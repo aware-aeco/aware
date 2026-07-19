@@ -637,7 +637,14 @@ fn emit_body(
 fn emit_polyline3(spf: &mut Spf, points: &[Vec3]) -> i64 {
     let ids = points
         .iter()
-        .map(|p| spf.emit(&format!("IFCCARTESIANPOINT(({},{},{}))", r(p.0), r(p.1), r(p.2))))
+        .map(|p| {
+            spf.emit(&format!(
+                "IFCCARTESIANPOINT(({},{},{}))",
+                r(p.0),
+                r(p.1),
+                r(p.2)
+            ))
+        })
         .collect::<Vec<_>>();
     let refs = ids
         .iter()
@@ -660,41 +667,55 @@ fn emit_box_cut_profile(
     reentrant: Option<(f64, i64)>,
     name: &str,
 ) -> i64 {
-    if let Some((rad, vsign)) = reentrant {
-        if rad > 0.0 {
-            let sy = if vsign >= 0 { 1.0 } else { -1.0 };
-            let vy = sy * hv; // the rounded corner's y (top or bottom on the +u edge)
-            let cx = hu - rad; // arc centre
-            let cy = vy - sy * rad;
-            let frac = std::f64::consts::FRAC_1_SQRT_2;
-            let mid = (cx + rad * frac, cy + sy * rad * frac); // arc midpoint (45° toward the corner)
-            let far_bl = (-hu, -hv);
-            let far_tl = (-hu, hv);
-            // Walk the outline CCW; the arc replaces exactly the rounded corner, with the tangent points on
-            // the +u edge and the horizontal (vy) edge.
-            let (pts, segs): (Vec<(f64, f64)>, &str) = if sy > 0.0 {
-                (
-                    vec![far_bl, (hu, -hv), (hu, vy - rad), mid, (hu - rad, vy), far_tl],
-                    "IFCLINEINDEX((1,2)),IFCLINEINDEX((2,3)),IFCARCINDEX((3,4,5)),IFCLINEINDEX((5,6)),IFCLINEINDEX((6,1))",
-                )
-            } else {
-                (
-                    vec![far_bl, (hu - rad, -hv), mid, (hu, -hv + rad), (hu, hv), far_tl],
-                    "IFCLINEINDEX((1,2)),IFCARCINDEX((2,3,4)),IFCLINEINDEX((4,5)),IFCLINEINDEX((5,6)),IFCLINEINDEX((6,1))",
-                )
-            };
-            let coords = pts
-                .iter()
-                .map(|(x, y)| format!("({},{})", r(*x), r(*y)))
-                .collect::<Vec<_>>()
-                .join(",");
-            let plist = spf.emit(&format!("IFCCARTESIANPOINTLIST2D(({coords}))"));
-            let curve = spf.emit(&format!("IFCINDEXEDPOLYCURVE(#{plist},({segs}),.F.)"));
-            return spf.emit(&format!(
-                "IFCARBITRARYCLOSEDPROFILEDEF(.AREA.,{},#{curve})",
-                s_lit(name)
-            ));
-        }
+    if let Some((rad, vsign)) = reentrant
+        && rad > 0.0
+    {
+        let sy = if vsign >= 0 { 1.0 } else { -1.0 };
+        let vy = sy * hv; // the rounded corner's y (top or bottom on the +u edge)
+        let cx = hu - rad; // arc centre
+        let cy = vy - sy * rad;
+        let frac = std::f64::consts::FRAC_1_SQRT_2;
+        let mid = (cx + rad * frac, cy + sy * rad * frac); // arc midpoint (45° toward the corner)
+        let far_bl = (-hu, -hv);
+        let far_tl = (-hu, hv);
+        // Walk the outline CCW; the arc replaces exactly the rounded corner, with the tangent points on
+        // the +u edge and the horizontal (vy) edge.
+        let (pts, segs): (Vec<(f64, f64)>, &str) = if sy > 0.0 {
+            (
+                vec![
+                    far_bl,
+                    (hu, -hv),
+                    (hu, vy - rad),
+                    mid,
+                    (hu - rad, vy),
+                    far_tl,
+                ],
+                "IFCLINEINDEX((1,2)),IFCLINEINDEX((2,3)),IFCARCINDEX((3,4,5)),IFCLINEINDEX((5,6)),IFCLINEINDEX((6,1))",
+            )
+        } else {
+            (
+                vec![
+                    far_bl,
+                    (hu - rad, -hv),
+                    mid,
+                    (hu, -hv + rad),
+                    (hu, hv),
+                    far_tl,
+                ],
+                "IFCLINEINDEX((1,2)),IFCARCINDEX((2,3,4)),IFCLINEINDEX((4,5)),IFCLINEINDEX((5,6)),IFCLINEINDEX((6,1))",
+            )
+        };
+        let coords = pts
+            .iter()
+            .map(|(x, y)| format!("({},{})", r(*x), r(*y)))
+            .collect::<Vec<_>>()
+            .join(",");
+        let plist = spf.emit(&format!("IFCCARTESIANPOINTLIST2D(({coords}))"));
+        let curve = spf.emit(&format!("IFCINDEXEDPOLYCURVE(#{plist},({segs}),.F.)"));
+        return spf.emit(&format!(
+            "IFCARBITRARYCLOSEDPROFILEDEF(.AREA.,{},#{curve})",
+            s_lit(name)
+        ));
     }
     spf.emit(&format!(
         "IFCRECTANGLEPROFILEDEF(.AREA.,{},#{pos2d},{},{})",
@@ -1487,19 +1508,21 @@ fn build_ifc(scene: &Value) -> BuildResult {
                         if !(hu > 0.0 && hv > 0.0 && hn > 0.0) {
                             return None;
                         }
-                        let reentrant = tool
-                            .get("reentrant")
-                            .and_then(Value::as_object)
-                            .and_then(|re| {
-                                Some((
-                                    re.get("radiusMm").and_then(Value::as_f64)?,
-                                    re.get("vSign").and_then(Value::as_f64)? as i64,
-                                ))
-                            });
-                        let profile = emit_box_cut_profile(&mut spf, pos2d, hu, hv, reentrant, op_id);
+                        let reentrant =
+                            tool.get("reentrant")
+                                .and_then(Value::as_object)
+                                .and_then(|re| {
+                                    Some((
+                                        re.get("radiusMm").and_then(Value::as_f64)?,
+                                        re.get("vSign").and_then(Value::as_f64)? as i64,
+                                    ))
+                                });
+                        let profile =
+                            emit_box_cut_profile(&mut spf, pos2d, hu, hv, reentrant, op_id);
                         let base = add3(origin, scale3(normal, -hn)); // base at origin - normal*hn (Codex R3 #6)
                         let place = emit_axis_placement(&mut spf, base, normal, u, bldg_place);
-                        let pds = emit_body(&mut spf, profile, 2.0 * hn, ctx, extrude_pos, dir_z, None);
+                        let pds =
+                            emit_body(&mut spf, profile, 2.0 * hn, ctx, extrude_pos, dir_z, None);
                         Some((place, pds))
                     } else if kind == "cylinder" {
                         let axis = tool.get("axis").and_then(Value::as_object)?;
@@ -1507,8 +1530,13 @@ fn build_ifc(scene: &Value) -> BuildResult {
                         let to = vec3(axis.get("to"))?;
                         let delta = (to.0 - from.0, to.1 - from.1, to.2 - from.2);
                         let dir = normalize3(delta)?;
-                        let len = (delta.0 * delta.0 + delta.1 * delta.1 + delta.2 * delta.2).sqrt();
+                        let len =
+                            (delta.0 * delta.0 + delta.1 * delta.1 + delta.2 * delta.2).sqrt();
                         let dia = pos(tool.get("diameterMm"))?;
+                        // Deliberately negated rather than `len <= 0.0`: this must also reject a
+                        // NaN length, and every comparison against NaN is false, so `!(len > 0.0)`
+                        // catches it while `len <= 0.0` would wave it through into the geometry.
+                        #[allow(clippy::neg_cmp_op_on_partial_ord)]
                         if !(len > 0.0) {
                             return None;
                         }
@@ -1517,7 +1545,8 @@ fn build_ifc(scene: &Value) -> BuildResult {
                             "IFCARBITRARYCLOSEDPROFILEDEF(.AREA.,{},#{circle})",
                             s_lit(op_id)
                         ));
-                        let place = emit_axis_placement(&mut spf, from, dir, axis_ref_dir(dir), bldg_place);
+                        let place =
+                            emit_axis_placement(&mut spf, from, dir, axis_ref_dir(dir), bldg_place);
                         let pds = emit_body(&mut spf, profile, len, ctx, extrude_pos, dir_z, None);
                         Some((place, pds))
                     } else {
@@ -1526,14 +1555,19 @@ fn build_ifc(scene: &Value) -> BuildResult {
                 })();
                 match (target, built) {
                     (Some(target), Some((place, pds))) => {
-                        let feat_type = if kind == "cylinder" { ".HOLE." } else { ".NOTCH." };
+                        let feat_type = if kind == "cylinder" {
+                            ".HOLE."
+                        } else {
+                            ".NOTCH."
+                        };
                         let gid = record_guid("voiding-feature", op_id);
                         let feature = spf.emit(&format!(
                             "IFCVOIDINGFEATURE({},$,{},$,$,#{place},#{pds},$,{feat_type})",
                             s_lit(&gid),
                             s_lit(op_id)
                         ));
-                        let rel_gid = record_guid("void-relation", &format!("{target_id}\0{op_id}"));
+                        let rel_gid =
+                            record_guid("void-relation", &format!("{target_id}\0{op_id}"));
                         spf.emit(&format!(
                             "IFCRELVOIDSELEMENT({},$,$,$,#{target},#{feature})",
                             s_lit(&rel_gid)
@@ -1585,12 +1619,11 @@ fn build_ifc(scene: &Value) -> BuildResult {
                     .and_then(Value::as_array)
                     .map(|a| a.iter().filter_map(|p| vec3(Some(p))).collect())
                     .unwrap_or_default();
-                if around {
-                    if let (Some(&first), Some(&last)) = (pts.first(), pts.last()) {
-                        if first != last {
-                            pts.push(first); // close an around-weld only when the authored path is open (R4 #8)
-                        }
-                    }
+                if around
+                    && let (Some(&first), Some(&last)) = (pts.first(), pts.last())
+                    && first != last
+                {
+                    pts.push(first); // close an around-weld only when the authored path is open (R4 #8)
                 }
                 let seg_len = |w: &[Vec3]| {
                     let d = (w[1].0 - w[0].0, w[1].1 - w[0].1, w[1].2 - w[0].2);
@@ -1602,15 +1635,24 @@ fn build_ifc(scene: &Value) -> BuildResult {
                 let sec = product_by_id.get(sec_id).copied();
                 match (main, sec, size) {
                     (Some(main), Some(sec), Some(size))
-                        if main_id != sec_id && main != sec && pts.len() >= 2 && seg_ok && total > 1e-6 =>
+                        if main_id != sec_id
+                            && main != sec
+                            && pts.len() >= 2
+                            && seg_ok
+                            && total > 1e-6 =>
                     {
                         let first = pts[0];
                         let local: Vec<Vec3> = pts
                             .iter()
                             .map(|p| (p.0 - first.0, p.1 - first.1, p.2 - first.2))
                             .collect();
-                        let place =
-                            emit_axis_placement(&mut spf, first, (0.0, 0.0, 1.0), (1.0, 0.0, 0.0), bldg_place);
+                        let place = emit_axis_placement(
+                            &mut spf,
+                            first,
+                            (0.0, 0.0, 1.0),
+                            (1.0, 0.0, 0.0),
+                            bldg_place,
+                        );
                         let axis_line = emit_polyline3(&mut spf, &local);
                         let shape = spf.emit(&format!(
                             "IFCSHAPEREPRESENTATION(#{ctx},'Axis','Curve3D',(#{axis_line}))"
@@ -2216,7 +2258,9 @@ fn validate_box_tool(tool: &serde_json::Map<String, Value>, path: &str) -> Resul
     let he = tool
         .get("halfExtents")
         .and_then(Value::as_array)
-        .ok_or_else(|| AwareError::Validation(format!("ifc write: `{path}.halfExtents` is required")))?;
+        .ok_or_else(|| {
+            AwareError::Validation(format!("ifc write: `{path}.halfExtents` is required"))
+        })?;
     if he.len() != 3
         || !he
             .iter()
@@ -2235,7 +2279,10 @@ fn validate_box_tool(tool: &serde_json::Map<String, Value>, path: &str) -> Resul
             )));
         }
     }
-    if dot(u, v).abs() > BOX_TOOL_TOL || dot(u, n).abs() > BOX_TOOL_TOL || dot(v, n).abs() > BOX_TOOL_TOL {
+    if dot(u, v).abs() > BOX_TOOL_TOL
+        || dot(u, n).abs() > BOX_TOOL_TOL
+        || dot(v, n).abs() > BOX_TOOL_TOL
+    {
         return Err(AwareError::Validation(format!(
             "ifc write: `{path}.frame` axes must be mutually orthogonal"
         )));
@@ -2943,9 +2990,12 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                 })?;
                 match tool.get("kind").and_then(Value::as_str) {
                     Some("cylinder") => {
-                        let axis = tool.get("axis").and_then(Value::as_object).ok_or_else(|| {
-                            AwareError::Validation(format!("ifc write: `{path}.tool.axis` is required"))
-                        })?;
+                        let axis =
+                            tool.get("axis").and_then(Value::as_object).ok_or_else(|| {
+                                AwareError::Validation(format!(
+                                    "ifc write: `{path}.tool.axis` is required"
+                                ))
+                            })?;
                         let from = vec3(axis.get("from"));
                         let to = vec3(axis.get("to"));
                         if !matches!((from, to), (Some(from), Some(to)) if normalize3((to.0-from.0,to.1-from.1,to.2-from.2)).is_some())
@@ -3556,13 +3606,28 @@ mod tests {
         // Two bolt-hole-effect openings + one cylinder cut (CUT-1) now voided as an IfcVoidingFeature(.HOLE.).
         assert_eq!(built.doc.matches("IFCRELVOIDSELEMENT(").count(), 3);
         assert_eq!(built.doc.matches("IFCVOIDINGFEATURE(").count(), 1);
-        assert!(built.doc.contains(".HOLE.)"), "the cylinder cut is a HOLE voiding feature");
+        assert!(
+            built.doc.contains(".HOLE.)"),
+            "the cylinder cut is a HOLE voiding feature"
+        );
         // WELD-1 is materialized as an IfcFastener(.WELD.) realizing the member↔plate connection.
         assert_eq!(built.doc.matches("IFCFASTENER(").count(), 1);
-        assert_eq!(built.doc.matches("IFCRELCONNECTSWITHREALIZINGELEMENTS(").count(), 1);
-        assert!(built.doc.contains("'Pset_FastenerWeld'") && built.doc.contains("IFCPOSITIVELENGTHMEASURE(6.0)"));
+        assert_eq!(
+            built
+                .doc
+                .matches("IFCRELCONNECTSWITHREALIZINGELEMENTS(")
+                .count(),
+            1
+        );
+        assert!(
+            built.doc.contains("'Pset_FastenerWeld'")
+                && built.doc.contains("IFCPOSITIVELENGTHMEASURE(6.0)")
+        );
         // The artifact is bound to the exact exported scene identity.
-        assert!(built.doc.contains("'Pset_AWARE_ExportIdentity'") && built.doc.contains("IFCIDENTIFIER('takeoff-1')"));
+        assert!(
+            built.doc.contains("'Pset_AWARE_ExportIdentity'")
+                && built.doc.contains("IFCIDENTIFIER('takeoff-1')")
+        );
         assert_eq!(built.doc.matches("IFCGRID(").count(), 1);
         assert_eq!(built.doc.matches("IFCGRIDAXIS(").count(), 2);
         assert_eq!(built.doc.matches("IFCANNOTATION(").count(), 1);
@@ -3950,9 +4015,17 @@ mod tests {
         let built = build_ifc(&scene);
         assert_eq!(built.doc.matches("IFCVOIDINGFEATURE(").count(), 1);
         assert!(built.doc.contains(".NOTCH.)"), "a box cope is a NOTCH");
-        assert_eq!(built.doc.matches("IFCINDEXEDPOLYCURVE(").count(), 1, "the fillet uses an indexed poly-curve with an arc");
+        assert_eq!(
+            built.doc.matches("IFCINDEXEDPOLYCURVE(").count(),
+            1,
+            "the fillet uses an indexed poly-curve with an arc"
+        );
         assert!(built.doc.contains("IFCARCINDEX("));
-        let row = built.emitted.iter().find(|row| row["id"] == "COPE-1").unwrap();
+        let row = built
+            .emitted
+            .iter()
+            .find(|row| row["id"] == "COPE-1")
+            .unwrap();
         assert_eq!(row["entityType"], "IfcVoidingFeature");
         assert_eq!(row["voids"], "BEAM-1");
         assert_eq!(row["relationshipType"], "IfcRelVoidsElement");
@@ -3960,10 +4033,22 @@ mod tests {
 
         // A square cope (no fillet) is still voided, but with no fillet arc.
         let mut square = scene.clone();
-        square["operations"][2]["tool"].as_object_mut().unwrap().remove("reentrant");
+        square["operations"][2]["tool"]
+            .as_object_mut()
+            .unwrap()
+            .remove("reentrant");
         let built = build_ifc(&square);
-        assert_eq!(built.doc.matches("IFCINDEXEDPOLYCURVE(").count(), 0, "a square cope has no fillet arc");
-        assert!(built.emitted.iter().any(|row| row["id"] == "COPE-1" && row["entityType"] == "IfcVoidingFeature"));
+        assert_eq!(
+            built.doc.matches("IFCINDEXEDPOLYCURVE(").count(),
+            0,
+            "a square cope has no fillet arc"
+        );
+        assert!(
+            built
+                .emitted
+                .iter()
+                .any(|row| row["id"] == "COPE-1" && row["entityType"] == "IfcVoidingFeature")
+        );
     }
 
     #[test]
@@ -3975,7 +4060,10 @@ mod tests {
             .find(|row| row["id"] == "WELD-1")
             .expect("the weld is materialized");
         assert_eq!(row["entityType"], "IfcFastener");
-        assert_eq!(row["relationshipType"], "IfcRelConnectsWithRealizingElements");
+        assert_eq!(
+            row["relationshipType"],
+            "IfcRelConnectsWithRealizingElements"
+        );
         assert_eq!(row["realizes"], json!(["BEAM-1", "PL-1"]));
         assert!(built.doc.contains(".WELD.)"));
         assert!(built.doc.contains("'Pset_AWARE_Weld'") && built.doc.contains("IFCBOOLEAN(.T.)"));

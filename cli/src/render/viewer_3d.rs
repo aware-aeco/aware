@@ -1791,9 +1791,10 @@ fn classify_operations(
                 // Boolean CSG for either, so both stay unsupported below — but neither aborts the scene).
                 match tool.get("kind").and_then(Value::as_str) {
                     Some("cylinder") => {
-                        let tool_axis = tool.get("axis").and_then(Value::as_object).ok_or_else(|| {
-                            scene_error(&format!("{path}.tool.axis"), "must be an object")
-                        })?;
+                        let tool_axis =
+                            tool.get("axis").and_then(Value::as_object).ok_or_else(|| {
+                                scene_error(&format!("{path}.tool.axis"), "must be an object")
+                            })?;
                         let from =
                             vector::<3>(tool_axis.get("from"), &format!("{path}.tool.axis.from"))?;
                         let to = vector::<3>(tool_axis.get("to"), &format!("{path}.tool.axis.to"))?;
@@ -1803,12 +1804,18 @@ fn classify_operations(
                                 "must have nonzero length",
                             ));
                         }
-                        positive_number(tool.get("diameterMm"), &format!("{path}.tool.diameterMm"))?;
+                        positive_number(
+                            tool.get("diameterMm"),
+                            &format!("{path}.tool.diameterMm"),
+                        )?;
                     }
                     Some("box") => {
-                        let frame = tool.get("frame").and_then(Value::as_object).ok_or_else(|| {
-                            scene_error(&format!("{path}.tool.frame"), "must be an object")
-                        })?;
+                        let frame =
+                            tool.get("frame")
+                                .and_then(Value::as_object)
+                                .ok_or_else(|| {
+                                    scene_error(&format!("{path}.tool.frame"), "must be an object")
+                                })?;
                         for axis in ["origin", "uDir", "vDir", "normal"] {
                             vector::<3>(frame.get(axis), &format!("{path}.tool.frame.{axis}"))?;
                         }
@@ -1817,7 +1824,10 @@ fn classify_operations(
                             .and_then(Value::as_array)
                             .filter(|a| a.len() == 3)
                             .ok_or_else(|| {
-                                scene_error(&format!("{path}.tool.halfExtents"), "must be three numbers")
+                                scene_error(
+                                    &format!("{path}.tool.halfExtents"),
+                                    "must be three numbers",
+                                )
                             })?;
                         for (i, h) in he.iter().enumerate() {
                             positive_number(Some(h), &format!("{path}.tool.halfExtents[{i}]"))?;
