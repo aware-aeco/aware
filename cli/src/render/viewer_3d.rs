@@ -580,6 +580,11 @@ const STRETCH={timber:5, stainless:6, aluminium:6};
 const BASE_CELLS={stainless:56, aluminium:56, timber:22, concrete:26, galvanised:22, asphalt:24, painted:34};
 const TILE_MM={concrete:600, asphalt:500, timber:900, weathering:700, galvanised:260,
   stainless:180, aluminium:180, painted:420, steel:400};
+// Families whose detail runs ALONG the member (wood grain, brushed stainless, extruded aluminium).
+// These must project from object space so the pattern rotates with the part; world-space projection
+// leaves grain pinned to the global axes, which reads as timber grain running ACROSS a sloped rafter.
+// Isotropic families stay world-projected so neighbouring members read as one continuous finish.
+const DIRECTIONAL=new Set(['timber','stainless','aluminium']);
 const texByFamily=new Map();
 function surfaceFor(family){
   if(!family||!SURFACES[family]) return null;
@@ -613,12 +618,16 @@ function surfaceFor(family){
 // extruded member's UVs are millimetre-scale and differ between its cap faces and its side walls, so
 // any single repeat value stretches somewhere — badly on a coped end. Triplanar sidesteps UVs, which
 // is the only thing that reads correctly at architectural scale.
-function applyTriplanar(material,scaleMm){
+function applyTriplanar(material,scaleMm,local){
+  // `local` projects from OBJECT space so a directional finish follows the member's own axes; the
+  // default projects from world space so isotropic finishes stay continuous across neighbours.
+  const posExpr=local?'transformed':'(modelMatrix*vec4(transformed,1.0)).xyz';
+  const nrmExpr=local?'objectNormal':'mat3(modelMatrix)*objectNormal';
   material.onBeforeCompile=(shader)=>{
     shader.uniforms.uTriScale={value:1/Math.max(1,scaleMm)};
     shader.vertexShader=shader.vertexShader
       .replace('#include <common>','#include <common>\nvarying vec3 vTriPos;\nvarying vec3 vTriNrm;')
-      .replace('#include <worldpos_vertex>','#include <worldpos_vertex>\n  vTriPos=(modelMatrix*vec4(transformed,1.0)).xyz;\n  vTriNrm=mat3(modelMatrix)*objectNormal;');
+      .replace('#include <worldpos_vertex>','#include <worldpos_vertex>\n  vTriPos='+posExpr+';\n  vTriNrm='+nrmExpr+';');
     const helper='\nvarying vec3 vTriPos;\nvarying vec3 vTriNrm;\nuniform float uTriScale;\n'
       +'vec4 triplanar(sampler2D tex, vec3 p, vec3 n){\n'
       +'  vec3 b=pow(abs(normalize(n)),vec3(4.0));\n'   // 4th power keeps faces crisp near corners
@@ -631,7 +640,7 @@ function applyTriplanar(material,scaleMm){
   };
   // Three caches programs by this key; without a distinct one a patched and an unpatched material
   // with otherwise identical parameters would silently share the WRONG compiled program.
-  material.customProgramCacheKey=()=>'triplanar:'+scaleMm;
+  material.customProgramCacheKey=()=>'triplanar:'+scaleMm+':'+(local?'local':'world');
   material.needsUpdate=true; }
 
 function solidMaterial(e,colorOf,opacityOf,doubleSided){ const col=colorOf[e.group]||0xffffff;
@@ -645,7 +654,7 @@ function solidMaterial(e,colorOf,opacityOf,doubleSided){ const col=colorOf[e.gro
   // Patch ONCE at creation rather than toggling with the mode: both replaced chunks are guarded by
   // USE_MAP/USE_ROUGHNESSMAP, so with no maps bound the patched shader matches the stock one — and
   // Solid never pays a program recompile on switch.
-  if(TILE_MM[fam]) applyTriplanar(mat,TILE_MM[fam]);
+  if(TILE_MM[fam]) applyTriplanar(mat,TILE_MM[fam],DIRECTIONAL.has(fam));
   mat.userData={baseOpacity:op, baseColor:col, family:fam}; return mat; }
 function cylinderBetween(a,b,r,mat,segments){ const d=b.clone().sub(a), len=d.length();
   const mesh=new THREE.Mesh(new THREE.CylinderGeometry(r,r,len,segments||32,1,false),mat);
@@ -2333,6 +2342,7 @@ mod tests {
     }
 
     #[test]
+    #[test]
     fn ships_realistic_material_mode() {
         // The "realistic" display mode shades each element from its semantic `meta.material`.
         // Metal is nothing but reflections, so the mode is only truthful if it ALSO ships an
@@ -2387,6 +2397,25 @@ mod tests {
         assert!(
             html.contains("ACESFilmicToneMapping") && html.contains("function setEnvironment"),
             "filmic tone mapping is toggled with the mode"
+        );
+
+        // Directional finishes must project from OBJECT space so the pattern runs along the member.
+        // The floless editor shipped this the other way once: `local` was threaded into the program
+        // cache key but never into the shader, so timber grain and brushed metal stayed pinned to
+        // the world axes and ran ACROSS sloped members. Nothing errored — it just looked wrong — so
+        // assert the branch exists rather than trusting that the parameter is honoured.
+        assert!(
+            compact.contains("constDIRECTIONAL=newSet(['timber','stainless','aluminium'])"),
+            "directional families are declared"
+        );
+        assert!(
+            compact.contains("applyTriplanar(mat,TILE_MM[fam],DIRECTIONAL.has(fam))"),
+            "the local flag is actually passed per family"
+        );
+        assert!(
+            compact.contains("constposExpr=local?'transformed'")
+                && compact.contains("constnrmExpr=local?'objectNormal'"),
+            "local projection reaches the shader instead of only the cache key"
         );
 
         // The per-family appearance table + the grade→family fallback chain.
