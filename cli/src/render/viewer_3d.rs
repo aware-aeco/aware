@@ -2342,7 +2342,6 @@ mod tests {
     }
 
     #[test]
-    #[test]
     fn ships_realistic_material_mode() {
         // The "realistic" display mode shades each element from its semantic `meta.material`.
         // Metal is nothing but reflections, so the mode is only truthful if it ALSO ships an
