@@ -22,9 +22,10 @@ description: |
   steel-detailer-de applies the German NA, etc.).
 
 # Phase 5: EU recommended-values agent built.
-# Deterministic lookup binary shared with steel-detailer-us and steel-detailer-uk
-# (steel-detailer-lookup/ Cargo project); users must build from Cargo.toml.
-status: planned
+# The deterministic lookup binary, shared with steel-detailer-us and steel-detailer-uk
+# (steel-detailer-lookup/ Cargo project), ships in the aware release archive and MSI,
+# next to `aware` on PATH — no local build needed.
+status: available
 
 stateful: false
 
@@ -66,7 +67,7 @@ commands:
       return the exact EN clause, value, units and citation as typed JSON — or
       found:false so the caller refuses rather than guesses. Rule IDs: run
       `lookup --list`. NDP rules are flagged with ndp:true in the JSON output.
-      Binary must be installed from steel-detailer-lookup/ (cargo build --release).
+      Binary ships in the aware release archive and MSI, next to `aware` on PATH.
     inputs:
       rule:
         type: string

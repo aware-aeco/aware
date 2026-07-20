@@ -73,10 +73,13 @@ fall back to inference.
 
 ## Install note
 
-Binary: `~/.aware/bin/aware-steel-detailer-eu.exe` (build from
-`20-agents/aeco/engineering/steel-detailer-lookup/` via `cargo build --release`; the
-same Rust project produces the AISC, UK, and EU binaries). Rules file installed by
-`aware agent install steel-detailer-eu`.
+Binary: `aware-steel-detailer-eu`, shipped in the aware release archive and MSI next
+to `aware`, so it resolves on PATH with no local build (the same Rust project produces
+the AISC, UK, and EU binaries). Rules file installed by
+`aware agent install steel-detailer-eu` — the binary reads it from
+`<AWARE_HOME>/agents/steel-detailer-eu/rules/`, so both steps are needed. To build from
+source instead, `cargo build --release` in
+`20-agents/aeco/engineering/steel-detailer-lookup/`.
 
 ## Source
 

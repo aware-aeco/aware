@@ -9,6 +9,9 @@
   Install layout: C:\Program Files\AWARE\
     aware.exe
     aware-sidecar.exe
+    aware-steel-detailer-us.exe (deterministic AISC / Eurocode clause + section
+    aware-steel-detailer-uk.exe  lookup for the steel-detailer agents; one binary
+    aware-steel-detailer-eu.exe  per region, rule set picked from argv[0])
     aware-roslyn\               (self-contained FOLDER — the MSBuildWorkspace
       aware-roslyn.exe           .csproj/.sln path can't run from a single file,
       …runtime + Roslyn DLLs     so it ships as a folder; discovered as a subdir
@@ -64,6 +67,19 @@
       </Component>
       <Component Id="AwareSidecarExe" Bitness="always64">
         <File Source="$(var.StageDir)\aware-sidecar.exe" KeyPath="yes" />
+      </Component>
+      <!-- steel-detailer lookup transports. Portable Rust (~284 KB each), so unlike
+           the host bridges they ship in the box rather than via `aware sidecar
+           install`. INSTALLFOLDER is on PATH, which is how invoker.rs resolves a
+           non-bridge transport binary by bare name. -->
+      <Component Id="SteelDetailerUsExe" Bitness="always64">
+        <File Source="$(var.StageDir)\aware-steel-detailer-us.exe" KeyPath="yes" />
+      </Component>
+      <Component Id="SteelDetailerUkExe" Bitness="always64">
+        <File Source="$(var.StageDir)\aware-steel-detailer-uk.exe" KeyPath="yes" />
+      </Component>
+      <Component Id="SteelDetailerEuExe" Bitness="always64">
+        <File Source="$(var.StageDir)\aware-steel-detailer-eu.exe" KeyPath="yes" />
       </Component>
       <Component Id="ReadmeFile" Bitness="always64">
         <File Source="$(var.StageDir)\README.md" KeyPath="yes" />

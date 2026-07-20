@@ -62,7 +62,7 @@ If `found: false`, the consumer reports "rule not in verified database" and does
 
 ## Install note
 
-Binary: `~/.aware/bin/aware-steel-detailer-uk.exe` (build from `20-agents/aeco/engineering/steel-detailer-lookup/` via `cargo build --release`; the same project produces both region binaries). Requires `~/.aware/bin/` on PATH. Rules file is installed by `aware agent install steel-detailer-uk`.
+Binary: `aware-steel-detailer-uk`, shipped in the aware release archive and MSI next to `aware`, so it resolves on PATH with no local build (the same project produces all three region binaries). Rules file is installed by `aware agent install steel-detailer-uk` — the binary reads it from `<AWARE_HOME>/agents/steel-detailer-uk/rules/`, so both steps are needed. To build from source instead, `cargo build --release` in `20-agents/aeco/engineering/steel-detailer-lookup/`.
 
 ## Source
 

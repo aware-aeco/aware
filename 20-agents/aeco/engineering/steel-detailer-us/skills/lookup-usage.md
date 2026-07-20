@@ -191,7 +191,7 @@ If `found: false`, the consumer reports "rule not in verified database" and does
 
 ## Install note
 
-Binary: `~/.aware/bin/aware-steel-detailer-us.exe` (build from `20-agents/aeco/engineering/steel-detailer-lookup/` via `cargo build --release`). Requires `~/.aware/bin/` on PATH. Both rules files (`aisc-360-22.json` + `aisc-shapes-v15.json`) are installed by `aware agent install steel-detailer-us`.
+Binary: `aware-steel-detailer-us`, shipped in the aware release archive and MSI next to `aware`, so it resolves on PATH with no local build. Both rules files (`aisc-360-22.json` + `aisc-shapes-v15.json`) are installed by `aware agent install steel-detailer-us` — the binary reads them from `<AWARE_HOME>/agents/steel-detailer-us/rules/`, so **both steps are needed**: the binary alone has no data, and the rules alone have nothing to serve them. To build from source instead, `cargo build --release` in `20-agents/aeco/engineering/steel-detailer-lookup/`.
 
 ## Source
 
