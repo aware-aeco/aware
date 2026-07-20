@@ -134,13 +134,69 @@ impl AgentInvoker for MockInvoker {
 
 /// Resolve an agent's `transport.cli.binary` to the path to spawn.
 ///
-/// Known host bridges live in `~/.aware/bridges/` — a persistent directory that
-/// is NOT on PATH (#148), so they must be resolved to an absolute path. Any other
-/// name (a real PATH command, or a legacy bridge still sitting next to `aware`)
-/// falls through to the bare name, which the OS resolves via PATH.
+/// Order: known host bridge in `~/.aware/bridges/` → a transport bundled beside the
+/// running `aware` → bare name for the OS to resolve via PATH.
+///
+/// Bridges live in `~/.aware/bridges/`, a persistent directory that is NOT on PATH
+/// (#148), so they must be resolved to an absolute path.
+///
+/// The sibling step covers transports that ship INSIDE the release archive next to
+/// `aware` (the steel-detailer lookups). Bare-name/PATH alone is not enough for
+/// those: the npm package runs the real binary out of its own `binaries/` directory
+/// with only the npm shim dir on PATH, so a bundled sibling would never be found.
+/// This mirrors how `aware-sidecar` and `aware-roslyn` are already discovered
+/// (see `sidecar::discover_named`).
 fn resolve_cli_binary(binary: &str, bridges_dir: &std::path::Path) -> std::path::PathBuf {
-    crate::commands::sidecar::find_bridge_by_binary(binary, bridges_dir)
-        .unwrap_or_else(|| std::path::PathBuf::from(binary))
+    if let Some(bridge) = crate::commands::sidecar::find_bridge_by_binary(binary, bridges_dir) {
+        return bridge;
+    }
+    if let Some(sibling) = std::env::current_exe()
+        .ok()
+        .and_then(|exe| exe.parent().map(std::path::Path::to_path_buf))
+        .and_then(|dir| sibling_binary(&dir, binary))
+    {
+        return sibling;
+    }
+    std::path::PathBuf::from(binary)
+}
+
+/// Transports that ship INSIDE the release archive next to `aware`.
+///
+/// An explicit allowlist, not "any bare name": `aware` is often installed into a shared
+/// directory (`~/.local/bin`, `/usr/local/bin`), and probing every transport name there
+/// would let an unrelated same-named file shadow whatever PATH order would have chosen.
+/// Only names we actually ship get sibling treatment; everything else keeps its previous
+/// PATH semantics.
+///
+/// Kept in step with the release staging (`.github/workflows/release.yml`), the npm
+/// payload contract (`cli-npm/scripts/payload.js`), and both install scripts.
+const BUNDLED_TRANSPORTS: &[&str] = &[
+    "aware-steel-detailer-us",
+    "aware-steel-detailer-uk",
+    "aware-steel-detailer-eu",
+];
+
+/// A bundled transport sitting in `dir` (the directory holding the running `aware`).
+///
+/// Bare names only, and only names in [`BUNDLED_TRANSPORTS`]: a manifest that declares a
+/// path or a real PATH command must keep its existing meaning, so anything containing a
+/// separator or not on the list is left alone. Pure over an explicit `dir` so it is
+/// testable without touching the process's own exe path.
+fn sibling_binary(dir: &std::path::Path, binary: &str) -> Option<std::path::PathBuf> {
+    if binary.contains('/') || binary.contains('\\') {
+        return None;
+    }
+    let stem = binary.strip_suffix(".exe").unwrap_or(binary);
+    if !BUNDLED_TRANSPORTS.contains(&stem) {
+        return None;
+    }
+    let name = if cfg!(windows) && !binary.to_ascii_lowercase().ends_with(".exe") {
+        format!("{binary}.exe")
+    } else {
+        binary.to_string()
+    };
+    let candidate = dir.join(name);
+    candidate.is_file().then_some(candidate)
 }
 
 /// The persistent bridges directory (`<AWARE_HOME>/bridges`), derived from the
@@ -1696,6 +1752,59 @@ fn call_anthropic_api(
         })
         .unwrap_or_default();
     parse_vision_json(text)
+}
+
+#[cfg(test)]
+mod sibling_binary_tests {
+    use super::*;
+
+    /// A transport bundled next to `aware` resolves to an absolute path even when its
+    /// directory is not on PATH — the npm layout, where the shim runs the real binary
+    /// out of `binaries/` and only the shim dir is on PATH.
+    #[test]
+    fn finds_a_bundled_transport_beside_aware() {
+        let dir = tempfile::tempdir().unwrap();
+        let name = if cfg!(windows) {
+            "aware-steel-detailer-us.exe"
+        } else {
+            "aware-steel-detailer-us"
+        };
+        std::fs::write(dir.path().join(name), b"").unwrap();
+
+        // The manifest declares the bare stem; Windows still resolves to the .exe.
+        let got = sibling_binary(dir.path(), "aware-steel-detailer-us").expect("resolved");
+        assert_eq!(got, dir.path().join(name));
+    }
+
+    #[test]
+    fn absent_binary_falls_through_to_path() {
+        let dir = tempfile::tempdir().unwrap();
+        assert!(sibling_binary(dir.path(), "aware-steel-detailer-us").is_none());
+    }
+
+    /// `aware` often lives in a shared bin dir. An unrelated transport that merely
+    /// happens to have a same-named neighbour there must keep normal PATH resolution
+    /// rather than being shadowed by the sibling.
+    #[test]
+    fn unbundled_transports_keep_path_semantics() {
+        let dir = tempfile::tempdir().unwrap();
+        for name in ["mytool", "mytool.exe", "aware-tekla", "aware-tekla.exe"] {
+            std::fs::write(dir.path().join(name), b"").unwrap();
+        }
+        assert!(sibling_binary(dir.path(), "mytool").is_none());
+        // a real host bridge resolves via ~/.aware/bridges, not as a sibling
+        assert!(sibling_binary(dir.path(), "aware-tekla").is_none());
+    }
+
+    /// A declared path must keep its meaning rather than being reinterpreted as a
+    /// sibling name.
+    #[test]
+    fn paths_are_left_alone() {
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(dir.path().join("tool"), b"").unwrap();
+        assert!(sibling_binary(dir.path(), "./tool").is_none());
+        assert!(sibling_binary(dir.path(), "sub/tool").is_none());
+    }
 }
 
 #[cfg(test)]

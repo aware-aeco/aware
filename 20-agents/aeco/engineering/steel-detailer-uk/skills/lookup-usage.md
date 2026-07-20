@@ -58,11 +58,26 @@ The `lookup` command is a standalone deterministic CLI (decalog #9 — no LLM in
 
 If `found: false`, the consumer reports "rule not in verified database" and does NOT fall back to inference.
 
-> The agent is `status: planned`: today the lookup is a standalone CLI (build it per the install note below). Composing it as a first-class node in a runnable AWARE `.app` is planned — it lights up when the agent becomes `available`.
+> The agent is `status: planned` **until a release carrying the lookup binary is out**. The binary is built and staged into the release archive; the flip to `available` follows the release, so already-installed CLIs get a clean compile-time refusal rather than a spawn failure. Until then the lookup is a standalone CLI and composing it as a node in a runnable `.app` is refused at validate/compile.
 
 ## Install note
 
-Binary: `~/.aware/bin/aware-steel-detailer-uk.exe` (build from `20-agents/aeco/engineering/steel-detailer-lookup/` via `cargo build --release`; the same project produces both region binaries). Requires `~/.aware/bin/` on PATH. Rules file is installed by `aware agent install steel-detailer-uk`.
+Binary: `aware-steel-detailer-uk`, built into the aware release archive and MSI next to `aware`, where the CLI resolves it directly — no local build needed once that release is out (the same project produces all three region binaries). Rules file is installed by `aware agent install steel-detailer-uk` — the binary reads it from `<AWARE_HOME>/agents/steel-detailer-uk/rules/`, so both steps are needed. To build from source instead, `cargo build --release` in `20-agents/aeco/engineering/steel-detailer-lookup/`.
+
+**Invoking it directly.** The `aware` CLI finds this binary on its own (it looks beside
+its own executable), so dispatching the agent from an app works on every install. Typing
+`aware-steel-detailer-uk ...` as a bare shell command additionally needs it on PATH, which
+depends on how aware was installed:
+
+| install method | bare `aware-steel-detailer-uk` on PATH? |
+|---|---|
+| MSI (Windows) | yes — the install dir is added to system PATH |
+| `scripts/install.sh` / `install.ps1` | yes — copied next to `aware` in the install dir |
+| npm / pnpm | **no** — it lives in the package-private `binaries/` directory and only `aware` gets a global shim |
+| built from source | only if you copy it out of `target/release/` yourself |
+
+If the bare command is not found, dispatch the agent through an app instead of invoking
+the binary by hand — that path always resolves.
 
 ## Source
 

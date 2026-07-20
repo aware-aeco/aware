@@ -51,10 +51,29 @@ try {
   Copy-Item (Join-Path $srcDir "aware.exe") $InstallDir -Force
   Copy-Item (Join-Path $srcDir "aware-sidecar.exe") $InstallDir -Force
 
+  # Agent transport binaries bundled in the archive. They must land NEXT TO aware.exe:
+  # that is where the CLI looks for a bundled transport before falling back to PATH.
+  # Absence is tolerated so this script still works against an older archive that
+  # predates them.
+  $transports = @(
+    "aware-steel-detailer-us.exe",
+    "aware-steel-detailer-uk.exe",
+    "aware-steel-detailer-eu.exe"
+  )
+  $installed = @()
+  foreach ($t in $transports) {
+    $src = Join-Path $srcDir $t
+    if (Test-Path $src) {
+      Copy-Item $src $InstallDir -Force
+      $installed += $t
+    }
+  }
+
   Write-Host ""
   Write-Host "Installed:" -ForegroundColor Green
   Write-Host "    $InstallDir\aware.exe"
   Write-Host "    $InstallDir\aware-sidecar.exe"
+  foreach ($t in $installed) { Write-Host "    $InstallDir\$t" }
   Write-Host ""
 
   # Check PATH

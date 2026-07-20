@@ -82,6 +82,22 @@ jobs:
           AWARE_GOOGLE_CLIENT_SECRET: ${{ secrets.AWARE_GOOGLE_CLIENT_SECRET }}
         run: cargo build --release
 
+      - name: Build steel-detailer lookup binaries (agent transport)
+        # Deterministic clause/section lookup for the steel-detailer-us / -uk / -eu
+        # agents — no LLM in the run path (decalog #9). One source, three [[bin]]
+        # names; the binary picks its rule set from argv[0]. Its own cargo workspace
+        # under 20-agents/, so it needs its own build invocation.
+        #
+        # Unlike the host bridges below, this is portable Rust with no host
+        # dependency, so it builds on all three runners and ships INSIDE the main
+        # archive next to `aware` (~284 KB each) rather than as a separate
+        # `aware sidecar install` asset — that path is Windows-only by construction
+        # (see cli/src/commands/sidecar.rs, which hardcodes a win-x64 asset name).
+        # Next to `aware` means the install dir's PATH entry resolves it, which is
+        # what invoker.rs falls back to for non-bridge binaries.
+        working-directory: 20-agents/aeco/engineering/steel-detailer-lookup
+        run: cargo build --release
+
       - name: Publish C# sidecar (NativeAOT)
         run: dotnet publish cli-sidecar -c Release -r ${{ matrix.rid }} -p:PublishAot=true
 
@@ -108,6 +124,11 @@ jobs:
           mkdir -p "$stage"
           cp "cli/target/release/aware${{ matrix.ext }}" "$stage/"
           cp "cli-sidecar/bin/Release/net10.0/${{ matrix.rid }}/publish/aware-sidecar${{ matrix.ext }}" "$stage/"
+          # steel-detailer lookup transports — one per region, same binary, argv[0] picks
+          # the rule set. Rules themselves arrive via `aware agent install`.
+          for region in us uk eu; do
+            cp "20-agents/aeco/engineering/steel-detailer-lookup/target/release/aware-steel-detailer-${region}${{ matrix.ext }}" "$stage/"
+          done
           # aware-roslyn ships as a self-contained FOLDER (#185 — see the publish step). Stage the
           # whole publish dir under `aware-roslyn/`; the CLI discovers `aware-roslyn/aware-roslyn`.
           mkdir -p "$stage/aware-roslyn"

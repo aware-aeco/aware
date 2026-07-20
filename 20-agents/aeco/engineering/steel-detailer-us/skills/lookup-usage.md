@@ -187,11 +187,26 @@ The `lookup` command is a standalone deterministic CLI (decalog #9 — no LLM in
 
 If `found: false`, the consumer reports "rule not in verified database" and does NOT fall back to inference.
 
-> The agent is `status: planned`: today the lookup is a standalone CLI (build it per the install note below). Composing it as a first-class node in a runnable AWARE `.app` is planned — it lights up when the agent becomes `available`.
+> The agent is `status: planned` **until a release carrying the lookup binary is out**. The binary is built and staged into the release archive; the flip to `available` follows the release, so already-installed CLIs get a clean compile-time refusal rather than a spawn failure. Until then the lookup is a standalone CLI and composing it as a node in a runnable `.app` is refused at validate/compile.
 
 ## Install note
 
-Binary: `~/.aware/bin/aware-steel-detailer-us.exe` (build from `20-agents/aeco/engineering/steel-detailer-lookup/` via `cargo build --release`). Requires `~/.aware/bin/` on PATH. Both rules files (`aisc-360-22.json` + `aisc-shapes-v15.json`) are installed by `aware agent install steel-detailer-us`.
+Binary: `aware-steel-detailer-us`, built into the aware release archive and MSI next to `aware`, where the CLI resolves it directly — no local build, and no dependence on that directory being on PATH. It arrives with the first release carrying it; until then, build from source (below). Both rules files (`aisc-360-22.json` + `aisc-shapes-v15.json`) are installed by `aware agent install steel-detailer-us` — the binary reads them from `<AWARE_HOME>/agents/steel-detailer-us/rules/`, so **both steps are needed**: the binary alone has no data, and the rules alone have nothing to serve them. To build from source instead, `cargo build --release` in `20-agents/aeco/engineering/steel-detailer-lookup/`.
+
+**Invoking it directly.** The `aware` CLI finds this binary on its own (it looks beside
+its own executable), so dispatching the agent from an app works on every install. Typing
+`aware-steel-detailer-us ...` as a bare shell command additionally needs it on PATH, which
+depends on how aware was installed:
+
+| install method | bare `aware-steel-detailer-us` on PATH? |
+|---|---|
+| MSI (Windows) | yes — the install dir is added to system PATH |
+| `scripts/install.sh` / `install.ps1` | yes — copied next to `aware` in the install dir |
+| npm / pnpm | **no** — it lives in the package-private `binaries/` directory and only `aware` gets a global shim |
+| built from source | only if you copy it out of `target/release/` yourself |
+
+If the bare command is not found, dispatch the agent through an app instead of invoking
+the binary by hand — that path always resolves.
 
 ## Source
 

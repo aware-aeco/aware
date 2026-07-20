@@ -103,10 +103,24 @@ cp "$src_dir/aware${ext}" "$INSTALL_DIR/"
 cp "$src_dir/aware-sidecar${ext}" "$INSTALL_DIR/"
 chmod +x "$INSTALL_DIR/aware${ext}" "$INSTALL_DIR/aware-sidecar${ext}"
 
+# Agent transport binaries bundled in the archive. They must land NEXT TO `aware`:
+# that is where the CLI looks for a bundled transport before falling back to PATH.
+# Copied in a loop that tolerates absence so this script still works against an
+# older archive that predates them.
+for transport in aware-steel-detailer-us aware-steel-detailer-uk aware-steel-detailer-eu; do
+  if [ -f "$src_dir/${transport}${ext}" ]; then
+    cp "$src_dir/${transport}${ext}" "$INSTALL_DIR/"
+    chmod +x "$INSTALL_DIR/${transport}${ext}"
+  fi
+done
+
 echo
 echo "Installed:"
 echo "    $INSTALL_DIR/aware${ext}"
 echo "    $INSTALL_DIR/aware-sidecar${ext}"
+for transport in aware-steel-detailer-us aware-steel-detailer-uk aware-steel-detailer-eu; do
+  [ -f "$INSTALL_DIR/${transport}${ext}" ] && echo "    $INSTALL_DIR/${transport}${ext}"
+done
 echo
 if ! echo ":$PATH:" | grep -q ":${INSTALL_DIR}:"; then
   echo "Warning: ${INSTALL_DIR} is not on your PATH."

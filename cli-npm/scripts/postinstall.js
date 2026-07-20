@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const { execFileSync } = require('child_process');
-const { requiredFiles } = require('./payload');
+const { requiredFiles, TRANSPORTS } = require('./payload');
 
 const PKG_VERSION = require('../package.json').version;
 const REPO = 'aware-aeco/aware';
@@ -132,6 +132,12 @@ function download(srcUrl, dest, depth = 0) {
     if (process.platform !== 'win32') {
       fs.chmodSync(path.join(binariesDir, `aware${target.ext}`), 0o755);
       fs.chmodSync(path.join(binariesDir, `aware-sidecar${target.ext}`), 0o755);
+      // Same treatment for the bundled transports: tar.gz does carry the mode, but so
+      // does it for the two above and they are still chmodded defensively. A transport
+      // that lands without +x spawns EACCES at lookup time, long after install.
+      for (const t of TRANSPORTS) {
+        fs.chmodSync(path.join(binariesDir, `${t}${target.ext}`), 0o755);
+      }
     }
 
     console.log(`[aware-npm] installed to ${binariesDir}`);
