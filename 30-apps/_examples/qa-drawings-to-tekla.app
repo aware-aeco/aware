@@ -12,6 +12,13 @@ description: |
   Realistic AECO
   QA workflow shape — software composed from a paragraph.
 
+  NOTE: this app does not pass `aware app validate` yet, and that failure is
+  accurate rather than an oversight — its `file-watch` trigger uses
+  `file.watch`, which is `status: planned` (the builtin file agent implements
+  read / write / write-csv, not watch). Everything else validates, including
+  the Tekla write's safety contract. It starts working the day `file.watch`
+  ships; nothing in this file needs to change for that.
+
 exposes-as-agent: false      # internal pipeline, not meant to be wrapped
 
 requires:
@@ -95,6 +102,14 @@ nodes:
       type:     "{{ match-build.connection-type }}"
       position: "{{ match-build.world-position }}"
       beams:    "{{ match-build.beams }}"
+    # Mutates the live Tekla model, so the safety contract applies (app-spec §
+    # Safety contract). `insert` is write-mode both by its manifest entry and by
+    # the `*.insert` naming convention.
+    safety:
+      transaction-group: qa-connection-insert   # rollback boundary for this pipeline
+      snapshot: true                            # save the model before touching it
+      audit-stamp:
+        uda-prefix: AWARE_                      # stamp inserted objects with run id / app / operator
 
   - id: slack-notify
     agent: slack
