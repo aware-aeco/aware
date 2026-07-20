@@ -12,6 +12,31 @@ description: |
   Realistic AECO
   QA workflow shape — software composed from a paragraph.
 
+  NOT RUNNABLE — this is a shape demo, not a working pipeline. It shows the
+  DAG topology (fan-in, fan-out) and where the safety contracts on its two external writes belong;
+  several of its nodes have no implementation behind them yet:
+
+    - `file.watch`      — declared but `status: planned` (the builtin file
+                          agent implements read / write / write-csv, no watch)
+    - `excel`           — no agent manifest in the registry at all
+    - `think-node`      — no agent manifest in the registry at all
+    - `tekla.insert`    — declared in the manifest, but not dispatched by the
+                          cli-tekla bridge
+    - `./schemas/connection.json` — referenced by `pdf-extract`, not present
+                          under `_examples/`
+    - `aware-slack`     — the slack agent's `transport.cli.binary`, which is
+                          not shipped, bundled, or installable as a sidecar
+    - slack write modes — no slack command declares `mode:`, so its writes
+                          classify as READ and would execute under `--dry-run`
+    - safety enforcement — `safety:` blocks are validated and recorded, but the
+                          runtime does not pass them to the transport, so no
+                          snapshot or audit stamp is actually performed
+
+  `aware app validate` reports only the `file.watch` error, which understates
+  this: it skips unresolved agents and unknown commands entirely, so a clean
+  (or nearly clean) validate does NOT mean an app will run. Treat the list
+  above as the real prerequisite set.
+
 exposes-as-agent: false      # internal pipeline, not meant to be wrapped
 
 requires:
@@ -95,10 +120,26 @@ nodes:
       type:     "{{ match-build.connection-type }}"
       position: "{{ match-build.world-position }}"
       beams:    "{{ match-build.beams }}"
+    # Mutates the live Tekla model, so the safety contract applies (app-spec §
+    # Safety contract). This node IS classified write — but by the legacy exact-name
+    # exception `name == "insert"` in manifest::agent::mode_of, not by a manifest
+    # `mode:` (it has none) and not by the `.insert` suffix rule (the bare name has no
+    # dot). Remove that exception and this gate silently disappears.
+    #
+    # DECLARED, NOT ENFORCED: the runtime does not pass `safety` to the transport —
+    # orchestrator calls invoke_single(agent, command, args), and the block is
+    # serialized only into the dry-run `would-write` event, the lock, and validation.
+    # So no snapshot is taken and no UDA stamp is written today. It is authored
+    # correctly so it starts working when the runtime wires it through.
+    safety:
+      transaction-group: qa-connection-insert   # rollback boundary for this pipeline
+      snapshot: true                            # intent: save the model before writing
+      audit-stamp:
+        uda-prefix: AWARE_                      # intent: stamp run id / app / operator
 
   - id: slack-notify
     agent: slack
-    command: post-message
+    command: chat-post-message
     row: 3
     col: 4
     config:
@@ -106,6 +147,25 @@ nodes:
       text:    |
         ✓ Connection {{ match-build.connection-type }} created on {{ match-build.drawing-mark }}.
         Deviation: {{ match-build.deviation-percent }}%.
+    # Posting to Slack is an OAuth-protected external write, so the safety contract
+    # applies (app-spec § Safety contract). Declared as correct authoring intent — but
+    # INERT today, and deliberately not presented as protection: the slack manifest
+    # declares no `mode:` on any command, and `chat-post-message` matches none of the
+    # write suffixes mode_of actually infers from (.create .update .delete .bump .stamp
+    # .reload-all .bulk-write .insert .save .publish .export-pdfs .export — note there
+    # is no `.post`). So the runtime classifies this node READ and a `--dry-run` would
+    # really post to #fab-team instead of emitting `would-write`. A node-level
+    # `mode: write` cannot fix that from here — it is rejected as
+    # E_APP_NODE_MODE_NOT_OVERRIDABLE. The fix belongs in the slack agent.
+    #
+    # Its own transaction group, NOT the Tekla one: a sent message cannot be recalled,
+    # so folding it into `qa-connection-insert` would promise a rollback boundary that
+    # cannot hold — rolling back would restore the model and leave #fab-team with a
+    # false "created" notice. An irreversible notification either sits in its own group
+    # or needs a compensating delete.
+    safety:
+      transaction-group: qa-fab-notify          # separate: a post cannot be rolled back
+      snapshot: false                           # nothing to snapshot; no undo exists
 
 connections:
   # Trigger → preprocess
