@@ -52,15 +52,63 @@ const TEMPLATE: &str = r##"<!doctype html>
   th,td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--border)} th{color:var(--muted);font-weight:600}
   td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   .swatch{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:7px;vertical-align:middle}
-  #legend{bottom:16px;left:16px;padding:12px 14px;font-size:12.5px} #legend .row{display:flex;align-items:center;gap:8px;margin:2px 0}
+  /* Clips + legend share ONE bounded bottom-left column. Two independently positioned panels, each
+     with its own calc() height cap, drift into each other on a short viewport — flexbox owns the
+     budget instead, and the 220px reserve simply moved here from #legend.objects. */
+  #bottomLeft{position:absolute;left:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;max-height:calc(100% - 220px)}
+  #bottomLeft>.panel{position:relative}
+  /* The LEGACY flat legend (a scene with no descriptor) never had a height cap of its own — only
+     #legend.objects did — so as a flex child it would run past the column. Give it the same bounded,
+     themed scroll rather than letting it grow. */
+  #bottomLeft>#legend:not(.objects){min-height:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border-2) transparent}
+  #bottomLeft>#legend:not(.objects)::-webkit-scrollbar{width:9px}
+  #bottomLeft>#legend:not(.objects)::-webkit-scrollbar-track{background:transparent}
+  #bottomLeft>#legend:not(.objects)::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:5px;border:2px solid transparent;background-clip:content-box}
+  #legend{padding:12px 14px;font-size:12.5px} #legend .row{display:flex;align-items:center;gap:8px;margin:2px 0}
   #legend .legend-hint{color:var(--muted);font-size:11px;margin:0 0 6px}
   #legend .row{cursor:pointer;user-select:none;border-radius:5px;padding:2px 5px} #legend .row:hover{background:rgba(51,65,85,.5)}
   #legend .row.off{opacity:.4} #legend .row.off .swatch{filter:grayscale(1)}
   /* ---- objects panel (scene.legend) ---- bounded and scrollable; the old list ran the full page
      height on a real model (~35 rows). Header (mode toggle, search, Show all, hint) is FIXED and
      only .obody scrolls, so the search box never scrolls away from the rows it filters. */
-  #legend.objects{width:248px;max-height:calc(100% - 220px);display:flex;flex-direction:column;padding:10px}
+  /* min-height:0 at EVERY level of the flex chain — a flex item defaults to min-height:auto and
+     refuses to shrink below its content, so without it the first long list pushes the whole column
+     past the wrapper's cap no matter what the max-height says. The legend keeps a protected floor
+     and the clip list does not: the legend is the primary way around the model, while a handful of
+     section cuts can degrade to their own scroll first. */
+  #legend.objects{width:248px;display:flex;flex-direction:column;padding:10px;flex:1 1 auto;min-height:140px}
   #legend.objects .obody{overflow-y:auto;overflow-x:hidden;min-height:0;margin:-2px -4px 0;padding:2px 4px 0}
+  /* ---- clip list ---- same row family as the objects panel, so the two read as one system.
+     Hidden outright when there are no clips (the `no-side` precedent: no content ⇒ no panel), which
+     also means it contributes nothing to the flex column and the legend reclaims the space. */
+  #clips{width:248px;padding:10px;font-size:12.5px;display:none;flex-direction:column;flex:0 1 auto;min-height:0;max-height:180px}
+  #clips.show{display:flex}
+  #clips .csec{color:#475569;font-size:10px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px;flex:none}
+  #clips .chint{color:var(--muted);font-size:10px;margin:4px 0 0;flex:none}
+  #clips .cbody{overflow-y:auto;overflow-x:hidden;min-height:0;margin:0 -4px;padding:0 4px}
+  #clips .cbody{scrollbar-width:thin;scrollbar-color:var(--border-2) transparent}
+  #clips .cbody::-webkit-scrollbar{width:9px}
+  #clips .cbody::-webkit-scrollbar-track{background:transparent}
+  #clips .cbody::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:5px;border:2px solid transparent;background-clip:content-box}
+  #clips .cbody::-webkit-scrollbar-thumb:hover{background:#475569;background-clip:content-box}
+  #clips .crow{display:flex;align-items:center;gap:4px;border-radius:5px;padding:1px 2px}
+  #clips .crow:hover{background:rgba(51,65,85,.5)}
+  #clips .crow.sel{box-shadow:inset 2px 0 0 var(--accent)}
+  #clips .crow button{background:transparent;border:1px solid transparent;border-radius:5px;color:var(--text);font:12px system-ui;font-family:inherit;cursor:pointer;padding:0}
+  #clips .crow button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+  #clips .cvis{width:24px;height:24px;flex:none;display:flex;align-items:center;justify-content:center}
+  #clips .cswatch{width:11px;height:11px;border-radius:2px;background:var(--sw,#94a3b8);box-shadow:inset 0 0 0 1.6px var(--sw,#94a3b8)}
+  #clips .cvis[aria-checked=false] .cswatch{background:transparent}
+  #clips .cpick{flex:1;min-width:0;text-align:left;padding:3px 2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* Revealed on hover/focus like the objects panel's isolate control. Neither is the ONLY route to
+     its action — Del deletes the selection from anywhere, F2 renames the focused row — so this stays
+     discoverability, not a keyboard trap. */
+  #clips .cren,#clips .cdel{width:24px;height:24px;flex:none;color:var(--muted);opacity:0}
+  #clips .crow:hover .cren,#clips .crow:hover .cdel,#clips .cren:focus-visible,#clips .cdel:focus-visible{opacity:1}
+  #clips .cdel:hover{background:rgba(127,29,29,.55);color:var(--text)}
+  #clips .cedit{flex:1;min-width:0;background:rgba(2,8,23,.6);border:1px solid var(--accent);border-radius:5px;color:var(--text);font:12px system-ui;font-family:inherit;padding:2px 4px;outline:none}
+  #clips .cedit[aria-invalid=true]{border-color:#7f1d1d}
+  #clips .cerr{color:var(--text);background:rgba(127,29,29,.55);border-radius:5px;font-size:11px;margin:2px 0 4px;padding:3px 6px}
   /* Theme the scroll container — a native light scrollbar on a dark panel is exactly the leak the
      house rule calls out. Firefox gets the standard properties, WebKit the pseudo-elements. */
   #legend.objects .obody{scrollbar-width:thin;scrollbar-color:var(--border-2) transparent}
@@ -203,7 +251,7 @@ const TEMPLATE: &str = r##"<!doctype html>
   </div>
 </div>
 <div id="side" class="panel"><h2 id="sideTitle">—</h2><p class="note" id="sideNote"></p><div id="panels"></div></div>
-<div id="legend" class="panel"></div>
+<div id="bottomLeft"><div id="clips" class="panel"></div><div id="legend" class="panel"></div></div>
 <div id="readout" class="panel">Left-drag box-select · right-drag orbit · middle-drag pan · scroll zoom · <b>click an element</b> · Home fits · Alt+Z zooms selection</div>
 <div id="rubber"></div>
 <div id="viewcube" data-tip="Click a face for that view · right-drag to orbit"></div>
@@ -1513,8 +1561,91 @@ function clipHandlesScreen(){ const out=[]; if(!clipGizmo) return out;
       axis:ud.face?ud.face.axis:null, sign:ud.face?ud.face.sign:0,
       x:(v.x*0.5+0.5)*innerWidth, y:(-v.y*0.5+0.5)*innerHeight, behind:v.z>1 }); }
   return out; }
-// Filled in by the clip-list unit; declared here so every clip mutation can call it.
-function refreshClipList(){}
+// ---- the clip list ----------------------------------------------------------------------------
+// Swatch = enable/disable (filled cutting, hollow off — the objects panel's own convention), label =
+// select, ✎ = rename, × = delete. Selection and enabling sit on DIFFERENT visual channels (row-edge
+// bar vs swatch fill) so a disabled-and-selected clip reads unambiguously as both.
+const clipsPanel=document.getElementById('clips');
+let clipAnchor=null;       // Shift-range anchor
+let clipEditingId=null;    // the row currently in inline rename
+function clipSelectFromRow(id,e){
+  const ids=clips.map(c=>c.id), cur=new Set(selectedClipIds);
+  let next;
+  if(e.shiftKey&&clipAnchor!=null&&ids.includes(clipAnchor)&&ids.includes(id)){
+    const i0=ids.indexOf(clipAnchor), i1=ids.indexOf(id);
+    next=ids.slice(Math.min(i0,i1),Math.max(i0,i1)+1);
+  } else if(e.ctrlKey||e.metaKey){
+    next=new Set(cur); next.has(id)?next.delete(id):next.add(id); next=[...next]; clipAnchor=id;
+  } else {
+    // A plain click on the only selected clip CLEARS it — the one modifier-free way to dismiss the
+    // handles without deleting anything.
+    next=(cur.size===1&&cur.has(id))?[]:[id]; clipAnchor=id;
+  }
+  setSelectedClips(next);
+}
+function startClipRename(id){
+  clipEditingId=id; refreshClipList();
+  const inp=clipsPanel.querySelector('.cedit'); if(inp){ inp.focus(); inp.select(); }
+}
+// Invalid input keeps the row in edit mode rather than reverting: the message stays on screen next
+// to the field the user is still holding. A FRESH alert node per attempt — re-using one and only
+// changing its text does not reliably re-announce when the same message repeats.
+function showClipRenameError(row,inp,msg){
+  const old=clipsPanel.querySelector('.cerr'); if(old) old.remove();
+  const err=el('div','cerr',msg); err.id='clipErr'; err.setAttribute('role','alert');
+  inp.setAttribute('aria-invalid','true'); inp.setAttribute('aria-describedby',err.id);
+  row.after(err); inp.focus();
+}
+function refreshClipList(){
+  if(!clipsPanel) return;
+  clipsPanel.classList.toggle('show',clips.length>0);
+  if(!clips.length){ clipsPanel.replaceChildren(); clipEditingId=null; return; }
+  const head=el('div','csec','Clips');
+  const body=el('div','cbody');
+  for(const c of clips){
+    const row=el('div','crow'+(selectedClipIds.has(c.id)?' sel':''));
+    const kind=c.kind==='plane'?'Plane clip':'Box clip';
+    const box=el('button','cvis'); box.type='button';
+    box.setAttribute('role','checkbox'); box.setAttribute('aria-checked',c.enabled?'true':'false');
+    box.setAttribute('aria-label','Enable or disable — '+c.label);
+    box.setAttribute('data-tip','Turn cutting on/off (keeps the clip)');
+    const sw=el('span','cswatch'); sw.style.setProperty('--sw',c.kind==='plane'?'#3b82f6':'#93c5fd');
+    box.append(sw);
+    box.addEventListener('click',ev=>{ ev.stopPropagation(); toggleClip(c.id); });
+    if(clipEditingId===c.id){
+      const inp=document.createElement('input'); inp.className='cedit'; inp.type='text'; inp.value=c.label;
+      inp.setAttribute('aria-label','Rename '+c.label);
+      const commit=()=>{ const nm=inp.value.trim();
+        if(nm===c.label){ clipEditingId=null; refreshClipList(); return; }
+        if(!nm){ showClipRenameError(row,inp,'A clip name cannot be blank.'); return; }
+        if(!renameClip(c.id,nm)){ showClipRenameError(row,inp,'Another clip is already named “'+nm+'”.'); return; }
+        clipEditingId=null; refreshClipList(); };
+      const cancel=()=>{ clipEditingId=null; refreshClipList(); };
+      inp.addEventListener('keydown',ev=>{ ev.stopPropagation();
+        if(ev.key==='Enter'){ ev.preventDefault(); commit(); }
+        else if(ev.key==='Escape'){ ev.preventDefault(); cancel(); } });
+      inp.addEventListener('blur',()=>{ if(clipEditingId===c.id) cancel(); });   // focus left → treat as cancel, never keep an invalid draft alive
+      row.append(box,inp);
+    } else {
+      const pick=el('button','cpick',c.label); pick.type='button';
+      // Kind is carried in text as well as colour — after a rename the default "Plane 1" label is
+      // gone and colour would be the only channel left.
+      pick.setAttribute('data-tip',kind+' — select · Shift/Ctrl multi-select · click again to clear · F2 renames');
+      pick.setAttribute('aria-pressed',selectedClipIds.has(c.id)?'true':'false');
+      pick.addEventListener('click',ev=>{ ev.stopPropagation(); clipSelectFromRow(c.id,ev); });
+      pick.addEventListener('keydown',ev=>{ if(ev.key==='F2'){ ev.preventDefault(); ev.stopPropagation(); startClipRename(c.id); } });
+      const ren=el('button','cren','✎'); ren.type='button';
+      ren.setAttribute('aria-label','Rename — '+c.label); ren.setAttribute('data-tip','Rename (F2)');
+      ren.addEventListener('click',ev=>{ ev.stopPropagation(); startClipRename(c.id); });
+      const del=el('button','cdel','×'); del.type='button';
+      del.setAttribute('aria-label','Delete — '+c.label); del.setAttribute('data-tip','Delete this clip');
+      del.addEventListener('click',ev=>{ ev.stopPropagation(); removeClip(c.id); });
+      row.append(box,pick,ren,del);
+    }
+    body.append(row);
+  }
+  clipsPanel.replaceChildren(head,body,el('div','chint','Box shows / hides · F2 renames · Del removes the selected'));
+}
 // Arm/disarm the face-pick: 'plane' → next left-click on a face drops a plane; null → back to selecting.
 function setClipPrompt(){ readout.replaceChildren(el('b',null,'Click a face'), document.createTextNode(' to cut the view there · Esc to cancel')); }
 function setClipMode(m){ clipMode=m==='plane'?'plane':null;
@@ -4516,6 +4647,90 @@ mod tests {
         assert!(
             html.contains("if((e.key==='Delete'||e.key==='Backspace') && selectedClipIds.size){ deleteSelectedClips(); e.preventDefault(); return; }"),
             "Del removes selected clips, and only when clips are selected"
+        );
+    }
+
+    #[test]
+    fn clip_list_is_keyboard_reachable_and_themed() {
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+
+        // Two absolutely-positioned panels with their own calc() caps drift into each other on a
+        // short viewport; one flex column owns the budget instead.
+        assert!(
+            html.contains(r#"<div id="bottomLeft"><div id="clips" class="panel"></div><div id="legend" class="panel"></div></div>"#),
+            "clips and legend share one bottom-left column"
+        );
+        assert!(
+            html.contains("#bottomLeft{position:absolute;left:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;max-height:calc(100% - 220px)}"),
+            "the 220px reserve moved to the wrapper"
+        );
+        // A flex item defaults to min-height:auto and refuses to shrink below its content, so
+        // without this at every level the first long list overflows the column regardless.
+        assert!(
+            html.contains("#clips .cbody{overflow-y:auto;overflow-x:hidden;min-height:0;margin:0 -4px;padding:0 4px}")
+                && html.contains("flex:1 1 auto;min-height:140px}"),
+            "both bodies shrink, and the legend keeps a protected floor"
+        );
+        // The legacy flat legend never had a cap of its own — as a flex child it would run past the
+        // column.
+        assert!(
+            html.contains("#bottomLeft>#legend:not(.objects){min-height:0;overflow-y:auto;"),
+            "the non-descriptor legend is bounded too"
+        );
+        // Scroll containers are themed — a native light scrollbar on a dark panel is the leak.
+        assert!(
+            html.contains("#clips .cbody::-webkit-scrollbar-thumb{background:var(--border-2);"),
+            "the clip list's scrollbar is themed"
+        );
+        // Every row control is a real button; the hover-revealed ones each have a keyboard route
+        // (Del for delete, F2 for rename), so revealing on hover is discoverability, not a trap.
+        assert!(
+            html.contains("const ren=el('button','cren','✎'); ren.type='button';")
+                && html.contains("const del=el('button','cdel','×'); del.type='button';"),
+            "rename and delete are real buttons"
+        );
+        assert!(
+            html.contains("if(ev.key==='F2'){ ev.preventDefault(); ev.stopPropagation(); startClipRename(c.id); }"),
+            "F2 renames without needing the hover-revealed pencil"
+        );
+        assert!(
+            html.contains("box.setAttribute('role','checkbox'); box.setAttribute('aria-checked',c.enabled?'true':'false');")
+                && html.contains("pick.setAttribute('aria-pressed',selectedClipIds.has(c.id)?'true':'false');"),
+            "enable state and selection state are both exposed"
+        );
+        assert!(
+            html.contains("box.setAttribute('aria-label','Enable or disable — '+c.label);"),
+            "icon-only controls carry an accessible name"
+        );
+        // Colour alone must not carry plane-vs-box once a clip is renamed off its default label.
+        assert!(
+            html.contains("pick.setAttribute('data-tip',kind+' — select"),
+            "the clip kind is available as text, not only as a swatch colour"
+        );
+        // Invalid rename keeps the row in edit mode, and each attempt inserts a FRESH alert node —
+        // re-using one and only changing its text does not reliably re-announce a repeated message.
+        assert!(
+            html.contains("const err=el('div','cerr',msg); err.id='clipErr'; err.setAttribute('role','alert');"),
+            "a rename error is announced"
+        );
+        assert!(
+            html.contains("inp.setAttribute('aria-invalid','true'); inp.setAttribute('aria-describedby',err.id);"),
+            "the invalid field points at its message"
+        );
+        // A plain click on the only selected clip clears it — the sole modifier-free way to dismiss
+        // the handles.
+        assert!(
+            html.contains("next=(cur.size===1&&cur.has(id))?[]:[id]; clipAnchor=id;"),
+            "plain click toggles off an already-solely-selected clip"
+        );
+        assert!(
+            !html.contains(r#"title=""#),
+            "tooltips are data-tip; native title= renders the light OS tooltip"
         );
     }
 
