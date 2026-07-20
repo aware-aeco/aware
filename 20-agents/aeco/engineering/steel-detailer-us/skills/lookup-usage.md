@@ -80,10 +80,18 @@ rolled-in fillets (none of them appear on HSS or pipe):
 | `T_in` | clear web depth between flange fillets — the room a connection actually gets | W/M/S/HP/C/MC |
 | `k1_in` | web centreline to flange-fillet toe — flange bolt clearance | rolled I-shapes |
 | `WGi_in` / `WGo_in` | inner / outer workable flange gage | `WGo` only on wide flanges |
+| `ddet_in` `bfdet_in` `twdet_in` `tfdet_in` | d / bf / tw / tf rounded to the nearest 1/16" for shop drawings | rolled shapes |
+
+The `*det` keys **pair with** the decimal design values, they do not replace them —
+W16X26 carries both `flange_in` 0.345 and `tfdet_in` 0.375 for the same flange. The rule
+is the same one that separates `kdes` from `kdet`:
+
+> **decimal for the calculation, detailing value for the layout.**
 
 **`kdes` and `kdet` are not interchangeable** — a bare "k" on a drawing means the
-detailing k. Using `kdes` to lay out a cope under-cuts it. Pick the key by what the
-answer is for, and say which one was used when citing a number.
+detailing k. Using `kdes` to lay out a cope under-cuts it. Likewise a strength check run
+on `tfdet_in` overstates the flange by 1/32" on a W16X26. Pick the key by what the answer
+is for, and say which one was used when citing a number.
 
 `T_in` is a **tabulated** AISC value, not `d − 2k` — do not recompute it, and do not
 derive one of these from another; if the key you need is absent for that shape, refuse.
@@ -96,7 +104,8 @@ derive one of these from another; if the key you need is absent for that shape, 
 - `materials` — preferred ASTM grades and Fy/Fu by member type
 - `sections` — section properties (weight/ft, depth, width, area, thicknesses, the
   strength/stiffness set I, S, Z, r about both axes plus J/Cw/C, and the detailing
-  dimensions T, kdes/kdet, k1 and the workable gages) for every
+  dimensions T, kdes/kdet, k1, the workable gages and the rounded ddet/bfdet/twdet/tfdet)
+  for every
   AISC shape, from the AISC Shapes Database (W, M, S, HP, C, MC, L, 2L, WT/MT/ST, HSS,
   Pipe). `lookup --rule section.<label>` or `--category sections`.
 

@@ -39,6 +39,13 @@ SECTION_PROPS = [
     # clearance, `WGi`/`WGo` the inner/outer workable flange gages.
     ("T", "T_in"), ("kdes", "kdes_in"), ("kdet", "kdet_in"), ("k1", "k1_in"),
     ("WGi", "WGi_in"), ("WGo", "WGo_in"),
+
+    # Detailing counterparts of d / bf / tw / tf — the same dimensions rounded to the
+    # nearest 1/16" for shop drawings. They travel with the decimal design values rather
+    # than replacing them: `tf` 0.345 and `tfdet` 0.375 are the same flange, one for a
+    # strength calc and one for a layout. Rolled shapes only.
+    ("ddet", "ddet_in"), ("bfdet", "bfdet_in"),
+    ("twdet", "twdet_in"), ("tfdet", "tfdet_in"),
 ]
 
 
@@ -165,7 +172,10 @@ def main():
                            "Ix_in4": 301, "Sx_in3": 38.4, "Zx_in3": 44.2,
                            "Iy_in4": 9.59, "ry_in": 1.12, "Cw_in6": 565,
                            "T_in": 13.625, "kdes_in": 0.747, "kdet_in": 1.0625,
-                           "k1_in": 0.75, "WGi_in": 3.5},
+                           "k1_in": 0.75, "WGi_in": 3.5,
+                           # detailing dims round the decimals above: tf 0.345 -> 3/8
+                           "ddet_in": 15.75, "bfdet_in": 5.5,
+                           "twdet_in": 0.25, "tfdet_in": 0.375},
         "section.HSS6X6X3/8": {"weight_plf": 27.48, "depth_in": 6.0, "area_in2": 7.58,
                                "Ix_in4": 39.5, "Zx_in3": 15.8, "J_in4": 64.6,
                                "C_in3": 22.1},
@@ -187,8 +197,9 @@ def main():
     # Keys that must be ABSENT for a family — a closed section has no warping constant
     # and no rolled-in fillet, so a k / T / gage on an HSS means the columns have drifted.
     for sid, absent in {
-        "section.HSS6X6X3/8": ["Cw_in6", "kdes_in", "kdet_in", "T_in", "WGi_in"],
-        "section.L4X4X1/4": ["C_in3", "T_in"],
+        "section.HSS6X6X3/8": ["Cw_in6", "kdes_in", "kdet_in", "T_in", "WGi_in",
+                               "ddet_in", "twdet_in"],
+        "section.L4X4X1/4": ["C_in3", "T_in", "ddet_in", "tfdet_in"],
     }.items():
         for k in absent:
             if k in by_id[sid]:
