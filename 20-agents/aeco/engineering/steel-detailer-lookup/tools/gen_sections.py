@@ -46,6 +46,28 @@ SECTION_PROPS = [
     # strength calc and one for a layout. Rolled shapes only.
     ("ddet", "ddet_in"), ("bfdet", "bfdet_in"),
     ("twdet", "twdet_in"), ("tfdet", "tfdet_in"),
+
+    # Centroid / shear-centre / plastic-axis locations. `x` and `y` are the centroid
+    # measured from the reference face (angle heel, channel web back, tee flange face) —
+    # what a member is actually located and gaged from. `eo` is the shear-centre offset
+    # (channels only): load applied off it twists the member. `xp`/`yp` locate the
+    # plastic neutral axis.
+    ("x", "x_in"), ("y", "y_in"), ("eo", "eo_in"),
+    ("xp", "xp_in"), ("yp", "yp_in"),
+
+    # Principal-axis angle for single angles — dimensionless, and the orientation the
+    # already-served Iz/Sz/rz are measured about, so those are unusable without it.
+    ("tan(a)", "tan_alpha"),
+
+    # Distance between flange centroids.
+    ("ho", "ho_in"),
+
+    # Surface perimeters, for paint / galvanizing / fireproofing quantity. Relationships
+    # verified against the data below: PB is the full shape perimeter, PD the box
+    # perimeter 2(d+bf), and PA/PC are those minus one flange face (3-sided contour and
+    # box fireproofing). PA2 is the single-angle variant.
+    ("PA", "PA_in"), ("PA2", "PA2_in"), ("PB", "PB_in"),
+    ("PC", "PC_in"), ("PD", "PD_in"),
 ]
 
 
@@ -123,6 +145,22 @@ def main():
         strength = {k: v for col, k in SECTION_PROPS if (v := num(r.get(col))) is not None}
         props.update(strength)
 
+        # Family-dependent columns, renamed by meaning rather than served under one
+        # ambiguous key. `h`/`b` are the HSS flat dimensions (Ht-3t, B-3t) — the flat
+        # a connection actually lands on — but `b` on an angle is the second leg, a
+        # different quantity entirely. `t` is the angle leg thickness, which no other
+        # key carries for L/2L; it is NOT named `t_in`, because a key differing from
+        # `T_in` (clear web depth) only by case is a misread waiting to happen.
+        if typ == "HSS":
+            family = [("h", "flat_h_in"), ("b", "flat_b_in")]
+        elif typ in ("L", "2L"):
+            family = [("b", "leg2_in"), ("t", "angle_t_in")]
+        elif typ == "PIPE":
+            family = [("ID", "ID_in")]
+        else:
+            family = []
+        props.update({k: v for col, k in family if (v := num(r.get(col))) is not None})
+
         # `d` means different things by family: leg for an angle, OD for a round shape,
         # depth otherwise. Label the human-readable string honestly (properties are typed).
         is_round = typ in ("HSS", "PIPE") and num(r.get("OD")) is not None
@@ -141,7 +179,7 @@ def main():
                 ("Ht", num(r.get("Ht"))), ("OD", num(r.get("OD"))),
                 ("bf", num(r.get("bf"))), ("B", num(r.get("B"))),
                 ("tw", tw), ("tf", tf), ("tdes", num(r.get("tdes"))),
-            ] + [(col, num(r.get(col))) for col, _ in SECTION_PROPS]
+            ] + [(col, num(r.get(col))) for col, _ in SECTION_PROPS + family]
             if v is not None)
 
         rules.append({
@@ -155,6 +193,31 @@ def main():
             "source_quote": f"{label}: {quote}",
             "found": True,
         })
+
+    # Surface-perimeter identities, checked on every W-shape. The AISC CSV ships no data
+    # dictionary, so these relationships are what pin down which column is which: PB is
+    # the full perimeter, PA = PB - bf (one flange face off, contour fireproofing), PD is
+    # the box perimeter 2(d+bf), PC = PD - bf. If the P-block ever shifts, this fails
+    # loudly instead of mislabelling paint areas.
+    perim_checked = 0
+    for p in (r["properties"] for r in rules if r["properties"]["type"] == "W"):
+        d, bf = p["depth_in"], p["width_in"]
+        for label, got, want in (
+            ("PA = PB - bf", p["PA_in"], p["PB_in"] - bf),
+            ("PD = 2(d+bf)", p["PD_in"], 2 * (d + bf)),
+            ("PC = PD - bf", p["PC_in"], p["PD_in"] - bf),
+        ):
+            # 1.5% relative. Measured worst case across all 283 W-shapes is 0.51%
+            # (W44X230) — AISC tabulates these to 3 significant figures and appears to
+            # take the box perimeter off the detailing dimensions, not decimal d/bf. A
+            # genuinely mislabelled column would be out by tens of percent, so this sits
+            # well clear of the noise and still catches a shift.
+            if abs(got - want) > max(0.015 * abs(want), 0.25):
+                raise SystemExit(
+                    f"ABORT: perimeter identity {label} fails ({got} vs {want:.3f}) — "
+                    f"the PA/PB/PC/PD columns are not what they are labelled.")
+        perim_checked += 1
+    print(f"perimeter identities: {perim_checked} W-shapes ok")
 
     if defin_bad:
         raise SystemExit(
@@ -175,13 +238,21 @@ def main():
                            "k1_in": 0.75, "WGi_in": 3.5,
                            # detailing dims round the decimals above: tf 0.345 -> 3/8
                            "ddet_in": 15.75, "bfdet_in": 5.5,
-                           "twdet_in": 0.25, "tfdet_in": 0.375},
+                           "twdet_in": 0.25, "tfdet_in": 0.375,
+                           "ho_in": 15.4, "PA_in": 46.7, "PB_in": 52.2,
+                           "PC_in": 36.9, "PD_in": 42.4},
+        "section.C12X25": {"weight_plf": 25.0, "x_in": 0.674, "eo_in": 0.746,
+                           "xp_in": 0.306, "T_in": 9.75},
         "section.HSS6X6X3/8": {"weight_plf": 27.48, "depth_in": 6.0, "area_in2": 7.58,
                                "Ix_in4": 39.5, "Zx_in3": 15.8, "J_in4": 64.6,
-                               "C_in3": 22.1},
+                               "C_in3": 22.1,
+                               # flats = Ht-3t / B-3t, the face a connection lands on
+                               "flat_h_in": 4.95, "flat_b_in": 4.95},
         "section.L4X4X1/4": {"weight_plf": 6.6, "depth_in": 4.0, "area_in2": 1.93,
                              "Ix_in4": 3.0, "Iz_in4": 1.19, "rz_in": 0.783,
-                             "kdes_in": 0.625, "kdet_in": 0.625},
+                             "kdes_in": 0.625, "kdet_in": 0.625,
+                             "x_in": 1.08, "y_in": 1.08, "tan_alpha": 1.0,
+                             "angle_t_in": 0.25, "leg2_in": 4.0, "PA2_in": 12.0},
     }.items():
         p = by_id.get(sid)
         if not p:

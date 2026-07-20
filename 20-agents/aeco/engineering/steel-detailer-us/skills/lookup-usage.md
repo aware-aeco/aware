@@ -81,6 +81,17 @@ rolled-in fillets (none of them appear on HSS or pipe):
 | `k1_in` | web centreline to flange-fillet toe — flange bolt clearance | rolled I-shapes |
 | `WGi_in` / `WGo_in` | inner / outer workable flange gage | `WGo` only on wide flanges |
 | `ddet_in` `bfdet_in` `twdet_in` `tfdet_in` | d / bf / tw / tf rounded to the nearest 1/16" for shop drawings | rolled shapes |
+| `x_in` / `y_in` | centroid from the reference face — angle heel, channel web back, tee flange face | L/2L/C/MC, tees |
+| `eo_in` | shear-centre offset; load applied off it twists the member | C/MC only |
+| `xp_in` / `yp_in` | plastic neutral axis location | as `x`/`y` |
+| `tan_alpha` | tangent of the principal-axis angle — **dimensionless**; the orientation `Iz`/`Sz`/`rz` are measured about | single angles |
+| `ho_in` | distance between flange centroids | W/M/S/HP/C/MC |
+| `flat_h_in` / `flat_b_in` | HSS flat depth / width (`Ht−3t`, `B−3t`) — the flat a connection actually lands on | HSS |
+| `leg2_in` / `angle_t_in` | second leg length / leg thickness | L, 2L |
+| `ID_in` | pipe inside diameter | Pipe |
+| `PB_in` / `PD_in` | full shape perimeter / box perimeter `2(d+bf)` | see below |
+| `PA_in` / `PC_in` | the same two minus one flange face (3-sided contour and box fireproofing) | see below |
+| `PA2_in` | single-angle variant of `PA` | L only |
 
 The `*det` keys **pair with** the decimal design values, they do not replace them —
 W16X26 carries both `flange_in` 0.345 and `tfdet_in` 0.375 for the same flange. The rule
@@ -96,6 +107,16 @@ is for, and say which one was used when citing a number.
 `T_in` is a **tabulated** AISC value, not `d − 2k` — do not recompute it, and do not
 derive one of these from another; if the key you need is absent for that shape, refuse.
 
+The **surface perimeters** are for paint / galvanizing / fireproofing quantity, in inches
+of perimeter (multiply by length for area). Pick by how the member is actually coated:
+`PB` all four sides, `PA` three sides where a slab or deck covers the top flange, and the
+`PD`/`PC` box pair where the coating boxes the shape rather than following its contour.
+Their identities (`PA = PB − bf`, `PD = 2(d+bf)`, `PC = PD − bf`) are asserted against
+every W-shape when the table is generated, so a shifted column fails the build.
+
+`tan_alpha` is the one **dimensionless** key — it carries no `_in` suffix for that
+reason. A single angle's `Iz`/`Sz`/`rz` are meaningless without it.
+
 ## Available categories
 
 - `bolts` — spacing, edge distances, hole sizes, pretension values
@@ -104,8 +125,9 @@ derive one of these from another; if the key you need is absent for that shape, 
 - `materials` — preferred ASTM grades and Fy/Fu by member type
 - `sections` — section properties (weight/ft, depth, width, area, thicknesses, the
   strength/stiffness set I, S, Z, r about both axes plus J/Cw/C, and the detailing
-  dimensions T, kdes/kdet, k1, the workable gages and the rounded ddet/bfdet/twdet/tfdet)
-  for every
+  dimensions T, kdes/kdet, k1, the workable gages, the rounded ddet/bfdet/twdet/tfdet,
+  the centroid / shear-centre / principal-axis locations and the surface perimeters for
+  coating quantity) for every
   AISC shape, from the AISC Shapes Database (W, M, S, HP, C, MC, L, 2L, WT/MT/ST, HSS,
   Pipe). `lookup --rule section.<label>` or `--category sections`.
 

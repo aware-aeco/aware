@@ -24,8 +24,10 @@ category of the `lookup` command — `lookup --rule section.W16X26` → typed JS
 (`Ix_in4`, `Sx_in3`, `Zx_in3`, `rx_in` and the y/z counterparts, `J_in4`, `Cw_in6`,
 `C_in3`), and the detailing dimensions (`T_in`, `kdes_in`/`kdet_in`, `k1_in`,
 `WGi_in`/`WGo_in`, and `ddet_in`/`bfdet_in`/`twdet_in`/`tfdet_in` — d/bf/tw/tf rounded to
-the nearest 1/16" for shop drawings) + citation (generated from the AISC Shapes Database
-v15.0 US). Use it
+the nearest 1/16" for shop drawings), the centroid / shear-centre / principal-axis
+locations (`x_in`, `y_in`, `eo_in`, `xp_in`, `yp_in`, `tan_alpha`) and the surface
+perimeters for coating quantity (`PA_in`, `PA2_in`, `PB_in`, `PC_in`, `PD_in`)
++ citation (generated from the AISC Shapes Database v15.0 US). Use it
 for weight/depth a designation does **not** encode (HSS, angles, pipe), and for the
 section properties and detailing dimensions a check needs without hardcoding a table.
 Note `kdes` (design, decimal) and `kdet` (detailing, fractional, larger) are **different
