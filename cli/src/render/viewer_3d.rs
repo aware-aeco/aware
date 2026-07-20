@@ -1206,7 +1206,11 @@ renderer.domElement.addEventListener('pointermove', e=>{ if(!boxStart) return;
 renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!boxStart) return;
   const dx=e.clientX-boxStart.x, dy=e.clientY-boxStart.y; rubber.style.display='none';
   if(Math.hypot(dx,dy)>=DRAG_PX) setSelection(meshesInRect(boxStart.x,boxStart.y,e.clientX,e.clientY));
-  else if(clipMode==='plane') addClipPlaneAtScreen(e.clientX,e.clientY); // armed → a click drops a clip plane on the picked face; STAYS armed (crosshair + lit button + Esc/Clip to cancel) — parity with floless
+  // Armed → a click drops ONE clip plane and the command is done; a MISS keeps it armed to retry.
+  // (This used to stay armed on success under a comment claiming parity with floless. floless does
+  // `if (addClipPlaneAtScreen(...)) setClipMode(null)` — one plane per command — so the comment
+  // asserted a parity that did not exist.)
+  else if(clipMode==='plane'){ if(addClipPlaneAtScreen(e.clientX,e.clientY)) setClipMode(null); }
   else pickAt(e.clientX,e.clientY);
   boxStart=null; });
 
@@ -1214,8 +1218,14 @@ renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!boxStar
 // Sectioning lives in renderer.clippingPlanes (GLOBAL), so it clips the grid + every element like
 // Tekla and survives a re-render. A clip PLANE keeps the camera-far side (1 plane); a clip BOX and
 // the work area keep INSIDE (6 inward planes). The ViewCube has its own renderer → never clipped.
+// A clip keeps its SOURCE geometry (a plane's normal + point, a box's Box3) and DERIVES `.planes`
+// from it. Storing only the derived planes — as this did — makes a clip unmanipulable: there is
+// nothing for a drag handle to move, and a box's Box3 was thrown away the moment it was built.
+// Every mutation edits the source and re-derives; nothing ever edits `.planes` directly.
+//   { id, kind:'plane'|'box', enabled, label, n?:Vector3, point?:Vector3, box?:Box3, planes:[Plane] }
 const EMPTY_CLIPS=Object.freeze([]);
 let clips=[]; let workArea=null; let clipMode=null; let clipSeq=0;
+let selectedClipIds=new Set();   // drives the gizmo only — selection never changes what is cut
 const overlayScene=new THREE.Scene(); let workAreaHelper=null; // work-area wireframe → 2nd UNCLIPPED pass
 // three.js convention: a material is KEPT where distanceToPoint(p) = normal·p + constant >= 0 (the
 // side the normal points toward) and discarded on the negative side. So INWARD normals + these
@@ -1225,11 +1235,13 @@ function boxToPlanes(b){ return [
   new THREE.Plane(new THREE.Vector3(-1,0,0), b.max.x), new THREE.Plane(new THREE.Vector3(1,0,0), -b.min.x),
   new THREE.Plane(new THREE.Vector3(0,-1,0), b.max.y), new THREE.Plane(new THREE.Vector3(0,1,0), -b.min.y),
   new THREE.Plane(new THREE.Vector3(0,0,-1), b.max.z), new THREE.Plane(new THREE.Vector3(0,0,1), -b.min.z) ]; }
-function applyClips(){ const active=clips.flatMap(c=>c.planes);
+function applyClips(){ const active=clips.filter(c=>c.enabled).flatMap(c=>c.planes);
   // The work area sections the view too — UNLESS it is in "show whole parts" mode, where parts are
   // hidden or shown whole by applyGroupVisibility and never sliced.
   if(workArea && workArea.enabled && !workArea.whole) active.push(...workArea.planes);
   renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; syncClipMirror(); }
+// Re-derive one clip's planes from its source geometry — the ONLY writer of `.planes`.
+function rebuildClipPlanes(c){ c.planes=c.kind==='box'?boxToPlanes(c.box):[new THREE.Plane().setFromNormalAndCoplanarPoint(c.n,c.point)]; }
 // Materials keep their OWN reference to the clip planes for the shadow pass, since renderer-global
 // ones are cleared there. applyClips REPLACES the array rather than mutating it, so that reference
 // has to be re-pointed on every clip change: a stale one leaves the model visibly clipped after the
@@ -1242,19 +1254,64 @@ function syncClipMirror(){
 function meshBox(meshes){ const b=new THREE.Box3(); for(const m of meshes){ if(m.visible) b.expandByObject(m); } return b; } // real mesh bounds incl. section width (sceneBox is centreline-only)
 function selBox(pad){ let box=meshBox(selection); if(box.isEmpty()) box=meshBox(pickable); if(box.isEmpty()) return null;
   return box.expandByScalar(pad==null?Math.max(maxDim*0.04,1):pad); }
+// A point is clipped when it falls on the cut-away side of ANY active plane (global clipping is a
+// union: a fragment outside any plane is removed). THREE.Raycaster does NOT honour
+// renderer.clippingPlanes, so without this a pick lands on a face that is visually gone and drops a
+// clip plane in empty space. Filtering here is a deliberate improvement, not a port — floless's own
+// clipPlaneAtScreen takes the first raw hit.
+const _clipPt=new THREE.Vector3();
+function isPointClipped(p){ const planes=renderer&&renderer.clippingPlanes;
+  if(!planes||!planes.length||!p) return false;
+  _clipPt.copy(p);
+  for(let i=0;i<planes.length;i++) if(planes[i].distanceToPoint(_clipPt)<0) return true;
+  return false; }
+// The plane a face-pick WOULD produce at (cx,cy): {n (keep-side normal, pointing away from the
+// camera), point} or null on a miss. Shared by the commit and the hover ghost so the preview can
+// never disagree with where the click actually lands.
+function clipPlaneAtScreen(cx,cy){
+  const ndc=new THREE.Vector2((cx/innerWidth)*2-1, -(cy/innerHeight)*2+1); ray.setFromCamera(ndc,camera);
+  const hit=ray.intersectObjects(pickable.filter(m=>m.visible),false).find(h=>h.face&&!isPointClipped(h.point));
+  if(!hit) return null;
+  const n=hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
+  if(n.dot(camera.position.clone().sub(hit.point))>0) n.negate();   // away from the camera → keep the FAR side, revealing the section
+  return { n, point:hit.point.clone() }; }
+// Push a fully-formed clip, derive its planes, select it, and report the id.
+function addClip(c){ rebuildClipPlanes(c); clips.push(c); applyClips(); selectClip(c.id); return c.id; }
 // A clip plane from a clicked face (screen px): keep the camera-FAR side so the cut reveals the section.
 function addClipPlaneAtScreen(cx,cy){
-  const ndc=new THREE.Vector2((cx/innerWidth)*2-1, -(cy/innerHeight)*2+1); ray.setFromCamera(ndc,camera);
-  const hit=ray.intersectObjects(pickable.filter(m=>m.visible),false)[0]; if(!hit||!hit.face) return null;
-  const n=hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
-  if(n.dot(camera.position.clone().sub(hit.point))>0) n.negate();
-  clips.push({ id:'clip'+(++clipSeq), kind:'plane', planes:[new THREE.Plane().setFromNormalAndCoplanarPoint(n,hit.point)] });
-  applyClips(); return clips[clips.length-1].id; }
+  const pp=clipPlaneAtScreen(cx,cy); if(!pp) return null;
+  return addClip({ id:'clip'+(++clipSeq), kind:'plane', enabled:true, label:'Plane '+clipSeq, n:pp.n.clone(), point:pp.point.clone(), planes:[] }); }
 // A clip box around the current selection (or the whole model when nothing is selected).
-function addClipBox(pad){ const box=selBox(pad); if(!box) return null;
-  clips.push({ id:'clip'+(++clipSeq), kind:'box', planes:boxToPlanes(box) }); applyClips(); return clips[clips.length-1].id; }
-function clearClips(){ clips=[]; applyClips(); }
+function addClipBox(pad){ const box=selBox(pad); if(!box) return null; return addClipBoxFromBox(box); }
+function addClipBoxFromBox(box){ if(!box||box.isEmpty()) return null;
+  return addClip({ id:'clip'+(++clipSeq), kind:'box', enabled:true, label:'Box '+clipSeq, box:box.clone(), planes:[] }); }
+function clearClips(){ if(!clips.length) return; clips=[]; selectedClipIds.clear(); applyClips(); renderClipGizmo(); refreshClipList(); }
 function clipCount(){ return clips.length; }
+// ---- clip lifecycle: mutate the source, re-derive, re-render the gizmo + list ----
+function findClip(id){ return clips.find(c=>c.id===id)||null; }
+function toggleClip(id,on){ const c=findClip(id); if(!c) return; c.enabled=on===undefined?!c.enabled:!!on; applyClips(); renderClipGizmo(); refreshClipList(); }
+// Reject a blank name, or one another clip already uses (case-insensitive) — the caller keeps the old
+// name and says why, rather than silently accepting a duplicate that makes two rows indistinguishable.
+function renameClip(id,name){ const c=findClip(id); if(!c) return false;
+  const nm=String(name||'').trim(); if(!nm) return false;
+  if(clips.some(x=>x.id!==id&&x.label.toLowerCase()===nm.toLowerCase())) return false;
+  c.label=nm; refreshClipList(); return true; }
+function removeClip(id){ if(!findClip(id)) return; clips=clips.filter(c=>c.id!==id); selectedClipIds.delete(id); applyClips(); renderClipGizmo(); refreshClipList(); }
+// Selection drives the gizmo ONLY — it never calls applyClips, because selecting a clip must not
+// change what is cut. Unknown ids are dropped rather than kept as phantom selection.
+function setSelectedClips(ids){ selectedClipIds=new Set((ids||[]).filter(id=>clips.some(c=>c.id===id))); renderClipGizmo(); refreshClipList(); }
+function selectClip(id){ setSelectedClips(id?[id]:[]); }
+function selectedClips(){ return [...selectedClipIds]; }
+function deleteSelectedClips(){ if(!selectedClipIds.size) return; clips=clips.filter(c=>!selectedClipIds.has(c.id)); selectedClipIds.clear(); applyClips(); renderClipGizmo(); refreshClipList(); }
+// The read model for the list + the test probe. EXACT values, not rounded: a probe that rounds
+// cannot prove a snapped bound or which face a drag moved.
+function getClips(){ return clips.map(c=>({ id:c.id, kind:c.kind, enabled:c.enabled, label:c.label,
+  selected:selectedClipIds.has(c.id),
+  box:c.box?{min:c.box.min.toArray(),max:c.box.max.toArray()}:null,
+  plane:c.n?{n:c.n.toArray(),point:c.point.toArray()}:null })); }
+// Filled in by the gizmo + clip-list units; declared here so every clip mutation can call them.
+function renderClipGizmo(){}
+function refreshClipList(){}
 // Arm/disarm the face-pick: 'plane' → next left-click on a face drops a plane; null → back to selecting.
 function setClipMode(m){ clipMode=m==='plane'?'plane':null;
   renderer.domElement.style.cursor=clipMode?'crosshair':'default';
@@ -1472,7 +1529,15 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   workAreaSetAll, workAreaFromSelection, clearWorkArea, workAreaOn,
   workAreaToggle, workAreaSetWhole, workAreaState,
   clipMode:()=>clipMode,
-  clipPlanes:()=>(renderer.clippingPlanes||[]).length };
+  clipPlanes:()=>(renderer.clippingPlanes||[]).length,
+  // Clip editing. `getClips` reports EXACT bounds and plane geometry, not rounded sizes — a probe
+  // that rounds cannot prove a snapped bound or which face a drag moved.
+  getClips, selectedClips, setSelectedClips, toggleClip, renameClip, removeClip, deleteSelectedClips,
+  referenceSystemSegments:()=>(SCENE.referenceSystems||[]).filter(R=>R&&R.kind==='structural-grid').map(R=>{
+    const s=referenceSystemSegments(R);
+    return { axes:s.axes.map(a=>({label:a.label,direction:a.direction,a:a.a.toArray(),b:a.b.toArray()})),
+             levels:s.levels.map(l=>({label:l.label,y:l.y,segments:l.segments.map(g=>[g[0].toArray(),g[1].toArray()])})) }; }),
+  pointClipped:(p)=>isPointClipped(new THREE.Vector3(p[0],p[1],p[2])) };
 </script>
 </body>
 </html>
@@ -4066,6 +4131,71 @@ mod tests {
         assert!(
             html.contains("renderer.autoClear=false"),
             "2nd unclipped pass keeps the work-area wireframe visible"
+        );
+    }
+
+    #[test]
+    fn clips_are_editable_objects_not_derived_planes() {
+        // A clip used to keep ONLY its derived planes — a box threw its Box3 away at creation — so
+        // nothing could be dragged, disabled or renamed afterwards. The source geometry is now the
+        // record and `.planes` is derived from it.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+
+        assert!(
+            html.contains("function rebuildClipPlanes"),
+            "source geometry re-derives the planes"
+        );
+        assert!(
+            html.contains("function applyClips(){ const active=clips.filter(c=>c.enabled).flatMap(c=>c.planes);"),
+            "a disabled clip must stop cutting — applyClips used to flatten every clip unconditionally"
+        );
+        // The shadow pass holds its own reference to the plane array, so every clip change has to
+        // re-point it or the model stays visibly clipped after the clip is gone.
+        assert!(
+            html.contains(
+                "renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; syncClipMirror(); }"
+            ),
+            "applyClips still re-points the shadow-pass mirror"
+        );
+        for f in [
+            "function toggleClip",
+            "function renameClip",
+            "function removeClip",
+            "function setSelectedClips",
+            "function deleteSelectedClips",
+            "function getClips",
+            "function addClipBoxFromBox",
+        ] {
+            assert!(html.contains(f), "clip lifecycle: {f}");
+        }
+        // Selection drives the gizmo only. If it also re-applied the clips, selecting a clip would
+        // change what is cut.
+        assert!(
+            html.contains("function setSelectedClips(ids){ selectedClipIds=new Set((ids||[]).filter(id=>clips.some(c=>c.id===id))); renderClipGizmo(); refreshClipList(); }"),
+            "selection never calls applyClips, and drops ids that no longer exist"
+        );
+        // Raycaster ignores renderer.clippingPlanes, so an unfiltered pick drops a plane on a face
+        // that is visually cut away.
+        assert!(
+            html.contains("function isPointClipped")
+                && html.contains(".find(h=>h.face&&!isPointClipped(h.point))"),
+            "a face hidden behind an active clip must not be pickable"
+        );
+        // One plane per command, and a miss stays armed to retry.
+        assert!(
+            html.contains("else if(clipMode==='plane'){ if(addClipPlaneAtScreen(e.clientX,e.clientY)) setClipMode(null); }"),
+            "placing a plane disarms; missing does not"
+        );
+        assert!(
+            !html.contains(
+                "STAYS armed (crosshair + lit button + Esc/Clip to cancel) — parity with floless"
+            ),
+            "that comment claimed a parity with floless that did not exist — floless disarms on success"
         );
     }
 
