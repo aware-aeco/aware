@@ -92,6 +92,9 @@ const TEMPLATE: &str = r##"<!doctype html>
   body.no-side #side{display:none}
   body.no-side #viewcube{right:16px}
   body.no-side #toolbar{max-width:calc(100% - 156px)}
+  /* An embedding host that already titles the model can suppress ours — see the presentation
+     message below. Never the default: opened standalone, this is the only model identity there is. */
+  body.no-title #sceneName{display:none}
   #viewcube canvas{display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))}
   /* World-axis triad, bottom-right (Tekla-style). Passive readout — pointer-events:none so it can
      never swallow an orbit gesture; orientation CHANGES stay on the ViewCube. */
@@ -163,6 +166,23 @@ const TEMPLATE: &str = r##"<!doctype html>
     window.addEventListener('unhandledrejection', function(e){ post('viewer-error', String((e&&e.reason)||'load error')); });
     window.__viewerPost=post;
     setTimeout(function(){ if(!window.__viewerReady) post('viewer-error','timed out loading 3D libraries'); }, 9000);
+    // Presentation, from the embedding host. The SAME frozen document is both iframed by a host
+    // that already titles the model and opened standalone from disk, so this cannot be decided when
+    // the file is baked — only the surface displaying it knows. Default is always "show": a
+    // standalone viewer must never end up with no model identity at all.
+    //
+    // Deliberately narrow: this toggles presentation only. It cannot supply content, run script, or
+    // change behaviour, so accepting it from any origin costs nothing — and anything that is not
+    // this exact shape is ignored.
+    var applyChrome=function(showTitle){
+      var go=function(){ document.body.classList.toggle('no-title', showTitle===false); };
+      if(document.body) go(); else document.addEventListener('DOMContentLoaded',go);
+    };
+    window.addEventListener('message', function(e){
+      var d=e&&e.data;
+      if(!d || d.type!=='viewer-presentation') return;
+      if(typeof d.showTitle==='boolean') applyChrome(d.showTitle);
+    });
   })();
 </script>
 <script type="importmap">
@@ -2918,6 +2938,64 @@ mod tests {
         assert!(
             html.contains("clearTimeout(legendClickT)"),
             "dbl-click cancels the single-click toggle"
+        );
+    }
+
+    #[test]
+    fn chrome_is_host_controllable_and_typing_safe() {
+        // Three independent bits of viewer chrome, asserted together because they all only exist in
+        // the rendered document: a scene with no `panels` must reclaim the side-panel column rather
+        // than show an empty box; an embedding host must be able to suppress our title (never the
+        // default — standalone has no other model identity); and the single-key view shortcuts must
+        // not fire while a text field has focus, or no input in this document can ever work.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+
+        // The side-panel column is reclaimed as a unit — hiding the panel alone would leave the
+        // ViewCube offset past a panel that is not there and the toolbar reserving its width.
+        assert!(
+            html.contains("body.no-side #side{display:none}"),
+            "side panel hides"
+        );
+        assert!(
+            html.contains("body.no-side #viewcube{right:16px}"),
+            "ViewCube reclaims the column"
+        );
+        assert!(
+            html.contains("body.no-side #toolbar{max-width:calc(100% - 156px)}"),
+            "toolbar stops reserving the panel's width"
+        );
+        assert!(
+            html.contains("classList.toggle('no-side',!hasPanels)"),
+            "the state is driven by whether the scene supplied panels"
+        );
+
+        // Host-controlled title: opt-IN suppression, so standalone keeps its identity.
+        assert!(
+            html.contains("d.type!=='viewer-presentation'"),
+            "listens for the presentation message"
+        );
+        assert!(
+            html.contains("body.no-title #sceneName{display:none}"),
+            "title can be suppressed"
+        );
+        assert!(
+            html.contains("classList.toggle('no-title', showTitle===false)"),
+            "only an explicit showTitle:false hides it"
+        );
+
+        // Typing guard: no view shortcut may fire into a focused text field.
+        assert!(
+            html.contains("function typingInto(t)"),
+            "focus guard exists"
+        );
+        assert!(
+            html.contains("if(typingInto(e.target) && e.key!=='Escape') return;"),
+            "the keydown handler consults it before any shortcut"
         );
     }
 
