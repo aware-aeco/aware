@@ -7,7 +7,7 @@ description: Use when the user wants to check a structural model or set of drawi
 
 The checker is a **composed workflow** (an AWARE `.app`) that reads a structural model and checks it against the verified AISC rules database deterministically. It has no LLM in the run path.
 
-> **Status:** `steel-detailer-us` is `status: planned` until a release carrying the `lookup` binary is out, so the pattern below documents the target composition rather than something that compiles today. The binary is built and staged into the release archive; once the flip lands, this runs as written — it also needs `aware agent install steel-detailer-us` for the rules the binary reads.
+> **Status:** `steel-detailer-us` is `status: available` as of aware v0.98.0, which ships the `lookup` binary — the pattern below composes and runs as written. It also needs `aware agent install steel-detailer-us` for the rules the binary reads.
 
 ## Workflow pattern
 
