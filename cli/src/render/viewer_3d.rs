@@ -77,6 +77,12 @@ const TEMPLATE: &str = r##"<!doctype html>
   #toolbar .menu button{width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:6px;padding:6px 9px}
   #toolbar .menu button:hover{background:rgba(51,65,85,.85);border-color:transparent}
   #toolbar .menu button.danger:hover{background:rgba(127,29,29,.55)}
+  /* Checkable menu items (work area). The tick is drawn, not a glyph, so it can't shift the row's
+     text when it toggles — the label stays put and only the mark changes. */
+  #toolbar .menu button.wtog{display:flex;align-items:center;gap:8px}
+  #toolbar .menu button.wtog .mck{width:12px;height:12px;flex:none;border:1px solid var(--border-2);border-radius:3px;position:relative}
+  #toolbar .menu button.wtog[aria-checked=true] .mck{background:var(--accent);border-color:var(--accent)}
+  #toolbar .menu button.wtog[aria-checked=true] .mck::after{content:'';position:absolute;left:3.5px;top:1px;width:3px;height:6px;border:solid #0a0f1a;border-width:0 2px 2px 0;transform:rotate(45deg)}
   #toolbar .menu hr{border:0;border-top:1px solid var(--border);margin:4px 2px}
   /* Themed tooltip — replaces native title= so no OS-default tooltip leaks the dark theme. */
   #tooltip{position:fixed;z-index:50;background:rgba(15,23,42,.97);border:1px solid var(--border-2);border-radius:6px;padding:5px 8px;font-size:11.5px;line-height:1.35;color:var(--text);pointer-events:none;max-width:260px;box-shadow:0 8px 22px rgba(0,0,0,.5);opacity:0;transition:opacity .12s}
@@ -133,8 +139,8 @@ const TEMPLATE: &str = r##"<!doctype html>
     <div class="tb-menu" id="clipMenu">
       <button id="clip" data-tip="Clip planes and boxes — section to see inside a connection">Clip ▾</button>
       <div class="menu" role="menu">
-        <button data-clip="plane" data-tip="Click a model face to cut the view there">Add clip plane</button>
-        <button data-clip="box" data-tip="Section a box around the selection (or whole model)">Add clip box</button>
+        <button data-clip="plane" data-tip="Click a model face to cut the view there (Shift+X)">Add clip plane</button>
+        <button data-clip="box" data-tip="Section a box around the selection (or whole model) (Shift+B)">Add clip box</button>
         <hr>
         <button data-clip="clear" class="danger" data-tip="Remove every clip">Clear all clips</button>
       </div>
@@ -144,6 +150,9 @@ const TEMPLATE: &str = r##"<!doctype html>
       <div class="menu" role="menu">
         <button data-wa="all" data-tip="Bound the work area to the whole model">Set to all objects</button>
         <button data-wa="sel" data-tip="Bound the work area to the current selection">Define from selection</button>
+        <hr>
+        <button id="waOn" class="wtog" role="menuitemcheckbox" aria-checked="false" data-tip="Show or hide the work-area box"><span class="mck" aria-hidden="true"></span>Show work area</button>
+        <button id="waWhole" class="wtog" role="menuitemcheckbox" aria-checked="true" style="display:none" data-tip="When ON, any part that touches the work area is shown in full — nothing gets cut. When OFF, the work area slices parts cleanly at its box faces (a section cut)."><span class="mck" aria-hidden="true"></span>Show whole parts</button>
         <hr>
         <button data-wa="clear" class="danger" data-tip="Remove the work area">Clear work area</button>
       </div>
@@ -415,8 +424,15 @@ function applyDisplayMode(){
   syncClipMirror();   // shadows just turned on or off — the mirror follows
 }
 function applyGroupVisibility(){
+  // In "show whole parts" mode the work area filters by WHOLE meshes: anything whose bounds touch
+  // the box is drawn in full, anything outside it is dropped. That is what makes the mode
+  // slice-free — the alternative (cut mode) contributes clipping planes in applyClips instead.
+  const waWhole = workArea && workArea.enabled && workArea.whole ? workArea.box : null;
+  const hit=new THREE.Box3();
   for(const m of pickable){ const k=m.userData&&m.userData.group;
-    m.visible = !groupHidden.has(k) && (soloGroup===null || soloGroup===k); }
+    let vis = !groupHidden.has(k) && (soloGroup===null || soloGroup===k);
+    if(vis && waWhole){ hit.setFromObject(m); vis = hit.intersectsBox(waWhole); }
+    m.visible = vis; }
 }
 function toggleGroup(k){ if(groupHidden.has(k)) groupHidden.delete(k); else groupHidden.add(k); soloGroup=null; applyGroupVisibility(); refreshLegend(); }
 function soloToggle(k){ soloGroup = soloGroup===k ? null : k; if(soloGroup) groupHidden.clear(); applyGroupVisibility(); refreshLegend(); }
@@ -902,7 +918,10 @@ function boxToPlanes(b){ return [
   new THREE.Plane(new THREE.Vector3(-1,0,0), b.max.x), new THREE.Plane(new THREE.Vector3(1,0,0), -b.min.x),
   new THREE.Plane(new THREE.Vector3(0,-1,0), b.max.y), new THREE.Plane(new THREE.Vector3(0,1,0), -b.min.y),
   new THREE.Plane(new THREE.Vector3(0,0,-1), b.max.z), new THREE.Plane(new THREE.Vector3(0,0,1), -b.min.z) ]; }
-function applyClips(){ const active=clips.flatMap(c=>c.planes); if(workArea) active.push(...workArea.planes);
+function applyClips(){ const active=clips.flatMap(c=>c.planes);
+  // The work area sections the view too — UNLESS it is in "show whole parts" mode, where parts are
+  // hidden or shown whole by applyGroupVisibility and never sliced.
+  if(workArea && workArea.enabled && !workArea.whole) active.push(...workArea.planes);
   renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; syncClipMirror(); }
 // Materials keep their OWN reference to the clip planes for the shadow pass, since renderer-global
 // ones are cleared there. applyClips REPLACES the array rather than mutating it, so that reference
@@ -932,21 +951,47 @@ function clipCount(){ return clips.length; }
 // Arm/disarm the face-pick: 'plane' → next left-click on a face drops a plane; null → back to selecting.
 function setClipMode(m){ clipMode=m==='plane'?'plane':null;
   renderer.domElement.style.cursor=clipMode?'crosshair':'default';
-  const btn=document.getElementById('clip'); if(btn) btn.classList.toggle('on',!!clipMode);
+  // Armed → the button both lights up AND becomes its own cancel target, so the way out is where the
+  // way in was. Matches the floless editor's ✕ affordance.
+  const btn=document.getElementById('clip'); if(btn){ btn.classList.toggle('on',!!clipMode); btn.textContent=clipMode?'Clip ✕':'Clip ▾'; }
   if(clipMode) readout.replaceChildren(el('b',null,'Click a face'), document.createTextNode(' to cut the view there · Esc to cancel'));
   else setHint();
   return clipMode; }
 // Work area: one box that bounds (and sections) the view, shown as an always-visible wireframe.
 function renderWorkArea(){ if(workAreaHelper){ overlayScene.remove(workAreaHelper); workAreaHelper.geometry.dispose(); workAreaHelper.material.dispose(); workAreaHelper=null; }
-  if(!workArea || workArea.box.isEmpty()) return;
+  if(!workArea || !workArea.enabled || workArea.box.isEmpty()) return;   // switched off → no wireframe either
   workAreaHelper=new THREE.Box3Helper(workArea.box, new THREE.Color(0x60a5fa));
   workAreaHelper.material.depthTest=false; workAreaHelper.renderOrder=995; overlayScene.add(workAreaHelper); }
-function setWorkAreaBox(box){ if(!box||box.isEmpty()) return false; workArea={ box:box.clone(), planes:boxToPlanes(box) }; applyClips(); renderWorkArea(); return true; }
-function workAreaSetAll(){ const box=meshBox(pickable); return box.isEmpty() ? false : setWorkAreaBox(box); } // bound the whole model by its rendered mesh bounds (not centrelines)
+// A work area has two independent switches, matching the floless editor:
+//   enabled — is it in force at all (the "Show work area" tick)
+//   whole   — ON (default): a part TOUCHING the box is drawn in full and parts outside are hidden
+//             outright, so nothing is ever sliced by surprise;
+//             OFF: the box sections the view, cutting parts at its faces.
+// Only the cut mode contributes clipping planes; whole mode is pure visibility (see applyClips and
+// applyGroupVisibility). A re-define keeps whichever mode is current.
+function setWorkAreaBox(box){ if(!box||box.isEmpty()) return false;
+  const whole = workArea ? workArea.whole : true;
+  workArea={ box:box.clone(), planes:boxToPlanes(box), enabled:true, whole };
+  applyClips(); renderWorkArea(); applyGroupVisibility(); reflectWorkArea(); return true; }
+function workAreaToggle(on){ if(!workArea) return false;
+  workArea.enabled = on===undefined ? !workArea.enabled : !!on;
+  applyClips(); renderWorkArea(); applyGroupVisibility(); reflectWorkArea(); return workArea.enabled; }
+function workAreaSetWhole(on){ if(!workArea) return false;
+  workArea.whole = on===undefined ? !workArea.whole : !!on;
+  applyClips(); applyGroupVisibility(); reflectWorkArea(); return workArea.whole; }
+function workAreaState(){ return workArea ? { on:!!workArea.enabled, whole:!!workArea.whole } : null; }
+// Keep the button and its two ticks honest about the live state. "Show whole parts" is meaningless
+// without a work area, so it stays hidden until there is one.
+function reflectWorkArea(){ const st=workAreaState();
+  const btn=document.getElementById('work'); if(btn) btn.classList.toggle('on', !!(st&&st.on));
+  const on=document.getElementById('waOn'); if(on) on.setAttribute('aria-checked', st&&st.on?'true':'false');
+  const wh=document.getElementById('waWhole'); if(wh){ wh.style.display=st?'flex':'none'; wh.setAttribute('aria-checked', st&&st.whole?'true':'false'); } }
+function workAreaSetAll(){ const box=meshBox(pickable); if(box.isEmpty()) return false;
+  return setWorkAreaBox(box); } // bound the whole model by its rendered mesh bounds (not centrelines)
 function workAreaFromSelection(pad){ const box=new THREE.Box3();
   for(const m of selection){ if(m.visible) box.expandByObject(m); }
   if(box.isEmpty()) return false; box.expandByScalar(pad==null?Math.max(maxDim*0.04,1):pad); return setWorkAreaBox(box); }
-function clearWorkArea(){ workArea=null; applyClips(); renderWorkArea(); }
+function clearWorkArea(){ workArea=null; applyClips(); renderWorkArea(); applyGroupVisibility(); reflectWorkArea(); }
 function workAreaOn(){ return !!workArea; }
 
 addEventListener('resize',()=>{
@@ -971,6 +1016,12 @@ addEventListener('keydown',e=>{
   if(e.key==='Escape' && clipMode){ setClipMode(null); e.preventDefault(); return; } // cancel an armed clip-plane pick
   if(typingInto(e.target)) return;                                                   // Escape with no armed clip → leave it to the field
   if(e.key==='Home'){ frameBox(sceneBox); e.preventDefault(); }                       // fit all
+  // Section shortcuts, matching the floless editor. Shift-qualified so they cannot collide with the
+  // bare-letter view keys above, and safe to add only because of the typing guard at the top.
+  else if(e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey && (e.key==='X'||e.key==='x')){
+    setClipMode(clipMode?null:'plane'); e.preventDefault(); }                          // Shift+X → arm / cancel a clip plane
+  else if(e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey && (e.key==='B'||e.key==='b')){
+    addClipBox(); e.preventDefault(); }                                                // Shift+B → clip box around selection/model
   else if((e.key==='z'||e.key==='Z') && e.altKey){                                     // zoom the current selection
     if(selection.length){ const b=new THREE.Box3(); for(const m of selection) b.expandByObject(m); frameBox(b); } e.preventDefault(); }
   else if(!e.altKey && !e.ctrlKey && !e.metaKey && VIEW_KEYS[e.key.toLowerCase()]){     // T/F/R/B/L → named views
@@ -994,6 +1045,9 @@ document.querySelectorAll('#clipMenu [data-clip]').forEach(b=>b.addEventListener
   const a=b.dataset.clip; if(a==='plane') setClipMode('plane'); else if(a==='box') addClipBox(); else if(a==='clear') clearClips(); }));
 document.querySelectorAll('#workMenu [data-wa]').forEach(b=>b.addEventListener('click', e=>{ e.stopPropagation(); closeMenus();
   const a=b.dataset.wa; if(a==='all') workAreaSetAll(); else if(a==='sel') workAreaFromSelection(); else if(a==='clear') clearWorkArea(); }));
+// The two ticks deliberately do NOT close the menu — the whole point is to see the state flip.
+document.getElementById('waOn').addEventListener('click', e=>{ e.stopPropagation(); workAreaToggle(); });
+document.getElementById('waWhole').addEventListener('click', e=>{ e.stopPropagation(); workAreaSetWhole(); });
 document.addEventListener('pointerdown', e=>{ if(!e.target.closest('#toolbar')) closeMenus(); }, true); // click outside the toolbar closes a menu
 
 // ---- Themed tooltips (replaces native title=): one shared element, shown on data-tip hover ----
@@ -1098,6 +1152,8 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   setView:applyView, setProjection, setDisplayMode, toggleGroup, frameAll:()=>frameBox(sceneBox),
   clipCount, addClipBox, clearClips, setClipMode, addClipPlaneAtScreen,
   workAreaSetAll, workAreaFromSelection, clearWorkArea, workAreaOn,
+  workAreaToggle, workAreaSetWhole, workAreaState,
+  clipMode:()=>clipMode,
   clipPlanes:()=>(renderer.clippingPlanes||[]).length };
 </script>
 </body>
@@ -2938,6 +2994,55 @@ mod tests {
         assert!(
             html.contains("clearTimeout(legendClickT)"),
             "dbl-click cancels the single-click toggle"
+        );
+    }
+
+        #[test]
+    fn work_area_and_clip_match_the_editor() {
+        // Toolbar parity with the floless steel editor. The work area gains its two switches, and
+        // the important one is `whole`: ON (the default) a part touching the box is drawn in FULL
+        // and parts outside are dropped, so a freshly-defined work area never slices anything by
+        // surprise. Only the cut mode may contribute clipping planes.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+
+        assert!(html.contains(r#"id="waOn""#), "Show work area tick");
+        assert!(html.contains(r#"id="waWhole""#), "Show whole parts tick");
+        assert!(
+            html.contains(r#"role="menuitemcheckbox""#),
+            "the ticks are real checkable menu items, not plain buttons"
+        );
+        // whole is the default for a new work area, and survives a re-define.
+        assert!(
+            html.contains("const whole = workArea ? workArea.whole : true;"),
+            "a new work area defaults to showing whole parts"
+        );
+        // Whole mode must NOT clip; cut mode must.
+        assert!(
+            html.contains("if(workArea && workArea.enabled && !workArea.whole) active.push(...workArea.planes);"),
+            "only the cut mode contributes clipping planes"
+        );
+        // ...and whole mode filters entire meshes instead.
+        assert!(
+            html.contains("vis = hit.intersectsBox(waWhole)"),
+            "whole mode hides parts outside the box rather than slicing them"
+        );
+        // The box disappears when the work area is switched off.
+        assert!(
+            html.contains("if(!workArea || !workArea.enabled || workArea.box.isEmpty()) return;"),
+            "no wireframe while switched off"
+        );
+
+        // Clip: the editor's Shift+X / Shift+B, and an armed button that is its own cancel.
+        assert!(html.contains("(e.key==='X'||e.key==='x')"), "Shift+X arms a clip plane");
+        assert!(html.contains("(e.key==='B'||e.key==='b')"), "Shift+B adds a clip box");
+        assert!(
+            html.contains("btn.textContent=clipMode?'Clip \u{2715}':'Clip \u{25be}'"),
+            "the armed button becomes its own cancel target"
         );
     }
 
