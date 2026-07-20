@@ -85,6 +85,24 @@ def num(s):
         raise ValueError(f"unparseable numeric cell {s!r}")
 
 
+# Cells that are demonstrably wrong in the vendored v15.0 CSV and that a later
+# authoritative edition fixes. {label: {column: (known_bad, corrected, source)}}.
+#
+# The vendored CSV is left byte-identical — it is what the mirror served, and its sha256
+# is recorded in the dataset metadata — so corrections live here instead, explicit and
+# citable. The known-bad value is asserted before overriding: if upstream ever ships a
+# fixed CSV, this fails loudly and the entry must be removed rather than silently
+# double-applying.
+#
+# Only for values an authoritative source actually corrects. Everything else that fails
+# validation is quarantined, never repaired by arithmetic — deriving a number and citing
+# AISC for it is inventing data.
+CORRECTIONS = {
+    "S24X90": {
+        "PB": (725.0, 72.5, "AISC Shapes Database v16.0"),
+    },
+}
+
 _LEG_RE = re.compile(r"^2?L([\d./-]+)X([\d./-]+)X")
 
 
@@ -138,12 +156,32 @@ def main():
     rules = []
     defin = {"W", "M", "S", "HP", "C", "MC", "WT", "MT", "ST"}
     defin_ok = defin_bad = 0
+    # Surface-perimeter keys, and the CSV columns behind them. Quarantine drops both the
+    # typed key and the quoted cell — a corrupt value left in `source_quote` would be
+    # read back as citation evidence, which is exactly what quarantine exists to stop.
+    PERIM = [("PA", "PA_in"), ("PA2", "PA2_in"), ("PB", "PB_in"),
+             ("PC", "PC_in"), ("PD", "PD_in")]
+    perim_checked = 0
+    quarantined = []
+    corrected = []
 
     for r in rows:
         label = r.get("AISC_Manual_Label", "").strip()
         typ = r.get("Type", "").strip()
         if not label or not typ:
             continue
+
+        if label in CORRECTIONS:
+            r = dict(r)
+            for col, (bad, good, src) in CORRECTIONS[label].items():
+                have = num(r.get(col))
+                if have is None or abs(have - bad) > 0.005:
+                    raise SystemExit(
+                        f"ABORT: correction for {label}.{col} expected the known-bad "
+                        f"{bad}, found {have}. Upstream data changed — re-verify and "
+                        f"remove this entry if it is now correct.")
+                r[col] = repr(good)
+                corrected.append(f"{label}.{col}: {bad} -> {good} ({src})")
 
         weight = num(r.get("W"))
         area = num(r.get("A"))
@@ -203,6 +241,33 @@ def main():
                     f"not match the d/b columns {cols}.")
             props["leg1_in"], props["leg2_in"] = leg1, leg2
 
+        # Surface-perimeter identities: PB is the full perimeter, PA = PB - bf (one
+        # flange face off, contour fireproofing), PD the box perimeter 2(d+bf),
+        # PC = PD - bf. The AISC CSV ships no data dictionary, so these relationships
+        # are what pin down which column is which — and they also catch corrupt cells.
+        # Checked here, before the quote is built, so a failure removes the value from
+        # BOTH the typed properties and the quoted evidence.
+        dropped_cols = set()
+        if width is not None and depth is not None and {"PA_in", "PB_in"} <= props.keys():
+            perim_checked += 1
+            for lab, got, want in (
+                ("PA = PB - bf", props["PA_in"], props["PB_in"] - width),
+                ("PD = 2(d+bf)", props.get("PD_in"), 2 * (depth + width)),
+                ("PC = PD - bf", props.get("PC_in"),
+                 props["PD_in"] - width if "PD_in" in props else None),
+            ):
+                # 1.5% relative. Worst case among sound rows is 0.51% (W44X230) — AISC
+                # tabulates to 3 significant figures and appears to take the box
+                # perimeter off detailing dimensions. Corrupt rows miss by 8x-900%.
+                if got is None or want is None:
+                    continue
+                if abs(got - want) > max(0.015 * abs(want), 0.25):
+                    quarantined.append(f"{label} ({lab}: {got} vs {want:.3f})")
+                    for col, key in PERIM:
+                        props.pop(key, None)
+                        dropped_cols.add(col)
+                    break
+
         # `d` means different things by family: leg for an angle, OD for a round shape,
         # depth otherwise. Label the human-readable string honestly (properties are typed).
         is_round = typ in ("HSS", "PIPE") and num(r.get("OD")) is not None
@@ -221,11 +286,21 @@ def main():
                 ("Ht", num(r.get("Ht"))), ("OD", num(r.get("OD"))),
                 ("bf", num(r.get("bf"))), ("B", num(r.get("B"))),
                 ("tw", tw), ("tf", tf), ("tdes", num(r.get("tdes"))),
-            ] + [(col, num(r.get(col))) for col, _ in SECTION_PROPS + family]
+            ] + [(col, num(r.get(col))) for col, _ in SECTION_PROPS + family
+                 if col not in dropped_cols]
             # `b` backs the angle leg check but maps to no key of its own there, so it
             # is quoted explicitly — the quote must cover everything a reader verifies.
             + ([("b", num(r.get("b")))] if typ in ("L", "2L") else [])
             if v is not None)
+
+        # A corrected cell must not masquerade as what the vendored CSV said.
+        citation = "AISC Shapes Database v15.0 (US)"
+        if label in CORRECTIONS:
+            fixes = "; ".join(
+                f"{col} corrected from {bad} per {src}"
+                for col, (bad, _, src) in CORRECTIONS[label].items())
+            citation = f"{citation} — {fixes}"
+            quote = f"{quote} [{fixes}]"
 
         rules.append({
             "id": f"section.{label}",
@@ -234,7 +309,7 @@ def main():
             "value": value,
             "units": "imperial (lb/ft, in, in², in³, in⁴, in⁶)",
             "properties": props,
-            "citation": "AISC Shapes Database v15.0 (US)",
+            "citation": citation,
             "source_quote": f"{label}: {quote}",
             "found": True,
         })
@@ -251,34 +326,6 @@ def main():
     # dropped rather than repaired — deriving the missing number and citing AISC for it
     # would be inventing data, so the lookup returns the keys absent and the caller
     # refuses. Failures are listed below and recorded in the dataset metadata.
-    PERIM_KEYS = ("PA_in", "PA2_in", "PB_in", "PC_in", "PD_in")
-    perim_checked = 0
-    quarantined = []
-    for r in rules:
-        p = r["properties"]
-        d, bf = p.get("depth_in"), p.get("width_in")
-        if bf is None or d is None or "PA_in" not in p or "PB_in" not in p:
-            continue
-        perim_checked += 1
-        for label, got, want in (
-            ("PA = PB - bf", p["PA_in"], p["PB_in"] - bf),
-            ("PD = 2(d+bf)", p.get("PD_in"), 2 * (d + bf)),
-            ("PC = PD - bf", p.get("PC_in"),
-             p["PD_in"] - bf if "PD_in" in p else None),
-        ):
-            # 1.5% relative. Measured worst case among the sound rows is 0.51%
-            # (W44X230) — AISC tabulates these to 3 significant figures and appears to
-            # take the box perimeter off the detailing dimensions, not decimal d/bf. The
-            # nine corrupt rows miss by 8x to 900%, so this cleanly separates the two.
-            if got is None or want is None:
-                continue
-            if abs(got - want) > max(0.015 * abs(want), 0.25):
-                quarantined.append(
-                    f"{r['id']} ({label}: {got} vs {want:.3f})")
-                for k in PERIM_KEYS:
-                    p.pop(k, None)
-                break
-
     # A handful of bad rows in the source is expected and handled. Wholesale failure is
     # not — that means the columns shifted, and shipping a table with the perimeters
     # quietly stripped out would hide it. Abort instead.
@@ -287,9 +334,11 @@ def main():
             f"ABORT: {len(quarantined)}/{perim_checked} shapes fail the perimeter "
             f"identities — that is systemic, not bad source rows. Columns shifted?")
     print(f"perimeter identities: {perim_checked} flanged shapes checked, "
-          f"{len(quarantined)} quarantined")
+          f"{len(quarantined)} quarantined, {len(corrected)} corrected")
+    for c in corrected:
+        print(f"  corrected: {c}")
     for q in quarantined:
-        print(f"  quarantined (perimeters dropped): {q}")
+        print(f"  quarantined (perimeters dropped from properties AND quote): {q}")
 
     # Single-angle identities. These pin down BOTH which leg `b` is and which leg each
     # perimeter drops: PA excludes the second (shorter) leg, PA2 excludes the first
@@ -406,12 +455,20 @@ def main():
         ],
         "data-quality": {
             "quarantined-perimeters": quarantined,
+            "corrections": corrected,
             "note": "Shapes whose PA/PB/PC/PD failed the surface-perimeter identities "
                     "(PA=PB-bf, PD=2(d+bf), PC=PD-bf) in the vendored CSV. Their "
-                    "perimeter keys are omitted rather than repaired, so a lookup "
-                    "returns them absent and the caller refuses instead of quoting a "
-                    "corrupt coating area. Every other property on these shapes is "
-                    "unaffected.",
+                    "perimeter keys are omitted from BOTH the typed properties and the "
+                    "source_quote rather than repaired, so a lookup returns them absent "
+                    "and the caller refuses instead of quoting a corrupt coating area. "
+                    "Every other property on these shapes is unaffected. The eight HP "
+                    "rows carry a verbatim copy of that row's rts in PA — a defect "
+                    "present in BOTH v15.0 and v16.0 of the AISC database, verified "
+                    "against a v16.0 export, so there is no edition to recover them "
+                    "from. Listed separately, `corrections` are cells a later "
+                    "authoritative edition does fix: S24X90's PB was 725 in v15.0 for "
+                    "72.5 (dropped decimal), corrected here per v16.0 and disclosed in "
+                    "that rule's citation and quote.",
         },
         "rules": rules,
     }
