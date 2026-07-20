@@ -850,6 +850,43 @@ function annulusMesh(e,up,mat){ const s=new THREE.Shape(); s.absarc(0,0,e.outerD
   const h=new THREE.Path(); h.absarc(0,0,e.innerDiameterMm/2,0,Math.PI*2,true); s.holes.push(h); return orientedProfileMesh(e,up,mat,s); }
 function hexMesh(e,up,mat){ const R=e.acrossFlatsMm/Math.sqrt(3), phase=Number(e.phaseRad||0)*(up==='z'?-1:1), s=new THREE.Shape();
   for(let i=0;i<6;i++){ const q=phase+i*Math.PI/3, x=R*Math.cos(q), y=R*Math.sin(q); i?s.lineTo(x,y):s.moveTo(x,y); } s.closePath(); return orientedProfileMesh(e,up,mat,s); }
+// ---- structural grids: ONE canonical transform ----------------------------------------------
+// A structural grid is authored in PLAN space — X/Y are the two plan axes and the third component is
+// the ELEVATION — and that is true regardless of `meta.up`, because the grid contract has its own
+// frame (see 10-core: axes carry `direction:'x'|'y'` + `offsetMm`, levels carry an absolute
+// `elevationMm`). Elements do NOT: they are scene-space and go through conv(P,up).
+//
+// So grid geometry must NOT be routed through conv(). It was, and on a `meta.up:'y'` scene conv is
+// the identity, which dropped the elevation into world Z and left every LEVEL rendering as a
+// VERTICAL plane. `expandSceneBounds` carried the same bug, so Fit and maxDim were wrong there too.
+// The mapping below is unconditional, and every consumer — rendering, bounds, labels, and the clip
+// draw's snap candidates — reads these exact segments, so a displayed grid and a snappable grid
+// cannot drift apart.
+const gridToWorld=(gx,gy,elev)=>new THREE.Vector3(gx,elev,gy);
+function referenceSystemSegments(R){
+  const o=R.origin,b=R.bounds||{}, x0=Number(b.minX),x1=Number(b.maxX),y0=Number(b.minY),y1=Number(b.maxY);
+  if(!vec3(o)||![x0,x1,y0,y1].every(Number.isFinite)) return { axes:[], levels:[] };
+  const axes=[];
+  for(const a of (R.axes||[])){
+    if(!a||!Number.isFinite(Number(a.offsetMm)))continue;
+    // An axis runs the full bounds of the CROSS direction unless it names its own start/end.
+    const start=Number.isFinite(a.startMm)?a.startMm:(a.direction==='x'?y0:x0);
+    const end=Number.isFinite(a.endMm)?a.endMm:(a.direction==='x'?y1:x1);
+    const A=a.direction==='x'?gridToWorld(o[0]+a.offsetMm,o[1]+start,o[2]):gridToWorld(o[0]+start,o[1]+a.offsetMm,o[2]);
+    const B=a.direction==='x'?gridToWorld(o[0]+a.offsetMm,o[1]+end,o[2]):gridToWorld(o[0]+end,o[1]+a.offsetMm,o[2]);
+    axes.push({ label:a.label, direction:a.direction, a:A, b:B });
+  }
+  const levels=[];
+  for(const l of (R.levels||[])){
+    if(!l||!Number.isFinite(Number(l.elevationMm)))continue;
+    const e=l.elevationMm, cx=o[0]+(x0+x1)/2, cy=o[1]+(y0+y1)/2;
+    // A level is drawn as a crosshair through the grid centre, not a filled plane.
+    levels.push({ label:l.label, y:e, segments:[
+      [gridToWorld(o[0]+x0,cy,e), gridToWorld(o[0]+x1,cy,e)],
+      [gridToWorld(cx,o[1]+y0,e), gridToWorld(cx,o[1]+y1,e)] ], labelAt:gridToWorld(o[0]+x1,cy,e) });
+  }
+  return { axes, levels };
+}
 function expandSceneBounds(box,S,up){ const add=P=>{if(vec3(P))box.expandByPoint(conv(P,up));};
   const addRadius=(P,r)=>{if(!vec3(P)||!Number.isFinite(r))return; for(const dx of [-r,r])for(const dy of [-r,r])for(const dz of [-r,r])add([P[0]+dx,P[1]+dy,P[2]+dz]);};
   for(const e of (S.elements||[])){ if(!e)continue; add(e.from);add(e.to);add(e.at);add(e.center); const A=axisEnds(e);if(A){const r=(e.diameterMm||0)/2;addRadius(A[0],r);addRadius(A[1],r);}
@@ -858,15 +895,21 @@ function expandSceneBounds(box,S,up){ const add=P=>{if(vec3(P))box.expandByPoint
     if(Array.isArray(e.positions))for(let i=0;i+2<e.positions.length;i+=3)add([e.positions[i],e.positions[i+1],e.positions[i+2]]);
     if(e.kind==='plate'&&e.frame&&Array.isArray(e.outline)){ const F=frameOf(e,up), z=e.thicknessMm/2; for(const p of e.outline)for(const dz of [-z,z])box.expandByPoint(F.o.clone().addScaledVector(F.u,p[0]).addScaledVector(F.v,p[1]).addScaledVector(F.n,dz)); }
   }
-  for(const R of (S.referenceSystems||[])){ if(!R||R.kind!=='structural-grid')continue; const o=R.origin,b=R.bounds||{}, x0=Number(b.minX),x1=Number(b.maxX),y0=Number(b.minY),y1=Number(b.maxY); if(vec3(o)&&[x0,x1,y0,y1].every(Number.isFinite)){add([o[0]+x0,o[1]+y0,o[2]]);add([o[0]+x1,o[1]+y1,o[2]]); for(const l of (R.levels||[])){add([o[0]+x0,o[1]+y0,l.elevationMm]);add([o[0]+x1,o[1]+y1,l.elevationMm]);}} }
+  // Grid bounds come from the SAME segments the renderer draws (never conv()'d — see
+  // referenceSystemSegments), so Fit and maxDim agree with what is on screen on a y-up scene too.
+  for(const R of (S.referenceSystems||[])){ if(!R||R.kind!=='structural-grid')continue;
+    const seg=referenceSystemSegments(R);
+    for(const a of seg.axes){ box.expandByPoint(a.a); box.expandByPoint(a.b); }
+    for(const l of seg.levels) for(const s of l.segments){ box.expandByPoint(s[0]); box.expandByPoint(s[1]); } }
   for(const op of (S.operations||[])){ if(op&&op.kind==='weld'&&Array.isArray(op.path))for(const p of op.path)add(p); }
 }
-function addReferenceSystems(S,up){ for(const R of (S.referenceSystems||[])){ if(!R||R.kind!=='structural-grid')continue;
-  const o=R.origin,b=R.bounds||{}, x0=b.minX,x1=b.maxX,y0=b.minY,y1=b.maxY, baseMat=new THREE.LineBasicMaterial({color:0x60a5fa,transparent:true,opacity:0.7});
-  const line=(A,B)=>{const g=new THREE.BufferGeometry().setFromPoints([conv(A,up),conv(B,up)]);content.add(new THREE.Line(g,baseMat.clone()));};
-  for(const a of (R.axes||[])){ const start=Number.isFinite(a.startMm)?a.startMm:(a.direction==='x'?y0:x0), end=Number.isFinite(a.endMm)?a.endMm:(a.direction==='x'?y1:x1);
-    const A=a.direction==='x'?[o[0]+a.offsetMm,o[1]+start,o[2]]:[o[0]+start,o[1]+a.offsetMm,o[2]], B=a.direction==='x'?[o[0]+a.offsetMm,o[1]+end,o[2]]:[o[0]+end,o[1]+a.offsetMm,o[2]]; line(A,B); content.add(makeLabel(a.label,conv(B,up),maxDim)); }
-  for(const l of (R.levels||[])){ const z=l.elevationMm,c=[o[0]+(x0+x1)/2,o[1]+(y0+y1)/2,z]; line([o[0]+x0,c[1],z],[o[0]+x1,c[1],z]); line([c[0],o[1]+y0,z],[c[0],o[1]+y1,z]); content.add(makeLabel(l.label,conv([o[0]+x1,c[1],z],up),maxDim)); }
+// Grid geometry comes from referenceSystemSegments — already in WORLD space, never conv()'d.
+function addReferenceSystems(S){ for(const R of (S.referenceSystems||[])){ if(!R||R.kind!=='structural-grid')continue;
+  const baseMat=new THREE.LineBasicMaterial({color:0x60a5fa,transparent:true,opacity:0.7});
+  const line=(A,B)=>{const g=new THREE.BufferGeometry().setFromPoints([A,B]);content.add(new THREE.Line(g,baseMat.clone()));};
+  const seg=referenceSystemSegments(R);
+  for(const a of seg.axes){ line(a.a,a.b); content.add(makeLabel(a.label,a.b,maxDim)); }
+  for(const l of seg.levels){ for(const s of l.segments) line(s[0],s[1]); content.add(makeLabel(l.label,l.labelAt,maxDim)); }
 } }
 function addOperations(S,up){ for(const op of (S.operations||[])){ if(!op||op.kind!=='weld'||!Array.isArray(op.path))continue;
   const points=op.path.map(p=>conv(p,up)); if(points.length<2)continue;
@@ -927,7 +970,7 @@ function renderScene(S){
     mesh.userData=e; content.add(mesh); pickable.push(mesh);
   }
   for(const g of (S.grids||[])) if(g&&Array.isArray(g.at)) content.add(makeLabel(g.label, conv(g.at,up), maxDim));
-  addReferenceSystems(S,up);
+  addReferenceSystems(S);
   addOperations(S,up);
   sizeShadowRig();      // needs the finished meshes: the scene bounds are centrelines, not extents
   applyDisplayMode();   // a rebuild makes new lights and materials — re-apply the current mode
@@ -3293,9 +3336,19 @@ mod tests {
             "weld paths must contribute to scene bounds as well as rendering"
         );
         assert!(html.contains("function addReferenceSystems"));
+        // A structural grid is authored in PLAN space (x/y plan axes + an absolute elevation) and has
+        // its own frame, independent of `meta.up`. Routing that through conv(P,up) was a real defect:
+        // on a `meta.up:'y'` scene conv is the identity, so the elevation landed in world Z and every
+        // LEVEL rendered as a vertical plane. This assertion replaces one that pinned the buggy line
+        // ("level elevation is world Z") — in the rendered world, which is always y-up, it is world Y.
+        assert!(html.contains("function referenceSystemSegments"));
         assert!(
-            html.contains("const z=l.elevationMm"),
-            "level elevation is world Z"
+            html.contains("const gridToWorld=(gx,gy,elev)=>new THREE.Vector3(gx,elev,gy);"),
+            "grid elevation maps to world Y, unconditionally — not through conv(P,up)"
+        );
+        assert!(
+            !html.contains("makeLabel(l.label,conv(") && !html.contains("conv(A,up),conv(B,up)"),
+            "grid geometry must never be conv()'d again — that is what broke y-up scenes"
         );
 
         let emitted = out["emitted"].as_array().unwrap();
