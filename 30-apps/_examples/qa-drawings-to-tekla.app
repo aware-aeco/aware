@@ -12,12 +12,22 @@ description: |
   Realistic AECO
   QA workflow shape — software composed from a paragraph.
 
-  NOTE: this app does not pass `aware app validate` yet, and that failure is
-  accurate rather than an oversight — its `file-watch` trigger uses
-  `file.watch`, which is `status: planned` (the builtin file agent implements
-  read / write / write-csv, not watch). Everything else validates, including
-  the Tekla write's safety contract. It starts working the day `file.watch`
-  ships; nothing in this file needs to change for that.
+  NOT RUNNABLE — this is a shape demo, not a working pipeline. It shows the
+  DAG topology (fan-in, fan-out) and the safety contract on the Tekla write;
+  several of its nodes have no implementation behind them yet:
+
+    - `file.watch`      — declared but `status: planned` (the builtin file
+                          agent implements read / write / write-csv, no watch)
+    - `excel`           — no agent manifest in the registry at all
+    - `think-node`      — no agent manifest in the registry at all
+    - `slack.post-message` — the slack agent declares `chat-post-message`
+    - `tekla.insert`    — declared in the manifest, but not dispatched by the
+                          cli-tekla bridge
+
+  `aware app validate` reports only the `file.watch` error, which understates
+  this: it skips unresolved agents and unknown commands entirely, so a clean
+  (or nearly clean) validate does NOT mean an app will run. Treat the list
+  above as the real prerequisite set.
 
 exposes-as-agent: false      # internal pipeline, not meant to be wrapped
 
