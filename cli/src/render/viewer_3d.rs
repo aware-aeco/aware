@@ -40,7 +40,10 @@ const TEMPLATE: &str = r##"<!doctype html>
 <link rel="icon" href="data:," />
 <title>AWARE · viewer-3d</title>
 <style>
-  :root{--bg:#0a0f1a;--panel:rgba(15,23,42,.82);--border:#1e293b;--border-2:#334155;--text:#e2e8f0;--muted:#94a3b8;--accent:#60a5fa;--accent-2:#38bdf8}
+  :root{--bg:#0a0f1a;--panel:rgba(15,23,42,.82);--border:#1e293b;--border-2:#334155;--text:#e2e8f0;--muted:#94a3b8;--accent:#60a5fa;--accent-2:#38bdf8;
+    /* section-editing tokens: a clip plane, a clip box, the armed-pick ghost. Named here so they are
+       part of the documented palette rather than hexes buried in the module. */
+    --clip-plane:#3b82f6;--clip-box:#93c5fd;--clip-ghost:#bfdbfe;--danger:rgba(127,29,29,.55)}
   *{box-sizing:border-box} html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
   #app{position:fixed;inset:0} canvas{display:block}
   .panel{position:absolute;background:var(--panel);border:1px solid var(--border-2);border-radius:12px;backdrop-filter:blur(10px);box-shadow:0 10px 30px rgba(0,0,0,.45)}
@@ -105,10 +108,10 @@ const TEMPLATE: &str = r##"<!doctype html>
      discoverability, not a keyboard trap. */
   #clips .cren,#clips .cdel{width:24px;height:24px;flex:none;color:var(--muted);opacity:0}
   #clips .crow:hover .cren,#clips .crow:hover .cdel,#clips .cren:focus-visible,#clips .cdel:focus-visible{opacity:1}
-  #clips .cdel:hover{background:rgba(127,29,29,.55);color:var(--text)}
+  #clips .cdel:hover{background:var(--danger);color:var(--text)}
   #clips .cedit{flex:1;min-width:0;background:rgba(2,8,23,.6);border:1px solid var(--accent);border-radius:5px;color:var(--text);font:12px system-ui;font-family:inherit;padding:2px 4px;outline:none}
-  #clips .cedit[aria-invalid=true]{border-color:#7f1d1d}
-  #clips .cerr{color:var(--text);background:rgba(127,29,29,.55);border-radius:5px;font-size:11px;margin:2px 0 4px;padding:3px 6px}
+  #clips .cedit[aria-invalid=true]{border-color:rgba(127,29,29,.9)}
+  #clips .cerr{color:var(--text);background:var(--danger);border-radius:5px;font-size:11px;margin:2px 0 4px;padding:3px 6px}
   /* Theme the scroll container — a native light scrollbar on a dark panel is exactly the leak the
      house rule calls out. Firefox gets the standard properties, WebKit the pseudo-elements. */
   #legend.objects .obody{scrollbar-width:thin;scrollbar-color:var(--border-2) transparent}
@@ -959,12 +962,15 @@ function expandSceneBounds(box,S,up){ const add=P=>{if(vec3(P))box.expandByPoint
   for(const op of (S.operations||[])){ if(op&&op.kind==='weld'&&Array.isArray(op.path))for(const p of op.path)add(p); }
 }
 // Grid geometry comes from referenceSystemSegments — already in WORLD space, never conv()'d.
-function addReferenceSystems(S){ for(const R of (S.referenceSystems||[])){ if(!R||R.kind!=='structural-grid')continue;
+let gridLines=[];
+function addReferenceSystems(S){ gridLines=[]; for(const R of (S.referenceSystems||[])){ if(!R||R.kind!=='structural-grid')continue;
   const baseMat=new THREE.LineBasicMaterial({color:0x60a5fa,transparent:true,opacity:0.7});
-  const line=(A,B)=>{const g=new THREE.BufferGeometry().setFromPoints([A,B]);content.add(new THREE.Line(g,baseMat.clone()));};
+  const line=(A,B,role)=>{const g=new THREE.BufferGeometry().setFromPoints([A,B]);
+    const ln=new THREE.Line(g,baseMat.clone()); ln.userData={gridRole:role, a:A.toArray(), b:B.toArray()};
+    content.add(ln); gridLines.push(ln);};
   const seg=referenceSystemSegments(R);
-  for(const a of seg.axes){ line(a.a,a.b); content.add(makeLabel(a.label,a.b,maxDim)); }
-  for(const l of seg.levels){ for(const s of l.segments) line(s[0],s[1]); content.add(makeLabel(l.label,l.labelAt,maxDim)); }
+  for(const a of seg.axes){ line(a.a,a.b,'axis'); content.add(makeLabel(a.label,a.b,maxDim)); }
+  for(const l of seg.levels){ for(const s of l.segments) line(s[0],s[1],'level'); content.add(makeLabel(l.label,l.labelAt,maxDim)); }
 } }
 function addOperations(S,up){ for(const op of (S.operations||[])){ if(!op||op.kind!=='weld'||!Array.isArray(op.path))continue;
   const points=op.path.map(p=>conv(p,up)); if(points.length<2)continue;
@@ -1272,6 +1278,7 @@ let gesture=null;        // null | 'clip-place' | 'clip-handle' | 'box-select'
 let gestureToken=0;      // bumped on every start/end — a queued frame carrying a stale token is a no-op
 let boxStart=null;       // box-select anchor
 let clipDrag=null;       // the live handle drag (source geometry is mutated in place; prePoint/preBox revert it)
+let gesturePointerId=null, placeMode=null;   // the owning pointer, and the mode snapshotted at press
 let pendingPointer=null, pointerRAF=0;
 // Raw pointer events outrun the display. Coalesce to at most one unit of work per frame — otherwise
 // every event raycasts, runs clipping tests, re-derives planes and re-points the renderer's array.
@@ -1311,7 +1318,7 @@ function dragClipHandle(cx,cy){ if(!clipDrag) return;
     // Keep min < max: a face dragged past its opposite would invert the box.
     if(f.sign>0) c.box.max[f.axis]=Math.max(val,c.box.min[f.axis]+1);
     else c.box.min[f.axis]=Math.min(val,c.box.max[f.axis]-1); }
-  rebuildClipPlanes(c); applyClips(); renderClipGizmo();
+  rebuildClipPlanes(c); applyClips(); updateClipGizmoAnchors();
   const amount=clipDrag.plane?delta:(c.box.max[clipDrag.face.axis]-c.box.min[clipDrag.face.axis]);
   readout.replaceChildren(el('b',null,(amount/304.8).toFixed(2)+' ft'),
     document.createTextNode(clipDrag.plane?' ⟂':' '+clipDrag.face.axis.toUpperCase())); }
@@ -1328,23 +1335,29 @@ function endGesture(revert){
   cancelPointerWork();
   rubber.style.display='none';
   if(wasHandle&&revert) revertClipDrag();
-  clipDrag=null; boxStart=null;
+  clipDrag=null; boxStart=null; gesturePointerId=null; placeMode=null;
   controls.enabled=true;
   refreshReadout(); }
 renderer.domElement.addEventListener('pointerdown', e=>{ if(e.button!==0) return;
-  gestureToken++;
-  if(clipMode){ gesture='clip-place'; }   // an armed clip mode owns the click before anything else
+  // A second primary press while a gesture is live would re-decide ownership and re-capture
+  // prePoint/preBox from ALREADY-MUTATED geometry, so a later Escape would "revert" to the
+  // half-applied state — the exact failure the single owner exists to prevent.
+  if(gesture) return;
+  gestureToken++; gesturePointerId=e.pointerId;
+  // Snapshot the armed mode. Reading the live `clipMode` on release let an Escape pressed while the
+  // button was still down disarm the tool and then fall through to placing a plane anyway.
+  if(clipMode){ gesture='clip-place'; placeMode=clipMode; }
   else { const h=selectedClipIds.size?pickClipHandle(e.clientX,e.clientY):null;
     if(h&&beginClipHandleDrag(h,e.clientX,e.clientY)){ gesture='clip-handle'; controls.enabled=false; }
     else { gesture='box-select'; boxStart={x:e.clientX,y:e.clientY}; } }
   try{ renderer.domElement.setPointerCapture(e.pointerId); }catch{}   // release off-canvas must still reach us
 });
 renderer.domElement.addEventListener('pointermove', e=>schedulePointerWork(e));
-renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!gesture) return;
+renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!gesture||e.pointerId!==gesturePointerId) return;
   flushPointerWork();   // the last few millimetres of a drag are part of the result
   const g=gesture;
-  if(g==='clip-place'){
-    if(clipMode==='box') onClipBoxClick(e.clientX,e.clientY);
+  if(g==='clip-place'&&placeMode&&clipMode===placeMode){
+    if(placeMode==='box') onClipBoxClick(e.clientX,e.clientY);
     // One plane per command; a MISS keeps it armed to retry. (This used to stay armed on success
     // under a comment claiming parity with floless — floless does
     // `if (addClipPlaneAtScreen(...)) setClipMode(null)`, so the comment asserted a parity that did
@@ -1356,10 +1369,18 @@ renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!gesture
     else { setSelectedClips([]); pickAt(e.clientX,e.clientY); }   // a canvas pick also drops any clip selection
   }
   endGesture(false); });   // pointerup COMMITS
-// A cancel or an unexpected capture loss REVERTS — the drag mutated live geometry.
-renderer.domElement.addEventListener('pointercancel', ()=>endGesture(true));
-renderer.domElement.addEventListener('lostpointercapture', ()=>endGesture(true));
-renderer.domElement.addEventListener('pointerleave', ()=>{ if(!gesture&&clipMode==='plane') setClipPlanePreview(null,null); });
+// pointercancel is the ONLY revert: the drag mutated live geometry and the gesture is genuinely over.
+renderer.domElement.addEventListener('pointercancel', e=>{ if(e.pointerId===gesturePointerId) endGesture(true); });
+// Capture loss is NOT cancellation. OrbitControls binds capture on the SAME element and pointer id,
+// and its pointerup handler has no `enabled` guard — so pressing a second mouse button during a clip
+// drag makes it release OUR capture, which as a revert silently discarded the user's live edit.
+// Re-acquire instead, and only give up if that fails.
+renderer.domElement.addEventListener('lostpointercapture', e=>{
+  if(!gesture||e.pointerId!==gesturePointerId) return;
+  try{ renderer.domElement.setPointerCapture(e.pointerId); }catch{ endGesture(true); } });
+renderer.domElement.addEventListener('pointerleave', ()=>{ if(gesture) return;
+  if(clipMode==='plane') setClipPlanePreview(null,null);
+  else if(clipMode==='box') clearClipDrawHints(); });   // leaving mid-draw must not strand the reticle + footprint
 
 // ---- clip planes / boxes + work area (Tekla-style sectioning) ----
 // Sectioning lives in renderer.clippingPlanes (GLOBAL), so it clips the grid + every element like
@@ -1459,6 +1480,7 @@ function getClips(){ return clips.map(c=>({ id:c.id, kind:c.kind, enabled:c.enab
 // ---- clip visuals: hover ghost + the manipulator ----------------------------------------------
 // ALL of it lives in overlayScene, which renders in a 2nd pass with clipping OFF. A gizmo added to
 // `scene` would be sectioned by the very planes it exists to move.
+// Mirrors of the --clip-* palette tokens (Three.js needs numbers, CSS needs the hex).
 const CLIP_PLANE_COLOR=0x3b82f6, CLIP_BOX_COLOR=0x93c5fd, CLIP_PREVIEW_COLOR=0xbfdbfe;
 const CLIP_PATCH_R=304.8;   // 1 ft half-size → a 2'×2' marker. Ghost and placed outline share it, so the preview sits exactly where the click will land.
 const _UPV=new THREE.Vector3(0,1,0), _XV=new THREE.Vector3(1,0,0), _ZV=new THREE.Vector3(0,0,1);
@@ -1552,6 +1574,24 @@ function renderClipGizmo(){ clearClipGizmo();
       outline.material.depthTest=false; outline.renderOrder=996; clipGizmo.add(outline);
       addHandle(hp,c.n.clone(),{plane:true,clipId:c.id},CLIP_PLANE_COLOR); } }
   sizeClipHandles(); }
+// Re-anchor the existing handles to the mutated geometry. Only the anchors move during a drag, so
+// the full renderClipGizmo() (which disposes and reallocates every geometry and material) is for
+// selection changes, not for every frame of a drag.
+function updateClipGizmoAnchors(){ if(!clipGizmo) return;
+  for(const h of clipGizmo.children){ const ud=h.userData; if(!ud) continue;
+    const c=ud.clipId?findClip(ud.clipId):null; if(!c) continue;
+    let anchor=null;
+    if(ud.plane) anchor=c.point.clone();
+    else if(ud.face&&c.box){ const ctr=c.box.getCenter(new THREE.Vector3());
+      anchor=ctr.clone(); anchor[ud.face.axis]=ud.face.sign>0?c.box.max[ud.face.axis]:c.box.min[ud.face.axis]; }
+    if(!anchor) continue;
+    if(ud.disc) h.position.copy(anchor);
+    ud.baseHp=anchor; }
+  // The stems carry no clipId, so re-anchor them from their sibling handle's normal + the same rule.
+  for(const h of clipGizmo.children){ const ud=h.userData; if(!ud||!ud.clipStem) continue;
+    const near=clipGizmo.children.find(o=>o.userData&&o.userData.clipHandle&&o.userData.normal&&o.userData.normal.equals(ud.normal));
+    if(near&&near.userData.baseHp) ud.baseHp=near.userData.baseHp.clone(); }
+  sizeClipHandles(); }
 function sizeClipHandles(){ if(!clipGizmo) return;
   for(const h of clipGizmo.children){ const ud=h.userData; if(!ud) continue;
     if(ud.arrow){ const off=pxToWorldAt(34,ud.baseHp);
@@ -1602,14 +1642,21 @@ const isFixedCand=c=>c.type==='vertex'||c.type==='intersection'||c.type==='midpo
 function toScreenPt(p){ const v=new THREE.Vector3(p[0],p[1],p[2]).project(camera);
   return { x:(v.x*0.5+0.5)*innerWidth, y:(-v.y*0.5+0.5)*innerHeight }; }
 // Snap `dragged` to the nearest candidate within tolPx SCREEN pixels.
-function snapPoint(dragged,candidates,tolPx){
+// `proj` is the projection cache for THESE candidates, passed explicitly. It used to be read off a
+// module global, which silently indexed one array's cache with another array's positions the moment
+// a second candidate set (the height levels) was passed — so a level snapped whenever some unrelated
+// vertex happened to project near the cursor. Out of range it was worse: clipProj[i*2] is undefined,
+// d becomes NaN, `NaN > tolPx` is FALSE so the candidate was never skipped, and it then won the sort.
+function snapPoint(dragged,candidates,tolPx,proj){
+  const cache=(proj&&proj.length>=candidates.length*2)?proj:null;
   const ds=toScreenPt(dragged), hits=[];
   for(let i=0;i<candidates.length;i++){ const c=candidates[i];
     const p=candidatePoint(c,dragged);
     // Fixed candidates project to a constant screen point, so their projection is cached and only
     // recomputed when the camera changes; the line types depend on `dragged` and cannot be.
-    const s=(isFixedCand(c)&&clipProj)?{x:clipProj[i*2],y:clipProj[i*2+1]}:toScreenPt(p);
-    const d=Math.hypot(s.x-ds.x,s.y-ds.y); if(d>tolPx) continue;
+    const s=(isFixedCand(c)&&cache)?{x:cache[i*2],y:cache[i*2+1]}:toScreenPt(p);
+    const d=Math.hypot(s.x-ds.x,s.y-ds.y);
+    if(!(d<=tolPx)) continue;   // NOT `d>tolPx`: that lets a NaN through
     hits.push({c,p,d,rank:PRECEDENCE[c.type]??9}); }
   if(!hits.length) return { snapped:dragged, candidate:null };
   // Distance first, in ~1.5px buckets so a near-tie falls through to precedence.
@@ -1688,7 +1735,12 @@ function buildClipCandidates(){
     const gx=Math.abs(g.a.x-g.b.x)<1e-6, hx=Math.abs(h.a.x-h.b.x)<1e-6;
     if(gx===hx) continue;
     const vert=gx?g:h, horiz=gx?h:g;
-    push('grid-int',[vert.a.x,fy,horiz.a.z]); }
+    const x=vert.a.x, z=horiz.a.z;
+    // An axis may carry its own startMm/endMm, so two axes of different directions do not necessarily
+    // cross where their infinite lines would. Snapping there points at nothing on screen.
+    const within=(lo,hi,v)=>v>=Math.min(lo,hi)-1e-6&&v<=Math.max(lo,hi)+1e-6;
+    if(!within(vert.a.z,vert.b.z,z)||!within(horiz.a.x,horiz.b.x,x)) continue;
+    push('grid-int',[x,fy,z]); }
   return out; }
 // Height levels: every distinct element-endpoint elevation, PLUS any authored grid datums. Grid
 // levels alone would leave a model with no structural grid unable to snap to its own steel.
@@ -1700,16 +1752,18 @@ function buildClipLevels(){
     for(const l of referenceSystemSegments(R).levels) ys.add(Math.round(l.y*1000)/1000); }
   // A level below the floor would produce a downward box.
   return [...ys].filter(y=>y>=fy+1).sort((a,b)=>a-b); }
-function clipDrawCands(){ if(!clipSnapCands){ try{ clipSnapCands=buildClipCandidates(); }catch{ clipSnapCands=[]; } clipProj=null; }
+function clipDrawCands(){ if(!clipSnapCands){ try{ clipSnapCands=buildClipCandidates(); }
+    catch(e){ console.warn('viewer-3d: snap candidates unavailable —',e); clipSnapCands=[]; } clipProj=null; }
   if(!clipProj) buildClipProjection(clipSnapCands);
   return clipSnapCands; }
-function clipDrawLevels(){ if(!clipLevels){ try{ clipLevels=buildClipLevels(); }catch{ clipLevels=[]; } } return clipLevels; }
+function clipDrawLevels(){ if(!clipLevels){ try{ clipLevels=buildClipLevels(); }
+    catch(e){ console.warn('viewer-3d: height levels unavailable —',e); clipLevels=[]; } } return clipLevels; }
 // A footprint corner: the floor point under the cursor, pulled to a snap when one is screen-near.
 // Only the PLAN components are kept — the corner rides the floor plane — but `world` carries the
 // full snapped point so the reticle can sit at the real target.
 function clipBoxFloorPoint(cx,cy){
   const fy=clipBoxFloorY(), g=rayToFloor(cx,cy,fy); if(!g) return null;
-  const r=snapPoint(g,clipDrawCands(),SNAP_TOL_PX);
+  const r=snapPoint(g,clipDrawCands(),SNAP_TOL_PX,clipProj);
   return r.candidate ? { xz:[r.snapped[PLAN_I[0]],r.snapped[PLAN_I[1]]], snap:r.candidate.type, world:r.snapped }
                      : { xz:[g[PLAN_I[0]],g[PLAN_I[1]]], snap:null, world:g }; }
 // The box top, pulled along the vertical line through the footprint centre. `usable` is false in an
@@ -1722,6 +1776,8 @@ function clipBoxHeightAt(cx,cy){
   if(Math.hypot(s1.x-s0.x,s1.y-s0.y)<4) return { y:fy+1, snap:null, usable:false };
   const raw=fy+Math.max(lineClosestT(base,_UPV,rayAt(cx,cy)),1);
   const levels=clipDrawLevels().map(y=>({type:'level',p:[mx,y,mz]}));
+  // Level candidates sit at the CURRENT footprint centre, so they move with the draft and are not
+  // cacheable at all — pass no cache rather than a mismatched one.
   const r=snapPoint([mx,raw,mz],levels,SNAP_TOL_PX);
   // Re-clamp AFTER snapping: an accepted level below the floor would invert the box.
   const y=Math.max(r.candidate?r.snapped[UP_I]:raw, fy+1);
@@ -1730,7 +1786,7 @@ function clipBoxHeightAt(cx,cy){
 // A camera-facing reticle whose glyph names the snap type — a bare dot vanishes against dark
 // background and coloured steel. Screen-constant, and depthTest/depthWrite OFF: the overlay pass
 // reuses the main depth buffer, so living in overlayScene is not on its own enough to stay visible.
-const RETICLE_PX=44, RETICLE_COLOR='#22d3ee';
+const RETICLE_PX=44, RETICLE_COLOR='#38bdf8';   // --accent-2, the palette's cyan
 const reticleTex={};
 function reticleFor(type){
   const key=type||'dot'; if(reticleTex[key]) return reticleTex[key];
@@ -1778,7 +1834,7 @@ function clipBoxPreviewAt(cx,cy){
     const h=clipBoxHeightAt(cx,cy);
     showReticle(h.snap,'level');
     setClipPreview(clipBoxFrom(clipBoxDraft.a,clipBoxDraft.b,fy,h.y));
-    if(!h.usable) setClipDrawPrompt('axial');
+    setClipDrawPrompt(h.usable?'h':'axial');
   } }
 function setClipDrawPrompt(stage){
   const say=(b,rest)=>readout.replaceChildren(el('b',null,b),document.createTextNode(rest));
@@ -1839,20 +1895,35 @@ function showClipRenameError(row,inp,msg){
   inp.setAttribute('aria-invalid','true'); inp.setAttribute('aria-describedby',err.id);
   row.after(err); inp.focus();
 }
+// Rebuilding the rows destroys focus, so remember WHICH control on WHICH clip had it and put it
+// back. Without this, toggling a clip with Space or finishing an F2 rename throws a keyboard user
+// to the top of the tab order — the F2 affordance exists for exactly those users.
+function clipFocusKey(){ const a=document.activeElement;
+  if(!a||!clipsPanel||!clipsPanel.contains(a)) return null;
+  const row=a.closest('.crow'); if(!row) return null;
+  const cls=['cvis','cpick','cren','cdel','cedit'].find(k=>a.classList.contains(k));
+  return cls?{id:row.dataset.clipId,cls}:null; }
+function restoreClipFocus(key){ if(!key||!clipsPanel) return;
+  let el2=clipsPanel.querySelector(`.crow[data-clip-id="${key.id}"] .${key.cls}`);
+  // The clip is gone (deleted) — keep focus in the panel rather than dropping it on the document.
+  if(!el2) el2=clipsPanel.querySelector('.crow .cpick');
+  if(el2) el2.focus(); }
 function refreshClipList(){
   if(!clipsPanel) return;
+  const focusKey=clipFocusKey();
   clipsPanel.classList.toggle('show',clips.length>0);
   if(!clips.length){ clipsPanel.replaceChildren(); clipEditingId=null; return; }
   const head=el('div','csec','Clips');
   const body=el('div','cbody');
   for(const c of clips){
     const row=el('div','crow'+(selectedClipIds.has(c.id)?' sel':''));
+    row.dataset.clipId=c.id;
     const kind=c.kind==='plane'?'Plane clip':'Box clip';
     const box=el('button','cvis'); box.type='button';
     box.setAttribute('role','checkbox'); box.setAttribute('aria-checked',c.enabled?'true':'false');
     box.setAttribute('aria-label','Enable or disable — '+c.label);
     box.setAttribute('data-tip','Turn cutting on/off (keeps the clip)');
-    const sw=el('span','cswatch'); sw.style.setProperty('--sw',c.kind==='plane'?'#3b82f6':'#93c5fd');
+    const sw=el('span','cswatch'); sw.style.setProperty('--sw',c.kind==='plane'?'var(--clip-plane)':'var(--clip-box)');
     box.append(sw);
     box.addEventListener('click',ev=>{ ev.stopPropagation(); toggleClip(c.id); });
     if(clipEditingId===c.id){
@@ -1888,6 +1959,7 @@ function refreshClipList(){
     body.append(row);
   }
   clipsPanel.replaceChildren(head,body,el('div','chint','Box shows / hides · F2 renames · Del removes the selected'));
+  restoreClipFocus(focusKey);
 }
 // Arm/disarm the face-pick: 'plane' → next left-click on a face drops a plane; null → back to selecting.
 function setClipPrompt(){ if(clipMode==='box'){ setClipDrawPrompt(!clipBoxDraft?'a':(clipBoxDraft.b?'h':'b')); return; }
@@ -2142,6 +2214,9 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   // The basis guard's silent failure mode is a VERTICAL cut, so a test needs the corners themselves.
   planePatchCorners:(hp,n)=>planePatchCorners(new THREE.Vector3(hp[0],hp[1],hp[2]),new THREE.Vector3(n[0],n[1],n[2]).normalize(),CLIP_PATCH_R).map(v=>v.toArray()),
   clipGhostShown:()=>!!(clipGhost&&clipGhost.group.visible),
+  controlsEnabled:()=>controls.enabled,
+  // What was actually DRAWN, so a test is not limited to interrogating the transform that fed it.
+  gridRenderables:()=>gridLines.map(l=>({role:l.userData.gridRole,a:l.userData.a,b:l.userData.b})),
   referenceSystemSegments:()=>(SCENE.referenceSystems||[]).filter(R=>R&&R.kind==='structural-grid').map(R=>{
     const s=referenceSystemSegments(R);
     return { axes:s.axes.map(a=>({label:a.label,direction:a.direction,a:a.a.toArray(),b:a.b.toArray()})),
@@ -4832,9 +4907,14 @@ mod tests {
             html.contains("_camPt.copy(pos).applyMatrix4(camera.matrixWorldInverse);"),
             "pxToWorldAt uses camera-space depth, not distanceTo"
         );
+        // Scope the negative guard to pxToWorldAt itself. Pinned to a bare identifier it could never
+        // fire — that exact string has never existed here — while `camera.position.distanceTo` IS
+        // legitimately used by reframeOrtho and must stay.
+        let px_fn = &html[html.find("function pxToWorldAt").unwrap()..];
+        let px_body = &px_fn[..px_fn.find("function rayAt").unwrap()];
         assert!(
-            !html.contains("camera.position.distanceTo(p3)"),
-            "the Euclidean sizing must not come back"
+            !px_body.contains("distanceTo"),
+            "pxToWorldAt must not go back to Euclidean camera distance"
         );
         for f in [
             "function renderClipGizmo",
@@ -4881,20 +4961,36 @@ mod tests {
             html.contains("if(p&&p.token===gestureToken) doPointerWork(p.x,p.y); }); }"),
             "a stale queued frame is a no-op"
         );
-        // pointerup COMMITS (and must flush the last queued move first); cancel / capture loss REVERT.
+        // pointerup COMMITS, and must flush the last queued move first.
         assert!(
             html.contains(
                 "flushPointerWork();   // the last few millimetres of a drag are part of the result"
             ),
             "pointerup flushes before committing"
         );
+        // pointercancel reverts. Capture LOSS must not: OrbitControls binds capture on the same
+        // element and pointer id and releases it with no `enabled` guard, so pressing a second mouse
+        // button mid-drag made it drop our capture — treated as a revert, that silently discarded a
+        // live edit. Re-acquire instead.
         assert!(
-            html.contains(
-                "renderer.domElement.addEventListener('pointercancel', ()=>endGesture(true));"
-            ) && html.contains(
-                "renderer.domElement.addEventListener('lostpointercapture', ()=>endGesture(true));"
-            ),
-            "cancel and capture loss revert a live drag"
+            html.contains("renderer.domElement.addEventListener('pointercancel', e=>{ if(e.pointerId===gesturePointerId) endGesture(true); });"),
+            "pointercancel reverts the live drag"
+        );
+        assert!(
+            html.contains("try{ renderer.domElement.setPointerCapture(e.pointerId); }catch{ endGesture(true); } });"),
+            "capture loss re-acquires rather than cancelling"
+        );
+        // A second primary press must not re-baseline a live drag's revert state.
+        assert!(
+            html.contains("if(gesture) return;")
+                && html.contains("gestureToken++; gesturePointerId=e.pointerId;"),
+            "pointerdown is re-entrancy guarded and records its owning pointer"
+        );
+        // The armed mode is snapshotted at press, or an Escape while the button is still down
+        // disarms the tool and then places a plane anyway on release.
+        assert!(
+            html.contains("if(g==='clip-place'&&placeMode&&clipMode===placeMode){"),
+            "a cancelled arm cannot still commit on release"
         );
         // endGesture clears ownership FIRST: releasePointerCapture itself fires lostpointercapture,
         // so a non-idempotent handler would revert the drag it had just committed.

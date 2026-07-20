@@ -8,7 +8,7 @@
 //
 // Usage:  node cli/tests/browser/run.mjs
 
-import { execFileSync, spawnSync } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
 import { createServer } from 'node:http';
 import { mkdtempSync, rmSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -41,6 +41,8 @@ function parseCheckTemplate() {
   // `new Function` here COMPILES but never runs the body, and the input is this repo's own source
   // file — anyone able to change it already has code execution. It is a parse check, not an eval of
   // anything external; the alternative is adding a JS parser dependency to a Rust repo.
+  // An empty slice would compile happily and report PASS, so prove the extraction found something.
+  if (js.length < 5000) { ok('template module script parses', false, `extraction produced only ${js.length} chars — the script markers moved`); return; }
   try { new Function(js); ok('template module script parses', true); }
   catch (e) { ok('template module script parses', false, e.message); }
 }
@@ -84,7 +86,11 @@ const frameScene = (up) => {
       axes: [{ id: 'GA-A', direction: 'x', offsetMm: 0, label: 'A' },
              { id: 'GA-B', direction: 'x', offsetMm: 6000, label: 'B' },
              { id: 'GA-1', direction: 'y', offsetMm: 0, label: '1' }],
-      levels: [{ id: 'GL-1', elevationMm: 4000, label: 'ROOF' }],
+      // FOOTING sits well below the steel on purpose: it is what makes the draw-floor assertion
+      // real. With only ROOF, sceneBox.min and the mesh floor coincide and substituting one for the
+      // other would still pass.
+      levels: [{ id: 'GL-0', elevationMm: -3000, label: 'FOOTING' },
+               { id: 'GL-1', elevationMm: 4000, label: 'ROOF' }],
     }],
   };
 };
@@ -103,17 +109,15 @@ function serve(pages) {
 // anything — on the one machine where that matters. Fail with the install command, not a stack.
 const PW_VERSION = '1.49.1';
 async function loadPlaywright() {
-  try { return (await import('playwright')).chromium; }
-  catch { /* fall through to the pinned local install */ }
-  const probe = spawnSync('npx', ['--yes', `playwright@${PW_VERSION}`, '--version'],
-    { stdio: 'pipe', shell: process.platform === 'win32' });
-  if (probe.status !== 0) {
-    console.error(`\nSETUP: Playwright is not available.\n  npm i -D playwright@${PW_VERSION} && npx playwright@${PW_VERSION} install chromium\n`);
-    process.exit(2);
-  }
+  // Deliberately NOT an `npx` probe. npx RUNS a package; it does not install it where a later
+  // `import('playwright')` resolves — so probing it reports "available" and the import fails anyway,
+  // which is worse than failing honestly. Either it imports from this directory's own node_modules,
+  // or we name the exact prerequisite and stop.
   try { return (await import('playwright')).chromium; }
   catch (e) {
-    console.error(`\nSETUP: Playwright resolved but could not be imported: ${e.message}\n  npm i -D playwright@${PW_VERSION}\n`);
+    console.error(['', 'SETUP: Playwright is not installed for this gate.',
+      `  cd ${HERE}`, '  npm install', `  npx playwright@${PW_VERSION} install chromium`,
+      `  (${e.code || e.message})`, ''].join('\n'));
     process.exit(2);
   }
 }
@@ -149,13 +153,27 @@ async function loadPlaywright() {
       console.log(`\n${up}-up scene:`);
       const { page, errors } = await open(`/${up}up.html`);
       const grids = await page.evaluate('window.__viewer3d.referenceSystemSegments()');
-      const level = grids[0].levels[0];
+      const level = grids[0].levels.find((l) => l.label === 'ROOF');
       const ys = level.segments.flat().map((p) => p[1]);
       ok(`${up}-up: a grid level is horizontal`, ys.every((y) => near(y, ys[0])), `world Y = ${ys.join(', ')}`);
       ok(`${up}-up: the level sits at its elevation`, near(level.y, 4000) && near(ys[0], 4000), `y=${level.y}`);
+      const footing = grids[0].levels.find((l) => l.label === 'FOOTING');
+      ok(`${up}-up: a datum BELOW the steel is horizontal too`,
+        near(footing.y, -3000) && footing.segments.flat().every((p) => near(p[1], -3000)), `y=${footing.y}`);
       // A level that is horizontal must span the two PLAN axes and not the vertical one.
       const spans = level.segments.map((s) => [s[1][0] - s[0][0], s[1][1] - s[0][1], s[1][2] - s[0][2]]);
       ok(`${up}-up: level spans plan axes only`, spans.every((d) => near(d[1], 0)), JSON.stringify(spans));
+      // Interrogating the transform alone would stay green if rendering dropped or re-transformed
+      // the grid, so assert what was actually DRAWN.
+      const drawn = await page.evaluate('window.__viewer3d.gridRenderables()');
+      const drawnLevels = drawn.filter((l) => l.role === 'level');
+      const drawnAxes = drawn.filter((l) => l.role === 'axis');
+      ok(`${up}-up: grid lines are rendered`, drawnAxes.length === 3 && drawnLevels.length === 4,
+        `${drawnAxes.length} axes / ${drawnLevels.length} level segments`);
+      ok(`${up}-up: the RENDERED roof level is horizontal at 4000`,
+        drawnLevels.filter((l) => near(l.a[1], 4000)).length === 2 &&
+        drawnLevels.filter((l) => near(l.a[1], 4000)).every((l) => near(l.a[1], l.b[1])),
+        JSON.stringify(drawnLevels.map((l) => [l.a[1], l.b[1]])));
       ok(`${up}-up: console clean`, errors.length === 0, errors.join(' | '));
       await page.close();
     }
@@ -171,12 +189,20 @@ async function loadPlaywright() {
     ok('a new clip is auto-selected', clips[0].selected === true);
     const before = clips[0].box.max[1];
 
-    // Disabling stops it cutting without deleting it.
+    // Disabling stops it CUTTING, not just counting: assert a point outside the box is actually
+    // reported clipped while it is on, and not while it is off. Counting planes alone would pass
+    // with reversed normals or with renderer clipping disabled entirely.
+    const inside = [3000, 2000, 0];
+    const outside = [3000, 20000, 0];
+    ok('a point outside the box is clipped', (await V(`window.__viewer3d.pointClipped([${outside}])`)) === true);
+    ok('a point inside the box is not', (await V(`window.__viewer3d.pointClipped([${inside}])`)) === false);
     await V(`window.__viewer3d.toggleClip('${clips[0].id}', false)`);
     ok('disabled clip contributes no planes', (await V('window.__viewer3d.clipPlanes()')) === 0);
+    ok('disabled clip stops clipping', (await V(`window.__viewer3d.pointClipped([${outside}])`)) === false);
     ok('disabled clip still exists', (await V('window.__viewer3d.getClips()')).length === 1);
     await V(`window.__viewer3d.toggleClip('${clips[0].id}', true)`);
     ok('re-enabled clip cuts again', (await V('window.__viewer3d.clipPlanes()')) === 6);
+    ok('re-enabled clip clips again', (await V(`window.__viewer3d.pointClipped([${outside}])`)) === true);
 
     // Rename rejects blank and case-insensitive duplicates.
     ok('rename accepts a new name', (await V(`window.__viewer3d.renameClip('${clips[0].id}','Roof cut')`)) === true);
@@ -211,9 +237,41 @@ async function loadPlaywright() {
       ok('the opposite face did not', near(after.min[1], clips[0].box.min[1], 1));
     }
 
+    // ---- Escape mid-drag reverts, and leaves nothing stuck ------------------------------------
+    // Previously only string-asserted, so a broken rollback or a stranded controls.enabled=false
+    // would have passed.
+    // Start from a FRESH clip: the drag above pushed the +Y handle up to y≈42, which is underneath
+    // the toolbar overlay — the canvas never sees a pointerdown there. `usable` below keeps that
+    // trap from recurring silently.
+    await V('window.__viewer3d.clearClips()');
+    await V('window.__viewer3d.addClipBox(0)');
+    const fresh = (await V('window.__viewer3d.getClips()'))[0];
+    await V(`window.__viewer3d.setSelectedClips(['${fresh.id}'])`);
+    const usable = (h) => !h.behind && h.y > 110 && h.y < 800 && h.x > 40 && h.x < 1240;   // clear of the toolbar and the panels
+    const h2 = (await V('window.__viewer3d.clipHandlesScreen()')).find((h) => h.arrow && usable(h));
+    if (h2) {
+      const boxBefore = (await V('window.__viewer3d.getClips()'))[0].box;
+      await page.mouse.move(h2.x, h2.y);
+      await page.mouse.down();
+      await page.mouse.move(h2.x, h2.y - 60, { steps: 8 });
+      ok('a live drag disables orbit', (await V('window.__viewer3d.controlsEnabled()')) === false);
+      ok('the drag is reported live', (await V('window.__viewer3d.gestureState()')).dragging === true);
+      await page.keyboard.press('Escape');
+      const boxAfter = (await V('window.__viewer3d.getClips()'))[0].box;
+      ok('Escape reverts the dragged geometry',
+        near(boxAfter.min[0], boxBefore.min[0], 0.001) && near(boxAfter.max[0], boxBefore.max[0], 0.001) &&
+        near(boxAfter.min[1], boxBefore.min[1], 0.001) && near(boxAfter.max[1], boxBefore.max[1], 0.001) &&
+        near(boxAfter.min[2], boxBefore.min[2], 0.001) && near(boxAfter.max[2], boxBefore.max[2], 0.001),
+        JSON.stringify({ boxBefore, boxAfter }));
+      ok('Escape clears the gesture', (await V('window.__viewer3d.gestureState()')).gesture === null);
+      ok('Escape restores orbit', (await V('window.__viewer3d.controlsEnabled()')) === true);
+      await page.mouse.up();
+      ok('the stray release changes nothing', (await V('window.__viewer3d.gestureState()')).gesture === null);
+    } else { ok('a draggable handle was clear of the chrome for the revert case', false); }
+
     // Delete removes only the selected clip.
     await V('window.__viewer3d.deleteSelectedClips()');
-    ok('delete removes the selected clip', (await V('window.__viewer3d.getClips()')).length === 1);
+    ok('delete removes the selected clip', (await V('window.__viewer3d.getClips()')).length === 0);
     await V('window.__viewer3d.clearClips()');
 
     // ---- the plane-patch basis guard -----------------------------------------------------------
@@ -237,7 +295,9 @@ async function loadPlaywright() {
     await V("window.__viewer3d.setClipMode('box')");
     ok('the draw arms', (await V('window.__viewer3d.clipMode()')) === 'box');
     const floorY = await V('window.__viewer3d.clipDrawFloorY()');
-    ok('the draw floor is the model floor, not a grid datum', near(floorY, 0, 1), `floorY=${floorY}`);
+    // The grid carries a FOOTING datum at -3000; the steel bottoms out at 0. sceneBox includes the
+    // datum, so this only passes if the floor comes from the meshes.
+    ok('the draw floor is the model floor, not the -3000 grid datum', near(floorY, 0, 1), `floorY=${floorY}`);
     // Two corners far apart in plan, then a height. Screen positions come from the viewer's own
     // projection so the test does not re-derive it.
     const s1 = await V('window.__viewer3d.worldToScreen([-1000,0,-1000])');
@@ -245,18 +305,28 @@ async function loadPlaywright() {
     await page.mouse.click(s1.x, s1.y);
     ok('first corner accepted', (await V('window.__viewer3d.gestureState()')).draft === 'footprint');
     // A second corner sharing a plan coordinate is a zero-width footprint and must be refused.
-    const sameRow = await V('window.__viewer3d.worldToScreen([-1000,0,-1000])');
-    await page.mouse.click(sameRow.x, sameRow.y);
-    ok('a zero-extent second corner is refused', (await V('window.__viewer3d.gestureState()')).draft === 'footprint');
+    // Shares X with the first corner but not Z: exactly one plan extent is zero. floless's `&&`
+    // would ACCEPT this and then silently commit nothing on the third click; the `||` rejects it.
+    const oneAxisZero = await V('window.__viewer3d.worldToScreen([-1000,0,3000])');
+    await page.mouse.click(oneAxisZero.x, oneAxisZero.y);
+    ok('a second corner with one zero plan extent is refused',
+      (await V('window.__viewer3d.gestureState()')).draft === 'footprint');
     await page.mouse.click(s2.x, s2.y);
     ok('second corner accepted → height stage', (await V('window.__viewer3d.gestureState()')).draft === 'height');
-    const top = await V('window.__viewer3d.worldToScreen([3000,5000,0])');
+    // Pull the height to just under the ROOF level (4000) so the level snap is what decides the top.
+    // Asserting the committed TOP is the case that was missing, and it is precisely why a snapping
+    // defect could ship green: the old test only checked that all three extents were > 1 mm.
+    const top = await V('window.__viewer3d.worldToScreen([3000,3960,0])');
     await page.mouse.move(top.x, top.y);
+    const h = await V(`window.__viewer3d.clipHeightAt(${top.x},${top.y})`);
+    ok('the height reports usable in this view', h && h.usable === true);
+    ok('the height snapped to the ROOF level', h && near(h.y, 4000, 0.001), `y=${h && h.y}`);
     await page.mouse.click(top.x, top.y);
     const drawn = await V('window.__viewer3d.getClips()');
     ok('the draw committed a box', drawn.length === 1 && drawn[0].box !== null);
     if (drawn.length === 1 && drawn[0].box) {
       ok('the box starts at the floor', near(drawn[0].box.min[1], floorY, 2), `min.y=${drawn[0].box.min[1]}`);
+      ok('the box TOP is the snapped level, exactly', near(drawn[0].box.max[1], 4000, 0.001), `max.y=${drawn[0].box.max[1]}`);
       ok('the box has real extent on all three axes',
         drawn[0].box.max[0] - drawn[0].box.min[0] > 1 &&
         drawn[0].box.max[1] - drawn[0].box.min[1] > 1 &&
