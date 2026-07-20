@@ -150,14 +150,22 @@ nodes:
     # Posting to Slack is an OAuth-protected external write, so the safety contract
     # applies (app-spec § Safety contract). Declared as correct authoring intent — but
     # INERT today, and deliberately not presented as protection: the slack manifest
-    # declares no `mode:` on any command, and `chat-post-message` does not match the
-    # `*.post` / `*.create` suffix inference, so the runtime classifies this node as
-    # READ. A `--dry-run` would therefore really post to #fab-team instead of emitting
-    # `would-write`. A node-level `mode: write` cannot fix that from here — it is
-    # rejected as E_APP_NODE_MODE_NOT_OVERRIDABLE. The fix belongs in the slack agent.
+    # declares no `mode:` on any command, and `chat-post-message` matches none of the
+    # write suffixes mode_of actually infers from (.create .update .delete .bump .stamp
+    # .reload-all .bulk-write .insert .save .publish .export-pdfs .export — note there
+    # is no `.post`). So the runtime classifies this node READ and a `--dry-run` would
+    # really post to #fab-team instead of emitting `would-write`. A node-level
+    # `mode: write` cannot fix that from here — it is rejected as
+    # E_APP_NODE_MODE_NOT_OVERRIDABLE. The fix belongs in the slack agent.
+    #
+    # Its own transaction group, NOT the Tekla one: a sent message cannot be recalled,
+    # so folding it into `qa-connection-insert` would promise a rollback boundary that
+    # cannot hold — rolling back would restore the model and leave #fab-team with a
+    # false "created" notice. An irreversible notification either sits in its own group
+    # or needs a compensating delete.
     safety:
-      transaction-group: qa-connection-insert   # same boundary as the Tekla write
-      snapshot: false                           # a chat post cannot be snapshotted or undone
+      transaction-group: qa-fab-notify          # separate: a post cannot be rolled back
+      snapshot: false                           # nothing to snapshot; no undo exists
 
 connections:
   # Trigger → preprocess
