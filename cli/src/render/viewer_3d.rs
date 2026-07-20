@@ -3523,8 +3523,10 @@ mod tests {
             html.contains("\"legend\":{"),
             "the descriptor reaches the page"
         );
+        // Matched as the injected JSON KEY: the template itself mentions `legendError` in the
+        // console.warn that surfaces it, so a bare word match would pass vacuously.
         assert!(
-            !html.contains("legendError"),
+            !html.contains("\"legendError\":"),
             "a valid descriptor is not flagged"
         );
         // A weld operation is addressable — `groups` alone could never express it, because weld
@@ -3598,7 +3600,7 @@ mod tests {
             });
             let html = out["html"].as_str().unwrap();
             assert!(
-                html.contains("legendError"),
+                html.contains("\"legendError\":"),
                 "{name}: must be reported to the producer"
             );
             // The injected scene must carry no descriptor at all. Checked against the JSON shape
