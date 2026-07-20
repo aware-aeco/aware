@@ -1,0 +1,7 @@
+{
+  "name": "viewer-3d-browser-gate",
+  "private": true,
+  "type": "module",
+  "description": "Pre-PR browser gate for viewer-3d clip editing. Scoped here so a Rust repo root stays free of node tooling.",
+  "devDependencies": { "playwright": "1.49.1" }
+}
