@@ -58,16 +58,12 @@ nodes:
     command: lookup
     config:
       rule: bolt.spacing.min          # exact rule id — free text returns found:false
-
-  - id: check-spacings
-    agent: tekla                      # or a scene read from a drawings-to-scene app
-    command: exec
-    config:
-      scene: "{{ read-model.scene }}"
-      limit: "{{ lookup-bolt-spacing.value }}"
-      citation: "{{ lookup-bolt-spacing.citation }}"
-      found: "{{ lookup-bolt-spacing.found }}"
 ```
+
+The comparison node is deliberately not shown: it depends on where the model comes from
+(a `tekla/exec` node has its own `code`/`args` contract and needs `mode: read` or a
+`safety:` block; a drawings-to-scene app hands you a scene instead). Consult that agent's
+own command docs rather than copying a shape from here.
 
 Reference the command's **declared output fields** (`value`, `citation`, `found`, and for
 `sections` rules `properties`) — see the `lookup` command manifest. There is no `.result`
