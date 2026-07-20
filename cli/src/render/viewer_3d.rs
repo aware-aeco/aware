@@ -85,6 +85,13 @@ const TEMPLATE: &str = r##"<!doctype html>
   #readout b{color:var(--text)} #readout .pill{color:var(--accent)}
   #rubber{position:absolute;border:1px solid var(--accent);background:rgba(96,165,250,.16);pointer-events:none;display:none;z-index:6}
   #viewcube{position:absolute;right:352px;top:74px;width:104px;height:104px;cursor:pointer;z-index:5}  /* top-right, left of the side panel (16+320+16) */
+  /* A scene that supplies no `panels` has no side panel to render. Hiding it alone is not enough:
+     these three measurements are coupled to its 320px column — the ViewCube is offset past it and
+     the toolbar reserves its width — so the column has to be reclaimed together or the viewer keeps
+     a gap where the panel used to be. 156 = 16 (edge) + 104 (cube) + 16 (gap) + 16 (toolbar left). */
+  body.no-side #side{display:none}
+  body.no-side #viewcube{right:16px}
+  body.no-side #toolbar{max-width:calc(100% - 156px)}
   #viewcube canvas{display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))}
   /* World-axis triad, bottom-right (Tekla-style). Passive readout — pointer-events:none so it can
      never swallow an orbit gesture; orientation CHANGES stay on the ViewCube. */
@@ -786,6 +793,11 @@ function renderScene(S){
 }
 
 function buildSidePanels(S){
+  // No panels ⇒ no side panel. It used to render anyway, titled with the scene name, so a scene
+  // that supplies no tables showed an empty box repeating a title the page already carries.
+  const hasPanels=Array.isArray(S.panels)&&S.panels.length>0;
+  document.body.classList.toggle('no-side',!hasPanels);
+  if(!hasPanels){ document.getElementById('panels').replaceChildren(); return; }
   document.getElementById('sideTitle').textContent=(S.panels&&S.panels[0]&&S.panels[0].title)||(S.meta&&S.meta.name)||'';
   document.getElementById('sideNote').textContent=(S.panels&&S.panels[0]&&S.panels[0].note)||'';
   const host=document.getElementById('panels'); host.replaceChildren();
