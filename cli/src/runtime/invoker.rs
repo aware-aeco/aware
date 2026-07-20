@@ -160,13 +160,34 @@ fn resolve_cli_binary(binary: &str, bridges_dir: &std::path::Path) -> std::path:
     std::path::PathBuf::from(binary)
 }
 
+/// Transports that ship INSIDE the release archive next to `aware`.
+///
+/// An explicit allowlist, not "any bare name": `aware` is often installed into a shared
+/// directory (`~/.local/bin`, `/usr/local/bin`), and probing every transport name there
+/// would let an unrelated same-named file shadow whatever PATH order would have chosen.
+/// Only names we actually ship get sibling treatment; everything else keeps its previous
+/// PATH semantics.
+///
+/// Kept in step with the release staging (`.github/workflows/release.yml`), the npm
+/// payload contract (`cli-npm/scripts/payload.js`), and both install scripts.
+const BUNDLED_TRANSPORTS: &[&str] = &[
+    "aware-steel-detailer-us",
+    "aware-steel-detailer-uk",
+    "aware-steel-detailer-eu",
+];
+
 /// A bundled transport sitting in `dir` (the directory holding the running `aware`).
 ///
-/// Bare names only: a manifest that declares a path or a real PATH command must keep
-/// its existing meaning, so anything containing a separator is left alone. Pure over
-/// an explicit `dir` so it is testable without touching the process's own exe path.
+/// Bare names only, and only names in [`BUNDLED_TRANSPORTS`]: a manifest that declares a
+/// path or a real PATH command must keep its existing meaning, so anything containing a
+/// separator or not on the list is left alone. Pure over an explicit `dir` so it is
+/// testable without touching the process's own exe path.
 fn sibling_binary(dir: &std::path::Path, binary: &str) -> Option<std::path::PathBuf> {
     if binary.contains('/') || binary.contains('\\') {
+        return None;
+    }
+    let stem = binary.strip_suffix(".exe").unwrap_or(binary);
+    if !BUNDLED_TRANSPORTS.contains(&stem) {
         return None;
     }
     let name = if cfg!(windows) && !binary.to_ascii_lowercase().ends_with(".exe") {
@@ -1758,7 +1779,21 @@ mod sibling_binary_tests {
     #[test]
     fn absent_binary_falls_through_to_path() {
         let dir = tempfile::tempdir().unwrap();
-        assert!(sibling_binary(dir.path(), "definitely-not-here").is_none());
+        assert!(sibling_binary(dir.path(), "aware-steel-detailer-us").is_none());
+    }
+
+    /// `aware` often lives in a shared bin dir. An unrelated transport that merely
+    /// happens to have a same-named neighbour there must keep normal PATH resolution
+    /// rather than being shadowed by the sibling.
+    #[test]
+    fn unbundled_transports_keep_path_semantics() {
+        let dir = tempfile::tempdir().unwrap();
+        for name in ["mytool", "mytool.exe", "aware-tekla", "aware-tekla.exe"] {
+            std::fs::write(dir.path().join(name), b"").unwrap();
+        }
+        assert!(sibling_binary(dir.path(), "mytool").is_none());
+        // a real host bridge resolves via ~/.aware/bridges, not as a sibling
+        assert!(sibling_binary(dir.path(), "aware-tekla").is_none());
     }
 
     /// A declared path must keep its meaning rather than being reinterpreted as a
