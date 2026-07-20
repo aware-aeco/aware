@@ -924,8 +924,20 @@ addEventListener('resize',()=>{
 });
 // Single-key view shortcuts mirror the ViewCube faces (lower- or upper-case).
 const VIEW_KEYS={ t:'top', f:'front', r:'right', b:'back', l:'left' };
+// A single-key shortcut must never fire while the user is typing. Without this guard, typing a
+// word containing t/f/r/b/l into ANY text field swings the camera and swallows the character,
+// and Home fits the model instead of moving the caret — so no text input in this document can
+// work until the guard exists.
+function typingInto(t){ if(!t) return false;
+  if(t.isContentEditable) return true;
+  const tag=(t.tagName||'').toLowerCase();
+  return tag==='input'||tag==='textarea'||tag==='select'; }
 addEventListener('keydown',e=>{
+  // Escape is deliberately still honoured while typing ONLY for the clip-mode cancel below, and
+  // a text field that wants Escape for itself stops propagation before this handler sees it.
+  if(typingInto(e.target) && e.key!=='Escape') return;
   if(e.key==='Escape' && clipMode){ setClipMode(null); e.preventDefault(); return; } // cancel an armed clip-plane pick
+  if(typingInto(e.target)) return;                                                   // Escape with no armed clip → leave it to the field
   if(e.key==='Home'){ frameBox(sceneBox); e.preventDefault(); }                       // fit all
   else if((e.key==='z'||e.key==='Z') && e.altKey){                                     // zoom the current selection
     if(selection.length){ const b=new THREE.Box3(); for(const m of selection) b.expandByObject(m); frameBox(b); } e.preventDefault(); }
