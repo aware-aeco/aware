@@ -76,7 +76,7 @@ rolled-in fillets (none of them appear on HSS or pipe):
 | key | what it is | present on |
 |---|---|---|
 | `kdes_in` | design k — decimal, for **calculations** (web local yielding, etc.) | rolled shapes + angles |
-| `kdet_in` | detailing k — fractional and **larger**; lay out copes/clips to this one | rolled shapes + angles |
+| `kdet_in` | detailing k — the tabulated fractional value; lay out copes/clips to this one | rolled shapes + angles |
 | `T_in` | clear web depth between flange fillets — the room a connection actually gets | W/M/S/HP/C/MC |
 | `k1_in` | web centreline to flange-fillet toe — flange bolt clearance | rolled I-shapes |
 | `WGi_in` / `WGo_in` | inner / outer workable flange gage | `WGo` only on wide flanges |
@@ -87,11 +87,12 @@ rolled-in fillets (none of them appear on HSS or pipe):
 | `tan_alpha` | tangent of the principal-axis angle — **dimensionless**; the orientation `Iz`/`Sz`/`rz` are measured about | single angles |
 | `ho_in` | distance between flange centroids | W/M/S/HP/C/MC |
 | `flat_h_in` / `flat_b_in` | HSS flat depth / width (`Ht−3t`, `B−3t`) — the flat a connection actually lands on | HSS |
-| `leg2_in` / `angle_t_in` | second leg length / leg thickness | L, 2L |
+| `leg1_in` / `leg2_in` | first / second leg **as written in the designation** — AISC puts the longer leg first, so `L6X4X1/2` gives `leg1_in` 6, `leg2_in` 4. `depth_in` is the second leg | L, 2L |
+| `angle_t_in` | leg thickness | L, 2L |
 | `ID_in` | pipe inside diameter | Pipe |
 | `PB_in` / `PD_in` | full shape perimeter / box perimeter `2(d+bf)` | see below |
 | `PA_in` / `PC_in` | the same two minus one flange face (3-sided contour and box fireproofing) | see below |
-| `PA2_in` | single-angle variant of `PA` | L only |
+| `PA2_in` | single angles: `PB` minus the **first (longer)** leg, where `PA_in` drops the **second (shorter)** one | L only |
 
 The `*det` keys **pair with** the decimal design values, they do not replace them —
 W16X26 carries both `flange_in` 0.345 and `tfdet_in` 0.375 for the same flange. The rule
@@ -100,9 +101,15 @@ is the same one that separates `kdes` from `kdet`:
 > **decimal for the calculation, detailing value for the layout.**
 
 **`kdes` and `kdet` are not interchangeable** — a bare "k" on a drawing means the
-detailing k. Using `kdes` to lay out a cope under-cuts it. Likewise a strength check run
-on `tfdet_in` overstates the flange by 1/32" on a W16X26. Pick the key by what the answer
-is for, and say which one was used when citing a number.
+detailing k. Likewise a strength check run on `tfdet_in` overstates the flange by 1/32"
+on a W16X26. Pick the key by what the answer is for, and say which one was used when
+citing a number.
+
+Do **not** assume `kdet` is the larger of the two. It usually is (613 shapes), but it is
+equal on 128 and smaller on 144 — every C, MC, M, S, ST, MT and most of the angles. Most
+of those are the 3-significant-figure decimal of the same fraction (C12X25: `kdes` 1.13
+vs `kdet` 1 1/8), though four L12X12 shapes differ by a real ~1/32". Read the key you
+need; never pick "the bigger one" as a proxy for it.
 
 `T_in` is a **tabulated** AISC value, not `d − 2k` — do not recompute it, and do not
 derive one of these from another; if the key you need is absent for that shape, refuse.
@@ -113,6 +120,13 @@ of perimeter (multiply by length for area). Pick by how the member is actually c
 `PD`/`PC` box pair where the coating boxes the shape rather than following its contour.
 Their identities (`PA = PB − bf`, `PD = 2(d+bf)`, `PC = PD − bf`) are asserted against
 every W-shape when the table is generated, so a shifted column fails the build.
+
+On a **single angle** the excluded face is a leg, not a flange, and which leg differs
+between the two keys: `PA = PB − leg2` (drops the shorter leg), `PA2 = PB − leg1` (drops
+the longer one). For an `L6X4X1/2` that is 16 in vs 14 in — picking the wrong one is a
+12% error in coating area. Equal-leg angles hide the distinction, so decide from the
+designation, not from a symmetric example. These identities are likewise asserted across
+all 137 single angles at generation time.
 
 `tan_alpha` is the one **dimensionless** key — it carries no `_in` suffix for that
 reason. A single angle's `Iz`/`Sz`/`rz` are meaningless without it.

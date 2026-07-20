@@ -154,7 +154,11 @@ def main():
         if typ == "HSS":
             family = [("h", "flat_h_in"), ("b", "flat_b_in")]
         elif typ in ("L", "2L"):
-            family = [("b", "leg2_in"), ("t", "angle_t_in")]
+            # Designation order, and it is NOT the obvious mapping: AISC writes the
+            # LONGER leg first (L6X4X1/2), and the CSV puts that first leg in `b` with
+            # the second in `d`. Naming `b` "leg2" would silently hand back a reversed
+            # angle. `depth_in` (also from `d`) is therefore the second leg.
+            family = [("b", "leg1_in"), ("d", "leg2_in"), ("t", "angle_t_in")]
         elif typ == "PIPE":
             family = [("ID", "ID_in")]
         else:
@@ -219,6 +223,28 @@ def main():
         perim_checked += 1
     print(f"perimeter identities: {perim_checked} W-shapes ok")
 
+    # Single-angle identities. These pin down BOTH which leg `b` is and which leg each
+    # perimeter drops: PA excludes the second (shorter) leg, PA2 excludes the first
+    # (longer) one. Equal-leg angles satisfy either reading, so an unequal-leg shape is
+    # what actually constrains it — L6X4X1/2 has PB 20, PA 16, PA2 14.
+    angle_checked = 0
+    for p in (r["properties"] for r in rules if r["properties"]["type"] == "L"):
+        leg1, leg2, PB = p["leg1_in"], p["leg2_in"], p["PB_in"]
+        if leg1 < leg2:
+            raise SystemExit(
+                f"ABORT: angle leg1 {leg1} < leg2 {leg2} — AISC writes the longer leg "
+                f"first, so the `b`/`d` columns are not what they are labelled.")
+        for label, got, want in (
+            ("PA = PB - leg2", p["PA_in"], PB - leg2),
+            ("PA2 = PB - leg1", p["PA2_in"], PB - leg1),
+        ):
+            if abs(got - want) > max(0.015 * abs(want), 0.25):
+                raise SystemExit(
+                    f"ABORT: angle identity {label} fails ({got} vs {want:.3f}) — "
+                    f"PA/PA2 do not exclude the legs they are documented to exclude.")
+        angle_checked += 1
+    print(f"angle leg/perimeter identities: {angle_checked} single angles ok")
+
     if defin_bad:
         raise SystemExit(
             f"ABORT: {defin_bad} I-family shapes whose trailing designation number "
@@ -252,7 +278,12 @@ def main():
                              "Ix_in4": 3.0, "Iz_in4": 1.19, "rz_in": 0.783,
                              "kdes_in": 0.625, "kdet_in": 0.625,
                              "x_in": 1.08, "y_in": 1.08, "tan_alpha": 1.0,
-                             "angle_t_in": 0.25, "leg2_in": 4.0, "PA2_in": 12.0},
+                             "angle_t_in": 0.25, "leg1_in": 4.0, "leg2_in": 4.0,
+                             "PA2_in": 12.0},
+        # Equal-leg angles cannot catch a reversed leg mapping or a swapped PA/PA2 —
+        # only an unequal-leg shape constrains those, so one is pinned explicitly.
+        "section.L6X4X1/2": {"leg1_in": 6.0, "leg2_in": 4.0, "depth_in": 4.0,
+                             "PB_in": 20.0, "PA_in": 16.0, "PA2_in": 14.0},
     }.items():
         p = by_id.get(sid)
         if not p:
