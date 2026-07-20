@@ -874,6 +874,11 @@ fn resolve_validate_target(path: &std::path::Path) -> Result<std::path::PathBuf,
         return Ok(path.to_path_buf());
     }
     if path.is_dir() {
+        // Probe first so a genuine enumeration failure (permissions, IO) propagates as
+        // itself. `find_app_manifest` flattens its `read_dir` error to `None`, which
+        // would otherwise be reported as "no .flo or .app file" — the previous
+        // `read_dir(path)?` did surface it, and losing that would be a regression.
+        std::fs::read_dir(path)?;
         // Shared with `app explain` / install: prefers `<dir-name>.flo`, then any `.flo`,
         // then any `.app` — deterministic, where the previous inline scan returned
         // whatever `read_dir` happened to yield first.
