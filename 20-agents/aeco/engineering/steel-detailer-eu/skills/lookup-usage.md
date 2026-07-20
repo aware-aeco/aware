@@ -69,13 +69,13 @@ The `lookup` command is a standalone deterministic CLI (decalog #9 — no LLM in
 If `found: false`, the consumer reports "rule not in verified database" and does NOT
 fall back to inference.
 
-> The agent is `status: available`: the lookup binary ships with the `aware` release, so the command is dispatchable and the agent can be composed as a first-class node in a runnable AWARE `.app`.
+> The agent is `status: planned` **until a release carrying the lookup binary is out**. The binary is built and staged into the release archive; the flip to `available` follows the release, so already-installed CLIs get a clean compile-time refusal rather than a spawn failure. Until then the lookup is a standalone CLI and composing it as a node in a runnable `.app` is refused at validate/compile.
 
 ## Install note
 
-Binary: `aware-steel-detailer-eu`, shipped in the aware release archive and MSI next
-to `aware`, where the CLI resolves it directly — no local build needed (the same Rust
-project produces the AISC, UK, and EU binaries). Rules file installed by
+Binary: `aware-steel-detailer-eu`, built into the aware release archive and MSI next
+to `aware`, where the CLI resolves it directly — no local build needed once that release
+is out (the same Rust project produces the AISC, UK, and EU binaries). Rules file installed by
 `aware agent install steel-detailer-eu` — the binary reads it from
 `<AWARE_HOME>/agents/steel-detailer-eu/rules/`, so both steps are needed. To build from
 source instead, `cargo build --release` in
