@@ -859,20 +859,36 @@ pub fn set_node_frozen(
     Ok(restore_line_endings(joined, source))
 }
 
-fn validate_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
-    // Find .flo/.app in the dir
-    let manifest_path = std::fs::read_dir(path)?
-        .flatten()
-        .map(|e| e.path())
-        .find(|p| {
-            matches!(
-                p.extension().and_then(|e| e.to_str()),
-                Some("flo") | Some("app")
-            )
-        })
-        .ok_or_else(|| {
+/// Resolve `aware app validate <PATH>` to the manifest to load.
+///
+/// Accepts EITHER the `.flo`/`.app` file itself or the directory holding it. The file
+/// form is the natural invocation — `aware app validate my-app.app`, and the only one
+/// possible for the loose `.app` files under `30-apps/_examples/` — but used to hit a
+/// bare `read_dir` and fail with an unexplained OS error (`ERROR_DIRECTORY` on Windows,
+/// `ENOTDIR` elsewhere) rather than anything a user could act on.
+///
+/// A missing path reports that, instead of the misleading "no .flo or .app file in …"
+/// a directory scan would produce for a path that is not a directory at all.
+fn resolve_validate_target(path: &std::path::Path) -> Result<std::path::PathBuf, AwareError> {
+    if path.is_file() {
+        return Ok(path.to_path_buf());
+    }
+    if path.is_dir() {
+        // Shared with `app explain` / install: prefers `<dir-name>.flo`, then any `.flo`,
+        // then any `.app` — deterministic, where the previous inline scan returned
+        // whatever `read_dir` happened to yield first.
+        return crate::manifest::loader::find_app_manifest(path).ok_or_else(|| {
             AwareError::Validation(format!("no .flo or .app file in {}", path.display()))
-        })?;
+        });
+    }
+    Err(AwareError::NotFound(format!(
+        "{} does not exist",
+        path.display()
+    )))
+}
+
+fn validate_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
+    let manifest_path = resolve_validate_target(path)?;
 
     let app = crate::manifest::loader::load_app(&manifest_path)?;
     let mut issues = crate::validate::validate_app(&app);
@@ -1296,6 +1312,66 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
     }
     print!("{}", t.render());
     Ok(())
+}
+
+#[cfg(test)]
+mod validate_target_tests {
+    use super::resolve_validate_target;
+
+    /// The regression: passing the manifest file itself used to reach `read_dir` and
+    /// fail with a raw OS error instead of validating.
+    #[test]
+    fn accepts_the_manifest_file_directly() {
+        let dir = tempfile::tempdir().unwrap();
+        let app = dir.path().join("demo.app");
+        std::fs::write(&app, "app: demo\n").unwrap();
+        assert_eq!(resolve_validate_target(&app).unwrap(), app);
+    }
+
+    #[test]
+    fn accepts_the_containing_directory() {
+        let dir = tempfile::tempdir().unwrap();
+        let app = dir.path().join("demo.app");
+        std::fs::write(&app, "app: demo\n").unwrap();
+        assert_eq!(resolve_validate_target(dir.path()).unwrap(), app);
+    }
+
+    /// `<dir-name>.flo` wins over other candidates, so the answer does not depend on
+    /// directory iteration order.
+    #[test]
+    fn directory_prefers_the_canonical_manifest() {
+        let dir = tempfile::tempdir().unwrap();
+        let name = dir
+            .path()
+            .file_name()
+            .unwrap()
+            .to_string_lossy()
+            .to_string();
+        let canonical = dir.path().join(format!("{name}.flo"));
+        std::fs::write(dir.path().join("aaa-other.app"), "app: other\n").unwrap();
+        std::fs::write(&canonical, "app: demo\n").unwrap();
+        assert_eq!(resolve_validate_target(dir.path()).unwrap(), canonical);
+    }
+
+    #[test]
+    fn missing_path_says_so_rather_than_blaming_a_directory_scan() {
+        let dir = tempfile::tempdir().unwrap();
+        let err = resolve_validate_target(&dir.path().join("nope.app")).unwrap_err();
+        assert!(
+            err.to_string().contains("does not exist"),
+            "expected a not-found message, got: {err}"
+        );
+    }
+
+    #[test]
+    fn empty_directory_reports_no_manifest() {
+        let dir = tempfile::tempdir().unwrap();
+        let err = resolve_validate_target(dir.path()).unwrap_err();
+        assert!(
+            err.to_string().contains("no .flo or .app file"),
+            "expected the no-manifest message, got: {err}"
+        );
+    }
 }
 
 #[cfg(test)]
