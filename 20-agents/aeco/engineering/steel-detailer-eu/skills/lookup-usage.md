@@ -81,6 +81,21 @@ project produces the AISC, UK, and EU binaries). Rules file installed by
 source instead, `cargo build --release` in
 `20-agents/aeco/engineering/steel-detailer-lookup/`.
 
+**Invoking it directly.** The `aware` CLI finds this binary on its own (it looks beside
+its own executable), so dispatching the agent from an app works on every install. Typing
+`aware-steel-detailer-eu ...` as a bare shell command additionally needs it on PATH, which
+depends on how aware was installed:
+
+| install method | bare `aware-steel-detailer-eu` on PATH? |
+|---|---|
+| MSI (Windows) | yes — the install dir is added to system PATH |
+| `scripts/install.sh` / `install.ps1` | yes — copied next to `aware` in the install dir |
+| npm / pnpm | **no** — it lives in the package-private `binaries/` directory and only `aware` gets a global shim |
+| built from source | only if you copy it out of `target/release/` yourself |
+
+If the bare command is not found, dispatch the agent through an app instead of invoking
+the binary by hand — that path always resolves.
+
 ## Source
 
 - Rules database: `20-agents/aeco/engineering/steel-detailer-eu/rules/bs-en-1993-eu.json`

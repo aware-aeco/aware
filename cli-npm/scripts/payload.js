@@ -9,10 +9,23 @@
 // extractor to have lied about its exit code.
 const path = require('path');
 
+// Agent transport binaries bundled in the archive. The CLI resolves these beside the
+// running `aware`, so a payload missing them extracts "successfully" and then fails at
+// run time on every steel-detailer lookup — the exact silent-partial-extraction case
+// this contract exists to catch. Safe to require: the npm package version and the
+// release archive it downloads are always the same version, so these are present in
+// every archive this shim can fetch.
+const TRANSPORTS = [
+  'aware-steel-detailer-us',
+  'aware-steel-detailer-uk',
+  'aware-steel-detailer-eu',
+];
+
 function requiredFiles(exeSuffix) {
   return [
     `aware${exeSuffix}`,
     `aware-sidecar${exeSuffix}`,
+    ...TRANSPORTS.map((t) => `${t}${exeSuffix}`),
     path.join('aware-roslyn', `aware-roslyn${exeSuffix}`),
     path.join('aware-roslyn', 'aware-roslyn.dll'),
     path.join('aware-roslyn', 'aware-roslyn.runtimeconfig.json'),
@@ -20,4 +33,4 @@ function requiredFiles(exeSuffix) {
   ];
 }
 
-module.exports = { requiredFiles };
+module.exports = { requiredFiles, TRANSPORTS };

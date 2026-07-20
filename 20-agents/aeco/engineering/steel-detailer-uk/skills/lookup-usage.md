@@ -64,6 +64,21 @@ If `found: false`, the consumer reports "rule not in verified database" and does
 
 Binary: `aware-steel-detailer-uk`, shipped in the aware release archive and MSI next to `aware`, where the CLI resolves it directly — no local build needed (the same project produces all three region binaries). Rules file is installed by `aware agent install steel-detailer-uk` — the binary reads it from `<AWARE_HOME>/agents/steel-detailer-uk/rules/`, so both steps are needed. To build from source instead, `cargo build --release` in `20-agents/aeco/engineering/steel-detailer-lookup/`.
 
+**Invoking it directly.** The `aware` CLI finds this binary on its own (it looks beside
+its own executable), so dispatching the agent from an app works on every install. Typing
+`aware-steel-detailer-uk ...` as a bare shell command additionally needs it on PATH, which
+depends on how aware was installed:
+
+| install method | bare `aware-steel-detailer-uk` on PATH? |
+|---|---|
+| MSI (Windows) | yes — the install dir is added to system PATH |
+| `scripts/install.sh` / `install.ps1` | yes — copied next to `aware` in the install dir |
+| npm / pnpm | **no** — it lives in the package-private `binaries/` directory and only `aware` gets a global shim |
+| built from source | only if you copy it out of `target/release/` yourself |
+
+If the bare command is not found, dispatch the agent through an app instead of invoking
+the binary by hand — that path always resolves.
+
 ## Source
 
 - Rules database: `20-agents/aeco/engineering/steel-detailer-uk/rules/bs-en-1993-uk.json` (verified 2026-06-14; traced to SCI P358, steelconstruction.info, SCI P363 — free sources).
