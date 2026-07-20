@@ -1,5 +1,5 @@
 agent:        steel-detailer-eu
-version:      0.1.0
+version:      0.2.0
 sdk-target:   eurocode-3-1-8@2005                 # the EN code edition these rules are sourced from
 display-name: Steel Detailer — EU (Eurocode 3, EN recommended values)
 
@@ -23,11 +23,10 @@ description: |
 
 # Phase 5: EU recommended-values agent built.
 # The deterministic lookup binary, shared with steel-detailer-us and steel-detailer-uk
-# (steel-detailer-lookup/ Cargo project), is built and staged into the aware release
-# archive + MSI. Still `planned` on purpose — see the note in steel-detailer-us: rolling
-# `main` means an early flip breaks already-released CLIs. Flip to `available` once a
-# release carrying the binary is out.
-status: planned
+# (steel-detailer-lookup/ Cargo project), ships in the aware release archive and MSI as
+# of v0.98.0. Flipped to `available` only after that release was published — see the note
+# in steel-detailer-us for why the ordering matters. Requires aware >= 0.98.0.
+status: available
 
 stateful: false
 
@@ -69,7 +68,7 @@ commands:
       return the exact EN clause, value, units and citation as typed JSON — or
       found:false so the caller refuses rather than guesses. Rule IDs: run
       `lookup --list`. NDP rules are flagged with ndp:true in the JSON output.
-      Binary is built into the aware release archive and MSI, next to `aware`.
+      Binary ships in the aware release archive and MSI from v0.98.0.
     inputs:
       rule:
         type: string
@@ -77,6 +76,8 @@ commands:
     outputs:
       type: single
       schema:
+        id:           string    # echoed back — present on a miss too, so a caller can log what it asked for
+        category:     string    # bolts | welds | materials | partial-factors
         rule:         string
         value:        string
         units:        string

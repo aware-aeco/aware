@@ -7,7 +7,7 @@ description: Use when the user wants to check a structural model or set of drawi
 
 The checker is a **composed workflow** (an AWARE `.app`) that reads a structural model and checks it against the verified AISC rules database deterministically. It has no LLM in the run path.
 
-> **Status:** `steel-detailer-us` is `status: planned` until a release carrying the `lookup` binary is out, so the pattern below documents the target composition rather than something that compiles today. The binary is built and staged into the release archive; once the flip lands, this runs as written — it also needs `aware agent install steel-detailer-us` for the rules the binary reads.
+> **Status:** `steel-detailer-us` is `status: available` as of aware v0.98.0, which ships the `lookup` binary, so the agent is no longer refused at validate/compile and can be composed as a node. It also needs `aware agent install steel-detailer-us` for the rules the binary reads. The snippet below uses the app-spec `nodes:` syntax; treat it as a starting point to adapt, not a copy-paste app — the surrounding app (inputs, model source, report node) is yours to write.
 
 ## Workflow pattern
 
@@ -52,24 +52,27 @@ When `found: false` for any rule, the checker reports "**rule not in verified da
 ## How to author the checker app
 
 ```yaml
-# Example snippet for a bolt-spacing check
-node lookup-bolt-spacing {
-  agent: steel-detailer-us
-  command: lookup
-  input:
-    rule: "bolt.spacing.min"
-}
-
-node check-spacings {
-  agent: tekla          # or: script node using viewer-3d scene output
-  command: exec
-  input:
-    scene: "{{ read-model.result }}"
-    min_spacing_rule: "{{ lookup-bolt-spacing.result }}"
-}
+nodes:
+  - id: lookup-bolt-spacing
+    agent: steel-detailer-us
+    command: lookup
+    config:
+      rule: bolt.spacing.min          # exact rule id — free text returns found:false
 ```
 
-A `script` (model-free arithmetic) node compares `connection.spacing` against `rule.value`; output is `{pass, fail, not_checked}` per connection.
+The comparison node is deliberately not shown: it depends on where the model comes from
+(a `tekla/exec` node has its own `code`/`args` contract and needs `mode: read` or a
+`safety:` block; a drawings-to-scene app hands you a scene instead). Consult that agent's
+own command docs rather than copying a shape from here.
+
+Reference the command's **declared output fields** (`value`, `citation`, `found`, and for
+`sections` rules `properties`) — see the `lookup` command manifest. There is no `.result`
+field; templating an undeclared name gives an unknown-field warning and an incomplete
+lock contract.
+
+A `script` (model-free arithmetic) node compares `connection.spacing` against the limit;
+output is `{pass, fail, not_checked}` per connection. Gate on `found` first — when it is
+false the correct output is `not_checked`, never a pass.
 
 ## Composing with a drawings-to-scene reader
 

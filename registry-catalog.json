@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-07-20T17:35:04.458446700+00:00",
+  "updated-at": "2026-07-20T18:30:24.263934100+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -5447,8 +5447,8 @@
       "versions": {
         "0.1.0": {
           "description": "Verified, citation-backed Eurocode 3 connection-detailing rules using the",
-          "status": "planned",
-          "manifest-version": "0.1.0",
+          "status": "available",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "sdk-target": "eurocode-3-1-8@2005",
           "transport": "cli",
@@ -5499,8 +5499,8 @@
       "versions": {
         "0.1.0": {
           "description": "Verified, citation-backed UK steel connection-detailing rules (Eurocode 3 +",
-          "status": "planned",
-          "manifest-version": "0.1.0",
+          "status": "available",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "sdk-target": "bs-en-1993-1-8:2005+uk-na",
           "transport": "cli",
@@ -5555,8 +5555,8 @@
       "versions": {
         "0.1.0": {
           "description": "Verified, citation-backed US steel connection-detailing rules (AISC). A",
-          "status": "planned",
-          "manifest-version": "0.4.0",
+          "status": "available",
+          "manifest-version": "0.5.0",
           "stateful": false,
           "sdk-target": "aisc-360-22",
           "transport": "cli",

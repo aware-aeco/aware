@@ -187,11 +187,11 @@ The `lookup` command is a standalone deterministic CLI (decalog #9 — no LLM in
 
 If `found: false`, the consumer reports "rule not in verified database" and does NOT fall back to inference.
 
-> The agent is `status: planned` **until a release carrying the lookup binary is out**. The binary is built and staged into the release archive; the flip to `available` follows the release, so already-installed CLIs get a clean compile-time refusal rather than a spawn failure. Until then the lookup is a standalone CLI and composing it as a node in a runnable `.app` is refused at validate/compile.
+> The agent is `status: available` as of **aware v0.98.0**, which ships the lookup binary: the command is dispatchable and the agent composes as a first-class node in a runnable AWARE `.app`. On an older CLI the binary is absent and the lookup will fail to spawn — upgrade rather than working around it.
 
 ## Install note
 
-Binary: `aware-steel-detailer-us`, built into the aware release archive and MSI next to `aware`, where the CLI resolves it directly — no local build, and no dependence on that directory being on PATH. It arrives with the first release carrying it; until then, build from source (below). Both rules files (`aisc-360-22.json` + `aisc-shapes-v15.json`) are installed by `aware agent install steel-detailer-us` — the binary reads them from `<AWARE_HOME>/agents/steel-detailer-us/rules/`, so **both steps are needed**: the binary alone has no data, and the rules alone have nothing to serve them. To build from source instead, `cargo build --release` in `20-agents/aeco/engineering/steel-detailer-lookup/`.
+Binary: `aware-steel-detailer-us`, shipped in the aware release archive and MSI from v0.98.0, next to `aware`, where the CLI resolves it directly — no local build, and no dependence on that directory being on PATH. Both rules files (`aisc-360-22.json` + `aisc-shapes-v15.json`) are installed by `aware agent install steel-detailer-us` — the binary reads them from `<AWARE_HOME>/agents/steel-detailer-us/rules/`, so **both steps are needed**: the binary alone has no data, and the rules alone have nothing to serve them. To build from source instead, `cargo build --release` in `20-agents/aeco/engineering/steel-detailer-lookup/`.
 
 **Invoking it directly.** The `aware` CLI finds this binary on its own (it looks beside
 its own executable), so dispatching the agent from an app works on every install. Typing
