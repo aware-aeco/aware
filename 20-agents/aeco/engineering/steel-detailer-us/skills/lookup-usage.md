@@ -119,7 +119,17 @@ of perimeter (multiply by length for area). Pick by how the member is actually c
 `PB` all four sides, `PA` three sides where a slab or deck covers the top flange, and the
 `PD`/`PC` box pair where the coating boxes the shape rather than following its contour.
 Their identities (`PA = PB − bf`, `PD = 2(d+bf)`, `PC = PD − bf`) are asserted against
-every W-shape when the table is generated, so a shifted column fails the build.
+every flanged rolled shape when the table is generated, so a shifted column fails the
+build.
+
+**Nine shapes have no perimeter keys at all** — eight HP and `S24X90`, whose values are
+corrupt in the source database (the HP rows repeat that row's `rts`; `S24X90` lost a
+decimal point). They are dropped rather than repaired, because deriving a number and
+citing AISC for it would be inventing data. A lookup returns those keys absent, so
+**refuse the coating question for those shapes** and say the source data is bad — do not
+substitute a neighbouring size or compute the perimeter yourself. Every other property on
+those shapes is unaffected and safe to use. The full list is in the dataset's
+`data-quality.quarantined-perimeters`.
 
 On a **single angle** the excluded face is a leg, not a flange, and which leg differs
 between the two keys: `PA = PB − leg2` (drops the shorter leg), `PA2 = PB − leg1` (drops

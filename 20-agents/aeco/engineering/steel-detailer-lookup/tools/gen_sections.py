@@ -239,30 +239,57 @@ def main():
             "found": True,
         })
 
-    # Surface-perimeter identities, checked on every W-shape. The AISC CSV ships no data
-    # dictionary, so these relationships are what pin down which column is which: PB is
-    # the full perimeter, PA = PB - bf (one flange face off, contour fireproofing), PD is
-    # the box perimeter 2(d+bf), PC = PD - bf. If the P-block ever shifts, this fails
-    # loudly instead of mislabelling paint areas.
+    # Surface-perimeter identities, checked on EVERY flanged rolled shape — W, M, S, HP,
+    # C, MC and the tees — not just W. The AISC CSV ships no data dictionary, so these
+    # relationships are what pin down which column is which: PB is the full perimeter,
+    # PA = PB - bf (one flange face off, contour fireproofing), PD is the box perimeter
+    # 2(d+bf), PC = PD - bf.
+    #
+    # They also catch corrupt source cells. The vendored mirror has nine bad rows: eight
+    # HP shapes whose PA is a verbatim copy of that row's `rts`, and S24X90 with PB 725
+    # for 72.5 (dropped decimal). A shape that fails has its whole perimeter block
+    # dropped rather than repaired — deriving the missing number and citing AISC for it
+    # would be inventing data, so the lookup returns the keys absent and the caller
+    # refuses. Failures are listed below and recorded in the dataset metadata.
+    PERIM_KEYS = ("PA_in", "PA2_in", "PB_in", "PC_in", "PD_in")
     perim_checked = 0
-    for p in (r["properties"] for r in rules if r["properties"]["type"] == "W"):
-        d, bf = p["depth_in"], p["width_in"]
+    quarantined = []
+    for r in rules:
+        p = r["properties"]
+        d, bf = p.get("depth_in"), p.get("width_in")
+        if bf is None or d is None or "PA_in" not in p or "PB_in" not in p:
+            continue
+        perim_checked += 1
         for label, got, want in (
             ("PA = PB - bf", p["PA_in"], p["PB_in"] - bf),
-            ("PD = 2(d+bf)", p["PD_in"], 2 * (d + bf)),
-            ("PC = PD - bf", p["PC_in"], p["PD_in"] - bf),
+            ("PD = 2(d+bf)", p.get("PD_in"), 2 * (d + bf)),
+            ("PC = PD - bf", p.get("PC_in"),
+             p["PD_in"] - bf if "PD_in" in p else None),
         ):
-            # 1.5% relative. Measured worst case across all 283 W-shapes is 0.51%
+            # 1.5% relative. Measured worst case among the sound rows is 0.51%
             # (W44X230) — AISC tabulates these to 3 significant figures and appears to
-            # take the box perimeter off the detailing dimensions, not decimal d/bf. A
-            # genuinely mislabelled column would be out by tens of percent, so this sits
-            # well clear of the noise and still catches a shift.
+            # take the box perimeter off the detailing dimensions, not decimal d/bf. The
+            # nine corrupt rows miss by 8x to 900%, so this cleanly separates the two.
+            if got is None or want is None:
+                continue
             if abs(got - want) > max(0.015 * abs(want), 0.25):
-                raise SystemExit(
-                    f"ABORT: perimeter identity {label} fails ({got} vs {want:.3f}) — "
-                    f"the PA/PB/PC/PD columns are not what they are labelled.")
-        perim_checked += 1
-    print(f"perimeter identities: {perim_checked} W-shapes ok")
+                quarantined.append(
+                    f"{r['id']} ({label}: {got} vs {want:.3f})")
+                for k in PERIM_KEYS:
+                    p.pop(k, None)
+                break
+
+    # A handful of bad rows in the source is expected and handled. Wholesale failure is
+    # not — that means the columns shifted, and shipping a table with the perimeters
+    # quietly stripped out would hide it. Abort instead.
+    if len(quarantined) > max(10, perim_checked // 20):
+        raise SystemExit(
+            f"ABORT: {len(quarantined)}/{perim_checked} shapes fail the perimeter "
+            f"identities — that is systemic, not bad source rows. Columns shifted?")
+    print(f"perimeter identities: {perim_checked} flanged shapes checked, "
+          f"{len(quarantined)} quarantined")
+    for q in quarantined:
+        print(f"  quarantined (perimeters dropped): {q}")
 
     # Single-angle identities. These pin down BOTH which leg `b` is and which leg each
     # perimeter drops: PA excludes the second (shorter) leg, PA2 excludes the first
@@ -377,6 +404,15 @@ def main():
                 },
             }
         ],
+        "data-quality": {
+            "quarantined-perimeters": quarantined,
+            "note": "Shapes whose PA/PB/PC/PD failed the surface-perimeter identities "
+                    "(PA=PB-bf, PD=2(d+bf), PC=PD-bf) in the vendored CSV. Their "
+                    "perimeter keys are omitted rather than repaired, so a lookup "
+                    "returns them absent and the caller refuses instead of quoting a "
+                    "corrupt coating area. Every other property on these shapes is "
+                    "unaffected.",
+        },
         "rules": rules,
     }
     with open(OUT, "w", encoding="utf-8") as f:

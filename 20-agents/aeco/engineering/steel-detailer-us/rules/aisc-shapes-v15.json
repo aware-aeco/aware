@@ -17,6 +17,20 @@
    }
   }
  ],
+ "data-quality": {
+  "quarantined-perimeters": [
+   "section.S24X90 (PA = PB - bf: 65.4 vs 717.870)",
+   "section.HP14X117 (PA = PB - bf: 4.15 vs 70.500)",
+   "section.HP14X102 (PA = PB - bf: 4.1 vs 70.000)",
+   "section.HP14X89 (PA = PB - bf: 4.05 vs 69.400)",
+   "section.HP14X73 (PA = PB - bf: 4.0 vs 69.000)",
+   "section.HP12X84 (PA = PB - bf: 3.41 vs 59.100)",
+   "section.HP12X74 (PA = PB - bf: 3.38 vs 58.600)",
+   "section.HP12X63 (PA = PB - bf: 3.33 vs 58.000)",
+   "section.HP12X53 (PA = PB - bf: 3.29 vs 57.700)"
+  ],
+  "note": "Shapes whose PA/PB/PC/PD failed the surface-perimeter identities (PA=PB-bf, PD=2(d+bf), PC=PD-bf) in the vendored CSV. Their perimeter keys are omitted rather than repaired, so a lookup returns them absent and the caller refuses instead of quoting a corrupt coating area. Every other property on these shapes is unaffected."
+ },
  "rules": [
   {
    "id": "section.W44X335",
@@ -13123,11 +13137,7 @@
     "bfdet_in": 7.125,
     "twdet_in": 0.625,
     "tfdet_in": 0.875,
-    "ho_in": 23.1,
-    "PA_in": 65.4,
-    "PB_in": 725.0,
-    "PC_in": 55.1,
-    "PD_in": 62.3
+    "ho_in": 23.1
    },
    "citation": "AISC Shapes Database v15.0 (US)",
    "source_quote": "S24X90: W=90, A=26.5, d=24, bf=7.13, tw=0.625, tf=0.87, Ix=2250, Sx=187, Zx=222, rx=9.21, Iy=44.7, Sy=12.5, Zy=22.4, ry=1.3, J=6.05, Cw=5980, T=20.5, kdes=1.75, kdet=1.75, WGi=4, ddet=24, bfdet=7.125, twdet=0.625, tfdet=0.875, ho=23.1, PA=65.4, PB=725, PC=55.1, PD=62.3",
@@ -14597,11 +14607,7 @@
     "bfdet_in": 14.875,
     "twdet_in": 0.8125,
     "tfdet_in": 0.8125,
-    "ho_in": 13.4,
-    "PA_in": 4.15,
-    "PB_in": 85.4,
-    "PC_in": 43.3,
-    "PD_in": 58.2
+    "ho_in": 13.4
    },
    "citation": "AISC Shapes Database v15.0 (US)",
    "source_quote": "HP14X117: W=117, A=34.4, d=14.2, bf=14.9, tw=0.805, tf=0.805, Ix=1220, Sx=172, Zx=194, rx=5.96, Iy=443, Sy=59.5, Zy=91.4, ry=3.59, J=8.02, Cw=19900, T=11.25, kdes=1.5, kdet=2.0625, k1=1.625, WGi=5.5, ddet=14.25, bfdet=14.875, twdet=0.8125, tfdet=0.8125, ho=13.4, PA=4.15, PB=85.4, PC=43.3, PD=58.2",
@@ -14640,11 +14646,7 @@
     "bfdet_in": 14.75,
     "twdet_in": 0.6875,
     "tfdet_in": 0.6875,
-    "ho_in": 13.3,
-    "PA_in": 4.1,
-    "PB_in": 84.8,
-    "PC_in": 42.8,
-    "PD_in": 57.6
+    "ho_in": 13.3
    },
    "citation": "AISC Shapes Database v15.0 (US)",
    "source_quote": "HP14X102: W=102, A=30.1, d=14, bf=14.8, tw=0.705, tf=0.705, Ix=1050, Sx=150, Zx=169, rx=5.92, Iy=380, Sy=51.4, Zy=78.8, ry=3.56, J=5.39, Cw=16800, T=11.25, kdes=1.38, kdet=1.9375, k1=1.5625, WGi=5.5, ddet=14, bfdet=14.75, twdet=0.6875, tfdet=0.6875, ho=13.3, PA=4.1, PB=84.8, PC=42.8, PD=57.6",
@@ -14683,11 +14685,7 @@
     "bfdet_in": 14.75,
     "twdet_in": 0.625,
     "tfdet_in": 0.625,
-    "ho_in": 13.2,
-    "PA_in": 4.05,
-    "PB_in": 84.1,
-    "PC_in": 42.3,
-    "PD_in": 57.0
+    "ho_in": 13.2
    },
    "citation": "AISC Shapes Database v15.0 (US)",
    "source_quote": "HP14X89: W=89, A=26.1, d=13.8, bf=14.7, tw=0.615, tf=0.615, Ix=904, Sx=131, Zx=146, rx=5.88, Iy=326, Sy=44.3, Zy=67.7, ry=3.53, J=3.59, Cw=14200, T=11.25, kdes=1.31, kdet=1.875, k1=1.5, WGi=5.5, ddet=13.875, bfdet=14.75, twdet=0.625, tfdet=0.625, ho=13.2, PA=4.05, PB=84.1, PC=42.3, PD=57",
@@ -14726,11 +14724,7 @@
     "bfdet_in": 14.625,
     "twdet_in": 0.5,
     "tfdet_in": 0.5,
-    "ho_in": 13.1,
-    "PA_in": 4.0,
-    "PB_in": 83.6,
-    "PC_in": 41.8,
-    "PD_in": 56.4
+    "ho_in": 13.1
    },
    "citation": "AISC Shapes Database v15.0 (US)",
    "source_quote": "HP14X73: W=73, A=21.4, d=13.6, bf=14.6, tw=0.505, tf=0.505, Ix=729, Sx=107, Zx=118, rx=5.84, Iy=261, Sy=35.8, Zy=54.6, ry=3.49, J=2.01, Cw=11200, T=11.25, kdes=1.19, kdet=1.75, k1=1.4375, WGi=5.5, ddet=13.625, bfdet=14.625, twdet=0.5, tfdet=0.5, ho=13.1, PA=4, PB=83.6, PC=41.8, PD=56.4",
@@ -14812,11 +14806,7 @@
     "bfdet_in": 12.25,
     "twdet_in": 0.6875,
     "tfdet_in": 0.6875,
-    "ho_in": 11.6,
-    "PA_in": 3.41,
-    "PB_in": 71.4,
-    "PC_in": 36.9,
-    "PD_in": 49.2
+    "ho_in": 11.6
    },
    "citation": "AISC Shapes Database v15.0 (US)",
    "source_quote": "HP12X84: W=84, A=24.6, d=12.3, bf=12.3, tw=0.685, tf=0.685, Ix=650, Sx=106, Zx=120, rx=5.14, Iy=213, Sy=34.6, Zy=53.2, ry=2.94, J=4.24, Cw=7140, T=9.5, kdes=1.38, kdet=1.5625, k1=1.1875, WGi=5.5, ddet=12.25, bfdet=12.25, twdet=0.6875, tfdet=0.6875, ho=11.6, PA=3.41, PB=71.4, PC=36.9, PD=49.2",
@@ -14855,11 +14845,7 @@
     "bfdet_in": 12.25,
     "twdet_in": 0.625,
     "tfdet_in": 0.625,
-    "ho_in": 11.5,
-    "PA_in": 3.38,
-    "PB_in": 70.8,
-    "PC_in": 36.4,
-    "PD_in": 48.6
+    "ho_in": 11.5
    },
    "citation": "AISC Shapes Database v15.0 (US)",
    "source_quote": "HP12X74: W=74, A=21.8, d=12.1, bf=12.2, tw=0.605, tf=0.61, Ix=569, Sx=93.8, Zx=105, rx=5.11, Iy=186, Sy=30.4, Zy=46.6, ry=2.92, J=2.98, Cw=6160, T=9.5, kdes=1.31, kdet=1.5, k1=1.125, WGi=5.5, ddet=12.125, bfdet=12.25, twdet=0.625, tfdet=0.625, ho=11.5, PA=3.38, PB=70.8, PC=36.4, PD=48.6",
@@ -14898,11 +14884,7 @@
     "bfdet_in": 12.125,
     "twdet_in": 0.5,
     "tfdet_in": 0.5,
-    "ho_in": 11.4,
-    "PA_in": 3.33,
-    "PB_in": 70.1,
-    "PC_in": 35.9,
-    "PD_in": 48.0
+    "ho_in": 11.4
    },
    "citation": "AISC Shapes Database v15.0 (US)",
    "source_quote": "HP12X63: W=63, A=18.4, d=11.9, bf=12.1, tw=0.515, tf=0.515, Ix=472, Sx=79.1, Zx=88.3, rx=5.06, Iy=153, Sy=25.3, Zy=38.7, ry=2.88, J=1.83, Cw=5000, T=9.5, kdes=1.25, kdet=1.4375, k1=1.0625, WGi=5.5, ddet=12, bfdet=12.125, twdet=0.5, tfdet=0.5, ho=11.4, PA=3.33, PB=70.1, PC=35.9, PD=48",
@@ -14941,11 +14923,7 @@
     "bfdet_in": 12.0,
     "twdet_in": 0.4375,
     "tfdet_in": 0.4375,
-    "ho_in": 11.4,
-    "PA_in": 3.29,
-    "PB_in": 69.7,
-    "PC_in": 35.6,
-    "PD_in": 47.6
+    "ho_in": 11.4
    },
    "citation": "AISC Shapes Database v15.0 (US)",
    "source_quote": "HP12X53: W=53, A=15.5, d=11.8, bf=12, tw=0.435, tf=0.435, Ix=393, Sx=66.7, Zx=74, rx=5.03, Iy=127, Sy=21.1, Zy=32.2, ry=2.86, J=1.12, Cw=4080, T=9.5, kdes=1.13, kdet=1.3125, k1=1.0625, WGi=5.5, ddet=11.75, bfdet=12, twdet=0.4375, tfdet=0.4375, ho=11.4, PA=3.29, PB=69.7, PC=35.6, PD=47.6",
