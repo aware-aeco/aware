@@ -58,11 +58,11 @@ The `lookup` command is a standalone deterministic CLI (decalog #9 — no LLM in
 
 If `found: false`, the consumer reports "rule not in verified database" and does NOT fall back to inference.
 
-> The agent is `status: planned`: today the lookup is a standalone CLI (build it per the install note below). Composing it as a first-class node in a runnable AWARE `.app` is planned — it lights up when the agent becomes `available`.
+> The agent is `status: available`: the lookup binary ships with the `aware` release, so the command is dispatchable and the agent can be composed as a first-class node in a runnable AWARE `.app`.
 
 ## Install note
 
-Binary: `aware-steel-detailer-uk`, shipped in the aware release archive and MSI next to `aware`, so it resolves on PATH with no local build (the same project produces all three region binaries). Rules file is installed by `aware agent install steel-detailer-uk` — the binary reads it from `<AWARE_HOME>/agents/steel-detailer-uk/rules/`, so both steps are needed. To build from source instead, `cargo build --release` in `20-agents/aeco/engineering/steel-detailer-lookup/`.
+Binary: `aware-steel-detailer-uk`, shipped in the aware release archive and MSI next to `aware`, where the CLI resolves it directly — no local build needed (the same project produces all three region binaries). Rules file is installed by `aware agent install steel-detailer-uk` — the binary reads it from `<AWARE_HOME>/agents/steel-detailer-uk/rules/`, so both steps are needed. To build from source instead, `cargo build --release` in `20-agents/aeco/engineering/steel-detailer-lookup/`.
 
 ## Source
 
