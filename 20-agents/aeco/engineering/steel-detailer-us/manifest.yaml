@@ -1,5 +1,5 @@
 agent:        steel-detailer-us
-version:      0.4.0
+version:      0.5.0
 sdk-target:   aisc-360-22                 # the code edition these rules are sourced from
 display-name: Steel Detailer — US (AISC)
 
@@ -78,12 +78,15 @@ commands:
     outputs:
       type: single
       schema:
+        id:           string    # echoed back — present on a miss too, so a caller can log what it asked for
+        category:     string    # bolts | welds | connection-strength | materials | sections
         rule:         string
         value:        string
         units:        string
         citation:     string    # e.g. "AISC 360-22 §J3.4, Table J3.4"
         source_quote: string    # short verbatim excerpt for verification
-        found:        boolean    # false → no verified rule (refuse, don't guess)
+        properties:   object    # `sections` rules only — typed numeric section, detailing and coating properties
+        found:        boolean   # false → no verified rule (refuse, don't guess)
 
 # Discovered from skills/*.md. Each rule skill was authored from a verified
 # extraction (extract from the real source → independent adversarial cross-check

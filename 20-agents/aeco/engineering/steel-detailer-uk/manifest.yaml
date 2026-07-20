@@ -1,5 +1,5 @@
 agent:        steel-detailer-uk
-version:      0.1.0
+version:      0.2.0
 sdk-target:   bs-en-1993-1-8:2005+uk-na          # the code + national annex these rules are sourced from
 display-name: Steel Detailer — UK (Eurocode 3 + UK NA)
 
@@ -78,12 +78,14 @@ commands:
     outputs:
       type: single
       schema:
+        id:           string    # echoed back — present on a miss too, so a caller can log what it asked for
+        category:     string    # bolts | welds | materials | partial-factors
         rule:         string
         value:        string
         units:        string
         citation:     string    # e.g. "BS EN 1993-1-8:2005 Table 3.3" or "SCI P358 Check 4 (EN 1993-1-8 cl. 3.9.1)"
         source_quote: string    # short verbatim excerpt for verification
-        found:        boolean    # false → no verified rule (refuse, don't guess)
+        found:        boolean   # false → no verified rule (refuse, don't guess)
 
 # Discovered from skills/*.md. Each rule skill was authored from a verified extraction
 # (extract from the real source → cross-corroborate → seed spot-check); each carries its

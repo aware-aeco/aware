@@ -1,5 +1,5 @@
 agent:        steel-detailer-eu
-version:      0.1.0
+version:      0.2.0
 sdk-target:   eurocode-3-1-8@2005                 # the EN code edition these rules are sourced from
 display-name: Steel Detailer — EU (Eurocode 3, EN recommended values)
 
@@ -76,6 +76,8 @@ commands:
     outputs:
       type: single
       schema:
+        id:           string    # echoed back — present on a miss too, so a caller can log what it asked for
+        category:     string    # bolts | welds | materials | partial-factors
         rule:         string
         value:        string
         units:        string
