@@ -13,16 +13,17 @@ description: |
   QA workflow shape — software composed from a paragraph.
 
   NOT RUNNABLE — this is a shape demo, not a working pipeline. It shows the
-  DAG topology (fan-in, fan-out) and the safety contract on the Tekla write;
+  DAG topology (fan-in, fan-out) and the safety contracts on its two external writes;
   several of its nodes have no implementation behind them yet:
 
     - `file.watch`      — declared but `status: planned` (the builtin file
                           agent implements read / write / write-csv, no watch)
     - `excel`           — no agent manifest in the registry at all
     - `think-node`      — no agent manifest in the registry at all
-    - `slack.post-message` — the slack agent declares `chat-post-message`
     - `tekla.insert`    — declared in the manifest, but not dispatched by the
                           cli-tekla bridge
+    - `./schemas/connection.json` — referenced by `pdf-extract`, not present
+                          under `_examples/`
 
   `aware app validate` reports only the `file.watch` error, which understates
   this: it skips unresolved agents and unknown commands entirely, so a clean
@@ -123,7 +124,7 @@ nodes:
 
   - id: slack-notify
     agent: slack
-    command: post-message
+    command: chat-post-message
     row: 3
     col: 4
     config:
@@ -131,6 +132,13 @@ nodes:
       text:    |
         ✓ Connection {{ match-build.connection-type }} created on {{ match-build.drawing-mark }}.
         Deviation: {{ match-build.deviation-percent }}%.
+    # Posting to Slack is an OAuth-protected external write, so the safety contract
+    # applies (app-spec § Safety contract). Validation will NOT catch its absence here:
+    # the command declares no explicit `mode:` and `chat-post-message` does not match the
+    # `*.post` / `*.create` suffix inference — which is precisely why it is declared.
+    safety:
+      transaction-group: qa-connection-insert   # same boundary as the Tekla write
+      snapshot: false                           # a chat post cannot be snapshotted or undone
 
 connections:
   # Trigger → preprocess
