@@ -30,8 +30,11 @@ perimeters for coating quantity (`PA_in`, `PA2_in`, `PB_in`, `PC_in`, `PD_in`)
 + citation (generated from the AISC Shapes Database v15.0 US). Use it
 for weight/depth a designation does **not** encode (HSS, angles, pipe), and for the
 section properties and detailing dimensions a check needs without hardcoding a table.
-Note `kdes` (design, decimal) and `kdet` (detailing, fractional, larger) are **different
-values** — a drawing's bare "k" is `kdet`. See the `lookup-usage` skill.
+Note `kdes` (design, decimal) and `kdet` (the tabulated fractional detailing value) are
+**different keys** — a drawing's bare "k" is `kdet`. Neither is reliably the larger, so
+read the one you need rather than inferring it. Angle legs are served as `leg1_in` /
+`leg2_in` in **designation order** (longer first), which the `d` / `b` columns do not
+follow — they swap roles between 2L LLBB and SLBB. See the `lookup-usage` skill.
 
 ## Source
 

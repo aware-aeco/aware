@@ -85,6 +85,37 @@ def num(s):
         raise ValueError(f"unparseable numeric cell {s!r}")
 
 
+_LEG_RE = re.compile(r"^2?L([\d./-]+)X([\d./-]+)X")
+
+
+def frac_in(s):
+    """AISC designation fragment -> inches. '6' / '3/4' / '1-1/8'."""
+    whole, _, rest = s.partition("-")
+    if rest:
+        n, _, d = rest.partition("/")
+        return float(whole) + float(n) / float(d)
+    if "/" in s:
+        n, _, d = s.partition("/")
+        return float(n) / float(d)
+    return float(s)
+
+
+def designation_legs(label):
+    """(leg1, leg2) as written in an L / 2L designation, longer leg first.
+
+    Read from the designation rather than the `d` / `b` columns on purpose: those
+    encode geometric axes, and which one holds the first leg FLIPS with the
+    back-to-back orientation. Verified across the whole dataset — `b` is the first
+    leg for single angles and 2L SLBB, but `d` is for all 228 unequal 2L LLBB. The
+    designation is the only unambiguous statement of leg order, so it is the source
+    and the columns are checked against it.
+    """
+    m = _LEG_RE.match(label)
+    if not m:
+        raise ValueError(f"cannot read legs from angle designation {label!r}")
+    return frac_in(m.group(1)), frac_in(m.group(2))
+
+
 def first(*vals):
     for v in vals:
         if v is not None:
@@ -154,16 +185,23 @@ def main():
         if typ == "HSS":
             family = [("h", "flat_h_in"), ("b", "flat_b_in")]
         elif typ in ("L", "2L"):
-            # Designation order, and it is NOT the obvious mapping: AISC writes the
-            # LONGER leg first (L6X4X1/2), and the CSV puts that first leg in `b` with
-            # the second in `d`. Naming `b` "leg2" would silently hand back a reversed
-            # angle. `depth_in` (also from `d`) is therefore the second leg.
-            family = [("b", "leg1_in"), ("d", "leg2_in"), ("t", "angle_t_in")]
+            family = [("t", "angle_t_in")]
         elif typ == "PIPE":
             family = [("ID", "ID_in")]
         else:
             family = []
         props.update({k: v for col, k in family if (v := num(r.get(col))) is not None})
+
+        # Angle legs come from the designation; the `d`/`b` columns must agree as a
+        # pair, which catches a bad parse without trusting either column's axis role.
+        if typ in ("L", "2L"):
+            leg1, leg2 = designation_legs(label)
+            cols = sorted(v for v in (num(r.get("d")), num(r.get("b"))) if v is not None)
+            if cols and any(abs(a - c) > 0.01 for a, c in zip(sorted((leg1, leg2)), cols)):
+                raise SystemExit(
+                    f"ABORT: {label} legs {sorted((leg1, leg2))} from the designation do "
+                    f"not match the d/b columns {cols}.")
+            props["leg1_in"], props["leg2_in"] = leg1, leg2
 
         # `d` means different things by family: leg for an angle, OD for a round shape,
         # depth otherwise. Label the human-readable string honestly (properties are typed).
@@ -184,6 +222,9 @@ def main():
                 ("bf", num(r.get("bf"))), ("B", num(r.get("B"))),
                 ("tw", tw), ("tf", tf), ("tdes", num(r.get("tdes"))),
             ] + [(col, num(r.get(col))) for col, _ in SECTION_PROPS + family]
+            # `b` backs the angle leg check but maps to no key of its own there, so it
+            # is quoted explicitly — the quote must cover everything a reader verifies.
+            + ([("b", num(r.get("b")))] if typ in ("L", "2L") else [])
             if v is not None)
 
         rules.append({
@@ -284,6 +325,10 @@ def main():
         # only an unequal-leg shape constrains those, so one is pinned explicitly.
         "section.L6X4X1/2": {"leg1_in": 6.0, "leg2_in": 4.0, "depth_in": 4.0,
                              "PB_in": 20.0, "PA_in": 16.0, "PA2_in": 14.0},
+        # Both back-to-back orientations, because the d/b axis roles swap between them:
+        # LLBB puts the long leg in `d`, SLBB in `b`. Same designation legs either way.
+        "section.2L8X6X1LLBB": {"leg1_in": 8.0, "leg2_in": 6.0},
+        "section.2L8X6X1SLBB": {"leg1_in": 8.0, "leg2_in": 6.0},
     }.items():
         p = by_id.get(sid)
         if not p:

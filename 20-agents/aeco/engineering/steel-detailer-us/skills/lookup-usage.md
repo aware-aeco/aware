@@ -87,7 +87,7 @@ rolled-in fillets (none of them appear on HSS or pipe):
 | `tan_alpha` | tangent of the principal-axis angle — **dimensionless**; the orientation `Iz`/`Sz`/`rz` are measured about | single angles |
 | `ho_in` | distance between flange centroids | W/M/S/HP/C/MC |
 | `flat_h_in` / `flat_b_in` | HSS flat depth / width (`Ht−3t`, `B−3t`) — the flat a connection actually lands on | HSS |
-| `leg1_in` / `leg2_in` | first / second leg **as written in the designation** — AISC puts the longer leg first, so `L6X4X1/2` gives `leg1_in` 6, `leg2_in` 4. `depth_in` is the second leg | L, 2L |
+| `leg1_in` / `leg2_in` | first / second leg **as written in the designation**, longer first — `L6X4X1/2` gives 6 and 4. Read from the designation, not from `d`/`b`, whose axis roles swap between 2L LLBB and SLBB | L, 2L |
 | `angle_t_in` | leg thickness | L, 2L |
 | `ID_in` | pipe inside diameter | Pipe |
 | `PB_in` / `PD_in` | full shape perimeter / box perimeter `2(d+bf)` | see below |
@@ -127,6 +127,11 @@ the longer one). For an `L6X4X1/2` that is 16 in vs 14 in — picking the wrong 
 12% error in coating area. Equal-leg angles hide the distinction, so decide from the
 designation, not from a symmetric example. These identities are likewise asserted across
 all 137 single angles at generation time.
+
+For a **double angle**, `depth_in` is the assembled section's depth and so depends on the
+back-to-back orientation — `2L8X6X1LLBB` is 8 in deep, `2L8X6X1SLBB` is 6 in — while
+`leg1_in`/`leg2_in` stay 8 and 6 for both, because they name the designation's legs.
+Use the legs to identify the angle and `depth_in` to fit the assembled member.
 
 `tan_alpha` is the one **dimensionless** key — it carries no `_in` suffix for that
 reason. A single angle's `Iz`/`Sz`/`rz` are meaningless without it.
