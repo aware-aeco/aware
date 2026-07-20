@@ -56,6 +56,49 @@ const TEMPLATE: &str = r##"<!doctype html>
   #legend .legend-hint{color:var(--muted);font-size:11px;margin:0 0 6px}
   #legend .row{cursor:pointer;user-select:none;border-radius:5px;padding:2px 5px} #legend .row:hover{background:rgba(51,65,85,.5)}
   #legend .row.off{opacity:.4} #legend .row.off .swatch{filter:grayscale(1)}
+  /* ---- objects panel (scene.legend) ---- bounded and scrollable; the old list ran the full page
+     height on a real model (~35 rows). Header (mode toggle, search, Show all, hint) is FIXED and
+     only .obody scrolls, so the search box never scrolls away from the rows it filters. */
+  #legend.objects{width:248px;max-height:calc(100% - 220px);display:flex;flex-direction:column;padding:10px}
+  #legend.objects .obody{overflow-y:auto;overflow-x:hidden;min-height:0;margin:-2px -4px 0;padding:2px 4px 0}
+  /* Theme the scroll container — a native light scrollbar on a dark panel is exactly the leak the
+     house rule calls out. Firefox gets the standard properties, WebKit the pseudo-elements. */
+  #legend.objects .obody{scrollbar-width:thin;scrollbar-color:var(--border-2) transparent}
+  #legend.objects .obody::-webkit-scrollbar{width:9px}
+  #legend.objects .obody::-webkit-scrollbar-track{background:transparent}
+  #legend.objects .obody::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:5px;border:2px solid transparent;background-clip:content-box}
+  #legend.objects .obody::-webkit-scrollbar-thumb:hover{background:#475569;background-clip:content-box}
+  #legend.objects .omode{display:flex;border:1px solid var(--border-2);border-radius:6px;overflow:hidden;height:24px;margin-bottom:6px;flex:none}
+  #legend.objects .omode button{flex:1;border:0;background:transparent;color:var(--muted);font-size:11px;cursor:pointer;font-family:inherit}
+  #legend.objects .omode button.on{background:var(--accent);color:#06121f;font-weight:600}
+  #legend.objects .osearch{display:flex;align-items:center;height:26px;margin-bottom:6px;padding:0 8px;background:rgba(2,8,23,.6);border:1px solid var(--border-2);border-radius:6px;flex:none}
+  #legend.objects .osearch:focus-within{border-color:var(--accent)}
+  #legend.objects .osearch input{flex:1;min-width:0;background:transparent;border:0;outline:none;color:var(--text);font:12px system-ui;font-family:inherit}
+  #legend.objects #legClear{display:none;flex:none;margin-bottom:6px;background:rgba(30,41,59,.6);color:var(--text);border:1px solid var(--border-2);border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;font-family:inherit}
+  #legend.objects #legClear:hover{border-color:var(--accent)}
+  #legend.objects .ohint{color:var(--muted);font-size:10px;margin:0 0 6px;flex:none;white-space:normal}
+  #legend.objects .osec{color:#475569;font-size:10px;letter-spacing:.06em;text-transform:uppercase;margin:6px 0 2px}
+  #legend.objects .ocat{display:flex;align-items:center;gap:6px;width:100%;background:transparent;border:0;border-radius:5px;padding:3px 4px;color:var(--text);font:12px system-ui;font-family:inherit;cursor:pointer;text-align:left}
+  #legend.objects .ocat:hover{background:rgba(51,65,85,.5)}
+  #legend.objects .ochev{color:var(--muted);width:10px;flex:none}
+  #legend.objects .ocatlabel{flex:1} #legend.objects .ocount{color:var(--muted);font-size:10px;font-variant-numeric:tabular-nums}
+  #legend.objects .orow{display:flex;align-items:center;gap:4px;border-radius:5px;padding:1px 2px}
+  #legend.objects .orow:hover{background:rgba(51,65,85,.5)}
+  #legend.objects .orow.typed{padding-left:16px}
+  #legend.objects .orow.sel{box-shadow:inset 2px 0 0 var(--accent)}
+  /* Every row control is a REAL button with a ≥24px hit area around an 11px mark — the visibility
+     control used to be a 10px span, unreachable by keyboard and a poor touch target. */
+  #legend.objects .orow button{background:transparent;border:1px solid transparent;border-radius:5px;color:var(--text);font:12px system-ui;font-family:inherit;cursor:pointer;padding:0}
+  #legend.objects .orow button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+  #legend.objects .ovis{width:24px;height:24px;flex:none;display:flex;align-items:center;justify-content:center}
+  #legend.objects .oswatch{width:11px;height:11px;border-radius:2px;background:var(--sw,#94a3b8);box-shadow:inset 0 0 0 1.6px var(--sw,#94a3b8)}
+  #legend.objects .ovis[aria-checked=false] .oswatch{background:transparent}
+  #legend.objects .ovis[aria-checked=mixed] .oswatch{background:linear-gradient(135deg,var(--sw,#94a3b8) 0 50%,transparent 50% 100%)}
+  #legend.objects .opick{flex:1;min-width:0;text-align:left;padding:3px 2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #legend.objects .oiso{width:24px;height:24px;flex:none;color:var(--muted);opacity:0}
+  #legend.objects .orow:hover .oiso,#legend.objects .oiso:focus-visible{opacity:1}
+  #legend.objects .oiso:hover{color:var(--accent)}
+  #legend.objects .oempty{color:var(--muted);font-size:11px;padding:6px 2px}
   #toolbar{top:74px;left:16px;padding:7px 9px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;max-width:calc(100% - 492px)}  /* clears the side panel AND the ViewCube now sharing the top row */
   #toolbar .tb-grp{display:flex;gap:4px} #toolbar .tb-sep{width:1px;height:20px;background:var(--border-2);margin:0 2px}
   #toolbar button{background:rgba(30,41,59,.6);color:var(--text);border:1px solid var(--border-2);border-radius:7px;padding:5px 9px;font-size:12px;cursor:pointer;line-height:1}
@@ -77,6 +120,12 @@ const TEMPLATE: &str = r##"<!doctype html>
   #toolbar .menu button{width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:6px;padding:6px 9px}
   #toolbar .menu button:hover{background:rgba(51,65,85,.85);border-color:transparent}
   #toolbar .menu button.danger:hover{background:rgba(127,29,29,.55)}
+  /* Checkable menu items (work area). The tick is drawn, not a glyph, so it can't shift the row's
+     text when it toggles — the label stays put and only the mark changes. */
+  #toolbar .menu button.wtog{display:flex;align-items:center;gap:8px}
+  #toolbar .menu button.wtog .mck{width:12px;height:12px;flex:none;border:1px solid var(--border-2);border-radius:3px;position:relative}
+  #toolbar .menu button.wtog[aria-checked=true] .mck{background:var(--accent);border-color:var(--accent)}
+  #toolbar .menu button.wtog[aria-checked=true] .mck::after{content:'';position:absolute;left:3.5px;top:1px;width:3px;height:6px;border:solid #0a0f1a;border-width:0 2px 2px 0;transform:rotate(45deg)}
   #toolbar .menu hr{border:0;border-top:1px solid var(--border);margin:4px 2px}
   /* Themed tooltip — replaces native title= so no OS-default tooltip leaks the dark theme. */
   #tooltip{position:fixed;z-index:50;background:rgba(15,23,42,.97);border:1px solid var(--border-2);border-radius:6px;padding:5px 8px;font-size:11.5px;line-height:1.35;color:var(--text);pointer-events:none;max-width:260px;box-shadow:0 8px 22px rgba(0,0,0,.5);opacity:0;transition:opacity .12s}
@@ -85,6 +134,16 @@ const TEMPLATE: &str = r##"<!doctype html>
   #readout b{color:var(--text)} #readout .pill{color:var(--accent)}
   #rubber{position:absolute;border:1px solid var(--accent);background:rgba(96,165,250,.16);pointer-events:none;display:none;z-index:6}
   #viewcube{position:absolute;right:352px;top:74px;width:104px;height:104px;cursor:pointer;z-index:5}  /* top-right, left of the side panel (16+320+16) */
+  /* A scene that supplies no `panels` has no side panel to render. Hiding it alone is not enough:
+     these three measurements are coupled to its 320px column — the ViewCube is offset past it and
+     the toolbar reserves its width — so the column has to be reclaimed together or the viewer keeps
+     a gap where the panel used to be. 156 = 16 (edge) + 104 (cube) + 16 (gap) + 16 (toolbar left). */
+  body.no-side #side{display:none}
+  body.no-side #viewcube{right:16px}
+  body.no-side #toolbar{max-width:calc(100% - 156px)}
+  /* An embedding host that already titles the model can suppress ours — see the presentation
+     message below. Never the default: opened standalone, this is the only model identity there is. */
+  body.no-title #sceneName{display:none}
   #viewcube canvas{display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))}
   /* World-axis triad, bottom-right (Tekla-style). Passive readout — pointer-events:none so it can
      never swallow an orbit gesture; orientation CHANGES stay on the ViewCube. */
@@ -123,8 +182,8 @@ const TEMPLATE: &str = r##"<!doctype html>
     <div class="tb-menu" id="clipMenu">
       <button id="clip" data-tip="Clip planes and boxes — section to see inside a connection">Clip ▾</button>
       <div class="menu" role="menu">
-        <button data-clip="plane" data-tip="Click a model face to cut the view there">Add clip plane</button>
-        <button data-clip="box" data-tip="Section a box around the selection (or whole model)">Add clip box</button>
+        <button data-clip="plane" data-tip="Click a model face to cut the view there (Shift+X)">Add clip plane</button>
+        <button data-clip="box" data-tip="Section a box around the selection (or whole model) (Shift+B)">Add clip box</button>
         <hr>
         <button data-clip="clear" class="danger" data-tip="Remove every clip">Clear all clips</button>
       </div>
@@ -134,6 +193,9 @@ const TEMPLATE: &str = r##"<!doctype html>
       <div class="menu" role="menu">
         <button data-wa="all" data-tip="Bound the work area to the whole model">Set to all objects</button>
         <button data-wa="sel" data-tip="Bound the work area to the current selection">Define from selection</button>
+        <hr>
+        <button id="waOn" class="wtog" role="menuitemcheckbox" aria-checked="false" data-tip="Show or hide the work-area box"><span class="mck" aria-hidden="true"></span>Show work area</button>
+        <button id="waWhole" class="wtog" role="menuitemcheckbox" aria-checked="true" style="display:none" data-tip="When ON, any part that touches the work area is shown in full — nothing gets cut. When OFF, the work area slices parts cleanly at its box faces (a section cut)."><span class="mck" aria-hidden="true"></span>Show whole parts</button>
         <hr>
         <button data-wa="clear" class="danger" data-tip="Remove the work area">Clear work area</button>
       </div>
@@ -156,6 +218,23 @@ const TEMPLATE: &str = r##"<!doctype html>
     window.addEventListener('unhandledrejection', function(e){ post('viewer-error', String((e&&e.reason)||'load error')); });
     window.__viewerPost=post;
     setTimeout(function(){ if(!window.__viewerReady) post('viewer-error','timed out loading 3D libraries'); }, 9000);
+    // Presentation, from the embedding host. The SAME frozen document is both iframed by a host
+    // that already titles the model and opened standalone from disk, so this cannot be decided when
+    // the file is baked — only the surface displaying it knows. Default is always "show": a
+    // standalone viewer must never end up with no model identity at all.
+    //
+    // Deliberately narrow: this toggles presentation only. It cannot supply content, run script, or
+    // change behaviour, so accepting it from any origin costs nothing — and anything that is not
+    // this exact shape is ignored.
+    var applyChrome=function(showTitle){
+      var go=function(){ document.body.classList.toggle('no-title', showTitle===false); };
+      if(document.body) go(); else document.addEventListener('DOMContentLoaded',go);
+    };
+    window.addEventListener('message', function(e){
+      var d=e&&e.data;
+      if(!d || d.type!=='viewer-presentation') return;
+      if(typeof d.showTitle==='boolean') applyChrome(d.showTitle);
+    });
   })();
 </script>
 <script type="importmap">
@@ -215,6 +294,49 @@ const conv=(P,up)=> up==='z' ? new THREE.Vector3(P[0],P[2],P[1]) : new THREE.Vec
 // ---- view state: scene bounds + display/visibility, driven by the toolbar + legend ----
 let sceneBox=new THREE.Box3(); let maxDim=1;
 const groupHidden=new Set(); let soloGroup=null; let displayMode='solid'; let legendClickT=null;
+// ---- objects panel (scene.legend) ------------------------------------------------------------
+// Two worlds live here. WITHOUT a descriptor the legacy flat list runs on group-level state
+// (groupHidden/soloGroup) and a row click hides — unchanged for every scene already in the wild.
+// WITH one, everything is keyed on TARGET IDS, because a descriptor row can be a SUBSET of a group
+// (the same profile under Beams and under Columns) and group-level state cannot express that.
+let opRenderables=[];                 // rendered weld operations — legend-operable, never canvas-picked
+let groupColor={};                    // group key → colour, for the panel's row swatches
+let targetOf=new Map();               // targetId → [Object3D,…]
+let LEG=null;                         // the validated descriptor (Rust drops an unusable one)
+let legModeIx=0, legQuery='', legRows=[];
+const legCollapsed=new Set();
+let selIds=new Set(), hiddenIds=new Set(), isolatedIds=null, legAnchor=null;
+const legActive=()=>!!LEG;
+
+/** Every rendered target, in scene order: elements, then weld operations. */
+function buildTargetRegistry(){ targetOf=new Map();
+  for(const m of pickable){ const id=m.userData&&m.userData.id; if(id) targetOf.set(id,[m]); }
+  for(const w of opRenderables){ const id=w.userData&&w.userData.id; if(id) targetOf.set(id,[w]); }
+}
+/** Resolve the active mode's rows to concrete target-id sets — once, not per interaction. */
+function resolveLegRows(){ legRows=[];
+  if(!legActive()) return;
+  const mode=LEG.modes[legModeIx]; if(!mode) return;
+  const byGroup=new Map();
+  for(const [id,objs] of targetOf){ const g=objs[0]&&objs[0].userData&&objs[0].userData.group;
+    if(g){ if(!byGroup.has(g)) byGroup.set(g,[]); byGroup.get(g).push(id); } }
+  for(const sec of (mode.sections||[])) for(const cat of (sec.categories||[])) for(const row of (cat.rows||[])){
+    const ids = Array.isArray(row.targets) && row.targets.length
+      ? row.targets.filter(id=>targetOf.has(id))
+      : (row.groups||[]).flatMap(g=>byGroup.get(g)||[]);
+    if(!ids.length) continue;                                   // a row controlling nothing is not drawn
+    legRows.push({ key:row.key, label:row.label, color:row.color||null, ids,
+      secKey:sec.key, secLabel:sec.label||null, catKey:cat.key||'', catLabel:cat.label||null });
+  }
+}
+/** The selection as OBJECTS — the single path every existing consumer (Alt+Z, clip box, work area,
+ *  readout, highlighting) reads, so a legend-driven selection behaves like a canvas one. */
+function selectedObjects(){ const out=[]; for(const id of selIds){ const objs=targetOf.get(id); if(objs) out.push(...objs); } return out; }
+function syncSelectionFromIds(){ setSelection(selectedObjects()); refreshLegend(); }   // setSelection re-derives the same ids — no loop
+/** A row is on/off/mixed — mixed is real once hiding is per-id, which is why the control is a
+ *  tri-state checkbox rather than a switch. */
+function rowVis(row){ let shown=0; for(const id of row.ids) if(!hiddenIds.has(id) && (!isolatedIds||isolatedIds.has(id))) shown++;
+  return shown===0?'false':(shown===row.ids.length?'true':'mixed'); }
 
 // Recompute the orthographic frustum so its on-screen scale matches the perspective
 // camera's at the target plane (keeps zoom continuous across a projection toggle / resize).
@@ -388,18 +510,52 @@ function applyDisplayMode(){
   syncClipMirror();   // shadows just turned on or off — the mirror follows
 }
 function applyGroupVisibility(){
-  for(const m of pickable){ const k=m.userData&&m.userData.group;
-    m.visible = !groupHidden.has(k) && (soloGroup===null || soloGroup===k); }
+  // In "show whole parts" mode the work area filters by WHOLE meshes: anything whose bounds touch
+  // the box is drawn in full, anything outside it is dropped. That is what makes the mode
+  // slice-free — the alternative (cut mode) contributes clipping planes in applyClips instead.
+  const waWhole = workArea && workArea.enabled && workArea.whole ? workArea.box : null;
+  const hit=new THREE.Box3();
+  // With a descriptor, visibility is per TARGET; without one it stays per group. Welds are only
+  // ever addressable through the descriptor — the legacy list has no row for them.
+  const shown=(id,group)=>legActive()
+    ? (!hiddenIds.has(id) && (!isolatedIds || isolatedIds.has(id)))
+    : (!groupHidden.has(group) && (soloGroup===null || soloGroup===group));
+  for(const m of pickable){ const u=m.userData||{};
+    let vis = shown(u.id, u.group);
+    if(vis && waWhole){ hit.setFromObject(m); vis = hit.intersectsBox(waWhole); }
+    m.visible = vis; }
+  for(const w of opRenderables){ const u=w.userData||{};
+    let vis = legActive() ? shown(u.id, u.group) : true;   // legacy: welds were never hideable
+    if(vis && waWhole){ hit.setFromObject(w); vis = hit.intersectsBox(waWhole); }
+    w.visible = vis; }
 }
 function toggleGroup(k){ if(groupHidden.has(k)) groupHidden.delete(k); else groupHidden.add(k); soloGroup=null; applyGroupVisibility(); refreshLegend(); }
 function soloToggle(k){ soloGroup = soloGroup===k ? null : k; if(soloGroup) groupHidden.clear(); applyGroupVisibility(); refreshLegend(); }
-function refreshLegend(){ document.querySelectorAll('#legend .row').forEach(r=>{ const k=r.dataset.key;
+function refreshLegend(){
+  if(legActive()){ refreshObjectsPanel(); return; }
+  document.querySelectorAll('#legend .row').forEach(r=>{ const k=r.dataset.key;
   r.classList.toggle('off', groupHidden.has(k) || (soloGroup!==null && soloGroup!==k)); }); }
+/** Repaint only the live bits — selection ring, tri-state box, the Show-all/Exit control — so
+ *  typing in the search box never rebuilds the node the caret lives in. */
+function refreshObjectsPanel(){
+  const byKey=new Map(legRows.map(r=>[r.key,r]));
+  document.querySelectorAll('#legend .orow').forEach(node=>{
+    const row=byKey.get(node.dataset.key); if(!row) return;
+    const sel=row.ids.every(id=>selIds.has(id));
+    node.classList.toggle('sel',sel);
+    const pick=node.querySelector('[data-act=pick]'); if(pick) pick.setAttribute('aria-pressed',sel?'true':'false');
+    const box=node.querySelector('[data-act=vis]'); if(box) box.setAttribute('aria-checked',rowVis(row));
+  });
+  const clear=document.getElementById('legClear');
+  if(clear){ const any=isolatedIds||hiddenIds.size;
+    clear.style.display=any?'block':'none';
+    clear.textContent=isolatedIds?'Exit isolation':'Show all'; }
+}
 function activate(sel,attr,val){ document.querySelectorAll(sel).forEach(b=>b.classList.toggle('on', b.getAttribute(attr)===val)); }
 
 function clearContent(){ scene.remove(content);
   content.traverse(o=>{ if(o.geometry)o.geometry.dispose(); if(o.material)o.material.dispose(); });
-  content=new THREE.Group(); scene.add(content); pickable=[]; }
+  content=new THREE.Group(); scene.add(content); pickable=[]; opRenderables=[]; targetOf=new Map(); }
 
 function makeLabel(text,pos,maxDim){
   const c=document.createElement('canvas'); c.width=128; c.height=64; const g=c.getContext('2d');
@@ -717,12 +873,18 @@ function addOperations(S,up){ for(const op of (S.operations||[])){ if(!op||op.ki
   const geometry=new THREE.BufferGeometry().setFromPoints(points);
   const material=new THREE.LineBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.95});
   const weld=new THREE.Line(geometry,material); weld.userData=op; content.add(weld);
+  // Legend-operable, but deliberately NOT added to `pickable`. Canvas picking would break on it:
+  // box-select projects an object's ORIGIN and a weld line's geometry holds world points while the
+  // object sits at the origin; clip placement aborts on a hit with no face; and highlighting
+  // expects an emissive material where this is a LineBasicMaterial.
+  opRenderables.push(weld);
 } }
 
 function renderScene(S){
   clearContent();
   const up=(S.meta&&S.meta.up)||'z';
   const colorOf={}, opacityOf={}; (S.groups||[]).forEach(g=>{ colorOf[g.key]=g.color; if(typeof g.opacity==='number') opacityOf[g.key]=g.opacity; });
+  groupColor=colorOf;   // kept module-level so a panel row can show its group's colour
   groupHidden.clear(); soloGroup=null;
   const box=new THREE.Box3(); expandSceneBounds(box,S,up);
   if(box.isEmpty()) box.set(new THREE.Vector3(-1,-1,-1), new THREE.Vector3(1,1,1));
@@ -779,6 +941,12 @@ function renderScene(S){
     if(camera.isOrthographicCamera) reframeOrtho();
     controls.update();
   } else { frameBox(sceneBox, new THREE.Vector3(1,0.8,1)); }
+  // The registry must exist before the panel resolves rows against it. Rust has already validated
+  // (or dropped) the descriptor, so a present one is known-good here.
+  LEG=(S.legend&&Array.isArray(S.legend.modes)&&S.legend.modes.length)?S.legend:null;
+  legModeIx=0; legQuery=''; legCollapsed.clear();
+  selIds=new Set(); hiddenIds=new Set(); isolatedIds=null; legAnchor=null;
+  buildTargetRegistry(); resolveLegRows();
   applyDisplayMode(); applyGroupVisibility();
 
   buildSidePanels(S); buildLegend(S); setHint();
@@ -786,6 +954,11 @@ function renderScene(S){
 }
 
 function buildSidePanels(S){
+  // No panels ⇒ no side panel. It used to render anyway, titled with the scene name, so a scene
+  // that supplies no tables showed an empty box repeating a title the page already carries.
+  const hasPanels=Array.isArray(S.panels)&&S.panels.length>0;
+  document.body.classList.toggle('no-side',!hasPanels);
+  if(!hasPanels){ document.getElementById('panels').replaceChildren(); return; }
   document.getElementById('sideTitle').textContent=(S.panels&&S.panels[0]&&S.panels[0].title)||(S.meta&&S.meta.name)||'';
   document.getElementById('sideNote').textContent=(S.panels&&S.panels[0]&&S.panels[0].note)||'';
   const host=document.getElementById('panels'); host.replaceChildren();
@@ -797,9 +970,144 @@ function buildSidePanels(S){
     table.append(tb); host.append(table);
   });
 }
+// ---- the objects panel (descriptor-driven) ----------------------------------------------------
+// Row verbs mirror the floless editor: the LABEL selects, a tri-state box shows/hides, and an
+// explicit isolate button gives keyboard and touch a route that is not a double-click.
+function legRowMatches(r){ return !legQuery || r.label.toLowerCase().includes(legQuery); }
+/** Actually on screen: matches the search AND is not inside a collapsed category. A Shift range
+ *  must not reach rows the user cannot see — a search temporarily opens matching categories, which
+ *  is why the collapse test is skipped while querying. */
+function legRowDisplayed(r){ return legRowMatches(r) && !(r.catLabel && legCollapsed.has(r.catKey) && !legQuery); }
+function legApply(){ applyGroupVisibility(); refreshLegend(); }
+function legSelectRow(row,additive){
+  if(additive){ const all=row.ids.every(id=>selIds.has(id));
+    for(const id of row.ids){ if(all) selIds.delete(id); else selIds.add(id); } }
+  else { selIds=new Set(row.ids); }
+  legAnchor=row.key; syncSelectionFromIds();
+}
+function legSelectRange(row){                       // Shift: over the rows CURRENTLY displayed
+  const shown=legRows.filter(legRowDisplayed);
+  const a=shown.findIndex(r=>r.key===legAnchor), b=shown.findIndex(r=>r.key===row.key);
+  if(a<0||b<0){ legSelectRow(row,false); return; }
+  selIds=new Set(); for(let i=Math.min(a,b);i<=Math.max(a,b);i++) for(const id of shown[i].ids) selIds.add(id);
+  syncSelectionFromIds();
+}
+function legToggleVis(row){ const v=rowVis(row);
+  for(const id of row.ids){ if(v==='true') hiddenIds.add(id); else hiddenIds.delete(id); }  // mixed → show all
+  legApply();
+}
+function legIsolate(row){                            // a selected row isolates the whole selection
+  const ids = selIds.size && row.ids.some(id=>selIds.has(id)) ? [...selIds] : row.ids;
+  const same = isolatedIds && isolatedIds.size===ids.length && ids.every(id=>isolatedIds.has(id));
+  isolatedIds = same ? null : new Set(ids);          // isolating the same set again exits
+  legApply();
+}
+function legShowAll(){                               // two DISTINCT transitions, never conflated
+  if(isolatedIds) isolatedIds=null;                  // exit isolation, keeping manual hides
+  else hiddenIds.clear();                            // then, separately, un-hide
+  legApply();
+}
+/** The producer-authored panel: mode toggle, search, then sections → categories → rows.
+ *  Header is fixed; only the row body scrolls. */
+function buildObjectsPanel(){
+  const host=document.getElementById('legend'); host.replaceChildren(); host.style.display='';
+  host.classList.add('objects');
+  resolveLegRows();
+
+  if((LEG.modes||[]).length>1){                       // a toggle only when there IS a choice
+    const modes=el('div','omode');
+    LEG.modes.forEach((m,i)=>{ const b=el('button',i===legModeIx?'on':null,m.label);
+      b.type='button'; b.setAttribute('aria-pressed',i===legModeIx?'true':'false');
+      b.addEventListener('click',()=>{ if(i===legModeIx) return; legModeIx=i; legAnchor=null; buildObjectsPanel(); });
+      modes.append(b); });
+    host.append(modes);
+  }
+
+  const search=el('div','osearch');
+  const input=document.createElement('input');
+  input.type='text'; input.placeholder='Search objects…'; input.value=legQuery;
+  input.setAttribute('aria-label','Search objects in the list'); input.autocomplete='off';
+  input.addEventListener('input',()=>{ legQuery=input.value.trim().toLowerCase(); paintRows(); });
+  // Escape clears first, blurs second — and never reaches the window handler, which would
+  // otherwise cancel an armed clip.
+  input.addEventListener('keydown',e=>{ if(e.key!=='Escape') return; e.stopPropagation();
+    if(input.value){ input.value=''; legQuery=''; paintRows(); } else input.blur(); });
+  search.append(input); host.append(search);
+
+  const clear=el('button',null,'Show all'); clear.id='legClear'; clear.type='button';
+  clear.addEventListener('click',legShowAll); host.append(clear);
+
+  host.append(el('div','ohint','click a row to select · box shows/hides · ⊙ isolates · Ctrl/Shift multi-select'));
+  const body=el('div','obody'); body.id='legBody'; host.append(body);
+  paintRows();
+  refreshObjectsPanel();
+}
+
+/** Rebuild just the scrolling row body (search/collapse changes) — the header keeps its state. */
+function paintRows(){
+  const body=document.getElementById('legBody'); if(!body) return; body.replaceChildren();
+  const visible=legRows.filter(legRowMatches);
+  let sec=null, cat=null;
+  for(const row of visible){
+    if(row.secLabel && row.secKey!==sec){ sec=row.secKey; cat=null; body.append(el('div','osec',row.secLabel)); }
+    if(row.catKey!==cat){
+      cat=row.catKey;
+      if(row.catLabel){
+        const count=visible.filter(r=>r.catKey===row.catKey&&r.secKey===row.secKey).length;
+        const open=!legCollapsed.has(row.catKey)||!!legQuery;   // a search temporarily opens matches
+        const h=el('button','ocat'); h.type='button'; h.setAttribute('aria-expanded',open?'true':'false');
+        h.append(el('span','ochev',open?'▾':'▸'), el('span','ocatlabel',row.catLabel), el('span','ocount','('+count+')'));
+        h.addEventListener('click',()=>{ if(legCollapsed.has(row.catKey)) legCollapsed.delete(row.catKey); else legCollapsed.add(row.catKey); paintRows(); refreshObjectsPanel(); });
+        body.append(h);
+      }
+    }
+    if(row.catLabel && legCollapsed.has(row.catKey) && !legQuery) continue;
+    body.append(buildRow(row));
+  }
+  if(!visible.length) body.append(el('div','oempty','No objects match “'+legQuery+'”'));
+}
+
+function buildRow(row){
+  const node=el('div','orow'+(row.catLabel?' typed':'')); node.dataset.key=row.key;
+  // Descriptor colour wins; otherwise inherit the first target's group colour, so the common case
+  // needs no colour in the descriptor at all. Weld operations carry no group — they fall through
+  // to the neutral default.
+  const first=row.ids.length?targetOf.get(row.ids[0]):null;
+  const colour=row.color||(first&&groupColor[first[0].userData.group])||'#94a3b8';
+
+  // Visibility — a real tri-state checkbox: once hiding is per-id a row can be PARTLY hidden,
+  // which role="switch" cannot express.
+  const box=el('button','ovis'); box.type='button'; box.dataset.act='vis';
+  box.setAttribute('role','checkbox'); box.setAttribute('aria-checked',rowVis(row));
+  box.setAttribute('aria-label','Show or hide '+row.label);
+  box.setAttribute('data-tip','Show or hide'); box.style.setProperty('--sw',colour);
+  box.append(el('span','oswatch'));
+  box.addEventListener('click',e=>{ e.stopPropagation(); legToggleVis(row); });
+
+  const pick=el('button','opick',row.label); pick.type='button'; pick.dataset.act='pick';
+  pick.setAttribute('aria-pressed','false');
+  pick.setAttribute('data-tip','Select · Ctrl/Shift to multi-select · double-click to isolate');
+  // The plain click is DEFERRED so a double-click can cancel it: otherwise the first click of a
+  // dblclick replaces a multi-selection and "isolate the selection" silently becomes "isolate this row".
+  pick.addEventListener('click',e=>{ e.stopPropagation();
+    if(e.shiftKey){ clearTimeout(legendClickT); legSelectRange(row); return; }
+    if(e.ctrlKey||e.metaKey){ clearTimeout(legendClickT); legSelectRow(row,true); return; }
+    clearTimeout(legendClickT); legendClickT=setTimeout(()=>legSelectRow(row,false),220); });
+  pick.addEventListener('dblclick',e=>{ e.preventDefault(); e.stopPropagation(); clearTimeout(legendClickT); legIsolate(row); });
+
+  const iso=el('button','oiso','⊙'); iso.type='button'; iso.dataset.act='iso';
+  iso.setAttribute('aria-label','Isolate '+row.label);
+  iso.setAttribute('data-tip','Isolate — the keyboard/touch route, no double-click needed');
+  iso.addEventListener('click',e=>{ e.stopPropagation(); legIsolate(row); });
+
+  node.append(box,pick,iso); return node;
+}
+
 function buildLegend(S){ const host=document.getElementById('legend'); host.replaceChildren();
-  const groups=(S.groups||[]); if(!groups.length){ host.style.display='none'; return; } host.style.display='';
-  host.append(el('div','legend-hint','click: hide/show · dbl-click: isolate'));
+  if(S.legendError) console.warn('viewer-3d: objects panel ignored — '+S.legendError);
+  if(legActive()){ buildObjectsPanel(); return; }
+  host.classList.remove('objects');
+host.append(el('div','legend-hint','click: hide/show · dbl-click: isolate'));
   groups.forEach(g=>{ const row=el('div','row'); row.dataset.key=g.key;
     const sw=el('span','swatch'); sw.style.background=g.color;
     row.append(sw, document.createTextNode(g.label));
@@ -819,6 +1127,10 @@ let selection=[];
 function clearHighlight(){ for(const m of selection){ const mat=m.material; if(mat&&mat.emissive) mat.emissive.setHex(0x000000); } }
 function setSelection(meshes){
   clearHighlight(); selection=meshes||[];
+  // With a descriptor, selIds is the source of truth — so a CANVAS pick (click, box-select) has to
+  // write it too. Without this the panel keeps highlighting the previous selection and isolate acts
+  // on it. Deriving from the objects is idempotent, so the panel→canvas path round-trips unchanged.
+  if(legActive()){ selIds=new Set(); for(const m of selection){ const id=m.userData&&m.userData.id; if(id) selIds.add(id); } refreshObjectsPanel(); }
   for(const m of selection){ const mat=m.material; if(mat){ mat.emissive=new THREE.Color(0xf59e0b); mat.emissiveIntensity=0.6; } }
   if(selection.length===0){ setHint(); return; }
   if(selection.length===1){ const u=selection[0].userData; const parts=[el('b',null,u.id||'(element)')];
@@ -870,7 +1182,10 @@ function boxToPlanes(b){ return [
   new THREE.Plane(new THREE.Vector3(-1,0,0), b.max.x), new THREE.Plane(new THREE.Vector3(1,0,0), -b.min.x),
   new THREE.Plane(new THREE.Vector3(0,-1,0), b.max.y), new THREE.Plane(new THREE.Vector3(0,1,0), -b.min.y),
   new THREE.Plane(new THREE.Vector3(0,0,-1), b.max.z), new THREE.Plane(new THREE.Vector3(0,0,1), -b.min.z) ]; }
-function applyClips(){ const active=clips.flatMap(c=>c.planes); if(workArea) active.push(...workArea.planes);
+function applyClips(){ const active=clips.flatMap(c=>c.planes);
+  // The work area sections the view too — UNLESS it is in "show whole parts" mode, where parts are
+  // hidden or shown whole by applyGroupVisibility and never sliced.
+  if(workArea && workArea.enabled && !workArea.whole) active.push(...workArea.planes);
   renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; syncClipMirror(); }
 // Materials keep their OWN reference to the clip planes for the shadow pass, since renderer-global
 // ones are cleared there. applyClips REPLACES the array rather than mutating it, so that reference
@@ -900,22 +1215,59 @@ function clipCount(){ return clips.length; }
 // Arm/disarm the face-pick: 'plane' → next left-click on a face drops a plane; null → back to selecting.
 function setClipMode(m){ clipMode=m==='plane'?'plane':null;
   renderer.domElement.style.cursor=clipMode?'crosshair':'default';
-  const btn=document.getElementById('clip'); if(btn) btn.classList.toggle('on',!!clipMode);
+  // Armed → the button both lights up AND becomes its own cancel target, so the way out is where the
+  // way in was. Matches the floless editor's ✕ affordance.
+  const btn=document.getElementById('clip'); if(btn){ btn.classList.toggle('on',!!clipMode); btn.textContent=clipMode?'Clip ✕':'Clip ▾'; }
   if(clipMode) readout.replaceChildren(el('b',null,'Click a face'), document.createTextNode(' to cut the view there · Esc to cancel'));
   else setHint();
   return clipMode; }
 // Work area: one box that bounds (and sections) the view, shown as an always-visible wireframe.
 function renderWorkArea(){ if(workAreaHelper){ overlayScene.remove(workAreaHelper); workAreaHelper.geometry.dispose(); workAreaHelper.material.dispose(); workAreaHelper=null; }
-  if(!workArea || workArea.box.isEmpty()) return;
+  if(!workArea || !workArea.enabled || workArea.box.isEmpty()) return;   // switched off → no wireframe either
   workAreaHelper=new THREE.Box3Helper(workArea.box, new THREE.Color(0x60a5fa));
   workAreaHelper.material.depthTest=false; workAreaHelper.renderOrder=995; overlayScene.add(workAreaHelper); }
-function setWorkAreaBox(box){ if(!box||box.isEmpty()) return false; workArea={ box:box.clone(), planes:boxToPlanes(box) }; applyClips(); renderWorkArea(); return true; }
-function workAreaSetAll(){ const box=meshBox(pickable); return box.isEmpty() ? false : setWorkAreaBox(box); } // bound the whole model by its rendered mesh bounds (not centrelines)
+// A work area has two independent switches, matching the floless editor:
+//   enabled — is it in force at all (the "Show work area" tick)
+//   whole   — ON (default): a part TOUCHING the box is drawn in full and parts outside are hidden
+//             outright, so nothing is ever sliced by surprise;
+//             OFF: the box sections the view, cutting parts at its faces.
+// Only the cut mode contributes clipping planes; whole mode is pure visibility (see applyClips and
+// applyGroupVisibility). A re-define keeps whichever mode is current.
+function setWorkAreaBox(box){ if(!box||box.isEmpty()) return false;
+  const whole = workArea ? workArea.whole : true;
+  workArea={ box:box.clone(), planes:boxToPlanes(box), enabled:true, whole };
+  applyClips(); renderWorkArea(); applyGroupVisibility(); reflectWorkArea(); return true; }
+function workAreaToggle(on){ if(!workArea) return false;
+  workArea.enabled = on===undefined ? !workArea.enabled : !!on;
+  applyClips(); renderWorkArea(); applyGroupVisibility(); reflectWorkArea(); return workArea.enabled; }
+function workAreaSetWhole(on){ if(!workArea) return false;
+  workArea.whole = on===undefined ? !workArea.whole : !!on;
+  applyClips(); applyGroupVisibility(); reflectWorkArea(); return workArea.whole; }
+function workAreaState(){ return workArea ? { on:!!workArea.enabled, whole:!!workArea.whole } : null; }
+// Keep the button and its two ticks honest about the live state. "Show whole parts" is meaningless
+// without a work area, so it stays hidden until there is one.
+function reflectWorkArea(){ const st=workAreaState();
+  const btn=document.getElementById('work'); if(btn) btn.classList.toggle('on', !!(st&&st.on));
+  const on=document.getElementById('waOn'); if(on) on.setAttribute('aria-checked', st&&st.on?'true':'false');
+  const wh=document.getElementById('waWhole'); if(wh){ wh.style.display=st?'flex':'none'; wh.setAttribute('aria-checked', st&&st.whole?'true':'false'); } }
+function workAreaSetAll(){ const box=meshBox(pickable); if(box.isEmpty()) return false;
+  // Pad before these bounds become clip planes. Bound EXACTLY to the mesh extents, the six planes sit
+  // on the model's own outer surfaces and the whole model is clipped away — "set to all objects" made
+  // everything vanish (pre-existing: it did this on every release before the whole/cut switch, where
+  // cut was the only mode).
+  //
+  // The pad is the SAME one selBox uses for clip boxes and for "define from selection", which is the
+  // empirically proven-good value here: A/B'd in a browser, a 0.6mm pad on this 6 m model still
+  // vanishes while this one renders correctly. That threshold is far larger than single-precision
+  // error at these magnitudes would predict, so the true mechanism is NOT understood — matching the
+  // value that demonstrably works, rather than a derived epsilon that does not.
+  box.expandByScalar(Math.max(maxDim*0.04, 1));
+  return setWorkAreaBox(box); } // bound the whole model by its rendered mesh bounds (not centrelines)
 function workAreaFromSelection(pad){ const box=new THREE.Box3();
   for(const m of selection){ if(m.visible) box.expandByObject(m); }
   if(box.isEmpty()) return false; box.expandByScalar(pad==null?Math.max(maxDim*0.04,1):pad); return setWorkAreaBox(box); }
-function clearWorkArea(){ workArea=null; applyClips(); renderWorkArea(); }
-function workAreaOn(){ return !!workArea; }
+function clearWorkArea(){ workArea=null; applyClips(); renderWorkArea(); applyGroupVisibility(); reflectWorkArea(); }
+function workAreaOn(){ return !!(workArea && workArea.enabled); }   // switched off IS off — clipping, filtering and the helper are all disabled
 
 addEventListener('resize',()=>{
   perspCam.aspect=innerWidth/innerHeight; perspCam.updateProjectionMatrix();
@@ -924,9 +1276,27 @@ addEventListener('resize',()=>{
 });
 // Single-key view shortcuts mirror the ViewCube faces (lower- or upper-case).
 const VIEW_KEYS={ t:'top', f:'front', r:'right', b:'back', l:'left' };
+// A single-key shortcut must never fire while the user is typing. Without this guard, typing a
+// word containing t/f/r/b/l into ANY text field swings the camera and swallows the character,
+// and Home fits the model instead of moving the caret — so no text input in this document can
+// work until the guard exists.
+function typingInto(t){ if(!t) return false;
+  if(t.isContentEditable) return true;
+  const tag=(t.tagName||'').toLowerCase();
+  return tag==='input'||tag==='textarea'||tag==='select'; }
 addEventListener('keydown',e=>{
+  // Escape is deliberately still honoured while typing ONLY for the clip-mode cancel below, and
+  // a text field that wants Escape for itself stops propagation before this handler sees it.
+  if(typingInto(e.target) && e.key!=='Escape') return;
   if(e.key==='Escape' && clipMode){ setClipMode(null); e.preventDefault(); return; } // cancel an armed clip-plane pick
+  if(typingInto(e.target)) return;                                                   // Escape with no armed clip → leave it to the field
   if(e.key==='Home'){ frameBox(sceneBox); e.preventDefault(); }                       // fit all
+  // Section shortcuts, matching the floless editor. Shift-qualified so they cannot collide with the
+  // bare-letter view keys above, and safe to add only because of the typing guard at the top.
+  else if(e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey && (e.key==='X'||e.key==='x')){
+    setClipMode(clipMode?null:'plane'); e.preventDefault(); }                          // Shift+X → arm / cancel a clip plane
+  else if(e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey && (e.key==='B'||e.key==='b')){
+    addClipBox(); e.preventDefault(); }                                                // Shift+B → clip box around selection/model
   else if((e.key==='z'||e.key==='Z') && e.altKey){                                     // zoom the current selection
     if(selection.length){ const b=new THREE.Box3(); for(const m of selection) b.expandByObject(m); frameBox(b); } e.preventDefault(); }
   else if(!e.altKey && !e.ctrlKey && !e.metaKey && VIEW_KEYS[e.key.toLowerCase()]){     // T/F/R/B/L → named views
@@ -950,6 +1320,9 @@ document.querySelectorAll('#clipMenu [data-clip]').forEach(b=>b.addEventListener
   const a=b.dataset.clip; if(a==='plane') setClipMode('plane'); else if(a==='box') addClipBox(); else if(a==='clear') clearClips(); }));
 document.querySelectorAll('#workMenu [data-wa]').forEach(b=>b.addEventListener('click', e=>{ e.stopPropagation(); closeMenus();
   const a=b.dataset.wa; if(a==='all') workAreaSetAll(); else if(a==='sel') workAreaFromSelection(); else if(a==='clear') clearWorkArea(); }));
+// The two ticks deliberately do NOT close the menu — the whole point is to see the state flip.
+document.getElementById('waOn').addEventListener('click', e=>{ e.stopPropagation(); workAreaToggle(); });
+document.getElementById('waWhole').addEventListener('click', e=>{ e.stopPropagation(); workAreaSetWhole(); });
 document.addEventListener('pointerdown', e=>{ if(!e.target.closest('#toolbar')) closeMenus(); }, true); // click outside the toolbar closes a menu
 
 // ---- Themed tooltips (replaces native title=): one shared element, shown on data-tip hover ----
@@ -1054,6 +1427,8 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   setView:applyView, setProjection, setDisplayMode, toggleGroup, frameAll:()=>frameBox(sceneBox),
   clipCount, addClipBox, clearClips, setClipMode, addClipPlaneAtScreen,
   workAreaSetAll, workAreaFromSelection, clearWorkArea, workAreaOn,
+  workAreaToggle, workAreaSetWhole, workAreaState,
+  clipMode:()=>clipMode,
   clipPlanes:()=>(renderer.clippingPlanes||[]).length };
 </script>
 </body>
@@ -2264,6 +2639,242 @@ fn validate_grid_bounds(
     Ok(())
 }
 
+/// The ids a legend row may name as a `target`.
+///
+/// Deliberately NARROW: a top-level `element`, or a rendered `kind:"weld"` operation — the only
+/// two things the viewer draws as independently operable objects. Structural grids, their
+/// axes/levels and labels, plate holes, non-rendered operations, lights and helpers are excluded;
+/// addressing those would need one-to-many target mappings and buys nothing for this panel.
+fn legend_target_ids(scene: &Value, emitted: &HashSet<String>) -> HashSet<String> {
+    let mut ids = HashSet::new();
+    if let Some(Value::Array(elements)) = scene.get("elements") {
+        for e in elements {
+            // Only what the renderer EMITS. An unsupported element kind is skipped at render time,
+            // so accepting its id here would pass validation and then quietly drop the row later —
+            // the opposite of the promised wholesale fallback.
+            // `emitted` is necessary but not sufficient: classify_scene can INFER `member` from
+            // geometry when `kind` is a truthy non-string, while the browser does
+            // `switch(el.kind||'box')` and skips it. Require the renderer's own shape.
+            if let Some(id) = e.get("id").and_then(Value::as_str)
+                && emitted.contains(id)
+                && browser_renders_kind(e)
+            {
+                ids.insert(id.to_string());
+            }
+        }
+    }
+    if let Some(Value::Array(ops)) = scene.get("operations") {
+        for op in ops {
+            if op.get("kind").and_then(Value::as_str) == Some("weld")
+                && let Some(id) = op.get("id").and_then(Value::as_str)
+                && emitted.contains(id)
+            {
+                ids.insert(id.to_string());
+            }
+        }
+    }
+    ids
+}
+
+/// group key → the target ids in it, so a row naming only `groups` resolves the same way the
+/// renderer will. Insertion order is irrelevant here (membership only); the PANEL's order always
+/// comes from the descriptor's own arrays.
+fn legend_group_members(scene: &Value, emitted: &HashSet<String>) -> HashMap<String, Vec<String>> {
+    let mut by_group: HashMap<String, Vec<String>> = HashMap::new();
+    if let Some(Value::Array(elements)) = scene.get("elements") {
+        for e in elements {
+            if let (Some(id), Some(g)) = (
+                e.get("id").and_then(Value::as_str),
+                e.get("group").and_then(Value::as_str),
+            ) && emitted.contains(id)
+                && browser_renders_kind(e)
+            {
+                by_group
+                    .entry(g.to_string())
+                    .or_default()
+                    .push(id.to_string());
+            }
+        }
+    }
+    by_group
+}
+
+/// The browser resolves an element's kind as `el.kind || 'box'` and switches on it, so a kind
+/// that is present but not a string can never match a case — it is skipped no matter what the
+/// Rust-side classifier inferred from the geometry.
+fn browser_renders_kind(e: &Value) -> bool {
+    match e.get("kind") {
+        None | Some(Value::Null) => true,
+        Some(Value::String(_)) => true,
+        Some(Value::Bool(false)) => true,
+        Some(Value::Number(n)) => n.as_f64() == Some(0.0),
+        Some(_) => false,
+    }
+}
+
+fn legend_named(v: Option<&Value>) -> bool {
+    matches!(v, Some(Value::String(s)) if !s.trim().is_empty())
+}
+
+/// Validate `scene.legend` — the producer-authored objects panel — as a whole.
+///
+/// `None` = absent or wholly valid. `Some(reason)` = it must be IGNORED in favour of the legacy
+/// flat list. Ignoring rather than erroring is deliberate: the panel is chrome and the model is the
+/// payload, so a producer bug in the panel must never cost the user their model. It is checked
+/// ATOMICALLY — a half-valid descriptor renders an ambiguous panel where some rows silently control
+/// nothing, which is worse than the honest legacy list.
+fn legend_problem(scene: &Value, emitted: &HashSet<String>) -> Option<String> {
+    let legend = match scene.get("legend") {
+        None | Some(Value::Null) => return None,
+        Some(v @ Value::Object(_)) => v,
+        Some(other) => return Some(format!("must be an object (got {})", json_type(other))),
+    };
+
+    match legend.get("v").and_then(Value::as_u64) {
+        Some(1) => {}
+        Some(other) => return Some(format!("unknown version {other} (this renderer speaks v1)")),
+        None => return Some("`v` is required (expected 1)".into()),
+    }
+    // Required in v1: the row semantics travel WITH the descriptor the producer authored, and are
+    // never inferred from some field happening to be present.
+    match legend.get("interaction").and_then(Value::as_str) {
+        Some("select") => {}
+        Some(other) => return Some(format!("unknown interaction `{other}` (expected `select`)")),
+        None => return Some("`interaction` is required in v1 (expected `select`)".into()),
+    }
+
+    let modes = match legend.get("modes") {
+        Some(Value::Array(m)) if !m.is_empty() => m,
+        _ => return Some("`modes` must be a non-empty array".into()),
+    };
+
+    let valid_targets = legend_target_ids(scene, emitted);
+    let group_members = legend_group_members(scene, emitted);
+
+    for (mi, mode) in modes.iter().enumerate() {
+        if !legend_named(mode.get("key")) || !legend_named(mode.get("label")) {
+            return Some(format!("modes[{mi}] needs a non-empty `key` and `label`"));
+        }
+        let sections = match mode.get("sections") {
+            Some(Value::Array(s)) if !s.is_empty() => s,
+            _ => return Some(format!("modes[{mi}].sections must be a non-empty array")),
+        };
+
+        // Row keys are unique per MODE, not merely per parent: a part-group name such as `weld`
+        // legitimately recurs under several connection categories, and the Shift-range anchor
+        // stores a bare row key — duplicates would make a range ambiguous.
+        let mut row_keys: HashSet<&str> = HashSet::new();
+        // Category keys share the collapse state and the header identity, so a duplicate makes one
+        // header vanish and ties the two categories' collapse together.
+        let mut cat_keys: HashSet<&str> = HashSet::new();
+        // A target belongs to at most one LEAF row per mode; cross-cutting classifications belong
+        // in separate modes. Category headers aggregate descendants without being rows themselves.
+        let mut claimed: HashMap<String, String> = HashMap::new();
+
+        for (si, section) in sections.iter().enumerate() {
+            if !legend_named(section.get("key")) {
+                return Some(format!(
+                    "modes[{mi}].sections[{si}].key must be a non-empty string"
+                ));
+            }
+            let categories = match section.get("categories") {
+                Some(Value::Array(c)) if !c.is_empty() => c,
+                _ => {
+                    return Some(format!(
+                        "modes[{mi}].sections[{si}].categories must be a non-empty array"
+                    ));
+                }
+            };
+            for (ci, category) in categories.iter().enumerate() {
+                if let Some(ck) = category.get("key").and_then(Value::as_str)
+                    && !ck.is_empty()
+                    && !cat_keys.insert(ck)
+                {
+                    return Some(format!(
+                        "modes[{mi}].sections[{si}].categories[{ci}].key `{ck}` recurs within one mode — category keys must be unique per mode"
+                    ));
+                }
+                let rows = match category.get("rows") {
+                    Some(Value::Array(r)) if !r.is_empty() => r,
+                    _ => {
+                        return Some(format!(
+                            "modes[{mi}].sections[{si}].categories[{ci}].rows must be a non-empty array"
+                        ));
+                    }
+                };
+                for (ri, row) in rows.iter().enumerate() {
+                    let at = format!("modes[{mi}].sections[{si}].categories[{ci}].rows[{ri}]");
+                    let key = match row.get("key").and_then(Value::as_str) {
+                        Some(k) if !k.trim().is_empty() => k,
+                        _ => return Some(format!("{at}.key must be a non-empty string")),
+                    };
+                    if !row_keys.insert(key) {
+                        return Some(format!(
+                            "{at}.key `{key}` recurs within one mode — row keys must be unique per mode"
+                        ));
+                    }
+                    if !legend_named(row.get("label")) {
+                        return Some(format!("{at}.label must be a non-empty string"));
+                    }
+
+                    // Resolve exactly as the renderer will: explicit targets win, else the groups.
+                    let mut resolved: Vec<String> = Vec::new();
+                    match row.get("targets") {
+                        Some(Value::Array(t)) if !t.is_empty() => {
+                            for v in t {
+                                match v.as_str() {
+                                    Some(id) if valid_targets.contains(id) => {
+                                        resolved.push(id.to_string())
+                                    }
+                                    Some(id) => {
+                                        return Some(format!(
+                                            "{at}.targets names `{id}`, which is not a rendered element or weld operation"
+                                        ));
+                                    }
+                                    None => return Some(format!("{at}.targets must be strings")),
+                                }
+                            }
+                        }
+                        Some(Value::Array(_)) => {
+                            return Some(format!("{at}.targets must not be empty"));
+                        }
+                        Some(_) => return Some(format!("{at}.targets must be an array")),
+                        None => {
+                            let groups = match row.get("groups") {
+                                Some(Value::Array(g)) if !g.is_empty() => g,
+                                _ => return Some(format!("{at} must name `groups` or `targets`")),
+                            };
+                            for g in groups {
+                                let Some(gk) = g.as_str() else {
+                                    return Some(format!("{at}.groups must be strings"));
+                                };
+                                match group_members.get(gk) {
+                                    Some(ids) => resolved.extend(ids.iter().cloned()),
+                                    None => {
+                                        return Some(format!(
+                                            "{at}.groups names `{gk}`, which no element belongs to"
+                                        ));
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    for id in resolved {
+                        if let Some(owner) = claimed.get(&id) {
+                            return Some(format!(
+                                "{at} claims target `{id}`, already claimed by row `{owner}` in the same mode"
+                            ));
+                        }
+                        claimed.insert(id, key.to_string());
+                    }
+                }
+            }
+        }
+    }
+    None
+}
+
 pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     // The scene is the payload; require an object so the renderer has something to draw.
     let scene = match args.get("scene") {
@@ -2282,7 +2893,7 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
     };
     // Validate and classify every record before producing any HTML or touching output-path.
     // A malformed supported record therefore fails atomically instead of disappearing in JS.
-    let receipt = classify_scene(scene)?;
+    let mut receipt = classify_scene(scene)?;
 
     // Serialize the scene and inject it into the renderer shell as a JS object-literal
     // expression. Neutralize EVERY `<` as a `<` escape that renders back
@@ -2291,6 +2902,36 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
     // tokenizer into the script-data-(double-)escaped state and stop the template's own
     // closing `</script>` from closing the element). JSON only contains `<` inside string
     // values, so escaping all of them is safe. Also escape the JS line terminators U+2028/U+2029.
+    // An unusable objects-panel descriptor is dropped rather than rendered half-valid, and the
+    // reason travels to the producer as `legendError` (the page console-warns it). Cloning only on
+    // the failure path keeps the common case allocation-free.
+    let emitted_ids: HashSet<String> = receipt
+        .emitted
+        .iter()
+        .filter_map(|e| e.get("id").and_then(Value::as_str).map(str::to_string))
+        .collect();
+    let repaired;
+    let scene = match legend_problem(scene, &emitted_ids) {
+        None => scene,
+        Some(reason) => {
+            // Surface it in the RESULT too. A headless producer must be able to see that its
+            // panel was rejected without parsing the generated HTML or opening a browser console.
+            receipt.warnings.push(serde_json::json!({
+                "status": "warning",
+                "code": "legend-ignored",
+                "message": format!("scene.legend ignored, falling back to the flat list: {reason}")
+            }));
+            repaired = {
+                let mut s = scene.clone();
+                if let Some(obj) = s.as_object_mut() {
+                    obj.remove("legend");
+                    obj.insert("legendError".into(), Value::String(reason));
+                }
+                s
+            };
+            &repaired
+        }
+    };
     let scene_json = serde_json::to_string(scene)
         .map_err(|e| AwareError::Internal(format!("viewer-3d: serialize scene: {e}")))?
         .replace('<', "\\u003C")
@@ -2894,6 +3535,339 @@ mod tests {
         assert!(
             html.contains("clearTimeout(legendClickT)"),
             "dbl-click cancels the single-click toggle"
+        );
+    }
+
+    /// A scene with two elements sharing a group, plus a weld operation — the shape the split-row
+    /// case needs (one group appearing under two categories) and the one welds live in.
+    fn legend_scene(legend: Value) -> Value {
+        json!({ "scene": {
+            "meta": {"name":"x"},
+            "groups": [{"key":"W16X26","label":"W16X26","color":"#94a3b8"}],
+            "elements": [
+                {"id":"b1","kind":"member","group":"W16X26","from":[0,0,0],"to":[1000,0,0],"widthMm":100,"depthMm":200},
+                {"id":"b2","kind":"member","group":"W16X26","from":[0,0,500],"to":[1000,0,500],"widthMm":100,"depthMm":200}
+            ],
+            "operations": [
+                {"id":"j1:weld:op","kind":"weld","mainId":"b1","secondaryId":"b2",
+                 "path":[[0,0,0],[0,0,500]],"weldType":"fillet","sizeMm":6,"around":false,"shop":true}
+            ],
+            "legend": legend
+        } })
+    }
+
+    /// One mode, one section, one category, rows split by explicit targets — the case group
+    /// annotation could not express, and the reason the descriptor exists at all.
+    fn legend_ok() -> Value {
+        json!({ "v":1, "interaction":"select", "modes":[
+            {"key":"type","label":"By type","sections":[
+                {"key":"members","label":"Members","categories":[
+                    {"key":"beam","label":"Beams","rows":[
+                        {"key":"beam|W16X26","label":"W16X26","groups":["W16X26"],"targets":["b1"]}]},
+                    {"key":"brace","label":"Braces","rows":[
+                        {"key":"brace|W16X26","label":"W16X26","groups":["W16X26"],"targets":["b2"]}]}]},
+                {"key":"connections","label":"Connections","categories":[
+                    {"key":"","label":null,"rows":[
+                        {"key":"weld","label":"Welds","targets":["j1:weld:op"]}]}]}]}]})
+    }
+
+    #[test]
+    fn a_valid_legend_descriptor_survives_and_reaches_the_page() {
+        let out = viewer_3d_render(&legend_scene(legend_ok()), true).unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(
+            html.contains("\"legend\":{"),
+            "the descriptor reaches the page"
+        );
+        // Matched as the injected JSON KEY: the template itself mentions `legendError` in the
+        // console.warn that surfaces it, so a bare word match would pass vacuously.
+        assert!(
+            !html.contains("\"legendError\":"),
+            "a valid descriptor is not flagged"
+        );
+        // A weld operation is addressable — `groups` alone could never express it, because weld
+        // operations carry no group.
+        assert!(
+            html.contains("j1:weld:op"),
+            "weld operations are addressable targets"
+        );
+    }
+
+    #[test]
+    fn an_unusable_legend_falls_back_wholesale_rather_than_half_rendering() {
+        // Each of these is a producer bug that would otherwise yield a panel whose rows silently
+        // control nothing. Every one must drop the descriptor and say why — never error the render,
+        // because the panel is chrome and the model is the payload.
+        let cases: Vec<(&str, Value)> = vec![
+            (
+                "unknown version",
+                json!({"v":2,"interaction":"select","modes":[]}),
+            ),
+            ("missing interaction", json!({"v":1,"modes":[]})),
+            (
+                "unknown interaction",
+                json!({"v":1,"interaction":"hover","modes":[]}),
+            ),
+            (
+                "empty modes",
+                json!({"v":1,"interaction":"select","modes":[]}),
+            ),
+            // A target that is not a rendered element or weld operation — e.g. a structural grid.
+            (
+                "bad target",
+                json!({"v":1,"interaction":"select","modes":[
+                {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                    {"key":"c","label":"C","rows":[{"key":"r","label":"R","targets":["grid-A"]}]}]}]}]}),
+            ),
+            // The same row key twice in one mode makes the Shift-range anchor ambiguous.
+            (
+                "duplicate row key in a mode",
+                json!({"v":1,"interaction":"select","modes":[
+                {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                    {"key":"c1","label":"C1","rows":[{"key":"dup","label":"R","targets":["b1"]}]},
+                    {"key":"c2","label":"C2","rows":[{"key":"dup","label":"R","targets":["b2"]}]}]}]}]}),
+            ),
+            // Two leaf rows in one mode fighting over the same target.
+            (
+                "overlapping targets in a mode",
+                json!({"v":1,"interaction":"select","modes":[
+                {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                    {"key":"c1","label":"C1","rows":[{"key":"r1","label":"R1","targets":["b1"]}]},
+                    {"key":"c2","label":"C2","rows":[{"key":"r2","label":"R2","targets":["b1"]}]}]}]}]}),
+            ),
+            // A row naming neither groups nor targets controls nothing at all.
+            (
+                "row addresses nothing",
+                json!({"v":1,"interaction":"select","modes":[
+                {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                    {"key":"c","label":"C","rows":[{"key":"r","label":"R"}]}]}]}]}),
+            ),
+            // A group no element belongs to.
+            (
+                "unknown group",
+                json!({"v":1,"interaction":"select","modes":[
+                {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                    {"key":"c","label":"C","rows":[{"key":"r","label":"R","groups":["NOPE"]}]}]}]}]}),
+            ),
+        ];
+        for (name, legend) in cases {
+            let out = viewer_3d_render(&legend_scene(legend), true).unwrap_or_else(|e| {
+                panic!("{name}: render must not fail, the model is the payload: {e:?}")
+            });
+            let html = out["html"].as_str().unwrap();
+            assert!(
+                html.contains("\"legendError\":"),
+                "{name}: must be reported to the producer"
+            );
+            // The injected scene must carry no descriptor at all. Checked against the JSON shape
+            // `"legend":{` — the template's own `#modes` display menu and `#legend` element mean a
+            // bare word match would pass vacuously.
+            assert!(
+                !html.contains("\"legend\":{"),
+                "{name}: the descriptor must be dropped wholesale, not partly rendered"
+            );
+        }
+    }
+
+    #[test]
+    fn a_target_the_renderer_skips_is_not_a_valid_target() {
+        // An unsupported element kind never reaches the scene, so a row aiming at it would pass
+        // validation and then be quietly dropped when the panel resolved its rows — the row would
+        // vanish instead of the descriptor falling back wholesale, which is exactly the ambiguous
+        // half-panel the atomic check exists to prevent.
+        let out = viewer_3d_render(
+            &json!({ "scene": {
+                "meta": {"name":"x"},
+                "groups": [{"key":"g","label":"G","color":"#60a5fa"}],
+                "elements": [
+                    {"id":"ok1","kind":"member","group":"g","from":[0,0,0],"to":[1000,0,0],"widthMm":100,"depthMm":100},
+                    {"id":"weird","kind":"tesseract","group":"g"}
+                ],
+                "legend": {"v":1,"interaction":"select","modes":[
+                    {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                        {"key":"c","label":"C","rows":[
+                            {"key":"r","label":"R","targets":["weird"]}]}]}]}]}
+            } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(
+            html.contains("\"legendError\":"),
+            "a target the renderer skips must invalidate the descriptor"
+        );
+        assert!(
+            !html.contains("\"legend\":{"),
+            "and it must be dropped wholesale, not left half-rendered"
+        );
+    }
+
+    #[test]
+    fn legend_fallback_is_visible_to_a_headless_caller() {
+        // A producer running without a browser must be able to SEE that its panel was rejected.
+        let out = viewer_3d_render(
+            &legend_scene(json!({"v":1,"interaction":"select","modes":[]})),
+            true,
+        )
+        .unwrap();
+        let warnings = out["warnings"].as_array().unwrap();
+        assert!(
+            warnings
+                .iter()
+                .any(|w| w.get("code").and_then(Value::as_str) == Some("legend-ignored")),
+            "the fallback reason is reported in the result, not only inside the HTML"
+        );
+    }
+
+    #[test]
+    fn duplicate_category_keys_in_one_mode_are_rejected() {
+        // Category keys carry the collapse state and the header identity, so a duplicate would drop
+        // one header and tie both categories' collapse together.
+        let out = viewer_3d_render(
+            &legend_scene(json!({"v":1,"interaction":"select","modes":[
+                {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                    {"key":"dup","label":"C1","rows":[{"key":"r1","label":"R1","targets":["b1"]}]},
+                    {"key":"dup","label":"C2","rows":[{"key":"r2","label":"R2","targets":["b2"]}]}]}]}]})),
+            true,
+        )
+        .unwrap();
+        assert!(out["html"].as_str().unwrap().contains("\"legendError\":"));
+    }
+
+    #[test]
+    fn a_truthy_non_string_kind_is_not_a_valid_target() {
+        // classify_scene can INFER `member` from the geometry, but the browser does
+        // `switch(el.kind||'box')` and skips a numeric kind — so it must not be addressable.
+        let out = viewer_3d_render(
+            &json!({ "scene": {
+                "meta": {"name":"x"},
+                "groups": [{"key":"g","label":"G","color":"#60a5fa"}],
+                "elements": [
+                    {"id":"odd","kind":123,"group":"g","from":[0,0,0],"to":[1000,0,0],"widthMm":100,"depthMm":100}
+                ],
+                "legend": {"v":1,"interaction":"select","modes":[
+                    {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                        {"key":"c","label":"C","rows":[{"key":"r","label":"R","targets":["odd"]}]}]}]}]}
+            } }),
+            true,
+        )
+        .unwrap();
+        assert!(
+            out["html"].as_str().unwrap().contains("\"legendError\":"),
+            "a kind the browser will skip cannot be a legend target"
+        );
+    }
+
+    #[test]
+    fn work_area_and_clip_match_the_editor() {
+        // Toolbar parity with the floless steel editor. The work area gains its two switches, and
+        // the important one is `whole`: ON (the default) a part touching the box is drawn in FULL
+        // and parts outside are dropped, so a freshly-defined work area never slices anything by
+        // surprise. Only the cut mode may contribute clipping planes.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+
+        assert!(html.contains(r#"id="waOn""#), "Show work area tick");
+        assert!(html.contains(r#"id="waWhole""#), "Show whole parts tick");
+        assert!(
+            html.contains(r#"role="menuitemcheckbox""#),
+            "the ticks are real checkable menu items, not plain buttons"
+        );
+        // whole is the default for a new work area, and survives a re-define.
+        assert!(
+            html.contains("const whole = workArea ? workArea.whole : true;"),
+            "a new work area defaults to showing whole parts"
+        );
+        // Whole mode must NOT clip; cut mode must.
+        assert!(
+            html.contains("if(workArea && workArea.enabled && !workArea.whole) active.push(...workArea.planes);"),
+            "only the cut mode contributes clipping planes"
+        );
+        // ...and whole mode filters entire meshes instead.
+        assert!(
+            html.contains("vis = hit.intersectsBox(waWhole)"),
+            "whole mode hides parts outside the box rather than slicing them"
+        );
+        // The box disappears when the work area is switched off.
+        assert!(
+            html.contains("if(!workArea || !workArea.enabled || workArea.box.isEmpty()) return;"),
+            "no wireframe while switched off"
+        );
+
+        // Clip: the editor's Shift+X / Shift+B, and an armed button that is its own cancel.
+        assert!(
+            html.contains("(e.key==='X'||e.key==='x')"),
+            "Shift+X arms a clip plane"
+        );
+        assert!(
+            html.contains("(e.key==='B'||e.key==='b')"),
+            "Shift+B adds a clip box"
+        );
+        assert!(
+            html.contains("btn.textContent=clipMode?'Clip \u{2715}':'Clip \u{25be}'"),
+            "the armed button becomes its own cancel target"
+        );
+    }
+
+    #[test]
+    fn chrome_is_host_controllable_and_typing_safe() {
+        // Three independent bits of viewer chrome, asserted together because they all only exist in
+        // the rendered document: a scene with no `panels` must reclaim the side-panel column rather
+        // than show an empty box; an embedding host must be able to suppress our title (never the
+        // default — standalone has no other model identity); and the single-key view shortcuts must
+        // not fire while a text field has focus, or no input in this document can ever work.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+
+        // The side-panel column is reclaimed as a unit — hiding the panel alone would leave the
+        // ViewCube offset past a panel that is not there and the toolbar reserving its width.
+        assert!(
+            html.contains("body.no-side #side{display:none}"),
+            "side panel hides"
+        );
+        assert!(
+            html.contains("body.no-side #viewcube{right:16px}"),
+            "ViewCube reclaims the column"
+        );
+        assert!(
+            html.contains("body.no-side #toolbar{max-width:calc(100% - 156px)}"),
+            "toolbar stops reserving the panel's width"
+        );
+        assert!(
+            html.contains("classList.toggle('no-side',!hasPanels)"),
+            "the state is driven by whether the scene supplied panels"
+        );
+
+        // Host-controlled title: opt-IN suppression, so standalone keeps its identity.
+        assert!(
+            html.contains("d.type!=='viewer-presentation'"),
+            "listens for the presentation message"
+        );
+        assert!(
+            html.contains("body.no-title #sceneName{display:none}"),
+            "title can be suppressed"
+        );
+        assert!(
+            html.contains("classList.toggle('no-title', showTitle===false)"),
+            "only an explicit showTitle:false hides it"
+        );
+
+        // Typing guard: no view shortcut may fire into a focused text field.
+        assert!(
+            html.contains("function typingInto(t)"),
+            "focus guard exists"
+        );
+        assert!(
+            html.contains("if(typingInto(e.target) && e.key!=='Escape') return;"),
+            "the keydown handler consults it before any shortcut"
         );
     }
 
