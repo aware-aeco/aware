@@ -56,6 +56,49 @@ const TEMPLATE: &str = r##"<!doctype html>
   #legend .legend-hint{color:var(--muted);font-size:11px;margin:0 0 6px}
   #legend .row{cursor:pointer;user-select:none;border-radius:5px;padding:2px 5px} #legend .row:hover{background:rgba(51,65,85,.5)}
   #legend .row.off{opacity:.4} #legend .row.off .swatch{filter:grayscale(1)}
+  /* ---- objects panel (scene.legend) ---- bounded and scrollable; the old list ran the full page
+     height on a real model (~35 rows). Header (mode toggle, search, Show all, hint) is FIXED and
+     only .obody scrolls, so the search box never scrolls away from the rows it filters. */
+  #legend.objects{width:248px;max-height:calc(100% - 220px);display:flex;flex-direction:column;padding:10px}
+  #legend.objects .obody{overflow-y:auto;overflow-x:hidden;min-height:0;margin:-2px -4px 0;padding:2px 4px 0}
+  /* Theme the scroll container — a native light scrollbar on a dark panel is exactly the leak the
+     house rule calls out. Firefox gets the standard properties, WebKit the pseudo-elements. */
+  #legend.objects .obody{scrollbar-width:thin;scrollbar-color:var(--border-2) transparent}
+  #legend.objects .obody::-webkit-scrollbar{width:9px}
+  #legend.objects .obody::-webkit-scrollbar-track{background:transparent}
+  #legend.objects .obody::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:5px;border:2px solid transparent;background-clip:content-box}
+  #legend.objects .obody::-webkit-scrollbar-thumb:hover{background:#475569;background-clip:content-box}
+  #legend.objects .omode{display:flex;border:1px solid var(--border-2);border-radius:6px;overflow:hidden;height:24px;margin-bottom:6px;flex:none}
+  #legend.objects .omode button{flex:1;border:0;background:transparent;color:var(--muted);font-size:11px;cursor:pointer;font-family:inherit}
+  #legend.objects .omode button.on{background:var(--accent);color:#06121f;font-weight:600}
+  #legend.objects .osearch{display:flex;align-items:center;height:26px;margin-bottom:6px;padding:0 8px;background:rgba(2,8,23,.6);border:1px solid var(--border-2);border-radius:6px;flex:none}
+  #legend.objects .osearch:focus-within{border-color:var(--accent)}
+  #legend.objects .osearch input{flex:1;min-width:0;background:transparent;border:0;outline:none;color:var(--text);font:12px system-ui;font-family:inherit}
+  #legend.objects #legClear{display:none;flex:none;margin-bottom:6px;background:rgba(30,41,59,.6);color:var(--text);border:1px solid var(--border-2);border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;font-family:inherit}
+  #legend.objects #legClear:hover{border-color:var(--accent)}
+  #legend.objects .ohint{color:var(--muted);font-size:10px;margin:0 0 6px;flex:none;white-space:normal}
+  #legend.objects .osec{color:#475569;font-size:10px;letter-spacing:.06em;text-transform:uppercase;margin:6px 0 2px}
+  #legend.objects .ocat{display:flex;align-items:center;gap:6px;width:100%;background:transparent;border:0;border-radius:5px;padding:3px 4px;color:var(--text);font:12px system-ui;font-family:inherit;cursor:pointer;text-align:left}
+  #legend.objects .ocat:hover{background:rgba(51,65,85,.5)}
+  #legend.objects .ochev{color:var(--muted);width:10px;flex:none}
+  #legend.objects .ocatlabel{flex:1} #legend.objects .ocount{color:var(--muted);font-size:10px;font-variant-numeric:tabular-nums}
+  #legend.objects .orow{display:flex;align-items:center;gap:4px;border-radius:5px;padding:1px 2px}
+  #legend.objects .orow:hover{background:rgba(51,65,85,.5)}
+  #legend.objects .orow.typed{padding-left:16px}
+  #legend.objects .orow.sel{box-shadow:inset 2px 0 0 var(--accent)}
+  /* Every row control is a REAL button with a ≥24px hit area around an 11px mark — the visibility
+     control used to be a 10px span, unreachable by keyboard and a poor touch target. */
+  #legend.objects .orow button{background:transparent;border:1px solid transparent;border-radius:5px;color:var(--text);font:12px system-ui;font-family:inherit;cursor:pointer;padding:0}
+  #legend.objects .orow button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+  #legend.objects .ovis{width:24px;height:24px;flex:none;display:flex;align-items:center;justify-content:center}
+  #legend.objects .oswatch{width:11px;height:11px;border-radius:2px;background:var(--sw,#94a3b8);box-shadow:inset 0 0 0 1.6px var(--sw,#94a3b8)}
+  #legend.objects .ovis[aria-checked=false] .oswatch{background:transparent}
+  #legend.objects .ovis[aria-checked=mixed] .oswatch{background:linear-gradient(135deg,var(--sw,#94a3b8) 0 50%,transparent 50% 100%)}
+  #legend.objects .opick{flex:1;min-width:0;text-align:left;padding:3px 2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #legend.objects .oiso{width:24px;height:24px;flex:none;color:var(--muted);opacity:0}
+  #legend.objects .orow:hover .oiso,#legend.objects .oiso:focus-visible{opacity:1}
+  #legend.objects .oiso:hover{color:var(--accent)}
+  #legend.objects .oempty{color:var(--muted);font-size:11px;padding:6px 2px}
   #toolbar{top:74px;left:16px;padding:7px 9px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;max-width:calc(100% - 492px)}  /* clears the side panel AND the ViewCube now sharing the top row */
   #toolbar .tb-grp{display:flex;gap:4px} #toolbar .tb-sep{width:1px;height:20px;background:var(--border-2);margin:0 2px}
   #toolbar button{background:rgba(30,41,59,.6);color:var(--text);border:1px solid var(--border-2);border-radius:7px;padding:5px 9px;font-size:12px;cursor:pointer;line-height:1}
@@ -251,6 +294,49 @@ const conv=(P,up)=> up==='z' ? new THREE.Vector3(P[0],P[2],P[1]) : new THREE.Vec
 // ---- view state: scene bounds + display/visibility, driven by the toolbar + legend ----
 let sceneBox=new THREE.Box3(); let maxDim=1;
 const groupHidden=new Set(); let soloGroup=null; let displayMode='solid'; let legendClickT=null;
+// ---- objects panel (scene.legend) ------------------------------------------------------------
+// Two worlds live here. WITHOUT a descriptor the legacy flat list runs on group-level state
+// (groupHidden/soloGroup) and a row click hides — unchanged for every scene already in the wild.
+// WITH one, everything is keyed on TARGET IDS, because a descriptor row can be a SUBSET of a group
+// (the same profile under Beams and under Columns) and group-level state cannot express that.
+let opRenderables=[];                 // rendered weld operations — legend-operable, never canvas-picked
+let groupColor={};                    // group key → colour, for the panel's row swatches
+let targetOf=new Map();               // targetId → [Object3D,…]
+let LEG=null;                         // the validated descriptor (Rust drops an unusable one)
+let legModeIx=0, legQuery='', legRows=[];
+const legCollapsed=new Set();
+let selIds=new Set(), hiddenIds=new Set(), isolatedIds=null, legAnchor=null;
+const legActive=()=>!!LEG;
+
+/** Every rendered target, in scene order: elements, then weld operations. */
+function buildTargetRegistry(){ targetOf=new Map();
+  for(const m of pickable){ const id=m.userData&&m.userData.id; if(id) targetOf.set(id,[m]); }
+  for(const w of opRenderables){ const id=w.userData&&w.userData.id; if(id) targetOf.set(id,[w]); }
+}
+/** Resolve the active mode's rows to concrete target-id sets — once, not per interaction. */
+function resolveLegRows(){ legRows=[];
+  if(!legActive()) return;
+  const mode=LEG.modes[legModeIx]; if(!mode) return;
+  const byGroup=new Map();
+  for(const [id,objs] of targetOf){ const g=objs[0]&&objs[0].userData&&objs[0].userData.group;
+    if(g){ if(!byGroup.has(g)) byGroup.set(g,[]); byGroup.get(g).push(id); } }
+  for(const sec of (mode.sections||[])) for(const cat of (sec.categories||[])) for(const row of (cat.rows||[])){
+    const ids = Array.isArray(row.targets) && row.targets.length
+      ? row.targets.filter(id=>targetOf.has(id))
+      : (row.groups||[]).flatMap(g=>byGroup.get(g)||[]);
+    if(!ids.length) continue;                                   // a row controlling nothing is not drawn
+    legRows.push({ key:row.key, label:row.label, color:row.color||null, ids,
+      secKey:sec.key, secLabel:sec.label||null, catKey:cat.key||'', catLabel:cat.label||null });
+  }
+}
+/** The selection as OBJECTS — the single path every existing consumer (Alt+Z, clip box, work area,
+ *  readout, highlighting) reads, so a legend-driven selection behaves like a canvas one. */
+function selectedObjects(){ const out=[]; for(const id of selIds){ const objs=targetOf.get(id); if(objs) out.push(...objs); } return out; }
+function syncSelectionFromIds(){ setSelection(selectedObjects()); refreshLegend(); }
+/** A row is on/off/mixed — mixed is real once hiding is per-id, which is why the control is a
+ *  tri-state checkbox rather than a switch. */
+function rowVis(row){ let shown=0; for(const id of row.ids) if(!hiddenIds.has(id) && (!isolatedIds||isolatedIds.has(id))) shown++;
+  return shown===0?'false':(shown===row.ids.length?'true':'mixed'); }
 
 // Recompute the orthographic frustum so its on-screen scale matches the perspective
 // camera's at the target plane (keeps zoom continuous across a projection toggle / resize).
@@ -429,20 +515,47 @@ function applyGroupVisibility(){
   // slice-free — the alternative (cut mode) contributes clipping planes in applyClips instead.
   const waWhole = workArea && workArea.enabled && workArea.whole ? workArea.box : null;
   const hit=new THREE.Box3();
-  for(const m of pickable){ const k=m.userData&&m.userData.group;
-    let vis = !groupHidden.has(k) && (soloGroup===null || soloGroup===k);
+  // With a descriptor, visibility is per TARGET; without one it stays per group. Welds are only
+  // ever addressable through the descriptor — the legacy list has no row for them.
+  const shown=(id,group)=>legActive()
+    ? (!hiddenIds.has(id) && (!isolatedIds || isolatedIds.has(id)))
+    : (!groupHidden.has(group) && (soloGroup===null || soloGroup===group));
+  for(const m of pickable){ const u=m.userData||{};
+    let vis = shown(u.id, u.group);
     if(vis && waWhole){ hit.setFromObject(m); vis = hit.intersectsBox(waWhole); }
     m.visible = vis; }
+  for(const w of opRenderables){ const u=w.userData||{};
+    let vis = legActive() ? shown(u.id, u.group) : true;   // legacy: welds were never hideable
+    if(vis && waWhole){ hit.setFromObject(w); vis = hit.intersectsBox(waWhole); }
+    w.visible = vis; }
 }
 function toggleGroup(k){ if(groupHidden.has(k)) groupHidden.delete(k); else groupHidden.add(k); soloGroup=null; applyGroupVisibility(); refreshLegend(); }
 function soloToggle(k){ soloGroup = soloGroup===k ? null : k; if(soloGroup) groupHidden.clear(); applyGroupVisibility(); refreshLegend(); }
-function refreshLegend(){ document.querySelectorAll('#legend .row').forEach(r=>{ const k=r.dataset.key;
+function refreshLegend(){
+  if(legActive()){ refreshObjectsPanel(); return; }
+  document.querySelectorAll('#legend .row').forEach(r=>{ const k=r.dataset.key;
   r.classList.toggle('off', groupHidden.has(k) || (soloGroup!==null && soloGroup!==k)); }); }
+/** Repaint only the live bits — selection ring, tri-state box, the Show-all/Exit control — so
+ *  typing in the search box never rebuilds the node the caret lives in. */
+function refreshObjectsPanel(){
+  const byKey=new Map(legRows.map(r=>[r.key,r]));
+  document.querySelectorAll('#legend .orow').forEach(node=>{
+    const row=byKey.get(node.dataset.key); if(!row) return;
+    const sel=row.ids.every(id=>selIds.has(id));
+    node.classList.toggle('sel',sel);
+    const pick=node.querySelector('[data-act=pick]'); if(pick) pick.setAttribute('aria-pressed',sel?'true':'false');
+    const box=node.querySelector('[data-act=vis]'); if(box) box.setAttribute('aria-checked',rowVis(row));
+  });
+  const clear=document.getElementById('legClear');
+  if(clear){ const any=isolatedIds||hiddenIds.size;
+    clear.style.display=any?'block':'none';
+    clear.textContent=isolatedIds?'Exit isolation':'Show all'; }
+}
 function activate(sel,attr,val){ document.querySelectorAll(sel).forEach(b=>b.classList.toggle('on', b.getAttribute(attr)===val)); }
 
 function clearContent(){ scene.remove(content);
   content.traverse(o=>{ if(o.geometry)o.geometry.dispose(); if(o.material)o.material.dispose(); });
-  content=new THREE.Group(); scene.add(content); pickable=[]; }
+  content=new THREE.Group(); scene.add(content); pickable=[]; opRenderables=[]; targetOf=new Map(); }
 
 function makeLabel(text,pos,maxDim){
   const c=document.createElement('canvas'); c.width=128; c.height=64; const g=c.getContext('2d');
@@ -760,12 +873,18 @@ function addOperations(S,up){ for(const op of (S.operations||[])){ if(!op||op.ki
   const geometry=new THREE.BufferGeometry().setFromPoints(points);
   const material=new THREE.LineBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.95});
   const weld=new THREE.Line(geometry,material); weld.userData=op; content.add(weld);
+  // Legend-operable, but deliberately NOT added to `pickable`. Canvas picking would break on it:
+  // box-select projects an object's ORIGIN and a weld line's geometry holds world points while the
+  // object sits at the origin; clip placement aborts on a hit with no face; and highlighting
+  // expects an emissive material where this is a LineBasicMaterial.
+  opRenderables.push(weld);
 } }
 
 function renderScene(S){
   clearContent();
   const up=(S.meta&&S.meta.up)||'z';
   const colorOf={}, opacityOf={}; (S.groups||[]).forEach(g=>{ colorOf[g.key]=g.color; if(typeof g.opacity==='number') opacityOf[g.key]=g.opacity; });
+  groupColor=colorOf;   // kept module-level so a panel row can show its group's colour
   groupHidden.clear(); soloGroup=null;
   const box=new THREE.Box3(); expandSceneBounds(box,S,up);
   if(box.isEmpty()) box.set(new THREE.Vector3(-1,-1,-1), new THREE.Vector3(1,1,1));
@@ -822,6 +941,12 @@ function renderScene(S){
     if(camera.isOrthographicCamera) reframeOrtho();
     controls.update();
   } else { frameBox(sceneBox, new THREE.Vector3(1,0.8,1)); }
+  // The registry must exist before the panel resolves rows against it. Rust has already validated
+  // (or dropped) the descriptor, so a present one is known-good here.
+  LEG=(S.legend&&Array.isArray(S.legend.modes)&&S.legend.modes.length)?S.legend:null;
+  legModeIx=0; legQuery=''; legCollapsed.clear();
+  selIds=new Set(); hiddenIds=new Set(); isolatedIds=null; legAnchor=null;
+  buildTargetRegistry(); resolveLegRows();
   applyDisplayMode(); applyGroupVisibility();
 
   buildSidePanels(S); buildLegend(S); setHint();
@@ -845,9 +970,140 @@ function buildSidePanels(S){
     table.append(tb); host.append(table);
   });
 }
+// ---- the objects panel (descriptor-driven) ----------------------------------------------------
+// Row verbs mirror the floless editor: the LABEL selects, a tri-state box shows/hides, and an
+// explicit isolate button gives keyboard and touch a route that is not a double-click.
+function legRowMatches(r){ return !legQuery || r.label.toLowerCase().includes(legQuery); }
+function legApply(){ applyGroupVisibility(); refreshLegend(); }
+function legSelectRow(row,additive){
+  if(additive){ const all=row.ids.every(id=>selIds.has(id));
+    for(const id of row.ids){ if(all) selIds.delete(id); else selIds.add(id); } }
+  else { selIds=new Set(row.ids); }
+  legAnchor=row.key; syncSelectionFromIds();
+}
+function legSelectRange(row){                       // Shift: over the rows CURRENTLY displayed
+  const shown=legRows.filter(legRowMatches);
+  const a=shown.findIndex(r=>r.key===legAnchor), b=shown.findIndex(r=>r.key===row.key);
+  if(a<0||b<0){ legSelectRow(row,false); return; }
+  selIds=new Set(); for(let i=Math.min(a,b);i<=Math.max(a,b);i++) for(const id of shown[i].ids) selIds.add(id);
+  syncSelectionFromIds();
+}
+function legToggleVis(row){ const v=rowVis(row);
+  for(const id of row.ids){ if(v==='true') hiddenIds.add(id); else hiddenIds.delete(id); }  // mixed → show all
+  legApply();
+}
+function legIsolate(row){                            // a selected row isolates the whole selection
+  const ids = selIds.size && row.ids.some(id=>selIds.has(id)) ? [...selIds] : row.ids;
+  const same = isolatedIds && isolatedIds.size===ids.length && ids.every(id=>isolatedIds.has(id));
+  isolatedIds = same ? null : new Set(ids);          // isolating the same set again exits
+  legApply();
+}
+function legShowAll(){                               // two DISTINCT transitions, never conflated
+  if(isolatedIds) isolatedIds=null;                  // exit isolation, keeping manual hides
+  else hiddenIds.clear();                            // then, separately, un-hide
+  legApply();
+}
+/** The producer-authored panel: mode toggle, search, then sections → categories → rows.
+ *  Header is fixed; only the row body scrolls. */
+function buildObjectsPanel(){
+  const host=document.getElementById('legend'); host.replaceChildren(); host.style.display='';
+  host.classList.add('objects');
+  resolveLegRows();
+
+  if((LEG.modes||[]).length>1){                       // a toggle only when there IS a choice
+    const modes=el('div','omode');
+    LEG.modes.forEach((m,i)=>{ const b=el('button',i===legModeIx?'on':null,m.label);
+      b.type='button'; b.setAttribute('aria-pressed',i===legModeIx?'true':'false');
+      b.addEventListener('click',()=>{ if(i===legModeIx) return; legModeIx=i; legAnchor=null; buildObjectsPanel(); });
+      modes.append(b); });
+    host.append(modes);
+  }
+
+  const search=el('div','osearch');
+  const input=document.createElement('input');
+  input.type='text'; input.placeholder='Search objects…'; input.value=legQuery;
+  input.setAttribute('aria-label','Search objects in the list'); input.autocomplete='off';
+  input.addEventListener('input',()=>{ legQuery=input.value.trim().toLowerCase(); paintRows(); });
+  // Escape clears first, blurs second — and never reaches the window handler, which would
+  // otherwise cancel an armed clip.
+  input.addEventListener('keydown',e=>{ if(e.key!=='Escape') return; e.stopPropagation();
+    if(input.value){ input.value=''; legQuery=''; paintRows(); } else input.blur(); });
+  search.append(input); host.append(search);
+
+  const clear=el('button',null,'Show all'); clear.id='legClear'; clear.type='button';
+  clear.addEventListener('click',legShowAll); host.append(clear);
+
+  host.append(el('div','ohint','click a row to select · box shows/hides · ⊙ isolates · Ctrl/Shift multi-select'));
+  const body=el('div','obody'); body.id='legBody'; host.append(body);
+  paintRows();
+  refreshObjectsPanel();
+}
+
+/** Rebuild just the scrolling row body (search/collapse changes) — the header keeps its state. */
+function paintRows(){
+  const body=document.getElementById('legBody'); if(!body) return; body.replaceChildren();
+  const visible=legRows.filter(legRowMatches);
+  let sec=null, cat=null;
+  for(const row of visible){
+    if(row.secLabel && row.secKey!==sec){ sec=row.secKey; cat=null; body.append(el('div','osec',row.secLabel)); }
+    if(row.catKey!==cat){
+      cat=row.catKey;
+      if(row.catLabel){
+        const count=visible.filter(r=>r.catKey===row.catKey&&r.secKey===row.secKey).length;
+        const open=!legCollapsed.has(row.catKey)||!!legQuery;   // a search temporarily opens matches
+        const h=el('button','ocat'); h.type='button'; h.setAttribute('aria-expanded',open?'true':'false');
+        h.append(el('span','ochev',open?'▾':'▸'), el('span','ocatlabel',row.catLabel), el('span','ocount','('+count+')'));
+        h.addEventListener('click',()=>{ if(legCollapsed.has(row.catKey)) legCollapsed.delete(row.catKey); else legCollapsed.add(row.catKey); paintRows(); refreshObjectsPanel(); });
+        body.append(h);
+      }
+    }
+    if(row.catLabel && legCollapsed.has(row.catKey) && !legQuery) continue;
+    body.append(buildRow(row));
+  }
+  if(!visible.length) body.append(el('div','oempty','No objects match “'+legQuery+'”'));
+}
+
+function buildRow(row){
+  const node=el('div','orow'+(row.catLabel?' typed':'')); node.dataset.key=row.key;
+  // Descriptor colour wins; otherwise inherit the first target's group colour, so the common case
+  // needs no colour in the descriptor at all. Weld operations carry no group — they fall through
+  // to the neutral default.
+  const first=row.ids.length?targetOf.get(row.ids[0]):null;
+  const colour=row.color||(first&&groupColor[first[0].userData.group])||'#94a3b8';
+
+  // Visibility — a real tri-state checkbox: once hiding is per-id a row can be PARTLY hidden,
+  // which role="switch" cannot express.
+  const box=el('button','ovis'); box.type='button'; box.dataset.act='vis';
+  box.setAttribute('role','checkbox'); box.setAttribute('aria-checked',rowVis(row));
+  box.setAttribute('aria-label','Show or hide '+row.label);
+  box.setAttribute('data-tip','Show or hide'); box.style.setProperty('--sw',colour);
+  box.append(el('span','oswatch'));
+  box.addEventListener('click',e=>{ e.stopPropagation(); legToggleVis(row); });
+
+  const pick=el('button','opick',row.label); pick.type='button'; pick.dataset.act='pick';
+  pick.setAttribute('aria-pressed','false');
+  pick.setAttribute('data-tip','Select · Ctrl/Shift to multi-select · double-click to isolate');
+  // The plain click is DEFERRED so a double-click can cancel it: otherwise the first click of a
+  // dblclick replaces a multi-selection and "isolate the selection" silently becomes "isolate this row".
+  pick.addEventListener('click',e=>{ e.stopPropagation();
+    if(e.shiftKey){ clearTimeout(legendClickT); legSelectRange(row); return; }
+    if(e.ctrlKey||e.metaKey){ clearTimeout(legendClickT); legSelectRow(row,true); return; }
+    clearTimeout(legendClickT); legendClickT=setTimeout(()=>legSelectRow(row,false),220); });
+  pick.addEventListener('dblclick',e=>{ e.preventDefault(); e.stopPropagation(); clearTimeout(legendClickT); legIsolate(row); });
+
+  const iso=el('button','oiso','⊙'); iso.type='button'; iso.dataset.act='iso';
+  iso.setAttribute('aria-label','Isolate '+row.label);
+  iso.setAttribute('data-tip','Isolate — the keyboard/touch route, no double-click needed');
+  iso.addEventListener('click',e=>{ e.stopPropagation(); legIsolate(row); });
+
+  node.append(box,pick,iso); return node;
+}
+
 function buildLegend(S){ const host=document.getElementById('legend'); host.replaceChildren();
-  const groups=(S.groups||[]); if(!groups.length){ host.style.display='none'; return; } host.style.display='';
-  host.append(el('div','legend-hint','click: hide/show · dbl-click: isolate'));
+  if(S.legendError) console.warn('viewer-3d: objects panel ignored — '+S.legendError);
+  if(legActive()){ buildObjectsPanel(); return; }
+  host.classList.remove('objects');
+host.append(el('div','legend-hint','click: hide/show · dbl-click: isolate'));
   groups.forEach(g=>{ const row=el('div','row'); row.dataset.key=g.key;
     const sw=el('span','swatch'); sw.style.background=g.color;
     row.append(sw, document.createTextNode(g.label));
