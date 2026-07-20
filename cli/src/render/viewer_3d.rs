@@ -987,6 +987,17 @@ function reflectWorkArea(){ const st=workAreaState();
   const on=document.getElementById('waOn'); if(on) on.setAttribute('aria-checked', st&&st.on?'true':'false');
   const wh=document.getElementById('waWhole'); if(wh){ wh.style.display=st?'flex':'none'; wh.setAttribute('aria-checked', st&&st.whole?'true':'false'); } }
 function workAreaSetAll(){ const box=meshBox(pickable); if(box.isEmpty()) return false;
+  // Pad before these bounds become clip planes. Bound EXACTLY to the mesh extents, the six planes sit
+  // on the model's own outer surfaces and the whole model is clipped away — "set to all objects" made
+  // everything vanish (pre-existing: it did this on every release before the whole/cut switch, where
+  // cut was the only mode).
+  //
+  // The pad is the SAME one selBox uses for clip boxes and for "define from selection", which is the
+  // empirically proven-good value here: A/B'd in a browser, a 0.6mm pad on this 6 m model still
+  // vanishes while this one renders correctly. That threshold is far larger than single-precision
+  // error at these magnitudes would predict, so the true mechanism is NOT understood — matching the
+  // value that demonstrably works, rather than a derived epsilon that does not.
+  box.expandByScalar(Math.max(maxDim*0.04, 1));
   return setWorkAreaBox(box); } // bound the whole model by its rendered mesh bounds (not centrelines)
 function workAreaFromSelection(pad){ const box=new THREE.Box3();
   for(const m of selection){ if(m.visible) box.expandByObject(m); }
@@ -2997,7 +3008,7 @@ mod tests {
         );
     }
 
-        #[test]
+    #[test]
     fn work_area_and_clip_match_the_editor() {
         // Toolbar parity with the floless steel editor. The work area gains its two switches, and
         // the important one is `whole`: ON (the default) a part touching the box is drawn in FULL
@@ -3038,8 +3049,14 @@ mod tests {
         );
 
         // Clip: the editor's Shift+X / Shift+B, and an armed button that is its own cancel.
-        assert!(html.contains("(e.key==='X'||e.key==='x')"), "Shift+X arms a clip plane");
-        assert!(html.contains("(e.key==='B'||e.key==='b')"), "Shift+B adds a clip box");
+        assert!(
+            html.contains("(e.key==='X'||e.key==='x')"),
+            "Shift+X arms a clip plane"
+        );
+        assert!(
+            html.contains("(e.key==='B'||e.key==='b')"),
+            "Shift+B adds a clip box"
+        );
         assert!(
             html.contains("btn.textContent=clipMode?'Clip \u{2715}':'Clip \u{25be}'"),
             "the armed button becomes its own cancel target"
