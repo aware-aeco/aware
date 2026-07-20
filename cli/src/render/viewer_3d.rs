@@ -1175,6 +1175,9 @@ function setSelection(meshes){
   // on it. Deriving from the objects is idempotent, so the panel→canvas path round-trips unchanged.
   if(legActive()){ selIds=new Set(); for(const m of selection){ const id=m.userData&&m.userData.id; if(id) selIds.add(id); } refreshObjectsPanel(); }
   for(const m of selection){ const mat=m.material; if(mat){ mat.emissive=new THREE.Color(0xf59e0b); mat.emissiveIntensity=0.6; } }
+  writeSelectionReadout();
+}
+function writeSelectionReadout(){
   if(selection.length===0){ setHint(); return; }
   if(selection.length===1){ const u=selection[0].userData; const parts=[el('b',null,u.id||'(element)')];
     if(u.group) parts.push(document.createTextNode(' · '), el('span','pill',u.group));
@@ -1182,6 +1185,9 @@ function setSelection(meshes){
     readout.replaceChildren(...parts); return; }
   readout.replaceChildren(el('b',null,String(selection.length)), document.createTextNode(' elements selected'));
 }
+// #readout is a fixed, always-visible panel (floless's floats and hides itself), so a drag readout
+// left in place would sit there forever. Every gesture terminal calls this.
+function refreshReadout(){ if(clipMode){ setClipPrompt(); return; } writeSelectionReadout(); }
 // Raycast a single element at a screen point. Only VISIBLE meshes — a legend-hidden / soloed-out
 // group in front must not swallow the click for the visible element behind it (raycaster ignores `visible`).
 function pickAt(cx,cy){ mouse.x=(cx/innerWidth)*2-1; mouse.y=-(cy/innerHeight)*2+1; ray.setFromCamera(mouse,camera);
@@ -1195,24 +1201,101 @@ function meshesInRect(x0,y0,x1,y1){ const lo={x:Math.min(x0,x1),y:Math.min(y0,y1
   const out=[]; for(const m of pickable){ if(!m.visible) continue; const s=screenOf(m);
     if(s && s.x>=lo.x && s.x<=hi.x && s.y>=lo.y && s.y<=hi.y) out.push(m); } return out; }
 
-// Left button drives selection (orbit moved to the right button, #258): a drag rubber-bands a
-// multi-select; a click (movement under DRAG_PX) picks the single element under the cursor.
-const rubber=document.getElementById('rubber'); let boxStart=null; const DRAG_PX=5;
-renderer.domElement.addEventListener('pointerdown', e=>{ if(e.button!==0) return; boxStart={x:e.clientX,y:e.clientY}; });
-renderer.domElement.addEventListener('pointermove', e=>{ if(!boxStart) return;
-  const dx=e.clientX-boxStart.x, dy=e.clientY-boxStart.y; if(Math.hypot(dx,dy)<DRAG_PX) return;
-  rubber.style.display='block'; rubber.style.left=Math.min(e.clientX,boxStart.x)+'px'; rubber.style.top=Math.min(e.clientY,boxStart.y)+'px';
-  rubber.style.width=Math.abs(dx)+'px'; rubber.style.height=Math.abs(dy)+'px'; });
-renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!boxStart) return;
-  const dx=e.clientX-boxStart.x, dy=e.clientY-boxStart.y; rubber.style.display='none';
-  if(Math.hypot(dx,dy)>=DRAG_PX) setSelection(meshesInRect(boxStart.x,boxStart.y,e.clientX,e.clientY));
-  // Armed → a click drops ONE clip plane and the command is done; a MISS keeps it armed to retry.
-  // (This used to stay armed on success under a comment claiming parity with floless. floless does
-  // `if (addClipPlaneAtScreen(...)) setClipMode(null)` — one plane per command — so the comment
-  // asserted a parity that did not exist.)
-  else if(clipMode==='plane'){ if(addClipPlaneAtScreen(e.clientX,e.clientY)) setClipMode(null); }
-  else pickAt(e.clientX,e.clientY);
-  boxStart=null; });
+// ---- one gesture owner (left button; orbit is on the right, #258) -----------------------------
+// Every left-button gesture is decided ONCE on pointerdown and owns the interaction through exactly
+// one terminal path. Separate listeners for rubber-band, armed clip placement and handle dragging
+// would all observe the same gesture and race; deciding up front is what prevents that.
+//   priority: armed clip mode → clip handle → box-select
+const rubber=document.getElementById('rubber'); const DRAG_PX=5, DRAG_TOL_PX=4;
+let gesture=null;        // null | 'clip-place' | 'clip-handle' | 'box-select'
+let gestureToken=0;      // bumped on every start/end — a queued frame carrying a stale token is a no-op
+let boxStart=null;       // box-select anchor
+let clipDrag=null;       // the live handle drag (source geometry is mutated in place; prePoint/preBox revert it)
+let pendingPointer=null, pointerRAF=0;
+// Raw pointer events outrun the display. Coalesce to at most one unit of work per frame — otherwise
+// every event raycasts, runs clipping tests, re-derives planes and re-points the renderer's array.
+function schedulePointerWork(e){ pendingPointer={x:e.clientX,y:e.clientY,token:gestureToken};
+  if(pointerRAF) return;
+  pointerRAF=requestAnimationFrame(()=>{ pointerRAF=0; const p=pendingPointer; pendingPointer=null;
+    if(p&&p.token===gestureToken) doPointerWork(p.x,p.y); }); }
+function cancelPointerWork(){ if(pointerRAF){ cancelAnimationFrame(pointerRAF); pointerRAF=0; } pendingPointer=null; }
+function flushPointerWork(){ const p=pendingPointer; cancelPointerWork();
+  if(p&&p.token===gestureToken) doPointerWork(p.x,p.y); }
+function doPointerWork(cx,cy){
+  if(gesture==='clip-handle'){ dragClipHandle(cx,cy); return; }
+  if(gesture==='box-select'){ const dx=cx-boxStart.x, dy=cy-boxStart.y;
+    if(Math.hypot(dx,dy)<DRAG_PX) return;
+    rubber.style.display='block'; rubber.style.left=Math.min(cx,boxStart.x)+'px'; rubber.style.top=Math.min(cy,boxStart.y)+'px';
+    rubber.style.width=Math.abs(dx)+'px'; rubber.style.height=Math.abs(dy)+'px'; return; }
+  if(!gesture&&clipMode==='plane') clipPlanePreviewAt(cx,cy);   // hover ghost, only while armed
+}
+function beginClipHandleDrag(h,cx,cy){
+  const c=findClip(h.userData.clipId); if(!c) return false;
+  const f=h.userData.face;
+  const u=h.userData.plane?c.n.clone():new THREE.Vector3(f.axis==='x'?1:0,f.axis==='y'?1:0,f.axis==='z'?1:0);
+  const lineP=h.position.clone();
+  clipDrag={ clip:c, plane:!!h.userData.plane, face:f, u, lineP, t0:lineClosestT(lineP,u,rayAt(cx,cy)),
+    start:[cx,cy], moved:false,
+    basePoint:c.point?c.point.clone():null, prePoint:c.point?c.point.clone():null,
+    startCoord:f?(f.sign>0?c.box.max[f.axis]:c.box.min[f.axis]):0, preBox:c.box?c.box.clone():null };
+  return true; }
+function dragClipHandle(cx,cy){ if(!clipDrag) return;
+  if(!clipDrag.moved&&Math.hypot(cx-clipDrag.start[0],cy-clipDrag.start[1])<=DRAG_TOL_PX) return;
+  clipDrag.moved=true;
+  const c=clipDrag.clip, delta=lineClosestT(clipDrag.lineP,clipDrag.u,rayAt(cx,cy))-clipDrag.t0;
+  if(clipDrag.plane){ c.point=clipDrag.basePoint.clone().addScaledVector(clipDrag.u,delta); }
+  else { const f=clipDrag.face, val=clipDrag.startCoord+delta;
+    // Keep min < max: a face dragged past its opposite would invert the box.
+    if(f.sign>0) c.box.max[f.axis]=Math.max(val,c.box.min[f.axis]+1);
+    else c.box.min[f.axis]=Math.min(val,c.box.max[f.axis]-1); }
+  rebuildClipPlanes(c); applyClips(); renderClipGizmo();
+  const amount=clipDrag.plane?delta:(c.box.max[clipDrag.face.axis]-c.box.min[clipDrag.face.axis]);
+  readout.replaceChildren(el('b',null,(amount/304.8).toFixed(2)+' ft'),
+    document.createTextNode(clipDrag.plane?' ⟂':' '+clipDrag.face.axis.toUpperCase())); }
+function revertClipDrag(){ if(!clipDrag||!clipDrag.moved) return;
+  const c=clipDrag.clip;
+  if(clipDrag.plane) c.point=clipDrag.prePoint; else c.box.copy(clipDrag.preBox);
+  rebuildClipPlanes(c); applyClips(); renderClipGizmo(); }
+// Idempotent, and it clears ownership FIRST: a normal releasePointerCapture itself fires
+// lostpointercapture, so a handler that reverted on capture loss would undo a drag it just committed.
+function endGesture(revert){
+  if(!gesture) return;
+  const wasHandle=gesture==='clip-handle';
+  gesture=null; gestureToken++;
+  cancelPointerWork();
+  rubber.style.display='none';
+  if(wasHandle&&revert) revertClipDrag();
+  clipDrag=null; boxStart=null;
+  controls.enabled=true;
+  refreshReadout(); }
+renderer.domElement.addEventListener('pointerdown', e=>{ if(e.button!==0) return;
+  gestureToken++;
+  if(clipMode==='plane'){ gesture='clip-place'; }
+  else { const h=selectedClipIds.size?pickClipHandle(e.clientX,e.clientY):null;
+    if(h&&beginClipHandleDrag(h,e.clientX,e.clientY)){ gesture='clip-handle'; controls.enabled=false; }
+    else { gesture='box-select'; boxStart={x:e.clientX,y:e.clientY}; } }
+  try{ renderer.domElement.setPointerCapture(e.pointerId); }catch{}   // release off-canvas must still reach us
+});
+renderer.domElement.addEventListener('pointermove', e=>schedulePointerWork(e));
+renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!gesture) return;
+  flushPointerWork();   // the last few millimetres of a drag are part of the result
+  const g=gesture;
+  if(g==='clip-place'){
+    // One plane per command; a MISS keeps it armed to retry. (This used to stay armed on success
+    // under a comment claiming parity with floless — floless does
+    // `if (addClipPlaneAtScreen(...)) setClipMode(null)`, so the comment asserted a parity that did
+    // not exist.)
+    if(addClipPlaneAtScreen(e.clientX,e.clientY)){ setClipPlanePreview(null,null); setClipMode(null); }
+  } else if(g==='box-select'){
+    const dx=e.clientX-boxStart.x, dy=e.clientY-boxStart.y;
+    if(Math.hypot(dx,dy)>=DRAG_PX) setSelection(meshesInRect(boxStart.x,boxStart.y,e.clientX,e.clientY));
+    else { setSelectedClips([]); pickAt(e.clientX,e.clientY); }   // a canvas pick also drops any clip selection
+  }
+  endGesture(false); });   // pointerup COMMITS
+// A cancel or an unexpected capture loss REVERTS — the drag mutated live geometry.
+renderer.domElement.addEventListener('pointercancel', ()=>endGesture(true));
+renderer.domElement.addEventListener('lostpointercapture', ()=>endGesture(true));
+renderer.domElement.addEventListener('pointerleave', ()=>{ if(!gesture&&clipMode==='plane') setClipPlanePreview(null,null); });
 
 // ---- clip planes / boxes + work area (Tekla-style sectioning) ----
 // Sectioning lives in renderer.clippingPlanes (GLOBAL), so it clips the grid + every element like
@@ -1309,17 +1392,139 @@ function getClips(){ return clips.map(c=>({ id:c.id, kind:c.kind, enabled:c.enab
   selected:selectedClipIds.has(c.id),
   box:c.box?{min:c.box.min.toArray(),max:c.box.max.toArray()}:null,
   plane:c.n?{n:c.n.toArray(),point:c.point.toArray()}:null })); }
-// Filled in by the gizmo + clip-list units; declared here so every clip mutation can call them.
-function renderClipGizmo(){}
+// ---- clip visuals: hover ghost + the manipulator ----------------------------------------------
+// ALL of it lives in overlayScene, which renders in a 2nd pass with clipping OFF. A gizmo added to
+// `scene` would be sectioned by the very planes it exists to move.
+const CLIP_PLANE_COLOR=0x3b82f6, CLIP_BOX_COLOR=0x93c5fd, CLIP_PREVIEW_COLOR=0xbfdbfe;
+const CLIP_PATCH_R=304.8;   // 1 ft half-size → a 2'×2' marker. Ghost and placed outline share it, so the preview sits exactly where the click will land.
+const _UPV=new THREE.Vector3(0,1,0), _XV=new THREE.Vector3(1,0,0), _ZV=new THREE.Vector3(0,0,1);
+// The in-plane square of half-size r around hp. The seed vector must not be parallel to the normal
+// or the cross product degenerates — and the rendered world is Y-UP, so the test is on n.y. A z-up
+// port testing n.z picks the wrong seed for a VERTICAL cut and for nothing else, which is exactly
+// the kind of bug that ships looking fine.
+function planePatchCorners(hp,n,r){
+  const u=(Math.abs(n.y)<0.9?_UPV:_XV).clone().cross(n).normalize();
+  const v=n.clone().cross(u).normalize();
+  return [ hp.clone().addScaledVector(u, r).addScaledVector(v, r),
+           hp.clone().addScaledVector(u,-r).addScaledVector(v, r),
+           hp.clone().addScaledVector(u,-r).addScaledVector(v,-r),
+           hp.clone().addScaledVector(u, r).addScaledVector(v,-r) ]; }
+// The ghost is allocated ONCE and moved; rebuilding geometry every hover frame is pure churn.
+let clipGhost=null;
+function ensureClipGhost(){ if(clipGhost) return clipGhost;
+  const group=new THREE.Group(); group.visible=false;
+  const fill=new THREE.Mesh(new THREE.PlaneGeometry(CLIP_PATCH_R*2,CLIP_PATCH_R*2),
+    new THREE.MeshBasicMaterial({color:CLIP_PREVIEW_COLOR,transparent:true,opacity:0.3,side:THREE.DoubleSide}));
+  fill.material.depthTest=false; fill.renderOrder=995;
+  const og=new THREE.BufferGeometry(); og.setAttribute('position',new THREE.BufferAttribute(new Float32Array(12),3));
+  const outline=new THREE.LineLoop(og,new THREE.LineBasicMaterial({color:CLIP_PREVIEW_COLOR}));
+  outline.material.depthTest=false; outline.renderOrder=996;
+  group.add(fill,outline); overlayScene.add(group);
+  clipGhost={group,fill,outline}; return clipGhost; }
+function setClipPlanePreview(hp,n){ const G=ensureClipGhost();
+  if(!hp||!n){ G.group.visible=false; return; }
+  G.fill.position.copy(hp); G.fill.quaternion.setFromUnitVectors(_ZV,n);
+  const c=planePatchCorners(hp,n,CLIP_PATCH_R), a=G.outline.geometry.attributes.position;
+  for(let i=0;i<4;i++) a.setXYZ(i,c[i].x,c[i].y,c[i].z);
+  a.needsUpdate=true; G.outline.geometry.computeBoundingSphere(); G.group.visible=true; }
+function clipPlanePreviewAt(cx,cy){ const pp=clipPlaneAtScreen(cx,cy); setClipPlanePreview(pp?pp.point:null,pp?pp.n:null); }
+
+// Screen-constant sizing. Projected size depends on CAMERA-SPACE DEPTH, not Euclidean distance to
+// the camera: distance oversizes a handle sitting off-axis, and then what is drawn no longer matches
+// the fixed-pixel picker below — handles become grabbable where they are not shown.
+const _camPt=new THREE.Vector3();
+function pxToWorldAt(px,pos){ const h=renderer.domElement.clientHeight||1;
+  if(camera.isOrthographicCamera) return px*((camera.top-camera.bottom)/(camera.zoom||1))/h;
+  _camPt.copy(pos).applyMatrix4(camera.matrixWorldInverse);
+  return px*(2*Math.tan(THREE.MathUtils.degToRad(perspCam.fov)/2)*(Math.abs(_camPt.z)||1e-6))/h; }
+function rayAt(cx,cy){ const ndc=new THREE.Vector2((cx/innerWidth)*2-1,-(cy/innerHeight)*2+1);
+  ray.setFromCamera(ndc,camera); return ray.ray.clone(); }
+// Parameter along the line P + t·u closest to `r`. Degenerate (line ∥ ray) → project onto u.
+function lineClosestT(P,u,r){ const w0=P.clone().sub(r.origin), d=r.direction;
+  const a=u.dot(u), b=u.dot(d), c=d.dot(d), dd=u.dot(w0), e=d.dot(w0), den=a*c-b*b;
+  return Math.abs(den)<1e-6 ? u.dot(w0) : (b*e-c*dd)/den; }
+
+const FACE_AXES=[{axis:'x',sign:1},{axis:'x',sign:-1},{axis:'y',sign:1},{axis:'y',sign:-1},{axis:'z',sign:1},{axis:'z',sign:-1}];
+let clipGizmo=null;
+function disposeSubtree(o){ o.traverse(c=>{ if(c.geometry)c.geometry.dispose();
+  const mm=Array.isArray(c.material)?c.material:(c.material?[c.material]:[]); for(const m of mm) m.dispose(); }); }
+// Persistent per SELECTION, not per frame — but a user cycling selections would still leak GPU
+// resources without this, so the gizmo is disposed whenever it is replaced or cleared. The ghost and
+// (later) the draw preview are session-lived and merely hidden, so they are exempt.
+function clearClipGizmo(){ if(!clipGizmo) return; overlayScene.remove(clipGizmo); disposeSubtree(clipGizmo); clipGizmo=null; }
+function renderClipGizmo(){ clearClipGizmo();
+  if(!selectedClipIds.size) return;
+  clipGizmo=new THREE.Group(); overlayScene.add(clipGizmo);
+  // One manipulator shape for a plane AND each box face: a translucent disc lying in the plane plus a
+  // normal arrow. Grab either and slide along `normal`. The stem is deliberately NOT flagged
+  // clipHandle, so it draws but never steals a grab from the disc or the cone.
+  const addHandle=(anchor,normal,ud,color)=>{
+    const disc=new THREE.Mesh(new THREE.CircleGeometry(1,32),
+      new THREE.MeshBasicMaterial({color,transparent:true,opacity:0.32,side:THREE.DoubleSide}));
+    disc.material.depthTest=false; disc.renderOrder=998; disc.position.copy(anchor);
+    disc.quaternion.setFromUnitVectors(_ZV,normal); disc.userData={clipHandle:true,disc:true,...ud};
+    const sg=new THREE.BufferGeometry(); sg.setAttribute('position',new THREE.BufferAttribute(new Float32Array(6),3));
+    const stem=new THREE.Line(sg,new THREE.LineBasicMaterial({color}));
+    stem.material.depthTest=false; stem.renderOrder=998;
+    stem.userData={clipStem:true,baseHp:anchor.clone(),normal:normal.clone()};
+    const cone=new THREE.Mesh(new THREE.ConeGeometry(0.5,1.5,18),new THREE.MeshBasicMaterial({color}));
+    cone.material.depthTest=false; cone.renderOrder=999;
+    cone.quaternion.setFromUnitVectors(_UPV,normal);   // ConeGeometry is Y-axial
+    cone.userData={clipHandle:true,arrow:true,baseHp:anchor.clone(),normal:normal.clone(),...ud};
+    clipGizmo.add(disc,stem,cone); };
+  for(const c of clips){ if(!selectedClipIds.has(c.id)) continue;
+    if(c.kind==='box'){
+      const helper=new THREE.Box3Helper(c.box,new THREE.Color(CLIP_BOX_COLOR));
+      helper.material.depthTest=false; helper.renderOrder=996; clipGizmo.add(helper);
+      const ctr=c.box.getCenter(new THREE.Vector3());
+      for(const f of FACE_AXES){ const anchor=ctr.clone();
+        anchor[f.axis]=f.sign>0?c.box.max[f.axis]:c.box.min[f.axis];
+        const nrm=new THREE.Vector3(f.axis==='x'?f.sign:0,f.axis==='y'?f.sign:0,f.axis==='z'?f.sign:0);
+        addHandle(anchor,nrm,{face:f,clipId:c.id},CLIP_BOX_COLOR); }
+    } else {
+      const hp=c.point.clone();
+      const outline=new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(planePatchCorners(hp,c.n,CLIP_PATCH_R)),
+        new THREE.LineBasicMaterial({color:CLIP_PLANE_COLOR}));
+      outline.material.depthTest=false; outline.renderOrder=996; clipGizmo.add(outline);
+      addHandle(hp,c.n.clone(),{plane:true,clipId:c.id},CLIP_PLANE_COLOR); } }
+  sizeClipHandles(); }
+function sizeClipHandles(){ if(!clipGizmo) return;
+  for(const h of clipGizmo.children){ const ud=h.userData; if(!ud) continue;
+    if(ud.arrow){ const off=pxToWorldAt(34,ud.baseHp);
+      h.position.copy(ud.baseHp).addScaledVector(ud.normal,off); h.scale.setScalar(pxToWorldAt(11,h.position)); }
+    else if(ud.disc) h.scale.setScalar(pxToWorldAt(14,h.position));
+    else if(ud.clipStem){ const off=pxToWorldAt(34,ud.baseHp), a=h.geometry.attributes.position;
+      const tip=ud.baseHp.clone().addScaledVector(ud.normal,off);
+      a.setXYZ(0,ud.baseHp.x,ud.baseHp.y,ud.baseHp.z); a.setXYZ(1,tip.x,tip.y,tip.z);
+      a.needsUpdate=true; h.geometry.computeBoundingSphere(); } } }
+// Screen-space nearest, no raycast — a handle buried inside geometry is still grabbable, which is
+// consistent with drawing it depthTest:false.
+function pickClipHandle(cx,cy){ if(!clipGizmo) return null;
+  let best=null,bestD=16;
+  for(const h of clipGizmo.children){ if(!h.userData||!h.userData.clipHandle) continue;
+    const v=h.position.clone().project(camera); if(v.z>1) continue;
+    const sx=(v.x*0.5+0.5)*innerWidth, sy=(-v.y*0.5+0.5)*innerHeight, d=Math.hypot(sx-cx,sy-cy);
+    if(d<bestD){ bestD=d; best=h; } }
+  return best; }
+function clipHandlesScreen(){ const out=[]; if(!clipGizmo) return out;
+  for(const h of clipGizmo.children){ const ud=h.userData; if(!ud||!ud.clipHandle) continue;
+    const v=h.position.clone().project(camera);
+    out.push({ clipId:ud.clipId, plane:!!ud.plane, arrow:!!ud.arrow,
+      axis:ud.face?ud.face.axis:null, sign:ud.face?ud.face.sign:0,
+      x:(v.x*0.5+0.5)*innerWidth, y:(-v.y*0.5+0.5)*innerHeight, behind:v.z>1 }); }
+  return out; }
+// Filled in by the clip-list unit; declared here so every clip mutation can call it.
 function refreshClipList(){}
 // Arm/disarm the face-pick: 'plane' → next left-click on a face drops a plane; null → back to selecting.
+function setClipPrompt(){ readout.replaceChildren(el('b',null,'Click a face'), document.createTextNode(' to cut the view there · Esc to cancel')); }
 function setClipMode(m){ clipMode=m==='plane'?'plane':null;
   renderer.domElement.style.cursor=clipMode?'crosshair':'default';
+  if(!clipMode) setClipPlanePreview(null,null);   // disarming must take the ghost with it
   // Armed → the button both lights up AND becomes its own cancel target, so the way out is where the
   // way in was. Matches the floless editor's ✕ affordance.
   const btn=document.getElementById('clip'); if(btn){ btn.classList.toggle('on',!!clipMode); btn.textContent=clipMode?'Clip ✕':'Clip ▾'; }
-  if(clipMode) readout.replaceChildren(el('b',null,'Click a face'), document.createTextNode(' to cut the view there · Esc to cancel'));
-  else setHint();
+  if(clipMode) setClipPrompt();
+  else writeSelectionReadout();
   return clipMode; }
 // Work area: one box that bounds (and sections) the view, shown as an always-visible wireframe.
 function renderWorkArea(){ if(workAreaHelper){ overlayScene.remove(workAreaHelper); workAreaHelper.geometry.dispose(); workAreaHelper.material.dispose(); workAreaHelper=null; }
@@ -1388,8 +1593,14 @@ addEventListener('keydown',e=>{
   // Escape is deliberately still honoured while typing ONLY for the clip-mode cancel below, and
   // a text field that wants Escape for itself stops propagation before this handler sees it.
   if(typingInto(e.target) && e.key!=='Escape') return;
+  // A live handle drag mutates geometry as you move, so Escape mid-drag REVERTS — and it wins over
+  // every other Escape branch, including the armed-mode cancel below.
+  if(e.key==='Escape' && gesture==='clip-handle'){ endGesture(true); e.preventDefault(); return; }
   if(e.key==='Escape' && clipMode){ setClipMode(null); e.preventDefault(); return; } // cancel an armed clip-plane pick
   if(typingInto(e.target)) return;                                                   // Escape with no armed clip → leave it to the field
+  // Del removes the selected clip(s) — only when clips are what is selected, so it can never be
+  // mistaken for "delete the selected elements" (which this viewer does not do).
+  if((e.key==='Delete'||e.key==='Backspace') && selectedClipIds.size){ deleteSelectedClips(); e.preventDefault(); return; }
   if(e.key==='Home'){ frameBox(sceneBox); e.preventDefault(); }                       // fit all
   // Section shortcuts, matching the floless editor. Shift-qualified so they cannot collide with the
   // bare-letter view keys above, and safe to add only because of the typing guard at the top.
@@ -1502,7 +1713,7 @@ function triadTip(label,color,pos){ // free-standing colored letter with a dark 
   triadScene.add(triadGroup); }
 function syncTriad(){ triadGroup.quaternion.copy(camera.quaternion).invert(); }
 
-(function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera);
+(function loop(){ requestAnimationFrame(loop); controls.update(); sizeClipHandles(); renderer.render(scene,camera);
   // 2nd UNCLIPPED pass: the work-area wireframe must stay visible through any clip (autoClear off so
   // it draws on top of the clipped main pass; clipping planes cleared so it is never sectioned).
   if(overlayScene.children.length){ const saved=renderer.clippingPlanes; renderer.autoClear=false; renderer.clippingPlanes=EMPTY_CLIPS; renderer.render(overlayScene,camera); renderer.clippingPlanes=saved; renderer.autoClear=true; }
@@ -4188,14 +4399,123 @@ mod tests {
         );
         // One plane per command, and a miss stays armed to retry.
         assert!(
-            html.contains("else if(clipMode==='plane'){ if(addClipPlaneAtScreen(e.clientX,e.clientY)) setClipMode(null); }"),
-            "placing a plane disarms; missing does not"
+            html.contains(
+                "if(addClipPlaneAtScreen(e.clientX,e.clientY)){ setClipPlanePreview(null,null); setClipMode(null); }"
+            ),
+            "placing a plane disarms and drops the ghost; missing does neither"
         );
         assert!(
             !html.contains(
                 "STAYS armed (crosshair + lit button + Esc/Clip to cancel) — parity with floless"
             ),
             "that comment claimed a parity with floless that did not exist — floless disarms on success"
+        );
+    }
+
+    #[test]
+    fn clip_manipulator_and_one_gesture_owner() {
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+
+        // The patch basis must avoid a degenerate cross product with the plane normal, and the
+        // rendered world is Y-UP. A z-up port tests n.z, which picks the wrong seed for a VERTICAL
+        // cut and for nothing else — invisible in every other case.
+        assert!(
+            html.contains("const u=(Math.abs(n.y)<0.9?_UPV:_XV).clone().cross(n).normalize();"),
+            "the plane-patch basis guard is on the UP component (y), not z"
+        );
+        // Projected size depends on camera-space depth. Euclidean distance oversizes off-axis
+        // handles, which desynchronises what is drawn from the fixed-pixel picker.
+        assert!(
+            html.contains("_camPt.copy(pos).applyMatrix4(camera.matrixWorldInverse);"),
+            "pxToWorldAt uses camera-space depth, not distanceTo"
+        );
+        assert!(
+            !html.contains("camera.position.distanceTo(p3)"),
+            "the Euclidean sizing must not come back"
+        );
+        for f in [
+            "function renderClipGizmo",
+            "function sizeClipHandles",
+            "function pickClipHandle",
+            "function clipHandlesScreen",
+            "function setClipPlanePreview",
+            "function clipPlanePreviewAt",
+            "function planePatchCorners",
+            "function lineClosestT",
+            "function clearClipGizmo",
+        ] {
+            assert!(html.contains(f), "clip manipulator: {f}");
+        }
+        // Handles live in the UNCLIPPED overlay pass — in `scene` they would be sectioned by the
+        // very planes they exist to move.
+        assert!(
+            html.contains("clipGizmo=new THREE.Group(); overlayScene.add(clipGizmo);"),
+            "the gizmo is built into overlayScene"
+        );
+        // Persistent per selection, but a user cycling selections would still leak without disposal.
+        assert!(
+            html.contains("function clearClipGizmo(){ if(!clipGizmo) return; overlayScene.remove(clipGizmo); disposeSubtree(clipGizmo); clipGizmo=null; }"),
+            "a replaced gizmo is disposed, not dropped"
+        );
+        // A box face dragged past its opposite would invert the box.
+        assert!(
+            html.contains("if(f.sign>0) c.box.max[f.axis]=Math.max(val,c.box.min[f.axis]+1);"),
+            "box faces clamp to a 1 mm minimum extent"
+        );
+
+        // One owner decided on pointerdown, not three listeners observing the same gesture.
+        assert!(
+            html.contains("let gesture=null;") && html.contains("let gestureToken=0;"),
+            "a single gesture owner with a token"
+        );
+        assert!(
+            html.contains("function schedulePointerWork")
+                && html.contains("requestAnimationFrame(()=>{ pointerRAF=0;"),
+            "pointer work is coalesced to one unit per frame"
+        );
+        // The token is what stops a queued frame applying to a gesture that already ended.
+        assert!(
+            html.contains("if(p&&p.token===gestureToken) doPointerWork(p.x,p.y); }); }"),
+            "a stale queued frame is a no-op"
+        );
+        // pointerup COMMITS (and must flush the last queued move first); cancel / capture loss REVERT.
+        assert!(
+            html.contains(
+                "flushPointerWork();   // the last few millimetres of a drag are part of the result"
+            ),
+            "pointerup flushes before committing"
+        );
+        assert!(
+            html.contains(
+                "renderer.domElement.addEventListener('pointercancel', ()=>endGesture(true));"
+            ) && html.contains(
+                "renderer.domElement.addEventListener('lostpointercapture', ()=>endGesture(true));"
+            ),
+            "cancel and capture loss revert a live drag"
+        );
+        // endGesture clears ownership FIRST: releasePointerCapture itself fires lostpointercapture,
+        // so a non-idempotent handler would revert the drag it had just committed.
+        assert!(
+            html.contains("gesture=null; gestureToken++;"),
+            "endGesture clears ownership before doing anything else"
+        );
+        assert!(
+            html.contains("renderer.domElement.setPointerCapture(e.pointerId)"),
+            "capture the pointer so a release off-canvas still reaches us"
+        );
+        // Escape mid-drag beats the armed-mode cancel.
+        assert!(
+            html.contains("if(e.key==='Escape' && gesture==='clip-handle'){ endGesture(true); e.preventDefault(); return; }"),
+            "Escape reverts a live drag before anything else looks at it"
+        );
+        assert!(
+            html.contains("if((e.key==='Delete'||e.key==='Backspace') && selectedClipIds.size){ deleteSelectedClips(); e.preventDefault(); return; }"),
+            "Del removes selected clips, and only when clips are selected"
         );
     }
 
