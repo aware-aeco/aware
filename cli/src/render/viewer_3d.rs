@@ -1267,7 +1267,7 @@ function workAreaFromSelection(pad){ const box=new THREE.Box3();
   for(const m of selection){ if(m.visible) box.expandByObject(m); }
   if(box.isEmpty()) return false; box.expandByScalar(pad==null?Math.max(maxDim*0.04,1):pad); return setWorkAreaBox(box); }
 function clearWorkArea(){ workArea=null; applyClips(); renderWorkArea(); applyGroupVisibility(); reflectWorkArea(); }
-function workAreaOn(){ return !!workArea; }
+function workAreaOn(){ return !!(workArea && workArea.enabled); }   // switched off IS off — clipping, filtering and the helper are all disabled
 
 addEventListener('resize',()=>{
   perspCam.aspect=innerWidth/innerHeight; perspCam.updateProjectionMatrix();
@@ -2652,8 +2652,12 @@ fn legend_target_ids(scene: &Value, emitted: &HashSet<String>) -> HashSet<String
             // Only what the renderer EMITS. An unsupported element kind is skipped at render time,
             // so accepting its id here would pass validation and then quietly drop the row later —
             // the opposite of the promised wholesale fallback.
+            // `emitted` is necessary but not sufficient: classify_scene can INFER `member` from
+            // geometry when `kind` is a truthy non-string, while the browser does
+            // `switch(el.kind||'box')` and skips it. Require the renderer's own shape.
             if let Some(id) = e.get("id").and_then(Value::as_str)
                 && emitted.contains(id)
+                && browser_renders_kind(e)
             {
                 ids.insert(id.to_string());
             }
@@ -2683,6 +2687,7 @@ fn legend_group_members(scene: &Value, emitted: &HashSet<String>) -> HashMap<Str
                 e.get("id").and_then(Value::as_str),
                 e.get("group").and_then(Value::as_str),
             ) && emitted.contains(id)
+                && browser_renders_kind(e)
             {
                 by_group
                     .entry(g.to_string())
@@ -2692,6 +2697,19 @@ fn legend_group_members(scene: &Value, emitted: &HashSet<String>) -> HashMap<Str
         }
     }
     by_group
+}
+
+/// The browser resolves an element's kind as `el.kind || 'box'` and switches on it, so a kind
+/// that is present but not a string can never match a case — it is skipped no matter what the
+/// Rust-side classifier inferred from the geometry.
+fn browser_renders_kind(e: &Value) -> bool {
+    match e.get("kind") {
+        None | Some(Value::Null) => true,
+        Some(Value::String(_)) => true,
+        Some(Value::Bool(false)) => true,
+        Some(Value::Number(n)) => n.as_f64() == Some(0.0),
+        Some(_) => false,
+    }
 }
 
 fn legend_named(v: Option<&Value>) -> bool {
@@ -2746,6 +2764,9 @@ fn legend_problem(scene: &Value, emitted: &HashSet<String>) -> Option<String> {
         // legitimately recurs under several connection categories, and the Shift-range anchor
         // stores a bare row key — duplicates would make a range ambiguous.
         let mut row_keys: HashSet<&str> = HashSet::new();
+        // Category keys share the collapse state and the header identity, so a duplicate makes one
+        // header vanish and ties the two categories' collapse together.
+        let mut cat_keys: HashSet<&str> = HashSet::new();
         // A target belongs to at most one LEAF row per mode; cross-cutting classifications belong
         // in separate modes. Category headers aggregate descendants without being rows themselves.
         let mut claimed: HashMap<String, String> = HashMap::new();
@@ -2765,6 +2786,14 @@ fn legend_problem(scene: &Value, emitted: &HashSet<String>) -> Option<String> {
                 }
             };
             for (ci, category) in categories.iter().enumerate() {
+                if let Some(ck) = category.get("key").and_then(Value::as_str)
+                    && !ck.is_empty()
+                    && !cat_keys.insert(ck)
+                {
+                    return Some(format!(
+                        "modes[{mi}].sections[{si}].categories[{ci}].key `{ck}` recurs within one mode — category keys must be unique per mode"
+                    ));
+                }
                 let rows = match category.get("rows") {
                     Some(Value::Array(r)) if !r.is_empty() => r,
                     _ => {
@@ -2864,7 +2893,7 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
     };
     // Validate and classify every record before producing any HTML or touching output-path.
     // A malformed supported record therefore fails atomically instead of disappearing in JS.
-    let receipt = classify_scene(scene)?;
+    let mut receipt = classify_scene(scene)?;
 
     // Serialize the scene and inject it into the renderer shell as a JS object-literal
     // expression. Neutralize EVERY `<` as a `<` escape that renders back
@@ -2885,6 +2914,13 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
     let scene = match legend_problem(scene, &emitted_ids) {
         None => scene,
         Some(reason) => {
+            // Surface it in the RESULT too. A headless producer must be able to see that its
+            // panel was rejected without parsing the generated HTML or opening a browser console.
+            receipt.warnings.push(serde_json::json!({
+                "status": "warning",
+                "code": "legend-ignored",
+                "message": format!("scene.legend ignored, falling back to the flat list: {reason}")
+            }));
             repaired = {
                 let mut s = scene.clone();
                 if let Some(obj) = s.as_object_mut() {
@@ -3663,6 +3699,62 @@ mod tests {
         assert!(
             !html.contains("\"legend\":{"),
             "and it must be dropped wholesale, not left half-rendered"
+        );
+    }
+
+    #[test]
+    fn legend_fallback_is_visible_to_a_headless_caller() {
+        // A producer running without a browser must be able to SEE that its panel was rejected.
+        let out = viewer_3d_render(
+            &legend_scene(json!({"v":1,"interaction":"select","modes":[]})),
+            true,
+        )
+        .unwrap();
+        let warnings = out["warnings"].as_array().unwrap();
+        assert!(
+            warnings
+                .iter()
+                .any(|w| w.get("code").and_then(Value::as_str) == Some("legend-ignored")),
+            "the fallback reason is reported in the result, not only inside the HTML"
+        );
+    }
+
+    #[test]
+    fn duplicate_category_keys_in_one_mode_are_rejected() {
+        // Category keys carry the collapse state and the header identity, so a duplicate would drop
+        // one header and tie both categories' collapse together.
+        let out = viewer_3d_render(
+            &legend_scene(json!({"v":1,"interaction":"select","modes":[
+                {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                    {"key":"dup","label":"C1","rows":[{"key":"r1","label":"R1","targets":["b1"]}]},
+                    {"key":"dup","label":"C2","rows":[{"key":"r2","label":"R2","targets":["b2"]}]}]}]}]})),
+            true,
+        )
+        .unwrap();
+        assert!(out["html"].as_str().unwrap().contains("\"legendError\":"));
+    }
+
+    #[test]
+    fn a_truthy_non_string_kind_is_not_a_valid_target() {
+        // classify_scene can INFER `member` from the geometry, but the browser does
+        // `switch(el.kind||'box')` and skips a numeric kind — so it must not be addressable.
+        let out = viewer_3d_render(
+            &json!({ "scene": {
+                "meta": {"name":"x"},
+                "groups": [{"key":"g","label":"G","color":"#60a5fa"}],
+                "elements": [
+                    {"id":"odd","kind":123,"group":"g","from":[0,0,0],"to":[1000,0,0],"widthMm":100,"depthMm":100}
+                ],
+                "legend": {"v":1,"interaction":"select","modes":[
+                    {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                        {"key":"c","label":"C","rows":[{"key":"r","label":"R","targets":["odd"]}]}]}]}]}
+            } }),
+            true,
+        )
+        .unwrap();
+        assert!(
+            out["html"].as_str().unwrap().contains("\"legendError\":"),
+            "a kind the browser will skip cannot be a legend target"
         );
     }
 
