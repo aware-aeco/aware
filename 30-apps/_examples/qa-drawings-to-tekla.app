@@ -13,7 +13,7 @@ description: |
   QA workflow shape — software composed from a paragraph.
 
   NOT RUNNABLE — this is a shape demo, not a working pipeline. It shows the
-  DAG topology (fan-in, fan-out) and the safety contracts on its two external writes;
+  DAG topology (fan-in, fan-out) and where the safety contracts on its two external writes belong;
   several of its nodes have no implementation behind them yet:
 
     - `file.watch`      — declared but `status: planned` (the builtin file
@@ -28,6 +28,9 @@ description: |
                           not shipped, bundled, or installable as a sidecar
     - slack write modes — no slack command declares `mode:`, so its writes
                           classify as READ and would execute under `--dry-run`
+    - safety enforcement — `safety:` blocks are validated and recorded, but the
+                          runtime does not pass them to the transport, so no
+                          snapshot or audit stamp is actually performed
 
   `aware app validate` reports only the `file.watch` error, which understates
   this: it skips unresolved agents and unknown commands entirely, so a clean
@@ -118,13 +121,21 @@ nodes:
       position: "{{ match-build.world-position }}"
       beams:    "{{ match-build.beams }}"
     # Mutates the live Tekla model, so the safety contract applies (app-spec §
-    # Safety contract). `insert` is write-mode both by its manifest entry and by
-    # the `*.insert` naming convention.
+    # Safety contract). This node IS classified write — but by the legacy exact-name
+    # exception `name == "insert"` in manifest::agent::mode_of, not by a manifest
+    # `mode:` (it has none) and not by the `.insert` suffix rule (the bare name has no
+    # dot). Remove that exception and this gate silently disappears.
+    #
+    # DECLARED, NOT ENFORCED: the runtime does not pass `safety` to the transport —
+    # orchestrator calls invoke_single(agent, command, args), and the block is
+    # serialized only into the dry-run `would-write` event, the lock, and validation.
+    # So no snapshot is taken and no UDA stamp is written today. It is authored
+    # correctly so it starts working when the runtime wires it through.
     safety:
       transaction-group: qa-connection-insert   # rollback boundary for this pipeline
-      snapshot: true                            # save the model before touching it
+      snapshot: true                            # intent: save the model before writing
       audit-stamp:
-        uda-prefix: AWARE_                      # stamp inserted objects with run id / app / operator
+        uda-prefix: AWARE_                      # intent: stamp run id / app / operator
 
   - id: slack-notify
     agent: slack
