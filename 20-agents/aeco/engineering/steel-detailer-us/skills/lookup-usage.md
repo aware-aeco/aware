@@ -43,9 +43,12 @@ consumer reads machine values directly (not by parsing the `value` string):
   "id": "section.W16X26",
   "category": "sections",
   "value": "26 lb/ft; depth d = 15.7 in; area A = 7.68 in²",
-  "units": "imperial (lb/ft, in, in²)",
+  "units": "imperial (lb/ft, in, in², in³, in⁴, in⁶)",
   "properties": { "type": "W", "weight_plf": 26.0, "depth_in": 15.7,
-                  "width_in": 5.5, "area_in2": 7.68, "web_in": 0.25, "flange_in": 0.345 },
+                  "width_in": 5.5, "area_in2": 7.68, "web_in": 0.25, "flange_in": 0.345,
+                  "Ix_in4": 301.0, "Sx_in3": 38.4, "Zx_in3": 44.2, "rx_in": 6.26,
+                  "Iy_in4": 9.59, "Sy_in3": 3.49, "Zy_in3": 5.48, "ry_in": 1.12,
+                  "J_in4": 0.262, "Cw_in6": 565.0 },
   "citation": "AISC Shapes Database v15.0 (US)",
   "found": true
 }
@@ -58,13 +61,21 @@ design-wall basis** (0.93× nominal for A500; nominal for A1085 — see `section
 The bulk of weights/depths are *not* derivable from the designation (HSS, angles, pipe) —
 that is exactly why this lookup exists.
 
+The strength/stiffness keys are present only where the AISC database defines them for
+that family — absence is meaningful, not missing data: `Iz_in4`/`Sz_in3`/`rz_in` are the
+single-angle principal axes (L only); `C_in3` is the HSS torsional constant (closed
+sections only); `Cw_in6` is the warping constant, which open sections have and closed
+ones do not. Read the key you need and refuse if it is absent — never substitute a
+neighbouring axis.
+
 ## Available categories
 
 - `bolts` — spacing, edge distances, hole sizes, pretension values
 - `welds` — fillet sizes, throat, length limits, PJP throat
 - `connection-strength` — bearing and tearout nominal strength equations (§J3.11)
 - `materials` — preferred ASTM grades and Fy/Fu by member type
-- `sections` — section properties (weight/ft, depth, width, area, thicknesses) for every
+- `sections` — section properties (weight/ft, depth, width, area, thicknesses, plus the
+  strength/stiffness set I, S, Z, r about both axes and J/Cw/C) for every
   AISC shape, from the AISC Shapes Database (W, M, S, HP, C, MC, L, 2L, WT/MT/ST, HSS,
   Pipe). `lookup --rule section.<label>` or `--category sections`.
 

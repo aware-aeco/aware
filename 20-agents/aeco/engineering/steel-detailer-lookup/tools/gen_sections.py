@@ -4,8 +4,9 @@
 
 Each row becomes a deterministic, citation-backed `sections` rule consumed by the
 `aware-steel-detailer-us lookup` command — designation -> verified weight, depth,
-width, area, thicknesses. No engine logic here; this is a pure data transform so the
-import is reproducible and auditable.
+width, area, thicknesses, plus the strength/stiffness set (I, S, Z, r, J, Cw).
+No engine logic here; this is a pure data transform so the import is reproducible
+and auditable.
 
 Run:  python gen_sections.py
 """
@@ -18,6 +19,18 @@ OUT = os.path.normpath(os.path.join(
 
 
 _NA = {"", "-", "–", "—", "N/A", "n/a"}
+
+# Strength / stiffness columns, copied straight across when the CSV has them.
+# (csv column, property key). Units are in the key suffix, matching the dimensional
+# props above (weight_plf / depth_in / area_in2). Blank cells are family-dependent —
+# Iz/rz/Sz are single-angle principal axes, C is the HSS torsional constant, Cw does
+# not apply to closed sections — so "absent" is normal and simply omits the key.
+SECTION_PROPS = [
+    ("Ix", "Ix_in4"), ("Sx", "Sx_in3"), ("Zx", "Zx_in3"), ("rx", "rx_in"),
+    ("Iy", "Iy_in4"), ("Sy", "Sy_in3"), ("Zy", "Zy_in3"), ("ry", "ry_in"),
+    ("Iz", "Iz_in4"), ("Sz", "Sz_in3"), ("rz", "rz_in"),
+    ("J", "J_in4"), ("Cw", "Cw_in6"), ("C", "C_in3"),
+]
 
 
 def num(s):
@@ -91,6 +104,9 @@ def main():
         if tf is not None: props["flange_in"] = tf
         if wall is not None: props["wall_in"] = wall
 
+        strength = {k: v for col, k in SECTION_PROPS if (v := num(r.get(col))) is not None}
+        props.update(strength)
+
         # `d` means different things by family: leg for an angle, OD for a round shape,
         # depth otherwise. Label the human-readable string honestly (properties are typed).
         is_round = typ in ("HSS", "PIPE") and num(r.get("OD")) is not None
@@ -101,20 +117,23 @@ def main():
             f"area A = {area:g} in²" if area is not None else None,
         ) if x)
 
+        # The quote is what a reader verifies the served properties against, so every
+        # property we serve appears in it — including the strength/stiffness set.
         quote = ", ".join(
-            f"{k}={v:g}" for k, v in (
+            f"{k}={v:g}" for k, v in [
                 ("W", weight), ("A", area), ("d", num(r.get("d"))),
                 ("Ht", num(r.get("Ht"))), ("OD", num(r.get("OD"))),
                 ("bf", num(r.get("bf"))), ("B", num(r.get("B"))),
                 ("tw", tw), ("tf", tf), ("tdes", num(r.get("tdes"))),
-            ) if v is not None)
+            ] + [(col, num(r.get(col))) for col, _ in SECTION_PROPS]
+            if v is not None)
 
         rules.append({
             "id": f"section.{label}",
             "category": "sections",
             "rule": f"{label} — section properties (AISC)",
             "value": value,
-            "units": "imperial (lb/ft, in, in²)",
+            "units": "imperial (lb/ft, in, in², in³, in⁴, in⁶)",
             "properties": props,
             "citation": "AISC Shapes Database v15.0 (US)",
             "source_quote": f"{label}: {quote}",
@@ -129,17 +148,34 @@ def main():
 
     # Hard imperial sentinel: known v15 US values. Guards against a metric / wrong file
     # (the definitional check alone passes on metric data, which also encodes weight).
+    # Each sentinel also pins strength/stiffness values, so a mis-mapped column (Ix
+    # read as Iy, Zx as Sx, HSS `C` as `Cw`) aborts instead of shipping wrong numbers.
     by_id = {r["id"]: r["properties"] for r in rules}
-    for sid, (w, d, a) in {
-        "section.W16X26": (26.0, 15.7, 7.68),
-        "section.HSS6X6X3/8": (27.48, 6.0, 7.58),
-        "section.L4X4X1/4": (6.6, 4.0, 1.93),
+    for sid, expect in {
+        "section.W16X26": {"weight_plf": 26.0, "depth_in": 15.7, "area_in2": 7.68,
+                           "Ix_in4": 301, "Sx_in3": 38.4, "Zx_in3": 44.2,
+                           "Iy_in4": 9.59, "ry_in": 1.12, "Cw_in6": 565},
+        "section.HSS6X6X3/8": {"weight_plf": 27.48, "depth_in": 6.0, "area_in2": 7.58,
+                               "Ix_in4": 39.5, "Zx_in3": 15.8, "J_in4": 64.6,
+                               "C_in3": 22.1},
+        "section.L4X4X1/4": {"weight_plf": 6.6, "depth_in": 4.0, "area_in2": 1.93,
+                             "Ix_in4": 3.0, "Iz_in4": 1.19, "rz_in": 0.783},
     }.items():
         p = by_id.get(sid)
-        if (not p or abs(p["weight_plf"] - w) > 0.01 or abs(p["depth_in"] - d) > 0.05
-                or abs(p["area_in2"] - a) > 0.01):
-            raise SystemExit(
-                f"ABORT: imperial sentinel {sid} mismatch (got {p}) — wrong/metric CSV?")
+        if not p:
+            raise SystemExit(f"ABORT: sentinel {sid} missing from generated rules.")
+        for k, want in expect.items():
+            got = p.get(k)
+            # 0.5% relative — tight enough to catch a swapped column, loose enough for
+            # the CSV's 3-significant-figure rounding.
+            if got is None or abs(got - want) > max(0.005 * abs(want), 0.005):
+                raise SystemExit(
+                    f"ABORT: sentinel {sid}.{k} = {got!r}, expected {want} — "
+                    f"wrong/metric CSV or a mis-mapped column?")
+        # Cw does not apply to closed sections; if it ever appears on HSS the column
+        # mapping has drifted.
+        if sid == "section.HSS6X6X3/8" and "Cw_in6" in p:
+            raise SystemExit(f"ABORT: {sid} has Cw — closed section, column mis-mapped?")
 
     db = {
         "agent": "steel-detailer-us",

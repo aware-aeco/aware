@@ -20,9 +20,11 @@ description: Use for US/AISC steel section type and naming questions — the sha
 
 **Deterministic section lookup:** this agent ships those properties as the `sections`
 category of the `lookup` command — `lookup --rule section.W16X26` → typed JSON with
-`weight_plf`, `depth_in`, `width_in`, `area_in2`, thicknesses + citation (generated from
-the AISC Shapes Database v15.0 US). Use it for weight/depth a designation does **not**
-encode (HSS, angles, pipe). See the `lookup-usage` skill.
+`weight_plf`, `depth_in`, `width_in`, `area_in2`, thicknesses, the strength/stiffness set
+(`Ix_in4`, `Sx_in3`, `Zx_in3`, `rx_in` and the y/z counterparts, `J_in4`, `Cw_in6`,
+`C_in3`) + citation (generated from the AISC Shapes Database v15.0 US). Use it for
+weight/depth a designation does **not** encode (HSS, angles, pipe), and for the section
+properties a check needs without hardcoding a table. See the `lookup-usage` skill.
 
 ## Source
 
