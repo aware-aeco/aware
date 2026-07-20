@@ -1205,7 +1205,13 @@ function buildLegend(S){ const host=document.getElementById('legend'); host.repl
   if(S.legendError) console.warn('viewer-3d: objects panel ignored — '+S.legendError);
   if(legActive()){ buildObjectsPanel(); return; }
   host.classList.remove('objects');
-host.append(el('div','legend-hint','click: hide/show · dbl-click: isolate'));
+  // `groups` MUST be bound here. v0.97.0 dropped this line while leaving the forEach below, so every
+  // scene without a descriptor threw ReferenceError out of renderScene and killed the whole module —
+  // no model, no toolbar, no __viewer3d. And since this legacy list is the documented fallback for a
+  // REJECTED descriptor, a producer bug in the panel took the viewer down with it, which is the
+  // opposite of the "the panel is chrome, the model is the payload" promise it falls back to honour.
+  const groups=(S.groups||[]); if(!groups.length){ host.style.display='none'; return; } host.style.display='';
+  host.append(el('div','legend-hint','click: hide/show · dbl-click: isolate'));
   groups.forEach(g=>{ const row=el('div','row'); row.dataset.key=g.key;
     const sw=el('span','swatch'); sw.style.background=g.color;
     row.append(sw, document.createTextNode(g.label));
@@ -2126,6 +2132,16 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   // Clip editing. `getClips` reports EXACT bounds and plane geometry, not rounded sizes — a probe
   // that rounds cannot prove a snapped bound or which face a drag moved.
   getClips, selectedClips, setSelectedClips, toggleClip, renameClip, removeClip, deleteSelectedClips,
+  clipHandlesScreen, addClipBoxFromBox, setClipMode,
+  worldToScreen:(p)=>toScreenPt(p),
+  gestureState:()=>({ gesture, draft:clipBoxDraft?(clipBoxDraft.b?'height':'footprint'):null, dragging:!!(clipDrag&&clipDrag.moved) }),
+  reticleState:()=>({ visible:!!(clipReticle&&clipReticle.visible), at:clipReticle&&clipReticle.visible?clipReticle.position.toArray():null }),
+  clipDrawFloorY:()=>clipBoxFloorY(),
+  clipBoxFloorAt:(x,y)=>clipBoxFloorPoint(x,y),
+  clipHeightAt:(x,y)=>clipBoxDraft&&clipBoxDraft.b?clipBoxHeightAt(x,y):null,
+  // The basis guard's silent failure mode is a VERTICAL cut, so a test needs the corners themselves.
+  planePatchCorners:(hp,n)=>planePatchCorners(new THREE.Vector3(hp[0],hp[1],hp[2]),new THREE.Vector3(n[0],n[1],n[2]).normalize(),CLIP_PATCH_R).map(v=>v.toArray()),
+  clipGhostShown:()=>!!(clipGhost&&clipGhost.group.visible),
   referenceSystemSegments:()=>(SCENE.referenceSystems||[]).filter(R=>R&&R.kind==='structural-grid').map(R=>{
     const s=referenceSystemSegments(R);
     return { axes:s.axes.map(a=>({label:a.label,direction:a.direction,a:a.a.toArray(),b:a.b.toArray()})),
@@ -5077,6 +5093,31 @@ mod tests {
             html.contains("transparent:true,depthTest:false,depthWrite:false}"),
             "the snap reticle draws over everything"
         );
+    }
+
+    #[test]
+    fn the_legacy_legend_binds_its_groups() {
+        // v0.97.0 dropped `const groups=(S.groups||[])` from buildLegend while leaving the forEach
+        // that reads it, so EVERY scene without a `scene.legend` descriptor threw ReferenceError out
+        // of renderScene and killed the module — no model, no toolbar, no __viewer3d. The legacy list
+        // is also the documented fallback for a REJECTED descriptor, so a producer bug in the panel
+        // took the whole viewer down instead of degrading to the flat list it falls back to.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(
+            html.contains("const groups=(S.groups||[]); if(!groups.length){ host.style.display='none'; return; } host.style.display='';"),
+            "buildLegend must bind `groups` before iterating it"
+        );
+        // Ordering matters as much as presence: the binding has to precede the loop.
+        let bind = html.find("const groups=(S.groups||[]);").unwrap();
+        let loop_at = html
+            .find("groups.forEach(g=>{ const row=el('div','row');")
+            .unwrap();
+        assert!(bind < loop_at, "`groups` is bound before it is iterated");
     }
 
     #[test]
