@@ -2375,6 +2375,206 @@ fn validate_grid_bounds(
     Ok(())
 }
 
+/// The ids a legend row may name as a `target`.
+///
+/// Deliberately NARROW: a top-level `element`, or a rendered `kind:"weld"` operation — the only
+/// two things the viewer draws as independently operable objects. Structural grids, their
+/// axes/levels and labels, plate holes, non-rendered operations, lights and helpers are excluded;
+/// addressing those would need one-to-many target mappings and buys nothing for this panel.
+fn legend_target_ids(scene: &Value) -> HashSet<String> {
+    let mut ids = HashSet::new();
+    if let Some(Value::Array(elements)) = scene.get("elements") {
+        for e in elements {
+            if let Some(id) = e.get("id").and_then(Value::as_str) {
+                ids.insert(id.to_string());
+            }
+        }
+    }
+    if let Some(Value::Array(ops)) = scene.get("operations") {
+        for op in ops {
+            if op.get("kind").and_then(Value::as_str) == Some("weld")
+                && let Some(id) = op.get("id").and_then(Value::as_str)
+            {
+                ids.insert(id.to_string());
+            }
+        }
+    }
+    ids
+}
+
+/// group key → the target ids in it, so a row naming only `groups` resolves the same way the
+/// renderer will. Insertion order is irrelevant here (membership only); the PANEL's order always
+/// comes from the descriptor's own arrays.
+fn legend_group_members(scene: &Value) -> HashMap<String, Vec<String>> {
+    let mut by_group: HashMap<String, Vec<String>> = HashMap::new();
+    if let Some(Value::Array(elements)) = scene.get("elements") {
+        for e in elements {
+            if let (Some(id), Some(g)) = (
+                e.get("id").and_then(Value::as_str),
+                e.get("group").and_then(Value::as_str),
+            ) {
+                by_group
+                    .entry(g.to_string())
+                    .or_default()
+                    .push(id.to_string());
+            }
+        }
+    }
+    by_group
+}
+
+fn legend_named(v: Option<&Value>) -> bool {
+    matches!(v, Some(Value::String(s)) if !s.trim().is_empty())
+}
+
+/// Validate `scene.legend` — the producer-authored objects panel — as a whole.
+///
+/// `None` = absent or wholly valid. `Some(reason)` = it must be IGNORED in favour of the legacy
+/// flat list. Ignoring rather than erroring is deliberate: the panel is chrome and the model is the
+/// payload, so a producer bug in the panel must never cost the user their model. It is checked
+/// ATOMICALLY — a half-valid descriptor renders an ambiguous panel where some rows silently control
+/// nothing, which is worse than the honest legacy list.
+fn legend_problem(scene: &Value) -> Option<String> {
+    let legend = match scene.get("legend") {
+        None | Some(Value::Null) => return None,
+        Some(v @ Value::Object(_)) => v,
+        Some(other) => return Some(format!("must be an object (got {})", json_type(other))),
+    };
+
+    match legend.get("v").and_then(Value::as_u64) {
+        Some(1) => {}
+        Some(other) => return Some(format!("unknown version {other} (this renderer speaks v1)")),
+        None => return Some("`v` is required (expected 1)".into()),
+    }
+    // Required in v1: the row semantics travel WITH the descriptor the producer authored, and are
+    // never inferred from some field happening to be present.
+    match legend.get("interaction").and_then(Value::as_str) {
+        Some("select") => {}
+        Some(other) => return Some(format!("unknown interaction `{other}` (expected `select`)")),
+        None => return Some("`interaction` is required in v1 (expected `select`)".into()),
+    }
+
+    let modes = match legend.get("modes") {
+        Some(Value::Array(m)) if !m.is_empty() => m,
+        _ => return Some("`modes` must be a non-empty array".into()),
+    };
+
+    let valid_targets = legend_target_ids(scene);
+    let group_members = legend_group_members(scene);
+
+    for (mi, mode) in modes.iter().enumerate() {
+        if !legend_named(mode.get("key")) || !legend_named(mode.get("label")) {
+            return Some(format!("modes[{mi}] needs a non-empty `key` and `label`"));
+        }
+        let sections = match mode.get("sections") {
+            Some(Value::Array(s)) if !s.is_empty() => s,
+            _ => return Some(format!("modes[{mi}].sections must be a non-empty array")),
+        };
+
+        // Row keys are unique per MODE, not merely per parent: a part-group name such as `weld`
+        // legitimately recurs under several connection categories, and the Shift-range anchor
+        // stores a bare row key — duplicates would make a range ambiguous.
+        let mut row_keys: HashSet<&str> = HashSet::new();
+        // A target belongs to at most one LEAF row per mode; cross-cutting classifications belong
+        // in separate modes. Category headers aggregate descendants without being rows themselves.
+        let mut claimed: HashMap<String, String> = HashMap::new();
+
+        for (si, section) in sections.iter().enumerate() {
+            if !legend_named(section.get("key")) {
+                return Some(format!(
+                    "modes[{mi}].sections[{si}].key must be a non-empty string"
+                ));
+            }
+            let categories = match section.get("categories") {
+                Some(Value::Array(c)) if !c.is_empty() => c,
+                _ => {
+                    return Some(format!(
+                        "modes[{mi}].sections[{si}].categories must be a non-empty array"
+                    ));
+                }
+            };
+            for (ci, category) in categories.iter().enumerate() {
+                let rows = match category.get("rows") {
+                    Some(Value::Array(r)) if !r.is_empty() => r,
+                    _ => {
+                        return Some(format!(
+                            "modes[{mi}].sections[{si}].categories[{ci}].rows must be a non-empty array"
+                        ));
+                    }
+                };
+                for (ri, row) in rows.iter().enumerate() {
+                    let at = format!("modes[{mi}].sections[{si}].categories[{ci}].rows[{ri}]");
+                    let key = match row.get("key").and_then(Value::as_str) {
+                        Some(k) if !k.trim().is_empty() => k,
+                        _ => return Some(format!("{at}.key must be a non-empty string")),
+                    };
+                    if !row_keys.insert(key) {
+                        return Some(format!(
+                            "{at}.key `{key}` recurs within one mode — row keys must be unique per mode"
+                        ));
+                    }
+                    if !legend_named(row.get("label")) {
+                        return Some(format!("{at}.label must be a non-empty string"));
+                    }
+
+                    // Resolve exactly as the renderer will: explicit targets win, else the groups.
+                    let mut resolved: Vec<String> = Vec::new();
+                    match row.get("targets") {
+                        Some(Value::Array(t)) if !t.is_empty() => {
+                            for v in t {
+                                match v.as_str() {
+                                    Some(id) if valid_targets.contains(id) => {
+                                        resolved.push(id.to_string())
+                                    }
+                                    Some(id) => {
+                                        return Some(format!(
+                                            "{at}.targets names `{id}`, which is not a rendered element or weld operation"
+                                        ));
+                                    }
+                                    None => return Some(format!("{at}.targets must be strings")),
+                                }
+                            }
+                        }
+                        Some(Value::Array(_)) => {
+                            return Some(format!("{at}.targets must not be empty"));
+                        }
+                        Some(_) => return Some(format!("{at}.targets must be an array")),
+                        None => {
+                            let groups = match row.get("groups") {
+                                Some(Value::Array(g)) if !g.is_empty() => g,
+                                _ => return Some(format!("{at} must name `groups` or `targets`")),
+                            };
+                            for g in groups {
+                                let Some(gk) = g.as_str() else {
+                                    return Some(format!("{at}.groups must be strings"));
+                                };
+                                match group_members.get(gk) {
+                                    Some(ids) => resolved.extend(ids.iter().cloned()),
+                                    None => {
+                                        return Some(format!(
+                                            "{at}.groups names `{gk}`, which no element belongs to"
+                                        ));
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    for id in resolved {
+                        if let Some(owner) = claimed.get(&id) {
+                            return Some(format!(
+                                "{at} claims target `{id}`, already claimed by row `{owner}` in the same mode"
+                            ));
+                        }
+                        claimed.insert(id, key.to_string());
+                    }
+                }
+            }
+        }
+    }
+    None
+}
+
 pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     // The scene is the payload; require an object so the renderer has something to draw.
     let scene = match args.get("scene") {
@@ -2402,6 +2602,24 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
     // tokenizer into the script-data-(double-)escaped state and stop the template's own
     // closing `</script>` from closing the element). JSON only contains `<` inside string
     // values, so escaping all of them is safe. Also escape the JS line terminators U+2028/U+2029.
+    // An unusable objects-panel descriptor is dropped rather than rendered half-valid, and the
+    // reason travels to the producer as `legendError` (the page console-warns it). Cloning only on
+    // the failure path keeps the common case allocation-free.
+    let repaired;
+    let scene = match legend_problem(scene) {
+        None => scene,
+        Some(reason) => {
+            repaired = {
+                let mut s = scene.clone();
+                if let Some(obj) = s.as_object_mut() {
+                    obj.remove("legend");
+                    obj.insert("legendError".into(), Value::String(reason));
+                }
+                s
+            };
+            &repaired
+        }
+    };
     let scene_json = serde_json::to_string(scene)
         .map_err(|e| AwareError::Internal(format!("viewer-3d: serialize scene: {e}")))?
         .replace('<', "\\u003C")
@@ -3006,6 +3224,135 @@ mod tests {
             html.contains("clearTimeout(legendClickT)"),
             "dbl-click cancels the single-click toggle"
         );
+    }
+
+    /// A scene with two elements sharing a group, plus a weld operation — the shape the split-row
+    /// case needs (one group appearing under two categories) and the one welds live in.
+    fn legend_scene(legend: Value) -> Value {
+        json!({ "scene": {
+            "meta": {"name":"x"},
+            "groups": [{"key":"W16X26","label":"W16X26","color":"#94a3b8"}],
+            "elements": [
+                {"id":"b1","kind":"member","group":"W16X26","from":[0,0,0],"to":[1000,0,0],"widthMm":100,"depthMm":200},
+                {"id":"b2","kind":"member","group":"W16X26","from":[0,0,500],"to":[1000,0,500],"widthMm":100,"depthMm":200}
+            ],
+            "operations": [
+                {"id":"j1:weld:op","kind":"weld","mainId":"b1","secondaryId":"b2",
+                 "path":[[0,0,0],[0,0,500]],"weldType":"fillet","sizeMm":6,"around":false,"shop":true}
+            ],
+            "legend": legend
+        } })
+    }
+
+    /// One mode, one section, one category, rows split by explicit targets — the case group
+    /// annotation could not express, and the reason the descriptor exists at all.
+    fn legend_ok() -> Value {
+        json!({ "v":1, "interaction":"select", "modes":[
+            {"key":"type","label":"By type","sections":[
+                {"key":"members","label":"Members","categories":[
+                    {"key":"beam","label":"Beams","rows":[
+                        {"key":"beam|W16X26","label":"W16X26","groups":["W16X26"],"targets":["b1"]}]},
+                    {"key":"brace","label":"Braces","rows":[
+                        {"key":"brace|W16X26","label":"W16X26","groups":["W16X26"],"targets":["b2"]}]}]},
+                {"key":"connections","label":"Connections","categories":[
+                    {"key":"","label":null,"rows":[
+                        {"key":"weld","label":"Welds","targets":["j1:weld:op"]}]}]}]}]})
+    }
+
+    #[test]
+    fn a_valid_legend_descriptor_survives_and_reaches_the_page() {
+        let out = viewer_3d_render(&legend_scene(legend_ok()), true).unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(
+            html.contains("\"legend\":{"),
+            "the descriptor reaches the page"
+        );
+        assert!(
+            !html.contains("legendError"),
+            "a valid descriptor is not flagged"
+        );
+        // A weld operation is addressable — `groups` alone could never express it, because weld
+        // operations carry no group.
+        assert!(
+            html.contains("j1:weld:op"),
+            "weld operations are addressable targets"
+        );
+    }
+
+    #[test]
+    fn an_unusable_legend_falls_back_wholesale_rather_than_half_rendering() {
+        // Each of these is a producer bug that would otherwise yield a panel whose rows silently
+        // control nothing. Every one must drop the descriptor and say why — never error the render,
+        // because the panel is chrome and the model is the payload.
+        let cases: Vec<(&str, Value)> = vec![
+            (
+                "unknown version",
+                json!({"v":2,"interaction":"select","modes":[]}),
+            ),
+            ("missing interaction", json!({"v":1,"modes":[]})),
+            (
+                "unknown interaction",
+                json!({"v":1,"interaction":"hover","modes":[]}),
+            ),
+            (
+                "empty modes",
+                json!({"v":1,"interaction":"select","modes":[]}),
+            ),
+            // A target that is not a rendered element or weld operation — e.g. a structural grid.
+            (
+                "bad target",
+                json!({"v":1,"interaction":"select","modes":[
+                {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                    {"key":"c","label":"C","rows":[{"key":"r","label":"R","targets":["grid-A"]}]}]}]}]}),
+            ),
+            // The same row key twice in one mode makes the Shift-range anchor ambiguous.
+            (
+                "duplicate row key in a mode",
+                json!({"v":1,"interaction":"select","modes":[
+                {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                    {"key":"c1","label":"C1","rows":[{"key":"dup","label":"R","targets":["b1"]}]},
+                    {"key":"c2","label":"C2","rows":[{"key":"dup","label":"R","targets":["b2"]}]}]}]}]}),
+            ),
+            // Two leaf rows in one mode fighting over the same target.
+            (
+                "overlapping targets in a mode",
+                json!({"v":1,"interaction":"select","modes":[
+                {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                    {"key":"c1","label":"C1","rows":[{"key":"r1","label":"R1","targets":["b1"]}]},
+                    {"key":"c2","label":"C2","rows":[{"key":"r2","label":"R2","targets":["b1"]}]}]}]}]}),
+            ),
+            // A row naming neither groups nor targets controls nothing at all.
+            (
+                "row addresses nothing",
+                json!({"v":1,"interaction":"select","modes":[
+                {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                    {"key":"c","label":"C","rows":[{"key":"r","label":"R"}]}]}]}]}),
+            ),
+            // A group no element belongs to.
+            (
+                "unknown group",
+                json!({"v":1,"interaction":"select","modes":[
+                {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                    {"key":"c","label":"C","rows":[{"key":"r","label":"R","groups":["NOPE"]}]}]}]}]}),
+            ),
+        ];
+        for (name, legend) in cases {
+            let out = viewer_3d_render(&legend_scene(legend), true).unwrap_or_else(|e| {
+                panic!("{name}: render must not fail, the model is the payload: {e:?}")
+            });
+            let html = out["html"].as_str().unwrap();
+            assert!(
+                html.contains("legendError"),
+                "{name}: must be reported to the producer"
+            );
+            // The injected scene must carry no descriptor at all. Checked against the JSON shape
+            // `"legend":{` — the template's own `#modes` display menu and `#legend` element mean a
+            // bare word match would pass vacuously.
+            assert!(
+                !html.contains("\"legend\":{"),
+                "{name}: the descriptor must be dropped wholesale, not partly rendered"
+            );
+        }
     }
 
     #[test]
