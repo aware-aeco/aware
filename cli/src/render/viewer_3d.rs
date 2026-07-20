@@ -332,7 +332,7 @@ function resolveLegRows(){ legRows=[];
 /** The selection as OBJECTS — the single path every existing consumer (Alt+Z, clip box, work area,
  *  readout, highlighting) reads, so a legend-driven selection behaves like a canvas one. */
 function selectedObjects(){ const out=[]; for(const id of selIds){ const objs=targetOf.get(id); if(objs) out.push(...objs); } return out; }
-function syncSelectionFromIds(){ setSelection(selectedObjects()); refreshLegend(); }
+function syncSelectionFromIds(){ setSelection(selectedObjects()); refreshLegend(); }   // setSelection re-derives the same ids — no loop
 /** A row is on/off/mixed — mixed is real once hiding is per-id, which is why the control is a
  *  tri-state checkbox rather than a switch. */
 function rowVis(row){ let shown=0; for(const id of row.ids) if(!hiddenIds.has(id) && (!isolatedIds||isolatedIds.has(id))) shown++;
@@ -974,6 +974,10 @@ function buildSidePanels(S){
 // Row verbs mirror the floless editor: the LABEL selects, a tri-state box shows/hides, and an
 // explicit isolate button gives keyboard and touch a route that is not a double-click.
 function legRowMatches(r){ return !legQuery || r.label.toLowerCase().includes(legQuery); }
+/** Actually on screen: matches the search AND is not inside a collapsed category. A Shift range
+ *  must not reach rows the user cannot see — a search temporarily opens matching categories, which
+ *  is why the collapse test is skipped while querying. */
+function legRowDisplayed(r){ return legRowMatches(r) && !(r.catLabel && legCollapsed.has(r.catKey) && !legQuery); }
 function legApply(){ applyGroupVisibility(); refreshLegend(); }
 function legSelectRow(row,additive){
   if(additive){ const all=row.ids.every(id=>selIds.has(id));
@@ -982,7 +986,7 @@ function legSelectRow(row,additive){
   legAnchor=row.key; syncSelectionFromIds();
 }
 function legSelectRange(row){                       // Shift: over the rows CURRENTLY displayed
-  const shown=legRows.filter(legRowMatches);
+  const shown=legRows.filter(legRowDisplayed);
   const a=shown.findIndex(r=>r.key===legAnchor), b=shown.findIndex(r=>r.key===row.key);
   if(a<0||b<0){ legSelectRow(row,false); return; }
   selIds=new Set(); for(let i=Math.min(a,b);i<=Math.max(a,b);i++) for(const id of shown[i].ids) selIds.add(id);
@@ -1123,6 +1127,10 @@ let selection=[];
 function clearHighlight(){ for(const m of selection){ const mat=m.material; if(mat&&mat.emissive) mat.emissive.setHex(0x000000); } }
 function setSelection(meshes){
   clearHighlight(); selection=meshes||[];
+  // With a descriptor, selIds is the source of truth — so a CANVAS pick (click, box-select) has to
+  // write it too. Without this the panel keeps highlighting the previous selection and isolate acts
+  // on it. Deriving from the objects is idempotent, so the panel→canvas path round-trips unchanged.
+  if(legActive()){ selIds=new Set(); for(const m of selection){ const id=m.userData&&m.userData.id; if(id) selIds.add(id); } refreshObjectsPanel(); }
   for(const m of selection){ const mat=m.material; if(mat){ mat.emissive=new THREE.Color(0xf59e0b); mat.emissiveIntensity=0.6; } }
   if(selection.length===0){ setHint(); return; }
   if(selection.length===1){ const u=selection[0].userData; const parts=[el('b',null,u.id||'(element)')];
@@ -2637,11 +2645,16 @@ fn validate_grid_bounds(
 /// two things the viewer draws as independently operable objects. Structural grids, their
 /// axes/levels and labels, plate holes, non-rendered operations, lights and helpers are excluded;
 /// addressing those would need one-to-many target mappings and buys nothing for this panel.
-fn legend_target_ids(scene: &Value) -> HashSet<String> {
+fn legend_target_ids(scene: &Value, emitted: &HashSet<String>) -> HashSet<String> {
     let mut ids = HashSet::new();
     if let Some(Value::Array(elements)) = scene.get("elements") {
         for e in elements {
-            if let Some(id) = e.get("id").and_then(Value::as_str) {
+            // Only what the renderer EMITS. An unsupported element kind is skipped at render time,
+            // so accepting its id here would pass validation and then quietly drop the row later —
+            // the opposite of the promised wholesale fallback.
+            if let Some(id) = e.get("id").and_then(Value::as_str)
+                && emitted.contains(id)
+            {
                 ids.insert(id.to_string());
             }
         }
@@ -2650,6 +2663,7 @@ fn legend_target_ids(scene: &Value) -> HashSet<String> {
         for op in ops {
             if op.get("kind").and_then(Value::as_str) == Some("weld")
                 && let Some(id) = op.get("id").and_then(Value::as_str)
+                && emitted.contains(id)
             {
                 ids.insert(id.to_string());
             }
@@ -2661,14 +2675,15 @@ fn legend_target_ids(scene: &Value) -> HashSet<String> {
 /// group key → the target ids in it, so a row naming only `groups` resolves the same way the
 /// renderer will. Insertion order is irrelevant here (membership only); the PANEL's order always
 /// comes from the descriptor's own arrays.
-fn legend_group_members(scene: &Value) -> HashMap<String, Vec<String>> {
+fn legend_group_members(scene: &Value, emitted: &HashSet<String>) -> HashMap<String, Vec<String>> {
     let mut by_group: HashMap<String, Vec<String>> = HashMap::new();
     if let Some(Value::Array(elements)) = scene.get("elements") {
         for e in elements {
             if let (Some(id), Some(g)) = (
                 e.get("id").and_then(Value::as_str),
                 e.get("group").and_then(Value::as_str),
-            ) {
+            ) && emitted.contains(id)
+            {
                 by_group
                     .entry(g.to_string())
                     .or_default()
@@ -2690,7 +2705,7 @@ fn legend_named(v: Option<&Value>) -> bool {
 /// payload, so a producer bug in the panel must never cost the user their model. It is checked
 /// ATOMICALLY — a half-valid descriptor renders an ambiguous panel where some rows silently control
 /// nothing, which is worse than the honest legacy list.
-fn legend_problem(scene: &Value) -> Option<String> {
+fn legend_problem(scene: &Value, emitted: &HashSet<String>) -> Option<String> {
     let legend = match scene.get("legend") {
         None | Some(Value::Null) => return None,
         Some(v @ Value::Object(_)) => v,
@@ -2715,8 +2730,8 @@ fn legend_problem(scene: &Value) -> Option<String> {
         _ => return Some("`modes` must be a non-empty array".into()),
     };
 
-    let valid_targets = legend_target_ids(scene);
-    let group_members = legend_group_members(scene);
+    let valid_targets = legend_target_ids(scene, emitted);
+    let group_members = legend_group_members(scene, emitted);
 
     for (mi, mode) in modes.iter().enumerate() {
         if !legend_named(mode.get("key")) || !legend_named(mode.get("label")) {
@@ -2861,8 +2876,13 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
     // An unusable objects-panel descriptor is dropped rather than rendered half-valid, and the
     // reason travels to the producer as `legendError` (the page console-warns it). Cloning only on
     // the failure path keeps the common case allocation-free.
+    let emitted_ids: HashSet<String> = receipt
+        .emitted
+        .iter()
+        .filter_map(|e| e.get("id").and_then(Value::as_str).map(str::to_string))
+        .collect();
     let repaired;
-    let scene = match legend_problem(scene) {
+    let scene = match legend_problem(scene, &emitted_ids) {
         None => scene,
         Some(reason) => {
             repaired = {
@@ -3611,6 +3631,39 @@ mod tests {
                 "{name}: the descriptor must be dropped wholesale, not partly rendered"
             );
         }
+    }
+
+    #[test]
+    fn a_target_the_renderer_skips_is_not_a_valid_target() {
+        // An unsupported element kind never reaches the scene, so a row aiming at it would pass
+        // validation and then be quietly dropped when the panel resolved its rows — the row would
+        // vanish instead of the descriptor falling back wholesale, which is exactly the ambiguous
+        // half-panel the atomic check exists to prevent.
+        let out = viewer_3d_render(
+            &json!({ "scene": {
+                "meta": {"name":"x"},
+                "groups": [{"key":"g","label":"G","color":"#60a5fa"}],
+                "elements": [
+                    {"id":"ok1","kind":"member","group":"g","from":[0,0,0],"to":[1000,0,0],"widthMm":100,"depthMm":100},
+                    {"id":"weird","kind":"tesseract","group":"g"}
+                ],
+                "legend": {"v":1,"interaction":"select","modes":[
+                    {"key":"m","label":"M","sections":[{"key":"s","label":"S","categories":[
+                        {"key":"c","label":"C","rows":[
+                            {"key":"r","label":"R","targets":["weird"]}]}]}]}]}
+            } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(
+            html.contains("\"legendError\":"),
+            "a target the renderer skips must invalidate the descriptor"
+        );
+        assert!(
+            !html.contains("\"legend\":{"),
+            "and it must be dropped wholesale, not left half-rendered"
+        );
     }
 
     #[test]
