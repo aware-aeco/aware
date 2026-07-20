@@ -22,9 +22,12 @@ description: Use for US/AISC steel section type and naming questions — the sha
 category of the `lookup` command — `lookup --rule section.W16X26` → typed JSON with
 `weight_plf`, `depth_in`, `width_in`, `area_in2`, thicknesses, the strength/stiffness set
 (`Ix_in4`, `Sx_in3`, `Zx_in3`, `rx_in` and the y/z counterparts, `J_in4`, `Cw_in6`,
-`C_in3`) + citation (generated from the AISC Shapes Database v15.0 US). Use it for
-weight/depth a designation does **not** encode (HSS, angles, pipe), and for the section
-properties a check needs without hardcoding a table. See the `lookup-usage` skill.
+`C_in3`), and the detailing dimensions (`T_in`, `kdes_in`/`kdet_in`, `k1_in`,
+`WGi_in`/`WGo_in`) + citation (generated from the AISC Shapes Database v15.0 US). Use it
+for weight/depth a designation does **not** encode (HSS, angles, pipe), and for the
+section properties and detailing dimensions a check needs without hardcoding a table.
+Note `kdes` (design, decimal) and `kdet` (detailing, fractional, larger) are **different
+values** — a drawing's bare "k" is `kdet`. See the `lookup-usage` skill.
 
 ## Source
 

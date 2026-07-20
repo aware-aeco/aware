@@ -48,7 +48,9 @@ consumer reads machine values directly (not by parsing the `value` string):
                   "width_in": 5.5, "area_in2": 7.68, "web_in": 0.25, "flange_in": 0.345,
                   "Ix_in4": 301.0, "Sx_in3": 38.4, "Zx_in3": 44.2, "rx_in": 6.26,
                   "Iy_in4": 9.59, "Sy_in3": 3.49, "Zy_in3": 5.48, "ry_in": 1.12,
-                  "J_in4": 0.262, "Cw_in6": 565.0 },
+                  "J_in4": 0.262, "Cw_in6": 565.0,
+                  "T_in": 13.625, "kdes_in": 0.747, "kdet_in": 1.0625,
+                  "k1_in": 0.75, "WGi_in": 3.5 },
   "citation": "AISC Shapes Database v15.0 (US)",
   "found": true
 }
@@ -68,14 +70,33 @@ sections only); `Cw_in6` is the warping constant, which open sections have and c
 ones do not. Read the key you need and refuse if it is absent — never substitute a
 neighbouring axis.
 
+**Detailing dimensions** ride alongside the design properties, on the shapes that have
+rolled-in fillets (none of them appear on HSS or pipe):
+
+| key | what it is | present on |
+|---|---|---|
+| `kdes_in` | design k — decimal, for **calculations** (web local yielding, etc.) | rolled shapes + angles |
+| `kdet_in` | detailing k — fractional and **larger**; lay out copes/clips to this one | rolled shapes + angles |
+| `T_in` | clear web depth between flange fillets — the room a connection actually gets | W/M/S/HP/C/MC |
+| `k1_in` | web centreline to flange-fillet toe — flange bolt clearance | rolled I-shapes |
+| `WGi_in` / `WGo_in` | inner / outer workable flange gage | `WGo` only on wide flanges |
+
+**`kdes` and `kdet` are not interchangeable** — a bare "k" on a drawing means the
+detailing k. Using `kdes` to lay out a cope under-cuts it. Pick the key by what the
+answer is for, and say which one was used when citing a number.
+
+`T_in` is a **tabulated** AISC value, not `d − 2k` — do not recompute it, and do not
+derive one of these from another; if the key you need is absent for that shape, refuse.
+
 ## Available categories
 
 - `bolts` — spacing, edge distances, hole sizes, pretension values
 - `welds` — fillet sizes, throat, length limits, PJP throat
 - `connection-strength` — bearing and tearout nominal strength equations (§J3.11)
 - `materials` — preferred ASTM grades and Fy/Fu by member type
-- `sections` — section properties (weight/ft, depth, width, area, thicknesses, plus the
-  strength/stiffness set I, S, Z, r about both axes and J/Cw/C) for every
+- `sections` — section properties (weight/ft, depth, width, area, thicknesses, the
+  strength/stiffness set I, S, Z, r about both axes plus J/Cw/C, and the detailing
+  dimensions T, kdes/kdet, k1 and the workable gages) for every
   AISC shape, from the AISC Shapes Database (W, M, S, HP, C, MC, L, 2L, WT/MT/ST, HSS,
   Pipe). `lookup --rule section.<label>` or `--category sections`.
 

@@ -30,6 +30,15 @@ SECTION_PROPS = [
     ("Iy", "Iy_in4"), ("Sy", "Sy_in3"), ("Zy", "Zy_in3"), ("ry", "ry_in"),
     ("Iz", "Iz_in4"), ("Sz", "Sz_in3"), ("rz", "rz_in"),
     ("J", "J_in4"), ("Cw", "Cw_in6"), ("C", "C_in3"),
+
+    # Detailing dimensions — what a detailer lays out to, rather than what a designer
+    # calculates with. `kdes` is the decimal design k; `kdet` is the (larger, fractional)
+    # detailing k and the one to lay out from — both are served so a consumer picks
+    # deliberately instead of guessing which k a bare "k" meant. `T` is the clear web
+    # depth between flange fillets, `k1` the web-centreline-to-flange-fillet-toe
+    # clearance, `WGi`/`WGo` the inner/outer workable flange gages.
+    ("T", "T_in"), ("kdes", "kdes_in"), ("kdet", "kdet_in"), ("k1", "k1_in"),
+    ("WGi", "WGi_in"), ("WGo", "WGo_in"),
 ]
 
 
@@ -154,12 +163,15 @@ def main():
     for sid, expect in {
         "section.W16X26": {"weight_plf": 26.0, "depth_in": 15.7, "area_in2": 7.68,
                            "Ix_in4": 301, "Sx_in3": 38.4, "Zx_in3": 44.2,
-                           "Iy_in4": 9.59, "ry_in": 1.12, "Cw_in6": 565},
+                           "Iy_in4": 9.59, "ry_in": 1.12, "Cw_in6": 565,
+                           "T_in": 13.625, "kdes_in": 0.747, "kdet_in": 1.0625,
+                           "k1_in": 0.75, "WGi_in": 3.5},
         "section.HSS6X6X3/8": {"weight_plf": 27.48, "depth_in": 6.0, "area_in2": 7.58,
                                "Ix_in4": 39.5, "Zx_in3": 15.8, "J_in4": 64.6,
                                "C_in3": 22.1},
         "section.L4X4X1/4": {"weight_plf": 6.6, "depth_in": 4.0, "area_in2": 1.93,
-                             "Ix_in4": 3.0, "Iz_in4": 1.19, "rz_in": 0.783},
+                             "Ix_in4": 3.0, "Iz_in4": 1.19, "rz_in": 0.783,
+                             "kdes_in": 0.625, "kdet_in": 0.625},
     }.items():
         p = by_id.get(sid)
         if not p:
@@ -172,10 +184,17 @@ def main():
                 raise SystemExit(
                     f"ABORT: sentinel {sid}.{k} = {got!r}, expected {want} — "
                     f"wrong/metric CSV or a mis-mapped column?")
-        # Cw does not apply to closed sections; if it ever appears on HSS the column
-        # mapping has drifted.
-        if sid == "section.HSS6X6X3/8" and "Cw_in6" in p:
-            raise SystemExit(f"ABORT: {sid} has Cw — closed section, column mis-mapped?")
+    # Keys that must be ABSENT for a family — a closed section has no warping constant
+    # and no rolled-in fillet, so a k / T / gage on an HSS means the columns have drifted.
+    for sid, absent in {
+        "section.HSS6X6X3/8": ["Cw_in6", "kdes_in", "kdet_in", "T_in", "WGi_in"],
+        "section.L4X4X1/4": ["C_in3", "T_in"],
+    }.items():
+        for k in absent:
+            if k in by_id[sid]:
+                raise SystemExit(
+                    f"ABORT: {sid} has {k}, which does not apply to that family — "
+                    f"column mis-mapped?")
 
     db = {
         "agent": "steel-detailer-us",
