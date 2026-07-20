@@ -24,6 +24,10 @@ description: |
                           cli-tekla bridge
     - `./schemas/connection.json` — referenced by `pdf-extract`, not present
                           under `_examples/`
+    - `aware-slack`     — the slack agent's `transport.cli.binary`, which is
+                          not shipped, bundled, or installable as a sidecar
+    - slack write modes — no slack command declares `mode:`, so its writes
+                          classify as READ and would execute under `--dry-run`
 
   `aware app validate` reports only the `file.watch` error, which understates
   this: it skips unresolved agents and unknown commands entirely, so a clean
@@ -133,9 +137,13 @@ nodes:
         ✓ Connection {{ match-build.connection-type }} created on {{ match-build.drawing-mark }}.
         Deviation: {{ match-build.deviation-percent }}%.
     # Posting to Slack is an OAuth-protected external write, so the safety contract
-    # applies (app-spec § Safety contract). Validation will NOT catch its absence here:
-    # the command declares no explicit `mode:` and `chat-post-message` does not match the
-    # `*.post` / `*.create` suffix inference — which is precisely why it is declared.
+    # applies (app-spec § Safety contract). Declared as correct authoring intent — but
+    # INERT today, and deliberately not presented as protection: the slack manifest
+    # declares no `mode:` on any command, and `chat-post-message` does not match the
+    # `*.post` / `*.create` suffix inference, so the runtime classifies this node as
+    # READ. A `--dry-run` would therefore really post to #fab-team instead of emitting
+    # `would-write`. A node-level `mode: write` cannot fix that from here — it is
+    # rejected as E_APP_NODE_MODE_NOT_OVERRIDABLE. The fix belongs in the slack agent.
     safety:
       transaction-group: qa-connection-insert   # same boundary as the Tekla write
       snapshot: false                           # a chat post cannot be snapshotted or undone
