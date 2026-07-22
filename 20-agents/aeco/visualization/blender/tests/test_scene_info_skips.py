@@ -11,6 +11,12 @@ skipped. A payload that reports `count: 8` with no trace of the ninth is
 exactly the failure mode this guards against: it is indistinguishable from
 a model that legitimately has 8 elements.
 
+Also checks the `excluded` / `excluded-count` pair (deliberately-not-
+imported products, e.g. openings and spaces) is present and correctly
+empty on this fixture, which has none -- a lighter sibling assertion to
+the skip-visibility one, same reasoning: an inventory command must not
+make two different facts ("failed" vs "never meant to render") look alike.
+
 Run: python test_scene_info_skips.py --aware-bin <path/to/aware[.exe]> [--blender <path>]
 Prints a PASS/FAIL summary and exits 0 only if every check passes. Prints a
 SKIP message and exits 0 if Blender cannot be found, so this does not fail
@@ -136,6 +142,16 @@ def main() -> int:
             "`skipped` / `skipped-count` keys are present on the ifc-path branch",
             "skipped" in payload and "skipped-count" in payload,
             f"keys={sorted(payload.keys())}",
+        ))
+        checks.append((
+            "`excluded` / `excluded-count` keys are present on the ifc-path branch",
+            "excluded" in payload and "excluded-count" in payload,
+            f"keys={sorted(payload.keys())}",
+        ))
+        checks.append((
+            "the fixture has no non-visual products, so excluded-count is 0",
+            payload.get("excluded") == {} and payload.get("excluded-count") == 0,
+            f"excluded={payload.get('excluded')!r} excluded-count={payload.get('excluded-count')!r}",
         ))
 
         count = payload.get("count")

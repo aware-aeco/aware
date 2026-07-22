@@ -8,14 +8,17 @@ Exactly one of `blend-path` / `ifc-path` is required. Passing both is
 rejected rather than silently preferring one -- otherwise which source was
 actually read is undetectable from the payload after the fact.
 
-On the `ifc-path` branch, `_ifc_import.import_ifc()`'s own skip record
-travels into the payload as `skipped` / `skipped-count`: this command is
-the verification and debugging surface for the rest of the agent, so a
-partially-failed import must never look identical to a smaller-but-intact
-model. The `blend-path` branch has no such record -- the import already
-happened in a prior `scene.import` call -- so it omits both keys rather
-than inventing a `"skipped-count": 0` that would falsely assert nothing
-was ever dropped.
+On the `ifc-path` branch, `_ifc_import.import_ifc()`'s own records travel
+into the payload as two independent pairs: `skipped` / `skipped-count` and
+`excluded` / `excluded-count`. This command is the verification and
+debugging surface for the rest of the agent, so a partially-failed import
+must never look identical to a smaller-but-intact model, and someone
+asking "why is there no wall here" must be able to tell "failed to
+tessellate" apart from "deliberately never imported" (openings, spaces --
+see `_ifc_import._NON_VISUAL_CLASSES`). The `blend-path` branch has no such
+records -- the import already happened in a prior `scene.import` call --
+so it omits all four keys rather than inventing zeroed counts that would
+falsely assert nothing was ever dropped or excluded.
 """
 
 import os
@@ -103,11 +106,14 @@ def main(inputs: dict) -> dict:
         str(ifc_path), unit_scale=float(inputs.get("unit-scale", 1.0))
     )
     payload = _inventory()
-    # The import just ran in-process, so the skip record is live -- surface
-    # it rather than letting a partially failed import masquerade as a
-    # smaller-but-complete model (see module docstring).
+    # The import just ran in-process, so both records are live -- surface
+    # them rather than letting a partially failed import masquerade as a
+    # smaller-but-complete model, or an intentional exclusion masquerade as
+    # a failure (see module docstring).
     payload["skipped"] = import_receipt["skipped"]
     payload["skipped-count"] = import_receipt["skipped-count"]
+    payload["excluded"] = import_receipt["excluded"]
+    payload["excluded-count"] = import_receipt["excluded-count"]
     payload["source"] = "ifc-path"
     return payload
 
