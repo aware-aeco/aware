@@ -1,4 +1,4 @@
-﻿// aware-tekla — Tekla Open API sidecar for the AWARE runtime.
+// aware-tekla — Tekla Open API sidecar for the AWARE runtime.
 // Spike v0.29: send-status verb only, single-instance Tekla, no ROT binding.
 // ROT-bind multi-instance precise routing lands in the hardening pass.
 //
@@ -1466,7 +1466,14 @@ internal static class Program
         {
             ["scene"] = scene.DeepClone(),
         };
-        return ExecuteResolvedScript("bake-scene", BakeSceneCode, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
+        // What the user will see in Tekla while the bake compiles and runs. The scene's own name
+        // keeps the substrate free of any calling app's vocabulary.
+        int objectCount = scene?["elements"] is JsonArray elements ? elements.Count : 0;
+        string sceneLabel = scene?["meta"]?["name"]?.GetValue<string>() is string n && !string.IsNullOrWhiteSpace(n)
+            ? n
+            : "Steel from Drawings";
+        string announce = $"{sceneLabel}: adding {objectCount} object{(objectCount == 1 ? "" : "s")} to this model...";
+        return ExecuteResolvedScript("bake-scene", BakeSceneCode, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned, announce);
     }
 
     internal static string TrimJsonBom(string input) => input.TrimStart('\uFEFF');
@@ -1542,7 +1549,8 @@ internal static class Program
         string? version,
         int? pid,
         JsonObject? argsNode,
-        ScriptCommitPolicy? commitPolicy = null)
+        ScriptCommitPolicy? commitPolicy = null,
+        string? announce = null)
     {
 
         // Find the running Tekla instance (if any) to populate host_pid and
@@ -1646,7 +1654,8 @@ internal static class Program
                 argsNode,
                 probedDir,
                 hostPid,
-                commitPolicy ?? CommitPolicyForVerb(verb));
+                commitPolicy ?? CommitPolicyForVerb(verb),
+                announce);
             // Losing the disarm race means a last-resort hook already emitted
             // a fail receipt (a background-thread fault) — ours is suppressed.
             if (!TryClaimReceipt()) return 2;
@@ -1705,7 +1714,8 @@ internal static class Program
         JsonObject? argsNode,
         string? teklaBinDir,
         int? expectedPid,
-        ScriptCommitPolicy commitPolicy)
+        ScriptCommitPolicy commitPolicy,
+        string? announce = null)
     {
         JsonNode? result = null;
         Exception? fault = null;
@@ -1714,7 +1724,7 @@ internal static class Program
             try
             {
                 result = SerializeResult(
-                    RunScript(code, teklaReferences, argsNode, teklaBinDir, expectedPid, commitPolicy));
+                    RunScript(code, teklaReferences, argsNode, teklaBinDir, expectedPid, commitPolicy, announce));
             }
             catch (Exception e) { fault = e; }
         })
@@ -1743,7 +1753,8 @@ internal static class Program
         JsonObject? argsNode,
         string? teklaBinDir,
         int? expectedPid,
-        ScriptCommitPolicy commitPolicy)
+        ScriptCommitPolicy commitPolicy,
+        string? announce = null)
     {
         // Standard usings — enough for catalog-style snippets to stay
         // boilerplate-free. The script writer can add `using ...;` lines of
@@ -1849,6 +1860,22 @@ internal static class Program
         // on it via DLR without us needing a compile-time Tekla reference.
         var argsDict = JsonObjectToDictionary(argsNode);
         var globals = new ExecGlobals { model = modelInstance, args = argsDict };
+
+        // Announce BEFORE compiling. Compiling this script is the long pole of a bake (seconds),
+        // and it happens with a live Tekla connection already in hand — so a message emitted from
+        // inside the script only appears once that wait is already over, flashing by just before the
+        // work finishes. Emitted here it covers the whole wait. Cosmetic: never fail a bake over it.
+        if (!string.IsNullOrEmpty(announce) && modelInstance is not null)
+        {
+            try
+            {
+                var opType = modelInstance.GetType().Assembly
+                    .GetType("Tekla.Structures.Model.Operations.Operation");
+                opType?.GetMethod("DisplayPrompt", new[] { typeof(string) })
+                    ?.Invoke(null, new object[] { announce! });
+            }
+            catch { /* a status message is never worth failing a bake for */ }
+        }
 
         var script = CSharpScript.Create<object>(
             code,

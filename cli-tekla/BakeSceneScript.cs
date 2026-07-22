@@ -275,13 +275,6 @@ bool scenePlaneChanged=false;
 try {
     if(!scenePlaneHandler.SetCurrentTransformationPlane(new TransformationPlane()))throw new Exception("failed to set the global scene work plane");
     scenePlaneChanged=true;
-    // Say what is about to happen in Tekla's OWN status bar. A bake takes seconds against a live
-    // model and the user is usually watching Tekla rather than whatever asked for the bake, so parts
-    // would otherwise appear with no warning and no attribution. DisplayPrompt is non-modal: it never
-    // steals focus or blocks. Announcing from HERE (rather than from the calling app, which would need
-    // a second connection to the host) is what makes it free and correctly ordered.
-    // Swallow failures: a status message must never be the reason a bake fails.
-    try{Tekla.Structures.Model.Operations.Operation.DisplayPrompt(sceneName+": adding "+elementById.Count.ToString(inv)+" object"+(elementById.Count==1?"":"s")+" to this model...");}catch{}
     // Ownership tags select only the retirement set. They are never proof that
     // geometry still matches: every retry rebuilds and verifies a fresh staged set.
     var oldOwned=new List<ModelObject>();var all=m.GetModelObjectSelector().GetAllObjects();while(all.MoveNext()){var o=all.Current as ModelObject;if(o==null)continue;string src="",recordId="",priorSceneHash="",owner="";if(o.GetUserProperty("USER_FIELD_1",ref src)&&(src==sourceKey||src==sourceId)&&o.GetUserProperty("USER_FIELD_2",ref recordId)&&!String.IsNullOrWhiteSpace(recordId)&&o.GetUserProperty("USER_FIELD_3",ref priorSceneHash)&&!String.IsNullOrWhiteSpace(priorSceneHash)&&o.GetUserProperty("USER_FIELD_4",ref owner)&&owner.Length==78&&owner.StartsWith("AWARE_BAKE_V1:",StringComparison.Ordinal)&&owner.Skip(14).All(c=>(c>='0'&&c<='9')||(c>='a'&&c<='f')))oldOwned.Add(o);}
