@@ -78,11 +78,17 @@ def load_scene(inputs: dict) -> None:
         raise _result.AwareBlenderError(
             _result.ERR_IFC_UNREADABLE, f"IFC not found: {ifc_path}"
         )
+    preset = str(inputs.get("preset", "realistic"))
+    if preset not in _looks.PRESETS:
+        raise _result.AwareBlenderError(
+            _result.ERR_INVALID_INPUTS,
+            f"unknown preset `{preset}`; expected one of {sorted(_looks.PRESETS)}",
+        )
     _ifc_import.clear_scene()
     _ifc_import.import_ifc(
         str(ifc_path), unit_scale=float(inputs.get("unit-scale", 1.0))
     )
-    _looks.apply_look(str(inputs.get("preset", "realistic")))
+    _looks.apply_look(preset)
 
 
 def main(inputs: dict) -> dict:
@@ -97,6 +103,11 @@ def main(inputs: dict) -> dict:
         raise _result.AwareBlenderError(
             _result.ERR_INVALID_INPUTS,
             f"unknown quality `{quality}`; expected draft or production",
+        )
+    if direction not in _framing.DIRECTIONS:
+        raise _result.AwareBlenderError(
+            _result.ERR_INVALID_INPUTS,
+            f"unknown direction `{direction}`; expected one of {sorted(_framing.DIRECTIONS)}",
         )
     if width < 1 or height < 1:
         raise _result.AwareBlenderError(
