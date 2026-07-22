@@ -275,6 +275,13 @@ bool scenePlaneChanged=false;
 try {
     if(!scenePlaneHandler.SetCurrentTransformationPlane(new TransformationPlane()))throw new Exception("failed to set the global scene work plane");
     scenePlaneChanged=true;
+    // Say what is about to happen in Tekla's OWN status bar. A bake takes seconds against a live
+    // model and the user is usually watching Tekla rather than whatever asked for the bake, so parts
+    // would otherwise appear with no warning and no attribution. DisplayPrompt is non-modal: it never
+    // steals focus or blocks. Announcing from HERE (rather than from the calling app, which would need
+    // a second connection to the host) is what makes it free and correctly ordered.
+    // Swallow failures: a status message must never be the reason a bake fails.
+    try{Tekla.Structures.Model.Operations.Operation.DisplayPrompt(sceneName+": adding "+elementById.Count.ToString(inv)+" object"+(elementById.Count==1?"":"s")+" to this model...");}catch{}
     // Ownership tags select only the retirement set. They are never proof that
     // geometry still matches: every retry rebuilds and verifies a fresh staged set.
     var oldOwned=new List<ModelObject>();var all=m.GetModelObjectSelector().GetAllObjects();while(all.MoveNext()){var o=all.Current as ModelObject;if(o==null)continue;string src="",recordId="",priorSceneHash="",owner="";if(o.GetUserProperty("USER_FIELD_1",ref src)&&(src==sourceKey||src==sourceId)&&o.GetUserProperty("USER_FIELD_2",ref recordId)&&!String.IsNullOrWhiteSpace(recordId)&&o.GetUserProperty("USER_FIELD_3",ref priorSceneHash)&&!String.IsNullOrWhiteSpace(priorSceneHash)&&o.GetUserProperty("USER_FIELD_4",ref owner)&&owner.Length==78&&owner.StartsWith("AWARE_BAKE_V1:",StringComparison.Ordinal)&&owner.Skip(14).All(c=>(c>='0'&&c<='9')||(c>='a'&&c<='f')))oldOwned.Add(o);}
@@ -351,6 +358,9 @@ try {
     foreach(var old in retirementOrder){retirementStarted=true;if(!old.Delete()){var still=m.SelectModelObject(new Identifier(old.Identifier.GUID));if(still!=null)throw new Exception("failed to delete prior source-owned object "+old.Identifier.GUID);}}
     foreach(var old in retirementOrder)if(m.SelectModelObject(new Identifier(old.Identifier.GUID))!=null)throw new Exception("prior source-owned object remains after retirement "+old.Identifier.GUID);
     if(!m.CommitChanges("AWARE bake-scene "+sceneName+" "+attemptId))throw new Exception("Tekla CommitChanges returned false");
+    // The objects are in the model as of the commit above, so replace the "adding..." message the
+    // moment it stops being true — otherwise the status bar keeps claiming work is in progress.
+    try{Tekla.Structures.Model.Operations.Operation.DisplayPrompt(sceneName+": "+nativeRecordIdByGuid.Count.ToString(inv)+" object"+(nativeRecordIdByGuid.Count==1?"":"s")+" added.");}catch{}
     if(scenePlaneChanged){if(!scenePlaneHandler.SetCurrentTransformationPlane(previousScenePlane))throw new Exception("failed to restore the user's prior work plane after the committed bake");scenePlaneChanged=false;}
 
     foreach(var item in supportedOrder){string id=item.Item1;string kind=item.Item2;ModelObject o=null;string realizedBy="";if(nativeById.TryGetValue(id,out o)){}else if(realizedChildren.TryGetValue(id,out realizedBy)||realizedEffects.TryGetValue(id,out realizedBy)||realizedReferences.TryGetValue(id,out realizedBy))nativeById.TryGetValue(realizedBy,out o);if(o==null)throw new Exception(id+": supported record was not classified by the materializer");var r=row(id,kind,"emitted","","");r["nativeGuid"]=o.Identifier.GUID.ToString();if(!String.IsNullOrEmpty(realizedBy))r["realizedBy"]=realizedBy;if(profileById.ContainsKey(id))r["profile"]=profileById[id];emitted.Add(r);}
