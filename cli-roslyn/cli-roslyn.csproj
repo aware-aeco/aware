@@ -69,8 +69,15 @@
       line, which carries its own advisories (GHSA-37gx-xxp4-5rgx / CVE-2026-33116,
       GHSA-w3x6-4m5h-cxqf) and is NOT framework-pruned on net10 (it's an older-than-framework
       explicit version). Pin it up to a patched 9.0.x so the audit clears.
+
+      This pin is a moving target: it is the audit floor, so a newly-published advisory against
+      whatever is pinned here fails `dotnet restore` — and therefore the RELEASE build, since
+      the audit is promoted to an error. 9.0.15 was cleared this way when GHSA-23rf-6693-g89p,
+      GHSA-8q5v-6pqq-x66h, GHSA-cvvh-rhrc-wg4q, GHSA-g8r8-53c2-pm3f and GHSA-mmjf-rqrv-855v
+      landed against `>= 9.0.0, <= 9.0.17`; 9.0.18 is the first patched 9.0.x. When this recurs,
+      check the advisory's `first_patched_version` and bump to it.
     -->
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="9.0.15" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="9.0.18" />
   </ItemGroup>
 
   <ItemGroup>
