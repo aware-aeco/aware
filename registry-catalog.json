@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-07-20T18:30:24.263934100+00:00",
+  "updated-at": "2026-07-22T20:11:56.137807500+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -1249,6 +1249,72 @@
               "lifecycle": "single",
               "category": "curated",
               "mode": "write"
+            }
+          ]
+        }
+      }
+    },
+    "blender": {
+      "display-name": "Blender",
+      "vendor": "aware-aeco",
+      "keywords": [
+        "aware",
+        "blender",
+        "rendering",
+        "visualization",
+        "headless",
+        "ifc",
+        "eevee",
+        "cycles",
+        "turntable"
+      ],
+      "versions": {
+        "0.1.0": {
+          "description": "The first visualization agent in the substrate that renders with NO human in",
+          "status": "available",
+          "manifest-version": "0.1.0",
+          "stateful": false,
+          "transport": "builtin",
+          "command_count": 5,
+          "skills": [
+            "headless-rendering",
+            "ifc-import-ifcopenshell",
+            "look-presets"
+          ],
+          "commands": [
+            {
+              "name": "render.still",
+              "description": "Render a camera-framed still. Takes either a staged `blend-path` or an",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "render.turntable",
+              "description": "Render a 360-degree orbit MP4 (EEVEE, H.264). The camera is parented to a",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "scene.apply-look",
+              "description": "Assign preset materials from IFC semantics. `clay` is neutral matte for",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "scene.import",
+              "description": "Import an IFC into Blender and stage it as a `.blend`. Geometry comes from",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "scene.info",
+              "description": "Inventory a staged `.blend` (or an IFC directly) by IFC class, material and",
+              "lifecycle": "single",
+              "category": "curated"
             }
           ]
         }
