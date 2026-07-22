@@ -69,12 +69,14 @@ fn json_output_returns_envelope() {
     //              → 74 (the generic `file` filesystem agent — watch/read/write/write-csv, #240).
     //              → 75 (the generic `shell` agent — open a path with the OS default handler, #241).
     //              → 76 (the `connection-reader` cli agent — extract steel connections from IFC as mesh).
+    //              → 77 (the `blender` builtin visualization agent — IFC in, headless PNG/MP4 out).
     // A strict equality keeps this honest — adjust it whenever an agent lands or retires.
-    assert_eq!(agents.len(), 76);
+    assert_eq!(agents.len(), 77);
     assert!(agents.iter().any(|a| a["id"] == "tekla"));
     assert!(agents.iter().any(|a| a["id"] == "vision"));
     assert!(agents.iter().any(|a| a["id"] == "viewer-3d"));
     assert!(agents.iter().any(|a| a["id"] == "ifc"));
     assert!(agents.iter().any(|a| a["id"] == "steel-detailer-us"));
     assert!(agents.iter().any(|a| a["id"] == "connection-reader"));
+    assert!(agents.iter().any(|a| a["id"] == "blender"));
 }
