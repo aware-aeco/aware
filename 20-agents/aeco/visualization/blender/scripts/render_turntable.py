@@ -56,6 +56,19 @@ def main(inputs: dict) -> dict:
             _result.ERR_INVALID_INPUTS,
             "duration-seconds must be > 0 and fps must be >= 1",
         )
+    if direction not in _framing.DIRECTIONS:
+        raise _result.AwareBlenderError(
+            _result.ERR_INVALID_INPUTS,
+            f"unknown direction `{direction}`; expected one of {sorted(_framing.DIRECTIONS)}",
+        )
+    if width < 1 or height < 1:
+        raise _result.AwareBlenderError(
+            _result.ERR_INVALID_INPUTS, "width-pixels and height-pixels must be >= 1"
+        )
+    if samples < 0:
+        raise _result.AwareBlenderError(
+            _result.ERR_INVALID_INPUTS, "samples must be >= 0"
+        )
     frame_count = max(2, int(round(duration * fps)))
 
     render_still.load_scene(inputs)
