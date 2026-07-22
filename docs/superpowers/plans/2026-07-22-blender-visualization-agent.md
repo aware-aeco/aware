@@ -2623,9 +2623,28 @@ What the runtime actually requires of such a binary, read from source rather tha
 
 So `aware-blender` is a **real, separate deliverable**: a bridge binary registered in `BRIDGES`, published as a release asset, speaking the `--json-stdin` protocol, locating Blender, running the scripts, parsing the sentinel payload, and owning both the missing-binary error and the timeout.
 
-**Do not let this leak into Task 11 silently.** Two options, and they are not equivalent:
+### DECIDED: builtin transport
 
-- **A — ship `aware-blender` as a host bridge** (register in `BRIDGES`, add release staging, implement the protocol). Architecturally correct: Blender is a vendor product with a host binary, which is exactly what bridges are for. Costs a new binary in the release pipeline.
-- **B — add a `builtin` transport handler** in the Rust CLI (`("blender", "scene.import") => …` alongside `ifc.write`). No new binary, no release change, and the timeout lands naturally in Rust. But every current builtin (`ui`, `viewer-3d`, `ifc`, `file`, `vision`) is host-free pure computation under `_core/`; a builtin that spawns a vendor product would be the first of its kind.
+Two options were weighed:
 
-This plan's Tasks 1–10 are unaffected either way — the `bpy` scripts and their contract are identical under both. **Raise the choice with the user before Task 11**, since it decides the manifest's `transport:` block and whether the release pipeline changes.
+- **A — ship `aware-blender` as a host bridge** (register in `BRIDGES`, add release staging, implement the `--json-stdin` protocol).
+- **B — add a `builtin` transport handler** in the Rust CLI, alongside `ifc.write`.
+
+**Chosen: B.** The reasoning that settled it — and it corrects a premise stated earlier in this document:
+
+The claim that "every current builtin is host-free pure computation" is **wrong**. `vision.extract` ([`invoker.rs:1176`](../../../cli/src/runtime/invoker.rs)) is a builtin that reads a file, calls a pinned model over HTTP, caches the response on disk and can fail on network. It is not pure, and it depends on an external system.
+
+So the real question is not purity. It is: **does a vendor SDK require a native host process?**
+
+- The existing bridges (`aware-tekla`, `aware-rhino`, `aware-revit`, `aware-sketchup`) exist because the work must happen *inside* the vendor's runtime with their SDK loaded. There is no way to drive Tekla from outside its .NET process.
+- Blender needs none of that. It is a standalone executable invoked as `blender -b -P script.py -- <json>`. There is no SDK to embed and no in-process API to reach.
+
+A bridge binary for Blender would therefore be a pure process-launcher: find the exe, spawn it, parse stdout. Shipping that as a separate release artifact buys nothing and costs real surface — `BRIDGES` registration, `release.yml` staging, the npm payload contract, and both install scripts.
+
+The builtin puts the launcher where its dependencies already live: `tokio` for the spawn and the timeout, `AwareError` for the taxonomy, and `cargo test` for coverage. It adds zero release-pipeline surface.
+
+**Consequences for Phase 2:**
+
+- `manifest.yaml` declares `transport: builtin: {}` — same as [`20-agents/_core/ifc/manifest.yaml`](../../../20-agents/_core/ifc/manifest.yaml).
+- A new Rust module owns Blender discovery, script-path resolution, process spawn, sentinel parsing, timeout and process-kill. This is where the design doc's last two error requirements finally land: **missing Blender binary** and **render timeout**.
+- The agent still lives under `20-agents/aeco/visualization/blender/` (it is an AECO visualization agent, not a `_core` primitive) — `builtin` describes the *transport*, not the catalog location.
