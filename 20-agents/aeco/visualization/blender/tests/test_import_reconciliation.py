@@ -116,6 +116,88 @@ def _build(ifcopenshell, path: str, degenerate: bool) -> tuple[str, int]:
     return bad_guid, VALID_BEAMS + (1 if degenerate else 0)
 
 
+def _build_non_visual(ifcopenshell, path: str) -> None:
+    """One real beam plus an opening and a space, all with valid geometry.
+
+    The opening and the space tessellate perfectly well -- that is the whole
+    problem. They must be excluded by class, not by any geometric test.
+    """
+    import ifcopenshell.guid
+
+    model = ifcopenshell.file(schema="IFC4")
+    guid = ifcopenshell.guid.new
+
+    def point(*coords):
+        return model.create_entity("IfcCartesianPoint", Coordinates=list(coords))
+
+    def placement(z=0.0):
+        return model.create_entity("IfcAxis2Placement3D", Location=point(0.0, 0.0, z))
+
+    context = model.create_entity(
+        "IfcGeometricRepresentationContext",
+        ContextType="Model",
+        CoordinateSpaceDimension=3,
+        Precision=1e-5,
+        WorldCoordinateSystem=placement(),
+    )
+    model.create_entity(
+        "IfcProject",
+        GlobalId=guid(),
+        Name="non-visual",
+        RepresentationContexts=[context],
+        UnitsInContext=model.create_entity(
+            "IfcUnitAssignment",
+            Units=[
+                model.create_entity("IfcSIUnit", UnitType="LENGTHUNIT", Name="METRE")
+            ],
+        ),
+    )
+
+    def build(ifc_class: str, name: str, offset: float):
+        solid = model.create_entity(
+            "IfcExtrudedAreaSolid",
+            SweptArea=model.create_entity(
+                "IfcRectangleProfileDef", ProfileType="AREA", XDim=0.5, YDim=0.5
+            ),
+            Position=placement(offset),
+            ExtrudedDirection=model.create_entity(
+                "IfcDirection", DirectionRatios=[0.0, 0.0, 1.0]
+            ),
+            Depth=2.0,
+        )
+        return model.create_entity(
+            ifc_class,
+            GlobalId=guid(),
+            Name=name,
+            ObjectPlacement=model.create_entity(
+                "IfcLocalPlacement", RelativePlacement=placement()
+            ),
+            Representation=model.create_entity(
+                "IfcProductDefinitionShape",
+                Representations=[
+                    model.create_entity(
+                        "IfcShapeRepresentation",
+                        ContextOfItems=context,
+                        RepresentationIdentifier="Body",
+                        RepresentationType="SweptSolid",
+                        Items=[solid],
+                    )
+                ],
+            ),
+        )
+
+    wall = build("IfcWall", "W1", 0.0)
+    opening = build("IfcOpeningElement", "O1", 3.0)
+    build("IfcSpace", "Room 1", 6.0)
+    model.create_entity(
+        "IfcRelVoidsElement",
+        GlobalId=guid(),
+        RelatingBuildingElement=wall,
+        RelatedOpeningElement=opening,
+    )
+    model.write(path)
+
+
 def main() -> int:
     ifcopenshell = _ifc_import._import_ifcopenshell()
     workdir = tempfile.mkdtemp(prefix="aware-blender-recon-")
@@ -176,6 +258,51 @@ def main() -> int:
                     "[clean] NO FALSE SKIPS",
                     f"actual={guids}",
                 )
+
+        # Non-visual products: real geometry, deliberately never rendered.
+        path = os.path.join(workdir, "non-visual.ifc")
+        _build_non_visual(ifcopenshell, path)
+        receipt = _ifc_import.import_ifc(path)
+        by_class = receipt["by-class"]
+        excluded = receipt["excluded"]
+        reopened = ifcopenshell.open(path)
+        bearing = len(_ifc_import._geometry_bearing_products(reopened))
+
+        check(
+            receipt["imported"] == 1,
+            "[non-visual] only the real element imports",
+            f"expected=1 actual={receipt['imported']}",
+        )
+        check(
+            by_class == {"IfcWall": 1},
+            "[non-visual] by-class holds ONLY the wall",
+            f"actual={by_class}",
+        )
+        check(
+            receipt["skipped-count"] == 0,
+            "[non-visual] excluded products are NOT reported as skipped",
+            f"actual={receipt['skipped']}",
+        )
+        check(
+            excluded == {"IfcOpeningElement": 1, "IfcSpace": 1},
+            "[non-visual] excluded reports both, by class",
+            f"actual={excluded}",
+        )
+        check(
+            receipt["excluded-count"] == 2,
+            "[non-visual] excluded-count",
+            f"expected=2 actual={receipt['excluded-count']}",
+        )
+        check(
+            bearing == 1,
+            "[non-visual] geometry-bearing predicate excludes them too",
+            f"expected=1 actual={bearing}",
+        )
+        check(
+            receipt["imported"] + receipt["skipped-count"] == bearing,
+            "[non-visual] INVARIANT still holds",
+            f"{receipt['imported']} + {receipt['skipped-count']} == {bearing}",
+        )
 
         failures = sum(1 for ok, _ in checks if not ok)
         for ok, label in checks:

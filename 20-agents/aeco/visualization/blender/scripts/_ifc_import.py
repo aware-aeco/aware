@@ -176,6 +176,31 @@ def _storey_of(product) -> str:
     return ""
 
 
+# Classes that carry real geometry the iterator will happily tessellate, but
+# that must never become a rendered solid. Kept short and justified on purpose:
+# every entry here is invisible in the receipt's `by-class`, so an unjustified
+# addition silently removes fabric from the picture.
+_NON_VISUAL_CLASSES = (
+    # A subtractive void, not fabric. The host wall already has the boolean
+    # applied, so importing the opening puts a solid box inside every door and
+    # window -- the hole and a block filling it, in the same render.
+    "IfcOpeningElement",
+    # A volumetric zone (room, circulation area). Analytic rather than built:
+    # importing it wraps the storey in slabs of solid air that hide everything.
+    "IfcSpace",
+)
+
+
+def _is_non_visual(product) -> bool:
+    """True for a product that is deliberately never imported.
+
+    `is_a` rather than a class-name equality test, so IFC4 subtypes are covered
+    too -- IfcOpeningStandardCase is an IfcOpeningElement and must not slip
+    through on a producer that emits the more specific class.
+    """
+    return any(product.is_a(ifc_class) for ifc_class in _NON_VISUAL_CLASSES)
+
+
 def _geometry_bearing_products(ifc_file) -> list:
     """Products that assert a shape representation, i.e. that should tessellate.
 
@@ -184,9 +209,15 @@ def _geometry_bearing_products(ifc_file) -> list:
     against the full product list would report them as skips on every single
     import and bury the real failures in noise. A product that claims a shape and
     produced none is a genuine skip; one that never claimed a shape is not.
+
+    Non-visual classes are excluded for the same reason: they are deliberately
+    not imported, so counting them here would just move the noise out of
+    `by-class` and into `skipped`.
     """
     claiming = []
     for product in ifc_file.by_type("IfcProduct"):
+        if _is_non_visual(product):
+            continue
         representation = getattr(product, "Representation", None)
         if representation is None:
             continue
@@ -207,6 +238,13 @@ def import_ifc(ifc_path: str, unit_scale: float = 1.0) -> dict:
     Invariant: `imported + skipped-count == len(_geometry_bearing_products(...))`.
     Every product that claimed a shape representation lands in exactly one of the
     two buckets, so an element can never disappear from the accounting.
+
+    Non-visual products (see `_NON_VISUAL_CLASSES`) sit outside that equation
+    entirely and are reported under `excluded` instead. They are a third fact:
+    not imported, but not a failure either. Folding them into `skipped` would put
+    a routine, expected exclusion into the channel that means "this should have
+    rendered and did not" -- on a real building that is dozens of openings per
+    storey, which would drown the one genuine failure the field exists to surface.
     """
     ifcopenshell = _import_ifcopenshell()
 
@@ -232,6 +270,7 @@ def import_ifc(ifc_path: str, unit_scale: float = 1.0) -> dict:
     imported = 0
     skipped: list[dict] = []
     seen_guids: set[str] = set()
+    excluded: dict[str, int] = {}
     by_class: dict[str, int] = {}
     by_material: dict[str, int] = {}
     by_storey: dict[str, int] = {}
@@ -244,49 +283,55 @@ def import_ifc(ifc_path: str, unit_scale: float = 1.0) -> dict:
             # cannot be double-counted by the reconciliation pass below.
             seen_guids.add(shape.guid)
             product = ifc_file.by_guid(shape.guid)
-
-            verts = shape.geometry.verts
-            faces = shape.geometry.faces
-            if not verts or not faces:
-                raise ValueError("empty tessellation")
-
-            coords = [
-                (
-                    verts[i] * unit_scale,
-                    verts[i + 1] * unit_scale,
-                    verts[i + 2] * unit_scale,
-                )
-                for i in range(0, len(verts), 3)
-            ]
-            tris = [
-                (faces[i], faces[i + 1], faces[i + 2])
-                for i in range(0, len(faces), 3)
-            ]
-
-            mesh = bpy.data.meshes.new(shape.name or shape.guid)
-            mesh.from_pydata(coords, [], tris)
-            mesh.validate()
-            mesh.update()
-
-            obj = bpy.data.objects.new(shape.name or shape.guid, mesh)
             ifc_class = product.is_a()
-            material = _material_of(product)
-            storey = _storey_of(product)
 
-            obj[PROP_GUID] = shape.guid
-            obj[PROP_CLASS] = ifc_class
-            obj[PROP_NAME] = product.Name or ""
-            obj[PROP_MATERIAL] = material
-            obj[PROP_STOREY] = storey
+            if _is_non_visual(product):
+                # Counted, never imported, never skipped. A deliberate exclusion
+                # is a different fact from a failure to tessellate, so it gets
+                # its own channel rather than polluting `skipped`.
+                excluded[ifc_class] = excluded.get(ifc_class, 0) + 1
+            else:
+                verts = shape.geometry.verts
+                faces = shape.geometry.faces
+                if not verts or not faces:
+                    raise ValueError("empty tessellation")
 
-            collection.objects.link(obj)
+                coords = [
+                    (
+                        verts[i] * unit_scale,
+                        verts[i + 1] * unit_scale,
+                        verts[i + 2] * unit_scale,
+                    )
+                    for i in range(0, len(verts), 3)
+                ]
+                tris = [
+                    (faces[i], faces[i + 1], faces[i + 2])
+                    for i in range(0, len(faces), 3)
+                ]
 
-            imported += 1
-            by_class[ifc_class] = by_class.get(ifc_class, 0) + 1
-            if material:
-                by_material[material] = by_material.get(material, 0) + 1
-            if storey:
-                by_storey[storey] = by_storey.get(storey, 0) + 1
+                mesh = bpy.data.meshes.new(shape.name or shape.guid)
+                mesh.from_pydata(coords, [], tris)
+                mesh.validate()
+                mesh.update()
+
+                obj = bpy.data.objects.new(shape.name or shape.guid, mesh)
+                material = _material_of(product)
+                storey = _storey_of(product)
+
+                obj[PROP_GUID] = shape.guid
+                obj[PROP_CLASS] = ifc_class
+                obj[PROP_NAME] = product.Name or ""
+                obj[PROP_MATERIAL] = material
+                obj[PROP_STOREY] = storey
+
+                collection.objects.link(obj)
+
+                imported += 1
+                by_class[ifc_class] = by_class.get(ifc_class, 0) + 1
+                if material:
+                    by_material[material] = by_material.get(material, 0) + 1
+                if storey:
+                    by_storey[storey] = by_storey.get(storey, 0) + 1
 
         except Exception as exc:  # noqa: BLE001 - skip-and-count is the contract
             guid = ""
@@ -329,6 +374,8 @@ def import_ifc(ifc_path: str, unit_scale: float = 1.0) -> dict:
         "imported": imported,
         "skipped": skipped,
         "skipped-count": len(skipped),
+        "excluded": dict(sorted(excluded.items())),
+        "excluded-count": sum(excluded.values()),
         "by-class": dict(sorted(by_class.items())),
         "by-material": dict(sorted(by_material.items())),
         "by-storey": dict(sorted(by_storey.items())),
