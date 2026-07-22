@@ -63,22 +63,79 @@ def _make_settings(ifcopenshell):
     return settings
 
 
+# Attributes that step from an IfcMaterialSelect toward the leaf IfcMaterial.
+# Ordered usage -> set -> item so the walk descends predictably; every wrapper
+# in practice exposes exactly one of them.
+_MATERIAL_LINKS = (
+    "ForLayerSet",  # IfcMaterialLayerSetUsage    -> IfcMaterialLayerSet
+    "ForProfileSet",  # IfcMaterialProfileSetUsage  -> IfcMaterialProfileSet
+    "MaterialLayers",  # IfcMaterialLayerSet         -> [IfcMaterialLayer]
+    "MaterialProfiles",  # IfcMaterialProfileSet       -> [IfcMaterialProfile]
+    "MaterialConstituents",  # IfcMaterialConstituentSet   -> [IfcMaterialConstituent]
+    "Materials",  # IfcMaterialList             -> [IfcMaterial]
+    "Material",  # Layer / Profile / Constituent -> IfcMaterial
+)
+
+# IFC material wrappers nest at most a few levels; the bound only exists so a
+# malformed file cannot spin the walk forever.
+_MAX_MATERIAL_DEPTH = 8
+
+
+def _leaf_material_name(node, seen: set, depth: int = 0) -> str:
+    """Walk an IfcMaterialSelect down to the first leaf IfcMaterial's name.
+
+    Only an actual IfcMaterial contributes a name. `IfcMaterialLayer.Name` and
+    `IfcMaterialProfile.Name` are the LAYER / PROFILE name ("Core", "Web"), not
+    the material, so lifting `.Name` off a wrapper yields a plausible-looking
+    wrong answer -- worse than returning nothing.
+    """
+    if node is None or depth > _MAX_MATERIAL_DEPTH:
+        return ""
+    is_a = getattr(node, "is_a", None)
+    if not callable(is_a):  # a plain attribute value, not an entity
+        return ""
+
+    # IFC references form a graph, not a tree: guard against revisiting.
+    identify = getattr(node, "id", None)
+    if callable(identify):
+        key = identify()
+        if key:
+            if key in seen:
+                return ""
+            seen.add(key)
+
+    if is_a("IfcMaterial"):
+        return node.Name or ""
+
+    for attr in _MATERIAL_LINKS:
+        nested = getattr(node, attr, None)
+        if not nested:
+            continue
+        children = nested if isinstance(nested, (list, tuple)) else (nested,)
+        for child in children:
+            name = _leaf_material_name(child, seen, depth + 1)
+            if name:
+                return name
+    return ""
+
+
 def _material_of(product) -> str:
-    """First associated IfcMaterial name, or empty string."""
+    """Name of the first associated material, through any wrapper, or "".
+
+    IFC hangs a material off a product through a family of wrappers whose shape
+    depends on the producing application: `ifc.write` associates a plain
+    IfcMaterial, Revit and Tekla wrap structural framing in an
+    IfcMaterialProfileSetUsage, and walls / slabs arrive as an
+    IfcMaterialLayerSetUsage. Probing a fixed attribute one level deep resolves
+    only the first of those and silently returns "" for the rest, so this
+    recurses to the leaf whatever the wrapper.
+    """
     for association in getattr(product, "HasAssociations", None) or ():
         if not association.is_a("IfcRelAssociatesMaterial"):
             continue
-        material = association.RelatingMaterial
-        if material.is_a("IfcMaterial"):
-            return material.Name or ""
-        # IfcMaterialLayerSetUsage / IfcMaterialList etc. -- take the first leaf.
-        for attr in ("ForLayerSet", "Materials", "MaterialLayers"):
-            nested = getattr(material, attr, None)
-            if nested:
-                first = nested[0] if isinstance(nested, (list, tuple)) else nested
-                name = getattr(first, "Name", None)
-                if name:
-                    return name
+        name = _leaf_material_name(association.RelatingMaterial, set())
+        if name:
+            return name
     return ""
 
 
