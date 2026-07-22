@@ -32,16 +32,64 @@ def _eevee_engine() -> str:
 
 
 def setup_world(strength: float = 1.0) -> None:
-    """A neutral grey studio world so nothing renders pitch black."""
+    """A vertical grey gradient sky, not a flat colour.
+
+    A flat single-colour world starves specular materials: a metal has
+    almost no diffuse response, so what you see is nearly all what it
+    reflects, and a flat dark environment reflects back as a flat dark
+    object -- no gradient across a curved or angled face, no visible form.
+    Clay and section-style are diffuse-dominant and barely need this;
+    realistic steel (metallic 0.85) needs it to read as metal at all. The
+    gradient is strictly neutral (equal R/G/B at both stops) so it never
+    tints the model or reads as a "look" -- it is lighting infrastructure,
+    not art direction, and applies the same way regardless of which preset
+    is active (preset is not knowable here on the staged-.blend path: the
+    look was applied by a prior `scene.apply-look` call and isn't recorded
+    as scene metadata).
+    """
     world = bpy.context.scene.world
     if world is None:
         world = bpy.data.worlds.new("AwareWorld")
         bpy.context.scene.world = world
     world.use_nodes = True
-    background = world.node_tree.nodes.get("Background")
-    if background is not None:
-        background.inputs["Color"].default_value = (0.05, 0.06, 0.08, 1.0)
-        background.inputs["Strength"].default_value = strength
+    nodes = world.node_tree.nodes
+    links = world.node_tree.links
+    background = nodes.get("Background")
+    if background is None:
+        return
+
+    # Named and reused rather than always-`new`, so calling setup_world()
+    # again in the same session rewires the same nodes instead of leaving
+    # orphaned duplicates behind.
+    coord = nodes.get("AwareSkyCoord") or nodes.new("ShaderNodeTexCoord")
+    coord.name = "AwareSkyCoord"
+    separate = nodes.get("AwareSkySeparateZ") or nodes.new("ShaderNodeSeparateXYZ")
+    separate.name = "AwareSkySeparateZ"
+    remap = nodes.get("AwareSkyRemap") or nodes.new("ShaderNodeMapRange")
+    remap.name = "AwareSkyRemap"
+    ramp_node = nodes.get("AwareSkyRamp") or nodes.new("ShaderNodeValToRGB")
+    ramp_node.name = "AwareSkyRamp"
+
+    # Z is a unit direction (-1 straight down .. +1 straight up); remap to
+    # 0..1 so the ramp below spans the whole visible sky with the horizon
+    # at the midpoint, rather than clamping the entire lower hemisphere to
+    # a single flat colour.
+    remap.inputs["From Min"].default_value = -1.0
+    remap.inputs["From Max"].default_value = 1.0
+    remap.inputs["To Min"].default_value = 0.0
+    remap.inputs["To Max"].default_value = 1.0
+
+    ramp = ramp_node.color_ramp
+    ramp.elements[0].position = 0.0
+    ramp.elements[0].color = (0.03, 0.03, 0.03, 1.0)
+    ramp.elements[1].position = 1.0
+    ramp.elements[1].color = (0.95, 0.95, 0.95, 1.0)
+
+    links.new(coord.outputs["Generated"], separate.inputs["Vector"])
+    links.new(separate.outputs["Z"], remap.inputs["Value"])
+    links.new(remap.outputs["Result"], ramp_node.inputs["Factor"])
+    links.new(ramp_node.outputs["Color"], background.inputs["Color"])
+    background.inputs["Strength"].default_value = strength
 
 
 def setup_key_light() -> None:
