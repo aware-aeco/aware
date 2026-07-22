@@ -113,6 +113,15 @@ def load_scene(inputs: dict) -> None:
             _result.ERR_INVALID_INPUTS,
             "one of `blend-path` or `ifc-path` is required",
         )
+    # Both given is an error, not a silent preference. The manifest declares these
+    # mutually exclusive, and quietly opening the staged .blend would render a stale
+    # model while the caller believes they asked for the IFC. `scene.info` rejects
+    # this the same way; render.turntable inherits the check through this loader.
+    if blend_path and ifc_path:
+        raise _result.AwareBlenderError(
+            _result.ERR_INVALID_INPUTS,
+            "`blend-path` and `ifc-path` are mutually exclusive; give exactly one",
+        )
 
     if blend_path:
         if not os.path.exists(str(blend_path)):

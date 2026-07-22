@@ -31,6 +31,10 @@ def main(inputs: dict) -> dict:
 
     bpy.ops.wm.open_mainfile(filepath=os.path.abspath(blend_path))
     receipt = _looks.apply_look(preset)
+    # Create the parent directory first, as scene_import.py and render_still.py do.
+    # Redirecting the looked .blend into a fresh output dir is a normal workflow, and
+    # without this Blender's save fails before the documented `blend-path` is returned.
+    os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
     bpy.ops.wm.save_as_mainfile(filepath=os.path.abspath(out_path))
 
     receipt["blend-path"] = os.path.abspath(out_path)
