@@ -176,6 +176,26 @@ def _storey_of(product) -> str:
     return ""
 
 
+def _geometry_bearing_products(ifc_file) -> list:
+    """Products that assert a shape representation, i.e. that should tessellate.
+
+    Deliberately not every IfcProduct. IfcSite, IfcBuilding, IfcBuildingStorey,
+    grids and annotations legitimately carry no representation, so reconciling
+    against the full product list would report them as skips on every single
+    import and bury the real failures in noise. A product that claims a shape and
+    produced none is a genuine skip; one that never claimed a shape is not.
+    """
+    claiming = []
+    for product in ifc_file.by_type("IfcProduct"):
+        representation = getattr(product, "Representation", None)
+        if representation is None:
+            continue
+        if not getattr(representation, "Representations", None):
+            continue
+        claiming.append(product)
+    return claiming
+
+
 def import_ifc(ifc_path: str, unit_scale: float = 1.0) -> dict:
     """Tessellate every product in `ifc_path` into the current Blender scene.
 
@@ -183,6 +203,10 @@ def import_ifc(ifc_path: str, unit_scale: float = 1.0) -> dict:
     ifcopenshell already converts, so 1.0 is correct for normal input.
 
     Returns a receipt: counts, per-class inventory, and the skipped GUIDs.
+
+    Invariant: `imported + skipped-count == len(_geometry_bearing_products(...))`.
+    Every product that claimed a shape representation lands in exactly one of the
+    two buckets, so an element can never disappear from the accounting.
     """
     ifcopenshell = _import_ifcopenshell()
 
@@ -207,6 +231,7 @@ def import_ifc(ifc_path: str, unit_scale: float = 1.0) -> dict:
 
     imported = 0
     skipped: list[dict] = []
+    seen_guids: set[str] = set()
     by_class: dict[str, int] = {}
     by_material: dict[str, int] = {}
     by_storey: dict[str, int] = {}
@@ -214,6 +239,10 @@ def import_ifc(ifc_path: str, unit_scale: float = 1.0) -> dict:
     while True:
         try:
             shape = iterator.get()
+            # Recorded before anything else can fail, so a product that yielded a
+            # shape but died during mesh construction is still accounted for and
+            # cannot be double-counted by the reconciliation pass below.
+            seen_guids.add(shape.guid)
             product = ifc_file.by_guid(shape.guid)
 
             verts = shape.geometry.verts
@@ -269,6 +298,25 @@ def import_ifc(ifc_path: str, unit_scale: float = 1.0) -> dict:
 
         if not iterator.next():
             break
+
+    # The geom iterator drops a product whose geometry is unfeasible -- a
+    # zero-depth extrusion, a zero-area profile -- at the C++ level: it is never
+    # yielded and nothing is raised, so the handler above cannot see it. Without
+    # this pass the element simply vanishes from the receipt, which is the worst
+    # possible outcome for a skip-and-count contract. Reconcile against the
+    # products that claimed a shape so a silent drop still gets reported.
+    for product in _geometry_bearing_products(ifc_file):
+        if product.GlobalId in seen_guids:
+            continue
+        skipped.append(
+            {
+                "guid": product.GlobalId,
+                "reason": (
+                    "not yielded by the geometry iterator "
+                    "(degenerate or unfeasible geometry)"
+                ),
+            }
+        )
 
     if imported == 0:
         raise _result.AwareBlenderError(
