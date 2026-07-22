@@ -3,6 +3,19 @@ material and storey. Read-only.
 
 Run: blender -b -P scene_info.py -- '{"blend-path":"m.blend"}'
   or blender -b -P scene_info.py -- '{"ifc-path":"m.ifc"}'
+
+Exactly one of `blend-path` / `ifc-path` is required. Passing both is
+rejected rather than silently preferring one -- otherwise which source was
+actually read is undetectable from the payload after the fact.
+
+On the `ifc-path` branch, `_ifc_import.import_ifc()`'s own skip record
+travels into the payload as `skipped` / `skipped-count`: this command is
+the verification and debugging surface for the rest of the agent, so a
+partially-failed import must never look identical to a smaller-but-intact
+model. The `blend-path` branch has no such record -- the import already
+happened in a prior `scene.import` call -- so it omits both keys rather
+than inventing a `"skipped-count": 0` that would falsely assert nothing
+was ever dropped.
 """
 
 import os
@@ -62,6 +75,14 @@ def main(inputs: dict) -> dict:
             _result.ERR_INVALID_INPUTS,
             "one of `blend-path` or `ifc-path` is required",
         )
+    if blend_path and ifc_path:
+        # Preferring one silently would make the source actually read
+        # undetectable from the payload after the fact -- reject instead of
+        # guessing; the docstring already documents an either/or contract.
+        raise _result.AwareBlenderError(
+            _result.ERR_INVALID_INPUTS,
+            "pass exactly one of `blend-path` or `ifc-path`, not both",
+        )
 
     if blend_path:
         if not os.path.exists(str(blend_path)):
@@ -69,17 +90,26 @@ def main(inputs: dict) -> dict:
                 _result.ERR_BLEND_UNREADABLE, f".blend not found: {blend_path}"
             )
         bpy.ops.wm.open_mainfile(filepath=os.path.abspath(str(blend_path)))
-    else:
-        if not os.path.exists(str(ifc_path)):
-            raise _result.AwareBlenderError(
-                _result.ERR_IFC_UNREADABLE, f"IFC not found: {ifc_path}"
-            )
-        _ifc_import.clear_scene()
-        _ifc_import.import_ifc(
-            str(ifc_path), unit_scale=float(inputs.get("unit-scale", 1.0))
-        )
+        payload = _inventory()
+        payload["source"] = "blend-path"
+        return payload
 
-    return _inventory()
+    if not os.path.exists(str(ifc_path)):
+        raise _result.AwareBlenderError(
+            _result.ERR_IFC_UNREADABLE, f"IFC not found: {ifc_path}"
+        )
+    _ifc_import.clear_scene()
+    import_receipt = _ifc_import.import_ifc(
+        str(ifc_path), unit_scale=float(inputs.get("unit-scale", 1.0))
+    )
+    payload = _inventory()
+    # The import just ran in-process, so the skip record is live -- surface
+    # it rather than letting a partially failed import masquerade as a
+    # smaller-but-complete model (see module docstring).
+    payload["skipped"] = import_receipt["skipped"]
+    payload["skipped-count"] = import_receipt["skipped-count"]
+    payload["source"] = "ifc-path"
+    return payload
 
 
 _result.run(main)
