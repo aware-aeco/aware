@@ -1,4 +1,4 @@
-// aware-tekla — Tekla Open API sidecar for the AWARE runtime.
+﻿// aware-tekla — Tekla Open API sidecar for the AWARE runtime.
 // Spike v0.29: send-status verb only, single-instance Tekla, no ROT binding.
 // ROT-bind multi-instance precise routing lands in the hardening pass.
 //
@@ -1871,14 +1871,19 @@ internal static class Program
         // and it happens with a live Tekla connection already in hand — so a message emitted from
         // inside the script only appears once that wait is already over, flashing by just before the
         // work finishes. Emitted here it covers the whole wait. Cosmetic: never fail a bake over it.
+        Action<string>? sayStatus = null;
         if (!string.IsNullOrEmpty(announce) && modelInstance is not null)
         {
             try
             {
                 var opType = modelInstance.GetType().Assembly
                     .GetType("Tekla.Structures.Model.Operations.Operation");
-                opType?.GetMethod("DisplayPrompt", new[] { typeof(string) })
-                    ?.Invoke(null, new object[] { announce! });
+                var prompt = opType?.GetMethod("DisplayPrompt", new[] { typeof(string) });
+                if (prompt is not null)
+                {
+                    sayStatus = msg => { try { prompt.Invoke(null, new object[] { msg }); } catch { } };
+                    sayStatus(announce!);
+                }
             }
             catch { /* a status message is never worth failing a bake for */ }
         }
@@ -1892,8 +1897,19 @@ internal static class Program
         // thread pool (no captured SynchronizationContext) — see
         // RunScriptOnStaThread for why a single-threaded pump is NOT installed
         // (it would deadlock sync-over-async scripts).
-        var state = script.RunAsync(globals).GetAwaiter().GetResult();
-        var returnValue = state.ReturnValue;
+        object? returnValue;
+        try
+        {
+            var state = script.RunAsync(globals).GetAwaiter().GetResult();
+            returnValue = state.ReturnValue;
+        }
+        catch
+        {
+            // The script never returned, so its own failure prompt never ran. Do not leave the
+            // caller's "adding..." claim standing over a model where nothing happened.
+            sayStatus?.Invoke("Nothing was added.");
+            throw;
+        }
 
         // Tekla "transaction-commit" — flush changes to the database. We
         // only do this if a real Model was constructed AND the connection is
