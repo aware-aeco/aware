@@ -1,0 +1,78 @@
+name: CI
+
+# The gates the release runbook requires, run on every PR — so they can't rot
+# silently and then block a release (#298). Before this, no workflow ran
+# `cargo fmt`, `cargo clippy` or `cargo test` at all: `release.yml` only builds,
+# so the suite's green-ness rested on whoever last ran it locally.
+#
+# To fix a failure locally, from `cli/`:
+#   cargo fmt --all
+#   cargo clippy --all-targets -- -D warnings
+#   cargo test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  gates:
+    name: fmt + clippy + test
+    runs-on: ubuntu-latest
+    # The suite spawns the built binary in a lot of integration tests; a hang
+    # there would otherwise sit on a runner for six hours.
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      # `cli/rust-toolchain.toml` is the single source of truth for the compiler
+      # version — read it here rather than restating it, so the pin can't drift
+      # between CI and a developer's checkout.
+      - name: Read pinned toolchain
+        id: pin
+        run: |
+          # POSIX sed, not `grep -oP` — PCRE isn't available in every shell this
+          # might get run in (Git Bash on Windows rejects `-P` outright), and a
+          # portable expression is one a maintainer can verify locally.
+          channel=$(sed -n 's/^[[:space:]]*channel[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' cli/rust-toolchain.toml | head -1)
+          if [ -z "$channel" ]; then
+            echo "::error::could not read [toolchain] channel from cli/rust-toolchain.toml"
+            exit 1
+          fi
+          echo "Pinned toolchain: $channel"
+          echo "channel=$channel" >> "$GITHUB_OUTPUT"
+
+      - name: Install Rust ${{ steps.pin.outputs.channel }}
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ steps.pin.outputs.channel }}
+          components: rustfmt, clippy
+
+      - name: Cache cargo registry + build
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: cli
+
+      # Same Linux build deps release.yml installs — the crate links libsecret
+      # and libdbus for credential storage.
+      - name: Install Linux build deps
+        run: sudo apt-get update && sudo apt-get install -y clang libsecret-1-dev libdbus-1-dev pkg-config
+
+      - name: cargo fmt --check
+        working-directory: cli
+        run: cargo fmt --all -- --check
+
+      - name: cargo clippy -D warnings
+        working-directory: cli
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: cargo test
+        working-directory: cli
+        run: cargo test

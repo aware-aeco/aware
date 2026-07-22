@@ -1,0 +1,16 @@
+# Pin the compiler so a new stable can't introduce lints against existing code
+# with nothing to catch it (#298). Before this, `release.yml` used
+# `dtolnay/rust-toolchain@stable` and there was no pin at all, so every stable
+# bump was an unreviewed change that only surfaced when a release was blocked.
+#
+# Bumping this is a deliberate, reviewable PR: change `channel`, then run the
+# gates from `cli/` (`cargo fmt --all -- --check`,
+# `cargo clippy --all-targets -- -D warnings`, `cargo test`) and fix any new
+# lints in the same change.
+#
+# `components` is listed here rather than in CI so rustup installs them
+# automatically for whoever picks the toolchain up — CI and a fresh clone
+# resolve identically.
+[toolchain]
+channel = "1.95.0"
+components = ["rustfmt", "clippy"]
