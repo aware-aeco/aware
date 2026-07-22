@@ -3,7 +3,27 @@
 No human clicks materials in an unattended render, so the look is deduced from
 what the IFC already states: the product class and its associated material grade.
 Unrecognised input never fails the render; it falls through to clay.
+
+Grade prefixes are not always unique to one family. EN 338 structural timber
+strength classes (C14-C50, 12 in total) share their bare "C<number>" shorthand
+with EN 206 concrete grades for every class both standards define -- C20, C30,
+C35, C40 and C50. A grade of "C30" alone cannot say which family it means.
+When the longest-matching grade prefix ties across families, `family_for`
+breaks the tie with CLASS_FAMILIES: IfcSlab / IfcWall / IfcWallStandardCase /
+IfcFooting / IfcPile are decisive for concrete there. No IFC class currently
+names timber as its CLASS_FAMILIES entry -- framing shapes (IfcBeam /
+IfcColumn / IfcMember) map to "steel" there, for the unrelated *no-grade*
+fallback case, and "steel" is never a candidate in a concrete/timber tie -- so
+a class that cannot settle the tie falls back to today's behaviour: the first
+tied family in GRADE_FAMILIES's declared order wins, which is concrete, the
+commoner bare "C-number" reading in AECO. A framing element graded with one of
+the five colliding numbers therefore still resolves to concrete unless the
+grade string also carries a signal unique to timber: TIMBER, WOOD, GL24, GL28,
+or one of the seven EN 338 classes concrete does not define (C14, C16, C18,
+C22, C24, C27, C45).
 """
+
+from __future__ import annotations
 
 import bpy
 
@@ -11,11 +31,17 @@ import _ifc_import
 
 # Material-grade prefixes by family. Matched case-insensitively against the
 # IfcMaterial name, longest-prefix-first, so "A500-GR.B" hits STEEL via "A500".
+# Five of the twelve EN 338 timber classes below also match a CONCRETE prefix
+# (C20/C30/C35/C40/C50); see the module docstring for how family_for resolves
+# that tie via IFC class.
 GRADE_FAMILIES = {
     "steel": ("A992", "A500", "A36", "A572", "A53", "S355", "S275", "S235", "Q345"),
     "concrete": ("C20", "C25", "C30", "C35", "C40", "C50", "CONCRETE", "BETON"),
     "glass": ("GLASS", "GLAZING", "SZKLO"),
-    "timber": ("TIMBER", "WOOD", "GL24", "GL28", "C24"),
+    "timber": (
+        "TIMBER", "WOOD", "GL24", "GL28",
+        "C14", "C16", "C18", "C20", "C22", "C24", "C27", "C30", "C35", "C40", "C45", "C50",
+    ),
 }
 
 # IFC class -> family, used when the material grade says nothing useful.
@@ -63,17 +89,39 @@ PRESETS = tuple(PALETTES)
 
 
 def family_for(ifc_class: str, material: str) -> tuple[str, str]:
-    """Resolve (family, reason) from an IFC class and material grade."""
+    """Resolve (family, reason) from an IFC class and material grade.
+
+    When the grade's longest-matching prefix ties across families, the IFC
+    class breaks the tie; see the module docstring for the exact rule.
+    """
     grade = (material or "").strip().upper()
     if grade:
-        best_family = ""
-        best_len = 0
-        for family, prefixes in GRADE_FAMILIES.items():
-            for prefix in prefixes:
-                if grade.startswith(prefix) and len(prefix) > best_len:
-                    best_family, best_len = family, len(prefix)
-        if best_family:
-            return best_family, f"grade:{material}"
+        matches = [
+            (family, prefix)
+            for family, prefixes in GRADE_FAMILIES.items()
+            for prefix in prefixes
+            if grade.startswith(prefix)
+        ]
+        if matches:
+            best_len = max(len(prefix) for _, prefix in matches)
+            candidates = {family for family, prefix in matches if len(prefix) == best_len}
+            if len(candidates) == 1:
+                (family,) = candidates
+                return family, f"grade:{material}"
+
+            # Ambiguous: more than one family's prefix ties for longest. Let
+            # the IFC class settle it when it names one of the tied families.
+            class_family = CLASS_FAMILIES.get(ifc_class or "")
+            if class_family in candidates:
+                return class_family, f"grade:{material}"
+
+            # The class was silent (or named a family not in contention, e.g.
+            # "steel" for a framing shape when the tie is concrete/timber):
+            # keep today's behaviour and take the first tied family in
+            # GRADE_FAMILIES's declared order.
+            for family in GRADE_FAMILIES:
+                if family in candidates:
+                    return family, f"grade:{material}"
 
     family = CLASS_FAMILIES.get(ifc_class or "")
     if family:
