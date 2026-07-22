@@ -27,12 +27,22 @@ These facts were established by running the commands, not by reading docs. Later
 | Output is deterministic | header stamp is fixed: `FILE_NAME('blender-fixture-frame.ifc','1970-01-01T00:00:00',...)` |
 | Blender was absent; installed for this work | `winget install --id BlenderFoundation.Blender` → **Blender 5.2.0 LTS**, build hash `fbe6228777e7`, at `C:\Program Files\Blender Foundation\Blender 5.2\blender.exe` |
 
-**Unknowns that Task 1 must resolve empirically** (do not assume — the whole plan branches on them):
+**Unknowns resolved by the Task 1 probe** — measured, not assumed. Full evidence in [`2026-07-22-blender-toolchain-probe.md`](./2026-07-22-blender-toolchain-probe.md).
 
-1. Which Python version Blender 5.2 bundles, and whether an `ifcopenshell` wheel exists for it.
-2. The `ifcopenshell.geom.settings()` API generation — 0.7 uses `settings.set(settings.USE_WORLD_COORDS, True)`; 0.8+ uses `settings.set("use-world-coords", True)`.
-3. Whether `ifcopenshell` returns geometry in metres (mm model → 3000 mm beam arriving as 3.0 Blender units) or in file units.
-4. The EEVEE engine enum string in Blender 5.2 (`BLENDER_EEVEE` vs `BLENDER_EEVEE_NEXT`).
+| Question | Answer |
+|---|---|
+| Blender's bundled Python | **3.13.13**, at `…\Blender 5.2\5.2\python\bin\python.exe` |
+| `ifcopenshell` wheel | **Available** — `ifcopenshell-0.8.5` installed first try. The IfcConvert fork was never triggered. |
+| `geom.settings()` API generation | **string-keys** — `settings.set("use-world-coords", True)` |
+| Geometry unit scale | **metres — `unit-scale` stays 1.0.** The probe's 6000 mm beam measured exactly `0.0 → 6.0`. |
+| EEVEE identifier | **`BLENDER_EEVEE`** (not `_NEXT`) |
+| IfcMaterial association shape | **Plain `IfcMaterial` direct off `RelatingMaterial`** — no layer-set wrapping, so `_material_of`'s first branch is the live path for `ifc.write` output |
+
+**Two probe findings that changed this plan's code — both already folded into the tasks below:**
+
+1. **The user-site trap (Task 4).** `pip install ifcopenshell` reporting success does *not* mean `import ifcopenshell` works. Blender's bundled Python runs with `site.ENABLE_USER_SITE = False` and ignores `PYTHONPATH`, and its own `site-packages` under `Program Files` is not writable — so pip falls back to a `--user` install that nothing ever puts on `sys.path`. A bare import raises `ImportError` against a correctly installed package. `_ifc_import._import_ifcopenshell()` now inserts `site.getusersitepackages()` first. Without this, every command in Tasks 4–10 fails with a misleading `ifcopenshell-missing`.
+
+2. **Engine enum introspection under-reports (Task 8).** `bpy.types.RenderSettings.bl_rna.properties["engine"].enum_items` returned only `['BLENDER_EEVEE']` — omitting `CYCLES` and `BLENDER_WORKBENCH` even though both are genuinely available (confirmed by direct assignment and `addon_utils.check('cycles')`). `_eevee_engine()`'s membership test still works, since `BLENDER_EEVEE` *is* in the list. But **do not add a Cycles availability check built on that enum** — it would report Cycles missing on a machine that has it. Assign the engine directly and let it fail if genuinely absent.
 
 ---
 
@@ -552,6 +562,8 @@ A product that fails to tessellate is skipped and counted, never fatal -- a
 single bad element must not cost the caller the whole render.
 """
 
+import sys
+
 import bpy
 
 import _result
@@ -566,7 +578,21 @@ PROP_STOREY = "ifc_storey"
 
 
 def _import_ifcopenshell():
-    """Import ifcopenshell or raise the named error with the install one-liner."""
+    """Import ifcopenshell or raise the named error with the install one-liner.
+
+    The user-site path insert is NOT optional (Task 1 probe finding). Blender's
+    bundled Python runs with `site.ENABLE_USER_SITE = False` and ignores
+    PYTHONPATH, while its own site-packages under Program Files is not writable
+    -- so `pip install ifcopenshell` silently falls back to a --user install that
+    nothing ever adds to sys.path. Without this, a correctly installed
+    ifcopenshell still raises ImportError on every run.
+    """
+    import site
+
+    user_site = site.getusersitepackages()
+    if user_site and user_site not in sys.path:
+        sys.path.insert(0, user_site)
+
     try:
         import ifcopenshell
         import ifcopenshell.geom
