@@ -72,6 +72,8 @@ Repo-level touches: `registry-index.json` (new entry), stats markers via `script
 
 **Why separate modules rather than one script:** each command is its own `-P` entry point, but import, framing, and looks are shared by three commands each. Underscore-prefixed modules are the shared half; the command scripts stay thin enough to read in one screen.
 
+**Every command script must guard its entry point** with `if __name__ == "__main__":` before calling `_result.run(main)`. This is not style. Blender's `sys.argv` is process-global, so an unguarded module-scope `run(main)` means *importing* a command script re-parses the **importer's** argv as its own inputs, executes, and calls `sys.exit()` — killing the caller before its own `main()` runs. `render_turntable.py` imports `render_still.py`, so this is a live path, not a hypothetical: unguarded, it silently wrote a file named `turn.mp4.png` and died with the wrong command's error message. Verified on Blender 5.2 that `-P` sets `__name__ == "__main__"` for the directly-invoked script, so the guard is safe — **re-check that before porting these scripts to a different Blender**, because if it ever stops holding, the guard turns every command into a silent no-op that exits 0 having done nothing.
+
 ---
 
 ## Task 1: Prove the toolchain
@@ -466,7 +468,8 @@ def require(inputs: dict, key: str) -> object:
 def run(main_fn) -> None:
     """Entry-point wrapper: run `main_fn(inputs) -> dict`, frame whatever happens.
 
-    Every command script ends with `_result.run(main)`. Unexpected exceptions are
+    Every command script ends with `if __name__ == "__main__":
+    _result.run(main)`. Unexpected exceptions are
     caught and framed too, so the caller never has to scrape a Python traceback
     out of Blender's log to find out what went wrong.
     """
@@ -808,7 +811,8 @@ def main(inputs: dict) -> dict:
     return receipt
 
 
-_result.run(main)
+if __name__ == "__main__":
+    _result.run(main)
 ```
 
 - [ ] **Step 3: Run it against the fixture**
@@ -964,7 +968,8 @@ def main(inputs: dict) -> dict:
     return _inventory()
 
 
-_result.run(main)
+if __name__ == "__main__":
+    _result.run(main)
 ```
 
 - [ ] **Step 2: Run it and check against the fixture's known inventory**
@@ -1348,7 +1353,8 @@ def main(inputs: dict) -> dict:
     return receipt
 
 
-_result.run(main)
+if __name__ == "__main__":
+    _result.run(main)
 ```
 
 - [ ] **Step 3: Verify the mapping logic without Blender**
@@ -1565,7 +1571,8 @@ def main(inputs: dict) -> dict:
     }
 
 
-_result.run(main)
+if __name__ == "__main__":
+    _result.run(main)
 ```
 
 - [ ] **Step 2: Render the fixture at low resolution**
@@ -1781,7 +1788,8 @@ def main(inputs: dict) -> dict:
 Then append the entry point:
 
 ```python
-_result.run(main)
+if __name__ == "__main__":
+    _result.run(main)
 ```
 
 - [ ] **Step 2: Render a short turntable**
