@@ -10,6 +10,11 @@ silent: geometry still imported, only `ifc_material` went blank, and the look
 mapper quietly fell back to the class family. These cases pin the recursive walk
 so that regression cannot come back unnoticed.
 
+The same failure shape recurs one level up: an association can hang off the type
+rather than the occurrence, which is exactly how IFC4 splits structural framing.
+Those cases are pinned here too, including the precedence rule when both levels
+carry a material.
+
 Each case builds a synthetic IFC4 product in memory, round-trips it through the
 SPF serializer so the inverse `HasAssociations` is resolved the same way a real
 file resolves it, then runs the real `_material_of` against the reloaded product.
@@ -201,7 +206,53 @@ def _build_model(ifcopenshell):
         "A992",
     )
 
-    # 10. No association at all resolves to "", not a crash.
+    def typed_by(occurrence, relating_type):
+        model.create_entity(
+            "IfcRelDefinesByType",
+            GlobalId=ifcopenshell.guid.new(),
+            RelatedObjects=[occurrence],
+            RelatingType=relating_type,
+        )
+
+    def profile_set(material_name: str):
+        return model.create_entity(
+            "IfcMaterialProfileSet",
+            MaterialProfiles=[
+                model.create_entity(
+                    "IfcMaterialProfile",
+                    Material=material(material_name),
+                    Profile=profile_def(),
+                )
+            ],
+        )
+
+    # 10. Type-level association only. The canonical IFC4 structural-framing
+    #     split puts IfcMaterialProfileSet on the type and only the usage on the
+    #     occurrence, so a producer that populates just the type side leaves
+    #     HasAssociations empty -- the walk has to hop through IsTypedBy.
+    beam_type, _ = product("IfcBeamType")
+    associate(beam_type, profile_set("S355"))
+    typed_beam, typed_guid = product("IfcBeam")
+    typed_by(typed_beam, beam_type)
+    cases.append(("type-level association only", typed_guid, "S355"))
+
+    # 11. Both present: the occurrence's usage is the more specific statement,
+    #     so it must win over the type's set. Distinct names make a silent
+    #     precedence flip impossible to miss.
+    column_type, _ = product("IfcColumnType")
+    associate(column_type, profile_set("S355-from-type"))
+    both, both_guid = product("IfcColumn")
+    associate(
+        both,
+        model.create_entity(
+            "IfcMaterialProfileSetUsage",
+            ForProfileSet=profile_set("A992-from-occurrence"),
+        ),
+    )
+    typed_by(both, column_type)
+    cases.append(("occurrence wins over type", both_guid, "A992-from-occurrence"))
+
+    # 12. No association at all, on either level, resolves to "" not a crash.
     _, orphan_guid = product("IfcBeam")
     cases.append(("no material association", orphan_guid, ""))
 

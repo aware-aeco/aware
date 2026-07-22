@@ -119,8 +119,19 @@ def _leaf_material_name(node, seen: set, depth: int = 0) -> str:
     return ""
 
 
+def _material_from_associations(entity) -> str:
+    """First leaf material name reachable from one entity's own associations."""
+    for association in getattr(entity, "HasAssociations", None) or ():
+        if not association.is_a("IfcRelAssociatesMaterial"):
+            continue
+        name = _leaf_material_name(association.RelatingMaterial, set())
+        if name:
+            return name
+    return ""
+
+
 def _material_of(product) -> str:
-    """Name of the first associated material, through any wrapper, or "".
+    """Name of the product's material, through any wrapper, or "".
 
     IFC hangs a material off a product through a family of wrappers whose shape
     depends on the producing application: `ifc.write` associates a plain
@@ -129,11 +140,28 @@ def _material_of(product) -> str:
     IfcMaterialLayerSetUsage. Probing a fixed attribute one level deep resolves
     only the first of those and silently returns "" for the rest, so this
     recurses to the leaf whatever the wrapper.
+
+    The association also need not hang off the occurrence at all. The canonical
+    IFC4 structural-framing split puts the IfcMaterialProfileSet on the type and
+    only the usage on the occurrence, so a producer that populates just the type
+    side leaves `HasAssociations` empty; this falls back one hop through
+    `IsTypedBy`. The occurrence wins when both are present, being the more
+    specific statement. (`IsTypedBy` is the IFC4 inverse; IFC2X3 spells it
+    `IsDefinedBy` and is not covered.)
+
+    Only the FIRST leaf material is returned. A composite wall reports its first
+    layer's material rather than blending -- downstream wants one material per
+    object, so this is the contract, not a rounding error.
     """
-    for association in getattr(product, "HasAssociations", None) or ():
-        if not association.is_a("IfcRelAssociatesMaterial"):
+    name = _material_from_associations(product)
+    if name:
+        return name
+
+    for rel in getattr(product, "IsTypedBy", None) or ():
+        relating_type = getattr(rel, "RelatingType", None)
+        if relating_type is None:
             continue
-        name = _leaf_material_name(association.RelatingMaterial, set())
+        name = _material_from_associations(relating_type)
         if name:
             return name
     return ""
