@@ -1359,7 +1359,13 @@ The `family_for` resolver is pure — test it directly:
 python -c "
 import sys, types
 sys.path.insert(0, '20-agents/aeco/visualization/blender/scripts')
-sys.modules['bpy'] = types.ModuleType('bpy')          # _looks imports bpy at top level
+# _looks imports bpy at top level AND annotates a return as `bpy.types.Material`.
+# Python evaluates that annotation at import time (the module has no
+# `from __future__ import annotations`), so a bare ModuleType stub raises
+# AttributeError before a single assertion runs. The stub needs `.types`.
+bpy_stub = types.ModuleType('bpy')
+bpy_stub.types = types.SimpleNamespace(Material=object)
+sys.modules['bpy'] = bpy_stub
 sys.modules['_ifc_import'] = types.ModuleType('_ifc_import')
 import _looks
 assert _looks.family_for('IfcBeam','A992')[0] == 'steel'
