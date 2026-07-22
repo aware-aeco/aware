@@ -5,11 +5,11 @@ use predicates::prelude::*;
 
 #[test]
 fn run_one_shot_app_with_no_installed_agents_fails_clearly() {
-    // welded-to-tc requires agents that aren't installed; with no agents installed,
-    // is_long_running() returns false (no installed manifest), so we'd take the
-    // one-shot path. But the orchestrator will try to invoke tekla via CliInvoker,
-    // which spawns `aware-tekla` (not on PATH) → AwareError::Network.
-    // The test confirms the exit is non-zero and the error mentions the binary.
+    // welded-to-tc references agents that aren't installed in this temp home, so
+    // the run must not proceed. Since #308 that is caught by the missing-agent
+    // pre-flight (`E_APP_AGENT_NOT_INSTALLED`) before any dispatch; previously it
+    // got as far as spawning `aware-tekla` and failed there. Either way the
+    // contract this test pins is the same: a non-zero exit, never a silent pass.
     let tmp = tempfile::tempdir().unwrap();
     let aware = tmp.path().join("aware");
 
@@ -825,4 +825,114 @@ fn find_first_jsonl(dir: &std::path::Path) -> Option<std::path::PathBuf> {
         }
     }
     None
+}
+
+#[test]
+fn run_refuses_app_whose_agent_is_not_installed() {
+    // #308: an app referencing an agent that does not exist installed + compiled
+    // cleanly, then died at run with a bare `io: ... (os error 3)` naming neither
+    // the app, the node, nor the agent. The pre-flight must name all three and
+    // carry the remedy.
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    let src = tmp.path().join("probe-src");
+    std::fs::create_dir_all(&src).unwrap();
+    std::fs::write(
+        src.join("probe-unknown-agent.flo"),
+        "app: probe-unknown-agent\nversion: 0.1.0\ndescription: |\n  probe\nrequires: []\n\
+         nodes:\n  - id: n\n    agent: definitely-not-an-agent-xyz\n    command: render\n",
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success()
+        // Install still succeeds (an app may be installed before its agents, #170)
+        // but must no longer be silent about the gap.
+        .stderr(predicate::str::contains("W_APP_AGENT_NOT_INSTALLED"));
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "run", "probe-unknown-agent"])
+        .assert()
+        .failure()
+        .stderr(
+            predicate::str::contains("E_APP_AGENT_NOT_INSTALLED")
+                .and(predicate::str::contains("\"n\""))
+                .and(predicate::str::contains("definitely-not-an-agent-xyz"))
+                .and(predicate::str::contains(
+                    "aware agent install definitely-not-an-agent-xyz",
+                ))
+                // The bare io error the issue reported must be gone.
+                .and(predicate::str::contains("os error 3").not()),
+        );
+}
+
+#[test]
+fn simulate_still_runs_an_app_whose_agent_is_not_installed() {
+    // #308 must not close the documented escape hatch: `--simulate` stubs every
+    // node and contacts no binary, so it stays the way to check a composition
+    // before its agents are installed.
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    let src = tmp.path().join("probe-src");
+    std::fs::create_dir_all(&src).unwrap();
+    std::fs::write(
+        src.join("probe-sim.flo"),
+        "app: probe-sim\nversion: 0.1.0\ndescription: |\n  probe\nrequires: []\n\
+         nodes:\n  - id: n\n    agent: definitely-not-an-agent-xyz\n    command: render\n    mode: read\n",
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "run", "probe-sim", "--simulate"])
+        .assert()
+        .success();
+}
+
+#[test]
+fn run_allows_a_frozen_node_whose_agent_is_not_installed() {
+    // A frozen node emits its pinned output and never dispatches, so the #308
+    // pre-flight must not require its agent to exist (app-spec § Frozen nodes).
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    let src = tmp.path().join("frozen-src");
+    std::fs::create_dir_all(&src).unwrap();
+    std::fs::write(
+        src.join("frozen-app.flo"),
+        "app: frozen-app\nversion: 0.1.0\ndescription: |\n  frozen\nrequires: []\n\
+         nodes:\n  - id: n\n    agent: definitely-not-an-agent-xyz\n    command: render\n\
+         \x20   frozen:\n      ok: true\n",
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "run", "frozen-app"])
+        .assert()
+        .success();
 }

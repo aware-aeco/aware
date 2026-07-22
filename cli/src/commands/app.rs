@@ -224,6 +224,21 @@ async fn run(
             return Err(AwareError::Validation(format!("[{}]", err.code)));
         }
 
+        // Missing-agent check (#308): a node whose agent isn't installed has
+        // nothing to dispatch to. Without this the run reached the transport and
+        // died reading `<home>/agents/<id>/manifest.yaml` — surfacing a bare
+        // `io: ... (os error 3)` that named neither the node nor the agent.
+        // Install/compile only warn (an app may be installed before its agents,
+        // #170); by run time the agent must exist. `--simulate` stubs every node
+        // and contacts no binary, so it is excluded above and stays the way to
+        // check a composition before its agents are installed.
+        if let Some(err) =
+            crate::validate::missing_agents(&app, &agents, crate::validate::Severity::Error).first()
+        {
+            eprintln!("error: {}", err.message);
+            return Err(AwareError::Validation(format!("[{}]", err.code)));
+        }
+
         // Safety pre-flight only gates real runs (dry-run is precisely how you test
         // an app's safety contract before adding the blocks).
         if !dry_run {
@@ -567,11 +582,22 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
         })?;
     let src_app = crate::manifest::loader::load_app(&src_manifest)?;
     let mut issues = crate::validate::validate_app(&src_app);
+    // Missing agents are reported separately from `issues` so they surface even
+    // on an otherwise-clean install (the `issues` loop below only prints when
+    // something is a hard error).
+    let mut missing = Vec::new();
     if let Ok(agents) = crate::manifest::loader::discover_agents(&ctx.paths) {
         issues.extend(crate::validate::validate_app_safety(&src_app, &agents));
         // Don't install an app that references a not-yet-runnable agent — install
         // must enforce the same contract as validate/compile (#161).
         issues.extend(crate::validate::validate_app_agents(&src_app, &agents));
+        // #308: a node whose agent isn't installed can't run. Installing an app
+        // before its agents is legitimate (#170), so this is a warning here
+        // rather than a refusal — but a loud one, naming the node, the agent and
+        // the remedy, so the gap is known now instead of surfacing later as a
+        // bare `os error 3`. `aware app run` refuses it.
+        missing =
+            crate::validate::missing_agents(&src_app, &agents, crate::validate::Severity::Warning);
     }
     if crate::validate::has_errors(&issues) {
         for i in &issues {
@@ -584,6 +610,9 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
         return Err(AwareError::Validation(
             "app install refused: app failed validation (fix errors above and retry)".into(),
         ));
+    }
+    for m in &missing {
+        eprintln!("\u{26a0} [{}] {}", m.code, m.message);
     }
 
     let app_id = crate::install::install_app_from_path(&path, &ctx.paths)?;
@@ -904,6 +933,11 @@ fn validate_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError>
     if let Ok(agents) = crate::manifest::loader::discover_agents(&ctx.paths) {
         issues.extend(crate::validate::validate_app_safety(&app, &agents));
         issues.extend(crate::validate::validate_app_agents(&app, &agents));
+        // Deliberately NOT the #308 missing-agent check: `app validate` judges the
+        // app *file*, and whether an agent happens to be installed is a fact about
+        // the environment, not the composition. (It would also make the verdict
+        // depend on ambient `~/.aware` state — an app would be "valid" on one
+        // machine and not another.) `install`/`compile` warn and `run` refuses.
     }
 
     if issues.is_empty() {
