@@ -1461,12 +1461,25 @@ internal static class Program
             return 2;
         }
 
-        // Hand the scene to the embedded bake script as the `args.scene` global.
+        // What the user sees in Tekla while the bake compiles and runs. An optional `label` lets the
+        // caller say who is doing this — the substrate has no name of its own to offer, and must not
+        // borrow the scene's, which names the MODEL rather than its producer. It rides beside `scene`
+        // rather than inside it, so the scene hash (and materialization identity) is unaffected.
+        string? label = input?["label"]?.GetValue<string>();
+        int objectCount = scene["elements"] is JsonArray sceneElements ? sceneElements.Count : 0;
+        string plural = objectCount == 1 ? "" : "s";
+        string announce = string.IsNullOrWhiteSpace(label)
+            ? $"Adding {objectCount} object{plural} to this model..."
+            : $"{label}: adding {objectCount} object{plural} to this model...";
+
+        // Hand the scene to the embedded bake script as the `args.scene` global; `label` rides along
+        // so the completion message the script emits on commit matches this one.
         var argsNode = new JsonObject
         {
             ["scene"] = scene.DeepClone(),
+            ["label"] = label,
         };
-        return ExecuteResolvedScript("bake-scene", BakeSceneCode, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
+        return ExecuteResolvedScript("bake-scene", BakeSceneCode, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned, announce);
     }
 
     internal static string TrimJsonBom(string input) => input.TrimStart('\uFEFF');
@@ -1542,7 +1555,8 @@ internal static class Program
         string? version,
         int? pid,
         JsonObject? argsNode,
-        ScriptCommitPolicy? commitPolicy = null)
+        ScriptCommitPolicy? commitPolicy = null,
+        string? announce = null)
     {
 
         // Find the running Tekla instance (if any) to populate host_pid and
@@ -1646,7 +1660,8 @@ internal static class Program
                 argsNode,
                 probedDir,
                 hostPid,
-                commitPolicy ?? CommitPolicyForVerb(verb));
+                commitPolicy ?? CommitPolicyForVerb(verb),
+                announce);
             // Losing the disarm race means a last-resort hook already emitted
             // a fail receipt (a background-thread fault) — ours is suppressed.
             if (!TryClaimReceipt()) return 2;
@@ -1705,7 +1720,8 @@ internal static class Program
         JsonObject? argsNode,
         string? teklaBinDir,
         int? expectedPid,
-        ScriptCommitPolicy commitPolicy)
+        ScriptCommitPolicy commitPolicy,
+        string? announce = null)
     {
         JsonNode? result = null;
         Exception? fault = null;
@@ -1714,7 +1730,7 @@ internal static class Program
             try
             {
                 result = SerializeResult(
-                    RunScript(code, teklaReferences, argsNode, teklaBinDir, expectedPid, commitPolicy));
+                    RunScript(code, teklaReferences, argsNode, teklaBinDir, expectedPid, commitPolicy, announce));
             }
             catch (Exception e) { fault = e; }
         })
@@ -1743,7 +1759,8 @@ internal static class Program
         JsonObject? argsNode,
         string? teklaBinDir,
         int? expectedPid,
-        ScriptCommitPolicy commitPolicy)
+        ScriptCommitPolicy commitPolicy,
+        string? announce = null)
     {
         // Standard usings — enough for catalog-style snippets to stay
         // boilerplate-free. The script writer can add `using ...;` lines of
@@ -1850,6 +1867,27 @@ internal static class Program
         var argsDict = JsonObjectToDictionary(argsNode);
         var globals = new ExecGlobals { model = modelInstance, args = argsDict };
 
+        // Announce BEFORE compiling. Compiling this script is the long pole of a bake (seconds),
+        // and it happens with a live Tekla connection already in hand — so a message emitted from
+        // inside the script only appears once that wait is already over, flashing by just before the
+        // work finishes. Emitted here it covers the whole wait. Cosmetic: never fail a bake over it.
+        Action<string>? sayStatus = null;
+        if (!string.IsNullOrEmpty(announce) && modelInstance is not null)
+        {
+            try
+            {
+                var opType = modelInstance.GetType().Assembly
+                    .GetType("Tekla.Structures.Model.Operations.Operation");
+                var prompt = opType?.GetMethod("DisplayPrompt", new[] { typeof(string) });
+                if (prompt is not null)
+                {
+                    sayStatus = msg => { try { prompt.Invoke(null, new object[] { msg }); } catch { } };
+                    sayStatus(announce!);
+                }
+            }
+            catch { /* a status message is never worth failing a bake for */ }
+        }
+
         var script = CSharpScript.Create<object>(
             code,
             options: options,
@@ -1859,8 +1897,19 @@ internal static class Program
         // thread pool (no captured SynchronizationContext) — see
         // RunScriptOnStaThread for why a single-threaded pump is NOT installed
         // (it would deadlock sync-over-async scripts).
-        var state = script.RunAsync(globals).GetAwaiter().GetResult();
-        var returnValue = state.ReturnValue;
+        object? returnValue;
+        try
+        {
+            var state = script.RunAsync(globals).GetAwaiter().GetResult();
+            returnValue = state.ReturnValue;
+        }
+        catch
+        {
+            // The script never returned, so its own failure prompt never ran. Do not leave the
+            // caller's "adding..." claim standing over a model where nothing happened.
+            sayStatus?.Invoke("Nothing was added.");
+            throw;
+        }
 
         // Tekla "transaction-commit" — flush changes to the database. We
         // only do this if a real Model was constructed AND the connection is

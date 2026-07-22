@@ -356,6 +356,11 @@ try {
     foreach(var item in supportedOrder){string id=item.Item1;string kind=item.Item2;ModelObject o=null;string realizedBy="";if(nativeById.TryGetValue(id,out o)){}else if(realizedChildren.TryGetValue(id,out realizedBy)||realizedEffects.TryGetValue(id,out realizedBy)||realizedReferences.TryGetValue(id,out realizedBy))nativeById.TryGetValue(realizedBy,out o);if(o==null)throw new Exception(id+": supported record was not classified by the materializer");var r=row(id,kind,"emitted","","");r["nativeGuid"]=o.Identifier.GUID.ToString();if(!String.IsNullOrEmpty(realizedBy))r["realizedBy"]=realizedBy;if(profileById.ContainsKey(id))r["profile"]=profileById[id];emitted.Add(r);}
     Func<IDictionary<string,object>,string> legacyMemberRole=e=>{string role=str(e,"role").ToLowerInvariant();if(String.IsNullOrEmpty(role))role=str(e,"group").ToLowerInvariant();return role;};var legacyMembers=elementById.Values.Where(e=>{string kind=str(e,"kind").ToLowerInvariant();return String.IsNullOrEmpty(kind)||kind=="member"||kind=="line"||kind=="box";}).ToList();int columns=legacyMembers.Count(e=>legacyMemberRole(e)=="column"),beams=legacyMembers.Count(e=>legacyMemberRole(e)!="column"&&legacyMemberRole(e)!="brace");string modelName;try{modelName=m.GetInfo().ModelName;}catch{modelName="Tekla model";}
     int nativeCount=nativeRecordIdByGuid.Count;
+    // Replace the "adding..." message only once the bake has actually reached its successful end.
+    // Announcing at CommitChanges would be true about the objects but premature about the operation:
+    // the work-plane restore and the classification below can still throw, and the caller would then
+    // report a failure Tekla had already called a success — inviting a retry that duplicates parts.
+    try{string doneLabel=str(args,"label");int doneMembers=emitted.Count(r=>str(r as IDictionary<string,object>,"kind")=="member");Tekla.Structures.Model.Operations.Operation.DisplayPrompt((String.IsNullOrWhiteSpace(doneLabel)?"":doneLabel+": ")+doneMembers.ToString(inv)+" member"+(doneMembers==1?"":"s")+" added.");}catch{}
     return new { ok=true,recovered=false,sourceId,sceneHash,materializationHash,attemptId,scene_name=sceneName,model=modelName,created=nativeCount,columns,beams,native=nativeCount,placeholder=0,failed_count=0,skipped=unsupported.Count,profiles=profileById,emitted,failed=new object[0],unsupported,warnings };
 }
 catch(Exception ex){
@@ -372,6 +377,10 @@ catch(Exception ex){
     string causeMessage=uncertain?failureMessage+" Tekla has no rollback API and the bridge could not prove complete, durably committed cleanup and work-plane restoration. Re-run bake-scene to reconcile source ownership before editing the model.":failureMessage;
     if(uncertain)warnings.Add(row("scene","scene","failed","commit-state-uncertain","Complete cleanup and a durable cleanup commit could not both be proved."));
     failed.Clear();bool causeAssigned=false;foreach(var item in supportedOrder){bool cause=!causeAssigned&&item.Item1==activeId;var r=row(item.Item1,item.Item2,"failed",cause?causeCode:"batch-aborted",cause?causeMessage:"Batch was aborted after another supported record failed.");r["rolledBack"]=!uncertain&&cleanupCommitted;failed.Add(r);if(cause)causeAssigned=true;}if(!causeAssigned){var r=row(activeId,"scene","failed",causeCode,causeMessage);r["rolledBack"]=!uncertain&&cleanupCommitted;failed.Insert(0,r);}
+    // Take back the "adding..." message the caller put up before compiling. Leaving it standing after
+    // a failure is the worst version of a stale status: it claims work is still under way in a model
+    // where nothing landed, or where ownership is uncertain and the user most needs the truth.
+    try{string failLabel=str(args,"label");Tekla.Structures.Model.Operations.Operation.DisplayPrompt((String.IsNullOrWhiteSpace(failLabel)?"":failLabel+": ")+(uncertain?"could not finish adding objects — re-run to reconcile the model.":"nothing was added."));}catch{}
     return new { ok=false,sourceId,sceneHash,materializationHash,attemptId,emitted=new object[0],failed,unsupported,warnings };
 }
 finally {

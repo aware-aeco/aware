@@ -291,6 +291,17 @@ commands:
         description: |
           Tekla version — selects the version-specific remoting channel (a wrong
           version silently finds no model). Use the running Tekla's version.
+      label:
+        type: string
+        required: false
+        example: "FloLess"
+        description: |
+          Who to name in Tekla's status bar while the bake runs. A bake takes
+          seconds against a live model and the user is usually watching Tekla, so
+          it announces itself there ("<label>: adding N objects to this model...",
+          then the outcome). Omitted, the messages simply drop the prefix. Carried
+          beside `scene` on purpose: inside it, it would change the scene hash and
+          therefore the materialization identity.
       pid:
         type: integer
         required: false
