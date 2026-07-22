@@ -343,9 +343,13 @@ fn collect_missing_agents(
 ) {
     for n in nodes {
         // A frozen node emits its pinned value and never invokes its agent, so a
-        // missing agent is harmless there (app-spec § Frozen nodes).
-        if n.frozen.is_none()
-            && let Some(agent_id) = &n.agent
+        // missing agent is harmless there — and neither does its `do:` body, which
+        // the orchestrator short-circuits along with it, so skip the whole subtree
+        // (app-spec § Frozen nodes; same rule as `check_node_agents`).
+        if n.frozen.is_some() {
+            continue;
+        }
+        if let Some(agent_id) = &n.agent
             && !agents.iter().any(|d| d.manifest.agent == *agent_id)
         {
             let msg = format!(
@@ -730,6 +734,24 @@ requires: []
         assert!(
             missing_agents(&app, &[], Severity::Error).is_empty(),
             "a frozen node must not require its agent to be installed"
+        );
+    }
+
+    #[test]
+    fn frozen_for_each_body_is_not_scanned_for_missing_agents() {
+        // A frozen `for-each` container short-circuits before its `do:` body runs,
+        // so an uninstalled agent *inside* that body can never be dispatched to.
+        // Descending into it would refuse a valid frozen composition at run.
+        let app: App = serde_yaml::from_str(
+            "app: frzloop\nversion: 0.0.1\ndescription: |\n  frozen for-each\n\
+             requires: []\nnodes:\n  - id: each\n    for-each: '{{ inputs.items }}'\n\
+             \x20   frozen:\n      ok: true\n    do:\n\
+             \x20     - id: inner\n        agent: nope\n        command: render\n",
+        )
+        .unwrap();
+        assert!(
+            missing_agents(&app, &[], Severity::Error).is_empty(),
+            "a frozen node's `do:` body never runs — it must not be scanned"
         );
     }
 
