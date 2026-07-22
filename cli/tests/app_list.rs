@@ -28,7 +28,7 @@ fn stdout_contains_version() -> predicates::str::ContainsPredicate {
 }
 
 #[test]
-fn json_output_has_seven_apps() {
+fn json_output_has_every_example_app() {
     let home = common::aware_home();
     let out = Command::cargo_bin("aware")
         .unwrap()
@@ -41,5 +41,8 @@ fn json_output_has_seven_apps() {
         .clone();
     let v: serde_json::Value = serde_json::from_slice(&out).unwrap();
     assert_eq!(v["ok"], true);
-    assert_eq!(v["data"]["apps"].as_array().unwrap().len(), 7);
+    // Mirrors every `.app` under `30-apps/_examples/`. A strict equality keeps this
+    // honest — adjust it whenever an example app lands or retires.
+    // 7 → 8 (`model-to-renders` — IFC in, headless still + turntable out).
+    assert_eq!(v["data"]["apps"].as_array().unwrap().len(), 8);
 }

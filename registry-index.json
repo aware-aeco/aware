@@ -482,6 +482,14 @@
         }
       }
     },
+    "blender": {
+      "versions": {
+        "0.1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/visualization/blender"
+        }
+      }
+    },
     "nbs-chorus": {
       "versions": {
         "4.0.0": {

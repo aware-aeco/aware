@@ -1058,6 +1058,14 @@ impl AgentInvoker for BuiltinInvoker {
             ("file", "write") => crate::render::file::file_write(&args, self.dry_run),
             ("file", "write-csv") => crate::render::file::file_write_csv(&args, self.dry_run),
             ("file", "read") => crate::render::file::file_read(&args, self.dry_run),
+            // The `blender` agent is the one builtin that drives an EXTERNAL process (headless
+            // Blender on the agent's own `bpy` scripts) — see `render::blender` for why it is a
+            // builtin and not a bridge. Matched on the agent alone so an unknown command gets that
+            // module's named error, which lists the five commands it does serve, rather than the
+            // generic dispatch message below.
+            ("blender", command) => {
+                crate::render::blender::run_blender_command(command, &args, self.dry_run).await
+            }
             _ => Err(AwareError::Validation(format!(
                 "builtin transport: no handler for {agent}/{command}"
             ))),

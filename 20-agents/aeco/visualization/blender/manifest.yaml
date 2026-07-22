@@ -1,0 +1,292 @@
+agent:        blender
+version:      0.1.0
+display-name: Blender
+description: |
+  The first visualization agent in the substrate that renders with NO human in
+  the loop. IFC in, production stills (PNG) and turntable videos (MP4) out.
+
+  Its siblings `enscape-prep` and `twinmotion-prep` are honest prep-only agents:
+  Enscape and Twinmotion cannot render headlessly, so AWARE stages the scene and
+  a human presses Render. Blender can — `blender -b -P script.py` runs import,
+  materials, camera and render entirely unattended, with two production
+  renderers in the box (EEVEE for drafts and turntables, Cycles for path-traced
+  hero shots).
+
+  Materials are assigned from what the IFC already states: product class plus
+  associated material grade, with clay as a never-fail default. That is what
+  makes the chain autonomous — nobody is there to click a material.
+
+  Generic by construction: it consumes any IFC — a scene written by the `ifc`
+  agent, a Tekla export, a Revit export — identically. Material associations are
+  resolved through layer-set, profile-set and type-level wrappers, not just the
+  trivial direct case.
+
+stateful: false
+
+vendor:   aware-aeco
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/visualization/blender
+keywords: [aware, blender, rendering, visualization, headless, ifc, eevee, cycles, turntable]
+
+provenance:
+  generated-by:      hand-curated
+  generator-version: 0.100.0
+  refined-by:        [pawellisowski]
+  generated-at:      2026-07-22T00:00:00Z
+
+requires:
+  software:
+    # Verified against 5.2.0 LTS (bundled Python 3.13.13). The scripts target the
+    # stable `bpy` surface but do carry two 5.x-specific accommodations: the
+    # `image_settings.media_type` gate for video output, and layered-action
+    # fcurve traversal (`Action.fcurves` was removed in 4.4).
+    - blender@4.2.x|5.x
+  filesystem:
+    - read:  '*.ifc,*.blend'
+    - write: '*.blend,*.png,*.mp4'
+
+# Runtime built-in: the transport runs in-process in the `aware` runtime, spawning
+# `blender -b -P <script>.py -- @<inputs>.json` and recovering the framed result
+# from stdout. There is no `aware-blender` bridge binary to install — Blender is a
+# standalone executable taking CLI arguments, not a vendor SDK needing a native
+# host process, so a bridge would be a pure process launcher. Dispatch is routed
+# by agent id to `cli/src/render/blender.rs`.
+#
+# The Blender executable is found via $AWARE_BLENDER, then `blender` on PATH, then
+# the platform's default install locations.
+transport:
+  builtin: {}
+
+commands:
+
+  scene.import:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Import an IFC into Blender and stage it as a `.blend`. Geometry comes from
+      the `ifcopenshell.geom` iterator; IFC class, material, storey, GUID and
+      name ride along on each object as custom properties, so later commands
+      never reopen the IFC.
+
+      Three outcomes are accounted for separately, because they mean different
+      things. `imported` produced geometry. `skipped` claimed a shape and failed
+      to produce one — including elements the geom iterator drops silently for
+      degenerate geometry, which a naive loop would lose with no trace.
+      `excluded` was never meant to render: `IfcOpeningElement` (a subtractive
+      void — the host already has the boolean applied, so importing it puts a
+      solid box inside every door) and `IfcSpace` (a volumetric zone). Folding
+      exclusions into `skipped` would bury the one real failure under dozens of
+      routine ones on any real building.
+
+      Invariant: `imported + skipped-count` equals the number of geometry-bearing
+      products, where a geometry-bearing product is one carrying a non-empty
+      `Representation`.
+    inputs:
+      ifc-path: string
+      blend-path: string
+      unit-scale:
+        type: number
+        default: 1.0
+        description: |
+          Multiplier applied to incoming coordinates. Blender's scene unit is
+          metres and ifcopenshell already converts (a 6000 mm beam arrives as
+          6.0), so 1.0 is correct for normal input. Set 0.001 only for a
+          producer that hands back raw millimetres.
+      timeout-seconds:
+        type: number
+        description: Override the transport's process budget for this call.
+    outputs:
+      type: single
+      schema:
+        blend-path:     string
+        path:           string
+        imported:       number
+        skipped:        array   # [{guid, reason}] — claimed geometry, produced none
+        skipped-count:  number
+        excluded:       object  # class -> count, deliberately not imported
+        excluded-count: number
+        by-class:       object
+        by-material:    object
+        by-storey:      object
+
+  scene.apply-look:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Assign preset materials from IFC semantics. `clay` is neutral matte for
+      form studies, `realistic` is PBR steel/concrete/glass/timber, and
+      `section-style` is the flat drawing-like look.
+
+      Family resolves by material grade first (A992/A500/A36/S355/C30/GL28…),
+      then by IFC class, then falls back to clay — an unrecognised element never
+      fails the render. Grade matching is longest-prefix-wins and
+      case-insensitive; when one grade matches several families the IFC class
+      breaks the tie.
+    inputs:
+      blend-path: string
+      preset:
+        type: enum
+        values: [clay, realistic, section-style]
+        default: realistic
+      output-path:
+        type: string
+        description: Optional; defaults to overwriting `blend-path`.
+      timeout-seconds:
+        type: number
+    outputs:
+      type: single
+      schema:
+        preset:     string
+        assigned:   object  # family -> count
+        by-reason:  object  # grade | class | fallback -> count
+        blend-path: string
+        path:       string
+
+  render.still:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Render a camera-framed still. Takes either a staged `blend-path` or an
+      `ifc-path` directly (importing and applying a look on the fly). `draft`
+      uses EEVEE, `production` uses Cycles.
+
+      The camera is fitted to the model's bounding sphere — there is no viewport
+      in background mode to fit against, and a rotation-invariant fit is what
+      lets `render.turntable` reuse a single solve for every frame.
+    inputs:
+      blend-path:
+        type: string
+        description: Staged .blend; mutually exclusive with `ifc-path`.
+      ifc-path:
+        type: string
+        description: IFC to import on the fly; mutually exclusive with `blend-path`.
+      output-path: string
+      quality:
+        type: enum
+        values: [draft, production]
+        default: draft
+      direction:
+        type: enum
+        values: [iso, front, back, left, right, top]
+        default: iso
+      width-pixels:
+        type: number
+        default: 1920
+      height-pixels:
+        type: number
+        default: 1080
+      samples:
+        type: number
+        description: Render samples; 0 selects the per-engine default.
+      preset:
+        type: enum
+        values: [clay, realistic, section-style]
+        default: realistic
+        description: Look applied when importing from `ifc-path`.
+      timeout-seconds:
+        type: number
+    outputs:
+      type: single
+      schema:
+        path:          string
+        output-path:   string
+        size-bytes:    number
+        width-pixels:  number
+        height-pixels: number
+        engine:        string
+        quality:       string
+        framing:       object  # {centre, radius, distance, direction}
+
+  render.turntable:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Render a 360-degree orbit MP4 (EEVEE, H.264). The camera is parented to a
+      pivot at the model centre and the pivot spins, so the framing solved once
+      holds for every frame.
+    inputs:
+      blend-path: string
+      ifc-path: string
+      output-path: string
+      duration-seconds:
+        type: number
+        default: 8
+      fps:
+        type: number
+        default: 30
+      direction:
+        type: enum
+        values: [iso, front, back, left, right, top]
+        default: iso
+      width-pixels:
+        type: number
+        default: 1920
+      height-pixels:
+        type: number
+        default: 1080
+      samples:
+        type: number
+      preset:
+        type: enum
+        values: [clay, realistic, section-style]
+        default: realistic
+      timeout-seconds:
+        type: number
+    outputs:
+      type: single
+      schema:
+        path:             string
+        output-path:      string
+        size-bytes:       number
+        frames:           number
+        fps:              number
+        duration-seconds: number
+        width-pixels:     number
+        height-pixels:    number
+        engine:           string
+        framing:          object
+
+  scene.info:
+    lifecycle: single
+    category: curated
+    description: |
+      Inventory a staged `.blend` (or an IFC directly) by IFC class, material and
+      storey. Read-only — the verification and debugging surface for everything
+      above.
+
+      `blend-path` and `ifc-path` are mutually exclusive; giving both is an
+      error rather than a silent preference. `source` always echoes which one was
+      read. The skip and exclusion counts are present only on the `ifc-path`
+      branch, where an import actually happened — a staged `.blend` carries no
+      import record, and reporting `skipped-count: 0` there would assert
+      something the command cannot know.
+    inputs:
+      blend-path: string
+      ifc-path: string
+      unit-scale:
+        type: number
+        default: 1.0
+      timeout-seconds:
+        type: number
+    outputs:
+      type: single
+      schema:
+        count:          number
+        source:         string  # "blend-path" | "ifc-path"
+        by-class:       object
+        by-material:    object
+        by-storey:      object
+        elements:       array   # [{guid, name, class, material, storey}]
+        skipped:        array   # ifc-path branch only
+        skipped-count:  number  # ifc-path branch only
+        excluded:       object  # ifc-path branch only
+        excluded-count: number  # ifc-path branch only
+
+skills:
+  - headless-rendering.md
+  - ifc-import-ifcopenshell.md
+  - look-presets.md
