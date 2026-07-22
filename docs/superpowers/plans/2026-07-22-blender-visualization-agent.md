@@ -1120,6 +1120,11 @@ bpy.context.scene.render.resolution_x = 960
 bpy.context.scene.render.resolution_y = 540
 cam = _framing.ensure_camera()
 print('RECEIPT', _framing.frame_camera(cam, 'iso'))
+# REQUIRED: frame_camera() writes .location/.rotation_euler directly, and in
+# background mode Blender does NOT synchronously refresh camera.matrix_world --
+# it updates on the next depsgraph evaluation. Without this line the check below
+# reads a stale identity matrix and reports EVERY vertex outside the frustum.
+bpy.context.view_layer.update()
 # every mesh vertex must land inside the camera frustum
 from bpy_extras.object_utils import world_to_camera_view
 scene = bpy.context.scene
@@ -1134,7 +1139,13 @@ print('OUTSIDE_FRUSTUM', outside)
 "
 ```
 
-Expected: a `RECEIPT` with `radius` ≈ 4.0 (the fixture's diagonal half-span) and **`OUTSIDE_FRUSTUM 0`**. A non-zero count means the fit is wrong — raise `margin` only after confirming the half-FOV derivation matches the sensor fit, since a margin bump hides a math bug rather than fixing it.
+Expected: a `RECEIPT` with `radius` ≈ 4.05 (the fixture's diagonal half-span) and **`OUTSIDE_FRUSTUM 0`**. A non-zero count means the fit is wrong — raise `margin` only after confirming the half-FOV derivation matches the sensor fit, since a margin bump hides a math bug rather than fixing it.
+
+**The `matrix_world` staleness trap** (found while verifying this task — it cost real time, so it is written down): `frame_camera()` sets `.location` and `.rotation_euler`, but in background mode `camera.matrix_world` does not refresh until the next depsgraph evaluation. Anything reading `matrix_world` — including `world_to_camera_view` — sees an identity matrix until then, which reports *every* vertex outside the frustum and looks exactly like a broken fit.
+
+Consequences for later tasks:
+- **The render path is safe as-is.** `bpy.ops.render.render()` forces its own depsgraph evaluation, so pixels are always rasterized from the correct placement. Tasks 8 and 9 need no `view_layer.update()` call to render correctly.
+- **Diagnostics are not safe.** If `render_still.py` or `render_turntable.py` ever log a camera world position into their receipt *before* rendering, that value will be stale. Log the values already in `frame_camera()`'s returned dict (`centre` / `radius` / `distance` / `direction`) — they are correct with no sync — or call `bpy.context.view_layer.update()` first.
 
 - [ ] **Step 3: Commit**
 
