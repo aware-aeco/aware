@@ -30,7 +30,9 @@ jobs:
     # there would otherwise sit on a runner for six hours.
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      # v6, matching release.yml — v4 still targets Node 20 and makes every run
+      # carry a deprecation annotation.
+      - uses: actions/checkout@v6
 
       # `cli/rust-toolchain.toml` is the single source of truth for the compiler
       # version — read it here rather than restating it, so the pin can't drift
