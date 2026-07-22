@@ -161,4 +161,5 @@ def main(inputs: dict) -> dict:
     }
 
 
-_result.run(main)
+if __name__ == "__main__":
+    _result.run(main)

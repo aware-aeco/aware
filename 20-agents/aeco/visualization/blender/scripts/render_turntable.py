@@ -39,24 +39,7 @@ def _iter_fcurves(action):
                 yield from channelbag.fcurves
 
 
-# `render_still.py` ends with an unguarded `_result.run(main)` at module scope
-# (no `if __name__ == "__main__":`). Blender's `sys.argv` is process-global, so
-# a plain `import render_still` would immediately re-parse *this* process's own
-# argv as render_still's inputs, render a still under that name, and call
-# `sys.exit()` -- aborting this script before its own `main()` ever runs.
-# Verified: it reproducibly renders `<output-path>.png` and then fails with
-# render_still's own "render completed but <output-path> was not written"
-# error, because Blender appends the format extension while render_still checks
-# for the bare path. Neutralise the entry point for the duration of the import
-# only; this is a workaround here, not a fix -- the real fix belongs in
-# render_still.py (add the `if __name__ == "__main__":` guard), which is out of
-# this script's scope.
-_disarmed_run = _result.run
-_result.run = lambda _main_fn: None
-try:
-    import render_still  # noqa: E402  - reuse load_scene / lighting / engine resolution
-finally:
-    _result.run = _disarmed_run
+import render_still  # noqa: E402  - reuse load_scene / lighting / engine resolution
 
 
 def main(inputs: dict) -> dict:
@@ -176,4 +159,5 @@ def main(inputs: dict) -> dict:
     }
 
 
-_result.run(main)
+if __name__ == "__main__":
+    _result.run(main)

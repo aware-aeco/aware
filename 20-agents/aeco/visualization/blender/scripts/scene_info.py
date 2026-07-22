@@ -112,4 +112,5 @@ def main(inputs: dict) -> dict:
     return payload
 
 
-_result.run(main)
+if __name__ == "__main__":
+    _result.run(main)

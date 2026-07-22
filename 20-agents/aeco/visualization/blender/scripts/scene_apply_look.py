@@ -38,4 +38,5 @@ def main(inputs: dict) -> dict:
     return receipt
 
 
-_result.run(main)
+if __name__ == "__main__":
+    _result.run(main)
