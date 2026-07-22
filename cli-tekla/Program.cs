@@ -1461,18 +1461,24 @@ internal static class Program
             return 2;
         }
 
-        // Hand the scene to the embedded bake script as the `args.scene` global.
+        // What the user sees in Tekla while the bake compiles and runs. An optional `label` lets the
+        // caller say who is doing this — the substrate has no name of its own to offer, and must not
+        // borrow the scene's, which names the MODEL rather than its producer. It rides beside `scene`
+        // rather than inside it, so the scene hash (and materialization identity) is unaffected.
+        string? label = input?["label"]?.GetValue<string>();
+        int objectCount = scene["elements"] is JsonArray sceneElements ? sceneElements.Count : 0;
+        string plural = objectCount == 1 ? "" : "s";
+        string announce = string.IsNullOrWhiteSpace(label)
+            ? $"Adding {objectCount} object{plural} to this model..."
+            : $"{label}: adding {objectCount} object{plural} to this model...";
+
+        // Hand the scene to the embedded bake script as the `args.scene` global; `label` rides along
+        // so the completion message the script emits on commit matches this one.
         var argsNode = new JsonObject
         {
             ["scene"] = scene.DeepClone(),
+            ["label"] = label,
         };
-        // What the user will see in Tekla while the bake compiles and runs. The scene's own name
-        // keeps the substrate free of any calling app's vocabulary.
-        int objectCount = scene?["elements"] is JsonArray elements ? elements.Count : 0;
-        string sceneLabel = scene?["meta"]?["name"]?.GetValue<string>() is string n && !string.IsNullOrWhiteSpace(n)
-            ? n
-            : "Steel from Drawings";
-        string announce = $"{sceneLabel}: adding {objectCount} object{(objectCount == 1 ? "" : "s")} to this model...";
         return ExecuteResolvedScript("bake-scene", BakeSceneCode, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned, announce);
     }
 

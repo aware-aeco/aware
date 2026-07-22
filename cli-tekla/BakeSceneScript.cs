@@ -353,7 +353,7 @@ try {
     if(!m.CommitChanges("AWARE bake-scene "+sceneName+" "+attemptId))throw new Exception("Tekla CommitChanges returned false");
     // The objects are in the model as of the commit above, so replace the "adding..." message the
     // moment it stops being true — otherwise the status bar keeps claiming work is in progress.
-    try{Tekla.Structures.Model.Operations.Operation.DisplayPrompt(sceneName+": "+nativeRecordIdByGuid.Count.ToString(inv)+" object"+(nativeRecordIdByGuid.Count==1?"":"s")+" added.");}catch{}
+    try{string doneLabel=str(args,"label");string donePlural=nativeRecordIdByGuid.Count==1?"":"s";Tekla.Structures.Model.Operations.Operation.DisplayPrompt((String.IsNullOrWhiteSpace(doneLabel)?"":doneLabel+": ")+nativeRecordIdByGuid.Count.ToString(inv)+" object"+donePlural+" added.");}catch{}
     if(scenePlaneChanged){if(!scenePlaneHandler.SetCurrentTransformationPlane(previousScenePlane))throw new Exception("failed to restore the user's prior work plane after the committed bake");scenePlaneChanged=false;}
 
     foreach(var item in supportedOrder){string id=item.Item1;string kind=item.Item2;ModelObject o=null;string realizedBy="";if(nativeById.TryGetValue(id,out o)){}else if(realizedChildren.TryGetValue(id,out realizedBy)||realizedEffects.TryGetValue(id,out realizedBy)||realizedReferences.TryGetValue(id,out realizedBy))nativeById.TryGetValue(realizedBy,out o);if(o==null)throw new Exception(id+": supported record was not classified by the materializer");var r=row(id,kind,"emitted","","");r["nativeGuid"]=o.Identifier.GUID.ToString();if(!String.IsNullOrEmpty(realizedBy))r["realizedBy"]=realizedBy;if(profileById.ContainsKey(id))r["profile"]=profileById[id];emitted.Add(r);}
