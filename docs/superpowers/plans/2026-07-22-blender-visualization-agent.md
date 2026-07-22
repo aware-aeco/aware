@@ -1648,6 +1648,22 @@ import _result  # noqa: E402
 import render_still  # noqa: E402  - reuse load_scene / lighting / engine resolution
 
 
+def _iter_fcurves(action):
+    """Yield an action's fcurves across the pre-4.4 flat and 4.4+ layered shapes.
+
+    Blender 4.4 replaced `action.fcurves` with layered actions; on 5.2 the old
+    attribute is gone entirely, so reaching for it raises AttributeError.
+    """
+    flat = getattr(action, "fcurves", None)
+    if flat is not None:
+        yield from flat
+        return
+    for layer in getattr(action, "layers", ()):
+        for strip in getattr(layer, "strips", ()):
+            for channelbag in getattr(strip, "channelbags", ()):
+                yield from getattr(channelbag, "fcurves", ())
+
+
 def main(inputs: dict) -> dict:
     output_path = os.path.abspath(str(_result.require(inputs, "output-path")))
     duration = float(inputs.get("duration-seconds", 8))
@@ -1678,6 +1694,11 @@ def main(inputs: dict) -> dict:
     if hasattr(scene, "eevee") and hasattr(scene.eevee, "taa_render_samples"):
         scene.eevee.taa_render_samples = samples or 16
 
+    # Blender 5.2 gates video containers behind a media_type switch that defaults
+    # to IMAGE; without this, setting file_format = "FFMPEG" raises TypeError.
+    # hasattr-guarded so the script still runs on 4.x, which has no media_type.
+    if hasattr(scene.render.image_settings, "media_type"):
+        scene.render.image_settings.media_type = "VIDEO"
     scene.render.image_settings.file_format = "FFMPEG"
     scene.render.ffmpeg.format = "MPEG4"
     scene.render.ffmpeg.codec = "H264"
@@ -1699,6 +1720,12 @@ def main(inputs: dict) -> dict:
     pivot.location = framing["centre"]
     scene.collection.objects.link(pivot)
 
+    # REQUIRED: frame_camera() wrote .location/.rotation_euler, but background-mode
+    # Blender has not refreshed camera.matrix_world yet. Without this sync the copy
+    # below captures a stale identity matrix and the re-parented camera lands at the
+    # world origin -- yielding a video of nothing, or of the inside of a beam.
+    bpy.context.view_layer.update()
+
     world_matrix = camera.matrix_world.copy()
     camera.parent = pivot
     camera.matrix_parent_inverse = pivot.matrix_world.inverted()
@@ -1710,7 +1737,10 @@ def main(inputs: dict) -> dict:
     pivot.keyframe_insert(data_path="rotation_euler", frame=frame_count)
 
     # Linear interpolation, or the orbit eases in and out and looks broken.
-    for fcurve in pivot.animation_data.action.fcurves:
+    # Blender 4.4+ replaced the flat `action.fcurves` with layered actions, so the
+    # curves now hang off action.layers[].strips[].channelbags[]. _iter_fcurves()
+    # handles both shapes -- a bare `action.fcurves` raises AttributeError on 5.2.
+    for fcurve in _iter_fcurves(pivot.animation_data.action):
         for keyframe in fcurve.keyframe_points:
             keyframe.interpolation = "LINEAR"
 
