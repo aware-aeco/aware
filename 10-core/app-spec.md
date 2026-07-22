@@ -146,6 +146,22 @@ Optionally place the node on a grid for DAG layouts:
   config: { ... }
 ```
 
+#### When the agent must be installed
+
+A node's agent must be installed **by the time the app runs** — not when it is installed or compiled. An app may legitimately be installed ahead of its agents (the node is then compiled with its author-declared `mode:` and no resolved output schema, and the lockfile records a compile note). The gates are therefore graded:
+
+| Surface | A node whose `agent:` is not installed |
+|---|---|
+| `aware app install` | **Warning** `W_APP_AGENT_NOT_INSTALLED` — installs, naming the node, the agent, and the remedy |
+| `aware app compile` | **Warning** `W_APP_AGENT_NOT_INSTALLED` — writes the lock, same message |
+| `aware app run`, `--dry-run` | **Error** `E_APP_AGENT_NOT_INSTALLED` — refuses before the run starts |
+| `aware app run --simulate` | **Allowed** — every node is stubbed and no binary is contacted |
+| `aware app validate` | **Silent** — it judges the app *file*; which agents are installed is a fact about the environment, not the composition |
+
+`--simulate` is the supported way to check a composition before its agents are installed. A [frozen node](#frozen-nodes) is exempt everywhere: it emits its pinned output and never dispatches, so its agent need not exist at all.
+
+This is distinct from `E_APP_AGENT_UNAVAILABLE`, which rejects an agent that *is* known but is declared `status: planned` (no shipped transport binary) — that one can never run, so it is refused at install, compile and run alike.
+
 ### Inline glue
 
 For tiny operations (filters, maps, reshapes) that don't deserve a dedicated agent:

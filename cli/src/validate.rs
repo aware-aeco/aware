@@ -308,6 +308,67 @@ pub fn validate_app_agents(
     out
 }
 
+/// Report nodes that dispatch to an agent which is **not installed** (#308).
+///
+/// Split out from [`validate_app_agents`] because the two have deliberately
+/// different reach: a node's agent must exist *by run time*, but need not be
+/// installed when the app is installed or compiled — an app may legitimately be
+/// installed before its agents are (`app_lock` compiles such a node with an
+/// author-declared mode and a warning, #170). So install/compile surface these
+/// as warnings while `app run` treats them as errors.
+///
+/// Traversal mirrors [`check_node_agents`]: frozen nodes are skipped (they emit
+/// a pinned output and never dispatch, so their agent needn't exist at all) and
+/// `for-each` `do:` bodies are recursed into.
+/// `severity` picks the gate: [`Severity::Error`] (`E_APP_AGENT_NOT_INSTALLED`)
+/// for run, [`Severity::Warning`] (`W_APP_AGENT_NOT_INSTALLED`) for
+/// install/compile. The message — node id, agent id, and both remedies — is the
+/// same either way.
+#[allow(dead_code)] // wired by `aware app run` pre-flight + `app install`/`compile`
+pub fn missing_agents(
+    app: &App,
+    agents: &[crate::manifest::loader::DiscoveredAgent],
+    severity: Severity,
+) -> Vec<ValidationIssue> {
+    let mut out = Vec::new();
+    collect_missing_agents(&app.nodes, agents, &severity, &mut out);
+    out
+}
+
+fn collect_missing_agents(
+    nodes: &[crate::manifest::app::Node],
+    agents: &[crate::manifest::loader::DiscoveredAgent],
+    severity: &Severity,
+    out: &mut Vec<ValidationIssue>,
+) {
+    for n in nodes {
+        // A frozen node emits its pinned value and never invokes its agent, so a
+        // missing agent is harmless there — and neither does its `do:` body, which
+        // the orchestrator short-circuits along with it, so skip the whole subtree
+        // (app-spec § Frozen nodes; same rule as `check_node_agents`).
+        if n.frozen.is_some() {
+            continue;
+        }
+        if let Some(agent_id) = &n.agent
+            && !agents.iter().any(|d| d.manifest.agent == *agent_id)
+        {
+            let msg = format!(
+                "node {:?} references agent {:?}, which is not installed — install it with \
+                 `aware agent install {agent_id}`, or check whether it exists at all with \
+                 `aware agent describe {agent_id} --available`",
+                n.id, agent_id
+            );
+            out.push(match severity {
+                Severity::Error => ValidationIssue::error("E_APP_AGENT_NOT_INSTALLED", msg),
+                Severity::Warning => ValidationIssue::warning("W_APP_AGENT_NOT_INSTALLED", msg),
+            });
+        }
+        if let Some(body) = &n.do_ {
+            collect_missing_agents(body, agents, severity, out);
+        }
+    }
+}
+
 fn check_node_agents(
     nodes: &[crate::manifest::app::Node],
     agents: &[crate::manifest::loader::DiscoveredAgent],
@@ -598,6 +659,130 @@ requires: []
         assert!(
             !issues.iter().any(|i| i.code == "E_APP_AGENT_UNAVAILABLE"),
             "issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn missing_agent_is_reported_with_node_agent_and_remedy() {
+        // #308: an app referencing an agent that isn't installed used to pass
+        // every gate and die at run with a bare `os error 3`. The issue must
+        // name the offending node, the agent, and how to fix it.
+        let app: App = serde_yaml::from_str(
+            "app: probe\nversion: 0.0.1\ndescription: |\n  unknown agent\n\
+             requires: []\nnodes:\n  - id: n\n    agent: definitely-not-an-agent-xyz\n    command: render\n",
+        )
+        .unwrap();
+        let issues = missing_agents(&app, &[], Severity::Error);
+        let issue = issues
+            .iter()
+            .find(|i| i.code == "E_APP_AGENT_NOT_INSTALLED")
+            .unwrap_or_else(|| panic!("expected E_APP_AGENT_NOT_INSTALLED, got {issues:?}"));
+        assert!(issue.message.contains("\"n\""), "names the node: {issue:?}");
+        assert!(
+            issue.message.contains("definitely-not-an-agent-xyz"),
+            "names the agent: {issue:?}"
+        );
+        assert!(
+            issue
+                .message
+                .contains("aware agent install definitely-not-an-agent-xyz"),
+            "carries the remedy: {issue:?}"
+        );
+    }
+
+    #[test]
+    fn missing_agent_severity_selects_the_code() {
+        // install/compile warn (an app may be installed before its agents, #170);
+        // run errors. Same message, different gate.
+        let app: App = serde_yaml::from_str(
+            "app: probe\nversion: 0.0.1\ndescription: |\n  unknown agent\n\
+             requires: []\nnodes:\n  - id: n\n    agent: nope\n    command: render\n",
+        )
+        .unwrap();
+        let warn = missing_agents(&app, &[], Severity::Warning);
+        assert_eq!(warn.len(), 1);
+        assert_eq!(warn[0].code, "W_APP_AGENT_NOT_INSTALLED");
+        assert!(!has_errors(&warn), "warning severity must not be an error");
+        let err = missing_agents(&app, &[], Severity::Error);
+        assert!(has_errors(&err), "error severity must be an error");
+    }
+
+    #[test]
+    fn installed_agent_is_not_reported_missing() {
+        let agents = vec![agent_with_status("")];
+        let app: App = serde_yaml::from_str(
+            "app: ok\nversion: 0.0.1\ndescription: |\n  installed agent\n\
+             requires: []\nnodes:\n  - id: report\n    agent: html-report\n    command: render\n",
+        )
+        .unwrap();
+        assert!(
+            missing_agents(&app, &agents, Severity::Error).is_empty(),
+            "an installed agent must not be flagged"
+        );
+    }
+
+    #[test]
+    fn frozen_node_with_missing_agent_is_not_reported() {
+        // A frozen node emits its pinned output and never dispatches, so its
+        // agent needn't be installed at all (app-spec § Frozen nodes) — the same
+        // carve-out the planned-agent gate makes.
+        let app: App = serde_yaml::from_str(
+            "app: frz\nversion: 0.0.1\ndescription: |\n  frozen unknown\n\
+             requires: []\nnodes:\n  - id: n\n    agent: nope\n    command: render\n    frozen:\n      ok: true\n",
+        )
+        .unwrap();
+        assert!(
+            missing_agents(&app, &[], Severity::Error).is_empty(),
+            "a frozen node must not require its agent to be installed"
+        );
+    }
+
+    #[test]
+    fn frozen_for_each_body_is_not_scanned_for_missing_agents() {
+        // A frozen `for-each` container short-circuits before its `do:` body runs,
+        // so an uninstalled agent *inside* that body can never be dispatched to.
+        // Descending into it would refuse a valid frozen composition at run.
+        let app: App = serde_yaml::from_str(
+            "app: frzloop\nversion: 0.0.1\ndescription: |\n  frozen for-each\n\
+             requires: []\nnodes:\n  - id: each\n    for-each: '{{ inputs.items }}'\n\
+             \x20   frozen:\n      ok: true\n    do:\n\
+             \x20     - id: inner\n        agent: nope\n        command: render\n",
+        )
+        .unwrap();
+        assert!(
+            missing_agents(&app, &[], Severity::Error).is_empty(),
+            "a frozen node's `do:` body never runs — it must not be scanned"
+        );
+    }
+
+    #[test]
+    fn missing_agent_is_found_inside_a_for_each_body() {
+        // The traversal must recurse into `do:` bodies, or a for-each node hides
+        // the missing agent from the pre-flight and it resurfaces at run.
+        let app: App = serde_yaml::from_str(
+            "app: loop\nversion: 0.0.1\ndescription: |\n  for-each body\n\
+             requires: []\nnodes:\n  - id: each\n    for-each: '{{ inputs.items }}'\n    do:\n\
+             \x20     - id: inner\n        agent: nope\n        command: render\n",
+        )
+        .unwrap();
+        let issues = missing_agents(&app, &[], Severity::Error);
+        assert!(
+            issues.iter().any(|i| i.message.contains("\"inner\"")),
+            "must recurse into `do:` bodies: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn nodes_without_an_agent_are_not_reported() {
+        // Inline / primitive nodes carry no `agent:` and dispatch to nothing.
+        let app: App = serde_yaml::from_str(
+            "app: inl\nversion: 0.0.1\ndescription: |\n  inline only\n\
+             requires: []\nnodes:\n  - id: i\n    inline:\n      kind: predicate\n      description: x\n      code: 'true'\n",
+        )
+        .unwrap();
+        assert!(
+            missing_agents(&app, &[], Severity::Error).is_empty(),
+            "a node with no agent has nothing to resolve"
         );
     }
 

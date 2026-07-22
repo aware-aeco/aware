@@ -853,6 +853,14 @@ pub fn compile_to_disk(source: &Path, paths: &Paths) -> Result<std::path::PathBu
             err.code, err.message
         )));
     }
+    // #308: warn (don't refuse) when a node's agent isn't installed. Compiling
+    // before the agents are installed is supported — the node is locked with its
+    // author-declared mode and no resolved schema (#170) — but that gap used to
+    // be silent, and only showed up at run as a bare `os error 3`. `aware app
+    // run` refuses it; here the user just gets told, with the remedy.
+    for m in crate::validate::missing_agents(&app, &agents, crate::validate::Severity::Warning) {
+        eprintln!("\u{26a0} [{}] {}", m.code, m.message);
+    }
     let lock = compile(&app, &agents, source)?;
     write_lockfile(&lock, source)
 }
