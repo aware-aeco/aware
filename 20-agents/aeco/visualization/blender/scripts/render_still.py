@@ -14,6 +14,8 @@ import _framing  # noqa: E402
 import _ifc_import  # noqa: E402
 import _looks  # noqa: E402
 import _result  # noqa: E402
+import _stage  # noqa: E402
+
 
 # Set from the Task 1 probe: Blender 4.2+ renamed EEVEE to BLENDER_EEVEE_NEXT.
 # Resolved at runtime so one script works across the 4.x/5.x split.
@@ -31,77 +33,21 @@ def _eevee_engine() -> str:
     )
 
 
-def setup_world(strength: float = 1.0) -> None:
-    """A vertical grey gradient sky, not a flat colour.
+def _as_bool(value, default: bool = True) -> bool:
+    """Coerce a JSON-ish input to a bool without surprising the caller.
 
-    A flat single-colour world starves specular materials: a metal has
-    almost no diffuse response, so what you see is nearly all what it
-    reflects, and a flat dark environment reflects back as a flat dark
-    object -- no gradient across a curved or angled face, no visible form.
-    Clay and section-style are diffuse-dominant and barely need this;
-    realistic steel (metallic 0.85) needs it to read as metal at all. The
-    gradient is strictly neutral (equal R/G/B at both stops) so it never
-    tints the model or reads as a "look" -- it is lighting infrastructure,
-    not art direction, and applies the same way regardless of which preset
-    is active (preset is not knowable here on the staged-.blend path: the
-    look was applied by a prior `scene.apply-look` call and isn't recorded
-    as scene metadata).
+    The transport hands inputs through as JSON, so `ground` normally arrives as a
+    real bool -- but a caller templating `'{{ inputs.ground }}'` in a workflow
+    gets a string, and `bool("false")` is True, which would silently ignore the
+    one value they bothered to set.
     """
-    world = bpy.context.scene.world
-    if world is None:
-        world = bpy.data.worlds.new("AwareWorld")
-        bpy.context.scene.world = world
-    world.use_nodes = True
-    nodes = world.node_tree.nodes
-    links = world.node_tree.links
-    background = nodes.get("Background")
-    if background is None:
-        return
-
-    # Named and reused rather than always-`new`, so calling setup_world()
-    # again in the same session rewires the same nodes instead of leaving
-    # orphaned duplicates behind.
-    coord = nodes.get("AwareSkyCoord") or nodes.new("ShaderNodeTexCoord")
-    coord.name = "AwareSkyCoord"
-    separate = nodes.get("AwareSkySeparateZ") or nodes.new("ShaderNodeSeparateXYZ")
-    separate.name = "AwareSkySeparateZ"
-    remap = nodes.get("AwareSkyRemap") or nodes.new("ShaderNodeMapRange")
-    remap.name = "AwareSkyRemap"
-    ramp_node = nodes.get("AwareSkyRamp") or nodes.new("ShaderNodeValToRGB")
-    ramp_node.name = "AwareSkyRamp"
-
-    # Z is a unit direction (-1 straight down .. +1 straight up); remap to
-    # 0..1 so the ramp below spans the whole visible sky with the horizon
-    # at the midpoint, rather than clamping the entire lower hemisphere to
-    # a single flat colour.
-    remap.inputs["From Min"].default_value = -1.0
-    remap.inputs["From Max"].default_value = 1.0
-    remap.inputs["To Min"].default_value = 0.0
-    remap.inputs["To Max"].default_value = 1.0
-
-    ramp = ramp_node.color_ramp
-    ramp.elements[0].position = 0.0
-    ramp.elements[0].color = (0.03, 0.03, 0.03, 1.0)
-    ramp.elements[1].position = 1.0
-    ramp.elements[1].color = (0.95, 0.95, 0.95, 1.0)
-
-    links.new(coord.outputs["Generated"], separate.inputs["Vector"])
-    links.new(separate.outputs["Z"], remap.inputs["Value"])
-    links.new(remap.outputs["Result"], ramp_node.inputs["Factor"])
-    links.new(ramp_node.outputs["Color"], background.inputs["Color"])
-    background.inputs["Strength"].default_value = strength
-
-
-def setup_key_light() -> None:
-    """One sun, angled to match the default `iso` camera direction."""
-    if any(obj.type == "LIGHT" for obj in bpy.data.objects):
-        return
-    light_data = bpy.data.lights.new("AwareSun", type="SUN")
-    light_data.energy = 3.0
-    light_data.angle = 0.15
-    light = bpy.data.objects.new("AwareSun", light_data)
-    light.rotation_euler = (0.9, 0.0, -0.8)
-    bpy.context.scene.collection.objects.link(light)
+    if value is None:
+        return default
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return bool(value)
+    return str(value).strip().lower() not in ("false", "0", "no", "off", "")
 
 
 def load_scene(inputs: dict) -> None:
@@ -151,10 +97,12 @@ def load_scene(inputs: dict) -> None:
 def main(inputs: dict) -> dict:
     output_path = os.path.abspath(str(_result.require(inputs, "output-path")))
     quality = str(inputs.get("quality", "draft"))
-    direction = str(inputs.get("direction", "iso"))
+    direction = str(inputs.get("direction", "hero"))
     width = int(inputs.get("width-pixels", 1920))
     height = int(inputs.get("height-pixels", 1080))
     samples = int(inputs.get("samples", 0))
+    environment = inputs.get("environment", _stage.DEFAULT_ENVIRONMENT)
+    ground_enabled = _as_bool(inputs.get("ground"), default=True)
 
     if quality not in ("draft", "production"):
         raise _result.AwareBlenderError(
@@ -187,15 +135,23 @@ def main(inputs: dict) -> dict:
         scene.render.engine = _eevee_engine()
         if hasattr(scene, "eevee") and hasattr(scene.eevee, "taa_render_samples"):
             scene.eevee.taa_render_samples = samples or 32
+        _stage.tune_eevee(scene)
 
-    setup_world()
-    setup_key_light()
+    environment_receipt = _stage.setup_world(environment)
+    _stage.setup_key_light()
 
     camera = _framing.ensure_camera()
     try:
         framing = _framing.frame_camera(camera, direction)
     except ValueError as exc:
         raise _result.AwareBlenderError(_result.ERR_RENDER_FAILED, str(exc)) from exc
+
+    # After framing, deliberately. The ground is sized from the model's bounds,
+    # and it carries the aware-helper mark so `scene_bounds()` skips it -- which
+    # means re-solving the fit with the ground present gives the same answer.
+    # `tests/test_ground_isolation.py` pins exactly that, because if it ever
+    # stopped holding every render would silently reframe.
+    ground_receipt = _stage.setup_ground(ground_enabled)
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     bpy.ops.render.render(write_still=True)
@@ -215,6 +171,8 @@ def main(inputs: dict) -> dict:
         "engine": scene.render.engine,
         "quality": quality,
         "framing": framing,
+        "environment": environment_receipt,
+        "ground": ground_receipt,
     }
 
 

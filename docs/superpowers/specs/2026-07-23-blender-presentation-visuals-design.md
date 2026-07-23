@@ -156,19 +156,47 @@ The constant lives beside the existing `PROP_*` names in `_ifc_import.py`, which
 `scene_info` already import — it is exactly "a custom property key on scene objects", which is what
 that block of constants is.
 
-### EEVEE needs switching on
+### EEVEE tuning: measured, then almost entirely deleted
 
-The first prototype rendered EEVEE's contact shadow as a **hard aliased polygon** on a completely
-flat frame, against Cycles' soft shadow and tonal floor. EEVEE Next ships its quality features off
-or low, so the draft path sets them explicitly: `use_shadows`, `shadow_ray_count`,
-`shadow_step_count`, `use_raytracing` with `ray_tracing_method = "SCREEN"`, and `use_fast_gi`.
-The sun also gets a wider `angle`, which is what softens the shadow edge in both engines.
+An early prototype rendered EEVEE's contact shadow as a hard aliased polygon, and a `tune_eevee()`
+was written to fix it — `use_raytracing`, `ray_tracing_method = "SCREEN"`, `use_fast_gi`,
+`shadow_ray_count`, `shadow_step_count`, plus a wider sun `angle`.
 
-**What that does not close, honestly:** EEVEE still renders metal flatter and darker than Cycles
-(measured above). That is the rasterizer, not a setting, and it is consistent with what the shipped
-`headless-rendering` skill already says — draft is for iterating and previewing framing; production
-is where reflections have to be correct. The gap gets documented in the skill rather than papered
-over.
+**A/B measured against the real fixture, all of it together changed nothing.** Floor-region mean
+came back 0.7327 tuned and 0.7327 untuned — identical to four decimal places. PROBE-vs-SCREEN
+tracing, `shadow_resolution_scale = 2.0`, a finer `shadow_maximum_resolution`, a larger
+`shadow_filter_radius` and `use_shadow_jitter` were each measured too; none moved the image. The
+sun angle A/B (0.15 vs 0.30) was 0.2244 vs 0.2204 floor spread and visually indistinguishable.
+
+The original hard shadow came from a *different* prototype scene (a 2 m cube on a 30 m plane), not
+from any setting these controls touch. So the settings are **not shipped**, and the sun `angle`
+stays at v1's 0.15. `tune_eevee()` survives as one line — `use_shadows = True` — justified by a
+real failure mode rather than a hoped-for one: the agent deliberately runs without
+`--factory-startup`, so the user's startup file is loaded and shadows are not guaranteed on.
+
+Settings whose only effect is to look diligent in a diff are worse than no settings, because the
+next person builds on the false premise that they did something.
+
+**What none of this closes, honestly:** EEVEE renders the steel **43% darker** than Cycles —
+steel-only mean luminance 0.2705 against 0.4774, measured through an alpha silhouette. That is the
+rasterizer, not a setting, and it matches what the shipped `headless-rendering` skill already says:
+draft previews framing, production is where reflections have to be correct. It gets documented in
+the skill rather than papered over.
+
+### Two bugs the renders caught that no numeric gate would have
+
+1. **The near clip plane sliced the ground.** `frame_camera()` set
+   `clip_start = distance - radius * 4.0` to buy depth precision — safe while nothing existed near
+   the camera, since the model sits at `distance ± radius`. The ground plane runs from the model
+   *towards* the camera and past it, so that near plane cut it, and the cut rendered as a hard
+   horizontal band across the bottom sixth of `direction: front`. Fixed to `distance / 1000.0`; the
+   remaining depth ratio is a few thousand to one, which is nothing.
+2. **The alpha-silhouette trick broke on the ground.** The handoff warns that a corner-sampled
+   background estimate breaks once the background is a gradient, and prescribes a
+   `film_transparent` alpha mask instead. That mask *also* breaks now: the ground is a real opaque
+   surface, so it lands in the silhouette. The first measurement of "the steel" was 279 k of 518 k
+   pixels — mostly floor — and reported EEVEE as *brighter* than Cycles, the exact opposite of the
+   truth. The mask has to be rendered with the ground removed.
 
 ### Sizing and the far clip
 
