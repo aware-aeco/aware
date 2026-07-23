@@ -343,6 +343,36 @@ For the record, measured correctly (30 k model pixels, 5.8 % of frame): steel me
 **0.4774** under Cycles and **0.2705** under EEVEE — the rasterizer renders metal 43 % darker, and
 no setting closes it.
 
+## Known limitation: EEVEE + HDRI banding on tessellated sections
+
+**Unresolved. Draft only.** Under `quality: draft` with an HDRI `environment`, EEVEE renders a row
+of regular light/dark dashes along the web of an I-section beam. Cycles renders the same geometry
+clean, and so does EEVEE with `environment: gradient`.
+
+Isolated by bisection against the fixture:
+
+| Engine | `environment` | Result |
+|---|---|---|
+| Cycles | `studio` | clean |
+| EEVEE | `gradient` | clean |
+| EEVEE | `studio` | **banded** |
+
+So it is the HDRI's high-frequency content, not the ground plane, the sun energy, the lens or the
+`hero` direction — each of those was ruled out separately. It is **not** pre-existing: rendering
+the fixture with the v0.102.0 scripts extracted from git comes back clean, so it arrived with
+image-based lighting.
+
+Ruled out as fixes, each measured: `shadow_ray_count`, `shadow_step_count`,
+`shadow_resolution_scale`, `shadow_maximum_resolution`, `shadow_filter_radius`,
+`use_shadow_jitter`, `use_raytracing` on/off, PROBE-vs-SCREEN tracing, `use_fast_gi`,
+`clamp_surface_indirect`, `gi_cubemap_resolution`, and sun `angle`. Turning `use_shadows` off
+removes it, but only by flattening the whole render.
+
+**Workarounds:** use `quality: production` for anything anyone will look at — which is what the
+presentation path is for — or `environment: gradient` if a clean draft matters more than
+representative lighting. Do not "fix" this by changing the default environment per engine: that
+would make draft stop previewing production, which is a worse problem than the banding.
+
 ## Blender 5.2 API breaks worth knowing
 
 **Video output is gated behind `media_type`.** `image_settings` gained a

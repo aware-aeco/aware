@@ -89,6 +89,19 @@ def frame_camera(
     height = render.resolution_y * (render.pixel_aspect_y or 1.0)
 
     cam_data = camera.data
+    # The lens is set HERE, not in `ensure_camera()`. That function returns a
+    # camera the .blend already carried without touching it, so a lens applied
+    # there reaches only scenes the agent built itself -- and any camera-bearing
+    # .blend keeps rendering at whatever FOV it happened to have (Blender's wide
+    # 50mm default, usually). The same `render.still` request would then produce
+    # two different pictures depending on a property of the input file nobody
+    # thinks about. Measured: 24mm gives distance 9.09 where 200mm gives 66.16.
+    #
+    # This function already overwrites location, rotation and both clip planes,
+    # so it owns the camera's framing outright and the lens belongs with them.
+    # It must be set BEFORE `angle` is read, since `angle` derives from the lens
+    # and the whole fit derives from `angle`.
+    cam_data.lens = DEFAULT_LENS_MM
     # `angle` is the FOV across the sensor-fit axis; derive the other from aspect.
     if width >= height:
         half_x = cam_data.angle / 2.0
@@ -135,7 +148,6 @@ def ensure_camera() -> bpy.types.Object:
     if scene.camera is not None:
         return scene.camera
     cam_data = bpy.data.cameras.new("AwareCamera")
-    cam_data.lens = DEFAULT_LENS_MM
     camera = bpy.data.objects.new("AwareCamera", cam_data)
     scene.collection.objects.link(camera)
     scene.camera = camera
