@@ -161,6 +161,9 @@ def apply_look(preset: str) -> dict:
     for obj in bpy.data.objects:
         if obj.type != "MESH":
             continue
+        # The ground plane is staging, not model -- it keeps its own material.
+        if obj.get(_ifc_import.PROP_HELPER):
+            continue
         ifc_class = obj.get(_ifc_import.PROP_CLASS, "")
         grade = obj.get(_ifc_import.PROP_MATERIAL, "")
         family, reason = family_for(ifc_class, grade)

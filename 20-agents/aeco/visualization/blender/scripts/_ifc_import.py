@@ -23,6 +23,21 @@ PROP_NAME = "ifc_name"
 PROP_MATERIAL = "ifc_material"
 PROP_STOREY = "ifc_storey"
 
+# Marks an object the AGENT created to stage the shot -- the ground plane today
+# -- rather than one imported from the IFC. Three places skip these, and each
+# would be wrong in its own way without it:
+#   `_framing.scene_bounds()`  a helper must never enter the camera fit. The
+#                              ground is sized FROM that fit, so letting it in
+#                              is circular as well as wrong: the floor inflates
+#                              the bounding sphere, which enlarges the floor,
+#                              and the model shrinks in frame on every render
+#                              with nothing raised.
+#   `_looks.apply_look()`      a helper must never be repainted as steel.
+#   `scene_info._inventory()`  a helper is not an element; counting one puts a
+#                              row with empty guid/class/material into
+#                              `elements` and inflates `count`.
+PROP_HELPER = "aware-helper"
+
 
 def _import_ifcopenshell():
     """Import ifcopenshell or raise the named error with the install one-liner.

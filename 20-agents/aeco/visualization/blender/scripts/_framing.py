@@ -13,6 +13,8 @@ import math
 import bpy
 from mathutils import Vector
 
+import _ifc_import
+
 # Named view directions, in Blender's Z-up world. Each is a unit-ish vector FROM
 # the model TOWARD the camera; they are normalized before use.
 DIRECTIONS = {
@@ -32,6 +34,11 @@ def scene_bounds() -> tuple[Vector, Vector]:
     found = False
     for obj in bpy.data.objects:
         if obj.type != "MESH":
+            continue
+        # Staging helpers (the ground plane) are sized from this very fit, so
+        # admitting them would be circular: the floor would inflate the sphere,
+        # which would enlarge the floor, and the model would shrink in frame.
+        if obj.get(_ifc_import.PROP_HELPER):
             continue
         for corner in obj.bound_box:
             world = obj.matrix_world @ Vector(corner)
