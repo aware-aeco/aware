@@ -38,6 +38,10 @@ Measured on Blender 5.2.0 LTS, bundled Python 3.13.13, this session.
 | Active view transform | `AgX` | Modern tonemapping is already in place; highlights roll off rather than clipping |
 | EEVEE quality knobs | `use_raytracing`, `ray_tracing_method`, `use_shadows`, `shadow_ray_count` | Real reflection/shadow levers exist on the draft path |
 | Manifest input types | `type: boolean` with `default:` is established in sibling agents | `ground` can be a plain boolean input |
+| `Material.blend_method` | still present on 5.2 (`OPAQUE`/`CLIP`/`HASHED`/`BLEND`) alongside the new `surface_render_method` (`DITHERED`/`BLENDED`) | `_looks.py`'s existing `blend_method = "BLEND"` for glass is **not** a latent crash — checked because EEVEE Next was thought to have removed it |
+| `ray_tracing_method` | `PROBE` / `SCREEN` | EEVEE's raytracer is off by default and must be switched on explicitly |
+| EEVEE vs Cycles on metal | centre-frame spread 0.083 vs 0.142; mean 0.28 vs 0.37 | EEVEE renders metal inherently flatter and darker. Not a bug to fix — a gap to document |
+| The Light-Path split's cost to EEVEE | metal mean 0.2813 direct vs 0.2837 split | Free. The split does not poison EEVEE's reflection probe, which was the suspicion |
 
 The shadow-catcher row is the load-bearing one, and it is the kind of fact this agent keeps
 paying for: **the flag reads back `True` on an engine that ignores it.** No property
@@ -46,8 +50,40 @@ does.
 
 ## 1. Environment lighting
 
+### The HDRI lights the scene; the gradient stays the backdrop
+
+**Revised after prototyping — the original draft wired the HDRI straight to `Background.Color`,
+and rendering it exposed two failures a close-up shot hid entirely:**
+
+1. **`studio.exr` is a photograph of a real room.** A wide render shows the softbox fixture and a
+   light stand. As a visible backdrop it is unusable.
+2. **The floor's fade ended as a hard ellipse** — a grey disc floating against the HDRI's dark
+   lower hemisphere.
+
+Both are fixed by the standard product-viz split, wired with `Light Path → Is Camera Ray` into a
+`Mix` in front of `Background.Color`:
+
+| Ray | Sees | Purpose |
+|---|---|---|
+| Camera | **the neutral gradient** (v1's node chain, unchanged) | the visible backdrop |
+| Everything else (diffuse, glossy, transmission) | **the HDRI** | lighting and reflections |
+
+This is strictly better than the approved draft, and it **strengthens rather than weakens the v1
+"lighting infrastructure, not art direction" position**: what the viewer actually *sees* behind the
+model is still exactly v1's neutral grey ramp, on every environment setting. The HDRI never appears
+in frame — it only feeds the lighting solution. `sunset` now warms the light on the model instead
+of pasting a sunset photograph behind it, which is what an architectural presentation actually
+wants. The floor's fade also now dissolves into the gradient instead of into the HDRI's dark
+underside, which is what removed the ellipse.
+
+**Measured cost to EEVEE: none.** Metal-region mean luminance came back 0.2813 with the HDRI wired
+direct and 0.2837 through the split — identical within noise. The split was suspected of poisoning
+EEVEE's reflection probe; it does not.
+
+### Resolution order
+
 `setup_world()` gains a resolution order in front of today's procedural gradient. The gradient
-code itself is unchanged and becomes the fallback leg.
+code itself is unchanged and becomes both the camera-ray backdrop and the no-HDRI fallback leg.
 
 | `environment` input | Resolves to | `source` in the receipt |
 |---|---|---|
@@ -119,6 +155,20 @@ Agent-created objects get an `aware-helper` custom property, and three places sk
 The constant lives beside the existing `PROP_*` names in `_ifc_import.py`, which both `_looks` and
 `scene_info` already import — it is exactly "a custom property key on scene objects", which is what
 that block of constants is.
+
+### EEVEE needs switching on
+
+The first prototype rendered EEVEE's contact shadow as a **hard aliased polygon** on a completely
+flat frame, against Cycles' soft shadow and tonal floor. EEVEE Next ships its quality features off
+or low, so the draft path sets them explicitly: `use_shadows`, `shadow_ray_count`,
+`shadow_step_count`, `use_raytracing` with `ray_tracing_method = "SCREEN"`, and `use_fast_gi`.
+The sun also gets a wider `angle`, which is what softens the shadow edge in both engines.
+
+**What that does not close, honestly:** EEVEE still renders metal flatter and darker than Cycles
+(measured above). That is the rasterizer, not a setting, and it is consistent with what the shipped
+`headless-rendering` skill already says — draft is for iterating and previewing framing; production
+is where reflections have to be correct. The gap gets documented in the skill rather than papered
+over.
 
 ### Sizing and the far clip
 
