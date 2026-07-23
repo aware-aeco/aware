@@ -556,6 +556,26 @@ def main() -> int:
             f"({png_info['distinct-colours-sampled']} distinct colour(s) sampled) -- "
             "the render shows nothing"
         )
+        # The staging receipts. A degraded environment still renders a perfectly
+        # good-looking picture, so these are the only place the chain can tell
+        # "lit by the HDRI it asked for" from "quietly fell back to the
+        # gradient" -- same reasoning as skipped/excluded on the import receipt.
+        assert still["environment"]["source"] == "blender-studiolight", (
+            "render.still: the default environment should resolve to one of "
+            f"Blender's bundled HDRIs, got {still['environment']}"
+        )
+        assert still["environment"]["fallback-reason"] is None, (
+            "render.still: the default environment degraded on a machine that "
+            f"has the bundled HDRIs: {still['environment']}"
+        )
+        assert still["ground"]["present"], (
+            f"render.still: expected a ground plane by default, got {still['ground']}"
+        )
+        print(
+            f"      environment={still['environment']['resolved']} "
+            f"({still['environment']['source']}), "
+            f"ground radius={still['ground']['radius']}"
+        )
         print(
             f"      {rendered_png.name}: {png_info['width']}x{png_info['height']}, "
             f"{png_info['distinct-colours-sampled']}+ distinct colours sampled, "

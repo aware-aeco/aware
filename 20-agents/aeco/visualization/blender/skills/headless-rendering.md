@@ -1,6 +1,6 @@
 ---
 name: blender-headless-rendering
-description: This skill should be used when running Blender unattended — composing an app that turns an IFC into a PNG or MP4 with nobody present, writing or debugging a `blender -b -P` command script, or reading a `blender` agent failure. Covers the `<<<AWARE_RESULT>>>` stdout framing and why exit 0 is not a success signal, the named error taxonomy, headless-only camera framing, the `matrix_world` staleness trap, the `__main__` guard every command script needs, and EEVEE vs Cycles on Blender 5.2.
+description: This skill should be used when running Blender unattended — composing an app that turns an IFC into a PNG or MP4 with nobody present, writing or debugging a `blender -b -P` command script, adding an object or a render setting to the agent, or reading a `blender` agent failure. Covers the `<<<AWARE_RESULT>>>` stdout framing and why exit 0 is not a success signal, the named error taxonomy, headless-only camera framing and why clip planes must clear the ground, the `matrix_world` staleness trap, the `__main__` guard every command script needs, EEVEE vs Cycles on Blender 5.2, why property introspection is not a capability probe, why every render setting must be A/B measured before shipping, and how to measure the model region without the silhouette lying.
 ---
 
 # Headless rendering
@@ -158,6 +158,23 @@ aspect, and the narrower of the two is used — fitting to the wider one would c
 The receipt (`centre`, `radius`, `distance`, `direction`) travels back in the command's
 payload, which matters for the next section.
 
+**The clip planes must clear the GROUND, not just the model.** `clip_start` was
+`max(distance - radius * 4.0, …)` — pushing the near plane out buys depth precision, and it was
+safe while the model, sitting at `distance ± radius`, was the only thing in the scene. The ground
+plane is not: it runs from the model *towards* the camera and out past it. That near plane sliced
+it, and the cut rendered as a **hard horizontal band across the bottom sixth of the frame** on
+`direction: front`. It is now `distance / 1000.0`; the remaining depth ratio is a few thousand to
+one, which is nothing for a 32-bit depth buffer, and Cycles has no depth buffer at all.
+
+**Stage before framing, not after.** Creating the ground *after* `frame_camera()` also "works" — a
+plane added later cannot disturb a fit already solved — but it works for the wrong reason, and it
+makes the `aware-helper` skip inside `scene_bounds()` unreachable. That was caught by mutation:
+with the skip deleted, the test that exists to guard it still passed. Staging first makes the skip
+load-bearing, and the same mutation now fails loudly — radius 45.85 against 4.05, distance 303
+against 26.8, the camera shoved 11× too far back and the model a speck, with **no error raised
+anywhere**. Any object the agent adds to the scene must carry `aware-helper` and be skipped by
+`scene_bounds()`, `_looks.apply_look()` and `scene_info._inventory()`.
+
 ## The `matrix_world` staleness trap
 
 After setting `.location` or `.rotation_euler` on an object, **`matrix_world` is not
@@ -255,6 +272,106 @@ confirmed by direct assignment and `addon_utils.check('cycles')`. `_eevee_engine
 membership test still works because `BLENDER_EEVEE` *is* in the under-reported list, but a
 guard like `if "CYCLES" not in identifiers: raise` would report Cycles missing on a machine
 that has it. Assign the engine directly and let it fail if genuinely absent.
+
+**The same enum lies about colour management.** Measured on this build:
+
+```python
+scene.view_settings.bl_rna.properties["view_transform"].enum_items   # -> ['NONE']
+scene.view_settings.bl_rna.properties["look"].enum_items             # -> ['NONE']
+scene.view_settings.view_transform                                   # -> 'AgX'
+```
+
+The scene is *on* `AgX` — a value the enum claims does not exist. These enums are populated
+from the OCIO config at runtime and `bl_rna` cannot see it. Never gate on them.
+
+## Introspection is not a capability probe
+
+Broader than the enums, and the most expensive shape of this trap: **a property can read back
+exactly what was written and still be ignored by the engine.**
+
+`object.is_shadow_catcher` is the case that cost time here. Set it, read it back, and it is `True`
+under both engines. Render the same scene with `film_transparent` and measure the opaque fraction
+of the frame:
+
+| Engine | Opaque frame | Meaning |
+|---|---|---|
+| Cycles | 19.9 % | honoured — the plane is invisible except for the shadow it catches |
+| EEVEE | **100 %** | ignored — the plane rendered as an ordinary solid surface |
+
+Nothing short of rendering distinguishes those. This is why the `blender` agent grounds models on a
+**real, visible, radially-faded floor** instead of a shadow catcher: a catcher would make `draft`
+show a solid slab where `production` shows a model floating over its own shadow, and no property
+read would reveal it. **To check whether an engine supports a feature, render it and measure the
+pixels.**
+
+## Settings that measurably do nothing are worse than no settings
+
+A `tune_eevee()` was written to fix a hard aliased contact shadow: `use_raytracing`,
+`ray_tracing_method = "SCREEN"`, `use_fast_gi`, `shadow_ray_count = 4`, `shadow_step_count = 8`,
+plus a wider sun `angle`. A/B measured against the real fixture, all of it together left the render
+**identical to four decimal places** (floor-region mean 0.7327 either way). PROBE-vs-SCREEN,
+`shadow_resolution_scale = 2.0`, a finer `shadow_maximum_resolution`, a larger
+`shadow_filter_radius`, `use_shadow_jitter` and `clamp_surface_indirect = 0` were each measured
+too. None moved the image. The shadow that motivated the whole exercise came from a *different*
+prototype scene.
+
+All of it was deleted. One line survives — `use_shadows = True` — because it has a real failure
+mode behind it rather than a hoped-for one: the agent deliberately runs **without
+`--factory-startup`**, so the user's startup file is loaded and shadows are not guaranteed on.
+
+The rule: **A/B every render setting against the real fixture before shipping it.** A block of
+plausible-looking quality settings invites the next person to build on a false premise, and
+"identical to four decimal places" is a fact only a measurement produces.
+
+## Measuring the model region — the alpha-silhouette trap, twice
+
+Judging a render numerically means isolating the model from the background. Two approaches have
+now failed here, in the same way:
+
+1. **A corner-sampled "background estimate"** broke the moment the background became a gradient —
+   it misclassified ~73 % of the frame as model.
+2. **A `film_transparent` alpha silhouette** — the prescribed fix for (1) — broke the moment the
+   scene gained a **ground plane**. The ground is a real opaque surface, so it lands in the
+   silhouette. On a thin steel frame the "model" came back as 279 k of 518 k pixels, and the
+   measurement reported EEVEE as *brighter* than Cycles: the exact opposite of the truth.
+
+Render the mask with the staging helpers removed (everything carrying the `aware-helper` custom
+property), and sanity-check the pixel count against what the model could plausibly cover. A steel
+frame occupying 54 % of the frame is not a measurement, it is a bug.
+
+For the record, measured correctly (30 k model pixels, 5.8 % of frame): steel mean luminance is
+**0.4774** under Cycles and **0.2705** under EEVEE — the rasterizer renders metal 43 % darker, and
+no setting closes it.
+
+## Known limitation: EEVEE + HDRI banding on tessellated sections
+
+**Unresolved. Draft only.** Under `quality: draft` with an HDRI `environment`, EEVEE renders a row
+of regular light/dark dashes along the web of an I-section beam. Cycles renders the same geometry
+clean, and so does EEVEE with `environment: gradient`.
+
+Isolated by bisection against the fixture:
+
+| Engine | `environment` | Result |
+|---|---|---|
+| Cycles | `studio` | clean |
+| EEVEE | `gradient` | clean |
+| EEVEE | `studio` | **banded** |
+
+So it is the HDRI's high-frequency content, not the ground plane, the sun energy, the lens or the
+`hero` direction — each of those was ruled out separately. It is **not** pre-existing: rendering
+the fixture with the v0.102.0 scripts extracted from git comes back clean, so it arrived with
+image-based lighting.
+
+Ruled out as fixes, each measured: `shadow_ray_count`, `shadow_step_count`,
+`shadow_resolution_scale`, `shadow_maximum_resolution`, `shadow_filter_radius`,
+`use_shadow_jitter`, `use_raytracing` on/off, PROBE-vs-SCREEN tracing, `use_fast_gi`,
+`clamp_surface_indirect`, `gi_cubemap_resolution`, and sun `angle`. Turning `use_shadows` off
+removes it, but only by flattening the whole render.
+
+**Workarounds:** use `quality: production` for anything anyone will look at — which is what the
+presentation path is for — or `environment: gradient` if a clean draft matters more than
+representative lighting. Do not "fix" this by changing the default environment per engine: that
+would make draft stop previewing production, which is a worse problem than the banding.
 
 ## Blender 5.2 API breaks worth knowing
 

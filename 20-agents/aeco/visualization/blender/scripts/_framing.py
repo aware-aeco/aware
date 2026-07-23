@@ -13,9 +13,15 @@ import math
 import bpy
 from mathutils import Vector
 
+import _ifc_import
+
 # Named view directions, in Blender's Z-up world. Each is a unit-ish vector FROM
 # the model TOWARD the camera; they are normalized before use.
 DIRECTIONS = {
+    # A three-quarter view: asymmetric in plan and slightly raised, which reads
+    # as photography. `iso`'s exact 45 degrees in plan reads as a CAD screenshot
+    # -- it is kept byte-identical for anyone who wants the axonometric.
+    "hero": Vector((1.0, -1.7, 0.62)),
     "iso": Vector((1.0, -1.0, 0.7)),
     "front": Vector((0.0, -1.0, 0.0)),
     "back": Vector((0.0, 1.0, 0.0)),
@@ -23,6 +29,13 @@ DIRECTIONS = {
     "right": Vector((1.0, 0.0, 0.0)),
     "top": Vector((0.0, 0.0, 1.0)),
 }
+
+# Blender's default 50mm on a 36mm sensor visibly distorts a building towards
+# the frame edges. `distance` below is DERIVED from `camera.data.angle`, so a
+# longer lens simply backs the camera off for the same framing -- the
+# bounding-sphere fit, and with it the turntable's no-clipping guarantee, is
+# untouched by this.
+DEFAULT_LENS_MM = 80.0
 
 
 def scene_bounds() -> tuple[Vector, Vector]:
@@ -32,6 +45,11 @@ def scene_bounds() -> tuple[Vector, Vector]:
     found = False
     for obj in bpy.data.objects:
         if obj.type != "MESH":
+            continue
+        # Staging helpers (the ground plane) are sized from this very fit, so
+        # admitting them would be circular: the floor would inflate the sphere,
+        # which would enlarge the floor, and the model would shrink in frame.
+        if obj.get(_ifc_import.PROP_HELPER):
             continue
         for corner in obj.bound_box:
             world = obj.matrix_world @ Vector(corner)
@@ -71,6 +89,19 @@ def frame_camera(
     height = render.resolution_y * (render.pixel_aspect_y or 1.0)
 
     cam_data = camera.data
+    # The lens is set HERE, not in `ensure_camera()`. That function returns a
+    # camera the .blend already carried without touching it, so a lens applied
+    # there reaches only scenes the agent built itself -- and any camera-bearing
+    # .blend keeps rendering at whatever FOV it happened to have (Blender's wide
+    # 50mm default, usually). The same `render.still` request would then produce
+    # two different pictures depending on a property of the input file nobody
+    # thinks about. Measured: 24mm gives distance 9.09 where 200mm gives 66.16.
+    #
+    # This function already overwrites location, rotation and both clip planes,
+    # so it owns the camera's framing outright and the lens belongs with them.
+    # It must be set BEFORE `angle` is read, since `angle` derives from the lens
+    # and the whole fit derives from `angle`.
+    cam_data.lens = DEFAULT_LENS_MM
     # `angle` is the FOV across the sensor-fit axis; derive the other from aspect.
     if width >= height:
         half_x = cam_data.angle / 2.0
@@ -86,9 +117,22 @@ def frame_camera(
     look = (centre - camera.location).normalized()
     camera.rotation_euler = look.to_track_quat("-Z", "Y").to_euler()
 
-    # Keep the model comfortably inside the clip range at any orbit angle.
-    cam_data.clip_start = max(distance - radius * 4.0, distance / 1000.0)
-    cam_data.clip_end = distance + radius * 4.0
+    # Both planes have to clear the GROUND, not just the model.
+    #
+    # `clip_start` was `max(distance - radius * 4.0, ...)` while nothing existed
+    # near the camera -- pushing the near plane out buys depth precision, and
+    # the model sits at `distance` +/- `radius`, so it was safe. The ground
+    # plane is not: it runs from the model TOWARDS the camera and out past it,
+    # so a near plane that far out slices it, and the cut renders as a hard
+    # horizontal band across the frame. Seen for real on `direction: front`,
+    # where the camera sits at mid-model height and the band cut the bottom
+    # sixth of the image.
+    #
+    # A near plane at 0.1% of the camera distance leaves a depth ratio of a few
+    # thousand to one, which is nothing for a 32-bit depth buffer, and Cycles
+    # has no depth buffer at all.
+    cam_data.clip_start = distance / 1000.0
+    cam_data.clip_end = distance + radius * 12.0
 
     return {
         "centre": [round(v, 6) for v in centre],

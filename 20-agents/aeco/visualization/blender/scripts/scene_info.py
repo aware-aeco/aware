@@ -42,6 +42,10 @@ def _inventory() -> dict:
     for obj in bpy.data.objects:
         if obj.type != "MESH":
             continue
+        # A staging helper is not an element. Counting one would inflate `count`
+        # and add a row with empty guid/class/material/storey to `elements`.
+        if obj.get(_ifc_import.PROP_HELPER):
+            continue
         ifc_class = obj.get(_ifc_import.PROP_CLASS, "")
         material = obj.get(_ifc_import.PROP_MATERIAL, "")
         storey = obj.get(_ifc_import.PROP_STOREY, "")

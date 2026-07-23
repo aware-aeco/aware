@@ -1,6 +1,6 @@
 ---
 name: blender-look-presets
-description: This skill should be used when deciding how the `blender` agent shades an element — choosing between the clay, realistic and section-style presets, working out why a beam rendered as concrete or fell back to clay, reading a `scene.apply-look` receipt's `assigned` / `by-reason`, or extending the grade and class tables for a new vertical. Covers the grade → class → clay resolution order, longest-prefix matching, the EN 206 / EN 338 C-number collision, and why metals need a world gradient.
+description: This skill should be used when deciding how the `blender` agent shades an element — choosing between the clay, realistic and section-style presets, working out why a beam rendered as concrete or fell back to clay, reading a `scene.apply-look` receipt's `assigned` / `by-reason`, extending the grade and class tables for a new vertical, or choosing an `environment` and reading its receipt. Covers the grade → class → clay resolution order, longest-prefix matching, the EN 206 / EN 338 C-number collision, why metals need an environment, the HDRI-lights / gradient-backdrop split and where the bundled HDRIs come from, and the measured 43% gap between how draft and production render metal.
 ---
 
 # Look presets
@@ -153,18 +153,78 @@ essentially no diffuse response, so what you see is nearly all what it reflects.
 near-black world it reflects back as a flat dark object: no gradient across a curved or
 angled face, no visible form, no readable material.
 
-The `realistic` preset was genuinely bad until `setup_world()` in `render_still.py` gained
-a neutral vertical gradient sky — a `Texture Coordinate → Separate XYZ → Map Range →
-Color Ramp` chain that remaps the world-direction Z from `-1 … +1` to `0 … 1` and ramps
-from `0.03` grey at the nadir to `0.95` at the zenith, with the horizon at the midpoint.
-That gradient is what gives a metal surface something to reflect that varies with its
-normal.
+The `realistic` preset was genuinely bad until the world gained a neutral vertical gradient sky
+— a `Texture Coordinate → Separate XYZ → Map Range → Color Ramp` chain that remaps the
+world-direction Z from `-1 … +1` to `0 … 1` and ramps from `0.03` grey at the nadir to `0.95` at
+the zenith, with the horizon at the midpoint. That gradient is what gives a metal surface
+something to reflect that varies with its normal.
 
-The gradient is strictly neutral — equal R/G/B at both stops — so it never tints the model
-or reads as art direction. It is lighting infrastructure, and it is applied identically for
-every preset, because on the staged-`.blend` path the preset is not knowable at render
-time: the look was applied by a prior `scene.apply-look` call and is not recorded as scene
-metadata.
+**The gradient is now the backdrop, and an HDRI does the lighting.** `_stage.setup_world()`
+splits the world by ray type:
+
+| Ray | Sees | Job |
+|---|---|---|
+| Camera | the neutral gradient | the visible backdrop |
+| Diffuse / glossy / transmission | the HDRI | lighting and reflections |
+
+wired as `Light Path → Is Camera Ray` into a `Mix` in front of `Background.Color`.
+
+**Do not wire an HDRI straight to `Background`.** It looks correct in a tight crop and fails in a
+wide one, for two reasons that only a wide render shows:
+
+- `studio.exr` is a **photograph of a real room** — a wide shot puts its softbox and a light stand
+  behind the building.
+- The ground plane's fade then ends as a **hard ellipse** against the HDRI's dark lower hemisphere,
+  instead of dissolving into the backdrop.
+
+The split keeps what the viewer *sees* exactly as neutral as it was before image-based lighting
+existed here, on every `environment` setting — so it stays lighting infrastructure, not art
+direction. `sunset` warms the light falling on the steel; it does not paste a sunset behind it.
+
+### Where the HDRIs come from
+
+Blender ships eight of them inside its own install (`datafiles/studiolights/world`), **CC0, by Greg
+Zaal / Poly Haven**, ~1.9 MB total: `studio` (the default, a neutral grey softbox room),
+`courtyard`, `city`, `forest`, `interior`, `night`, `sunrise`, `sunset`. Nothing is vendored in the
+repo and nothing is fetched at runtime — they are present wherever Blender is. Resolution order:
+
+1. `gradient` → the procedural sky, explicitly.
+2. One of the eight names → the bundled `.exr`. Reserved words, checked **before** the path branch,
+   so a local file called `studio` cannot shadow the bundled one.
+3. A path → that `.exr`/`.hdr`.
+4. Anything else → **the gradient, with the reason in the receipt.**
+
+Nothing here can fail a render — same posture as the clay fallback. Which means the receipt is the
+only place a degrade is visible:
+
+```json
+"environment": {
+  "requested": "studo", "resolved": "gradient", "source": "procedural-gradient",
+  "path": null,
+  "fallback-reason": "unknown environment `studo`; expected one of [...], `gradient`, or a path to an .exr/.hdr"
+}
+```
+
+`fallback-reason` is `null` on the happy path. A picture that came back lit by the wrong thing
+looks perfectly good — check `source` before concluding a preset is misbehaving.
+
+### Draft renders metal much darker than production
+
+Measured on the fixture, steel-only mean luminance through an alpha silhouette:
+
+| Engine | Steel mean |
+|---|---|
+| Cycles (`quality: production`) | **0.4774** |
+| EEVEE (`quality: draft`) | **0.2705** |
+
+EEVEE renders it **43% darker**. That is the rasterizer, not a setting — raytracing, fast GI,
+shadow ray/step counts, PROBE-vs-SCREEN tracing and the indirect-light clamp were each measured and
+none of them moved it. **Judge a metallic palette entry on a `production` render.** A draft is for
+framing and composition.
+
+The world is applied identically for every preset, because on the staged-`.blend` path the preset
+is not knowable at render time: the look was applied by a prior `scene.apply-look` call and is not
+recorded as scene metadata.
 
 **The general rule, for anyone extending `PALETTES`:** a new entry with a non-zero
 `metallic` value will render as whatever the environment gives it. Check it against a real

@@ -17,6 +17,7 @@ import bpy  # noqa: E402
 
 import _framing  # noqa: E402
 import _result  # noqa: E402
+import _stage  # noqa: E402
 
 
 def _iter_fcurves(action):
@@ -48,8 +49,10 @@ def main(inputs: dict) -> dict:
     fps = int(inputs.get("fps", 30))
     width = int(inputs.get("width-pixels", 1920))
     height = int(inputs.get("height-pixels", 1080))
-    direction = str(inputs.get("direction", "iso"))
+    direction = str(inputs.get("direction", "hero"))
     samples = int(inputs.get("samples", 0))
+    environment = inputs.get("environment", _stage.DEFAULT_ENVIRONMENT)
+    ground_enabled = render_still._as_bool(inputs.get("ground"), default=True)
 
     if duration <= 0 or fps < 1:
         raise _result.AwareBlenderError(
@@ -84,6 +87,7 @@ def main(inputs: dict) -> dict:
     scene.render.engine = render_still._eevee_engine()
     if hasattr(scene, "eevee") and hasattr(scene.eevee, "taa_render_samples"):
         scene.eevee.taa_render_samples = samples or 16
+    _stage.tune_eevee(scene)
 
     # Blender 5.x added a `media_type` switch on image_settings (IMAGE /
     # MULTI_LAYER_IMAGE / VIDEO) that gates which `file_format` values are
@@ -101,8 +105,15 @@ def main(inputs: dict) -> dict:
     scene.render.ffmpeg.ffmpeg_preset = "GOOD"
     scene.render.filepath = output_path
 
-    render_still.setup_world()
-    render_still.setup_key_light()
+    environment_receipt = _stage.setup_world(environment)
+    _stage.setup_key_light()
+
+    # Before framing, for the reason spelled out in render_still.main: staging
+    # first is what makes the aware-helper skip in `scene_bounds()` load-bearing
+    # rather than merely unreachable. The ground is radially symmetric about the
+    # model centre and is not parented to the pivot, so it neither moves the
+    # camera nor rides the orbit.
+    ground_receipt = _stage.setup_ground(ground_enabled)
 
     camera = _framing.ensure_camera()
     try:
@@ -169,6 +180,8 @@ def main(inputs: dict) -> dict:
         "height-pixels": height,
         "engine": scene.render.engine,
         "framing": framing,
+        "environment": environment_receipt,
+        "ground": ground_receipt,
     }
 
 
