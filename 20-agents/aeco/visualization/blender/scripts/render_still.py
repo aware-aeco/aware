@@ -140,18 +140,20 @@ def main(inputs: dict) -> dict:
     environment_receipt = _stage.setup_world(environment)
     _stage.setup_key_light()
 
+    # BEFORE framing, deliberately. Ordering this the other way round also
+    # "works" -- the ground cannot disturb a fit that was already solved -- but
+    # it works for the wrong reason, and it makes the aware-helper skip in
+    # `scene_bounds()` unreachable, so nothing tests it and a future reorder
+    # silently reframes every render. Staging first means the fit is solved with
+    # the ground already in the scene, so the skip is load-bearing and
+    # `tests/test_ground_isolation.py` genuinely fails when it is removed.
+    ground_receipt = _stage.setup_ground(ground_enabled)
+
     camera = _framing.ensure_camera()
     try:
         framing = _framing.frame_camera(camera, direction)
     except ValueError as exc:
         raise _result.AwareBlenderError(_result.ERR_RENDER_FAILED, str(exc)) from exc
-
-    # After framing, deliberately. The ground is sized from the model's bounds,
-    # and it carries the aware-helper mark so `scene_bounds()` skips it -- which
-    # means re-solving the fit with the ground present gives the same answer.
-    # `tests/test_ground_isolation.py` pins exactly that, because if it ever
-    # stopped holding every render would silently reframe.
-    ground_receipt = _stage.setup_ground(ground_enabled)
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     bpy.ops.render.render(write_still=True)

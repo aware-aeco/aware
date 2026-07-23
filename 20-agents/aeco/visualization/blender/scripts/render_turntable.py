@@ -108,17 +108,18 @@ def main(inputs: dict) -> dict:
     environment_receipt = _stage.setup_world(environment)
     _stage.setup_key_light()
 
+    # Before framing, for the reason spelled out in render_still.main: staging
+    # first is what makes the aware-helper skip in `scene_bounds()` load-bearing
+    # rather than merely unreachable. The ground is radially symmetric about the
+    # model centre and is not parented to the pivot, so it neither moves the
+    # camera nor rides the orbit.
+    ground_receipt = _stage.setup_ground(ground_enabled)
+
     camera = _framing.ensure_camera()
     try:
         framing = _framing.frame_camera(camera, direction)
     except ValueError as exc:
         raise _result.AwareBlenderError(_result.ERR_RENDER_FAILED, str(exc)) from exc
-
-    # After framing, and before the pivot: the ground is sized from the model's
-    # bounds and stays OUT of the fit (aware-helper), so it neither moves the
-    # camera nor rides the orbit. It is radially symmetric about the model
-    # centre, which is what keeps its fade edge out of frame at every angle.
-    ground_receipt = _stage.setup_ground(ground_enabled)
 
     # Pivot at the model centre; the camera rides it, so the fit never changes.
     pivot = bpy.data.objects.new("AwareTurntablePivot", None)
