@@ -52,7 +52,8 @@
     <RevitVersion Condition="'$(RevitVersion)' == ''">2026</RevitVersion>
     <!-- Autodesk's reference assemblies for that release. Not derivable from
          $(RevitVersion) — Autodesk's package versions have no stable pattern
-         across years (2025.0.2.419 vs 2026.0.0.9999) — so it is pinned. -->
+         across years (2025.0.2.419 vs 2026.0.0.9999) — so it is pinned, and
+         the guard below refuses a build where the pin and the target disagree. -->
     <RevitSdkPackageVersion Condition="'$(RevitSdkPackageVersion)' == ''">2026.0.0.9999</RevitSdkPackageVersion>
     <!-- 64-bit Program Files. ProgramW6432 says so regardless of the build's
          own bitness; ProgramFiles is the fallback when it is not set. -->
@@ -103,4 +104,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <!-- Refuse a build whose reference assemblies target a DIFFERENT Revit release than
+       $(RevitVersion) claims. Without a local install there is nothing to notice the
+       mismatch: passing -p:RevitVersion=2025 alone would silently compile against the
+       pinned 2026 SDK and produce an add-in that says 2025 on the tin. Because the
+       package versions follow no pattern, the caller must state both — so this asks
+       for that rather than guessing one from the other. -->
+  <Target Name="GuardRevitSdkMatchesTarget" BeforeTargets="CoreCompile">
+    <Error Condition="!$(RevitSdkPackageVersion.StartsWith('$(RevitVersion)'))"
+           Text="Revit SDK mismatch: RevitVersion=$(RevitVersion) but RevitSdkPackageVersion=$(RevitSdkPackageVersion). Autodesk's package versions follow no pattern across releases, so pass the matching one explicitly, e.g. -p:RevitVersion=2025 -p:RevitSdkPackageVersion=2025.0.2.419" />
+  </Target>
+
 </Project>

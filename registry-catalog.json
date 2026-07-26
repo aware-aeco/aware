@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-07-26T10:35:03.025055700+00:00",
+  "updated-at": "2026-07-26T11:13:31.454654800+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -4589,7 +4589,7 @@
           "stateful": false,
           "sdk-target": "2025.0.2.419",
           "transport": "cli",
-          "command_count": 7431,
+          "command_count": 7430,
           "skills": [
             "a0x51085866",
             "autodesk-internal-info-center",
@@ -4637,15 +4637,6 @@
             "global",
             "revit-assembly-resolver",
             "xaml-generated-namespace"
-          ],
-          "commands": [
-            {
-              "name": "bake-scene",
-              "description": "Materialize a canonical millimetre scene as source-owned native Revit",
-              "lifecycle": "single",
-              "category": "curated",
-              "mode": "write"
-            }
           ]
         }
       }
