@@ -53,7 +53,7 @@ internal static class Program
         {
             verb = args[0];
             var wantsStdin = args.Skip(1).Any(a => a == "--json-stdin");
-            if (wantsStdin || verb is "exec" or "send-status" or "launch" or "close")
+            if (wantsStdin || verb is "exec" or "bake-scene" or "send-status" or "launch" or "close")
             {
                 string buf;
                 try { buf = Console.In.ReadToEnd(); }
@@ -79,6 +79,7 @@ internal static class Program
         {
             "list-instances" => Verbs.ListInstances.RunAsync().GetAwaiter().GetResult(),
             "exec"           => Verbs.Exec.RunAsync(stdinJson).GetAwaiter().GetResult(),
+            "bake-scene"     => Verbs.BakeScene.RunAsync(stdinJson).GetAwaiter().GetResult(),
             "send-status"    => Verbs.SendStatus.RunAsync(stdinJson).GetAwaiter().GetResult(),
             "launch"         => Verbs.Launch.Run(stdinJson),
             "close"          => Verbs.Close.RunAsync(stdinJson).GetAwaiter().GetResult(),
@@ -103,6 +104,7 @@ internal static class Program
 
             Verbs:
               exec             Compile + run an ad-hoc C# script against the active Revit doc
+              bake-scene       Materialize a canonical mm scene as source-owned native elements (write)
               list-instances   Print running Revit instances (pid + version + addin status)
               send-status      Show a transient TaskDialog message in Revit
               launch           Start a Revit instance (optionally opening a model)

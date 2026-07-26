@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-07-22T20:11:56.137807500+00:00",
+  "updated-at": "2026-07-26T11:13:31.454654800+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -4663,7 +4663,7 @@
           "stateful": false,
           "sdk-target": "2026.0.0.9999",
           "transport": "cli",
-          "command_count": 7662,
+          "command_count": 7663,
           "skills": [
             "revit-views-and-sheets",
             "revit-transactions",
@@ -4720,6 +4720,13 @@
             "xaml-generated-namespace"
           ],
           "commands": [
+            {
+              "name": "bake-scene",
+              "description": "Materialize a canonical millimetre scene as source-owned native Revit",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
             {
               "name": "element.by-parameter-value",
               "description": "Typed filter over the active document — find every element where a",
@@ -5075,7 +5082,7 @@
           "stateful": false,
           "sdk-target": "2026.0",
           "transport": "cli",
-          "command_count": 1443,
+          "command_count": 1444,
           "skills": [
             "sketchup-units-and-precision",
             "sketchup-undo-transactions",
@@ -5095,6 +5102,13 @@
             {
               "name": "attribute.bulk-write",
               "description": "Write multiple key/value pairs into a named AttributeDictionary on every",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "bake-scene",
+              "description": "Materialize a canonical millimetre scene as source-owned SketchUp groups —",
               "lifecycle": "single",
               "category": "curated",
               "mode": "write"

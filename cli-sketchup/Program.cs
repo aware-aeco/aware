@@ -68,7 +68,7 @@ internal static class Program
         if (args[0].StartsWith("--", StringComparison.Ordinal))
         {
             string buf;
-            try { buf = Console.In.ReadToEnd(); }
+            try { buf = TrimJsonBom(Console.In.ReadToEnd()); }
             catch (Exception e)
             {
                 Console.Error.WriteLine($"aware-sketchup: stdin not readable: {e.Message}");
@@ -91,11 +91,11 @@ internal static class Program
         {
             verb = args[0];
             var wantsStdin = args.Skip(1).Any(a => a == "--json-stdin");
-            // exec, send-status, close are always stdin-driven for their params.
-            if (wantsStdin || verb is "exec" or "send-status" or "close" or "launch")
+            // exec, bake-scene, send-status, close are always stdin-driven for their params.
+            if (wantsStdin || verb is "exec" or "bake-scene" or "send-status" or "close" or "launch")
             {
                 string buf;
-                try { buf = Console.In.ReadToEnd(); }
+                try { buf = TrimJsonBom(Console.In.ReadToEnd()); }
                 catch (Exception e)
                 {
                     Console.Error.WriteLine($"aware-sketchup: stdin not readable: {e.Message}");
@@ -116,6 +116,7 @@ internal static class Program
         return verb switch
         {
             "exec"           => Exec.Run(stdinJson),
+            "bake-scene"     => BakeScene.Run(stdinJson),
             "list-instances" => ListInstances.Run(),
             "send-status"    => SendStatus.Run(stdinJson),
             "launch"         => Launch.Run(stdinJson),
@@ -123,6 +124,13 @@ internal static class Program
             _                => Unknown(verb),
         };
     }
+
+    /// <summary>
+    /// PowerShell's pipeline prefixes a UTF-8 BOM, which System.Text.Json rejects
+    /// outright ("'0xEF' is an invalid start of a value"). cli-tekla trims it for
+    /// exactly this reason; every stdin-driven verb here needs the same.
+    /// </summary>
+    internal static string TrimJsonBom(string input) => input.TrimStart('\uFEFF');
 
     static int Unknown(string verb)
     {
@@ -141,10 +149,20 @@ internal static class Program
 
             Verbs:
               exec             Evaluate a Ruby script against Sketchup.active_model
+              bake-scene       Materialize a canonical mm scene as source-owned groups (write)
               list-instances   Print running SketchUp instances (PID + version + port + model)
               send-status      Display a status-bar message in SketchUp
               launch           Spawn a fresh SketchUp process (optionally opens a model)
               close            Save + close one (or all) SketchUp instance(s)
+
+            bake-scene (stdin JSON):
+              { "scene": { "meta": { "units": "mm", "sourceId": "...", "sceneHash": "..." },
+                           "elements": [ ... ] },
+                "label": "FloLess",            // optional; names the status-bar messages
+                "sketchup_id": 12345 }         // optional; required when >1 instance is live
+              Retire-and-replace: erases only the groups already owned by the SAME
+              scene.meta.sourceId, then creates the incoming scene fresh — the whole drop
+              inside ONE start_operation, so it is a single SketchUp Undo. Millimetres only.
 
             Bridge management:
               --install-bridge [--target-year YYYY]    Copy Ruby bridge into Plugins/

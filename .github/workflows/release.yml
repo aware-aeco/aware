@@ -231,21 +231,40 @@ jobs:
             -DestinationPath "aware-sketchup-${version}-win-x64.zip" -Force
           Write-Host "DONE: aware-sketchup-${version}-win-x64.zip"
 
-          # 4. aware-revit (net8 sidecar single-file + install artifacts → zip)
-          #    AwareRevit.dll requires RevitAPI.dll from a local Revit 2026 install
-          #    which is not available on CI runners. Ship the sidecar exe, the
-          #    .addin manifest, and install-addin.ps1; the DLL must be built locally.
-          Write-Host "--- aware-revit (net8 sidecar) ---"
+          # 4. aware-revit (net8 sidecar single-file + the IExternalApplication
+          #    add-in + install-addin.ps1 → zip)
+          #    UseLocalRevitApi=false makes AwareRevit.dll compile against
+          #    Autodesk's reference assemblies from nuget.org instead of a local
+          #    Revit install, which is what lets this runner build the add-in at
+          #    all — without it the zip shipped an installer with nothing to
+          #    install (issue #315).
+          #    The add-in payload goes in its own AwareRevit/ subfolder. The zip
+          #    extracts FLAT into ~/.aware/bridges/, which every bridge shares,
+          #    and the add-in's net8 Roslyn assemblies have the exact same file
+          #    names as aware-tekla's net48 ones — flat, they would overwrite
+          #    each other. install-addin.ps1 looks in that subfolder first.
+          Write-Host "--- aware-revit (net8 sidecar + add-in) ---"
           dotnet publish cli-revit/Sidecar/cli-revit.csproj -c Release -r win-x64
+          dotnet build cli-revit/AwareRevit/AwareRevit.csproj -c Release -p:UseLocalRevitApi=false
           $revitPublish = "cli-revit/Sidecar/bin/Release/net8.0-windows/win-x64/publish"
+          $addinBuild   = "cli-revit/AwareRevit/bin/Release/net8.0-windows"
           $revitStage   = "bridge-revit"
-          New-Item -ItemType Directory -Path $revitStage -Force | Out-Null
+          $addinStage   = "$revitStage/AwareRevit"
+          New-Item -ItemType Directory -Path $addinStage -Force | Out-Null
           Copy-Item "$revitPublish/aware-revit.exe" "$revitStage/"
-          if (Test-Path "cli-revit/install-addin.ps1") {
-            Copy-Item "cli-revit/install-addin.ps1" "$revitStage/"
-          }
-          if (Test-Path "cli-revit/AwareRevit/AwareRevit.addin") {
-            Copy-Item "cli-revit/AwareRevit/AwareRevit.addin" "$revitStage/"
+          Copy-Item "cli-revit/install-addin.ps1" "$revitStage/"
+          # The add-in and everything it loads at run time: the Roslyn scripting
+          # assemblies and their localized resource folders, the shared frame
+          # types, and the .addin manifest that CopyToOutputDirectory put here.
+          # No Revit assembly is among them — they are referenced, never copied.
+          Copy-Item "$addinBuild/*" "$addinStage/" -Recurse
+          foreach ($required in @(
+            "$addinStage/AwareRevit.dll",
+            "$addinStage/AwareRevit.addin",
+            "$revitStage/install-addin.ps1")) {
+            if (-not (Test-Path $required)) {
+              throw "aware-revit zip would ship without $required - the installer could not succeed"
+            }
           }
           Compress-Archive -Path "$revitStage/*" `
             -DestinationPath "aware-revit-${version}-win-x64.zip" -Force

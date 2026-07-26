@@ -47,6 +47,67 @@ commands:
       Globals: `dynamic uiapp` (UIApplication), `IDictionary<string,object?> args`.
       Use transaction="auto" to wrap the body in a Transaction (default: no wrap).
       Requires AwareRevit add-in installed (cli-revit/install-addin.ps1).
+  bake-scene:
+    lifecycle: single
+    category: curated
+    mode: write
+    mode-overridable: false  # the bridge ships the script; a node can't override to read
+    description: |
+      Materialize a canonical millimetre scene as source-owned native Revit
+      elements. Members become FamilyInstances — Structural Framing for
+      non-vertical members, Structural Columns for plumb ones — placed on a line
+      between the scene points, hosted on the nearest level at or below the
+      member's start. The profile designation is matched against loaded family
+      types on a NORMALISED name (upper-case, whitespace stripped), because a
+      live document ships `W16X26` beside `W16x50` and a case-sensitive match
+      loses half the members. With no matching family type the member still
+      lands, as a DirectShape carrying an extruded placeholder solid, and the
+      receipt says so — a member is never silently dropped.
+
+      Scene millimetres become Revit's internal decimal feet at one conversion
+      point (/304.8). Every record needs a stable unique id; scene.meta.sourceId
+      and sceneHash are mandatory, and an explicit non-mm unit is refused before
+      any model mutation.
+
+      Ownership is stamped as an Extensible Storage entity (schema `AwareBakeV1`)
+      carrying sourceId, sceneHash, materializationHash, and the record id. The
+      bake is RETIRE-AND-REPLACE: it reads what this sourceId already owns before
+      creating anything, then deletes that prior set — elements owned by any other
+      source are never touched. Everything happens in ONE Revit Transaction, so
+      the whole bake is one Undo step and any failure rolls the whole batch back.
+
+      Unlike Tekla's bake-scene this verb shows NO status message: Revit has no
+      status bar, and its TaskDialog is modal — announcing the bake would block it.
+    inputs:
+      scene:
+        type: object
+        required: true
+        description: |
+          Canonical scene object. meta is `{name?, units?:"mm", sourceId, sceneHash}`.
+          Top-level collections are `elements`, `operations`, and `referenceSystems`.
+          Materialized element kinds are `member`, `line`, and `box`, each carrying
+          `from`/`to` in millimetres and a profile designation on `profile`,
+          `meta.profile`, or `meta.name`. Plates, rods, bolt parts, operations, and
+          reference systems are reported in `unsupported` rather than dropped.
+      version:
+        type: string
+        required: false
+        example: "2026"
+        description: Revit release to target when more than one is running.
+      host_pid:
+        type: integer
+        required: false
+        description: |
+          Target Revit PID. Required when several Revit instances are live —
+          otherwise the sidecar refuses an ambiguous target rather than guessing.
+    outputs:
+      type: single
+      schema:
+        ok:           boolean
+        result:       object  # identity hashes + attemptId + counts + nested emitted/failed/unsupported/warnings/retired arrays
+        error:        string  # only when ok=false
+        stack:        string  # only when ok=false
+        delivered_at: string
   list-instances:
     lifecycle: single
     description: |
