@@ -330,6 +330,29 @@ internal static class BakeScene
         var label      = Exec.TryString(input, "label") ?? "";
 
         var client = clientOverride ?? new SketchupClient();
+
+        // A version filter resolves by PREFIX and takes the first match, which is fine for a read
+        // but not for this: bake-scene is retire-and-replace, so picking an arbitrary one of two
+        // matching sessions would create members in one model and DELETE source-owned groups from
+        // whichever happened to be enumerated first. `Resolve` already refuses to guess when no
+        // filter is given; a filter that still matches several is the same ambiguity wearing a
+        // filter, so it gets the same refusal. An explicit sketchup_id is always unambiguous.
+        if (string.IsNullOrEmpty(sketchupId) && !string.IsNullOrEmpty(version))
+        {
+            var matching = client.ListInstances()
+                .Where(i => i.Version.StartsWith(version!, StringComparison.Ordinal))
+                .ToList();
+            if (matching.Count > 1)
+            {
+                Console.WriteLine(Receipts.ExecFail(
+                    $"ambiguous target — {matching.Count} SketchUp instances match version='{version}' "
+                    + $"(pids: {string.Join(", ", matching.Select(i => i.Pid))}); "
+                    + "pass sketchup_id=<pid> to say which model to bake into",
+                    "", "", verb: Verb).ToJsonString());
+                return 1;
+            }
+        }
+
         var inst = client.Resolve(sketchupId, version);
         if (inst is null)
         {

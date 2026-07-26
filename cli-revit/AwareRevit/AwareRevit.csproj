@@ -110,7 +110,8 @@
        pinned 2026 SDK and produce an add-in that says 2025 on the tin. Because the
        package versions follow no pattern, the caller must state both — so this asks
        for that rather than guessing one from the other. -->
-  <Target Name="GuardRevitSdkMatchesTarget" BeforeTargets="CoreCompile">
+  <Target Name="GuardRevitSdkMatchesTarget" BeforeTargets="CoreCompile"
+          Condition="'$(UseLocalRevitApi)' != 'true'">
     <Error Condition="!$(RevitSdkPackageVersion.StartsWith('$(RevitVersion)'))"
            Text="Revit SDK mismatch: RevitVersion=$(RevitVersion) but RevitSdkPackageVersion=$(RevitSdkPackageVersion). Autodesk's package versions follow no pattern across releases, so pass the matching one explicitly, e.g. -p:RevitVersion=2025 -p:RevitSdkPackageVersion=2025.0.2.419" />
   </Target>
