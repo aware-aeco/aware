@@ -304,6 +304,33 @@ internal static class BakeScene
 
     // ── verb ─────────────────────────────────────────────────────────────────
 
+    /// <summary>
+    /// Turn a bridge-level failure into an honest sentence.
+    ///
+    /// Most bridge faults mean the bake's rescue already ran abort_operation and the model is
+    /// intact. A WATCHDOG TIMEOUT does not: that answer comes from the bridge's own thread while
+    /// the materializer is still running on SketchUp's main thread, which the bridge cannot
+    /// interrupt, so the script may reach commit_operation after the reply. Reporting a plain
+    /// failure there would assert an untouched model we have not checked. Say it is unknown, and
+    /// say what makes it recoverable — a retry under the same sourceId reconciles rather than
+    /// duplicates, because the bake is retire-and-replace on that identity.
+    /// </summary>
+    internal static string DescribeBridgeFailure(string? bridgeError)
+    {
+        var error = string.IsNullOrWhiteSpace(bridgeError)
+            ? "bridge reported failure with no error message"
+            : bridgeError!;
+        var timedOut = error.Contains("timeout", StringComparison.OrdinalIgnoreCase)
+                    || error.Contains("timed out", StringComparison.OrdinalIgnoreCase)
+                    || error.Contains("watchdog", StringComparison.OrdinalIgnoreCase);
+        if (!timedOut) return error;
+        return error
+            + " — the materializer may still be running on SketchUp's main thread, so the model may"
+            + " or may not have received this bake. Check the model before deciding; re-running the"
+            + " SAME scene under the same sourceId reconciles it (retire-and-replace) rather than"
+            + " inserting a second copy.";
+    }
+
     public static int Run(JsonNode? input, SketchupClient? clientOverride = null, int timeoutMs = DefaultTimeoutMs)
     {
         var sceneNode = input?["scene"];
@@ -415,11 +442,18 @@ internal static class BakeScene
         bool dispatched = bridgeBody["ok"]?.GetValue<bool?>() ?? false;
         if (!dispatched)
         {
-            // The Ruby raised outside its own rescue, or the bridge itself failed.
-            // The bake's rescue commits an abort_operation, so the model is intact;
-            // anything reaching here is a bridge-level fault, not a bake receipt.
+            // The Ruby raised outside its own rescue, or the bridge itself failed. Usually the
+            // bake's rescue has already run abort_operation, so the model is intact.
+            //
+            // EXCEPT on the watchdog timeout. That answer comes from the bridge's own thread while
+            // the materializer is still running on SketchUp's MAIN thread — which the bridge cannot
+            // interrupt. The script may therefore reach commit_operation AFTER this reply, so
+            // "failed" here does not mean "nothing happened", and a receipt implying an untouched
+            // model would be a guess dressed as a fact. Say the outcome is unknown, and say what
+            // makes it recoverable: a retry under the SAME sourceId reconciles rather than
+            // duplicates, because the bake is retire-and-replace on that identity.
             Console.WriteLine(Receipts.ExecFail(
-                bridgeBody["error"]?.GetValue<string>() ?? "bridge reported failure with no error message",
+                DescribeBridgeFailure(bridgeBody["error"]?.GetValue<string>()),
                 bridgeBody["stack"]?.GetValue<string>() ?? "",
                 stdoutLog, inst.Version, inst.Pid, inst.Pid.ToString(), Verb).ToJsonString());
             return 2;

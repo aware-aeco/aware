@@ -116,3 +116,44 @@ public class BakeSceneAmbiguityTests : IDisposable
         Assert.DoesNotContain("ambiguous target", output);
     }
 }
+
+/// <summary>
+/// A watchdog timeout is NOT "nothing happened".
+///
+/// The bridge answers from its own thread while the Ruby materializer keeps running on SketchUp's
+/// main thread, so the script can still reach commit_operation after the reply. A receipt implying
+/// an untouched model would be a guess dressed as a fact. Found by Codex review.
+/// </summary>
+public class BakeSceneTimeoutHonestyTests
+{
+    [Theory]
+    [InlineData("bridge timeout after 90000ms")]
+    [InlineData("request timed out")]
+    [InlineData("WATCHDOG fired")]
+    public void ATimeout_SaysTheOutcomeIsUnknownAndHowToRecover(string error)
+    {
+        var described = Verbs.BakeScene.DescribeBridgeFailure(error);
+        Assert.Contains(error, described);
+        Assert.Contains("may or may not", described);
+        Assert.Contains("same sourceId", described);
+    }
+
+    [Theory]
+    [InlineData("NoMethodError: undefined method `foo'")]
+    [InlineData("bridge reported failure with no error message")]
+    public void ANonTimeoutFailure_IsPassedThroughUnembellished(string error)
+    {
+        // The rescue already aborted the operation there; adding "may or may not" would make a
+        // clean, known failure sound uncertain.
+        Assert.Equal(error, Verbs.BakeScene.DescribeBridgeFailure(error));
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("   ")]
+    public void AMissingErrorStillReadsAsAFailure(string? error)
+    {
+        Assert.Contains("bridge reported failure", Verbs.BakeScene.DescribeBridgeFailure(error));
+    }
+}
