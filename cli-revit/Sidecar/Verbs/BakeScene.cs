@@ -66,8 +66,37 @@ internal static class BakeScene
             return execExit == 0 ? 2 : execExit;
         }
         receipt["verb"] = "bake-scene";
+
+        // A bake that REFUSED is not a successful command. `exec` reports whether the SCRIPT ran,
+        // and a script that returns {ok:false} ran perfectly — so left alone the envelope says
+        // ok:true with exit 0 while the model received nothing. A caller that trusts the envelope
+        // (floless.app does, to decide whether to tell the user their members landed) would report
+        // a successful insert into a model that refused it. Mirror the SketchUp verb: a receipt
+        // that says it failed makes the command fail.
+        //
+        // Only an explicit `false` flips the verdict — a missing nested `ok` leaves exec's own
+        // result standing rather than inventing a failure.
+        var exit = ApplyBakeVerdict(receipt, execExit);
         Console.WriteLine(receipt.ToJsonString());
-        return execExit;
+        return exit;
+    }
+
+    /// <summary>
+    /// Fold the nested bake receipt's verdict into the top-level envelope, returning the exit code
+    /// the command should report. Mutates <paramref name="receipt"/> in place.
+    /// Extracted so the rule is testable without a live Revit on the other end of the pipe.
+    /// </summary>
+    internal static int ApplyBakeVerdict(JsonObject receipt, int execExit)
+    {
+        if (execExit != 0) return execExit;   // exec already failed; its verdict stands
+        var refused = receipt["result"] is JsonObject nested
+                   && nested["ok"] is JsonValue okValue
+                   && okValue.TryGetValue<bool>(out var okFlag)
+                   && !okFlag;
+        if (!refused) return execExit;
+        receipt["ok"] = false;
+        receipt["error"] = "bake-scene returned ok:false; inspect the structured result receipt";
+        return 2;
     }
 
     /// <summary>Identity of a materialization: the canonical scene JSON bound to
