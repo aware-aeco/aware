@@ -339,6 +339,23 @@ using (var tx = new Transaction(doc, "AWARE bake-scene " + sceneName))
                     symbol.Activate();
                     doc.Regenerate();
                 }
+                // The CURVE overload is used for columns too, not just framing — deliberately, and
+                // against the usual advice to place columns from a point. Two reasons.
+                //
+                // It was measured, not assumed: on Revit 2026 this places plumb columns correctly
+                // across the three family classes a steel/concrete job actually uses — wide-flange
+                // (W10X49), hollow section (HSS6X6X5/8) and concrete rectangular (24 x 24) — each
+                // read back spanning exactly z 0->3000 with the right section width. Concrete
+                // rectangular is the family most often cited as not curve-driven; it works.
+                //
+                // And the alternative is worse here. The point overload places at a location and
+                // then needs base level, top level and both offsets set to reach a given top — four
+                // more chances to put a member somewhere the scene did not ask for. The scene gives
+                // us an exact axis; handing Revit that axis is the smaller claim.
+                //
+                // If a family ever DOES refuse the curve, it surfaces as a failed row and the batch
+                // rolls back rather than landing something wrong — so the failure is loud, and this
+                // comment is the place to start.
                 created = doc.Create.NewFamilyInstance(
                     Line.CreateBound(start, end),
                     symbol,
