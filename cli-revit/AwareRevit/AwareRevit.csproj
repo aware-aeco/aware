@@ -27,16 +27,72 @@
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
-  <!-- Reference Revit's API assemblies from the installed Revit 2026.
-       <Private>false</Private> means "do not copy to output" — Revit
-       already owns these in its load context. -->
+  <!-- ── Where Revit's API assemblies come from ──────────────────────────────
+       The add-in compiles against RevitAPI / RevitAPIUI, but Revit owns those
+       binaries at run time (they sit next to Revit.exe and are loaded into its
+       own context), so we only ever REFERENCE them — never copy, never ship.
+
+       Two sources, preferred in this order:
+         A. A local Revit install, when this machine has one. Offline, and the
+            add-in compiles against the exact binaries it will be loaded beside.
+         B. Autodesk's reference-assembly package on nuget.org. This is what
+            makes the add-in buildable on a machine — or a CI runner — with no
+            Revit installed, which is what lets the release workflow ship
+            AwareRevit.dll inside the bridge zip (see issue #315).
+
+       No hardcoded absolute paths: the install directory is derived from the
+       64-bit Program Files and the Revit version, and every input is
+       overridable from the command line:
+         -p:RevitVersion=2025          target a different Revit release
+         -p:RevitApiDir=<dir>          a Revit installed somewhere else
+         -p:UseLocalRevitApi=false     force B (this is how CI builds, and how
+                                       CI's path is exercised on a dev box) -->
+  <PropertyGroup>
+    <!-- Revit release whose API this add-in targets. -->
+    <RevitVersion Condition="'$(RevitVersion)' == ''">2026</RevitVersion>
+    <!-- Autodesk's reference assemblies for that release. Not derivable from
+         $(RevitVersion) — Autodesk's package versions have no stable pattern
+         across years (2025.0.2.419 vs 2026.0.0.9999) — so it is pinned. -->
+    <RevitSdkPackageVersion Condition="'$(RevitSdkPackageVersion)' == ''">2026.0.0.9999</RevitSdkPackageVersion>
+    <!-- 64-bit Program Files. ProgramW6432 says so regardless of the build's
+         own bitness; ProgramFiles is the fallback when it is not set. -->
+    <RevitProgramFiles Condition="'$(ProgramW6432)' != ''">$(ProgramW6432)</RevitProgramFiles>
+    <RevitProgramFiles Condition="'$(RevitProgramFiles)' == ''">$(ProgramFiles)</RevitProgramFiles>
+    <RevitApiDir Condition="'$(RevitApiDir)' == ''">$(RevitProgramFiles)\Autodesk\Revit $(RevitVersion)\</RevitApiDir>
+    <!-- Local install wins when it is actually there; an explicit
+         -p:UseLocalRevitApi=... on the command line wins over both. -->
+    <UseLocalRevitApi Condition="'$(UseLocalRevitApi)' == '' And Exists('$(RevitApiDir)RevitAPI.dll')">true</UseLocalRevitApi>
+    <UseLocalRevitApi Condition="'$(UseLocalRevitApi)' == ''">false</UseLocalRevitApi>
+  </PropertyGroup>
+
+  <!-- B. Autodesk's reference assemblies from nuget.org. ExcludeAssets="all"
+       stops NuGet from auto-referencing the package: it ships all 32 of Revit's
+       ref assemblies, seven of which are native images with no managed metadata
+       (RevitDB, RevitUI, RevitMFC, …) and make the build spew MSB3246. We only
+       want the two the add-in actually compiles against, so we take the package
+       purely as a download — GeneratePathProperty gives us its folder — and
+       reference those two by path, exactly as the local-install path does. -->
+  <ItemGroup Condition="'$(UseLocalRevitApi)' != 'true'">
+    <PackageReference Include="Autodesk.Revit.SDK" Version="$(RevitSdkPackageVersion)"
+                      ExcludeAssets="all" GeneratePathProperty="true" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <!-- The one directory both paths resolve to. Kept separate from
+         $(RevitApiDir) because that one may be a command-line global property,
+         which a project-level assignment cannot override. -->
+    <RevitApiRefDir Condition="'$(UseLocalRevitApi)' == 'true'">$(RevitApiDir)</RevitApiRefDir>
+    <RevitApiRefDir Condition="'$(RevitApiRefDir)' == ''">$(PkgAutodesk_Revit_SDK)\ref\net8.0\</RevitApiRefDir>
+  </PropertyGroup>
+
+  <!-- <Private>false</Private> = do not copy to output. Revit owns these. -->
   <ItemGroup>
     <Reference Include="RevitAPI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2026\RevitAPI.dll</HintPath>
+      <HintPath>$(RevitApiRefDir)RevitAPI.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2026\RevitAPIUI.dll</HintPath>
+      <HintPath>$(RevitApiRefDir)RevitAPIUI.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>
