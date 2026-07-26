@@ -407,7 +407,19 @@ using (var tx = new Transaction(doc, "AWARE bake-scene " + sceneName))
             retired.Add(row);
         }
 
-        tx.Commit();
+        // Commit REPORTS its outcome rather than always throwing. When Revit's failure processing
+        // rolls the transaction back — or leaves it pending — Commit() returns that status quietly,
+        // and treating the call as fire-and-forget would hand back ok:true with a list of element
+        // ids for geometry the model does not have. Same failure this bake already guards at the
+        // envelope: a write that did not land must never read as success.
+        var commitStatus = tx.Commit();
+        if (commitStatus != TransactionStatus.Committed)
+        {
+            throw new Exception(
+                "Revit did not commit the bake (transaction status: " + commitStatus + "). "
+                + "Nothing was written; this is usually Revit's failure processing rejecting the "
+                + "geometry or a warning dialog resolving to a rollback.");
+        }
     }
     catch (Exception ex)
     {
