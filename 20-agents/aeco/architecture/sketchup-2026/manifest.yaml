@@ -42,6 +42,87 @@ commands:
       `args` (Hash). Returns JSON receipt matching tekla.exec and rhino.exec
       vocabulary; only the `host` field differs ("sketchup"). See
       commands/exec.md for the full spec.
+  bake-scene:
+    lifecycle: single
+    category: curated
+    mode: write
+    mode-overridable: false  # the sidecar ships the script; a node can't override to read
+    description: |
+      Materialize a canonical millimetre scene as source-owned SketchUp groups —
+      the SketchUp sink for the same host-neutral scene the Tekla bridge bakes
+      into native parts. Each member becomes a named Sketchup::Group holding its
+      profile extruded along the from->to axis, placed on the `AWARE` tag. Scene
+      millimetres are converted with SketchUp's own Numeric#mm, and the sidecar
+      proves the mm<->inch pair round-trips on the live host before building
+      anything.
+
+      Members (`member`, `line`, `box`) are what this sink materializes. Every
+      other element kind, and every operation and reference system, is REPORTED
+      as an `unsupported` row rather than dropped — the receipt accounts for
+      every record in the scene. A record's nested children (a plate's holes, a
+      bolt array's instances, a grid's axes) are covered by their parent's row.
+
+      Every record needs a stable unique id. scene.meta.sourceId and sceneHash
+      are mandatory. bake-scene is RETIRE-AND-REPLACE: it stamps sourceId, the
+      record id, the scene hash and a namespaced materialization marker into each
+      group's AttributeDictionary, and on the next bake erases exactly the groups
+      already carrying that same sourceId before the fresh set is committed. A
+      group owned by a different sourceId, or never stamped, is never touched.
+      Callers that want independent drops must give each one its own derived
+      source id.
+
+      The whole bake is ONE model.start_operation(..., true) /
+      commit_operation, so a drop is a single SketchUp Undo. Unlike the Tekla
+      sink, SketchUp has real rollback: any failure calls abort_operation and the
+      model is left exactly as the user had it, so `rolledBack` is true and no
+      reconciliation retry is required. Envelope, id and kind validation all
+      happen in the sidecar before a socket is opened, and geometry is fully
+      validated before the operation starts — a refused bake never touches the
+      model.
+    inputs:
+      scene:
+        type: object
+        required: true
+        description: |
+          Canonical scene object. meta is `{name?, units?:"mm", sourceId, sceneHash}`.
+          Top-level collections are `elements`, `operations`, and `referenceSystems`.
+          A member carries `from`/`to` in millimetres, a positive `section:{w,d}`,
+          optional `meta.profile` and `xsection` (which select the real I / channel /
+          angle / hollow outline), and optional `rot` (section roll in degrees about
+          the reference line). Missing units means legacy millimetres; explicit
+          non-mm units fail before any mutation. bake-scene never invents a section:
+          a member without one is refused, not drawn at a default size.
+      version:
+        type: string
+        required: false
+        example: "26.0"
+        description: |
+          SketchUp version prefix used to pick the target instance when more than
+          one is running.
+      sketchup_id:
+        type: integer
+        required: false
+        description: |
+          Target SketchUp PID. Required when more than one instance is live —
+          bake-scene refuses an ambiguous target rather than writing to whichever
+          host answered first.
+      label:
+        type: string
+        required: false
+        example: "FloLess"
+        description: |
+          Who to name in SketchUp's status bar while the bake runs ("<label>:
+          adding N objects to this model...", then the outcome). Omitted, the
+          messages drop the prefix. Carried beside `scene` on purpose: inside it,
+          it would change the scene hash and therefore the materialization identity.
+    outputs:
+      type: single
+      schema:
+        ok:           boolean
+        result:       object  # identity hashes + attemptId + created/retired counts + nested emitted/failed/unsupported/warnings arrays
+        error:        string  # only when ok=false
+        stack:        string  # only when ok=false
+        delivered_at: string
   # === v0.33 curated workflow verbs ==========================================
   # Hand-curated workflow verbs per the v0.10 curation framework. Each
   # declares typed inputs/outputs; the implementation is the documented

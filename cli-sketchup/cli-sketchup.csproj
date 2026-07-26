@@ -34,4 +34,11 @@
       <TargetPath>BridgeAssets\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
     </None>
   </ItemGroup>
+  <!-- The bake-scene materializer is INJECTED through the bridge's exec path, not
+       installed with the bridge: an installed copy would only reload on a SketchUp
+       restart, silently pairing a new sidecar with a stale write script. Embedding it
+       keeps script and sidecar in lockstep (and survives PublishSingleFile). -->
+  <ItemGroup>
+    <EmbeddedResource Include="BakeSceneScript.rb" LogicalName="AwareSketchup.BakeSceneScript.rb" />
+  </ItemGroup>
 </Project>

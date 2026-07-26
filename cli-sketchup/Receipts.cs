@@ -12,7 +12,7 @@ internal static class Receipts
     public const string Host = "sketchup";
 
     public static JsonObject ExecOk(JsonNode? result, string? hostVersion, int? hostPid,
-                                    string? sketchupId, string stdoutLog)
+                                    string? sketchupId, string stdoutLog, string verb = "exec")
     {
         return new JsonObject
         {
@@ -22,7 +22,7 @@ internal static class Receipts
             ["host_version"]  = hostVersion,
             ["host_pid"]      = hostPid,
             ["sketchup_id"]   = sketchupId,
-            ["verb"]          = "exec",
+            ["verb"]          = verb,
             ["stdout_log"]    = stdoutLog,
             ["delivered_at"]  = DateTime.UtcNow.ToString("o"),
         };
@@ -30,7 +30,7 @@ internal static class Receipts
 
     public static JsonObject ExecFail(string error, string stack, string stdoutLog,
                                       string? hostVersion = null, int? hostPid = null,
-                                      string? sketchupId = null)
+                                      string? sketchupId = null, string verb = "exec")
     {
         return new JsonObject
         {
@@ -41,7 +41,32 @@ internal static class Receipts
             ["host_version"]  = hostVersion,
             ["host_pid"]      = hostPid,
             ["sketchup_id"]   = sketchupId,
-            ["verb"]          = "exec",
+            ["verb"]          = verb,
+            ["stdout_log"]    = stdoutLog,
+            ["delivered_at"]  = DateTime.UtcNow.ToString("o"),
+        };
+    }
+
+    /// <summary>
+    /// A bake that ran (or was refused before the model was touched) and reported
+    /// `ok:false` in its own structured receipt. Distinct from <see cref="ExecFail"/>,
+    /// which means the verb never got as far as a result: here the full
+    /// emitted/failed/unsupported/warnings body is the point, so it is carried in
+    /// `result` and the top-level `error` only points at it.
+    /// </summary>
+    public static JsonObject BakeResultFail(JsonNode? result, string? hostVersion, int? hostPid,
+                                            string? sketchupId, string stdoutLog, string verb = "bake-scene")
+    {
+        return new JsonObject
+        {
+            ["ok"]            = false,
+            ["error"]         = $"{verb} returned ok:false; inspect the structured result receipt",
+            ["result"]        = result?.DeepClone(),
+            ["host"]          = Host,
+            ["host_version"]  = hostVersion,
+            ["host_pid"]      = hostPid,
+            ["sketchup_id"]   = sketchupId,
+            ["verb"]          = verb,
             ["stdout_log"]    = stdoutLog,
             ["delivered_at"]  = DateTime.UtcNow.ToString("o"),
         };
