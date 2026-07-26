@@ -7,6 +7,7 @@ using Xunit;
 
 namespace AwareRevit.Tests;
 
+[Collection(ConsoleCaptureCollection.Name)]
 public class EndToEndTests
 {
     static readonly JsonSerializerOptions JsonOpts = new()

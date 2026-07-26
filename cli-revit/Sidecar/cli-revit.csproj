@@ -22,6 +22,15 @@
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
+  <!-- BakeSceneRules.cs is compiled into this assembly (so the unit tests
+       exercise it directly) AND embedded as source, because BakeSceneScript
+       splices the same text into the Roslyn script that runs inside Revit.
+       One text, two compilations — the rules the tests pin are the rules that
+       mutate the model. -->
+  <ItemGroup>
+    <EmbeddedResource Include="BakeSceneRules.cs" LogicalName="BakeSceneRules.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="AwareRevit.Tests" />
   </ItemGroup>
