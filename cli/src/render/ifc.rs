@@ -2882,9 +2882,16 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                                 "ifc write: `{instance_path}.holeEffects` must be an array"
                             ))
                         })?;
-                    if effects.len() != 2 {
+                    // ONE EFFECT PER PLY THE BOLT PASSES THROUGH — the declared pair at minimum, and more
+                    // when the joint is genuinely multi-ply. A double-sided gusset bolts plate + angle leg
+                    // + plate: three plies, three holes, one bolt in double shear, and that is an ordinary
+                    // detail rather than an exotic one. Pinning the count at two made every such joint
+                    // unexportable and refused the whole scene over it, so the effect list IS the ply stack
+                    // and `partToBoltTo`/`partToBeBolted` name the primary pair within it (the pair the
+                    // native hosts bind first). The emit pass already drills every effect it is given.
+                    if effects.len() < participants.len() {
                         return Err(AwareError::Validation(format!(
-                            "ifc write: `{instance_path}.holeEffects` must contain exactly one effect per participant"
+                            "ifc write: `{instance_path}.holeEffects` must contain at least one effect per bolt participant"
                         )));
                     }
                     let mut effect_targets = BTreeSet::new();
@@ -2892,9 +2899,26 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                         let effect_path = format!("{instance_path}.holeEffects[{effect_index}]");
                         require_id(effect, &effect_path, &mut seen)?;
                         let target = effect.get("targetId").and_then(Value::as_str).unwrap_or("");
-                        if !participants.contains(&target) || !effect_targets.insert(target) {
+                        // A ply beyond the declared pair is held to exactly the bar the pair is held to.
+                        // It has to be: the emit pass SKIPS a target it cannot resolve, so an unknown or
+                        // mistyped id would validate here and then quietly not be drilled — a hole missing
+                        // from a fabricated ply, with the receipt still reading clean.
+                        if !element_kinds
+                            .get(target)
+                            .is_some_and(|kind| is_physical_kind(kind))
+                        {
                             return Err(AwareError::Validation(format!(
-                                "ifc write: `{effect_path}.targetId` must uniquely reference a bolt participant"
+                                "ifc write: `{effect_path}.targetId` must reference a physical element (got `{target}`)"
+                            )));
+                        }
+                        if realized_bolt_components.contains(target) {
+                            return Err(AwareError::Validation(format!(
+                                "ifc write: `{effect_path}.targetId` must reference an independently materialized physical element, not bolt-array component `{target}`"
+                            )));
+                        }
+                        if !effect_targets.insert(target) {
+                            return Err(AwareError::Validation(format!(
+                                "ifc write: `{effect_path}.targetId` must not hole the same ply twice"
                             )));
                         }
                         let Some(center) = vec3(effect.get("center")) else {
@@ -2925,9 +2949,15 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                             )));
                         }
                     }
-                    if effect_targets.len() != participants.len() {
+                    // Extra plies are allowed; the declared pair is still mandatory. Counting effects
+                    // against participants would let a 3-ply stack that MISSES one of the pair pass on
+                    // arithmetic alone, so name the one that is absent instead.
+                    if let Some(missing) = participants
+                        .iter()
+                        .find(|participant| !effect_targets.contains(*participant))
+                    {
                         return Err(AwareError::Validation(format!(
-                            "ifc write: `{instance_path}.holeEffects` must cover both bolt participants"
+                            "ifc write: `{instance_path}.holeEffects` must cover bolt participant `{missing}`"
                         )));
                     }
                 }
@@ -3952,6 +3982,124 @@ mod tests {
         assert!(
             err.to_string()
                 .contains("independently materialized physical element")
+        );
+    }
+
+    /// A double-sided gusset: plate + member + plate clamped by ONE bolt, i.e. double shear. Three
+    /// plies, three holes. The commonest multi-ply detail there is, and the shape the old two-effect
+    /// cap refused outright — taking the whole scene down with it.
+    fn double_shear_scene() -> Value {
+        let mut scene = connection_scene();
+        scene["elements"].as_array_mut().unwrap().push(json!({
+            "id": "PL-2", "kind": "plate", "material": "S355",
+            "frame": { "origin": [100,0,-40], "uDir": [1,0,0], "vDir": [0,1,0], "normal": [0,0,1] },
+            "outline": [[-100,-150],[100,-150],[100,150],[-100,150]], "thicknessMm": 12
+        }));
+        scene["operations"][0]["instances"][0]["holeEffects"]
+            .as_array_mut()
+            .unwrap()
+            .push(json!({ "id": "BA-1-H-PL2", "targetId": "PL-2",
+                          "center": [100,0,0], "axis": [0,0,1], "diameterMm": 22 }));
+        scene
+    }
+
+    #[test]
+    fn a_bolt_may_hole_more_plies_than_the_declared_pair() {
+        let scene = double_shear_scene();
+        validate_scene(&scene).unwrap();
+
+        // Accepting the scene is only half of it: the far plate must actually be VOIDED. A relaxation
+        // that validated the third effect and then dropped it would ship a plate fabricated with no
+        // hole in it, which is worse than the refusal it replaced.
+        let built = build_ifc(&scene);
+        let row = built
+            .emitted
+            .iter()
+            .find(|row| row["id"] == "BA-1-H-PL2")
+            .expect("the third ply's hole effect is emitted");
+        assert_eq!(row["targetId"], json!("PL-2"));
+        assert_eq!(row["entityType"], json!("IfcOpeningElement"));
+        assert_eq!(
+            built.doc.matches("IFCRELVOIDSELEMENT(").count(),
+            4,
+            "three bolt holes (plate, member, far plate) plus the plate's own independent hole"
+        );
+    }
+
+    #[test]
+    fn an_extra_ply_must_still_be_a_holeable_element() {
+        // Unknown id: the emit pass skips a target it cannot resolve, so without this guard the hole
+        // would validate and then silently not be drilled.
+        let mut unknown = double_shear_scene();
+        unknown["operations"][0]["instances"][0]["holeEffects"][2]["targetId"] = json!("PL-NOPE");
+        assert!(
+            validate_scene(&unknown)
+                .unwrap_err()
+                .to_string()
+                .contains("must reference a physical element")
+        );
+
+        // …and a bolt does not drill itself: an extra ply may not be one of the array's own components.
+        let mut component = double_shear_scene();
+        component["operations"][0]["instances"][0]["holeEffects"][2]["targetId"] =
+            json!("WASHER-1");
+        assert!(
+            validate_scene(&component)
+                .unwrap_err()
+                .to_string()
+                .contains("not bolt-array component")
+        );
+    }
+
+    #[test]
+    fn one_ply_may_not_be_holed_twice_by_the_same_bolt() {
+        let mut twice = double_shear_scene();
+        twice["operations"][0]["instances"][0]["holeEffects"][2]["targetId"] = json!("PL-1");
+        assert!(
+            validate_scene(&twice)
+                .unwrap_err()
+                .to_string()
+                .contains("must not hole the same ply twice")
+        );
+    }
+
+    #[test]
+    fn extra_plies_do_not_excuse_a_missing_declared_participant() {
+        // Three effects, but the MEMBER is not among them. A count test would pass this on arithmetic
+        // alone (3 effects ≥ 2 participants) — the bolt would clamp two plates and miss the beam.
+        let mut scene = double_shear_scene();
+        scene["operations"][0]["instances"][0]["holeEffects"][1]["targetId"] = json!("PL-2");
+        scene["operations"][0]["instances"][0]["holeEffects"][2]["targetId"] = json!("PL-2");
+        let err = validate_scene(&scene).unwrap_err().to_string();
+        assert!(
+            err.contains("must not hole the same ply twice"),
+            "got: {err}"
+        );
+
+        // The same shape without the duplicate: two distinct plates, no member.
+        let mut scene = double_shear_scene();
+        scene["operations"][0]["instances"][0]["holeEffects"]
+            .as_array_mut()
+            .unwrap()
+            .remove(1);
+        let err = validate_scene(&scene).unwrap_err().to_string();
+        assert!(
+            err.contains("must cover bolt participant `BEAM-1`"),
+            "got: {err}"
+        );
+    }
+
+    #[test]
+    fn a_single_hole_effect_is_still_refused() {
+        let mut scene = connection_scene();
+        scene["operations"][0]["instances"][0]["holeEffects"]
+            .as_array_mut()
+            .unwrap()
+            .truncate(1);
+        let err = validate_scene(&scene).unwrap_err().to_string();
+        assert!(
+            err.contains("at least one effect per bolt participant"),
+            "got: {err}"
         );
     }
 
