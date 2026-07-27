@@ -2776,6 +2776,12 @@ fn relation_target<'a>(
     }
 }
 
+/// The element kinds a bolt can pass through and hole. A bolt's OWN components (`rod`, `bolt-shank`,
+/// `nut`, `washer`, `bolt-head`) are deliberately absent — a bolt does not drill itself — which is
+/// also what keeps a component from being smuggled in as an extra ply. Shared by the declared-pair
+/// check and the per-effect ply check below so the two can never drift apart.
+const BOLT_PLY_KINDS: [&str; 4] = ["member", "line", "box", "plate"];
+
 fn classify_operations(
     scene: &Value,
     physical: &HashMap<String, String>,
@@ -2794,7 +2800,7 @@ fn classify_operations(
 
         match kind {
             "bolt-array" => {
-                let part_kinds = ["member", "line", "box", "plate"];
+                let part_kinds = BOLT_PLY_KINDS;
                 let part_to_bolt_to =
                     relation_target(object, &path, "partToBoltTo", physical, &part_kinds)?;
                 let part_to_be_bolted =
@@ -3226,10 +3232,14 @@ fn classify_operations(
                 .ok_or_else(|| {
                     scene_error(&format!("{instance_path}.holeEffects"), "must be an array")
                 })?;
-            if effects.len() != 2 {
+            // One effect per PLY the bolt passes through — the declared pair at minimum, and more when
+            // the joint is genuinely multi-ply. A double-sided gusset bolts plate + angle leg + plate:
+            // three plies, three holes, one bolt in double shear. Pinning the count at two refused the
+            // whole scene over an ordinary detail. See the matching relaxation in `render/ifc.rs`.
+            if effects.len() < 2 {
                 return Err(scene_error(
                     &format!("{instance_path}.holeEffects"),
-                    "must contain exactly one effect per bolt participant",
+                    "must contain at least one effect per bolt participant",
                 ));
             }
             let mut effect_targets = HashSet::new();
@@ -3243,12 +3253,24 @@ fn classify_operations(
                     .ok_or_else(|| {
                         scene_error(&format!("{effect_path}.targetId"), "must be an element id")
                     })?;
+                // A ply beyond the declared pair is held to the same bar the pair is held to — a real
+                // element of a kind a bolt can hole. Without that an unknown id would validate here and
+                // then be silently dropped downstream, leaving a ply that is fabricated with no hole in
+                // it while the receipt still reads clean.
                 if ![participant_a, participant_b].contains(&target)
-                    || !effect_targets.insert(target)
+                    && !physical
+                        .get(target)
+                        .is_some_and(|kind| BOLT_PLY_KINDS.contains(&kind.as_str()))
                 {
                     return Err(scene_error(
                         &format!("{effect_path}.targetId"),
-                        "must uniquely reference a bolt participant",
+                        "must reference a bolt participant or another element the bolt passes through",
+                    ));
+                }
+                if !effect_targets.insert(target) {
+                    return Err(scene_error(
+                        &format!("{effect_path}.targetId"),
+                        "must not hole the same ply twice",
                     ));
                 }
                 let center = vector::<3>(effect.get("center"), &format!("{effect_path}.center"))?;
@@ -3286,7 +3308,9 @@ fn classify_operations(
                     "realizedBy": id, "renderedKind": "relationship", "geometryDuplicated": false
                 }));
             }
-            if effect_targets.len() != 2 {
+            // Extra plies are allowed; the declared pair is still mandatory. A count test would let a
+            // 3-ply stack that MISSES one of the pair pass on arithmetic alone.
+            if !effect_targets.contains(participant_a) || !effect_targets.contains(participant_b) {
                 return Err(scene_error(
                     &format!("{instance_path}.holeEffects"),
                     "must cover both bolt participants",
@@ -4191,6 +4215,109 @@ mod tests {
         non_boolean["operations"][0]["components"]["washer"] = json!("yes");
         let error = viewer_3d_render(&json!({ "scene": non_boolean }), true).unwrap_err();
         assert!(error.to_string().contains("components.washer"));
+    }
+
+    /// A double-sided gusset: plate + member + plate on ONE bolt, i.e. double shear. Three plies,
+    /// three holes — the commonest multi-ply detail, and the shape the old two-effect cap refused.
+    /// Kept in step with `render::ifc`'s `double_shear_scene`.
+    fn viewer_double_shear_scene() -> Value {
+        let mut scene = json!({
+            "meta": { "name": "Double shear", "units": "mm", "up": "z" },
+            "elements": [
+                {"id":"A","kind":"plate","frame":{"origin":[0,0,10],"uDir":[1,0,0],"vDir":[0,1,0],"normal":[0,0,1]},
+                 "outline":[[-40,-40],[40,-40],[40,40],[-40,40]],"thicknessMm":10},
+                {"id":"B","kind":"member","from":[-200,0,0],"to":[200,0,0]},
+                {"id":"C","kind":"plate","frame":{"origin":[0,0,-10],"uDir":[1,0,0],"vDir":[0,1,0],"normal":[0,0,1]},
+                 "outline":[[-40,-40],[40,-40],[40,40],[-40,40]],"thicknessMm":10},
+                {"id":"S","kind":"bolt-shank","axis":{"from":[0,0,-30],"to":[0,0,30]},"diameterMm":20},
+                {"id":"H","kind":"bolt-head","center":[0,0,34],"axis":[0,0,1],"acrossFlatsMm":30,"thicknessMm":8}
+            ],
+            "operations":[{
+                "id":"BA","kind":"bolt-array","partToBoltTo":"A","partToBeBolted":"B",
+                "frame":{"origin":[0,0,0],"uDir":[1,0,0],"vDir":[0,1,0],"normal":[0,0,1]},
+                "uOffsetsMm":[0],"vOffsetsMm":[0],"diameterMm":20,"standard":"A325N","toleranceMm":2,
+                "boltType":"shop","components":{"bolt":true,"nut":false,"washer":false},
+                "instances":[{"id":"I","point":[0,0,0],"shankId":"S","headId":"H",
+                  "nutIds":[],"washerIds":[],"holeEffects":[
+                    {"id":"HE-A","targetId":"A","center":[0,0,0],"axis":[0,0,1],"diameterMm":22},
+                    {"id":"HE-B","targetId":"B","center":[0,0,0],"axis":[0,0,1],"diameterMm":22}
+                  ]}]
+            }]
+        });
+        scene["operations"][0]["instances"][0]["holeEffects"]
+            .as_array_mut()
+            .unwrap()
+            .push(
+                json!({"id":"HE-C","targetId":"C","center":[0,0,0],"axis":[0,0,1],"diameterMm":22}),
+            );
+        scene
+    }
+
+    #[test]
+    fn viewer_accepts_a_bolt_holing_more_plies_than_the_declared_pair() {
+        let scene = viewer_double_shear_scene();
+        let out = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
+        let emitted = out["emitted"].as_array().unwrap();
+        // The far plate's hole must reach the receipt, not merely survive validation.
+        assert!(
+            emitted.iter().any(|row| row["id"] == "HE-C"),
+            "the third ply's hole effect is emitted"
+        );
+        assert!(out["failed"].as_array().unwrap().is_empty());
+    }
+
+    #[test]
+    fn viewer_holds_an_extra_ply_to_the_same_bar_as_the_pair() {
+        // An unknown id would validate and then be dropped downstream — a ply fabricated with no hole.
+        let mut unknown = viewer_double_shear_scene();
+        unknown["operations"][0]["instances"][0]["holeEffects"][2]["targetId"] = json!("NOPE");
+        let error = viewer_3d_render(&json!({ "scene": unknown }), true).unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("another element the bolt passes through"),
+            "got: {error}"
+        );
+
+        // A bolt does not drill itself.
+        let mut component = viewer_double_shear_scene();
+        component["operations"][0]["instances"][0]["holeEffects"][2]["targetId"] = json!("S");
+        let error = viewer_3d_render(&json!({ "scene": component }), true).unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("another element the bolt passes through"),
+            "got: {error}"
+        );
+
+        // The same ply twice is not two shear planes.
+        let mut twice = viewer_double_shear_scene();
+        twice["operations"][0]["instances"][0]["holeEffects"][2]["targetId"] = json!("A");
+        let error = viewer_3d_render(&json!({ "scene": twice }), true).unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("must not hole the same ply twice"),
+            "got: {error}"
+        );
+    }
+
+    #[test]
+    fn viewer_extra_plies_do_not_excuse_a_missing_declared_participant() {
+        // Two plates and no member: three effects would satisfy any count test, while the bolt misses
+        // the very member the array declares it is bolting.
+        let mut scene = viewer_double_shear_scene();
+        scene["operations"][0]["instances"][0]["holeEffects"]
+            .as_array_mut()
+            .unwrap()
+            .remove(1);
+        let error = viewer_3d_render(&json!({ "scene": scene }), true).unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("must cover both bolt participants"),
+            "got: {error}"
+        );
     }
 
     #[test]

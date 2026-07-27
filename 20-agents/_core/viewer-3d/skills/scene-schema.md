@@ -83,6 +83,14 @@ Tekla materialization on one deterministic contract.
 returned in `unsupported` with code `exact-csg-not-available` rather than approximated.
 Bolt-array `instances[].id` and `instances[].holeEffects[].id` are also receipt identities.
 
+A bolt's `holeEffects` is the **ply stack it passes through — one effect per ply, not a fixed pair.**
+`partToBoltTo` and `partToBeBolted` name the primary pair and must both appear among the effects;
+beyond them an instance may hole any further element it genuinely passes through. That is what makes
+double shear expressible: a double-sided gusset clamps plate + angle leg + plate, so one bolt drills
+three plies. Each extra ply is held to the same bar as the pair — a real physical element of a
+holeable kind, never one of the array's own bolt components (a bolt does not drill itself) — and no
+ply may be holed twice by one instance. Producers that emit only the pair are unaffected.
+
 ## Structural grids and elevation datums
 
 ```jsonc
