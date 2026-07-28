@@ -339,7 +339,28 @@ try:
         if not doc.EndUndoRecord(undo_serial):
             raise RuntimeError("Rhino could not close the bake undo record")
         undo_serial = 0
-    doc.Views.Redraw()
+
+    # A newly baked model can be far from Rhino's untouched startup camera.
+    # Frame only the active model view: every other model/layout/detail camera
+    # belongs to the user and must remain untouched. Camera failure is non-fatal
+    # because the committed geometry remains valid.
+    frame_failure = None
+    try:
+        active_view = doc.Views.ActiveView
+        if active_view is None:
+            frame_failure = "there is no active model view"
+        elif isinstance(active_view, Rhino.Display.RhinoPageView):
+            frame_failure = "the active view is a layout"
+        elif not active_view.ActiveViewport.ZoomExtents():
+            frame_failure = "{} refused Zoom Extents".format(
+                str(active_view.ActiveViewport.Name or "the active model view"))
+        doc.Views.Redraw()
+    except Exception as ex:
+        frame_failure = str(ex)
+    if frame_failure:
+        warnings.append(row(
+            "scene", "scene", "warning", "view-frame-failed",
+            "The model was baked, but Rhino could not frame it automatically: {}".format(frame_failure)))
     return envelope(True, emitted, [], warnings, len(retired_serials), False)
 except Exception as ex:
     cleanup_ok = True

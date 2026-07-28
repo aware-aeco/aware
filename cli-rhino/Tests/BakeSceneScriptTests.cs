@@ -23,6 +23,10 @@ public class BakeSceneScriptTests
         Assert.Contains("created object read-back failed", code);
         Assert.Contains("ownership read-back differs from the request", code);
         Assert.Contains("commit-state-uncertain", code);
+        Assert.Contains("active_view = doc.Views.ActiveView", code);
+        Assert.Contains("isinstance(active_view, Rhino.Display.RhinoPageView)", code);
+        Assert.Contains("elif not active_view.ActiveViewport.ZoomExtents()", code);
+        Assert.Contains("view-frame-failed", code);
         Assert.Contains("if capped is None:", code);
         Assert.Contains("not brep.IsSolid", code);
         Assert.Contains("valid closed solid", code);
@@ -44,6 +48,27 @@ public class BakeSceneScriptTests
 
         Assert.DoesNotContain(BakeSceneRules.SourceIdKey, BakeSceneScript.Code);
         Assert.DoesNotContain(BakeSceneRules.RecordIdKey, BakeSceneScript.Code);
+    }
+
+    [Fact]
+    public void ViewFramingRunsAfterCommitAndCannotEnterGeometryRollback()
+    {
+        var code = BakeSceneScript.Code;
+        var frame = code.IndexOf("frame_failure = None", StringComparison.Ordinal);
+        var commitClosed = code.LastIndexOf("undo_serial = 0", frame, StringComparison.Ordinal);
+        var redraw = code.IndexOf("doc.Views.Redraw()", frame, StringComparison.Ordinal);
+        var warning = code.IndexOf("if frame_failure:", frame, StringComparison.Ordinal);
+        var success = code.IndexOf("return envelope(True", warning, StringComparison.Ordinal);
+        var rollback = code.IndexOf("cleanup_ok = True", success, StringComparison.Ordinal);
+
+        Assert.True(commitClosed >= 0);
+        Assert.True(commitClosed < frame);
+        Assert.True(frame < redraw);
+        Assert.True(redraw < warning);
+        Assert.True(warning < success);
+        Assert.True(success < rollback);
+        Assert.Contains("elif not active_view.ActiveViewport.ZoomExtents()", code);
+        Assert.Contains("\"view-frame-failed\"", code);
     }
 
     [Fact]
