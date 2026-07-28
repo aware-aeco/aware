@@ -343,35 +343,26 @@ For the record, measured correctly (30 k model pixels, 5.8 % of frame): steel me
 **0.4774** under Cycles and **0.2705** under EEVEE — the rasterizer renders metal 43 % darker, and
 no setting closes it.
 
-## Known limitation: EEVEE + HDRI banding on tessellated sections
+## EEVEE + HDRI world-sun shadow filtering
 
-**Unresolved. Draft only.** Under `quality: draft` with an HDRI `environment`, EEVEE renders a row
-of regular light/dark dashes along the web of an I-section beam. Cycles renders the same geometry
-clean, and so does EEVEE with `environment: gradient`.
+Blender 5.2 does more than feed an HDRI into the world probe: when the image exceeds
+`World.sun_threshold`, it converts the excess into a synthetic sun so the brightest source can
+cast a directional shadow. The default one-pixel PCF radius aliases on thin tessellated geometry.
+On the fixture that appeared as a regular row of light/dark dashes along an I-section web under
+`quality: draft`; Cycles and the procedural-gradient world were clean because neither uses that
+synthetic EEVEE world sun.
 
-Isolated by bisection against the fixture:
+The import mesh was not the cause. Its web polygons were already flat, coplanar and consistently
+normalled; welding vertices, explicit flat shading, smooth-by-angle, probe resolution, the explicit
+key light, and the general EEVEE shadow controls did not remove the pattern. Disabling the world
+sun did, but also threw away its useful directional contact shadow.
 
-| Engine | `environment` | Result |
-|---|---|---|
-| Cycles | `studio` | clean |
-| EEVEE | `gradient` | clean |
-| EEVEE | `studio` | **banded** |
-
-So it is the HDRI's high-frequency content, not the ground plane, the sun energy, the lens or the
-`hero` direction — each of those was ruled out separately. It is **not** pre-existing: rendering
-the fixture with the v0.102.0 scripts extracted from git comes back clean, so it arrived with
-image-based lighting.
-
-Ruled out as fixes, each measured: `shadow_ray_count`, `shadow_step_count`,
-`shadow_resolution_scale`, `shadow_maximum_resolution`, `shadow_filter_radius`,
-`use_shadow_jitter`, `use_raytracing` on/off, PROBE-vs-SCREEN tracing, `use_fast_gi`,
-`clamp_surface_indirect`, `gi_cubemap_resolution`, and sun `angle`. Turning `use_shadows` off
-removes it, but only by flattening the whole render.
-
-**Workarounds:** use `quality: production` for anything anyone will look at — which is what the
-presentation path is for — or `environment: gradient` if a clean draft matters more than
-representative lighting. Do not "fix" this by changing the default environment per engine: that
-would make draft stop previewing production, which is a worse problem than the banding.
+`_stage.setup_world()` therefore raises **the world sun's own**
+`sun_shadow_filter_radius` from 1 to 4 when an HDRI loads. That is the narrow control at the source
+of the alias: the HDRI and world sun remain active, contact shadows remain directional, and the
+fixture's measured high-frequency web score falls from **5.502** to **1.638**. The smoke test pins
+that rendered symptom, not merely the property value, so removing the filter fails against the
+same visible regression.
 
 ## Blender 5.2 API breaks worth knowing
 

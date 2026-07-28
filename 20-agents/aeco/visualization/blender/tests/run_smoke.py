@@ -40,6 +40,7 @@ harness, not just once during development.
 
 import argparse
 import json
+import math
 import shutil
 import struct
 import subprocess
@@ -79,6 +80,12 @@ TURNTABLE_WIDTH, TURNTABLE_HEIGHT = 480, 270
 TURNTABLE_DURATION_SECONDS = 1
 TURNTABLE_FPS = 12
 MIN_MP4_BYTES = 10_000
+
+# Hand-measured against the committed 9-element fixture at STILL_WIDTH x
+# STILL_HEIGHT. The near web of beam B1 runs diagonally through this sample
+# line. A clean web is a smooth luminance ramp; the Blender 5.2 world-sun
+# shadow alias from #314 raises this high-frequency residual above 5.5.
+MAX_WEB_BANDING_SCORE = 2.0
 
 # Verified location from the Task 1 toolchain probe; used only when neither
 # --blender nor PATH resolves anything.
@@ -256,6 +263,40 @@ def inspect_png(path: Path) -> dict:
         "distinct-colours-sampled": distinct,
         "is-flat": distinct <= 1,
     }
+
+
+def fixture_web_banding_score(path: Path) -> float:
+    """High-frequency luminance residual along the fixture's near beam web.
+
+    This is intentionally a visual-fixture assertion, not a source/property
+    check: removing the shadow filter must fail on the rendered symptom. The
+    diagonal and threshold are hand-derived from `fixture-scene.json` rendered
+    at the smoke test's fixed 640x360 framing. A 15-pixel moving mean removes
+    the legitimate gradual HDRI reflection; the remaining standard deviation
+    measures the regular light/dark dashes from #314.
+    """
+    width, height, bpp, raw = decode_png(path.read_bytes())
+    if (width, height) != (STILL_WIDTH, STILL_HEIGHT):
+        raise ValueError(
+            "fixture web banding score requires the smoke test's fixed "
+            f"{STILL_WIDTH}x{STILL_HEIGHT} render, got {width}x{height}"
+        )
+    if bpp < 3:
+        raise ValueError(f"fixture web banding score requires RGB data, got {bpp} Bpp")
+
+    luminances = []
+    for x in range(270, 455):
+        y = round(89 + 0.127 * (x - 260) + 3)
+        index = (y * width + x) * bpp
+        red, green, blue = raw[index : index + 3]
+        luminances.append(0.2126 * red + 0.7152 * green + 0.0722 * blue)
+
+    residuals = []
+    for index in range(7, len(luminances) - 7):
+        local_mean = sum(luminances[index - 7 : index + 8]) / 15
+        residuals.append(luminances[index] - local_mean)
+    mean = sum(residuals) / len(residuals)
+    return math.sqrt(sum((value - mean) ** 2 for value in residuals) / len(residuals))
 
 
 # --------------------------------------------------------------------------
@@ -556,6 +597,12 @@ def main() -> int:
             f"({png_info['distinct-colours-sampled']} distinct colour(s) sampled) -- "
             "the render shows nothing"
         )
+        banding_score = fixture_web_banding_score(rendered_png)
+        assert banding_score <= MAX_WEB_BANDING_SCORE, (
+            "render.still: EEVEE + HDRI bands the fixture's I-section web "
+            f"(high-frequency score {banding_score:.3f}, expected <= "
+            f"{MAX_WEB_BANDING_SCORE:.3f})"
+        )
         # The staging receipts. A degraded environment still renders a perfectly
         # good-looking picture, so these are the only place the chain can tell
         # "lit by the HDRI it asked for" from "quietly fell back to the
@@ -579,7 +626,8 @@ def main() -> int:
         print(
             f"      {rendered_png.name}: {png_info['width']}x{png_info['height']}, "
             f"{png_info['distinct-colours-sampled']}+ distinct colours sampled, "
-            f"{rendered_png.stat().st_size:,} bytes"
+            f"{rendered_png.stat().st_size:,} bytes, "
+            f"web banding score={banding_score:.3f}"
         )
 
         # 6. render.turntable -- MP4 must exist, be a real container, non-trivial size
