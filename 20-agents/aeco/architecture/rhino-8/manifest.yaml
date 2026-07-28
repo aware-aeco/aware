@@ -290,7 +290,11 @@ commands:
       the prior set. Objects from other sources and unstamped Rhino objects are
       never touched.
 
-      Members are materialized. Every other element, operation, nested opening
+      Members use the canonical optional xsection discriminant (i, channel,
+      angle, rhs, chs, or rect) for nominal sharp-corner profiles. A missing
+      descriptor retains the legacy rectangular section envelope; a present
+      malformed descriptor fails before Rhino is contacted. Rhino never parses
+      a designation or guesses a thickness. Every other element, operation, nested opening
       and reference-system record is returned as an explicit unsupported row, so
       the receipt accounts for the complete scene. A member without a non-zero
       axis and positive section dimensions fails the whole batch; Rhino never
@@ -305,9 +309,12 @@ commands:
         required: true
         description: |
           Canonical scene object. meta contains sourceId, sceneHash and optional
-          units:"mm". Members carry from/to points and section:{w,d}, all in
-          millimetres. Missing units means legacy millimetres; explicit non-mm
-          units fail before Rhino is contacted.
+          units:"mm". Members carry from/to points, section:{w,d}, and optional
+          canonical xsection, all in millimetres. xsection is one of
+          {shape:i,d,bf,tw,tf} | {shape:channel,d,bf,tw,tf} |
+          {shape:angle,d,b,t} | {shape:rhs,d,b,t} |
+          {shape:chs,od,t} | {shape:rect,w,d}. Missing units means legacy
+          millimetres; explicit non-mm units fail before Rhino is contacted.
       rhino_id:
         type: string
         required: false
@@ -331,7 +338,13 @@ commands:
       type: single
       schema:
         ok:           boolean
-        result:       object
+        result:
+          type: object
+          description: |
+            Host-members receipt. Each emitted member includes Rhino object
+            GUID plus read-back geometry diagnostics: rhino-profile-v2
+            revision, normalized shape/dimensions, profileCount, capCount, and
+            volume in active-document cubic units.
         error:        string
         host_version: string
         host_pid:     integer

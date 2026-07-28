@@ -29,6 +29,9 @@ The request carries the unchanged host-neutral scene:
         "from": [0, 0, 0],
         "to": [6000, 0, 0],
         "section": { "w": 165, "d": 310 },
+        "xsection": {
+          "shape": "i", "d": 310, "bf": 165, "tw": 7.1, "tf": 11.2
+        },
         "meta": { "profile": "W12X26" }
       }
     ],
@@ -45,10 +48,23 @@ The scene is always interpreted in millimetres. The materializer reads
 dimension with RhinoCommon's millimetre-to-document-unit conversion. It does not
 change the document unit system.
 
-Each member becomes a capped rectangular Brep extruded along its exact `from` to
-`to` axis. The rectangle preserves the authored section width and depth. The v1
-sink does not infer flange, web or wall thickness from a designation; a missing
-or non-positive section is a failed member, never a guessed shape.
+Each member becomes a capped outward Brep extruded along its exact `from` to
+`to` axis. When `xsection` is absent, the member remains the legacy rectangular
+`section.{w,d}` envelope. When present, `xsection` must be the exact lowercase
+canonical union:
+
+```text
+{shape:"i",d,bf,tw,tf} | {shape:"channel",d,bf,tw,tf} |
+{shape:"angle",d,b,t} | {shape:"rhs",d,b,t} |
+{shape:"chs",od,t} | {shape:"rect",w,d}
+```
+
+The descriptor supplies nominal sharp-corner flange, web, leg, and wall
+thicknesses; Rhino never parses `meta.profile` or estimates them. Its envelope
+must agree with `section.{w,d}`. A present malformed, mismatched, partial, or
+degenerate descriptor fails the whole preflight before Rhino is contacted.
+Channel width is canonically `bf`; `b` is rejected. RHS and CHS are true hollow
+solids with an inner profile.
 
 All objects are placed on the `AWARE` layer. Rhino has no family lookup for this
 operation, so the receipt does not distinguish "native" from "fallback".
@@ -115,7 +131,7 @@ The outer sidecar envelope identifies the actual target:
     "ok": true,
     "sourceId": "floless:drop:frame-a",
     "sceneHash": "sha256-of-canonical-scene",
-    "materializationHash": "host-bound-sha256",
+    "materializationHash": "host-and-rhino-profile-v2-bound-sha256",
     "attemptId": "unique-attempt-id",
     "created": 1,
     "retired": 0,
@@ -124,7 +140,15 @@ The outer sidecar envelope identifies the actual target:
         "id": "M1",
         "kind": "member",
         "status": "emitted",
-        "nativeGuid": "Rhino-object-guid"
+        "nativeGuid": "Rhino-object-guid",
+        "geometry": {
+          "revision": "rhino-profile-v2",
+          "shape": "i",
+          "dimensions": { "d": 310, "bf": 165, "tw": 7.1, "tf": 11.2 },
+          "profileCount": 1,
+          "capCount": 2,
+          "volume": 123456789
+        }
       }
     ],
     "failed": [],
@@ -139,3 +163,6 @@ Every authored scene record appears exactly once in `emitted`, `failed`, or
 `unsupported`. Nested plate holes and bolt hole effects use the shared
 `opening` receipt kind. A nested `result.ok:false` also makes the outer command
 fail, so a refused or rolled-back bake cannot be mistaken for success.
+The V2 materialization marker replaces any valid source-owned V1 rectangular
+batch instead of duplicating it. Geometry diagnostics come from the Brep read
+back from `RhinoDoc.Objects`, before any prior batch is retired.

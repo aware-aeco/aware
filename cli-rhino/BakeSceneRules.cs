@@ -15,7 +15,8 @@ internal static class BakeSceneRules
     internal const string RecordIdKey = "AWARE.BAKE.RECORD_ID";
     internal const string SceneHashKey = "AWARE.BAKE.SCENE_HASH";
     internal const string MarkerKey = "AWARE.BAKE.MARKER";
-    internal const string MarkerPrefix = "AWARE_BAKE_V1:";
+    internal const string LegacyMarkerPrefix = "AWARE_BAKE_V1:";
+    internal const string MarkerPrefix = "AWARE_BAKE_V2:";
     internal const string LayerName = "AWARE";
 
     internal sealed class Preflight
@@ -69,10 +70,11 @@ internal static class BakeSceneRules
 
     internal static bool IsOwnershipMarker(string? marker)
     {
-        if (marker is null || marker.Length != MarkerPrefix.Length + 64
-            || !marker.StartsWith(MarkerPrefix, StringComparison.Ordinal))
+        if (marker is null || marker.Length != MarkerPrefix.Length + 64)
             return false;
-        return marker.AsSpan(MarkerPrefix.Length).ToArray()
+        var prefixOk = marker.StartsWith(MarkerPrefix, StringComparison.Ordinal)
+                       || marker.StartsWith(LegacyMarkerPrefix, StringComparison.Ordinal);
+        return prefixOk && marker.AsSpan(MarkerPrefix.Length).ToArray()
             .All(c => (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f'));
     }
 
@@ -81,7 +83,8 @@ internal static class BakeSceneRules
 
     internal static string ComputeMaterializationHash(JsonNode scene, string hostVersion)
     {
-        var payload = scene.ToJsonString() + "\0rhino\0" + hostVersion;
+        var payload = scene.ToJsonString() + "\0rhino\0" + hostVersion
+                      + "\0" + CrossSectionProfile.GeometryRevision;
         return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(payload))).ToLowerInvariant();
     }
 
@@ -126,8 +129,10 @@ internal static class BakeSceneRules
                 if (kind == "member")
                 {
                     supported.Add((id, kind));
-                    pf.Supported.Add(new JsonObject { ["id"] = id, ["kind"] = kind });
-                    ValidateMember(element, id, pf);
+                    var profile = ValidateMember(element, id, pf);
+                    var supportedRow = new JsonObject { ["id"] = id, ["kind"] = kind };
+                    if (profile is not null) supportedRow["profile"] = profile.ToJson();
+                    pf.Supported.Add(supportedRow);
                 }
                 else
                 {
@@ -267,13 +272,13 @@ internal static class BakeSceneRules
             + $"(matches: {string.Join(", ", selected.Select(i => $"{i.Pid}/{i.RhinoId}"))})");
     }
 
-    static void ValidateMember(JsonObject element, string id, Preflight pf)
+    static CrossSectionProfile.Plan? ValidateMember(JsonObject element, string id, Preflight pf)
     {
         if (!Vec3(element["from"]) || !Vec3(element["to"]))
         {
             pf.Failed.Add(Row(id, "member", "failed", "invalid-geometry",
                 "member requires finite from/to points in millimetres"));
-            return;
+            return null;
         }
         var from = (JsonArray)element["from"]!;
         var to = (JsonArray)element["to"]!;
@@ -283,8 +288,18 @@ internal static class BakeSceneRules
         var w = Number(section?["w"]);
         var d = Number(section?["d"]);
         if (!(length2 > 0) || !(w > 0) || !(d > 0))
+        {
             pf.Failed.Add(Row(id, "member", "failed", "invalid-geometry",
                 "member requires a non-zero axis and a positive section {w,d}; Rhino never invents a section"));
+            return null;
+        }
+        var decoded = CrossSectionProfile.Decode(element, w, d);
+        if (!decoded.Ok)
+        {
+            pf.Failed.Add(Row(id, "member", "failed", "invalid-xsection", decoded.Error));
+            return null;
+        }
+        return decoded.Profile;
     }
 
     static bool Vec3(JsonNode? node)

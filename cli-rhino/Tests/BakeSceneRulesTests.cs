@@ -108,14 +108,22 @@ public class BakeSceneRulesTests
     }
 
     [Fact]
-    public void OwnershipMarkerIsStrictAndMaterializationHashIsHostBound()
+    public void OwnershipMarkerRetiresV1AndV2WhileNewHashIsRevisionBound()
     {
         var scene = JsonNode.Parse(Minimal)!;
         var hash = BakeSceneRules.ComputeMaterializationHash(scene, "8.31");
         Assert.Equal(64, hash.Length);
-        Assert.True(BakeSceneRules.IsOwnershipMarker(BakeSceneRules.BuildMarker(hash)));
+        Assert.Equal("AWARE_BAKE_V2:" + hash, BakeSceneRules.BuildMarker(hash));
+        Assert.True(BakeSceneRules.IsOwnershipMarker("AWARE_BAKE_V1:" + hash));
+        Assert.True(BakeSceneRules.IsOwnershipMarker("AWARE_BAKE_V2:" + hash));
         Assert.False(BakeSceneRules.IsOwnershipMarker("AWARE_BAKE_V1:" + new string('A', 64)));
+        Assert.False(BakeSceneRules.IsOwnershipMarker("AWARE_BAKE_V3:" + hash));
         Assert.NotEqual(hash, BakeSceneRules.ComputeMaterializationHash(scene, "8.32"));
+
+        var legacyPayload = scene.ToJsonString() + "\0rhino\0" + "8.31";
+        var legacyHash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(
+            System.Text.Encoding.UTF8.GetBytes(legacyPayload))).ToLowerInvariant();
+        Assert.NotEqual(legacyHash, hash);
     }
 
     static IReadOnlyList<BakeSceneRules.RhinoInstance> Instances =>

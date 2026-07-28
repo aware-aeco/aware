@@ -69,7 +69,7 @@ if not source_id or not scene_hash:
 
 required_ownership = [
     "sourceIdKey", "recordIdKey", "sceneHashKey", "markerKey",
-    "sourceId", "marker", "layer",
+    "sourceId", "marker", "layer", "geometryRevision",
 ]
 if any(not str(ownership.get(k) or "") for k in required_ownership):
     return envelope(False, [], [
@@ -83,7 +83,9 @@ if str(ownership.get("sourceId")) != source_id:
     ], [], 0, True)
 
 marker = str(ownership["marker"])
-if re.fullmatch(r"AWARE_BAKE_V1:[0-9a-f]{64}", marker) is None:
+geometry_revision = str(ownership["geometryRevision"])
+if geometry_revision != "rhino-profile-v2" or re.fullmatch(
+        r"AWARE_BAKE_V2:[0-9a-f]{64}", marker) is None:
     return envelope(False, [], [
         row("scene", "scene", "failed", "invalid-ownership",
             "ownership marker is malformed")
@@ -152,17 +154,151 @@ def vrot(v, axis, angle):
     return [v[i] * c + cross[i] * s + axis[i] * dot for i in range(3)]
 
 def rectangular_outline(width, depth):
-    # Rhino v1 deliberately realizes the only dimensions the host-members
-    # contract guarantees: authored width and depth. It does not infer flange,
-    # web or wall thickness from a designation.
     hw = width / 2.0
     hd = depth / 2.0
     return [[-hw, -hd], [hw, -hd], [hw, hd], [-hw, hd]]
+
+def profile_outlines(profile):
+    # The sidecar already decoded and normalized the canonical xsection. The
+    # live script consumes that plan; it never parses a designation, accepts an
+    # alias, or invents a thickness.
+    shape = str(profile["shape"])
+    width = float(profile["w"])
+    depth = float(profile["d"])
+    dimensions = profile["dimensions"]
+    hw = width / 2.0
+    hd = depth / 2.0
+
+    if shape == "i":
+        tf = float(dimensions["tf"])
+        tw = float(dimensions["tw"])
+        return [
+                [-hw, -hd], [hw, -hd], [hw, -hd + tf], [tw / 2.0, -hd + tf],
+                [tw / 2.0, hd - tf], [hw, hd - tf], [hw, hd], [-hw, hd],
+                [-hw, hd - tf], [-tw / 2.0, hd - tf],
+                [-tw / 2.0, -hd + tf], [-hw, -hd + tf],
+            ], None
+    if shape == "channel":
+        tf = float(dimensions["tf"])
+        tw = float(dimensions["tw"])
+        return [
+                [-hw, -hd], [hw, -hd], [hw, -hd + tf],
+                [-hw + tw, -hd + tf], [-hw + tw, hd - tf],
+                [hw, hd - tf], [hw, hd], [-hw, hd],
+            ], None
+    if shape == "angle":
+        thickness = float(dimensions["t"])
+        return [
+                [-hw, -hd], [hw, -hd], [hw, -hd + thickness],
+                [-hw + thickness, -hd + thickness],
+                [-hw + thickness, hd], [-hw, hd],
+            ], None
+    if shape == "rhs":
+        thickness = float(dimensions["t"])
+        return rectangular_outline(width, depth), [
+                [-hw + thickness, -hd + thickness],
+                [hw - thickness, -hd + thickness],
+                [hw - thickness, hd - thickness],
+                [-hw + thickness, hd - thickness],
+            ]
+    return rectangular_outline(width, depth), None
 
 elements = scene.get("elements") if isinstance(scene.get("elements"), list) else []
 by_id = {str(e.get("id")): e for e in elements if isinstance(e, dict)}
 plans = []
 failed = []
+
+def local_polygon(outline):
+    points = [
+        Rhino.Geometry.Point3d(point[0] * scale, point[1] * scale, 0.0)
+        for point in outline
+    ]
+    points.append(points[0])
+    curve = Rhino.Geometry.PolylineCurve(points)
+    return curve
+
+def normalize_outward(brep):
+    if brep.SolidOrientation == Rhino.Geometry.BrepSolidOrientation.Inward:
+        brep.Flip()
+
+def validate_brep(
+        record_id, brep, profile, frame, axis, length, context,
+        measure_volume):
+    if brep is None or not brep.IsValid or not brep.IsSolid:
+        raise ValueError(
+            "{}: {} is not a valid closed solid".format(record_id, context))
+    if brep.SolidOrientation != Rhino.Geometry.BrepSolidOrientation.Outward:
+        raise ValueError(
+            "{}: {} does not have outward solid orientation".format(record_id, context))
+
+    expected_profiles = int(profile["profileCount"])
+    cap_loops = []
+    for face in brep.Faces:
+        if not face.IsPlanar(tol):
+            continue
+        u = (face.Domain(0).Min + face.Domain(0).Max) / 2.0
+        v = (face.Domain(1).Min + face.Domain(1).Max) / 2.0
+        normal = face.NormalAt(u, v)
+        if normal.Unitize() and abs(abs(
+                normal.X * axis.X + normal.Y * axis.Y + normal.Z * axis.Z) - 1.0) <= 1.0e-7:
+            cap_loops.append(face.Loops.Count)
+    if len(cap_loops) != 2 or any(count != expected_profiles for count in cap_loops):
+        raise ValueError(
+            "{}: {} requires two matching caps with {} profile loop(s)".format(
+                record_id, context, expected_profiles))
+
+    bbox = brep.GetBoundingBox(frame)
+    width = float(profile["w"]) * scale
+    depth = float(profile["d"]) * scale
+    expected_area = float(profile["area"]) * scale * scale
+    expected_perimeter = float(profile["perimeter"]) * scale
+    expected_volume = expected_area * length
+    linear_e = max(tol, 1.0e-9 * max(scale, width, depth, length))
+    expected_bounds = [
+        (-width / 2.0, bbox.Min.X), (width / 2.0, bbox.Max.X),
+        (-depth / 2.0, bbox.Min.Y), (depth / 2.0, bbox.Max.Y),
+        (0.0, bbox.Min.Z), (length, bbox.Max.Z),
+    ]
+    if any(abs(expected - actual) > linear_e for expected, actual in expected_bounds):
+        raise ValueError(
+            "{}: {} endpoints or section envelope differ from the normalized plan".format(
+                record_id, context))
+
+    diagnostics = {
+        "revision": geometry_revision,
+        "shape": str(profile["shape"]),
+        "dimensions": profile["dimensions"],
+        "profileCount": expected_profiles,
+        "capCount": len(cap_loops),
+    }
+    # Mass properties are materially more expensive than topology and envelope
+    # checks. The rigid transform cannot change volume, so local/transformed
+    # preflight uses the exact analytic profile while every authoritative Brep
+    # read back from RhinoDoc is measured independently.
+    measured_volume = None
+    volume_basis = None
+    if measure_volume:
+        mass = Rhino.Geometry.VolumeMassProperties.Compute(brep)
+        if mass is None:
+            raise ValueError(
+                "{}: {} volume could not be measured".format(record_id, context))
+        measured_volume = abs(mass.Volume)
+        volume_basis = "document-readback"
+    if measured_volume is not None:
+        area_tolerance = max(
+            expected_perimeter * linear_e + math.pi * linear_e * linear_e,
+            expected_area * 1.0e-9)
+        volume_tolerance = max(
+            expected_area * linear_e + length * area_tolerance
+            + linear_e * area_tolerance,
+            expected_volume * 1.0e-9)
+        if abs(measured_volume - expected_volume) > volume_tolerance:
+            raise ValueError(
+                "{}: {} volume differs from the normalized profile".format(
+                    record_id, context))
+        diagnostics["volume"] = measured_volume
+        diagnostics["volumeBasis"] = volume_basis
+    return diagnostics
 
 # Full live-host preflight: every Brep exists in memory before BeginUndoRecord
 # or a layer/object table mutation.
@@ -188,6 +324,16 @@ for supported_row in supported:
             raise ValueError("{}: member requires positive section {{w,d}}; Rhino never invents a section".format(record_id))
         if width * scale <= tol or depth * scale <= tol:
             raise ValueError("{}: member section is at or below Rhino document tolerance".format(record_id))
+        profile_plan = supported_row.get("profile") if isinstance(supported_row, dict) else None
+        if not isinstance(profile_plan, dict) or str(
+                profile_plan.get("revision") or "") != geometry_revision:
+            raise ValueError(
+                "{}: normalized xsection plan is missing or has the wrong revision".format(record_id))
+        residuals = profile_plan.get("residuals")
+        if not isinstance(residuals, list) or any(
+                number(value) is None or number(value) * scale <= tol for value in residuals):
+            raise ValueError(
+                "{}: xsection edge, thickness, or void is at or below Rhino document tolerance".format(record_id))
 
         zaxis = vnorm(axis_mm)
         dz = vdot([0.0, 0.0, 1.0], zaxis)
@@ -200,31 +346,60 @@ for supported_row in supported:
             xaxis = vrot(xaxis, zaxis, radians)
             yaxis = vrot(yaxis, zaxis, radians)
 
-        start = [v * scale for v in start_mm]
-        direction = Rhino.Geometry.Vector3d(
-            axis_mm[0] * scale, axis_mm[1] * scale, axis_mm[2] * scale)
-        points = []
-        for ox_mm, oy_mm in rectangular_outline(width, depth):
-            ox = ox_mm * scale
-            oy = oy_mm * scale
-            points.append(Rhino.Geometry.Point3d(
-                start[0] + xaxis[0] * ox + yaxis[0] * oy,
-                start[1] + xaxis[1] * ox + yaxis[1] * oy,
-                start[2] + xaxis[2] * ox + yaxis[2] * oy))
-        points.append(points[0])
-        curve = Rhino.Geometry.PolylineCurve(points)
-        if not curve.IsValid or not curve.IsClosed:
-            raise ValueError("{}: section outline is not a valid closed curve".format(record_id))
-        surface = Rhino.Geometry.Surface.CreateExtrusion(curve, direction)
-        if surface is None:
+        length = length_mm * scale
+        outer_outline, inner_outline = profile_outlines(profile_plan)
+        if str(profile_plan["shape"]) == "chs":
+            dimensions = profile_plan["dimensions"]
+            radius = float(dimensions["od"]) * scale / 2.0
+            thickness = float(dimensions["t"]) * scale
+            outer_curve = Rhino.Geometry.Circle(
+                Rhino.Geometry.Plane.WorldXY, radius).ToNurbsCurve()
+            inner_curve = Rhino.Geometry.Circle(
+                Rhino.Geometry.Plane.WorldXY, radius - thickness).ToNurbsCurve()
+        else:
+            outer_curve = local_polygon(outer_outline)
+            inner_curve = local_polygon(inner_outline) if inner_outline is not None else None
+        if (not outer_curve.IsValid or not outer_curve.IsClosed
+                or (inner_curve is not None and (
+                    not inner_curve.IsValid or not inner_curve.IsClosed))):
+            raise ValueError(
+                "{}: section outline is not a valid closed curve".format(record_id))
+
+        extrusion = Rhino.Geometry.Extrusion()
+        if not extrusion.SetPathAndUp(
+                Rhino.Geometry.Point3d.Origin,
+                Rhino.Geometry.Point3d(0.0, 0.0, length),
+                Rhino.Geometry.Vector3d.YAxis):
+            raise ValueError("{}: Rhino refused the local extrusion path".format(record_id))
+        if not extrusion.SetOuterProfile(outer_curve, True):
+            raise ValueError("{}: Rhino refused the outer section profile".format(record_id))
+        if inner_curve is not None and not extrusion.AddInnerProfile(inner_curve):
+            raise ValueError("{}: Rhino refused the inner section profile".format(record_id))
+        if extrusion.ProfileCount != int(profile_plan["profileCount"]):
+            raise ValueError("{}: Rhino extrusion profile count is wrong".format(record_id))
+        brep = extrusion.ToBrep()
+        if brep is None:
             raise ValueError("{}: Rhino could not extrude the section".format(record_id))
-        brep = surface.ToBrep()
-        capped = brep.CapPlanarHoles(tol)
-        if capped is None:
-            raise ValueError("{}: Rhino could not cap the extruded section".format(record_id))
-        brep = capped
-        if not brep.IsValid or not brep.IsSolid:
-            raise ValueError("{}: Rhino did not produce a valid closed solid".format(record_id))
+        normalize_outward(brep)
+        validate_brep(
+            record_id, brep, profile_plan, Rhino.Geometry.Plane.WorldXY,
+            Rhino.Geometry.Vector3d.ZAxis, length, "local extrusion", False)
+
+        start = [v * scale for v in start_mm]
+        origin = Rhino.Geometry.Point3d(start[0], start[1], start[2])
+        member_plane = Rhino.Geometry.Plane(
+            origin,
+            Rhino.Geometry.Vector3d(xaxis[0], xaxis[1], xaxis[2]),
+            Rhino.Geometry.Vector3d(yaxis[0], yaxis[1], yaxis[2]))
+        transform = Rhino.Geometry.Transform.PlaneToPlane(
+            Rhino.Geometry.Plane.WorldXY, member_plane)
+        if not brep.Transform(transform):
+            raise ValueError("{}: Rhino could not transform the section into place".format(record_id))
+        normalize_outward(brep)
+        world_axis = Rhino.Geometry.Vector3d(zaxis[0], zaxis[1], zaxis[2])
+        diagnostics = validate_brep(
+            record_id, brep, profile_plan, member_plane, world_axis,
+            length, "transformed extrusion", False)
 
         element_meta = element.get("meta") if isinstance(element.get("meta"), dict) else {}
         profile = str(element_meta.get("profile") or "")
@@ -232,7 +407,9 @@ for supported_row in supported:
         plans.append({
             "id": record_id, "kind": kind, "brep": brep,
             "name": "{} [{}]".format(name, record_id) if name != record_id else record_id,
-            "profile": profile,
+            "profile": profile, "profilePlan": profile_plan,
+            "frame": member_plane, "axis": world_axis, "length": length,
+            "diagnostics": diagnostics,
         })
     except Exception as ex:
         failed.append(row(record_id, kind, "failed", "invalid-geometry", str(ex)))
@@ -261,7 +438,7 @@ def owned(obj):
     prior_marker = attrs.GetUserString(k_marker)
     return (
         source == source_id and bool(record_id) and bool(prior_hash)
-        and re.fullmatch(r"AWARE_BAKE_V1:[0-9a-f]{64}", str(prior_marker or "")) is not None
+        and re.fullmatch(r"AWARE_BAKE_V[12]:[0-9a-f]{64}", str(prior_marker or "")) is not None
     )
 
 prior = [obj for obj in doc.Objects if owned(obj)]
@@ -276,12 +453,14 @@ active_id = "scene"
 
 try:
     undo_serial = doc.BeginUndoRecord("AWARE bake-scene {}".format(str(meta.get("name") or "scene")))
+    if not undo_serial:
+        raise RuntimeError("Rhino refused to begin the bake undo record")
 
     layer = doc.Layers.FindName(layer_name)
     if layer is None:
         layer = Rhino.DocObjects.Layer()
         layer.Name = layer_name
-        layer.Color = System.Drawing.Color.FromArgb(59, 130, 246)
+        layer.Color = System.Drawing.Color.FromArgb(164, 169, 172)
         layer_index = doc.Layers.Add(layer)
         if layer_index < 0:
             raise RuntimeError("Rhino refused to create the AWARE layer")
@@ -293,6 +472,7 @@ try:
         active_id = plan["id"]
         attrs = doc.CreateDefaultAttributes()
         attrs.LayerIndex = layer_index
+        attrs.ColorSource = Rhino.DocObjects.ObjectColorSource.ColorFromLayer
         attrs.Name = plan["name"]
         if not attrs.SetUserString(k_source, source_id):
             raise RuntimeError("{}: source ownership stamp failed".format(active_id))
@@ -318,8 +498,16 @@ try:
                 or created_attrs.GetUserString(k_scene) != scene_hash
                 or created_attrs.GetUserString(k_marker) != marker):
             raise RuntimeError("{}: ownership read-back differs from the request".format(active_id))
+        readback = created.Geometry
+        if not isinstance(readback, Rhino.Geometry.Brep):
+            raise RuntimeError("{}: created object is not a Rhino Brep".format(active_id))
+        readback_diagnostics = validate_brep(
+            active_id, readback, plan["profilePlan"], plan["frame"],
+            plan["axis"], plan["length"], "document read-back",
+            True)
         emitted_row = row(active_id, plan["kind"], "emitted")
         emitted_row["nativeGuid"] = object_id.ToString()
+        emitted_row["geometry"] = readback_diagnostics
         emitted.append(emitted_row)
 
     # Retire only after the entire replacement set exists and its ownership

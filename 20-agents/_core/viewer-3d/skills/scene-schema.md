@@ -34,10 +34,28 @@ Legacy primitives remain supported:
 
 ```jsonc
 { "id":"M1", "kind":"line|box|member", "from":[0,0,0], "to":[0,0,3000],
-  "section":{"w":300,"d":300}, "group":"member", "meta":{"profile":"W12X40"} }
+  "section":{"w":200,"d":300},
+  "xsection":{"shape":"i","d":300,"bf":200,"tw":10,"tf":20},
+  "group":"member", "meta":{"profile":"W12X40"} }
 { "id":"P1", "kind":"node", "at":[0,0,0], "size":100 }
 { "id":"X1", "kind":"mesh", "positions":[0,0,0, 100,0,0, 0,100,0], "indices":[0,1,2] }
 ```
+
+`section.{w,d}` is the required member envelope. An optional canonical
+`xsection` gives nominal sharp-corner profile geometry in millimetres:
+
+```text
+{shape:"i",d,bf,tw,tf} | {shape:"channel",d,bf,tw,tf} |
+{shape:"angle",d,b,t} | {shape:"rhs",d,b,t} |
+{shape:"chs",od,t} | {shape:"rect",w,d}
+```
+
+Every discriminant and field name is exact and lowercase. `channel` uses
+`bf`, never the non-canonical `b` alias. Shape envelope dimensions must agree
+with `section.{w,d}`; thickness dimensions must be positive and leave a
+non-degenerate web, flange, leg, or void. Consumers that promise nominal
+profiles fail a present malformed descriptor rather than guessing thickness.
+An absent descriptor remains the legacy rectangular member envelope.
 
 Connection solids use direct geometry rather than member cross-section hints:
 

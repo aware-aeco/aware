@@ -19,7 +19,6 @@ public class BakeSceneScriptTests
         Assert.Contains("doc.Objects.Undelete", code);
         Assert.Contains("doc.Objects.Delete", code);
         Assert.Contains("doc.Layers.FindName", code);
-        Assert.Contains("rectangular_outline(width, depth)", code);
         Assert.Contains("created object read-back failed", code);
         Assert.Contains("ownership read-back differs from the request", code);
         Assert.Contains("commit-state-uncertain", code);
@@ -27,12 +26,73 @@ public class BakeSceneScriptTests
         Assert.Contains("isinstance(active_view, Rhino.Display.RhinoPageView)", code);
         Assert.Contains("elif not active_view.ActiveViewport.ZoomExtents()", code);
         Assert.Contains("view-frame-failed", code);
-        Assert.Contains("if capped is None:", code);
-        Assert.Contains("not brep.IsSolid", code);
-        Assert.Contains("valid closed solid", code);
+        Assert.Contains("Rhino.Geometry.Extrusion()", code);
+        Assert.Contains("System.Drawing.Color.FromArgb(164, 169, 172)", code);
+        Assert.Contains("ObjectColorSource.ColorFromLayer", code);
+        Assert.Contains("extrusion.SetPathAndUp(", code);
+        Assert.Contains("extrusion.SetOuterProfile(outer_curve, True)", code);
+        Assert.Contains("extrusion.AddInnerProfile(inner_curve)", code);
+        Assert.Contains("extrusion.ToBrep()", code);
+        Assert.Contains("created.Geometry", code);
+        Assert.Contains("\"document read-back\"", code);
+        Assert.Contains("VolumeMassProperties.Compute(brep)", code);
+        Assert.Contains("\"local extrusion\", False", code);
+        Assert.Contains("\"transformed extrusion\", False", code);
+        Assert.DoesNotContain("measured_profile_areas", code);
+        Assert.DoesNotContain("measured_profile_area", code);
+        Assert.Contains("\"document read-back\",\n            True", code);
+        Assert.Contains("\"volumeBasis\"", code);
         Assert.DoesNotContain("304.8", code);
         Assert.DoesNotContain("25.4", code);
         Assert.DoesNotContain("real_thickness", code);
+    }
+
+    [Fact]
+    public void EmbeddedMaterializerConsumesOnlyTheNormalizedProfilePlan()
+    {
+        var code = BakeSceneScript.Code;
+
+        Assert.Contains("profile_plan = supported_row.get(\"profile\")", code);
+        Assert.Contains("geometry_revision != \"rhino-profile-v2\"", code);
+        Assert.Contains("if shape == \"i\":", code);
+        Assert.Contains("if shape == \"channel\":", code);
+        Assert.Contains("if shape == \"angle\":", code);
+        Assert.Contains("if shape == \"rhs\":", code);
+        Assert.Contains("dimensions = profile[\"dimensions\"]", code);
+        Assert.DoesNotContain("shape_of", code);
+        Assert.DoesNotContain("element.get(\"xsection\")", code);
+        Assert.DoesNotContain("meta.get(\"profile\")", code[..code.IndexOf("element_meta =", StringComparison.Ordinal)]);
+        Assert.DoesNotContain("Rhino.Geometry.Surface.CreateExtrusion", code);
+        Assert.DoesNotContain("CapPlanarHoles", code);
+    }
+
+    [Fact]
+    public void DirectExtrusionAndUndoSafetyOrderingArePinned()
+    {
+        var code = BakeSceneScript.Code;
+
+        var begin = code.IndexOf("undo_serial = doc.BeginUndoRecord", StringComparison.Ordinal);
+        var zeroCheck = code.IndexOf("if not undo_serial:", begin, StringComparison.Ordinal);
+        var layerRead = code.IndexOf("layer = doc.Layers.FindName", zeroCheck, StringComparison.Ordinal);
+        var layerWrite = code.IndexOf("doc.Layers.Add(layer)", layerRead, StringComparison.Ordinal);
+        var objectWrite = code.IndexOf("doc.Objects.AddBrep", layerWrite, StringComparison.Ordinal);
+        Assert.True(begin >= 0);
+        Assert.True(begin < zeroCheck);
+        Assert.True(zeroCheck < layerRead);
+        Assert.True(layerRead < layerWrite);
+        Assert.True(layerWrite < objectWrite);
+
+        var localValidation = code.IndexOf("\"local extrusion\"", StringComparison.Ordinal);
+        var transform = code.IndexOf("brep.Transform(transform)", localValidation, StringComparison.Ordinal);
+        var transformedValidation = code.IndexOf("\"transformed extrusion\"", transform, StringComparison.Ordinal);
+        var add = code.IndexOf("doc.Objects.AddBrep", transformedValidation, StringComparison.Ordinal);
+        var readback = code.IndexOf("\"document read-back\"", add, StringComparison.Ordinal);
+        var retire = code.IndexOf("for old in prior:", readback, StringComparison.Ordinal);
+        Assert.True(localValidation < transform);
+        Assert.True(transform < transformedValidation);
+        Assert.True(transformedValidation < add);
+        Assert.True(add < readback);
+        Assert.True(readback < retire);
     }
 
     [Fact]
@@ -44,7 +104,8 @@ public class BakeSceneScriptTests
         Assert.Equal("AWARE.BAKE.RECORD_ID", ownership["recordIdKey"]!.GetValue<string>());
         Assert.Equal("AWARE.BAKE.SCENE_HASH", ownership["sceneHashKey"]!.GetValue<string>());
         Assert.Equal("AWARE.BAKE.MARKER", ownership["markerKey"]!.GetValue<string>());
-        Assert.Equal("AWARE_BAKE_V1:" + hash, ownership["marker"]!.GetValue<string>());
+        Assert.Equal("AWARE_BAKE_V2:" + hash, ownership["marker"]!.GetValue<string>());
+        Assert.Equal("rhino-profile-v2", ownership["geometryRevision"]!.GetValue<string>());
 
         Assert.DoesNotContain(BakeSceneRules.SourceIdKey, BakeSceneScript.Code);
         Assert.DoesNotContain(BakeSceneRules.RecordIdKey, BakeSceneScript.Code);

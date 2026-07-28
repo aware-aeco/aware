@@ -12,6 +12,7 @@ Drill recipe: [`docs/superpowers/handoffs/2026-05-19-v032-rhino-exec-ready.md`](
 
 | Verb | Purpose |
 |---|---|
+| `bake-scene` | Materialize canonical scene members as source-owned nominal sharp-corner Rhino Breps, including hollow RHS/CHS profiles. |
 | `exec` | Compile + run an ad-hoc C# script against `RhinoDoc.ActiveDoc`. The bridge from catalog (knowledge) to live host (execution). |
 | `list-instances` | Enumerate running Rhino instances (PID, version, active doc, named-pipe ID for multi-instance routing). |
 | `send-status` | Display a transient status-bar message in Rhino. |
