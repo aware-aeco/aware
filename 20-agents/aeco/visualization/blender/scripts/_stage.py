@@ -215,6 +215,12 @@ def setup_world(environment=DEFAULT_ENVIRONMENT, strength: float = 1.0) -> dict:
                 receipt["requested"], f"could not load {receipt['path']}: {exc}"
             )
         else:
+            # Blender 5.2 converts the HDRI's brightest excess into a synthetic
+            # world sun. Its one-pixel PCF default aliases into regular dashes
+            # along thin I-section webs; four pixels removes the pattern while
+            # retaining the world sun's directional contact shadows (#314).
+            if hasattr(world, "sun_shadow_filter_radius"):
+                world.sun_shadow_filter_radius = 4.0
             coord = nodes.get("AwareEnvCoord") or nodes.new("ShaderNodeTexCoord")
             coord.name = "AwareEnvCoord"
             mapping = nodes.get("AwareEnvMapping") or nodes.new("ShaderNodeMapping")
