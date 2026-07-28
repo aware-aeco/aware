@@ -20,6 +20,9 @@
   <ItemGroup>
     <InternalsVisibleTo Include="AwareRhino.Tests" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BakeSceneScript.py" LogicalName="AwareRhino.BakeSceneScript.py" />
+  </ItemGroup>
   <!-- Tests/ has its own csproj; don't drag its sources into the main project. -->
   <ItemGroup>
     <Compile Remove="Tests/**" />

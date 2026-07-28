@@ -273,6 +273,70 @@ commands:
             success: boolean
             error:   string
   # === v0.32 runtime verbs (aware-rhino sidecar) =============================
+  bake-scene:
+    lifecycle: single
+    category: curated
+    mode: write
+    mode-overridable: false
+    description: |
+      Materialize the members in a canonical millimetre scene as source-owned
+      Rhino Breps on the AWARE layer. Coordinates and section dimensions are
+      converted into the active document's own unit system; the document units
+      are never changed.
+
+      Every created object carries namespaced object user text for the source,
+      record, scene and materialization identities. A later bake with the same
+      source id stages and verifies the complete replacement set before retiring
+      the prior set. Objects from other sources and unstamped Rhino objects are
+      never touched.
+
+      Members are materialized. Every other element, operation, nested opening
+      and reference-system record is returned as an explicit unsupported row, so
+      the receipt accounts for the complete scene. A member without a non-zero
+      axis and positive section dimensions fails the whole batch; Rhino never
+      invents a section and has no native-versus-fallback distinction.
+
+      The write targets exactly one live Rhino Script Server session. An exact
+      rhino_id is preferred; host_pid and version are filters and must resolve
+      unambiguously. With no selector, exactly one session must be live.
+    inputs:
+      scene:
+        type: object
+        required: true
+        description: |
+          Canonical scene object. meta contains sourceId, sceneHash and optional
+          units:"mm". Members carry from/to points and section:{w,d}, all in
+          millimetres. Missing units means legacy millimetres; explicit non-mm
+          units fail before Rhino is contacted.
+      rhino_id:
+        type: string
+        required: false
+        description: Exact rhinocode Script Server pipe id returned by list-instances.
+      host_pid:
+        type: integer
+        required: false
+        description: |
+          Rhino process id. It must resolve to exactly one Script Server session
+          and, when rhino_id is also supplied, both selectors must identify the
+          same session.
+      version:
+        type: string
+        required: false
+        description: Rhino version prefix. Ambiguous matches are refused.
+      label:
+        type: string
+        required: false
+        description: Optional caller label carried beside the scene without changing its hash.
+    outputs:
+      type: single
+      schema:
+        ok:           boolean
+        result:       object
+        error:        string
+        host_version: string
+        host_pid:     integer
+        rhino_id:     string
+        delivered_at: string
   exec:
     lifecycle: single
     description: |

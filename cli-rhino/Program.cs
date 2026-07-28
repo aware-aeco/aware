@@ -65,8 +65,8 @@ internal static class Program
             verb = args[0];
             // Read stdin only if --json-stdin was passed somewhere after the verb.
             var wantsStdin = args.Skip(1).Any(a => a == "--json-stdin");
-            // exec, send-status, launch, close, and any verb that takes structured input → always need stdin
-            if (wantsStdin || verb is "exec" or "send-status" or "launch" or "close")
+            // Structured write verbs always need stdin.
+            if (wantsStdin || verb is "exec" or "bake-scene" or "send-status" or "launch" or "close")
             {
                 string buf;
                 try { buf = Console.In.ReadToEnd(); }
@@ -105,6 +105,7 @@ internal static class Program
         return verb switch
         {
             "exec"           => Exec.Run(client!, stdinJson),
+            "bake-scene"     => BakeScene.Run(client!, stdinJson),
             "list-instances" => ListInstances.Run(client!),
             "send-status"    => SendStatus.Run(client!, stdinJson),
             "launch"         => Launch.Run(stdinJson),
@@ -130,6 +131,7 @@ internal static class Program
 
             Verbs:
               exec             Run an ad-hoc Python script against the active Rhino doc
+              bake-scene      Materialize a canonical mm scene as source-owned Rhino Breps
               list-instances   Print running Rhino instances (PID + version + active doc)
               send-status      Display a transient status-bar message in Rhino
               launch           Spawn a fresh Rhino instance (optionally with a model + auto Script Server)

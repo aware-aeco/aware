@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-07-26T11:13:31.454654800+00:00",
+  "updated-at": "2026-07-28T06:29:56.085619100+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -4876,7 +4876,7 @@
           "stateful": false,
           "sdk-target": "8.0",
           "transport": "cli",
-          "command_count": 16922,
+          "command_count": 16923,
           "skills": [
             "rhino-units-and-tolerances",
             "rhino-scripting-context",
@@ -4923,6 +4923,13 @@
             "rhino-ui-gumball"
           ],
           "commands": [
+            {
+              "name": "bake-scene",
+              "description": "Materialize the members in a canonical millimetre scene as source-owned",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
             {
               "name": "block.list-instances",
               "description": "Enumerate every InstanceObject for a given block definition (by name",

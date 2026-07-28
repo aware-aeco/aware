@@ -9,7 +9,7 @@ namespace AwareRhino;
 internal static class Receipts
 {
     public static JsonObject ExecOk(object? result, string? hostVersion, int? hostPid,
-                                    string? rhinoId, string stdoutLog)
+                                    string? rhinoId, string stdoutLog, string verb = "exec")
     {
         return new JsonObject
         {
@@ -19,7 +19,7 @@ internal static class Receipts
             ["host_version"]  = hostVersion,
             ["host_pid"]      = hostPid,
             ["rhino_id"]      = rhinoId,
-            ["verb"]          = "exec",
+            ["verb"]          = verb,
             ["stdout_log"]    = stdoutLog,
             ["delivered_at"]  = DateTime.UtcNow.ToString("o"),
         };
@@ -31,7 +31,9 @@ internal static class Receipts
     // caller can tell infra-fault from script-fault: exit_code != null && != 0
     // ⇒ rhinocode/infra problem; exit_code == 0 or null ⇒ the script ran.
     public static JsonObject ExecFail(string error, string stack, string stdoutLog,
-                                      int? exitCode = null, string? stderrLog = null)
+                                      int? exitCode = null, string? stderrLog = null,
+                                      string? hostVersion = null, int? hostPid = null,
+                                      string? rhinoId = null, string verb = "exec")
     {
         return new JsonObject
         {
@@ -39,11 +41,33 @@ internal static class Receipts
             ["error"]         = error,
             ["stack"]         = stack,
             ["host"]          = "rhino",
-            ["verb"]          = "exec",
+            ["host_version"]  = hostVersion,
+            ["host_pid"]      = hostPid,
+            ["rhino_id"]      = rhinoId,
+            ["verb"]          = verb,
             ["exit_code"]     = exitCode,
             ["stdout_log"]    = stdoutLog,
             ["stderr_log"]    = stderrLog,
             ["delivered_at"]  = DateTime.UtcNow.ToString("o"),
+        };
+    }
+
+    public static JsonObject BakeResultFail(JsonNode? result, string? hostVersion = null,
+                                            int? hostPid = null, string? rhinoId = null,
+                                            string stdoutLog = "")
+    {
+        return new JsonObject
+        {
+            ["ok"] = false,
+            ["error"] = "bake-scene returned ok:false; inspect the structured result receipt",
+            ["result"] = result?.DeepClone(),
+            ["host"] = "rhino",
+            ["host_version"] = hostVersion,
+            ["host_pid"] = hostPid,
+            ["rhino_id"] = rhinoId,
+            ["verb"] = "bake-scene",
+            ["stdout_log"] = stdoutLog,
+            ["delivered_at"] = DateTime.UtcNow.ToString("o"),
         };
     }
 
