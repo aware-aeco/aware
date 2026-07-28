@@ -195,6 +195,19 @@ public sealed class CommitPolicyTests
     }
 
     [Fact]
+    public void NativeBoltLiveFixtureCoversTwoAndFivePlyBoundaries()
+    {
+        var fixturePath = System.IO.Path.GetFullPath(System.IO.Path.Combine(
+            AppContext.BaseDirectory,
+            "..", "..", "..", "Fixtures", "native-bolt-ply-boundaries-scene.json"));
+        var fixture = JsonNode.Parse(System.IO.File.ReadAllText(fixturePath))!;
+        var operations = fixture["scene"]!["operations"]!.AsArray();
+
+        Assert.Equal(2, operations[0]!["instances"]![0]!["holeEffects"]!.AsArray().Count);
+        Assert.Equal(5, operations[1]!["instances"]![0]!["holeEffects"]!.AsArray().Count);
+    }
+
+    [Fact]
     public void IndependentGridAxisExtentsAreExplicitlyUnsupported()
     {
         Assert.Contains("gridsWithIndependentAxisExtents", BakeSceneScript.Code);
