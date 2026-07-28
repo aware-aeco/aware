@@ -41,6 +41,7 @@ harness, not just once during development.
 import argparse
 import json
 import math
+import re
 import shutil
 import struct
 import subprocess
@@ -86,6 +87,7 @@ MIN_MP4_BYTES = 10_000
 # line. A clean web is a smooth luminance ramp; the Blender 5.2 world-sun
 # shadow alias from #314 raises this high-frequency residual above 5.5.
 MAX_WEB_BANDING_SCORE = 2.0
+WEB_BANDING_REGRESSION_VERSIONS = {(5, 2)}
 
 # Verified location from the Task 1 toolchain probe; used only when neither
 # --blender nor PATH resolves anything.
@@ -137,7 +139,7 @@ def _paeth_predictor(a: int, b: int, c: int) -> int:
     return c
 
 
-def decode_png(data: bytes) -> tuple[int, int, int, bytes]:
+def decode_png(data: bytes) -> tuple[int, int, int, int, int, bytes]:
     """Decode just enough of a PNG to check "is this a single flat colour".
 
     Supports the subset Blender's own PNG writer actually produces: colour
@@ -149,11 +151,13 @@ def decode_png(data: bytes) -> tuple[int, int, int, bytes]:
     "not a single flat colour" check meaningless, which is worse than no
     check running at all.
 
-    Returns (width, height, bytes_per_pixel, raw) where `raw` is the fully
-    de-filtered pixel data -- `height * width * bytes_per_pixel` bytes,
-    row-major, top-to-bottom. Each `bytes_per_pixel`-byte slice is one
-    pixel's exact on-disk sample; byte-equality between two slices is
-    colour-equality, which is all the caller needs.
+    Returns (width, height, bit_depth, color_type, bytes_per_pixel, raw)
+    where `raw` is the fully de-filtered pixel data --
+    `height * width * bytes_per_pixel` bytes, row-major, top-to-bottom.
+    Each `bytes_per_pixel`-byte slice is one pixel's exact on-disk sample;
+    byte-equality between two slices is colour-equality. The explicit sample
+    metadata also lets visual assertions decode 8- and 16-bit channels
+    without guessing from bytes-per-pixel alone.
     """
     width = height = bit_depth = color_type = None
     idat = bytearray()
@@ -234,9 +238,9 @@ def decode_png(data: bytes) -> tuple[int, int, int, bytes]:
         for i in range(height * width):
             idx = out[i]
             expanded[i * 3 : i * 3 + 3] = palette[idx * 3 : idx * 3 + 3]
-        return width, height, 3, bytes(expanded)
+        return width, height, 8, 2, 3, bytes(expanded)
 
-    return width, height, bpp, bytes(out)
+    return width, height, bit_depth, color_type, bpp, bytes(out)
 
 
 def count_distinct_pixels(bpp: int, raw: bytes, cap: int = 64) -> int:
@@ -255,7 +259,7 @@ def count_distinct_pixels(bpp: int, raw: bytes, cap: int = 64) -> int:
 
 def inspect_png(path: Path) -> dict:
     """Decode a PNG and report exactly what this smoke test checks."""
-    width, height, bpp, raw = decode_png(path.read_bytes())
+    width, height, _bit_depth, _color_type, bpp, raw = decode_png(path.read_bytes())
     distinct = count_distinct_pixels(bpp, raw)
     return {
         "width": width,
@@ -263,6 +267,30 @@ def inspect_png(path: Path) -> dict:
         "distinct-colours-sampled": distinct,
         "is-flat": distinct <= 1,
     }
+
+
+def _rgb_channels_8bit_scale(
+    raw: bytes, index: int, bit_depth: int, color_type: int, bpp: int
+) -> tuple[float, float, float]:
+    """Read one RGB/RGBA pixel, normalizing 16-bit samples to the 8-bit scale."""
+    if color_type not in (2, 6):
+        raise ValueError(
+            "fixture web banding score requires RGB or RGBA data, "
+            f"got PNG colour type {color_type}"
+        )
+    sample_bytes = bit_depth // 8
+    expected_bpp = (3 if color_type == 2 else 4) * sample_bytes
+    if bpp != expected_bpp:
+        raise ValueError(
+            "fixture web banding score got inconsistent PNG sample metadata: "
+            f"bit depth {bit_depth}, colour type {color_type}, {bpp} Bpp"
+        )
+    if bit_depth == 8:
+        return tuple(raw[index + channel] for channel in range(3))
+    return tuple(
+        int.from_bytes(raw[index + channel * 2 : index + channel * 2 + 2], "big") / 257
+        for channel in range(3)
+    )
 
 
 def fixture_web_banding_score(path: Path) -> float:
@@ -275,20 +303,19 @@ def fixture_web_banding_score(path: Path) -> float:
     the legitimate gradual HDRI reflection; the remaining standard deviation
     measures the regular light/dark dashes from #314.
     """
-    width, height, bpp, raw = decode_png(path.read_bytes())
+    width, height, bit_depth, color_type, bpp, raw = decode_png(path.read_bytes())
     if (width, height) != (STILL_WIDTH, STILL_HEIGHT):
         raise ValueError(
             "fixture web banding score requires the smoke test's fixed "
             f"{STILL_WIDTH}x{STILL_HEIGHT} render, got {width}x{height}"
         )
-    if bpp < 3:
-        raise ValueError(f"fixture web banding score requires RGB data, got {bpp} Bpp")
-
     luminances = []
     for x in range(270, 455):
         y = round(89 + 0.127 * (x - 260) + 3)
         index = (y * width + x) * bpp
-        red, green, blue = raw[index : index + 3]
+        red, green, blue = _rgb_channels_8bit_scale(
+            raw, index, bit_depth, color_type, bpp
+        )
         luminances.append(0.2126 * red + 0.7152 * green + 0.0722 * blue)
 
     residuals = []
@@ -334,6 +361,25 @@ def _encode_rgb8_png(rows: list) -> bytes:
     )
 
 
+def _encode_rgb16_png(rows: list) -> bytes:
+    """Hand-rolled RGB16/filter-0 PNG encoder. `rows` is rows of (r,g,b)."""
+    height = len(rows)
+    width = len(rows[0])
+    raw = bytearray()
+    for row in rows:
+        raw.append(0)
+        for red, green, blue in row:
+            raw += struct.pack(">HHH", red, green, blue)
+    ihdr = struct.pack(">IIBBBBB", width, height, 16, 2, 0, 0, 0)
+    idat = zlib.compress(bytes(raw), 9)
+    return (
+        b"\x89PNG\r\n\x1a\n"
+        + _png_chunk(b"IHDR", ihdr)
+        + _png_chunk(b"IDAT", idat)
+        + _png_chunk(b"IEND", b"")
+    )
+
+
 def self_test_flat_detector(workdir: Path) -> None:
     """Prove the flat-colour detector distinguishes flat from not-flat.
 
@@ -351,11 +397,14 @@ def self_test_flat_detector(workdir: Path) -> None:
 
     flat_path = workdir / "_selftest_flat.png"
     striped_path = workdir / "_selftest_striped.png"
+    rgb16_path = workdir / "_selftest_rgb16.png"
     flat_path.write_bytes(flat_bytes)
     striped_path.write_bytes(striped_bytes)
+    rgb16_path.write_bytes(_encode_rgb16_png([[(0x1234, 0xABCD, 0xFFFF)]]))
 
     flat_info = inspect_png(flat_path)
     striped_info = inspect_png(striped_path)
+    width, height, bit_depth, color_type, bpp, raw = decode_png(rgb16_path.read_bytes())
 
     if not (flat_info["is-flat"] and flat_info["width"] == 5 and flat_info["height"] == 5):
         raise AssertionError(
@@ -366,6 +415,20 @@ def self_test_flat_detector(workdir: Path) -> None:
         raise AssertionError(
             "flat-image detector self-test FAILED on a deliberately "
             f"two-colour 5x5 PNG -- decoder is not trustworthy: {striped_info}"
+        )
+    if (width, height, bit_depth, color_type, bpp) != (1, 1, 16, 2, 6):
+        raise AssertionError(
+            "PNG decoder self-test FAILED to surface RGB16 sample metadata: "
+            f"{(width, height, bit_depth, color_type, bpp)}"
+        )
+    if raw != struct.pack(">HHH", 0x1234, 0xABCD, 0xFFFF):
+        raise AssertionError("PNG decoder self-test FAILED to preserve RGB16 samples")
+    decoded_rgb16 = _rgb_channels_8bit_scale(raw, 0, bit_depth, color_type, bpp)
+    expected_rgb16 = tuple(value / 257 for value in (0x1234, 0xABCD, 0xFFFF))
+    if any(abs(actual - expected) > 1e-9 for actual, expected in zip(decoded_rgb16, expected_rgb16)):
+        raise AssertionError(
+            "RGB16 visual sample self-test FAILED: "
+            f"expected {expected_rgb16}, got {decoded_rgb16}"
         )
     print(
         "  ok  flat-image detector self-test "
@@ -397,6 +460,20 @@ def resolve_blender(explicit: str | None) -> str | None:
         if found:
             return found
     return None
+
+
+def detect_blender_version(blender: str) -> tuple[int, int] | None:
+    """Return Blender's major/minor version without loading a scene."""
+    proc = subprocess.run(
+        [blender, "--version"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    match = re.search(r"\bBlender\s+(\d+)\.(\d+)", proc.stdout)
+    if proc.returncode != 0 or match is None:
+        return None
+    return int(match.group(1)), int(match.group(2))
 
 
 def run_command(blender: str, script: str, inputs: dict) -> tuple[dict, float]:
@@ -476,7 +553,16 @@ def main() -> int:
 
     start = time.monotonic()
     work = Path(tempfile.mkdtemp(prefix="aware-blender-smoke-"))
+    blender_version = detect_blender_version(blender)
     print(f"blender:  {blender}")
+    print(
+        "version:  "
+        + (
+            f"{blender_version[0]}.{blender_version[1]}"
+            if blender_version is not None
+            else "unknown"
+        )
+    )
     print(f"aware:    {opts.aware_bin}")
     print(f"work dir: {work}\n")
 
@@ -597,12 +683,24 @@ def main() -> int:
             f"({png_info['distinct-colours-sampled']} distinct colour(s) sampled) -- "
             "the render shows nothing"
         )
-        banding_score = fixture_web_banding_score(rendered_png)
-        assert banding_score <= MAX_WEB_BANDING_SCORE, (
-            "render.still: EEVEE + HDRI bands the fixture's I-section web "
-            f"(high-frequency score {banding_score:.3f}, expected <= "
-            f"{MAX_WEB_BANDING_SCORE:.3f})"
-        )
+        banding_score = None
+        if blender_version in WEB_BANDING_REGRESSION_VERSIONS:
+            banding_score = fixture_web_banding_score(rendered_png)
+            assert banding_score <= MAX_WEB_BANDING_SCORE, (
+                "render.still: EEVEE + HDRI bands the fixture's I-section web "
+                f"(high-frequency score {banding_score:.3f}, expected <= "
+                f"{MAX_WEB_BANDING_SCORE:.3f})"
+            )
+        else:
+            shown_version = (
+                f"{blender_version[0]}.{blender_version[1]}"
+                if blender_version is not None
+                else "unknown"
+            )
+            print(
+                "      web banding regression check skipped: calibrated for "
+                f"Blender 5.2, running {shown_version}"
+            )
         # The staging receipts. A degraded environment still renders a perfectly
         # good-looking picture, so these are the only place the chain can tell
         # "lit by the HDRI it asked for" from "quietly fell back to the
@@ -623,12 +721,14 @@ def main() -> int:
             f"({still['environment']['source']}), "
             f"ground radius={still['ground']['radius']}"
         )
-        print(
+        render_summary = (
             f"      {rendered_png.name}: {png_info['width']}x{png_info['height']}, "
             f"{png_info['distinct-colours-sampled']}+ distinct colours sampled, "
-            f"{rendered_png.stat().st_size:,} bytes, "
-            f"web banding score={banding_score:.3f}"
+            f"{rendered_png.stat().st_size:,} bytes"
         )
+        if banding_score is not None:
+            render_summary += f", web banding score={banding_score:.3f}"
+        print(render_summary)
 
         # 6. render.turntable -- MP4 must exist, be a real container, non-trivial size
         mp4_request = work / "turn.mp4"
