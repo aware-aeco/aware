@@ -1,0 +1,52 @@
+{
+  "verb": "bake-scene",
+  "rhino_id": "replace-with-list-instances-pipe-id",
+  "scene": {
+    "meta": {
+      "name": "Rhino nominal profile fixture",
+      "units": "mm",
+      "sourceId": "aware:rhino-profile-fixture",
+      "sceneHash": "fixture-six-profiles-v2"
+    },
+    "elements": [
+      {
+        "id": "I-1", "kind": "member",
+        "from": [0, 0, 0], "to": [2000, 0, 0],
+        "section": { "w": 200, "d": 300 },
+        "xsection": { "shape": "i", "d": 300, "bf": 200, "tw": 10, "tf": 20 }
+      },
+      {
+        "id": "C-1", "kind": "member",
+        "from": [0, 500, 0], "to": [2000, 500, 0],
+        "section": { "w": 200, "d": 300 },
+        "xsection": { "shape": "channel", "d": 300, "bf": 200, "tw": 10, "tf": 20 }
+      },
+      {
+        "id": "L-1", "kind": "member",
+        "from": [0, 1000, 0], "to": [2000, 1000, 0],
+        "section": { "w": 200, "d": 300 },
+        "xsection": { "shape": "angle", "d": 300, "b": 200, "t": 10 }
+      },
+      {
+        "id": "RHS-1", "kind": "member",
+        "from": [0, 1500, 0], "to": [2000, 1500, 0],
+        "section": { "w": 200, "d": 300 },
+        "xsection": { "shape": "rhs", "d": 300, "b": 200, "t": 10 }
+      },
+      {
+        "id": "CHS-1", "kind": "member",
+        "from": [0, 2000, 0], "to": [2000, 2000, 0],
+        "section": { "w": 200, "d": 200 },
+        "xsection": { "shape": "chs", "od": 200, "t": 10 }
+      },
+      {
+        "id": "RECT-1", "kind": "member",
+        "from": [0, 2500, 0], "to": [2000, 2500, 0],
+        "section": { "w": 200, "d": 300 },
+        "xsection": { "shape": "rect", "w": 200, "d": 300 }
+      }
+    ],
+    "operations": [],
+    "referenceSystems": []
+  }
+}

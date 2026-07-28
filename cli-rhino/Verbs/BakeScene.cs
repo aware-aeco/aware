@@ -16,6 +16,7 @@ internal static class BakeScene
             ["sourceId"] = sourceId,
             ["marker"] = BakeSceneRules.BuildMarker(materializationHash),
             ["layer"] = BakeSceneRules.LayerName,
+            ["geometryRevision"] = CrossSectionProfile.GeometryRevision,
         };
 
     public static int Run(RhinocodeClient client, JsonNode? input)
