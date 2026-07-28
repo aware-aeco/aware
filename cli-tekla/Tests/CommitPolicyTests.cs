@@ -183,6 +183,18 @@ public sealed class CommitPolicyTests
     }
 
     [Fact]
+    public void NativeBoltMapsAndReadsBackEveryAuthoredPly()
+    {
+        Assert.DoesNotContain("effects.Count!=2", BakeSceneScript.Code);
+        Assert.Contains("effects.Count<2||effects.Count>5", BakeSceneScript.Code);
+        Assert.Contains("AddOtherPartToBolt", BakeSceneScript.Code);
+        Assert.Contains("GetOtherPartsToBolt", BakeSceneScript.Code);
+        Assert.Contains("Hole3=otherParticipantIds.Count>=1", BakeSceneScript.Code);
+        Assert.Contains("Hole4=otherParticipantIds.Count>=2", BakeSceneScript.Code);
+        Assert.Contains("Hole5=otherParticipantIds.Count>=3", BakeSceneScript.Code);
+    }
+
+    [Fact]
     public void IndependentGridAxisExtentsAreExplicitlyUnsupported()
     {
         Assert.Contains("gridsWithIndependentAxisExtents", BakeSceneScript.Code);
