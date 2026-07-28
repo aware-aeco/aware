@@ -50,12 +50,29 @@ internal static class ListInstances
                 ["pid"]        = jo["processId"]?.GetValue<int?>(),
                 ["version"]    = TrimVersion(jo["processVersion"]?.GetValue<string>()),
                 ["rhino_id"]   = jo["pipeId"]?.GetValue<string>(),
-                ["active_doc"] = jo["activeDoc"]?.GetValue<string>(),
+                ["active_doc"] = ReadActiveDoc(jo["activeDoc"]),
             });
         }
 
         Console.WriteLine(Receipts.ListOk(reshaped).ToJsonString());
         return 0;
+    }
+
+    // RhinoCode 8.31 changed activeDoc from a legacy string to
+    // {title,location}. Discovery must tolerate both shapes: list-instances is
+    // the preflight for every exact-target write, so a display-only field may
+    // never crash it.
+    internal static string? ReadActiveDoc(JsonNode? node)
+    {
+        if (node is JsonValue value && value.TryGetValue<string>(out var text))
+            return text;
+        if (node is JsonObject obj)
+        {
+            var location = obj["location"] is JsonValue lv && lv.TryGetValue<string>(out var l) ? l : null;
+            if (!string.IsNullOrEmpty(location)) return location;
+            return obj["title"] is JsonValue tv && tv.TryGetValue<string>(out var t) ? t : null;
+        }
+        return null;
     }
 
     // "8.13.24296.13001" → "8.13" so it matches the version filter shape used in `exec`.

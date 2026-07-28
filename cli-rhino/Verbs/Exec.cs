@@ -11,9 +11,26 @@ using System.Text.Json.Nodes;
 
 namespace AwareRhino.Verbs;
 
+internal readonly record struct ExecWaitPolicy(
+    string TimeoutEnvironmentVariable,
+    int DefaultTimeoutMs,
+    bool MutationMayContinue)
+{
+    internal static readonly ExecWaitPolicy Ordinary =
+        new("AWARE_EXEC_TIMEOUT_MS", 60_000, false);
+
+    // A bake can legitimately outlive an interactive exec. More importantly, rhinocode's script
+    // command is fire-and-forget: reaching this deadline does not prove Rhino stopped mutating.
+    internal static readonly ExecWaitPolicy MutatingBake =
+        new("AWARE_BAKE_TIMEOUT_MS", 15 * 60_000, true);
+}
+
 internal static class Exec
 {
     public static int Run(RhinocodeClient client, JsonNode? input)
+        => Run(client, input, ExecWaitPolicy.Ordinary);
+
+    internal static int Run(RhinocodeClient client, JsonNode? input, ExecWaitPolicy waitPolicy)
     {
         var code = input?["code"]?.GetValue<string>();
         if (string.IsNullOrEmpty(code))
@@ -94,6 +111,7 @@ internal static class Exec
         var scriptPath = Path.Combine(Path.GetTempPath(),
             $"aware-rhino-exec-{Guid.NewGuid():N}.py");
         File.WriteAllText(scriptPath, wrapped);
+        var preserveTempsForUncertainCompletion = false;
 
         try
         {
@@ -107,10 +125,13 @@ internal static class Exec
             // if it never appears within the timeout the script either didn't
             // run or threw before the write.
             //
-            // The timeout is generous (default 60s) so long geometry ops don't
-            // get cut off; override with AWARE_EXEC_TIMEOUT_MS. We stop early as
-            // soon as the file appears AND is fully written (parse succeeds).
-            var timeoutMs = ParseTimeoutMs(Environment.GetEnvironmentVariable("AWARE_EXEC_TIMEOUT_MS"), 60_000);
+            // Ordinary execs wait 60s; mutating bake-scene calls use a longer,
+            // separately configurable policy because timing out cannot cancel a
+            // fire-and-forget script. We still stop as soon as the file appears
+            // and is fully written (parse succeeds).
+            var timeoutMs = ParseTimeoutMs(
+                Environment.GetEnvironmentVariable(waitPolicy.TimeoutEnvironmentVariable),
+                waitPolicy.DefaultTimeoutMs);
             var fileText = WaitForResultFile(resultPath, timeoutMs);
             if (fileText is null)
             {
@@ -118,11 +139,25 @@ internal static class Exec
                 // fault — surface the rhinocode exit code + stderr so callers can
                 // distinguish it from a script-reported failure. Don't assert
                 // "script did not run": it may have run and failed to write.
-                var msg = exit != 0
-                    ? (FirstLine(stderr) ?? $"rhinocode exited {exit}; result file not written")
-                    : "result file not written within timeout (script may have failed before writing)";
-                Console.WriteLine(Receipts.ExecFail(
-                    msg, stderr.Trim(), stdout.Trim(), exit, stderr.Trim()).ToJsonString());
+                if (waitPolicy.MutationMayContinue && exit == 0)
+                {
+                    preserveTempsForUncertainCompletion = true;
+                    var uncertain = Receipts.ExecFail(
+                        "bake-scene completion was not observed before the timeout; Rhino may still be applying the scene",
+                        stderr.Trim(), stdout.Trim(), exit, stderr.Trim());
+                    uncertain["commit_state"] = "uncertain";
+                    uncertain["recovery"] =
+                        "Wait for Rhino to finish, then re-run the same scene with the same sourceId to reconcile ownership before making another edit.";
+                    Console.WriteLine(uncertain.ToJsonString());
+                }
+                else
+                {
+                    var msg = exit != 0
+                        ? (FirstLine(stderr) ?? $"rhinocode exited {exit}; result file not written")
+                        : "result file not written within timeout (script may have failed before writing)";
+                    Console.WriteLine(Receipts.ExecFail(
+                        msg, stderr.Trim(), stdout.Trim(), exit, stderr.Trim()).ToJsonString());
+                }
                 return 2;
             }
 
@@ -178,12 +213,13 @@ internal static class Exec
         {
             // AWARE_KEEP_TEMP=1 leaves the generated .py + result file on disk for
             // debugging a failing exec. Off by default — temp files are deleted.
-            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AWARE_KEEP_TEMP")))
+            if (!preserveTempsForUncertainCompletion
+                && string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AWARE_KEEP_TEMP")))
             {
                 try { File.Delete(scriptPath); } catch { /* best-effort */ }
                 try { File.Delete(resultPath); } catch { /* best-effort */ }
             }
-            else
+            else if (!preserveTempsForUncertainCompletion)
             {
                 Console.Error.WriteLine($"aware-rhino exec: kept temp script {scriptPath} and result {resultPath}");
             }

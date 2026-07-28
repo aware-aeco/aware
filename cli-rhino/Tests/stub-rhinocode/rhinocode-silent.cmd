@@ -16,6 +16,7 @@ if /I "%~1"=="list" (
   exit /b 0
 )
 if /I "%~1"=="script" (
+  if not "%AWARE_STUB_DUMP_DIR%"=="" if not "%~2"=="" echo %~2>"%AWARE_STUB_DUMP_DIR%\last-script-path.txt"
   REM Deliberately write nothing.
   exit /b 0
 )
