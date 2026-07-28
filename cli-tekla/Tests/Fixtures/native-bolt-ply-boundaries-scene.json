@@ -1,0 +1,94 @@
+{
+  "scene": {
+    "meta": {
+      "name": "AWARE native bolt ply boundary verification",
+      "units": "mm",
+      "sourceId": "aware-live-native-bolt-boundaries-v1",
+      "sceneHash": "live-native-bolt-boundaries-2026-v1"
+    },
+    "elements": [
+      { "id": "PLY-1", "kind": "plate", "frame": { "origin": [60000, 0, -20], "uDir": [1, 0, 0], "vDir": [0, 1, 0], "normal": [0, 0, 1] }, "outline": [[-300, -300], [300, -300], [300, 300], [-300, 300]], "thicknessMm": 6, "material": "A36" },
+      { "id": "PLY-2", "kind": "plate", "frame": { "origin": [60000, 0, -10], "uDir": [1, 0, 0], "vDir": [0, 1, 0], "normal": [0, 0, 1] }, "outline": [[-300, -300], [300, -300], [300, 300], [-300, 300]], "thicknessMm": 6, "material": "A36" },
+      { "id": "PLY-3", "kind": "plate", "frame": { "origin": [60000, 0, 0], "uDir": [1, 0, 0], "vDir": [0, 1, 0], "normal": [0, 0, 1] }, "outline": [[-300, -300], [300, -300], [300, 300], [-300, 300]], "thicknessMm": 6, "material": "A36" },
+      { "id": "PLY-4", "kind": "plate", "frame": { "origin": [60000, 0, 10], "uDir": [1, 0, 0], "vDir": [0, 1, 0], "normal": [0, 0, 1] }, "outline": [[-300, -300], [300, -300], [300, 300], [-300, 300]], "thicknessMm": 6, "material": "A36" },
+      { "id": "PLY-5", "kind": "plate", "frame": { "origin": [60000, 0, 20], "uDir": [1, 0, 0], "vDir": [0, 1, 0], "normal": [0, 0, 1] }, "outline": [[-300, -300], [300, -300], [300, 300], [-300, 300]], "thicknessMm": 6, "material": "A36" },
+
+      { "id": "SHANK-2PLY", "kind": "bolt-shank", "axis": { "from": [59900, -100, -50], "to": [59900, -100, 50] }, "diameterMm": 19.05 },
+      { "id": "HEAD-2PLY", "kind": "bolt-head", "center": [59900, -100, 55], "axis": [0, 0, 1], "acrossFlatsMm": 30, "thicknessMm": 10 },
+      { "id": "NUT-2PLY", "kind": "nut", "center": [59900, -100, -55], "axis": [0, 0, 1], "acrossFlatsMm": 30, "thicknessMm": 12 },
+      { "id": "WASHER-2PLY", "kind": "washer", "center": [59900, -100, -45], "axis": [0, 0, 1], "outerDiameterMm": 36, "innerDiameterMm": 21, "thicknessMm": 3 },
+
+      { "id": "SHANK-5PLY", "kind": "bolt-shank", "axis": { "from": [60100, 100, -50], "to": [60100, 100, 50] }, "diameterMm": 19.05 },
+      { "id": "HEAD-5PLY", "kind": "bolt-head", "center": [60100, 100, 55], "axis": [0, 0, 1], "acrossFlatsMm": 30, "thicknessMm": 10 },
+      { "id": "NUT-5PLY", "kind": "nut", "center": [60100, 100, -55], "axis": [0, 0, 1], "acrossFlatsMm": 30, "thicknessMm": 12 },
+      { "id": "WASHER-5PLY", "kind": "washer", "center": [60100, 100, -45], "axis": [0, 0, 1], "outerDiameterMm": 36, "innerDiameterMm": 21, "thicknessMm": 3 }
+    ],
+    "operations": [
+      {
+        "id": "BOLTS-2PLY",
+        "kind": "bolt-array",
+        "partToBoltTo": "PLY-1",
+        "partToBeBolted": "PLY-2",
+        "frame": { "origin": [60000, 0, 0], "uDir": [1, 0, 0], "vDir": [0, 1, 0], "normal": [0, 0, 1] },
+        "uOffsetsMm": [-100],
+        "vOffsetsMm": [-100],
+        "diameterMm": 19.05,
+        "standard": "A325N",
+        "grade": "A325",
+        "toleranceMm": 2,
+        "boltType": "shop",
+        "threadInMaterial": false,
+        "components": { "bolt": true, "nut": true, "washer": true },
+        "instances": [
+          {
+            "id": "BOLT-I-2PLY",
+            "point": [59900, -100, 0],
+            "shankId": "SHANK-2PLY",
+            "headId": "HEAD-2PLY",
+            "nutIds": ["NUT-2PLY"],
+            "washerIds": ["WASHER-2PLY"],
+            "holeEffects": [
+              { "id": "HOLE-2PLY-1", "targetId": "PLY-1", "center": [59900, -100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 },
+              { "id": "HOLE-2PLY-2", "targetId": "PLY-2", "center": [59900, -100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "BOLTS-5PLY",
+        "kind": "bolt-array",
+        "partToBoltTo": "PLY-1",
+        "partToBeBolted": "PLY-2",
+        "frame": { "origin": [60000, 0, 0], "uDir": [1, 0, 0], "vDir": [0, 1, 0], "normal": [0, 0, 1] },
+        "uOffsetsMm": [100],
+        "vOffsetsMm": [100],
+        "diameterMm": 19.05,
+        "standard": "A325N",
+        "grade": "A325",
+        "toleranceMm": 2,
+        "boltType": "shop",
+        "threadInMaterial": false,
+        "components": { "bolt": true, "nut": true, "washer": true },
+        "instances": [
+          {
+            "id": "BOLT-I-5PLY",
+            "point": [60100, 100, 0],
+            "shankId": "SHANK-5PLY",
+            "headId": "HEAD-5PLY",
+            "nutIds": ["NUT-5PLY"],
+            "washerIds": ["WASHER-5PLY"],
+            "holeEffects": [
+              { "id": "HOLE-5PLY-1", "targetId": "PLY-1", "center": [60100, 100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 },
+              { "id": "HOLE-5PLY-2", "targetId": "PLY-2", "center": [60100, 100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 },
+              { "id": "HOLE-5PLY-3", "targetId": "PLY-3", "center": [60100, 100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 },
+              { "id": "HOLE-5PLY-4", "targetId": "PLY-4", "center": [60100, 100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 },
+              { "id": "HOLE-5PLY-5", "targetId": "PLY-5", "center": [60100, 100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 }
+            ]
+          }
+        ]
+      }
+    ],
+    "referenceSystems": []
+  },
+  "output-path": ".tmp/native-bolt-ply-boundaries.html"
+}

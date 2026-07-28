@@ -183,6 +183,31 @@ public sealed class CommitPolicyTests
     }
 
     [Fact]
+    public void NativeBoltMapsAndReadsBackEveryAuthoredPly()
+    {
+        Assert.DoesNotContain("effects.Count!=2", BakeSceneScript.Code);
+        Assert.Contains("effects.Count<2||effects.Count>5", BakeSceneScript.Code);
+        Assert.Contains("AddOtherPartToBolt", BakeSceneScript.Code);
+        Assert.Contains("GetOtherPartsToBolt", BakeSceneScript.Code);
+        Assert.Contains("Hole3=otherParticipantIds.Count>=1", BakeSceneScript.Code);
+        Assert.Contains("Hole4=otherParticipantIds.Count>=2", BakeSceneScript.Code);
+        Assert.Contains("Hole5=otherParticipantIds.Count>=3", BakeSceneScript.Code);
+    }
+
+    [Fact]
+    public void NativeBoltLiveFixtureCoversTwoAndFivePlyBoundaries()
+    {
+        var fixturePath = System.IO.Path.GetFullPath(System.IO.Path.Combine(
+            AppContext.BaseDirectory,
+            "..", "..", "..", "Fixtures", "native-bolt-ply-boundaries-scene.json"));
+        var fixture = JsonNode.Parse(System.IO.File.ReadAllText(fixturePath))!;
+        var operations = fixture["scene"]!["operations"]!.AsArray();
+
+        Assert.Equal(2, operations[0]!["instances"]![0]!["holeEffects"]!.AsArray().Count);
+        Assert.Equal(5, operations[1]!["instances"]![0]!["holeEffects"]!.AsArray().Count);
+    }
+
+    [Fact]
     public void IndependentGridAxisExtentsAreExplicitlyUnsupported()
     {
         Assert.Contains("gridsWithIndependentAxisExtents", BakeSceneScript.Code);
