@@ -587,9 +587,13 @@ internal static class AwareBakeRules
                 continue;
             }
             var id = Str(child, "id");
-            if (!acceptId(id, childKind)) continue;
-            parsed.Unsupported.Add(Row(id, childKind, "unsupported", "unsupported-parent",
-                "the parent record is not supported by the Revit sink"));
+            if (acceptId(id, childKind))
+                parsed.Unsupported.Add(Row(id, childKind, "unsupported", "unsupported-parent",
+                    "the parent record is not supported by the Revit sink"));
+            // A rejected child id must NOT cost its grandchildren their rows. The hole effects under
+            // a bolt instance are records in their own right: skipping them would leave valid ids
+            // unclassified and — worse — let a duplicate among THEM go undetected. Both reference
+            // sinks (cli-tekla, cli-rhino) walk them whatever the instance id did.
             if (grandchildProperty != null)
                 ParseUnsupportedChildren(child, parsed, acceptId, grandchildProperty, grandchildKind, null, null);
         }

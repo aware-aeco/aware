@@ -266,6 +266,33 @@ public class BakeSceneTests : IDisposable
         Assert.Contains(pf.Failed, r => Code(r) == "invalid-id");
     }
 
+    /// <summary>
+    /// A rejected bolt-instance id does not take its hole effects down with it. The effects are
+    /// records in their own right, so they still get their rows AND still enter the scene-wide id
+    /// set — otherwise a duplicate among the effects would slip through behind a bad instance id.
+    /// This is what cli-tekla and cli-rhino already do.
+    /// </summary>
+    [Fact]
+    public void HoleEffectsAreStillClassifiedWhenTheirInstanceIdIsRejected()
+    {
+        var pf = BakeScene.Validate(JsonNode.Parse("""
+            {"meta":{"units":"mm","sourceId":"s","sceneHash":"h"},
+             "elements":[{"id":"ba1-i0","kind":"member"}],
+             "operations":[{"id":"ba1","kind":"bolt-array",
+                            "instances":[{"id":"ba1-i0","holeEffects":[{"id":"eff-a"},{"id":"eff-b"}]},
+                                         {"id":"ba1-i1","holeEffects":[{"id":"eff-b"}]}]}]}
+            """));
+
+        // The instance id collides with the member's, so the instance itself is a failure...
+        Assert.False(pf.Ok);
+        Assert.Contains(pf.Failed, r => Id(r) == "ba1-i0" && Code(r) == "duplicate-id");
+        // ...but its effects are classified anyway, and the duplicate BETWEEN two instances' effects
+        // is still caught — both of which the old `continue` would have lost.
+        Assert.Contains(pf.Unsupported, r => Id(r) == "eff-a" && Kind(r) == "opening");
+        Assert.Contains(pf.Unsupported, r => Id(r) == "eff-b" && Kind(r) == "opening");
+        Assert.Contains(pf.Failed, r => Id(r) == "eff-b" && Code(r) == "duplicate-id");
+    }
+
     [Fact]
     public void ANestedCollectionThatIsNotAnArrayFailsTheBatch()
     {

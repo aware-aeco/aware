@@ -398,6 +398,37 @@ public class BakeSceneRulesTests
         Assert.Contains(parsed.Failed, r => (string)r["id"] == "dup" && (string)r["code"] == "duplicate-id");
     }
 
+    /// <summary>
+    /// A rejected bolt-instance id does not take its hole effects down with it. The effects are
+    /// records in their own right, so they still get their rows AND still enter the scene-wide id
+    /// set — otherwise a duplicate among the effects would slip through behind a bad instance id.
+    /// This is what cli-tekla and cli-rhino already do.
+    /// </summary>
+    [Fact]
+    public void ParseScene_ClassifiesHoleEffectsEvenWhenTheirInstanceIdIsRejected()
+    {
+        var parsed = AwareBakeRules.ParseScene(Json("""
+        {
+          "meta": { "units": "mm", "sourceId": "s", "sceneHash": "h" },
+          "elements": [ { "id": "ba1-i0", "kind": "plate" } ],
+          "operations": [
+            { "id": "ba1", "kind": "bolt-array", "instances": [
+                { "id": "ba1-i0", "holeEffects": [ { "id": "eff-a" }, { "id": "eff-b" } ] },
+                { "id": "ba1-i1", "holeEffects": [ { "id": "eff-b" } ] } ] }
+          ]
+        }
+        """));
+
+        // The instance id collides with the plate's, so the instance itself is a failure...
+        Assert.False(parsed.Ok);
+        Assert.Contains(parsed.Failed, r => (string)r["id"] == "ba1-i0" && (string)r["code"] == "duplicate-id");
+        // ...but its effects are classified anyway, and the duplicate BETWEEN two instances' effects
+        // is still caught — both of which the old `continue` would have lost.
+        Assert.Contains(parsed.Unsupported, r => (string)r["id"] == "eff-a" && (string)r["kind"] == "opening");
+        Assert.Contains(parsed.Unsupported, r => (string)r["id"] == "eff-b" && (string)r["kind"] == "opening");
+        Assert.Contains(parsed.Failed, r => (string)r["id"] == "eff-b" && (string)r["code"] == "duplicate-id");
+    }
+
     [Fact]
     public void AppendBatchAborted_GivesEverySupportedRecordAVerdict()
     {
