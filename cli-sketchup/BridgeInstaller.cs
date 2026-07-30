@@ -16,6 +16,9 @@ namespace AwareSketchup;
 internal static class BridgeInstaller
 {
     public const string LoaderFileName = "aware_sketchup_bridge.rb";
+
+    /// <summary>SketchUp year assumed when no --target-year is given.</summary>
+    public const int DefaultTargetYear = 2026;
     public const string SupportFolder  = "aware_sketchup_bridge";
 
     /// <summary>
@@ -148,7 +151,7 @@ internal static class BridgeInstaller
     /// </summary>
     internal static (int targetYear, string? pluginsOverride) ParseArgs(string[] args)
     {
-        int year = 2026;
+        int year = DefaultTargetYear;
         string? pluginsOverride = null;
         for (int i = 1; i < args.Length; i++)
         {
@@ -185,12 +188,23 @@ internal static class BridgeInstaller
     }
 
     /// <summary>
-    /// BRIDGE_VERSION of the loader shipped beside this exe — what a SketchUp
-    /// session would be running had it started after the last install. Null when
-    /// the packaged asset can't be read.
+    /// BRIDGE_VERSION of the loader shipped beside this exe — what
+    /// <c>--install-bridge</c> would put in place. Null when it can't be read.
     /// </summary>
     internal static string? PackagedVersion()
         => ReadInstalledVersion(Path.Combine(LocateAssetDir(), LoaderFileName));
+
+    /// <summary>
+    /// BRIDGE_VERSION of the loader actually sitting in SketchUp's Plugins folder —
+    /// what the next SketchUp start would load, which is NOT necessarily what this
+    /// sidecar ships (upgrading the CLI does not re-run <c>--install-bridge</c>).
+    /// Null when nothing is installed there.
+    /// </summary>
+    internal static string? InstalledVersion(int targetYear = DefaultTargetYear)
+    {
+        try { return ReadInstalledVersion(Path.Combine(DefaultPluginsDir(targetYear), LoaderFileName)); }
+        catch { return null; }
+    }
 
     /// <summary>
     /// Reads `BRIDGE_VERSION = '...'` out of a loader .rb. Returns null on

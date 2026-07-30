@@ -143,28 +143,60 @@ public class SketchupClientTests : IDisposable
     }
 
     [Fact]
-    public void StaleBridgeNote_SilentWhenSessionRunsTheInstalledBridge()
+    public void StaleBridgeNote_SilentWhenEverythingIsInStep()
     {
         var inst = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.35.0");
-        Assert.Equal("", SketchupClient.StaleBridgeNote(inst, packagedVersion: "0.35.0"));
-        // Packaged version unreadable → say nothing rather than guess.
-        Assert.Equal("", SketchupClient.StaleBridgeNote(inst, packagedVersion: ""));
+        Assert.Equal("", SketchupClient.StaleBridgeNote(inst, packagedVersion: "0.35.0", installedVersion: "0.35.0"));
+        // Nothing readable to compare against → say nothing rather than guess.
+        Assert.Equal("", SketchupClient.StaleBridgeNote(inst, packagedVersion: "", installedVersion: ""));
     }
 
     [Fact]
-    public void StaleBridgeNote_TellsUserToRestartWhenSessionIsStale()
+    public void StaleBridgeNote_TellsUserToRestartWhenOnlyTheSessionIsStale()
     {
         var older = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0");
-        var note = SketchupClient.StaleBridgeNote(older, packagedVersion: "0.35.0");
+        var note = SketchupClient.StaleBridgeNote(older, packagedVersion: "0.35.0", installedVersion: "0.35.0");
         Assert.Contains("0.34.0", note);
-        Assert.Contains("0.35.0", note);
         Assert.Contains("restart SketchUp", note);
+        Assert.DoesNotContain("--install-bridge", note);
 
         // A session from before bridge_version existed is stale in the same way.
         var unversioned = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, null);
-        var legacyNote = SketchupClient.StaleBridgeNote(unversioned, packagedVersion: "0.35.0");
+        var legacyNote = SketchupClient.StaleBridgeNote(unversioned, packagedVersion: "0.35.0", installedVersion: "0.35.0");
         Assert.Contains("older than 0.35.0", legacyNote);
         Assert.Contains("restart SketchUp", legacyNote);
+    }
+
+    [Fact]
+    public void StaleBridgeNote_SaysInstallFirstWhenThePluginsFolderIsAlsoBehind()
+    {
+        // Upgrading the CLI does not re-run --install-bridge, so restarting alone would
+        // reload the SAME stale bridge. Saying "just restart" there is wrong advice.
+        var running = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0");
+        var note = SketchupClient.StaleBridgeNote(running, packagedVersion: "0.35.0", installedVersion: "0.34.0");
+        Assert.Contains("--install-bridge", note);
+        Assert.Contains("restart SketchUp", note);
+
+        // Even when the session already matches what is installed, a newer packaged
+        // bridge still has to be installed before a restart can help.
+        var inStep = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0");
+        var note2 = SketchupClient.StaleBridgeNote(inStep, packagedVersion: "0.35.0", installedVersion: "0.34.0");
+        Assert.Contains("--install-bridge", note2);
+    }
+
+    [Fact]
+    public void SendRequest_UnreachablePort_ReportsTheRequestWasNeverDelivered()
+    {
+        // Bind and immediately release a port so nothing is listening on it.
+        var probe = new TcpListener(IPAddress.Loopback, 0);
+        probe.Start();
+        var deadPort = ((IPEndPoint)probe.LocalEndpoint).Port;
+        probe.Stop();
+
+        var c = new SketchupClient(_discoveryDir, pidAlive: _ => true);
+        var ex = Assert.Throws<BridgeRequestNotDeliveredException>(
+            () => c.SendRequest(deadPort, new JsonObject { ["type"] = "ping" }, timeoutMs: 2_000));
+        Assert.Contains($"{deadPort}", ex.Message);
     }
 
     [Fact]

@@ -76,6 +76,7 @@ module AwareSketchupBridge
     @conns     = []
     @timer_id  = nil
     @pumping   = false
+    @evaluated_this_tick = false
     @shutdown  = false
     @served    = 0
     @accepted  = 0
@@ -173,19 +174,26 @@ module AwareSketchupBridge
       # SketchUp pumps its own message loop during long model operations, so this
       # timer can fire again while a bake is still running inside it. Without the
       # guard the same buffered frame could be serviced twice — a duplicated bake.
+      #
+      # The guard is cleared ONLY by the invocation that set it: the early return
+      # deliberately sits outside the begin/ensure, because a nested tick running
+      # the ensure would drop the guard while the outer tick is still inside
+      # service_connections (mutating @conns during its own delete_if).
       def pump
         return if @pumping
 
         @pumping = true
-        @evaluated_this_tick = false
-        now = monotonic
-        accept_pending(now)
-        service_connections(now)
-      rescue StandardError => e
-        write_diag("pump error: #{e.class}: #{e.message}")
-        warn "[aware-sketchup] pump error: #{e.class}: #{e.message}"
-      ensure
-        @pumping = false
+        begin
+          @evaluated_this_tick = false
+          now = monotonic
+          accept_pending(now)
+          service_connections(now)
+        rescue StandardError => e
+          write_diag("pump error: #{e.class}: #{e.message}")
+          warn "[aware-sketchup] pump error: #{e.class}: #{e.message}"
+        ensure
+          @pumping = false
+        end
       end
 
       def accept_pending(now)

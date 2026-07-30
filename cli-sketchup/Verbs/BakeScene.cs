@@ -497,9 +497,19 @@ internal static class BakeScene
 
         JsonNode response;
         try { response = client.SendRequest(inst.Port, request, timeoutMs); }
+        catch (BridgeRequestNotDeliveredException nd)
+        {
+            // The scene never reached the bridge, so the model is untouched — say so
+            // plainly rather than hedging with the unknown-outcome guidance.
+            Console.WriteLine(Receipts.ExecFail(
+                $"{nd.Message} — the scene never reached SketchUp, so the model is unchanged"
+                + SketchupClient.StaleBridgeNote(inst),
+                "", "", inst.Version, inst.Pid, inst.Pid.ToString(), Verb).ToJsonString());
+            return 2;
+        }
         catch (TimeoutException te)
         {
-            // The request was fully handed over, so the bake may be running right now.
+            // The request WAS fully handed over, so the bake may be running right now.
             Console.WriteLine(Receipts.ExecFail(
                 $"timeout talking to SketchUp bridge on port {inst.Port}: {te.Message}"
                 + UnknownOutcomeGuidance + SketchupClient.StaleBridgeNote(inst),
@@ -508,8 +518,8 @@ internal static class BakeScene
         }
         catch (Exception e)
         {
-            // Same ambiguity: the socket broke, but we cannot see whether the bridge had
-            // already started materializing the scene.
+            // Same ambiguity: the request went out, then the socket broke while we waited,
+            // and we cannot see whether the bridge had started materializing the scene.
             Console.WriteLine(Receipts.ExecFail(
                 $"bridge I/O failed (port {inst.Port}, pid {inst.Pid}): {e.Message}"
                 + UnknownOutcomeGuidance + SketchupClient.StaleBridgeNote(inst),

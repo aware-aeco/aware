@@ -32,6 +32,18 @@ internal sealed record SketchupInstance(
     DateTime StartedAt,
     string? BridgeVersion = null);
 
+/// <summary>
+/// The bridge call failed BEFORE the whole request had been handed to the socket, so the
+/// bridge cannot have evaluated anything and the model is provably untouched. Verbs that
+/// mutate the model rely on this distinction: for them "we don't know what happened" and
+/// "nothing happened" are different receipts.
+/// </summary>
+internal sealed class BridgeRequestNotDeliveredException : Exception
+{
+    public BridgeRequestNotDeliveredException(string message, Exception? inner = null)
+        : base(message, inner) { }
+}
+
 internal sealed class SketchupClient
 {
     /// <summary>
@@ -128,9 +140,16 @@ internal sealed class SketchupClient
     public JsonNode SendRequest(int port, JsonObject request, int timeoutMs = 30_000)
     {
         using var tcp = new TcpClient();
-        var connectTask = tcp.ConnectAsync(IPAddress.Loopback, port);
-        if (!connectTask.Wait(Math.Min(timeoutMs, 5_000)))
-            throw new TimeoutException($"connect to 127.0.0.1:{port} timed out");
+        try
+        {
+            var connectTask = tcp.ConnectAsync(IPAddress.Loopback, port);
+            if (!connectTask.Wait(Math.Min(timeoutMs, 5_000)))
+                throw new TimeoutException($"connect to 127.0.0.1:{port} timed out");
+        }
+        catch (Exception e)
+        {
+            throw new BridgeRequestNotDeliveredException($"could not connect to 127.0.0.1:{port}: {Unwrap(e).Message}", e);
+        }
 
         tcp.ReceiveTimeout = timeoutMs;
         // The caller's timeout is the only bound that means anything: a multi-megabyte
@@ -140,7 +159,17 @@ internal sealed class SketchupClient
 
         using var stream = tcp.GetStream();
         var body = Encoding.UTF8.GetBytes(request.ToJsonString());
-        WriteLengthPrefixed(stream, body);
+        try
+        {
+            WriteLengthPrefixed(stream, body);
+        }
+        catch (Exception e)
+        {
+            // A partial frame is never evaluated — bridge 0.35.0 drops a connection that
+            // ends before a complete frame arrives — so a failed write leaves the model
+            // provably untouched, and the caller must not be told the outcome is unknown.
+            throw new BridgeRequestNotDeliveredException($"could not send the request to 127.0.0.1:{port}: {Unwrap(e).Message}", e);
+        }
 
         var responseBytes = ReadLengthPrefixed(stream, timeoutMs);
         var responseJson  = Encoding.UTF8.GetString(responseBytes);
@@ -227,8 +256,8 @@ internal sealed class SketchupClient
     }
 
     /// <summary>
-    /// A "restart SketchUp" sentence when the bridge running in that session is not
-    /// the one installed on disk — otherwise the empty string.
+    /// What the user has to DO when the bridge running in that session is not the fixed
+    /// one — otherwise the empty string.
     /// <para>
     /// This is the blind spot behind aware-aeco/aware#330: installing a fixed bridge
     /// changes nothing until the session restarts, and a stale session is
@@ -236,17 +265,46 @@ internal sealed class SketchupClient
     /// the discovery file. So say it on the paths where the user is already looking at
     /// a failure.
     /// </para>
+    /// <para>
+    /// Three versions matter and conflating them gives useless advice: what the session
+    /// is RUNNING, what is INSTALLED in the Plugins folder (what a restart would load),
+    /// and what this sidecar has PACKAGED (what <c>--install-bridge</c> would put there).
+    /// Upgrading the CLI does not re-install the bridge, so "just restart" is wrong
+    /// advice whenever the installed loader is itself behind.
+    /// </para>
     /// </summary>
-    internal static string StaleBridgeNote(SketchupInstance inst, string? packagedVersion = null)
+    internal static string StaleBridgeNote(
+        SketchupInstance inst,
+        string? packagedVersion = null,
+        string? installedVersion = null)
     {
-        var packaged = packagedVersion ?? BridgeInstaller.PackagedVersion();
-        if (string.IsNullOrEmpty(packaged)) return "";
-        if (inst.BridgeVersion == packaged) return "";
+        var packaged  = packagedVersion  ?? BridgeInstaller.PackagedVersion();
+        var installed = installedVersion ?? BridgeInstaller.InstalledVersion();
+
+        // A restart loads the INSTALLED loader; fall back to the packaged version only
+        // when we can't read the Plugins folder at all.
+        var wouldLoad = string.IsNullOrEmpty(installed) ? packaged : installed;
+        if (string.IsNullOrEmpty(wouldLoad)) return "";
+
+        var needsInstall = !string.IsNullOrEmpty(packaged)
+                        && !string.IsNullOrEmpty(installed)
+                        && packaged != installed;
+        var needsRestart = inst.BridgeVersion != wouldLoad;
+        if (!needsInstall && !needsRestart) return "";
+
         var running = inst.BridgeVersion ?? "older than 0.35.0 (it does not report a version)";
-        return $" — note: the bridge running in SketchUp pid {inst.Pid} is {running} while {packaged}"
-             + " is installed on disk; SketchUp only loads plugins at startup, so restart SketchUp"
-             + " to pick the installed bridge up";
+        var head = $" — note: SketchUp pid {inst.Pid} is running bridge {running}";
+        if (needsInstall)
+            return head + $", the installed bridge is {installed} and this sidecar ships {packaged}:"
+                 + " run `aware-sketchup --install-bridge`, then restart SketchUp — it only loads"
+                 + " plugins at startup";
+        return head + $" while {wouldLoad} is installed; SketchUp only loads plugins at startup,"
+             + " so restart SketchUp to pick the installed bridge up";
     }
+
+    /// <summary>Peels the AggregateException that Task.Wait wraps everything in.</summary>
+    static Exception Unwrap(Exception e)
+        => e is AggregateException agg && agg.InnerExceptions.Count == 1 ? agg.InnerExceptions[0] : e;
 
     static bool IsProcessAlive(int pid)
     {
