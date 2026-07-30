@@ -30,13 +30,15 @@ internal sealed record SketchupInstance(
     string Version,
     string? ModelPath,
     DateTime StartedAt,
-    string? BridgeVersion = null);
+    string? BridgeVersion = null,
+    string? BridgeLoaderPath = null);
 
 /// <summary>
-/// The bridge call failed BEFORE the whole request had been handed to the socket, so the
-/// bridge cannot have evaluated anything and the model is provably untouched. Verbs that
-/// mutate the model rely on this distinction: for them "we don't know what happened" and
-/// "nothing happened" are different receipts.
+/// The bridge call failed before a single byte of the request left the sidecar — no
+/// connection — so the bridge cannot have evaluated anything and the model is provably
+/// untouched. Verbs that mutate the model rely on this distinction: for them "we don't
+/// know what happened" and "nothing happened" are different receipts. Deliberately NOT
+/// used for write failures: a write can throw after the peer already has the whole frame.
 /// </summary>
 internal sealed class BridgeRequestNotDeliveredException : Exception
 {
@@ -139,6 +141,12 @@ internal sealed class SketchupClient
     /// </summary>
     public JsonNode SendRequest(int port, JsonObject request, int timeoutMs = 30_000)
     {
+        // ONE deadline for the whole call. Sending a multi-megabyte scene and then reading
+        // the reply must share the caller's budget — giving each its own would let a
+        // "two minute" bake take four.
+        var deadline = DateTime.UtcNow.AddMilliseconds(timeoutMs);
+        int Remaining() => (int)Math.Ceiling((deadline - DateTime.UtcNow).TotalMilliseconds);
+
         using var tcp = new TcpClient();
         try
         {
@@ -148,30 +156,26 @@ internal sealed class SketchupClient
         }
         catch (Exception e)
         {
+            // The ONLY provably-nothing-happened failure: no byte of the request was ever
+            // handed to a socket. Once the write starts, a failure is ambiguous — the peer
+            // may have received the whole frame and still reset the connection — so those
+            // stay ordinary exceptions and keep the "outcome unknown" treatment.
             throw new BridgeRequestNotDeliveredException($"could not connect to 127.0.0.1:{port}: {Unwrap(e).Message}", e);
         }
 
-        tcp.ReceiveTimeout = timeoutMs;
-        // The caller's timeout is the only bound that means anything: a multi-megabyte
-        // bake payload is handed over as fast as the bridge's pump drains it, which a
-        // fixed 10s ceiling could cut off mid-send on a busy model.
-        tcp.SendTimeout    = timeoutMs;
+        // A fixed ceiling here could cut off a large send on a busy model; the caller's
+        // remaining budget is the honest bound.
+        tcp.SendTimeout    = Math.Max(1, Remaining());
+        tcp.ReceiveTimeout = Math.Max(1, Remaining());
 
         using var stream = tcp.GetStream();
         var body = Encoding.UTF8.GetBytes(request.ToJsonString());
-        try
-        {
-            WriteLengthPrefixed(stream, body);
-        }
-        catch (Exception e)
-        {
-            // A partial frame is never evaluated — bridge 0.35.0 drops a connection that
-            // ends before a complete frame arrives — so a failed write leaves the model
-            // provably untouched, and the caller must not be told the outcome is unknown.
-            throw new BridgeRequestNotDeliveredException($"could not send the request to 127.0.0.1:{port}: {Unwrap(e).Message}", e);
-        }
+        WriteLengthPrefixed(stream, body);
 
-        var responseBytes = ReadLengthPrefixed(stream, timeoutMs);
+        var left = Remaining();
+        if (left <= 0)
+            throw new TimeoutException($"the request to 127.0.0.1:{port} used the whole {timeoutMs} ms budget before a reply could be read");
+        var responseBytes = ReadLengthPrefixed(stream, left);
         var responseJson  = Encoding.UTF8.GetString(responseBytes);
         return JsonNode.Parse(responseJson)
                ?? throw new InvalidDataException("bridge returned non-JSON response");
@@ -244,15 +248,17 @@ internal sealed class SketchupClient
         var version = node["version"]?.GetValue<string>();
         if (pid is null || port is null || string.IsNullOrEmpty(version)) return null;
         string? modelPath = node["model_path"]?.GetValue<string>();
-        // bridge_version arrived in bridge 0.35.0; older sessions simply omit it.
+        // bridge_version and bridge_loader arrived in bridge 0.35.0; older sessions omit them.
         var bridgeVersion = node["bridge_version"]?.GetValue<string>();
         if (string.IsNullOrEmpty(bridgeVersion)) bridgeVersion = null;
+        var bridgeLoader = node["bridge_loader"]?.GetValue<string>();
+        if (string.IsNullOrEmpty(bridgeLoader)) bridgeLoader = null;
         // started_at is informational; we don't fail if it's malformed.
         DateTime started = DateTime.MinValue;
         var sa = node["started_at"]?.GetValue<string>();
         if (!string.IsNullOrEmpty(sa))
             DateTime.TryParse(sa, null, System.Globalization.DateTimeStyles.AssumeUniversal | System.Globalization.DateTimeStyles.AdjustToUniversal, out started);
-        return new SketchupInstance(pid.Value, port.Value, version!, modelPath, started, bridgeVersion);
+        return new SketchupInstance(pid.Value, port.Value, version!, modelPath, started, bridgeVersion, bridgeLoader);
     }
 
     /// <summary>
@@ -279,11 +285,15 @@ internal sealed class SketchupClient
         string? installedVersion = null)
     {
         var packaged = packagedVersion ?? BridgeInstaller.PackagedVersion();
-        // Read the Plugins folder of the year THIS session belongs to. A 2025 session
-        // compared against the 2026 folder would earn confidently wrong advice.
+        // Prefer the loader THIS session actually loaded (bridge 0.35.0+ advertises its
+        // path, so a custom --plugins-dir is exact). Only fall back to the Plugins folder
+        // of the session's own year — never the default year, which would compare a 2025
+        // session against an unrelated 2026 install.
         var installed = installedVersion
+                        ?? BridgeInstaller.ReadInstalledVersion(inst.BridgeLoaderPath ?? "")
                         ?? BridgeInstaller.InstalledVersion(BridgeInstaller.PluginYearForHostVersion(inst.Version));
         var running = inst.BridgeVersion ?? "older than 0.35.0 (it does not report a version)";
+        var where = inst.BridgeLoaderPath is null ? "" : $" ({inst.BridgeLoaderPath})";
         var head = $" — note: SketchUp pid {inst.Pid} is running bridge {running}";
 
         // Installing only helps when the packaged bridge is NEWER than the installed one;
@@ -301,13 +311,13 @@ internal sealed class SketchupClient
         }
 
         if (installIsBehind)
-            return head + $", the installed bridge is {installed} and this sidecar ships {packaged}:"
-                 + " run `aware-sketchup --install-bridge`, then restart SketchUp — it only loads"
-                 + " plugins at startup";
+            return head + $", the installed bridge is {installed}{where} and this sidecar ships"
+                 + $" {packaged}: run `aware-sketchup --install-bridge`, then restart SketchUp — it"
+                 + " only loads plugins at startup";
 
         if (inst.BridgeVersion != installed)
-            return head + $" while {installed} is installed; SketchUp only loads plugins at startup,"
-                 + " so restart SketchUp to pick the installed bridge up";
+            return head + $" while {installed} is installed{where}; SketchUp only loads plugins at"
+                 + " startup, so restart SketchUp to pick the installed bridge up";
 
         return "";
     }

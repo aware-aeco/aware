@@ -477,6 +477,7 @@ module AwareSketchupBridge
           'port'           => port,
           'version'        => sketchup_version,
           'bridge_version' => bridge_version,
+          'bridge_loader'  => loader_path,
           'model_path'     => safe_active_model_path,
           'started_at'     => Time.now.utc.iso8601,
         }
@@ -521,6 +522,16 @@ module AwareSketchupBridge
       # it loaded at startup until SketchUp restarts).
       def bridge_version
         defined?(AwareSketchupBridge::BRIDGE_VERSION) ? AwareSketchupBridge::BRIDGE_VERSION.to_s : 'unknown'
+      end
+
+      # The loader file THIS session actually loaded. SketchUp can be pointed at a
+      # non-default Plugins folder (`--install-bridge --plugins-dir …`), so the sidecar
+      # must not have to guess where to look when it wants to know what a restart would
+      # load. core.rb sits in <plugins>/aware_sketchup_bridge/, the loader beside it.
+      def loader_path
+        File.expand_path(File.join(File.dirname(File.dirname(__FILE__)), 'aware_sketchup_bridge.rb'))
+      rescue StandardError
+        nil
       end
 
       # --- small utilities ---------------------------------------------------

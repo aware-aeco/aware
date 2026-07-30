@@ -128,18 +128,33 @@ public class SketchupClientTests : IDisposable
     }
 
     [Fact]
-    public void ParseDiscoveryFile_ReadsBridgeVersion()
+    public void ParseDiscoveryFile_ReadsBridgeVersionAndLoaderPath()
     {
         var inst = SketchupClient.ParseDiscoveryFile(
-            "{\"pid\":1,\"port\":8765,\"version\":\"26.0\",\"bridge_version\":\"0.35.0\"}");
+            "{\"pid\":1,\"port\":8765,\"version\":\"26.0\",\"bridge_version\":\"0.35.0\","
+            + "\"bridge_loader\":\"C:/custom/Plugins/aware_sketchup_bridge.rb\"}");
         Assert.NotNull(inst);
         Assert.Equal("0.35.0", inst!.BridgeVersion);
+        Assert.Equal("C:/custom/Plugins/aware_sketchup_bridge.rb", inst.BridgeLoaderPath);
 
         // An empty string is "not reported", not a version.
         var blank = SketchupClient.ParseDiscoveryFile(
-            "{\"pid\":1,\"port\":8765,\"version\":\"26.0\",\"bridge_version\":\"\"}");
+            "{\"pid\":1,\"port\":8765,\"version\":\"26.0\",\"bridge_version\":\"\",\"bridge_loader\":\"\"}");
         Assert.NotNull(blank);
         Assert.Null(blank!.BridgeVersion);
+        Assert.Null(blank.BridgeLoaderPath);
+    }
+
+    [Fact]
+    public void StaleBridgeNote_NamesTheLoaderTheSessionActuallyLoaded()
+    {
+        // A session installed with --plugins-dir advertises its own loader path, so the
+        // advice points at THAT file rather than the default year folder.
+        var custom = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0",
+                                          @"D:\custom\Plugins\aware_sketchup_bridge.rb");
+        var note = SketchupClient.StaleBridgeNote(custom, packagedVersion: "0.35.0", installedVersion: "0.35.0");
+        Assert.Contains(@"D:\custom\Plugins\aware_sketchup_bridge.rb", note);
+        Assert.Contains("restart SketchUp", note);
     }
 
     [Fact]

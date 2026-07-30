@@ -499,8 +499,9 @@ internal static class BakeScene
         try { response = client.SendRequest(inst.Port, request, timeoutMs); }
         catch (BridgeRequestNotDeliveredException nd)
         {
-            // The scene never reached the bridge, so the model is untouched — say so
-            // plainly rather than hedging with the unknown-outcome guidance.
+            // No connection was ever made, so the model is untouched — say so plainly
+            // rather than hedging with the unknown-outcome guidance. Every failure from
+            // the write onwards stays ambiguous and falls to the catches below.
             Console.WriteLine(Receipts.ExecFail(
                 $"{nd.Message} — the scene never reached SketchUp, so the model is unchanged"
                 + SketchupClient.StaleBridgeNote(inst),
