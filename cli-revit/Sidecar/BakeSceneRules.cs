@@ -415,10 +415,25 @@ internal static class AwareBakeRules
         };
 
         ParseElements(scene, parsed, acceptId);
+        // Which nested collections each family of records carries is fixed by the canonical scene,
+        // and is the SAME set the Tekla sink walks: a bolt array owns instances, and each instance
+        // owns the hole effects it cuts into its participants; a reference system owns axes and
+        // levels. Every one of those is an addressable record with its own id, so the receipt has to
+        // carry a row for it — a receipt that skips records cannot prove WHICH scene was applied.
         ParseUnsupportedCollection(scene, parsed, acceptId, "operations", "operation", "unsupported-operation",
-            "operation kind is not supported by the Revit sink");
+            "operation kind is not supported by the Revit sink",
+            (record, kind) =>
+            {
+                if (kind == "bolt-array")
+                    ParseUnsupportedChildren(record, parsed, acceptId, "instances", "bolt-instance", "holeEffects", "opening");
+            });
         ParseUnsupportedCollection(scene, parsed, acceptId, "referenceSystems", "reference-system",
-            "unsupported-reference-system", "reference system kind is not supported by the Revit sink");
+            "unsupported-reference-system", "reference system kind is not supported by the Revit sink",
+            (record, kind) =>
+            {
+                ParseUnsupportedChildren(record, parsed, acceptId, "axes", "grid-axis", null, null);
+                ParseUnsupportedChildren(record, parsed, acceptId, "levels", "grid-level", null, null);
+            });
         return parsed;
     }
 
@@ -451,8 +466,11 @@ internal static class AwareBakeRules
             {
                 parsed.Unsupported.Add(Row(id, kind, "unsupported", "unsupported-kind",
                     "element kind is not supported by the Revit sink"));
-                // Children still get a row apiece so nothing vanishes unaccounted for.
-                ParseUnsupportedChildren(el, parsed, acceptId, "holes", "opening");
+                // Children still get a row apiece so nothing vanishes unaccounted for. Only a plate
+                // carries `holes` in the canonical scene, so only a plate's are walked — an id the
+                // scene never declared would be as unreconcilable as one it skipped.
+                if (kind == "plate")
+                    ParseUnsupportedChildren(el, parsed, acceptId, "holes", "opening", null, null);
                 continue;
             }
 
@@ -500,6 +518,11 @@ internal static class AwareBakeRules
         };
     }
 
+    /// <param name="parseChildren">Walks the nested records THIS collection's parents carry, given
+    /// the parent element and its kind. Passed in rather than hardcoded because the nested
+    /// collections are per-family: an operation owns `instances`, a reference system owns
+    /// `axes`/`levels`, and walking one family's collections on the other would invent rows for ids
+    /// the scene never declared.</param>
     static void ParseUnsupportedCollection(
         System.Text.Json.JsonElement scene,
         ParsedScene parsed,
@@ -507,7 +530,8 @@ internal static class AwareBakeRules
         string property,
         string recordLabel,
         string code,
-        string message)
+        string message,
+        Action<System.Text.Json.JsonElement, string> parseChildren)
     {
         System.Text.Json.JsonElement collection;
         if (!scene.TryGetProperty(property, out collection)) return;
@@ -530,18 +554,21 @@ internal static class AwareBakeRules
             if (string.IsNullOrEmpty(kind)) kind = recordLabel;
             if (!acceptId(id, kind)) continue;
             parsed.Unsupported.Add(Row(id, kind, "unsupported", code, message));
-            ParseUnsupportedChildren(record, parsed, acceptId, "instances", "bolt-instance");
-            ParseUnsupportedChildren(record, parsed, acceptId, "axes", "grid-axis");
-            ParseUnsupportedChildren(record, parsed, acceptId, "levels", "grid-level");
+            parseChildren(record, kind);
         }
     }
 
+    /// <param name="grandchildProperty">A collection nested one level deeper inside each child —
+    /// a bolt instance's `holeEffects`. Null when the child carries none. Bolt holes live TWO levels
+    /// below the operation, which is exactly why they were the records this receipt used to drop.</param>
     static void ParseUnsupportedChildren(
         System.Text.Json.JsonElement parent,
         ParsedScene parsed,
         Func<string, string, bool> acceptId,
         string property,
-        string childKind)
+        string childKind,
+        string grandchildProperty,
+        string grandchildKind)
     {
         System.Text.Json.JsonElement children;
         if (!parent.TryGetProperty(property, out children)) return;
@@ -563,6 +590,8 @@ internal static class AwareBakeRules
             if (!acceptId(id, childKind)) continue;
             parsed.Unsupported.Add(Row(id, childKind, "unsupported", "unsupported-parent",
                 "the parent record is not supported by the Revit sink"));
+            if (grandchildProperty != null)
+                ParseUnsupportedChildren(child, parsed, acceptId, grandchildProperty, grandchildKind, null, null);
         }
     }
 

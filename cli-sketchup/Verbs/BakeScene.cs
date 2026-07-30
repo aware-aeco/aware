@@ -132,13 +132,35 @@ internal static class BakeScene
         // Ids are unique across the WHOLE scene, not per collection — the receipt
         // addresses every record by id alone, so a collision would make two rows
         // indistinguishable to the caller.
+        //
+        // Nested records are classified too. A plate's holes, a bolt array's instances and the hole
+        // effects inside each one, a grid's axes and levels are all addressable records with their
+        // own ids — exactly the set the Tekla sink accounts for. Leaving them out is not a smaller
+        // receipt, it is an unreconcilable one: a bake that cannot say what it did with every record
+        // cannot prove WHICH scene the model now holds, and this bake is retire-and-replace keyed on
+        // that identity. Which collections a record carries is decided by its KIND, so that no row is
+        // invented for an id the canonical scene never declared either.
         var seen = new HashSet<string>(StringComparer.Ordinal);
         Classify(elements, "element", "member", MaterializedKinds, "unsupported-kind",
-            "element kind is not supported by the SketchUp sink", pf, seen);
+            "element kind is not supported by the SketchUp sink", pf, seen,
+            (record, kind) =>
+            {
+                if (kind == "plate") ClassifyNested(record, "holes", "opening", null, null, pf, seen);
+            });
         Classify(operations, "operation", "operation", Array.Empty<string>(), "unsupported-operation",
-            "operation kind is not supported by the SketchUp sink", pf, seen);
+            "operation kind is not supported by the SketchUp sink", pf, seen,
+            (record, kind) =>
+            {
+                if (kind == "bolt-array")
+                    ClassifyNested(record, "instances", "bolt-instance", "holeEffects", "opening", pf, seen);
+            });
         Classify(references, "reference-system", "reference-system", Array.Empty<string>(), "unsupported-reference-system",
-            "reference system kind is not supported by the SketchUp sink", pf, seen);
+            "reference system kind is not supported by the SketchUp sink", pf, seen,
+            (record, _) =>
+            {
+                ClassifyNested(record, "axes", "grid-axis", null, null, pf, seen);
+                ClassifyNested(record, "levels", "grid-level", null, null, pf, seen);
+            });
 
         if (pf.Failed.Count > 0)
             AppendBatchAborted(pf, "Batch was aborted because scene identity or envelope validation failed.");
@@ -154,9 +176,11 @@ internal static class BakeScene
         return new JsonArray();
     }
 
+    /// <param name="classifyNested">Classifies the records nested inside this one, given the parent
+    /// object and its kind.</param>
     static void Classify(JsonArray records, string recordLabel, string defaultKind,
                          string[] materialized, string unsupportedCode, string unsupportedMessage,
-                         Preflight pf, HashSet<string> seen)
+                         Preflight pf, HashSet<string> seen, Action<JsonObject, string> classifyNested)
     {
         foreach (var raw in records)
         {
@@ -170,23 +194,69 @@ internal static class BakeScene
             var kind = Str(record, "kind").ToLowerInvariant();
             if (kind.Length == 0) kind = defaultKind;
 
-            if (!IsValidId(id))
-            {
-                pf.Failed.Add(Row(string.IsNullOrEmpty(id) ? "scene" : id, kind, "failed", "invalid-id",
-                    "id must be unique, trimmed, 1-256 UTF-8 bytes, and contain no control characters"));
-                continue;
-            }
-            if (!seen.Add(id))
-            {
-                pf.Failed.Add(Row(id, kind, "failed", "duplicate-id", "id is duplicated in the scene"));
-                continue;
-            }
+            if (!AcceptId(id, kind, pf, seen)) continue;
 
             if (Array.IndexOf(materialized, kind) >= 0)
                 pf.Supported.Add(new JsonObject { ["id"] = id, ["kind"] = kind });
             else
                 pf.Unsupported.Add(Row(id, kind, "unsupported", unsupportedCode, unsupportedMessage));
+
+            classifyNested(record, kind);
         }
+    }
+
+    /// <summary>
+    /// Give every record in a nested collection its own receipt row.
+    ///
+    /// None of them are materialized by this sink — their parent (a plate, a bolt array, a grid) is
+    /// not either — so they are reported `unsupported`, which is an honest answer that lets the bake
+    /// proceed. Being ABSENT is the one thing they may not be.
+    /// </summary>
+    /// <param name="grandchildProperty">A collection nested one level deeper inside each child — a
+    /// bolt instance's `holeEffects`. Null when the child carries none.</param>
+    static void ClassifyNested(JsonObject parent, string property, string childKind,
+                               string? grandchildProperty, string? grandchildKind,
+                               Preflight pf, HashSet<string> seen)
+    {
+        if (!parent.ContainsKey(property)) return;
+        if (parent[property] is not JsonArray children)
+        {
+            pf.Failed.Add(Row(Str(parent, "id"), childKind, "failed", "invalid-collection",
+                $"{property} must be an array"));
+            return;
+        }
+        foreach (var raw in children)
+        {
+            if (raw is not JsonObject child)
+            {
+                pf.Failed.Add(Row(Str(parent, "id"), childKind, "failed", "invalid-record",
+                    $"{childKind} must be an object"));
+                continue;
+            }
+            var id = Str(child, "id");
+            if (!AcceptId(id, childKind, pf, seen)) continue;
+            pf.Unsupported.Add(Row(id, childKind, "unsupported", "unsupported-parent",
+                "the parent record is not supported by the SketchUp sink"));
+            if (grandchildProperty is not null)
+                ClassifyNested(child, grandchildProperty, grandchildKind!, null, null, pf, seen);
+        }
+    }
+
+    /// <summary>Shared id gate: valid shape, and not already claimed anywhere in the scene.</summary>
+    static bool AcceptId(string id, string kind, Preflight pf, HashSet<string> seen)
+    {
+        if (!IsValidId(id))
+        {
+            pf.Failed.Add(Row(string.IsNullOrEmpty(id) ? "scene" : id, kind, "failed", "invalid-id",
+                "id must be unique, trimmed, 1-256 UTF-8 bytes, and contain no control characters"));
+            return false;
+        }
+        if (!seen.Add(id))
+        {
+            pf.Failed.Add(Row(id, kind, "failed", "duplicate-id", "id is duplicated in the scene"));
+            return false;
+        }
+        return true;
     }
 
     /// <summary>

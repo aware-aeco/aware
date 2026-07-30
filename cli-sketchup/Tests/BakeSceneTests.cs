@@ -189,6 +189,95 @@ public class BakeSceneTests : IDisposable
         Assert.All(pf.Unsupported, r => Assert.Equal("unsupported", Status(r)));
     }
 
+    /// <summary>
+    /// EVERY record the canonical scene carries gets exactly one row — including the ones nested
+    /// inside another record. A plate's holes and a bolt instance's hole effects used to be absent
+    /// from all three arrays, which made a connection model unexportable: the consumer reconciles
+    /// the receipt against the scene and refuses a bake that cannot say what became of a record
+    /// (aware-aeco/aware#326). This asserts the ids as a SET, so a future collection that is added
+    /// to the scene and forgotten here fails rather than passing unnoticed.
+    /// </summary>
+    [Fact]
+    public void EveryNestedSceneRecordIsClassified()
+    {
+        var pf = BakeScene.Validate(JsonNode.Parse("""
+            {"meta":{"units":"mm","sourceId":"s","sceneHash":"h"},
+             "elements":[{"id":"m1","kind":"member"},
+                         {"id":"p1","kind":"plate","holes":[{"id":"p1-h0"},{"id":"p1-h1"}]}],
+             "operations":[{"id":"ba1","kind":"bolt-array",
+                            "instances":[{"id":"ba1-i0","holeEffects":[{"id":"ba1-i0-hp"},{"id":"ba1-i0-hm"}]},
+                                         {"id":"ba1-i1","holeEffects":[{"id":"ba1-i1-hp"}]}]}],
+             "referenceSystems":[{"id":"g1","kind":"structural-grid",
+                                  "axes":[{"id":"g1-a"}],"levels":[{"id":"g1-l"}]}]}
+            """));
+
+        Assert.True(pf.Ok);
+        var classified = pf.Supported.Select(Id)
+            .Concat(pf.Unsupported.Select(Id))
+            .Concat(pf.Failed.Select(Id))
+            .ToArray();
+        Assert.Equal(classified.Length, classified.Distinct().Count());
+        Assert.Equal(
+            new[] { "ba1", "ba1-i0", "ba1-i0-hm", "ba1-i0-hp", "ba1-i1", "ba1-i1-hp",
+                    "g1", "g1-a", "g1-l", "m1", "p1", "p1-h0", "p1-h1" },
+            classified.OrderBy(x => x, StringComparer.Ordinal).ToArray());
+
+        // The kind is the vocabulary the consumer reconciles against, and it is Tekla's: a hole —
+        // whether it belongs to a plate or to a bolt instance — is an `opening`.
+        foreach (var openingId in new[] { "p1-h0", "p1-h1", "ba1-i0-hp", "ba1-i0-hm", "ba1-i1-hp" })
+            Assert.Contains(pf.Unsupported, r => Id(r) == openingId && Kind(r) == "opening"
+                                                && Code(r) == "unsupported-parent");
+        Assert.Contains(pf.Unsupported, r => Id(r) == "ba1-i0" && Kind(r) == "bolt-instance");
+        Assert.Contains(pf.Unsupported, r => Id(r) == "g1-a" && Kind(r) == "grid-axis");
+        Assert.Contains(pf.Unsupported, r => Id(r) == "g1-l" && Kind(r) == "grid-level");
+    }
+
+    /// <summary>
+    /// The other half of the same contract: a row for an id the scene never declared is as
+    /// unreconcilable as a missing one, so a nested collection is only walked on the kind that
+    /// canonically owns it. `holes` belong to a plate and `instances` to a bolt array — nowhere else.
+    /// </summary>
+    [Fact]
+    public void NestedCollectionsAreOnlyReadOffTheKindThatOwnsThem()
+    {
+        var pf = BakeScene.Validate(JsonNode.Parse("""
+            {"meta":{"units":"mm","sourceId":"s","sceneHash":"h"},
+             "elements":[{"id":"m1","kind":"member","holes":[{"id":"not-a-record"}]}],
+             "operations":[{"id":"w1","kind":"weld","instances":[{"id":"also-not-a-record"}]}]}
+            """));
+
+        Assert.True(pf.Ok);
+        var classified = pf.Supported.Select(Id).Concat(pf.Unsupported.Select(Id)).Concat(pf.Failed.Select(Id));
+        Assert.Equal(new[] { "m1", "w1" }, classified.OrderBy(x => x, StringComparer.Ordinal).ToArray());
+    }
+
+    /// <summary>A nested record with a duplicate or malformed id is caught by the same gate as a
+    /// top-level one — ids are unique across the WHOLE scene, nesting included.</summary>
+    [Fact]
+    public void NestedRecordsShareTheSceneWideIdGate()
+    {
+        var pf = BakeScene.Validate(JsonNode.Parse("""
+            {"meta":{"units":"mm","sourceId":"s","sceneHash":"h"},
+             "elements":[{"id":"p1","kind":"plate","holes":[{"id":"dup"},{"id":"dup"},{"id":" untrimmed "}]}]}
+            """));
+
+        Assert.False(pf.Ok);
+        Assert.Contains(pf.Failed, r => Id(r) == "dup" && Code(r) == "duplicate-id");
+        Assert.Contains(pf.Failed, r => Code(r) == "invalid-id");
+    }
+
+    [Fact]
+    public void ANestedCollectionThatIsNotAnArrayFailsTheBatch()
+    {
+        var pf = BakeScene.Validate(JsonNode.Parse("""
+            {"meta":{"units":"mm","sourceId":"s","sceneHash":"h"},
+             "elements":[{"id":"p1","kind":"plate","holes":{"id":"nope"}}]}
+            """));
+
+        Assert.False(pf.Ok);
+        Assert.Contains(pf.Failed, r => Id(r) == "p1" && Code(r) == "invalid-collection");
+    }
+
     // ── receipt shape ────────────────────────────────────────────────────────
 
     [Fact]

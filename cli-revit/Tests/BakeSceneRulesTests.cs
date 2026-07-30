@@ -299,6 +299,105 @@ public class BakeSceneRulesTests
             (string)parsed.Unsupported.Single(r => (string)r["id"] == "g1")["code"]);
     }
 
+    /// <summary>
+    /// EVERY record the canonical scene carries gets exactly one row — including the ones nested
+    /// inside another record. A bolt instance's hole effects sit TWO levels below the operation and
+    /// used to be absent from all three arrays, which made a connection model unexportable: the
+    /// consumer reconciles the receipt against the scene and refuses a bake that cannot say what
+    /// became of a record (aware-aeco/aware#326). The ids are asserted as a SET, so a future
+    /// collection that is added to the scene and forgotten here fails rather than passing unnoticed.
+    /// </summary>
+    [Fact]
+    public void ParseScene_ClassifiesEveryNestedRecord()
+    {
+        var parsed = AwareBakeRules.ParseScene(Json("""
+        {
+          "meta": { "units": "mm", "sourceId": "s", "sceneHash": "h" },
+          "elements": [
+            { "id": "m1", "from": [0,0,0], "to": [1000,0,0], "meta": { "profile": "W16X50" } },
+            { "id": "p1", "kind": "plate", "holes": [ { "id": "p1-h0" }, { "id": "p1-h1" } ] }
+          ],
+          "operations": [
+            { "id": "ba1", "kind": "bolt-array", "instances": [
+                { "id": "ba1-i0", "holeEffects": [ { "id": "ba1-i0-hp" }, { "id": "ba1-i0-hm" } ] },
+                { "id": "ba1-i1", "holeEffects": [ { "id": "ba1-i1-hp" } ] } ] }
+          ],
+          "referenceSystems": [
+            { "id": "g1", "kind": "structural-grid", "axes": [ { "id": "g1-a" } ], "levels": [ { "id": "g1-l" } ] }
+          ]
+        }
+        """));
+
+        Assert.True(parsed.Ok);
+        var classified = parsed.SupportedOrder.Select(r => r.Id)
+            .Concat(parsed.Unsupported.Select(r => (string)r["id"]))
+            .Concat(parsed.Failed.Select(r => (string)r["id"]))
+            .ToArray();
+        Assert.Equal(classified.Length, classified.Distinct().Count());
+        Assert.Equal(
+            new[] { "ba1", "ba1-i0", "ba1-i0-hm", "ba1-i0-hp", "ba1-i1", "ba1-i1-hp",
+                    "g1", "g1-a", "g1-l", "m1", "p1", "p1-h0", "p1-h1" },
+            classified.OrderBy(x => x, StringComparer.Ordinal).ToArray());
+
+        // The kind is the vocabulary the consumer reconciles against, and it is Tekla's: a hole —
+        // whether it belongs to a plate or to a bolt instance — is an `opening`.
+        foreach (var openingId in new[] { "p1-h0", "p1-h1", "ba1-i0-hp", "ba1-i0-hm", "ba1-i1-hp" })
+        {
+            var row = parsed.Unsupported.Single(r => (string)r["id"] == openingId);
+            Assert.Equal("opening", (string)row["kind"]);
+            Assert.Equal("unsupported-parent", (string)row["code"]);
+        }
+        Assert.Equal("bolt-instance", (string)parsed.Unsupported.Single(r => (string)r["id"] == "ba1-i0")["kind"]);
+        Assert.Equal("grid-axis", (string)parsed.Unsupported.Single(r => (string)r["id"] == "g1-a")["kind"]);
+        Assert.Equal("grid-level", (string)parsed.Unsupported.Single(r => (string)r["id"] == "g1-l")["kind"]);
+    }
+
+    /// <summary>
+    /// The other half of the same contract: a row for an id the scene never declared is as
+    /// unreconcilable as a missing one, so a nested collection is only read off the record family
+    /// that canonically owns it — `holes` off a plate, `instances` off a bolt array, `axes`/`levels`
+    /// off a reference system.
+    /// </summary>
+    [Fact]
+    public void ParseScene_ReadsNestedCollectionsOnlyOffTheKindThatOwnsThem()
+    {
+        var parsed = AwareBakeRules.ParseScene(Json("""
+        {
+          "meta": { "units": "mm", "sourceId": "s", "sceneHash": "h" },
+          "elements": [ { "id": "b1", "kind": "bolt-shank", "holes": [ { "id": "not-a-record" } ] } ],
+          "operations": [ { "id": "w1", "kind": "weld", "instances": [ { "id": "also-not" } ],
+                            "axes": [ { "id": "nor-this" } ] } ],
+          "referenceSystems": [ { "id": "g1", "kind": "structural-grid", "axes": [ { "id": "g1-a" } ] } ]
+        }
+        """));
+
+        Assert.True(parsed.Ok);
+        var classified = parsed.SupportedOrder.Select(r => r.Id)
+            .Concat(parsed.Unsupported.Select(r => (string)r["id"]))
+            .Concat(parsed.Failed.Select(r => (string)r["id"]));
+        Assert.Equal(new[] { "b1", "g1", "g1-a", "w1" },
+            classified.OrderBy(x => x, StringComparer.Ordinal).ToArray());
+    }
+
+    /// <summary>A nested record with a duplicate or malformed id is caught by the same gate as a
+    /// top-level one — ids are unique across the WHOLE scene, nesting included.</summary>
+    [Fact]
+    public void ParseScene_AppliesTheSceneWideIdGateToNestedRecords()
+    {
+        var parsed = AwareBakeRules.ParseScene(Json("""
+        {
+          "meta": { "units": "mm", "sourceId": "s", "sceneHash": "h" },
+          "operations": [
+            { "id": "ba1", "kind": "bolt-array", "instances": [
+                { "id": "i0", "holeEffects": [ { "id": "dup" }, { "id": "dup" } ] } ] }
+          ]
+        }
+        """));
+
+        Assert.False(parsed.Ok);
+        Assert.Contains(parsed.Failed, r => (string)r["id"] == "dup" && (string)r["code"] == "duplicate-id");
+    }
+
     [Fact]
     public void AppendBatchAborted_GivesEverySupportedRecordAVerdict()
     {
