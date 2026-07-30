@@ -550,8 +550,14 @@ internal static class BakeScene
             // model would be a guess dressed as a fact. Say the outcome is unknown, and say what
             // makes it recoverable: a retry under the SAME sourceId reconciles rather than
             // duplicates, because the bake is retire-and-replace on that identity.
+            //
+            // The stale-bridge note belongs HERE too, and not only on the catches: a 0.34.x
+            // watchdog answers at 90s, inside the client's 120s budget, so a stale session
+            // lands in this branch rather than in a timeout — exactly the session the note
+            // exists to diagnose. It is empty unless the session really is behind.
             Console.WriteLine(Receipts.ExecFail(
-                DescribeBridgeFailure(bridgeBody["error"]?.GetValue<string>()),
+                DescribeBridgeFailure(bridgeBody["error"]?.GetValue<string>())
+                + SketchupClient.StaleBridgeNote(inst),
                 bridgeBody["stack"]?.GetValue<string>() ?? "",
                 stdoutLog, inst.Version, inst.Pid, inst.Pid.ToString(), Verb).ToJsonString());
             return 2;
