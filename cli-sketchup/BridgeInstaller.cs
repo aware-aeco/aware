@@ -198,12 +198,60 @@ internal static class BridgeInstaller
     /// BRIDGE_VERSION of the loader actually sitting in SketchUp's Plugins folder —
     /// what the next SketchUp start would load, which is NOT necessarily what this
     /// sidecar ships (upgrading the CLI does not re-run <c>--install-bridge</c>).
-    /// Null when nothing is installed there.
+    /// Null when the year is unknown or nothing is installed there — better to say
+    /// nothing than to compare a 2025 session against the 2026 folder.
     /// </summary>
-    internal static string? InstalledVersion(int targetYear = DefaultTargetYear)
+    internal static string? InstalledVersion(int? targetYear)
     {
-        try { return ReadInstalledVersion(Path.Combine(DefaultPluginsDir(targetYear), LoaderFileName)); }
+        if (targetYear is null) return null;
+        try { return ReadInstalledVersion(Path.Combine(DefaultPluginsDir(targetYear.Value), LoaderFileName)); }
         catch { return null; }
+    }
+
+    /// <summary>
+    /// The SketchUp YEAR a running instance belongs to, from its version string:
+    /// SketchUp numbers its majors by year, so 26.1.189 is SketchUp 2026. Null when
+    /// the version doesn't parse into a plausible year.
+    /// </summary>
+    internal static int? PluginYearForHostVersion(string? hostVersion)
+    {
+        if (string.IsNullOrWhiteSpace(hostVersion)) return null;
+        var dot  = hostVersion!.IndexOf('.');
+        var head = dot < 0 ? hostVersion : hostVersion[..dot];
+        if (!int.TryParse(head, out var major)) return null;
+        var year = 2000 + major;
+        return year is >= 2015 and <= 2099 ? year : null;
+    }
+
+    /// <summary>
+    /// Orders two dotted-number bridge versions (-1/0/1), or null when either side
+    /// isn't one. Direction matters: recommending <c>--install-bridge</c> when the
+    /// INSTALLED bridge is the newer one would overwrite it with an older copy.
+    /// </summary>
+    internal static int? CompareBridgeVersions(string? a, string? b)
+    {
+        var pa = ParseVersion(a);
+        var pb = ParseVersion(b);
+        if (pa is null || pb is null) return null;
+        for (int i = 0; i < Math.Max(pa.Length, pb.Length); i++)
+        {
+            int x = i < pa.Length ? pa[i] : 0;
+            int y = i < pb.Length ? pb[i] : 0;
+            if (x != y) return x < y ? -1 : 1;
+        }
+        return 0;
+    }
+
+    static int[]? ParseVersion(string? v)
+    {
+        if (string.IsNullOrWhiteSpace(v)) return null;
+        var parts = v!.Split('.');
+        var nums = new int[parts.Length];
+        for (int i = 0; i < parts.Length; i++)
+        {
+            if (!int.TryParse(parts[i], out nums[i])) return null;
+        }
+        return nums;
     }
 
     /// <summary>

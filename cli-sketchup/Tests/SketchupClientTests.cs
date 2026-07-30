@@ -176,12 +176,59 @@ public class SketchupClientTests : IDisposable
         var note = SketchupClient.StaleBridgeNote(running, packagedVersion: "0.35.0", installedVersion: "0.34.0");
         Assert.Contains("--install-bridge", note);
         Assert.Contains("restart SketchUp", note);
+    }
 
-        // Even when the session already matches what is installed, a newer packaged
-        // bridge still has to be installed before a restart can help.
-        var inStep = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0");
-        var note2 = SketchupClient.StaleBridgeNote(inStep, packagedVersion: "0.35.0", installedVersion: "0.34.0");
-        Assert.Contains("--install-bridge", note2);
+    [Fact]
+    public void StaleBridgeNote_NeverAdvisesInstallingOverANewerBridge()
+    {
+        // Sidecar rolled back while a newer bridge stayed installed: --install-bridge
+        // would DOWNGRADE it, so the note must not ask for it.
+        var running = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.35.0");
+        var note = SketchupClient.StaleBridgeNote(running, packagedVersion: "0.35.0", installedVersion: "0.36.0");
+        Assert.DoesNotContain("--install-bridge", note);
+        Assert.Contains("restart SketchUp", note);   // 0.36.0 is installed, the session is on 0.35.0
+
+        // …and when the session is already on that newer bridge, there is nothing to say.
+        var current = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.36.0");
+        Assert.Equal("", SketchupClient.StaleBridgeNote(current, packagedVersion: "0.35.0", installedVersion: "0.36.0"));
+    }
+
+    [Fact]
+    public void StaleBridgeNote_DoesNotAssertAFixWhenTheInstalledBridgeIsUnreadable()
+    {
+        // Unknown SketchUp year or a custom --plugins-dir: we cannot see what a restart
+        // would load, so the note names the facts instead of prescribing a cure.
+        var running = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0");
+        var note = SketchupClient.StaleBridgeNote(running, packagedVersion: "0.35.0", installedVersion: "");
+        Assert.Contains("could not be read", note);
+
+        // Session already runs what this sidecar ships → nothing worth saying.
+        var same = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.35.0");
+        Assert.Equal("", SketchupClient.StaleBridgeNote(same, packagedVersion: "0.35.0", installedVersion: ""));
+    }
+
+    [Theory]
+    [InlineData("26.1.189", 2026)]
+    [InlineData("25.0.455", 2025)]
+    [InlineData("", null)]
+    [InlineData("nonsense", null)]
+    [InlineData("3.0", null)]          // implausible year — refuse rather than guess
+    public void PluginYearForHostVersion_MapsSketchupMajorToItsYear(string hostVersion, int? expected)
+    {
+        Assert.Equal(expected, BridgeInstaller.PluginYearForHostVersion(hostVersion));
+    }
+
+    [Fact]
+    public void CompareBridgeVersions_OrdersNumericallyAndRefusesGarbage()
+    {
+        Assert.Equal(1,  BridgeInstaller.CompareBridgeVersions("0.35.0", "0.34.0"));
+        Assert.Equal(-1, BridgeInstaller.CompareBridgeVersions("0.35.0", "0.36.0"));
+        Assert.Equal(0,  BridgeInstaller.CompareBridgeVersions("0.35.0", "0.35"));
+        Assert.Equal(1,  BridgeInstaller.CompareBridgeVersions("0.35.1", "0.35"));
+        // 10 > 9 numerically, which a string compare would get backwards.
+        Assert.Equal(1,  BridgeInstaller.CompareBridgeVersions("0.10.0", "0.9.0"));
+        Assert.Null(BridgeInstaller.CompareBridgeVersions("0.35.0", null));
+        Assert.Null(BridgeInstaller.CompareBridgeVersions("v0.35.0", "0.34.0"));
     }
 
     [Fact]

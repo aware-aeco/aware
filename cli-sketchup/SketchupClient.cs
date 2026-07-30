@@ -278,28 +278,38 @@ internal sealed class SketchupClient
         string? packagedVersion = null,
         string? installedVersion = null)
     {
-        var packaged  = packagedVersion  ?? BridgeInstaller.PackagedVersion();
-        var installed = installedVersion ?? BridgeInstaller.InstalledVersion();
-
-        // A restart loads the INSTALLED loader; fall back to the packaged version only
-        // when we can't read the Plugins folder at all.
-        var wouldLoad = string.IsNullOrEmpty(installed) ? packaged : installed;
-        if (string.IsNullOrEmpty(wouldLoad)) return "";
-
-        var needsInstall = !string.IsNullOrEmpty(packaged)
-                        && !string.IsNullOrEmpty(installed)
-                        && packaged != installed;
-        var needsRestart = inst.BridgeVersion != wouldLoad;
-        if (!needsInstall && !needsRestart) return "";
-
+        var packaged = packagedVersion ?? BridgeInstaller.PackagedVersion();
+        // Read the Plugins folder of the year THIS session belongs to. A 2025 session
+        // compared against the 2026 folder would earn confidently wrong advice.
+        var installed = installedVersion
+                        ?? BridgeInstaller.InstalledVersion(BridgeInstaller.PluginYearForHostVersion(inst.Version));
         var running = inst.BridgeVersion ?? "older than 0.35.0 (it does not report a version)";
         var head = $" — note: SketchUp pid {inst.Pid} is running bridge {running}";
-        if (needsInstall)
+
+        // Installing only helps when the packaged bridge is NEWER than the installed one;
+        // running --install-bridge over a newer installed bridge would downgrade it.
+        var installIsBehind = BridgeInstaller.CompareBridgeVersions(packaged, installed) > 0;
+
+        if (string.IsNullOrEmpty(installed))
+        {
+            // Can't see what a restart would load (unknown year, or a custom --plugins-dir).
+            // Don't assert a fix; name both facts and let the user decide.
+            if (string.IsNullOrEmpty(packaged) || inst.BridgeVersion == packaged) return "";
+            return head + $" and this sidecar ships {packaged}, but the installed bridge could not be"
+                 + " read; run `aware-sketchup --install-bridge` and restart SketchUp if this keeps"
+                 + " failing";
+        }
+
+        if (installIsBehind)
             return head + $", the installed bridge is {installed} and this sidecar ships {packaged}:"
                  + " run `aware-sketchup --install-bridge`, then restart SketchUp — it only loads"
                  + " plugins at startup";
-        return head + $" while {wouldLoad} is installed; SketchUp only loads plugins at startup,"
-             + " so restart SketchUp to pick the installed bridge up";
+
+        if (inst.BridgeVersion != installed)
+            return head + $" while {installed} is installed; SketchUp only loads plugins at startup,"
+                 + " so restart SketchUp to pick the installed bridge up";
+
+        return "";
     }
 
     /// <summary>Peels the AggregateException that Task.Wait wraps everything in.</summary>
