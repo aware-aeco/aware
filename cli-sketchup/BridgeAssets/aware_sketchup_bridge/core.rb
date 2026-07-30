@@ -1,21 +1,31 @@
 # aware_sketchup_bridge/core.rb — the in-process TCP bridge for AWARE.
 #
-# Spec lives in docs/superpowers/specs/2026-05-19-v034-sketchup-exec-design.md.
+# Spec lives in docs/superpowers/specs/2026-05-19-v034-sketchup-exec-design.md,
+# amended by docs/superpowers/specs/2026-07-30-sketchup-bridge-main-thread-pump.md.
 #
 # Architecture
 # ============
-# - Background accept thread binds 127.0.0.1:<first-free-port-in-8765..8865>,
-#   reads length-prefixed JSON request frames, enqueues them onto a thread-
-#   safe Queue.
-# - A UI.start_timer(0.05, true) tick on the SketchUp main thread drains the
-#   queue, evaluates each request against the live document, encodes the
-#   result (or error) as JSON, sends it back to the originating socket.
-# - Why the timer: SketchUp's Ruby API is single-threaded with respect to the
-#   document; calls into Sketchup.active_model.entities.* from a background
-#   thread crash the host. UI.start_timer is Trimble's canonical pattern for
-#   marshaling work onto the main thread.
-# - Discovery: on bind, the bridge writes %TEMP%/aware-sketchup/<pid>.json so
-#   the sidecar can find us. We delete the file at process exit (at_exit).
+# EVERYTHING runs on SketchUp's main thread, inside one repeating UI timer, using
+# non-blocking socket I/O. There are no background threads.
+#
+# - UI.start_timer(0.05, true) { pump } is the whole engine. Each tick accepts
+#   pending connections, drains whatever bytes are readable, evaluates at most
+#   one complete request against the live document, and flushes whatever the
+#   kernel will take of the reply. Anything unfinished resumes on the next tick,
+#   so no socket call can ever block SketchUp's UI.
+# - Why not threads: SketchUp hands the Ruby GVL to a BACKGROUND thread only
+#   about four times a second (measured: a background `sleep 0.01` loop resumes
+#   after ~250 ms). The v0.34 design crossed thread boundaries 5-7 times per
+#   request — accept thread, per-connection worker, main-thread drain, back to
+#   the worker to write and close — so a trivial `1+1` took 5-7 seconds, latency
+#   grew as worker and watchdog threads piled up competing for the same scarce
+#   handoff, and requests eventually always outran the client's patience while
+#   unserviced connections stacked up in CLOSE_WAIT (aware-aeco/aware#330). The
+#   main thread is the one thread SketchUp schedules reliably, and it is the only
+#   thread allowed to touch the model, so it was already on the critical path.
+# - Discovery: on bind, the bridge writes %TEMP%/aware-sketchup/<pid>.json (via a
+#   temp file + rename, so a reader never sees a half-written file) so the
+#   sidecar can find us. We delete it at process exit (at_exit).
 #
 # Wire protocol (request)
 # -----------------------
@@ -27,6 +37,11 @@
 #   <4-byte big-endian length><utf8-json-body>
 # Body: {"ok":true,"result":<json>,"stdout_log":"<captured>"}
 #    or {"ok":false,"error":"<msg>","stack":"<backtrace>","stdout_log":"<captured>"}
+#
+# One request per connection: the bridge answers, then closes. A peer that
+# disconnects before its reply is written is dropped WITHOUT evaluating — a
+# caller that has already given up must not get a surprise mutation it will
+# never see a receipt for.
 
 require 'socket'
 require 'json'
@@ -39,13 +54,38 @@ module AwareSketchupBridge
   module Core
     PORT_MIN = 8765
     PORT_MAX = 8865
-    DRAIN_INTERVAL_SECONDS = 0.05
+    PUMP_INTERVAL_SECONDS = 0.05
+
+    # Protocol/resource ceilings. The bridge only ever talks to a local sidecar,
+    # but the pump runs on SketchUp's UI thread, so every loop it runs is bounded.
+    MAX_FRAME_BYTES        = 64 * 1024 * 1024
+    MAX_LIVE_CONNECTIONS   = 32
+    MAX_ACCEPTS_PER_TICK   = 8
+    READ_CHUNK_BYTES       = 256 * 1024
+    # Per TICK, not per connection: the point of the budget is to bound how long one UI
+    # callback can spend moving bytes, and 32 connections each claiming their own would
+    # be no bound at all.
+    READ_BUDGET_PER_TICK   = 8 * 1024 * 1024
+    WRITE_BUDGET_PER_TICK  = 8 * 1024 * 1024
+    # A connection that makes no progress at all for this long is abandoned.
+    CONNECTION_IDLE_LIMIT_SECONDS = 300
+
+    # One in-flight connection. `outbuf` being non-nil means the request has been
+    # evaluated and we are flushing the reply; until then we are still reading.
+    Conn = Struct.new(:sock, :inbuf, :need, :outbuf, :touched_at, :id)
 
     @started   = false
     @port      = nil
     @server    = nil
-    @accept_th = nil
-    @inbox     = nil
+    @conns     = []
+    @timer_id  = nil
+    @pumping   = false
+    @evaluated_this_tick = false
+    @read_budget  = 0
+    @write_budget = 0
+    @shutdown  = false
+    @served    = 0
+    @accepted  = 0
 
     class << self
       attr_reader :port, :started
@@ -57,7 +97,7 @@ module AwareSketchupBridge
 
         write_diag("start! called at #{Time.now.iso8601} pid=#{Process.pid}")
 
-        @inbox = Queue.new
+        @conns = []
         @port, @server = bind_first_free_port
         if @server.nil?
           write_diag("bind failed in #{PORT_MIN}..#{PORT_MAX}")
@@ -66,18 +106,14 @@ module AwareSketchupBridge
         end
         write_diag("bound port=#{@port}")
 
-        @accept_th = Thread.new { accept_loop(@server, @inbox) }
-        @accept_th.name = 'aware-sketchup-accept' if @accept_th.respond_to?(:name=)
-        write_diag("accept_th started")
-
-        # Main-thread drain pump. UI.start_timer's block runs on the main UI
-        # thread - safe to touch Sketchup.active_model from inside it.
-        UI.start_timer(DRAIN_INTERVAL_SECONDS, true) { drain_inbox }
-        write_diag("UI.start_timer set up")
+        # The whole engine. UI.start_timer's block runs on the main UI thread —
+        # safe to touch Sketchup.active_model from inside it.
+        @timer_id = UI.start_timer(PUMP_INTERVAL_SECONDS, true) { pump }
+        write_diag("pump timer started (id=#{@timer_id.inspect})")
 
         write_discovery_file(@port)
         write_diag("discovery file written to #{discovery_file_path}")
-        at_exit { delete_discovery_file }
+        at_exit { shutdown! }
 
         @started = true
         log "started on 127.0.0.1:#{@port} (pid #{Process.pid})"
@@ -85,10 +121,37 @@ module AwareSketchupBridge
         write_diag("startup CRASHED: #{e.class}: #{e.message}\n#{(e.backtrace || []).join("\n")}")
         warn "[aware-sketchup] startup failed: #{e.class}: #{e.message}"
         warn e.backtrace.join("\n") if e.backtrace
+        # Never leave a half-started bridge holding a port or advertising itself.
+        shutdown!
+      end
+
+      # Idempotent teardown: stop the pump, close everything, unadvertise.
+      def shutdown!
+        return if @shutdown
+
+        @shutdown = true
+        begin
+          UI.stop_timer(@timer_id) if @timer_id && defined?(UI) && UI.respond_to?(:stop_timer)
+        rescue StandardError
+          # Nothing useful to do while the host is going down.
+        end
+        @timer_id = nil
+        (@conns || []).each { |c| close_socket(c.sock) }
+        @conns = []
+        begin
+          @server.close if @server && !@server.closed?
+        rescue StandardError
+          # best-effort
+        end
+        @server = nil
+        delete_discovery_file
+        @started = false
       end
 
       # Diagnostic: writes one line to %TEMP%\aware-sketchup\boot-<pid>.log
-      # regardless of outcome. Helps diagnose silent failures.
+      # regardless of outcome. Helps diagnose silent failures — the readiness
+      # probe (`list-instances`) only reads the discovery file, so this log is
+      # the only place that can show whether requests are actually being served.
       def write_diag(msg)
         dir = discovery_dir
         FileUtils.mkdir_p(dir) rescue nil
@@ -112,122 +175,202 @@ module AwareSketchupBridge
         [nil, nil]
       end
 
-      # --- accept loop (runs on background thread) ---------------------------
+      # --- the pump (main thread, once per timer tick) ------------------------
 
-      def accept_loop(server, inbox)
-        loop do
-          conn = server.accept
-          # One worker thread per connection. Reads the request, enqueues
-          # {conn, request, response_q}, then blocks on response_q for the
-          # main thread to drop a result in.
-          Thread.new(conn) do |sock|
-            handle_one(sock, inbox)
-          end
-        end
-      rescue IOError, Errno::EBADF
-        # Server socket closed - graceful exit.
-      rescue StandardError => e
-        warn "[aware-sketchup] accept loop crashed: #{e.class}: #{e.message}"
-      end
+      # SketchUp pumps its own message loop during long model operations, so this
+      # timer can fire again while a bake is still running inside it. Without the
+      # guard the same buffered frame could be serviced twice — a duplicated bake.
+      #
+      # The guard is cleared ONLY by the invocation that set it: the early return
+      # deliberately sits outside the begin/ensure, because a nested tick running
+      # the ensure would drop the guard while the outer tick is still inside
+      # service_connections (mutating @conns during its own delete_if).
+      def pump
+        return if @pumping
 
-      def handle_one(sock, inbox)
+        @pumping = true
         begin
-          request = read_frame(sock)
+          @evaluated_this_tick = false
+          @read_budget  = READ_BUDGET_PER_TICK
+          @write_budget = WRITE_BUDGET_PER_TICK
+          now = monotonic
+          accept_pending(now)
+          service_connections(now)
         rescue StandardError => e
-          warn "[aware-sketchup] read_frame failed: #{e.message}"
-          sock.close rescue nil
-          return
+          write_diag("pump error: #{e.class}: #{e.message}")
+          warn "[aware-sketchup] pump error: #{e.class}: #{e.message}"
+        ensure
+          @pumping = false
         end
+      end
 
-        response_q = Queue.new
-        inbox << { conn: sock, request: request, response_q: response_q }
+      def accept_pending(now)
+        MAX_ACCEPTS_PER_TICK.times do
+          sock = @server.accept_nonblock(exception: false)
+          break if sock.nil? || sock == :wait_readable
 
-        # Block until the main thread fulfils the response. 90s ceiling so we
-        # don't leak threads forever if the user code somehow never returns.
-        watchdog = Thread.new do
-          sleep(90)
-          begin
-            response_q << { 'ok' => false, 'error' => 'main-thread eval timed out after 90s', 'stack' => '', 'stdout_log' => '' }
-          rescue ClosedQueueError
-            # Queue may have been closed/drained already.
+          if @conns.size >= MAX_LIVE_CONNECTIONS
+            # Refuse rather than grow without bound; the sidecar retries.
+            write_diag("refused connection: #{@conns.size} already live")
+            close_socket(sock)
+            next
           end
-        end
-        result = response_q.pop
-        watchdog.kill rescue nil
-        send_frame(sock, result.to_json)
-      rescue StandardError => e
-        warn "[aware-sketchup] handle_one error: #{e.class}: #{e.message}"
-      ensure
-        sock.close rescue nil
-      end
 
-      # --- frame I/O (length-prefixed JSON) ----------------------------------
-
-      def read_frame(sock)
-        header = read_exactly(sock, 4)
-        len    = header.unpack1('N')
-        raise 'absurd length' if len.negative? || len > 64 * 1024 * 1024
-        body = read_exactly(sock, len)
-        JSON.parse(body)
-      end
-
-      def send_frame(sock, json_str)
-        body = json_str.encode('utf-8')
-        header = [body.bytesize].pack('N')
-        sock.write(header)
-        sock.write(body)
-        sock.flush
-      end
-
-      def read_exactly(sock, count)
-        buf = String.new(capacity: count)
-        while buf.bytesize < count
-          chunk = sock.read(count - buf.bytesize)
-          raise EOFError, "stream closed after #{buf.bytesize}/#{count}" if chunk.nil?
-          buf << chunk
-        end
-        buf
-      end
-
-      # --- main-thread drain -------------------------------------------------
-
-      def drain_inbox
-        # Pull every pending request and process inline on the main thread.
-        until @inbox.empty?
-          begin
-            msg = @inbox.pop(true)  # non-blocking
-          rescue ThreadError
-            break  # queue drained between empty? and pop
-          end
-          process_one(msg)
+          @accepted += 1
+          sock.sync = true if sock.respond_to?(:sync=)
+          @conns << Conn.new(sock, String.new, nil, nil, now, @accepted)
         end
       rescue StandardError => e
-        warn "[aware-sketchup] drain crashed: #{e.class}: #{e.message}"
+        write_diag("accept error: #{e.class}: #{e.message}")
       end
 
-      def process_one(msg)
-        req = msg[:request] || {}
+      def service_connections(now)
+        @conns.delete_if do |c|
+          begin
+            service(c, now)
+          rescue StandardError => e
+            write_diag("conn ##{c.id} dropped: #{e.class}: #{e.message}")
+            close_socket(c.sock)
+            true
+          end
+        end
+      end
+
+      # One connection, one tick. Returns true when the connection is finished
+      # (socket closed) and should be forgotten.
+      def service(c, now)
+        # Covers both phases: a peer that never finishes sending and one that
+        # never reads its reply both eventually get dropped.
+        if now - c.touched_at > CONNECTION_IDLE_LIMIT_SECONDS
+          write_diag("conn ##{c.id} made no progress for #{CONNECTION_IDLE_LIMIT_SECONDS}s; dropping")
+          close_socket(c.sock)
+          return true
+        end
+
+        return flush(c, now) unless c.outbuf.nil?
+
+        if drain_reads(c, now) == :closed
+          # Peer went away mid-request: nothing to answer, nothing to run.
+          write_diag("conn ##{c.id} closed by peer before a reply was due")
+          close_socket(c.sock)
+          return true
+        end
+
+        # At most one user script per tick: a burst of queued requests must not
+        # chain several evaluations into a single UI callback. Checked BEFORE
+        # take_frame so the frame stays buffered for the next tick.
+        return false if @evaluated_this_tick
+
+        frame = take_frame(c)
+        return false if frame.nil?
+
+        @evaluated_this_tick = true
+        started_at = monotonic
+        response   = process_frame(frame)
+        c.outbuf   = encode_frame(response)
+        c.touched_at = monotonic
+        @served += 1
+        write_diag(format('served #%d conn #%d in=%dB out=%dB %.0fms',
+                          @served, c.id, frame.bytesize, c.outbuf.bytesize,
+                          (monotonic - started_at) * 1000))
+        flush(c, monotonic)
+      end
+
+      # Pulls whatever the kernel already has, out of the tick's shared read budget, so a
+      # huge payload — or many connections — can't monopolise one UI callback. Returns
+      # :closed on EOF, :wait otherwise (including "out of budget, resume next tick").
+      def drain_reads(c, now)
+        while @read_budget.positive?
+          chunk = c.sock.read_nonblock(READ_CHUNK_BYTES, exception: false)
+          return :wait   if chunk == :wait_readable
+          return :closed if chunk.nil?
+
+          c.inbuf << chunk
+          c.touched_at = now
+          @read_budget -= chunk.bytesize
+        end
+        :wait
+      end
+
+      # Returns a complete request body, or nil while one is still arriving.
+      def take_frame(c)
+        if c.need.nil?
+          return nil if c.inbuf.bytesize < 4
+
+          len = c.inbuf.byteslice(0, 4).unpack1('N')
+          raise "absurd frame length: #{len}" if len.nil? || len > MAX_FRAME_BYTES
+
+          c.need  = len
+          c.inbuf = c.inbuf.byteslice(4, c.inbuf.bytesize - 4)
+        end
+        return nil if c.inbuf.bytesize < c.need
+
+        body    = c.inbuf.byteslice(0, c.need)
+        c.inbuf = c.inbuf.byteslice(c.need, c.inbuf.bytesize - c.need)
+        c.need  = nil
+        body
+      end
+
+      # Hands the reply to the kernel a piece at a time, out of the tick's shared write
+      # budget — a reply is not size-capped, and an eagerly-reading client would otherwise
+      # let one callback push the whole thing. Returns true once the whole reply is out and
+      # the socket is closed, false to resume next tick.
+      def flush(c, now)
+        until c.outbuf.empty?
+          return false unless @write_budget.positive?
+
+          written = c.sock.write_nonblock(c.outbuf, exception: false)
+          return false if written == :wait_writable
+          raise "write_nonblock returned #{written.inspect}" unless written.is_a?(Integer) && written.positive?
+
+          c.outbuf = c.outbuf.byteslice(written, c.outbuf.bytesize - written)
+          # One socket-buffer of overshoot at most: the budget is checked per call, not
+          # sliced into the payload, so we never copy the reply just to bound it.
+          @write_budget -= written
+          c.touched_at = now
+        end
+        close_socket(c.sock)
+        true
+      end
+
+      # --- request handling (main thread) ------------------------------------
+
+      def process_frame(body)
+        req = JSON.parse(body)
+        req = {} unless req.is_a?(Hash)
         case req['type']
         when 'exec'
-          response = run_user_script(req['code'].to_s, req['args'] || {})
+          run_user_script(req['code'].to_s, req['args'].is_a?(Hash) ? req['args'] : {})
         when 'ping'
-          response = { 'ok' => true, 'result' => 'pong', 'stdout_log' => '' }
+          { 'ok' => true, 'result' => 'pong', 'stdout_log' => '' }
         else
-          response = {
+          {
             'ok'    => false,
             'error' => "unknown request type: #{req['type'].inspect}",
             'stack' => '',
             'stdout_log' => '',
           }
         end
-        msg[:response_q] << response
+      rescue JSON::ParserError => e
+        { 'ok' => false, 'error' => "malformed request JSON: #{e.message}", 'stack' => '', 'stdout_log' => '' }
       rescue StandardError => e
-        msg[:response_q] << {
+        {
           'ok' => false,
-          'error' => "process_one crashed: #{e.class}: #{e.message}",
-          'stack' => (e.backtrace || []).join("\n"),
+          'error' => "bridge failed handling request: #{e.class}: #{e.message}",
+          'stack' => (e.backtrace || []).first(50).join("\n"),
           'stdout_log' => '',
         }
+      end
+
+      # Length-prefixed reply bytes. Falls back to a minimal error frame if the
+      # response itself can't be serialized, so the caller always gets an answer.
+      def encode_frame(response)
+        body = response.to_json.encode('utf-8').b
+        [body.bytesize].pack('N') + body
+      rescue StandardError => e
+        fallback = { 'ok' => false, 'error' => "bridge could not encode its response: #{e.class}: #{e.message}",
+                     'stack' => '', 'stdout_log' => '' }.to_json.b
+        [fallback.bytesize].pack('N') + fallback
       end
 
       # --- user-script wrapper ----------------------------------------------
@@ -345,13 +488,19 @@ module AwareSketchupBridge
         dir = discovery_dir
         FileUtils.mkdir_p(dir)
         payload = {
-          'pid'        => Process.pid,
-          'port'       => port,
-          'version'    => sketchup_version,
-          'model_path' => safe_active_model_path,
-          'started_at' => Time.now.utc.iso8601,
+          'pid'            => Process.pid,
+          'port'           => port,
+          'version'        => sketchup_version,
+          'bridge_version' => bridge_version,
+          'bridge_loader'  => loader_path,
+          'model_path'     => safe_active_model_path,
+          'started_at'     => Time.now.utc.iso8601,
         }
-        File.open(discovery_file_path, 'w') { |f| f.write(JSON.pretty_generate(payload)) }
+        # Write-then-rename: the sidecar DELETES any discovery file it fails to
+        # parse, so it must never be able to catch this one half-written.
+        tmp = "#{discovery_file_path}.tmp-#{Process.pid}"
+        File.open(tmp, 'w') { |f| f.write(JSON.pretty_generate(payload)) }
+        File.rename(tmp, discovery_file_path)
       end
 
       def delete_discovery_file
@@ -383,7 +532,47 @@ module AwareSketchupBridge
         path.to_s.empty? ? nil : path.to_s
       end
 
-      # --- small utility ----------------------------------------------------
+      # The loader defines BRIDGE_VERSION; report it so the sidecar can tell a
+      # RUNNING bridge from the one installed on disk (a session keeps whatever
+      # it loaded at startup until SketchUp restarts).
+      def bridge_version
+        defined?(AwareSketchupBridge::BRIDGE_VERSION) ? AwareSketchupBridge::BRIDGE_VERSION.to_s : 'unknown'
+      end
+
+      # The loader file THIS session actually loaded. SketchUp can be pointed at a
+      # non-default Plugins folder (`--install-bridge --plugins-dir …`), so the sidecar
+      # must not have to guess where to look when it wants to know what a restart would
+      # load. core.rb sits in <plugins>/aware_sketchup_bridge/, the loader beside it.
+      def loader_path
+        File.expand_path(File.join(File.dirname(File.dirname(__FILE__)), 'aware_sketchup_bridge.rb'))
+      rescue StandardError
+        nil
+      end
+
+      # --- small utilities ---------------------------------------------------
+
+      def monotonic
+        Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      end
+
+      def close_socket(sock)
+        return if sock.nil?
+
+        # Drain anything still unread: closing a socket with unread inbound data
+        # can produce an abortive reset on Windows, which would eat the reply we
+        # just wrote.
+        begin
+          8.times do
+            chunk = sock.read_nonblock(READ_CHUNK_BYTES, exception: false)
+            break if chunk.nil? || chunk == :wait_readable
+          end
+        rescue StandardError
+          # already broken; closing is all that's left
+        end
+        sock.close
+      rescue StandardError
+        # best-effort
+      end
 
       def log(msg)
         puts "[aware-sketchup] #{msg}"

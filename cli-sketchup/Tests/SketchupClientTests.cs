@@ -123,6 +123,178 @@ public class SketchupClientTests : IDisposable
             "{\"pid\":1,\"port\":8765,\"version\":\"26.0\"}");
         Assert.NotNull(inst);
         Assert.Null(inst!.ModelPath);
+        // A pre-0.35.0 bridge advertises no version — that must parse, not fail.
+        Assert.Null(inst.BridgeVersion);
+    }
+
+    [Fact]
+    public void ParseDiscoveryFile_ReadsBridgeVersionAndLoaderPath()
+    {
+        var inst = SketchupClient.ParseDiscoveryFile(
+            "{\"pid\":1,\"port\":8765,\"version\":\"26.0\",\"bridge_version\":\"0.35.0\","
+            + "\"bridge_loader\":\"C:/custom/Plugins/aware_sketchup_bridge.rb\"}");
+        Assert.NotNull(inst);
+        Assert.Equal("0.35.0", inst!.BridgeVersion);
+        Assert.Equal("C:/custom/Plugins/aware_sketchup_bridge.rb", inst.BridgeLoaderPath);
+
+        // An empty string is "not reported", not a version.
+        var blank = SketchupClient.ParseDiscoveryFile(
+            "{\"pid\":1,\"port\":8765,\"version\":\"26.0\",\"bridge_version\":\"\",\"bridge_loader\":\"\"}");
+        Assert.NotNull(blank);
+        Assert.Null(blank!.BridgeVersion);
+        Assert.Null(blank.BridgeLoaderPath);
+    }
+
+    [Fact]
+    public void StaleBridgeNote_NamesTheLoaderTheSessionActuallyLoaded()
+    {
+        // A session installed with --plugins-dir advertises its own loader path, so the
+        // advice points at THAT file rather than the default year folder.
+        var custom = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0",
+                                          @"D:\custom\Plugins\aware_sketchup_bridge.rb");
+        var note = SketchupClient.StaleBridgeNote(custom, packagedVersion: "0.35.0", installedVersion: "0.35.0");
+        Assert.Contains(@"D:\custom\Plugins\aware_sketchup_bridge.rb", note);
+        Assert.Contains("restart SketchUp", note);
+    }
+
+    [Fact]
+    public void StaleBridgeNote_InstallCommandTargetsTheSessionsOwnPluginsFolder()
+    {
+        // Installing into the DEFAULT folder would leave the custom loader stale, so the
+        // restart would reload the same old bridge. The command has to name the folder.
+        var custom = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0",
+                                          @"D:\custom\Plugins\aware_sketchup_bridge.rb");
+        var note = SketchupClient.StaleBridgeNote(custom, packagedVersion: "0.35.0", installedVersion: "0.34.0");
+        Assert.Contains(@"--plugins-dir ""D:\custom\Plugins""", note);
+
+        // A default-folder session keeps the plain command.
+        var standard = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0");
+        var plain = SketchupClient.StaleBridgeNote(standard, packagedVersion: "0.35.0", installedVersion: "0.34.0");
+        Assert.Contains("`aware-sketchup --install-bridge`", plain);
+        Assert.DoesNotContain("--plugins-dir", plain);
+    }
+
+    [Fact]
+    public void StaleBridgeNote_SilentWhenEverythingIsInStep()
+    {
+        var inst = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.35.0");
+        Assert.Equal("", SketchupClient.StaleBridgeNote(inst, packagedVersion: "0.35.0", installedVersion: "0.35.0"));
+        // Nothing readable to compare against → say nothing rather than guess.
+        Assert.Equal("", SketchupClient.StaleBridgeNote(inst, packagedVersion: "", installedVersion: ""));
+    }
+
+    [Fact]
+    public void StaleBridgeNote_TellsUserToRestartWhenOnlyTheSessionIsStale()
+    {
+        var older = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0");
+        var note = SketchupClient.StaleBridgeNote(older, packagedVersion: "0.35.0", installedVersion: "0.35.0");
+        Assert.Contains("0.34.0", note);
+        Assert.Contains("restart SketchUp", note);
+        Assert.DoesNotContain("--install-bridge", note);
+
+        // A session from before bridge_version existed is stale in the same way.
+        var unversioned = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, null);
+        var legacyNote = SketchupClient.StaleBridgeNote(unversioned, packagedVersion: "0.35.0", installedVersion: "0.35.0");
+        Assert.Contains("older than 0.35.0", legacyNote);
+        Assert.Contains("restart SketchUp", legacyNote);
+    }
+
+    [Fact]
+    public void StaleBridgeNote_SaysInstallFirstWhenThePluginsFolderIsAlsoBehind()
+    {
+        // Upgrading the CLI does not re-run --install-bridge, so restarting alone would
+        // reload the SAME stale bridge. Saying "just restart" there is wrong advice.
+        var running = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0");
+        var note = SketchupClient.StaleBridgeNote(running, packagedVersion: "0.35.0", installedVersion: "0.34.0");
+        Assert.Contains("--install-bridge", note);
+        Assert.Contains("restart SketchUp", note);
+    }
+
+    [Fact]
+    public void StaleBridgeNote_NeverAdvisesInstallingOverANewerBridge()
+    {
+        // Sidecar rolled back while a newer bridge stayed installed: --install-bridge
+        // would DOWNGRADE it, so the note must not ask for it.
+        var running = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.35.0");
+        var note = SketchupClient.StaleBridgeNote(running, packagedVersion: "0.35.0", installedVersion: "0.36.0");
+        Assert.DoesNotContain("--install-bridge", note);
+        Assert.Contains("restart SketchUp", note);   // 0.36.0 is installed, the session is on 0.35.0
+
+        // …and when the session is already on that newer bridge, there is nothing to say.
+        var current = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.36.0");
+        Assert.Equal("", SketchupClient.StaleBridgeNote(current, packagedVersion: "0.35.0", installedVersion: "0.36.0"));
+    }
+
+    [Fact]
+    public void StaleBridgeNote_DoesNotAssertAFixWhenTheInstalledBridgeIsUnreadable()
+    {
+        // Unknown SketchUp year or a custom --plugins-dir: we cannot see what a restart
+        // would load, so the note names the facts instead of prescribing a cure.
+        var running = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0");
+        var note = SketchupClient.StaleBridgeNote(running, packagedVersion: "0.35.0", installedVersion: "");
+        Assert.Contains("could not be read", note);
+
+        // Session already runs what this sidecar ships → nothing worth saying.
+        var same = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.35.0");
+        Assert.Equal("", SketchupClient.StaleBridgeNote(same, packagedVersion: "0.35.0", installedVersion: ""));
+
+        // Running bridge NEWER than the packaged one (sidecar rolled back) → suggesting an
+        // install here would downgrade the session's bridge. Say nothing.
+        var newer = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.36.0");
+        Assert.Equal("", SketchupClient.StaleBridgeNote(newer, packagedVersion: "0.35.0", installedVersion: ""));
+    }
+
+    [Fact]
+    public void StaleBridgeNote_NeverAdvisesAnythingThatWouldDowngradeTheSession()
+    {
+        // Running 0.36.0, installed 0.34.0, packaged 0.35.0: installing + restarting would
+        // drop the session from 0.36.0 to 0.35.0. Nothing on offer is an upgrade → silence.
+        var ahead = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.36.0");
+        Assert.Equal("", SketchupClient.StaleBridgeNote(ahead, packagedVersion: "0.35.0", installedVersion: "0.34.0"));
+
+        // Same versions, an OLDER session: now the advice really is an upgrade.
+        var behind = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.33.0");
+        var note = SketchupClient.StaleBridgeNote(behind, packagedVersion: "0.35.0", installedVersion: "0.34.0");
+        Assert.Contains("--install-bridge", note);
+    }
+
+    [Theory]
+    [InlineData("26.1.189", 2026)]
+    [InlineData("25.0.455", 2025)]
+    [InlineData("", null)]
+    [InlineData("nonsense", null)]
+    [InlineData("3.0", null)]          // implausible year — refuse rather than guess
+    public void PluginYearForHostVersion_MapsSketchupMajorToItsYear(string hostVersion, int? expected)
+    {
+        Assert.Equal(expected, BridgeInstaller.PluginYearForHostVersion(hostVersion));
+    }
+
+    [Fact]
+    public void CompareBridgeVersions_OrdersNumericallyAndRefusesGarbage()
+    {
+        Assert.Equal(1,  BridgeInstaller.CompareBridgeVersions("0.35.0", "0.34.0"));
+        Assert.Equal(-1, BridgeInstaller.CompareBridgeVersions("0.35.0", "0.36.0"));
+        Assert.Equal(0,  BridgeInstaller.CompareBridgeVersions("0.35.0", "0.35"));
+        Assert.Equal(1,  BridgeInstaller.CompareBridgeVersions("0.35.1", "0.35"));
+        // 10 > 9 numerically, which a string compare would get backwards.
+        Assert.Equal(1,  BridgeInstaller.CompareBridgeVersions("0.10.0", "0.9.0"));
+        Assert.Null(BridgeInstaller.CompareBridgeVersions("0.35.0", null));
+        Assert.Null(BridgeInstaller.CompareBridgeVersions("v0.35.0", "0.34.0"));
+    }
+
+    [Fact]
+    public void SendRequest_UnreachablePort_ReportsTheRequestWasNeverDelivered()
+    {
+        // Bind and immediately release a port so nothing is listening on it.
+        var probe = new TcpListener(IPAddress.Loopback, 0);
+        probe.Start();
+        var deadPort = ((IPEndPoint)probe.LocalEndpoint).Port;
+        probe.Stop();
+
+        var c = new SketchupClient(_discoveryDir, pidAlive: _ => true);
+        var ex = Assert.Throws<BridgeRequestNotDeliveredException>(
+            () => c.SendRequest(deadPort, new JsonObject { ["type"] = "ping" }, timeoutMs: 2_000));
+        Assert.Contains($"{deadPort}", ex.Message);
     }
 
     [Fact]

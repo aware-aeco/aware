@@ -29,11 +29,25 @@ internal static class BakeScene
     public const string Verb = "bake-scene";
 
     /// <summary>
-    /// The bridge's own main-thread watchdog answers at 90s, so the sidecar waits
-    /// longer than that on purpose: a slow bake should come back as the bridge's
-    /// clean timeout receipt, not as a socket the sidecar gave up on.
+    /// A bake runs inline on SketchUp's main thread and a big scene legitimately
+    /// takes a while, so the sidecar waits two minutes before giving up on the
+    /// socket. Since bridge 0.35.0 this is the ONLY timeout in play — the bridge's
+    /// old 90s watchdog is gone (it answered from a background thread it could not
+    /// use to stop the script, so it only ever released the caller early).
     /// </summary>
     public const int DefaultTimeoutMs = 120_000;
+
+    /// <summary>
+    /// What to say when the bake may or may not have landed. A timeout does not mean
+    /// nothing happened: the materializer runs on SketchUp's main thread and cannot be
+    /// interrupted, so it may reach commit_operation after the caller has given up.
+    /// Reporting a plain failure would assert an untouched model we have not checked.
+    /// </summary>
+    internal const string UnknownOutcomeGuidance =
+        " — the materializer may still be running on SketchUp's main thread, so the model may"
+        + " or may not have received this bake. Check the model before deciding; re-running the"
+        + " SAME scene under the same sourceId reconciles it (retire-and-replace) rather than"
+        + " inserting a second copy.";
 
     public const double MillimetresPerInch = 25.4;
 
@@ -382,12 +396,10 @@ internal static class BakeScene
     /// Turn a bridge-level failure into an honest sentence.
     ///
     /// Most bridge faults mean the bake's rescue already ran abort_operation and the model is
-    /// intact. A WATCHDOG TIMEOUT does not: that answer comes from the bridge's own thread while
-    /// the materializer is still running on SketchUp's main thread, which the bridge cannot
-    /// interrupt, so the script may reach commit_operation after the reply. Reporting a plain
-    /// failure there would assert an untouched model we have not checked. Say it is unknown, and
-    /// say what makes it recoverable — a retry under the same sourceId reconciles rather than
-    /// duplicates, because the bake is retire-and-replace on that identity.
+    /// intact. A TIMEOUT answer does not — see <see cref="UnknownOutcomeGuidance"/>. Bridge 0.35.0
+    /// no longer produces one (its watchdog is gone), but a SketchUp session that started before
+    /// the fixed bridge was installed is still running 0.34.x and can still answer this way, so the
+    /// branch stays.
     /// </summary>
     internal static string DescribeBridgeFailure(string? bridgeError)
     {
@@ -398,11 +410,7 @@ internal static class BakeScene
                     || error.Contains("timed out", StringComparison.OrdinalIgnoreCase)
                     || error.Contains("watchdog", StringComparison.OrdinalIgnoreCase);
         if (!timedOut) return error;
-        return error
-            + " — the materializer may still be running on SketchUp's main thread, so the model may"
-            + " or may not have received this bake. Check the model before deciding; re-running the"
-            + " SAME scene under the same sourceId reconciles it (retire-and-replace) rather than"
-            + " inserting a second copy.";
+        return error + UnknownOutcomeGuidance;
     }
 
     public static int Run(JsonNode? input, SketchupClient? clientOverride = null, int timeoutMs = DefaultTimeoutMs)
@@ -489,17 +497,33 @@ internal static class BakeScene
 
         JsonNode response;
         try { response = client.SendRequest(inst.Port, request, timeoutMs); }
+        catch (BridgeRequestNotDeliveredException nd)
+        {
+            // No connection was ever made, so the model is untouched — say so plainly
+            // rather than hedging with the unknown-outcome guidance. Every failure from
+            // the write onwards stays ambiguous and falls to the catches below.
+            Console.WriteLine(Receipts.ExecFail(
+                $"{nd.Message} — the scene never reached SketchUp, so the model is unchanged"
+                + SketchupClient.StaleBridgeNote(inst),
+                "", "", inst.Version, inst.Pid, inst.Pid.ToString(), Verb).ToJsonString());
+            return 2;
+        }
         catch (TimeoutException te)
         {
+            // The request WAS fully handed over, so the bake may be running right now.
             Console.WriteLine(Receipts.ExecFail(
-                $"timeout talking to SketchUp bridge on port {inst.Port}: {te.Message}",
+                $"timeout talking to SketchUp bridge on port {inst.Port}: {te.Message}"
+                + UnknownOutcomeGuidance + SketchupClient.StaleBridgeNote(inst),
                 "", "", inst.Version, inst.Pid, inst.Pid.ToString(), Verb).ToJsonString());
             return 2;
         }
         catch (Exception e)
         {
+            // Same ambiguity: the request went out, then the socket broke while we waited,
+            // and we cannot see whether the bridge had started materializing the scene.
             Console.WriteLine(Receipts.ExecFail(
-                $"bridge I/O failed (port {inst.Port}, pid {inst.Pid}): {e.Message}",
+                $"bridge I/O failed (port {inst.Port}, pid {inst.Pid}): {e.Message}"
+                + UnknownOutcomeGuidance + SketchupClient.StaleBridgeNote(inst),
                 e.StackTrace ?? "", "", inst.Version, inst.Pid, inst.Pid.ToString(), Verb).ToJsonString());
             return 2;
         }
@@ -526,8 +550,14 @@ internal static class BakeScene
             // model would be a guess dressed as a fact. Say the outcome is unknown, and say what
             // makes it recoverable: a retry under the SAME sourceId reconciles rather than
             // duplicates, because the bake is retire-and-replace on that identity.
+            //
+            // The stale-bridge note belongs HERE too, and not only on the catches: a 0.34.x
+            // watchdog answers at 90s, inside the client's 120s budget, so a stale session
+            // lands in this branch rather than in a timeout — exactly the session the note
+            // exists to diagnose. It is empty unless the session really is behind.
             Console.WriteLine(Receipts.ExecFail(
-                DescribeBridgeFailure(bridgeBody["error"]?.GetValue<string>()),
+                DescribeBridgeFailure(bridgeBody["error"]?.GetValue<string>())
+                + SketchupClient.StaleBridgeNote(inst),
                 bridgeBody["stack"]?.GetValue<string>() ?? "",
                 stdoutLog, inst.Version, inst.Pid, inst.Pid.ToString(), Verb).ToJsonString());
             return 2;

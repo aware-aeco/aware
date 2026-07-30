@@ -53,14 +53,16 @@ internal static class Exec
         catch (TimeoutException te)
         {
             Console.WriteLine(Receipts.ExecFail(
-                $"timeout talking to SketchUp bridge on port {inst.Port}: {te.Message}",
+                $"timeout talking to SketchUp bridge on port {inst.Port}: {te.Message}"
+                + SketchupClient.StaleBridgeNote(inst),
                 "", "", inst.Version, inst.Pid, inst.Pid.ToString()).ToJsonString());
             return 2;
         }
         catch (Exception e)
         {
             Console.WriteLine(Receipts.ExecFail(
-                $"bridge I/O failed (port {inst.Port}, pid {inst.Pid}): {e.Message}",
+                $"bridge I/O failed (port {inst.Port}, pid {inst.Pid}): {e.Message}"
+                + SketchupClient.StaleBridgeNote(inst),
                 e.StackTrace ?? "", "", inst.Version, inst.Pid, inst.Pid.ToString()).ToJsonString());
             return 2;
         }

@@ -148,7 +148,12 @@ public class BridgeInstallerTests : IDisposable
         Assert.Contains("\"loader_present\":true", json);
         Assert.Contains("\"support_present\":true", json);
         Assert.Contains("\"up_to_date\":true", json);
-        Assert.Contains("\"installed_version\":\"0.34.0\"", json);
+        // Pin the installed version to whatever the packaged loader says rather than a
+        // literal: the version is meant to move when the bridge changes, and a hardcoded
+        // copy just turns a deliberate bump into a red test.
+        var packaged = BridgeInstaller.PackagedVersion();
+        Assert.False(string.IsNullOrEmpty(packaged));
+        Assert.Contains($"\"installed_version\":\"{packaged}\"", json);
     }
 
     [Fact]

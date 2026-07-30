@@ -17,11 +17,15 @@ internal static class ListInstances
         {
             reshaped.Add(new JsonObject
             {
-                ["pid"]          = inst.Pid,
-                ["version"]      = inst.Version,
-                ["port"]         = inst.Port,
-                ["model_path"]   = inst.ModelPath,
-                ["sketchup_id"]  = inst.Pid.ToString(),
+                ["pid"]            = inst.Pid,
+                ["version"]        = inst.Version,
+                ["port"]           = inst.Port,
+                ["model_path"]     = inst.ModelPath,
+                ["sketchup_id"]    = inst.Pid.ToString(),
+                // The bridge RUNNING in that session — null when it predates 0.35.0.
+                // A session keeps the bridge it loaded at startup, so this is the only
+                // way to tell a stale session from one running the installed bridge.
+                ["bridge_version"] = inst.BridgeVersion,
             });
         }
         Console.WriteLine(Receipts.ListOk(reshaped).ToJsonString());
