@@ -298,54 +298,59 @@ internal sealed class SketchupClient
     {
         var packaged = packagedVersion ?? BridgeInstaller.PackagedVersion();
 
-        // The loader THIS session actually loaded (bridge 0.35.0+ advertises its path, so a
-        // custom --plugins-dir is exact). When it is advertised, that file is the ONLY
-        // truth: falling back to the default folder would label an unrelated version with
-        // the custom path. Only a session that advertises nothing gets the fallback — and
-        // then from the Plugins folder of its OWN year, never the default year.
+        // Which loader file we judge by. A 0.35.0+ session advertises the one it actually
+        // loaded, so a custom --plugins-dir is exact; older sessions only leave us the
+        // default folder of their OWN year (never the default year), and we NAME whatever
+        // we inspected so a user who installed elsewhere can see we looked in the wrong place.
         var advertised = string.IsNullOrEmpty(inst.BridgeLoaderPath) ? null : inst.BridgeLoaderPath;
-        var installed = installedVersion ?? (advertised is not null
-            ? BridgeInstaller.ReadInstalledVersion(advertised)
-            : BridgeInstaller.InstalledVersion(BridgeInstaller.PluginYearForHostVersion(inst.Version)));
+        var loaderPath = advertised
+                         ?? BridgeInstaller.LoaderPathForYear(BridgeInstaller.PluginYearForHostVersion(inst.Version));
+        var installed = installedVersion ?? BridgeInstaller.ReadInstalledVersion(loaderPath ?? "");
+        if (string.IsNullOrEmpty(installed)) installed = null;
+
+        // What the session would end up running if the user followed the advice, and whether
+        // getting there needs an install as well as a restart. Installing only helps when the
+        // packaged bridge really supersedes the installed one — otherwise --install-bridge
+        // would overwrite a newer installed bridge with an older copy.
+        string? target;
+        bool adviseInstall;
+        if (installed is null)                                                   { target = packaged;  adviseInstall = true;  }
+        else if (BridgeInstaller.CompareBridgeVersions(packaged, installed) > 0) { target = packaged;  adviseInstall = true;  }
+        else                                                                     { target = installed; adviseInstall = false; }
+        if (string.IsNullOrEmpty(target)) return "";
+
+        // Never advise anything that would leave the session on an OLDER bridge than it is
+        // already running. A session with no reported version predates 0.35.0, so anything
+        // we could offer is an upgrade.
+        var isUpgrade = inst.BridgeVersion is null
+                        || BridgeInstaller.CompareBridgeVersions(target, inst.BridgeVersion) > 0;
+        if (!isUpgrade) return "";
 
         var running = inst.BridgeVersion ?? "older than 0.35.0 (it does not report a version)";
-        var where = advertised is null ? "" : $" ({advertised})";
+        var where = loaderPath is null ? "" : $" ({loaderPath})";
         // Installing has to target the folder this session loads from, or the user updates
-        // the default folder and restarts into the same stale bridge.
-        var installDir = advertised is null ? null : Path.GetDirectoryName(advertised);
+        // the default folder and restarts into the same stale bridge. Only spell that out
+        // when it ISN'T the default folder — the flag is noise in the common case.
+        var defaultLoader = BridgeInstaller.LoaderPathForYear(BridgeInstaller.PluginYearForHostVersion(inst.Version));
+        var custom = loaderPath is not null
+                     && !string.Equals(loaderPath, defaultLoader, StringComparison.OrdinalIgnoreCase);
+        var installDir = custom ? Path.GetDirectoryName(loaderPath) : null;
         var installCmd = string.IsNullOrEmpty(installDir)
             ? "`aware-sketchup --install-bridge`"
             : $"`aware-sketchup --install-bridge --plugins-dir \"{installDir}\"`";
         var head = $" — note: SketchUp pid {inst.Pid} is running bridge {running}";
 
-        // Installing only helps when the packaged bridge is NEWER than the installed one;
-        // running --install-bridge over a newer installed bridge would downgrade it.
-        var installIsBehind = BridgeInstaller.CompareBridgeVersions(packaged, installed) > 0;
-
-        if (string.IsNullOrEmpty(installed))
-        {
-            // Can't see what a restart would load (unknown year, or a loader that has since
-            // been removed). Don't assert a fix; name both facts and let the user decide —
-            // and only when the packaged bridge really supersedes the running one, since
-            // installing over a NEWER running bridge would be a downgrade.
-            if (string.IsNullOrEmpty(packaged)) return "";
-            var packagedIsNewerThanRunning = inst.BridgeVersion is null   // pre-0.35.0, so yes
-                || BridgeInstaller.CompareBridgeVersions(packaged, inst.BridgeVersion) > 0;
-            if (!packagedIsNewerThanRunning) return "";
+        if (installed is null)
             return head + $" and this sidecar ships {packaged}, but the installed bridge{where} could"
                  + $" not be read; run {installCmd} and restart SketchUp if this keeps failing";
-        }
 
-        if (installIsBehind)
+        if (adviseInstall)
             return head + $", the installed bridge is {installed}{where} and this sidecar ships"
                  + $" {packaged}: run {installCmd}, then restart SketchUp — it only loads plugins"
                  + " at startup";
 
-        if (inst.BridgeVersion != installed)
-            return head + $" while {installed} is installed{where}; SketchUp only loads plugins at"
-                 + " startup, so restart SketchUp to pick the installed bridge up";
-
-        return "";
+        return head + $" while {installed} is installed{where}; SketchUp only loads plugins at"
+             + " startup, so restart SketchUp to pick the installed bridge up";
     }
 
     /// <summary>Peels the AggregateException that Task.Wait wraps everything in.</summary>

@@ -202,9 +202,17 @@ internal static class BridgeInstaller
     /// nothing than to compare a 2025 session against the 2026 folder.
     /// </summary>
     internal static string? InstalledVersion(int? targetYear)
+        => ReadInstalledVersion(LoaderPathForYear(targetYear) ?? "");
+
+    /// <summary>
+    /// Where the loader for a SketchUp year lives by default, or null when the year is
+    /// unknown. Callers report this path rather than asserting a bare version, because a
+    /// user who installed with <c>--plugins-dir</c> must be able to see we looked elsewhere.
+    /// </summary>
+    internal static string? LoaderPathForYear(int? targetYear)
     {
         if (targetYear is null) return null;
-        try { return ReadInstalledVersion(Path.Combine(DefaultPluginsDir(targetYear.Value), LoaderFileName)); }
+        try { return Path.Combine(DefaultPluginsDir(targetYear.Value), LoaderFileName); }
         catch { return null; }
     }
 

@@ -244,6 +244,20 @@ public class SketchupClientTests : IDisposable
         Assert.Equal("", SketchupClient.StaleBridgeNote(newer, packagedVersion: "0.35.0", installedVersion: ""));
     }
 
+    [Fact]
+    public void StaleBridgeNote_NeverAdvisesAnythingThatWouldDowngradeTheSession()
+    {
+        // Running 0.36.0, installed 0.34.0, packaged 0.35.0: installing + restarting would
+        // drop the session from 0.36.0 to 0.35.0. Nothing on offer is an upgrade → silence.
+        var ahead = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.36.0");
+        Assert.Equal("", SketchupClient.StaleBridgeNote(ahead, packagedVersion: "0.35.0", installedVersion: "0.34.0"));
+
+        // Same versions, an OLDER session: now the advice really is an upgrade.
+        var behind = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.33.0");
+        var note = SketchupClient.StaleBridgeNote(behind, packagedVersion: "0.35.0", installedVersion: "0.34.0");
+        Assert.Contains("--install-bridge", note);
+    }
+
     [Theory]
     [InlineData("26.1.189", 2026)]
     [InlineData("25.0.455", 2025)]
