@@ -62,7 +62,11 @@ module AwareSketchupBridge
     MAX_LIVE_CONNECTIONS   = 32
     MAX_ACCEPTS_PER_TICK   = 8
     READ_CHUNK_BYTES       = 256 * 1024
+    # Per TICK, not per connection: the point of the budget is to bound how long one UI
+    # callback can spend moving bytes, and 32 connections each claiming their own would
+    # be no bound at all.
     READ_BUDGET_PER_TICK   = 8 * 1024 * 1024
+    WRITE_BUDGET_PER_TICK  = 8 * 1024 * 1024
     # A connection that makes no progress at all for this long is abandoned.
     CONNECTION_IDLE_LIMIT_SECONDS = 300
 
@@ -77,6 +81,8 @@ module AwareSketchupBridge
     @timer_id  = nil
     @pumping   = false
     @evaluated_this_tick = false
+    @read_budget  = 0
+    @write_budget = 0
     @shutdown  = false
     @served    = 0
     @accepted  = 0
@@ -185,6 +191,8 @@ module AwareSketchupBridge
         @pumping = true
         begin
           @evaluated_this_tick = false
+          @read_budget  = READ_BUDGET_PER_TICK
+          @write_budget = WRITE_BUDGET_PER_TICK
           now = monotonic
           accept_pending(now)
           service_connections(now)
@@ -268,18 +276,18 @@ module AwareSketchupBridge
         flush(c, monotonic)
       end
 
-      # Pulls whatever the kernel already has. Returns :closed on EOF, :wait
-      # otherwise. Bounded so a huge payload can't monopolise one UI tick.
+      # Pulls whatever the kernel already has, out of the tick's shared read budget, so a
+      # huge payload — or many connections — can't monopolise one UI callback. Returns
+      # :closed on EOF, :wait otherwise (including "out of budget, resume next tick").
       def drain_reads(c, now)
-        budget = READ_BUDGET_PER_TICK
-        while budget.positive?
+        while @read_budget.positive?
           chunk = c.sock.read_nonblock(READ_CHUNK_BYTES, exception: false)
           return :wait   if chunk == :wait_readable
           return :closed if chunk.nil?
 
           c.inbuf << chunk
           c.touched_at = now
-          budget -= chunk.bytesize
+          @read_budget -= chunk.bytesize
         end
         :wait
       end
@@ -303,15 +311,22 @@ module AwareSketchupBridge
         body
       end
 
-      # Hands the reply to the kernel a piece at a time. Returns true once the
-      # whole reply is out and the socket is closed, false to resume next tick.
+      # Hands the reply to the kernel a piece at a time, out of the tick's shared write
+      # budget — a reply is not size-capped, and an eagerly-reading client would otherwise
+      # let one callback push the whole thing. Returns true once the whole reply is out and
+      # the socket is closed, false to resume next tick.
       def flush(c, now)
         until c.outbuf.empty?
+          return false unless @write_budget.positive?
+
           written = c.sock.write_nonblock(c.outbuf, exception: false)
           return false if written == :wait_writable
           raise "write_nonblock returned #{written.inspect}" unless written.is_a?(Integer) && written.positive?
 
           c.outbuf = c.outbuf.byteslice(written, c.outbuf.bytesize - written)
+          # One socket-buffer of overshoot at most: the budget is checked per call, not
+          # sliced into the payload, so we never copy the reply just to bound it.
+          @write_budget -= written
           c.touched_at = now
         end
         close_socket(c.sock)
