@@ -20,7 +20,7 @@ require 'time'
 
 module AwareSketchupBridge
   EXTENSION_NAME = 'AWARE SketchUp Bridge'.freeze
-  BRIDGE_VERSION = '0.34.0'.freeze
+  BRIDGE_VERSION = '0.35.0'.freeze
 
   # Diagnostic breadcrumb: log that the loader file ran at all. Helps
   # distinguish "SketchUp didn't load our .rb" from "extension registered but

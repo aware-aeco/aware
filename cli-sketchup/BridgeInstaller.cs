@@ -185,6 +185,14 @@ internal static class BridgeInstaller
     }
 
     /// <summary>
+    /// BRIDGE_VERSION of the loader shipped beside this exe — what a SketchUp
+    /// session would be running had it started after the last install. Null when
+    /// the packaged asset can't be read.
+    /// </summary>
+    internal static string? PackagedVersion()
+        => ReadInstalledVersion(Path.Combine(LocateAssetDir(), LoaderFileName));
+
+    /// <summary>
     /// Reads `BRIDGE_VERSION = '...'` out of a loader .rb. Returns null on
     /// any failure (missing file, no version line, parse glitch).
     /// </summary>

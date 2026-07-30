@@ -17,13 +17,20 @@ namespace AwareSketchup;
 
 /// <summary>
 /// One running SketchUp instance, as advertised by its discovery file.
+/// <para>
+/// <c>BridgeVersion</c> is the bridge RUNNING inside that session, which is not
+/// necessarily the one installed on disk: SketchUp loads plugins once at startup,
+/// so a session keeps whatever it loaded until it restarts. Null means the session
+/// is running a bridge older than 0.35.0, which did not report its version.
+/// </para>
 /// </summary>
 internal sealed record SketchupInstance(
     int Pid,
     int Port,
     string Version,
     string? ModelPath,
-    DateTime StartedAt);
+    DateTime StartedAt,
+    string? BridgeVersion = null);
 
 internal sealed class SketchupClient
 {
@@ -126,7 +133,10 @@ internal sealed class SketchupClient
             throw new TimeoutException($"connect to 127.0.0.1:{port} timed out");
 
         tcp.ReceiveTimeout = timeoutMs;
-        tcp.SendTimeout    = Math.Min(timeoutMs, 10_000);
+        // The caller's timeout is the only bound that means anything: a multi-megabyte
+        // bake payload is handed over as fast as the bridge's pump drains it, which a
+        // fixed 10s ceiling could cut off mid-send on a busy model.
+        tcp.SendTimeout    = timeoutMs;
 
         using var stream = tcp.GetStream();
         var body = Encoding.UTF8.GetBytes(request.ToJsonString());
@@ -156,29 +166,35 @@ internal sealed class SketchupClient
 
     /// <summary>
     /// Reads a 4-byte big-endian length prefix + that many bytes.
+    /// <paramref name="timeoutMs"/> bounds header and body TOGETHER: one deadline for
+    /// the whole reply, not a fresh one per read.
     /// </summary>
     internal static byte[] ReadLengthPrefixed(Stream s, int timeoutMs)
     {
-        var lenBuf = ReadExactly(s, 4, timeoutMs);
+        var deadline = DateTime.UtcNow.AddMilliseconds(timeoutMs);
+        var lenBuf = ReadExactly(s, 4, deadline);
         // Big-endian → int32.
         int len = (lenBuf[0] << 24) | (lenBuf[1] << 16) | (lenBuf[2] << 8) | lenBuf[3];
         if (len < 0 || len > 64 * 1024 * 1024)
             throw new InvalidDataException($"absurd message length: {len}");
-        return ReadExactly(s, len, timeoutMs);
+        return ReadExactly(s, len, deadline);
     }
 
     /// <summary>
-    /// Blocking read of exactly <paramref name="count"/> bytes from the stream.
+    /// Blocking read of exactly <paramref name="count"/> bytes, giving up at
+    /// <paramref name="deadlineUtc"/>. Each individual read is capped at the time
+    /// left, so a silent peer can't stall past the deadline.
     /// </summary>
-    internal static byte[] ReadExactly(Stream s, int count, int timeoutMs)
+    internal static byte[] ReadExactly(Stream s, int count, DateTime deadlineUtc)
     {
         var buf = new byte[count];
         int got = 0;
-        var deadline = DateTime.UtcNow.AddMilliseconds(timeoutMs);
         while (got < count)
         {
-            if (DateTime.UtcNow > deadline)
+            var remaining = (deadlineUtc - DateTime.UtcNow).TotalMilliseconds;
+            if (remaining <= 0)
                 throw new TimeoutException($"read {count} bytes timed out (got {got})");
+            if (s.CanTimeout) s.ReadTimeout = (int)Math.Ceiling(remaining);
             int n = s.Read(buf, got, count - got);
             if (n == 0)
                 throw new EndOfStreamException($"stream closed after {got}/{count} bytes");
@@ -199,12 +215,37 @@ internal sealed class SketchupClient
         var version = node["version"]?.GetValue<string>();
         if (pid is null || port is null || string.IsNullOrEmpty(version)) return null;
         string? modelPath = node["model_path"]?.GetValue<string>();
+        // bridge_version arrived in bridge 0.35.0; older sessions simply omit it.
+        var bridgeVersion = node["bridge_version"]?.GetValue<string>();
+        if (string.IsNullOrEmpty(bridgeVersion)) bridgeVersion = null;
         // started_at is informational; we don't fail if it's malformed.
         DateTime started = DateTime.MinValue;
         var sa = node["started_at"]?.GetValue<string>();
         if (!string.IsNullOrEmpty(sa))
             DateTime.TryParse(sa, null, System.Globalization.DateTimeStyles.AssumeUniversal | System.Globalization.DateTimeStyles.AdjustToUniversal, out started);
-        return new SketchupInstance(pid.Value, port.Value, version!, modelPath, started);
+        return new SketchupInstance(pid.Value, port.Value, version!, modelPath, started, bridgeVersion);
+    }
+
+    /// <summary>
+    /// A "restart SketchUp" sentence when the bridge running in that session is not
+    /// the one installed on disk — otherwise the empty string.
+    /// <para>
+    /// This is the blind spot behind aware-aeco/aware#330: installing a fixed bridge
+    /// changes nothing until the session restarts, and a stale session is
+    /// indistinguishable from a healthy one to <c>list-instances</c>, which only reads
+    /// the discovery file. So say it on the paths where the user is already looking at
+    /// a failure.
+    /// </para>
+    /// </summary>
+    internal static string StaleBridgeNote(SketchupInstance inst, string? packagedVersion = null)
+    {
+        var packaged = packagedVersion ?? BridgeInstaller.PackagedVersion();
+        if (string.IsNullOrEmpty(packaged)) return "";
+        if (inst.BridgeVersion == packaged) return "";
+        var running = inst.BridgeVersion ?? "older than 0.35.0 (it does not report a version)";
+        return $" — note: the bridge running in SketchUp pid {inst.Pid} is {running} while {packaged}"
+             + " is installed on disk; SketchUp only loads plugins at startup, so restart SketchUp"
+             + " to pick the installed bridge up";
     }
 
     static bool IsProcessAlive(int pid)

@@ -123,6 +123,48 @@ public class SketchupClientTests : IDisposable
             "{\"pid\":1,\"port\":8765,\"version\":\"26.0\"}");
         Assert.NotNull(inst);
         Assert.Null(inst!.ModelPath);
+        // A pre-0.35.0 bridge advertises no version — that must parse, not fail.
+        Assert.Null(inst.BridgeVersion);
+    }
+
+    [Fact]
+    public void ParseDiscoveryFile_ReadsBridgeVersion()
+    {
+        var inst = SketchupClient.ParseDiscoveryFile(
+            "{\"pid\":1,\"port\":8765,\"version\":\"26.0\",\"bridge_version\":\"0.35.0\"}");
+        Assert.NotNull(inst);
+        Assert.Equal("0.35.0", inst!.BridgeVersion);
+
+        // An empty string is "not reported", not a version.
+        var blank = SketchupClient.ParseDiscoveryFile(
+            "{\"pid\":1,\"port\":8765,\"version\":\"26.0\",\"bridge_version\":\"\"}");
+        Assert.NotNull(blank);
+        Assert.Null(blank!.BridgeVersion);
+    }
+
+    [Fact]
+    public void StaleBridgeNote_SilentWhenSessionRunsTheInstalledBridge()
+    {
+        var inst = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.35.0");
+        Assert.Equal("", SketchupClient.StaleBridgeNote(inst, packagedVersion: "0.35.0"));
+        // Packaged version unreadable → say nothing rather than guess.
+        Assert.Equal("", SketchupClient.StaleBridgeNote(inst, packagedVersion: ""));
+    }
+
+    [Fact]
+    public void StaleBridgeNote_TellsUserToRestartWhenSessionIsStale()
+    {
+        var older = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0");
+        var note = SketchupClient.StaleBridgeNote(older, packagedVersion: "0.35.0");
+        Assert.Contains("0.34.0", note);
+        Assert.Contains("0.35.0", note);
+        Assert.Contains("restart SketchUp", note);
+
+        // A session from before bridge_version existed is stale in the same way.
+        var unversioned = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, null);
+        var legacyNote = SketchupClient.StaleBridgeNote(unversioned, packagedVersion: "0.35.0");
+        Assert.Contains("older than 0.35.0", legacyNote);
+        Assert.Contains("restart SketchUp", legacyNote);
     }
 
     [Fact]
