@@ -168,10 +168,20 @@ internal sealed class SketchupClient
         // time to render, and a timeout measured before that work would overrun the call's
         // advertised bound.
         var body = Encoding.UTF8.GetBytes(request.ToJsonString());
+
+        // If rendering the scene already spent the budget, refuse rather than send anyway:
+        // a request that goes out after its deadline can still mutate the model, and the
+        // caller has been told this call is bounded. Nothing is written yet, so this is a
+        // provably-nothing-happened refusal.
+        var sendBudget = Remaining();
+        if (sendBudget <= 0)
+            throw new BridgeRequestNotDeliveredException(
+                $"the {timeoutMs} ms budget was spent before the request could be sent to 127.0.0.1:{port}");
+
         // A fixed ceiling here could cut off a large send on a busy model; the caller's
         // remaining budget is the honest bound.
-        tcp.SendTimeout    = Math.Max(1, Remaining());
-        tcp.ReceiveTimeout = Math.Max(1, Remaining());
+        tcp.SendTimeout    = sendBudget;
+        tcp.ReceiveTimeout = sendBudget;
         WriteLengthPrefixed(stream, body);
 
         var left = Remaining();
@@ -314,9 +324,14 @@ internal sealed class SketchupClient
 
         if (string.IsNullOrEmpty(installed))
         {
-            // Can't see what a restart would load (unknown year, or a custom --plugins-dir).
-            // Don't assert a fix; name both facts and let the user decide.
-            if (string.IsNullOrEmpty(packaged) || inst.BridgeVersion == packaged) return "";
+            // Can't see what a restart would load (unknown year, or a loader that has since
+            // been removed). Don't assert a fix; name both facts and let the user decide —
+            // and only when the packaged bridge really supersedes the running one, since
+            // installing over a NEWER running bridge would be a downgrade.
+            if (string.IsNullOrEmpty(packaged)) return "";
+            var packagedIsNewerThanRunning = inst.BridgeVersion is null   // pre-0.35.0, so yes
+                || BridgeInstaller.CompareBridgeVersions(packaged, inst.BridgeVersion) > 0;
+            if (!packagedIsNewerThanRunning) return "";
             return head + $" and this sidecar ships {packaged}, but the installed bridge{where} could"
                  + $" not be read; run {installCmd} and restart SketchUp if this keeps failing";
         }

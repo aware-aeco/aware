@@ -237,6 +237,11 @@ public class SketchupClientTests : IDisposable
         // Session already runs what this sidecar ships → nothing worth saying.
         var same = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.35.0");
         Assert.Equal("", SketchupClient.StaleBridgeNote(same, packagedVersion: "0.35.0", installedVersion: ""));
+
+        // Running bridge NEWER than the packaged one (sidecar rolled back) → suggesting an
+        // install here would downgrade the session's bridge. Say nothing.
+        var newer = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.36.0");
+        Assert.Equal("", SketchupClient.StaleBridgeNote(newer, packagedVersion: "0.35.0", installedVersion: ""));
     }
 
     [Theory]
