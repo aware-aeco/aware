@@ -127,6 +127,13 @@ no bridge version. A user who installs the fix and does not restart sees the ide
    afterwards all ok at ~125 ms. Retiring them by re-baking an empty scene under the same source
    id removed exactly those 14.
 4. **Product level.** A whole-model send from floless.app (`POST /api/contract/steel-model/
-   export-host/sketchup`) materialized all 187 groups of the demo project in the live session.
+   export-host/sketchup`, floless 0.113.6 on AWARE 0.108.0) returned 200 and materialized all
+   187 groups of the demo project in the live session. The bridge's own log shows that request
+   as 394,890 bytes in / 22,318 bytes out, 294 ms of main-thread work, with further requests
+   served immediately afterwards.
 5. `cargo fmt` / `clippy -D warnings` / `cargo test`, plus `dotnet build` + `dotnet test` for
-   `cli-sketchup` (90 tests).
+   `cli-sketchup` (103 tests).
+
+Every one of these was re-run against the FINAL bridge after each review round changed it — the
+artifact that was verified is the artifact that ships (the installed `core.rb` was diffed against
+the committed one).
