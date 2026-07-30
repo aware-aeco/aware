@@ -163,13 +163,15 @@ internal sealed class SketchupClient
             throw new BridgeRequestNotDeliveredException($"could not connect to 127.0.0.1:{port}: {Unwrap(e).Message}", e);
         }
 
+        using var stream = tcp.GetStream();
+        // Serialize BEFORE snapshotting the send budget: a multi-megabyte scene takes real
+        // time to render, and a timeout measured before that work would overrun the call's
+        // advertised bound.
+        var body = Encoding.UTF8.GetBytes(request.ToJsonString());
         // A fixed ceiling here could cut off a large send on a busy model; the caller's
         // remaining budget is the honest bound.
         tcp.SendTimeout    = Math.Max(1, Remaining());
         tcp.ReceiveTimeout = Math.Max(1, Remaining());
-
-        using var stream = tcp.GetStream();
-        var body = Encoding.UTF8.GetBytes(request.ToJsonString());
         WriteLengthPrefixed(stream, body);
 
         var left = Remaining();
@@ -285,15 +287,25 @@ internal sealed class SketchupClient
         string? installedVersion = null)
     {
         var packaged = packagedVersion ?? BridgeInstaller.PackagedVersion();
-        // Prefer the loader THIS session actually loaded (bridge 0.35.0+ advertises its
-        // path, so a custom --plugins-dir is exact). Only fall back to the Plugins folder
-        // of the session's own year — never the default year, which would compare a 2025
-        // session against an unrelated 2026 install.
-        var installed = installedVersion
-                        ?? BridgeInstaller.ReadInstalledVersion(inst.BridgeLoaderPath ?? "")
-                        ?? BridgeInstaller.InstalledVersion(BridgeInstaller.PluginYearForHostVersion(inst.Version));
+
+        // The loader THIS session actually loaded (bridge 0.35.0+ advertises its path, so a
+        // custom --plugins-dir is exact). When it is advertised, that file is the ONLY
+        // truth: falling back to the default folder would label an unrelated version with
+        // the custom path. Only a session that advertises nothing gets the fallback — and
+        // then from the Plugins folder of its OWN year, never the default year.
+        var advertised = string.IsNullOrEmpty(inst.BridgeLoaderPath) ? null : inst.BridgeLoaderPath;
+        var installed = installedVersion ?? (advertised is not null
+            ? BridgeInstaller.ReadInstalledVersion(advertised)
+            : BridgeInstaller.InstalledVersion(BridgeInstaller.PluginYearForHostVersion(inst.Version)));
+
         var running = inst.BridgeVersion ?? "older than 0.35.0 (it does not report a version)";
-        var where = inst.BridgeLoaderPath is null ? "" : $" ({inst.BridgeLoaderPath})";
+        var where = advertised is null ? "" : $" ({advertised})";
+        // Installing has to target the folder this session loads from, or the user updates
+        // the default folder and restarts into the same stale bridge.
+        var installDir = advertised is null ? null : Path.GetDirectoryName(advertised);
+        var installCmd = string.IsNullOrEmpty(installDir)
+            ? "`aware-sketchup --install-bridge`"
+            : $"`aware-sketchup --install-bridge --plugins-dir \"{installDir}\"`";
         var head = $" — note: SketchUp pid {inst.Pid} is running bridge {running}";
 
         // Installing only helps when the packaged bridge is NEWER than the installed one;
@@ -305,15 +317,14 @@ internal sealed class SketchupClient
             // Can't see what a restart would load (unknown year, or a custom --plugins-dir).
             // Don't assert a fix; name both facts and let the user decide.
             if (string.IsNullOrEmpty(packaged) || inst.BridgeVersion == packaged) return "";
-            return head + $" and this sidecar ships {packaged}, but the installed bridge could not be"
-                 + " read; run `aware-sketchup --install-bridge` and restart SketchUp if this keeps"
-                 + " failing";
+            return head + $" and this sidecar ships {packaged}, but the installed bridge{where} could"
+                 + $" not be read; run {installCmd} and restart SketchUp if this keeps failing";
         }
 
         if (installIsBehind)
             return head + $", the installed bridge is {installed}{where} and this sidecar ships"
-                 + $" {packaged}: run `aware-sketchup --install-bridge`, then restart SketchUp — it"
-                 + " only loads plugins at startup";
+                 + $" {packaged}: run {installCmd}, then restart SketchUp — it only loads plugins"
+                 + " at startup";
 
         if (inst.BridgeVersion != installed)
             return head + $" while {installed} is installed{where}; SketchUp only loads plugins at"

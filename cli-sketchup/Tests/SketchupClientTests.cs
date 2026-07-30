@@ -158,6 +158,23 @@ public class SketchupClientTests : IDisposable
     }
 
     [Fact]
+    public void StaleBridgeNote_InstallCommandTargetsTheSessionsOwnPluginsFolder()
+    {
+        // Installing into the DEFAULT folder would leave the custom loader stale, so the
+        // restart would reload the same old bridge. The command has to name the folder.
+        var custom = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0",
+                                          @"D:\custom\Plugins\aware_sketchup_bridge.rb");
+        var note = SketchupClient.StaleBridgeNote(custom, packagedVersion: "0.35.0", installedVersion: "0.34.0");
+        Assert.Contains(@"--plugins-dir ""D:\custom\Plugins""", note);
+
+        // A default-folder session keeps the plain command.
+        var standard = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.34.0");
+        var plain = SketchupClient.StaleBridgeNote(standard, packagedVersion: "0.35.0", installedVersion: "0.34.0");
+        Assert.Contains("`aware-sketchup --install-bridge`", plain);
+        Assert.DoesNotContain("--plugins-dir", plain);
+    }
+
+    [Fact]
     public void StaleBridgeNote_SilentWhenEverythingIsInStep()
     {
         var inst = new SketchupInstance(42, 8765, "26.1", null, DateTime.MinValue, "0.35.0");
