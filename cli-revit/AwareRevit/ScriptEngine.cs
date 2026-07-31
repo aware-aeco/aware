@@ -49,6 +49,12 @@ internal static class ScriptEngine
     {
         var pid = System.Diagnostics.Process.GetCurrentProcess().Id;
         var ver = ui.Application.VersionNumber;
+
+        // Release any transaction a previous Pending commit left in our custody and Revit
+        // has since resolved. Every request runs through here on the API thread, which is
+        // the only recurring point that can do it: hooking the sweep to the NEXT Pending
+        // would strand the last one for the life of the process (#337).
+        AwarePendingRevitCommits.ReleaseFinished();
         var stdoutCapture = new System.IO.StringWriter();
         var originalOut = Console.Out;
         Console.SetOut(stdoutCapture);
