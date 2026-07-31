@@ -18,23 +18,32 @@ namespace AwareRevit.Sidecar;
 internal static class BakeSceneScript
 {
     const string RulesResourceName = "BakeSceneRules.cs";
+    const string PreprocessorResourceName = "FailurePreprocessor.cs";
 
     static string? _code;
 
     /// <summary>The complete C# script shipped to the in-Revit add-in.</summary>
-    internal static string Code => _code ??= Header + LoadRulesSource() + Body;
+    internal static string Code =>
+        _code ??= Header + LoadRulesSource() + LoadPreprocessorSource() + Body;
 
     /// <summary>The host-neutral rules, read back out of this assembly's
     /// resources. Missing = a broken build, and a broken build must not ship a
     /// half-script that would compile-error inside the user's model.</summary>
-    internal static string LoadRulesSource()
+    internal static string LoadRulesSource() => LoadEmbeddedSource(RulesResourceName);
+
+    /// <summary>The failure preprocessor, the same text the add-in compiles for
+    /// `exec`. Splicing it in is what keeps the two write paths' failure handling
+    /// from drifting (#337).</summary>
+    internal static string LoadPreprocessorSource() => LoadEmbeddedSource(PreprocessorResourceName);
+
+    static string LoadEmbeddedSource(string resourceName)
     {
         var asm = typeof(BakeSceneScript).GetTypeInfo().Assembly;
-        using var stream = asm.GetManifestResourceStream(RulesResourceName);
+        using var stream = asm.GetManifestResourceStream(resourceName);
         if (stream is null)
         {
             throw new InvalidOperationException(
-                $"aware-revit is built without the embedded bake-scene rules source '{RulesResourceName}'");
+                $"aware-revit is built without the embedded bake-scene source '{resourceName}'");
         }
         using var reader = new StreamReader(stream);
         return reader.ReadToEnd();
@@ -279,15 +288,27 @@ Solid PlaceholderSolid(XYZ start, XYZ end, double depthMm, double widthMm)
 // back in one step and a mid-batch failure rolls back completely (unlike Tekla,
 // Revit really does have rollback — the receipt can say so honestly).
 var activeId = parsed.SupportedOrder.Count > 0 ? parsed.SupportedOrder[0].Id : "scene";
-using (var tx = new Transaction(doc, "AWARE bake-scene " + sceneName))
+// NOT a `using`. Disposing an unfinished transaction makes Revit's destructor roll it
+// back and discard the bake, and a Pending commit is exactly "unfinished" — so a scope
+// exit would silently throw away work Revit was still finalizing (#337). Disposal is
+// explicit below, and skipped while the transaction is Pending.
+var tx = new Transaction(doc, "AWARE bake-scene " + sceneName);
+var leftWithRevit = false;
+var bakePreprocessor = new AwareFailurePreprocessor();
+try
 {
     tx.Start();
     // Never force a modal failure dialog: this runs unattended from the CLI and
-    // a modal would hang the API thread inside an open transaction.
+    // a modal would hang the API thread inside an open transaction. Suppressing the
+    // modal only downgrades it to a NON-blocking dialog though, which is what leaves
+    // Commit returning Pending — the preprocessor is what removes the dialog outright,
+    // so the commit finishes synchronously and Revit's objections become receipt
+    // warnings instead (#337). Same text `exec` compiles.
     var failureOptions = tx.GetFailureHandlingOptions();
     failureOptions.SetForcedModalHandling(false);
     failureOptions.SetClearAfterRollback(true);
     failureOptions.SetDelayedMiniWarnings(true);
+    failureOptions.SetFailuresPreprocessor(bakePreprocessor);
     tx.SetFailureHandlingOptions(failureOptions);
 
     try
@@ -430,17 +451,56 @@ using (var tx = new Transaction(doc, "AWARE bake-scene " + sceneName))
         // ids for geometry the model does not have. Same failure this bake already guards at the
         // envelope: a write that did not land must never read as success.
         var commitStatus = tx.Commit();
+        foreach (var objection in bakePreprocessor.Warnings)
+        {
+            warnings.Add(AwareBakeRules.Row("scene", "scene", "warning", "host-warning", objection));
+        }
+        if (commitStatus == TransactionStatus.Pending)
+        {
+            // Defence in depth: the preprocessor should leave Revit nothing to wait on.
+            // If it happens anyway, Revit owns the transaction — RollBack() throws while
+            // the document is in failure mode, disposing it discards the bake, and merely
+            // dropping the reference lets the GC finalizer roll it back instead.
+            //
+            // Return the receipt here rather than throwing: the catch below stamps every
+            // row `rolledBack = true`, and that is an assertion this path cannot make. If
+            // Revit went on to commit, a caller told "nothing landed" would re-run and
+            // duplicate the scene.
+            leftWithRevit = true;
+            // Custody lives in the add-in, not in this script: this text is recompiled
+            // per request, so anything static here dies with the request and could never
+            // release what a previous bake rooted (#337).
+            AwareRevit.AddIn.AwarePendingRevitCommits.LeaveWithRevit(tx);
+            retired.Clear();
+            var unresolved = new List<Dictionary<string, object>>();
+            foreach (var record in parsed.SupportedOrder)
+            {
+                var row = AwareBakeRules.Row(record.Id, record.Kind, "failed", "commit-unresolved",
+                    "Revit's failure processing had not finished when the bake returned, so it owns "
+                    + "the outcome. Whether this record landed is UNKNOWN.");
+                row["rolledBack"] = false;
+                unresolved.Add(row);
+            }
+            warnings.Add(AwareBakeRules.Row("scene", "scene", "warning", "commit-unresolved",
+                "Revit left the bake's transaction unresolved (status: Pending). Inspect the model "
+                + "before re-running; re-run under the SAME sourceId so ownership reconciles rather "
+                + "than duplicating."));
+            return Envelope(false, noRows, unresolved, parsed.Unsupported, warnings);
+        }
         if (commitStatus != TransactionStatus.Committed)
         {
             throw new Exception(
                 "Revit did not commit the bake (transaction status: " + commitStatus + "). "
-                + "Nothing was written; this is usually Revit's failure processing rejecting the "
-                + "geometry or a warning dialog resolving to a rollback.");
+                + "Nothing was written; Revit's failure processing rejected the geometry"
+                + (bakePreprocessor.RolledBackForErrors
+                    ? ": " + String.Join("; ", bakePreprocessor.Errors)
+                    : "."));
         }
     }
     catch (Exception ex)
     {
-        if (tx.HasStarted() && !tx.HasEnded()) tx.RollBack();
+        if (!leftWithRevit && tx.HasStarted() && !tx.HasEnded()
+            && tx.GetStatus() != TransactionStatus.Pending) tx.RollBack();
         retired.Clear();
         var failures = new List<Dictionary<string, object>>();
         var causeAssigned = false;
@@ -462,6 +522,13 @@ using (var tx = new Transaction(doc, "AWARE bake-scene " + sceneName))
         }
         return Envelope(false, noRows, failures, parsed.Unsupported, warnings);
     }
+}
+finally
+{
+    // Disposing while Pending would roll back the very bake Revit is finalizing.
+    // Leaking one Transaction is the strictly better failure: Revit blocks every
+    // further write until it resolves anyway.
+    if (!leftWithRevit) tx.Dispose();
 }
 
 return Envelope(true, emitted, noRows, parsed.Unsupported, warnings);

@@ -14,4 +14,9 @@ public sealed class ExecResponse
     public string StdoutLog { get; set; } = "";
     public string? HostVersion { get; set; }
     public int? HostPid { get; set; }
+
+    /// <summary>What Revit objected to while committing — the text its failure dialog
+    /// would have shown. Unattended writes suppress that dialog (#328), so without this
+    /// the objection reached nobody (#337). Null when Revit raised nothing.</summary>
+    public IReadOnlyList<string>? Warnings { get; set; }
 }

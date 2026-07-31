@@ -129,7 +129,8 @@ internal static class Exec
                 resultNode,
                 resp.HostVersion ?? targetVersion,
                 resp.HostPid ?? targetPid,
-                resp.StdoutLog).ToJsonString());
+                resp.StdoutLog,
+                resp.Warnings).ToJsonString());
             return 0;
         }
 

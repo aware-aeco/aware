@@ -9,10 +9,13 @@ namespace AwareRevit.Sidecar;
 
 internal static class Receipts
 {
+    /// <param name="warnings">What Revit objected to while committing. An unattended
+    /// exec suppresses Revit's failure dialog, so without carrying these the objection
+    /// reaches nobody (#337). Omitted from the receipt when Revit raised nothing.</param>
     public static JsonObject ExecOk(JsonNode? result, string? hostVersion, int? hostPid,
-                                    string stdoutLog)
+                                    string stdoutLog, IReadOnlyList<string>? warnings = null)
     {
-        return new JsonObject
+        var receipt = new JsonObject
         {
             ["ok"]            = true,
             ["result"]        = result,
@@ -23,6 +26,13 @@ internal static class Receipts
             ["stdout_log"]    = stdoutLog,
             ["delivered_at"]  = DateTime.UtcNow.ToString("o"),
         };
+        if (warnings is { Count: > 0 })
+        {
+            var array = new JsonArray();
+            foreach (var warning in warnings) array.Add(warning);
+            receipt["warnings"] = array;
+        }
+        return receipt;
     }
 
     public static JsonObject ExecFail(string error, string stack, string stdoutLog)
