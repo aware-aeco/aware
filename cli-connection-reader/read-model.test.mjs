@@ -90,10 +90,34 @@ test('a mesh-only file with zero profile definitions still returns geometry', as
 test('material rides along, because it is the signal that says "do not convert this"', async (t) => {
   if (!sample('Building-Structural.ifc')) return t.skip(skipReason('Building-Structural.ifc'));
   const out = await read('Building-Structural.ifc');
-  const materials = out.objects.map((o) => o.material).filter(Boolean);
+  const materials = out.objects.map((o) => o.material);
   // The beams here are named "girder" but are wood_spruce_beam. Type-based mapping would happily
   // convert them into steel; the material string is what stops it.
-  assert.ok(materials.some((m) => /wood/i.test(m)), `expected a timber material, got ${materials}`);
+  assert.ok(materials.some((m) => m && /wood/i.test(m)), `expected a timber material, got ${materials}`);
+  // EVERY object must resolve a material, not just some. IFC allows the material to hang off the
+  // element TYPE with the occurrence overriding it, and following only direct
+  // IfcRelAssociatesMaterial links returned null for ordinary objects in this very file — a null
+  // here silently re-arms the "convert timber as steel" mistake the field exists to prevent.
+  assert.equal(materials.filter(Boolean).length, materials.length,
+    `every object should resolve a material; got ${materials.filter(Boolean).length}/${materials.length}`);
+});
+
+test('nothing is dropped silently — a skipped count is always reported', async (t) => {
+  if (!sample('Building-Structural.ifc')) return t.skip(skipReason('Building-Structural.ifc'));
+  const out = await read('Building-Structural.ifc');
+  // The command claims to return every element, so the objects it could not draw must be COUNTED
+  // rather than quietly missing. A consumer comparing this against probe's element count needs to
+  // know the difference is accounted for.
+  assert.equal(typeof out.skipped, 'number');
+  assert.equal(out.skipped, 0);
+});
+
+test('assembly children inherit their storey instead of reporting null', async (t) => {
+  if (!sample('example-steel-framing.ifc')) return t.skip(skipReason('example-steel-framing.ifc'));
+  const out = await read('example-steel-framing.ifc');
+  // IFC forbids an assembly's parts from also being spatially contained, so reading direct
+  // containment alone reports storey:null for every part of every assembly.
+  assert.ok(out.objects.every((o) => o.storey !== null), 'every object should resolve a storey');
 });
 
 test('the vertex budget aborts DURING tessellation, not after it', async (t) => {

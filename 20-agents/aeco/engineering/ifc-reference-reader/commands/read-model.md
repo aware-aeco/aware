@@ -26,7 +26,14 @@ objects:
     material:  string   # material name, may be null
     positions: [number] # world mm, [x,y,z]*
     indices:   [number] # triangle indices
+skipped: number         # products streamed but carrying no drawable triangle (see below)
 ```
+
+## Nothing is dropped silently
+A product web-ifc streams but that yields fewer than 3 vertices or 1 triangle cannot be drawn, and is
+excluded — an object that loads but renders as nothing is worse than an absent one, because it looks
+like success. Those exclusions are **counted in `skipped`** rather than quietly missing, so a consumer
+comparing this against `probe`'s element count can account for the difference instead of guessing.
 
 ## Two fields that are load-bearing, not decoration
 
@@ -49,7 +56,9 @@ instance**, each with its own transform. De-duplicating by shape would silently 
 test file serves 19 objects from 14 shapes, so de-duplicating loses five walls.
 
 ## `max-vertices` is a circuit breaker, not a gate
-The budget decrements as meshes stream and the command aborts **mid-walk**. It is deliberately not a
+The budget decrements as meshes stream and the command aborts **mid-walk**. Note the check happens
+once a whole product has been tessellated, so a single enormous object can overshoot the budget by its
+own size before the breaker fires; the cap bounds the total, not each step. It is deliberately not a
 preflight check: an exact vertex count cannot be known before tessellating, so a cap applied after
 this command returns would only fire once the payload that causes the freeze had already been built
 and serialised. Use `probe` plus a file-size check for true preflight protection.

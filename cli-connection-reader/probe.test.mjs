@@ -85,3 +85,32 @@ test('probe is honest when a file declares no length unit', async (t) => {
     closeApi(h);
   }
 });
+
+test('an imperial file is scaled by its real conversion factor, not silently by 1', async (t) => {
+  // The bug this pins: an earlier five-entry metric lookup fell back to a factor of 1 for anything
+  // it did not recognise, so an inch-based file produced a bbox 25.4x too small while still being
+  // labelled millimetres. A wrong extent is worse than no extent — it is exactly what a consumer's
+  // "this looks 1000x off" check reads. Built inline because none of the sample files are imperial.
+  const { unitToMMForTest } = await import('./index.mjs');
+  if (!unitToMMForTest) return t.skip('unitToMM not exported for testing');
+  // IfcConversionBasedUnit(inch) -> IfcMeasureWithUnit(25.4, IfcSIUnit(MILLI, METRE))
+  const fake = {
+    GetLine: (_m, id) => ({
+      1: { Name: { value: 'inch' }, ConversionFactor: { value: 2 } },
+      2: { ValueComponent: { value: 25.4 }, UnitComponent: { value: 3 } },
+      3: { Name: { value: 'METRE' }, Prefix: { value: 'MILLI' } },
+    }[id]),
+  };
+  assert.equal(unitToMMForTest(fake, 0, 1), 25.4);
+  // And the metric ladder still resolves through the SI prefix rather than a lookup table.
+  assert.equal(unitToMMForTest(fake, 0, 3), 1);
+});
+
+test('an unresolvable unit yields bbox null, never a plausible-looking box', async (t) => {
+  const { unitToMMForTest } = await import('./index.mjs');
+  if (!unitToMMForTest) return t.skip('unitToMM not exported for testing');
+  // A unit that is neither METRE nor convertible must come back null so probeModel can say
+  // "I could not tell" instead of emitting a box scaled by a guess.
+  const fake = { GetLine: () => ({ Name: { value: 'FURLONG' } }) };
+  assert.equal(unitToMMForTest(fake, 0, 1), null);
+});

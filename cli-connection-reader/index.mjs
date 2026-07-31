@@ -24,12 +24,44 @@
 import { readFileSync } from 'node:fs';
 import { dirname, basename, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { createRequire } from 'node:module';
 import { unzipSync } from 'fflate'; // tiny pure-JS unzip for .ifczip inputs
 import * as WebIFC from 'web-ifc'; // package export resolves to the node build (auto-locates its .wasm)
 import { recognizeBasePlate, recognizeShearPlate } from './recognize.mjs'; // fit a parametric recipe from the tessellated parts
 
 // web-ifc returns geometry in metres (SI base unit); AWARE scenes are canonical millimetres.
 const M_TO_MM = 1000;
+
+/**
+ * Are we running as the packaged single-file executable (Node SEA) rather than plain `node`?
+ *
+ * Asks Node directly. An earlier cut inferred it from `basename(process.execPath)` not starting with
+ * "node", which is not a reliable SEA test in either direction: a packaged binary renamed
+ * `node-reference-reader.exe` would be taken for plain Node — and since `import.meta` is inert in the
+ * CJS bundle, the entry guard below would then be false and the exe would exit cleanly having done
+ * NOTHING. The same misclassification also skipped the sibling-.wasm path. `node:sea.isSea()` is exact.
+ */
+function isPackagedExe() {
+  const sea = loadSea();
+  if (sea && typeof sea.isSea === 'function') return sea.isSea();
+  // Fallback for a Node too old for node:sea (added 20.12/21.7). Only reached in plain-ESM dev runs,
+  // where `import.meta.url` IS live and gives the entry guard a real second signal.
+  return !basename(process.execPath).toLowerCase().startsWith('node');
+}
+
+// `node:sea` must be loaded through whichever module system we ended up in: the shipped bundle is
+// CJS (where a global `require` exists and `import.meta` does not), the dev entry is ESM (where the
+// reverse holds). Top-level `await import()` would be the tidy answer but esbuild cannot emit it for
+// a CJS output format, so this branches instead.
+function loadSea() {
+  try {
+    if (typeof require === 'function') return require('node:sea');
+  } catch { /* no node:sea on this runtime */ }
+  try {
+    return createRequire(import.meta.url)('node:sea');
+  } catch { /* ESM on a Node without node:sea */ }
+  return null;
+}
 
 // Connection-hardware element types (the parts that MAKE a connection) and the members it sits on.
 const HARDWARE = new Map([
@@ -192,6 +224,12 @@ function tessellate(api, modelID, wantById) {
  * null means the file did not say — an honest "unknown", never a guess.
  */
 export function declaredUnit(api, modelID) {
+  return lengthUnit(api, modelID).declared;
+}
+
+/** The declared LENGTHUNIT as `{ declared, id }` — the label for humans, the express id so the scale
+ *  can be resolved. Both null when the file declares no length unit. */
+function lengthUnit(api, modelID) {
   const ids = api.GetLineIDsWithType(modelID, WebIFC.IFCUNITASSIGNMENT);
   for (let i = 0; i < ids.size(); i++) {
     const asg = api.GetLine(modelID, ids.get(i));
@@ -200,19 +238,60 @@ export function declaredUnit(api, modelID) {
       try { u = api.GetLine(modelID, ref.value); } catch { continue; }
       if (!u || strOf(u.UnitType) !== 'LENGTHUNIT') continue;
       const name = strOf(u.Name);
-      if (!name) continue; // a conversion-based unit (IfcConversionBasedUnit) has no .Name — skip it
+      if (!name) continue;
       const prefix = strOf(u.Prefix);
-      return prefix ? `${prefix}.${name}` : name;
+      return { declared: prefix ? `${prefix}.${name}` : name, id: ref.value };
+    }
+  }
+  return { declared: null, id: null };
+}
+
+// SI prefix -> multiplier, for turning a declared IfcSIUnit into millimetres.
+const SI_PREFIX = {
+  EXA: 1e18, PETA: 1e15, TERA: 1e12, GIGA: 1e9, MEGA: 1e6, KILO: 1e3, HECTO: 1e2, DECA: 10,
+  DECI: 1e-1, CENTI: 1e-2, MILLI: 1e-3, MICRO: 1e-6, NANO: 1e-9, PICO: 1e-12, FEMTO: 1e-15, ATTO: 1e-18,
+};
+
+/**
+ * How many millimetres one file-unit is, for the APPROXIMATE preflight extent only (see probeModel).
+ *
+ * Returns `null` when the unit cannot be resolved — deliberately, and the caller must handle it.
+ * An earlier cut used a five-entry metric lookup that silently fell back to a factor of 1. That is
+ * exactly the failure this whole feature was built to avoid: an imperial file (IfcConversionBasedUnit,
+ * e.g. inches) would be scaled by 1 and reported as a bbox "in millimetres" that was wrong by 25.4x,
+ * with nothing to indicate it. A guessed factor is worse than an honest unknown.
+ *
+ * Handles both shapes IFC allows for a length unit:
+ *  - IfcSIUnit — Name METRE plus an optional Prefix.
+ *  - IfcConversionBasedUnit — a named unit (inch, foot) whose ConversionFactor is an IfcMeasureWithUnit
+ *    giving its size in terms of another unit, which is itself resolved recursively.
+ */
+export function unitToMMForTest(api, modelID, unitId) { return unitToMM(api, modelID, unitId); }
+
+function unitToMM(api, modelID, unitId, depth = 0) {
+  if (depth > 4) return null; // a malformed file could otherwise cycle through ConversionFactor
+  let u;
+  try { u = api.GetLine(modelID, unitId); } catch { return null; }
+  if (!u) return null;
+  const name = strOf(u.Name);
+  if (name === 'METRE') {
+    const prefix = strOf(u.Prefix);
+    const mult = prefix ? SI_PREFIX[prefix] : 1;
+    return mult == null ? null : 1000 * mult; // metres -> mm
+  }
+  const cf = u.ConversionFactor && u.ConversionFactor.value;
+  if (cf != null) {
+    let m;
+    try { m = api.GetLine(modelID, cf); } catch { return null; }
+    const value = strOf(m && m.ValueComponent);
+    const compId = m && m.UnitComponent && m.UnitComponent.value;
+    if (typeof value === 'number' && compId != null) {
+      const base = unitToMM(api, modelID, compId, depth + 1);
+      return base == null ? null : value * base;
     }
   }
   return null;
 }
-
-// Declared unit -> millimetres, for the APPROXIMATE preflight extent only (see probeModel). Unknown
-// units fall back to 1 rather than guessing a scale that would misreport how big the file is.
-const UNIT_TO_MM = {
-  'MILLI.METRE': 1, 'METRE': 1000, 'CENTI.METRE': 10, 'DECI.METRE': 100, 'KILO.METRE': 1e6,
-};
 
 /**
  * The physical elements placed in the spatial structure, via IfcRelContainedInSpatialStructure.
@@ -245,8 +324,20 @@ function placedElements(api, modelID) {
  * authoritative extent — that comes from real geometry in `read-model`.
  */
 export function probeModel(api, modelID) {
-  const declared = declaredUnit(api, modelID);
-  const toMM = UNIT_TO_MM[declared] ?? 1;
+  const { declared, id: unitId } = lengthUnit(api, modelID);
+  const toMM = unitId == null ? null : unitToMM(api, modelID, unitId);
+  // An unresolvable unit means we cannot state the extent in millimetres. Say so with `bbox: null`
+  // rather than emitting a plausible-looking box scaled by a guessed 1 — a wrong extent is what
+  // drives a consumer's "this looks 1000x off" logic, so a guess here causes the exact misjudgement
+  // the size check exists to make correctly.
+  if (toMM == null) {
+    return {
+      schema: api.GetModelSchema ? api.GetModelSchema(modelID) : null,
+      units: { declared },
+      elements: placedElements(api, modelID).size,
+      bbox: null,
+    };
+  }
   const min = [Infinity, Infinity, Infinity];
   const max = [-Infinity, -Infinity, -Infinity];
   const pts = api.GetLineIDsWithType(modelID, WebIFC.IFCCARTESIANPOINT);
@@ -262,12 +353,14 @@ export function probeModel(api, modelID) {
       if (v > max[k]) max[k] = v;
     }
   }
+  // No usable 3D points → null, NOT a zero box. A zero box is a claim ("this model is a point at the
+  // origin"); null is the truth ("we could not tell").
   const empty = !Number.isFinite(min[0]);
   return {
     schema: api.GetModelSchema ? api.GetModelSchema(modelID) : null,
     units: { declared },
     elements: placedElements(api, modelID).size,
-    bbox: empty ? { min: [0, 0, 0], max: [0, 0, 0] } : { min, max },
+    bbox: empty ? null : { min, max },
   };
 }
 
@@ -286,6 +379,11 @@ function typeName(code) {
 }
 
 // element expressID -> the name of the spatial structure (storey) containing it.
+//
+// Spatial containment is only ever declared on the OUTERMOST element: IFC forbids an assembly's parts
+// from also being contained, so a bolt inside an IfcElementAssembly has no containment of its own.
+// Reading direct containment alone therefore reports `storey: null` for every part of every assembly —
+// so aggregated children inherit their parent's storey, transitively.
 function storeyByElement(api, modelID) {
   const out = new Map();
   const rels = api.GetLineIDsWithType(modelID, WebIFC.IFCRELCONTAINEDINSPATIALSTRUCTURE);
@@ -296,6 +394,20 @@ function storeyByElement(api, modelID) {
     let label = null;
     try { label = strOf(api.GetLine(modelID, structId).Name) ?? null; } catch { /* unnamed storey */ }
     for (const e of rel.RelatedElements || []) if (e && e.value != null) out.set(e.value, label);
+  }
+  // Push each containment down through IfcRelAggregates. Repeat until nothing new is learned so a
+  // nested assembly resolves at any depth; the pass count is bounded so a cyclic file cannot spin.
+  const children = assemblyChildren(api, modelID);
+  for (let pass = 0; pass < 8; pass++) {
+    let learned = 0;
+    for (const [parent, kids] of children) {
+      if (!out.has(parent)) continue;
+      const label = out.get(parent);
+      for (const kid of kids) {
+        if (kid != null && !out.has(kid)) { out.set(kid, label); learned++; }
+      }
+    }
+    if (!learned) break;
   }
   return out;
 }
@@ -335,7 +447,28 @@ function materialByElement(api, modelID) {
     if (matId == null) continue;
     const name = nameOf(matId);
     if (!name) continue;
+    // Note this keys on whatever the relationship points at — which may be an element OCCURRENCE or
+    // an element TYPE. The type case is resolved below.
     for (const e of rel.RelatedObjects || []) if (e && e.value != null) out.set(e.value, name);
+  }
+
+  // IFC lets a material be attached to the element TYPE rather than each occurrence, with the
+  // occurrence free to override it. Following only direct associations therefore returns null for
+  // perfectly ordinary files — and since `material` is the signal that says DO NOT CONVERT THIS, a
+  // null there silently re-arms the exact mistake it exists to prevent (converting timber to steel).
+  // So walk IfcRelDefinesByType and let each occurrence inherit its type's material, without ever
+  // overwriting a material the occurrence declared for itself.
+  const byType = api.GetLineIDsWithType(modelID, WebIFC.IFCRELDEFINESBYTYPE);
+  for (let i = 0; i < byType.size(); i++) {
+    let rel;
+    try { rel = api.GetLine(modelID, byType.get(i)); } catch { continue; }
+    const typeId = rel.RelatingType && rel.RelatingType.value;
+    if (typeId == null) continue;
+    const inherited = out.get(typeId);
+    if (!inherited) continue;
+    for (const e of rel.RelatedObjects || []) {
+      if (e && e.value != null && !out.has(e.value)) out.set(e.value, inherited);
+    }
   }
   return out;
 }
@@ -390,6 +523,7 @@ export function readModel(api, modelID, maxVertices = Infinity) {
   const materials = materialByElement(api, modelID);
   const objects = [];
   let budget = maxVertices;
+  let skipped = 0; // products web-ifc streamed but that carry no drawable triangle
 
   api.StreamAllMeshes(modelID, (flatMesh) => {
     const positions = [];
@@ -418,7 +552,8 @@ export function readModel(api, modelID, maxVertices = Infinity) {
     }
     // A part is renderable only with >=3 vertices and >=1 triangle. Drop the degenerate ones: an object
     // that loads but cannot be drawn is worse than an absent one, because it looks like success.
-    if (positions.length < 9 || indices.length < 3) return;
+    // Dropping them SILENTLY would be the same mistake one level up, so they are counted and reported.
+    if (positions.length < 9 || indices.length < 3) { skipped++; return; }
 
     budget -= positions.length / 3;
     if (budget < 0) {
@@ -440,7 +575,7 @@ export function readModel(api, modelID, maxVertices = Infinity) {
     });
   });
 
-  return { objects };
+  return { objects, skipped };
 }
 
 function extractConnection(api, modelID, guid) {
@@ -489,9 +624,9 @@ export async function openApi(ifcPath) {
   // quiets web-ifc at the source, which is what keeps the test path clean.
   const api = new WebIFC.IfcAPI();
   // When packaged as a single-file exe (Node SEA), web-ifc can't auto-locate its .wasm relative to a
-  // real module on disk — point it at the .wasm shipped alongside the exe. Plain `node index.mjs`
-  // (dev) runs from node.exe, so the basename starts with "node" → skip and let web-ifc auto-locate.
-  if (!basename(process.execPath).toLowerCase().startsWith('node')) {
+  // real module on disk — point it at the .wasm shipped alongside the exe. Under plain `node` we skip
+  // it and let web-ifc auto-locate.
+  if (isPackagedExe()) {
     api.SetWasmPath(dirname(process.execPath) + sep, true);
   }
   await api.Init();
@@ -551,8 +686,7 @@ async function main() {
 // CJS inside a renamed node.exe, where argv[1] is not this script and may be absent entirely — an
 // argv-first guard would evaluate false and leave the bridge silently doing nothing, which is a far
 // worse failure than the one the guard prevents.
-const isPackagedExe = !basename(process.execPath).toLowerCase().startsWith('node');
-const invokedDirectly = isPackagedExe
+const invokedDirectly = isPackagedExe()
   || (!!process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href);
 if (invokedDirectly) {
   main().catch((e) => {
