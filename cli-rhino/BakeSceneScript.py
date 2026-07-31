@@ -16,6 +16,20 @@ def row(record_id, kind, status, code=None, message=None):
         value["message"] = message
     return value
 
+class BakeFailure(Exception):
+    """A failure inside the mutation block that names its own receipt code.
+
+    Everything raised in there otherwise lands as `materialization-failed`,
+    which is right for geometry that Rhino refused to build but wrong for a
+    precondition the document itself denied — a caller cannot tell "this shape
+    is bad" from "this document would not give us an undo record" and so cannot
+    tell a retry from a fix. Carrying the code keeps that distinction.
+    """
+
+    def __init__(self, code, message):
+        Exception.__init__(self, message)
+        self.code = code
+
 scene = args.get("scene")
 supported = args.get("supported")
 unsupported = args.get("unsupported")
@@ -452,9 +466,15 @@ layer_created = False
 active_id = "scene"
 
 try:
+    # Rhino answers 0 when it will not open a record — undo recording is off, or
+    # a record is already open and this one would nest. Every mutation below is
+    # only reversible because it belongs to this record, so a zero serial has to
+    # abort BEFORE the first layer read, not merely skip EndUndoRecord.
     undo_serial = doc.BeginUndoRecord("AWARE bake-scene {}".format(str(meta.get("name") or "scene")))
     if not undo_serial:
-        raise RuntimeError("Rhino refused to begin the bake undo record")
+        raise BakeFailure(
+            "undo-unavailable",
+            "Rhino refused to begin the bake undo record, so the batch would not be undoable as one step")
 
     layer = doc.Layers.FindName(layer_name)
     if layer is None:
@@ -591,18 +611,19 @@ except Exception as ex:
     except Exception:
         cleanup_ok = False
 
+    cause_code = ex.code if isinstance(ex, BakeFailure) else "materialization-failed"
     failure_rows = []
     cause_seen = False
     for plan in plans:
         cause = plan["id"] == active_id and not cause_seen
         failure_rows.append(row(
             plan["id"], plan["kind"], "failed",
-            "materialization-failed" if cause else "batch-aborted",
+            cause_code if cause else "batch-aborted",
             str(ex) if cause else "Batch was aborted after another member failed."))
         if cause:
             cause_seen = True
     if not cause_seen:
-        failure_rows.insert(0, row(active_id, "scene", "failed", "materialization-failed", str(ex)))
+        failure_rows.insert(0, row(active_id, "scene", "failed", cause_code, str(ex)))
     if not cleanup_ok:
         warnings.append(row(
             "scene", "scene", "warning", "commit-state-uncertain",
