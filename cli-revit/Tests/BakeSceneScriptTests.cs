@@ -163,6 +163,11 @@ public class BakeSceneScriptTests
         AddFromType(typeof(JsonSerializer));
         references.Add(MetadataReference.CreateFromFile(Path.Combine(revitDir, "RevitAPI.dll")));
         references.Add(MetadataReference.CreateFromFile(Path.Combine(revitDir, "RevitAPIUI.dll")));
+        // The add-in: the script hands a Pending transaction to its persistent custody
+        // type (#337). ScriptEngine adds this same reference at run time. Referencing the
+        // assembly by path reads metadata only — it does not load Revit here.
+        references.Add(MetadataReference.CreateFromFile(
+            typeof(AwareRevit.AddIn.AwarePendingRevitCommits).Assembly.Location));
 
         // ScriptEngine supplies `uiapp` and `args` as globals; declare them as
         // locals instead so this compile needs no compile-time Revit reference in

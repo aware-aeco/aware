@@ -124,7 +124,7 @@ internal static class ScriptEngine
                         // run Revit's finalizer, which rolls back exactly the edit we are
                         // protecting. Suppress the finalizer and hold a durable root.
                         leftWithRevit = true;
-                        AwarePendingCommits.LeaveWithRevit(tx);
+                        AwarePendingRevitCommits.LeaveWithRevit(tx);
                         throw new Exception(
                             "Revit left the exec's transaction unresolved (status: Pending) — its "
                             + "failure processing is still running and it now owns the outcome. "
@@ -237,6 +237,10 @@ internal static class ScriptEngine
         Add(typeof(System.Text.Json.JsonSerializer));
         Add(typeof(Autodesk.Revit.UI.UIApplication));  // RevitAPIUI
         Add(typeof(Autodesk.Revit.DB.Document));       // RevitAPI
+        // This add-in. The bake script hands a Pending transaction to
+        // AwarePendingRevitCommits, and that custody has to live in something that
+        // outlives a single Roslyn submission — which is exactly this assembly (#337).
+        Add(typeof(AwarePendingRevitCommits));
 
         // De-dup by file path.
         return refs

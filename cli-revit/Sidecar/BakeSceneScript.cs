@@ -467,7 +467,10 @@ try
             // Revit went on to commit, a caller told "nothing landed" would re-run and
             // duplicate the scene.
             leftWithRevit = true;
-            AwarePendingCommits.LeaveWithRevit(tx);
+            // Custody lives in the add-in, not in this script: this text is recompiled
+            // per request, so anything static here dies with the request and could never
+            // release what a previous bake rooted (#337).
+            AwareRevit.AddIn.AwarePendingRevitCommits.LeaveWithRevit(tx);
             retired.Clear();
             var unresolved = new List<Dictionary<string, object>>();
             foreach (var record in parsed.SupportedOrder)

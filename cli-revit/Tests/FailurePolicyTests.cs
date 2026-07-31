@@ -7,6 +7,7 @@
 // testable without Revit. The plumbing around it is covered by
 // BakeSceneScriptTests' compile-against-the-real-RevitAPI check.
 
+using AwareRevit.Sidecar;
 using Xunit;
 
 namespace AwareRevit.Tests;
@@ -66,21 +67,26 @@ public class FailurePolicyTests
     }
 
     [Fact]
-    public void OnlyATransactionRevitHasFinishedWithIsReleased()
+    public void PendingCustodyLivesSomewhereThatOutlivesOneRequest()
     {
-        // The root exists because an unrooted Transaction can still have Revit's
-        // finalizer run, and that rolls back the edit this path protects. But it must not
-        // root forever: Pending resolves asynchronously, so a long-lived Revit session
-        // would otherwise leak a native transaction per occurrence. Release exactly the
-        // finished ones.
-        Assert.True(AwarePendingCommits.ShouldRelease(hasEnded: true));
-        Assert.False(AwarePendingCommits.ShouldRelease(hasEnded: false));
+        // The bake script is a Roslyn submission compiled fresh per request, so anything
+        // static declared in that text is a NEW type each time — it could never release
+        // what an earlier bake rooted, and with finalization suppressed that strands a
+        // native transaction until Revit exits. Custody therefore has to sit in the
+        // add-in assembly, which outlives the request, and be reachable from the script.
+        var custody = typeof(AwareRevit.AddIn.AwarePendingRevitCommits);
+        Assert.True(custody.IsPublic, "the bake script reaches this from another assembly");
+        Assert.Equal("AwareRevit", custody.Assembly.GetName().Name);
+
+        // And the script must be able to name it: ScriptEngine adds this assembly to the
+        // reference set precisely so the hand-off compiles.
+        Assert.Contains("AwarePendingRevitCommits", BakeSceneScript.Code);
     }
 
-    // AwarePendingCommits' other members (LeaveWithRevit, ReleaseFinished, Count) cannot
-    // be exercised here: they touch Autodesk.Revit.DB.Transaction, and Revit's assemblies
-    // are referenced with Private=false — Revit owns them at run time and they are never
-    // copied beside the tests, so the JIT cannot even resolve the signatures. That is why
-    // the decision above is factored out as a plain bool. The plumbing around it is
-    // covered by BakeSceneScriptTests' compile-against-the-real-RevitAPI check.
+    // AwarePendingRevitCommits' behaviour (LeaveWithRevit / ReleaseFinished / Count)
+    // cannot be exercised here: it touches Autodesk.Revit.DB.Transaction, and Revit's
+    // assemblies are referenced with Private=false — Revit owns them at run time and they
+    // are never copied beside the tests, so the JIT cannot resolve the signatures. That
+    // is why the *decision* above is a plain bool. The plumbing is covered by
+    // BakeSceneScriptTests' compile-against-the-real-RevitAPI check.
 }
