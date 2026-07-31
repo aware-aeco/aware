@@ -20,19 +20,28 @@ aware-steel-detailer-us describe
 
 **Output:** JSON to stdout, **UTF-8**, matching the schema:
 
-> **Decode it as UTF-8 explicitly.** The output carries non-ASCII characters — `²`, `³`, `⁴` and `⁶`
-> in the `units` and `value` strings (`area A = 7.58 in²`), `¼` in bolt rules, `—` in prose fields.
-> A caller that lets its runtime pick the console codepage instead will **throw while decoding**,
-> and the usual shape of that bug is a wrapper swallowing the error and returning *no value for
-> every lookup* — a total, silent failure that reads like an empty rules database rather than an
-> encoding problem.
+> **Decode the output as UTF-8 explicitly — do not let the runtime pick a console codepage.**
+> The payload carries non-ASCII characters: `²`, `³`, `⁴` and `⁶` in the `units` and `value` strings (`area A = 7.58 in²`), `¼` in bolt rules, `—` in prose.
 >
-> This is the normal case here, not an edge one: measured across all 2161 rule ids, **2093 of them**
-> fail to decode under cp1250 while every one is clean UTF-8 (`UnicodeDecodeError: 'charmap' codec
-> can't decode byte 0x81`). Nearly every `section.*` rule carries `in²`/`in⁴`.
+> Two failure modes follow from getting this wrong, and the quiet one is the dangerous one. Both
+> were measured against this binary on Windows with the console codepage forced to cp1250:
 >
-> In Python pass `encoding='utf-8'` to `subprocess.run(...)`/`check_output(...)`; in Node set
-> `{ encoding: 'utf8' }`; in PowerShell set `[Console]::OutputEncoding` before capturing.
+> | decoder | what happens |
+> |---|---|
+> | strict (Python `subprocess` default text mode) | raises `UnicodeDecodeError: 'charmap' codec can't decode byte 0x81`. A wrapper that swallows it returns **no value at all**, which reads like an empty rules database rather than an encoding fault. |
+> | lenient (Windows PowerShell 5.1 native-command capture) | **does not raise.** The bytes become `U+FFFD` replacement characters, so `in²` silently disappears and the caller parses corrupted strings without ever learning they were corrupted. |
+>
+> This is the normal case here, not an edge one: **2093 of the 2161** rule ids are affected — nearly every `section.*` rule carries `in²`/`in⁴`.
+>
+> To decode correctly:
+>
+> - **Python** — pass `encoding='utf-8'` to `subprocess.run(...)` / `check_output(...)`, or decode
+>   the raw bytes with `.decode('utf-8')`.
+> - **Node** — `{ encoding: 'utf8' }` covers `execFile`, `exec` and `spawnSync`. For `spawn`, set it
+>   on the stream instead: `child.stdout.setEncoding('utf8')`.
+> - **PowerShell / .NET** — set `[Console]::OutputEncoding` before capturing a native command. That
+>   does **not** reach `System.Diagnostics.Process`; there, set
+>   `ProcessStartInfo.StandardOutputEncoding` explicitly. PowerShell 7 already defaults to UTF-8.
 
 ```json
 {
