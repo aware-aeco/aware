@@ -20,28 +20,30 @@ aware-steel-detailer-uk describe
 
 **Output:** JSON to stdout, **UTF-8**, matching the schema:
 
-> **Decode the output as UTF-8 explicitly — do not let the runtime pick a console codepage.**
-> The payload carries non-ASCII characters: `§` in clause references, `—` in prose, `²`, `·`, `≤` and `γ` in expressions.
+> **Decode the output as UTF-8 explicitly — never let the runtime pick a console codepage.**
+> The payload carries non-ASCII characters: `§` in clause references, `—` in prose, and `²`, `·`, `≤`, `γ` in expressions.
 >
-> Two failure modes follow from getting this wrong, and the quiet one is the dangerous one. Both
-> were measured against this binary on Windows with the console codepage forced to cp1250:
+> Getting this wrong fails in one of two ways, and the quiet one is the dangerous one. Both were
+> measured against this binary on Windows with the codepage forced to cp1250:
 >
-> | decoder | what happens |
-> |---|---|
-> | strict (Python `subprocess` default text mode) | raises `UnicodeDecodeError: 'charmap' codec can't decode byte 0x81`. A wrapper that swallows it returns **no value at all**, which reads like an empty rules database rather than an encoding fault. |
-> | lenient (Windows PowerShell 5.1 native-command capture) | **does not raise.** The bytes become `U+FFFD` replacement characters, so `in²` silently disappears and the caller parses corrupted strings without ever learning they were corrupted. |
+> | decoder | what happens | rules affected |
+> |---|---|---|
+> | **strict** — Python `subprocess` text mode | raises `UnicodeDecodeError`. A wrapper that swallows it returns **no value**, which reads like an empty rules database rather than an encoding fault. | 2 of 49 |
+> | **lenient** — Windows PowerShell 5.1 native-command capture | **does not raise.** The text comes back as mojibake — `in²` arrives as `inÂ˛` (`U+00C2 U+02DB`) — so the caller parses corrupted strings and never learns they were corrupted. | **49 of 49** |
 >
-> Only **2 of the 49** rule ids are affected — but they are ordinary rules, not exotica, so a caller that decodes loosely corrupts them silently.
+> Note which column is larger. A strict decoder at least fails loudly on some rules; a lenient one
+> quietly corrupts **49 of the 49**. Reading a number out of a corrupted `value`
+> string is how a wrong figure reaches a drawing.
 >
 > To decode correctly:
 >
 > - **Python** — pass `encoding='utf-8'` to `subprocess.run(...)` / `check_output(...)`, or decode
 >   the raw bytes with `.decode('utf-8')`.
-> - **Node** — `{ encoding: 'utf8' }` covers `execFile`, `exec` and `spawnSync`. For `spawn`, set it
->   on the stream instead: `child.stdout.setEncoding('utf8')`.
-> - **PowerShell / .NET** — set `[Console]::OutputEncoding` before capturing a native command. That
->   does **not** reach `System.Diagnostics.Process`; there, set
->   `ProcessStartInfo.StandardOutputEncoding` explicitly. PowerShell 7 already defaults to UTF-8.
+> - **Node** — `{ encoding: 'utf8' }` covers `execFile`, `exec` and `spawnSync`. Asynchronous
+>   `spawn` needs it on the stream instead: `child.stdout.setEncoding('utf8')`.
+> - **PowerShell / .NET** — set `[Console]::OutputEncoding` to UTF-8 before capturing a native
+>   command. That does **not** reach `System.Diagnostics.Process`; there, set
+>   `ProcessStartInfo.StandardOutputEncoding`. PowerShell 7 already defaults to UTF-8.
 
 ```json
 {
@@ -88,7 +90,8 @@ If `found: false`, the consumer reports "rule not in verified database" and does
 Binary: `aware-steel-detailer-uk`, shipped in the aware release archive and MSI from v0.98.0, next to `aware`, where the CLI resolves it directly — no local build needed (the same project produces all three region binaries). Rules file is installed by `aware agent install steel-detailer-uk` — the binary reads it from `<AWARE_HOME>/agents/steel-detailer-uk/rules/`, so both steps are needed. To build from source instead, `cargo build --release` in `20-agents/aeco/engineering/steel-detailer-lookup/`.
 
 **Invoking it directly.** The `aware` CLI finds this binary on its own (it looks beside
-its own executable), so dispatching the agent from an app works on every install. Typing
+its own executable, then falling back to PATH), so dispatching the agent from an app works on
+every install that actually ships the binary. Typing
 `aware-steel-detailer-uk ...` as a bare shell command additionally needs it on PATH, which
 depends on how aware was installed:
 
@@ -100,7 +103,8 @@ depends on how aware was installed:
 | built from source | only if you copy it out of `target/release/` yourself |
 
 If the bare command is not found, dispatch the agent through an app instead of invoking
-the binary by hand — that path always resolves.
+the binary by hand — that path resolves wherever the binary was shipped alongside `aware`,
+which is every install channel above except a from-source build you have not copied out.
 
 ## Source
 
