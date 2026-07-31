@@ -20,6 +20,30 @@ public class ReceiptsTests
     }
 
     [Fact]
+    public void ExecOk_CarriesRevitsCommitWarningsToTheCaller()
+    {
+        // An unattended exec suppresses Revit's failure dialog, so the receipt is the
+        // only place its objection can land. Dropping it here would leave the caller
+        // with no indication at all — the whole point of collecting them (#337).
+        var r = Receipts.ExecOk(JsonNode.Parse("1"), "2026", 7, "",
+            new[] { "Beam or Brace is slightly off axis and may cause inaccuracies.", "Second" });
+
+        var warnings = r["warnings"]!.AsArray();
+        Assert.Equal(2, warnings.Count);
+        Assert.Equal("Beam or Brace is slightly off axis and may cause inaccuracies.",
+            warnings[0]!.GetValue<string>());
+        Assert.Equal("Second", warnings[1]!.GetValue<string>());
+    }
+
+    [Fact]
+    public void ExecOk_OmitsWarningsWhenRevitRaisedNone()
+    {
+        // The common case must not grow a noisy empty array.
+        Assert.Null(Receipts.ExecOk(JsonNode.Parse("1"), "2026", 7, "")["warnings"]);
+        Assert.Null(Receipts.ExecOk(JsonNode.Parse("1"), "2026", 7, "", Array.Empty<string>())["warnings"]);
+    }
+
+    [Fact]
     public void ExecFail_SetsOkFalse()
     {
         var r = Receipts.ExecFail("nope", "stack here", "stdout here");
