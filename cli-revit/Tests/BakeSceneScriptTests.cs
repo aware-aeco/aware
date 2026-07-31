@@ -46,7 +46,17 @@ public class BakeSceneScriptTests
         var rules = BakeSceneScript.LoadRulesSource();
         Assert.Contains("internal static class AwareBakeRules", rules);
         Assert.Contains("MmPerFoot = 304.8", rules);
-        Assert.Equal(BakeSceneScript.Header + rules + BakeSceneScript.Body, BakeSceneScript.Code);
+
+        // The failure preprocessor is spliced in as source too, so the bake resolves
+        // Revit's end-of-transaction failures with byte-identical logic to `exec`,
+        // which compiles the same file (#337).
+        var preprocessor = BakeSceneScript.LoadPreprocessorSource();
+        Assert.Contains("internal sealed class AwareFailurePreprocessor", preprocessor);
+        Assert.Contains("internal static class AwareFailurePolicy", preprocessor);
+
+        Assert.Equal(
+            BakeSceneScript.Header + rules + preprocessor + BakeSceneScript.Body,
+            BakeSceneScript.Code);
     }
 
     static readonly System.Text.RegularExpressions.Regex UsingDirective =
@@ -160,7 +170,8 @@ public class BakeSceneScriptTests
         // compiles with the nullable context off.
         const string globalsStub = "UIApplication uiapp = null;\nIDictionary<string, object> args = null;\n";
         var code = BakeSceneScript.Header + globalsStub
-            + BakeSceneScript.LoadRulesSource() + BakeSceneScript.Body;
+            + BakeSceneScript.LoadRulesSource() + BakeSceneScript.LoadPreprocessorSource()
+            + BakeSceneScript.Body;
 
         var options = ScriptOptions.Default
             .WithReferences(references)

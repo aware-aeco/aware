@@ -31,6 +31,16 @@
     <EmbeddedResource Include="BakeSceneRules.cs" LogicalName="BakeSceneRules.cs" />
   </ItemGroup>
 
+  <!-- FailurePreprocessor.cs is embedded the same way, but NOT compiled here:
+       it touches Autodesk.Revit.DB types, and this sidecar is deliberately
+       Revit-version-neutral (it references no Revit assembly — that is why the
+       bake runs as a script in the first place). The add-in compiles the same
+       file via a link, so `exec` and `bake-scene` share one text. -->
+  <ItemGroup>
+    <Compile Remove="FailurePreprocessor.cs" />
+    <EmbeddedResource Include="FailurePreprocessor.cs" LogicalName="FailurePreprocessor.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="AwareRevit.Tests" />
   </ItemGroup>

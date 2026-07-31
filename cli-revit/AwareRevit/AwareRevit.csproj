@@ -27,6 +27,15 @@
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
+  <!-- The failure preprocessor lives beside the sidecar's bake script, which
+       embeds it as source. Compile the SAME file here so `exec` resolves Revit's
+       end-of-transaction failures with byte-identical logic to `bake-scene`
+       (#337). The sidecar itself cannot compile it — it references no Revit
+       assembly by design. -->
+  <ItemGroup>
+    <Compile Include="..\Sidecar\FailurePreprocessor.cs" Link="FailurePreprocessor.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="AwareRevit.Tests" />
   </ItemGroup>
