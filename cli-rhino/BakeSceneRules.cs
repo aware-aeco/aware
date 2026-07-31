@@ -125,19 +125,29 @@ internal static class BakeSceneRules
                 var id = Str(element, "id");
                 var kind = Str(element, "kind").Trim().ToLowerInvariant();
                 if (kind.Length == 0) kind = "member";
-                if (!AcceptId(id, kind, pf, seen)) continue;
-                if (kind == "member")
+                // A rejected id withholds this element's OWN row, but never its
+                // nested collection: the descendants have ids of their own, and
+                // skipping them drops them from the receipt and — worse — from
+                // `seen`, so a duplicate hiding under a bad parent escapes
+                // detection until the parent is fixed (#327). Same rule already
+                // applied one level lower, to a rejected bolt instance and its
+                // holeEffects (#326).
+                var accepted = AcceptId(id, kind, pf, seen);
+                if (accepted)
                 {
-                    supported.Add((id, kind));
-                    var profile = ValidateMember(element, id, pf);
-                    var supportedRow = new JsonObject { ["id"] = id, ["kind"] = kind };
-                    if (profile is not null) supportedRow["profile"] = profile.ToJson();
-                    pf.Supported.Add(supportedRow);
-                }
-                else
-                {
-                    pf.Unsupported.Add(Row(id, kind, "unsupported", "unsupported-kind",
-                        "element kind is not supported by the Rhino member sink"));
+                    if (kind == "member")
+                    {
+                        supported.Add((id, kind));
+                        var profile = ValidateMember(element, id, pf);
+                        var supportedRow = new JsonObject { ["id"] = id, ["kind"] = kind };
+                        if (profile is not null) supportedRow["profile"] = profile.ToJson();
+                        pf.Supported.Add(supportedRow);
+                    }
+                    else
+                    {
+                        pf.Unsupported.Add(Row(id, kind, "unsupported", "unsupported-kind",
+                            "element kind is not supported by the Rhino member sink"));
+                    }
                 }
 
                 if (kind == "plate")
@@ -158,9 +168,10 @@ internal static class BakeSceneRules
                 var id = Str(operation, "id");
                 var kind = Str(operation, "kind").Trim().ToLowerInvariant();
                 if (kind.Length == 0) kind = "operation";
-                if (!AcceptId(id, kind, pf, seen)) continue;
-                pf.Unsupported.Add(Row(id, kind, "unsupported", "unsupported-operation",
-                    "operation kind is not supported by the Rhino member sink"));
+                // Withhold only this operation's own row; still walk its instances (#327).
+                if (AcceptId(id, kind, pf, seen))
+                    pf.Unsupported.Add(Row(id, kind, "unsupported", "unsupported-operation",
+                        "operation kind is not supported by the Rhino member sink"));
                 if (kind == "bolt-array")
                 {
                     if (operation["instances"] is JsonArray instances)
@@ -201,9 +212,10 @@ internal static class BakeSceneRules
                 var id = Str(reference, "id");
                 var kind = Str(reference, "kind").Trim().ToLowerInvariant();
                 if (kind.Length == 0) kind = "reference-system";
-                if (!AcceptId(id, kind, pf, seen)) continue;
-                pf.Unsupported.Add(Row(id, kind, "unsupported", "unsupported-reference-system",
-                    "reference system kind is not supported by the Rhino member sink"));
+                // Withhold only this system's own row; still walk axes + levels (#327).
+                if (AcceptId(id, kind, pf, seen))
+                    pf.Unsupported.Add(Row(id, kind, "unsupported", "unsupported-reference-system",
+                        "reference system kind is not supported by the Rhino member sink"));
                 AddChildren(reference, "axes", "grid-axis", "grid axis", pf, seen);
                 AddChildren(reference, "levels", "grid-level", "grid level", pf, seen);
             }

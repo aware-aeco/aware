@@ -429,6 +429,43 @@ public class BakeSceneRulesTests
         Assert.Contains(parsed.Failed, r => (string)r["id"] == "eff-b" && (string)r["code"] == "duplicate-id");
     }
 
+    /// <summary>
+    /// The same rule one level UP (#327): a rejected parent id withholds only the parent's own row,
+    /// never its nested collection. Otherwise a duplicate hiding in the subtree of a bad parent only
+    /// surfaces after the parent is fixed, and the refusal names the bad parent while saying nothing
+    /// about what is underneath it.
+    /// </summary>
+    [Fact]
+    public void ParseScene_ClassifiesNestedRecordsEvenWhenTheParentIdIsRejected()
+    {
+        var parsed = AwareBakeRules.ParseScene(Json("""
+        {
+          "meta": { "units": "mm", "sourceId": "s", "sceneHash": "h" },
+          "elements": [
+            { "id": "dup", "kind": "member" },
+            { "id": "dup", "kind": "plate", "holes": [ { "id": "h-a" }, { "id": "h-b" } ] }
+          ],
+          "referenceSystems": [
+            { "id": " bad ", "kind": "structural-grid",
+              "axes": [ { "id": "ax-a" } ], "levels": [ { "id": "h-b" } ] }
+          ]
+        }
+        """));
+
+        Assert.False(parsed.Ok);
+        // The plate's id collides with the member's, so the plate itself fails and
+        // contributes no row of its own...
+        Assert.Contains(parsed.Failed, r => (string)r["id"] == "dup" && (string)r["code"] == "duplicate-id");
+        Assert.DoesNotContain(parsed.Unsupported, r => (string)r["id"] == "dup");
+        // ...but its holes are classified anyway, as are the axes beneath a malformed
+        // reference-system id.
+        Assert.Contains(parsed.Unsupported, r => (string)r["id"] == "h-a" && (string)r["kind"] == "opening");
+        Assert.Contains(parsed.Unsupported, r => (string)r["id"] == "ax-a" && (string)r["kind"] == "grid-axis");
+        // ...and they still claim ids, so the duplicate ACROSS two rejected parents'
+        // subtrees is caught — exactly what the old `continue` dropped.
+        Assert.Contains(parsed.Failed, r => (string)r["id"] == "h-b" && (string)r["code"] == "duplicate-id");
+    }
+
     [Fact]
     public void AppendBatchAborted_GivesEverySupportedRecordAVerdict()
     {

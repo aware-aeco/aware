@@ -208,12 +208,19 @@ internal static class BakeScene
             var kind = Str(record, "kind").ToLowerInvariant();
             if (kind.Length == 0) kind = defaultKind;
 
-            if (!AcceptId(id, kind, pf, seen)) continue;
-
-            if (Array.IndexOf(materialized, kind) >= 0)
-                pf.Supported.Add(new JsonObject { ["id"] = id, ["kind"] = kind });
-            else
-                pf.Unsupported.Add(Row(id, kind, "unsupported", unsupportedCode, unsupportedMessage));
+            // A rejected id withholds this record's OWN row, but never its nested
+            // collection. Those records have ids of their own: skipping them drops
+            // them from the receipt and from `seen`, so a duplicate hiding beneath a
+            // bad parent stays invisible until the parent is fixed (#327). This is
+            // exactly the rule ClassifyNested already applies one level lower, to a
+            // rejected bolt instance and its holeEffects (#326).
+            if (AcceptId(id, kind, pf, seen))
+            {
+                if (Array.IndexOf(materialized, kind) >= 0)
+                    pf.Supported.Add(new JsonObject { ["id"] = id, ["kind"] = kind });
+                else
+                    pf.Unsupported.Add(Row(id, kind, "unsupported", unsupportedCode, unsupportedMessage));
+            }
 
             classifyNested(record, kind);
         }

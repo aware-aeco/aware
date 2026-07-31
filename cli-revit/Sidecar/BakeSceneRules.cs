@@ -460,12 +460,17 @@ internal static class AwareBakeRules
             var id = Str(el, "id");
             var kind = Str(el, "kind").ToLowerInvariant();
             if (string.IsNullOrEmpty(kind)) kind = "member";
-            if (!acceptId(id, kind)) continue;
+            // A rejected id withholds this element's OWN row, but never its nested
+            // collection — those records have ids of their own, and dropping them
+            // also drops them from the seen-set, so a duplicate beneath a bad parent
+            // escapes detection until the parent is fixed (#327).
+            var accepted = acceptId(id, kind);
 
             if (!IsSupportedElementKind(kind))
             {
-                parsed.Unsupported.Add(Row(id, kind, "unsupported", "unsupported-kind",
-                    "element kind is not supported by the Revit sink"));
+                if (accepted)
+                    parsed.Unsupported.Add(Row(id, kind, "unsupported", "unsupported-kind",
+                        "element kind is not supported by the Revit sink"));
                 // Children still get a row apiece so nothing vanishes unaccounted for. Only a plate
                 // carries `holes` in the canonical scene, so only a plate's are walked — an id the
                 // scene never declared would be as unreconcilable as one it skipped.
@@ -473,6 +478,10 @@ internal static class AwareBakeRules
                     ParseUnsupportedChildren(el, parsed, acceptId, "holes", "opening", null, null);
                 continue;
             }
+
+            // A supported kind carries no nested collection of its own, so there is
+            // nothing further to walk once its id is refused.
+            if (!accepted) continue;
 
             var member = ReadMember(el, id, kind, parsed);
             if (member == null) continue;
@@ -552,8 +561,10 @@ internal static class AwareBakeRules
             var id = Str(record, "id");
             var kind = Str(record, "kind").ToLowerInvariant();
             if (string.IsNullOrEmpty(kind)) kind = recordLabel;
-            if (!acceptId(id, kind)) continue;
-            parsed.Unsupported.Add(Row(id, kind, "unsupported", code, message));
+            // Withhold only this record's own row; its children are records in their
+            // own right and must still be classified and claimed in `seen` (#327).
+            if (acceptId(id, kind))
+                parsed.Unsupported.Add(Row(id, kind, "unsupported", code, message));
             parseChildren(record, kind);
         }
     }
