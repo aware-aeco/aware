@@ -271,6 +271,178 @@ export function probeModel(api, modelID) {
   };
 }
 
+// Numeric IFC type code -> its entity name ("IFCBEAM"). Built by reversing web-ifc's own exported
+// constants rather than hardcoding a table, so it stays correct across schema versions and web-ifc
+// upgrades. Lazily built: it is a few hundred entries and most runs never need it.
+let TYPE_NAMES = null;
+function typeName(code) {
+  if (!TYPE_NAMES) {
+    TYPE_NAMES = new Map();
+    for (const [k, v] of Object.entries(WebIFC)) {
+      if (typeof v === 'number' && k.startsWith('IFC')) TYPE_NAMES.set(v, k);
+    }
+  }
+  return TYPE_NAMES.get(code) ?? null;
+}
+
+// element expressID -> the name of the spatial structure (storey) containing it.
+function storeyByElement(api, modelID) {
+  const out = new Map();
+  const rels = api.GetLineIDsWithType(modelID, WebIFC.IFCRELCONTAINEDINSPATIALSTRUCTURE);
+  for (let i = 0; i < rels.size(); i++) {
+    const rel = api.GetLine(modelID, rels.get(i));
+    const structId = rel.RelatingStructure && rel.RelatingStructure.value;
+    if (structId == null) continue;
+    let label = null;
+    try { label = strOf(api.GetLine(modelID, structId).Name) ?? null; } catch { /* unnamed storey */ }
+    for (const e of rel.RelatedElements || []) if (e && e.value != null) out.set(e.value, label);
+  }
+  return out;
+}
+
+// element expressID -> a material name, following IfcRelAssociatesMaterial through the three shapes a
+// material association can take (a bare material, a layer set, a profile set).
+//
+// The material string is load-bearing, not decoration: it is the signal that says DO NOT CONVERT THIS.
+// A file can name a member "girder" and type it IfcBeam while its material is wood_spruce_beam — type
+// alone would happily turn timber into steel.
+function materialByElement(api, modelID) {
+  const out = new Map();
+  const nameOf = (id) => {
+    let line;
+    try { line = api.GetLine(modelID, id); } catch { return null; }
+    if (!line) return null;
+    const direct = strOf(line.Name);
+    if (direct) return direct;
+    // A layer/profile/constituent set — take the first member's material name.
+    for (const key of ['MaterialLayers', 'MaterialProfiles', 'MaterialConstituents', 'Materials', 'ForLayerSet']) {
+      const v = line[key];
+      if (!v) continue;
+      const items = Array.isArray(v) ? v : [v];
+      for (const it of items) {
+        if (it == null) continue;
+        if (it.value != null) { const n = nameOf(it.value); if (n) return n; }
+      }
+    }
+    if (line.Material && line.Material.value != null) return nameOf(line.Material.value);
+    return null;
+  };
+  const rels = api.GetLineIDsWithType(modelID, WebIFC.IFCRELASSOCIATESMATERIAL);
+  for (let i = 0; i < rels.size(); i++) {
+    let rel;
+    try { rel = api.GetLine(modelID, rels.get(i)); } catch { continue; }
+    const matId = rel.RelatingMaterial && rel.RelatingMaterial.value;
+    if (matId == null) continue;
+    const name = nameOf(matId);
+    if (!name) continue;
+    for (const e of rel.RelatedObjects || []) if (e && e.value != null) out.set(e.value, name);
+  }
+  return out;
+}
+
+// The profile NAME an element's swept-solid representation was built from ("W10X33"), or null.
+//
+// The name is what makes a catalogue lookup possible at conversion time, and §4.4 of the design makes
+// that mandatory: sections are looked up by name, NEVER measured off the mesh. This very file writes
+// W10X33 as a plain 150x250 box while the real section is 247x202, so a converter that measured would
+// come out ~25% narrow on the flange with nothing on screen looking wrong.
+function profileOf(api, modelID, expressID) {
+  let el;
+  try { el = api.GetLine(modelID, expressID); } catch { return null; }
+  const repId = el && el.Representation && el.Representation.value;
+  if (repId == null) return null;
+  let rep;
+  try { rep = api.GetLine(modelID, repId); } catch { return null; }
+  for (const r of rep.Representations || []) {
+    if (r == null || r.value == null) continue;
+    let shape;
+    try { shape = api.GetLine(modelID, r.value); } catch { continue; }
+    for (const item of shape.Items || []) {
+      if (item == null || item.value == null) continue;
+      let solid;
+      try { solid = api.GetLine(modelID, item.value); } catch { continue; }
+      const areaId = solid && solid.SweptArea && solid.SweptArea.value;
+      if (areaId == null) continue;
+      try {
+        const name = strOf(api.GetLine(modelID, areaId).ProfileName);
+        if (name) return name;
+      } catch { /* not a named profile */ }
+    }
+  }
+  return null;
+}
+
+/**
+ * `read-model` — the whole file as reference geometry.
+ *
+ * Unlike `extract`, this tessellates EVERY element rather than only connection hardware, and returns
+ * what the file says about each one (name, IFC type, storey, profile, material) alongside its mesh.
+ * Positions stay in the file's own world frame, in millimetres — a consumer re-anchors and places.
+ *
+ * `maxVertices` is an in-process CIRCUIT BREAKER, not a preflight gate. Be honest about which it is:
+ * an exact vertex count cannot be known before tessellating, so a cap applied by the caller after this
+ * returns would fire only once the oversized payload had already been built and serialised — reporting
+ * the freeze it was meant to prevent. Decrementing as meshes stream is what actually stops it. The
+ * byte-size check a caller does before invoking us is the only true preflight protection.
+ */
+export function readModel(api, modelID, maxVertices = Infinity) {
+  const storeys = storeyByElement(api, modelID);
+  const materials = materialByElement(api, modelID);
+  const objects = [];
+  let budget = maxVertices;
+
+  api.StreamAllMeshes(modelID, (flatMesh) => {
+    const positions = [];
+    const indices = [];
+    const geoms = flatMesh.geometries;
+    // NOTE: `geometries` carries one entry PER INSTANCE, each with its own flatTransformation — which
+    // is exactly how mapped/instanced items work. Do not de-duplicate by geometryExpressID: the
+    // Motebello file serves 19 objects from 14 shapes, and de-duplicating silently loses five walls.
+    for (let i = 0; i < geoms.size(); i++) {
+      const pg = geoms.get(i);
+      const geom = api.GetGeometry(modelID, pg.geometryExpressID);
+      const verts = api.GetVertexArray(geom.GetVertexData(), geom.GetVertexDataSize()); // [x,y,z,nx,ny,nz]*
+      const idx = api.GetIndexArray(geom.GetIndexData(), geom.GetIndexDataSize());
+      const m = pg.flatTransformation; // 4x4 column-major, metres
+      const base = positions.length / 3;
+      for (let v = 0; v < verts.length; v += 6) {
+        const x = verts[v], y = verts[v + 1], z = verts[v + 2];
+        positions.push(
+          (m[0] * x + m[4] * y + m[8] * z + m[12]) * M_TO_MM,
+          (m[1] * x + m[5] * y + m[9] * z + m[13]) * M_TO_MM,
+          (m[2] * x + m[6] * y + m[10] * z + m[14]) * M_TO_MM,
+        );
+      }
+      for (let k = 0; k < idx.length; k++) indices.push(base + idx[k]);
+      geom.delete();
+    }
+    // A part is renderable only with >=3 vertices and >=1 triangle. Drop the degenerate ones: an object
+    // that loads but cannot be drawn is worse than an absent one, because it looks like success.
+    if (positions.length < 9 || indices.length < 3) return;
+
+    budget -= positions.length / 3;
+    if (budget < 0) {
+      throw new Error(`that file is too complex to load as a reference model (over ${Math.round(maxVertices / 1000)}k vertices)`);
+    }
+
+    const id = flatMesh.expressID;
+    let line;
+    try { line = api.GetLine(modelID, id); } catch { line = null; }
+    objects.push({
+      id: (line && strOf(line.GlobalId)) || String(id),
+      name: (line && strOf(line.Name)) || null,
+      ifcType: typeName(api.GetLineType(modelID, id)),
+      storey: storeys.get(id) ?? null,
+      profile: profileOf(api, modelID, id),
+      material: materials.get(id) ?? null,
+      positions,
+      indices,
+    });
+  });
+
+  return { objects };
+}
+
 function extractConnection(api, modelID, guid) {
   const kids = assemblyChildren(api, modelID);
   const asmIds = api.GetLineIDsWithType(modelID, WebIFC.IFCELEMENTASSEMBLY);
