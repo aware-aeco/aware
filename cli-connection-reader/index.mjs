@@ -23,6 +23,7 @@
 
 import { readFileSync } from 'node:fs';
 import { dirname, basename, sep } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { unzipSync } from 'fflate'; // tiny pure-JS unzip for .ifczip inputs
 import * as WebIFC from 'web-ifc'; // package export resolves to the node build (auto-locates its .wasm)
 import { recognizeBasePlate, recognizeShearPlate } from './recognize.mjs'; // fit a parametric recipe from the tessellated parts
@@ -174,6 +175,102 @@ function tessellate(api, modelID, wantById) {
   return parts;
 }
 
+// ---------------------------------------------------------------------------------------------
+// probe / read-model — the whole file as a REFERENCE MODEL (borrowed geometry a consumer overlays
+// but never owns), as opposed to list/extract's one-connection-to-import job.
+// ---------------------------------------------------------------------------------------------
+
+/**
+ * What the file DECLARES as its length unit, verbatim: "MILLI.METRE" | "METRE" | … | null.
+ *
+ * This is PROVENANCE, not a conversion factor for geometry. Measured 2026-07-25: web-ifc reads
+ * IfcUnitAssignment itself and normalises tessellated geometry to metres before we ever see a vertex,
+ * so nothing downstream may multiply mesh coordinates by this. It exists so a user can see what they
+ * were handed, and so a file that LIES about its units can be spotted and overridden.
+ * (floless.app/docs/superpowers/specs/2026-07-25-reference-objects-units-evidence.md)
+ *
+ * null means the file did not say — an honest "unknown", never a guess.
+ */
+export function declaredUnit(api, modelID) {
+  const ids = api.GetLineIDsWithType(modelID, WebIFC.IFCUNITASSIGNMENT);
+  for (let i = 0; i < ids.size(); i++) {
+    const asg = api.GetLine(modelID, ids.get(i));
+    for (const ref of asg.Units || []) {
+      let u;
+      try { u = api.GetLine(modelID, ref.value); } catch { continue; }
+      if (!u || strOf(u.UnitType) !== 'LENGTHUNIT') continue;
+      const name = strOf(u.Name);
+      if (!name) continue; // a conversion-based unit (IfcConversionBasedUnit) has no .Name — skip it
+      const prefix = strOf(u.Prefix);
+      return prefix ? `${prefix}.${name}` : name;
+    }
+  }
+  return null;
+}
+
+// Declared unit -> millimetres, for the APPROXIMATE preflight extent only (see probeModel). Unknown
+// units fall back to 1 rather than guessing a scale that would misreport how big the file is.
+const UNIT_TO_MM = {
+  'MILLI.METRE': 1, 'METRE': 1000, 'CENTI.METRE': 10, 'DECI.METRE': 100, 'KILO.METRE': 1e6,
+};
+
+/**
+ * The physical elements placed in the spatial structure, via IfcRelContainedInSpatialStructure.
+ *
+ * Deliberately NOT a hardcoded list of IFC element types: that list differs across IFC2X3 / IFC4 /
+ * IFC4X3 and would silently undercount whichever schema it was not written against. Containment is
+ * schema-stable and is also the right question — "what did the author place in this building?".
+ */
+function placedElements(api, modelID) {
+  const ids = new Set();
+  const rels = api.GetLineIDsWithType(modelID, WebIFC.IFCRELCONTAINEDINSPATIALSTRUCTURE);
+  for (let i = 0; i < rels.size(); i++) {
+    const rel = api.GetLine(modelID, rels.get(i));
+    for (const e of rel.RelatedElements || []) if (e && e.value != null) ids.add(e.value);
+  }
+  return ids;
+}
+
+/**
+ * `probe` — answer the cheap questions WITHOUT tessellating: what schema, what units, how many
+ * elements, and roughly where and how big it sits.
+ *
+ * This exists so a consumer can decide whether to load a file at all before paying to tessellate it.
+ * Tessellating a 300 MB model in order to discover it is too big is the exact freeze the size cap is
+ * meant to prevent.
+ *
+ * `bbox` is APPROXIMATE and in millimetres: it comes from the file's own IfcCartesianPoints scaled by
+ * the declared unit, so it includes local profile coordinates and ignores placement nesting. It is
+ * good enough for "is this thing 1000x off, or sitting 74 m from the origin?" and is not the
+ * authoritative extent — that comes from real geometry in `read-model`.
+ */
+export function probeModel(api, modelID) {
+  const declared = declaredUnit(api, modelID);
+  const toMM = UNIT_TO_MM[declared] ?? 1;
+  const min = [Infinity, Infinity, Infinity];
+  const max = [-Infinity, -Infinity, -Infinity];
+  const pts = api.GetLineIDsWithType(modelID, WebIFC.IFCCARTESIANPOINT);
+  for (let i = 0; i < pts.size(); i++) {
+    let c;
+    try { c = api.GetLine(modelID, pts.get(i)); } catch { continue; }
+    const co = c && c.Coordinates;
+    if (!co || co.length < 3) continue; // 2D points (profile geometry) tell us nothing about extent
+    for (let k = 0; k < 3; k++) {
+      const v = (strOf(co[k]) ?? 0) * toMM;
+      if (!Number.isFinite(v)) continue;
+      if (v < min[k]) min[k] = v;
+      if (v > max[k]) max[k] = v;
+    }
+  }
+  const empty = !Number.isFinite(min[0]);
+  return {
+    schema: api.GetModelSchema ? api.GetModelSchema(modelID) : null,
+    units: { declared },
+    elements: placedElements(api, modelID).size,
+    bbox: empty ? { min: [0, 0, 0], max: [0, 0, 0] } : { min, max },
+  };
+}
+
 function extractConnection(api, modelID, guid) {
   const kids = assemblyChildren(api, modelID);
   const asmIds = api.GetLineIDsWithType(modelID, WebIFC.IFCELEMENTASSEMBLY);
@@ -205,18 +302,19 @@ function extractConnection(api, modelID, guid) {
   throw new Error(`no IfcElementAssembly with GlobalId ${guid}`);
 }
 
-async function main() {
-  const command = process.argv[2];
-  const args = JSON.parse(readStdin() || '{}');
-  const ifcPath = args['ifc-path'] || args.ifcPath || args.path;
-  if (!ifcPath) throw new Error('`ifc-path` is required');
-
-  // web-ifc's WASM prints diagnostics to stdout (C++ printf → Module.print); the bridge protocol
-  // requires PURE JSON on stdout. Route any stray stdout to stderr while we work, and restore it
-  // only to emit the result. SetLogLevel(OFF) quiets the diagnostics at the source too.
-  const realWrite = process.stdout.write.bind(process.stdout);
-  process.stdout.write = process.stderr.write.bind(process.stderr);
-
+/**
+ * Init web-ifc and open a model. Exported so the commands and the tests share ONE open sequence —
+ * a test that opened the model differently (different flags, different wasm path) would be testing a
+ * model nobody ships.
+ *
+ * Returns a handle; pass it to `closeApi` when done.
+ */
+export async function openApi(ifcPath) {
+  // NOTE: this deliberately does NOT touch process.stdout. An earlier cut installed the stdout guard
+  // here so both callers inherited it — which silently corrupted `node --test`, whose reporter streams
+  // structured records over stdout: four tests ran and the summary reported one. Stream hygiene is the
+  // CLI protocol's concern, so it lives in main(), which owns the protocol. SetLogLevel(OFF) below
+  // quiets web-ifc at the source, which is what keeps the test path clean.
   const api = new WebIFC.IfcAPI();
   // When packaged as a single-file exe (Node SEA), web-ifc can't auto-locate its .wasm relative to a
   // real module on disk — point it at the .wasm shipped alongside the exe. Plain `node index.mjs`
@@ -229,10 +327,30 @@ async function main() {
     if (WebIFC.LogLevel && typeof api.SetLogLevel === 'function') {
       api.SetLogLevel(WebIFC.LogLevel.LOG_LEVEL_OFF ?? 6);
     }
-  } catch { /* older web-ifc without SetLogLevel — the stdout guard still covers us */ }
-
-  let result;
+  } catch { /* older web-ifc without SetLogLevel — main()'s stdout guard still covers the CLI path */ }
   const modelID = await openModel(api, ifcPath);
+  return { api, modelID };
+}
+
+/** Close a handle from `openApi`. */
+export function closeApi({ api, modelID }) {
+  api.CloseModel(modelID);
+}
+
+async function main() {
+  const command = process.argv[2];
+  const args = JSON.parse(readStdin() || '{}');
+  const ifcPath = args['ifc-path'] || args.ifcPath || args.path;
+  if (!ifcPath) throw new Error('`ifc-path` is required');
+
+  // The bridge protocol requires PURE JSON on stdout, and both model-open and tessellation print — so
+  // the guard goes up BEFORE the model is opened and comes down only to emit the result.
+  const realWrite = process.stdout.write.bind(process.stdout);
+  process.stdout.write = process.stderr.write.bind(process.stderr);
+
+  const handle = await openApi(ifcPath);
+  const { api, modelID } = handle;
+  let result;
   try {
     if (command === 'list') {
       result = listConnections(api, modelID);
@@ -240,17 +358,28 @@ async function main() {
       const id = args.id || (args.selector && args.selector.id);
       if (!id) throw new Error('`id` (an IfcElementAssembly GlobalId, from `list`) is required for extract');
       result = extractConnection(api, modelID, id);
+    } else if (command === 'probe') {
+      result = probeModel(api, modelID);
+    } else if (command === 'read-model') {
+      result = readModel(api, modelID, args['max-vertices']);
     } else {
-      throw new Error(`unknown command '${command}' (expected: list | extract)`);
+      throw new Error(`unknown command '${command}' (expected: list | extract | probe | read-model)`);
     }
   } finally {
-    api.CloseModel(modelID);
+    closeApi(handle);
     process.stdout.write = realWrite; // restore before emitting the pure-JSON result
   }
   realWrite(JSON.stringify(result));
 }
 
-main().catch((e) => {
-  process.stderr.write(`connection-reader: ${e && e.message ? e.message : e}\n`);
-  process.exit(1);
-});
+// Only run as a CLI when this file IS the entry point. Without this guard, importing the module from a
+// test executes main(), which reads fd 0 and exits non-zero.
+const invokedDirectly = process.argv[1]
+  && (import.meta.url === pathToFileURL(process.argv[1]).href
+      || !basename(process.execPath).toLowerCase().startsWith('node')); // packaged SEA: argv[1] isn't this file
+if (invokedDirectly) {
+  main().catch((e) => {
+    process.stderr.write(`connection-reader: ${e && e.message ? e.message : e}\n`);
+    process.exit(1);
+  });
+}
