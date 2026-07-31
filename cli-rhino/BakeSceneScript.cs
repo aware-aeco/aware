@@ -17,6 +17,12 @@ internal static class BakeSceneScript
             ?? throw new InvalidOperationException(
                 $"embedded Rhino bake-scene materializer '{ResourceName}' is missing");
         using var reader = new StreamReader(stream);
-        return reader.ReadToEnd();
+        // Normalize to LF. Without a .gitattributes rule this file is checked out
+        // CRLF on Windows (core.autocrlf=true is the default there) and LF
+        // everywhere else, so the embedded resource — and every source assertion
+        // pinned against it — would otherwise depend on the contributor's git
+        // config. ScriptWrapper normalizes the body again before it reaches
+        // Rhino, so this only makes the bytes deterministic, never different.
+        return reader.ReadToEnd().Replace("\r\n", "\n").Replace("\r", "\n");
     }
 }
