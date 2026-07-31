@@ -27,6 +27,10 @@
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="AwareRevit.Tests" />
+  </ItemGroup>
+
   <!-- ── Where Revit's API assemblies come from ──────────────────────────────
        The add-in compiles against RevitAPI / RevitAPIUI, but Revit owns those
        binaries at run time (they sit next to Revit.exe and are loaded into its

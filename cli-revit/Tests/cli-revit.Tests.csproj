@@ -19,5 +19,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Shared\Shared.csproj" />
     <ProjectReference Include="..\Sidecar\cli-revit.csproj" />
+    <!-- The in-Revit add-in. Referenced so the parts of it that are pure logic —
+         the pipe server's wedge-detection timeout (#328) — are testable without
+         Revit. It compiles against Autodesk's reference assemblies when no local
+         Revit is installed, so this adds no machine requirement. -->
+    <ProjectReference Include="..\AwareRevit\AwareRevit.csproj" />
   </ItemGroup>
 </Project>

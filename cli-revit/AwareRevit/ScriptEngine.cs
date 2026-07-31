@@ -73,6 +73,19 @@ internal static class ScriptEngine
             {
                 using var tx = new Transaction(ui.ActiveUIDocument.Document, "AWARE exec");
                 tx.Start();
+                // Never let Revit force a modal failure dialog on commit. This runs
+                // unattended over a pipe: a modal blocks Revit's API thread INSIDE an
+                // open transaction, and that is the same thread the pipe handler is
+                // waiting on — so the whole bridge stops answering until a human
+                // clicks OK on a dialog nobody was told about (#328). bake-scene has
+                // guarded this since it shipped; exec, the more general write path,
+                // did not. Anything warning-worthy — an off-axis brace, geometry
+                // joined out from under a dimension — trips it.
+                var failureOptions = tx.GetFailureHandlingOptions();
+                failureOptions.SetForcedModalHandling(false);
+                failureOptions.SetClearAfterRollback(true);
+                failureOptions.SetDelayedMiniWarnings(true);
+                tx.SetFailureHandlingOptions(failureOptions);
                 try
                 {
                     result = script.RunAsync(globals).GetAwaiter().GetResult().ReturnValue;
