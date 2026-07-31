@@ -133,6 +133,64 @@ public class BakeSceneScriptTests
     }
 
     [Fact]
+    public void AZeroUndoSerialAbortsAsUndoUnavailableBeforeAnyMutation()
+    {
+        var code = BakeSceneScript.Code;
+
+        // The guard must reject the zero serial by raising the *coded* failure,
+        // with no document write between Rhino's refusal and the abort.
+        var begin = code.IndexOf("undo_serial = doc.BeginUndoRecord", StringComparison.Ordinal);
+        var zeroCheck = code.IndexOf("if not undo_serial:", begin, StringComparison.Ordinal);
+        var raise = code.IndexOf("raise BakeFailure(", zeroCheck, StringComparison.Ordinal);
+        var reason = code.IndexOf("\"undo-unavailable\"", raise, StringComparison.Ordinal);
+        Assert.True(begin >= 0);
+        Assert.True(begin < zeroCheck);
+        Assert.True(zeroCheck < raise);
+        Assert.True(raise < reason);
+
+        // No mutation may appear between BeginUndoRecord and the abort — the
+        // whole point of #324 is that a zero serial cannot reach a write.
+        var betweenBeginAndRaise = code[begin..raise];
+        Assert.DoesNotContain("doc.Layers.Add", betweenBeginAndRaise);
+        Assert.DoesNotContain("doc.Objects.AddBrep", betweenBeginAndRaise);
+        Assert.DoesNotContain("doc.Objects.Delete", betweenBeginAndRaise);
+
+        // ...and the first mutation of any kind still sits after the abort.
+        var firstLayerWrite = code.IndexOf("doc.Layers.Add(layer)", raise, StringComparison.Ordinal);
+        var firstObjectWrite = code.IndexOf("doc.Objects.AddBrep", raise, StringComparison.Ordinal);
+        Assert.True(raise < firstLayerWrite);
+        Assert.True(raise < firstObjectWrite);
+    }
+
+    [Fact]
+    public void CodedFailuresKeepTheirReceiptCodeAndOthersStayMaterializationFailed()
+    {
+        var code = BakeSceneScript.Code;
+
+        // The rollback path must read the code off the coded failure rather than
+        // stamping every exception `materialization-failed`; anything uncoded
+        // keeps the original default.
+        Assert.Contains("class BakeFailure(Exception):", code);
+        Assert.Contains("scene_level = isinstance(ex, BakeFailure)", code);
+        Assert.Contains(
+            "cause_code = ex.code if scene_level else \"materialization-failed\"",
+            code);
+
+        var causeCode = code.IndexOf("scene_level = isinstance(ex, BakeFailure)", StringComparison.Ordinal);
+        var perPlanRow = code.IndexOf("cause_code if cause else \"batch-aborted\"", causeCode, StringComparison.Ordinal);
+        Assert.True(causeCode >= 0);
+        Assert.True(causeCode < perPlanRow);
+
+        // `scene` is a legal record id — IsValidId reserves nothing — so a
+        // document-level refusal must not be pinned onto a member that happens
+        // to be called `scene`. The plan match is suppressed for scene-level
+        // failures, and the synthetic row hardcodes the id rather than reusing
+        // active_id.
+        Assert.Contains("cause = not scene_level and plan[\"id\"] == active_id and not cause_seen", code);
+        Assert.Contains("\"scene\" if scene_level else active_id, \"scene\", \"failed\", cause_code, str(ex)", code);
+    }
+
+    [Fact]
     public void ProgramAndProjectShipTheBakeVerbAndScript()
     {
         Assert.NotEmpty(BakeSceneScript.Code);
