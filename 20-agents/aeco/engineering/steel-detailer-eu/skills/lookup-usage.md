@@ -31,7 +31,7 @@ aware-steel-detailer-eu describe
 > | decoder | what happens | rules affected |
 > |---|---|---|
 > | **strict** — Python `subprocess` text mode | raises `UnicodeDecodeError`. A wrapper that swallows it returns **no value**, which reads like an empty rules database rather than an encoding fault. | 3 of 68 |
-> | **lenient** — Windows PowerShell 5.1 native-command capture | **does not raise.** The text comes back as mojibake — `in²` arrives as `inÂ˛` (`U+00C2 U+02DB`) — so the caller parses corrupted strings and never learns they were corrupted. | **68 of 68** |
+> | **lenient** — Windows PowerShell 5.1 native-command capture | **does not raise.** The text comes back as mojibake — `N/mm²` arrives as `N/mmÂ˛` (`U+00C2 U+02DB`) — so the caller parses corrupted strings and never learns they were corrupted. | **68 of 68** |
 >
 > Note which column is larger. A strict decoder at least fails loudly on some rules; a lenient one
 > quietly corrupts **68 of the 68**. Reading a number out of a corrupted `value`
