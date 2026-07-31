@@ -459,14 +459,30 @@ try
         {
             // Defence in depth: the preprocessor should leave Revit nothing to wait on.
             // If it happens anyway, Revit owns the transaction — RollBack() throws while
-            // the document is in failure mode, and disposing it discards the bake. Say
-            // the outcome is unknown rather than claiming nothing was written.
+            // the document is in failure mode, disposing it discards the bake, and merely
+            // dropping the reference lets the GC finalizer roll it back instead.
+            //
+            // Return the receipt here rather than throwing: the catch below stamps every
+            // row `rolledBack = true`, and that is an assertion this path cannot make. If
+            // Revit went on to commit, a caller told "nothing landed" would re-run and
+            // duplicate the scene.
             leftWithRevit = true;
-            throw new Exception(
-                "Revit left the bake's transaction unresolved (status: Pending) — its failure "
-                + "processing is still running and it now owns the outcome. Whether the scene "
-                + "landed is UNKNOWN: inspect the model before re-running, and re-run under the "
-                + "same sourceId so ownership reconciles rather than duplicating.");
+            AwarePendingCommits.LeaveWithRevit(tx);
+            retired.Clear();
+            var unresolved = new List<Dictionary<string, object>>();
+            foreach (var record in parsed.SupportedOrder)
+            {
+                var row = AwareBakeRules.Row(record.Id, record.Kind, "failed", "commit-unresolved",
+                    "Revit's failure processing had not finished when the bake returned, so it owns "
+                    + "the outcome. Whether this record landed is UNKNOWN.");
+                row["rolledBack"] = false;
+                unresolved.Add(row);
+            }
+            warnings.Add(AwareBakeRules.Row("scene", "scene", "warning", "commit-unresolved",
+                "Revit left the bake's transaction unresolved (status: Pending). Inspect the model "
+                + "before re-running; re-run under the SAME sourceId so ownership reconciles rather "
+                + "than duplicating."));
+            return Envelope(false, noRows, unresolved, parsed.Unsupported, warnings);
         }
         if (commitStatus != TransactionStatus.Committed)
         {

@@ -14,69 +14,74 @@ namespace AwareRevit.Tests;
 public class FailurePolicyTests
 {
     [Fact]
-    public void OnlyResolvableWarningsOnACommitAreWorthRetrying()
+    public void AWarningOnlyCommitIsAllowedToFinish()
     {
-        // Nothing blocking, Revit is committing, first attempt: clear the warnings and
-        // let the commit re-run. This is the path that stops a dialog from ever opening,
-        // which is what stops Commit() returning Pending.
+        // Nothing blocking and Revit is committing: the warnings have been deleted, so
+        // default processing has nothing left to show and the commit finishes. This is
+        // the path that stops a dialog from ever opening, which is what stops Commit()
+        // returning Pending.
         Assert.Equal(
-            AwareFailureDecision.CommitAfterResolving,
-            AwareFailurePolicy.Decide(hasBlockingFailure: false, beingCommitted: true, attempt: 1));
+            AwareFailureDecision.ContinueAfterResolving,
+            AwareFailurePolicy.Decide(hasBlockingFailure: false, beingCommitted: true));
     }
 
     [Fact]
-    public void ABlockingFailureRollsBackRatherThanRetrying()
+    public void ABlockingFailureRollsBackRatherThanProceeding()
     {
         // Revit will not let a commit past an Error, and AWARE has no resolution to
-        // offer unattended. Retrying would just re-post it; the honest move is a silent
-        // rollback the receipt can explain.
+        // offer unattended. The honest move is a silent rollback the receipt can explain.
         Assert.Equal(
             AwareFailureDecision.RollBackSilently,
-            AwareFailurePolicy.Decide(hasBlockingFailure: true, beingCommitted: true, attempt: 1));
+            AwareFailurePolicy.Decide(hasBlockingFailure: true, beingCommitted: true));
     }
 
     [Fact]
     public void ARollbackAlreadyUnderwayIsNeverTurnedIntoACommit()
     {
-        // Autodesk: ProceedWithCommit "cannot be used if the transaction is already
-        // being rolled back, and will be treated as ProceedWithRollBack in this case."
-        // Decide it explicitly rather than relying on Revit to reinterpret it.
+        // Autodesk: a commit result "cannot be used if the transaction is already being
+        // rolled back, and will be treated as ProceedWithRollBack in this case." Decide
+        // it explicitly rather than relying on Revit to reinterpret it.
         Assert.Equal(
             AwareFailureDecision.RollBackSilently,
-            AwareFailurePolicy.Decide(hasBlockingFailure: false, beingCommitted: false, attempt: 1));
+            AwareFailurePolicy.Decide(hasBlockingFailure: false, beingCommitted: false));
         Assert.Equal(
             AwareFailureDecision.RollBackSilently,
-            AwareFailurePolicy.Decide(hasBlockingFailure: true, beingCommitted: false, attempt: 1));
+            AwareFailurePolicy.Decide(hasBlockingFailure: true, beingCommitted: false));
     }
 
     [Fact]
-    public void ASelfRegeneratingFailureCannotLoopForever()
+    public void ARepostedWarningIsNeverEscalatedIntoARollback()
     {
-        // Every ProceedWithCommit re-runs end-of-transaction checks, and Autodesk warns a
-        // handler "should be careful not to try to repeatedly commit if it is unable to
-        // deal with all the errors". A failure that re-posts itself must terminate in a
-        // rollback, not spin.
-        for (var attempt = 1; attempt < AwareFailurePolicy.MaxCommitAttempts; attempt++)
+        // The decision must not depend on how many times the handler has run. A warning
+        // the model re-posts on every pass — a permanently off-axis brace is exactly that
+        // — would otherwise exhaust a retry bound and roll back a transaction whose only
+        // sin was a warning, which Revit itself defines as ignorable. Continue takes one
+        // pass, so there is no loop and nothing to escalate.
+        for (var i = 0; i < 25; i++)
         {
             Assert.Equal(
-                AwareFailureDecision.CommitAfterResolving,
-                AwareFailurePolicy.Decide(false, true, attempt));
+                AwareFailureDecision.ContinueAfterResolving,
+                AwareFailurePolicy.Decide(hasBlockingFailure: false, beingCommitted: true));
         }
-
-        Assert.Equal(
-            AwareFailureDecision.RollBackSilently,
-            AwareFailurePolicy.Decide(false, true, AwareFailurePolicy.MaxCommitAttempts));
-        Assert.Equal(
-            AwareFailureDecision.RollBackSilently,
-            AwareFailurePolicy.Decide(false, true, AwareFailurePolicy.MaxCommitAttempts + 1));
     }
 
     [Fact]
-    public void TheRetryBoundIsSmallButLeavesRoomForOnePass()
+    public void APendingTransactionIsRootedAndItsFinalizerSuppressed()
     {
-        // One pass is the normal case (delete the warnings, commit succeeds). A bound of
-        // 1 would mean never retrying at all, which defeats the mechanism.
-        Assert.True(AwareFailurePolicy.MaxCommitAttempts >= 2);
-        Assert.True(AwareFailurePolicy.MaxCommitAttempts <= 5);
+        // Not disposing is not enough: an unrooted Transaction can still have Revit's
+        // finalizer run, and that rolls back the edit this path exists to protect.
+        var before = AwarePendingCommits.Count;
+        var sentinel = new object();
+
+        AwarePendingCommits.LeaveWithRevit(sentinel);
+        Assert.Equal(before + 1, AwarePendingCommits.Count);
+
+        // Idempotent — handing the same transaction over twice must not double-root it.
+        AwarePendingCommits.LeaveWithRevit(sentinel);
+        Assert.Equal(before + 1, AwarePendingCommits.Count);
+
+        // Null is a no-op rather than a crash on an already-bad path.
+        AwarePendingCommits.LeaveWithRevit(null);
+        Assert.Equal(before + 1, AwarePendingCommits.Count);
     }
 }

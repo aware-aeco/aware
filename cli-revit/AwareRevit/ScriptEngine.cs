@@ -118,7 +118,13 @@ internal static class ScriptEngine
                         // transaction alone: RollBack() throws while the document is in
                         // failure mode, and disposing it discards the edit. Revit
                         // resolves the status asynchronously and owns it from here.
+                        //
+                        // Skipping Dispose() is not sufficient on its own — once this
+                        // local falls out of scope the object is unrooted and the GC may
+                        // run Revit's finalizer, which rolls back exactly the edit we are
+                        // protecting. Suppress the finalizer and hold a durable root.
                         leftWithRevit = true;
+                        AwarePendingCommits.LeaveWithRevit(tx);
                         throw new Exception(
                             "Revit left the exec's transaction unresolved (status: Pending) — its "
                             + "failure processing is still running and it now owns the outcome. "

@@ -42,8 +42,10 @@
 /// <summary>What to do with a transaction whose end-of-transaction checks failed.</summary>
 internal enum AwareFailureDecision
 {
-    /// <summary>Warnings were cleared and nothing blocking remains — retry the commit.</summary>
-    CommitAfterResolving,
+    /// <summary>Warnings were cleared and nothing blocking remains — let the commit
+    /// finish. Autodesk: "Warnings will not be displayed if they have been deleted
+    /// already by the failure handler", so this shows nothing.</summary>
+    ContinueAfterResolving,
 
     /// <summary>Something unresolvable remains (or the caller is already rolling
     /// back) — roll back, silently.</summary>
@@ -53,23 +55,57 @@ internal enum AwareFailureDecision
 /// <summary>The pure half of the failure policy: no Revit types, so it is unit-testable.</summary>
 internal static class AwareFailurePolicy
 {
-    /// <summary>Revit re-runs end-of-transaction checks after every
-    /// ProceedWithCommit, and warns that a handler "should be careful not to try
-    /// to repeatedly commit if it is unable to deal with all the errors". This is
-    /// the bound that keeps a self-regenerating failure from looping forever.</summary>
-    internal const int MaxCommitAttempts = 3;
-
     /// <param name="hasBlockingFailure">A failure of severity Error or worse — one Revit
     /// will not let a commit past without a resolution AWARE cannot supply unattended.</param>
-    /// <param name="beingCommitted">False once Revit is already rolling back; ProceedWithCommit
-    /// is not permitted then and would be treated as a rollback anyway.</param>
-    /// <param name="attempt">1 for the first call, incremented on each re-entry.</param>
-    internal static AwareFailureDecision Decide(bool hasBlockingFailure, bool beingCommitted, int attempt)
+    /// <param name="beingCommitted">False once Revit is already rolling back; a commit
+    /// result is not permitted then and would be treated as a rollback anyway.</param>
+    /// <remarks>
+    /// Deliberately NOT a ProceedWithCommit-and-retry loop. ProceedWithCommit re-runs the
+    /// end-of-transaction checks from the beginning, so a warning the model re-posts every
+    /// pass (a permanently off-axis brace is exactly that) would re-enter this handler
+    /// until any retry bound was hit — and then roll back a transaction whose only sin was
+    /// a warning, which is ignorable by definition. Continue finishes the commit in one
+    /// pass with the warnings already deleted, so there is no loop to bound.
+    /// </remarks>
+    internal static AwareFailureDecision Decide(bool hasBlockingFailure, bool beingCommitted)
     {
         if (!beingCommitted) return AwareFailureDecision.RollBackSilently;
         if (hasBlockingFailure) return AwareFailureDecision.RollBackSilently;
-        if (attempt >= MaxCommitAttempts) return AwareFailureDecision.RollBackSilently;
-        return AwareFailureDecision.CommitAfterResolving;
+        return AwareFailureDecision.ContinueAfterResolving;
+    }
+}
+
+/// <summary>Keeps a transaction Revit has not finished with from being rolled back
+/// behind its back.</summary>
+/// <remarks>
+/// Simply not calling Dispose() is NOT enough. Revit's Transaction has a finalizer, and
+/// once the local goes out of scope the object is unrooted — the GC may then run that
+/// finalizer, whose documented behaviour is to roll back an unfinished transaction and
+/// discard the edit. That is precisely the outcome the Pending path exists to avoid, and
+/// it would happen nondeterministically. So suppress the finalizer AND hold a durable
+/// root.
+/// </remarks>
+internal static class AwarePendingCommits
+{
+    static readonly List<object> Rooted = new List<object>();
+
+    /// <summary>Hand a Pending transaction to Revit for good: no rollback, no dispose,
+    /// no finalizer. A bounded, deliberate leak — Revit blocks every further write to the
+    /// document until it resolves anyway, so at most a handful can ever accumulate.</summary>
+    internal static void LeaveWithRevit(object transaction)
+    {
+        if (transaction == null) return;
+        GC.SuppressFinalize(transaction);
+        lock (Rooted)
+        {
+            if (!Rooted.Contains(transaction)) Rooted.Add(transaction);
+        }
+    }
+
+    /// <summary>How many transactions Revit still owns. Diagnostic only.</summary>
+    internal static int Count
+    {
+        get { lock (Rooted) { return Rooted.Count; } }
     }
 }
 
@@ -79,7 +115,6 @@ internal sealed class AwareFailurePreprocessor : Autodesk.Revit.DB.IFailuresPrep
 {
     readonly List<string> _warnings = new List<string>();
     readonly List<string> _errors = new List<string>();
-    int _attempts;
 
     /// <summary>Warning text Revit posted, deduped, in first-seen order. Reported in the
     /// receipt so the caller learns what the model objected to — the thing the dialog
@@ -96,8 +131,6 @@ internal sealed class AwareFailurePreprocessor : Autodesk.Revit.DB.IFailuresPrep
     public Autodesk.Revit.DB.FailureProcessingResult PreprocessFailures(
         Autodesk.Revit.DB.FailuresAccessor failuresAccessor)
     {
-        _attempts++;
-
         // Read every message BEFORE deleting anything: DeleteAllWarnings invalidates
         // the accessors, and these strings are the receipt's only account of what
         // Revit found.
@@ -125,7 +158,7 @@ internal sealed class AwareFailurePreprocessor : Autodesk.Revit.DB.IFailuresPrep
         failuresAccessor.DeleteAllWarnings();
 
         var decision = AwareFailurePolicy.Decide(
-            blocking, failuresAccessor.IsTransactionBeingCommitted(), _attempts);
+            blocking, failuresAccessor.IsTransactionBeingCommitted());
 
         if (decision == AwareFailureDecision.RollBackSilently)
         {
@@ -138,6 +171,8 @@ internal sealed class AwareFailurePreprocessor : Autodesk.Revit.DB.IFailuresPrep
             return Autodesk.Revit.DB.FailureProcessingResult.ProceedWithRollBack;
         }
 
-        return Autodesk.Revit.DB.FailureProcessingResult.ProceedWithCommit;
+        // Nothing blocking and every warning deleted, so default processing has nothing
+        // left to deliver and the commit finishes on this pass.
+        return Autodesk.Revit.DB.FailureProcessingResult.Continue;
     }
 }
