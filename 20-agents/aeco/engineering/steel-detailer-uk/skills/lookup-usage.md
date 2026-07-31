@@ -18,7 +18,18 @@ aware-steel-detailer-uk describe
 
 **Exit codes:** `0` = found (or listing), `1` = not found, `2` = error.
 
-**Output:** JSON to stdout matching the schema:
+**Output:** JSON to stdout, **UTF-8**, matching the schema:
+
+> **Decode it as UTF-8 explicitly.** The output carries non-ASCII characters — § (clause refs), `—`, `²`, `≤` and `γ` — from the
+> EN 1993-1-8 / BS clause references. A caller that lets its runtime pick the console codepage instead will **throw while
+> decoding**, and the usual shape of that bug is a wrapper swallowing the error and returning *no
+> value* — a silent failure that reads like a missing rule rather than an encoding problem.
+>
+> Measured across all 49 rule ids: **2** fail to decode under cp1250 while every one is
+> clean UTF-8. Few, but the ones that break are ordinary rules, not exotica.
+>
+> In Python pass `encoding='utf-8'` to `subprocess.run(...)`/`check_output(...)`; in Node set
+> `{ encoding: 'utf8' }`; in PowerShell set `[Console]::OutputEncoding` before capturing.
 
 ```json
 {

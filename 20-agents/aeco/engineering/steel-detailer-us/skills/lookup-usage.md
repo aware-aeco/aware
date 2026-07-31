@@ -18,7 +18,21 @@ aware-steel-detailer-us describe
 
 **Exit codes:** `0` = found (or listing), `1` = not found, `2` = error.
 
-**Output:** JSON to stdout matching the schema:
+**Output:** JSON to stdout, **UTF-8**, matching the schema:
+
+> **Decode it as UTF-8 explicitly.** The output carries non-ASCII characters — `²`, `³`, `⁴` and `⁶`
+> in the `units` and `value` strings (`area A = 7.58 in²`), `¼` in bolt rules, `—` in prose fields.
+> A caller that lets its runtime pick the console codepage instead will **throw while decoding**,
+> and the usual shape of that bug is a wrapper swallowing the error and returning *no value for
+> every lookup* — a total, silent failure that reads like an empty rules database rather than an
+> encoding problem.
+>
+> This is the normal case here, not an edge one: measured across all 2161 rule ids, **2093 of them**
+> fail to decode under cp1250 while every one is clean UTF-8 (`UnicodeDecodeError: 'charmap' codec
+> can't decode byte 0x81`). Nearly every `section.*` rule carries `in²`/`in⁴`.
+>
+> In Python pass `encoding='utf-8'` to `subprocess.run(...)`/`check_output(...)`; in Node set
+> `{ encoding: 'utf8' }`; in PowerShell set `[Console]::OutputEncoding` before capturing.
 
 ```json
 {

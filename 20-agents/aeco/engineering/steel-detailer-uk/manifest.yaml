@@ -1,5 +1,5 @@
 agent:        steel-detailer-uk
-version:      0.2.0
+version:      0.3.0
 sdk-target:   bs-en-1993-1-8:2005+uk-na          # the code + national annex these rules are sourced from
 display-name: Steel Detailer — UK (Eurocode 3 + UK NA)
 
