@@ -1,6 +1,6 @@
 # AWARE — Project Instructions
 
-You are working on **AWARE** (`aware-aeco/aware`) — the open-source agentic substrate for AECO. The substrate is content-complete (manifesto, decalog, specs, <!--stat:agents_total-->77<!--/stat--> agents, <!--stat:skills-->3,344<!--/stat--> skills, <!--stat:apps-->8<!--/stat--> reference apps, <!--stat:meta_primitives-->11<!--/stat--> meta-primitives) and the `aware` CLI has shipped (v<!--stat:cli_version-->0.111.0<!--/stat-->). The current focus is the **`aware` CLI** — the runtime binary that executes everything the substrate describes.
+You are working on **AWARE** (`aware-aeco/aware`) — the open-source agentic substrate for AECO. The substrate is content-complete (manifesto, decalog, specs, <!--stat:agents_total-->78<!--/stat--> agents, <!--stat:skills-->3,345<!--/stat--> skills, <!--stat:apps-->8<!--/stat--> reference apps, <!--stat:meta_primitives-->11<!--/stat--> meta-primitives) and the `aware` CLI has shipped (v<!--stat:cli_version-->0.111.0<!--/stat-->). The current focus is the **`aware` CLI** — the runtime binary that executes everything the substrate describes.
 
 ## Read these first (in order)
 
@@ -130,8 +130,8 @@ All skill creation, modification, or porting routes through Anthropic's `skill-c
 
 The substrate is content-complete. Do not re-litigate decisions captured in the docs above unless you have a concrete new constraint.
 
-- <!--stat:agents_total-->77<!--/stat--> agents under `20-agents/` — <!--stat:agents_curated-->28<!--/stat--> curated (tekla, trimble-connect, navisworks, microsoft-365, google-workspace, …) + <!--stat:agents_reflected-->49<!--/stat--> reflected (revit, rhino, autocad, idea-statica, …); full list in `registry-index.json`
-- <!--stat:skills-->3,344<!--/stat--> skill files
+- <!--stat:agents_total-->78<!--/stat--> agents under `20-agents/` — <!--stat:agents_curated-->29<!--/stat--> curated (tekla, trimble-connect, navisworks, microsoft-365, google-workspace, …) + <!--stat:agents_reflected-->49<!--/stat--> reflected (revit, rhino, autocad, idea-statica, …); full list in `registry-index.json`
+- <!--stat:skills-->3,345<!--/stat--> skill files
 - <!--stat:apps-->8<!--/stat--> reference apps under `30-apps/_examples/`
 - Diagrams in `40-diagrams/` (Mermaid + Excalidraw)
 - Issue + PR templates under `.github/`

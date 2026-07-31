@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-07-31T09:00:22.867195700+00:00",
+  "updated-at": "2026-07-31T16:58:39.865514200+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -2714,6 +2714,49 @@
             {
               "name": "validate.schema",
               "description": "Validate the IFC against its declared schema (IFC2x3 / IFC4 /",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        }
+      }
+    },
+    "ifc-reference-reader": {
+      "display-name": "IFC Reference Reader (whole model → mesh)",
+      "vendor": "aware-aeco",
+      "keywords": [
+        "aware",
+        "ifc",
+        "reference",
+        "model",
+        "coordination",
+        "overlay",
+        "mesh",
+        "tessellation",
+        "web-ifc",
+        "units"
+      ],
+      "versions": {
+        "0.1.0": {
+          "description": "Read a WHOLE IFC file as a reference model — borrowed geometry you overlay, measure and build to,",
+          "status": "available",
+          "manifest-version": "0.1.0",
+          "stateful": false,
+          "transport": "cli",
+          "command_count": 2,
+          "skills": [
+            "what-this-agent-does"
+          ],
+          "commands": [
+            {
+              "name": "probe",
+              "description": "Answer the cheap questions about an IFC WITHOUT tessellating: which schema, what length unit it",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "read-model",
+              "description": "Tessellate the WHOLE file into mesh scene objects — every element, not only connection hardware",
               "lifecycle": "single",
               "category": "curated"
             }
