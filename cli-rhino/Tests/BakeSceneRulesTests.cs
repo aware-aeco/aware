@@ -107,6 +107,43 @@ public class BakeSceneRulesTests
             r => r["code"]!.GetValue<string>() == "duplicate-id");
     }
 
+    /// <summary>
+    /// A rejected PARENT id does not take its nested collection down with it (#327). The children are
+    /// records in their own right, so they still get their rows AND still enter the scene-wide id set
+    /// — otherwise a duplicate hiding among them only surfaces after the parent is fixed. This is the
+    /// rule #326 already applied one level lower, to a rejected bolt instance and its holeEffects.
+    /// </summary>
+    [Fact]
+    public void NestedRecordsAreClassifiedEvenWhenTheParentIdIsRejected()
+    {
+        var pf = BakeSceneRules.Validate(JsonNode.Parse("""
+            {"meta":{"units":"mm","sourceId":"s","sceneHash":"h"},
+             "elements":[
+               {"id":"dup","kind":"member","from":[0,0,0],"to":[1,0,0],"section":{"w":1,"d":1}},
+               {"id":"dup","kind":"plate","holes":[{"id":"h-a"},{"id":"h-b"}]}],
+             "referenceSystems":[
+               {"id":" bad ","kind":"structural-grid","axes":[{"id":"ax-a"}],"levels":[{"id":"h-b"}]}]}
+            """));
+
+        Assert.False(pf.Ok);
+        // The plate's own id collides with the member's, so the plate itself fails...
+        Assert.Contains(pf.Failed.OfType<JsonObject>(),
+            r => r["id"]!.GetValue<string>() == "dup" && r["code"]!.GetValue<string>() == "duplicate-id");
+        // ...and it contributes no row of its own.
+        Assert.DoesNotContain(pf.Unsupported.OfType<JsonObject>(),
+            r => r["id"]!.GetValue<string>() == "dup");
+        // ...but its holes are still classified, as are the axes under a malformed
+        // reference-system id.
+        Assert.Contains(pf.Unsupported.OfType<JsonObject>(),
+            r => r["id"]!.GetValue<string>() == "h-a" && r["kind"]!.GetValue<string>() == "opening");
+        Assert.Contains(pf.Unsupported.OfType<JsonObject>(),
+            r => r["id"]!.GetValue<string>() == "ax-a" && r["kind"]!.GetValue<string>() == "grid-axis");
+        // ...and the descendants still claim ids, so a duplicate BETWEEN two rejected
+        // parents' subtrees is caught — which the old `continue` lost entirely.
+        Assert.Contains(pf.Failed.OfType<JsonObject>(),
+            r => r["id"]!.GetValue<string>() == "h-b" && r["code"]!.GetValue<string>() == "duplicate-id");
+    }
+
     [Fact]
     public void OwnershipMarkerRetiresV1AndV2WhileNewHashIsRevisionBound()
     {

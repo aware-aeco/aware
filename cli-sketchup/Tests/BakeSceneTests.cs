@@ -90,6 +90,36 @@ public class BakeSceneTests : IDisposable
         Assert.Contains(pf.Failed, r => Code(r) == "duplicate-id" && Id(r) == "dup");
     }
 
+    /// <summary>
+    /// A rejected PARENT id withholds only the parent's own row, never its nested collection (#327).
+    /// The children are records in their own right: dropping them loses their receipt rows AND their
+    /// claim on the scene-wide id set, so a duplicate hiding under a bad parent stays invisible until
+    /// the parent is fixed. Same rule ClassifyNested already applies to a rejected bolt instance and
+    /// its holeEffects (#326).
+    /// </summary>
+    [Fact]
+    public void NestedRecordsAreClassifiedEvenWhenTheParentIdIsRejected()
+    {
+        var pf = BakeScene.Validate(JsonNode.Parse("""
+            {"meta":{"units":"mm","sourceId":"s","sceneHash":"h"},
+             "elements":[
+               {"id":"dup","kind":"member"},
+               {"id":"dup","kind":"plate","holes":[{"id":"h-a"},{"id":"h-b"}]}],
+             "referenceSystems":[
+               {"id":" bad ","kind":"structural-grid","axes":[{"id":"ax-a"}],"levels":[{"id":"h-b"}]}]}
+            """));
+
+        Assert.False(pf.Ok);
+        // The plate's id collides with the member's, so it fails and contributes no row of its own...
+        Assert.Contains(pf.Failed, r => Id(r) == "dup" && Code(r) == "duplicate-id");
+        Assert.DoesNotContain(pf.Unsupported, r => Id(r) == "dup");
+        // ...but its holes are still classified, as are the axes under a malformed grid id...
+        Assert.Contains(pf.Unsupported, r => Id(r) == "h-a");
+        Assert.Contains(pf.Unsupported, r => Id(r) == "ax-a");
+        // ...and they still claim ids, so the duplicate across two rejected parents' subtrees is caught.
+        Assert.Contains(pf.Failed, r => Id(r) == "h-b" && Code(r) == "duplicate-id");
+    }
+
     [Fact]
     public void InvalidIdIsReportedAgainstTheSceneWhenThereIsNoIdToNameItBy()
     {

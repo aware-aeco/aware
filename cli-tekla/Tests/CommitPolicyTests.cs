@@ -32,6 +32,45 @@ public sealed class CommitPolicyTests
     }
 
     [Fact]
+    public void BakeScript_ClassifiesNestedRecordsEvenWhenTheParentIdIsRejected()
+    {
+        // #327: a rejected parent id must withhold only the parent's OWN row, never its nested
+        // collection — the children are records in their own right, and skipping them drops them
+        // from the receipt AND from the scene-wide id set, so a duplicate beneath a bad parent
+        // escapes detection. The Tekla rules live in script text with no executable harness here,
+        // so the property is pinned on the source: the early `continue` that took the children
+        // down with the parent must be gone from all three top-level loops.
+        var code = BakeSceneScript.Code;
+
+        Assert.DoesNotContain("if (!acceptId(id,kind)) continue;", code);
+        Assert.DoesNotContain("if(!acceptId(id,kind))continue;", code);
+
+        // The parent's own classification is now gated on acceptance...
+        Assert.Contains("var accepted = acceptId(id,kind);", code);
+        Assert.Contains("if(acceptId(id,kind)) {", code);
+        Assert.Contains("if(acceptId(id,kind)){", code);
+
+        // ...while every nested walk still runs. Each must sit AFTER its parent's gate,
+        // outside it — reachable whatever the parent id did.
+        var elementAccept = code.IndexOf("var accepted = acceptId(id,kind);", StringComparison.Ordinal);
+        var holes = code.IndexOf("var holes=list(el,\"holes\");", elementAccept, StringComparison.Ordinal);
+        var instances = code.IndexOf("var ins=list(op,\"instances\");", holes, StringComparison.Ordinal);
+        var axes = code.IndexOf("var axes=list(rf,\"axes\");", instances, StringComparison.Ordinal);
+        var levels = code.IndexOf("var levels=list(rf,\"levels\");", axes, StringComparison.Ordinal);
+        Assert.True(elementAccept >= 0);
+        Assert.True(holes > elementAccept);
+        Assert.True(instances > holes);
+        Assert.True(axes > instances);
+        Assert.True(levels > axes);
+
+        // The nested ids still enter the scene-wide set, which is what makes a duplicate
+        // among them detectable at all.
+        Assert.Contains("if(acceptId(hid,\"opening\"))", code);
+        Assert.Contains("if(acceptId(aid,\"grid-axis\"))", code);
+        Assert.Contains("if(acceptId(lid,\"grid-level\"))", code);
+    }
+
+    [Fact]
     public void ExecRetainsAutomaticCommitPolicy()
     {
         Assert.Equal(
