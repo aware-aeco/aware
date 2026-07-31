@@ -17,13 +17,19 @@ def row(record_id, kind, status, code=None, message=None):
     return value
 
 class BakeFailure(Exception):
-    """A failure inside the mutation block that names its own receipt code.
+    """A document-level precondition failure that names its own receipt code.
 
-    Everything raised in there otherwise lands as `materialization-failed`,
-    which is right for geometry that Rhino refused to build but wrong for a
-    precondition the document itself denied — a caller cannot tell "this shape
-    is bad" from "this document would not give us an undo record" and so cannot
-    tell a retry from a fix. Carrying the code keeps that distinction.
+    Everything raised in the mutation block otherwise lands as
+    `materialization-failed`, which is right for geometry that Rhino refused to
+    build but wrong for a precondition the document itself denied — a caller
+    cannot tell "this shape is bad" from "this document would not give us an
+    undo record" and so cannot tell a retry from a fix. Carrying the code keeps
+    that distinction.
+
+    It is scene-level by construction: it reports what the document refused,
+    never what a record contained, so it must never be attributed to a plan row
+    — not even when a record is legitimately named `scene` (ids are not a
+    reserved vocabulary, so that collision is reachable).
     """
 
     def __init__(self, code, message):
@@ -611,11 +617,14 @@ except Exception as ex:
     except Exception:
         cleanup_ok = False
 
-    cause_code = ex.code if isinstance(ex, BakeFailure) else "materialization-failed"
+    # A BakeFailure is the document's refusal, so it never matches a plan even
+    # if a member is named `scene`; it always lands on its own synthetic row.
+    scene_level = isinstance(ex, BakeFailure)
+    cause_code = ex.code if scene_level else "materialization-failed"
     failure_rows = []
     cause_seen = False
     for plan in plans:
-        cause = plan["id"] == active_id and not cause_seen
+        cause = not scene_level and plan["id"] == active_id and not cause_seen
         failure_rows.append(row(
             plan["id"], plan["kind"], "failed",
             cause_code if cause else "batch-aborted",
@@ -623,7 +632,8 @@ except Exception as ex:
         if cause:
             cause_seen = True
     if not cause_seen:
-        failure_rows.insert(0, row(active_id, "scene", "failed", cause_code, str(ex)))
+        failure_rows.insert(0, row(
+            "scene" if scene_level else active_id, "scene", "failed", cause_code, str(ex)))
     if not cleanup_ok:
         warnings.append(row(
             "scene", "scene", "warning", "commit-state-uncertain",

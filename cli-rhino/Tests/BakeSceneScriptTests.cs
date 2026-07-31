@@ -171,22 +171,23 @@ public class BakeSceneScriptTests
         // stamping every exception `materialization-failed`; anything uncoded
         // keeps the original default.
         Assert.Contains("class BakeFailure(Exception):", code);
+        Assert.Contains("scene_level = isinstance(ex, BakeFailure)", code);
         Assert.Contains(
-            "cause_code = ex.code if isinstance(ex, BakeFailure) else \"materialization-failed\"",
+            "cause_code = ex.code if scene_level else \"materialization-failed\"",
             code);
 
-        var causeCode = code.IndexOf("cause_code = ex.code", StringComparison.Ordinal);
+        var causeCode = code.IndexOf("scene_level = isinstance(ex, BakeFailure)", StringComparison.Ordinal);
         var perPlanRow = code.IndexOf("cause_code if cause else \"batch-aborted\"", causeCode, StringComparison.Ordinal);
-        var sceneRow = code.IndexOf(
-            "failure_rows.insert(0, row(active_id, \"scene\", \"failed\", cause_code, str(ex)))",
-            causeCode, StringComparison.Ordinal);
         Assert.True(causeCode >= 0);
         Assert.True(causeCode < perPlanRow);
-        Assert.True(causeCode < sceneRow);
 
-        // The undo abort is scene-level, so it lands on the scene row: no plan
-        // carries the id `scene`, so `cause_seen` stays false and the insert runs.
-        Assert.Contains("active_id = \"scene\"", code);
+        // `scene` is a legal record id — IsValidId reserves nothing — so a
+        // document-level refusal must not be pinned onto a member that happens
+        // to be called `scene`. The plan match is suppressed for scene-level
+        // failures, and the synthetic row hardcodes the id rather than reusing
+        // active_id.
+        Assert.Contains("cause = not scene_level and plan[\"id\"] == active_id and not cause_seen", code);
+        Assert.Contains("\"scene\" if scene_level else active_id, \"scene\", \"failed\", cause_code, str(ex)", code);
     }
 
     [Fact]
