@@ -66,22 +66,21 @@ public class FailurePolicyTests
     }
 
     [Fact]
-    public void APendingTransactionIsRootedAndItsFinalizerSuppressed()
+    public void OnlyATransactionRevitHasFinishedWithIsReleased()
     {
-        // Not disposing is not enough: an unrooted Transaction can still have Revit's
-        // finalizer run, and that rolls back the edit this path exists to protect.
-        var before = AwarePendingCommits.Count;
-        var sentinel = new object();
-
-        AwarePendingCommits.LeaveWithRevit(sentinel);
-        Assert.Equal(before + 1, AwarePendingCommits.Count);
-
-        // Idempotent — handing the same transaction over twice must not double-root it.
-        AwarePendingCommits.LeaveWithRevit(sentinel);
-        Assert.Equal(before + 1, AwarePendingCommits.Count);
-
-        // Null is a no-op rather than a crash on an already-bad path.
-        AwarePendingCommits.LeaveWithRevit(null);
-        Assert.Equal(before + 1, AwarePendingCommits.Count);
+        // The root exists because an unrooted Transaction can still have Revit's
+        // finalizer run, and that rolls back the edit this path protects. But it must not
+        // root forever: Pending resolves asynchronously, so a long-lived Revit session
+        // would otherwise leak a native transaction per occurrence. Release exactly the
+        // finished ones.
+        Assert.True(AwarePendingCommits.ShouldRelease(hasEnded: true));
+        Assert.False(AwarePendingCommits.ShouldRelease(hasEnded: false));
     }
+
+    // AwarePendingCommits' other members (LeaveWithRevit, ReleaseFinished, Count) cannot
+    // be exercised here: they touch Autodesk.Revit.DB.Transaction, and Revit's assemblies
+    // are referenced with Private=false — Revit owns them at run time and they are never
+    // copied beside the tests, so the JIT cannot even resolve the signatures. That is why
+    // the decision above is factored out as a plain bool. The plumbing around it is
+    // covered by BakeSceneScriptTests' compile-against-the-real-RevitAPI check.
 }

@@ -87,19 +87,61 @@ internal static class AwareFailurePolicy
 /// </remarks>
 internal static class AwarePendingCommits
 {
-    static readonly List<object> Rooted = new List<object>();
+    static readonly List<Autodesk.Revit.DB.Transaction> Rooted =
+        new List<Autodesk.Revit.DB.Transaction>();
 
-    /// <summary>Hand a Pending transaction to Revit for good: no rollback, no dispose,
-    /// no finalizer. A bounded, deliberate leak — Revit blocks every further write to the
-    /// document until it resolves anyway, so at most a handful can ever accumulate.</summary>
-    internal static void LeaveWithRevit(object transaction)
+    /// <summary>Hand a Pending transaction to Revit: no rollback, no dispose, no
+    /// finalizer, until Revit has finished with it.</summary>
+    internal static void LeaveWithRevit(Autodesk.Revit.DB.Transaction transaction)
     {
+        // Sweep first. Pending resolves asynchronously, and Revit refuses new writes
+        // until it does — so by the time another one arrives, the previous is almost
+        // always finished and can be released. Without this the list would only ever
+        // grow, and a long-lived Revit session leaks a native transaction per event.
+        ReleaseFinished();
+
         if (transaction == null) return;
         GC.SuppressFinalize(transaction);
         lock (Rooted)
         {
             if (!Rooted.Contains(transaction)) Rooted.Add(transaction);
         }
+    }
+
+    /// <summary>Dispose and drop every rooted transaction Revit has since finished
+    /// with. Safe to call at any time; returns how many were released.</summary>
+    internal static int ReleaseFinished()
+    {
+        lock (Rooted)
+        {
+            var released = 0;
+            for (var i = Rooted.Count - 1; i >= 0; i--)
+            {
+                var transaction = Rooted[i];
+                if (!ShouldRelease(HasEndedSafely(transaction))) continue;
+
+                // Disposing a FINISHED transaction is the ordinary path — it releases the
+                // native object without rolling anything back. That is only true because
+                // the sweep tests the status first.
+                try { transaction.Dispose(); } catch { /* already gone; drop it anyway */ }
+                Rooted.RemoveAt(i);
+                released++;
+            }
+            return released;
+        }
+    }
+
+    /// <summary>The sweep's decision, isolated so it is testable without Revit:
+    /// release exactly the transactions Revit has finished with, keep the rest.</summary>
+    internal static bool ShouldRelease(bool hasEnded) => hasEnded;
+
+    static bool HasEndedSafely(Autodesk.Revit.DB.Transaction transaction)
+    {
+        if (transaction == null) return true;
+        // A disposed or otherwise unusable transaction throws here. Treat that as ended:
+        // holding a reference we can no longer even query serves nobody.
+        try { return transaction.HasEnded(); }
+        catch { return true; }
     }
 
     /// <summary>How many transactions Revit still owns. Diagnostic only.</summary>
