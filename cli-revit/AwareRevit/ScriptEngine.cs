@@ -97,6 +97,17 @@ internal static class ScriptEngine
                     // fire-and-forget would hand back ok:true for changes the
                     // model does not have. bake-scene guards this the same way.
                     var commitStatus = tx.Commit();
+                    if (commitStatus == TransactionStatus.Pending)
+                    {
+                        // Revit's failure processing has not finished, so the
+                        // change may still land. Do NOT claim nothing was
+                        // written — that would send the caller into a retry that
+                        // duplicates the edit if the commit later succeeds.
+                        throw new Exception(
+                            "Revit has not resolved the exec's transaction (status: Pending) — its "
+                            + "failure processing is still running, so the change may yet be "
+                            + "committed. Check the model before retrying; a retry may duplicate it.");
+                    }
                     if (commitStatus != TransactionStatus.Committed)
                     {
                         throw new Exception(
@@ -107,7 +118,13 @@ internal static class ScriptEngine
                 }
                 catch
                 {
-                    if (tx.HasStarted()) tx.RollBack();
+                    // Only roll back a transaction still in our hands. HasEnded()
+                    // covers the commit that already resolved to RolledBack, and
+                    // a Pending one belongs to Revit's failure processing —
+                    // rolling either back here throws on top of the real fault.
+                    // Same guard bake-scene uses.
+                    if (tx.HasStarted() && !tx.HasEnded()
+                        && tx.GetStatus() != TransactionStatus.Pending) tx.RollBack();
                     throw;
                 }
             }
