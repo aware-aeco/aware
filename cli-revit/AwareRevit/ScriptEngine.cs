@@ -73,14 +73,66 @@ internal static class ScriptEngine
             {
                 using var tx = new Transaction(ui.ActiveUIDocument.Document, "AWARE exec");
                 tx.Start();
+                // Never let Revit force a modal failure dialog on commit. This runs
+                // unattended over a pipe: a modal blocks Revit's API thread INSIDE an
+                // open transaction, and that is the same thread the pipe handler is
+                // waiting on — so the whole bridge stops answering until a human
+                // clicks OK on a dialog nobody was told about (#328). bake-scene has
+                // guarded this since it shipped; exec, the more general write path,
+                // did not. Anything warning-worthy — an off-axis brace, geometry
+                // joined out from under a dimension — trips it.
+                var failureOptions = tx.GetFailureHandlingOptions();
+                failureOptions.SetForcedModalHandling(false);
+                failureOptions.SetClearAfterRollback(true);
+                failureOptions.SetDelayedMiniWarnings(true);
+                tx.SetFailureHandlingOptions(failureOptions);
                 try
                 {
                     result = script.RunAsync(globals).GetAwaiter().GetResult().ReturnValue;
-                    tx.Commit();
+                    // Commit REPORTS its outcome rather than always throwing, and
+                    // suppressing the modal above is exactly what makes the quiet
+                    // outcomes reachable: Revit's failure processing now resolves
+                    // on its own and can roll back — or leave the transaction
+                    // pending — without raising. Treating Commit as
+                    // fire-and-forget would hand back ok:true for changes the
+                    // model does not have. bake-scene guards this the same way.
+                    var commitStatus = tx.Commit();
+                    if (commitStatus == TransactionStatus.Pending)
+                    {
+                        // Revit's failure processing had not resolved when Commit
+                        // returned, and this scope disposes the transaction on the
+                        // way out. Whether that disposal discards the edit or Revit
+                        // still finalizes it is not something the add-in can
+                        // determine from here, so report the outcome as UNKNOWN
+                        // rather than asserting either. Claiming "nothing was
+                        // written" would invite a retry that duplicates the edit if
+                        // it did land; claiming success would be worse. Resolving
+                        // this properly means keeping the transaction alive past the
+                        // response, which bake-scene would need too — tracked
+                        // separately rather than guessed at here.
+                        throw new Exception(
+                            "Revit left the exec's transaction unresolved (status: Pending) — its "
+                            + "failure processing had not finished. Whether the change landed is "
+                            + "UNKNOWN: inspect the model before retrying, because a blind retry "
+                            + "would duplicate it if it did.");
+                    }
+                    if (commitStatus != TransactionStatus.Committed)
+                    {
+                        throw new Exception(
+                            $"Revit did not commit the exec (transaction status: {commitStatus}). "
+                            + "Nothing was written; this is usually Revit's failure processing "
+                            + "rejecting the change or a warning resolving to a rollback.");
+                    }
                 }
                 catch
                 {
-                    if (tx.HasStarted()) tx.RollBack();
+                    // Only roll back a transaction still in our hands. HasEnded()
+                    // covers the commit that already resolved to RolledBack, and
+                    // a Pending one belongs to Revit's failure processing —
+                    // rolling either back here throws on top of the real fault.
+                    // Same guard bake-scene uses.
+                    if (tx.HasStarted() && !tx.HasEnded()
+                        && tx.GetStatus() != TransactionStatus.Pending) tx.RollBack();
                     throw;
                 }
             }
