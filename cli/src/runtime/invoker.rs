@@ -1191,7 +1191,21 @@ async fn vision_extract(args: Value, dry_run: bool) -> Result<Value, AwareError>
     let model = s("model").ok_or_else(|| {
         AwareError::Validation("vision.extract: `model` (a pinned model id) is required".into())
     })?;
-    let schema = args.get("schema").cloned().unwrap_or(Value::Null);
+    // Required, exactly like file/prompt/model. Defaulting a missing schema to null used to
+    // disable validation altogether — the same fence bypass as #333, reached from the other
+    // side: "schema-bound" cannot mean "bound only when the caller remembers to bind it".
+    // The manifest declares the input and app-spec mandates it, so absence is a caller
+    // error, not a permissive mode.
+    let schema = match args.get("schema") {
+        Some(v) if !v.is_null() => v.clone(),
+        _ => {
+            return Err(AwareError::Validation(
+                "vision.extract: `schema` (the fixed output JSON schema) is required — \
+                 the extraction is schema-bound"
+                    .into(),
+            ));
+        }
+    };
 
     let bytes = std::fs::read(&file).map_err(|e| {
         AwareError::Validation(format!("vision.extract: cannot read file {file}: {e}"))
@@ -1211,18 +1225,24 @@ async fn vision_extract(args: Value, dry_run: bool) -> Result<Value, AwareError>
     let validator = compile_schema(&schema)
         .map_err(|e| AwareError::Validation(format!("vision.extract: {e}")))?;
 
+    let mut stale_cache = false;
     if let Ok(text) = std::fs::read_to_string(&cache_path)
         && let Ok(result) = serde_json::from_str::<Value>(&text)
     {
         if validate_with(validator.as_ref(), &result).is_ok() {
             return Ok(serde_json::json!({ "result": result, "cached": true, "model": model }));
         }
-        let _ = std::fs::remove_file(&cache_path);
+        // Refuse to replay it — but a preview must not touch the disk, so the eviction
+        // waits until after the dry-run return.
+        stale_cache = true;
     }
     if dry_run {
         return Ok(
             serde_json::json!({ "result": Value::Null, "cached": false, "dry-run": true, "model": model }),
         );
+    }
+    if stale_cache {
+        let _ = std::fs::remove_file(&cache_path);
     }
 
     // MISS — call the pinned model (blocking ureq → off the async reactor), and accept the
@@ -3936,7 +3956,8 @@ mod builtin_invoker_tests {
 
     #[test]
     fn absent_schema_validates_anything() {
-        // `schema` is optional on the inputs; a null schema declares no contract to enforce.
+        // Helper-level contract only. `vision.extract` itself now REJECTS a missing schema
+        // (see the required-input check) — a null schema there would be a fence bypass.
         let anything = serde_json::json!({ "whatever": [1, 2, 3] });
         assert!(validate_against_schema(&anything, &Value::Null).is_ok());
     }
@@ -3979,6 +4000,24 @@ mod builtin_invoker_tests {
         assert!(!is_nonconforming_reply(&net));
         let internal = AwareError::Internal("boom".into());
         assert!(!is_nonconforming_reply(&internal));
+    }
+
+    #[test]
+    fn dry_run_does_not_evict_a_stale_cache_entry() {
+        // Codex review: preview must mutate nothing. The eviction of a schema-violating
+        // cache entry is deliberately sequenced AFTER the dry-run return, so this pins the
+        // ordering in the source rather than trusting a comment.
+        let src = include_str!("invoker.rs");
+        let body = src
+            .split("async fn vision_extract")
+            .nth(1)
+            .expect("vision_extract must exist");
+        let dry = body.find("if dry_run").expect("dry-run guard");
+        let evict = body.find("remove_file").expect("stale-cache eviction");
+        assert!(
+            dry < evict,
+            "the dry-run return must come BEFORE the cache eviction, or preview writes to disk"
+        );
     }
 
     #[test]
