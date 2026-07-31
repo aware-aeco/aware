@@ -546,9 +546,14 @@ async function main() {
 
 // Only run as a CLI when this file IS the entry point. Without this guard, importing the module from a
 // test executes main(), which reads fd 0 and exits non-zero.
-const invokedDirectly = process.argv[1]
-  && (import.meta.url === pathToFileURL(process.argv[1]).href
-      || !basename(process.execPath).toLowerCase().startsWith('node')); // packaged SEA: argv[1] isn't this file
+//
+// The packaged case is checked FIRST and does not depend on argv[1]. Shipped as a SEA the bundle is
+// CJS inside a renamed node.exe, where argv[1] is not this script and may be absent entirely — an
+// argv-first guard would evaluate false and leave the bridge silently doing nothing, which is a far
+// worse failure than the one the guard prevents.
+const isPackagedExe = !basename(process.execPath).toLowerCase().startsWith('node');
+const invokedDirectly = isPackagedExe
+  || (!!process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href);
 if (invokedDirectly) {
   main().catch((e) => {
     process.stderr.write(`connection-reader: ${e && e.message ? e.message : e}\n`);
