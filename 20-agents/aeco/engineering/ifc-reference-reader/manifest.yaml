@@ -1,0 +1,114 @@
+agent:        ifc-reference-reader
+version:      0.1.0
+display-name: IFC Reference Reader (whole model → mesh)
+description: |
+  Read a WHOLE IFC file as a reference model — borrowed geometry you overlay, measure and build to,
+  but never own. Returns AWARE's generic kind:"mesh" scene primitive (positions+indices) in canonical
+  millimetres for every element, plus what the file says about each one: name, IFC type, storey,
+  profile designation and material. Drives the bundled web-ifc WASM parser; it never re-implements an
+  IFC geometry kernel.
+
+  Persona (anyone building against someone else's model): "The architect sent me their model. I want
+  to see it next to mine, snap to it and build to it — I am not importing it." That is the whole
+  distinction from `connection-reader`, which answers the opposite question: pick ONE connection out
+  of a file and make it mine. Same file format, same bridge, opposite intent — so they are separate
+  agents rather than four commands on one.
+
+  `probe` answers the cheap questions (schema, declared units, element count, rough extent) WITHOUT
+  tessellating, so a consumer can refuse a file before paying to load it. `read-model` then returns
+  the geometry. Pairs with `ifc-inspector` (property sets) and `viewer-3d` (render it).
+
+stateful: false
+
+vendor:   aware-aeco
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/ifc-reference-reader
+keywords: [aware, ifc, reference, model, coordination, overlay, mesh, tessellation, web-ifc, units]
+
+provenance:
+  generated-by:      hand-curated
+  generator-version: 0.13.0
+  refined-by:        [pawellisowski]
+
+requires:
+  filesystem:
+    - read: '*.ifc,*.ifczip'
+
+# CLI transport. Deliberately the SAME binary as `connection-reader`: both agents are thin intents
+# over one web-ifc bridge, and the sidecar registry resolves an install by BINARY name, not by agent
+# name (cli/src/commands/sidecar.rs, cli/src/runtime/invoker.rs). Sharing it means this agent needs no
+# new downloadable asset and works the moment `aware sidecar install connection-reader` has been run.
+transport:
+  cli:
+    binary: aware-connection-reader
+
+commands:
+
+  probe:
+    lifecycle: single
+    category: curated
+    description: |
+      Answer the cheap questions about an IFC WITHOUT tessellating: which schema, what length unit it
+      declares, how many elements it places, and roughly where and how big it sits. Fast even on a
+      large file, because no geometry is walked.
+
+      This exists so a consumer can decide whether to load a file AT ALL before paying to tessellate
+      it — tessellating a 300 MB model in order to discover it is too big is the freeze a size cap is
+      meant to prevent.
+
+      `units.declared` is PROVENANCE, not a conversion factor. web-ifc reads IfcUnitAssignment itself
+      and normalises geometry to metres before any caller sees a vertex, so nothing downstream may
+      scale mesh coordinates by this value. It is here so a user can see what they were handed, and so
+      a file that LIES about its units can be spotted and overridden. `null` means the file did not
+      say — an honest unknown, never a guess. Read-only.
+    inputs:
+      ifc-path:
+        type: string
+        description: Absolute or workspace-relative path to the .ifc / .ifczip file.
+    outputs:
+      type: single
+      schema:
+        schema: string   # "IFC2X3" | "IFC4" | "IFC4X3_ADD2" | …
+        units: object    # { declared: "MILLI.METRE" | "METRE" | null } — provenance, NOT a factor
+        elements: number # elements placed DIRECTLY in the spatial structure. NOT equal to
+                         # read-model's object count — different populations (see probe.md)
+        bbox: object     # { min: [x,y,z], max: [x,y,z] } APPROXIMATE, in mm — or NULL when the
+                         # length unit cannot be resolved, or there are no usable 3D points.
+                         # Callers must handle null: a guessed box is worse than none
+
+  read-model:
+    lifecycle: single
+    category: curated
+    description: |
+      Tessellate the WHOLE file into mesh scene objects — every element, not only connection hardware
+      — each a kind:"mesh" element (positions + indices) in canonical millimetres, in the file's own
+      world frame. A consumer re-anchors and places. Deterministic for a given file, so the result is
+      content-hash cacheable.
+
+      Each object also carries what the file SAYS about it: `name`, `ifcType`, `storey`, `profile` and
+      `material`. Two of those are load-bearing rather than decorative. `profile` is the designation
+      verbatim ("W10x33", lowercase x and all) — a section must be looked up by name and never
+      measured off the mesh, because exports routinely write a simplified box for a real profile.
+      `material` is the signal that says do not convert this: a member can be named "girder" and typed
+      IfcBeam while being spruce.
+
+      `max-vertices` is an in-process circuit breaker: the budget decrements as meshes stream and the
+      command aborts mid-walk. It is NOT a preflight gate — an exact vertex count cannot be known
+      before tessellating, so a cap applied after this returns would fire only once the payload that
+      causes the freeze had already been built. Read-only.
+    inputs:
+      ifc-path:
+        type: string
+        description: Absolute or workspace-relative path to the .ifc / .ifczip file.
+      max-vertices:
+        type: number
+        description: Optional vertex budget; the command aborts mid-tessellation if the file exceeds it.
+    outputs:
+      type: single
+      schema:
+        objects: array # [{ id, name, ifcType, storey, profile, material, positions: [mm], indices }]
+        skipped: number # products streamed but carrying no drawable triangle — counted, never
+                        # dropped silently, so a consumer can reconcile against probe.elements
+
+skills:
+  - what-this-agent-does.md

@@ -70,8 +70,10 @@ fn json_output_returns_envelope() {
     //              → 75 (the generic `shell` agent — open a path with the OS default handler, #241).
     //              → 76 (the `connection-reader` cli agent — extract steel connections from IFC as mesh).
     //              → 77 (the `blender` builtin visualization agent — IFC in, headless PNG/MP4 out).
+    //              → 78 (the `ifc-reference-reader` cli agent — a WHOLE IFC as reference geometry.
+    //                    Shares connection-reader's bridge binary, so it adds no sidecar asset).
     // A strict equality keeps this honest — adjust it whenever an agent lands or retires.
-    assert_eq!(agents.len(), 77);
+    assert_eq!(agents.len(), 78);
     assert!(agents.iter().any(|a| a["id"] == "tekla"));
     assert!(agents.iter().any(|a| a["id"] == "vision"));
     assert!(agents.iter().any(|a| a["id"] == "viewer-3d"));
