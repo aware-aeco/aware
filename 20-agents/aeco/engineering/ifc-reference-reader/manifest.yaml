@@ -69,9 +69,12 @@ commands:
       type: single
       schema:
         schema: string   # "IFC2X3" | "IFC4" | "IFC4X3_ADD2" | …
-        units: object    # { declared: "MILLI.METRE" | "METRE" | null }
-        elements: number # elements placed in the spatial structure
-        bbox: object     # { min: [x,y,z], max: [x,y,z] } APPROXIMATE, in mm
+        units: object    # { declared: "MILLI.METRE" | "METRE" | null } — provenance, NOT a factor
+        elements: number # elements placed DIRECTLY in the spatial structure. NOT equal to
+                         # read-model's object count — different populations (see probe.md)
+        bbox: object     # { min: [x,y,z], max: [x,y,z] } APPROXIMATE, in mm — or NULL when the
+                         # length unit cannot be resolved, or there are no usable 3D points.
+                         # Callers must handle null: a guessed box is worse than none
 
   read-model:
     lifecycle: single
@@ -104,6 +107,8 @@ commands:
       type: single
       schema:
         objects: array # [{ id, name, ifcType, storey, profile, material, positions: [mm], indices }]
+        skipped: number # products streamed but carrying no drawable triangle — counted, never
+                        # dropped silently, so a consumer can reconcile against probe.elements
 
 skills:
   - what-this-agent-does.md

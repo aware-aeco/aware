@@ -395,10 +395,17 @@ function storeyByElement(api, modelID) {
     try { label = strOf(api.GetLine(modelID, structId).Name) ?? null; } catch { /* unnamed storey */ }
     for (const e of rel.RelatedElements || []) if (e && e.value != null) out.set(e.value, label);
   }
-  // Push each containment down through IfcRelAggregates. Repeat until nothing new is learned so a
-  // nested assembly resolves at any depth; the pass count is bounded so a cyclic file cannot spin.
+  // Push each containment down through IfcRelAggregates, repeating until a pass learns nothing new,
+  // so a nested assembly resolves at ANY depth.
+  //
+  // There is deliberately no pass cap. Termination comes from the `!out.has(kid)` guard: every
+  // iteration that continues has strictly grown `out`, which is bounded by the number of elements in
+  // the file, so a cyclic aggregation cannot spin. An earlier cut also capped the passes at 8 "for
+  // safety" — but relationship iteration order is arbitrary, so a reverse-ordered chain advances only
+  // one level per pass, and that cap silently returned `storey: null` for anything nested deeper.
+  // A bound that can truncate a legitimate answer is not a safety measure.
   const children = assemblyChildren(api, modelID);
-  for (let pass = 0; pass < 8; pass++) {
+  for (;;) {
     let learned = 0;
     for (const [parent, kids] of children) {
       if (!out.has(parent)) continue;
