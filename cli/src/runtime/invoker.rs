@@ -1191,7 +1191,21 @@ async fn vision_extract(args: Value, dry_run: bool) -> Result<Value, AwareError>
     let model = s("model").ok_or_else(|| {
         AwareError::Validation("vision.extract: `model` (a pinned model id) is required".into())
     })?;
-    let schema = args.get("schema").cloned().unwrap_or(Value::Null);
+    // Required, exactly like file/prompt/model. Defaulting a missing schema to null used to
+    // disable validation altogether — the same fence bypass as #333, reached from the other
+    // side: "schema-bound" cannot mean "bound only when the caller remembers to bind it".
+    // The manifest declares the input and app-spec mandates it, so absence is a caller
+    // error, not a permissive mode.
+    let schema = match args.get("schema") {
+        Some(v) if !v.is_null() => v.clone(),
+        _ => {
+            return Err(AwareError::Validation(
+                "vision.extract: `schema` (the fixed output JSON schema) is required — \
+                 the extraction is schema-bound"
+                    .into(),
+            ));
+        }
+    };
 
     let bytes = std::fs::read(&file).map_err(|e| {
         AwareError::Validation(format!("vision.extract: cannot read file {file}: {e}"))
@@ -1201,27 +1215,79 @@ async fn vision_extract(args: Value, dry_run: bool) -> Result<Value, AwareError>
     let key = vision_cache_key(&bytes, &prompt, &schema, &model);
     let cache_path = vision_cache_dir().join(format!("{key}.json"));
 
-    // Cache HIT — deterministic replay, no model call.
+    // Cache HIT — deterministic replay, no model call. An entry written before validation
+    // existed (or by an older CLI) can itself violate the schema; replaying it would make
+    // one bad extraction permanent for that input, so an invalid entry is evicted and
+    // re-extracted rather than served.
+    // Compiled once, before the cache read and before any model call: an invalid schema can
+    // never be satisfied, so failing here costs nothing where discovering it later would
+    // cost two full extractions.
+    let validator = compile_schema(&schema)
+        .map_err(|e| AwareError::Validation(format!("vision.extract: {e}")))?;
+
+    let mut stale_cache = false;
     if let Ok(text) = std::fs::read_to_string(&cache_path)
         && let Ok(result) = serde_json::from_str::<Value>(&text)
     {
-        return Ok(serde_json::json!({ "result": result, "cached": true, "model": model }));
+        if validate_with(validator.as_ref(), &result).is_ok() {
+            return Ok(serde_json::json!({ "result": result, "cached": true, "model": model }));
+        }
+        // Refuse to replay it — but a preview must not touch the disk, so the eviction
+        // waits until after the dry-run return.
+        stale_cache = true;
     }
     if dry_run {
         return Ok(
             serde_json::json!({ "result": Value::Null, "cached": false, "dry-run": true, "model": model }),
         );
     }
+    if stale_cache {
+        let _ = std::fs::remove_file(&cache_path);
+    }
 
-    // MISS — call the pinned model once (blocking ureq → off the async reactor), store, return.
-    let result = {
-        let model2 = model.clone();
-        tokio::task::spawn_blocking(move || call_vision_model(&bytes, &prompt, &schema, &model2))
-            .await
-            .map_err(|e| {
-                AwareError::Internal(format!("vision.extract: blocking task failed: {e}"))
-            })??
-    };
+    // MISS — call the pinned model (blocking ureq → off the async reactor), and accept the
+    // reply only if it conforms to the declared schema. The failure this guards is
+    // intermittent (observed ~1 sheet in 20 on one corpus), so a single retry clears the
+    // common case; a second failure is reported with the offending path rather than handed
+    // back as `ok: true`. Only a validated result is cached — never poison the key.
+    const VISION_ATTEMPTS: usize = 2;
+    let mut result = Value::Null;
+    let mut last_err = String::new();
+    for attempt in 1..=VISION_ATTEMPTS {
+        let (bytes2, prompt2, schema2, model2) =
+            (bytes.clone(), prompt.clone(), schema.clone(), model.clone());
+        let outcome = tokio::task::spawn_blocking(move || {
+            call_vision_model(&bytes2, &prompt2, &schema2, &model2)
+        })
+        .await
+        .map_err(|e| AwareError::Internal(format!("vision.extract: blocking task failed: {e}")))?;
+
+        let candidate = match outcome {
+            Ok(v) => v,
+            // An unparseable reply is a non-conforming reply — retry it like any other.
+            // A provider/transport failure is not; propagate it rather than paying twice.
+            Err(e) if is_nonconforming_reply(&e) && attempt < VISION_ATTEMPTS => {
+                last_err = format!("attempt {attempt}/{VISION_ATTEMPTS}: {e}");
+                continue;
+            }
+            Err(e) => return Err(e),
+        };
+
+        match validate_with(validator.as_ref(), &candidate) {
+            Ok(()) => {
+                result = candidate;
+                last_err.clear();
+                break;
+            }
+            Err(e) => last_err = format!("attempt {attempt}/{VISION_ATTEMPTS}: {e}"),
+        }
+    }
+    if !last_err.is_empty() {
+        return Err(AwareError::Validation(format!(
+            "vision.extract: model output violates the declared schema — {last_err}"
+        )));
+    }
+
     if let Some(dir) = cache_path.parent() {
         let _ = std::fs::create_dir_all(dir);
     }
@@ -1367,6 +1433,10 @@ fn vision_instruction(prompt: &str, schema: &Value) -> String {
 }
 
 /// Strip optional ``` fences and parse the model's reply as JSON.
+///
+/// Parsing only proves the reply is JSON. Conformance to the declared schema is a separate
+/// check — see [`validate_against_schema`] — so this error deliberately says "parse", not
+/// "schema-conforming", which is what it used to claim while checking no such thing.
 fn parse_vision_json(text: &str) -> Result<Value, AwareError> {
     let cleaned = text
         .trim()
@@ -1374,11 +1444,69 @@ fn parse_vision_json(text: &str) -> Result<Value, AwareError> {
         .trim_start_matches("```")
         .trim_end_matches("```")
         .trim();
-    serde_json::from_str::<Value>(cleaned).map_err(|e| {
-        AwareError::Validation(format!(
-            "vision.extract: model did not return schema-conforming JSON: {e}"
-        ))
-    })
+    serde_json::from_str::<Value>(cleaned)
+        .map_err(|e| AwareError::Validation(format!("vision.extract: reply is not JSON: {e}")))
+}
+
+/// Validate a value against a caller-declared JSON Schema, naming where it failed.
+///
+/// A schema that is only pasted into the prompt is a suggestion, not a fence: the model
+/// intermittently returns structurally wrong JSON that parses cleanly, and the substrate
+/// used to hand that to callers as `ok: true` (aware-aeco#333). A declared schema is a
+/// contract, so it is enforced here.
+///
+/// A `null` schema means none was declared — nothing to enforce, always valid.
+fn validate_against_schema(value: &Value, schema: &Value) -> Result<(), String> {
+    validate_with(compile_schema(schema)?.as_ref(), value)
+}
+
+/// Compile a declared schema once. `None` means no schema was declared.
+///
+/// Compiled up-front, before any model call: an invalid schema can never be satisfied, and
+/// discovering that only after the extractions would burn minutes of model time to report
+/// what is really a configuration error.
+fn compile_schema(schema: &Value) -> Result<Option<jsonschema::Validator>, String> {
+    if schema.is_null() {
+        return Ok(None);
+    }
+    jsonschema::validator_for(schema)
+        .map(Some)
+        .map_err(|e| format!("the declared schema is not valid JSON Schema: {e}"))
+}
+
+/// A reply that could not be parsed is as non-conforming as one that fails validation —
+/// both mean the model did not produce the declared shape — so both are retried. Provider
+/// and transport failures are NOT: retrying those only doubles the cost of a real outage.
+/// The message is the one [`parse_vision_json`] emits; `parse_failure_is_retryable` pins
+/// that coupling so it cannot drift silently.
+fn is_nonconforming_reply(e: &AwareError) -> bool {
+    matches!(e, AwareError::Validation(m) if m.contains("vision.extract: reply is not JSON"))
+}
+
+/// Validate against an already-compiled schema, naming where it failed.
+fn validate_with(validator: Option<&jsonschema::Validator>, value: &Value) -> Result<(), String> {
+    let Some(validator) = validator else {
+        return Ok(());
+    };
+    let mut errors: Vec<String> = validator
+        .iter_errors(value)
+        .map(|e| {
+            let at = e.instance_path().to_string();
+            let at = if at.is_empty() { "/".to_string() } else { at };
+            format!("{e} (at `{at}`)")
+        })
+        .collect();
+    if errors.is_empty() {
+        return Ok(());
+    }
+    // Enough to diagnose without dumping a whole malformed document into the error.
+    let total = errors.len();
+    errors.truncate(3);
+    let mut msg = errors.join("; ");
+    if total > 3 {
+        msg.push_str(&format!(" (+{} more)", total - 3));
+    }
+    Err(msg)
 }
 
 /// Resolve `name` to a directly-spawnable executable on PATH. On Windows this appends
@@ -3751,6 +3879,158 @@ mod builtin_invoker_tests {
         assert!(
             !out.exists(),
             "preview run must not write the file via dispatch"
+        );
+    }
+
+    // ---- aware-aeco#333: a declared schema must actually bind ----
+
+    /// The exact schema shape `vision.extract` callers declare for traced geometry:
+    /// `pts` is an array of two-element number arrays.
+    fn pts_schema() -> Value {
+        serde_json::json!({
+            "type": "object",
+            "required": ["elements"],
+            "properties": {
+                "elements": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": ["kind"],
+                        "properties": {
+                            "kind": { "enum": ["line", "polyline", "text"] },
+                            "pts": {
+                                "type": "array",
+                                "items": {
+                                    "type": "array",
+                                    "items": { "type": "number" },
+                                    "minItems": 2,
+                                    "maxItems": 2
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    #[test]
+    fn schema_validation_accepts_conforming_output() {
+        let ok = serde_json::json!({
+            "elements": [{ "kind": "line", "pts": [[199.0, 0.0], [199.0, 999.0]] }]
+        });
+        assert!(validate_against_schema(&ok, &pts_schema()).is_ok());
+    }
+
+    #[test]
+    fn schema_validation_rejects_the_flat_pts_regression() {
+        // The literal payload from aware-aeco#333: pts flattened to bare numbers. It parses
+        // as JSON, which is why it used to be returned as ok:true, and it crashed the
+        // downstream consumer that trusted the declared schema.
+        let bad = serde_json::json!({
+            "elements": [{ "kind": "line", "pts": [199, 0, 199, 999] }]
+        });
+        let err = validate_against_schema(&bad, &pts_schema())
+            .expect_err("flat pts violates the declared schema and must be rejected");
+        assert!(
+            err.contains("pts"),
+            "the error must name where it failed, got: {err}"
+        );
+    }
+
+    #[test]
+    fn schema_validation_reports_the_offending_path() {
+        let bad = serde_json::json!({ "elements": [{ "kind": "circle" }] });
+        let err = validate_against_schema(&bad, &pts_schema()).expect_err("enum violation");
+        assert!(
+            err.contains("kind"),
+            "expected the failing property in the message, got: {err}"
+        );
+    }
+
+    #[test]
+    fn schema_validation_requires_declared_required_fields() {
+        let bad = serde_json::json!({ "notelements": [] });
+        assert!(validate_against_schema(&bad, &pts_schema()).is_err());
+    }
+
+    #[test]
+    fn absent_schema_validates_anything() {
+        // Helper-level contract only. `vision.extract` itself now REJECTS a missing schema
+        // (see the required-input check) — a null schema there would be a fence bypass.
+        let anything = serde_json::json!({ "whatever": [1, 2, 3] });
+        assert!(validate_against_schema(&anything, &Value::Null).is_ok());
+    }
+
+    #[test]
+    fn a_malformed_declared_schema_is_reported_not_ignored() {
+        // Silently passing everything when the *schema* is broken would recreate the bug.
+        let broken = serde_json::json!({ "type": "not-a-json-schema-type" });
+        let err = validate_against_schema(&serde_json::json!({}), &broken)
+            .expect_err("a broken schema must surface, not silently accept");
+        assert!(err.contains("not valid JSON Schema"), "got: {err}");
+    }
+
+    #[test]
+    fn parse_vision_json_no_longer_claims_schema_conformance() {
+        // It only ever checked parseability; the message used to say "schema-conforming",
+        // which is exactly the false assurance #333 was about.
+        let err = parse_vision_json("this is not json").unwrap_err();
+        let msg = format!("{err}");
+        assert!(msg.contains("not JSON"), "got: {msg}");
+        assert!(!msg.contains("schema-conforming"), "got: {msg}");
+    }
+
+    #[test]
+    fn parse_failure_is_retryable() {
+        // Codex review: an unparseable reply is as non-conforming as a schema violation and
+        // must be retried, not propagated on the first attempt. This pins the coupling to
+        // parse_vision_json's message so it cannot drift silently.
+        let e = parse_vision_json("not json at all").unwrap_err();
+        assert!(
+            is_nonconforming_reply(&e),
+            "a parse failure must be classified retryable, got: {e}"
+        );
+    }
+
+    #[test]
+    fn provider_failures_are_not_retryable() {
+        // Retrying a real outage just doubles the cost of it.
+        let net = AwareError::Validation("vision.extract: claude failed (exit code: 1)".into());
+        assert!(!is_nonconforming_reply(&net));
+        let internal = AwareError::Internal("boom".into());
+        assert!(!is_nonconforming_reply(&internal));
+    }
+
+    #[test]
+    fn dry_run_does_not_evict_a_stale_cache_entry() {
+        // Codex review: preview must mutate nothing. The eviction of a schema-violating
+        // cache entry is deliberately sequenced AFTER the dry-run return, so this pins the
+        // ordering in the source rather than trusting a comment.
+        let src = include_str!("invoker.rs");
+        let body = src
+            .split("async fn vision_extract")
+            .nth(1)
+            .expect("vision_extract must exist");
+        let dry = body.find("if dry_run").expect("dry-run guard");
+        let evict = body.find("remove_file").expect("stale-cache eviction");
+        assert!(
+            dry < evict,
+            "the dry-run return must come BEFORE the cache eviction, or preview writes to disk"
+        );
+    }
+
+    #[test]
+    fn a_broken_schema_is_rejected_before_any_model_call() {
+        // Codex review: compiling the schema up-front is what makes an invalid schema cost
+        // zero extractions instead of two.
+        let broken = serde_json::json!({ "type": "not-a-json-schema-type" });
+        assert!(compile_schema(&broken).is_err());
+        // ... and a declared-but-absent schema compiles to "nothing to enforce".
+        assert!(
+            compile_schema(&Value::Null)
+                .expect("null schema is legal")
+                .is_none()
         );
     }
 }
