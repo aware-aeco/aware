@@ -89,7 +89,21 @@ internal static class ScriptEngine
                 try
                 {
                     result = script.RunAsync(globals).GetAwaiter().GetResult().ReturnValue;
-                    tx.Commit();
+                    // Commit REPORTS its outcome rather than always throwing, and
+                    // suppressing the modal above is exactly what makes the quiet
+                    // outcomes reachable: Revit's failure processing now resolves
+                    // on its own and can roll back — or leave the transaction
+                    // pending — without raising. Treating Commit as
+                    // fire-and-forget would hand back ok:true for changes the
+                    // model does not have. bake-scene guards this the same way.
+                    var commitStatus = tx.Commit();
+                    if (commitStatus != TransactionStatus.Committed)
+                    {
+                        throw new Exception(
+                            $"Revit did not commit the exec (transaction status: {commitStatus}). "
+                            + "Nothing was written; this is usually Revit's failure processing "
+                            + "rejecting the change or a warning resolving to a rollback.");
+                    }
                 }
                 catch
                 {
