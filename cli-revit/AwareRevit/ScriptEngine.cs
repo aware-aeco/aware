@@ -99,14 +99,22 @@ internal static class ScriptEngine
                     var commitStatus = tx.Commit();
                     if (commitStatus == TransactionStatus.Pending)
                     {
-                        // Revit's failure processing has not finished, so the
-                        // change may still land. Do NOT claim nothing was
-                        // written — that would send the caller into a retry that
-                        // duplicates the edit if the commit later succeeds.
+                        // Revit's failure processing had not resolved when Commit
+                        // returned, and this scope disposes the transaction on the
+                        // way out. Whether that disposal discards the edit or Revit
+                        // still finalizes it is not something the add-in can
+                        // determine from here, so report the outcome as UNKNOWN
+                        // rather than asserting either. Claiming "nothing was
+                        // written" would invite a retry that duplicates the edit if
+                        // it did land; claiming success would be worse. Resolving
+                        // this properly means keeping the transaction alive past the
+                        // response, which bake-scene would need too — tracked
+                        // separately rather than guessed at here.
                         throw new Exception(
-                            "Revit has not resolved the exec's transaction (status: Pending) — its "
-                            + "failure processing is still running, so the change may yet be "
-                            + "committed. Check the model before retrying; a retry may duplicate it.");
+                            "Revit left the exec's transaction unresolved (status: Pending) — its "
+                            + "failure processing had not finished. Whether the change landed is "
+                            + "UNKNOWN: inspect the model before retrying, because a blind retry "
+                            + "would duplicate it if it did.");
                     }
                     if (commitStatus != TransactionStatus.Committed)
                     {
