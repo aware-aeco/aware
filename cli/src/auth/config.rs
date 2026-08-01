@@ -524,15 +524,6 @@ mod tests {
         }
     }
 
-    #[test]
-    fn client_id_falls_back_to_default_when_env_unset() {
-        // Use an integration not normally in tests' env
-        let c = for_integration("google-workspace").unwrap();
-        let id = c.client_id();
-        // Either it's the placeholder OR it's set in the environment; either way it's non-empty
-        assert!(!id.is_empty());
-    }
-
     // ── BYO profile overlay (#146) ────────────────────────────────────────────
 
     #[test]

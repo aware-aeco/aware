@@ -270,24 +270,37 @@ mod tests {
     }
 
     #[test]
-    fn pkce_pair_has_valid_shape() {
+    fn pkce_challenge_is_the_s256_digest_of_the_verifier() {
+        // This binding is the whole security property of PKCE: we advertise
+        // code_challenge_method=S256, so the provider recomputes SHA-256 over the
+        // verifier we later present. A challenge derived from anything else makes
+        // every authorization fail — and a challenge that ignores the verifier
+        // silently removes the protection. Shape checks alone can't see either.
         let (verifier, challenge) = make_pkce_pair();
-        // URL-safe base64-no-pad of 32 bytes is 43 chars
+        let expected = base64::engine::general_purpose::URL_SAFE_NO_PAD
+            .encode(sha2::Sha256::digest(verifier.as_bytes()));
+        assert_eq!(challenge, expected);
+    }
+
+    #[test]
+    fn pkce_verifier_meets_rfc7636_shape_and_is_unpredictable() {
+        let (verifier, challenge) = make_pkce_pair();
+        // RFC 7636 §4.1: 43–128 chars from the unreserved set. URL-safe
+        // base64-no-pad of 32 random bytes is exactly 43.
         assert_eq!(verifier.len(), 43);
         assert_eq!(challenge.len(), 43);
-        assert!(
-            verifier
-                .chars()
-                .all(|c| c.is_alphanumeric() || c == '-' || c == '_')
-        );
-        assert!(
-            challenge
-                .chars()
-                .all(|c| c.is_alphanumeric() || c == '-' || c == '_')
-        );
-        // Two different calls produce different verifiers (random)
-        let (v2, _) = make_pkce_pair();
+        for s in [&verifier, &challenge] {
+            assert!(
+                s.chars()
+                    .all(|c| c.is_ascii_alphanumeric() || c == '-' || c == '_'),
+                "not unreserved-safe: {s}"
+            );
+        }
+        // Reusing a verifier across authorizations would let a leaked one be
+        // replayed, so distinct calls must not collide.
+        let (v2, c2) = make_pkce_pair();
         assert_ne!(verifier, v2);
+        assert_ne!(challenge, c2);
     }
 
     #[test]
