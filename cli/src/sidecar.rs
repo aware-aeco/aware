@@ -4,8 +4,6 @@
 //! on PATH. Spawns the sidecar as a subprocess; one JSON request goes in on stdin,
 //! one JSON response comes back on stdout. Process exits between requests.
 
-#![allow(dead_code)]
-
 use std::io::Write;
 use std::path::PathBuf;
 use std::process::{Command, Stdio};

@@ -10,8 +10,6 @@
 //! which pins agent versions inside `~/.aware/apps/<app>/`. This module is
 //! the engineer-facing compile artifact.
 
-#![allow(dead_code)]
-
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
@@ -139,6 +137,11 @@ pub enum NoteKind {
     /// fallback, an uninstalled agent, or a dangling input reference.
     Warn,
     /// A condition that should block the run.
+    ///
+    /// No compile path constructs this yet, but `10-core/app-spec.md` publishes
+    /// `info | warn | error` as the lockfile's note-kind contract, so the
+    /// variant stays until the spec drops it.
+    #[allow(dead_code)]
     Error,
 }
 
@@ -166,7 +169,9 @@ impl CompileNote {
         }
     }
 
-    /// Run-blocking error (`kind: error`).
+    /// Run-blocking error (`kind: error`). Unused today — kept in step with
+    /// [`NoteKind::Error`], which the app-spec still publishes.
+    #[allow(dead_code)]
     pub fn error(text: impl Into<String>) -> Self {
         Self {
             kind: NoteKind::Error,
