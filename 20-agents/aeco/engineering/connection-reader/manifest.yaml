@@ -78,9 +78,9 @@ commands:
     outputs:
       type: single
       schema:
-        connection: object # { id, name, type, members: [GlobalId], parts: [{ id, role, positions: [mm], indices }], recipe?: { kind: "base-plate"|"shear-plate", params, main } }
-                           # `parts` positions are in web-ifc's Y-UP tessellation frame (up is +Y) —
-                           # NOT the file's Z-up world frame, and NOT the frame
+        connection: object # { id, name, type, frame, members: [GlobalId], parts: [{ id, role, positions: [mm], indices }], recipe?: { kind: "base-plate"|"shear-plate", params, main } }
+                           # `frame` is "y-up": `parts` positions are in web-ifc's tessellation frame
+                           # (up is +Y) — NOT the file's Z-up world frame, and NOT the frame
                            # ifc-reference-reader.read-model returns. A consumer targeting a Z-up
                            # scene must rotate (x,y,z) -> (x,-z,y). See extract.md. `recipe` is
                            # frame-independent (scalars in mm), so recipe imports are unaffected.

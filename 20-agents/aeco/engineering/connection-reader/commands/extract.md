@@ -18,6 +18,7 @@ connection:
   id:      string           # the GlobalId requested
   name:    string           # human label ("BEAM B156")
   type:    string           # assembly ObjectType (may be null)
+  frame:   string           # "y-up" — the frame `parts[].positions` are in (see below)
   members: [string]         # GlobalIds of the members (columns/beams) the connection sits on
   parts:
     type: array
@@ -32,8 +33,8 @@ connection:
     main:   string          # the member GlobalId the plate sits on — a column (base plate) or beam (shear plate); advisory
 ```
 
-Each part is exactly the shape of a `kind:"mesh"` scene element — hand `positions`/`indices`
-straight to `viewer-3d.render` or `ifc.write`.
+Each part is exactly the shape of a `kind:"mesh"` scene element — hand `positions`/`indices` to
+`viewer-3d.render` (with `meta.up: "y"`, see below) or `ifc.write` (rotate first, see below).
 
 ## `parts` are in web-ifc's Y-UP frame — up is `+Y`, not `+Z`
 
@@ -42,9 +43,18 @@ The mesh comes back exactly as web-ifc tessellates it, and web-ifc bakes a fixed
 plate's anchors run along `±Y`, and a consumer dropping these vertices into a Z-up scene must rotate
 them (`(x, y, z) → (x, −z, y)`) or the connection arrives on its side.
 
-Handing these parts to `viewer-3d.render`, declare it: `meta.up: "y"`. The scene schema keeps
-coordinates in producer space and converts via `meta.up`, so the connection renders upright without
-anyone rotating vertices.
+The output says so itself: `connection.frame` is `"y-up"`. Read that field rather than assuming, and
+rather than inferring it from a version — the geometry is produced by the separately-installed
+`aware-connection-reader` bridge, which a stale install still runs (with only a warning).
+
+**`viewer-3d.render`** honours it: declare `meta.up: "y"` and the connection renders upright, because
+the scene schema keeps coordinates in producer space and converts via `meta.up`. No rotation needed.
+
+**`ifc.write` does not.** It emits `positions` verbatim as absolute IFC coordinates and never reads
+`meta.up` (`cli/src/render/ifc.rs`), and IFC is Z-up — so writing these parts straight out produces a
+file lying on its side. **Rotate `(x, y, z) → (x, −z, y)` before `ifc.write`.** (Rotating is also what
+`ifc-reference-reader.read-model` now does internally, which is why *its* meshes round-trip through
+`ifc.write` upright.) Tracked with the frame split in aware-aeco/aware#347.
 
 This is stated rather than changed because it is the frame this command has always returned and
 consumers are built on it. It is deliberately **not** the same as

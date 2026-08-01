@@ -17,6 +17,7 @@ schema:   string   # "IFC2X3" | "IFC4" | "IFC4X3_ADD2" | …
 units:
   declared: string # "MILLI.METRE" | "METRE" | … | null if the file did not say
 elements: number   # elements placed DIRECTLY in the spatial structure — see the caveat below
+frame:    string   # "z-up" — the frame `bbox` is in. Check this, not a version (see read-model.md)
 bbox:              # APPROXIMATE, in millimetres, Z-up — or null when it cannot be established
   min: [x, y, z]
   max: [x, y, z]
@@ -56,10 +57,13 @@ Measured across four real files (2026-07-25): three millimetre files came back d
 file declaring `METRE` was left alone.
 
 ## `bbox` is in the same frame `read-model` returns
-IFC's own world frame: **X and Y in plan, Z up**, millimetres. `read-model`'s vertices use that frame
-too (it rotates web-ifc's Y-up tessellation back — see `read-model.md`), so the two are directly
-comparable. They did not used to be, which is the bug this pairing exists to make impossible:
-aware-aeco/aware#343.
+IFC's own world frame: **X and Y in plan, Z up**, millimetres — reported as `frame: "z-up"` in the
+output, so a consumer checks it instead of assuming. `read-model`'s vertices use that frame too (it
+rotates web-ifc's Y-up tessellation back — see `read-model.md`), so the two share axes and units and
+their spans are comparable. They did not used to be, which is the bug this pairing exists to make
+impossible: aware-aeco/aware#343.
+
+Shared axes are not a shared origin, though — see below. Compare *scale*, not containment.
 
 ## `bbox` is approximate, and `null` when it cannot be trusted
 It comes from the file's own `IfcCartesianPoint`s scaled by the declared unit, so it includes local

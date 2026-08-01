@@ -37,8 +37,10 @@ That difference in intent is why they are separate agents rather than four comma
   per instance; de-duplicating by shape would silently drop objects.
 - **One frame for both commands: the file's own, Z-up.** web-ifc tessellates into a Y-up renderer
   frame; the reader rotates that back, so `probe`'s box and `read-model`'s vertices describe the same
-  building on the same axes. Before `0.2.0` they did not, and every reference model loaded on its side
-  (aware-aeco/aware#343). If you carry a Y-up→Z-up correction of your own, remove it.
+  building on the same axes. Before `1.0.0` they did not, and every reference model loaded on its side
+  (aware-aeco/aware#343 — see `BREAKING.md`). If you carry a Y-up→Z-up correction of your own, remove
+  it. Both commands report `frame` in their output; check that rather than a version number, because
+  the bridge binary that produces the geometry is installed separately from this agent.
 
 ## Two things worth knowing
 

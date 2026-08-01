@@ -335,6 +335,7 @@ export function probeModel(api, modelID) {
       schema: api.GetModelSchema ? api.GetModelSchema(modelID) : null,
       units: { declared },
       elements: placedElements(api, modelID).size,
+      frame: FILE_Z_UP,
       bbox: null,
     };
   }
@@ -360,6 +361,7 @@ export function probeModel(api, modelID) {
     schema: api.GetModelSchema ? api.GetModelSchema(modelID) : null,
     units: { declared },
     elements: placedElements(api, modelID).size,
+    frame: FILE_Z_UP,
     bbox: empty ? null : { min, max },
   };
 }
@@ -526,6 +528,21 @@ function profileOf(api, modelID, expressID) {
 export const toWebIfcYUp = ([x, y, z]) => [x, z, -y];
 
 /**
+ * The frame each command's coordinates are in, stated IN THE OUTPUT so a consumer can check it at
+ * runtime instead of inferring it from a version number.
+ *
+ * Version numbers cannot answer this question, which is why the field exists. Measured 2026-08-01
+ * against a real `aware app run`: (a) the bridge binary is installed separately from the agent
+ * (`aware sidecar install connection-reader`) and a stale one only prints a warning and runs anyway
+ * (cli/src/runtime/invoker.rs), so an agent manifest saying 1.0.0 can still be served by a bridge
+ * that returns the old frame; and (b) an app's `requires:` pin is not enforced at compile OR run
+ * time — `ifc-reference-reader@9.9.x` compiled and ran clean against an installed 1.0.0. So the
+ * only trustworthy answer is the one the producing binary puts in its own payload.
+ */
+export const FILE_Z_UP = 'z-up'; // IFC's own world frame: X/Y in plan, Z up
+export const WEB_IFC_Y_UP = 'y-up'; // web-ifc's renderer frame: X/Z in plan, Y up
+
+/**
  * `read-model` — the whole file as reference geometry.
  *
  * Unlike `extract`, this tessellates EVERY element rather than only connection hardware, and returns
@@ -610,7 +627,7 @@ export function readModel(api, modelID, maxVertices = Infinity) {
     });
   });
 
-  return { objects, skipped };
+  return { frame: FILE_Z_UP, objects, skipped };
 }
 
 function extractConnection(api, modelID, guid) {
@@ -635,6 +652,7 @@ function extractConnection(api, modelID, guid) {
         id: guid,
         name: assemblyLabel(asm),
         type: strOf(asm.ObjectType) || null,
+        frame: WEB_IFC_Y_UP,
         members,
         parts,
         ...(recipe ? { recipe } : {}),

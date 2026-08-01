@@ -109,6 +109,22 @@ test('probe and read-model agree about which axis is up (#343)', async () => {
   }
 });
 
+test('both commands STATE their frame, because no version number can (#343)', async () => {
+  // The agent manifest cannot answer "which frame did I just get": the bridge binary that produces
+  // the geometry is installed separately (`aware sidecar install connection-reader`) and a stale one
+  // only warns before running, and an app's `requires:` pin is enforced at neither compile nor run
+  // time (measured 2026-08-01). The producing binary saying so in its own payload is the only
+  // trustworthy answer — so the field is part of the contract, not a nicety.
+  const { probe, model } = await probeAndRead(join('test-fixtures', 'baseplate-bp1.ifc'));
+  assert.equal(probe.frame, 'z-up');
+  assert.equal(model.frame, 'z-up');
+  // And it must describe the geometry actually returned, not be a constant nobody checks: the same
+  // fixture's ~1125 mm column-plus-plate height is in Z, which is what "z-up" claims.
+  const { span } = extent(model.objects);
+  assert.ok(span[2] > span[0] && span[2] > span[1],
+    `frame says z-up but the tall axis is not Z: span ${span.map(Math.round)}`);
+});
+
 test('a base plate is horizontal in the frame read-model returns (#343)', async () => {
   // Ground truth from the fixture generators, not from probe: make-baseplate.py authors a HORIZONTAL
   // 400x400 plate with a column stub standing on it, so the assembly is ~400 mm in plan and ~1125 mm

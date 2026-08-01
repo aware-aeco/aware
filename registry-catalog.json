@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-08-01T08:23:44.850556300+00:00",
+  "updated-at": "2026-08-01T09:40:21.296712900+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -2740,7 +2740,7 @@
         "0.1.0": {
           "description": "Read a WHOLE IFC file as a reference model — borrowed geometry you overlay, measure and build to,",
           "status": "available",
-          "manifest-version": "0.2.0",
+          "manifest-version": "1.0.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 2,
