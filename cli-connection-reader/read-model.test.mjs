@@ -9,7 +9,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { openApi, closeApi, readModel, probeModel, toWebIfcYUp } from './index.mjs';
+import * as WebIFC from 'web-ifc';
+import { openApi, closeApi, readModel, probeModel, toWebIfcYUp, mergeInherited, propertySetsByElement } from './index.mjs';
 
 const DOWNLOADS = join(process.env.USERPROFILE ?? process.env.HOME ?? '', 'Downloads');
 const sample = (name) => (existsSync(join(DOWNLOADS, name)) ? join(DOWNLOADS, name) : null);
@@ -202,6 +203,186 @@ test('material rides along, because it is the signal that says "do not convert t
   // here silently re-arms the "convert timber as steel" mistake the field exists to prevent.
   assert.equal(materials.filter(Boolean).length, materials.length,
     `every object should resolve a material; got ${materials.filter(Boolean).length}/${materials.length}`);
+});
+
+test('property sets ride along, because in a real file that is where the meaning is', async (t) => {
+  if (!sample('11134_V_Motebello_Heistopp_Rev.ifc')) return t.skip(skipReason('11134_V_Motebello_Heistopp_Rev.ifc'));
+  const out = await read('11134_V_Motebello_Heistopp_Rev.ifc');
+
+  // THE FILE THAT MAKES THE CASE. Its objects carry almost nothing in the well-known fields — every
+  // one is an IfcBuildingElementProxy — so a reader returning only name/type/storey/profile/material
+  // hands a consumer an object tree in which nothing can be told apart. The properties are the answer.
+  const sets = out.objects.flatMap((o) => o.propertySets);
+  const values = sets.flatMap((s) => s.properties);
+  assert.equal(sets.length, 31, 'the design doc measured 31 property sets in this file');
+  assert.equal(values.length, 271, 'and 271 values across them');
+  assert.ok(out.objects.every((o) => o.propertySets.length > 0), 'every object here carries properties');
+
+  // VERBATIM — no normalisation, no translation, no renaming. These are vendor sets in Norwegian, and
+  // showing them as authored is the entire value; a reader that tidied them would be discarding the
+  // only thing that distinguishes one proxy from another.
+  const names = new Set(sets.map((s) => s.name));
+  assert.ok(names.has('AllplanAttributes'), `expected the vendor set verbatim, got ${[...names]}`);
+  assert.ok(values.some((p) => /[æøå]/i.test(p.name) || /^V\d+$/.test(p.name)),
+    'the authored property names must survive as written');
+});
+
+test('a standard property set reads its values as authored', async (t) => {
+  if (!sample('Building-Architecture.ifc')) return t.skip(skipReason('Building-Architecture.ifc'));
+  const out = await read('Building-Architecture.ifc');
+  const slab = out.objects.find((o) => o.propertySets.some((s) => s.name === 'Pset_SlabCommon'));
+  assert.ok(slab, 'the architecture file carries a standard Pset_SlabCommon');
+  const props = slab.propertySets.find((s) => s.name === 'Pset_SlabCommon').properties;
+  const value = (n) => (props.find((p) => p.name === n) || {}).value;
+
+  // Strings, booleans and codes all come back as the file wrote them. `FireRating` in particular is
+  // free text in IFC ("REI30"), so anything that tried to interpret it would be inventing meaning.
+  assert.equal(value('FireRating'), 'REI30');
+  assert.equal(value('AcousticRating'), '29dB Rw');
+  assert.equal(value('IsExternal'), 'true');
+  assert.equal(value('LoadBearing'), 'false');
+});
+
+// ── Property-set DISCOVERY, driven through a fake web-ifc API ────────────────────────────────
+//
+// These run in CI; the file-based tests above do not. Every sample lives in ~/Downloads and self-skips
+// when absent, and CI expects exactly that (ci.yml) — so before these existed, deleting the entire
+// type-inheritance traversal would have left the suite green. A fake api is the only way to drive the
+// discovery paths on inputs the four samples do not contain.
+
+/** The two calls `propertySetsByElement` makes: enumerate ids of a type, and fetch one line. */
+function fakeApi(lines, byType) {
+  return {
+    GetLineIDsWithType: (_m, t) => {
+      const ids = byType[t] || [];
+      return { size: () => ids.length, get: (i) => ids[i] };
+    },
+    GetLine: (_m, id) => {
+      if (!(id in lines)) throw new Error(`no line ${id}`);   // real web-ifc throws; the code catches
+      return lines[id];
+    },
+  };
+}
+const pset = (name, props) => ({ Name: { value: name }, HasProperties: props.map((p) => ({ value: p })) });
+const prop = (name, value) => ({ Name: { value: name }, NominalValue: { value } });
+const REL_PROPS = WebIFC.IFCRELDEFINESBYPROPERTIES;
+const REL_TYPE = WebIFC.IFCRELDEFINESBYTYPE;
+
+test('ONE relationship carrying SEVERAL sets — the IFC4 aggregate select — keeps all of them', () => {
+  // THE REGRESSION THIS EXISTS FOR. IFC4 widened RelatingPropertyDefinition to an
+  // IfcPropertySetDefinitionSet, which web-ifc returns as `{ value: [20, 21] }`. Reading `.value` as
+  // one id passed the ARRAY to GetLine, matched nothing, and dropped every set in the relationship —
+  // a silent total loss on a valid, ordinary encoding.
+  const api = fakeApi({
+    10: { RelatingPropertyDefinition: { value: [20, 21] }, RelatedObjects: [{ value: 1 }] },
+    20: pset('A', [30]),
+    21: pset('B', [31]),
+    30: prop('p1', 'v1'),
+    31: prop('p2', 'v2'),
+  }, { [REL_PROPS]: [10], [REL_TYPE]: [] });
+
+  const sets = propertySetsByElement(api, 0).get(1);
+  assert.deepEqual(sets.map((s) => s.name), ['A', 'B'], 'both sets on the one relationship must survive');
+  assert.deepEqual(sets[1].properties, [{ name: 'p2', value: 'v2' }]);
+});
+
+test('a single-set relationship still works, and handles carried as objects are flattened', () => {
+  const api = fakeApi({
+    10: { RelatingPropertyDefinition: { value: 20 }, RelatedObjects: [{ value: 1 }] },
+    11: { RelatingPropertyDefinition: { value: [{ value: 21 }] }, RelatedObjects: [{ value: 1 }] },
+    20: pset('A', [30]),
+    21: pset('B', [31]),
+    30: prop('p1', 'v1'),
+    31: prop('p2', 'v2'),
+  }, { [REL_PROPS]: [10, 11], [REL_TYPE]: [] });
+
+  const sets = propertySetsByElement(api, 0).get(1);
+  assert.deepEqual(sets.map((s) => s.name), ['A', 'B']);
+});
+
+test('a type\'s own HasPropertySets reaches its occurrences, merged property by property', () => {
+  // The path no sample file exercises: three of the four have no IfcRelDefinesByType at all.
+  const api = fakeApi({
+    10: { RelatingPropertyDefinition: { value: 20 }, RelatedObjects: [{ value: 1 }] },
+    20: pset('Common', [30]),
+    30: prop('shared', 'fromOccurrence'),
+    12: { RelatingType: { value: 40 }, RelatedObjects: [{ value: 1 }] },
+    40: { HasPropertySets: [{ value: 22 }] },
+    22: pset('Common', [32, 33]),
+    32: prop('shared', 'fromType'),
+    33: prop('typeOnly', 'kept'),
+  }, { [REL_PROPS]: [10], [REL_TYPE]: [12] });
+
+  const sets = propertySetsByElement(api, 0).get(1);
+  assert.equal(sets.length, 1, 'the same-named set is merged, not duplicated');
+  const byName = Object.fromEntries(sets[0].properties.map((p) => [p.name, p.value]));
+  assert.equal(byName.shared, 'fromOccurrence', 'the occurrence wins the property it declares');
+  assert.equal(byName.typeOnly, 'kept', 'and the type property it never mentioned is NOT lost');
+});
+
+test('an IfcElementQuantity is not mistaken for a property set', () => {
+  // It rides the same relationship. It carries `Quantities`, not `HasProperties`, and this command
+  // returns IfcPropertySet only — matching ifc-inspector, and stated in the contract.
+  const api = fakeApi({
+    10: { RelatingPropertyDefinition: { value: 20 }, RelatedObjects: [{ value: 1 }] },
+    20: { Name: { value: 'BaseQuantities' }, Quantities: [{ value: 30 }] },
+    30: { Name: { value: 'GrossVolume' }, VolumeValue: { value: 3 } },
+  }, { [REL_PROPS]: [10], [REL_TYPE]: [] });
+
+  assert.equal(propertySetsByElement(api, 0).get(1), undefined, 'a quantity set contributes nothing');
+});
+
+// Type-level property inheritance, tested DIRECTLY rather than through a file.
+//
+// None of the four sample files exercises it: three have no IfcRelDefinesByType at all, and the fourth
+// has a single type carrying sets with no occurrence of the same name to collide with. A file-based
+// test would therefore go green without the merge rule ever running, which is worse than no test —
+// so the rule is driven at its own boundary.
+
+test('a type set the occurrence does not have is inherited whole', () => {
+  const merged = mergeInherited([], [{ name: 'Pset_WallCommon', properties: [{ name: 'FireRating', value: 'REI60' }] }]);
+  assert.deepEqual(merged, [{ name: 'Pset_WallCommon', properties: [{ name: 'FireRating', value: 'REI60' }] }]);
+});
+
+test('a same-named type set merges PROPERTY BY PROPERTY, and type-only properties survive', () => {
+  // THE DATA-LOSS CASE. Set-level precedence — "the occurrence declared this set, so use only that" —
+  // would silently drop LoadBearing, which the file plainly states. It is also what the sibling
+  // `ifc-inspector.entities.get-by-guid` does, and two agents reading one file must not disagree.
+  const own = [{ name: 'Pset_WallCommon', properties: [{ name: 'FireRating', value: 'REI30' }] }];
+  const type = [{ name: 'Pset_WallCommon', properties: [
+    { name: 'FireRating', value: 'REI60' },      // the occurrence overrides this
+    { name: 'LoadBearing', value: 'true' },      // and this must NOT be lost
+  ] }];
+  const merged = mergeInherited(own, type);
+  assert.equal(merged.length, 1);
+  const byName = Object.fromEntries(merged[0].properties.map((p) => [p.name, p.value]));
+  assert.equal(byName.FireRating, 'REI30', 'the occurrence wins the property it declares');
+  assert.equal(byName.LoadBearing, 'true', 'and the type keeps the one it does not');
+});
+
+test('merging never mutates its inputs, which are shared across every element', () => {
+  // Parsed sets are cached and handed to every element that references them. Appending to one in place
+  // would leak one element's type properties into another's — a corruption that grows with file size
+  // and would look like the file saying something it does not.
+  const own = [{ name: 'P', properties: [{ name: 'a', value: '1' }] }];
+  const type = [{ name: 'P', properties: [{ name: 'b', value: '2' }] }];
+  const merged = mergeInherited(own, type);
+  assert.equal(merged[0].properties.length, 2);
+  assert.equal(own[0].properties.length, 1, 'the occurrence set must be untouched');
+  assert.equal(type[0].properties.length, 1, 'and so must the cached type set');
+});
+
+test('propertySets is ALWAYS an array, so absent and empty are not the same question', async (t) => {
+  if (!sample('example-steel-framing.ifc')) return t.skip(skipReason('example-steel-framing.ifc'));
+  const out = await read('example-steel-framing.ifc');
+  // This file carries no property sets at all. The field must still be there and still be iterable:
+  // a consumer rendering an inspect panel should print "no properties", not crash on undefined, and
+  // should never have to distinguish "the reader did not look" from "the file did not say".
+  assert.ok(out.objects.length > 0);
+  for (const o of out.objects) {
+    assert.ok(Array.isArray(o.propertySets), `${o.name}: propertySets must be an array`);
+    assert.equal(o.propertySets.length, 0, `${o.name}: this file carries no property sets`);
+  }
 });
 
 test('nothing is dropped silently — a skipped count is always reported', async (t) => {

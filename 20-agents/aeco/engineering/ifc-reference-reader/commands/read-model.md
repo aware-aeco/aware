@@ -25,6 +25,12 @@ objects:
     storey:    string   # containing spatial structure name, may be null
     profile:   string   # profile designation VERBATIM, may be null
     material:  string   # material name, may be null
+    propertySets:       # every IfcPropertySet, verbatim — always present, [] when none
+      type: array
+      items:
+        name:       string   # the set name as authored ("AllplanAttributes", "Pset_SlabCommon")
+        properties:          # [{ name, value }] — value is text as written, or null
+          type: array
     positions: [number] # world mm, [x,y,z]*
     indices:   [number] # triangle indices
 skipped: number         # products streamed but carrying no drawable triangle (see below)
@@ -91,6 +97,81 @@ case-insensitively, or `"W10x33"` will miss a catalogue storing `"W10X33"`.
 
 **`material` is the signal that says *do not convert this*.** A member can be named `girder`, typed
 `IfcBeam`, and be `wood_spruce_beam`. Type alone would happily turn timber into steel.
+
+## `propertySets` is where the meaning is in a real file
+
+The five well-known fields describe an object the exporter bothered to describe. Plenty do not.
+`11134_V_Motebello_Heistopp_Rev.ifc` is the case that settles it: every one of its 19 objects is an
+`IFCBUILDINGELEMENTPROXY`, so `ifcType` separates nothing, and the names are no help either — while
+**31 property sets carry 271 values**, in Norwegian, under vendor set names. A consumer given only the
+well-known fields is handed an object tree in which nothing can be told apart.
+
+So the element's `IfcPropertySet`s ride along, **grouped and named exactly as the file wrote them**:
+
+```yaml
+propertySets:
+  - name: AllplanAttributes
+    properties:
+      - { name: "2:Etasje", value: "1" }
+      - { name: "6:Max VCT", value: "0" }
+```
+
+**Nothing is normalised, translated or renamed.** Vendor sets in the author's own language are the
+norm rather than the exception, and showing them as authored is the entire value — a reader that
+tidied them would be discarding the only thing that distinguishes one proxy from another. No unit
+conversion, no localisation, no renaming of sets or properties.
+
+**What a value is, precisely: its canonical textual form, not the file's literal tokens.** Values
+arrive through web-ifc already parsed, so an authored `IFCREAL(1.2300)` reaches us as the number
+`1.23` and is rendered `"1.23"`. Lexical preservation would need the raw STEP tokens, which this
+reader never sees. So: exact for text, codes and identifiers — which is what property sets mostly
+carry — and canonical for numerics. Two known edges: an `IfcLogical` of `UNKNOWN` currently reads as
+`null`, indistinguishable from "no value"; and `IfcPropertyReferenceValue` / `IfcPropertyTableValue`
+degrade to `null` rather than being rendered.
+
+`propertySets` is `[]` when the file carries none, so a consumer renders "no properties" rather than
+having to tell absent from empty. **A missing field is a different statement from an empty one**, and
+it is possible: the geometry comes from a separately-installed bridge binary, a stale one only warns
+before running, and a pre-1.1.0 bridge omits `propertySets` entirely under a 1.1.0 manifest. Treat
+absent as *"this bridge cannot answer"* — exactly as you already must for `frame` — and refresh with
+`aware sidecar install connection-reader`. For the same reason a consumer caching this response
+**must not key the cache on the IFC bytes alone**: identical bytes yield a different shape depending
+on the bridge that read them.
+
+**Occurrence and type sets are merged property by property, the occurrence winning.** IFC lets a
+property sit on the element type with each occurrence inheriting it, so following only
+`IfcRelDefinesByProperties` returns nothing for perfectly ordinary exports. Merging at the *set* level
+instead would silently drop a type property the occurrence never mentioned — a type
+`Pset_WallCommon{FireRating, LoadBearing}` beside an occurrence `Pset_WallCommon{FireRating}` would
+lose `LoadBearing`, which the file plainly states. This is also the rule
+[`ifc-inspector.entities.get-by-guid`](../../../construction/ifc-inspector/commands/entities.get-by-guid.md)
+applies; two agents reading one file must not disagree about what it says.
+
+**Which attachments are followed.** Direct occurrence sets (`IfcRelDefinesByProperties`, including
+IFC4's aggregate form where one relationship carries several sets) and type sets (`IfcRelDefinesByType`
+→ the type's `HasPropertySets`). **`IfcRelDefinesByObject` is NOT followed** — an object declaring
+another's properties by reflection. It is valid IFC4 but uncommon and outside the standard subsets, and
+its precedence against direct occurrence properties is not something this reader can settle without a
+real file to measure; a reflected object therefore reports only what it carries directly.
+
+Quantity sets (`IfcElementQuantity`) are **not** included — this is `IfcPropertySet` only, matching
+`ifc-inspector`.
+
+**Cost.** Properties are read for every element the file relates, before any mesh is streamed, and
+shared type sets are repeated per occurrence in the response — on the Motebello sample that is ~20% of
+the serialised bytes. `max-vertices` bounds geometry and does not bound this. A federated model with
+heavily reused type sets can therefore carry materially more metadata than its vertex count suggests.
+No property budget is applied: silently truncating what a consumer asked for would be worse than the
+weight, and an aborting budget would refuse files that load correctly today.
+
+### Why this is here and not only in `ifc-inspector`
+
+It overlaps that agent deliberately, and the **shape** is what differs. `ifc-inspector` answers
+per-GUID (`entities.get-by-guid`) or exports a whole class to CSV (`psets.export`), on its own binary.
+An interactive object tree needs every object's properties out of the **one read it already pays
+for**: a call per click would mean a second sidecar download and an agent round trip on every
+selection. Reach for `ifc-inspector` when you want one element, a schedule, or a compliance check;
+reach for this when you are drawing a tree of a whole borrowed model.
 
 ## Instancing is preserved
 Real exports serve many objects from few shapes via mapped items. Geometry is emitted **per

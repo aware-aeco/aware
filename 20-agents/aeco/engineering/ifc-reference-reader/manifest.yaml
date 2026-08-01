@@ -11,13 +11,14 @@ agent:        ifc-reference-reader
 # `main`, and the bridge binary that actually produces the geometry is installed separately, so a stale
 # one can serve the OLD frame under this manifest with only a warning. The frame a consumer actually
 # received is in the OUTPUT — every command reports `frame` — and that is the field to check.
-version:      1.0.0
+version:      1.1.0
 display-name: IFC Reference Reader (whole model → mesh)
 description: |
   Read a WHOLE IFC file as a reference model — borrowed geometry you overlay, measure and build to,
   but never own. Returns AWARE's generic kind:"mesh" scene primitive (positions+indices) in canonical
   millimetres for every element, plus what the file says about each one: name, IFC type, storey,
-  profile designation and material. Drives the bundled web-ifc WASM parser; it never re-implements an
+  profile designation, material, and every property set verbatim — which in a real file is often the
+  only thing that tells one object from another. Drives the bundled web-ifc WASM parser; it never re-implements an
   IFC geometry kernel.
 
   ONE FRAME for both commands: IFC's own Z-up world frame, in millimetres — reported as `frame` in
@@ -114,12 +115,35 @@ commands:
       must NOT apply a Y-up correction: the reader already undid web-ifc's Y-up tessellation frame.
       Deterministic for a given file, so the result is content-hash cacheable.
 
-      Each object also carries what the file SAYS about it: `name`, `ifcType`, `storey`, `profile` and
-      `material`. Two of those are load-bearing rather than decorative. `profile` is the designation
-      verbatim ("W10x33", lowercase x and all) — a section must be looked up by name and never
-      measured off the mesh, because exports routinely write a simplified box for a real profile.
-      `material` is the signal that says do not convert this: a member can be named "girder" and typed
-      IfcBeam while being spruce.
+      Each object also carries what the file SAYS about it: `name`, `ifcType`, `storey`, `profile`,
+      `material` and `propertySets`. Two of those are load-bearing rather than decorative. `profile`
+      is the designation verbatim ("W10x33", lowercase x and all) — a section must be looked up by
+      name and never measured off the mesh, because exports routinely write a simplified box for a
+      real profile. `material` is the signal that says do not convert this: a member can be named
+      "girder" and typed IfcBeam while being spruce.
+
+      `propertySets` is the IfcPropertySets the element carries, grouped and named exactly as the
+      file wrote them, with no normalisation, translation or renaming — because in a real file that is
+      where the meaning is. One test file's objects are all IfcBuildingElementProxy, so name, type and
+      storey identify nothing, while 31 property sets carry 271 values under vendor set names in
+      Norwegian. Occurrence and type-level sets are both collected (IFC lets a property sit on the
+      element type with the occurrence inheriting it), merged PROPERTY BY PROPERTY with the occurrence
+      winning — the same rule `ifc-inspector.entities.get-by-guid` applies, because two agents reading
+      one file must not disagree about what it says; set-level precedence would drop a type property
+      the occurrence never mentioned. Quantity sets (IfcElementQuantity) are not included, nor is
+      IfcRelDefinesByObject reflection (valid IFC4, but uncommon and with precedence this reader cannot
+      settle without a real file). Values are canonical text, not the file's literal tokens: web-ifc
+      parses before we see them, so an authored 1.2300 arrives as 1.23.
+
+      `[]` means the file carries none. A MISSING field means something else: the bridge binary is
+      installed separately and a pre-1.1.0 one omits it entirely under this manifest, so absent reads
+      as "this bridge cannot answer" — the same caution `frame` already requires. A consumer caching
+      the response must not key that cache on the IFC bytes alone.
+
+      This overlaps `ifc-inspector` deliberately, and the SHAPE is what differs: that agent answers
+      per-GUID or exports a whole class to CSV, on its own binary. An interactive object tree needs
+      every object's properties out of the one read it already pays for — a call per click would mean
+      a second sidecar download and an agent round trip on every selection.
 
       `max-vertices` is an in-process circuit breaker: the budget decrements as meshes stream and the
       command aborts mid-walk. It is NOT a preflight gate — an exact vertex count cannot be known
@@ -138,7 +162,9 @@ commands:
         frame: string  # "z-up" — the frame `positions` are in. Check this rather than a version:
                        # the geometry comes from a separately-installed bridge binary, so the agent
                        # version cannot speak for it (see BREAKING.md)
-        objects: array # [{ id, name, ifcType, storey, profile, material, positions: [mm], indices }]
+        objects: array # [{ id, name, ifcType, storey, profile, material,
+                       #    propertySets: [{ name, properties: [{ name, value }] }],
+                       #    positions: [mm], indices }]
         skipped: number # products streamed but carrying no drawable triangle — counted, never
                         # dropped silently, so a consumer can reconcile against probe.elements
 
