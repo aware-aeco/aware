@@ -437,25 +437,22 @@ fn to_local_agent(s: SidecarAgent, source_kind: &str) -> GeneratedAgent {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::test_env::EnvVarGuard;
 
     #[test]
     fn discover_respects_env_var_when_file_exists() {
         let tmp = tempfile::tempdir().unwrap();
         let fake = tmp.path().join("aware-sidecar.exe");
         std::fs::write(&fake, b"").unwrap();
-        // SAFETY: single-threaded test; env var is restored immediately after.
-        unsafe { std::env::set_var("AWARE_SIDECAR", &fake) };
+        let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", &fake);
         let result = discover();
-        unsafe { std::env::remove_var("AWARE_SIDECAR") };
         assert_eq!(result.unwrap(), fake);
     }
 
     #[test]
     fn discover_env_var_with_missing_file_is_not_found() {
-        // SAFETY: single-threaded test; env var is restored immediately after.
-        unsafe { std::env::set_var("AWARE_SIDECAR", "C:/this-does-not-exist-12345") };
+        let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", "C:/this-does-not-exist-12345");
         let result = discover();
-        unsafe { std::env::remove_var("AWARE_SIDECAR") };
         assert!(matches!(result, Err(AwareError::NotFound(_))));
     }
 }

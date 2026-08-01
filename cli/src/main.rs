@@ -28,6 +28,8 @@ mod render;
 mod runtime;
 mod sidecar;
 mod skill_builder;
+#[cfg(test)]
+mod test_env;
 mod validate;
 
 use clap::{Parser, Subcommand};
