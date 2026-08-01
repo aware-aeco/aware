@@ -24,7 +24,7 @@ connection:
     items:
       id:        string     # part GlobalId
       role:      string     # "plate" | "bolt" | "weld"
-      positions: [number]   # flat x,y,z world coordinates in MILLIMETRES
+      positions: [number]   # flat x,y,z world coordinates in MILLIMETRES, Y-UP (see below)
       indices:   [number]   # 0-based triangle vertex refs (triples)
   recipe:                   # OPTIONAL — present ONLY when the connection is recognized (see below)
     kind:   string          # the recognized type: "base-plate" or "shear-plate"
@@ -34,6 +34,23 @@ connection:
 
 Each part is exactly the shape of a `kind:"mesh"` scene element — hand `positions`/`indices`
 straight to `viewer-3d.render` or `ifc.write`.
+
+## `parts` are in web-ifc's Y-UP frame — up is `+Y`, not `+Z`
+
+The mesh comes back exactly as web-ifc tessellates it, and web-ifc bakes a fixed
+`(x, y, z) → (x, z, −y)` rotation of IFC's Z-up world into its own **Y-up** renderer frame. So a base
+plate's anchors run along `±Y`, and a consumer dropping these vertices into a Z-up scene must rotate
+them (`(x, y, z) → (x, −z, y)`) or the connection arrives on its side.
+
+This is stated rather than changed because it is the frame this command has always returned and
+consumers are built on it. It is deliberately **not** the same as
+`ifc-reference-reader.read-model`, which rotates back into the file's own Z-up frame so it can be
+compared against `probe`'s bbox (aware-aeco/aware#343). Aligning the two is tracked separately; until
+then, read each command's frame from its own contract.
+
+The `recipe`, when present, is **frame-independent** — its params are scalars in millimetres that the
+consumer re-derives on its own member — so a recipe import is unaffected by any of this. Only the mesh
+fallback carries the frame.
 
 ## Recognition (optional `recipe`)
 When the tessellated parts match a **supported pattern**, `extract` also **fits a parametric

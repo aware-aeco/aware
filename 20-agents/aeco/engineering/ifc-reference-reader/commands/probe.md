@@ -17,7 +17,7 @@ schema:   string   # "IFC2X3" | "IFC4" | "IFC4X3_ADD2" | …
 units:
   declared: string # "MILLI.METRE" | "METRE" | … | null if the file did not say
 elements: number   # elements placed DIRECTLY in the spatial structure — see the caveat below
-bbox:              # APPROXIMATE, in millimetres — or null when it cannot be established
+bbox:              # APPROXIMATE, in millimetres, Z-up — or null when it cannot be established
   min: [x, y, z]
   max: [x, y, z]
 ```
@@ -55,11 +55,26 @@ never a guess.
 Measured across four real files (2026-07-25): three millimetre files came back divided by 1000, and a
 file declaring `METRE` was left alone.
 
+## `bbox` is in the same frame `read-model` returns
+IFC's own world frame: **X and Y in plan, Z up**, millimetres. `read-model`'s vertices use that frame
+too (it rotates web-ifc's Y-up tessellation back — see `read-model.md`), so the two are directly
+comparable. They did not used to be, which is the bug this pairing exists to make impossible:
+aware-aeco/aware#343.
+
 ## `bbox` is approximate, and `null` when it cannot be trusted
 It comes from the file's own `IfcCartesianPoint`s scaled by the declared unit, so it includes local
 profile coordinates and ignores placement nesting. That is good enough for the two questions it is
 asked — *"is this roughly 1000× off?"* and *"is this sitting 74 m from the origin?"* — and it is not
 the authoritative extent. That comes from real geometry, via `read-model`.
+
+**It is not a size readout, and the gap can be large in either direction.** Because every point is read
+as if it were a world coordinate, a file with nested placements is overstated: for
+`11134_V_Motebello_Heistopp_Rev.ifc` this reports `42.64 × 43.93 × 74.07 m` for a model whose geometry
+renders `3.62 × 3.66 × 0.74 m` — a ~10× overstatement that is within what "approximate" permits and
+still useless as a size. For the same reason it can also *miss* geometry: on `baseplate-rot.ifc`, whose
+frame is yawed 30° about the vertical, the tessellated connection lands outside the reported box in
+plan. Ask it *"is this far from the origin, or wildly mis-scaled?"*; ask `read-model` *"how big is
+it?"*. Tightening it to the placed geometry without tessellating is tracked separately.
 
 **It is `null` rather than a guess** when the length unit cannot be resolved to millimetres, or when
 the file has no usable 3D points. Both cases used to produce a plausible-looking box — a factor-1

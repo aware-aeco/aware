@@ -513,11 +513,34 @@ function profileOf(api, modelID, expressID) {
 }
 
 /**
+ * web-ifc's Y-up reading of a point given in the file's own Z-up world frame: `(x, y, z) -> (x, z, -y)`.
+ *
+ * This is web-ifc's `NormalizeIFC` — the fixed rotation it bakes into every flat mesh transform, so
+ * that IFC's Z-up world comes out in the Y-up frame a renderer wants. `read-model` undoes it (below),
+ * which is what makes its meshes comparable with `probe`'s bbox.
+ *
+ * Exported so the #343 regression test can reconstruct the pre-fix, Y-up reading of the SAME meshes
+ * and assert that it fails the frame-agreement check the fixed output passes. Without that arm the
+ * check could be trivially satisfiable and still green.
+ */
+export const toWebIfcYUp = ([x, y, z]) => [x, z, -y];
+
+/**
  * `read-model` — the whole file as reference geometry.
  *
  * Unlike `extract`, this tessellates EVERY element rather than only connection hardware, and returns
  * what the file says about each one (name, IFC type, storey, profile, material) alongside its mesh.
- * Positions stay in the file's own world frame, in millimetres — a consumer re-anchors and places.
+ * Positions are in the file's own world frame — IFC's Z-up, the SAME frame `probe`'s bbox reports —
+ * in millimetres. A consumer re-anchors and places.
+ *
+ * That frame costs one rotation, because web-ifc does not emit it. web-ifc bakes a fixed
+ * `NormalizeIFC` into every flat mesh transform, mapping the file's Z-up world to its own Y-up
+ * renderer frame: `(x, y, z) -> (x, z, -y)`. `probe` never sees it (it reads IfcCartesianPoints
+ * straight off the file), so leaving it in made the two commands answer in different frames — a
+ * reference model that renders on its side and a bbox that cannot be compared against the mesh
+ * (aware-aeco/aware#343). We undo it here rather than in each consumer: the manifest promises the
+ * file's own world frame, and one rotation in the reader beats the same rotation re-derived, or
+ * forgotten, by every consumer.
  *
  * `maxVertices` is an in-process CIRCUIT BREAKER, not a preflight gate. Be honest about which it is:
  * an exact vertex count cannot be known before tessellating, so a cap applied by the caller after this
@@ -544,16 +567,21 @@ export function readModel(api, modelID, maxVertices = Infinity) {
       const geom = api.GetGeometry(modelID, pg.geometryExpressID);
       const verts = api.GetVertexArray(geom.GetVertexData(), geom.GetVertexDataSize()); // [x,y,z,nx,ny,nz]*
       const idx = api.GetIndexArray(geom.GetIndexData(), geom.GetIndexDataSize());
-      const m = pg.flatTransformation; // 4x4 column-major, metres
+      const m = pg.flatTransformation; // 4x4 column-major, metres, in web-ifc's Y-up frame
       const base = positions.length / 3;
       for (let v = 0; v < verts.length; v += 6) {
         const x = verts[v], y = verts[v + 1], z = verts[v + 2];
+        // Placement transform and the Y-up -> Z-up rotation in one step: the file frame's X is
+        // web-ifc's X, its Y is -web-ifc-Z, and its Z (up) is web-ifc's Y — the inverse of
+        // `toWebIfcYUp`, folded into the matrix multiply so the hot loop allocates nothing.
         positions.push(
           (m[0] * x + m[4] * y + m[8] * z + m[12]) * M_TO_MM,
+          -(m[2] * x + m[6] * y + m[10] * z + m[14]) * M_TO_MM,
           (m[1] * x + m[5] * y + m[9] * z + m[13]) * M_TO_MM,
-          (m[2] * x + m[6] * y + m[10] * z + m[14]) * M_TO_MM,
         );
       }
+      // Winding is preserved without touching the indices: the rotation above has determinant +1, so
+      // it cannot turn a front face into a back face. (A mirror would, and would need a flip here.)
       for (let k = 0; k < idx.length; k++) indices.push(base + idx[k]);
       geom.delete();
     }

@@ -1,5 +1,14 @@
 agent:        ifc-reference-reader
-version:      0.1.0
+# 0.2.0, not 0.1.1: `read-model` used to return web-ifc's Y-up renderer frame while claiming the file's
+# own world frame, and 0.1.0 shipped that way in @aware-aeco/cli 0.112.0 (aware-aeco/aware#343). A
+# consumer that compensated with a rotation of its own is CORRECT against 0.1.0 and WRONG against this,
+# so the output change gets a minor, not a patch.
+#
+# Note what this version can and cannot do. It is the number `agent list` and the catalogue's
+# `manifest-version` report, so a consumer can TELL whether it has the frame fix. It is NOT the
+# registry index key (still `0.1.0`) — that is a separate axis whose tarball tracks `main`, so it
+# cannot gate the change, and bumping it would only break `agent install` for no protection.
+version:      0.2.0
 display-name: IFC Reference Reader (whole model → mesh)
 description: |
   Read a WHOLE IFC file as a reference model — borrowed geometry you overlay, measure and build to,
@@ -7,6 +16,12 @@ description: |
   millimetres for every element, plus what the file says about each one: name, IFC type, storey,
   profile designation and material. Drives the bundled web-ifc WASM parser; it never re-implements an
   IFC geometry kernel.
+
+  ONE FRAME for both commands: IFC's own Z-up world frame, in millimetres. `read-model`'s vertices and
+  `probe`'s bbox are directly comparable — same axes, same origin, same units — so a consumer can use
+  the cheap box to sanity-check the expensive mesh. That costs a rotation the reader performs for you:
+  web-ifc tessellates into its own Y-up renderer frame, and this agent rotates back rather than leaving
+  every consumer to discover it (aware-aeco/aware#343).
 
   Persona (anyone building against someone else's model): "The architect sent me their model. I want
   to see it next to mine, snap to it and build to it — I am not importing it." That is the whole
@@ -72,9 +87,13 @@ commands:
         units: object    # { declared: "MILLI.METRE" | "METRE" | null } — provenance, NOT a factor
         elements: number # elements placed DIRECTLY in the spatial structure. NOT equal to
                          # read-model's object count — different populations (see probe.md)
-        bbox: object     # { min: [x,y,z], max: [x,y,z] } APPROXIMATE, in mm — or NULL when the
-                         # length unit cannot be resolved, or there are no usable 3D points.
-                         # Callers must handle null: a guessed box is worse than none
+        bbox: object     # { min: [x,y,z], max: [x,y,z] } APPROXIMATE, in mm, Z-up — the SAME frame
+                         # read-model's vertices use. NULL when the length unit cannot be resolved,
+                         # or there are no usable 3D points; callers must handle null, because a
+                         # guessed box is worse than none. It bounds the file's own points and
+                         # ignores placement nesting, so it can OVERSTATE badly (42 x 44 x 74 m for
+                         # a model that renders 3.6 x 3.7 x 0.7 m) and can also miss geometry placed
+                         # outside it. A "far from the origin / 1000x off?" signal, never a size.
 
   read-model:
     lifecycle: single
@@ -82,8 +101,9 @@ commands:
     description: |
       Tessellate the WHOLE file into mesh scene objects — every element, not only connection hardware
       — each a kind:"mesh" element (positions + indices) in canonical millimetres, in the file's own
-      world frame. A consumer re-anchors and places. Deterministic for a given file, so the result is
-      content-hash cacheable.
+      Z-up world frame (the same frame `probe`'s bbox reports). A consumer re-anchors and places, and
+      must NOT apply a Y-up correction: the reader already undid web-ifc's Y-up tessellation frame.
+      Deterministic for a given file, so the result is content-hash cacheable.
 
       Each object also carries what the file SAYS about it: `name`, `ifcType`, `storey`, `profile` and
       `material`. Two of those are load-bearing rather than decorative. `profile` is the designation

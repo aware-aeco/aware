@@ -1,7 +1,7 @@
 # `ifc-reference-reader.read-model` — the whole file as reference geometry
 
-Stateless, read-only. Tessellates **every** element into mesh scene objects, in the file's own world
-frame, in canonical millimetres. Deterministic for a given file, so the result is content-hash
+Stateless, read-only. Tessellates **every** element into mesh scene objects, in the file's own **Z-up**
+world frame, in canonical millimetres. Deterministic for a given file, so the result is content-hash
 cacheable.
 
 ## Lifecycle
@@ -28,6 +28,31 @@ objects:
     indices:   [number] # triangle indices
 skipped: number         # products streamed but carrying no drawable triangle (see below)
 ```
+
+## The frame is the file's own, Z-up — do not rotate it again
+
+`positions` are in IFC's world frame: **X and Y in plan, Z up**, millimetres, origin as the file has
+it. That is the same frame `probe`'s `bbox` reports, so the cheap box and the expensive mesh are
+directly comparable — which is the whole point of having both.
+
+This costs a rotation, because web-ifc does not give it to you. web-ifc bakes a fixed
+`(x, y, z) → (x, z, −y)` normalisation into every mesh transform, so its tessellation lands in the
+**Y-up** frame a renderer wants. Until `0.2.0` this command passed that through while documenting the
+file's frame, and the two commands answered in different frames: measured on `example-steel-framing.ifc`
+(a 12 m × 6 m grid on 4500 mm columns) `probe` reported `12000 × 6000 × 4500` while the mesh measured
+`12150 × 4625 × 6150` — the height in Y. Every reference model rendered on its side, and the first
+consumer to hit it added a compensating rotation of its own.
+
+**If you carry such a workaround, delete it.** With `0.2.0` the same file now measures
+`12150 × 6150 × 4625` — the same box as `probe`, axis for axis. The agent's `version` moved to `0.2.0`
+because the output changed, so `aware agent list` (or the catalogue's `manifest-version`) tells you
+which frame the installed copy returns. It cannot *gate* the change: the registry index key is a
+separate axis and its tarball tracks `main`, so an install spec of `0.1.0` still fetches this code.
+Check the version rather than assume it.
+
+`connection-reader.extract` is a **different** command with a different contract: its `parts` are still
+in web-ifc's Y-up tessellation frame (see `connection-reader/commands/extract.md`). Read each command's
+frame from its own contract; do not carry an assumption across.
 
 ## Nothing is dropped silently
 A product web-ifc streams but that yields fewer than 3 vertices or 1 triangle cannot be drawn, and is
