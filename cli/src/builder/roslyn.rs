@@ -68,6 +68,7 @@ pub fn build_from_project(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::test_env::EnvVarGuard;
 
     #[test]
     fn empty_path_is_validation_error() {
@@ -100,14 +101,8 @@ mod tests {
     #[test]
     fn csharp_no_roslyn_binary_returns_not_found() {
         // With AWARE_ROSLYN pointing at a missing file, discovery fails before the subprocess.
-        // SAFETY: single-threaded test; env var is restored immediately after.
-        unsafe {
-            std::env::set_var("AWARE_ROSLYN", "C:/aware-roslyn-does-not-exist-test.exe");
-        }
+        let _roslyn = EnvVarGuard::set("AWARE_ROSLYN", "C:/aware-roslyn-does-not-exist-test.exe");
         let err = build_from_csharp("Foo.cs", &[], None).unwrap_err();
-        unsafe {
-            std::env::remove_var("AWARE_ROSLYN");
-        }
         assert!(matches!(err, AwareError::NotFound(_)));
     }
 }

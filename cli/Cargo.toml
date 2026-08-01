@@ -182,6 +182,25 @@ path = "tests/sidecar_integration.rs"
 name = "roslyn_integration_test"
 path = "tests/roslyn_integration.rs"
 
+# CLAUDE.md §Code style: "No `unsafe` unless explicitly justified with a comment
+# block explaining the invariant." That rule had no gate — `cargo clippy -D
+# warnings` does not enable `undocumented_unsafe_blocks`, which lives in the
+# `restriction` group and is off by default. So an `unsafe` block could land with
+# no justification and CI stayed green; 8 of the crate's 19 blocks had in fact
+# done so.
+#
+# Note the limit: this gates that a safety comment *exists*, not that it is true.
+# The 11 blocks that did carry one all claimed "single-threaded test", which was
+# false. Only review catches that.
+#
+# Denying it here rather than in a bespoke script means the existing clippy gate
+# enforces it — no new CI step, and `cargo clippy` reproduces the failure
+# locally exactly as CI sees it. A block is satisfied by a `// SAFETY:` comment
+# directly above it (or as its first line) explaining why the operation upholds
+# the invariant.
+[lints.clippy]
+undocumented_unsafe_blocks = "deny"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1

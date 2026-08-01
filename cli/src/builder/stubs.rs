@@ -63,18 +63,17 @@ pub fn build_with_decompile(pkg: &str) -> Result<GeneratedAgent, AwareError> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::test_env::EnvVarGuard;
+
+    /// A path that cannot exist, so sidecar discovery fails before any
+    /// subprocess is spawned.
+    const MISSING_SIDECAR: &str = "C:/aware-sidecar-does-not-exist-test.exe";
 
     #[test]
     fn dlls_no_sidecar_returns_not_found() {
         // When AWARE_SIDECAR points to a non-existent file discovery fails with NotFound.
-        // SAFETY: single-threaded test; env var is restored immediately after.
-        unsafe {
-            std::env::set_var("AWARE_SIDECAR", "C:/aware-sidecar-does-not-exist-test.exe");
-        }
+        let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", MISSING_SIDECAR);
         let err = build_from_dlls("C:/some.dll", None).unwrap_err();
-        unsafe {
-            std::env::remove_var("AWARE_SIDECAR");
-        }
         // Discovery fails before reaching the sidecar, so the error is NotFound.
         assert!(matches!(err, AwareError::NotFound(_)));
     }
@@ -83,14 +82,8 @@ mod tests {
     fn com_no_sidecar_returns_not_found_or_not_implemented() {
         // On Windows, build_from_com routes to the sidecar; without a sidecar binary it returns
         // NotFound. On non-Windows it returns NotYetImplemented (Windows-only guard).
-        // SAFETY: single-threaded test; env var is restored immediately after.
-        unsafe {
-            std::env::set_var("AWARE_SIDECAR", "C:/aware-sidecar-does-not-exist-test.exe");
-        }
+        let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", MISSING_SIDECAR);
         let err = build_from_com("WScript.Shell", None).unwrap_err();
-        unsafe {
-            std::env::remove_var("AWARE_SIDECAR");
-        }
         let ok = matches!(
             err,
             AwareError::NotFound(_) | AwareError::NotYetImplemented(_)
@@ -101,27 +94,15 @@ mod tests {
     #[test]
     fn headers_no_sidecar_returns_not_found() {
         // build_from_headers now routes to the sidecar; without a sidecar binary it returns NotFound.
-        // SAFETY: single-threaded test; env var is restored immediately after.
-        unsafe {
-            std::env::set_var("AWARE_SIDECAR", "C:/aware-sidecar-does-not-exist-test.exe");
-        }
+        let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", MISSING_SIDECAR);
         let err = build_from_headers("path/to/header.h", None).unwrap_err();
-        unsafe {
-            std::env::remove_var("AWARE_SIDECAR");
-        }
         assert!(matches!(err, AwareError::NotFound(_)));
     }
 
     #[test]
     fn decompile_no_sidecar_returns_not_found() {
-        // SAFETY: single-threaded test; env var is restored immediately after.
-        unsafe {
-            std::env::set_var("AWARE_SIDECAR", "C:/aware-sidecar-does-not-exist-test.exe");
-        }
+        let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", MISSING_SIDECAR);
         let err = build_with_decompile("Pkg@1.0").unwrap_err();
-        unsafe {
-            std::env::remove_var("AWARE_SIDECAR");
-        }
         assert!(matches!(err, AwareError::NotFound(_)));
     }
 

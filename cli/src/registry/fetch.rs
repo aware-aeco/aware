@@ -135,6 +135,7 @@ fn fetch_body(source: &str) -> Result<String, AwareError> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::test_env::EnvVarGuard;
 
     #[test]
     fn fetches_from_file_url() {
@@ -161,10 +162,7 @@ mod tests {
         )
         .unwrap();
         let url = format!("file://{}", idx.display());
-        // SAFETY: test-only; single-threaded test binary. set_var is process-global,
-        // which is a known parallelism hazard, but acceptable here since only this
-        // test touches AWARE_REGISTRY.
-        unsafe { std::env::set_var("AWARE_REGISTRY", &url) };
+        let _registry = EnvVarGuard::set("AWARE_REGISTRY", &url);
 
         let cache = tmp.path().join("cache");
         let idx1 = fetch_index(&cache).unwrap();
@@ -175,9 +173,6 @@ mod tests {
         std::fs::remove_file(&idx).unwrap();
         let idx2 = fetch_index(&cache).unwrap();
         assert_eq!(idx2.version, "1.0");
-
-        // SAFETY: same test-only, single-threaded context as set_var above.
-        unsafe { std::env::remove_var("AWARE_REGISTRY") };
     }
 
     #[test]
@@ -186,8 +181,7 @@ mod tests {
         // Present source → Ok(Some) + cached.
         let cat = tmp.path().join("registry-catalog.json");
         std::fs::write(&cat, r#"{"version":"1.0","updated-at":"x","agents":{}}"#).unwrap();
-        // SAFETY: test-only; only catalog tests touch AWARE_CATALOG.
-        unsafe { std::env::set_var("AWARE_CATALOG", format!("file://{}", cat.display())) };
+        let mut catalog = EnvVarGuard::set("AWARE_CATALOG", format!("file://{}", cat.display()));
         let cache = tmp.path().join("cache");
         let got = fetch_catalog(&cache).unwrap();
         assert!(got.is_some(), "present source → Some");
@@ -195,11 +189,8 @@ mod tests {
 
         // Absent source (missing file) → Ok(None), not an error.
         let missing = tmp.path().join("nope.json");
-        unsafe { std::env::set_var("AWARE_CATALOG", format!("file://{}", missing.display())) };
+        catalog.replace(format!("file://{}", missing.display()));
         let none = fetch_catalog(&tmp.path().join("cache2")).unwrap();
         assert!(none.is_none(), "absent source → None");
-
-        // SAFETY: same test-only context.
-        unsafe { std::env::remove_var("AWARE_CATALOG") };
     }
 }
