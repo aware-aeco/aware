@@ -3,8 +3,6 @@
 //!
 //! Consumed by Task 15 (aware app install with lockfile).
 
-#![allow(dead_code)]
-
 use std::collections::BTreeMap;
 use std::path::Path;
 
@@ -40,6 +38,9 @@ pub fn write(
     Ok(())
 }
 
+/// Read-back half of `write`. Exercised by this module's tests; no command
+/// reads the install lockfile yet.
+#[allow(dead_code)]
 pub fn read(path: &Path) -> Result<Lockfile, AwareError> {
     let text = std::fs::read_to_string(path)?;
     serde_yaml::from_str(&text)

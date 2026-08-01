@@ -323,10 +323,6 @@ impl IntegrationConfig {
             .and_then(|p| p.tenant.as_deref())
     }
 
-    pub fn app_source(&self) -> AppSource {
-        self.overlay.source
-    }
-
     /// Whether the resolved client is the bundled first-party app (no BYO
     /// profile/env client_id). Used to gate behaviors that only the bundled app
     /// can't do — e.g. the bundled Google Desktop client can't do device-code,

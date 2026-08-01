@@ -20,8 +20,6 @@
 //!
 //! Per `10-core/app-spec.md § Stamped Receipt` (added in v0.27).
 
-#![allow(dead_code)]
-
 use std::path::{Path, PathBuf};
 
 use base64::Engine;
@@ -101,7 +99,9 @@ pub fn load_signing_key(sec_path: &Path) -> Result<SigningKey, AwareError> {
     Ok(SigningKey::from_bytes(&arr))
 }
 
-/// Load an ed25519 verifying key (public) from disk.
+/// Load an ed25519 verifying key (public) from disk. `verify_receipt` parses the
+/// key inline, so only the tests reach this today.
+#[allow(dead_code)]
 pub fn load_verifying_key(pub_path: &Path) -> Result<VerifyingKey, AwareError> {
     let raw = std::fs::read_to_string(pub_path)
         .map_err(|e| AwareError::NotFound(format!("{}: {e}", pub_path.display())))?;
@@ -215,6 +215,9 @@ pub fn verify_receipt(receipt_path: &Path, sig_path: &Path) -> Result<(), AwareE
 /// the outputs. `aware app cases run <app>` executes every case in dry-run
 /// mode (no writes) and checks the expected vs actual.
 #[derive(Debug, Deserialize, Serialize, Clone)]
+// Reserved for `aware app cases run <app>` per `10-core/app-spec.md`
+// § Stamped Receipt; the command that walks these is not built yet.
+#[allow(dead_code)]
 pub struct ReferenceCase {
     /// Stable id (filename minus `.yaml`). Used in green/red reporting.
     pub id: String,
@@ -234,6 +237,9 @@ pub struct ReferenceCase {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
+// Reserved for `aware app cases run <app>` per `10-core/app-spec.md`
+// § Stamped Receipt; the command that walks these is not built yet.
+#[allow(dead_code)]
 pub struct ExpectAssertion {
     /// Node id whose output is asserted.
     pub node: String,
@@ -246,6 +252,9 @@ pub struct ExpectAssertion {
 }
 
 /// Walk an app directory's `tests/cases/` folder, return every parsed case.
+// Reserved for `aware app cases run <app>` per `10-core/app-spec.md`
+// § Stamped Receipt; the command that walks these is not built yet.
+#[allow(dead_code)]
 pub fn discover_cases(app_dir: &Path) -> Result<Vec<ReferenceCase>, AwareError> {
     let cases_dir = app_dir.join("tests").join("cases");
     if !cases_dir.is_dir() {
