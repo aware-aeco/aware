@@ -220,6 +220,58 @@ fn current_bridge_is_required(binary: &str, command: &str, current: bool) -> boo
     !current && binary == "aware-tekla" && command == "bake-scene"
 }
 
+/// How much of a failed bridge's output may appear in the error message.
+///
+/// Generous enough for any real diagnostic (a bridge's error is one or two sentences) and small
+/// enough that a partial payload cannot become the error. A streaming bridge that fails mid-walk can
+/// have left hundreds of megabytes on stdout — `ifc-reference-reader.read-model` on a real
+/// coordination model reaches 289 MB — and embedding that would put the whole document into an error
+/// string, a log line, and every consumer that renders it.
+const MAX_DETAIL_CHARS: usize = 2000;
+
+/// Trim a bridge's failure output to something reportable, on a char boundary.
+fn truncate_detail(detail: &str) -> String {
+    match detail.char_indices().nth(MAX_DETAIL_CHARS) {
+        None => detail.to_string(),
+        Some((cut, _)) => format!(
+            "{}… ({} more bytes suppressed)",
+            &detail[..cut],
+            detail.len() - cut
+        ),
+    }
+}
+
+/// What to report when a bridge exits non-zero — STDERR FIRST, falling back to stdout.
+///
+/// This used to prefer stdout, which was harmless only while every bridge emitted its payload in one
+/// write at the very end: a failure left stdout empty, so stderr — where a bridge actually reports
+/// errors — was what surfaced. A bridge that STREAMS its response breaks that assumption.
+/// `ifc-reference-reader.read-model` now writes objects as it produces them, so a mid-walk refusal
+/// ("that file returns more reference geometry than the … budget allows") leaves megabytes of
+/// half-written JSON on stdout, and preferring it buried the one sentence a user can act on under a
+/// truncated document.
+///
+/// For a process that exited non-zero, stderr is the error channel and stdout is at best a partial
+/// payload. The fallback keeps a bridge that reports only on stdout working.
+///
+/// Extracted rather than left inline so it can be tested against the real thing: as inline logic the
+/// only available test was one that restated the condition, which would have passed just as happily
+/// against the stdout-first version it was written to catch.
+fn failure_detail(stdout: &str, stderr: &str) -> String {
+    let mut detail = if stderr.trim().is_empty() {
+        stdout.trim()
+    } else {
+        stderr.trim()
+    };
+    if detail.is_empty() {
+        // A sidecar that died with nothing on either pipe was killed before it could emit its
+        // receipt — a native/vendor failure inside the bridge, not a structured error (#283).
+        detail = "process terminated without emitting a receipt \
+                  (native/vendor failure in the bridge?)";
+    }
+    truncate_detail(detail)
+}
+
 /// Production invoker: spawn the agent's CLI transport binary,
 /// talk JSON over stdin/stdout.
 pub struct CliInvoker {
@@ -347,22 +399,10 @@ impl AgentInvoker for CliInvoker {
         if !output.status.success() {
             let stdout = String::from_utf8_lossy(&output.stdout);
             let stderr = String::from_utf8_lossy(&output.stderr);
-            let mut detail = if stdout.trim().is_empty() {
-                stderr.trim()
-            } else {
-                stdout.trim()
-            };
-            if detail.is_empty() {
-                // A sidecar that died with nothing on either pipe was killed
-                // before it could emit its receipt — a native/vendor failure
-                // inside the bridge, not a structured error (#283).
-                detail = "process terminated without emitting a receipt \
-                          (native/vendor failure in the bridge?)";
-            }
             return Err(AwareError::Network(format!(
                 "agent {agent}/{command} failed (exit {:?}): {}",
                 output.status.code(),
-                detail
+                failure_detail(&stdout, &stderr)
             )));
         }
         let body: Value = serde_json::from_slice(&output.stdout).map_err(|e| {
@@ -3974,6 +4014,69 @@ mod builtin_invoker_tests {
         let err = validate_against_schema(&serde_json::json!({}), &broken)
             .expect_err("a broken schema must surface, not silently accept");
         assert!(err.contains("not valid JSON Schema"), "got: {err}");
+    }
+
+    #[test]
+    fn a_failed_bridge_reports_its_stderr_not_its_half_written_payload() {
+        // A STREAMING bridge changes what a failure leaves behind. `read-model` writes objects as it
+        // produces them, so a mid-walk refusal leaves a partial JSON document on stdout AND the
+        // actionable sentence on stderr. Preferring stdout — which this did while every bridge
+        // emitted its payload in one final write — buries the only thing a user can act on.
+        let stdout = r#"{"frame":"z-up","objects":[{"id":"a"},{"id":"b"#;
+        let stderr = "connection-reader: that file returns more reference geometry than the 1.0 KB budget allows";
+        assert_eq!(
+            failure_detail(stdout, stderr),
+            stderr,
+            "the half-written payload won over the real error"
+        );
+    }
+
+    #[test]
+    fn a_bridge_that_reports_only_on_stdout_still_surfaces() {
+        // stderr-first must FALL BACK, not replace: a bridge whose only output is on stdout would
+        // otherwise report nothing at all.
+        assert_eq!(
+            failure_detail("vendor bridge: licence not found", "   \n "),
+            "vendor bridge: licence not found"
+        );
+    }
+
+    #[test]
+    fn a_bridge_that_died_with_both_pipes_empty_still_says_something() {
+        // #283: killed before it could emit a receipt. An empty error message is the least
+        // actionable outcome of all, so the fallback sentence has to survive the refactor.
+        let detail = failure_detail("", "  \n ");
+        assert!(
+            detail.contains("without emitting a receipt"),
+            "got: {detail}"
+        );
+    }
+
+    #[test]
+    fn a_huge_partial_payload_cannot_become_the_error_message() {
+        // 289 MB is what one real coordination model streams before a budget trips. Embedding that
+        // puts the whole document into an error string, a log line, and every consumer that renders
+        // it — so the detail is capped whichever pipe it came from.
+        let huge = "x".repeat(5_000_000);
+        let out = failure_detail(&huge, "");
+        assert!(
+            out.len() < MAX_DETAIL_CHARS + 100,
+            "not truncated: {} chars",
+            out.len()
+        );
+        assert!(out.contains("more bytes suppressed"));
+        // A short detail passes through untouched — no ellipsis on an ordinary one-line error.
+        let short = "connection-reader: that file is too complex";
+        assert_eq!(failure_detail("", short), short);
+    }
+
+    #[test]
+    fn truncation_never_splits_a_multibyte_character() {
+        // Bridge errors carry real filenames, and a naive byte slice at the cap would panic on a
+        // model called "Bâtiment.ifc" or any non-ASCII path.
+        let s = "é".repeat(MAX_DETAIL_CHARS + 50);
+        let out = failure_detail(&s, ""); // must not panic
+        assert!(out.contains("more bytes suppressed"));
     }
 
     #[test]

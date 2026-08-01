@@ -868,22 +868,31 @@ export function readModel(api, modelID, maxVertices = Infinity, opts = {}) {
     };
     count++;
 
+    // SERIALIZE ONCE. The sink writes JSON and the budget counts JSON, so producing the text here and
+    // handing it on means one `JSON.stringify` per object rather than two — on a 289 MB response the
+    // duplicate was a second 289 MB of serialisation for callers who set a budget.
+    const text = (sink || byteBudget !== Infinity) ? JSON.stringify(object) : null;
+
     // The byte budget is OPT-IN (absent => Infinity) and it is deliberately not a default. Streaming
     // the response removed the ceiling that used to make a size limit compulsory, so imposing one here
     // would invent a refusal where none is needed. It exists because a CONSUMER may still have a
     // ceiling of its own, and would rather be told the size than discover it as an out-of-memory.
     if (byteBudget !== Infinity) {
-      bytes += serializedObject(object).length;
+      // BYTES, not `.length`. A JS string's length is UTF-16 code units, and the pipe carries UTF-8 —
+      // so on the property values that motivated this reader (Norwegian, in one real file) a budget
+      // measured by length silently lets the response run over the size it promised. Review measured
+      // 69,363 units against 69,440 bytes on one small fixture; the gap grows with the file.
+      bytes += Buffer.byteLength(text, 'utf8');
       if (bytes > byteBudget) {
         throw new Error(
-          `that file returns more reference geometry than the ${Math.round(byteBudget / 1048576)} MB budget allows `
-          + `(over ${Math.round(bytes / 1048576)} MB so far). Read one storey or a few IFC types at a time — `
+          `that file returns more reference geometry than the ${mib(byteBudget)} budget allows `
+          + `(over ${mib(bytes)} so far). Read one storey or a few IFC types at a time — `
           + 'see `storeys` / `ifc-types`.',
         );
       }
     }
 
-    if (sink) sink(object); else objects.push(object);
+    if (sink) sink(object, text); else objects.push(object);
   };
 
   // A FILTER IS RESOLVED TO EXPRESS IDS AND HANDED TO `StreamMeshes`, so the elements nobody asked for
@@ -901,28 +910,51 @@ export function readModel(api, modelID, maxVertices = Infinity, opts = {}) {
     // Present ONLY when a filter was asked for, so "no filter" and "a filter that matched everything"
     // stay distinguishable, and so an older consumer sees no new field at all.
     ...(selection.applied ? { selected: selection.report } : {}),
+    // The RECEIPT for `max-bytes`, and it exists for the same reason `selected` does. Review pointed
+    // out that a caller passing only a budget got no acknowledgement from either bridge: a new one
+    // emitted no `selected` (no subset filter was applied) and an old one silently ignores the input,
+    // so a successful response could not be told from an unenforced budget. Echoing what was honoured
+    // — and what it cost — makes "this bridge understood me" checkable on the one call that matters.
+    ...(byteBudget !== Infinity ? { budget: { maxBytes: byteBudget, bytes } } : {}),
   };
 }
 
-/** One object as the bytes it will occupy in the response — the unit the `max-bytes` budget counts. */
-const serializedObject = (object) => JSON.stringify(object);
+/**
+ * A byte count a human can read, without rounding a real limit away to "0 MB".
+ *
+ * `Math.round(n / 1048576)` reported a 1 KB budget as `0 MB budget allows (over 0 MB so far)`, which
+ * names neither the limit nor the size — the two things the message exists to give.
+ */
+function mib(bytes) {
+  if (bytes < 1024) return `${bytes} bytes`;
+  if (bytes < 1048576) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / 1048576).toFixed(bytes < 10 * 1048576 ? 1 : 0)} MB`;
+}
 
 /**
- * The expressIDs of subtraction features — IfcOpeningElement and its siblings under
- * IfcFeatureElementSubtraction (IfcVoidingFeature in IFC4).
+ * The three classes web-ifc's `StreamAllMeshes` skips, which a filter must skip too.
  *
- * These carry real, tessellatable geometry and are the geometry of a HOLE: the prism cut out of a wall
- * for a door. An unfiltered read never returns them, so a filtered one must not either — see the call
- * site for the measurement that found this.
+ * THIS LIST IS NOT OURS — it mirrors web-ifc 0.0.77, whose mesh walk explicitly excludes
+ * `IFCOPENINGELEMENT`, `IFCOPENINGSTANDARDCASE` and `IFCSPACE` (`src/cpp/wasm/web-ifc-wasm.cpp`).
+ * `StreamMeshes` honours whatever ids it is handed and applies no such rule, so anything on this list
+ * that a filter selects would come back as an object an unfiltered read has never returned.
  *
- * The SUPERTYPE is queried with `includeInherited` rather than IfcOpeningElement alone, so a schema
- * that adds another subtraction kind is covered without this list having to be revisited — the same
+ * Both kinds matter and they are different kinds. The openings are VOIDS — the prisms cut out of walls
+ * for doors, 740 of them in one real model, which would render as solid boxes filling every doorway.
+ * `IfcSpace` is a room VOLUME, so a `storeys:` or a broad `ifc-types:` filter would hand back the air
+ * in every room as geometry. Review caught the second: excluding `IfcFeatureElementSubtraction` alone
+ * covers both opening types (the standard case is a subtype) and misses spaces entirely.
+ *
+ * The subtraction SUPERTYPE is queried with `includeInherited` rather than the two opening types by
+ * name, so a schema that adds another subtraction kind is covered without revisiting this — the same
  * reason `placedElements` refuses to hardcode an element-type list.
  */
-function subtractionFeatures(api, modelID) {
+function notInAWholeRead(api, modelID) {
   const out = new Set();
-  const found = api.GetLineIDsWithType(modelID, WebIFC.IFCFEATUREELEMENTSUBTRACTION, true);
-  for (let i = 0; i < found.size(); i++) out.add(found.get(i));
+  for (const type of [WebIFC.IFCFEATUREELEMENTSUBTRACTION, WebIFC.IFCSPACE]) {
+    const found = api.GetLineIDsWithType(modelID, type, true);
+    for (let i = 0; i < found.size(); i++) out.add(found.get(i));
+  }
   return out;
 }
 
@@ -951,13 +983,22 @@ function selectExpressIds(api, modelID, opts, storeys) {
   const wantStoreys = list(opts.storeys);
   const wantTypes = list(opts.ifcTypes);
   const wantIds = list(opts.ids);
-  if (!wantStoreys.length && !wantTypes.length && !wantIds.length) return { ids: null, applied: false };
+
+  // PRESENT-BUT-EMPTY IS NOT THE SAME AS ABSENT, and getting that wrong fails in the one direction
+  // that must never happen. `storeys: []` or `storeys: ['']` normalises to an empty list; treating
+  // that as "no filter given" returns THE WHOLE BUILDING to a caller who asked for a subset because
+  // it cannot afford the building. So the decision is made on whether the key was supplied at all,
+  // and an empty one narrows to nothing — the safe direction, and visible in `selected.candidates`.
+  const given = (v) => Array.isArray(v);
+  if (!given(opts.storeys) && !given(opts.ifcTypes) && !given(opts.ids)) {
+    return { ids: null, applied: false };
+  }
 
   const unmatched = [];
   let ids = null;                       // null = "not narrowed yet"; every term intersects into it
   const narrow = (next) => { ids = ids === null ? next : new Set([...ids].filter((id) => next.has(id))); };
 
-  if (wantStoreys.length) {
+  if (given(opts.storeys)) {
     // Case-insensitive for the same reason as the type names: a storey label is copied off a probe
     // breakdown or typed by hand, and "L2" vs "l2" is not a distinction a user means to draw.
     const want = new Set(wantStoreys.map((s) => s.toUpperCase()));
@@ -972,21 +1013,26 @@ function selectExpressIds(api, modelID, opts, storeys) {
     narrow(hit);
   }
 
-  if (wantTypes.length) {
+  if (given(opts.ifcTypes)) {
     const hit = new Set();
     for (const name of wantTypes) {
       const code = typeCode(name);
+      // UNKNOWN and KNOWN-BUT-ABSENT are both unmatched. Only the first was reported at first, so
+      // asking a model for IFCCHIMNEY — a real entity this file happens not to contain — returned
+      // zero objects and an empty `unmatched`, which reads as "the filter worked and there are none"
+      // in exactly the same way a typo does. If a value contributed nothing, say so.
       if (code == null) { unmatched.push({ ifcType: name }); continue; }
       // `includeInherited` is deliberately true: asking for IFCBUILDINGELEMENT and being handed
       // nothing, because every actual element is a subtype of it, would be a filter that punishes
       // knowing the schema.
       const found = api.GetLineIDsWithType(modelID, code, true);
+      if (!found.size()) { unmatched.push({ ifcType: name }); continue; }
       for (let i = 0; i < found.size(); i++) hit.add(found.get(i));
     }
     narrow(hit);
   }
 
-  if (wantIds.length) {
+  if (given(opts.ids)) {
     // EVERY PRODUCT, not just the ones in the spatial structure — measured, after the first cut
     // resolved GlobalIds against `storeys`'s keys alone. On a real 12-storey model that covers 17,459
     // of 17,460 objects; the one it misses is the IfcSite's own surface, which carries geometry while
@@ -1016,7 +1062,7 @@ function selectExpressIds(api, modelID, opts, storeys) {
   // cut from, not things anybody wants overlaid — so without this a filtered read would draw 740
   // phantom boxes filling every opening, and the same file would describe two different models
   // depending on whether you narrowed it.
-  for (const id of subtractionFeatures(api, modelID)) ids?.delete(id);
+  for (const id of notInAWholeRead(api, modelID)) ids?.delete(id);
 
   return {
     ids: ids ?? new Set(),
@@ -1166,10 +1212,11 @@ function readModelStreamed(api, modelID, args, write) {
     ifcTypes: args['ifc-types'] ?? args.ifcTypes,
     ids: args.ids,
     maxBytes: args['max-bytes'] ?? args.maxBytes,
-    onObject: (object) => {
+    // `text` is the object already serialised by readModel — see the note there on serialising once.
+    onObject: (object, text) => {
       if (!first) write(',');
       first = false;
-      write(JSON.stringify(object));
+      write(text ?? JSON.stringify(object));
     },
   });
   write(']');
