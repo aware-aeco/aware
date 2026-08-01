@@ -67,17 +67,31 @@ would save the bytes and pay the whole cost — and the cost is the part that hu
 **Several filters INTERSECT.** `storeys: [L2]` with `ifc-types: [IFCBEAM]` means the beams on L2, not
 beams plus everything on L2. Every one of these narrows.
 
-**A filter only ever selects a subset of what an unfiltered read returns.** In particular it will not
-return subtraction features — `IfcOpeningElement`, the prisms cut out of walls for doors and windows.
-They tessellate perfectly well and a whole read has never returned them; on the same 17,460-object
-model there are 740, and handing them back would fill every doorway with a solid box and make one file
-describe two different models depending on whether you narrowed it.
+**An empty filter selects NOTHING.** `storeys: []` — or `[""]`, or a list that is all whitespace —
+returns no objects, not the whole model. Only *omitting* the key means "unfiltered". The distinction
+exists because the other reading fails in the one direction that must never happen: handing the entire
+building to a caller who asked for a subset because it cannot afford the entire building. You can tell
+the two apart in the response — an empty filter reports `selected.candidates: 0`, an absent one reports
+no `selected` at all.
+
+**A filter only ever selects a subset of what an unfiltered read returns.** web-ifc's whole-model walk
+skips three classes and a filtered read skips the same three, so neither can hand you geometry the
+other would not:
+
+| Skipped | Why it would be wrong to return |
+|---|---|
+| `IfcOpeningElement`, `IfcOpeningStandardCase` | Voids — the prisms cut out of walls for doors and windows. One real 17,460-object model holds **740**; returned, they fill every doorway with a solid box. |
+| `IfcSpace` | Room volumes. A `storeys:` filter would otherwise hand back the air in every room as geometry. |
+
+Without this, one file would describe two different models depending on whether you narrowed it.
 
 **A value that matches nothing is reported, not silently zero.** A misspelled storey selects no
 objects, which is indistinguishable from a model that genuinely has none — so it comes back in
 `selected.unmatched` and you can say "there is no storey called that" instead of "this model is empty".
-`selected` is absent entirely when no filter was passed, so "unfiltered" and "a filter that matched
-everything" stay different answers.
+This covers a *valid* entity the model lacks too: `IFCCHIMNEY` on a file with no chimneys is reported
+unmatched, not silently accepted, because "you spelled it wrong" and "there are none" otherwise look
+identical. `selected` is absent entirely when no filter was passed, so "unfiltered" and "a filter that
+matched everything" stay different answers.
 
 Run `probe` first for the names worth passing — it reports the storey and type breakdown without
 tessellating anything.
@@ -98,7 +112,17 @@ reintroduce the peak this removes. JSON object keys are unordered, so no conform
 `max-bytes` is an **opt-in** budget, absent by default. Streaming removed the ceiling that would make a
 size cap compulsory, so imposing one here would invent a refusal; it exists because a *consumer* may
 still have a ceiling of its own and would rather be told the size than meet it as an out-of-memory. It
-refuses in words, naming the size, the limit, and that a subset would fit.
+refuses in words, naming the size, the limit, and that a subset would fit — counting **UTF-8 bytes**,
+not string length, so a file full of non-ASCII property values cannot overrun the size it promised.
+
+When honoured it comes back as a receipt, `budget: { maxBytes, bytes }`. That exists for the same
+reason `selected` does: a caller passing only `max-bytes` otherwise had no way to tell a bridge that
+enforced the budget from a pre-1.2.0 one that ignored the input, because both return a successful
+response of the same shape.
+
+A refusal mid-walk leaves a **truncated** document on stdout — bytes are already written by then — and
+exits non-zero. That is safe because the runtime checks the exit status before parsing, and reports the
+bridge's **stderr**, where the actionable sentence is.
 
 ## The frame is the file's own, Z-up — do not rotate it again
 

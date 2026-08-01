@@ -191,7 +191,9 @@ commands:
         description: >
           Optional storey names (from probe.storeys) to read. Resolved to expressIDs BEFORE
           tessellation, so what is not asked for is never built. Case-insensitive. Combines with the
-          other filters by INTERSECTION.
+          other filters by INTERSECTION. An EMPTY list selects nothing — only omitting the key means
+          unfiltered, because the other reading returns the whole building to a caller who asked for
+          a subset precisely because it cannot afford the whole building.
       ifc-types:
         type: array
         description: >
@@ -223,7 +225,11 @@ commands:
                          #   { storeys?, ifcTypes?, ids?, candidates, unmatched }
                          # `unmatched` lists filter values nothing matched — [{storey}|{ifcType}|{id}]
                          # — because zero objects otherwise reads as "this model has none of those"
-                         # when the truth is a misspelling
+                         # when the truth is a misspelling. A VALID entity the model lacks counts as
+                         # unmatched too, not just an unknown name
+        budget: object   # ONLY when max-bytes was passed: { maxBytes, bytes }. The receipt that says
+                         # the budget was enforced — without it a caller cannot tell this bridge from
+                         # a pre-1.2.0 one that ignored the input, since both return a success
 
 skills:
   - what-this-agent-does.md
