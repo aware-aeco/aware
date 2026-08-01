@@ -25,6 +25,12 @@ objects:
     storey:    string   # containing spatial structure name, may be null
     profile:   string   # profile designation VERBATIM, may be null
     material:  string   # material name, may be null
+    propertySets:       # every IfcPropertySet, verbatim — always present, [] when none
+      type: array
+      items:
+        name:       string   # the set name as authored ("AllplanAttributes", "Pset_SlabCommon")
+        properties:          # [{ name, value }] — value is text as written, or null
+          type: array
     positions: [number] # world mm, [x,y,z]*
     indices:   [number] # triangle indices
 skipped: number         # products streamed but carrying no drawable triangle (see below)
@@ -91,6 +97,55 @@ case-insensitively, or `"W10x33"` will miss a catalogue storing `"W10X33"`.
 
 **`material` is the signal that says *do not convert this*.** A member can be named `girder`, typed
 `IfcBeam`, and be `wood_spruce_beam`. Type alone would happily turn timber into steel.
+
+## `propertySets` is where the meaning is in a real file
+
+The five well-known fields describe an object the exporter bothered to describe. Plenty do not.
+`11134_V_Motebello_Heistopp_Rev.ifc` is the case that settles it: every one of its 19 objects is an
+`IFCBUILDINGELEMENTPROXY`, so `ifcType` separates nothing, and the names are no help either — while
+**31 property sets carry 271 values**, in Norwegian, under vendor set names. A consumer given only the
+well-known fields is handed an object tree in which nothing can be told apart.
+
+So every `IfcPropertySet` rides along, **grouped and named exactly as the file wrote it**:
+
+```yaml
+propertySets:
+  - name: AllplanAttributes
+    properties:
+      - { name: "2:Etasje", value: "1" }
+      - { name: "6:Max VCT", value: "0" }
+```
+
+**Nothing is normalised, translated or renamed.** Vendor sets in the author's own language are the
+norm rather than the exception, and showing them as authored is the entire value — a reader that
+tidied them would be discarding the only thing that distinguishes one proxy from another. Values are
+text as written: no unit conversion, no rounding, no localisation. A value that cannot be read is
+`null`, never the string `"undefined"`, so *"the file did not say"* stays distinguishable from *"the
+file said this"*.
+
+`propertySets` is **always present**, `[]` when the file carries none — a consumer renders "no
+properties" rather than having to tell absent from empty, and never null-checks before iterating.
+
+**Occurrence and type sets are merged property by property, the occurrence winning.** IFC lets a
+property sit on the element type with each occurrence inheriting it, so following only
+`IfcRelDefinesByProperties` returns nothing for perfectly ordinary exports. Merging at the *set* level
+instead would silently drop a type property the occurrence never mentioned — a type
+`Pset_WallCommon{FireRating, LoadBearing}` beside an occurrence `Pset_WallCommon{FireRating}` would
+lose `LoadBearing`, which the file plainly states. This is also the rule
+[`ifc-inspector.entities.get-by-guid`](../../../construction/ifc-inspector/commands/entities.get-by-guid.md)
+applies; two agents reading one file must not disagree about what it says.
+
+Quantity sets (`IfcElementQuantity`) are **not** included — this is `IfcPropertySet` only, matching
+`ifc-inspector`.
+
+### Why this is here and not only in `ifc-inspector`
+
+It overlaps that agent deliberately, and the **shape** is what differs. `ifc-inspector` answers
+per-GUID (`entities.get-by-guid`) or exports a whole class to CSV (`psets.export`), on its own binary.
+An interactive object tree needs every object's properties out of the **one read it already pays
+for**: a call per click would mean a second sidecar download and an agent round trip on every
+selection. Reach for `ifc-inspector` when you want one element, a schedule, or a compliance check;
+reach for this when you are drawing a tree of a whole borrowed model.
 
 ## Instancing is preserved
 Real exports serve many objects from few shapes via mapped items. Geometry is emitted **per

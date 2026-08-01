@@ -482,6 +482,157 @@ function materialByElement(api, modelID) {
   return out;
 }
 
+/**
+ * One property's value, rendered as the file wrote it.
+ *
+ * IFC wraps every value in a typed carrier (`IfcLabel`, `IfcReal`, `IfcBoolean`…), and the several
+ * property kinds carry it under different keys — a single value, an enumeration, a list, a bounded
+ * range. They are flattened to text here because the consumer's job is to SHOW what the file says:
+ * no unit conversion, no localisation, no rounding. A value we cannot read becomes null rather than
+ * the string "undefined", so "the file did not say" stays distinguishable from "the file said this".
+ */
+function propertyValue(line) {
+  const one = (v) => {
+    const raw = strOf(v);
+    if (raw == null) return null;
+    return typeof raw === 'string' ? raw : String(raw);
+  };
+  const many = (vs) => {
+    const parts = (vs || []).map(one).filter((v) => v != null);
+    return parts.length ? parts.join(', ') : null;
+  };
+  if (line.NominalValue != null) return one(line.NominalValue);          // IfcPropertySingleValue
+  if (line.EnumerationValues != null) return many(line.EnumerationValues); // IfcPropertyEnumeratedValue
+  if (line.ListValues != null) return many(line.ListValues);              // IfcPropertyListValue
+  if (line.UpperBoundValue != null || line.LowerBoundValue != null) {     // IfcPropertyBoundedValue
+    const lo = one(line.LowerBoundValue), hi = one(line.UpperBoundValue);
+    return lo != null || hi != null ? `${lo ?? ''}..${hi ?? ''}` : null;
+  }
+  return null;
+}
+
+/** One IfcPropertySet as `{ name, properties: [{ name, value }] }`, or null when it holds nothing. */
+function readPropertySet(api, modelID, setId) {
+  let set;
+  try { set = api.GetLine(modelID, setId); } catch { return null; }
+  if (!set || !Array.isArray(set.HasProperties)) return null;   // IfcElementQuantity lands here and is skipped
+  const properties = [];
+  for (const ref of set.HasProperties) {
+    if (!ref || ref.value == null) continue;
+    let prop;
+    try { prop = api.GetLine(modelID, ref.value); } catch { continue; }
+    if (!prop) continue;
+    const name = strOf(prop.Name);
+    if (name == null) continue;
+    properties.push({ name: String(name), value: propertyValue(prop) });
+  }
+  if (!properties.length) return null;
+  return { name: strOf(set.Name) == null ? null : String(strOf(set.Name)), properties };
+}
+
+/**
+ * Every property set each element carries, grouped and named exactly as the file wrote them.
+ *
+ * THIS IS WHERE THE MEANING LIVES IN A REAL FILE, and the reference-objects design says so with
+ * evidence: in `11134_V_Motebello_Heistopp_Rev.ifc` every object is literally named `-`, so the name,
+ * type and storey say nothing at all — while 31 property sets carry 271 values under one vendor set,
+ * in Norwegian. A reader that returns only the six well-known fields hands the consumer an object
+ * tree it cannot identify anything in.
+ *
+ * Nothing is normalised, translated or renamed. Vendor sets are the norm rather than the exception,
+ * and their value is in being shown as authored; a reader that tidied them would be discarding the
+ * only thing that distinguishes one proxy from another.
+ *
+ * Occurrence and TYPE sets are both collected, mirroring `materialByElement` and for the same reason:
+ * IFC lets a property sit on the element type with the occurrence inheriting it, so following only
+ * IfcRelDefinesByProperties returns nothing for perfectly ordinary exports. A set the occurrence
+ * declares wins over a type set of the same name — that is what an occurrence-level override means —
+ * and the type's remaining sets are appended rather than dropped.
+ */
+function propertySetsByElement(api, modelID) {
+  const out = new Map();          // element expressID -> [{ name, properties }]
+  const byTypeId = new Map();     // type expressID -> [{ name, properties }]
+  const cache = new Map();        // set expressID -> parsed set (files reuse one set across elements)
+
+  const parse = (setId) => {
+    if (cache.has(setId)) return cache.get(setId);
+    const parsed = readPropertySet(api, modelID, setId);
+    cache.set(setId, parsed);
+    return parsed;
+  };
+  const add = (map, key, set) => {
+    if (!set) return;
+    const list = map.get(key) || [];
+    list.push(set);
+    map.set(key, list);
+  };
+
+  const rels = api.GetLineIDsWithType(modelID, WebIFC.IFCRELDEFINESBYPROPERTIES);
+  for (let i = 0; i < rels.size(); i++) {
+    let rel;
+    try { rel = api.GetLine(modelID, rels.get(i)); } catch { continue; }
+    const setId = rel.RelatingPropertyDefinition && rel.RelatingPropertyDefinition.value;
+    if (setId == null) continue;
+    const parsed = parse(setId);
+    if (!parsed) continue;
+    for (const e of rel.RelatedObjects || []) if (e && e.value != null) add(out, e.value, parsed);
+  }
+
+  // Type-level sets hang off the type object itself (`HasPropertySets`), not off a relationship, so
+  // they are collected by walking the types an occurrence is bound to.
+  const byType = api.GetLineIDsWithType(modelID, WebIFC.IFCRELDEFINESBYTYPE);
+  for (let i = 0; i < byType.size(); i++) {
+    let rel;
+    try { rel = api.GetLine(modelID, byType.get(i)); } catch { continue; }
+    const typeId = rel.RelatingType && rel.RelatingType.value;
+    if (typeId == null) continue;
+    if (!byTypeId.has(typeId)) {
+      let typeLine;
+      try { typeLine = api.GetLine(modelID, typeId); } catch { typeLine = null; }
+      const sets = [];
+      for (const ref of (typeLine && typeLine.HasPropertySets) || []) {
+        if (!ref || ref.value == null) continue;
+        const parsed = parse(ref.value);
+        if (parsed) sets.push(parsed);
+      }
+      byTypeId.set(typeId, sets);
+      // A type can ALSO be the RelatedObject of an IfcRelDefinesByProperties, which the first pass
+      // filed under the type's own id. Those are the type's sets too.
+      for (const s of out.get(typeId) || []) sets.push(s);
+    }
+    const inherited = byTypeId.get(typeId);
+    if (!inherited.length) continue;
+    for (const e of rel.RelatedObjects || []) {
+      if (!e || e.value == null) continue;
+      out.set(e.value, mergeInherited(out.get(e.value) || [], inherited));
+    }
+  }
+  return out;
+}
+
+/**
+ * The occurrence's sets merged with its type's, the occurrence winning PROPERTY BY PROPERTY.
+ *
+ * Set-level precedence would lose data the file plainly states: a type `Pset_WallCommon` carrying
+ * {FireRating, LoadBearing} beside an occurrence `Pset_WallCommon` carrying only {FireRating} would
+ * drop LoadBearing entirely, because the occurrence "won" the whole set. Property-level is also what
+ * the sibling `ifc-inspector.entities.get-by-guid` does, and two agents reading the same file must not
+ * disagree about what it says.
+ *
+ * Copies rather than mutating: parsed sets are cached and shared across every element that references
+ * them, so appending to one in place would leak another element's type properties into it.
+ */
+export function mergeInherited(own, inherited) {
+  const merged = own.map((s) => ({ name: s.name, properties: [...s.properties] }));
+  for (const t of inherited) {
+    const mine = merged.find((s) => s.name === t.name);
+    if (!mine) { merged.push({ name: t.name, properties: [...t.properties] }); continue; }
+    const taken = new Set(mine.properties.map((p) => p.name));
+    for (const p of t.properties) if (!taken.has(p.name)) mine.properties.push(p);
+  }
+  return merged;
+}
+
 // The profile NAME an element's swept-solid representation was built from ("W10X33"), or null.
 //
 // The name is what makes a catalogue lookup possible at conversion time, and §4.4 of the design makes
@@ -568,6 +719,7 @@ export const WEB_IFC_Y_UP = 'y-up'; // web-ifc's renderer frame: X/Z in plan, Y 
 export function readModel(api, modelID, maxVertices = Infinity) {
   const storeys = storeyByElement(api, modelID);
   const materials = materialByElement(api, modelID);
+  const propertySets = propertySetsByElement(api, modelID);
   const objects = [];
   let budget = maxVertices;
   let skipped = 0; // products web-ifc streamed but that carry no drawable triangle
@@ -622,6 +774,9 @@ export function readModel(api, modelID, maxVertices = Infinity) {
       storey: storeys.get(id) ?? null,
       profile: profileOf(api, modelID, id),
       material: materials.get(id) ?? null,
+      // ALWAYS AN ARRAY, empty when the file carries none — so a consumer renders "no properties"
+      // rather than having to tell absent from empty, and never has to null-check before iterating.
+      propertySets: propertySets.get(id) ?? [],
       positions,
       indices,
     });
