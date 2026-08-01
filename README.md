@@ -93,7 +93,7 @@ aware-aeco/
 
 **Substrate: content-complete. Runtime: shipped.**
 
-The `aware` CLI is live at **v<!--stat:cli_version-->0.115.0<!--/stat-->** (Rust), published to npm as **`@aware-aeco/cli`**, with curl + PowerShell installers in [`scripts/`](./scripts/). What began as 7 reference agents is now a working substrate:
+The `aware` CLI is live at **v<!--stat:cli_version-->0.116.0<!--/stat-->** (Rust), published to npm as **`@aware-aeco/cli`**, with curl + PowerShell installers in [`scripts/`](./scripts/). What began as 7 reference agents is now a working substrate:
 
 - **<!--stat:agents_total-->78<!--/stat--> agents** — <!--stat:agents_curated-->29<!--/stat--> hand-written + <!--stat:agents_reflected-->49<!--/stat--> auto-generated from vendor SDKs — **all registered** in [`registry-index.json`](./registry-index.json) and installable today.
 - **`aware build agent`** generators: `--from-nuget`, `--from-npm`, `--from-yard`, `--from-openapi`, `--from-csharp` (Roslyn source reader).
