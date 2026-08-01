@@ -11,8 +11,6 @@
 //! `load_secret_value` already reads as a manual-override fallback). On read we
 //! check the keyring first, then the file; on delete we clear both.
 
-#![allow(dead_code)]
-
 use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
@@ -239,6 +237,11 @@ pub fn load_app_secret(
 }
 
 /// Remove a stored BYO client secret from the keychain and file fallback (idempotent).
+///
+/// Not yet wired: `run_disconnect` clears the token but not the BYO app secret,
+/// so the secret currently outlives `aware connect disconnect`. Kept because the
+/// gap is the missing call, not this function.
+#[allow(dead_code)]
 pub fn delete_app_secret(
     integration: &str,
     alias: Option<&str>,

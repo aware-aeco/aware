@@ -3,11 +3,11 @@
 //! `AgentInvoker` trait + `MockInvoker` (test-only) here. `CliInvoker`
 //! (subprocess + JSON envelope) added in Task 6.
 
-#![allow(dead_code)]
-
-use std::collections::HashMap;
 use std::path::PathBuf;
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
+// `MockInvoker`'s pre-baked output maps are the only users of these.
+#[cfg(test)]
+use std::{collections::HashMap, sync::Mutex};
 
 use async_trait::async_trait;
 use serde_json::Value;
@@ -16,7 +16,8 @@ use tokio::sync::{mpsc, oneshot};
 use crate::error::AwareError;
 use crate::manifest::App;
 
-/// Map key: (agent-name, command-name).
+/// Map key: (agent-name, command-name). Only [`MockInvoker`] keys by this.
+#[cfg(test)]
 type CmdKey = (String, String);
 
 /// Handle returned by `invoke_stream`. Drop the handle (or call `stop`) to
@@ -46,6 +47,7 @@ pub trait AgentInvoker: Send + Sync {
 }
 
 /// Test-only invoker: pre-baked outputs per (agent, command).
+#[cfg(test)]
 #[derive(Default, Clone)]
 pub struct MockInvoker {
     /// (agent, command) -> single output
@@ -54,6 +56,7 @@ pub struct MockInvoker {
     streams: Arc<Mutex<HashMap<CmdKey, Vec<Value>>>>,
 }
 
+#[cfg(test)]
 impl MockInvoker {
     pub fn new() -> Self {
         Self::default()
@@ -76,6 +79,7 @@ impl MockInvoker {
     }
 }
 
+#[cfg(test)]
 #[async_trait]
 impl AgentInvoker for MockInvoker {
     async fn invoke_single(
@@ -1456,6 +1460,7 @@ fn parse_vision_json(text: &str) -> Result<Value, AwareError> {
 /// contract, so it is enforced here.
 ///
 /// A `null` schema means none was declared — nothing to enforce, always valid.
+#[cfg(test)]
 fn validate_against_schema(value: &Value, schema: &Value) -> Result<(), String> {
     validate_with(compile_schema(schema)?.as_ref(), value)
 }
