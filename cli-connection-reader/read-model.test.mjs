@@ -9,7 +9,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { openApi, closeApi, readModel, probeModel, toWebIfcYUp, mergeInherited } from './index.mjs';
+import * as WebIFC from 'web-ifc';
+import { openApi, closeApi, readModel, probeModel, toWebIfcYUp, mergeInherited, propertySetsByElement } from './index.mjs';
 
 const DOWNLOADS = join(process.env.USERPROFILE ?? process.env.HOME ?? '', 'Downloads');
 const sample = (name) => (existsSync(join(DOWNLOADS, name)) ? join(DOWNLOADS, name) : null);
@@ -240,6 +241,95 @@ test('a standard property set reads its values as authored', async (t) => {
   assert.equal(value('AcousticRating'), '29dB Rw');
   assert.equal(value('IsExternal'), 'true');
   assert.equal(value('LoadBearing'), 'false');
+});
+
+// ── Property-set DISCOVERY, driven through a fake web-ifc API ────────────────────────────────
+//
+// These run in CI; the file-based tests above do not. Every sample lives in ~/Downloads and self-skips
+// when absent, and CI expects exactly that (ci.yml) — so before these existed, deleting the entire
+// type-inheritance traversal would have left the suite green. A fake api is the only way to drive the
+// discovery paths on inputs the four samples do not contain.
+
+/** The two calls `propertySetsByElement` makes: enumerate ids of a type, and fetch one line. */
+function fakeApi(lines, byType) {
+  return {
+    GetLineIDsWithType: (_m, t) => {
+      const ids = byType[t] || [];
+      return { size: () => ids.length, get: (i) => ids[i] };
+    },
+    GetLine: (_m, id) => {
+      if (!(id in lines)) throw new Error(`no line ${id}`);   // real web-ifc throws; the code catches
+      return lines[id];
+    },
+  };
+}
+const pset = (name, props) => ({ Name: { value: name }, HasProperties: props.map((p) => ({ value: p })) });
+const prop = (name, value) => ({ Name: { value: name }, NominalValue: { value } });
+const REL_PROPS = WebIFC.IFCRELDEFINESBYPROPERTIES;
+const REL_TYPE = WebIFC.IFCRELDEFINESBYTYPE;
+
+test('ONE relationship carrying SEVERAL sets — the IFC4 aggregate select — keeps all of them', () => {
+  // THE REGRESSION THIS EXISTS FOR. IFC4 widened RelatingPropertyDefinition to an
+  // IfcPropertySetDefinitionSet, which web-ifc returns as `{ value: [20, 21] }`. Reading `.value` as
+  // one id passed the ARRAY to GetLine, matched nothing, and dropped every set in the relationship —
+  // a silent total loss on a valid, ordinary encoding.
+  const api = fakeApi({
+    10: { RelatingPropertyDefinition: { value: [20, 21] }, RelatedObjects: [{ value: 1 }] },
+    20: pset('A', [30]),
+    21: pset('B', [31]),
+    30: prop('p1', 'v1'),
+    31: prop('p2', 'v2'),
+  }, { [REL_PROPS]: [10], [REL_TYPE]: [] });
+
+  const sets = propertySetsByElement(api, 0).get(1);
+  assert.deepEqual(sets.map((s) => s.name), ['A', 'B'], 'both sets on the one relationship must survive');
+  assert.deepEqual(sets[1].properties, [{ name: 'p2', value: 'v2' }]);
+});
+
+test('a single-set relationship still works, and handles carried as objects are flattened', () => {
+  const api = fakeApi({
+    10: { RelatingPropertyDefinition: { value: 20 }, RelatedObjects: [{ value: 1 }] },
+    11: { RelatingPropertyDefinition: { value: [{ value: 21 }] }, RelatedObjects: [{ value: 1 }] },
+    20: pset('A', [30]),
+    21: pset('B', [31]),
+    30: prop('p1', 'v1'),
+    31: prop('p2', 'v2'),
+  }, { [REL_PROPS]: [10, 11], [REL_TYPE]: [] });
+
+  const sets = propertySetsByElement(api, 0).get(1);
+  assert.deepEqual(sets.map((s) => s.name), ['A', 'B']);
+});
+
+test('a type\'s own HasPropertySets reaches its occurrences, merged property by property', () => {
+  // The path no sample file exercises: three of the four have no IfcRelDefinesByType at all.
+  const api = fakeApi({
+    10: { RelatingPropertyDefinition: { value: 20 }, RelatedObjects: [{ value: 1 }] },
+    20: pset('Common', [30]),
+    30: prop('shared', 'fromOccurrence'),
+    12: { RelatingType: { value: 40 }, RelatedObjects: [{ value: 1 }] },
+    40: { HasPropertySets: [{ value: 22 }] },
+    22: pset('Common', [32, 33]),
+    32: prop('shared', 'fromType'),
+    33: prop('typeOnly', 'kept'),
+  }, { [REL_PROPS]: [10], [REL_TYPE]: [12] });
+
+  const sets = propertySetsByElement(api, 0).get(1);
+  assert.equal(sets.length, 1, 'the same-named set is merged, not duplicated');
+  const byName = Object.fromEntries(sets[0].properties.map((p) => [p.name, p.value]));
+  assert.equal(byName.shared, 'fromOccurrence', 'the occurrence wins the property it declares');
+  assert.equal(byName.typeOnly, 'kept', 'and the type property it never mentioned is NOT lost');
+});
+
+test('an IfcElementQuantity is not mistaken for a property set', () => {
+  // It rides the same relationship. It carries `Quantities`, not `HasProperties`, and this command
+  // returns IfcPropertySet only — matching ifc-inspector, and stated in the contract.
+  const api = fakeApi({
+    10: { RelatingPropertyDefinition: { value: 20 }, RelatedObjects: [{ value: 1 }] },
+    20: { Name: { value: 'BaseQuantities' }, Quantities: [{ value: 30 }] },
+    30: { Name: { value: 'GrossVolume' }, VolumeValue: { value: 3 } },
+  }, { [REL_PROPS]: [10], [REL_TYPE]: [] });
+
+  assert.equal(propertySetsByElement(api, 0).get(1), undefined, 'a quantity set contributes nothing');
 });
 
 // Type-level property inheritance, tested DIRECTLY rather than through a file.

@@ -122,7 +122,7 @@ commands:
       real profile. `material` is the signal that says do not convert this: a member can be named
       "girder" and typed IfcBeam while being spruce.
 
-      `propertySets` is every IfcPropertySet the element carries, grouped and named exactly as the
+      `propertySets` is the IfcPropertySets the element carries, grouped and named exactly as the
       file wrote them, with no normalisation, translation or renaming — because in a real file that is
       where the meaning is. One test file's objects are all IfcBuildingElementProxy, so name, type and
       storey identify nothing, while 31 property sets carry 271 values under vendor set names in
@@ -130,8 +130,15 @@ commands:
       element type with the occurrence inheriting it), merged PROPERTY BY PROPERTY with the occurrence
       winning — the same rule `ifc-inspector.entities.get-by-guid` applies, because two agents reading
       one file must not disagree about what it says; set-level precedence would drop a type property
-      the occurrence never mentioned. Quantity sets (IfcElementQuantity) are not included. Always
-      present, empty when the file carries none.
+      the occurrence never mentioned. Quantity sets (IfcElementQuantity) are not included, nor is
+      IfcRelDefinesByObject reflection (valid IFC4, but uncommon and with precedence this reader cannot
+      settle without a real file). Values are canonical text, not the file's literal tokens: web-ifc
+      parses before we see them, so an authored 1.2300 arrives as 1.23.
+
+      `[]` means the file carries none. A MISSING field means something else: the bridge binary is
+      installed separately and a pre-1.1.0 one omits it entirely under this manifest, so absent reads
+      as "this bridge cannot answer" — the same caution `frame` already requires. A consumer caching
+      the response must not key that cache on the IFC bytes alone.
 
       This overlaps `ifc-inspector` deliberately, and the SHAPE is what differs: that agent answers
       per-GUID or exports a whole class to CSV, on its own binary. An interactive object tree needs

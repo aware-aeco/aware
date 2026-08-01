@@ -511,6 +511,25 @@ function propertyValue(line) {
   return null;
 }
 
+/**
+ * The express ids a property-definition select points at — one, or SINCE IFC4 a whole list.
+ *
+ * `IfcRelDefinesByProperties.RelatingPropertyDefinition` is an `IfcPropertySetDefinitionSelect`, and
+ * IFC4 widened it to admit an `IfcPropertySetDefinitionSet`: several property sets attached by ONE
+ * relationship. web-ifc hands that back as `{ value: [2, 4] }`.
+ *
+ * Reading `.value` as a single id therefore passed an ARRAY to GetLine, which matches no line — so
+ * every set in such a relationship vanished. Not a partial read: a silent, total loss, on a valid and
+ * ordinary IFC4 encoding. Elements may carry handles or bare numbers, so both are flattened.
+ */
+function definitionIds(select) {
+  if (!select) return [];
+  const v = select.value;
+  if (v == null) return [];
+  const list = Array.isArray(v) ? v : [v];
+  return list.map((e) => (e && typeof e === 'object' && 'value' in e ? e.value : e)).filter((id) => id != null);
+}
+
 /** One IfcPropertySet as `{ name, properties: [{ name, value }] }`, or null when it holds nothing. */
 function readPropertySet(api, modelID, setId) {
   let set;
@@ -549,7 +568,7 @@ function readPropertySet(api, modelID, setId) {
  * declares wins over a type set of the same name — that is what an occurrence-level override means —
  * and the type's remaining sets are appended rather than dropped.
  */
-function propertySetsByElement(api, modelID) {
+export function propertySetsByElement(api, modelID) {
   const out = new Map();          // element expressID -> [{ name, properties }]
   const byTypeId = new Map();     // type expressID -> [{ name, properties }]
   const cache = new Map();        // set expressID -> parsed set (files reuse one set across elements)
@@ -571,11 +590,11 @@ function propertySetsByElement(api, modelID) {
   for (let i = 0; i < rels.size(); i++) {
     let rel;
     try { rel = api.GetLine(modelID, rels.get(i)); } catch { continue; }
-    const setId = rel.RelatingPropertyDefinition && rel.RelatingPropertyDefinition.value;
-    if (setId == null) continue;
-    const parsed = parse(setId);
-    if (!parsed) continue;
-    for (const e of rel.RelatedObjects || []) if (e && e.value != null) add(out, e.value, parsed);
+    for (const setId of definitionIds(rel.RelatingPropertyDefinition)) {
+      const parsed = parse(setId);
+      if (!parsed) continue;
+      for (const e of rel.RelatedObjects || []) if (e && e.value != null) add(out, e.value, parsed);
+    }
   }
 
   // Type-level sets hang off the type object itself (`HasPropertySets`), not off a relationship, so
