@@ -15,7 +15,7 @@
 //   list      inputs { ifc-path }                    -> { connections: [ {id,name,type,plates,bolts,welds,members} ] }
 //             Fast: enumerate connection candidates (one per IfcElementAssembly that carries
 //             connection hardware) WITHOUT tessellating — this backs the "which connection?" picker.
-//   extract   inputs { ifc-path, id }                -> { connection: {id,name,type,members,parts:[mesh…],recipe?} }
+//   extract   inputs { ifc-path, id }                -> { connection: {id,name,type,frame,members,parts:[mesh…],recipe?} }
 //             Tessellate ONE candidate (by its IfcElementAssembly GlobalId) into mesh scene parts, AND —
 //             when the parts match a supported pattern (a base plate with a vertical anchor grid) — fit a
 //             parametric `recipe:{kind,params}` so the consumer can import it as an EDITABLE recipe rather
