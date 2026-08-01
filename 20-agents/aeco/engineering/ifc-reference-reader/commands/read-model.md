@@ -1,8 +1,8 @@
-# `ifc-reference-reader.read-model` — the whole file as reference geometry
+# `ifc-reference-reader.read-model` — a file, or part of one, as reference geometry
 
-Stateless, read-only. Tessellates **every** element into mesh scene objects, in the file's own **Z-up**
-world frame, in canonical millimetres. Deterministic for a given file, so the result is content-hash
-cacheable.
+Stateless, read-only. Tessellates every element into mesh scene objects — or only the storeys, IFC
+types or GlobalIds you ask for — in the file's own **Z-up** world frame, in canonical millimetres.
+Deterministic for a given file and filter, so the result is content-hash cacheable.
 
 ## Lifecycle
 `single` — one call, one response.
@@ -12,6 +12,10 @@ cacheable.
 |---|---|---|
 | `ifc-path` | string | Path to the `.ifc` / `.ifczip` file. |
 | `max-vertices` | number | Optional vertex budget; aborts mid-tessellation if exceeded. |
+| `storeys` | [string] | Optional storey names to read (from `probe.storeys`). Case-insensitive. |
+| `ifc-types` | [string] | Optional IFC entity names to read, e.g. `[IFCBEAM, IFCCOLUMN]` (from `probe.types`). Subtypes included; case-insensitive. |
+| `ids` | [string] | Optional GlobalIds to read — for re-reading a known selection. |
+| `max-bytes` | number | Optional response-size budget. Absent means no limit. |
 
 ## Outputs
 ```yaml
@@ -34,7 +38,91 @@ objects:
     positions: [number] # world mm, [x,y,z]*
     indices:   [number] # triangle indices
 skipped: number         # products streamed but carrying no drawable triangle (see below)
+count:   number         # objects returned; equals objects.length
+selected:               # ONLY present when a filter was passed (see below)
+  storeys:  [string]    # echoed back, as asked
+  ifcTypes: [string]
+  ids:      [string]
+  candidates: number    # expressIDs the filter resolved to, before tessellation
+  unmatched:  array     # [{storey}|{ifcType}|{id}] — values nothing matched
 ```
+
+## Reading part of a file
+
+`read-model` was all-or-nothing until 1.2.0, which on a real coordination model meant 289 MB of it or
+nothing at all. `storeys`, `ifc-types` and `ids` narrow it.
+
+```yaml
+config:
+  ifc-path: C:/models/tower.ifc
+  storeys: [L2]              # one floor of twelve
+  ifc-types: [IFCBEAM, IFCCOLUMN]
+```
+
+**Filters are applied before tessellation, not after.** They resolve to expressIDs which are handed to
+web-ifc's `StreamMeshes`, so an element nobody asked for is never built. Filtering the output instead
+would save the bytes and pay the whole cost — and the cost is the part that hurts: measured on a
+17,460-object model, one storey reads in **5 s** where the whole file takes **73 s**.
+
+**Several filters INTERSECT.** `storeys: [L2]` with `ifc-types: [IFCBEAM]` means the beams on L2, not
+beams plus everything on L2. Every one of these narrows.
+
+**An empty filter selects NOTHING.** `storeys: []` — or `[""]`, or a list that is all whitespace —
+returns no objects, not the whole model. Only *omitting* the key means "unfiltered". The distinction
+exists because the other reading fails in the one direction that must never happen: handing the entire
+building to a caller who asked for a subset because it cannot afford the entire building. You can tell
+the two apart in the response — an empty filter reports `selected.candidates: 0`, an absent one reports
+no `selected` at all.
+
+**A filter only ever selects a subset of what an unfiltered read returns.** web-ifc's whole-model walk
+skips three classes and a filtered read skips the same three, so neither can hand you geometry the
+other would not:
+
+| Skipped | Why it would be wrong to return |
+|---|---|
+| `IfcOpeningElement`, `IfcOpeningStandardCase` | Voids — the prisms cut out of walls for doors and windows. One real 17,460-object model holds **740**; returned, they fill every doorway with a solid box. |
+| `IfcSpace` | Room volumes. A `storeys:` filter would otherwise hand back the air in every room as geometry. |
+
+Without this, one file would describe two different models depending on whether you narrowed it.
+
+**A value that matches nothing is reported, not silently zero.** A misspelled storey selects no
+objects, which is indistinguishable from a model that genuinely has none — so it comes back in
+`selected.unmatched` and you can say "there is no storey called that" instead of "this model is empty".
+This covers a *valid* entity the model lacks too: `IFCCHIMNEY` on a file with no chimneys is reported
+unmatched, not silently accepted, because "you spelled it wrong" and "there are none" otherwise look
+identical. `selected` is absent entirely when no filter was passed, so "unfiltered" and "a filter that
+matched everything" stay different answers.
+
+Run `probe` first for the names worth passing — it reports the storey and type breakdown without
+tessellating anything.
+
+## Size: the response is streamed, so there is no length ceiling
+
+Until 1.2.0 the whole response was assembled with one `JSON.stringify`, and a string has a maximum
+length. Real coordination models crossed it and died on V8's raw `Invalid string length` — with no way
+out, because the only control on offer was `max-vertices` and the budget error told you to *raise* it
+while raising it far enough to satisfy the file landed on the ceiling instead. Measured 2026-08-01,
+three of five real files were unreadable at **every** budget (aware-aeco/aware#352).
+
+The response is now written one object at a time as it is produced, so no single string approaches the
+limit however large the model. Note that `objects` is emitted last in the JSON — `skipped`, `count` and
+`selected` are only known once the walk is over, and buffering the geometry to put them first would
+reintroduce the peak this removes. JSON object keys are unordered, so no conforming consumer notices.
+
+`max-bytes` is an **opt-in** budget, absent by default. Streaming removed the ceiling that would make a
+size cap compulsory, so imposing one here would invent a refusal; it exists because a *consumer* may
+still have a ceiling of its own and would rather be told the size than meet it as an out-of-memory. It
+refuses in words, naming the size, the limit, and that a subset would fit — counting **UTF-8 bytes**,
+not string length, so a file full of non-ASCII property values cannot overrun the size it promised.
+
+When honoured it comes back as a receipt, `budget: { maxBytes, bytes }`. That exists for the same
+reason `selected` does: a caller passing only `max-bytes` otherwise had no way to tell a bridge that
+enforced the budget from a pre-1.2.0 one that ignored the input, because both return a successful
+response of the same shape.
+
+A refusal mid-walk leaves a **truncated** document on stdout — bytes are already written by then — and
+exits non-zero. That is safe because the runtime checks the exit status before parsing, and reports the
+bridge's **stderr**, where the actionable sentence is.
 
 ## The frame is the file's own, Z-up — do not rotate it again
 
@@ -137,6 +225,14 @@ absent as *"this bridge cannot answer"* — exactly as you already must for `fra
 `aware sidecar install connection-reader`. For the same reason a consumer caching this response
 **must not key the cache on the IFC bytes alone**: identical bytes yield a different shape depending
 on the bridge that read them.
+
+**The 1.2.0 fields carry the same caution, and one of them bites harder.** A pre-1.2.0 bridge under a
+1.2.0 manifest omits `count` and `selected`, and — the dangerous one — **silently ignores `storeys`,
+`ifc-types` and `ids`, returning the whole model.** A consumer that asked for one floor and cannot
+afford the building must therefore check that it got what it asked for rather than assume: `selected`
+present means the filter was understood, absent means it was not. That is the same absent-means-cannot-
+answer rule, applied to an input rather than an output, and it is why `selected` is emitted at all
+instead of the filter being a silent contract.
 
 **Occurrence and type sets are merged property by property, the occurrence winning.** IFC lets a
 property sit on the element type with each occurrence inheriting it, so following only

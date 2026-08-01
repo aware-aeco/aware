@@ -326,6 +326,7 @@ function placedElements(api, modelID) {
 export function probeModel(api, modelID) {
   const { declared, id: unitId } = lengthUnit(api, modelID);
   const toMM = unitId == null ? null : unitToMM(api, modelID, unitId);
+  const breakdown = modelBreakdown(api, modelID);
   // An unresolvable unit means we cannot state the extent in millimetres. Say so with `bbox: null`
   // rather than emitting a plausible-looking box scaled by a guessed 1 — a wrong extent is what
   // drives a consumer's "this looks 1000x off" logic, so a guess here causes the exact misjudgement
@@ -337,6 +338,7 @@ export function probeModel(api, modelID) {
       elements: placedElements(api, modelID).size,
       frame: FILE_Z_UP,
       bbox: null,
+      ...breakdown,
     };
   }
   const min = [Infinity, Infinity, Infinity];
@@ -363,7 +365,50 @@ export function probeModel(api, modelID) {
     elements: placedElements(api, modelID).size,
     frame: FILE_Z_UP,
     bbox: empty ? null : { min, max },
+    ...breakdown,
   };
+}
+
+/**
+ * What is IN the file, by storey and by IFC type — so a consumer can offer "which part do you want?"
+ * before committing to a read it may not be able to afford.
+ *
+ * THESE COUNT THE POPULATION A `read-model` FILTER SELECTS, not the one `elements` counts, and the two
+ * genuinely differ: `elements` is what the author placed directly in the spatial structure (a real
+ * 12-storey model: 5,878), while a read returns those plus everything transitively aggregated beneath
+ * them (17,460). A breakdown that predicted the smaller number would mislead every consumer that used
+ * it to size a read — which is the only reason to ask.
+ *
+ * They are an UPPER BOUND on what a read returns, and cannot be anything else: whether an element
+ * carries a drawable triangle is only knowable by tessellating it, which is precisely what `probe`
+ * exists not to do. A read reports the difference as `skipped`.
+ *
+ * SCOPE, precisely: elements IN the spatial structure. An element outside it is not listed — measured
+ * on the same 12-storey model, that is exactly one object, the IfcSite's own surface, which is the top
+ * of the structure rather than something contained by it. Such an element cannot be reached by
+ * `storeys` (it has none) but CAN be reached by `ifc-types`, so the type rows are a lower bound for
+ * that one filter. Stating the population beats inventing a count for geometry probe cannot see.
+ *
+ * No tessellation happens here — this walks the same relationship tables `read-model` already walks
+ * before it streams, so `probe` stays the cheap call it is documented to be.
+ */
+function modelBreakdown(api, modelID) {
+  const storeys = storeyByElement(api, modelID);
+  const byStorey = new Map();
+  const byType = new Map();
+  for (const [id, label] of storeys) {
+    const key = label ?? null;
+    byStorey.set(key, (byStorey.get(key) ?? 0) + 1);
+    let entity = null;
+    try { entity = typeName(api.GetLineType(modelID, id)); } catch { entity = null; }
+    byType.set(entity, (byType.get(entity) ?? 0) + 1);
+  }
+  // Descending by count: the first rows are the ones worth offering, and a 16-type model should not
+  // make a consumer sort before it can show anything useful.
+  const rows = (m, key) => [...m.entries()]
+    .sort((a, b) => b[1] - a[1] || String(a[0]).localeCompare(String(b[0])))
+    .map(([name, elements]) => ({ [key]: name, elements }));
+  return { storeys: rows(byStorey, 'name'), types: rows(byType, 'name') };
 }
 
 // Numeric IFC type code -> its entity name ("IFCBEAM"). Built by reversing web-ifc's own exported
@@ -378,6 +423,22 @@ function typeName(code) {
     }
   }
   return TYPE_NAMES.get(code) ?? null;
+}
+
+/**
+ * Entity name -> its numeric IFC type code — `typeName` read the other way, for the `ifc-types` filter.
+ *
+ * Case-insensitive, because a filter value is typed by a human or copied out of a `probe` breakdown,
+ * and "IfcBeam" naming the same entity as "IFCBEAM" is not a distinction worth enforcing. Returns null
+ * for a name web-ifc does not know, which the caller reports rather than silently matching nothing —
+ * a typo that quietly selects zero objects reads exactly like a model that has none.
+ */
+function typeCode(name) {
+  typeName(0); // force TYPE_NAMES to build
+  const want = String(name ?? '').trim().toUpperCase();
+  if (!want) return null;
+  for (const [code, entity] of TYPE_NAMES) if (entity === want) return code;
+  return null;
 }
 
 // element expressID -> the name of the spatial structure (storey) containing it.
@@ -735,15 +796,21 @@ export const WEB_IFC_Y_UP = 'y-up'; // web-ifc's renderer frame: X/Z in plan, Y 
  * the freeze it was meant to prevent. Decrementing as meshes stream is what actually stops it. The
  * byte-size check a caller does before invoking us is the only true preflight protection.
  */
-export function readModel(api, modelID, maxVertices = Infinity) {
+export function readModel(api, modelID, maxVertices = Infinity, opts = {}) {
   const storeys = storeyByElement(api, modelID);
   const materials = materialByElement(api, modelID);
   const propertySets = propertySetsByElement(api, modelID);
   const objects = [];
+  const sink = typeof opts.onObject === 'function' ? opts.onObject : null;
+  let count = 0;
   let budget = maxVertices;
+  let byteBudget = Number.isFinite(opts.maxBytes) ? opts.maxBytes : Infinity;
+  let bytes = 0;
   let skipped = 0; // products web-ifc streamed but that carry no drawable triangle
 
-  api.StreamAllMeshes(modelID, (flatMesh) => {
+  const selection = selectExpressIds(api, modelID, opts, storeys);
+
+  const onMesh = (flatMesh) => {
     const positions = [];
     const indices = [];
     const geoms = flatMesh.geometries;
@@ -786,7 +853,7 @@ export function readModel(api, modelID, maxVertices = Infinity) {
     const id = flatMesh.expressID;
     let line;
     try { line = api.GetLine(modelID, id); } catch { line = null; }
-    objects.push({
+    const object = {
       id: (line && strOf(line.GlobalId)) || String(id),
       name: (line && strOf(line.Name)) || null,
       ifcType: typeName(api.GetLineType(modelID, id)),
@@ -798,10 +865,216 @@ export function readModel(api, modelID, maxVertices = Infinity) {
       propertySets: propertySets.get(id) ?? [],
       positions,
       indices,
-    });
-  });
+    };
+    count++;
 
-  return { frame: FILE_Z_UP, objects, skipped };
+    // SERIALIZE ONCE. The sink writes JSON and the budget counts JSON, so producing the text here and
+    // handing it on means one `JSON.stringify` per object rather than two — on a 289 MB response the
+    // duplicate was a second 289 MB of serialisation for callers who set a budget.
+    const text = (sink || byteBudget !== Infinity) ? JSON.stringify(object) : null;
+
+    // The byte budget is OPT-IN (absent => Infinity) and it is deliberately not a default. Streaming
+    // the response removed the ceiling that used to make a size limit compulsory, so imposing one here
+    // would invent a refusal where none is needed. It exists because a CONSUMER may still have a
+    // ceiling of its own, and would rather be told the size than discover it as an out-of-memory.
+    if (byteBudget !== Infinity) {
+      // BYTES, not `.length`. A JS string's length is UTF-16 code units, and the pipe carries UTF-8 —
+      // so on the property values that motivated this reader (Norwegian, in one real file) a budget
+      // measured by length silently lets the response run over the size it promised. Review measured
+      // 69,363 units against 69,440 bytes on one small fixture; the gap grows with the file.
+      bytes += Buffer.byteLength(text, 'utf8');
+      if (bytes > byteBudget) {
+        throw new Error(
+          `that file returns more reference geometry than the ${mib(byteBudget)} budget allows `
+          + `(over ${mib(bytes)} so far). Read one storey or a few IFC types at a time — `
+          + 'see `storeys` / `ifc-types`.',
+        );
+      }
+    }
+
+    if (sink) sink(object, text); else objects.push(object);
+  };
+
+  // A FILTER IS RESOLVED TO EXPRESS IDS AND HANDED TO `StreamMeshes`, so the elements nobody asked for
+  // are never tessellated at all. Filtering inside the callback would be far simpler and nearly
+  // worthless: web-ifc has already built the mesh by the time the callback fires, so it would save the
+  // bytes while paying the whole cost — which on the files that motivated this is the part that hurts.
+  if (selection.ids) api.StreamMeshes(modelID, [...selection.ids], onMesh);
+  else api.StreamAllMeshes(modelID, onMesh);
+
+  return {
+    frame: FILE_Z_UP,
+    objects,
+    skipped,
+    count,
+    // Present ONLY when a filter was asked for, so "no filter" and "a filter that matched everything"
+    // stay distinguishable, and so an older consumer sees no new field at all.
+    ...(selection.applied ? { selected: selection.report } : {}),
+    // The RECEIPT for `max-bytes`, and it exists for the same reason `selected` does. Review pointed
+    // out that a caller passing only a budget got no acknowledgement from either bridge: a new one
+    // emitted no `selected` (no subset filter was applied) and an old one silently ignores the input,
+    // so a successful response could not be told from an unenforced budget. Echoing what was honoured
+    // — and what it cost — makes "this bridge understood me" checkable on the one call that matters.
+    ...(byteBudget !== Infinity ? { budget: { maxBytes: byteBudget, bytes } } : {}),
+  };
+}
+
+/**
+ * A byte count a human can read, without rounding a real limit away to "0 MB".
+ *
+ * `Math.round(n / 1048576)` reported a 1 KB budget as `0 MB budget allows (over 0 MB so far)`, which
+ * names neither the limit nor the size — the two things the message exists to give.
+ */
+function mib(bytes) {
+  if (bytes < 1024) return `${bytes} bytes`;
+  if (bytes < 1048576) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / 1048576).toFixed(bytes < 10 * 1048576 ? 1 : 0)} MB`;
+}
+
+/**
+ * The three classes web-ifc's `StreamAllMeshes` skips, which a filter must skip too.
+ *
+ * THIS LIST IS NOT OURS — it mirrors web-ifc 0.0.77, whose mesh walk explicitly excludes
+ * `IFCOPENINGELEMENT`, `IFCOPENINGSTANDARDCASE` and `IFCSPACE` (`src/cpp/wasm/web-ifc-wasm.cpp`).
+ * `StreamMeshes` honours whatever ids it is handed and applies no such rule, so anything on this list
+ * that a filter selects would come back as an object an unfiltered read has never returned.
+ *
+ * Both kinds matter and they are different kinds. The openings are VOIDS — the prisms cut out of walls
+ * for doors, 740 of them in one real model, which would render as solid boxes filling every doorway.
+ * `IfcSpace` is a room VOLUME, so a `storeys:` or a broad `ifc-types:` filter would hand back the air
+ * in every room as geometry. Review caught the second: excluding `IfcFeatureElementSubtraction` alone
+ * covers both opening types (the standard case is a subtype) and misses spaces entirely.
+ *
+ * The subtraction SUPERTYPE is queried with `includeInherited` rather than the two opening types by
+ * name, so a schema that adds another subtraction kind is covered without revisiting this — the same
+ * reason `placedElements` refuses to hardcode an element-type list.
+ */
+function notInAWholeRead(api, modelID) {
+  const out = new Set();
+  for (const type of [WebIFC.IFCFEATUREELEMENTSUBTRACTION, WebIFC.IFCSPACE]) {
+    const found = api.GetLineIDsWithType(modelID, type, true);
+    for (let i = 0; i < found.size(); i++) out.add(found.get(i));
+  }
+  return out;
+}
+
+/**
+ * Turn the `storeys` / `ifc-types` / `ids` filters into the set of expressIDs to tessellate.
+ *
+ * Returns `{ ids: null }` when nothing was asked for — the whole-file read, unchanged, so the cost of
+ * this feature to an existing caller is one Map lookup that never happens.
+ *
+ * SEVERAL FILTERS INTERSECT. `storeys: [L2], ifc-types: [IFCBEAM]` means the beams on L2, not their
+ * union — "narrow it down" is what every one of these is for, so widening on a second term would be
+ * the surprising reading.
+ *
+ * A VALUE THAT MATCHES NOTHING IS REPORTED, NOT SWALLOWED. A misspelled storey or entity name selects
+ * zero objects, which is indistinguishable from a model that genuinely has none — so the unmatched
+ * values come back in `selected.unmatched` and the caller can say "there is no storey called that"
+ * instead of "this model is empty".
+ *
+ * The candidate population is `storeyByElement`'s keys: everything placed in the spatial structure
+ * plus everything transitively aggregated beneath it. Measured on a real 12-storey model, that covers
+ * every object `StreamAllMeshes` produces (all 17,460 resolved to a named storey, none fell through),
+ * which is what makes it safe to resolve `ids` against rather than walking every line in the file.
+ */
+function selectExpressIds(api, modelID, opts, storeys) {
+  const list = (v) => (Array.isArray(v) ? v.map((s) => String(s ?? '').trim()).filter(Boolean) : []);
+  const wantStoreys = list(opts.storeys);
+  const wantTypes = list(opts.ifcTypes);
+  const wantIds = list(opts.ids);
+
+  // PRESENT-BUT-EMPTY IS NOT THE SAME AS ABSENT, and getting that wrong fails in the one direction
+  // that must never happen. `storeys: []` or `storeys: ['']` normalises to an empty list; treating
+  // that as "no filter given" returns THE WHOLE BUILDING to a caller who asked for a subset because
+  // it cannot afford the building. So the decision is made on whether the key was supplied at all,
+  // and an empty one narrows to nothing — the safe direction, and visible in `selected.candidates`.
+  const given = (v) => Array.isArray(v);
+  if (!given(opts.storeys) && !given(opts.ifcTypes) && !given(opts.ids)) {
+    return { ids: null, applied: false };
+  }
+
+  const unmatched = [];
+  let ids = null;                       // null = "not narrowed yet"; every term intersects into it
+  const narrow = (next) => { ids = ids === null ? next : new Set([...ids].filter((id) => next.has(id))); };
+
+  if (given(opts.storeys)) {
+    // Case-insensitive for the same reason as the type names: a storey label is copied off a probe
+    // breakdown or typed by hand, and "L2" vs "l2" is not a distinction a user means to draw.
+    const want = new Set(wantStoreys.map((s) => s.toUpperCase()));
+    const seen = new Set();
+    const hit = new Set();
+    for (const [id, label] of storeys) {
+      if (label == null) continue;
+      seen.add(label.toUpperCase());
+      if (want.has(label.toUpperCase())) hit.add(id);
+    }
+    for (const s of wantStoreys) if (!seen.has(s.toUpperCase())) unmatched.push({ storey: s });
+    narrow(hit);
+  }
+
+  if (given(opts.ifcTypes)) {
+    const hit = new Set();
+    for (const name of wantTypes) {
+      const code = typeCode(name);
+      // UNKNOWN and KNOWN-BUT-ABSENT are both unmatched. Only the first was reported at first, so
+      // asking a model for IFCCHIMNEY — a real entity this file happens not to contain — returned
+      // zero objects and an empty `unmatched`, which reads as "the filter worked and there are none"
+      // in exactly the same way a typo does. If a value contributed nothing, say so.
+      if (code == null) { unmatched.push({ ifcType: name }); continue; }
+      // `includeInherited` is deliberately true: asking for IFCBUILDINGELEMENT and being handed
+      // nothing, because every actual element is a subtype of it, would be a filter that punishes
+      // knowing the schema.
+      const found = api.GetLineIDsWithType(modelID, code, true);
+      if (!found.size()) { unmatched.push({ ifcType: name }); continue; }
+      for (let i = 0; i < found.size(); i++) hit.add(found.get(i));
+    }
+    narrow(hit);
+  }
+
+  if (given(opts.ids)) {
+    // EVERY PRODUCT, not just the ones in the spatial structure — measured, after the first cut
+    // resolved GlobalIds against `storeys`'s keys alone. On a real 12-storey model that covers 17,459
+    // of 17,460 objects; the one it misses is the IfcSite's own surface, which carries geometry while
+    // being the top of the spatial structure rather than something contained by it. A filter that
+    // cannot name an object the same read returns is a filter with a hole in it, and the hole would
+    // have been invisible on every file whose site carries no geometry.
+    const byGuid = new Map();
+    const products = api.GetLineIDsWithType(modelID, WebIFC.IFCPRODUCT, true);
+    for (let i = 0; i < products.size(); i++) {
+      const id = products.get(i);
+      let guid = null;
+      try { guid = strOf(api.GetLine(modelID, id).GlobalId) ?? null; } catch { guid = null; }
+      if (guid) byGuid.set(guid, id);
+    }
+    const hit = new Set();
+    for (const guid of wantIds) {
+      const id = byGuid.get(guid);
+      if (id == null) unmatched.push({ id: guid }); else hit.add(id);
+    }
+    narrow(hit);
+  }
+
+  // A FILTER MUST SELECT A SUBSET OF WHAT AN UNFILTERED READ RETURNS. `StreamMeshes` honours whatever
+  // ids it is handed, while `StreamAllMeshes` — the unfiltered walk — leaves out subtraction features.
+  // Measured on a real 12-storey model: 17,460 objects unfiltered against 18,200 reachable by id, the
+  // whole difference being 740 IfcOpeningElements. Those are VOIDS — the holes doors and windows are
+  // cut from, not things anybody wants overlaid — so without this a filtered read would draw 740
+  // phantom boxes filling every opening, and the same file would describe two different models
+  // depending on whether you narrowed it.
+  for (const id of notInAWholeRead(api, modelID)) ids?.delete(id);
+
+  return {
+    ids: ids ?? new Set(),
+    applied: true,
+    report: {
+      ...(wantStoreys.length ? { storeys: wantStoreys } : {}),
+      ...(wantTypes.length ? { ifcTypes: wantTypes } : {}),
+      ...(wantIds.length ? { ids: wantIds } : {}),
+      candidates: (ids ?? new Set()).size,
+      unmatched,
+    },
+  };
 }
 
 function extractConnection(api, modelID, guid) {
@@ -885,6 +1158,7 @@ async function main() {
   const handle = await openApi(ifcPath);
   const { api, modelID } = handle;
   let result;
+  let streamed = false;
   try {
     if (command === 'list') {
       result = listConnections(api, modelID);
@@ -895,7 +1169,8 @@ async function main() {
     } else if (command === 'probe') {
       result = probeModel(api, modelID);
     } else if (command === 'read-model') {
-      result = readModel(api, modelID, args['max-vertices']);
+      result = readModelStreamed(api, modelID, args, realWrite);
+      streamed = true;
     } else {
       throw new Error(`unknown command '${command}' (expected: list | extract | probe | read-model)`);
     }
@@ -903,7 +1178,55 @@ async function main() {
     closeApi(handle);
     process.stdout.write = realWrite; // restore before emitting the pure-JSON result
   }
-  realWrite(JSON.stringify(result));
+  if (!streamed) realWrite(JSON.stringify(result));
+}
+
+/**
+ * `read-model`, written to stdout AS IT IS PRODUCED rather than assembled and stringified.
+ *
+ * THIS IS THE FIX FOR THE CEILING (aware-aeco/aware#352). `JSON.stringify(result)` over a whole model
+ * builds one string, and a string has a maximum length — so the command died with V8's raw
+ * `Invalid string length` on real coordination models. Measured 2026-08-01, three of five real files
+ * were unreadable at EVERY `max-vertices` budget: the budget error says "raise it", and raising it far
+ * enough to satisfy the file lands on the ceiling instead. No number the caller could pass was an
+ * answer, which is what made this a defect rather than a limit.
+ *
+ * One object at a time is the unit that makes it go away: each is at most a few hundred kilobytes, so
+ * no single `JSON.stringify` approaches the limit however large the model is.
+ *
+ * `objects` is emitted LAST despite being the only field the caller waits on, and that ordering is
+ * load-bearing rather than cosmetic: `skipped` and `selected` are only known once the walk is over, so
+ * writing them first would mean buffering the geometry to learn them — reintroducing the very peak
+ * this exists to remove. JSON object keys are unordered by definition, so no consumer may notice.
+ *
+ * `write` is passed in rather than taken from `process.stdout` because the stdout guard is STILL UP
+ * while this runs: web-ifc prints during tessellation, and those lines must keep going to stderr until
+ * the last mesh has streamed. So the guard stays on `process.stdout.write` and the real handle is
+ * handed here — the one path allowed to put bytes on the protocol's stdout.
+ */
+function readModelStreamed(api, modelID, args, write) {
+  let first = true;
+  write('{"frame":' + JSON.stringify(FILE_Z_UP) + ',"objects":[');
+  const tail = readModel(api, modelID, args['max-vertices'], {
+    storeys: args.storeys,
+    ifcTypes: args['ifc-types'] ?? args.ifcTypes,
+    ids: args.ids,
+    maxBytes: args['max-bytes'] ?? args.maxBytes,
+    // `text` is the object already serialised by readModel — see the note there on serialising once.
+    onObject: (object, text) => {
+      if (!first) write(',');
+      first = false;
+      write(text ?? JSON.stringify(object));
+    },
+  });
+  write(']');
+  for (const [key, value] of Object.entries(tail)) {
+    // `frame` is already written and `objects` was the stream; everything else is the tail.
+    if (key === 'frame' || key === 'objects') continue;
+    write(',' + JSON.stringify(key) + ':' + JSON.stringify(value));
+  }
+  write('}');
+  return tail;
 }
 
 // Only run as a CLI when this file IS the entry point. Without this guard, importing the module from a
