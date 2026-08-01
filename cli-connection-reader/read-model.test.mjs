@@ -9,7 +9,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { openApi, closeApi, readModel } from './index.mjs';
+import { openApi, closeApi, readModel, probeModel, toWebIfcYUp } from './index.mjs';
 
 const DOWNLOADS = join(process.env.USERPROFILE ?? process.env.HOME ?? '', 'Downloads');
 const sample = (name) => (existsSync(join(DOWNLOADS, name)) ? join(DOWNLOADS, name) : null);
@@ -24,19 +24,31 @@ async function read(name, maxVertices) {
   }
 }
 
-// The extent of every returned object's vertices, in mm.
-function extent(objects) {
+// Both commands against ONE open of the same file — the comparison the frame test is about.
+async function probeAndRead(path) {
+  const h = await openApi(path);
+  try {
+    return { probe: probeModel(h.api, h.modelID), model: readModel(h.api, h.modelID) };
+  } finally {
+    closeApi(h);
+  }
+}
+
+// The extent of every returned object's vertices, in mm. `map` re-reads each vertex in another frame
+// (the #343 test passes `toWebIfcYUp` to measure what read-model used to return).
+function extent(objects, map = (p) => p) {
   const min = [Infinity, Infinity, Infinity], max = [-Infinity, -Infinity, -Infinity];
   for (const o of objects) {
     for (let i = 0; i + 2 < o.positions.length; i += 3) {
+      const p = map([o.positions[i], o.positions[i + 1], o.positions[i + 2]]);
       for (let k = 0; k < 3; k++) {
-        const v = o.positions[i + k];
+        const v = p[k];
         if (v < min[k]) min[k] = v;
         if (v > max[k]) max[k] = v;
       }
     }
   }
-  return { min, max, span: max.map((v, k) => v - min[k]) };
+  return { min, max, span: max.map((v, k) => v - min[k]), ctr: max.map((v, k) => (v + min[k]) / 2) };
 }
 
 test('our own export comes back at true size, every member present', async (t) => {
@@ -46,9 +58,99 @@ test('our own export comes back at true size, every member present', async (t) =
   const { span } = extent(out.objects);
   // The 12 m x 6 m grid, plus section overhang; columns 4500 tall plus beam depth. Measured 2026-07-25.
   // This is the headline test: it is OUR export, so a reference of it must coincide with the native model.
+  //
+  // Axis order is the FILE's own Z-up world frame (#343, re-measured 2026-08-01): grid along X and Y,
+  // height in Z. Until read-model undid web-ifc's baked Z-up -> Y-up rotation these read 12150 / 4625 /
+  // 6150 — the same box, lying on its side, in a frame nothing else in this agent used.
   assert.ok(Math.abs(span[0] - 12150) < 100, `expected ~12150 mm across the grid, got ${span[0]}`);
-  assert.ok(Math.abs(span[2] - 6150) < 100, `expected ~6150 mm, got ${span[2]}`);
-  assert.ok(Math.abs(span[1] - 4625) < 100, `expected ~4625 mm tall, got ${span[1]}`);
+  assert.ok(Math.abs(span[1] - 6150) < 100, `expected ~6150 mm, got ${span[1]}`);
+  assert.ok(Math.abs(span[2] - 4625) < 100, `expected ~4625 mm tall, got ${span[2]}`);
+});
+
+// ── #343: probe and read-model must answer in the SAME frame ────────────────────────────────────
+//
+// `probe` reads IfcCartesianPoints straight off the file, so its bbox is in the file's own Z-up world
+// frame. `read-model` goes through web-ifc, which bakes a fixed Z-up -> Y-up rotation into every flat
+// mesh transform. Leaving that in made the two commands describe the same file in different frames:
+// every reference model rendered on its side, and probe's bbox could not be used to sanity-check the
+// mesh it was next to. The consumer that found it had to add a rotation of its own — a workaround the
+// next consumer would have had to rediscover.
+//
+// These fixtures are IN-REPO, so this runs everywhere; the Downloads-gated test below is the same
+// claim measured against a full building.
+const FRAME_FIXTURES = ['baseplate-bp1.ifc', 'shearplate-sp1.ifc', 'baseplate-rot.ifc'];
+
+// Height, not position: all three fixtures sit at a site offset and baseplate-rot is yawed 30°, so a
+// plan-position claim would be about placement composition (which probe's bbox deliberately ignores —
+// see probe.md) rather than about the frame. The VERTICAL range is yaw-invariant, so it isolates the
+// one question this test asks: do the two commands agree about which axis is up?
+const overlaps = (a, b) => a[0] <= b[1] && b[0] <= a[1];
+
+test('probe and read-model agree about which axis is up (#343)', async () => {
+  for (const name of FRAME_FIXTURES) {
+    const { probe, model } = await probeAndRead(join('test-fixtures', name));
+    assert.ok(probe.bbox, `${name}: probe should establish a bbox`);
+    assert.ok(model.objects.length > 0, `${name}: read-model should return geometry`);
+    const probeZ = [probe.bbox.min[2], probe.bbox.max[2]];
+
+    const m = extent(model.objects);
+    assert.ok(overlaps([m.min[2], m.max[2]], probeZ),
+      `${name}: the mesh spans Z ${Math.round(m.min[2])}..${Math.round(m.max[2])} mm, but the file's own ` +
+      `points span Z ${probeZ.map(Math.round)} — read-model is not answering in the file's frame`);
+
+    // The arm that makes the check discriminating: the SAME meshes re-read in web-ifc's Y-up frame —
+    // exactly what this command returned before the fix — must FAIL it. Without this, a check that
+    // happened to hold in either frame would look like proof and prove nothing.
+    const y = extent(model.objects, toWebIfcYUp);
+    assert.ok(!overlaps([y.min[2], y.max[2]], probeZ),
+      `${name}: the pre-fix Y-up reading spans Z ${Math.round(y.min[2])}..${Math.round(y.max[2])} and still ` +
+      `overlaps the file's ${probeZ.map(Math.round)} — this fixture cannot tell the two frames apart, so it ` +
+      `does not belong in FRAME_FIXTURES`);
+  }
+});
+
+test('both commands STATE their frame, because no version number can (#343)', async () => {
+  // The agent manifest cannot answer "which frame did I just get": the bridge binary that produces
+  // the geometry is installed separately (`aware sidecar install connection-reader`) and a stale one
+  // only warns before running, and an app's `requires:` pin is enforced at neither compile nor run
+  // time (measured 2026-08-01). The producing binary saying so in its own payload is the only
+  // trustworthy answer — so the field is part of the contract, not a nicety.
+  const { probe, model } = await probeAndRead(join('test-fixtures', 'baseplate-bp1.ifc'));
+  assert.equal(probe.frame, 'z-up');
+  assert.equal(model.frame, 'z-up');
+  // And it must describe the geometry actually returned, not be a constant nobody checks: the same
+  // fixture's ~1125 mm column-plus-plate height is in Z, which is what "z-up" claims.
+  const { span } = extent(model.objects);
+  assert.ok(span[2] > span[0] && span[2] > span[1],
+    `frame says z-up but the tall axis is not Z: span ${span.map(Math.round)}`);
+});
+
+test('a base plate is horizontal in the frame read-model returns (#343)', async () => {
+  // Ground truth from the fixture generators, not from probe: make-baseplate.py authors a HORIZONTAL
+  // 400x400 plate with a column stub standing on it, so the assembly is ~400 mm in plan and ~1125 mm
+  // tall. In the file's Z-up frame the tall axis is therefore Z. Before the fix that height sat in Y —
+  // which is why every reference model rendered on its side.
+  for (const name of ['baseplate-bp1.ifc', 'baseplate-rot.ifc']) {
+    const { model } = await probeAndRead(join('test-fixtures', name));
+    const { span } = extent(model.objects);
+    assert.ok(span[2] > 1000, `${name}: expected the ~1125 mm column-plus-plate height in Z, got ${Math.round(span[2])}`);
+    assert.ok(span[0] < 600 && span[1] < 600,
+      `${name}: expected a ~400 mm plan footprint, got ${span.slice(0, 2).map(Math.round)}`);
+  }
+});
+
+test('probe\'s bbox and read-model\'s mesh describe the same box, axis for axis (#343)', async (t) => {
+  if (!sample('example-steel-framing.ifc')) return t.skip(skipReason('example-steel-framing.ifc'));
+  const { probe, model } = await probeAndRead(sample('example-steel-framing.ifc'));
+  const { span } = extent(model.objects);
+  const probeSpan = probe.bbox.max.map((v, k) => v - probe.bbox.min[k]);
+  // 12000 x 6000 x 4500 from the file's points; 12150 x 6150 x 4625 tessellated. The differences are
+  // half-profile margins and beam depth — the point is that they now line up axis for axis, which is
+  // what the manifest's "the file's own world frame" claims and what a consumer comparing the two needs.
+  for (let k = 0; k < 3; k++) {
+    assert.ok(Math.abs(span[k] - probeSpan[k]) < 250,
+      `axis ${k}: probe says ${Math.round(probeSpan[k])} mm, the mesh says ${Math.round(span[k])} mm`);
+  }
 });
 
 test('profile names ride along, because conversion must never measure a section off a mesh', async (t) => {

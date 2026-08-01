@@ -18,6 +18,12 @@
 // vertical-anchor test is THE discriminator from a vertical shear/fin plate (whose bolts are horizontal),
 // which stops shear connections from being mis-read as base plates. If a web-ifc upgrade ever changed the
 // output frame, this one constant is the single knob to turn.
+//
+// NOT contradicted by `read-model`, which returns the file's own Z-up frame (#343): that command rotates
+// web-ifc's output on the way out, while `extract` — the only producer of the parts this file fits —
+// still hands them over exactly as web-ifc tessellated them. Do not "align" this constant with
+// read-model without also rotating in `tessellate`; the two would then disagree in the opposite
+// direction and every base plate would be read as a fin plate.
 export const VERTICAL = 1;
 
 function median(a) {

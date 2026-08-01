@@ -78,3 +78,28 @@ jobs:
       - name: cargo test
         working-directory: cli
         run: cargo test
+
+  # The IFC bridge is a Node package, so `cargo test` never touches it — its suite only ever ran on
+  # whoever last remembered to. That is how `read-model` shipped returning a different coordinate
+  # frame from `probe` (#343): the bridge's own tests encoded the wrong frame and nothing re-read
+  # them. The fixtures it needs are in-repo; the tests that want a large sample file self-skip.
+  bridge:
+    name: connection-reader bridge tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: cli-connection-reader/package-lock.json
+
+      - name: npm ci
+        working-directory: cli-connection-reader
+        run: npm ci
+
+      - name: node --test
+        working-directory: cli-connection-reader
+        run: node --test
