@@ -21,7 +21,35 @@ frame:    string   # "z-up" — the frame `bbox` is in. Check this, not a versio
 bbox:              # APPROXIMATE, in millimetres, Z-up — or null when it cannot be established
   min: [x, y, z]
   max: [x, y, z]
+storeys:           # descending by count — what a read-model `storeys` filter can select
+  - { name: "L2", elements: 3696 }    # name is null for an unnamed storey
+types:             # the same population by IFC entity, for the `ifc-types` filter
+  - { name: "IFCMEMBER", elements: 9210 }
 ```
+
+## The breakdown is how you choose what to read
+
+`read-model` can read one storey, or a few IFC types, instead of a whole building. This is where you
+find out what to ask it for — and it stays cheap, because it walks the same relationship tables a read
+already walks before it streams, and tessellates nothing.
+
+```
+storeys: L2 ×3696, LG ×3351, L1 ×3256, L3 ×1405, L6 ×1300, L5 ×1124, L7 ×1122, BASEMENT ×882, …
+types:   IFCMEMBER ×9210, IFCPLATE ×2665, IFCWALLSTANDARDCASE ×2341, IFCBUILDINGELEMENTPROXY ×1129, …
+```
+
+**These count the population a READ returns, not `elements`.** On the model above `elements` is 5,878
+while a full read yields 17,460, because a read also returns everything transitively aggregated beneath
+what was placed. A breakdown that summed to `elements` would under-predict every read by 3×, which is
+the only thing anyone would use it for.
+
+**They are an upper bound.** Whether an element carries a drawable triangle is only knowable by
+tessellating it — precisely what this command exists not to do. A read reports the shortfall as
+`skipped`.
+
+**Scope: elements in the spatial structure.** An element outside it is not listed — on that same model
+exactly one object, a site's own surface. It cannot be reached by `storeys` (it has no storey) but
+`ifc-types` can still reach it, so the type rows are a lower bound for that one filter.
 
 ## `elements` is a spatial-containment count, not "how many objects you will get"
 

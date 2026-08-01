@@ -1,5 +1,30 @@
 # Breaking changes
 
+## 1.2.0 — additive, but a stale bridge now ignores an input rather than an output
+
+Nothing moved. `read-model` gained `storeys` / `ifc-types` / `ids` / `max-bytes`, `probe` gained the
+`storeys` and `types` breakdown, and the response is streamed instead of being built as one JSON string
+(aware-aeco/aware#352, #353). A consumer passing none of the new inputs sees exactly the old behaviour.
+
+**The one thing to check.** The bridge binary is installed separately from the agent and a stale one
+only warns before running — so a **pre-1.2.0 bridge under a 1.2.0 manifest silently ignores the
+filters and returns the whole model.** For an output field, absent has always meant *"this bridge
+cannot answer"*; here the same staleness makes an *input* disappear, and the failure is worse: a
+consumer that asked for one floor because it cannot afford the building gets the building.
+
+So do not treat a filter as a contract the bridge is known to honour. `selected` is present exactly
+when the filter was understood:
+
+```js
+const out = await readModel(...);            // storeys: ['L2']
+if (!out.selected) {
+  // this bridge predates the filters and has just returned everything —
+  // `aware sidecar install connection-reader` to refresh it
+}
+```
+
+That is why `selected` is emitted at all rather than the filter being silent on success.
+
 ## 1.0.0 — `read-model` returns the file's own Z-up frame (was web-ifc's Y-up)
 
 **What moved:** every vertex in `read-model`'s `objects[].positions`.

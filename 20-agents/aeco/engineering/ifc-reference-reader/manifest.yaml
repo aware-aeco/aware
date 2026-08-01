@@ -11,7 +11,14 @@ agent:        ifc-reference-reader
 # `main`, and the bridge binary that actually produces the geometry is installed separately, so a stale
 # one can serve the OLD frame under this manifest with only a warning. The frame a consumer actually
 # received is in the OUTPUT — every command reports `frame` — and that is the field to check.
-version:      1.1.0
+# 1.2.0: `read-model` gained `storeys` / `ifc-types` / `ids` filters and a `max-bytes` budget, `probe`
+# gained the storey + type breakdown that lets a consumer choose one, and the response is now streamed
+# rather than built as a single JSON string (aware-aeco/aware#352, #353). Additive throughout — an
+# older consumer that passes none of the new inputs gets exactly the old behaviour — so MINOR. What is
+# NOT additive is the absence of these fields: a pre-1.2.0 BRIDGE serves this manifest and omits them,
+# so absent means "this bridge cannot answer", never "this file has no storeys" (the same caution
+# `frame` and `propertySets` already require — see BREAKING.md).
+version:      1.2.0
 display-name: IFC Reference Reader (whole model → mesh)
 description: |
   Read a WHOLE IFC file as a reference model — borrowed geometry you overlay, measure and build to,
@@ -94,6 +101,18 @@ commands:
         units: object    # { declared: "MILLI.METRE" | "METRE" | null } — provenance, NOT a factor
         elements: number # elements placed DIRECTLY in the spatial structure. NOT equal to
                          # read-model's object count — different populations (see probe.md)
+        storeys: array   # [{ name, elements }] descending by count — what a read-model `storeys`
+                         # filter can select, so a consumer can offer "which floor?" before paying
+                         # for a read. Counts the population a READ returns (placed + everything
+                         # aggregated beneath it), NOT `elements` above: on a real 12-storey model
+                         # those are 17,460 and 5,878, and a breakdown that summed to the latter
+                         # would under-predict every read by 3x. `name` is null for an unnamed
+                         # storey. An UPPER BOUND — whether an element carries a drawable triangle
+                         # is only knowable by tessellating, which probe exists not to do
+        types: array     # [{ name, elements }] descending — the same population by IFC entity, for
+                         # the `ifc-types` filter. Covers the spatial structure, so an element
+                         # outside it (a site's own surface) is not counted here even though
+                         # `ifc-types` can reach it
         frame: string    # "z-up" — the frame bbox is in. Stated in the output because no version
                          # number can answer it: the bridge binary is installed separately and a
                          # stale one still runs (with a warning). Check this, not a version.
@@ -109,11 +128,22 @@ commands:
     lifecycle: single
     category: curated
     description: |
-      Tessellate the WHOLE file into mesh scene objects — every element, not only connection hardware
-      — each a kind:"mesh" element (positions + indices) in canonical millimetres, in the file's own
-      Z-up world frame (the same frame `probe`'s bbox reports). A consumer re-anchors and places, and
-      must NOT apply a Y-up correction: the reader already undid web-ifc's Y-up tessellation frame.
-      Deterministic for a given file, so the result is content-hash cacheable.
+      Tessellate the file into mesh scene objects — every element by default, not only connection
+      hardware — each a kind:"mesh" element (positions + indices) in canonical millimetres, in the
+      file's own Z-up world frame (the same frame `probe`'s bbox reports). A consumer re-anchors and
+      places, and must NOT apply a Y-up correction: the reader already undid web-ifc's Y-up
+      tessellation frame. Deterministic for a given file, so the result is content-hash cacheable.
+
+      Pass `storeys`, `ifc-types` or `ids` to read PART of it. They are resolved to expressIDs before
+      any tessellation happens, so the elements nobody asked for cost nothing — which is the whole
+      point on a model where reading everything is not affordable. Several filters INTERSECT. A filter
+      can only ever select a subset of what an unfiltered read returns: notably it will not hand back
+      subtraction features (IfcOpeningElement — the prisms cut out of walls for doors), which a whole
+      read has never returned and which would otherwise appear as solid boxes filling every opening.
+
+      A filter value that matches nothing comes back in `selected.unmatched` rather than silently
+      selecting zero, because zero objects and "you misspelled the storey" are the same answer
+      otherwise. Run `probe` first for the storey and type names worth passing.
 
       Each object also carries what the file SAYS about it: `name`, `ifcType`, `storey`, `profile`,
       `material` and `propertySets`. Two of those are load-bearing rather than decorative. `profile`
@@ -156,6 +186,26 @@ commands:
       max-vertices:
         type: number
         description: Optional vertex budget; the command aborts mid-tessellation if the file exceeds it.
+      storeys:
+        type: array
+        description: >
+          Optional storey names (from probe.storeys) to read. Resolved to expressIDs BEFORE
+          tessellation, so what is not asked for is never built. Case-insensitive. Combines with the
+          other filters by INTERSECTION.
+      ifc-types:
+        type: array
+        description: >
+          Optional IFC entity names to read, e.g. [IFCBEAM, IFCCOLUMN] (from probe.types). Subtypes
+          are included, so IFCBUILDINGELEMENT does not select nothing. Case-insensitive.
+      ids:
+        type: array
+        description: Optional GlobalIds to read — for re-reading a known selection.
+      max-bytes:
+        type: number
+        description: >
+          Optional response-size budget in bytes. Absent means no limit. Opt-in because streaming
+          removed the ceiling that used to make a size cap compulsory; it exists so a consumer with a
+          ceiling of its own is told the size instead of discovering it as an out-of-memory.
     outputs:
       type: single
       schema:
@@ -167,6 +217,13 @@ commands:
                        #    positions: [mm], indices }]
         skipped: number # products streamed but carrying no drawable triangle — counted, never
                         # dropped silently, so a consumer can reconcile against probe.elements
+        count: number   # objects returned. Present always; equals objects.length
+        selected: object # ONLY when a filter was passed, so "unfiltered" and "a filter that matched
+                         # everything" stay distinguishable:
+                         #   { storeys?, ifcTypes?, ids?, candidates, unmatched }
+                         # `unmatched` lists filter values nothing matched — [{storey}|{ifcType}|{id}]
+                         # — because zero objects otherwise reads as "this model has none of those"
+                         # when the truth is a misspelling
 
 skills:
   - what-this-agent-does.md

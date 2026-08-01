@@ -16,10 +16,25 @@ const DOWNLOADS = join(process.env.USERPROFILE ?? process.env.HOME ?? '', 'Downl
 const sample = (name) => (existsSync(join(DOWNLOADS, name)) ? join(DOWNLOADS, name) : null);
 const skipReason = (name) => `sample file not present: ${join(DOWNLOADS, name)} — see the reference-objects design doc §8`;
 
-async function read(name, maxVertices) {
+async function read(name, maxVertices, opts) {
   const h = await openApi(sample(name));
   try {
-    return readModel(h.api, h.modelID, maxVertices);
+    return readModel(h.api, h.modelID, maxVertices, opts);
+  } finally {
+    closeApi(h);
+  }
+}
+
+// The big real coordination models live in a subfolder — they are the files that motivated #352/#353
+// and are far too large to commit. Same skip-when-absent contract as `sample`.
+const BIG = join(DOWNLOADS, 'ifc');
+const bigSample = (name) => (existsSync(join(BIG, name)) ? join(BIG, name) : null);
+const bigSkip = (name) => `large sample not present: ${join(BIG, name)} — see aware-aeco/aware#352`;
+
+async function readBig(name, maxVertices, opts) {
+  const h = await openApi(bigSample(name));
+  try {
+    return readModel(h.api, h.modelID, maxVertices, opts);
   } finally {
     closeApi(h);
   }
@@ -417,4 +432,122 @@ test('a generous budget does not trip', async (t) => {
   if (!sample('Building-Structural.ifc')) return t.skip(skipReason('Building-Structural.ifc'));
   const out = await read('Building-Structural.ifc', 8_000_000);
   assert.ok(out.objects.length >= 16);
+});
+
+// ── #353: read PART of a model — the filters, and what they must not do quietly ──────────────────
+//
+// The gap these close: `read-model` was all-or-nothing, so a 12-storey coordination model was 289 MB
+// of it or nothing. Combined with the serialisation ceiling (#352) that made three of five real files
+// unreadable at every budget. The filters are resolved to expressIDs and handed to `StreamMeshes`, so
+// what nobody asked for is never tessellated — the cost is avoided, not just the bytes.
+
+test('an ifc-types filter returns those types and nothing else', async (t) => {
+  if (!sample('example-steel-framing.ifc')) return t.skip(skipReason('example-steel-framing.ifc'));
+  const out = await read('example-steel-framing.ifc', undefined, { ifcTypes: ['IFCCOLUMN'] });
+  assert.equal(out.objects.length, 6);                       // 6 columns of the 13 members
+  assert.ok(out.objects.every((o) => o.ifcType === 'IFCCOLUMN'), 'a non-column survived the filter');
+});
+
+test('a type name is matched case-insensitively — it is copied or typed, not parsed', async (t) => {
+  if (!sample('example-steel-framing.ifc')) return t.skip(skipReason('example-steel-framing.ifc'));
+  const out = await read('example-steel-framing.ifc', undefined, { ifcTypes: ['IfcColumn'] });
+  assert.equal(out.objects.length, 6);
+});
+
+test('filters INTERSECT — narrowing twice does not widen', async (t) => {
+  if (!sample('example-steel-framing.ifc')) return t.skip(skipReason('example-steel-framing.ifc'));
+  const all = await read('example-steel-framing.ifc');
+  const storey = all.objects.find((o) => o.storey)?.storey;
+  assert.ok(storey, 'fixture has no storey to filter on');
+  const both = await read('example-steel-framing.ifc', undefined, { storeys: [storey], ifcTypes: ['IFCBEAM'] });
+  assert.equal(both.objects.length, 7);                      // the beams ON that storey, not beams + storey
+  assert.ok(both.objects.every((o) => o.ifcType === 'IFCBEAM' && o.storey === storey));
+});
+
+test('a filter value that matches NOTHING is reported, not silently zero', async (t) => {
+  if (!sample('example-steel-framing.ifc')) return t.skip(skipReason('example-steel-framing.ifc'));
+  // Zero objects is indistinguishable from "this model has none of those" — which is exactly the
+  // wrong thing to tell a user who mistyped a storey name. The unmatched value has to come back.
+  const out = await read('example-steel-framing.ifc', undefined, { storeys: ['Nivo 47'], ifcTypes: ['IFCNOTATHING'] });
+  assert.equal(out.objects.length, 0);
+  assert.deepEqual(out.selected.unmatched, [{ storey: 'Nivo 47' }, { ifcType: 'IFCNOTATHING' }]);
+});
+
+test('NO filter reports no selection, so "unfiltered" and "matched everything" stay different', async (t) => {
+  if (!sample('example-steel-framing.ifc')) return t.skip(skipReason('example-steel-framing.ifc'));
+  const out = await read('example-steel-framing.ifc');
+  assert.equal(out.selected, undefined);
+  assert.equal(out.objects.length, 13);
+  // …and a filter that happens to select everything DOES report itself.
+  const wide = await read('example-steel-framing.ifc', undefined, { ifcTypes: ['IFCCOLUMN', 'IFCBEAM'] });
+  assert.equal(wide.objects.length, 13);
+  assert.deepEqual(wide.selected.unmatched, []);
+});
+
+// ── #352: the byte budget refuses in words, where the ceiling used to crash in V8's ──────────────
+
+test('the byte budget names the size, the limit, and the way out', async (t) => {
+  if (!sample('example-steel-framing.ifc')) return t.skip(skipReason('example-steel-framing.ifc'));
+  await assert.rejects(
+    async () => read('example-steel-framing.ifc', undefined, { maxBytes: 1024 }),
+    (e) => {
+      assert.match(e.message, /budget allows/);
+      assert.match(e.message, /storeys/);        // the actionable half — "read one storey at a time"
+      assert.match(e.message, /ifc-types/);
+      return true;
+    },
+  );
+});
+
+test('no byte budget means no byte limit — the ceiling is gone, not relocated', async (t) => {
+  if (!sample('example-steel-framing.ifc')) return t.skip(skipReason('example-steel-framing.ifc'));
+  const out = await read('example-steel-framing.ifc', undefined, {});
+  assert.equal(out.objects.length, 13);
+});
+
+// ── The real coordination model: 12 storeys, 17,460 objects, 289 MB whole ────────────────────────
+
+test('one storey of a 12-storey model reads WITHOUT reading the other eleven', async (t) => {
+  if (!bigSample('2023-05-09 30 Daldy Street Model.ifc')) {
+    return t.skip(bigSkip('2023-05-09 30 Daldy Street Model.ifc'));
+  }
+  const out = await readBig('2023-05-09 30 Daldy Street Model.ifc', undefined, { storeys: ['BASEMENT'] });
+  assert.ok(out.objects.length > 0, 'BASEMENT selected nothing');
+  assert.ok(out.objects.every((o) => o.storey === 'BASEMENT'), 'an object from another storey came back');
+  // The whole file is 17,460 objects. A storey must be a genuine fraction of that, or the filter is
+  // decorative — this is the assertion that would fail if filtering happened after tessellation and
+  // merely discarded, since the cost (and the count) would be unchanged.
+  assert.ok(out.objects.length < 5000, `expected a fraction of 17,460, got ${out.objects.length}`);
+  assert.deepEqual(out.selected.unmatched, []);
+});
+
+test('an ids filter reaches an object OUTSIDE the spatial structure', async (t) => {
+  const name = '2023-05-09 30 Daldy Street Model.ifc';
+  if (!bigSample(name)) return t.skip(bigSkip(name));
+  // This file's IfcSite carries a surface of its own while BEING the top of the spatial structure, so
+  // nothing contains it and it reads back with `storey: null`. Resolving GlobalIds against the storey
+  // walk alone therefore could not name it — one object in 17,460, invisible on any file whose site
+  // carries no geometry. Reached here by type first, then by the id that type read.
+  const sites = await readBig(name, undefined, { ifcTypes: ['IFCSITE'] });
+  assert.equal(sites.objects.length, 3, 'expected the three IfcSites that carry geometry');
+  const orphan = sites.objects.find((o) => o.storey == null);
+  assert.ok(orphan, 'expected one site to sit outside the spatial structure');
+
+  const byId = await readBig(name, undefined, { ids: [orphan.id] });
+  assert.equal(byId.objects.length, 1, 'the ids filter could not name an object the same read returns');
+  assert.equal(byId.objects[0].id, orphan.id);
+  assert.deepEqual(byId.selected.unmatched, [], 'the site read as an unmatched GlobalId');
+});
+
+test('a filter can only ever select a SUBSET — it never conjures void geometry', async (t) => {
+  const name = '2023-05-09 30 Daldy Street Model.ifc';
+  if (!bigSample(name)) return t.skip(bigSkip(name));
+  // `StreamMeshes` honours whatever ids it is handed, and this file's 740 IfcOpeningElements tessellate
+  // perfectly well — they are the prisms cut out of walls for doors and windows. An unfiltered read
+  // returns 17,460 objects and none of them; asking for openings by name must therefore return none
+  // either, or the same file would describe two different models depending on whether you narrowed it.
+  const openings = await readBig(name, undefined, { ifcTypes: ['IFCOPENINGELEMENT'] });
+  assert.equal(openings.objects.length, 0, `a filter returned ${openings.objects.length} voids as objects`);
+  // …and the type still RESOLVED, so this is "there are none to give you", not "no such type".
+  assert.deepEqual(openings.selected.unmatched, []);
 });
