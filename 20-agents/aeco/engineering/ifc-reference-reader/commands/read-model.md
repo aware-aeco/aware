@@ -50,6 +50,11 @@ which frame the installed copy returns. It cannot *gate* the change: the registr
 separate axis and its tarball tracks `main`, so an install spec of `0.1.0` still fetches this code.
 Check the version rather than assume it.
 
+Handing these meshes to `viewer-3d.render`, declare the frame you are actually in:
+`meta.up: "z"`. The scene schema keeps coordinates in producer space and uses `meta.up` to convert to
+the renderer's own up-axis, so the mesh renders upright without anyone rotating vertices. (`"y"` was
+right for this command before `0.2.0`, and is still right for `extract` — see below.)
+
 `connection-reader.extract` is a **different** command with a different contract: its `parts` are still
 in web-ifc's Y-up tessellation frame (see `connection-reader/commands/extract.md`). Read each command's
 frame from its own contract; do not carry an assumption across.

@@ -42,6 +42,10 @@ The mesh comes back exactly as web-ifc tessellates it, and web-ifc bakes a fixed
 plate's anchors run along `±Y`, and a consumer dropping these vertices into a Z-up scene must rotate
 them (`(x, y, z) → (x, −z, y)`) or the connection arrives on its side.
 
+Handing these parts to `viewer-3d.render`, declare it: `meta.up: "y"`. The scene schema keeps
+coordinates in producer space and converts via `meta.up`, so the connection renders upright without
+anyone rotating vertices.
+
 This is stated rather than changed because it is the frame this command has always returned and
 consumers are built on it. It is deliberately **not** the same as
 `ifc-reference-reader.read-model`, which rotates back into the file's own Z-up frame so it can be
