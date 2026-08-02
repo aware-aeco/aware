@@ -1,7 +1,5 @@
 //! PKCE OAuth flow with localhost callback.
 
-#![allow(dead_code)]
-
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use base64::Engine;

@@ -145,10 +145,8 @@ pub struct Node {
     pub inline: Option<Inline>,
     pub row: Option<u32>,
     pub col: Option<u32>,
-    #[allow(dead_code)]
     #[serde(default)]
     pub config: Value,
-    #[allow(dead_code)]
     #[serde(default)]
     pub inputs: Value,
     /// Safety contract — required on write-mode nodes per app-spec § Safety contract.
@@ -414,9 +412,7 @@ fn default_audit_fields() -> Vec<String> {
 #[derive(Debug, Deserialize, Clone)]
 pub struct Inline {
     pub kind: String,
-    #[allow(dead_code)]
     pub description: String,
-    #[allow(dead_code)]
     pub code: Option<String>,
     /// `atom://` URI referencing a reusable atom in `atoms/`,
     /// `20-agents/<agent>/atoms/`, or app-local atoms (v0.20).
@@ -440,11 +436,6 @@ pub struct Connection {
 }
 
 impl App {
-    #[allow(dead_code)]
-    pub fn is_dag(&self) -> bool {
-        self.layout == Layout::Dag
-    }
-
     pub fn node_count(&self) -> usize {
         self.nodes.len()
     }
@@ -513,7 +504,6 @@ mod tests {
         let a: App = serde_yaml::from_str(&text).unwrap();
         assert_eq!(a.app, "qa-drawings-to-tekla");
         assert_eq!(a.layout, Layout::Dag);
-        assert!(a.is_dag());
         assert_eq!(a.node_count(), 7);
         assert_eq!(a.connection_count(), 6);
     }

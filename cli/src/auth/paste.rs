@@ -5,8 +5,6 @@
 //! encrypted to the OS keychain. The token NEVER flows through stdout or any
 //! AI chat — it only exists in the user's browser tab and the local keychain.
 
-#![allow(dead_code)]
-
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use crate::auth::keychain::{StoredToken, TokenSource};

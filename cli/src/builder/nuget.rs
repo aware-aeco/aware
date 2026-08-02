@@ -8,8 +8,6 @@
 //! sidecar — same code path as `--from-dlls`. Packages that ship no DLLs
 //! fall back to XML-doc-only skills.
 
-#![allow(dead_code)]
-
 use std::collections::BTreeMap;
 use std::io::Read;
 

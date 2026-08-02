@@ -4,8 +4,6 @@
 //! Task 11 adds long-running (streaming sources + per-event downstream propagation).
 //! Task 12 adds DAG fan-in.
 
-#![allow(dead_code)]
-
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;

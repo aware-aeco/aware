@@ -21,7 +21,6 @@ pub struct DiscoveredAgent {
 #[derive(Debug)]
 pub struct DiscoveredApp {
     pub manifest: App,
-    #[allow(dead_code)] // consumed by Task 12 (app list / describe)
     pub root: PathBuf,
     #[allow(dead_code)] // consumed by Task 12 (app list / describe)
     pub manifest_path: PathBuf,

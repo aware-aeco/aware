@@ -1,7 +1,5 @@
 //! Lazy token refresh — call before any access_token read; refreshes when within 60s of expiry.
 
-#![allow(dead_code)]
-
 use std::io::Read;
 use std::time::{SystemTime, UNIX_EPOCH};
 

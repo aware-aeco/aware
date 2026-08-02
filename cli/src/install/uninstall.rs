@@ -1,7 +1,5 @@
 //! Uninstall — remove an agent or app folder.
 
-#![allow(dead_code)]
-
 use crate::error::AwareError;
 use crate::paths::Paths;
 

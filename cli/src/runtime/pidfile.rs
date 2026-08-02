@@ -1,7 +1,5 @@
 //! Pidfile under `<instance_dir>/pidfile.yaml` for `aware app stop`.
 
-#![allow(dead_code)]
-
 use std::path::Path;
 
 use serde::{Deserialize, Serialize};

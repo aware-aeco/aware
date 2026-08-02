@@ -17,10 +17,14 @@
 //!   `vendor`, `license`, `transport.cli.binary`, `Command::lifecycle`,
 //!   `Command::description`.
 //!
-//! Remaining unused until later tasks: `homepage`, `keywords`, `provenance`,
-//! `requires`, `Command::inputs`, `Command::outputs`, `Transport::mcp`,
-//! `Transport::rest`, and all `Provenance`/`Requires` fields.
-//! Each gets a targeted `#[allow(dead_code)]`.
+//! Still deserialized but never read: `homepage`, `engineering`,
+//! `EngineeringDecl::pinnable`, every field of `EngineeringPin`, every field
+//! of `Provenance` except `generated_by`, and `Requires::filesystem` +
+//! `Requires::skills`. They stay because the agent-spec publishes them and
+//! dropping them would change what a manifest is allowed to declare. Each
+//! carries a targeted `#[allow(dead_code)]` rather than a blanket
+//! module-level one, so a newly-unread field surfaces as a warning instead
+//! of hiding.
 
 use std::collections::BTreeMap;
 
@@ -53,11 +57,8 @@ pub struct Agent {
     #[allow(dead_code)]
     pub homepage: Option<String>,
     #[serde(default)]
-    #[allow(dead_code)]
     pub keywords: Vec<String>,
-    #[allow(dead_code)]
     pub provenance: Option<Provenance>,
-    #[allow(dead_code)]
     pub requires: Option<Requires>,
     /// `engineering:` block — declares pinnable inputs for the engineering
     /// envelope (v0.21). Engineering agents (TSD, IDEA, CSi, etc.) declare
@@ -181,9 +182,7 @@ pub struct Requires {
 #[derive(Debug, Deserialize)]
 pub struct Transport {
     pub cli: Option<TransportCli>,
-    #[allow(dead_code)]
     pub mcp: Option<Value>,
-    #[allow(dead_code)]
     pub rest: Option<Value>,
     /// `app` transport — present only on agent manifests synthesized from an
     /// `exposes-as-agent: true` app (see [`crate::manifest::expose`]). Dispatch
@@ -226,9 +225,7 @@ pub struct Command {
     #[serde(default)]
     pub status: AgentStatus,
     #[serde(default)]
-    #[allow(dead_code)]
     pub inputs: Value,
-    #[allow(dead_code)]
     pub outputs: Option<Value>,
     /// REST operation mapping (v0.39, `--from-openapi`): the HTTP method this
     /// command performs. When set, the REST transport executes the command as

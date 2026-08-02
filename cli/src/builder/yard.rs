@@ -12,8 +12,6 @@
 //! Accepts HTTP(S) URL (e.g. `https://ruby.sketchup.com/`) or a local
 //! directory (a YARD output dir on disk).
 
-#![allow(dead_code)]
-
 use std::collections::BTreeMap;
 use std::io::Read;
 use std::path::{Path, PathBuf};

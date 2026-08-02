@@ -2,8 +2,6 @@
 //!
 //! Submodules added across Tasks 2-5.
 
-#![allow(dead_code)]
-
 pub mod config;
 pub mod device; // v0.13 — RFC 8628 device-code flow
 pub mod keychain;

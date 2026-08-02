@@ -3,8 +3,6 @@
 //! `print_ok` is consumed by Tasks 9/12/13/14 (agent list, agent show, app
 //! list, app show).  `EnvelopeError` and `meta_for` are consumed when
 //! error-envelope output is added in v0.2.
-#![allow(dead_code)]
-
 use std::time::Instant;
 
 use serde::Serialize;
