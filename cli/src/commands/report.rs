@@ -324,3 +324,331 @@ const SCRIPT: &str = r#"<script>
 })();
 </script>
 "#;
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::manifest::Agent;
+    use std::path::PathBuf;
+
+    /// Build a `DiscoveredAgent` by deserializing a manifest, so the fixture
+    /// travels the same serde path the real report does. `extra` is spliced in
+    /// as raw YAML so a test can add `keywords:` / `sdk-target:` / `skills:`
+    /// without a builder that would drift from the manifest schema.
+    fn agent(id: &str, extra: &str, commands: &[(&str, &str)]) -> DiscoveredAgent {
+        let mut yaml = format!(
+            "agent: {id}\nversion: 1.2.3\ndescription: an agent\nstateful: false\n\
+             license: MIT\ntransport:\n  cli:\n    binary: aware-{id}\n{extra}"
+        );
+        if commands.is_empty() {
+            yaml.push_str("commands: {}\n");
+        } else {
+            yaml.push_str("commands:\n");
+            for (name, desc) in commands {
+                yaml.push_str(&format!(
+                    "  {name}:\n    lifecycle: single\n    description: {desc:?}\n"
+                ));
+            }
+        }
+        let manifest: Agent =
+            serde_yaml::from_str(&yaml).unwrap_or_else(|e| panic!("fixture yaml: {e}\n{yaml}"));
+        DiscoveredAgent {
+            manifest,
+            root: PathBuf::from("."),
+        }
+    }
+
+    fn keywords(list: &[&str]) -> String {
+        let mut s = String::from("keywords:\n");
+        for k in list {
+            s.push_str(&format!("  - {k}\n"));
+        }
+        s
+    }
+
+    #[test]
+    fn html_escape_replaces_every_markup_significant_character() {
+        assert_eq!(
+            html_escape(r#"<script>a && b "q" 'p'</script>"#),
+            "&lt;script&gt;a &amp;&amp; b &quot;q&quot; &#39;p&#39;&lt;/script&gt;"
+        );
+    }
+
+    #[test]
+    fn html_escape_leaves_ordinary_and_non_ascii_text_alone() {
+        assert_eq!(
+            html_escape("Ø 45 × 2 — poutre béton"),
+            "Ø 45 × 2 — poutre béton"
+        );
+    }
+
+    #[test]
+    fn rendered_agent_section_escapes_untrusted_manifest_text() {
+        // A manifest is data from disk, not a trusted template. Every field
+        // that reaches the page must arrive escaped — the whole report is one
+        // file a user opens in a browser.
+        let a = agent(
+            "evil<one>",
+            "display-name: \"Bad \\\"Name\\\"\"\nvendor: \"A & B\"\n",
+            &[("wipe", "<script>alert(1)</script>")],
+        );
+        let mut html = String::new();
+        render_agent_section(&mut html, &a);
+
+        assert!(
+            !html.contains("<script>"),
+            "raw <script> reached the page: {html}"
+        );
+        assert!(html.contains("&lt;script&gt;alert(1)&lt;/script&gt;"));
+        assert!(
+            html.contains("evil&lt;one&gt;"),
+            "unescaped agent id: {html}"
+        );
+        assert!(
+            html.contains("Bad &quot;Name&quot;"),
+            "unescaped display name"
+        );
+        assert!(html.contains("A &amp; B"), "unescaped vendor: {html}");
+    }
+
+    #[test]
+    fn agent_section_omits_the_sdk_chip_when_no_sdk_target_is_declared() {
+        let without = {
+            let mut h = String::new();
+            render_agent_section(&mut h, &agent("plain", "", &[]));
+            h
+        };
+        let with = {
+            let mut h = String::new();
+            render_agent_section(&mut h, &agent("pinned", "sdk-target: \"2026.1\"\n", &[]));
+            h
+        };
+        assert!(
+            !without.contains("class=\"sdk\""),
+            "chip rendered with no sdk-target: {without}"
+        );
+        assert!(
+            with.contains(r#"<span class="sdk">SDK 2026.1</span>"#),
+            "sdk chip missing or malformed: {with}"
+        );
+    }
+
+    #[test]
+    fn agent_section_falls_back_to_the_agent_id_when_display_name_is_absent() {
+        let mut html = String::new();
+        render_agent_section(&mut html, &agent("tekla", "", &[]));
+        assert!(
+            html.contains(r#"<span class="adisplay">tekla</span>"#),
+            "id not used as display fallback: {html}"
+        );
+    }
+
+    #[test]
+    fn agent_section_groups_commands_into_one_class_section_per_type_prefix() {
+        let a = agent(
+            "grouped",
+            "",
+            &[
+                ("load", "Viewer.LoadModel loads a model"),
+                ("save", "Viewer.SaveModel saves a model"),
+                ("ping", "Checks the connection is alive"),
+            ],
+        );
+        let mut html = String::new();
+        render_agent_section(&mut html, &a);
+
+        assert_eq!(
+            html.matches(r#"<details class="class">"#).count(),
+            2,
+            "expected exactly Viewer + Top-level sections: {html}"
+        );
+        assert!(html.contains(r#"<span class="cname">Viewer</span>"#));
+        assert!(html.contains(r#"<span class="cname">Top-level</span>"#));
+        // The Viewer section holds both of its commands, the prose one neither.
+        let viewer = html
+            .split(r#"<span class="cname">Viewer</span>"#)
+            .nth(1)
+            .expect("Viewer section")
+            .split("</ul>")
+            .next()
+            .expect("Viewer command list");
+        assert!(
+            viewer.contains(">load<") && viewer.contains(">save<"),
+            "{viewer}"
+        );
+        assert!(
+            !viewer.contains(">ping<"),
+            "prose command misfiled: {viewer}"
+        );
+    }
+
+    #[test]
+    fn verticals_come_back_in_the_declared_report_order_not_alphabetically() {
+        // Buckets are accumulated in a BTreeMap, which sorts its keys —
+        // "Architecture" would lead if the map's own order leaked out. The
+        // report wants Engineering first.
+        let labels: Vec<&str> = group_by_vertical(&[]).into_iter().map(|(l, _)| l).collect();
+        assert_eq!(
+            labels,
+            [
+                "Engineering",
+                "Architecture",
+                "Construction",
+                "Visualization",
+                "Cross-cutting",
+                "Operations",
+                "Meta + Utility",
+            ]
+        );
+    }
+
+    #[test]
+    fn each_keyword_routes_its_agent_to_the_matching_vertical() {
+        for (keyword, expected) in [
+            ("engineering", "Engineering"),
+            ("architecture", "Architecture"),
+            ("construction", "Construction"),
+            ("visualization", "Visualization"),
+            ("cross-cutting", "Cross-cutting"),
+            ("operations", "Operations"),
+        ] {
+            let agents = vec![agent("a", &keywords(&[keyword]), &[])];
+            let placed: Vec<&str> = group_by_vertical(&agents)
+                .into_iter()
+                .filter(|(_, v)| !v.is_empty())
+                .map(|(l, _)| l)
+                .collect();
+            assert_eq!(placed, [expected], "keyword {keyword} misrouted");
+        }
+    }
+
+    #[test]
+    fn an_agent_with_no_recognised_keyword_lands_in_meta_and_utility() {
+        let agents = vec![
+            agent("bare", "", &[]),
+            agent("odd", &keywords(&["surveying", "gis"]), &[]),
+        ];
+        let buckets = group_by_vertical(&agents);
+        let meta = buckets
+            .iter()
+            .find(|(l, _)| *l == "Meta + Utility")
+            .expect("Meta + Utility bucket");
+        assert_eq!(meta.1.len(), 2, "unrecognised agents did not fall through");
+    }
+
+    #[test]
+    fn the_first_matching_keyword_in_precedence_order_wins() {
+        // tekla-like agents carry several keywords. The if-chain, not the
+        // manifest's own list order, decides where the agent is filed.
+        let agents = vec![agent(
+            "multi",
+            &keywords(&["operations", "construction", "engineering"]),
+            &[],
+        )];
+        let placed: Vec<&str> = group_by_vertical(&agents)
+            .into_iter()
+            .filter(|(_, v)| !v.is_empty())
+            .map(|(l, _)| l)
+            .collect();
+        assert_eq!(placed, ["Engineering"]);
+        let agents = vec![agent(
+            "multi",
+            &keywords(&["operations", "construction"]),
+            &[],
+        )];
+        let placed: Vec<&str> = group_by_vertical(&agents)
+            .into_iter()
+            .filter(|(_, v)| !v.is_empty())
+            .map(|(l, _)| l)
+            .collect();
+        assert_eq!(placed, ["Construction"]);
+    }
+
+    #[test]
+    fn empty_verticals_are_neither_rendered_nor_counted_in_the_header() {
+        let agents = vec![
+            agent("a", &keywords(&["engineering"]), &[]),
+            agent("b", &keywords(&["engineering"]), &[]),
+        ];
+        let html = render_substrate_html(&agents);
+        assert_eq!(
+            html.matches(r#"<details class="vertical"#).count(),
+            1,
+            "an empty vertical was rendered: {html}"
+        );
+        assert!(
+            html.contains(r#"<span class="stat">1 verticals</span>"#),
+            "header vertical count disagrees with what was rendered"
+        );
+        assert!(!html.contains("Meta + Utility"), "empty bucket emitted");
+    }
+
+    #[test]
+    fn header_totals_sum_skills_and_commands_across_every_agent() {
+        let agents = vec![
+            agent(
+                "a",
+                "skills:\n  - one\n  - two\n",
+                &[("x", "does x"), ("y", "does y")],
+            ),
+            agent("b", "skills:\n  - three\n", &[("z", "does z")]),
+        ];
+        let html = render_substrate_html(&agents);
+        assert!(
+            html.contains("<b>2</b> agents"),
+            "agent total wrong: {html}"
+        );
+        assert!(
+            html.contains("<b>3</b> skills"),
+            "skill total wrong: {html}"
+        );
+        assert!(
+            html.contains("<b>3</b> commands"),
+            "command total wrong: {html}"
+        );
+    }
+
+    #[test]
+    fn per_vertical_meta_counts_only_the_agents_in_that_vertical() {
+        let agents = vec![
+            agent(
+                "eng",
+                &format!("{}skills:\n  - s1\n", keywords(&["engineering"])),
+                &[("a", "does a")],
+            ),
+            agent(
+                "ops",
+                &format!("{}skills:\n  - s2\n  - s3\n", keywords(&["operations"])),
+                &[("b", "does b"), ("c", "does c"), ("d", "does d")],
+            ),
+        ];
+        let html = render_substrate_html(&agents);
+        // Skill and command counts are deliberately unequal so swapping the two
+        // fields, or summing over every agent instead of the bucket, both show up.
+        assert!(
+            html.contains("1 agents · 1 skills · 1 cmds"),
+            "Engineering strip wrong: {html}"
+        );
+        assert!(
+            html.contains("1 agents · 2 skills · 3 cmds"),
+            "Operations strip wrong: {html}"
+        );
+    }
+
+    #[test]
+    fn the_report_is_one_self_contained_document() {
+        // The command's contract is a single file openable offline: doctype,
+        // inlined style + script, closed body. A partial document is the
+        // failure mode a caller can't see until they open it in a browser.
+        let html = render_substrate_html(&[agent("a", &keywords(&["engineering"]), &[])]);
+        assert!(html.starts_with("<!DOCTYPE html>"), "no doctype");
+        assert!(html.contains("<style>") && html.contains("</style>"));
+        assert!(html.contains("<script>") && html.contains("</script>"));
+        assert!(html.contains("<main>") && html.contains("</main>"));
+        assert!(html.trim_end().ends_with("</body></html>"), "unclosed body");
+        assert!(
+            !html.contains("src=\"http") && !html.contains("href=\"http"),
+            "report reaches out to the network; it must be self-contained"
+        );
+    }
+}
