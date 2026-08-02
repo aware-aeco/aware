@@ -209,6 +209,9 @@ fn group_by_vertical(agents: &[DiscoveredAgent]) -> Vec<(&'static str, Vec<&Disc
         .collect()
 }
 
+// TODO: byte-identical to `commands::tree::extract_group`, and both copies are
+// now pinned by their own tests. Hoist to one shared module rather than letting
+// the two drift.
 fn extract_group(description: &str) -> String {
     let trimmed = description.trim_start();
     let head: String = trimmed
@@ -383,15 +386,24 @@ mod tests {
     }
 
     #[test]
-    fn rendered_agent_section_escapes_untrusted_manifest_text() {
-        // A manifest is data from disk, not a trusted template. Every field
-        // that reaches the page must arrive escaped — the whole report is one
-        // file a user opens in a browser.
-        let a = agent(
-            "evil<one>",
-            "display-name: \"Bad \\\"Name\\\"\"\nvendor: \"A & B\"\n",
-            &[("wipe", "<script>alert(1)</script>")],
-        );
+    fn rendered_agent_section_escapes_every_manifest_field_it_interpolates() {
+        // A manifest is data from disk, not a trusted template. Command names
+        // come from vendor reflection and versions come from a file someone
+        // else wrote, so every one of the six interpolated fields carries
+        // markup here — a field that stops being escaped must show up.
+        let manifest: Agent = serde_yaml::from_str(
+            "agent: \"evil<one>\"\nversion: \"1.0<v>\"\ndescription: an agent\n\
+             stateful: false\nlicense: MIT\nsdk-target: \"2026<s>\"\n\
+             display-name: 'Bad \"Name\"'\nvendor: \"A & B\"\n\
+             transport:\n  cli:\n    binary: aware-evil\n\
+             commands:\n  \"wipe<n>\":\n    lifecycle: single\n    \
+             description: \"<script>alert(1)</script>\"\n",
+        )
+        .expect("fixture yaml");
+        let a = DiscoveredAgent {
+            manifest,
+            root: PathBuf::from("."),
+        };
         let mut html = String::new();
         render_agent_section(&mut html, &a);
 
@@ -399,16 +411,21 @@ mod tests {
             !html.contains("<script>"),
             "raw <script> reached the page: {html}"
         );
-        assert!(html.contains("&lt;script&gt;alert(1)&lt;/script&gt;"));
-        assert!(
-            html.contains("evil&lt;one&gt;"),
-            "unescaped agent id: {html}"
-        );
-        assert!(
-            html.contains("Bad &quot;Name&quot;"),
-            "unescaped display name"
-        );
-        assert!(html.contains("A &amp; B"), "unescaped vendor: {html}");
+        for (field, escaped) in [
+            ("agent id", "evil&lt;one&gt;"),
+            ("display name", "Bad &quot;Name&quot;"),
+            ("vendor", "A &amp; B"),
+            ("version", "v1.0&lt;v&gt;"),
+            ("sdk-target", "SDK 2026&lt;s&gt;"),
+            ("command name", "wipe&lt;n&gt;"),
+            ("description", "&lt;script&gt;alert(1)&lt;/script&gt;"),
+        ] {
+            assert!(html.contains(escaped), "unescaped {field} in: {html}");
+        }
+        // Each escaped value must also land in its own slot — a `contains`
+        // sweep alone cannot tell the id span from the display-name span.
+        assert!(html.contains(r#"<span class="aname">evil&lt;one&gt;</span>"#));
+        assert!(html.contains(r#"<span class="adisplay">Bad &quot;Name&quot;</span>"#));
     }
 
     #[test]
@@ -465,13 +482,10 @@ mod tests {
         assert!(html.contains(r#"<span class="cname">Viewer</span>"#));
         assert!(html.contains(r#"<span class="cname">Top-level</span>"#));
         // The Viewer section holds both of its commands, the prose one neither.
-        let viewer = html
-            .split(r#"<span class="cname">Viewer</span>"#)
-            .nth(1)
-            .expect("Viewer section")
-            .split("</ul>")
-            .next()
-            .expect("Viewer command list");
+        let (_, after) = html
+            .split_once(r#"<span class="cname">Viewer</span>"#)
+            .expect("Viewer section");
+        let (viewer, _) = after.split_once("</ul>").expect("Viewer command list");
         assert!(
             viewer.contains(">load<") && viewer.contains(">save<"),
             "{viewer}"
@@ -538,30 +552,43 @@ mod tests {
 
     #[test]
     fn the_first_matching_keyword_in_precedence_order_wins() {
-        // tekla-like agents carry several keywords. The if-chain, not the
-        // manifest's own list order, decides where the agent is filed.
-        let agents = vec![agent(
-            "multi",
-            &keywords(&["operations", "construction", "engineering"]),
-            &[],
-        )];
-        let placed: Vec<&str> = group_by_vertical(&agents)
-            .into_iter()
-            .filter(|(_, v)| !v.is_empty())
-            .map(|(l, _)| l)
-            .collect();
-        assert_eq!(placed, ["Engineering"]);
-        let agents = vec![agent(
-            "multi",
-            &keywords(&["operations", "construction"]),
-            &[],
-        )];
-        let placed: Vec<&str> = group_by_vertical(&agents)
-            .into_iter()
-            .filter(|(_, v)| !v.is_empty())
-            .map(|(l, _)| l)
-            .collect();
-        assert_eq!(placed, ["Construction"]);
+        // An agent may carry several vertical keywords. The if-chain's own
+        // order — not the manifest's list order — decides where it is filed.
+        // Every adjacent pair in that chain is checked, so reordering any two
+        // arms is caught; testing keywords one at a time is order-blind.
+        let chain = [
+            "engineering",
+            "architecture",
+            "construction",
+            "visualization",
+            "cross-cutting",
+            "operations",
+        ];
+        let labels = [
+            "Engineering",
+            "Architecture",
+            "Construction",
+            "Visualization",
+            "Cross-cutting",
+            "Operations",
+        ];
+        for i in 0..chain.len() - 1 {
+            // Declared in reverse, so a chain that honoured list order would
+            // file the agent under the *lower*-precedence keyword.
+            let agents = vec![agent("multi", &keywords(&[chain[i + 1], chain[i]]), &[])];
+            let placed: Vec<&str> = group_by_vertical(&agents)
+                .into_iter()
+                .filter(|(_, v)| !v.is_empty())
+                .map(|(l, _)| l)
+                .collect();
+            assert_eq!(
+                placed,
+                [labels[i]],
+                "`{}` must outrank `{}`",
+                chain[i],
+                chain[i + 1]
+            );
+        }
     }
 
     #[test]
@@ -585,13 +612,20 @@ mod tests {
 
     #[test]
     fn header_totals_sum_skills_and_commands_across_every_agent() {
+        // Agent, skill and command totals are all different numbers, so a
+        // header that sums the wrong field — or renders the right two totals
+        // in each other's slot — cannot pass by coincidence.
         let agents = vec![
             agent(
                 "a",
                 "skills:\n  - one\n  - two\n",
-                &[("x", "does x"), ("y", "does y")],
+                &[("v", "does v"), ("w", "does w"), ("x", "does x")],
             ),
-            agent("b", "skills:\n  - three\n", &[("z", "does z")]),
+            agent(
+                "b",
+                "skills:\n  - three\n",
+                &[("y", "does y"), ("z", "does z")],
+            ),
         ];
         let html = render_substrate_html(&agents);
         assert!(
@@ -603,7 +637,7 @@ mod tests {
             "skill total wrong: {html}"
         );
         assert!(
-            html.contains("<b>3</b> commands"),
+            html.contains("<b>5</b> commands"),
             "command total wrong: {html}"
         );
     }
@@ -646,9 +680,25 @@ mod tests {
         assert!(html.contains("<script>") && html.contains("</script>"));
         assert!(html.contains("<main>") && html.contains("</main>"));
         assert!(html.trim_end().ends_with("</body></html>"), "unclosed body");
-        assert!(
-            !html.contains("src=\"http") && !html.contains("href=\"http"),
-            "report reaches out to the network; it must be self-contained"
-        );
+
+        // "Self-contained" has to mean no remote fetch of any kind, not just
+        // no `src="http`. The page's whole dependency surface is one inlined
+        // <style> block, where `@import` and `url()` are the natural ways to
+        // reach out — and a protocol-relative `//cdn/...` names no scheme at
+        // all. Match on the URL forms themselves rather than on the attribute
+        // that happens to carry them.
+        for probe in [
+            "http://",
+            "https://",
+            "@import",
+            "url(//",
+            "src=\"//",
+            "href=\"//",
+        ] {
+            assert!(
+                !html.contains(probe),
+                "report reaches out to the network via `{probe}`; it must be self-contained"
+            );
+        }
     }
 }

@@ -98,10 +98,13 @@ fn the_report_describes_the_agents_that_were_discovered() {
 }
 
 #[test]
-fn an_unwritable_output_path_fails_instead_of_reporting_success() {
+fn an_output_path_under_a_missing_directory_fails_instead_of_reporting_success() {
     let home = common::aware_home();
     let tmp = tempfile::tempdir().unwrap();
-    // A directory that does not exist — `fs::write` cannot create parents.
+    // A missing parent directory, deliberately, rather than a `chmod 000` one:
+    // `fs::write` will not create parents, and ENOENT is not a permission
+    // check — so this still fails when the suite runs as root, which a
+    // permission-based fixture would not.
     let out = tmp
         .path()
         .join("no")

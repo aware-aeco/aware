@@ -105,10 +105,29 @@ mod tests {
         assert!(agent.commands.contains_key("loads"));
     }
 
-    // The spawn-failure branch of `build_from_python` (`AwareError::Network`)
-    // is not reachable from a test today: the interpreter name is hardcoded
-    // to `python` inside the function, and Rust 2024 makes `set_var` on PATH
-    // unsafe and process-global. Covering it needs an injectable interpreter
-    // on the production signature — a change for a PR that wants it, not a
-    // placeholder test that runs no code.
+    #[test]
+    fn a_module_python_cannot_import_is_reported_as_a_network_error() {
+        // The introspect-failed arm: `python` runs fine but exits non-zero.
+        // This is the failure users actually hit (a typo'd or uninstalled
+        // module), and it must surface as Network — `aware build` maps that
+        // to its own exit code, so a change to Validation here would be a
+        // silent behaviour change at the CLI boundary.
+        if !python_available() {
+            eprintln!("python not on PATH; skipping");
+            return;
+        }
+        let err = build_from_python("definitely_not_a_module_xyz_123", None)
+            .expect_err("importing a nonexistent module must fail");
+        assert!(
+            matches!(&err, AwareError::Network(m) if m.contains("python introspect failed")),
+            "wrong error for an unimportable module: {err:?}"
+        );
+    }
+
+    // The *spawn*-failure arm of `build_from_python` (the `.output()` error,
+    // also `AwareError::Network`) stays uncovered: the interpreter name is
+    // hardcoded to `python` inside the function, and Rust 2024 makes `set_var`
+    // on PATH unsafe and process-global. Reaching it needs an injectable
+    // interpreter on the production signature — a change for a PR that wants
+    // it, not a placeholder test that runs no code.
 }

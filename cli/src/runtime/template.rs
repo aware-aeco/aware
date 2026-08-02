@@ -624,6 +624,10 @@ mod tests {
         // the run carries no ambient context. Each root must still be a defined
         // (empty) object, so the reference degrades to empty instead of failing
         // the whole run with "undefined value".
+        //
+        // `run` alone is also covered by `run_ref_with_empty_namespace_renders
+        // _empty_not_error` below; the other four roots had no empty-context
+        // guard, and each is seeded by its own line in `render`.
         let ctx = RenderContext::default();
         for template in [
             "d={{ run.date }}!",
