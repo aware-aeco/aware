@@ -22,7 +22,10 @@ pub struct DiscoveredAgent {
 pub struct DiscoveredApp {
     pub manifest: App,
     pub root: PathBuf,
-    #[allow(dead_code)] // consumed by Task 12 (app list / describe)
+    /// Path to the app file this was loaded from. Retained but not read —
+    /// callers that need it derive it from `root`. Kept so a discovered app
+    /// can always say where it came from without re-deriving the convention.
+    #[allow(dead_code)]
     pub manifest_path: PathBuf,
 }
 

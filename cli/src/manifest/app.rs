@@ -40,6 +40,10 @@ pub struct App {
     pub nodes: Vec<Node>,
     #[serde(default)]
     pub connections: Vec<Connection>,
+    /// App-level skills (see `qa-drawings-to-tekla.app`). Deserialized but not
+    /// read by any command yet — kept because `10-core/app-spec.md` publishes
+    /// `skills:` as a valid app key, so dropping it would start rejecting
+    /// apps that legally declare one.
     #[allow(dead_code)]
     #[serde(default)]
     pub skills: Vec<String>,

@@ -96,8 +96,14 @@ struct Envelope<'a, T: Serialize> {
 #[derive(Deserialize, Debug)]
 struct OkResponse {
     ok: bool,
+    /// Protocol version the sidecar stamps on every reply. Deserialized but
+    /// not read: the CLI pins the sidecar it downloads, so there is nothing
+    /// to negotiate. Kept because dropping it would make a reply carrying it
+    /// fail to parse the day we do want to check it.
     #[allow(dead_code)]
     version: String,
+    /// Echo of the request's `op`. Deserialized but not read — dispatch already
+    /// knows which op it sent. Kept for the same reason as `version`.
     #[allow(dead_code)]
     op: Option<String>,
     data: Option<ResponseData>,
