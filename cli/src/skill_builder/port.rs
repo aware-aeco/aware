@@ -46,7 +46,12 @@ pub fn run(ctx: &Context, source: &str, target_agent: &str) -> Result<(), AwareE
     let body = std::fs::read_to_string(&source_path)?;
     let stem = source_path
         .file_stem()
-        .unwrap()
+        .ok_or_else(|| {
+            AwareError::Validation(format!(
+                "source {} has no file name to derive a skill name from",
+                source_path.display()
+            ))
+        })?
         .to_string_lossy()
         .to_string();
     let new_name = format!("name: {target_agent}-{stem}");

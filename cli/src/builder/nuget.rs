@@ -265,7 +265,8 @@ fn tfm_rank(tfm: &str) -> i32 {
     {
         let digits: Vec<i32> = rest
             .chars()
-            .map(|c| c.to_digit(10).unwrap() as i32)
+            .filter_map(|c| c.to_digit(10))
+            .map(|d| d as i32)
             .collect();
         let major = digits.first().copied().unwrap_or(0);
         let minor = digits.get(1).copied().unwrap_or(0);
@@ -279,7 +280,8 @@ fn tfm_rank(tfm: &str) -> i32 {
     {
         let digits: Vec<i32> = rest
             .chars()
-            .map(|c| c.to_digit(10).unwrap() as i32)
+            .filter_map(|c| c.to_digit(10))
+            .map(|d| d as i32)
             .collect();
         let major = digits.first().copied().unwrap_or(0);
         let minor = digits.get(1).copied().unwrap_or(0);
