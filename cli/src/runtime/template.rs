@@ -604,12 +604,39 @@ mod tests {
     }
 
     #[test]
-    fn missing_field_errors() {
+    fn a_bare_undefined_name_renders_empty_but_a_path_through_one_errors() {
+        // minijinja's default lenient mode renders an undefined *name* as the
+        // empty string, but attribute access *through* an undefined value is
+        // an error — that asymmetry is the whole reason `render` seeds `run`,
+        // `inputs`, `secrets`, `config` and `upstream` as objects (#127).
         let ctx = RenderContext::default();
-        let result = render("{{ nonexistent.deep.path }}", &ctx);
-        // minijinja default (lenient) mode renders missing keys as empty string.
-        // Strict mode would error; v0.3 uses lenient to match Jinja2 defaults.
-        let _ = result;
+        assert_eq!(render("a={{ nonexistent }}!", &ctx).unwrap(), "a=!");
+        let err = render("a={{ nonexistent.deep }}!", &ctx).unwrap_err();
+        assert!(
+            matches!(&err, AwareError::Validation(m) if m.contains("undefined value")),
+            "expected a render error on the undefined path, got {err:?}"
+        );
+    }
+
+    #[test]
+    fn ambient_context_roots_stay_addressable_when_the_run_supplied_nothing() {
+        // The #127 regression shape: a node template says `{{ run.date }}` and
+        // the run carries no ambient context. Each root must still be a defined
+        // (empty) object, so the reference degrades to empty instead of failing
+        // the whole run with "undefined value".
+        let ctx = RenderContext::default();
+        for template in [
+            "d={{ run.date }}!",
+            "i={{ inputs.missing }}!",
+            "s={{ secrets.absent }}!",
+            "c={{ config.absent }}!",
+            "u={{ upstream[\"no-such-node\"] }}!",
+        ] {
+            let rendered = render(template, &ctx)
+                .unwrap_or_else(|e| panic!("`{template}` must not error, got {e:?}"));
+            let (prefix, _) = template.split_once('=').expect("probe template");
+            assert_eq!(rendered, format!("{prefix}=!"), "for `{template}`");
+        }
     }
 
     // ── #117-4: hyphenated dot-paths now render via the normalizer ──────────

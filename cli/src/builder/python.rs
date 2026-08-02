@@ -105,10 +105,10 @@ mod tests {
         assert!(agent.commands.contains_key("loads"));
     }
 
-    #[test]
-    fn missing_python_returns_network_error() {
-        // Force-failure via an obviously broken interpreter name
-        // (we can't easily mock spawn failure, so just test the error variant indirectly via spawning a nonexistent binary)
-        // Actually we don't have a way to override the binary name here. Skip this test.
-    }
+    // The spawn-failure branch of `build_from_python` (`AwareError::Network`)
+    // is not reachable from a test today: the interpreter name is hardcoded
+    // to `python` inside the function, and Rust 2024 makes `set_var` on PATH
+    // unsafe and process-global. Covering it needs an injectable interpreter
+    // on the production signature — a change for a PR that wants it, not a
+    // placeholder test that runs no code.
 }

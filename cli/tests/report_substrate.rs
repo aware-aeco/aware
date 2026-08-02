@@ -102,7 +102,12 @@ fn an_unwritable_output_path_fails_instead_of_reporting_success() {
     let home = common::aware_home();
     let tmp = tempfile::tempdir().unwrap();
     // A directory that does not exist — `fs::write` cannot create parents.
-    let out = tmp.path().join("no").join("such").join("dir").join("r.html");
+    let out = tmp
+        .path()
+        .join("no")
+        .join("such")
+        .join("dir")
+        .join("r.html");
 
     Command::cargo_bin("aware")
         .unwrap()
