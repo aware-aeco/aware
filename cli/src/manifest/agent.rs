@@ -20,11 +20,13 @@
 //! Still deserialized but never read: `homepage`, `engineering`,
 //! `EngineeringDecl::pinnable`, every field of `EngineeringPin`, every field
 //! of `Provenance` except `generated_by`, and `Requires::filesystem` +
-//! `Requires::skills`. They stay because the agent-spec publishes them and
-//! dropping them would change what a manifest is allowed to declare. Each
-//! carries a targeted `#[allow(dead_code)]` rather than a blanket
-//! module-level one, so a newly-unread field surfaces as a warning instead
-//! of hiding.
+//! `Requires::skills`. They stay because they are what type-check the keys
+//! the agent-spec publishes. Dropping them would not narrow what a manifest
+//! is allowed to declare — there is no `deny_unknown_fields`, so a key with
+//! no field is ignored, not rejected — it would stop checking the shape of
+//! these, letting a malformed declaration through unnoticed. Each carries a
+//! targeted `#[allow(dead_code)]` rather than a blanket module-level one, so
+//! a newly-unread field surfaces as a warning instead of hiding.
 
 use std::collections::BTreeMap;
 

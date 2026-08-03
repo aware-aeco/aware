@@ -41,9 +41,13 @@ pub struct App {
     #[serde(default)]
     pub connections: Vec<Connection>,
     /// App-level skills (see `qa-drawings-to-tekla.app`). Deserialized but not
-    /// read by any command yet — kept because `10-core/app-spec.md` publishes
-    /// `skills:` as a valid app key, so dropping it would start rejecting
-    /// apps that legally declare one.
+    /// read by any command yet — kept because it is what type-checks the
+    /// `skills:` key `10-core/app-spec.md` publishes. Deleting the field would
+    /// not start rejecting apps that declare one; it would do the opposite.
+    /// There is no `deny_unknown_fields` here, so an unmapped `skills:` is
+    /// ignored rather than rejected, and a malformed declaration
+    /// (`skills: not-a-list`) would begin passing unnoticed. That shape check
+    /// is the field's actual job — see `malformed_skills_is_rejected`.
     #[allow(dead_code)]
     #[serde(default)]
     pub skills: Vec<String>,
@@ -701,5 +705,31 @@ requires: []
         assert_eq!(s.cron, "0 7 * * MON");
         assert_eq!(s.timezone, "Europe/London");
         assert_eq!(s.start_date.as_deref(), Some("2026-06-01"));
+    }
+
+    /// Pins the reason `App::skills` is kept despite being unread, so the
+    /// justification is enforced rather than merely claimed: the field is what
+    /// type-checks the published `skills:` key. Delete it and this test fails —
+    /// the malformed declaration below starts parsing clean.
+    #[test]
+    fn malformed_skills_is_rejected() {
+        let head = "app: x\nversion: 0.0.1\ndescription: x\nnodes: []\nrequires: []\n";
+
+        let malformed = format!("{head}skills: not-a-list\n");
+        assert!(serde_yaml::from_str::<App>(&malformed).is_err());
+
+        let well_formed = format!("{head}skills: [qa-check]\n");
+        let app: App = serde_yaml::from_str(&well_formed).unwrap();
+        assert_eq!(app.skills, vec!["qa-check".to_string()]);
+    }
+
+    /// The flip side, and the reason the comment on `skills` does not claim
+    /// that dropping the field would reject apps declaring one: there is no
+    /// `deny_unknown_fields`, so a key the struct has no field for is ignored.
+    #[test]
+    fn unmapped_app_keys_are_ignored() {
+        let yaml =
+            "app: x\nversion: 0.0.1\ndescription: x\nnodes: []\nrequires: []\nunmapped-key: 42\n";
+        assert!(serde_yaml::from_str::<App>(yaml).is_ok());
     }
 }
