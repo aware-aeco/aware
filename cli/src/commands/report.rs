@@ -728,6 +728,12 @@ mod tests {
             r#"<link HREF='//cdn.example/a.css'>"#,
             r#"<script Src = "//cdn.example/x.js"></script>"#,
             r#"@font-face{src:URL(//cdn.example/x.woff)}"#,
+            // A network-path reference needs no dot: these are valid hosts on
+            // an intranet and the browser fetches every one of them.
+            r#"<script src="//localhost/x.js"></script>"#,
+            r#"<script src="//assets/bundle.js"></script>"#,
+            r#"<link href='//intranet/a.css'>"#,
+            r#"@font-face{src:url(//fonts/x.woff)}"#,
         ] {
             assert!(
                 protocol_relative_ref(spelling).is_some(),
@@ -744,10 +750,13 @@ mod tests {
             r#"<script>const u = "a//b";</script>"#,
             "<style>a{color:#fff}</style>",
             // Accepting whitespace around `=` makes these read as attributes
-            // right up to the host check. They fetch nothing.
+            // until the tag context rules them out. They fetch nothing — and
+            // unlike the dotted-host guard they replaced, that reasoning holds
+            // for a comment whose first word happens to look like a host.
             "<script>let src = // why not\nlet x = 1;</script>",
             "<script>let href =\n// note\n2;</script>",
             "<script>const src = //TODO fix\n3;</script>",
+            "<script>let src = //localhost is fine here\n1;</script>",
         ] {
             assert_eq!(
                 protocol_relative_ref(benign),
@@ -781,6 +790,18 @@ mod tests {
             };
             haystack.is_char_boundary(start) && haystack[start..].eq_ignore_ascii_case(needle)
         }
+        /// Whether `idx` sits inside an HTML tag — i.e. the nearest `<` before
+        /// it is not yet closed. This is what separates an attribute from a
+        /// same-named JS identifier: `src=` within `<script …>` is a carrier,
+        /// `let src =` in that script's body is not.
+        fn inside_tag(html: &str, idx: usize) -> bool {
+            let before = &html[..idx];
+            match (before.rfind('<'), before.rfind('>')) {
+                (Some(open), Some(close)) => open > close,
+                (Some(_), None) => true,
+                _ => false,
+            }
+        }
         for (idx, _) in html.match_indices("//") {
             let preceding = html[..idx].trim_end_matches(SEPARATORS);
             // `url(` carries no `=`; an attribute does, and may be spaced
@@ -788,24 +809,27 @@ mod tests {
             let is_carrier = match preceding.strip_suffix('=') {
                 Some(attribute) => {
                     let attribute = attribute.trim_end_matches(SEPARATORS);
-                    ends_with_ci(attribute, "src") || ends_with_ci(attribute, "href")
+                    // Tolerating whitespace around `=` is what makes a JS
+                    // assignment followed by a line comment (`let src = //
+                    // note`) read as an attribute. The tag context, not the
+                    // shape of what follows, is what tells the two apart —
+                    // requiring a dotted host would instead miss the
+                    // single-label intranet hosts a browser fetches happily
+                    // (`//localhost/x.js`, `//assets/bundle.js`).
+                    (ends_with_ci(attribute, "src") || ends_with_ci(attribute, "href"))
+                        && inside_tag(html, idx)
                 }
                 None => ends_with_ci(preceding, "url("),
             };
             if !is_carrier {
                 continue;
             }
-            // Tolerating whitespace around `=` is what makes a JS assignment
-            // followed by a line comment (`let src = // note`) read as an
-            // attribute. Require the `//` to be followed by something
-            // host-shaped — no whitespace, and a dot before the path — so the
-            // looser carrier match cannot trade a missed fetch for a spurious
-            // failure on the report's own inlined script.
-            let host: String = html[idx + 2..]
+            // A carrier naming an empty authority (`src="//"`) fetches nothing.
+            let host_len = html[idx + 2..]
                 .chars()
                 .take_while(|c| !c.is_whitespace() && !"/\"')>".contains(*c))
-                .collect();
-            if host.contains('.') {
+                .count();
+            if host_len > 0 {
                 return Some(html[idx..].chars().take(40).collect());
             }
         }
