@@ -192,7 +192,7 @@ pub fn validate_exposed_inputs(
             None => {
                 return Err(AwareError::Validation(format!(
                     "exposed command `{command}` input `{name}`: expected {declared_type}, got {}",
-                    json_type_name(value)
+                    crate::json::type_name(value)
                 )));
             }
         }
@@ -265,17 +265,6 @@ fn parse_number(s: &str) -> Option<serde_json::Value> {
         .ok()
         .and_then(serde_json::Number::from_f64)
         .map(serde_json::Value::Number)
-}
-
-fn json_type_name(value: &serde_json::Value) -> &'static str {
-    match value {
-        serde_json::Value::Null => "null",
-        serde_json::Value::Bool(_) => "boolean",
-        serde_json::Value::Number(_) => "number",
-        serde_json::Value::String(_) => "string",
-        serde_json::Value::Array(_) => "array",
-        serde_json::Value::Object(_) => "object",
-    }
 }
 
 #[cfg(test)]

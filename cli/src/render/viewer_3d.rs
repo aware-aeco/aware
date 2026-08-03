@@ -26,6 +26,7 @@
 //! Three.js loads from a pinned CDN for v1; full-inline (offline) is a planned follow-on.
 
 use crate::error::AwareError;
+use crate::json::type_name as json_type;
 use serde_json::Value;
 use std::collections::{HashMap, HashSet};
 
@@ -3832,18 +3833,6 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
     }
 
     Ok(Value::Object(out))
-}
-
-/// JSON type name for clear validation errors.
-fn json_type(v: &Value) -> &'static str {
-    match v {
-        Value::Null => "null",
-        Value::Bool(_) => "boolean",
-        Value::Number(_) => "number",
-        Value::String(_) => "string",
-        Value::Array(_) => "array",
-        Value::Object(_) => "object",
-    }
 }
 
 #[cfg(test)]

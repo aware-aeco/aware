@@ -509,7 +509,16 @@ fn fetch_spec(input: &str) -> Result<String, AwareError> {
 }
 
 /// Convert camelCase or snake_case or "Title Case" to kebab-case. Strip non-alphanumeric.
-pub(crate) fn kebab(s: &str) -> String {
+///
+/// Deliberately **not** [`crate::builder::kebab_ascii`], despite the shared name and
+/// shared purpose. Two behaviours differ, and OpenAPI `operationId`s depend on both:
+/// a segment opens only at a lower→upper hump, so `XMLParser` stays `xmlparser`
+/// rather than becoming `x-m-l-parser`; and punctuation is *dropped* rather than
+/// treated as a separator, so `Pet.Store` is `petstore`, not `pet-store`. It is also
+/// Unicode-aware (`char::is_alphanumeric`) where `kebab_ascii` is ASCII-only.
+/// Collapsing the two would need a flag at every call site to pick a spelling —
+/// which is the tell that they are two functions, not one.
+fn kebab(s: &str) -> String {
     let mut out = String::new();
     let mut prev_lower = false;
     for c in s.chars() {

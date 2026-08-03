@@ -6,6 +6,7 @@ use sha2::Digest;
 
 use crate::auth::config::IntegrationConfig;
 use crate::auth::keychain::{StoredToken, TokenSource};
+use crate::auth::urlencode;
 use crate::error::AwareError;
 
 pub fn run_pkce_flow(
@@ -175,10 +176,6 @@ fn random_token(n: usize) -> String {
         .collect()
 }
 
-fn urlencode(s: &str) -> String {
-    url::form_urlencoded::byte_serialize(s.as_bytes()).collect()
-}
-
 fn bind_callback_server() -> Result<(tiny_http::Server, u16), AwareError> {
     for port in 7421u16..=7430u16 {
         let addr = format!("127.0.0.1:{port}");
@@ -297,12 +294,6 @@ mod tests {
         let t = random_token(16);
         assert_eq!(t.len(), 16);
         assert!(t.chars().all(|c| c.is_alphanumeric()));
-    }
-
-    #[test]
-    fn urlencode_handles_special_chars() {
-        assert_eq!(urlencode("hello world"), "hello+world");
-        assert_eq!(urlencode("a=b&c"), "a%3Db%26c");
     }
 
     #[test]

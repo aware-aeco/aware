@@ -14,19 +14,9 @@
 //! `write-csv` is a pure function of `columns` + `rows`. No clock, no randomness.
 
 use crate::error::AwareError;
+use crate::json::type_name as json_type;
 use base64::Engine;
 use serde_json::Value;
-
-fn json_type(v: &Value) -> &'static str {
-    match v {
-        Value::Null => "null",
-        Value::Bool(_) => "boolean",
-        Value::Number(_) => "number",
-        Value::String(_) => "string",
-        Value::Array(_) => "array",
-        Value::Object(_) => "object",
-    }
-}
 
 /// The required destination `path`, trimmed; missing/empty/non-string is rejected. (Only `path` —
 /// the `folder` key is the `watch` verb's, which this module doesn't handle.)

@@ -105,6 +105,37 @@ pub fn now_iso() -> String {
     chrono::Utc::now().to_rfc3339()
 }
 
+/// Slugify a reflected symbol name into the kebab-case id the substrate uses for
+/// agent ids and command names.
+///
+/// The contract, stated once so it stops drifting: **every** ASCII uppercase
+/// letter opens a new segment (`HTTPServer` → `h-t-t-p-server`), and **every** run
+/// of characters outside `[A-Za-z0-9]` collapses to a single `-` (`Tekla::Model` →
+/// `tekla-model`). Leading and trailing separators are trimmed.
+///
+/// `builder::npm`, `builder::ruby` and `builder::yard` each carried a private copy
+/// of this. Two were byte-identical and the third was the same function rewritten
+/// with a `prev_was_sep` flag standing in for the `out.is_empty() ||
+/// out.ends_with('-')` test — indistinguishable from outside, and three places for
+/// the next id-scheme fix to have to land.
+///
+/// Not to be confused with [`openapi::kebab`], which is a genuinely different
+/// slugifier — see its doc comment.
+pub fn kebab_ascii(s: &str) -> String {
+    let mut out = String::new();
+    for ch in s.chars() {
+        if ch.is_ascii_alphanumeric() {
+            if ch.is_ascii_uppercase() && !out.is_empty() && !out.ends_with('-') {
+                out.push('-');
+            }
+            out.push(ch.to_ascii_lowercase());
+        } else if !out.is_empty() && !out.ends_with('-') {
+            out.push('-');
+        }
+    }
+    out.trim_matches('-').to_string()
+}
+
 /// Write the generated agent into `<output_dir>/<agent-id>/`. Returns the new agent's root path.
 pub fn write_agent(
     agent: &GeneratedAgent,
@@ -282,6 +313,25 @@ pub(crate) fn quote_yaml_scalar(s: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn kebab_ascii_handles_namespaces_and_camelcase() {
+        assert_eq!(kebab_ascii("Sketchup::Animation"), "sketchup-animation");
+        assert_eq!(kebab_ascii("nextFrame"), "next-frame");
+        assert_eq!(kebab_ascii("ArcCurve"), "arc-curve");
+    }
+
+    /// The contract the three former copies shared, pinned so the next edit has to
+    /// admit it is a behaviour change: every capital opens a segment, every
+    /// non-alphanumeric run collapses to one `-`, and the ends are trimmed.
+    #[test]
+    fn kebab_ascii_splits_on_every_capital_and_collapses_separators() {
+        assert_eq!(kebab_ascii("HTTPServer"), "h-t-t-p-server");
+        assert_eq!(kebab_ascii("  spaced__out  "), "spaced-out");
+        assert_eq!(kebab_ascii("already-kebab"), "already-kebab");
+        assert_eq!(kebab_ascii("v2Point3"), "v2-point3");
+        assert_eq!(kebab_ascii("!!!"), "");
+    }
 
     fn sample_agent() -> GeneratedAgent {
         let mut cmds = BTreeMap::new();
