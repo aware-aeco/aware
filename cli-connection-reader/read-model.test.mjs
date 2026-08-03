@@ -10,7 +10,7 @@ import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import * as WebIFC from 'web-ifc';
-import { openApi, closeApi, readModel, probeModel, toWebIfcYUp, mergeInherited, propertySetsByElement } from './index.mjs';
+import { openApi, closeApi, readModel, probeModel, toWebIfcYUp, mergeInherited, propertySetsByElement, fileAuthorsColour, pushColourRun } from './index.mjs';
 
 const DOWNLOADS = join(process.env.USERPROFILE ?? process.env.HOME ?? '', 'Downloads');
 const sample = (name) => (existsSync(join(DOWNLOADS, name)) ? join(DOWNLOADS, name) : null);
@@ -397,6 +397,159 @@ test('propertySets is ALWAYS an array, so absent and empty are not the same ques
   for (const o of out.objects) {
     assert.ok(Array.isArray(o.propertySets), `${o.name}: propertySets must be an array`);
     assert.equal(o.propertySets.length, 0, `${o.name}: this file carries no property sets`);
+  }
+});
+
+// ── colours ────────────────────────────────────────────────────────────────────────────────────
+//
+// The whole point of the `colors` field is that an unstyled file must NOT come back white. web-ifc
+// reports opaque white for geometry nobody styled, which is indistinguishable from a wall the
+// architect painted white — so absence, not whiteness, is how "this file has no colours" is said.
+
+test('a file that authors no colour omits `colors` — it does not report white', async (t) => {
+  if (!sample('example-steel-framing.ifc')) return t.skip(skipReason('example-steel-framing.ifc'));
+  const out = await read('example-steel-framing.ifc');
+  assert.ok(out.objects.length > 0);
+  for (const o of out.objects) {
+    // ABSENT, and the assertion says absent rather than falsy on purpose. `[]` would be a claim —
+    // "this object has no colour" — when the truth is that the file has none to give, and a consumer
+    // told the first has no way back to its own default. This file carries zero style entities.
+    assert.equal('colors' in o, false, `${o.name}: an unstyled file must not carry a colors field`);
+  }
+});
+
+test("a styled file's colours are the file's own, covering every triangle exactly", async (t) => {
+  if (!sample('11134_V_Motebello_Heistopp_Rev.ifc')) return t.skip(skipReason('11134_V_Motebello_Heistopp_Rev.ifc'));
+  const out = await read('11134_V_Motebello_Heistopp_Rev.ifc');
+  assert.ok(out.objects.length > 0);
+  for (const o of out.objects) {
+    assert.ok(Array.isArray(o.colors) && o.colors.length > 0, `${o.id}: expected colour runs`);
+    // THE RUNS MUST TILE THE INDEX BUFFER: contiguous from 0, no gap, no overlap, ending exactly at
+    // the end. A consumer maps these straight onto draw groups, so a run that points past the buffer
+    // (or leaves a hole) is not a wrong colour — it is geometry that renders as nothing.
+    let at = 0;
+    for (const c of o.colors) {
+      assert.equal(c.start, at, `${o.id}: run must start where the last one ended`);
+      assert.ok(c.count > 0, `${o.id}: an empty run should never be emitted`);
+      assert.equal(c.rgba.length, 4);
+      for (const v of c.rgba) assert.ok(v >= 0 && v <= 1, `${o.id}: ${v} is not a 0..1 channel`);
+      at += c.count;
+    }
+    assert.equal(at, o.indices.length, `${o.id}: runs must cover the whole index buffer`);
+  }
+  // And they are REAL colours read off the file, not a uniform default. This file paints its 19
+  // objects in three: measured 2026-08-03 as black, cyan and green.
+  const seen = new Set(out.objects.flatMap((o) => o.colors.map((c) => c.rgba.join(','))));
+  assert.ok(seen.size > 1, `expected several distinct colours, got ${[...seen]}`);
+  assert.ok(seen.has('0,1,1,1'), `expected the file's cyan among ${[...seen]}`);
+});
+
+test('NAMED objects carry THEIR OWN colour, not merely some colour', async (t) => {
+  if (!sample('Building-Architecture.ifc')) return t.skip(skipReason('Building-Architecture.ifc'));
+  const out = await read('Building-Architecture.ifc');
+  // AN ORACLE, and the tests above needed one. Everything else here checks shape — that the runs tile
+  // the buffer, that several colours appear, that white survives — and review found the hole: rotate
+  // every geometry's colour onto the next geometry and all of it still passes. The runs still tile,
+  // the palette is unchanged, the multi-coloured objects are still multi-coloured. Only pinning a
+  // KNOWN object to a KNOWN colour falsifies a wrong association.
+  //
+  // Measured 2026-08-03 by GlobalId, which is stable across reads in a way array order is not.
+  const expect = {
+    '3_4VN63S96DfWiJjgG8j1C': [0.8588, 0.7725, 0.5961, 1],   // "sand bedding" — sandy brown
+    '3zR0BOEcLADRKln4HYporH': [0.5765, 0.5765, 0.5765, 1],   // "floor" — mid grey
+    '0ZTBBPo6f6bxqV2K7Oelrq': [0.9647, 0.6863, 0.498, 1],    // "house - roof - slab left" — terracotta
+    '1AQAupaRP1txwK1AGiN61V': [1, 1, 1, 1],                  // an outer wall — authored WHITE
+  };
+  for (const [id, rgba] of Object.entries(expect)) {
+    const o = out.objects.find((x) => x.id === id);
+    assert.ok(o, `expected an object with GlobalId ${id}`);
+    assert.equal(o.colors.length, 1, `${o.name}: this object is a single colour`);
+    assert.deepEqual(o.colors[0].rgba, rgba, `${o.name} should be ${rgba}`);
+    assert.equal(o.colors[0].count, o.indices.length, `${o.name}: its run must cover all its triangles`);
+  }
+});
+
+test('authored TRANSPARENCY survives — a<1 is the file speaking, not a default', async (t) => {
+  if (!sample('Building-Architecture.ifc')) return t.skip(skipReason('Building-Architecture.ifc'));
+  const out = await read('Building-Architecture.ifc');
+  // Alpha is the channel most easily dropped by accident (three-channel colour is the common shape),
+  // and a consumer that renders glass as solid concrete has silently lost information the file gave.
+  // "house - gross volume" is styled at 0.149 opacity in this file.
+  const zone = out.objects.find((o) => o.id === '1yP7NInQz5uQzbiOpVFFJr');
+  assert.ok(zone, 'expected the gross-volume zone');
+  assert.equal(zone.colors[0].rgba[3], 0.149, 'its authored alpha must come through unrounded to 1');
+  assert.ok(out.objects.some((o) => o.colors.every((c) => c.rgba[3] === 1)),
+    'and opaque objects must stay opaque, or alpha is being invented');
+});
+
+test('the response says whether colour could be answered AT ALL', async (t) => {
+  if (!sample('example-steel-framing.ifc') || !sample('Building-Architecture.ifc')) {
+    return t.skip(skipReason('example-steel-framing.ifc / Building-Architecture.ifc'));
+  }
+  // Two silences that are NOT the same answer: a file with no palette, and a pre-1.3.0 bridge that
+  // cannot report one. Both leave every object without `colors`, and only one of them is fixed by
+  // installing a newer bridge — so the receipt is what lets a consumer tell a permanent condition
+  // from a stale install. `false` is an answer; ABSENT is the old bridge.
+  assert.equal((await read('example-steel-framing.ifc')).colorsAvailable, false);
+  assert.equal((await read('Building-Architecture.ifc')).colorsAvailable, true);
+});
+
+test('an authored white is kept, because a styled file means it', async (t) => {
+  if (!sample('Building-Architecture.ifc')) return t.skip(skipReason('Building-Architecture.ifc'));
+  const out = await read('Building-Architecture.ifc');
+  // This is the case that rules out "treat white as unstyled": half of this file's objects report
+  // opaque white and they are genuinely styled that way (measured 2026-08-03 — 6 of 12). A heuristic
+  // on the colour value would silently repaint them, so the gate is the FILE, not the pixel.
+  const whites = out.objects.filter((o) => o.colors.some((c) => c.rgba.join(',') === '1,1,1,1'));
+  assert.ok(whites.length > 0, 'expected authored whites in a file that has a palette');
+  const coloured = out.objects.filter((o) => o.colors.some((c) => c.rgba.join(',') !== '1,1,1,1'));
+  assert.ok(coloured.length > 0, 'and non-white ones beside them, or this file proves nothing');
+});
+
+test('one object with several colours keeps all of them', async (t) => {
+  if (!bigSample('Hospital Arch.ifc')) return t.skip(bigSkip('Hospital Arch.ifc'));
+  const out = await readBig('Hospital Arch.ifc');
+  // Multi-coloured objects are ORDINARY, not exotic: measured 2026-08-03, 1,127 of this file's
+  // 14,409 objects carry more than one colour among their placed geometries, and 6,358 of the 77,118
+  // in `Steel IFC.ifc` do. Collapsing to one colour per object would be a visible lie on 8% of an
+  // ordinary steel export, which is why colour is a run over the index buffer and not a field.
+  const multi = out.objects.filter((o) => o.colors && o.colors.length > 1);
+  assert.ok(multi.length > 500, `expected many multi-coloured objects, got ${multi.length}`);
+  const runs = multi[0].colors;
+  assert.ok(new Set(runs.map((c) => c.rgba.join(','))).size > 1, 'its runs must differ in colour');
+});
+
+test('adjacent runs of one colour merge; a change or a gap does not', () => {
+  // Unmerged, 206,621 placed geometries would emit 206,621 runs to say 16 things. Merging is what
+  // keeps the field small — but it must never merge across a colour change or a discontinuity,
+  // because either would hand a consumer triangles painted with the wrong run's colour.
+  const red = [1, 0, 0, 1], blue = [0, 0, 1, 1];
+  let runs = [];
+  runs = pushColourRun(runs, red, 0, 3);
+  runs = pushColourRun(runs, red, 3, 6);      // same colour, contiguous -> merges
+  assert.deepEqual(runs, [{ rgba: red, start: 0, count: 9 }]);
+  runs = pushColourRun(runs, blue, 9, 3);     // different colour -> new run
+  assert.equal(runs.length, 2);
+  runs = pushColourRun(runs, blue, 99, 3);    // same colour but NOT contiguous -> new run
+  assert.equal(runs.length, 3);
+  assert.deepEqual(runs[2], { rgba: blue, start: 99, count: 3 });
+  // A zero-length run is never recorded: it would name a start nothing occupies.
+  assert.equal(pushColourRun([], red, 0, 0).length, 0);
+});
+
+test('the colour gate asks the FILE, and answers both ways', async (t) => {
+  if (!sample('example-steel-framing.ifc') || !sample('Building-Architecture.ifc')) {
+    return t.skip(skipReason('example-steel-framing.ifc / Building-Architecture.ifc'));
+  }
+  // Both arms, or this proves nothing: a gate stuck at `false` would pass the unstyled assertion
+  // above on its own, and a gate stuck at `true` would pass the styled ones.
+  for (const [name, expected] of [['example-steel-framing.ifc', false], ['Building-Architecture.ifc', true]]) {
+    const h = await openApi(sample(name));
+    try {
+      assert.equal(fileAuthorsColour(h.api, h.modelID), expected, `${name} should ${expected ? '' : 'not '}author colour`);
+    } finally {
+      closeApi(h);
+    }
   }
 });
 

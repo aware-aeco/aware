@@ -37,8 +37,17 @@ objects:
           type: array
     positions: [number] # world mm, [x,y,z]*
     indices:   [number] # triangle indices
+    colors:             # the file's own surface colours, as runs over `indices`. ABSENT — not [] —
+                        # when the file authors no colour at all (see below)
+      type: array
+      items:
+        rgba:  [number] # [r,g,b,a], 0..1, as the file styles it. a<1 is authored transparency
+        start: number   # first index into `indices` this colour paints
+        count: number   # how many indices
 skipped: number         # products streamed but carrying no drawable triangle (see below)
 count:   number         # objects returned; equals objects.length
+colorsAvailable: boolean # whether this file authors ANY colour. Present from 1.3.0 always, so
+                        # `false` (this file has none) and ABSENT (older bridge) stay different
 selected:               # ONLY present when a filter was passed (see below)
   storeys:  [string]    # echoed back, as asked
   ifcTypes: [string]
@@ -185,6 +194,81 @@ case-insensitively, or `"W10x33"` will miss a catalogue storing `"W10X33"`.
 
 **`material` is the signal that says *do not convert this*.** A member can be named `girder`, typed
 `IfcBeam`, and be `wood_spruce_beam`. Type alone would happily turn timber into steel.
+
+## `colors` — the file's own colours, and the one thing white cannot tell you
+
+A borrowed model rendered in one flat grey is legible as a silhouette and almost nothing else. The
+file usually knows better: `IFC House.ifc` styles its 35 objects in 5 colours, `Steel IFC.ifc` its
+77,118 in 16. So the surface colour web-ifc resolves rides along.
+
+**Colour is per placed geometry, so it is emitted as RUNS over `indices`, not as a field on the
+object.** One object routinely carries several: measured 2026-08-03, **6,358 of the 77,118 objects**
+in `Steel IFC.ifc` and 1,127 of 14,409 in `Hospital Arch.ifc` are multi-coloured. A single colour per
+object would render a bolted assembly entirely in its bolt's colour — a lie on 8% of an ordinary
+steel export. Each run owns `[start, start+count)` of the index buffer, the runs tile it exactly with
+no gap or overlap, and adjacent runs of one colour are merged (which on `Steel IFC.ifc` turns 206,621
+placed geometries into 111,754 runs).
+
+Channels are rounded to 4 decimal places. Colours are authored as `k/255` overwhelmingly often and 4
+places round-trip those exactly, at 6 characters instead of the 19 a raw float costs.
+
+### Absent means "this file has no colours" — because white cannot say it
+
+**web-ifc reports opaque white for geometry nobody styled**, which is indistinguishable from a wall
+the architect painted white. `example-steel-framing.ifc` carries zero style entities and every one of
+its 13 objects reports `{1,1,1,1}`; `Building-Architecture.ifc` reports the same white for 6 objects
+that are genuinely styled that way. A consumer handed white for both would paint an entirely unstyled
+model glaring white and call it "the file's real colours".
+
+So the question is asked of the **file**, once — does it carry any `IfcSurfaceStyle` at all? — and the
+answer gates the whole field. No style anywhere means **no object carries `colors`**, and a consumer
+renders its own default instead of a white nobody chose. `[]` would have been the wrong encoding for
+the same reason `propertySets: []` is the right one there: empty is a claim about the object, absent
+is a statement about what could be answered.
+
+**Why the file and not the element.** The precise question — "was THIS geometry styled?" — was
+implemented first and does not survive a real model. Resolving `IfcStyledItem.Item` against
+`geometryExpressID` plus material-associated styles agreed with web-ifc on four small files and then
+missed **11,257** genuinely-coloured geometries on `Steel IFC.ifc` and 370 on `Hospital Arch.ifc`;
+web-ifc reaches colour through routes that reimplementation did not, and a resolver whose misses are
+invisible is worse than none.
+
+The cost of stopping there, stated rather than hidden: **an element that is unstyled inside a styled
+file still reports white** — 696 of 31,381 placed geometries on `Hospital Arch.ifc`. That is web-ifc's
+answer and this reader does not guess past it.
+
+### `colorsAvailable` separates the two silences
+
+A pre-1.3.0 bridge omits `colors` under a 1.3.0 manifest, exactly as an unstyled file does — so
+absence alone conflates a permanent property of the file with a stale install that one
+`aware sidecar install connection-reader` would fix. **`colorsAvailable` is emitted on every response
+from 1.3.0**, so the three states stay distinct:
+
+| | meaning | what a consumer does |
+|---|---|---|
+| `colorsAvailable: true` | the file authors colour; objects carry `colors` | paint them |
+| `colorsAvailable: false` | this file authors none, and never will | paint your own default, and say so |
+| field absent | the bridge predates colours | paint your own default; offer to refresh the bridge |
+
+Rendering is the same in the bottom two rows, which is why the field is a *receipt* rather than a
+control — but only one of them is repairable, and a UI that says "this file has no colours" about a
+stale bridge is stating something false. Same reason `selected` and `budget` exist.
+
+As with `propertySets`, a consumer caching this response **must not key the cache on the IFC bytes
+alone**: identical bytes yield a different shape depending on the bridge that read them.
+
+### The `IfcIndexedColourMap` case, and why it is not counted
+
+IFC4 lets a tessellated face set carry per-face colour through `IfcIndexedColourMap` +
+`IfcColourRgbList` with no `IfcSurfaceStyle` anywhere, so on paper the gate above has a false negative
+there. Measured 2026-08-03 against web-ifc 0.0.77, with a hand-built IFC4 file — one
+`IfcTriangulatedFaceSet`, four faces coloured red, green, blue and yellow, zero surface styles —
+**web-ifc reports `{1,1,1,1}`**. It does not implement that route.
+
+So counting the colour map in the gate would not recover those colours. It would switch the gate on
+and publish web-ifc's *default white* as though the file had authored it, for a file that is in fact
+brightly coloured — turning a correct "no colours here" into a confident lie. Suppressing is the
+honest answer until the engine can answer, and this is the note to revisit if it ever does.
 
 ## `propertySets` is where the meaning is in a real file
 

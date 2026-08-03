@@ -746,6 +746,88 @@ function profileOf(api, modelID, expressID) {
 }
 
 /**
+ * Does this file author ANY surface colour at all?
+ *
+ * THIS QUESTION HAS TO BE ASKED, because web-ifc's per-geometry colour cannot answer it. An
+ * unstyled geometry does not come back colourless — it comes back **opaque white**, which is
+ * indistinguishable from a wall the architect painted white. Measured 2026-08-03:
+ * `example-steel-framing.ifc` carries zero style entities and every one of its 13 objects reports
+ * `{1,1,1,1}`, while `Building-Architecture.ifc` reports the same white for 6 objects that are
+ * genuinely styled that way. A consumer handed white for both would paint an entirely unstyled
+ * model glaring white and call it "the file's real colours".
+ *
+ * So the file is asked once, and the answer gates the whole `colors` field: no surface style
+ * anywhere means no object gets a colour, and a consumer renders its own default rather than a
+ * white that was never authored.
+ *
+ * WHY THE FILE AND NOT THE ELEMENT. The precise question — "was THIS geometry styled?" — was tried
+ * first and does not survive contact with a real model. Resolving `IfcStyledItem.Item` against
+ * `geometryExpressID`, plus material-associated styles via `IfcMaterialDefinitionRepresentation`,
+ * agreed with web-ifc on four small files and then missed **11,257** genuinely-coloured geometries
+ * on `Steel IFC.ifc` and 370 on `Hospital Arch.ifc` — web-ifc reaches colour through routes that
+ * reimplementation did not, and a resolver whose misses are invisible is worse than none. The
+ * file-level question is exact for the case that actually bites (a file with no palette at all) and
+ * is one index lookup rather than a second style engine.
+ *
+ * The cost of stopping here, stated plainly: an element that is unstyled *inside* a styled file
+ * still reports white, because that is what web-ifc resolved and this reader will not guess past
+ * it. On `Hospital Arch.ifc` that is 696 of 31,381 placed geometries — and a FILTERED read sharpens
+ * it, because a filter that selects only unstyled elements still sees the file's palette and so
+ * still reports their white as authored.
+ *
+ * WHY `IfcIndexedColourMap` IS DELIBERATELY NOT COUNTED. IFC4 lets a tessellated face set carry
+ * per-face colour through `IfcIndexedColourMap` + `IfcColourRgbList` with no `IfcSurfaceStyle`
+ * anywhere, so on paper this gate has a false negative there. Measured 2026-08-03 against web-ifc
+ * 0.0.77 with a hand-built IFC4 file — one `IfcTriangulatedFaceSet`, four faces coloured red, green,
+ * blue and yellow, zero surface styles — **web-ifc reports `{1,1,1,1}`**: it does not implement that
+ * route. So counting the colour map here would not recover those colours, it would switch the gate on
+ * and publish web-ifc's default white as though the file had authored it, for a file that is in fact
+ * brightly coloured. Suppressing is the honest answer until the engine can answer.
+ */
+export function fileAuthorsColour(api, modelID) {
+  // IfcSurfaceStyle is the root of every colour route web-ifc actually IMPLEMENTS (IfcStyledItem,
+  // presentation style assignments, material definition representations all terminate in one). Its
+  // mere presence is the signal; which elements it reaches is deliberately not asked (see above).
+  return api.GetLineIDsWithType(modelID, WebIFC.IFCSURFACESTYLE).size() > 0;
+}
+
+/**
+ * Round a colour channel to what an 8-bit authored value round-trips through, and no further.
+ *
+ * Colours are authored as k/255 overwhelmingly often, and 4 decimal places carry that back exactly
+ * (0.4627 x 255 = 117.99 -> 118) while spending 6 characters instead of the 19 a raw float costs.
+ * On a 206,621-geometry model that is the difference between a few hundred KB and a few MB of
+ * response for information nobody can see.
+ */
+const chan = (v) => Math.round(Math.max(0, Math.min(1, Number(v) || 0)) * 1e4) / 1e4;
+
+/**
+ * Accumulate one placed geometry's colour as a RUN over the index buffer.
+ *
+ * COLOUR IS PER PLACED GEOMETRY, NOT PER OBJECT, and a real model says so: 6,358 of the 77,118
+ * objects in `Steel IFC.ifc` carry more than one colour among their geometries. Collapsing to one
+ * colour per object would be a visible lie on 8% of an ordinary steel export — a bolted assembly
+ * rendered entirely in its bolt's colour.
+ *
+ * Runs are contiguous because the index buffer is built in geometry order, so each geometry owns
+ * `[start, start+count)` and a consumer maps a run straight onto a draw group. Adjacent runs of the
+ * SAME colour are merged rather than emitted separately: with 16 distinct colours across 206,621
+ * geometries, unmerged runs would be mostly repetition.
+ */
+export function pushColourRun(runs, rgba, start, count) {
+  if (count <= 0) return runs;
+  const last = runs[runs.length - 1];
+  if (last && last.start + last.count === start
+    && last.rgba[0] === rgba[0] && last.rgba[1] === rgba[1]
+    && last.rgba[2] === rgba[2] && last.rgba[3] === rgba[3]) {
+    last.count += count;
+    return runs;
+  }
+  runs.push({ rgba, start, count });
+  return runs;
+}
+
+/**
  * web-ifc's Y-up reading of a point given in the file's own Z-up world frame: `(x, y, z) -> (x, z, -y)`.
  *
  * This is web-ifc's `NormalizeIFC` — the fixed rotation it bakes into every flat mesh transform, so
@@ -809,10 +891,14 @@ export function readModel(api, modelID, maxVertices = Infinity, opts = {}) {
   let skipped = 0; // products web-ifc streamed but that carry no drawable triangle
 
   const selection = selectExpressIds(api, modelID, opts, storeys);
+  // Asked ONCE per file, not per element: web-ifc reports opaque white for unstyled geometry, so
+  // without this a file that authors no colour at all would be served back as a white building.
+  const authorsColour = fileAuthorsColour(api, modelID);
 
   const onMesh = (flatMesh) => {
     const positions = [];
     const indices = [];
+    const colors = [];
     const geoms = flatMesh.geometries;
     // NOTE: `geometries` carries one entry PER INSTANCE, each with its own flatTransformation — which
     // is exactly how mapped/instanced items work. Do not de-duplicate by geometryExpressID: the
@@ -837,7 +923,14 @@ export function readModel(api, modelID, maxVertices = Infinity, opts = {}) {
       }
       // Winding is preserved without touching the indices: the rotation above has determinant +1, so
       // it cannot turn a front face into a back face. (A mirror would, and would need a flip here.)
+      const runStart = indices.length;
       for (let k = 0; k < idx.length; k++) indices.push(base + idx[k]);
+      // The run is recorded AFTER the indices it describes, against the buffer as it now stands, so
+      // `start` can never drift from what it points at.
+      if (authorsColour) {
+        const c = pg.color;
+        pushColourRun(colors, [chan(c.x), chan(c.y), chan(c.z), chan(c.w)], runStart, idx.length);
+      }
       geom.delete();
     }
     // A part is renderable only with >=3 vertices and >=1 triangle. Drop the degenerate ones: an object
@@ -865,6 +958,11 @@ export function readModel(api, modelID, maxVertices = Infinity, opts = {}) {
       propertySets: propertySets.get(id) ?? [],
       positions,
       indices,
+      // OMITTED ENTIRELY, not sent empty, when the file authors no surface colour. `[]` would have to
+      // mean "this object has no colour" while the honest statement is "this file has none to give",
+      // and a consumer told the first would have no way back to its own default. Same discipline as
+      // `selected`: a field that is absent is a different answer from a field that is empty.
+      ...(authorsColour ? { colors } : {}),
     };
     count++;
 
@@ -907,6 +1005,12 @@ export function readModel(api, modelID, maxVertices = Infinity, opts = {}) {
     objects,
     skipped,
     count,
+    // THE RECEIPT THAT SEPARATES TWO SILENCES. Without it, "this file authors no colour" and "the
+    // bridge that read it predates colours" are both an absent `colors` on every object, and a
+    // consumer cannot tell the permanent condition from the one an install would fix. Present from
+    // 1.3.0 always — `false` is a real answer about the file, absence is a statement about the
+    // bridge. Same discipline as `selected` and `budget`, which exist for exactly this reason.
+    colorsAvailable: authorsColour,
     // Present ONLY when a filter was asked for, so "no filter" and "a filter that matched everything"
     // stay distinguishable, and so an older consumer sees no new field at all.
     ...(selection.applied ? { selected: selection.report } : {}),

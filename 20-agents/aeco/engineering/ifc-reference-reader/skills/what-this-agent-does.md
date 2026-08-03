@@ -42,7 +42,15 @@ That difference in intent is why they are separate agents rather than four comma
   it. Both commands report `frame` in their output; check that rather than a version number, because
   the bridge binary that produces the geometry is installed separately from this agent.
 
-## Two things worth knowing
+## Three things worth knowing
+
+**Colours come from the file, and silence is meaningful.** Each object carries `colors` — the surface
+colours the file styles it with, as runs over the index buffer, because colour is per placed geometry
+and one object routinely has several (6,358 of 77,118 in one real steel export). The field is **absent
+entirely** when the file authors no colour, and that is deliberate: web-ifc reports opaque *white* for
+unstyled geometry, which cannot be told from a wall the architect painted white. So a consumer that
+sees no `colors` must paint its own default, never white.
+
 
 **Units are already applied.** web-ifc reads `IfcUnitAssignment` and normalises geometry to metres
 before you see a vertex. `probe`'s `units.declared` is therefore *provenance* — what the file claims —
