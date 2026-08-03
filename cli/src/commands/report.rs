@@ -734,6 +734,13 @@ mod tests {
             r#"<script src="//assets/bundle.js"></script>"#,
             r#"<link href='//intranet/a.css'>"#,
             r#"@font-face{src:url(//fonts/x.woff)}"#,
+            // Fetching attributes that do not end in `src`/`href`. `srcset` is
+            // the one a suffix match silently drops.
+            r#"<img srcset="//cdn.example/x.jpg 2x">"#,
+            r#"<video poster="//cdn.example/p.jpg"></video>"#,
+            r#"<body background="//cdn.example/b.png">"#,
+            r#"<form action="//cdn.example/submit"></form>"#,
+            r#"<img data-src="//cdn.example/lazy.png">"#,
         ] {
             assert!(
                 protocol_relative_ref(spelling).is_some(),
@@ -757,6 +764,11 @@ mod tests {
             "<script>let href =\n// note\n2;</script>",
             "<script>const src = //TODO fix\n3;</script>",
             "<script>let src = //localhost is fine here\n1;</script>",
+            // `data-vendor` is interpolated from the manifest and `/` is not
+            // escaped, so a vendor opening with `//` reaches the page. It is an
+            // attribute inside a tag, and it fetches nothing — which is why the
+            // carrier list is explicit rather than "any attribute".
+            r#"<details class="agent" data-vendor="//odd"><summary>x</summary></details>"#,
         ] {
             assert_eq!(
                 protocol_relative_ref(benign),
@@ -782,6 +794,21 @@ mod tests {
     /// `URL(` fetch exactly like their lowercase spellings.
     fn protocol_relative_ref(html: &str) -> Option<String> {
         const SEPARATORS: [char; 6] = [' ', '\t', '\r', '\n', '\'', '"'];
+        /// Attributes whose value a browser resolves and fetches. Matched as
+        /// suffixes, so `data-src` and `xlink:href` come along. Deliberately a
+        /// list rather than "any attribute in a tag": `data-vendor` carries
+        /// manifest text, and a vendor string opening with `//` must not read
+        /// as a fetch. `srcset` is spelled out because it does not end in
+        /// `src`.
+        const URL_ATTRIBUTES: [&str; 7] = [
+            "src",
+            "srcset",
+            "href",
+            "poster",
+            "background",
+            "action",
+            "cite",
+        ];
         /// `str::ends_with`, ignoring ASCII case. Guards the char boundary so a
         /// multi-byte tail can't panic the slice.
         fn ends_with_ci(haystack: &str, needle: &str) -> bool {
@@ -816,7 +843,7 @@ mod tests {
                     // requiring a dotted host would instead miss the
                     // single-label intranet hosts a browser fetches happily
                     // (`//localhost/x.js`, `//assets/bundle.js`).
-                    (ends_with_ci(attribute, "src") || ends_with_ci(attribute, "href"))
+                    URL_ATTRIBUTES.iter().any(|a| ends_with_ci(attribute, a))
                         && inside_tag(html, idx)
                 }
                 None => ends_with_ci(preceding, "url("),
