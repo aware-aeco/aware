@@ -332,6 +332,7 @@ const SCRIPT: &str = r#"<script>
 mod tests {
     use super::*;
     use crate::manifest::Agent;
+    use std::collections::BTreeSet;
     use std::path::PathBuf;
 
     /// Build a `DiscoveredAgent` by deserializing a manifest, so the fixture
@@ -733,6 +734,14 @@ mod tests {
             r#"<style>@font-face{src:url( //cdn.example/x.woff )}</style>"#,
             r#"<style>@font-face{src:URL(//fonts/x.woff)}</style>"#,
             r#"<style>@import "//cdn.example/a.css";</style>"#,
+            // CSS in a `style` attribute fetches exactly as a stylesheet does.
+            r#"<div style="background-image:url(//cdn.example/x.png)"></div>"#,
+            r#"<div style="background:URL('//assets/y.png')"></div>"#,
+            // `srcdoc` is a whole nested document, escaped into an attribute.
+            r#"<iframe srcdoc="&lt;img src='//cdn.example/x.png'&gt;"></iframe>"#,
+            r#"<iframe srcdoc="&lt;link href=&quot;//cdn/a.css&quot;&gt;"></iframe>"#,
+            // A `srcset` whose remote candidate follows a comma-bearing data URI.
+            r#"<img srcset="data:image/gif;base64,R0lGOD 1x, //cdn.example/x.png 2x">"#,
             // A second file is not self-contained either, whatever the scheme.
             r#"<link href="https://cdn.example/a.css">"#,
             r#"<link href="theme.css">"#,
@@ -765,6 +774,14 @@ mod tests {
             r##"<a href="#top">top</a>"##,
             r#"<img src="data:image/gif;base64,R0lGOD">"#,
             "<style>a{color:#fff}</style>",
+            // The comma belongs to the base64 payload, not to the candidate
+            // list — splitting on commas reports `R0lGOD` as a relative path.
+            r#"<img srcset="data:image/gif;base64,R0lGOD 1x">"#,
+            r#"<img srcset="data:image/gif;base64,AAA 1x, data:image/gif;base64,BBB 2x">"#,
+            // A `style` attribute carrying no URL at all.
+            r#"<div style="color:#fff;background:#000"></div>"#,
+            // A nested document that is itself self-contained.
+            r#"<iframe srcdoc="&lt;p&gt;hello&lt;/p&gt;"></iframe>"#,
         ] {
             assert!(
                 external_refs(benign).is_empty(),
@@ -772,6 +789,96 @@ mod tests {
                 external_refs(benign)
             );
         }
+    }
+
+    /// The check above is a blacklist: it knows the ways a browser can be made
+    /// to fetch. That list is open-ended — `srcset` candidate lists, `<object
+    /// data>`, a `style` attribute and `<iframe srcdoc>` were each found
+    /// missing from it in turn, one review round at a time.
+    ///
+    /// This bounds the same property from the other side, where the set *is*
+    /// finite: the report emits a small, fixed surface, and none of it can
+    /// fetch. Anything new fails here until someone adds it deliberately —
+    /// which is exactly the moment to ask whether it reaches the network.
+    #[test]
+    fn the_report_emits_only_its_known_element_and_attribute_surface() {
+        /// Every element the renderer emits. None fetches a subresource:
+        /// there is no `img`, `iframe`, `link`, `object`, `embed` or `a`.
+        const ELEMENTS: [&str; 17] = [
+            "b", "body", "details", "div", "head", "header", "html", "input", "li", "main", "meta",
+            "script", "span", "style", "summary", "title", "ul",
+        ];
+        /// Every attribute the renderer emits. None is URL-bearing: no `src`,
+        /// `href`, `style` or `srcset`. `data-vendor` carries manifest text.
+        const ATTRIBUTES: [&str; 9] = [
+            "autocomplete",
+            "charset",
+            "class",
+            "data-vendor",
+            "id",
+            "lang",
+            "open",
+            "placeholder",
+            "type",
+        ];
+
+        // Exercise every render branch, so a tag emitted only for, say, an
+        // agent with an sdk-target is still covered.
+        let html = render_substrate_html(&[
+            agent(
+                "eng",
+                &format!(
+                    "{}sdk-target: \"2026.1\"\ndisplay-name: Eng\nvendor: ACME\nskills:\n  - s\n",
+                    keywords(&["engineering"])
+                ),
+                &[("load", "Viewer.LoadModel loads"), ("ping", "checks it")],
+            ),
+            agent("bare", "", &[]),
+        ]);
+
+        let (elements, attributes) = document_surface(&html);
+        let unexpected_elements: Vec<_> = elements
+            .iter()
+            .filter(|e| !ELEMENTS.contains(&e.as_str()))
+            .collect();
+        let unexpected_attributes: Vec<_> = attributes
+            .iter()
+            .filter(|a| !ATTRIBUTES.contains(&a.as_str()))
+            .collect();
+        assert!(
+            unexpected_elements.is_empty(),
+            "report emits unlisted elements {unexpected_elements:?}; if one of these fetches a \
+             subresource the document is no longer self-contained"
+        );
+        assert!(
+            unexpected_attributes.is_empty(),
+            "report emits unlisted attributes {unexpected_attributes:?}; if one of these is \
+             URL-bearing the document is no longer self-contained"
+        );
+    }
+
+    /// The set of element and attribute names `html` actually contains.
+    fn document_surface(html: &str) -> (BTreeSet<String>, BTreeSet<String>) {
+        use lol_html::{RewriteStrSettings, element, rewrite_str};
+        use std::cell::RefCell;
+        use std::rc::Rc;
+
+        let seen = Rc::new(RefCell::new((BTreeSet::new(), BTreeSet::new())));
+        let sink = Rc::clone(&seen);
+        rewrite_str(
+            html,
+            RewriteStrSettings::new().append_element_content_handler(element!("*", move |el| {
+                let mut s = sink.borrow_mut();
+                s.0.insert(el.tag_name().to_ascii_lowercase());
+                for attr in el.attributes() {
+                    s.1.insert(attr.name().to_ascii_lowercase());
+                }
+                Ok(())
+            })),
+        )
+        .expect("fixture html tokenizes");
+        let surface = seen.borrow();
+        (surface.0.clone(), surface.1.clone())
     }
 
     /// Every reference in `html` that the browser would resolve against the
@@ -813,6 +920,71 @@ mod tests {
             !v.is_empty() && !v.starts_with('#') && !v.to_ascii_lowercase().starts_with("data:")
         }
 
+        /// Candidate URLs in a `srcset`, parsed the way the HTML spec does: a
+        /// candidate's URL is a run of non-whitespace characters, so a comma
+        /// inside a `data:` URI belongs to that URL rather than separating
+        /// candidates. Splitting on commas instead reports the tail of a base64
+        /// payload as a relative reference.
+        fn srcset_urls(value: &str) -> Vec<String> {
+            let mut urls = Vec::new();
+            let mut rest = value;
+            loop {
+                rest = rest.trim_start_matches(|c: char| c.is_ascii_whitespace() || c == ',');
+                if rest.is_empty() {
+                    break;
+                }
+                let end = rest.find(char::is_whitespace).unwrap_or(rest.len());
+                let (candidate, tail) = rest.split_at(end);
+                let url = candidate.trim_end_matches(',');
+                if !url.is_empty() {
+                    urls.push(url.to_string());
+                }
+                if candidate.ends_with(',') {
+                    // Empty descriptor; the next token is another URL.
+                    rest = tail;
+                } else if let Some(comma) = tail.find(',') {
+                    rest = &tail[comma + 1..];
+                } else {
+                    break;
+                }
+            }
+            urls
+        }
+
+        /// `url(…)` and `@import` targets in CSS — a stylesheet's text, or a
+        /// `style` attribute, which carries the same CSS and fetches the same
+        /// way.
+        fn css_refs(css: &str) -> Vec<String> {
+            let mut out = Vec::new();
+            let lower = css.to_ascii_lowercase();
+            if lower.contains("@import") {
+                out.push("@import".to_string());
+            }
+            for (at, _) in lower.match_indices("url(") {
+                let value: String = css[at + 4..]
+                    .chars()
+                    .skip_while(|c| c.is_whitespace() || *c == '\'' || *c == '"')
+                    .take_while(|c| !c.is_whitespace() && !")'\"".contains(*c))
+                    .collect();
+                if is_external(&value) {
+                    out.push(value);
+                }
+            }
+            out
+        }
+
+        /// `lol_html` hands back attribute values with character references
+        /// intact. `srcdoc` carries a whole nested document escaped into an
+        /// attribute, so it must be decoded before it can be tokenized.
+        fn decode_entities(value: &str) -> String {
+            value
+                .replace("&lt;", "<")
+                .replace("&gt;", ">")
+                .replace("&quot;", "\"")
+                .replace("&#39;", "'")
+                .replace("&amp;", "&")
+        }
+
         let refs = Rc::new(RefCell::new(Vec::<String>::new()));
         let css = Rc::new(RefCell::new(String::new()));
         let (attr_sink, css_sink) = (Rc::clone(&refs), Rc::clone(&css));
@@ -824,18 +996,18 @@ mod tests {
                     for attr in el.attributes() {
                         let name = attr.name().to_ascii_lowercase();
                         let value = attr.value();
-                        if name == "srcset" {
-                            // A candidate list: `url 1x, url 2x`. The remote
-                            // one need not come first.
-                            for candidate in value.split(',') {
-                                if let Some(url) = candidate.split_whitespace().next()
-                                    && is_external(url)
-                                {
-                                    attr_sink.borrow_mut().push(url.to_string());
-                                }
+                        let mut sink = attr_sink.borrow_mut();
+                        match name.as_str() {
+                            "srcset" | "imagesrcset" => sink
+                                .extend(srcset_urls(&value).into_iter().filter(|u| is_external(u))),
+                            "style" => sink.extend(css_refs(&value)),
+                            // A nested document, escaped into an attribute. The
+                            // browser parses it and fetches what it references.
+                            "srcdoc" => sink.extend(external_refs(&decode_entities(&value))),
+                            _ if URL_ATTRS.contains(&name.as_str()) && is_external(&value) => {
+                                sink.push(value.trim().to_string());
                             }
-                        } else if URL_ATTRS.contains(&name.as_str()) && is_external(&value) {
-                            attr_sink.borrow_mut().push(value.trim().to_string());
+                            _ => {}
                         }
                     }
                     Ok(())
@@ -847,23 +1019,8 @@ mod tests {
         )
         .expect("fixture html tokenizes");
 
-        // `@import` and `url()` are how a stylesheet reaches out; neither is an
-        // attribute, so they are scanned in the collected CSS text.
-        let css = css.borrow();
-        let lower = css.to_ascii_lowercase();
-        if lower.contains("@import") {
-            refs.borrow_mut().push("@import".to_string());
-        }
-        for (at, _) in lower.match_indices("url(") {
-            let value: String = css[at + 4..]
-                .chars()
-                .skip_while(|c| c.is_whitespace() || *c == '\'' || *c == '"')
-                .take_while(|c| !c.is_whitespace() && !")'\"".contains(*c))
-                .collect();
-            if is_external(&value) {
-                refs.borrow_mut().push(value);
-            }
-        }
+        let collected = css.borrow().clone();
+        refs.borrow_mut().extend(css_refs(&collected));
         refs.borrow().clone()
     }
 }
