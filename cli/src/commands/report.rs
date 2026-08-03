@@ -717,6 +717,11 @@ mod tests {
             r#"@font-face{src:url("//cdn.example/x.woff")}"#,
             r#"@font-face{src:url('//cdn.example/x.woff')}"#,
             r#"@font-face{src:url( //cdn.example/x.woff )}"#,
+            // HTML allows whitespace around an attribute's `=`; a browser
+            // fetches these exactly as it does the unspaced forms.
+            r#"<script src = "//cdn.example/x.js"></script>"#,
+            r#"<link href = '//cdn.example/a.css'>"#,
+            r#"<script src=  //cdn.example/x.js></script>"#,
         ] {
             assert!(
                 protocol_relative_ref(spelling).is_some(),
@@ -746,16 +751,25 @@ mod tests {
     /// A fixed list of literal probes (`src="//`, `url(//`, …) only catches the
     /// quoting style it happens to spell out, so `src='//cdn/x.js'`,
     /// `url("//cdn/x.woff")` and `url( //cdn/x.woff )` all slip past while the
-    /// page still performs the fetch the test forbids. Match the carrier
-    /// (`src=`, `href=`, `url(`) and then skip any quoting/whitespace, so every
-    /// spelling is covered by construction rather than by enumeration.
+    /// page still performs the fetch the test forbids. Match the carrier and
+    /// then skip every separator HTML and CSS allow between it and the URL —
+    /// quotes, whitespace, and the whitespace HTML permits around an
+    /// attribute's `=` (`src = "//cdn/x.js"` is valid markup and fetches) — so
+    /// spellings are covered by construction rather than by enumeration.
     fn protocol_relative_ref(html: &str) -> Option<String> {
+        const SEPARATORS: [char; 6] = [' ', '\t', '\r', '\n', '\'', '"'];
         for (idx, _) in html.match_indices("//") {
-            let preceding = html[..idx].trim_end_matches([' ', '\t', '\r', '\n', '\'', '"']);
-            if ["src=", "href=", "url("]
-                .iter()
-                .any(|carrier| preceding.ends_with(carrier))
-            {
+            let preceding = html[..idx].trim_end_matches(SEPARATORS);
+            // `url(` carries no `=`; an attribute does, and may be spaced
+            // around it. Strip the `=` and re-trim before naming the attribute.
+            let is_carrier = match preceding.strip_suffix('=') {
+                Some(attribute) => {
+                    let attribute = attribute.trim_end_matches(SEPARATORS);
+                    attribute.ends_with("src") || attribute.ends_with("href")
+                }
+                None => preceding.ends_with("url("),
+            };
+            if is_carrier {
                 return Some(html[idx..].chars().take(40).collect());
             }
         }
