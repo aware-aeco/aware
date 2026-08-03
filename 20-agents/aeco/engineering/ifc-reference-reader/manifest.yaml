@@ -18,15 +18,21 @@ agent:        ifc-reference-reader
 # NOT additive is the absence of these fields: a pre-1.2.0 BRIDGE serves this manifest and omits them,
 # so absent means "this bridge cannot answer", never "this file has no storeys" (the same caution
 # `frame` and `propertySets` already require — see BREAKING.md).
-version:      1.2.0
+# 1.3.0: `read-model` objects now carry `colors` — the file's own surface colours, as runs over the
+# index buffer (colour is per placed geometry, and 6,358 of one real model's 77,118 objects carry more
+# than one). Additive, so MINOR. The absence caution applies here too and is sharper than usual: an
+# unstyled file and a pre-1.3.0 BRIDGE both say nothing, because web-ifc reports opaque white for
+# unstyled geometry and white cannot be told from an authored white. Both silences mean the same thing
+# to a consumer — render your own default — so the ambiguity costs nothing (see read-model.md).
+version:      1.3.0
 display-name: IFC Reference Reader (whole model → mesh)
 description: |
   Read a WHOLE IFC file as a reference model — borrowed geometry you overlay, measure and build to,
   but never own. Returns AWARE's generic kind:"mesh" scene primitive (positions+indices) in canonical
   millimetres for every element, plus what the file says about each one: name, IFC type, storey,
-  profile designation, material, and every property set verbatim — which in a real file is often the
-  only thing that tells one object from another. Drives the bundled web-ifc WASM parser; it never re-implements an
-  IFC geometry kernel.
+  profile designation, material, every property set verbatim — which in a real file is often the
+  only thing that tells one object from another — and the surface colours it is styled with. Drives the
+  bundled web-ifc WASM parser; it never re-implements an IFC geometry kernel.
 
   ONE FRAME for both commands: IFC's own Z-up world frame, in millimetres — reported as `frame` in
   every output, so a consumer checks it rather than assuming it. `read-model`'s vertices and `probe`'s
@@ -165,6 +171,14 @@ commands:
       settle without a real file). Values are canonical text, not the file's literal tokens: web-ifc
       parses before we see them, so an authored 1.2300 arrives as 1.23.
 
+      Each object also carries `colors` — the surface colours the file styles it with, as runs over
+      the index buffer, because colour is per placed geometry and one object routinely has several
+      (6,358 of 77,118 in one real steel export). It is ABSENT, never empty, when the file authors no
+      colour at all: web-ifc reports opaque WHITE for unstyled geometry and white is indistinguishable
+      from a wall the architect painted white, so the question is asked of the FILE — does it carry any
+      IfcSurfaceStyle? — and the answer gates the whole field. A consumer that sees no colours renders
+      its own default rather than a white nobody chose.
+
       `[]` means the file carries none. A MISSING field means something else: the bridge binary is
       installed separately and a pre-1.1.0 one omits it entirely under this manifest, so absent reads
       as "this bridge cannot answer" — the same caution `frame` already requires. A consumer caching
@@ -216,7 +230,13 @@ commands:
                        # version cannot speak for it (see BREAKING.md)
         objects: array # [{ id, name, ifcType, storey, profile, material,
                        #    propertySets: [{ name, properties: [{ name, value }] }],
-                       #    positions: [mm], indices }]
+                       #    positions: [mm], indices,
+                       #    colors?: [{ rgba: [r,g,b,a], start, count }] }]
+                       # `colors` are the file's own surface colours as RUNS over `indices` — colour
+                       # is per placed geometry, not per object. ABSENT (never []) when the file
+                       # authors no colour at all: web-ifc reports opaque WHITE for unstyled
+                       # geometry, so a consumer handed that would paint an unstyled model white and
+                       # call it real. See read-model.md
         skipped: number # products streamed but carrying no drawable triangle — counted, never
                         # dropped silently, so a consumer can reconcile against probe.elements
         count: number   # objects returned. Present always; equals objects.length
