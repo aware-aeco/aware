@@ -114,7 +114,8 @@ All skill creation, modification, or porting routes through Anthropic's `skill-c
 
 ### Git workflow
 
-- **Committing is pre-approved for this project.** You have standing approval to create commits when a unit of work is complete — no need to ask per commit. (Pushing, force-pushing, and merging to `main` still require explicit approval each time.)
+- **Committing is pre-approved for this project.** You have standing approval to create commits when a unit of work is complete — no need to ask per commit. (Pushing and force-pushing still require explicit approval each time. Merging to `main` does too, with one carve-out below.)
+- **Carve-out — a gated PR may merge itself.** The scheduled maintenance routines that open `routine/*` PRs may merge their own PR without asking, but only when Codex's GitHub code review has reviewed the **final** commit and has nothing outstanding, and CI is green on that same commit. Codex names the commit it read, so an approval from before a fix does not cover the fix — pushing changes forces a re-review. If Codex never responded and only a same-model in-harness reviewer ran, the PR stays open for a human: merging is earned by a cross-model review, not by the absence of one. A refused merge stays refused — never `--admin`, never force. Granted by Pawel 2026-08-02, when that Codex gate went in; before it there was no cross-model review available to an unattended run, which is why this rule was absolute. Nothing else about `main` changes: direct pushes still need approval.
 - **No `Co-Authored-By: Claude ...` trailers** in commit messages.
 - **Session cleanup before commit** — delete `tmpclaude-*` temp files first.
 - Stage specific files (`git add <path>`); avoid `git add -A` to prevent accidental secret commits.
