@@ -91,10 +91,32 @@ fn the_report_describes_the_agents_that_were_discovered() {
         html.contains(&format!("<b>{installed}</b> agents")),
         "header count disagrees with the rendered sections"
     );
-    assert!(
-        html.contains(r#"<span class="aname">tekla</span>"#),
-        "a known fixture agent is missing from the report"
+    // Derive the names to look for from the fixture rather than pinning one.
+    // Naming a repository agent (`tekla`) coupled this command-plumbing test to
+    // substrate content: renaming or retiring that agent would fail it even
+    // though the report still rendered every discovered agent correctly. The
+    // rendered name is the manifest's `agent:` field, which is what
+    // `render_agent_section` puts in the `aname` span.
+    let mut rendered_ids: Vec<String> = std::fs::read_dir(home.join("agents"))
+        .unwrap()
+        .filter_map(|entry| {
+            let text = std::fs::read_to_string(entry.ok()?.path().join("manifest.yaml")).ok()?;
+            let manifest: serde_yaml::Value = serde_yaml::from_str(&text).ok()?;
+            Some(manifest.get("agent")?.as_str()?.to_string())
+        })
+        .collect();
+    rendered_ids.sort();
+    assert_eq!(
+        rendered_ids.len(),
+        installed,
+        "could not read an `agent:` id for every fixture agent"
     );
+    for id in &rendered_ids {
+        assert!(
+            html.contains(&format!(r#"<span class="aname">{id}</span>"#)),
+            "discovered agent `{id}` is missing from the report"
+        );
+    }
 }
 
 #[test]

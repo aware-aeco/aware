@@ -687,18 +687,78 @@ mod tests {
         // reach out — and a protocol-relative `//cdn/...` names no scheme at
         // all. Match on the URL forms themselves rather than on the attribute
         // that happens to carry them.
-        for probe in [
-            "http://",
-            "https://",
-            "@import",
-            "url(//",
-            "src=\"//",
-            "href=\"//",
-        ] {
+        for probe in ["http://", "https://", "@import"] {
             assert!(
                 !html.contains(probe),
                 "report reaches out to the network via `{probe}`; it must be self-contained"
             );
         }
+        if let Some(found) = protocol_relative_ref(&html) {
+            panic!(
+                "report reaches out to the network via a protocol-relative URL (`{found}`); \
+                 it must be self-contained"
+            );
+        }
+    }
+
+    /// Pins the detector's coverage, so the self-contained assertion above
+    /// can't quietly go back to passing on a page that does fetch. Every
+    /// spelling here was reachable past the old literal-probe list except the
+    /// three it happened to name.
+    #[test]
+    fn a_protocol_relative_ref_is_caught_in_every_spelling() {
+        for spelling in [
+            r#"<script src="//cdn.example/x.js"></script>"#,
+            r#"<script src='//cdn.example/x.js'></script>"#,
+            r#"<script src=//cdn.example/x.js></script>"#,
+            r#"<link href="//cdn.example/a.css">"#,
+            r#"<link href='//cdn.example/a.css'>"#,
+            r#"@font-face{src:url(//cdn.example/x.woff)}"#,
+            r#"@font-face{src:url("//cdn.example/x.woff")}"#,
+            r#"@font-face{src:url('//cdn.example/x.woff')}"#,
+            r#"@font-face{src:url( //cdn.example/x.woff )}"#,
+        ] {
+            assert!(
+                protocol_relative_ref(spelling).is_some(),
+                "a remote fetch spelled `{spelling}` slipped past the detector"
+            );
+        }
+
+        // And it must not fire on the inlined script/style the report legitimately
+        // carries — `//` opens a JS comment and appears inside ordinary strings,
+        // neither of which fetches anything. A detector that flags those would be
+        // turned off rather than fixed.
+        for benign in [
+            "<script>\n// a comment\nlet x = 1;\n</script>",
+            r#"<script>const u = "a//b";</script>"#,
+            "<style>a{color:#fff}</style>",
+        ] {
+            assert_eq!(
+                protocol_relative_ref(benign),
+                None,
+                "detector false-positived on `{benign}`"
+            );
+        }
+    }
+
+    /// First protocol-relative reference (`//host/…`) in `html`, if any.
+    ///
+    /// A fixed list of literal probes (`src="//`, `url(//`, …) only catches the
+    /// quoting style it happens to spell out, so `src='//cdn/x.js'`,
+    /// `url("//cdn/x.woff")` and `url( //cdn/x.woff )` all slip past while the
+    /// page still performs the fetch the test forbids. Match the carrier
+    /// (`src=`, `href=`, `url(`) and then skip any quoting/whitespace, so every
+    /// spelling is covered by construction rather than by enumeration.
+    fn protocol_relative_ref(html: &str) -> Option<String> {
+        for (idx, _) in html.match_indices("//") {
+            let preceding = html[..idx].trim_end_matches([' ', '\t', '\r', '\n', '\'', '"']);
+            if ["src=", "href=", "url("]
+                .iter()
+                .any(|carrier| preceding.ends_with(carrier))
+            {
+                return Some(html[idx..].chars().take(40).collect());
+            }
+        }
+        None
     }
 }
