@@ -734,12 +734,19 @@ mod tests {
             r#"<style>@font-face{src:url( //cdn.example/x.woff )}</style>"#,
             r#"<style>@font-face{src:URL(//fonts/x.woff)}</style>"#,
             r#"<style>@import "//cdn.example/a.css";</style>"#,
+            // CSS unescapes identifiers, so this is the `url()` function
+            // spelled around a substring scan.
+            r#"<style>a{background:u\72 l(//cdn.example/x.png)}</style>"#,
+            r#"<style>a{background:\75 rl("//cdn.example/y.png")}</style>"#,
             // CSS in a `style` attribute fetches exactly as a stylesheet does.
             r#"<div style="background-image:url(//cdn.example/x.png)"></div>"#,
             r#"<div style="background:URL('//assets/y.png')"></div>"#,
             // `srcdoc` is a whole nested document, escaped into an attribute.
             r#"<iframe srcdoc="&lt;img src='//cdn.example/x.png'&gt;"></iframe>"#,
             r#"<iframe srcdoc="&lt;link href=&quot;//cdn/a.css&quot;&gt;"></iframe>"#,
+            // Numeric character references spell the same nested document.
+            r#"<iframe srcdoc="&#60;img src='//cdn/x.png'&#62;"></iframe>"#,
+            r#"<iframe srcdoc="&#x3C;img src='//cdn/x.png'&#x3E;"></iframe>"#,
             // A `srcset` whose remote candidate follows a comma-bearing data URI.
             r#"<img srcset="data:image/gif;base64,R0lGOD 1x, //cdn.example/x.png 2x">"#,
             // A second file is not self-contained either, whatever the scheme.
@@ -780,6 +787,14 @@ mod tests {
             r#"<img srcset="data:image/gif;base64,AAA 1x, data:image/gif;base64,BBB 2x">"#,
             // A `style` attribute carrying no URL at all.
             r#"<div style="color:#fff;background:#000"></div>"#,
+            // `url(` inside a CSS comment or string fetches nothing. Flagging
+            // either would fail the report over a note someone left in STYLE.
+            "<style>/* see url(//cdn/x.png) for why */a{color:#fff}</style>",
+            r#"<style>a::after{content:"url(//cdn/x.png)"}</style>"#,
+            r#"<style>a::after{content:'@import "//cdn/a.css"'}</style>"#,
+            // A quoted argument to a real url() is still read, so the string
+            // handling must locate strings rather than strip them.
+            r#"<style>a{background:url("data:image/gif;base64,AAA")}</style>"#,
             // A nested document that is itself self-contained.
             r#"<iframe srcdoc="&lt;p&gt;hello&lt;/p&gt;"></iframe>"#,
         ] {
@@ -854,6 +869,26 @@ mod tests {
             unexpected_attributes.is_empty(),
             "report emits unlisted attributes {unexpected_attributes:?}; if one of these is \
              URL-bearing the document is no longer self-contained"
+        );
+
+        // And the converse. A subset check alone is only as good as the
+        // fixture: a branch this render never took could emit anything and the
+        // list would still look satisfied. Requiring every listed name to
+        // actually appear makes an inadequate fixture a failure here rather
+        // than a silent hole, and stops the list going stale as the renderer
+        // drops elements.
+        let missing_elements: Vec<_> = ELEMENTS
+            .iter()
+            .filter(|e| !elements.contains(**e))
+            .collect();
+        let missing_attributes: Vec<_> = ATTRIBUTES
+            .iter()
+            .filter(|a| !attributes.contains(**a))
+            .collect();
+        assert!(
+            missing_elements.is_empty() && missing_attributes.is_empty(),
+            "these are listed but never rendered: {missing_elements:?} {missing_attributes:?} — \
+             either the fixture stopped exercising a branch, or the list is stale"
         );
     }
 
@@ -954,22 +989,65 @@ mod tests {
         /// `url(…)` and `@import` targets in CSS — a stylesheet's text, or a
         /// `style` attribute, which carries the same CSS and fetches the same
         /// way.
+        ///
+        /// Tokenized with `cssparser`, for the same reason the HTML is
+        /// tokenized: a substring scan cannot see CSS token boundaries. It
+        /// reports `content: "url(//cdn/x)"` and `/* url(//cdn/x) */`, neither
+        /// of which fetches, and misses `u\72l(//cdn/x)`, which does — CSS
+        /// unescapes identifiers, so that is the `url()` function by another
+        /// spelling.
         fn css_refs(css: &str) -> Vec<String> {
-            let mut out = Vec::new();
-            let lower = css.to_ascii_lowercase();
-            if lower.contains("@import") {
-                out.push("@import".to_string());
-            }
-            for (at, _) in lower.match_indices("url(") {
-                let value: String = css[at + 4..]
-                    .chars()
-                    .skip_while(|c| c.is_whitespace() || *c == '\'' || *c == '"')
-                    .take_while(|c| !c.is_whitespace() && !")'\"".contains(*c))
-                    .collect();
-                if is_external(&value) {
-                    out.push(value);
+            use cssparser::{ParseError, Parser, ParserInput, Token};
+
+            fn collect(parser: &mut Parser, out: &mut Vec<String>) {
+                loop {
+                    // Cloned so the borrow of `parser` ends before descending.
+                    let token = match parser.next_including_whitespace_and_comments() {
+                        Ok(token) => token.clone(),
+                        Err(_) => break,
+                    };
+                    match token {
+                        Token::UnquotedUrl(value) if is_external(&value) => {
+                            out.push(value.to_string());
+                        }
+                        Token::AtKeyword(name) if name.eq_ignore_ascii_case("import") => {
+                            out.push("@import".to_string());
+                        }
+                        // `url("…")` tokenizes as a function whose block holds
+                        // the quoted target. Any other function may nest one,
+                        // so every block is walked.
+                        Token::Function(name) => {
+                            let is_url = name.eq_ignore_ascii_case("url");
+                            let sink = &mut *out;
+                            let _ = parser.parse_nested_block(|nested| {
+                                if is_url
+                                    && let Ok(Token::QuotedString(value)) = nested.next()
+                                    && is_external(value)
+                                {
+                                    sink.push(value.to_string());
+                                }
+                                collect(nested, sink);
+                                Ok::<(), ParseError<'_, ()>>(())
+                            });
+                        }
+                        Token::ParenthesisBlock
+                        | Token::SquareBracketBlock
+                        | Token::CurlyBracketBlock => {
+                            let sink = &mut *out;
+                            let _ = parser.parse_nested_block(|nested| {
+                                collect(nested, sink);
+                                Ok::<(), ParseError<'_, ()>>(())
+                            });
+                        }
+                        _ => {}
+                    }
                 }
             }
+
+            let mut input = ParserInput::new(css);
+            let mut parser = Parser::new(&mut input);
+            let mut out = Vec::new();
+            collect(&mut parser, &mut out);
             out
         }
 
@@ -977,12 +1055,43 @@ mod tests {
         /// intact. `srcdoc` carries a whole nested document escaped into an
         /// attribute, so it must be decoded before it can be tokenized.
         fn decode_entities(value: &str) -> String {
-            value
-                .replace("&lt;", "<")
-                .replace("&gt;", ">")
-                .replace("&quot;", "\"")
-                .replace("&#39;", "'")
-                .replace("&amp;", "&")
+            let mut out = String::with_capacity(value.len());
+            let mut rest = value;
+            while let Some(amp) = rest.find('&') {
+                out.push_str(&rest[..amp]);
+                rest = &rest[amp..];
+                let Some(semi) = rest.find(';') else { break };
+                let decoded = match &rest[1..semi] {
+                    "lt" => Some('<'),
+                    "gt" => Some('>'),
+                    "quot" => Some('"'),
+                    "apos" => Some('\''),
+                    "amp" => Some('&'),
+                    // Numeric references spell the same characters: `&#60;`
+                    // and `&#x3C;` are both `<`, and a nested document escaped
+                    // that way must decode too.
+                    other => other.strip_prefix('#').and_then(|n| {
+                        match n.strip_prefix(['x', 'X']) {
+                            Some(hex) => u32::from_str_radix(hex, 16).ok(),
+                            None => n.parse::<u32>().ok(),
+                        }
+                        .and_then(char::from_u32)
+                    }),
+                };
+                match decoded {
+                    Some(c) => {
+                        out.push(c);
+                        rest = &rest[semi + 1..];
+                    }
+                    // Not a reference we know — keep the `&` and move on.
+                    None => {
+                        out.push('&');
+                        rest = &rest[1..];
+                    }
+                }
+            }
+            out.push_str(rest);
+            out
         }
 
         let refs = Rc::new(RefCell::new(Vec::<String>::new()));
