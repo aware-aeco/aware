@@ -7,6 +7,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 use crate::auth::config;
 use crate::auth::keychain::{self, StoredToken};
+use crate::auth::urlencode;
 use crate::error::AwareError;
 
 const REFRESH_BUFFER_SECS: i64 = 60;
@@ -93,10 +94,6 @@ pub fn ensure_fresh(
     };
     keychain::store_token(&new_token, alias, aware_home)?;
     Ok(new_token)
-}
-
-fn urlencode(s: &str) -> String {
-    url::form_urlencoded::byte_serialize(s.as_bytes()).collect()
 }
 
 #[cfg(test)]

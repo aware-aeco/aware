@@ -18,6 +18,7 @@ mod context;
 mod envelope;
 mod error;
 mod install;
+mod json;
 mod lockfile;
 mod manifest;
 mod paths;

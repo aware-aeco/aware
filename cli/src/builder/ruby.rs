@@ -16,7 +16,9 @@ use std::io::Read;
 use flate2::read::GzDecoder;
 use tar::Archive;
 
-use crate::builder::{GeneratedAgent, GeneratedCommand, GeneratedSkill, Provenance, now_iso};
+use crate::builder::{
+    GeneratedAgent, GeneratedCommand, GeneratedSkill, Provenance, kebab_ascii, now_iso,
+};
 use crate::error::AwareError;
 
 pub fn build_from_ruby(spec: &str, agent_id: Option<&str>) -> Result<GeneratedAgent, AwareError> {
@@ -161,7 +163,7 @@ fn extract_surface(
             if let Some(rest) = trimmed.strip_prefix("def ")
                 && let Some((name, args, is_self)) = parse_method_def(rest)
             {
-                let cmd_id = kebab(&format!("{current_class}-{name}"));
+                let cmd_id = kebab_ascii(&format!("{current_class}-{name}"));
                 let sep = if is_self { "." } else { "#" };
                 let display = if args.is_empty() {
                     format!("{current_class}{sep}{name}")
@@ -189,7 +191,7 @@ fn extract_surface(
     let mut skills: Vec<GeneratedSkill> = by_class
         .into_iter()
         .map(|(class_name, methods)| {
-            let stem = kebab(&class_name);
+            let stem = kebab_ascii(&class_name);
             let listing = methods
                 .iter()
                 .map(|(m, a, is_self)| {
@@ -300,21 +302,6 @@ fn parse_gemspec(yaml: &str) -> (String, String) {
         }
     }
     (description, license)
-}
-
-fn kebab(s: &str) -> String {
-    let mut out = String::new();
-    for ch in s.chars() {
-        if ch.is_ascii_alphanumeric() {
-            if ch.is_ascii_uppercase() && !out.is_empty() && !out.ends_with('-') {
-                out.push('-');
-            }
-            out.push(ch.to_ascii_lowercase());
-        } else if !out.is_empty() && !out.ends_with('-') {
-            out.push('-');
-        }
-    }
-    out.trim_matches('-').to_string()
 }
 
 #[cfg(test)]

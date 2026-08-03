@@ -16,6 +16,7 @@ use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use crate::auth::config::IntegrationConfig;
 use crate::auth::keychain::{StoredToken, TokenSource};
+use crate::auth::urlencode;
 use crate::error::AwareError;
 
 /// Per-integration device-authorization endpoint. Returned alongside the
@@ -293,19 +294,6 @@ fn read_body(resp: ureq::Response) -> Result<String, AwareError> {
     Ok(buf)
 }
 
-fn urlencode(s: &str) -> String {
-    let mut out = String::with_capacity(s.len());
-    for b in s.bytes() {
-        match b {
-            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'_' | b'.' | b'~' => {
-                out.push(b as char);
-            }
-            _ => out.push_str(&format!("%{b:02X}")),
-        }
-    }
-    out
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -434,15 +422,5 @@ mod tests {
         let cfg = config::for_integration("trimble-connect").unwrap();
         let e = device_endpoints_for(&cfg, None);
         assert!(e.device_authorization_url.is_empty());
-    }
-
-    #[test]
-    fn urlencode_preserves_unreserved_chars() {
-        assert_eq!(urlencode("hello.world-test_X~"), "hello.world-test_X~");
-    }
-
-    #[test]
-    fn urlencode_percent_encodes_reserved() {
-        assert_eq!(urlencode("a b/c"), "a%20b%2Fc");
     }
 }

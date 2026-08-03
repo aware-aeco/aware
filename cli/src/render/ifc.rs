@@ -19,6 +19,7 @@
 //! elements, reals use a fixed invariant format, and the SPF stamp is fixed — no clock, no environment.
 
 use crate::error::AwareError;
+use crate::json::type_name as json_type;
 use serde_json::Value;
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
@@ -3270,18 +3271,6 @@ pub fn ifc_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     }
 
     Ok(Value::Object(out))
-}
-
-/// JSON type name for clear validation errors.
-fn json_type(v: &Value) -> &'static str {
-    match v {
-        Value::Null => "null",
-        Value::Bool(_) => "boolean",
-        Value::Number(_) => "number",
-        Value::String(_) => "string",
-        Value::Array(_) => "array",
-        Value::Object(_) => "object",
-    }
 }
 
 #[cfg(test)]

@@ -20,7 +20,9 @@ use std::path::{Path, PathBuf};
 
 use scraper::{Html, Selector};
 
-use crate::builder::{GeneratedAgent, GeneratedCommand, GeneratedSkill, Provenance, now_iso};
+use crate::builder::{
+    GeneratedAgent, GeneratedCommand, GeneratedSkill, Provenance, kebab_ascii, now_iso,
+};
 use crate::error::AwareError;
 
 pub fn build_from_url_or_dir(
@@ -47,7 +49,7 @@ pub fn build_from_url_or_dir(
         };
         let parsed = parse_class_page(&class_html);
         for m in &parsed.methods {
-            let cmd_name = kebab(&format!("{}-{}", parsed.class_name, m.name));
+            let cmd_name = kebab_ascii(&format!("{}-{}", parsed.class_name, m.name));
             commands.insert(
                 cmd_name,
                 GeneratedCommand {
@@ -62,7 +64,7 @@ pub fn build_from_url_or_dir(
         // One skill per class — captures the class-level docstring + a roster
         // of its methods so the AI can find the right command.
         let pkg_lower = "yard";
-        let skill_stem = kebab(&parsed.class_name);
+        let skill_stem = kebab_ascii(&parsed.class_name);
         let method_list = parsed
             .methods
             .iter()
@@ -266,24 +268,6 @@ fn text_of(el: &scraper::ElementRef) -> String {
     el.text().collect::<Vec<_>>().join("").replace('\n', " ")
 }
 
-fn kebab(s: &str) -> String {
-    let mut out = String::new();
-    let mut prev_was_sep = true;
-    for ch in s.chars() {
-        if ch.is_ascii_alphanumeric() {
-            if ch.is_ascii_uppercase() && !prev_was_sep && !out.ends_with('-') {
-                out.push('-');
-            }
-            out.push(ch.to_ascii_lowercase());
-            prev_was_sep = false;
-        } else if !out.is_empty() && !out.ends_with('-') {
-            out.push('-');
-            prev_was_sep = true;
-        }
-    }
-    out.trim_matches('-').to_string()
-}
-
 fn derive_id_from_input(input: &str) -> String {
     let trimmed = input.trim_end_matches('/');
     if let Some(host_pos) = trimmed.find("://") {
@@ -291,13 +275,13 @@ fn derive_id_from_input(input: &str) -> String {
         let host = host.split('/').next().unwrap_or(host);
         // strip leading 'www.' and trailing TLDs ad-hoc
         let host = host.trim_start_matches("www.");
-        return kebab(host.split('.').next().unwrap_or(host));
+        return kebab_ascii(host.split('.').next().unwrap_or(host));
     }
     let basename = Path::new(trimmed)
         .file_name()
         .and_then(|s| s.to_str())
         .unwrap_or(trimmed);
-    kebab(basename)
+    kebab_ascii(basename)
 }
 
 #[cfg(test)]
@@ -415,12 +399,5 @@ mod tests {
             derive_id_from_input("/local/path/sketchup-api"),
             "sketchup-api"
         );
-    }
-
-    #[test]
-    fn kebab_handles_namespaces_and_camelcase() {
-        assert_eq!(kebab("Sketchup::Animation"), "sketchup-animation");
-        assert_eq!(kebab("nextFrame"), "next-frame");
-        assert_eq!(kebab("ArcCurve"), "arc-curve");
     }
 }

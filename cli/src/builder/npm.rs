@@ -24,7 +24,9 @@ use std::io::Read;
 use flate2::read::GzDecoder;
 use tar::Archive;
 
-use crate::builder::{GeneratedAgent, GeneratedCommand, GeneratedSkill, Provenance, now_iso};
+use crate::builder::{
+    GeneratedAgent, GeneratedCommand, GeneratedSkill, Provenance, kebab_ascii, now_iso,
+};
 use crate::error::AwareError;
 
 pub fn build_from_npm(spec: &str, agent_id: Option<&str>) -> Result<GeneratedAgent, AwareError> {
@@ -223,7 +225,7 @@ fn extract_surface(
                 && brace_depth > current_depth
                 && let Some((mname, margs)) = parse_method_decl(line)
             {
-                let cmd_id = kebab(&format!("{cur}-{mname}"));
+                let cmd_id = kebab_ascii(&format!("{cur}-{mname}"));
                 let display = if margs.is_empty() {
                     format!("{cur}.{mname}()")
                 } else {
@@ -250,7 +252,7 @@ fn extract_surface(
                 && brace_depth == 0
                 && let Some((fname, fargs)) = parse_function_decl(line)
             {
-                let cmd_id = kebab(&fname);
+                let cmd_id = kebab_ascii(&fname);
                 commands.insert(
                     cmd_id,
                     GeneratedCommand {
@@ -283,7 +285,7 @@ fn extract_surface(
     let mut skills: Vec<GeneratedSkill> = by_class
         .into_iter()
         .map(|(class_name, methods)| {
-            let stem = kebab(&class_name);
+            let stem = kebab_ascii(&class_name);
             let listing = methods
                 .iter()
                 .map(|(m, a)| {
@@ -459,21 +461,6 @@ fn extract_params(s: &str) -> String {
     } else {
         String::new()
     }
-}
-
-fn kebab(s: &str) -> String {
-    let mut out = String::new();
-    for ch in s.chars() {
-        if ch.is_ascii_alphanumeric() {
-            if ch.is_ascii_uppercase() && !out.is_empty() && !out.ends_with('-') {
-                out.push('-');
-            }
-            out.push(ch.to_ascii_lowercase());
-        } else if !out.is_empty() && !out.ends_with('-') {
-            out.push('-');
-        }
-    }
-    out.trim_matches('-').to_string()
 }
 
 #[cfg(test)]
