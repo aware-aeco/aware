@@ -96,14 +96,18 @@ struct Envelope<'a, T: Serialize> {
 #[derive(Deserialize, Debug)]
 struct OkResponse {
     ok: bool,
-    /// Protocol version the sidecar stamps on every reply. Deserialized but
-    /// not read: the CLI pins the sidecar it downloads, so there is nothing
-    /// to negotiate. Kept because dropping it would make a reply carrying it
-    /// fail to parse the day we do want to check it.
+    /// Protocol version the sidecar stamps on every reply. Never read — the CLI
+    /// pins the sidecar it downloads, so there is nothing to negotiate. It is
+    /// required rather than `Option` on purpose: that makes a reply which omits
+    /// it fail to parse, so we never accept output from a process that isn't
+    /// speaking this envelope. Deleting the field would drop that check (there
+    /// is no `deny_unknown_fields` here — serde ignores keys it has no field
+    /// for, so an unmapped `version` would simply pass unnoticed).
     #[allow(dead_code)]
     version: String,
-    /// Echo of the request's `op`. Deserialized but not read — dispatch already
-    /// knows which op it sent. Kept for the same reason as `version`.
+    /// Echo of the request's `op`. Never read — dispatch already knows which op
+    /// it sent — and being `Option`, it asserts nothing either: a reply parses
+    /// whether or not it carries one. Kept purely as a record of the wire shape.
     #[allow(dead_code)]
     op: Option<String>,
     data: Option<ResponseData>,
@@ -458,5 +462,28 @@ mod tests {
         let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", "C:/this-does-not-exist-12345");
         let result = discover();
         assert!(matches!(result, Err(AwareError::NotFound(_))));
+    }
+
+    /// `OkResponse::version` is never read, so what earns it its place is the
+    /// parse itself: required-and-not-`Option` means a reply without a version
+    /// stamp is rejected rather than silently accepted. Asserted here so the
+    /// field's justification is enforced instead of merely claimed — delete the
+    /// field and this test fails.
+    #[test]
+    fn reply_without_version_is_rejected() {
+        let missing_version = r#"{"ok":true,"op":"reflect"}"#;
+        assert!(serde_json::from_str::<OkResponse>(missing_version).is_err());
+
+        let with_version = r#"{"ok":true,"version":"1.0.0","op":"reflect"}"#;
+        assert!(serde_json::from_str::<OkResponse>(with_version).is_ok());
+    }
+
+    /// The flip side, and the reason the comment on `version` does not claim
+    /// unknown keys are rejected: there is no `deny_unknown_fields` here, so a
+    /// key the struct has no field for is ignored, not an error.
+    #[test]
+    fn unmapped_keys_are_ignored() {
+        let extra = r#"{"ok":true,"version":"1.0.0","unmapped-key":42}"#;
+        assert!(serde_json::from_str::<OkResponse>(extra).is_ok());
     }
 }
