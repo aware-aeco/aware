@@ -69,7 +69,7 @@ pub fn dispatch(cmd: CoverageCommand, ctx: &Context) -> Result<(), AwareError> {
             let result = crate::builder::coverage::build_from_coverage(
                 &from_ir, &target, &agent_id, v, &vertical,
             )?;
-            println!("{}", serde_json::to_string_pretty(&result).unwrap());
+            println!("{}", serde_json::to_string_pretty(&result)?);
             Ok(())
         }
         CoverageCommand::Validate { ir, agent_dir } => {

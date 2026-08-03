@@ -48,7 +48,8 @@ pub fn print_ok<T: Serialize>(command: &str, data: T, started: Instant) -> std::
         error: None,
         meta: meta_for(command, started),
     };
-    println!("{}", serde_json::to_string(&env).unwrap());
+    let json = serde_json::to_string(&env).map_err(std::io::Error::other)?;
+    println!("{json}");
     Ok(())
 }
 

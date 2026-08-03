@@ -10,7 +10,7 @@
 
 use std::io::Read;
 use std::thread::sleep;
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::time::{Duration, SystemTime};
 
 use crate::auth::config::IntegrationConfig;
 use crate::auth::keychain::{StoredToken, TokenSource};
@@ -265,10 +265,7 @@ pub fn run_device_code_flow(
             .and_then(|v| v.as_str())
             .unwrap_or("Bearer")
             .to_string();
-        let now = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .unwrap()
-            .as_secs() as i64;
+        let now = super::unix_now_secs()?;
 
         return Ok(StoredToken {
             access_token,

@@ -10,6 +10,27 @@
 //! the v0.19 substrate primitives other than `assert:` (parsed +
 //! validated; runtime execution lands in v0.19.x patches).
 
+// CLAUDE.md §Code style: "Errors as data, not exceptions … No `unwrap()`
+// outside of tests + main entry." That rule had no gate. `clippy::unwrap_used`
+// and `expect_used` live in the `restriction` group, which `cargo clippy -D
+// warnings` does not enable, so 67 `unwrap()` and 2 `expect()` calls had
+// accumulated in non-test code with CI green throughout.
+//
+// This cannot be a `[lints.clippy]` entry in `Cargo.toml` the way
+// `undocumented_unsafe_blocks` is (#344): `[lints]` applies to every target in
+// the package, so it would also fire on the unit tests and on every file under
+// `tests/`, where CLAUDE.md explicitly permits `unwrap()`. Gating it here with
+// `cfg_attr(not(test), …)` encodes the carve-out exactly — the bin target is
+// linted, the same crate compiled under `cfg(test)` is not, and the integration
+// tests are separate crate roots this attribute never reaches.
+//
+// `cargo clippy --all-targets` builds the bin without `cfg(test)`, so the
+// existing CI gate enforces this with no new step.
+//
+// Note the limit: this catches `unwrap()`/`expect()` only. Indexing (`v[i]`),
+// slicing, and integer division are panics this does not see.
+#![cfg_attr(not(test), deny(clippy::unwrap_used, clippy::expect_used))]
+
 mod app_lock;
 mod auth;
 mod builder;

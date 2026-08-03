@@ -121,7 +121,7 @@ fn run_json(ctx: &Context) -> Result<(), AwareError> {
         "host_bridges": host_bridges,
     });
 
-    println!("{}", serde_json::to_string_pretty(&output).unwrap());
+    println!("{}", serde_json::to_string_pretty(&output)?);
     Ok(())
 }
 

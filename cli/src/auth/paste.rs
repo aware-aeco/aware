@@ -5,8 +5,6 @@
 //! encrypted to the OS keychain. The token NEVER flows through stdout or any
 //! AI chat — it only exists in the user's browser tab and the local keychain.
 
-use std::time::{SystemTime, UNIX_EPOCH};
-
 use crate::auth::keychain::{StoredToken, TokenSource};
 use crate::error::AwareError;
 
@@ -30,12 +28,7 @@ pub fn run_paste_flow(integration: &str) -> Result<StoredToken, AwareError> {
 
         match request.method().clone() {
             tiny_http::Method::Get => {
-                let html = render_paste_form(integration);
-                let response = tiny_http::Response::from_string(html).with_header(
-                    "Content-Type: text/html; charset=utf-8"
-                        .parse::<tiny_http::Header>()
-                        .unwrap(),
-                );
+                let response = super::html_response(render_paste_form(integration));
                 let _ = request.respond(response);
             }
             tiny_http::Method::Post => {
@@ -49,18 +42,10 @@ pub fn run_paste_flow(integration: &str) -> Result<StoredToken, AwareError> {
                 let token_value = extract_token_from_form(&body)?;
 
                 // Respond with success page BEFORE returning so the user sees it
-                let html = render_success_page();
-                let response = tiny_http::Response::from_string(html).with_header(
-                    "Content-Type: text/html; charset=utf-8"
-                        .parse::<tiny_http::Header>()
-                        .unwrap(),
-                );
+                let response = super::html_response(render_success_page());
                 let _ = request.respond(response);
 
-                let now = SystemTime::now()
-                    .duration_since(UNIX_EPOCH)
-                    .unwrap()
-                    .as_secs() as i64;
+                let now = super::unix_now_secs()?;
                 return Ok(StoredToken {
                     access_token: token_value,
                     refresh_token: None,
