@@ -114,7 +114,8 @@ All skill creation, modification, or porting routes through Anthropic's `skill-c
 
 ### Git workflow
 
-- **Committing is pre-approved for this project.** You have standing approval to create commits when a unit of work is complete — no need to ask per commit. (Pushing, force-pushing, and merging to `main` still require explicit approval each time.)
+- **Committing is pre-approved for this project.** You have standing approval to create commits when a unit of work is complete — no need to ask per commit. (Pushing and force-pushing still require explicit approval each time. Merging to `main` does too, with one carve-out below.)
+- **Carve-out — a gated PR may merge itself.** The scheduled maintenance routines that open `routine/*` PRs may merge their own PR without asking, but only when Codex's GitHub code review has reviewed the **final** commit and has nothing outstanding, and CI is green on that same commit. Codex names the commit it read, so an approval from before a fix does not cover the fix — pushing changes forces a re-review. If Codex never responded and only a same-model in-harness reviewer ran, the PR stays open for a human: merging is earned by a cross-model review, not by the absence of one. A refused merge stays refused — never `--admin`, never force. Granted by Pawel 2026-08-02, when that Codex gate went in; before it there was no cross-model review available to an unattended run, which is why this rule was absolute. Nothing else about `main` changes: direct pushes still need approval.
 - **No `Co-Authored-By: Claude ...` trailers** in commit messages.
 - **Session cleanup before commit** — delete `tmpclaude-*` temp files first.
 - Stage specific files (`git add <path>`); avoid `git add -A` to prevent accidental secret commits.
@@ -122,8 +123,8 @@ All skill creation, modification, or porting routes through Anthropic's `skill-c
 ### PR review — non-negotiable
 
 - **Every PR must be reviewed before merge.** No PR merges without a review pass; address all findings (or justify why not) before merging.
-- **Codex reviews first.** Run `codex exec review --base main` on the branch. Codex is the primary reviewer.
-- **Fall back to the local reviewer only if Codex is genuinely unavailable** (rate-limited, errored, or not installed): use the `pr-review-toolkit:code-reviewer` agent instead.
+- **Codex reviews first.** Codex is the primary reviewer, and it reaches the branch two ways. On a machine with the CLI, run `codex exec review --base main`. In an environment without it — notably the scheduled cloud routines, which have no Codex CLI, no credential and no egress of their own — comment `@codex review` on the PR and use Codex's GitHub code review, which runs from GitHub's side on the maintainer's ChatGPT subscription. **Both are Codex; either satisfies this rule.** Do not treat an absent CLI as an absent reviewer.
+- **Fall back to the local reviewer only if Codex is genuinely unavailable by BOTH routes** (CLI rate-limited/errored/not installed *and* no GitHub review inside the poll window): use the `pr-review-toolkit:code-reviewer` agent instead. A PR reviewed only that way must say so, and — per the Git workflow carve-out above — must not self-merge.
 - **Re-check Codex every time.** A one-time rate-limit (e.g. "try again at …") is *not* permanent — try Codex again on the next PR / next day before falling back. Don't coast on the local reviewer because Codex was down once.
 
 ## What's already shipped

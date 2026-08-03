@@ -86,8 +86,11 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
         return run_list(ctx);
     }
 
-    // `integration` is guaranteed Some by clap's `required_unless_present = "list"`.
-    let integration = args.integration.as_deref().unwrap();
+    // clap's `required_unless_present = "list"` should guarantee this is `Some`,
+    // but report it rather than panicking if that attribute is ever relaxed.
+    let integration = args.integration.as_deref().ok_or_else(|| {
+        AwareError::Validation("connect: INTEGRATION is required unless --list is given".into())
+    })?;
 
     // --set-app-secret: stash a BYO OAuth client secret (read from stdin) in the
     // keychain and exit. (#146)
@@ -305,11 +308,12 @@ fn run_set_app_secret(
         println!(
             "\u{2713} stored BYO client secret for {integration} (OS keychain or ~/.aware/credentials fallback)"
         );
-        if stored_default_for_alias {
+        // Only reachable with an alias in hand — bind it here rather than
+        // asserting that separately-computed flag implies `Some`.
+        if let Some(alias) = alias.filter(|_| stored_default_for_alias) {
             println!(
-                "  \u{00b7} no alias-specific profile for --as {}; stored for the default app \
-                 (shared by aliases that inherit the default profile)",
-                alias.unwrap()
+                "  \u{00b7} no alias-specific profile for --as {alias}; stored for the default app \
+                 (shared by aliases that inherit the default profile)"
             );
         }
     }
@@ -346,7 +350,7 @@ fn run_list(ctx: &Context) -> Result<(), AwareError> {
             .collect();
         println!(
             "{}",
-            serde_json::to_string_pretty(&serde_json::Value::Array(items)).unwrap()
+            serde_json::to_string_pretty(&serde_json::Value::Array(items))?
         );
     } else {
         println!("Credentials:");

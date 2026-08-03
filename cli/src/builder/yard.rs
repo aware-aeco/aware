@@ -12,8 +12,6 @@
 //! Accepts HTTP(S) URL (e.g. `https://ruby.sketchup.com/`) or a local
 //! directory (a YARD output dir on disk).
 
-#![allow(dead_code)]
-
 use std::collections::BTreeMap;
 use std::io::Read;
 use std::path::{Path, PathBuf};
@@ -166,7 +164,12 @@ impl YardSource {
 /// to each class page (e.g. `Sketchup/Animation.html`).
 fn parse_index_classes(html: &str) -> Vec<String> {
     let doc = Html::parse_document(html);
-    let sel = Selector::parse("a.object_link, span.object_link a").unwrap();
+    // The selector is a constant, so `Err` would mean a malformed literal, not
+    // bad input. An empty class list is the honest degradation — the caller
+    // already handles a page that yields no classes.
+    let Ok(sel) = Selector::parse("a.object_link, span.object_link a") else {
+        return Vec::new();
+    };
     let mut out: Vec<String> = Vec::new();
     for a in doc.select(&sel) {
         if let Some(href) = a.value().attr("href")
@@ -199,11 +202,13 @@ struct ParsedMethod {
 fn parse_class_page(html: &str) -> ParsedClass {
     let doc = Html::parse_document(html);
 
-    let h1_sel = Selector::parse("h1").unwrap();
-    let class_name = doc
-        .select(&h1_sel)
-        .next()
-        .map(|h| text_of(&h).trim().to_string())
+    let class_name = Selector::parse("h1")
+        .ok()
+        .and_then(|sel| {
+            doc.select(&sel)
+                .next()
+                .map(|h| text_of(&h).trim().to_string())
+        })
         .unwrap_or_else(|| "Unknown".into());
     // YARD <h1> is always "Class: <Name>" or "Module: <Name>"; strip the prefix.
     let class_name = class_name
@@ -220,11 +225,21 @@ fn parse_class_page(html: &str) -> ParsedClass {
             .trim()
             .to_string();
 
-    let sig_sel = Selector::parse("h3.signature").unwrap();
     let mut methods = Vec::new();
+    // Both selectors are constants — hoisted out of the loop so `strong` is
+    // compiled once rather than per `<h3>`, and so a malformed literal yields
+    // an empty method list instead of a panic.
+    let (Ok(sig_sel), Ok(strong_sel)) =
+        (Selector::parse("h3.signature"), Selector::parse("strong"))
+    else {
+        return ParsedClass {
+            class_name,
+            class_doc,
+            methods,
+        };
+    };
     for h3 in doc.select(&sig_sel) {
         // Method name is inside <strong>...</strong>
-        let strong_sel = Selector::parse("strong").unwrap();
         let name = h3
             .select(&strong_sel)
             .next()

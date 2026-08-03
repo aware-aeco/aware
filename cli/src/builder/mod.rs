@@ -2,8 +2,6 @@
 //!
 //! Per-source builders land in tasks 3-7 (openapi / cli_help / nuget / python / stubs).
 
-#![allow(dead_code)]
-
 pub mod cli_help;
 pub mod coverage;
 pub mod npm;

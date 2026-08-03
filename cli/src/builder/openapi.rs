@@ -3,8 +3,6 @@
 //! Walks `paths.<path>.<method>` operations and emits one command per operation.
 //! Accepts JSON or YAML; HTTP(S) URL or local file path.
 
-#![allow(dead_code)]
-
 use std::collections::BTreeMap;
 use std::io::Read;
 

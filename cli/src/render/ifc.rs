@@ -2628,23 +2628,31 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                 let frame = op.get("frame").and_then(Value::as_object).ok_or_else(|| {
                     AwareError::Validation(format!("ifc write: `{path}.frame` is required"))
                 })?;
-                for field in ["origin", "uDir", "vDir", "normal"] {
-                    if vec3(frame.get(field)).is_none()
-                        || (field != "origin"
-                            && vec3(frame.get(field)).and_then(normalize3).is_none())
-                    {
-                        return Err(AwareError::Validation(format!(
+                // Parse each frame field once, at the point of use, so the
+                // validation and the extraction cannot drift apart.
+                let frame_vec3 = |field: &str| {
+                    vec3(frame.get(field)).ok_or_else(|| {
+                        AwareError::Validation(format!(
                             "ifc write: `{path}.frame.{field}` must be a valid Vec3"
-                        )));
-                    }
-                }
-                let origin = vec3(frame.get("origin")).unwrap();
-                let u = normalize3(vec3(frame.get("uDir")).unwrap()).unwrap();
-                let v = normalize3(vec3(frame.get("vDir")).unwrap()).unwrap();
-                let normal = normalize3(vec3(frame.get("normal")).unwrap()).unwrap();
-                if dot3(u, v).abs() > 1.0e-6
-                    || dot3(normalize3(cross3(u, v)).unwrap(), normal) < 1.0 - 1.0e-6
-                {
+                        ))
+                    })
+                };
+                let frame_direction = |field: &str| {
+                    normalize3(frame_vec3(field)?).ok_or_else(|| {
+                        AwareError::Validation(format!(
+                            "ifc write: `{path}.frame.{field}` must be a valid Vec3"
+                        ))
+                    })
+                };
+                let origin = frame_vec3("origin")?;
+                let u = frame_direction("uDir")?;
+                let v = frame_direction("vDir")?;
+                let normal = frame_direction("normal")?;
+                // A zero-length cross product means `uDir` and `vDir` are
+                // parallel — the same "not orthonormal" failure reported here.
+                let right_handed = normalize3(cross3(u, v))
+                    .is_some_and(|cross| dot3(cross, normal) >= 1.0 - 1.0e-6);
+                if dot3(u, v).abs() > 1.0e-6 || !right_handed {
                     return Err(AwareError::Validation(format!(
                         "ifc write: `{path}.frame` must be right-handed and orthonormal"
                     )));
@@ -2656,19 +2664,18 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                             "ifc write: `{path}.{field}` must be an array"
                         ))
                     })?;
-                    if values.is_empty()
-                        || values
-                            .iter()
-                            .any(|value| value.as_f64().is_none_or(|number| !number.is_finite()))
-                    {
-                        return Err(AwareError::Validation(format!(
-                            "ifc write: `{path}.{field}` must contain finite offsets"
-                        )));
-                    }
+                    // One pass: reject a non-finite entry and keep the parsed
+                    // value, instead of checking and then re-reading it.
                     let parsed = values
                         .iter()
-                        .map(|value| value.as_f64().unwrap())
-                        .collect::<Vec<_>>();
+                        .map(|value| value.as_f64().filter(|number| number.is_finite()))
+                        .collect::<Option<Vec<_>>>()
+                        .filter(|parsed: &Vec<f64>| !parsed.is_empty())
+                        .ok_or_else(|| {
+                            AwareError::Validation(format!(
+                                "ifc write: `{path}.{field}` must contain finite offsets"
+                            ))
+                        })?;
                     if parsed
                         .iter()
                         .enumerate()
@@ -2790,10 +2797,22 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                                         "ifc write: `{instance_path}.{field}` requires an axis object"
                                     ))
                                 })?;
-                            let from = vec3(axis.get("from")).unwrap();
-                            let to = vec3(axis.get("to")).unwrap();
+                            let axis_endpoint = |end: &str| {
+                                vec3(axis.get(end)).ok_or_else(|| {
+                                    AwareError::Validation(format!(
+                                        "ifc write: `{instance_path}.{field}` axis `{end}` must be a valid Vec3"
+                                    ))
+                                })
+                            };
+                            let from = axis_endpoint("from")?;
+                            let to = axis_endpoint("to")?;
                             let direction =
-                                normalize3((to.0 - from.0, to.1 - from.1, to.2 - from.2)).unwrap();
+                                normalize3((to.0 - from.0, to.1 - from.1, to.2 - from.2))
+                                    .ok_or_else(|| {
+                                        AwareError::Validation(format!(
+                                            "ifc write: `{instance_path}.{field}` shank axis must have nonzero length"
+                                        ))
+                                    })?;
                             let offset = (
                                 instance_point.0 - from.0,
                                 instance_point.1 - from.1,
@@ -2802,7 +2821,11 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                             let child_diameter = child_element
                                 .get("diameterMm")
                                 .and_then(Value::as_f64)
-                                .unwrap();
+                                .ok_or_else(|| {
+                                    AwareError::Validation(format!(
+                                        "ifc write: `{instance_path}.{field}` requires a numeric `diameterMm`"
+                                    ))
+                                })?;
                             if (dot3(direction, normal).abs() - 1.0).abs() > 1.0e-6
                                 || length3(cross3(offset, direction)) > 0.1
                                 || (child_diameter - diameter).abs() > 0.1
@@ -2812,10 +2835,18 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                                 )));
                             }
                         } else {
-                            let center = vec3(child_element.get("center")).unwrap();
+                            let center = vec3(child_element.get("center")).ok_or_else(|| {
+                                AwareError::Validation(format!(
+                                    "ifc write: `{instance_path}.{field}` requires a valid `center`"
+                                ))
+                            })?;
                             let child_axis = vec3(child_element.get("axis"))
                                 .and_then(normalize3)
-                                .unwrap();
+                                .ok_or_else(|| {
+                                AwareError::Validation(format!(
+                                    "ifc write: `{instance_path}.{field}` requires a nonzero `axis`"
+                                ))
+                            })?;
                             let offset = (
                                 center.0 - instance_point.0,
                                 center.1 - instance_point.1,
@@ -2856,10 +2887,18 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                             if let Some((material, _)) = resolve_material(child_element) {
                                 bolt_materials.insert(material);
                             }
-                            let center = vec3(child_element.get("center")).unwrap();
+                            let center = vec3(child_element.get("center")).ok_or_else(|| {
+                                AwareError::Validation(format!(
+                                    "ifc write: `{instance_path}.{field}` requires a valid `center`"
+                                ))
+                            })?;
                             let child_axis = vec3(child_element.get("axis"))
                                 .and_then(normalize3)
-                                .unwrap();
+                                .ok_or_else(|| {
+                                AwareError::Validation(format!(
+                                    "ifc write: `{instance_path}.{field}` requires a nonzero `axis`"
+                                ))
+                            })?;
                             let offset = (
                                 center.0 - instance_point.0,
                                 center.1 - instance_point.1,
@@ -4001,6 +4040,29 @@ mod tests {
             .push(json!({ "id": "BA-1-H-PL2", "targetId": "PL-2",
                           "center": [100,0,0], "axis": [0,0,1], "diameterMm": 22 }));
         scene
+    }
+
+    /// Pins the orthonormality rejection across this module's frame-parsing
+    /// rewrite (validation and extraction merged into `frame_vec3` /
+    /// `frame_direction`).
+    ///
+    /// Unlike the viewer's equivalent, this is *not* a panic regression test —
+    /// the `normalize3(cross3(u, v)).unwrap()` it replaced was unreachable, and
+    /// a mutation check confirms it: `dot3(u, v).abs() > 1.0e-6` short-circuits
+    /// first for a parallel frame, and for a genuinely perpendicular pair of
+    /// unit vectors the cross product has length 1, never 0. This module's
+    /// `normalize3` also guards `n.is_finite()`, so the overflowing-direction
+    /// route that *does* reach the viewer's panic is caught here as an invalid
+    /// `Vec3` well before the frame check.
+    #[test]
+    fn parallel_bolt_frame_is_rejected() {
+        let mut scene = double_shear_scene();
+        scene["operations"][0]["frame"]["vDir"] = json!([1, 0, 0]);
+        let error = validate_scene(&scene).unwrap_err();
+        assert!(
+            error.to_string().contains("right-handed and orthonormal"),
+            "expected an orthonormality error, got: {error}"
+        );
     }
 
     #[test]

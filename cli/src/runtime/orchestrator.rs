@@ -4,8 +4,6 @@
 //! Task 11 adds long-running (streaming sources + per-event downstream propagation).
 //! Task 12 adds DAG fan-in.
 
-#![allow(dead_code)]
-
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -112,7 +110,7 @@ impl Orchestrator {
                 .nodes
                 .iter()
                 .find(|n| n.id == node_id)
-                .unwrap()
+                .ok_or_else(|| unknown_node(&node_id))?
                 .clone();
             let result = self.execute_node(&node).await;
             match result {
@@ -202,9 +200,11 @@ impl Orchestrator {
                 .nodes
                 .iter()
                 .find(|n| &n.id == source_id)
-                .unwrap()
+                .ok_or_else(|| unknown_node(source_id))?
                 .clone();
-            let agent = node.agent.as_ref().unwrap();
+            let agent = node.agent.as_ref().ok_or_else(|| {
+                AwareError::Validation(format!("node `{source_id}` declares no agent"))
+            })?;
             let command = node.command.as_deref().unwrap_or("");
             let args = render_config(
                 &yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?,
@@ -398,7 +398,7 @@ impl Orchestrator {
                     .nodes
                     .iter()
                     .find(|n| n.id == next_id)
-                    .unwrap()
+                    .ok_or_else(|| unknown_node(&next_id))?
                     .clone();
 
                 // ── Fan-in case ──────────────────────────────────────────────
@@ -436,7 +436,10 @@ impl Orchestrator {
 
                     // Pop the oldest entry from each slot and merge into one event.
                     let mut merged = serde_json::Map::new();
-                    let node_slots = self.fan_in.slots.get_mut(&next_id).unwrap();
+                    // `entry` rather than `get_mut`: the slot map for this node was
+                    // created by the `or_default()` above, so re-entering it is
+                    // equivalent and carries no "must exist" assumption.
+                    let node_slots = self.fan_in.slots.entry(next_id.clone()).or_default();
                     for s in &expected_slots {
                         if let Some(q) = node_slots.get_mut(s)
                             && let Some(v) = q.pop_front()
@@ -1142,6 +1145,17 @@ enum NodeResult {
 /// tracking ONLY — streaming fan-in, `compare` slots, and terminal-output detection
 /// stay on the author's explicit `connections` (a derived edge must not, e.g., flip a
 /// node into fan-in mode).
+/// A node id that the graph walk reached but `app.nodes` does not declare.
+///
+/// `aware app validate` rejects these up front, so reaching one at run time
+/// means the manifest changed underneath us — a bad app, not a bug worth
+/// aborting the process over.
+fn unknown_node(node_id: &str) -> AwareError {
+    AwareError::Validation(format!(
+        "app references node `{node_id}`, which is not declared in `nodes`"
+    ))
+}
+
 fn effective_edges(app: &App) -> Vec<crate::manifest::app::Connection> {
     let mut edges = app.connections.clone();
     edges.extend(crate::app_lock::derive_connections(app));
@@ -1165,7 +1179,16 @@ fn topo_order(app: &App) -> Result<Vec<String>, AwareError> {
     while let Some(id) = queue.pop_front() {
         out.push(id.to_string());
         for c in edges.iter().filter(|c| c.from == id) {
-            let entry = indegree.get_mut(c.to.as_str()).unwrap();
+            // Unreachable today: the seeding loop above uses `entry().or_default()`
+            // over this same `edges` vector, so every target — declared or not —
+            // already has a counter. Kept as a fail-*closed* guard rather than a
+            // `continue`: if that seeding is ever narrowed to declared nodes only,
+            // an edge to a ghost node must be rejected, not silently skipped. A
+            // `continue` here would leave `out.len() == app.nodes.len()` and let
+            // the malformed graph through the check below.
+            let Some(entry) = indegree.get_mut(c.to.as_str()) else {
+                return Err(unknown_node(&c.to));
+            };
             *entry -= 1;
             if *entry == 0 {
                 queue.push_back(c.to.as_str());

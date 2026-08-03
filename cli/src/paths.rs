@@ -39,17 +39,14 @@ impl Paths {
         self.aware_home.join("cache")
     }
 
-    #[allow(dead_code)] // consumed by v0.4 (aware connect)
     pub fn credentials_dir(&self) -> PathBuf {
         self.aware_home.join("credentials")
     }
 
-    #[allow(dead_code)] // consumed by Task 13 (aware app run)
     pub fn logs_dir(&self) -> PathBuf {
         self.aware_home.join("logs")
     }
 
-    #[allow(dead_code)] // consumed by Task 14 (aware app run long-running)
     pub fn app_instance_dir(&self, app: &str, instance: &str) -> PathBuf {
         self.apps_dir().join(app).join("instances").join(instance)
     }

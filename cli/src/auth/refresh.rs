@@ -1,9 +1,6 @@
 //! Lazy token refresh — call before any access_token read; refreshes when within 60s of expiry.
 
-#![allow(dead_code)]
-
 use std::io::Read;
-use std::time::{SystemTime, UNIX_EPOCH};
 
 use crate::auth::config;
 use crate::auth::keychain::{self, StoredToken};
@@ -19,10 +16,7 @@ pub fn ensure_fresh(
     let token = keychain::load_token(integration, alias, aware_home)?
         .ok_or_else(|| AwareError::AuthExpired(integration.to_string()))?;
 
-    let now = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .unwrap()
-        .as_secs() as i64;
+    let now = super::unix_now_secs()?;
     if token.expires_at > now + REFRESH_BUFFER_SECS {
         return Ok(token);
     }
@@ -105,6 +99,7 @@ mod tests {
 
     use std::path::{Path, PathBuf};
     use std::sync::mpsc;
+    use std::time::{SystemTime, UNIX_EPOCH};
 
     use crate::auth::keychain::TokenSource;
 

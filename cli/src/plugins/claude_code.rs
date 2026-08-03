@@ -3,8 +3,6 @@
 //! Writes `<plugin_root>/aware-aeco/plugin.json` + per-agent-command markdown
 //! files under `commands/`. Idempotent: re-running produces byte-identical output.
 
-#![allow(dead_code)]
-
 use std::path::Path;
 
 use crate::error::AwareError;
