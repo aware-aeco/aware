@@ -444,6 +444,56 @@ test("a styled file's colours are the file's own, covering every triangle exactl
   assert.ok(seen.has('0,1,1,1'), `expected the file's cyan among ${[...seen]}`);
 });
 
+test('NAMED objects carry THEIR OWN colour, not merely some colour', async (t) => {
+  if (!sample('Building-Architecture.ifc')) return t.skip(skipReason('Building-Architecture.ifc'));
+  const out = await read('Building-Architecture.ifc');
+  // AN ORACLE, and the tests above needed one. Everything else here checks shape — that the runs tile
+  // the buffer, that several colours appear, that white survives — and review found the hole: rotate
+  // every geometry's colour onto the next geometry and all of it still passes. The runs still tile,
+  // the palette is unchanged, the multi-coloured objects are still multi-coloured. Only pinning a
+  // KNOWN object to a KNOWN colour falsifies a wrong association.
+  //
+  // Measured 2026-08-03 by GlobalId, which is stable across reads in a way array order is not.
+  const expect = {
+    '3_4VN63S96DfWiJjgG8j1C': [0.8588, 0.7725, 0.5961, 1],   // "sand bedding" — sandy brown
+    '3zR0BOEcLADRKln4HYporH': [0.5765, 0.5765, 0.5765, 1],   // "floor" — mid grey
+    '0ZTBBPo6f6bxqV2K7Oelrq': [0.9647, 0.6863, 0.498, 1],    // "house - roof - slab left" — terracotta
+    '1AQAupaRP1txwK1AGiN61V': [1, 1, 1, 1],                  // an outer wall — authored WHITE
+  };
+  for (const [id, rgba] of Object.entries(expect)) {
+    const o = out.objects.find((x) => x.id === id);
+    assert.ok(o, `expected an object with GlobalId ${id}`);
+    assert.equal(o.colors.length, 1, `${o.name}: this object is a single colour`);
+    assert.deepEqual(o.colors[0].rgba, rgba, `${o.name} should be ${rgba}`);
+    assert.equal(o.colors[0].count, o.indices.length, `${o.name}: its run must cover all its triangles`);
+  }
+});
+
+test('authored TRANSPARENCY survives — a<1 is the file speaking, not a default', async (t) => {
+  if (!sample('Building-Architecture.ifc')) return t.skip(skipReason('Building-Architecture.ifc'));
+  const out = await read('Building-Architecture.ifc');
+  // Alpha is the channel most easily dropped by accident (three-channel colour is the common shape),
+  // and a consumer that renders glass as solid concrete has silently lost information the file gave.
+  // "house - gross volume" is styled at 0.149 opacity in this file.
+  const zone = out.objects.find((o) => o.id === '1yP7NInQz5uQzbiOpVFFJr');
+  assert.ok(zone, 'expected the gross-volume zone');
+  assert.equal(zone.colors[0].rgba[3], 0.149, 'its authored alpha must come through unrounded to 1');
+  assert.ok(out.objects.some((o) => o.colors.every((c) => c.rgba[3] === 1)),
+    'and opaque objects must stay opaque, or alpha is being invented');
+});
+
+test('the response says whether colour could be answered AT ALL', async (t) => {
+  if (!sample('example-steel-framing.ifc') || !sample('Building-Architecture.ifc')) {
+    return t.skip(skipReason('example-steel-framing.ifc / Building-Architecture.ifc'));
+  }
+  // Two silences that are NOT the same answer: a file with no palette, and a pre-1.3.0 bridge that
+  // cannot report one. Both leave every object without `colors`, and only one of them is fixed by
+  // installing a newer bridge — so the receipt is what lets a consumer tell a permanent condition
+  // from a stale install. `false` is an answer; ABSENT is the old bridge.
+  assert.equal((await read('example-steel-framing.ifc')).colorsAvailable, false);
+  assert.equal((await read('Building-Architecture.ifc')).colorsAvailable, true);
+});
+
 test('an authored white is kept, because a styled file means it', async (t) => {
   if (!sample('Building-Architecture.ifc')) return t.skip(skipReason('Building-Architecture.ifc'));
   const out = await read('Building-Architecture.ifc');

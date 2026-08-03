@@ -171,18 +171,22 @@ commands:
       settle without a real file). Values are canonical text, not the file's literal tokens: web-ifc
       parses before we see them, so an authored 1.2300 arrives as 1.23.
 
-      Each object also carries `colors` — the surface colours the file styles it with, as runs over
-      the index buffer, because colour is per placed geometry and one object routinely has several
-      (6,358 of 77,118 in one real steel export). It is ABSENT, never empty, when the file authors no
-      colour at all: web-ifc reports opaque WHITE for unstyled geometry and white is indistinguishable
-      from a wall the architect painted white, so the question is asked of the FILE — does it carry any
-      IfcSurfaceStyle? — and the answer gates the whole field. A consumer that sees no colours renders
-      its own default rather than a white nobody chose.
-
-      `[]` means the file carries none. A MISSING field means something else: the bridge binary is
+      For `propertySets`, `[]` means the file carries none. A MISSING field means something else: the bridge binary is
       installed separately and a pre-1.1.0 one omits it entirely under this manifest, so absent reads
       as "this bridge cannot answer" — the same caution `frame` already requires. A consumer caching
       the response must not key that cache on the IFC bytes alone.
+
+      Each object also carries `colors` — the surface colours the file styles it with, as RUNS over the
+      index buffer, because colour is per placed geometry and one object routinely has several (6,358
+      of 77,118 in one real steel export). A run's alpha below 1 is transparency the file authored.
+
+      `colors` is ABSENT, never empty, when the file authors no colour at all. web-ifc reports opaque
+      WHITE for unstyled geometry and that is indistinguishable from a wall the architect painted
+      white, so the question is asked of the FILE — does it carry any IfcSurfaceStyle? — and the answer
+      gates the whole field; a consumer that sees no colours renders its own default rather than a
+      white nobody chose. Because a pre-1.3.0 BRIDGE is silent in exactly the same way, every response
+      also carries `colorsAvailable`: `false` is a permanent fact about the file, an absent field is a
+      stale install. They render alike, but only one of them is repairable and only one is true to say.
 
       This overlaps `ifc-inspector` deliberately, and the SHAPE is what differs: that agent answers
       per-GUID or exports a whole class to CSV, on its own binary. An interactive object tree needs
@@ -240,6 +244,10 @@ commands:
         skipped: number # products streamed but carrying no drawable triangle — counted, never
                         # dropped silently, so a consumer can reconcile against probe.elements
         count: number   # objects returned. Present always; equals objects.length
+        colorsAvailable: boolean # whether the file authors ANY surface colour. Present from 1.3.0
+                         # always, so `false` (this file has none, permanently) stays distinct from
+                         # ABSENT (a pre-1.3.0 bridge, which a sidecar install would fix). Both
+                         # render the same, but only one is repairable and only one is true to say
         selected: object # ONLY when a filter was passed, so "unfiltered" and "a filter that matched
                          # everything" stay distinguishable:
                          #   { storeys?, ifcTypes?, ids?, candidates, unmatched }

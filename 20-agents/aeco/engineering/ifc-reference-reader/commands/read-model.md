@@ -46,6 +46,8 @@ objects:
         count: number   # how many indices
 skipped: number         # products streamed but carrying no drawable triangle (see below)
 count:   number         # objects returned; equals objects.length
+colorsAvailable: boolean # whether this file authors ANY colour. Present from 1.3.0 always, so
+                        # `false` (this file has none) and ABSENT (older bridge) stay different
 selected:               # ONLY present when a filter was passed (see below)
   storeys:  [string]    # echoed back, as asked
   ifcTypes: [string]
@@ -235,11 +237,38 @@ The cost of stopping there, stated rather than hidden: **an element that is unst
 file still reports white** — 696 of 31,381 placed geometries on `Hospital Arch.ifc`. That is web-ifc's
 answer and this reader does not guess past it.
 
-`colors` carries the same absent-means-cannot-answer caution as `frame` and `propertySets`, and for
-the same reason: a pre-1.3.0 bridge omits it under a 1.3.0 manifest. There is no way to tell that from
-a file with no palette — both are silence — so a consumer must render its own default in either case,
-which is the correct behaviour for both. And, as with `propertySets`, a consumer caching this response
-**must not key the cache on the IFC bytes alone**.
+### `colorsAvailable` separates the two silences
+
+A pre-1.3.0 bridge omits `colors` under a 1.3.0 manifest, exactly as an unstyled file does — so
+absence alone conflates a permanent property of the file with a stale install that one
+`aware sidecar install connection-reader` would fix. **`colorsAvailable` is emitted on every response
+from 1.3.0**, so the three states stay distinct:
+
+| | meaning | what a consumer does |
+|---|---|---|
+| `colorsAvailable: true` | the file authors colour; objects carry `colors` | paint them |
+| `colorsAvailable: false` | this file authors none, and never will | paint your own default, and say so |
+| field absent | the bridge predates colours | paint your own default; offer to refresh the bridge |
+
+Rendering is the same in the bottom two rows, which is why the field is a *receipt* rather than a
+control — but only one of them is repairable, and a UI that says "this file has no colours" about a
+stale bridge is stating something false. Same reason `selected` and `budget` exist.
+
+As with `propertySets`, a consumer caching this response **must not key the cache on the IFC bytes
+alone**: identical bytes yield a different shape depending on the bridge that read them.
+
+### The `IfcIndexedColourMap` case, and why it is not counted
+
+IFC4 lets a tessellated face set carry per-face colour through `IfcIndexedColourMap` +
+`IfcColourRgbList` with no `IfcSurfaceStyle` anywhere, so on paper the gate above has a false negative
+there. Measured 2026-08-03 against web-ifc 0.0.77, with a hand-built IFC4 file — one
+`IfcTriangulatedFaceSet`, four faces coloured red, green, blue and yellow, zero surface styles —
+**web-ifc reports `{1,1,1,1}`**. It does not implement that route.
+
+So counting the colour map in the gate would not recover those colours. It would switch the gate on
+and publish web-ifc's *default white* as though the file had authored it, for a file that is in fact
+brightly coloured — turning a correct "no colours here" into a confident lie. Suppressing is the
+honest answer until the engine can answer, and this is the note to revisit if it ever does.
 
 ## `propertySets` is where the meaning is in a real file
 

@@ -771,13 +771,23 @@ function profileOf(api, modelID, expressID) {
  *
  * The cost of stopping here, stated plainly: an element that is unstyled *inside* a styled file
  * still reports white, because that is what web-ifc resolved and this reader will not guess past
- * it. On `Hospital Arch.ifc` that is 696 of 31,381 placed geometries.
+ * it. On `Hospital Arch.ifc` that is 696 of 31,381 placed geometries — and a FILTERED read sharpens
+ * it, because a filter that selects only unstyled elements still sees the file's palette and so
+ * still reports their white as authored.
+ *
+ * WHY `IfcIndexedColourMap` IS DELIBERATELY NOT COUNTED. IFC4 lets a tessellated face set carry
+ * per-face colour through `IfcIndexedColourMap` + `IfcColourRgbList` with no `IfcSurfaceStyle`
+ * anywhere, so on paper this gate has a false negative there. Measured 2026-08-03 against web-ifc
+ * 0.0.77 with a hand-built IFC4 file — one `IfcTriangulatedFaceSet`, four faces coloured red, green,
+ * blue and yellow, zero surface styles — **web-ifc reports `{1,1,1,1}`**: it does not implement that
+ * route. So counting the colour map here would not recover those colours, it would switch the gate on
+ * and publish web-ifc's default white as though the file had authored it, for a file that is in fact
+ * brightly coloured. Suppressing is the honest answer until the engine can answer.
  */
 export function fileAuthorsColour(api, modelID) {
-  // IfcSurfaceStyle is the root of surface colour in both IFC2X3 and IFC4 — every route web-ifc
-  // takes to a rendered colour (IfcStyledItem, presentation style assignments, material definition
-  // representations) terminates in one. Its mere presence is the signal; which elements it reaches
-  // is deliberately not asked (see above).
+  // IfcSurfaceStyle is the root of every colour route web-ifc actually IMPLEMENTS (IfcStyledItem,
+  // presentation style assignments, material definition representations all terminate in one). Its
+  // mere presence is the signal; which elements it reaches is deliberately not asked (see above).
   return api.GetLineIDsWithType(modelID, WebIFC.IFCSURFACESTYLE).size() > 0;
 }
 
@@ -995,6 +1005,12 @@ export function readModel(api, modelID, maxVertices = Infinity, opts = {}) {
     objects,
     skipped,
     count,
+    // THE RECEIPT THAT SEPARATES TWO SILENCES. Without it, "this file authors no colour" and "the
+    // bridge that read it predates colours" are both an absent `colors` on every object, and a
+    // consumer cannot tell the permanent condition from the one an install would fix. Present from
+    // 1.3.0 always — `false` is a real answer about the file, absence is a statement about the
+    // bridge. Same discipline as `selected` and `budget`, which exist for exactly this reason.
+    colorsAvailable: authorsColour,
     // Present ONLY when a filter was asked for, so "no filter" and "a filter that matched everything"
     // stay distinguishable, and so an older consumer sees no new field at all.
     ...(selection.applied ? { selected: selection.report } : {}),
