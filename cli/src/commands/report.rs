@@ -738,6 +738,11 @@ mod tests {
             // spelled around a substring scan.
             r#"<style>a{background:u\72 l(//cdn.example/x.png)}</style>"#,
             r#"<style>a{background:\75 rl("//cdn.example/y.png")}</style>"#,
+            // The walk descends into every block, and a truncated stylesheet
+            // must not end it early and quietly drop what follows.
+            r#"<style>@media screen{a{background:url(//cdn.example/m.png)}}</style>"#,
+            r#"<style>a{background:image-set(url(//cdn.example/n.png) 1x)}</style>"#,
+            "<style>a{background:url(//cdn.example/unclosed.png</style>",
             // CSS in a `style` attribute fetches exactly as a stylesheet does.
             r#"<div style="background-image:url(//cdn.example/x.png)"></div>"#,
             r#"<div style="background:URL('//assets/y.png')"></div>"#,
