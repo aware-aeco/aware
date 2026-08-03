@@ -221,7 +221,9 @@ pub fn render(template: &str, ctx: &RenderContext) -> Result<String, AwareError>
     let mut env = Environment::new();
     env.add_template("t", &normalized)
         .map_err(|e| AwareError::Validation(format!("template parse: {e}")))?;
-    let tmpl = env.get_template("t").unwrap();
+    let tmpl = env
+        .get_template("t")
+        .map_err(|e| AwareError::Validation(format!("template load: {e}")))?;
 
     // Build the flat top-level context.
     let mut top: Map<String, serde_json::Value> = Map::new();
@@ -382,7 +384,9 @@ pub fn is_whole_value_template(s: &str) -> bool {
     // digit and is not a path — and which isn't a Minijinja literal keyword. Such
     // literals must keep going through `render` so they evaluate, rather than resolve
     // to a null "node id" (#205 Codex).
-    let first = inner.chars().next().unwrap();
+    let Some(first) = inner.chars().next() else {
+        return false;
+    };
     (first.is_alphabetic() || first == '_')
         && !matches!(
             inner.to_ascii_lowercase().as_str(),

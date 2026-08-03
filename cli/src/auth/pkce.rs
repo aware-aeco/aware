@@ -2,8 +2,6 @@
 
 #![allow(dead_code)]
 
-use std::time::{SystemTime, UNIX_EPOCH};
-
 use base64::Engine;
 use rand::RngCore;
 use sha2::Digest;
@@ -82,11 +80,7 @@ pub fn run_pkce_flow(
     let html = "<html><head><meta charset=\"utf-8\"></head>\
                 <body><h1>\u{2713} Authenticated</h1><p>You can close this tab.</p>\
                 <script>setTimeout(()=>window.close(),500)</script></body></html>";
-    let response = tiny_http::Response::from_string(html).with_header(
-        "Content-Type: text/html; charset=utf-8"
-            .parse::<tiny_http::Header>()
-            .unwrap(),
-    );
+    let response = super::html_response(html);
     let _ = request.respond(response);
 
     // 8. Exchange code for token
@@ -126,10 +120,7 @@ pub fn run_pkce_flow(
         .map_err(|e| AwareError::Validation(format!("token response: {e}")))?;
 
     // 9. Build StoredToken
-    let now = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .unwrap()
-        .as_secs() as i64;
+    let now = super::unix_now_secs()?;
     let expires_in = token_json
         .get("expires_in")
         .and_then(|v| v.as_i64())

@@ -200,7 +200,7 @@ fn group_by_vertical(agents: &[DiscoveredAgent]) -> Vec<(&'static str, Vec<&Disc
         } else {
             "Meta + Utility"
         };
-        buckets.get_mut(bucket).unwrap().push(a);
+        buckets.entry(bucket).or_default().push(a);
     }
     // Stable order
     order
