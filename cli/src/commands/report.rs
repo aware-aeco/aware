@@ -722,6 +722,12 @@ mod tests {
             r#"<script src = "//cdn.example/x.js"></script>"#,
             r#"<link href = '//cdn.example/a.css'>"#,
             r#"<script src=  //cdn.example/x.js></script>"#,
+            // HTML attribute names and the CSS `url()` token are both
+            // ASCII-case-insensitive; a browser fetches these too.
+            r#"<script SRC="//cdn.example/x.js"></script>"#,
+            r#"<link HREF='//cdn.example/a.css'>"#,
+            r#"<script Src = "//cdn.example/x.js"></script>"#,
+            r#"@font-face{src:URL(//cdn.example/x.woff)}"#,
         ] {
             assert!(
                 protocol_relative_ref(spelling).is_some(),
@@ -737,6 +743,11 @@ mod tests {
             "<script>\n// a comment\nlet x = 1;\n</script>",
             r#"<script>const u = "a//b";</script>"#,
             "<style>a{color:#fff}</style>",
+            // Accepting whitespace around `=` makes these read as attributes
+            // right up to the host check. They fetch nothing.
+            "<script>let src = // why not\nlet x = 1;</script>",
+            "<script>let href =\n// note\n2;</script>",
+            "<script>const src = //TODO fix\n3;</script>",
         ] {
             assert_eq!(
                 protocol_relative_ref(benign),
@@ -756,8 +767,20 @@ mod tests {
     /// quotes, whitespace, and the whitespace HTML permits around an
     /// attribute's `=` (`src = "//cdn/x.js"` is valid markup and fetches) — so
     /// spellings are covered by construction rather than by enumeration.
+    ///
+    /// Carrier names are matched case-insensitively: HTML attribute names and
+    /// the CSS `url()` token are both ASCII-case-insensitive, so `SRC=` and
+    /// `URL(` fetch exactly like their lowercase spellings.
     fn protocol_relative_ref(html: &str) -> Option<String> {
         const SEPARATORS: [char; 6] = [' ', '\t', '\r', '\n', '\'', '"'];
+        /// `str::ends_with`, ignoring ASCII case. Guards the char boundary so a
+        /// multi-byte tail can't panic the slice.
+        fn ends_with_ci(haystack: &str, needle: &str) -> bool {
+            let Some(start) = haystack.len().checked_sub(needle.len()) else {
+                return false;
+            };
+            haystack.is_char_boundary(start) && haystack[start..].eq_ignore_ascii_case(needle)
+        }
         for (idx, _) in html.match_indices("//") {
             let preceding = html[..idx].trim_end_matches(SEPARATORS);
             // `url(` carries no `=`; an attribute does, and may be spaced
@@ -765,11 +788,24 @@ mod tests {
             let is_carrier = match preceding.strip_suffix('=') {
                 Some(attribute) => {
                     let attribute = attribute.trim_end_matches(SEPARATORS);
-                    attribute.ends_with("src") || attribute.ends_with("href")
+                    ends_with_ci(attribute, "src") || ends_with_ci(attribute, "href")
                 }
-                None => preceding.ends_with("url("),
+                None => ends_with_ci(preceding, "url("),
             };
-            if is_carrier {
+            if !is_carrier {
+                continue;
+            }
+            // Tolerating whitespace around `=` is what makes a JS assignment
+            // followed by a line comment (`let src = // note`) read as an
+            // attribute. Require the `//` to be followed by something
+            // host-shaped — no whitespace, and a dot before the path — so the
+            // looser carrier match cannot trade a missed fetch for a spurious
+            // failure on the report's own inlined script.
+            let host: String = html[idx + 2..]
+                .chars()
+                .take_while(|c| !c.is_whitespace() && !"/\"')>".contains(*c))
+                .collect();
+            if host.contains('.') {
                 return Some(html[idx..].chars().take(40).collect());
             }
         }
