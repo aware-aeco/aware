@@ -128,7 +128,6 @@ pub fn validate_agent_on_disk(agent: &Agent, agent_root: &Path) -> Vec<Validatio
 }
 
 /// Validate an `App` manifest: cycles, dangling refs, unique node ids, inline-glue descriptions.
-#[allow(dead_code)] // consumed by Task 14 (`aware app validate`)
 pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
     let mut out = Vec::new();
     if app.app.trim().is_empty() {
@@ -250,7 +249,6 @@ fn check_inline_nodes(nodes: &[crate::manifest::app::Node], out: &mut Vec<Valida
 ///
 /// Agents referenced by the app but not installed are skipped (not an
 /// error here — caught by lockfile resolution earlier).
-#[allow(dead_code)] // wired by `aware app validate` + `aware app run` in v0.11
 pub fn validate_app_safety(
     app: &App,
     agents: &[crate::manifest::loader::DiscoveredAgent],
@@ -298,7 +296,6 @@ pub fn validate_app_safety(
 /// validate/compile rather than at run with "program not found" (#161). Recurses
 /// into `for-each` `do:` bodies. Agents not in the catalogue are skipped here
 /// (lockfile resolution / run handle the missing-agent case).
-#[allow(dead_code)] // wired by `aware app validate` + `compile_to_disk` + `app run`
 pub fn validate_app_agents(
     app: &App,
     agents: &[crate::manifest::loader::DiscoveredAgent],
@@ -324,7 +321,6 @@ pub fn validate_app_agents(
 /// for run, [`Severity::Warning`] (`W_APP_AGENT_NOT_INSTALLED`) for
 /// install/compile. The message — node id, agent id, and both remedies — is the
 /// same either way.
-#[allow(dead_code)] // wired by `aware app run` pre-flight + `app install`/`compile`
 pub fn missing_agents(
     app: &App,
     agents: &[crate::manifest::loader::DiscoveredAgent],
@@ -530,7 +526,6 @@ fn check_node_agents(
     }
 }
 
-#[allow(dead_code)] // called by validate_app above
 fn has_cycle<'a>(
     node: &'a str,
     graph: &BTreeMap<&'a str, Vec<&'a str>>,

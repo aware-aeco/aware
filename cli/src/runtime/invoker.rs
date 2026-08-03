@@ -381,7 +381,7 @@ impl AgentInvoker for CliInvoker {
 
         if let Some(mut stdin) = child.stdin.take() {
             use tokio::io::AsyncWriteExt;
-            let args_text = serde_json::to_string(&args).unwrap();
+            let args_text = serde_json::to_string(&args)?;
             stdin
                 .write_all(args_text.as_bytes())
                 .await
@@ -683,8 +683,11 @@ impl AgentInvoker for RestInvoker {
                 inject_auth(auth, &cred, &mut headers, &mut query);
             }
         }
-        let send_body = matches!(method.as_str(), "POST" | "PUT" | "PATCH" | "DELETE")
-            && body.as_ref().is_some_and(|b| !b.is_null());
+        // Carry the body itself rather than a separate "should send" flag, so the
+        // send path can't be reached without one in hand.
+        let request_body = body.filter(|b| {
+            matches!(method.as_str(), "POST" | "PUT" | "PATCH" | "DELETE") && !b.is_null()
+        });
         // Owned label for the error path — `agent`/`command` are borrows that
         // can't escape into the `'static` blocking closure.
         let label = format!("{agent}/{command}");
@@ -699,14 +702,14 @@ impl AgentInvoker for RestInvoker {
             for (k, v) in &query {
                 req = req.query(k, v);
             }
-            let outcome = if send_body {
+            let outcome = if let Some(request_body) = request_body {
                 // `ureq` is built without the `json` feature, so serialize here.
                 // Objects/arrays are sent as application/json (unless the caller
                 // set their own Content-Type); a string body is sent verbatim.
                 let has_ct = headers
                     .iter()
                     .any(|(k, _)| k.eq_ignore_ascii_case("content-type"));
-                let payload = match body.unwrap() {
+                let payload = match request_body {
                     Value::String(s) => s,
                     other => {
                         if !has_ct {
@@ -1634,8 +1637,15 @@ fn run_cli_capture(
         .spawn()
         .map_err(|e| AwareError::Network(format!("vision.extract: spawn {label}: {e}")))?;
 
-    let mut stdout = child.stdout.take().expect("piped stdout");
-    let mut stderr = child.stderr.take().expect("piped stderr");
+    // Both were configured `Stdio::piped()` above, so this holds — but a failed
+    // `take()` means the child is already half-consumed, and reporting that is
+    // more useful to a caller than unwinding out of a spawned process.
+    let (Some(mut stdout), Some(mut stderr)) = (child.stdout.take(), child.stderr.take()) else {
+        kill_process_tree(&mut child);
+        return Err(AwareError::Network(format!(
+            "vision.extract: {label}: child stdout/stderr were not piped"
+        )));
+    };
     let h_out = std::thread::spawn(move || {
         let mut s = String::new();
         let _ = stdout.read_to_string(&mut s);

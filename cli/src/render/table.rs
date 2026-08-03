@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 //! Minimal column-aligned text table. Pads each column to the max width of
 //! its values plus 2 spaces. No external dep needed for v0.1.
 

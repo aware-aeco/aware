@@ -11,8 +11,6 @@
 //!
 //! `e => <expr>` is supported by stripping the prefix before parsing.
 
-#![allow(dead_code)]
-
 use serde_json::Value;
 
 use crate::error::AwareError;

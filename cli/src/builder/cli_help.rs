@@ -3,8 +3,6 @@
 //! Heuristic: scan for a line containing "Commands:" or "Subcommands:";
 //! treat subsequent indented lines as `<name>  <description>` pairs.
 
-#![allow(dead_code)]
-
 use std::collections::BTreeMap;
 
 use crate::builder::{GeneratedAgent, GeneratedCommand, Provenance, now_iso};

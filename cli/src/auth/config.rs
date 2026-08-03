@@ -6,8 +6,6 @@
 //!
 //! Resolution precedence per value: **profile > env var > bundled default**.
 
-#![allow(dead_code)]
-
 use crate::auth::profile::OAuthAppProfile;
 use crate::error::AwareError;
 

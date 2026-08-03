@@ -8,8 +8,6 @@
 //! methods (`define_method`, `attr_accessor`, etc.). For most APIs that's
 //! 90%+ of the public surface.
 
-#![allow(dead_code)]
-
 use std::collections::BTreeMap;
 use std::io::Read;
 

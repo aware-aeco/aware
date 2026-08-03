@@ -40,6 +40,14 @@ pub struct App {
     pub nodes: Vec<Node>,
     #[serde(default)]
     pub connections: Vec<Connection>,
+    /// App-level skills (see `qa-drawings-to-tekla.app`). Deserialized but not
+    /// read by any command yet — kept because it is what type-checks the
+    /// `skills:` key `10-core/app-spec.md` publishes. Deleting the field would
+    /// not start rejecting apps that declare one; it would do the opposite.
+    /// There is no `deny_unknown_fields` here, so an unmapped `skills:` is
+    /// ignored rather than rejected, and a malformed declaration
+    /// (`skills: not-a-list`) would begin passing unnoticed. That shape check
+    /// is the field's actual job — see `malformed_skills_is_rejected`.
     #[allow(dead_code)]
     #[serde(default)]
     pub skills: Vec<String>,
@@ -145,10 +153,8 @@ pub struct Node {
     pub inline: Option<Inline>,
     pub row: Option<u32>,
     pub col: Option<u32>,
-    #[allow(dead_code)]
     #[serde(default)]
     pub config: Value,
-    #[allow(dead_code)]
     #[serde(default)]
     pub inputs: Value,
     /// Safety contract — required on write-mode nodes per app-spec § Safety contract.
@@ -414,9 +420,7 @@ fn default_audit_fields() -> Vec<String> {
 #[derive(Debug, Deserialize, Clone)]
 pub struct Inline {
     pub kind: String,
-    #[allow(dead_code)]
     pub description: String,
-    #[allow(dead_code)]
     pub code: Option<String>,
     /// `atom://` URI referencing a reusable atom in `atoms/`,
     /// `20-agents/<agent>/atoms/`, or app-local atoms (v0.20).
@@ -440,11 +444,6 @@ pub struct Connection {
 }
 
 impl App {
-    #[allow(dead_code)]
-    pub fn is_dag(&self) -> bool {
-        self.layout == Layout::Dag
-    }
-
     pub fn node_count(&self) -> usize {
         self.nodes.len()
     }
@@ -513,7 +512,6 @@ mod tests {
         let a: App = serde_yaml::from_str(&text).unwrap();
         assert_eq!(a.app, "qa-drawings-to-tekla");
         assert_eq!(a.layout, Layout::Dag);
-        assert!(a.is_dag());
         assert_eq!(a.node_count(), 7);
         assert_eq!(a.connection_count(), 6);
     }
@@ -707,5 +705,31 @@ requires: []
         assert_eq!(s.cron, "0 7 * * MON");
         assert_eq!(s.timezone, "Europe/London");
         assert_eq!(s.start_date.as_deref(), Some("2026-06-01"));
+    }
+
+    /// Pins the reason `App::skills` is kept despite being unread, so the
+    /// justification is enforced rather than merely claimed: the field is what
+    /// type-checks the published `skills:` key. Delete it and this test fails —
+    /// the malformed declaration below starts parsing clean.
+    #[test]
+    fn malformed_skills_is_rejected() {
+        let head = "app: x\nversion: 0.0.1\ndescription: x\nnodes: []\nrequires: []\n";
+
+        let malformed = format!("{head}skills: not-a-list\n");
+        assert!(serde_yaml::from_str::<App>(&malformed).is_err());
+
+        let well_formed = format!("{head}skills: [qa-check]\n");
+        let app: App = serde_yaml::from_str(&well_formed).unwrap();
+        assert_eq!(app.skills, vec!["qa-check".to_string()]);
+    }
+
+    /// The flip side, and the reason the comment on `skills` does not claim
+    /// that dropping the field would reject apps declaring one: there is no
+    /// `deny_unknown_fields`, so a key the struct has no field for is ignored.
+    #[test]
+    fn unmapped_app_keys_are_ignored() {
+        let yaml =
+            "app: x\nversion: 0.0.1\ndescription: x\nnodes: []\nrequires: []\nunmapped-key: 42\n";
+        assert!(serde_yaml::from_str::<App>(yaml).is_ok());
     }
 }

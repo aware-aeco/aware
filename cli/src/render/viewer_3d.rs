@@ -2319,6 +2319,19 @@ fn vector<const N: usize>(value: Option<&Value>, path: &str) -> Result<[f64; N],
     Ok(result)
 }
 
+/// Read a JSON array of finite numbers, reporting the offending index rather
+/// than panicking on a non-numeric entry.
+fn number_array(value: Option<&Value>, path: &str) -> Result<Vec<f64>, AwareError> {
+    let values = value
+        .and_then(Value::as_array)
+        .ok_or_else(|| scene_error(path, "must be an array of numbers"))?;
+    values
+        .iter()
+        .enumerate()
+        .map(|(index, value)| finite_number(Some(value), &format!("{path}[{index}]")))
+        .collect()
+}
+
 fn length3(value: [f64; 3]) -> f64 {
     value
         .iter()
@@ -2832,9 +2845,12 @@ fn classify_operations(
                     u[2] * v[0] - u[0] * v[2],
                     u[0] * v[1] - u[1] * v[0],
                 ];
-                if dot3(u, v).abs() > 1.0e-6
-                    || dot3(normalized3(cross).unwrap(), normal) < 1.0 - 1.0e-6
-                {
+                // A zero-length cross product means `uDir` and `vDir` are
+                // parallel, which is precisely the "not orthonormal" case
+                // below — report it rather than panicking on the normalize.
+                let orthonormal =
+                    normalized3(cross).is_some_and(|cross| dot3(cross, normal) >= 1.0 - 1.0e-6);
+                if dot3(u, v).abs() > 1.0e-6 || !orthonormal {
                     return Err(scene_error(
                         &format!("{path}.frame"),
                         "must be right-handed and orthonormal",
@@ -3033,37 +3049,38 @@ fn classify_operations(
         if kind != "bolt-array" {
             continue;
         }
-        let participant_a = object["partToBoltTo"].as_str().unwrap();
-        let participant_b = object["partToBeBolted"].as_str().unwrap();
-        let frame = object["frame"].as_object().unwrap();
+        let participant_a = object
+            .get("partToBoltTo")
+            .and_then(Value::as_str)
+            .ok_or_else(|| scene_error(&format!("{path}.partToBoltTo"), "must be an element id"))?;
+        let participant_b = object
+            .get("partToBeBolted")
+            .and_then(Value::as_str)
+            .ok_or_else(|| {
+                scene_error(&format!("{path}.partToBeBolted"), "must be an element id")
+            })?;
+        let frame = object
+            .get("frame")
+            .and_then(Value::as_object)
+            .ok_or_else(|| scene_error(&format!("{path}.frame"), "must be an object"))?;
         let origin = vector::<3>(frame.get("origin"), &format!("{path}.frame.origin"))?;
         let u = normalized3(vector::<3>(
             frame.get("uDir"),
             &format!("{path}.frame.uDir"),
         )?)
-        .unwrap();
+        .ok_or_else(|| scene_error(&format!("{path}.frame.uDir"), "must be nonzero"))?;
         let v = normalized3(vector::<3>(
             frame.get("vDir"),
             &format!("{path}.frame.vDir"),
         )?)
-        .unwrap();
+        .ok_or_else(|| scene_error(&format!("{path}.frame.vDir"), "must be nonzero"))?;
         let normal = normalized3(vector::<3>(
             frame.get("normal"),
             &format!("{path}.frame.normal"),
         )?)
-        .unwrap();
-        let u_offsets = object["uOffsetsMm"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .map(|value| value.as_f64().unwrap())
-            .collect::<Vec<_>>();
-        let v_offsets = object["vOffsetsMm"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .map(|value| value.as_f64().unwrap())
-            .collect::<Vec<_>>();
+        .ok_or_else(|| scene_error(&format!("{path}.frame.normal"), "must be nonzero"))?;
+        let u_offsets = number_array(object.get("uOffsetsMm"), &format!("{path}.uOffsetsMm"))?;
+        let v_offsets = number_array(object.get("vOffsetsMm"), &format!("{path}.vOffsetsMm"))?;
         for (field, offsets) in [("uOffsetsMm", &u_offsets), ("vOffsetsMm", &v_offsets)] {
             if offsets
                 .iter()
@@ -3076,7 +3093,7 @@ fn classify_operations(
                 ));
             }
         }
-        let diameter = object["diameterMm"].as_f64().unwrap();
+        let diameter = finite_number(object.get("diameterMm"), &format!("{path}.diameterMm"))?;
         let tolerance = object
             .get("toleranceMm")
             .and_then(Value::as_f64)
@@ -3097,8 +3114,7 @@ fn classify_operations(
             .get("instances")
             .and_then(Value::as_array)
             .ok_or_else(|| scene_error(&format!("{path}.instances"), "must be an array"))?;
-        let expected = object["uOffsetsMm"].as_array().unwrap().len()
-            * object["vOffsetsMm"].as_array().unwrap().len();
+        let expected = u_offsets.len() * v_offsets.len();
         if instances.len() != expected {
             return Err(scene_error(
                 &format!("{path}.instances"),
@@ -3136,11 +3152,22 @@ fn classify_operations(
                         "must not reuse a component already claimed by another bolt instance",
                     ));
                 }
-                let child_element = scene_element(scene, child).unwrap();
+                let child_element = scene_element(scene, child).ok_or_else(|| {
+                    scene_error(
+                        &format!("{instance_path}.{field}"),
+                        "references an unknown element",
+                    )
+                })?;
                 if field == "shankId" {
                     let (from, to) = axis(child_element, child)?;
                     let direction =
-                        normalized3([to[0] - from[0], to[1] - from[1], to[2] - from[2]]).unwrap();
+                        normalized3([to[0] - from[0], to[1] - from[1], to[2] - from[2]])
+                            .ok_or_else(|| {
+                                scene_error(
+                                    &format!("{instance_path}.{field}"),
+                                    "shank axis must have nonzero length",
+                                )
+                            })?;
                     let offset = [point[0] - from[0], point[1] - from[1], point[2] - from[2]];
                     let child_diameter = positive_number(
                         child_element.get("diameterMm"),
@@ -3160,7 +3187,13 @@ fn classify_operations(
                         child_element.get("center"),
                         &format!("{instance_path}.{field}.center"),
                     )?;
-                    let child_axis = normalized3(direction(child_element, child)?).unwrap();
+                    let child_axis =
+                        normalized3(direction(child_element, child)?).ok_or_else(|| {
+                            scene_error(
+                                &format!("{instance_path}.{field}"),
+                                "axis must have nonzero length",
+                            )
+                        })?;
                     let offset = [
                         center[0] - point[0],
                         center[1] - point[1],
@@ -3202,12 +3235,23 @@ fn classify_operations(
                             "must not reuse a component already claimed by another bolt instance",
                         ));
                     }
-                    let child_element = scene_element(scene, child).unwrap();
+                    let child_element = scene_element(scene, child).ok_or_else(|| {
+                        scene_error(
+                            &format!("{instance_path}.{field}[{child_index}]"),
+                            "references an unknown element",
+                        )
+                    })?;
                     let center = vector::<3>(
                         child_element.get("center"),
                         &format!("{instance_path}.{field}[{child_index}].center"),
                     )?;
-                    let child_axis = normalized3(direction(child_element, child)?).unwrap();
+                    let child_axis =
+                        normalized3(direction(child_element, child)?).ok_or_else(|| {
+                            scene_error(
+                                &format!("{instance_path}.{field}[{child_index}]"),
+                                "axis must have nonzero length",
+                            )
+                        })?;
                     let offset = [
                         center[0] - point[0],
                         center[1] - point[1],
@@ -4240,6 +4284,26 @@ mod tests {
                 json!({"id":"HE-C","targetId":"C","center":[0,0,0],"axis":[0,0,1],"diameterMm":22}),
             );
         scene
+    }
+
+    /// A bolt-array frame whose `uDir` is finite but enormous used to abort the
+    /// process, not fail validation.
+    ///
+    /// `finite_number` accepts `1e200`, so `vector::<3>` hands it through. But
+    /// `normalized3` divides by `length3`, and `1e200 * 1e200` overflows to
+    /// `inf` — so the "unit" vector is `[0,0,0]`, its cross product with `vDir`
+    /// is `[0,0,0]`, and normalizing *that* yields `None`. The old code called
+    /// `.unwrap()` on it and panicked; a degenerate frame is invalid input, so
+    /// it must come back as a validation error the caller can report.
+    #[test]
+    fn degenerate_bolt_frame_is_rejected_not_panicked() {
+        let mut scene = viewer_double_shear_scene();
+        scene["operations"][0]["frame"]["uDir"] = json!([1e200, 0, 0]);
+        let error = viewer_3d_render(&json!({ "scene": scene }), true).unwrap_err();
+        assert!(
+            error.to_string().contains("right-handed and orthonormal"),
+            "expected an orthonormality error, got: {error}"
+        );
     }
 
     #[test]

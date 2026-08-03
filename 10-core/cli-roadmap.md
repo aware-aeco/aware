@@ -577,6 +577,24 @@ The bones (text composition, decalog discipline, CLI ergonomics, hand-curated Te
 
 Adds reference-cases-as-contract (engineers' existing `\\fileserver\Tender\2024\Q3\Final` folders become CI gates) + ed25519-signed JSONL receipt. PE-stamp-grade. Insurance-grade. Building-control-grade.
 
+The signed-JSONL half **shipped** in v0.27 — `aware key` + `aware receipt`, implemented in `cli/src/receipt.rs`. The reference-case half is what remains queued.
+
+**Reference-case shape**, recorded here so the design outlives the speculative types that carried it (they were deleted unbuilt — nothing dispatched to them, and no spec published them). Each app ships `<app-dir>/tests/cases/<id>.yaml`:
+
+```yaml
+id: happy-path            # stable id, filename minus `.yaml`; used in green/red reporting
+description: what this case proves
+inputs: {}                # app inputs, substituted into the app's `{{ inputs.x }}` templates
+expect:                   # each entry asserts one node output satisfies a constraint
+  - node: quantities      # node id whose output is asserted
+    field: rows.count     # field within that output; dotted paths supported
+    op: eq                # eq | contains | > | >= | < | <= | count-eq
+    value: 42             # typed: string, number, or boolean
+golden: false             # when true, a re-run's receipt becomes the new baseline
+```
+
+`aware app cases run <app>` would walk every case in dry-run mode (no writes) and report green/red per case.
+
 Defer until adoption signals demand it. Don't ship the "stamped" tier until 2–3 engineering firms say "we'd pilot this if our last 5 tender packages still pass."
 
 ---

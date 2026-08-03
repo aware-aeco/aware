@@ -8,8 +8,6 @@
 //! the `.cs` set + every `PackageReference`/`ProjectReference` resolve automatically (no
 //! `--reference-dir`), at the cost of requiring the host .NET SDK (#185).
 
-#![allow(dead_code)]
-
 use crate::builder::GeneratedAgent;
 use crate::error::AwareError;
 

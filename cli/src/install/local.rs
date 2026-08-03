@@ -45,7 +45,6 @@ pub fn install_agent_from_path(src: &Path, paths: &Paths) -> Result<String, Awar
 }
 
 /// Install an app folder. `src` must contain a `.flo` or `.app` file.
-#[allow(dead_code)] // consumed by v0.2 `aware app install` (Task 13+)
 pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<String, AwareError> {
     let manifest_path = std::fs::read_dir(src)?
         .flatten()

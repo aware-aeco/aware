@@ -16,8 +16,6 @@
 //! to scanning for `.d.ts` files anywhere in the package; if none are
 //! found, returns a Validation error.
 
-#![allow(dead_code)]
-
 use std::collections::BTreeMap;
 use std::io::Read;
 
