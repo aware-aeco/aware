@@ -681,185 +681,189 @@ mod tests {
         assert!(html.contains("<main>") && html.contains("</main>"));
         assert!(html.trim_end().ends_with("</body></html>"), "unclosed body");
 
-        // "Self-contained" has to mean no remote fetch of any kind, not just
-        // no `src="http`. The page's whole dependency surface is one inlined
-        // <style> block, where `@import` and `url()` are the natural ways to
-        // reach out — and a protocol-relative `//cdn/...` names no scheme at
-        // all. Match on the URL forms themselves rather than on the attribute
-        // that happens to carry them.
-        for probe in ["http://", "https://", "@import"] {
-            assert!(
-                !html.contains(probe),
-                "report reaches out to the network via `{probe}`; it must be self-contained"
-            );
-        }
-        if let Some(found) = protocol_relative_ref(&html) {
-            panic!(
-                "report reaches out to the network via a protocol-relative URL (`{found}`); \
-                 it must be self-contained"
-            );
-        }
+        // "Self-contained" means one file: nothing the browser resolves
+        // against the network or the filesystem when the page opens. The
+        // template emits no URL-bearing attribute at all, so the correct rule
+        // is the strict one — any external reference is a violation.
+        let refs = external_refs(&html);
+        assert!(
+            refs.is_empty(),
+            "report is not self-contained; it references {refs:?}"
+        );
     }
 
-    /// Pins the detector's coverage, so the self-contained assertion above
-    /// can't quietly go back to passing on a page that does fetch. Every
-    /// spelling here was reachable past the old literal-probe list except the
-    /// three it happened to name.
+    /// Pins the detector, so the assertion above cannot quietly go back to
+    /// passing on a page that fetches. Each group below is a spelling that got
+    /// past an earlier hand-rolled version of this check.
     #[test]
-    fn a_protocol_relative_ref_is_caught_in_every_spelling() {
+    fn every_spelling_of_an_external_reference_is_caught() {
         for spelling in [
+            // Quote styles, and none at all.
             r#"<script src="//cdn.example/x.js"></script>"#,
             r#"<script src='//cdn.example/x.js'></script>"#,
             r#"<script src=//cdn.example/x.js></script>"#,
-            r#"<link href="//cdn.example/a.css">"#,
             r#"<link href='//cdn.example/a.css'>"#,
-            r#"@font-face{src:url(//cdn.example/x.woff)}"#,
-            r#"@font-face{src:url("//cdn.example/x.woff")}"#,
-            r#"@font-face{src:url('//cdn.example/x.woff')}"#,
-            r#"@font-face{src:url( //cdn.example/x.woff )}"#,
-            // HTML allows whitespace around an attribute's `=`; a browser
-            // fetches these exactly as it does the unspaced forms.
+            // Whitespace around `=`, which HTML permits.
             r#"<script src = "//cdn.example/x.js"></script>"#,
-            r#"<link href = '//cdn.example/a.css'>"#,
             r#"<script src=  //cdn.example/x.js></script>"#,
-            // HTML attribute names and the CSS `url()` token are both
-            // ASCII-case-insensitive; a browser fetches these too.
+            "<script src\n=\n'//cdn.example/x.js'></script>",
+            // Attribute names are ASCII-case-insensitive.
             r#"<script SRC="//cdn.example/x.js"></script>"#,
             r#"<link HREF='//cdn.example/a.css'>"#,
-            r#"<script Src = "//cdn.example/x.js"></script>"#,
-            r#"@font-face{src:URL(//cdn.example/x.woff)}"#,
-            // A network-path reference needs no dot: these are valid hosts on
-            // an intranet and the browser fetches every one of them.
+            // A network-path reference needs no dot in its authority.
             r#"<script src="//localhost/x.js"></script>"#,
             r#"<script src="//assets/bundle.js"></script>"#,
-            r#"<link href='//intranet/a.css'>"#,
-            r#"@font-face{src:url(//fonts/x.woff)}"#,
-            // Fetching attributes that do not end in `src`/`href`. `srcset` is
-            // the one a suffix match silently drops.
-            r#"<img srcset="//cdn.example/x.jpg 2x">"#,
+            // Carriers that are not `src`/`href`.
             r#"<video poster="//cdn.example/p.jpg"></video>"#,
             r#"<body background="//cdn.example/b.png">"#,
             r#"<form action="//cdn.example/submit"></form>"#,
-            r#"<img data-src="//cdn.example/lazy.png">"#,
+            r#"<blockquote cite="//cdn.example/q"></blockquote>"#,
+            // `<object data>` fetches; `data-vendor` below does not. Only a
+            // real parser can tell those two apart by name.
+            r#"<object data="//cdn.example/x.svg"></object>"#,
+            // Every `srcset` candidate, not just the first.
+            r#"<img srcset="//cdn.example/x.png 2x">"#,
+            r#"<img srcset="data:image/gif;base64,R0lGOD 1x, //cdn.example/x.png 2x">"#,
+            // A `>` inside a quoted value does not end the tag.
+            r#"<script data-note="a > b" src="//cdn/x.js"></script>"#,
+            // CSS, in every quoting and spacing style.
+            r#"<style>@font-face{src:url(//cdn.example/x.woff)}</style>"#,
+            r#"<style>@font-face{src:url("//cdn.example/x.woff")}</style>"#,
+            r#"<style>@font-face{src:url('//cdn.example/x.woff')}</style>"#,
+            r#"<style>@font-face{src:url( //cdn.example/x.woff )}</style>"#,
+            r#"<style>@font-face{src:URL(//fonts/x.woff)}</style>"#,
+            r#"<style>@import "//cdn.example/a.css";</style>"#,
+            // A second file is not self-contained either, whatever the scheme.
+            r#"<link href="https://cdn.example/a.css">"#,
+            r#"<link href="theme.css">"#,
         ] {
             assert!(
-                protocol_relative_ref(spelling).is_some(),
-                "a remote fetch spelled `{spelling}` slipped past the detector"
+                !external_refs(spelling).is_empty(),
+                "an external reference spelled `{spelling}` slipped past the detector"
             );
         }
 
-        // And it must not fire on the inlined script/style the report legitimately
-        // carries — `//` opens a JS comment and appears inside ordinary strings,
-        // neither of which fetches anything. A detector that flags those would be
-        // turned off rather than fixed.
+        // The other direction. A detector that fires on the report's own
+        // inlined script, on manifest text, or on in-page anchors gets switched
+        // off rather than fixed.
         for benign in [
+            // `//` opens a JS comment and occurs inside ordinary strings.
             "<script>\n// a comment\nlet x = 1;\n</script>",
             r#"<script>const u = "a//b";</script>"#,
-            "<style>a{color:#fff}</style>",
-            // Accepting whitespace around `=` makes these read as attributes
-            // until the tag context rules them out. They fetch nothing — and
-            // unlike the dotted-host guard they replaced, that reasoning holds
-            // for a comment whose first word happens to look like a host.
             "<script>let src = // why not\nlet x = 1;</script>",
             "<script>let href =\n// note\n2;</script>",
-            "<script>const src = //TODO fix\n3;</script>",
             "<script>let src = //localhost is fine here\n1;</script>",
+            // Markup-shaped text inside a script is raw text, not markup.
+            r#"<script>const s = '<img src="//cdn/x">';</script>"#,
             // `data-vendor` is interpolated from the manifest and `/` is not
-            // escaped, so a vendor opening with `//` reaches the page. It is an
-            // attribute inside a tag, and it fetches nothing — which is why the
-            // carrier list is explicit rather than "any attribute".
+            // escaped, so a vendor opening with `//` reaches the page.
             r#"<details class="agent" data-vendor="//odd"><summary>x</summary></details>"#,
+            // A URL in *text* fetches nothing — the old substring probes for
+            // `https://` would have failed the report over a description.
+            "<p>see https://example.com for details</p>",
+            // In-page anchors and inline data are self-contained.
+            r##"<a href="#top">top</a>"##,
+            r#"<img src="data:image/gif;base64,R0lGOD">"#,
+            "<style>a{color:#fff}</style>",
         ] {
-            assert_eq!(
-                protocol_relative_ref(benign),
-                None,
-                "detector false-positived on `{benign}`"
+            assert!(
+                external_refs(benign).is_empty(),
+                "detector false-positived on `{benign}`: {:?}",
+                external_refs(benign)
             );
         }
     }
 
-    /// First protocol-relative reference (`//host/…`) in `html`, if any.
+    /// Every reference in `html` that the browser would resolve against the
+    /// network or the filesystem.
     ///
-    /// A fixed list of literal probes (`src="//`, `url(//`, …) only catches the
-    /// quoting style it happens to spell out, so `src='//cdn/x.js'`,
-    /// `url("//cdn/x.woff")` and `url( //cdn/x.woff )` all slip past while the
-    /// page still performs the fetch the test forbids. Match the carrier and
-    /// then skip every separator HTML and CSS allow between it and the URL —
-    /// quotes, whitespace, and the whitespace HTML permits around an
-    /// attribute's `=` (`src = "//cdn/x.js"` is valid markup and fetches) — so
-    /// spellings are covered by construction rather than by enumeration.
-    ///
-    /// Carrier names are matched case-insensitively: HTML attribute names and
-    /// the CSS `url()` token are both ASCII-case-insensitive, so `SRC=` and
-    /// `URL(` fetch exactly like their lowercase spellings.
-    fn protocol_relative_ref(html: &str) -> Option<String> {
-        const SEPARATORS: [char; 6] = [' ', '\t', '\r', '\n', '\'', '"'];
-        /// Attributes whose value a browser resolves and fetches. Matched as
-        /// suffixes, so `data-src` and `xlink:href` come along. Deliberately a
-        /// list rather than "any attribute in a tag": `data-vendor` carries
-        /// manifest text, and a vendor string opening with `//` must not read
-        /// as a fetch. `srcset` is spelled out because it does not end in
-        /// `src`.
-        const URL_ATTRIBUTES: [&str; 7] = [
+    /// Tokenized with `lol_html` rather than pattern-matched. Six rounds of
+    /// review on a hand-rolled scanner turned up nine distinct spellings it
+    /// missed or misfired on — quote styles, whitespace around `=`, attribute
+    /// case, single-label hosts, non-`src` carriers, `srcset` candidate lists,
+    /// `<object data>`, a `>` inside a quoted value, and a `<` inside a script
+    /// string. Every one of those is a tokenizer's job, and a spec-compliant
+    /// tokenizer answers them by construction. What is left here is the only
+    /// part that is genuinely this project's judgement: which attributes fetch,
+    /// and what counts as self-contained.
+    fn external_refs(html: &str) -> Vec<String> {
+        use lol_html::{RewriteStrSettings, element, rewrite_str, text};
+        use std::cell::RefCell;
+        use std::rc::Rc;
+
+        /// Attribute names whose value a browser resolves. Exact names, not
+        /// suffixes — the parser hands us the real name, so `data` (which
+        /// `<object>` fetches) no longer risks colliding with `data-vendor`.
+        const URL_ATTRS: [&str; 8] = [
             "src",
-            "srcset",
             "href",
             "poster",
             "background",
             "action",
+            "formaction",
             "cite",
+            "data",
         ];
-        /// `str::ends_with`, ignoring ASCII case. Guards the char boundary so a
-        /// multi-byte tail can't panic the slice.
-        fn ends_with_ci(haystack: &str, needle: &str) -> bool {
-            let Some(start) = haystack.len().checked_sub(needle.len()) else {
-                return false;
-            };
-            haystack.is_char_boundary(start) && haystack[start..].eq_ignore_ascii_case(needle)
+
+        /// A value is self-contained only if it stays inside this document: an
+        /// in-page anchor, or an inline `data:` URI. Anything else — remote,
+        /// protocol-relative, or a relative path to a second file — is not.
+        fn is_external(value: &str) -> bool {
+            let v = value.trim();
+            !v.is_empty() && !v.starts_with('#') && !v.to_ascii_lowercase().starts_with("data:")
         }
-        /// Whether `idx` sits inside an HTML tag — i.e. the nearest `<` before
-        /// it is not yet closed. This is what separates an attribute from a
-        /// same-named JS identifier: `src=` within `<script …>` is a carrier,
-        /// `let src =` in that script's body is not.
-        fn inside_tag(html: &str, idx: usize) -> bool {
-            let before = &html[..idx];
-            match (before.rfind('<'), before.rfind('>')) {
-                (Some(open), Some(close)) => open > close,
-                (Some(_), None) => true,
-                _ => false,
-            }
+
+        let refs = Rc::new(RefCell::new(Vec::<String>::new()));
+        let css = Rc::new(RefCell::new(String::new()));
+        let (attr_sink, css_sink) = (Rc::clone(&refs), Rc::clone(&css));
+
+        rewrite_str(
+            html,
+            RewriteStrSettings::new()
+                .append_element_content_handler(element!("*", move |el| {
+                    for attr in el.attributes() {
+                        let name = attr.name().to_ascii_lowercase();
+                        let value = attr.value();
+                        if name == "srcset" {
+                            // A candidate list: `url 1x, url 2x`. The remote
+                            // one need not come first.
+                            for candidate in value.split(',') {
+                                if let Some(url) = candidate.split_whitespace().next()
+                                    && is_external(url)
+                                {
+                                    attr_sink.borrow_mut().push(url.to_string());
+                                }
+                            }
+                        } else if URL_ATTRS.contains(&name.as_str()) && is_external(&value) {
+                            attr_sink.borrow_mut().push(value.trim().to_string());
+                        }
+                    }
+                    Ok(())
+                }))
+                .append_element_content_handler(text!("style", move |chunk| {
+                    css_sink.borrow_mut().push_str(chunk.as_str());
+                    Ok(())
+                })),
+        )
+        .expect("fixture html tokenizes");
+
+        // `@import` and `url()` are how a stylesheet reaches out; neither is an
+        // attribute, so they are scanned in the collected CSS text.
+        let css = css.borrow();
+        let lower = css.to_ascii_lowercase();
+        if lower.contains("@import") {
+            refs.borrow_mut().push("@import".to_string());
         }
-        for (idx, _) in html.match_indices("//") {
-            let preceding = html[..idx].trim_end_matches(SEPARATORS);
-            // `url(` carries no `=`; an attribute does, and may be spaced
-            // around it. Strip the `=` and re-trim before naming the attribute.
-            let is_carrier = match preceding.strip_suffix('=') {
-                Some(attribute) => {
-                    let attribute = attribute.trim_end_matches(SEPARATORS);
-                    // Tolerating whitespace around `=` is what makes a JS
-                    // assignment followed by a line comment (`let src = //
-                    // note`) read as an attribute. The tag context, not the
-                    // shape of what follows, is what tells the two apart —
-                    // requiring a dotted host would instead miss the
-                    // single-label intranet hosts a browser fetches happily
-                    // (`//localhost/x.js`, `//assets/bundle.js`).
-                    URL_ATTRIBUTES.iter().any(|a| ends_with_ci(attribute, a))
-                        && inside_tag(html, idx)
-                }
-                None => ends_with_ci(preceding, "url("),
-            };
-            if !is_carrier {
-                continue;
-            }
-            // A carrier naming an empty authority (`src="//"`) fetches nothing.
-            let host_len = html[idx + 2..]
+        for (at, _) in lower.match_indices("url(") {
+            let value: String = css[at + 4..]
                 .chars()
-                .take_while(|c| !c.is_whitespace() && !"/\"')>".contains(*c))
-                .count();
-            if host_len > 0 {
-                return Some(html[idx..].chars().take(40).collect());
+                .skip_while(|c| c.is_whitespace() || *c == '\'' || *c == '"')
+                .take_while(|c| !c.is_whitespace() && !")'\"".contains(*c))
+                .collect();
+            if is_external(&value) {
+                refs.borrow_mut().push(value);
             }
         }
-        None
+        refs.borrow().clone()
     }
 }
