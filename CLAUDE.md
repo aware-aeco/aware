@@ -123,8 +123,8 @@ All skill creation, modification, or porting routes through Anthropic's `skill-c
 ### PR review — non-negotiable
 
 - **Every PR must be reviewed before merge.** No PR merges without a review pass; address all findings (or justify why not) before merging.
-- **Codex reviews first.** Run `codex exec review --base main` on the branch. Codex is the primary reviewer.
-- **Fall back to the local reviewer only if Codex is genuinely unavailable** (rate-limited, errored, or not installed): use the `pr-review-toolkit:code-reviewer` agent instead.
+- **Codex reviews first.** Codex is the primary reviewer, and it reaches the branch two ways. On a machine with the CLI, run `codex exec review --base main`. In an environment without it — notably the scheduled cloud routines, which have no Codex CLI, no credential and no egress of their own — comment `@codex review` on the PR and use Codex's GitHub code review, which runs from GitHub's side on the maintainer's ChatGPT subscription. **Both are Codex; either satisfies this rule.** Do not treat an absent CLI as an absent reviewer.
+- **Fall back to the local reviewer only if Codex is genuinely unavailable by BOTH routes** (CLI rate-limited/errored/not installed *and* no GitHub review inside the poll window): use the `pr-review-toolkit:code-reviewer` agent instead. A PR reviewed only that way must say so, and — per the Git workflow carve-out above — must not self-merge.
 - **Re-check Codex every time.** A one-time rate-limit (e.g. "try again at …") is *not* permanent — try Codex again on the next PR / next day before falling back. Don't coast on the local reviewer because Codex was down once.
 
 ## What's already shipped
