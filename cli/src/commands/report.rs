@@ -742,6 +742,10 @@ mod tests {
             // must not end it early and quietly drop what follows.
             r#"<style>@media screen{a{background:url(//cdn.example/m.png)}}</style>"#,
             r#"<style>a{background:image-set(url(//cdn.example/n.png) 1x)}</style>"#,
+            // A resource function may name its target as a bare string.
+            r#"<style>a{background:image-set("//cdn.example/s.png" 1x)}</style>"#,
+            r#"<style>a{background:-webkit-image-set('//cdn.example/w.png' 1x)}</style>"#,
+            r#"<style>a{background:cross-fade("//cdn.example/c.png", red)}</style>"#,
             "<style>a{background:url(//cdn.example/unclosed.png</style>",
             // CSS in a `style` attribute fetches exactly as a stylesheet does.
             r#"<div style="background-image:url(//cdn.example/x.png)"></div>"#,
@@ -807,6 +811,51 @@ mod tests {
                 external_refs(benign).is_empty(),
                 "detector false-positived on `{benign}`: {:?}",
                 external_refs(benign)
+            );
+        }
+    }
+
+    /// Neither check above says anything about what the inlined script *does*.
+    /// Both are static: they read what the document declares. A `fetch()`, a
+    /// dynamic `import()`, or a `src` assigned to an element the script creates
+    /// would leave the element surface unchanged and `external_refs` empty
+    /// while the report still hits the network when opened.
+    ///
+    /// So the honest scope of `the_report_is_one_self_contained_document` is
+    /// "nothing the markup declares resolves externally" — not "opening this
+    /// page performs no request". This closes the gap for the script we
+    /// actually ship: it is ours, it is short, and it exists to filter a list.
+    /// The list below is a blacklist and makes no completeness claim; what
+    /// makes it worth having is that the script is reviewed, not that the list
+    /// is exhaustive.
+    #[test]
+    fn the_inlined_script_uses_no_network_capable_api() {
+        const NETWORK_APIS: [&str; 10] = [
+            "fetch(",
+            "XMLHttpRequest",
+            "import(",
+            "importScripts",
+            "Worker(",
+            "EventSource",
+            "WebSocket",
+            "sendBeacon",
+            "navigator.connection",
+            "requestIdleCallback(fetch",
+        ];
+        for api in NETWORK_APIS {
+            assert!(
+                !SCRIPT.contains(api),
+                "the inlined script calls `{api}`; the report would reach the network when \
+                 opened, which no static check on this page can see"
+            );
+        }
+        // Assigning a URL to an element the script creates is the other route,
+        // and it does not name an API at all.
+        for assignment in [".src =", ".src=", ".href =", ".href=", "setAttribute('src'"] {
+            assert!(
+                !SCRIPT.contains(assignment),
+                "the inlined script assigns `{assignment}`; if that value is ever external the \
+                 report fetches at runtime"
             );
         }
     }
@@ -1004,7 +1053,21 @@ mod tests {
         fn css_refs(css: &str) -> Vec<String> {
             use cssparser::{ParseError, Parser, ParserInput, Token};
 
-            fn collect(parser: &mut Parser, out: &mut Vec<String>) {
+            /// CSS functions whose arguments name a resource. A quoted string
+            /// inside one is a URL — `image-set("//cdn/x.png" 1x)` fetches —
+            /// whereas a quoted string anywhere else is just a string, and
+            /// `content: "url(//cdn/x)"` fetches nothing.
+            const URL_FUNCTIONS: [&str; 5] = [
+                "url",
+                "image-set",
+                "-webkit-image-set",
+                "image",
+                "cross-fade",
+            ];
+
+            /// `strings_are_urls` is set while walking inside one of the
+            /// functions above, and only there.
+            fn collect(parser: &mut Parser, out: &mut Vec<String>, strings_are_urls: bool) {
                 loop {
                     // Cloned so the borrow of `parser` ends before descending.
                     let token = match parser.next_including_whitespace_and_comments() {
@@ -1015,23 +1078,20 @@ mod tests {
                         Token::UnquotedUrl(value) if is_external(&value) => {
                             out.push(value.to_string());
                         }
+                        Token::QuotedString(value) if strings_are_urls && is_external(&value) => {
+                            out.push(value.to_string());
+                        }
                         Token::AtKeyword(name) if name.eq_ignore_ascii_case("import") => {
                             out.push("@import".to_string());
                         }
-                        // `url("…")` tokenizes as a function whose block holds
-                        // the quoted target. Any other function may nest one,
-                        // so every block is walked.
+                        // Every block is walked: a resource-naming function may
+                        // be nested inside one that is not.
                         Token::Function(name) => {
-                            let is_url = name.eq_ignore_ascii_case("url");
+                            let nested_urls =
+                                URL_FUNCTIONS.iter().any(|f| name.eq_ignore_ascii_case(f));
                             let sink = &mut *out;
                             let _ = parser.parse_nested_block(|nested| {
-                                if is_url
-                                    && let Ok(Token::QuotedString(value)) = nested.next()
-                                    && is_external(value)
-                                {
-                                    sink.push(value.to_string());
-                                }
-                                collect(nested, sink);
+                                collect(nested, sink, nested_urls);
                                 Ok::<(), ParseError<'_, ()>>(())
                             });
                         }
@@ -1040,7 +1100,7 @@ mod tests {
                         | Token::CurlyBracketBlock => {
                             let sink = &mut *out;
                             let _ = parser.parse_nested_block(|nested| {
-                                collect(nested, sink);
+                                collect(nested, sink, false);
                                 Ok::<(), ParseError<'_, ()>>(())
                             });
                         }
@@ -1052,7 +1112,7 @@ mod tests {
             let mut input = ParserInput::new(css);
             let mut parser = Parser::new(&mut input);
             let mut out = Vec::new();
-            collect(&mut parser, &mut out);
+            collect(&mut parser, &mut out, false);
             out
         }
 
