@@ -8,8 +8,6 @@
 //!
 //! Per `10-core/cli-spec.md` and the v0.13 phase entry in `cli-roadmap.md`.
 
-#![allow(dead_code)]
-
 use std::io::Read;
 use std::thread::sleep;
 use std::time::{Duration, SystemTime};

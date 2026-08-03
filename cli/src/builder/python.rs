@@ -2,8 +2,6 @@
 //!
 //! Spawns `python -c "<introspection script>"` and parses the JSON output.
 
-#![allow(dead_code)]
-
 use std::collections::BTreeMap;
 
 use crate::builder::{GeneratedAgent, GeneratedCommand, Provenance, now_iso};

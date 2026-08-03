@@ -2,8 +2,6 @@
 //!
 //! Submodules added across Tasks 2-5.
 
-#![allow(dead_code)]
-
 use crate::error::AwareError;
 
 pub mod config;

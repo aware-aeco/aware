@@ -1,30 +1,18 @@
 //! Stamped Receipt — v0.27.
 //!
-//! The third + final tier of the Receipt design.
+//! **ed25519-signed JSONL receipts.** Every panel-gated run produces a
+//! `.jsonl` receipt + a `.sig` sidecar containing an ed25519 signature over
+//! the receipt's SHA-256. The operator's keypair is loaded from
+//! `~/.aware/keys/<operator-id>.{pub,sec}`. An insurer, building-control
+//! officer, or PE-stamping engineer can verify the receipt independently
+//! against the published public key.
 //!
-//! Adds two primitives on top of the v0.25 Reviewed Receipt:
-//!
-//! 1. **ed25519-signed JSONL receipts.** Every panel-gated run produces
-//!    a `.jsonl` receipt + a `.sig` sidecar containing an ed25519 signature
-//!    over the receipt's SHA-256. The operator's keypair is loaded from
-//!    `~/.aware/keys/<operator-id>.{pub,sec}`. An insurer, building-
-//!    control officer, or PE-stamping engineer can verify the receipt
-//!    independently against the published public key.
-//!
-//! 2. **Reference cases as contract.** Engineers already hoard
-//!    `\\fileserver\Tender\2024\Q3\Final\...` folders that ARE their
-//!    ground truth. v0.27 turns those folders into CI gates: each app
-//!    can ship a `tests/cases/<case>.yaml` declaring expected inputs +
-//!    expected outputs. `aware app cases run <app>` walks every case
-//!    and reports green/red.
-//!
-//! Per `10-core/app-spec.md § Stamped Receipt` (added in v0.27).
+//! Surfaced by `aware key` + `aware receipt`.
 
 use std::path::{Path, PathBuf};
 
 use base64::Engine;
 use ed25519_dalek::{Signature, Signer, SigningKey, Verifier, VerifyingKey};
-use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
 use crate::error::AwareError;
@@ -208,77 +196,6 @@ pub fn verify_receipt(receipt_path: &Path, sig_path: &Path) -> Result<(), AwareE
     Ok(())
 }
 
-// ---- Reference cases as contract ----
-
-/// A reference case. Lives at `<app-dir>/tests/cases/<id>.yaml`. Each case
-/// declares the inputs the app should be run with + the expected shape of
-/// the outputs. `aware app cases run <app>` executes every case in dry-run
-/// mode (no writes) and checks the expected vs actual.
-#[derive(Debug, Deserialize, Serialize, Clone)]
-// Reserved for `aware app cases run <app>` per `10-core/app-spec.md`
-// § Stamped Receipt; the command that walks these is not built yet.
-#[allow(dead_code)]
-pub struct ReferenceCase {
-    /// Stable id (filename minus `.yaml`). Used in green/red reporting.
-    pub id: String,
-    /// Human-readable description of what the case proves.
-    pub description: String,
-    /// App inputs (substituted into the app's `{{ inputs.x }}` templates).
-    #[serde(default)]
-    pub inputs: serde_yaml::Value,
-    /// Expected output assertions. Each entry asserts a node's output
-    /// satisfies a constraint.
-    #[serde(default)]
-    pub expect: Vec<ExpectAssertion>,
-    /// Optional: this case represents the project's golden state — when
-    /// updated, the receipt of the run becomes the new baseline.
-    #[serde(default)]
-    pub golden: bool,
-}
-
-#[derive(Debug, Deserialize, Serialize, Clone)]
-// Reserved for `aware app cases run <app>` per `10-core/app-spec.md`
-// § Stamped Receipt; the command that walks these is not built yet.
-#[allow(dead_code)]
-pub struct ExpectAssertion {
-    /// Node id whose output is asserted.
-    pub node: String,
-    /// Field within the node's output. Dotted path supported.
-    pub field: String,
-    /// Operator: `eq` (exact), `contains`, `>`, `>=`, `<`, `<=`, `count-eq`.
-    pub op: String,
-    /// Expected value (typed: string, number, boolean).
-    pub value: serde_yaml::Value,
-}
-
-/// Walk an app directory's `tests/cases/` folder, return every parsed case.
-// Reserved for `aware app cases run <app>` per `10-core/app-spec.md`
-// § Stamped Receipt; the command that walks these is not built yet.
-#[allow(dead_code)]
-pub fn discover_cases(app_dir: &Path) -> Result<Vec<ReferenceCase>, AwareError> {
-    let cases_dir = app_dir.join("tests").join("cases");
-    if !cases_dir.is_dir() {
-        return Ok(Vec::new());
-    }
-    let mut out = Vec::new();
-    for entry in std::fs::read_dir(&cases_dir)
-        .map_err(|e| AwareError::Internal(format!("read_dir {}: {e}", cases_dir.display())))?
-        .flatten()
-    {
-        let p = entry.path();
-        if p.extension().and_then(|e| e.to_str()) != Some("yaml") {
-            continue;
-        }
-        let text = std::fs::read_to_string(&p)
-            .map_err(|e| AwareError::Internal(format!("read {}: {e}", p.display())))?;
-        let case: ReferenceCase = serde_yaml::from_str(&text)
-            .map_err(|e| AwareError::Validation(format!("parse {}: {e}", p.display())))?;
-        out.push(case);
-    }
-    out.sort_by(|a, b| a.id.cmp(&b.id));
-    Ok(out)
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -325,36 +242,5 @@ mod tests {
         let signing = load_signing_key(&keys.sec_path).unwrap();
         let verifying = load_verifying_key(&keys.pub_path).unwrap();
         assert_eq!(verifying.to_bytes(), signing.verifying_key().to_bytes());
-    }
-
-    #[test]
-    fn empty_cases_folder_returns_empty_vec() {
-        let tmp = tempfile::tempdir().unwrap();
-        let cases = discover_cases(tmp.path()).unwrap();
-        assert!(cases.is_empty());
-    }
-
-    #[test]
-    fn discovers_yaml_cases() {
-        let tmp = tempfile::tempdir().unwrap();
-        let cases_dir = tmp.path().join("tests").join("cases");
-        std::fs::create_dir_all(&cases_dir).unwrap();
-        std::fs::write(
-            cases_dir.join("happy-path.yaml"),
-            r#"id: happy-path
-description: smoke
-inputs: {}
-expect:
-  - node: x
-    field: y
-    op: eq
-    value: 42
-"#,
-        )
-        .unwrap();
-        let cases = discover_cases(tmp.path()).unwrap();
-        assert_eq!(cases.len(), 1);
-        assert_eq!(cases[0].id, "happy-path");
-        assert_eq!(cases[0].expect.len(), 1);
     }
 }

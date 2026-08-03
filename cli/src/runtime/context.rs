@@ -1,7 +1,5 @@
 //! Runtime context (re-exports template::RenderContext + secret loader).
 
-#![allow(dead_code)]
-
 use std::path::Path;
 
 use crate::error::AwareError;

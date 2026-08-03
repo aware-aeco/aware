@@ -7,8 +7,6 @@
 //! form (`tekla_watch`) so they're valid Jinja identifiers; the raw kebab key
 //! is also inserted for bracket-syntax access.
 
-#![allow(dead_code)]
-
 use minijinja::{Environment, Value};
 use serde_json::Map;
 

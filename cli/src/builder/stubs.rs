@@ -3,8 +3,6 @@
 //! `build_from_dlls` and `build_with_decompile` now route to the C# sidecar.
 //! `build_from_com` and `build_from_headers` stay stubbed (deferred to v0.5.2+).
 
-#![allow(dead_code)]
-
 use crate::builder::GeneratedAgent;
 use crate::error::AwareError;
 

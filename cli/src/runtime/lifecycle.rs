@@ -1,7 +1,5 @@
 //! Lifecycle helpers for the runtime: stop-broadcast channel + Ctrl+C handler.
 
-#![allow(dead_code)]
-
 use tokio::sync::watch;
 
 pub type StopSender = watch::Sender<bool>;

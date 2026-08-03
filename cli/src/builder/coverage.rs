@@ -7,8 +7,6 @@
 //! JSON summary (manifest path + skill/catalog counts + written file lists).
 //! The CLI prints that summary back to the caller.
 
-#![allow(dead_code)]
-
 use std::path::Path;
 
 use crate::error::AwareError;

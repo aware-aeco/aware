@@ -5,8 +5,6 @@
 //! stored here — it goes to the OS keychain (see `keychain::store_app_secret`).
 //! Resolution precedence is applied in `config::IntegrationConfig::with_profile`.
 
-#![allow(dead_code)]
-
 use std::path::Path;
 
 use serde::Deserialize;

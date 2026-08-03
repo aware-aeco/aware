@@ -4,8 +4,6 @@
 
 use thiserror::Error;
 
-// Variants are forward-declared; callers will be added in later CLI phases.
-#[allow(dead_code)]
 #[derive(Debug, Error)]
 pub enum AwareError {
     #[error("not yet implemented: {0} (see cli-roadmap.md for phasing)")]

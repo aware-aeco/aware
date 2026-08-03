@@ -1,7 +1,5 @@
 //! PKCE OAuth flow with localhost callback.
 
-#![allow(dead_code)]
-
 use base64::Engine;
 use rand::RngCore;
 use sha2::Digest;

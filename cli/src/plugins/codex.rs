@@ -3,8 +3,6 @@
 //! The Codex plugin format isn't settled. This generator writes a TODO marker
 //! so users know the directory exists for the eventual integration.
 
-#![allow(dead_code)]
-
 use std::path::Path;
 
 use crate::error::AwareError;
