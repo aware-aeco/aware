@@ -16,6 +16,7 @@ use crate::envelope;
 use crate::error::AwareError;
 use crate::manifest::agent::Category;
 use crate::manifest::loader::discover_agents;
+use crate::text;
 
 #[derive(Args, Debug)]
 pub struct SearchArgs {
@@ -128,12 +129,12 @@ pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
         }
         for hit in hits.iter().take(shown) {
             let desc_one = hit.description.replace('\n', " ");
-            let desc_trimmed = if desc_one.len() > 100 {
-                format!("{}…", &desc_one[..97])
-            } else {
-                desc_one
-            };
-            println!("  {} → {}", hit.command, desc_trimmed);
+            // Characters, not bytes. This was `&desc_one[..97]`, which aborts the
+            // process when byte 97 lands inside a multi-byte character — four
+            // descriptions already in `20-agents/` do exactly that (see
+            // `crate::text`). Descriptions are author-written prose; typographic
+            // quotes and accents in them are ordinary, not exotic.
+            println!("  {} → {}", hit.command, text::ellipsize(&desc_one, 97));
         }
         if total_hits > shown {
             println!("  … {} more (use --limit 0 to see all)", total_hits - shown);

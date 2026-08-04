@@ -231,12 +231,11 @@ const MAX_DETAIL_CHARS: usize = 2000;
 
 /// Trim a bridge's failure output to something reportable, on a char boundary.
 fn truncate_detail(detail: &str) -> String {
-    match detail.char_indices().nth(MAX_DETAIL_CHARS) {
+    match crate::text::cut_after_chars(detail, MAX_DETAIL_CHARS) {
         None => detail.to_string(),
-        Some((cut, _)) => format!(
-            "{}… ({} more bytes suppressed)",
-            &detail[..cut],
-            detail.len() - cut
+        Some(kept) => format!(
+            "{kept}… ({} more bytes suppressed)",
+            detail.len() - kept.len()
         ),
     }
 }
@@ -1865,11 +1864,7 @@ fn vision_error_detail(body: &str) -> Option<String> {
 /// when truncated (API messages can be long; a one-liner is enough to diagnose).
 fn truncate_error_detail(detail: &str) -> String {
     const MAX_CHARS: usize = 300;
-    if detail.chars().count() <= MAX_CHARS {
-        return detail.to_string();
-    }
-    let truncated: String = detail.chars().take(MAX_CHARS).collect();
-    format!("{truncated}…")
+    crate::text::ellipsize(detail, MAX_CHARS).into_owned()
 }
 
 /// The original Anthropic Messages API path (now one provider among several): send the
