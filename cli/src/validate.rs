@@ -221,16 +221,20 @@ fn check_requires_syntax(requires: &[String], out: &mut Vec<ValidationIssue>) {
         let Some((agent, spec)) = entry.split_once('@') else {
             continue; // no `@` — an unpinned agent id, which is legal
         };
-        if agent.trim().is_empty() {
+        // Normalise the id ONCE, here, and use only the normalised value below.
+        // A `requires:` entry is free-form YAML text, but an agent id is a token,
+        // and every consumer compares it by exact string equality. Deciding what
+        // an id *is* at the point it is parsed — rather than checking for bad
+        // shapes further down — is what keeps this check and `unsatisfied_pins`
+        // agreeing about the same entry; the two disagreeing is what let
+        // `"@1.2.3"` through in the first place.
+        let agent = agent.trim();
+        if agent.is_empty() {
             // `@1.2.3` — the id was dropped, so the pin parses and the entry reads
             // as a constraint while naming nothing to constrain. Reported here
             // rather than left to the pin branch, whose "expected {agent}@…"
             // remedy would echo the same missing id back at the author.
-            //
-            // `trim()`, not `is_empty()`: `" @1.2.3"` names an agent no more than
-            // `"@1.2.3"` does, and it reaches the same dead end one step later —
-            // no whitespace id is in any catalogue or `dispatchable` set.
-            // [`validate_agent`] already spells the same rule this way.
+            // [`validate_agent`] already spells "no id" as a trimmed emptiness.
             out.push(ValidationIssue::error(
                 "E_APP_REQUIRES_MALFORMED",
                 format!(
@@ -514,7 +518,15 @@ pub fn unsatisfied_pins(
         let Some((agent_id, spec)) = entry.split_once('@') else {
             continue; // unpinned — nothing to satisfy
         };
-        if agent_id.trim().is_empty() {
+        // Normalise ONCE, before anything compares it. Both lookups below are
+        // exact string equality against ids that came from agent manifests, so a
+        // padded id (`"probe-agent @1.2.3"`) matches neither the catalogue nor
+        // `dispatchable` — and silently takes the unreachable-agent exemption,
+        // leaving a live node running an unenforced pin. Trimming here removes
+        // that class by construction rather than adding another predicate for
+        // each spelling; three findings in a row were one spelling each.
+        let agent_id = agent_id.trim();
+        if agent_id.is_empty() {
             // `@1.2.3` names no agent, so the empty id is in no catalogue and in
             // no `dispatchable` set. Falling through would hit the dispatchability
             // exemption below and skip the entry — which reads as "this pin is
@@ -1286,6 +1298,68 @@ requires: []
         // A real id in front of the `@` is untouched: this must not become a
         // check that refuses every pin.
         assert!(pin_codes("ifc-reference-reader@1.3.x", "1.3.0").is_empty());
+    }
+
+    #[test]
+    fn a_padded_agent_id_is_normalised_rather_than_silently_exempted() {
+        // The third spelling of one bug, and the one that shows why a predicate on
+        // the id's *shape* was the wrong instrument. `"probe-agent @1.2.3"` has a
+        // nonempty id, so every emptiness check — `is_empty`, then
+        // `trim().is_empty()` — passes it. Then `dispatchable` holds
+        // `ifc-reference-reader` while the entry carries `ifc-reference-reader `,
+        // the exact-equality lookup misses, and the entry takes the
+        // "declared but unreachable" exemption: a live node runs the installed
+        // agent with the pin apparently in force and actually unchecked.
+        //
+        // Normalising at the split closes this by construction. The assertions
+        // below are the two halves of that: a violated pin is now *reported*, and
+        // a satisfied one is still *accepted* — a fix that merely rejected padding
+        // would pass the first and fail the second.
+        let agents = vec![installed("ifc-reference-reader", "1.3.0")];
+        for padded in [
+            "ifc-reference-reader @9.9.x",
+            " ifc-reference-reader@9.9.x",
+            "  ifc-reference-reader  @9.9.x",
+            "\tifc-reference-reader@9.9.x",
+        ] {
+            assert_eq!(
+                unsatisfied_pins(
+                    &app_requiring(&format!("\"{padded}\"")),
+                    &agents,
+                    Severity::Error
+                )
+                .iter()
+                .map(|i| i.code)
+                .collect::<Vec<_>>(),
+                ["E_APP_AGENT_PIN_UNSATISFIED"],
+                "{padded:?} must be enforced, not exempted"
+            );
+        }
+        // …and the same padding on a pin that IS satisfied stays silent, so the
+        // normalisation reads the id rather than merely refusing odd-looking ones.
+        for padded in [
+            "ifc-reference-reader @1.3.x",
+            " ifc-reference-reader@1.3.x",
+            "  ifc-reference-reader  @1.3.0",
+        ] {
+            assert!(
+                unsatisfied_pins(
+                    &app_requiring(&format!("\"{padded}\"")),
+                    &agents,
+                    Severity::Error
+                )
+                .is_empty(),
+                "{padded:?} names a satisfied pin and must pass"
+            );
+        }
+        // The file-level check agrees: a padded id is a readable entry, not a
+        // malformed one. The two checks disagreeing about what an id *is* is the
+        // mechanism that produced this whole family.
+        assert!(
+            !validate_app(&app_requiring("\"ifc-reference-reader @1.3.x\""))
+                .iter()
+                .any(|i| i.code == "E_APP_REQUIRES_MALFORMED")
+        );
     }
 
     #[test]
