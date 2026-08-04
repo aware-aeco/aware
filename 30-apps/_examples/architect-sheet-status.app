@@ -13,10 +13,10 @@ description: |
 exposes-as-agent: false
 
 requires:
-  - revit-2026@2026.x
-  - acc-issues@1.x
-  - bluebeam-studio@1.x
-  - microsoft-365@1.x
+  - revit-2026@0.1.x
+  - acc-issues@0.2.x
+  - bluebeam-studio@0.1.x
+  - microsoft-365@0.2.x
 
 requires-permissions:
   filesystem:

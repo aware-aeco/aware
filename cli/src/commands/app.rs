@@ -239,6 +239,23 @@ async fn run(
             return Err(AwareError::Validation(format!("[{}]", err.code)));
         }
 
+        // Pin check (#349): the app's `requires:` names the agent contract it was
+        // written against. Running against a version outside that pin is how a
+        // breaking agent change used to reach an app silently — the #343
+        // coordinate-frame change is the case that surfaced it. Checked against
+        // the live catalogue rather than the lock, so an agent swapped out after
+        // the app was compiled is caught too. `--simulate` is excluded with the
+        // other catalogue checks above: it stubs every node and dispatches to
+        // nothing, and it is the documented way to check a composition before the
+        // agents around it are in place.
+        if let Some(err) =
+            crate::validate::unsatisfied_pins(&app, &agents, crate::validate::Severity::Error)
+                .first()
+        {
+            eprintln!("error: {}", err.message);
+            return Err(AwareError::Validation(format!("[{}]", err.code)));
+        }
+
         // Safety pre-flight only gates real runs (dry-run is precisely how you test
         // an app's safety contract before adding the blocks).
         if !dry_run {
@@ -598,6 +615,15 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
         // bare `os error 3`. `aware app run` refuses it.
         missing =
             crate::validate::missing_agents(&src_app, &agents, crate::validate::Severity::Warning);
+        // #349: same posture for an unsatisfied `requires:` pin. Installing an
+        // app before the agent it pins is legitimate, and the matching version
+        // may still be on its way — so name the mismatch here and let `compile`
+        // and `run` be the refusals.
+        missing.extend(crate::validate::unsatisfied_pins(
+            &src_app,
+            &agents,
+            crate::validate::Severity::Warning,
+        ));
     }
     if crate::validate::has_errors(&issues) {
         for i in &issues {

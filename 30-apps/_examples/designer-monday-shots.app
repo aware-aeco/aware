@@ -14,8 +14,8 @@ description: |
 exposes-as-agent: false
 
 requires:
-  - rhino-8@8.x
-  - microsoft-365@1.x
+  - rhino-8@0.30.x
+  - microsoft-365@0.2.x
 
 requires-permissions:
   filesystem:

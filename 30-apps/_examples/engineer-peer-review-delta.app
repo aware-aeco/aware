@@ -19,9 +19,9 @@ description: |
 exposes-as-agent: false
 
 requires:
-  - tsd-26@26.x
-  - html-report@1.x
-  - microsoft-365@1.x
+  - tsd-26@0.1.x
+  - html-report@0.2.x
+  - microsoft-365@0.2.x
 
 requires-permissions:
   filesystem:

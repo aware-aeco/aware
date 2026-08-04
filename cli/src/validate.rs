@@ -205,6 +205,156 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
     }
 
     check_inline_nodes(&app.nodes, &mut out);
+    check_requires_syntax(&app.requires, &mut out);
+    out
+}
+
+/// Reject `requires:` entries whose pin can't be parsed (#349).
+///
+/// This is a judgement about the app *file* — it needs no agent catalogue and
+/// gives the same verdict on every machine — so it belongs in
+/// [`validate_app`], alongside the other pure checks. Whether an installed
+/// agent *satisfies* a well-formed pin is a fact about the environment and
+/// lives in [`unsatisfied_pins`] instead.
+fn check_requires_syntax(requires: &[String], out: &mut Vec<ValidationIssue>) {
+    for entry in requires {
+        let Some((agent, spec)) = entry.split_once('@') else {
+            continue; // no `@` — an unpinned agent id, which is legal
+        };
+        if VersionPin::parse(spec).is_none() {
+            out.push(ValidationIssue::error(
+                "E_APP_REQUIRES_MALFORMED",
+                format!(
+                    "requires entry {entry:?} has an unreadable version pin {spec:?} — \
+                     expected {agent}@<major>.x (loose), {agent}@<major>.<minor>.x (default), \
+                     or an exact {agent}@<major>.<minor>.<patch>"
+                ),
+            ));
+        }
+    }
+}
+
+/// A parsed `requires:` version pin.
+///
+/// The three forms are the ones `10-core/agent-spec.md § Versioning` publishes
+/// — *"apps pin agent versions by `agent@minor.x` (default), `agent@major.x`
+/// (loose), or `agent@exact-semver` (strict)"* — plus the two-component
+/// `agent@<major>.<minor>` row that `10-core/app-spec.md § Versioning` lists as
+/// "any compatible version newer than" it. No reference app under
+/// `30-apps/_examples/` uses that last form, but the spec publishes it, so it
+/// parses rather than being reported as a typo.
+#[derive(Debug, PartialEq, Eq)]
+enum VersionPin {
+    /// `1.2.3` — this exact version.
+    Exact(u64, u64, u64),
+    /// `1.2.x` — any patch within 1.2. The recommended default.
+    Minor(u64, u64),
+    /// `1.x` — any minor within major 1.
+    Major(u64),
+    /// `1.2` — same major, and at least minor 2.
+    AtLeast(u64, u64),
+}
+
+impl VersionPin {
+    /// Parse the part after the `@`. `None` means malformed.
+    fn parse(spec: &str) -> Option<Self> {
+        let parts: Vec<&str> = spec.split('.').collect();
+        // A wildcard is only meaningful in the LAST position: `1.x.3` pins a
+        // patch under an unknown minor, which denotes nothing.
+        let wild = |s: &str| matches!(s, "x" | "X" | "*");
+        if parts.iter().rev().skip(1).any(|p| wild(p)) {
+            return None;
+        }
+        let num = |s: &str| s.parse::<u64>().ok();
+        match parts.as_slice() {
+            [maj, min, pat] if wild(pat) => Some(Self::Minor(num(maj)?, num(min)?)),
+            [maj, min, pat] => Some(Self::Exact(num(maj)?, num(min)?, num(pat)?)),
+            [maj, min] if wild(min) => Some(Self::Major(num(maj)?)),
+            [maj, min] => Some(Self::AtLeast(num(maj)?, num(min)?)),
+            _ => None,
+        }
+    }
+
+    fn is_satisfied_by(&self, (maj, min, pat): (u64, u64, u64)) -> bool {
+        match *self {
+            Self::Exact(a, b, c) => (maj, min, pat) == (a, b, c),
+            Self::Minor(a, b) => (maj, min) == (a, b),
+            Self::Major(a) => maj == a,
+            Self::AtLeast(a, b) => maj == a && min >= b,
+        }
+    }
+}
+
+/// Parse an installed agent's `version:` into a `(major, minor, patch)` triple.
+///
+/// Trailing semver prerelease / build metadata (`1.2.0-rc.1`, `1.2.0+deadbeef`)
+/// is discarded before the triple is read: it does not participate in the pin
+/// grammar above, and dropping it here keeps such a version *checkable* instead
+/// of unreadable.
+fn parse_semver(version: &str) -> Option<(u64, u64, u64)> {
+    let core = version
+        .split_once(['-', '+'])
+        .map_or(version, |(core, _)| core);
+    let [maj, min, pat] = core.split('.').collect::<Vec<_>>()[..] else {
+        return None;
+    };
+    Some((maj.parse().ok()?, min.parse().ok()?, pat.parse().ok()?))
+}
+
+/// Report `requires:` pins that the installed agent catalogue does not satisfy (#349).
+///
+/// Before this, `requires:` was parsed, echoed by `app show`, and resolved into
+/// the install-time `lockfile.yaml` — but nothing ever compared a declared pin
+/// against the version actually installed, so an app pinned to
+/// `ifc-reference-reader@0.1.x` compiled and ran clean against a `1.3.0` whose
+/// contract it had never asked for. That is what makes a major bump plus a
+/// `BREAKING.md` enforceable rather than advisory (`agent-spec.md § Versioning`).
+///
+/// Deliberately silent on an agent that is **not installed**: a pin verdict
+/// needs a version to judge, and "the agent is missing" is a different finding
+/// with its own gate ([`missing_agents`], #308). Reporting both would name the
+/// same gap twice with two remedies.
+///
+/// `severity` picks the gate, mirroring [`missing_agents`]:
+/// [`Severity::Error`] (`E_APP_AGENT_PIN_UNSATISFIED`) for `compile` and `run`,
+/// [`Severity::Warning`] (`W_APP_AGENT_PIN_UNSATISFIED`) for `install` — where
+/// installing the app before its agents is legitimate (#170) and the right
+/// agent may still be on its way.
+pub fn unsatisfied_pins(
+    app: &App,
+    agents: &[crate::manifest::loader::DiscoveredAgent],
+    severity: Severity,
+) -> Vec<ValidationIssue> {
+    let mut out = Vec::new();
+    for entry in &app.requires {
+        let Some((agent_id, spec)) = entry.split_once('@') else {
+            continue; // unpinned — nothing to satisfy
+        };
+        // A malformed pin is already reported by `validate_app`; don't say it twice.
+        let Some(pin) = VersionPin::parse(spec) else {
+            continue;
+        };
+        let Some(installed) = agents.iter().find(|d| d.manifest.agent == agent_id) else {
+            continue; // not installed — `missing_agents` owns that finding
+        };
+        let version = installed.manifest.version.as_str();
+        let msg = match parse_semver(version) {
+            Some(v) if pin.is_satisfied_by(v) => continue,
+            Some(_) => format!(
+                "app requires {agent_id}@{spec}, but {version} is installed — \
+                 install a matching version with `aware agent install {agent_id}@{spec}`, \
+                 or update the app's `requires:` pin if the new contract is the intended one"
+            ),
+            None => format!(
+                "app requires {agent_id}@{spec}, but the installed version {version:?} is not \
+                 semver, so the pin cannot be checked — fix the agent's `version:` field"
+            ),
+        };
+        out.push(match severity {
+            Severity::Error => ValidationIssue::error("E_APP_AGENT_PIN_UNSATISFIED", msg),
+            Severity::Warning => ValidationIssue::warning("W_APP_AGENT_PIN_UNSATISFIED", msg),
+        });
+    }
     out
 }
 
@@ -612,6 +762,270 @@ requires: []
         let a = load_app("30-apps/_examples/welded-to-tc.app");
         let issues = validate_app(&a);
         assert!(!has_errors(&issues), "issues: {issues:?}");
+    }
+
+    // ── `requires:` version pins (#349) ──────────────────────────────────────
+
+    /// An installed agent of `id` at `version`, with the minimum manifest shape.
+    fn installed(id: &str, version: &str) -> crate::manifest::loader::DiscoveredAgent {
+        let yaml = format!(
+            "agent: {id}\nversion: {version}\ndescription: x\nstateful: false\nlicense: MIT\n\
+             transport:\n  cli:\n    binary: aware-{id}\ncommands:\n  probe:\n    \
+             lifecycle: single\n    description: x\n"
+        );
+        crate::manifest::loader::DiscoveredAgent {
+            manifest: serde_yaml::from_str(&yaml).unwrap(),
+            root: std::path::PathBuf::from("."),
+        }
+    }
+
+    /// An app whose only `requires:` entry is `entry`.
+    fn app_requiring(entry: &str) -> App {
+        serde_yaml::from_str(&format!(
+            "app: pin-test\nversion: 0.1.0\ndescription: x\nrequires:\n  - {entry}\n\
+             nodes:\n  - id: probe\n    agent: ifc-reference-reader\n    command: probe\n"
+        ))
+        .unwrap()
+    }
+
+    fn pin_codes(entry: &str, installed_version: &str) -> Vec<&'static str> {
+        let agents = vec![installed("ifc-reference-reader", installed_version)];
+        unsatisfied_pins(&app_requiring(entry), &agents, Severity::Error)
+            .iter()
+            .map(|i| i.code)
+            .collect()
+    }
+
+    #[test]
+    fn an_impossible_pin_is_refused_against_the_installed_version() {
+        // The issue's own reproduction: `@9.9.x` compiled and ran clean against
+        // an installed 1.x, because nothing compared the two.
+        assert_eq!(
+            pin_codes("ifc-reference-reader@9.9.x", "1.3.0"),
+            ["E_APP_AGENT_PIN_UNSATISFIED"]
+        );
+        // …and the realistic case that motivated it: an app pinned to the OLD
+        // contract, running against the agent that broke it (#343).
+        assert_eq!(
+            pin_codes("ifc-reference-reader@0.1.x", "1.3.0"),
+            ["E_APP_AGENT_PIN_UNSATISFIED"]
+        );
+    }
+
+    #[test]
+    fn the_message_names_the_pin_and_the_installed_version() {
+        // The whole point is that the operator can tell WHICH side is wrong.
+        let agents = vec![installed("ifc-reference-reader", "1.3.0")];
+        let issues = unsatisfied_pins(
+            &app_requiring("ifc-reference-reader@0.1.x"),
+            &agents,
+            Severity::Error,
+        );
+        let msg = &issues[0].message;
+        assert!(msg.contains("ifc-reference-reader@0.1.x"), "{msg}");
+        assert!(msg.contains("1.3.0"), "{msg}");
+    }
+
+    #[test]
+    fn each_pin_form_admits_exactly_the_versions_the_spec_says_it_does() {
+        // `agent-spec.md § Versioning` — minor.x (default), major.x (loose),
+        // exact-semver (strict); `app-spec.md § Versioning` adds `<major>.<minor>`.
+        // Each row lists versions that MUST pass and versions that MUST fail, so a
+        // pin that degenerated to "accept anything" fails here.
+        let cases: &[(&str, &[&str], &[&str])] = &[
+            // exact
+            ("1.2.3", &["1.2.3"], &["1.2.4", "1.3.3", "2.2.3", "1.2.2"]),
+            // minor — any patch within 1.2
+            ("1.2.x", &["1.2.0", "1.2.9"], &["1.3.0", "2.2.0", "1.1.9"]),
+            // major — any minor within 1
+            ("1.x", &["1.0.0", "1.9.9"], &["0.9.9", "2.0.0"]),
+            // two-component — same major, at least minor 2
+            ("1.2", &["1.2.0", "1.9.0"], &["1.1.9", "2.2.0", "0.2.0"]),
+            // real pins from `30-apps/_examples/`
+            ("2026.x", &["2026.0.1"], &["2025.9.9"]),
+            ("0.1.x", &["0.1.0"], &["1.3.0", "0.2.0"]),
+        ];
+        for (spec, pass, fail) in cases {
+            for v in *pass {
+                assert!(
+                    pin_codes(&format!("ifc-reference-reader@{spec}"), v).is_empty(),
+                    "{spec} must admit {v}"
+                );
+            }
+            for v in *fail {
+                assert_eq!(
+                    pin_codes(&format!("ifc-reference-reader@{spec}"), v),
+                    ["E_APP_AGENT_PIN_UNSATISFIED"],
+                    "{spec} must refuse {v}"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn an_uninstalled_agent_gets_no_pin_verdict() {
+        // A pin verdict needs a version to judge. "Not installed" is a different
+        // finding with its own gate (`missing_agents`, #308) and its own remedy —
+        // reporting both would name one gap twice.
+        let agents = vec![installed("something-else", "1.0.0")];
+        assert!(
+            unsatisfied_pins(
+                &app_requiring("ifc-reference-reader@9.9.x"),
+                &agents,
+                Severity::Error
+            )
+            .is_empty()
+        );
+    }
+
+    #[test]
+    fn an_unpinned_requires_entry_admits_any_installed_version() {
+        // `requires: [- foo]` declares a dependency, not a constraint.
+        assert!(pin_codes("ifc-reference-reader", "1.3.0").is_empty());
+    }
+
+    #[test]
+    fn severity_selects_the_gate() {
+        let agents = vec![installed("ifc-reference-reader", "1.3.0")];
+        let app = app_requiring("ifc-reference-reader@9.9.x");
+        let warn = unsatisfied_pins(&app, &agents, Severity::Warning);
+        assert_eq!(warn[0].code, "W_APP_AGENT_PIN_UNSATISFIED");
+        assert_eq!(warn[0].severity, Severity::Warning);
+        let err = unsatisfied_pins(&app, &agents, Severity::Error);
+        assert_eq!(err[0].code, "E_APP_AGENT_PIN_UNSATISFIED");
+        assert_eq!(err[0].severity, Severity::Error);
+    }
+
+    #[test]
+    fn a_non_semver_installed_version_is_reported_rather_than_silently_passing() {
+        // Failing open here would reintroduce the bug for exactly the agents whose
+        // versioning is already suspect.
+        let codes = pin_codes("ifc-reference-reader@1.x", "latest");
+        assert_eq!(codes, ["E_APP_AGENT_PIN_UNSATISFIED"]);
+    }
+
+    #[test]
+    fn prerelease_and_build_metadata_stay_checkable() {
+        // `1.3.0-rc.1` is within `1.3.x`; dropping the suffix must not make the
+        // triple unreadable (which would report it as unpinnable instead).
+        assert!(pin_codes("ifc-reference-reader@1.3.x", "1.3.0-rc.1").is_empty());
+        assert!(pin_codes("ifc-reference-reader@1.3.x", "1.3.0+deadbeef").is_empty());
+        assert_eq!(
+            pin_codes("ifc-reference-reader@1.4.x", "1.3.0-rc.1"),
+            ["E_APP_AGENT_PIN_UNSATISFIED"]
+        );
+    }
+
+    #[test]
+    fn a_malformed_pin_is_rejected_by_the_file_check_not_the_catalogue_one() {
+        // Whether a pin is *readable* is a fact about the app file — same verdict on
+        // every machine — so it belongs in `validate_app`, which is what makes
+        // `aware app validate` catch it with no agents installed.
+        for bad in [
+            "ifc-reference-reader@not-a-version",
+            "ifc-reference-reader@",
+            "ifc-reference-reader@1",
+            "ifc-reference-reader@1.2.3.4",
+            "ifc-reference-reader@x.2.3",
+            "ifc-reference-reader@1.x.3", // wildcard in a non-final position denotes nothing
+            "ifc-reference-reader@-1.0.0",
+        ] {
+            let issues = validate_app(&app_requiring(bad));
+            assert!(
+                issues.iter().any(|i| i.code == "E_APP_REQUIRES_MALFORMED"),
+                "{bad} must be rejected; issues: {issues:?}"
+            );
+        }
+        // A well-formed pin the catalogue happens not to satisfy is NOT a syntax
+        // error — otherwise the two findings would collapse into one wrong message.
+        let issues = validate_app(&app_requiring("ifc-reference-reader@9.9.x"));
+        assert!(
+            !issues.iter().any(|i| i.code == "E_APP_REQUIRES_MALFORMED"),
+            "issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn a_malformed_pin_yields_one_finding_not_two() {
+        // `unsatisfied_pins` must stay quiet about a pin `validate_app` already
+        // rejected, or the operator gets a syntax error plus a bogus
+        // "version mismatch" naming a constraint that was never parsed.
+        assert!(pin_codes("ifc-reference-reader@not-a-version", "1.3.0").is_empty());
+    }
+
+    #[test]
+    fn every_reference_app_pin_is_well_formed_and_satisfied_by_its_own_agent() {
+        // The substrate's own 8 apps are the corpus this check runs against in the
+        // wild — if the grammar above were wrong, this is where it shows.
+        for app_rel in [
+            "30-apps/_examples/welded-to-tc.app",
+            "30-apps/_examples/qa-drawings-to-tekla.app",
+            "30-apps/_examples/architect-sheet-status.app",
+            "30-apps/_examples/bim-monday-audit.app",
+            "30-apps/_examples/designer-monday-shots.app",
+            "30-apps/_examples/detailer-issue-pack.app",
+            "30-apps/_examples/engineer-peer-review-delta.app",
+            "30-apps/_examples/model-to-renders.app",
+        ] {
+            let app = load_app(app_rel);
+            assert!(!app.requires.is_empty(), "{app_rel} declares no pins");
+            let issues = validate_app(&app);
+            assert!(
+                !issues.iter().any(|i| i.code == "E_APP_REQUIRES_MALFORMED"),
+                "{app_rel}: {issues:?}"
+            );
+            // And every pin admits the version of the agent it names — proving the
+            // published pins and the shipped agents actually agree. Agents that
+            // don't ship in this repo (`excel`, `think-node`) get no verdict, so
+            // building the catalogue from what IS here is the whole check.
+            let agents: Vec<_> = app
+                .requires
+                .iter()
+                .filter_map(|e| e.split_once('@').map(|(id, _)| id))
+                .filter_map(shipped_agent)
+                .collect();
+            let unsatisfied = unsatisfied_pins(&app, &agents, Severity::Error);
+            assert!(
+                unsatisfied.is_empty(),
+                "{app_rel} pins a version no shipped agent satisfies: {:?}",
+                unsatisfied.iter().map(|i| &i.message).collect::<Vec<_>>()
+            );
+        }
+    }
+
+    /// Load `20-agents/**/<id>/manifest.yaml` as a `DiscoveredAgent`, if that
+    /// agent ships in this repo. Hand-rolled walk rather than a glob dependency
+    /// for one test.
+    fn shipped_agent(id: &str) -> Option<crate::manifest::loader::DiscoveredAgent> {
+        let root = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .join("20-agents");
+        fn walk(dir: &std::path::Path, id: &str, out: &mut Option<std::path::PathBuf>) {
+            let Ok(entries) = std::fs::read_dir(dir) else {
+                return;
+            };
+            for e in entries.flatten() {
+                let p = e.path();
+                if p.is_dir() {
+                    if p.file_name().and_then(|s| s.to_str()) == Some(id) {
+                        let m = p.join("manifest.yaml");
+                        if m.is_file() {
+                            *out = Some(m);
+                            return;
+                        }
+                    }
+                    walk(&p, id, out);
+                }
+            }
+        }
+        let mut found = None;
+        walk(&root, id, &mut found);
+        let manifest = found?;
+        Some(crate::manifest::loader::DiscoveredAgent {
+            manifest: serde_yaml::from_str(&std::fs::read_to_string(&manifest).unwrap()).unwrap(),
+            root: manifest.parent().unwrap().to_path_buf(),
+        })
     }
 
     fn agent_with_status(status_line: &str) -> crate::manifest::loader::DiscoveredAgent {

@@ -31,8 +31,8 @@ exposed-commands:
 
 # Pinned agent versions. Minor pinning recommended.
 requires:
-  - tekla@2025.x
-  - trimble-connect@2.x
+  - tekla@0.1.x
+  - trimble-connect@0.2.x
 
 requires-permissions:
   network:

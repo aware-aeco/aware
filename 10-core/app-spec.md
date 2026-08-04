@@ -939,15 +939,32 @@ For v0:
 
 Apps follow semver. Breaking changes (changed inputs/outputs on exposed commands, removed nodes that callers depend on) require a major bump.
 
-Apps **pin agent versions** in `requires:`. Three pinning levels:
+Apps **pin agent versions** in `requires:`, as `<agent-id>@<pin>`. An entry with no `@` declares a dependency without constraining its version.
 
-| Pin | Example | Meaning |
+| Pin | Example | Admits |
 |---|---|---|
-| Exact | `tekla@2025.0.1` | This specific patch version. Used for reproducibility. |
-| Minor (recommended) | `tekla@2025.x` | Any patch within 2025.0. The default. |
-| Loose | `tekla@2025.0` | Any compatible version newer than 2025.0. Use when you actively track upstream. |
+| Exact | `tekla@0.1.3` | Only that version. Used for reproducibility. |
+| Minor (recommended) | `tekla@0.1.x` | Any patch within 0.1. The default, and the right one below 1.0, where the *minor* is the breaking axis. |
+| Major (loose) | `tekla@1.x` | Any minor within major 1. Use when you actively track upstream. |
+| At-least-minor | `tekla@1.2` | Major 1, minor 2 or newer. |
+
+The wildcard (`x`, `X` or `*`) is only meaningful in the final position: `1.x.3` pins a patch under an unknown minor, which denotes nothing, and is rejected as `E_APP_REQUIRES_MALFORMED`. Prerelease and build metadata on the *installed* agent (`1.2.0-rc.1`, `1.2.0+deadbeef`) do not participate in the grammar and are ignored when the pin is checked.
 
 The orchestrator resolves pins at install time and locks the resolved versions into `~/.aware/apps/<name>/lockfile.yaml`. Subsequent runs use the lock. `aware app update <name>` re-resolves and updates the lock.
+
+#### When a pin is enforced
+
+A pin is what makes the major-bump-plus-`BREAKING.md` rule in [Agent Spec § Versioning](./agent-spec.md#versioning) enforceable rather than advisory: without a check, a breaking agent change reaches every app silently. The gates are graded like the [agent-installed](#when-the-agent-must-be-installed) ones, and for the same reason — an app may legitimately be installed before the agent version it wants is:
+
+| Surface | An installed agent outside the declared pin |
+|---|---|
+| `aware app install` | **Warning** `W_APP_AGENT_PIN_UNSATISFIED` — installs, naming the pin, the installed version, and both remedies |
+| `aware app compile` | **Error** `E_APP_AGENT_PIN_UNSATISFIED` — refuses, and writes no lock. Unlike a missing agent this is not a "compile now, install later" gap: the agent *is* installed and is the wrong one, so the lock would pin a contract the author never asked for |
+| `aware app run`, `--dry-run` | **Error** `E_APP_AGENT_PIN_UNSATISFIED` — refuses before the run starts. Checked against the live catalogue, so an agent swapped out after the app was compiled is caught too |
+| `aware app run --simulate` | **Allowed** — every node is stubbed and no binary is contacted |
+| `aware app validate` | **Silent about versions** — it judges the app *file*, so it rejects an unreadable pin (`E_APP_REQUIRES_MALFORMED`) but not which version happens to be installed |
+
+An agent named in `requires:` but **not installed** gets no pin verdict at all: judging a pin needs a version, and the missing agent is already reported by `W_/E_APP_AGENT_NOT_INSTALLED` with its own remedy.
 
 ---
 
