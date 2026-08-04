@@ -27,6 +27,11 @@ chosen by counting bytes in the source, which holds only while the input stays
 ASCII. `&rest[start + 2..]` is *not* flagged: `start` came from `find`, and
 adding the byte length of an ASCII delimiter to a boundary keeps it a boundary.
 
+A literal *zero* is the one exception, because byte 0 is a boundary in every
+string: `&s[0..]` and `&s[..0]` cannot panic, so flagging them would be exactly
+the false-positive pressure that gets a gate ripped out. `&s[..=0]` still is
+flagged — an inclusive bound ends one byte later, at 1, which can split.
+
 Type information comes from clippy (`string_slice` fires on `str`, never on
 `&[u8]`, so `&digest[..16]` is correctly ignored); the literal-vs-derived
 judgement comes from the span text.
@@ -59,15 +64,55 @@ LINT = "clippy::string_slice"
 # `&s[..0x61]` slices at byte 97 exactly as `&s[..97]` does, and clippy reports
 # both, so a decimal-only test would leave an easy way past this gate.
 # Anything containing an identifier is derived and therefore not our business.
+#
+# The digits are captured so the *value* can be recovered: zero is a boundary in
+# every string, so `&s[0..]` is a literal bound that cannot split a character.
 _BARE_LITERAL = re.compile(
     r"""^\s*(?:
-          0[xX][0-9a-fA-F_]+      # hex
-        | 0[oO][0-7_]+            # octal
-        | 0[bB][01_]+             # binary
-        | [0-9][0-9_]*            # decimal
+          0[xX](?P<hex>[0-9a-fA-F_]+)
+        | 0[oO](?P<oct>[0-7_]+)
+        | 0[bB](?P<bin>[01_]+)
+        | (?P<dec>[0-9][0-9_]*)
     )(?:usize|isize|u8|u16|u32|u64|u128|i8|i16|i32|i64|i128)?\s*$""",
     re.VERBOSE,
 )
+
+_LITERAL_BASES = (("hex", 16), ("oct", 8), ("bin", 2), ("dec", 10))
+
+
+def literal_value(bound: str) -> int | None:
+    """The integer a bare-literal bound denotes, or None when it is derived.
+
+    Parsed per captured base rather than through `int(text, 0)`, which rejects
+    the leading zeros Rust accepts (`007` is 7, not a syntax error).
+    """
+    match = _BARE_LITERAL.match(bound)
+    if not match:
+        return None
+    for group, base in _LITERAL_BASES:
+        digits = (match.group(group) or "").replace("_", "")
+        if digits:
+            return int(digits, base)
+    return None
+
+
+def is_hardcoded_bound(bound: str, *, inclusive_upper: bool = False) -> bool:
+    """True when this bound pins a byte offset that could land mid-character.
+
+    Byte 0 is a character boundary in every string, so a literal zero cannot
+    split anything: `&s[0..]` is the whole string and `&s[..0]` is empty, and
+    neither can panic. Flagging them was false-positive pressure on a gate whose
+    whole argument for existing is that it does not fire on correct code.
+
+    An *inclusive* upper bound is the exception. `&s[..=0]` ends at byte **1**,
+    which lands inside a two-byte character, so zero is a hazard there and stays
+    flagged. Lower bounds are always exclusive of nothing — `0..` starts at the
+    boundary itself — so the exemption is unconditional on that side.
+    """
+    value = literal_value(bound)
+    if value is None:
+        return False  # open bound, or derived from `find()` / `char_indices()`
+    return inclusive_upper or value != 0
 
 
 def mask_lexical(text: str) -> str:
@@ -196,10 +241,16 @@ def strip_grouping(expr: str) -> str:
     return expr
 
 
-def bounds_of(index_expr: str) -> list[str]:
+def bounds_of(index_expr: str) -> tuple[list[str], bool]:
     """Split a slice index into its bounds, ignoring `..` inside nested brackets.
 
-    `..97` -> ['', '97'];  `2..t.len() - 2` -> ['2', 't.len() - 2']
+    `..97` -> (['', '97'], False);  `2..t.len() - 2` -> (['2', 't.len() - 2'], False)
+
+    The second element says whether the range is *inclusive* (`..=n`). The `=` is
+    stripped from the bound rather than carried along — a bound has to reach
+    `strip_grouping` and `_BARE_LITERAL` unencumbered, or `&s[..=(97)]` stops
+    parsing as a literal — but the fact is reported, because `..=0` ends one byte
+    past `..0` and only one of the two is safe.
     """
     depth = 0
     for i in range(len(index_expr) - 1):
@@ -210,10 +261,9 @@ def bounds_of(index_expr: str) -> list[str]:
             depth -= 1
         elif depth == 0 and index_expr[i : i + 2] == "..":
             rest = index_expr[i + 2 :]
-            # Inclusive ranges (`..=n`) are the same hazard.
-            rest = rest[1:] if rest.startswith("=") else rest
-            return [index_expr[:i], rest]
-    return [index_expr]
+            inclusive = rest.startswith("=")
+            return [index_expr[:i], rest[1:] if inclusive else rest], inclusive
+    return [index_expr], False
 
 
 def slice_index_of(span_text: str) -> str | None:
@@ -255,11 +305,12 @@ def is_hardcoded(span_text: str) -> bool:
     index_expr = slice_index_of(mask_lexical(span_text))
     if index_expr is None:
         return False
-    bounds = bounds_of(strip_grouping(index_expr))
+    bounds, inclusive = bounds_of(strip_grouping(index_expr))
     if len(bounds) < 2:
         return False  # `[i]` / `[0]` — indexing, not slicing.
-    return any(
-        _BARE_LITERAL.match(strip_grouping(b)) for b in bounds if strip_grouping(b)
+    lower, upper = (strip_grouping(bound) for bound in bounds)
+    return is_hardcoded_bound(lower) or is_hardcoded_bound(
+        upper, inclusive_upper=inclusive
     )
 
 
@@ -428,6 +479,27 @@ SELF_TEST_CASES = [
     ("Foo::<&'a str>::cut(s)[..end]", False),
     # An escaped quote must not end the literal early.
     ("s[s.find('\\'').unwrap_or(0)..9]", True),
+    # Byte 0 is a boundary in every string, so a literal zero cannot split a
+    # character and must not fail CI — that is the false-positive pressure this
+    # gate exists to avoid (round 5).
+    ("s[0..]", False),
+    ("s[..0]", False),
+    ("s[0..0]", False),
+    ("s[0x0..]", False),
+    ("s[..0usize]", False),
+    ("s[..0_0]", False),
+    ("s[{ 0.. }]", False),
+    # …but an *inclusive* upper zero ends at byte 1, which can, so it stays.
+    ("s[..=0]", True),
+    ("s[0..=0]", True),
+    ("s[..=0x0]", True),
+    # A safe zero on one side does not launder a hard-coded bound on the other.
+    ("s[0..3]", True),
+    ("s[0..end]", False),
+    ("s[..=(97)]", True),
+    # Rust reads a leading zero as decimal padding, not as a base prefix: `007`
+    # is 7, and must not be mistaken for the exempt zero.
+    ("s[..007]", True),
 ]
 
 
