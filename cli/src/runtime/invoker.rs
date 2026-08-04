@@ -2274,10 +2274,16 @@ impl DispatchInvoker {
         // skips it: every node is stubbed and no binary is contacted.
         if !app_ctx.simulate {
             let agents = crate::manifest::loader::discover_agents_in(&self.agents_dir)?;
-            if let Some(err) =
-                crate::validate::unsatisfied_pins(&app, &agents, crate::validate::Severity::Error)
-                    .first()
-            {
+            // The nested app gets the same two catalogue pre-flights `aware app run`
+            // applies to the app the operator named — it never had either, because
+            // the command-level pre-flight only ever sees the top-level app. Missing
+            // agent first: without it, a nested node whose agent isn't installed died
+            // at the transport with a bare `os error 3` naming neither.
+            let missing =
+                crate::validate::missing_agents(&app, &agents, crate::validate::Severity::Error);
+            let pins =
+                crate::validate::unsatisfied_pins(&app, &agents, crate::validate::Severity::Error);
+            if let Some(err) = missing.first().or_else(|| pins.first()) {
                 return Err(AwareError::Validation(format!(
                     "app-backed agent {agent}: [{}] {}",
                     err.code, err.message

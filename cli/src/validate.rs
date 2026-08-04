@@ -410,6 +410,21 @@ fn is_dot_separated_identifiers(s: &str, numeric_leading_zero_rule: bool) -> boo
 /// and `install` both run [`validate_app`] first and return on its errors, so
 /// they never reach this branch.
 ///
+/// **Only pins agents that can actually dispatch.** A `requires:` entry whose
+/// agent is reachable *only* through frozen nodes — or through no node at all —
+/// is not version-checked. `app-spec.md § Frozen nodes` is explicit that a
+/// frozen node "needn't have its agent installed", and gating the *version* of
+/// an agent that need not exist is stricter than the contract in a way that
+/// contradicts itself: an absent agent would be fine while a merely-mismatched
+/// one refused a static app that had been running. The neighbouring
+/// availability checks skip frozen subtrees for the same reason, so this
+/// mirrors their traversal rather than inventing a second rule.
+///
+/// The unreadable-pin branch is deliberately *not* scoped that way: "I cannot
+/// read your constraint" is a broken file, not an irrelevant constraint, and
+/// nothing about it can be judged — including whether it names a dispatchable
+/// agent correctly.
+///
 /// `severity` picks the gate, mirroring [`missing_agents`]:
 /// [`Severity::Error`] (`E_APP_AGENT_PIN_UNSATISFIED`) for `compile` and `run`,
 /// [`Severity::Warning`] (`W_APP_AGENT_PIN_UNSATISFIED`) for `install` — where
@@ -421,6 +436,8 @@ pub fn unsatisfied_pins(
     severity: Severity,
 ) -> Vec<ValidationIssue> {
     let mut out = Vec::new();
+    let mut dispatchable = HashSet::new();
+    collect_dispatchable_agents(&app.nodes, &mut dispatchable);
     for entry in &app.requires {
         let Some((agent_id, spec)) = entry.split_once('@') else {
             continue; // unpinned — nothing to satisfy
@@ -440,6 +457,12 @@ pub fn unsatisfied_pins(
             });
             continue;
         };
+        if !dispatchable.contains(agent_id) {
+            // Declared but unreachable — frozen-only, or named in `requires:` with
+            // no node behind it. Nothing will invoke it, so its version cannot
+            // affect this app's behaviour.
+            continue;
+        }
         let Some(installed) = agents.iter().find(|d| d.manifest.agent == agent_id) else {
             continue; // not installed — `missing_agents` owns that finding
         };
@@ -601,6 +624,30 @@ pub fn missing_agents(
     let mut out = Vec::new();
     collect_missing_agents(&app.nodes, agents, &severity, &mut out);
     out
+}
+
+/// Collect the agent ids this app can actually dispatch to.
+///
+/// Traversal mirrors [`collect_missing_agents`] and `check_node_agents`: a
+/// frozen node emits its pinned output and never invokes its agent, and the
+/// orchestrator short-circuits its `do:` body along with it, so the whole
+/// subtree is skipped. `do:` bodies of live nodes are descended into, since a
+/// `for-each` body dispatches once per item.
+fn collect_dispatchable_agents<'a>(
+    nodes: &'a [crate::manifest::app::Node],
+    out: &mut HashSet<&'a str>,
+) {
+    for n in nodes {
+        if n.frozen.is_some() {
+            continue;
+        }
+        if let Some(agent_id) = &n.agent {
+            out.insert(agent_id.as_str());
+        }
+        if let Some(body) = &n.do_ {
+            collect_dispatchable_agents(body, out);
+        }
+    }
 }
 
 fn collect_missing_agents(
@@ -982,6 +1029,106 @@ requires: []
                 );
             }
         }
+    }
+
+    #[test]
+    fn a_frozen_only_agent_is_not_version_gated() {
+        // `app-spec.md § Frozen nodes`: a frozen node emits its pinned output, never
+        // invokes its agent, and "needn't have its agent installed". Gating the
+        // VERSION of an agent that need not exist is stricter than that contract —
+        // and self-contradicting: an absent agent would pass while a merely
+        // mismatched one refused a static app that had been running fine.
+        let agents = vec![installed("ifc-reference-reader", "1.3.0")];
+        let frozen_app: App = serde_yaml::from_str(
+            "app: pin-test\nversion: 0.1.0\ndescription: x\nrequires:\n  \
+             - ifc-reference-reader@9.9.x\nnodes:\n  - id: probe\n    \
+             agent: ifc-reference-reader\n    command: probe\n    frozen:\n      ok: true\n",
+        )
+        .unwrap();
+        assert!(
+            unsatisfied_pins(&frozen_app, &agents, Severity::Error).is_empty(),
+            "a frozen-only agent must not be version-gated"
+        );
+        // Same for an agent named in `requires:` that no node reaches at all.
+        let orphan_pin: App = serde_yaml::from_str(
+            "app: pin-test\nversion: 0.1.0\ndescription: x\nrequires:\n  \
+             - ifc-reference-reader@9.9.x\nnodes:\n  - id: gate\n    inline:\n      \
+             kind: predicate\n      description: always pass\n      code: 'true'\n",
+        )
+        .unwrap();
+        assert!(unsatisfied_pins(&orphan_pin, &agents, Severity::Error).is_empty());
+
+        // The exemption must not leak past the frozen subtree. A LIVE node using the
+        // same agent still gates, even when a frozen one also uses it.
+        let mixed: App = serde_yaml::from_str(
+            "app: pin-test\nversion: 0.1.0\ndescription: x\nrequires:\n  \
+             - ifc-reference-reader@9.9.x\nnodes:\n  - id: pinned\n    \
+             agent: ifc-reference-reader\n    command: probe\n    frozen:\n      ok: true\n  \
+             - id: live\n    agent: ifc-reference-reader\n    command: probe\n",
+        )
+        .unwrap();
+        assert_eq!(
+            unsatisfied_pins(&mixed, &agents, Severity::Error)
+                .iter()
+                .map(|i| i.code)
+                .collect::<Vec<_>>(),
+            ["E_APP_AGENT_PIN_UNSATISFIED"]
+        );
+    }
+
+    #[test]
+    fn dispatchability_is_judged_through_do_bodies_and_frozen_ancestors() {
+        // A `for-each` body dispatches once per item, so an agent used only there is
+        // live — while the body of a FROZEN node is short-circuited with it, so an
+        // agent used only there is not. Getting either backwards silently changes
+        // which apps the gate applies to.
+        let agents = vec![installed("ifc-reference-reader", "1.3.0")];
+        let live_body: App = serde_yaml::from_str(
+            "app: pin-test\nversion: 0.1.0\ndescription: x\nrequires:\n  \
+             - ifc-reference-reader@9.9.x\nnodes:\n  - id: loop\n    for-each: '{{ xs.rows }}'\n    \
+             do:\n      - id: probe\n        agent: ifc-reference-reader\n        command: probe\n",
+        )
+        .unwrap();
+        assert_eq!(
+            unsatisfied_pins(&live_body, &agents, Severity::Error)
+                .iter()
+                .map(|i| i.code)
+                .collect::<Vec<_>>(),
+            ["E_APP_AGENT_PIN_UNSATISFIED"],
+            "an agent used inside a live for-each body must still be gated"
+        );
+
+        let frozen_body: App = serde_yaml::from_str(
+            "app: pin-test\nversion: 0.1.0\ndescription: x\nrequires:\n  \
+             - ifc-reference-reader@9.9.x\nnodes:\n  - id: loop\n    for-each: '{{ xs.rows }}'\n    \
+             frozen:\n      ok: true\n    do:\n      - id: probe\n        \
+             agent: ifc-reference-reader\n        command: probe\n",
+        )
+        .unwrap();
+        assert!(
+            unsatisfied_pins(&frozen_body, &agents, Severity::Error).is_empty(),
+            "a frozen node short-circuits its `do:` body, so its agents can't dispatch"
+        );
+    }
+
+    #[test]
+    fn an_unreadable_pin_is_reported_even_for_an_unreachable_agent() {
+        // The dispatchability exemption is about an *irrelevant* constraint. An
+        // unreadable one is a broken file: nothing about it can be judged, including
+        // whether the id in front of the `@` is an agent this app even uses.
+        let orphan: App = serde_yaml::from_str(
+            "app: pin-test\nversion: 0.1.0\ndescription: x\nrequires:\n  \
+             - ifc-reference-reader@not-a-version\nnodes:\n  - id: gate\n    inline:\n      \
+             kind: predicate\n      description: always pass\n      code: 'true'\n",
+        )
+        .unwrap();
+        assert_eq!(
+            unsatisfied_pins(&orphan, &[], Severity::Error)
+                .iter()
+                .map(|i| i.code)
+                .collect::<Vec<_>>(),
+            ["E_APP_REQUIRES_MALFORMED"]
+        );
     }
 
     #[test]

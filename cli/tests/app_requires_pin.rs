@@ -154,8 +154,13 @@ fn validate_judges_the_file_not_the_machine() {
 
 /// An exposed inner app pinning `probe-agent@<pin>`, and an outer app that
 /// composes it. The outer app pins nothing, so its own pre-flight is clean and
-/// only the nested check can catch the inner app's pin. The inner app's single
-/// node is inline glue, so no agent needs to dispatch for it to run.
+/// only the nested check can catch the inner app's pin.
+///
+/// The inner app **dispatches** to `probe-agent`. An earlier version of this
+/// fixture pinned the agent while containing only inline glue, which made it
+/// test a shape that cannot occur: a pin on an agent no node can reach is not
+/// enforced at all now (see `a_frozen_only_agent_is_not_version_gated`), so
+/// that fixture would have passed whatever the gate did.
 fn nested_fixture(installed_version: &str, inner_pin: &str) -> tempfile::TempDir {
     let tmp = tempfile::tempdir().unwrap();
     let home = tmp.path().join("home");
@@ -178,8 +183,8 @@ fn nested_fixture(installed_version: &str, inner_pin: &str) -> tempfile::TempDir
                 "app: inner\nversion: 0.2.0\ndescription: an exposed inner app\n\
                  exposes-as-agent: true\nexposed-commands:\n  run:\n    lifecycle: single\n    \
                  inputs:\n      phase:\n        type: string\n    outputs:\n      type: single\n      \
-                 schema:\n        ok: bool\nnodes:\n  - id: gate\n    inline:\n      kind: predicate\n      \
-                 description: always pass\n      code: 'true'\nrequires:\n  - probe-agent@{inner_pin}\n"
+                 schema:\n        ok: bool\nnodes:\n  - id: probe\n    agent: probe-agent\n    \
+                 command: probe\nrequires:\n  - probe-agent@{inner_pin}\n"
             ),
         ),
         (
@@ -220,15 +225,42 @@ fn a_nested_exposed_app_is_refused_when_its_own_pin_is_unsatisfied() {
 }
 
 #[test]
-fn a_nested_exposed_app_runs_when_its_pin_is_satisfied() {
-    // Negative control: the outer app pins nothing and the inner app's pin is
-    // met, so the nested check must be invisible. Without this, a check that
-    // refused every nested dispatch would still pass the test above.
+fn a_nested_exposed_app_with_a_satisfied_pin_is_not_stopped_by_the_pin_gate() {
+    // Negative control: without it, a check that refused every nested dispatch
+    // would still pass the test above.
+    //
+    // It asserts "not refused for a pin reason" rather than plain success,
+    // because the inner app now really dispatches to `probe-agent` and no
+    // `aware-probe` binary exists in the fixture — so the run legitimately fails
+    // *later*, at the transport. That distinction is the whole assertion: the
+    // gate let it through and something downstream stopped it.
     let tmp = nested_fixture("1.3.0", "1.3.x");
     aware(&tmp.path().join("home"))
         .args(["app", "run", "outer"])
         .assert()
-        .success();
+        .stderr(predicate::str::contains("PIN_UNSATISFIED").not())
+        .stderr(predicate::str::contains("REQUIRES_MALFORMED").not())
+        .stderr(predicate::str::contains("AGENT_NOT_INSTALLED").not())
+        // Reached dispatch — the pin gate is behind it.
+        .stderr(predicate::str::contains("aware-probe"));
+}
+
+#[test]
+fn a_nested_exposed_app_whose_agent_is_missing_is_named_not_left_to_the_transport() {
+    // The nested path never ran the missing-agent check at all: the command-level
+    // pre-flight only ever sees the app the operator named, so a nested node whose
+    // agent isn't installed died at the transport with a bare `os error 3` naming
+    // neither the node nor the agent.
+    let tmp = nested_fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+    std::fs::remove_dir_all(home.join("agents/probe-agent")).unwrap();
+
+    aware(&home)
+        .args(["app", "run", "outer"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains("E_APP_AGENT_NOT_INSTALLED"))
+        .stderr(predicate::str::contains("probe-agent"));
 }
 
 #[test]
