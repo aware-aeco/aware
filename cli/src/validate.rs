@@ -571,53 +571,38 @@ pub fn unsatisfied_pins(
             continue; // not installed — `missing_agents` owns that finding
         };
         let version = installed.manifest.version.as_str();
-        // Every remedy here starts with `uninstall`, because this finding only
-        // fires when the agent IS installed (the `else { continue }` above hands
-        // the absent case to `missing_agents`) — and `install` refuses outright
-        // while a copy is on disk: "already installed; use `aware agent update`"
-        // (`install/local.rs`, reached by the registry path too via
-        // `registry::install_agent_from_registry`). `update` is not the way out
-        // either: it resolves the newest release and takes no version, so it
-        // cannot reach a pin the latest does not satisfy. Uninstall-then-install
-        // is the only sequence that gets to an arbitrary version today; a
-        // version-selecting `update` would be the better surface, and is its own
-        // change (#363).
+        // This message deliberately names NO command, and that is a fix rather
+        // than an omission. Five review findings landed on the command this used
+        // to print, each a different spelling of the same mistake: the validator
+        // does not know enough to prescribe one.
         //
-        // Only an EXACT pin can be handed to the installer verbatim: `Index::resolve`
-        // looks a version up as a literal registry key, so `aware agent install
-        // foo@0.1.x` searches for a version called "0.1.x" and reports it missing
-        // even when 0.1.0 is right there. Printing that command for a wildcard pin
-        // would send the operator to a dead end, so a range pin gets the goal
-        // rather than an incantation. (`agent-spec.md § Installation` advertises
-        // `aware agent install tekla@2025.0.x`; making the installer resolve
-        // ranges is its own change, not this one.)
-        let install_hint = if matches!(pin, VersionPin::Exact(..)) {
-            // …and even then, not quite verbatim. The pin grammar accepts build
-            // metadata and then ignores it (§10: it is not part of a release's
-            // identity), so `foo@1.2.3+build.1` and `foo@1.2.3` are the same
-            // pin — but the registry key is literal, and only one of those two
-            // strings is in it. Strip it, or accepting the metadata would have
-            // bought a remedy that resolves to nothing. The prerelease suffix
-            // stays: that IS part of the identity, and names a release the
-            // registry holds under exactly that key.
-            let exact = spec.split_once('+').map_or(spec, |(core, _)| core);
-            format!(
-                "replace it with `aware agent uninstall {agent_id} && aware agent install \
-                 {agent_id}@{exact}`"
-            )
-        } else {
-            format!(
-                "install a version matching {spec} — `aware agent describe {agent_id} \
-                 --available` shows what the registry has, then `aware agent uninstall \
-                 {agent_id} && aware agent install {agent_id}@<version>` (or plain `aware agent \
-                 update {agent_id}` if the newest release satisfies {spec})"
-            )
-        };
+        //   - a range pin is not a registry key (`Index::resolve` looks versions
+        //     up literally, so `foo@0.1.x` misses even when `0.1.0` is there);
+        //   - build metadata is part of a pin but not of a registry key;
+        //   - `install` refuses while a copy is on disk, and this finding only
+        //     fires when the agent IS installed;
+        //   - `update` takes no version, so it cannot reach a pin the newest
+        //     release fails;
+        //   - and `uninstall` first — the last thing printed here — is actively
+        //     DESTRUCTIVE for an agent installed from a local folder: `agent
+        //     install id@version` is parsed as a registry spec (`commands/agent.rs`),
+        //     so removing a local install and reinstalling it by version cannot
+        //     work, and leaves the machine with no agent at all.
+        //
+        // Nothing at this point distinguishes a registry agent from a local one,
+        // and no command lists the versions the registry actually holds, so any
+        // sequence printed here is wrong for some real case. A wrong command is
+        // worse than none — and a destructive one is worse than a dead end. State
+        // the goal, which is true in every case, and leave the route to the
+        // operator. #363 tracks the missing surface (version-selecting update,
+        // version listing, local-install provenance); when it lands, a remedy can
+        // come back with something that always works.
         let msg = match parse_semver(version) {
             Some(v) if pin.is_satisfied_by(&v) => continue,
             Some(_) => format!(
-                "app requires {agent_id}@{spec}, but {version} is installed — {install_hint}, \
-                 or update the app's `requires:` pin if the new contract is the intended one"
+                "app requires {agent_id}@{spec}, but {version} is installed — install a version \
+                 matching {spec}, or update the app's `requires:` pin if the new contract is the \
+                 intended one"
             ),
             None => format!(
                 "app requires {agent_id}@{spec}, but the installed version {version:?} is not \
@@ -1577,73 +1562,49 @@ requires: []
     }
 
     #[test]
-    fn the_remedy_never_prints_an_install_command_the_installer_cannot_resolve() {
-        // `Index::resolve` looks a version up as a literal registry key, so
-        // `aware agent install foo@0.1.x` searches for a version *called* "0.1.x"
-        // and reports it missing even when 0.1.0 exists. Printing that for a
-        // wildcard pin sends the operator to a dead end.
+    fn the_remedy_states_the_goal_and_prescribes_no_command() {
+        // This test used to assert the opposite for exact pins, and the history is
+        // the reason it now reads this way. The printed command drew five separate
+        // findings — range pins are not registry keys; build metadata is part of a
+        // pin but not of a key; `install` refuses while a copy is on disk; `update`
+        // takes no version — ending in a DESTRUCTIVE one: `uninstall` first, then
+        // reinstall-by-version, silently assumes the registry, so for an agent
+        // installed from a local folder it removed the only copy and then failed.
+        //
+        // The validator knows neither the agent's provenance nor what the registry
+        // holds, so every sequence it could print is wrong for some real case. It
+        // states the goal instead. A message that prescribes nothing cannot
+        // prescribe something harmful.
         let agents = vec![installed("ifc-reference-reader", "1.3.0")];
-        for range_pin in ["0.1.x", "0.x", "0.1"] {
+        for pin in [
+            "0.1.x",
+            "0.x",
+            "0.1",
+            "0.1.0",
+            "0.1.0+build.1",
+            "0.1.0-rc.1",
+            "0.1.0-rc.1+build.1",
+        ] {
             let issues = unsatisfied_pins(
-                &app_requiring(&format!("ifc-reference-reader@{range_pin}")),
+                &app_requiring(&format!("ifc-reference-reader@{pin}")),
                 &agents,
                 Severity::Error,
             );
             let msg = &issues[0].message;
+            // The operator still learns what is needed…
             assert!(
-                !msg.contains(&format!(
-                    "aware agent install ifc-reference-reader@{range_pin}"
-                )),
-                "range pin {range_pin} must not be handed to the installer verbatim: {msg}"
+                msg.contains(&format!("install a version matching {pin}")),
+                "pin {pin} lost the goal: {msg}"
             );
-            // It still has to say what to DO.
-            assert!(msg.contains("install a version matching"), "{msg}");
+            // …and is never handed an incantation whose success cannot be known here.
+            for verb in [
+                "aware agent install",
+                "aware agent uninstall",
+                "aware agent update",
+            ] {
+                assert!(!msg.contains(verb), "pin {pin} prescribed `{verb}`: {msg}");
+            }
         }
-        // An exact pin CAN be handed over verbatim — that lookup succeeds — so the
-        // concrete command is still offered where it works.
-        let issues = unsatisfied_pins(
-            &app_requiring("ifc-reference-reader@0.1.0"),
-            &agents,
-            Severity::Error,
-        );
-        assert!(
-            issues[0]
-                .message
-                .contains("aware agent install ifc-reference-reader@0.1.0"),
-            "{}",
-            issues[0].message
-        );
-        // …but build metadata must be stripped out of it first. The pin grammar
-        // accepts `@0.1.0+build.1` and then ignores the suffix, since §10 keeps
-        // it out of a release's identity — while the registry key is literal, so
-        // only `0.1.0` is actually in it. Handing the metadata through would
-        // have made accepting it buy a remedy that resolves to nothing.
-        let issues = unsatisfied_pins(
-            &app_requiring("ifc-reference-reader@0.1.0+build.1"),
-            &agents,
-            Severity::Error,
-        );
-        let msg = &issues[0].message;
-        assert!(
-            msg.contains("aware agent install ifc-reference-reader@0.1.0`"),
-            "{msg}"
-        );
-        assert!(
-            !msg.contains("install ifc-reference-reader@0.1.0+build.1"),
-            "build metadata must not reach the installer: {msg}"
-        );
-        // A prerelease is the other case and must survive: it IS part of the
-        // identity, and the registry holds it under exactly that key.
-        let issues = unsatisfied_pins(
-            &app_requiring("ifc-reference-reader@0.1.0-rc.1+build.1"),
-            &agents,
-            Severity::Error,
-        );
-        let msg = &issues[0].message;
-        assert!(
-            msg.contains("aware agent install ifc-reference-reader@0.1.0-rc.1`"),
-            "prerelease must survive the strip: {msg}"
-        );
     }
 
     #[test]

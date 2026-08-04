@@ -479,49 +479,15 @@ fn an_uninstalled_pinned_agent_is_reported_as_missing_not_as_a_pin_mismatch() {
 }
 
 #[test]
-fn the_remedy_we_print_is_a_sequence_that_actually_works() {
-    // The remedy text is the only part of this finding an operator acts on, so a
-    // command that cannot run is a bug in the finding. `install` refuses while a
-    // copy is on disk — and this finding only fires when the agent IS installed,
-    // so the naive `aware agent install foo@1.2.3` could never apply the fix it
-    // named. Uninstall first, and the same install goes through.
-    let (tmp, _src) = fixture("1.3.0", "9.9.x");
-    let home = tmp.path().join("home");
-
-    // A second install of an already-installed agent is refused, and the refusal
-    // names `update` — which cannot select a version, hence the sequence below.
-    let agent_src = tmp.path().join("agent-src");
-    std::fs::create_dir_all(&agent_src).unwrap();
-    std::fs::copy(
-        home.join("agents/probe-agent/manifest.yaml"),
-        agent_src.join("manifest.yaml"),
-    )
-    .unwrap();
-    aware(&home)
-        .args(["agent", "install"])
-        .arg(&agent_src)
-        .assert()
-        .failure()
-        .stderr(predicate::str::contains("already installed"));
-
-    // Uninstall, and the very same install succeeds — proving the printed
-    // sequence is the one that reaches an arbitrary version.
-    aware(&home)
-        .args(["agent", "uninstall", "probe-agent"])
-        .assert()
-        .success();
-    aware(&home)
-        .args(["agent", "install"])
-        .arg(&agent_src)
-        .assert()
-        .success();
-}
-
-#[test]
-fn an_unsatisfied_pin_never_prints_a_bare_install_as_the_whole_remedy() {
-    // Guards both branches at once: exact and range alike must lead with the
-    // uninstall, or they regress to a command the operator cannot run.
-    for pin in ["9.9.3", "9.9.x"] {
+fn an_unsatisfied_pin_never_prescribes_an_agent_command() {
+    // Five findings landed on the command this message used to print, ending in a
+    // DESTRUCTIVE one: `uninstall` then reinstall-by-version silently assumes the
+    // registry, so for a locally-installed agent it removed the only copy and then
+    // failed. The validator knows neither the agent's provenance nor what versions
+    // the registry holds, so every sequence it printed was wrong for some real
+    // case. It now states the goal and names no command — a message that
+    // prescribes nothing cannot prescribe something harmful.
+    for pin in ["9.9.3", "9.9.x", "9.9.3+build.1", "9.9.3-rc.1"] {
         let (tmp, src) = fixture("1.3.0", pin);
         let out = aware(&tmp.path().join("home"))
             .args(["app", "compile"])
@@ -530,8 +496,23 @@ fn an_unsatisfied_pin_never_prints_a_bare_install_as_the_whole_remedy() {
             .unwrap();
         let stderr = String::from_utf8_lossy(&out.stderr);
         assert!(
-            stderr.contains("aware agent uninstall probe-agent && aware agent install"),
-            "pin {pin} printed a remedy without the uninstall step: {stderr}"
+            stderr.contains("E_APP_AGENT_PIN_UNSATISFIED"),
+            "pin {pin} should still be refused: {stderr}"
         );
+        // The goal survives — the operator still learns what is needed.
+        assert!(
+            stderr.contains(&format!("install a version matching {pin}")),
+            "pin {pin} lost the goal: {stderr}"
+        );
+        for forbidden in [
+            "aware agent uninstall",
+            "aware agent install",
+            "aware agent update",
+        ] {
+            assert!(
+                !stderr.contains(forbidden),
+                "pin {pin} prescribed `{forbidden}`, which cannot be known to work here: {stderr}"
+            );
+        }
     }
 }
