@@ -396,6 +396,20 @@ fn is_dot_separated_identifiers(s: &str, numeric_leading_zero_rule: bool) -> boo
 /// with its own gate ([`missing_agents`], #308). Reporting both would name the
 /// same gap twice with two remedies.
 ///
+/// **Fails closed on an unreadable pin.** It would be tempting to stay quiet
+/// here because [`validate_app`] already reports one — but the two are not
+/// always called together. `aware app run` and nested exposed-app dispatch call
+/// *this* function alone; neither validates the loaded app first. Skipping an
+/// unparseable constraint there would let an app installed by an older CLI, or
+/// edited in place under `~/.aware/apps/`, run against any version at all —
+/// silently reopening the hole this whole check exists to close, for exactly
+/// the apps whose `requires:` block is already suspect. A check that cannot
+/// read its constraint must never answer "satisfied".
+///
+/// Saying it twice is avoided by *ordering* rather than by silence: `compile`
+/// and `install` both run [`validate_app`] first and return on its errors, so
+/// they never reach this branch.
+///
 /// `severity` picks the gate, mirroring [`missing_agents`]:
 /// [`Severity::Error`] (`E_APP_AGENT_PIN_UNSATISFIED`) for `compile` and `run`,
 /// [`Severity::Warning`] (`W_APP_AGENT_PIN_UNSATISFIED`) for `install` — where
@@ -411,8 +425,19 @@ pub fn unsatisfied_pins(
         let Some((agent_id, spec)) = entry.split_once('@') else {
             continue; // unpinned — nothing to satisfy
         };
-        // A malformed pin is already reported by `validate_app`; don't say it twice.
         let Some(pin) = VersionPin::parse(spec) else {
+            // Unreadable constraint — refuse rather than skip. See the fail-closed
+            // note above: `run` reaches here without having called `validate_app`.
+            let msg = format!(
+                "app requires {entry:?}, whose version pin {spec:?} is unreadable, so no \
+                 installed version can be checked against it — fix the pin to \
+                 {agent_id}@<major>.x, {agent_id}@<major>.<minor>.x, or an exact \
+                 {agent_id}@<major>.<minor>.<patch>"
+            );
+            out.push(match severity {
+                Severity::Error => ValidationIssue::error("E_APP_REQUIRES_MALFORMED", msg),
+                Severity::Warning => ValidationIssue::warning("W_APP_REQUIRES_MALFORMED", msg),
+            });
             continue;
         };
         let Some(installed) = agents.iter().find(|d| d.manifest.agent == agent_id) else {
@@ -1176,11 +1201,60 @@ requires: []
     }
 
     #[test]
-    fn a_malformed_pin_yields_one_finding_not_two() {
-        // `unsatisfied_pins` must stay quiet about a pin `validate_app` already
-        // rejected, or the operator gets a syntax error plus a bogus
-        // "version mismatch" naming a constraint that was never parsed.
-        assert!(pin_codes("ifc-reference-reader@not-a-version", "1.3.0").is_empty());
+    fn an_unreadable_pin_fails_closed_in_the_catalogue_check_too() {
+        // This test previously asserted the OPPOSITE — that `unsatisfied_pins` stays
+        // quiet because `validate_app` already reported the pin. That reasoning was
+        // right about the message and wrong about the mechanism: `app run` and nested
+        // exposed-app dispatch call `unsatisfied_pins` WITHOUT `validate_app`, so
+        // silence there let an app with an unreadable constraint run against any
+        // installed version — reopening the hole for exactly the apps whose
+        // `requires:` is already suspect. A check that cannot read its constraint
+        // must never answer "satisfied".
+        assert_eq!(
+            pin_codes("ifc-reference-reader@not-a-version", "1.3.0"),
+            ["E_APP_REQUIRES_MALFORMED"]
+        );
+        // Reported as UNREADABLE, not as a version mismatch — the operator must not
+        // be sent chasing a constraint that was never parsed.
+        let agents = vec![installed("ifc-reference-reader", "1.3.0")];
+        let issues = unsatisfied_pins(
+            &app_requiring("ifc-reference-reader@not-a-version"),
+            &agents,
+            Severity::Error,
+        );
+        assert!(
+            issues[0].message.contains("is unreadable"),
+            "{}",
+            issues[0].message
+        );
+        assert!(
+            !issues[0].message.contains("1.3.0 is installed"),
+            "{}",
+            issues[0].message
+        );
+        // Same fail-closed answer when the agent isn't installed at all: without a
+        // readable pin there is nothing to defer to `missing_agents` about.
+        assert_eq!(
+            unsatisfied_pins(
+                &app_requiring("ifc-reference-reader@not-a-version"),
+                &[],
+                Severity::Error
+            )
+            .iter()
+            .map(|i| i.code)
+            .collect::<Vec<_>>(),
+            ["E_APP_REQUIRES_MALFORMED"]
+        );
+        // And it honours the gate selector like every other finding here.
+        assert_eq!(
+            unsatisfied_pins(
+                &app_requiring("ifc-reference-reader@not-a-version"),
+                &agents,
+                Severity::Warning
+            )[0]
+            .code,
+            "W_APP_REQUIRES_MALFORMED"
+        );
     }
 
     #[test]

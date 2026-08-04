@@ -232,6 +232,61 @@ fn a_nested_exposed_app_runs_when_its_pin_is_satisfied() {
 }
 
 #[test]
+fn run_refuses_an_installed_app_whose_pin_became_unreadable() {
+    // `app run` never calls `validate_app` — it runs the catalogue checks only.
+    // So an app that reaches `~/.aware/apps/` with an unreadable pin (installed by
+    // an older CLI, or edited in place afterwards) must still be refused by the pin
+    // gate itself. When that gate merely skipped what it couldn't parse, this app
+    // ran against whatever happened to be installed.
+    let (tmp, src) = fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+    aware(&home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+
+    // Edit the INSTALLED copy, behind install/compile's back.
+    let installed_flo = home.join("apps/pin-test/pin-test.flo");
+    let body = std::fs::read_to_string(&installed_flo).unwrap();
+    std::fs::write(
+        &installed_flo,
+        body.replace("probe-agent@1.3.x", "probe-agent@not-a-version"),
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "pin-test", "--dry-run"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_APP_REQUIRES_MALFORMED"))
+        // Refused for being unreadable, not dressed up as a version mismatch.
+        .stderr(predicate::str::contains("unreadable"));
+}
+
+#[test]
+fn a_nested_exposed_app_with_an_unreadable_pin_is_refused_too() {
+    // The nested dispatch path calls the same check with no `validate_app` either,
+    // so the same fail-closed rule has to hold one level down.
+    let tmp = nested_fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+    let inner_flo = home.join("apps/inner/inner.flo");
+    let body = std::fs::read_to_string(&inner_flo).unwrap();
+    std::fs::write(
+        &inner_flo,
+        body.replace("probe-agent@1.3.x", "probe-agent@not-a-version"),
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "outer"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains("E_APP_REQUIRES_MALFORMED"));
+}
+
+#[test]
 fn an_uninstalled_pinned_agent_is_reported_as_missing_not_as_a_pin_mismatch() {
     // Two different gaps with two different remedies. A pin verdict needs a
     // version to judge; naming the same gap twice would send the operator to

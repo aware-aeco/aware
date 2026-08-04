@@ -968,6 +968,8 @@ A pin is what makes the major-bump-plus-`BREAKING.md` rule in [Agent Spec § Ver
 | `aware app run --simulate` | **Allowed** — every node is stubbed and no binary is contacted |
 | `aware app validate` | **Silent about versions** — it judges the app *file*, so it rejects an unreadable pin (`E_APP_REQUIRES_MALFORMED`) but not which version happens to be installed |
 
+An **unreadable** pin is refused at every one of those gates, including at run and at nested dispatch — neither of which validates the app file first, so an app that reached `~/.aware/apps/` with a broken constraint (written by an older CLI, or edited in place) is still stopped. A check that cannot read its constraint never reports "satisfied".
+
 An agent named in `requires:` but **not installed** gets no pin verdict at all: judging a pin needs a version, and the missing agent is already reported by `W_/E_APP_AGENT_NOT_INSTALLED` with its own remedy.
 
 A nested [`exposes-as-agent`](#exposes-as-agent) app carries its own `requires:`, and those pins are checked **at dispatch**, when the app transport loads the backing app — not by the calling app's pre-flight, which only sees the caller's own `requires:`. So a caller whose pins are all satisfied is still refused if the app it composes has drifted from its own.
