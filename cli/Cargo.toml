@@ -58,6 +58,8 @@ jsonschema = { version = "0.49.2", default-features = false }
 
 [dev-dependencies]
 assert_cmd  = "2.0"
+cssparser = "0.36"
+lol_html = "3"
 predicates  = "3.1"
 tempfile    = "3.14"
 
