@@ -70,6 +70,104 @@ _BARE_LITERAL = re.compile(
 )
 
 
+def mask_lexical(text: str) -> str:
+    """Blank the *contents* of string/char literals and comments, keeping length.
+
+    Every scan below reads `[`, `]`, `(`, `..` as structure. Inside a Rust
+    literal or comment those characters are just bytes, and mistaking one for
+    structure breaks bracket matching outright:
+
+        &s[s.find(']').unwrap_or(0)..3]
+
+    The `]` in that char literal makes the reverse scan miscount, so the gate
+    found no slice bracket at all and passed a hard-coded `..3`. The same flaw
+    hides a bound behind a comment (`&s[.. /* cap */ 3]`) and hides a `..`
+    inside a string. Masking once, here, retires the whole class rather than
+    the two spellings that happened to be reported.
+
+    Length is preserved so offsets stay valid against the original text; the
+    caller reports the original and reasons over the mask.
+
+    Handles line and (nestable) block comments, char literals, plain and byte
+    strings, and raw strings with any hash count. A `'` that opens a *lifetime*
+    (`&'a str`) is deliberately not treated as a literal — it has no closing
+    quote, and consuming to the next one would swallow real structure.
+    """
+    out = list(text)
+    i, n = 0, len(text)
+
+    def blank(start: int, stop: int) -> None:
+        for k in range(max(start, 0), min(stop, n)):
+            if not out[k].isspace():
+                out[k] = " "
+
+    while i < n:
+        char = text[i]
+
+        if text.startswith("//", i):
+            end = text.find("\n", i)
+            end = n if end < 0 else end
+            blank(i, end)
+            i = end
+            continue
+
+        if text.startswith("/*", i):
+            depth, j = 1, i + 2
+            while j < n and depth:
+                if text.startswith("/*", j):
+                    depth, j = depth + 1, j + 2
+                elif text.startswith("*/", j):
+                    depth, j = depth - 1, j + 2
+                else:
+                    j += 1
+            blank(i, j)
+            i = j
+            continue
+
+        # Raw string: r"…", br##"…"##. The hash count sets the terminator.
+        raw = re.compile(r'(?:b?r)(#*)"').match(text, i)
+        if raw:
+            terminator = '"' + raw.group(1)
+            end = text.find(terminator, raw.end())
+            end = n if end < 0 else end + len(terminator)
+            blank(i, end)
+            i = end
+            continue
+
+        if char == '"' or (char == "b" and text.startswith('b"', i)):
+            j = i + (2 if char == "b" else 1)
+            while j < n:
+                if text[j] == "\\":
+                    j += 2
+                    continue
+                if text[j] == '"':
+                    j += 1
+                    break
+                j += 1
+            blank(i, j)
+            i = j
+            continue
+
+        if char == "'":
+            # `'\x'` or `'x'` is a literal; anything else is a lifetime.
+            if text.startswith("'\\", i):
+                end = text.find("'", i + 2)
+                end = n if end < 0 else end + 1
+            elif i + 2 < n and text[i + 2] == "'":
+                end = i + 3
+            else:
+                out[i] = " "  # lifetime tick — not structure, not a literal
+                i += 1
+                continue
+            blank(i, end)
+            i = end
+            continue
+
+        i += 1
+
+    return "".join(out)
+
+
 def strip_grouping(expr: str) -> str:
     """Peel parentheses or braces that wrap the whole expression.
 
@@ -148,8 +246,13 @@ def slice_index_of(span_text: str) -> str | None:
 
 
 def is_hardcoded(span_text: str) -> bool:
-    """True when the `str` slice pins a bound to a bare integer literal."""
-    index_expr = slice_index_of(span_text)
+    """True when the `str` slice pins a bound to a bare integer literal.
+
+    Reasons over the masked span throughout, so a bracket, `..` or digit that
+    only *looks* structural because it sits in a literal or comment cannot
+    steer the result either way.
+    """
+    index_expr = slice_index_of(mask_lexical(span_text))
     if index_expr is None:
         return False
     bounds = bounds_of(strip_grouping(index_expr))
@@ -277,6 +380,28 @@ SELF_TEST_CASES = [
     ("s[{ offsets[0].. }]", False),
     # Grouping that does not enclose the whole expression must survive intact.
     ("s[(a + 1)..(b - 1)]", False),
+    # Brackets and `..` inside literals or comments are text, not structure.
+    # Counting them as structure broke bracket matching outright, so the gate
+    # found no slice at all and passed a hard-coded bound (round 3).
+    ("s[s.find(']').unwrap_or(0)..3]", True),
+    ("s[s.find(']').unwrap_or(0)..end]", False),
+    ("line[line.find('[').unwrap_or(0)..80]", True),
+    ("line[line.find('[').unwrap_or(0)..cap]", False),
+    ('s[s.find("]..[").unwrap_or(0)..12]', True),
+    ('s[s.find("]..[").unwrap_or(0)..stop]', False),
+    # A bound is not derived just because it is documented.
+    ("s[.. /* display cap */ 3]", True),
+    ("s[/* from */ 2..end]", True),
+    ("s[.. /* cap */ limit]", False),
+    ("s[..end] // truncate to 97 bytes", False),
+    # Raw and byte strings, and a lifetime tick, must not desynchronise the mask.
+    ('s[s.find(r"]#").unwrap_or(0)..7]', True),
+    ('s[s.find(r#"a"]"#).unwrap_or(0)..7]', True),
+    ('s[s.find(b"]").unwrap_or(0)..end]', False),
+    ("Foo::<&'a str>::cut(s)[..15]", True),
+    ("Foo::<&'a str>::cut(s)[..end]", False),
+    # An escaped quote must not end the literal early.
+    ("s[s.find('\\'').unwrap_or(0)..9]", True),
 ]
 
 
