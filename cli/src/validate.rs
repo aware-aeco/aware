@@ -571,6 +571,18 @@ pub fn unsatisfied_pins(
             continue; // not installed — `missing_agents` owns that finding
         };
         let version = installed.manifest.version.as_str();
+        // Every remedy here starts with `uninstall`, because this finding only
+        // fires when the agent IS installed (the `else { continue }` above hands
+        // the absent case to `missing_agents`) — and `install` refuses outright
+        // while a copy is on disk: "already installed; use `aware agent update`"
+        // (`install/local.rs`, reached by the registry path too via
+        // `registry::install_agent_from_registry`). `update` is not the way out
+        // either: it resolves the newest release and takes no version, so it
+        // cannot reach a pin the latest does not satisfy. Uninstall-then-install
+        // is the only sequence that gets to an arbitrary version today; a
+        // version-selecting `update` would be the better surface, and is its own
+        // change (#363).
+        //
         // Only an EXACT pin can be handed to the installer verbatim: `Index::resolve`
         // looks a version up as a literal registry key, so `aware agent install
         // foo@0.1.x` searches for a version called "0.1.x" and reports it missing
@@ -589,12 +601,16 @@ pub fn unsatisfied_pins(
             // stays: that IS part of the identity, and names a release the
             // registry holds under exactly that key.
             let exact = spec.split_once('+').map_or(spec, |(core, _)| core);
-            format!("install it with `aware agent install {agent_id}@{exact}`")
+            format!(
+                "replace it with `aware agent uninstall {agent_id} && aware agent install \
+                 {agent_id}@{exact}`"
+            )
         } else {
             format!(
-                "install a version matching {spec} (`aware agent install {agent_id}@<version>` \
-                 takes one exact version; `aware agent describe {agent_id} --available` shows \
-                 what the registry has)"
+                "install a version matching {spec} — `aware agent describe {agent_id} \
+                 --available` shows what the registry has, then `aware agent uninstall \
+                 {agent_id} && aware agent install {agent_id}@<version>` (or plain `aware agent \
+                 update {agent_id}` if the newest release satisfies {spec})"
             )
         };
         let msg = match parse_semver(version) {
