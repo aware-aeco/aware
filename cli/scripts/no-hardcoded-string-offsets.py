@@ -80,28 +80,41 @@ def bounds_of(index_expr: str) -> list[str]:
     return [index_expr]
 
 
-def index_expr_of(span_text: str) -> str | None:
-    """The text between the outermost `[` and its matching `]`, or None."""
-    start = span_text.find("[")
-    if start < 0:
-        return None
-    depth = 0
-    for i in range(start, len(span_text)):
-        if span_text[i] == "[":
-            depth += 1
-        elif span_text[i] == "]":
-            depth -= 1
-            if depth == 0:
-                return span_text[start + 1 : i]
-    return None
+def bracket_contents(span_text: str) -> list[str]:
+    """Every balanced `[...]` pair in the span, at any nesting depth.
+
+    Not just the first: when the sliced string is itself produced by indexing,
+    clippy's primary span covers both pairs. `&parts[i][..97]` opens with `[i]`,
+    so reading only the first bracket would inspect the *index* and never see
+    the hard-coded slice — the exact pattern this gate exists to stop would
+    sail through, while `&parts[0][..end]` would be rejected for the `0`.
+    """
+    pairs: list[str] = []
+    stack: list[int] = []
+    for i, char in enumerate(span_text):
+        if char == "[":
+            stack.append(i)
+        elif char == "]" and stack:
+            start = stack.pop()
+            pairs.append(span_text[start + 1 : i])
+    return pairs
 
 
 def is_hardcoded(span_text: str) -> bool:
-    """True when this string slice pins at least one bound to a bare literal."""
-    index_expr = index_expr_of(span_text)
-    if index_expr is None:
-        return False
-    return any(_BARE_LITERAL.match(b) for b in bounds_of(index_expr) if b.strip())
+    """True when a *slice* bound in this span is a bare literal.
+
+    Only bracket pairs that actually contain a range are considered. That is
+    what separates `[..97]` (a slice, and the hazard) from `[0]` (an index into
+    a collection, which cannot split a character), so `&parts[0][..end]` is
+    correctly left alone while `&parts[i][..97]` is caught.
+    """
+    for content in bracket_contents(span_text):
+        bounds = bounds_of(content)
+        if len(bounds) < 2:
+            continue  # `[i]` / `[0]` — indexing, not slicing.
+        if any(_BARE_LITERAL.match(b) for b in bounds if b.strip()):
+            return True
+    return False
 
 
 def collect_offenders() -> list[str]:
@@ -176,6 +189,16 @@ SELF_TEST_CASES = [
     ("let parts: Vec<&str> = inner[..path_end]", False),
     ("let kept = &s[..cut];", False),
     ("no slice here at all", False),
+    # The sliced string is itself produced by indexing, so the span carries two
+    # bracket pairs. Reading only the first inspected the index and missed the
+    # slice entirely (PR #361 review). Both directions are pinned.
+    ("let head = &parts[i][..97];", True),
+    ("let head = &parts[0][..end];", False),
+    ("let head = &map[key][..12];", True),
+    ("let head = &rows[3][start..];", False),
+    # A range whose own bound contains an index expression.
+    ("let head = &s[offsets[0]..97];", True),
+    ("let head = &s[offsets[0]..end];", False),
 ]
 
 
