@@ -516,3 +516,54 @@ fn an_unsatisfied_pin_never_prescribes_an_agent_command() {
         }
     }
 }
+
+#[test]
+fn a_nested_unreadable_pin_is_refused_under_simulate_too() {
+    // The one place the file-level rule still didn't hold. `--simulate` short-
+    // circuits in `Orchestrator` with a synthesized output *before* the app
+    // transport, so `resolve_exposed` — which reads a nested app's pins on a real
+    // run — is never reached, and the backing app was never loaded to look at.
+    // The top-level check moving out of the simulation exemption fixed only the
+    // app the operator named; one level down, an unreadable constraint was
+    // reported by nothing at all.
+    //
+    // Reproduced before fixing: `aware app run outer --simulate` exited 0 with an
+    // empty stderr against an inner app pinning `probe-agent@not-a-version`.
+    let tmp = nested_fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+    let inner_flo = home.join("apps/inner/inner.flo");
+    let body = std::fs::read_to_string(&inner_flo).unwrap();
+    std::fs::write(
+        &inner_flo,
+        body.replace("probe-agent@1.3.x", "probe-agent@not-a-version"),
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "outer", "--simulate"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_APP_REQUIRES_MALFORMED"))
+        // Names the hop, or the pin appears in neither the app the operator named
+        // nor anything else they can see from here.
+        .stderr(predicate::str::contains("inner"));
+}
+
+#[test]
+fn simulate_still_ignores_a_nested_version_mismatch() {
+    // The negative control for the test above, and the reason it is scoped to
+    // *readability*. Moving the nested file check out of the simulation exemption
+    // must not drag the catalogue checks out with it: which version happens to be
+    // installed is a fact about the environment, and `--simulate` contacts no
+    // binary at either level. Without this, "refuse every nested app under
+    // simulate" would pass the test above just as well.
+    //
+    // `0.1.x` against an installed `1.3.0` is exactly what `app run outer` (no
+    // `--simulate`) refuses two tests up, so the pair pins the boundary.
+    let tmp = nested_fixture("1.3.0", "0.1.x");
+    aware(&tmp.path().join("home"))
+        .args(["app", "run", "outer", "--simulate"])
+        .assert()
+        .success();
+}

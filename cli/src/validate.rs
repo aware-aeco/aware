@@ -740,6 +740,20 @@ pub fn missing_agents(
     out
 }
 
+/// The agent ids this app can actually dispatch to, by the same traversal
+/// [`unsatisfied_pins`] scopes itself with — frozen subtrees excluded, `do:`
+/// bodies descended into.
+///
+/// Public so a caller that must reason about *which* agents an app reaches can
+/// share this one traversal rather than writing a second one that drifts: the
+/// run pre-flight uses it to find the app-backed agents whose backing apps
+/// carry `requires:` blocks of their own.
+pub fn dispatchable_agents(app: &App) -> HashSet<&str> {
+    let mut out = HashSet::new();
+    collect_dispatchable_agents(&app.nodes, &mut out);
+    out
+}
+
 /// Collect the agent ids this app can actually dispatch to.
 ///
 /// Traversal mirrors [`collect_missing_agents`] and `check_node_agents`: a

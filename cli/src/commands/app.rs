@@ -225,6 +225,18 @@ async fn run(
         return Err(AwareError::Validation(format!("[{}]", err.code)));
     }
 
+    // …and the same file-level rule one level down. A node may dispatch to an
+    // app-backed agent, and the app behind it carries a `requires:` block of its
+    // own. On a real run `DispatchInvoker::resolve_exposed` reads those pins when
+    // the node dispatches; `--simulate` never reaches it, because the
+    // orchestrator returns a synthesized output before the app transport, so the
+    // backing app is never loaded and an unreadable pin one level down was
+    // reported nowhere at all.
+    if let Some(err) = nested_malformed_requires(&ctx.paths, &app).first() {
+        eprintln!("error: {}", err.message);
+        return Err(AwareError::Validation(format!("[{}]", err.code)));
+    }
+
     if !simulate {
         let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
 
@@ -443,6 +455,77 @@ async fn run(
     orch.run_one_shot().await?;
     println!("\u{2713} run complete; trace at {}", log_path.display());
     Ok(())
+}
+
+/// Unreadable `requires:` pins in the apps behind this app's app-backed agents.
+///
+/// Whether a constraint can be *read* is a fact about a file — true on every
+/// machine, needing no binary — so the `--simulate` exemption, which is about
+/// the environment, must not swallow it one level down any more than it does at
+/// the top level. Under a real run the nested pins are read at dispatch by
+/// [`crate::runtime::invoker::DispatchInvoker::resolve_exposed`]; under
+/// `--simulate` the orchestrator short-circuits with a synthesized output before
+/// the app transport, so nothing ever loaded the backing app to look.
+///
+/// Deliberately narrow, and the narrowness is the point:
+///
+/// - It reads a **file**, and only for the `requires:` *syntax*. It does not
+///   dispatch to the nested app, run it, or apply the catalogue checks
+///   (installed / version-satisfied) that `--simulate` is legitimately excused
+///   from because it contacts no binary.
+/// - Anything not installed, not app-backed, or not loadable is skipped in
+///   silence — the same posture as `Orchestrator::synthesize_output`, which
+///   already reads agent manifests under `--simulate` and falls back quietly
+///   when one is missing. So `--simulate` stays the way to check a composition
+///   before the agents around it exist.
+/// - Scoped to *dispatchable* agents via [`crate::validate::dispatchable_agents`],
+///   so a frozen-only nested app — which never runs — is not gated, matching
+///   [`crate::validate::unsatisfied_pins`].
+///
+/// One level is the whole depth: a nested app may not itself compose another
+/// `exposes-as-agent` app in v0 (`DispatchInvoker::nested_leaf` passes
+/// `app_ctx: None`), so there is no deeper hop to recurse into.
+fn nested_malformed_requires(
+    paths: &crate::paths::Paths,
+    app: &crate::manifest::app::App,
+) -> Vec<crate::validate::ValidationIssue> {
+    let Ok(agents) = crate::manifest::loader::discover_agents(paths) else {
+        return Vec::new();
+    };
+    let dispatchable = crate::validate::dispatchable_agents(app);
+    let apps_dir = paths.apps_dir();
+    let mut out = Vec::new();
+    for agent in agents
+        .iter()
+        .filter(|d| dispatchable.contains(d.manifest.agent.as_str()))
+    {
+        // Only an app-backed agent has an app — and therefore a `requires:` block
+        // — behind it. A cli/rest/mcp/builtin agent has nothing to read here.
+        let Some(app_transport) = agent.manifest.transport.app.as_ref() else {
+            continue;
+        };
+        let backing_dir = apps_dir.join(&app_transport.backed_by);
+        let Some(manifest_path) = crate::manifest::loader::find_app_manifest(&backing_dir) else {
+            continue;
+        };
+        let Ok(backing) = crate::manifest::loader::load_app(&manifest_path) else {
+            continue;
+        };
+        out.extend(
+            crate::validate::malformed_requires(&backing)
+                .into_iter()
+                .map(|issue| crate::validate::ValidationIssue {
+                    // Name the hop, or the operator reads a pin that appears in
+                    // neither the app they named nor anything they can see.
+                    message: format!(
+                        "app-backed agent {:?} (backing app {:?}): {}",
+                        agent.manifest.agent, app_transport.backed_by, issue.message
+                    ),
+                    ..issue
+                }),
+        );
+    }
+    out
 }
 
 async fn logs(
