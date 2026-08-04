@@ -270,11 +270,37 @@ def highlighted(span: dict) -> str:
     columns bounding the part of *that* line the span covers; concatenating
     those slices reconstructs the expression even when it wraps. Classifying the
     raw line instead would drag in unrelated brackets from elsewhere on it.
+
+    Chunks are joined with a **newline**, not butted together. A line comment
+    ends at the end of its line, so flattening `&s[\n .. // display cap\n 3\n]`
+    into one line made `mask_lexical` swallow the bound and the closing bracket
+    along with the comment — the whole rest of the expression became comment
+    text, `is_hardcoded` saw no slice, and the gate printed a clean result. The
+    two are only correct together: masking has to be told where the lines were.
     """
-    return "".join(
+    return "\n".join(
         chunk["text"][chunk["highlight_start"] - 1 : chunk["highlight_end"] - 1]
         for chunk in (span.get("text") or [])
     ).strip()
+
+
+# `--force-warn`, not `-W`. A `-W` on the command line is *overridden* by an
+# `#[allow(clippy::string_slice)]` in the source, so a module could switch this
+# gate off at the call site and the script would report the crate clean — the
+# exact move the failure message tells people not to make, and which CLAUDE.md
+# §Engineering rules forbids. `--force-warn` cannot be suppressed by a source
+# attribute, so the diagnostic is emitted and judged here whatever the module
+# says about it. Hoisted out of the call so `--self-test` can assert on it: a
+# revert to `-W` silently disarms the gate and no fixture would notice.
+CLIPPY_CMD = [
+    "cargo",
+    "clippy",
+    "--quiet",
+    "--message-format=json",
+    "--",
+    "--force-warn",
+    LINT,
+]
 
 
 def collect_offenders() -> list[str]:
@@ -284,7 +310,7 @@ def collect_offenders() -> list[str]:
     `src/main.rs` scopes its sibling unwrap gate the same way.
     """
     proc = subprocess.run(
-        ["cargo", "clippy", "--quiet", "--message-format=json", "--", "-W", LINT],
+        CLIPPY_CMD,
         capture_output=True,
         text=True,
     )
@@ -413,11 +439,48 @@ def self_test() -> int:
             failures.append(
                 f"  {text!r}: expected flagged={expected}, got flagged={actual}"
             )
+
+    # `highlighted()` is part of the contract too — masking is only correct if
+    # it is told where the lines were. A span rustc reports across three lines
+    # must come back across three lines, or a `//` comment in it eats the rest
+    # of the expression and the gate goes quiet.
+    wrapped = highlighted(
+        {
+            "text": [
+                {"text": "    let _ = &s[", "highlight_start": 14, "highlight_end": 17},
+                {
+                    "text": "        .. // display cap",
+                    "highlight_start": 9,
+                    "highlight_end": 27,
+                },
+                {"text": "        3", "highlight_start": 9, "highlight_end": 10},
+                {"text": "    ];", "highlight_start": 5, "highlight_end": 6},
+            ]
+        }
+    )
+    if "\n" not in wrapped:
+        failures.append(
+            f"  highlighted() flattened a multi-line span to {wrapped!r} — a line "
+            "comment in it would swallow the rest of the expression"
+        )
+    elif not is_hardcoded(wrapped):
+        failures.append(
+            f"  a multi-line slice with a line comment was not flagged: {wrapped!r}"
+        )
+
+    # A `-W` here is overridden by `#[allow(clippy::string_slice)]` at the call
+    # site, which disarms the whole gate while leaving every fixture green.
+    if "--force-warn" not in CLIPPY_CMD or "-W" in CLIPPY_CMD:
+        failures.append(
+            f"  clippy must be invoked with --force-warn, not -W, or a source "
+            f"attribute can silence this gate: {CLIPPY_CMD}"
+        )
+
     if failures:
         print("self-test FAILED — the classifier no longer matches its contract:")
         print("\n".join(failures))
         return 1
-    print(f"self-test ok ({len(SELF_TEST_CASES)} cases)")
+    print(f"self-test ok ({len(SELF_TEST_CASES)} cases + 3 contract checks)")
     return 0
 
 
