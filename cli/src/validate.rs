@@ -526,7 +526,16 @@ pub fn unsatisfied_pins(
         // `aware agent install tekla@2025.0.x`; making the installer resolve
         // ranges is its own change, not this one.)
         let install_hint = if matches!(pin, VersionPin::Exact(..)) {
-            format!("install it with `aware agent install {agent_id}@{spec}`")
+            // …and even then, not quite verbatim. The pin grammar accepts build
+            // metadata and then ignores it (§10: it is not part of a release's
+            // identity), so `foo@1.2.3+build.1` and `foo@1.2.3` are the same
+            // pin — but the registry key is literal, and only one of those two
+            // strings is in it. Strip it, or accepting the metadata would have
+            // bought a remedy that resolves to nothing. The prerelease suffix
+            // stays: that IS part of the identity, and names a release the
+            // registry holds under exactly that key.
+            let exact = spec.split_once('+').map_or(spec, |(core, _)| core);
+            format!("install it with `aware agent install {agent_id}@{exact}`")
         } else {
             format!(
                 "install a version matching {spec} (`aware agent install {agent_id}@<version>` \
@@ -1415,6 +1424,37 @@ requires: []
                 .contains("aware agent install ifc-reference-reader@0.1.0"),
             "{}",
             issues[0].message
+        );
+        // …but build metadata must be stripped out of it first. The pin grammar
+        // accepts `@0.1.0+build.1` and then ignores the suffix, since §10 keeps
+        // it out of a release's identity — while the registry key is literal, so
+        // only `0.1.0` is actually in it. Handing the metadata through would
+        // have made accepting it buy a remedy that resolves to nothing.
+        let issues = unsatisfied_pins(
+            &app_requiring("ifc-reference-reader@0.1.0+build.1"),
+            &agents,
+            Severity::Error,
+        );
+        let msg = &issues[0].message;
+        assert!(
+            msg.contains("aware agent install ifc-reference-reader@0.1.0`"),
+            "{msg}"
+        );
+        assert!(
+            !msg.contains("install ifc-reference-reader@0.1.0+build.1"),
+            "build metadata must not reach the installer: {msg}"
+        );
+        // A prerelease is the other case and must survive: it IS part of the
+        // identity, and the registry holds it under exactly that key.
+        let issues = unsatisfied_pins(
+            &app_requiring("ifc-reference-reader@0.1.0-rc.1+build.1"),
+            &agents,
+            Severity::Error,
+        );
+        let msg = &issues[0].message;
+        assert!(
+            msg.contains("aware agent install ifc-reference-reader@0.1.0-rc.1`"),
+            "prerelease must survive the strip: {msg}"
         );
     }
 
