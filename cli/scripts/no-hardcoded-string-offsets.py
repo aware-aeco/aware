@@ -54,10 +54,48 @@ import sys
 
 LINT = "clippy::string_slice"
 
-# A bound made only of digits (with optional `_` separators and an integer
-# suffix): `97`, `1`, `2usize`. Anything containing an identifier is derived and
-# therefore not our business.
-_BARE_LITERAL = re.compile(r"^\s*[0-9][0-9_]*(?:usize|u32|u64|i32|i64)?\s*$")
+# A bound that is nothing but an integer literal: `97`, `1`, `2usize` — and the
+# non-decimal spellings, which are the same hazard written differently.
+# `&s[..0x61]` slices at byte 97 exactly as `&s[..97]` does, and clippy reports
+# both, so a decimal-only test would leave an easy way past this gate.
+# Anything containing an identifier is derived and therefore not our business.
+_BARE_LITERAL = re.compile(
+    r"""^\s*(?:
+          0[xX][0-9a-fA-F_]+      # hex
+        | 0[oO][0-7_]+            # octal
+        | 0[bB][01_]+             # binary
+        | [0-9][0-9_]*            # decimal
+    )(?:usize|isize|u8|u16|u32|u64|u128|i8|i16|i32|i64|i128)?\s*$""",
+    re.VERBOSE,
+)
+
+
+def strip_grouping(expr: str) -> str:
+    """Peel parentheses or braces that wrap the whole expression.
+
+    `(..97)` and `{ ..97 }` are valid Rust and slice exactly as `..97` does, but
+    the wrapper hides the `..` from the depth-aware scan in `bounds_of`, which
+    would report a single bound and skip the diagnostic entirely.
+
+    Only a wrapper enclosing the *entire* expression is peeled, so `(a)..(b)`
+    is left alone rather than mangled into `a)..(b`.
+    """
+    expr = expr.strip()
+    while len(expr) >= 2 and expr[0] in "({" and expr[-1] in ")}":
+        depth = 0
+        encloses_all = True
+        for i, char in enumerate(expr):
+            if char in "([{":
+                depth += 1
+            elif char in ")]}":
+                depth -= 1
+                if depth == 0 and i != len(expr) - 1:
+                    encloses_all = False
+                    break
+        if not encloses_all:
+            break
+        expr = expr[1:-1].strip()
+    return expr
 
 
 def bounds_of(index_expr: str) -> list[str]:
@@ -80,41 +118,60 @@ def bounds_of(index_expr: str) -> list[str]:
     return [index_expr]
 
 
-def bracket_contents(span_text: str) -> list[str]:
-    """Every balanced `[...]` pair in the span, at any nesting depth.
+def slice_index_of(span_text: str) -> str | None:
+    """The index expression of the bracket that performs the `str` slice.
 
-    Not just the first: when the sliced string is itself produced by indexing,
-    clippy's primary span covers both pairs. `&parts[i][..97]` opens with `[i]`,
-    so reading only the first bracket would inspect the *index* and never see
-    the hard-coded slice — the exact pattern this gate exists to stop would
-    sail through, while `&parts[0][..end]` would be rejected for the `0`.
+    Clippy's primary span *is* the slice expression, so the operation being
+    linted is always the final index applied to it: the pair closed by the last
+    `]`. Everything before that pair is the receiver, whose brackets belong to
+    other types and must not be judged as string offsets.
+
+    That distinction is the whole job. In `strings[0..1][0][..end]` the `[0..1]`
+    slices a `Vec` (a hard-coded index there is perfectly safe) and `[0]` is an
+    element access; only `[..end]` touches a `str`. Scanning every pair would
+    fail CI on that line even though `end` came from `char_indices()`. Reading
+    only the *first* pair has the opposite fault — it inspects the receiver and
+    lets `&parts[i][..97]` through, the exact panic this gate exists to stop.
     """
-    pairs: list[str] = []
-    stack: list[int] = []
-    for i, char in enumerate(span_text):
-        if char == "[":
-            stack.append(i)
-        elif char == "]" and stack:
-            start = stack.pop()
-            pairs.append(span_text[start + 1 : i])
-    return pairs
+    end = span_text.rfind("]")
+    if end < 0:
+        return None
+    depth = 0
+    for i in range(end, -1, -1):
+        if span_text[i] == "]":
+            depth += 1
+        elif span_text[i] == "[":
+            depth -= 1
+            if depth == 0:
+                return span_text[i + 1 : end]
+    return None
 
 
 def is_hardcoded(span_text: str) -> bool:
-    """True when a *slice* bound in this span is a bare literal.
+    """True when the `str` slice pins a bound to a bare integer literal."""
+    index_expr = slice_index_of(span_text)
+    if index_expr is None:
+        return False
+    bounds = bounds_of(strip_grouping(index_expr))
+    if len(bounds) < 2:
+        return False  # `[i]` / `[0]` — indexing, not slicing.
+    return any(
+        _BARE_LITERAL.match(strip_grouping(b)) for b in bounds if strip_grouping(b)
+    )
 
-    Only bracket pairs that actually contain a range are considered. That is
-    what separates `[..97]` (a slice, and the hazard) from `[0]` (an index into
-    a collection, which cannot split a character), so `&parts[0][..end]` is
-    correctly left alone while `&parts[i][..97]` is caught.
+
+def highlighted(span: dict) -> str:
+    """Just the source rustc underlined, not the whole line it sits on.
+
+    Each `text` chunk carries the line plus 1-based `highlight_start`/`_end`
+    columns bounding the part of *that* line the span covers; concatenating
+    those slices reconstructs the expression even when it wraps. Classifying the
+    raw line instead would drag in unrelated brackets from elsewhere on it.
     """
-    for content in bracket_contents(span_text):
-        bounds = bounds_of(content)
-        if len(bounds) < 2:
-            continue  # `[i]` / `[0]` — indexing, not slicing.
-        if any(_BARE_LITERAL.match(b) for b in bounds if b.strip()):
-            return True
-    return False
+    return "".join(
+        chunk["text"][chunk["highlight_start"] - 1 : chunk["highlight_end"] - 1]
+        for chunk in (span.get("text") or [])
+    ).strip()
 
 
 def collect_offenders() -> list[str]:
@@ -150,11 +207,9 @@ def collect_offenders() -> list[str]:
         for span in message.get("spans") or []:
             if not span.get("is_primary"):
                 continue
-            text = "".join(chunk["text"] for chunk in (span.get("text") or []))
+            text = highlighted(span)
             if is_hardcoded(text):
-                offenders.append(
-                    f"{span['file_name']}:{span['line_start']}: {text.strip()}"
-                )
+                offenders.append(f"{span['file_name']}:{span['line_start']}: {text}")
 
     # A clippy run that never compiled the `aware` bin inspected nothing, so an
     # empty offender list would be an artefact of the failure rather than a
@@ -174,31 +229,54 @@ def collect_offenders() -> list[str]:
     return offenders
 
 
-# (span text, should this be flagged?) — the classifier's contract, including
-# the real regression and the safe shapes it must leave alone.
+# (span text, should this be flagged?) — the classifier's contract.
+#
+# These are *spans*, not source lines: what `highlighted()` hands the classifier
+# is the expression rustc underlined. Every entry below was taken from real
+# clippy 1.95.0 output for the corresponding Rust, so the fixtures cannot drift
+# from what the gate actually receives.
 SELF_TEST_CASES = [
-    ('format!("{}…", &desc_one[..97])', True),
-    ("let after_scope = &spec[1..];", True),
-    ("let inner = t[2..t.len() - 2].trim();", True),
-    ("let head = &s[..=15];", True),
-    ("let after = &rest[start + 2..];", False),
-    ("let inner = after[..end].trim();", False),
-    ("rest = &after[end + 2..];", False),
-    ("Some(nuspec[start + 13..start + end].trim().to_string())", False),
-    ("u8::from_str_radix(&h[a..a + 2], 16)", False),
-    ("let parts: Vec<&str> = inner[..path_end]", False),
-    ("let kept = &s[..cut];", False),
+    # The regression this gate exists for, and its delimiter-shaped cousins.
+    ("desc_one[..97]", True),
+    ("spec[1..]", True),
+    ("t[2..t.len() - 2]", True),
+    ("s[..=15]", True),
+    # Bounds from `find()` / `char_indices()` — boundaries by construction.
+    ("rest[start + 2..]", False),
+    ("after[..end]", False),
+    ("nuspec[start + 13..start + end]", False),
+    ("h[a..a + 2]", False),
+    ("inner[..path_end]", False),
+    ("s[..cut]", False),
     ("no slice here at all", False),
-    # The sliced string is itself produced by indexing, so the span carries two
-    # bracket pairs. Reading only the first inspected the index and missed the
-    # slice entirely (PR #361 review). Both directions are pinned.
-    ("let head = &parts[i][..97];", True),
-    ("let head = &parts[0][..end];", False),
-    ("let head = &map[key][..12];", True),
-    ("let head = &rows[3][start..];", False),
-    # A range whose own bound contains an index expression.
-    ("let head = &s[offsets[0]..97];", True),
-    ("let head = &s[offsets[0]..end];", False),
+    # The receiver is itself indexed, so the span carries several bracket pairs.
+    # Only the last one slices the `str`; reading the first inspected the
+    # receiver and let the real bug through (PR #361 review, round 1).
+    ("parts[i][..97]", True),
+    ("parts[0][..end]", False),
+    ("map[key][..12]", True),
+    ("rows[3][start..]", False),
+    ("s[offsets[0]..97]", True),
+    ("s[offsets[0]..end]", False),
+    # A hard-coded range in the *receiver* slices a collection, not a string,
+    # and must not fail CI. Judging every range-bearing pair rejected this even
+    # when the string bound was derived (round 2).
+    ("strings[0..1][0][..end]", False),
+    ("strings[0..1][0][..97]", True),
+    ("rows[2..8][i][start..]", False),
+    # Non-decimal spellings of the same byte offset (round 2).
+    ("s[..0x61]", True),
+    ("s[..0o141]", True),
+    ("s[0b1..]", True),
+    ("s[..0xFF_usize]", True),
+    # Grouped ranges, which hid the `..` from the depth-aware scan (round 2).
+    ("s[(..97)]", True),
+    ("s[{ ..97 }]", True),
+    ("s[{ 12.. }]", True),
+    ("s[(..end)]", False),
+    ("s[{ offsets[0].. }]", False),
+    # Grouping that does not enclose the whole expression must survive intact.
+    ("s[(a + 1)..(b - 1)]", False),
 ]
 
 
