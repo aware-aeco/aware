@@ -943,12 +943,14 @@ Apps **pin agent versions** in `requires:`, as `<agent-id>@<pin>`. An entry with
 
 | Pin | Example | Admits |
 |---|---|---|
-| Exact | `tekla@0.1.3` | Only that version. Used for reproducibility. |
+| Exact | `tekla@0.1.3` | Only that release. Used for reproducibility — a prerelease (`0.1.3-rc.1`) is a *different* release and does **not** satisfy it. |
 | Minor (recommended) | `tekla@0.1.x` | Any patch within 0.1. The default, and the right one below 1.0, where the *minor* is the breaking axis. |
 | Major (loose) | `tekla@1.x` | Any minor within major 1. Use when you actively track upstream. |
 | At-least-minor | `tekla@1.2` | Major 1, minor 2 or newer. |
 
-The wildcard (`x`, `X` or `*`) is only meaningful in the final position: `1.x.3` pins a patch under an unknown minor, which denotes nothing, and is rejected as `E_APP_REQUIRES_MALFORMED`. Prerelease and build metadata on the *installed* agent (`1.2.0-rc.1`, `1.2.0+deadbeef`) do not participate in the grammar and are ignored when the pin is checked.
+The wildcard (`x`, `X` or `*`) is only meaningful in the final position: `1.x.3` pins a patch under an unknown minor, which denotes nothing, and is rejected as `E_APP_REQUIRES_MALFORMED`.
+
+Build metadata on the *installed* agent (`1.2.0+deadbeef`) is excluded from a release's identity by semver §10, so it never changes which pins a version satisfies. A **prerelease** (`1.2.0-rc.1`) does: it satisfies the three range forms, but never the exact form, which exists precisely to pin one release.
 
 The orchestrator resolves pins at install time and locks the resolved versions into `~/.aware/apps/<name>/lockfile.yaml`. Subsequent runs use the lock. `aware app update <name>` re-resolves and updates the lock.
 
@@ -965,6 +967,8 @@ A pin is what makes the major-bump-plus-`BREAKING.md` rule in [Agent Spec § Ver
 | `aware app validate` | **Silent about versions** — it judges the app *file*, so it rejects an unreadable pin (`E_APP_REQUIRES_MALFORMED`) but not which version happens to be installed |
 
 An agent named in `requires:` but **not installed** gets no pin verdict at all: judging a pin needs a version, and the missing agent is already reported by `W_/E_APP_AGENT_NOT_INSTALLED` with its own remedy.
+
+A nested [`exposes-as-agent`](#exposes-as-agent) app carries its own `requires:`, and those pins are checked **at dispatch**, when the app transport loads the backing app — not by the calling app's pre-flight, which only sees the caller's own `requires:`. So a caller whose pins are all satisfied is still refused if the app it composes has drifted from its own.
 
 ---
 

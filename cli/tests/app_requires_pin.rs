@@ -152,6 +152,85 @@ fn validate_judges_the_file_not_the_machine() {
         .stdout(predicate::str::contains("E_APP_REQUIRES_MALFORMED"));
 }
 
+/// An exposed inner app pinning `probe-agent@<pin>`, and an outer app that
+/// composes it. The outer app pins nothing, so its own pre-flight is clean and
+/// only the nested check can catch the inner app's pin. The inner app's single
+/// node is inline glue, so no agent needs to dispatch for it to run.
+fn nested_fixture(installed_version: &str, inner_pin: &str) -> tempfile::TempDir {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("home");
+    let agent_dir = home.join("agents").join("probe-agent");
+    std::fs::create_dir_all(&agent_dir).unwrap();
+    std::fs::write(
+        agent_dir.join("manifest.yaml"),
+        format!(
+            "agent: probe-agent\nversion: {installed_version}\ndescription: x\nstateful: false\n\
+             license: MIT\ntransport:\n  cli:\n    binary: aware-probe\ncommands:\n  probe:\n    \
+             lifecycle: single\n    description: x\n    mode: read\n"
+        ),
+    )
+    .unwrap();
+
+    for (name, body) in [
+        (
+            "inner",
+            format!(
+                "app: inner\nversion: 0.2.0\ndescription: an exposed inner app\n\
+                 exposes-as-agent: true\nexposed-commands:\n  run:\n    lifecycle: single\n    \
+                 inputs:\n      phase:\n        type: string\n    outputs:\n      type: single\n      \
+                 schema:\n        ok: bool\nnodes:\n  - id: gate\n    inline:\n      kind: predicate\n      \
+                 description: always pass\n      code: 'true'\nrequires:\n  - probe-agent@{inner_pin}\n"
+            ),
+        ),
+        (
+            "outer",
+            "app: outer\nversion: 0.1.0\ndescription: composes inner as an agent\nnodes:\n  \
+             - id: call-inner\n    agent: inner\n    command: run\n    config:\n      \
+             phase: design\nconnections: []\nrequires: []\n"
+                .to_string(),
+        ),
+    ] {
+        let dir = tmp.path().join("src").join(name);
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join(format!("{name}.flo")), body).unwrap();
+        aware(&home)
+            .args(["app", "install"])
+            .arg(&dir)
+            .assert()
+            .success();
+    }
+    tmp
+}
+
+#[test]
+fn a_nested_exposed_app_is_refused_when_its_own_pin_is_unsatisfied() {
+    // `aware app run` pre-flights the app the operator NAMED. A nested exposed
+    // app is reached only through the app transport, so without a check there
+    // its `requires:` was never consulted — upgrading one of its agents to an
+    // incompatible version after install still dispatched, which is the same
+    // live-catalogue gap the pre-flight exists to close, one level down.
+    let tmp = nested_fixture("1.3.0", "0.1.x");
+    aware(&tmp.path().join("home"))
+        .args(["app", "run", "outer"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains("E_APP_AGENT_PIN_UNSATISFIED"))
+        // Names the app-backed agent, so the operator knows which hop refused.
+        .stderr(predicate::str::contains("inner"));
+}
+
+#[test]
+fn a_nested_exposed_app_runs_when_its_pin_is_satisfied() {
+    // Negative control: the outer app pins nothing and the inner app's pin is
+    // met, so the nested check must be invisible. Without this, a check that
+    // refused every nested dispatch would still pass the test above.
+    let tmp = nested_fixture("1.3.0", "1.3.x");
+    aware(&tmp.path().join("home"))
+        .args(["app", "run", "outer"])
+        .assert()
+        .success();
+}
+
 #[test]
 fn an_uninstalled_pinned_agent_is_reported_as_missing_not_as_a_pin_mismatch() {
     // Two different gaps with two different remedies. A pin verdict needs a

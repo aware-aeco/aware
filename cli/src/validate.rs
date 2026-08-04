@@ -275,9 +275,17 @@ impl VersionPin {
         }
     }
 
-    fn is_satisfied_by(&self, (maj, min, pat): (u64, u64, u64)) -> bool {
+    fn is_satisfied_by(&self, v: &InstalledVersion) -> bool {
+        let (maj, min, pat) = v.triple;
         match *self {
-            Self::Exact(a, b, c) => (maj, min, pat) == (a, b, c),
+            // An exact pin exists for reproducibility, so it admits only that
+            // release. `1.2.0-rc.1` is a *different* release from `1.2.0` in
+            // semver — it even orders before it — so a prerelease never
+            // satisfies an exact pin, or `agent@1.2.0` could silently run a
+            // release candidate the app never asked for. The range forms below
+            // stay deliberately permissive: they are ranges, and an author who
+            // wanted the strict reading had the exact form available.
+            Self::Exact(a, b, c) => (maj, min, pat) == (a, b, c) && !v.prerelease,
             Self::Minor(a, b) => (maj, min) == (a, b),
             Self::Major(a) => maj == a,
             Self::AtLeast(a, b) => maj == a && min >= b,
@@ -285,20 +293,37 @@ impl VersionPin {
     }
 }
 
-/// Parse an installed agent's `version:` into a `(major, minor, patch)` triple.
+/// An installed agent's `version:`, parsed.
+struct InstalledVersion {
+    triple: (u64, u64, u64),
+    /// Whether the version carries a semver prerelease suffix (`-rc.1`).
+    /// Build metadata (`+deadbeef`) is **not** recorded: semver §10 excludes it
+    /// from a release's identity and from precedence, so it cannot change which
+    /// pins a version satisfies.
+    prerelease: bool,
+}
+
+/// Parse an installed agent's `version:`.
 ///
-/// Trailing semver prerelease / build metadata (`1.2.0-rc.1`, `1.2.0+deadbeef`)
-/// is discarded before the triple is read: it does not participate in the pin
-/// grammar above, and dropping it here keeps such a version *checkable* instead
-/// of unreadable.
-fn parse_semver(version: &str) -> Option<(u64, u64, u64)> {
-    let core = version
-        .split_once(['-', '+'])
-        .map_or(version, |(core, _)| core);
+/// The triple is read from the version core, so a prereleased or
+/// build-stamped version stays *checkable* rather than being reported as
+/// unreadable. The prerelease flag is kept rather than discarded because it
+/// changes the answer for an exact pin (see [`VersionPin::is_satisfied_by`]).
+fn parse_semver(version: &str) -> Option<InstalledVersion> {
+    // Semver order is `<core>-<prerelease>+<build>`, so strip build metadata
+    // first — otherwise `1.2.0+linux-gnu` would read as a prerelease.
+    let without_build = version.split_once('+').map_or(version, |(v, _)| v);
+    let (core, prerelease) = match without_build.split_once('-') {
+        Some((core, _)) => (core, true),
+        None => (without_build, false),
+    };
     let [maj, min, pat] = core.split('.').collect::<Vec<_>>()[..] else {
         return None;
     };
-    Some((maj.parse().ok()?, min.parse().ok()?, pat.parse().ok()?))
+    Some(InstalledVersion {
+        triple: (maj.parse().ok()?, min.parse().ok()?, pat.parse().ok()?),
+        prerelease,
+    })
 }
 
 /// Report `requires:` pins that the installed agent catalogue does not satisfy (#349).
@@ -339,7 +364,7 @@ pub fn unsatisfied_pins(
         };
         let version = installed.manifest.version.as_str();
         let msg = match parse_semver(version) {
-            Some(v) if pin.is_satisfied_by(v) => continue,
+            Some(v) if pin.is_satisfied_by(&v) => continue,
             Some(_) => format!(
                 "app requires {agent_id}@{spec}, but {version} is installed — \
                  install a matching version with `aware agent install {agent_id}@{spec}`, \
@@ -906,12 +931,37 @@ requires: []
 
     #[test]
     fn prerelease_and_build_metadata_stay_checkable() {
-        // `1.3.0-rc.1` is within `1.3.x`; dropping the suffix must not make the
-        // triple unreadable (which would report it as unpinnable instead).
+        // `1.3.0-rc.1` is within the RANGE `1.3.x`; reading the triple past the
+        // suffix must not make the version unreadable (which would report it as
+        // unpinnable instead of judging it).
         assert!(pin_codes("ifc-reference-reader@1.3.x", "1.3.0-rc.1").is_empty());
         assert!(pin_codes("ifc-reference-reader@1.3.x", "1.3.0+deadbeef").is_empty());
         assert_eq!(
             pin_codes("ifc-reference-reader@1.4.x", "1.3.0-rc.1"),
+            ["E_APP_AGENT_PIN_UNSATISFIED"]
+        );
+    }
+
+    #[test]
+    fn an_exact_pin_refuses_a_prerelease_but_ignores_build_metadata() {
+        // An exact pin is the reproducibility form, so it must admit only that
+        // release. `1.2.3-rc.1` is a DIFFERENT release from `1.2.3` in semver
+        // (§9, and it orders *before* it), so admitting it would silently run a
+        // release candidate against an app that asked for the stable version —
+        // exactly the substitution the exact form exists to prevent.
+        assert_eq!(
+            pin_codes("ifc-reference-reader@1.2.3", "1.2.3-rc.1"),
+            ["E_APP_AGENT_PIN_UNSATISFIED"]
+        );
+        // Build metadata is excluded from identity and precedence by semver §10,
+        // so it cannot change which pins a version satisfies — `1.2.3+deadbeef`
+        // IS `1.2.3`. Stripping it must not be confused with stripping a
+        // prerelease, including when the metadata itself contains a hyphen.
+        assert!(pin_codes("ifc-reference-reader@1.2.3", "1.2.3+deadbeef").is_empty());
+        assert!(pin_codes("ifc-reference-reader@1.2.3", "1.2.3+linux-gnu").is_empty());
+        // A prerelease that carries build metadata too is still a prerelease.
+        assert_eq!(
+            pin_codes("ifc-reference-reader@1.2.3", "1.2.3-rc.1+deadbeef"),
             ["E_APP_AGENT_PIN_UNSATISFIED"]
         );
     }

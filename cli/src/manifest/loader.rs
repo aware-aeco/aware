@@ -33,12 +33,19 @@ pub struct DiscoveredApp {
 /// `manifest.yaml` is an installed agent. Returns discovered agents sorted
 /// by id. Missing `agents/` directory returns an empty Vec (not an error).
 pub fn discover_agents(paths: &Paths) -> Result<Vec<DiscoveredAgent>, AwareError> {
-    let agents_dir = paths.agents_dir();
+    discover_agents_in(&paths.agents_dir())
+}
+
+/// [`discover_agents`] against an agents directory directly, for callers that
+/// hold one without a [`Paths`] — the runtime invoker, which is constructed
+/// with `agents_dir` alone. Same walk, so a catalogue read at dispatch and one
+/// read at pre-flight can't drift apart.
+pub fn discover_agents_in(agents_dir: &Path) -> Result<Vec<DiscoveredAgent>, AwareError> {
     if !agents_dir.exists() {
         return Ok(Vec::new());
     }
     let mut out = Vec::new();
-    for entry in std::fs::read_dir(&agents_dir)? {
+    for entry in std::fs::read_dir(agents_dir)? {
         let entry = entry?;
         if !entry.file_type()?.is_dir() {
             continue;
