@@ -950,7 +950,9 @@ Apps **pin agent versions** in `requires:`, as `<agent-id>@<pin>`. An entry with
 
 The wildcard (`x`, `X` or `*`) is only meaningful in the final position: `1.x.3` pins a patch under an unknown minor, which denotes nothing, and is rejected as `E_APP_REQUIRES_MALFORMED`.
 
-Build metadata on the *installed* agent (`1.2.0+deadbeef`) is excluded from a release's identity by semver §10, so it never changes which pins a version satisfies. A **prerelease** (`1.2.0-rc.1`) does: it satisfies the three range forms, but never the exact form, which exists precisely to pin one release.
+Pin components are SemVer numeric identifiers, so a zero-padded one (`01.2.x`) is rejected rather than read as `1.2.x`.
+
+The *installed* agent's `version:` is parsed as **strict** SemVer 2.0.0. Build metadata (`1.2.0+deadbeef`) is excluded from a release's identity by §10, so it never changes which pins a version satisfies. A **prerelease** (`1.2.0-rc.1`) does: it satisfies the three range forms, but never the exact form, which exists precisely to pin one release. A version that is *not* valid SemVer (`1.2.3+`, `1.02.3`, `1.2.3-01`) yields no verdict at all — it is reported as uncheckable, never quietly treated as the nearest valid release.
 
 The orchestrator resolves pins at install time and locks the resolved versions into `~/.aware/apps/<name>/lockfile.yaml`. Subsequent runs use the lock. `aware app update <name>` re-resolves and updates the lock.
 

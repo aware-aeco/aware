@@ -265,7 +265,10 @@ impl VersionPin {
         if parts.iter().rev().skip(1).any(|p| wild(p)) {
             return None;
         }
-        let num = |s: &str| s.parse::<u64>().ok();
+        // `numeric_identifier`, not `parse::<u64>`, so a zero-padded component is
+        // rejected rather than silently meaning something else (`01.2.x` is not
+        // `1.2.x`) — the same SemVer rule the installed version is held to.
+        let num = numeric_identifier;
         match parts.as_slice() {
             [maj, min, pat] if wild(pat) => Some(Self::Minor(num(maj)?, num(min)?)),
             [maj, min, pat] => Some(Self::Exact(num(maj)?, num(min)?, num(pat)?)),
@@ -303,27 +306,80 @@ struct InstalledVersion {
     prerelease: bool,
 }
 
-/// Parse an installed agent's `version:`.
+/// Parse an installed agent's `version:` as **strict** SemVer 2.0.0.
 ///
-/// The triple is read from the version core, so a prereleased or
+/// Strictness is the point, not pedantry. The caller treats an unparseable
+/// version as "cannot check this pin" and reports it; a *lenient* parse would
+/// route malformed values into the satisfied path instead. `1.2.3+` (empty
+/// build metadata — which `validate_agent` does not currently reject) would
+/// read as the release `1.2.3` and satisfy an exact `@1.2.3` pin it is not,
+/// which is the very substitution the exact form exists to prevent. Same for
+/// `1.02.3`, `1.2.3-`, and `1.2.3-01`.
+///
+/// The triple is read from the version core, so a legitimately prereleased or
 /// build-stamped version stays *checkable* rather than being reported as
 /// unreadable. The prerelease flag is kept rather than discarded because it
 /// changes the answer for an exact pin (see [`VersionPin::is_satisfied_by`]).
 fn parse_semver(version: &str) -> Option<InstalledVersion> {
-    // Semver order is `<core>-<prerelease>+<build>`, so strip build metadata
-    // first — otherwise `1.2.0+linux-gnu` would read as a prerelease.
-    let without_build = version.split_once('+').map_or(version, |(v, _)| v);
-    let (core, prerelease) = match without_build.split_once('-') {
-        Some((core, _)) => (core, true),
-        None => (without_build, false),
+    // SemVer order is `<core>-<prerelease>+<build>`, so split build metadata
+    // off first — otherwise `1.2.0+linux-gnu` would read as a prerelease.
+    let (rest, build) = match version.split_once('+') {
+        Some((rest, build)) => (rest, Some(build)),
+        None => (version, None),
     };
+    // §10: build identifiers are alphanumerics-and-hyphens, dot-separated, and
+    // non-empty — but they carry no leading-zero rule, since they never take
+    // part in precedence.
+    if build.is_some_and(|b| !is_dot_separated_identifiers(b, false)) {
+        return None;
+    }
+    let (core, pre) = match rest.split_once('-') {
+        Some((core, pre)) => (core, Some(pre)),
+        None => (rest, None),
+    };
+    // §9: prerelease identifiers add the rule that a purely numeric one must
+    // not carry a leading zero.
+    if pre.is_some_and(|p| !is_dot_separated_identifiers(p, true)) {
+        return None;
+    }
     let [maj, min, pat] = core.split('.').collect::<Vec<_>>()[..] else {
         return None;
     };
     Some(InstalledVersion {
-        triple: (maj.parse().ok()?, min.parse().ok()?, pat.parse().ok()?),
-        prerelease,
+        triple: (
+            numeric_identifier(maj)?,
+            numeric_identifier(min)?,
+            numeric_identifier(pat)?,
+        ),
+        prerelease: pre.is_some(),
     })
+}
+
+/// A SemVer numeric identifier (§2, §9): digits only, and no leading zero
+/// unless the identifier *is* `0`. Shared by the version core and the pin
+/// grammar, so `01.2.x` can't silently mean `1.2.x` in either.
+fn numeric_identifier(s: &str) -> Option<u64> {
+    if s.is_empty() || !s.bytes().all(|b| b.is_ascii_digit()) {
+        return None;
+    }
+    if s.len() > 1 && s.starts_with('0') {
+        return None;
+    }
+    s.parse().ok()
+}
+
+/// Dot-separated SemVer identifiers, per §9 (prerelease) and §10 (build).
+/// `numeric_leading_zero_rule` selects the prerelease-only restriction that a
+/// purely numeric identifier must not be zero-padded.
+fn is_dot_separated_identifiers(s: &str, numeric_leading_zero_rule: bool) -> bool {
+    !s.is_empty()
+        && s.split('.').all(|id| {
+            if id.is_empty() || !id.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-') {
+                return false;
+            }
+            let all_digits = id.bytes().all(|b| b.is_ascii_digit());
+            !(numeric_leading_zero_rule && all_digits && id.len() > 1 && id.starts_with('0'))
+        })
 }
 
 /// Report `requires:` pins that the installed agent catalogue does not satisfy (#349).
@@ -363,11 +419,27 @@ pub fn unsatisfied_pins(
             continue; // not installed — `missing_agents` owns that finding
         };
         let version = installed.manifest.version.as_str();
+        // Only an EXACT pin can be handed to the installer verbatim: `Index::resolve`
+        // looks a version up as a literal registry key, so `aware agent install
+        // foo@0.1.x` searches for a version called "0.1.x" and reports it missing
+        // even when 0.1.0 is right there. Printing that command for a wildcard pin
+        // would send the operator to a dead end, so a range pin gets the goal
+        // rather than an incantation. (`agent-spec.md § Installation` advertises
+        // `aware agent install tekla@2025.0.x`; making the installer resolve
+        // ranges is its own change, not this one.)
+        let install_hint = if matches!(pin, VersionPin::Exact(..)) {
+            format!("install it with `aware agent install {agent_id}@{spec}`")
+        } else {
+            format!(
+                "install a version matching {spec} (`aware agent install {agent_id}@<version>` \
+                 takes one exact version; `aware agent describe {agent_id} --available` shows \
+                 what the registry has)"
+            )
+        };
         let msg = match parse_semver(version) {
             Some(v) if pin.is_satisfied_by(&v) => continue,
             Some(_) => format!(
-                "app requires {agent_id}@{spec}, but {version} is installed — \
-                 install a matching version with `aware agent install {agent_id}@{spec}`, \
+                "app requires {agent_id}@{spec}, but {version} is installed — {install_hint}, \
                  or update the app's `requires:` pin if the new contract is the intended one"
             ),
             None => format!(
@@ -963,6 +1035,114 @@ requires: []
         assert_eq!(
             pin_codes("ifc-reference-reader@1.2.3", "1.2.3-rc.1+deadbeef"),
             ["E_APP_AGENT_PIN_UNSATISFIED"]
+        );
+    }
+
+    #[test]
+    fn a_malformed_installed_version_never_reads_as_a_valid_release() {
+        // The fail-closed branch only protects anything if malformed versions
+        // actually REACH it. A lenient parse routes them into the satisfied path
+        // instead: `1.2.3+` (empty build metadata, which `validate_agent` does not
+        // reject today) would read as the release `1.2.3` and pass an exact
+        // `@1.2.3` pin — the substitution the exact form exists to prevent.
+        for bad in [
+            "1.2.3+",      // empty build metadata
+            "1.2.3-",      // empty prerelease
+            "1.02.3",      // zero-padded core component
+            "01.2.3",      // ditto, major
+            "1.2.3-01",    // zero-padded numeric prerelease identifier (§9)
+            "1.2.3-rc..1", // empty identifier from a repeated separator
+            "1.2.3-rc.1+", // valid prerelease, empty build
+            "1.2.3+a..b",  // empty build identifier
+            "1.2.3-rc_1",  // underscore is not an allowed identifier character
+            "1.2",         // not three components
+            "1.2.3.4",
+            "v1.2.3", // a leading `v` is not part of the grammar
+            "",
+        ] {
+            assert_eq!(
+                pin_codes("ifc-reference-reader@1.2.3", bad),
+                ["E_APP_AGENT_PIN_UNSATISFIED"],
+                "{bad:?} must be reported as uncheckable, not silently satisfied"
+            );
+            // Reported for the right REASON — as unreadable, not as a mismatch.
+            let agents = vec![installed("ifc-reference-reader", bad)];
+            let issues = unsatisfied_pins(
+                &app_requiring("ifc-reference-reader@1.2.3"),
+                &agents,
+                Severity::Error,
+            );
+            assert!(
+                issues[0].message.contains("is not semver"),
+                "{bad:?}: {}",
+                issues[0].message
+            );
+        }
+        // …while the legitimately-suffixed versions still parse, so strictness
+        // did not simply break the prerelease support added for the exact-pin fix.
+        assert!(pin_codes("ifc-reference-reader@1.2.x", "1.2.3-rc.1").is_empty());
+        assert!(pin_codes("ifc-reference-reader@1.2.x", "1.2.3+build.1").is_empty());
+        assert!(pin_codes("ifc-reference-reader@1.2.x", "1.2.3-0.3.7+exp.sha.5114f85").is_empty());
+        assert!(pin_codes("ifc-reference-reader@1.2.3", "1.2.3+linux-gnu").is_empty());
+        assert!(pin_codes("ifc-reference-reader@0.2.x", "0.2.0").is_empty()); // a real `0` component
+    }
+
+    #[test]
+    fn a_zero_padded_pin_component_is_rejected_rather_than_silently_reinterpreted() {
+        // `01.2.x` is not `1.2.x`. Accepting it would make the pin mean something
+        // its author didn't write — the same SemVer rule the installed version is
+        // held to, applied to the other side of the comparison.
+        for bad in ["01.2.x", "1.02.x", "1.2.03", "0.01.x"] {
+            let issues = validate_app(&app_requiring(&format!("ifc-reference-reader@{bad}")));
+            assert!(
+                issues.iter().any(|i| i.code == "E_APP_REQUIRES_MALFORMED"),
+                "{bad} must be rejected; issues: {issues:?}"
+            );
+        }
+        // A genuine zero component is fine — the rule is about PADDING.
+        assert!(
+            !validate_app(&app_requiring("ifc-reference-reader@0.1.x"))
+                .iter()
+                .any(|i| i.code == "E_APP_REQUIRES_MALFORMED")
+        );
+    }
+
+    #[test]
+    fn the_remedy_never_prints_an_install_command_the_installer_cannot_resolve() {
+        // `Index::resolve` looks a version up as a literal registry key, so
+        // `aware agent install foo@0.1.x` searches for a version *called* "0.1.x"
+        // and reports it missing even when 0.1.0 exists. Printing that for a
+        // wildcard pin sends the operator to a dead end.
+        let agents = vec![installed("ifc-reference-reader", "1.3.0")];
+        for range_pin in ["0.1.x", "0.x", "0.1"] {
+            let issues = unsatisfied_pins(
+                &app_requiring(&format!("ifc-reference-reader@{range_pin}")),
+                &agents,
+                Severity::Error,
+            );
+            let msg = &issues[0].message;
+            assert!(
+                !msg.contains(&format!(
+                    "aware agent install ifc-reference-reader@{range_pin}"
+                )),
+                "range pin {range_pin} must not be handed to the installer verbatim: {msg}"
+            );
+            // It still has to say what to DO.
+            assert!(msg.contains("install a version matching"), "{msg}");
+        }
+        // An exact pin CAN be handed over verbatim — that lookup succeeds — so the
+        // concrete command is still offered where it works.
+        let issues = unsatisfied_pins(
+            &app_requiring("ifc-reference-reader@0.1.0"),
+            &agents,
+            Severity::Error,
+        );
+        assert!(
+            issues[0]
+                .message
+                .contains("aware agent install ifc-reference-reader@0.1.0"),
+            "{}",
+            issues[0].message
         );
     }
 
