@@ -221,11 +221,16 @@ fn check_requires_syntax(requires: &[String], out: &mut Vec<ValidationIssue>) {
         let Some((agent, spec)) = entry.split_once('@') else {
             continue; // no `@` — an unpinned agent id, which is legal
         };
-        if agent.is_empty() {
+        if agent.trim().is_empty() {
             // `@1.2.3` — the id was dropped, so the pin parses and the entry reads
             // as a constraint while naming nothing to constrain. Reported here
             // rather than left to the pin branch, whose "expected {agent}@…"
             // remedy would echo the same missing id back at the author.
+            //
+            // `trim()`, not `is_empty()`: `" @1.2.3"` names an agent no more than
+            // `"@1.2.3"` does, and it reaches the same dead end one step later —
+            // no whitespace id is in any catalogue or `dispatchable` set.
+            // [`validate_agent`] already spells the same rule this way.
             out.push(ValidationIssue::error(
                 "E_APP_REQUIRES_MALFORMED",
                 format!(
@@ -509,7 +514,7 @@ pub fn unsatisfied_pins(
         let Some((agent_id, spec)) = entry.split_once('@') else {
             continue; // unpinned — nothing to satisfy
         };
-        if agent_id.is_empty() {
+        if agent_id.trim().is_empty() {
             // `@1.2.3` names no agent, so the empty id is in no catalogue and in
             // no `dispatchable` set. Falling through would hit the dispatchability
             // exemption below and skip the entry — which reads as "this pin is
@@ -1234,7 +1239,18 @@ requires: []
         // took the "declared but unreachable" exemption and skipped it. Between the
         // two, an entry that reads as a constraint enforced nothing, on both the
         // file path and the runtime one.
-        for bad in ["@1.2.3", "@0.1.x", "@1.x"] {
+        // The whitespace spellings belong here rather than in a test of their own:
+        // `" @1.2.3"` names an agent no more than `"@1.2.3"` does and dies at the
+        // same place, so a check that caught only the zero-length one would just
+        // move the hole one space to the right.
+        for bad in [
+            "@1.2.3",
+            "@0.1.x",
+            "@1.x",
+            " @1.2.3",
+            "\t@1.2.3",
+            "   @1.2.3",
+        ] {
             assert!(
                 validate_app(&app_requiring(&format!("\"{bad}\"")))
                     .iter()
@@ -1816,6 +1832,48 @@ requires: []
         assert!(
             missing_agents(&app, &[], Severity::Error).is_empty(),
             "a frozen node must not require its agent to be installed"
+        );
+    }
+
+    #[test]
+    fn a_requires_only_agent_is_not_reported_missing() {
+        // `app-spec.md § Versioning` states this, and the statement had drifted: it
+        // used to promise `W_/E_APP_AGENT_NOT_INSTALLED` for any uninstalled agent
+        // named in `requires:`, which was written before the dispatchability rule
+        // landed in the paragraph above it and was never true for an entry with no
+        // node behind it.
+        //
+        // The code is the side that is right. This gate already skips frozen
+        // subtrees because "a missing agent is harmless there"; an agent nothing
+        // dispatches to is the same case, so reporting it would treat an *absent*
+        // agent more harshly than a merely mismatched one — the contradiction the
+        // frozen-only exemption exists to avoid. It would also refuse apps that
+        // run today, and there is no node for the message to name.
+        let requires_only: App = serde_yaml::from_str(
+            "app: pin-test\nversion: 0.1.0\ndescription: x\nrequires:\n  \
+             - ifc-reference-reader@1.2.3\nnodes:\n  - id: gate\n    inline:\n      \
+             kind: predicate\n      description: always pass\n      code: 'true'\n",
+        )
+        .unwrap();
+        assert!(
+            missing_agents(&requires_only, &[], Severity::Error).is_empty(),
+            "an agent no node dispatches to must not be reported missing"
+        );
+        // The exemption is about dispatchability, not about `requires:`. The same
+        // pin with a live node behind it is still reported, so this cannot become a
+        // blanket excuse for uninstalled agents.
+        let dispatched: App = serde_yaml::from_str(
+            "app: pin-test\nversion: 0.1.0\ndescription: x\nrequires:\n  \
+             - ifc-reference-reader@1.2.3\nnodes:\n  - id: probe\n    \
+             agent: ifc-reference-reader\n    command: probe\n",
+        )
+        .unwrap();
+        assert_eq!(
+            missing_agents(&dispatched, &[], Severity::Error)
+                .iter()
+                .map(|i| i.code)
+                .collect::<Vec<_>>(),
+            ["E_APP_AGENT_NOT_INSTALLED"]
         );
     }
 

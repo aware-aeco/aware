@@ -975,7 +975,7 @@ An **unreadable** pin is refused at every one of those gates, including at run a
 
 A pin is only enforced for an agent the app can actually **dispatch** to. An agent reachable solely through [frozen nodes](#frozen-nodes) — or named in `requires:` with no node behind it at all — is not version-checked, for the same reason a frozen node needn't have its agent installed: nothing will invoke it. Gating its version would contradict itself, since an *absent* agent is fine there while a merely mismatched one would refuse a static app that had been running. A live `for-each` body counts as dispatching; a frozen node's body does not, because the orchestrator short-circuits it along with the node.
 
-An agent named in `requires:` but **not installed** gets no pin verdict at all: judging a pin needs a version, and the missing agent is already reported by `W_/E_APP_AGENT_NOT_INSTALLED` with its own remedy.
+An agent named in `requires:` but **not installed** gets no pin verdict at all: judging a pin needs a version. If a *node* dispatches to it, its absence is reported by `W_/E_APP_AGENT_NOT_INSTALLED` with its own remedy. If nothing dispatches to it, neither gate fires — for the same reason its version is not checked, stated in the paragraph above: nothing will invoke it, so an app that runs today must not start failing on the absence of an agent it never reaches.
 
 A nested [`exposes-as-agent`](#exposes-as-agent) app carries its own `requires:`, and those pins are checked **at dispatch**, when the app transport loads the backing app — not by the calling app's pre-flight, which only sees the caller's own `requires:`. So a caller whose pins are all satisfied is still refused if the app it composes has drifted from its own.
 
