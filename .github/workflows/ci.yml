@@ -75,6 +75,19 @@ jobs:
         working-directory: cli
         run: cargo clippy --all-targets -- -D warnings
 
+      # `clippy::string_slice` is a `restriction` lint, so the step above does not
+      # enable it and a hard-coded byte offset into a `str` reaches users as a
+      # process abort — `aware search` shipped `&desc[..97]` and four command
+      # descriptions already in `20-agents/` crashed it. The script narrows to the
+      # offsets that can never be shown safe rather than denying the lint wholesale;
+      # its own contract is covered by `--self-test`, run first so a broken
+      # classifier fails loudly instead of reporting a clean crate.
+      - name: no hard-coded byte offsets into strings
+        working-directory: cli
+        run: |
+          python3 scripts/no-hardcoded-string-offsets.py --self-test
+          python3 scripts/no-hardcoded-string-offsets.py
+
       - name: cargo test
         working-directory: cli
         run: cargo test

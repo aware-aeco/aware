@@ -428,12 +428,17 @@ impl Agent {
             .as_ref()
             .map(|d| d.to_lowercase())
             .unwrap_or_else(|| self.agent.clone());
-        if raw.chars().count() > 17 {
-            let mut s: String = raw.chars().take(14).collect();
-            s.push_str("...");
-            s
-        } else {
-            raw
+        // Cut at 14 only once past 17, so a 15–17 char name shows in full rather
+        // than losing three characters to gain an ellipsis.
+        match crate::text::cut_after_chars(&raw, 17) {
+            None => raw,
+            Some(_) => {
+                let mut s = crate::text::cut_after_chars(&raw, 14)
+                    .unwrap_or(&raw)
+                    .to_string();
+                s.push_str("...");
+                s
+            }
         }
     }
 }

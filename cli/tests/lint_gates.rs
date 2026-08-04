@@ -228,6 +228,50 @@ fn no_targeted_allow_reopens_the_gate_in_src() {
     );
 }
 
+/// The hard-coded-byte-offset gate (`scripts/no-hardcoded-string-offsets.py`)
+/// runs in CI, where it can afford the extra clippy pass. Its *classifier* is
+/// pure and cheap, though, and a classifier that silently stops matching would
+/// report a clean crate forever — so run its self-test here too, giving `cargo
+/// test` the same signal locally.
+///
+/// Skips when `python3` is absent, and — as with clippy above — refuses to skip
+/// under `CI`, where the runner has it.
+#[test]
+fn hardcoded_offset_gate_classifier_still_matches_its_contract() {
+    let script = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("scripts")
+        .join("no-hardcoded-string-offsets.py");
+    assert!(
+        script.is_file(),
+        "the gate script is gone: {}",
+        script.display()
+    );
+
+    let out = Command::new("python3").args(["--version"]).output();
+    let have_python = out.is_ok_and(|o| o.status.success());
+    assert!(
+        have_python || std::env::var_os("CI").is_none(),
+        "python3 is unavailable under CI, where the workflow runs this gate — \
+         skipping here would drop its only negative control"
+    );
+    if !have_python {
+        eprintln!("skipping: python3 unavailable");
+        return;
+    }
+
+    let out = Command::new("python3")
+        .arg(&script)
+        .arg("--self-test")
+        .output()
+        .expect("run the gate self-test");
+    assert!(
+        out.status.success(),
+        "the gate's classifier no longer matches its own contract:\n{}{}",
+        String::from_utf8_lossy(&out.stdout),
+        String::from_utf8_lossy(&out.stderr)
+    );
+}
+
 fn collect_rs_files(dir: &Path, out: &mut Vec<std::path::PathBuf>) {
     let Ok(entries) = std::fs::read_dir(dir) else {
         return;

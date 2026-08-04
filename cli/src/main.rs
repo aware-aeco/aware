@@ -52,6 +52,7 @@ mod sidecar;
 mod skill_builder;
 #[cfg(test)]
 mod test_env;
+mod text;
 mod validate;
 
 use clap::{Parser, Subcommand};

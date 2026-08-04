@@ -33,8 +33,12 @@ pub fn build_from_npm(spec: &str, agent_id: Option<&str>) -> Result<GeneratedAge
         // `@` belongs to the scope; the version `@` is whatever comes after
         // the last `/<lastsegment>` part.
         Some(_) if spec.starts_with('@') => {
-            // scope present — find the SECOND '@'
-            let after_scope = &spec[1..];
+            // scope present — find the SECOND '@'. `strip_prefix` rather than
+            // `&spec[1..]`: a byte-offset slice into a `str` panics when the
+            // offset lands mid-character, and a hard-coded offset can never be
+            // shown safe (see `crate::text`). Here `spec` is known to start with
+            // `@`, so the two agree — but the safe form costs nothing.
+            let after_scope = spec.strip_prefix('@').unwrap_or(spec);
             match after_scope.rsplit_once('@') {
                 Some((pkg_after, v)) => (format!("@{pkg_after}"), v.to_string()),
                 None => {

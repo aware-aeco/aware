@@ -369,7 +369,16 @@ pub fn is_whole_value_template(s: &str) -> bool {
     {
         return false;
     }
-    let inner = t[2..t.len() - 2].trim();
+    // `strip_prefix`/`strip_suffix` rather than `t[2..t.len() - 2]`: hard-coded
+    // byte offsets into a `str` panic when they land mid-character (see
+    // `crate::text`). The guard above already proves both delimiters are there,
+    // so the strips always succeed — this just removes the arithmetic that would
+    // have to be re-audited if the guard ever changed.
+    let inner = t
+        .strip_prefix("{{")
+        .and_then(|rest| rest.strip_suffix("}}"))
+        .unwrap_or("")
+        .trim();
     // Must be a bare path over exactly the charset `resolve_value` walks …
     if inner.is_empty()
         || !inner
