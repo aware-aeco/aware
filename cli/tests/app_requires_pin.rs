@@ -298,6 +298,39 @@ fn run_refuses_an_installed_app_whose_pin_became_unreadable() {
 }
 
 #[test]
+fn run_refuses_an_installed_app_whose_pin_lost_its_agent_id() {
+    // The same in-place edit, one character smaller: `@1.3.x` with the id dropped.
+    // This one parsed, so the syntax check was silent, and the empty id matched no
+    // dispatchable agent, so the catalogue check took its "declared but
+    // unreachable" exemption — the app ran with an entry that looked like a
+    // constraint and was enforced by nothing.
+    let (tmp, src) = fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+    aware(&home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+
+    let installed_flo = home.join("apps/pin-test/pin-test.flo");
+    let body = std::fs::read_to_string(&installed_flo).unwrap();
+    std::fs::write(
+        &installed_flo,
+        body.replace("probe-agent@1.3.x", "\"@1.3.x\""),
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "pin-test", "--dry-run"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_APP_REQUIRES_MALFORMED"))
+        // Named for what is actually wrong — the missing id, not the pin.
+        .stderr(predicate::str::contains("names no agent"));
+}
+
+#[test]
 fn a_nested_exposed_app_with_an_unreadable_pin_is_refused_too() {
     // The nested dispatch path calls the same check with no `validate_app` either,
     // so the same fail-closed rule has to hold one level down.

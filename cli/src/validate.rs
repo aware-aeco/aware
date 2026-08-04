@@ -221,6 +221,21 @@ fn check_requires_syntax(requires: &[String], out: &mut Vec<ValidationIssue>) {
         let Some((agent, spec)) = entry.split_once('@') else {
             continue; // no `@` — an unpinned agent id, which is legal
         };
+        if agent.is_empty() {
+            // `@1.2.3` — the id was dropped, so the pin parses and the entry reads
+            // as a constraint while naming nothing to constrain. Reported here
+            // rather than left to the pin branch, whose "expected {agent}@…"
+            // remedy would echo the same missing id back at the author.
+            out.push(ValidationIssue::error(
+                "E_APP_REQUIRES_MALFORMED",
+                format!(
+                    "requires entry {entry:?} pins a version but names no agent — \
+                     an entry is <agent-id>@<pin>, and a pin with no id in front of \
+                     the `@` constrains nothing"
+                ),
+            ));
+            continue;
+        }
         if VersionPin::parse(spec).is_none() {
             out.push(ValidationIssue::error(
                 "E_APP_REQUIRES_MALFORMED",
@@ -472,7 +487,10 @@ fn is_dot_separated_identifiers(s: &str, numeric_leading_zero_rule: bool) -> boo
 /// The unreadable-pin branch is deliberately *not* scoped that way: "I cannot
 /// read your constraint" is a broken file, not an irrelevant constraint, and
 /// nothing about it can be judged — including whether it names a dispatchable
-/// agent correctly.
+/// agent correctly. An entry with **no id at all** (`@1.2.3`) belongs to that
+/// branch rather than to the exemption: an empty id is in no `dispatchable` set,
+/// so treating it as merely unreachable would silently accept an entry that
+/// looks like a constraint and enforces nothing.
 ///
 /// `severity` picks the gate, mirroring [`missing_agents`]:
 /// [`Severity::Error`] (`E_APP_AGENT_PIN_UNSATISFIED`) for `compile` and `run`,
@@ -491,6 +509,25 @@ pub fn unsatisfied_pins(
         let Some((agent_id, spec)) = entry.split_once('@') else {
             continue; // unpinned — nothing to satisfy
         };
+        if agent_id.is_empty() {
+            // `@1.2.3` names no agent, so the empty id is in no catalogue and in
+            // no `dispatchable` set. Falling through would hit the dispatchability
+            // exemption below and skip the entry — which reads as "this pin is
+            // irrelevant" when the truth is that it is unreadable. Same
+            // fail-closed rule as an unparseable pin, and for the same reason:
+            // `run` and nested dispatch reach here without `validate_app`, so an
+            // app edited in place under `~/.aware/apps/` would otherwise run with
+            // a constraint nothing ever checked.
+            let msg = format!(
+                "app requires {entry:?}, which pins a version but names no agent, so there \
+                 is nothing to check it against — an entry is <agent-id>@<pin>"
+            );
+            out.push(match severity {
+                Severity::Error => ValidationIssue::error("E_APP_REQUIRES_MALFORMED", msg),
+                Severity::Warning => ValidationIssue::warning("W_APP_REQUIRES_MALFORMED", msg),
+            });
+            continue;
+        }
         let Some(pin) = VersionPin::parse(spec) else {
             // Unreadable constraint — refuse rather than skip. See the fail-closed
             // note above: `run` reaches here without having called `validate_app`.
@@ -1188,6 +1225,51 @@ requires: []
                 .collect::<Vec<_>>(),
             ["E_APP_REQUIRES_MALFORMED"]
         );
+    }
+
+    #[test]
+    fn an_entry_that_pins_a_version_but_names_no_agent_is_refused() {
+        // `@1.2.3` — the id was dropped. The pin parses, so the syntax check was
+        // silent; the empty id is in no `dispatchable` set, so the catalogue check
+        // took the "declared but unreachable" exemption and skipped it. Between the
+        // two, an entry that reads as a constraint enforced nothing, on both the
+        // file path and the runtime one.
+        for bad in ["@1.2.3", "@0.1.x", "@1.x"] {
+            assert!(
+                validate_app(&app_requiring(&format!("\"{bad}\"")))
+                    .iter()
+                    .any(|i| i.code == "E_APP_REQUIRES_MALFORMED"),
+                "{bad} must be rejected by the syntax check"
+            );
+            assert_eq!(
+                pin_codes(&format!("\"{bad}\""), "1.3.0"),
+                ["E_APP_REQUIRES_MALFORMED"],
+                "{bad} must fail closed in the catalogue check too"
+            );
+        }
+        // Fails closed for the same reason as an unparseable pin, so it answers the
+        // same way when the agent is absent, and honours the same gate selector.
+        assert_eq!(
+            unsatisfied_pins(&app_requiring("\"@1.2.3\""), &[], Severity::Error)
+                .iter()
+                .map(|i| i.code)
+                .collect::<Vec<_>>(),
+            ["E_APP_REQUIRES_MALFORMED"]
+        );
+        let agents = vec![installed("ifc-reference-reader", "1.3.0")];
+        assert_eq!(
+            unsatisfied_pins(&app_requiring("\"@1.2.3\""), &agents, Severity::Warning)[0].code,
+            "W_APP_REQUIRES_MALFORMED"
+        );
+        // Reported as a missing *id*, not dressed up as a version mismatch or as an
+        // unreadable pin — the pin is fine, and the operator must be sent to the
+        // part that is actually wrong.
+        let msg =
+            &unsatisfied_pins(&app_requiring("\"@1.2.3\""), &agents, Severity::Error)[0].message;
+        assert!(msg.contains("names no agent"), "{msg}");
+        // A real id in front of the `@` is untouched: this must not become a
+        // check that refuses every pin.
+        assert!(pin_codes("ifc-reference-reader@1.3.x", "1.3.0").is_empty());
     }
 
     #[test]
