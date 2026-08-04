@@ -212,6 +212,19 @@ async fn run(
     // Pre-flight checks need the agent catalogue. `--simulate` stubs every node
     // and contacts no binary, so it skips both checks; a plain `--dry-run` still
     // dispatches read-mode nodes, so it gets the planned-agent check.
+
+    // …but an unreadable `requires:` pin is checked FIRST, outside that exemption
+    // (#349). Simulation is excused from the catalogue checks because it contacts
+    // no binary — a fact about the environment. Whether a constraint can be *read*
+    // is a fact about the file, true on every machine, so the same exemption must
+    // not swallow it. `run` never calls `validate_app`, so without this an app
+    // edited in place under `~/.aware/apps/` simulated clean with a constraint
+    // nothing could parse.
+    if let Some(err) = crate::validate::malformed_requires(&app).first() {
+        eprintln!("error: {}", err.message);
+        return Err(AwareError::Validation(format!("[{}]", err.code)));
+    }
+
     if !simulate {
         let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
 

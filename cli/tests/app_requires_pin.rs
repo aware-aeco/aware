@@ -128,6 +128,58 @@ fn install_warns_but_still_installs() {
 }
 
 #[test]
+fn simulate_refuses_an_unreadable_pin_but_still_ignores_a_version_mismatch() {
+    // The `--simulate` exemption is about the ENVIRONMENT: every node is stubbed
+    // and no binary is contacted, so which version happens to be installed cannot
+    // matter. Whether a constraint can be *read* is not about the environment —
+    // it is a fact about the file, true on every machine — so the same exemption
+    // must not swallow it. `run` never calls `validate_app`, so an app edited in
+    // place under `~/.aware/apps/` simulated clean with a pin nothing could parse.
+    //
+    // The two assertions are the whole point: moving the check out of the
+    // exemption must not drag the version check out with it, or `--simulate`
+    // stops being the way to check a composition before its agents are in place.
+    // Install with a readable pin, then break it in place. That is the realistic
+    // route — `app install` refuses a malformed pin through `validate_app`, so the
+    // only way one reaches `~/.aware/apps/` is an older CLI or an edit afterwards.
+    let (tmp, src) = fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+    aware(&home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+    let installed = home.join("apps/pin-test/pin-test.flo");
+    let body = std::fs::read_to_string(&installed).unwrap();
+    std::fs::write(
+        &installed,
+        body.replace("probe-agent@1.3.x", "probe-agent@not-a-version"),
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "pin-test", "--simulate"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_APP_REQUIRES_MALFORMED"));
+
+    // …while a well-formed but UNSATISFIED pin still simulates clean, because
+    // that one genuinely is about the environment.
+    let (tmp2, src2) = fixture("1.3.0", "9.9.x");
+    let home2 = tmp2.path().join("home");
+    aware(&home2)
+        .args(["app", "install"])
+        .arg(&src2)
+        .assert()
+        .success();
+    aware(&home2)
+        .args(["app", "run", "pin-test", "--simulate"])
+        .assert()
+        .success();
+}
+
+#[test]
 fn a_padded_id_still_resolves_into_the_install_lockfile() {
     // The id normalisation had to reach *every* consumer, and this is the one it
     // initially missed. `write_app_lockfile` turns the id into a directory name,

@@ -216,6 +216,22 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
 /// [`validate_app`], alongside the other pure checks. Whether an installed
 /// agent *satisfies* a well-formed pin is a fact about the environment and
 /// lives in [`unsatisfied_pins`] instead.
+/// The `requires:` syntax check on its own, for callers that do not run
+/// [`validate_app`] — `aware app run` and nested exposed-app dispatch.
+///
+/// Needs no agent catalogue, because it judges the app *file*: an unreadable
+/// pin is unreadable on every machine. That is exactly why it must run **before**
+/// the `--simulate` exemption rather than inside it. Simulation is excused from
+/// the catalogue checks because it stubs every node and contacts no binary —
+/// a statement about the environment. Whether a constraint can be *read* is not
+/// about the environment, so the same exemption must not swallow it; that is the
+/// shape of #349's tenth finding, one exemption further out.
+pub fn malformed_requires(app: &App) -> Vec<ValidationIssue> {
+    let mut out = Vec::new();
+    check_requires_syntax(&app.requires, &mut out);
+    out
+}
+
 fn check_requires_syntax(requires: &[String], out: &mut Vec<ValidationIssue>) {
     for entry in requires {
         let (agent, Some(spec)) = crate::manifest::app::split_requires_entry(entry) else {
