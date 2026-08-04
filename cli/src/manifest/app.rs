@@ -27,6 +27,8 @@ pub struct App {
     /// See `10-core/app-spec.md § exposes-as-agent`.
     #[serde(rename = "exposed-commands", default)]
     pub exposed_commands: Option<BTreeMap<String, ExposedCommand>>,
+    /// Agent version pins, as `<agent-id>[@<pin>]`. Split them with
+    /// [`split_requires_entry`] rather than by hand — see its docs for why.
     #[serde(default)]
     pub requires: Vec<String>,
     /// Author-declared permission union the app needs. When the app is
@@ -60,6 +62,30 @@ pub struct App {
     /// See `10-core/agent-spec.md § Engineering envelope`.
     #[serde(default)]
     pub engineering: Option<EngineeringBinding>,
+}
+
+/// Split a `requires:` entry into its agent id and its version pin, if any,
+/// **normalising the id**.
+///
+/// Every consumer compares that id by exact string equality against ids that
+/// came from agent manifests — the `dispatchable` set, the installed catalogue,
+/// the `agents/<id>/` directory. But a `requires:` entry is free-form text from
+/// a YAML file, so `"probe-agent @1.2.3"` carries an id no manifest will ever
+/// match, and each consumer that splits by hand fails its lookup *silently* and
+/// in its own way: skipped as unreachable in one, omitted from the install
+/// lockfile in another.
+///
+/// #349 produced one finding per spelling and then one per consumer. Splitting
+/// through a single function is what ends that: the id is normalised once, at
+/// the only place an entry is taken apart, so a new consumer cannot forget to
+/// do it and no future spelling reaches a comparison unnormalised.
+pub(crate) fn split_requires_entry(entry: &str) -> (&str, Option<&str>) {
+    match entry.split_once('@') {
+        Some((id, pin)) => (id.trim(), Some(pin)),
+        // No `@` — an unpinned dependency, which is legal. Still normalised:
+        // it reaches the same directory and catalogue lookups.
+        None => (entry.trim(), None),
+    }
 }
 
 /// One command an `exposes-as-agent: true` app surfaces to callers.

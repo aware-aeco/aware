@@ -218,17 +218,9 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
 /// lives in [`unsatisfied_pins`] instead.
 fn check_requires_syntax(requires: &[String], out: &mut Vec<ValidationIssue>) {
     for entry in requires {
-        let Some((agent, spec)) = entry.split_once('@') else {
+        let (agent, Some(spec)) = crate::manifest::app::split_requires_entry(entry) else {
             continue; // no `@` — an unpinned agent id, which is legal
         };
-        // Normalise the id ONCE, here, and use only the normalised value below.
-        // A `requires:` entry is free-form YAML text, but an agent id is a token,
-        // and every consumer compares it by exact string equality. Deciding what
-        // an id *is* at the point it is parsed — rather than checking for bad
-        // shapes further down — is what keeps this check and `unsatisfied_pins`
-        // agreeing about the same entry; the two disagreeing is what let
-        // `"@1.2.3"` through in the first place.
-        let agent = agent.trim();
         if agent.is_empty() {
             // `@1.2.3` — the id was dropped, so the pin parses and the entry reads
             // as a constraint while naming nothing to constrain. Reported here
@@ -515,17 +507,9 @@ pub fn unsatisfied_pins(
     let mut dispatchable = HashSet::new();
     collect_dispatchable_agents(&app.nodes, &mut dispatchable);
     for entry in &app.requires {
-        let Some((agent_id, spec)) = entry.split_once('@') else {
+        let (agent_id, Some(spec)) = crate::manifest::app::split_requires_entry(entry) else {
             continue; // unpinned — nothing to satisfy
         };
-        // Normalise ONCE, before anything compares it. Both lookups below are
-        // exact string equality against ids that came from agent manifests, so a
-        // padded id (`"probe-agent @1.2.3"`) matches neither the catalogue nor
-        // `dispatchable` — and silently takes the unreachable-agent exemption,
-        // leaving a live node running an unenforced pin. Trimming here removes
-        // that class by construction rather than adding another predicate for
-        // each spelling; three findings in a row were one spelling each.
-        let agent_id = agent_id.trim();
         if agent_id.is_empty() {
             // `@1.2.3` names no agent, so the empty id is in no catalogue and in
             // no `dispatchable` set. Falling through would hit the dispatchability
@@ -1744,7 +1728,7 @@ requires: []
             let agents: Vec<_> = app
                 .requires
                 .iter()
-                .filter_map(|e| e.split_once('@').map(|(id, _)| id))
+                .filter_map(|e| crate::manifest::app::split_requires_entry(e).0.into())
                 .filter_map(shipped_agent)
                 .collect();
             let unsatisfied = unsatisfied_pins(&app, &agents, Severity::Error);

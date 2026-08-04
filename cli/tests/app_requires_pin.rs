@@ -128,6 +128,55 @@ fn install_warns_but_still_installs() {
 }
 
 #[test]
+fn a_padded_id_still_resolves_into_the_install_lockfile() {
+    // The id normalisation had to reach *every* consumer, and this is the one it
+    // initially missed. `write_app_lockfile` turns the id into a directory name,
+    // so `"probe-agent @1.3.x"` looked for `agents/probe-agent /` and missed —
+    // silently, because that resolution is best-effort. The result was the worst
+    // of both: the pin accepted and enforced everywhere else, while the agent it
+    // names went absent from the app's `lockfile.yaml`.
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("home");
+    let agent_dir = home.join("agents").join("probe-agent");
+    std::fs::create_dir_all(&agent_dir).unwrap();
+    std::fs::write(
+        agent_dir.join("manifest.yaml"),
+        "agent: probe-agent\nversion: 1.3.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+         transport:\n  cli:\n    binary: aware-probe\ncommands:\n  probe:\n    \
+         lifecycle: single\n    description: x\n    mode: read\n",
+    )
+    .unwrap();
+
+    let src = tmp.path().join("pin-test");
+    std::fs::create_dir_all(&src).unwrap();
+    std::fs::write(
+        src.join("pin-test.flo"),
+        "app: pin-test\nversion: 0.1.0\ndescription: padded but satisfied pin\n\
+         requires:\n  - \"probe-agent @1.3.x\"\nlayout: linear\nnodes:\n  - id: probe\n    \
+         agent: probe-agent\n    command: probe\n",
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+
+    let lockfile = std::fs::read_to_string(home.join("apps/pin-test/lockfile.yaml")).unwrap();
+    assert!(
+        lockfile.contains("probe-agent: 1.3.0"),
+        "the padded id must resolve into resolved-agents; got:\n{lockfile}"
+    );
+    // And the key is the normalised id, not the padded spelling — a lockfile
+    // keyed `\"probe-agent \"` would read as resolved while matching nothing later.
+    assert!(
+        !lockfile.contains("probe-agent : "),
+        "resolved-agents must be keyed by the normalised id; got:\n{lockfile}"
+    );
+}
+
+#[test]
 fn validate_judges_the_file_not_the_machine() {
     // `app validate` deliberately gives the same verdict everywhere: an
     // unreadable pin is a fact about the file and is rejected, while "which
