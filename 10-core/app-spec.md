@@ -944,6 +944,7 @@ Apps **pin agent versions** in `requires:`, as `<agent-id>@<pin>`. An entry with
 | Pin | Example | Admits |
 |---|---|---|
 | Exact | `tekla@0.1.3` | Only that release. Used for reproducibility — a prerelease (`0.1.3-rc.1`) is a *different* release and does **not** satisfy it. |
+| Exact prerelease | `tekla@0.1.3-rc.1` | Only that prerelease. The same rule read the other way: it admits neither the stable `0.1.3` nor another candidate. |
 | Minor (recommended) | `tekla@0.1.x` | Any patch within 0.1. The default, and the right one below 1.0, where the *minor* is the breaking axis. |
 | Major (loose) | `tekla@1.x` | Any minor within major 1. Use when you actively track upstream. |
 | At-least-minor | `tekla@1.2` | Major 1, minor 2 or newer. |
@@ -951,6 +952,8 @@ Apps **pin agent versions** in `requires:`, as `<agent-id>@<pin>`. An entry with
 The wildcard (`x`, `X` or `*`) is only meaningful in the final position: `1.x.3` pins a patch under an unknown minor, which denotes nothing, and is rejected as `E_APP_REQUIRES_MALFORMED`.
 
 Pin components are SemVer numeric identifiers, so a zero-padded one (`01.2.x`) is rejected rather than read as `1.2.x`.
+
+A pin is decomposed as SemVer orders it — `<core>-<prerelease>+<build>` — the same way an installed version is, so the two grammars describe the same version space. Only the exact form may carry a prerelease, since a prerelease names one release and a range names a set: `1.2.x-rc.1` is rejected. Build metadata parses and is then ignored on both sides, per §10, so `tekla@0.1.3+build.1` pins the same release as `tekla@0.1.3`.
 
 The *installed* agent's `version:` is parsed as **strict** SemVer 2.0.0. Build metadata (`1.2.0+deadbeef`) is excluded from a release's identity by §10, so it never changes which pins a version satisfies. A **prerelease** (`1.2.0-rc.1`) does: it satisfies the three range forms, but never the exact form, which exists precisely to pin one release. A version that is *not* valid SemVer (`1.2.3+`, `1.02.3`, `1.2.3-01`) yields no verdict at all — it is reported as uncheckable, never quietly treated as the nearest valid release.
 

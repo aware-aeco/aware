@@ -227,7 +227,8 @@ fn check_requires_syntax(requires: &[String], out: &mut Vec<ValidationIssue>) {
                 format!(
                     "requires entry {entry:?} has an unreadable version pin {spec:?} — \
                      expected {agent}@<major>.x (loose), {agent}@<major>.<minor>.x (default), \
-                     or an exact {agent}@<major>.<minor>.<patch>"
+                     or an exact {agent}@<major>.<minor>.<patch>, which may name a \
+                     prerelease ({agent}@<major>.<minor>.<patch>-rc.1)"
                 ),
             ));
         }
@@ -245,8 +246,10 @@ fn check_requires_syntax(requires: &[String], out: &mut Vec<ValidationIssue>) {
 /// parses rather than being reported as a typo.
 #[derive(Debug, PartialEq, Eq)]
 enum VersionPin {
-    /// `1.2.3` — this exact version.
-    Exact(u64, u64, u64),
+    /// `1.2.3` — this exact version. The trailing field is the prerelease
+    /// suffix, so `1.2.3-rc.1` pins the release candidate and `1.2.3` pins the
+    /// stable one; they are different releases and neither satisfies the other.
+    Exact(u64, u64, u64, Option<String>),
     /// `1.2.x` — any patch within 1.2. The recommended default.
     Minor(u64, u64),
     /// `1.x` — any minor within major 1.
@@ -257,8 +260,35 @@ enum VersionPin {
 
 impl VersionPin {
     /// Parse the part after the `@`. `None` means malformed.
+    ///
+    /// Decomposed in SemVer's own order — `<core>-<prerelease>+<build>` — for
+    /// the same reason [`parse_semver`] is. The two grammars describe the same
+    /// version space and have to agree: splitting the pin on `.` first meant
+    /// `1.2.3-rc.1` arrived as four components and was rejected as malformed,
+    /// while the *installed* parser read it happily. An app could therefore run
+    /// a prerelease but never pin one, and the only way to name it was a range
+    /// like `1.2.x` — which admits every other patch too, losing exactly the
+    /// reproducibility the exact form exists for.
     fn parse(spec: &str) -> Option<Self> {
-        let parts: Vec<&str> = spec.split('.').collect();
+        // §10 keeps build metadata out of a release's identity, so `1.2.3+linux`
+        // pins the same release as `1.2.3`. Split first (a build tag may contain
+        // a hyphen), and validate it rather than ignoring it — a malformed pin
+        // is still malformed.
+        let (rest, build) = match spec.split_once('+') {
+            Some((rest, build)) => (rest, Some(build)),
+            None => (spec, None),
+        };
+        if build.is_some_and(|b| !is_dot_separated_identifiers(b, false)) {
+            return None;
+        }
+        let (core, pre) = match rest.split_once('-') {
+            Some((core, pre)) => (core, Some(pre)),
+            None => (rest, None),
+        };
+        if pre.is_some_and(|p| !is_dot_separated_identifiers(p, true)) {
+            return None;
+        }
+        let parts: Vec<&str> = core.split('.').collect();
         // A wildcard is only meaningful in the LAST position: `1.x.3` pins a
         // patch under an unknown minor, which denotes nothing.
         let wild = |s: &str| matches!(s, "x" | "X" | "*");
@@ -269,13 +299,26 @@ impl VersionPin {
         // rejected rather than silently meaning something else (`01.2.x` is not
         // `1.2.x`) — the same SemVer rule the installed version is held to.
         let num = numeric_identifier;
-        match parts.as_slice() {
-            [maj, min, pat] if wild(pat) => Some(Self::Minor(num(maj)?, num(min)?)),
-            [maj, min, pat] => Some(Self::Exact(num(maj)?, num(min)?, num(pat)?)),
-            [maj, min] if wild(min) => Some(Self::Major(num(maj)?)),
-            [maj, min] => Some(Self::AtLeast(num(maj)?, num(min)?)),
-            _ => None,
+        let ranged = match parts.as_slice() {
+            [maj, min, pat] if wild(pat) => Self::Minor(num(maj)?, num(min)?),
+            [maj, min, pat] => {
+                return Some(Self::Exact(
+                    num(maj)?,
+                    num(min)?,
+                    num(pat)?,
+                    pre.map(str::to_owned),
+                ));
+            }
+            [maj, min] if wild(min) => Self::Major(num(maj)?),
+            [maj, min] => Self::AtLeast(num(maj)?, num(min)?),
+            _ => return None,
+        };
+        // A prerelease names one release, so it is only meaningful on the form
+        // that names one. `1.2.x-rc.1` describes no set of versions at all.
+        if pre.is_some() {
+            return None;
         }
+        Some(ranged)
     }
 
     fn is_satisfied_by(&self, v: &InstalledVersion) -> bool {
@@ -288,7 +331,11 @@ impl VersionPin {
             // release candidate the app never asked for. The range forms below
             // stay deliberately permissive: they are ranges, and an author who
             // wanted the strict reading had the exact form available.
-            Self::Exact(a, b, c) => (maj, min, pat) == (a, b, c) && !v.prerelease,
+            // …and an exact pin that names a prerelease admits that prerelease
+            // and nothing else, which is the same rule read the other way.
+            Self::Exact(a, b, c, ref pre) => {
+                (maj, min, pat) == (a, b, c) && v.prerelease.as_deref() == pre.as_deref()
+            }
             Self::Minor(a, b) => (maj, min) == (a, b),
             Self::Major(a) => maj == a,
             Self::AtLeast(a, b) => maj == a && min >= b,
@@ -299,11 +346,13 @@ impl VersionPin {
 /// An installed agent's `version:`, parsed.
 struct InstalledVersion {
     triple: (u64, u64, u64),
-    /// Whether the version carries a semver prerelease suffix (`-rc.1`).
+    /// The semver prerelease suffix (`rc.1` of `1.2.0-rc.1`), if any. Kept as
+    /// the identifier rather than a flag so an exact pin can name *which*
+    /// prerelease it wants, not merely refuse all of them.
     /// Build metadata (`+deadbeef`) is **not** recorded: semver §10 excludes it
     /// from a release's identity and from precedence, so it cannot change which
     /// pins a version satisfies.
-    prerelease: bool,
+    prerelease: Option<String>,
 }
 
 /// Parse an installed agent's `version:` as **strict** SemVer 2.0.0.
@@ -351,7 +400,7 @@ fn parse_semver(version: &str) -> Option<InstalledVersion> {
             numeric_identifier(min)?,
             numeric_identifier(pat)?,
         ),
-        prerelease: pre.is_some(),
+        prerelease: pre.map(str::to_owned),
     })
 }
 
@@ -449,7 +498,8 @@ pub fn unsatisfied_pins(
                 "app requires {entry:?}, whose version pin {spec:?} is unreadable, so no \
                  installed version can be checked against it — fix the pin to \
                  {agent_id}@<major>.x, {agent_id}@<major>.<minor>.x, or an exact \
-                 {agent_id}@<major>.<minor>.<patch>"
+                 {agent_id}@<major>.<minor>.<patch>, which may name a prerelease \
+                 ({agent_id}@<major>.<minor>.<patch>-rc.1)"
             );
             out.push(match severity {
                 Severity::Error => ValidationIssue::error("E_APP_REQUIRES_MALFORMED", msg),
@@ -1184,6 +1234,56 @@ requires: []
             pin_codes("ifc-reference-reader@1.4.x", "1.3.0-rc.1"),
             ["E_APP_AGENT_PIN_UNSATISFIED"]
         );
+    }
+
+    #[test]
+    fn an_exact_pin_can_name_the_prerelease_it_wants() {
+        // The other half of "a prerelease is a distinct release". Refusing it
+        // for `@1.2.3` is right, but the pin grammar then had no way to ask for
+        // it either: `parse` split on `.` before anything else, so
+        // `1.2.3-rc.1` arrived as four components and was rejected as
+        // MALFORMED — while the installed-version parser read the same string
+        // happily. An app could run a prerelease and never pin one, leaving a
+        // range like `1.2.x` as the only way to name it, which admits every
+        // other patch as well and gives up the reproducibility the exact form
+        // is for.
+        assert!(pin_codes("ifc-reference-reader@1.2.3-rc.1", "1.2.3-rc.1").is_empty());
+        // It admits that prerelease and nothing else — not the stable release,
+        // and not a different candidate.
+        assert_eq!(
+            pin_codes("ifc-reference-reader@1.2.3-rc.1", "1.2.3"),
+            ["E_APP_AGENT_PIN_UNSATISFIED"]
+        );
+        assert_eq!(
+            pin_codes("ifc-reference-reader@1.2.3-rc.1", "1.2.3-rc.2"),
+            ["E_APP_AGENT_PIN_UNSATISFIED"]
+        );
+        // §10 again, now on the pin's side: build metadata is not part of a
+        // release's identity, so it must not change the verdict from either
+        // direction.
+        assert!(pin_codes("ifc-reference-reader@1.2.3+build.1", "1.2.3").is_empty());
+        assert!(pin_codes("ifc-reference-reader@1.2.3-rc.1", "1.2.3-rc.1+deadbeef").is_empty());
+        // A prerelease pin is held to §9 exactly as an installed version is, so
+        // a malformed one is malformed rather than quietly meaning something.
+        for bad in [
+            "1.2.3-",      // empty prerelease
+            "1.2.3-01",    // zero-padded numeric identifier
+            "1.2.3-rc..1", // empty identifier
+            "1.2.3-rc_1",  // illegal character
+            "1.2.3+",      // empty build metadata
+        ] {
+            assert!(
+                VersionPin::parse(bad).is_none(),
+                "{bad:?} must not parse as a pin"
+            );
+        }
+        // A prerelease names ONE release, so it means nothing on a range form.
+        for bad in ["1.2.x-rc.1", "1.x-rc.1", "1.2-rc.1"] {
+            assert!(
+                VersionPin::parse(bad).is_none(),
+                "{bad:?} must not parse — a range cannot carry a prerelease"
+            );
+        }
     }
 
     #[test]
