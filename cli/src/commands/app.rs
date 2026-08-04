@@ -477,7 +477,11 @@ async fn run(
 ///   silence — the same posture as `Orchestrator::synthesize_output`, which
 ///   already reads agent manifests under `--simulate` and falls back quietly
 ///   when one is missing. So `--simulate` stays the way to check a composition
-///   before the agents around it exist.
+///   before the agents around it exist. That silence is deliberately **per
+///   agent**: the manifests are loaded one at a time rather than through
+///   `discover_agents`, which aborts the whole walk on the first unreadable
+///   manifest in the catalogue — so an unrelated broken agent elsewhere under
+///   `~/.aware/agents/` would otherwise switch this check off entirely.
 /// - Scoped to *dispatchable* agents via [`crate::validate::dispatchable_agents`],
 ///   so a frozen-only nested app — which never runs — is not gated, matching
 ///   [`crate::validate::unsatisfied_pins`].
@@ -489,19 +493,29 @@ fn nested_malformed_requires(
     paths: &crate::paths::Paths,
     app: &crate::manifest::app::App,
 ) -> Vec<crate::validate::ValidationIssue> {
-    let Ok(agents) = crate::manifest::loader::discover_agents(paths) else {
-        return Vec::new();
-    };
-    let dispatchable = crate::validate::dispatchable_agents(app);
+    let agents_dir = paths.agents_dir();
     let apps_dir = paths.apps_dir();
+    // Sorted, so which of several broken nested apps gets reported first is the
+    // same on every machine — `dispatchable_agents` returns a set, whose order is
+    // not.
+    let mut agent_ids: Vec<&str> = crate::validate::dispatchable_agents(app)
+        .into_iter()
+        .collect();
+    agent_ids.sort_unstable();
     let mut out = Vec::new();
-    for agent in agents
-        .iter()
-        .filter(|d| dispatchable.contains(d.manifest.agent.as_str()))
-    {
+    for agent_id in agent_ids {
+        // Loaded one at a time on purpose: `discover_agents` walks the whole
+        // catalogue and returns `Err` on the first manifest that won't parse, so
+        // routing this through it would let one unrelated broken agent silence
+        // the check for every app on the machine.
+        let Ok(manifest) =
+            crate::manifest::loader::load_agent(&agents_dir.join(agent_id).join("manifest.yaml"))
+        else {
+            continue; // not installed, or a manifest this run cannot read
+        };
         // Only an app-backed agent has an app — and therefore a `requires:` block
         // — behind it. A cli/rest/mcp/builtin agent has nothing to read here.
-        let Some(app_transport) = agent.manifest.transport.app.as_ref() else {
+        let Some(app_transport) = manifest.transport.app.as_ref() else {
             continue;
         };
         let backing_dir = apps_dir.join(&app_transport.backed_by);
@@ -519,7 +533,7 @@ fn nested_malformed_requires(
                     // neither the app they named nor anything they can see.
                     message: format!(
                         "app-backed agent {:?} (backing app {:?}): {}",
-                        agent.manifest.agent, app_transport.backed_by, issue.message
+                        agent_id, app_transport.backed_by, issue.message
                     ),
                     ..issue
                 }),

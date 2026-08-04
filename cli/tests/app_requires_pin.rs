@@ -567,3 +567,43 @@ fn simulate_still_ignores_a_nested_version_mismatch() {
         .assert()
         .success();
 }
+
+#[test]
+fn one_unreadable_manifest_elsewhere_does_not_switch_the_nested_check_off() {
+    // The first cut of the nested pre-flight read the catalogue through
+    // `discover_agents`, which aborts the whole walk on the first manifest that
+    // won't parse (`loader.rs:48-58`) — so it returned `Err`, the pre-flight
+    // returned "no issues", and ONE unrelated broken agent anywhere under
+    // `~/.aware/agents/` silently disabled the check for every app on the machine.
+    // Fail-open, and far wider than the intended "skip the unloadable thing".
+    //
+    // The manifests are now loaded one per dispatchable agent, so the silence is
+    // scoped to the agent that earned it.
+    let tmp = nested_fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+    let inner_flo = home.join("apps/inner/inner.flo");
+    let body = std::fs::read_to_string(&inner_flo).unwrap();
+    std::fs::write(
+        &inner_flo,
+        body.replace("probe-agent@1.3.x", "probe-agent@not-a-version"),
+    )
+    .unwrap();
+
+    // An installed agent this app never mentions, with a manifest nothing can
+    // parse — the collateral damage that used to take the check down with it.
+    let wreck = home.join("agents").join("unrelated-wreck");
+    std::fs::create_dir_all(&wreck).unwrap();
+    std::fs::write(
+        wreck.join("manifest.yaml"),
+        "agent: [this is not\n  a manifest\n",
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "outer", "--simulate"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_APP_REQUIRES_MALFORMED"))
+        .stderr(predicate::str::contains("inner"));
+}
