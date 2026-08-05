@@ -18,10 +18,14 @@
 //!
 //! A dotfile inside the agent's own directory (`agents/<id>/.aware-install.yaml`) rather than a
 //! central receipts file. It then has no lifecycle of its own: `uninstall`'s `remove_dir_all` takes
-//! it, `rename`/`duplicate`'s directory copy carries it (a copy of a local agent is still local),
-//! and `update`'s atomic staging-then-rename replaces it with the new one. A central index would
-//! need every one of those to remember to update it — which is the class of bug this file exists to
-//! close, not to reintroduce.
+//! it, and `update`'s atomic staging-then-rename replaces it with the new one. There is no
+//! `agent rename` or `agent duplicate` to carry it anywhere — those verbs are APP verbs and copy
+//! `apps/`, never an agent directory. A central index would need every one of those paths to
+//! remember to update it, which is the class of bug this file exists to close, not to reintroduce.
+//!
+//! Writing is BEST-EFFORT: an agent whose marker could not be written reads as "unknown", which
+//! the guard judges conservatively. Failing an otherwise-good install over its metadata would
+//! trade a recoverable ambiguity for a functional break.
 //!
 //! It is dot-prefixed so it cannot be mistaken for agent content: `validate_agent_on_disk` reads
 //! `manifest.yaml`, skills and commands by name, and nothing walks for arbitrary files.
@@ -31,7 +35,7 @@ use std::path::Path;
 use serde::{Deserialize, Serialize};
 
 /// The filename, dot-prefixed so it reads as metadata rather than content.
-const FILE: &str = ".aware-install.yaml";
+pub(crate) const FILE: &str = ".aware-install.yaml";
 
 /// How an installed agent got onto this machine.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]

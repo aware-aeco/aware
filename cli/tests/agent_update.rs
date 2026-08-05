@@ -937,3 +937,156 @@ fn install_records_where_it_came_from() {
         "the folder belongs in it: {marker2}"
     );
 }
+
+/// A registry whose KEY differs from the id its payload installs under — `probe` publishing an
+/// agent whose `manifest.agent` is `probe-agent`. Both supported shapes produce this: a key that
+/// installs under a suffixed id (`allplan-2024` -> `allplan-2024.0`) and an `alias-of` rename.
+fn renaming_registry(dir: &std::path::Path) -> String {
+    let tar = dir.join("renaming.tar.gz");
+    build_probe_tarball(&tar, "2.0.0");
+    let idx_path = dir.join("renaming-index.json");
+    std::fs::write(
+        &idx_path,
+        format!(
+            r#"{{
+    "version": "1.0",
+    "updated-at": "2026-05-16T00:00:00Z",
+    "agents": {{
+        "probe": {{
+            "versions": {{
+                "2.0.0": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent" }}
+            }}
+        }}
+    }},
+    "bundles": {{}}
+}}"#,
+            to_file_url(&tar)
+        ),
+    )
+    .unwrap();
+    to_file_url(&idx_path)
+}
+
+#[test]
+fn update_by_registry_key_cannot_delete_a_local_agent_at_the_resulting_id() {
+    // The route that defeated the FIRST cut of this fix, and the reason it needed a second.
+    //
+    // `update_agent_from_registry` removes TWO directories: `agents/<id>` (the spec you typed) and
+    // `agents/<new_name>` (the id the payload installs under). Guarding only the first left the
+    // whole bug alive whenever they differ — which they do for a suffixed install id and for an
+    // `alias-of` rename, both supported and both already tested elsewhere in this file.
+    //
+    // Reproduced against the real binary before the second fix: `aware agent update probe` replaced
+    // a local fork at `agents/probe-agent/` and exited 0.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = renaming_registry(tmp.path());
+    install_local_fork(&aware, tmp.path(), "0.0.1-my-local-fork");
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe"])
+        .assert()
+        .failure()
+        .code(8)
+        .stderr(predicate::str::contains("installed from a local folder"));
+
+    assert!(
+        installed_manifest(&aware).contains("0.0.1-my-local-fork"),
+        "the fork sits at the id the PAYLOAD installs under, which the first guard never looked at"
+    );
+}
+
+#[test]
+fn an_installed_agent_whose_manifest_will_not_parse_is_not_deleted() {
+    // The unknown-provenance branch reads the installed version to infer whether this came from the
+    // registry. When the manifest will not parse there is no version to read — and treating that as
+    // "nothing installed" deleted the directory, which is the opposite of the rule this guard
+    // exists to enforce. An unparseable manifest is a likelier sign of a hand-edited fork than of a
+    // registry install.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    let dir = aware.join("agents").join("probe-agent");
+    std::fs::create_dir_all(&dir).unwrap();
+    std::fs::write(dir.join("manifest.yaml"), "agent: [not\n  yaml\n").unwrap();
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent"])
+        .assert()
+        .failure()
+        .code(8)
+        .stderr(predicate::str::contains("manifest cannot be read"));
+    assert!(
+        dir.join("manifest.yaml").is_file(),
+        "it must still be there"
+    );
+}
+
+#[test]
+fn a_registry_update_records_that_it_came_from_the_registry() {
+    // The WRITE side of the update path, which nothing pinned: deleting it left the whole suite
+    // green, because the fixture publishes both versions so the unknown-inference branch proceeds
+    // anyway and masks the missing marker. A regression there would silently make every
+    // registry-updated agent read as "unknown" forever.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent"])
+        .assert()
+        .success();
+    std::fs::remove_file(aware.join("agents/probe-agent/.aware-install.yaml")).unwrap();
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent@1.2.0"])
+        .assert()
+        .success();
+
+    let marker =
+        std::fs::read_to_string(aware.join("agents/probe-agent/.aware-install.yaml")).unwrap();
+    assert!(
+        marker.contains("source: registry"),
+        "an update must leave the agent MARKED, not merely replaced: {marker}"
+    );
+    assert!(
+        marker.contains("1.2.0"),
+        "with the version it landed: {marker}"
+    );
+}
+
+#[test]
+fn a_local_install_over_a_copied_registry_agent_does_not_inherit_its_marker() {
+    // `install <dir>` copies the whole directory, so if the source is itself an installed registry
+    // agent it carries a `source: registry` marker. The write that follows is best-effort; if it
+    // ever failed, that inherited marker would survive and say the opposite of the truth about a
+    // LOCAL install — a silent failure in the destructive direction. So it is cleared first.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent"])
+        .assert()
+        .success();
+
+    // Copy the INSTALLED agent (marker and all) into a source folder, then install it elsewhere.
+    let src = tmp.path().join("copied").join("probe-agent");
+    std::fs::create_dir_all(&src).unwrap();
+    for f in ["manifest.yaml", ".aware-install.yaml"] {
+        std::fs::copy(aware.join("agents/probe-agent").join(f), src.join(f)).unwrap();
+    }
+    let aware2 = tmp.path().join("aware2");
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware2)
+        .args(["agent", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+
+    let marker =
+        std::fs::read_to_string(aware2.join("agents/probe-agent/.aware-install.yaml")).unwrap();
+    assert!(
+        marker.contains("source: local"),
+        "installing FROM a folder is a local install, whatever that folder used to be: {marker}"
+    );
+}

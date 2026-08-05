@@ -52,6 +52,12 @@ pub fn install_agent_from_path(
     copy_dir_recursive(src, &dst)?;
     // AFTER the copy: if `src` is itself an installed agent directory it carries a marker of its
     // own, and that one describes where IT came from, not where this copy did.
+    //
+    // Cleared FIRST, because the write is best-effort. If it failed, an inherited
+    // `source: registry` marker would survive and say the opposite of the truth about a
+    // LOCAL install — a silent failure in the destructive direction. Absent degrades to
+    // "unknown", which the guard judges conservatively; wrong does not.
+    let _ = std::fs::remove_file(dst.join(crate::install::provenance::FILE));
     crate::install::provenance::write(&dst, source);
     Ok(agent.agent)
 }

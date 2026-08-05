@@ -23,18 +23,17 @@ pub fn install_agent_from_registry(
     paths: &Paths,
     index: &Index,
 ) -> Result<String, AwareError> {
-    let key = index
-        .resolve_key(id)
-        .ok_or_else(|| AwareError::NotFound(format!("agent {id} not in registry")))?
-        .to_string();
-    let (resolved, _) = index.resolve(&key, version_pin)?;
+    // `id` is used as the key directly, exactly as before — resolving it through
+    // `resolve_key` here would quietly make `install <suffixed-id>` succeed where it has
+    // always errored, which is a behaviour change that does not belong in a bug fix.
+    let (resolved, _) = index.resolve(id, version_pin)?;
     let resolved = resolved.clone();
-    let (_scratch, subdir) = stage_agent_from_registry(&key, version_pin, paths, index)?;
+    let (_scratch, subdir) = stage_agent_from_registry(id, version_pin, paths, index)?;
     install_agent_from_path(
         &subdir,
         paths,
         &crate::install::provenance::InstallSource::Registry {
-            key,
+            key: id.to_string(),
             version: resolved,
         },
     )
@@ -303,6 +302,21 @@ pub fn update_agent_from_registry(
         },
     );
 
+    // #370, second route: this removes TWO directories, and step 0 only judged the
+    // first. `new_name` is the PAYLOAD's id, which differs from the spec you typed in
+    // two supported shapes — a key that installs under a suffixed id (`allplan-2024`
+    // -> `allplan-2024.0`), and an `alias-of` rename. So `update <key>` could delete a
+    // local install sitting at `<new_name>` without the guard ever looking at it.
+    // Verified before fixing: `update probe` replaced a local fork at
+    // `agents/probe-agent/`, exit 0, with the first guard in place.
+    //
+    // Judged here rather than at step 0 because `new_name` is not known until the
+    // payload has been fetched and validated — and still before any fs mutation, which
+    // is the property that matters.
+    if new_name != id {
+        check_update_is_not_destructive(&new_name, force, paths, index)?;
+    }
+
     // Remove the prior install (the folder we updated from) and any stale folder
     // already at the new name — collapses the duplicate-folder bug.
     let prev_dir = agents_dir.join(id);
@@ -343,6 +357,12 @@ fn check_update_is_not_destructive(
     if force {
         return Ok(());
     }
+    // Fenced like every other agent-id join (#365). Read-only and operator-supplied, so
+    // the exposure is small — but this is now the FIRST thing the destructive command
+    // does with an unvalidated id, which is exactly where that guard belongs.
+    if !crate::manifest::loader::is_safe_segment(id) {
+        return Ok(()); // no path-shaped id names an installed agent; resolve_key refuses it
+    }
     let agent_dir = paths.agents_dir().join(id);
     match crate::install::provenance::read(&agent_dir) {
         Some(crate::install::provenance::InstallSource::Local { path }) => {
@@ -357,7 +377,16 @@ fn check_update_is_not_destructive(
                 .ok()
                 .map(|m| m.version);
             let Some(installed) = installed else {
-                return Ok(()); // nothing readable installed — `update` behaves as an install
+                // NOTHING there is fine — `update` then behaves as an install. A directory
+                // that exists but whose manifest will not parse is NOT fine: that is a
+                // likelier sign of a hand-edited fork than of a registry install, and
+                // deleting it would contradict the rule this function exists to enforce.
+                if !agent_dir.exists() {
+                    return Ok(());
+                }
+                return Err(AwareError::Conflict(format!(
+                    "agent {id} is installed but its manifest cannot be read, so `update` cannot tell whether it came from the registry — and replacing it would be unrecoverable if it did not. Fix or remove the manifest, or pass --force to take the registry's version"
+                )));
             };
             let published = index
                 .resolve_key(id)
