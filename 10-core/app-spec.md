@@ -941,7 +941,7 @@ Apps follow semver. Breaking changes (changed inputs/outputs on exposed commands
 
 Apps **pin agent versions** in `requires:`, as `<agent-id>@<pin>`. An entry with no `@` declares a dependency without constraining its version.
 
-Every entry must **name an agent**. An entry that does not — `"@1.2.3"`, which drops the id in front of a pin, or `""` / `"   "`, which names nothing and pins nothing — is rejected as `E_APP_REQUIRES_MALFORMED`, because it reads as a declaration while declaring nothing that can be checked. Surrounding whitespace is trimmed (`" tekla @0.1.x"` is the entry `tekla@0.1.x`), so a padded id resolves rather than silently missing every lookup.
+Every entry must **name an agent**. An entry that does not — `"@1.2.3"`, which drops the id in front of a pin, or `""` / `"   "`, which names nothing and pins nothing — is rejected as `E_APP_REQUIRES_MALFORMED`, because it reads as a declaration while declaring nothing that can be checked. Whitespace around the **id** is trimmed (`" tekla @0.1.x"` is the entry `tekla@0.1.x`), so a padded id resolves rather than silently missing every lookup. The **pin** is read verbatim: `tekla@ 0.1.x` and `tekla@0.1.x ` are `E_APP_REQUIRES_MALFORMED`, reported as an unreadable pin. That asymmetry is deliberate — an id is matched against a catalogue, where a padded lookup fails silently, while a pin is parsed, where it fails loudly and names itself.
 
 | Pin | Example | Admits |
 |---|---|---|

@@ -1325,6 +1325,15 @@ requires: []
         let msg =
             &unsatisfied_pins(&app_requiring("\"@1.2.3\""), &agents, Severity::Error)[0].message;
         assert!(msg.contains("names no agent"), "{msg}");
+        // The file check says so too, and says it the PINNED way — the other half
+        // of the pair asserted in `an_entry_that_names_no_agent_and_pins_nothing_is_refused_too`.
+        // Together they pin the `match spec` arms against each other; either alone
+        // holds if the two messages are collapsed into one.
+        let file_msg = &malformed_requires(&app_requiring("\"@1.2.3\""))[0].message;
+        assert!(
+            file_msg.contains("pins a version but names no agent"),
+            "{file_msg}"
+        );
         // A real id in front of the `@` is untouched: this must not become a
         // check that refuses every pin.
         assert!(pin_codes("ifc-reference-reader@1.3.x", "1.3.0").is_empty());
@@ -1353,6 +1362,14 @@ requires: []
                 .message;
             assert!(msg.contains("names no agent"), "{msg}");
             assert!(!msg.contains("unreadable version pin"), "{msg}");
+            // Discriminating, not merely present: "names no agent" is true of the
+            // pinned message too, so an assertion on that phrase alone would hold
+            // even if the two arms were collapsed back into one — and this entry
+            // would then be told it "pins a version" when it contains no `@`,
+            // sending the operator to a pin that isn't there. The `match spec`
+            // exists for this sentence, so this is what pins it.
+            assert!(!msg.contains("pins a version"), "{msg}");
+            assert!(msg.contains("declares nothing"), "{msg}");
         }
         // Which gate this reaches, stated exactly, because the two halves differ.
         //
