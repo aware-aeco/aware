@@ -35,8 +35,8 @@ version:     0.3.1
 description: Watch Tekla for welded assemblies, upload drawings to TC.
 
 requires:
-  - tekla@2025.x
-  - trimble-connect@2.x
+  - tekla@0.1.x
+  - trimble-connect@0.2.x
 
 layout: linear
 nodes:
@@ -89,8 +89,8 @@ exposed-commands:
 
 # Agent version pins
 requires:
-  - tekla@2025.x                       # minor-pinned (recommended)
-  - trimble-connect@2.x
+  - tekla@0.1.x                        # minor-pinned (recommended)
+  - trimble-connect@0.2.x
   - file@1.0.0                         # exact pin
 
 # Capabilities the app needs (inherited from agents + app-level extras)
@@ -940,6 +940,8 @@ For v0:
 Apps follow semver. Breaking changes (changed inputs/outputs on exposed commands, removed nodes that callers depend on) require a major bump.
 
 Apps **pin agent versions** in `requires:`, as `<agent-id>@<pin>`. An entry with no `@` declares a dependency without constraining its version.
+
+Every entry must **name an agent**. An entry that does not — `"@1.2.3"`, which drops the id in front of a pin, or `""` / `"   "`, which names nothing and pins nothing — is rejected as `E_APP_REQUIRES_MALFORMED`, because it reads as a declaration while declaring nothing that can be checked. Surrounding whitespace is trimmed (`" tekla @0.1.x"` is the entry `tekla@0.1.x`), so a padded id resolves rather than silently missing every lookup.
 
 | Pin | Example | Admits |
 |---|---|---|
