@@ -68,12 +68,12 @@ const MULTI_VERSION_CATALOG: &str = r#"{
   "agents": {
     "probe-agent": {
       "versions": {
-        "1.1.0": { "description": "old", "status": "available", "stateful": false,
-                   "transport": "cli", "command_count": 1, "skills": [] },
-        "1.2.0": { "description": "middle", "status": "available", "stateful": false,
-                   "transport": "cli", "command_count": 1, "skills": [] },
-        "1.3.0": { "description": "newest", "status": "available", "stateful": false,
-                   "transport": "cli", "command_count": 1, "skills": [] }
+        "1.9.0":  { "description": "old", "status": "available", "stateful": false,
+                    "transport": "cli", "command_count": 1, "skills": [] },
+        "1.10.0": { "description": "middle", "status": "available", "stateful": false,
+                    "transport": "cli", "command_count": 1, "skills": [] },
+        "1.10.1": { "description": "newest", "status": "available", "stateful": false,
+                    "transport": "cli", "command_count": 1, "skills": [] }
       }
     }
   }
@@ -104,11 +104,19 @@ fn describe_available_lists_every_version_the_registry_has() {
     let (_tmp, out) = describe_available(MULTI_VERSION_CATALOG, false);
     let text = String::from_utf8_lossy(&out);
 
+    // CHARACTERISATION, not an endorsement: `version:` reports **1.9.0**, because
+    // `CatalogAgent::latest()` takes `next_back()` on a `BTreeMap<String, _>` and
+    // `"1.10.1" < "1.9.0"` as strings. So the two lines below contradict each
+    // other on screen — filed as #371, and this fixture is what surfaced it.
+    //
+    // Asserted rather than avoided so the defect is documented and this test
+    // TRIPS when #371 lands (verified by simulating the fix). Delete this
+    // assertion then, and assert `1.10.1`.
     assert!(
-        text.contains("version:      1.3.0"),
-        "the newest is still the one described: {text}"
+        text.contains("version:      1.9.0"),
+        "#371: `latest()` is lexicographic, so the OLD version is described: {text}"
     );
-    for v in ["1.1.0", "1.2.0", "1.3.0"] {
+    for v in ["1.9.0", "1.10.0", "1.10.1"] {
         assert!(
             text.lines()
                 .any(|l| l.starts_with("versions:") && l.contains(v)),
@@ -136,10 +144,24 @@ fn describe_available_json_carries_the_versions_too() {
         .iter()
         .map(|x| x.as_str().unwrap())
         .collect();
-    assert_eq!(versions, ["1.1.0", "1.2.0", "1.3.0"], "oldest first");
+    // `1.9.0` before `1.10.0` is the whole point. The keys live in a
+    // `BTreeMap<String, _>`, so the obvious `versions.keys()` sorts them
+    // LEXICOGRAPHICALLY and puts `1.10.0` first — and this registry ships
+    // calendar-shaped versions (`tekla@2025.0.1`), where that misordering is
+    // routine rather than exotic. A fixture of 1.1/1.2/1.3 would have passed
+    // either way and proved nothing about the order it asserts.
     assert_eq!(
-        v["data"]["version"], "1.3.0",
-        "…and `version` is still the newest"
+        versions,
+        ["1.9.0", "1.10.0", "1.10.1"],
+        "oldest first by SEMVER"
+    );
+    // CHARACTERISATION (#371), the same one as above: `version` is the
+    // LEXICOGRAPHICALLY greatest key, so it disagrees with the last entry of the
+    // list beside it. Pinned so a consumer reading this envelope is not surprised,
+    // and so the fix announces itself here.
+    assert_eq!(
+        v["data"]["version"], "1.9.0",
+        "#371: `latest()` is lexicographic — this should become 1.10.1"
     );
 }
 

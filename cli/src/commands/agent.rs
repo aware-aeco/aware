@@ -153,6 +153,37 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
     }
 }
 
+/// Every version of a catalogue agent, **oldest first by semver** (#363).
+///
+/// Not simply `versions.keys()`, which is a `BTreeMap<String, _>` and therefore
+/// sorts LEXICOGRAPHICALLY — putting `1.10.0` before `1.9.0`, and `2025.0.10`
+/// before `2025.0.2`. This registry ships calendar-shaped versions
+/// (`tekla@2025.0.1`), so that is not a hypothetical: the list an operator reads
+/// to pick a version would be ordered wrongly at exactly the point they compare
+/// two of them.
+///
+/// A key that is not strict semver keeps its key order and sorts after the ones
+/// that are, rather than being dropped — an unparseable version is still a
+/// version you can ask for, and hiding it would be worse than misplacing it.
+fn versions_oldest_first(agent: &catalog::CatalogAgent) -> Vec<&str> {
+    let mut keys: Vec<&str> = agent.versions.keys().map(String::as_str).collect();
+    keys.sort_by(|a, b| {
+        match (
+            crate::validate::parse_semver(a),
+            crate::validate::parse_semver(b),
+        ) {
+            // Prerelease sorts before its release, per semver §11.
+            (Some(x), Some(y)) => (x.triple, x.prerelease.is_none())
+                .cmp(&(y.triple, y.prerelease.is_none()))
+                .then_with(|| x.prerelease.cmp(&y.prerelease)),
+            (Some(_), None) => std::cmp::Ordering::Less,
+            (None, Some(_)) => std::cmp::Ordering::Greater,
+            (None, None) => a.cmp(b),
+        }
+    });
+    keys
+}
+
 /// `aware agent invoke <agent> <command> [--inputs <json|@file>]` — run a
 /// BUILTIN agent command in-process and print its JSON result (#215).
 ///
@@ -1199,7 +1230,7 @@ fn describe_from_catalog(
             command_count: usize,
             commands: &'a [catalog::CatalogCommand],
             skills: &'a [String],
-            /// EVERY version the registry carries, oldest first — not just the
+            /// EVERY version the registry carries, oldest first by SEMVER — not just the
             /// newest one the fields above describe (#363). Without this there
             /// was no way to discover which older version to ask for when the
             /// newest falls outside an app's `requires:` pin: the information
@@ -1220,7 +1251,7 @@ fn describe_from_catalog(
             command_count: v.command_count,
             commands: &v.commands,
             skills: &v.skills,
-            versions: agent.versions.keys().map(String::as_str).collect(),
+            versions: versions_oldest_first(agent),
         };
         envelope::print_ok("agent describe", data, started).ok();
         return Ok(());
@@ -1233,7 +1264,7 @@ fn describe_from_catalog(
     // an older one to `aware agent update <id>@<version>` (#363). The catalogue
     // has always held them; nothing printed them.
     if agent.versions.len() > 1 {
-        let all: Vec<&str> = agent.versions.keys().map(String::as_str).collect();
+        let all = versions_oldest_first(agent);
         println!(
             "versions:     {}  (update with `aware agent update {agent_id}@<version>`)",
             all.join(", ")
