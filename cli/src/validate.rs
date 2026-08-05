@@ -234,25 +234,40 @@ pub fn malformed_requires(app: &App) -> Vec<ValidationIssue> {
 
 fn check_requires_syntax(requires: &[String], out: &mut Vec<ValidationIssue>) {
     for entry in requires {
-        let (agent, Some(spec)) = crate::manifest::app::split_requires_entry(entry) else {
-            continue; // no `@` — an unpinned agent id, which is legal
-        };
+        let (agent, spec) = crate::manifest::app::split_requires_entry(entry);
+        // "Names no agent" is judged BEFORE the pin, and whether or not one
+        // follows. Two spellings reach here — `"@1.2.3"`, which drops the id in
+        // front of a pin, and `""` / `"   "`, which names nothing and pins
+        // nothing — and reporting them through one rule is what stops a third
+        // appearing: the earlier cut asked about the pin first, so an entry with
+        // no `@` was waved through as "an unpinned agent id" without anyone
+        // checking that it named an agent. Nothing downstream then said so
+        // either: `unsatisfied_pins` has no version to judge, `missing_agents`
+        // walks nodes rather than `requires:`, and `write_app_lockfile`'s
+        // resolution is best-effort, so `agents//manifest.yaml` missed in
+        // silence. [`validate_agent`] already spells "no id" as a trimmed
+        // emptiness.
         if agent.is_empty() {
-            // `@1.2.3` — the id was dropped, so the pin parses and the entry reads
-            // as a constraint while naming nothing to constrain. Reported here
-            // rather than left to the pin branch, whose "expected {agent}@…"
-            // remedy would echo the same missing id back at the author.
-            // [`validate_agent`] already spells "no id" as a trimmed emptiness.
             out.push(ValidationIssue::error(
                 "E_APP_REQUIRES_MALFORMED",
-                format!(
-                    "requires entry {entry:?} pins a version but names no agent — \
-                     an entry is <agent-id>@<pin>, and a pin with no id in front of \
-                     the `@` constrains nothing"
-                ),
+                match spec {
+                    Some(_) => format!(
+                        "requires entry {entry:?} pins a version but names no agent — \
+                         an entry is <agent-id>@<pin>, and a pin with no id in front of \
+                         the `@` constrains nothing"
+                    ),
+                    None => format!(
+                        "requires entry {entry:?} names no agent — an entry is \
+                         <agent-id> (an unpinned dependency) or <agent-id>@<pin>, and \
+                         an entry with neither declares nothing"
+                    ),
+                },
             ));
             continue;
         }
+        let Some(spec) = spec else {
+            continue; // an unpinned agent id, which is legal
+        };
         if VersionPin::parse(spec).is_none() {
             out.push(ValidationIssue::error(
                 "E_APP_REQUIRES_MALFORMED",
@@ -1313,6 +1328,57 @@ requires: []
         // A real id in front of the `@` is untouched: this must not become a
         // check that refuses every pin.
         assert!(pin_codes("ifc-reference-reader@1.3.x", "1.3.0").is_empty());
+    }
+
+    #[test]
+    fn an_entry_that_names_no_agent_and_pins_nothing_is_refused_too() {
+        // The last spelling of "names no agent", and the one the check above
+        // walked past: it asked about the *pin* first, so an entry with no `@`
+        // was accepted as "an unpinned agent id" without anyone asking whether
+        // it named an agent. `requires: ["  "]` therefore validated clean while
+        // `write_app_lockfile` looked for `agents//manifest.yaml`, missed, and —
+        // being best-effort by design — said nothing.
+        for bad in ["", " ", "   ", "\t", "\n"] {
+            let issues = validate_app(&app_requiring(&format!("\"{bad}\"")));
+            assert!(
+                issues.iter().any(|i| i.code == "E_APP_REQUIRES_MALFORMED"),
+                "{bad:?} must be rejected by the syntax check: {issues:?}"
+            );
+            // Sent to the part that is wrong — the missing id, not a pin. There
+            // is no pin here, so a "fix the pin" remedy would be a dead end.
+            let msg = &issues
+                .iter()
+                .find(|i| i.code == "E_APP_REQUIRES_MALFORMED")
+                .unwrap()
+                .message;
+            assert!(msg.contains("names no agent"), "{msg}");
+            assert!(!msg.contains("unreadable version pin"), "{msg}");
+        }
+        // Which gate this reaches, stated exactly, because the two halves differ.
+        //
+        // The *catalogue* gate stays silent: there is no pin, so there is no
+        // version to judge, and inventing a verdict would be the fail-open this
+        // PR spent twenty findings closing, run backwards.
+        assert!(unsatisfied_pins(&app_requiring("\"\""), &[], Severity::Error).is_empty());
+        // The *file* check refuses wherever it runs — and that includes `run` and
+        // nested dispatch, which skip `validate_app` and reach this through
+        // `malformed_requires`. Verified on the real binary: an app installed
+        // clean and then edited in place to `requires: ["   "]` is refused by
+        // `app run --simulate` with exit 3. Same treatment `"@1.2.3"` gets, and
+        // deliberately so: an entry naming no agent is unreadable *as a
+        // declaration*, so no gate can honestly report it satisfied.
+        assert!(
+            malformed_requires(&app_requiring("\"   \""))
+                .iter()
+                .any(|i| i.code == "E_APP_REQUIRES_MALFORMED")
+        );
+        // An unpinned entry that DOES name an agent is still legal, or this
+        // becomes a check that refuses every unpinned dependency.
+        assert!(
+            !validate_app(&app_requiring("\"ifc-reference-reader\""))
+                .iter()
+                .any(|i| i.code == "E_APP_REQUIRES_MALFORMED")
+        );
     }
 
     #[test]
