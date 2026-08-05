@@ -35,8 +35,8 @@ version:     0.3.1
 description: Watch Tekla for welded assemblies, upload drawings to TC.
 
 requires:
-  - tekla@2025.x
-  - trimble-connect@2.x
+  - tekla@0.1.x
+  - trimble-connect@0.2.x
 
 layout: linear
 nodes:
@@ -89,8 +89,8 @@ exposed-commands:
 
 # Agent version pins
 requires:
-  - tekla@2025.x                       # minor-pinned (recommended)
-  - trimble-connect@2.x
+  - tekla@0.1.x                        # minor-pinned (recommended)
+  - trimble-connect@0.2.x
   - file@1.0.0                         # exact pin
 
 # Capabilities the app needs (inherited from agents + app-level extras)
@@ -939,15 +939,49 @@ For v0:
 
 Apps follow semver. Breaking changes (changed inputs/outputs on exposed commands, removed nodes that callers depend on) require a major bump.
 
-Apps **pin agent versions** in `requires:`. Three pinning levels:
+Apps **pin agent versions** in `requires:`, as `<agent-id>@<pin>`. An entry with no `@` declares a dependency without constraining its version.
 
-| Pin | Example | Meaning |
+Every entry must **name an agent**. An entry that does not — `"@1.2.3"`, which drops the id in front of a pin, or `""` / `"   "`, which names nothing and pins nothing — is rejected as `E_APP_REQUIRES_MALFORMED`, because it reads as a declaration while declaring nothing that can be checked. Whitespace around the **id** is trimmed (`" tekla @0.1.x"` is the entry `tekla@0.1.x`), so a padded id resolves rather than silently missing every lookup. The **pin** is read verbatim: `tekla@ 0.1.x` and `tekla@0.1.x ` are `E_APP_REQUIRES_MALFORMED`, reported as an unreadable pin. That asymmetry is deliberate — an id is matched against a catalogue, where a padded lookup fails silently, while a pin is parsed, where it fails loudly and names itself.
+
+| Pin | Example | Admits |
 |---|---|---|
-| Exact | `tekla@2025.0.1` | This specific patch version. Used for reproducibility. |
-| Minor (recommended) | `tekla@2025.x` | Any patch within 2025.0. The default. |
-| Loose | `tekla@2025.0` | Any compatible version newer than 2025.0. Use when you actively track upstream. |
+| Exact | `tekla@0.1.3` | Only that release. Used for reproducibility — a prerelease (`0.1.3-rc.1`) is a *different* release and does **not** satisfy it. |
+| Exact prerelease | `tekla@0.1.3-rc.1` | Only that prerelease. The same rule read the other way: it admits neither the stable `0.1.3` nor another candidate. |
+| Minor (recommended) | `tekla@0.1.x` | Any patch within 0.1. The default, and the right one below 1.0, where the *minor* is the breaking axis. |
+| Major (loose) | `tekla@1.x` | Any minor within major 1. Use when you actively track upstream. |
+| At-least-minor | `tekla@1.2` | Major 1, minor 2 or newer. |
+
+The wildcard (`x`, `X` or `*`) is only meaningful in the final position: `1.x.3` pins a patch under an unknown minor, which denotes nothing, and is rejected as `E_APP_REQUIRES_MALFORMED`.
+
+Pin components are SemVer numeric identifiers, so a zero-padded one (`01.2.x`) is rejected rather than read as `1.2.x`.
+
+A pin is decomposed as SemVer orders it — `<core>-<prerelease>+<build>` — the same way an installed version is, so the two grammars describe the same version space. Only the exact form may carry a prerelease, since a prerelease names one release and a range names a set: `1.2.x-rc.1` is rejected. Build metadata parses and is then ignored on both sides, per §10, so `tekla@0.1.3+build.1` pins the same release as `tekla@0.1.3`.
+
+The *installed* agent's `version:` is parsed as **strict** SemVer 2.0.0. Build metadata (`1.2.0+deadbeef`) is excluded from a release's identity by §10, so it never changes which pins a version satisfies. A **prerelease** (`1.2.0-rc.1`) does: it satisfies the three range forms, but never the exact form, which exists precisely to pin one release. A version that is *not* valid SemVer (`1.2.3+`, `1.02.3`, `1.2.3-01`) yields no verdict at all — it is reported as uncheckable, never quietly treated as the nearest valid release.
 
 The orchestrator resolves pins at install time and locks the resolved versions into `~/.aware/apps/<name>/lockfile.yaml`. Subsequent runs use the lock. `aware app update <name>` re-resolves and updates the lock.
+
+#### When a pin is enforced
+
+A pin is what makes the major-bump-plus-`BREAKING.md` rule in [Agent Spec § Versioning](./agent-spec.md#versioning) enforceable rather than advisory: without a check, a breaking agent change reaches every app silently. The gates are graded like the [agent-installed](#when-the-agent-must-be-installed) ones, and for the same reason — an app may legitimately be installed before the agent version it wants is:
+
+| Surface | An installed agent outside the declared pin |
+|---|---|
+| `aware app install` | **Warning** `W_APP_AGENT_PIN_UNSATISFIED` — installs, naming the pin, the installed version, and both remedies |
+| `aware app compile` | **Error** `E_APP_AGENT_PIN_UNSATISFIED` — refuses, and writes no lock. Unlike a missing agent this is not a "compile now, install later" gap: the agent *is* installed and is the wrong one, so the lock would pin a contract the author never asked for |
+| `aware app run`, `--dry-run` | **Error** `E_APP_AGENT_PIN_UNSATISFIED` — refuses before the run starts. Checked against the live catalogue, so an agent swapped out after the app was compiled is caught too |
+| `aware app run --simulate` | **Allowed** — every node is stubbed and no binary is contacted |
+| `aware app validate` | **Silent about versions** — it judges the app *file*, so it rejects an unreadable pin (`E_APP_REQUIRES_MALFORMED`) but not which version happens to be installed |
+
+An **unreadable** pin is refused at every one of those gates, including at run and at nested dispatch — neither of which validates the app file first, so an app that reached `~/.aware/apps/` with a broken constraint (written by an older CLI, or edited in place) is still stopped. A check that cannot read its constraint never reports "satisfied".
+
+A pin is only enforced for an agent the app can actually **dispatch** to. An agent reachable solely through [frozen nodes](#frozen-nodes) — or named in `requires:` with no node behind it at all — is not version-checked, for the same reason a frozen node needn't have its agent installed: nothing will invoke it. Gating its version would contradict itself, since an *absent* agent is fine there while a merely mismatched one would refuse a static app that had been running. A live `for-each` body counts as dispatching; a frozen node's body does not, because the orchestrator short-circuits it along with the node.
+
+An agent named in `requires:` but **not installed** gets no pin verdict at all: judging a pin needs a version. If a *node* dispatches to it, its absence is reported by `W_/E_APP_AGENT_NOT_INSTALLED` with its own remedy. If nothing dispatches to it, neither gate fires — for the same reason its version is not checked, stated in the paragraph above: nothing will invoke it, so an app that runs today must not start failing on the absence of an agent it never reaches.
+
+A nested [`exposes-as-agent`](#exposes-as-agent) app carries its own `requires:`, and those pins are checked **at dispatch**, when the app transport loads the backing app — not by the calling app's pre-flight, which only sees the caller's own `requires:`. So a caller whose pins are all satisfied is still refused if the app it composes has drifted from its own.
+
+An **unreadable** nested pin is the one part of that check that does not wait for dispatch: the caller's pre-flight reads the `requires:` syntax of every installed app-backed agent it can dispatch to, in every run mode. Dispatch is too late under `--simulate`, which stubs the node and never loads the backing app at all — and readability is a fact about a file rather than about the environment, so the simulation exemption does not cover it one level down any more than it does at the top level. That pre-flight reads the nested app's manifest and nothing else: it does not run the nested app, and a backing app that is absent or unreadable is passed over in silence, so `--simulate` remains the way to check a composition before the apps and agents around it are installed.
 
 ---
 

@@ -13,9 +13,9 @@ description: |
   any new section profiles appear (they may need to be ordered).
 
 requires:
-  - tekla@2026.x
-  - tekla-powerfab@24.2.x
-  - microsoft-365@1.x
+  - tekla@0.1.x
+  - tekla-powerfab@0.1.x
+  - microsoft-365@0.2.x
 
 nodes:
   - id: tekla-watch

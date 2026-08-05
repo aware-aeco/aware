@@ -14,6 +14,7 @@ use crate::envelope;
 use crate::error::AwareError;
 use crate::manifest::loader::discover_apps;
 use crate::render::table::Table;
+use crate::runtime::invoker::{TransportKind, effective_transport};
 
 #[derive(Subcommand, Debug)]
 pub enum AppCommand {
@@ -212,6 +213,31 @@ async fn run(
     // Pre-flight checks need the agent catalogue. `--simulate` stubs every node
     // and contacts no binary, so it skips both checks; a plain `--dry-run` still
     // dispatches read-mode nodes, so it gets the planned-agent check.
+
+    // …but an unreadable `requires:` pin is checked FIRST, outside that exemption
+    // (#349). Simulation is excused from the catalogue checks because it contacts
+    // no binary — a fact about the environment. Whether a constraint can be *read*
+    // is a fact about the file, true on every machine, so the same exemption must
+    // not swallow it. `run` never calls `validate_app`, so without this an app
+    // edited in place under `~/.aware/apps/` simulated clean with a constraint
+    // nothing could parse.
+    if let Some(err) = crate::validate::malformed_requires(&app).first() {
+        eprintln!("error: {}", err.message);
+        return Err(AwareError::Validation(format!("[{}]", err.code)));
+    }
+
+    // …and the same file-level rule one level down. A node may dispatch to an
+    // app-backed agent, and the app behind it carries a `requires:` block of its
+    // own. On a real run `DispatchInvoker::resolve_exposed` reads those pins when
+    // the node dispatches; `--simulate` never reaches it, because the
+    // orchestrator returns a synthesized output before the app transport, so the
+    // backing app is never loaded and an unreadable pin one level down was
+    // reported nowhere at all.
+    if let Some(err) = nested_malformed_requires(&ctx.paths, &app).first() {
+        eprintln!("error: {}", err.message);
+        return Err(AwareError::Validation(format!("[{}]", err.code)));
+    }
+
     if !simulate {
         let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
 
@@ -234,6 +260,23 @@ async fn run(
         // check a composition before its agents are installed.
         if let Some(err) =
             crate::validate::missing_agents(&app, &agents, crate::validate::Severity::Error).first()
+        {
+            eprintln!("error: {}", err.message);
+            return Err(AwareError::Validation(format!("[{}]", err.code)));
+        }
+
+        // Pin check (#349): the app's `requires:` names the agent contract it was
+        // written against. Running against a version outside that pin is how a
+        // breaking agent change used to reach an app silently — the #343
+        // coordinate-frame change is the case that surfaced it. Checked against
+        // the live catalogue rather than the lock, so an agent swapped out after
+        // the app was compiled is caught too. `--simulate` is excluded with the
+        // other catalogue checks above: it stubs every node and dispatches to
+        // nothing, and it is the documented way to check a composition before the
+        // agents around it are in place.
+        if let Some(err) =
+            crate::validate::unsatisfied_pins(&app, &agents, crate::validate::Severity::Error)
+                .first()
         {
             eprintln!("error: {}", err.message);
             return Err(AwareError::Validation(format!("[{}]", err.code)));
@@ -413,6 +456,105 @@ async fn run(
     orch.run_one_shot().await?;
     println!("\u{2713} run complete; trace at {}", log_path.display());
     Ok(())
+}
+
+/// Unreadable `requires:` pins in the apps behind this app's app-backed agents.
+///
+/// Whether a constraint can be *read* is a fact about a file — true on every
+/// machine, needing no binary — so the `--simulate` exemption, which is about
+/// the environment, must not swallow it one level down any more than it does at
+/// the top level. Under a real run the nested pins are read at dispatch by
+/// [`crate::runtime::invoker::DispatchInvoker::resolve_exposed`]; under
+/// `--simulate` the orchestrator short-circuits with a synthesized output before
+/// the app transport, so nothing ever loaded the backing app to look.
+///
+/// Deliberately narrow, and the narrowness is the point:
+///
+/// - It reads a **file**, and only for the `requires:` *syntax*. It does not
+///   dispatch to the nested app, run it, or apply the catalogue checks
+///   (installed / version-satisfied) that `--simulate` is legitimately excused
+///   from because it contacts no binary.
+/// - Anything not installed, not app-backed, or not loadable is skipped in
+///   silence — the same posture as `Orchestrator::synthesize_output`, which
+///   already reads agent manifests under `--simulate` and falls back quietly
+///   when one is missing. So `--simulate` stays the way to check a composition
+///   before the agents around it exist. That silence is deliberately **per
+///   agent**: the manifests are loaded one at a time rather than through
+///   `discover_agents`, which aborts the whole walk on the first unreadable
+///   manifest in the catalogue — so an unrelated broken agent elsewhere under
+///   `~/.aware/agents/` would otherwise switch this check off entirely.
+/// - Scoped to *dispatchable* agents via [`crate::validate::dispatchable_agents`],
+///   so a frozen-only nested app — which never runs — is not gated, matching
+///   [`crate::validate::unsatisfied_pins`].
+/// - Scoped to agents that are app-backed *as dispatch resolves it* — through
+///   [`effective_transport`], not through the raw `transport.app` field. A
+///   manifest declaring both `cli:` and `app:` runs on `cli` and never loads the
+///   backing app, so reading that app's pins here would refuse a run over a file
+///   the node never touches (#215 review).
+///
+/// One level is the whole depth: a nested app may not itself compose another
+/// `exposes-as-agent` app in v0 (`DispatchInvoker::nested_leaf` passes
+/// `app_ctx: None`), so there is no deeper hop to recurse into.
+fn nested_malformed_requires(
+    paths: &crate::paths::Paths,
+    app: &crate::manifest::app::App,
+) -> Vec<crate::validate::ValidationIssue> {
+    let agents_dir = paths.agents_dir();
+    let apps_dir = paths.apps_dir();
+    // Sorted, so which of several broken nested apps gets reported first is the
+    // same on every machine — `dispatchable_agents` returns a set, whose order is
+    // not.
+    let mut agent_ids: Vec<&str> = crate::validate::dispatchable_agents(app)
+        .into_iter()
+        .collect();
+    agent_ids.sort_unstable();
+    let mut out = Vec::new();
+    for agent_id in agent_ids {
+        // Loaded one at a time on purpose: `discover_agents` walks the whole
+        // catalogue and returns `Err` on the first manifest that won't parse, so
+        // routing this through it would let one unrelated broken agent silence
+        // the check for every app on the machine.
+        let Ok(manifest) =
+            crate::manifest::loader::load_agent(&agents_dir.join(agent_id).join("manifest.yaml"))
+        else {
+            continue; // not installed, or a manifest this run cannot read
+        };
+        // Only an app-backed agent has an app — and therefore a `requires:` block
+        // — behind it, and "app-backed" means what DISPATCH means by it. Resolved
+        // through `effective_transport`, the single owner of the priority order
+        // (cli > rest > app > builtin) that `DispatchInvoker::transport_kind`
+        // resolves through, because a manifest carrying both `cli:` and `app:`
+        // runs on `cli` and never loads the backing app: probing `transport.app`
+        // raw would refuse the run over a file the node would never touch. That
+        // rule is #215's, written at the definition of `effective_transport`.
+        let Ok(TransportKind::App) = effective_transport(&manifest, agent_id) else {
+            continue; // dispatches on some other transport, or on none at all
+        };
+        let Some(app_transport) = manifest.transport.app.as_ref() else {
+            continue; // unreachable: `TransportKind::App` is that field being set
+        };
+        let backing_dir = apps_dir.join(&app_transport.backed_by);
+        let Some(manifest_path) = crate::manifest::loader::find_app_manifest(&backing_dir) else {
+            continue;
+        };
+        let Ok(backing) = crate::manifest::loader::load_app(&manifest_path) else {
+            continue;
+        };
+        out.extend(
+            crate::validate::malformed_requires(&backing)
+                .into_iter()
+                .map(|issue| crate::validate::ValidationIssue {
+                    // Name the hop, or the operator reads a pin that appears in
+                    // neither the app they named nor anything they can see.
+                    message: format!(
+                        "app-backed agent {:?} (backing app {:?}): {}",
+                        agent_id, app_transport.backed_by, issue.message
+                    ),
+                    ..issue
+                }),
+        );
+    }
+    out
 }
 
 async fn logs(
@@ -598,6 +740,15 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
         // bare `os error 3`. `aware app run` refuses it.
         missing =
             crate::validate::missing_agents(&src_app, &agents, crate::validate::Severity::Warning);
+        // #349: same posture for an unsatisfied `requires:` pin. Installing an
+        // app before the agent it pins is legitimate, and the matching version
+        // may still be on its way — so name the mismatch here and let `compile`
+        // and `run` be the refusals.
+        missing.extend(crate::validate::unsatisfied_pins(
+            &src_app,
+            &agents,
+            crate::validate::Severity::Warning,
+        ));
     }
     if crate::validate::has_errors(&issues) {
         for i in &issues {

@@ -19,10 +19,10 @@ description: |
 exposes-as-agent: false
 
 requires:
-  - tekla@2025.x
-  - peddinghaus-translator@1.x
-  - trimble-connect@2.x
-  - microsoft-365@1.x
+  - tekla@0.1.x
+  - peddinghaus-translator@0.1.x
+  - trimble-connect@0.2.x
+  - microsoft-365@0.2.x
 
 requires-permissions:
   filesystem:

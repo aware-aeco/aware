@@ -128,7 +128,12 @@ pub(crate) fn write_app_lockfile(
 ) -> Result<(), AwareError> {
     let mut resolved = BTreeMap::new();
     for req in &app.requires {
-        let id = req.split_once('@').map_or(req.as_str(), |(i, _)| i);
+        // Through `split_requires_entry`, not by hand: the id becomes a
+        // directory name here, so a padded entry (`"probe-agent @1.3.x"`) would
+        // look for `agents/probe-agent /` and miss — silently, because this
+        // resolution is best-effort. The pin would then be accepted and enforced
+        // everywhere else while the agent went missing from `lockfile.yaml`.
+        let (id, _) = crate::manifest::app::split_requires_entry(req);
         let agent_manifest = paths.agents_dir().join(id).join("manifest.yaml");
         if let Ok(m) = load_agent(&agent_manifest) {
             resolved.insert(id.to_string(), m.version);

@@ -43,8 +43,8 @@ requires:
   - file@1.x
   - excel@1.x
   - think-node@1.x
-  - tekla@2025.x
-  - slack@1.x
+  - tekla@0.1.x
+  - slack@0.2.x
 
 requires-permissions:
   filesystem:

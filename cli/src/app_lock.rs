@@ -858,6 +858,19 @@ pub fn compile_to_disk(source: &Path, paths: &Paths) -> Result<std::path::PathBu
             err.code, err.message
         )));
     }
+    // #349: refuse to lock an app against an agent whose installed version the
+    // app's `requires:` pin does not admit. Unlike the missing-agent case below
+    // this is not a "compile now, install later" gap — the agent IS installed
+    // and is the wrong one, so the lock would record a version the author never
+    // asked for, and the lock is the approved artifact.
+    if let Some(err) =
+        crate::validate::unsatisfied_pins(&app, &agents, crate::validate::Severity::Error).first()
+    {
+        return Err(AwareError::Validation(format!(
+            "app failed validation: [{}] {}",
+            err.code, err.message
+        )));
+    }
     // #308: warn (don't refuse) when a node's agent isn't installed. Compiling
     // before the agents are installed is supported — the node is locked with its
     // author-declared mode and no resolved schema (#170) — but that gap used to

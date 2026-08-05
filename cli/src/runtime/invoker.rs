@@ -2260,6 +2260,31 @@ impl DispatchInvoker {
                 "app {backed_by} does not expose a command named {command:?}"
             ))
         })?;
+        // #349: the backing app has its own `requires:` pins, and nothing else
+        // checks them. `aware app run` pre-flights the app the operator named;
+        // a nested exposed app is reached only here, so upgrading one of ITS
+        // agents to an incompatible version would otherwise still dispatch —
+        // the same live-catalogue gap the pre-flight exists to close, one level
+        // down. Skipped under `--simulate` for the same reason the pre-flight
+        // skips it: every node is stubbed and no binary is contacted.
+        if !app_ctx.simulate {
+            let agents = crate::manifest::loader::discover_agents_in(&self.agents_dir)?;
+            // The nested app gets the same two catalogue pre-flights `aware app run`
+            // applies to the app the operator named — it never had either, because
+            // the command-level pre-flight only ever sees the top-level app. Missing
+            // agent first: without it, a nested node whose agent isn't installed died
+            // at the transport with a bare `os error 3` naming neither.
+            let missing =
+                crate::validate::missing_agents(&app, &agents, crate::validate::Severity::Error);
+            let pins =
+                crate::validate::unsatisfied_pins(&app, &agents, crate::validate::Severity::Error);
+            if let Some(err) = missing.first().or_else(|| pins.first()) {
+                return Err(AwareError::Validation(format!(
+                    "app-backed agent {agent}: [{}] {}",
+                    err.code, err.message
+                )));
+            }
+        }
         // Coerce + type-check the caller's routed inputs against the declared
         // contract (templating stringifies them; this restores declared types).
         crate::manifest::expose::validate_exposed_inputs(command, exposed, args)?;

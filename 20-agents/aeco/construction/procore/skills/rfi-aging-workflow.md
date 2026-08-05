@@ -12,8 +12,8 @@ description: |
   open > 5 days, group by ball-in-court, post to coordination channel.
 
 requires:
-  - procore@3.x
-  - microsoft-365@1.x
+  - procore@0.1.x
+  - microsoft-365@0.2.x
 
 schedule:        # v0.19
   cron: "0 7 * * MON"
