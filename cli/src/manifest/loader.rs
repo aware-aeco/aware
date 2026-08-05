@@ -166,8 +166,16 @@ pub(crate) fn is_safe_segment(id: &str) -> bool {
         return false;
     }
     let mut components = Path::new(id).components();
-    matches!(components.next(), Some(std::path::Component::Normal(_)))
-        && components.next().is_none()
+    let Some(std::path::Component::Normal(first)) = components.next() else {
+        return false;
+    };
+    // The component must be the WHOLE id, not merely what it normalises to.
+    // `components()` quietly drops a trailing separator and a trailing `/.`, so
+    // `my-app/` and `my-app/.` both read as one `Normal` — and the lockfile write
+    // would then land at `<source-dir>/my-app/.lock`, inside a subdirectory
+    // rather than beside the source. No escape, but not what the author asked
+    // for either, and an id is a name rather than a path however short.
+    components.next().is_none() && first == id
 }
 
 pub(crate) fn find_app_manifest(root: &Path) -> Option<PathBuf> {
@@ -200,6 +208,37 @@ fn read_manifest(manifest_path: &Path) -> Result<String, AwareError> {
     std::fs::read_to_string(manifest_path).map_err(|e| {
         std::io::Error::new(e.kind(), format!("{}: {e}", manifest_path.display())).into()
     })
+}
+
+/// Load the manifest of an installed agent BY ID — the only sanctioned way to
+/// turn an agent id into a manifest.
+///
+/// The id reaches most callers from a file (a node's `agent:`, a manifest's
+/// `backed-by:`) and is joined onto `agents/` to find the manifest, so every one
+/// of those joins needs the [`is_safe_segment`] fence or a path-shaped id reads a
+/// `manifest.yaml` from anywhere on disk. There were seventeen such joins and the
+/// fence was on none of them (#365), which is the argument for one function
+/// rather than seventeen guards: a guard you have to remember is a guard you will
+/// forget. `cli/tests/agent_id_joins_are_fenced.rs` fails the build if a new raw
+/// join of that shape appears — it is a text scan, so it catches the shape
+/// rather than the intent, and a caller determined to build the path another way
+/// (`PathBuf::push`, `format!`) is beyond it.
+///
+/// "Not a plain segment" and "not installed" are the same answer to a caller, so
+/// they share `NotFound` — no caller has to learn a new error.
+pub fn load_agent_by_id(agents_dir: &Path, id: &str) -> Result<Agent, AwareError> {
+    load_agent(&agent_manifest_path(agents_dir, id)?)
+}
+
+/// The fenced path of an installed agent's manifest, for the callers that need
+/// the path rather than the parsed manifest (an existence check, an error
+/// message). Same fence, same `NotFound`; splitting it out keeps those callers
+/// from hand-rolling the join and losing the guard.
+pub fn agent_manifest_path(agents_dir: &Path, id: &str) -> Result<PathBuf, AwareError> {
+    if !is_safe_segment(id) {
+        return Err(AwareError::NotFound(format!("agent {id} is not installed")));
+    }
+    Ok(agents_dir.join(id).join("manifest.yaml"))
 }
 
 pub fn load_agent(manifest_path: &Path) -> Result<Agent, AwareError> {
@@ -282,7 +321,20 @@ mod tests {
             assert!(is_safe_segment(ok), "{ok:?} names a plain segment");
         }
         // Rejected everywhere: `/` is a separator on both platforms.
-        for bad in ["", ".", "..", "a/b", "/abs", "\0", "sub/../.."] {
+        for bad in [
+            "",
+            ".",
+            "..",
+            "a/b",
+            "/abs",
+            "\0",
+            "sub/../..",
+            // A trailing separator normalises AWAY under `components()`, so
+            // these read as one `Normal` and were accepted until the id was
+            // compared against the component itself.
+            "my-app/",
+            "my-app/.",
+        ] {
             assert!(!is_safe_segment(bad), "{bad:?} is not a plain segment");
         }
         // Windows-only, and the cfg is the point rather than a convenience: `\`

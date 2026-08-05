@@ -134,8 +134,10 @@ pub(crate) fn write_app_lockfile(
         // resolution is best-effort. The pin would then be accepted and enforced
         // everywhere else while the agent went missing from `lockfile.yaml`.
         let (id, _) = crate::manifest::app::split_requires_entry(req);
-        let agent_manifest = paths.agents_dir().join(id).join("manifest.yaml");
-        if let Ok(m) = load_agent(&agent_manifest) {
+        // Fenced with every other agent-id join (#365): this id comes from the
+        // app file's `requires:` too, and best-effort resolution would otherwise
+        // read a manifest from outside `agents/` and lock the version it found.
+        if let Ok(m) = crate::manifest::loader::load_agent_by_id(&paths.agents_dir(), id) {
             resolved.insert(id.to_string(), m.version);
         }
     }

@@ -288,8 +288,7 @@ impl CliInvoker {
         agent: &str,
         command: &str,
     ) -> Result<(tokio::process::Child, String), AwareError> {
-        let manifest_path = self.agents_dir.join(agent).join("manifest.yaml");
-        let m = crate::manifest::loader::load_agent(&manifest_path)?;
+        let m = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent)?;
         let cli =
             m.transport.cli.as_ref().ok_or_else(|| {
                 AwareError::Validation(format!("agent {agent} has no cli transport"))
@@ -654,9 +653,7 @@ impl AgentInvoker for RestInvoker {
         // credential is a fail-fast error (not a silent unauthenticated call).
         // Load the manifest once for the auth block + this command's `no-auth`
         // (public-endpoint) flag, which opts a command out of agent auth.
-        if let Ok(m) =
-            crate::manifest::loader::load_agent(&self.agents_dir.join(agent).join("manifest.yaml"))
-        {
+        if let Ok(m) = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent) {
             let is_public = m.commands.get(command).is_some_and(|c| c.no_auth);
             if let Some(auth) = &m.auth
                 && !is_public
@@ -753,8 +750,7 @@ impl AgentInvoker for RestInvoker {
 /// generic `http` agent declares no base (callers pass absolute URLs); a
 /// domain-specific rest agent may set one and pass relative paths.
 pub(crate) fn rest_base_url(agents_dir: &std::path::Path, agent: &str) -> Option<String> {
-    let m =
-        crate::manifest::loader::load_agent(&agents_dir.join(agent).join("manifest.yaml")).ok()?;
+    let m = crate::manifest::loader::load_agent_by_id(agents_dir, agent).ok()?;
     m.transport
         .rest
         .as_ref()?
@@ -766,7 +762,7 @@ pub(crate) fn rest_base_url(agents_dir: &std::path::Path, agent: &str) -> Option
 /// The HTTP method a manifest command maps to (a built OpenAPI operation), if
 /// any. Used to prefer the operation executor over the generic url-based path.
 fn command_method(agents_dir: &std::path::Path, agent: &str, command: &str) -> Option<String> {
-    crate::manifest::loader::load_agent(&agents_dir.join(agent).join("manifest.yaml"))
+    crate::manifest::loader::load_agent_by_id(agents_dir, agent)
         .ok()?
         .commands
         .get(command)?
@@ -837,7 +833,7 @@ fn build_operation_request(
     command: &str,
     args: &Value,
 ) -> Result<RequestParts, AwareError> {
-    let m = crate::manifest::loader::load_agent(&agents_dir.join(agent).join("manifest.yaml"))?;
+    let m = crate::manifest::loader::load_agent_by_id(agents_dir, agent)?;
     let cmd = m.commands.get(command).ok_or_else(|| {
         AwareError::Validation(format!("{agent}/{command}: command not found in manifest"))
     })?;
@@ -2216,21 +2212,12 @@ impl DispatchInvoker {
     fn transport_kind(&self, agent: &str) -> Result<TransportKind, AwareError> {
         // The funnel every dispatch passes through — `invoke_single` and
         // `invoke_stream` both start here, and `CliInvoker`/`RestInvoker` are
-        // only ever constructed after it returns. So this is where the node's
-        // `agent:` id gets fenced: it reaches us from the app FILE, nothing
-        // validates it as a path, and every transport below joins it onto
-        // `agents_dir` again. Fencing further in (in `resolve_exposed`) would
-        // leave the join right here unguarded, and a traversal manifest declaring
-        // `cli:` or `rest:` would never reach that check at all (#349 review).
-        // "Not a plain segment" and "not installed" are the same answer.
-        if !crate::manifest::loader::is_safe_segment(agent) {
-            return Err(AwareError::NotFound(format!(
-                "agent {agent} is not installed"
-            )));
-        }
-        let m = crate::manifest::loader::load_agent(
-            &self.agents_dir.join(agent).join("manifest.yaml"),
-        )?;
+        // only ever constructed after it returns. The node's `agent:` id reaches
+        // us from the app FILE and nothing validates it as a path, so the fence
+        // in `load_agent_by_id` matters most here: every transport below joins
+        // the same id onto `agents_dir` again, and a traversal manifest declaring
+        // `cli:` or `rest:` never touches the app-transport path (#349, #365).
+        let m = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent)?;
         effective_transport(&m, agent)
     }
 
@@ -2243,9 +2230,7 @@ impl DispatchInvoker {
         command: &str,
         args: &mut Value,
     ) -> Result<App, AwareError> {
-        let manifest = crate::manifest::loader::load_agent(
-            &self.agents_dir.join(agent).join("manifest.yaml"),
-        )?;
+        let manifest = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent)?;
         let backed_by = manifest
             .transport
             .app

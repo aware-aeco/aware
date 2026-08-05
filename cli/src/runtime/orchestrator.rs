@@ -677,8 +677,7 @@ impl Orchestrator {
             Some(c) => c,
             None => return false,
         };
-        let manifest_path = self.agents_dir.join(agent_id).join("manifest.yaml");
-        let Ok(m) = crate::manifest::loader::load_agent(&manifest_path) else {
+        let Ok(m) = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent_id) else {
             return false;
         };
         if !m.stateful {
@@ -706,8 +705,7 @@ impl Orchestrator {
         command: &str,
         declared: Option<crate::manifest::agent::Mode>,
     ) -> crate::manifest::agent::Mode {
-        let mp = self.agents_dir.join(agent_id).join("manifest.yaml");
-        match crate::manifest::loader::load_agent(&mp) {
+        match crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent_id) {
             Ok(agent) => agent
                 .commands
                 .get(command)
@@ -730,8 +728,8 @@ impl Orchestrator {
     /// `{ "simulated": true }` marker so the DAG still flows.
     fn synthesize_output(&self, agent_id: &str, command: &str) -> Value {
         let fallback = || serde_json::json!({ "simulated": true });
-        let mp = self.agents_dir.join(agent_id).join("manifest.yaml");
-        let Ok(agent) = crate::manifest::loader::load_agent(&mp) else {
+        let Ok(agent) = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent_id)
+        else {
             return fallback();
         };
         let Some(cmd) = agent.commands.get(command) else {

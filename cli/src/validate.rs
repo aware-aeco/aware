@@ -132,6 +132,35 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
     let mut out = Vec::new();
     if app.app.trim().is_empty() {
         out.push(ValidationIssue::error("E_APP_EMPTY_ID", "app id is empty"));
+    } else if !crate::manifest::loader::is_safe_segment(&app.app) {
+        // #365. An app id becomes a DIRECTORY NAME (`apps/<id>/`) and a FILE NAME
+        // (`<source-dir>/<id>.lock`), and until this check the only judgement on it
+        // was "not empty" — so `app: ../../pwned` compiled clean and wrote its
+        // lockfile two directories above the source, exit 0. Verified against the
+        // real binary before this was written.
+        //
+        // Judged here, in `validate_app`, because it is a fact about the FILE:
+        // the same verdict on every machine, needing no catalogue. That also puts
+        // it ahead of `write_lockfile` on the only path that reaches it
+        // (`compile_to_disk` aborts on any error-severity issue), which is what
+        // actually closes the write.
+        //
+        // The RAW id is judged, not the trimmed one, because the raw id is what
+        // gets joined. `install::rename::validate_app_id` is stricter still —
+        // charset, leading character, Windows reserved names — but it governs ids
+        // being CREATED; applying it to every app already on disk would refuse
+        // ones that are legal today. This asks only the question the escape turns
+        // on: does the id name one plain path segment?
+        out.push(ValidationIssue::error(
+            "E_APP_ID_NOT_A_SEGMENT",
+            format!(
+                "app id {:?} is not a plain name — it becomes a directory under \
+                 `apps/` and the name of the `.lock` beside the source, so it may \
+                 not be `.` or `..`, contain a path separator, or carry a \
+                 drive/UNC prefix (a dot INSIDE a name, as in `my.app`, is fine)",
+                app.app
+            ),
+        ));
     }
     if app.nodes.is_empty() {
         out.push(ValidationIssue::error(
