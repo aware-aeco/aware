@@ -14,6 +14,7 @@ use crate::envelope;
 use crate::error::AwareError;
 use crate::manifest::loader::discover_apps;
 use crate::render::table::Table;
+use crate::runtime::invoker::{TransportKind, effective_transport};
 
 #[derive(Subcommand, Debug)]
 pub enum AppCommand {
@@ -485,6 +486,11 @@ async fn run(
 /// - Scoped to *dispatchable* agents via [`crate::validate::dispatchable_agents`],
 ///   so a frozen-only nested app — which never runs — is not gated, matching
 ///   [`crate::validate::unsatisfied_pins`].
+/// - Scoped to agents that are app-backed *as dispatch resolves it* — through
+///   [`effective_transport`], not through the raw `transport.app` field. A
+///   manifest declaring both `cli:` and `app:` runs on `cli` and never loads the
+///   backing app, so reading that app's pins here would refuse a run over a file
+///   the node never touches (#215 review).
 ///
 /// One level is the whole depth: a nested app may not itself compose another
 /// `exposes-as-agent` app in v0 (`DispatchInvoker::nested_leaf` passes
@@ -514,9 +520,18 @@ fn nested_malformed_requires(
             continue; // not installed, or a manifest this run cannot read
         };
         // Only an app-backed agent has an app — and therefore a `requires:` block
-        // — behind it. A cli/rest/mcp/builtin agent has nothing to read here.
+        // — behind it, and "app-backed" means what DISPATCH means by it. Resolved
+        // through `effective_transport`, the single owner of the priority order
+        // (cli > rest > app > builtin) that `DispatchInvoker::transport_kind`
+        // resolves through, because a manifest carrying both `cli:` and `app:`
+        // runs on `cli` and never loads the backing app: probing `transport.app`
+        // raw would refuse the run over a file the node would never touch. That
+        // rule is #215's, written at the definition of `effective_transport`.
+        let Ok(TransportKind::App) = effective_transport(&manifest, agent_id) else {
+            continue; // dispatches on some other transport, or on none at all
+        };
         let Some(app_transport) = manifest.transport.app.as_ref() else {
-            continue;
+            continue; // unreachable: `TransportKind::App` is that field being set
         };
         let backing_dir = apps_dir.join(&app_transport.backed_by);
         let Some(manifest_path) = crate::manifest::loader::find_app_manifest(&backing_dir) else {

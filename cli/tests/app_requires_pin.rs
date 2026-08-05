@@ -607,3 +607,48 @@ fn one_unreadable_manifest_elsewhere_does_not_switch_the_nested_check_off() {
         .stderr(predicate::str::contains("E_APP_REQUIRES_MALFORMED"))
         .stderr(predicate::str::contains("inner"));
 }
+
+#[test]
+fn a_mixed_transport_agent_is_not_read_as_app_backed_by_the_nested_check() {
+    // `effective_transport` resolves cli > rest > app > builtin and its doc comment
+    // is explicit that every guard asking "which transport is this?" must resolve
+    // through it, "otherwise the guard and dispatch disagree (#215 review)". The
+    // first cut of this pre-flight probed `transport.app` raw instead, so a manifest
+    // carrying BOTH `cli:` and `app:` — which dispatches on `cli` and never loads
+    // the backing app — had that app's `requires:` read anyway, and an unreadable
+    // pin in a file no node would touch refused the run. A false REFUSAL, the
+    // opposite direction from the fail-opens this gate was built to close.
+    let tmp = nested_fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+
+    // Break the backing app's pin: if the check fires at all, it fires on this.
+    let inner_flo = home.join("apps/inner/inner.flo");
+    let body = std::fs::read_to_string(&inner_flo).unwrap();
+    std::fs::write(
+        &inner_flo,
+        body.replace("probe-agent@1.3.x", "probe-agent@not-a-version"),
+    )
+    .unwrap();
+
+    // …and give the synthesized agent a higher-priority transport, so dispatch
+    // resolves it to `cli` and the app behind it is never reached.
+    let synth = home.join("agents/inner/manifest.yaml");
+    let manifest = std::fs::read_to_string(&synth).unwrap();
+    assert!(
+        manifest.contains("backed-by: inner"),
+        "fixture must start app-backed, else this asserts nothing: {manifest}"
+    );
+    std::fs::write(
+        &synth,
+        manifest.replace(
+            "transport:\n",
+            "transport:\n  cli:\n    binary: aware-inner-cli\n",
+        ),
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "outer", "--simulate"])
+        .assert()
+        .success();
+}
