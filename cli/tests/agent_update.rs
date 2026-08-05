@@ -539,3 +539,195 @@ fn update_does_not_hijack_custom_agent_sharing_a_key_prefix() {
         "registry `tekla` must not have been installed over the custom agent"
     );
 }
+
+// ── #363: reaching a version that is not the newest ───────────────────────────
+
+/// A minimal one-command agent tarball declaring `version`, laid out under the
+/// subdir its index entry references. Two of these at different versions are what
+/// makes "reach an OLDER one" testable at all — the tekla fixture above ships a
+/// single version, so it cannot tell "picked the one I asked for" from "picked
+/// the only one there is".
+fn build_probe_tarball(path: &std::path::Path, version: &str) {
+    let tar_gz = std::fs::File::create(path).unwrap();
+    let enc = flate2::write::GzEncoder::new(tar_gz, flate2::Compression::default());
+    let mut tar = tar::Builder::new(enc);
+    let manifest = format!(
+        "agent: probe-agent\nversion: {version}\ndescription: a two-version fixture\n\
+         stateful: false\nlicense: MIT\ntransport:\n  cli:\n    binary: aware-probe\n\
+         commands:\n  probe:\n    lifecycle: single\n    description: x\n    mode: read\n"
+    );
+    let mut h = tar::Header::new_gnu();
+    h.set_size(manifest.len() as u64);
+    h.set_mode(0o644);
+    h.set_cksum();
+    tar.append_data(
+        &mut h,
+        "aware-main/20-agents/probe-agent/manifest.yaml",
+        manifest.as_bytes(),
+    )
+    .unwrap();
+    let gz_writer = tar.into_inner().unwrap();
+    let mut file = gz_writer.finish().unwrap();
+    file.flush().unwrap();
+}
+
+/// A registry carrying `probe-agent` at 1.2.0 and 1.3.0, each from its own
+/// tarball, so which one landed is visible in the installed manifest.
+fn two_version_registry(dir: &std::path::Path) -> String {
+    let old = dir.join("probe-1.2.0.tar.gz");
+    let new = dir.join("probe-1.3.0.tar.gz");
+    build_probe_tarball(&old, "1.2.0");
+    build_probe_tarball(&new, "1.3.0");
+    let idx_path = dir.join("registry-index.json");
+    std::fs::write(
+        &idx_path,
+        format!(
+            r#"{{
+    "version": "1.0",
+    "updated-at": "2026-05-16T00:00:00Z",
+    "agents": {{
+        "probe-agent": {{
+            "versions": {{
+                "1.2.0": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent" }},
+                "1.3.0": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent" }}
+            }}
+        }}
+    }},
+    "bundles": {{}}
+}}"#,
+            to_file_url(&old),
+            to_file_url(&new)
+        ),
+    )
+    .unwrap();
+    to_file_url(&idx_path)
+}
+
+fn installed_version(aware: &std::path::Path) -> String {
+    let text = std::fs::read_to_string(aware.join("agents/probe-agent/manifest.yaml")).unwrap();
+    let m: serde_yaml::Value = serde_yaml::from_str(&text).unwrap();
+    m["version"].as_str().unwrap().to_string()
+}
+
+fn probe(aware: &std::path::Path, idx: &str) -> Command {
+    let mut c = Command::cargo_bin("aware").unwrap();
+    c.env("AWARE_HOME", aware).env("AWARE_REGISTRY", idx);
+    c
+}
+
+#[test]
+fn update_reaches_a_version_that_is_not_the_newest() {
+    // The issue's own repro. There was no single command that moved an installed
+    // agent to a chosen version: `install` refuses while a copy is on disk
+    // ("already installed; use `aware agent update`") and `update` only ever
+    // pulled the newest — the two messages pointing at each other, with
+    // `uninstall` + `install <id>@<v>` the only way through, which destroys a
+    // locally-installed agent before failing.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent"])
+        .assert()
+        .success();
+    assert_eq!(
+        installed_version(&aware),
+        "1.3.0",
+        "install takes the newest"
+    );
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent@1.2.0"])
+        .assert()
+        .success()
+        // The version is echoed, so the operator can see which one landed
+        // without going to look.
+        .stdout(predicate::str::contains("updated probe-agent to 1.2.0"));
+    assert_eq!(
+        installed_version(&aware),
+        "1.2.0",
+        "the DOWNGRADE is the point — this is what needed uninstall-then-install"
+    );
+}
+
+#[test]
+fn update_without_a_version_still_takes_the_newest() {
+    // The control, and the compatibility guarantee: adding the argument must not
+    // change what the bare command has always done. Run from the downgraded
+    // state, so "newest" and "unchanged" are different answers.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent"])
+        .assert()
+        .success();
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent@1.2.0"])
+        .assert()
+        .success();
+    assert_eq!(installed_version(&aware), "1.2.0");
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("updated probe-agent"));
+    assert_eq!(installed_version(&aware), "1.3.0", "bare update = newest");
+}
+
+#[test]
+fn a_version_the_registry_lacks_leaves_the_install_untouched() {
+    // The property that makes this the right verb to carry a version, and the one
+    // the remedy in `validate.rs` now tells operators to rely on: the resolve
+    // happens before any filesystem work, so a miss cannot cost them the agent
+    // they have. `install`+`uninstall` could not offer that.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent"])
+        .assert()
+        .success();
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent@9.9.9"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains(
+            "probe-agent@9.9.9 not in registry",
+        ));
+
+    assert_eq!(
+        installed_version(&aware),
+        "1.3.0",
+        "a failed version-selecting update must leave the existing install alone"
+    );
+}
+
+#[test]
+fn a_spec_missing_one_side_of_the_at_is_refused() {
+    // `@` with nothing on one side is a typo, not a request. Refused with a
+    // message that names the shape, rather than resolving an empty id or an
+    // empty version into a registry lookup.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent"])
+        .assert()
+        .success();
+
+    for bad in ["probe-agent@", "@1.2.0"] {
+        probe(&aware, &idx)
+            .args(["agent", "update", bad])
+            .assert()
+            .failure()
+            .code(3)
+            .stderr(predicate::str::contains("<agent>[@<version>]"));
+    }
+    assert_eq!(installed_version(&aware), "1.3.0", "and nothing moved");
+}

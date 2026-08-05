@@ -47,12 +47,19 @@ pub enum AgentCommand {
     },
     /// Uninstall an agent. (v0.2)
     Uninstall { agent: String },
-    /// Re-pull the latest matching version of an agent. (v0.2)
+    /// Re-pull an agent — the newest version, or a named one. (v0.2)
+    ///
+    /// `aware agent update <id>` pulls the newest release;
+    /// `aware agent update <id>@<version>` reaches a specific one, including an
+    /// OLDER one (#363). The swap is atomic either way: the new copy is fetched
+    /// and validated before the installed one is touched, so naming a version
+    /// the registry does not have leaves the existing install alone.
     ///
     /// Pass `--all` to update every installed agent instead of a single one.
-    /// The `<agent>` argument is required unless `--all` is used.
+    /// The `<agent>` argument is required unless `--all` is used, and `--all`
+    /// takes no version.
     Update {
-        /// Agent id to update. Omit when `--all` is set.
+        /// Agent to update, as `<id>` or `<id>@<version>`. Omit when `--all` is set.
         agent: Option<String>,
         /// Update every installed agent.
         #[arg(long)]
@@ -296,6 +303,11 @@ fn update(ctx: &Context, id: Option<&str>, all: bool) -> Result<(), AwareError> 
         (Some(_), true) => Err(AwareError::Validation(
             "agent update: pass either <agent> or --all, not both".into(),
         )),
+        // No `--all` + version case to guard: the version rides on the `<agent>`
+        // positional, so `--all <id>@<v>` is already refused by the arm above as
+        // "either <agent> or --all". `--all` alone therefore always means "each
+        // installed agent to its newest", which is the only reading that means
+        // anything (#363).
         (None, false) => Err(AwareError::Validation(
             "agent update: missing <agent> (or pass --all)".into(),
         )),
@@ -304,12 +316,38 @@ fn update(ctx: &Context, id: Option<&str>, all: bool) -> Result<(), AwareError> 
     }
 }
 
-fn update_one(ctx: &Context, id: &str) -> Result<(), AwareError> {
+fn update_one(ctx: &Context, spec: &str) -> Result<(), AwareError> {
+    // `<id>[@<version>]` (#363). Before this there was no single command that
+    // reached a version other than the newest: `install` refused while a copy was
+    // on disk ("already installed; use `aware agent update`"), and `update` only
+    // ever pulled the latest — so the two messages pointed at each other and the
+    // only way through was `uninstall` then `install <id>@<version>`, which
+    // DESTROYS a locally-installed agent before failing, because a local agent is
+    // not in the registry to reinstall from.
+    //
+    // Split here rather than in `update_agent_from_registry` so the id it resolves
+    // is always just an id, and an empty one is caught before any lookup.
+    let (id, version_pin) = match spec.split_once('@') {
+        Some((id, v)) if id.trim().is_empty() || v.trim().is_empty() => {
+            return Err(AwareError::Validation(format!(
+                "agent update: {spec:?} is not <agent>[@<version>] — \
+                 both sides of the `@` must be present"
+            )));
+        }
+        Some((id, v)) => (id, Some(v)),
+        None => (spec, None),
+    };
     let index = crate::registry::fetch::fetch_index(&ctx.paths.cache_dir())?;
     // Atomic: resolve + fetch + validate before the on-disk install is touched,
-    // so a failed re-pull leaves the existing agent intact (#174).
-    let installed = crate::install::update_agent_from_registry(id, &ctx.paths, &index)?;
-    println!("\u{2713} updated {installed}");
+    // so a failed re-pull — including a version the registry does not have —
+    // leaves the existing agent intact (#174). That property is exactly why the
+    // version argument went here rather than on `install --force`.
+    let installed =
+        crate::install::update_agent_from_registry(id, version_pin, &ctx.paths, &index)?;
+    match version_pin {
+        Some(v) => println!("\u{2713} updated {installed} to {v}"),
+        None => println!("\u{2713} updated {installed}"),
+    }
     // Full rebuild: an updated agent's command descriptions may have changed, which the
     // presence-based (incremental) path would skip.
     let _ = auto_regenerate_plugins(ctx, true);
@@ -333,7 +371,7 @@ fn update_all(ctx: &Context) -> Result<(), AwareError> {
         // Atomic per-agent update: a failure leaves that agent's existing
         // install untouched rather than deleting it (#174). One transient
         // network error must not cost the user an installed agent.
-        match crate::install::update_agent_from_registry(id, &ctx.paths, &index) {
+        match crate::install::update_agent_from_registry(id, None, &ctx.paths, &index) {
             Ok(spec) => {
                 println!("  \u{2713} {spec}");
                 ok += 1;
@@ -1161,6 +1199,12 @@ fn describe_from_catalog(
             command_count: usize,
             commands: &'a [catalog::CatalogCommand],
             skills: &'a [String],
+            /// EVERY version the registry carries, oldest first — not just the
+            /// newest one the fields above describe (#363). Without this there
+            /// was no way to discover which older version to ask for when the
+            /// newest falls outside an app's `requires:` pin: the information
+            /// was in the catalogue and simply never surfaced.
+            versions: Vec<&'a str>,
         }
         let data = D {
             agent: agent_id,
@@ -1176,6 +1220,7 @@ fn describe_from_catalog(
             command_count: v.command_count,
             commands: &v.commands,
             skills: &v.skills,
+            versions: agent.versions.keys().map(String::as_str).collect(),
         };
         envelope::print_ok("agent describe", data, started).ok();
         return Ok(());
@@ -1183,6 +1228,17 @@ fn describe_from_catalog(
 
     println!("agent:        {agent_id}  (from registry catalog — not installed)");
     println!("version:      {ver}");
+    // Every version, not just the newest — the one thing an operator needs when
+    // an app's `requires:` pin excludes the newest release and they have to name
+    // an older one to `aware agent update <id>@<version>` (#363). The catalogue
+    // has always held them; nothing printed them.
+    if agent.versions.len() > 1 {
+        let all: Vec<&str> = agent.versions.keys().map(String::as_str).collect();
+        println!(
+            "versions:     {}  (update with `aware agent update {agent_id}@<version>`)",
+            all.join(", ")
+        );
+    }
     if let Some(dn) = &agent.display_name {
         println!("display-name: {dn}");
     }

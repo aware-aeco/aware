@@ -199,6 +199,7 @@ fn download_tarball(tarball: &str, dest: &Path) -> Result<(), AwareError> {
 ///    agent is never left installed under two names.
 pub fn update_agent_from_registry(
     id: &str,
+    version_pin: Option<&str>,
     paths: &Paths,
     index: &Index,
 ) -> Result<String, AwareError> {
@@ -209,8 +210,14 @@ pub fn update_agent_from_registry(
         .ok_or_else(|| AwareError::NotFound(format!("agent {id} not in registry")))?
         .to_string();
 
-    // 2. Fetch + extract into scratch (the network-fallible work).
-    let (_scratch, subdir) = stage_agent_from_registry(&key, None, paths, index)?;
+    // 2. Fetch + extract into scratch (the network-fallible work). `version_pin`
+    //    is what makes `update` able to reach a version that is not the newest
+    //    (#363) — the resolve happens inside `stage_agent_from_registry`, before
+    //    any of the fs work below, so naming a version the registry does not have
+    //    fails with the install untouched. That is the whole reason a version
+    //    argument belongs on `update` rather than on `install --force`: the
+    //    atomic resolve-fetch-validate-then-swap already exists here (#174).
+    let (_scratch, subdir) = stage_agent_from_registry(&key, version_pin, paths, index)?;
 
     // 3. Validate the freshly fetched copy before it can replace a good install.
     let manifest_path = subdir.join("manifest.yaml");
@@ -619,7 +626,8 @@ mod tests {
         };
 
         // 3. Updating the OLD install migrates it to the new id.
-        let migrated = update_agent_from_registry("steel-detailer-aisc", &paths, &after).unwrap();
+        let migrated =
+            update_agent_from_registry("steel-detailer-aisc", None, &paths, &after).unwrap();
         assert_eq!(migrated, "steel-detailer-us");
         assert!(
             aware

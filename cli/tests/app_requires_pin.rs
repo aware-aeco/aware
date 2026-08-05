@@ -479,14 +479,14 @@ fn an_uninstalled_pinned_agent_is_reported_as_missing_not_as_a_pin_mismatch() {
 }
 
 #[test]
-fn an_unsatisfied_pin_never_prescribes_an_agent_command() {
-    // Five findings landed on the command this message used to print, ending in a
-    // DESTRUCTIVE one: `uninstall` then reinstall-by-version silently assumes the
-    // registry, so for a locally-installed agent it removed the only copy and then
-    // failed. The validator knows neither the agent's provenance nor what versions
-    // the registry holds, so every sequence it printed was wrong for some real
-    // case. It now states the goal and names no command — a message that
-    // prescribes nothing cannot prescribe something harmful.
+fn an_unsatisfied_pin_prescribes_only_safe_always_available_commands() {
+    // The message went silent after five findings, the last of them DESTRUCTIVE:
+    // `uninstall` then reinstall-by-version assumes the registry, so for a
+    // locally-installed agent it removed the only copy and then failed. #363 gave
+    // `update` a version argument and `describe --available` a version list, so
+    // the remedy comes back — as the two commands that cannot do damage and
+    // cannot be unavailable, with the version left to the operator because a
+    // range pin is not a registry key.
     for pin in ["9.9.3", "9.9.x", "9.9.3+build.1", "9.9.3-rc.1"] {
         let (tmp, src) = fixture("1.3.0", pin);
         let out = aware(&tmp.path().join("home"))
@@ -504,16 +504,29 @@ fn an_unsatisfied_pin_never_prescribes_an_agent_command() {
             stderr.contains(&format!("install a version matching {pin}")),
             "pin {pin} lost the goal: {stderr}"
         );
-        for forbidden in [
-            "aware agent uninstall",
-            "aware agent install",
-            "aware agent update",
-        ] {
+        // The two safe commands are named…
+        assert!(
+            stderr.contains("aware agent describe probe-agent --available"),
+            "pin {pin} lost the discovery step: {stderr}"
+        );
+        assert!(
+            stderr.contains("aware agent update probe-agent@<version>"),
+            "pin {pin} lost the version-selecting update: {stderr}"
+        );
+        // …and the destructive one never is. This is the finding that silenced
+        // the message; it must not return with it.
+        for forbidden in ["aware agent uninstall", "aware agent install"] {
             assert!(
                 !stderr.contains(forbidden),
-                "pin {pin} prescribed `{forbidden}`, which cannot be known to work here: {stderr}"
+                "pin {pin} prescribed `{forbidden}`, which can destroy a local install: {stderr}"
             );
         }
+        // And never the pin as if it were a version — `update foo@9.9.x` goes to a
+        // literal registry lookup and misses.
+        assert!(
+            !stderr.contains(&format!("update probe-agent@{pin}")),
+            "pin {pin} was printed as if it were a version: {stderr}"
+        );
     }
 }
 

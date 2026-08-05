@@ -377,15 +377,21 @@ Engineer audit, section H: *"My insurer (Zurich, in my case) won't underwrite a 
 ## Installation
 
 ```bash
-aware agent install tekla                # latest
-aware agent install tekla@2025.0.1       # exact
-aware agent install tekla@2025.0.x       # minor pinning
-aware agent install aware-aeco           # bundle (installs multiple agents)
-aware agent list                         # show what's installed
-aware agent describe tekla               # manifest summary + skill index
-aware agent skill tekla drawing-identity # print the skill file
+aware agent install tekla                       # latest
+aware agent install tekla@2025.0.1              # an exact version
+aware agent install aware-aeco                  # bundle (installs multiple agents)
+aware agent list                                # show what's installed
+aware agent describe tekla                      # manifest summary + skill index
+aware agent describe tekla --available          # …from the registry, with EVERY version it has
+aware agent update tekla                        # re-pull the newest
+aware agent update tekla@2025.0.1               # move to a named version — including an older one
+aware agent skill tekla drawing-identity        # print the skill file
 aware agent uninstall tekla
 ```
+
+A version after `@` is an **exact registry version**, not a range. `tekla@2025.0.x` is not an install spec: the registry resolves a version by exact key lookup, so a wildcard finds nothing. Ranges are an *app pinning* syntax (`requires:` in [App Spec](./app-spec.md)), which is a different question — "which versions may satisfy this app" rather than "which one do I want on disk". This document advertised the wildcard form for some time and the installer never supported it (#363).
+
+`update <id>@<version>` is how an installed agent reaches a version that is not the newest — `install` refuses while a copy is on disk, and before #363 `update` took no version, so the only route was `uninstall` then `install`, which destroys a locally-installed agent before failing. The swap is **atomic**: the new copy is fetched and validated before the installed one is touched, so naming a version the registry does not have — or an agent that came from a local folder — refuses and leaves what you have alone.
 
 Installation drops the agent folder under `~/.aware/agents/<name>/` and auto-generates host plugins under `~/.<host>/plugins/aware-aeco/` for each agentic CLI present on the machine.
 
