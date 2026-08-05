@@ -119,6 +119,8 @@ skills:
 
 `app`, `version`, `description`, `nodes`, `connections`, `requires`.
 
+The `app` id is a **plain name**, not a path. It becomes a directory (`~/.aware/apps/<id>/`) and a file name (`<source-dir>/<id>.lock`), so it may not contain a path separator, `.` or `..`, or a drive/UNC prefix. `E_APP_ID_NOT_A_SEGMENT` at install, compile and validate. Before that check existed, an id like `../../pwned` compiled clean and wrote its lockfile two directories above the source, reporting success (#365).
+
 ---
 
 ## Nodes

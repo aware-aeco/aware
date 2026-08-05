@@ -165,11 +165,21 @@ async fn invoke_cmd(
     };
 
     let started = Instant::now();
-    let manifest_path = ctx.paths.agents_dir().join(agent_id).join("manifest.yaml");
-    if !manifest_path.is_file() {
-        return Err(AwareError::NotFound(format!(
+    // The path comes from `agent_manifest_path` so the id is fenced before it is
+    // joined (#365). This one is operator input rather than file input, so it
+    // crosses no trust boundary — but it is the same join, and a fence applied at
+    // one function is one nobody has to re-reason about per call site. A rejected
+    // id lands on the same "not installed" message, which names the remedy.
+    let not_installed = || {
+        AwareError::NotFound(format!(
             "agent '{agent_id}' is not installed — `aware agent install {agent_id}` first"
-        )));
+        ))
+    };
+    let manifest_path =
+        crate::manifest::loader::agent_manifest_path(&ctx.paths.agents_dir(), agent_id)
+            .map_err(|_| not_installed())?;
+    if !manifest_path.is_file() {
+        return Err(not_installed());
     }
     let m = crate::manifest::loader::load_agent(&manifest_path)?;
     // Resolve the EFFECTIVE transport through the same priority order workflow

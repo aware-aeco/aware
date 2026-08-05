@@ -202,6 +202,35 @@ fn read_manifest(manifest_path: &Path) -> Result<String, AwareError> {
     })
 }
 
+/// Load the manifest of an installed agent BY ID — the only sanctioned way to
+/// turn an agent id into a manifest.
+///
+/// The id reaches most callers from a file (a node's `agent:`, a manifest's
+/// `backed-by:`) and is joined onto `agents/` to find the manifest, so every one
+/// of those joins needs the [`is_safe_segment`] fence or a path-shaped id reads a
+/// `manifest.yaml` from anywhere on disk. There were seventeen such joins and the
+/// fence was on none of them (#365), which is the argument for one function
+/// rather than seventeen guards: a guard you have to remember is a guard you will
+/// forget. `cli/tests/agent_id_joins_are_fenced.rs` fails the build if a new raw
+/// join appears.
+///
+/// "Not a plain segment" and "not installed" are the same answer to a caller, so
+/// they share `NotFound` — no caller has to learn a new error.
+pub fn load_agent_by_id(agents_dir: &Path, id: &str) -> Result<Agent, AwareError> {
+    load_agent(&agent_manifest_path(agents_dir, id)?)
+}
+
+/// The fenced path of an installed agent's manifest, for the callers that need
+/// the path rather than the parsed manifest (an existence check, an error
+/// message). Same fence, same `NotFound`; splitting it out keeps those callers
+/// from hand-rolling the join and losing the guard.
+pub fn agent_manifest_path(agents_dir: &Path, id: &str) -> Result<PathBuf, AwareError> {
+    if !is_safe_segment(id) {
+        return Err(AwareError::NotFound(format!("agent {id} is not installed")));
+    }
+    Ok(agents_dir.join(id).join("manifest.yaml"))
+}
+
 pub fn load_agent(manifest_path: &Path) -> Result<Agent, AwareError> {
     let text = read_manifest(manifest_path)?;
     let parsed: Agent = serde_yaml::from_str(&text)

@@ -51,8 +51,7 @@ pub async fn download(agents_dir: PathBuf, args: Value) -> Result<Value, AwareEr
 
 /// Resolve the (refreshed, #198) bearer token + trimmed base URL for trimble-connect.
 fn auth_and_base(agents_dir: &Path) -> Result<(String, String), AwareError> {
-    let manifest =
-        crate::manifest::loader::load_agent(&agents_dir.join(TC_AGENT).join("manifest.yaml"))?;
+    let manifest = crate::manifest::loader::load_agent_by_id(agents_dir, TC_AGENT)?;
     let auth = manifest.auth.ok_or_else(|| {
         AwareError::Validation("trimble-connect: manifest has no `auth:` block".into())
     })?;

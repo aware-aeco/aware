@@ -311,8 +311,8 @@ async fn run(
     // treat the node as stateless. Task 14 wires the actual long-running path.
     let is_long_running = app.nodes.iter().any(|n| {
         if let Some(agent_id) = &n.agent {
-            let mp = ctx.paths.agents_dir().join(agent_id).join("manifest.yaml");
-            if let Ok(m) = crate::manifest::loader::load_agent(&mp)
+            let mp = ctx.paths.agents_dir();
+            if let Ok(m) = crate::manifest::loader::load_agent_by_id(&mp, agent_id)
                 && m.stateful
                 && let Some(cmd_name) = &n.command
                 && let Some(c) = m.commands.get(cmd_name)
