@@ -632,7 +632,7 @@ pub fn unsatisfied_pins(
         //     as a registry spec, so removing a local install and reinstalling it
         //     by version cannot work, and leaves the machine with no agent.
         //
-        // #363 closed the middle three: `update <id>@<version>` reaches a named
+        // #363 closed the LAST three: `update <id>@<version>` reaches a named
         // version, `describe <id> --available` lists which exist, and the
         // uninstall-first sequence is retired. So a remedy comes back — but only
         // what the code can actually promise.
@@ -645,7 +645,7 @@ pub fn unsatisfied_pins(
         // records install provenance, so `update` cannot tell a local install
         // from a registry one, and a local fork whose id is ALSO a registry key
         // is silently replaced (verified, filed as #370). That is exactly the
-        // population a pin failure finds, so the message WARNS rather than
+        // population a pin failure squarely includes, so the message WARNS rather than
         // claiming a safety the substrate cannot offer yet. When #370 lands, the
         // warning collapses into a plain refusal from `update` itself.
         let msg = match parse_semver(version) {
@@ -657,7 +657,7 @@ pub fn unsatisfied_pins(
                  `aware agent describe {agent_id} --available`; to move to one: \
                  `aware agent update {agent_id}@<version>` — atomic, so a version the registry \
                  does not have refuses and leaves the installed copy untouched. WARNING: if this \
-                 {agent_id} was installed from a LOCAL folder, update replaces it with the \
+                 {agent_id} was installed from a LOCAL folder, update MAY replace it with the \
                  registry's copy and the local one is gone (#370) — back it up first"
             ),
             None => format!(

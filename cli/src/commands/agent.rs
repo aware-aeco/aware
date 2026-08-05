@@ -165,6 +165,13 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
 /// A key that is not strict semver keeps its key order and sorts after the ones
 /// that are, rather than being dropped — an unparseable version is still a
 /// version you can ask for, and hiding it would be worse than misplacing it.
+///
+/// One limit, stated because "by semver" reads as more than it delivers: a
+/// prerelease sorts before its release (§11), but two prereleases of the SAME
+/// triple are compared as raw strings, so `rc.10` sorts before `rc.2`.
+/// `parse_semver` keeps the suffix as a `String` rather than as identifiers, and
+/// giving it real §11 precedence belongs with #371, which needs a full
+/// comparator for `latest()` and `Index::resolve` anyway.
 fn versions_oldest_first(agent: &catalog::CatalogAgent) -> Vec<&str> {
     let mut keys: Vec<&str> = agent.versions.keys().map(String::as_str).collect();
     keys.sort_by(|a, b| {
