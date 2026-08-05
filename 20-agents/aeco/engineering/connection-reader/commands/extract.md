@@ -71,20 +71,21 @@ opaque geometry, and re-derive it on its own member. Two patterns are recognized
 - **base plate** — a horizontal plate with a grid of vertical anchor bolts passing through it; the
   recipe carries the plate width/depth/thickness, the anchor grid cols×rows, the bolt diameter and
   edge distance (all in millimetres), and `main` is the **column** it sits on.
-- **shear / fin plate** — a vertical plate lapping a beam web with a single vertical line of
-  horizontal bolts; the recipe carries the plate thickness/height/width, the bolt count and pitch,
-  the bolt diameter and edge distance (all in millimetres), and `main` is the **beam** it hangs off.
+- **shear / fin plate** — a vertical plate lapping a beam web, pierced by one or more vertical
+  lines of horizontal bolts; the recipe carries the plate thickness/height/width, the bolt grid
+  (`boltCols` × `boltRows`, with `boltPitch` and, for more than one column, `boltColPitch`), the
+  bolt diameter and edge distance (all in millimetres), and `main` is the **beam** it hangs off.
 
 The bolt orientation is what tells them apart — vertical anchors for a base plate, horizontal bolts
 for a fin plate — so the two never collide. The mesh `parts` are **always** returned as the fallback;
 `recipe` appears **only when recognition is confident**, so an unrecognized connection (a welded
-gusset, a multi-column fin plate, anything unfamiliar) simply comes back as mesh with no `recipe`.
+gusset, an irregular bolt grid, anything unfamiliar) simply comes back as mesh with no `recipe`.
 Recognition grows one supported type at a time.
 
 ## Under the hood
 Drives the bundled **web-ifc** WASM engine: `OpenModel` → tessellate the assembly's plate/bolt/weld
-elements (`StreamAllMeshesWithTypes`) → apply each placed geometry's world transform → scale metres
-to millimetres. web-ifc resolves the real geometry (extrusions, faceted breps, boolean-clip copes,
+elements (`StreamAllMeshesWithTypes`) → apply each placed geometry's world transform → rotate
+web-ifc's Y-up output back into the file's own Z-up frame → scale metres to millimetres. web-ifc resolves the real geometry (extrusions, faceted breps, boolean-clip copes,
 mapped-item bolts); this agent never re-implements a geometry kernel. Deterministic per (file, id).
 
 ## Composition example

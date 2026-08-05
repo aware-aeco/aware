@@ -3,7 +3,9 @@
 recognition fixture. Same shape as make-shearplate.py but the plate is wider (200 along the beam) and carries
 2 columns x 3 rows of bolts (an independent horizontal boltColPitch the single-column recipe couldn't fit).
 
-Dimensions (mm, the recognition target, in the FINAL web-ifc Y-up frame where vertical = axis 1):
+Dimensions (mm, the recognition target). They are frame-independent scalars, so they held
+before aware-aeco/aware#347 and hold after it; `extract` now returns the file's own Z-up frame
+(vertical = axis 2), where it used to return web-ifc's Y-up one (vertical = axis 1):
   fin plate  10 thick x 210 tall x 200 wide          -> plateThickness=10, plateHeight=210, plateWidth=200
   bolts      2 cols (Y = +-40, pitch 80) x 3 rows (Z pitch 70)
              -> boltCols=2, boltRows=3, boltPitch=70, boltColPitch=80, edgeDist = 210/2 - 70 = 35

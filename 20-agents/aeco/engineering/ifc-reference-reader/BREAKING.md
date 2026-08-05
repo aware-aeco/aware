@@ -63,8 +63,10 @@ Read the `frame` field in the output (`"z-up"` for both `probe` and `read-model`
 Do **not** infer it from a version number. The geometry is produced by the `aware-connection-reader`
 bridge binary, which is installed separately (`aware sidecar install connection-reader`) and, when
 stale, only prints a warning and runs anyway — so this manifest can read `1.0.0` while an old bridge
-returns the old frame. Measured 2026-08-01: an app's `requires:` pin is enforced neither at compile
-nor at run time either. The output field is the only trustworthy answer.
+returns the old frame. (An app's `requires:` pin WAS enforced nowhere when this was written; it is
+enforced at compile and run as of aware-aeco/aware#349 — but that constrains the AGENT version, not
+the bridge binary, which is the thing that produces the coordinates.) The output field is the only
+trustworthy answer.
 
 ### Not affected
 
