@@ -9,7 +9,10 @@
 //! There were seventeen of those joins and only two carried a fence. Guarding
 //! them one at a time would leave the next one to be written unfenced, so they
 //! all go through `loader::load_agent_by_id` / `loader::agent_manifest_path`,
-//! which fence once — and this test fails the build if a new raw one appears.
+//! which fence once — and this test fails the build if a new raw one OF THAT
+//! SHAPE appears. It is a text scan, so it catches the shape rather than the
+//! intent: a caller determined to build the path another way (`PathBuf::push`,
+//! `format!`) is beyond it, and beyond any grep.
 //!
 //! It scans the REAL source tree, not a fixture: a guard that checks a sample of
 //! what it guards proves nothing about the rest. And it carries its own

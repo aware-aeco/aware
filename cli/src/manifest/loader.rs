@@ -166,8 +166,16 @@ pub(crate) fn is_safe_segment(id: &str) -> bool {
         return false;
     }
     let mut components = Path::new(id).components();
-    matches!(components.next(), Some(std::path::Component::Normal(_)))
-        && components.next().is_none()
+    let Some(std::path::Component::Normal(first)) = components.next() else {
+        return false;
+    };
+    // The component must be the WHOLE id, not merely what it normalises to.
+    // `components()` quietly drops a trailing separator and a trailing `/.`, so
+    // `my-app/` and `my-app/.` both read as one `Normal` — and the lockfile write
+    // would then land at `<source-dir>/my-app/.lock`, inside a subdirectory
+    // rather than beside the source. No escape, but not what the author asked
+    // for either, and an id is a name rather than a path however short.
+    components.next().is_none() && first == id
 }
 
 pub(crate) fn find_app_manifest(root: &Path) -> Option<PathBuf> {
@@ -313,7 +321,20 @@ mod tests {
             assert!(is_safe_segment(ok), "{ok:?} names a plain segment");
         }
         // Rejected everywhere: `/` is a separator on both platforms.
-        for bad in ["", ".", "..", "a/b", "/abs", "\0", "sub/../.."] {
+        for bad in [
+            "",
+            ".",
+            "..",
+            "a/b",
+            "/abs",
+            "\0",
+            "sub/../..",
+            // A trailing separator normalises AWAY under `components()`, so
+            // these read as one `Normal` and were accepted until the id was
+            // compared against the component itself.
+            "my-app/",
+            "my-app/.",
+        ] {
             assert!(!is_safe_segment(bad), "{bad:?} is not a plain segment");
         }
         // Windows-only, and the cfg is the point rather than a convenience: `\`
