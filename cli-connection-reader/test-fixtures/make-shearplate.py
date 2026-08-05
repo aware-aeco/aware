@@ -4,7 +4,9 @@ IfcElementAssembly aggregating an IfcBeam stub + an IfcColumn support stub + a V
 + 3 horizontal IfcMechanicalFastener bolts in a single vertical line. Geometry is IfcExtrudedAreaSolid so
 web-ifc tessellates it; placed at a site offset to exercise the world->local re-anchor. Recognition fixture.
 
-Dimensions (mm, the recognition target, in the FINAL web-ifc Y-up frame where vertical = axis 1):
+Dimensions (mm, the recognition target). They are frame-independent scalars, so they held
+before aware-aeco/aware#347 and hold after it; `extract` now returns the file's own Z-up frame
+(vertical = axis 2), where it used to return web-ifc's Y-up one (vertical = axis 1):
   fin plate   10 thick x 210 tall x 120 wide  -> plateThickness=10, plateHeight=210, plateWidth=120
   bolts       3 x M20 in one vertical line, pitch 70  -> boltCols=1, boltRows=3, boltPitch=70
   edge dist   min(210/2 - 70, 120/2 - 0) = 35

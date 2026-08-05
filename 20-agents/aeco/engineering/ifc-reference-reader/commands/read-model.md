@@ -157,7 +157,8 @@ consumer to hit it added a compensating rotation of its own.
 geometry is produced by the `aware-connection-reader` bridge binary, installed separately from the
 agent (`aware sidecar install connection-reader`); a stale bridge only prints a warning and runs
 anyway, so this manifest can read `1.0.0` while an old bridge returns Y-up. Measured 2026-08-01: an
-app's `requires:` pin is enforced neither at compile nor at run time either. The `frame` field is
+app's `requires:` pin now IS enforced at compile and run (aware-aeco/aware#349) — but it constrains
+the AGENT version, not the separately-installed bridge that produces the coordinates. The `frame` field is
 produced by the binary that produced the vertices, which is why it is the one to trust.
 
 Handing these meshes to `viewer-3d.render`, declare the frame you are in: `meta.up: "z"`. The scene

@@ -1,8 +1,33 @@
-// Unit tests for the pure base-plate recognition (recognize.mjs). Synthetic parts in web-ifc's Y-up
-// frame (vertical = axis 1). `node --test`.
+// Unit tests for the pure base-plate recognition (recognize.mjs). `node --test`.
+//
+// Fixtures are authored in web-ifc's Y-UP frame (vertical = axis 1), because that is the frame
+// web-ifc actually emits and the one these shapes read naturally in — a base plate is "thin in Y",
+// a fin-plate bolt runs along X. They are rotated to the file's Z-up frame at the boundary below,
+// exactly as `tessellate` now does (#347), so the recognizer sees here what it sees in production.
+//
+// Converting at the seam rather than re-authoring every fixture is deliberate: a rigid rotation
+// preserves every length, so each test's dimensional assertions stay true and stay checkable
+// against the drawing they came from. Re-deriving forty fixtures' coordinates by hand would have
+// risked changing what a test measures while claiming only to change its frame.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { recognizeBasePlate, recognizeShearPlate, convexHull2d, minAreaRectAngle, rotateAboutVertical } from './recognize.mjs';
+import {
+  recognizeBasePlate as recognizeBasePlateZUp,
+  recognizeShearPlate as recognizeShearPlateZUp,
+  convexHull2d, minAreaRectAngle, rotateAboutVertical,
+} from './recognize.mjs';
+
+// web-ifc's Y-up -> the file's Z-up: `(x, y, z) -> (x, -z, y)`. The same mapping `tessellate`
+// applies, spelled once.
+const zUp = (parts) => parts.map((p) => {
+  const out = [];
+  for (let i = 0; i + 2 < p.positions.length; i += 3) {
+    out.push(p.positions[i], -p.positions[i + 2], p.positions[i + 1]);
+  }
+  return { ...p, positions: out };
+});
+const recognizeBasePlate = (parts, ids) => recognizeBasePlateZUp(zUp(parts), ids);
+const recognizeShearPlate = (parts, ids) => recognizeShearPlateZUp(zUp(parts), ids);
 
 // An axis-aligned box part centred at (cx,cy,cz) with extents (ex,ey,ez). Only positions matter to
 // recognition (it AABBs them); indices are irrelevant here.

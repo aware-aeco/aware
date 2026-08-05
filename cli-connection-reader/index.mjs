@@ -147,7 +147,9 @@ function assemblyLabel(asm) {
   return name || tag || strOf(asm.ObjectType) || 'Connection';
 }
 
-function listConnections(api, modelID) {
+// Exported so `extract.test.mjs` can drive the real pipeline against the in-repo fixtures — the
+// frame these two produce is not observable from `recognize.mjs` alone (#347).
+export function listConnections(api, modelID) {
   const kids = assemblyChildren(api, modelID);
   const asmIds = api.GetLineIDsWithType(modelID, WebIFC.IFCELEMENTASSEMBLY);
   const out = [];
@@ -186,16 +188,29 @@ function tessellate(api, modelID, wantById) {
       const geom = api.GetGeometry(modelID, pg.geometryExpressID);
       const verts = api.GetVertexArray(geom.GetVertexData(), geom.GetVertexDataSize()); // [x,y,z,nx,ny,nz]*
       const idx = api.GetIndexArray(geom.GetIndexData(), geom.GetIndexDataSize());
-      const m = pg.flatTransformation; // 4x4 column-major, metres
+      const m = pg.flatTransformation; // 4x4 column-major, metres, in web-ifc's Y-up frame
       const base = positions.length / 3;
       for (let v = 0; v < verts.length; v += 6) {
         const x = verts[v], y = verts[v + 1], z = verts[v + 2];
+        // Placement transform and the Y-up -> Z-up rotation in one step, identical to
+        // `readModel` below — the inverse of `toWebIfcYUp`, folded into the matrix
+        // multiply so the hot loop allocates nothing.
+        //
+        // #347: `extract` used to hand web-ifc's frame straight through while
+        // `read-model` and `probe` answered in the file's own Z-up one. One binary,
+        // two frames, and the difference lived only in prose — so a consumer that
+        // imported a recipe from one command and a mesh from the other got a
+        // connection lying on its side. `ifc.write` has no `meta.up` knob either, so
+        // `extract` -> `ifc.write` had ALWAYS written it sideways; that composition is
+        // correct for free now.
         positions.push(
           (m[0] * x + m[4] * y + m[8] * z + m[12]) * M_TO_MM,
+          -(m[2] * x + m[6] * y + m[10] * z + m[14]) * M_TO_MM,
           (m[1] * x + m[5] * y + m[9] * z + m[13]) * M_TO_MM,
-          (m[2] * x + m[6] * y + m[10] * z + m[14]) * M_TO_MM,
         );
       }
+      // Winding survives untouched: the rotation has determinant +1, so it cannot turn
+      // a front face into a back face. (A mirror would, and would need an index flip.)
       for (let k = 0; k < idx.length; k++) indices.push(base + idx[k]);
       geom.delete();
     }
@@ -848,11 +863,15 @@ export const toWebIfcYUp = ([x, y, z]) => [x, z, -y];
  * against a real `aware app run`: (a) the bridge binary is installed separately from the agent
  * (`aware sidecar install connection-reader`) and a stale one only prints a warning and runs anyway
  * (cli/src/runtime/invoker.rs), so an agent manifest saying 1.0.0 can still be served by a bridge
- * that returns the old frame; and (b) an app's `requires:` pin is not enforced at compile OR run
- * time — `ifc-reference-reader@9.9.x` compiled and ran clean against an installed 1.0.0. So the
- * only trustworthy answer is the one the producing binary puts in its own payload.
+ * that returns the old frame; and (b) even now that an app's `requires:` pin IS enforced at compile
+ * and run (aware-aeco/aware#349 — it was enforced nowhere when this was written), the pin constrains
+ * the AGENT version, and the bridge binary is installed separately from the agent. So the only
+ * trustworthy answer is still the one the producing binary puts in its own payload.
  */
 export const FILE_Z_UP = 'z-up'; // IFC's own world frame: X/Y in plan, Z up
+// Retained though no command emits it any more: it is the documented value of the `frame` field a
+// PRE-#347 bridge still sends, and a consumer comparing against it needs the spelling to be stated
+// somewhere authoritative rather than guessed. Deleting it would not remove the value from the wire.
 export const WEB_IFC_Y_UP = 'y-up'; // web-ifc's renderer frame: X/Z in plan, Y up
 
 /**
@@ -1181,7 +1200,7 @@ function selectExpressIds(api, modelID, opts, storeys) {
   };
 }
 
-function extractConnection(api, modelID, guid) {
+export function extractConnection(api, modelID, guid) {
   const kids = assemblyChildren(api, modelID);
   const asmIds = api.GetLineIDsWithType(modelID, WebIFC.IFCELEMENTASSEMBLY);
   for (let i = 0; i < asmIds.size(); i++) {
@@ -1203,7 +1222,11 @@ function extractConnection(api, modelID, guid) {
         id: guid,
         name: assemblyLabel(asm),
         type: strOf(asm.ObjectType) || null,
-        frame: WEB_IFC_Y_UP,
+        // The file's own frame since #347 — the same one `read-model` and `probe`
+        // report. The field stays (a consumer must be able to CHECK the frame rather
+        // than infer it from a version number, which was #343's point); what changed
+        // is that all three commands now answer the same.
+        frame: FILE_Z_UP,
         members,
         parts,
         ...(recipe ? { recipe } : {}),
