@@ -12,7 +12,16 @@ use crate::validate::{Severity, has_errors, validate_agent_on_disk, validate_app
 /// Install an agent folder. `src` must contain `manifest.yaml`.
 /// Destination is `<paths.agents_dir>/<agent-id>/`. Existing agents are
 /// rejected (use `aware agent update` to refresh).
-pub fn install_agent_from_path(src: &Path, paths: &Paths) -> Result<String, AwareError> {
+///
+/// `source` is recorded beside the agent (#370). This function is the funnel for BOTH install
+/// routes — the registry path stages into a scratch dir and hands it here — so it cannot tell
+/// from `src` alone whether it is looking at a user's folder or a downloaded payload. Only the
+/// caller knows, so only the caller can say.
+pub fn install_agent_from_path(
+    src: &Path,
+    paths: &Paths,
+    source: &crate::install::provenance::InstallSource,
+) -> Result<String, AwareError> {
     let manifest_path = src.join("manifest.yaml");
     if !manifest_path.is_file() {
         return Err(AwareError::Validation(format!(
@@ -41,6 +50,9 @@ pub fn install_agent_from_path(src: &Path, paths: &Paths) -> Result<String, Awar
     }
     std::fs::create_dir_all(paths.agents_dir())?;
     copy_dir_recursive(src, &dst)?;
+    // AFTER the copy: if `src` is itself an installed agent directory it carries a marker of its
+    // own, and that one describes where IT came from, not where this copy did.
+    crate::install::provenance::write(&dst, source);
     Ok(agent.agent)
 }
 
@@ -193,7 +205,14 @@ mod tests {
             aware_home: tmp.path().to_path_buf(),
         };
         let src = repo_agent_path("20-agents/aeco/engineering/tekla");
-        let installed = install_agent_from_path(&src, &paths).unwrap();
+        let installed = install_agent_from_path(
+            &src,
+            &paths,
+            &crate::install::provenance::InstallSource::Local {
+                path: "fixture".into(),
+            },
+        )
+        .unwrap();
         assert_eq!(installed, "tekla");
         assert!(tmp.path().join("agents/tekla/manifest.yaml").is_file());
         assert!(
@@ -210,8 +229,22 @@ mod tests {
             aware_home: tmp.path().to_path_buf(),
         };
         let src = repo_agent_path("20-agents/aeco/engineering/tekla");
-        install_agent_from_path(&src, &paths).unwrap();
-        let err = install_agent_from_path(&src, &paths).unwrap_err();
+        install_agent_from_path(
+            &src,
+            &paths,
+            &crate::install::provenance::InstallSource::Local {
+                path: "fixture".into(),
+            },
+        )
+        .unwrap();
+        let err = install_agent_from_path(
+            &src,
+            &paths,
+            &crate::install::provenance::InstallSource::Local {
+                path: "fixture".into(),
+            },
+        )
+        .unwrap_err();
         assert!(matches!(err, AwareError::Conflict(_)));
     }
 

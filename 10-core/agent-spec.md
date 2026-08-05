@@ -395,6 +395,13 @@ A version after `@` is an **exact registry version**, not a range. `tekla@2025.0
 
 Installation drops the agent folder under `~/.aware/agents/<name>/` and auto-generates host plugins under `~/.<host>/plugins/aware-aeco/` for each agentic CLI present on the machine.
 
+### Where an agent came from is recorded
+
+Installation also writes `~/.aware/agents/<name>/.aware-install.yaml`, saying whether the agent came from the **registry** (with the key and version resolved) or from a **local folder** (with the path). It is metadata about the install, not about the agent — distinct from the manifest's own `provenance:` block, which records how the agent was *authored*.
+
+`aware agent update` reads it and **refuses to replace a locally-installed agent**, because the registry's copy would overwrite work that exists nowhere else. Pass `--force` to take the registry's version anyway. An install that predates the marker has no record, so `update` infers instead: if the installed version is one the registry publishes it proceeds, and if it is not it refuses and says it is inferring (#370).
+
+
 ---
 
 ## The callable contract

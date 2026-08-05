@@ -2,6 +2,7 @@
 
 pub mod bundle;
 pub mod local;
+pub mod provenance;
 pub mod registry;
 pub mod rename;
 pub mod uninstall;
@@ -10,6 +11,7 @@ pub use bundle::install_bundle;
 pub use local::install_agent_from_path;
 #[allow(unused_imports)] // consumed by v0.2 `aware app install` (app command, Task 13+)
 pub use local::install_app_from_path;
+pub use provenance::InstallSource;
 pub use registry::install_agent_from_registry;
 pub use registry::update_agent_from_registry;
 pub use rename::{LockOutcome, duplicate_app, rename_app};
