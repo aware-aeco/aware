@@ -28,7 +28,14 @@
 // existing CI gate enforces this with no new step.
 //
 // Note the limit: this catches `unwrap()`/`expect()` only. Indexing (`v[i]`),
-// slicing, and integer division are panics this does not see.
+// slicing, and integer division are panics this does not see — and one of them
+// shipped: `render::table` aborted the process on a row with more cells than
+// headers. `clippy::indexing_slicing` cannot be denied here the way this lint
+// is, because it also fires on `serde_json::Value` indexing, which yields
+// `Value::Null` rather than panicking (~100 sites in this crate). It is
+// therefore denied per-module where indexing is never load-bearing, starting
+// with `src/render/table.rs`; see the comment there. Integer division remains
+// ungated.
 #![cfg_attr(not(test), deny(clippy::unwrap_used, clippy::expect_used))]
 
 mod app_lock;
