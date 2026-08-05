@@ -186,16 +186,29 @@ function tessellate(api, modelID, wantById) {
       const geom = api.GetGeometry(modelID, pg.geometryExpressID);
       const verts = api.GetVertexArray(geom.GetVertexData(), geom.GetVertexDataSize()); // [x,y,z,nx,ny,nz]*
       const idx = api.GetIndexArray(geom.GetIndexData(), geom.GetIndexDataSize());
-      const m = pg.flatTransformation; // 4x4 column-major, metres
+      const m = pg.flatTransformation; // 4x4 column-major, metres, in web-ifc's Y-up frame
       const base = positions.length / 3;
       for (let v = 0; v < verts.length; v += 6) {
         const x = verts[v], y = verts[v + 1], z = verts[v + 2];
+        // Placement transform and the Y-up -> Z-up rotation in one step, identical to
+        // `readModel` below — the inverse of `toWebIfcYUp`, folded into the matrix
+        // multiply so the hot loop allocates nothing.
+        //
+        // #347: `extract` used to hand web-ifc's frame straight through while
+        // `read-model` and `probe` answered in the file's own Z-up one. One binary,
+        // two frames, and the difference lived only in prose — so a consumer that
+        // imported a recipe from one command and a mesh from the other got a
+        // connection lying on its side. `ifc.write` has no `meta.up` knob either, so
+        // `extract` -> `ifc.write` had ALWAYS written it sideways; that composition is
+        // correct for free now.
         positions.push(
           (m[0] * x + m[4] * y + m[8] * z + m[12]) * M_TO_MM,
+          -(m[2] * x + m[6] * y + m[10] * z + m[14]) * M_TO_MM,
           (m[1] * x + m[5] * y + m[9] * z + m[13]) * M_TO_MM,
-          (m[2] * x + m[6] * y + m[10] * z + m[14]) * M_TO_MM,
         );
       }
+      // Winding survives untouched: the rotation has determinant +1, so it cannot turn
+      // a front face into a back face. (A mirror would, and would need an index flip.)
       for (let k = 0; k < idx.length; k++) indices.push(base + idx[k]);
       geom.delete();
     }
@@ -1203,7 +1216,11 @@ function extractConnection(api, modelID, guid) {
         id: guid,
         name: assemblyLabel(asm),
         type: strOf(asm.ObjectType) || null,
-        frame: WEB_IFC_Y_UP,
+        // The file's own frame since #347 — the same one `read-model` and `probe`
+        // report. The field stays (a consumer must be able to CHECK the frame rather
+        // than infer it from a version number, which was #343's point); what changed
+        // is that all three commands now answer the same.
+        frame: FILE_Z_UP,
         members,
         parts,
         ...(recipe ? { recipe } : {}),

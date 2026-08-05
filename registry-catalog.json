@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-08-01T18:59:13.951309+00:00",
+  "updated-at": "2026-08-05T21:23:31.016158600+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -1462,10 +1462,10 @@
         "detailing"
       ],
       "versions": {
-        "0.1.0": {
+        "1.0.0": {
           "description": "Extract a steel connection from an IFC file as tessellated geometry, so a connection designed in",
           "status": "available",
-          "manifest-version": "0.1.0",
+          "manifest-version": "1.0.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 2,
@@ -2740,7 +2740,7 @@
         "0.1.0": {
           "description": "Read a WHOLE IFC file as a reference model — borrowed geometry you overlay, measure and build to,",
           "status": "available",
-          "manifest-version": "1.2.0",
+          "manifest-version": "1.3.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 2,

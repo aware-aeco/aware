@@ -13,18 +13,18 @@
 // plate penetration is not carried. Everything the recipe DOES emit is gated to reproduce, else it falls back
 // to faithful mesh — the recognizer never emits a wrong dimension/grid/diameter, only a confident fit or mesh.
 
-// web-ifc emits mesh geometry in a fixed Y-UP frame (it always converts IFC's Z-up world to its own Y-up
-// output), so "up" is always axis 1. A base plate is a HORIZONTAL plate with VERTICAL anchor bolts — the
-// vertical-anchor test is THE discriminator from a vertical shear/fin plate (whose bolts are horizontal),
-// which stops shear connections from being mis-read as base plates. If a web-ifc upgrade ever changed the
-// output frame, this one constant is the single knob to turn.
+// The parts this file fits come from `extract`, which returns the FILE's own Z-up world frame — so
+// "up" is axis 2. A base plate is a HORIZONTAL plate with VERTICAL anchor bolts, and the
+// vertical-anchor test is THE discriminator from a vertical shear/fin plate (whose bolts are
+// horizontal), which stops shear connections from being mis-read as base plates. If the producing
+// frame ever changes again, this one constant is the knob.
 //
-// NOT contradicted by `read-model`, which returns the file's own Z-up frame (#343): that command rotates
-// web-ifc's output on the way out, while `extract` — the only producer of the parts this file fits —
-// still hands them over exactly as web-ifc tessellated them. Do not "align" this constant with
-// read-model without also rotating in `tessellate`; the two would then disagree in the opposite
-// direction and every base plate would be read as a fin plate.
-export const VERTICAL = 1;
+// It was 1 until #347. web-ifc tessellates in its own Y-up frame and `extract` used to pass that
+// through, while `read-model` and `probe` answered in the file's Z-up one — one binary, two frames.
+// #343 fixed `read-model` and left `extract`, documenting the split rather than removing it; #347
+// rotates `tessellate` too, so this constant moves WITH it. The two changes are one edit: rotating
+// without moving this inverts the discriminator, and every base plate reads as a fin plate.
+export const VERTICAL = 2;
 
 function median(a) {
   const s = [...a].sort((x, y) => x - y);
@@ -394,7 +394,11 @@ export function recognizeBasePlate(parts, members) {
   // yaw-invariant so the world-frame test holds under plate rotation; the covariance axis + roundness reject a
   // tilted anchor (whose horizontal radius would over-read) or a square/elliptical prism (whose diagonal would
   // read as the diameter). A fin plate's horizontal bolts are rejected here, never mis-read as a base plate.
-  const [ha, hc] = [0, 2];
+  // Derived from VERTICAL, not spelled `[0, 2]`. Those two literals were the only
+  // thing in this file that did NOT follow the constant, so the comment above it
+  // claiming "one knob to turn" was false — moving VERTICAL to 2 for #347 left
+  // these testing the wrong plane, and every base plate stopped recognizing.
+  const [ha, hc] = [0, 1, 2].filter((k) => k !== VERTICAL);
   if (!bolts.every((p) => {
     const { dir, ratio } = dominantAxis(p.positions);
     return Math.abs(dir[VERTICAL]) >= 0.996 && ratio >= 3 && crossSectionCircular(p.positions, ha, hc);
@@ -417,7 +421,7 @@ export function recognizeBasePlate(parts, members) {
 // the given plate, never re-selects the largest), so candidate iteration actually tries each one. null on
 // any gate → the caller moves on / falls back to faithful mesh.
 function fitBasePlate(parts, candidatePlate, members) {
-  const [a, c] = [0, 2]; // the two horizontal axes
+  const [a, c] = [0, 1, 2].filter((k) => k !== VERTICAL); // the two horizontal axes
   // θ from the candidate plate's horizontal footprint; rotate every part by −θ into that aligned frame.
   const foot = [];
   for (let i = 0; i + 2 < candidatePlate.positions.length; i += 3) foot.push([candidatePlate.positions[i + a], candidatePlate.positions[i + c]]);

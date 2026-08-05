@@ -1,5 +1,5 @@
 agent:        connection-reader
-version:      0.1.0
+version:      1.0.0
 display-name: Connection Reader (IFC → mesh)
 description: |
   Extract a steel connection from an IFC file as tessellated geometry, so a connection designed in
@@ -79,11 +79,13 @@ commands:
       type: single
       schema:
         connection: object # { id, name, type, frame, members: [GlobalId], parts: [{ id, role, positions: [mm], indices }], recipe?: { kind: "base-plate"|"shear-plate", params, main } }
-                           # `frame` is "y-up": `parts` positions are in web-ifc's tessellation frame
-                           # (up is +Y) — NOT the file's Z-up world frame, and NOT the frame
-                           # ifc-reference-reader.read-model returns. A consumer targeting a Z-up
-                           # scene must rotate (x,y,z) -> (x,-z,y). See extract.md. `recipe` is
-                           # frame-independent (scalars in mm), so recipe imports are unaffected.
+                           # `frame` is "z-up": `parts` positions are in the FILE's own world frame,
+                           # the same one ifc-reference-reader.read-model and probe report. No
+                           # rotation is needed for ifc.write or viewer-3d.render. It was "y-up"
+                           # (web-ifc's tessellation frame) until aware-aeco/aware#347 — read the
+                           # field rather than assuming, since a stale bridge still answers the old
+                           # one. See extract.md. `recipe` is frame-independent (scalars in mm), so
+                           # recipe imports were unaffected either way.
 
 skills:
   - what-this-agent-does.md

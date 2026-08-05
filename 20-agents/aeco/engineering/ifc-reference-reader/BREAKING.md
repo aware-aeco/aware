@@ -68,8 +68,9 @@ nor at run time either. The output field is the only trustworthy answer.
 
 ### Not affected
 
-`connection-reader.extract` — a different agent with a different contract. Its `parts` are still in
-web-ifc's Y-up frame and its `frame` field says `"y-up"`. Aligning the two is tracked in
-aware-aeco/aware#347.
+`connection-reader.extract` — a different agent with a different contract. At the time of this
+release its `parts` were still in web-ifc's Y-up frame. **That is no longer true:**
+`connection-reader@1.0.0` aligned it on the file's Z-up frame too (aware-aeco/aware#347), so the two
+agents now agree and neither needs a rotation. See that agent's own `BREAKING.md`.
 
 Issue: aware-aeco/aware#343.

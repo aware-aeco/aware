@@ -18,14 +18,14 @@ connection:
   id:      string           # the GlobalId requested
   name:    string           # human label ("BEAM B156")
   type:    string           # assembly ObjectType (may be null)
-  frame:   string           # "y-up" — the frame `parts[].positions` are in (see below)
+  frame:   string           # "z-up" — the frame `parts[].positions` are in (see below)
   members: [string]         # GlobalIds of the members (columns/beams) the connection sits on
   parts:
     type: array
     items:
       id:        string     # part GlobalId
       role:      string     # "plate" | "bolt" | "weld"
-      positions: [number]   # flat x,y,z world coordinates in MILLIMETRES, Y-UP (see below)
+      positions: [number]   # flat x,y,z world coordinates in MILLIMETRES, the file's Z-UP frame (see below)
       indices:   [number]   # 0-based triangle vertex refs (triples)
   recipe:                   # OPTIONAL — present ONLY when the connection is recognized (see below)
     kind:   string          # the recognized type: "base-plate" or "shear-plate"
@@ -33,34 +33,31 @@ connection:
     main:   string          # the member GlobalId the plate sits on — a column (base plate) or beam (shear plate); advisory
 ```
 
-Each part is exactly the shape of a `kind:"mesh"` scene element — hand `positions`/`indices` to
-`viewer-3d.render` (with `meta.up: "y"`, see below) or `ifc.write` (rotate first, see below).
+Each part is exactly the shape of a `kind:"mesh"` scene element — hand `positions`/`indices`
+straight to `viewer-3d.render` or `ifc.write`. No rotation, either way.
 
-## `parts` are in web-ifc's Y-UP frame — up is `+Y`, not `+Z`
+## `parts` are in the FILE's own Z-UP frame — the same one `read-model` and `probe` report
 
-The mesh comes back exactly as web-ifc tessellates it, and web-ifc bakes a fixed
-`(x, y, z) → (x, z, −y)` rotation of IFC's Z-up world into its own **Y-up** renderer frame. So a base
-plate's anchors run along `±Y`, and a consumer dropping these vertices into a Z-up scene must rotate
-them (`(x, y, z) → (x, −z, y)`) or the connection arrives on its side.
+web-ifc tessellates in its own Y-up renderer frame (it bakes a fixed `(x, y, z) → (x, z, −y)`
+rotation of IFC's Z-up world into every mesh transform). This command undoes that on the way out, so
+a base plate's anchors run along `±Z`, as they do in the file.
 
-The output says so itself: `connection.frame` is `"y-up"`. Read that field rather than assuming, and
+The output says so itself: `connection.frame` is `"z-up"`. Read that field rather than assuming, and
 rather than inferring it from a version — the geometry is produced by the separately-installed
-`aware-connection-reader` bridge, which a stale install still runs (with only a warning).
+`aware-connection-reader` bridge, which a stale install still runs (with only a warning), and a
+bridge older than aware-aeco/aware#347 answers `"y-up"` from the same agent version.
 
-**`viewer-3d.render`** honours it: declare `meta.up: "y"` and the connection renders upright, because
-the scene schema keeps coordinates in producer space and converts via `meta.up`. No rotation needed.
+**`ifc.write`** now works directly. It emits `positions` verbatim as absolute IFC coordinates and
+never reads `meta.up` (`cli/src/render/ifc.rs`), and IFC is Z-up — so this composition had ALWAYS
+written the connection on its side, and is correct for free now. `extract` → `ifc.write` needs no
+rotation step.
 
-**`ifc.write` does not.** It emits `positions` verbatim as absolute IFC coordinates and never reads
-`meta.up` (`cli/src/render/ifc.rs`), and IFC is Z-up — so writing these parts straight out produces a
-file lying on its side. **Rotate `(x, y, z) → (x, −z, y)` before `ifc.write`.** (Rotating is also what
-`ifc-reference-reader.read-model` now does internally, which is why *its* meshes round-trip through
-`ifc.write` upright.) Tracked with the frame split in aware-aeco/aware#347.
+**`viewer-3d.render`** works directly too: declare `meta.up: "z"` (or leave it at the default, which
+is Z-up) and the connection renders upright.
 
-This is stated rather than changed because it is the frame this command has always returned and
-consumers are built on it. It is deliberately **not** the same as
-`ifc-reference-reader.read-model`, which rotates back into the file's own Z-up frame so it can be
-compared against `probe`'s bbox (aware-aeco/aware#343). Aligning the two is tracked separately; until
-then, read each command's frame from its own contract.
+Until aware-aeco/aware#347 this command returned web-ifc's Y-up frame while `read-model` and `probe`
+returned the file's — one binary answering in two frames, with the difference living only in prose.
+It now answers the same as its siblings.
 
 The `recipe`, when present, is **frame-independent** — its params are scalars in millimetres that the
 consumer re-derives on its own member — so a recipe import is unaffected by any of this. Only the mesh
