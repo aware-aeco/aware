@@ -2214,6 +2214,20 @@ impl DispatchInvoker {
     }
 
     fn transport_kind(&self, agent: &str) -> Result<TransportKind, AwareError> {
+        // The funnel every dispatch passes through — `invoke_single` and
+        // `invoke_stream` both start here, and `CliInvoker`/`RestInvoker` are
+        // only ever constructed after it returns. So this is where the node's
+        // `agent:` id gets fenced: it reaches us from the app FILE, nothing
+        // validates it as a path, and every transport below joins it onto
+        // `agents_dir` again. Fencing further in (in `resolve_exposed`) would
+        // leave the join right here unguarded, and a traversal manifest declaring
+        // `cli:` or `rest:` would never reach that check at all (#349 review).
+        // "Not a plain segment" and "not installed" are the same answer.
+        if !crate::manifest::loader::is_safe_segment(agent) {
+            return Err(AwareError::NotFound(format!(
+                "agent {agent} is not installed"
+            )));
+        }
         let m = crate::manifest::loader::load_agent(
             &self.agents_dir.join(agent).join("manifest.yaml"),
         )?;
@@ -2238,6 +2252,16 @@ impl DispatchInvoker {
             .as_ref()
             .map(|a| a.backed_by.clone())
             .unwrap_or_else(|| agent.to_string());
+        // `agent` arrived through `transport_kind`, which fenced it. `backed-by:`
+        // has not been fenced by anyone: it comes from the agent MANIFEST and is
+        // joined onto `apps_dir` just below, so a hand-edited
+        // `backed-by: ../../elsewhere` would run an app from outside `apps/`. The
+        // pre-flight in `commands::app` fences the same field (#349 review).
+        if !crate::manifest::loader::is_safe_segment(&backed_by) {
+            return Err(AwareError::NotFound(format!(
+                "app-backed agent {agent}: backing app {backed_by} is not installed"
+            )));
+        }
 
         let app_dir = app_ctx.apps_dir.join(&backed_by);
         if !app_dir.is_dir() {

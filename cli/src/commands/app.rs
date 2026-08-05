@@ -233,7 +233,7 @@ async fn run(
     // orchestrator returns a synthesized output before the app transport, so the
     // backing app is never loaded and an unreadable pin one level down was
     // reported nowhere at all.
-    if let Some(err) = nested_malformed_requires(&ctx.paths, &app).first() {
+    if let Some(err) = nested_malformed_requires(&ctx.paths, &app)?.first() {
         eprintln!("error: {}", err.message);
         return Err(AwareError::Validation(format!("[{}]", err.code)));
     }
@@ -474,7 +474,7 @@ async fn run(
 ///   dispatch to the nested app, run it, or apply the catalogue checks
 ///   (installed / version-satisfied) that `--simulate` is legitimately excused
 ///   from because it contacts no binary.
-/// - Anything not installed, not app-backed, or not loadable is skipped in
+/// - Anything not installed, or installed but not app-backed, is skipped in
 ///   silence — the same posture as `Orchestrator::synthesize_output`, which
 ///   already reads agent manifests under `--simulate` and falls back quietly
 ///   when one is missing. So `--simulate` stays the way to check a composition
@@ -483,6 +483,25 @@ async fn run(
 ///   `discover_agents`, which aborts the whole walk on the first unreadable
 ///   manifest in the catalogue — so an unrelated broken agent elsewhere under
 ///   `~/.aware/agents/` would otherwise switch this check off entirely.
+/// - A file that is *present and unreadable* is NOT silence, though — neither the
+///   agent manifest nor the backing app. A check that cannot read the files it
+///   must follow cannot report "no unreadable pin below them" either, so the
+///   loader's error propagates. A real run gives the same answer below: on the
+///   agent manifest always (`discover_agents` walks the catalogue), on the
+///   backing app when that node dispatches (`resolve_exposed` loads it). So the
+///   pre-flight is the stricter of the two by exactly the nodes that never run —
+///   deliberately, since it is the only gate `--simulate` reaches at all.
+///   One residual it does NOT catch: `find_app_manifest` flattens a failed
+///   `read_dir` to "no manifest here" (`read_dir(..).ok()?`), so a backing-app
+///   directory this process cannot *enumerate* reads as an absence. Narrow in
+///   practice — the canonical `<dir>/<dir>.flo` is probed by name first, which
+///   needs traverse rather than list permission, so a standard install still
+///   resolves; it bites a non-canonically-named `.flo`, or a directory that
+///   cannot be traversed either. Tracked on #365 rather than left here.
+/// - Every id it joins onto a directory is fenced with
+///   [`crate::manifest::loader::is_safe_segment`] first — the node's `agent:` and
+///   the manifest's `backed-by:`, both of which come from a FILE and neither of
+///   which is validated as a path anywhere else.
 /// - Scoped to *dispatchable* agents via [`crate::validate::dispatchable_agents`],
 ///   so a frozen-only nested app — which never runs — is not gated, matching
 ///   [`crate::validate::unsatisfied_pins`].
@@ -498,7 +517,7 @@ async fn run(
 fn nested_malformed_requires(
     paths: &crate::paths::Paths,
     app: &crate::manifest::app::App,
-) -> Vec<crate::validate::ValidationIssue> {
+) -> Result<Vec<crate::validate::ValidationIssue>, AwareError> {
     let agents_dir = paths.agents_dir();
     let apps_dir = paths.apps_dir();
     // Sorted, so which of several broken nested apps gets reported first is the
@@ -510,15 +529,60 @@ fn nested_malformed_requires(
     agent_ids.sort_unstable();
     let mut out = Vec::new();
     for agent_id in agent_ids {
+        // An installed agent id is always a plain directory segment, so fence it
+        // before joining — the same guard `loader::resolve_app_dir` puts in front
+        // of an app id. This id comes from the app FILE, and nothing validates it
+        // as a path, so `agent: ../../somewhere` would otherwise make the
+        // pre-flight read a `manifest.yaml` from outside `agents/` entirely.
+        // Skipping is the right answer as well as the safe one: no path-shaped id
+        // can name an installed agent, so this is the "not installed" case.
+        if !crate::manifest::loader::is_safe_segment(agent_id) {
+            continue;
+        }
+        let manifest_path = agents_dir.join(agent_id).join("manifest.yaml");
+        // Absent means "not installed", and that is the silence `--simulate`
+        // depends on to check a composition before its agents exist. Anything
+        // else — a directory where the manifest should be, a broken symlink, a
+        // metadata read this process is not allowed to make — is a fault and
+        // propagates. `is_file()` could not tell those apart: it answers `false`
+        // for all of them, which would have left a narrower version of the very
+        // fail-open below.
+        //
+        // `symlink_metadata` rather than `metadata` so a DANGLING symlink is a
+        // fault too: `metadata` follows the link and reports its missing target
+        // as `NotFound`, which would read as "not installed" for an entry that is
+        // plainly there and plainly broken.
+        //
+        // One residual, stated rather than papered over: on Windows an invalid
+        // *intermediate* component can also surface as `NotFound`
+        // (`ERROR_PATH_NOT_FOUND`), so a file sitting where `agents/<id>/` should
+        // be still reads as an absence here. That shape is "no agent directory",
+        // which is the same answer, so it is left alone rather than special-cased
+        // on an error code that means two things.
+        match std::fs::symlink_metadata(&manifest_path) {
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => continue,
+            // Re-raised carrying the path, the way `loader::read_manifest` does:
+            // `AwareError::Io` cannot hold one, and a bare "Access is denied.
+            // (os error 5)" names neither the agent nor the file, which is no
+            // better than the silence this replaced. The kind is preserved, so
+            // the class and exit code are unchanged.
+            Err(e) => {
+                return Err(std::io::Error::new(
+                    e.kind(),
+                    format!("{}: {e}", manifest_path.display()),
+                )
+                .into());
+            }
+            Ok(_) => {}
+        }
         // Loaded one at a time on purpose: `discover_agents` walks the whole
         // catalogue and returns `Err` on the first manifest that won't parse, so
         // routing this through it would let one unrelated broken agent silence
-        // the check for every app on the machine.
-        let Ok(manifest) =
-            crate::manifest::loader::load_agent(&agents_dir.join(agent_id).join("manifest.yaml"))
-        else {
-            continue; // not installed, or a manifest this run cannot read
-        };
+        // the check for every app on the machine. Installed-but-unreadable
+        // propagates, though — see the doc comment: it is a fault, not an absence,
+        // and a check that cannot read this manifest cannot clear the pins below
+        // it either.
+        let manifest = crate::manifest::loader::load_agent(&manifest_path)?;
         // Only an app-backed agent has an app — and therefore a `requires:` block
         // — behind it, and "app-backed" means what DISPATCH means by it. Resolved
         // through `effective_transport`, the single owner of the priority order
@@ -533,13 +597,46 @@ fn nested_malformed_requires(
         let Some(app_transport) = manifest.transport.app.as_ref() else {
             continue; // unreachable: `TransportKind::App` is that field being set
         };
+        // `backed-by` is manifest-controlled too, and lands in a join of its own —
+        // an agent manifest edited to `backed-by: ../../elsewhere` would read an
+        // app from outside `apps/`. Same fence, same reasoning as the id above.
+        if !crate::manifest::loader::is_safe_segment(&app_transport.backed_by) {
+            continue;
+        }
         let backing_dir = apps_dir.join(&app_transport.backed_by);
         let Some(manifest_path) = crate::manifest::loader::find_app_manifest(&backing_dir) else {
             continue;
         };
-        let Ok(backing) = crate::manifest::loader::load_app(&manifest_path) else {
-            continue;
-        };
+        // The backing app is the file whose `requires:` this whole function
+        // exists to read, so an unparseable one is the LEAST excusable silence of
+        // the lot — it is the check failing at its own subject. Absent (no
+        // `.flo`/`.app` in the directory) already continued above; this is
+        // "present and unreadable", which propagates for the same reason the
+        // agent manifest above does.
+        //
+        // Named with the hop, as every issue below is — but matched on the
+        // VARIANT rather than stringified, for two reasons a `format!("{e}")` got
+        // wrong. `AwareError` Displays its own class prefix, so wrapping the
+        // rendered error printed "validation failed:" twice, and for a read
+        // failure it nested one class inside another. And coercing both arms to
+        // `Validation` moved an unreadable file from exit 1 to exit 3,
+        // contradicting the re-raise above and disagreeing with `resolve_exposed`,
+        // which yields `Io` for the same file on a real run. `cli-spec.md` keeps 1
+        // ("general failure") and 3 ("validation failed") distinct: a file that
+        // cannot be read is not an invalid one.
+        let backing = crate::manifest::loader::load_app(&manifest_path).map_err(|e| {
+            let hop = format!(
+                "app-backed agent {:?} (backing app {:?})",
+                agent_id, app_transport.backed_by
+            );
+            match e {
+                AwareError::Validation(m) => AwareError::Validation(format!("{hop}: {m}")),
+                AwareError::Io(io) => std::io::Error::new(io.kind(), format!("{hop}: {io}")).into(),
+                // `load_app` yields only those two; anything else keeps its own
+                // class and loses only the hop, which fails safe.
+                other => other,
+            }
+        })?;
         out.extend(
             crate::validate::malformed_requires(&backing)
                 .into_iter()
@@ -554,7 +651,7 @@ fn nested_malformed_requires(
                 }),
         );
     }
-    out
+    Ok(out)
 }
 
 async fn logs(
