@@ -12,7 +12,9 @@
 //!   * the `cfg(test)` carve-out still holds, witnessed by a companion probe so
 //!     the assertion cannot pass by never compiling a test target at all;
 //!   * `src/main.rs` and `build.rs` still carry their gate;
-//!   * nobody has re-opened the gate with a targeted `#[allow]` in `src/`.
+//!   * the module-scoped panicking-index gate denies a runtime index, and
+//!     `src/render/table.rs` still carries it;
+//!   * nobody has re-opened either gate with a targeted `#[allow]` in `src/`.
 //!
 //! They shell out to `cargo clippy` on a two-file scratch crate with no
 //! dependencies (hence `--offline`). If clippy is missing the tests skip —
@@ -28,6 +30,13 @@ const GATE: &str = "#![cfg_attr(not(test), deny(clippy::unwrap_used, clippy::exp
 /// The `build.rs` variant. `build.rs` is a separate crate root, so the `main.rs`
 /// attribute does not reach it and it carries its own.
 const BUILD_GATE: &str = "#![deny(clippy::unwrap_used, clippy::expect_used)]";
+
+/// The module-scoped panicking-index gate. `src/main.rs` names indexing as a
+/// panic class its own attribute does not see; `clippy::indexing_slicing`
+/// cannot be denied crate-wide (it fires on `serde_json::Value` indexing, which
+/// does not panic — ~100 sites), so it is denied in `src/render/table.rs`, the
+/// formatting module where it already shipped a process abort.
+const INDEX_GATE: &str = "#![cfg_attr(not(test), deny(clippy::indexing_slicing))]";
 
 /// `true` when the probe can run. Panics instead of skipping under `CI`.
 fn clippy_available() -> bool {
@@ -50,6 +59,12 @@ fn clippy_available() -> bool {
 /// tests pass for the wrong reason — a probe that fails to build at all also
 /// "fails", which would make a dead gate look enforced.
 fn run_gate(body: &str) -> (bool, String) {
+    run_gate_with(GATE, body)
+}
+
+/// As [`run_gate`], but with an explicit gate attribute — so a second gate can
+/// be probed through the same harness instead of a copy of it.
+fn run_gate_with(gate: &str, body: &str) -> (bool, String) {
     let dir = tempfile::tempdir().expect("tempdir");
     let root = dir.path();
     std::fs::create_dir_all(root.join("src")).expect("src dir");
@@ -58,7 +73,7 @@ fn run_gate(body: &str) -> (bool, String) {
         "[package]\nname = \"gate_probe\"\nversion = \"0.0.0\"\nedition = \"2024\"\n\n[workspace]\n",
     )
     .expect("write manifest");
-    std::fs::write(root.join("src/main.rs"), format!("{GATE}\n\n{body}")).expect("write main");
+    std::fs::write(root.join("src/main.rs"), format!("{gate}\n\n{body}")).expect("write main");
 
     let out = Command::new("cargo")
         // `--all-targets` matches how CI invokes clippy, and is what makes the
@@ -177,6 +192,57 @@ fn crate_roots_actually_carry_the_gate() {
     }
 }
 
+/// `src/render/table.rs` shipped `widths[i]` where `widths` was sized from the
+/// header row and `i` came from a *row* — so a row with more cells than headers
+/// aborted the process. `cargo clippy -D warnings` never saw it:
+/// `indexing_slicing` is a `restriction` lint. The module now denies it.
+///
+/// Two assertions, and both are needed. The first proves the attribute still
+/// rejects a panicking index (a lint that stopped firing would leave a gate that
+/// only looks like one); the second proves the shipped module is the thing
+/// carrying it, since the first would pass just as well with the attribute
+/// deleted from `table.rs` entirely.
+#[test]
+fn indexing_gate_rejects_panicking_indexes_and_table_still_carries_it() {
+    if !clippy_available() {
+        eprintln!("skipping: cargo clippy unavailable");
+        return;
+    }
+
+    // Positive control first: the same attribute over index-free code. If this
+    // fails the probe is broken and the rejection below proves nothing.
+    let clean = "fn main() {\n    let v: Vec<u8> = std::env::args().map(|a| a.len() as u8).collect();\n    println!(\"{:?}\", v.first());\n}\n";
+    let (accepted, diagnostics) = run_gate_with(INDEX_GATE, clean);
+    assert!(
+        accepted,
+        "the index gate rejected index-free code — the probe is broken, not the gate:\n{diagnostics}"
+    );
+
+    // A runtime-length `Vec` and a runtime index: a constant index into a
+    // fixed-size array is a compile-time bound and does not trip the lint, which
+    // would make this pass for the wrong reason.
+    let (accepted, diagnostics) = run_gate_with(
+        INDEX_GATE,
+        "fn main() {\n    let v: Vec<u8> = std::env::args().map(|a| a.len() as u8).collect();\n    println!(\"{}\", v[std::env::args().count()]);\n}\n",
+    );
+    assert!(
+        !accepted,
+        "clippy accepted a panicking index in non-test code — the gate is not enforcing"
+    );
+    assert!(
+        diagnostics.contains("indexing_slicing"),
+        "clippy rejected the index, but not for `indexing_slicing` — the probe may \
+         be failing for an unrelated reason. Diagnostics:\n{diagnostics}"
+    );
+
+    let table = Path::new(env!("CARGO_MANIFEST_DIR")).join("src/render/table.rs");
+    let source = std::fs::read_to_string(&table).unwrap_or_else(|e| panic!("read table.rs: {e}"));
+    assert!(
+        source.contains(INDEX_GATE),
+        "src/render/table.rs no longer carries the panicking-index gate:\n  {INDEX_GATE}"
+    );
+}
+
 /// `deny` can be re-opened for a single function with one `#[allow]`, and
 /// clippy stays green — so the attribute alone is not the whole gate. CI has no
 /// other signal for this, hence a test.
@@ -207,7 +273,8 @@ fn no_targeted_allow_reopens_the_gate_in_src() {
             .unwrap_or(usize::MAX);
         for (index, line) in source.lines().enumerate() {
             let opens_gate = line.contains("allow(clippy::unwrap_used")
-                || line.contains("allow(clippy::expect_used");
+                || line.contains("allow(clippy::expect_used")
+                || line.contains("allow(clippy::indexing_slicing");
             if opens_gate && index < test_mod_line {
                 offenders.push(format!(
                     "{}:{}: {}",
