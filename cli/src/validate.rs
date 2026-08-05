@@ -156,7 +156,8 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
             format!(
                 "app id {:?} is not a plain name — it becomes a directory under \
                  `apps/` and the name of the `.lock` beside the source, so it may \
-                 not contain a path separator, `.`/`..`, or a drive/UNC prefix",
+                 not be `.` or `..`, contain a path separator, or carry a \
+                 drive/UNC prefix (a dot INSIDE a name, as in `my.app`, is fine)",
                 app.app
             ),
         ));

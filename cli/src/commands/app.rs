@@ -311,8 +311,8 @@ async fn run(
     // treat the node as stateless. Task 14 wires the actual long-running path.
     let is_long_running = app.nodes.iter().any(|n| {
         if let Some(agent_id) = &n.agent {
-            let mp = ctx.paths.agents_dir();
-            if let Ok(m) = crate::manifest::loader::load_agent_by_id(&mp, agent_id)
+            let agents = ctx.paths.agents_dir();
+            if let Ok(m) = crate::manifest::loader::load_agent_by_id(&agents, agent_id)
                 && m.stateful
                 && let Some(cmd_name) = &n.command
                 && let Some(c) = m.commands.get(cmd_name)
@@ -529,17 +529,23 @@ fn nested_malformed_requires(
     agent_ids.sort_unstable();
     let mut out = Vec::new();
     for agent_id in agent_ids {
-        // An installed agent id is always a plain directory segment, so fence it
-        // before joining — the same guard `loader::resolve_app_dir` puts in front
-        // of an app id. This id comes from the app FILE, and nothing validates it
-        // as a path, so `agent: ../../somewhere` would otherwise make the
-        // pre-flight read a `manifest.yaml` from outside `agents/` entirely.
-        // Skipping is the right answer as well as the safe one: no path-shaped id
-        // can name an installed agent, so this is the "not installed" case.
-        if !crate::manifest::loader::is_safe_segment(agent_id) {
-            continue;
-        }
-        let manifest_path = agents_dir.join(agent_id).join("manifest.yaml");
+        // This id comes from the app FILE and nothing validates it as a path, so
+        // `agent: ../../somewhere` would otherwise make the pre-flight read a
+        // `manifest.yaml` from outside `agents/` entirely. Skipping is the right
+        // answer as well as the safe one: no path-shaped id can name an installed
+        // agent, so this is the "not installed" case.
+        //
+        // Through `agent_manifest_path` — the fenced path, not a hand-rolled join
+        // plus a hand-rolled guard. This site needs the PATH rather than the
+        // parsed manifest (the absent-vs-unreadable split below is about the file
+        // itself), which is exactly what that function exists for. Doing it by
+        // hand was safe but invisible to `tests/agent_id_joins_are_fenced.rs`, so
+        // it would have taught the next author a pattern the guard cannot check
+        // (#365 review).
+        let Ok(manifest_path) = crate::manifest::loader::agent_manifest_path(&agents_dir, agent_id)
+        else {
+            continue; // not a plain segment, so it names no installed agent
+        };
         // Absent means "not installed", and that is the silence `--simulate`
         // depends on to check a composition before its agents exist. Anything
         // else — a directory where the manifest should be, a broken symlink, a

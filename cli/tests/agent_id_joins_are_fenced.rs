@@ -6,7 +6,7 @@
 //! join needs `loader::is_safe_segment` in front of it, or a crafted
 //! `agent: ../elsewhere` reads a `manifest.yaml` from anywhere on disk.
 //!
-//! There were seventeen of those joins and the fence was on none of them. Fixing
+//! There were seventeen of those joins and only two carried a fence. Guarding
 //! them one at a time would leave the next one to be written unfenced, so they
 //! all go through `loader::load_agent_by_id` / `loader::agent_manifest_path`,
 //! which fence once — and this test fails the build if a new raw one appears.
@@ -101,7 +101,7 @@ fn no_source_file_joins_an_agent_id_onto_agents_by_hand() {
     // walk (a renamed directory, a changed extension filter) fails loudly
     // instead of reporting a clean tree.
     assert!(
-        files.len() > 40,
+        files.len() > 80,
         "only {} source files scanned — the walk is not reaching the tree",
         files.len()
     );
@@ -161,8 +161,14 @@ fn the_scanner_finds_the_shape_it_claims_to() {
     );
 
     for ok in [
-        // An already-resolved directory — the argument is a literal.
+        // An already-resolved directory — there is no preceding `.join(` at all.
         r#"let m = load_agent(&root.join("manifest.yaml"))?;"#,
+        // A LITERAL id. This is the case the literal-argument narrowing exists
+        // for, and it needs a preceding join to reach that branch at all — the
+        // line above is excluded one step earlier, so without this the narrowing
+        // was inert and the claim that all three axes are pinned was untrue
+        // (#365 review).
+        r#"let m = load_agent(&self.agents_dir.join("trimble-connect").join("manifest.yaml"))?;"#,
         // A WRITE, in a fixture. Same path shape, no trust boundary.
         r#"std::fs::write(aware.join("agents").join(a).join("manifest.yaml"), body).unwrap();"#,
         // The fenced call this test exists to push people towards.

@@ -10,8 +10,6 @@
 //! These drive the real binary, because the escape is in what reaches the
 //! filesystem, not in what the validator returns.
 
-mod common;
-
 use assert_cmd::Command;
 use predicates::prelude::*;
 
@@ -94,6 +92,7 @@ fn install_refuses_it_too() {
         .arg(&src)
         .assert()
         .failure()
+        .code(3)
         .stderr(predicate::str::contains("E_APP_ID_NOT_A_SEGMENT"));
     assert!(
         !tmp.path().join("pwned").exists(),

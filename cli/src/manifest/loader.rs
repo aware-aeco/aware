@@ -212,7 +212,9 @@ fn read_manifest(manifest_path: &Path) -> Result<String, AwareError> {
 /// fence was on none of them (#365), which is the argument for one function
 /// rather than seventeen guards: a guard you have to remember is a guard you will
 /// forget. `cli/tests/agent_id_joins_are_fenced.rs` fails the build if a new raw
-/// join appears.
+/// join of that shape appears — it is a text scan, so it catches the shape
+/// rather than the intent, and a caller determined to build the path another way
+/// (`PathBuf::push`, `format!`) is beyond it.
 ///
 /// "Not a plain segment" and "not installed" are the same answer to a caller, so
 /// they share `NotFound` — no caller has to learn a new error.
