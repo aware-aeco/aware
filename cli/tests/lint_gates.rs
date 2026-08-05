@@ -12,7 +12,9 @@
 //!   * the `cfg(test)` carve-out still holds, witnessed by a companion probe so
 //!     the assertion cannot pass by never compiling a test target at all;
 //!   * `src/main.rs` and `build.rs` still carry their gate;
-//!   * nobody has re-opened the gate with a targeted `#[allow]` in `src/`.
+//!   * the module-scoped panicking-index gate denies a runtime index, and
+//!     `src/render/table.rs` still carries it;
+//!   * nobody has re-opened either gate with a targeted `#[allow]` in `src/`.
 //!
 //! They shell out to `cargo clippy` on a two-file scratch crate with no
 //! dependencies (hence `--offline`). If clippy is missing the tests skip —
