@@ -652,3 +652,302 @@ fn a_mixed_transport_agent_is_not_read_as_app_backed_by_the_nested_check() {
         .assert()
         .success();
 }
+
+#[test]
+fn an_unreadable_manifest_for_a_dispatched_agent_is_a_fault_not_silence() {
+    // The other half of the silence question. Skipping an agent whose manifest is
+    // ABSENT is right — `--simulate` is how you check a composition before its
+    // agents exist. Skipping one that is installed but cannot be PARSED is not: a
+    // check that cannot read the manifest it must follow cannot clear the pins
+    // behind it either, and `--simulate` is the only gate where this showed,
+    // because a real run's `discover_agents` already fails on the same manifest.
+    //
+    // Before the fix, `let Ok(..) else { continue }` swallowed both cases alike,
+    // so corrupting the manifest of the very agent under test switched its own
+    // nested check off and the malformed pin one level down simulated clean.
+    let tmp = nested_fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+    let inner_flo = home.join("apps/inner/inner.flo");
+    let body = std::fs::read_to_string(&inner_flo).unwrap();
+    std::fs::write(
+        &inner_flo,
+        body.replace("probe-agent@1.3.x", "probe-agent@not-a-version"),
+    )
+    .unwrap();
+
+    // `inner` is the app-backed agent `outer` dispatches to. Corrupt ITS manifest.
+    std::fs::write(
+        home.join("agents/inner/manifest.yaml"),
+        "agent: [this is not\n  a manifest\n",
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "outer", "--simulate"])
+        .assert()
+        .failure()
+        .code(3)
+        // The loader's own message, which names the manifest it could not read.
+        .stderr(predicate::str::contains("inner"));
+}
+
+#[test]
+fn a_manifest_that_is_not_a_file_is_a_fault_too_not_an_absence() {
+    // `is_file()` cannot tell "no manifest here" from "something is here that I
+    // cannot read as one" — it answers `false` to both, so gating on it left a
+    // narrower copy of the fail-open above: a directory (or an unreadable entry)
+    // where `manifest.yaml` belongs skipped the agent in silence. Only a
+    // NotFound is an absence; everything else propagates.
+    let tmp = nested_fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+    let inner_flo = home.join("apps/inner/inner.flo");
+    let body = std::fs::read_to_string(&inner_flo).unwrap();
+    std::fs::write(
+        &inner_flo,
+        body.replace("probe-agent@1.3.x", "probe-agent@not-a-version"),
+    )
+    .unwrap();
+
+    let manifest = home.join("agents/inner/manifest.yaml");
+    std::fs::remove_file(&manifest).unwrap();
+    std::fs::create_dir(&manifest).unwrap();
+
+    aware(&home)
+        .args(["app", "run", "outer", "--simulate"])
+        .assert()
+        .failure()
+        // Named, not just "failed": every agent manifest path contains
+        // "manifest.yaml", so the agent has to be named too or the test would
+        // pass on a read of any OTHER agent's manifest.
+        .stderr(predicate::str::contains("manifest.yaml"))
+        .stderr(predicate::str::contains("inner"));
+}
+
+#[test]
+fn an_unreadable_backing_app_is_a_fault_too() {
+    // The same rule one file further in, and the least excusable place for it:
+    // the backing app's `.flo` is the file whose `requires:` this pre-flight
+    // exists to read. Skipping it on a parse failure was the check going silent
+    // about its own subject — so a nested app edited into invalid YAML simulated
+    // clean, pins and all.
+    //
+    // "No .flo/.app in the directory" is still an absence and still skips; this
+    // is present-and-unreadable.
+    let tmp = nested_fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+    std::fs::write(
+        home.join("apps/inner/inner.flo"),
+        "app: inner\n  version: [not\n   valid: yaml\n",
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "outer", "--simulate"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("inner.flo"))
+        // Nailed to the LOADER, not to "something named that file": the pin-syntax
+        // check names the backing app too, so without this the assertion would
+        // also be satisfied by a malformed pin — the opposite of what is broken.
+        .stderr(predicate::str::contains("E_APP_REQUIRES_MALFORMED").not())
+        // …and it names the hop, so the operator learns which agent led here.
+        .stderr(predicate::str::contains("app-backed agent"))
+        // Exactly ONE class prefix. Naming the hop by stringifying the error
+        // printed "validation failed:" twice, because `AwareError` Displays its
+        // own prefix — so the wrap matches on the variant instead.
+        .stderr(predicate::str::contains("validation failed").count(1));
+}
+
+#[test]
+fn an_unreadable_backing_app_keeps_the_io_exit_code() {
+    // The other arm of that wrap, and the one that was silently wrong: naming the
+    // hop by re-formatting the error coerced BOTH of `load_app`'s classes into
+    // `Validation`, moving an unreadable file from exit 1 to exit 3. `cli-spec.md`
+    // keeps those distinct — 1 is a general failure, 3 is "validation failed" —
+    // and a file that cannot be READ is not an invalid one. A real run agrees:
+    // `resolve_exposed` yields `Io` for the same file.
+    //
+    // A directory where `inner.flo` belongs is the reachable shape:
+    // `find_app_manifest` matches it on extension, then the read fails.
+    let tmp = nested_fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+    let flo = home.join("apps/inner/inner.flo");
+    std::fs::remove_file(&flo).unwrap();
+    std::fs::create_dir(&flo).unwrap();
+
+    aware(&home)
+        .args(["app", "run", "outer", "--simulate"])
+        .assert()
+        .failure()
+        .code(1)
+        .stderr(predicate::str::contains("app-backed agent"))
+        .stderr(predicate::str::contains("inner.flo"))
+        // The io class, not validation — one prefix, and the right one.
+        .stderr(predicate::str::contains("validation failed").not());
+}
+
+#[test]
+fn a_path_shaped_agent_id_never_reads_a_manifest_outside_agents() {
+    // The nested pre-flight joins a node's `agent:` id onto `agents/`, and that id
+    // comes from the app FILE — nothing validates it as a path segment. Without a
+    // guard, `agent: ../elsewhere` walks out of `agents/` and reads an arbitrary
+    // `manifest.yaml`, the same traversal `loader::resolve_app_dir` already fences
+    // for an app id.
+    //
+    // The fixture makes the traversal the ONLY way to reach the manifest: it sits
+    // in `<home>/elsewhere/`, is app-backed by `inner`, and `inner` carries a
+    // malformed pin. So a naive join reports E_APP_REQUIRES_MALFORMED and a fenced
+    // one reports nothing — the assertion cannot pass by accident.
+    let tmp = nested_fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+    let inner_flo = home.join("apps/inner/inner.flo");
+    let body = std::fs::read_to_string(&inner_flo).unwrap();
+    std::fs::write(
+        &inner_flo,
+        body.replace("probe-agent@1.3.x", "probe-agent@not-a-version"),
+    )
+    .unwrap();
+
+    let outside = home.join("elsewhere");
+    std::fs::create_dir_all(&outside).unwrap();
+    std::fs::write(
+        outside.join("manifest.yaml"),
+        "agent: elsewhere\nversion: 1.0.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+         transport:\n  app:\n    backed-by: inner\ncommands:\n  run:\n    lifecycle: single\n    \
+         description: x\n    mode: read\n",
+    )
+    .unwrap();
+
+    std::fs::write(
+        home.join("apps/outer/outer.flo"),
+        "app: outer\nversion: 0.1.0\ndescription: names an agent by traversal\nnodes:\n  \
+         - id: call\n    agent: ../elsewhere\n    command: run\nconnections: []\nrequires: []\n",
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "outer", "--simulate"])
+        .assert()
+        // Succeeds, not merely "fails for some other reason": a run that died on
+        // an unrelated error would satisfy the absence of the code all by itself.
+        .success()
+        .stderr(predicate::str::contains("E_APP_REQUIRES_MALFORMED").not());
+}
+
+#[test]
+fn a_path_shaped_agent_id_is_refused_at_real_dispatch_too() {
+    // The pre-flight fence only covers the pre-flight. A REAL run reaches
+    // `DispatchInvoker::transport_kind`, which joins the same file-controlled id
+    // onto `agents/` before it knows the transport — so a traversal manifest
+    // declaring `cli:`/`rest:` never touched the app-transport path where the
+    // fence first went (Codex, round 3). The fence sits in that funnel now.
+    //
+    // Getting there is the hard part, and the first cut of this test did NOT:
+    // `app run` pre-flights `missing_agents` before dispatching, and a node whose
+    // `agent:` matches nothing installed dies right there with
+    // E_APP_AGENT_NOT_INSTALLED — whose message also says "not installed", so the
+    // test passed with the fence deleted (Codex, round 4). It needs a catalogue
+    // entry that MATCHES the path-shaped id, which is what the decoy below is: a
+    // manifest sitting at a perfectly ordinary `agents/decoy/`, whose own `agent:`
+    // field declares the traversal. `discover_agents` keys on that field, so the
+    // pre-flight is satisfied and dispatch really happens.
+    let tmp = nested_fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+
+    // The manifest OUTSIDE `agents/` that a traversal would reach. Its binary name
+    // is the marker: it can only appear in the output if the traversal was read.
+    let outside = home.join("elsewhere");
+    std::fs::create_dir_all(&outside).unwrap();
+    std::fs::write(
+        outside.join("manifest.yaml"),
+        "agent: elsewhere\nversion: 1.0.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+         transport:\n  cli:\n    binary: traversal-marker-binary\ncommands:\n  probe:\n    \
+         lifecycle: single\n    description: x\n    mode: read\n",
+    )
+    .unwrap();
+
+    // The decoy: an ordinary catalogue entry whose declared id is the traversal,
+    // so `missing_agents` finds the node's agent and lets the run proceed.
+    let decoy = home.join("agents").join("decoy");
+    std::fs::create_dir_all(&decoy).unwrap();
+    std::fs::write(
+        decoy.join("manifest.yaml"),
+        "agent: ../elsewhere\nversion: 1.0.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+         transport:\n  cli:\n    binary: traversal-marker-binary\ncommands:\n  probe:\n    \
+         lifecycle: single\n    description: x\n    mode: read\n",
+    )
+    .unwrap();
+
+    std::fs::write(
+        home.join("apps/outer/outer.flo"),
+        "app: outer\nversion: 0.1.0\ndescription: names an agent by traversal\nnodes:\n  \
+         - id: call\n    agent: ../elsewhere\n    command: probe\nconnections: []\nrequires: []\n",
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "outer"])
+        .assert()
+        .failure()
+        // Refused as not-installed, which is what a path-shaped id is…
+        .stderr(predicate::str::contains(
+            "agent ../elsewhere is not installed",
+        ))
+        // …and NOT because the pre-flight got there first, which is how the
+        // previous version of this test fooled itself.
+        .stderr(predicate::str::contains("E_APP_AGENT_NOT_INSTALLED").not())
+        // The DISPATCH load never happened: without the fence `transport_kind`
+        // reads the planted manifest and gets as far as the binary it names.
+        // (Read-only lookups earlier in the run — the long-running probe, the
+        // orchestrator's mode lookups — still reach that file either way; those
+        // joins are filed as #365.)
+        .stderr(predicate::str::contains("traversal-marker-binary").not());
+}
+
+#[test]
+fn a_path_shaped_backed_by_never_reads_an_app_outside_apps() {
+    // The second manifest-controlled id in the same pre-flight: an app-backed
+    // agent's `backed-by:`, joined onto `apps/` to find the app whose pins we
+    // read. A synthesized manifest always names a plain id, but a hand-edited or
+    // hand-installed one need not — and this is the only place that reads it
+    // before dispatch, so it gets the same fence as the node's `agent:`.
+    //
+    // Same construction as the test above: the malformed pin lives in an app that
+    // ONLY the traversal can reach, so an unfenced join reports it and a fenced
+    // one is silent.
+    let tmp = nested_fixture("1.3.0", "1.3.x");
+    let home = tmp.path().join("home");
+
+    let outside = home.join("elsewhere-app");
+    std::fs::create_dir_all(&outside).unwrap();
+    std::fs::write(
+        outside.join("elsewhere-app.flo"),
+        "app: elsewhere-app\nversion: 0.1.0\ndescription: outside apps/\n\
+         exposes-as-agent: true\nexposed-commands:\n  run:\n    lifecycle: single\n    \
+         outputs:\n      type: single\n      schema:\n        ok: bool\nnodes:\n  \
+         - id: probe\n    agent: probe-agent\n    command: probe\n\
+         requires:\n  - probe-agent@not-a-version\n",
+    )
+    .unwrap();
+
+    // Point the installed agent at it by traversal. Everything else is untouched,
+    // so `inner`'s own (satisfied) pin is the only other thing on this path.
+    let inner_manifest = home.join("agents/inner/manifest.yaml");
+    let body = std::fs::read_to_string(&inner_manifest).unwrap();
+    assert!(
+        body.contains("backed-by: inner"),
+        "fixture changed: expected a synthesized `backed-by: inner`, got:\n{body}"
+    );
+    std::fs::write(
+        &inner_manifest,
+        body.replace("backed-by: inner", "backed-by: ../elsewhere-app"),
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "outer", "--simulate"])
+        .assert()
+        .success()
+        .stderr(predicate::str::contains("E_APP_REQUIRES_MALFORMED").not());
+}

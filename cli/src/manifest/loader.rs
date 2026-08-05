@@ -134,12 +134,40 @@ pub fn resolve_app_dir(paths: &Paths, id: &str) -> Result<PathBuf, AwareError> {
     Err(AwareError::NotFound(format!("app: {id}")))
 }
 
-/// True when `id` is a plain path segment safe to join onto a directory: non-empty,
-/// not `.`/`..`, and free of path separators or NUL. Used to fence an installed
-/// app id (always a plain slug) before it is joined onto apps_dir. The stricter
-/// charset/reserved-name check for a *new* id lives in `install::rename`.
+/// True when `id` is a plain path segment: `dir.join(id)` then names a direct
+/// child of `dir` **lexically**. Used to fence an installed app or agent id
+/// (always a plain slug) that reaches us from a file, before it is joined onto
+/// `apps_dir`/`agents_dir`. The stricter charset/reserved-name check for a *new*
+/// id lives in `install::rename`.
+///
+/// Asked of the platform rather than hand-rolled, because a hand-rolled version
+/// got it wrong: rejecting `.`, `..` and the separators still let a Windows
+/// **drive-relative** id like `C:evil` through, and `Path::join` discards the
+/// whole base when the appended path carries a prefix — so `agents/` + `C:evil`
+/// is `C:evil\manifest.yaml`, not under `agents/` at all (#349 review). Demanding
+/// that `id` parse as exactly ONE `Component::Normal` covers every escape shape
+/// the running platform can spell, in one question: prefixes (`C:evil`,
+/// `\\host\share`), roots, `.`/`..`, and embedded separators.
+///
+/// Two limits, stated because the guard is easy to over-read:
+///
+/// - **Lexical, not physical.** A permitted id that names a *symlink* can still
+///   resolve outside `dir`. Containment against symlinks is a different check
+///   (canonicalise and compare), not this one.
+/// - **Per platform, by design.** `\` is a separator on Windows and an ordinary
+///   filename character on POSIX, so `a\b` is rejected on one and accepted on the
+///   other. That is correct: the question is what *this* platform's `join` does.
+///
+/// It does NOT reject Windows reserved device names (`CON`, `NUL`, `COM1`) — they
+/// name no directory but they do not escape either, so opening one simply fails
+/// where it is used, which is the honest outcome for an id nothing installed.
 pub(crate) fn is_safe_segment(id: &str) -> bool {
-    !id.is_empty() && id != "." && id != ".." && !id.contains(['/', '\\', '\0'])
+    if id.is_empty() || id.contains('\0') {
+        return false;
+    }
+    let mut components = Path::new(id).components();
+    matches!(components.next(), Some(std::path::Component::Normal(_)))
+        && components.next().is_none()
 }
 
 pub(crate) fn find_app_manifest(root: &Path) -> Option<PathBuf> {
@@ -160,15 +188,29 @@ pub(crate) fn find_app_manifest(root: &Path) -> Option<PathBuf> {
     None
 }
 
+/// Read the manifest text, naming the file in BOTH failure modes.
+///
+/// The YAML branch below always named it; the read did not, so an unreadable
+/// manifest surfaced as a bare `io: Access is denied. (os error 5)` naming
+/// neither the file nor the agent — the operator could not tell which of dozens
+/// of installed agents to look at. `AwareError::Io` carries no path, so the path
+/// goes into the message and the error KIND is preserved, leaving the class and
+/// exit code unchanged.
+fn read_manifest(manifest_path: &Path) -> Result<String, AwareError> {
+    std::fs::read_to_string(manifest_path).map_err(|e| {
+        std::io::Error::new(e.kind(), format!("{}: {e}", manifest_path.display())).into()
+    })
+}
+
 pub fn load_agent(manifest_path: &Path) -> Result<Agent, AwareError> {
-    let text = std::fs::read_to_string(manifest_path)?;
+    let text = read_manifest(manifest_path)?;
     let parsed: Agent = serde_yaml::from_str(&text)
         .map_err(|e| AwareError::Validation(format!("{}: {e}", manifest_path.display())))?;
     Ok(parsed)
 }
 
 pub fn load_app(manifest_path: &Path) -> Result<App, AwareError> {
-    let text = std::fs::read_to_string(manifest_path)?;
+    let text = read_manifest(manifest_path)?;
     let parsed: App = serde_yaml::from_str(&text)
         .map_err(|e| AwareError::Validation(format!("{}: {e}", manifest_path.display())))?;
     Ok(parsed)
@@ -226,5 +268,69 @@ mod tests {
         };
         let agents = discover_agents(&paths).unwrap();
         assert!(agents.is_empty());
+    }
+
+    #[test]
+    fn a_safe_segment_is_one_that_cannot_leave_its_directory() {
+        for ok in [
+            "probe-agent",
+            "allplan-2024.0",
+            "with space",
+            "..evil",
+            "CON",
+        ] {
+            assert!(is_safe_segment(ok), "{ok:?} names a plain segment");
+        }
+        // Rejected everywhere: `/` is a separator on both platforms.
+        for bad in ["", ".", "..", "a/b", "/abs", "\0", "sub/../.."] {
+            assert!(!is_safe_segment(bad), "{bad:?} is not a plain segment");
+        }
+        // Windows-only, and the cfg is the point rather than a convenience: `\`
+        // separates there and is an ordinary filename character on POSIX, so
+        // `a\b` really IS a plain segment on Linux. A guard that answered the
+        // same on both would be wrong on one of them.
+        //
+        // `C:evil` is the escape the first, hand-rolled guard missed: it carries
+        // no separator, so a `.contains(['/', '\\'])` test passed it — and
+        // `Path::join` then throws the base away.
+        #[cfg(windows)]
+        {
+            for bad in [
+                "a\\b",
+                "\\abs",
+                "C:evil",
+                "C:",
+                "c:x",
+                "C:..",
+                "C:\\evil",
+                "\\\\host\\share",
+            ] {
+                assert!(
+                    !is_safe_segment(bad),
+                    "{bad:?} is not a plain segment on Windows"
+                );
+            }
+            // Of those, the ones that genuinely leave `agents/` — asserted, so
+            // the case cannot go vacuous if `join`'s behaviour ever changes.
+            // (`a\b` is excluded on purpose: it stays inside, it simply is not
+            // one segment.)
+            for escapes in ["\\abs", "C:evil", "C:", "c:x", "C:..", "C:\\evil"] {
+                assert!(
+                    !std::path::Path::new("agents")
+                        .join(escapes)
+                        .starts_with("agents"),
+                    "{escapes:?} was expected to escape"
+                );
+            }
+        }
+        // The mirror image, so the POSIX arm is asserted rather than merely
+        // skipped: there, a backslash names a file and nothing escapes.
+        #[cfg(not(windows))]
+        for ok in ["a\\b", "C:evil", "C:"] {
+            assert!(
+                is_safe_segment(ok),
+                "{ok:?} is an ordinary POSIX filename, not a traversal"
+            );
+        }
     }
 }
