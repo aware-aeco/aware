@@ -57,3 +57,129 @@ fn json_describe_returns_envelope() {
     assert_eq!(v["data"]["skill_count"], 33);
     assert_eq!(v["data"]["command_count"], 24);
 }
+
+// ── #363: which versions does the registry actually have? ─────────────────────
+
+/// A catalog carrying THREE versions of one agent, so "lists them all" is
+/// distinguishable from "prints the newest" — which is all `describe` did before.
+const MULTI_VERSION_CATALOG: &str = r#"{
+  "version": "1",
+  "updated-at": "2026-06-16T00:00:00Z",
+  "agents": {
+    "probe-agent": {
+      "versions": {
+        "1.9.0":  { "description": "old", "status": "available", "stateful": false,
+                    "transport": "cli", "command_count": 1, "skills": [] },
+        "1.10.0": { "description": "middle", "status": "available", "stateful": false,
+                    "transport": "cli", "command_count": 1, "skills": [] },
+        "1.10.1": { "description": "newest", "status": "available", "stateful": false,
+                    "transport": "cli", "command_count": 1, "skills": [] }
+      }
+    }
+  }
+}"#;
+
+fn describe_available(catalog_body: &str, json: bool) -> (tempfile::TempDir, Vec<u8>) {
+    let tmp = tempfile::tempdir().unwrap();
+    let cat = tmp.path().join("fixture-catalog.json");
+    std::fs::write(&cat, catalog_body).unwrap();
+    let mut cmd = Command::cargo_bin("aware").unwrap();
+    cmd.env("AWARE_HOME", tmp.path())
+        .env("AWARE_CATALOG", format!("file://{}", cat.display()))
+        .args(["agent", "describe", "probe-agent", "--available"]);
+    if json {
+        cmd.arg("--json");
+    }
+    let out = cmd.assert().success().get_output().stdout.clone();
+    (tmp, out)
+}
+
+#[test]
+fn describe_available_lists_every_version_the_registry_has() {
+    // The discovery half of #363. `describe` called `agent.latest()` and printed
+    // that one version, so when the newest release fell outside an app's
+    // `requires:` pin there was no way to find out which older version satisfied
+    // it — the information was in the catalogue and simply never surfaced. The
+    // unsatisfied-pin remedy now points here, so it has to actually answer.
+    let (_tmp, out) = describe_available(MULTI_VERSION_CATALOG, false);
+    let text = String::from_utf8_lossy(&out);
+
+    // CHARACTERISATION, not an endorsement: `version:` reports **1.9.0**, because
+    // `CatalogAgent::latest()` takes `next_back()` on a `BTreeMap<String, _>` and
+    // `"1.10.1" < "1.9.0"` as strings. So the two lines below contradict each
+    // other on screen — filed as #371, and this fixture is what surfaced it.
+    //
+    // Asserted rather than avoided so the defect is documented and this test
+    // TRIPS when #371 lands (verified by simulating the fix). Delete this
+    // assertion then, and assert `1.10.1`.
+    assert!(
+        text.contains("version:      1.9.0"),
+        "#371: `latest()` is lexicographic, so the OLD version is described: {text}"
+    );
+    for v in ["1.9.0", "1.10.0", "1.10.1"] {
+        assert!(
+            text.lines()
+                .any(|l| l.starts_with("versions:") && l.contains(v)),
+            "version {v} missing from the versions line: {text}"
+        );
+    }
+    // And it names the verb that acts on them, so the answer is actionable
+    // rather than merely informative.
+    assert!(
+        text.contains("aware agent update probe-agent@<version>"),
+        "the versions line should say what to do with them: {text}"
+    );
+}
+
+#[test]
+fn describe_available_json_carries_the_versions_too() {
+    // The UI reads JSON, not the table — floless.app's "Available agents" tab is
+    // the consumer that made `vendor`/`keywords` a field, and version selection
+    // needs the same treatment.
+    let (_tmp, out) = describe_available(MULTI_VERSION_CATALOG, true);
+    let v: serde_json::Value = serde_json::from_slice(&out).unwrap();
+    let versions: Vec<&str> = v["data"]["versions"]
+        .as_array()
+        .expect("versions array")
+        .iter()
+        .map(|x| x.as_str().unwrap())
+        .collect();
+    // `1.9.0` before `1.10.0` is the whole point. The keys live in a
+    // `BTreeMap<String, _>`, so the obvious `versions.keys()` sorts them
+    // LEXICOGRAPHICALLY and puts `1.10.0` first — and this registry ships
+    // calendar-shaped versions (`tekla@2025.0.1`), where that misordering is
+    // routine rather than exotic. A fixture of 1.1/1.2/1.3 would have passed
+    // either way and proved nothing about the order it asserts.
+    assert_eq!(
+        versions,
+        ["1.9.0", "1.10.0", "1.10.1"],
+        "oldest first by SEMVER"
+    );
+    // CHARACTERISATION (#371), the same one as above: `version` is the
+    // LEXICOGRAPHICALLY greatest key, so it disagrees with the last entry of the
+    // list beside it. Pinned so a consumer reading this envelope is not surprised,
+    // and so the fix announces itself here.
+    assert_eq!(
+        v["data"]["version"], "1.9.0",
+        "#371: `latest()` is lexicographic — this should become 1.10.1"
+    );
+}
+
+#[test]
+fn a_single_version_agent_prints_no_versions_line() {
+    // Negative control, and a deliberate quiet: repeating one version on a second
+    // line teaches the reader that the line means something it does not. The
+    // line appears when there is a CHOICE to make.
+    let (_tmp, out) = describe_available(
+        r#"{"version":"1","updated-at":"2026-06-16T00:00:00Z","agents":{"probe-agent":{"versions":{
+             "1.3.0": { "description": "only", "status": "available", "stateful": false,
+                        "transport": "cli", "command_count": 1, "skills": [] }}}}}"#,
+        false,
+    );
+    let text = String::from_utf8_lossy(&out);
+    assert!(text.contains("version:      1.3.0"));
+    assert!(
+        !text.lines().any(|l| l.starts_with("versions:")),
+        "one version is not a choice: {text}"
+    );
+}

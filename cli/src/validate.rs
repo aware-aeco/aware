@@ -420,15 +420,15 @@ impl VersionPin {
 }
 
 /// An installed agent's `version:`, parsed.
-struct InstalledVersion {
-    triple: (u64, u64, u64),
+pub(crate) struct InstalledVersion {
+    pub(crate) triple: (u64, u64, u64),
     /// The semver prerelease suffix (`rc.1` of `1.2.0-rc.1`), if any. Kept as
     /// the identifier rather than a flag so an exact pin can name *which*
     /// prerelease it wants, not merely refuse all of them.
     /// Build metadata (`+deadbeef`) is **not** recorded: semver §10 excludes it
     /// from a release's identity and from precedence, so it cannot change which
     /// pins a version satisfies.
-    prerelease: Option<String>,
+    pub(crate) prerelease: Option<String>,
 }
 
 /// Parse an installed agent's `version:` as **strict** SemVer 2.0.0.
@@ -445,7 +445,7 @@ struct InstalledVersion {
 /// build-stamped version stays *checkable* rather than being reported as
 /// unreadable. The prerelease flag is kept rather than discarded because it
 /// changes the answer for an exact pin (see [`VersionPin::is_satisfied_by`]).
-fn parse_semver(version: &str) -> Option<InstalledVersion> {
+pub(crate) fn parse_semver(version: &str) -> Option<InstalledVersion> {
     // SemVer order is `<core>-<prerelease>+<build>`, so split build metadata
     // off first — otherwise `1.2.0+linux-gnu` would read as a prerelease.
     let (rest, build) = match version.split_once('+') {
@@ -615,38 +615,50 @@ pub fn unsatisfied_pins(
             continue; // not installed — `missing_agents` owns that finding
         };
         let version = installed.manifest.version.as_str();
-        // This message deliberately names NO command, and that is a fix rather
-        // than an omission. Five review findings landed on the command this used
-        // to print, each a different spelling of the same mistake: the validator
-        // does not know enough to prescribe one.
+        // What this message may say has been argued five times, and every clause
+        // below is one of those arguments. It once printed a command; five review
+        // findings killed that, each a different spelling of "the validator does
+        // not know enough to prescribe one":
         //
         //   - a range pin is not a registry key (`Index::resolve` looks versions
         //     up literally, so `foo@0.1.x` misses even when `0.1.0` is there);
         //   - build metadata is part of a pin but not of a registry key;
         //   - `install` refuses while a copy is on disk, and this finding only
         //     fires when the agent IS installed;
-        //   - `update` takes no version, so it cannot reach a pin the newest
+        //   - `update` took no version, so it could not reach a pin the newest
         //     release fails;
-        //   - and `uninstall` first — the last thing printed here — is actively
-        //     DESTRUCTIVE for an agent installed from a local folder: `agent
-        //     install id@version` is parsed as a registry spec (`commands/agent.rs`),
-        //     so removing a local install and reinstalling it by version cannot
-        //     work, and leaves the machine with no agent at all.
+        //   - and `uninstall` first was actively DESTRUCTIVE for an agent
+        //     installed from a local folder: `agent install id@version` is parsed
+        //     as a registry spec, so removing a local install and reinstalling it
+        //     by version cannot work, and leaves the machine with no agent.
         //
-        // Nothing at this point distinguishes a registry agent from a local one,
-        // and no command lists the versions the registry actually holds, so any
-        // sequence printed here is wrong for some real case. A wrong command is
-        // worse than none — and a destructive one is worse than a dead end. State
-        // the goal, which is true in every case, and leave the route to the
-        // operator. #363 tracks the missing surface (version-selecting update,
-        // version listing, local-install provenance); when it lands, a remedy can
-        // come back with something that always works.
+        // #363 closed the LAST three: `update <id>@<version>` reaches a named
+        // version, `describe <id> --available` lists which exist, and the
+        // uninstall-first sequence is retired. So a remedy comes back — but only
+        // what the code can actually promise.
+        //
+        // The first two findings stand, and they are why NO CONCRETE VERSION is
+        // printed: a range pin is not a registry key, and build metadata is part
+        // of a pin but not of a key. The operator picks the version.
+        //
+        // And the destructive finding is not fully retired — it moved. Nothing
+        // records install provenance, so `update` cannot tell a local install
+        // from a registry one, and a local fork whose id is ALSO a registry key
+        // is silently replaced (verified, filed as #370). That is exactly the
+        // population a pin failure squarely includes, so the message WARNS rather than
+        // claiming a safety the substrate cannot offer yet. When #370 lands, the
+        // warning collapses into a plain refusal from `update` itself.
         let msg = match parse_semver(version) {
             Some(v) if pin.is_satisfied_by(&v) => continue,
             Some(_) => format!(
                 "app requires {agent_id}@{spec}, but {version} is installed — install a version \
                  matching {spec}, or update the app's `requires:` pin if the new contract is the \
-                 intended one"
+                 intended one. To see what the registry has: \
+                 `aware agent describe {agent_id} --available`; to move to one: \
+                 `aware agent update {agent_id}@<version>` — atomic, so a version the registry \
+                 does not have refuses and leaves the installed copy untouched. WARNING: if this \
+                 {agent_id} was installed from a LOCAL folder, update MAY replace it with the \
+                 registry's copy and the local one is gone (#370) — back it up first"
             ),
             None => format!(
                 "app requires {agent_id}@{spec}, but the installed version {version:?} is not \
@@ -1688,19 +1700,17 @@ requires: []
     }
 
     #[test]
-    fn the_remedy_states_the_goal_and_prescribes_no_command() {
-        // This test used to assert the opposite for exact pins, and the history is
-        // the reason it now reads this way. The printed command drew five separate
-        // findings — range pins are not registry keys; build metadata is part of a
-        // pin but not of a key; `install` refuses while a copy is on disk; `update`
-        // takes no version — ending in a DESTRUCTIVE one: `uninstall` first, then
-        // reinstall-by-version, silently assumes the registry, so for an agent
-        // installed from a local folder it removed the only copy and then failed.
+    fn the_remedy_prescribes_only_what_is_safe_and_always_available() {
+        // This test has now said three different things, and each turn was earned.
+        // It asserted a printed command; then, after five findings — range pins are
+        // not registry keys; build metadata is part of a pin but not of a key;
+        // `install` refuses while a copy is on disk; `update` took no version; and
+        // `uninstall`-first DESTROYS a locally-installed agent — it asserted no
+        // command at all. #363 closed three of the five, so a remedy comes back,
+        // and this pins the properties that make it safe rather than its wording.
         //
-        // The validator knows neither the agent's provenance nor what the registry
-        // holds, so every sequence it could print is wrong for some real case. It
-        // states the goal instead. A message that prescribes nothing cannot
-        // prescribe something harmful.
+        // Relaxed deliberately, which is what #363 asked for: the two findings
+        // that still stand are exactly why no concrete VERSION is printed.
         let agents = vec![installed("ifc-reference-reader", "1.3.0")];
         for pin in [
             "0.1.x",
@@ -1717,19 +1727,36 @@ requires: []
                 Severity::Error,
             );
             let msg = &issues[0].message;
-            // The operator still learns what is needed…
+            // The goal survives every rewrite — it is the part that is true on
+            // every machine.
             assert!(
                 msg.contains(&format!("install a version matching {pin}")),
                 "pin {pin} lost the goal: {msg}"
             );
-            // …and is never handed an incantation whose success cannot be known here.
-            for verb in [
-                "aware agent install",
-                "aware agent uninstall",
-                "aware agent update",
-            ] {
+            // The two commands it may name are the two that cannot do damage and
+            // cannot be unavailable: one lists what the registry has, the other
+            // moves to a version atomically.
+            assert!(
+                msg.contains("aware agent describe ifc-reference-reader --available"),
+                "pin {pin} lost the discovery step: {msg}"
+            );
+            assert!(
+                msg.contains("aware agent update ifc-reference-reader@<version>"),
+                "pin {pin} lost the version-selecting update: {msg}"
+            );
+            // Never the destructive one. This is the finding that made the
+            // message go silent in the first place, and it must not come back
+            // with it.
+            for verb in ["aware agent uninstall", "aware agent install"] {
                 assert!(!msg.contains(verb), "pin {pin} prescribed `{verb}`: {msg}");
             }
+            // And never a CONCRETE version, because a range pin is not a registry
+            // key: `update foo@0.1.x` would be handed to a literal lookup and
+            // miss even when `0.1.0` is there. The placeholder is load-bearing.
+            assert!(
+                !msg.contains(&format!("update ifc-reference-reader@{pin}")),
+                "pin {pin} was printed as if it were a version: {msg}"
+            );
         }
     }
 
