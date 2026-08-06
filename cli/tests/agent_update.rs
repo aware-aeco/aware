@@ -1244,11 +1244,17 @@ fn update_all_force_skips_local_installs_and_updates_the_rest() {
         .success();
     let text = String::from_utf8_lossy(&out.get_output().stdout).to_string();
 
-    // The local one is left alone AND named — a skip the operator cannot see is the thing
-    // this replaced.
+    // The local one is left alone AND named — "the command names none of them" is the
+    // complaint in the issue, so the SUMMARY must list it, not merely a per-agent line
+    // scrolled past among fifty others. Asserting the per-agent line alone let a mutant
+    // that deleted the summary survive.
     assert!(
-        text.contains("handmade") && text.contains("skipped"),
-        "the local agent must be reported as skipped, by name: {text}"
+        text.contains("- handmade: skipped"),
+        "the local agent must be reported as skipped where it is reached: {text}"
+    );
+    assert!(
+        text.contains("left alone: handmade"),
+        "and named again in the summary, which is what an operator actually reads: {text}"
     );
     assert!(
         text.contains("aware agent update <id> --force"),
