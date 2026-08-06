@@ -70,6 +70,11 @@ pub enum AgentCommand {
         /// `update` refuses those by default: the registry's copy would overwrite work that
         /// exists nowhere else (#370). Pass this when taking the registry's version is what you
         /// actually want.
+        ///
+        /// With `--all` it means something different, deliberately: the local installs are
+        /// SKIPPED and named, and everything else updates (#374). One id plus this flag is a
+        /// decision about that agent; `--all` plus this flag would be a blanket waiver over a
+        /// set you cannot see.
         #[arg(long)]
         force: bool,
     },
@@ -402,11 +407,36 @@ fn update_all(ctx: &Context, force: bool) -> Result<(), AwareError> {
 
     let mut ok = 0usize;
     let mut failed: Vec<(String, String)> = Vec::new();
+    let mut skipped: Vec<String> = Vec::new();
     for id in &ids {
+        // `--all --force` SKIPS a local install rather than replacing it (#374).
+        //
+        // For ONE named agent, `--force` is a fair trade: the operator typed the id and
+        // the flag together. `--all` breaks that pairing — the id is gone, so the flag
+        // stops being a decision about a particular agent and becomes a blanket waiver
+        // over a set the operator cannot see. It is also the natural thing to reach for:
+        // `update --all` fails, the failure says `--force`, and the shortest fix is to
+        // append it. So here it means "do not fail the run over my local builds", not
+        // "replace them".
+        if force
+            && let Some(reason) =
+                crate::install::registry::local_install_conflict(id, &ctx.paths, &index)
+        {
+            println!("  - {id}: skipped — {reason}");
+            skipped.push(id.clone());
+            continue;
+        }
         // Atomic per-agent update: a failure leaves that agent's existing
         // install untouched rather than deleting it (#174). One transient
         // network error must not cost the user an installed agent.
-        match crate::install::update_agent_from_registry(id, None, force, &ctx.paths, &index) {
+        //
+        // `force` is deliberately NOT passed through. Everything it waives is the guard
+        // just asked above, so anything it would still waive here is a case this loop has
+        // not judged — specifically a payload that RENAMES onto a local install under a
+        // different id, which the second guard inside catches. Passing `force` would
+        // destroy that one silently; withholding it turns the same case into a reported
+        // failure.
+        match crate::install::update_agent_from_registry(id, None, false, &ctx.paths, &index) {
             Ok(spec) => {
                 println!("  \u{2713} {spec}");
                 ok += 1;
@@ -424,7 +454,20 @@ fn update_all(ctx: &Context, force: bool) -> Result<(), AwareError> {
     let _ = crate::commands::diagram::auto_regenerate(ctx);
 
     println!();
-    println!("{ok} updated, {} failed", failed.len());
+    if skipped.is_empty() {
+        println!("{ok} updated, {} failed", failed.len());
+    } else {
+        println!(
+            "{ok} updated, {} skipped (local installs), {} failed",
+            skipped.len(),
+            failed.len()
+        );
+        // Named, because a skip the operator cannot see is the thing this replaced.
+        println!("  left alone: {}", skipped.join(", "));
+        println!(
+            "  to replace one with the registry's copy, name it: aware agent update <id> --force"
+        );
+    }
     if !failed.is_empty() {
         return Err(AwareError::Validation(format!(
             "{} agent(s) failed to update",

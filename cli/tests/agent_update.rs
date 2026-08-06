@@ -1196,3 +1196,104 @@ fn naming_a_version_explicitly_still_reaches_the_older_one() {
         .success();
     assert_eq!(installed_version(&aware), "1.9.0");
 }
+
+// ── #374: `--all --force` skips local installs instead of replacing them ──────
+
+/// A local agent folder that is NOT in the registry fixture, so `update` must treat it as
+/// a local build. Returns its id.
+fn local_agent_dir(tmp: &std::path::Path, id: &str) -> std::path::PathBuf {
+    let src = tmp.join(format!("src-{id}"));
+    std::fs::create_dir_all(&src).unwrap();
+    std::fs::write(
+        src.join("manifest.yaml"),
+        format!(
+            "agent: {id}\nversion: 0.0.1-local\ndescription: a hand-built agent\n\
+             stateful: false\nlicense: MIT\ntransport:\n  cli:\n    binary: b\n\
+             commands:\n  go:\n    lifecycle: single\n    description: x\n"
+        ),
+    )
+    .unwrap();
+    src
+}
+
+#[test]
+fn update_all_force_skips_local_installs_and_updates_the_rest() {
+    // #374. `--force` waives the #370 guard, and with `--all` that waiver applied to EVERY
+    // installed agent at once — the id is gone, so the flag stopped being a decision about
+    // a particular agent. It is also the natural thing to reach for: `update --all` fails,
+    // the failure says `--force`, and the shortest fix is to append it.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+
+    // One registry agent at the older version, one hand-built local agent.
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent@1.2.0"])
+        .assert()
+        .success();
+    let local = local_agent_dir(tmp.path(), "handmade");
+    probe(&aware, &idx)
+        .args(["agent", "install"])
+        .arg(&local)
+        .assert()
+        .success();
+
+    let out = probe(&aware, &idx)
+        .args(["agent", "update", "--all", "--force"])
+        .assert()
+        .success();
+    let text = String::from_utf8_lossy(&out.get_output().stdout).to_string();
+
+    // The local one is left alone AND named — a skip the operator cannot see is the thing
+    // this replaced.
+    assert!(
+        text.contains("handmade") && text.contains("skipped"),
+        "the local agent must be reported as skipped, by name: {text}"
+    );
+    assert!(
+        text.contains("aware agent update <id> --force"),
+        "and the output must say how to replace it deliberately: {text}"
+    );
+    assert!(
+        std::fs::read_to_string(aware.join("agents/handmade/manifest.yaml"))
+            .unwrap()
+            .contains("0.0.1-local"),
+        "the local build must still be on disk, untouched"
+    );
+
+    // …while the registry agent DID update. Without this the test would pass on a build
+    // that had simply stopped updating anything.
+    assert_eq!(
+        installed_version(&aware),
+        "1.3.0",
+        "the registry-sourced agent must still be brought up to date: {text}"
+    );
+}
+
+#[test]
+fn update_all_without_force_still_fails_on_a_local_install() {
+    // The control. `--all` alone must keep refusing — the skip is what `--force` now BUYS,
+    // so if the bare form also skipped, the flag would mean nothing and a local install
+    // would be silently ignored rather than reported as a problem.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    let local = local_agent_dir(tmp.path(), "handmade");
+    probe(&aware, &idx)
+        .args(["agent", "install"])
+        .arg(&local)
+        .assert()
+        .success();
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "--all"])
+        .assert()
+        .failure()
+        .stdout(predicate::str::contains("handmade"));
+    assert!(
+        std::fs::read_to_string(aware.join("agents/handmade/manifest.yaml"))
+            .unwrap()
+            .contains("0.0.1-local"),
+        "and it is still untouched either way"
+    );
+}
