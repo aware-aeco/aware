@@ -334,9 +334,19 @@ function placedElements(api, modelID) {
  * meant to prevent.
  *
  * `bbox` is APPROXIMATE and in millimetres: it comes from the file's own IfcCartesianPoints scaled by
- * the declared unit, so it includes local profile coordinates and ignores placement nesting. It is
- * good enough for "is this thing 1000x off, or sitting 74 m from the origin?" and is not the
- * authoritative extent — that comes from real geometry in `read-model`.
+ * the declared unit, so it includes local profile coordinates and ignores placement nesting. It is not
+ * the authoritative extent — that comes from real geometry in `read-model`.
+ *
+ * READ THE CORNERS, NOT THE CENTRE. A file's points include every placement origin, so the box is
+ * routinely pinned to the world origin at one end and the model at the other, putting its midpoint
+ * about half way to the model. Measured on this repo's four connection fixtures (2026-08-06), the box
+ * centre is 9.6–12.6 MODEL-SPANS from the centre of what `read-model` returns — so a consumer using the
+ * midpoint as a position proxy reports "miles away" for a correctly placed file. Compare extents.
+ *
+ * Why it is not simply fixed: a point-based extent cannot bound a swept solid (the size lives in
+ * `IfcRectangleProfileDef`/`IfcExtrudedAreaSolid` NUMBERS, not in any point); composing placements is
+ * a no-op on files that place at the origin; and excluding transform points empties the box, because
+ * on such a file every point IS a placement origin. All three measured in aware-aeco/aware#348.
  */
 export function probeModel(api, modelID) {
   const { declared, id: unitId } = lengthUnit(api, modelID);

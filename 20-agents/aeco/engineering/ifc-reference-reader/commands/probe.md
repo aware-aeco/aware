@@ -95,9 +95,17 @@ Shared axes are not a shared origin, though — see below. Compare *scale*, not 
 
 ## `bbox` is approximate, and `null` when it cannot be trusted
 It comes from the file's own `IfcCartesianPoint`s scaled by the declared unit, so it includes local
-profile coordinates and ignores placement nesting. That is good enough for the two questions it is
-asked — *"is this roughly 1000× off?"* and *"is this sitting 74 m from the origin?"* — and it is not
-the authoritative extent. That comes from real geometry, via `read-model`.
+profile coordinates and ignores placement nesting. It is not the authoritative extent — that comes
+from real geometry, via `read-model`.
+
+**Read the CORNERS, never the centre.** The box is the extent of the points the file writes, and a
+file's points include every placement origin — so the box is routinely pinned to the world origin at
+one end and to the model at the other, which puts its centre roughly half way to the model rather than
+on it. Measured on the four connection fixtures in this repo (2026-08-06), the box centre sits **9.6 to
+12.6 model-spans** away from the centre of what `read-model` returns. A consumer asking *"is this
+reference sitting miles from my model?"* must therefore compare the box's **extent** against the
+model's, not its midpoint; a midpoint comparison reports "miles away" for a file that is placed
+correctly.
 
 **It is not a size readout, and the gap can be large in either direction.** Because every point is read
 as if it were a world coordinate, a file with nested placements is overstated: for
@@ -106,7 +114,13 @@ renders `3.62 × 3.66 × 0.74 m` — a ~10× overstatement that is within what "
 still useless as a size. For the same reason it can also *miss* geometry: on `baseplate-rot.ifc`, whose
 frame is yawed 30° about the vertical, the tessellated connection lands outside the reported box in
 plan. Ask it *"is this far from the origin, or wildly mis-scaled?"*; ask `read-model` *"how big is
-it?"*. Tightening it to the placed geometry without tessellating is tracked separately.
+it?"*. Tightening it to the placed geometry without tessellating is tracked in aware-aeco/aware#348 —
+where three cheap approaches are measured and closed out, so read it before attempting a fourth. The
+short version: a point-based extent **cannot** bound a swept solid, because the size lives in numbers
+(`IFCRECTANGLEPROFILEDEF(…,0.4,0.4)`, `IFCEXTRUDEDAREASOLID(…,1.)`) and not in any point; composing
+placements is a no-op on files that place at the origin and put their coordinates in the
+representation; and excluding transform points empties the box entirely, because on a swept file
+*every* point is a placement origin.
 
 **It is `null` rather than a guess** when the length unit cannot be resolved to millimetres, or when
 the file has no usable 3D points. Both cases used to produce a plausible-looking box — a factor-1
