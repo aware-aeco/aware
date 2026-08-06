@@ -102,8 +102,12 @@ impl Index {
         format!("{:x}", h.finalize())
     }
 
-    /// Resolve `<id>[@version]` → `(version, &VersionEntry)`. If version is `None`, return
-    /// the lexicographically-greatest version (good enough for v0.2; v0.3+ adds semver).
+    /// Resolve `<id>[@version]` → `(version, &VersionEntry)`.
+    ///
+    /// With no version, returns the greatest by **SemVer §11 precedence** — not the
+    /// lexicographically-greatest, which is what this did until #371 and which put `1.9.0`
+    /// ahead of `1.10.1`. A version key that is not strict SemVer ranks below every key that
+    /// is, so it can be asked for by name but never resolves as "latest".
     pub fn resolve(
         &self,
         id: &str,
@@ -118,10 +122,14 @@ impl Index {
                 .versions
                 .get_key_value(v)
                 .ok_or_else(|| AwareError::NotFound(format!("agent {id}@{v} not in registry")))?,
+            // #371: NOT `next_back()`. These keys live in a `BTreeMap<String, _>`, so that is a
+            // string comparison — `"1.10.1" < "1.9.0"` — and `aware agent install <id>` fetched
+            // 1.9.0 when 1.10.1 existed. This registry publishes calendar-shaped versions
+            // (`tekla@2025.0.1`), where a `.10` follows a `.9` routinely.
             None => entry
                 .versions
                 .iter()
-                .next_back()
+                .max_by(|a, b| crate::validate::compare_version_keys(a.0, b.0))
                 .ok_or_else(|| AwareError::NotFound(format!("agent {id} has no versions")))?,
         };
         Ok((resolved_version, version_entry))

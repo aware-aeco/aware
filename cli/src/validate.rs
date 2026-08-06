@@ -493,6 +493,79 @@ fn numeric_identifier(s: &str) -> Option<u64> {
     s.parse().ok()
 }
 
+/// SemVer §11 precedence between two version KEYS, for picking "the latest" (#371).
+///
+/// The registry and the catalogue both key versions in a `BTreeMap<String, _>` and used to take
+/// `next_back()` as the greatest. That is a STRING comparison: `"1.10.1" < "1.9.0"`, so
+/// `aware agent install <id>` fetched **1.9.0** when 1.10.1 existed, and `describe --available`
+/// reported the older one as current. Dormant only because every registry entry shipped a single
+/// version — and this registry publishes calendar-shaped ones (`tekla@2025.0.1`), where a `.10`
+/// follows a `.9` as a matter of course.
+///
+/// Full §11, not just the numeric triple:
+///
+/// - a version WITHOUT a prerelease outranks the same triple WITH one (`1.0.0` > `1.0.0-rc.1`);
+/// - prerelease identifiers compare field by field: numeric ones numerically (so `rc.2` < `rc.10`,
+///   which a string compare gets backwards), numeric always below alphanumeric, and a shorter
+///   run below a longer one when all preceding fields are equal;
+/// - build metadata is excluded entirely (§10), which `parse_semver` already discards.
+///
+/// A key that is not strict semver keeps its key order and sorts BELOW every key that is, rather
+/// than being dropped — an unparseable version is still one you can ask for by name, and hiding it
+/// would be worse than ranking it last. Ranking it last rather than first is the load-bearing
+/// half: a key nothing can reason about must never WIN `install <id>`.
+///
+/// One documented disagreement with the spec, unreachable in practice: a prerelease numeric
+/// identifier larger than `u64::MAX` falls to the alphanumeric arm, so two such identifiers of
+/// DIFFERING digit-length compare by ASCII rather than by value. Equal widths still come out
+/// right, and the `semver` crate has the same ceiling.
+pub(crate) fn compare_version_keys(a: &str, b: &str) -> std::cmp::Ordering {
+    match (parse_semver(a), parse_semver(b)) {
+        (Some(x), Some(y)) => x.triple.cmp(&y.triple).then_with(|| {
+            match (x.prerelease.as_deref(), y.prerelease.as_deref()) {
+                (None, None) => std::cmp::Ordering::Equal,
+                // §11: a release outranks any prerelease of the same triple.
+                (None, Some(_)) => std::cmp::Ordering::Greater,
+                (Some(_), None) => std::cmp::Ordering::Less,
+                (Some(p), Some(q)) => compare_prerelease(p, q),
+            }
+        }),
+        (Some(_), None) => std::cmp::Ordering::Greater,
+        (None, Some(_)) => std::cmp::Ordering::Less,
+        (None, None) => a.cmp(b),
+    }
+}
+
+/// §11 precedence between two prerelease suffixes (`rc.1` vs `rc.10`), identifier by identifier.
+fn compare_prerelease(a: &str, b: &str) -> std::cmp::Ordering {
+    let mut ai = a.split('.');
+    let mut bi = b.split('.');
+    loop {
+        match (ai.next(), bi.next()) {
+            (None, None) => return std::cmp::Ordering::Equal,
+            // "A larger set of pre-release fields has a higher precedence than a smaller set, if
+            // all of the preceding identifiers are equal."
+            (None, Some(_)) => return std::cmp::Ordering::Less,
+            (Some(_), None) => return std::cmp::Ordering::Greater,
+            (Some(x), Some(y)) => {
+                let (nx, ny) = (x.parse::<u64>().ok(), y.parse::<u64>().ok());
+                let ord = match (nx, ny) {
+                    // Numeric identifiers compare NUMERICALLY — the whole point: `2` < `10`,
+                    // where a string compare says the opposite.
+                    (Some(x), Some(y)) => x.cmp(&y),
+                    // "Numeric identifiers always have lower precedence than alphanumeric ones."
+                    (Some(_), None) => std::cmp::Ordering::Less,
+                    (None, Some(_)) => std::cmp::Ordering::Greater,
+                    (None, None) => x.cmp(y),
+                };
+                if ord != std::cmp::Ordering::Equal {
+                    return ord;
+                }
+            }
+        }
+    }
+}
+
 /// Dot-separated SemVer identifiers, per §9 (prerelease) and §10 (build).
 /// `numeric_leading_zero_rule` selects the prerelease-only restriction that a
 /// purely numeric identifier must not be zero-padded.
@@ -1055,6 +1128,98 @@ fn has_cycle<'a>(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn latest_is_semver_precedence_not_string_order() {
+        use std::cmp::Ordering::*;
+        // The bug, first: every one of these is ordered BACKWARDS by a string compare, which is
+        // what `next_back()` on a `BTreeMap<String, _>` was doing. The calendar-shaped pair is not
+        // hypothetical — this registry ships `tekla@2025.0.1`.
+        for (lo, hi) in [
+            ("1.9.0", "1.10.0"),
+            ("1.9.0", "1.10.1"),
+            ("2025.0.2", "2025.0.10"),
+            ("1.2.9", "1.2.10"),
+            ("9.0.0", "10.0.0"),
+        ] {
+            assert_eq!(
+                compare_version_keys(lo, hi),
+                Less,
+                "{lo} must rank below {hi} — a string compare says the opposite"
+            );
+            assert_eq!(compare_version_keys(hi, lo), Greater);
+            assert_eq!(compare_version_keys(lo, lo), Equal);
+        }
+    }
+
+    #[test]
+    fn a_release_outranks_its_own_prereleases() {
+        use std::cmp::Ordering::*;
+        // §11. Without this a prerelease could be served as "latest" to everyone who typed
+        // `aware agent install <id>` with no version.
+        assert_eq!(compare_version_keys("1.0.0-rc.1", "1.0.0"), Less);
+        assert_eq!(compare_version_keys("1.0.0", "1.0.0-rc.1"), Greater);
+        // …but only within the same triple: a prerelease of a HIGHER triple still wins.
+        assert_eq!(compare_version_keys("1.0.0", "1.1.0-rc.1"), Less);
+    }
+
+    #[test]
+    fn prerelease_identifiers_compare_field_by_field_not_as_strings() {
+        use std::cmp::Ordering::*;
+        // The half the first cut of this comparator got wrong (it compared the whole suffix as a
+        // String, so `rc.10` sorted below `rc.2`). §11 spells out all three rules:
+        //
+        //   numeric identifiers compare numerically…
+        assert_eq!(compare_version_keys("1.0.0-rc.2", "1.0.0-rc.10"), Less);
+        assert_eq!(compare_version_keys("1.0.0-1", "1.0.0-2"), Less);
+        //   …numeric always ranks below alphanumeric…
+        assert_eq!(compare_version_keys("1.0.0-1", "1.0.0-alpha"), Less);
+        //   …and a longer field set outranks a shorter one when the preceding fields are equal.
+        assert_eq!(compare_version_keys("1.0.0-rc", "1.0.0-rc.1"), Less);
+        // The example chain from the spec itself, checked pairwise in order.
+        let chain = [
+            "1.0.0-alpha",
+            "1.0.0-alpha.1",
+            "1.0.0-alpha.beta",
+            "1.0.0-beta",
+            "1.0.0-beta.2",
+            "1.0.0-beta.11",
+            "1.0.0-rc.1",
+            "1.0.0",
+        ];
+        for pair in chain.windows(2) {
+            assert_eq!(
+                compare_version_keys(pair[0], pair[1]),
+                Less,
+                "semver §11: {} must rank below {}",
+                pair[0],
+                pair[1]
+            );
+        }
+    }
+
+    #[test]
+    fn build_metadata_does_not_change_precedence() {
+        use std::cmp::Ordering::*;
+        // §10 excludes it from identity and from precedence, and `parse_semver` discards it — so
+        // two keys differing only there compare Equal, and a stable sort leaves them in key order.
+        assert_eq!(compare_version_keys("1.2.3+linux", "1.2.3"), Equal);
+        assert_eq!(compare_version_keys("1.2.3+a", "1.2.3+b"), Equal);
+        assert_eq!(compare_version_keys("1.2.3+zzz", "1.2.4"), Less);
+    }
+
+    #[test]
+    fn an_unparseable_key_ranks_below_every_real_version_but_is_not_dropped() {
+        use std::cmp::Ordering::*;
+        // A version you cannot parse is still one you can ask for by name. Ranking it last is a
+        // judgement; hiding it would be a lie — and making it WIN would hand `install <id>` a key
+        // nothing can reason about.
+        assert_eq!(compare_version_keys("not-a-version", "0.0.1"), Less);
+        assert_eq!(compare_version_keys("0.0.1", "not-a-version"), Greater);
+        // Two unparseable keys keep a stable, defined order rather than comparing Equal.
+        assert_eq!(compare_version_keys("aaa", "bbb"), Less);
+        assert_eq!(compare_version_keys("aaa", "aaa"), Equal);
+    }
     use crate::manifest::Agent;
 
     fn load_agent(rel: &str) -> Agent {

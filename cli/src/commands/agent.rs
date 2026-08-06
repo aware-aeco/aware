@@ -169,32 +169,15 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
 /// to pick a version would be ordered wrongly at exactly the point they compare
 /// two of them.
 ///
-/// A key that is not strict semver keeps its key order and sorts after the ones
-/// that are, rather than being dropped — an unparseable version is still a
-/// version you can ask for, and hiding it would be worse than misplacing it.
-///
-/// One limit, stated because "by semver" reads as more than it delivers: a
-/// prerelease sorts before its release (§11), but two prereleases of the SAME
-/// triple are compared as raw strings, so `rc.10` sorts before `rc.2`.
-/// `parse_semver` keeps the suffix as a `String` rather than as identifiers, and
-/// giving it real §11 precedence belongs with #371, which needs a full
-/// comparator for `latest()` and `Index::resolve` anyway.
+/// Ordering is `validate::compare_version_keys`, the same comparator `Index::resolve` and
+/// `CatalogAgent::latest` pick "the latest" with — so the list a reader sees and the version
+/// `install` would fetch can no longer disagree. This function had its own copy until #371;
+/// that copy compared prerelease suffixes as raw strings (`rc.10` below `rc.2`) and ranked
+/// unparseable keys LAST. Both are fixed in the shared one, and an unparseable key now sorts
+/// FIRST — below every real version, which is what stops it winning `latest()`.
 fn versions_oldest_first(agent: &catalog::CatalogAgent) -> Vec<&str> {
     let mut keys: Vec<&str> = agent.versions.keys().map(String::as_str).collect();
-    keys.sort_by(|a, b| {
-        match (
-            crate::validate::parse_semver(a),
-            crate::validate::parse_semver(b),
-        ) {
-            // Prerelease sorts before its release, per semver §11.
-            (Some(x), Some(y)) => (x.triple, x.prerelease.is_none())
-                .cmp(&(y.triple, y.prerelease.is_none()))
-                .then_with(|| x.prerelease.cmp(&y.prerelease)),
-            (Some(_), None) => std::cmp::Ordering::Less,
-            (None, Some(_)) => std::cmp::Ordering::Greater,
-            (None, None) => a.cmp(b),
-        }
-    });
+    keys.sort_by(|a, b| crate::validate::compare_version_keys(a, b));
     keys
 }
 

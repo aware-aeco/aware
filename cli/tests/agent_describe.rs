@@ -104,17 +104,13 @@ fn describe_available_lists_every_version_the_registry_has() {
     let (_tmp, out) = describe_available(MULTI_VERSION_CATALOG, false);
     let text = String::from_utf8_lossy(&out);
 
-    // CHARACTERISATION, not an endorsement: `version:` reports **1.9.0**, because
-    // `CatalogAgent::latest()` takes `next_back()` on a `BTreeMap<String, _>` and
-    // `"1.10.1" < "1.9.0"` as strings. So the two lines below contradict each
-    // other on screen — filed as #371, and this fixture is what surfaced it.
-    //
-    // Asserted rather than avoided so the defect is documented and this test
-    // TRIPS when #371 lands (verified by simulating the fix). Delete this
-    // assertion then, and assert `1.10.1`.
+    // #371 landed, so this asserts the truth rather than characterising the defect: the
+    // fixture is chosen so lexicographic and semver DISAGREE (`"1.10.1" < "1.9.0"` as
+    // strings), which is what makes the assertion mean something. It was the
+    // characterisation test that announced the fix, exactly as intended.
     assert!(
-        text.contains("version:      1.9.0"),
-        "#371: `latest()` is lexicographic, so the OLD version is described: {text}"
+        text.contains("version:      1.10.1"),
+        "the newest by SEMVER is the one described: {text}"
     );
     for v in ["1.9.0", "1.10.0", "1.10.1"] {
         assert!(
@@ -155,13 +151,12 @@ fn describe_available_json_carries_the_versions_too() {
         ["1.9.0", "1.10.0", "1.10.1"],
         "oldest first by SEMVER"
     );
-    // CHARACTERISATION (#371), the same one as above: `version` is the
-    // LEXICOGRAPHICALLY greatest key, so it disagrees with the last entry of the
-    // list beside it. Pinned so a consumer reading this envelope is not surprised,
-    // and so the fix announces itself here.
+    // …and `version` now AGREES with the last entry of the list beside it. Those two
+    // contradicted each other on screen before #371, which is what a consumer reading this
+    // envelope would have had to reconcile.
     assert_eq!(
-        v["data"]["version"], "1.9.0",
-        "#371: `latest()` is lexicographic — this should become 1.10.1"
+        v["data"]["version"], "1.10.1",
+        "`version` must be the newest by semver, matching the list"
     );
 }
 
