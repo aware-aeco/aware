@@ -2024,9 +2024,13 @@ requires: []
     /// reach in principle.
     ///
     /// Both halves are discovered, not listed: every app file under
-    /// `30-apps/_examples/`, and every ```` ```yaml ```` block that deserializes as a
-    /// whole `App` under the doc trees. A new example, or a new skill that documents
-    /// one, is covered the day it lands.
+    /// `30-apps/_examples/`, and every ```` ```yaml ```` block under the doc trees whose
+    /// first key is `app:`. A new example, or a new skill that documents one, is
+    /// covered the day it lands.
+    ///
+    /// A doc block is read for its PINS, not as a whole `App` — demanding one would
+    /// skip exactly the blocks this exists for, since app-spec § Versioning publishes
+    /// its pins inside a fragment (`nodes: ...` as an ellipsis).
     #[test]
     fn every_published_app_example_pins_honestly() {
         let root = repo_root();
@@ -2070,7 +2074,7 @@ requires: []
         // reflected agents ship ~47k generated command pages under `20-agents/`
         // that contain no manifests and would make this test minutes long.
         let mut md_files = Vec::new();
-        for scope in ["10-core", "docs", "30-apps", "00-vision"] {
+        for scope in ["10-core", "docs", "30-apps", "00-vision", "90-onboarding"] {
             collect_files(
                 &root.join(scope),
                 &mut |p| p.extension().and_then(|e| e.to_str()) == Some("md"),
@@ -2090,6 +2094,7 @@ requires: []
 
         let mut from_core = 0;
         let mut from_skills = 0;
+        let mut from_docs = 0;
         // Why each `app:`-headed block was NOT judged. A silent skip is how a guard
         // like this dies: the extractor keeps running, finds nothing, and every
         // assertion below passes. The reasons are reported with the count assertions
@@ -2172,11 +2177,14 @@ requires: []
                 if rel.contains("/skills/") {
                     from_skills += 1;
                 }
+                if rel.starts_with("docs/") {
+                    from_docs += 1;
+                }
                 corpus.push((rel.clone(), app));
             }
         }
-        // Both reaches are asserted separately, because the two walks fail
-        // independently and a combined count hides one of them dying.
+        // Each reach is asserted separately: they fail independently, and a combined
+        // count lets one of them die behind the others.
         assert!(
             from_core >= 2,
             "no pinned app manifest found in 10-core/*.md — the extractor stopped seeing \
@@ -2187,6 +2195,12 @@ requires: []
             "no pinned app manifest found under 20-agents/**/skills/ — where all four of \
              #362's broken examples lived. Blocks headed `app:` that did not \
              deserialize: {skipped:#?}"
+        );
+        assert!(
+            from_docs >= 1,
+            "no pinned app manifest found under docs/ — `docs/superpowers/plans/` has one \
+             today, and plan documents are where the next copy-me example lands. Blocks \
+             headed `app:` that did not deserialize: {skipped:#?}"
         );
 
         // ── the assertions themselves, over the whole corpus ─────────────────
@@ -2201,13 +2215,45 @@ requires: []
             .collect();
         let mut found = Vec::new();
         collect_agent_manifests(&root.join("20-agents"), &wanted, &mut found);
-        let shipped: Vec<_> = found
+        let shipped: Vec<crate::manifest::loader::DiscoveredAgent> = found
             .iter()
             .map(|p| crate::manifest::loader::DiscoveredAgent {
-                manifest: serde_yaml::from_str(&std::fs::read_to_string(p).unwrap()).unwrap(),
+                manifest: serde_yaml::from_str(&std::fs::read_to_string(p).unwrap())
+                    .unwrap_or_else(|e| panic!("{}: {e}", rel_to(&root, p))),
                 root: p.parent().unwrap().to_path_buf(),
             })
             .collect();
+
+        // THIS walk needs its own assertion, and review caught that it did not have
+        // one. `unsatisfied_pins` skips any pin whose agent is not in `agents` —
+        // "not installed" is `missing_agents`' finding, not its own — so a resolver
+        // that returns nothing makes every pin below unjudged and the test green.
+        // It is the same vacuity that `nodes: []` caused one commit earlier, one
+        // link further along the same chain: extract → dispatchable → RESOLVE.
+        // Verified by mutation: stubbing `collect_agent_manifests` to return nothing
+        // left this test passing before this assertion existed.
+        //
+        // Counted as pins that reach a version comparison rather than as agents
+        // found, because that is the quantity the assertions below actually consume.
+        let judged = corpus
+            .iter()
+            .flat_map(|(_, app)| app.requires.iter())
+            .filter(|e| {
+                let (id, pin) = crate::manifest::app::split_requires_entry(e);
+                pin.is_some() && shipped.iter().any(|d| d.manifest.agent == id)
+            })
+            .count();
+        assert!(
+            judged >= 12,
+            "only {judged} of the corpus's pins resolve to a shipped agent — every \
+             unresolved pin is SKIPPED by `unsatisfied_pins`, so a low count here means \
+             the check below is judging almost nothing. Resolved agents: {:?}",
+            shipped
+                .iter()
+                .map(|d| &d.manifest.agent)
+                .collect::<Vec<_>>()
+        );
+
         for (rel, app) in &corpus {
             let issues = validate_app(app);
             assert!(
@@ -2224,7 +2270,12 @@ requires: []
             let unsatisfied = unsatisfied_pins(app, &shipped, Severity::Error);
             assert!(
                 unsatisfied.is_empty(),
-                "{rel} pins a version no shipped agent satisfies: {:?}",
+                "{rel} pins a version no shipped agent satisfies: {:?}\n\
+                 (a doc block is judged as if a node dispatched to every pin it \
+                 publishes, which is stricter than the runtime — an agent reachable \
+                 only through a frozen node is not version-checked when the app RUNS. \
+                 A pin printed in the docs gets copied regardless, which is why it is \
+                 judged here.)",
                 unsatisfied.iter().map(|i| &i.message).collect::<Vec<_>>()
             );
         }
@@ -2255,8 +2306,12 @@ requires: []
             return;
         };
         for e in entries.flatten() {
+            // `file_type()` reuses the type the directory scan already returned;
+            // `path().is_dir()` issues a fresh metadata call per entry, and these
+            // walks cross ~60k of them.
+            let is_dir = e.file_type().map(|t| t.is_dir()).unwrap_or(false);
             let p = e.path();
-            if p.is_dir() {
+            if is_dir {
                 collect_files(&p, keep, out);
             } else if keep(&p) {
                 out.push(p);
@@ -2276,10 +2331,10 @@ requires: []
             return;
         };
         for e in entries.flatten() {
-            let p = e.path();
-            if !p.is_dir() {
+            if !e.file_type().map(|t| t.is_dir()).unwrap_or(false) {
                 continue;
             }
+            let p = e.path();
             let named = p
                 .file_name()
                 .and_then(|s| s.to_str())
@@ -2303,10 +2358,10 @@ requires: []
             return;
         };
         for e in entries.flatten() {
-            let p = e.path();
-            if !p.is_dir() {
+            if !e.file_type().map(|t| t.is_dir()).unwrap_or(false) {
                 continue;
             }
+            let p = e.path();
             if p.file_name().and_then(|s| s.to_str()) == Some(name) {
                 collect_files(
                     &p,
@@ -2320,43 +2375,142 @@ requires: []
     }
 
     /// The bodies of fenced blocks tagged `yaml`/`yml` (or untagged) in a Markdown
-    /// document. A line scanner rather than a regex: no regex dependency here, and
-    /// the closing fence is unambiguous at the line level.
+    /// document, **dedented to the fence's own indent**. A line scanner rather than
+    /// a regex: this crate has no regex dependency, and a fence is a line-level
+    /// construct anyway.
+    ///
+    /// It follows CommonMark closely enough that the ways it can be wrong are the
+    /// ways a doc is actually written, because a miss here is SILENT — the block
+    /// simply never reaches the pin check, which is the failure mode #367 exists to
+    /// end. So:
+    ///
+    /// - **indented fences** keep their indent stripped, since a list-indented
+    ///   ```` ```yaml ```` is idiomatic in `docs/superpowers/plans/` and its body
+    ///   would otherwise start with spaces and never match `app:`;
+    /// - **`~~~` fences** count, though the tree has none today;
+    /// - **fence length** is respected, so a ` ```` ` block wrapping ``` samples
+    ///   closes on its own ` ```` ` rather than on the first inner fence — one such
+    ///   block exists (`docs/superpowers/specs/host-coverage-review-protocol.md`)
+    ///   and would desync everything after it the day it gains an inner fence;
+    /// - a non-yaml fence is still TRACKED, or its closer reads as the next opener
+    ///   and every block after it is off by one;
+    /// - an unterminated fence at EOF drops its block, deliberately: half a block
+    ///   is not a manifest.
     fn yaml_blocks(md: &str) -> Vec<String> {
+        /// `(fence char, length, indent)` of a fence line, if it is one.
+        fn fence_of(line: &str) -> Option<(char, usize, usize)> {
+            let indent = line.len() - line.trim_start().len();
+            let t = line.trim_start();
+            let c = t.chars().next().filter(|c| *c == '`' || *c == '~')?;
+            let n = t.chars().take_while(|x| *x == c).count();
+            (n >= 3).then_some((c, n, indent))
+        }
+
         let mut out = Vec::new();
-        let mut in_fence = false;
+        // The open fence: its char, its length, and how far it was indented.
+        let mut open: Option<(char, usize, usize)> = None;
         let mut capture: Option<String> = None;
         for line in md.lines() {
-            let t = line.trim_start();
-            if let Some(info) = t.strip_prefix("```") {
-                if in_fence {
-                    // A closing fence ends the block whatever follows the
-                    // backticks — Markdown does not check.
-                    in_fence = false;
-                    if let Some(body) = capture.take() {
-                        out.push(body);
+            if let Some((c, n, indent)) = fence_of(line) {
+                match open {
+                    // A closer must use the same character and be at least as long
+                    // (CommonMark). Anything shorter is content inside the block.
+                    Some((oc, on, _)) if c == oc && n >= on => {
+                        open = None;
+                        if let Some(body) = capture.take() {
+                            out.push(body);
+                        }
+                        continue;
                     }
-                } else {
-                    in_fence = true;
-                    let tag = info.trim();
-                    // Tracked even when it is a ```rust block we do not want:
-                    // otherwise ITS closing fence reads as the next opening one
-                    // and every block after it is off by one.
-                    if tag.is_empty()
-                        || tag.eq_ignore_ascii_case("yaml")
-                        || tag.eq_ignore_ascii_case("yml")
-                    {
-                        capture = Some(String::new());
+                    Some(_) => {} // a shorter/other fence INSIDE the block: content
+                    None => {
+                        open = Some((c, n, indent));
+                        let tag = line.trim_start()[n..].trim();
+                        if tag.is_empty()
+                            || tag.eq_ignore_ascii_case("yaml")
+                            || tag.eq_ignore_ascii_case("yml")
+                        {
+                            capture = Some(String::new());
+                        }
+                        continue;
                     }
                 }
-                continue;
             }
             if let Some(body) = capture.as_mut() {
-                body.push_str(line);
+                // Strip the fence's indent, no more: a line indented less than the
+                // fence is malformed markdown, and one indented more is meaningful
+                // YAML nesting that must survive.
+                let indent = open.map(|(_, _, i)| i).unwrap_or(0);
+                let stripped = line
+                    .char_indices()
+                    .take_while(|(i, c)| *i < indent && c.is_whitespace())
+                    .count();
+                body.push_str(&line[stripped..]);
                 body.push('\n');
             }
         }
         out
+    }
+
+    #[test]
+    fn the_fence_scanner_sees_the_blocks_a_doc_actually_writes() {
+        // Every case here is a way `yaml_blocks` could miss a block SILENTLY, which
+        // is the failure mode #367 exists to end — a missed block is not judged and
+        // nothing says so. Two of these shapes are live in this repo's docs.
+        let md = "\
+text
+```yaml
+app: plain
+```
+- a list item:
+
+  ```yaml
+  app: indented
+  requires:
+    - tekla@0.1.x
+  ```
+
+```rust
+// a non-yaml fence, whose CLOSER must not read as the next opener
+```
+~~~yaml
+app: tilde
+~~~
+````markdown
+```yaml
+app: nested-inside-a-longer-fence
+```
+````
+```yaml
+app: after-everything
+```
+";
+        let blocks = yaml_blocks(md);
+        let heads: Vec<&str> = blocks.iter().filter_map(|b| b.lines().next()).collect();
+        assert_eq!(
+            heads,
+            [
+                "app: plain",
+                "app: indented",
+                "app: tilde",
+                "app: after-everything"
+            ],
+            "blocks: {blocks:#?}"
+        );
+        // The indented block must come back DEDENTED — otherwise its first line is
+        // `  app: indented`, which fails the `app:` test and is skipped without ever
+        // reaching the `skipped` diagnostic.
+        assert!(
+            blocks[1].contains("app: indented\nrequires:\n  - tekla@0.1.x\n"),
+            "the fence's indent must be stripped and no more: {:?}",
+            blocks[1]
+        );
+        // The ````markdown block is NOT yaml, so its inner ```yaml is content — and
+        // critically, the inner fences must not desync what follows.
+        assert!(
+            !blocks.iter().any(|b| b.contains("nested-inside")),
+            "a block inside a non-yaml fence is content, not a block: {blocks:#?}"
+        );
     }
     fn agent_with_status(status_line: &str) -> crate::manifest::loader::DiscoveredAgent {
         let yaml = format!(
