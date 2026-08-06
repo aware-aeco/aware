@@ -157,17 +157,34 @@ fn resolve_pack_dir(ctx: &Context, pack: &str) -> Result<PathBuf, AwareError> {
             "voice pack {scope}/{id}@{v} not installed"
         )));
     }
-    // Pick the lexically-latest version (good enough for semver-tagged folders).
+    // Pick the newest version by COMPONENT, not by string. This compared directory
+    // names directly until #377, with a comment conceding it was "good enough for
+    // semver-tagged folders" — and it is not: `"2025.10" < "2025.9"` as strings, so a
+    // pack whose minor reaches double digits loses to its own predecessor. Same shape
+    // as #371, which fixed it for the registry; the strict-SemVer comparator that
+    // issue added cannot serve here, because a pack folder is `2025.10`, not a triple,
+    // so `parse_semver` returns `None` and it degrades to the same string compare.
+    // `compare_dot_components` is the part of that work which does apply.
     let mut latest: Option<PathBuf> = None;
-    let mut latest_name = String::new();
+    let mut latest_name: Option<String> = None;
     if let Ok(entries) = std::fs::read_dir(&parent) {
         for entry in entries.flatten() {
             if !entry.file_type().map(|t| t.is_dir()).unwrap_or(false) {
                 continue;
             }
             let name = entry.file_name().to_string_lossy().into_owned();
-            if name > latest_name {
-                latest_name = name;
+            let newer = match &latest_name {
+                Some(best) => {
+                    crate::validate::compare_dot_components(&name, best)
+                        == std::cmp::Ordering::Greater
+                }
+                // The first directory wins by default rather than by comparison: an
+                // empty-string sentinel made this "is it greater than nothing", which
+                // a legitimately named version can only lose against by accident.
+                None => true,
+            };
+            if newer {
+                latest_name = Some(name);
                 latest = Some(entry.path());
             }
         }
@@ -257,4 +274,74 @@ fn uninstall(ctx: &Context, pack: &str) -> Result<(), AwareError> {
         .map_err(|e| AwareError::Internal(format!("remove {}: {e}", pack_dir.display())))?;
     println!("\u{2713} uninstalled voice pack at {}", pack_dir.display());
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::validate::compare_dot_components;
+    use std::cmp::Ordering::*;
+
+    #[test]
+    fn a_double_digit_component_ranks_above_a_single_digit_one() {
+        // #377: pack folders were compared as strings, so `"2025.10" < "2025.9"` and a
+        // pack lost to its own predecessor the moment a component reached double digits.
+        // These are the folder shapes this registry actually publishes.
+        for (lo, hi) in [
+            ("2025.9", "2025.10"),
+            ("2025", "2025.1"),
+            ("2025.0.9", "2025.0.10"),
+            ("1.9", "1.10"),
+            ("9", "10"),
+        ] {
+            assert_eq!(
+                compare_dot_components(lo, hi),
+                Less,
+                "{lo} must rank below {hi} — a string compare says the opposite"
+            );
+            assert_eq!(compare_dot_components(hi, lo), Greater);
+            assert_eq!(compare_dot_components(lo, lo), Equal);
+        }
+    }
+
+    #[test]
+    fn a_non_numeric_component_still_has_a_defined_order() {
+        use std::cmp::Ordering::*;
+        // Folder names are not validated, so the comparator must total-order whatever is
+        // on disk rather than panic or call two different names equal. Numeric below
+        // alphanumeric is SemVer §11's rule, kept because this IS that function.
+        assert_eq!(compare_dot_components("2025", "beta"), Less);
+        assert_eq!(compare_dot_components("alpha", "beta"), Less);
+        assert_eq!(compare_dot_components("beta", "beta"), Equal);
+    }
+
+    /// Build `<home>/voices/<scope>/<id>/<version>/` for each version, then ask the real
+    /// resolver which one it picks.
+    fn resolve_latest(versions: &[&str]) -> String {
+        let tmp = tempfile::tempdir().unwrap();
+        let parent = tmp.path().join("voices").join("acme").join("reviewer");
+        for v in versions {
+            std::fs::create_dir_all(parent.join(v)).unwrap();
+        }
+        let ctx = Context {
+            paths: crate::paths::Paths {
+                aware_home: tmp.path().to_path_buf(),
+            },
+            json: false,
+        };
+        let dir = resolve_pack_dir(&ctx, "acme/reviewer").unwrap();
+        dir.file_name().unwrap().to_string_lossy().into_owned()
+    }
+
+    #[test]
+    fn the_resolver_picks_the_newest_pack_not_the_lexically_greatest() {
+        // The issue's repro, through the function `aware voice` actually calls.
+        assert_eq!(resolve_latest(&["2025.9", "2025.10"]), "2025.10");
+        // Order of discovery must not decide it: `read_dir` order is not guaranteed, and
+        // the fix replaced an empty-string sentinel with a first-wins branch.
+        assert_eq!(resolve_latest(&["2025.10", "2025.9"]), "2025.10");
+        // A single version is still found — the first candidate wins by default now,
+        // rather than by comparing greater than "".
+        assert_eq!(resolve_latest(&["2025.1"]), "2025.1");
+    }
 }
