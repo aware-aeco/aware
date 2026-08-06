@@ -2400,8 +2400,22 @@ requires: []
 
         let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
         let (stop_tx, stop_rx) = stop_channel();
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
-        tokio::time::sleep(std::time::Duration::from_millis(150)).await;
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // Wait for BOTH bodies rather than for 150 ms (#388). The exact count is still
+        // asserted below, against the log as it stands once the run has ended — which the
+        // sleep could not promise either, since it could truncate a third output as easily
+        // as it could miss the second.
+        events_until(
+            &log_path,
+            &mut run_handle,
+            &[("for-each body emits both sink outputs", |evts| {
+                evts.iter()
+                    .filter(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "sink"))
+                    .count()
+                    >= 2
+            })],
+        )
+        .await;
         let _ = stop_tx.send(true);
         run_handle.await.unwrap().unwrap();
 
@@ -2708,8 +2722,17 @@ requires: []
         ));
         let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
         let (stop_tx, stop_rx) = stop_channel();
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
-        tokio::time::sleep(std::time::Duration::from_millis(150)).await;
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // Wait for the delta rather than for 150 ms (#388).
+        events_until(
+            &log_path,
+            &mut run_handle,
+            &[("compare emits its delta", |evts| {
+                evts.iter()
+                    .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "delta"))
+            })],
+        )
+        .await;
         let _ = stop_tx.send(true);
         run_handle.await.unwrap().unwrap();
 
@@ -2720,7 +2743,7 @@ requires: []
                 RunEvent::NodeOutput { node, data, .. } if node == "delta" => Some(data.clone()),
                 _ => None,
             })
-            .expect("compare node must emit a NodeOutput in the streaming path");
+            .expect("waited for it above");
         assert_eq!(
             diff["added"],
             serde_json::json!([{ "id": 2 }]),
@@ -2956,8 +2979,17 @@ requires: []
         );
         let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
         let (stop_tx, stop_rx) = stop_channel();
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
-        tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // Wait for the delta rather than for 200 ms (#388).
+        events_until(
+            &log_path,
+            &mut run_handle,
+            &[("compare emits its delta", |evts| {
+                evts.iter()
+                    .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "delta"))
+            })],
+        )
+        .await;
         let _ = stop_tx.send(true);
         let _ = run_handle.await.unwrap();
 
@@ -2968,7 +3000,7 @@ requires: []
                 RunEvent::NodeOutput { node, data, .. } if node == "delta" => Some(data.clone()),
                 _ => None,
             })
-            .expect("fan-in compare must emit a NodeOutput");
+            .expect("waited for it above");
         assert_eq!(
             diff["removed"],
             serde_json::json!([{ "id": 2 }]),
@@ -3014,8 +3046,17 @@ requires: []
         // Run-supplied baseline lives in the `inputs` namespace.
         orch.ctx.inputs = serde_json::json!({ "baseline": [ { "id": 1 } ] });
         let (stop_tx, stop_rx) = stop_channel();
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
-        tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // Wait for the delta rather than for 200 ms (#388).
+        events_until(
+            &log_path,
+            &mut run_handle,
+            &[("compare emits its delta", |evts| {
+                evts.iter()
+                    .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "delta"))
+            })],
+        )
+        .await;
         let _ = stop_tx.send(true);
         let _ = run_handle.await.unwrap();
 
@@ -3026,7 +3067,7 @@ requires: []
                 RunEvent::NodeOutput { node, data, .. } if node == "delta" => Some(data.clone()),
                 _ => None,
             })
-            .expect("compare must emit a NodeOutput");
+            .expect("waited for it above");
         assert_eq!(
             diff["added"],
             serde_json::json!([{ "id": 2 }]),
@@ -3448,9 +3489,21 @@ requires: []
         let (stop_tx, stop_rx) = stop_channel();
 
         // Spawn the orchestrator; it naturally ends when the 3-event stream drains.
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
-        // Give it time to drain all 3 events (each mock event has a 5 ms delay).
-        tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // Wait for the two Welded outputs rather than for 200 ms of drain time (#388) —
+        // "give it time to drain" is a hope, not a condition. `== 2` below still catches an
+        // ungated Bolted event, and now judges a log the run has finished writing.
+        events_until(
+            &log_path,
+            &mut run_handle,
+            &[("both Welded events reach the sink", |evts| {
+                evts.iter()
+                    .filter(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "sink"))
+                    .count()
+                    >= 2
+            })],
+        )
+        .await;
         let _ = stop_tx.send(true);
         run_handle.await.unwrap().unwrap();
 
@@ -3611,6 +3664,13 @@ requires: []
         let (stop_tx, stop_rx) = stop_channel();
 
         let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // THIS SLEEP STAYS, and it is the one exception in this file (#388). Everything
+        // else here waits for a condition; this test needs the stop to arrive *before* a
+        // condition — mid-stream, so the run ends `interrupted` rather than `ok`. Its flake
+        // therefore runs the OTHER way: if this task is descheduled past the stream's ~500 ms
+        // (100 events x 5 ms) the stream drains, the status is `ok`, and it fails. A wait
+        // cannot express "act before X happens"; fixing it needs bounded progress (wait for
+        // exactly one NodeOutput, THEN stop), which is a design change, not a conversion.
         tokio::time::sleep(std::time::Duration::from_millis(50)).await;
         stop_tx.send(true).unwrap();
         run_handle.await.unwrap().unwrap();
@@ -3730,10 +3790,22 @@ requires: []
         let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
         let (stop_tx, stop_rx) = stop_channel();
 
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
-        // Give streams time to drain (each mock event has a 5 ms delay; 2+1 events = ~30 ms).
-        // The run may end naturally before 200 ms; ignore send error if the receiver is gone.
-        tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // Wait for the match rather than for streams to "have had time" to drain (#388).
+        // The run may end naturally once the streams close, which `events_until` handles: a
+        // finished run whose log already satisfies the condition returns it on the next pass.
+        // The `== 1` below still catches a second, spurious match.
+        events_until(
+            &log_path,
+            &mut run_handle,
+            &[("match-build emits its output", |evts| {
+                evts.iter().any(
+                    |e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "match-build"),
+                )
+            })],
+        )
+        .await;
+        // The run may already be over; ignore a send error if the receiver is gone.
         let _ = stop_tx.send(true);
         let _ = run_handle.await.unwrap();
 
