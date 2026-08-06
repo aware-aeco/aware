@@ -540,7 +540,7 @@ pub(crate) fn compare_version_keys(a: &str, b: &str) -> std::cmp::Ordering {
                 // §11: a release outranks any prerelease of the same triple.
                 (None, Some(_)) => std::cmp::Ordering::Greater,
                 (Some(_), None) => std::cmp::Ordering::Less,
-                (Some(p), Some(q)) => compare_prerelease(p, q),
+                (Some(p), Some(q)) => compare_dot_components(p, q),
             }
         }),
         (Some(_), None) => std::cmp::Ordering::Greater,
@@ -549,8 +549,23 @@ pub(crate) fn compare_version_keys(a: &str, b: &str) -> std::cmp::Ordering {
     }
 }
 
-/// §11 precedence between two prerelease suffixes (`rc.1` vs `rc.10`), identifier by identifier.
-fn compare_prerelease(a: &str, b: &str) -> std::cmp::Ordering {
+/// Precedence between two DOT-SEPARATED version strings, component by component:
+/// numeric components compare numerically (`2` below `10`, which a string compare gets
+/// backwards), a numeric component ranks below an alphanumeric one, and when every
+/// preceding component is equal the longer run wins.
+///
+/// That is SemVer §11's rule for prerelease suffixes (`rc.1` vs `rc.10`), which is what
+/// it was written for — and it is also exactly what a calendar-shaped folder name needs
+/// (`2025.10` after `2025.9`), so `aware voice`'s pack resolver reads it too rather than
+/// growing a second comparator that could disagree (#377). `compare_version_keys` cannot
+/// serve there: it is strict SemVer, so `parse_semver` returns `None` for `2025.10` and it
+/// falls through to the same string compare — a fix that changes nothing.
+///
+/// The limit, since the pack resolver hands it whole folder names rather than suffixes: a
+/// semver prerelease or build marker is not understood here (`1.0.0-rc.1` compares its
+/// third component as the string `0-rc`). Voice packs do not use them; anything that does
+/// wants `compare_version_keys`, which parses the whole grammar.
+pub(crate) fn compare_dot_components(a: &str, b: &str) -> std::cmp::Ordering {
     let mut ai = a.split('.');
     let mut bi = b.split('.');
     loop {
