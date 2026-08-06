@@ -98,14 +98,34 @@ It comes from the file's own `IfcCartesianPoint`s scaled by the declared unit, s
 profile coordinates and ignores placement nesting. It is not the authoritative extent — that comes
 from real geometry, via `read-model`.
 
-**Read the CORNERS, never the centre.** The box is the extent of the points the file writes, and a
-file's points include every placement origin — so the box is routinely pinned to the world origin at
-one end and to the model at the other, which puts its centre roughly half way to the model rather than
-on it. Measured on the four connection fixtures in this repo (2026-08-06), the box centre sits **9.6 to
-12.6 model-spans** away from the centre of what `read-model` returns. A consumer asking *"is this
-reference sitting miles from my model?"* must therefore compare the box's **extent** against the
-model's, not its midpoint; a midpoint comparison reports "miles away" for a file that is placed
-correctly.
+**The box is usually pinned to the world origin, so its midpoint is not the model's position.** A
+file's points include every placement origin — the representation context's `WorldCoordinateSystem`,
+the site and building placements, every product's placement — and those sit at `(0,0,0)`. `min` is
+therefore `[0,0,0]` on every file measured here, and the midpoint lands about half way from the origin
+to the model.
+
+How far off that puts it **depends entirely on how far the model is from the origin**, not on the
+algorithm: the centre error is roughly `distance-from-origin / 2`, so in units of the model's own
+longest edge it is `distance / (2 × longest-edge)`. Measured 2026-08-06:
+
+| file | centre error, in model longest-edges |
+|---|---|
+| `example-steel-framing.ifc` (authored at the origin) | **0.01** — the midpoint is essentially exact |
+| the four connection fixtures here (~22 m offset, ~1 m connection) | **9.6 – 12.6** |
+| `11134_V_Motebello_Heistopp_Rev.ifc` | **12.9** |
+
+**You can tell which case you are in from `bbox` alone**: when `|max|` is much larger than the box's
+own span, the box is origin-pinned and the midpoint is meaningless. When the two are comparable, the
+file is authored near the origin and the midpoint is fine.
+
+The corner **farther from the origin** tracks where the model actually is — within one longest-edge
+on every file measured (0.01, 0.44, 0.89) — **except under a rotated frame**, where it does not: on `baseplate-rot.ifc`
+(yawed 30°) that corner is 10.3 longest-edges out, barely better than the midpoint's 12.6, and on the
+wrong side of the model. See the next paragraph.
+
+What this does **not** license is comparing the box's SPAN against a model's to judge position. The
+span runs 1× the model's on an origin-authored file and ~18–20× on the offset ones measured here — it is not a size (next paragraph), and a size
+would not answer a position question anyway.
 
 **It is not a size readout, and the gap can be large in either direction.** Because every point is read
 as if it were a world coordinate, a file with nested placements is overstated: for

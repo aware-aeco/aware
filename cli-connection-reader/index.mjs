@@ -337,11 +337,18 @@ function placedElements(api, modelID) {
  * the declared unit, so it includes local profile coordinates and ignores placement nesting. It is not
  * the authoritative extent — that comes from real geometry in `read-model`.
  *
- * READ THE CORNERS, NOT THE CENTRE. A file's points include every placement origin, so the box is
- * routinely pinned to the world origin at one end and the model at the other, putting its midpoint
- * about half way to the model. Measured on this repo's four connection fixtures (2026-08-06), the box
- * centre is 9.6–12.6 MODEL-SPANS from the centre of what `read-model` returns — so a consumer using the
- * midpoint as a position proxy reports "miles away" for a correctly placed file. Compare extents.
+ * THE BOX IS USUALLY PINNED TO THE WORLD ORIGIN, so its midpoint is not the model's position. Every
+ * placement origin is a point — the representation context, the site, the building, each product — and
+ * they sit at (0,0,0), so `min` is [0,0,0] on every file measured here and the midpoint lands about
+ * half way from the origin to the model. The error is therefore `distance-from-origin / 2`, which
+ * says nothing about the algorithm and everything about the file: 0.01 model longest-edges for
+ * `example-steel-framing.ifc` (authored at the origin), 9.6–12.6 for this repo's connection fixtures
+ * (~22 m offset, ~1 m connection), 12.9 for Motebello. `bbox` alone tells you which case you are in:
+ * `|max|` much larger than the box's own span means origin-pinned, and the midpoint is meaningless.
+ *
+ * The far corner tracks the model within one longest-edge on every file measured EXCEPT under a
+ * rotated frame — `baseplate-rot.ifc` puts it 10.3 out, on the wrong side. And the box's SPAN is not a
+ * position signal at all: it runs 1x (origin-authored) to 20x (offset) the model's.
  *
  * Why it is not simply fixed: a point-based extent cannot bound a swept solid (the size lives in
  * `IfcRectangleProfileDef`/`IfcExtrudedAreaSolid` NUMBERS, not in any point); composing placements is
