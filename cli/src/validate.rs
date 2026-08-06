@@ -2135,12 +2135,34 @@ requires: []
                 // Re-materialize as an `App` so the block goes through the SAME two
                 // assertions as the app files, rather than a second implementation
                 // of the check that could drift from the first.
+                //
+                // With a NODE per pinned agent, which is load-bearing and was wrong
+                // in the first cut of this: `unsatisfied_pins` exempts any pin whose
+                // agent no node can reach (`app-spec § Frozen nodes` — an agent that
+                // needn't be installed cannot have its version gated). Synthesizing
+                // `nodes: []` therefore exempted EVERY pin, and this whole half
+                // judged nothing while passing. Mutation testing caught it: a
+                // deliberately broken pin in `app-spec.md` did not fail this test.
+                //
+                // A block's own `nodes:` cannot be used — the fragments this reads
+                // write `nodes: ...` as an ellipsis — so every published pin is
+                // judged instead. That is stricter than the runtime, on purpose: a
+                // pin printed in the docs is copied whether or not this particular
+                // example wires a node to it.
                 let app: App = serde_yaml::from_str(&format!(
-                    "app: {}\nversion: 0.0.0\ndescription: x\nnodes: []\nrequires:\n{}",
+                    "app: {}\nversion: 0.0.0\ndescription: x\nrequires:\n{}nodes:\n{}",
                     pins.app,
                     pins.requires
                         .iter()
                         .map(|r| format!("  - {r}\n"))
+                        .collect::<String>(),
+                    pins.requires
+                        .iter()
+                        .enumerate()
+                        .map(|(i, r)| {
+                            let id = crate::manifest::app::split_requires_entry(r).0;
+                            format!("  - id: n{i}\n    agent: {id}\n    command: probe\n")
+                        })
                         .collect::<String>()
                 ))
                 .unwrap_or_else(|e| panic!("{rel}: pins {:?} are not a list: {e}", pins.requires));
