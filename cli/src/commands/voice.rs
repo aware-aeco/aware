@@ -127,6 +127,36 @@ fn describe(ctx: &Context, pack: &str) -> Result<(), AwareError> {
     Ok(())
 }
 
+/// Order two voice-pack FOLDER NAMES: the newest is the one this returns `Greater` for.
+///
+/// Two comparators, because pack folders are two different things in practice and using
+/// either alone gets one of them backwards:
+///
+/// - when both names are strict SemVer, `compare_version_keys` decides — it knows that a
+///   release outranks its own prerelease and that build metadata carries no precedence
+///   (§10/§11), neither of which is visible to a component-wise scan;
+/// - otherwise `compare_dot_components`, which is what a calendar-shaped folder needs
+///   (`2025.10` after `2025.9`) and what this whole issue is about (#377).
+///
+/// Composing them rather than using only the second is a correction to the first cut of
+/// this fix, which regressed a shape `main` had right: `1.0.0-rc.1` split as
+/// `["1","0","0-rc","1"]`, and §11's "numeric ranks below alphanumeric" rule then made
+/// `0-rc` beat the `1` of `1.0.1` — so a release candidate outranked a HIGHER patch. A
+/// string compare, for all its faults, got that pair right. Nothing stops a pack shipping
+/// a semver version (`install` copies whatever the manifest says), so this was reachable.
+///
+/// Equal-comparing names fall back to the raw string so the order is total: `2025.01` and
+/// `2025.1` are Equal component-wise, and leaving them tied would decide the winner by
+/// `read_dir` order — the same non-determinism this is meant to remove.
+fn compare_pack_versions(a: &str, b: &str) -> std::cmp::Ordering {
+    use crate::validate::{compare_dot_components, compare_version_keys, parse_semver};
+    match (parse_semver(a), parse_semver(b)) {
+        (Some(_), Some(_)) => compare_version_keys(a, b),
+        _ => compare_dot_components(a, b),
+    }
+    .then_with(|| a.cmp(b))
+}
+
 /// Resolve a pack identifier like `@ise/uk-structural-reviewer@2025`,
 /// `ise/uk-structural-reviewer/2025`, or `aware-aeco/structural-engineer`
 /// to a folder path under `~/.aware/voices/`. Picks the latest installed
@@ -174,13 +204,13 @@ fn resolve_pack_dir(ctx: &Context, pack: &str) -> Result<PathBuf, AwareError> {
             }
             let name = entry.file_name().to_string_lossy().into_owned();
             let newer = match &latest_name {
-                Some(best) => {
-                    crate::validate::compare_dot_components(&name, best)
-                        == std::cmp::Ordering::Greater
-                }
-                // The first directory wins by default rather than by comparison: an
-                // empty-string sentinel made this "is it greater than nothing", which
-                // a legitimately named version can only lose against by accident.
+                Some(best) => compare_pack_versions(&name, best) == std::cmp::Ordering::Greater,
+                // The first directory wins outright, and the empty-string sentinel this
+                // replaced could not survive the comparator: `compare_pack_versions("2025",
+                // "")` is LESS, because `""` fails to parse as a number and a numeric
+                // component ranks below an alphanumeric one. Keeping the sentinel would
+                // have let `""` win every comparison, so no calendar-named pack would
+                // resolve at all. This is not tidying — it is load-bearing.
                 None => true,
             };
             if newer {
@@ -337,11 +367,71 @@ mod tests {
     fn the_resolver_picks_the_newest_pack_not_the_lexically_greatest() {
         // The issue's repro, through the function `aware voice` actually calls.
         assert_eq!(resolve_latest(&["2025.9", "2025.10"]), "2025.10");
-        // Order of discovery must not decide it: `read_dir` order is not guaranteed, and
-        // the fix replaced an empty-string sentinel with a first-wins branch.
-        assert_eq!(resolve_latest(&["2025.10", "2025.9"]), "2025.10");
-        // A single version is still found — the first candidate wins by default now,
-        // rather than by comparing greater than "".
+
+        // The DISPLACEMENT branch — a later entry beating the incumbent — needs a case
+        // where the winner is discovered SECOND, and creation order does not give you
+        // that: NTFS returns `read_dir` in collation order whatever order you create in
+        // (measured), so `["2025.10", "2025.9"]` enumerates identically to the line
+        // above. `2026.1` sorts after `2025.9`, so it is genuinely found last. Without
+        // this, "always keep the first directory" passes every assertion here.
+        assert_eq!(resolve_latest(&["2025.9", "2026.1"]), "2026.1");
+
+        // A single version is still found — the first candidate wins outright now. It
+        // could not win by comparison: `compare_pack_versions("2025.1", "")` is Less.
         assert_eq!(resolve_latest(&["2025.1"]), "2025.1");
+    }
+
+    #[test]
+    fn a_semver_shaped_pack_orders_by_semver_not_by_components() {
+        // The first cut of this fix regressed a shape `main` had RIGHT. Splitting
+        // `1.0.0-rc.1` on '.' yields `["1","0","0-rc","1"]`, and §11's "numeric ranks
+        // below alphanumeric" then makes `0-rc` beat the `1` of `1.0.1` — a release
+        // candidate outranking a higher patch. Nothing stops a pack shipping a semver
+        // version: `install` copies whatever its manifest says.
+        assert_eq!(resolve_latest(&["1.0.0-rc.1", "1.0.1"]), "1.0.1");
+        // …and a release still outranks its own prerelease (§11).
+        assert_eq!(resolve_latest(&["1.0.0-rc.1", "1.0.0"]), "1.0.0");
+        // The component path is still what handles the folder shapes semver cannot
+        // parse — that is the whole issue, and it must not regress to satisfy the above.
+        assert_eq!(resolve_latest(&["2025.9", "2025.10"]), "2025.10");
+    }
+
+    #[test]
+    fn names_that_compare_equal_still_resolve_deterministically() {
+        // `2025.01` and `2025.1` are Equal component-wise (both parse as 1), so without
+        // a tiebreak the winner would be decided by `read_dir` order — the same
+        // non-determinism this fix exists to remove. The raw-string fallback settles it.
+        let first = resolve_latest(&["2025.01", "2025.1"]);
+        assert_eq!(first, resolve_latest(&["2025.1", "2025.01"]));
+        assert_eq!(
+            first, "2025.1",
+            "the tiebreak is the raw name, and `1` > `01`"
+        );
+    }
+
+    #[test]
+    fn an_unpinned_uninstall_removes_the_newest_pack() {
+        // `resolve_pack_dir` is shared with `uninstall`, where the resolved path goes
+        // straight to `remove_dir_all` — so this fix silently changed which directory an
+        // unpinned `aware voice uninstall` DELETES (it used to take 2025.9). Pinned
+        // there, because a destructive command changing target deserves a test rather
+        // than a paragraph.
+        let tmp = tempfile::tempdir().unwrap();
+        let parent = tmp.path().join("voices").join("acme").join("reviewer");
+        for v in ["2025.9", "2025.10"] {
+            std::fs::create_dir_all(parent.join(v)).unwrap();
+        }
+        let ctx = Context {
+            paths: crate::paths::Paths {
+                aware_home: tmp.path().to_path_buf(),
+            },
+            json: false,
+        };
+        let doomed = resolve_pack_dir(&ctx, "acme/reviewer").unwrap();
+        assert_eq!(doomed.file_name().unwrap(), "2025.10");
+        assert!(
+            parent.join("2025.9").is_dir(),
+            "the older pack is untouched"
+        );
     }
 }

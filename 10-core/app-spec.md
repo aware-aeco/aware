@@ -627,6 +627,19 @@ Voice pack folder layout:
     fire-strategy-gap.md
 ```
 
+**Which version an unpinned pack resolves to.** `aware voice describe acme/reviewer` (and
+`uninstall`, which deletes what it resolves) takes the **newest installed** version — newest by
+version ORDER, not by folder-name string order, so `2025.10` is newer than `2025.9`. Pack versions
+are compared component by component: numeric components numerically, and where a pack's version
+happens to be strict SemVer, by SemVer precedence (so a release outranks its own prerelease and
+build metadata carries none). Names that compare equal — `2025.01` and `2025.1` — are settled by
+the raw name, so the answer never depends on filesystem enumeration order. Pin the version
+(`acme/reviewer@2025.9`) whenever the answer must not move.
+
+This is `voice`'s own rule and deliberately looser than the registry's: pack versions are folder
+names, often calendar-shaped (`2025`, `2025.10`), and are not required to be SemVer triples. For
+agents and apps, see [CLI Spec → What "latest" means](./cli-spec.md).
+
 Voice packs compose with the v0.20 atom library: a voice pack can reference atoms (`atom://generic/at-least`) inside its system prompt to enforce deterministic checks during reasoning.
 
 ### Receipt artifact
