@@ -1609,10 +1609,14 @@ mod tests {
     /// The deadline is a backstop for a genuine hang, not the thing being measured, so it is
     /// long enough to be unreachable by load. On an idle machine this finishes well inside
     /// the 200 ms it replaces, because it returns the moment the work is done.
+    /// A named thing the run log must show before a test may assert on it. Named because
+    /// an anonymous predicate makes a failure say only "it did not happen".
+    type LogCondition = (&'static str, fn(&[RunEvent]) -> bool);
+
     async fn events_until(
         log_path: &std::path::Path,
         run: &mut tokio::task::JoinHandle<Result<(), AwareError>>,
-        conditions: &[(&str, fn(&[RunEvent]) -> bool)],
+        conditions: &[LogCondition],
     ) -> Vec<RunEvent> {
         let deadline = std::time::Instant::now() + std::time::Duration::from_secs(30);
         let mut last_err: Option<AwareError> = None;
