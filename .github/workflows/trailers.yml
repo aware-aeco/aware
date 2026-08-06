@@ -1,0 +1,75 @@
+name: Trailers
+
+# CLAUDE.md §Git workflow: "No `Co-Authored-By: Claude ...` trailers in commit
+# messages." Nothing enforced it and the rule was being broken — 8 of the 50
+# commits reachable in a depth-50 clone carry one, the most recent on 2026-08-05
+# (b0ee11b5, #362). Those cannot be fixed: the same section makes `main`
+# append-only ("no force-push, no rewrite"). Catching the trailer on the branch
+# is the only fix available, because GitHub propagates it from the branch's
+# commits — and from the PR body — into the squash commit, after which it is on
+# `main` for good.
+#
+# Its own workflow rather than a job in `ci.yml`, for two reasons that both come
+# from the `edited` trigger below. `ci.yml` declares one `on:` for every job, so
+# adding `edited` there would rebuild the whole Rust suite on a typo fix in a
+# description; and its `cancel-in-progress: true` would let a description edit
+# cancel an in-flight `cargo test`. Separate triggers and a separate concurrency
+# group keep both from happening.
+#
+# To fix a failure locally:
+#   python3 scripts/no-claude-coauthor-trailers.py --range origin/main..HEAD
+#
+# Note `origin/main`, not `main`: a stale local `main` puts the eight unfixable
+# commits in the range and reports eight failures nobody can act on.
+
+on:
+  pull_request:
+    # `edited` is load-bearing and is NOT in the default set (`opened`,
+    # `synchronize`, `reopened`). The PR body is half of what this checks, and
+    # GitHub copies trailers out of it into the squash commit — so without
+    # `edited` the body is checked once at push time and can then be changed
+    # freely, with the required check left green from the earlier run.
+    types: [opened, synchronize, reopened, edited]
+
+concurrency:
+  group: trailers-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  trailers:
+    name: no Claude co-author trailers
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # `fetch-depth: 0` is load-bearing: the default shallow checkout cannot
+      # reach the base commit, so the range fails to resolve. It fails loudly
+      # (non-zero, with the reason) rather than coming back clean.
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      # The negative control runs first, so a classifier that has stopped
+      # matching anything fails loudly instead of reporting a clean branch.
+      - name: Self-test the trailer classifier
+        run: python3 scripts/no-claude-coauthor-trailers.py --self-test
+
+      # The range is `origin/<base branch>..<head>`, not
+      # `<base.sha>..<head>`. `base.sha` is the base branch as it stood when the
+      # event fired and can lag; if the branch has merged `main` in since, a
+      # lagging base puts commits already on `main` into the range — and eight
+      # of those carry the trailer and can never be fixed. Against the live base
+      # ref that cannot happen, because `main` is append-only.
+      #
+      # The body is written to a file rather than interpolated into the shell:
+      # `${{ }}` inside a `run:` splices attacker-controlled text into the
+      # script, and a PR description is exactly that.
+      - name: Check the PR's commits and body
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          printf '%s' "$PR_BODY" > "$RUNNER_TEMP/pr-body.txt"
+          python3 scripts/no-claude-coauthor-trailers.py \
+            --range "origin/$BASE_REF..$HEAD_SHA" \
+            --message-file "$RUNNER_TEMP/pr-body.txt"
