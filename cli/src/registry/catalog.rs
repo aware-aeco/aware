@@ -287,14 +287,33 @@ where
             keywords: Vec::new(),
             versions: BTreeMap::new(),
         };
+        // Agent-level metadata (`display-name`, `vendor`, `keywords`) is projected from the
+        // NEWEST version by SemVer precedence — the same version `CatalogAgent::latest()`
+        // reports and `Index::resolve(None)` installs, through the same comparator.
+        //
+        // It used to be taken from every loaded manifest with "last wins", on the assumption
+        // that the metadata is stable across versions. Nothing enforces that assumption — a
+        // rebrand edits `display-name`, an acquisition edits `vendor`, and `keywords` are
+        // revised as an agent grows commands, all of which land in the NEW version — and the
+        // iteration below is a `BTreeMap`'s STRING order, in which `1.10.1` precedes `1.9.0`.
+        // So "last wins" described the agent from the OLDER manifest while `install` fetched
+        // the newer one (#384).
+        //
+        // Only a version whose manifest actually LOADED can be the source: a failed load has
+        // no metadata to project, and is reported in `errors` instead.
+        let mut newest: Option<&String> = None;
         for (ver, ve) in &entry.versions {
             match load(&ve.subdir) {
                 Ok(agent) => {
-                    // Agent-level metadata is stable across versions; take it from each
-                    // loaded manifest (last wins — they describe the same agent).
-                    ca.display_name = agent.display_name.clone();
-                    ca.vendor = agent.vendor.clone();
-                    ca.keywords = agent.keywords.clone();
+                    if newest.is_none_or(|best| {
+                        crate::validate::compare_version_keys(ver, best)
+                            == std::cmp::Ordering::Greater
+                    }) {
+                        ca.display_name = agent.display_name.clone();
+                        ca.vendor = agent.vendor.clone();
+                        ca.keywords = agent.keywords.clone();
+                        newest = Some(ver);
+                    }
                     ca.versions.insert(ver.clone(), version_from_agent(&agent));
                 }
                 Err(e) => errors.push((format!("{id}@{ver}"), e.to_string())),
@@ -456,6 +475,112 @@ mod tests {
             agents,
             bundles: BTreeMap::new(),
         }
+    }
+
+    /// An agent manifest carrying the agent-level metadata fields the catalog projects.
+    fn agent_with_metadata(id: &str, display: &str, vendor: &str, keyword: &str) -> Agent {
+        let y = format!(
+            "agent: {id}\nversion: 9.9.9\ndescription: desc\nstateful: false\nlicense: MIT\n\
+             display-name: {display}\nvendor: {vendor}\nkeywords: [{keyword}]\n\
+             transport:\n  cli:\n    binary: aware-{id}\n\
+             commands:\n  do-thing:\n    lifecycle: single\n    description: does a thing\n"
+        );
+        serde_yaml::from_str(&y).unwrap()
+    }
+
+    /// An index entry publishing several versions of ONE agent, each in its own subdir.
+    fn index_with_versions(id: &str, versions: &[&str]) -> Index {
+        let mut vs = BTreeMap::new();
+        for v in versions {
+            vs.insert(
+                (*v).to_string(),
+                VersionEntry {
+                    tarball: "t".to_string(),
+                    subdir: format!("{id}-{v}"),
+                },
+            );
+        }
+        let mut agents = BTreeMap::new();
+        agents.insert(
+            id.to_string(),
+            IndexEntry {
+                versions: vs,
+                ..Default::default()
+            },
+        );
+        Index {
+            version: "1.0".to_string(),
+            updated_at: "x".to_string(),
+            agents,
+            bundles: BTreeMap::new(),
+        }
+    }
+
+    #[test]
+    fn build_catalog_metadata_comes_from_the_newest_version_not_the_lexical_last() {
+        // #384: `entry.versions` is a BTreeMap, so iteration is a STRING order in which
+        // "1.10.1" comes BEFORE "1.9.0". Taking the metadata with "last wins" therefore
+        // described the agent from the OLDER manifest — a rebrand in 1.10.1 was overwritten
+        // by 1.9.0 — while `latest()`/`install` correctly resolved 1.10.1.
+        let index = index_with_versions("probe", &["1.9.0", "1.10.1"]);
+        let (cat, errs) = build_catalog(&index, "now".to_string(), |subdir| {
+            let v = subdir
+                .strip_prefix("probe-")
+                .expect("subdir names the version");
+            Ok(agent_with_metadata(
+                "probe",
+                &format!("name-{v}"),
+                &format!("vendor-{v}"),
+                &format!("kw-{v}"),
+            ))
+        });
+        assert!(errs.is_empty());
+        let a = cat.agents.get("probe").unwrap();
+
+        // Guard the premise: string order really does yield 1.9.0 last, so a passing
+        // assertion below cannot be an accident of the map happening to be ordered.
+        assert_eq!(
+            a.versions.keys().next_back().map(String::as_str),
+            Some("1.9.0"),
+            "the lexically-last key is the OLDER version — the trap this test covers"
+        );
+        assert_eq!(a.latest().unwrap().0, "1.10.1", "…but SemVer picks 1.10.1");
+
+        assert_eq!(a.display_name.as_deref(), Some("name-1.10.1"));
+        assert_eq!(a.vendor.as_deref(), Some("vendor-1.10.1"));
+        assert_eq!(a.keywords, vec!["kw-1.10.1".to_string()]);
+    }
+
+    #[test]
+    fn build_catalog_metadata_skips_a_version_whose_manifest_failed_to_load() {
+        // Only a version that actually LOADED can source the metadata. When the newest
+        // manifest is broken it is reported in `errors`, and the description falls back to
+        // the newest one that did load rather than leaving the agent nameless.
+        let index = index_with_versions("probe", &["1.9.0", "1.10.1"]);
+        let (cat, errs) = build_catalog(&index, "now".to_string(), |subdir| {
+            if subdir == "probe-1.10.1" {
+                return Err(AwareError::Validation("boom".to_string()));
+            }
+            Ok(agent_with_metadata(
+                "probe",
+                "name-1.9.0",
+                "vendor-1.9.0",
+                "kw-1.9.0",
+            ))
+        });
+
+        assert_eq!(errs.len(), 1, "the broken version is reported: {errs:?}");
+        assert!(errs[0].0.contains("1.10.1"));
+        let a = cat.agents.get("probe").unwrap();
+        assert_eq!(
+            a.display_name.as_deref(),
+            Some("name-1.9.0"),
+            "falls back to the newest version that loaded"
+        );
+        assert!(
+            !a.versions.contains_key("1.10.1"),
+            "the unloadable version is not published"
+        );
     }
 
     #[test]
