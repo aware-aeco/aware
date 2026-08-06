@@ -1196,3 +1196,158 @@ fn naming_a_version_explicitly_still_reaches_the_older_one() {
         .success();
     assert_eq!(installed_version(&aware), "1.9.0");
 }
+
+// ── #374: `--all --force` skips local installs instead of replacing them ──────
+
+#[test]
+fn update_all_force_skips_a_local_fork_that_would_otherwise_be_overwritten() {
+    // #374, on the path that actually DESTROYS something. The fork sits at `probe-agent`
+    // — the registry key — so `resolve_key` succeeds and the registry copy really would
+    // replace it. A first cut of this test used an id the registry does not publish, and
+    // the disk assertion was therefore vacuous: the old code waived the guard and then
+    // died on `resolve_key` with nothing touched, so "the fork survived" proved nothing.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    install_local_fork(&aware, tmp.path(), "9.9.9-local");
+
+    let out = probe(&aware, &idx)
+        .args(["agent", "update", "--all", "--force"])
+        .assert()
+        .success();
+    let text = String::from_utf8_lossy(&out.get_output().stdout).to_string();
+
+    assert!(
+        text.contains("- probe-agent: skipped"),
+        "the local fork must be reported as skipped where it is reached: {text}"
+    );
+    assert!(
+        text.contains("left alone: probe-agent"),
+        "and named in the SUMMARY, which is what an operator reads — \"the command names \
+         none of them\" is the complaint in the issue: {text}"
+    );
+    // The load-bearing one: on the old code `--force` waived the guard and the registry's
+    // 1.3.0 replaced this.
+    let manifest = installed_manifest(&aware);
+    assert!(
+        manifest.contains("9.9.9-local") && manifest.contains("a LOCAL fork"),
+        "the fork must still be on disk, unmodified: {manifest}"
+    );
+}
+
+#[test]
+fn update_all_force_also_skips_a_local_install_reached_through_a_rename() {
+    // The route that defeated the first cut of #370, now under `--all`. `probe` resolves
+    // to a payload whose manifest declares `agent: probe-agent`, so the update would
+    // remove `agents/probe-agent/` as well — where a local fork lives. The FIRST guard
+    // sees only `probe` (registry-installed, so it passes); only the second, on the
+    // payload's `new_name`, can see the fork.
+    //
+    // This is what pins `force: false` on the call below. Passing `force` through would
+    // waive that second guard and delete the fork, and no pre-check on the id could have
+    // stopped it — which is the whole reason the classification is on the returned error.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = renaming_registry(tmp.path());
+    install_local_fork(&aware, tmp.path(), "9.9.9-local");
+
+    // `agents/probe/` is written directly rather than installed: `agent install probe`
+    // would land it at `agents/probe-agent/` (the payload's own id) and collide with the
+    // fork, which is the very collision under test. This is the state that arises when
+    // the registry key and the payload's id differ — an `alias-of` rename or a suffixed
+    // install id, both supported. Version 2.0.0 IS what this registry publishes, so the
+    // unknown-provenance branch infers "registry" and the FIRST guard lets it through;
+    // only the second, on the payload's `new_name`, can see the fork.
+    let probe_dir = aware.join("agents").join("probe");
+    std::fs::create_dir_all(&probe_dir).unwrap();
+    std::fs::write(
+        probe_dir.join("manifest.yaml"),
+        "agent: probe\nversion: 2.0.0\ndescription: the alias id\nstateful: false\n\
+         license: MIT\ntransport:\n  cli:\n    binary: aware-probe\n\
+         commands:\n  probe:\n    lifecycle: single\n    description: x\n    mode: read\n",
+    )
+    .unwrap();
+
+    let out = probe(&aware, &idx)
+        .args(["agent", "update", "--all", "--force"])
+        .assert()
+        .success();
+    let text = String::from_utf8_lossy(&out.get_output().stdout).to_string();
+
+    assert!(
+        text.contains("skipped") && text.contains("left alone:"),
+        "a local install reached through a rename must be SKIPPED, not reported as a \
+         failure — `--all --force` promises not to fail the run over local builds: {text}"
+    );
+    let manifest = installed_manifest(&aware);
+    assert!(
+        manifest.contains("9.9.9-local") && manifest.contains("a LOCAL fork"),
+        "and the fork must still be on disk, unmodified: {manifest}"
+    );
+}
+
+#[test]
+fn update_all_reports_the_counts_it_promises() {
+    // The summary is the operator-facing contract of this change, and nothing pinned its
+    // shape: a mutant garbling either branch survived. One local fork + one registry
+    // agent gives one of each.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    install_local_fork(&aware, tmp.path(), "9.9.9-local");
+
+    let out = probe(&aware, &idx)
+        .args(["agent", "update", "--all", "--force"])
+        .assert()
+        .success();
+    let text = String::from_utf8_lossy(&out.get_output().stdout).to_string();
+    assert!(
+        text.contains("0 updated, 1 skipped (local installs), 0 failed"),
+        "the counts must say what happened: {text}"
+    );
+    assert!(
+        text.contains("aware agent update <id> --force"),
+        "and the output must say how to replace one deliberately: {text}"
+    );
+
+    // With nothing local, the summary keeps its original two-part form — the skipped
+    // clause must not appear when it would read as "0 skipped" noise.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent@1.2.0"])
+        .assert()
+        .success();
+    let out = probe(&aware, &idx)
+        .args(["agent", "update", "--all", "--force"])
+        .assert()
+        .success();
+    let text = String::from_utf8_lossy(&out.get_output().stdout).to_string();
+    assert!(
+        text.contains("1 updated, 0 failed") && !text.contains("skipped"),
+        "with nothing local the summary is unchanged: {text}"
+    );
+    assert_eq!(installed_version(&aware), "1.3.0", "and it did update");
+}
+
+#[test]
+fn update_all_without_force_still_fails_on_a_local_install() {
+    // The control. `--all` alone must keep refusing — the skip is what `--force` now BUYS,
+    // so if the bare form also skipped, the flag would mean nothing and a local install
+    // would be silently ignored rather than reported as a problem.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    install_local_fork(&aware, tmp.path(), "9.9.9-local");
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "--all"])
+        .assert()
+        .failure()
+        .stdout(predicate::str::contains("probe-agent"));
+    assert!(
+        installed_manifest(&aware).contains("9.9.9-local"),
+        "and it is still untouched either way"
+    );
+}
