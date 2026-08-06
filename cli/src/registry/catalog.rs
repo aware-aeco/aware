@@ -760,6 +760,9 @@ mod tests {
         assert_eq!(transport_str(&agent_with(&["mcp"]).transport), "mcp");
         assert_eq!(transport_str(&agent_with(&[]).transport), "none");
         // Alongside a runnable transport, `mcp` never wins.
-        assert_eq!(transport_str(&agent_with(&["mcp", "builtin"]).transport), "builtin");
+        assert_eq!(
+            transport_str(&agent_with(&["mcp", "builtin"]).transport),
+            "builtin"
+        );
     }
 }
