@@ -287,17 +287,53 @@ where
             keywords: Vec::new(),
             versions: BTreeMap::new(),
         };
+        // Agent-level metadata comes from the NEWEST version by SemVer precedence —
+        // the same version `CatalogAgent::latest` reports and `install` fetches.
+        //
+        // This took it "last wins" from the iteration until #384, and `entry.versions`
+        // is a `BTreeMap<String, _>`, so the last one visited is the lexically-greatest:
+        // `1.9.0` came after `1.10.1` and overwrote it. The comment defending that read
+        // "agent-level metadata is stable across versions", which is an assumption
+        // nothing enforces — a rebrand changes `display-name`, an acquisition changes
+        // `vendor`, and `keywords` are edited as an agent grows commands. Those are
+        // exactly the fields a maintainer edits in the NEW version, and the catalogue
+        // published the old one while `install` fetched the new (#371's fix).
+        let newest = entry
+            .versions
+            .keys()
+            .max_by(|a, b| crate::validate::compare_version_keys(a, b))
+            .cloned();
         for (ver, ve) in &entry.versions {
             match load(&ve.subdir) {
                 Ok(agent) => {
-                    // Agent-level metadata is stable across versions; take it from each
-                    // loaded manifest (last wins — they describe the same agent).
-                    ca.display_name = agent.display_name.clone();
-                    ca.vendor = agent.vendor.clone();
-                    ca.keywords = agent.keywords.clone();
+                    if Some(ver) == newest.as_ref() {
+                        ca.display_name = agent.display_name.clone();
+                        ca.vendor = agent.vendor.clone();
+                        ca.keywords = agent.keywords.clone();
+                    }
                     ca.versions.insert(ver.clone(), version_from_agent(&agent));
                 }
                 Err(e) => errors.push((format!("{id}@{ver}"), e.to_string())),
+            }
+        }
+        // If the newest version's manifest failed to LOAD, the fields above were never
+        // assigned and the agent would be published with no metadata at all — worse than
+        // stale. Fall back to the newest version that did load, so a single broken
+        // manifest degrades the description rather than erasing it. (`reindex` reports
+        // the load failure either way; it is in `errors`.)
+        if ca.display_name.is_none() && ca.vendor.is_none() && ca.keywords.is_empty() {
+            let loaded_newest = ca
+                .versions
+                .keys()
+                .max_by(|a, b| crate::validate::compare_version_keys(a, b))
+                .cloned();
+            if let Some(ver) = loaded_newest
+                && let Some(ve) = entry.versions.get(&ver)
+                && let Ok(agent) = load(&ve.subdir)
+            {
+                ca.display_name = agent.display_name.clone();
+                ca.vendor = agent.vendor.clone();
+                ca.keywords = agent.keywords.clone();
             }
         }
         // A rename alias / deprecated key is still LOADED above — so a broken one is
@@ -767,5 +803,112 @@ mod tests {
             transport_str(&agent_with(&["mcp", "builtin"]).transport),
             "builtin"
         );
+    }
+
+    /// An index publishing one agent at each of `versions`, with a `load` that returns a
+    /// manifest whose metadata NAMES its version — so the catalogue's metadata says
+    /// outright which manifest it came from.
+    fn catalog_of(versions: &[&str]) -> Catalog {
+        let entries: String = versions
+            .iter()
+            .map(|v| {
+                format!(r#""{v}": {{ "tarball": "https://x.invalid/x.tar.gz", "subdir": "{v}" }}"#)
+            })
+            .collect::<Vec<_>>()
+            .join(",\n            ");
+        let index: Index = serde_json::from_str(&format!(
+            r#"{{
+    "version": "1.0",
+    "updated-at": "x",
+    "agents": {{ "probe": {{ "versions": {{
+            {entries}
+    }} }} }},
+    "bundles": {{}}
+}}"#
+        ))
+        .unwrap();
+        // `subdir` IS the version here, so the loader can answer per-version.
+        let (cat, errors) = build_catalog(&index, "x".into(), |subdir| {
+            Ok(serde_yaml::from_str(&format!(
+                "agent: probe\nversion: {subdir}\ndescription: probe\nstateful: false\n\
+                 license: MIT\ndisplay-name: Name {subdir}\nvendor: vendor-{subdir}\n\
+                 keywords: [kw-{subdir}]\ntransport:\n  cli:\n    binary: b\n\
+                 commands:\n  go:\n    lifecycle: single\n    description: x\n"
+            ))
+            .unwrap())
+        });
+        assert!(errors.is_empty(), "{errors:?}");
+        cat
+    }
+
+    #[test]
+    fn agent_metadata_comes_from_the_newest_version_not_the_lexically_last() {
+        // #384. `entry.versions` is a `BTreeMap<String, _>`, so "last wins" landed on the
+        // lexically-greatest — `1.9.0` after `1.10.1` — and the catalogue described the
+        // OLDER manifest while `install` fetched the newer one.
+        let cat = catalog_of(&["1.9.0", "1.10.1"]);
+        let a = cat.agents.get("probe").unwrap();
+        assert_eq!(a.display_name.as_deref(), Some("Name 1.10.1"));
+        assert_eq!(a.vendor.as_deref(), Some("vendor-1.10.1"));
+        assert_eq!(a.keywords, ["kw-1.10.1"]);
+        // Both versions are still published — this is about which one DESCRIBES the
+        // agent, not about dropping any.
+        assert_eq!(a.versions.len(), 2);
+        // And it agrees with `latest()`, which is the version `install` would fetch:
+        // the two disagreeing is the whole defect.
+        assert_eq!(a.latest().map(|(v, _)| v.as_str()), Some("1.10.1"));
+
+        // Calendar-shaped keys, which is what this registry actually publishes.
+        let cat = catalog_of(&["2025.0.2", "2025.0.10"]);
+        let a = cat.agents.get("probe").unwrap();
+        assert_eq!(a.vendor.as_deref(), Some("vendor-2025.0.10"));
+
+        // A single version is unaffected, and a prerelease still loses to its release.
+        let cat = catalog_of(&["1.0.0"]);
+        assert_eq!(cat.agents["probe"].vendor.as_deref(), Some("vendor-1.0.0"));
+        let cat = catalog_of(&["1.0.0-rc.1", "1.0.0"]);
+        assert_eq!(cat.agents["probe"].vendor.as_deref(), Some("vendor-1.0.0"));
+    }
+
+    #[test]
+    fn a_broken_newest_manifest_degrades_the_metadata_rather_than_erasing_it() {
+        // Taking metadata from ONE version means a load failure at that version leaves
+        // the agent with none at all — worse than stale, and invisible, since the
+        // catalogue would simply omit the fields. It falls back to the newest version
+        // that did load.
+        let index: Index = serde_json::from_str(
+            r#"{
+    "version": "1.0",
+    "updated-at": "x",
+    "agents": { "probe": { "versions": {
+            "1.9.0":  { "tarball": "https://x.invalid/x.tar.gz", "subdir": "1.9.0" },
+            "1.10.1": { "tarball": "https://x.invalid/x.tar.gz", "subdir": "1.10.1" }
+    } } },
+    "bundles": {}
+}"#,
+        )
+        .unwrap();
+        let (cat, errors) = build_catalog(&index, "x".into(), |subdir| {
+            if subdir == "1.10.1" {
+                return Err(AwareError::Validation("broken manifest".into()));
+            }
+            Ok(serde_yaml::from_str(&format!(
+                "agent: probe\nversion: {subdir}\ndescription: probe\nstateful: false\n\
+                 license: MIT\ndisplay-name: Name {subdir}\nvendor: vendor-{subdir}\n\
+                 keywords: [kw-{subdir}]\ntransport:\n  cli:\n    binary: b\n\
+                 commands:\n  go:\n    lifecycle: single\n    description: x\n"
+            ))
+            .unwrap())
+        });
+        // The failure is still REPORTED — `reindex` must not swallow it.
+        assert_eq!(errors.len(), 1, "{errors:?}");
+        assert!(errors[0].0.contains("1.10.1"), "{errors:?}");
+        let a = cat.agents.get("probe").unwrap();
+        assert_eq!(
+            a.vendor.as_deref(),
+            Some("vendor-1.9.0"),
+            "with the newest manifest unloadable, the newest that DID load describes it"
+        );
+        assert_eq!(a.versions.len(), 1, "the broken version is not published");
     }
 }
