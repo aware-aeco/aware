@@ -2645,13 +2645,13 @@ commands:
     #[tokio::test]
     async fn missing_transport_cli_returns_validation_error() {
         let tmp = tempfile::tempdir().unwrap();
-        let agent_dir = tmp.path().join("only-mcp");
+        let agent_dir = tmp.path().join("no-transport");
         std::fs::create_dir_all(&agent_dir).unwrap();
         // Transport has neither cli nor any other field — invalid but parseable
         // (transport.cli is Option<TransportCli>).
         std::fs::write(
             agent_dir.join("manifest.yaml"),
-            r#"agent: only-mcp
+            r#"agent: no-transport
 version: 0.1.0
 description: x
 stateful: false
@@ -2669,7 +2669,7 @@ commands:
             agents_dir: tmp.path().to_path_buf(),
         };
         let err = inv
-            .invoke_single("only-mcp", "do", serde_json::json!({}))
+            .invoke_single("no-transport", "do", serde_json::json!({}))
             .await
             .unwrap_err();
         assert!(matches!(err, AwareError::Validation(_)), "got: {err:?}");

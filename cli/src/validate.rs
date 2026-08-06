@@ -86,7 +86,7 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
     {
         out.push(ValidationIssue::error(
             "E_AGENT_NO_TRANSPORT",
-            "agent must declare at least one transport (cli / mcp / rest / app / builtin)",
+            "agent must declare at least one transport that the runtime can dispatch (cli / rest / app / builtin). `mcp` counts only ALONGSIDE one of those — it describes how a non-CLI host reaches the agent, not how AWARE runs it",
         ));
     } else if dispatch_transport(&agent.transport).is_none() {
         // Reachable only as mcp-only: every other transport is dispatchable, and
