@@ -127,6 +127,28 @@ fn describe(ctx: &Context, pack: &str) -> Result<(), AwareError> {
     Ok(())
 }
 
+/// Every part of a pack coordinate becomes one directory level under
+/// `~/.aware/voices/`, so each must be a plain segment — same fence, same
+/// reasoning as `apps/<id>/` (#365) and `agents/<id>/`.
+///
+/// Without it `resolve_pack_dir` handed `voices/../..` to callers, and
+/// `uninstall` calls `remove_dir_all` on whatever it is handed: `aware voice
+/// uninstall '../..'` deleted the whole of `~/.aware` — apps, agents, stored
+/// credentials — and printed `✓ uninstalled`, exit 0. `install` is the same
+/// escape one step earlier, writing the copied pack wherever a manifest's
+/// `id:` pointed. Both verified against the real binary before this was
+/// written; `tests/voice_pack_ids_are_segments.rs` pins them.
+fn fence_segment(part: &str, what: &str, pack: &str) -> Result<(), AwareError> {
+    if crate::manifest::loader::is_safe_segment(part) {
+        return Ok(());
+    }
+    Err(AwareError::Validation(format!(
+        "voice pack {pack:?} has a {what} ({part:?}) that is not a plain name — \
+         each part becomes a directory under `voices/`, so it may not be `.` or \
+         `..`, contain a path separator, or carry a drive/UNC prefix"
+    )))
+}
+
 /// Resolve a pack identifier like `@ise/uk-structural-reviewer@2025`,
 /// `ise/uk-structural-reviewer/2025`, or `aware-aeco/structural-engineer`
 /// to a folder path under `~/.aware/voices/`. Picks the latest installed
@@ -141,6 +163,12 @@ fn resolve_pack_dir(ctx: &Context, pack: &str) -> Result<PathBuf, AwareError> {
     let (scope, id) = scope_id
         .split_once('/')
         .ok_or_else(|| AwareError::Validation(format!("invalid pack id: {pack}")))?;
+
+    fence_segment(scope, "scope", pack)?;
+    fence_segment(id, "id", pack)?;
+    if let Some(v) = version.as_deref() {
+        fence_segment(v, "version", pack)?;
+    }
 
     let parent = voices_dir(ctx).join(scope).join(id);
     if !parent.is_dir() {
@@ -209,6 +237,15 @@ fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
             )
         })?;
 
+    // The three fields that decide WHERE the copy lands all come from a file the
+    // installer did not write, so they are fenced before the join — not after,
+    // and not only on `resolve_pack_dir`'s side. `create_dir_all` +
+    // `copy_dir_recursive` below take whatever `dst` says.
+    let coord = format!("{scope}/{id}@{version}");
+    fence_segment(&scope, "scope", &coord)?;
+    fence_segment(&id, "id", &coord)?;
+    fence_segment(&version, "version", &coord)?;
+
     let dst = voices_dir(ctx).join(&scope).join(&id).join(&version);
     std::fs::create_dir_all(&dst)
         .map_err(|e| AwareError::Internal(format!("create {}: {e}", dst.display())))?;
@@ -257,4 +294,227 @@ fn uninstall(ctx: &Context, pack: &str) -> Result<(), AwareError> {
         .map_err(|e| AwareError::Internal(format!("remove {}: {e}", pack_dir.display())))?;
     println!("\u{2713} uninstalled voice pack at {}", pack_dir.display());
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::paths::Paths;
+
+    /// A voices tree with the given `scope/id/version` folders, plus an
+    /// `apps/keep-me/` sibling that no voice operation should ever touch —
+    /// it is what makes the escape assertions below say something.
+    fn ctx_with(packs: &[(&str, &str, &str)]) -> (tempfile::TempDir, Context) {
+        let tmp = tempfile::tempdir().unwrap();
+        let home = tmp.path().join("aware");
+        std::fs::create_dir_all(home.join("apps/keep-me")).unwrap();
+        for (scope, id, version) in packs {
+            let dir = home.join("voices").join(scope).join(id).join(version);
+            std::fs::create_dir_all(&dir).unwrap();
+            std::fs::write(
+                dir.join("manifest.yaml"),
+                format!("id: {id}\nversion: {version}\n"),
+            )
+            .unwrap();
+        }
+        let ctx = Context {
+            paths: Paths { aware_home: home },
+            json: false,
+        };
+        (tmp, ctx)
+    }
+
+    #[test]
+    fn no_version_picks_the_latest_installed_one() {
+        let (_tmp, ctx) = ctx_with(&[("ise", "reviewer", "1.0.0"), ("ise", "reviewer", "2.0.0")]);
+        let dir = resolve_pack_dir(&ctx, "ise/reviewer").unwrap();
+        assert_eq!(
+            dir.file_name().unwrap(),
+            "2.0.0",
+            "an unversioned id must resolve to the newest installed version, got {}",
+            dir.display()
+        );
+    }
+
+    #[test]
+    fn an_explicit_version_wins_over_the_latest() {
+        let (_tmp, ctx) = ctx_with(&[("ise", "reviewer", "1.0.0"), ("ise", "reviewer", "2.0.0")]);
+        // Both spellings the doc comment promises: bare and `@`-prefixed.
+        for pack in ["ise/reviewer@1.0.0", "@ise/reviewer@1.0.0"] {
+            let dir = resolve_pack_dir(&ctx, pack).unwrap();
+            assert_eq!(
+                dir.file_name().unwrap(),
+                "1.0.0",
+                "{pack} asked for 1.0.0 and got {}",
+                dir.display()
+            );
+        }
+    }
+
+    #[test]
+    fn a_version_that_is_not_installed_is_not_silently_downgraded() {
+        let (_tmp, ctx) = ctx_with(&[("ise", "reviewer", "1.0.0")]);
+        // The failure this guards is resolving to 1.0.0 anyway — describe would
+        // then print a different pack than the one named, and uninstall would
+        // delete it.
+        let err = resolve_pack_dir(&ctx, "ise/reviewer@9.9.9").unwrap_err();
+        assert!(
+            matches!(err, AwareError::NotFound(_)),
+            "expected NotFound, got {err:?}"
+        );
+    }
+
+    #[test]
+    fn a_pack_id_without_a_scope_is_refused() {
+        let (_tmp, ctx) = ctx_with(&[("ise", "reviewer", "1.0.0")]);
+        let err = resolve_pack_dir(&ctx, "reviewer").unwrap_err();
+        assert!(
+            matches!(err, AwareError::Validation(_)),
+            "expected Validation, got {err:?}"
+        );
+    }
+
+    /// The resolver's half of the escape. `uninstall` hands whatever this
+    /// returns straight to `remove_dir_all`, so a resolved path that is not
+    /// under `voices/` is a delete of something else.
+    #[test]
+    fn no_pack_id_resolves_outside_the_voices_directory() {
+        let (_tmp, ctx) = ctx_with(&[("ise", "reviewer", "1.0.0")]);
+        let voices = voices_dir(&ctx);
+        for pack in [
+            "../..",
+            "../../apps/keep-me",
+            "ise/../../apps",
+            "ise/reviewer@../../../apps",
+            "./../voices/ise/reviewer",
+        ] {
+            match resolve_pack_dir(&ctx, pack) {
+                Err(_) => {}
+                Ok(dir) => panic!(
+                    "{pack:?} resolved to {} — outside {}",
+                    dir.display(),
+                    voices.display()
+                ),
+            }
+        }
+        // And the guard did not achieve that by refusing everything.
+        assert!(resolve_pack_dir(&ctx, "ise/reviewer").is_ok());
+    }
+
+    /// `install` joins three fields read out of a file nobody here wrote.
+    /// Fencing only the resolver would leave this half open.
+    #[test]
+    fn a_manifest_cannot_write_its_pack_outside_the_voices_directory() {
+        let (tmp, ctx) = ctx_with(&[]);
+        let src = tmp.path().join("pack");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(
+            src.join("manifest.yaml"),
+            "id: ../../../pwned\nversion: 1.0.0\nscope: ise\n",
+        )
+        .unwrap();
+        std::fs::write(src.join("system-prompt.md"), "you are a reviewer\n").unwrap();
+
+        let err = install(
+            &ctx,
+            &InstallArgs {
+                path: src,
+                scope: None,
+            },
+        )
+        .unwrap_err();
+        assert!(
+            matches!(err, AwareError::Validation(_)),
+            "expected Validation, got {err:?}"
+        );
+        assert!(
+            !tmp.path().join("pwned").exists(),
+            "the pack escaped to {}",
+            tmp.path().join("pwned").display()
+        );
+    }
+
+    #[test]
+    fn a_traversing_scope_flag_cannot_write_outside_the_voices_directory() {
+        let (tmp, ctx) = ctx_with(&[]);
+        let src = tmp.path().join("pack");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("manifest.yaml"), "id: reviewer\nversion: 1.0.0\n").unwrap();
+
+        let err = install(
+            &ctx,
+            &InstallArgs {
+                path: src,
+                scope: Some("../../../pwned-scope".into()),
+            },
+        )
+        .unwrap_err();
+        assert!(
+            matches!(err, AwareError::Validation(_)),
+            "expected Validation, got {err:?}"
+        );
+        assert!(!tmp.path().join("pwned-scope").exists());
+    }
+
+    /// The point of the fence is that legal packs still install, and install
+    /// WHERE they say. Also pins the YAML-scalar coercion: `version: 2025`
+    /// parses as a number, and a string-only read would reject it as missing.
+    #[test]
+    fn a_plain_pack_installs_under_its_own_coordinate() {
+        let (tmp, ctx) = ctx_with(&[]);
+        let src = tmp.path().join("pack");
+        std::fs::create_dir_all(src.join("references")).unwrap();
+        std::fs::write(
+            src.join("manifest.yaml"),
+            "id: uk-reviewer\nversion: 2025\n",
+        )
+        .unwrap();
+        std::fs::write(src.join("system-prompt.md"), "you are a reviewer\n").unwrap();
+        std::fs::write(src.join("references").join("bs5950.md"), "clause 4\n").unwrap();
+
+        install(
+            &ctx,
+            &InstallArgs {
+                path: src,
+                scope: Some("ise".into()),
+            },
+        )
+        .unwrap();
+
+        let dst = voices_dir(&ctx)
+            .join("ise")
+            .join("uk-reviewer")
+            .join("2025");
+        assert!(dst.join("system-prompt.md").is_file(), "{}", dst.display());
+        assert!(
+            dst.join("references").join("bs5950.md").is_file(),
+            "copy_dir_recursive skipped the nested references/ folder"
+        );
+        // And it is addressable afterwards by the coordinate it was filed under.
+        assert_eq!(
+            resolve_pack_dir(&ctx, "@ise/uk-reviewer@2025").unwrap(),
+            dst
+        );
+    }
+
+    #[test]
+    fn uninstall_removes_one_version_and_leaves_its_siblings() {
+        let (_tmp, ctx) = ctx_with(&[
+            ("ise", "reviewer", "1.0.0"),
+            ("ise", "reviewer", "2.0.0"),
+            ("aware-aeco", "structural", "1.0.0"),
+        ]);
+        uninstall(&ctx, "ise/reviewer@1.0.0").unwrap();
+
+        let voices = voices_dir(&ctx);
+        assert!(!voices.join("ise/reviewer/1.0.0").exists());
+        assert!(
+            voices.join("ise/reviewer/2.0.0").is_dir(),
+            "uninstalling one version took the other with it"
+        );
+        assert!(
+            voices.join("aware-aeco/structural/1.0.0").is_dir(),
+            "uninstalling one pack took an unrelated pack with it"
+        );
+    }
 }
