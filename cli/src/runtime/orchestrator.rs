@@ -1580,7 +1580,7 @@ mod tests {
     use crate::runtime::lifecycle::stop_channel;
     use crate::runtime::provenance::{log_path_for, read_run_events};
 
-    /// Wait until the run log satisfies `done`, then return its events.
+    /// Wait until the run log satisfies every NAMED condition, then return its events.
     ///
     /// Replaces "sleep an arbitrary 200 ms and hope", which is how
     /// `simulate_stubs_stream_source_and_downstream` failed twice in one session — always
@@ -1589,23 +1589,63 @@ mod tests {
     /// long-running loop had got somewhere within a wall-clock window that a loaded machine
     /// does not honour.
     ///
-    /// The timeout is a backstop for a genuine hang, not the thing being measured, so it is
-    /// long enough to be unreachable by mere load. On an idle machine this returns as fast
-    /// as the sleep it replaces.
+    /// Three things this has to get right, each of which the first cut got wrong and review
+    /// caught:
+    ///
+    /// - **It watches the run.** `run_long_running` propagates with `?` — an unexpected
+    ///   `invoke_stream` returns `Err` and simply stops writing events. Polling alone would
+    ///   spin out the whole deadline and panic without that error, on exactly the regression
+    ///   these tests exist to catch (an empty invoker means any real invoke fails the run).
+    ///   Measured: with the simulate gate off, this now fails in 0.01s naming
+    ///   `mock invoker has no canned stream for ag-watch/watch`, where polling alone hung
+    ///   for 30s and reported nothing useful.
+    /// - **The conditions are named**, so a failure says WHICH one was unmet instead of
+    ///   dumping the log and leaving the reader to diff it against a predicate.
+    /// - **A read error is kept, not merely swallowed.** Swallowing is right per poll — the
+    ///   writer `write_all`s a line at a time, so a reader landing mid-write gets a parse
+    ///   error it must retry — but reporting `events: []` at the deadline would claim
+    ///   nothing had been written when the log may be full of unparseable lines.
+    ///
+    /// The deadline is a backstop for a genuine hang, not the thing being measured, so it is
+    /// long enough to be unreachable by load. On an idle machine this finishes well inside
+    /// the 200 ms it replaces, because it returns the moment the work is done.
     async fn events_until(
         log_path: &std::path::Path,
-        done: impl Fn(&[RunEvent]) -> bool,
+        run: &mut tokio::task::JoinHandle<Result<(), AwareError>>,
+        conditions: &[(&str, fn(&[RunEvent]) -> bool)],
     ) -> Vec<RunEvent> {
         let deadline = std::time::Instant::now() + std::time::Duration::from_secs(30);
+        let mut last_err: Option<AwareError> = None;
         loop {
-            // A missing/partial log is "not yet", not a failure: the writer creates it
-            // asynchronously and appends a line at a time.
-            let events = read_run_events(log_path).await.unwrap_or_default();
-            if done(&events) {
+            let events = match read_run_events(log_path).await {
+                Ok(events) => events,
+                Err(e) => {
+                    last_err = Some(e);
+                    Vec::new()
+                }
+            };
+            let unmet: Vec<&str> = conditions
+                .iter()
+                .filter(|(_, holds)| !holds(&events))
+                .map(|(name, _)| *name)
+                .collect();
+            if unmet.is_empty() {
                 return events;
             }
+            // A run that ENDED without satisfying them is a real failure, and its error is
+            // the diagnosis — surface it now rather than after a 30s spin that discards it.
+            if run.is_finished() {
+                let outcome = run.await;
+                panic!(
+                    "run ended before {unmet:?} — outcome: {outcome:?}; \
+                     last read error: {last_err:?}; events: {events:?}"
+                );
+            }
             if std::time::Instant::now() >= deadline {
-                panic!("run log never satisfied the condition within 30s; events: {events:?}");
+                panic!(
+                    "run log never satisfied {unmet:?} within 30s; \
+                     last read error: {last_err:?}; events: {events:?}"
+                );
             }
             tokio::time::sleep(std::time::Duration::from_millis(10)).await;
         }
@@ -3502,40 +3542,44 @@ commands:
 
         orch.simulate = true;
         let (stop_tx, stop_rx) = stop_channel();
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
         // Wait for the work to HAPPEN rather than for 200 ms to pass. Both events must be
         // present before the stop, or this asserts on whatever the loop had managed in an
         // arbitrary window — which is what made it fail under a loaded machine while the
-        // orchestrator was behaving correctly.
-        let events = events_until(&log_path, |evts| {
-            let watched = evts
-                .iter()
-                .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "watch"));
-            let wrote = evts
-                .iter()
-                .any(|e| matches!(e, RunEvent::WouldWrite { node, .. } if node == "sink"));
-            watched && wrote
-        })
+        // orchestrator was behaving correctly. `events_until` also watches the run, so the
+        // regression this test exists to catch — a real invoke against the empty invoker —
+        // still fails fast and names the invoker error instead of timing out mutely.
+        let events = events_until(
+            &log_path,
+            &mut run_handle,
+            &[
+                ("watch source emits a synthesized NodeOutput", |evts| {
+                    evts.iter()
+                        .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "watch"))
+                }),
+                ("write sink emits would-write under simulate", |evts| {
+                    evts.iter()
+                        .any(|e| matches!(e, RunEvent::WouldWrite { node, .. } if node == "sink"))
+                }),
+            ],
+        )
         .await;
         let _ = stop_tx.send(true);
         // Must complete without ever touching the (empty) invoker.
         run_handle.await.unwrap().unwrap();
 
+        // The PRESENCE of both events is what the wait established; what is asserted here is
+        // their CONTENT, which no wait can imply. Re-asserting presence would be a test that
+        // cannot fail — the wait panics first — so that assertion is gone rather than left
+        // as decoration.
         let watch_out = events
             .iter()
             .find_map(|e| match e {
                 RunEvent::NodeOutput { node, data, .. } if node == "watch" => Some(data.clone()),
                 _ => None,
             })
-            .expect("watch source must emit a synthesized placeholder event");
+            .expect("waited for it above");
         assert_eq!(watch_out["mark"], serde_json::json!("<simulated>"));
-        let saw_would_write = events
-            .iter()
-            .any(|e| matches!(e, RunEvent::WouldWrite { node, .. } if node == "sink"));
-        assert!(
-            saw_would_write,
-            "write sink must emit would-write under simulate; events: {events:?}"
-        );
     }
 
     #[tokio::test]
