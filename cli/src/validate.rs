@@ -2032,81 +2032,507 @@ requires: []
         );
     }
 
+    /// Every app manifest this repo PUBLISHES — as a file or inside a fenced code
+    /// block someone can copy — declares pins that the agents shipped beside it
+    /// actually satisfy.
+    ///
+    /// This iterated a hand-written list of 8 paths until #367, so it guarded only
+    /// what someone remembered to add. That mattered the moment #349 made pins
+    /// enforced: an unguarded example stopped being cosmetic and became a trap —
+    /// copy it, run `aware app compile`, get `E_APP_AGENT_PIN_UNSATISFIED`, taught
+    /// to you by the repo's own documentation. All four examples that had actually
+    /// drifted when #362 landed were embedded in Markdown, which the list could not
+    /// reach in principle.
+    ///
+    /// Both halves are discovered, not listed: every app file under
+    /// `30-apps/_examples/`, and every ```` ```yaml ```` block under the doc trees whose
+    /// first key is `app:`. A new example, or a new skill that documents one, is
+    /// covered the day it lands.
+    ///
+    /// A doc block is read for its PINS, not as a whole `App` — demanding one would
+    /// skip exactly the blocks this exists for, since app-spec § Versioning publishes
+    /// its pins inside a fragment (`nodes: ...` as an ellipsis).
     #[test]
-    fn every_reference_app_pin_is_well_formed_and_satisfied_by_its_own_agent() {
-        // The substrate's own 8 apps are the corpus this check runs against in the
-        // wild — if the grammar above were wrong, this is where it shows.
-        for app_rel in [
-            "30-apps/_examples/welded-to-tc.app",
-            "30-apps/_examples/qa-drawings-to-tekla.app",
-            "30-apps/_examples/architect-sheet-status.app",
-            "30-apps/_examples/bim-monday-audit.app",
-            "30-apps/_examples/designer-monday-shots.app",
-            "30-apps/_examples/detailer-issue-pack.app",
-            "30-apps/_examples/engineer-peer-review-delta.app",
-            "30-apps/_examples/model-to-renders.app",
-        ] {
-            let app = load_app(app_rel);
-            assert!(!app.requires.is_empty(), "{app_rel} declares no pins");
-            let issues = validate_app(&app);
+    fn every_published_app_example_pins_honestly() {
+        let root = repo_root();
+        let mut corpus: Vec<(String, App)> = Vec::new();
+
+        // ── half 1: the app FILES, discovered ────────────────────────────────
+        // AWARE is extension-agnostic about app sources (`.app` is its own default;
+        // `.flo` is FloLess's), so take any of the spellings that compile to a lock.
+        let examples = root.join("30-apps/_examples");
+        let mut app_files = Vec::new();
+        collect_files(
+            &examples,
+            &mut |p| {
+                matches!(
+                    p.extension().and_then(|e| e.to_str()),
+                    Some("app" | "flo" | "flow" | "aware")
+                )
+            },
+            &mut app_files,
+        );
+        app_files.sort();
+        assert!(
+            app_files.len() >= 9,
+            "expected at least the 9 app files under 30-apps/_examples/, walked {} — \
+             a walk that finds nothing passes every assertion below vacuously",
+            app_files.len()
+        );
+        for path in &app_files {
+            let rel = rel_to(&root, path);
+            let text = std::fs::read_to_string(path).unwrap();
+            let app: App = serde_yaml::from_str(&text)
+                .unwrap_or_else(|e| panic!("{rel} does not deserialize as an app: {e}"));
+            // A published example that stops declaring pins would drop out of this
+            // check silently, so the corpus membership is asserted, not assumed.
+            assert!(!app.requires.is_empty(), "{rel} declares no pins");
+            corpus.push((rel, app));
+        }
+
+        // ── half 2: the app manifests embedded in the docs ───────────────────
+        // Where every real failure was. Scoped to the hand-written doc trees: the
+        // reflected agents ship ~47k generated command pages under `20-agents/`
+        // that contain no manifests and would make this test minutes long.
+        let mut md_files = Vec::new();
+        for scope in ["10-core", "docs", "30-apps", "00-vision", "90-onboarding"] {
+            collect_files(
+                &root.join(scope),
+                &mut |p| p.extension().and_then(|e| e.to_str()) == Some("md"),
+                &mut md_files,
+            );
+        }
+        let mut skill_md = Vec::new();
+        collect_files_in_dirs_named(&root.join("20-agents"), "skills", &mut skill_md);
+        md_files.extend(skill_md);
+        md_files.sort();
+        assert!(
+            md_files.len() >= 3000,
+            "expected the doc trees + every 20-agents/**/skills/ page, walked {} — \
+             too few means the walk stopped descending, not that the docs shrank",
+            md_files.len()
+        );
+
+        let mut from_core = 0;
+        let mut from_skills = 0;
+        let mut from_docs = 0;
+        // Why each `app:`-headed block was NOT judged. A silent skip is how a guard
+        // like this dies: the extractor keeps running, finds nothing, and every
+        // assertion below passes. The reasons are reported with the count assertions
+        // so a failure says which blocks it walked past and why.
+        let mut skipped: Vec<String> = Vec::new();
+        for path in &md_files {
+            let rel = rel_to(&root, path);
+            let Ok(text) = std::fs::read_to_string(path) else {
+                continue;
+            };
+            for block in yaml_blocks(&text) {
+                let first = block
+                    .lines()
+                    .find(|l| !l.trim().is_empty() && !l.trim_start().starts_with('#'));
+                if !first.is_some_and(|l| l.starts_with("app:")) {
+                    continue;
+                }
+                // Read the pins ONLY, not the whole app. A doc legitimately shows
+                // FRAGMENTS — `nodes: ...` as an ellipsis, a half-app illustrating
+                // one field — and app-spec § Versioning, the very section that
+                // publishes pins to copy, is one of them. Demanding a whole `App`
+                // here would skip exactly the blocks this guard exists for. This
+                // judges pins; runnability is a different question and deliberately
+                // not asked (`rfi-aging-workflow.md` is aspirational — inline `map`
+                // nodes, `E_APP_INLINE_KIND` — and a pin guard that refused it would
+                // start refusing examples that document the roadmap).
+                #[derive(serde::Deserialize)]
+                struct PinsOnly {
+                    app: String,
+                    #[serde(default)]
+                    requires: Vec<String>,
+                }
+                let pins = match serde_yaml::from_str::<PinsOnly>(&block) {
+                    Ok(p) => p,
+                    Err(e) => {
+                        skipped.push(format!("{rel}: {e}"));
+                        continue;
+                    }
+                };
+                if pins.requires.is_empty() {
+                    continue; // nothing pinned, nothing to be dishonest about
+                }
+                // Re-materialize as an `App` so the block goes through the SAME two
+                // assertions as the app files, rather than a second implementation
+                // of the check that could drift from the first.
+                //
+                // With a NODE per pinned agent, which is load-bearing and was wrong
+                // in the first cut of this: `unsatisfied_pins` exempts any pin whose
+                // agent no node can reach (`app-spec § Frozen nodes` — an agent that
+                // needn't be installed cannot have its version gated). Synthesizing
+                // `nodes: []` therefore exempted EVERY pin, and this whole half
+                // judged nothing while passing. Mutation testing caught it: a
+                // deliberately broken pin in `app-spec.md` did not fail this test.
+                //
+                // A block's own `nodes:` cannot be used — the fragments this reads
+                // write `nodes: ...` as an ellipsis — so every published pin is
+                // judged instead. That is stricter than the runtime, on purpose: a
+                // pin printed in the docs is copied whether or not this particular
+                // example wires a node to it.
+                let app: App = serde_yaml::from_str(&format!(
+                    "app: {}\nversion: 0.0.0\ndescription: x\nrequires:\n{}nodes:\n{}",
+                    pins.app,
+                    pins.requires
+                        .iter()
+                        .map(|r| format!("  - {r}\n"))
+                        .collect::<String>(),
+                    pins.requires
+                        .iter()
+                        .enumerate()
+                        .map(|(i, r)| {
+                            let id = crate::manifest::app::split_requires_entry(r).0;
+                            format!("  - id: n{i}\n    agent: {id}\n    command: probe\n")
+                        })
+                        .collect::<String>()
+                ))
+                .unwrap_or_else(|e| panic!("{rel}: pins {:?} are not a list: {e}", pins.requires));
+                if rel.starts_with("10-core/") {
+                    from_core += 1;
+                }
+                if rel.contains("/skills/") {
+                    from_skills += 1;
+                }
+                if rel.starts_with("docs/") {
+                    from_docs += 1;
+                }
+                corpus.push((rel.clone(), app));
+            }
+        }
+        // Each reach is asserted separately: they fail independently, and a combined
+        // count lets one of them die behind the others.
+        assert!(
+            from_core >= 2,
+            "no pinned app manifest found in 10-core/*.md — the extractor stopped seeing \
+             them. Blocks headed `app:` that did not deserialize: {skipped:#?}"
+        );
+        assert!(
+            from_skills >= 2,
+            "no pinned app manifest found under 20-agents/**/skills/ — where all four of \
+             #362's broken examples lived. Blocks headed `app:` that did not \
+             deserialize: {skipped:#?}"
+        );
+        assert!(
+            from_docs >= 1,
+            "no pinned app manifest found under docs/ — `docs/superpowers/plans/` has one \
+             today, and plan documents are where the next copy-me example lands. Blocks \
+             headed `app:` that did not deserialize: {skipped:#?}"
+        );
+
+        // ── the assertions themselves, over the whole corpus ─────────────────
+        // Every agent the corpus pins, resolved in ONE walk. The per-id lookup this
+        // replaced walked all of `20-agents/` per call, and that tree carries ~50k
+        // reflected-agent pages — per pin, over a corpus this size, it took 2 minutes.
+        // `unsatisfied_pins` looks agents up by id, so a superset costs nothing.
+        let wanted: std::collections::BTreeSet<String> = corpus
+            .iter()
+            .flat_map(|(_, app)| app.requires.iter())
+            .map(|e| crate::manifest::app::split_requires_entry(e).0.to_string())
+            .collect();
+        let mut found = Vec::new();
+        collect_agent_manifests(&root.join("20-agents"), &wanted, &mut found);
+        let shipped: Vec<crate::manifest::loader::DiscoveredAgent> = found
+            .iter()
+            .map(|p| crate::manifest::loader::DiscoveredAgent {
+                manifest: serde_yaml::from_str(&std::fs::read_to_string(p).unwrap())
+                    .unwrap_or_else(|e| panic!("{}: {e}", rel_to(&root, p))),
+                root: p.parent().unwrap().to_path_buf(),
+            })
+            .collect();
+
+        // THIS walk needs its own assertion, and review caught that it did not have
+        // one. `unsatisfied_pins` skips any pin whose agent is not in `agents` —
+        // "not installed" is `missing_agents`' finding, not its own — so a resolver
+        // that returns nothing makes every pin below unjudged and the test green.
+        // It is the same vacuity that `nodes: []` caused one commit earlier, one
+        // link further along the same chain: extract → dispatchable → RESOLVE.
+        // Verified by mutation: stubbing `collect_agent_manifests` to return nothing
+        // left this test passing before this assertion existed.
+        //
+        // Counted as pins that reach a version comparison rather than as agents
+        // found, because that is the quantity the assertions below actually consume.
+        let judged = corpus
+            .iter()
+            .flat_map(|(_, app)| app.requires.iter())
+            .filter(|e| {
+                let (id, pin) = crate::manifest::app::split_requires_entry(e);
+                pin.is_some() && shipped.iter().any(|d| d.manifest.agent == id)
+            })
+            .count();
+        assert!(
+            judged >= 12,
+            "only {judged} of the corpus's pins resolve to a shipped agent — every \
+             unresolved pin is SKIPPED by `unsatisfied_pins`, so a low count here means \
+             the check below is judging almost nothing. Resolved agents: {:?}",
+            shipped
+                .iter()
+                .map(|d| &d.manifest.agent)
+                .collect::<Vec<_>>()
+        );
+
+        for (rel, app) in &corpus {
+            let issues = validate_app(app);
             assert!(
                 !issues.iter().any(|i| i.code == "E_APP_REQUIRES_MALFORMED"),
-                "{app_rel}: {issues:?}"
+                "{rel} publishes a malformed pin: {issues:?}"
             );
-            // And every pin admits the version of the agent it names — proving the
-            // published pins and the shipped agents actually agree. Agents that
-            // don't ship in this repo (`excel`, `think-node`) get no verdict, so
-            // building the catalogue from what IS here is the whole check.
-            let agents: Vec<_> = app
-                .requires
-                .iter()
-                .filter_map(|e| crate::manifest::app::split_requires_entry(e).0.into())
-                .filter_map(shipped_agent)
-                .collect();
-            let unsatisfied = unsatisfied_pins(&app, &agents, Severity::Error);
+            // Every pin admits the version of the agent it names, so the published
+            // pins and the shipped agents actually agree. An agent that does not
+            // ship here (`excel`, `think-node`) yields no verdict — building the
+            // catalogue from what IS here is the whole check. Runnability is NOT
+            // judged: `rfi-aging-workflow.md` is deliberately aspirational
+            // (inline `map` nodes, E_APP_INLINE_KIND) and a pin guard that refused
+            // it would start refusing examples that document the roadmap.
+            let unsatisfied = unsatisfied_pins(app, &shipped, Severity::Error);
             assert!(
                 unsatisfied.is_empty(),
-                "{app_rel} pins a version no shipped agent satisfies: {:?}",
+                "{rel} pins a version no shipped agent satisfies: {:?}\n\
+                 (a doc block is judged as if a node dispatched to every pin it \
+                 publishes, which is stricter than the runtime — an agent reachable \
+                 only through a frozen node is not version-checked when the app RUNS. \
+                 A pin printed in the docs gets copied regardless, which is why it is \
+                 judged here.)",
                 unsatisfied.iter().map(|i| &i.message).collect::<Vec<_>>()
             );
         }
     }
 
-    /// Load `20-agents/**/<id>/manifest.yaml` as a `DiscoveredAgent`, if that
-    /// agent ships in this repo. Hand-rolled walk rather than a glob dependency
-    /// for one test.
-    fn shipped_agent(id: &str) -> Option<crate::manifest::loader::DiscoveredAgent> {
-        let root = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    fn repo_root() -> std::path::PathBuf {
+        std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
             .parent()
             .unwrap()
-            .join("20-agents");
-        fn walk(dir: &std::path::Path, id: &str, out: &mut Option<std::path::PathBuf>) {
-            let Ok(entries) = std::fs::read_dir(dir) else {
-                return;
-            };
-            for e in entries.flatten() {
-                let p = e.path();
-                if p.is_dir() {
-                    if p.file_name().and_then(|s| s.to_str()) == Some(id) {
-                        let m = p.join("manifest.yaml");
-                        if m.is_file() {
-                            *out = Some(m);
-                            return;
-                        }
-                    }
-                    walk(&p, id, out);
-                }
-            }
-        }
-        let mut found = None;
-        walk(&root, id, &mut found);
-        let manifest = found?;
-        Some(crate::manifest::loader::DiscoveredAgent {
-            manifest: serde_yaml::from_str(&std::fs::read_to_string(&manifest).unwrap()).unwrap(),
-            root: manifest.parent().unwrap().to_path_buf(),
-        })
+            .to_path_buf()
     }
 
+    fn rel_to(root: &std::path::Path, p: &std::path::Path) -> String {
+        p.strip_prefix(root)
+            .unwrap_or(p)
+            .to_string_lossy()
+            .replace('\\', "/")
+    }
+
+    /// Recursively collect files under `dir` matching `keep`. Hand-rolled rather
+    /// than pulling in a glob crate for one test.
+    fn collect_files(
+        dir: &std::path::Path,
+        keep: &mut dyn FnMut(&std::path::Path) -> bool,
+        out: &mut Vec<std::path::PathBuf>,
+    ) {
+        let Ok(entries) = std::fs::read_dir(dir) else {
+            return;
+        };
+        for e in entries.flatten() {
+            // `file_type()` reuses the type the directory scan already returned;
+            // `path().is_dir()` issues a fresh metadata call per entry, and these
+            // walks cross ~60k of them.
+            let is_dir = e.file_type().map(|t| t.is_dir()).unwrap_or(false);
+            let p = e.path();
+            if is_dir {
+                collect_files(&p, keep, out);
+            } else if keep(&p) {
+                out.push(p);
+            }
+        }
+    }
+
+    /// Resolve MANY agent ids in one walk of `20-agents/`. A per-id lookup walks the
+    /// whole tree each time, which is ~50k entries once the reflected agents are
+    /// counted — fine for one lookup, two minutes for a corpus of them.
+    fn collect_agent_manifests(
+        dir: &std::path::Path,
+        wanted: &std::collections::BTreeSet<String>,
+        out: &mut Vec<std::path::PathBuf>,
+    ) {
+        let Ok(entries) = std::fs::read_dir(dir) else {
+            return;
+        };
+        for e in entries.flatten() {
+            if !e.file_type().map(|t| t.is_dir()).unwrap_or(false) {
+                continue;
+            }
+            let p = e.path();
+            let named = p
+                .file_name()
+                .and_then(|s| s.to_str())
+                .is_some_and(|n| wanted.contains(n));
+            if named && p.join("manifest.yaml").is_file() {
+                out.push(p.join("manifest.yaml"));
+                continue;
+            }
+            collect_agent_manifests(&p, wanted, out);
+        }
+    }
+
+    /// Every `.md` inside any directory named `name`, at any depth. Descends the
+    /// whole tree but reads only what is in those directories.
+    fn collect_files_in_dirs_named(
+        dir: &std::path::Path,
+        name: &str,
+        out: &mut Vec<std::path::PathBuf>,
+    ) {
+        let Ok(entries) = std::fs::read_dir(dir) else {
+            return;
+        };
+        for e in entries.flatten() {
+            if !e.file_type().map(|t| t.is_dir()).unwrap_or(false) {
+                continue;
+            }
+            let p = e.path();
+            if p.file_name().and_then(|s| s.to_str()) == Some(name) {
+                collect_files(
+                    &p,
+                    &mut |f| f.extension().and_then(|x| x.to_str()) == Some("md"),
+                    out,
+                );
+            } else {
+                collect_files_in_dirs_named(&p, name, out);
+            }
+        }
+    }
+
+    /// The bodies of fenced blocks tagged `yaml`/`yml` (or untagged) in a Markdown
+    /// document, **dedented to the fence's own indent**. A line scanner rather than
+    /// a regex: this crate has no regex dependency, and a fence is a line-level
+    /// construct anyway.
+    ///
+    /// It follows CommonMark closely enough that the ways it can be wrong are the
+    /// ways a doc is actually written, because a miss here is SILENT — the block
+    /// simply never reaches the pin check, which is the failure mode #367 exists to
+    /// end. So:
+    ///
+    /// - **indented fences** keep their indent stripped, since a list-indented
+    ///   ```` ```yaml ```` is idiomatic in `docs/superpowers/plans/` and its body
+    ///   would otherwise start with spaces and never match `app:`;
+    /// - **`~~~` fences** count, though the tree has none today;
+    /// - **fence length** is respected, so a ` ```` ` block wrapping ``` samples
+    ///   closes on its own ` ```` ` rather than on the first inner fence — one such
+    ///   block exists (`docs/superpowers/specs/host-coverage-review-protocol.md`)
+    ///   and would desync everything after it the day it gains an inner fence;
+    /// - a non-yaml fence is still TRACKED, or its closer reads as the next opener
+    ///   and every block after it is off by one;
+    /// - an unterminated fence at EOF drops its block, deliberately: half a block
+    ///   is not a manifest.
+    fn yaml_blocks(md: &str) -> Vec<String> {
+        /// `(fence char, length, indent)` of a fence line, if it is one.
+        fn fence_of(line: &str) -> Option<(char, usize, usize)> {
+            let indent = line.len() - line.trim_start().len();
+            let t = line.trim_start();
+            let c = t.chars().next().filter(|c| *c == '`' || *c == '~')?;
+            let n = t.chars().take_while(|x| *x == c).count();
+            (n >= 3).then_some((c, n, indent))
+        }
+
+        let mut out = Vec::new();
+        // The open fence: its char, its length, and how far it was indented.
+        let mut open: Option<(char, usize, usize)> = None;
+        let mut capture: Option<String> = None;
+        for line in md.lines() {
+            if let Some((c, n, indent)) = fence_of(line) {
+                match open {
+                    // A closer must use the same character and be at least as long
+                    // (CommonMark). Anything shorter is content inside the block.
+                    Some((oc, on, _)) if c == oc && n >= on => {
+                        open = None;
+                        if let Some(body) = capture.take() {
+                            out.push(body);
+                        }
+                        continue;
+                    }
+                    Some(_) => {} // a shorter/other fence INSIDE the block: content
+                    None => {
+                        open = Some((c, n, indent));
+                        let tag = line.trim_start()[n..].trim();
+                        if tag.is_empty()
+                            || tag.eq_ignore_ascii_case("yaml")
+                            || tag.eq_ignore_ascii_case("yml")
+                        {
+                            capture = Some(String::new());
+                        }
+                        continue;
+                    }
+                }
+            }
+            if let Some(body) = capture.as_mut() {
+                // Strip the fence's indent, no more: a line indented less than the
+                // fence is malformed markdown, and one indented more is meaningful
+                // YAML nesting that must survive.
+                let indent = open.map(|(_, _, i)| i).unwrap_or(0);
+                let stripped = line
+                    .char_indices()
+                    .take_while(|(i, c)| *i < indent && c.is_whitespace())
+                    .count();
+                body.push_str(&line[stripped..]);
+                body.push('\n');
+            }
+        }
+        out
+    }
+
+    #[test]
+    fn the_fence_scanner_sees_the_blocks_a_doc_actually_writes() {
+        // Every case here is a way `yaml_blocks` could miss a block SILENTLY, which
+        // is the failure mode #367 exists to end — a missed block is not judged and
+        // nothing says so. Two of these shapes are live in this repo's docs.
+        let md = "\
+text
+```yaml
+app: plain
+```
+- a list item:
+
+  ```yaml
+  app: indented
+  requires:
+    - tekla@0.1.x
+  ```
+
+```rust
+// a non-yaml fence, whose CLOSER must not read as the next opener
+```
+~~~yaml
+app: tilde
+~~~
+````markdown
+```yaml
+app: nested-inside-a-longer-fence
+```
+````
+```yaml
+app: after-everything
+```
+";
+        let blocks = yaml_blocks(md);
+        let heads: Vec<&str> = blocks.iter().filter_map(|b| b.lines().next()).collect();
+        assert_eq!(
+            heads,
+            [
+                "app: plain",
+                "app: indented",
+                "app: tilde",
+                "app: after-everything"
+            ],
+            "blocks: {blocks:#?}"
+        );
+        // The indented block must come back DEDENTED — otherwise its first line is
+        // `  app: indented`, which fails the `app:` test and is skipped without ever
+        // reaching the `skipped` diagnostic.
+        assert!(
+            blocks[1].contains("app: indented\nrequires:\n  - tekla@0.1.x\n"),
+            "the fence's indent must be stripped and no more: {:?}",
+            blocks[1]
+        );
+        // The ````markdown block is NOT yaml, so its inner ```yaml is content — and
+        // critically, the inner fences must not desync what follows.
+        assert!(
+            !blocks.iter().any(|b| b.contains("nested-inside")),
+            "a block inside a non-yaml fence is content, not a block: {blocks:#?}"
+        );
+    }
     fn agent_with_status(status_line: &str) -> crate::manifest::loader::DiscoveredAgent {
         let yaml = format!(
             "agent: html-report\nversion: 0.1.0\ndescription: x\nstateful: false\n{status_line}\
