@@ -1638,7 +1638,22 @@ mod tests {
             }
             // A run that ENDED without satisfying them is a real failure, and its error is
             // the diagnosis — surface it now rather than after a 30s spin that discards it.
+            //
+            // But re-read first. `read_run_events` awaits per line, so the run task can write
+            // its final events and return DURING a read that already hit EOF — concluding
+            // "ended without satisfying" from that stale snapshot would fail a run that in
+            // fact satisfied every condition. These runs end within milliseconds of meeting
+            // their conditions, which is the worst case for that window.
             if run.is_finished() {
+                let events = read_run_events(log_path).await.unwrap_or_default();
+                if conditions.iter().all(|(_, holds)| holds(&events)) {
+                    return events;
+                }
+                let unmet: Vec<&str> = conditions
+                    .iter()
+                    .filter(|(_, holds)| !holds(&events))
+                    .map(|(name, _)| *name)
+                    .collect();
                 let outcome = run.await;
                 panic!(
                     "run ended before {unmet:?} — outcome: {outcome:?}; \
@@ -2400,8 +2415,23 @@ requires: []
 
         let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
         let (stop_tx, stop_rx) = stop_channel();
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
-        tokio::time::sleep(std::time::Duration::from_millis(150)).await;
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // Wait for BOTH bodies rather than for 150 ms (#388). Safe to wait on the asserted
+        // quantity HERE, unlike the filter and fan-in tests: one source event drives the
+        // whole for-each, and its propagation runs to completion inside the event branch,
+        // outside the `select!`. So no stop can land mid-loop and no extra body run can
+        // arrive after the wait — the count is settled before the wait can return.
+        events_until(
+            &log_path,
+            &mut run_handle,
+            &[("for-each body emits both sink outputs", |evts| {
+                evts.iter()
+                    .filter(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "sink"))
+                    .count()
+                    >= 2
+            })],
+        )
+        .await;
         let _ = stop_tx.send(true);
         run_handle.await.unwrap().unwrap();
 
@@ -2708,8 +2738,17 @@ requires: []
         ));
         let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
         let (stop_tx, stop_rx) = stop_channel();
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
-        tokio::time::sleep(std::time::Duration::from_millis(150)).await;
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // Wait for the delta rather than for 150 ms (#388).
+        events_until(
+            &log_path,
+            &mut run_handle,
+            &[("compare emits its delta", |evts| {
+                evts.iter()
+                    .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "delta"))
+            })],
+        )
+        .await;
         let _ = stop_tx.send(true);
         run_handle.await.unwrap().unwrap();
 
@@ -2720,7 +2759,7 @@ requires: []
                 RunEvent::NodeOutput { node, data, .. } if node == "delta" => Some(data.clone()),
                 _ => None,
             })
-            .expect("compare node must emit a NodeOutput in the streaming path");
+            .expect("waited for it above");
         assert_eq!(
             diff["added"],
             serde_json::json!([{ "id": 2 }]),
@@ -2956,8 +2995,17 @@ requires: []
         );
         let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
         let (stop_tx, stop_rx) = stop_channel();
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
-        tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // Wait for the delta rather than for 200 ms (#388).
+        events_until(
+            &log_path,
+            &mut run_handle,
+            &[("compare emits its delta", |evts| {
+                evts.iter()
+                    .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "delta"))
+            })],
+        )
+        .await;
         let _ = stop_tx.send(true);
         let _ = run_handle.await.unwrap();
 
@@ -2968,7 +3016,7 @@ requires: []
                 RunEvent::NodeOutput { node, data, .. } if node == "delta" => Some(data.clone()),
                 _ => None,
             })
-            .expect("fan-in compare must emit a NodeOutput");
+            .expect("waited for it above");
         assert_eq!(
             diff["removed"],
             serde_json::json!([{ "id": 2 }]),
@@ -3014,8 +3062,17 @@ requires: []
         // Run-supplied baseline lives in the `inputs` namespace.
         orch.ctx.inputs = serde_json::json!({ "baseline": [ { "id": 1 } ] });
         let (stop_tx, stop_rx) = stop_channel();
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
-        tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // Wait for the delta rather than for 200 ms (#388).
+        events_until(
+            &log_path,
+            &mut run_handle,
+            &[("compare emits its delta", |evts| {
+                evts.iter()
+                    .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "delta"))
+            })],
+        )
+        .await;
         let _ = stop_tx.send(true);
         let _ = run_handle.await.unwrap();
 
@@ -3026,7 +3083,7 @@ requires: []
                 RunEvent::NodeOutput { node, data, .. } if node == "delta" => Some(data.clone()),
                 _ => None,
             })
-            .expect("compare must emit a NodeOutput");
+            .expect("waited for it above");
         assert_eq!(
             diff["added"],
             serde_json::json!([{ "id": 2 }]),
@@ -3448,9 +3505,30 @@ requires: []
         let (stop_tx, stop_rx) = stop_channel();
 
         // Spawn the orchestrator; it naturally ends when the 3-event stream drains.
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
-        // Give it time to drain all 3 events (each mock event has a 5 ms delay).
-        tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // Wait for the SOURCE to drain, not for the sink count (#388, and a review finding
+        // on the first cut of this conversion).
+        //
+        // Never wait on the quantity you are about to assert an exact value of. Waiting for
+        // `sink >= 2` looks equivalent and is not: under the bug this test exists to catch —
+        // an ungated Bolted event — the count reaches 2 on event B, roughly 5 ms before
+        // Welded C is sent. The wait would return early, the stop would pre-empt C, and the
+        // log would hold exactly 2. The test would pass ON THE BROKEN GATE, with the bug
+        // deciding when the stop fired.
+        //
+        // The source emits all three regardless of what the gate does, so waiting on it is
+        // invariant to the very defect under test.
+        events_until(
+            &log_path,
+            &mut run_handle,
+            &[("the 3-event stream has drained", |evts| {
+                evts.iter()
+                    .filter(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "watch"))
+                    .count()
+                    >= 3
+            })],
+        )
+        .await;
         let _ = stop_tx.send(true);
         run_handle.await.unwrap().unwrap();
 
@@ -3610,8 +3688,28 @@ requires: []
         let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
         let (stop_tx, stop_rx) = stop_channel();
 
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
-        tokio::time::sleep(std::time::Duration::from_millis(50)).await;
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // This test is the odd one out: it needs the stop to arrive *mid*-stream, so the run
+        // ends `interrupted` rather than `ok`. Its flake runs the OTHER way from the rest —
+        // descheduled past the stream's ~500 ms (100 events x 5 ms) the stream drains, the
+        // status is `ok`, and it fails.
+        //
+        // A first pass at #388 left the 50 ms sleep here, arguing a wait "cannot express act
+        // before X happens". Review was right that this is not the design change that claim
+        // implies: waiting for the stream to have STARTED is a condition, and it strictly
+        // improves the margin. The first element is sent with no leading delay, so this
+        // returns in single-digit milliseconds and leaves ~490 ms of the drain window rather
+        // than ~450 ms — and, unlike the sleep, it makes the stop conditional on the stream
+        // actually being live instead of on wall-clock.
+        events_until(
+            &log_path,
+            &mut run_handle,
+            &[("the stream is live", |evts| {
+                evts.iter()
+                    .any(|e| matches!(e, RunEvent::NodeOutput { .. }))
+            })],
+        )
+        .await;
         stop_tx.send(true).unwrap();
         run_handle.await.unwrap().unwrap();
 
@@ -3730,10 +3828,39 @@ requires: []
         let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
         let (stop_tx, stop_rx) = stop_channel();
 
-        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
-        // Give streams time to drain (each mock event has a 5 ms delay; 2+1 events = ~30 ms).
-        // The run may end naturally before 200 ms; ignore send error if the receiver is gone.
-        tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+        let mut run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // Wait for both SOURCES to drain, not for the match (#388, and a review finding on
+        // the first cut of this conversion).
+        //
+        // Both mock streams send their first element immediately, so `match-build` fires at
+        // t≈0 — about 5 ms before `pdf B` is even sent. Waiting on the match would therefore
+        // stop the run before the second pdf event, which is precisely the event that would
+        // expose a fan-in slot failing to consume its entry. The `== 1` assertion would then
+        // be judging a run that was cut off before the evidence arrived.
+        //
+        // The sources emit regardless of how the fan-in behaves, so this condition is
+        // invariant to the defect under test.
+        events_until(
+            &log_path,
+            &mut run_handle,
+            &[("both sources have drained", |evts| {
+                let pdfs = evts
+                    .iter()
+                    .filter(
+                        |e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "pdf-watch"),
+                    )
+                    .count();
+                let excels = evts
+                    .iter()
+                    .filter(
+                        |e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "excel-watch"),
+                    )
+                    .count();
+                pdfs >= 2 && excels >= 1
+            })],
+        )
+        .await;
+        // The run may already be over; ignore a send error if the receiver is gone.
         let _ = stop_tx.send(true);
         let _ = run_handle.await.unwrap();
 
