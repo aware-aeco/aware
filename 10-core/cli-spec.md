@@ -78,6 +78,14 @@ aware
 └── doctor                              health check — config, creds, hosts, registry
 ```
 
+### What "latest" means
+
+`install <agent>` and `update <agent>` with no `@version` resolve to the greatest version by **SemVer §11 precedence** — not the greatest string. `1.10.1` outranks `1.9.0`, and `2025.0.10` outranks `2025.0.2`, which matters because the registry publishes calendar-shaped versions. A release outranks its own prereleases (`1.0.0` > `1.0.0-rc.1`), and build metadata carries no precedence at all (§10).
+
+A version key that is not strict SemVer ranks **below** every key that is: it can still be asked for by name (`install <agent>@<that-key>`), but it never resolves as "latest" — a key nothing can reason about must not be what an unpinned install fetches.
+
+A version after `@` is an **exact key**, not a range. Ranges are an app-pinning syntax; see [Agent Spec](./agent-spec.md) § Installation.
+
 ## Filesystem layout (what `aware` reads / writes)
 
 ```

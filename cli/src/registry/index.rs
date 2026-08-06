@@ -102,8 +102,12 @@ impl Index {
         format!("{:x}", h.finalize())
     }
 
-    /// Resolve `<id>[@version]` → `(version, &VersionEntry)`. If version is `None`, return
-    /// the lexicographically-greatest version (good enough for v0.2; v0.3+ adds semver).
+    /// Resolve `<id>[@version]` → `(version, &VersionEntry)`.
+    ///
+    /// With no version, returns the greatest by **SemVer §11 precedence** — not the
+    /// lexicographically-greatest, which is what this did until #371 and which put `1.9.0`
+    /// ahead of `1.10.1`. A version key that is not strict SemVer ranks below every key that
+    /// is, so it can be asked for by name but never resolves as "latest".
     pub fn resolve(
         &self,
         id: &str,

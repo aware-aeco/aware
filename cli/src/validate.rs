@@ -493,9 +493,6 @@ fn numeric_identifier(s: &str) -> Option<u64> {
     s.parse().ok()
 }
 
-/// Dot-separated SemVer identifiers, per §9 (prerelease) and §10 (build).
-/// `numeric_leading_zero_rule` selects the prerelease-only restriction that a
-/// purely numeric identifier must not be zero-padded.
 /// SemVer §11 precedence between two version KEYS, for picking "the latest" (#371).
 ///
 /// The registry and the catalogue both key versions in a `BTreeMap<String, _>` and used to take
@@ -515,7 +512,13 @@ fn numeric_identifier(s: &str) -> Option<u64> {
 ///
 /// A key that is not strict semver keeps its key order and sorts BELOW every key that is, rather
 /// than being dropped — an unparseable version is still one you can ask for by name, and hiding it
-/// would be worse than ranking it last.
+/// would be worse than ranking it last. Ranking it last rather than first is the load-bearing
+/// half: a key nothing can reason about must never WIN `install <id>`.
+///
+/// One documented disagreement with the spec, unreachable in practice: a prerelease numeric
+/// identifier larger than `u64::MAX` falls to the alphanumeric arm, so two such identifiers of
+/// DIFFERING digit-length compare by ASCII rather than by value. Equal widths still come out
+/// right, and the `semver` crate has the same ceiling.
 pub(crate) fn compare_version_keys(a: &str, b: &str) -> std::cmp::Ordering {
     match (parse_semver(a), parse_semver(b)) {
         (Some(x), Some(y)) => x.triple.cmp(&y.triple).then_with(|| {
@@ -563,6 +566,9 @@ fn compare_prerelease(a: &str, b: &str) -> std::cmp::Ordering {
     }
 }
 
+/// Dot-separated SemVer identifiers, per §9 (prerelease) and §10 (build).
+/// `numeric_leading_zero_rule` selects the prerelease-only restriction that a
+/// purely numeric identifier must not be zero-padded.
 fn is_dot_separated_identifiers(s: &str, numeric_leading_zero_rule: bool) -> bool {
     !s.is_empty()
         && s.split('.').all(|id| {
