@@ -46,6 +46,13 @@ node_modules/
 # Re-downloaded on demand by the extractor; not part of the committed artefacts.
 cli-sidecar/Ingest/Output/dynamo-nupkg/
 
+# Sidecar request payloads written by the `extract-*.ps1` harnesses immediately
+# before they pipe one into aware-sidecar (`WriteAllText($ReqFile, $req)`), then
+# read back only within that same run. Same scratch class as the `*-extraction.log`
+# / `*-stdout.log` the same scripts emit, which `*.log` above already covers —
+# this pattern is the piece that was missing, so committed copies kept accruing.
+cli-sidecar/Ingest/Output/*-req.json
+
 # cli-sidecar build output
 cli-sidecar/bin/
 cli-sidecar/obj/
