@@ -149,10 +149,64 @@ fn fence_segment(part: &str, what: &str, pack: &str) -> Result<(), AwareError> {
     )))
 }
 
-/// Resolve a pack identifier like `@ise/uk-structural-reviewer@2025`,
-/// `ise/uk-structural-reviewer/2025`, or `aware-aeco/structural-engineer`
-/// to a folder path under `~/.aware/voices/`. Picks the latest installed
-/// version if none specified.
+/// The physical half of the fence. [`fence_segment`] is **lexical** — it asks
+/// what `join` spells, which is the only question `is_safe_segment` answers, and
+/// its own doc says so: *"A permitted id that names a symlink can still resolve
+/// outside `dir`. Containment against symlinks is a different check (canonicalise
+/// and compare), not this one."*
+///
+/// For `apps/` and `agents/` the lexical half is where the repo stopped. It
+/// cannot stop there here, because `uninstall` ends in `remove_dir_all` and a
+/// symlink anywhere along the resolved path — not just at the leaf — carries it
+/// straight through:
+///
+/// ```text
+/// $ ln -s /elsewhere ~/.aware/voices/ise      # scope dir is a symlink
+/// $ aware voice uninstall 'ise/secret-pack'   # every part a plain segment
+/// ✓ uninstalled voice pack at ~/.aware/voices/ise/secret-pack/1.0.0
+/// $ ls /elsewhere/secret-pack/                # emptied
+/// ```
+///
+/// Both ids pass `fence_segment`; the escape is in what the path *resolves to*.
+/// A symlinked LEAF is harmless — `remove_dir_all` unlinks the link and leaves
+/// the target alone — which is exactly why testing only the leaf case reads as
+/// "symlinks are fine" and is wrong. Reproduced against the real binary.
+///
+/// So: canonicalise, and demand the result still sit under a canonicalised
+/// `voices/`. Returns the CANONICAL path, so the caller acts on what it checked
+/// rather than on the spelling that got it here.
+fn contained_in_voices(ctx: &Context, resolved: &std::path::Path) -> Result<PathBuf, AwareError> {
+    let root = voices_dir(ctx).canonicalize().map_err(|e| {
+        AwareError::Internal(format!("canonicalise {}: {e}", voices_dir(ctx).display()))
+    })?;
+    let real = resolved
+        .canonicalize()
+        .map_err(|e| AwareError::Internal(format!("canonicalise {}: {e}", resolved.display())))?;
+    if !real.starts_with(&root) {
+        return Err(AwareError::Validation(format!(
+            "voice pack path {} resolves to {}, outside {} — refusing, because a \
+             symlink cannot be allowed to move what `install` writes or what \
+             `uninstall` deletes",
+            resolved.display(),
+            real.display(),
+            root.display()
+        )));
+    }
+    Ok(real)
+}
+
+/// Resolve a pack identifier like `@ise/uk-structural-reviewer@2025` or
+/// `aware-aeco/structural-engineer` to a folder path under `~/.aware/voices/`.
+/// Picks the latest installed version if none specified.
+///
+/// The version is introduced by `@`. This doc used to advertise a third
+/// spelling, `<scope>/<id>/<version>`, which never worked: `scope_id` splits on
+/// the FIRST `/`, so the id became `uk-structural-reviewer/2025`, `parent`
+/// became `voices/ise/uk-structural-reviewer/2025`, and the "latest version"
+/// scan then picked a lexically-latest *subdirectory of the version folder* —
+/// `references/`, say, which `uninstall` would go on to delete. The fence turns
+/// that into a clean refusal, so the promise is removed rather than left
+/// contradicting the code (`a_slash_separated_version_is_refused` pins it).
 fn resolve_pack_dir(ctx: &Context, pack: &str) -> Result<PathBuf, AwareError> {
     let cleaned = pack.trim_start_matches('@');
     let (scope_id, version) = if let Some((s, v)) = cleaned.split_once('@') {
@@ -179,7 +233,7 @@ fn resolve_pack_dir(ctx: &Context, pack: &str) -> Result<PathBuf, AwareError> {
     if let Some(v) = version {
         let p = parent.join(&v);
         if p.is_dir() {
-            return Ok(p);
+            return contained_in_voices(ctx, &p);
         }
         return Err(AwareError::NotFound(format!(
             "voice pack {scope}/{id}@{v} not installed"
@@ -200,7 +254,9 @@ fn resolve_pack_dir(ctx: &Context, pack: &str) -> Result<PathBuf, AwareError> {
             }
         }
     }
-    latest.ok_or_else(|| AwareError::NotFound(format!("no installed versions of {scope}/{id}")))
+    let latest = latest
+        .ok_or_else(|| AwareError::NotFound(format!("no installed versions of {scope}/{id}")))?;
+    contained_in_voices(ctx, &latest)
 }
 
 fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
@@ -249,6 +305,12 @@ fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
     let dst = voices_dir(ctx).join(&scope).join(&id).join(&version);
     std::fs::create_dir_all(&dst)
         .map_err(|e| AwareError::Internal(format!("create {}: {e}", dst.display())))?;
+    // Fenced lexically above, but a symlink already sitting at `voices/<scope>`
+    // would still put the copy somewhere else entirely. Checked after
+    // `create_dir_all` (which needs the path to exist to canonicalise) and
+    // BEFORE any file is written, so an escape costs empty directories rather
+    // than the pack's contents.
+    let dst = contained_in_voices(ctx, &dst)?;
     copy_dir_recursive(src, &dst)?;
     println!(
         "\u{2713} installed voice pack {scope}/{id}@{version} \u{2192} {}",
@@ -268,6 +330,19 @@ fn yaml_to_string(v: Option<&serde_yaml::Value>) -> Option<String> {
     }
 }
 
+/// Copy the pack tree, refusing to FOLLOW symlinks out of it.
+///
+/// `Path::is_dir` follows links, and the walk used it. A pack shipping
+/// `up -> ..` therefore descended `pack/up/pack/up/…` until the OS stopped it
+/// with `ELOOP` — 85 directories and half a megabyte written under
+/// `~/.aware/voices/` on the way, left behind because there is no rollback. The
+/// same mechanism means `references -> /etc` copies `/etc` into the pack.
+/// Reproduced against the real binary.
+///
+/// So the type is read with `symlink_metadata`, which does NOT follow, and a
+/// link is refused by name rather than silently skipped: a pack that ships one
+/// is asking for something this installer will not do, and dropping it quietly
+/// would install a pack missing files its manifest lists.
 fn copy_dir_recursive(src: &std::path::Path, dst: &std::path::Path) -> Result<(), AwareError> {
     for entry in std::fs::read_dir(src)
         .map_err(|e| AwareError::Internal(format!("read_dir {}: {e}", src.display())))?
@@ -275,7 +350,17 @@ fn copy_dir_recursive(src: &std::path::Path, dst: &std::path::Path) -> Result<()
     {
         let from = entry.path();
         let to = dst.join(entry.file_name());
-        if from.is_dir() {
+        let meta = std::fs::symlink_metadata(&from)
+            .map_err(|e| AwareError::Internal(format!("stat {}: {e}", from.display())))?;
+        if meta.file_type().is_symlink() {
+            return Err(AwareError::Validation(format!(
+                "voice pack contains a symlink ({}) — refusing, because following \
+                 it would copy from outside the pack, and a link pointing back at \
+                 an ancestor recurses until the filesystem stops it",
+                from.display()
+            )));
+        }
+        if meta.is_dir() {
             std::fs::create_dir_all(&to)
                 .map_err(|e| AwareError::Internal(format!("create {}: {e}", to.display())))?;
             copy_dir_recursive(&from, &to)?;
@@ -304,9 +389,17 @@ mod tests {
     /// A voices tree with the given `scope/id/version` folders, plus an
     /// `apps/keep-me/` sibling that no voice operation should ever touch —
     /// it is what makes the escape assertions below say something.
+    ///
+    /// The home is nested `deep/enough/to/catch/aware` inside the tempdir on
+    /// purpose. An earlier version put it one level down, so a scope of
+    /// `../../../pwned` escaped past the tempdir into the system `/tmp` — and
+    /// the assertion written to catch that looked inside the tempdir, where
+    /// nothing would ever appear. It passed by construction, and a real fence
+    /// regression littered `/tmp` on every machine that ran the suite. Any
+    /// `..`-chain a test uses must stay inside the directory the test inspects.
     fn ctx_with(packs: &[(&str, &str, &str)]) -> (tempfile::TempDir, Context) {
         let tmp = tempfile::tempdir().unwrap();
-        let home = tmp.path().join("aware");
+        let home = tmp.path().join("deep/enough/to/catch/aware");
         std::fs::create_dir_all(home.join("apps/keep-me")).unwrap();
         for (scope, id, version) in packs {
             let dir = home.join("voices").join(scope).join(id).join(version);
@@ -340,6 +433,8 @@ mod tests {
     fn an_explicit_version_wins_over_the_latest() {
         let (_tmp, ctx) = ctx_with(&[("ise", "reviewer", "1.0.0"), ("ise", "reviewer", "2.0.0")]);
         // Both spellings the doc comment promises: bare and `@`-prefixed.
+        // (It used to promise a third, `scope/id/version`; see
+        // `a_slash_separated_version_is_refused` for why that is gone.)
         for pack in ["ise/reviewer@1.0.0", "@ise/reviewer@1.0.0"] {
             let dir = resolve_pack_dir(&ctx, pack).unwrap();
             assert_eq!(
@@ -377,6 +472,13 @@ mod tests {
     /// The resolver's half of the escape. `uninstall` hands whatever this
     /// returns straight to `remove_dir_all`, so a resolved path that is not
     /// under `voices/` is a delete of something else.
+    ///
+    /// Each input must be refused BY THE FENCE — `Validation` — not merely
+    /// refused. Accepting any `Err` let inputs into the list that the fence
+    /// never judged: `../../apps/keep-me` names a directory that does not
+    /// exist relative to `voices/`, so it returned `NotFound` on the unfenced
+    /// code too and carried no weight. Demanding the fence's own verdict is
+    /// what makes every row here count.
     #[test]
     fn no_pack_id_resolves_outside_the_voices_directory() {
         let (_tmp, ctx) = ctx_with(&[("ise", "reviewer", "1.0.0")]);
@@ -389,7 +491,11 @@ mod tests {
             "./../voices/ise/reviewer",
         ] {
             match resolve_pack_dir(&ctx, pack) {
-                Err(_) => {}
+                Err(AwareError::Validation(_)) => {}
+                Err(other) => panic!(
+                    "{pack:?} was refused as {other:?}, not by the fence — it would \
+                     have been refused for an unrelated reason on unfenced code too"
+                ),
                 Ok(dir) => panic!(
                     "{pack:?} resolved to {} — outside {}",
                     dir.display(),
@@ -399,6 +505,112 @@ mod tests {
         }
         // And the guard did not achieve that by refusing everything.
         assert!(resolve_pack_dir(&ctx, "ise/reviewer").is_ok());
+    }
+
+    /// #3 from review: the doc comment advertised `<scope>/<id>/<version>` and
+    /// the code never honoured it. Now that the fence turns it into a clean
+    /// refusal, this pins code and doc together so they cannot drift apart
+    /// again silently.
+    #[test]
+    fn a_slash_separated_version_is_refused() {
+        let (_tmp, ctx) = ctx_with(&[("ise", "reviewer", "1.0.0")]);
+        let err = resolve_pack_dir(&ctx, "ise/reviewer/1.0.0").unwrap_err();
+        assert!(
+            matches!(err, AwareError::Validation(_)),
+            "expected Validation, got {err:?}"
+        );
+        // The `@` spelling of the same coordinate is the supported one.
+        assert!(resolve_pack_dir(&ctx, "ise/reviewer@1.0.0").is_ok());
+    }
+
+    /// The fence is lexical; this is the other half. Every part of
+    /// `ise/secret-pack` is a plain segment, so `fence_segment` passes it —
+    /// and `uninstall` would then `remove_dir_all` through the symlink,
+    /// emptying a directory outside `voices/` entirely.
+    #[test]
+    fn a_symlinked_scope_directory_cannot_smuggle_the_target_outside_voices() {
+        let (tmp, ctx) = ctx_with(&[]);
+        let outside = tmp.path().join("outside");
+        std::fs::create_dir_all(outside.join("secret-pack/1.0.0")).unwrap();
+        std::fs::write(outside.join("secret-pack/1.0.0/creds.txt"), "secret\n").unwrap();
+        std::fs::create_dir_all(voices_dir(&ctx)).unwrap();
+        #[cfg(unix)]
+        std::os::unix::fs::symlink(&outside, voices_dir(&ctx).join("ise")).unwrap();
+        #[cfg(windows)]
+        std::os::windows::fs::symlink_dir(&outside, voices_dir(&ctx).join("ise")).unwrap();
+
+        let err = resolve_pack_dir(&ctx, "ise/secret-pack").unwrap_err();
+        assert!(
+            matches!(err, AwareError::Validation(_)),
+            "expected Validation, got {err:?}"
+        );
+        // What actually matters: uninstall did not reach through the link.
+        assert!(uninstall(&ctx, "ise/secret-pack").is_err());
+        assert!(
+            outside.join("secret-pack/1.0.0/creds.txt").is_file(),
+            "remove_dir_all followed the symlinked scope directory and deleted \
+             a file outside voices/"
+        );
+    }
+
+    /// A symlinked LEAF is the harmless case — `remove_dir_all` unlinks the
+    /// link and leaves the target alone. Pinned so the distinction survives:
+    /// testing only this shape is what made "symlinks are fine" look true.
+    #[test]
+    fn a_symlinked_pack_version_removes_the_link_not_the_target() {
+        let (tmp, ctx) = ctx_with(&[]);
+        let outside = tmp.path().join("outside");
+        std::fs::create_dir_all(&outside).unwrap();
+        std::fs::write(outside.join("data.txt"), "keep\n").unwrap();
+        let parent = voices_dir(&ctx).join("ise").join("reviewer");
+        std::fs::create_dir_all(&parent).unwrap();
+        #[cfg(unix)]
+        std::os::unix::fs::symlink(&outside, parent.join("1.0.0")).unwrap();
+        #[cfg(windows)]
+        std::os::windows::fs::symlink_dir(&outside, parent.join("1.0.0")).unwrap();
+
+        // The leaf canonicalises outside voices/, so the containment check
+        // refuses it too — and the target is untouched either way.
+        assert!(resolve_pack_dir(&ctx, "ise/reviewer@1.0.0").is_err());
+        assert!(
+            outside.join("data.txt").is_file(),
+            "the symlink target's contents were destroyed"
+        );
+    }
+
+    /// #2 from review. `Path::is_dir` follows links, so a pack shipping
+    /// `up -> ..` walked `pack/up/pack/up/…` until the OS stopped it, leaving
+    /// ~85 directories under `voices/` with no rollback.
+    #[test]
+    fn a_pack_containing_a_symlink_is_refused_rather_than_followed() {
+        let (tmp, ctx) = ctx_with(&[]);
+        let src = tmp.path().join("src").join("pack");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("manifest.yaml"), "id: p\nversion: 1.0.0\n").unwrap();
+        #[cfg(unix)]
+        std::os::unix::fs::symlink("..", src.join("up")).unwrap();
+        #[cfg(windows)]
+        std::os::windows::fs::symlink_dir("..", src.join("up")).unwrap();
+
+        let err = install(
+            &ctx,
+            &InstallArgs {
+                path: src,
+                scope: Some("s".into()),
+            },
+        )
+        .unwrap_err();
+        assert!(
+            matches!(err, AwareError::Validation(_)),
+            "expected Validation, got {err:?}"
+        );
+        // The runaway wrote a directory per level; nothing that deep may exist.
+        let deep = voices_dir(&ctx).join("s/p/1.0.0/up/pack/up");
+        assert!(
+            !deep.exists(),
+            "the walk followed the link into {}",
+            deep.display()
+        );
     }
 
     /// `install` joins three fields read out of a file nobody here wrote.
