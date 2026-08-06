@@ -12,6 +12,7 @@ use std::collections::{BTreeMap, HashSet};
 use std::path::Path;
 
 use crate::manifest::{Agent, App};
+use crate::runtime::invoker::{TransportKind, dispatch_transport};
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum Severity {
@@ -72,6 +73,11 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
             "agent declares zero commands",
         ));
     }
+    // Two questions, not one: does it declare a transport at all, and can the
+    // runtime RUN what it declares? `mcp` answers the first and not the second —
+    // `TransportKind` has no `Mcp` variant, so an mcp-only agent validated clean
+    // and then died at dispatch with "has no executable transport" (#366). The
+    // manifest was never wrong about itself; validation was wrong to admit it.
     if agent.transport.cli.is_none()
         && agent.transport.mcp.is_none()
         && agent.transport.rest.is_none()
@@ -81,6 +87,13 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
         out.push(ValidationIssue::error(
             "E_AGENT_NO_TRANSPORT",
             "agent must declare at least one transport (cli / mcp / rest / app / builtin)",
+        ));
+    } else if dispatch_transport(&agent.transport).is_none() {
+        // Reachable only as mcp-only: every other transport is dispatchable, and
+        // the empty case is taken by the arm above.
+        out.push(ValidationIssue::error(
+            "E_AGENT_MCP_ONLY",
+            "`mcp` is not a dispatchable transport on its own — the runtime cannot invoke it, so this agent would validate and then fail at run. Declare `mcp` alongside a runnable transport (cli / rest / app / builtin), which is how the agent-spec describes it",
         ));
     }
     if agent.stateful {
@@ -1014,7 +1027,15 @@ fn check_node_agents(
             // than only at dispatch (app-spec § exposes-as-agent constraints).
             // (The self-reference case above also covers first-install, before
             // this app's own synthesized agent exists in the catalogue.)
-            if app_exposes && agent_id != app_id && d.manifest.transport.app.is_some() {
+            // Through `dispatch_transport`, not `transport.app.is_some()`: a
+            // `cli:`+`app:` agent dispatches on `cli` and never enters the app
+            // transport, so it cannot recurse and this gate must not refuse it
+            // (#366). The raw probe was the same mistake #362 fixed in the nested
+            // pin pre-flight, in the same direction — a false refusal.
+            if app_exposes
+                && agent_id != app_id
+                && dispatch_transport(&d.manifest.transport) == Some(TransportKind::App)
+            {
                 out.push(ValidationIssue::error(
                     "E_APP_EXPOSED_COMPOSES_EXPOSED",
                     format!(
@@ -3210,6 +3231,138 @@ requires: []
                 .iter()
                 .any(|i| i.code == "E_APP_EXPOSED_COMPOSES_EXPOSED"),
             "self-referential exposed app must be rejected at first install; issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn mcp_alone_is_refused_because_the_runtime_cannot_dispatch_it() {
+        // #366: `E_AGENT_NO_TRANSPORT` accepted `mcp` as a sole transport, but
+        // `TransportKind` has no `Mcp` variant — so this validated clean, installed, and
+        // then died at run with "agent probe has no executable transport". Validation
+        // now refuses what the runtime cannot run.
+        let a: Agent = serde_yaml::from_str(
+            "agent: probe\nversion: 1.0.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+             transport:\n  mcp:\n    server: s\n\
+             commands:\n  go:\n    lifecycle: single\n    description: x\n",
+        )
+        .unwrap();
+        let issues = validate_agent(&a);
+        assert!(
+            issues.iter().any(|i| i.code == "E_AGENT_MCP_ONLY"),
+            "mcp-only must be refused; issues: {issues:?}"
+        );
+        // The two arms are exclusive: an mcp-only agent DOES declare a transport, so
+        // saying "declares zero transports" would be false as well as confusing.
+        assert!(
+            !issues.iter().any(|i| i.code == "E_AGENT_NO_TRANSPORT"),
+            "issues: {issues:?}"
+        );
+
+        // The spec's own shape — `mcp` beside a runnable transport — stays valid. This
+        // is the assertion that stops the fix from being "reject mcp".
+        let a: Agent = serde_yaml::from_str(
+            "agent: probe\nversion: 1.0.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+             transport:\n  cli:\n    binary: b\n  mcp:\n    server: s\n\
+             commands:\n  go:\n    lifecycle: single\n    description: x\n",
+        )
+        .unwrap();
+        let issues = validate_agent(&a);
+        assert!(
+            !issues
+                .iter()
+                .any(|i| i.code == "E_AGENT_MCP_ONLY" || i.code == "E_AGENT_NO_TRANSPORT"),
+            "cli+mcp is exactly what the agent-spec shows; issues: {issues:?}"
+        );
+
+        // And an agent declaring nothing at all still gets the original error, not the
+        // new one — the empty case must not be swallowed by the mcp arm.
+        let a: Agent = serde_yaml::from_str(
+            "agent: probe\nversion: 1.0.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+             transport: {}\ncommands:\n  go:\n    lifecycle: single\n    description: x\n",
+        )
+        .unwrap();
+        let issues = validate_agent(&a);
+        assert!(
+            issues.iter().any(|i| i.code == "E_AGENT_NO_TRANSPORT")
+                && !issues.iter().any(|i| i.code == "E_AGENT_MCP_ONLY"),
+            "issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn composing_an_app_backed_agent_that_dispatches_on_cli_is_allowed() {
+        // #366: this gate probed `transport.app.is_some()`, so a `cli:`+`app:` agent was
+        // refused although dispatch takes `cli` and never enters the app transport —
+        // it cannot recurse, which is the only thing the v0 rule exists to prevent. A
+        // false refusal, the same mechanism #362 fixed in the nested pin pre-flight.
+        let inner = discovered(
+            r#"
+agent: inner
+version: 1.0
+description: x
+stateful: false
+license: app-exposed
+transport:
+  cli:
+    binary: inner-bin
+  app:
+    backed-by: inner
+commands:
+  run:
+    lifecycle: single
+    description: x
+"#,
+        );
+        let mid: App = serde_yaml::from_str(
+            r#"
+app: mid
+version: 0.0.1
+description: x
+exposes-as-agent: true
+exposed-commands:
+  run:
+    lifecycle: single
+nodes:
+  - id: call-inner
+    agent: inner
+    command: run
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+        let issues = validate_app_agents(&mid, std::slice::from_ref(&inner));
+        assert!(
+            !issues
+                .iter()
+                .any(|i| i.code == "E_APP_EXPOSED_COMPOSES_EXPOSED"),
+            "an agent that dispatches on cli cannot recurse into an app; issues: {issues:?}"
+        );
+
+        // The control: drop the `cli:` and the SAME agent is refused again. Without
+        // this, the test above would pass on a gate that had simply been deleted.
+        let app_only = discovered(
+            r#"
+agent: inner
+version: 1.0
+description: x
+stateful: false
+license: app-exposed
+transport:
+  app:
+    backed-by: inner
+commands:
+  run:
+    lifecycle: single
+    description: x
+"#,
+        );
+        let issues = validate_app_agents(&mid, &[app_only]);
+        assert!(
+            issues
+                .iter()
+                .any(|i| i.code == "E_APP_EXPOSED_COMPOSES_EXPOSED"),
+            "an app-only agent still recurses and must still be refused; issues: {issues:?}"
         );
     }
 }

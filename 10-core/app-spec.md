@@ -932,6 +932,7 @@ When a node invokes an app-backed agent:
 
 For v0:
 - An app exposing-as-agent **cannot itself compose** another exposed-as-agent app from the same machine. (Prevents accidental recursion.) This is rejected at install/validate (`E_APP_EXPOSED_COMPOSES_EXPOSED`) and again at dispatch. A normal (non-exposed) app may compose exposed apps one level deep. Deeper hierarchies come post-v0.
+  - "Exposed-as-agent" here means the composed agent **dispatches** on its `app` transport — not merely that its manifest carries an `app:` block. A manifest declaring both `cli:` and `app:` runs as `cli` (see [Agent Spec → Which one runs](./agent-spec.md#which-one-runs-priority-order)), never enters the app transport, and so cannot recurse; refusing it was a false refusal (#366).
 - An exposed app's stateful internal agents are managed when the calling app starts/stops the exposed command.
 - An exposed app **does** inherit the union of its internal agents' `requires-permissions`. The caller approves the full union, not each internal agent separately.
 

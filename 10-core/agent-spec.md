@@ -226,8 +226,23 @@ Required: at least one transport. Optional: more than one.
 | `mcp` | When the agent needs to work in non-CLI hosts (Claude Desktop, Cursor) or wants streaming/server-pushed events. | An MCP server config in `runtime/mcp-server.json`. |
 | `rest` | When the underlying tool is already a REST API and a REST shim is simpler than a CLI. | An OpenAPI spec or hand-written shim. |
 | `builtin` | A `_core` utility the runtime handles **in-process** — no host binary to ship or install (e.g. `html-report`'s generic renderer). | A present-but-empty `builtin: {}` block; dispatch routes by agent id to a runtime handler. |
+| `app` | Not hand-written. Synthesized by `aware app install` onto the agent manifest of an `exposes-as-agent: true` app. | `app: { backed-by: <app-id> }`; dispatch runs that app's node chain instead of spawning a binary. |
 
 The contract every transport satisfies: **structured input → structured output, with errors as data, not exceptions.** The CLI envelope is documented in [`response-envelope.md`](./response-envelope.md) (forthcoming).
+
+### Which one runs (priority order)
+
+An agent may declare several transports; exactly one of them dispatches. The order is:
+
+```
+cli  >  rest  >  app  >  builtin
+```
+
+The highest-priority DECLARED transport wins, and it is the only one that runs — a manifest carrying both `builtin:` and `cli:` runs as `cli`, and its builtin handler is never reached.
+
+This is not a detail of the runtime. It decides which nested `requires:` pins are enforced, what `aware agent catalog` publishes as an agent's `transport:`, and which app compositions validate — so anything asking "how does this agent run?" must answer with THIS order, or it will contradict what actually happens (#215, #349, #366).
+
+**`mcp` is not in the order, and is not dispatchable on its own.** It describes how a non-CLI host (Claude Desktop, Cursor) reaches the agent; the AWARE runtime cannot invoke it. Declare it *alongside* a runnable transport, as the example above does. An `mcp`-only agent is rejected at validate/install (`E_AGENT_MCP_ONLY`) rather than being admitted and then failing at run.
 
 ---
 

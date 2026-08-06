@@ -2431,7 +2431,7 @@ pub(crate) enum TransportKind {
 
 impl TransportKind {
     /// Lowercase manifest-key name (`cli` / `rest` / `app` / `builtin`) for
-    /// error messages.
+    /// error messages and for the catalogue's `transport:` field.
     pub(crate) fn as_str(self) -> &'static str {
         match self {
             TransportKind::Cli => "cli",
@@ -2442,29 +2442,48 @@ impl TransportKind {
     }
 }
 
-/// Resolve which transport a manifest ACTUALLY dispatches on. This is the one
-/// source of truth for the priority order (cli > rest > app > builtin): a
-/// mixed-transport manifest (e.g. builtin + cli) runs as its highest-priority
-/// transport, so every guard that asks "is this agent builtin?" must resolve
-/// through here rather than checking `transport.builtin.is_some()` — otherwise
-/// the guard and dispatch disagree (#215 review).
+/// Resolve which transport a `transport:` block ACTUALLY dispatches on, or `None`
+/// when it declares nothing the runtime can run.
+///
+/// **This is the one source of truth for the priority order — `cli > rest > app >
+/// builtin`.** A mixed-transport manifest (e.g. builtin + cli) runs as its
+/// highest-priority transport, so every site that asks "is this agent builtin?" or
+/// "which transport is this?" must resolve through here rather than probing
+/// `transport.builtin.is_some()` — otherwise it and dispatch disagree (#215 review).
+/// Three sites re-derived the order by hand and one of them (`agent catalog`) ranked
+/// `app` above `rest`, so it published `app` for an agent `aware app run` dispatches
+/// on `rest` (#366). Take a `&Transport` rather than a `&Agent` so a caller holding
+/// only the block — the catalogue projection does — can ask without inventing an id.
+///
+/// `mcp` is deliberately absent: [`TransportKind`] has no `Mcp` variant because the
+/// runtime cannot dispatch one, and pretending otherwise here would move the failure
+/// from "declared valid, then unrunnable" to "claims to run, then panics on a missing
+/// arm". `validate_agent`'s `E_AGENT_MCP_ONLY` refuses the manifest instead, and the
+/// day MCP dispatch lands, the variant and this arm are added together.
+pub(crate) fn dispatch_transport(t: &crate::manifest::agent::Transport) -> Option<TransportKind> {
+    if t.cli.is_some() {
+        Some(TransportKind::Cli)
+    } else if t.rest.is_some() {
+        Some(TransportKind::Rest)
+    } else if t.app.is_some() {
+        Some(TransportKind::App)
+    } else if t.builtin.is_some() {
+        Some(TransportKind::Builtin)
+    } else {
+        None
+    }
+}
+
+/// [`dispatch_transport`] for a whole manifest, naming the agent in the error.
 pub(crate) fn effective_transport(
     m: &crate::manifest::Agent,
     agent: &str,
 ) -> Result<TransportKind, AwareError> {
-    if m.transport.cli.is_some() {
-        Ok(TransportKind::Cli)
-    } else if m.transport.rest.is_some() {
-        Ok(TransportKind::Rest)
-    } else if m.transport.app.is_some() {
-        Ok(TransportKind::App)
-    } else if m.transport.builtin.is_some() {
-        Ok(TransportKind::Builtin)
-    } else {
-        Err(AwareError::Validation(format!(
+    dispatch_transport(&m.transport).ok_or_else(|| {
+        AwareError::Validation(format!(
             "agent {agent} has no executable transport (need `cli`, `rest`, `app`, or `builtin`)"
-        )))
-    }
+        ))
+    })
 }
 
 #[async_trait]
