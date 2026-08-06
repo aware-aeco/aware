@@ -118,10 +118,14 @@ impl Index {
                 .versions
                 .get_key_value(v)
                 .ok_or_else(|| AwareError::NotFound(format!("agent {id}@{v} not in registry")))?,
+            // #371: NOT `next_back()`. These keys live in a `BTreeMap<String, _>`, so that is a
+            // string comparison — `"1.10.1" < "1.9.0"` — and `aware agent install <id>` fetched
+            // 1.9.0 when 1.10.1 existed. This registry publishes calendar-shaped versions
+            // (`tekla@2025.0.1`), where a `.10` follows a `.9` routinely.
             None => entry
                 .versions
                 .iter()
-                .next_back()
+                .max_by(|a, b| crate::validate::compare_version_keys(a.0, b.0))
                 .ok_or_else(|| AwareError::NotFound(format!("agent {id} has no versions")))?,
         };
         Ok((resolved_version, version_entry))

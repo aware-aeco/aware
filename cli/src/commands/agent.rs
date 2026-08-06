@@ -181,20 +181,7 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
 /// comparator for `latest()` and `Index::resolve` anyway.
 fn versions_oldest_first(agent: &catalog::CatalogAgent) -> Vec<&str> {
     let mut keys: Vec<&str> = agent.versions.keys().map(String::as_str).collect();
-    keys.sort_by(|a, b| {
-        match (
-            crate::validate::parse_semver(a),
-            crate::validate::parse_semver(b),
-        ) {
-            // Prerelease sorts before its release, per semver §11.
-            (Some(x), Some(y)) => (x.triple, x.prerelease.is_none())
-                .cmp(&(y.triple, y.prerelease.is_none()))
-                .then_with(|| x.prerelease.cmp(&y.prerelease)),
-            (Some(_), None) => std::cmp::Ordering::Less,
-            (None, Some(_)) => std::cmp::Ordering::Greater,
-            (None, None) => a.cmp(b),
-        }
-    });
+    keys.sort_by(|a, b| crate::validate::compare_version_keys(a, b));
     keys
 }
 

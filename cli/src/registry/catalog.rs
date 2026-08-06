@@ -120,10 +120,17 @@ impl Catalog {
 }
 
 impl CatalogAgent {
-    /// The greatest version key + its metadata (BTreeMap is sorted; matches the
-    /// index's `resolve(None)` which also returns the lexicographically-greatest).
+    /// The greatest version by SemVer precedence + its metadata — the same answer the index's
+    /// `resolve(None)` gives, through the same comparator.
+    ///
+    /// Both used to take `next_back()` on a `BTreeMap<String, _>`, which is a STRING comparison:
+    /// `1.9.0` outranked `1.10.1`, so this reported the older version as current while the
+    /// `versions:` list beside it was correctly ordered — the two contradicting each other on
+    /// screen (#371).
     pub fn latest(&self) -> Option<(&String, &CatalogVersion)> {
-        self.versions.iter().next_back()
+        self.versions
+            .iter()
+            .max_by(|a, b| crate::validate::compare_version_keys(a.0, b.0))
     }
 
     /// Capability hits in the agent's latest version: a command whose name or

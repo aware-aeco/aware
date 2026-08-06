@@ -1097,3 +1097,102 @@ fn a_local_install_over_a_copied_registry_agent_does_not_inherit_its_marker() {
         "installing FROM a folder is a local install, whatever that folder used to be: {marker}"
     );
 }
+
+// ── #371: "latest" must be semver precedence, not string order ────────────────
+
+/// A registry publishing 1.9.0 and 1.10.1 — the pair a string compare orders BACKWARDS, and the
+/// shape this registry actually ships (`tekla@2025.0.1`, where a `.10` follows a `.9` routinely).
+fn double_digit_registry(dir: &std::path::Path) -> String {
+    let old = dir.join("probe-1.9.0.tar.gz");
+    let new = dir.join("probe-1.10.1.tar.gz");
+    build_probe_tarball(&old, "1.9.0");
+    build_probe_tarball(&new, "1.10.1");
+    let idx_path = dir.join("double-digit-index.json");
+    std::fs::write(
+        &idx_path,
+        format!(
+            r#"{{
+    "version": "1.0",
+    "updated-at": "2026-05-16T00:00:00Z",
+    "agents": {{
+        "probe-agent": {{
+            "versions": {{
+                "1.9.0":  {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent" }},
+                "1.10.1": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent" }}
+            }}
+        }}
+    }},
+    "bundles": {{}}
+}}"#,
+            to_file_url(&old),
+            to_file_url(&new)
+        ),
+    )
+    .unwrap();
+    to_file_url(&idx_path)
+}
+
+#[test]
+fn install_takes_the_semver_latest_not_the_lexicographic_one() {
+    // The issue reproduction, on the path that puts bytes on disk. `Index::resolve(id, None)` took
+    // `next_back()` on a `BTreeMap<String, _>`, which is a STRING comparison: `"1.10.1" < "1.9.0"`.
+    // So `aware agent install <id>` fetched 1.9.0 while 1.10.1 was published — silently, and for
+    // everyone, the moment any agent published a second version.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = double_digit_registry(tmp.path());
+
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent"])
+        .assert()
+        .success();
+    assert_eq!(
+        installed_version(&aware),
+        "1.10.1",
+        "install must take the newest by SEMVER — a string compare picks 1.9.0"
+    );
+}
+
+#[test]
+fn a_bare_update_also_takes_the_semver_latest() {
+    // Same resolve, other verb. Reaching it needs a starting point that is not already the answer,
+    // so this installs the older version explicitly first (#363's version argument), then updates.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = double_digit_registry(tmp.path());
+
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent@1.9.0"])
+        .assert()
+        .success();
+    assert_eq!(installed_version(&aware), "1.9.0");
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent"])
+        .assert()
+        .success();
+    assert_eq!(
+        installed_version(&aware),
+        "1.10.1",
+        "a bare update must move FORWARD to 1.10.1, not sit on 1.9.0"
+    );
+}
+
+#[test]
+fn naming_a_version_explicitly_still_reaches_the_older_one() {
+    // The control: fixing "latest" must not take away the ability to ask for an older version by
+    // name, which is the whole of #363.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = double_digit_registry(tmp.path());
+
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent"])
+        .assert()
+        .success();
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent@1.9.0", "--force"])
+        .assert()
+        .success();
+    assert_eq!(installed_version(&aware), "1.9.0");
+}
