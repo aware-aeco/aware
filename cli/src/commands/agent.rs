@@ -409,37 +409,33 @@ fn update_all(ctx: &Context, force: bool) -> Result<(), AwareError> {
     let mut failed: Vec<(String, String)> = Vec::new();
     let mut skipped: Vec<String> = Vec::new();
     for id in &ids {
-        // `--all --force` SKIPS a local install rather than replacing it (#374).
-        //
-        // For ONE named agent, `--force` is a fair trade: the operator typed the id and
-        // the flag together. `--all` breaks that pairing — the id is gone, so the flag
-        // stops being a decision about a particular agent and becomes a blanket waiver
-        // over a set the operator cannot see. It is also the natural thing to reach for:
-        // `update --all` fails, the failure says `--force`, and the shortest fix is to
-        // append it. So here it means "do not fail the run over my local builds", not
-        // "replace them".
-        if force
-            && let Some(reason) =
-                crate::install::registry::local_install_conflict(id, &ctx.paths, &index)
-        {
-            println!("  - {id}: skipped — {reason}");
-            skipped.push(id.clone());
-            continue;
-        }
         // Atomic per-agent update: a failure leaves that agent's existing
         // install untouched rather than deleting it (#174). One transient
         // network error must not cost the user an installed agent.
         //
-        // `force` is deliberately NOT passed through. Everything it waives is the guard
-        // just asked above, so anything it would still waive here is a case this loop has
-        // not judged — specifically a payload that RENAMES onto a local install under a
-        // different id, which the second guard inside catches. Passing `force` would
-        // destroy that one silently; withholding it turns the same case into a reported
-        // failure.
+        // `force` is deliberately NOT passed through (#374). For ONE named agent it is a
+        // fair trade — the operator typed the id and the flag together. `--all` breaks
+        // that pairing: the id is gone, so the flag stops being a decision about a
+        // particular agent and becomes a blanket waiver over a set the operator cannot
+        // see. It is also the natural thing to reach for, which is what makes it
+        // dangerous: `update --all` fails, the failure names `--force`, and the shortest
+        // fix is to append it.
         match crate::install::update_agent_from_registry(id, None, false, &ctx.paths, &index) {
             Ok(spec) => {
                 println!("  \u{2713} {spec}");
                 ok += 1;
+            }
+            // Under `--all --force`, a local install is SKIPPED rather than replaced —
+            // the flag means "do not fail the run over my local builds", not "replace
+            // them". Classified on the error rather than pre-checked on the id, because
+            // every `Conflict` this call can return comes from
+            // `check_update_is_not_destructive` at one of its TWO sites: the agent
+            // itself, or a payload that renames onto a local install under a different
+            // id. A pre-check could only ever see the first, and the second is the route
+            // that defeated the first cut of #370.
+            Err(AwareError::Conflict(reason)) if force => {
+                println!("  - {id}: skipped — {reason}");
+                skipped.push(id.clone());
             }
             Err(e) => {
                 println!("  \u{2717} {id}: {e}");

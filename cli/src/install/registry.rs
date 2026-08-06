@@ -353,24 +353,6 @@ pub fn update_agent_from_registry(
 ///
 /// `--force` overrides all of it, which is what keeps this from being a wall: an operator who
 /// genuinely wants the registry's copy over their own says so once.
-/// Would `update` refuse to replace this installed agent because it looks LOCAL? Returns
-/// the reason it would give, or `None` when replacing it is safe.
-///
-/// The same question [`check_update_is_not_destructive`] answers, asked instead of
-/// enforced — and answered BY it, so there is one rule rather than two that can drift
-/// apart (#366's lesson, one module over). `--all` needs to ask: waiving the guard for
-/// every installed agent at once is a blanket decision about a set the operator cannot
-/// see, so `update --all --force` SKIPS these and updates the rest (#374).
-///
-/// Only a `Conflict` counts. A `NotFound` (a path-shaped id) is not "this is local" — it
-/// is "this is not installed", and the update that follows will say so on its own terms.
-pub(crate) fn local_install_conflict(id: &str, paths: &Paths, index: &Index) -> Option<String> {
-    match check_update_is_not_destructive(id, false, paths, index) {
-        Err(AwareError::Conflict(reason)) => Some(reason),
-        _ => None,
-    }
-}
-
 fn check_update_is_not_destructive(
     id: &str,
     force: bool,
