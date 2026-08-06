@@ -521,11 +521,29 @@ fn update_does_not_hijack_custom_agent_sharing_a_key_prefix() {
     assert!(aware.join("agents/tekla.dev/manifest.yaml").is_file());
 
     // Updating it must fail non-destructively — not pull `tekla` over it.
+    //
+    // Since #370 it is refused one step EARLIER and for a more specific reason: this agent was
+    // installed from a folder, which is true and is the thing the operator needs to know. The
+    // #174 suffix guard still stands behind it — the `--force` arm below is what proves that,
+    // because forcing past the provenance check is the only way to reach it now.
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
         .env("AWARE_REGISTRY", &idx_url)
         .args(["agent", "update", "tekla.dev"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains("installed from a local folder"));
+
+    // #174 itself, still enforced: with the provenance check waived, the suffix fallback must
+    // STILL refuse rather than resolve `tekla.dev` to key `tekla` and replace it. Without this
+    // arm, #370's guard would have quietly become the only thing standing between a custom agent
+    // and the registry — and `--force` would walk straight through it.
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_REGISTRY", &idx_url)
+        .args(["agent", "update", "tekla.dev", "--force"])
         .assert()
         .failure()
         .stderr(predicate::str::contains("not in registry"));
@@ -730,4 +748,352 @@ fn a_spec_missing_one_side_of_the_at_is_refused() {
             .stderr(predicate::str::contains("<agent>[@<version>]"));
     }
     assert_eq!(installed_version(&aware), "1.3.0", "and nothing moved");
+}
+
+// ── #370: update must not destroy something the registry did not put there ────
+
+/// Install a LOCAL agent whose id is also a registry key — the collision the #174 hijack guard
+/// misses, because that one only covers the suffix case (`tekla.dev` resolving to key `tekla`).
+fn install_local_fork(aware: &std::path::Path, tmp: &std::path::Path, version: &str) {
+    let src = tmp.join("fork").join("probe-agent");
+    std::fs::create_dir_all(&src).unwrap();
+    std::fs::write(
+        src.join("manifest.yaml"),
+        format!(
+            "agent: probe-agent\nversion: {version}\ndescription: a LOCAL fork\nstateful: false\n\
+             license: MIT\ntransport:\n  cli:\n    binary: aware-probe\ncommands:\n  probe:\n    \
+             lifecycle: single\n    description: my local change\n    mode: read\n"
+        ),
+    )
+    .unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", aware)
+        .args(["agent", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+}
+
+fn installed_manifest(aware: &std::path::Path) -> String {
+    std::fs::read_to_string(aware.join("agents/probe-agent/manifest.yaml")).unwrap()
+}
+
+#[test]
+fn update_refuses_to_replace_a_locally_installed_agent() {
+    // The issue reproduction. `update` resolves the id in the registry and replaces whatever sits
+    // at `agents/<id>/` — right for a registry install, unrecoverable for a folder one, because
+    // the staging directory holds the registry payload and not the local work. Exit 0, no warning.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    install_local_fork(&aware, tmp.path(), "0.0.1-my-local-fork");
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent"])
+        .assert()
+        .failure()
+        .code(8)
+        // Names the folder, so the operator can act rather than guess.
+        .stderr(predicate::str::contains("installed from a local folder"))
+        .stderr(predicate::str::contains("fork"))
+        .stderr(predicate::str::contains("--force"));
+
+    assert!(
+        installed_manifest(&aware).contains("0.0.1-my-local-fork"),
+        "the local fork must still be on disk — that is the whole issue"
+    );
+}
+
+#[test]
+fn a_version_selecting_update_is_refused_the_same_way() {
+    // #363 gave `update` a version argument, which makes this destructive path EASIER to reach:
+    // the remedy an unsatisfied pin prints leads straight to it. Same guard, same answer.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    install_local_fork(&aware, tmp.path(), "0.0.1-my-local-fork");
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent@1.2.0"])
+        .assert()
+        .failure()
+        .code(8);
+    assert!(installed_manifest(&aware).contains("0.0.1-my-local-fork"));
+}
+
+#[test]
+fn force_takes_the_registry_copy_when_that_is_what_you_want() {
+    // The guard must not be a wall. An operator who genuinely wants the registry version over
+    // their own says so once — and the marker is rewritten, so the agent is registry-sourced after.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    install_local_fork(&aware, tmp.path(), "0.0.1-my-local-fork");
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent@1.2.0", "--force"])
+        .assert()
+        .success();
+    assert_eq!(installed_version(&aware), "1.2.0");
+
+    // …and now it updates with no ceremony, because it IS registry-sourced now.
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent"])
+        .assert()
+        .success();
+    assert_eq!(installed_version(&aware), "1.3.0");
+}
+
+#[test]
+fn a_registry_install_still_updates_with_no_ceremony() {
+    // The negative control that matters most: a guard that refused everything would pass every
+    // test above while breaking the command for its ordinary use.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent"])
+        .assert()
+        .success();
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent@1.2.0"])
+        .assert()
+        .success();
+    assert_eq!(installed_version(&aware), "1.2.0");
+}
+
+#[test]
+fn an_install_predating_the_marker_is_judged_by_its_version() {
+    // Back-compat, and the half that needed a judgement call. An agent installed before provenance
+    // existed carries no marker, and "unknown" must not silently mean "registry" — that assumption
+    // is exactly what destroyed forks, for precisely the people most likely to have one.
+    //
+    // So ask the registry a different question: does it publish the version that is installed? A
+    // registry install always matches a published key; a hand-built one almost never does.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent"])
+        .assert()
+        .success();
+    let marker = aware.join("agents/probe-agent/.aware-install.yaml");
+    std::fs::remove_file(&marker).unwrap();
+
+    // 1.3.0 IS published, so this reads as a registry install and proceeds — no false refusal for
+    // everyone who installed before this shipped.
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent@1.2.0"])
+        .assert()
+        .success();
+
+    // Now a version the registry does not publish, still with no marker: refused, and the message
+    // says it is inferring rather than claiming a record it does not have.
+    std::fs::remove_file(&marker).unwrap();
+    let m = aware.join("agents/probe-agent/manifest.yaml");
+    let body = std::fs::read_to_string(&m).unwrap();
+    std::fs::write(
+        &m,
+        body.replace("version: 1.2.0", "version: 9.9.9-hand-built"),
+    )
+    .unwrap();
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent"])
+        .assert()
+        .failure()
+        .code(8)
+        .stderr(predicate::str::contains("does not publish"))
+        .stderr(predicate::str::contains("inference, not a record"));
+}
+
+#[test]
+fn install_records_where_it_came_from() {
+    // The fact the guard reads. Asserted directly, so a regression in the WRITE side is not
+    // diagnosed through a confusing failure in the guard.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent"])
+        .assert()
+        .success();
+    let marker =
+        std::fs::read_to_string(aware.join("agents/probe-agent/.aware-install.yaml")).unwrap();
+    assert!(marker.contains("source: registry"), "got: {marker}");
+    assert!(
+        marker.contains("1.3.0"),
+        "the resolved version belongs in it: {marker}"
+    );
+
+    let tmp2 = tempfile::tempdir().unwrap();
+    let aware2 = tmp2.path().join("aware");
+    install_local_fork(&aware2, tmp2.path(), "0.0.1-mine");
+    let marker2 =
+        std::fs::read_to_string(aware2.join("agents/probe-agent/.aware-install.yaml")).unwrap();
+    assert!(marker2.contains("source: local"), "got: {marker2}");
+    assert!(
+        marker2.contains("fork"),
+        "the folder belongs in it: {marker2}"
+    );
+}
+
+/// A registry whose KEY differs from the id its payload installs under — `probe` publishing an
+/// agent whose `manifest.agent` is `probe-agent`. Both supported shapes produce this: a key that
+/// installs under a suffixed id (`allplan-2024` -> `allplan-2024.0`) and an `alias-of` rename.
+fn renaming_registry(dir: &std::path::Path) -> String {
+    let tar = dir.join("renaming.tar.gz");
+    build_probe_tarball(&tar, "2.0.0");
+    let idx_path = dir.join("renaming-index.json");
+    std::fs::write(
+        &idx_path,
+        format!(
+            r#"{{
+    "version": "1.0",
+    "updated-at": "2026-05-16T00:00:00Z",
+    "agents": {{
+        "probe": {{
+            "versions": {{
+                "2.0.0": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent" }}
+            }}
+        }}
+    }},
+    "bundles": {{}}
+}}"#,
+            to_file_url(&tar)
+        ),
+    )
+    .unwrap();
+    to_file_url(&idx_path)
+}
+
+#[test]
+fn update_by_registry_key_cannot_delete_a_local_agent_at_the_resulting_id() {
+    // The route that defeated the FIRST cut of this fix, and the reason it needed a second.
+    //
+    // `update_agent_from_registry` removes TWO directories: `agents/<id>` (the spec you typed) and
+    // `agents/<new_name>` (the id the payload installs under). Guarding only the first left the
+    // whole bug alive whenever they differ — which they do for a suffixed install id and for an
+    // `alias-of` rename, both supported and both already tested elsewhere in this file.
+    //
+    // Reproduced against the real binary before the second fix: `aware agent update probe` replaced
+    // a local fork at `agents/probe-agent/` and exited 0.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = renaming_registry(tmp.path());
+    install_local_fork(&aware, tmp.path(), "0.0.1-my-local-fork");
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe"])
+        .assert()
+        .failure()
+        .code(8)
+        .stderr(predicate::str::contains("installed from a local folder"));
+
+    assert!(
+        installed_manifest(&aware).contains("0.0.1-my-local-fork"),
+        "the fork sits at the id the PAYLOAD installs under, which the first guard never looked at"
+    );
+}
+
+#[test]
+fn an_installed_agent_whose_manifest_will_not_parse_is_not_deleted() {
+    // The unknown-provenance branch reads the installed version to infer whether this came from the
+    // registry. When the manifest will not parse there is no version to read — and treating that as
+    // "nothing installed" deleted the directory, which is the opposite of the rule this guard
+    // exists to enforce. An unparseable manifest is a likelier sign of a hand-edited fork than of a
+    // registry install.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    let dir = aware.join("agents").join("probe-agent");
+    std::fs::create_dir_all(&dir).unwrap();
+    std::fs::write(dir.join("manifest.yaml"), "agent: [not\n  yaml\n").unwrap();
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent"])
+        .assert()
+        .failure()
+        .code(8)
+        .stderr(predicate::str::contains("manifest cannot be read"));
+    // The CONTENT, not merely a file of that name — a successful replacement would also leave a
+    // `manifest.yaml` here, so asserting existence alone would pass either way.
+    assert!(
+        std::fs::read_to_string(dir.join("manifest.yaml"))
+            .unwrap()
+            .contains("[not"),
+        "the unparseable manifest must still be there, untouched"
+    );
+}
+
+#[test]
+fn a_registry_update_records_that_it_came_from_the_registry() {
+    // The WRITE side of the update path, which nothing pinned: deleting it left the whole suite
+    // green, because the fixture publishes both versions so the unknown-inference branch proceeds
+    // anyway and masks the missing marker. A regression there would silently make every
+    // registry-updated agent read as "unknown" forever.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent"])
+        .assert()
+        .success();
+    std::fs::remove_file(aware.join("agents/probe-agent/.aware-install.yaml")).unwrap();
+
+    probe(&aware, &idx)
+        .args(["agent", "update", "probe-agent@1.2.0"])
+        .assert()
+        .success();
+
+    let marker =
+        std::fs::read_to_string(aware.join("agents/probe-agent/.aware-install.yaml")).unwrap();
+    assert!(
+        marker.contains("source: registry"),
+        "an update must leave the agent MARKED, not merely replaced: {marker}"
+    );
+    assert!(
+        marker.contains("1.2.0"),
+        "with the version it landed: {marker}"
+    );
+}
+
+#[test]
+fn a_local_install_over_a_copied_registry_agent_does_not_inherit_its_marker() {
+    // `install <dir>` copies the whole directory, so if the source is itself an installed registry
+    // agent it carries a `source: registry` marker saying the wrong thing about this install.
+    //
+    // What this pins is that the marker is written AFTER the copy, so the inherited one is
+    // overwritten. It does NOT pin the belt-and-braces `remove_file` that precedes the write —
+    // that line only matters when the write itself FAILS, which no test can induce without fault
+    // injection. Said plainly so nobody later reads this as coverage of that line.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let idx = two_version_registry(tmp.path());
+    probe(&aware, &idx)
+        .args(["agent", "install", "probe-agent"])
+        .assert()
+        .success();
+
+    // Copy the INSTALLED agent (marker and all) into a source folder, then install it elsewhere.
+    let src = tmp.path().join("copied").join("probe-agent");
+    std::fs::create_dir_all(&src).unwrap();
+    for f in ["manifest.yaml", ".aware-install.yaml"] {
+        std::fs::copy(aware.join("agents/probe-agent").join(f), src.join(f)).unwrap();
+    }
+    let aware2 = tmp.path().join("aware2");
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware2)
+        .args(["agent", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+
+    let marker =
+        std::fs::read_to_string(aware2.join("agents/probe-agent/.aware-install.yaml")).unwrap();
+    assert!(
+        marker.contains("source: local"),
+        "installing FROM a folder is a local install, whatever that folder used to be: {marker}"
+    );
 }

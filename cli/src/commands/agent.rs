@@ -64,6 +64,13 @@ pub enum AgentCommand {
         /// Update every installed agent.
         #[arg(long)]
         all: bool,
+        /// Replace an agent even when it was installed from a local folder.
+        ///
+        /// `update` refuses those by default: the registry's copy would overwrite work that
+        /// exists nowhere else (#370). Pass this when taking the registry's version is what you
+        /// actually want.
+        #[arg(long)]
+        force: bool,
     },
     /// Validate an agent folder against the agent-spec. (v0.2)
     Validate {
@@ -138,7 +145,7 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
             let _ = crate::commands::diagram::auto_regenerate(ctx);
             Ok(())
         }
-        AgentCommand::Update { agent, all } => update(ctx, agent.as_deref(), all),
+        AgentCommand::Update { agent, all, force } => update(ctx, agent.as_deref(), all, force),
         AgentCommand::Validate { path } => validate_cmd(ctx, &path),
         AgentCommand::Publish { path } => publish(ctx, &path),
         AgentCommand::Catalog => catalog_cmd(ctx),
@@ -294,7 +301,13 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     use std::path::PathBuf;
     let path = PathBuf::from(spec);
     if path.is_dir() {
-        let installed = crate::install::install_agent_from_path(&path, &ctx.paths)?;
+        let installed = crate::install::install_agent_from_path(
+            &path,
+            &ctx.paths,
+            &crate::install::InstallSource::Local {
+                path: path.display().to_string(),
+            },
+        )?;
         println!("✓ installed {installed} from {}", path.display());
         // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
         let _ = auto_regenerate_plugins(ctx, false);
@@ -336,7 +349,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     Ok(())
 }
 
-fn update(ctx: &Context, id: Option<&str>, all: bool) -> Result<(), AwareError> {
+fn update(ctx: &Context, id: Option<&str>, all: bool, force: bool) -> Result<(), AwareError> {
     match (id, all) {
         (Some(_), true) => Err(AwareError::Validation(
             "agent update: pass either <agent> or --all, not both".into(),
@@ -349,12 +362,12 @@ fn update(ctx: &Context, id: Option<&str>, all: bool) -> Result<(), AwareError> 
         (None, false) => Err(AwareError::Validation(
             "agent update: missing <agent> (or pass --all)".into(),
         )),
-        (Some(id), false) => update_one(ctx, id),
-        (None, true) => update_all(ctx),
+        (Some(id), false) => update_one(ctx, id, force),
+        (None, true) => update_all(ctx, force),
     }
 }
 
-fn update_one(ctx: &Context, spec: &str) -> Result<(), AwareError> {
+fn update_one(ctx: &Context, spec: &str, force: bool) -> Result<(), AwareError> {
     // `<id>[@<version>]` (#363). Before this there was no single command that
     // reached a version other than the newest: `install` refused while a copy was
     // on disk ("already installed; use `aware agent update`"), and `update` only
@@ -381,7 +394,7 @@ fn update_one(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     // leaves the existing agent intact (#174). That property is exactly why the
     // version argument went here rather than on `install --force`.
     let installed =
-        crate::install::update_agent_from_registry(id, version_pin, &ctx.paths, &index)?;
+        crate::install::update_agent_from_registry(id, version_pin, force, &ctx.paths, &index)?;
     match version_pin {
         Some(v) => println!("\u{2713} updated {installed} to {v}"),
         None => println!("\u{2713} updated {installed}"),
@@ -393,7 +406,7 @@ fn update_one(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     Ok(())
 }
 
-fn update_all(ctx: &Context) -> Result<(), AwareError> {
+fn update_all(ctx: &Context, force: bool) -> Result<(), AwareError> {
     let installed = discover_agents(&ctx.paths)?;
     if installed.is_empty() {
         println!("(no agents installed)");
@@ -409,7 +422,7 @@ fn update_all(ctx: &Context) -> Result<(), AwareError> {
         // Atomic per-agent update: a failure leaves that agent's existing
         // install untouched rather than deleting it (#174). One transient
         // network error must not cost the user an installed agent.
-        match crate::install::update_agent_from_registry(id, None, &ctx.paths, &index) {
+        match crate::install::update_agent_from_registry(id, None, force, &ctx.paths, &index) {
             Ok(spec) => {
                 println!("  \u{2713} {spec}");
                 ok += 1;

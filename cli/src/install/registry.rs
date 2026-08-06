@@ -23,8 +23,20 @@ pub fn install_agent_from_registry(
     paths: &Paths,
     index: &Index,
 ) -> Result<String, AwareError> {
+    // `id` is used as the key directly, exactly as before — resolving it through
+    // `resolve_key` here would quietly make `install <suffixed-id>` succeed where it has
+    // always errored, which is a behaviour change that does not belong in a bug fix.
+    let (resolved, _) = index.resolve(id, version_pin)?;
+    let resolved = resolved.clone();
     let (_scratch, subdir) = stage_agent_from_registry(id, version_pin, paths, index)?;
-    install_agent_from_path(&subdir, paths)
+    install_agent_from_path(
+        &subdir,
+        paths,
+        &crate::install::provenance::InstallSource::Registry {
+            key: id.to_string(),
+            version: resolved,
+        },
+    )
 }
 
 /// Resolve `<key>[@version]`, fetch the tarball (cache → `file://` → network),
@@ -200,9 +212,21 @@ fn download_tarball(tarball: &str, dest: &Path) -> Result<(), AwareError> {
 pub fn update_agent_from_registry(
     id: &str,
     version_pin: Option<&str>,
+    force: bool,
     paths: &Paths,
     index: &Index,
 ) -> Result<String, AwareError> {
+    // 0. WOULD THIS DESTROY SOMETHING? (#370) Step 3 below deletes whatever sits at
+    //    `agents/<id>/` and moves the registry's copy in. That is right for an agent
+    //    installed FROM the registry and unrecoverable for one installed from a
+    //    folder — the staging dir holds the registry payload, not theirs.
+    //
+    //    The #174 hijack guard covers only the SUFFIX case (local `tekla.dev`
+    //    resolving to key `tekla`). An exact id collision — a local fork of a
+    //    registry agent, which is the commonest kind — walks past it, because
+    //    `index.agents.contains_key(id)` is true.
+    check_update_is_not_destructive(id, force, paths, index)?;
+
     // 1. Resolve the registry key BEFORE touching disk. A spec that maps to no
     //    registry entry fails here, leaving the install intact.
     let key = index
@@ -268,6 +292,35 @@ pub fn update_agent_from_registry(
         let _ = std::fs::remove_dir_all(&staging);
         return Err(e.into());
     }
+    // The staged copy came from the registry, whatever the one it replaces came from — record it
+    // BEFORE the rename, so the marker lands atomically with the agent it describes (#370).
+    crate::install::provenance::write(
+        &staging,
+        &crate::install::provenance::InstallSource::Registry {
+            key: key.clone(),
+            version: agent.version.clone(),
+        },
+    );
+
+    // #370, second route: this removes TWO directories, and step 0 only judged the
+    // first. `new_name` is the PAYLOAD's id, which differs from the spec you typed in
+    // two supported shapes — a key that installs under a suffixed id (`allplan-2024`
+    // -> `allplan-2024.0`), and an `alias-of` rename. So `update <key>` could delete a
+    // local install sitting at `<new_name>` without the guard ever looking at it.
+    // Verified before fixing: `update probe` replaced a local fork at
+    // `agents/probe-agent/`, exit 0, with the first guard in place.
+    //
+    // Judged here rather than at step 0 because `new_name` is not known until the payload
+    // has been fetched and validated. The staging copy above has already been written, so
+    // this is not "before any filesystem mutation" — it is before any mutation of the
+    // INSTALL, which is the property that matters. The staging dir is cleaned on the way
+    // out so a refusal leaves no more behind than the copy-failure path above does.
+    if new_name != id
+        && let Err(e) = check_update_is_not_destructive(&new_name, force, paths, index)
+    {
+        let _ = std::fs::remove_dir_all(&staging);
+        return Err(e);
+    }
 
     // Remove the prior install (the folder we updated from) and any stale folder
     // already at the new name — collapses the duplicate-folder bug.
@@ -283,6 +336,81 @@ pub fn update_agent_from_registry(
     // Atomic move into place (same filesystem).
     std::fs::rename(&staging, &final_dir)?;
     Ok(new_name)
+}
+
+/// Refuse an `update` that would replace something the registry did not put there (#370).
+///
+/// Three answers, because there are three states and conflating them is what caused the bug:
+///
+/// - **Known local** — refuse. The operator installed this from a folder; replacing it with the
+///   registry's copy loses work that exists nowhere else.
+/// - **Known registry** — proceed. This is what `update` is for.
+/// - **Unknown** (installed before the marker existed, or it was lost) — ask the registry a
+///   different question: does it publish the version that is installed? A registry install always
+///   matches a published key; a local fork almost never does (`0.0.1-my-fork` against `1.3.0`). A
+///   mismatch is not proof, so the message says it is inferring — but refusing a maybe beats
+///   deleting a maybe, and `--force` is one flag away.
+///
+/// `--force` overrides all of it, which is what keeps this from being a wall: an operator who
+/// genuinely wants the registry's copy over their own says so once.
+fn check_update_is_not_destructive(
+    id: &str,
+    force: bool,
+    paths: &Paths,
+    index: &Index,
+) -> Result<(), AwareError> {
+    if force {
+        return Ok(());
+    }
+    // Fenced like every other agent-id join (#365) — and REFUSING, not abstaining.
+    //
+    // The direction matters at the second call site. `new_name` comes from the PAYLOAD's
+    // manifest, and `validate_agent` checks an agent id only for emptiness — it has no
+    // segment check, unlike `validate_app`. So a path-shaped `new_name` would reach
+    // `agents_dir.join(&new_name)` and `remove_dir_all`, and this is the first and only
+    // place that can stop it. "No path-shaped id names an installed agent" is precisely
+    // the argument for refusing rather than waving it through; returning Ok here would
+    // have made the guard abstain on the one input it is least able to trust.
+    if !crate::manifest::loader::is_safe_segment(id) {
+        return Err(AwareError::NotFound(format!("agent {id} is not installed")));
+    }
+    let agent_dir = paths.agents_dir().join(id);
+    match crate::install::provenance::read(&agent_dir) {
+        Some(crate::install::provenance::InstallSource::Local { path }) => {
+            Err(AwareError::Conflict(format!(
+                "agent {id} was installed from a local folder ({path}), so `update` would replace it with the registry's copy and your local one would be gone. Re-install from that folder to refresh it, or pass --force to take the registry's version instead"
+            )))
+        }
+        Some(crate::install::provenance::InstallSource::Registry { .. }) => Ok(()),
+        None => {
+            // No marker. Infer from the version, and say that is what we are doing.
+            let installed = crate::manifest::loader::load_agent_by_id(&paths.agents_dir(), id)
+                .ok()
+                .map(|m| m.version);
+            let Some(installed) = installed else {
+                // NOTHING there is fine — `update` then behaves as an install. A directory
+                // that exists but whose manifest will not parse is NOT fine: that is a
+                // likelier sign of a hand-edited fork than of a registry install, and
+                // deleting it would contradict the rule this function exists to enforce.
+                if !agent_dir.exists() {
+                    return Ok(());
+                }
+                return Err(AwareError::Conflict(format!(
+                    "there is a directory at agents/{id} whose manifest cannot be read, so `update` cannot tell whether it came from the registry — and replacing it would be unrecoverable if it did not. Fix or remove it, or pass --force to take the registry's version"
+                )));
+            };
+            let published = index
+                .resolve_key(id)
+                .and_then(|k| index.agents.get(k))
+                .is_some_and(|e| e.versions.contains_key(&installed));
+            if published {
+                return Ok(());
+            }
+            Err(AwareError::Conflict(format!(
+                "agent {id} has version {installed} installed, which the registry does not publish — this looks like a local build, and `update` would replace it with the registry's copy. (This install predates provenance tracking, so that is an inference, not a record.) Re-install from its folder to refresh it, or pass --force to take the registry's version"
+            )))
+        }
+    }
 }
 
 /// Extract `subdir` from `tarball` into a fresh dir under `extract_root` and return the
@@ -627,7 +755,7 @@ mod tests {
 
         // 3. Updating the OLD install migrates it to the new id.
         let migrated =
-            update_agent_from_registry("steel-detailer-aisc", None, &paths, &after).unwrap();
+            update_agent_from_registry("steel-detailer-aisc", None, false, &paths, &after).unwrap();
         assert_eq!(migrated, "steel-detailer-us");
         assert!(
             aware
