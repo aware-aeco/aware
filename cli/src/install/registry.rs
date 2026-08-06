@@ -310,11 +310,16 @@ pub fn update_agent_from_registry(
     // Verified before fixing: `update probe` replaced a local fork at
     // `agents/probe-agent/`, exit 0, with the first guard in place.
     //
-    // Judged here rather than at step 0 because `new_name` is not known until the
-    // payload has been fetched and validated — and still before any fs mutation, which
-    // is the property that matters.
-    if new_name != id {
-        check_update_is_not_destructive(&new_name, force, paths, index)?;
+    // Judged here rather than at step 0 because `new_name` is not known until the payload
+    // has been fetched and validated. The staging copy above has already been written, so
+    // this is not "before any filesystem mutation" — it is before any mutation of the
+    // INSTALL, which is the property that matters. The staging dir is cleaned on the way
+    // out so a refusal leaves no more behind than the copy-failure path above does.
+    if new_name != id
+        && let Err(e) = check_update_is_not_destructive(&new_name, force, paths, index)
+    {
+        let _ = std::fs::remove_dir_all(&staging);
+        return Err(e);
     }
 
     // Remove the prior install (the folder we updated from) and any stale folder
@@ -357,11 +362,17 @@ fn check_update_is_not_destructive(
     if force {
         return Ok(());
     }
-    // Fenced like every other agent-id join (#365). Read-only and operator-supplied, so
-    // the exposure is small — but this is now the FIRST thing the destructive command
-    // does with an unvalidated id, which is exactly where that guard belongs.
+    // Fenced like every other agent-id join (#365) — and REFUSING, not abstaining.
+    //
+    // The direction matters at the second call site. `new_name` comes from the PAYLOAD's
+    // manifest, and `validate_agent` checks an agent id only for emptiness — it has no
+    // segment check, unlike `validate_app`. So a path-shaped `new_name` would reach
+    // `agents_dir.join(&new_name)` and `remove_dir_all`, and this is the first and only
+    // place that can stop it. "No path-shaped id names an installed agent" is precisely
+    // the argument for refusing rather than waving it through; returning Ok here would
+    // have made the guard abstain on the one input it is least able to trust.
     if !crate::manifest::loader::is_safe_segment(id) {
-        return Ok(()); // no path-shaped id names an installed agent; resolve_key refuses it
+        return Err(AwareError::NotFound(format!("agent {id} is not installed")));
     }
     let agent_dir = paths.agents_dir().join(id);
     match crate::install::provenance::read(&agent_dir) {
@@ -385,7 +396,7 @@ fn check_update_is_not_destructive(
                     return Ok(());
                 }
                 return Err(AwareError::Conflict(format!(
-                    "agent {id} is installed but its manifest cannot be read, so `update` cannot tell whether it came from the registry — and replacing it would be unrecoverable if it did not. Fix or remove the manifest, or pass --force to take the registry's version"
+                    "there is a directory at agents/{id} whose manifest cannot be read, so `update` cannot tell whether it came from the registry — and replacing it would be unrecoverable if it did not. Fix or remove it, or pass --force to take the registry's version"
                 )));
             };
             let published = index

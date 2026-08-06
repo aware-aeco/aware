@@ -1016,9 +1016,13 @@ fn an_installed_agent_whose_manifest_will_not_parse_is_not_deleted() {
         .failure()
         .code(8)
         .stderr(predicate::str::contains("manifest cannot be read"));
+    // The CONTENT, not merely a file of that name — a successful replacement would also leave a
+    // `manifest.yaml` here, so asserting existence alone would pass either way.
     assert!(
-        dir.join("manifest.yaml").is_file(),
-        "it must still be there"
+        std::fs::read_to_string(dir.join("manifest.yaml"))
+            .unwrap()
+            .contains("[not"),
+        "the unparseable manifest must still be there, untouched"
     );
 }
 
@@ -1057,9 +1061,12 @@ fn a_registry_update_records_that_it_came_from_the_registry() {
 #[test]
 fn a_local_install_over_a_copied_registry_agent_does_not_inherit_its_marker() {
     // `install <dir>` copies the whole directory, so if the source is itself an installed registry
-    // agent it carries a `source: registry` marker. The write that follows is best-effort; if it
-    // ever failed, that inherited marker would survive and say the opposite of the truth about a
-    // LOCAL install — a silent failure in the destructive direction. So it is cleared first.
+    // agent it carries a `source: registry` marker saying the wrong thing about this install.
+    //
+    // What this pins is that the marker is written AFTER the copy, so the inherited one is
+    // overwritten. It does NOT pin the belt-and-braces `remove_file` that precedes the write —
+    // that line only matters when the write itself FAILS, which no test can induce without fault
+    // injection. Said plainly so nobody later reads this as coverage of that line.
     let tmp = tempfile::tempdir().unwrap();
     let aware = tmp.path().join("aware");
     let idx = two_version_registry(tmp.path());
