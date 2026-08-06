@@ -298,42 +298,28 @@ where
         // `vendor`, and `keywords` are edited as an agent grows commands. Those are
         // exactly the fields a maintainer edits in the NEW version, and the catalogue
         // published the old one while `install` fetched the new (#371's fix).
-        let newest = entry
-            .versions
-            .keys()
-            .max_by(|a, b| crate::validate::compare_version_keys(a, b))
-            .cloned();
+        // "Newest among the versions that LOADED", tracked as a running best. A first
+        // cut computed the newest key up front and then bolted on a fallback for the
+        // case where that version's manifest failed to load — which is the same answer
+        // by a longer route (when the newest loads, it IS the newest that loaded), and
+        // it re-invoked `load` for a manifest already read, quietly requiring the
+        // caller's closure to be idempotent. A running best needs neither.
+        let mut newest: Option<String> = None;
         for (ver, ve) in &entry.versions {
             match load(&ve.subdir) {
                 Ok(agent) => {
-                    if Some(ver) == newest.as_ref() {
+                    let is_newer = newest.as_ref().is_none_or(|best| {
+                        crate::validate::compare_version_keys(ver, best).is_gt()
+                    });
+                    if is_newer {
                         ca.display_name = agent.display_name.clone();
                         ca.vendor = agent.vendor.clone();
                         ca.keywords = agent.keywords.clone();
+                        newest = Some(ver.clone());
                     }
                     ca.versions.insert(ver.clone(), version_from_agent(&agent));
                 }
                 Err(e) => errors.push((format!("{id}@{ver}"), e.to_string())),
-            }
-        }
-        // If the newest version's manifest failed to LOAD, the fields above were never
-        // assigned and the agent would be published with no metadata at all — worse than
-        // stale. Fall back to the newest version that did load, so a single broken
-        // manifest degrades the description rather than erasing it. (`reindex` reports
-        // the load failure either way; it is in `errors`.)
-        if ca.display_name.is_none() && ca.vendor.is_none() && ca.keywords.is_empty() {
-            let loaded_newest = ca
-                .versions
-                .keys()
-                .max_by(|a, b| crate::validate::compare_version_keys(a, b))
-                .cloned();
-            if let Some(ver) = loaded_newest
-                && let Some(ve) = entry.versions.get(&ver)
-                && let Ok(agent) = load(&ve.subdir)
-            {
-                ca.display_name = agent.display_name.clone();
-                ca.vendor = agent.vendor.clone();
-                ca.keywords = agent.keywords.clone();
             }
         }
         // A rename alias / deprecated key is still LOADED above — so a broken one is
@@ -868,6 +854,84 @@ mod tests {
         assert_eq!(cat.agents["probe"].vendor.as_deref(), Some("vendor-1.0.0"));
         let cat = catalog_of(&["1.0.0-rc.1", "1.0.0"]);
         assert_eq!(cat.agents["probe"].vendor.as_deref(), Some("vendor-1.0.0"));
+    }
+
+    /// A two-version index for `probe` where `subdir` IS the version, so a test's `load`
+    /// closure can answer differently per version.
+    fn two_version_index() -> Index {
+        serde_json::from_str(
+            r#"{
+    "version": "1.0",
+    "updated-at": "x",
+    "agents": { "probe": { "versions": {
+            "1.9.0":  { "tarball": "https://x.invalid/x.tar.gz", "subdir": "1.9.0" },
+            "1.10.1": { "tarball": "https://x.invalid/x.tar.gz", "subdir": "1.10.1" }
+    } } },
+    "bundles": {}
+}"#,
+        )
+        .unwrap()
+    }
+
+    /// A manifest for `version`, carrying whatever `meta` lines are given. Raw literal so
+    /// the YAML in a test reads as YAML.
+    fn manifest_with_meta(version: &str, meta: &str) -> Agent {
+        let yaml = format!(
+            r#"agent: probe
+version: {version}
+description: probe
+stateful: false
+license: MIT
+{meta}transport:
+  cli:
+    binary: b
+commands:
+  go:
+    lifecycle: single
+    description: x
+"#
+        );
+        serde_yaml::from_str(&yaml).unwrap()
+    }
+
+    #[test]
+    fn a_newest_version_with_no_metadata_publishes_none_rather_than_reviving_an_older_one() {
+        // The case that keeps the fix honest, and the one a "fall back whenever the fields
+        // came out empty" formulation gets wrong: an agent that DROPS its metadata in a new
+        // version must publish nothing, not resurrect what 1.9.0 said. That is #384 in the
+        // other direction — stale metadata presented as current.
+        let index = two_version_index();
+        let (cat, errors) = build_catalog(&index, "x".into(), |subdir| {
+            Ok(manifest_with_meta(
+                subdir,
+                if subdir == "1.10.1" {
+                    ""
+                } else {
+                    "display-name: Old Name\nvendor: vendor-1.9.0\nkeywords: [kw-1.9.0]\n"
+                },
+            ))
+        });
+        assert!(errors.is_empty(), "{errors:?}");
+        let a = cat.agents.get("probe").unwrap();
+        assert_eq!(a.display_name, None, "1.9.0's name must not come back");
+        assert_eq!(a.vendor, None, "1.9.0's vendor must not come back");
+        assert!(a.keywords.is_empty(), "1.9.0's keywords must not come back");
+
+        // The PARTIAL case, which an `||` where the rule wants "the newest decides" would
+        // also get wrong: the newest sets a display-name but no vendor, the older has one.
+        let (cat, _) = build_catalog(&index, "x".into(), |subdir| {
+            Ok(manifest_with_meta(
+                subdir,
+                if subdir == "1.10.1" {
+                    "display-name: New Name\n"
+                } else {
+                    "display-name: Old Name\nvendor: vendor-1.9.0\n"
+                },
+            ))
+        });
+        let a = cat.agents.get("probe").unwrap();
+        assert_eq!(a.display_name.as_deref(), Some("New Name"));
+        assert_eq!(a.vendor, None, "a field the newest omits stays omitted");
     }
 
     #[test]
