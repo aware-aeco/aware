@@ -178,3 +178,59 @@ fn a_single_version_agent_prints_no_versions_line() {
         "one version is not a choice: {text}"
     );
 }
+
+#[test]
+fn describe_names_the_transport_that_dispatches_and_flags_the_rest() {
+    // #366: this printed a line per DECLARED transport, and only for `cli` and `app` — so
+    // a `rest:`+`app:` agent was described as `app` though it runs on `rest` (the issue's
+    // repro, reached from a second command), and a rest-only or builtin-only agent got no
+    // transport line at all.
+    let home = tempfile::tempdir().unwrap();
+    let install = |id: &str, transport_block: &str| {
+        let src = tempfile::tempdir().unwrap();
+        let manifest = format!(
+            r#"agent: {id}
+version: 1.0.0
+description: y
+stateful: false
+license: MIT
+transport:
+{transport_block}commands:
+  do:
+    lifecycle: single
+    description: z
+"#
+        );
+        std::fs::write(src.path().join("manifest.yaml"), manifest).unwrap();
+        Command::cargo_bin("aware")
+            .unwrap()
+            .env("AWARE_HOME", home.path())
+            .args(["agent", "install"])
+            .arg(src.path())
+            .assert()
+            .success();
+    };
+
+    // The repro: rest + app dispatches on rest.
+    install("restapp", "  rest: {}\n  app:\n    backed-by: some-app\n");
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .args(["agent", "describe", "restapp"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("transport:    rest"))
+        // …and the app transport is named as declared-but-unused, never as THE transport.
+        .stdout(predicate::str::contains("also declared: app"))
+        .stdout(predicate::str::contains("transport:    app").not());
+
+    // A builtin-only agent — 8 of the 78 in the shipped catalogue — printed nothing.
+    install("buil", "  builtin: {}\n");
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .args(["agent", "describe", "buil"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("transport:    builtin"));
+}

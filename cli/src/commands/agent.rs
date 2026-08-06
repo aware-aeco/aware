@@ -17,6 +17,7 @@ use crate::manifest::loader::discover_agents;
 use crate::registry::catalog::{self, Catalog};
 use crate::registry::fetch::fetch_catalog;
 use crate::render::table::Table;
+use crate::runtime::invoker::{TransportKind, dispatch_transport};
 
 #[derive(Subcommand, Debug)]
 pub enum AgentCommand {
@@ -734,12 +735,7 @@ fn describe_installed(ctx: &Context, m: &Agent, started: Instant) -> Result<(), 
         println!("vendor:       {v}");
     }
     println!("license:      {}", m.license);
-    if let Some(t) = &m.transport.cli {
-        println!("transport:    cli ({})", t.binary);
-    }
-    if let Some(t) = &m.transport.app {
-        println!("transport:    app (backed by app {})", t.backed_by);
-    }
+    print_transport(&m.transport);
     if m.status == crate::manifest::agent::AgentStatus::Planned {
         println!(
             "status:       \u{26a0} planned — not yet runnable (no shipped transport binary); \
@@ -769,6 +765,58 @@ fn describe_installed(ctx: &Context, m: &Agent, started: Instant) -> Result<(), 
         println!("  - {s}");
     }
     Ok(())
+}
+
+/// Print the `transport:` line of `aware agent describe` — the one that dispatches,
+/// resolved through [`dispatch_transport`].
+///
+/// This printed a line per DECLARED transport until #366, and only for `cli` and `app`:
+/// a `rest:`+`app:` agent was described as `app` though it runs on `rest` (the issue's
+/// own repro, reached from a second command), a `cli:`+`app:` one printed two
+/// contradictory lines, and a rest-only or builtin-only agent — 10 of the 78 agents in
+/// the shipped catalogue — printed no transport line at all.
+///
+/// Anything else declared is listed after it, marked as not used: "which one runs" and
+/// "what does this manifest declare" are both worth knowing, and only the first was
+/// ever the question being answered wrongly.
+fn print_transport(t: &crate::manifest::agent::Transport) {
+    let line = match dispatch_transport(t) {
+        Some(TransportKind::Cli) => match &t.cli {
+            Some(c) => format!("cli ({})", c.binary),
+            None => "cli".to_string(),
+        },
+        Some(TransportKind::App) => match &t.app {
+            Some(a) => format!("app (backed by app {})", a.backed_by),
+            None => "app".to_string(),
+        },
+        Some(kind) => kind.as_str().to_string(),
+        // Not dispatchable. `mcp` alone is refused by `validate_agent`
+        // (E_AGENT_MCP_ONLY), so saying so beats printing it like a runnable one.
+        None if t.mcp.is_some() => {
+            "mcp (not dispatchable on its own — see E_AGENT_MCP_ONLY)".to_string()
+        }
+        None => "none — this agent cannot be dispatched".to_string(),
+    };
+    println!("transport:    {line}");
+
+    let dispatched = dispatch_transport(t).map(TransportKind::as_str);
+    let also: Vec<&str> = [
+        ("cli", t.cli.is_some()),
+        ("rest", t.rest.is_some()),
+        ("app", t.app.is_some()),
+        ("builtin", t.builtin.is_some()),
+        ("mcp", t.mcp.is_some()),
+    ]
+    .into_iter()
+    .filter(|(name, present)| *present && Some(*name) != dispatched)
+    .map(|(name, _)| name)
+    .collect();
+    if !also.is_empty() {
+        println!(
+            "  also declared: {} (not used — see agent-spec § Which one runs)",
+            also.join(", ")
+        );
+    }
 }
 
 fn skill_cmd(ctx: &Context, agent_id: &str, skill_name: &str) -> Result<(), AwareError> {
