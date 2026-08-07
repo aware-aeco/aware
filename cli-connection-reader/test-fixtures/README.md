@@ -23,6 +23,22 @@ python make-baseplate.py baseplate-bp1.ifc
 The assembly's GlobalId is random per regeneration — tests should discover it via `list` (the
 first candidate), not hard-code it.
 
+## `baseplate-origin.ifc`
+
+The **same** connection as `baseplate-bp1.ifc` with the site offset set to zero, so it is authored
+across the world origin rather than ~23 m out. It exists for `probe`'s `bbox`, not for recognition:
+`bbox`'s midpoint error is a property of how far a file is authored from the origin (aware-aeco/aware#348),
+and without an origin-authored fixture only the far arm of that claim could be tested in CI — the near
+arm rested on a `~/Downloads` file whose tests skip. It also disproves the tempting generalisation that
+`probe.bbox.min` is always `[0,0,0]`: this file's anchors straddle the origin, so its `min` is negative.
+
+Because it differs from `baseplate-bp1.ifc` in exactly one authored quantity, the contrast between the
+two is evidence rather than anecdote. Regenerate with the same script, passing the offset:
+
+```bash
+python make-baseplate.py baseplate-origin.ifc 0 0 0
+```
+
 ## `shearplate-sp1.ifc`
 
 A minimal but real IFC4 shear / fin-plate connection: one `IfcElementAssembly` aggregating an

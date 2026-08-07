@@ -14,6 +14,12 @@ import sys
 import ifcopenshell
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "baseplate-bp1.ifc"
+# The site offset is a PARAMETER because `probe`'s bbox error is a property of it, not of the
+# algorithm (aware-aeco/aware#348): the box runs from the world origin to the model, so its midpoint
+# is off by roughly half the offset. Passing 0 0 0 authors the same connection AT the origin, which
+# is the only way to exercise the other half of that claim — the case where the midpoint is exact.
+# Defaults are unchanged, so `python make-baseplate.py baseplate-bp1.ifc` still regenerates bp1.
+OX, OY, OZ = (float(v) for v in (sys.argv[2:5] if len(sys.argv) > 4 else (10.0, 20.0, 5.0)))
 f = ifcopenshell.file(schema="IFC4")
 
 
@@ -79,9 +85,6 @@ def shape(solid):
                           RepresentationIdentifier="Body", RepresentationType="SweptSolid", Items=[solid])
     return f.create_entity("IfcProductDefinitionShape", Representations=[shp])
 
-
-# realistic site offset (metres) so world->local re-anchor is non-trivial
-OX, OY, OZ = 10.0, 20.0, 5.0
 
 # base plate 0.4 x 0.4 x 0.025, bottom at OZ (top of foundation)
 plate = f.create_entity("IfcPlate", GlobalId=gid(), Name="BASE PLATE PL25", ObjectPlacement=placement(bldg_plc, 0, 0, 0),
