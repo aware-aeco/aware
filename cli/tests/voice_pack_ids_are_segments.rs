@@ -93,6 +93,40 @@ fn assert_refused_with(out: &std::process::Output, code: i32, needle: &str) {
     );
 }
 
+/// Assert nothing whose name begins with `prefix` exists ANYWHERE under `root`.
+///
+/// The escape assertions used to name one path and check that, and got the
+/// depth wrong: `<tmp>/pwned` where the escape actually lands at
+/// `<tmp>/deep/enough/to/catch/pwned`. That is the same failure
+/// `home_with_neighbours`'s own doc comment warns about — an assertion satisfied
+/// by the fixture rather than by the code — repeated one level up. Searching the
+/// tree takes the arithmetic out of the assertion instead of getting it right
+/// once and leaving it to be got wrong again.
+fn assert_nothing_escaped(root: &std::path::Path, prefix: &str) {
+    let mut found = Vec::new();
+    let mut stack = vec![root.to_path_buf()];
+    while let Some(dir) = stack.pop() {
+        let Ok(entries) = std::fs::read_dir(&dir) else {
+            continue;
+        };
+        for entry in entries.flatten() {
+            if entry.file_name().to_string_lossy().starts_with(prefix) {
+                found.push(entry.path());
+            }
+            // `file_type` does not follow links, so a symlinked fixture cannot
+            // walk this out of `root` or into a cycle.
+            if entry.file_type().map(|t| t.is_dir()).unwrap_or(false) {
+                stack.push(entry.path());
+            }
+        }
+    }
+    assert!(
+        found.is_empty(),
+        "the pack escaped to {found:?} — nothing named {prefix:?}* may exist under {}",
+        root.display()
+    );
+}
+
 fn assert_neighbours_intact(tmp: &std::path::Path, home: &std::path::Path) {
     assert!(
         home.join("apps/keep-me/keep-me.flo").is_file(),
@@ -154,11 +188,7 @@ fn install_refuses_a_manifest_whose_id_points_outside_voices() {
     // not merely that the command exited non-zero. Before the fix this existed
     // and the command reported success. Checked before the exit-code assert,
     // which would otherwise panic first and skip it.
-    assert!(
-        !tmp.path().join("pwned").exists(),
-        "the pack escaped to {}",
-        tmp.path().join("pwned").display()
-    );
+    assert_nothing_escaped(tmp.path(), "pwned");
     assert_neighbours_intact(tmp.path(), &home);
     assert_refused_with(&out, 3, "not a plain name");
     assert_refused_with(&out, 3, "../../../pwned");
@@ -183,19 +213,12 @@ fn install_refuses_a_traversing_scope_flag() {
         ],
     );
 
-    // Where the escape actually LANDS. `home` is `<tmp>/deep/enough/to/catch/
-    // aware`, so `voices/../../../pwned-scope` is `<tmp>/deep/enough/to/
-    // pwned-scope` — inside the tempdir, which is the whole point of nesting
-    // it. The earlier one-level home put this in the system `/tmp`, where the
-    // assertion could not see it and so could never fail.
-    let landing = home.parent().unwrap().parent().unwrap().join("pwned-scope");
-    assert!(
-        !landing.exists(),
-        "the scope flag escaped to {}",
-        landing.display()
-    );
-    // Nothing anywhere else under the tempdir either.
-    assert!(!tmp.path().join("pwned-scope").exists());
+    // `home` is `<tmp>/deep/enough/to/catch/aware`, so the escape would land at
+    // `<tmp>/deep/enough/to/pwned-scope` — inside the tempdir, which is the
+    // whole point of nesting it. The earlier one-level home put this in the
+    // system `/tmp`, where the assertion could not see it and so could never
+    // fail. Searched rather than spelled out, so the depth cannot drift.
+    assert_nothing_escaped(tmp.path(), "pwned-scope");
     assert_neighbours_intact(tmp.path(), &home);
     assert_refused_with(&out, 3, "not a plain name");
 }
@@ -269,20 +292,129 @@ fn a_legitimate_pack_still_installs_lists_describes_and_uninstalls() {
 #[test]
 fn uninstall_does_not_reach_through_a_symlinked_scope_directory() {
     let (tmp, home) = home_with_neighbours();
-    let outside = tmp.path().join("outside");
-    std::fs::create_dir_all(outside.join("secret-pack/1.0.0")).unwrap();
-    std::fs::write(outside.join("secret-pack/1.0.0/creds.txt"), "secret\n").unwrap();
-    std::os::unix::fs::symlink(&outside, home.join("voices/ise-linked")).unwrap();
+    // Named `elsewhere`, not `outside`: the refusal message echoes the resolved
+    // path back, so a fixture called `outside` satisfied a
+    // `stderr.contains("outside")` needle by its own name — the assertion passed
+    // on the path, never on the message's own words.
+    let elsewhere = tmp.path().join("elsewhere");
+    std::fs::create_dir_all(elsewhere.join("secret-pack/1.0.0")).unwrap();
+    std::fs::write(elsewhere.join("secret-pack/1.0.0/creds.txt"), "secret\n").unwrap();
+    std::os::unix::fs::symlink(&elsewhere, home.join("voices/ise-linked")).unwrap();
 
     let out = run(&home, &["voice", "uninstall", "ise-linked/secret-pack"]);
 
     assert!(
-        outside.join("secret-pack/1.0.0/creds.txt").is_file(),
+        elsewhere.join("secret-pack/1.0.0/creds.txt").is_file(),
         "uninstall followed the symlinked scope directory and deleted {}",
-        outside.join("secret-pack/1.0.0/creds.txt").display()
+        elsewhere.join("secret-pack/1.0.0/creds.txt").display()
     );
     assert_neighbours_intact(tmp.path(), &home);
-    assert_refused_with(&out, 3, "outside");
+    assert_refused_with(&out, 3, "resolves through a symlink");
+}
+
+/// The install half of the same blind spot, through the real binary. `--scope
+/// ise-linked` is a plain segment, so the lexical fence passes it; only the
+/// containment check stands between a manifest and a write outside `voices/`.
+/// Deleting that one call left the whole suite green before this existed.
+#[cfg(unix)]
+#[test]
+fn install_does_not_write_through_a_symlinked_scope_directory() {
+    let (tmp, home) = home_with_neighbours();
+    let elsewhere = tmp.path().join("elsewhere");
+    std::fs::create_dir_all(&elsewhere).unwrap();
+    std::os::unix::fs::symlink(&elsewhere, home.join("voices/ise-linked")).unwrap();
+
+    let src = tmp.path().join("pack");
+    std::fs::create_dir_all(&src).unwrap();
+    std::fs::write(src.join("manifest.yaml"), "id: reviewer\nversion: 1.0.0\n").unwrap();
+    std::fs::write(src.join("system-prompt.md"), "hi\n").unwrap();
+
+    let out = run(
+        &home,
+        &[
+            "voice",
+            "install",
+            src.to_str().unwrap(),
+            "--scope",
+            "ise-linked",
+        ],
+    );
+
+    // Filesystem first: not one byte through the link, and not even the empty
+    // directories `create_dir_all` makes on the way to the check.
+    assert!(
+        !elsewhere.join("reviewer/1.0.0/system-prompt.md").exists(),
+        "the pack was written through the symlinked scope directory"
+    );
+    assert!(
+        !elsewhere.join("reviewer").exists(),
+        "a refused install left {} behind",
+        elsewhere.join("reviewer").display()
+    );
+    assert_neighbours_intact(tmp.path(), &home);
+    assert_refused_with(&out, 3, "resolves through a symlink");
+}
+
+/// A link that stays INSIDE `voices/` — the case a `starts_with` containment
+/// test waves through, and the one that turns the fence itself into a delete of
+/// something the operator never named.
+///
+/// `resolve_pack_dir` returns the canonical path and `uninstall` calls
+/// `remove_dir_all` on it, so with only the prefix test `uninstall
+/// 'ise/reviewer@1.0.0'` reported success while destroying 2.0.0 and leaving
+/// the dangling 1.0.0 link standing.
+#[cfg(unix)]
+#[test]
+fn uninstall_does_not_delete_the_pack_a_sibling_symlink_points_at() {
+    let (tmp, home) = home_with_neighbours();
+    let parent = home.join("voices/ise/reviewer");
+    std::fs::create_dir_all(parent.join("2.0.0")).unwrap();
+    std::fs::write(parent.join("2.0.0/manifest.yaml"), "id: reviewer\n").unwrap();
+    std::os::unix::fs::symlink("2.0.0", parent.join("1.0.0-link")).unwrap();
+
+    let out = run(&home, &["voice", "uninstall", "ise/reviewer@1.0.0-link"]);
+
+    assert!(
+        parent.join("2.0.0/manifest.yaml").is_file(),
+        "uninstalling the LINK deleted the real pack at {}",
+        parent.join("2.0.0").display()
+    );
+    assert_neighbours_intact(tmp.path(), &home);
+    assert_refused_with(&out, 3, "resolves through a symlink");
+}
+
+/// A refused install must leave nothing that `list` will call installed.
+/// `list` reads the directory tree, so a bare `voices/s/p/1.0.0/` left by a
+/// failed copy is reported as a pack — exit 0, with none of its files present.
+#[cfg(unix)]
+#[test]
+fn a_refused_install_is_not_reported_as_installed_afterwards() {
+    let (tmp, home) = home_with_neighbours();
+    let src = tmp.path().join("src").join("pack");
+    std::fs::create_dir_all(src.join("references")).unwrap();
+    std::fs::write(src.join("manifest.yaml"), "id: husk\nversion: 1.0.0\n").unwrap();
+    std::fs::write(src.join("system-prompt.md"), "hi\n").unwrap();
+    std::fs::write(src.join("references/bs5950.md"), "clause 4\n").unwrap();
+    std::os::unix::fs::symlink("/etc", src.join("etc-link")).unwrap();
+
+    let out = run(
+        &home,
+        &["voice", "install", src.to_str().unwrap(), "--scope", "s"],
+    );
+    assert_refused_with(&out, 3, "symlink");
+
+    assert!(
+        !home.join("voices/s").exists(),
+        "a refused install left {} standing",
+        home.join("voices/s").display()
+    );
+    let listed = run(&home, &["voice", "list"]);
+    let stdout = String::from_utf8_lossy(&listed.stdout);
+    assert!(
+        !stdout.contains("husk"),
+        "`voice list` reports a pack whose install was refused: {stdout}"
+    );
+    assert_neighbours_intact(tmp.path(), &home);
 }
 
 /// A pack that ships `up -> ..` walked `pack/up/pack/up/…` until the OS

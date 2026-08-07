@@ -168,31 +168,71 @@ fn fence_segment(part: &str, what: &str, pack: &str) -> Result<(), AwareError> {
 /// ```
 ///
 /// Both ids pass `fence_segment`; the escape is in what the path *resolves to*.
-/// A symlinked LEAF is harmless — `remove_dir_all` unlinks the link and leaves
-/// the target alone — which is exactly why testing only the leaf case reads as
-/// "symlinks are fine" and is wrong. Reproduced against the real binary.
 ///
-/// So: canonicalise, and demand the result still sit under a canonicalised
-/// `voices/`. Returns the CANONICAL path, so the caller acts on what it checked
-/// rather than on the spelling that got it here.
+/// The test is not "does it land under `voices/`" but "did it get there without
+/// following a link". `starts_with(root)`, which this used at first, passes a
+/// link that stays *inside* `voices/` — and that is not harmless, because
+/// `contained_in_voices` returns the CANONICAL path and `uninstall` calls
+/// `remove_dir_all` on what it returns. With only the prefix test:
+///
+/// ```text
+/// $ ln -s ../reviewer/2.0.0 ~/.aware/voices/ise/reviewer/1.0.0
+/// $ aware voice uninstall 'ise/reviewer@1.0.0'
+/// ✓ uninstalled voice pack at ~/.aware/voices/ise/reviewer/2.0.0   # exit 0
+/// ```
+///
+/// 2.0.0 is destroyed and the dangling 1.0.0 link is what survives — a delete of
+/// something the operator did not name, introduced by the very check meant to
+/// stop that. An earlier draft of this doc claimed a symlinked leaf was harmless
+/// because `remove_dir_all` unlinks the link; that is true of the *pre-fix*
+/// code, and canonicalising here is exactly what stopped it being true.
+///
+/// So the demand is equality, not prefix: the canonical path must be the
+/// canonical `voices/` root joined with the components as spelled. That holds
+/// only when no component along the way — leaf or ancestor — is a link, which is
+/// the property both callers actually need. Returns the CANONICAL path, so the
+/// caller acts on what it checked rather than on the spelling that got it here.
 fn contained_in_voices(ctx: &Context, resolved: &std::path::Path) -> Result<PathBuf, AwareError> {
-    let root = voices_dir(ctx).canonicalize().map_err(|e| {
-        AwareError::Internal(format!("canonicalise {}: {e}", voices_dir(ctx).display()))
+    let voices = voices_dir(ctx);
+    let root = canonicalize_named(&voices)?;
+    // Both callers build `resolved` by joining onto `voices_dir(ctx)`, so this
+    // cannot fail for them; it is a `Result` rather than an `expect` because a
+    // future third caller getting it wrong should be an error, not a panic.
+    let rel = resolved.strip_prefix(&voices).map_err(|_| {
+        AwareError::Internal(format!(
+            "{} is not built under {}",
+            resolved.display(),
+            voices.display()
+        ))
     })?;
-    let real = resolved
-        .canonicalize()
-        .map_err(|e| AwareError::Internal(format!("canonicalise {}: {e}", resolved.display())))?;
-    if !real.starts_with(&root) {
+    let real = canonicalize_named(resolved)?;
+    let expected = root.join(rel);
+    if real != expected {
         return Err(AwareError::Validation(format!(
-            "voice pack path {} resolves to {}, outside {} — refusing, because a \
-             symlink cannot be allowed to move what `install` writes or what \
-             `uninstall` deletes",
+            "voice pack path {} resolves through a symlink to {}, not to {} — \
+             refusing, because a link cannot be allowed to move what `install` \
+             writes or what `uninstall` deletes",
             resolved.display(),
             real.display(),
-            root.display()
+            expected.display()
         )));
     }
     Ok(real)
+}
+
+/// `canonicalize`, re-raised carrying the path and PRESERVING the io kind, the
+/// way `app.rs`'s installed-manifest probe does.
+///
+/// Every reachable failure here is environmental — an unreadable `~/.aware`
+/// (EACCES), a link cycle (ELOOP), a directory removed under us — and flattening
+/// them all to `AwareError::Internal` printed `error: internal: …`, which tells
+/// an operator whose home is merely chmod-ed 000 to file a bug. The kind is what
+/// says otherwise, and a bare `Permission denied (os error 13)` names no path,
+/// so both are kept.
+fn canonicalize_named(path: &std::path::Path) -> Result<PathBuf, AwareError> {
+    path.canonicalize().map_err(|e| {
+        std::io::Error::new(e.kind(), format!("canonicalise {}: {e}", path.display())).into()
+    })
 }
 
 /// Order two voice-pack FOLDER NAMES: the newest is the one this returns `Greater` for.
@@ -350,20 +390,81 @@ fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
     fence_segment(&version, "version", &coord)?;
 
     let dst = voices_dir(ctx).join(&scope).join(&id).join(&version);
+    // Noted BEFORE anything is created, because it is the only thing that makes
+    // the rollback below safe: it names the topmost directory that does not yet
+    // exist, so undoing the install can never remove something that was already
+    // there. `None` means `dst` already existed and this is a re-install over it.
+    let created_root = topmost_missing_ancestor(&dst);
     std::fs::create_dir_all(&dst)
         .map_err(|e| AwareError::Internal(format!("create {}: {e}", dst.display())))?;
     // Fenced lexically above, but a symlink already sitting at `voices/<scope>`
-    // would still put the copy somewhere else entirely. Checked after
-    // `create_dir_all` (which needs the path to exist to canonicalise) and
-    // BEFORE any file is written, so an escape costs empty directories rather
-    // than the pack's contents.
-    let dst = contained_in_voices(ctx, &dst)?;
-    copy_dir_recursive(src, &dst)?;
+    // would still put the copy somewhere else entirely, so the physical check
+    // has to run too — and it needs the path to exist in order to canonicalise,
+    // which is why it is here rather than before `create_dir_all`.
+    //
+    // Everything from here is undone as a unit on failure. Without that, a
+    // refusal left the version directory standing and `list` — which reads the
+    // directory tree, not a manifest — reported the pack as installed:
+    //
+    // ```text
+    // $ aware voice install ./pack     # ships one symlink
+    // error: validation failed: voice pack contains a symlink (…)   exit 3
+    // $ aware voice list
+    // ise    reviewer    1.0.0                                      exit 0
+    // ```
+    //
+    // and `read_dir` order decides whether `describe` then prints a manifest for
+    // a pack whose `references/` never arrived. `copy_dir_recursive`'s own doc
+    // refuses a symlink rather than skipping it precisely so a pack is never
+    // installed missing files its manifest lists; leaving the husk behind was
+    // that same failure by another route.
+    let dst = match contained_in_voices(ctx, &dst)
+        .and_then(|checked| copy_dir_recursive(src, &checked).map(|()| checked))
+    {
+        Ok(checked) => checked,
+        Err(e) => {
+            if let Some(root) = created_root {
+                // Removes only what this call made. Best-effort: the install has
+                // already failed, and a cleanup error would replace the real
+                // reason with a less useful one.
+                let _ = std::fs::remove_dir_all(&root);
+            }
+            return Err(e);
+        }
+    };
     println!(
         "\u{2713} installed voice pack {scope}/{id}@{version} \u{2192} {}",
         dst.display()
     );
     Ok(())
+}
+
+/// The highest directory on `path` that does not exist yet — i.e. the root of
+/// what a following `create_dir_all(path)` will bring into being, and therefore
+/// exactly what an undo may remove.
+///
+/// `None` when `path` already exists: there is then nothing this call created,
+/// and removing a pre-existing pack because a re-install of it failed would
+/// destroy the working copy the operator still has.
+///
+/// Deliberately lexical. It is called before `create_dir_all`, so the components
+/// it names are the ones that call will create — including, when `voices/<scope>`
+/// is itself a link, the empty directories that land at the link's target. Those
+/// are still this call's litter, and still the right thing to sweep up.
+fn topmost_missing_ancestor(path: &std::path::Path) -> Option<PathBuf> {
+    if path.exists() {
+        return None;
+    }
+    let mut highest = path.to_path_buf();
+    let mut cursor = path;
+    while let Some(parent) = cursor.parent() {
+        if parent.as_os_str().is_empty() || parent.exists() {
+            break;
+        }
+        highest = parent.to_path_buf();
+        cursor = parent;
+    }
+    Some(highest)
 }
 
 /// Coerce a YAML scalar (string, number, bool) to a string. Returns None
@@ -464,6 +565,41 @@ mod tests {
             json: false,
         };
         (tmp, ctx)
+    }
+
+    /// Assert nothing whose name begins with `prefix` exists ANYWHERE under
+    /// `root`, and say where it landed if it does.
+    ///
+    /// The escape assertions used to name one path and check that. Two of the
+    /// three named the wrong one — `<tmp>/pwned` where the escape actually lands
+    /// at `<tmp>/deep/enough/to/catch/pwned` — so both passed with
+    /// `fence_segment` deleted outright, which is the exact failure `ctx_with`'s
+    /// own doc comment warns about, repeated one level up. Fixing the arithmetic
+    /// would have left the next person to get it wrong; searching the whole tree
+    /// removes the arithmetic from the assertion altogether.
+    fn assert_nothing_escaped(root: &std::path::Path, prefix: &str) {
+        let mut found = Vec::new();
+        let mut stack = vec![root.to_path_buf()];
+        while let Some(dir) = stack.pop() {
+            let Ok(entries) = std::fs::read_dir(&dir) else {
+                continue;
+            };
+            for entry in entries.flatten() {
+                if entry.file_name().to_string_lossy().starts_with(prefix) {
+                    found.push(entry.path());
+                }
+                // `file_type` does not follow links, so a symlinked fixture
+                // cannot walk this out of `root` or into a cycle.
+                if entry.file_type().map(|t| t.is_dir()).unwrap_or(false) {
+                    stack.push(entry.path());
+                }
+            }
+        }
+        assert!(
+            found.is_empty(),
+            "the pack escaped to {found:?} — nothing named {prefix:?}* may exist under {}",
+            root.display()
+        );
     }
 
     #[test]
@@ -602,28 +738,62 @@ mod tests {
         );
     }
 
-    /// A symlinked LEAF is the harmless case — `remove_dir_all` unlinks the
-    /// link and leaves the target alone. Pinned so the distinction survives:
-    /// testing only this shape is what made "symlinks are fine" look true.
+    /// A symlinked LEAF, both ways it can point — and it must be refused both
+    /// ways, with `uninstall` actually run.
+    ///
+    /// This test previously covered only the outside-`voices/` link and never
+    /// called `uninstall`, so `assert!(target still there)` could not fail: no
+    /// delete was ever attempted. Its name claimed a link-vs-target distinction
+    /// it asserted nothing about.
+    ///
+    /// The sibling case is the one that mattered. A link to `../2.0.0` stays
+    /// inside `voices/`, so the old prefix test passed it, `resolve_pack_dir`
+    /// returned the CANONICAL 2.0.0 path, and `uninstall ise/reviewer@1.0.0`
+    /// deleted 2.0.0 — a pack the operator never named, destroyed by the check
+    /// added to stop exactly that.
+    #[cfg(unix)]
     #[test]
-    fn a_symlinked_pack_version_removes_the_link_not_the_target() {
+    fn a_symlinked_pack_version_is_refused_wherever_it_points() {
+        // (a) pointing out of voices/ — the target's contents must survive.
         let (tmp, ctx) = ctx_with(&[]);
-        let outside = tmp.path().join("outside");
+        let outside = tmp.path().join("elsewhere");
         std::fs::create_dir_all(&outside).unwrap();
         std::fs::write(outside.join("data.txt"), "keep\n").unwrap();
         let parent = voices_dir(&ctx).join("ise").join("reviewer");
         std::fs::create_dir_all(&parent).unwrap();
-        #[cfg(unix)]
         std::os::unix::fs::symlink(&outside, parent.join("1.0.0")).unwrap();
-        #[cfg(windows)]
-        std::os::windows::fs::symlink_dir(&outside, parent.join("1.0.0")).unwrap();
 
-        // The leaf canonicalises outside voices/, so the containment check
-        // refuses it too — and the target is untouched either way.
-        assert!(resolve_pack_dir(&ctx, "ise/reviewer@1.0.0").is_err());
+        assert!(matches!(
+            resolve_pack_dir(&ctx, "ise/reviewer@1.0.0"),
+            Err(AwareError::Validation(_))
+        ));
+        assert!(
+            uninstall(&ctx, "ise/reviewer@1.0.0").is_err(),
+            "uninstall accepted a symlinked pack version"
+        );
         assert!(
             outside.join("data.txt").is_file(),
-            "the symlink target's contents were destroyed"
+            "uninstall followed the link and destroyed the target's contents"
+        );
+
+        // (b) pointing at a SIBLING inside voices/ — canonically contained, and
+        // still a delete of a pack that was not named.
+        let (_tmp2, ctx2) = ctx_with(&[("ise", "reviewer", "2.0.0")]);
+        let parent2 = voices_dir(&ctx2).join("ise").join("reviewer");
+        std::os::unix::fs::symlink("2.0.0", parent2.join("1.0.0")).unwrap();
+
+        assert!(
+            matches!(
+                resolve_pack_dir(&ctx2, "ise/reviewer@1.0.0"),
+                Err(AwareError::Validation(_))
+            ),
+            "a link that stays inside voices/ was accepted — `starts_with` is \
+             not enough, the path must reach its target without following one"
+        );
+        assert!(uninstall(&ctx2, "ise/reviewer@1.0.0").is_err());
+        assert!(
+            parent2.join("2.0.0/manifest.yaml").is_file(),
+            "uninstalling the 1.0.0 LINK deleted the real 2.0.0 pack"
         );
     }
 
@@ -688,11 +858,7 @@ mod tests {
             matches!(err, AwareError::Validation(_)),
             "expected Validation, got {err:?}"
         );
-        assert!(
-            !tmp.path().join("pwned").exists(),
-            "the pack escaped to {}",
-            tmp.path().join("pwned").display()
-        );
+        assert_nothing_escaped(tmp.path(), "pwned");
     }
 
     #[test]
@@ -714,7 +880,121 @@ mod tests {
             matches!(err, AwareError::Validation(_)),
             "expected Validation, got {err:?}"
         );
-        assert!(!tmp.path().join("pwned-scope").exists());
+        assert_nothing_escaped(tmp.path(), "pwned-scope");
+    }
+
+    /// The install-side containment call, and ONLY it.
+    ///
+    /// `--scope ise` is a plain segment, so `fence_segment` waves it through;
+    /// the link sits at `voices/ise`, so the whole escape is in what the path
+    /// resolves to. Deleting the `contained_in_voices` call in `install` left
+    /// the entire suite green before this existed — the three tests that did
+    /// redden under that mutation were every one of them resolve/uninstall
+    /// tests, so the reason commit `9ada65e4` exists had no coverage at all.
+    #[cfg(unix)]
+    #[test]
+    fn a_symlinked_scope_directory_cannot_smuggle_an_install_outside_voices() {
+        let (tmp, ctx) = ctx_with(&[]);
+        let outside = tmp.path().join("elsewhere");
+        std::fs::create_dir_all(&outside).unwrap();
+        std::fs::create_dir_all(voices_dir(&ctx)).unwrap();
+        std::os::unix::fs::symlink(&outside, voices_dir(&ctx).join("ise")).unwrap();
+
+        let src = tmp.path().join("pack");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("manifest.yaml"), "id: reviewer\nversion: 1.0.0\n").unwrap();
+        std::fs::write(src.join("system-prompt.md"), "you are a reviewer\n").unwrap();
+
+        let err = install(
+            &ctx,
+            &InstallArgs {
+                path: src,
+                scope: Some("ise".into()),
+            },
+        )
+        .unwrap_err();
+        assert!(
+            matches!(err, AwareError::Validation(_)),
+            "expected Validation, got {err:?}"
+        );
+        // Not one byte through the link — the assertion the exit code cannot make.
+        assert!(
+            !outside.join("reviewer/1.0.0/system-prompt.md").exists(),
+            "the pack was written through the symlinked scope directory"
+        );
+        // And the rollback swept the empty directories `create_dir_all` made at
+        // the link's target on the way.
+        assert!(
+            !outside.join("reviewer").exists(),
+            "a refused install left {} behind",
+            outside.join("reviewer").display()
+        );
+    }
+
+    /// A refused install must leave NOTHING, because `list` reads the directory
+    /// tree rather than a manifest: a bare `voices/s/p/1.0.0/` is reported as an
+    /// installed pack, and `describe` will print a manifest for one whose
+    /// `references/` never arrived. Which of the two happens is decided by
+    /// `read_dir` order, so the husk is the bug either way.
+    #[cfg(unix)]
+    #[test]
+    fn a_refused_install_leaves_no_half_written_pack_behind() {
+        let (tmp, ctx) = ctx_with(&[]);
+        let src = tmp.path().join("pack");
+        std::fs::create_dir_all(src.join("references")).unwrap();
+        std::fs::write(src.join("manifest.yaml"), "id: p\nversion: 1.0.0\n").unwrap();
+        std::fs::write(src.join("system-prompt.md"), "you are a reviewer\n").unwrap();
+        std::fs::write(src.join("references/bs5950.md"), "clause 4\n").unwrap();
+        std::os::unix::fs::symlink("/etc", src.join("references-link")).unwrap();
+
+        let err = install(
+            &ctx,
+            &InstallArgs {
+                path: src,
+                scope: Some("s".into()),
+            },
+        )
+        .unwrap_err();
+        assert!(
+            matches!(err, AwareError::Validation(_)),
+            "expected Validation, got {err:?}"
+        );
+        assert!(
+            !voices_dir(&ctx).join("s").exists(),
+            "a refused install left {} standing — `list` reports that as installed",
+            voices_dir(&ctx).join("s").display()
+        );
+    }
+
+    /// The rollback removes what the failed install created, and NOT the pack
+    /// that was already there. Re-installing over an existing coordinate is the
+    /// case where a careless `remove_dir_all` destroys a working copy.
+    #[cfg(unix)]
+    #[test]
+    fn a_refused_reinstall_does_not_delete_the_pack_it_would_have_replaced() {
+        let (tmp, ctx) = ctx_with(&[("s", "p", "1.0.0")]);
+        let installed = voices_dir(&ctx).join("s/p/1.0.0/manifest.yaml");
+        assert!(installed.is_file(), "fixture did not install the pack");
+
+        let src = tmp.path().join("pack");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("manifest.yaml"), "id: p\nversion: 1.0.0\n").unwrap();
+        std::os::unix::fs::symlink("/etc", src.join("up")).unwrap();
+
+        assert!(
+            install(
+                &ctx,
+                &InstallArgs {
+                    path: src,
+                    scope: Some("s".into()),
+                },
+            )
+            .is_err()
+        );
+        assert!(
+            installed.is_file(),
+            "the rollback deleted the pack that was already installed"
+        );
     }
 
     /// The point of the fence is that legal packs still install, and install
@@ -752,9 +1032,14 @@ mod tests {
             "copy_dir_recursive skipped the nested references/ folder"
         );
         // And it is addressable afterwards by the coordinate it was filed under.
+        // Both sides canonicalised: `resolve_pack_dir` returns the canonical
+        // path, and comparing it against the spelled `dst` fails wherever
+        // `TMPDIR` is itself a link — which is the macOS default (`/var` ->
+        // `/private/var`), and macOS is a release target (`release.yml`) even
+        // though the test job is ubuntu-only.
         assert_eq!(
             resolve_pack_dir(&ctx, "@ise/uk-reviewer@2025").unwrap(),
-            dst
+            dst.canonicalize().unwrap()
         );
     }
 
