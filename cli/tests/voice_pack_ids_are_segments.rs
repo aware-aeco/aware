@@ -309,7 +309,7 @@ fn uninstall_does_not_reach_through_a_symlinked_scope_directory() {
         elsewhere.join("secret-pack/1.0.0/creds.txt").display()
     );
     assert_neighbours_intact(tmp.path(), &home);
-    assert_refused_with(&out, 3, "resolves through a symlink");
+    assert_refused_with(&out, 3, "without passing through a symlink");
 }
 
 /// The install half of the same blind spot, through the real binary. `--scope
@@ -352,7 +352,7 @@ fn install_does_not_write_through_a_symlinked_scope_directory() {
         elsewhere.join("reviewer").display()
     );
     assert_neighbours_intact(tmp.path(), &home);
-    assert_refused_with(&out, 3, "resolves through a symlink");
+    assert_refused_with(&out, 3, "without passing through a symlink");
 }
 
 /// A link that stays INSIDE `voices/` — the case a `starts_with` containment
@@ -380,7 +380,7 @@ fn uninstall_does_not_delete_the_pack_a_sibling_symlink_points_at() {
         parent.join("2.0.0").display()
     );
     assert_neighbours_intact(tmp.path(), &home);
-    assert_refused_with(&out, 3, "resolves through a symlink");
+    assert_refused_with(&out, 3, "without passing through a symlink");
 }
 
 /// A refused install must leave nothing that `list` will call installed.
@@ -401,7 +401,7 @@ fn a_refused_install_is_not_reported_as_installed_afterwards() {
         &home,
         &["voice", "install", src.to_str().unwrap(), "--scope", "s"],
     );
-    assert_refused_with(&out, 3, "symlink");
+    assert_refused_with(&out, 3, "voice pack contains a symlink");
 
     assert!(
         !home.join("voices/s").exists(),
@@ -441,7 +441,7 @@ fn install_refuses_a_pack_containing_a_symlink_instead_of_following_it() {
         deep.display()
     );
     assert_neighbours_intact(tmp.path(), &home);
-    assert_refused_with(&out, 3, "symlink");
+    assert_refused_with(&out, 3, "voice pack contains a symlink");
 }
 
 /// An id naming nothing installed must fail as not-found (exit 7), not be

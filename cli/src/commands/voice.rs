@@ -184,14 +184,21 @@ fn fence_segment(part: &str, what: &str, pack: &str) -> Result<(), AwareError> {
 /// 2.0.0 is destroyed and the dangling 1.0.0 link is what survives — a delete of
 /// something the operator did not name, introduced by the very check meant to
 /// stop that. An earlier draft of this doc claimed a symlinked leaf was harmless
-/// because `remove_dir_all` unlinks the link; that is true of the *pre-fix*
-/// code, and canonicalising here is exactly what stopped it being true.
+/// because `remove_dir_all` unlinks the link. That was true before `9ada65e4`
+/// added any containment check at all, and canonicalising here is what stopped it
+/// being true — so by the time that sentence was written it described neither the
+/// code above it nor the code below it.
 ///
 /// So the demand is equality, not prefix: the canonical path must be the
-/// canonical `voices/` root joined with the components as spelled. That holds
-/// only when no component along the way — leaf or ancestor — is a link, which is
-/// the property both callers actually need. Returns the CANONICAL path, so the
-/// caller acts on what it checked rather than on the spelling that got it here.
+/// canonical `voices/` root joined with the components as spelled. Note where the
+/// line falls — `root` is canonicalised too, so this constrains only the
+/// components BELOW `voices/`. The root itself, `AWARE_HOME`, and anything above
+/// them may be links, and must stay allowed: a symlinked `~` is an ordinary
+/// dotfile-manager layout, and macOS's default `TMPDIR` is `/var` → `/private/var`,
+/// which the tests in this file rely on. What may not be a link is any component
+/// the operator names in a coordinate, because those are what `install` writes to
+/// and `uninstall` deletes. Returns the CANONICAL path, so the caller acts on
+/// what it checked rather than on the spelling that got it here.
 fn contained_in_voices(ctx: &Context, resolved: &std::path::Path) -> Result<PathBuf, AwareError> {
     let voices = voices_dir(ctx);
     let root = canonicalize_named(&voices)?;
@@ -208,27 +215,46 @@ fn contained_in_voices(ctx: &Context, resolved: &std::path::Path) -> Result<Path
     let real = canonicalize_named(resolved)?;
     let expected = root.join(rel);
     if real != expected {
+        // States what was MEASURED, not an inferred cause. An earlier wording said
+        // "resolves through a symlink", which is only reachable via a link while
+        // `fence_segment` runs first — but with that fence mutated off, a plain
+        // `../../../` traversal produced the same sentence, sending a reader
+        // hunting for a link that was never there. It also named `expected`, which
+        // on any ordinary home is byte-identical to `resolved`, so it told the
+        // operator that a path does not resolve to itself. Name the boundary
+        // instead: that is the thing being enforced.
         return Err(AwareError::Validation(format!(
-            "voice pack path {} resolves through a symlink to {}, not to {} — \
-             refusing, because a link cannot be allowed to move what `install` \
-             writes or what `uninstall` deletes",
+            "voice pack path {} resolves to {} — refusing, because every part of \
+             a coordinate must reach its target under {} without passing through \
+             a symlink, or a link could move what `install` writes and what \
+             `uninstall` deletes",
             resolved.display(),
             real.display(),
-            expected.display()
+            root.display()
         )));
     }
     Ok(real)
 }
 
-/// `canonicalize`, re-raised carrying the path and PRESERVING the io kind, the
-/// way `app.rs`'s installed-manifest probe does.
+/// `canonicalize`, re-raised carrying the path and preserving the io kind, the
+/// way `app.rs`'s installed-manifest probe does (`app.rs`, the
+/// `symlink_metadata` match — same `io::Error::new(e.kind(), …)` re-raise).
 ///
-/// Every reachable failure here is environmental — an unreadable `~/.aware`
-/// (EACCES), a link cycle (ELOOP), a directory removed under us — and flattening
-/// them all to `AwareError::Internal` printed `error: internal: …`, which tells
-/// an operator whose home is merely chmod-ed 000 to file a bug. The kind is what
-/// says otherwise, and a bare `Permission denied (os error 13)` names no path,
-/// so both are kept.
+/// Scope, stated honestly because an earlier version of this comment overclaimed
+/// and a reviewer measured it: this does NOT fix what an operator with a
+/// chmod-000 `~/.aware` sees. That operator never reaches this function —
+/// `list`'s `if let Ok(…) = read_dir` returns "(no voice packs installed)" at
+/// exit 0, `resolve_pack_dir`'s `parent.is_dir()` returns "not installed" at exit
+/// 7, and `create_dir_all` raises its own `Internal` — all before any
+/// canonicalise. Those three are the real defect for that operator and they are
+/// pre-existing; this is not a substitute for fixing them.
+///
+/// What it does do is stop THIS call site printing `error: internal:` for a
+/// failure that is environmental (EACCES, ELOOP, a directory removed under us),
+/// and keep the path in the message, since a bare `Permission denied (os error
+/// 13)` names nothing. Both `Io` and `Internal` map to exit 1, so no script sees
+/// a difference — `AwareError::PermissionDenied` (exit 5) exists and would be the
+/// right variant if this is ever made to carry the classification too.
 fn canonicalize_named(path: &std::path::Path) -> Result<PathBuf, AwareError> {
     path.canonicalize().map_err(|e| {
         std::io::Error::new(e.kind(), format!("canonicalise {}: {e}", path.display())).into()
@@ -390,11 +416,10 @@ fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
     fence_segment(&version, "version", &coord)?;
 
     let dst = voices_dir(ctx).join(&scope).join(&id).join(&version);
-    // Noted BEFORE anything is created, because it is the only thing that makes
-    // the rollback below safe: it names the topmost directory that does not yet
-    // exist, so undoing the install can never remove something that was already
-    // there. `None` means `dst` already existed and this is a re-install over it.
-    let created_root = topmost_missing_ancestor(&dst);
+    // Whether THIS call is the one bringing the version directory into being.
+    // `false` means it already existed and this is a re-install over it — see the
+    // rollback below for why that case is left alone rather than cleaned up.
+    let created_dst = !dst.exists();
     std::fs::create_dir_all(&dst)
         .map_err(|e| AwareError::Internal(format!("create {}: {e}", dst.display())))?;
     // Fenced lexically above, but a symlink already sitting at `voices/<scope>`
@@ -402,7 +427,7 @@ fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
     // has to run too — and it needs the path to exist in order to canonicalise,
     // which is why it is here rather than before `create_dir_all`.
     //
-    // Everything from here is undone as a unit on failure. Without that, a
+    // A FIRST install of this coordinate is undone on failure. Without that, a
     // refusal left the version directory standing and `list` — which reads the
     // directory tree, not a manifest — reported the pack as installed:
     //
@@ -414,20 +439,24 @@ fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
     // ```
     //
     // and `read_dir` order decides whether `describe` then prints a manifest for
-    // a pack whose `references/` never arrived. `copy_dir_recursive`'s own doc
-    // refuses a symlink rather than skipping it precisely so a pack is never
-    // installed missing files its manifest lists; leaving the husk behind was
-    // that same failure by another route.
+    // a pack whose `references/` never arrived.
+    //
+    // A RE-INSTALL is NOT undone, and saying so plainly rather than claiming a
+    // transaction this does not have: `copy_dir_recursive` writes into the live
+    // directory, so by the time a refusal arrives the previously installed pack
+    // is already a blend of old and new. Rolling back would then delete a working
+    // pack the operator still has; not rolling back leaves it corrupted. Neither
+    // is right, and the fix is to stage into a sibling and `rename` into place —
+    // a behaviour change owed its own PR (see the review thread on #381). What is
+    // fixed here is the first-install husk; the re-install hazard is recorded,
+    // not closed.
     let dst = match contained_in_voices(ctx, &dst)
         .and_then(|checked| copy_dir_recursive(src, &checked).map(|()| checked))
     {
         Ok(checked) => checked,
         Err(e) => {
-            if let Some(root) = created_root {
-                // Removes only what this call made. Best-effort: the install has
-                // already failed, and a cleanup error would replace the real
-                // reason with a less useful one.
-                let _ = std::fs::remove_dir_all(&root);
+            if created_dst {
+                undo_created_pack_dir(ctx, &dst);
             }
             return Err(e);
         }
@@ -439,32 +468,58 @@ fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
     Ok(())
 }
 
-/// The highest directory on `path` that does not exist yet — i.e. the root of
-/// what a following `create_dir_all(path)` will bring into being, and therefore
-/// exactly what an undo may remove.
+/// Undo the directory a failed FIRST install created, and nothing else.
 ///
-/// `None` when `path` already exists: there is then nothing this call created,
-/// and removing a pre-existing pack because a re-install of it failed would
-/// destroy the working copy the operator still has.
+/// The blast radius is the point. An earlier cut of this walked up to the
+/// topmost directory that had not existed before the install and
+/// `remove_dir_all`-ed that — which on a home with no `voices/` yet is
+/// `~/.aware/voices` **itself**, and on a home whose parents did not exist
+/// reached above `AWARE_HOME` entirely. Reproduced: a second `aware voice
+/// install` that completed successfully during the first one's copy had its pack
+/// deleted when the first was refused —
 ///
-/// Deliberately lexical. It is called before `create_dir_all`, so the components
-/// it names are the ones that call will create — including, when `voices/<scope>`
-/// is itself a link, the empty directories that land at the link's target. Those
-/// are still this call's litter, and still the right thing to sweep up.
-fn topmost_missing_ancestor(path: &std::path::Path) -> Option<PathBuf> {
-    if path.exists() {
-        return None;
+/// ```text
+/// ✓ installed voice pack other/q@1.0.0          # B, exit 0
+/// error: validation failed: … contains a symlink # A, exit 3
+/// $ aware voice list
+/// (no voice packs installed)                     # B's pack, gone
+/// ```
+///
+/// — "a delete of a pack nobody named", which is the exact bug the fence at the
+/// top of this file exists to stop, reintroduced by the cleanup for a lesser one.
+/// Before any rollback existed, a refused install left litter but destroyed
+/// nothing, so that first cut was a regression and not merely an imperfection.
+///
+/// So: remove only the version directory this call created, then prune ancestors
+/// with `remove_dir`, which removes a directory only when it is EMPTY. A sibling
+/// pack another process installed keeps its parent non-empty and stops the walk
+/// on its own — no lock needed, and no window in which a concurrent success can
+/// be swallowed. The walk stops at `voices/` and never considers a path outside
+/// it, so `AWARE_HOME` and everything above it are out of reach by construction.
+///
+/// Best-effort by necessity — the install has already failed and there is no
+/// second error to return — but not silent: a cleanup that leaves something
+/// behind means `voice list` will report a pack that is not there, and the
+/// operator needs to know which one.
+fn undo_created_pack_dir(ctx: &Context, dst: &std::path::Path) {
+    if let Err(e) = std::fs::remove_dir_all(dst) {
+        eprintln!(
+            "warning: the failed install could not be undone — {} may be left \
+             behind, and `aware voice list` will report it as installed: {e}",
+            dst.display()
+        );
+        return;
     }
-    let mut highest = path.to_path_buf();
-    let mut cursor = path;
-    while let Some(parent) = cursor.parent() {
-        if parent.as_os_str().is_empty() || parent.exists() {
+    // `remove_dir` on an empty directory only. Stops at the first non-empty one,
+    // which is what makes a concurrent install safe, and never touches `voices/`.
+    let voices = voices_dir(ctx);
+    let mut cursor = dst.parent();
+    while let Some(dir) = cursor {
+        if dir == voices || !dir.starts_with(&voices) || std::fs::remove_dir(dir).is_err() {
             break;
         }
-        highest = parent.to_path_buf();
-        cursor = parent;
+        cursor = dir.parent();
     }
-    Some(highest)
 }
 
 /// Coerce a YAML scalar (string, number, bool) to a string. Returns None
@@ -966,20 +1021,32 @@ mod tests {
         );
     }
 
-    /// The rollback removes what the failed install created, and NOT the pack
-    /// that was already there. Re-installing over an existing coordinate is the
-    /// case where a careless `remove_dir_all` destroys a working copy.
+    /// A refused re-install does not DELETE the pack it would have replaced.
+    ///
+    /// Deliberately narrow, and named for what it actually pins. An earlier
+    /// version of this test claimed the whole "undone as a unit" property and
+    /// asserted only `manifest.yaml.is_file()` — on a file the install itself
+    /// rewrites, with the fixture's manifest and the source's manifest written
+    /// byte-identical, so it could not have failed. Two reviewers measured what
+    /// it was passing over: the refused install had already overwritten the live
+    /// system prompt and left stray files in the pack.
+    ///
+    /// That corruption is real and is NOT fixed — see `install`'s comment. Since
+    /// a green test must not imply otherwise, this asserts only the one guarantee
+    /// that does hold (nothing was deleted) and
+    /// `a_refused_reinstall_leaves_the_live_pack_modified_in_place` below pins the
+    /// hazard that remains, so neither can be mistaken for the other.
     #[cfg(unix)]
     #[test]
     fn a_refused_reinstall_does_not_delete_the_pack_it_would_have_replaced() {
         let (tmp, ctx) = ctx_with(&[("s", "p", "1.0.0")]);
-        let installed = voices_dir(&ctx).join("s/p/1.0.0/manifest.yaml");
-        assert!(installed.is_file(), "fixture did not install the pack");
+        let live = voices_dir(&ctx).join("s/p/1.0.0");
+        std::fs::write(live.join("keep-me.md"), "ORIGINAL\n").unwrap();
 
         let src = tmp.path().join("pack");
         std::fs::create_dir_all(&src).unwrap();
         std::fs::write(src.join("manifest.yaml"), "id: p\nversion: 1.0.0\n").unwrap();
-        std::os::unix::fs::symlink("/etc", src.join("up")).unwrap();
+        std::os::unix::fs::symlink("/etc", src.join("zz-link")).unwrap();
 
         assert!(
             install(
@@ -992,8 +1059,191 @@ mod tests {
             .is_err()
         );
         assert!(
-            installed.is_file(),
+            live.join("manifest.yaml").is_file(),
             "the rollback deleted the pack that was already installed"
+        );
+        // A file the incoming pack does not carry, so only a delete could remove
+        // it — unlike `manifest.yaml`, which the copy overwrites.
+        assert_eq!(
+            std::fs::read_to_string(live.join("keep-me.md")).unwrap(),
+            "ORIGINAL\n",
+            "the rollback removed a file the failed re-install never wrote"
+        );
+    }
+
+    /// The hazard that is NOT fixed, pinned so it cannot be forgotten and so the
+    /// day someone makes `install` stage-and-rename, this test fails and tells
+    /// them to delete it.
+    ///
+    /// `copy_dir_recursive` writes into the live directory, so a re-install that
+    /// is refused partway leaves the installed pack a blend of old and new, with
+    /// `describe` serving the REFUSED pack's content at exit 0. Rolling back is
+    /// not the answer either — that would delete a working pack over a bad input.
+    /// The fix is to stage into a sibling and rename, which is a behaviour change
+    /// owed its own PR.
+    #[cfg(unix)]
+    #[test]
+    fn a_refused_reinstall_leaves_the_live_pack_modified_in_place() {
+        let (tmp, ctx) = ctx_with(&[("s", "p", "1.0.0")]);
+        let live = voices_dir(&ctx).join("s/p/1.0.0");
+        std::fs::write(live.join("system-prompt.md"), "ORIGINAL PROMPT\n").unwrap();
+
+        let src = tmp.path().join("pack");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("manifest.yaml"), "id: p\nversion: 1.0.0\n").unwrap();
+        std::fs::write(src.join("system-prompt.md"), "REPLACEMENT PROMPT\n").unwrap();
+        std::os::unix::fs::symlink("/etc", src.join("zz-link")).unwrap();
+
+        assert!(
+            install(
+                &ctx,
+                &InstallArgs {
+                    path: src,
+                    scope: Some("s".into()),
+                },
+            )
+            .is_err()
+        );
+        assert_eq!(
+            std::fs::read_to_string(live.join("system-prompt.md")).unwrap(),
+            "REPLACEMENT PROMPT\n",
+            "install now appears to be atomic on the re-install path — if that is \
+             deliberate, delete this test and the carve-out in `install`'s comment"
+        );
+    }
+
+    /// The rollback must not be able to swallow a pack another process installed
+    /// while this one was copying.
+    ///
+    /// The first cut walked up to the topmost directory that had not existed
+    /// before the install and `remove_dir_all`-ed it — which on a fresh home is
+    /// `voices/` itself. A concurrent install that COMPLETED was then deleted by
+    /// the failing one's cleanup. Simulated here without threads by creating the
+    /// neighbour during the window: the refusal is what triggers cleanup, so a
+    /// neighbour present at that moment is exactly the race.
+    #[cfg(unix)]
+    #[test]
+    fn the_rollback_cannot_delete_a_pack_installed_alongside_it() {
+        let (tmp, ctx) = ctx_with(&[]);
+        let src = tmp.path().join("pack");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("manifest.yaml"), "id: p\nversion: 1.0.0\n").unwrap();
+        std::os::unix::fs::symlink("/etc", src.join("zz-link")).unwrap();
+
+        // Stands in for the concurrent install: a completed pack under a
+        // different scope, sitting in the `voices/` the failing install created.
+        let neighbour = voices_dir(&ctx).join("other/q/1.0.0");
+        std::fs::create_dir_all(&neighbour).unwrap();
+        std::fs::write(neighbour.join("manifest.yaml"), "id: q\n").unwrap();
+
+        assert!(
+            install(
+                &ctx,
+                &InstallArgs {
+                    path: src,
+                    scope: Some("s".into()),
+                },
+            )
+            .is_err()
+        );
+        assert!(
+            neighbour.join("manifest.yaml").is_file(),
+            "the rollback deleted a pack installed alongside it at {}",
+            neighbour.display()
+        );
+        assert!(
+            voices_dir(&ctx).is_dir(),
+            "the rollback removed the voices/ root itself"
+        );
+        // Its own litter is still gone.
+        assert!(!voices_dir(&ctx).join("s").exists());
+    }
+
+    /// A home reached THROUGH a symlink must keep working, end to end.
+    ///
+    /// This is the boundary `contained_in_voices`'s doc draws: the canonical root
+    /// absorbs anything above `voices/`, so links there are fine and only the
+    /// coordinate's own components are constrained. Nothing pinned it, and the
+    /// hole was not theoretical — replacing `root.join(rel)` with
+    /// `resolved.to_path_buf()` left the ENTIRE suite green while making every
+    /// `voice` command refuse permanently for any user whose `~` or `~/.aware`
+    /// sits behind a link. That is macOS's default `TMPDIR` shape (`/var` →
+    /// `/private/var`) and an ordinary dotfile-manager layout on Linux.
+    #[cfg(unix)]
+    #[test]
+    fn a_home_reached_through_a_symlink_still_installs_resolves_and_uninstalls() {
+        let tmp = tempfile::tempdir().unwrap();
+        let real = tmp.path().join("real-home");
+        std::fs::create_dir_all(&real).unwrap();
+        let linked = tmp.path().join("home-link");
+        std::os::unix::fs::symlink(&real, &linked).unwrap();
+        let ctx = Context {
+            paths: Paths {
+                aware_home: linked.clone(),
+            },
+            json: false,
+        };
+
+        let src = tmp.path().join("pack");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("manifest.yaml"), "id: reviewer\nversion: 1.0.0\n").unwrap();
+        std::fs::write(src.join("system-prompt.md"), "you are a reviewer\n").unwrap();
+
+        install(
+            &ctx,
+            &InstallArgs {
+                path: src,
+                scope: Some("ise".into()),
+            },
+        )
+        .expect("install refused a home that is merely reached through a symlink");
+        let resolved = resolve_pack_dir(&ctx, "ise/reviewer@1.0.0")
+            .expect("resolve refused a symlinked home after install accepted it");
+        assert!(resolved.join("system-prompt.md").is_file());
+        uninstall(&ctx, "ise/reviewer@1.0.0").expect("uninstall refused a symlinked home");
+        assert!(!real.join("voices/ise/reviewer/1.0.0").exists());
+    }
+
+    /// The rollback is bounded by `voices/` and cannot climb above `AWARE_HOME`.
+    /// The first cut removed directories outside the home entirely when the
+    /// home's own parents did not exist yet.
+    #[cfg(unix)]
+    #[test]
+    fn the_rollback_cannot_climb_above_the_aware_home() {
+        let tmp = tempfile::tempdir().unwrap();
+        let outer = tmp.path().join("outer");
+        let home = outer.join("nested").join("aware");
+        std::fs::create_dir_all(&outer).unwrap();
+        let ctx = Context {
+            paths: Paths {
+                aware_home: home.clone(),
+            },
+            json: false,
+        };
+
+        let src = tmp.path().join("pack");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("manifest.yaml"), "id: p\nversion: 1.0.0\n").unwrap();
+        std::os::unix::fs::symlink("/etc", src.join("zz-link")).unwrap();
+
+        assert!(
+            install(
+                &ctx,
+                &InstallArgs {
+                    path: src,
+                    scope: Some("s".into()),
+                },
+            )
+            .is_err()
+        );
+        assert!(
+            outer.is_dir(),
+            "the rollback removed {} — above AWARE_HOME",
+            outer.display()
+        );
+        assert!(
+            home.join("voices").is_dir(),
+            "the rollback removed the voices/ root itself"
         );
     }
 
