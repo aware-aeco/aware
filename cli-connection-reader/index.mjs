@@ -343,8 +343,17 @@ function placedElements(api, modelID) {
  * half way from the origin to the model. The error is therefore `distance-from-origin / 2`, which
  * says nothing about the algorithm and everything about the file: 0.01 model longest-edges for
  * `example-steel-framing.ifc` (authored at the origin), 9.6–12.6 for this repo's connection fixtures
- * (~22 m offset, ~1 m connection), 12.9 for Motebello. `bbox` alone tells you which case you are in:
- * `|max|` much larger than the box's own span means origin-pinned, and the midpoint is meaningless.
+ * (~22 m offset, ~1 m connection), 12.9 for Motebello.
+ *
+ * `bbox` ALONE CANNOT TELL YOU WHICH CASE YOU ARE IN. This comment used to claim it could — "`|max|`
+ * much larger than the box's own span means origin-pinned" — and that rule is vacuous: when `min` is
+ * [0,0,0] the span IS `max`, so it compares a quantity with itself and reads exactly 1 on every
+ * origin-pinned file, i.e. it says "the midpoint is fine" about the files whose midpoint is 10 spans
+ * out. It is also backwards on the arm that can fire, since a ratio >> 1 needs a box EXCLUDING the
+ * origin — the tight, far-out box whose midpoint is the trustworthy one. The origin-pinned signature
+ * is simply `min` at [0,0,0] with a distant `max`, and it does not separate an origin-authored model
+ * from one 22 m out; that needs the model's own size, which only `read-model` has. Pinned by
+ * `probe.test.mjs` against the in-repo fixtures.
  *
  * The far corner tracks the model within one longest-edge on every file measured EXCEPT under a
  * rotated frame — `baseplate-rot.ifc` puts it 10.3 out, on the wrong side. And the box's SPAN is not a

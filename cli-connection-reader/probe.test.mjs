@@ -10,7 +10,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { openApi, probeModel, closeApi } from './index.mjs';
+import { openApi, probeModel, readModel, closeApi } from './index.mjs';
 
 const DOWNLOADS = join(process.env.USERPROFILE ?? process.env.HOME ?? '', 'Downloads');
 const sample = (name) => join(DOWNLOADS, name);
@@ -174,4 +174,146 @@ test('a single-storey file still gets a breakdown, so a consumer never special-c
   // Every object in this file is an IfcBuildingElementProxy — which is exactly why the breakdown
   // cannot be the whole answer for it, and why propertySets exist. One type, honestly reported.
   assert.deepEqual(out.types.map((t2) => t2.name), ['IFCBUILDINGELEMENTPROXY']);
+});
+
+// ── #348: the `bbox` contract, pinned against the fixtures that ship in this repo ─────────────────
+//
+// Every assertion above that touches `bbox` needs a third-party file from ~/Downloads, so on CI — and
+// on any fresh checkout — ALL of them skip. Measured on this branch before these tests existed: of the
+// nine tests in this file exactly two ran, both pure unit-conversion checks against a fake `GetLine`.
+// Not one assertion about `bbox` had ever executed in CI, while `bbox` is the entire subject of #348
+// and of the doc rewrite that shipped in #391.
+//
+// Meanwhile four IFC fixtures ship in-repo and exhibit the documented behaviour exactly. So the
+// measurements that have been living in #348's comment thread since 2026-08-05 become executable here.
+// `read-model.test.mjs` already compares the two commands on these fixtures, but deliberately only
+// about WHICH AXIS IS UP (#343) — it avoids position and size claims, which is precisely the ground
+// left uncovered.
+//
+// These are CHARACTERISATION tests: they pin what the number does today, including where that is
+// wrong. Each one that records a defect says so and says what to do when it starts failing, so it
+// documents the defect rather than cementing it.
+const CONNECTION_FIXTURES = ['baseplate-bp1.ifc', 'baseplate-rot.ifc', 'shearplate-sp1.ifc', 'shearplate-2col.ifc'];
+
+const box = (min, max) => ({
+  min, max,
+  span: max.map((v, k) => v - min[k]),
+  ctr: max.map((v, k) => (v + min[k]) / 2),
+});
+const boxOf = (b) => box(b.min, b.max);
+const dist = (a, b) => Math.hypot(...a.map((v, k) => v - b[k]));
+// The ratio the deleted rule was built on: how far the box reaches from the origin, against how wide
+// it is. Named here because two tests below need to compute the SAME number the doc used to prescribe.
+const reachOverSpan = (b) => Math.max(...b.max.map(Math.abs), ...b.min.map(Math.abs)) / Math.max(...b.span);
+
+// probe and read-model against ONE open of the same file — the comparison every test below makes.
+async function probeAndMesh(name) {
+  const h = await openApi(join('test-fixtures', name));
+  try {
+    const probe = probeModel(h.api, h.modelID);
+    const model = readModel(h.api, h.modelID);
+    const min = [Infinity, Infinity, Infinity], max = [-Infinity, -Infinity, -Infinity];
+    for (const o of model.objects) {
+      for (let i = 0; i + 2 < o.positions.length; i += 3) {
+        for (let k = 0; k < 3; k++) {
+          const v = o.positions[i + k];
+          if (v < min[k]) min[k] = v;
+          if (v > max[k]) max[k] = v;
+        }
+      }
+    }
+    return { probe, mesh: box(min, max) };
+  } finally {
+    closeApi(h);
+  }
+}
+
+test('#348: probe.bbox is pinned to the world origin on every in-repo fixture', async () => {
+  // The mechanism the whole issue turns on. A file's points include every placement origin — the
+  // representation context's WorldCoordinateSystem, the site and building placements, each product's —
+  // and those sit at (0,0,0). So `min` is not "where the model starts"; it is the origin, exactly,
+  // while `max` is ~20 m away. Asserting min is EXACTLY zero (not merely small) is what makes this a
+  // statement about the mechanism rather than about these particular fixtures.
+  for (const name of CONNECTION_FIXTURES) {
+    const { probe, mesh } = await probeAndMesh(name);
+    assert.ok(probe.bbox, `${name}: probe should establish a bbox`);
+    assert.deepEqual(probe.bbox.min, [0, 0, 0],
+      `${name}: expected the origin-pinned min the mechanism produces, got ${probe.bbox.min}`);
+    // And nothing is actually there: the geometry sits ~22 m away. Without this arm a model genuinely
+    // authored at the origin would satisfy the assertion above and prove nothing.
+    //
+    // DISTANCE of the model's centre, not a per-axis minimum: `baseplate-rot` is yawed 30° about the
+    // vertical, which swings it to x = -1563, so an axiswise "every coordinate exceeds 1 m" test reads
+    // that as "at the origin" when it is 22 m out. The claim is about the model's position, so it has
+    // to be measured as one.
+    assert.ok(dist(mesh.ctr, [0, 0, 0]) > 5000,
+      `${name}: the mesh should sit far from the origin, but its centre is ` +
+      `${Math.round(dist(mesh.ctr, [0, 0, 0]))} mm out — if a fixture is ever authored at the origin ` +
+      'it does not belong in CONNECTION_FIXTURES');
+  }
+});
+
+test('#348: probe.bbox does NOT contain the geometry read-model returns', async () => {
+  // The defect, characterised. `bbox` is not an upper bound on anything: a point-based extent cannot
+  // see a swept solid, whose size lives in numbers (IFCRECTANGLEPROFILEDEF, IFCEXTRUDEDAREASOLID
+  // depth) and not in any IfcCartesianPoint. Measured 2026-08-07 the box falls short at the TOP of
+  // every fixture — 1000 mm of column on the baseplates, 430 mm on the shear plates.
+  //
+  // WHEN THIS TEST STARTS FAILING, THE BUG IS FIXED. That is the intent: read #348, confirm the box
+  // now contains the mesh on every fixture, and replace this test with the containment assertion it
+  // has been standing in for. Do not "repair" it by loosening the bound.
+  for (const name of CONNECTION_FIXTURES) {
+    const { probe, mesh } = await probeAndMesh(name);
+    const contains = mesh.min.every((v, k) => v >= probe.bbox.min[k])
+      && mesh.max.every((v, k) => v <= probe.bbox.max[k]);
+    assert.equal(contains, false,
+      `${name}: probe.bbox now CONTAINS the mesh — if that is deliberate, #348 is fixed: turn this ` +
+      'into a containment assertion rather than relaxing it');
+    // Name the axis, so the characterisation records WHY rather than just that. The top of the model
+    // is above the top of the box on all four, which is the swept-solid blindness specifically.
+    assert.ok(mesh.max[2] > probe.bbox.max[2],
+      `${name}: expected the mesh to overtop the box in Z (the invisible extrusion depth), but ` +
+      `mesh Z ends at ${Math.round(mesh.max[2])} and the box at ${Math.round(probe.bbox.max[2])}`);
+  }
+});
+
+test('#348: the midpoint of probe.bbox is ~10 model longest-edges from the model', async () => {
+  // What the only real consumer actually reads (floless.app's `verdictFor` feeds this midpoint to an
+  // off-screen check), and therefore the number worth pinning. Because the box runs from the origin to
+  // the model, its centre lands about half way there — so the error is distance-from-origin / 2, a
+  // property of the FILE rather than of the algorithm.
+  //
+  // The unit is the model's own longest edge, which is what makes the figure comparable across
+  // fixtures. Measured 2026-08-07: 10.21, 12.60, 9.97, 9.64.
+  for (const name of CONNECTION_FIXTURES) {
+    const { probe, mesh } = await probeAndMesh(name);
+    const err = dist(boxOf(probe.bbox).ctr, mesh.ctr) / Math.max(...mesh.span);
+    assert.ok(err > 9 && err < 13,
+      `${name}: expected the midpoint 9–13 model longest-edges out (the documented 9.6–12.6), got ${err.toFixed(2)}`);
+  }
+});
+
+test('#348: |max|-over-span cannot discriminate an origin-pinned box — it is 1 by construction', async () => {
+  // A guard on the doc, not on the code. `probe.md` and probeModel's own comment used to tell a
+  // consumer: "when |max| is much larger than the box's own span the box is origin-pinned and the
+  // midpoint is meaningless; when the two are comparable the midpoint is fine." Both arms are wrong,
+  // and this test is here so the rule cannot quietly come back.
+  //
+  // Arm one: on an origin-pinned box min is [0,0,0], so span === max and the ratio is IDENTICALLY 1.
+  // It can never report "much larger" about the very boxes it exists to flag, and read literally it
+  // says the midpoint is fine — about a midpoint the test above measures at ~10 longest-edges out.
+  for (const name of CONNECTION_FIXTURES) {
+    const { probe } = await probeAndMesh(name);
+    assert.equal(reachOverSpan(boxOf(probe.bbox)), 1,
+      `${name}: the ratio should be exactly 1 on an origin-pinned box; if it is not, min is no longer ` +
+      'the origin and this test and the probe.md paragraph it guards both need re-deriving');
+  }
+
+  // Arm two, and the reason "backwards" is the right word: a ratio much larger than 1 requires a box
+  // that EXCLUDES the origin. read-model's real mesh AABB for the same fixture is exactly such a box —
+  // tight, ~20 m out — and its midpoint is the model's true position, the case the deleted rule called
+  // meaningless. Using a measured box rather than a synthetic one keeps both arms about real files.
+  const { mesh } = await probeAndMesh('baseplate-bp1.ifc');
+  assert.ok(reachOverSpan(mesh) > 10,
+    `the trustworthy far-out box should be the one scoring "much larger", got ${reachOverSpan(mesh).toFixed(1)}`);
 });

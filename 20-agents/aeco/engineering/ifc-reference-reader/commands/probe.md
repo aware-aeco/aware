@@ -114,9 +114,29 @@ longest edge it is `distance / (2 × longest-edge)`. Measured 2026-08-06:
 | the four connection fixtures here (~22 m offset, ~1 m connection) | **9.6 – 12.6** |
 | `11134_V_Motebello_Heistopp_Rev.ifc` | **12.9** |
 
-**You can tell which case you are in from `bbox` alone**: when `|max|` is much larger than the box's
-own span, the box is origin-pinned and the midpoint is meaningless. When the two are comparable, the
-file is authored near the origin and the midpoint is fine.
+**`bbox` alone does NOT tell you which case you are in.** This page used to say it did, via a rule that
+is worse than useless: *"when `|max|` is much larger than the box's own span the box is origin-pinned;
+when the two are comparable the midpoint is fine."* Whenever `min` is `[0,0,0]` — which the paragraph
+above states is every file measured — the span **is** `max`, so those two quantities are the same
+number and the ratio is exactly `1`. The rule therefore reports "comparable, the midpoint is fine"
+about precisely the files whose midpoint is 9.6–12.6 longest-edges out, and it can never fire the other
+way on an origin-pinned box at all.
+
+It is also inverted on the arm that *can* fire. A ratio much larger than 1 requires a box that
+**excludes** the origin — a tight box far out, which is the case whose midpoint is trustworthy.
+Measured on `baseplate-bp1.ifc`: probe's origin-pinned box scores `1.00` (midpoint 10.2 longest-edges
+out), while the real mesh AABB of that same file scores `18.0` (midpoint exact).
+
+What `bbox` does tell you: **`min` at `[0,0,0]` with a distant `max` is the origin-pinned signature**,
+and it is the ordinary case. That signature does not separate "the model is authored at the origin", where
+the midpoint is essentially exact, from "the model is 22 m out", where it is half that far off — both
+put `min` at `[0,0,0]`, and telling them apart needs the model's own size, which only `read-model` has.
+So unless you already know the model's scale from elsewhere, treat the midpoint as unusable and read the
+far corner instead, with the rotated-frame caveat below.
+
+Every figure in this section is now asserted by `cli-connection-reader/probe.test.mjs` against the four
+fixtures that ship in this repo, so it runs on CI rather than resting on a one-off measurement — which
+is how the rule above survived being written down.
 
 The corner **farther from the origin** tracks where the model actually is — within one longest-edge
 on every file measured (0.01, 0.44, 0.89) — **except under a rotated frame**, where it does not: on `baseplate-rot.ifc`
