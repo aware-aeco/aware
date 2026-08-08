@@ -415,49 +415,82 @@ fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
     fence_segment(&id, "id", &coord)?;
     fence_segment(&version, "version", &coord)?;
 
-    let dst = voices_dir(ctx).join(&scope).join(&id).join(&version);
-    // Whether THIS call is the one bringing the version directory into being.
-    // `false` means it already existed and this is a re-install over it — see the
-    // rollback below for why that case is left alone rather than cleaned up.
-    let created_dst = !dst.exists();
-    std::fs::create_dir_all(&dst)
-        .map_err(|e| AwareError::Internal(format!("create {}: {e}", dst.display())))?;
-    // Fenced lexically above, but a symlink already sitting at `voices/<scope>`
-    // would still put the copy somewhere else entirely, so the physical check
-    // has to run too — and it needs the path to exist in order to canonicalise,
-    // which is why it is here rather than before `create_dir_all`.
+    // Stage the whole pack somewhere harmless, then move it into place in one
+    // step. Codex raised the two failures this closes (#381 review, both P1),
+    // and the previous cut of this code named the fix in a comment while
+    // deferring it — so here it is.
     //
-    // A FIRST install of this coordinate is undone on failure. Without that, a
-    // refusal left the version directory standing and `list` — which reads the
-    // directory tree, not a manifest — reported the pack as installed:
+    // 1. A RE-INSTALL used to be corrupted by its own refusal.
+    //    `copy_dir_recursive` wrote straight into the live directory, so a
+    //    source rejected part-way (a symlink, a read error) left the installed
+    //    pack a blend of old files and new, reported as a failure. `describe`
+    //    then served content from an install that said it had not happened.
+    // 2. The rollback could delete a CONCURRENT install. Ownership was decided
+    //    by `!dst.exists()` before `create_dir_all` — a check and an act with a
+    //    gap between them — so two processes installing the same coordinate
+    //    could both believe they had created it, and the one that failed
+    //    removed the one that had succeeded.
     //
-    // ```text
-    // $ aware voice install ./pack     # ships one symlink
-    // error: validation failed: voice pack contains a symlink (…)   exit 3
-    // $ aware voice list
-    // ise    reviewer    1.0.0                                      exit 0
-    // ```
+    // Copying into `cache/` first answers both, and answers them by
+    // construction rather than by being careful: nothing under `voices/` is
+    // touched until the ENTIRE source has been read and accepted, and the only
+    // thing a failure deletes is this process's own staging directory. It also
+    // means a bad source never creates a husk under `voices/` for `voice list`
+    // to report as installed.
     //
-    // and `read_dir` order decides whether `describe` then prints a manifest for
-    // a pack whose `references/` never arrived.
-    //
-    // A RE-INSTALL is NOT undone, and saying so plainly rather than claiming a
-    // transaction this does not have: `copy_dir_recursive` writes into the live
-    // directory, so by the time a refusal arrives the previously installed pack
-    // is already a blend of old and new. Rolling back would then delete a working
-    // pack the operator still has; not rolling back leaves it corrupted. Neither
-    // is right, and the fix is to stage into a sibling and `rename` into place —
-    // a behaviour change owed its own PR (see the review thread on #381). What is
-    // fixed here is the first-install husk; the re-install hazard is recorded,
-    // not closed.
-    let dst = match contained_in_voices(ctx, &dst)
-        .and_then(|checked| copy_dir_recursive(src, &checked).map(|()| checked))
-    {
-        Ok(checked) => checked,
+    // `cache/` rather than a sibling under `voices/` so that `list` — which
+    // reads the directory tree, not a manifest — cannot see a half-built pack
+    // mid-install and report it as a version. Both live under `AWARE_HOME`, so
+    // the `rename` stays on one filesystem.
+    let pack_parent = voices_dir(ctx).join(&scope).join(&id);
+    let staging = ctx
+        .paths
+        .cache_dir()
+        .join("voice-install")
+        .join(std::process::id().to_string());
+    // A directory left by a previous run of this same pid is stale by
+    // definition — this process is not using it — so it is ours to clear.
+    if staging.exists() {
+        let _ = std::fs::remove_dir_all(&staging);
+    }
+    std::fs::create_dir_all(&staging)
+        .map_err(|e| AwareError::Internal(format!("create {}: {e}", staging.display())))?;
+
+    let staged = (|| -> Result<PathBuf, AwareError> {
+        // Read and validate the whole source BEFORE `voices/` is touched at all.
+        copy_dir_recursive(src, &staging)?;
+        // Fenced lexically above, but a symlink already sitting at
+        // `voices/<scope>` would still put the pack somewhere else entirely, so
+        // the physical check runs too.
+        let checked_parent = ensure_pack_parent(ctx, &scope, &id)?;
+        let dst = checked_parent.join(&version);
+        // Replacing an existing version is the one destructive step, and it is
+        // reached only once the source is known good and known contained. The
+        // version directory gets its own physical check because the parent's
+        // says nothing about it: a symlink AT the coordinate would otherwise
+        // aim this `remove_dir_all` somewhere else.
+        if dst.exists() {
+            contained_in_voices(ctx, &dst)?;
+            std::fs::remove_dir_all(&dst)
+                .map_err(|e| AwareError::Internal(format!("replace {}: {e}", dst.display())))?;
+        }
+        std::fs::rename(&staging, &dst).map_err(|e| {
+            AwareError::Internal(format!(
+                "move {} -> {}: {e}",
+                staging.display(),
+                dst.display()
+            ))
+        })?;
+        Ok(dst)
+    })();
+
+    let dst = match staged {
+        Ok(dst) => dst,
         Err(e) => {
-            if created_dst {
-                undo_created_pack_dir(ctx, &dst);
-            }
+            // Only ever this process's own staging directory, plus any empty
+            // ancestors the attempt brought into being.
+            let _ = std::fs::remove_dir_all(&staging);
+            prune_empty_pack_dirs(ctx, &pack_parent);
             return Err(e);
         }
     };
@@ -468,57 +501,97 @@ fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
     Ok(())
 }
 
-/// Undo the directory a failed FIRST install created, and nothing else.
+/// Create `voices/<scope>/<id>/` ONE LEVEL AT A TIME, checking containment
+/// after each, and hand back the canonical path.
 ///
-/// The blast radius is the point. An earlier cut of this walked up to the
-/// topmost directory that had not existed before the install and
-/// `remove_dir_all`-ed that — which on a home with no `voices/` yet is
-/// `~/.aware/voices` **itself**, and on a home whose parents did not exist
-/// reached above `AWARE_HOME` entirely. Reproduced: a second `aware voice
-/// install` that completed successfully during the first one's copy had its pack
-/// deleted when the first was refused —
+/// `create_dir_all` followed by a single check was the obvious shape and the
+/// wrong one: with `voices/<scope>` a symlink out of the tree, `create_dir_all`
+/// happily makes `<id>/` at the link's TARGET, and only then does the check
+/// refuse. The escape is caught, but directories have already been created
+/// outside `AWARE_HOME` — and the cleanup that then wanted to remove them is
+/// exactly what Codex flagged as a delete outside the tree (#381 review, P1).
 ///
-/// ```text
-/// ✓ installed voice pack other/q@1.0.0          # B, exit 0
-/// error: validation failed: … contains a symlink # A, exit 3
-/// $ aware voice list
-/// (no voice packs installed)                     # B's pack, gone
-/// ```
+/// Creating a level at a time removes the question instead of answering it.
+/// `create_dir` (not `_all`) on an existing symlink returns `AlreadyExists`, so
+/// the link is judged before anything is joined onto it, and nothing is ever
+/// made at its target. It is also the atomic form: exactly one process wins the
+/// creation, rather than each deciding it was first from a prior `exists()`.
+fn ensure_pack_parent(ctx: &Context, scope: &str, id: &str) -> Result<PathBuf, AwareError> {
+    let voices = voices_dir(ctx);
+    std::fs::create_dir_all(&voices)
+        .map_err(|e| AwareError::Internal(format!("create {}: {e}", voices.display())))?;
+    let mut cur = voices;
+    for part in [scope, id] {
+        cur = cur.join(part);
+        match std::fs::create_dir(&cur) {
+            Ok(()) => {}
+            Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => {}
+            Err(e) => {
+                return Err(AwareError::Internal(format!(
+                    "create {}: {e}",
+                    cur.display()
+                )));
+            }
+        }
+        // Verify, but keep walking the LEXICAL path: `contained_in_voices`
+        // builds its expectation by stripping `voices_dir` off the front, so
+        // joining onto the canonical result it returns would break that
+        // contract on the next level (and did — it refused any home reached
+        // through a symlink, which `a_home_reached_through_a_symlink_still_…`
+        // pins as legal).
+        contained_in_voices(ctx, &cur)?;
+    }
+    Ok(cur)
+}
+
+/// Remove the empty directories a failed install brought into being, and
+/// nothing else.
 ///
-/// — "a delete of a pack nobody named", which is the exact bug the fence at the
-/// top of this file exists to stop, reintroduced by the cleanup for a lesser one.
-/// Before any rollback existed, a refused install left litter but destroyed
-/// nothing, so that first cut was a regression and not merely an imperfection.
+/// The blast radius is the point, and two earlier cuts of this got it wrong in
+/// opposite directions. One walked up to the topmost directory that had not
+/// existed before and `remove_dir_all`-ed it — on a home with no `voices/` yet
+/// that is `~/.aware/voices` itself. The next bounded the walk with a LEXICAL
+/// `starts_with(voices)`, which Codex caught (#381 review, P1): `remove_dir`
+/// resolves symlinks, so with `voices/<scope>` a link out of the tree, the path
+/// `voices/<scope>/<id>` still passes a prefix test on its spelling while the
+/// removal lands on a real directory somewhere else. A pre-existing empty
+/// directory outside `AWARE_HOME` was deletable that way — the same escape the
+/// fence at the top of this file exists to stop, let back in through the
+/// cleanup.
 ///
-/// So: remove only the version directory this call created, then prune ancestors
-/// with `remove_dir`, which removes a directory only when it is EMPTY. A sibling
-/// pack another process installed keeps its parent non-empty and stops the walk
-/// on its own — no lock needed, and no window in which a concurrent success can
-/// be swallowed. The walk stops at `voices/` and never considers a path outside
-/// it, so `AWARE_HOME` and everything above it are out of reach by construction.
+/// So the walk is bounded PHYSICALLY, by the same canonical comparison
+/// [`contained_in_voices`] uses, and refuses to step onto a symlink at all.
+/// Nothing else is needed to make it concurrency-safe: `remove_dir` removes a
+/// directory only when it is EMPTY, so a pack another process installed keeps
+/// its parent non-empty and stops the walk on its own.
 ///
 /// Best-effort by necessity — the install has already failed and there is no
-/// second error to return — but not silent: a cleanup that leaves something
-/// behind means `voice list` will report a pack that is not there, and the
-/// operator needs to know which one.
-fn undo_created_pack_dir(ctx: &Context, dst: &std::path::Path) {
-    if let Err(e) = std::fs::remove_dir_all(dst) {
-        eprintln!(
-            "warning: the failed install could not be undone — {} may be left \
-             behind, and `aware voice list` will report it as installed: {e}",
-            dst.display()
-        );
+/// second error to return.
+fn prune_empty_pack_dirs(ctx: &Context, from: &std::path::Path) {
+    let Ok(voices_real) = voices_dir(ctx).canonicalize() else {
         return;
-    }
-    // `remove_dir` on an empty directory only. Stops at the first non-empty one,
-    // which is what makes a concurrent install safe, and never touches `voices/`.
-    let voices = voices_dir(ctx);
-    let mut cursor = dst.parent();
+    };
+    let mut cursor = Some(from.to_path_buf());
     while let Some(dir) = cursor {
-        if dir == voices || !dir.starts_with(&voices) || std::fs::remove_dir(dir).is_err() {
+        // Canonicalise before judging — this is the check the lexical
+        // `starts_with` could not make.
+        //
+        // There is deliberately no separate "is this component a symlink?"
+        // test. It would be unfalsifiable: a link pointing OUT of the tree is
+        // already refused by the comparison below, and one pointing back INSIDE
+        // it is harmless because `remove_dir` is `rmdir`, which fails with
+        // ENOTDIR on a symlink rather than following it. A guard no test can
+        // distinguish is a guard nobody can verify, so it is not shipped.
+        let Ok(real) = dir.canonicalize() else {
+            break;
+        };
+        if real == voices_real || !real.starts_with(&voices_real) {
             break;
         }
-        cursor = dir.parent();
+        if std::fs::remove_dir(&dir).is_err() {
+            break;
+        }
+        cursor = dir.parent().map(|p| p.to_path_buf());
     }
 }
 
@@ -1071,22 +1144,140 @@ mod tests {
         );
     }
 
-    /// The hazard that is NOT fixed, pinned so it cannot be forgotten and so the
-    /// day someone makes `install` stage-and-rename, this test fails and tells
-    /// them to delete it.
+    /// The cleanup may not delete a directory it can only reach THROUGH a link.
     ///
-    /// `copy_dir_recursive` writes into the live directory, so a re-install that
-    /// is refused partway leaves the installed pack a blend of old and new, with
-    /// `describe` serving the REFUSED pack's content at exit 0. Rolling back is
-    /// not the answer either — that would delete a working pack over a bad input.
-    /// The fix is to stage into a sibling and rename, which is a behaviour change
-    /// owed its own PR.
+    /// Codex's finding (#381 review, P1): the prune was bounded by a lexical
+    /// `starts_with(voices)`, but `remove_dir` resolves symlinks. With
+    /// `voices/<scope>` a link out of the tree, `voices/<scope>/<id>` passes a
+    /// test on its spelling while the removal lands somewhere else entirely — so
+    /// a pre-existing empty directory outside `AWARE_HOME` was deletable by a
+    /// failed install. That is the same escape the fence at the top of the file
+    /// exists to stop, let back in through the cleanup.
     #[cfg(unix)]
     #[test]
-    fn a_refused_reinstall_leaves_the_live_pack_modified_in_place() {
+    fn the_cleanup_cannot_delete_an_empty_directory_outside_the_tree() {
+        let (tmp, ctx) = ctx_with(&[]);
+        let outside = tmp.path().join("outside");
+        // Empty, and not ours: exactly what `remove_dir` would take.
+        std::fs::create_dir_all(outside.join("reviewer")).unwrap();
+        std::fs::create_dir_all(voices_dir(&ctx)).unwrap();
+        std::os::unix::fs::symlink(&outside, voices_dir(&ctx).join("ise")).unwrap();
+
+        let src = tmp.path().join("pack");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("manifest.yaml"), "id: reviewer\nversion: 1.0.0\n").unwrap();
+
+        assert!(
+            install(
+                &ctx,
+                &InstallArgs {
+                    path: src,
+                    scope: Some("ise".into()),
+                },
+            )
+            .is_err()
+        );
+        assert!(
+            outside.join("reviewer").is_dir(),
+            "the cleanup deleted {} — outside the voices tree, reached only \
+             through the symlinked scope directory",
+            outside.join("reviewer").display()
+        );
+    }
+
+    /// Each of the six `fence_segment` calls, pinned ALONE.
+    ///
+    /// Codex's finding (#381 review, P1): the traversal tests used inputs with
+    /// more than one bad component, so deleting any single fence left the suite
+    /// green — a sibling fence, or `contained_in_voices`, refused the input for
+    /// its own reasons. `../..` has an unsafe scope AND an unsafe id; remove the
+    /// scope check and the id check still fires. Three of six barriers were
+    /// therefore unpinned, and they are the barriers that run BEFORE anything
+    /// touches the filesystem, which is the property worth having.
+    ///
+    /// So: exactly one unsafe component per row, and assert the message names
+    /// THAT component. `contained_in_voices` produces `Validation` too, so
+    /// matching only the variant would not tell the two apart.
+    #[test]
+    fn every_resolve_side_fence_is_pinned_on_its_own() {
+        let (_tmp, ctx) = ctx_with(&[("ise", "reviewer", "1.0.0")]);
+        // (coordinate, the component that is unsafe — everything else is legal)
+        for (pack, what) in [
+            ("../reviewer", "scope"),
+            ("ise/..", "id"),
+            ("ise/reviewer@..", "version"),
+        ] {
+            let err = resolve_pack_dir(&ctx, pack).unwrap_err();
+            let AwareError::Validation(msg) = &err else {
+                panic!("{pack:?}: expected Validation, got {err:?}");
+            };
+            assert!(
+                msg.contains(&format!("has a {what}")) && msg.contains("not a plain name"),
+                "{pack:?} was refused, but not by the {what} fence — the message \
+                 was {msg:?}, so removing that fence would leave this green"
+            );
+        }
+    }
+
+    /// The install side has three more, and its version fence had no invalid
+    /// case at all. Same rule: one unsafe component per row.
+    #[test]
+    fn every_install_side_fence_is_pinned_on_its_own() {
+        for (scope, manifest, what) in [
+            ("..", "id: p\nversion: 1.0.0\n", "scope"),
+            ("s", "id: ..\nversion: 1.0.0\n", "id"),
+            ("s", "id: p\nversion: ../..\n", "version"),
+        ] {
+            let (tmp, ctx) = ctx_with(&[]);
+            let src = tmp.path().join("pack");
+            std::fs::create_dir_all(&src).unwrap();
+            std::fs::write(src.join("manifest.yaml"), manifest).unwrap();
+            std::fs::write(src.join("system-prompt.md"), "hi\n").unwrap();
+
+            let err = install(
+                &ctx,
+                &InstallArgs {
+                    path: src,
+                    scope: Some(scope.into()),
+                },
+            )
+            .unwrap_err();
+            let AwareError::Validation(msg) = &err else {
+                panic!("{what}: expected Validation, got {err:?}");
+            };
+            assert!(
+                msg.contains(&format!("has a {what}")) && msg.contains("not a plain name"),
+                "the {what} fence did not refuse this — the message was {msg:?}"
+            );
+            // The fence must run BEFORE the filesystem is touched, which is the
+            // whole reason it exists separately from `contained_in_voices`.
+            assert!(
+                !voices_dir(&ctx).exists(),
+                "the {what} fence let the install create {} before refusing",
+                voices_dir(&ctx).display()
+            );
+        }
+    }
+
+    /// A refused re-install must leave the live pack EXACTLY as it was.
+    ///
+    /// This replaces a test that pinned the opposite — the old code copied
+    /// straight into the live directory, so a source rejected partway left the
+    /// installed pack a blend of old files and new, with `describe` serving the
+    /// refused pack's content at exit 0. That test's own message said to delete
+    /// it "if install ever becomes atomic on the re-install path, deliberately";
+    /// staging makes it so, and Codex raised the corruption as P1 (#381 review).
+    ///
+    /// The symlink is named `zz-` so `read_dir` is likely to reach the ordinary
+    /// files first: the point is that files ALREADY COPIED into staging are
+    /// still not visible in the live pack when the refusal arrives.
+    #[cfg(unix)]
+    #[test]
+    fn a_refused_reinstall_leaves_the_live_pack_untouched() {
         let (tmp, ctx) = ctx_with(&[("s", "p", "1.0.0")]);
         let live = voices_dir(&ctx).join("s/p/1.0.0");
         std::fs::write(live.join("system-prompt.md"), "ORIGINAL PROMPT\n").unwrap();
+        std::fs::write(live.join("keep-me.md"), "ORIGINAL\n").unwrap();
 
         let src = tmp.path().join("pack");
         std::fs::create_dir_all(&src).unwrap();
@@ -1106,9 +1297,55 @@ mod tests {
         );
         assert_eq!(
             std::fs::read_to_string(live.join("system-prompt.md")).unwrap(),
-            "REPLACEMENT PROMPT\n",
-            "install now appears to be atomic on the re-install path — if that is \
-             deliberate, delete this test and the carve-out in `install`'s comment"
+            "ORIGINAL PROMPT\n",
+            "a refused re-install overwrote the live pack"
+        );
+        assert_eq!(
+            std::fs::read_to_string(live.join("keep-me.md")).unwrap(),
+            "ORIGINAL\n",
+            "a refused re-install removed a file it never wrote"
+        );
+        // And nothing of the refused source survives anywhere under the pack.
+        assert!(!live.join("zz-link").exists());
+    }
+
+    /// Nothing of a failed install may be left in the staging area either — a
+    /// cache that grows a copy of every refused pack is a slower leak, not an
+    /// absent one.
+    ///
+    /// The refusal must come from something reached AFTER the staging directory
+    /// exists. A first cut of this used `id: ../escape`, which the lexical fence
+    /// rejects several steps earlier — so no staging was ever created and the
+    /// assertion held no matter what the cleanup did. A source symlink is the
+    /// right trigger: `copy_dir_recursive` is already writing into staging by
+    /// the time it refuses.
+    #[cfg(unix)]
+    #[test]
+    fn a_failed_install_leaves_no_staging_directory_behind() {
+        let (tmp, ctx) = ctx_with(&[]);
+        let src = tmp.path().join("pack");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("manifest.yaml"), "id: p\nversion: 1.0.0\n").unwrap();
+        std::fs::write(src.join("system-prompt.md"), "hi\n").unwrap();
+        std::os::unix::fs::symlink("/etc", src.join("zz-link")).unwrap();
+
+        assert!(
+            install(
+                &ctx,
+                &InstallArgs {
+                    path: src,
+                    scope: Some("s".into()),
+                },
+            )
+            .is_err()
+        );
+        let staging_root = ctx.paths.cache_dir().join("voice-install");
+        let leftovers: Vec<_> = std::fs::read_dir(&staging_root)
+            .map(|d| d.flatten().map(|e| e.path()).collect())
+            .unwrap_or_default();
+        assert!(
+            leftovers.is_empty(),
+            "the failed install left staging directories behind: {leftovers:?}"
         );
     }
 
@@ -1204,16 +1441,25 @@ mod tests {
         assert!(!real.join("voices/ise/reviewer/1.0.0").exists());
     }
 
-    /// The rollback is bounded by `voices/` and cannot climb above `AWARE_HOME`.
+    /// The cleanup is bounded by `voices/` and cannot climb above `AWARE_HOME`.
     /// The first cut removed directories outside the home entirely when the
     /// home's own parents did not exist yet.
+    ///
+    /// Staging makes the guarantee stronger than "cleaned up correctly": a
+    /// source that will be refused is now read in full BEFORE anything under
+    /// `voices/` is created, so on this path there is nothing to clean up. The
+    /// test asserts that too — a scope directory appearing here would mean the
+    /// live tree was touched on behalf of an install that never happened.
     #[cfg(unix)]
     #[test]
     fn the_rollback_cannot_climb_above_the_aware_home() {
         let tmp = tempfile::tempdir().unwrap();
         let outer = tmp.path().join("outer");
         let home = outer.join("nested").join("aware");
-        std::fs::create_dir_all(&outer).unwrap();
+        // A `voices/` that already exists, as on any home that has ever been
+        // used — otherwise "the root survived" is vacuous, since nothing on
+        // this path would create it.
+        std::fs::create_dir_all(home.join("voices")).unwrap();
         let ctx = Context {
             paths: Paths {
                 aware_home: home.clone(),
@@ -1244,6 +1490,12 @@ mod tests {
         assert!(
             home.join("voices").is_dir(),
             "the rollback removed the voices/ root itself"
+        );
+        assert!(
+            !home.join("voices/s").exists(),
+            "a source that was going to be refused still created {} under the \
+             live tree",
+            home.join("voices/s").display()
         );
     }
 
