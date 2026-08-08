@@ -74,6 +74,10 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
                         for ver_entry in versions.flatten() {
                             if ver_entry.file_type().map(|t| t.is_dir()).unwrap_or(false) {
                                 let version = ver_entry.file_name().to_string_lossy().into_owned();
+                                // A pack parked mid-re-install is not a version.
+                                if version.starts_with(ASIDE_PREFIX) {
+                                    continue;
+                                }
                                 found.push((scope.clone(), id.clone(), version));
                             }
                         }
@@ -351,6 +355,12 @@ fn resolve_pack_dir(ctx: &Context, pack: &str) -> Result<PathBuf, AwareError> {
                 continue;
             }
             let name = entry.file_name().to_string_lossy().into_owned();
+            // A pack parked by a re-install mid-commit is not a version, and an
+            // unversioned coordinate must never resolve to one — `uninstall`
+            // would then delete the copy being held for restoration.
+            if name.starts_with(ASIDE_PREFIX) {
+                continue;
+            }
             let newer = match &latest_name {
                 Some(best) => compare_pack_versions(&name, best) == std::cmp::Ordering::Greater,
                 // The first directory wins outright, and the empty-string sentinel this
@@ -468,20 +478,51 @@ fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
         // reached only once the source is known good and known contained. The
         // version directory gets its own physical check because the parent's
         // says nothing about it: a symlink AT the coordinate would otherwise
-        // aim this `remove_dir_all` somewhere else.
-        if dst.exists() {
+        // aim the moves below somewhere else.
+        //
+        // The old pack is moved ASIDE, not deleted, and put back if the commit
+        // fails. Deleting first was a regression this staging work introduced
+        // and Codex caught (#381 review, P1): before staging, a failed
+        // re-install left a corrupted pack; delete-then-rename could leave NO
+        // pack at all. The concrete trigger is a `cache/` that resolves to a
+        // different filesystem — a symlinked `~/.aware/cache` is enough — where
+        // `rename` returns `EXDEV` even though both paths spell out under
+        // `AWARE_HOME`. A pack the operator still had is not something a failed
+        // command may take.
+        let previous = if dst.exists() {
             contained_in_voices(ctx, &dst)?;
-            std::fs::remove_dir_all(&dst)
-                .map_err(|e| AwareError::Internal(format!("replace {}: {e}", dst.display())))?;
+            let aside = checked_parent.join(format!("{ASIDE_PREFIX}{}", std::process::id()));
+            if aside.exists() {
+                let _ = std::fs::remove_dir_all(&aside);
+            }
+            std::fs::rename(&dst, &aside)
+                .map_err(|e| AwareError::Internal(format!("set aside {}: {e}", dst.display())))?;
+            Some(aside)
+        } else {
+            None
+        };
+
+        match commit_staged(&staging, &dst) {
+            Ok(()) => {
+                if let Some(aside) = &previous {
+                    let _ = std::fs::remove_dir_all(aside);
+                }
+                Ok(dst)
+            }
+            Err(e) => {
+                // Put the operator's pack back before reporting the failure.
+                let _ = std::fs::remove_dir_all(&dst);
+                if let Some(aside) = &previous
+                    && let Err(restore) = std::fs::rename(aside, &dst)
+                {
+                    eprintln!(
+                        "warning: the previous pack could not be restored — it is at {}: {restore}",
+                        aside.display()
+                    );
+                }
+                Err(e)
+            }
         }
-        std::fs::rename(&staging, &dst).map_err(|e| {
-            AwareError::Internal(format!(
-                "move {} -> {}: {e}",
-                staging.display(),
-                dst.display()
-            ))
-        })?;
-        Ok(dst)
     })();
 
     let dst = match staged {
@@ -499,6 +540,34 @@ fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
         dst.display()
     );
     Ok(())
+}
+
+/// Name of the directory a re-install parks the previous pack under while it
+/// commits. `list` skips it: for the moment between the two renames it sits
+/// beside the real versions, and a crash in that window would otherwise leave
+/// `voice list` reporting it as one forever.
+const ASIDE_PREFIX: &str = ".replacing-";
+
+/// Move the staged pack onto `dst`, falling back to a copy when `rename`
+/// cannot cross the boundary.
+///
+/// `rename` is preferred because it is atomic — the coordinate is either the
+/// old pack or the new one, never half of each. It is not always available:
+/// staging lives under `cache/`, and if that resolves to a different
+/// filesystem (a symlinked `~/.aware/cache`) the call fails with `EXDEV`
+/// however identical the two paths look. Refusing there would make re-install
+/// simply impossible on such a home, so the copy is the fallback — slower, and
+/// not atomic, which is why the caller keeps the old pack aside until this
+/// returns `Ok`.
+fn commit_staged(staging: &std::path::Path, dst: &std::path::Path) -> Result<(), AwareError> {
+    match std::fs::rename(staging, dst) {
+        Ok(()) => Ok(()),
+        Err(_) => {
+            std::fs::create_dir_all(dst)
+                .map_err(|e| AwareError::Internal(format!("create {}: {e}", dst.display())))?;
+            copy_dir_recursive(staging, dst)
+        }
+    }
 }
 
 /// Create `voices/<scope>/<id>/` ONE LEVEL AT A TIME, checking containment
@@ -1307,6 +1376,102 @@ mod tests {
         );
         // And nothing of the refused source survives anywhere under the pack.
         assert!(!live.join("zz-link").exists());
+    }
+
+    /// A commit that fails must put the operator's pack BACK.
+    ///
+    /// Codex's finding on `4f5ba1ff` (P1): staging fixed the corruption but
+    /// introduced a worse failure — the live pack was deleted before the
+    /// rename, so a rename that failed left no pack at all. Before staging, a
+    /// bad re-install corrupted your pack; for one commit, it could delete it.
+    ///
+    /// The failure is forced by making `dst` un-creatable at commit time: the
+    /// pack directory is set read-only, so both the rename and the copy
+    /// fallback fail. What matters is what is on disk afterwards.
+    #[cfg(unix)]
+    #[test]
+    fn a_commit_that_fails_restores_the_pack_it_set_aside() {
+        use std::os::unix::fs::PermissionsExt;
+
+        let (tmp, ctx) = ctx_with(&[("s", "p", "1.0.0")]);
+        let live = voices_dir(&ctx).join("s/p/1.0.0");
+        std::fs::write(live.join("system-prompt.md"), "ORIGINAL\n").unwrap();
+
+        let src = tmp.path().join("pack");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("manifest.yaml"), "id: p\nversion: 1.0.0\n").unwrap();
+        std::fs::write(src.join("system-prompt.md"), "REPLACEMENT\n").unwrap();
+
+        // Mode bits do not deny root, and test containers often run as root, so
+        // the forcing function below would silently not force anything. Probe
+        // for it rather than assert something the environment has made untrue —
+        // and skip rather than pass, because a green that proves nothing is
+        // worse than an absent test. CI's runner is unprivileged, so this runs
+        // there; it was also verified locally by running the test binary under
+        // an unprivileged uid.
+        let probe = tmp.path().join("probe");
+        std::fs::create_dir(&probe).unwrap();
+        let mut p = std::fs::metadata(&probe).unwrap().permissions();
+        p.set_mode(0o500);
+        std::fs::set_permissions(&probe, p).unwrap();
+        let denied = std::fs::write(probe.join("x"), b"x").is_err();
+        let mut p = std::fs::metadata(&probe).unwrap().permissions();
+        p.set_mode(0o700);
+        std::fs::set_permissions(&probe, p).unwrap();
+        if !denied {
+            return;
+        }
+
+        let pack_parent = voices_dir(&ctx).join("s/p");
+        let mut perms = std::fs::metadata(&pack_parent).unwrap().permissions();
+        perms.set_mode(0o500); // r-x: the aside rename works, creating `dst` does not
+        std::fs::set_permissions(&pack_parent, perms).unwrap();
+
+        let result = install(
+            &ctx,
+            &InstallArgs {
+                path: src,
+                scope: Some("s".into()),
+            },
+        );
+
+        // Restore permissions before asserting, or the assertions cannot read.
+        let mut perms = std::fs::metadata(&pack_parent).unwrap().permissions();
+        perms.set_mode(0o700);
+        std::fs::set_permissions(&pack_parent, perms).unwrap();
+
+        assert!(result.is_err(), "the commit was expected to fail");
+        assert!(
+            live.join("system-prompt.md").is_file(),
+            "the failed commit destroyed the pack it was replacing — {} is gone",
+            live.display()
+        );
+        assert_eq!(
+            std::fs::read_to_string(live.join("system-prompt.md")).unwrap(),
+            "ORIGINAL\n"
+        );
+        // And the pack is addressable again, not parked under the aside name.
+        assert!(resolve_pack_dir(&ctx, "s/p@1.0.0").is_ok());
+    }
+
+    /// A pack parked mid-re-install is not a version, and `list` must not
+    /// report it as one if a crash leaves it behind.
+    #[test]
+    fn a_parked_pack_is_not_listed_as_a_version() {
+        let (_tmp, ctx) = ctx_with(&[("s", "p", "1.0.0")]);
+        let parked = voices_dir(&ctx)
+            .join("s/p")
+            .join(format!("{ASIDE_PREFIX}999"));
+        std::fs::create_dir_all(&parked).unwrap();
+        // `resolve_pack_dir` picks the newest version; the parked copy must not
+        // be a candidate, or an unversioned coordinate could resolve to it.
+        let dir = resolve_pack_dir(&ctx, "s/p").unwrap();
+        assert_eq!(
+            dir.file_name().unwrap(),
+            "1.0.0",
+            "resolved to {}",
+            dir.display()
+        );
     }
 
     /// Nothing of a failed install may be left in the staging area either — a
