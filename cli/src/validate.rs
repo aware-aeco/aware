@@ -111,7 +111,8 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
     out
 }
 
-/// Disk-aware: confirms every manifest-listed skill file exists, warns on orphans.
+/// Disk-aware: confirms every manifest-listed skill file exists and warns on orphaned
+/// skill and command documentation files.
 pub fn validate_agent_on_disk(agent: &Agent, agent_root: &Path) -> Vec<ValidationIssue> {
     let mut out = validate_agent(agent);
     let skills_dir = agent_root.join("skills");
@@ -134,6 +135,29 @@ pub fn validate_agent_on_disk(agent: &Agent, agent_root: &Path) -> Vec<Validatio
                         format!("skill file {name:?} on disk but not listed in manifest skills:"),
                     ));
                 }
+            }
+        }
+    }
+    let commands_dir = agent_root.join("commands");
+    if commands_dir.is_dir()
+        && let Ok(read) = std::fs::read_dir(&commands_dir)
+    {
+        for entry in read.flatten() {
+            let path = entry.path();
+            if path.extension().is_some_and(|extension| extension == "md")
+                && let Some(name) = path.file_stem().and_then(|name| name.to_str())
+                && !agent.commands.contains_key(name)
+            {
+                let file_name = path
+                    .file_name()
+                    .and_then(|file_name| file_name.to_str())
+                    .unwrap_or(name);
+                out.push(ValidationIssue::warning(
+                    "W_COMMAND_DOC_ORPHAN",
+                    format!(
+                        "command doc {file_name:?} on disk but not declared in manifest commands:"
+                    ),
+                ));
             }
         }
     }
@@ -3084,6 +3108,41 @@ skills:
         let a: Agent = serde_yaml::from_str(manifest).unwrap();
         let issues = validate_agent_on_disk(&a, tmp.path());
         assert!(issues.iter().any(|i| i.code == "E_SKILL_FILE_MISSING"));
+    }
+
+    #[test]
+    fn orphan_command_doc_is_warning() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::create_dir_all(tmp.path().join("commands")).unwrap();
+        std::fs::write(tmp.path().join("commands/do.md"), "# Do").unwrap();
+        std::fs::write(tmp.path().join("commands/removed.md"), "# Removed").unwrap();
+        std::fs::write(tmp.path().join("commands/notes.txt"), "not a command doc").unwrap();
+        let manifest = r#"
+agent: x
+version: 1.0
+description: y
+stateful: false
+license: MIT
+transport: { cli: { binary: x } }
+commands: { do: { lifecycle: single, description: z } }
+"#;
+        let agent: Agent = serde_yaml::from_str(manifest).unwrap();
+
+        let issues = validate_agent_on_disk(&agent, tmp.path());
+
+        assert_eq!(
+            issues
+                .iter()
+                .filter(|issue| issue.code == "W_COMMAND_DOC_ORPHAN")
+                .count(),
+            1
+        );
+        let orphan = issues
+            .iter()
+            .find(|issue| issue.code == "W_COMMAND_DOC_ORPHAN")
+            .unwrap();
+        assert_eq!(orphan.severity, Severity::Warning);
+        assert!(orphan.message.contains("removed.md"));
     }
 
     /// Build a `DiscoveredAgent` for the safety-contract tests below.
