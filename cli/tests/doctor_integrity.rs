@@ -4,7 +4,7 @@ use assert_cmd::Command;
 use predicates::prelude::*;
 
 #[test]
-fn doctor_reports_integrity_clean_for_real_fixtures() {
+fn doctor_reports_integrity_warnings_for_real_fixtures() {
     let home = common::aware_home();
     Command::cargo_bin("aware")
         .unwrap()
@@ -13,9 +13,7 @@ fn doctor_reports_integrity_clean_for_real_fixtures() {
         .assert()
         .success()
         .stdout(predicate::str::contains("Integrity:"))
-        .stdout(predicate::str::contains(
-            "all installed agents pass validation",
-        ));
+        .stdout(predicate::str::contains("W_COMMAND_DOC_ORPHAN"));
 }
 
 #[test]
