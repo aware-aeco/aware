@@ -10,7 +10,8 @@ use sha2::{Digest, Sha256};
 use tar::Archive;
 
 use crate::error::AwareError;
-use crate::install::local::{copy_dir_recursive, install_agent_from_path};
+use crate::fs_tree::copy_dir_recursive;
+use crate::install::local::install_agent_from_path;
 use crate::manifest::loader::load_agent;
 use crate::paths::Paths;
 use crate::registry::Index;
