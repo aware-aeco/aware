@@ -5,7 +5,6 @@ use std::path::Path;
 use crate::error::AwareError;
 use crate::runtime::template::RenderContext;
 
-#[allow(unused_imports)]
 pub use crate::runtime::template::RenderContext as RuntimeContext;
 
 /// Load a secret credential into the context.

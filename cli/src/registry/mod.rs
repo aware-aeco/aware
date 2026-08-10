@@ -6,7 +6,11 @@ pub mod catalog;
 pub mod fetch;
 pub mod index;
 
-#[allow(unused_imports)] // consumed by the agent catalog/search/has commands
-pub use catalog::{Catalog, CatalogAgent, build_catalog, search};
-#[allow(unused_imports)] // BundleEntry / IndexEntry / VersionEntry consumed by tests + Task 11
-pub use index::{BundleEntry, Index, IndexEntry, VersionEntry};
+// `IndexEntry` / `VersionEntry` are reached through this facade only by
+// `catalog`'s own tests, so the non-test build sees them as unused — hence the
+// allow. `Index` is used by both. `BundleEntry` used to sit here too and was
+// unused in *either* build; so was the whole
+// `catalog::{Catalog, CatalogAgent, build_catalog, search}` re-export, since
+// every caller names `catalog::` directly. Both are gone.
+#[allow(unused_imports)]
+pub use index::{Index, IndexEntry, VersionEntry};
