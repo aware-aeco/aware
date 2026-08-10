@@ -53,27 +53,11 @@ pub fn print_ok<T: Serialize>(command: &str, data: T, started: Instant) -> std::
     Ok(())
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn ok_envelope_round_trips() {
-        let env = Envelope {
-            ok: true,
-            data: Some(serde_json::json!({"n": 7})),
-            error: None,
-            meta: Meta {
-                cli_version: "0.1.0",
-                command: "agent list".into(),
-                duration_ms: 1,
-            },
-        };
-        let s = serde_json::to_string(&env).unwrap();
-        let v: Value = serde_json::from_str(&s).unwrap();
-        assert_eq!(v["ok"], true);
-        assert_eq!(v["data"]["n"], 7);
-        assert!(v["error"].is_null());
-        assert_eq!(v["meta"]["command"], "agent list");
-    }
-}
+// No unit tests here on purpose. The one that used to live at this spot
+// (`ok_envelope_round_trips`) hand-built an `Envelope`, serialised it and read
+// its own literals back — it never called `print_ok` or `meta_for`, so
+// inverting `ok`, blanking the command in `meta_for` or dropping the
+// `cli-version` / `duration-ms` renames all left it green. The envelope frame
+// is now asserted end-to-end against the real binary in
+// `tests/search_filters.rs::json_output_is_wrapped_in_the_spec_envelope`, which
+// goes red on each of those.
