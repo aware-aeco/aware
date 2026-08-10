@@ -11,10 +11,37 @@
 //!   `blender`'s appended a second one regardless, so an `AWARE_BLENDER=blender.exe`
 //!   override went looking for `blender.exe.exe` and reported Blender missing.
 //!
-//! The `invoker` behaviour is the correct one in both places, so it is what
-//! survives here.
+//! Neither copy was wholly right. `invoker`'s verbatim rule keyed on *any*
+//! extension, and `Path::extension` splits at the last `.`, so the documented
+//! `AWARE_BLENDER=blender-4.2` form parses as extension `"2"` and would have
+//! stopped resolving to `blender-4.2.exe` — a regression `blender`'s
+//! append-always copy did not have. The unified rule keys on the extension being
+//! one Windows can actually spawn, and still falls back to the verbatim name, so
+//! every lookup either copy resolved still resolves.
 
 use std::path::{Path, PathBuf};
+
+/// The extensions `Command::new` can actually launch on Windows.
+const WINDOWS_EXEC_EXTS: [&str; 4] = ["exe", "cmd", "bat", "com"];
+
+/// Whether `name` already ends in an extension Windows would spawn directly, and
+/// so must be looked up verbatim rather than extended again.
+///
+/// This asks whether the extension is *executable*, not merely whether one is
+/// present. `Path::extension` splits at the last `.`, so the documented
+/// `AWARE_BLENDER=blender-4.2` override form has extension `"2"` — treating any
+/// extension as final would search only for `blender-4.2` and miss the
+/// `blender-4.2.exe` on `PATH`.
+fn has_executable_extension(name: &str) -> bool {
+    Path::new(name)
+        .extension()
+        .and_then(|ext| ext.to_str())
+        .is_some_and(|ext| {
+            WINDOWS_EXEC_EXTS
+                .iter()
+                .any(|known| ext.eq_ignore_ascii_case(known))
+        })
+}
 
 /// Resolve `name` to a directly-spawnable executable on `PATH`.
 ///
@@ -25,12 +52,13 @@ use std::path::{Path, PathBuf};
 pub fn find_on_path(name: &str) -> Option<PathBuf> {
     let path = std::env::var_os("PATH")?;
     let dirs: Vec<PathBuf> = std::env::split_paths(&path).collect();
-    // If the caller already supplied an extension (e.g. "codex.cmd"), don't append a
-    // second one — look the name up verbatim.
-    let exts: &[&str] = if cfg!(windows) && Path::new(name).extension().is_none() {
-        &[".exe", ".cmd", ".bat", ".com"]
-    } else {
-        &[""]
+    // If the caller already supplied a spawnable extension (e.g. "codex.cmd"), don't
+    // append a second one — look the name up verbatim. Otherwise try the executable
+    // suffixes first and fall back to the verbatim name, which keeps a dotted bare
+    // name like "blender-4.2" resolving to "blender-4.2.exe".
+    let exts: &[&str] = match () {
+        _ if !cfg!(windows) || has_executable_extension(name) => &[""],
+        _ => &[".exe", ".cmd", ".bat", ".com", ""],
     };
     find_in_dirs(name, &dirs, exts)
 }
@@ -111,6 +139,35 @@ mod tests {
         assert_eq!(
             find_in_dirs("blender.exe", &[tmp.path().to_path_buf()], &[".exe"]),
             None
+        );
+    }
+
+    /// The case Codex caught on #399: `Path::extension` splits at the last `.`,
+    /// so a dotted bare command name is *not* an already-extended name.
+    #[test]
+    fn a_dotted_bare_name_is_not_treated_as_already_extended() {
+        assert!(!has_executable_extension("blender-4.2"));
+        assert!(!has_executable_extension("blender"));
+        assert!(!has_executable_extension("codex.ps1"));
+        assert!(has_executable_extension("codex.cmd"));
+        assert!(has_executable_extension("blender.exe"));
+        // Windows paths are case-insensitive about this.
+        assert!(has_executable_extension("Blender.EXE"));
+    }
+
+    /// The Windows search order: executable suffixes first, verbatim last, so a
+    /// dotted bare name still resolves to its `.exe` while nothing either former
+    /// copy could find becomes unfindable.
+    #[test]
+    fn suffixes_are_tried_before_the_verbatim_name() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(tmp.path().join("blender-4.2.exe"), "").unwrap();
+        std::fs::write(tmp.path().join("blender-4.2"), "").unwrap();
+        let dirs = vec![tmp.path().to_path_buf()];
+
+        assert_eq!(
+            find_in_dirs("blender-4.2", &dirs, &[".exe", ".cmd", ".bat", ".com", ""]),
+            Some(tmp.path().join("blender-4.2.exe"))
         );
     }
 
