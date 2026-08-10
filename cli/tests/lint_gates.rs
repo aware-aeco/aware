@@ -14,7 +14,16 @@
 //!   * `src/main.rs` and `build.rs` still carry their gate;
 //!   * the module-scoped panicking-index gate denies a runtime index, and
 //!     `src/render/table.rs` still carries it;
-//!   * nobody has re-opened either gate with a targeted `#[allow]` in `src/`.
+//!   * `Cargo.toml` still denies `undocumented_unsafe_blocks`, the gate for
+//!     CLAUDE.md's "no `unsafe` without a justification" rule;
+//!   * nobody has re-opened any of those gates from `src/` — with an `#[allow]`,
+//!     an `#[expect]`, a `clippy::restriction` group allow, or a wrapped
+//!     attribute — nor from `[lints]` in the manifest.
+//!
+//! The last of those carries its own negative control
+//! (`gate_reopener_classifier_matches_its_contract`), because it scans real
+//! `src/`, which contains no such attribute — so it reports clean both when it
+//! works and when it has stopped matching anything at all.
 //!
 //! They shell out to `cargo clippy` on a two-file scratch crate with no
 //! dependencies (hence `--offline`). If clippy is missing the tests skip —
@@ -243,14 +252,111 @@ fn indexing_gate_rejects_panicking_indexes_and_table_still_carries_it() {
     );
 }
 
-/// `deny` can be re-opened for a single function with one `#[allow]`, and
-/// clippy stays green — so the attribute alone is not the whole gate. CI has no
-/// other signal for this, hence a test.
+/// The lints this crate's `deny` attributes rest on. All four live in clippy's
+/// `restriction` group, which is why `clippy::restriction` appears in
+/// [`GATED_GROUPS`] and the other groups do not.
+const GATED_LINTS: [&str; 4] = [
+    "unwrap_used",
+    "expect_used",
+    "indexing_slicing",
+    "undocumented_unsafe_blocks",
+];
+
+/// Lint *groups* whose allow-level suppresses a gated lint. Probed, not
+/// reasoned about: `clippy::all`, `pedantic`, `nursery` and `correctness` were
+/// all measured NOT to suppress `unwrap_used` (they do not contain it), so
+/// listing them would make this reject code that is in fact gated.
+/// `gated_groups_actually_reopen_the_gate_and_others_do_not` re-measures both
+/// halves, so a future clippy that moves these lints between groups fails here
+/// instead of silently widening or narrowing the check.
+const GATED_GROUPS: [&str; 1] = ["clippy::restriction"];
+
+/// A lint-level attribute that would re-open one of the gates.
+#[derive(Debug, PartialEq, Eq)]
+struct Reopener {
+    /// 1-indexed line the attribute starts on.
+    line: usize,
+    /// The attribute, whitespace-collapsed onto one line.
+    text: String,
+}
+
+/// Report every `allow`/`expect` attribute in `source` that re-opens a gate.
 ///
-/// Heuristic, and deliberately a blunt one: an `allow` for these lints is
-/// reported unless it sits after the file's first `#[cfg(test)]`, which is where
-/// this crate puts its unit tests. CLAUDE.md permits `unwrap()` in tests, so an
-/// `allow` down there is redundant rather than harmful.
+/// Pure, so [`gate_reopener_classifier_matches_its_contract`] can drive it with
+/// synthetic sources — the scan over real `src/` below has nothing to say about
+/// whether the classifier still matches anything at all.
+///
+/// The rule is deliberately absolute: **no** allow/expect of a gated lint (or of
+/// `clippy::restriction`) anywhere under `src/`, test modules included. The
+/// previous version carved out test code by ignoring everything after a file's
+/// first `#[cfg(test)]` line, and that carve-out was the bug — the first
+/// `#[cfg(test)]` in a file is frequently not the unit-test module but a
+/// cfg-gated `use`, which blinded the check to the whole rest of the file
+/// (`src/runtime/invoker.rs` line 9, exempting 4,193 of its 4,202 lines; 5,332
+/// non-test lines across the crate). Dropping the carve-out removes the class of
+/// bug rather than patching one instance of it, and costs nothing: the crate's
+/// gate is `cfg_attr(not(test), deny(…))`, so inside `#[cfg(test)]` the lint is
+/// not denied and such an `allow` is redundant. If one is ever reported from a
+/// test module, the fix is to delete it.
+///
+/// Only line-initial attributes count, and lines opening with `//` are skipped,
+/// so prose naming an attribute (several module docs do) is not a finding.
+/// Attributes are joined across lines until their brackets balance, because
+/// rustfmt splits a long one and a single-line `contains` misses every wrapped
+/// form.
+fn gate_reopeners(source: &str) -> Vec<Reopener> {
+    let lines: Vec<&str> = source.lines().collect();
+    let mut found = Vec::new();
+    let mut index = 0;
+    while index < lines.len() {
+        let trimmed = lines[index].trim_start();
+        if trimmed.starts_with("//") || !(trimmed.starts_with("#[") || trimmed.starts_with("#![")) {
+            index += 1;
+            continue;
+        }
+
+        // Join until the attribute's brackets balance, so a wrapped attribute is
+        // classified as the single token it is.
+        let start = index;
+        let mut attribute = String::new();
+        let mut depth: i32 = 0;
+        loop {
+            let line = lines.get(index).copied().unwrap_or_default();
+            attribute.push_str(line.trim());
+            attribute.push(' ');
+            depth += line.matches('[').count() as i32 - line.matches(']').count() as i32;
+            index += 1;
+            if depth <= 0 || index >= lines.len() {
+                break;
+            }
+        }
+
+        let collapsed = attribute.split_whitespace().collect::<Vec<_>>().join(" ");
+        // `expect` as well as `allow`: `#[expect(clippy::unwrap_used)]` is stable
+        // and sets the same lint level, so grepping only for `allow` left an
+        // opening that clippy honours in full.
+        let is_lint_level = collapsed.starts_with("#[allow(")
+            || collapsed.starts_with("#![allow(")
+            || collapsed.starts_with("#[expect(")
+            || collapsed.starts_with("#![expect(");
+        if !is_lint_level {
+            continue;
+        }
+        let names_gated = GATED_LINTS.iter().any(|lint| collapsed.contains(lint))
+            || GATED_GROUPS.iter().any(|group| collapsed.contains(group));
+        if names_gated {
+            found.push(Reopener {
+                line: start + 1,
+                text: collapsed,
+            });
+        }
+    }
+    found
+}
+
+/// `deny` can be re-opened for a single item with one `#[allow]` or `#[expect]`,
+/// and clippy stays green — so the attribute alone is not the whole gate. CI has
+/// no other signal for this, hence a test.
 #[test]
 fn no_targeted_allow_reopens_the_gate_in_src() {
     let src = Path::new(env!("CARGO_MANIFEST_DIR")).join("src");
@@ -267,31 +373,177 @@ fn no_targeted_allow_reopens_the_gate_in_src() {
         let Ok(source) = std::fs::read_to_string(file) else {
             continue;
         };
-        let test_mod_line = source
-            .lines()
-            .position(|line| line.trim_start().starts_with("#[cfg(test)]"))
-            .unwrap_or(usize::MAX);
-        for (index, line) in source.lines().enumerate() {
-            let opens_gate = line.contains("allow(clippy::unwrap_used")
-                || line.contains("allow(clippy::expect_used")
-                || line.contains("allow(clippy::indexing_slicing");
-            if opens_gate && index < test_mod_line {
-                offenders.push(format!(
-                    "{}:{}: {}",
-                    file.strip_prefix(&src).unwrap_or(file).display(),
-                    index + 1,
-                    line.trim()
-                ));
-            }
+        let relative = file
+            .strip_prefix(&src)
+            .unwrap_or(file)
+            .display()
+            .to_string();
+        for hit in gate_reopeners(&source) {
+            offenders.push(format!("{relative}:{}: {}", hit.line, hit.text));
         }
     }
 
     assert!(
         offenders.is_empty(),
-        "these `#[allow]`s re-open the unwrap/expect gate in non-test code — fix \
-         the call site instead (CLAUDE.md §Engineering rules forbids silencing a \
-         gate to satisfy it):\n  {}",
+        "these attributes re-open a lint gate under `src/` — fix the call site \
+         instead (CLAUDE.md §Engineering rules forbids silencing a gate to \
+         satisfy it). Inside `#[cfg(test)]` the lint is not denied at all, so an \
+         allow there is redundant and should simply be deleted:\n  {}",
         offenders.join("\n  ")
+    );
+}
+
+/// The negative control for [`gate_reopeners`]. The scan above runs over real
+/// `src/`, which currently contains none of these attributes — so it reports
+/// clean whether the classifier works or has stopped matching entirely. This
+/// drives it with sources that must be caught and sources that must not.
+///
+/// Every "must be caught" case below was measured against `cargo clippy` (see
+/// [`gated_groups_actually_reopen_the_gate_and_others_do_not`]) to genuinely
+/// suppress the crate's `deny`; the previous classifier caught only the first.
+#[test]
+fn gate_reopener_classifier_matches_its_contract() {
+    let must_catch = [
+        ("plain allow", "#[allow(clippy::unwrap_used)]\nfn f() {}\n"),
+        (
+            "expect, not allow",
+            "#[expect(clippy::unwrap_used)]\nfn f() {}\n",
+        ),
+        (
+            "the restriction group",
+            "#[allow(clippy::restriction)]\nfn f() {}\n",
+        ),
+        (
+            "wrapped across lines",
+            "#[allow(\n    clippy::unwrap_used,\n    clippy::expect_used\n)]\nfn f() {}\n",
+        ),
+        (
+            "inner attribute",
+            "#![allow(clippy::indexing_slicing)]\nfn f() {}\n",
+        ),
+        (
+            "the unsafe gate",
+            "#[allow(clippy::undocumented_unsafe_blocks)]\nfn f() {}\n",
+        ),
+        (
+            // The bug this rewrite fixes: a cfg-gated `use` near the top of a
+            // file used to exempt everything below it.
+            "below an early cfg(test) item",
+            "#[cfg(test)]\nuse std::collections::HashMap;\n\n#[allow(clippy::unwrap_used)]\nfn f() {}\n",
+        ),
+        (
+            "inside a unit-test module, where it is redundant",
+            "#[cfg(test)]\nmod tests {\n    #[allow(clippy::unwrap_used)]\n    fn t() {}\n}\n",
+        ),
+    ];
+    for (what, source) in must_catch {
+        assert!(
+            !gate_reopeners(source).is_empty(),
+            "the classifier missed {what}, which clippy honours as a re-opened gate:\n{source}"
+        );
+    }
+
+    let must_ignore = [
+        ("an unrelated lint", "#[allow(dead_code)]\nfn f() {}\n"),
+        (
+            // Measured not to contain the gated lints; flagging it would reject
+            // code that is still fully gated.
+            "a group that does not contain them",
+            "#[allow(clippy::all)]\nfn f() {}\n",
+        ),
+        (
+            "prose naming the attribute",
+            "//! Fields carry `#[allow(clippy::unwrap_used)]` in the old design.\nfn f() {}\n",
+        ),
+        (
+            "the deny that IS the gate",
+            "#![cfg_attr(not(test), deny(clippy::unwrap_used, clippy::expect_used))]\nfn f() {}\n",
+        ),
+        ("no attributes at all", "fn f() {}\n"),
+    ];
+    for (what, source) in must_ignore {
+        assert_eq!(
+            gate_reopeners(source),
+            Vec::new(),
+            "the classifier reported {what}, which does not re-open any gate:\n{source}"
+        );
+    }
+
+    // Line numbers are what a maintainer navigates by; an off-by-one here would
+    // send them to the wrong place.
+    let hits = gate_reopeners("fn a() {}\n\n#[allow(clippy::unwrap_used)]\nfn b() {}\n");
+    assert_eq!(hits.len(), 1, "expected exactly one hit, got {hits:?}");
+    assert_eq!(hits[0].line, 3, "wrong line reported: {hits:?}");
+}
+
+/// [`GATED_GROUPS`] claims `clippy::restriction` suppresses a gated lint and the
+/// other groups do not. That is a fact about clippy, not about this crate, so it
+/// is measured rather than asserted — a clippy release that moves these lints
+/// into another group would otherwise leave the classifier quietly wrong in
+/// whichever direction the move went.
+#[test]
+fn gated_groups_actually_reopen_the_gate_and_others_do_not() {
+    if !clippy_available() {
+        eprintln!("skipping: cargo clippy unavailable");
+        return;
+    }
+
+    let violation = |group: &str| {
+        format!(
+            "#[allow({group})]\nfn main() {{\n    let v: Option<u8> = std::env::args().count().try_into().ok();\n    println!(\"{{}}\", v.unwrap());\n}}\n"
+        )
+    };
+
+    for group in GATED_GROUPS {
+        let (accepted, diagnostics) = run_gate(&violation(group));
+        assert!(
+            accepted,
+            "`#[allow({group})]` no longer suppresses the gate, so listing it in \
+             GATED_GROUPS now rejects code that is still gated:\n{diagnostics}"
+        );
+    }
+
+    for group in ["clippy::all", "clippy::pedantic", "clippy::correctness"] {
+        let (accepted, _) = run_gate(&violation(group));
+        assert!(
+            !accepted,
+            "`#[allow({group})]` now suppresses the gate but is absent from \
+             GATED_GROUPS — the classifier would let it through"
+        );
+    }
+}
+
+/// `undocumented_unsafe_blocks` is denied in `Cargo.toml`, not in a crate-root
+/// attribute, so `crate_roots_actually_carry_the_gate` never saw it and nothing
+/// else did either: deleting that one line leaves every check in this file
+/// green. This anchors it, and rejects re-opening it through the same manifest.
+#[test]
+fn the_manifest_still_carries_the_unsafe_gate() {
+    let manifest = Path::new(env!("CARGO_MANIFEST_DIR")).join("Cargo.toml");
+    let source =
+        std::fs::read_to_string(&manifest).unwrap_or_else(|e| panic!("read Cargo.toml: {e}"));
+
+    assert!(
+        source.contains(r#"undocumented_unsafe_blocks = "deny""#),
+        "Cargo.toml no longer denies `undocumented_unsafe_blocks` — CLAUDE.md \
+         §Code style requires every `unsafe` block to carry a justification, and \
+         `cargo clippy -D warnings` does not enable that lint on its own"
+    );
+
+    // A `[lints]` entry can re-open a gate as effectively as an `#[allow]`, and
+    // from a file the source scan above never reads.
+    let reopened: Vec<&str> = source
+        .lines()
+        .map(str::trim)
+        .filter(|line| {
+            GATED_LINTS.iter().any(|lint| line.starts_with(lint))
+                && (line.contains(r#""allow""#) || line.contains(r#""warn""#))
+        })
+        .collect();
+    assert!(
+        reopened.is_empty(),
+        "these `[lints]` entries downgrade a gated lint below `deny`:\n  {}",
+        reopened.join("\n  ")
     );
 }
 
