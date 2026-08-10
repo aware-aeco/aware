@@ -20,6 +20,10 @@
 
 use crate::error::AwareError;
 use crate::json::type_name as json_type;
+use crate::render::geom::{
+    Vec2, Vec3, add3, cross3, distance3, dot3, length3, normalized3, point_in_polygon,
+    point_segment_distance, polygon_edges, polygon_is_simple_nonzero, scale3,
+};
 use serde_json::Value;
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
@@ -128,15 +132,6 @@ fn num(v: Option<&Value>) -> f64 {
 fn pos(v: Option<&Value>) -> Option<f64> {
     v.and_then(Value::as_f64)
         .filter(|x| x.is_finite() && *x > 0.0)
-}
-
-/// 3-vector cross product.
-fn cross(a: (f64, f64, f64), b: (f64, f64, f64)) -> (f64, f64, f64) {
-    (
-        a.1 * b.2 - a.2 * b.1,
-        a.2 * b.0 - a.0 * b.2,
-        a.0 * b.1 - a.1 * b.0,
-    )
 }
 
 /// A deterministic, scene-derived ascii filename for the SPF `FILE_NAME` metadata field.
@@ -407,102 +402,13 @@ fn emit_mesh(spf: &mut Spf, el: &Value, place: i64, ctx: i64, style: Option<i64>
     )))
 }
 
-type Vec3 = (f64, f64, f64);
-type Vec2 = (f64, f64);
-
-fn vec2(v: Option<&Value>) -> Option<(f64, f64)> {
+fn vec2(v: Option<&Value>) -> Option<Vec2> {
     let a = v?.as_array()?;
     if a.len() != 2 {
         return None;
     }
-    let p = (a.first()?.as_f64()?, a.get(1)?.as_f64()?);
-    (p.0.is_finite() && p.1.is_finite()).then_some(p)
-}
-
-fn polygon_edges2(polygon: &[Vec2]) -> impl Iterator<Item = (Vec2, Vec2)> + '_ {
-    polygon
-        .iter()
-        .copied()
-        .zip(polygon.iter().copied().cycle().skip(1))
-        .take(polygon.len())
-}
-
-fn point_in_polygon2(point: Vec2, polygon: &[Vec2]) -> bool {
-    let mut inside = false;
-    for (a, b) in polygon_edges2(polygon) {
-        if (a.1 > point.1) != (b.1 > point.1)
-            && point.0 < (b.0 - a.0) * (point.1 - a.1) / (b.1 - a.1) + a.0
-        {
-            inside = !inside;
-        }
-    }
-    inside
-}
-
-fn point_segment_distance2(point: Vec2, a: Vec2, b: Vec2) -> f64 {
-    let delta = (b.0 - a.0, b.1 - a.1);
-    let length_sq = delta.0 * delta.0 + delta.1 * delta.1;
-    if length_sq <= 1.0e-18 {
-        return ((point.0 - a.0).powi(2) + (point.1 - a.1).powi(2)).sqrt();
-    }
-    let t = (((point.0 - a.0) * delta.0 + (point.1 - a.1) * delta.1) / length_sq).clamp(0.0, 1.0);
-    let nearest = (a.0 + t * delta.0, a.1 + t * delta.1);
-    ((point.0 - nearest.0).powi(2) + (point.1 - nearest.1).powi(2)).sqrt()
-}
-
-fn cross2(a: Vec2, b: Vec2, c: Vec2) -> f64 {
-    (b.0 - a.0) * (c.1 - a.1) - (b.1 - a.1) * (c.0 - a.0)
-}
-
-fn segments_intersect2(a: Vec2, b: Vec2, c: Vec2, d: Vec2) -> bool {
-    const EPS: f64 = 1.0e-9;
-    let on_segment = |p: Vec2, q: Vec2, r: Vec2| {
-        cross2(p, q, r).abs() <= EPS
-            && r.0 >= p.0.min(q.0) - EPS
-            && r.0 <= p.0.max(q.0) + EPS
-            && r.1 >= p.1.min(q.1) - EPS
-            && r.1 <= p.1.max(q.1) + EPS
-    };
-    let (ab_c, ab_d, cd_a, cd_b) = (
-        cross2(a, b, c),
-        cross2(a, b, d),
-        cross2(c, d, a),
-        cross2(c, d, b),
-    );
-    (ab_c.signum() != ab_d.signum() && cd_a.signum() != cd_b.signum())
-        || on_segment(a, b, c)
-        || on_segment(a, b, d)
-        || on_segment(c, d, a)
-        || on_segment(c, d, b)
-}
-
-fn polygon_is_simple_nonzero2(polygon: &[Vec2]) -> bool {
-    const EPS: f64 = 1.0e-9;
-    if polygon.len() < 3
-        || polygon_edges2(polygon).any(|(a, b)| (a.0 - b.0).hypot(a.1 - b.1) <= EPS)
-    {
-        return false;
-    }
-    let twice_area = polygon_edges2(polygon)
-        .map(|(a, b)| a.0 * b.1 - b.0 * a.1)
-        .sum::<f64>();
-    if twice_area.abs() <= EPS {
-        return false;
-    }
-    let n = polygon.len();
-    for i in 0..n {
-        let a = polygon[i];
-        let b = polygon[(i + 1) % n];
-        for j in (i + 1)..n {
-            if j == i || j == (i + 1) % n || (j + 1) % n == i {
-                continue;
-            }
-            if segments_intersect2(a, b, polygon[j], polygon[(j + 1) % n]) {
-                return false;
-            }
-        }
-    }
-    true
+    let p = [a.first()?.as_f64()?, a.get(1)?.as_f64()?];
+    (p[0].is_finite() && p[1].is_finite()).then_some(p)
 }
 
 fn vec3(v: Option<&Value>) -> Option<Vec3> {
@@ -510,45 +416,12 @@ fn vec3(v: Option<&Value>) -> Option<Vec3> {
     if a.len() != 3 {
         return None;
     }
-    let p = (
+    let p = [
         a.first()?.as_f64()?,
         a.get(1)?.as_f64()?,
         a.get(2)?.as_f64()?,
-    );
-    (p.0.is_finite() && p.1.is_finite() && p.2.is_finite()).then_some(p)
-}
-
-fn add3(a: Vec3, b: Vec3) -> Vec3 {
-    (a.0 + b.0, a.1 + b.1, a.2 + b.2)
-}
-
-fn scale3(a: Vec3, s: f64) -> Vec3 {
-    (a.0 * s, a.1 * s, a.2 * s)
-}
-
-fn normalize3(a: Vec3) -> Option<Vec3> {
-    let n = (a.0 * a.0 + a.1 * a.1 + a.2 * a.2).sqrt();
-    (n.is_finite() && n > 1e-9).then_some((a.0 / n, a.1 / n, a.2 / n))
-}
-
-fn dot3(a: Vec3, b: Vec3) -> f64 {
-    a.0 * b.0 + a.1 * b.1 + a.2 * b.2
-}
-
-fn cross3(a: Vec3, b: Vec3) -> Vec3 {
-    (
-        a.1 * b.2 - a.2 * b.1,
-        a.2 * b.0 - a.0 * b.2,
-        a.0 * b.1 - a.1 * b.0,
-    )
-}
-
-fn distance3(a: Vec3, b: Vec3) -> f64 {
-    ((a.0 - b.0).powi(2) + (a.1 - b.1).powi(2) + (a.2 - b.2).powi(2)).sqrt()
-}
-
-fn length3(a: Vec3) -> f64 {
-    dot3(a, a).sqrt()
+    ];
+    (p[0].is_finite() && p[1].is_finite() && p[2].is_finite()).then_some(p)
 }
 
 fn label(el: &Value) -> &str {
@@ -569,37 +442,37 @@ fn emit_axis_placement(spf: &mut Spf, origin: Vec3, axis: Vec3, ref_dir: Vec3, p
 fn emit_axis2_placement3d(spf: &mut Spf, origin: Vec3, axis: Vec3, ref_dir: Vec3) -> i64 {
     let p = spf.emit(&format!(
         "IFCCARTESIANPOINT(({},{},{}))",
-        r(origin.0),
-        r(origin.1),
-        r(origin.2)
+        r(origin[0]),
+        r(origin[1]),
+        r(origin[2])
     ));
     let z = spf.emit(&format!(
         "IFCDIRECTION(({},{},{}))",
-        r(axis.0),
-        r(axis.1),
-        r(axis.2)
+        r(axis[0]),
+        r(axis[1]),
+        r(axis[2])
     ));
     let x = spf.emit(&format!(
         "IFCDIRECTION(({},{},{}))",
-        r(ref_dir.0),
-        r(ref_dir.1),
-        r(ref_dir.2)
+        r(ref_dir[0]),
+        r(ref_dir[1]),
+        r(ref_dir[2])
     ));
     spf.emit(&format!("IFCAXIS2PLACEMENT3D(#{p},#{z},#{x})"))
 }
 
 fn axis_ref_dir(axis: Vec3) -> Vec3 {
-    let seed = if axis.2.abs() < 0.9 {
-        (0.0, 0.0, 1.0)
+    let seed = if axis[2].abs() < 0.9 {
+        [0.0, 0.0, 1.0]
     } else {
-        (1.0, 0.0, 0.0)
+        [1.0, 0.0, 0.0]
     };
-    normalize3(cross(seed, axis)).unwrap_or((1.0, 0.0, 0.0))
+    normalized3(cross3(seed, axis)).unwrap_or([1.0, 0.0, 0.0])
 }
 
-fn emit_polyline2(spf: &mut Spf, points: &[(f64, f64)], close: bool) -> i64 {
+fn emit_polyline2(spf: &mut Spf, points: &[Vec2], close: bool) -> i64 {
     let mut ids = Vec::with_capacity(points.len() + 1);
-    for &(x, y) in points {
+    for &[x, y] in points {
         ids.push(spf.emit(&format!("IFCCARTESIANPOINT(({},{}))", r(x), r(y))));
     }
     if close && points.first() != points.last() && !ids.is_empty() {
@@ -641,9 +514,9 @@ fn emit_polyline3(spf: &mut Spf, points: &[Vec3]) -> i64 {
         .map(|p| {
             spf.emit(&format!(
                 "IFCCARTESIANPOINT(({},{},{}))",
-                r(p.0),
-                r(p.1),
-                r(p.2)
+                r(p[0]),
+                r(p[1]),
+                r(p[2])
             ))
         })
         .collect::<Vec<_>>();
@@ -741,9 +614,9 @@ fn emit_fastener_sweep(spf: &mut Spf, el: &Value, pos2d: i64) -> Option<Fastener
             let axis_obj = el.get("axis")?.as_object()?;
             let from = vec3(axis_obj.get("from"))?;
             let to = vec3(axis_obj.get("to"))?;
-            let delta = (to.0 - from.0, to.1 - from.1, to.2 - from.2);
-            let axis = normalize3(delta)?;
-            let length = (delta.0 * delta.0 + delta.1 * delta.1 + delta.2 * delta.2).sqrt();
+            let delta = [to[0] - from[0], to[1] - from[1], to[2] - from[2]];
+            let axis = normalized3(delta)?;
+            let length = length3(delta);
             let diameter = pos(el.get("diameterMm"))?;
             let circle = spf.emit(&format!("IFCCIRCLE(#{pos2d},{})", r(diameter / 2.0)));
             let profile = spf.emit(&format!(
@@ -753,7 +626,7 @@ fn emit_fastener_sweep(spf: &mut Spf, el: &Value, pos2d: i64) -> Option<Fastener
             (from, axis, length, diameter, profile)
         } else {
             let center = vec3(el.get("center"))?;
-            let axis = vec3(el.get("axis")).and_then(normalize3)?;
+            let axis = vec3(el.get("axis")).and_then(normalized3)?;
             let length = pos(el.get("thicknessMm"))?;
             let start = add3(center, scale3(axis, -length / 2.0));
             if kind == "washer" {
@@ -776,7 +649,7 @@ fn emit_fastener_sweep(spf: &mut Spf, el: &Value, pos2d: i64) -> Option<Fastener
                 let points = (0..6)
                     .map(|i| {
                         let a = phase + i as f64 * std::f64::consts::PI / 3.0;
-                        (radius * a.cos(), radius * a.sin())
+                        [radius * a.cos(), radius * a.sin()]
                     })
                     .collect::<Vec<_>>();
                 let outer = emit_polyline2(spf, &points, true);
@@ -1142,13 +1015,13 @@ fn build_ifc(scene: &Value) -> BuildResult {
             let Some(origin) = vec3(frame.get("origin")) else {
                 continue;
             };
-            let Some(u) = vec3(frame.get("uDir")).and_then(normalize3) else {
+            let Some(u) = vec3(frame.get("uDir")).and_then(normalized3) else {
                 continue;
             };
-            let Some(_v) = vec3(frame.get("vDir")).and_then(normalize3) else {
+            let Some(_v) = vec3(frame.get("vDir")).and_then(normalized3) else {
                 continue;
             };
-            let Some(normal) = vec3(frame.get("normal")).and_then(normalize3) else {
+            let Some(normal) = vec3(frame.get("normal")).and_then(normalized3) else {
                 continue;
             };
             let Some(thickness) = pos(el.get("thicknessMm")) else {
@@ -1168,7 +1041,7 @@ fn build_ifc(scene: &Value) -> BuildResult {
             let mut inner_curves = Vec::new();
             if let Some(holes) = el.get("holes").and_then(Value::as_array) {
                 for hole in holes {
-                    let Some((x, y)) = vec2(hole.get("center")) else {
+                    let Some([x, y]) = vec2(hole.get("center")) else {
                         continue;
                     };
                     let Some(diameter) = pos(hole.get("diameterMm")) else {
@@ -1214,7 +1087,7 @@ fn build_ifc(scene: &Value) -> BuildResult {
                     f64::INFINITY,
                     f64::NEG_INFINITY,
                 ),
-                |(min_x, max_x, min_y, max_y), (x, y)| {
+                |(min_x, max_x, min_y, max_y), [x, y]| {
                     (min_x.min(*x), max_x.max(*x), min_y.min(*y), max_y.max(*y))
                 },
             );
@@ -1337,9 +1210,9 @@ fn build_ifc(scene: &Value) -> BuildResult {
         let (zx, zy, zz) = (dx / len, dy / len, dz / len);
         // Local frame: Z = member axis; profile Y (= Z × X) = world-up, so an I-shape web is vertical
         // for beams and columns take a fixed +Y-depth orientation (matches the FloLess 3D viewer).
-        let (xx, xy, xz) = if zx * zx + zy * zy <= VERTICAL_EPSILON_SQ {
+        let [xx, xy, xz] = if zx * zx + zy * zy <= VERTICAL_EPSILON_SQ {
             // Near-vertical: seed local X = world +X (Y = Z × X is right-handed for both +Z and −Z).
-            (1.0, 0.0, 0.0)
+            [1.0, 0.0, 0.0]
         } else {
             // General: local Y = normalize(world-up projected onto the ⟂-Z plane); local X = Y × Z.
             let dot = zz; // up·z
@@ -1348,7 +1221,7 @@ fn build_ifc(scene: &Value) -> BuildResult {
             yx /= yl;
             yy /= yl;
             yz /= yl;
-            cross((yx, yy, yz), (zx, zy, zz)) // x = y × z
+            cross3([yx, yy, yz], [zx, zy, zz]) // x = y × z
         };
 
         let sec = el.get("section").and_then(Value::as_object);
@@ -1500,8 +1373,8 @@ fn build_ifc(scene: &Value) -> BuildResult {
                     if kind == "box" {
                         let frame = tool.get("frame").and_then(Value::as_object)?;
                         let origin = vec3(frame.get("origin"))?;
-                        let u = vec3(frame.get("uDir")).and_then(normalize3)?;
-                        let normal = vec3(frame.get("normal")).and_then(normalize3)?;
+                        let u = vec3(frame.get("uDir")).and_then(normalized3)?;
+                        let normal = vec3(frame.get("normal")).and_then(normalized3)?;
                         let he = tool.get("halfExtents")?.as_array()?;
                         let hu = he.first().and_then(Value::as_f64)?;
                         let hv = he.get(1).and_then(Value::as_f64)?;
@@ -1529,10 +1402,9 @@ fn build_ifc(scene: &Value) -> BuildResult {
                         let axis = tool.get("axis").and_then(Value::as_object)?;
                         let from = vec3(axis.get("from"))?;
                         let to = vec3(axis.get("to"))?;
-                        let delta = (to.0 - from.0, to.1 - from.1, to.2 - from.2);
-                        let dir = normalize3(delta)?;
-                        let len =
-                            (delta.0 * delta.0 + delta.1 * delta.1 + delta.2 * delta.2).sqrt();
+                        let delta = [to[0] - from[0], to[1] - from[1], to[2] - from[2]];
+                        let dir = normalized3(delta)?;
+                        let len = length3(delta);
                         let dia = pos(tool.get("diameterMm"))?;
                         // Deliberately negated rather than `len <= 0.0`: this must also reject a
                         // NaN length, and every comparison against NaN is false, so `!(len > 0.0)`
@@ -1627,7 +1499,7 @@ fn build_ifc(scene: &Value) -> BuildResult {
                     pts.push(first); // close an around-weld only when the authored path is open (R4 #8)
                 }
                 let seg_len = |w: &[Vec3]| {
-                    let d = (w[1].0 - w[0].0, w[1].1 - w[0].1, w[1].2 - w[0].2);
+                    let d = (w[1][0] - w[0][0], w[1][1] - w[0][1], w[1][2] - w[0][2]);
                     (d.0 * d.0 + d.1 * d.1 + d.2 * d.2).sqrt()
                 };
                 let seg_ok = pts.windows(2).all(|w| seg_len(w) > 1e-6);
@@ -1645,13 +1517,13 @@ fn build_ifc(scene: &Value) -> BuildResult {
                         let first = pts[0];
                         let local: Vec<Vec3> = pts
                             .iter()
-                            .map(|p| (p.0 - first.0, p.1 - first.1, p.2 - first.2))
+                            .map(|p| [p[0] - first[0], p[1] - first[1], p[2] - first[2]])
                             .collect();
                         let place = emit_axis_placement(
                             &mut spf,
                             first,
-                            (0.0, 0.0, 1.0),
-                            (1.0, 0.0, 0.0),
+                            [0.0, 0.0, 1.0],
+                            [1.0, 0.0, 0.0],
                             bldg_place,
                         );
                         let axis_line = emit_polyline3(&mut spf, &local);
@@ -1809,9 +1681,9 @@ fn build_ifc(scene: &Value) -> BuildResult {
             let pds = spf.emit(&format!("IFCPRODUCTDEFINITIONSHAPE($,$,(#{shape}))"));
             let group_place = emit_axis_placement(
                 &mut spf,
-                (0.0, 0.0, 0.0),
-                (0.0, 0.0, 1.0),
-                (1.0, 0.0, 0.0),
+                [0.0, 0.0, 0.0],
+                [0.0, 0.0, 1.0],
+                [1.0, 0.0, 0.0],
                 bldg_place,
             );
             let standard = op.get("standard").and_then(Value::as_str).unwrap_or("");
@@ -1866,7 +1738,7 @@ fn build_ifc(scene: &Value) -> BuildResult {
                             let Some(center) = vec3(effect.get("center")) else {
                                 continue;
                             };
-                            let Some(axis) = vec3(effect.get("axis")).and_then(normalize3) else {
+                            let Some(axis) = vec3(effect.get("axis")).and_then(normalized3) else {
                                 continue;
                             };
                             let Some(diameter) = pos(effect.get("diameterMm")) else {
@@ -1982,8 +1854,8 @@ fn build_ifc(scene: &Value) -> BuildResult {
             let grid_place = emit_axis_placement(
                 &mut spf,
                 origin,
-                (0.0, 0.0, 1.0),
-                (1.0, 0.0, 0.0),
+                [0.0, 0.0, 1.0],
+                [1.0, 0.0, 0.0],
                 bldg_place,
             );
             let mut u_axes = Vec::new();
@@ -1998,13 +1870,13 @@ fn build_ifc(scene: &Value) -> BuildResult {
                     let end = axis.get("endMm").and_then(Value::as_f64);
                     let points = if direction == "x" {
                         vec![
-                            (offset, start.unwrap_or(min_y)),
-                            (offset, end.unwrap_or(max_y)),
+                            [offset, start.unwrap_or(min_y)],
+                            [offset, end.unwrap_or(max_y)],
                         ]
                     } else {
                         vec![
-                            (start.unwrap_or(min_x), offset),
-                            (end.unwrap_or(max_x), offset),
+                            [start.unwrap_or(min_x), offset],
+                            [end.unwrap_or(max_x), offset],
                         ]
                     };
                     let curve = emit_polyline2(&mut spf, &points, false);
@@ -2053,9 +1925,9 @@ fn build_ifc(scene: &Value) -> BuildResult {
                         .unwrap_or(level_id);
                     let level_place = emit_axis_placement(
                         &mut spf,
-                        (origin.0, origin.1, elevation),
-                        (0.0, 0.0, 1.0),
-                        (1.0, 0.0, 0.0),
+                        [origin[0], origin[1], elevation],
+                        [0.0, 0.0, 1.0],
+                        [1.0, 0.0, 0.0],
                         bldg_place,
                     );
                     let p1 = spf.emit(&format!(
@@ -2271,8 +2143,8 @@ fn validate_box_tool(tool: &serde_json::Map<String, Value>, path: &str) -> Resul
             "ifc write: `{path}.halfExtents` must be three positive numbers"
         )));
     }
-    let len = |a: Vec3| (a.0 * a.0 + a.1 * a.1 + a.2 * a.2).sqrt();
-    let dot = |a: Vec3, b: Vec3| a.0 * b.0 + a.1 * b.1 + a.2 * b.2;
+    let len = |a: Vec3| (a[0] * a[0] + a[1] * a[1] + a[2] * a[2]).sqrt();
+    let dot = |a: Vec3, b: Vec3| a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
     for (name, vv) in [("uDir", u), ("vDir", v), ("normal", n)] {
         if (len(vv) - 1.0).abs() > BOX_TOOL_TOL {
             return Err(AwareError::Validation(format!(
@@ -2289,9 +2161,9 @@ fn validate_box_tool(tool: &serde_json::Map<String, Value>, path: &str) -> Resul
         )));
     }
     let rh = cross3(u, v);
-    if (rh.0 - n.0).abs() > BOX_TOOL_TOL
-        || (rh.1 - n.1).abs() > BOX_TOOL_TOL
-        || (rh.2 - n.2).abs() > BOX_TOOL_TOL
+    if (rh[0] - n[0]).abs() > BOX_TOOL_TOL
+        || (rh[1] - n[1]).abs() > BOX_TOOL_TOL
+        || (rh[2] - n[2]).abs() > BOX_TOOL_TOL
     {
         return Err(AwareError::Validation(format!(
             "ifc write: `{path}.frame` must be right-handed (normal == uDir×vDir)"
@@ -2369,14 +2241,14 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                         )));
                     }
                     let u = vec3(frame.get("uDir"))
-                        .and_then(normalize3)
+                        .and_then(normalized3)
                         .ok_or_else(|| {
                             AwareError::Validation(format!(
                                 "ifc write: `{path}.frame.uDir` must be a nonzero Vec3"
                             ))
                         })?;
                     let v = vec3(frame.get("vDir"))
-                        .and_then(normalize3)
+                        .and_then(normalized3)
                         .ok_or_else(|| {
                             AwareError::Validation(format!(
                                 "ifc write: `{path}.frame.vDir` must be a nonzero Vec3"
@@ -2384,13 +2256,13 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                         })?;
                     let normal =
                         vec3(frame.get("normal"))
-                            .and_then(normalize3)
+                            .and_then(normalized3)
                             .ok_or_else(|| {
                                 AwareError::Validation(format!(
                                     "ifc write: `{path}.frame.normal` must be a nonzero Vec3"
                                 ))
                             })?;
-                    let uv = normalize3(cross(u, v)).ok_or_else(|| {
+                    let uv = normalized3(cross3(u, v)).ok_or_else(|| {
                         AwareError::Validation(format!(
                             "ifc write: `{path}.frame` axes are collinear"
                         ))
@@ -2410,7 +2282,7 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                         .map(|point| vec2(Some(point)))
                         .collect::<Option<Vec<_>>>();
                     let Some(polygon) =
-                        polygon.filter(|polygon| polygon_is_simple_nonzero2(polygon))
+                        polygon.filter(|polygon| polygon_is_simple_nonzero(polygon))
                     else {
                         return Err(AwareError::Validation(format!(
                             "ifc write: `{path}.outline` must be a finite, nonzero, simple polygon"
@@ -2435,9 +2307,9 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                                 )));
                             };
                             let diameter = require_positive(hole, "diameterMm", &hole_path)?;
-                            if !point_in_polygon2(center, &polygon)
-                                || polygon_edges2(&polygon).any(|(a, b)| {
-                                    point_segment_distance2(center, a, b) + 1.0e-9 < diameter / 2.0
+                            if !point_in_polygon(center, &polygon)
+                                || polygon_edges(&polygon).any(|(a, b)| {
+                                    point_segment_distance(center, a, b) + 1.0e-9 < diameter / 2.0
                                 })
                             {
                                 return Err(AwareError::Validation(format!(
@@ -2445,8 +2317,8 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                                 )));
                             }
                             if circles.iter().any(|(other, other_diameter)| {
-                                let distance = ((center.0 - other.0).powi(2)
-                                    + (center.1 - other.1).powi(2))
+                                let distance = ((center[0] - other[0]).powi(2)
+                                    + (center[1] - other[1]).powi(2))
                                 .sqrt();
                                 distance <= (diameter + *other_diameter) / 2.0 + 1.0e-9
                             }) {
@@ -2461,7 +2333,7 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                 "member" | "line" | "box" => {
                     let from = vec3(el.get("from"));
                     let to = vec3(el.get("to"));
-                    if !matches!((from, to), (Some(a), Some(b)) if normalize3((b.0-a.0,b.1-a.1,b.2-a.2)).is_some())
+                    if !matches!((from, to), (Some(a), Some(b)) if normalized3([b[0]-a[0],b[1]-a[1],b[2]-a[2]]).is_some())
                     {
                         return Err(AwareError::Validation(format!(
                             "ifc write: `{path}` requires distinct finite from/to Vec3 points"
@@ -2476,7 +2348,8 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                     let to = vec3(axis.get("to"));
                     let valid_axis = match (from, to) {
                         (Some(from), Some(to)) => {
-                            normalize3((to.0 - from.0, to.1 - from.1, to.2 - from.2)).is_some()
+                            normalized3([to[0] - from[0], to[1] - from[1], to[2] - from[2]])
+                                .is_some()
                         }
                         _ => false,
                     };
@@ -2489,7 +2362,7 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                 }
                 "washer" => {
                     if vec3(el.get("center")).is_none()
-                        || vec3(el.get("axis")).and_then(normalize3).is_none()
+                        || vec3(el.get("axis")).and_then(normalized3).is_none()
                     {
                         return Err(AwareError::Validation(format!(
                             "ifc write: `{path}` requires finite center and nonzero axis Vec3"
@@ -2506,7 +2379,7 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                 }
                 "nut" | "bolt-head" => {
                     if vec3(el.get("center")).is_none()
-                        || vec3(el.get("axis")).and_then(normalize3).is_none()
+                        || vec3(el.get("axis")).and_then(normalized3).is_none()
                     {
                         return Err(AwareError::Validation(format!(
                             "ifc write: `{path}` requires finite center and nonzero axis Vec3"
@@ -2639,7 +2512,7 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                     })
                 };
                 let frame_direction = |field: &str| {
-                    normalize3(frame_vec3(field)?).ok_or_else(|| {
+                    normalized3(frame_vec3(field)?).ok_or_else(|| {
                         AwareError::Validation(format!(
                             "ifc write: `{path}.frame.{field}` must be a valid Vec3"
                         ))
@@ -2651,7 +2524,7 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                 let normal = frame_direction("normal")?;
                 // A zero-length cross product means `uDir` and `vDir` are
                 // parallel — the same "not orthonormal" failure reported here.
-                let right_handed = normalize3(cross3(u, v))
+                let right_handed = normalized3(cross3(u, v))
                     .is_some_and(|cross| dot3(cross, normal) >= 1.0 - 1.0e-6);
                 if dot3(u, v).abs() > 1.0e-6 || !right_handed {
                     return Err(AwareError::Validation(format!(
@@ -2808,17 +2681,17 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                             let from = axis_endpoint("from")?;
                             let to = axis_endpoint("to")?;
                             let direction =
-                                normalize3((to.0 - from.0, to.1 - from.1, to.2 - from.2))
+                                normalized3([to[0] - from[0], to[1] - from[1], to[2] - from[2]])
                                     .ok_or_else(|| {
                                         AwareError::Validation(format!(
                                             "ifc write: `{instance_path}.{field}` shank axis must have nonzero length"
                                         ))
                                     })?;
-                            let offset = (
-                                instance_point.0 - from.0,
-                                instance_point.1 - from.1,
-                                instance_point.2 - from.2,
-                            );
+                            let offset = [
+                                instance_point[0] - from[0],
+                                instance_point[1] - from[1],
+                                instance_point[2] - from[2],
+                            ];
                             let child_diameter = child_element
                                 .get("diameterMm")
                                 .and_then(Value::as_f64)
@@ -2842,17 +2715,17 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                                 ))
                             })?;
                             let child_axis = vec3(child_element.get("axis"))
-                                .and_then(normalize3)
+                                .and_then(normalized3)
                                 .ok_or_else(|| {
                                 AwareError::Validation(format!(
                                     "ifc write: `{instance_path}.{field}` requires a nonzero `axis`"
                                 ))
                             })?;
-                            let offset = (
-                                center.0 - instance_point.0,
-                                center.1 - instance_point.1,
-                                center.2 - instance_point.2,
-                            );
+                            let offset = [
+                                center[0] - instance_point[0],
+                                center[1] - instance_point[1],
+                                center[2] - instance_point[2],
+                            ];
                             if (dot3(child_axis, normal).abs() - 1.0).abs() > 1.0e-6
                                 || length3(cross3(offset, normal)) > 0.1
                             {
@@ -2894,17 +2767,17 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                                 ))
                             })?;
                             let child_axis = vec3(child_element.get("axis"))
-                                .and_then(normalize3)
+                                .and_then(normalized3)
                                 .ok_or_else(|| {
                                 AwareError::Validation(format!(
                                     "ifc write: `{instance_path}.{field}` requires a nonzero `axis`"
                                 ))
                             })?;
-                            let offset = (
-                                center.0 - instance_point.0,
-                                center.1 - instance_point.1,
-                                center.2 - instance_point.2,
-                            );
+                            let offset = [
+                                center[0] - instance_point[0],
+                                center[1] - instance_point[1],
+                                center[2] - instance_point[2],
+                            ];
                             if (dot3(child_axis, normal).abs() - 1.0).abs() > 1.0e-6
                                 || length3(cross3(offset, normal)) > 0.1
                             {
@@ -2971,7 +2844,7 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                                 "ifc write: `{effect_path}.center` must match the bolt instance point"
                             )));
                         }
-                        let Some(effect_axis) = vec3(effect.get("axis")).and_then(normalize3)
+                        let Some(effect_axis) = vec3(effect.get("axis")).and_then(normalized3)
                         else {
                             return Err(AwareError::Validation(format!(
                                 "ifc write: `{effect_path}.axis` must be a nonzero Vec3"
@@ -3068,7 +2941,7 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                             })?;
                         let from = vec3(axis.get("from"));
                         let to = vec3(axis.get("to"));
-                        if !matches!((from, to), (Some(from), Some(to)) if normalize3((to.0-from.0,to.1-from.1,to.2-from.2)).is_some())
+                        if !matches!((from, to), (Some(from), Some(to)) if normalized3([to[0]-from[0],to[1]-from[1],to[2]-from[2]]).is_some())
                         {
                             return Err(AwareError::Validation(format!(
                                 "ifc write: `{path}.tool.axis` must contain distinct from/to Vec3 points"
@@ -3598,11 +3471,11 @@ mod tests {
     #[test]
     fn polyline_emitter_only_closes_profile_boundaries() {
         let mut open = Spf::new();
-        emit_polyline2(&mut open, &[(0.0, 0.0), (1.0, 0.0)], false);
+        emit_polyline2(&mut open, &[[0.0, 0.0], [1.0, 0.0]], false);
         assert!(open.buf.contains("IFCPOLYLINE((#1,#2))"));
 
         let mut closed = Spf::new();
-        emit_polyline2(&mut closed, &[(0.0, 0.0), (1.0, 0.0)], true);
+        emit_polyline2(&mut closed, &[[0.0, 0.0], [1.0, 0.0]], true);
         assert!(closed.buf.contains("IFCPOLYLINE((#1,#2,#1))"));
     }
 
@@ -4036,11 +3909,11 @@ mod tests {
     /// `frame_direction`).
     ///
     /// Unlike the viewer's equivalent, this is *not* a panic regression test —
-    /// the `normalize3(cross3(u, v)).unwrap()` it replaced was unreachable, and
+    /// the `normalized3(cross3(u, v)).unwrap()` it replaced was unreachable, and
     /// a mutation check confirms it: `dot3(u, v).abs() > 1.0e-6` short-circuits
     /// first for a parallel frame, and for a genuinely perpendicular pair of
     /// unit vectors the cross product has length 1, never 0. This module's
-    /// `normalize3` also guards `n.is_finite()`, so the overflowing-direction
+    /// `normalized3` also guards `n.is_finite()`, so the overflowing-direction
     /// route that *does* reach the viewer's panic is caught here as an invalid
     /// `Vec3` well before the frame check.
     #[test]

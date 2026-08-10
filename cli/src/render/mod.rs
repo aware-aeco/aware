@@ -1,5 +1,6 @@
 pub mod blender;
 pub mod file;
+pub mod geom;
 pub mod html_report;
 pub mod ifc;
 pub mod table;
