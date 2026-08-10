@@ -45,6 +45,7 @@ mod commands;
 mod context;
 mod envelope;
 mod error;
+mod fs_tree;
 mod install;
 mod json;
 mod lockfile;
@@ -61,6 +62,7 @@ mod skill_builder;
 mod test_env;
 mod text;
 mod validate;
+mod which;
 
 use clap::{Parser, Subcommand};
 
