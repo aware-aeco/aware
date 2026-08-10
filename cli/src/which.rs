@@ -15,14 +15,26 @@
 //! extension, and `Path::extension` splits at the last `.`, so the documented
 //! `AWARE_BLENDER=blender-4.2` form parses as extension `"2"` and would have
 //! stopped resolving to `blender-4.2.exe` — a regression `blender`'s
-//! append-always copy did not have. The unified rule keys on the extension being
-//! one Windows can actually spawn, and still falls back to the verbatim name, so
-//! every lookup either copy resolved still resolves.
+//! append-always copy did not have. The unified rule keys instead on the
+//! extension being one Windows can actually *spawn*.
+//!
+//! The rule is about spawnability throughout, which is why there is no verbatim
+//! fallback on Windows. Returning a name no `CreateProcess` can launch is not a
+//! better answer than `None` — it is the same failure, moved somewhere the
+//! caller cannot diagnose it.
 
 use std::path::{Path, PathBuf};
 
 /// The extensions `Command::new` can actually launch on Windows.
 const WINDOWS_EXEC_EXTS: [&str; 4] = ["exe", "cmd", "bat", "com"];
+
+/// The suffixes a bare name is searched under on Windows, in order. Named so the
+/// tests exercise the list [`find_on_path`] really uses rather than a copy of it.
+const WINDOWS_SEARCH_SUFFIXES: &[&str] = &[".exe", ".cmd", ".bat", ".com"];
+
+/// The single "as written" suffix, used on Unix and for a name that already
+/// carries a spawnable extension.
+const VERBATIM: &[&str] = &[""];
 
 /// Whether `name` already ends in an extension Windows would spawn directly, and
 /// so must be looked up verbatim rather than extended again.
@@ -52,13 +64,17 @@ fn has_executable_extension(name: &str) -> bool {
 pub fn find_on_path(name: &str) -> Option<PathBuf> {
     let path = std::env::var_os("PATH")?;
     let dirs: Vec<PathBuf> = std::env::split_paths(&path).collect();
-    // If the caller already supplied a spawnable extension (e.g. "codex.cmd"), don't
-    // append a second one — look the name up verbatim. Otherwise try the executable
-    // suffixes first and fall back to the verbatim name, which keeps a dotted bare
-    // name like "blender-4.2" resolving to "blender-4.2.exe".
-    let exts: &[&str] = match () {
-        _ if !cfg!(windows) || has_executable_extension(name) => &[""],
-        _ => &[".exe", ".cmd", ".bat", ".com", ""],
+    // On Unix, and for a name that already carries a spawnable extension (e.g.
+    // "codex.cmd"), look the name up verbatim. Otherwise search only the executable
+    // suffixes — which resolves a dotted bare name like "blender-4.2" to
+    // "blender-4.2.exe". There is deliberately no verbatim fallback on Windows: the
+    // search is directory-outer, so an extensionless shim in an early `PATH` entry
+    // would win over the spawnable `.cmd` in a later one, and hand the caller a file
+    // `CreateProcess` cannot launch.
+    let exts = if !cfg!(windows) || has_executable_extension(name) {
+        VERBATIM
+    } else {
+        WINDOWS_SEARCH_SUFFIXES
     };
     find_in_dirs(name, &dirs, exts)
 }
@@ -155,19 +171,37 @@ mod tests {
         assert!(has_executable_extension("Blender.EXE"));
     }
 
-    /// The Windows search order: executable suffixes first, verbatim last, so a
-    /// dotted bare name still resolves to its `.exe` while nothing either former
-    /// copy could find becomes unfindable.
+    /// A dotted bare name resolves to its `.exe` under the Windows suffix list.
     #[test]
-    fn suffixes_are_tried_before_the_verbatim_name() {
+    fn a_dotted_bare_name_resolves_through_the_windows_suffixes() {
         let tmp = tempfile::tempdir().unwrap();
         std::fs::write(tmp.path().join("blender-4.2.exe"), "").unwrap();
-        std::fs::write(tmp.path().join("blender-4.2"), "").unwrap();
         let dirs = vec![tmp.path().to_path_buf()];
 
         assert_eq!(
-            find_in_dirs("blender-4.2", &dirs, &[".exe", ".cmd", ".bat", ".com", ""]),
+            find_in_dirs("blender-4.2", &dirs, WINDOWS_SEARCH_SUFFIXES),
             Some(tmp.path().join("blender-4.2.exe"))
+        );
+    }
+
+    /// The second thing Codex caught on #399. The search is directory-outer, so a
+    /// verbatim `""` in the Windows suffix list would let an extensionless shim in
+    /// an early `PATH` entry beat the spawnable `.cmd` in a later one — and hand
+    /// the caller a file `CreateProcess` cannot launch. The Windows list carries no
+    /// `""` for exactly that reason.
+    #[test]
+    fn an_extensionless_early_shim_does_not_shadow_a_later_spawnable_one() {
+        let tmp = tempfile::tempdir().unwrap();
+        let (first, second) = (tmp.path().join("a"), tmp.path().join("b"));
+        std::fs::create_dir_all(&first).unwrap();
+        std::fs::create_dir_all(&second).unwrap();
+        std::fs::write(first.join("codex"), "").unwrap();
+        std::fs::write(second.join("codex.cmd"), "").unwrap();
+
+        let dirs = vec![first, second.clone()];
+        assert_eq!(
+            find_in_dirs("codex", &dirs, WINDOWS_SEARCH_SUFFIXES),
+            Some(second.join("codex.cmd"))
         );
     }
 
