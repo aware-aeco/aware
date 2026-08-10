@@ -468,6 +468,26 @@ fn blank_comments_and_strings(chars: &[char]) -> Vec<char> {
 /// wrapped across lines. The lint level itself is found by position via
 /// [`opens_a_lint`], so a level nested in a `cfg_attr` predicate counts too.
 fn gate_reopeners(source: &str) -> Vec<Reopener> {
+    let all: Vec<&str> = GATED_LINTS
+        .iter()
+        .chain(GATED_GROUPS.iter())
+        .copied()
+        .collect();
+    gate_reopeners_for(source, &all)
+}
+
+/// The lints denied from `Cargo.toml` rather than from a crate-root attribute.
+///
+/// They are the only ones that reach *every* Cargo target, integration tests
+/// included, which is why [`gated_source_files`] looks for these — and only
+/// these — under `tests/`. The rest are denied by `cfg_attr(not(test), …)`
+/// attributes in `src/main.rs` and `src/render/table.rs`, which never reach a
+/// separate integration-test crate root; an allow of one there suppresses
+/// nothing, and CLAUDE.md permits `unwrap()` in tests anyway.
+const MANIFEST_SOURCED: [&str; 2] = ["undocumented_unsafe_blocks", "restriction"];
+
+/// As [`gate_reopeners`], but looking only for `names`.
+fn gate_reopeners_for(source: &str, names: &[&str]) -> Vec<Reopener> {
     let chars: Vec<char> = source.chars().collect();
     let code = blank_comments_and_strings(&chars);
     let mut found = Vec::new();
@@ -508,9 +528,8 @@ fn gate_reopeners(source: &str) -> Vec<Reopener> {
         let collapsed = collapse(&code[i..=end]);
         // Qualified, so `#[allow(othertool::unwrap_used)]` is another tool's
         // business rather than a finding here.
-        let names_gated = GATED_LINTS
+        let names_gated = names
             .iter()
-            .chain(GATED_GROUPS.iter())
             .any(|name| collapsed.contains(&format!("clippy::{name}")));
         if opens_a_lint(&collapsed) && names_gated {
             found.push(Reopener {
@@ -537,30 +556,58 @@ fn collapse(span: &[char]) -> String {
 /// `deny` can be re-opened for a single item with one `#[allow]` or `#[expect]`,
 /// and clippy stays green — so the attribute alone is not the whole gate. CI has
 /// no other signal for this, hence a test.
-/// Every `.rs` file the gates cover: `src/`, plus `build.rs`.
+/// Every `.rs` file a gate reaches, paired with the lint names re-openable there.
 ///
-/// `build.rs` is easy to forget because it sits *beside* `src/` rather than in
-/// it — `crate_roots_actually_carry_the_gate` asserts it carries `BUILD_GATE`,
-/// but a scan rooted at `src/` never looks at whether the next line re-opens it.
-/// It is the last file that should go unwatched: it injects the Google client
-/// secret into release builds, so an `unwrap()` there aborts the process inside
-/// credential handling.
-fn gated_source_files() -> Vec<std::path::PathBuf> {
+/// Three roots, because a gate's reach depends on where it is declared. `src/`
+/// and `build.rs` carry crate-root `deny` attributes *and* are covered by the
+/// manifest, so everything applies. `build.rs` is easy to miss because it sits
+/// beside `src/` rather than in it — `crate_roots_actually_carry_the_gate`
+/// asserts it carries `BUILD_GATE`, but a scan rooted at `src/` never checks
+/// whether the next line re-opens it, and it injects the Google client secret
+/// into release builds.
+///
+/// `tests/` is narrower. A crate-root attribute in `src/main.rs` cannot reach a
+/// separate integration-test crate, but a `[lints.clippy]` entry reaches every
+/// Cargo target — measured: an `#![allow(clippy::undocumented_unsafe_blocks)]`
+/// in an integration test lets an unsafe block ship with no safety comment and
+/// `clippy -D warnings` stays green. So only [`MANIFEST_SOURCED`] is looked for
+/// there; flagging `unwrap_used` in `tests/` would reject what CLAUDE.md
+/// explicitly permits.
+fn gated_source_files() -> Vec<(std::path::PathBuf, &'static [&'static str])> {
+    static ALL: &[&str] = &[
+        "unwrap_used",
+        "expect_used",
+        "indexing_slicing",
+        "undocumented_unsafe_blocks",
+        "restriction",
+    ];
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
-    let mut files = vec![root.join("build.rs")];
-    collect_rs_files(&root.join("src"), &mut files);
-    files
+
+    let mut compiled = vec![root.join("build.rs")];
+    collect_rs_files(&root.join("src"), &mut compiled);
+    let mut integration = Vec::new();
+    collect_rs_files(&root.join("tests"), &mut integration);
+
+    compiled
+        .into_iter()
+        .map(|path| (path, ALL))
+        .chain(
+            integration
+                .into_iter()
+                .map(|path| (path, &MANIFEST_SOURCED[..])),
+        )
+        .collect()
 }
 
 #[test]
 fn no_targeted_allow_reopens_the_gate_in_src() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
     let files = gated_source_files();
-    // A floor, not an is-empty check. `src/` holds ~90 files, so a walk that
-    // recovered one of them would pass an emptiness test while having silently
-    // dropped the other 89 — coverage collapse looks exactly like coverage.
+    // A floor, not an is-empty check. `src/` alone holds ~90 files, so a walk
+    // that recovered one of them would pass an emptiness test while having
+    // silently dropped the rest — coverage collapse looks exactly like coverage.
     assert!(
-        files.len() > 80,
+        files.len() > 120,
         "scanned only {} files under {} — the walk is truncated, so a clean \
          result means nothing",
         files.len(),
@@ -568,7 +615,7 @@ fn no_targeted_allow_reopens_the_gate_in_src() {
     );
 
     let mut offenders = Vec::new();
-    for file in &files {
+    for (file, names) in &files {
         // Not `else { continue }`. A file this gate cannot read is a file it
         // cannot clear, and turning that into silence is the exact failure mode
         // CLAUDE.md §Engineering rules forbids — in the file that enforces it.
@@ -579,7 +626,7 @@ fn no_targeted_allow_reopens_the_gate_in_src() {
             .unwrap_or(file)
             .display()
             .to_string();
-        for hit in gate_reopeners(&source) {
+        for hit in gate_reopeners_for(&source, names) {
             offenders.push(format!("{relative}:{}: {}", hit.line, hit.text));
         }
     }
@@ -932,17 +979,38 @@ fn the_manifest_still_carries_the_unsafe_gate() {
         })
         .collect();
 
-    // Groups need the priority test. `undocumented_unsafe_blocks` is the one
-    // gate that lives only in this manifest, so a group entry that outranks it
-    // switches it off with every other check in this file still green — measured
-    // on clippy 1.95, `restriction = { level = "allow", priority = 1 }` does
-    // exactly that. At a negative priority the specific `deny` wins and the
-    // manifest is fine, so priority is what separates a hole from a false alarm.
-    reopened.extend(GATED_GROUPS.iter().filter_map(|group| {
-        let (level, priority) = manifest_clippy_entry(&source, group)?;
-        (!level_enforces(&level) && priority >= 0)
-            .then(|| format!("{group} = {{ level = \"{level}\", priority = {priority} }}"))
-    }));
+    // Groups need a priority comparison, not a priority threshold.
+    // `undocumented_unsafe_blocks` is the one gate that lives only in this
+    // manifest, so a group entry that outranks it switches it off with every
+    // other check in this file still green. Cargo applies the higher-priority
+    // entry last, so the group wins exactly when its priority is strictly
+    // greater than the lint's — measured on clippy 1.95:
+    //
+    //   deny @ 0   vs allow @  1  -> gate OFF     deny @  0 vs allow @  0 -> holds
+    //   deny @ -2  vs allow @ -1  -> gate OFF     deny @ -1 vs allow @ -2 -> holds
+    //
+    // Comparing the group against zero instead would miss the second row, where
+    // both priorities are negative, and comparing it against nothing at all
+    // would reject the legitimate manifests on the right.
+    for group in GATED_GROUPS {
+        let Some((group_level, group_priority)) = manifest_clippy_entry(&source, group) else {
+            continue;
+        };
+        if level_enforces(&group_level) {
+            continue;
+        }
+        for lint in GATED_LINTS {
+            let Some((lint_level, lint_priority)) = manifest_clippy_entry(&source, lint) else {
+                continue;
+            };
+            if level_enforces(&lint_level) && group_priority > lint_priority {
+                reopened.push(format!(
+                    "{group} = {{ level = \"{group_level}\", priority = {group_priority} }} \
+                     outranks {lint} = {{ level = \"{lint_level}\", priority = {lint_priority} }}"
+                ));
+            }
+        }
+    }
 
     assert!(
         reopened.is_empty(),
@@ -1008,14 +1076,48 @@ fn manifest_lint_reader_matches_its_contract() {
         );
     }
 
-    // The group form the priority test exists for.
-    assert_eq!(
-        manifest_clippy_entry(
+    // The group form the priority comparison exists for, including the negative
+    // pair where a threshold-against-zero test reads both as harmless.
+    for (manifest, expected) in [
+        (
             "[lints.clippy]\nrestriction = { level = \"allow\", priority = 1 }\n",
-            "restriction"
+            ("allow", 1),
         ),
-        Some(("allow".to_string(), 1))
+        (
+            "[lints.clippy]\nrestriction = { level = \"allow\", priority = -1 }\n",
+            ("allow", -1),
+        ),
+    ] {
+        assert_eq!(
+            manifest_clippy_entry(manifest, "restriction"),
+            Some((expected.0.to_string(), expected.1)),
+            "misread the group entry:\n{manifest}"
+        );
+    }
+}
+
+/// `gate_reopeners_for` narrows the scan by lint name, which is what lets
+/// `tests/` be checked for the manifest-sourced gates without flagging the
+/// `unwrap()` CLAUDE.md permits there.
+#[test]
+fn the_scan_narrows_by_lint_name() {
+    let unsafe_allow = "#![allow(clippy::undocumented_unsafe_blocks)]\nfn f() {}\n";
+    let unwrap_allow = "#[allow(clippy::unwrap_used)]\nfn f() {}\n";
+
+    assert_eq!(
+        gate_reopeners_for(unsafe_allow, &MANIFEST_SOURCED).len(),
+        1,
+        "the manifest-sourced gate reaches integration tests and must be checked there"
     );
+    assert_eq!(
+        gate_reopeners_for(unwrap_allow, &MANIFEST_SOURCED),
+        Vec::new(),
+        "`unwrap_used` is denied by a crate-root attribute that never reaches an \
+         integration-test crate, so an allow of it there suppresses nothing"
+    );
+    // The wide form still sees both, so narrowing did not weaken `src/`.
+    assert_eq!(gate_reopeners(unwrap_allow).len(), 1);
+    assert_eq!(gate_reopeners(unsafe_allow).len(), 1);
 }
 
 /// The hard-coded-byte-offset gate (`scripts/no-hardcoded-string-offsets.py`)
