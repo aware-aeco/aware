@@ -834,6 +834,8 @@ async fn artifact(
     output: &std::path::Path,
 ) -> Result<(), AwareError> {
     let instance = instance.unwrap_or("default");
+    crate::runtime::provenance::validate_artifact_component(app_id, "app")?;
+    crate::runtime::provenance::validate_artifact_component(instance, "instance")?;
     let run_id = match run_id_override {
         Some(id) => id.to_string(),
         None => {

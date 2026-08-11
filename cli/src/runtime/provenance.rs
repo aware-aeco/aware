@@ -92,16 +92,30 @@ pub fn artifact_path_for(
     run_id: &str,
     id: &str,
 ) -> Result<PathBuf, AwareError> {
-    if id.is_empty()
-        || !id
+    for (label, value) in [
+        ("app", app),
+        ("instance", instance),
+        ("run id", run_id),
+        ("artifact id", id),
+    ] {
+        validate_artifact_component(value, label)?;
+    }
+    Ok(artifact_dir_for(logs_dir, app, instance, run_id).join(id))
+}
+
+/// Path components supplied to artifact retrieval are opaque selectors, never paths.
+pub fn validate_artifact_component(value: &str, label: &str) -> Result<(), AwareError> {
+    if value.is_empty()
+        || matches!(value, "." | "..")
+        || !value
             .bytes()
             .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'.' | b'-' | b'_'))
     {
         return Err(AwareError::Validation(format!(
-            "artifact id {id:?} must contain only letters, digits, '.', '-' or '_'"
+            "artifact {label} {value:?} must be one path-safe identifier"
         )));
     }
-    Ok(artifact_dir_for(logs_dir, app, instance, run_id).join(id))
+    Ok(())
 }
 
 pub struct ProvenanceWriter {
@@ -234,5 +248,8 @@ mod tests {
             PathBuf::from("/tmp/aware/logs/app/default/r1.artifacts/read-model.json")
         );
         assert!(artifact_path_for(logs, "app", "default", "r1", "../secret").is_err());
+        assert!(artifact_path_for(logs, "../app", "default", "r1", "result.json").is_err());
+        assert!(artifact_path_for(logs, "app", "../other", "r1", "result.json").is_err());
+        assert!(artifact_path_for(logs, "app", "default", "..", "result.json").is_err());
     }
 }
