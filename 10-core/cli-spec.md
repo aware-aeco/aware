@@ -75,6 +75,12 @@ aware
 │   ├── --tier-strategy <auto|all-1|all-2>
 │   └── --output <agent-id>
 │
+├── sidecar ...                         manage AWARE runtime sidecars
+│   ├── list [--json]                   status of every managed sidecar
+│   ├── install <id>                    download one named sidecar
+│   ├── repair --installed              refresh all installed stale managed sidecars
+│   └── uninstall <id>                  remove one managed sidecar
+│
 └── doctor                              health check — config, creds, hosts, registry
 ```
 
@@ -284,6 +290,49 @@ Plugins (host-side):
 Registry:
   ✓ aware-aeco/aware (last index pull: 4 hours ago)
 ```
+
+### `aware sidecar list --json`
+
+Returns AWARE's complete managed-sidecar catalogue using the standard response
+envelope. Consumers use this contract instead of carrying their own list of
+sidecar IDs or inspecting the `~/.aware/bridges/` filesystem layout.
+
+```json
+{
+  "ok": true,
+  "data": {
+    "schema-version": 1,
+    "runtime-version": "0.120.0",
+    "sidecars": [
+      {
+        "id": "connection-reader",
+        "binary": "aware-connection-reader",
+        "description": "Connection Reader (Node + web-ifc WASM; extract steel connections from IFC)",
+        "status": "stale",
+        "installed-version": "0.119.0",
+        "repair-eligible": true
+      }
+    ]
+  },
+  "error": null,
+  "meta": { "cli-version": "0.120.0", "command": "sidecar list", "duration-ms": 1 }
+}
+```
+
+`status` is owned by AWARE and is one of:
+
+| Status | Meaning | `repair --installed` |
+|---|---|---|
+| `current` | A managed copy and its version marker match the running CLI. | Skipped. |
+| `stale` | A managed copy exists but its marker is absent or from another CLI version. | Refreshed. |
+| `legacy` | Only an unmanaged PATH copy was found. | Never overwritten; use `sidecar install <id>` to migrate deliberately. |
+| `missing` | No copy was found. | Never installed implicitly. |
+
+`aware sidecar repair --installed` snapshots every `stale` entry in this
+catalogue and refreshes each with the currently running CLI's release asset. It
+does not accept a consumer-supplied tool list, install absent sidecars, or alter
+legacy PATH copies. A caller queries `sidecar list --json` again after repair to
+observe the authoritative result.
 
 ## Out of scope for the CLI itself
 

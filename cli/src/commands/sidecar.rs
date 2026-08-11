@@ -1,7 +1,8 @@
-//! `aware sidecar` — manage host-execution bridge binaries.
+//! `aware sidecar` — manage runtime sidecars.
 //!
-//! Host-execution bridges (`aware-tekla`, `aware-rhino`, `aware-sketchup`,
-//! `aware-revit`) are separate Windows binaries that the CLI spawns when an
+//! Runtime sidecars (including host-execution bridges such as `aware-tekla`,
+//! `aware-rhino`, `aware-sketchup`, `aware-revit`, plus headless helpers such
+//! as `aware-connection-reader`) are separate Windows binaries that the CLI spawns when an
 //! agent declares `transport: cli: binary: aware-<host>`. They are NOT
 //! bundled in the main release zip (they are Windows-only and some ship with
 //! platform-specific assets), so they are published as separate release
@@ -12,6 +13,7 @@
 //! ```
 //! aware sidecar list                 # show which bridges are present / missing
 //! aware sidecar install <host>       # download + install the bridge binary
+//! aware sidecar repair --installed    # refresh every installed stale managed sidecar
 //! aware sidecar uninstall <host>     # remove the bridge binary
 //! ```
 //!
@@ -23,10 +25,13 @@
 
 use std::io::Write as _;
 use std::path::PathBuf;
+use std::time::Instant;
 
 use clap::Subcommand;
+use serde::Serialize;
 
 use crate::context::Context;
+use crate::envelope;
 use crate::error::AwareError;
 
 /// Known host bridges. Each entry: (host-id, binary-name, asset-suffix)
@@ -82,6 +87,45 @@ struct Bridge {
     note: Option<&'static str>,
 }
 
+/// A consumer-safe status for one entry in AWARE's managed-sidecar catalogue.
+///
+/// The CLI owns this classification: consumers must never infer it from file
+/// names or version-marker files. Adding a new `BRIDGES` entry automatically
+/// includes it in `sidecar list --json` and `sidecar repair --installed`.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "kebab-case")]
+enum SidecarStatus {
+    /// A managed copy is present and stamped by this CLI version.
+    Current,
+    /// A managed copy is present, but its marker is absent or from another CLI version.
+    Stale,
+    /// Only an unmanaged PATH copy is present; repair never overwrites it.
+    Legacy,
+    /// No managed or legacy copy was found.
+    Missing,
+}
+
+#[derive(Serialize)]
+struct SidecarListData<'a> {
+    #[serde(rename = "schema-version")]
+    schema_version: u8,
+    #[serde(rename = "runtime-version")]
+    runtime_version: &'static str,
+    sidecars: Vec<SidecarStatusRow<'a>>,
+}
+
+#[derive(Serialize)]
+struct SidecarStatusRow<'a> {
+    id: &'a str,
+    binary: &'a str,
+    description: &'a str,
+    status: SidecarStatus,
+    #[serde(rename = "installed-version")]
+    installed_version: Option<String>,
+    #[serde(rename = "repair-eligible")]
+    repair_eligible: bool,
+}
+
 #[derive(Clone, Copy, Debug)]
 enum AssetKind {
     Exe,
@@ -99,7 +143,7 @@ impl AssetKind {
 
 #[derive(Subcommand, Debug)]
 pub enum SidecarCommand {
-    /// Show installed and missing host bridges.
+    /// Show every managed runtime sidecar and its compatibility status.
     List,
 
     /// Download and install a host bridge binary.
@@ -110,6 +154,17 @@ pub enum SidecarCommand {
     Install {
         /// Bridge ID: `tekla`, `rhino`, `sketchup`, `revit`, or `connection-reader`.
         host: String,
+    },
+
+    /// Refresh every installed stale managed sidecar.
+    ///
+    /// Takes a snapshot of AWARE-managed sidecars that are present in the
+    /// persistent install directory but do not match this CLI version. Missing
+    /// and legacy PATH-only copies are deliberately left alone.
+    Repair {
+        /// Repair all installed stale managed sidecars (never install missing ones).
+        #[arg(long)]
+        installed: bool,
     },
 
     /// Remove an installed host bridge binary.
@@ -123,6 +178,7 @@ pub fn dispatch(action: SidecarCommand, ctx: &Context) -> Result<(), AwareError>
     match action {
         SidecarCommand::List => list(ctx),
         SidecarCommand::Install { host } => install(ctx, &host),
+        SidecarCommand::Repair { installed } => repair(ctx, installed),
         SidecarCommand::Uninstall { host } => uninstall(ctx, &host),
     }
 }
@@ -130,10 +186,25 @@ pub fn dispatch(action: SidecarCommand, ctx: &Context) -> Result<(), AwareError>
 // ── list ─────────────────────────────────────────────────────────────────────
 
 fn list(ctx: &Context) -> Result<(), AwareError> {
+    let started = Instant::now();
     let install_dir = bridge_install_dir(ctx);
+    let version = env!("CARGO_PKG_VERSION");
+    if ctx.json {
+        let data = SidecarListData {
+            schema_version: 1,
+            runtime_version: version,
+            sidecars: BRIDGES
+                .iter()
+                .map(|bridge| sidecar_status_row(bridge, &install_dir, version))
+                .collect(),
+        };
+        envelope::print_ok("sidecar list", data, started)
+            .map_err(|e| AwareError::Internal(format!("write sidecar list JSON: {e}")))?;
+        return Ok(());
+    }
+
     println!("Host bridges  (install dir: {})", install_dir.display());
     println!();
-    let version = env!("CARGO_PKG_VERSION");
     for b in BRIDGES {
         match find_bridge_in_dir(b, &install_dir) {
             Some(p) if bridge_is_current(b, &install_dir, version) => {
@@ -174,6 +245,31 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
         println!();
     }
     Ok(())
+}
+
+fn sidecar_status_row<'a>(
+    bridge: &'a Bridge,
+    install_dir: &std::path::Path,
+    version: &str,
+) -> SidecarStatusRow<'a> {
+    let status = sidecar_status(bridge, install_dir, version);
+    SidecarStatusRow {
+        id: bridge.id,
+        binary: bridge.binary,
+        description: bridge.description,
+        status,
+        installed_version: installed_bridge_version(install_dir, bridge.binary),
+        repair_eligible: status == SidecarStatus::Stale,
+    }
+}
+
+fn sidecar_status(bridge: &Bridge, install_dir: &std::path::Path, version: &str) -> SidecarStatus {
+    match find_bridge_in_dir(bridge, install_dir) {
+        Some(_) if bridge_is_current(bridge, install_dir, version) => SidecarStatus::Current,
+        Some(_) => SidecarStatus::Stale,
+        None if which_binary(bridge.binary).is_some() => SidecarStatus::Legacy,
+        None => SidecarStatus::Missing,
+    }
 }
 
 // ── install ───────────────────────────────────────────────────────────────────
@@ -239,6 +335,44 @@ fn install(ctx: &Context, host: &str) -> Result<(), AwareError> {
 
     print_note(bridge, &install_dir);
     Ok(())
+}
+
+// —— repair ——————————————————————————————————————————————————————————————————
+
+/// `aware sidecar repair --installed` — refresh every stale sidecar that AWARE
+/// already manages. The target IDs are an immutable snapshot of `BRIDGES`, so a
+/// consumer never needs to keep (or pass) a sidecar-specific list.
+fn repair(ctx: &Context, installed: bool) -> Result<(), AwareError> {
+    if !installed {
+        return Err(AwareError::Validation(
+            "sidecar repair requires --installed; it never installs missing sidecars implicitly"
+                .into(),
+        ));
+    }
+
+    let install_dir = bridge_install_dir(ctx);
+    let version = env!("CARGO_PKG_VERSION");
+    let targets = installed_stale_sidecar_ids(&install_dir, version);
+
+    if targets.is_empty() {
+        println!("✓ No installed managed sidecars need repair.");
+        return Ok(());
+    }
+
+    println!("Repairing {} installed stale sidecar(s)...", targets.len());
+    for id in targets {
+        install(ctx, id)?;
+    }
+    println!("✓ Managed sidecar repair complete.");
+    Ok(())
+}
+
+fn installed_stale_sidecar_ids(install_dir: &std::path::Path, version: &str) -> Vec<&'static str> {
+    BRIDGES
+        .iter()
+        .filter(|bridge| sidecar_status(bridge, install_dir, version) == SidecarStatus::Stale)
+        .map(|bridge| bridge.id)
+        .collect()
 }
 
 /// Path of the `<binary>.version` marker recording which CLI release installed
@@ -625,6 +759,50 @@ mod tests {
         std::fs::write(version_marker_path(dir, "aware-tekla"), version).unwrap();
         assert!(managed_bridge_is_current("aware-tekla", dir, version));
         assert!(!managed_bridge_is_current("ripgrep", dir, version));
+    }
+
+    #[test]
+    fn sidecar_status_reports_current_stale_and_missing_without_consumer_rules() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path();
+        let version = "0.43.0";
+        let current = lookup_bridge("tekla").unwrap();
+        let stale = lookup_bridge("connection-reader").unwrap();
+        let missing = lookup_bridge("rhino").unwrap();
+
+        std::fs::write(dir.join("aware-tekla.exe"), b"fake").unwrap();
+        std::fs::write(version_marker_path(dir, "aware-tekla"), version).unwrap();
+        std::fs::write(dir.join("aware-connection-reader.exe"), b"fake").unwrap();
+        std::fs::write(
+            version_marker_path(dir, "aware-connection-reader"),
+            "0.42.0",
+        )
+        .unwrap();
+
+        assert_eq!(
+            sidecar_status(current, dir, version),
+            SidecarStatus::Current
+        );
+        assert_eq!(sidecar_status(stale, dir, version), SidecarStatus::Stale);
+        assert_eq!(
+            sidecar_status(missing, dir, version),
+            SidecarStatus::Missing
+        );
+    }
+
+    #[test]
+    fn repair_targets_every_installed_stale_catalogue_entry() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path();
+        let version = "0.43.0";
+        std::fs::write(dir.join("aware-tekla.exe"), b"fake").unwrap();
+        std::fs::write(version_marker_path(dir, "aware-tekla"), version).unwrap();
+        std::fs::write(dir.join("aware-connection-reader.exe"), b"fake").unwrap();
+
+        assert_eq!(
+            installed_stale_sidecar_ids(dir, version),
+            vec!["connection-reader"]
+        );
     }
 
     #[test]
