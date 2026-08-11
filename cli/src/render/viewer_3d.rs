@@ -27,6 +27,10 @@
 
 use crate::error::AwareError;
 use crate::json::type_name as json_type;
+use crate::render::geom::{
+    cross3, distance3, dot3, length3, normalized3, point_in_polygon, point_segment_distance,
+    polygon_edges, polygon_is_simple_nonzero,
+};
 use serde_json::Value;
 use std::collections::{HashMap, HashSet};
 
@@ -2332,35 +2336,6 @@ fn number_array(value: Option<&Value>, path: &str) -> Result<Vec<f64>, AwareErro
         .collect()
 }
 
-fn length3(value: [f64; 3]) -> f64 {
-    value
-        .iter()
-        .map(|component| component * component)
-        .sum::<f64>()
-        .sqrt()
-}
-
-fn dot3(a: [f64; 3], b: [f64; 3]) -> f64 {
-    (0..3).map(|index| a[index] * b[index]).sum()
-}
-
-fn normalized3(value: [f64; 3]) -> Option<[f64; 3]> {
-    let length = length3(value);
-    (length > 1.0e-9).then(|| value.map(|component| component / length))
-}
-
-fn distance3(a: [f64; 3], b: [f64; 3]) -> f64 {
-    length3([a[0] - b[0], a[1] - b[1], a[2] - b[2]])
-}
-
-fn cross3(a: [f64; 3], b: [f64; 3]) -> [f64; 3] {
-    [
-        a[1] * b[2] - a[2] * b[1],
-        a[2] * b[0] - a[0] * b[2],
-        a[0] * b[1] - a[1] * b[0],
-    ]
-}
-
 fn scene_element<'a>(scene: &'a Value, id: &str) -> Option<&'a serde_json::Map<String, Value>> {
     scene
         .get("elements")
@@ -2415,97 +2390,6 @@ fn direction(object: &serde_json::Map<String, Value>, path: &str) -> Result<[f64
     Ok(axis)
 }
 
-fn polygon_edges(polygon: &[[f64; 2]]) -> impl Iterator<Item = ([f64; 2], [f64; 2])> + '_ {
-    polygon
-        .iter()
-        .copied()
-        .zip(polygon.iter().copied().cycle().skip(1))
-        .take(polygon.len())
-}
-
-fn point_in_polygon(point: [f64; 2], polygon: &[[f64; 2]]) -> bool {
-    let mut inside = false;
-    for (a, b) in polygon_edges(polygon) {
-        if (a[1] > point[1]) != (b[1] > point[1])
-            && point[0] < (b[0] - a[0]) * (point[1] - a[1]) / (b[1] - a[1]) + a[0]
-        {
-            inside = !inside;
-        }
-    }
-    inside
-}
-
-fn point_segment_distance(point: [f64; 2], a: [f64; 2], b: [f64; 2]) -> f64 {
-    let delta = [b[0] - a[0], b[1] - a[1]];
-    let length_sq = delta[0] * delta[0] + delta[1] * delta[1];
-    if length_sq <= 1.0e-18 {
-        return ((point[0] - a[0]).powi(2) + (point[1] - a[1]).powi(2)).sqrt();
-    }
-    let t =
-        (((point[0] - a[0]) * delta[0] + (point[1] - a[1]) * delta[1]) / length_sq).clamp(0.0, 1.0);
-    let nearest = [a[0] + t * delta[0], a[1] + t * delta[1]];
-    ((point[0] - nearest[0]).powi(2) + (point[1] - nearest[1]).powi(2)).sqrt()
-}
-
-fn cross2(a: [f64; 2], b: [f64; 2], c: [f64; 2]) -> f64 {
-    (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
-}
-
-fn segments_intersect(a: [f64; 2], b: [f64; 2], c: [f64; 2], d: [f64; 2]) -> bool {
-    const EPS: f64 = 1.0e-9;
-    let on_segment = |p: [f64; 2], q: [f64; 2], r: [f64; 2]| {
-        cross2(p, q, r).abs() <= EPS
-            && r[0] >= p[0].min(q[0]) - EPS
-            && r[0] <= p[0].max(q[0]) + EPS
-            && r[1] >= p[1].min(q[1]) - EPS
-            && r[1] <= p[1].max(q[1]) + EPS
-    };
-    let (ab_c, ab_d, cd_a, cd_b) = (
-        cross2(a, b, c),
-        cross2(a, b, d),
-        cross2(c, d, a),
-        cross2(c, d, b),
-    );
-    (ab_c.signum() != ab_d.signum() && cd_a.signum() != cd_b.signum())
-        || on_segment(a, b, c)
-        || on_segment(a, b, d)
-        || on_segment(c, d, a)
-        || on_segment(c, d, b)
-}
-
-fn polygon_is_simple_nonzero(polygon: &[[f64; 2]]) -> bool {
-    const EPS: f64 = 1.0e-9;
-    if polygon.len() < 3
-        || polygon_edges(polygon)
-            .any(|(a, b)| ((a[0] - b[0]).powi(2) + (a[1] - b[1]).powi(2)).sqrt() <= EPS)
-    {
-        return false;
-    }
-    let twice_area = polygon_edges(polygon)
-        .map(|(a, b)| a[0] * b[1] - b[0] * a[1])
-        .sum::<f64>();
-    if twice_area.abs() <= EPS {
-        return false;
-    }
-    let n = polygon.len();
-    for i in 0..n {
-        for j in (i + 1)..n {
-            if j == (i + 1) % n || (j + 1) % n == i {
-                continue;
-            }
-            if segments_intersect(
-                polygon[i],
-                polygon[(i + 1) % n],
-                polygon[j],
-                polygon[(j + 1) % n],
-            ) {
-                return false;
-            }
-        }
-    }
-    true
-}
-
 fn validate_plate(
     object: &serde_json::Map<String, Value>,
     path: &str,
@@ -2522,27 +2406,21 @@ fn validate_plate(
     let u = vector::<3>(frame.get("uDir"), &format!("{path}.frame.uDir"))?;
     let v = vector::<3>(frame.get("vDir"), &format!("{path}.frame.vDir"))?;
     let n = vector::<3>(frame.get("normal"), &format!("{path}.frame.normal"))?;
-    let length = |a: [f64; 3]| a.iter().map(|x| x * x).sum::<f64>().sqrt();
-    let (ul, vl, nl) = (length(u), length(v), length(n));
+    let (ul, vl, nl) = (length3(u), length3(v), length3(n));
     if ul <= 1.0e-9 || vl <= 1.0e-9 || nl <= 1.0e-9 {
         return Err(scene_error(
             &format!("{path}.frame"),
             "directions must be nonzero",
         ));
     }
-    let dot = |a: [f64; 3], b: [f64; 3]| (0..3).map(|i| a[i] * b[i]).sum::<f64>();
-    if (dot(u, v) / (ul * vl)).abs() > 1.0e-6 {
+    if (dot3(u, v) / (ul * vl)).abs() > 1.0e-6 {
         return Err(scene_error(
             &format!("{path}.frame"),
             "uDir and vDir must be orthogonal",
         ));
     }
-    let cross = [
-        u[1] * v[2] - u[2] * v[1],
-        u[2] * v[0] - u[0] * v[2],
-        u[0] * v[1] - u[1] * v[0],
-    ];
-    if dot(cross, n) / (length(cross) * nl) < 1.0 - 1.0e-6 {
+    let cross = cross3(u, v);
+    if dot3(cross, n) / (length3(cross) * nl) < 1.0 - 1.0e-6 {
         return Err(scene_error(
             &format!("{path}.frame.normal"),
             "must align with the right-handed uDir cross vDir normal",
@@ -2837,14 +2715,10 @@ fn classify_operations(
                 let (Some(u), Some(v), Some(normal)) = (u, v, normal) else {
                     return Err(scene_error(
                         &format!("{path}.frame"),
-                        "directions must be nonzero",
+                        "directions must be nonzero and finite",
                     ));
                 };
-                let cross = [
-                    u[1] * v[2] - u[2] * v[1],
-                    u[2] * v[0] - u[0] * v[2],
-                    u[0] * v[1] - u[1] * v[0],
-                ];
+                let cross = cross3(u, v);
                 // A zero-length cross product means `uDir` and `vDir` are
                 // parallel, which is precisely the "not orthonormal" case
                 // below — report it rather than panicking on the normalize.
@@ -4291,18 +4165,25 @@ mod tests {
     ///
     /// `finite_number` accepts `1e200`, so `vector::<3>` hands it through. But
     /// `normalized3` divides by `length3`, and `1e200 * 1e200` overflows to
-    /// `inf` — so the "unit" vector is `[0,0,0]`, its cross product with `vDir`
-    /// is `[0,0,0]`, and normalizing *that* yields `None`. The old code called
-    /// `.unwrap()` on it and panicked; a degenerate frame is invalid input, so
-    /// it must come back as a validation error the caller can report.
+    /// `inf`. A degenerate frame is invalid input, so it must come back as a
+    /// validation error the caller can report rather than a panic.
+    ///
+    /// The *message* changed when the two copies of `normalized3` were unified
+    /// into `render::geom`: this one lacked the `is_finite` check its `ifc` twin
+    /// had, so it answered `Some([0,0,0])` — a "unit" vector of length zero —
+    /// and the frame only failed later, on orthonormality, by luck. The shared
+    /// version rejects the non-finite length up front, which is both earlier and
+    /// truthful about what is wrong with the input.
     #[test]
     fn degenerate_bolt_frame_is_rejected_not_panicked() {
         let mut scene = viewer_double_shear_scene();
         scene["operations"][0]["frame"]["uDir"] = json!([1e200, 0, 0]);
         let error = viewer_3d_render(&json!({ "scene": scene }), true).unwrap_err();
         assert!(
-            error.to_string().contains("right-handed and orthonormal"),
-            "expected an orthonormality error, got: {error}"
+            error
+                .to_string()
+                .contains("directions must be nonzero and finite"),
+            "expected a degenerate-frame validation error, got: {error}"
         );
     }
 

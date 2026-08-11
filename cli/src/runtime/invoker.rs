@@ -15,6 +15,7 @@ use tokio::sync::{mpsc, oneshot};
 
 use crate::error::AwareError;
 use crate::manifest::App;
+use crate::which::find_on_path;
 
 /// Map key: (agent-name, command-name). Only [`MockInvoker`] keys by this.
 #[cfg(test)]
@@ -1552,35 +1553,6 @@ fn validate_with(validator: Option<&jsonschema::Validator>, value: &Value) -> Re
     Err(msg)
 }
 
-/// Resolve `name` to a directly-spawnable executable on PATH. On Windows this appends
-/// the PATHEXT variants `Command::new` can actually launch (`.exe`/`.cmd`/`.bat`/`.com`)
-/// — npm ships `codex` only as `.cmd`/`.ps1` shims, and the bare or `.ps1` forms are not
-/// spawnable by CreateProcess. On Unix the bare name resolves.
-fn find_on_path(name: &str) -> Option<PathBuf> {
-    let path = std::env::var_os("PATH")?;
-    let dirs: Vec<PathBuf> = std::env::split_paths(&path).collect();
-    // If the caller already supplied an extension (e.g. "codex.cmd"), don't append a
-    // second one — look the name up verbatim.
-    let exts: &[&str] = if cfg!(windows) && std::path::Path::new(name).extension().is_none() {
-        &[".exe", ".cmd", ".bat", ".com"]
-    } else {
-        &[""]
-    };
-    find_in_dirs(name, &dirs, exts)
-}
-
-fn find_in_dirs(name: &str, dirs: &[PathBuf], exts: &[&str]) -> Option<PathBuf> {
-    for dir in dirs {
-        for ext in exts {
-            let cand = dir.join(format!("{name}{ext}"));
-            if cand.is_file() {
-                return Some(cand);
-            }
-        }
-    }
-    None
-}
-
 /// A unique temp path (pid + atomic seq) so concurrent extractions never collide.
 fn vision_temp_path(ext: &str) -> PathBuf {
     use std::sync::atomic::{AtomicU64, Ordering};
@@ -2075,21 +2047,6 @@ mod vision_provider_tests {
     fn unknown_provider_is_a_clear_error() {
         let c = json!({ "provider": "gpt-4o" });
         assert!(resolve_vision_provider_from(Some(&c), &p(), |_| true).is_err());
-    }
-
-    #[test]
-    fn find_in_dirs_resolves_by_extension_and_misses_cleanly() {
-        let tmp = tempfile::tempdir().unwrap();
-        let exts: &[&str] = if cfg!(windows) {
-            &[".exe", ".cmd", ".bat", ".com"]
-        } else {
-            &[""]
-        };
-        let fname = if cfg!(windows) { "toolx.cmd" } else { "toolx" };
-        std::fs::write(tmp.path().join(fname), b"shim").unwrap();
-        let dirs = vec![tmp.path().to_path_buf()];
-        assert!(find_in_dirs("toolx", &dirs, exts).is_some());
-        assert!(find_in_dirs("absent", &dirs, exts).is_none());
     }
 
     #[test]

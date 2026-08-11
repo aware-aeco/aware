@@ -43,6 +43,7 @@
 //! which is what `CliInvoker` already uses for a transport binary that will not spawn.
 
 use crate::error::AwareError;
+use crate::which::find_on_path;
 use serde_json::{Map, Value};
 use std::path::{Path, PathBuf};
 use std::time::Duration;
@@ -131,25 +132,6 @@ fn timeout_for(command: &str, args: &Value) -> Result<Duration, AwareError> {
 }
 
 // ─────────────────────────────── binary discovery ───────────────────────────────
-
-/// Look a bare command name up on `PATH` (appending the Windows executable extensions).
-fn find_on_path(name: &str) -> Option<PathBuf> {
-    let path = std::env::var_os("PATH")?;
-    let exts: &[&str] = if cfg!(windows) {
-        &[".exe", ".cmd", ".bat"]
-    } else {
-        &[""]
-    };
-    for dir in std::env::split_paths(&path) {
-        for ext in exts {
-            let candidate = dir.join(format!("{name}{ext}"));
-            if candidate.is_file() {
-                return Some(candidate);
-            }
-        }
-    }
-    None
-}
 
 /// The `Blender Foundation` parents to sweep on Windows. Read from the environment (rather than
 /// hard-coded) so a non-`C:` or localized install root still resolves.

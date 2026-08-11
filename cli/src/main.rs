@@ -61,6 +61,7 @@ mod skill_builder;
 mod test_env;
 mod text;
 mod validate;
+mod which;
 
 use clap::{Parser, Subcommand};
 
