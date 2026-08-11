@@ -105,6 +105,19 @@ pub enum AppCommand {
         #[arg(long)]
         run_id: Option<String>,
     },
+    /// Copy a run-owned large artifact to an explicit destination. (v0.121)
+    Artifact {
+        app: String,
+        /// Opaque artifact id from a `$aware-artifact` node output.
+        id: String,
+        #[arg(long)]
+        instance: Option<String>,
+        #[arg(long)]
+        run_id: Option<String>,
+        /// Destination file. Required so large payloads never accidentally enter a terminal.
+        #[arg(long)]
+        output: std::path::PathBuf,
+    },
     /// Freeze a node: pin its last run output into the source as a `frozen:` block, so Run skips
     /// it (emits the pinned value, never re-runs the agent) until unfrozen. Recompiles the lock.
     Freeze {
@@ -161,6 +174,23 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
                 tail,
                 replay,
                 run_id.as_deref(),
+            )
+            .await
+        }
+        AppCommand::Artifact {
+            app,
+            id,
+            instance,
+            run_id,
+            output,
+        } => {
+            artifact(
+                ctx,
+                &app,
+                &id,
+                instance.as_deref(),
+                run_id.as_deref(),
+                &output,
             )
             .await
         }
@@ -329,7 +359,19 @@ async fn run(
 
         let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
         let provenance = ProvenanceWriter::open(&log_path).await?;
-        let invoker = std::sync::Arc::new(DispatchInvoker::new(&ctx.paths, dry_run, simulate));
+        let artifact_dir = crate::runtime::provenance::artifact_dir_for(
+            &ctx.paths.logs_dir(),
+            app_id,
+            &instance,
+            &run_id,
+        );
+        tokio::fs::create_dir_all(&artifact_dir).await?;
+        let invoker = std::sync::Arc::new(DispatchInvoker::new(
+            &ctx.paths,
+            dry_run,
+            simulate,
+            Some(artifact_dir),
+        ));
 
         let mut rt_ctx = RuntimeContext {
             inputs: serde_json::Value::Object(inputs.clone()),
@@ -403,7 +445,19 @@ async fn run(
     // One-shot path.
     let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
     let provenance = ProvenanceWriter::open(&log_path).await?;
-    let invoker = std::sync::Arc::new(DispatchInvoker::new(&ctx.paths, dry_run, simulate));
+    let artifact_dir = crate::runtime::provenance::artifact_dir_for(
+        &ctx.paths.logs_dir(),
+        app_id,
+        &instance,
+        &run_id,
+    );
+    tokio::fs::create_dir_all(&artifact_dir).await?;
+    let invoker = std::sync::Arc::new(DispatchInvoker::new(
+        &ctx.paths,
+        dry_run,
+        simulate,
+        Some(artifact_dir),
+    ));
 
     let mut rt_ctx = RuntimeContext {
         inputs: serde_json::Value::Object(inputs),
@@ -769,6 +823,39 @@ async fn logs(
         file = reader.into_inner();
         tokio::time::sleep(std::time::Duration::from_millis(200)).await;
     }
+}
+
+async fn artifact(
+    ctx: &Context,
+    app_id: &str,
+    id: &str,
+    instance: Option<&str>,
+    run_id_override: Option<&str>,
+    output: &std::path::Path,
+) -> Result<(), AwareError> {
+    let instance = instance.unwrap_or("default");
+    let run_id = match run_id_override {
+        Some(id) => id.to_string(),
+        None => {
+            crate::runtime::provenance::most_recent_run_id(&ctx.paths.logs_dir(), app_id, instance)
+                .ok_or_else(|| AwareError::NotFound(format!("no runs for {app_id}/{instance}")))?
+        }
+    };
+    let source = crate::runtime::provenance::artifact_path_for(
+        &ctx.paths.logs_dir(),
+        app_id,
+        instance,
+        &run_id,
+        id,
+    )?;
+    if !source.is_file() {
+        return Err(AwareError::NotFound(format!(
+            "artifact {id:?} for run {run_id} not found"
+        )));
+    }
+    tokio::fs::copy(&source, output).await?;
+    println!("✓ copied artifact {id} → {}", output.display());
+    Ok(())
 }
 
 fn stop(ctx: &Context, app_id: &str, instance: Option<&str>) -> Result<(), AwareError> {

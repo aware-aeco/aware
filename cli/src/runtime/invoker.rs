@@ -276,6 +276,9 @@ fn failure_detail(stdout: &str, stderr: &str) -> String {
 /// talk JSON over stdin/stdout.
 pub struct CliInvoker {
     pub agents_dir: std::path::PathBuf,
+    /// Run-owned destination for an opt-in large artifact. Kept out of agent
+    /// stdin so it cannot collide with an agent's public command schema.
+    pub artifact_dir: Option<PathBuf>,
 }
 
 impl CliInvoker {
@@ -329,41 +332,44 @@ impl CliInvoker {
             );
         }
 
-        let child = tokio::process::Command::new(&program)
+        let mut process = tokio::process::Command::new(&program);
+        process
             .arg(command)
             .arg("--json-stdin")
             .stdin(std::process::Stdio::piped())
             .stdout(std::process::Stdio::piped())
-            .stderr(std::process::Stdio::piped())
-            .spawn()
-            .map_err(|e| {
-                // When the binary is missing, surface an actionable hint — but only
-                // point at `aware sidecar install` for binaries that command actually
-                // knows, or the hint is a dead end (#276).
-                let hint = if e.kind() == std::io::ErrorKind::NotFound {
-                    match crate::commands::sidecar::bridge_id_for_binary(&binary) {
-                        Some(id) => format!(
-                            "\n  hint: run `aware sidecar install {id}` to download the bridge binary"
-                        ),
-                        // No downloadable bridge for this agent — steer by how the
-                        // manifest declared the executable: PATH advice is wrong for
-                        // path-valued binaries (Command::new keeps using the declared
-                        // path), and `aware build agent` never emits a binary.
-                        None if binary.contains('/') || binary.contains('\\') => format!(
-                            "\n  hint: no downloadable bridge for `{binary}`; restore the \
+            .stderr(std::process::Stdio::piped());
+        if let Some(dir) = &self.artifact_dir {
+            process.env("AWARE_ARTIFACT_DIR", dir);
+        }
+        let child = process.spawn().map_err(|e| {
+            // When the binary is missing, surface an actionable hint — but only
+            // point at `aware sidecar install` for binaries that command actually
+            // knows, or the hint is a dead end (#276).
+            let hint = if e.kind() == std::io::ErrorKind::NotFound {
+                match crate::commands::sidecar::bridge_id_for_binary(&binary) {
+                    Some(id) => format!(
+                        "\n  hint: run `aware sidecar install {id}` to download the bridge binary"
+                    ),
+                    // No downloadable bridge for this agent — steer by how the
+                    // manifest declared the executable: PATH advice is wrong for
+                    // path-valued binaries (Command::new keeps using the declared
+                    // path), and `aware build agent` never emits a binary.
+                    None if binary.contains('/') || binary.contains('\\') => format!(
+                        "\n  hint: no downloadable bridge for `{binary}`; restore the \
                              executable at that path (or fix the agent manifest's \
                              transport.cli.binary)"
-                        ),
-                        None => format!(
-                            "\n  hint: no downloadable bridge for `{binary}`; the agent's \
+                    ),
+                    None => format!(
+                        "\n  hint: no downloadable bridge for `{binary}`; the agent's \
                              `transport.cli.binary` executable must be provided on PATH"
-                        ),
-                    }
-                } else {
-                    String::new()
-                };
-                AwareError::Network(format!("spawn {binary}: {e}{hint}"))
-            })?;
+                    ),
+                }
+            } else {
+                String::new()
+            };
+            AwareError::Network(format!("spawn {binary}: {e}{hint}"))
+        })?;
         Ok((child, binary))
     }
 }
@@ -2124,6 +2130,7 @@ mod vision_provider_tests {
 /// web-API (rest), and app-backed agents.
 pub struct DispatchInvoker {
     pub agents_dir: PathBuf,
+    pub artifact_dir: Option<PathBuf>,
     /// Set on the top-level invoker to enable app-backed-agent dispatch. `None`
     /// on a nested invoker — that disables app dispatch, enforcing the v0 rule
     /// that an exposed app cannot itself compose another exposes-as-agent app
@@ -2152,9 +2159,15 @@ pub struct AppTransportCtx {
 impl DispatchInvoker {
     /// Construct the top-level dispatch invoker, wiring app-backed-agent support
     /// from the given paths + run posture.
-    pub fn new(paths: &crate::paths::Paths, dry_run: bool, simulate: bool) -> Self {
+    pub fn new(
+        paths: &crate::paths::Paths,
+        dry_run: bool,
+        simulate: bool,
+        artifact_dir: Option<PathBuf>,
+    ) -> Self {
         Self {
             agents_dir: paths.agents_dir(),
+            artifact_dir,
             app_ctx: Some(AppTransportCtx {
                 apps_dir: paths.apps_dir(),
                 logs_dir: paths.logs_dir(),
@@ -2262,6 +2275,7 @@ impl DispatchInvoker {
     fn nested_leaf(&self) -> Arc<dyn AgentInvoker> {
         Arc::new(DispatchInvoker {
             agents_dir: self.agents_dir.clone(),
+            artifact_dir: self.artifact_dir.clone(),
             app_ctx: None,
             // Carry the preview posture into the nested run so its built-ins still
             // suppress side effects under --dry-run / --simulate (#201 Codex).
@@ -2454,9 +2468,12 @@ impl AgentInvoker for DispatchInvoker {
         let dir = self.agents_dir.clone();
         match self.transport_kind(agent)? {
             TransportKind::Cli => {
-                CliInvoker { agents_dir: dir }
-                    .invoke_single(agent, command, args)
-                    .await
+                CliInvoker {
+                    agents_dir: dir,
+                    artifact_dir: self.artifact_dir.clone(),
+                }
+                .invoke_single(agent, command, args)
+                .await
             }
             TransportKind::Rest => {
                 RestInvoker { agents_dir: dir }
@@ -2489,9 +2506,12 @@ impl AgentInvoker for DispatchInvoker {
         let dir = self.agents_dir.clone();
         match self.transport_kind(agent)? {
             TransportKind::Cli => {
-                CliInvoker { agents_dir: dir }
-                    .invoke_stream(agent, command, args)
-                    .await
+                CliInvoker {
+                    agents_dir: dir,
+                    artifact_dir: self.artifact_dir.clone(),
+                }
+                .invoke_stream(agent, command, args)
+                .await
             }
             TransportKind::Rest => {
                 RestInvoker { agents_dir: dir }
@@ -2591,6 +2611,7 @@ commands:
 
         let inv = CliInvoker {
             agents_dir: tmp.path().to_path_buf(),
+            artifact_dir: None,
         };
         let err = inv
             .invoke_single("phantom", "do", serde_json::json!({}))
@@ -2624,6 +2645,7 @@ commands:
 
         let inv = CliInvoker {
             agents_dir: tmp.path().to_path_buf(),
+            artifact_dir: None,
         };
         let err = inv
             .invoke_single("no-transport", "do", serde_json::json!({}))
@@ -2663,6 +2685,7 @@ commands:
 
         let inv = CliInvoker {
             agents_dir: tmp.path().to_path_buf(),
+            artifact_dir: None,
         };
         let err = inv
             .invoke_stream("phantom-watcher", "watch", serde_json::json!({}))
@@ -2694,6 +2717,7 @@ commands:
 
         let inv = CliInvoker {
             agents_dir: tmp.path().to_path_buf(),
+            artifact_dir: None,
         };
         let err = inv
             .invoke_stream("no-cli", "watch", serde_json::json!({}))
@@ -3094,6 +3118,7 @@ commands:
         let tmp = http_agent_dir();
         let inv = DispatchInvoker {
             agents_dir: tmp.path().to_path_buf(),
+            artifact_dir: None,
             app_ctx: None,
             preview: false,
         };
@@ -3924,6 +3949,7 @@ mod builtin_invoker_tests {
         let out = tmp.path().join("r.html");
         let inv = DispatchInvoker {
             agents_dir: agents,
+            artifact_dir: None,
             app_ctx: None, // nested-invoker shape
             preview: true,
         };

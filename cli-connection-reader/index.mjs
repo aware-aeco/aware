@@ -21,7 +21,7 @@
 //             parametric `recipe:{kind,params}` so the consumer can import it as an EDITABLE recipe rather
 //             than opaque mesh. `parts` is always returned as the fallback; `recipe` only when confident.
 
-import { readFileSync } from 'node:fs';
+import { closeSync, mkdirSync, openSync, readFileSync, renameSync, statSync, writeSync } from 'node:fs';
 import { dirname, basename, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
@@ -1322,7 +1322,7 @@ async function main() {
     closeApi(handle);
     process.stdout.write = realWrite; // restore before emitting the pure-JSON result
   }
-  if (!streamed) realWrite(JSON.stringify(result));
+  if (!streamed || result?.['$aware-artifact']) realWrite(JSON.stringify(result));
 }
 
 /**
@@ -1349,7 +1349,20 @@ async function main() {
  * handed here — the one path allowed to put bytes on the protocol's stdout.
  */
 function readModelStreamed(api, modelID, args, write) {
+  const artifactDir = process.env.AWARE_ARTIFACT_DIR;
+  const artifactId = 'read-model.json';
+  let fd = null;
+  let artifactPath = null;
+  let tempPath = null;
+  if (artifactDir) {
+    mkdirSync(artifactDir, { recursive: true });
+    artifactPath = `${artifactDir}/${artifactId}`;
+    tempPath = `${artifactPath}.${process.pid}.tmp`;
+    fd = openSync(tempPath, 'w');
+    write = (chunk) => writeSync(fd, chunk);
+  }
   let first = true;
+  try {
   write('{"frame":' + JSON.stringify(FILE_Z_UP) + ',"objects":[');
   const tail = readModel(api, modelID, args['max-vertices'], {
     storeys: args.storeys,
@@ -1370,7 +1383,21 @@ function readModelStreamed(api, modelID, args, write) {
     write(',' + JSON.stringify(key) + ':' + JSON.stringify(value));
   }
   write('}');
-  return tail;
+  if (!fd) return tail;
+  closeSync(fd);
+  fd = null;
+  renameSync(tempPath, artifactPath);
+  return {
+    '$aware-artifact': {
+      id: artifactId,
+      mediaType: 'application/json',
+      bytes: statSync(artifactPath).size,
+      items: tail.count,
+    },
+  };
+  } finally {
+    if (fd != null) closeSync(fd);
+  }
 }
 
 // Only run as a CLI when this file IS the entry point. Without this guard, importing the module from a

@@ -193,6 +193,11 @@ commands:
       every object's properties out of the one read it already pays for — a call per click would mean
       a second sidecar download and an agent round trip on every selection.
 
+      When invoked by `aware app run`, a large result is written incrementally as a run-owned JSON
+      artifact and the node output is an `$aware-artifact` descriptor (`id`, `mediaType`, `bytes`,
+      `items`) rather than the geometry itself. Resolve that opaque id with `aware app artifact`;
+      never read it as a path. Direct bridge callers retain the normal JSON response.
+
       `max-vertices` is an in-process circuit breaker: the budget decrements as meshes stream and the
       command aborts mid-walk. It is NOT a preflight gate — an exact vertex count cannot be known
       before tessellating, so a cap applied after this returns would fire only once the payload that

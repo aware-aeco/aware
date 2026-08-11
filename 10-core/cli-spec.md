@@ -39,7 +39,8 @@ aware
 │   ├── stop <app> [--instance <id>]    stop a running app
 │   ├── validate <path>                 schema + cycle + cap checks
 │   ├── export <app> <output-path>      copy the app file out
-│   └── logs <app> [--instance <id>] [--tail]   read execution traces
+│   ├── logs <app> [--instance <id>] [--tail]   read execution traces
+│   └── artifact <app> <id> --output <path>     copy a run-owned large artifact
 │
 ├── connect <integration>               provision OAuth credentials (default: browser-paste)
 │   ├── --as <alias>                    named credential for multi-account
@@ -83,6 +84,20 @@ aware
 │
 └── doctor                              health check — config, creds, hosts, registry
 ```
+
+### Large command outputs
+
+An agent command may materialize a large result as a run-owned artifact rather than embed it in a
+`node-output` JSONL event. Its ordinary node output is then a small descriptor:
+
+```json
+{ "$aware-artifact": { "id": "read-model.json", "mediaType": "application/json", "bytes": 305623149, "items": 2993 } }
+```
+
+`id` is opaque and scoped to the app, instance, and run. A local consumer resolves it with
+`aware app artifact <app> <id> --run-id <run> --output <path>`; it must never treat an artifact id
+as a filesystem path. This keeps JSONL replay bounded while a producer writes data incrementally and
+lets a renderer load or batch-read the resulting file without duplicating the payload in the trace.
 
 ### What "latest" means
 

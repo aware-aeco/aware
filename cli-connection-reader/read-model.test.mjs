@@ -7,8 +7,9 @@
 // design doc §8 for what each file proves.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 import * as WebIFC from 'web-ifc';
 import { openApi, closeApi, readModel, probeModel, toWebIfcYUp, mergeInherited, propertySetsByElement, fileAuthorsColour, pushColourRun } from './index.mjs';
 
@@ -798,11 +799,33 @@ test('the refusal names a small limit in real units, not "0 MB"', async (t) => {
 import { execFileSync } from 'node:child_process';
 
 /** Run the bridge as the runtime does: argv command, JSON config on stdin, JSON on stdout. */
-function cli(command, config) {
+function cli(command, config, env = {}) {
   return execFileSync(process.execPath, ['index.mjs', command], {
     input: JSON.stringify(config), encoding: 'utf8', maxBuffer: 1 << 30, cwd: import.meta.dirname,
+    env: { ...process.env, ...env },
   });
 }
+
+test('AWARE artifact mode writes geometry outside stdout (#402)', () => {
+  const artifactDir = mkdtempSync(join(tmpdir(), 'aware-ifc-artifact-'));
+  try {
+    const raw = cli('read-model', {
+      'ifc-path': join('test-fixtures', 'baseplate-bp1.ifc'),
+    }, { AWARE_ARTIFACT_DIR: artifactDir });
+    const descriptor = JSON.parse(raw);
+    assert.deepEqual(Object.keys(descriptor), ['$aware-artifact']);
+    assert.equal(descriptor['$aware-artifact'].id, 'read-model.json');
+    assert.equal(descriptor['$aware-artifact'].mediaType, 'application/json');
+    assert.ok(descriptor['$aware-artifact'].bytes > 1024);
+
+    const artifact = JSON.parse(readFileSync(join(artifactDir, 'read-model.json'), 'utf8'));
+    assert.equal(artifact.frame, 'z-up');
+    assert.ok(artifact.count > 0);
+    assert.equal(artifact.count, artifact.objects.length);
+  } finally {
+    rmSync(artifactDir, { recursive: true, force: true });
+  }
+});
 
 test('the streamed response is valid JSON, and says what the direct call says', async (t) => {
   if (!sample('example-steel-framing.ifc')) return t.skip(skipReason('example-steel-framing.ifc'));
