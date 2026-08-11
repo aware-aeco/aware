@@ -4,7 +4,6 @@ use std::collections::BTreeMap;
 use std::path::Path;
 
 use crate::error::AwareError;
-use crate::fs_tree::copy_dir_recursive;
 use crate::manifest::App;
 use crate::manifest::loader::{load_agent, load_app};
 use crate::paths::Paths;
@@ -178,6 +177,20 @@ pub(crate) fn is_app_backed_agent(agent_dir: &Path, app_id: &str) -> bool {
         .ok()
         .and_then(|a| a.transport.app)
         .is_some_and(|t| t.backed_by == app_id)
+}
+
+pub(crate) fn copy_dir_recursive(src: &Path, dst: &Path) -> std::io::Result<()> {
+    std::fs::create_dir_all(dst)?;
+    for entry in std::fs::read_dir(src)?.flatten() {
+        let from = entry.path();
+        let to = dst.join(entry.file_name());
+        if entry.file_type()?.is_dir() {
+            copy_dir_recursive(&from, &to)?;
+        } else {
+            std::fs::copy(&from, &to)?;
+        }
+    }
+    Ok(())
 }
 
 #[cfg(test)]

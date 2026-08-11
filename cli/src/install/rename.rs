@@ -26,8 +26,9 @@
 use std::path::{Path, PathBuf};
 
 use crate::error::AwareError;
-use crate::fs_tree::copy_dir_recursive;
-use crate::install::local::{is_app_backed_agent, write_app_lockfile, write_synthesized_agent};
+use crate::install::local::{
+    copy_dir_recursive, is_app_backed_agent, write_app_lockfile, write_synthesized_agent,
+};
 use crate::manifest::loader::{find_app_manifest, is_safe_segment, load_app};
 use crate::paths::Paths;
 

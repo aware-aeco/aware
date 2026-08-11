@@ -45,7 +45,6 @@ mod commands;
 mod context;
 mod envelope;
 mod error;
-mod fs_tree;
 mod install;
 mod json;
 mod lockfile;
