@@ -4,6 +4,13 @@ Stateless, read-only. Tessellates every element into mesh scene objects — or o
 types or GlobalIds you ask for — in the file's own **Z-up** world frame, in canonical millimetres.
 Deterministic for a given file and filter, so the result is content-hash cacheable.
 
+## Large result transport
+
+Inside `aware app run`, geometry is streamed into a run-owned JSON artifact and the node output is a
+small `$aware-artifact` descriptor. Resolve its opaque `id` with `aware app artifact <app> <id>
+--run-id <run> --output <path>`; the trace never contains the mesh arrays. Direct bridge callers keep
+the normal JSON response for compatibility.
+
 ## Lifecycle
 `single` — one call, one response.
 

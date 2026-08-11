@@ -77,6 +77,47 @@ pub fn log_path_for(logs_dir: &Path, app: &str, instance: &str, run_id: &str) ->
     log_dir_for(logs_dir, app, instance).join(format!("{run_id}.jsonl"))
 }
 
+/// Files produced during one run live beside its JSONL trace, never inside it.
+/// The id is deliberately a filename, rather than an absolute path, so a trace
+/// can hand an opaque artifact handle to another local consumer without granting
+/// it access to arbitrary files.
+pub fn artifact_dir_for(logs_dir: &Path, app: &str, instance: &str, run_id: &str) -> PathBuf {
+    log_dir_for(logs_dir, app, instance).join(format!("{run_id}.artifacts"))
+}
+
+pub fn artifact_path_for(
+    logs_dir: &Path,
+    app: &str,
+    instance: &str,
+    run_id: &str,
+    id: &str,
+) -> Result<PathBuf, AwareError> {
+    for (label, value) in [
+        ("app", app),
+        ("instance", instance),
+        ("run id", run_id),
+        ("artifact id", id),
+    ] {
+        validate_artifact_component(value, label)?;
+    }
+    Ok(artifact_dir_for(logs_dir, app, instance, run_id).join(id))
+}
+
+/// Path components supplied to artifact retrieval are opaque selectors, never paths.
+pub fn validate_artifact_component(value: &str, label: &str) -> Result<(), AwareError> {
+    if value.is_empty()
+        || matches!(value, "." | "..")
+        || !value
+            .bytes()
+            .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'.' | b'-' | b'_'))
+    {
+        return Err(AwareError::Validation(format!(
+            "artifact {label} {value:?} must be one path-safe identifier"
+        )));
+    }
+    Ok(())
+}
+
 pub struct ProvenanceWriter {
     file: tokio::fs::File,
 }
@@ -197,5 +238,18 @@ mod tests {
         std::fs::write(dir.join("r_new.jsonl"), "").unwrap();
         let found = most_recent_run_id(tmp.path(), "app", "default").unwrap();
         assert_eq!(found, "r_new");
+    }
+
+    #[test]
+    fn artifact_paths_are_run_scoped_and_reject_traversal() {
+        let logs = Path::new("/tmp/aware/logs");
+        assert_eq!(
+            artifact_path_for(logs, "app", "default", "r1", "read-model.json").unwrap(),
+            PathBuf::from("/tmp/aware/logs/app/default/r1.artifacts/read-model.json")
+        );
+        assert!(artifact_path_for(logs, "app", "default", "r1", "../secret").is_err());
+        assert!(artifact_path_for(logs, "../app", "default", "r1", "result.json").is_err());
+        assert!(artifact_path_for(logs, "app", "../other", "r1", "result.json").is_err());
+        assert!(artifact_path_for(logs, "app", "default", "..", "result.json").is_err());
     }
 }

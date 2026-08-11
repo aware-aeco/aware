@@ -483,6 +483,116 @@ requires: []
     server.join().unwrap();
 }
 
+/// #402: a CLI agent can materialize a large response in the run-owned
+/// artifact directory. The actual `aware app run` trace must contain only the
+/// descriptor, and the CLI must retrieve the opaque id without loading the
+/// payload into the trace path.
+#[test]
+fn large_cli_output_is_an_artifact_not_a_trace_record() {
+    let tmp = tempfile::tempdir().unwrap();
+    let Some(bin) = compile_helper(
+        tmp.path(),
+        "artifact_writer",
+        r#"use std::{env, fs, io::{Read, Write}, path::Path};
+fn main() {
+    let mut stdin = String::new();
+    let _ = std::io::stdin().read_to_string(&mut stdin);
+    let dir = env::var("AWARE_ARTIFACT_DIR").expect("AWARE_ARTIFACT_DIR missing");
+    fs::create_dir_all(&dir).unwrap();
+    let path = Path::new(&dir).join("read-model.json");
+    let mut file = fs::File::create(&path).unwrap();
+    file.write_all(b"{\"objects\":[\"").unwrap();
+    file.write_all(&vec![b'x'; 512 * 1024]).unwrap();
+    file.write_all(b"\"]}").unwrap();
+    println!("{{\"$aware-artifact\":{{\"id\":\"read-model.json\",\"mediaType\":\"application/json\",\"bytes\":{},\"items\":1}}}}", fs::metadata(path).unwrap().len());
+}
+"#,
+    ) else {
+        eprintln!("[skip] rustc not found on PATH; cannot build artifact helper");
+        return;
+    };
+
+    let aware = tmp.path().join("aware");
+    let agent_dir = aware.join("agents/artifact-reader");
+    std::fs::create_dir_all(&agent_dir).unwrap();
+    let binary = bin.to_string_lossy().replace('\\', "/");
+    std::fs::write(
+        agent_dir.join("manifest.yaml"),
+        format!(
+            r#"agent: artifact-reader
+version: 0.0.1
+description: x
+stateful: false
+license: MIT
+transport:
+  cli:
+    binary: {binary}
+commands:
+  read:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: emits an artifact
+    outputs:
+      type: single
+"#
+        ),
+    )
+    .unwrap();
+    let app_dir = aware.join("apps/artifactapp");
+    std::fs::create_dir_all(&app_dir).unwrap();
+    std::fs::write(
+        app_dir.join("artifactapp.flo"),
+        r#"app: artifactapp
+version: 0.0.1
+description: x
+nodes:
+  - id: read
+    agent: artifact-reader
+    command: read
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args(["app", "run", "artifactapp"])
+        .assert()
+        .success();
+
+    let trace = find_first_jsonl(&aware.join("logs/artifactapp")).expect("no trace");
+    let trace_body = std::fs::read_to_string(&trace).unwrap();
+    assert!(
+        trace_body.contains("$aware-artifact"),
+        "trace: {trace_body}"
+    );
+    assert!(
+        trace_body.len() < 10_000,
+        "large artifact leaked into trace"
+    );
+
+    let output = tmp.path().join("retrieved.json");
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args([
+            "app",
+            "artifact",
+            "artifactapp",
+            "read-model.json",
+            "--output",
+        ])
+        .arg(&output)
+        .assert()
+        .success();
+    let copied = std::fs::read_to_string(&output).unwrap();
+    assert!(copied.len() > 512 * 1024, "artifact was not copied in full");
+    assert!(serde_json::from_str::<serde_json::Value>(&copied).is_ok());
+}
+
 fn copy_dir(src: &std::path::Path, dst: &std::path::Path) -> std::io::Result<()> {
     std::fs::create_dir_all(dst)?;
     for entry in std::fs::read_dir(src)?.flatten() {
