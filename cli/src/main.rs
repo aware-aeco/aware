@@ -171,8 +171,7 @@ enum Command {
         action: commands::receipt_cli::ReceiptCommand,
     },
 
-    /// Download and manage host-execution bridge binaries
-    /// (tekla, rhino, sketchup, revit).
+    /// Download and manage AWARE runtime sidecars.
     Sidecar {
         #[command(subcommand)]
         action: commands::sidecar::SidecarCommand,
