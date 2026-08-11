@@ -814,11 +814,11 @@ test('AWARE artifact mode writes geometry outside stdout (#402)', () => {
     }, { AWARE_ARTIFACT_DIR: artifactDir });
     const descriptor = JSON.parse(raw);
     assert.deepEqual(Object.keys(descriptor), ['$aware-artifact']);
-    assert.equal(descriptor['$aware-artifact'].id, 'read-model.json');
+    assert.match(descriptor['$aware-artifact'].id, /^read-model-[0-9a-f-]{36}\.json$/);
     assert.equal(descriptor['$aware-artifact'].mediaType, 'application/json');
     assert.ok(descriptor['$aware-artifact'].bytes > 1024);
 
-    const artifact = JSON.parse(readFileSync(join(artifactDir, 'read-model.json'), 'utf8'));
+    const artifact = JSON.parse(readFileSync(join(artifactDir, descriptor['$aware-artifact'].id), 'utf8'));
     assert.equal(artifact.frame, 'z-up');
     assert.ok(artifact.count > 0);
     assert.equal(artifact.count, artifact.objects.length);

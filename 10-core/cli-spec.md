@@ -91,7 +91,7 @@ An agent command may materialize a large result as a run-owned artifact rather t
 `node-output` JSONL event. Its ordinary node output is then a small descriptor:
 
 ```json
-{ "$aware-artifact": { "id": "read-model.json", "mediaType": "application/json", "bytes": 305623149, "items": 2993 } }
+{ "$aware-artifact": { "id": "read-model-<uuid>.json", "mediaType": "application/json", "bytes": 305623149, "items": 2993 } }
 ```
 
 `id` is opaque and scoped to the app, instance, and run. A local consumer resolves it with

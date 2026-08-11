@@ -23,6 +23,7 @@
 
 import { closeSync, mkdirSync, openSync, readFileSync, renameSync, statSync, writeSync } from 'node:fs';
 import { dirname, basename, sep } from 'node:path';
+import { randomUUID } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
 import { unzipSync } from 'fflate'; // tiny pure-JS unzip for .ifczip inputs
@@ -1350,7 +1351,9 @@ async function main() {
  */
 function readModelStreamed(api, modelID, args, write) {
   const artifactDir = process.env.AWARE_ARTIFACT_DIR;
-  const artifactId = 'read-model.json';
+  // One app run can invoke this bridge more than once. The descriptor id must therefore be unique
+  // within the run-owned directory; otherwise a later reader result overwrites an earlier one.
+  const artifactId = `read-model-${randomUUID()}.json`;
   let fd = null;
   let artifactPath = null;
   let tempPath = null;
