@@ -29,6 +29,7 @@ import { createRequire } from 'node:module';
 import { unzipSync } from 'fflate'; // tiny pure-JS unzip for .ifczip inputs
 import * as WebIFC from 'web-ifc'; // package export resolves to the node build (auto-locates its .wasm)
 import { recognizeBasePlate, recognizeShearPlate } from './recognize.mjs'; // fit a parametric recipe from the tessellated parts
+import { emitProgress, progressEnabled } from './progress.mjs'; // tell the runtime what a long read is doing, while it does it
 
 // web-ifc returns geometry in metres (SI base unit); AWARE scenes are canonical millimetres.
 const M_TO_MM = 1000;
@@ -1300,6 +1301,9 @@ async function main() {
   const realWrite = process.stdout.write.bind(process.stdout);
   process.stdout.write = process.stderr.write.bind(process.stderr);
 
+  // Opening a 66 MiB IFC is seconds of work before the first triangle exists, so it is its own
+  // phase rather than dead air a consumer cannot distinguish from a hung bridge (#405).
+  emitProgress({ phase: 'parse', message: `opening ${basename(ifcPath)}` });
   const handle = await openApi(ifcPath);
   const { api, modelID } = handle;
   let result;
@@ -1364,8 +1368,19 @@ function readModelStreamed(api, modelID, args, write) {
     fd = openSync(tempPath, 'w');
     write = (chunk) => writeSync(fd, chunk);
   }
+  // OPT-IN, and off by default (#405). Segments cost a second copy of the geometry on disk and buy
+  // nothing for a consumer that waits for the whole artifact anyway, so the caller that intends to
+  // render progressively is the one that asks. Absent, this command behaves exactly as it did.
+  // `progressEnabled()` is part of the condition, not an optimisation: a segment nobody can be TOLD
+  // about is a second copy of the model written for no reader at all. The announcement is the
+  // delivery, so no channel means no segments.
+  const batchSize = batchSizeOf(args);
+  const segments = artifactDir && batchSize && progressEnabled()
+    ? new SegmentWriter(artifactDir, artifactId.slice(0, -'.json'.length), batchSize)
+    : null;
   let first = true;
   try {
+  emitProgress({ phase: 'tessellate', message: 'walking geometry' });
   write('{"frame":' + JSON.stringify(FILE_Z_UP) + ',"objects":[');
   const tail = readModel(api, modelID, args['max-vertices'], {
     storeys: args.storeys,
@@ -1374,11 +1389,17 @@ function readModelStreamed(api, modelID, args, write) {
     maxBytes: args['max-bytes'] ?? args.maxBytes,
     // `text` is the object already serialised by readModel — see the note there on serialising once.
     onObject: (object, text) => {
+      const serialized = text ?? JSON.stringify(object);
       if (!first) write(',');
       first = false;
-      write(text ?? JSON.stringify(object));
+      write(serialized);
+      // The SAME serialised text goes into the segment, so progressive delivery costs one extra
+      // write per object and never a second `JSON.stringify` — the duplicate serialisation the
+      // whole-model path exists to avoid.
+      if (segments) segments.add(serialized);
     },
   });
+  if (segments) segments.flush();
   write(']');
   for (const [key, value] of Object.entries(tail)) {
     // `frame` is already written and `objects` was the stream; everything else is the tail.
@@ -1386,20 +1407,113 @@ function readModelStreamed(api, modelID, args, write) {
     write(',' + JSON.stringify(key) + ':' + JSON.stringify(value));
   }
   write('}');
-  if (!fd) return tail;
+  if (!fd) {
+    emitProgress({ phase: 'complete', done: tail.count, total: tail.count });
+    return tail;
+  }
   closeSync(fd);
   fd = null;
   renameSync(tempPath, artifactPath);
-  return {
-    '$aware-artifact': {
-      id: artifactId,
-      mediaType: 'application/json',
-      bytes: statSync(artifactPath).size,
-      items: tail.count,
-    },
+  const descriptor = {
+    id: artifactId,
+    mediaType: 'application/json',
+    bytes: statSync(artifactPath).size,
+    items: tail.count,
+    ...(segments ? { segments: segments.count } : {}),
   };
+  // The completion record carries the WHOLE artifact's descriptor, so a consumer that renders from
+  // segments learns in one place that the walk is over and where the durable copy is — without
+  // having to correlate the trace's node output back to the progress stream it was following.
+  emitProgress({ phase: 'complete', done: tail.count, total: tail.count, artifact: descriptor });
+  return { '$aware-artifact': descriptor };
   } finally {
     if (fd != null) closeSync(fd);
+  }
+}
+
+/**
+ * `batch-size` in objects, or 0 for "do not segment".
+ *
+ * Anything that is not a positive whole number means off rather than throwing: this input only ever
+ * adds an optional delivery path, and refusing a read outright over a malformed hint would fail the
+ * geometry the caller actually asked for.
+ */
+function batchSizeOf(args) {
+  const raw = args['batch-size'] ?? args.batchSize;
+  const n = Number(raw);
+  return Number.isInteger(n) && n > 0 ? n : 0;
+}
+
+/**
+ * Ordered geometry segments, written into the run-owned artifact directory as the walk produces
+ * them and announced on the progress channel once each is durable (#405).
+ *
+ * WHY SEGMENTS AND NOT A STREAM OF EVENTS. The trace is the runtime's subscription channel and it
+ * must stay bounded — that is the whole point of #402 — so the geometry cannot travel through it.
+ * A segment is a normal run-owned artifact: the consumer fetches it with the same
+ * `aware app artifact` call it already uses, and the runtime never holds a mesh in memory.
+ *
+ * ANNOUNCED AFTER THE RENAME, never before. A consumer acts on the record by opening the file, so
+ * advertising a path still being written would hand it a truncated document — and the failure would
+ * look like corrupt geometry rather than a race.
+ */
+class SegmentWriter {
+  constructor(dir, stem, size) {
+    this.dir = dir;
+    this.stem = stem;
+    this.size = size;
+    this.pending = [];
+    this.count = 0;      // segments written
+    this.delivered = 0;  // objects handed over so far
+  }
+
+  add(text) {
+    this.pending.push(text);
+    if (this.pending.length >= this.size) this.write();
+  }
+
+  /** The final partial segment. A model whose object count is not a multiple of the batch size must
+   *  not silently lose its last few objects from the progressive path. */
+  flush() {
+    if (this.pending.length) this.write();
+  }
+
+  write() {
+    const seq = this.count + 1;
+    // Zero-padded so the ids sort lexicographically in the order they were produced — a consumer
+    // listing the directory sees the model's own order without parsing numbers out of names.
+    const id = `${this.stem}.seg-${String(seq).padStart(5, '0')}.json`;
+    const path = `${this.dir}/${id}`;
+    const temp = `${path}.${process.pid}.tmp`;
+    const fd = openSync(temp, 'w');
+    try {
+      // ONE write per segment, not one per object. The whole-model path streams object by object
+      // because its document has no bound; a segment does — `batch-size` is that bound — so joining
+      // here costs a string the size of one batch and saves a syscall per object. Measured on a
+      // 12,000-object / 46 MiB model (`bench-progressive.mjs`): it took the progressive path's
+      // overhead on time-to-COMPLETE from ~47% to ~22-34%. The rest is the second copy of the
+      // geometry itself, which is what buys the segments.
+      //
+      // Self-contained: `frame` rides on every segment so a consumer can place the first batch
+      // without waiting for the tail keys of the complete artifact.
+      writeSync(
+        fd,
+        `{"frame":${JSON.stringify(FILE_Z_UP)},"seq":${seq},"objects":[${this.pending.join(',')}]}`,
+      );
+    } finally {
+      closeSync(fd);
+    }
+    renameSync(temp, path);
+    const items = this.pending.length;
+    this.pending = [];
+    this.count = seq;
+    this.delivered += items;
+    emitProgress({
+      phase: 'batch',
+      seq,
+      done: this.delivered,
+      artifact: { id, mediaType: 'application/json', bytes: statSync(path).size, items, seq },
+    });
   }
 }
 

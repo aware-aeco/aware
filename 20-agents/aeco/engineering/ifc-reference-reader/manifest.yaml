@@ -24,7 +24,15 @@ agent:        ifc-reference-reader
 # unstyled file and a pre-1.3.0 BRIDGE both say nothing, because web-ifc reports opaque white for
 # unstyled geometry and white cannot be told from an authored white. Both silences mean the same thing
 # to a consumer — render your own default — so the ambiguity costs nothing (see read-model.md).
-version:      1.3.0
+# 1.4.0: `read-model` gained `batch-size` — opt-in PROGRESSIVE delivery (aware-aeco/aware#405). With
+# it the command publishes ordered geometry segments as it walks, so a consumer draws the first
+# objects while the rest is still tessellating instead of waiting for the whole artifact. Purely
+# additive and off unless asked for: omit the input and the command behaves exactly as 1.3.0 did, so
+# MINOR. The usual absence caution applies with an extra edge — a pre-1.4.0 BRIDGE ignores
+# `batch-size` silently and simply delivers nothing progressively, which a consumer detects the same
+# way it detects everything else here: by what came back (no `segments` on the descriptor, no
+# `node-progress` events), never by a version number.
+version:      1.4.0
 display-name: IFC Reference Reader (whole model → mesh)
 description: |
   Read a WHOLE IFC file as a reference model — borrowed geometry you overlay, measure and build to,
@@ -198,6 +206,16 @@ commands:
       `items`) rather than the geometry itself. Resolve that opaque id with `aware app artifact`;
       never read it as a path. Direct bridge callers retain the normal JSON response.
 
+      `batch-size` adds PROGRESSIVE delivery on top of that (aware-aeco/aware#405): the walk writes
+      ordered, self-contained segments into the same run-owned directory and announces each one on
+      the runtime's progress channel the moment it is durable, so a consumer tailing the trace can
+      fetch and draw the first objects while the rest of the model is still being tessellated —
+      instead of waiting for a complete 305 MB artifact it must then parse in one go. The whole
+      artifact is still produced and still named by the node output; segments are an additional,
+      earlier path to the same geometry, not a replacement for it. Off unless asked for, because
+      segments cost a second copy of the geometry on disk and buy nothing for a consumer that waits
+      for the complete artifact anyway.
+
       `max-vertices` is an in-process circuit breaker: the budget decrements as meshes stream and the
       command aborts mid-walk. It is NOT a preflight gate — an exact vertex count cannot be known
       before tessellating, so a cap applied after this returns would fire only once the payload that
@@ -231,6 +249,17 @@ commands:
           Optional response-size budget in bytes. Absent means no limit. Opt-in because streaming
           removed the ceiling that used to make a size cap compulsory; it exists so a consumer with a
           ceiling of its own is told the size instead of discovering it as an out-of-memory.
+      batch-size:
+        type: number
+        description: >
+          Optional objects per progressive segment. Absent (or not a positive whole number) means no
+          segments — exactly the pre-1.4.0 behaviour. When set AND the runtime is listening (inside
+          `aware app run`), the walk writes every `batch-size` objects as a self-contained segment
+          artifact and announces it on the progress channel, so a consumer renders the first objects
+          long before the whole model exists. Segments are additional to the complete artifact, not
+          instead of it, so they cost a second copy of the geometry on disk and a measured 22-34%
+          on time-to-complete; what they buy is a time-to-first-object that depends on the batch
+          rather than on the model.
     outputs:
       type: single
       schema:

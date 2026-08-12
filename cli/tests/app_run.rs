@@ -593,6 +593,193 @@ requires: []
     assert!(serde_json::from_str::<serde_json::Value>(&copied).is_ok());
 }
 
+/// #405: a long one-shot command must be able to hand a consumer usable geometry BEFORE it
+/// finishes. The claim under test is the one the issue makes — first render without waiting for the
+/// full artifact — so this drives the real `aware app run` as a live child and fetches an announced
+/// segment while that child is still working, which is the only way to tell a progressive delivery
+/// from a fast one.
+#[test]
+fn a_segment_is_retrievable_while_the_run_is_still_in_flight() {
+    let tmp = tempfile::tempdir().unwrap();
+    // The helper announces its first segment immediately and then keeps working for ~1.4s, so a
+    // retrieval that succeeds during that window could not have come from a completed run.
+    let Some(bin) = compile_helper(
+        tmp.path(),
+        "progressive_writer",
+        r#"use std::{env, fs, io::{Read, Write}, path::Path, thread, time::Duration};
+fn main() {
+    let mut stdin = String::new();
+    let _ = std::io::stdin().read_to_string(&mut stdin);
+    let dir = env::var("AWARE_ARTIFACT_DIR").expect("AWARE_ARTIFACT_DIR missing");
+    let channel = env::var("AWARE_PROGRESS_FILE").expect("AWARE_PROGRESS_FILE missing");
+    fs::create_dir_all(&dir).unwrap();
+    let mut log = fs::OpenOptions::new().create(true).append(true).open(&channel).unwrap();
+    writeln!(log, "{{\"$aware-progress\":{{\"phase\":\"parse\",\"message\":\"opening model\"}}}}").unwrap();
+    log.flush().unwrap();
+    for seq in 1..=2u32 {
+        let name = format!("seg-{seq}.json");
+        let tmp_path = Path::new(&dir).join(format!("{name}.tmp"));
+        let body = format!("{{\"seq\":{seq},\"objects\":[\"object-{seq}\"]}}");
+        fs::write(&tmp_path, &body).unwrap();
+        // Announce only after the rename: a half-written segment must never be advertised.
+        let final_path = Path::new(&dir).join(&name);
+        fs::rename(&tmp_path, &final_path).unwrap();
+        let bytes = fs::metadata(&final_path).unwrap().len();
+        writeln!(log, "{{\"$aware-progress\":{{\"phase\":\"batch\",\"done\":{seq},\"total\":2,\"artifact\":{{\"id\":\"{name}\",\"mediaType\":\"application/json\",\"bytes\":{bytes},\"items\":1,\"seq\":{seq}}}}}}}").unwrap();
+        log.flush().unwrap();
+        thread::sleep(Duration::from_millis(700));
+    }
+    // Noise on the channel is skipped, never mirrored: a producer's stray line must not become a
+    // trace record, and must not stop the records around it from being one.
+    writeln!(log, "loading geometry 100%").unwrap();
+    writeln!(log, "{{\"$aware-progress\":{{\"phase\":\"complete\",\"done\":2,\"total\":2}}}}").unwrap();
+    log.flush().unwrap();
+    fs::write(Path::new(&dir).join("full.json"), b"{\"objects\":[\"object-1\",\"object-2\"]}").unwrap();
+    println!("{{\"$aware-artifact\":{{\"id\":\"full.json\",\"mediaType\":\"application/json\",\"bytes\":36,\"items\":2}}}}");
+}
+"#,
+    ) else {
+        eprintln!("[skip] rustc not found on PATH; cannot build progressive helper");
+        return;
+    };
+
+    let aware = tmp.path().join("aware");
+    let agent_dir = aware.join("agents/progressive-reader");
+    std::fs::create_dir_all(&agent_dir).unwrap();
+    let binary = bin.to_string_lossy().replace('\\', "/");
+    std::fs::write(
+        agent_dir.join("manifest.yaml"),
+        format!(
+            r#"agent: progressive-reader
+version: 0.0.1
+description: x
+stateful: false
+license: MIT
+transport:
+  cli:
+    binary: {binary}
+commands:
+  read:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: emits segments while it works
+    outputs:
+      type: single
+"#
+        ),
+    )
+    .unwrap();
+    let app_dir = aware.join("apps/progressiveapp");
+    std::fs::create_dir_all(&app_dir).unwrap();
+    std::fs::write(
+        app_dir.join("progressiveapp.flo"),
+        r#"app: progressiveapp
+version: 0.0.1
+description: x
+nodes:
+  - id: read
+    agent: progressive-reader
+    command: read
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    let exe = assert_cmd::cargo::cargo_bin("aware");
+    let mut run = std::process::Command::new(&exe)
+        .env("AWARE_HOME", &aware)
+        .args(["app", "run", "progressiveapp"])
+        .stdout(std::process::Stdio::piped())
+        .spawn()
+        .expect("spawn aware app run");
+
+    // Wait for the first announced segment to appear in the trace — the same thing a consumer
+    // tailing `aware app logs --tail` waits for.
+    let logs = aware.join("logs/progressiveapp");
+    let deadline = std::time::Instant::now() + std::time::Duration::from_secs(30);
+    let mut announced = None;
+    while std::time::Instant::now() < deadline {
+        if let Some(trace) = find_first_jsonl(&logs)
+            && let Ok(body) = std::fs::read_to_string(&trace)
+        {
+            for line in body.lines() {
+                let Ok(event) = serde_json::from_str::<serde_json::Value>(line) else {
+                    continue;
+                };
+                if event["kind"] == "node-progress"
+                    && let Some(id) = event["data"]["artifact"]["id"].as_str()
+                {
+                    announced = Some(id.to_string());
+                    break;
+                }
+            }
+        }
+        if announced.is_some() {
+            break;
+        }
+        std::thread::sleep(std::time::Duration::from_millis(25));
+    }
+    let Some(segment) = announced else {
+        let trace = find_first_jsonl(&logs)
+            .and_then(|p| std::fs::read_to_string(p).ok())
+            .unwrap_or_else(|| "<no trace written>".into());
+        panic!("no segment was announced while the node ran; trace:\n{trace}");
+    };
+    assert!(
+        run.try_wait().unwrap().is_none(),
+        "the run had already finished — this proves nothing about progressive delivery"
+    );
+
+    // Fetch it through the ordinary artifact contract, with the run still going.
+    let fetched = tmp.path().join("first-batch.json");
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args(["app", "artifact", "progressiveapp", &segment, "--output"])
+        .arg(&fetched)
+        .assert()
+        .success();
+    let body: serde_json::Value =
+        serde_json::from_str(&std::fs::read_to_string(&fetched).unwrap()).unwrap();
+    assert_eq!(body["seq"], 1, "the first segment must be the first batch");
+
+    assert!(run.wait().unwrap().success(), "run failed");
+
+    let trace = find_first_jsonl(&logs).expect("no trace");
+    let events: Vec<serde_json::Value> = std::fs::read_to_string(&trace)
+        .unwrap()
+        .lines()
+        .map(|l| serde_json::from_str(l).unwrap())
+        .collect();
+    let phases: Vec<&str> = events
+        .iter()
+        .filter(|e| e["kind"] == "node-progress")
+        .filter_map(|e| e["data"]["phase"].as_str())
+        .collect();
+    assert_eq!(
+        phases,
+        vec!["parse", "batch", "batch", "complete"],
+        "phases must arrive in the order the producer wrote them, with the noise line skipped"
+    );
+
+    // Ordering is the proof that the records were flushed DURING the call: `node-output` is written
+    // only after the invocation returns, so a runtime that buffered progress would put them after.
+    let progress_at = events
+        .iter()
+        .position(|e| e["kind"] == "node-progress")
+        .unwrap();
+    let output_at = events
+        .iter()
+        .position(|e| e["kind"] == "node-output")
+        .unwrap();
+    assert!(
+        progress_at < output_at,
+        "progress must reach the trace before the node's single output"
+    );
+}
+
 fn copy_dir(src: &std::path::Path, dst: &std::path::Path) -> std::io::Result<()> {
     std::fs::create_dir_all(dst)?;
     for entry in std::fs::read_dir(src)?.flatten() {
@@ -926,6 +1113,15 @@ fn which_on_path(name: &str) -> Option<std::path::PathBuf> {
 fn find_first_jsonl(dir: &std::path::Path) -> Option<std::path::PathBuf> {
     for entry in std::fs::read_dir(dir).ok()?.flatten() {
         let p = entry.path();
+        // A run's artifact directory (`<run-id>.artifacts/`) sits beside its trace and may hold
+        // JSONL of its own — the #405 progress channel is exactly that. It enumerates first, so a
+        // blind recursion returns a producer's channel where the caller asked for the trace.
+        if p.file_name()
+            .and_then(|n| n.to_str())
+            .is_some_and(|n| n.ends_with(".artifacts"))
+        {
+            continue;
+        }
         if p.is_dir() {
             if let Some(found) = find_first_jsonl(&p) {
                 return Some(found);

@@ -7,7 +7,7 @@
 // design doc §8 for what each file proves.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import * as WebIFC from 'web-ifc';
@@ -822,6 +822,128 @@ test('AWARE artifact mode writes geometry outside stdout (#402)', () => {
     assert.equal(artifact.frame, 'z-up');
     assert.ok(artifact.count > 0);
     assert.equal(artifact.count, artifact.objects.length);
+  } finally {
+    rmSync(artifactDir, { recursive: true, force: true });
+  }
+});
+
+/** Every progress record the bridge published, in order. */
+function progressRecords(channel) {
+  return readFileSync(channel, 'utf8')
+    .split('\n')
+    .filter((l) => l.trim())
+    .map((l) => JSON.parse(l)['$aware-progress']);
+}
+
+test('batch-size delivers ordered segments while the read is still running (#405)', () => {
+  const artifactDir = mkdtempSync(join(tmpdir(), 'aware-ifc-batch-'));
+  const channel = join(artifactDir, 'progress.jsonl');
+  try {
+    // baseplate-bp1 holds 6 objects; a batch of 2 must therefore produce 3 segments — the case that
+    // catches an off-by-one in the final flush as well as the ordinary full batch.
+    const raw = cli('read-model', {
+      'ifc-path': join('test-fixtures', 'baseplate-bp1.ifc'), 'batch-size': 2,
+    }, { AWARE_ARTIFACT_DIR: artifactDir, AWARE_PROGRESS_FILE: channel });
+    const descriptor = JSON.parse(raw)['$aware-artifact'];
+
+    const records = progressRecords(channel);
+    assert.deepEqual(
+      records.map((r) => r.phase),
+      ['parse', 'tessellate', 'batch', 'batch', 'batch', 'complete'],
+      'the four phases the contract names must be distinguishable, in order',
+    );
+
+    const batches = records.filter((r) => r.phase === 'batch');
+    assert.deepEqual(batches.map((b) => b.seq), [1, 2, 3], 'segments must be announced in order');
+    assert.deepEqual(batches.map((b) => b.done), [2, 4, 6], '`done` must count objects handed over');
+
+    // EACH SEGMENT IS RENDERABLE ON ITS OWN — the acceptance criterion. It parses, carries the
+    // frame, and its objects are the same shape the whole artifact holds.
+    let total = 0;
+    for (const b of batches) {
+      const segment = JSON.parse(readFileSync(join(artifactDir, b.artifact.id), 'utf8'));
+      assert.equal(segment.frame, 'z-up');
+      assert.equal(segment.seq, b.seq);
+      assert.equal(segment.objects.length, b.artifact.items);
+      for (const o of segment.objects) {
+        assert.ok(Array.isArray(o.positions) && o.positions.length >= 9);
+        assert.ok(Array.isArray(o.indices) && o.indices.length >= 3);
+      }
+      total += segment.objects.length;
+    }
+    assert.equal(total, descriptor.items, 'the segments must add up to the whole model');
+    assert.equal(descriptor.segments, 3, 'the final descriptor must report how many segments exist');
+
+    // No segment is ever advertised half-written: the announce follows the rename, so a `.tmp`
+    // can never be a record's id and none may survive a clean run.
+    assert.deepEqual(readdirSync(artifactDir).filter((f) => f.endsWith('.tmp')), []);
+
+    // The completion record names the durable whole-model artifact, so a consumer following
+    // segments does not have to correlate back to the node output to find it.
+    const done = records.at(-1);
+    assert.equal(done.artifact.id, descriptor.id);
+    assert.equal(done.total, descriptor.items);
+  } finally {
+    rmSync(artifactDir, { recursive: true, force: true });
+  }
+});
+
+test('without batch-size the read behaves exactly as before (#405)', () => {
+  const artifactDir = mkdtempSync(join(tmpdir(), 'aware-ifc-nobatch-'));
+  const channel = join(artifactDir, 'progress.jsonl');
+  try {
+    // Progressive delivery is opt-in: an existing consumer must not start paying for a second copy
+    // of the geometry on disk because the runtime now offers a channel.
+    const raw = cli('read-model', {
+      'ifc-path': join('test-fixtures', 'baseplate-bp1.ifc'),
+    }, { AWARE_ARTIFACT_DIR: artifactDir, AWARE_PROGRESS_FILE: channel });
+    const descriptor = JSON.parse(raw)['$aware-artifact'];
+    assert.equal(descriptor.segments, undefined);
+    assert.deepEqual(
+      readdirSync(artifactDir).filter((f) => f.includes('.seg-')),
+      [],
+      'no segments may be written when none were asked for',
+    );
+    // Phases still flow — they cost nothing and are what makes a long read legible.
+    assert.deepEqual(
+      progressRecords(channel).map((r) => r.phase),
+      ['parse', 'tessellate', 'complete'],
+    );
+  } finally {
+    rmSync(artifactDir, { recursive: true, force: true });
+  }
+});
+
+test('a malformed batch-size is ignored, not fatal (#405)', () => {
+  const artifactDir = mkdtempSync(join(tmpdir(), 'aware-ifc-badbatch-'));
+  try {
+    // The geometry the caller actually asked for must survive a bad hint about an optional
+    // delivery path.
+    for (const bad of [0, -5, 2.5, 'lots', null]) {
+      const raw = cli('read-model', {
+        'ifc-path': join('test-fixtures', 'baseplate-bp1.ifc'), 'batch-size': bad,
+      }, { AWARE_ARTIFACT_DIR: artifactDir });
+      assert.ok(JSON.parse(raw)['$aware-artifact'].items > 0, `batch-size ${bad} broke the read`);
+    }
+    assert.deepEqual(readdirSync(artifactDir).filter((f) => f.includes('.seg-')), []);
+  } finally {
+    rmSync(artifactDir, { recursive: true, force: true });
+  }
+});
+
+test('progress is silent when the runtime is not listening (#405)', () => {
+  const artifactDir = mkdtempSync(join(tmpdir(), 'aware-ifc-nochannel-'));
+  try {
+    // No AWARE_PROGRESS_FILE means nobody drains the channel — so a `batch-size` cannot be
+    // honoured, and writing segments anyway would be a second copy of the model produced for a
+    // reader that will never be told they exist.
+    const raw = cli('read-model', {
+      'ifc-path': join('test-fixtures', 'baseplate-bp1.ifc'), 'batch-size': 2,
+    }, { AWARE_ARTIFACT_DIR: artifactDir });
+    const descriptor = JSON.parse(raw)['$aware-artifact'];
+    assert.ok(descriptor.items > 0);
+    assert.equal(descriptor.segments, undefined);
+    assert.deepEqual(readdirSync(artifactDir).filter((f) => f.includes('.seg-')), []);
   } finally {
     rmSync(artifactDir, { recursive: true, force: true });
   }

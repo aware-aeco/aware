@@ -29,6 +29,20 @@ pub enum RunEvent {
         node: String,
         data: serde_json::Value,
     },
+    /// A bounded progress record a still-running command published on its
+    /// progress channel (#405). Mirrored into the trace the moment it is
+    /// written, so a consumer tailing the trace learns what a long node is
+    /// doing — and can retrieve the ordered artifact segments it announces —
+    /// before the node's single `node-output` exists. `data` is the record's
+    /// `$aware-progress` body, size-capped by
+    /// [`crate::runtime::progress::MAX_RECORD_BYTES`] so a payload can never
+    /// become a trace record.
+    NodeProgress {
+        ts: String,
+        run_id: String,
+        node: String,
+        data: serde_json::Value,
+    },
     NodeError {
         ts: String,
         run_id: String,
