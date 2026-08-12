@@ -645,10 +645,12 @@ impl Orchestrator {
             if self.simulate {
                 self.synthesize_output(agent_id, command)
             } else {
-                self.invoker.invoke_single(agent_id, command, args).await?
+                self.invoke_reporting_progress(&node.id, agent_id, command, args)
+                    .await?
             }
         } else {
-            self.invoker.invoke_single(agent_id, command, args).await?
+            self.invoke_reporting_progress(&node.id, agent_id, command, args)
+                .await?
         };
 
         self.emit(RunEvent::NodeOutput {
@@ -691,6 +693,58 @@ impl Orchestrator {
 
     async fn emit(&mut self, event: RunEvent) -> Result<(), AwareError> {
         self.provenance.write(&event).await
+    }
+
+    /// Invoke a one-shot command, writing every progress record it publishes into the trace AS IT
+    /// ARRIVES (#405).
+    ///
+    /// This is what makes progress progressive. `ProvenanceWriter::write` flushes each event, and
+    /// these are written from inside the wait rather than after it, so a consumer tailing the trace
+    /// sees `node-progress` — and can fetch the artifact segments those records announce — while
+    /// the node is still tessellating. Emitting them after the call returned would produce the same
+    /// trace and none of the value.
+    ///
+    /// Progress is advisory: a failed invocation still keeps the records that arrived before it
+    /// failed, because "it got to batch 40 of 200 and then died" is most of the diagnosis.
+    async fn invoke_reporting_progress(
+        &mut self,
+        node_id: &str,
+        agent: &str,
+        command: &str,
+        args: Value,
+    ) -> Result<Value, AwareError> {
+        let (tx, mut rx) = tokio::sync::mpsc::channel::<Value>(64);
+        let invoker = std::sync::Arc::clone(&self.invoker);
+        let (agent, command) = (agent.to_string(), command.to_string());
+        let call = async move {
+            invoker
+                .invoke_single_progress(&agent, &command, args, Some(tx))
+                .await
+        };
+        tokio::pin!(call);
+
+        let outcome = loop {
+            tokio::select! {
+                Some(record) = rx.recv() => self.emit_progress(node_id, record).await?,
+                done = &mut call => break done,
+            }
+        };
+        // The sender is dropped with the completed call, so anything still buffered is drained
+        // here — including the `complete` record a producer writes on its way out.
+        while let Ok(record) = rx.try_recv() {
+            self.emit_progress(node_id, record).await?;
+        }
+        outcome
+    }
+
+    async fn emit_progress(&mut self, node_id: &str, data: Value) -> Result<(), AwareError> {
+        self.emit(RunEvent::NodeProgress {
+            ts: now_iso(),
+            run_id: self.run_id.clone(),
+            node: node_id.to_string(),
+            data,
+        })
+        .await
     }
 
     /// Resolve the read/write mode of a command by loading the agent's
@@ -839,7 +893,9 @@ impl Orchestrator {
                 }
             }
 
-            let output = self.invoker.invoke_single(agent_id, command, args).await?;
+            let output = self
+                .invoke_reporting_progress(&node.id, agent_id, command, args)
+                .await?;
             self.emit(RunEvent::NodeOutput {
                 ts: now_iso(),
                 run_id: self.run_id.clone(),
@@ -1845,6 +1901,98 @@ requires: []
         } else {
             panic!();
         }
+    }
+
+    /// An invoker that publishes progress records mid-call, then answers.
+    ///
+    /// The delay is what gives the test its teeth: the records are sent while the call is still
+    /// outstanding, so an orchestrator that collected them after the await would still produce the
+    /// same set of events — in the wrong order, which is the only observable difference between
+    /// progressive delivery and a summary at the end.
+    struct ProgressiveInvoker;
+
+    #[async_trait::async_trait]
+    impl AgentInvoker for ProgressiveInvoker {
+        async fn invoke_single(
+            &self,
+            _agent: &str,
+            _command: &str,
+            _args: Value,
+        ) -> Result<Value, AwareError> {
+            Ok(serde_json::json!({ "done": true }))
+        }
+
+        async fn invoke_single_progress(
+            &self,
+            agent: &str,
+            command: &str,
+            args: Value,
+            progress: Option<tokio::sync::mpsc::Sender<Value>>,
+        ) -> Result<Value, AwareError> {
+            let tx = progress.expect("the orchestrator must offer a progress sink");
+            for phase in ["parse", "batch", "complete"] {
+                tx.send(serde_json::json!({ "phase": phase }))
+                    .await
+                    .unwrap();
+                tokio::time::sleep(std::time::Duration::from_millis(5)).await;
+            }
+            self.invoke_single(agent, command, args).await
+        }
+
+        async fn invoke_stream(
+            &self,
+            _agent: &str,
+            _command: &str,
+            _args: Value,
+        ) -> Result<crate::runtime::invoker::StreamingHandle, AwareError> {
+            unreachable!("one-shot only")
+        }
+    }
+
+    #[tokio::test]
+    async fn progress_records_reach_the_trace_before_the_node_output() {
+        let app: App = serde_yaml::from_str(
+            r#"
+app: tiny
+version: 0.1.0
+description: x
+nodes:
+  - id: read
+    agent: ag
+    command: read
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let (orch, _tmp, log_path) = make_orchestrator(app, Arc::new(ProgressiveInvoker)).await;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let phases: Vec<String> = events
+            .iter()
+            .filter_map(|e| match e {
+                RunEvent::NodeProgress { data, node, .. } if node == "read" => {
+                    Some(data["phase"].as_str().unwrap_or_default().to_string())
+                }
+                _ => None,
+            })
+            .collect();
+        assert_eq!(phases, ["parse", "batch", "complete"]);
+
+        let progress_at = events
+            .iter()
+            .position(|e| matches!(e, RunEvent::NodeProgress { .. }))
+            .expect("no progress reached the trace");
+        let output_at = events
+            .iter()
+            .position(|e| matches!(e, RunEvent::NodeOutput { .. }))
+            .expect("no node output");
+        assert!(
+            progress_at < output_at,
+            "progress must be written while the node runs, not summarised after it"
+        );
     }
 
     #[tokio::test]

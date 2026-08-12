@@ -762,6 +762,9 @@ async fn logs(
                 RunEvent::NodeOutput { ts, node, data, .. } => {
                     println!("[{ts}] \u{2192} {node}  output {data}");
                 }
+                RunEvent::NodeProgress { ts, node, data, .. } => {
+                    println!("[{ts}] \u{2026} {node}  {}", render_progress(data));
+                }
                 RunEvent::NodeError {
                     ts, node, error, ..
                 } => {
@@ -823,6 +826,37 @@ async fn logs(
         file = reader.into_inner();
         tokio::time::sleep(std::time::Duration::from_millis(200)).await;
     }
+}
+
+/// One `node-progress` record as a line a person can follow (#405).
+///
+/// Rendered rather than dumped as JSON because this is the view a human watches a 40-second read
+/// through, and the three things that matter — where it is, how far along, and whether a segment is
+/// ready to fetch — are otherwise buried in a record whose other fields are producer-specific. The
+/// raw record is still one `--replay`-free `aware app logs` away, since the JSONL is the trace.
+fn render_progress(data: &serde_json::Value) -> String {
+    let phase = data
+        .get("phase")
+        .and_then(|v| v.as_str())
+        .unwrap_or("progress");
+    let mut line = format!("progress {phase}");
+    if let Some(done) = data.get("done").and_then(|v| v.as_u64()) {
+        match data.get("total").and_then(|v| v.as_u64()) {
+            Some(total) => line.push_str(&format!(" {done}/{total}")),
+            None => line.push_str(&format!(" {done}")),
+        }
+    }
+    if let Some(id) = data
+        .get("artifact")
+        .and_then(|a| a.get("id"))
+        .and_then(|v| v.as_str())
+    {
+        line.push_str(&format!(" segment {id}"));
+    }
+    if let Some(message) = data.get("message").and_then(|v| v.as_str()) {
+        line.push_str(&format!(" — {message}"));
+    }
+    line
 }
 
 async fn artifact(

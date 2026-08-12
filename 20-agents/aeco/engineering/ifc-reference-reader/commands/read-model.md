@@ -11,6 +11,73 @@ small `$aware-artifact` descriptor. Resolve its opaque `id` with `aware app arti
 --run-id <run> --output <path>`; the trace never contains the mesh arrays. Direct bridge callers keep
 the normal JSON response for compatibility.
 
+## `batch-size` — draw the first objects before the last one exists
+
+The artifact above bounds what the trace carries. It does nothing about **when** a consumer may
+draw, and on a real coordination model that is the complaint: PALM.ifc (66 MiB, 2,993 objects,
+~305 MB of geometry) takes ~43 s before the artifact exists at all, and the consumer then has to
+retrieve and `JSON.parse` the whole thing before its first triangle. IFC Lite renders the same file's
+first geometry in about two seconds, because it delivers in batches (aware-aeco/aware#405).
+
+Pass `batch-size` and the walk delivers as it goes:
+
+```yaml
+config:
+  ifc-path: C:/models/PALM.ifc
+  batch-size: 100        # objects per segment
+```
+
+Every `batch-size` objects, a **self-contained segment** is written into the run's artifact directory
+and announced on the runtime's progress channel, which the runtime mirrors into the trace as a
+`node-progress` event:
+
+```json
+{ "kind": "node-progress", "node": "read",
+  "data": { "phase": "batch", "seq": 7, "done": 700,
+            "artifact": { "id": "read-model-<uuid>.seg-00007.json", "mediaType": "application/json",
+                          "bytes": 1048231, "items": 100, "seq": 7 } } }
+```
+
+A consumer therefore: reads the run id `aware app run` prints **before** the first node starts, tails
+the trace (`aware app logs <app> --tail`), and on each `phase: "batch"` fetches
+`aware app artifact <app> <that id> --run-id <run> --output <path>` — **while the run continues** —
+parses it, and draws it. A segment is `{ frame, seq, objects: [...] }`: the same objects the whole
+artifact holds, carrying their own `frame`, so nothing has to be correlated back to the complete
+document before it can be placed.
+
+Four phases are published, which is what lets a UI say something true rather than spin: `parse` (the
+file is being opened), `tessellate` (the walk has begun), `batch` (once per delivered segment, with
+`done` counting objects handed over), and `complete` — whose record repeats the **whole** artifact's
+descriptor, so the durable copy is named in the same stream the segments arrived on.
+
+**It is off unless you ask, and that is deliberate.** Segments are additional to the complete
+artifact, not a replacement, so they cost a second copy of the geometry on disk and — measured with
+`cli-connection-reader/bench-progressive.mjs` on a 12,000-object / 46 MiB model — **22-34% on
+time-to-complete**. What that buys, on the same run:
+
+| | first object drawable | complete |
+|---|---|---|
+| whole-artifact path | 1,418 ms | 1,418 ms |
+| `batch-size: 100` | **354 ms** | 1,627 ms |
+
+The first number is the one that matters, and its shape matters more than its value: time-to-first
+depends on the *batch*, not on the model, so it barely moved (302 ms → 354 ms) between a 3,000-object
+and a 12,000-object model while the complete time tripled. Run the benchmark against a real file with
+`node bench-progressive.mjs --ifc C:/models/PALM.ifc --batch-size 100`.
+
+**What survives a cancelled run.** Segments already announced are already durable — they are ordinary
+run-owned artifacts beside the trace, so a consumer that has drawn 40 of 200 batches keeps them if
+the run is killed, and they are removed with the run's logs and nothing sooner. A read killed
+mid-segment leaves an unannounced `.tmp` that no record ever names. There is no resume protocol: a
+consumer that loses its place re-reads the announced segments, or falls back to the complete artifact
+in the node output.
+
+**Outside `aware app run`, nothing changes.** A direct bridge caller with no progress channel gets no
+segments even with `batch-size` set — writing a second copy of the model for a reader that will never
+be told it exists would be pure cost. A pre-1.4.0 bridge ignores the input entirely; as everywhere
+else in this contract, check what came back (`segments` on the descriptor, `node-progress` in the
+trace), never a version number.
+
 ## Lifecycle
 `single` — one call, one response.
 
@@ -23,6 +90,7 @@ the normal JSON response for compatibility.
 | `ifc-types` | [string] | Optional IFC entity names to read, e.g. `[IFCBEAM, IFCCOLUMN]` (from `probe.types`). Subtypes included; case-insensitive. |
 | `ids` | [string] | Optional GlobalIds to read — for re-reading a known selection. |
 | `max-bytes` | number | Optional response-size budget. Absent means no limit. |
+| `batch-size` | number | Optional objects per progressive segment. Absent means no segments (see below). |
 
 ## Outputs
 ```yaml

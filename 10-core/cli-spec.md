@@ -99,6 +99,63 @@ An agent command may materialize a large result as a run-owned artifact rather t
 as a filesystem path. This keeps JSONL replay bounded while a producer writes data incrementally and
 lets a renderer load or batch-read the resulting file without duplicating the payload in the trace.
 
+### Progressive large outputs
+
+A run-owned artifact bounds the trace; it does not make the result *early*. A `single`-lifecycle
+command has exactly one output, emitted after the process exits, so a consumer of a 40-second read
+can draw nothing for 40 seconds even though the first geometry existed after one. The progress
+channel is the second, write-only channel that fixes that.
+
+**The runtime** passes a CLI transport `AWARE_PROGRESS_FILE` — a path inside the same run-owned
+artifact directory as `AWARE_ARTIFACT_DIR`, unique per invocation — whenever it will mirror what is
+written there. It tails that file while the command runs and writes each valid record into the trace
+as a `node-progress` event, flushed on arrival:
+
+```json
+{ "kind": "node-progress", "ts": "…", "run_id": "…", "node": "read",
+  "data": { "phase": "batch", "seq": 7, "done": 700, "total": 2993,
+            "artifact": { "id": "read-model-<uuid>.seg-00007.json", "mediaType": "application/json",
+                          "bytes": 1048231, "items": 100, "seq": 7 } } }
+```
+
+**A producer** appends newline-delimited `{"$aware-progress": { … }}` records to that path. The
+runtime mirrors a record only if it is a JSON object carrying a non-empty `phase` string; is at most
+**8 KiB**; and, when it carries an `artifact` descriptor, names an id that passes the same fence
+`aware app artifact` applies. Anything else — engine noise, a half-flushed line, an oversized record —
+is skipped silently: the channel is advisory and the node output remains the authoritative result.
+The size cap is what preserves #402's guarantee, since a channel that mirrored arbitrary JSON would
+let a producer stream the payload back into the trace one "progress" record at a time. For the same
+reason at most **10,000 records per invocation** are mirrored, and at most **16 MiB** of the channel
+is read at all — the second budget covers a channel whose lines are all rejected, which the first
+never sees. Past either, the runtime emits one `phase: "progress-suppressed"` record and stops
+listening, so a consumer can tell that from a producer that simply went quiet.
+
+`phase` is producer-defined; the conventional ladder for a geometry producer is `parse` →
+`tessellate` → `batch` (once per delivered segment) → `complete`. `done`/`total` are optional
+counters and `message` optional prose; both are rendered by `aware app logs`.
+
+**Segments** are the delivery mechanism. A record's `artifact` block names an ordered slice that is
+already durable in the run-owned artifact directory, retrievable **while the run continues** through
+the ordinary `aware app artifact <app> <id> --run-id <run> --output <path>`. Nothing new is needed to
+consume it: a consumer reads the run id `aware app run` prints before the first node starts, tails
+the trace (`aware app logs <app> --tail`), and fetches each segment as it is announced. Neither the
+trace nor the runtime ever holds a mesh.
+
+Semantics a consumer may rely on:
+
+- **Ordering** — records reach the trace in the order the producer wrote them; `seq` numbers segments
+  from 1.
+- **Durability** — a segment is announced only after it is completely written and renamed into
+  place, so an announced id always resolves to a whole document.
+- **Cancellation and failure** — segments and progress records already written survive a cancelled
+  or failed run. They live beside the trace and are removed with it; nothing else prunes them. A
+  producer killed mid-segment leaves an unannounced temporary file, which is never retrievable.
+- **No resume** — the channel carries no restart protocol. A consumer that loses its place re-reads
+  the announced segments, or falls back to the complete artifact named by the final node output.
+- **Opt-in at the producer** — a command that has no reason to segment keeps emitting one
+  `$aware-artifact` (or an ordinary inline output) and publishes no records. Small outputs are
+  untouched by all of this.
+
 ### What "latest" means
 
 `install <agent>` and `update <agent>` with no `@version` resolve to the greatest version by **SemVer §11 precedence** — not the greatest string. `1.10.1` outranks `1.9.0`, and `2025.0.10` outranks `2025.0.2`, which matters because the registry publishes calendar-shaped versions. A release outranks its own prereleases (`1.0.0` > `1.0.0-rc.1`), and build metadata carries no precedence at all (§10).
@@ -126,7 +183,11 @@ A version after `@` is an **exact key**, not a range. Ranges are an app-pinning 
 ├── permissions/
 │   └── <app-id>.yaml                   # user's Allow / Always-allow / Deny decisions
 ├── logs/
-│   └── <app-id>/<instance-id>/<run-id>.jsonl    # provenance trail per run
+│   ├── <app-id>/<instance-id>/<run-id>.jsonl    # provenance trail per run
+│   └── <app-id>/<instance-id>/<run-id>.artifacts/   # that run's large outputs, addressed by
+│                                                    # `aware app artifact` — the whole result, any
+│                                                    # progressive segments, and each invocation's
+│                                                    # progress channel. Removed with the run's logs
 ├── cache/
 │   └── registry-index.json             # last-known agent registry index
 └── plugins/                            # generated for each agentic CLI host

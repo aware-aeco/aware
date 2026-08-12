@@ -9,6 +9,7 @@ pub mod invoker;
 pub mod lifecycle;
 pub mod orchestrator;
 pub mod pidfile;
+pub mod progress;
 pub mod provenance;
 pub mod template;
 pub mod trimble_files;
