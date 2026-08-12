@@ -44,6 +44,13 @@ pub const MAX_RECORD_BYTES: usize = 8 * 1024;
 /// Longest `phase` we mirror. A phase is a label a consumer switches on, not free text.
 const MAX_PHASE_CHARS: usize = 64;
 
+/// Most bytes one poll will read from the channel.
+///
+/// 256 KiB is ~32 maximum-size records, far more than a producer writes in one [`POLL_INTERVAL`],
+/// and it is what keeps the runtime's memory a function of the poll rather than of whatever the
+/// producer managed to write. Anything beyond it stays in the file and is read by the next poll.
+const MAX_DRAIN_BYTES: usize = 256 * 1024;
+
 /// How often the runtime looks for new records while a node runs.
 ///
 /// The cost of a poll is one seek + read on a file that is usually unchanged; the benefit is that a
@@ -122,8 +129,20 @@ impl ProgressTail {
         {
             return Vec::new();
         }
+        // BOUNDED, not "however much is there". The record cap bounds one record and the relay's
+        // budget bounds how many are mirrored, but both are applied AFTER a read — so reading to
+        // EOF would let a producer that wrote a gigabyte between two polls allocate a gigabyte
+        // here, before any limit had a chance to speak. The cursor advances by what was read, so a
+        // producer running ahead of the runtime is simply followed at this rate rather than
+        // swallowed whole.
         let mut fresh = Vec::new();
-        if file.read_to_end(&mut fresh).await.is_err() || fresh.is_empty() {
+        if (&mut file)
+            .take(MAX_DRAIN_BYTES as u64)
+            .read_to_end(&mut fresh)
+            .await
+            .is_err()
+            || fresh.is_empty()
+        {
             return Vec::new();
         }
         self.offset += fresh.len() as u64;
@@ -270,6 +289,47 @@ mod tests {
         let last = tail.drain().await;
         assert_eq!(last.len(), 1);
         assert_eq!(last[0]["phase"], "complete");
+    }
+
+    #[tokio::test]
+    async fn one_drain_reads_a_bounded_slice_of_a_flood_and_loses_nothing() {
+        // A producer that outruns the runtime must be FOLLOWED, not swallowed: each poll reads at
+        // most `MAX_DRAIN_BYTES`, so the runtime's memory tracks the poll rather than whatever was
+        // written between two of them — and the records past the cut are still delivered next time,
+        // in order, with none split across the boundary.
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("progress.jsonl");
+        let mut body = String::new();
+        let mut written = 0;
+        while body.len() < MAX_DRAIN_BYTES * 3 {
+            body.push_str(&format!(
+                "{{\"$aware-progress\":{{\"phase\":\"batch\",\"seq\":{written}}}}}\n"
+            ));
+            written += 1;
+        }
+        tokio::fs::write(&path, &body).await.unwrap();
+
+        let mut tail = ProgressTail::new(&path);
+        let first = tail.drain().await;
+        assert!(!first.is_empty());
+        assert!(
+            first.len() < written,
+            "one drain must not consume the whole flood ({} of {written})",
+            first.len()
+        );
+        assert!(
+            tail.offset <= MAX_DRAIN_BYTES as u64,
+            "read {} bytes in one poll",
+            tail.offset
+        );
+
+        let mut all = first;
+        for _ in 0..8 {
+            all.extend(tail.drain().await);
+        }
+        assert_eq!(all.len(), written, "records were lost between polls");
+        let seqs: Vec<u64> = all.iter().map(|r| r["seq"].as_u64().unwrap()).collect();
+        assert_eq!(seqs, (0..written as u64).collect::<Vec<_>>());
     }
 
     #[tokio::test]
