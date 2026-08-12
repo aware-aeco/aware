@@ -476,10 +476,15 @@ async fn relay_progress(
     let output = loop {
         tokio::select! {
             done = &mut wait => break done,
-            _ = tokio::time::sleep(crate::runtime::progress::POLL_INTERVAL) => relay.pump().await,
+            _ = tokio::time::sleep(crate::runtime::progress::POLL_INTERVAL) => { relay.pump().await; }
         }
     };
-    relay.pump().await;
+    // Drain to the END, not one slice of it. A poll reads at most `MAX_DRAIN_BYTES`, so a producer
+    // that wrote a burst of segments and exited immediately would otherwise lose everything past
+    // the first slice — including the `complete` record, which is the one a consumer waits for.
+    // Terminates: each pump either advances the cursor or reports there is nothing left, and the
+    // relay's record budget closes the channel regardless.
+    while relay.pump().await {}
     output
 }
 
@@ -500,11 +505,16 @@ impl Relay {
     /// `batch-size: 100` publishes 33) and still leaves the trace a couple of megabytes at worst.
     const MAX_RECORDS: usize = 10_000;
 
-    async fn pump(&mut self) {
+    /// One poll. Returns whether the cursor moved — i.e. whether it is worth polling again right
+    /// now, rather than waiting for the producer to write more.
+    async fn pump(&mut self) -> bool {
         let Some(tail) = self.tail.as_mut() else {
-            return;
+            return false;
         };
-        for record in tail.drain().await {
+        let before = tail.consumed();
+        let records = tail.drain().await;
+        let advanced = tail.consumed() > before;
+        for record in records {
             if self.sent >= Self::MAX_RECORDS {
                 // Say so in the trace rather than falling silent: a consumer that stops receiving
                 // batches must be able to tell "the producer stopped" from "we stopped listening".
@@ -520,15 +530,16 @@ impl Relay {
                     }))
                     .await;
                 self.tail = None;
-                return;
+                return false;
             }
             self.sent += 1;
             if self.tx.send(record).await.is_err() {
                 // Nobody is listening any more; the child still owns the result.
                 self.tail = None;
-                return;
+                return false;
             }
         }
+        advanced
     }
 }
 
@@ -2704,6 +2715,53 @@ mod cli_invoker_tests {
     use super::*;
 
     #[tokio::test]
+    async fn the_final_drain_delivers_everything_a_producer_wrote_before_exiting() {
+        // A poll reads a bounded slice, so a producer that wrote a burst of segment announcements
+        // and exited immediately has more than one slice waiting when the child is reaped. Stopping
+        // after one would lose the later segments AND the `complete` record — the one a consumer
+        // waits for — which is exactly the silence this channel exists to remove.
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("progress.jsonl");
+        let mut body = String::new();
+        let mut written = 0;
+        while body.len() < 300 * 1024 {
+            body.push_str(&format!(
+                "{{\"$aware-progress\":{{\"phase\":\"batch\",\"seq\":{written}}}}}\n"
+            ));
+            written += 1;
+        }
+        body.push_str("{\"$aware-progress\":{\"phase\":\"complete\"}}\n");
+        tokio::fs::write(&path, body).await.unwrap();
+
+        let (tx, mut rx) = mpsc::channel::<Value>(64);
+        let collector = tokio::spawn(async move {
+            let mut seen = Vec::new();
+            while let Some(record) = rx.recv().await {
+                seen.push(record);
+            }
+            seen
+        });
+        let mut relay = Relay {
+            tail: Some(crate::runtime::progress::ProgressTail::new(&path)),
+            tx,
+            sent: 0,
+        };
+        let mut pumps = 0;
+        while relay.pump().await {
+            pumps += 1;
+        }
+        drop(relay);
+
+        let seen = collector.await.unwrap();
+        assert!(
+            pumps > 1,
+            "the burst fitted in one poll — the test proves nothing"
+        );
+        assert_eq!(seen.len(), written + 1);
+        assert_eq!(seen.last().unwrap()["phase"], "complete");
+    }
+
+    #[tokio::test]
     async fn the_relay_stops_mirroring_a_flood_and_says_that_it_did() {
         // The per-record cap bounds how big a record is; this bounds how many. Without it a
         // producer looping on the channel puts unbounded growth back into the trace one small
@@ -2731,11 +2789,11 @@ mod cli_invoker_tests {
             tx,
             sent: 0,
         };
-        relay.pump().await;
-        // A second pump must add nothing: the runtime has stopped reading the file entirely, so a
+        while relay.pump().await {}
+        // The channel is closed for good: the runtime has stopped reading the file entirely, so a
         // producer cannot keep it busy after the budget is spent.
         assert!(relay.tail.is_none(), "the relay kept the channel open");
-        relay.pump().await;
+        assert!(!relay.pump().await);
         drop(relay);
 
         let seen = collector.await.unwrap();

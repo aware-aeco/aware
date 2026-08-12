@@ -103,7 +103,12 @@ pub fn parse_record(line: &str) -> Option<Value> {
 pub struct ProgressTail {
     path: PathBuf,
     offset: u64,
-    partial: String,
+    /// BYTES, not a `String`. A bounded read can cut a multi-byte character in half, and decoding
+    /// eagerly would replace those bytes with U+FFFD — permanently corrupting a record that was
+    /// merely split, and dropping it when its remainder arrives. Property values in real files are
+    /// routinely non-ASCII (one sample carries 271 Norwegian values), so this is an ordinary case,
+    /// not a hostile one. Decoding happens per complete line instead.
+    partial: Vec<u8>,
 }
 
 impl ProgressTail {
@@ -111,8 +116,14 @@ impl ProgressTail {
         Self {
             path: path.into(),
             offset: 0,
-            partial: String::new(),
+            partial: Vec::new(),
         }
+    }
+
+    /// How many bytes of the channel have been consumed — the caller's signal that a drain made
+    /// progress and there may be more waiting (one drain reads at most [`MAX_DRAIN_BYTES`]).
+    pub fn consumed(&self) -> u64 {
+        self.offset
     }
 
     /// Every complete record written since the previous call, in the order the producer wrote them.
@@ -146,30 +157,27 @@ impl ProgressTail {
             return Vec::new();
         }
         self.offset += fresh.len() as u64;
-        // Lossy on purpose: the offset counts BYTES, so a multi-byte character split across two
-        // reads would otherwise desynchronise the cursor from the file. The replacement character
-        // fails `parse_record` and the record is skipped, which is the right outcome for a line
-        // whose bytes we only half have.
-        self.partial.push_str(&String::from_utf8_lossy(&fresh));
+        self.partial.extend_from_slice(&fresh);
 
         let mut out = Vec::new();
-        // The tail after the last newline is a record still being written — keep it for next time.
-        let keep_from = match self.partial.rfind('\n') {
-            Some(idx) => idx + 1,
+        // The tail after the last newline is a record still being written — keep its BYTES for next
+        // time, so a record split mid-character (or mid-document) is reassembled intact.
+        let Some(last_newline) = self.partial.iter().rposition(|b| *b == b'\n') else {
             // No newline at all: nothing is complete yet. Guard the unbounded case — a producer
             // that opened the channel and wrote megabytes without a newline is not speaking this
             // protocol, and buffering it forever would be the memory blow-up #402 removed.
-            None => {
-                if self.partial.len() > MAX_RECORD_BYTES {
-                    self.partial.clear();
-                }
-                return out;
+            if self.partial.len() > MAX_RECORD_BYTES {
+                self.partial.clear();
             }
+            return out;
         };
-        let complete = self.partial[..keep_from].to_string();
-        self.partial.drain(..keep_from);
-        for line in complete.lines() {
-            if let Some(record) = parse_record(line) {
+        let complete: Vec<u8> = self.partial.drain(..=last_newline).collect();
+        for line in complete.split(|b| *b == b'\n') {
+            // A line that is not valid UTF-8 is not a record — no JSON document is. Skipped like
+            // any other malformed line rather than lossily patched into something that parses.
+            if let Ok(text) = std::str::from_utf8(line)
+                && let Some(record) = parse_record(text)
+            {
                 out.push(record);
             }
         }
@@ -330,6 +338,42 @@ mod tests {
         assert_eq!(all.len(), written, "records were lost between polls");
         let seqs: Vec<u64> = all.iter().map(|r| r["seq"].as_u64().unwrap()).collect();
         assert_eq!(seqs, (0..written as u64).collect::<Vec<_>>());
+    }
+
+    #[tokio::test]
+    async fn a_record_split_mid_character_survives_the_boundary() {
+        // A bounded read can cut a multi-byte character in half, and non-ASCII in a progress
+        // message is ordinary (real files carry Norwegian property names). Decoding the buffer
+        // eagerly would substitute U+FFFD for the half character and the reassembled record would
+        // no longer be the JSON the producer wrote — a valid record lost to the poll interval.
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("progress.jsonl");
+        let line = r#"{"$aware-progress":{"phase":"parse","message":"åpner Bygg-Øst.ifc"}}"#;
+        let bytes = line.as_bytes();
+        // Cut inside the 'å' (2 bytes) — the first byte lands in one read, the second in the next.
+        let cut = line.find('å').unwrap() + 1;
+
+        tokio::fs::write(&path, &bytes[..cut]).await.unwrap();
+        let mut tail = ProgressTail::new(&path);
+        assert!(
+            tail.drain().await.is_empty(),
+            "half a record is not a record"
+        );
+
+        let mut file = tokio::fs::OpenOptions::new()
+            .append(true)
+            .open(&path)
+            .await
+            .unwrap();
+        tokio::io::AsyncWriteExt::write_all(&mut file, &bytes[cut..])
+            .await
+            .unwrap();
+        tokio::io::AsyncWriteExt::write_all(&mut file, b"\n")
+            .await
+            .unwrap();
+        let records = tail.drain().await;
+        assert_eq!(records.len(), 1, "the split record was lost");
+        assert_eq!(records[0]["message"], "åpner Bygg-Øst.ifc");
     }
 
     #[tokio::test]
