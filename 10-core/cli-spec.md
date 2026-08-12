@@ -125,9 +125,10 @@ runtime mirrors a record only if it is a JSON object carrying a non-empty `phase
 is skipped silently: the channel is advisory and the node output remains the authoritative result.
 The size cap is what preserves #402's guarantee, since a channel that mirrored arbitrary JSON would
 let a producer stream the payload back into the trace one "progress" record at a time. For the same
-reason at most **10,000 records per invocation** are mirrored; past that the runtime emits one
-`phase: "progress-suppressed"` record and stops listening, so a consumer can tell that from a
-producer that simply went quiet.
+reason at most **10,000 records per invocation** are mirrored, and at most **16 MiB** of the channel
+is read at all — the second budget covers a channel whose lines are all rejected, which the first
+never sees. Past either, the runtime emits one `phase: "progress-suppressed"` record and stops
+listening, so a consumer can tell that from a producer that simply went quiet.
 
 `phase` is producer-defined; the conventional ladder for a geometry producer is `parse` →
 `tessellate` → `batch` (once per delivered segment) → `complete`. `done`/`total` are optional

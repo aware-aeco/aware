@@ -505,6 +505,17 @@ impl Relay {
     /// `batch-size: 100` publishes 33) and still leaves the trace a couple of megabytes at worst.
     const MAX_RECORDS: usize = 10_000;
 
+    /// Bytes read from one invocation's channel before the runtime stops listening.
+    ///
+    /// The record budget counts what is MIRRORED, so it never fires on a channel whose lines are
+    /// all rejected — and the final drain reads to the end of the file. A bridge that accidentally
+    /// redirects an engine log (or a payload) to the channel would therefore be scanned in full
+    /// after its own process had already exited, adding delay to a run whose result was in hand.
+    /// This budget is on what is READ, so a channel nobody can use costs a bounded amount of time.
+    /// 16 MiB is far past any honest producer: 10,000 records of the maximum size would be 80 MiB,
+    /// but a real one publishes a few hundred bytes per record.
+    const MAX_CHANNEL_BYTES: u64 = 16 * 1024 * 1024;
+
     /// One poll. Returns whether the cursor moved — i.e. whether it is worth polling again right
     /// now, rather than waiting for the producer to write more.
     async fn pump(&mut self) -> bool {
@@ -514,22 +525,15 @@ impl Relay {
         let before = tail.consumed();
         let records = tail.drain().await;
         let advanced = tail.consumed() > before;
+        let over_budget = tail.consumed() > Self::MAX_CHANNEL_BYTES;
         for record in records {
             if self.sent >= Self::MAX_RECORDS {
-                // Say so in the trace rather than falling silent: a consumer that stops receiving
-                // batches must be able to tell "the producer stopped" from "we stopped listening".
-                let _ = self
-                    .tx
-                    .send(serde_json::json!({
-                        "phase": "progress-suppressed",
-                        "message": format!(
-                            "stopped mirroring after {} records — the producer is publishing \
-                             progress faster than the trace may carry it",
-                            Self::MAX_RECORDS
-                        ),
-                    }))
-                    .await;
-                self.tail = None;
+                self.suppress(format!(
+                    "stopped mirroring after {} records — the producer is publishing progress \
+                     faster than the trace may carry it",
+                    Self::MAX_RECORDS
+                ))
+                .await;
                 return false;
             }
             self.sent += 1;
@@ -539,7 +543,29 @@ impl Relay {
                 return false;
             }
         }
+        if over_budget {
+            self.suppress(format!(
+                "stopped reading the progress channel after {} MiB — it is carrying something \
+                 other than progress records",
+                Self::MAX_CHANNEL_BYTES / (1024 * 1024)
+            ))
+            .await;
+            return false;
+        }
         advanced
+    }
+
+    /// Close the channel, saying so in the trace rather than falling silent — a consumer that stops
+    /// receiving batches must be able to tell "the producer stopped" from "we stopped listening".
+    async fn suppress(&mut self, message: String) {
+        let _ = self
+            .tx
+            .send(serde_json::json!({
+                "phase": "progress-suppressed",
+                "message": message,
+            }))
+            .await;
+        self.tail = None;
     }
 }
 
@@ -2759,6 +2785,47 @@ mod cli_invoker_tests {
         );
         assert_eq!(seen.len(), written + 1);
         assert_eq!(seen.last().unwrap()["phase"], "complete");
+    }
+
+    #[tokio::test]
+    async fn a_channel_carrying_something_else_is_abandoned_not_scanned_whole() {
+        // The record budget counts what is mirrored, so a channel whose every line is rejected
+        // never trips it — and the drain after the child exits would read the file to its end. A
+        // bridge that redirected an engine log here would delay a run whose result was already in
+        // hand, so the READ is budgeted too.
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("progress.jsonl");
+        let noise = "web-ifc: loading geometry, nothing to do with progress\n".repeat(400_000);
+        assert!(noise.len() as u64 > Relay::MAX_CHANNEL_BYTES);
+        tokio::fs::write(&path, noise).await.unwrap();
+
+        let (tx, mut rx) = mpsc::channel::<Value>(64);
+        let collector = tokio::spawn(async move {
+            let mut seen = Vec::new();
+            while let Some(record) = rx.recv().await {
+                seen.push(record);
+            }
+            seen
+        });
+        let mut relay = Relay {
+            tail: Some(crate::runtime::progress::ProgressTail::new(&path)),
+            tx,
+            sent: 0,
+        };
+        let mut read = 0;
+        while relay.pump().await {
+            read = relay.tail.as_ref().map(|t| t.consumed()).unwrap_or(read);
+        }
+        assert!(relay.tail.is_none(), "the relay kept reading the noise");
+        drop(relay);
+
+        let seen = collector.await.unwrap();
+        assert_eq!(seen.len(), 1, "expected only the suppression notice");
+        assert_eq!(seen[0]["phase"], "progress-suppressed");
+        assert!(
+            read <= Relay::MAX_CHANNEL_BYTES + crate::runtime::progress::MAX_RECORD_BYTES as u64,
+            "read {read} bytes of a channel it had already given up on"
+        );
     }
 
     #[tokio::test]
