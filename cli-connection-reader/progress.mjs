@@ -14,6 +14,24 @@ import { appendFileSync } from 'node:fs';
 
 const CHANNEL = process.env.AWARE_PROGRESS_FILE || null;
 
+/**
+ * Ceiling on ONE record, in bytes — the runtime's `MAX_RECORD_BYTES` (cli/src/runtime/progress.rs),
+ * restated here because the producer is the only side that can do anything about it.
+ *
+ * An over-long record is DROPPED by the runtime, not truncated, and dropped SILENTLY because the
+ * channel is advisory. So a producer that builds a record out of caller-supplied values — a filter
+ * receipt echoing an `ids` list, say — can delete its own record by quoting the caller back at
+ * itself, and the consumer sees the phase simply never arrive. Measure before emitting instead.
+ */
+export const MAX_RECORD_BYTES = 8 * 1024;
+
+/** The exact bytes the runtime measures for `record`: the wrapped JSON, which it reads after trim. */
+export function progressRecordBytes(record) {
+  return Buffer.byteLength(line(record), 'utf8');
+}
+
+const line = (record) => JSON.stringify({ '$aware-progress': record });
+
 /** Is the runtime listening? Absent means nobody drains the channel — do not pay to describe work. */
 export function progressEnabled() {
   return CHANNEL !== null;
@@ -31,7 +49,7 @@ export function progressEnabled() {
 export function emitProgress(record) {
   if (!CHANNEL) return;
   try {
-    appendFileSync(CHANNEL, `${JSON.stringify({ '$aware-progress': record })}\n`);
+    appendFileSync(CHANNEL, `${line(record)}\n`);
   } catch {
     /* the channel is advisory: never fail a read because progress could not be written */
   }

@@ -50,6 +50,46 @@ file is being opened), `tessellate` (the walk has begun), `batch` (once per deli
 `done` counting objects handed over), and `complete` — whose record repeats the **whole** artifact's
 descriptor, so the durable copy is named in the same stream the segments arrived on.
 
+### May I draw this? The receipt on `tessellate`
+
+If you passed a filter, the `tessellate` record carries the **same `selected` receipt** the response
+returns — published once, after the filter has resolved to expressIDs and **before the first
+segment**, which is the last moment a consumer can still decide not to draw:
+
+```json
+{ "kind": "node-progress", "node": "read",
+  "data": { "phase": "tessellate",
+            "selected": { "storeys": ["L2"], "candidates": 3767, "unmatched": [] } } }
+```
+
+This is the input side of the absence-means-cannot-answer rule. Segments carry geometry and nothing
+else, so while they arrive you cannot otherwise tell a bridge that honoured `storeys: [L2]` and is
+streaming one floor from a **pre-1.2.0 bridge that ignored the filter**, exited zero, and is
+streaming the whole building. No count substitutes for it: a legitimately large floor and a silently
+unfiltered building are the same number of objects. So draw progressively only when the receipt
+confirms the axes you asked for, and fall back to waiting for `complete` otherwise.
+
+**No `selected` on the record keeps its existing meaning** — this bridge cannot answer. An
+unfiltered read publishes none (as the response omits it, so "unfiltered" and "a filter that matched
+everything" stay distinguishable here too), and a pre-1.5.0 bridge publishes none either.
+
+**The echoed lists are bounded, and what was dropped is named.** The runtime discards a progress
+record over 8 KiB whole rather than truncating it, and `ids` is meant for re-reading a known
+selection — a few hundred GlobalIds is ordinary and more than that budget. Echoing them verbatim
+would therefore delete the record precisely when the filter was largest. Instead the echoed lists
+(`ids`, `unmatched`, `ifcTypes`, `storeys`) are dropped largest-first until the record fits, and
+every one dropped is listed in `selected.elided`:
+
+```json
+{ "phase": "tessellate",
+  "selected": { "storeys": ["L2"], "candidates": 4980, "elided": ["ids", "unmatched"] } }
+```
+
+`candidates` always survives — it is the count that says a filter ran at all. A field named in
+`elided` was **applied but not echoed**: do not read its absence as "that axis was not filtered",
+and do not compare a list against what you sent without checking `elided` first. The response's own
+`selected` is never elided, so the complete artifact always carries the full receipt.
+
 **It is off unless you ask, and that is deliberate.** Segments are additional to the complete
 artifact, not a replacement, so they cost a second copy of the geometry on disk and — measured with
 `cli-connection-reader/bench-progressive.mjs` on a 12,000-object / 46 MiB model — **22-34% on
@@ -392,7 +432,9 @@ on the bridge that read them.
 afford the building must therefore check that it got what it asked for rather than assume: `selected`
 present means the filter was understood, absent means it was not. That is the same absent-means-cannot-
 answer rule, applied to an input rather than an output, and it is why `selected` is emitted at all
-instead of the filter being a silent contract.
+instead of the filter being a silent contract. A consumer rendering `batch-size` segments needs that
+answer *before* the response exists, which is why the same receipt also rides on the `tessellate`
+progress record from 1.5.0 — see [May I draw this?](#may-i-draw-this-the-receipt-on-tessellate).
 
 **Occurrence and type sets are merged property by property, the occurrence winning.** IFC lets a
 property sit on the element type with each occurrence inheriting it, so following only
