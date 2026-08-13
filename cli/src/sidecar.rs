@@ -447,9 +447,33 @@ mod tests {
     use super::*;
     use crate::test_env::EnvVarGuard;
 
+    /// A temp dir rooted somewhere `std::env::var` can read back.
+    ///
+    /// `tempfile::tempdir()` roots at `std::env::temp_dir()`, i.e. at `TMPDIR`.
+    /// Every fixture below is handed to `discover_named` through
+    /// `AWARE_SIDECAR`, and that reads its override with `std::env::var`, which
+    /// rejects a non-UTF-8 value as `NotUnicode` and falls through as though
+    /// the variable were unset. So on a machine whose `TMPDIR` carries a
+    /// non-UTF-8 byte, every one of those tests fails for a reason that has
+    /// nothing to do with what it covers — measured: 13 of them.
+    ///
+    /// `to_str` is the exact test `discover_named` will apply later, so this
+    /// rejects precisely what it would reject.
+    fn readable_tempdir_base() -> PathBuf {
+        match std::env::temp_dir() {
+            dir if dir.to_str().is_some() => dir,
+            // Not `#[cfg(unix)]`: on Windows `TMPDIR` is not the source and a
+            // non-Unicode `TEMP` is not reachable this way, so this arm is the
+            // unix fallback and harmless elsewhere.
+            _ => PathBuf::from("/tmp"),
+        }
+    }
+
     #[test]
     fn discover_respects_env_var_when_file_exists() {
-        let tmp = tempfile::tempdir().unwrap();
+        let tmp = tempfile::Builder::new()
+            .tempdir_in(readable_tempdir_base())
+            .unwrap();
         let fake = tmp.path().join("aware-sidecar.exe");
         std::fs::write(&fake, b"").unwrap();
         let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", &fake);
@@ -737,12 +761,40 @@ mod tests {
     /// variable were unset, so the fake sidecar is never found and the test
     /// fails for a reason that has nothing to do with quoting. That hazard is
     /// covered directly by `sh_quote_preserves_non_utf8_path_bytes` instead.
+    ///
+    /// The same limitation is why the base comes from [`readable_tempdir_base`]
+    /// rather than being inherited from `TMPDIR`. The ASCII hazards this helper
+    /// exists for are in the prefix, which is ours; the base only has to be
+    /// somewhere `std::env::var` can read back.
     #[cfg(unix)]
     fn hostile_tempdir() -> tempfile::TempDir {
         tempfile::Builder::new()
             .prefix("aware sidecar's $fixture ")
-            .tempdir()
+            .tempdir_in(readable_tempdir_base())
             .unwrap()
+    }
+
+    /// The live fixtures must land somewhere `discover_named` can read back,
+    /// whatever the runner's `TMPDIR` holds — otherwise the ten live-path tests
+    /// fail on such a machine for a reason that is not about the sidecar at
+    /// all. Asserts the property (`to_str` succeeds) rather than the fallback
+    /// path, so choosing a different UTF-8 base later is not a test change.
+    #[test]
+    #[cfg(unix)]
+    fn live_fixtures_land_on_a_readable_path_under_a_non_utf8_tmpdir() {
+        use std::os::unix::ffi::OsStrExt;
+
+        let _env = EnvVarGuard::scope(&[(
+            "TMPDIR",
+            Some(std::ffi::OsStr::from_bytes(b"/tmp/aware-\xff-tmpdir")),
+        )]);
+        let dir = hostile_tempdir();
+        assert!(
+            dir.path().to_str().is_some(),
+            "fixture path is not valid UTF-8, so `discover_named` would reject \
+             `AWARE_SIDECAR` as NotUnicode and skip the override entirely: {:?}",
+            dir.path()
+        );
     }
 
     /// `sh_quote` must reproduce the path byte for byte. A unix path is
