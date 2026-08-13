@@ -133,14 +133,22 @@ impl EnvVarGuard {
     /// Taking the whole list at once rather than allowing a second `set` is
     /// deliberate: the lock is not reentrant, so nesting guards deadlocks.
     pub(crate) fn scope(vars: &[(&'static str, Option<&OsStr>)]) -> Self {
+        // Reject the whole list before touching anything. Validating inside the
+        // apply loop would leave the earlier entries already written when the
+        // panic fires, and since `Self` is never constructed there is no `Drop`
+        // to undo them — a misuse would leak overrides into every later test
+        // instead of failing cleanly. Checked before the lock is even taken.
+        for (index, (key, _)) in vars.iter().enumerate() {
+            assert!(
+                !vars[..index].iter().any(|(seen, _)| seen == key),
+                "EnvVarGuard::scope: {key} listed twice, so the value to restore is ambiguous"
+            );
+        }
+
         let lock = env_lock();
         let mut saved: Vec<(&'static str, Option<std::ffi::OsString>)> =
             Vec::with_capacity(vars.len());
         for (key, value) in vars {
-            assert!(
-                !saved.iter().any(|(seen, _)| seen == key),
-                "EnvVarGuard::scope: {key} listed twice, so the value to restore is ambiguous"
-            );
             saved.push((key, std::env::var_os(key)));
             match value {
                 // SAFETY: `lock` is held across this write and then moves into
@@ -286,6 +294,34 @@ mod tests {
         );
         // SAFETY: as above — this key belongs to this test alone.
         unsafe { std::env::remove_var(CLEARED) };
+    }
+
+    /// A rejected `scope` must leave the environment exactly as it found it.
+    /// The guard is never constructed when the assertion fires, so there is no
+    /// `Drop` to clean up after it — the validation has to happen before any
+    /// write, not partway through applying them.
+    #[test]
+    fn a_duplicate_key_is_rejected_before_anything_is_applied() {
+        const APPLIED_FIRST: &str = "AWARE_TEST_ENV_GUARD_DUP_FIRST";
+        const LISTED_TWICE: &str = "AWARE_TEST_ENV_GUARD_DUP_TWICE";
+
+        let result = std::panic::catch_unwind(|| {
+            EnvVarGuard::scope(&[
+                (APPLIED_FIRST, Some(OsStr::new("leaked"))),
+                (LISTED_TWICE, Some(OsStr::new("first"))),
+                (LISTED_TWICE, Some(OsStr::new("second"))),
+            ])
+        });
+
+        assert!(result.is_err(), "a duplicate key must panic");
+        assert!(
+            std::env::var_os(APPLIED_FIRST).is_none(),
+            "an entry before the duplicate must not have been written"
+        );
+        assert!(
+            std::env::var_os(LISTED_TWICE).is_none(),
+            "the duplicated variable must not have been written either"
+        );
     }
 
     #[test]
