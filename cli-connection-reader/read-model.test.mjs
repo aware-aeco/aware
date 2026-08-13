@@ -11,7 +11,8 @@ import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import * as WebIFC from 'web-ifc';
-import { openApi, closeApi, readModel, probeModel, toWebIfcYUp, mergeInherited, propertySetsByElement, fileAuthorsColour, pushColourRun } from './index.mjs';
+import { openApi, closeApi, readModel, probeModel, toWebIfcYUp, mergeInherited, propertySetsByElement, fileAuthorsColour, pushColourRun, tessellateRecord } from './index.mjs';
+import { progressRecordBytes, MAX_RECORD_BYTES } from './progress.mjs';
 
 const DOWNLOADS = join(process.env.USERPROFILE ?? process.env.HOME ?? '', 'Downloads');
 const sample = (name) => (existsSync(join(DOWNLOADS, name)) ? join(DOWNLOADS, name) : null);
@@ -1005,4 +1006,158 @@ test('a mid-stream refusal exits non-zero and says WHY on stderr', async (t) => 
     assert.throws(() => JSON.parse(String(e.stdout)), 'the partial document should NOT parse');
   }
   assert.ok(threw, 'the byte budget did not refuse');
+});
+
+// ── The filter receipt on the progress channel (#407) ────────────────────────────────────────────
+//
+// A consumer drawing segments as they arrive cannot otherwise tell a bridge that honoured
+// `storeys: [L2]` and is streaming one floor from a pre-1.2.0 bridge that ignored the filter and is
+// streaming the whole building — both are just geometry turning up. The node output's `selected`
+// settles it only once the walk is over, which is the wait progressive delivery exists to remove.
+
+test('the filter receipt rides on `tessellate`, before the first segment (#407)', () => {
+  const artifactDir = mkdtempSync(join(tmpdir(), 'aware-ifc-receipt-'));
+  const channel = join(artifactDir, 'progress.jsonl');
+  try {
+    // IFCCHIMNEY is a real entity the fixture happens not to contain, so this also proves the
+    // `unmatched` half travels — the field that separates "you misspelled it" from "there are none".
+    const raw = cli('read-model', {
+      'ifc-path': join('test-fixtures', 'baseplate-bp1.ifc'),
+      'ifc-types': ['IFCPLATE', 'IFCCHIMNEY'],
+      'batch-size': 1,
+    }, { AWARE_ARTIFACT_DIR: artifactDir, AWARE_PROGRESS_FILE: channel });
+
+    const records = progressRecords(channel);
+    const tessellate = records.filter((r) => r.phase === 'tessellate');
+    assert.equal(tessellate.length, 1, 'the receipt must be published exactly once');
+    assert.deepEqual(tessellate[0].selected.ifcTypes, ['IFCPLATE', 'IFCCHIMNEY']);
+    assert.deepEqual(tessellate[0].selected.unmatched, [{ ifcType: 'IFCCHIMNEY' }]);
+    assert.equal(tessellate[0].selected.candidates, 1);
+
+    // BEFORE THE FIRST SEGMENT is the whole contract: a consumer may only act on the receipt while
+    // it can still decide not to draw. Emitted after even one batch, it would arrive too late.
+    const phases = records.map((r) => r.phase);
+    assert.ok(
+      phases.indexOf('tessellate') < phases.indexOf('batch'),
+      `the receipt must precede every segment; phases were ${phases.join(', ')}`,
+    );
+
+    // THE CHANNEL AND THE RESPONSE MUST NOT SAY DIFFERENT THINGS about one read. Two receipts that
+    // could disagree would be worse than one, because the consumer acts on the earlier one.
+    const artifact = JSON.parse(
+      readFileSync(join(artifactDir, JSON.parse(raw)['$aware-artifact'].id), 'utf8'),
+    );
+    assert.deepEqual(tessellate[0].selected, artifact.selected);
+  } finally {
+    rmSync(artifactDir, { recursive: true, force: true });
+  }
+});
+
+test('an UNFILTERED read publishes no receipt, so absent keeps its meaning (#407)', () => {
+  const artifactDir = mkdtempSync(join(tmpdir(), 'aware-ifc-noreceipt-'));
+  const channel = join(artifactDir, 'progress.jsonl');
+  try {
+    cli('read-model', {
+      'ifc-path': join('test-fixtures', 'baseplate-bp1.ifc'), 'batch-size': 2,
+    }, { AWARE_ARTIFACT_DIR: artifactDir, AWARE_PROGRESS_FILE: channel });
+
+    const records = progressRecords(channel);
+    // `selected` is absent from the response when no filter was passed; the record must match, or
+    // "unfiltered" and "a filter that matched everything" stop being distinguishable on the channel.
+    assert.equal(records.find((r) => r.phase === 'tessellate').selected, undefined);
+    // The phases themselves are unchanged — this adds a field, never a record.
+    assert.deepEqual(records.map((r) => r.phase), ['parse', 'tessellate', 'batch', 'batch', 'batch', 'complete']);
+  } finally {
+    rmSync(artifactDir, { recursive: true, force: true });
+  }
+});
+
+test('a huge `ids` filter still publishes a record the runtime will accept (#407)', () => {
+  const artifactDir = mkdtempSync(join(tmpdir(), 'aware-ifc-bigfilter-'));
+  const channel = join(artifactDir, 'progress.jsonl');
+  try {
+    // `ids` is documented for "re-reading a known selection", so hundreds of GlobalIds is ordinary
+    // use — and echoing them verbatim is ~20 KiB, which the runtime DROPS whole. Unbounded, the
+    // receipt would delete its own record exactly when the caller filtered hardest.
+    const ids = Array.from({ length: 600 }, (_, i) => `2aBcDeFgHiJkLmNoPqR${String(i).padStart(3, '0')}`);
+    cli('read-model', {
+      'ifc-path': join('test-fixtures', 'baseplate-bp1.ifc'), ids, 'batch-size': 2,
+    }, { AWARE_ARTIFACT_DIR: artifactDir, AWARE_PROGRESS_FILE: channel });
+
+    const line = readFileSync(channel, 'utf8').split('\n').find((l) => l.includes('"tessellate"'));
+    assert.ok(line, 'the record must survive a large filter, not be silently dropped');
+    assert.ok(
+      Buffer.byteLength(line.trim(), 'utf8') <= MAX_RECORD_BYTES,
+      `the runtime drops anything over ${MAX_RECORD_BYTES} bytes; this was ${Buffer.byteLength(line.trim(), 'utf8')}`,
+    );
+    const { selected } = JSON.parse(line)['$aware-progress'];
+    // What was dropped is NAMED. A consumer that finds `ids` missing must be able to tell "not
+    // echoed" from "no id filter was passed" — otherwise the elision invents a different filter.
+    assert.deepEqual(selected.elided, ['ids', 'unmatched']);
+    assert.equal(selected.ids, undefined);
+    assert.equal(selected.candidates, 0, '`candidates` is the count that says a filter ran at all');
+  } finally {
+    rmSync(artifactDir, { recursive: true, force: true });
+  }
+});
+
+// The elision itself, driven directly: the sizes that force it are far larger than any fixture, and
+// the branch that matters (which list is given up) is invisible from the outside once it has run.
+
+/** `n` GlobalIds at their real 22-character width — the length that decides whether a receipt fits. */
+const globalIds = (n) => Array.from({ length: n }, (_, i) => `2aBcDeFgHiJkLmNoPqR${String(i).padStart(3, '0')}`);
+
+test('tessellateRecord: no filter means no receipt (#407)', () => {
+  assert.deepEqual(tessellateRecord(null), { phase: 'tessellate', message: 'walking geometry' });
+});
+
+test('tessellateRecord: a receipt that fits is echoed verbatim (#407)', () => {
+  const report = { storeys: ['L2'], candidates: 3767, unmatched: [] };
+  const record = tessellateRecord(report);
+  assert.deepEqual(record.selected, report, 'a small receipt must not be reshaped at all');
+  assert.equal(record.selected.elided, undefined, '`elided` must be absent when nothing was dropped');
+});
+
+test('tessellateRecord: the LARGEST list goes first, so the fewest are lost (#407)', () => {
+  // Dropping in declaration order, or dropping everything at the first overflow, both produce a
+  // record that fits — and both throw away a one-value `storeys` the consumer could have confirmed.
+  const record = tessellateRecord({
+    storeys: ['L2'],
+    ids: globalIds(600),
+    candidates: 42,
+    unmatched: [],
+  });
+  assert.deepEqual(record.selected.storeys, ['L2'], 'the small list was affordable and must survive');
+  assert.deepEqual(record.selected.elided, ['ids']);
+  assert.equal(record.selected.candidates, 42);
+  assert.ok(progressRecordBytes(record) <= MAX_RECORD_BYTES);
+});
+
+test('tessellateRecord: every echoed list can go, and `candidates` still cannot (#407)', () => {
+  const record = tessellateRecord({
+    storeys: globalIds(600),
+    ifcTypes: globalIds(600),
+    ids: globalIds(600),
+    candidates: 7,
+    unmatched: globalIds(600).map((id) => ({ id })),
+  });
+  assert.deepEqual(record.selected.elided, ['ifcTypes', 'ids', 'storeys', 'unmatched'].sort());
+  assert.equal(record.selected.candidates, 7);
+  assert.equal(record.phase, 'tessellate');
+  assert.ok(progressRecordBytes(record) <= MAX_RECORD_BYTES);
+});
+
+test('the producer measures against the runtime`s OWN limit, not a copy of the number (#407)', () => {
+  // MAX_RECORD_BYTES is restated in progress.mjs because the producer is the only side that can act
+  // on it. Restated is not the same as kept in step, so read the runtime's source and compare: if
+  // the cap ever moves in Rust, this fails instead of the feature silently going dark.
+  const rust = join(import.meta.dirname, '..', 'cli', 'src', 'runtime', 'progress.rs');
+  if (!existsSync(rust)) return; // the bridge is also built standalone, without the CLI beside it
+  const declared = /pub const MAX_RECORD_BYTES: usize = ([^;]+);/.exec(readFileSync(rust, 'utf8'));
+  assert.ok(declared, 'the runtime no longer declares MAX_RECORD_BYTES under that name');
+  assert.equal(
+    Function(`"use strict"; return (${declared[1]});`)(),
+    MAX_RECORD_BYTES,
+    'the bridge and the runtime disagree about the record cap',
+  );
 });

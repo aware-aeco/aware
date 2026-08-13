@@ -32,7 +32,15 @@ agent:        ifc-reference-reader
 # `batch-size` silently and simply delivers nothing progressively, which a consumer detects the same
 # way it detects everything else here: by what came back (no `segments` on the descriptor, no
 # `node-progress` events), never by a version number.
-version:      1.4.0
+# 1.5.0: the `tessellate` progress record now carries the FILTER RECEIPT — the same `selected` the
+# response returns — so a consumer drawing segments progressively learns before the first one whether
+# its filter was honoured (aware-aeco/aware#407). Without it, a bridge streaming one filtered floor
+# and a pre-1.2.0 bridge streaming the whole building look identical while the geometry arrives, and
+# the response's receipt settles it only once the walk is over — which is the wait progressive
+# delivery exists to remove. Additive, and the absence caution is unchanged: no `selected` on the
+# record still means "this bridge cannot answer", so an unfiltered read publishes none and every
+# existing consumer sees exactly what it saw before. MINOR.
+version:      1.5.0
 display-name: IFC Reference Reader (whole model → mesh)
 description: |
   Read a WHOLE IFC file as a reference model — borrowed geometry you overlay, measure and build to,

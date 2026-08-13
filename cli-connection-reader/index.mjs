@@ -29,7 +29,7 @@ import { createRequire } from 'node:module';
 import { unzipSync } from 'fflate'; // tiny pure-JS unzip for .ifczip inputs
 import * as WebIFC from 'web-ifc'; // package export resolves to the node build (auto-locates its .wasm)
 import { recognizeBasePlate, recognizeShearPlate } from './recognize.mjs'; // fit a parametric recipe from the tessellated parts
-import { emitProgress, progressEnabled } from './progress.mjs'; // tell the runtime what a long read is doing, while it does it
+import { emitProgress, progressEnabled, progressRecordBytes, MAX_RECORD_BYTES } from './progress.mjs'; // tell the runtime what a long read is doing, while it does it
 
 // web-ifc returns geometry in metres (SI base unit); AWARE scenes are canonical millimetres.
 const M_TO_MM = 1000;
@@ -918,8 +918,6 @@ export const WEB_IFC_Y_UP = 'y-up'; // web-ifc's renderer frame: X/Z in plan, Y 
  */
 export function readModel(api, modelID, maxVertices = Infinity, opts = {}) {
   const storeys = storeyByElement(api, modelID);
-  const materials = materialByElement(api, modelID);
-  const propertySets = propertySetsByElement(api, modelID);
   const objects = [];
   const sink = typeof opts.onObject === 'function' ? opts.onObject : null;
   let count = 0;
@@ -928,7 +926,22 @@ export function readModel(api, modelID, maxVertices = Infinity, opts = {}) {
   let bytes = 0;
   let skipped = 0; // products web-ifc streamed but that carry no drawable triangle
 
+  // RESOLVED BEFORE THE REST OF THE PREP, not after, and the ordering is the point rather than a
+  // tidy-up. `onSelected` is how a progressive consumer learns whether its filter was honoured, and
+  // it may only act on that BEFORE the first segment — so every millisecond between here and the
+  // walk is dead air it must wait through. The maps below cost real time on the files this command
+  // exists for (property sets are collected for every element in the file), and the selection needs
+  // none of them: `selectExpressIds` reads `storeys` and nothing else. Behaviour is unchanged —
+  // both maps are consulted only from `onMesh`, which cannot run until `StreamMeshes` is called.
   const selection = selectExpressIds(api, modelID, opts, storeys);
+  // ABSENT AND EMPTY ARE DIFFERENT ANSWERS, the same distinction the `selected` output field draws:
+  // `null` says no filter was asked for, so there is nothing to confirm. A receipt is passed only
+  // when one was applied, which is what keeps "unfiltered" apart from "a filter that matched
+  // everything" on the channel exactly as it is kept apart in the response.
+  if (typeof opts.onSelected === 'function') opts.onSelected(selection.applied ? selection.report : null);
+
+  const materials = materialByElement(api, modelID);
+  const propertySets = propertySetsByElement(api, modelID);
   // Asked ONCE per file, not per element: web-ifc reports opaque white for unstyled geometry, so
   // without this a file that authors no colour at all would be served back as a white building.
   const authorsColour = fileAuthorsColour(api, modelID);
@@ -1380,13 +1393,17 @@ function readModelStreamed(api, modelID, args, write) {
     : null;
   let first = true;
   try {
-  emitProgress({ phase: 'tessellate', message: 'walking geometry' });
   write('{"frame":' + JSON.stringify(FILE_Z_UP) + ',"objects":[');
   const tail = readModel(api, modelID, args['max-vertices'], {
     storeys: args.storeys,
     ifcTypes: args['ifc-types'] ?? args.ifcTypes,
     ids: args.ids,
     maxBytes: args['max-bytes'] ?? args.maxBytes,
+    // The `tessellate` record is published from HERE rather than before the read, because this is
+    // the one moment that satisfies both halves of what it has to say: the filter has resolved to
+    // expressIDs (so the receipt exists) and not one segment has been written yet (so a consumer
+    // can still decide whether it may draw what follows). See `tessellateRecord`.
+    onSelected: (report) => emitProgress(tessellateRecord(report)),
     // `text` is the object already serialised by readModel — see the note there on serialising once.
     onObject: (object, text) => {
       const serialized = text ?? JSON.stringify(object);
@@ -1428,6 +1445,59 @@ function readModelStreamed(api, modelID, args, write) {
   return { '$aware-artifact': descriptor };
   } finally {
     if (fd != null) closeSync(fd);
+  }
+}
+
+/** The receipt fields that echo caller-supplied values, and so have no bound of their own. */
+const ECHOED_LISTS = ['ids', 'unmatched', 'ifcTypes', 'storeys'];
+
+/**
+ * The `tessellate` record, carrying the filter receipt a progressive consumer decides on (#407).
+ *
+ * WHAT IT IS FOR. Segments arrive with no statement of what was selected, so a consumer drawing
+ * them cannot tell a bridge that honoured `storeys: [L2]` and is streaming one floor from a
+ * pre-1.2.0 bridge that ignored the filter, exited zero, and is streaming the whole building. Both
+ * look like geometry turning up. `selected` in the node output settles it, but only once the walk
+ * is over — which is the wait progressive delivery exists to remove. So the same receipt is
+ * published here, once, before the first segment.
+ *
+ * ABSENT KEEPS ITS MEANING. No `selected` on this record still reads as "this bridge cannot
+ * answer", exactly as an absent `selected`, `budget` or `colorsAvailable` does elsewhere in this
+ * contract — so an unfiltered read publishes none and nothing existing changes.
+ *
+ * WHY IT IS BOUNDED. The runtime drops a record over MAX_RECORD_BYTES rather than truncating it,
+ * and drops it silently. A receipt echoes caller-supplied values, and `ids` is documented for
+ * "re-reading a known selection" — a few hundred GlobalIds is an ordinary use of it and ~8 KiB of
+ * JSON. Emitting the full echo would therefore delete the whole record precisely when the caller
+ * filtered hardest, and the consumer would read that absence as "old bridge, do not draw": the
+ * feature silently off in its best case. So the echoed lists are dropped, largest first, until the
+ * record fits, and every one dropped is NAMED in `elided`.
+ *
+ * Dropped, not shortened, and named rather than quietly omitted — because a half-echoed list is a
+ * DIFFERENT filter, and a consumer comparing it against what it sent would find a mismatch it
+ * could only read as "this bridge honoured something else". `candidates` survives every elision:
+ * it is the count that says a filter ran at all, and it is one number.
+ */
+export function tessellateRecord(report) {
+  const base = { phase: 'tessellate', message: 'walking geometry' };
+  if (!report) return base;
+
+  const kept = { ...report };
+  const elided = [];
+  for (;;) {
+    const selected = elided.length ? { ...kept, elided: [...elided].sort() } : kept;
+    const record = { ...base, selected };
+    if (progressRecordBytes(record) <= MAX_RECORD_BYTES) return record;
+    // Largest first, so the fewest lists are lost to make room.
+    const biggest = ECHOED_LISTS
+      .filter((key) => Array.isArray(kept[key]) && kept[key].length)
+      .sort((a, b) => JSON.stringify(kept[b]).length - JSON.stringify(kept[a]).length)[0];
+    // Unreachable — `{ phase, message, candidates, elided }` is a few dozen bytes — but if the
+    // record cannot be made to fit, publish the PHASE rather than let the runtime drop the lot. A
+    // consumer then falls back to wait-for-complete, which is what absence already tells it.
+    if (!biggest) return base;
+    delete kept[biggest];
+    elided.push(biggest);
   }
 }
 
