@@ -22,10 +22,12 @@
 //!   * `src/main.rs` still carries the gate verbatim;
 //!   * no production source under `src/` — every `.rs` file, not just the crate
 //!     root, since a module can `#![allow]` its way out from under one — has
-//!     re-opened it with an `#[allow]` / `#[expect]` / a `clippy::restriction`
-//!     group allow, including one rustfmt has wrapped across lines or nested in
-//!     a `cfg_attr` predicate, nor from `[lints.clippy]` in the manifest, where
-//!     a group entry that outranks a specific `deny` switches it off.
+//!     re-opened it with an `#[allow]` / `#[expect]` / `#[warn]` — a `warn`
+//!     overrides an outer `deny` and leaves only CI's `-D warnings` enforcing
+//!     it — or a `clippy::restriction` group override, including one rustfmt
+//!     has wrapped across lines or nested in a `cfg_attr` predicate, nor from
+//!     `[lints.clippy]` in the manifest, where a group entry that outranks a
+//!     specific `deny` switches it off.
 //!
 //! The last two scan artefacts that are correct today — the real sources under
 //! `src/`, the real `Cargo.toml` — so they would report clean both when they
@@ -509,6 +511,14 @@ fn gate_reopener_classifier_matches_its_contract() {
         // honours the attribute in full.
         "#[allow(\n    clippy::unwrap_used,\n    reason = \"a long justification that pushes rustfmt into wrapping this attribute\"\n)]\nfn f() {}\n",
         "#[cfg_attr(\n    not(test),\n    allow(clippy::expect_used)\n)]\nfn f() {}\n",
+        // A module-level `warn` overrides the crate-root `deny`, leaving only
+        // CI's `-D warnings` between the `unwrap()` and a green build. Measured
+        // against the pinned 1.95.0: with this in a `src/helper.rs`, clippy
+        // demotes `unwrap_used` to a warning, and `cargo clippy` on its own
+        // exits 0.
+        "#![warn(clippy::unwrap_used)]\n\npub fn f(s: &str) -> i32 { s.parse().unwrap() }\n",
+        "#[cfg_attr(windows, warn(clippy::expect_used))]\nfn f() {}\n",
+        "#![warn(clippy::restriction)]\n",
     ] {
         assert!(
             !gate_reopeners(source).is_empty(),
@@ -519,6 +529,11 @@ fn gate_reopener_classifier_matches_its_contract() {
     for source in [
         "#![cfg_attr(not(test), deny(clippy::unwrap_used, clippy::expect_used))]\n",
         "#[allow(dead_code)]\nfn f() {}\n",
+        // `warn` counts only for a gated lint. Raising an ungated one is
+        // ordinary code, not a gate being taken apart.
+        "#[warn(dead_code)]\nfn f() {}\n",
+        // Nor is tightening a gated lint further.
+        "#[deny(clippy::unwrap_used)]\nfn f() {}\n",
         "// an #[allow(clippy::unwrap_used)] mentioned in prose, not an attribute\n",
         "/* #[allow(clippy::unwrap_used)] in a block comment */\n",
         "let s = \"#[allow(clippy::unwrap_used)]\";\n",
@@ -750,8 +765,8 @@ fn gate_reopeners(source: &str) -> Vec<Reopener> {
     found
 }
 
-/// `true` when `collapsed` sets an `allow` or `expect` lint level *anywhere*
-/// inside it, including nested in a `cfg_attr` payload.
+/// `true` when `collapsed` sets an `allow`, `expect` or `warn` lint level
+/// *anywhere* inside it, including nested in a `cfg_attr` payload.
 ///
 /// Nesting is the point. A prefix test (`starts_with("#[allow(")`) misses
 /// `#[cfg_attr(not(test), allow(clippy::unwrap_used))]`, which clippy honours in
@@ -759,15 +774,27 @@ fn gate_reopeners(source: &str) -> Vec<Reopener> {
 /// the first thing someone reaching for a target-conditional override would
 /// write.
 ///
+/// `warn` counts alongside `allow` and `expect`. It reads like a lesser thing
+/// and is not: a module-level `#![warn(clippy::unwrap_used)]` overrides the
+/// crate-root `deny`, after which the only thing still rejecting the `unwrap()`
+/// is the `-D warnings` in CI's clippy invocation — measured, and it does still
+/// reject today. That is the point. A `deny` in the source is enforced by the
+/// source; a `warn` is enforced by a flag in a workflow file, so downgrading one
+/// to the other moves the gate somewhere this test cannot see and makes the
+/// `deny` it is guarding decorative. [`level_enforces`] already draws the line
+/// in the same place for the manifest, counting `deny`/`forbid` and nothing
+/// else; this keeps the two readers saying the same thing about the same word.
+///
 /// A lint level is recognised by its position rather than by enumerating
-/// wrappers: with whitespace removed, `allow(`/`expect(` counts only when the
-/// character before it opens a list — `[`, `(` or `,`. That admits `#[allow(`,
-/// `#![allow(` and any `cfg_attr(<pred>, allow(` depth, while the crate's own
-/// `deny(…)` gate is left alone. Whitespace is stripped rather than trusted, so
-/// `#[allow (clippy::unwrap_used)]` — which clippy honours — still counts.
+/// wrappers: with whitespace removed, `allow(`/`expect(`/`warn(` counts only
+/// when the character before it opens a list — `[`, `(` or `,`. That admits
+/// `#[allow(`, `#![allow(` and any `cfg_attr(<pred>, allow(` depth, while the
+/// crate's own `deny(…)` gate is left alone. Whitespace is stripped rather than
+/// trusted, so `#[allow (clippy::unwrap_used)]` — which clippy honours — still
+/// counts.
 fn opens_a_lint(collapsed: &str) -> bool {
     let dense: String = collapsed.chars().filter(|c| !c.is_whitespace()).collect();
-    ["allow(", "expect("].iter().any(|level| {
+    ["allow(", "expect(", "warn("].iter().any(|level| {
         dense.match_indices(level).any(|(at, _)| {
             // A level at index 0 has no opening bracket before it, so it is not
             // an attribute at all.
