@@ -60,7 +60,11 @@ jobs:
       - name: Cache cargo registry + build
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: cli
+          # Two workspaces, not one: `20-agents/.../steel-detailer-lookup`
+          # declares its own `[workspace]`, so `cli`'s cache never covered it.
+          workspaces: |
+            cli
+            20-agents/aeco/engineering/steel-detailer-lookup
 
       # Same Linux build deps release.yml installs — the crate links libsecret
       # and libdbus for credential storage.
@@ -91,6 +95,26 @@ jobs:
       - name: cargo test
         working-directory: cli
         run: cargo test
+
+      # `20-agents/aeco/engineering/steel-detailer-lookup` is the repo's *other*
+      # Rust crate — the deterministic clause/section lookup that ships inside
+      # every install archive next to `aware` (release.yml builds it; install.sh,
+      # install.ps1 and packaging/wix/aware.wxs all place it). It declares its own
+      # `[workspace]`, so `cd cli && cargo …` has never reached it and no gate ran
+      # on it at all: not fmt, not clippy, not its five unit tests. The only thing
+      # that ever compiled it was `cargo build --release` at release time, which
+      # runs neither clippy nor the suite.
+      #
+      # That is how it accumulated six `unwrap()` calls in non-test code against
+      # CLAUDE.md §Code style, and stayed on edition 2021 against the 2024 pin in
+      # §Tech stack, with CI green throughout. Same three gates as `cli/` above,
+      # same pinned toolchain; it links nothing, so it needs none of the apt deps.
+      - name: steel-detailer-lookup — fmt + clippy + test
+        working-directory: 20-agents/aeco/engineering/steel-detailer-lookup
+        run: |
+          cargo fmt --all -- --check
+          cargo clippy --all-targets -- -D warnings
+          cargo test
 
   # The IFC bridge is a Node package, so `cargo test` never touches it — its suite only ever ran on
   # whoever last remembered to. That is how `read-model` shipped returning a different coordinate
