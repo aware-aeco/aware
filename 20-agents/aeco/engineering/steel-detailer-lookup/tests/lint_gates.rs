@@ -21,15 +21,17 @@
 //!     the assertion cannot pass by never compiling a test target at all;
 //!   * `src/main.rs` still carries the gate verbatim;
 //!   * nobody has re-opened it with an `#[allow]` / `#[expect]` / a
-//!     `clippy::restriction` group allow, nor from `[lints.clippy]` in the
-//!     manifest, where a group entry that outranks a specific `deny` switches
-//!     it off.
+//!     `clippy::restriction` group allow — including one rustfmt has wrapped
+//!     across lines, or nested in a `cfg_attr` predicate — nor from
+//!     `[lints.clippy]` in the manifest, where a group entry that outranks a
+//!     specific `deny` switches it off.
 //!
-//! The last two scan an artefact that is correct today — the real `src/main.rs`,
+//! The last two scan artefacts that are correct today — the real `src/main.rs`,
 //! the real `Cargo.toml` — so they would report clean both when they work and
-//! when they have stopped matching anything at all. Hence
-//! `gate_reopener_classifier_matches_its_contract`, which drives the classifier
-//! over synthetic input with known answers.
+//! when they have stopped matching anything at all. Each therefore has a
+//! negative control driving its classifier over synthetic input:
+//! `gate_reopener_classifier_matches_its_contract` and
+//! `manifest_lint_reader_matches_its_contract`.
 //!
 //! The clippy-backed probes shell out to `cargo clippy` on a scratch crate with
 //! no dependencies (hence `--offline`); the rest are pure file and string
@@ -190,12 +192,7 @@ fn crate_root_actually_carries_the_gate() {
 #[test]
 fn nobody_reopened_the_gate_from_source() {
     let source = std::fs::read_to_string(manifest_dir().join("src/main.rs")).expect("read main.rs");
-    let reopened: Vec<(usize, &str)> = source
-        .lines()
-        .enumerate()
-        .filter(|(_, line)| reopens_gate(line))
-        .map(|(i, line)| (i + 1, line.trim()))
-        .collect();
+    let reopened = gate_reopeners(&source);
     assert!(
         reopened.is_empty(),
         "`src/main.rs` re-opens the gate it is supposed to be under. \
@@ -206,69 +203,206 @@ fn nobody_reopened_the_gate_from_source() {
 
 #[test]
 fn nobody_reopened_the_gate_from_the_manifest() {
-    // `[lints.clippy]` outranks a crate-root attribute, so a group-level allow
-    // there switches the gate off with nothing in `src/` to show for it.
+    // `[lints.clippy]` reaches every target in the package, so an entry here can
+    // re-open a gate as effectively as an `#[allow]` — and from a file the
+    // source scan above never reads.
     let manifest = std::fs::read_to_string(manifest_dir().join("Cargo.toml")).expect("read mani");
-    let reopened: Vec<&str> = manifest
-        .lines()
-        .map(str::trim)
-        .filter(|line| manifest_reopens_gate(line))
+
+    assert_eq!(
+        manifest_clippy_entry(&manifest, "undocumented_unsafe_blocks")
+            .map(|(level, _)| level)
+            .as_deref(),
+        Some("deny"),
+        "`Cargo.toml` no longer actively denies `undocumented_unsafe_blocks` under \
+         `[lints.clippy]` — CLAUDE.md §Code style requires every `unsafe` block to \
+         carry a justification, and `cargo clippy -D warnings` does not enable \
+         that lint on its own"
+    );
+
+    let mut reopened: Vec<String> = GATED_LINTS
+        .iter()
+        .filter_map(|lint| {
+            let (level, _) = manifest_clippy_entry(&manifest, lint)?;
+            (!level_enforces(&level)).then(|| format!("{lint} = \"{level}\""))
+        })
         .collect();
+
+    // Groups need a priority comparison, not a priority threshold.
+    // `undocumented_unsafe_blocks` is the one gate that lives only in this
+    // manifest, so a group entry that outranks it switches it off with every
+    // other check in this file still green. Cargo applies the higher-priority
+    // entry last, so the group wins exactly when its priority is strictly
+    // greater than the lint's — measured on clippy 1.95:
+    //
+    //   deny @ 0   vs allow @  1  -> gate OFF     deny @  0 vs allow @  0 -> holds
+    //   deny @ -2  vs allow @ -1  -> gate OFF     deny @ -1 vs allow @ -2 -> holds
+    //
+    // Comparing the group against zero instead would miss the second row, where
+    // both priorities are negative, and comparing it against nothing at all
+    // would reject the legitimate manifests on the right.
+    for group in GATED_GROUPS {
+        let Some((group_level, group_priority)) = manifest_clippy_entry(&manifest, group) else {
+            continue;
+        };
+        if level_enforces(&group_level) {
+            continue;
+        }
+        for lint in GATED_LINTS {
+            let Some((lint_level, lint_priority)) = manifest_clippy_entry(&manifest, lint) else {
+                continue;
+            };
+            if level_enforces(&lint_level) && group_priority > lint_priority {
+                reopened.push(format!(
+                    "{group} = {{ level = \"{group_level}\", priority = {group_priority} }} \
+                     outranks {lint} = {{ level = \"{lint_level}\", priority = {lint_priority} }}"
+                ));
+            }
+        }
+    }
+
     assert!(
         reopened.is_empty(),
-        "`Cargo.toml` switches off a lint the crate root denies:\n{reopened:#?}"
-    );
-    assert!(
-        manifest.contains("undocumented_unsafe_blocks = \"deny\""),
-        "`Cargo.toml` no longer denies `undocumented_unsafe_blocks` — CLAUDE.md's \
-         \"no `unsafe` without a justification\" rule has lost its only gate here."
+        "these `[lints.clippy]` entries put a gated lint below `deny`:\n  {}",
+        reopened.join("\n  ")
     );
 }
 
-/// Negative control for the two scanners above. They read artefacts that are
-/// clean today, so they report success both when they work and when they have
-/// stopped matching anything; this drives them over inputs with known answers.
+/// Negative control for [`gate_reopeners`]. The scan above reads a `src/main.rs`
+/// that is clean today, so it reports success both when the classifier works and
+/// when it has stopped matching anything; this drives it over known answers.
 #[test]
 fn gate_reopener_classifier_matches_its_contract() {
-    for line in [
-        "#[allow(clippy::unwrap_used)]",
-        "    #![allow(clippy::expect_used)]",
-        "#[expect(clippy::unwrap_used)]",
-        "#![allow(clippy::restriction)]",
-        "#[cfg_attr(windows, allow(clippy::unwrap_used))]",
-        "#[allow(clippy::undocumented_unsafe_blocks)]",
+    for source in [
+        "#[allow(clippy::unwrap_used)]\nfn f() {}\n",
+        "    #![allow(clippy::expect_used)]\n",
+        "#[expect(clippy::unwrap_used)]\nfn f() {}\n",
+        "#![allow(clippy::restriction)]\n",
+        "#[cfg_attr(windows, allow(clippy::unwrap_used))]\nfn f() {}\n",
+        "#[allow(clippy::undocumented_unsafe_blocks)]\nfn f() {}\n",
+        // Anywhere, not just line-initial — clippy honours this form too.
+        "fn f() { let w = { #[allow(clippy::unwrap_used)] g() }; }\n",
+        // Whitespace between the name and its list is legal and honoured.
+        "#[allow (clippy::unwrap_used)]\nfn f() {}\n",
+        // The form Codex flagged on this PR (#408): rustfmt wraps a long
+        // `reason` across lines, splitting `allow(` from the lint name. A
+        // line-at-a-time classifier reads every line as clean while clippy
+        // honours the attribute in full.
+        "#[allow(\n    clippy::unwrap_used,\n    reason = \"a long justification that pushes rustfmt into wrapping this attribute\"\n)]\nfn f() {}\n",
+        "#[cfg_attr(\n    not(test),\n    allow(clippy::expect_used)\n)]\nfn f() {}\n",
     ] {
-        assert!(reopens_gate(line), "should have been flagged: {line}");
-    }
-    for line in [
-        "#![cfg_attr(not(test), deny(clippy::unwrap_used, clippy::expect_used))]",
-        "#[allow(dead_code)]",
-        "// an allow(clippy::unwrap_used) mentioned in prose, not an attribute",
-        "let unwrap_used = 1;",
-    ] {
-        assert!(!reopens_gate(line), "should not have been flagged: {line}");
+        assert!(
+            !gate_reopeners(source).is_empty(),
+            "should have been flagged:\n{source}"
+        );
     }
 
-    for line in [
-        "unwrap_used = \"allow\"",
-        "expect_used = 'allow'",
-        "restriction = \"allow\"",
-        "undocumented_unsafe_blocks = \"warn\"",
+    for source in [
+        "#![cfg_attr(not(test), deny(clippy::unwrap_used, clippy::expect_used))]\n",
+        "#[allow(dead_code)]\nfn f() {}\n",
+        "// an #[allow(clippy::unwrap_used)] mentioned in prose, not an attribute\n",
+        "/* #[allow(clippy::unwrap_used)] in a block comment */\n",
+        "let s = \"#[allow(clippy::unwrap_used)]\";\n",
+        // Naming the lint in a `reason` string is not setting its level.
+        "#[expect(dead_code, reason = \"unlike clippy::unwrap_used, harmless\")]\nfn f() {}\n",
+        "let unwrap_used = 1;\n",
+        // Another tool's lint of the same bare name is not clippy's.
+        "#[allow(othertool::unwrap_used)]\nfn f() {}\n",
+        // An unbalanced bracket in a comment must not swallow what follows.
+        "// TODO(#412): first element is items[0\nfn f() {}\n",
     ] {
         assert!(
-            manifest_reopens_gate(line),
-            "manifest line should have been flagged: {line}"
+            gate_reopeners(source).is_empty(),
+            "should not have been flagged:\n{source}"
         );
     }
-    for line in [
-        "undocumented_unsafe_blocks = \"deny\"",
-        "serde_json = \"1\"",
-        "# unwrap_used = \"allow\" — a commented-out example, not active",
-    ] {
-        assert!(
-            !manifest_reopens_gate(line),
-            "manifest line should not have been flagged: {line}"
+
+    // The reported line is the attribute's own, so a maintainer can go to it.
+    let hits = gate_reopeners("fn a() {}\n\n#[allow(clippy::unwrap_used)]\nfn b() {}\n");
+    assert_eq!(hits.len(), 1);
+    assert_eq!(hits[0].line, 3);
+}
+
+/// Negative control for [`manifest_clippy_entry`]. Same reasoning: the test
+/// above reads a `Cargo.toml` that is correct today.
+#[test]
+fn manifest_lint_reader_matches_its_contract() {
+    let cases = [
+        (
+            "the gate as it actually ships",
+            "[lints.clippy]\nundocumented_unsafe_blocks = \"deny\"\n",
+            Some(("deny", 0)),
+        ),
+        (
+            "commented out — the gate is off, however the line reads",
+            "[lints.clippy]\n# undocumented_unsafe_blocks = \"deny\"\n",
+            None,
+        ),
+        (
+            "downgraded",
+            "[lints.clippy]\nundocumented_unsafe_blocks = \"allow\"\n",
+            Some(("allow", 0)),
+        ),
+        (
+            "single quotes, which are valid TOML",
+            "[lints.clippy]\nundocumented_unsafe_blocks = 'allow'\n",
+            Some(("allow", 0)),
+        ),
+        (
+            // The form Codex flagged on this PR (#408): a `value == \"allow\"`
+            // comparison reads the whole inline table and matches nothing.
+            "the inline-table form cargo also accepts",
+            "[lints.clippy]\nundocumented_unsafe_blocks = { level = \"warn\", priority = 1 }\n",
+            Some(("warn", 1)),
+        ),
+        (
+            "a negative priority, which loses to the specific lint",
+            "[lints.clippy]\nundocumented_unsafe_blocks = { level = \"allow\", priority = -1 }\n",
+            Some(("allow", -1)),
+        ),
+        (
+            "the dotted key cargo accepts under `[lints]`",
+            "[lints]\nclippy.undocumented_unsafe_blocks = \"allow\"\n",
+            Some(("allow", 0)),
+        ),
+        (
+            "a different tool's table cannot answer for clippy's",
+            "[lints.rust]\nundocumented_unsafe_blocks = \"deny\"\n",
+            None,
+        ),
+        (
+            "the entry moved out from under the table header",
+            "[lints.clippy]\nother = \"deny\"\n\n[profile.release]\nundocumented_unsafe_blocks = \"deny\"\n",
+            None,
+        ),
+        (
+            "a longer lint name must not answer for this one",
+            "[lints.clippy]\nundocumented_unsafe_blocks_extra = \"deny\"\n",
+            None,
+        ),
+        ("absent entirely", "[lints.clippy]\n", None),
+    ];
+    for (what, manifest, expected) in cases {
+        let expected = expected.map(|(level, priority)| (level.to_string(), priority));
+        assert_eq!(
+            manifest_clippy_entry(manifest, "undocumented_unsafe_blocks"),
+            expected,
+            "misread the manifest with {what}:\n{manifest}"
         );
+    }
+
+    // The group form the priority comparison exists for, including the negative
+    // pair a threshold-against-zero test reads as harmless.
+    for (manifest, expected) in [
+        (
+            "[lints.clippy]\nrestriction = { level = \"allow\", priority = 1 }\n",
+            Some(("allow".to_string(), 1)),
+        ),
+        (
+            "[lints.clippy]\nrestriction = { level = \"allow\", priority = -1 }\n",
+            Some(("allow".to_string(), -1)),
+        ),
+    ] {
+        assert_eq!(manifest_clippy_entry(manifest, "restriction"), expected);
     }
 }
 
@@ -277,43 +411,333 @@ fn manifest_dir() -> &'static Path {
     Path::new(env!("CARGO_MANIFEST_DIR"))
 }
 
-/// `true` when `line` is an attribute that relaxes one of the denied lints.
+/// The lints this crate's gates rest on. All three live in clippy's
+/// `restriction` group, which is why `restriction` appears in [`GATED_GROUPS`]
+/// and the other groups do not.
 ///
-/// Matches on the attribute opener so prose and identifiers that merely contain
-/// a lint name do not trip it, and covers `cfg_attr`-wrapped levels because the
-/// level is what takes effect, not the predicate around it.
-fn reopens_gate(line: &str) -> bool {
-    let trimmed = line.trim();
-    if !(trimmed.starts_with("#[") || trimmed.starts_with("#![")) {
-        return false;
-    }
-    let relaxes = ["allow(", "expect(", "warn("];
-    let targets = [
-        "clippy::unwrap_used",
-        "clippy::expect_used",
-        "clippy::undocumented_unsafe_blocks",
-        "clippy::restriction",
-    ];
-    relaxes.iter().any(|level| trimmed.contains(level))
-        && targets.iter().any(|target| trimmed.contains(target))
+/// Bare, not `clippy::`-qualified, because both lists are matched two ways —
+/// against qualified attribute text in [`gate_reopeners`], and against the
+/// unqualified keys a `[lints.clippy]` table uses.
+const GATED_LINTS: [&str; 3] = ["unwrap_used", "expect_used", "undocumented_unsafe_blocks"];
+
+/// Lint *groups* whose allow-level suppresses a gated lint. `clippy::all`,
+/// `pedantic`, `nursery` and `correctness` do not contain these lints, so
+/// listing them would make this reject code that is in fact gated.
+const GATED_GROUPS: [&str; 1] = ["restriction"];
+
+/// A lint-level attribute that would re-open one of the gates.
+#[derive(Debug, PartialEq, Eq)]
+struct Reopener {
+    /// 1-indexed line the attribute starts on.
+    line: usize,
+    /// The attribute, whitespace-collapsed onto one line.
+    text: String,
 }
 
-/// `true` when `line` is a `[lints.clippy]` entry that relaxes a denied lint.
-fn manifest_reopens_gate(line: &str) -> bool {
-    let trimmed = line.trim();
-    if trimmed.starts_with('#') {
-        return false;
+/// Report every `allow`/`expect` attribute in `source` that re-opens a gate.
+///
+/// Pure, so [`gate_reopener_classifier_matches_its_contract`] can drive it with
+/// synthetic sources — the scan over the real `src/main.rs` has nothing to say
+/// about whether the classifier still matches anything at all.
+///
+/// Attributes are matched as *complete bracketed spans*, not line by line.
+/// Codex flagged the line-at-a-time version on this PR (#408) and was right: an
+/// `#[allow(…)]` carrying a long `reason` gets wrapped by rustfmt so that
+/// `allow(` and `clippy::unwrap_used` land on different lines, and a predicate
+/// requiring both on one line then reports clean while clippy honours the
+/// attribute in full. Bracket matching over
+/// [`blank_comments_and_strings`] also catches attributes that are not
+/// line-initial (`let w = { #[allow(clippy::unwrap_used)] v.unwrap() };`), and
+/// [`opens_a_lint`] finds the level by position, so one nested in a `cfg_attr`
+/// predicate counts too.
+///
+/// The rule is deliberately absolute: no allow/expect of a gated lint (or of
+/// `clippy::restriction`) anywhere in the file, test module included. Inside
+/// `#[cfg(test)]` the `cfg_attr(not(test), …)` gate is not in force, so such an
+/// attribute is redundant — delete it. `undocumented_unsafe_blocks` is denied
+/// from `Cargo.toml` and so applies to every target; the fix for that one is a
+/// `// SAFETY:` comment, never a deletion.
+fn gate_reopeners(source: &str) -> Vec<Reopener> {
+    let chars: Vec<char> = source.chars().collect();
+    let code = blank_comments_and_strings(&chars);
+    let mut found = Vec::new();
+    let mut i = 0;
+    while i < code.len() {
+        // An attribute opens with `#[` or `#![` and nothing else.
+        let open = match (code.get(i), code.get(i + 1), code.get(i + 2)) {
+            (Some('#'), Some('['), _) => i + 1,
+            (Some('#'), Some('!'), Some('[')) => i + 2,
+            _ => {
+                i += 1;
+                continue;
+            }
+        };
+
+        let mut depth = 0usize;
+        let mut end = None;
+        for (k, c) in code.iter().enumerate().skip(open) {
+            match c {
+                '[' => depth += 1,
+                ']' => {
+                    depth -= 1;
+                    if depth == 0 {
+                        end = Some(k);
+                        break;
+                    }
+                }
+                _ => {}
+            }
+        }
+        let Some(end) = end else {
+            // Unterminated — not an attribute this can reason about. Step past
+            // the `#` only, so nothing after it is swallowed.
+            i += 1;
+            continue;
+        };
+
+        let collapsed = collapse(&code[i..=end]);
+        // Qualified, so `#[allow(othertool::unwrap_used)]` is another tool's
+        // business rather than a finding here.
+        let names_gated = GATED_LINTS
+            .iter()
+            .chain(GATED_GROUPS.iter())
+            .any(|name| collapsed.contains(&format!("clippy::{name}")));
+        if opens_a_lint(&collapsed) && names_gated {
+            found.push(Reopener {
+                line: code[..i].iter().filter(|c| **c == '\n').count() + 1,
+                // Reported from the original, so a maintainer sees the text as
+                // written rather than with its strings blanked out.
+                text: collapse(&chars[i..=end]),
+            });
+        }
+        i = end + 1;
     }
-    let Some((key, value)) = trimmed.split_once('=') else {
-        return false;
+    found
+}
+
+/// `true` when `collapsed` sets an `allow` or `expect` lint level *anywhere*
+/// inside it, including nested in a `cfg_attr` payload.
+///
+/// Nesting is the point. A prefix test (`starts_with("#[allow(")`) misses
+/// `#[cfg_attr(not(test), allow(clippy::unwrap_used))]`, which clippy honours in
+/// full — and that form is the exact mirror of this crate's own gate, so it is
+/// the first thing someone reaching for a target-conditional override would
+/// write.
+///
+/// A lint level is recognised by its position rather than by enumerating
+/// wrappers: with whitespace removed, `allow(`/`expect(` counts only when the
+/// character before it opens a list — `[`, `(` or `,`. That admits `#[allow(`,
+/// `#![allow(` and any `cfg_attr(<pred>, allow(` depth, while the crate's own
+/// `deny(…)` gate is left alone. Whitespace is stripped rather than trusted, so
+/// `#[allow (clippy::unwrap_used)]` — which clippy honours — still counts.
+fn opens_a_lint(collapsed: &str) -> bool {
+    let dense: String = collapsed.chars().filter(|c| !c.is_whitespace()).collect();
+    ["allow(", "expect("].iter().any(|level| {
+        dense.match_indices(level).any(|(at, _)| {
+            // A level at index 0 has no opening bracket before it, so it is not
+            // an attribute at all.
+            matches!(dense[..at].chars().next_back(), Some('[' | '(' | ','))
+        })
+    })
+}
+
+/// Collapse a span onto one whitespace-normalized line.
+fn collapse(span: &[char]) -> String {
+    span.iter()
+        .collect::<String>()
+        .split_whitespace()
+        .collect::<Vec<_>>()
+        .join(" ")
+}
+
+/// Blank out comment and string-literal *contents*, preserving every character
+/// position and newline so offsets still map to lines.
+///
+/// This is what makes bracket matching trustworthy, and it is not a nicety. A
+/// scanner that counts `[` and `]` over raw text is thrown by one unbalanced
+/// bracket inside a comment — `// TODO(#412): first element is items[0` — and
+/// then runs on until the brackets happen to rebalance, swallowing every
+/// attribute in between.
+///
+/// Blanking string contents earns its keep twice more: it removes the
+/// false-positive class where a comment or an `#[expect(…, reason = "…")]`
+/// merely *names* a gated lint, and it disarms `#[doc = "…[…"]`.
+fn blank_comments_and_strings(chars: &[char]) -> Vec<char> {
+    let mut out = chars.to_vec();
+    let mut i = 0;
+    let at = |k: usize| chars.get(k).copied();
+    // Blank `chars[k]` unless it is the newline that keeps line numbers aligned.
+    let blank = |out: &mut Vec<char>, k: usize| {
+        if chars.get(k).is_some_and(|c| *c != '\n')
+            && let Some(slot) = out.get_mut(k)
+        {
+            *slot = ' ';
+        }
     };
-    let key = key.trim();
-    let value = value.trim().trim_matches(['"', '\'']);
-    let gated = [
-        "unwrap_used",
-        "expect_used",
-        "undocumented_unsafe_blocks",
-        "restriction",
-    ];
-    gated.contains(&key) && matches!(value, "allow" | "warn")
+    while i < chars.len() {
+        match (chars[i], at(i + 1)) {
+            ('/', Some('/')) => {
+                while i < chars.len() && chars[i] != '\n' {
+                    blank(&mut out, i);
+                    i += 1;
+                }
+            }
+            ('/', Some('*')) => {
+                let mut depth = 0usize;
+                while i < chars.len() {
+                    if chars[i] == '/' && at(i + 1) == Some('*') {
+                        depth += 1;
+                        blank(&mut out, i);
+                        blank(&mut out, i + 1);
+                        i += 2;
+                        continue;
+                    }
+                    if chars[i] == '*' && at(i + 1) == Some('/') {
+                        depth -= 1;
+                        blank(&mut out, i);
+                        blank(&mut out, i + 1);
+                        i += 2;
+                        if depth == 0 {
+                            break;
+                        }
+                        continue;
+                    }
+                    blank(&mut out, i);
+                    i += 1;
+                }
+            }
+            // Raw string: `r`, then any number of `#`, then `"`. Anything else
+            // beginning with `r` is an ordinary identifier.
+            ('r', Some('"' | '#')) => {
+                let mut hashes = 0;
+                let mut j = i + 1;
+                while at(j) == Some('#') {
+                    hashes += 1;
+                    j += 1;
+                }
+                if at(j) != Some('"') {
+                    i += 1;
+                    continue;
+                }
+                j += 1;
+                while j < chars.len() {
+                    if chars[j] == '"' {
+                        let closed = (1..=hashes).all(|n| at(j + n) == Some('#'));
+                        if closed {
+                            j += hashes + 1;
+                            break;
+                        }
+                    }
+                    blank(&mut out, j);
+                    j += 1;
+                }
+                i = j;
+            }
+            ('"', _) => {
+                let mut j = i + 1;
+                while j < chars.len() && chars[j] != '"' {
+                    // Skip the character an escape protects, so `\"` does not
+                    // look like the closing quote.
+                    let step = usize::from(chars[j] == '\\') + 1;
+                    for k in j..j + step {
+                        blank(&mut out, k);
+                    }
+                    j += step;
+                }
+                i = j + 1;
+            }
+            // A char literal, not a lifetime: `'x'`, `'\n'`. A lifetime (`'a`)
+            // has no closing quote and must be left alone.
+            ('\'', _) => {
+                let width = if at(i + 1) == Some('\\') { 3 } else { 2 };
+                if at(i + width) == Some('\'') {
+                    for k in i + 1..i + width {
+                        blank(&mut out, k);
+                    }
+                    i += width + 1;
+                } else {
+                    i += 1;
+                }
+            }
+            _ => i += 1,
+        }
+    }
+    out
+}
+
+/// The level and priority a manifest `[lints.clippy]` table assigns to `name`,
+/// or `None` when it assigns none. Priority defaults to 0, as cargo does.
+///
+/// Reads *active* entries only. A `contains` over the whole file cannot tell
+/// `undocumented_unsafe_blocks = "deny"` from the same line commented out, so
+/// the gate could be switched off by prefixing one `#` and the anchor would stay
+/// green — the precise failure it exists to prevent. Tracking the table header
+/// also keeps a same-named `[lints.rust]` entry from answering for the clippy
+/// one.
+///
+/// Both value forms cargo accepts are read: `name = "level"` and the inline
+/// table `name = { level = "level", priority = N }`. Codex flagged the missing
+/// second form on this PR (#408) — a `value == "allow"` comparison sees the
+/// whole table and matches nothing, so `restriction = { level = "allow",
+/// priority = 1 }` would switch the unsafe gate off with this test still green.
+///
+/// Priority is read because it decides whether a *group* entry wins. Measured
+/// against the real gate: with `undocumented_unsafe_blocks = "deny"` present,
+/// `restriction = { level = "allow", priority = 1 }` turns the unsafe gate off,
+/// while the same entry at `priority = -1` leaves it enforcing. Flagging the
+/// second would reject a legitimate manifest.
+///
+/// Deliberately not a TOML parser: this crate has no TOML dependency, and both
+/// forms carry what is needed in quotes on the entry's first line.
+fn manifest_clippy_entry(manifest: &str, name: &str) -> Option<(String, i64)> {
+    let dotted = format!("clippy.{name}");
+    let mut table = "";
+    for line in manifest.lines().map(str::trim) {
+        if line.starts_with('#') {
+            continue;
+        }
+        if let Some(header) = line.strip_prefix('[') {
+            table = header.split(']').next().unwrap_or_default();
+            continue;
+        }
+        // Under `[lints]`, cargo also accepts the dotted key `clippy.<lint>` —
+        // a form a bare `starts_with(name)` never sees.
+        let rest = match table {
+            "lints.clippy" => line.strip_prefix(name),
+            "lints" => line.strip_prefix(dotted.as_str()),
+            _ => None,
+        };
+        // `strip_prefix` alone would match `unwrap_used_extra`; require the
+        // assignment to begin right after the name.
+        let Some(rest) = rest.map(str::trim_start).filter(|r| r.starts_with('=')) else {
+            continue;
+        };
+        // Single quotes are valid TOML, so a quote-specific split would read
+        // `= 'allow'` as no level at all and call a downgraded lint clean.
+        let level = rest
+            .split(['"', '\''])
+            .nth(1)
+            .unwrap_or_default()
+            .to_string();
+        let priority = rest
+            .split_once("priority")
+            .and_then(|(_, tail)| {
+                let digits: String = tail
+                    .trim_start()
+                    .trim_start_matches('=')
+                    .trim()
+                    .chars()
+                    .take_while(|c| c.is_ascii_digit() || *c == '-')
+                    .collect();
+                digits.parse::<i64>().ok()
+            })
+            .unwrap_or(0);
+        return Some((level, priority));
+    }
+    None
+}
+
+/// `true` when `level` still enforces.
+fn level_enforces(level: &str) -> bool {
+    level == "deny" || level == "forbid"
 }
