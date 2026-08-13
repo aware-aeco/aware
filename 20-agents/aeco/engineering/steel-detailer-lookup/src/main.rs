@@ -1,3 +1,24 @@
+//! Deterministic clause/section lookup for the steel-detailer-us / -uk / -eu
+//! AWARE agents. One source, three `[[bin]]` names; the binary picks its rule
+//! set from `argv[0]`. Built and shipped by `.github/workflows/release.yml`
+//! next to `aware` in every install archive.
+
+// CLAUDE.md §Code style: "Errors as data, not exceptions … No `unwrap()`
+// outside of tests + main entry." `cli/` gates that with this exact attribute
+// (see `cli/src/main.rs`); this crate is a separate cargo workspace under
+// `20-agents/`, so nothing here inherited it and six `unwrap()` calls had
+// accumulated in `run_lookup` / `run_describe` with every gate green — because
+// until now no gate ran on this crate at all.
+//
+// Same form as `cli/`, for the same reason stated there: `[lints.clippy]`
+// applies to every target in the package and would also fire on the unit tests
+// below, where CLAUDE.md explicitly permits `unwrap()`. `cfg_attr(not(test), …)`
+// encodes the carve-out exactly — the bin targets are linted, the same crate
+// compiled under `cfg(test)` is not.
+//
+// `tests/lint_gates.rs` is this gate's negative control.
+#![cfg_attr(not(test), deny(clippy::unwrap_used, clippy::expect_used))]
+
 use std::collections::HashSet;
 use std::env;
 use std::fs;
@@ -144,7 +165,9 @@ fn main() {
             eprintln!("  lookup --rule <id>           look up a specific rule by id");
             eprintln!("  lookup --category <cat>      list all rules in a category");
             eprintln!("  lookup --list                list all rule ids");
-            eprintln!("  lookup --json-stdin          read {{rule|category}} as JSON on stdin (AWARE cli transport)");
+            eprintln!(
+                "  lookup --json-stdin          read {{rule|category}} as JSON on stdin (AWARE cli transport)"
+            );
             eprintln!("  describe                     show agent metadata and category list");
             process::exit(2);
         }
@@ -217,15 +240,21 @@ fn run_lookup(rules: &[serde_json::Value], args: &[String], _db: &serde_json::Va
     let not_found_code = if json_mode { 0 } else { 1 };
 
     if inputs.list_all {
-        let ids: Vec<&str> = rules.iter().filter_map(|r| r["id"].as_str()).collect();
-        println!("{}", serde_json::to_string_pretty(&ids).unwrap());
+        // Built as a `Value` rather than serialized from `Vec<&str>` so it can go
+        // through `print_json` with the rest — `Value::from(&str)` is infallible.
+        let ids: serde_json::Value = rules
+            .iter()
+            .filter_map(|r| r["id"].as_str())
+            .map(serde_json::Value::from)
+            .collect();
+        print_json(&ids);
         return;
     }
 
     if let Some(id) = inputs.rule_id.as_deref() {
         match find_rule(rules, id) {
             Some(rule) => {
-                println!("{}", serde_json::to_string_pretty(rule).unwrap());
+                print_json(rule);
                 // exit 0 = found
             }
             None => {
@@ -238,7 +267,7 @@ fn run_lookup(rules: &[serde_json::Value], args: &[String], _db: &serde_json::Va
                     "source_quote": null,
                     "found": false
                 });
-                println!("{}", serde_json::to_string_pretty(&not_found).unwrap());
+                print_json(&not_found);
                 process::exit(not_found_code);
             }
         }
@@ -249,16 +278,18 @@ fn run_lookup(rules: &[serde_json::Value], args: &[String], _db: &serde_json::Va
         let filtered = rules_in_category(rules, cat);
         if filtered.is_empty() {
             let result = serde_json::json!({ "category": cat, "rules": [], "found": false });
-            println!("{}", serde_json::to_string_pretty(&result).unwrap());
+            print_json(&result);
             process::exit(not_found_code);
         } else {
             let result = serde_json::json!({ "category": cat, "rules": filtered });
-            println!("{}", serde_json::to_string_pretty(&result).unwrap());
+            print_json(&result);
         }
         return;
     }
 
-    eprintln!("lookup requires --rule <id>, --category <cat>, or --list (or a JSON {{rule|category}} on stdin with --json-stdin)");
+    eprintln!(
+        "lookup requires --rule <id>, --category <cat>, or --list (or a JSON {{rule|category}} on stdin with --json-stdin)"
+    );
     process::exit(2);
 }
 
@@ -278,7 +309,26 @@ fn run_describe(rules: &[serde_json::Value], db: &serde_json::Value) {
         "rule_count": rules.len(),
         "categories": cat_list
     });
-    println!("{}", serde_json::to_string_pretty(&info).unwrap());
+    print_json(&info);
+}
+
+/// Print `value` as pretty JSON on stdout, or report the failure and exit 2.
+///
+/// Every result this binary emits goes through here. `to_string_pretty` returns
+/// a `Result`, and the six call sites used to `unwrap()` it — a panic message
+/// with no context on stderr, and exit code 101 rather than the 2 this binary
+/// uses for every other hard error, which the cli transport reads as a failed
+/// invocation with an unparseable reason (see `cli/src/runtime/invoker.rs`).
+/// Serializing a `Value` is not expected to fail; "not expected to" is exactly
+/// the claim the gate at the top of this file no longer takes on trust.
+fn print_json(value: &serde_json::Value) {
+    match serde_json::to_string_pretty(value) {
+        Ok(text) => println!("{text}"),
+        Err(e) => {
+            eprintln!("error: cannot serialize result to JSON: {e}");
+            process::exit(2);
+        }
+    }
 }
 
 /// Find a rule by its exact `id`. Pure — the curated connection rules and the merged
@@ -352,9 +402,10 @@ mod tests {
         let rules = merged();
         let secs = rules_in_category(&rules, "sections");
         assert_eq!(secs.len(), 2);
-        assert!(secs
-            .iter()
-            .all(|r| r["id"].as_str().unwrap().starts_with("section.")));
+        assert!(
+            secs.iter()
+                .all(|r| r["id"].as_str().unwrap().starts_with("section."))
+        );
         assert!(rules_in_category(&rules, "nonexistent").is_empty());
     }
 }

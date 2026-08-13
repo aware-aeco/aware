@@ -4,7 +4,10 @@ members = ["."]
 [package]
 name = "steel-detailer-lookup"
 version = "0.1.0"
-edition = "2021"
+# CLAUDE.md §Tech stack pins the language at "Rust (edition 2024)"; this crate
+# was still on 2021 because no gate compiled it. Bumped with the CI wiring that
+# now does.
+edition = "2024"
 description = "Deterministic clause-lookup CLI for steel-detailer-us, steel-detailer-uk and steel-detailer-eu AWARE agents"
 
 [[bin]]
@@ -21,3 +24,17 @@ path = "src/main.rs"
 
 [dependencies]
 serde_json = "1"
+
+[dev-dependencies]
+# Scratch crates for the lint-gate negative control in `tests/lint_gates.rs`.
+# Dev-only, so `cargo build --release` — what release.yml runs — never sees it.
+tempfile = "3.14"
+
+# CLAUDE.md §Code style: "No `unsafe` unless explicitly justified with a comment
+# block explaining the invariant." `cargo clippy -D warnings` does not enable
+# `undocumented_unsafe_blocks` — it lives in the `restriction` group — so the
+# rule needs denying by name. Mirrors `cli/Cargo.toml`, which took the same step
+# for the same reason. This crate has no `unsafe` today; the gate is what keeps
+# it that way without a review catching it.
+[lints.clippy]
+undocumented_unsafe_blocks = "deny"
