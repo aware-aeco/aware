@@ -262,6 +262,14 @@ mod tests {
         const SET: &str = "AWARE_TEST_ENV_GUARD_SCOPE_SET";
         const CLEARED: &str = "AWARE_TEST_ENV_GUARD_SCOPE_CLEARED";
 
+        // Snapshot both before anything is touched. Asserting these names are
+        // absent would be a claim about the runner's environment rather than
+        // about `scope`, and the cleanup below would delete a value the test
+        // did not create — so what is checked is that each ends where it
+        // started, whatever that was.
+        let set_before = std::env::var_os(SET);
+        let cleared_before = std::env::var_os(CLEARED);
+
         let ambient = EnvVarGuard::set(CLEARED, "ambient");
         assert_eq!(std::env::var(CLEARED).as_deref(), Ok("ambient"));
         drop(ambient);
@@ -283,17 +291,28 @@ mod tests {
             );
         }
 
-        assert!(
-            std::env::var_os(SET).is_none(),
-            "a variable that was absent before the scope must be absent after it"
+        assert_eq!(
+            std::env::var_os(SET),
+            set_before,
+            "an overridden variable must come back to whatever it was before the \
+             scope — absent if it was absent, its own value if it had one"
         );
         assert_eq!(
             std::env::var(CLEARED).as_deref(),
             Ok("ambient"),
             "an unset must be undone, not left as a removal"
         );
-        // SAFETY: as above — this key belongs to this test alone.
-        unsafe { std::env::remove_var(CLEARED) };
+        // Put `CLEARED` back where it started rather than removing it. The
+        // `set_var` above overwrote whatever the runner had; an unconditional
+        // remove here would leave the test having deleted it.
+        // SAFETY: as above — no guard is held, and this key belongs to this
+        // test alone.
+        unsafe {
+            match &cleared_before {
+                Some(value) => std::env::set_var(CLEARED, value),
+                None => std::env::remove_var(CLEARED),
+            }
+        }
     }
 
     /// A rejected `scope` must leave the environment exactly as it found it.
