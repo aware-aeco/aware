@@ -219,16 +219,29 @@ fn nobody_reopened_the_gate_from_the_manifest() {
          that lint on its own"
     );
 
+    let reopened = manifest_reopenings(&manifest);
+    assert!(
+        reopened.is_empty(),
+        "these `[lints.clippy]` entries put a gated lint below `deny`:\n  {}",
+        reopened.join("\n  ")
+    );
+}
+
+/// Every way `manifest` puts a gated lint below `deny`, directly or by group.
+///
+/// Pure, so `the_manifest_reader_agrees_with_clippy` can drive it over forms
+/// whose real effect has been measured.
+fn manifest_reopenings(manifest: &str) -> Vec<String> {
     let mut reopened: Vec<String> = GATED_LINTS
         .iter()
         .filter_map(|lint| {
-            let (level, _) = manifest_clippy_entry(&manifest, lint)?;
+            let (level, _) = manifest_clippy_entry(manifest, lint)?;
             (!level_enforces(&level)).then(|| format!("{lint} = \"{level}\""))
         })
         .collect();
 
     // Groups need a priority comparison, not a priority threshold.
-    // `undocumented_unsafe_blocks` is the one gate that lives only in this
+    // `undocumented_unsafe_blocks` is the one gate that lives only in the
     // manifest, so a group entry that outranks it switches it off with every
     // other check in this file still green. Cargo applies the higher-priority
     // entry last, so the group wins exactly when its priority is strictly
@@ -241,14 +254,14 @@ fn nobody_reopened_the_gate_from_the_manifest() {
     // both priorities are negative, and comparing it against nothing at all
     // would reject the legitimate manifests on the right.
     for group in GATED_GROUPS {
-        let Some((group_level, group_priority)) = manifest_clippy_entry(&manifest, group) else {
+        let Some((group_level, group_priority)) = manifest_clippy_entry(manifest, group) else {
             continue;
         };
         if level_enforces(&group_level) {
             continue;
         }
         for lint in GATED_LINTS {
-            let Some((lint_level, lint_priority)) = manifest_clippy_entry(&manifest, lint) else {
+            let Some((lint_level, lint_priority)) = manifest_clippy_entry(manifest, lint) else {
                 continue;
             };
             if level_enforces(&lint_level) && group_priority > lint_priority {
@@ -259,12 +272,144 @@ fn nobody_reopened_the_gate_from_the_manifest() {
             }
         }
     }
+    reopened
+}
 
-    assert!(
-        reopened.is_empty(),
-        "these `[lints.clippy]` entries put a gated lint below `deny`:\n  {}",
-        reopened.join("\n  ")
+/// The `[lints.clippy]` table as this crate ships it.
+const SHIPPED_LINTS: &str = "[lints.clippy]\nundocumented_unsafe_blocks = \"deny\"\n";
+
+/// `true` when clippy still rejects an undocumented `unsafe` block in a scratch
+/// crate carrying `lints` as its `[lints.clippy]` table.
+///
+/// This is the oracle. Every other assertion about the manifest reader is a
+/// claim about TOML syntax written by hand, and two rounds of review on #408
+/// found forms those claims had missed. Asking clippy directly cannot miss one.
+fn unsafe_gate_holds(lints: &str) -> bool {
+    let dir = tempfile::tempdir().expect("tempdir");
+    let root = dir.path();
+    std::fs::create_dir_all(root.join("src")).expect("src dir");
+    std::fs::write(
+        root.join("Cargo.toml"),
+        format!(
+            "[package]\nname = \"gate_probe\"\nversion = \"0.0.0\"\nedition = \"2024\"\n\n[workspace]\n\n{lints}"
+        ),
+    )
+    .expect("write manifest");
+    // An `unsafe` block with no `// SAFETY:` above it — the exact thing
+    // `undocumented_unsafe_blocks` exists to reject. Never executed: only
+    // clippy runs here, the binary is not.
+    std::fs::write(
+        root.join("src/main.rs"),
+        "fn main() {\n    unsafe {\n        std::ptr::null::<u8>();\n    }\n}\n",
+    )
+    .expect("write main");
+
+    let out = Command::new("cargo")
+        .args(["clippy", "--offline", "--quiet"])
+        .current_dir(root)
+        .env("CARGO_TARGET_DIR", root.join("target"))
+        .output()
+        .expect("run cargo clippy");
+    let diagnostics = format!(
+        "{}{}",
+        String::from_utf8_lossy(&out.stdout),
+        String::from_utf8_lossy(&out.stderr)
     );
+    // Named, not merely non-zero: a scratch crate that failed to build for some
+    // unrelated reason would otherwise read as an enforcing gate.
+    let named = diagnostics.contains("undocumented_unsafe_blocks");
+    // And the converse trap, which this test walked into while being written: a
+    // manifest cargo *rejects* names no lint either, so it would read as "gate
+    // off" and quietly agree with whatever the reader said. A failure that is
+    // not the lint firing means the probe broke, not that the gate is open.
+    assert!(
+        named || out.status.success(),
+        "the probe crate failed for a reason other than the gate — the manifest \
+         under test may not be valid TOML at all:\n{lints}\n{diagnostics}"
+    );
+    named
+}
+
+/// The reader's verdict must match what clippy actually does, form by form.
+///
+/// Hand-written fixtures encode what their author believed cargo accepts, and
+/// on #408 that belief was wrong four times running — a single-line inline
+/// table, a multiline one, a `+`-signed priority, and a lint promoted to its own
+/// sub-table. Each was measured to switch the unsafe gate off while the reader
+/// called the manifest clean. This test measures instead of believing: it runs
+/// clippy over each form and fails when the reader disagrees with the result.
+#[test]
+fn the_manifest_reader_agrees_with_clippy() {
+    if !clippy_available() {
+        eprintln!("skipping: cargo clippy unavailable");
+        return;
+    }
+    let deny = "undocumented_unsafe_blocks = \"deny\"";
+    let cases = [
+        (
+            "the table as this crate ships it",
+            SHIPPED_LINTS.to_string(),
+        ),
+        (
+            "a single-line inline table outranking the deny",
+            format!(
+                "[lints.clippy]\n{deny}\nrestriction = {{ level = \"allow\", priority = 1 }}\n"
+            ),
+        ),
+        (
+            "a multiline inline table",
+            format!(
+                "[lints.clippy]\n{deny}\nrestriction = {{\n  level = \"allow\",\n  priority = 1,\n}}\n"
+            ),
+        ),
+        (
+            "an explicitly `+`-signed priority",
+            format!(
+                "[lints.clippy]\n{deny}\nrestriction = {{ level = \"allow\", priority = +1 }}\n"
+            ),
+        ),
+        (
+            "the group promoted to its own sub-table",
+            format!(
+                "[lints.clippy]\n{deny}\n\n[lints.clippy.restriction]\nlevel = \"allow\"\npriority = 1\n"
+            ),
+        ),
+        (
+            "a group that loses the priority comparison",
+            format!(
+                "[lints.clippy]\n{deny}\nrestriction = {{ level = \"allow\", priority = -1 }}\n"
+            ),
+        ),
+        (
+            "the lint downgraded outright",
+            "[lints.clippy]\nundocumented_unsafe_blocks = \"allow\"\n".to_string(),
+        ),
+        (
+            // Both dotted under one `[lints]` header. `[lints.clippy]` followed
+            // by a second `[lints]` is a duplicate key and not valid TOML — a
+            // fixture this test was first written with, and which the hardened
+            // `unsafe_gate_holds` now refuses to read as an open gate.
+            "the dotted keys cargo accepts under `[lints]`",
+            "[lints]\nclippy.undocumented_unsafe_blocks = \"deny\"\nclippy.restriction = { level = \"allow\", priority = 1 }\n".to_string(),
+        ),
+    ];
+
+    for (what, lints) in cases {
+        let holds = unsafe_gate_holds(&lints);
+        let reader_says_clean = manifest_reopenings(&lints).is_empty();
+        assert_eq!(
+            reader_says_clean,
+            holds,
+            "the manifest reader and clippy disagree about {what}. \
+             clippy: gate {}. reader: manifest {}.\n{lints}",
+            if holds { "HOLDS" } else { "is OFF" },
+            if reader_says_clean {
+                "is clean"
+            } else {
+                "re-opens the gate"
+            }
+        );
+    }
 }
 
 /// Negative control for [`gate_reopeners`]. The scan above reads a `src/main.rs`
@@ -348,11 +493,26 @@ fn manifest_lint_reader_matches_its_contract() {
             Some(("allow", 0)),
         ),
         (
-            // The form Codex flagged on this PR (#408): a `value == \"allow\"`
-            // comparison reads the whole inline table and matches nothing.
             "the inline-table form cargo also accepts",
             "[lints.clippy]\nundocumented_unsafe_blocks = { level = \"warn\", priority = 1 }\n",
             Some(("warn", 1)),
+        ),
+        (
+            // Every row below was measured against the real gate before being
+            // written down — see `cargo_accepts_the_forms_this_reader_claims`.
+            "the multiline inline table (#408, round 2)",
+            "[lints.clippy]\nundocumented_unsafe_blocks = {\n  level = \"allow\",\n  priority = 1,\n}\n",
+            Some(("allow", 1)),
+        ),
+        (
+            "an explicitly `+`-signed priority (#408, round 2)",
+            "[lints.clippy]\nundocumented_unsafe_blocks = { level = \"allow\", priority = +1 }\n",
+            Some(("allow", 1)),
+        ),
+        (
+            "the lint promoted to its own sub-table",
+            "[lints.clippy.undocumented_unsafe_blocks]\nlevel = \"allow\"\npriority = 1\n",
+            Some(("allow", 1)),
         ),
         (
             "a negative priority, which loses to the specific lint",
@@ -675,66 +835,54 @@ fn blank_comments_and_strings(chars: &[char]) -> Vec<char> {
 /// also keeps a same-named `[lints.rust]` entry from answering for the clippy
 /// one.
 ///
-/// Both value forms cargo accepts are read: `name = "level"` and the inline
-/// table `name = { level = "level", priority = N }`. Codex flagged the missing
-/// second form on this PR (#408) — a `value == "allow"` comparison sees the
-/// whole table and matches nothing, so `restriction = { level = "allow",
-/// priority = 1 }` would switch the unsafe gate off with this test still green.
+/// Parsed as TOML rather than scanned, and that is the whole point. A
+/// line-at-a-time reader was tried first and shipped three separate holes,
+/// each of which cargo 1.95.0 accepts and each of which was *measured* to
+/// switch the unsafe gate off with this test still green:
+///
+/// | form | what the scanner did |
+/// |---|---|
+/// | `restriction = { level = "allow", priority = 1 }` | compared the whole inline table against `"allow"`, matched nothing |
+/// | `restriction = {`⏎`  level = "allow",`⏎`  priority = 1,`⏎`}` | read only the first line, recorded an empty level at priority 0 |
+/// | `priority = +1` | a digits-and-`-` filter rejected `+`, so the parse failed and defaulted to 0 |
+///
+/// A fourth, `[lints.clippy.restriction]` as its own sub-table, was found while
+/// checking the first three. That is four for four against a hand-rolled
+/// reader, so this reads the manifest the way cargo does instead of guessing at
+/// its syntax — `+1`, multiline tables, sub-tables and dotted keys all come out
+/// right because the parser, not this function, decides what they mean.
+///
+/// One thing the parse gives for free that the scanner needed a special case
+/// for: a commented-out `undocumented_unsafe_blocks = "deny"` is not data, so
+/// it cannot answer for the live entry. A `contains` over the file could not
+/// tell the two apart, and the gate would have been switchable off by prefixing
+/// one `#`.
 ///
 /// Priority is read because it decides whether a *group* entry wins. Measured
 /// against the real gate: with `undocumented_unsafe_blocks = "deny"` present,
 /// `restriction = { level = "allow", priority = 1 }` turns the unsafe gate off,
 /// while the same entry at `priority = -1` leaves it enforcing. Flagging the
 /// second would reject a legitimate manifest.
-///
-/// Deliberately not a TOML parser: this crate has no TOML dependency, and both
-/// forms carry what is needed in quotes on the entry's first line.
 fn manifest_clippy_entry(manifest: &str, name: &str) -> Option<(String, i64)> {
-    let dotted = format!("clippy.{name}");
-    let mut table = "";
-    for line in manifest.lines().map(str::trim) {
-        if line.starts_with('#') {
-            continue;
+    // `Table`, not `Value`: in toml 1.x `Value`'s `FromStr` parses a single TOML
+    // *value*, so a whole document fails with "unexpected content" at the first
+    // table header.
+    let parsed: toml::Table = manifest.parse().expect("manifest is not valid TOML");
+    // `[lints.clippy]`, `[lints] clippy.<name> = …` and `[lints.clippy.<name>]`
+    // are three spellings of one path, and the parser has already reconciled
+    // them — so navigating the path covers all three with no cases here.
+    let entry = parsed.get("lints")?.get("clippy")?.get(name)?;
+    match entry {
+        // `name = "level"`. Priority defaults to 0, as cargo does.
+        toml::Value::String(level) => Some((level.clone(), 0)),
+        // `name = { level = "…", priority = N }`, however it is laid out.
+        toml::Value::Table(table) => {
+            let level = table.get("level")?.as_str()?.to_string();
+            let priority = table.get("priority").and_then(toml::Value::as_integer);
+            Some((level, priority.unwrap_or(0)))
         }
-        if let Some(header) = line.strip_prefix('[') {
-            table = header.split(']').next().unwrap_or_default();
-            continue;
-        }
-        // Under `[lints]`, cargo also accepts the dotted key `clippy.<lint>` —
-        // a form a bare `starts_with(name)` never sees.
-        let rest = match table {
-            "lints.clippy" => line.strip_prefix(name),
-            "lints" => line.strip_prefix(dotted.as_str()),
-            _ => None,
-        };
-        // `strip_prefix` alone would match `unwrap_used_extra`; require the
-        // assignment to begin right after the name.
-        let Some(rest) = rest.map(str::trim_start).filter(|r| r.starts_with('=')) else {
-            continue;
-        };
-        // Single quotes are valid TOML, so a quote-specific split would read
-        // `= 'allow'` as no level at all and call a downgraded lint clean.
-        let level = rest
-            .split(['"', '\''])
-            .nth(1)
-            .unwrap_or_default()
-            .to_string();
-        let priority = rest
-            .split_once("priority")
-            .and_then(|(_, tail)| {
-                let digits: String = tail
-                    .trim_start()
-                    .trim_start_matches('=')
-                    .trim()
-                    .chars()
-                    .take_while(|c| c.is_ascii_digit() || *c == '-')
-                    .collect();
-                digits.parse::<i64>().ok()
-            })
-            .unwrap_or(0);
-        return Some((level, priority));
+        _ => None,
     }
-    None
 }
 
 /// `true` when `level` still enforces.

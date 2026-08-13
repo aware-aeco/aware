@@ -26,9 +26,18 @@ path = "src/main.rs"
 serde_json = "1"
 
 [dev-dependencies]
-# Scratch crates for the lint-gate negative control in `tests/lint_gates.rs`.
-# Dev-only, so `cargo build --release` — what release.yml runs — never sees it.
+# Both are for the lint-gate negative control in `tests/lint_gates.rs`, and both
+# are dev-only — `cargo build --release`, what release.yml runs, never sees them.
+#
+# `tempfile` builds the scratch crates the clippy probes lint. `toml` reads the
+# `[lints.clippy]` table below, replacing a hand-rolled line-at-a-time reader
+# that missed three separate forms cargo accepts — a single-line inline table, a
+# multiline one, and a `+`-signed priority — each of which was *measured* to
+# switch the unsafe gate off with the test still green (#408). A guard for
+# "nobody re-opened this gate" has to read the manifest the way cargo does, so
+# it parses rather than pattern-matches.
 tempfile = "3.14"
+toml = "1"
 
 # CLAUDE.md §Code style: "No `unsafe` unless explicitly justified with a comment
 # block explaining the invariant." `cargo clippy -D warnings` does not enable
