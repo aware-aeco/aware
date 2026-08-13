@@ -20,15 +20,16 @@
 //!   * the `cfg(test)` carve-out still holds, witnessed by a companion probe so
 //!     the assertion cannot pass by never compiling a test target at all;
 //!   * `src/main.rs` still carries the gate verbatim;
-//!   * nobody has re-opened it with an `#[allow]` / `#[expect]` / a
-//!     `clippy::restriction` group allow — including one rustfmt has wrapped
-//!     across lines, or nested in a `cfg_attr` predicate — nor from
-//!     `[lints.clippy]` in the manifest, where a group entry that outranks a
-//!     specific `deny` switches it off.
+//!   * no production source under `src/` — every `.rs` file, not just the crate
+//!     root, since a module can `#![allow]` its way out from under one — has
+//!     re-opened it with an `#[allow]` / `#[expect]` / a `clippy::restriction`
+//!     group allow, including one rustfmt has wrapped across lines or nested in
+//!     a `cfg_attr` predicate, nor from `[lints.clippy]` in the manifest, where
+//!     a group entry that outranks a specific `deny` switches it off.
 //!
-//! The last two scan artefacts that are correct today — the real `src/main.rs`,
-//! the real `Cargo.toml` — so they would report clean both when they work and
-//! when they have stopped matching anything at all. Each therefore has a
+//! The last two scan artefacts that are correct today — the real sources under
+//! `src/`, the real `Cargo.toml` — so they would report clean both when they
+//! work and when they have stopped matching anything at all. Each therefore has a
 //! negative control driving its classifier over synthetic input:
 //! `gate_reopener_classifier_matches_its_contract` and
 //! `manifest_lint_reader_matches_its_contract`.
@@ -189,16 +190,75 @@ fn crate_root_actually_carries_the_gate() {
     );
 }
 
+/// Every production `.rs` file, not just `src/main.rs`.
+///
+/// The crate is a single file today, and scanning only that file was the gate's
+/// blind spot: a crate-root `deny` is overridden by an `#![allow(…)]` at the top
+/// of any *other* module, so the first `src/helper.rs` this crate grows could
+/// re-open the gate with nothing reading it. Walking `src/` means the guard
+/// survives the crate being split into modules, which is precisely when a
+/// hand-listed path stops covering it.
 #[test]
 fn nobody_reopened_the_gate_from_source() {
-    let source = std::fs::read_to_string(manifest_dir().join("src/main.rs")).expect("read main.rs");
-    let reopened = gate_reopeners(&source);
+    let root = manifest_dir();
+    let mut files = Vec::new();
+    collect_rs_files(&root.join("src"), &mut files);
+    files.sort();
+
+    // A floor, not an is-empty check: a walk that silently recovered nothing
+    // would report a clean scan. `src/main.rs` is the file the crate cannot
+    // exist without, so its presence is what proves the walk actually ran.
     assert!(
-        reopened.is_empty(),
-        "`src/main.rs` re-opens the gate it is supposed to be under. \
-         CLAUDE.md forbids silencing a gate rather than fixing the violation \
-         under it:\n{reopened:#?}"
+        files.contains(&root.join("src/main.rs")),
+        "the walk of {} did not reach `src/main.rs`, so a clean result means \
+         nothing:\n{files:#?}",
+        root.join("src").display()
     );
+
+    let mut offenders = Vec::new();
+    for file in &files {
+        // Not `else { continue }`. A file this gate cannot read is a file it
+        // cannot clear, and turning that into silence is the exact failure mode
+        // CLAUDE.md §Engineering rules forbids — in the file that enforces it.
+        let source = std::fs::read_to_string(file)
+            .unwrap_or_else(|e| panic!("cannot read {}: {e}", file.display()));
+        let relative = file
+            .strip_prefix(root)
+            .unwrap_or(file)
+            .display()
+            .to_string();
+        for hit in gate_reopeners(&source) {
+            offenders.push(format!("{relative}:{}: {}", hit.line, hit.text));
+        }
+    }
+
+    assert!(
+        offenders.is_empty(),
+        "these attributes re-open the gate the crate is supposed to be under. \
+         CLAUDE.md forbids silencing a gate rather than fixing the violation \
+         under it:\n  {}",
+        offenders.join("\n  ")
+    );
+}
+
+/// Collect every `.rs` file under `dir`, recursively.
+///
+/// Panics rather than returning early on an unreadable directory. Turning a
+/// failed walk into a short file list would hand the caller a clean scan of
+/// almost nothing — coverage collapse looks exactly like coverage.
+fn collect_rs_files(dir: &Path, out: &mut Vec<std::path::PathBuf>) {
+    let entries =
+        std::fs::read_dir(dir).unwrap_or_else(|e| panic!("cannot walk {}: {e}", dir.display()));
+    for entry in entries {
+        let path = entry
+            .unwrap_or_else(|e| panic!("cannot read an entry in {}: {e}", dir.display()))
+            .path();
+        if path.is_dir() {
+            collect_rs_files(&path, out);
+        } else if path.extension().is_some_and(|ext| ext == "rs") {
+            out.push(path);
+        }
+    }
 }
 
 #[test]
@@ -318,16 +378,21 @@ fn unsafe_gate_holds(lints: &str) -> bool {
     // Named, not merely non-zero: a scratch crate that failed to build for some
     // unrelated reason would otherwise read as an enforcing gate.
     let named = diagnostics.contains("undocumented_unsafe_blocks");
+    // And rejected, not merely named: at `warn` the lint still fires and still
+    // prints its name, but clippy exits 0 and the undocumented `unsafe` ships.
+    // A gate that only warns is not a gate, so naming alone must not read as
+    // one — `level_enforces` agrees, counting `deny`/`forbid` and nothing else.
+    let rejected = !out.status.success();
     // And the converse trap, which this test walked into while being written: a
     // manifest cargo *rejects* names no lint either, so it would read as "gate
     // off" and quietly agree with whatever the reader said. A failure that is
     // not the lint firing means the probe broke, not that the gate is open.
     assert!(
-        named || out.status.success(),
+        named || !rejected,
         "the probe crate failed for a reason other than the gate — the manifest \
          under test may not be valid TOML at all:\n{lints}\n{diagnostics}"
     );
-    named
+    rejected && named
 }
 
 /// The reader's verdict must match what clippy actually does, form by form.
@@ -383,6 +448,16 @@ fn the_manifest_reader_agrees_with_clippy() {
         (
             "the lint downgraded outright",
             "[lints.clippy]\nundocumented_unsafe_blocks = \"allow\"\n".to_string(),
+        ),
+        (
+            // Measured, not assumed: at `warn` the lint still fires and still
+            // prints its own name, but clippy exits 0 and the undocumented
+            // `unsafe` compiles. An oracle keyed on the name alone read that as
+            // an enforcing gate. The reader has always counted `deny`/`forbid`
+            // and nothing else, so this case is what holds the two to the same
+            // meaning of "enforcing".
+            "the lint downgraded to a warning",
+            "[lints.clippy]\nundocumented_unsafe_blocks = \"warn\"\n".to_string(),
         ),
         (
             // Both dotted under one `[lints]` header. `[lints.clippy]` followed
