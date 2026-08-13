@@ -305,6 +305,16 @@ mod tests {
         const APPLIED_FIRST: &str = "AWARE_TEST_ENV_GUARD_DUP_FIRST";
         const LISTED_TWICE: &str = "AWARE_TEST_ENV_GUARD_DUP_TWICE";
 
+        // Snapshot rather than requiring absence. "Exactly as it found it" is a
+        // comparison against whatever was actually there — asserting `is_none`
+        // would instead assert something about the runner's environment, and
+        // fail on a machine that happens to export these names even though
+        // `scope` behaved correctly.
+        let before = (
+            std::env::var_os(APPLIED_FIRST),
+            std::env::var_os(LISTED_TWICE),
+        );
+
         let result = std::panic::catch_unwind(|| {
             EnvVarGuard::scope(&[
                 (APPLIED_FIRST, Some(OsStr::new("leaked"))),
@@ -314,13 +324,14 @@ mod tests {
         });
 
         assert!(result.is_err(), "a duplicate key must panic");
-        assert!(
-            std::env::var_os(APPLIED_FIRST).is_none(),
-            "an entry before the duplicate must not have been written"
-        );
-        assert!(
-            std::env::var_os(LISTED_TWICE).is_none(),
-            "the duplicated variable must not have been written either"
+        assert_eq!(
+            (
+                std::env::var_os(APPLIED_FIRST),
+                std::env::var_os(LISTED_TWICE),
+            ),
+            before,
+            "a rejected scope must leave every variable exactly as it found it, \
+             including the entries listed before the duplicate"
         );
     }
 
