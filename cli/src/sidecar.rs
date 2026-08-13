@@ -683,9 +683,9 @@ mod tests {
             &script,
             format!(
                 "#!/bin/sh\ncat > {seen}\ncat {out}\ncat {err} >&2\n",
-                seen = seen.display(),
-                out = out.display(),
-                err = err.display(),
+                seen = sh_quote(&seen),
+                out = sh_quote(&out),
+                err = sh_quote(&err),
             ),
         )
         .unwrap();
@@ -693,9 +693,32 @@ mod tests {
         script
     }
 
+    /// Single-quote a path for `/bin/sh`. These paths come from `TMPDIR`, which
+    /// on a developer's machine can hold spaces or shell metacharacters —
+    /// interpolating one raw would have `sh` word-split it, and the script
+    /// would then read and write the wrong files while still exiting 0. Single
+    /// quotes suppress every expansion; the only character they cannot contain
+    /// is `'` itself, so each one is closed, escaped and reopened.
+    #[cfg(unix)]
+    fn sh_quote(path: &std::path::Path) -> String {
+        format!("'{}'", path.to_string_lossy().replace('\'', r"'\''"))
+    }
+
+    /// A temp dir whose name carries the hazards `sh_quote` exists for: a
+    /// space, an apostrophe, and a `$`. Every live-path test runs beneath one,
+    /// so the quoting is exercised by the suite rather than asserted in a
+    /// comment — drop the quoting and these tests fail on any machine.
+    #[cfg(unix)]
+    fn hostile_tempdir() -> tempfile::TempDir {
+        tempfile::Builder::new()
+            .prefix("aware sidecar's $fixture ")
+            .tempdir()
+            .unwrap()
+    }
+
     #[cfg(unix)]
     fn reflect_against(stdout_body: &str, stderr_body: &str) -> Result<GeneratedAgent, AwareError> {
-        let tmp = tempfile::tempdir().unwrap();
+        let tmp = hostile_tempdir();
         let script = fake_sidecar(tmp.path(), stdout_body, stderr_body);
         let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", &script);
         reflect_dlls(ReflectDllsArgs {
@@ -710,7 +733,7 @@ mod tests {
     #[cfg(unix)]
     #[test]
     fn request_is_one_newline_terminated_json_object_naming_the_op() {
-        let tmp = tempfile::tempdir().unwrap();
+        let tmp = hostile_tempdir();
         let script = fake_sidecar(
             tmp.path(),
             r#"{"ok":true,"version":"1.0.0","data":{"agent":{"id":"tekla","version":"1",
@@ -884,7 +907,7 @@ mod tests {
     #[cfg(unix)]
     #[test]
     fn coverage_validate_returns_violations_as_a_value_not_an_error() {
-        let tmp = tempfile::tempdir().unwrap();
+        let tmp = hostile_tempdir();
         let script = fake_sidecar(
             tmp.path(),
             r#"{"ok":true,"version":"1.0.0","data":{"coverage_validate":{
@@ -915,7 +938,7 @@ mod tests {
     #[cfg(unix)]
     #[test]
     fn coverage_verbs_do_not_accept_each_others_payloads() {
-        let tmp = tempfile::tempdir().unwrap();
+        let tmp = hostile_tempdir();
         let script = fake_sidecar(
             tmp.path(),
             r#"{"ok":true,"version":"1.0.0","data":{"coverage":{"skills":7}}}"#,
@@ -953,7 +976,7 @@ mod tests {
     #[cfg(unix)]
     #[test]
     fn roslyn_reflection_uses_its_own_binary_and_source_kind() {
-        let tmp = tempfile::tempdir().unwrap();
+        let tmp = hostile_tempdir();
         let script = fake_sidecar(
             tmp.path(),
             r#"{"ok":true,"version":"1.0.0","data":{"agent":{"id":"acme","version":"9.0",
@@ -978,14 +1001,23 @@ mod tests {
         let tmp = tempfile::tempdir().unwrap();
         let fake = tmp.path().join("aware-sidecar");
         std::fs::write(&fake, b"").unwrap();
-        let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", &fake);
+        // `AWARE_ROSLYN` is unset *by the guard*, not merely assumed unset: a
+        // developer who exports it would otherwise either fail this test (an
+        // override pointing at a missing file errors as `AWARE_ROSLYN=… but
+        // file not found`, which names neither `aware-roslyn` nor the fallback)
+        // or pass it vacuously (a valid override returns before the fallback
+        // this test exists to exercise ever runs).
+        let _env = EnvVarGuard::scope(&[
+            ("AWARE_SIDECAR", Some(fake.as_os_str())),
+            ("AWARE_ROSLYN", None),
+        ]);
 
-        // `AWARE_ROSLYN` is unset, so discovery falls through to the
-        // sibling/PATH search. Whatever it finds there, it must never resolve
-        // to whatever `AWARE_SIDECAR` points at — and when it finds nothing it
-        // must say so under its own name, not the sidecar's. (Written to
-        // tolerate a real `aware-roslyn` on the runner's PATH rather than
-        // assuming its absence.)
+        // Discovery therefore falls through to the sibling/PATH search.
+        // Whatever it finds there, it must never resolve to what
+        // `AWARE_SIDECAR` points at — and when it finds nothing it must say so
+        // under its own name, not the sidecar's. The `Ok` arm tolerates a real
+        // `aware-roslyn` on the runner's PATH, which is an environment fact
+        // rather than a defect.
         match discover_roslyn() {
             Ok(found) => assert_ne!(found, fake, "AWARE_ROSLYN must not read AWARE_SIDECAR"),
             Err(AwareError::NotFound(message)) => {

@@ -88,7 +88,7 @@ fn env_lock() -> MutexGuard<'static, ()> {
     }
 }
 
-/// An RAII override of one environment variable, restored on drop.
+/// An RAII override of one or more environment variables, restored on drop.
 ///
 /// Holds the process-wide environment lock for its whole lifetime, so writes
 /// through this type are totally ordered.
@@ -96,10 +96,14 @@ fn env_lock() -> MutexGuard<'static, ()> {
 /// The lock is not reentrant, so a second [`set`](EnvVarGuard::set) on a thread
 /// that already holds a guard cannot succeed; it fails after [`LOCK_TIMEOUT`]
 /// with a message naming the cause. To vary one variable within a test use
-/// [`replace`](EnvVarGuard::replace); to override two at once, extend this type.
+/// [`replace`](EnvVarGuard::replace); to override several at once — including
+/// *unsetting* one so an ambient value in the developer's environment cannot
+/// reach the code under test — use [`scope`](EnvVarGuard::scope).
 pub(crate) struct EnvVarGuard {
-    key: &'static str,
-    previous: Option<std::ffi::OsString>,
+    /// One entry per overridden variable, in the order the overrides were
+    /// applied. `Drop` restores in reverse so a list that names a variable's
+    /// prior state consistently unwinds to exactly the environment it found.
+    saved: Vec<(&'static str, Option<std::ffi::OsString>)>,
     _lock: MutexGuard<'static, ()>,
     /// Makes the guard `!Sync`. Without it `EnvVarGuard` would be `Sync` (a
     /// `MutexGuard` is), letting two threads share one `&EnvVarGuard` and drive
@@ -112,18 +116,47 @@ pub(crate) struct EnvVarGuard {
 impl EnvVarGuard {
     /// Set `key` to `value` until the returned guard drops.
     pub(crate) fn set(key: &'static str, value: impl AsRef<OsStr>) -> Self {
+        Self::scope(&[(key, Some(value.as_ref()))])
+    }
+
+    /// Override every variable in `vars` under a single acquisition of the
+    /// lock, restoring all of them on drop. `Some(value)` sets it; `None`
+    /// *unsets* it.
+    ///
+    /// The `None` form is what makes a test independent of the machine it runs
+    /// on. A discovery path that consults `$FOO` before falling back to a
+    /// search cannot be tested by leaving `$FOO` alone: a developer who has it
+    /// set either fails the test or — worse — passes it vacuously, because the
+    /// fallback under test never runs. Naming the variable with `None` states
+    /// the precondition instead of hoping for it.
+    ///
+    /// Taking the whole list at once rather than allowing a second `set` is
+    /// deliberate: the lock is not reentrant, so nesting guards deadlocks.
+    pub(crate) fn scope(vars: &[(&'static str, Option<&OsStr>)]) -> Self {
         let lock = env_lock();
-        let previous = std::env::var_os(key);
-        // SAFETY: `lock` is held across this write and then moves into the
-        // returned guard, so this is ordered against every other access that
-        // goes through `EnvVarGuard` — the only sanctioned way to mutate the
-        // environment in this binary. It does not exclude a `getenv` from linked
-        // C code or a DNS lookup on another thread; see the module docs for why
-        // no in-process lock can, and why that residue is irreducible here.
-        unsafe { std::env::set_var(key, value) };
+        let mut saved: Vec<(&'static str, Option<std::ffi::OsString>)> =
+            Vec::with_capacity(vars.len());
+        for (key, value) in vars {
+            assert!(
+                !saved.iter().any(|(seen, _)| seen == key),
+                "EnvVarGuard::scope: {key} listed twice, so the value to restore is ambiguous"
+            );
+            saved.push((key, std::env::var_os(key)));
+            match value {
+                // SAFETY: `lock` is held across this write and then moves into
+                // the returned guard, so this is ordered against every other
+                // access that goes through `EnvVarGuard` — the only sanctioned
+                // way to mutate the environment in this binary. It does not
+                // exclude a `getenv` from linked C code or a DNS lookup on
+                // another thread; see the module docs for why no in-process
+                // lock can, and why that residue is irreducible here.
+                Some(value) => unsafe { std::env::set_var(key, value) },
+                // SAFETY: as above, under the same held lock.
+                None => unsafe { std::env::remove_var(key) },
+            }
+        }
         Self {
-            key,
-            previous,
+            saved,
             _lock: lock,
             _not_sync: PhantomData,
         }
@@ -137,11 +170,23 @@ impl EnvVarGuard {
     /// and hand the lock to another test mid-scenario.
     ///
     /// Takes `&mut self` so that a shared `&EnvVarGuard` cannot be used to write.
+    ///
+    /// Single-variable guards only — on a multi-variable [`scope`] there is no
+    /// one variable this could mean, so it panics rather than guessing.
+    ///
+    /// [`scope`]: EnvVarGuard::scope
     pub(crate) fn replace(&mut self, value: impl AsRef<OsStr>) {
+        let [(key, _)] = self.saved.as_slice() else {
+            panic!(
+                "EnvVarGuard::replace needs a single-variable guard, but this one holds {} \
+                 variables; name the variable by building a fresh guard instead",
+                self.saved.len()
+            );
+        };
         // SAFETY: `self._lock` is held for as long as `self` is alive, and
         // `&mut self` proves no other reference to this guard is usable
         // concurrently, so this write carries the same ordering as `set`.
-        unsafe { std::env::set_var(self.key, value) };
+        unsafe { std::env::set_var(key, value) };
     }
 }
 
@@ -150,13 +195,15 @@ impl Drop for EnvVarGuard {
         // The lock is still held: a `Drop` body runs before any of the type's
         // fields are dropped, so `_lock` cannot have been released yet whatever
         // its declaration position. The restore is therefore ordered exactly as
-        // the writes in `set` are.
-        match self.previous.take() {
-            // SAFETY: as in `set`, under the still-held environment lock.
-            Some(previous) => unsafe { std::env::set_var(self.key, previous) },
-            // SAFETY: as above; the variable was unset before this guard ran, so
-            // restoring it means removing it.
-            None => unsafe { std::env::remove_var(self.key) },
+        // the writes in `scope` are.
+        for (key, previous) in std::mem::take(&mut self.saved).into_iter().rev() {
+            match previous {
+                // SAFETY: as in `scope`, under the still-held environment lock.
+                Some(previous) => unsafe { std::env::set_var(key, previous) },
+                // SAFETY: as above; the variable was unset before this guard ran,
+                // so restoring it means removing it.
+                None => unsafe { std::env::remove_var(key) },
+            }
         }
     }
 }
@@ -196,6 +243,49 @@ mod tests {
             std::env::var_os(KEY).is_none(),
             "replace must not overwrite the original value the guard restores"
         );
+    }
+
+    /// The reason `scope` accepts `None`: a test whose subject consults a
+    /// variable before falling back needs that variable *absent*, and it must
+    /// come back afterwards or the guard has corrupted the environment for
+    /// whatever runs next.
+    #[test]
+    fn scope_unsets_a_named_variable_and_puts_it_back() {
+        const SET: &str = "AWARE_TEST_ENV_GUARD_SCOPE_SET";
+        const CLEARED: &str = "AWARE_TEST_ENV_GUARD_SCOPE_CLEARED";
+
+        let ambient = EnvVarGuard::set(CLEARED, "ambient");
+        assert_eq!(std::env::var(CLEARED).as_deref(), Ok("ambient"));
+        drop(ambient);
+
+        // Re-establish the ambient value outside any guard, so the scope below
+        // is genuinely overriding something a developer's shell might have set.
+        // SAFETY: no guard is held and no other environment writer can run —
+        // this test's keys are its own, and every other writer in the binary
+        // goes through the same lock that `scope` takes on the next line.
+        unsafe { std::env::set_var(CLEARED, "ambient") };
+
+        {
+            let _scope =
+                EnvVarGuard::scope(&[(SET, Some(OsStr::new("overridden"))), (CLEARED, None)]);
+            assert_eq!(std::env::var(SET).as_deref(), Ok("overridden"));
+            assert!(
+                std::env::var_os(CLEARED).is_none(),
+                "None must unset the variable for the duration of the scope"
+            );
+        }
+
+        assert!(
+            std::env::var_os(SET).is_none(),
+            "a variable that was absent before the scope must be absent after it"
+        );
+        assert_eq!(
+            std::env::var(CLEARED).as_deref(),
+            Ok("ambient"),
+            "an unset must be undone, not left as a removal"
+        );
+        // SAFETY: as above — this key belongs to this test alone.
+        unsafe { std::env::remove_var(CLEARED) };
     }
 
     #[test]
