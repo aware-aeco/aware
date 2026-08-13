@@ -460,7 +460,22 @@ mod tests {
     /// `to_str` is the exact test `discover_named` will apply later, so this
     /// rejects precisely what it would reject.
     fn readable_tempdir_base() -> PathBuf {
-        match std::env::temp_dir() {
+        readable_base_from(std::env::temp_dir())
+    }
+
+    /// The choice itself, as a pure function of the candidate.
+    ///
+    /// Split out from [`readable_tempdir_base`] so the fallback can be covered
+    /// by passing a non-UTF-8 path in, rather than by pointing the process's
+    /// own `TMPDIR` at one. That distinction is not stylistic: `TMPDIR` is
+    /// process-global, and the many tests in this binary that call
+    /// `tempfile::tempdir()` directly do not go through `EnvVarGuard`, so they
+    /// cannot be ordered against such a write. One overlapping with it would
+    /// try to create its directory under a path that does not exist and fail
+    /// its own `unwrap()` — a nondeterministic failure in a test that has
+    /// nothing to do with any of this.
+    fn readable_base_from(candidate: PathBuf) -> PathBuf {
+        match candidate {
             dir if dir.to_str().is_some() => dir,
             // Not `#[cfg(unix)]`: on Windows `TMPDIR` is not the source and a
             // non-Unicode `TEMP` is not reachable this way, so this arm is the
@@ -779,22 +794,37 @@ mod tests {
     /// fail on such a machine for a reason that is not about the sidecar at
     /// all. Asserts the property (`to_str` succeeds) rather than the fallback
     /// path, so choosing a different UTF-8 base later is not a test change.
+    ///
+    /// Drives the decision directly instead of setting `TMPDIR`: see
+    /// [`readable_base_from`] for why writing that variable would make
+    /// unrelated tests flaky.
     #[test]
     #[cfg(unix)]
-    fn live_fixtures_land_on_a_readable_path_under_a_non_utf8_tmpdir() {
+    fn a_non_utf8_tmpdir_is_replaced_by_a_readable_base() {
         use std::os::unix::ffi::OsStrExt;
 
-        let _env = EnvVarGuard::scope(&[(
-            "TMPDIR",
-            Some(std::ffi::OsStr::from_bytes(b"/tmp/aware-\xff-tmpdir")),
-        )]);
-        let dir = hostile_tempdir();
+        let unreadable = PathBuf::from(std::ffi::OsStr::from_bytes(b"/tmp/aware-\xff-tmpdir"));
         assert!(
-            dir.path().to_str().is_some(),
-            "fixture path is not valid UTF-8, so `discover_named` would reject \
-             `AWARE_SIDECAR` as NotUnicode and skip the override entirely: {:?}",
-            dir.path()
+            unreadable.to_str().is_none(),
+            "precondition: the candidate must be the kind of path that breaks discovery"
         );
+
+        let chosen = readable_base_from(unreadable);
+        assert!(
+            chosen.to_str().is_some(),
+            "a fixture rooted here would not be valid UTF-8, so `discover_named` \
+             would reject `AWARE_SIDECAR` as NotUnicode and skip the override \
+             entirely: {chosen:?}"
+        );
+    }
+
+    /// The other half of the same decision: a perfectly good `TMPDIR` must be
+    /// used, not discarded in favour of the fallback. Without this, hardcoding
+    /// `/tmp` unconditionally would pass.
+    #[test]
+    fn a_readable_tmpdir_is_used_as_given() {
+        let candidate = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("target");
+        assert_eq!(readable_base_from(candidate.clone()), candidate);
     }
 
     /// `sh_quote` must reproduce the path byte for byte. A unix path is
