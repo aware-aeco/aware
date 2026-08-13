@@ -678,42 +678,98 @@ mod tests {
         std::fs::write(&out, stdout_body).unwrap();
         std::fs::write(&err, stderr_body).unwrap();
 
+        // Assembled as bytes, not a `String`: a unix path is arbitrary bytes,
+        // and the script has to name these files exactly as the filesystem
+        // does. See `sh_quote`.
+        let mut body = b"#!/bin/sh\ncat > ".to_vec();
+        body.extend_from_slice(&sh_quote(&seen));
+        body.extend_from_slice(b"\ncat ");
+        body.extend_from_slice(&sh_quote(&out));
+        body.extend_from_slice(b"\ncat ");
+        body.extend_from_slice(&sh_quote(&err));
+        body.extend_from_slice(b" >&2\n");
+
         let script = dir.join("aware-sidecar");
-        std::fs::write(
-            &script,
-            format!(
-                "#!/bin/sh\ncat > {seen}\ncat {out}\ncat {err} >&2\n",
-                seen = sh_quote(&seen),
-                out = sh_quote(&out),
-                err = sh_quote(&err),
-            ),
-        )
-        .unwrap();
+        std::fs::write(&script, body).unwrap();
         std::fs::set_permissions(&script, std::fs::Permissions::from_mode(0o755)).unwrap();
         script
     }
 
-    /// Single-quote a path for `/bin/sh`. These paths come from `TMPDIR`, which
-    /// on a developer's machine can hold spaces or shell metacharacters —
-    /// interpolating one raw would have `sh` word-split it, and the script
-    /// would then read and write the wrong files while still exiting 0. Single
-    /// quotes suppress every expansion; the only character they cannot contain
-    /// is `'` itself, so each one is closed, escaped and reopened.
+    /// Single-quote a path for `/bin/sh`, byte for byte.
+    ///
+    /// These paths come from `TMPDIR`, which on a developer's machine can hold
+    /// spaces or shell metacharacters — interpolating one raw would have `sh`
+    /// word-split it, and the script would then read and write the wrong files
+    /// while still exiting 0. Single quotes suppress every expansion; the only
+    /// character they cannot contain is `'` itself, so each one is closed,
+    /// escaped and reopened.
+    ///
+    /// Returns bytes rather than a `String`, and reads the path as bytes rather
+    /// than through `to_string_lossy`, because a unix path is not required to
+    /// be UTF-8. A lossy conversion would substitute U+FFFD for any stray byte,
+    /// so the script would name a file that does not exist — and it would still
+    /// exit 0, leaving the live-path tests to fail against empty output for a
+    /// reason that points nowhere near `TMPDIR`.
     #[cfg(unix)]
-    fn sh_quote(path: &std::path::Path) -> String {
-        format!("'{}'", path.to_string_lossy().replace('\'', r"'\''"))
+    fn sh_quote(path: &std::path::Path) -> Vec<u8> {
+        use std::os::unix::ffi::OsStrExt;
+
+        let mut quoted = vec![b'\''];
+        for &byte in path.as_os_str().as_bytes() {
+            match byte {
+                b'\'' => quoted.extend_from_slice(br"'\''"),
+                _ => quoted.push(byte),
+            }
+        }
+        quoted.push(b'\'');
+        quoted
     }
 
-    /// A temp dir whose name carries the hazards `sh_quote` exists for: a
-    /// space, an apostrophe, and a `$`. Every live-path test runs beneath one,
+    /// A temp dir whose name carries the shell hazards `sh_quote` exists for: a
+    /// space, an apostrophe and a `$`. Every live-path test runs beneath one,
     /// so the quoting is exercised by the suite rather than asserted in a
-    /// comment — drop the quoting and these tests fail on any machine.
+    /// comment — drop it and those tests fail.
+    ///
+    /// Deliberately ASCII. A name carrying a non-UTF-8 byte would also cover
+    /// the lossy-conversion hazard, but it cannot be driven through this route:
+    /// `discover_named` reads the override with `std::env::var`, which rejects
+    /// a non-UTF-8 value as `NotUnicode` and falls through as though the
+    /// variable were unset, so the fake sidecar is never found and the test
+    /// fails for a reason that has nothing to do with quoting. That hazard is
+    /// covered directly by `sh_quote_preserves_non_utf8_path_bytes` instead.
     #[cfg(unix)]
     fn hostile_tempdir() -> tempfile::TempDir {
         tempfile::Builder::new()
             .prefix("aware sidecar's $fixture ")
             .tempdir()
             .unwrap()
+    }
+
+    /// `sh_quote` must reproduce the path byte for byte. A unix path is
+    /// arbitrary bytes, and `to_string_lossy` would substitute U+FFFD for any
+    /// that are not valid UTF-8 — the script would then name a file that does
+    /// not exist, still exit 0, and leave the live-path tests failing against
+    /// empty output for a reason pointing nowhere near `TMPDIR`.
+    #[cfg(unix)]
+    #[test]
+    fn sh_quote_preserves_non_utf8_path_bytes() {
+        use std::os::unix::ffi::OsStrExt;
+
+        let mut raw = b"/tmp/we".to_vec();
+        raw.push(0xff);
+        raw.extend_from_slice(b"ird/it's here");
+        let quoted = sh_quote(std::path::Path::new(std::ffi::OsStr::from_bytes(&raw)));
+
+        let mut expected = b"'/tmp/we".to_vec();
+        expected.push(0xff);
+        expected.extend_from_slice(b"ird/it'\\''s here'");
+        assert_eq!(quoted, expected);
+
+        const REPLACEMENT: &[u8] = "\u{fffd}".as_bytes();
+        assert!(
+            !quoted.windows(REPLACEMENT.len()).any(|w| w == REPLACEMENT),
+            "a lossy conversion would leave U+FFFD where the raw byte belongs"
+        );
     }
 
     #[cfg(unix)]
