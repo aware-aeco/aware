@@ -90,13 +90,19 @@ one:
   * a **`--admin` merge**, which CLAUDE.md §Git workflow makes the repo's normal
     merge mechanism, and which bypasses required status checks — a red run here
     does not mechanically block it, only the procedural "CI is green" rule does;
-  * the **squash message edited in the merge dialog**, which nothing re-reads.
+  * the **squash message edited in the merge dialog**, which nothing re-reads;
+  * a **human contributor genuinely named Claude**, whose commits are allowed and
+    whose generated co-author trailer therefore reaches `main` unflagged. That is
+    the deliberate cost of §"Why a name is not enough to block an author", and it
+    is the right trade twice over: their attribution is legitimate — CLAUDE.md
+    forbids the tool's trailer, not a person's — and the alternative was barring
+    them from contributing at all.
 
-Against those three, the durable mitigation is not a check at all: supply the
+Against the first three, the durable mitigation is not a check at all: supply the
 squash body explicitly at merge time (the REST API's `commit_message`, or
 `gh pr merge --body`) instead of accepting the one GitHub generates. That keeps
 the trailer out no matter who authored the branch, and CLAUDE.md §Git workflow
-requires it.
+requires it. The fourth is not a gap to close but a person to leave alone.
 
 What this *does* now reach is the path all 14 offenders took.
 
@@ -123,14 +129,37 @@ this prints would then be telling somebody to delete a real person's
 attribution. So a trailer is ours when its *name* or *email* names Claude, or
 when its address is Anthropic automation (`noreply@anthropic.com`).
 
-One predicate — `identifies_claude` — answers that for both checks, and that is
-deliberate rather than tidiness. The authorship check exists to catch identities
-*because* the squash turns them into a trailer, so the set of identities it
-flags has to be exactly the set whose generated trailer the trailer check would
-flag. Two predicates would be two things to drift apart, and the drift would be
-silent in the safe-looking direction: an identity the authorship half ignores
-still becomes a trailer nobody sees. `_IDENTITY_PARITY_CASES` pins the two
-together.
+## Why a name is not enough to block an author
+
+The two halves do NOT share one predicate, and the asymmetry is the point.
+
+An earlier version of this check used `identifies_claude` for both, reasoning
+that the authorship check exists because a squash turns an identity into a
+trailer, so it should flag exactly the identities whose trailer would be flagged.
+That is tidy and it is wrong, because the two costs are nothing alike. A trailer
+is an explicit line somebody added: a false positive there costs them one
+`git commit --amend`. An AUTHOR identity is who a person *is*: a false positive
+there rejects every commit they will ever make until they change their git
+config. The same pattern, applied to the second, is a much heavier instrument.
+
+And this file already knew the pattern has a false positive. §"Which co-authors
+are flagged" names it — a contributor whose given name is literally Claude — and
+`REMEDY` tells anyone it hits that the gate is wrong and must be narrowed rather
+than their attribution deleted. Extending the name match to authorship quietly
+turned that documented, tolerable false positive into a blanket ban:
+`Claude Dupont <claude.dupont@example.com>`, an ordinary contributor with an
+ordinary address, was rejected on every commit. Codex caught it on #412.
+
+So `identifies_claude_automation` requires the evidence to be in the ADDRESS —
+Anthropic's own no-reply/bot addresses, or a bot-shaped address that also names
+Claude. A Claude-shaped name over a personal address is a person.
+
+The invariant that remains is one-directional and is the safety-relevant half:
+anything the AUTHORSHIP check blocks must also be something the TRAILER check
+would flag, so the gate never blocks an author over an identity it would have
+accepted as a co-author. `_IDENTITY_CASES` asserts that implication on every
+fixture. The converse is deliberately false, and its consequence is stated in
+§"What this does not reach".
 
 Deliberately NOT flagged: a human at an Anthropic address (`colah@anthropic.com`
 is a person, not a bot), and a human whose name merely contains the string —
@@ -178,7 +207,9 @@ stuck at False, the field-count guard removed, the empty-tail trim removed, the
 committer check re-added, the delimiter reverted to `\\x1f`, `--encoding=UTF-8`
 dropped, `main()`'s identity loop deleted, its trailer loop deleted, its
 `--message-file` offenders ignored, its body check turned into an `elif`, its
-range truncated to the first commit, and its exit code forced to 0.
+range truncated to the first commit, its exit code forced to 0, and the
+authorship test widened back to `identifies_claude` — which bars a contributor
+named Claude.
 
 A control nothing can trip certifies nothing — which is how the `\\x1f` bypass
 survived its first review here, the missing CLI layer its second, the
@@ -218,6 +249,17 @@ _ANTHROPIC_AUTOMATION = re.compile(
     re.IGNORECASE,
 )
 
+# An address that belongs to a bot rather than a person, judged on the local part
+# alone. `noreply@` and `no-reply@` lead it; `[bot]@` is GitHub App style; a bare
+# `bot` must stand as its own word, so `robot` and `bottle` are not bots and
+# neither is a person whose address merely contains the letters.
+#
+# This is what makes a Claude-shaped NAME insufficient to block an author, and
+# `35166048+pawellisowski@users.noreply.github.com` — a real contributor's GitHub
+# address, which contains "noreply" in the DOMAIN — is why it reads the local part
+# only.
+_BOT_LOCAL_PART = re.compile(r"^(?:noreply|no-reply)\b|\[bot\]|(?<![\w-])bot(?![\w-])", re.IGNORECASE)
+
 # `Name <email>`, the form git writes and GitHub reads. A value that does not
 # match is treated as all name, so an address-less trailer is still judged.
 _IDENTITY = re.compile(r"^(?P<name>.*?)\s*<(?P<email>[^>]*)>\s*$")
@@ -232,15 +274,30 @@ def split_identity(value: str) -> tuple[str, str]:
 
 
 def identifies_claude(name: str, email: str) -> bool:
-    """Whether a `(name, email)` identity is Claude's, or Anthropic automation's.
+    """Whether a `(name, email)` identity reads as Claude's — the TRAILER test.
 
-    The single judgement behind both halves of the gate: a trailer's value is
-    ours when this says so, and so is a commit's author or committer. See
-    §"Which co-authors are flagged" for why that must stay one function.
+    Deliberately broad: a trailer is an explicit, removable line, so the cost of
+    a false positive is "delete a line you did not mean to add". Blocking an
+    author costs them every commit they make, so authorship uses the stricter
+    `identifies_claude_automation` instead.
     """
     if _CLAUDE_WORD.search(name) or _CLAUDE_WORD.search(email):
         return True
     return _ANTHROPIC_AUTOMATION.match(email) is not None
+
+
+def identifies_claude_automation(name: str, email: str) -> bool:
+    """Whether an identity is Claude *automation* — the AUTHORSHIP test.
+
+    The evidence has to be in the ADDRESS. A name is not enough: see
+    §"Why a name is not enough to block an author".
+    """
+    if _ANTHROPIC_AUTOMATION.match(email):
+        return True
+    local_part = email.split("@", 1)[0]
+    if not _BOT_LOCAL_PART.search(local_part):
+        return False
+    return bool(_CLAUDE_WORD.search(email) or _CLAUDE_WORD.search(name))
 
 
 def is_claude_coauthor(key: str, value: str) -> bool:
@@ -404,7 +461,7 @@ def offending_identities(commit: Commit) -> list[str]:
 
     The AUTHOR, and deliberately not the committer — see §"Why the author only".
     """
-    if identifies_claude(*commit.author):
+    if identifies_claude_automation(*commit.author):
         return [f"author: {commit.author}"]
     return []
 
@@ -500,9 +557,10 @@ _PREDICATE_CASES: list[tuple[str, str, bool]] = [
     ("Reviewed-by", "Claude <noreply@anthropic.com>", False),
 ]
 
-# `(name, email, expected)` for the identity predicate — the authorship half of
-# the gate, judged before any trailer exists.
-_IDENTITY_PARITY_CASES: list[tuple[str, str, bool]] = [
+# `(name, email, expected)` for `identifies_claude_automation` — the AUTHORSHIP
+# half, judged before any trailer exists. Blocking an author is the heavier of
+# the two instruments, so the evidence has to be in the address.
+_IDENTITY_CASES: list[tuple[str, str, bool]] = [
     # The identity that authored all five commits of #408, and #398 and #399.
     ("Claude", "noreply@anthropic.com", True),
     # The same agent under other spellings CI has produced.
@@ -510,18 +568,35 @@ _IDENTITY_PARITY_CASES: list[tuple[str, str, bool]] = [
     ("claude", "claude-code[bot]@users.noreply.github.com", True),
     # Display name hides the tool; the automation address does not.
     ("automation", "noreply@anthropic.com", True),
-    # …and the reverse.
+    # …and a bot address that names the tool only in the display name.
     ("Claude Opus 5", "bot@users.noreply.github.com", True),
+    # A PERSON named Claude, at an ordinary address. Allowed, and the reason this
+    # predicate exists: the trailer classifier flags the name alone, and reusing
+    # it here rejected every commit such a contributor could ever author — which
+    # `REMEDY` already told them was the gate's bug, not theirs. See
+    # §"Why a name is not enough to block an author".
+    ("Claude Dupont", "claude.dupont@example.com", False),
+    ("Claude", "claude@example.org", False),
+    ("claude.martin", "cmartin@example.co.uk", False),
+    # …and the same person on a host whose NAME carries a bot marker. The marker
+    # has to be in the local part, which says whose account it is; the host says
+    # nothing about that. Reading the whole address instead would flag this, and
+    # nothing else here can tell the two readings apart.
+    ("Claude Dupont", "claude.dupont@bot.example.com", False),
     # The identities this repo's humans commit under. Flagging one of these
     # would block every legitimate branch, which is the failure that gets a
-    # gate deleted rather than fixed.
+    # gate deleted rather than fixed. The second carries "noreply" in its
+    # DOMAIN, which is why only the local part is read.
     ("Pawel", "pawellisowski@o2.pl", False),
     ("pawellisowski", "35166048+pawellisowski@users.noreply.github.com", False),
     ("Jean-Claude Meunier", "jc.meunier@gmail.com", False),
     ("Chris Olah", "colah@anthropic.com", False),
     ("Ana Diaz", "ana@anthropic-partners.example", False),
-    # GitHub's own committer on a squash merge is not Claude.
+    # A bot address that has nothing to do with Claude.
     ("GitHub", "noreply@github.com", False),
+    ("dependabot", "49699333+dependabot[bot]@users.noreply.github.com", False),
+    # `robot` is not `bot`: the word boundary keeps an ordinary address out.
+    ("Claude Roberts", "robotics@example.com", False),
 ]
 
 
@@ -545,6 +620,13 @@ _CLAUDE_AUTHOR = {"GIT_AUTHOR_NAME": "Claude", "GIT_AUTHOR_EMAIL": "noreply@anth
 _CLAUDE_COMMITTER = {
     "GIT_COMMITTER_NAME": "Claude",
     "GIT_COMMITTER_EMAIL": "noreply@anthropic.com",
+}
+
+# A PERSON named Claude, at an ordinary address — allowed, and pinned through
+# real git because this is the contributor the gate must never bar.
+_HUMAN_NAMED_CLAUDE = {
+    "GIT_AUTHOR_NAME": "Claude Dupont",
+    "GIT_AUTHOR_EMAIL": "claude.dupont@example.com",
 }
 
 
@@ -658,6 +740,7 @@ def _end_to_end_control() -> list[str]:
         # one place, so a Claude author read back as something harmless and the
         # gate passed the commit. See `_FIELD_SEP`.
         smuggled = commit("probe: field\x1fseparator\x1fin the subject", _CLAUDE_AUTHOR)
+        human = commit("probe: an ordinary contribution", _HUMAN_NAMED_CLAUDE)
         clean = commit("probe: clean in message and identity alike")
 
         for rev_range, expected, description in (
@@ -681,7 +764,14 @@ def _end_to_end_control() -> list[str]:
                 "a Claude author behind a subject carrying the field delimiter — "
                 "the parser-level bypass, which must not reopen",
             ),
-            (f"{smuggled}..{clean}", 0, "a commit clean in message and identity"),
+            (
+                f"{smuggled}..{human}",
+                0,
+                "a commit authored by a PERSON named Claude at an ordinary address "
+                "— allowed on purpose; blocking them bars every commit they make, "
+                "which `REMEDY` itself calls the gate's bug and not theirs",
+            ),
+            (f"{human}..{clean}", 0, "a commit clean in message and identity"),
             (f"{clean}..{clean}", 0, "an empty range"),
         ):
             found = [
@@ -735,7 +825,11 @@ def _end_to_end_control() -> list[str]:
 
         for arguments, expected_code, description in (
             (("--range", f"{trailer}..{authored}"), 1, "a Claude-authored commit"),
-            (("--range", f"{smuggled}..{clean}"), 0, "a commit clean in message and identity"),
+            (
+                ("--range", f"{smuggled}..{clean}"),
+                0,
+                "clean commits, one of them authored by a PERSON named Claude",
+            ),
             (("--range", f"{base}..{trailer}"), 1, "a trailer in the commit message"),
             # MULTI-COMMIT, with the offender NOT the newest commit. Every case
             # above spans one commit, which cannot tell a loop over the range
@@ -829,21 +923,23 @@ def self_test() -> int:
                 f"expected {expected}, got {actual}"
             )
 
-    for name, email, expected in _IDENTITY_PARITY_CASES:
-        actual = identifies_claude(name, email)
+    for name, email, expected in _IDENTITY_CASES:
+        actual = identifies_claude_automation(name, email)
         if actual != expected:
             failures.append(
-                f"  identifies_claude({name!r}, {email!r}): expected {expected}, got {actual}"
+                f"  identifies_claude_automation({name!r}, {email!r}): "
+                f"expected {expected}, got {actual}"
             )
-        # The parity that makes the authorship half correct: an identity is
-        # flagged exactly when the trailer GitHub would synthesise from it is.
-        # Drift here is silent and lands the trailer on `main`.
-        as_trailer = is_claude_coauthor("Co-authored-by", f"{name} <{email}>")
-        if as_trailer != actual:
+        # The one-directional invariant: anything the AUTHORSHIP half blocks must
+        # be something the TRAILER half would also flag. Otherwise the gate bars
+        # an author over an identity it would have accepted as a co-author — the
+        # heavier instrument used where the lighter one saw nothing wrong. The
+        # converse is deliberately false; see §"Why a name is not enough".
+        if actual and not is_claude_coauthor("Co-authored-by", f"{name} <{email}>"):
             failures.append(
-                f"  parity: identifies_claude({name!r}, {email!r}) is {actual}, but the "
-                f"trailer it would become is judged {as_trailer} — the two halves of "
-                "the gate disagree, so one of them lets this identity through"
+                f"  invariant: {name!r} <{email}> is blocked as an AUTHOR but its "
+                "generated trailer would not be flagged — the authorship half is "
+                "now stricter than the rule it exists to enforce"
             )
 
     for message, expected in SELF_TEST_CASES:
@@ -864,8 +960,9 @@ def self_test() -> int:
         return 1
     print(
         f"self-test ok ({len(_PREDICATE_CASES)} trailer-predicate cases + "
-        f"{len(_IDENTITY_PARITY_CASES)} identity cases, each also checked for parity, + "
-        f"{len(SELF_TEST_CASES)} message cases + 6 parser cases + 6 end-to-end ranges "
+        f"{len(_IDENTITY_CASES)} identity cases, each also checked against the "
+        f"authorship-implies-trailer invariant, + "
+        f"{len(SELF_TEST_CASES)} message cases + 6 parser cases + 7 end-to-end ranges "
         f"+ 12 through the real CLI)"
     )
     return 0
