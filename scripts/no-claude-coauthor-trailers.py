@@ -150,18 +150,30 @@ telling them to erase their own attribution.
 Note `origin/main`, not `main`. A stale local `main` puts the 14 unfixable
 commits above into the range and reports failures nobody can act on.
 
-`--self-test` is the negative control. It covers all three layers — the two
-classifiers, the log parser (`_parser_control`), and the extraction path through
-real git (`_end_to_end_control`) — because a control that only exercises the
-classifier stays green while a refactor of another layer leaves the gate
-completely blind.
+`--self-test` is the negative control, and it covers four layers, because a
+control that stops short of one leaves everything past it free to rot:
+
+  * the two classifiers, over message and identity fixtures;
+  * the log parser, on hand-built streams (`_parser_control`) — including the
+    shapes git never emits, which is the only way to reach the field-count guard;
+  * the extraction path through real git (`_end_to_end_control`); and
+  * the **real `argv` → `main()` → exit-code path**, as a subprocess.
+
+That last layer is not ceremony. Every other case calls the helpers and rebuilds
+the verdict itself, which is not the same thing as the gate *reporting* it —
+deleting `main()`'s identity loop left every other case green while CI stopped
+checking authorship altogether.
 
 Each layer was confirmed to fail against a deliberately broken build: the
 identity check neutered, `%B` swapped for `%s`, `%an` dropped, the classifier
 stuck at False, the field-count guard removed, the empty-tail trim removed, the
-committer check re-added, and the delimiter reverted to `\\x1f`. A control
-nothing can trip certifies nothing, which is how the `\\x1f` bypass survived its
-first review here.
+committer check re-added, the delimiter reverted to `\\x1f`, `--encoding=UTF-8`
+dropped, `main()`'s identity loop deleted, its trailer loop deleted, its
+`--message-file` offenders ignored, and its exit code forced to 0.
+
+A control nothing can trip certifies nothing — which is how the `\\x1f` bypass
+survived its first review here, and how the missing CLI layer survived its
+second.
 """
 
 from __future__ import annotations
@@ -313,7 +325,14 @@ def commits_in_range(rev_range: str, cwd: str | None = None) -> list[Commit]:
     a long branch turns a five-second check into a timeout.
     """
     listed = subprocess.run(
-        ["git", "log", "-z", f"--format={_LOG_FORMAT}", rev_range],
+        # `--encoding=UTF-8` is load-bearing, not decoration. `i18n.logOutputEncoding`
+        # re-encodes the whole formatted stream — the format's own `%x00` separators
+        # included — so in a checkout that sets a multibyte encoding the field
+        # delimiters stop being single NUL bytes and the record structure dissolves:
+        # measured at 123 tokens for a ONE-commit range under `UTF-16LE`, against the
+        # 7 expected. It pins the output to what Python is decoding here. Codex caught
+        # this on #412; `_end_to_end_control` configures that encoding and pins it.
+        ["git", "log", "-z", "--encoding=UTF-8", f"--format={_LOG_FORMAT}", rev_range],
         capture_output=True,
         text=True,
         check=False,
@@ -681,6 +700,63 @@ def _end_to_end_control() -> list[str]:
             if not probe.message.startswith("probe: a clean message, authored by Claude"):
                 failures.append(f"  end-to-end: the message field read back as {probe.message!r}")
 
+        # The real argv → `main()` → exit-code path. Every case above calls the
+        # helpers directly and rebuilds the verdict here, which is not the same
+        # thing as the gate reporting it: deleting `main()`'s identity loop left
+        # every case above green while CI stopped checking authorship entirely.
+        # Codex caught that on #412.
+        script = os.path.abspath(__file__)
+
+        def cli(*arguments: str) -> subprocess.CompletedProcess[str]:
+            return subprocess.run(
+                [sys.executable, script, *arguments],
+                cwd=repo,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+        for arguments, expected_code, description in (
+            (("--range", f"{trailer}..{authored}"), 1, "a Claude-authored commit"),
+            (("--range", f"{smuggled}..{clean}"), 0, "a commit clean in message and identity"),
+            (("--range", f"{base}..{trailer}"), 1, "a trailer in the commit message"),
+        ):
+            completed = cli(*arguments)
+            if completed.returncode != expected_code:
+                failures.append(
+                    f"  end-to-end: {description} exited {completed.returncode} through the "
+                    f"CLI, expected {expected_code} — `main()` no longer reports what the "
+                    f"helpers find\n    stderr: {completed.stderr.strip()[:300]}"
+                )
+
+        # The PR-body half of `main()`, through the same real path.
+        body_file = os.path.join(repo, "pr-body.txt")
+        for body, expected_code, description in (
+            ("A description\n\nCo-authored-by: Claude <noreply@anthropic.com>\n", 1, "carrying"),
+            ("A description with nothing in it.\n", 0, "clean of"),
+        ):
+            with open(body_file, "w", encoding="utf-8") as handle:
+                handle.write(body)
+            completed = cli("--message-file", body_file)
+            if completed.returncode != expected_code:
+                failures.append(
+                    f"  end-to-end: a PR body {description} the trailer exited "
+                    f"{completed.returncode} through the CLI, expected {expected_code}"
+                )
+
+        # Last, because it reconfigures the repo: a checkout that re-encodes log
+        # output. Without `--encoding=UTF-8` git transcodes the format's own NUL
+        # separators and the field stream dissolves, so the gate stops reading
+        # identities at all.
+        _git(["config", "i18n.logOutputEncoding", "UTF-16LE"], repo)
+        transcoded = cli("--range", f"{trailer}..{authored}")
+        if transcoded.returncode != 1:
+            failures.append(
+                "  end-to-end: under a multibyte `i18n.logOutputEncoding` a Claude-authored "
+                f"commit exited {transcoded.returncode}, expected 1 — the log output "
+                "encoding is not pinned, so the field delimiters are not really NUL"
+            )
+
     return failures
 
 
@@ -731,7 +807,8 @@ def self_test() -> int:
     print(
         f"self-test ok ({len(_PREDICATE_CASES)} trailer-predicate cases + "
         f"{len(_IDENTITY_PARITY_CASES)} identity cases, each also checked for parity, + "
-        f"{len(SELF_TEST_CASES)} message cases + 6 parser cases + 6 end-to-end ranges)"
+        f"{len(SELF_TEST_CASES)} message cases + 6 parser cases + 6 end-to-end ranges "
+        f"+ 6 through the real CLI)"
     )
     return 0
 
