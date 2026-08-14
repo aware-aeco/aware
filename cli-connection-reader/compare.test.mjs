@@ -135,3 +135,98 @@ test('an object with no geometry compares on attributes alone rather than report
   const ghostly = at({ centroid: null, extents: null, triangles: 0 });
   assert.deepEqual(changedBy(ghostly, { ...ghostly }, 1), []);
 });
+
+// --- the change list, and the refusal ------------------------------------------------------------
+import { diffObjects } from './compare.mjs';
+
+test('added, removed and changed are classified, and unchanged is counted but not listed', () => {
+  const a = [obj('KEEP'), obj('GONE'), obj('MOVE')];
+  const b = [obj('KEEP'), obj('NEW'), obj('MOVE', { centroid: [0, 0, 500] })];
+  const r = diffObjects(a, b, { tolerance: 1 });
+  assert.deepEqual(r.summary, { added: 1, removed: 1, changed: 1, unchanged: 1, uncomparable: 0 });
+  assert.deepEqual(r.changes.map((c) => [c.status, c.id]).sort(), [['added','NEW'], ['changed','MOVE'], ['removed','GONE']]);
+  assert.equal(r.changes.find((c) => c.id === 'MOVE').changedBy[0], 'location');
+  assert.equal(r.changes.some((c) => c.status === 'unchanged'), false, 'unchanged is 99% of a real model — counted, not listed');
+});
+
+test('include-unchanged lists them when asked', () => {
+  const r = diffObjects([obj('K')], [obj('K')], { tolerance: 1, includeUnchanged: true });
+  assert.deepEqual(r.changes.map((c) => c.status), ['unchanged']);
+});
+
+test('a moved object carries the delta and the distance, so a row can say "moved 500 mm"', () => {
+  const r = diffObjects([obj('M')], [obj('M', { centroid: [0, 0, 500] })], { tolerance: 1 });
+  const row = r.changes[0];
+  assert.deepEqual(row.delta, [0, 0, 500]);
+  assert.equal(row.distance, 500);
+});
+
+test('every removed object HAS a usable id — which is what lets ghosts be a read-model --ids call', () => {
+  // NOTE the shared 'S'. The plan's fixture here was `[G, blank]` against `[K]`, which shares no id at
+  // all and therefore REFUSES — so it asserted against `r.changes` while `r.changes` is deliberately
+  // undefined on a refusal. The refusal was right and the fixture was wrong; one paired object is what
+  // makes the comparison run at all, so that there IS a removed row to inspect.
+  const r = diffObjects([obj('S'), obj('G'), obj('')], [obj('S'), obj('K')], { tolerance: 1 });
+  assert.equal(r.identity.refused, undefined, 'the shared id is what keeps this out of the refusal');
+  const removed = r.changes.filter((c) => c.status === 'removed');
+  assert.deepEqual(removed.map((c) => c.id), ['G']);
+  assert.equal(removed.every((c) => c.id.length > 0), true);
+  assert.equal(r.identity.base.uncomparable.count, 1, 'and the blank one is uncomparable, never removed');
+});
+
+test('uncomparable objects are counted per side and NEVER folded into unchanged', () => {
+  const r = diffObjects([obj('A'), obj('')], [obj('A'), obj(''), obj('')], { tolerance: 1 });
+  assert.equal(r.identity.base.uncomparable.count, 1);
+  assert.equal(r.identity.revised.uncomparable.count, 2);
+  assert.equal(r.summary.uncomparable, 3);
+  assert.equal(r.summary.unchanged, 1, 'the one real pair, and not one object more');
+});
+
+test('the five summary counts reconcile against both sides — this is what proves nothing was dropped', () => {
+  const a = [obj('K'), obj('GONE'), obj('CHG'), obj('')];
+  const b = [obj('K'), obj('NEW'), obj('CHG', { name: 'x' })];
+  const r = diffObjects(a, b, { tolerance: 1 });
+  const { added, removed, changed, unchanged, uncomparable } = r.summary;
+  assert.equal(added + removed + changed + unchanged + uncomparable, a.length + b.length - (changed + unchanged));
+});
+
+test('REFUSES when nothing at all matched — the exact symptom of a regenerated-id export', () => {
+  const r = diffObjects([obj('a1'), obj('a2')], [obj('b1'), obj('b2')], { tolerance: 1 });
+  assert.ok(r.identity.refused, 'must refuse rather than report 2 added and 2 removed');
+  assert.equal(r.changes, undefined, 'and must not hand back the fabricated list at all');
+  assert.equal(r.identity.refused.baseObjects, 2);
+  assert.equal(r.identity.refused.revisedObjects, 2);
+});
+
+test('does NOT refuse when one side is legitimately empty — an empty file is not an unmatched one', () => {
+  const r = diffObjects([], [obj('n1')], { tolerance: 1 });
+  assert.equal(r.identity.refused, undefined);
+  assert.equal(r.summary.added, 1);
+});
+
+test('REFUSES when a side is empty only because every product was SKIPPED — that is not an empty file', () => {
+  // readModel drops products carrying no drawable triangle and counts them in `skipped`. Without this,
+  // a model whose products are all undrawable arrives as [] and is reported as a wholesale deletion.
+  const r = diffObjects([obj('a1')], [], { tolerance: 1, skipped: { base: 0, revised: 900 } });
+  assert.ok(r.identity.refused, 'nothing was compared, and the reason is the reader, not the model');
+  assert.match(r.identity.refused.reason, /could not be drawn/);
+});
+
+test('a legitimately empty side with NOTHING skipped still proceeds — the refusal stays narrow', () => {
+  // The counterpart to the test above, and the one that proves the rule discriminates rather than just
+  // fires. A filter that selected nothing, against a file that dropped nothing, is an honest empty read.
+  const r = diffObjects([obj('a1')], [], { tolerance: 1, skipped: { base: 0, revised: 0 } });
+  assert.equal(r.identity.refused, undefined);
+  assert.equal(r.summary.removed, 1);
+});
+
+test('the skipped counts are reported per side even on a successful compare — never dropped silently', () => {
+  const r = diffObjects([obj('K')], [obj('K')], { tolerance: 1, skipped: { base: 3, revised: 5 } });
+  assert.equal(r.identity.base.skipped, 3);
+  assert.equal(r.identity.revised.skipped, 5);
+});
+
+test('does not refuse on a single match — one shared id means the ids carry signal', () => {
+  const r = diffObjects([obj('S'), obj('a1')], [obj('S'), obj('b1')], { tolerance: 1 });
+  assert.equal(r.identity.refused, undefined);
+});

@@ -140,3 +140,104 @@ export function changedBy(a, b, tolerance) {
   if (propertiesDiffer(a.properties, b.properties)) fired.push('properties');
   return fired;
 }
+
+const row = (status, o, extra = {}) => ({
+  status, id: o.globalId, name: o.name, ifcType: o.ifcType, storey: o.storey,
+  profile: o.profile, material: o.material, centroid: o.centroid, ...extra,
+});
+
+/**
+ * The change list, or a refusal.
+ *
+ * THE REFUSAL IS THE LOAD-BEARING PART. With no geometry fallback, "everything added and everything
+ * removed" is the precise symptom of an exporter that regenerated every GlobalId — and reporting it as
+ * a change list is not a weak answer but a confident lie about somebody else's building. So when the
+ * ids paired NOTHING while both files hold objects, this returns the refusal and NO `changes` at all.
+ * Returning the list alongside a flag was rejected: a caller would render it.
+ *
+ * ONE PAIR IS ENOUGH TO PROCEED. The ids either carry signal or they do not, and a single shared id
+ * says they do — a project genuinely can replace all but one object between revisions.
+ *
+ * AN EMPTY SIDE IS NOT A REFUSAL — UNLESS IT IS EMPTY FOR THE WRONG REASON. A first version against an
+ * empty file pairs nothing for a reason already visible in the counts. But `readModel` DROPS products
+ * carrying no drawable triangle and reports them as `skipped`, so a side can arrive as `[]` while the
+ * file is full of objects — and reporting that as a wholesale deletion is the same lie by another road.
+ * `skipped` is therefore an input, not decoration.
+ */
+export function diffObjects(baseObjects, revisedObjects, opts = {}) {
+  const tolerance = Number.isFinite(opts.tolerance) ? opts.tolerance : 1;
+  const skipped = { base: opts.skipped?.base ?? 0, revised: opts.skipped?.revised ?? 0 };
+  const base = partitionByUsableId(baseObjects);
+  const revised = partitionByUsableId(revisedObjects);
+
+  const identity = {
+    base: { objects: baseObjects.length, usableIds: base.usable.size, skipped: skipped.base, uncomparable: base.uncomparable },
+    revised: { objects: revisedObjects.length, usableIds: revised.usable.size, skipped: skipped.revised, uncomparable: revised.uncomparable },
+    paired: 0, added: 0, removed: 0,
+  };
+
+  let paired = 0;
+  for (const id of base.usable.keys()) if (revised.usable.has(id)) paired++;
+
+  // An "empty" side that is empty because everything was skipped is a READER outcome, not a model fact,
+  // and the two get different sentences because only one of them is repairable.
+  const emptyBySkip = (objs, n) => objs.length === 0 && n > 0;
+  if (emptyBySkip(baseObjects, skipped.base) || emptyBySkip(revisedObjects, skipped.revised)) {
+    identity.refused = {
+      reason: 'every object in one of these files could not be drawn, so nothing could be compared',
+      baseObjects: baseObjects.length, revisedObjects: revisedObjects.length,
+      skipped, uncomparable: base.uncomparable.count + revised.uncomparable.count,
+    };
+    return { identity, summary: null, criteria: CRITERIA };
+  }
+
+  if (paired === 0 && baseObjects.length > 0 && revisedObjects.length > 0) {
+    identity.refused = {
+      reason: 'no object in either file shares a usable IFC id with the other',
+      baseObjects: baseObjects.length,
+      revisedObjects: revisedObjects.length,
+      skipped,
+      uncomparable: base.uncomparable.count + revised.uncomparable.count,
+    };
+    return { identity, summary: null, criteria: CRITERIA };
+  }
+
+  const changes = [];
+  let unchanged = 0;
+  for (const [id, b] of base.usable) {
+    const r = revised.usable.get(id);
+    if (!r) { changes.push(row('removed', b)); identity.removed++; continue; }
+    const fired = changedBy(b, r, tolerance);
+    if (fired.length === 0) {
+      unchanged++;
+      if (opts.includeUnchanged) changes.push(row('unchanged', r));
+      continue;
+    }
+    const extra = { changedBy: fired };
+    if (fired.includes('location') && b.centroid && r.centroid) {
+      extra.delta = [r.centroid[0] - b.centroid[0], r.centroid[1] - b.centroid[1], r.centroid[2] - b.centroid[2]];
+      extra.distance = Math.hypot(...extra.delta);
+    }
+    if (fired.includes('properties')) {
+      const keys = new Set([...Object.keys(b.properties), ...Object.keys(r.properties)]);
+      extra.fields = [...keys].filter((k) => b.properties[k] !== r.properties[k])
+        .map((k) => ({ name: k, from: b.properties[k] ?? null, to: r.properties[k] ?? null }));
+    }
+    changes.push(row('changed', r, extra));
+  }
+  for (const [id, r] of revised.usable) if (!base.usable.has(id)) { changes.push(row('added', r)); identity.added++; }
+
+  identity.paired = paired;
+  return {
+    identity,
+    changes,
+    criteria: CRITERIA,
+    summary: {
+      added: identity.added,
+      removed: identity.removed,
+      changed: changes.filter((c) => c.status === 'changed').length,
+      unchanged,
+      uncomparable: base.uncomparable.count + revised.uncomparable.count,
+    },
+  };
+}
