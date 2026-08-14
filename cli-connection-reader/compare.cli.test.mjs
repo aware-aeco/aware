@@ -122,6 +122,12 @@ test('a non-string ifc-path is refused before the stdout guard goes up', () => {
 // EVERY test above skips when its sample file is absent, and a file of skipped tests reports success.
 // This is the tripwire: if NOTHING ran, say so loudly rather than shipping a green run that proved
 // nothing about a two-file command.
-test('the fixtures this suite needs are present at all', () => {
+test('the fixtures this suite needs are present at all', (t) => {
+  // NOT IN CI, where the samples are absent BY DESIGN — they are real coordination models far too
+  // large to commit (see the reference-objects design doc §8), so every test above skipping there is
+  // correct rather than a warning. This tripwire is aimed at a DEVELOPER machine, where an
+  // all-skipped green run would otherwise read as "the two-file command works". Firing it in CI would
+  // make the gate permanently red and teach everyone to ignore it, which costs the local signal too.
+  if (process.env.CI) return t.skip('CI carries no sample IFCs by design — see the reference-objects design doc §8');
   assert.ok(sample('example-steel-framing.ifc'), 'no sample IFC found — every test above skipped, so this suite proved NOTHING. See the reference-objects design doc §8.');
 });
