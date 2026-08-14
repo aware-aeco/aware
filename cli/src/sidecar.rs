@@ -447,9 +447,48 @@ mod tests {
     use super::*;
     use crate::test_env::EnvVarGuard;
 
+    /// A temp dir rooted somewhere `std::env::var` can read back.
+    ///
+    /// `tempfile::tempdir()` roots at `std::env::temp_dir()`, i.e. at `TMPDIR`.
+    /// Every fixture below is handed to `discover_named` through
+    /// `AWARE_SIDECAR`, and that reads its override with `std::env::var`, which
+    /// rejects a non-UTF-8 value as `NotUnicode` and falls through as though
+    /// the variable were unset. So on a machine whose `TMPDIR` carries a
+    /// non-UTF-8 byte, every one of those tests fails for a reason that has
+    /// nothing to do with what it covers — measured: 13 of them.
+    ///
+    /// `to_str` is the exact test `discover_named` will apply later, so this
+    /// rejects precisely what it would reject.
+    fn readable_tempdir_base() -> PathBuf {
+        readable_base_from(std::env::temp_dir())
+    }
+
+    /// The choice itself, as a pure function of the candidate.
+    ///
+    /// Split out from [`readable_tempdir_base`] so the fallback can be covered
+    /// by passing a non-UTF-8 path in, rather than by pointing the process's
+    /// own `TMPDIR` at one. That distinction is not stylistic: `TMPDIR` is
+    /// process-global, and the many tests in this binary that call
+    /// `tempfile::tempdir()` directly do not go through `EnvVarGuard`, so they
+    /// cannot be ordered against such a write. One overlapping with it would
+    /// try to create its directory under a path that does not exist and fail
+    /// its own `unwrap()` — a nondeterministic failure in a test that has
+    /// nothing to do with any of this.
+    fn readable_base_from(candidate: PathBuf) -> PathBuf {
+        match candidate {
+            dir if dir.to_str().is_some() => dir,
+            // Not `#[cfg(unix)]`: on Windows `TMPDIR` is not the source and a
+            // non-Unicode `TEMP` is not reachable this way, so this arm is the
+            // unix fallback and harmless elsewhere.
+            _ => PathBuf::from("/tmp"),
+        }
+    }
+
     #[test]
     fn discover_respects_env_var_when_file_exists() {
-        let tmp = tempfile::tempdir().unwrap();
+        let tmp = tempfile::Builder::new()
+            .tempdir_in(readable_tempdir_base())
+            .unwrap();
         let fake = tmp.path().join("aware-sidecar.exe");
         std::fs::write(&fake, b"").unwrap();
         let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", &fake);
@@ -485,5 +524,645 @@ mod tests {
     fn unmapped_keys_are_ignored() {
         let extra = r#"{"ok":true,"version":"1.0.0","unmapped-key":42}"#;
         assert!(serde_json::from_str::<OkResponse>(extra).is_ok());
+    }
+
+    /// Parse a sidecar `agent` payload off the wire rather than building the
+    /// struct field by field, so the `#[serde(default)]` fallbacks on
+    /// `SidecarCommand::mode` / `::inputs` are exercised by the same fixtures
+    /// that exercise the mapping.
+    fn sidecar_agent(json: &str) -> SidecarAgent {
+        serde_json::from_str(json).expect("fixture must parse as a sidecar agent")
+    }
+
+    #[test]
+    fn required_is_emitted_only_for_non_optional_inputs() {
+        let inputs = vec![
+            SidecarInput {
+                name: "profile".into(),
+                ty: "string".into(),
+                optional: false,
+                default: None,
+            },
+            SidecarInput {
+                name: "dry-run".into(),
+                ty: "boolean".into(),
+                optional: true,
+                default: None,
+            },
+        ];
+        assert_eq!(
+            render_inputs_yaml(&inputs),
+            "profile:\n  type: string\n  required: true\ndry-run:\n  type: boolean\n"
+        );
+    }
+
+    #[test]
+    fn defaults_are_emitted_only_when_the_input_declares_one() {
+        let with_default = vec![SidecarInput {
+            name: "units".into(),
+            ty: "string".into(),
+            optional: true,
+            default: Some("mm".into()),
+        }];
+        assert_eq!(
+            render_inputs_yaml(&with_default),
+            "units:\n  type: string\n  default: mm\n"
+        );
+
+        let without_default = vec![SidecarInput {
+            name: "units".into(),
+            ty: "string".into(),
+            optional: true,
+            default: None,
+        }];
+        assert_eq!(
+            render_inputs_yaml(&without_default),
+            "units:\n  type: string\n"
+        );
+    }
+
+    /// Names, types and defaults come from a plug-in's own metadata, so all
+    /// three go through `quote_yaml_scalar`. Each field here carries a
+    /// different trigger — a `:` in the name, a leading `*` in the type, a `#`
+    /// in the default — so dropping the quoting on any one of them shows up as
+    /// a distinct failure rather than being masked by the other two.
+    #[test]
+    fn hostile_input_metadata_is_yaml_quoted_in_every_field() {
+        let inputs = vec![SidecarInput {
+            name: "Tekla::Beam".into(),
+            ty: "*ref".into(),
+            optional: false,
+            default: Some("grade # A36".into()),
+        }];
+        let yaml = render_inputs_yaml(&inputs);
+        assert_eq!(
+            yaml,
+            "\"Tekla::Beam\":\n  type: \"*ref\"\n  required: true\n  default: \"grade # A36\"\n"
+        );
+
+        // The point of the quoting is that the result still parses, and parses
+        // back to the values the plug-in declared.
+        let parsed: serde_yaml::Value = serde_yaml::from_str(&yaml).expect("must stay parseable");
+        let entry = &parsed["Tekla::Beam"];
+        assert_eq!(entry["type"].as_str(), Some("*ref"));
+        assert_eq!(entry["required"].as_bool(), Some(true));
+        assert_eq!(entry["default"].as_str(), Some("grade # A36"));
+    }
+
+    /// The sidecar's `version` is the *SDK* it reflected, not the agent's own
+    /// version — the generated agent is always a fresh `0.1.0`. Getting these
+    /// two the wrong way round would stamp e.g. Tekla's `2024.0` as the agent
+    /// version and lose the SDK target entirely.
+    #[test]
+    fn sidecar_version_becomes_sdk_target_and_the_agent_starts_at_0_1_0() {
+        let agent = to_local_agent(
+            sidecar_agent(
+                r#"{"id":"tekla","version":"2024.0","description":"d","license":"MIT",
+                    "stateful":true,"commands":[],"skills":[]}"#,
+            ),
+            "dlls",
+        );
+        assert_eq!(agent.version, "0.1.0");
+        assert_eq!(agent.sdk_target.as_deref(), Some("2024.0"));
+        assert_eq!(agent.id, "tekla");
+        assert_eq!(agent.license, "MIT");
+        assert!(agent.stateful);
+        // Nothing on this path describes a REST transport.
+        assert!(agent.rest.is_none());
+    }
+
+    #[test]
+    fn commands_are_keyed_by_name_and_carry_mode_and_rendered_inputs() {
+        let agent = to_local_agent(
+            sidecar_agent(
+                r#"{"id":"tekla","version":"2024.0","description":"d","license":"MIT",
+                    "stateful":false,"skills":[],"commands":[
+                      {"name":"insert-beam","lifecycle":"session","description":"Insert a beam",
+                       "mode":"write","inputs":[{"name":"profile","type":"string"}]},
+                      {"name":"list-beams","lifecycle":"oneshot","description":"List beams"}
+                    ]}"#,
+            ),
+            "dlls",
+        );
+
+        let insert = &agent.commands["insert-beam"];
+        assert_eq!(insert.lifecycle, "session");
+        assert_eq!(insert.description, "Insert a beam");
+        assert_eq!(insert.mode.as_deref(), Some("write"));
+        assert_eq!(
+            insert.inputs_yaml,
+            "profile:\n  type: string\n  required: true\n"
+        );
+
+        // A command that declares neither `mode` nor `inputs` must leave both
+        // empty so the manifest loader falls back to name-based inference.
+        let list = &agent.commands["list-beams"];
+        assert_eq!(list.mode, None);
+        assert_eq!(list.inputs_yaml, "");
+    }
+
+    #[test]
+    fn skills_are_carried_through_verbatim() {
+        let agent = to_local_agent(
+            sidecar_agent(
+                r##"{"id":"tekla","version":"1","description":"d","license":"MIT",
+                    "stateful":false,"commands":[],"skills":[
+                      {"filename":"insert-beam.md","body":"# Insert a beam\n"}
+                    ]}"##,
+            ),
+            "dlls",
+        );
+        assert_eq!(agent.skills.len(), 1);
+        assert_eq!(agent.skills[0].filename, "insert-beam.md");
+        assert_eq!(agent.skills[0].body, "# Insert a beam\n");
+    }
+
+    /// Provenance is what lets a reader tell a decompiled agent from a
+    /// COM-derived one, so the `source_kind` each public verb passes has to
+    /// reach the manifest rather than being flattened to a constant.
+    #[test]
+    fn provenance_records_the_source_kind_the_caller_passed() {
+        for kind in ["dlls", "decompile", "com", "headers", "csharp"] {
+            let agent = to_local_agent(
+                sidecar_agent(
+                    r#"{"id":"a","version":"1","description":"d","license":"MIT",
+                        "stateful":false,"commands":[],"skills":[]}"#,
+                ),
+                kind,
+            );
+            assert_eq!(agent.provenance.source["type"], kind);
+            assert_eq!(agent.provenance.source["via"], "aware-sidecar");
+            assert_eq!(agent.provenance.generated_by, "aware-agent-builder");
+            assert_eq!(
+                agent.provenance.generator_version,
+                env!("CARGO_PKG_VERSION")
+            );
+        }
+    }
+
+    /// Stand-in for the C# sidecar: reads and records the request on stdin,
+    /// then replays fixed `stdout` / `stderr` bodies. Lets the wire handling in
+    /// [`invoke_raw_with`] be driven without the real NativeAOT binary, which
+    /// is not built in CI.
+    ///
+    /// Unix-only because it is a `#!/bin/sh` script; the code under test is
+    /// platform-independent, so covering it on one platform covers it.
+    #[cfg(unix)]
+    fn fake_sidecar(dir: &std::path::Path, stdout_body: &str, stderr_body: &str) -> PathBuf {
+        use std::os::unix::fs::PermissionsExt;
+
+        let out = dir.join("stdout.txt");
+        let err = dir.join("stderr.txt");
+        let seen = dir.join("request.json");
+        std::fs::write(&out, stdout_body).unwrap();
+        std::fs::write(&err, stderr_body).unwrap();
+
+        // Assembled as bytes, not a `String`: a unix path is arbitrary bytes,
+        // and the script has to name these files exactly as the filesystem
+        // does. See `sh_quote`.
+        let mut body = b"#!/bin/sh\ncat > ".to_vec();
+        body.extend_from_slice(&sh_quote(&seen));
+        body.extend_from_slice(b"\ncat ");
+        body.extend_from_slice(&sh_quote(&out));
+        body.extend_from_slice(b"\ncat ");
+        body.extend_from_slice(&sh_quote(&err));
+        body.extend_from_slice(b" >&2\n");
+
+        let script = dir.join("aware-sidecar");
+        std::fs::write(&script, body).unwrap();
+        std::fs::set_permissions(&script, std::fs::Permissions::from_mode(0o755)).unwrap();
+        script
+    }
+
+    /// Single-quote a path for `/bin/sh`, byte for byte.
+    ///
+    /// These paths come from `TMPDIR`, which on a developer's machine can hold
+    /// spaces or shell metacharacters — interpolating one raw would have `sh`
+    /// word-split it, and the script would then read and write the wrong files
+    /// while still exiting 0. Single quotes suppress every expansion; the only
+    /// character they cannot contain is `'` itself, so each one is closed,
+    /// escaped and reopened.
+    ///
+    /// Returns bytes rather than a `String`, and reads the path as bytes rather
+    /// than through `to_string_lossy`, because a unix path is not required to
+    /// be UTF-8. A lossy conversion would substitute U+FFFD for any stray byte,
+    /// so the script would name a file that does not exist — and it would still
+    /// exit 0, leaving the live-path tests to fail against empty output for a
+    /// reason that points nowhere near `TMPDIR`.
+    #[cfg(unix)]
+    fn sh_quote(path: &std::path::Path) -> Vec<u8> {
+        use std::os::unix::ffi::OsStrExt;
+
+        let mut quoted = vec![b'\''];
+        for &byte in path.as_os_str().as_bytes() {
+            match byte {
+                b'\'' => quoted.extend_from_slice(br"'\''"),
+                _ => quoted.push(byte),
+            }
+        }
+        quoted.push(b'\'');
+        quoted
+    }
+
+    /// A temp dir whose name carries the shell hazards `sh_quote` exists for: a
+    /// space, an apostrophe and a `$`. Every live-path test runs beneath one,
+    /// so the quoting is exercised by the suite rather than asserted in a
+    /// comment — drop it and those tests fail.
+    ///
+    /// Deliberately ASCII. A name carrying a non-UTF-8 byte would also cover
+    /// the lossy-conversion hazard, but it cannot be driven through this route:
+    /// `discover_named` reads the override with `std::env::var`, which rejects
+    /// a non-UTF-8 value as `NotUnicode` and falls through as though the
+    /// variable were unset, so the fake sidecar is never found and the test
+    /// fails for a reason that has nothing to do with quoting. That hazard is
+    /// covered directly by `sh_quote_preserves_non_utf8_path_bytes` instead.
+    ///
+    /// The same limitation is why the base comes from [`readable_tempdir_base`]
+    /// rather than being inherited from `TMPDIR`. The ASCII hazards this helper
+    /// exists for are in the prefix, which is ours; the base only has to be
+    /// somewhere `std::env::var` can read back.
+    #[cfg(unix)]
+    fn hostile_tempdir() -> tempfile::TempDir {
+        tempfile::Builder::new()
+            .prefix("aware sidecar's $fixture ")
+            .tempdir_in(readable_tempdir_base())
+            .unwrap()
+    }
+
+    /// The live fixtures must land somewhere `discover_named` can read back,
+    /// whatever the runner's `TMPDIR` holds — otherwise the ten live-path tests
+    /// fail on such a machine for a reason that is not about the sidecar at
+    /// all. Asserts the property (`to_str` succeeds) rather than the fallback
+    /// path, so choosing a different UTF-8 base later is not a test change.
+    ///
+    /// Drives the decision directly instead of setting `TMPDIR`: see
+    /// [`readable_base_from`] for why writing that variable would make
+    /// unrelated tests flaky.
+    #[test]
+    #[cfg(unix)]
+    fn a_non_utf8_tmpdir_is_replaced_by_a_readable_base() {
+        use std::os::unix::ffi::OsStrExt;
+
+        let unreadable = PathBuf::from(std::ffi::OsStr::from_bytes(b"/tmp/aware-\xff-tmpdir"));
+        assert!(
+            unreadable.to_str().is_none(),
+            "precondition: the candidate must be the kind of path that breaks discovery"
+        );
+
+        let chosen = readable_base_from(unreadable);
+        assert!(
+            chosen.to_str().is_some(),
+            "a fixture rooted here would not be valid UTF-8, so `discover_named` \
+             would reject `AWARE_SIDECAR` as NotUnicode and skip the override \
+             entirely: {chosen:?}"
+        );
+    }
+
+    /// The other half of the same decision: a perfectly good `TMPDIR` must be
+    /// used, not discarded in favour of the fallback. Without this, hardcoding
+    /// `/tmp` unconditionally would pass.
+    #[test]
+    fn a_readable_tmpdir_is_used_as_given() {
+        let candidate = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("target");
+        assert_eq!(readable_base_from(candidate.clone()), candidate);
+    }
+
+    /// `sh_quote` must reproduce the path byte for byte. A unix path is
+    /// arbitrary bytes, and `to_string_lossy` would substitute U+FFFD for any
+    /// that are not valid UTF-8 — the script would then name a file that does
+    /// not exist, still exit 0, and leave the live-path tests failing against
+    /// empty output for a reason pointing nowhere near `TMPDIR`.
+    #[cfg(unix)]
+    #[test]
+    fn sh_quote_preserves_non_utf8_path_bytes() {
+        use std::os::unix::ffi::OsStrExt;
+
+        let mut raw = b"/tmp/we".to_vec();
+        raw.push(0xff);
+        raw.extend_from_slice(b"ird/it's here");
+        let quoted = sh_quote(std::path::Path::new(std::ffi::OsStr::from_bytes(&raw)));
+
+        let mut expected = b"'/tmp/we".to_vec();
+        expected.push(0xff);
+        expected.extend_from_slice(b"ird/it'\\''s here'");
+        assert_eq!(quoted, expected);
+
+        const REPLACEMENT: &[u8] = "\u{fffd}".as_bytes();
+        assert!(
+            !quoted.windows(REPLACEMENT.len()).any(|w| w == REPLACEMENT),
+            "a lossy conversion would leave U+FFFD where the raw byte belongs"
+        );
+    }
+
+    #[cfg(unix)]
+    fn reflect_against(stdout_body: &str, stderr_body: &str) -> Result<GeneratedAgent, AwareError> {
+        let tmp = hostile_tempdir();
+        let script = fake_sidecar(tmp.path(), stdout_body, stderr_body);
+        let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", &script);
+        reflect_dlls(ReflectDllsArgs {
+            globs: vec!["*.dll".into()],
+            agent_id: Some("tekla".into()),
+        })
+    }
+
+    /// The request contract: exactly one JSON object, naming the op and
+    /// carrying the caller's args, terminated by a newline so a sidecar reading
+    /// a line at a time sees a complete request.
+    #[cfg(unix)]
+    #[test]
+    fn request_is_one_newline_terminated_json_object_naming_the_op() {
+        let tmp = hostile_tempdir();
+        let script = fake_sidecar(
+            tmp.path(),
+            r#"{"ok":true,"version":"1.0.0","data":{"agent":{"id":"tekla","version":"1",
+               "description":"d","license":"MIT","stateful":false,"commands":[],"skills":[]}}}"#,
+            "",
+        );
+        let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", &script);
+        reflect_dlls(ReflectDllsArgs {
+            globs: vec!["a.dll".into(), "b.dll".into()],
+            agent_id: Some("tekla".into()),
+        })
+        .expect("fixture reply is well-formed");
+
+        let request = std::fs::read_to_string(tmp.path().join("request.json")).unwrap();
+        assert!(
+            request.ends_with('\n'),
+            "request must be newline-terminated, got {request:?}"
+        );
+        assert_eq!(
+            request.trim_end().lines().count(),
+            1,
+            "one request per spawn"
+        );
+
+        let parsed: serde_json::Value = serde_json::from_str(&request).unwrap();
+        assert_eq!(parsed["op"], "reflect-dlls");
+        assert_eq!(
+            parsed["args"]["globs"],
+            serde_json::json!(["a.dll", "b.dll"])
+        );
+        assert_eq!(parsed["args"]["agent_id"], "tekla");
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn reply_is_mapped_into_a_generated_agent() {
+        let agent = reflect_against(
+            r#"{"ok":true,"version":"1.0.0","op":"reflect-dlls","data":{"agent":{
+                 "id":"tekla","version":"2024.0","description":"Tekla Structures",
+                 "license":"proprietary","stateful":true,
+                 "commands":[{"name":"insert-beam","lifecycle":"session","description":"b"}],
+                 "skills":[{"filename":"s.md","body":"x"}]}}}"#,
+            "",
+        )
+        .expect("well-formed reply must map cleanly");
+
+        assert_eq!(agent.id, "tekla");
+        assert_eq!(agent.sdk_target.as_deref(), Some("2024.0"));
+        assert_eq!(agent.provenance.source["type"], "dlls");
+        assert!(agent.commands.contains_key("insert-beam"));
+        assert_eq!(agent.skills.len(), 1);
+    }
+
+    /// `ok: false` is the sidecar reporting a failure it diagnosed itself. The
+    /// message it wrote is the only diagnostic the user gets, so it has to
+    /// survive into the error rather than being replaced by a generic one.
+    #[cfg(unix)]
+    #[test]
+    fn sidecar_reported_failure_surfaces_its_message_and_the_op() {
+        let err = reflect_against(
+            r#"{"ok":false,"version":"1.0.0","error":"assembly load failed: Tekla.Structures.dll"}"#,
+            "",
+        )
+        .expect_err("ok:false must not be treated as success");
+
+        let AwareError::Network(message) = err else {
+            panic!("expected a Network error, got {err:?}");
+        };
+        assert!(
+            message.contains("assembly load failed: Tekla.Structures.dll"),
+            "sidecar's own diagnostic must survive: {message}"
+        );
+        assert!(
+            message.contains("reflect-dlls"),
+            "op must be named: {message}"
+        );
+    }
+
+    /// A failure reply with no `error` still has to fail — the missing message
+    /// is a gap in the diagnostic, not a reason to treat the call as having
+    /// worked.
+    #[cfg(unix)]
+    #[test]
+    fn failure_without_a_message_still_fails() {
+        let err = reflect_against(r#"{"ok":false,"version":"1.0.0"}"#, "")
+            .expect_err("ok:false must fail whether or not it carries a message");
+        assert!(matches!(err, AwareError::Network(_)), "got {err:?}");
+    }
+
+    /// `ok: true` with an empty envelope is a sidecar bug, and the three layers
+    /// each catch a different depth of it. Missing `data` is caught in
+    /// `invoke_raw`; `data` present but with no `agent` is caught one layer up
+    /// in `invoke`. Neither may fall through as an empty-but-valid agent.
+    #[cfg(unix)]
+    #[test]
+    fn success_without_a_data_payload_is_rejected() {
+        let err = reflect_against(r#"{"ok":true,"version":"1.0.0"}"#, "")
+            .expect_err("ok:true with no data must not yield an agent");
+
+        let AwareError::Validation(message) = err else {
+            panic!("expected a Validation error, got {err:?}");
+        };
+        assert!(message.contains("no data"), "{message}");
+        assert!(
+            message.contains("reflect-dlls"),
+            "op must be named: {message}"
+        );
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn success_without_an_agent_is_rejected() {
+        let err = reflect_against(r#"{"ok":true,"version":"1.0.0","data":{}}"#, "")
+            .expect_err("ok:true with no agent must not yield an agent");
+
+        let AwareError::Validation(message) = err else {
+            panic!("expected a Validation error, got {err:?}");
+        };
+        assert!(message.contains("no agent"), "{message}");
+        assert!(
+            message.contains("reflect-dlls"),
+            "op must be named: {message}"
+        );
+    }
+
+    /// When the sidecar dies before writing a reply — a missing .NET runtime,
+    /// a native crash — stdout is empty or noise and stderr holds the only
+    /// clue. Dropping stderr from the error leaves the user with an
+    /// unactionable "not JSON".
+    #[cfg(unix)]
+    #[test]
+    fn unparseable_stdout_reports_both_streams() {
+        let err = reflect_against(
+            "Unhandled exception. System.IO.FileNotFoundException",
+            "libhostfxr.so not found",
+        )
+        .expect_err("non-JSON stdout must not be treated as a reply");
+
+        let AwareError::Validation(message) = err else {
+            panic!("expected a Validation error, got {err:?}");
+        };
+        assert!(
+            message.contains("Unhandled exception"),
+            "stdout must be quoted back: {message}"
+        );
+        assert!(
+            message.contains("libhostfxr.so not found"),
+            "stderr must be quoted back: {message}"
+        );
+    }
+
+    /// A reply that parses but omits the version stamp is rejected at the same
+    /// place a garbled one is — driven end to end here so the guarantee is
+    /// checked on the real path, not only against `OkResponse` in isolation.
+    #[cfg(unix)]
+    #[test]
+    fn reply_without_a_version_stamp_is_rejected_on_the_live_path() {
+        let err = reflect_against(
+            r#"{"ok":true,"data":{"agent":{"id":"tekla","version":"1","description":"d",
+               "license":"MIT","stateful":false,"commands":[],"skills":[]}}}"#,
+            "",
+        )
+        .expect_err("an unstamped reply is not this protocol");
+        assert!(matches!(err, AwareError::Validation(_)), "got {err:?}");
+    }
+
+    /// `coverage-validate` is the one verb whose payload is deserialized into a
+    /// typed result rather than re-emitted as JSON, and `ok = false` on the
+    /// *result* means schema violations — not a failed call. It must come back
+    /// as a value the caller can render, not an error.
+    #[cfg(unix)]
+    #[test]
+    fn coverage_validate_returns_violations_as_a_value_not_an_error() {
+        let tmp = hostile_tempdir();
+        let script = fake_sidecar(
+            tmp.path(),
+            r#"{"ok":true,"version":"1.0.0","data":{"coverage_validate":{
+                 "ok":false,"ir_path":"ir.json","ir_violations":["/commands: required"],
+                 "catalog_violations":{"catalog/a.json":["/x: type"]},
+                 "catalog_files_validated":3}}}"#,
+            "",
+        );
+        let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", &script);
+
+        let result = coverage_validate(CoverageValidateArgs {
+            ir_path: "ir.json".into(),
+            ..Default::default()
+        })
+        .expect("schema violations are a result, not a transport failure");
+
+        assert!(!result.ok);
+        assert_eq!(result.ir_violations, ["/commands: required"]);
+        assert_eq!(result.catalog_files_validated, 3);
+        assert_eq!(
+            result.catalog_violations["catalog/a.json"],
+            ["/x: type".to_string()]
+        );
+    }
+
+    /// Each coverage verb reads its own field of `data`. A reply carrying the
+    /// other verb's payload must not be accepted as this one's.
+    #[cfg(unix)]
+    #[test]
+    fn coverage_verbs_do_not_accept_each_others_payloads() {
+        let tmp = hostile_tempdir();
+        let script = fake_sidecar(
+            tmp.path(),
+            r#"{"ok":true,"version":"1.0.0","data":{"coverage":{"skills":7}}}"#,
+            "",
+        );
+        let _sidecar = EnvVarGuard::set("AWARE_SIDECAR", &script);
+
+        // `coverage-generate`'s field is present, so that verb succeeds…
+        let generated = coverage_generate(CoverageGenerateArgs {
+            ir_path: "ir.json".into(),
+            out_dir: "out".into(),
+            agent_id: "a".into(),
+            vendor: "v".into(),
+            vertical: "aec".into(),
+        })
+        .expect("the coverage field is present");
+        assert_eq!(generated["skills"], serde_json::json!(7));
+
+        // …while `coverage-validate` reads a different field and must not
+        // silently accept it.
+        let err = coverage_validate(CoverageValidateArgs {
+            ir_path: "ir.json".into(),
+            ..Default::default()
+        })
+        .expect_err("coverage_validate must not read the coverage field");
+        let AwareError::Validation(message) = err else {
+            panic!("expected a Validation error, got {err:?}");
+        };
+        assert!(message.contains("coverage_validate"), "{message}");
+    }
+
+    /// The Roslyn reader is discovered under its own env var and reports under
+    /// its own name — sharing `invoke_raw_with` with the sidecar must not make
+    /// it fall back to `AWARE_SIDECAR`.
+    #[cfg(unix)]
+    #[test]
+    fn roslyn_reflection_uses_its_own_binary_and_source_kind() {
+        let tmp = hostile_tempdir();
+        let script = fake_sidecar(
+            tmp.path(),
+            r#"{"ok":true,"version":"1.0.0","data":{"agent":{"id":"acme","version":"9.0",
+               "description":"d","license":"MIT","stateful":false,"commands":[],"skills":[]}}}"#,
+            "",
+        );
+        let _roslyn = EnvVarGuard::set("AWARE_ROSLYN", &script);
+
+        let agent = reflect_csharp(ReflectCsharpArgs {
+            paths: vec!["src".into()],
+            references: vec![],
+            agent_id: Some("acme".into()),
+        })
+        .expect("AWARE_ROSLYN must be the binary reflect_csharp spawns");
+
+        assert_eq!(agent.id, "acme");
+        assert_eq!(agent.provenance.source["type"], "csharp");
+    }
+
+    #[test]
+    fn roslyn_discovery_does_not_fall_back_to_the_sidecar_variable() {
+        let tmp = tempfile::tempdir().unwrap();
+        let fake = tmp.path().join("aware-sidecar");
+        std::fs::write(&fake, b"").unwrap();
+        // `AWARE_ROSLYN` is unset *by the guard*, not merely assumed unset: a
+        // developer who exports it would otherwise either fail this test (an
+        // override pointing at a missing file errors as `AWARE_ROSLYN=… but
+        // file not found`, which names neither `aware-roslyn` nor the fallback)
+        // or pass it vacuously (a valid override returns before the fallback
+        // this test exists to exercise ever runs).
+        let _env = EnvVarGuard::scope(&[
+            ("AWARE_SIDECAR", Some(fake.as_os_str())),
+            ("AWARE_ROSLYN", None),
+        ]);
+
+        // Discovery therefore falls through to the sibling/PATH search.
+        // Whatever it finds there, it must never resolve to what
+        // `AWARE_SIDECAR` points at — and when it finds nothing it must say so
+        // under its own name, not the sidecar's. The `Ok` arm tolerates a real
+        // `aware-roslyn` on the runner's PATH, which is an environment fact
+        // rather than a defect.
+        match discover_roslyn() {
+            Ok(found) => assert_ne!(found, fake, "AWARE_ROSLYN must not read AWARE_SIDECAR"),
+            Err(AwareError::NotFound(message)) => {
+                assert!(message.contains("aware-roslyn"), "{message}");
+                assert!(message.contains("AWARE_ROSLYN"), "{message}");
+            }
+            other => panic!("expected a NotFound naming aware-roslyn, got {other:?}"),
+        }
     }
 }
