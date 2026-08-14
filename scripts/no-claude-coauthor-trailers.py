@@ -158,8 +158,8 @@ control that stops short of one leaves everything past it free to rot:
     shapes git never emits, which is the only way to reach the field-count guard;
   * the extraction path through real git (`_end_to_end_control`); and
   * the **real `argv` → `main()` → exit-code path**, as a subprocess — including
-    the BOTH-flags shape `trailers.yml` actually runs, not only one flag at a
-    time.
+    the BOTH-flags shape `trailers.yml` actually runs, and MULTI-COMMIT ranges
+    whose offender is not the newest commit.
 
 That last layer is not ceremony, and neither is that last detail. Every other
 case calls the helpers and rebuilds the verdict itself, which is not the same
@@ -167,20 +167,26 @@ thing as the gate *reporting* it: deleting `main()`'s identity loop left every
 other case green while CI stopped checking authorship altogether. And every
 single-flag case stayed green when `main()`'s second `if args.message_file:`
 became an `elif`, which silently stops reading the PR body on every real run,
-because the real run always passes a range too.
+because the real run always passes a range too. And every single-COMMIT range
+stayed green when `main()` was cut to `commits_in_range(args.range)[:1]`, which
+passes any PR whose newest commit happens to be clean — the shape of most real
+ones, #408's five commits included.
 
 Each layer was confirmed to fail against a deliberately broken build: the
 identity check neutered, `%B` swapped for `%s`, `%an` dropped, the classifier
 stuck at False, the field-count guard removed, the empty-tail trim removed, the
 committer check re-added, the delimiter reverted to `\\x1f`, `--encoding=UTF-8`
 dropped, `main()`'s identity loop deleted, its trailer loop deleted, its
-`--message-file` offenders ignored, its body check turned into an `elif`, and
-its exit code forced to 0.
+`--message-file` offenders ignored, its body check turned into an `elif`, its
+range truncated to the first commit, and its exit code forced to 0.
 
 A control nothing can trip certifies nothing — which is how the `\\x1f` bypass
-survived its first review here, the missing CLI layer its second, and the
-one-flag-at-a-time CLI cases its third. Each was found by a reviewer, not by
-this control; extend it before trusting it.
+survived its first review here, the missing CLI layer its second, the
+one-flag-at-a-time cases its third, and the single-commit ranges its fourth.
+Every one was found by a reviewer, and every one was found AFTER a mutation
+sweep had been run and reported clean: a sweep only ever tests the weakenings
+its author already imagined. Extend this before trusting it, and do not read the
+mutation count above as a proof of coverage.
 """
 
 from __future__ import annotations
@@ -731,6 +737,23 @@ def _end_to_end_control() -> list[str]:
             (("--range", f"{trailer}..{authored}"), 1, "a Claude-authored commit"),
             (("--range", f"{smuggled}..{clean}"), 0, "a commit clean in message and identity"),
             (("--range", f"{base}..{trailer}"), 1, "a trailer in the commit message"),
+            # MULTI-COMMIT, with the offender NOT the newest commit. Every case
+            # above spans one commit, which cannot tell a loop over the range
+            # apart from a loop over its first entry: `commits_in_range(...)[:1]`
+            # kept the whole self-test green while any PR whose newest commit was
+            # clean sailed through. Real PRs are this shape — #408 had five
+            # commits. `git log` returns newest first, so the offender here is
+            # the second entry. Codex caught this on #412.
+            (
+                ("--range", f"{committed}..{clean}"),
+                1,
+                "a two-commit range whose offender is the OLDER commit",
+            ),
+            (
+                ("--range", f"{base}..{clean}"),
+                1,
+                "a five-commit range, offenders in the middle and a clean tip",
+            ),
         ):
             completed = cli(*arguments)
             if completed.returncode != expected_code:
@@ -767,7 +790,7 @@ def _end_to_end_control() -> list[str]:
         # on #412. Each source must still be able to fail the run on its own.
         for range_arg, body, expected_code, description in (
             (f"{smuggled}..{clean}", _TRAILER_BODY, 1, "a clean range with an offending body"),
-            (f"{trailer}..{authored}", _CLEAN_BODY, 1, "an offending range with a clean body"),
+            (f"{committed}..{clean}", _CLEAN_BODY, 1, "a multi-commit offending range, clean body"),
             (f"{base}..{trailer}", _TRAILER_BODY, 1, "both sources offending"),
             (f"{smuggled}..{clean}", _CLEAN_BODY, 0, "both sources clean"),
         ):
@@ -843,7 +866,7 @@ def self_test() -> int:
         f"self-test ok ({len(_PREDICATE_CASES)} trailer-predicate cases + "
         f"{len(_IDENTITY_PARITY_CASES)} identity cases, each also checked for parity, + "
         f"{len(SELF_TEST_CASES)} message cases + 6 parser cases + 6 end-to-end ranges "
-        f"+ 10 through the real CLI)"
+        f"+ 12 through the real CLI)"
     )
     return 0
 
