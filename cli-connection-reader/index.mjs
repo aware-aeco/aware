@@ -30,6 +30,7 @@ import { unzipSync } from 'fflate'; // tiny pure-JS unzip for .ifczip inputs
 import * as WebIFC from 'web-ifc'; // package export resolves to the node build (auto-locates its .wasm)
 import { recognizeBasePlate, recognizeShearPlate } from './recognize.mjs'; // fit a parametric recipe from the tessellated parts
 import { emitProgress, progressEnabled, progressRecordBytes, MAX_RECORD_BYTES } from './progress.mjs'; // tell the runtime what a long read is doing, while it does it
+import { comparableFrom, diffObjects } from './compare.mjs'; // match two versions of one file by GlobalId, and refuse when nothing pairs
 
 // web-ifc returns geometry in metres (SI base unit); AWARE scenes are canonical millimetres.
 const M_TO_MM = 1000;
@@ -1312,22 +1313,55 @@ export function closeApi({ api, modelID }) {
 async function main() {
   const command = process.argv[2];
   const args = JSON.parse(readStdin() || '{}');
+
+  // ARGUMENT VALIDATION HAPPENS BEFORE THE STDOUT GUARD GOES UP. The guard swaps `process.stdout.write`
+  // for stderr's; a `throw` between installing it and the `finally` that restores it leaves the process
+  // with stdout permanently redirected, so the error path emits nothing on the channel the protocol
+  // reads. The original code had the same shape (the guard went up before `openApi`), so this fixes an
+  // existing latent bug rather than only avoiding a new one.
   const ifcPath = args['ifc-path'] || args.ifcPath || args.path;
-  if (!ifcPath) throw new Error('`ifc-path` is required');
+  if (command === 'compare') {
+    if (!args['base-ifc-path']) throw new Error('`base-ifc-path` is required for compare');
+    if (!args['revised-ifc-path']) throw new Error('`revised-ifc-path` is required for compare');
+  } else if (typeof ifcPath !== 'string' || !ifcPath) {
+    // TYPE-checked, not merely truthy: `basename()` on a truthy non-string (a number, an array from a
+    // hand-written JSON payload) throws, and everything after this point runs under the stdout guard.
+    throw new Error('`ifc-path` is required, as a string');
+  }
 
   // The bridge protocol requires PURE JSON on stdout, and both model-open and tessellation print — so
   // the guard goes up BEFORE the model is opened and comes down only to emit the result.
   const realWrite = process.stdout.write.bind(process.stdout);
   process.stdout.write = process.stderr.write.bind(process.stderr);
 
-  // Opening a 66 MiB IFC is seconds of work before the first triangle exists, so it is its own
-  // phase rather than dead air a consumer cannot distinguish from a hung bridge (#405).
-  emitProgress({ phase: 'parse', message: `opening ${basename(ifcPath)}` });
-  const handle = await openApi(ifcPath);
-  const { api, modelID } = handle;
+  // `compare` opens TWO models, neither of which is `ifc-path`, so it owns its own opens and closes
+  // rather than borrowing the single-handle shape below.
+  if (command === 'compare') {
+    let result;
+    try {
+      result = await compareCommand(args);
+    } finally {
+      process.stdout.write = realWrite;   // restored on the throw path too, which is the point
+    }
+    realWrite(JSON.stringify(result));
+    return;
+  }
+
+  let handle;
   let result;
   let streamed = false;
   try {
+    // INSIDE the try, and `ifcPath` is type-checked above. `basename()` on a truthy non-string throws,
+    // and this line used to sit between the guard going up and the try — the last remaining path that
+    // could leak a redirected stdout.
+    //
+    // Opening a 66 MiB IFC is seconds of work before the first triangle exists, so it is its own
+    // phase rather than dead air a consumer cannot distinguish from a hung bridge (#405).
+    emitProgress({ phase: 'parse', message: `opening ${basename(ifcPath)}` });
+    // INSIDE the try: `openApi` on a corrupt or unreadable file throws, and in the original shape that
+    // throw escaped before the `finally`, leaking the guard exactly as above.
+    handle = await openApi(ifcPath);
+    const { api, modelID } = handle;
     if (command === 'list') {
       result = listConnections(api, modelID);
     } else if (command === 'extract') {
@@ -1340,13 +1374,71 @@ async function main() {
       result = readModelStreamed(api, modelID, args, realWrite);
       streamed = true;
     } else {
-      throw new Error(`unknown command '${command}' (expected: list | extract | probe | read-model)`);
+      throw new Error(`unknown command '${command}' (expected: list | extract | probe | read-model | compare)`);
     }
   } finally {
-    closeApi(handle);
-    process.stdout.write = realWrite; // restore before emitting the pure-JSON result
+    if (handle) closeApi(handle);          // `handle` may be undefined if openApi itself threw
+    process.stdout.write = realWrite;      // restore before emitting the pure-JSON result
   }
   if (!streamed || result?.['$aware-artifact']) realWrite(JSON.stringify(result));
+}
+
+/**
+ * `compare` — read both files, reduce each object to a comparable AS IT STREAMS, then diff.
+ *
+ * ONE MODEL OPEN AT A TIME, and the objects never accumulate: `readModel`'s `onObject` sink hands each
+ * object over the moment it is tessellated, `comparableFrom` keeps a fixed handful of numbers, and the
+ * triangles are dropped. Reading both into arrays first would hold two complete tessellations — the
+ * memory bill the design rejected an overlay diff for, arriving through the back door.
+ */
+async function compareCommand(args) {
+  /**
+   * PER-SIDE FILTERS, because the two versions are not always read under the same one. A user may pick
+   * a new filter when a storey name changed ("Level 1" became "L01"), and the comparison is then
+   * explicitly not like-for-like — but it still has to RUN. A single shared filter makes that case
+   * unrepresentable. The bare `storeys`/`ifc-types`/`ids` remain as the shorthand for "the same on both
+   * sides", which is the ordinary case.
+   */
+  const sideFilter = (side) => ({
+    // THE KEYS ARE `storeys` / `ifcTypes` / `ids` — camelCase for the types one, because that is what
+    // `selectExpressIds` reads. Passing `'ifc-types'` here would be IGNORED, and if it were the only
+    // filter given, `given()` fails on all three and the WHOLE BUILDING is read — the exact
+    // silent-wrong-answer direction. `readModelStreamed` does this same mapping.
+    storeys: args[`${side}-storeys`] ?? args.storeys,
+    ifcTypes: args[`${side}-ifc-types`] ?? args['ifc-types'] ?? args.ifcTypes,
+    ids: args[`${side}-ids`] ?? args.ids,
+    maxBytes: args['max-bytes'] ?? args.maxBytes,
+  });
+
+  const readComparables = async (path, side) => {
+    emitProgress({ phase: 'parse', message: `opening ${side}: ${basename(path)}` });
+    const handle = await openApi(path);
+    const out = [];
+    try {
+      const res = readModel(handle.api, handle.modelID, args['max-vertices'], {
+        ...sideFilter(side),
+        // `(object, text)` is the real signature — `text` is the pre-serialised form and is deliberately
+        // ignored here, because we keep a reduced record rather than the JSON.
+        onObject: (object) => { out.push(comparableFrom(object)); },
+      });
+      // `skipped` is carried, not discarded: a file whose every product is undrawable arrives as an
+      // empty array, and diffObjects needs to tell that apart from an empty file.
+      return { objects: out, selected: res.selected ?? null, skipped: res.skipped ?? 0 };
+    } finally {
+      closeApi(handle);
+    }
+  };
+
+  const base = await readComparables(args['base-ifc-path'], 'base');
+  const revised = await readComparables(args['revised-ifc-path'], 'revised');
+  const result = diffObjects(base.objects, revised.objects, {
+    tolerance: Number.isFinite(args['position-tolerance-mm']) ? args['position-tolerance-mm'] : 1,
+    includeUnchanged: args['include-unchanged'] === true,
+    skipped: { base: base.skipped, revised: revised.skipped },
+  });
+  // The frame is STATED rather than left to a version number, for the reason every other command in
+  // this bridge states it: the binary is installed separately and a stale one still runs.
+  return { frame: FILE_Z_UP, ...result, selected: { base: base.selected, revised: revised.selected } };
 }
 
 /**
