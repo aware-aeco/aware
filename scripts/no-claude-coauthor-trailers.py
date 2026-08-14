@@ -244,8 +244,18 @@ _CLAUDE_WORD = re.compile(r"(?<![\w-])claude", re.IGNORECASE)
 # Anthropic automation, as an address. Scoped to no-reply/bot local parts on
 # purpose: `@anthropic.com` alone would flag human employees, whose co-authorship
 # is as legitimate as anyone else's.
+#
+# `bot` must stand as its own token — either the whole local part, or preceded by
+# a separator, as in `claude-bot` or `ci.bot`. This was `[^@]*bot`, which also
+# matched the tail of an ordinary surname: `Alice Talbot <talbot@anthropic.com>`
+# was classified as automation, contradicting the §"Which co-authors are flagged"
+# promise two lines below that a human at an Anthropic address is a person. The
+# bug was latent while this only judged trailers and became a blanket ban when
+# the authorship check started sharing it — it rejected her every commit and
+# printed author-restamping instructions to somebody not named Claude. Codex
+# caught it on #412.
 _ANTHROPIC_AUTOMATION = re.compile(
-    r"^(?:noreply|no-reply|[^@]*bot)@(?:[^@]*\.)?anthropic\.com$",
+    r"^(?:noreply|no-reply|(?:[^@]*[-._])?bot)@(?:[^@]*\.)?anthropic\.com$",
     re.IGNORECASE,
 )
 
@@ -553,6 +563,13 @@ _PREDICATE_CASES: list[tuple[str, str, bool]] = [
     ("Co-authored-by", "Pawel Lisowski <pawellisowski@o2.pl>", False),
     ("Co-authored-by", "Jean-Claude Meunier <jc.meunier@gmail.com>", False),
     ("Co-authored-by", "Chris Olah <colah@anthropic.com>", False),
+    # A surname ENDING in "bot" is not a bot. `[^@]*bot` matched `talbot`, which
+    # made this employee's legitimate co-authorship a violation.
+    ("Co-authored-by", "Alice Talbot <talbot@anthropic.com>", False),
+    # …while the automation shapes it must still catch.
+    ("Co-authored-by", "CI <bot@anthropic.com>", True),
+    ("Co-authored-by", "CI <claude-bot@anthropic.com>", True),
+    ("Co-authored-by", "CI <ci.bot@anthropic.com>", True),
     ("Signed-off-by", "Claude <noreply@anthropic.com>", False),
     ("Reviewed-by", "Claude <noreply@anthropic.com>", False),
 ]
@@ -591,7 +608,13 @@ _IDENTITY_CASES: list[tuple[str, str, bool]] = [
     ("pawellisowski", "35166048+pawellisowski@users.noreply.github.com", False),
     ("Jean-Claude Meunier", "jc.meunier@gmail.com", False),
     ("Chris Olah", "colah@anthropic.com", False),
+    # An Anthropic employee whose surname ends in "bot". Blocking her author
+    # identity would bar every commit she makes, over a substring.
+    ("Alice Talbot", "talbot@anthropic.com", False),
     ("Ana Diaz", "ana@anthropic-partners.example", False),
+    # The Anthropic automation shapes that must survive the narrowing.
+    ("CI", "bot@anthropic.com", True),
+    ("CI", "claude-bot@anthropic.com", True),
     # A bot address that has nothing to do with Claude.
     ("GitHub", "noreply@github.com", False),
     ("dependabot", "49699333+dependabot[bot]@users.noreply.github.com", False),
