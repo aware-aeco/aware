@@ -157,23 +157,30 @@ control that stops short of one leaves everything past it free to rot:
   * the log parser, on hand-built streams (`_parser_control`) — including the
     shapes git never emits, which is the only way to reach the field-count guard;
   * the extraction path through real git (`_end_to_end_control`); and
-  * the **real `argv` → `main()` → exit-code path**, as a subprocess.
+  * the **real `argv` → `main()` → exit-code path**, as a subprocess — including
+    the BOTH-flags shape `trailers.yml` actually runs, not only one flag at a
+    time.
 
-That last layer is not ceremony. Every other case calls the helpers and rebuilds
-the verdict itself, which is not the same thing as the gate *reporting* it —
-deleting `main()`'s identity loop left every other case green while CI stopped
-checking authorship altogether.
+That last layer is not ceremony, and neither is that last detail. Every other
+case calls the helpers and rebuilds the verdict itself, which is not the same
+thing as the gate *reporting* it: deleting `main()`'s identity loop left every
+other case green while CI stopped checking authorship altogether. And every
+single-flag case stayed green when `main()`'s second `if args.message_file:`
+became an `elif`, which silently stops reading the PR body on every real run,
+because the real run always passes a range too.
 
 Each layer was confirmed to fail against a deliberately broken build: the
 identity check neutered, `%B` swapped for `%s`, `%an` dropped, the classifier
 stuck at False, the field-count guard removed, the empty-tail trim removed, the
 committer check re-added, the delimiter reverted to `\\x1f`, `--encoding=UTF-8`
 dropped, `main()`'s identity loop deleted, its trailer loop deleted, its
-`--message-file` offenders ignored, and its exit code forced to 0.
+`--message-file` offenders ignored, its body check turned into an `elif`, and
+its exit code forced to 0.
 
 A control nothing can trip certifies nothing — which is how the `\\x1f` bypass
-survived its first review here, and how the missing CLI layer survived its
-second.
+survived its first review here, the missing CLI layer its second, and the
+one-flag-at-a-time CLI cases its third. Each was found by a reviewer, not by
+this control; extend it before trusting it.
 """
 
 from __future__ import annotations
@@ -523,6 +530,10 @@ def _git(args: list[str], cwd: str, env: dict[str, str] | None = None) -> None:
     )
 
 
+# PR-body fixtures for the CLI controls, which check both sources in one run.
+_TRAILER_BODY = "A description\n\nCo-authored-by: Claude <noreply@anthropic.com>\n"
+_CLEAN_BODY = "A description with nothing to attribute.\n"
+
 # The identity that authored #398, #399 and all five commits of #408.
 _CLAUDE_AUTHOR = {"GIT_AUTHOR_NAME": "Claude", "GIT_AUTHOR_EMAIL": "noreply@anthropic.com"}
 _CLAUDE_COMMITTER = {
@@ -731,17 +742,41 @@ def _end_to_end_control() -> list[str]:
 
         # The PR-body half of `main()`, through the same real path.
         body_file = os.path.join(repo, "pr-body.txt")
-        for body, expected_code, description in (
-            ("A description\n\nCo-authored-by: Claude <noreply@anthropic.com>\n", 1, "carrying"),
-            ("A description with nothing in it.\n", 0, "clean of"),
-        ):
+
+        def with_body(body: str) -> str:
             with open(body_file, "w", encoding="utf-8") as handle:
                 handle.write(body)
-            completed = cli("--message-file", body_file)
+            return body_file
+
+        for body, expected_code, description in (
+            (_TRAILER_BODY, 1, "carrying"),
+            (_CLEAN_BODY, 0, "clean of"),
+        ):
+            completed = cli("--message-file", with_body(body))
             if completed.returncode != expected_code:
                 failures.append(
                     f"  end-to-end: a PR body {description} the trailer exited "
                     f"{completed.returncode} through the CLI, expected {expected_code}"
+                )
+
+        # BOTH flags at once, which is the shape `trailers.yml` actually runs.
+        # Every case above passes one or the other, and that is not the same
+        # coverage: turning `main()`'s second `if args.message_file:` into an
+        # `elif` keeps all of them green while the real workflow stops reading the
+        # PR body whenever a range is supplied too — verified, and caught by Codex
+        # on #412. Each source must still be able to fail the run on its own.
+        for range_arg, body, expected_code, description in (
+            (f"{smuggled}..{clean}", _TRAILER_BODY, 1, "a clean range with an offending body"),
+            (f"{trailer}..{authored}", _CLEAN_BODY, 1, "an offending range with a clean body"),
+            (f"{base}..{trailer}", _TRAILER_BODY, 1, "both sources offending"),
+            (f"{smuggled}..{clean}", _CLEAN_BODY, 0, "both sources clean"),
+        ):
+            completed = cli("--range", range_arg, "--message-file", with_body(body))
+            if completed.returncode != expected_code:
+                failures.append(
+                    f"  end-to-end: {description} exited {completed.returncode} through the "
+                    f"combined invocation, expected {expected_code} — the workflow passes "
+                    "both flags, so one source going unread reads as a clean branch"
                 )
 
         # Last, because it reconfigures the repo: a checkout that re-encodes log
@@ -808,7 +843,7 @@ def self_test() -> int:
         f"self-test ok ({len(_PREDICATE_CASES)} trailer-predicate cases + "
         f"{len(_IDENTITY_PARITY_CASES)} identity cases, each also checked for parity, + "
         f"{len(SELF_TEST_CASES)} message cases + 6 parser cases + 6 end-to-end ranges "
-        f"+ 6 through the real CLI)"
+        f"+ 10 through the real CLI)"
     )
     return 0
 
