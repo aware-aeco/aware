@@ -1,0 +1,232 @@
+// Unit tests for `compare` — the identity rules and the refusal, which are the two things that decide
+// whether this feature tells the truth. They live here rather than in the CLI suite because `compare.mjs`
+// is deliberately pure: plain objects in, plain objects out, no WASM parser and no sample file. The
+// two-file CLI path is covered separately in `compare.cli.test.mjs`.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { comparableFrom } from './compare.mjs';
+
+// A unit cube, 1000 mm on a side, centred on (500, 500, 500). Two triangles per face is not needed —
+// the extents and centroid come off the vertices, and the triangle count off the indices.
+const CUBE = {
+  globalId: 'ABC', id: 'ABC', name: 'Beam 1', ifcType: 'IFCBEAM', storey: 'L1', profile: 'W10x33', material: 'S355',
+  positions: [0,0,0, 1000,0,0, 1000,1000,0, 0,1000,0, 0,0,1000, 1000,0,1000, 1000,1000,1000, 0,1000,1000],
+  indices: [0,1,2, 0,2,3],
+  propertySets: [{ name: 'Pset_BeamCommon', properties: [{ name: 'Reference', value: 'B1' }] }],
+};
+
+test('comparableFrom keys on globalId and IGNORES id, which may be a substituted expressID', () => {
+  const c = comparableFrom({ ...CUBE, globalId: null, id: '4711' });
+  assert.equal(c.globalId, null, 'a file with no GlobalId yields no identity — never the expressID');
+  const real = comparableFrom(CUBE);
+  assert.equal(real.globalId, 'ABC');
+});
+
+test('comparableFrom keeps identity, attributes, centroid, extents and triangle count', () => {
+  const c = comparableFrom(CUBE);
+  assert.equal(c.globalId, 'ABC');
+  assert.equal(c.ifcType, 'IFCBEAM');
+  assert.equal(c.profile, 'W10x33');
+  assert.deepEqual(c.centroid, [500, 500, 500]);
+  assert.deepEqual(c.extents, [1000, 1000, 1000]); // sorted ascending
+  assert.equal(c.triangles, 2);
+});
+
+test('comparableFrom retains NO geometry — holding two models of triangles is the memory bill this avoids', () => {
+  const c = comparableFrom(CUBE);
+  assert.equal(c.positions, undefined);
+  assert.equal(c.indices, undefined);
+});
+
+test('comparableFrom sorts extents, so a 90-degree turn about an axis is not a shape change', () => {
+  const upright = comparableFrom({ ...CUBE, positions: [0,0,0, 100,0,0, 100,200,0, 0,200,0, 0,0,300, 100,0,300, 100,200,300, 0,200,300] });
+  const onItsSide = comparableFrom({ ...CUBE, positions: [0,0,0, 300,0,0, 300,100,0, 0,100,0, 0,0,200, 300,0,200, 300,100,200, 0,100,200] });
+  assert.deepEqual(upright.extents, onItsSide.extents);
+});
+
+test('comparableFrom flattens property sets to set.name -> value, so a diff can name the field', () => {
+  const c = comparableFrom(CUBE);
+  assert.equal(c.properties['Pset_BeamCommon.Reference'], 'B1');
+});
+
+test('comparableFrom tolerates an object with no drawable geometry rather than dividing by zero', () => {
+  const c = comparableFrom({ ...CUBE, positions: [], indices: [] });
+  assert.equal(c.centroid, null);
+  assert.equal(c.extents, null);
+  assert.equal(c.triangles, 0);
+});
+
+// --- usable ids ----------------------------------------------------------------------------------
+import { partitionByUsableId } from './compare.mjs';
+
+// `obj(globalId, …)` — the first argument is the FILE'S GlobalId. `null` means the file records none.
+const obj = (globalId, over = {}) => ({ globalId, name: null, ifcType: 'IFCWALL', storey: 'L1', profile: null, material: null, centroid: [0,0,0], extents: [1,1,1], triangles: 1, properties: {}, ...over });
+
+test('a null globalId is not usable — a file recording none gives us nothing to match on', () => {
+  const { usable, uncomparable } = partitionByUsableId([obj(null), obj('A')]);
+  assert.deepEqual([...usable.keys()], ['A']);
+  assert.equal(uncomparable.count, 1);
+  assert.equal(uncomparable.blank, 1);
+  assert.equal(uncomparable.duplicated, 0);
+});
+
+test('an EMPTY-STRING globalId is not usable either — belt and braces on the reader\u2019s normalisation', () => {
+  const { usable } = partitionByUsableId([obj(''), obj('A')]);
+  assert.deepEqual([...usable.keys()], ['A']);
+});
+
+test('a DUPLICATED id is not usable either, and BOTH copies are excluded', () => {
+  const { usable, uncomparable } = partitionByUsableId([obj('D'), obj('D'), obj('A')]);
+  assert.deepEqual([...usable.keys()], ['A']);
+  assert.equal(uncomparable.count, 2, 'both copies go, not just the second — nothing says which is which');
+  assert.equal(uncomparable.duplicated, 2);
+});
+
+test('uncomparable objects are broken down by type and storey, so the UI can say WHICH ones', () => {
+  const { uncomparable } = partitionByUsableId([
+    obj(null, { ifcType: 'IFCBUILDINGELEMENTPROXY', storey: 'L2' }),
+    obj(null, { ifcType: 'IFCBUILDINGELEMENTPROXY', storey: 'L2' }),
+    obj(null, { ifcType: 'IFCWALL', storey: 'L1' }),
+  ]);
+  assert.equal(uncomparable.byType.IFCBUILDINGELEMENTPROXY, 2);
+  assert.equal(uncomparable.byStorey.L2, 2);
+});
+
+// --- what counts as a change ---------------------------------------------------------------------
+import { CRITERIA, changedBy } from './compare.mjs';
+
+const base = obj('A', { name: 'B1', profile: 'W10x33', material: 'S355', centroid: [0,0,0], extents: [100,200,300], triangles: 12, properties: { 'Pset.Ref': 'B1' } });
+const at = (over) => ({ ...base, ...over });
+
+test('the comparison set is a NAMED list, echoed so a stored change list cannot silently change meaning', () => {
+  assert.deepEqual(CRITERIA, ['location', 'geometry', 'ifcType', 'name', 'profile', 'material', 'properties']);
+});
+
+test('nothing fires when nothing changed', () => {
+  assert.deepEqual(changedBy(base, at({}), 1), []);
+});
+
+test('a move beyond tolerance fires location, and only location', () => {
+  assert.deepEqual(changedBy(base, at({ centroid: [0, 0, 250] }), 1), ['location']);
+});
+
+test('a move WITHIN tolerance fires nothing — this is what stops float noise flooding the list', () => {
+  assert.deepEqual(changedBy(base, at({ centroid: [0, 0, 0.4] }), 1), []);
+});
+
+test('a different shape fires geometry', () => {
+  assert.deepEqual(changedBy(base, at({ extents: [100, 200, 900] }), 1), ['geometry']);
+  assert.deepEqual(changedBy(base, at({ triangles: 24 }), 1), ['geometry']);
+});
+
+test('each remaining criterion fires ALONE — a criterion that cannot be isolated is one nobody can trust a row about', () => {
+  assert.deepEqual(changedBy(base, at({ ifcType: 'IFCCOLUMN' }), 1), ['ifcType']);
+  assert.deepEqual(changedBy(base, at({ name: 'B2' }), 1), ['name']);
+  assert.deepEqual(changedBy(base, at({ profile: 'W12x40' }), 1), ['profile']);
+  assert.deepEqual(changedBy(base, at({ material: 'S275' }), 1), ['material']);
+  assert.deepEqual(changedBy(base, at({ properties: { 'Pset.Ref': 'B9' } }), 1), ['properties']);
+});
+
+test('a REMOVED property fires properties — deleting a value is a change, and the easiest one to miss', () => {
+  assert.deepEqual(changedBy(base, at({ properties: {} }), 1), ['properties']);
+});
+
+test('an object with no geometry compares on attributes alone rather than reporting a phantom move', () => {
+  const ghostly = at({ centroid: null, extents: null, triangles: 0 });
+  assert.deepEqual(changedBy(ghostly, { ...ghostly }, 1), []);
+});
+
+// --- the change list, and the refusal ------------------------------------------------------------
+import { diffObjects } from './compare.mjs';
+
+test('added, removed and changed are classified, and unchanged is counted but not listed', () => {
+  const a = [obj('KEEP'), obj('GONE'), obj('MOVE')];
+  const b = [obj('KEEP'), obj('NEW'), obj('MOVE', { centroid: [0, 0, 500] })];
+  const r = diffObjects(a, b, { tolerance: 1 });
+  assert.deepEqual(r.summary, { added: 1, removed: 1, changed: 1, unchanged: 1, uncomparable: 0 });
+  assert.deepEqual(r.changes.map((c) => [c.status, c.id]).sort(), [['added','NEW'], ['changed','MOVE'], ['removed','GONE']]);
+  assert.equal(r.changes.find((c) => c.id === 'MOVE').changedBy[0], 'location');
+  assert.equal(r.changes.some((c) => c.status === 'unchanged'), false, 'unchanged is 99% of a real model — counted, not listed');
+});
+
+test('include-unchanged lists them when asked', () => {
+  const r = diffObjects([obj('K')], [obj('K')], { tolerance: 1, includeUnchanged: true });
+  assert.deepEqual(r.changes.map((c) => c.status), ['unchanged']);
+});
+
+test('a moved object carries the delta and the distance, so a row can say "moved 500 mm"', () => {
+  const r = diffObjects([obj('M')], [obj('M', { centroid: [0, 0, 500] })], { tolerance: 1 });
+  const row = r.changes[0];
+  assert.deepEqual(row.delta, [0, 0, 500]);
+  assert.equal(row.distance, 500);
+});
+
+test('every removed object HAS a usable id — which is what lets ghosts be a read-model --ids call', () => {
+  // NOTE the shared 'S'. The plan's fixture here was `[G, blank]` against `[K]`, which shares no id at
+  // all and therefore REFUSES — so it asserted against `r.changes` while `r.changes` is deliberately
+  // undefined on a refusal. The refusal was right and the fixture was wrong; one paired object is what
+  // makes the comparison run at all, so that there IS a removed row to inspect.
+  const r = diffObjects([obj('S'), obj('G'), obj('')], [obj('S'), obj('K')], { tolerance: 1 });
+  assert.equal(r.identity.refused, undefined, 'the shared id is what keeps this out of the refusal');
+  const removed = r.changes.filter((c) => c.status === 'removed');
+  assert.deepEqual(removed.map((c) => c.id), ['G']);
+  assert.equal(removed.every((c) => c.id.length > 0), true);
+  assert.equal(r.identity.base.uncomparable.count, 1, 'and the blank one is uncomparable, never removed');
+});
+
+test('uncomparable objects are counted per side and NEVER folded into unchanged', () => {
+  const r = diffObjects([obj('A'), obj('')], [obj('A'), obj(''), obj('')], { tolerance: 1 });
+  assert.equal(r.identity.base.uncomparable.count, 1);
+  assert.equal(r.identity.revised.uncomparable.count, 2);
+  assert.equal(r.summary.uncomparable, 3);
+  assert.equal(r.summary.unchanged, 1, 'the one real pair, and not one object more');
+});
+
+test('the five summary counts reconcile against both sides — this is what proves nothing was dropped', () => {
+  const a = [obj('K'), obj('GONE'), obj('CHG'), obj('')];
+  const b = [obj('K'), obj('NEW'), obj('CHG', { name: 'x' })];
+  const r = diffObjects(a, b, { tolerance: 1 });
+  const { added, removed, changed, unchanged, uncomparable } = r.summary;
+  assert.equal(added + removed + changed + unchanged + uncomparable, a.length + b.length - (changed + unchanged));
+});
+
+test('REFUSES when nothing at all matched — the exact symptom of a regenerated-id export', () => {
+  const r = diffObjects([obj('a1'), obj('a2')], [obj('b1'), obj('b2')], { tolerance: 1 });
+  assert.ok(r.identity.refused, 'must refuse rather than report 2 added and 2 removed');
+  assert.equal(r.changes, undefined, 'and must not hand back the fabricated list at all');
+  assert.equal(r.identity.refused.baseObjects, 2);
+  assert.equal(r.identity.refused.revisedObjects, 2);
+});
+
+test('does NOT refuse when one side is legitimately empty — an empty file is not an unmatched one', () => {
+  const r = diffObjects([], [obj('n1')], { tolerance: 1 });
+  assert.equal(r.identity.refused, undefined);
+  assert.equal(r.summary.added, 1);
+});
+
+test('REFUSES when a side is empty only because every product was SKIPPED — that is not an empty file', () => {
+  // readModel drops products carrying no drawable triangle and counts them in `skipped`. Without this,
+  // a model whose products are all undrawable arrives as [] and is reported as a wholesale deletion.
+  const r = diffObjects([obj('a1')], [], { tolerance: 1, skipped: { base: 0, revised: 900 } });
+  assert.ok(r.identity.refused, 'nothing was compared, and the reason is the reader, not the model');
+  assert.match(r.identity.refused.reason, /could not be drawn/);
+});
+
+test('a legitimately empty side with NOTHING skipped still proceeds — the refusal stays narrow', () => {
+  // The counterpart to the test above, and the one that proves the rule discriminates rather than just
+  // fires. A filter that selected nothing, against a file that dropped nothing, is an honest empty read.
+  const r = diffObjects([obj('a1')], [], { tolerance: 1, skipped: { base: 0, revised: 0 } });
+  assert.equal(r.identity.refused, undefined);
+  assert.equal(r.summary.removed, 1);
+});
+
+test('the skipped counts are reported per side even on a successful compare — never dropped silently', () => {
+  const r = diffObjects([obj('K')], [obj('K')], { tolerance: 1, skipped: { base: 3, revised: 5 } });
+  assert.equal(r.identity.base.skipped, 3);
+  assert.equal(r.identity.revised.skipped, 5);
+});
+
+test('does not refuse on a single match — one shared id means the ids carry signal', () => {
+  const r = diffObjects([obj('S'), obj('a1')], [obj('S'), obj('b1')], { tolerance: 1 });
+  assert.equal(r.identity.refused, undefined);
+});
