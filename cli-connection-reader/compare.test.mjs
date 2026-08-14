@@ -91,3 +91,47 @@ test('uncomparable objects are broken down by type and storey, so the UI can say
   assert.equal(uncomparable.byType.IFCBUILDINGELEMENTPROXY, 2);
   assert.equal(uncomparable.byStorey.L2, 2);
 });
+
+// --- what counts as a change ---------------------------------------------------------------------
+import { CRITERIA, changedBy } from './compare.mjs';
+
+const base = obj('A', { name: 'B1', profile: 'W10x33', material: 'S355', centroid: [0,0,0], extents: [100,200,300], triangles: 12, properties: { 'Pset.Ref': 'B1' } });
+const at = (over) => ({ ...base, ...over });
+
+test('the comparison set is a NAMED list, echoed so a stored change list cannot silently change meaning', () => {
+  assert.deepEqual(CRITERIA, ['location', 'geometry', 'ifcType', 'name', 'profile', 'material', 'properties']);
+});
+
+test('nothing fires when nothing changed', () => {
+  assert.deepEqual(changedBy(base, at({}), 1), []);
+});
+
+test('a move beyond tolerance fires location, and only location', () => {
+  assert.deepEqual(changedBy(base, at({ centroid: [0, 0, 250] }), 1), ['location']);
+});
+
+test('a move WITHIN tolerance fires nothing — this is what stops float noise flooding the list', () => {
+  assert.deepEqual(changedBy(base, at({ centroid: [0, 0, 0.4] }), 1), []);
+});
+
+test('a different shape fires geometry', () => {
+  assert.deepEqual(changedBy(base, at({ extents: [100, 200, 900] }), 1), ['geometry']);
+  assert.deepEqual(changedBy(base, at({ triangles: 24 }), 1), ['geometry']);
+});
+
+test('each remaining criterion fires ALONE — a criterion that cannot be isolated is one nobody can trust a row about', () => {
+  assert.deepEqual(changedBy(base, at({ ifcType: 'IFCCOLUMN' }), 1), ['ifcType']);
+  assert.deepEqual(changedBy(base, at({ name: 'B2' }), 1), ['name']);
+  assert.deepEqual(changedBy(base, at({ profile: 'W12x40' }), 1), ['profile']);
+  assert.deepEqual(changedBy(base, at({ material: 'S275' }), 1), ['material']);
+  assert.deepEqual(changedBy(base, at({ properties: { 'Pset.Ref': 'B9' } }), 1), ['properties']);
+});
+
+test('a REMOVED property fires properties — deleting a value is a change, and the easiest one to miss', () => {
+  assert.deepEqual(changedBy(base, at({ properties: {} }), 1), ['properties']);
+});
+
+test('an object with no geometry compares on attributes alone rather than reporting a phantom move', () => {
+  const ghostly = at({ centroid: null, extents: null, triangles: 0 });
+  assert.deepEqual(changedBy(ghostly, { ...ghostly }, 1), []);
+});

@@ -99,3 +99,44 @@ export function partitionByUsableId(objects) {
   }
   return { usable, uncomparable };
 }
+
+/**
+ * WHAT COUNTS AS A CHANGE — borrowed from Tekla's "comparison set", which exists because a diff that
+ * reports every difference reports mostly noise (an export timestamp, a 0.1 mm float wobble).
+ *
+ * FIXED in this slice and ECHOED in the output. Tekla makes it user-configurable and will eventually be
+ * right to; until then the echo is what stops a change list stored today from meaning something
+ * different when the set grows.
+ */
+export const CRITERIA = ['location', 'geometry', 'ifcType', 'name', 'profile', 'material', 'properties'];
+
+const dist = (a, b) => (a && b ? Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]) : 0);
+
+/** Same keys, same values — and the key set is compared BOTH ways so a DELETED property is a change. */
+function propertiesDiffer(a, b) {
+  const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
+  for (const k of keys) if (a[k] !== b[k]) return true;
+  return false;
+}
+
+/**
+ * Which criteria fired, in `CRITERIA` order. Empty means unchanged.
+ *
+ * `tolerance` applies to BOTH location and geometry: the same float noise that moves a centroid moves
+ * an extent, and applying it to one but not the other would make a file that passes the location check
+ * fail the shape check for the same underlying wobble.
+ */
+export function changedBy(a, b, tolerance) {
+  const fired = [];
+  if (dist(a.centroid, b.centroid) > tolerance) fired.push('location');
+  const shapeMoved = (a.extents && b.extents)
+    ? a.extents.some((v, i) => Math.abs(v - b.extents[i]) > tolerance)
+    : Boolean(a.extents) !== Boolean(b.extents);
+  if (shapeMoved || a.triangles !== b.triangles) fired.push('geometry');
+  if (a.ifcType !== b.ifcType) fired.push('ifcType');
+  if (a.name !== b.name) fired.push('name');
+  if (a.profile !== b.profile) fired.push('profile');
+  if (a.material !== b.material) fired.push('material');
+  if (propertiesDiffer(a.properties, b.properties)) fired.push('properties');
+  return fired;
+}
