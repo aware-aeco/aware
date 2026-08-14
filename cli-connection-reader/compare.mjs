@@ -66,3 +66,36 @@ export function comparableFrom(o) {
     properties: flattenProperties(o.propertySets),
   };
 }
+
+/**
+ * Split a file's objects into "has an id we can match on" and "does not".
+ *
+ * BOTH HALVES OF "USABLE" COME FROM AN EXISTING RULE — floless's `revalidateSubSelection` already
+ * refuses a blank id and a duplicated one, for the reasons its header sets out: in a file where every
+ * id is `''` the check waves through whatever landed at that slot, and two objects sharing an id make
+ * "the id still matches" true after a reorder that swapped them. An id that cannot distinguish anything
+ * does not get to vote.
+ *
+ * A DUPLICATED ID DISQUALIFIES EVERY COPY, not the second one onward. Keeping the first would be
+ * choosing arbitrarily between two objects the file gives us no way to tell apart, and the whole point
+ * of this module is not doing that.
+ */
+export function partitionByUsableId(objects) {
+  const seen = new Map();
+  for (const o of objects) {
+    if (!o.globalId) continue;
+    seen.set(o.globalId, (seen.get(o.globalId) ?? 0) + 1);
+  }
+  const usable = new Map();
+  const uncomparable = { count: 0, blank: 0, duplicated: 0, byType: {}, byStorey: {} };
+  for (const o of objects) {
+    if (o.globalId && seen.get(o.globalId) === 1) { usable.set(o.globalId, o); continue; }
+    uncomparable.count++;
+    if (o.globalId) uncomparable.duplicated++; else uncomparable.blank++;
+    const t = o.ifcType ?? 'UNKNOWN';
+    const s = o.storey ?? 'UNKNOWN';
+    uncomparable.byType[t] = (uncomparable.byType[t] ?? 0) + 1;
+    uncomparable.byStorey[s] = (uncomparable.byStorey[s] ?? 0) + 1;
+  }
+  return { usable, uncomparable };
+}

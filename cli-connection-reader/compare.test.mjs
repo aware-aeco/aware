@@ -55,3 +55,39 @@ test('comparableFrom tolerates an object with no drawable geometry rather than d
   assert.equal(c.extents, null);
   assert.equal(c.triangles, 0);
 });
+
+// --- usable ids ----------------------------------------------------------------------------------
+import { partitionByUsableId } from './compare.mjs';
+
+// `obj(globalId, …)` — the first argument is the FILE'S GlobalId. `null` means the file records none.
+const obj = (globalId, over = {}) => ({ globalId, name: null, ifcType: 'IFCWALL', storey: 'L1', profile: null, material: null, centroid: [0,0,0], extents: [1,1,1], triangles: 1, properties: {}, ...over });
+
+test('a null globalId is not usable — a file recording none gives us nothing to match on', () => {
+  const { usable, uncomparable } = partitionByUsableId([obj(null), obj('A')]);
+  assert.deepEqual([...usable.keys()], ['A']);
+  assert.equal(uncomparable.count, 1);
+  assert.equal(uncomparable.blank, 1);
+  assert.equal(uncomparable.duplicated, 0);
+});
+
+test('an EMPTY-STRING globalId is not usable either — belt and braces on the reader\u2019s normalisation', () => {
+  const { usable } = partitionByUsableId([obj(''), obj('A')]);
+  assert.deepEqual([...usable.keys()], ['A']);
+});
+
+test('a DUPLICATED id is not usable either, and BOTH copies are excluded', () => {
+  const { usable, uncomparable } = partitionByUsableId([obj('D'), obj('D'), obj('A')]);
+  assert.deepEqual([...usable.keys()], ['A']);
+  assert.equal(uncomparable.count, 2, 'both copies go, not just the second — nothing says which is which');
+  assert.equal(uncomparable.duplicated, 2);
+});
+
+test('uncomparable objects are broken down by type and storey, so the UI can say WHICH ones', () => {
+  const { uncomparable } = partitionByUsableId([
+    obj(null, { ifcType: 'IFCBUILDINGELEMENTPROXY', storey: 'L2' }),
+    obj(null, { ifcType: 'IFCBUILDINGELEMENTPROXY', storey: 'L2' }),
+    obj(null, { ifcType: 'IFCWALL', storey: 'L1' }),
+  ]);
+  assert.equal(uncomparable.byType.IFCBUILDINGELEMENTPROXY, 2);
+  assert.equal(uncomparable.byStorey.L2, 2);
+});
