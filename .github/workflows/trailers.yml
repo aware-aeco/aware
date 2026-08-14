@@ -1,13 +1,14 @@
 name: Trailers
 
 # CLAUDE.md §Git workflow: "No `Co-Authored-By: Claude ...` trailers in commit
-# messages." Nothing enforced it and the rule was being broken — 8 of the 50
-# commits reachable in a depth-50 clone carry one, the most recent on 2026-08-05
-# (b0ee11b5, #362). Those cannot be fixed: the same section makes `main`
-# append-only ("no force-push, no rewrite"). Catching the trailer on the branch
-# is the only fix available, because GitHub propagates it from the branch's
-# commits — and from the PR body — into the squash commit, after which it is on
-# `main` for good.
+# messages." Nothing enforced it and the rule was being broken — 14 of the 568
+# commits on `main` carry one, five of them landing AFTER this workflow existed
+# (the last 0789633b, #408, 2026-08-13), because the check was aimed at commit
+# messages and the PR body while GitHub was generating the trailer from commit
+# AUTHORSHIP instead. Those cannot be fixed: the same section makes `main`
+# append-only ("no force-push, no rewrite"). Catching it on the branch is the
+# only fix available, because GitHub propagates or synthesises it into the
+# squash commit, after which it is on `main` for good. See #411.
 #
 # Its own workflow rather than a job in `ci.yml`, for two reasons that both come
 # from the `edited` trigger below. `ci.yml` declares one `on:` for every job, so
@@ -63,7 +64,7 @@ jobs:
       # The body is written to a file rather than interpolated into the shell:
       # `${{ }}` inside a `run:` splices attacker-controlled text into the
       # script, and a PR description is exactly that.
-      - name: Check the PR's commits and body
+      - name: Check the PR's commit messages, commit identities and body
         env:
           PR_BODY: ${{ github.event.pull_request.body }}
           BASE_REF: ${{ github.event.pull_request.base.ref }}
