@@ -49,19 +49,36 @@ commits, five of them Claude-authored) are the same shape.
 All three are therefore checked:
 
   * every commit message in the PR range (`--range`);
-  * the **author and committer identity** of every commit in that range; and
+  * the **author identity** of every commit in that range; and
   * the PR body (`--message-file`), which GitHub also mines for trailers.
-
-The author half is proven by the three merges named above. The committer half is
-a deliberate superset: it is *not* established that GitHub mines the committer
-too, but a commit committed by Claude is agent-produced whichever field carries
-it, and the only false positives that choice can produce are agent-made commits.
-Leaving it out would be another silent hole of exactly the kind this file exists
-to close.
 
 No exemption is modelled for the account performing the merge, which GitHub does
 omit from the trailers it generates. It cannot matter here: the identities this
 flags are Claude's, and Claude is not the account that merges.
+
+## Why the author only, and not the committer
+
+The first version of this check flagged a Claude *committer* too, on the reasoning
+that a commit committed by Claude is agent-produced whichever field carries it.
+That was wrong twice over, and Codex said so on #412.
+
+It defends against nothing established. The synthesis documented above works from
+commit *authors*; that GitHub also mines the committer is not shown, and a squash
+discards the branch's committer field entirely — the squash commit's committer is
+GitHub and its author is the merger. So an unmined committer leaves no trace on
+`main` to catch.
+
+And it costs a real false positive. A human who cherry-picks or applies a patch
+in a checkout whose `user.email` is still Claude's produces a legitimate,
+human-authored commit with a Claude committer — and this repo is exactly where
+that happens, because the agent environments leave that identity set globally.
+Committer metadata cannot tell that person apart from an agent, so the gate would
+have blocked a branch that was never going to put a trailer anywhere.
+
+The committer is still *read*, and asserted in `_end_to_end_control`: it is the
+column that proves the identity fields have not shifted, which is the one way
+this parser has actually been wrong. If GitHub is ever shown to synthesise from
+it, `offending_identities` is one line from covering it.
 
 ## What this does not reach
 
@@ -133,10 +150,18 @@ telling them to erase their own attribution.
 Note `origin/main`, not `main`. A stale local `main` puts the 14 unfixable
 commits above into the range and reports failures nobody can act on.
 
-`--self-test` is the negative control. It covers both halves of the gate — the
-classifier *and* the commit-extraction path — because a control that only
-exercises the classifier stays green while a refactor of the other half leaves
-the gate completely blind.
+`--self-test` is the negative control. It covers all three layers — the two
+classifiers, the log parser (`_parser_control`), and the extraction path through
+real git (`_end_to_end_control`) — because a control that only exercises the
+classifier stays green while a refactor of another layer leaves the gate
+completely blind.
+
+Each layer was confirmed to fail against a deliberately broken build: the
+identity check neutered, `%B` swapped for `%s`, `%an` dropped, the classifier
+stuck at False, the field-count guard removed, the empty-tail trim removed, the
+committer check re-added, and the delimiter reverted to `\\x1f`. A control
+nothing can trip certifies nothing, which is how the `\\x1f` bypass survived its
+first review here.
 """
 
 from __future__ import annotations
@@ -257,16 +282,26 @@ class Commit(NamedTuple):
     committer: Identity
 
 
-# The separator between fields of one record. `%B` is emitted LAST and the split
-# below is bounded to match, so a message containing this byte cannot shift the
-# fields ahead of it. Records are separated by NUL (`git log -z`), which a commit
-# message cannot contain at all.
-_FIELD_SEP = "\x1f"
+# NUL separates the fields, and `git log -z` separates the records with the same
+# byte — so the whole stream is one flat token list, read `_LOG_FIELDS` at a time.
+#
+# NUL because it is the only delimiter that cannot appear INSIDE a field: a git
+# commit object cannot carry one, and neither can a name or an address. A byte
+# that merely looks out-of-band is not enough. This first used `\x1f`, bounding
+# the split so a *message* could not shift the fields ahead of it — but a
+# *subject* could, and `%s` is emitted before every identity. A commit subjected
+# `clean\x1fsubject` still splits into exactly seven fields, so the count guard
+# below stays silent while every identity column has slid one place and the gate
+# reads an author out of the wrong column. Verified: with author
+# `automation <noreply@anthropic.com>` that commit passed while the same identity
+# under an ordinary subject failed. Codex caught it on #412;
+# `_end_to_end_control` now pins it.
+_FIELD_SEP = "\x00"
 
 # `%B` is the RAW BODY — subject *and* message body. `%s` would be the subject
 # alone, and a trailer never lives in the subject, so that swap leaves the gate
 # reporting every branch clean. `_end_to_end_control` covers it.
-_LOG_FORMAT = _FIELD_SEP.join(["%H", "%s", "%an", "%ae", "%cn", "%ce", "%B"])
+_LOG_FORMAT = "%x00".join(["%H", "%s", "%an", "%ae", "%cn", "%ce", "%B"])
 _LOG_FIELDS = 7
 
 
@@ -291,20 +326,35 @@ def commits_in_range(rev_range: str, cwd: str | None = None) -> list[Commit]:
             "`fetch-depth: 0` before running this."
         )
 
+    return commits_from_log(listed.stdout)
+
+
+def commits_from_log(stdout: str) -> list[Commit]:
+    """Parse `git log -z --format=_LOG_FORMAT` output into `Commit` records.
+
+    Split out from the subprocess so the field-count guard below is reachable
+    without one: it fires only when `_LOG_FORMAT` and `_LOG_FIELDS` disagree,
+    which no real `git log` can produce and which therefore had nothing pinning
+    it until this was a function of its own.
+    """
+    tokens = stdout.split(_FIELD_SEP)
+    # `-z` TERMINATES the last record rather than separating, so the split leaves
+    # one empty tail token. Empty output produces `[""]` and lands at `[]`.
+    if tokens and tokens[-1] == "":
+        tokens.pop()
+    if len(tokens) % _LOG_FIELDS:
+        # Loud rather than skipped: a stream this cannot read is a set of commits
+        # the gate would otherwise wave through unexamined.
+        raise RuntimeError(
+            f"git log emitted {len(tokens)} fields, which is not a whole number of "
+            f"{_LOG_FIELDS}-field commits — `_LOG_FORMAT` and `_LOG_FIELDS` disagree"
+        )
+
     commits = []
-    for record in listed.stdout.split("\0"):
-        # `-z` TERMINATES each record, so the split leaves an empty tail.
-        if not record:
-            continue
-        fields = record.split(_FIELD_SEP, _LOG_FIELDS - 1)
-        if len(fields) != _LOG_FIELDS:
-            # Loud rather than skipped: a record this code cannot read is a
-            # commit the gate would otherwise wave through unexamined.
-            raise RuntimeError(
-                f"git log emitted {len(fields)} fields for a commit, expected "
-                f"{_LOG_FIELDS}: {record!r}"
-            )
-        sha, subject, author_name, author_email, committer_name, committer_email, message = fields
+    for start in range(0, len(tokens), _LOG_FIELDS):
+        sha, subject, author_name, author_email, committer_name, committer_email, message = tokens[
+            start : start + _LOG_FIELDS
+        ]
         commits.append(
             Commit(
                 sha=sha,
@@ -318,17 +368,13 @@ def commits_in_range(rev_range: str, cwd: str | None = None) -> list[Commit]:
 
 
 def offending_identities(commit: Commit) -> list[str]:
-    """The Claude identities on `commit` that a squash would turn into trailers."""
-    flagged = [
-        (role, identity)
-        for role, identity in (("author", commit.author), ("committer", commit.committer))
-        if identifies_claude(*identity)
-    ]
-    # On an ordinary local commit the two identities are the same — as they are
-    # on every offender so far — so say it once rather than twice.
-    if len(flagged) == 2 and commit.author == commit.committer:
-        return [f"author and committer: {commit.author}"]
-    return [f"{role}: {identity}" for role, identity in flagged]
+    """The Claude identity on `commit` a squash would turn into a trailer.
+
+    The AUTHOR, and deliberately not the committer — see §"Why the author only".
+    """
+    if identifies_claude(*commit.author):
+        return [f"author: {commit.author}"]
+    return []
 
 
 # ── Negative control ─────────────────────────────────────────────────────────
@@ -466,6 +512,77 @@ _CLAUDE_COMMITTER = {
 }
 
 
+def _parser_control() -> list[str]:
+    """Pin `commits_from_log` directly, including the shapes git never emits.
+
+    The field-count guard is the reason this exists: it fires only on a
+    `_LOG_FORMAT`/`_LOG_FIELDS` mismatch, so no fixture built by running git can
+    reach it, and a guard nothing can trip is a guard that can be deleted without
+    a test going red.
+    """
+    failures = []
+    record = _FIELD_SEP.join(
+        ["c0ffee", "the subject", "Claude", "noreply@anthropic.com", "Pawel", "p@o2.pl", "body\n"]
+    )
+
+    parsed = commits_from_log(record + _FIELD_SEP)
+    if len(parsed) != 1:
+        failures.append(f"  parser: one record parsed as {len(parsed)} commits")
+    elif parsed[0] != Commit(
+        sha="c0ffee",
+        subject="the subject",
+        message="body\n",
+        author=Identity("Claude", "noreply@anthropic.com"),
+        committer=Identity("Pawel", "p@o2.pl"),
+    ):
+        failures.append(f"  parser: a record read back as {parsed[0]!r}")
+
+    if len(commits_from_log(_FIELD_SEP.join([record, record]) + _FIELD_SEP)) != 2:
+        failures.append("  parser: two records did not parse as two commits")
+
+    if commits_from_log("") != []:
+        failures.append("  parser: empty output did not parse as no commits")
+
+    # The delimiter this parser used to use, now appearing in the two fields a
+    # commit author controls. Both must be inert: this is the bypass in its
+    # general form, and NUL is the whole reason it cannot recur.
+    smuggled = _FIELD_SEP.join(
+        [
+            "c0ffee",
+            "sub\x1fject",
+            "Claude",
+            "noreply@anthropic.com",
+            "Pawel",
+            "p@o2.pl",
+            "body\x1fwith\x1fseparators\n",
+        ]
+    )
+    parsed = commits_from_log(smuggled + _FIELD_SEP)
+    if len(parsed) != 1:
+        failures.append(f"  parser: a smuggled delimiter split one commit into {len(parsed)}")
+    elif parsed[0].author != Identity("Claude", "noreply@anthropic.com"):
+        failures.append(
+            f"  parser: a smuggled delimiter shifted the author to {parsed[0].author!r} — "
+            "the identity columns are forgeable again"
+        )
+
+    for bad, description in (
+        (_LOG_FIELDS - 1, "one field short"),
+        (_LOG_FIELDS + 1, "one field long"),
+    ):
+        try:
+            commits_from_log(_FIELD_SEP.join(["x"] * bad) + _FIELD_SEP)
+        except RuntimeError:
+            pass
+        else:
+            failures.append(
+                f"  parser: a stream {description} was accepted — the field-count "
+                "guard cannot fire, so a format/parser mismatch would pass silently"
+            )
+
+    return failures
+
+
 def _end_to_end_control() -> list[str]:
     """Drive `commits_in_range` over a throwaway repo carrying each real shape.
 
@@ -500,6 +617,11 @@ def _end_to_end_control() -> list[str]:
         trailer = commit("probe: the violation\n\nCo-authored-by: Claude <noreply@anthropic.com>")
         authored = commit("probe: a clean message, authored by Claude", _CLAUDE_AUTHOR)
         committed = commit("probe: a clean message, committed by Claude", _CLAUDE_COMMITTER)
+        # A subject carrying the delimiter this parser once used. Under `\x1f` it
+        # split into the expected seven fields with every identity column shifted
+        # one place, so a Claude author read back as something harmless and the
+        # gate passed the commit. See `_FIELD_SEP`.
+        smuggled = commit("probe: field\x1fseparator\x1fin the subject", _CLAUDE_AUTHOR)
         clean = commit("probe: clean in message and identity alike")
 
         for rev_range, expected, description in (
@@ -510,8 +632,20 @@ def _end_to_end_control() -> list[str]:
                 "a clean message AUTHORED by Claude — the #408 shape, which the "
                 "message-only gate passed five times",
             ),
-            (f"{authored}..{committed}", 1, "a clean message COMMITTED by Claude"),
-            (f"{committed}..{clean}", 0, "a commit clean in message and identity"),
+            (
+                f"{authored}..{committed}",
+                0,
+                "a human-authored commit merely COMMITTED by Claude — allowed on "
+                "purpose: a squash discards the committer, and a person working in "
+                "a checkout with a stale identity is not an offender",
+            ),
+            (
+                f"{committed}..{smuggled}",
+                1,
+                "a Claude author behind a subject carrying the field delimiter — "
+                "the parser-level bypass, which must not reopen",
+            ),
+            (f"{smuggled}..{clean}", 0, "a commit clean in message and identity"),
             (f"{clean}..{clean}", 0, "an empty range"),
         ):
             found = [
@@ -587,6 +721,7 @@ def self_test() -> int:
                 f"got {len(found)}: {found}"
             )
 
+    failures.extend(_parser_control())
     failures.extend(_end_to_end_control())
 
     if failures:
@@ -596,7 +731,7 @@ def self_test() -> int:
     print(
         f"self-test ok ({len(_PREDICATE_CASES)} trailer-predicate cases + "
         f"{len(_IDENTITY_PARITY_CASES)} identity cases, each also checked for parity, + "
-        f"{len(SELF_TEST_CASES)} message cases + 5 end-to-end ranges)"
+        f"{len(SELF_TEST_CASES)} message cases + 6 parser cases + 6 end-to-end ranges)"
     )
     return 0
 
