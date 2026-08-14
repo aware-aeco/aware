@@ -998,6 +998,12 @@ export function readModel(api, modelID, maxVertices = Infinity, opts = {}) {
     let line;
     try { line = api.GetLine(modelID, id); } catch { line = null; }
     const object = {
+      // THE FILE'S OWN GlobalId, or null — SEPARATE from `id`, which falls back to the expressID below.
+      // That fallback is right for `id` (a consumer needs *something* to address an object by) and
+      // catastrophic for anything comparing two files: an expressID is a file-local sequence number, so
+      // two exports of one model share many, and a comparison keyed on `id` would pair unrelated objects
+      // and call it a match. `compare` keys on THIS field and treats null as uncomparable.
+      globalId: (line && strOf(line.GlobalId)) || null,
       id: (line && strOf(line.GlobalId)) || String(id),
       name: (line && strOf(line.Name)) || null,
       ifcType: typeName(api.GetLineType(modelID, id)),

@@ -1161,3 +1161,35 @@ test('the producer measures against the runtime`s OWN limit, not a copy of the n
     'the bridge and the runtime disagree about the record cap',
   );
 });
+
+// --- globalId: the file's own GlobalId, told apart from `id` -------------------------------------
+//
+// `id` falls back to the expressID when a file records no GlobalId (see the object literal in
+// `readModel`). That fallback is right for `id` — a consumer needs *something* to address an object by
+// — and catastrophic for anything comparing two files: an expressID is a file-local sequence number,
+// so two exports of one model share a great many, and a diff keyed on `id` would pair unrelated
+// objects and present the result as a match. `compare` therefore keys on `globalId`, which is null
+// when the file has none, and these tests are what make that distinction real rather than intended.
+
+test('globalId is the FILE\u2019s GlobalId, and null when it has none \u2014 `id` may be a substituted expressID', async (t) => {
+  const f = sample('example-steel-framing.ifc');
+  if (!f) return t.skip(skipReason('example-steel-framing.ifc'));
+  const r = await read('example-steel-framing.ifc');
+  assert.ok(r.objects.length > 0, 'the file read at all — otherwise the loop below asserts nothing');
+  for (const o of r.objects) {
+    assert.ok('globalId' in o, 'every object carries the field, so absence is never ambiguous');
+    if (o.globalId !== null) assert.equal(o.globalId, o.id, 'when the file HAS one, id is it');
+    else assert.match(o.id, /^\d+$/, 'when it has none, id is the substituted expressID — a decimal');
+  }
+});
+
+test('a second real file agrees — the rule is the reader\u2019s, not one export\u2019s habit', async (t) => {
+  const f = sample('Building-Architecture.ifc');
+  if (!f) return t.skip(skipReason('Building-Architecture.ifc'));
+  const r = await read('Building-Architecture.ifc');
+  assert.ok(r.objects.length > 0);
+  for (const o of r.objects) {
+    assert.ok('globalId' in o);
+    if (o.globalId !== null) assert.equal(o.globalId, o.id);
+  }
+});
