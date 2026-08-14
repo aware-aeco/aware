@@ -207,9 +207,10 @@ stuck at False, the field-count guard removed, the empty-tail trim removed, the
 committer check re-added, the delimiter reverted to `\\x1f`, `--encoding=UTF-8`
 dropped, `main()`'s identity loop deleted, its trailer loop deleted, its
 `--message-file` offenders ignored, its body check turned into an `elif`, its
-range truncated to the first commit, its exit code forced to 0, and the
-authorship test widened back to `identifies_claude` — which bars a contributor
-named Claude.
+range truncated to the first commit, its exit code forced to 0, the authorship
+test widened back to `identifies_claude` — which bars a contributor named
+Claude — the bot-token boundary moved either way, and NFKC folding dropped from
+each of the three places that need it.
 
 A control nothing can trip certifies nothing — which is how the `\\x1f` bypass
 survived its first review here, the missing CLI layer its second, the
@@ -228,6 +229,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import unicodedata
 from typing import NamedTuple
 
 # The trailer key CLAUDE.md names. Git treats trailer keys case-insensitively
@@ -265,6 +267,22 @@ _BOT_LOCAL_PART = re.compile(
 # The hosts whose bot addresses are Anthropic's own.
 _ANTHROPIC_HOST = re.compile(r"^(?:[^@]*\.)?anthropic\.com$", re.IGNORECASE)
 
+def folded(text: str) -> str:
+    """NFKC-normalised text, for MATCHING only — never for display.
+
+    A compatibility character is a distinct code point that renders as the same
+    letter, and every pattern here is a literal. `cⅼaude-bot@example.com` uses
+    U+217C for the `l`: it read as Claude automation to any human, satisfied the
+    bot rule, and missed the Claude match entirely, so the identity passed
+    through the production path. NFKC maps those code points to their ordinary
+    equivalents before any pattern sees them. Codex caught it on #412.
+
+    Reported text stays the original, so a failure names the address exactly as
+    git records it rather than a normalised form nobody would find by searching.
+    """
+    return unicodedata.normalize("NFKC", text)
+
+
 def is_bot_address(email: str) -> bool:
     """Whether an address belongs to a bot rather than a person.
 
@@ -272,7 +290,7 @@ def is_bot_address(email: str) -> bool:
     `35166048+pawellisowski@users.noreply.github.com` carries "noreply" in its
     domain, and a host says nothing about whose account it is.
     """
-    return bool(_BOT_LOCAL_PART.search(email.split("@", 1)[0]))
+    return bool(_BOT_LOCAL_PART.search(folded(email).split("@", 1)[0]))
 
 
 def is_anthropic_automation(email: str) -> bool:
@@ -284,7 +302,7 @@ def is_anthropic_automation(email: str) -> bool:
     so `claude-bot@anthropic.com` was caught and `claude-bot@example.com` was not.
     A fixture for the first read as coverage for both. Codex caught it on #412.
     """
-    _, _, host = email.partition("@")
+    _, _, host = folded(email).partition("@")
     return bool(_ANTHROPIC_HOST.match(host)) and is_bot_address(email)
 
 
@@ -309,7 +327,7 @@ def identifies_claude(name: str, email: str) -> bool:
     author costs them every commit they make, so authorship uses the stricter
     `identifies_claude_automation` instead.
     """
-    if _CLAUDE_WORD.search(name) or _CLAUDE_WORD.search(email):
+    if _CLAUDE_WORD.search(folded(name)) or _CLAUDE_WORD.search(folded(email)):
         return True
     return is_anthropic_automation(email)
 
@@ -324,7 +342,7 @@ def identifies_claude_automation(name: str, email: str) -> bool:
         return True
     if not is_bot_address(email):
         return False
-    return bool(_CLAUDE_WORD.search(email) or _CLAUDE_WORD.search(name))
+    return bool(_CLAUDE_WORD.search(folded(email)) or _CLAUDE_WORD.search(folded(name)))
 
 
 def is_claude_coauthor(key: str, value: str) -> bool:
@@ -644,6 +662,19 @@ _IDENTITY_CASES: list[tuple[str, str, bool]] = [
     # …and the people those must not sweep up, on the same non-Anthropic hosts.
     ("Alice Talbot", "talbot@example.com", False),
     ("Claude Dupont", "abbot@example.com", False),
+    # Compatibility characters that RENDER as the letters but are different code
+    # points. Every pattern here is a literal, so without NFKC folding these read
+    # as Claude automation to a person while matching nothing. The first is U+217C
+    # for the `l`; the second is fullwidth.
+    ("automation", "cⅼaude-bot@example.com", True),
+    ("Ｃｌａｕｄｅ", "noreply@example.com", True),
+    # The compatibility character in the BOT MARKER rather than in "claude".
+    # Folding has to happen before `_BOT_LOCAL_PART` too, not only before the
+    # Claude match — and nothing else here can tell those two apart.
+    ("Claude", "claude-ｂｏｔ@example.com", True),
+    ("Claude Code", "ｎｏｒｅｐｌｙ@example.com", True),
+    # Folding must not INVENT a match: an accented name is not the tool.
+    ("Claudé Dupont", "claudé.dupont@example.com", False),
     # A bot address that has nothing to do with Claude.
     ("GitHub", "noreply@github.com", False),
     ("dependabot", "49699333+dependabot[bot]@users.noreply.github.com", False),
@@ -686,6 +717,13 @@ _HUMAN_NAMED_CLAUDE = {
 _CLAUDE_BOT_HOST = {
     "GIT_AUTHOR_NAME": "Claude",
     "GIT_AUTHOR_EMAIL": "claude-bot@example.com",
+}
+
+# The same, spelled with U+217C where the `l` belongs. Blocked, and pinned
+# through real git for the same reason: it reached the production path.
+_CONFUSABLE_CLAUDE_BOT = {
+    "GIT_AUTHOR_NAME": "automation",
+    "GIT_AUTHOR_EMAIL": "cⅼaude-bot@example.com",
 }
 
 
@@ -806,6 +844,10 @@ def _end_to_end_control() -> list[str]:
         # fixture stayed green, because those pass on the host before the bot rule
         # is consulted. See `is_anthropic_automation`.
         hyphenated = commit("probe: a clean message from a hyphenated bot", _CLAUDE_BOT_HOST)
+        # The same identity spelled with a compatibility character. It renders as
+        # "claude" and satisfied the bot rule while matching no Claude pattern, so
+        # it reached the production path and exited 0. See `folded`.
+        confusable = commit("probe: a clean message, confusable author", _CONFUSABLE_CLAUDE_BOT)
 
         for rev_range, expected, description in (
             (f"{base}..{trailer}", 1, "a trailer in the commit message"),
@@ -841,6 +883,12 @@ def _end_to_end_control() -> list[str]:
                 1,
                 "Claude automation at a hyphenated local part on a NON-Anthropic "
                 "host — the shape the Anthropic fixtures could not vouch for",
+            ),
+            (
+                f"{hyphenated}..{confusable}",
+                1,
+                "a Claude bot address spelled with a compatibility character — it "
+                "renders as the tool and must be judged as it renders",
             ),
             (f"{clean}..{clean}", 0, "an empty range"),
         ):
@@ -916,7 +964,7 @@ def _end_to_end_control() -> list[str]:
             (
                 ("--range", f"{base}..{clean}"),
                 1,
-                "a seven-commit range with offenders scattered through it",
+                "an eight-commit range with offenders scattered through it",
             ),
         ):
             completed = cli(*arguments)
@@ -1032,7 +1080,7 @@ def self_test() -> int:
         f"self-test ok ({len(_PREDICATE_CASES)} trailer-predicate cases + "
         f"{len(_IDENTITY_CASES)} identity cases, each also checked against the "
         f"authorship-implies-trailer invariant, + "
-        f"{len(SELF_TEST_CASES)} message cases + 6 parser cases + 8 end-to-end ranges "
+        f"{len(SELF_TEST_CASES)} message cases + 6 parser cases + 9 end-to-end ranges "
         f"+ 12 through the real CLI)"
     )
     return 0
