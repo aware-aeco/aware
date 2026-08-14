@@ -241,34 +241,52 @@ COAUTHOR_KEY = "co-authored-by"
 # there the word *starts*.
 _CLAUDE_WORD = re.compile(r"(?<![\w-])claude", re.IGNORECASE)
 
-# Anthropic automation, as an address. Scoped to no-reply/bot local parts on
-# purpose: `@anthropic.com` alone would flag human employees, whose co-authorship
-# is as legitimate as anyone else's.
+# A local part that belongs to a bot rather than a person. ONE rule, used for
+# every address this file judges — see `is_anthropic_automation` below for what
+# happened when there were two.
 #
-# `bot` must stand as its own token — either the whole local part, or preceded by
-# a separator, as in `claude-bot` or `ci.bot`. This was `[^@]*bot`, which also
-# matched the tail of an ordinary surname: `Alice Talbot <talbot@anthropic.com>`
-# was classified as automation, contradicting the §"Which co-authors are flagged"
-# promise two lines below that a human at an Anthropic address is a person. The
-# bug was latent while this only judged trailers and became a blanket ban when
-# the authorship check started sharing it — it rejected her every commit and
-# printed author-restamping instructions to somebody not named Claude. Codex
-# caught it on #412.
-_ANTHROPIC_AUTOMATION = re.compile(
-    r"^(?:noreply|no-reply|(?:[^@]*[-._])?bot)@(?:[^@]*\.)?anthropic\.com$",
+# `bot` must stand as its own token, with `-`, `.` and `_` counting as separators
+# rather than as part of it. Both boundaries earned their shape on #412:
+#
+#   * NOT excluding a preceding separator caught `talbot` — an ordinary surname —
+#     and, once authorship shared the predicate, barred every commit
+#     `Alice Talbot <talbot@anthropic.com>` could make;
+#   * excluding `-` the way `_CLAUDE_WORD` does (where it is right, because
+#     `Jean-Claude` is a given name) went too far the other way and MISSED
+#     `claude-bot@example.com`, which is exactly what a bot is called.
+#
+# `\w` excludes only letters, digits and `_`… and `_` is a separator here, so the
+# lookarounds spell it out rather than reusing `\b`.
+_BOT_LOCAL_PART = re.compile(
+    r"^(?:noreply|no-reply)(?![^\W_])|\[bot\]|(?<![^\W_])bot(?![^\W_])",
     re.IGNORECASE,
 )
 
-# An address that belongs to a bot rather than a person, judged on the local part
-# alone. `noreply@` and `no-reply@` lead it; `[bot]@` is GitHub App style; a bare
-# `bot` must stand as its own word, so `robot` and `bottle` are not bots and
-# neither is a person whose address merely contains the letters.
-#
-# This is what makes a Claude-shaped NAME insufficient to block an author, and
-# `35166048+pawellisowski@users.noreply.github.com` — a real contributor's GitHub
-# address, which contains "noreply" in the DOMAIN — is why it reads the local part
-# only.
-_BOT_LOCAL_PART = re.compile(r"^(?:noreply|no-reply)\b|\[bot\]|(?<![\w-])bot(?![\w-])", re.IGNORECASE)
+# The hosts whose bot addresses are Anthropic's own.
+_ANTHROPIC_HOST = re.compile(r"^(?:[^@]*\.)?anthropic\.com$", re.IGNORECASE)
+
+def is_bot_address(email: str) -> bool:
+    """Whether an address belongs to a bot rather than a person.
+
+    The LOCAL PART decides, never the host: a real contributor's
+    `35166048+pawellisowski@users.noreply.github.com` carries "noreply" in its
+    domain, and a host says nothing about whose account it is.
+    """
+    return bool(_BOT_LOCAL_PART.search(email.split("@", 1)[0]))
+
+
+def is_anthropic_automation(email: str) -> bool:
+    """Whether an address is one of Anthropic's own bots.
+
+    Anthropic's HOST plus the shared bot rule — not a second pattern of its own.
+    It was one, and the two disagreed about hyphens in both directions at once:
+    the Anthropic copy accepted `claude-bot` while `_BOT_LOCAL_PART` rejected it,
+    so `claude-bot@anthropic.com` was caught and `claude-bot@example.com` was not.
+    A fixture for the first read as coverage for both. Codex caught it on #412.
+    """
+    _, _, host = email.partition("@")
+    return bool(_ANTHROPIC_HOST.match(host)) and is_bot_address(email)
+
 
 # `Name <email>`, the form git writes and GitHub reads. A value that does not
 # match is treated as all name, so an address-less trailer is still judged.
@@ -293,7 +311,7 @@ def identifies_claude(name: str, email: str) -> bool:
     """
     if _CLAUDE_WORD.search(name) or _CLAUDE_WORD.search(email):
         return True
-    return _ANTHROPIC_AUTOMATION.match(email) is not None
+    return is_anthropic_automation(email)
 
 
 def identifies_claude_automation(name: str, email: str) -> bool:
@@ -302,10 +320,9 @@ def identifies_claude_automation(name: str, email: str) -> bool:
     The evidence has to be in the ADDRESS. A name is not enough: see
     §"Why a name is not enough to block an author".
     """
-    if _ANTHROPIC_AUTOMATION.match(email):
+    if is_anthropic_automation(email):
         return True
-    local_part = email.split("@", 1)[0]
-    if not _BOT_LOCAL_PART.search(local_part):
+    if not is_bot_address(email):
         return False
     return bool(_CLAUDE_WORD.search(email) or _CLAUDE_WORD.search(name))
 
@@ -615,6 +632,18 @@ _IDENTITY_CASES: list[tuple[str, str, bool]] = [
     # The Anthropic automation shapes that must survive the narrowing.
     ("CI", "bot@anthropic.com", True),
     ("CI", "claude-bot@anthropic.com", True),
+    ("CI", "bot-runner@anthropic.com", True),
+    # Claude automation on a NON-Anthropic host, hyphenated. These are the cases
+    # the Anthropic fixtures above cannot vouch for: those pass on the host alone,
+    # so they stayed green while the shared bot rule rejected the same hyphen and
+    # let every one of these through. Each must be judged by the bot rule itself.
+    ("Claude", "claude-bot@example.com", True),
+    ("claude-code", "claude-code-bot@users.noreply.github.example", True),
+    ("Claude", "bot.claude@example.com", True),
+    ("Claude", "claude_bot@example.com", True),
+    # …and the people those must not sweep up, on the same non-Anthropic hosts.
+    ("Alice Talbot", "talbot@example.com", False),
+    ("Claude Dupont", "abbot@example.com", False),
     # A bot address that has nothing to do with Claude.
     ("GitHub", "noreply@github.com", False),
     ("dependabot", "49699333+dependabot[bot]@users.noreply.github.com", False),
@@ -650,6 +679,13 @@ _CLAUDE_COMMITTER = {
 _HUMAN_NAMED_CLAUDE = {
     "GIT_AUTHOR_NAME": "Claude Dupont",
     "GIT_AUTHOR_EMAIL": "claude.dupont@example.com",
+}
+
+# Claude automation on a host that is not Anthropic's — blocked, and pinned
+# through real git because this shape reached production and was missed.
+_CLAUDE_BOT_HOST = {
+    "GIT_AUTHOR_NAME": "Claude",
+    "GIT_AUTHOR_EMAIL": "claude-bot@example.com",
 }
 
 
@@ -765,6 +801,11 @@ def _end_to_end_control() -> list[str]:
         smuggled = commit("probe: field\x1fseparator\x1fin the subject", _CLAUDE_AUTHOR)
         human = commit("probe: an ordinary contribution", _HUMAN_NAMED_CLAUDE)
         clean = commit("probe: clean in message and identity alike")
+        # Claude automation on a NON-Anthropic host, hyphenated — the shape that
+        # reached the production `--range` path and exited 0 while every Anthropic
+        # fixture stayed green, because those pass on the host before the bot rule
+        # is consulted. See `is_anthropic_automation`.
+        hyphenated = commit("probe: a clean message from a hyphenated bot", _CLAUDE_BOT_HOST)
 
         for rev_range, expected, description in (
             (f"{base}..{trailer}", 1, "a trailer in the commit message"),
@@ -795,6 +836,12 @@ def _end_to_end_control() -> list[str]:
                 "which `REMEDY` itself calls the gate's bug and not theirs",
             ),
             (f"{human}..{clean}", 0, "a commit clean in message and identity"),
+            (
+                f"{clean}..{hyphenated}",
+                1,
+                "Claude automation at a hyphenated local part on a NON-Anthropic "
+                "host — the shape the Anthropic fixtures could not vouch for",
+            ),
             (f"{clean}..{clean}", 0, "an empty range"),
         ):
             found = [
@@ -869,7 +916,7 @@ def _end_to_end_control() -> list[str]:
             (
                 ("--range", f"{base}..{clean}"),
                 1,
-                "a five-commit range, offenders in the middle and a clean tip",
+                "a seven-commit range with offenders scattered through it",
             ),
         ):
             completed = cli(*arguments)
@@ -985,7 +1032,7 @@ def self_test() -> int:
         f"self-test ok ({len(_PREDICATE_CASES)} trailer-predicate cases + "
         f"{len(_IDENTITY_CASES)} identity cases, each also checked against the "
         f"authorship-implies-trailer invariant, + "
-        f"{len(SELF_TEST_CASES)} message cases + 6 parser cases + 7 end-to-end ranges "
+        f"{len(SELF_TEST_CASES)} message cases + 6 parser cases + 8 end-to-end ranges "
         f"+ 12 through the real CLI)"
     )
     return 0
