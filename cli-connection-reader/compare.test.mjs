@@ -1,0 +1,57 @@
+// Unit tests for `compare` — the identity rules and the refusal, which are the two things that decide
+// whether this feature tells the truth. They live here rather than in the CLI suite because `compare.mjs`
+// is deliberately pure: plain objects in, plain objects out, no WASM parser and no sample file. The
+// two-file CLI path is covered separately in `compare.cli.test.mjs`.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { comparableFrom } from './compare.mjs';
+
+// A unit cube, 1000 mm on a side, centred on (500, 500, 500). Two triangles per face is not needed —
+// the extents and centroid come off the vertices, and the triangle count off the indices.
+const CUBE = {
+  globalId: 'ABC', id: 'ABC', name: 'Beam 1', ifcType: 'IFCBEAM', storey: 'L1', profile: 'W10x33', material: 'S355',
+  positions: [0,0,0, 1000,0,0, 1000,1000,0, 0,1000,0, 0,0,1000, 1000,0,1000, 1000,1000,1000, 0,1000,1000],
+  indices: [0,1,2, 0,2,3],
+  propertySets: [{ name: 'Pset_BeamCommon', properties: [{ name: 'Reference', value: 'B1' }] }],
+};
+
+test('comparableFrom keys on globalId and IGNORES id, which may be a substituted expressID', () => {
+  const c = comparableFrom({ ...CUBE, globalId: null, id: '4711' });
+  assert.equal(c.globalId, null, 'a file with no GlobalId yields no identity — never the expressID');
+  const real = comparableFrom(CUBE);
+  assert.equal(real.globalId, 'ABC');
+});
+
+test('comparableFrom keeps identity, attributes, centroid, extents and triangle count', () => {
+  const c = comparableFrom(CUBE);
+  assert.equal(c.globalId, 'ABC');
+  assert.equal(c.ifcType, 'IFCBEAM');
+  assert.equal(c.profile, 'W10x33');
+  assert.deepEqual(c.centroid, [500, 500, 500]);
+  assert.deepEqual(c.extents, [1000, 1000, 1000]); // sorted ascending
+  assert.equal(c.triangles, 2);
+});
+
+test('comparableFrom retains NO geometry — holding two models of triangles is the memory bill this avoids', () => {
+  const c = comparableFrom(CUBE);
+  assert.equal(c.positions, undefined);
+  assert.equal(c.indices, undefined);
+});
+
+test('comparableFrom sorts extents, so a 90-degree turn about an axis is not a shape change', () => {
+  const upright = comparableFrom({ ...CUBE, positions: [0,0,0, 100,0,0, 100,200,0, 0,200,0, 0,0,300, 100,0,300, 100,200,300, 0,200,300] });
+  const onItsSide = comparableFrom({ ...CUBE, positions: [0,0,0, 300,0,0, 300,100,0, 0,100,0, 0,0,200, 300,0,200, 300,100,200, 0,100,200] });
+  assert.deepEqual(upright.extents, onItsSide.extents);
+});
+
+test('comparableFrom flattens property sets to set.name -> value, so a diff can name the field', () => {
+  const c = comparableFrom(CUBE);
+  assert.equal(c.properties['Pset_BeamCommon.Reference'], 'B1');
+});
+
+test('comparableFrom tolerates an object with no drawable geometry rather than dividing by zero', () => {
+  const c = comparableFrom({ ...CUBE, positions: [], indices: [] });
+  assert.equal(c.centroid, null);
+  assert.equal(c.extents, null);
+  assert.equal(c.triangles, 0);
+});
