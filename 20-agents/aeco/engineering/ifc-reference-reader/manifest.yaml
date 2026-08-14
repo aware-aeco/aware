@@ -40,7 +40,22 @@ agent:        ifc-reference-reader
 # delivery exists to remove. Additive, and the absence caution is unchanged: no `selected` on the
 # record still means "this bridge cannot answer", so an unfiltered read publishes none and every
 # existing consumer sees exactly what it saw before. MINOR.
-version:      1.5.0
+# 1.6.0: a third command, `compare` — match the objects of two versions of one file by GlobalId and
+# report added / removed / changed — plus a new `globalId` on every `read-model` object. Purely
+# additive (no existing command's inputs, outputs or behaviour change), so MINOR. `globalId` is the
+# file's OWN GlobalId or null, and it exists because `id` is not that: `id` falls back to the expressID
+# when a file records none, which is right for addressing an object and catastrophic for comparing two
+# files, since expressIDs are file-local sequence numbers that two exports of one model share in
+# quantity. A comparison keyed on `id` would pair unrelated objects and call it a match. `compare`
+# matches on GlobalId ONLY and REFUSES when nothing pairs, which is deliberate rather than unfinished:
+# IfcOpenShell's ifcdiff matches on GlobalId alone, Tekla falls back to manual linking, and Solibri —
+# which does fall back to geometry — shipped a switch in 9.7.15 to turn that off. Everything-added-
+# everything-removed is the exact symptom of a regenerated-id export, so reporting it as a change list
+# would be a confident lie; the refusal is the honest answer, and it returns NO `changes` array at all
+# rather than a list beside a flag a caller would render. The usual absence caution applies: a
+# pre-1.6.0 BRIDGE serving this manifest fails `compare` with "unknown command" and omits `globalId`,
+# which a consumer detects by what came back, never by a version number.
+version:      1.6.0
 display-name: IFC Reference Reader (whole model → mesh)
 description: |
   Read a WHOLE IFC file as a reference model — borrowed geometry you overlay, measure and build to,
@@ -274,10 +289,16 @@ commands:
         frame: string  # "z-up" — the frame `positions` are in. Check this rather than a version:
                        # the geometry comes from a separately-installed bridge binary, so the agent
                        # version cannot speak for it (see BREAKING.md)
-        objects: array # [{ id, name, ifcType, storey, profile, material,
+        objects: array # [{ id, globalId, name, ifcType, storey, profile, material,
                        #    propertySets: [{ name, properties: [{ name, value }] }],
                        #    positions: [mm], indices,
                        #    colors?: [{ rgba: [r,g,b,a], start, count }] }]
+                       # `globalId` is the FILE'S OWN GlobalId, or null when it records none. `id` is
+                       # NOT that: it falls back to the expressID so a consumer always has something
+                       # to address an object by. Anything comparing TWO files must key on `globalId`
+                       # — an expressID is a file-local sequence number, two exports of one model
+                       # share many, and a match on `id` would pair unrelated objects. Present from
+                       # 1.6.0; absent means a pre-1.6.0 bridge, not a file without ids
                        # `colors` are the file's own surface colours as RUNS over `indices` — colour
                        # is per placed geometry, not per object. ABSENT (never []) when the file
                        # authors no colour at all: web-ifc reports opaque WHITE for unstyled
@@ -300,6 +321,150 @@ commands:
         budget: object   # ONLY when max-bytes was passed: { maxBytes, bytes }. The receipt that says
                          # the budget was enforced — without it a caller cannot tell this bridge from
                          # a pre-1.2.0 one that ignored the input, since both return a success
+
+  compare:
+    lifecycle: single
+    category: curated
+    description: |
+      Match the objects of TWO versions of one IFC and say what was added, removed and changed. For
+      the recurring case where a project sends the next file: you already have the reference, and the
+      question is what moved — not what the new file contains.
+
+      MATCHES ON GlobalId AND NOTHING ELSE, and that is researched rather than unfinished. IfcOpenShell's
+      `ifcdiff` matches on GlobalId alone with no fallback; Tekla matches on GUID and falls back to
+      MANUAL LINKING; Solibri does fall back to geometry and shipped a checkbox in 9.7.15 to turn that
+      fallback off. A mature product adding an escape hatch toward the strict answer is a scar, not an
+      endorsement. So when ids cannot answer, this refuses instead of guessing.
+
+      THE REFUSAL IS THE LOAD-BEARING PART. With no geometry fallback, "everything added and everything
+      removed" is the exact symptom of an exporter that regenerated every GlobalId — and presenting
+      that as a change list is not a weak answer but a confident lie about somebody else's building.
+      So when the ids pair NOTHING while both files hold objects, the response carries
+      `identity.refused` and NO `changes` array at all. Returning the list beside a flag was rejected:
+      a caller renders what it is given. There is deliberately no "compare anyway" — with no fallback
+      there is nothing left to compare with, so the option could only produce the fabricated list.
+      An EMPTY side is not a refusal (a first version against an empty file honestly pairs nothing),
+      UNLESS it is empty only because every product was skipped as undrawable — which is a reader
+      outcome, not a model fact, and gets its own sentence because only one of the two is repairable.
+
+      `uncomparable` is never folded into `unchanged`. An object whose GlobalId is blank or duplicated
+      WITHIN its own file cannot vote — a file where every id is `''` makes "the id matches" trivially
+      true, and two objects sharing an id make it true after a reorder that swapped them. A duplicated
+      id disqualifies EVERY copy, not the second onward: keeping the first would be choosing
+      arbitrarily between two objects the file gives no way to tell apart. They are counted per side
+      and broken down by type and storey, so a consumer can say WHICH ones, which is what stops a
+      clean-looking list being read as a complete one.
+
+      The comparison set — what counts as a change — is FIXED in this version and ECHOED back in
+      `criteria`. Borrowed from Tekla's, which exists because a diff reporting every difference reports
+      mostly noise. The echo is what stops a change list stored today from meaning something different
+      once the set becomes configurable. `location` and `geometry` are compared to
+      `position-tolerance-mm`; everything else is exact. `unchanged` is counted, not listed, unless
+      `include-unchanged` is passed — on a 12,000-object model the list is otherwise 99% rows saying
+      nothing happened.
+
+      METADATA ONLY — no positions, no indices. Removed objects always have a usable unique id by
+      construction, so their geometry is a separate `read-model` call against the retained previous
+      file with `ids: [...]`, which is exactly what that input is for. That keeps this response bounded
+      and lets a consumer fetch shapes LAZILY: on a revision with 3,000 deletions, only the ones
+      actually looked at get tessellated.
+
+      COSTS ROUGHLY TWICE A `read-model`, because it tessellates both files: measured 51.8s against
+      read-model's 27.1s on a 25,533-object, 35 MB model. Objects stream through the same sink
+      `read-model` uses and are reduced to a fixed handful of numbers each, so two complete
+      tessellations are never resident at once — but the parse is paid twice and no filter avoids it.
+      Read-only.
+    inputs:
+      base-ifc-path:
+        type: string
+        description: The version you already have. Absolute or workspace-relative .ifc / .ifczip path.
+      revised-ifc-path:
+        type: string
+        description: The version that just arrived. Same path rules.
+      storeys:
+        type: array
+        description: >
+          Optional storey names applied to BOTH sides, so a filtered reference compares like-for-like.
+          Same semantics as read-model's: resolved before tessellation, case-insensitive, intersecting
+          with the other filters, and an EMPTY list selects nothing while omitting the key means
+          unfiltered.
+      ifc-types:
+        type: array
+        description: Optional IFC entity names applied to BOTH sides. Subtypes included, case-insensitive.
+      ids:
+        type: array
+        description: Optional GlobalIds applied to BOTH sides.
+      base-storeys:
+        type: array
+        description: >
+          Overrides `storeys` for the BASE side only. The per-side filters exist because the two
+          versions are not always readable under one filter — when a storey is renamed between
+          revisions ("Level 1" becomes "L01"), a single shared filter makes the comparison
+          unrepresentable rather than merely not like-for-like. The `selected` receipts come back per
+          side so a consumer can BANNER the scope change instead of presenting it as a plain diff.
+      base-ifc-types:
+        type: array
+        description: Overrides `ifc-types` for the BASE side only. See `base-storeys`.
+      base-ids:
+        type: array
+        description: Overrides `ids` for the BASE side only. See `base-storeys`.
+      revised-storeys:
+        type: array
+        description: Overrides `storeys` for the REVISED side only. See `base-storeys`.
+      revised-ifc-types:
+        type: array
+        description: Overrides `ifc-types` for the REVISED side only. See `base-storeys`.
+      revised-ids:
+        type: array
+        description: Overrides `ids` for the REVISED side only. See `base-storeys`.
+      position-tolerance-mm:
+        type: number
+        description: >
+          How far a centroid or an extent may move before it counts as a change. Default 1. Applies to
+          `location` AND `geometry`, because the same float noise moves both and forgiving one but not
+          the other fails a shape check for a wobble the location check waved through. An INPUT rather
+          than a constant because the default is a defensible number, not a measured one.
+      include-unchanged:
+        type: boolean
+        description: >
+          List unchanged objects too. Default false, because unchanged is ~99% of a real revision and
+          the count already reports it.
+      max-vertices:
+        type: number
+        description: Optional vertex budget, applied per side exactly as read-model applies it.
+      max-bytes:
+        type: number
+        description: Optional response-size budget in bytes, applied per side.
+    outputs:
+      type: single
+      schema:
+        frame: string    # "z-up" — stated, never inferred from a version, exactly as probe and
+                         # read-model state it, and for the same reason: the bridge binary is
+                         # installed separately and a stale one still runs
+        identity: object # { paired, added, removed,
+                         #   base:    { objects, usableIds, skipped, uncomparable },
+                         #   revised: { objects, usableIds, skipped, uncomparable },
+                         #   refused?: { reason, baseObjects, revisedObjects, skipped, uncomparable } }
+                         # `uncomparable` per side is { count, blank, duplicated, byType, byStorey }
+                         # — named, so a consumer can say WHICH objects could not be compared rather
+                         # than only how many. `refused` present means NO `changes` was returned
+        changes: array   # ABSENT ENTIRELY on a refusal. Otherwise
+                         # [{ status: added|removed|changed|unchanged, id, name, ifcType, storey,
+                         #    profile, material, centroid,
+                         #    changedBy?: [criterion, …], delta?, distance?,
+                         #    fields?: [{ name, from, to }] }]
+                         # `id` is the GlobalId. NO positions/indices — this is a list, not a second
+                         # model; removed geometry is a read-model --ids call against the old file.
+                         # A changed row always NAMES which criteria fired: a diff that reports a
+                         # change without naming it sends the user hunting
+        criteria: array  # the comparison set actually applied, echoed back — the receipt that says
+                         # WHICH questions were asked, so a later configurable set cannot silently
+                         # change what a stored change list meant
+        summary: object  # { added, removed, changed, unchanged, uncomparable }, or NULL on a refusal.
+                         # `uncomparable` is counted here and never folded into `unchanged`
+        selected: object # { base, revised } — each the same receipt read-model returns, or null when
+                         # that side was unfiltered. Per side so a storey that vanished in the new
+                         # file, or a deliberately different filter, is visible to the caller
 
 skills:
   - what-this-agent-does.md
