@@ -367,7 +367,9 @@ test('#348: reach-over-span can never fire on a box that contains the origin', a
   //
   // The reason it cannot fire HERE: whenever a box contains the origin, `|max|` is at most the box's
   // own span on each axis, so the ratio is <= 1 and "much larger" is unreachable. It is exactly 1 when
-  // `min` is [0,0,0], and below 1 otherwise — 0.50 on `baseplate-origin.ifc`. Every in-repo fixture
+  // `min` is [0,0,0] — sufficient for equality, but NOT necessary, since the reach is measured against
+  // the WIDEST span: [-1,0,0]..[0,10,1] has a nonzero min and still scores exactly 1.
+  // `baseplate-origin.ifc` measures 0.50. Every in-repo fixture
   // contains the origin because a file's points include every placement origin and these files anchor
   // those at (0,0,0), so the FIRST assertion below is a precondition check, not decoration.
   //
@@ -429,7 +431,7 @@ test('#348: reach-over-span CAN exceed 1 — the <= 1 result is about the files,
     'a box with min at the origin marks the boundary of the lemma and must score exactly 1');
 });
 
-test('#348: a file authored AT the origin has no origin-pinned min, and a near-exact midpoint', async () => {
+test('#348: a file authored AT the origin has no origin-pinned min, and a collapsed midpoint error', async () => {
   // The other arm of the doc's claim, which until now rested entirely on `example-steel-framing.ifc` —
   // a ~/Downloads file whose tests skip on CI. `baseplate-origin.ifc` is the SAME connection as
   // `baseplate-bp1.ifc` with the generator's site offset set to 0 0 0, so the only difference between
@@ -453,14 +455,19 @@ test('#348: a file authored AT the origin has no origin-pinned min, and a near-e
   // The lower bound below is a fact about THIS fixture, not a floor under origin-authored files in
   // general — a model given as explicit 3D points would hand probe the real vertices and could measure
   // ~0 without anything being fixed. That is why the remedy in the message names this fixture.
+  // Pinned to the MEASURED value, not to a band. `probe.md` and probeModel's comment both quote 0.44
+  // for this fixture and say this test holds them to it — and a band of "somewhere between 0.05 and 1",
+  // which is what stood here, would let the error drift to 0.9 with CI green and the docs stale. That
+  // is the same defect as the rest of this PR (a claim nothing executes), so the bound has to be as
+  // tight as the claim. 0.005 is far wider than float noise and far narrower than any real change:
+  // the value is 4/9 exactly, set by the fixture's 240 mm point box against its 1125 mm mesh.
   const err = dist(boxOf(probe.bbox).ctr, mesh.ctr) / Math.max(...mesh.span);
-  assert.ok(err < 1,
-    `expected the midpoint within one longest-edge for an origin-authored file, got ${err.toFixed(2)}`);
-  assert.ok(err > 0.05,
-    `expected a small but NON-zero midpoint error (${ORIGIN_FIXTURE}'s swept column is still invisible), ` +
-    `got ${err.toFixed(3)} — if this is now ~0, either probe can see swept solids (#348 is fixed) or this ` +
-    'fixture was regenerated with explicit-point geometry, which would make the residual vanish without ' +
-    'anything being fixed. Check which before editing the bound');
+  assert.ok(Math.abs(err - 0.4444) < 0.005,
+    `expected ${ORIGIN_FIXTURE}'s documented 0.44 midpoint residual, got ${err.toFixed(4)}. Three readings, ` +
+    'and they need different responses: ~0 means either probe can now see swept solids (#348 is fixed) or ' +
+    'this fixture was regenerated with explicit-point geometry (nothing fixed — see make-baseplate.py); ' +
+    '~10 means it is no longer authored at the origin and belongs in CONNECTION_FIXTURES; anything else ' +
+    'means its geometry changed, so re-measure and update the 0.44 in probe.md, index.mjs and this file');
 });
 
 test('#348: the deleted reach-over-span rule has not come back to probe.md', () => {
