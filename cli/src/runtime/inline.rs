@@ -362,14 +362,6 @@ mod tests {
     }
 
     #[test]
-    fn parens_and_or() {
-        let code = "(e.x == 1) || (e.y == 2)";
-        assert!(eval_predicate(code, &json!({"x":1})).unwrap());
-        assert!(eval_predicate(code, &json!({"y":2})).unwrap());
-        assert!(!eval_predicate(code, &json!({"x":3,"y":4})).unwrap());
-    }
-
-    #[test]
     fn nested_path() {
         let code = r#"e.assembly.type == "Welded""#;
         assert!(eval_predicate(code, &json!({"assembly":{"type":"Welded"}})).unwrap());
@@ -392,5 +384,190 @@ mod tests {
         // Just a field path, no comparison
         let err = eval_predicate("e.x", &json!({"x":42}));
         assert!(err.is_err());
+    }
+
+    // ── precedence and grouping ─────────────────────────────────────────────
+    //
+    // The module header promises `||` < `&&` < equality, but nothing checked it.
+    // Every prior test used one operator, or used `||` and `&&` in a shape that
+    // parses the same under either precedence — so the ladder could have been
+    // rebuilt in the wrong order and the suite would have stayed green.
+
+    #[test]
+    fn and_binds_tighter_than_or() {
+        // Each event is chosen so that the two precedences disagree — an event
+        // where they agree proves nothing here.
+        //
+        // `false && false` on the right of `||`: correct = true (the left arm
+        // carries it); with the ladder swapped, `(a==1 || b==1) && c==1` = false.
+        assert!(
+            eval_predicate(
+                "e.a == 1 || e.b == 1 && e.c == 1",
+                &json!({"a":1,"b":9,"c":9})
+            )
+            .unwrap()
+        );
+        // The mirror image, so a swap is caught from either side. Correct =
+        // `(false && false) || true` = true; swapped = `false && (…)` = false.
+        assert!(
+            eval_predicate(
+                "e.a == 1 && e.b == 1 || e.c == 1",
+                &json!({"a":9,"b":9,"c":1})
+            )
+            .unwrap()
+        );
+    }
+
+    #[test]
+    fn parentheses_regroup_what_precedence_would_otherwise_decide() {
+        // The test this replaces wrapped each side of an `||` in parens that the
+        // precedence ladder would have produced anyway, so it passed whether or
+        // not `(` opened a fresh expression. Grouping is only observable when it
+        // contradicts precedence: same event, same terms, opposite answers.
+        let event = json!({"a":1,"b":9,"c":9});
+        assert!(eval_predicate("e.a == 1 || e.b == 1 && e.c == 1", &event).unwrap());
+        assert!(!eval_predicate("(e.a == 1 || e.b == 1) && e.c == 1", &event).unwrap());
+        // And a group nests — the inner one must survive being reached through
+        // the outer one rather than being flattened into it.
+        assert!(!eval_predicate("((e.a == 1) || (e.b == 1)) && e.c == 1", &event).unwrap());
+    }
+
+    #[test]
+    fn every_term_in_a_chain_is_evaluated() {
+        // `parse_or` / `parse_and` loop; a single-shot `if` would parse the first
+        // pair, leave the remainder unconsumed and fail with "trailing tokens" —
+        // so a three-term chain is what distinguishes a loop from a branch.
+        assert!(
+            eval_predicate(
+                "e.a == 1 && e.b == 2 && e.c == 3",
+                &json!({"a":1,"b":2,"c":3})
+            )
+            .unwrap()
+        );
+        // …and the third term genuinely participates rather than being dropped.
+        assert!(
+            !eval_predicate(
+                "e.a == 1 && e.b == 2 && e.c == 3",
+                &json!({"a":1,"b":2,"c":9})
+            )
+            .unwrap()
+        );
+        assert!(
+            eval_predicate(
+                "e.a == 9 || e.b == 9 || e.c == 3",
+                &json!({"a":1,"b":2,"c":3})
+            )
+            .unwrap()
+        );
+        assert!(
+            !eval_predicate(
+                "e.a == 9 || e.b == 9 || e.c == 9",
+                &json!({"a":1,"b":2,"c":3})
+            )
+            .unwrap()
+        );
+    }
+
+    // ── truthiness ──────────────────────────────────────────────────────────
+
+    #[test]
+    fn only_null_and_false_are_falsy() {
+        // `value_truthy` is deliberately NOT JavaScript's rule, even though the
+        // predicates are written in a JS-looking syntax: `0` and `""` are TRUE
+        // here. That divergence is exactly the kind a maintainer would "fix"
+        // toward the familiar semantics, silently flipping every gate in every
+        // app that tests a numeric field. Nothing pinned it before.
+        assert!(eval_predicate("e.a && e.b", &json!({"a":0,"b":""})).unwrap());
+        assert!(eval_predicate("e.a || e.b", &json!({"a":0,"b":false})).unwrap());
+        // The two that ARE falsy, plus the missing field that resolves to null.
+        assert!(!eval_predicate("e.a || e.b", &json!({"a":false,"b":null})).unwrap());
+        assert!(!eval_predicate("e.a || e.b", &json!({"a":false})).unwrap());
+        assert!(!eval_predicate("e.a && e.b", &json!({"a":true,"b":null})).unwrap());
+    }
+
+    // ── path resolution ─────────────────────────────────────────────────────
+
+    #[test]
+    fn the_leading_e_is_a_binding_name_not_a_field() {
+        // `e.type` means the event's `type`, not the `type` of a field called
+        // `e` — and a path that does not start with `e` reads straight off the
+        // event. One event carries both readings, so dropping the binding rule
+        // or applying it unconditionally each produces the wrong answer.
+        let event = json!({"type":"Welded", "e":{"type":"Bolted"}});
+        assert!(eval_predicate(r#"e.type == "Welded""#, &event).unwrap());
+        assert!(eval_predicate(r#"type == "Welded""#, &event).unwrap());
+        // Reaching the field that is literally named `e` takes saying so twice.
+        assert!(eval_predicate(r#"e.e.type == "Bolted""#, &event).unwrap());
+    }
+
+    #[test]
+    fn a_hop_through_a_scalar_yields_null() {
+        // A path that runs off the end of the data is null, not an error — that
+        // is what lets `!= null` be the idiom for "present". `null_check` covers
+        // the one-hop case; this covers hopping THROUGH a value that has no
+        // fields at all, which is what a mis-typed path actually looks like.
+        assert!(eval_predicate("e.mark.length == null", &json!({"mark":"A-104"})).unwrap());
+        assert!(eval_predicate("e.a.b.c == null", &json!({"a":{"b":1}})).unwrap());
+        assert!(!eval_predicate("e.a.b == null", &json!({"a":{"b":1}})).unwrap());
+    }
+
+    // ── what the parser refuses ─────────────────────────────────────────────
+    //
+    // A predicate gates whether work runs. Every input below must fail loudly:
+    // a parser that quietly recovers from one of them returns an answer nobody
+    // wrote, and for a filter that answer defaults to "let it through".
+
+    #[test]
+    fn a_chained_comparison_is_refused_rather_than_silently_truncated() {
+        // Equality is non-associative here (`atom (op atom)?`). Without the
+        // trailing-token check the extra `== e.c` would be dropped on the floor
+        // and the predicate would answer about the first pair alone.
+        let err = eval_predicate("e.a == e.b == e.c", &json!({"a":1,"b":1,"c":2}));
+        assert!(err.is_err(), "chained comparison must not parse");
+        assert!(format!("{}", err.unwrap_err()).contains("trailing tokens"));
+    }
+
+    #[test]
+    fn an_unclosed_group_is_refused() {
+        assert!(eval_predicate("(e.a == 1", &json!({"a":1})).is_err());
+        assert!(eval_predicate("((e.a == 1)", &json!({"a":1})).is_err());
+        assert!(eval_predicate("(e.a == 1 && e.b == 2", &json!({"a":1,"b":2})).is_err());
+    }
+
+    #[test]
+    fn half_written_operators_are_refused() {
+        // `bare_equals_is_error` covers `=`; the other three single characters
+        // are each one keystroke away from a working operator, and each has its
+        // own guard in the tokenizer.
+        let event = json!({"a":true,"b":true});
+        assert!(eval_predicate("e.a & e.b", &event).is_err(), "bare &");
+        assert!(eval_predicate("e.a | e.b", &event).is_err(), "bare |");
+        assert!(eval_predicate("e.a ! e.b", &event).is_err(), "bare !");
+    }
+
+    #[test]
+    fn an_empty_predicate_is_refused_rather_than_passing_everything() {
+        // The failure mode worth naming: an empty or arrow-only predicate that
+        // parsed as "true" would gate nothing while looking like it gated.
+        assert!(eval_predicate("", &json!({"a":1})).is_err());
+        assert!(eval_predicate("   \n\t ", &json!({"a":1})).is_err());
+        assert!(eval_predicate("e => ", &json!({"a":1})).is_err());
+    }
+
+    #[test]
+    fn a_dangling_dot_is_refused() {
+        assert!(eval_predicate("e. == 1", &json!({"a":1})).is_err());
+        assert!(eval_predicate("e.a. == 1", &json!({"a":1})).is_err());
+        assert!(eval_predicate("e..a == 1", &json!({"a":1})).is_err());
+    }
+
+    #[test]
+    fn input_the_parser_cannot_account_for_is_refused() {
+        // Left-over tokens, and a character the tokenizer has no rule for. A
+        // tokenizer that skipped what it did not recognise would turn a typo
+        // into a valid predicate with a different meaning.
+        assert!(eval_predicate("e.a == 1 2", &json!({"a":1})).is_err());
+        assert!(eval_predicate("e.a == 1 @", &json!({"a":1})).is_err());
+        assert!(eval_predicate("e.a == 1 && ", &json!({"a":1})).is_err());
     }
 }
