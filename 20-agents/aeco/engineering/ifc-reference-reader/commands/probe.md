@@ -100,32 +100,88 @@ from real geometry, via `read-model`.
 
 **The box is usually pinned to the world origin, so its midpoint is not the model's position.** A
 file's points include every placement origin — the representation context's `WorldCoordinateSystem`,
-the site and building placements, every product's placement — and those sit at `(0,0,0)`. `min` is
-therefore `[0,0,0]` on every file measured here, and the midpoint lands about half way from the origin
-to the model.
+the site and building placements, every product's placement — and those sit at `(0,0,0)`. On a file
+authored wholly in the positive octant `min` is therefore `[0,0,0]` exactly, and the midpoint lands
+about half way from the origin to the model. (It is not a law: `baseplate-origin.ifc`, whose anchors
+straddle the origin, reports a negative `min`.)
 
-How far off that puts it **depends entirely on how far the model is from the origin**, not on the
-algorithm: the centre error is roughly `distance-from-origin / 2`, so in units of the model's own
-longest edge it is `distance / (2 × longest-edge)`. Measured 2026-08-06:
+How far off that puts it is **dominated by how far the model is from the origin**: the centre error is
+roughly `distance-from-origin / 2`, so in units of the model's own longest edge it is
+`distance / (2 × longest-edge)`. That term is a property of the file, not of the algorithm, and on the
+offset fixtures it accounts for essentially all of the error.
+
+It is not the whole of it, though. `baseplate-origin.ifc` is authored *at* the origin, where the term
+predicts ~0, and still measures `0.44` — because the box cannot see the swept column that model is
+mostly made of (below).
+
+That residual is **this fixture's, not a floor under every file**. How much survives at zero distance
+depends on how the geometry is represented: a model given as explicit 3D points (a BRep, or tessellated
+items) hands `probe` the real vertices and can measure essentially zero, and even an unseen sweep that
+happens to be symmetric about the point-box midpoint leaves the centre where it was. So read the formula
+as the dominant term, with a residual whose size is a question about the file's representation rather
+than a constant. Measured 2026-08-07:
 
 | file | centre error, in model longest-edges |
 |---|---|
-| `example-steel-framing.ifc` (authored at the origin) | **0.01** — the midpoint is essentially exact |
-| the four connection fixtures here (~22 m offset, ~1 m connection) | **9.6 – 12.6** |
+| `baseplate-origin.ifc` (authored at the origin) | **0.44** |
+| `example-steel-framing.ifc` (authored from the origin) | **0.01** — the midpoint is essentially exact |
+| the four connection fixtures here (~23 m out, ~1 m connection) | **9.6 – 12.6** |
 | `11134_V_Motebello_Heistopp_Rev.ifc` | **12.9** |
 
-**You can tell which case you are in from `bbox` alone**: when `|max|` is much larger than the box's
-own span, the box is origin-pinned and the midpoint is meaningless. When the two are comparable, the
-file is authored near the origin and the midpoint is fine.
+**`bbox` alone does NOT tell you which case you are in.** This page used to say it did:
+
+> when `|max|` is much larger than the box's own span, the box is origin-pinned and the midpoint is
+> meaningless. When the two are comparable, the file is authored near the origin and the midpoint is
+> fine.
+
+**The rule cannot fire on any file measured here, and a ratio it *could* fire on would not mean what
+it says.** Two separate reasons, and it is worth keeping them apart:
+
+*First, the arm it offers is unreachable on every file measured.* Whenever a box **contains the
+origin**, `|max|` is at most the box's own span on each axis, so the ratio is `≤ 1` and "much larger"
+cannot happen. On a box with some span, a `min` of `[0,0,0]` is *sufficient* for the ratio to be exactly
+`1` — that is all four offset fixtures — but not necessary: `[-1,0,0]..[0,10,1]` has a nonzero `min` and
+still scores `1`, since the reach is measured against the box's widest span. `baseplate-origin.ifc`
+measures `0.50`.
+
+"With some span" is doing real work there. A file whose only usable 3D points all sit at the origin
+yields `min == max == [0,0,0]`, where reach and span are both zero and the ratio is `0/0` — undefined,
+not `1`. That is a legal `probe` output (it is a point, not the `null` reserved for *no* usable points),
+so any rule computed from this box has to handle it, and none of the sentences above apply to it.
+
+Note what that argument does *not* say. Containing the origin is a property of the **files**, not of
+this command: `probe` bounds the file's own 3D points and never inserts the origin, so a file **can**
+produce a box that excludes the origin, and such a box **can** score above `1`. Neither follows
+automatically from nonzero anchors — points at `(1,1,1)` and `(-1,-1,-1)` are both nonzero and still
+bracket the origin, and even an origin-excluding box scores at most `1` if some other axis is wide
+enough. Every file measured here anchors those points at `(0,0,0)`, which is ordinary but not
+guaranteed. Read the `≤ 1` as measured, not as a law about the algorithm.
+
+*Second — and this is the part that holds regardless* — a high ratio would not rescue the midpoint
+anyway. It tells you only that the box **excludes** the origin, which is not the same as a trustworthy
+midpoint: a point-based box can exclude the origin, score 84, and still have
+its midpoint 0.44 longest-edges out, because it cannot see the swept column (below). **If you need the
+model's position, call `read-model`** — the same answer this page already gives for size. That is not a
+counsel of despair: `read-model` is what a consumer runs next anyway, and `probe`'s job is to say
+whether that call is affordable, which `elements`, `storeys` and `types` answer without the box.
+
+What is asserted on CI, in `cli-connection-reader/probe.test.mjs` against the five fixtures that ship
+here: the origin-pinned `min`, the `≤ 1` lemma and its `= 1` equality case, the non-containment and its
+exact Z shortfall, the 9–13 midpoint band, and the origin-authored contrast. The figures above drawn
+from `~/Downloads` files (`0.01`, `12.9`) and the far-corner numbers below are still one-off
+measurements — treat them as dated evidence, not as guarded contract.
 
 The corner **farther from the origin** tracks where the model actually is — within one longest-edge
-on every file measured (0.01, 0.44, 0.89) — **except under a rotated frame**, where it does not: on `baseplate-rot.ifc`
-(yawed 30°) that corner is 10.3 longest-edges out, barely better than the midpoint's 12.6, and on the
-wrong side of the model. See the next paragraph.
+on every file measured (0.01, 0.44, 0.89, corner-to-corner) — **except under a rotated frame**, where it
+does not: on `baseplate-rot.ifc` (yawed 30°) that corner is 10.3 longest-edges out, barely better than
+the midpoint's 12.6, and on the wrong side of the model. Nothing in the response marks that case, so
+this is an observation about the files measured, **not a method to follow**.
 
-What this does **not** license is comparing the box's SPAN against a model's to judge position. The
-span runs 1× the model's on an origin-authored file and ~18–20× on the offset ones measured here — it is not a size (next paragraph), and a size
-would not answer a position question anyway.
+What this does **not** license is comparing the box's SPAN against a model's to judge position. Measured
+against each model's longest edge, the span runs **0.2×** on `baseplate-origin.ifc`, ~1× on
+`example-steel-framing.ifc`, and **17–18×** on the four offset fixtures — so it is neither bounded nor
+monotonic in the distance you would be trying to read off it. It is not a size (next paragraph), and a
+size would not answer a position question anyway.
 
 **It is not a size readout, and the gap can be large in either direction.** Because every point is read
 as if it were a world coordinate, a file with nested placements is overstated: for
@@ -133,8 +189,8 @@ as if it were a world coordinate, a file with nested placements is overstated: f
 renders `3.62 × 3.66 × 0.74 m` — a ~10× overstatement that is within what "approximate" permits and
 still useless as a size. For the same reason it can also *miss* geometry: on `baseplate-rot.ifc`, whose
 frame is yawed 30° about the vertical, the tessellated connection lands outside the reported box in
-plan. Ask it *"is this far from the origin, or wildly mis-scaled?"*; ask `read-model` *"how big is
-it?"*. Tightening it to the placed geometry without tessellating is tracked in aware-aeco/aware#348 —
+plan. Ask it *"is this file affordable to read?"* — `elements`, `storeys`, `types`; ask `read-model`
+*"how big is it, and where?"*. Tightening it to the placed geometry without tessellating is tracked in aware-aeco/aware#348 —
 where three cheap approaches are measured and closed out, so read it before attempting a fourth. The
 short version: a point-based extent **cannot** bound a swept solid, because the size lives in numbers
 (`IFCRECTANGLEPROFILEDEF(…,0.4,0.4)`, `IFCEXTRUDEDAREASOLID(…,1.)`) and not in any point; composing

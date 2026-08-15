@@ -159,7 +159,11 @@ commands:
                          # guessed box is worse than none. It bounds the file's own points and
                          # ignores placement nesting, so it can OVERSTATE badly (42 x 44 x 74 m for
                          # a model that renders 3.6 x 3.7 x 0.7 m) and can also miss geometry placed
-                         # outside it. A "far from the origin / 1000x off?" signal, never a size.
+                         # outside it. Never a size — and never a POSITION either: its midpoint is
+                         # about half way from the origin to the model, and no cheap test on the box
+                         # tells you whether you are in that case (aware-aeco/aware#348). Ask
+                         # read-model for both. Use `elements` / `storeys` / `types` to decide
+                         # whether that read is affordable.
 
   read-model:
     lifecycle: single

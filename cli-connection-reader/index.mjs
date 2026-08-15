@@ -342,16 +342,46 @@ function placedElements(api, modelID) {
  *
  * THE BOX IS USUALLY PINNED TO THE WORLD ORIGIN, so its midpoint is not the model's position. Every
  * placement origin is a point — the representation context, the site, the building, each product — and
- * they sit at (0,0,0), so `min` is [0,0,0] on every file measured here and the midpoint lands about
- * half way from the origin to the model. The error is therefore `distance-from-origin / 2`, which
- * says nothing about the algorithm and everything about the file: 0.01 model longest-edges for
- * `example-steel-framing.ifc` (authored at the origin), 9.6–12.6 for this repo's connection fixtures
- * (~22 m offset, ~1 m connection), 12.9 for Motebello. `bbox` alone tells you which case you are in:
- * `|max|` much larger than the box's own span means origin-pinned, and the midpoint is meaningless.
+ * they sit at (0,0,0), so on a file authored wholly in the positive octant `min` is [0,0,0] exactly and
+ * the midpoint lands about half way from the origin to the model. The DOMINANT term is therefore
+ * `distance-from-origin / 2`, which is a property of the file rather than of this function — but not
+ * the whole error: `baseplate-origin.ifc` is authored AT the origin, where that term predicts ~0, and
+ * still measures 0.44, because the box cannot see the swept column. That residual is THAT FIXTURE'S,
+ * not a floor under every file — a model given as explicit 3D points (BRep, tessellated items) hands
+ * this loop the real vertices and can measure ~0, and an unseen sweep symmetric about the point-box
+ * midpoint moves the centre not at all. probe.test.mjs pins the 0.44 for that one fixture. Measured:
+ * 0.01 model longest-edges for `example-steel-framing.ifc` (authored from the origin), 0.44 for
+ * `baseplate-origin.ifc`, 9.6-12.6 for this repo's offset connection fixtures (~23 m out, ~1 m
+ * connection), 12.9 for Motebello. (The [0,0,0] min is not a law — `baseplate-origin.ifc` straddles the
+ * origin and reports a negative min.)
+ *
+ * `bbox` ALONE CANNOT TELL YOU WHICH CASE YOU ARE IN. This comment used to claim it could, via the rule
+ * "|max| much larger than the box's own span means origin-pinned". Whenever a box CONTAINS the origin,
+ * |max| is at most the span on each axis, so the ratio is <= 1 — exactly 1 when min is [0,0,0] AND the
+ * box has some span; a file whose usable 3D points all sit at the origin yields min == max == [0,0,0],
+ * where the ratio is 0/0 rather than 1 (a legal output — a point, not the null reserved for NO usable
+ * points) — and
+ * "much larger" cannot happen. It therefore only ever reports its other arm, "the midpoint is fine",
+ * about files whose midpoint is 9.6-12.6 longest-edges out.
+ *
+ * That is a fact about the FILES, not about this function, and the distinction matters: the loop below
+ * bounds the file's own 3D points and never inserts the origin, so a file CAN produce a box that
+ * excludes the origin, and such a box CAN score above 1. Neither is automatic — points at (1,1,1) and
+ * (-1,-1,-1) are both nonzero and still bracket the origin, and an origin-excluding box scores at most
+ * 1 if some other axis is wide enough. Every file measured here anchors those points at (0,0,0), which
+ * is ordinary but not guaranteed.
+ *
+ * Nor is a high ratio a licence to trust the midpoint: a point box CAN exclude the origin, score ~84,
+ * and still sit 0.44 longest-edges off, because it cannot see the swept column. There is no cheap
+ * substitute — for position, as for size, the answer is `read-model`. Pinned by `probe.test.mjs`
+ * against the five in-repo fixtures.
  *
  * The far corner tracks the model within one longest-edge on every file measured EXCEPT under a
- * rotated frame — `baseplate-rot.ifc` puts it 10.3 out, on the wrong side. And the box's SPAN is not a
- * position signal at all: it runs 1x (origin-authored) to 20x (offset) the model's.
+ * rotated frame — `baseplate-rot.ifc` puts it 10.3 out, on the wrong side, and nothing in the response
+ * marks that case, so it is an observation and not a method. The box's SPAN is not a position signal
+ * either, and it is not even monotonic in the distance you would be reading off it: measured against
+ * each model's longest edge it runs 0.2x on `baseplate-origin.ifc`, ~1x on `example-steel-framing.ifc`
+ * (both authored at the origin) and 17-18x on the four offset fixtures.
  *
  * Why it is not simply fixed: a point-based extent cannot bound a swept solid (the size lives in
  * `IfcRectangleProfileDef`/`IfcExtrudedAreaSolid` NUMBERS, not in any point); composing placements is
