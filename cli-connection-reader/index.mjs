@@ -348,13 +348,18 @@ function placedElements(api, modelID) {
  * 0.01 model longest-edges for `example-steel-framing.ifc` (authored from the origin), 0.44 for
  * `baseplate-origin.ifc`, 9.6-12.6 for this repo's offset connection fixtures (~23 m out, ~1 m
  * connection), 12.9 for Motebello. (The [0,0,0] min is not a law — `baseplate-origin.ifc` straddles the
- * origin and reports a negative min. What IS general is that the box CONTAINS the origin.)
+ * origin and reports a negative min.)
  *
  * `bbox` ALONE CANNOT TELL YOU WHICH CASE YOU ARE IN. This comment used to claim it could, via the rule
- * "|max| much larger than the box's own span means origin-pinned". That rule can never fire: for any
- * box containing the origin — which is every box this function emits — |max| is at most the span on
- * each axis, so the ratio is <= 1, exactly 1 when min is [0,0,0]. It therefore only ever reports its
- * other arm, "the midpoint is fine", about files whose midpoint is 9.6-12.6 longest-edges out.
+ * "|max| much larger than the box's own span means origin-pinned". Whenever a box CONTAINS the origin,
+ * |max| is at most the span on each axis, so the ratio is <= 1 — exactly 1 when min is [0,0,0] — and
+ * "much larger" cannot happen. It therefore only ever reports its other arm, "the midpoint is fine",
+ * about files whose midpoint is 9.6-12.6 longest-edges out.
+ *
+ * That is a fact about the FILES, not about this function, and the distinction matters: the loop below
+ * bounds the file's own 3D points and never inserts the origin, so a file whose WorldCoordinateSystem
+ * and every placement location are nonzero yields a box EXCLUDING the origin and a ratio above 1. Every
+ * file measured here anchors those at (0,0,0), which is ordinary but not guaranteed.
  *
  * Nor is a high ratio a licence to trust the midpoint: a point box CAN exclude the origin, score ~84,
  * and still sit 0.44 longest-edges off, because it cannot see the swept column. There is no cheap

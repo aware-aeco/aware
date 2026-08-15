@@ -103,7 +103,7 @@ file's points include every placement origin — the representation context's `W
 the site and building placements, every product's placement — and those sit at `(0,0,0)`. On a file
 authored wholly in the positive octant `min` is therefore `[0,0,0]` exactly, and the midpoint lands
 about half way from the origin to the model. (It is not a law: `baseplate-origin.ifc`, whose anchors
-straddle the origin, reports a negative `min`. What *is* general is that the box contains the origin.)
+straddle the origin, reports a negative `min`.)
 
 How far off that puts it **depends entirely on how far the model is from the origin**, not on the
 algorithm: the centre error is roughly `distance-from-origin / 2`, so in units of the model's own
@@ -122,17 +122,23 @@ longest edge it is `distance / (2 × longest-edge)`. Measured 2026-08-07:
 > meaningless. When the two are comparable, the file is authored near the origin and the midpoint is
 > fine.
 
-**That rule can never fire.** Every box this command emits contains the origin, and for any box
-containing the origin `|max|` is at most the box's own span on each axis — so the ratio is `≤ 1` and
-"much larger" is unreachable. It is exactly `1` when `min` is `[0,0,0]` (all four offset fixtures) and
-below it otherwise (`0.50` on `baseplate-origin.ifc`).
+**The rule cannot fire on any file measured here, and a ratio it *could* fire on would not mean what
+it says.** Two separate reasons, and it is worth keeping them apart:
 
-So the rule only ever reports its second arm — *"the file is authored near the origin and the midpoint
-is fine"* — and that arm is **false on all four offset fixtures**, whose midpoints are 9.6–12.6
-longest-edges out. It does not merely fail to discriminate; it answers "fine" every time.
+*First, the arm it offers is unreachable on every file measured.* Whenever a box **contains the
+origin**, `|max|` is at most the box's own span on each axis, so the ratio is `≤ 1` and "much larger"
+cannot happen. It is exactly `1` when `min` is `[0,0,0]` (all four offset fixtures) and below it
+otherwise (`0.50` on `baseplate-origin.ifc`).
 
-Nothing cheap replaces it. A high ratio does tell you the box **excludes** the origin, but that is not
-the same as a trustworthy midpoint: a point-based box can exclude the origin, score 84, and still have
+Note what that argument does *not* say. Containing the origin is a property of the **files**, not of
+this command: `probe` bounds the file's own 3D points and never inserts the origin, so a file whose
+`WorldCoordinateSystem` and every placement location are nonzero would produce a box that excludes the
+origin and a ratio above `1`. Every file measured here happens to anchor those at `(0,0,0)`, which is
+ordinary but not guaranteed. Read the `≤ 1` as measured, not as a law about the algorithm.
+
+*Second — and this is the part that holds regardless* — a high ratio would not rescue the midpoint
+anyway. It tells you only that the box **excludes** the origin, which is not the same as a trustworthy
+midpoint: a point-based box can exclude the origin, score 84, and still have
 its midpoint 0.44 longest-edges out, because it cannot see the swept column (below). **If you need the
 model's position, call `read-model`** — the same answer this page already gives for size. That is not a
 counsel of despair: `read-model` is what a consumer runs next anyway, and `probe`'s job is to say

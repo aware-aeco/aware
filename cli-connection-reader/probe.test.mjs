@@ -361,10 +361,16 @@ test('#348: reach-over-span can never fire on a box that contains the origin', a
   // midpoint is meaningless. When the two are comparable, the file is authored near the origin and the
   // midpoint is fine." This test is here so that rule cannot quietly come back.
   //
-  // The general reason it can never fire: EVERY box probe emits contains the origin, because a file's
-  // points include every placement origin. For any box containing the origin, `|max|` is at most the
-  // box's own span on each axis, so the ratio is <= 1 and "much larger" is unreachable. It is exactly
-  // 1 when `min` is [0,0,0], and below 1 otherwise — 0.50 on `baseplate-origin.ifc`.
+  // The reason it cannot fire HERE: whenever a box contains the origin, `|max|` is at most the box's
+  // own span on each axis, so the ratio is <= 1 and "much larger" is unreachable. It is exactly 1 when
+  // `min` is [0,0,0], and below 1 otherwise — 0.50 on `baseplate-origin.ifc`. Every in-repo fixture
+  // contains the origin because a file's points include every placement origin and these files anchor
+  // those at (0,0,0), so the FIRST assertion below is a precondition check, not decoration.
+  //
+  // Containing the origin is a property of the FILES, not of probeModel, which bounds the file's own
+  // 3D points and never inserts the origin — see the ratio-above-1 test below, which is the other half
+  // of this one. So the doc must not claim the rule can never fire in general; only that it cannot on
+  // anything measured, and that a ratio it COULD fire on still would not license the midpoint.
   //
   // So the rule only ever reports its SECOND arm, "the file is authored near the origin and the
   // midpoint is fine" — which is false on all four offset fixtures, whose midpoints the test above
@@ -388,6 +394,31 @@ test('#348: reach-over-span can never fire on a box that contains the origin', a
     const { probe } = await probeAndMesh(name);
     assert.equal(reachOverSpan(boxOf(probe.bbox)), 1, `${name}: expected exactly 1 on an origin-pinned box`);
   }
+});
+
+test('#348: reach-over-span CAN exceed 1 — the <= 1 result is about the files, not the algorithm', () => {
+  // The other half of the test above, and the reason this file's claim is scoped the way it is.
+  //
+  // It is tempting to write "the ratio is <= 1 on every box probe emits", which reads as a property of
+  // probeModel. It is not one. `probeModel` bounds the file's own 3D IfcCartesianPoints and never
+  // inserts the origin (see the loop in index.mjs), so a file whose WorldCoordinateSystem and every
+  // placement location are nonzero produces a box that excludes the origin — and then the ratio is
+  // unbounded above. Every fixture in this repo anchors those points at (0,0,0), which is ordinary but
+  // not guaranteed, and generalising from five files to a law is exactly the mistake #348 is about.
+  //
+  // Asserted on the pure helper rather than through a sixth fixture: the claim is arithmetic about a
+  // box, so a box is the honest input. A fixture would additionally prove that IFC can express such a
+  // file — true, but not what the doc sentence rests on.
+  const farAway = box([10000, 20000, 5000], [10400, 20400, 6000]);
+  assert.ok(farAway.min.some((v) => v > 0),
+    'this box is meant to EXCLUDE the origin — otherwise it cannot demonstrate anything');
+  assert.ok(reachOverSpan(farAway) > 1,
+    `a box excluding the origin should score above 1, got ${reachOverSpan(farAway).toFixed(2)} — if this ` +
+    'now fails, reachOverSpan changed and the scoped claim in probe.md needs re-deriving');
+  // And the boundary: a box whose min is exactly the origin sits at 1, which is where the two arms of
+  // the lemma meet. Pinning it stops the inequality being quietly widened to `< 1`.
+  assert.equal(reachOverSpan(box([0, 0, 0], [400, 400, 1000])), 1,
+    'a box with min at the origin marks the boundary of the lemma and must score exactly 1');
 });
 
 test('#348: a file authored AT the origin has no origin-pinned min, and a near-exact midpoint', async () => {

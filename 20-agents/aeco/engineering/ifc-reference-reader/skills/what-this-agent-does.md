@@ -64,8 +64,8 @@ off-screen next to a model at the origin. Offering to zoom to it or move it is a
 than rescuing a wrong scale.
 
 **But `probe` cannot tell you where it is — use `read-model` for that.** It is tempting to read the
-position off `probe`'s `bbox`, and this page used to say to. The box runs from the world origin to the
-model, because a file's points include every placement origin, so its midpoint is roughly half way
+position off `probe`'s `bbox`, and this page used to say to. The box usually runs from the world origin
+to the model, because a file's points include every placement origin, so its midpoint is roughly half way
 there — 9.6–12.6 model longest-edges out on the fixtures in this repo. No cheap test on the box tells
 you whether you are in that case (aware-aeco/aware#348). `read-model` returns real geometry and
 answers both "how big" and "where"; `probe` answers whether you can afford to call it, via `elements`,
