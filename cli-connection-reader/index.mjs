@@ -342,16 +342,29 @@ function placedElements(api, modelID) {
  *
  * THE BOX IS USUALLY PINNED TO THE WORLD ORIGIN, so its midpoint is not the model's position. Every
  * placement origin is a point — the representation context, the site, the building, each product — and
- * they sit at (0,0,0), so `min` is [0,0,0] on every file measured here and the midpoint lands about
- * half way from the origin to the model. The error is therefore `distance-from-origin / 2`, which
- * says nothing about the algorithm and everything about the file: 0.01 model longest-edges for
- * `example-steel-framing.ifc` (authored at the origin), 9.6–12.6 for this repo's connection fixtures
- * (~22 m offset, ~1 m connection), 12.9 for Motebello. `bbox` alone tells you which case you are in:
- * `|max|` much larger than the box's own span means origin-pinned, and the midpoint is meaningless.
+ * they sit at (0,0,0), so on a file authored wholly in the positive octant `min` is [0,0,0] exactly and
+ * the midpoint lands about half way from the origin to the model. The error is therefore
+ * `distance-from-origin / 2`, which says nothing about the algorithm and everything about the file:
+ * 0.01 model longest-edges for `example-steel-framing.ifc` (authored from the origin), 0.44 for
+ * `baseplate-origin.ifc`, 9.6-12.6 for this repo's offset connection fixtures (~23 m out, ~1 m
+ * connection), 12.9 for Motebello. (The [0,0,0] min is not a law — `baseplate-origin.ifc` straddles the
+ * origin and reports a negative min. What IS general is that the box CONTAINS the origin.)
+ *
+ * `bbox` ALONE CANNOT TELL YOU WHICH CASE YOU ARE IN. This comment used to claim it could, via the rule
+ * "|max| much larger than the box's own span means origin-pinned". That rule can never fire: for any
+ * box containing the origin — which is every box this function emits — |max| is at most the span on
+ * each axis, so the ratio is <= 1, exactly 1 when min is [0,0,0]. It therefore only ever reports its
+ * other arm, "the midpoint is fine", about files whose midpoint is 9.6-12.6 longest-edges out.
+ *
+ * Nor is a high ratio a licence to trust the midpoint: a point box CAN exclude the origin, score ~84,
+ * and still sit 0.44 longest-edges off, because it cannot see the swept column. There is no cheap
+ * substitute — for position, as for size, the answer is `read-model`. Pinned by `probe.test.mjs`
+ * against the five in-repo fixtures.
  *
  * The far corner tracks the model within one longest-edge on every file measured EXCEPT under a
- * rotated frame — `baseplate-rot.ifc` puts it 10.3 out, on the wrong side. And the box's SPAN is not a
- * position signal at all: it runs 1x (origin-authored) to 20x (offset) the model's.
+ * rotated frame — `baseplate-rot.ifc` puts it 10.3 out, on the wrong side, and nothing in the response
+ * marks that case, so it is an observation and not a method. The box's SPAN is not a position signal
+ * either: it runs 1x (origin-authored) to ~18x (offset) the model's.
  *
  * Why it is not simply fixed: a point-based extent cannot bound a swept solid (the size lives in
  * `IfcRectangleProfileDef`/`IfcExtrudedAreaSolid` NUMBERS, not in any point); composing placements is

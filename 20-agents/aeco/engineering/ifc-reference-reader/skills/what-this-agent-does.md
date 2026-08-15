@@ -60,8 +60,16 @@ that is honest, to rescue the rare one that lies.
 
 **Correct size does not mean visible.** A real export usually sits at real site coordinates. One of
 the test files loads at its true size, 74 m up and 40 m out — perfectly correct and entirely
-off-screen next to a model at the origin. `probe`'s `bbox` is there so a consumer can notice that and
-offer to zoom to it or move it, which is a far more common problem than wrong scale.
+off-screen next to a model at the origin. Offering to zoom to it or move it is a far more common need
+than rescuing a wrong scale.
+
+**But `probe` cannot tell you where it is — use `read-model` for that.** It is tempting to read the
+position off `probe`'s `bbox`, and this page used to say to. The box runs from the world origin to the
+model, because a file's points include every placement origin, so its midpoint is roughly half way
+there — 9.6–12.6 model longest-edges out on the fixtures in this repo. No cheap test on the box tells
+you whether you are in that case (aware-aeco/aware#348). `read-model` returns real geometry and
+answers both "how big" and "where"; `probe` answers whether you can afford to call it, via `elements`,
+`storeys` and `types`.
 
 ## Failure modes
 
