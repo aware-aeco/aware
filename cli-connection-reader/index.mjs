@@ -357,7 +357,10 @@ function placedElements(api, modelID) {
  *
  * `bbox` ALONE CANNOT TELL YOU WHICH CASE YOU ARE IN. This comment used to claim it could, via the rule
  * "|max| much larger than the box's own span means origin-pinned". Whenever a box CONTAINS the origin,
- * |max| is at most the span on each axis, so the ratio is <= 1 — exactly 1 when min is [0,0,0] — and
+ * |max| is at most the span on each axis, so the ratio is <= 1 — exactly 1 when min is [0,0,0] AND the
+ * box has some span; a file whose usable 3D points all sit at the origin yields min == max == [0,0,0],
+ * where the ratio is 0/0 rather than 1 (a legal output — a point, not the null reserved for NO usable
+ * points) — and
  * "much larger" cannot happen. It therefore only ever reports its other arm, "the midpoint is fine",
  * about files whose midpoint is 9.6-12.6 longest-edges out.
  *

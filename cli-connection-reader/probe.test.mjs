@@ -373,8 +373,11 @@ test('#348: reach-over-span can never fire on a box that contains the origin', a
   //
   // The reason it cannot fire HERE: whenever a box contains the origin, `|max|` is at most the box's
   // own span on each axis, so the ratio is <= 1 and "much larger" is unreachable. It is exactly 1 when
-  // `min` is [0,0,0] — sufficient for equality, but NOT necessary, since the reach is measured against
-  // the WIDEST span: [-1,0,0]..[0,10,1] has a nonzero min and still scores exactly 1.
+  // `min` is [0,0,0] AND the box has some span — sufficient for equality, but NOT necessary, since the
+  // reach is measured against the WIDEST span: [-1,0,0]..[0,10,1] has a nonzero min and still scores
+  // exactly 1. The span caveat is not pedantry: min == max == [0,0,0] is a legal probe output (a file
+  // whose usable 3D points all sit at the origin), and there the ratio is 0/0, which is why
+  // `reachOverSpan` refuses a degenerate box rather than returning NaN into an assertion.
   // `baseplate-origin.ifc` measures 0.50. Every in-repo fixture
   // contains the origin because a file's points include every placement origin and these files anchor
   // those at (0,0,0), so the FIRST assertion below is a precondition check, not decoration.
@@ -434,10 +437,20 @@ test('#348: reach-over-span CAN exceed 1 — the <= 1 result is about the files,
     'constructed box and NOT that origin-excluding boxes score above 1 in general (they need not: see ' +
     'the comment above). If this fails, reachOverSpan changed and the scoped claim in probe.md needs ' +
     're-deriving');
+  // The case the lemma does NOT cover, pinned so the caveat in probe.md is executable too. A file whose
+  // usable 3D points all sit at the origin yields min == max == [0,0,0] — a legal probe output (a point;
+  // `null` is reserved for NO usable points) — and there reach and span are both 0, so the ratio is 0/0.
+  // The helper refuses it rather than returning NaN, which matters because `NaN <= 1` is FALSE but
+  // `assert.ok(NaN <= 1)` failing looks like the lemma breaking rather than like a degenerate input.
+  assert.throws(() => reachOverSpan(box([0, 0, 0], [0, 0, 0])), /degenerate box/,
+    'a degenerate box must be refused rather than scored — 0/0 is not the lemma\'s equality case');
+
   // And the boundary: a box whose min is exactly the origin sits at 1, which is where the two arms of
   // the lemma meet. Pinning it stops the inequality being quietly widened to `< 1`.
   assert.equal(reachOverSpan(box([0, 0, 0], [400, 400, 1000])), 1,
-    'a box with min at the origin marks the boundary of the lemma and must score exactly 1');
+    'a box with min at the origin AND some span marks the boundary of the lemma and must score exactly 1 ' +
+    '(a degenerate min == max == [0,0,0] box is 0/0, not 1 — reachOverSpan rejects it rather than ' +
+    'returning NaN)');
 });
 
 test('#348: a file authored AT the origin has no origin-pinned min, and a collapsed midpoint error', async () => {

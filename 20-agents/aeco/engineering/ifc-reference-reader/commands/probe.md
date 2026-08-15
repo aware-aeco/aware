@@ -139,9 +139,15 @@ it says.** Two separate reasons, and it is worth keeping them apart:
 
 *First, the arm it offers is unreachable on every file measured.* Whenever a box **contains the
 origin**, `|max|` is at most the box's own span on each axis, so the ratio is `≤ 1` and "much larger"
-cannot happen. A `min` of `[0,0,0]` is *sufficient* for the ratio to be exactly `1` — that is all four
-offset fixtures — but not necessary: `[-1,0,0]..[0,10,1]` has a nonzero `min` and still scores `1`,
-since the reach is measured against the box's widest span. `baseplate-origin.ifc` measures `0.50`.
+cannot happen. On a box with some span, a `min` of `[0,0,0]` is *sufficient* for the ratio to be exactly
+`1` — that is all four offset fixtures — but not necessary: `[-1,0,0]..[0,10,1]` has a nonzero `min` and
+still scores `1`, since the reach is measured against the box's widest span. `baseplate-origin.ifc`
+measures `0.50`.
+
+"With some span" is doing real work there. A file whose only usable 3D points all sit at the origin
+yields `min == max == [0,0,0]`, where reach and span are both zero and the ratio is `0/0` — undefined,
+not `1`. That is a legal `probe` output (it is a point, not the `null` reserved for *no* usable points),
+so any rule computed from this box has to handle it, and none of the sentences above apply to it.
 
 Note what that argument does *not* say. Containing the origin is a property of the **files**, not of
 this command: `probe` bounds the file's own 3D points and never inserts the origin, so a file **can**
