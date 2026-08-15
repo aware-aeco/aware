@@ -463,9 +463,10 @@ test('#348: the deleted reach-over-span rule has not come back to probe.md', () 
     .filter((l) => /much larger than the box/.test(l) && /own span/.test(l))
     .filter((l) => !l.trimStart().startsWith('>'));
   assert.deepEqual(asserted, [],
-    'probe.md states the reach-over-span rule outside a blockquote. #348 measured it as unable to fire '
-    + '(the ratio is <= 1 on every box containing the origin, which is every box probe emits), so it may '
-    + 'be quoted as the error it was — not given as advice.');
+    'probe.md states the reach-over-span rule outside a blockquote. #348 measured it as unable to fire on '
+    + 'any file here (the ratio is <= 1 on any box CONTAINING the origin, which every in-repo fixture does) '
+    + 'and as no use where it could fire (a high ratio only means the box excludes the origin, which does '
+    + 'not make the midpoint trustworthy), so it may be quoted as the error it was — not given as advice.');
   assert.ok(!/You can tell which case you are in from `bbox` alone/.test(doc),
     'probe.md has re-acquired the claim that bbox alone discriminates the two cases — it cannot.');
   // And the replacement must still be there, so this guard cannot be satisfied by deleting the section.
