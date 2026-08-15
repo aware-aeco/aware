@@ -105,9 +105,15 @@ authored wholly in the positive octant `min` is therefore `[0,0,0]` exactly, and
 about half way from the origin to the model. (It is not a law: `baseplate-origin.ifc`, whose anchors
 straddle the origin, reports a negative `min`.)
 
-How far off that puts it **depends entirely on how far the model is from the origin**, not on the
-algorithm: the centre error is roughly `distance-from-origin / 2`, so in units of the model's own
-longest edge it is `distance / (2 × longest-edge)`. Measured 2026-08-07:
+How far off that puts it is **dominated by how far the model is from the origin**: the centre error is
+roughly `distance-from-origin / 2`, so in units of the model's own longest edge it is
+`distance / (2 × longest-edge)`. That term is a property of the file, not of the algorithm, and on the
+offset fixtures it accounts for essentially all of the error.
+
+It is not the whole of it, though. Even at zero distance a residual remains, because the box cannot see
+a swept solid at all (below) — `baseplate-origin.ifc` is authored at the origin and still measures
+`0.44`. So read the formula as the dominant term with a non-zero algorithmic floor under it, not as the
+error. Measured 2026-08-07:
 
 | file | centre error, in model longest-edges |
 |---|---|

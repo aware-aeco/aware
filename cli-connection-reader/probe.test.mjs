@@ -339,8 +339,10 @@ test('#348: probe.bbox does NOT contain the geometry read-model returns', async 
 test('#348: the midpoint of probe.bbox is ~10 model longest-edges from the model', async () => {
   // What the only real consumer actually reads (floless.app's `verdictFor` feeds this midpoint to an
   // off-screen check), and therefore the number worth pinning. Because the box runs from the origin to
-  // the model, its centre lands about half way there — so the error is distance-from-origin / 2, a
-  // property of the FILE rather than of the algorithm.
+  // the model, its centre lands about half way there — so the DOMINANT term is distance-from-origin / 2,
+  // a property of the FILE rather than of the algorithm. It is not the whole error: a residual survives
+  // at zero distance, where the box still cannot see the swept column, which is what the
+  // origin-authored test below pins at 0.44 rather than at 0.
   //
   // The unit is the model's own longest edge, which is what makes the figure comparable across
   // fixtures. Measured 2026-08-07: 10.21, 12.60, 9.97, 9.64. The band is wide because the exact value

@@ -343,8 +343,11 @@ function placedElements(api, modelID) {
  * THE BOX IS USUALLY PINNED TO THE WORLD ORIGIN, so its midpoint is not the model's position. Every
  * placement origin is a point — the representation context, the site, the building, each product — and
  * they sit at (0,0,0), so on a file authored wholly in the positive octant `min` is [0,0,0] exactly and
- * the midpoint lands about half way from the origin to the model. The error is therefore
- * `distance-from-origin / 2`, which says nothing about the algorithm and everything about the file:
+ * the midpoint lands about half way from the origin to the model. The DOMINANT term is therefore
+ * `distance-from-origin / 2`, which is a property of the file rather than of this function — but not
+ * the whole error, because a residual survives at zero distance where the box cannot see the swept
+ * solid (`baseplate-origin.ifc` is authored at the origin and still measures 0.44, and probe.test.mjs
+ * asserts that residual stays non-zero). Measured:
  * 0.01 model longest-edges for `example-steel-framing.ifc` (authored from the origin), 0.44 for
  * `baseplate-origin.ifc`, 9.6-12.6 for this repo's offset connection fixtures (~23 m out, ~1 m
  * connection), 12.9 for Motebello. (The [0,0,0] min is not a law — `baseplate-origin.ifc` straddles the
