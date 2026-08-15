@@ -429,8 +429,11 @@ test('#348: reach-over-span CAN exceed 1 — the <= 1 result is about the files,
   assert.ok(farAway.min.some((v) => v > 0),
     'this box is meant to EXCLUDE the origin — otherwise it cannot demonstrate anything');
   assert.ok(reachOverSpan(farAway) > 1,
-    `a box excluding the origin should score above 1, got ${reachOverSpan(farAway).toFixed(2)} — if this ` +
-    'now fails, reachOverSpan changed and the scoped claim in probe.md needs re-deriving');
+    `THIS box — [10000,20000,5000]..[10400,20400,6000], reach 20400 against a widest span of 1000 — ` +
+    `should score above 1, got ${reachOverSpan(farAway).toFixed(2)}. Note the claim is about this ` +
+    'constructed box and NOT that origin-excluding boxes score above 1 in general (they need not: see ' +
+    'the comment above). If this fails, reachOverSpan changed and the scoped claim in probe.md needs ' +
+    're-deriving');
   // And the boundary: a box whose min is exactly the origin sits at 1, which is where the two arms of
   // the lemma meet. Pinning it stops the inequality being quietly widened to `< 1`.
   assert.equal(reachOverSpan(box([0, 0, 0], [400, 400, 1000])), 1,

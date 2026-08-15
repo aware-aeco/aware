@@ -376,7 +376,9 @@ function placedElements(api, modelID) {
  * The far corner tracks the model within one longest-edge on every file measured EXCEPT under a
  * rotated frame — `baseplate-rot.ifc` puts it 10.3 out, on the wrong side, and nothing in the response
  * marks that case, so it is an observation and not a method. The box's SPAN is not a position signal
- * either: it runs 1x (origin-authored) to ~18x (offset) the model's.
+ * either, and it is not even monotonic in the distance you would be reading off it: measured against
+ * each model's longest edge it runs 0.2x on `baseplate-origin.ifc`, ~1x on `example-steel-framing.ifc`
+ * (both authored at the origin) and 17-18x on the four offset fixtures.
  *
  * Why it is not simply fixed: a point-based extent cannot bound a swept solid (the size lives in
  * `IfcRectangleProfileDef`/`IfcExtrudedAreaSolid` NUMBERS, not in any point); composing placements is
