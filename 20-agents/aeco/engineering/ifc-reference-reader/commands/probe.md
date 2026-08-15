@@ -110,10 +110,16 @@ roughly `distance-from-origin / 2`, so in units of the model's own longest edge 
 `distance / (2 × longest-edge)`. That term is a property of the file, not of the algorithm, and on the
 offset fixtures it accounts for essentially all of the error.
 
-It is not the whole of it, though. Even at zero distance a residual remains, because the box cannot see
-a swept solid at all (below) — `baseplate-origin.ifc` is authored at the origin and still measures
-`0.44`. So read the formula as the dominant term with a non-zero algorithmic floor under it, not as the
-error. Measured 2026-08-07:
+It is not the whole of it, though. `baseplate-origin.ifc` is authored *at* the origin, where the term
+predicts ~0, and still measures `0.44` — because the box cannot see the swept column that model is
+mostly made of (below).
+
+That residual is **this fixture's, not a floor under every file**. How much survives at zero distance
+depends on how the geometry is represented: a model given as explicit 3D points (a BRep, or tessellated
+items) hands `probe` the real vertices and can measure essentially zero, and even an unseen sweep that
+happens to be symmetric about the point-box midpoint leaves the centre where it was. So read the formula
+as the dominant term, with a residual whose size is a question about the file's representation rather
+than a constant. Measured 2026-08-07:
 
 | file | centre error, in model longest-edges |
 |---|---|
@@ -137,10 +143,12 @@ cannot happen. It is exactly `1` when `min` is `[0,0,0]` (all four offset fixtur
 otherwise (`0.50` on `baseplate-origin.ifc`).
 
 Note what that argument does *not* say. Containing the origin is a property of the **files**, not of
-this command: `probe` bounds the file's own 3D points and never inserts the origin, so a file whose
-`WorldCoordinateSystem` and every placement location are nonzero would produce a box that excludes the
-origin and a ratio above `1`. Every file measured here happens to anchor those at `(0,0,0)`, which is
-ordinary but not guaranteed. Read the `≤ 1` as measured, not as a law about the algorithm.
+this command: `probe` bounds the file's own 3D points and never inserts the origin, so a file **can**
+produce a box that excludes the origin, and such a box **can** score above `1`. Neither follows
+automatically from nonzero anchors — points at `(1,1,1)` and `(-1,-1,-1)` are both nonzero and still
+bracket the origin, and even an origin-excluding box scores at most `1` if some other axis is wide
+enough. Every file measured here anchors those points at `(0,0,0)`, which is ordinary but not
+guaranteed. Read the `≤ 1` as measured, not as a law about the algorithm.
 
 *Second — and this is the part that holds regardless* — a high ratio would not rescue the midpoint
 anyway. It tells you only that the box **excludes** the origin, which is not the same as a trustworthy

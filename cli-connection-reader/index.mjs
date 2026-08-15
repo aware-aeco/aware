@@ -345,9 +345,11 @@ function placedElements(api, modelID) {
  * they sit at (0,0,0), so on a file authored wholly in the positive octant `min` is [0,0,0] exactly and
  * the midpoint lands about half way from the origin to the model. The DOMINANT term is therefore
  * `distance-from-origin / 2`, which is a property of the file rather than of this function — but not
- * the whole error, because a residual survives at zero distance where the box cannot see the swept
- * solid (`baseplate-origin.ifc` is authored at the origin and still measures 0.44, and probe.test.mjs
- * asserts that residual stays non-zero). Measured:
+ * the whole error: `baseplate-origin.ifc` is authored AT the origin, where that term predicts ~0, and
+ * still measures 0.44, because the box cannot see the swept column. That residual is THAT FIXTURE'S,
+ * not a floor under every file — a model given as explicit 3D points (BRep, tessellated items) hands
+ * this loop the real vertices and can measure ~0, and an unseen sweep symmetric about the point-box
+ * midpoint moves the centre not at all. probe.test.mjs pins the 0.44 for that one fixture. Measured:
  * 0.01 model longest-edges for `example-steel-framing.ifc` (authored from the origin), 0.44 for
  * `baseplate-origin.ifc`, 9.6-12.6 for this repo's offset connection fixtures (~23 m out, ~1 m
  * connection), 12.9 for Motebello. (The [0,0,0] min is not a law — `baseplate-origin.ifc` straddles the
@@ -360,9 +362,11 @@ function placedElements(api, modelID) {
  * about files whose midpoint is 9.6-12.6 longest-edges out.
  *
  * That is a fact about the FILES, not about this function, and the distinction matters: the loop below
- * bounds the file's own 3D points and never inserts the origin, so a file whose WorldCoordinateSystem
- * and every placement location are nonzero yields a box EXCLUDING the origin and a ratio above 1. Every
- * file measured here anchors those at (0,0,0), which is ordinary but not guaranteed.
+ * bounds the file's own 3D points and never inserts the origin, so a file CAN produce a box that
+ * excludes the origin, and such a box CAN score above 1. Neither is automatic — points at (1,1,1) and
+ * (-1,-1,-1) are both nonzero and still bracket the origin, and an origin-excluding box scores at most
+ * 1 if some other axis is wide enough. Every file measured here anchors those points at (0,0,0), which
+ * is ordinary but not guaranteed.
  *
  * Nor is a high ratio a licence to trust the midpoint: a point box CAN exclude the origin, score ~84,
  * and still sit 0.44 longest-edges off, because it cannot see the swept column. There is no cheap

@@ -340,9 +340,11 @@ test('#348: the midpoint of probe.bbox is ~10 model longest-edges from the model
   // What the only real consumer actually reads (floless.app's `verdictFor` feeds this midpoint to an
   // off-screen check), and therefore the number worth pinning. Because the box runs from the origin to
   // the model, its centre lands about half way there — so the DOMINANT term is distance-from-origin / 2,
-  // a property of the FILE rather than of the algorithm. It is not the whole error: a residual survives
-  // at zero distance, where the box still cannot see the swept column, which is what the
-  // origin-authored test below pins at 0.44 rather than at 0.
+  // a property of the FILE rather than of the algorithm. It is not the whole error: at zero distance
+  // `baseplate-origin.ifc` still measures 0.44, because the box cannot see the swept column — which the
+  // origin-authored test below pins. That residual is THAT fixture's, not a floor under every file: a
+  // model given as explicit 3D points can measure ~0, and a sweep symmetric about the point-box midpoint
+  // moves the centre not at all.
   //
   // The unit is the model's own longest edge, which is what makes the figure comparable across
   // fixtures. Measured 2026-08-07: 10.21, 12.60, 9.97, 9.64. The band is wide because the exact value
@@ -403,10 +405,14 @@ test('#348: reach-over-span CAN exceed 1 — the <= 1 result is about the files,
   //
   // It is tempting to write "the ratio is <= 1 on every box probe emits", which reads as a property of
   // probeModel. It is not one. `probeModel` bounds the file's own 3D IfcCartesianPoints and never
-  // inserts the origin (see the loop in index.mjs), so a file whose WorldCoordinateSystem and every
-  // placement location are nonzero produces a box that excludes the origin — and then the ratio is
-  // unbounded above. Every fixture in this repo anchors those points at (0,0,0), which is ordinary but
-  // not guaranteed, and generalising from five files to a law is exactly the mistake #348 is about.
+  // inserts the origin (see the loop in index.mjs), so a file CAN produce a box that excludes the
+  // origin, and such a box CAN score above 1 — which is all this test claims, and all the doc may say.
+  //
+  // Neither is automatic, and the doc must not say otherwise: points at (1,1,1) and (-1,-1,-1) are both
+  // nonzero and still bracket the origin, and an origin-excluding box scores at most 1 if some other
+  // axis is wide enough (`reachOverSpan` divides by the WIDEST span, not the matching one). Every
+  // fixture in this repo anchors those points at (0,0,0), which is ordinary but not guaranteed, and
+  // generalising from five files to a law is exactly the mistake #348 is about.
   //
   // Asserted on the pure helper rather than through a sixth fixture: the claim is arithmetic about a
   // box, so a box is the honest input. A fixture would additionally prove that IFC can express such a
@@ -440,15 +446,21 @@ test('#348: a file authored AT the origin has no origin-pinned min, and a near-e
     `${Math.round(dist(mesh.ctr, [0, 0, 0]))} mm out`);
 
   // The payoff: the midpoint error collapses. ~0.44 longest-edges here against 9.6-12.6 on the offset
-  // fixtures — so the error really is a property of how far the file is authored from the origin, and
-  // not of the algorithm. Not ZERO, though, and that matters: the box still cannot see the swept
-  // column, so even at the origin the midpoint is only approximately the model's.
+  // fixtures — so the dominant term really is how far the file is authored from the origin, and not the
+  // algorithm. Not ZERO, though, and that matters: THIS model is swept solids, which the box cannot see,
+  // so even at the origin its midpoint is only approximately the model's.
+  //
+  // The lower bound below is a fact about THIS fixture, not a floor under origin-authored files in
+  // general — a model given as explicit 3D points would hand probe the real vertices and could measure
+  // ~0 without anything being fixed. That is why the remedy in the message names this fixture.
   const err = dist(boxOf(probe.bbox).ctr, mesh.ctr) / Math.max(...mesh.span);
   assert.ok(err < 1,
     `expected the midpoint within one longest-edge for an origin-authored file, got ${err.toFixed(2)}`);
   assert.ok(err > 0.05,
-    `expected a small but NON-zero midpoint error (the swept column is still invisible), got ${err.toFixed(3)} — ` +
-    'if this is now ~0, probe can see swept solids and #348 is fixed');
+    `expected a small but NON-zero midpoint error (${ORIGIN_FIXTURE}'s swept column is still invisible), ` +
+    `got ${err.toFixed(3)} — if this is now ~0, either probe can see swept solids (#348 is fixed) or this ` +
+    'fixture was regenerated with explicit-point geometry, which would make the residual vanish without ' +
+    'anything being fixed. Check which before editing the bound');
 });
 
 test('#348: the deleted reach-over-span rule has not come back to probe.md', () => {

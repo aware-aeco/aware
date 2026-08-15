@@ -18,9 +18,12 @@ OUT = sys.argv[1] if len(sys.argv) > 1 else "baseplate-bp1.ifc"
 # algorithm (aware-aeco/aware#348): the box runs from the world origin to the model, so its midpoint
 # is off by roughly half the offset. Passing 0 0 0 authors the same connection AT the origin, which
 # is the only way to exercise the other half of that claim — the case where the midpoint error
-# COLLAPSES, to ~0.44 longest-edges against 9.6-12.6 on the offset fixtures. Not to zero: the box
-# still cannot see the swept column, so even at the origin the midpoint is only approximately the
-# model's, and `probe.test.mjs` asserts that it stays non-zero.
+# COLLAPSES, to ~0.44 longest-edges against 9.6-12.6 on the offset fixtures. Not to zero: this
+# connection is swept solids, whose size lives in numbers rather than points, so even at the origin the
+# midpoint is only approximately the model's, and `probe.test.mjs` asserts that it stays non-zero.
+# That residual is a fact about THIS geometry, not about origin-authored files at large — keep the
+# shapes swept when regenerating, because explicit-point geometry would drive it to ~0 and trip that
+# assertion with nothing actually fixed.
 # Defaults are unchanged, so `python make-baseplate.py baseplate-bp1.ifc` still regenerates bp1.
 OX, OY, OZ = (float(v) for v in (sys.argv[2:5] if len(sys.argv) > 4 else (10.0, 20.0, 5.0)))
 f = ifcopenshell.file(schema="IFC4")
