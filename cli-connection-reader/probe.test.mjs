@@ -54,7 +54,7 @@ test('probe reads METRE from a file that declares no prefix', async (t) => {
   }
 });
 
-test('probe reports an extent far from the origin, so a consumer can offer to move it', async (t) => {
+test('probe reports an extent far from the origin on a real site-coordinate export', async (t) => {
   const path = needs('11134_V_Motebello_Heistopp_Rev.ifc');
   if (!path) return t.skip(skipReason('11134_V_Motebello_Heistopp_Rev.ifc'));
   const h = await openApi(path);
@@ -62,8 +62,14 @@ test('probe reports an extent far from the origin, so a consumer can offer to mo
     const { bbox } = probeModel(h.api, h.modelID);
     // Measured 2026-07-25: this file sits at real site coordinates — ~74 m up. It loads at the CORRECT
     // size and entirely off-screen beside a model at the origin, which is the defect the size-sanity
-    // check was originally (wrongly) aimed at. Assert the distance, since that is what earns the
-    // "zoom to reference" and "move to origin" affordances.
+    // check was originally (wrongly) aimed at.
+    //
+    // This CHARACTERISES the number and does not endorse it as a position signal. The comment here used
+    // to say the distance "earns the zoom-to-reference and move-to-origin affordances" — that is the
+    // consumer contract #348 retracts, and leaving it in a test would keep teaching it after probe.md,
+    // manifest.yaml and the skill stopped. The box reaches far from the origin because it runs FROM the
+    // origin (every placement anchor is a point in it), so a large reach says the file is authored away
+    // from the origin — not where the model is. For position, call `read-model`.
     const far = Math.max(...bbox.max.map(Math.abs), ...bbox.min.map(Math.abs));
     assert.ok(far > 40_000, `expected the extent to sit far from the origin, got ${far} mm`);
   } finally {

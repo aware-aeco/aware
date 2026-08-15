@@ -27,10 +27,19 @@ first candidate), not hard-code it.
 
 The **same** connection as `baseplate-bp1.ifc` with the site offset set to zero, so it is authored
 across the world origin rather than ~23 m out. It exists for `probe`'s `bbox`, not for recognition:
-`bbox`'s midpoint error is a property of how far a file is authored from the origin (aware-aeco/aware#348),
-and without an origin-authored fixture only the far arm of that claim could be tested in CI — the near
-arm rested on a `~/Downloads` file whose tests skip. It also disproves the tempting generalisation that
-`probe.bbox.min` is always `[0,0,0]`: this file's anchors straddle the origin, so its `min` is negative.
+`bbox`'s midpoint error is **dominated** by how far a file is authored from the origin
+(aware-aeco/aware#348), and without an origin-authored fixture only the far arm of that claim could be
+tested in CI — the near arm rested on a `~/Downloads` file whose tests skip. It also disproves the
+tempting generalisation that `probe.bbox.min` is always `[0,0,0]`: this file's anchors straddle the
+origin, so its `min` is negative.
+
+Distance is the dominant term but not the whole error, which matters for **this** fixture more than any
+other: authored at the origin, that term predicts ~0, and it still measures `0.44` longest-edges. The
+remainder is representation — the connection is swept solids, whose size lives in `XDim`/`Radius`/`Depth`
+numbers that no `IfcCartesianPoint` records. So **keep the shapes swept when regenerating**: geometry
+given as explicit points (a BRep, or tessellated items) would hand `probe` the real vertices, drive the
+residual to ~0, and trip `probe.test.mjs`'s bound with nothing actually fixed. If you change this
+fixture's geometry, re-measure and update the `0.44` in `probe.md`, `index.mjs` and `probe.test.mjs`.
 
 Because it differs from `baseplate-bp1.ifc` in exactly one authored quantity, the contrast between the
 two is evidence rather than anecdote. Regenerate with the same script, passing the offset:
