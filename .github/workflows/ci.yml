@@ -71,13 +71,67 @@ jobs:
       - name: Install Linux build deps
         run: sudo apt-get update && sudo apt-get install -y clang libsecret-1-dev libdbus-1-dev pkg-config
 
+      # A pinned toolchain is only half the pin — `Cargo.lock` is the other half,
+      # and nothing checked it. Every cargo invocation here resolved without
+      # `--locked`, and cargo REPAIRS a stale lock as a silent side effect of
+      # resolving, so a lockfile disagreeing with its manifest was rewritten
+      # inside the runner and the job went green on a tree that does not build
+      # reproducibly. That is how `cli/Cargo.lock` came to record `aware 0.122.0`
+      # against a manifest reading `0.123.0`: the v0.123.0 release commit bumped
+      # `Cargo.toml` alone, and `cargo build --locked` / `cargo install --locked`
+      # failed outright on `main` from then on, with every check green.
+      #
+      # TWO checks, because neither alone is sufficient — both measured:
+      #
+      #   * `git diff --exit-code` catches a lock some EARLIER step already
+      #     repaired. `Swatinem/rust-cache` shells out to `cargo metadata` for its
+      #     cache key, and after such a repair `cargo metadata --locked` exits 0 —
+      #     the gate defeated, silently. Against a committed stale pair, a resolve
+      #     rewrites the lock and `git diff --exit-code` then exits 1 while
+      #     `--locked` exits 0. This half is what makes the check independent of
+      #     where it sits in the job.
+      #   * `cargo metadata --locked` catches drift nothing has repaired yet, and
+      #     names the offending crate.
+      #
+      # NOT `--no-deps`, however tempting: it skips resolution, so it downloads
+      # nothing (0 archives) but also detects nothing — measured against the real
+      # stale lock it exits 0 where the full resolve exits 101. It would leave a
+      # step that looks like a gate and is not.
+      #
+      # AFTER the cache step, deliberately. `cargo metadata --locked` resolves the
+      # whole graph and fetches it: against a cold `CARGO_HOME` it downloads 408
+      # `.crate` archives for `cli` alone. Run before the cache that is pure
+      # waste, repeated every job and thrown away; run after it, the same fetch is
+      # work `cargo clippy` and `cargo test` need anyway (Codex review, PR #416).
+      # The `git diff` half is what keeps that move safe.
+      #
+      # Both crates — `steel-detailer-lookup` is the repo's other Rust binary and
+      # ships in the same archive. `cli/tests/lockfile_gate.rs` asserts this step
+      # still carries both halves and still names both crates.
+      #
+      # To fix a failure, in the directory it names:
+      #   cargo generate-lockfile        # then commit the updated Cargo.lock
+      - name: lockfiles agree with their manifests
+        run: |
+          if ! git diff --exit-code -- cli/Cargo.lock 20-agents/aeco/engineering/steel-detailer-lookup/Cargo.lock; then
+            echo "::error::a step before this one rewrote a Cargo.lock, which means the committed lock did not match its manifest — run 'cargo generate-lockfile' in the crate shown above and commit the result"
+            exit 1
+          fi
+          for crate in cli 20-agents/aeco/engineering/steel-detailer-lookup; do
+            echo "checking $crate/Cargo.lock"
+            if ! (cd "$crate" && cargo metadata --locked --format-version 1 >/dev/null); then
+              echo "::error::$crate/Cargo.lock is out of sync with $crate/Cargo.toml — run 'cargo generate-lockfile' in $crate and commit the result"
+              exit 1
+            fi
+          done
+
       - name: cargo fmt --check
         working-directory: cli
         run: cargo fmt --all -- --check
 
       - name: cargo clippy -D warnings
         working-directory: cli
-        run: cargo clippy --all-targets -- -D warnings
+        run: cargo clippy --all-targets --locked -- -D warnings
 
       # `clippy::string_slice` is a `restriction` lint, so the step above does not
       # enable it and a hard-coded byte offset into a `str` reaches users as a
@@ -94,7 +148,7 @@ jobs:
 
       - name: cargo test
         working-directory: cli
-        run: cargo test
+        run: cargo test --locked
 
       # `20-agents/aeco/engineering/steel-detailer-lookup` is the repo's *other*
       # Rust crate — the deterministic clause/section lookup that ships inside
@@ -113,8 +167,8 @@ jobs:
         working-directory: 20-agents/aeco/engineering/steel-detailer-lookup
         run: |
           cargo fmt --all -- --check
-          cargo clippy --all-targets -- -D warnings
-          cargo test
+          cargo clippy --all-targets --locked -- -D warnings
+          cargo test --locked
 
   # The IFC bridge is a Node package, so `cargo test` never touches it — its suite only ever ran on
   # whoever last remembered to. That is how `read-model` shipped returning a different coordinate
