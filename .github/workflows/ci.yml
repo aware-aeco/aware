@@ -57,6 +57,46 @@ jobs:
           toolchain: ${{ steps.pin.outputs.channel }}
           components: rustfmt, clippy
 
+      # BEFORE the cache and every build step below, and that ordering is the
+      # whole check. A pinned toolchain is only half the pin — `Cargo.lock` is
+      # the other half, and nothing checked it. Cargo REPAIRS a stale lock as a
+      # silent side effect of any command that resolves dependencies, so by the
+      # time `cargo clippy` runs the evidence is already gone; `Swatinem/rust-
+      # cache` shells out to `cargo metadata` for its cache key and would erase
+      # it earlier still. The same side effect is why this cannot be a test:
+      # `cargo test` rewrites the lock while building the test binary, so a test
+      # reading `Cargo.lock` reads the repaired copy and passes against the very
+      # drift it was written to catch (measured, not assumed —
+      # `cli/tests/lockfile_gate.rs` records it).
+      #
+      # That is how `cli/Cargo.lock` came to record `aware 0.122.0` against a
+      # manifest reading `0.123.0`: the v0.123.0 release commit bumped
+      # `Cargo.toml` alone, and `cargo build --locked` / `cargo install --locked`
+      # have failed outright on `main` ever since — with every check green. The
+      # release commits before it happened to carry a regenerated lock because
+      # somebody had built locally first; nothing ever required one.
+      #
+      # `cargo metadata` because it resolves the graph and does nothing else — no
+      # compile, and no network beyond the registry index. `--locked` is then
+      # added to clippy and test below, so no later step can resolve around a
+      # drift this one has already reported.
+      #
+      # Both crates, not just `cli` — `steel-detailer-lookup` is the repo's other
+      # Rust binary and ships in the same archive. `cli/tests/lockfile_gate.rs`
+      # asserts this step still names both.
+      #
+      # To fix a failure, in the directory it names:
+      #   cargo generate-lockfile        # then commit the updated Cargo.lock
+      - name: lockfiles agree with their manifests
+        run: |
+          for crate in cli 20-agents/aeco/engineering/steel-detailer-lookup; do
+            echo "checking $crate/Cargo.lock"
+            if ! (cd "$crate" && cargo metadata --locked --format-version 1 >/dev/null); then
+              echo "::error::$crate/Cargo.lock is out of sync with $crate/Cargo.toml — run 'cargo generate-lockfile' in $crate and commit the result"
+              exit 1
+            fi
+          done
+
       - name: Cache cargo registry + build
         uses: Swatinem/rust-cache@v2
         with:
@@ -77,7 +117,7 @@ jobs:
 
       - name: cargo clippy -D warnings
         working-directory: cli
-        run: cargo clippy --all-targets -- -D warnings
+        run: cargo clippy --all-targets --locked -- -D warnings
 
       # `clippy::string_slice` is a `restriction` lint, so the step above does not
       # enable it and a hard-coded byte offset into a `str` reaches users as a
@@ -94,7 +134,7 @@ jobs:
 
       - name: cargo test
         working-directory: cli
-        run: cargo test
+        run: cargo test --locked
 
       # `20-agents/aeco/engineering/steel-detailer-lookup` is the repo's *other*
       # Rust crate — the deterministic clause/section lookup that ships inside
@@ -113,8 +153,8 @@ jobs:
         working-directory: 20-agents/aeco/engineering/steel-detailer-lookup
         run: |
           cargo fmt --all -- --check
-          cargo clippy --all-targets -- -D warnings
-          cargo test
+          cargo clippy --all-targets --locked -- -D warnings
+          cargo test --locked
 
   # The IFC bridge is a Node package, so `cargo test` never touches it — its suite only ever ran on
   # whoever last remembered to. That is how `read-model` shipped returning a different coordinate
