@@ -412,15 +412,342 @@ fn count_verticals(agents: &[DiscoveredAgent]) -> usize {
 mod tests {
     use super::*;
 
+    /// Build a `DiscoveredAgent` from an inline manifest. Callers pass the
+    /// fields the renderers actually read — everything else is filler the
+    /// `Agent` struct requires to deserialize.
+    fn agent(
+        id: &str,
+        display_name: Option<&str>,
+        vendor: Option<&str>,
+        keywords: &[&str],
+        skills: usize,
+        commands: usize,
+    ) -> DiscoveredAgent {
+        let mut yaml = format!(
+            "agent: {id}\nversion: 0.1.0\ndescription: fixture\nstateful: false\nlicense: MIT\ntransport: {{ cli: {{ binary: aware-{id} }} }}\n"
+        );
+        if let Some(d) = display_name {
+            yaml.push_str(&format!("display-name: {d}\n"));
+        }
+        if let Some(v) = vendor {
+            yaml.push_str(&format!("vendor: {v}\n"));
+        }
+        yaml.push_str("keywords:\n");
+        for k in keywords {
+            yaml.push_str(&format!("  - {k}\n"));
+        }
+        yaml.push_str("skills:\n");
+        for i in 0..skills {
+            yaml.push_str(&format!("  - skills/s{i}.md\n"));
+        }
+        yaml.push_str("commands:\n");
+        for i in 0..commands {
+            yaml.push_str(&format!(
+                "  c{i}:\n    lifecycle: single\n    category: curated\n    description: cmd {i}\n"
+            ));
+        }
+        let manifest: crate::manifest::Agent = serde_yaml::from_str(&yaml).unwrap();
+        // The fixture is only trustworthy if it really carries what it claims;
+        // a typo'd key would deserialize to a default and silently weaken every
+        // assertion built on it (there is no `deny_unknown_fields` on `Agent`).
+        assert_eq!(manifest.skill_count(), skills, "fixture skills");
+        assert_eq!(manifest.command_count(), commands, "fixture commands");
+        assert_eq!(manifest.keywords.len(), keywords.len(), "fixture keywords");
+        DiscoveredAgent {
+            manifest,
+            root: std::path::PathBuf::from("/dev/null"),
+        }
+    }
+
+    /// The line `render_agents_block` emits for one vertical, so a test can
+    /// assert on that vertical alone without matching the whole block.
+    fn vertical_line<'a>(block: &'a str, id: &str) -> &'a str {
+        block
+            .lines()
+            .find(|l| l.trim_start().starts_with(&format!("{id}[")))
+            .unwrap_or_else(|| panic!("no {id} line in block:\n{block}"))
+    }
+
+    // ---- bucket_by_vertical / count_verticals -------------------------------
+
     #[test]
-    fn replace_markers_inserts_between_markers() {
+    fn bucketing_is_first_match_wins_not_multi_membership() {
+        // Keyword order in the manifest is deliberately the reverse of the
+        // `if/else if` order in `bucket_by_vertical`, so a chain rewritten as
+        // independent `if`s would file this agent under BOTH verticals.
+        let agents = vec![agent(
+            "dual",
+            None,
+            None,
+            &["architecture", "engineering"],
+            0,
+            0,
+        )];
+        let b = bucket_by_vertical(&agents);
+        assert_eq!(b.engineering.len(), 1, "engineering wins the chain");
+        assert!(b.architecture.is_empty(), "must not double-file");
+        assert_eq!(count_verticals(&agents), 1);
+    }
+
+    #[test]
+    fn agents_without_an_aeco_keyword_are_dropped_from_buckets() {
+        // Meta primitives and utilities (html-report) carry no vertical keyword
+        // and belong to no bucket — they render in their own subgraph.
+        let agents = vec![
+            agent("html-report", None, None, &["meta", "reporting"], 3, 1),
+            agent("no-keywords", None, None, &[], 1, 1),
+        ];
+        assert_eq!(count_verticals(&agents), 0);
+        let b = bucket_by_vertical(&agents);
+        let filed = b.engineering.len()
+            + b.architecture.len()
+            + b.construction.len()
+            + b.visualization.len()
+            + b.cross_cutting.len()
+            + b.ops.len();
+        assert_eq!(filed, 0, "non-AECO agents must not be filed anywhere");
+    }
+
+    #[test]
+    fn count_verticals_counts_buckets_not_agents() {
+        // Three agents, two distinct verticals — the count must be 2. Guards
+        // against returning `agents.len()` or summing bucket sizes.
+        let agents = vec![
+            agent("tekla", None, None, &["engineering"], 0, 0),
+            agent("idea", None, None, &["engineering"], 0, 0),
+            agent("maximo", None, None, &["operations"], 0, 0),
+        ];
+        assert_eq!(count_verticals(&agents), 2);
+    }
+
+    // ---- render_agents_block ------------------------------------------------
+
+    #[test]
+    fn empty_ops_bucket_renders_as_future_without_a_star() {
+        // Ops is the one vertical whose fallback class is `future`; every other
+        // vertical stays `poc` even when empty. Both halves are asserted so a
+        // blanket "always poc" (or "always future") fails.
+        let block = render_agents_block(&[]);
+        let ops = vertical_line(&block, "Ops");
+        assert!(ops.ends_with(":::future"), "empty Ops is future: {ops}");
+        assert!(!ops.contains('\u{2605}'), "empty Ops has no star: {ops}");
+
+        let eng = vertical_line(&block, "Eng");
+        assert!(eng.ends_with(":::poc"), "empty Eng stays poc: {eng}");
+        assert!(eng.contains("Engineering \u{2605}"), "starred: {eng}");
+    }
+
+    #[test]
+    fn populated_ops_bucket_flips_to_poc_with_a_star() {
+        let agents = vec![agent(
+            "maximo",
+            Some("IBM Maximo"),
+            None,
+            &["operations"],
+            0,
+            0,
+        )];
+        let block = render_agents_block(&agents);
+        let ops = vertical_line(&block, "Ops");
+        assert!(ops.ends_with(":::poc"), "populated Ops is poc: {ops}");
+        assert!(ops.contains("Operations \u{2605}"), "starred: {ops}");
+    }
+
+    #[test]
+    fn future_hint_survives_a_populated_bucket() {
+        // The hint is the unshipped-products list, not an empty-state message:
+        // it must still render once the vertical has agents in it.
+        let agents = vec![agent("tekla", Some("Tekla"), None, &["engineering"], 2, 3)];
+        let eng = {
+            let block = render_agents_block(&agents);
+            vertical_line(&block, "Eng").to_string()
+        };
+        assert!(eng.contains("future: ETABS"), "hint retained: {eng}");
+        assert!(
+            eng.contains("Tekla \u{2605} (2 skills \u{b7} 3 cmds)"),
+            "{eng}"
+        );
+        // The agent precedes the hint — the hint is pushed last.
+        let agent_at = eng.find("Tekla").unwrap();
+        let hint_at = eng.find("future:").unwrap();
+        assert!(agent_at < hint_at, "agents render before the hint: {eng}");
+    }
+
+    #[test]
+    fn agent_line_falls_back_to_the_agent_id_and_reports_real_counts() {
+        // No `display-name:` → the raw id is the label. Counts are distinct
+        // numbers so a swapped skills/cmds pair cannot pass.
+        let agents = vec![agent(
+            "rhino",
+            None,
+            Some("mcneel"),
+            &["architecture"],
+            7,
+            2,
+        )];
+        let block = render_agents_block(&agents);
+        let arch = vertical_line(&block, "Arch");
+        assert!(
+            arch.contains("rhino \u{2605} (7 skills \u{b7} 2 cmds)"),
+            "{arch}"
+        );
+    }
+
+    // ---- render_vertical ----------------------------------------------------
+
+    #[test]
+    fn render_vertical_rejects_an_unknown_vertical() {
+        let err = render_vertical(&[], "structural").unwrap_err();
+        let AwareError::Validation(msg) = err else {
+            panic!("expected a validation error");
+        };
+        assert!(msg.contains("structural"), "names the input: {msg}");
+        assert!(msg.contains("engineering"), "lists the allowed set: {msg}");
+    }
+
+    #[test]
+    fn render_vertical_matches_case_insensitively() {
+        // The filter compares against the lowercased input, so an uppercase
+        // argument must both pass validation AND still match the keyword.
+        let agents = vec![agent("tekla", Some("Tekla"), None, &["engineering"], 1, 1)];
+        let out = render_vertical(&agents, "ENGINEERING").unwrap();
+        assert!(out.contains("AWARE Engineering<br/>1 agents"), "{out}");
+        assert!(
+            out.contains("Tekla"),
+            "the agent survived the filter: {out}"
+        );
+    }
+
+    #[test]
+    fn render_vertical_with_no_matching_agents_emits_the_empty_node() {
+        // Agents exist, but none in the requested vertical — the empty branch
+        // must fire on the FILTERED set, not on the input being empty.
+        let agents = vec![agent("tekla", None, None, &["engineering"], 1, 1)];
+        let out = render_vertical(&agents, "operations").unwrap();
+        assert!(out.contains("(no installed agents in Operations)"), "{out}");
+        assert!(out.contains("Header --> Empty"), "{out}");
+        assert!(!out.contains("subgraph V_"), "no vendor cluster: {out}");
+        assert!(!out.contains("tekla"), "off-vertical agent excluded: {out}");
+    }
+
+    #[test]
+    fn render_vertical_header_totals_only_count_the_filtered_agents() {
+        // The off-vertical agent carries much larger counts, so summing over
+        // the unfiltered input would show 40/50 instead of 2/3.
+        let agents = vec![
+            agent("tekla", None, None, &["engineering"], 2, 3),
+            agent("excel", None, None, &["cross-cutting"], 40, 50),
+        ];
+        let out = render_vertical(&agents, "engineering").unwrap();
+        assert!(
+            out.contains("AWARE Engineering<br/>1 agents \u{b7} 2 skills \u{b7} 3 cmds"),
+            "{out}"
+        );
+    }
+
+    #[test]
+    fn render_vertical_groups_by_vendor_in_sorted_order() {
+        // Vendors are inserted in reverse-alphabetical order; the BTreeMap must
+        // still emit trimble before zzz, and autodesk before both.
+        let agents = vec![
+            agent("navis", None, Some("zzz"), &["construction"], 0, 0),
+            agent("tc", None, Some("trimble"), &["construction"], 0, 0),
+            agent("acc", None, Some("autodesk"), &["construction"], 0, 0),
+        ];
+        let out = render_vertical(&agents, "construction").unwrap();
+        let at = |v: &str| out.find(&format!("subgraph V_{v}[")).unwrap();
+        assert!(at("autodesk") < at("trimble"), "{out}");
+        assert!(at("trimble") < at("zzz"), "{out}");
+    }
+
+    #[test]
+    fn render_vertical_sanitizes_hyphens_in_node_ids() {
+        // Mermaid node ids cannot contain `-`. The id is sanitized but the
+        // human-facing label must keep the original spelling, so asserting
+        // only on the id would miss a global replace over the whole string.
+        let agents = vec![agent(
+            "trimble-connect",
+            None,
+            Some("trimble-inc"),
+            &["construction"],
+            0,
+            0,
+        )];
+        let out = render_vertical(&agents, "construction").unwrap();
+        assert!(
+            out.contains("subgraph V_trimble_inc[\"trimble-inc\"]"),
+            "{out}"
+        );
+        assert!(out.contains("Header --> V_trimble_inc"), "{out}");
+        assert!(
+            out.contains("    trimble_connect[\"trimble-connect<br/>"),
+            "{out}"
+        );
+    }
+
+    #[test]
+    fn render_vertical_labels_a_vendorless_agent_unknown() {
+        let agents = vec![agent("orphan", None, None, &["visualization"], 0, 0)];
+        let out = render_vertical(&agents, "visualization").unwrap();
+        assert!(out.contains("subgraph V_unknown[\"unknown\"]"), "{out}");
+    }
+
+    // ---- render_standalone --------------------------------------------------
+
+    #[test]
+    fn standalone_counts_every_installed_agent_not_just_bucketed_ones() {
+        // `html-report` is filed under no vertical, but it IS installed — the
+        // CLI node reports the install count, so it must be 2, not 1.
+        let agents = vec![
+            agent("tekla", None, None, &["engineering"], 1, 1),
+            agent("html-report", None, None, &["meta"], 1, 1),
+        ];
+        let block = render_agents_block(&agents);
+        let out = render_standalone(&agents, &block);
+        assert!(out.contains("aware CLI<br/>2 installed agents"), "{out}");
+        assert!(
+            out.contains(&block),
+            "the block is embedded verbatim: {out}"
+        );
+        assert!(out.contains("CLI --> AGENTS"), "{out}");
+    }
+
+    // ---- replace_markers ----------------------------------------------------
+
+    #[test]
+    fn replace_markers_rewrites_only_the_span_between_the_markers() {
+        // Exact equality, not `contains`: it pins that the prefix and suffix
+        // survive byte-for-byte and that the marker lines themselves are kept.
         let original = "line 1\n%% AWARE-AUTOGEN-AGENTS-BEGIN\n  old content\n%% AWARE-AUTOGEN-AGENTS-END\nline 5\n";
-        let new_block = "  new content\n";
-        let updated = replace_markers(original, new_block).unwrap();
-        assert!(updated.contains("line 1"));
-        assert!(updated.contains("new content"));
-        assert!(updated.contains("line 5"));
-        assert!(!updated.contains("old content"));
+        let updated = replace_markers(original, "  new content\n").unwrap();
+        assert_eq!(
+            updated,
+            "line 1\n%% AWARE-AUTOGEN-AGENTS-BEGIN\n  new content\n%% AWARE-AUTOGEN-AGENTS-END\nline 5\n"
+        );
+    }
+
+    #[test]
+    fn replace_markers_newline_terminates_a_block_that_lacks_one() {
+        // Without the guard the END marker would be pulled onto the last
+        // content line, producing a file that no longer round-trips.
+        let original = "%% AWARE-AUTOGEN-AGENTS-BEGIN\n%% AWARE-AUTOGEN-AGENTS-END\n";
+        let updated = replace_markers(original, "  no trailing newline").unwrap();
+        assert_eq!(
+            updated,
+            "%% AWARE-AUTOGEN-AGENTS-BEGIN\n  no trailing newline\n%% AWARE-AUTOGEN-AGENTS-END\n"
+        );
+    }
+
+    #[test]
+    fn replace_markers_begin_without_a_trailing_newline_errors() {
+        // Both markers present and correctly ordered, but the file is a single
+        // line — there is no newline after BEGIN to anchor the splice to.
+        let original = "%% AWARE-AUTOGEN-AGENTS-BEGIN x %% AWARE-AUTOGEN-AGENTS-END";
+        let err = replace_markers(original, "  block\n").unwrap_err();
+        let AwareError::Validation(msg) = err else {
+            panic!("expected a validation error");
+        };
+        assert!(msg.contains("no trailing newline"), "{msg}");
     }
 
     #[test]
