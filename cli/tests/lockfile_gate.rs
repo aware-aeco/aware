@@ -24,11 +24,19 @@
 //! What is left here is what a test *can* prove:
 //!   * `cargo metadata --locked` really does reject a stale lock and accept a
 //!     fresh one — the mechanism CI runs, measured rather than assumed;
-//!   * cargo really does erase the evidence, which is what makes the step's
-//!     position in the workflow load-bearing;
-//!   * `ci.yml` still carries the check, still names both crates, and still runs
-//!     it before anything that would repair the lock — without this, deleting or
-//!     merely *moving* the step leaves both assertions above green.
+//!   * cargo really does erase the evidence, which is why the CI step pairs that
+//!     resolve with a `git diff --exit-code` over the lockfiles;
+//!   * `ci.yml` still carries BOTH halves and still names both crates — without
+//!     this, deleting either one leaves the assertions above green.
+//!
+//! On why the CI step needs both halves, each measured on PR #416. The resolve
+//! alone is defeated by anything that repairs the lock first: `Swatinem/rust-
+//! cache` shells out to `cargo metadata`, and against a committed stale pair a
+//! resolve rewrites the lock, after which `cargo metadata --locked` exits 0
+//! while `git diff --exit-code` exits 1. The git half alone would not name the
+//! offending crate. And `--no-deps` is not the cheap substitute it looks like —
+//! it skips resolution, downloading nothing and detecting nothing (exit 0 against
+//! the real stale lock, where the full resolve exits 101).
 
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
@@ -266,7 +274,7 @@ fn step_index(steps: &[Step], name: &str) -> usize {
 /// Rust binary and ships in the same archive. CI is its only coverage, and this
 /// is what keeps CI honest about it.
 #[test]
-fn ci_still_checks_both_lockfiles_before_anything_repairs_them() {
+fn ci_still_carries_both_halves_of_the_lockfile_check() {
     let workflow = repo_root().join(".github/workflows/ci.yml");
     let source = std::fs::read_to_string(&workflow)
         .unwrap_or_else(|e| panic!("read {}: {e}", workflow.display()));
@@ -282,31 +290,51 @@ fn ci_still_checks_both_lockfiles_before_anything_repairs_them() {
         steps.len()
     );
 
-    let check = step_index(&steps, "lockfiles agree with their manifests");
+    let check = &steps[step_index(&steps, "lockfiles agree with their manifests")];
+
+    // Half one: the resolve. Catches drift nothing has repaired yet, and names
+    // the crate. `--no-deps` would make this step download nothing and detect
+    // nothing — measured: exit 0 against the real stale lock where the full
+    // resolve exits 101 — so the flag it must NOT carry is asserted too.
     assert!(
-        steps[check].body.contains("cargo metadata --locked"),
+        check.body.contains("cargo metadata --locked"),
         "the lockfile step no longer runs `cargo metadata --locked`, so a lockfile \
          disagreeing with its manifest would be silently rewritten in the runner \
          and reported green"
     );
+    assert!(
+        !check.body.contains("--no-deps"),
+        "the lockfile step now passes `--no-deps`, which skips resolution — it \
+         downloads nothing but detects nothing either, leaving a step that looks \
+         like a gate and is not"
+    );
+
+    // Half two: the git check. This is what catches a lock an EARLIER step has
+    // already repaired — `Swatinem/rust-cache` shells out to `cargo metadata`,
+    // and after such a repair `--locked` exits 0 with the drift invisible. It is
+    // also what makes the step's position in the job not matter, which is what
+    // lets it sit after the cache instead of paying for a cold full fetch.
+    assert!(
+        check.body.contains("git diff --exit-code"),
+        "the lockfile step no longer runs `git diff --exit-code` over the \
+         lockfiles. Without it, any earlier step that resolves — the cache action \
+         does — repairs a stale lock in place and `cargo metadata --locked` then \
+         passes on the repaired copy"
+    );
+
     for crate_dir in ["cli", "20-agents/aeco/engineering/steel-detailer-lookup"] {
         assert!(
-            steps[check].body.contains(crate_dir),
+            check.body.contains(crate_dir),
             "the lockfile step no longer names {crate_dir}, so its Cargo.lock is \
              unchecked — CI is that crate's only coverage for this"
         );
+        // The git half must cover both lockfiles by path, not just the resolve.
+        assert!(
+            check.body.contains(&format!("{crate_dir}/Cargo.lock")),
+            "the lockfile step's `git diff` no longer names {crate_dir}/Cargo.lock, \
+             so a repair to that crate's lock would go unnoticed"
+        );
     }
-
-    // Position, not just presence. `Swatinem/rust-cache` shells out to `cargo
-    // metadata` for its cache key, so a check that runs after it inspects a lock
-    // cargo has already repaired — the step would still be there, still be
-    // green, and prove nothing.
-    assert!(
-        check < step_index(&steps, "Cache cargo registry + build"),
-        "the lockfile check now runs AFTER the cache step, which resolves \
-         dependencies and repairs a stale lock before the check can see it. Move \
-         it back above `Swatinem/rust-cache`."
-    );
 
     // `--locked` on the build steps is the belt to that check's braces: it makes
     // the enforcement independent of step order, so a future reshuffle degrades
