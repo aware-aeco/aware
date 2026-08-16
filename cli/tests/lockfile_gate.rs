@@ -69,9 +69,21 @@ fn probe_crate(version: &str) -> tempfile::TempDir {
     dir
 }
 
+/// The probe's manifest, at `version`.
+///
+/// `edition = "2021"`, deliberately, even though CLAUDE.md §Tech stack pins this
+/// repo at 2024. The probe is built by a cargo running in a TEMPDIR, and a
+/// `rust-toolchain.toml` override applies only within its own directory tree —
+/// so the child process gets rustup's *default* toolchain, not `cli/`'s pinned
+/// 1.95. On a developer whose default is older than 1.85, an edition-2024
+/// manifest fails to parse and the probe fails for a reason that has nothing to
+/// do with lockfiles (Codex review, PR #416). Nothing here is edition-sensitive:
+/// the probe declares no dependencies and is never compiled — `generate-lockfile`
+/// and `metadata` only resolve — so the oldest widely-available edition is the
+/// one that couples this test to the least.
 fn manifest(version: &str) -> String {
     format!(
-        "[package]\nname = \"lock_probe\"\nversion = \"{version}\"\nedition = \"2024\"\n\n[workspace]\n"
+        "[package]\nname = \"lock_probe\"\nversion = \"{version}\"\nedition = \"2021\"\n\n[workspace]\n"
     )
 }
 
