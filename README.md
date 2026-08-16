@@ -61,7 +61,6 @@ aware-aeco/
 │       └── cross-cutting/  #    3 — microsoft-365 · google-workspace · dropbox
 ├── 30-apps/_examples/      # 7 reference apps — one per persona + canonical demos
 ├── 40-diagrams/            # Mermaid + Excalidraw views of the substrate
-├── 50-research/            # design notes, prior art, competitive analysis
 ├── 90-onboarding/          # first-hour walk-throughs, one per persona
 ├── cli/                    # the `aware` CLI — Rust runtime (shipped)
 ├── cli-tekla / -revit /    # desktop-host sidecars — stateful, in-process vendor APIs
