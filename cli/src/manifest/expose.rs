@@ -64,14 +64,6 @@ struct SynthCommand {
     outputs: Option<Value>,
 }
 
-fn lifecycle_str(l: Lifecycle) -> &'static str {
-    match l {
-        Lifecycle::Start => "start",
-        Lifecycle::Stop => "stop",
-        Lifecycle::Single => "single",
-    }
-}
-
 /// The read/write mode a synthesized command presents at the app boundary.
 /// Defaults to `read` (a "run and return outputs" call); an author may declare
 /// `mode: write` to force callers to wrap the node in a `safety:` block.
@@ -106,7 +98,7 @@ pub fn synthesize_agent_manifest(app: &App) -> Result<String, AwareError> {
         commands.insert(
             name.clone(),
             SynthCommand {
-                lifecycle: lifecycle_str(cmd.lifecycle),
+                lifecycle: cmd.lifecycle.as_str(),
                 description: cmd
                     .description
                     .clone()

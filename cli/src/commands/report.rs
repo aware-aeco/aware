@@ -16,6 +16,7 @@ use std::time::Instant;
 
 use clap::{Args, Subcommand};
 
+use super::extract_group;
 use crate::context::Context;
 use crate::error::AwareError;
 use crate::manifest::loader::{DiscoveredAgent, discover_agents};
@@ -207,26 +208,6 @@ fn group_by_vertical(agents: &[DiscoveredAgent]) -> Vec<(&'static str, Vec<&Disc
         .iter()
         .map(|l| (*l, buckets.remove(l).unwrap_or_default()))
         .collect()
-}
-
-// TODO: byte-identical to `commands::tree::extract_group`, and both copies are
-// now pinned by their own tests. Hoist to one shared module rather than letting
-// the two drift.
-fn extract_group(description: &str) -> String {
-    let trimmed = description.trim_start();
-    let head: String = trimmed
-        .chars()
-        .take_while(|c| c.is_ascii_alphanumeric() || *c == '_' || *c == '$')
-        .collect();
-    if head.is_empty() {
-        return "Top-level".into();
-    }
-    if let Some(rest) = trimmed.strip_prefix(&head)
-        && rest.starts_with('.')
-    {
-        return head;
-    }
-    "Top-level".into()
 }
 
 fn html_escape(s: &str) -> String {

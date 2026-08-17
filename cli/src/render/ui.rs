@@ -16,6 +16,7 @@
 use serde_json::Value;
 
 use crate::error::AwareError;
+use crate::json::type_name;
 use crate::render::html_report::{TableOptions, esc, render_fragment};
 
 /// The descriptor schema version this build understands.
@@ -175,18 +176,6 @@ fn type_matches(ty: &str, v: &Value) -> bool {
             .is_some_and(|a| a.iter().all(|x| x.is_string())),
         "object" => v.is_object(),
         _ => false,
-    }
-}
-
-/// Human name of a JSON value's type, for "got …" error suffixes.
-fn type_name(v: &Value) -> &'static str {
-    match v {
-        Value::Null => "null",
-        Value::Bool(_) => "boolean",
-        Value::Number(_) => "number",
-        Value::String(_) => "string",
-        Value::Array(_) => "array",
-        Value::Object(_) => "object",
     }
 }
 
