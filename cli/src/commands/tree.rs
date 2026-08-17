@@ -11,6 +11,7 @@ use std::time::Instant;
 use clap::Args;
 use serde::Serialize;
 
+use super::extract_group;
 use crate::context::Context;
 use crate::envelope;
 use crate::error::AwareError;
@@ -152,28 +153,6 @@ pub fn run(ctx: &Context, args: &TreeArgs) -> Result<(), AwareError> {
         }
     }
     Ok(())
-}
-
-/// Extract the group bucket for a command from its `description`.
-///
-/// Heuristic: if the description starts with `Word.AnotherWord` (no spaces
-/// between Word and `.`), that's the owning class — return the leading
-/// `Word`. Otherwise return `Top-level`.
-fn extract_group(description: &str) -> String {
-    let trimmed = description.trim_start();
-    let head: String = trimmed
-        .chars()
-        .take_while(|c| c.is_ascii_alphanumeric() || *c == '_' || *c == '$')
-        .collect();
-    if head.is_empty() {
-        return "Top-level".into();
-    }
-    if let Some(rest) = trimmed.strip_prefix(&head)
-        && rest.starts_with('.')
-    {
-        return head;
-    }
-    "Top-level".into()
 }
 
 #[derive(Serialize)]

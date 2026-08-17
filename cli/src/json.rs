@@ -9,10 +9,10 @@ use serde_json::Value;
 /// The JSON type of `value`, spelled the way a validation message spells it —
 /// `"must be an array (got string)"`.
 ///
-/// Four modules had each grown a private, byte-identical copy of this match:
-/// `render::file`, `render::ifc`, `render::viewer_3d` and `manifest::expose`.
-/// Nothing forced them to agree, so the words a user sees for a rejected value
-/// depended on which verb rejected it.
+/// Five modules had each grown a private, byte-identical copy of this match:
+/// `render::file`, `render::ifc`, `render::viewer_3d`, `manifest::expose` and
+/// `render::ui`. Nothing forced them to agree, so the words a user sees for a
+/// rejected value depended on which verb rejected it.
 pub fn type_name(value: &Value) -> &'static str {
     match value {
         Value::Null => "null",

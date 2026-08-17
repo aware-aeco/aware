@@ -313,6 +313,25 @@ pub enum Lifecycle {
     Single,
 }
 
+impl Lifecycle {
+    /// The manifest spelling of this variant — the exact string the
+    /// `rename_all = "lowercase"` deserializer above accepts, so a value read
+    /// from a manifest round-trips back to the same word.
+    ///
+    /// `manifest::expose` and `registry::catalog` each carried a private,
+    /// byte-identical copy of this match. Both write the word back out at a
+    /// boundary an author reads — the synthesized agent manifest and the
+    /// registry catalog — so a rename in one copy alone would have silently
+    /// desynchronised the two surfaces from each other and from the parser.
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Lifecycle::Start => "start",
+            Lifecycle::Stop => "stop",
+            Lifecycle::Single => "single",
+        }
+    }
+}
+
 /// Whether a command is a hand-curated workflow verb (`Curated`) or an
 /// auto-generated leaf-level API method (`Reflected`).
 ///

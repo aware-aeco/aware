@@ -16,7 +16,7 @@ use std::io::Read;
 use serde::{Deserialize, Serialize};
 
 use crate::error::AwareError;
-use crate::manifest::agent::{Agent, AgentStatus, Category, Command, Lifecycle, Transport};
+use crate::manifest::agent::{Agent, AgentStatus, Category, Command, Transport};
 use crate::registry::Index;
 use crate::runtime::invoker::dispatch_transport;
 
@@ -182,14 +182,6 @@ fn first_line(s: &str) -> String {
     s.lines().next().unwrap_or("").trim().to_string()
 }
 
-fn lifecycle_str(l: Lifecycle) -> &'static str {
-    match l {
-        Lifecycle::Start => "start",
-        Lifecycle::Stop => "stop",
-        Lifecycle::Single => "single",
-    }
-}
-
 fn category_str(c: Category) -> &'static str {
     match c {
         Category::Curated => "curated",
@@ -238,7 +230,7 @@ fn version_from_agent(a: &Agent) -> CatalogVersion {
         .map(|(name, c): (&String, &Command)| CatalogCommand {
             name: name.clone(),
             description: first_line(&c.description),
-            lifecycle: lifecycle_str(c.lifecycle).to_string(),
+            lifecycle: c.lifecycle.as_str().to_string(),
             category: category_str(a.category_of(c)).to_string(),
             mode: c.mode.map(|m| m.as_str().to_string()),
             method: c.method.clone(),
