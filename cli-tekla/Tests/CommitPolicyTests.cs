@@ -254,6 +254,10 @@ public sealed class CommitPolicyTests
 
         Assert.Contains("gridEnvelope.Evaluate(axisContracts,levelContracts,number(origin[2]))", code);
         Assert.Contains("tekla-grid-axis-extents-expanded", code);
+        Assert.Contains("warning[\"xFamilyStartMm\"]=envelope.XFamilyStartMm", code);
+        Assert.Contains("warning[\"xFamilyEndMm\"]=envelope.XFamilyEndMm", code);
+        Assert.Contains("warning[\"yFamilyStartMm\"]=envelope.YFamilyStartMm", code);
+        Assert.Contains("warning[\"yFamilyEndMm\"]=envelope.YFamilyEndMm", code);
         Assert.Contains("Grid origin/coordinate/label/envelope/magnetism read-back", code);
         Assert.Contains("realizedReferences.TryGetValue(id,out realizedBy)", code);
         Assert.DoesNotContain("nativeById[x.Item3]=g", code);
