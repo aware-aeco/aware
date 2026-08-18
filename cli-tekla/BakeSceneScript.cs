@@ -383,8 +383,6 @@ try {
     foreach(var old in retirementOrder)if(m.SelectModelObject(new Identifier(old.Identifier.GUID))!=null)throw new Exception("prior source-owned object remains after retirement "+old.Identifier.GUID);
     if(!m.CommitChanges("AWARE bake-scene "+sceneName+" "+attemptId))throw new Exception("Tekla CommitChanges returned false");
     if(scenePlaneChanged){if(!scenePlaneHandler.SetCurrentTransformationPlane(previousScenePlane))throw new Exception("failed to restore the user's prior work plane after the committed bake");scenePlaneChanged=false;}
-    warnings.AddRange(gridWarningJournal.PublishAfterCommit());
-
     foreach(var item in supportedOrder){string id=item.Item1;string kind=item.Item2;ModelObject o=null;string realizedBy="";if(nativeById.TryGetValue(id,out o)){}else if(realizedChildren.TryGetValue(id,out realizedBy)||realizedEffects.TryGetValue(id,out realizedBy)||realizedReferences.TryGetValue(id,out realizedBy))nativeById.TryGetValue(realizedBy,out o);if(o==null)throw new Exception(id+": supported record was not classified by the materializer");var r=row(id,kind,"emitted","","");r["nativeGuid"]=o.Identifier.GUID.ToString();if(!String.IsNullOrEmpty(realizedBy))r["realizedBy"]=realizedBy;if(profileById.ContainsKey(id))r["profile"]=profileById[id];emitted.Add(r);}
     Func<IDictionary<string,object>,string> legacyMemberRole=e=>{string role=str(e,"role").ToLowerInvariant();if(String.IsNullOrEmpty(role))role=str(e,"group").ToLowerInvariant();return role;};var legacyMembers=elementById.Values.Where(e=>{string kind=str(e,"kind").ToLowerInvariant();return String.IsNullOrEmpty(kind)||kind=="member"||kind=="line"||kind=="box";}).ToList();int columns=legacyMembers.Count(e=>legacyMemberRole(e)=="column"),beams=legacyMembers.Count(e=>legacyMemberRole(e)!="column"&&legacyMemberRole(e)!="brace");string modelName;try{modelName=m.GetInfo().ModelName;}catch{modelName="Tekla model";}
     int nativeCount=nativeRecordIdByGuid.Count;
@@ -393,6 +391,7 @@ try {
     // the work-plane restore and the classification below can still throw, and the caller would then
     // report a failure Tekla had already called a success — inviting a retry that duplicates parts.
     try{string doneLabel=str(args,"label");int doneMembers=emitted.Count(r=>str(r as IDictionary<string,object>,"kind")=="member");Tekla.Structures.Model.Operations.Operation.DisplayPrompt((String.IsNullOrWhiteSpace(doneLabel)?"":doneLabel+": ")+doneMembers.ToString(inv)+" member"+(doneMembers==1?"":"s")+" added.");}catch{}
+    warnings.AddRange(gridWarningJournal.PublishAfterCommit());
     return new { ok=true,recovered=false,sourceId,sceneHash,materializationHash,attemptId,scene_name=sceneName,model=modelName,created=nativeCount,columns,beams,native=nativeCount,placeholder=0,failed_count=0,skipped=unsupported.Count,profiles=profileById,emitted,failed=new object[0],unsupported,warnings };
 }
 catch(Exception ex){

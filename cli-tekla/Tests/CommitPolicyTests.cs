@@ -263,9 +263,11 @@ public sealed class CommitPolicyTests
         Assert.DoesNotContain("tekla-grid-axis-extents-unsupported", code);
 
         var commit = code.IndexOf("if(!m.CommitChanges(\"AWARE bake-scene", StringComparison.Ordinal);
+        var classifyRecords = code.IndexOf("foreach(var item in supportedOrder){string id=item.Item1;string kind=item.Item2;ModelObject o=null", StringComparison.Ordinal);
         var publishWarnings = code.IndexOf("warnings.AddRange(gridWarningJournal.PublishAfterCommit())", StringComparison.Ordinal);
         Assert.True(commit >= 0);
-        Assert.True(publishWarnings > commit);
+        Assert.True(classifyRecords > commit);
+        Assert.True(publishWarnings > classifyRecords);
     }
 
     [Fact]
