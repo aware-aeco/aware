@@ -53,7 +53,7 @@ public class BakeSceneScriptTests
         var code = BakeSceneScript.Code;
 
         Assert.Contains("profile_plan = supported_row.get(\"profile\")", code);
-        Assert.Contains("geometry_revision != \"rhino-profile-v2\"", code);
+        Assert.Contains("geometry_revision != \"rhino-profile-v3\"", code);
         Assert.Contains("if shape == \"i\":", code);
         Assert.Contains("if shape == \"channel\":", code);
         Assert.Contains("if shape == \"angle\":", code);
@@ -105,7 +105,7 @@ public class BakeSceneScriptTests
         Assert.Equal("AWARE.BAKE.SCENE_HASH", ownership["sceneHashKey"]!.GetValue<string>());
         Assert.Equal("AWARE.BAKE.MARKER", ownership["markerKey"]!.GetValue<string>());
         Assert.Equal("AWARE_BAKE_V2:" + hash, ownership["marker"]!.GetValue<string>());
-        Assert.Equal("rhino-profile-v2", ownership["geometryRevision"]!.GetValue<string>());
+        Assert.Equal("rhino-profile-v3", ownership["geometryRevision"]!.GetValue<string>());
 
         Assert.DoesNotContain(BakeSceneRules.SourceIdKey, BakeSceneScript.Code);
         Assert.DoesNotContain(BakeSceneRules.RecordIdKey, BakeSceneScript.Code);

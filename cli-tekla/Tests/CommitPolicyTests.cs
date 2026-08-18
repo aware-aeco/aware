@@ -180,6 +180,14 @@ public sealed class CommitPolicyTests
     }
 
     [Fact]
+    public void CanonicalTeeAndDoubleAngleNeverSilentlyUseATeklaCatalogProfile()
+    {
+        var code = BakeSceneScript.Code;
+        Assert.Contains("xshape==\"tee\"||xshape==\"double-angle\"", code);
+        Assert.Contains("is explicitly unsupported by the Tekla sink", code);
+    }
+
+    [Fact]
     public void BakeSceneRetiresOnlyNamespacedOwnedObjects()
     {
         Assert.Contains("AWARE_SRC_V1:", BakeSceneScript.Code);

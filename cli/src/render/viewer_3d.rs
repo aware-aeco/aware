@@ -633,7 +633,8 @@ function makeLabel(text,pos,maxDim){
 // Legacy `section` + profile-name inference remains for older producers.
 function shapeOf(e){
   const xs=e&&e.xsection, xshape=xs&&String(xs.shape||'').toLowerCase();
-  if(xshape==='i') return 'I'; if(xshape==='channel') return 'C'; if(xshape==='angle') return 'L';
+  if(xshape==='i') return 'I'; if(xshape==='channel') return 'C'; if(xshape==='angle') return 'L'; if(xshape==='tee') return 'T';
+  if(xshape==='double-angle') return 'DOUBLE_ANGLE';
   if(xshape==='rhs'||xshape==='chs') return xshape.toUpperCase(); if(xshape==='rect') return 'BOX';
   const p=((e.section&&e.section.shape)||(e.meta&&e.meta.profile)||'').toString().toUpperCase().trim();
   if(/^(W|M|S|HP|UC|UB|UKC|UKB|IPE|HE)/.test(p)) return 'I';
@@ -650,6 +651,8 @@ function sectionSpec(e,w,d){ const xs=e&&e.xsection, shape=xs&&String(xs.shape||
   if(shape==='rhs'&&pos(xs.d,xs.b,xs.t)&&2*xs.t<Math.min(xs.d,xs.b))return {kind:'RHS',w:xs.b,d:xs.d,t:xs.t};
   if(shape==='chs'&&pos(xs.od,xs.t)&&2*xs.t<xs.od)return {kind:'CHS',w:xs.od,d:xs.od,t:xs.t};
   if(shape==='rect'&&pos(xs.w,xs.d))return {kind:'BOX',w:xs.w,d:xs.d};
+  if(shape==='tee'&&pos(xs.d,xs.bf,xs.tw,xs.tf)&&xs.tw<xs.bf&&xs.tf<xs.d)return {kind:'T',w:xs.bf,d:xs.d,tw:xs.tw,tf:xs.tf};
+  if(shape==='double-angle'&&pos(xs.d,xs.b,xs.t,xs.gap)&&xs.t<Math.min(xs.d,xs.b)&&(xs.orientation==='llbb'||xs.orientation==='slbb'))return xs.orientation==='llbb'?{kind:'DA_LLBB',w:2*xs.b+xs.gap,d:xs.d,t:xs.t,gap:xs.gap}:{kind:'DA_SLBB',w:xs.b,d:2*xs.d+xs.gap,t:xs.t,gap:xs.gap};
   return {kind:shapeOf(e),w,d}; }
 function profileShape(spec){ const kind=spec.kind,w=spec.w,d=spec.d;
   const s=new THREE.Shape(), hw=w/2, hd=d/2;
@@ -662,6 +665,15 @@ function profileShape(spec){ const kind=spec.kind,w=spec.w,d=spec.d;
     s.lineTo(-hw+tw,hd-tf); s.lineTo(hw,hd-tf); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath();
   } else if(kind==='L'){ const t=spec.t||Math.max(Math.min(w,d)*0.18,5);
     s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,-hd+t); s.lineTo(-hw+t,-hd+t); s.lineTo(-hw+t,hd); s.lineTo(-hw,hd); s.closePath();
+  } else if(kind==='T'){ const tf=spec.tf||Math.max(d*0.10,5),tw=spec.tw||Math.max(w*0.12,5);
+    s.moveTo(-tw/2,-hd); s.lineTo(tw/2,-hd); s.lineTo(tw/2,hd-tf); s.lineTo(hw,hd-tf);
+    s.lineTo(hw,hd); s.lineTo(-hw,hd); s.lineTo(-hw,hd-tf); s.lineTo(-tw/2,hd-tf); s.closePath();
+  } else if(kind==='DA_LLBB'){ const t=spec.t,g=spec.gap,a=new THREE.Shape(),b=new THREE.Shape();
+    a.moveTo(-g/2-t,-hd); a.lineTo(-g/2,-hd); a.lineTo(-g/2,hd); a.lineTo(-g/2-t,hd); a.lineTo(-g/2-t,-hd+t); a.lineTo(-hw,-hd+t); a.lineTo(-hw,-hd); a.closePath();
+    b.moveTo(g/2,-hd); b.lineTo(g/2+t,-hd); b.lineTo(g/2+t,hd); b.lineTo(g/2,hd); b.lineTo(g/2,-hd+t); b.lineTo(hw,-hd+t); b.lineTo(hw,-hd); b.closePath(); return [a,b];
+  } else if(kind==='DA_SLBB'){ const t=spec.t,g=spec.gap,a=new THREE.Shape(),b=new THREE.Shape();
+    a.moveTo(-hw,-hd); a.lineTo(-hw+t,-hd); a.lineTo(-hw+t,-g/2-t); a.lineTo(hw,-g/2-t); a.lineTo(hw,-g/2); a.lineTo(-hw,-g/2); a.closePath();
+    b.moveTo(hw,hd); b.lineTo(hw-t,hd); b.lineTo(hw-t,g/2+t); b.lineTo(-hw,g/2+t); b.lineTo(-hw,g/2); b.lineTo(hw,g/2); b.closePath(); return [a,b];
   } else if(kind==='TUBE'||kind==='RHS'){ const t=spec.t||Math.max(Math.min(w,d)*0.12,4);
     s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath();
     const h=new THREE.Path(); h.moveTo(-hw+t,-hd+t); h.lineTo(hw-t,-hd+t); h.lineTo(hw-t,hd-t); h.lineTo(-hw+t,hd-t); h.closePath(); s.holes.push(h);
@@ -2376,6 +2388,19 @@ fn validate_member_xsection(
     let dimension =
         |name: &str| positive_number(section.get(name), &format!("{section_path}.{name}"));
     let invalid = |message: &str| Err(scene_error(&section_path, message));
+    let envelope = |expected_w: f64, expected_d: f64| {
+        let source = object
+            .get("section")
+            .and_then(Value::as_object)
+            .ok_or_else(|| scene_error(&format!("{path}.section"), "must be an object"))?;
+        let w = positive_number(source.get("w"), &format!("{path}.section.w"))?;
+        let d = positive_number(source.get("d"), &format!("{path}.section.d"))?;
+        let tolerance = 1.0e-6_f64.max(1.0e-9 * expected_w.abs().max(expected_d.abs()));
+        if (w - expected_w).abs() > tolerance || (d - expected_d).abs() > tolerance {
+            return invalid("dimensions must match the member section envelope");
+        }
+        Ok(())
+    };
     match shape {
         "i" | "channel" => {
             let d = dimension("d")?;
@@ -2413,7 +2438,35 @@ fn validate_member_xsection(
             dimension("w")?;
             dimension("d")?;
         }
-        _ => return invalid("shape must be one of i, channel, angle, rhs, chs, or rect"),
+        "tee" => {
+            let d = dimension("d")?;
+            let bf = dimension("bf")?;
+            let tw = dimension("tw")?;
+            let tf = dimension("tf")?;
+            if tw >= bf || tf >= d {
+                return invalid("must have tw < bf and tf < d");
+            }
+            envelope(bf, d)?;
+        }
+        "double-angle" => {
+            let d = dimension("d")?;
+            let b = dimension("b")?;
+            let t = dimension("t")?;
+            let gap = dimension("gap")?;
+            if t >= d.min(b) {
+                return invalid("must have t < min(d,b)");
+            }
+            match section.get("orientation").and_then(Value::as_str) {
+                Some("llbb") => envelope(2.0 * b + gap, d)?,
+                Some("slbb") => envelope(b, 2.0 * d + gap)?,
+                _ => return invalid("orientation must be exactly llbb or slbb"),
+            }
+        }
+        _ => {
+            return invalid(
+                "shape must be one of i, channel, angle, rhs, chs, rect, tee, or double-angle",
+            );
+        }
     }
     Ok(())
 }
@@ -3871,6 +3924,39 @@ mod tests {
                 .to_string();
             assert!(error.contains("xsection"), "{error}");
         }
+    }
+
+    #[test]
+    fn renders_tee_and_both_double_angle_orientations_from_exact_envelopes() {
+        for xsection in [
+            json!({"shape":"tee","d":300,"bf":200,"tw":10,"tf":20}),
+            json!({"shape":"double-angle","d":150,"b":100,"t":10,"gap":12,"orientation":"llbb"}),
+            json!({"shape":"double-angle","d":150,"b":100,"t":10,"gap":12,"orientation":"slbb"}),
+        ] {
+            let (w, d) = match xsection["orientation"].as_str() {
+                Some("llbb") => (212, 150),
+                Some("slbb") => (100, 312),
+                _ => (200, 300),
+            };
+            let scene = json!({ "meta": { "units": "mm" }, "elements": [{
+                "id":"M", "kind":"member", "from":[0,0,0], "to":[1000,0,0],
+                "section":{"w":w,"d":d}, "xsection":xsection
+            }]});
+            let output = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
+            let html = output["html"].as_str().unwrap();
+            assert!(html.contains("shape==='tee'"));
+            assert!(html.contains("DA_LLBB"));
+        }
+    }
+
+    #[test]
+    fn rejects_double_angle_with_an_incorrect_envelope_or_orientation() {
+        let mut scene = rolled_member("z", json!(0));
+        scene["elements"][0]["xsection"] = json!({
+            "shape":"double-angle","d":150,"b":100,"t":10,"gap":12,"orientation":"llbb"
+        });
+        scene["elements"][0]["section"] = json!({"w":200,"d":150});
+        assert!(viewer_3d_render(&json!({ "scene": scene }), true).is_err());
     }
 
     #[test]

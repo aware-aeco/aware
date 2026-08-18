@@ -104,7 +104,7 @@ if str(ownership.get("sourceId")) != source_id:
 
 marker = str(ownership["marker"])
 geometry_revision = str(ownership["geometryRevision"])
-if geometry_revision != "rhino-profile-v2" or re.fullmatch(
+if geometry_revision != "rhino-profile-v3" or re.fullmatch(
         r"AWARE_BAKE_V2:[0-9a-f]{64}", marker) is None:
     return envelope(False, [], [
         row("scene", "scene", "failed", "invalid-ownership",
