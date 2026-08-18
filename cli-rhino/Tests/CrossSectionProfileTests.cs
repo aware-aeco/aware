@@ -14,6 +14,7 @@ public class CrossSectionProfileTests
         { """{"shape":"rhs","d":300,"b":200,"t":10}""", 200, 300, "rhs", 9600, 2 },
         { """{"shape":"chs","od":200,"t":10}""", 200, 200, "chs", Math.PI * 1900, 2 },
         { """{"shape":"rect","w":200,"d":300}""", 200, 300, "rect", 60000, 1 },
+        { """{"shape":"tee","d":300,"bf":200,"tw":10,"tf":20}""", 200, 300, "tee", 6800, 1 },
     };
 
     [Theory]
@@ -32,7 +33,7 @@ public class CrossSectionProfileTests
         Assert.Equal(profiles, result.Profile.ProfileCount);
         Assert.All(result.Profile.Residuals, value => Assert.True(value > 0));
         var normalized = result.Profile.ToJson();
-        Assert.Equal("rhino-profile-v2", normalized["revision"]!.GetValue<string>());
+        Assert.Equal("rhino-profile-v3", normalized["revision"]!.GetValue<string>());
         Assert.Equal(2, normalized["capCount"]!.GetValue<int>());
     }
 
@@ -102,6 +103,28 @@ public class CrossSectionProfileTests
         var result = CrossSectionProfile.Decode(
             new JsonObject { ["xsection"] = xsection }, 200, 300);
         Assert.False(result.Ok);
+    }
+
+    [Theory]
+    [InlineData("""{"shape":"tee","d":300,"bf":200,"tw":200,"tf":20}""")]
+    [InlineData("""{"shape":"tee","d":300,"bf":200,"tw":10,"tf":300}""")]
+    public void TeeTopologyBoundaryDegeneracyIsRejected(string xsection)
+    {
+        var result = CrossSectionProfile.Decode(
+            new JsonObject { ["xsection"] = JsonNode.Parse(xsection) }, 200, 300);
+        Assert.False(result.Ok);
+    }
+
+    [Fact]
+    public void DoubleAngleIsRecognizedAndExplicitlyUnsupported()
+    {
+        var result = CrossSectionProfile.Decode(new JsonObject
+        {
+            ["xsection"] = JsonNode.Parse(
+                """{"shape":"double-angle","d":150,"b":100,"t":10,"orientation":"llbb","gap":12}""")
+        }, 212, 150);
+        Assert.False(result.Ok);
+        Assert.Contains("explicitly unsupported", result.Error!);
     }
 
     [Theory]

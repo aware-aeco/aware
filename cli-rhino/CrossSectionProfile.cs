@@ -10,7 +10,7 @@ namespace AwareRhino;
 /// </summary>
 internal static class CrossSectionProfile
 {
-    internal const string GeometryRevision = "rhino-profile-v2";
+    internal const string GeometryRevision = "rhino-profile-v3";
 
     internal sealed record Plan(
         string Shape,
@@ -59,8 +59,8 @@ internal static class CrossSectionProfile
         if (element["xsection"] is not JsonObject xs)
             return Fail("xsection, when present, must be an object");
         if (!StrictString(xs["shape"], out var shape)
-            || shape is not ("i" or "channel" or "angle" or "rhs" or "chs" or "rect"))
-            return Fail("xsection.shape must be exactly one of i|channel|angle|rhs|chs|rect");
+            || shape is not ("i" or "channel" or "angle" or "rhs" or "chs" or "rect" or "tee" or "double-angle"))
+            return Fail("xsection.shape must be exactly one of i|channel|angle|rhs|chs|rect|tee|double-angle");
 
         return shape switch
         {
@@ -70,6 +70,8 @@ internal static class CrossSectionProfile
             "rhs" => DecodeRhs(xs, sectionWidth, sectionDepth),
             "chs" => DecodeChs(xs, sectionWidth, sectionDepth),
             "rect" => DecodeRect(xs, sectionWidth, sectionDepth),
+            "tee" => DecodeTee(xs, sectionWidth, sectionDepth),
+            "double-angle" => Fail("xsection double-angle is canonical but explicitly unsupported by the Rhino sink"),
             _ => Fail("unsupported xsection.shape"),
         };
     }
@@ -175,6 +177,26 @@ internal static class CrossSectionProfile
         return !Matches(v["w"], w) || !Matches(v["d"], d)
             ? Fail("xsection rect {w,d} must match section {w,d}")
             : Success(Rect(w, d));
+    }
+
+    static DecodeResult DecodeTee(JsonObject xs, double w, double d)
+    {
+        if (!Dimensions(xs, ["d", "bf", "tw", "tf"], out var v, out var error))
+            return Fail(error);
+        if (!Matches(v["bf"], w) || !Matches(v["d"], d))
+            return Fail("xsection tee {bf,d} must match section {w,d}");
+        var tw = v["tw"];
+        var tf = v["tf"];
+        if (!(tw < w) || !(tf < d))
+            return Fail("xsection tee requires tw < bf and tf < d");
+        var points = new[]
+        {
+            (-tw / 2, -d / 2), (tw / 2, -d / 2), (tw / 2, d / 2 - tf),
+            (w / 2, d / 2 - tf), (w / 2, d / 2), (-w / 2, d / 2),
+            (-w / 2, d / 2 - tf), (-tw / 2, d / 2 - tf),
+        };
+        return Success(new Plan("tee", w, d, v, [tw, tf, (w - tw) / 2, d - tf],
+            w * tf + (d - tf) * tw, PolygonPerimeter(points), 1));
     }
 
     static Plan Rect(double w, double d)

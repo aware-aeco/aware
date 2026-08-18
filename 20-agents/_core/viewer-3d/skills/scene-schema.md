@@ -47,7 +47,9 @@ Legacy primitives remain supported:
 ```text
 {shape:"i",d,bf,tw,tf} | {shape:"channel",d,bf,tw,tf} |
 {shape:"angle",d,b,t} | {shape:"rhs",d,b,t} |
-{shape:"chs",od,t} | {shape:"rect",w,d}
+{shape:"chs",od,t} | {shape:"rect",w,d} |
+{shape:"tee",d,bf,tw,tf} |
+{shape:"double-angle",d,b,t,gap,orientation:"llbb"|"slbb"}
 ```
 
 Every discriminant and field name is exact and lowercase. `channel` uses
@@ -56,6 +58,16 @@ with `section.{w,d}`; thickness dimensions must be positive and leave a
 non-degenerate web, flange, leg, or void. Consumers that promise nominal
 profiles fail a present malformed descriptor rather than guessing thickness.
 An absent descriptor remains the legacy rectangular member envelope.
+
+`tee` has a top flange (`bf` × `tf`) and a centred web of thickness `tw`; its
+envelope is `{w:bf,d:d}`. `double-angle` describes two identical sharp-corner
+angles. `orientation:"llbb"` places their long (`d`) legs back-to-back, so its
+envelope is `{w:2*b+gap,d:d}`. `orientation:"slbb"` places their short (`b`)
+legs back-to-back, so its envelope is `{w:b,d:2*d+gap}`. `gap` is the clear,
+positive separation between the facing legs. All fields and orientation values
+are exact lowercase tokens. A sink that cannot materialize the disconnected
+double-angle geometry must report it as explicitly unsupported; it must never
+silently substitute a different section.
 
 `rot` is optional and is applicable only to physical `member`, `line`, and `box` records. When
 present it must be a finite JSON number of degrees: positive is right-handed about the directed

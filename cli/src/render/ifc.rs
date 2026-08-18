@@ -4,7 +4,7 @@
 //! (members as `from`->`to` axes with an optional parametric cross-section + a `group`) and emits an
 //! IFC4 STEP (SPF) document — IfcColumn/IfcBeam/IfcMember as extruded profiles placed on the member
 //! axis, under an IfcProject -> IfcSite -> IfcBuilding -> IfcBuildingStorey spine. Each element may
-//! carry an `xsection` (i/channel/angle/rhs/chs/rect) → the matching parametric IfcProfileDef; a
+//! carry an `xsection` (i/channel/angle/rhs/chs/rect/tee/double-angle) → the matching parametric IfcProfileDef; a
 //! neutral `role` → the element type; a `material` → an IfcMaterial association; and its `group`'s
 //! colour → an IfcStyledItem. A `kind:"mesh"` element (tessellated `positions`+`indices`) is written
 //! as an IfcTriangulatedFaceSet on an IfcBuildingElementProxy. The writer stays GENERIC: it applies
@@ -245,6 +245,10 @@ fn emit_profile(
         Some(_) => return (rect(spf, w, d), bad("xsection is not an object")),
     };
     let f = |k: &str| pos(xs.get(k));
+    let envelope = |ww: f64, dd: f64| {
+        let tolerance = 1.0e-6_f64.max(1.0e-9 * ww.abs().max(dd.abs()));
+        (w - ww).abs() <= tolerance && (d - dd).abs() <= tolerance
+    };
     match xs.get("shape").and_then(Value::as_str).unwrap_or("") {
         "i" | "channel" => {
             let (d0, bf, tw, tf) = (f("d"), f("bf"), f("tw"), f("tf"));
@@ -336,6 +340,55 @@ fn emit_profile(
             let ww = f("w").unwrap_or(w);
             let dd = f("d").unwrap_or(d);
             (rect(spf, ww, dd), None)
+        }
+        "tee" => {
+            if let (Some(d0), Some(bf), Some(tw), Some(tf)) = (f("d"), f("bf"), f("tw"), f("tf"))
+                && tw < bf
+                && tf < d0
+                && envelope(bf, d0)
+            {
+                // IfcTShapeProfileDef(_,_,Position,Depth,FlangeWidth,WebThickness,FlangeThickness,
+                // Fillet,FlangeEdge,WebEdge,WebSlope,FlangeSlope)
+                return (
+                    spf.emit(&format!(
+                        "IFCTSHAPEPROFILEDEF(.AREA.,{},#{pos2d},{},{},{},{},$,$,$,$,$)",
+                        s_lit(name),
+                        r(d0),
+                        r(bf),
+                        r(tw),
+                        r(tf)
+                    )),
+                    None,
+                );
+            }
+            (rect(spf, w, d), bad("invalid tee dims or envelope"))
+        }
+        "double-angle" => {
+            let valid = if let (Some(d0), Some(b), Some(t), Some(gap)) =
+                (f("d"), f("b"), f("t"), f("gap"))
+            {
+                t < d0.min(b)
+                    && match xs.get("orientation").and_then(Value::as_str) {
+                        Some("llbb") => envelope(2.0 * b + gap, d0),
+                        Some("slbb") => envelope(b, 2.0 * d0 + gap),
+                        _ => false,
+                    }
+            } else {
+                false
+            };
+            if valid {
+                // IFC export deliberately declines a disconnected two-profile section until its
+                // IfcCompositeProfileDef placement contract is implemented and tested.
+                (
+                    rect(spf, w, d),
+                    bad("double-angle is explicitly unsupported by the IFC sink"),
+                )
+            } else {
+                (
+                    rect(spf, w, d),
+                    bad("invalid double-angle dims, orientation, or envelope"),
+                )
+            }
         }
         other => (
             rect(spf, w, d),
@@ -3371,6 +3424,25 @@ mod tests {
                 .doc
                 .contains("IFCCIRCLEHOLLOWPROFILEDEF(")
         );
+        let tee = json!({ "meta": { "name": "x" }, "elements": [{
+            "id":"tee", "from":[0,0,0], "to":[3000,0,0],
+            "section":{"w":200,"d":300}, "xsection":{"shape":"tee","d":300,"bf":200,"tw":10,"tf":20}
+        }]});
+        assert!(build_ifc(&tee).doc.contains("IFCTSHAPEPROFILEDEF("));
+    }
+
+    #[test]
+    fn double_angle_is_explicitly_unsupported_in_ifc() {
+        let scene = json!({ "meta": { "name": "x" }, "elements": [{
+            "id":"2L", "from":[0,0,0], "to":[3000,0,0],
+            "section":{"w":212,"d":150}, "xsection":{
+                "shape":"double-angle","d":150,"b":100,"t":10,"gap":12,"orientation":"llbb"
+            }
+        }]});
+        let result = build_ifc(&scene);
+        assert!(result.doc.contains("IFCRECTANGLEPROFILEDEF("));
+        assert_eq!(result.warnings.len(), 1);
+        assert!(result.warnings[0].1.contains("explicitly unsupported"));
     }
 
     #[test]
