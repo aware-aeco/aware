@@ -87,16 +87,48 @@ public sealed class TeklaGridEnvelopeResult
 
 public sealed class GridChildRealizationContract
 {
-    public GridChildRealizationContract(string id, string kind, string realizedBy)
+    public GridChildRealizationContract(
+        string id,
+        string kind,
+        string realizedBy,
+        string family,
+        string nativeLabel,
+        double offsetMm)
     {
         Id = id;
         Kind = kind;
         RealizedBy = realizedBy;
+        Family = family;
+        NativeLabel = nativeLabel;
+        OffsetMm = offsetMm;
     }
 
     public string Id { get; }
     public string Kind { get; }
     public string RealizedBy { get; }
+    public string Family { get; }
+    public string NativeLabel { get; }
+    public double OffsetMm { get; }
+}
+
+public sealed class GridLabelTokenMapping
+{
+    public GridLabelTokenMapping(
+        string id,
+        string family,
+        string authoredLabel,
+        string nativeLabel)
+    {
+        Id = id;
+        Family = family;
+        AuthoredLabel = authoredLabel;
+        NativeLabel = nativeLabel;
+    }
+
+    public string Id { get; }
+    public string Family { get; }
+    public string AuthoredLabel { get; }
+    public string NativeLabel { get; }
 }
 
 /// <summary>
@@ -123,7 +155,8 @@ public sealed class TeklaGridMaterializationPlan
         double extensionRightX,
         double extensionLeftY,
         double extensionRightY,
-        IReadOnlyList<GridChildRealizationContract> children)
+        IReadOnlyList<GridChildRealizationContract> children,
+        IReadOnlyList<GridLabelTokenMapping> labelTokenMappings)
     {
         GridId = gridId;
         Envelope = envelope;
@@ -142,6 +175,7 @@ public sealed class TeklaGridMaterializationPlan
         ExtensionLeftY = extensionLeftY;
         ExtensionRightY = extensionRightY;
         Children = children;
+        LabelTokenMappings = labelTokenMappings;
     }
 
     public string GridId { get; }
@@ -161,6 +195,7 @@ public sealed class TeklaGridMaterializationPlan
     public double ExtensionLeftY { get; }
     public double ExtensionRightY { get; }
     public IReadOnlyList<GridChildRealizationContract> Children { get; }
+    public IReadOnlyList<GridLabelTokenMapping> LabelTokenMappings { get; }
 
     public Dictionary<string, object>? CreateExpansionWarning()
     {
@@ -176,6 +211,27 @@ public sealed class TeklaGridMaterializationPlan
             ["xFamilyEndMm"] = Envelope.XFamilyEndMm,
             ["yFamilyStartMm"] = Envelope.YFamilyStartMm,
             ["yFamilyEndMm"] = Envelope.YFamilyEndMm,
+        };
+    }
+
+    public Dictionary<string, object>? CreateLabelTokenWarning()
+    {
+        if (LabelTokenMappings.Count == 0) return null;
+        return new Dictionary<string, object>(StringComparer.Ordinal)
+        {
+            ["id"] = GridId,
+            ["kind"] = "structural-grid",
+            ["status"] = "warning",
+            ["code"] = "tekla-grid-label-tokenized",
+            ["message"] = "Tekla's parent Grid label grammar cannot carry spaces, so multi-word axis or elevation labels were mapped to deterministic native tokens.",
+            ["mappings"] = LabelTokenMappings.Select(mapping =>
+                (object)new Dictionary<string, object>(StringComparer.Ordinal)
+                {
+                    ["id"] = mapping.Id,
+                    ["family"] = mapping.Family,
+                    ["authoredLabel"] = mapping.AuthoredLabel,
+                    ["nativeLabel"] = mapping.NativeLabel,
+                }).ToArray(),
         };
     }
 }
@@ -215,11 +271,27 @@ public sealed class TeklaGridEnvelopeContract
 {
     const double DuplicateToleranceMm = 1e-9;
     const double ExpansionToleranceMm = 1e-9;
+    const int WorkaroundLabelMaxUtf16CodeUnits = 40;
+
+    sealed class LabelAllocation
+    {
+        internal LabelAllocation(
+            IReadOnlyDictionary<string, string> nativeLabels,
+            IReadOnlyList<GridLabelTokenMapping> mappings)
+        {
+            NativeLabels = nativeLabels;
+            Mappings = mappings;
+        }
+
+        internal IReadOnlyDictionary<string, string> NativeLabels { get; }
+        internal IReadOnlyList<GridLabelTokenMapping> Mappings { get; }
+    }
 
     public TeklaGridEnvelopeResult Evaluate(
         IReadOnlyList<GridAxisExtentContract> axes,
         IReadOnlyList<GridLevelContract> levels,
-        double originZMm)
+        double originZMm,
+        string resolvedHostVersion)
     {
         if (axes is null) throw new ArgumentNullException(nameof(axes));
         if (levels is null) throw new ArgumentNullException(nameof(levels));
@@ -232,11 +304,10 @@ public sealed class TeklaGridEnvelopeContract
                 "tekla-grid-single-family-unsupported",
                 "Tekla native Grid requires both X and Y axis families.");
 
-        if (axes.Any(axis => !IsLabelToken(axis.Label))
-            || levels.Any(level => !IsLabelToken(level.Label)))
+        if (!TryAllocateLabels(axes, levels, resolvedHostVersion, out _))
             return Unsupported(
                 "tekla-grid-label-token-unsupported",
-                "Tekla native Grid requires every axis and level label to be one whitespace-free token.");
+                "Tekla native Grid requires each label to be one token; resolved Tekla 2026 additionally supports exactly two control-free tokens separated by one ASCII space through a deterministic native-token mapping of at most 40 UTF-16 code units.");
 
         if (HasDuplicate(xs.Select(axis => axis.OffsetMm))
             || HasDuplicate(ys.Select(axis => axis.OffsetMm)))
@@ -302,19 +373,27 @@ public sealed class TeklaGridEnvelopeContract
         string gridId,
         IReadOnlyList<GridAxisExtentContract> axes,
         IReadOnlyList<GridLevelContract> levels,
-        double originZMm)
+        double originZMm,
+        string resolvedHostVersion)
     {
         if (string.IsNullOrWhiteSpace(gridId)) throw new ArgumentException("Grid id is required.", nameof(gridId));
-        var envelope = Evaluate(axes, levels, originZMm);
+        var envelope = Evaluate(axes, levels, originZMm, resolvedHostVersion);
         if (!envelope.IsSupported)
             throw new InvalidOperationException($"{envelope.Code}: {envelope.Message}");
+
+        if (!TryAllocateLabels(axes, levels, resolvedHostVersion, out var allocation))
+            throw new InvalidOperationException("Grid label allocation changed after successful evaluation.");
 
         var xs = axes.Where(axis => axis.Direction == "x").OrderBy(axis => axis.OffsetMm).ToList();
         var ys = axes.Where(axis => axis.Direction == "y").OrderBy(axis => axis.OffsetMm).ToList();
         var zs = levels.OrderBy(level => level.ElevationMm).ToList();
-        var children = axes
-            .Select(axis => new GridChildRealizationContract(axis.Id, "grid-axis", gridId))
-            .Concat(levels.Select(level => new GridChildRealizationContract(level.Id, "grid-level", gridId)))
+        var children = xs
+            .Select(axis => new GridChildRealizationContract(
+                axis.Id, "grid-axis", gridId, "x", allocation.NativeLabels[axis.Id], axis.OffsetMm))
+            .Concat(ys.Select(axis => new GridChildRealizationContract(
+                axis.Id, "grid-axis", gridId, "y", allocation.NativeLabels[axis.Id], axis.OffsetMm)))
+            .Concat(zs.Select(level => new GridChildRealizationContract(
+                level.Id, "grid-level", gridId, "z", allocation.NativeLabels[level.Id], level.ElevationMm - originZMm)))
             .ToArray();
 
         return new TeklaGridMaterializationPlan(
@@ -323,9 +402,9 @@ public sealed class TeklaGridEnvelopeContract
             Spacing(xs.Select(axis => axis.OffsetMm)),
             Spacing(ys.Select(axis => axis.OffsetMm)),
             Spacing(zs.Select(level => level.ElevationMm - originZMm)),
-            string.Join(" ", xs.Select(axis => axis.Label)),
-            string.Join(" ", ys.Select(axis => axis.Label)),
-            string.Join(" ", zs.Select(level => level.Label)),
+            string.Join(" ", xs.Select(axis => allocation.NativeLabels[axis.Id])),
+            string.Join(" ", ys.Select(axis => allocation.NativeLabels[axis.Id])),
+            string.Join(" ", zs.Select(level => allocation.NativeLabels[level.Id])),
             xs[0].OffsetMm,
             xs[xs.Count - 1].OffsetMm,
             ys[0].OffsetMm,
@@ -334,7 +413,8 @@ public sealed class TeklaGridEnvelopeContract
             envelope.XFamilyEndMm - ys[ys.Count - 1].OffsetMm,
             xs[0].OffsetMm - envelope.YFamilyStartMm,
             envelope.YFamilyEndMm - xs[xs.Count - 1].OffsetMm,
-            children);
+            children,
+            allocation.Mappings);
     }
 
     public IReadOnlyList<Dictionary<string, object>> CreateUnsupportedRows(
@@ -372,8 +452,86 @@ public sealed class TeklaGridEnvelopeContract
         return false;
     }
 
-    static bool IsLabelToken(string label) =>
-        !string.IsNullOrEmpty(label) && !label.Any(char.IsWhiteSpace);
+    static bool TryAllocateLabels(
+        IReadOnlyList<GridAxisExtentContract> axes,
+        IReadOnlyList<GridLevelContract> levels,
+        string resolvedHostVersion,
+        out LabelAllocation allocation)
+    {
+        var orderedFamilies = new[]
+        {
+            axes.Where(axis => axis.Direction == "x").OrderBy(axis => axis.OffsetMm)
+                .Select(axis => (axis.Id, Family: "x", axis.Label)).ToArray(),
+            axes.Where(axis => axis.Direction == "y").OrderBy(axis => axis.OffsetMm)
+                .Select(axis => (axis.Id, Family: "y", axis.Label)).ToArray(),
+            levels.OrderBy(level => level.ElevationMm)
+                .Select(level => (level.Id, Family: "z", level.Label)).ToArray(),
+        };
+        var nativeLabels = new Dictionary<string, string>(StringComparer.Ordinal);
+        var mappings = new List<GridLabelTokenMapping>();
+        var supportsTwoTokenMapping = resolvedHostVersion?.StartsWith("2026.", StringComparison.Ordinal) == true;
+
+        foreach (var family in orderedFamilies)
+        {
+            var reserved = new HashSet<string>(
+                family.Where(item => IsExactLabelToken(item.Label)).Select(item => item.Label),
+                StringComparer.Ordinal);
+
+            for (var position = 0; position < family.Length; position++)
+            {
+                var item = family[position];
+                if (IsExactLabelToken(item.Label))
+                {
+                    nativeLabels[item.Id] = item.Label;
+                    continue;
+                }
+                if (!supportsTwoTokenMapping || !IsSupportedTwoTokenLabel(item.Label))
+                {
+                    allocation = null!;
+                    return false;
+                }
+
+                var candidate = item.Label.Replace(' ', '_');
+                if (candidate.Length > WorkaroundLabelMaxUtf16CodeUnits)
+                {
+                    allocation = null!;
+                    return false;
+                }
+                for (var attempt = 0; !reserved.Add(candidate); attempt++)
+                {
+                    var suffix = $"~{position + 1}-{attempt + 1}";
+                    candidate = item.Label.Replace(' ', '_') + suffix;
+                    if (candidate.Length > WorkaroundLabelMaxUtf16CodeUnits)
+                    {
+                        allocation = null!;
+                        return false;
+                    }
+                }
+                nativeLabels[item.Id] = candidate;
+                mappings.Add(new GridLabelTokenMapping(item.Id, item.Family, item.Label, candidate));
+            }
+        }
+
+        allocation = new LabelAllocation(nativeLabels, mappings);
+        return true;
+    }
+
+    static bool IsExactLabelToken(string label) =>
+        !string.IsNullOrEmpty(label)
+        && !label.Any(char.IsWhiteSpace)
+        && !label.Any(char.IsControl);
+
+    static bool IsSupportedTwoTokenLabel(string label)
+    {
+        if (string.IsNullOrEmpty(label)
+            || label.Length > WorkaroundLabelMaxUtf16CodeUnits
+            || label.Any(char.IsControl)
+            || label.Count(character => character == ' ') != 1
+            || label.Any(character => character != ' ' && char.IsWhiteSpace(character)))
+            return false;
+        var separator = label.IndexOf(' ');
+        return separator > 0 && separator < label.Length - 1;
+    }
 
     static bool IsFinite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
 

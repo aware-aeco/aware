@@ -106,7 +106,13 @@ coordinate spans. It verifies the native origin, coordinates, labels, extensions
 levels, and magnetic flag before replacing a prior source-owned grid. A lossy
 native expansion is explicit in `warnings` as
 `tekla-grid-axis-extents-expanded`; axes and levels share the parent Grid GUID
-through `realizedBy` rather than becoming duplicate native objects.
+through `realizedBy` rather than becoming duplicate native objects. Tekla 2026
+grids with a two-word label such as `2nd Floor` remain one native `Grid`: the
+bridge writes all elevations into that parent's `CoordinateZ`/`LabelZ`, maps the
+space to a deterministic native token (`2nd_Floor`), and reports the exact
+authored-to-native mapping as `tekla-grid-label-tokenized`. Tekla-generated
+`GridPlane` children are inspected read-only; the bridge never creates or edits
+one plane per elevation.
 
 ## Drill
 

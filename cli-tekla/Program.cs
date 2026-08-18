@@ -1591,7 +1591,7 @@ internal static class Program
         return true;
     }
 
-    internal const string BakeMaterializerIdentity = "tekla-connection-materializer-v3";
+    internal const string BakeMaterializerIdentity = "tekla-connection-materializer-v4";
 
     internal static string ComputeBakeMaterializationHash(JsonNode scene, string? version)
     {
@@ -1602,6 +1602,16 @@ internal static class Program
         using var sha = System.Security.Cryptography.SHA256.Create();
         var digest = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(payload));
         return string.Concat(digest.Select(b => b.ToString("x2", System.Globalization.CultureInfo.InvariantCulture)));
+    }
+
+    internal static void ApplyResolvedBakeContext(JsonObject argsNode, JsonNode scene, string? hostVersion)
+    {
+        if (argsNode is null) throw new ArgumentNullException(nameof(argsNode));
+        if (scene is null) throw new ArgumentNullException(nameof(scene));
+        // These values are host-resolved capabilities, never caller claims. Always
+        // overwrite an existing field before the Roslyn trust boundary.
+        argsNode["resolvedHostVersion"] = hostVersion ?? string.Empty;
+        argsNode["materializationHash"] = ComputeBakeMaterializationHash(scene, hostVersion);
     }
 
     internal enum ScriptCommitPolicy
@@ -1691,7 +1701,7 @@ internal static class Program
             // Hash against the resolved running host version, not the caller's stale
             // request. The canonical scene includes every requested profile/operation/
             // grid input, so exact Insert/read-back selects one deterministic result.
-            argsNode["materializationHash"] = ComputeBakeMaterializationHash(bakeScene, hostVersion);
+            ApplyResolvedBakeContext(argsNode, bakeScene, hostVersion);
         }
 
         // Resolve the Tekla install dir for the version we'll connect to (the running instance

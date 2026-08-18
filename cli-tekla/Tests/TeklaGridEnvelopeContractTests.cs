@@ -24,7 +24,8 @@ public sealed class TeklaGridEnvelopeContractTests
                 Axis("Y-2", "y", 3000, "2", 0, 6000),
             },
             Levels(),
-            0);
+            0,
+            "2026.0");
 
         Assert.True(result.IsSupported);
         Assert.False(result.ExpandsAuthoredExtents);
@@ -46,7 +47,8 @@ public sealed class TeklaGridEnvelopeContractTests
                 Axis("Y-2", "y", 3000, "2", -250, 6250),
             },
             Levels(),
-            0);
+            0,
+            "2026.0");
 
         Assert.True(result.IsSupported);
         Assert.True(result.ExpandsAuthoredExtents);
@@ -72,7 +74,7 @@ public sealed class TeklaGridEnvelopeContractTests
             new GridLevelContract("Z-0", 1000, "+0"),
         };
 
-        var plan = _contract.CreatePlan("GRID-1", axes, levels, 1000);
+        var plan = _contract.CreatePlan("GRID-1", axes, levels, 1000, "2026.0");
 
         Assert.Equal("0 6000", plan.CoordinateX);
         Assert.Equal("0 3000", plan.CoordinateY);
@@ -86,11 +88,154 @@ public sealed class TeklaGridEnvelopeContractTests
         Assert.Equal(500, plan.ExtensionRightY);
         Assert.Equal(6, plan.Children.Count);
         Assert.Equal(
-            new[] { "Y-2", "X-B", "Y-1", "X-A", "Z-3000", "Z-0" },
+            new[] { "X-A", "X-B", "Y-1", "Y-2", "Z-0", "Z-3000" },
             plan.Children.Select(child => child.Id));
         Assert.All(plan.Children, child => Assert.Equal("GRID-1", child.RealizedBy));
         Assert.Equal(4, plan.Children.Count(child => child.Kind == "grid-axis"));
         Assert.Equal(2, plan.Children.Count(child => child.Kind == "grid-level"));
+        Assert.Equal(new[] { "x", "x", "y", "y", "z", "z" }, plan.Children.Select(child => child.Family));
+        Assert.Equal(new[] { 0d, 6000d, 0d, 3000d, 0d, 3000d }, plan.Children.Select(child => child.OffsetMm));
+    }
+
+    [Fact]
+    public void Tekla2026MapsTwoWordLabelsOnTheSingleParentGrid()
+    {
+        var plan = _contract.CreatePlan(
+            "GRID-1",
+            new[]
+            {
+                Axis("X-A", "x", 0, "Grid A", 0, 3000),
+                Axis("Y-1", "y", 0, "Grid 1", 0, 6000),
+            },
+            new[] { new GridLevelContract("Z-0", 0, "2nd Floor") },
+            0,
+            "2026.0");
+
+        Assert.Equal("Grid_A", plan.LabelX);
+        Assert.Equal("Grid_1", plan.LabelY);
+        Assert.Equal("2nd_Floor", plan.LabelZ);
+        Assert.Equal(new[] { "Grid_A", "Grid_1", "2nd_Floor" }, plan.Children.Select(child => child.NativeLabel));
+
+        var warning = plan.CreateLabelTokenWarning();
+        Assert.NotNull(warning);
+        Assert.Equal("tekla-grid-label-tokenized", warning!["code"]);
+        var mappings = Assert.IsType<object[]>(warning["mappings"]);
+        Assert.Equal(3, mappings.Length);
+        var levelMapping = Assert.IsType<Dictionary<string, object>>(mappings[2]);
+        Assert.Equal("Z-0", levelMapping["id"]);
+        Assert.Equal("z", levelMapping["family"]);
+        Assert.Equal("2nd Floor", levelMapping["authoredLabel"]);
+        Assert.Equal("2nd_Floor", levelMapping["nativeLabel"]);
+    }
+
+    [Fact]
+    public void ExactTokensStayByteForByteAndSilent()
+    {
+        var longExactToken = new string('x', 80);
+        var plan = _contract.CreatePlan(
+            "GRID-1",
+            new[]
+            {
+                Axis("X-A", "x", 0, longExactToken, 0, 3000),
+                Axis("Y-1", "y", 0, "A_B%20", 0, 6000),
+            },
+            Levels(),
+            0,
+            "2026.0");
+
+        Assert.Equal(longExactToken, plan.LabelX);
+        Assert.Equal("A_B%20", plan.LabelY);
+        Assert.Null(plan.CreateLabelTokenWarning());
+    }
+
+    [Fact]
+    public void TokenAllocationReservesFutureAndSuffixLookingExactTokens()
+    {
+        var plan = _contract.CreatePlan(
+            "GRID-1",
+            new[]
+            {
+                Axis("X-changed", "x", 0, "A B", 0, 3000),
+                Axis("X-exact", "x", 3000, "A_B", 0, 3000),
+                Axis("X-suffix", "x", 6000, "A_B~1-1", 0, 3000),
+                Axis("Y-1", "y", 0, "1", 0, 6000),
+            },
+            Levels(),
+            0,
+            "2026.0");
+
+        Assert.Equal("A_B~1-2 A_B A_B~1-1", plan.LabelX);
+        Assert.Equal("A_B~1-2", plan.LabelTokenMappings.Single().NativeLabel);
+    }
+
+    [Theory]
+    [InlineData(" A")]
+    [InlineData("A ")]
+    [InlineData("A  B")]
+    [InlineData("A B C")]
+    [InlineData("A\tB")]
+    [InlineData("A\nB")]
+    [InlineData("A\u00a0B")]
+    [InlineData("A\u0001B")]
+    public void UnprovenWhitespaceAndControlGrammarsRemainUnsupported(string label)
+    {
+        var result = _contract.Evaluate(
+            new[]
+            {
+                Axis("X-A", "x", 0, label, 0, 3000),
+                Axis("Y-1", "y", 0, "1", 0, 6000),
+            },
+            Levels(),
+            0,
+            "2026.0");
+
+        Assert.False(result.IsSupported);
+        Assert.Equal("tekla-grid-label-token-unsupported", result.Code);
+    }
+
+    [Fact]
+    public void TwoWordMappingIsResolvedHostGated()
+    {
+        var axes = new[]
+        {
+            Axis("X-A", "x", 0, "Grid A", 0, 3000),
+            Axis("Y-1", "y", 0, "1", 0, 6000),
+        };
+
+        Assert.False(_contract.Evaluate(axes, Levels(), 0, "2025.0").IsSupported);
+        Assert.True(_contract.Evaluate(axes, Levels(), 0, "2026.0").IsSupported);
+    }
+
+    [Fact]
+    public void MappingBoundaryCountsUtf16CodeUnitsLikeJavascript()
+    {
+        var fortyCodeUnits = new string('a', 18) + "😀" + " " + new string('b', 19);
+        var fortyOneCodeUnits = fortyCodeUnits + "b";
+        Assert.Equal(40, fortyCodeUnits.Length);
+        Assert.Equal(41, fortyOneCodeUnits.Length);
+
+        var supported = _contract.Evaluate(
+            new[]
+            {
+                Axis("X-A", "x", 0, fortyCodeUnits, 0, 3000),
+                Axis("Y-1", "y", 0, "1", 0, 6000),
+            },
+            Levels(),
+            0,
+            "2026.0");
+        var unsupported = _contract.Evaluate(
+            new[]
+            {
+                Axis("X-A", "x", 0, fortyOneCodeUnits, 0, 3000),
+                Axis("Y-1", "y", 0, "1", 0, 6000),
+            },
+            Levels(),
+            0,
+            "2026.0");
+
+        Assert.True(supported.IsSupported);
+        Assert.False(unsupported.IsSupported);
+        Assert.Equal("tekla-grid-label-token-unsupported", unsupported.Code);
     }
 
     [Fact]
@@ -106,7 +251,8 @@ public sealed class TeklaGridEnvelopeContractTests
                 Axis("Y-2", "y", 3000, "2", -250, 6250),
             },
             Levels(),
-            0);
+            0,
+            "2026.0");
         var warning = plan.CreateExpansionWarning();
 
         Assert.NotNull(warning);
@@ -135,7 +281,7 @@ public sealed class TeklaGridEnvelopeContractTests
     {
         var axes = new[] { Axis("X-A", "x", 0, "A", 0, 1000) };
         var levels = Levels();
-        var reason = _contract.Evaluate(axes, levels, 0);
+        var reason = _contract.Evaluate(axes, levels, 0, "2026.0");
 
         var rows = _contract.CreateUnsupportedRows("GRID-1", axes, levels, reason);
 
@@ -158,7 +304,8 @@ public sealed class TeklaGridEnvelopeContractTests
                 Axis("Y-2", "y", 4000, "2", 50, 100),
             },
             Levels(),
-            0);
+            0,
+            "2026.0");
 
         Assert.True(result.IsSupported);
         Assert.Equal(-500, result.XFamilyStartMm);
@@ -234,7 +381,7 @@ public sealed class TeklaGridEnvelopeContractTests
                 throw new InvalidOperationException(scenario);
         }
 
-        var result = _contract.Evaluate(axes, levels, 0);
+        var result = _contract.Evaluate(axes, levels, 0, "2025.0");
 
         Assert.False(result.IsSupported);
         Assert.Equal(expectedCode, result.Code);
@@ -246,8 +393,9 @@ public sealed class TeklaGridEnvelopeContractTests
         var unsupported = _contract.Evaluate(
             new[] { Axis("X-A", "x", 0, "A", 0, 1000) },
             Levels(),
-            0);
-        var supported = _contract.Evaluate(RectangularAxes(), Levels(), 0);
+            0,
+            "2026.0");
+        var supported = _contract.Evaluate(RectangularAxes(), Levels(), 0, "2026.0");
 
         Assert.False(unsupported.IsSupported);
         Assert.True(supported.IsSupported);
@@ -259,7 +407,8 @@ public sealed class TeklaGridEnvelopeContractTests
         var result = _contract.Evaluate(
             RectangularAxes(),
             new[] { new GridLevelContract("Z-high", double.MaxValue, "high") },
-            -double.MaxValue);
+            -double.MaxValue,
+            "2026.0");
 
         Assert.False(result.IsSupported);
         Assert.Equal("tekla-grid-derived-spacing-unsupported", result.Code);

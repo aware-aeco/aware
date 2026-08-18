@@ -1,5 +1,5 @@
 agent:        tekla
-version:      0.1.2
+version:      0.1.3
 sdk-target:   2025+         # version-agnostic shorthand; structured form lands in hardening pass
 display-name: Tekla Structures
 
@@ -286,7 +286,10 @@ commands:
           X/Y axes and elevation levels. Per-axis startMm/endMm values are preserved
           by the tightest non-truncating shared Tekla Grid envelope; when that native
           rectangle extends one or more authored axes, the result carries a
-          tekla-grid-axis-extents-expanded warning. Missing units means legacy
+          tekla-grid-axis-extents-expanded warning. On resolved Tekla 2026,
+          exact two-word axis/elevation labels are mapped to deterministic native
+          tokens with a tekla-grid-label-tokenized warning while all elevations
+          remain in the one parent Grid's CoordinateZ/LabelZ. Missing units means legacy
           millimetres; explicit non-mm units fail before mutation. Physical member/line/box
           records may carry finite numeric `rot`: positive degrees are right-handed about
           directed from→to and are verified against native B-rep geometry before retirement.
