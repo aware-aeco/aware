@@ -2611,7 +2611,11 @@ fn classify_scene(scene: &Value) -> Result<SceneReceipt, AwareError> {
                 }
             });
         let mut nested_rows = Vec::new();
-        if !matches!(kind.as_str(), "line" | "box" | "member") && object.contains_key("rot") {
+        if matches!(
+            kind.as_str(),
+            "node" | "mesh" | "plate" | "rod" | "bolt-shank" | "washer" | "nut" | "bolt-head"
+        ) && object.contains_key("rot")
+        {
             return Err(scene_error(
                 &format!("{path}.rot"),
                 "is applicable only to physical member, line, and box records",
@@ -3867,6 +3871,17 @@ mod tests {
                 .to_string();
             assert!(error.contains("xsection"), "{error}");
         }
+    }
+
+    #[test]
+    fn unknown_rotated_element_stays_forward_compatible_and_is_receipted() {
+        let scene = json!({
+            "meta": { "name": "Future element", "units": "mm", "up": "z" },
+            "elements": [{ "id": "FUTURE-1", "kind": "future-native-part", "rot": 82.7 }]
+        });
+        let output = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
+        assert_eq!(output["unsupported"][0]["id"], "FUTURE-1");
+        assert_eq!(output["unsupported"][0]["code"], "unsupported-element-kind");
     }
 
     #[test]

@@ -201,6 +201,27 @@ async function loadPlaywright() {
           dot(cross(frame.world.x, frame.world.y), frame.world.axis) > 1 - 1e-9);
         ok(`${up}-up ${id}: actual profile vertices are finite`, vertices.length >= 8 && vertices.flat().every(Number.isFinite), `vertices=${vertices.length}`);
       }
+      // Golden proof for the regression behind #425: metadata alone is not enough.  For the
+      // vertical asymmetric angle, assert both the rolled basis and one real mesh corner.  These
+      // fail if orientMember/memberFrame reports 82.7 degrees but renders the zero-roll frame.
+      const angle = await page.evaluate(() => ({
+        frame: window.__viewer3d.memberFrame('L'),
+        vertices: window.__viewer3d.memberVertices('L'),
+      }));
+      const radians = 82.7 * Math.PI / 180, c = Math.cos(radians), s = Math.sin(radians);
+      const expectedX = up === 'z' ? [c, 0, s] : [c, 0, -s];
+      const expectedY = up === 'z' ? [-s, 0, c] : [-s, 0, -c];
+      const expectedAxis = up === 'z' ? [0, -1, 0] : [0, 1, 0];
+      const vecNear = (a, b, tol = 1e-6) => a && b && a.length === b.length && a.every((v, i) => near(v, b[i], tol));
+      ok(`${up}-up L: rendered 82.7-degree X axis is golden`, vecNear(angle.frame.world.x, expectedX, 1e-9), JSON.stringify(angle.frame.world.x));
+      ok(`${up}-up L: rendered 82.7-degree Y axis is golden`, vecNear(angle.frame.world.y, expectedY, 1e-9), JSON.stringify(angle.frame.world.y));
+      const center = [1000, 600, 0];
+      const expectedCorner = center.map((v, i) => v - 60 * expectedX[i] - 100 * expectedY[i] - 600 * expectedAxis[i]);
+      const zeroCorner = up === 'z' ? [940, 1200, -100] : [940, 0, 100];
+      ok(`${up}-up L: actual asymmetric-profile vertex carries authored roll`,
+        angle.vertices.some((v) => vecNear(v, expectedCorner)), `expected=${JSON.stringify(expectedCorner)}`);
+      ok(`${up}-up L: actual asymmetric-profile vertex is not left at zero roll`,
+        !angle.vertices.some((v) => vecNear(v, zeroCorner)), `zero=${JSON.stringify(zeroCorner)}`);
       const expectedBoundary = [-180, 0, -180, 0, 0, -180, 0, -180];
       for (let index = 0; index < expectedBoundary.length; index++) {
         const frame = await page.evaluate((memberId) => window.__viewer3d.memberFrame(memberId), `BOUND-${index}`);

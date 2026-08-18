@@ -2219,7 +2219,11 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                     "member"
                 }
             });
-            if !matches!(kind, "member" | "line" | "box") && el.get("rot").is_some() {
+            if matches!(
+                kind,
+                "plate" | "rod" | "bolt-shank" | "washer" | "nut" | "bolt-head" | "mesh"
+            ) && el.get("rot").is_some()
+            {
                 return Err(AwareError::Validation(format!(
                     "ifc write: `{path}.rot` is applicable only to physical member, line, and box records"
                 )));
@@ -3241,7 +3245,18 @@ mod tests {
         first["elements"][0]["rot"] = json!(82.7);
         let mut wrapped = sample_scene();
         wrapped["elements"][0]["rot"] = json!(442.7);
-        assert_eq!(build_ifc(&first).doc, build_ifc(&wrapped).doc);
+        let rolled = build_ifc(&first).doc;
+        assert_eq!(rolled, build_ifc(&wrapped).doc);
+
+        // Golden 2D RefDirection: prove the authored roll reaches IFC geometry rather than only
+        // being normalized and carried alongside an unchanged zero-roll profile placement.
+        assert!(
+            rolled.contains("IFCDIRECTION((0.1270646086,0.99189444259))"),
+            "82.7-degree profile RefDirection was not emitted"
+        );
+        let mut zero = sample_scene();
+        zero["elements"][0]["rot"] = json!(0.0);
+        assert_ne!(rolled, build_ifc(&zero).doc);
     }
 
     #[test]
@@ -4185,7 +4200,7 @@ mod tests {
     fn unsupported_element_kinds_are_exhaustively_reported() {
         let mut scene = connection_scene();
         scene["elements"].as_array_mut().unwrap().push(json!({
-            "id": "FUTURE-1", "kind": "future-native-part"
+            "id": "FUTURE-1", "kind": "future-native-part", "rot": 82.7
         }));
         scene["referenceSystems"]
             .as_array_mut()
