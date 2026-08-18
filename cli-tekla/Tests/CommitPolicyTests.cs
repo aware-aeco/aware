@@ -110,6 +110,7 @@ public sealed class CommitPolicyTests
         var scene = JsonNode.Parse("{\"meta\":{\"sourceId\":\"s\",\"sceneHash\":\"h\"},\"elements\":[]}")!;
         var first = Program.ComputeBakeMaterializationHash(scene, "2025.0");
 
+        Assert.Equal("tekla-connection-materializer-v2", Program.BakeMaterializerIdentity);
         Assert.Equal(first, Program.ComputeBakeMaterializationHash(scene, "2025.0"));
         Assert.NotEqual(first, Program.ComputeBakeMaterializationHash(scene, "2026.0"));
         Assert.Equal(64, first.Length);
@@ -247,11 +248,37 @@ public sealed class CommitPolicyTests
     }
 
     [Fact]
-    public void IndependentGridAxisExtentsAreExplicitlyUnsupported()
+    public void IndependentGridAxisExtentsUseOneVerifiedNativeEnvelope()
     {
-        Assert.Contains("gridsWithIndependentAxisExtents", BakeSceneScript.Code);
-        Assert.Contains("tekla-grid-axis-extents-unsupported", BakeSceneScript.Code);
-        Assert.Contains("referenceById.Remove(gridId)", BakeSceneScript.Code);
+        var code = BakeSceneScript.Code;
+
+        Assert.Contains("gridEnvelope.Evaluate(axisContracts,levelContracts,number(origin[2]))", code);
+        Assert.Contains("gridEnvelope.CreatePlan(pair.Key,axisContracts,levelContracts,number(origin[2]))", code);
+        Assert.Contains("plan.CreateExpansionWarning()", code);
+        Assert.Contains("CoordinateX=plan.CoordinateX", code);
+        Assert.Contains("ExtensionLeftX=plan.ExtensionLeftX", code);
+        Assert.Contains("Grid origin/coordinate/label/envelope/magnetism read-back", code);
+        Assert.Contains("realizedReferences.TryGetValue(id,out realizedBy)", code);
+        Assert.DoesNotContain("nativeById[x.Item3]=g", code);
+        Assert.DoesNotContain("tekla-grid-axis-extents-unsupported", code);
+
+        var commit = code.IndexOf("if(!m.CommitChanges(\"AWARE bake-scene", StringComparison.Ordinal);
+        var classifyRecords = code.IndexOf("foreach(var item in supportedOrder){string id=item.Item1;string kind=item.Item2;ModelObject o=null", StringComparison.Ordinal);
+        var publishWarnings = code.IndexOf("warnings.AddRange(gridWarningJournal.PublishAfterCommit())", StringComparison.Ordinal);
+        Assert.True(commit >= 0);
+        Assert.True(classifyRecords > commit);
+        Assert.True(publishWarnings > classifyRecords);
+    }
+
+    [Fact]
+    public void TeklaOnlyGridLimitsDoNotAbortUnrelatedSupportedRecords()
+    {
+        var code = BakeSceneScript.Code;
+
+        Assert.Contains("unsupportedGridEnvelopes", code);
+        Assert.Contains("gridEnvelope.CreateUnsupportedRows", code);
+        Assert.Contains("supportedOrder.RemoveAll", code);
+        Assert.Contains("referenceById.Remove(gridId)", code);
     }
 
     [Fact]
@@ -259,6 +286,16 @@ public sealed class CommitPolicyTests
     {
         Assert.Contains("levels==null||levels.Count==0", BakeSceneScript.Code);
         Assert.Contains("non-empty levels", BakeSceneScript.Code);
+    }
+
+    [Fact]
+    public void CanonicalGridBoundsAndAxisExtentsStayPreflightValidated()
+    {
+        var code = BakeSceneScript.Code;
+
+        Assert.Contains("off<minX||off>maxX", code);
+        Assert.Contains("off<minY||off>maxY", code);
+        Assert.Contains("start/end extents must be finite and increasing", code);
     }
 
     [Fact]

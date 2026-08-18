@@ -35,6 +35,7 @@ public sealed class ExecGlobals
     // surrounding Tekla operations.
     public dynamic? model = null;
     public IDictionary<string, object?> args = new Dictionary<string, object?>();
+    public TeklaGridEnvelopeContract gridEnvelope = new TeklaGridEnvelopeContract();
 }
 
 internal static class Program
@@ -1513,9 +1514,11 @@ internal static class Program
         return true;
     }
 
+    internal const string BakeMaterializerIdentity = "tekla-connection-materializer-v2";
+
     internal static string ComputeBakeMaterializationHash(JsonNode scene, string? version)
     {
-        var payload = "tekla-connection-materializer-v1\0"
+        var payload = BakeMaterializerIdentity + "\0"
             + (version ?? "running-host")
             + "\0"
             + scene.ToJsonString(new JsonSerializerOptions { WriteIndented = false });
@@ -1752,15 +1755,7 @@ internal static class Program
     // BakeSceneScript so its source-owned staging and commit boundary stay reviewable.
     static readonly string BakeSceneCode = BakeSceneScript.Code;
 
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    static object? RunScript(
-        string code,
-        IReadOnlyList<MetadataReference> teklaReferences,
-        JsonObject? argsNode,
-        string? teklaBinDir,
-        int? expectedPid,
-        ScriptCommitPolicy commitPolicy,
-        string? announce = null)
+    internal static ScriptOptions CreateScriptOptions(IReadOnlyList<MetadataReference> teklaReferences)
     {
         // Standard usings — enough for catalog-style snippets to stay
         // boilerplate-free. The script writer can add `using ...;` lines of
@@ -1786,27 +1781,40 @@ internal static class Program
         // Build references: BCL essentials + Tekla assemblies (if found).
         var refs = new List<MetadataReference>
         {
-            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),       // mscorlib / System.Private.CoreLib
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
             MetadataReference.CreateFromFile(typeof(System.Linq.Enumerable).Assembly.Location),
             MetadataReference.CreateFromFile(typeof(System.Collections.Generic.IDictionary<,>).Assembly.Location),
-            MetadataReference.CreateFromFile(typeof(System.Dynamic.DynamicObject).Assembly.Location),  // System.Core.dll
-            MetadataReference.CreateFromFile(typeof(Microsoft.CSharp.RuntimeBinder.Binder).Assembly.Location), // Microsoft.CSharp.dll for `dynamic`
+            MetadataReference.CreateFromFile(typeof(System.Dynamic.DynamicObject).Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(Microsoft.CSharp.RuntimeBinder.Binder).Assembly.Location),
+            // The shipped bake script delegates host-agnostic contract math to
+            // public helpers in this assembly. Roslyn receives ExecGlobals as
+            // its globals type, but does not automatically add that assembly as
+            // a metadata reference for helper DTO names used in script source.
+            MetadataReference.CreateFromFile(typeof(ExecGlobals).Assembly.Location),
         };
-        // De-dup by file path — typeof(...).Assembly.Location can return the
-        // same DLL twice on net48 (e.g. mscorlib + System.Collections both
-        // live in mscorlib).
         refs = refs
             .GroupBy(r => (r as PortableExecutableReference)?.FilePath ?? Guid.NewGuid().ToString())
             .Select(g => g.First())
             .ToList();
         refs.AddRange(teklaReferences);
 
-        var options = ScriptOptions.Default
+        return ScriptOptions.Default
             .WithReferences(refs)
             .WithImports(imports)
-            // Allow `await` at top level — handy for snippets that need it.
-            // Roslyn scripts default to non-async but enabling allows both.
             .WithEmitDebugInformation(false);
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    static object? RunScript(
+        string code,
+        IReadOnlyList<MetadataReference> teklaReferences,
+        JsonObject? argsNode,
+        string? teklaBinDir,
+        int? expectedPid,
+        ScriptCommitPolicy commitPolicy,
+        string? announce = null)
+    {
+        var options = CreateScriptOptions(teklaReferences);
 
         // Construct the Tekla Model lazily. If teklaBinDir is null OR Tekla
         // isn't running, the constructor either throws or returns a model
