@@ -11,7 +11,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using Tekla.Structures;
 using Tekla.Structures.Model;
@@ -79,7 +78,8 @@ var meta = obj(scene,"meta");
 string sceneName = meta == null ? "Steel from Drawings" : str(meta,"name");
 if (String.IsNullOrWhiteSpace(sceneName)) sceneName = "Steel from Drawings";
 string units = meta == null ? "" : str(meta,"units");
-string sceneUp = meta == null ? "" : str(meta,"up");
+object sceneUpValue = null;
+bool sceneUpPresent = meta != null && meta.TryGetValue("up", out sceneUpValue);
 string sourceId = meta == null ? "" : str(meta,"sourceId").Trim();
 string sceneHash = meta == null ? "" : str(meta,"sceneHash").Trim();
 string materializationHash = args != null && args.TryGetValue("materializationHash", out var mh) ? text(mh) : "";
@@ -119,7 +119,7 @@ Func<string,string,bool> acceptId = (id,kind) => {
 
 if (!String.IsNullOrEmpty(units) && !String.Equals(units,"mm",StringComparison.OrdinalIgnoreCase))
     failed.Add(row("scene","scene","failed","unsupported-units","Tekla bake-scene accepts only millimetres"));
-if (!String.IsNullOrEmpty(sceneUp) && sceneUp != "z")
+if (!AwareTekla.TeklaSceneInputContract.SceneUpIsAbsentOrExactZ(sceneUpPresent, sceneUpValue))
     failed.Add(row("scene","scene","failed","unsupported-scene-up","Tekla bake-scene accepts only absent or `z` meta.up; Y-up export needs an explicit reviewed transform"));
 if (String.IsNullOrWhiteSpace(sourceId)) failed.Add(row("scene","scene","failed","missing-source-id","scene.meta.sourceId is required"));
 if (String.IsNullOrWhiteSpace(sceneHash)) failed.Add(row("scene","scene","failed","missing-scene-hash","scene.meta.sceneHash is required"));
@@ -264,8 +264,8 @@ if(failed.Count>0){appendBatchAborted("Batch was aborted because another support
 
 string expectedModelPath=args!=null&&args.TryGetValue("expectedModelPath",out var expectedModelValue)?text(expectedModelValue).Trim():"";
 if(!String.IsNullOrEmpty(expectedModelPath)){
-    string actualModelPath=Path.GetFullPath(m.GetInfo().ModelPath);
-    string canonicalExpectedPath=Path.GetFullPath(expectedModelPath);
+    string actualModelPath=AwareTekla.TeklaSceneInputContract.CanonicalModelDirectoryPath(m.GetInfo().ModelPath);
+    string canonicalExpectedPath=AwareTekla.TeklaSceneInputContract.CanonicalModelDirectoryPath(expectedModelPath);
     if(!String.Equals(actualModelPath,canonicalExpectedPath,StringComparison.OrdinalIgnoreCase)){
         failed.Add(row("scene","scene","failed","unexpected-model-path","Refusing to mutate Tekla model `"+actualModelPath+"`; expected `"+canonicalExpectedPath+"`."));
         appendBatchAborted("Batch was aborted because the connected Tekla model did not match the expected QA target.");

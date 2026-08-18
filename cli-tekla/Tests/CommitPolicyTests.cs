@@ -145,6 +145,8 @@ public sealed class CommitPolicyTests
         var code = BakeSceneScript.Code;
         Assert.Contains("memberRoll.CreatePlan", code);
         Assert.Contains("member rot must be a finite JSON number", code);
+        Assert.Contains("SceneUpIsAbsentOrExactZ", code);
+        Assert.Contains("CanonicalModelDirectoryPath", code);
         Assert.Contains("EffectiveNativeDegrees", code);
         Assert.Contains("solidVertices", code);
         Assert.Contains("native B-rep section orientation differs", code);

@@ -210,7 +210,7 @@ public class ResolveExecTargetTests
     [Fact]
     public void ExpectedModelPathMayComeFromRequestOrEnvironment()
     {
-        var input = JsonNode.Parse("{\"expectedModelPath\":\"C:\\\\Models\\\\QA\"}");
+        var input = JsonNode.Parse("{\"expectedModelPath\":\"C:\\\\Models\\\\QA\\\\\"}");
         var ok = Program.TryResolveExpectedModelPath(
             input,
             @"c:\Models\QA",
@@ -221,6 +221,28 @@ public class ResolveExecTargetTests
         Assert.True(ok);
         Assert.Equal(@"C:\Models\QA", path, ignoreCase: true);
         Assert.Null(error);
+    }
+
+    [Theory]
+    [InlineData(false, null, true)]
+    [InlineData(true, "z", true)]
+    [InlineData(true, null, false)]
+    [InlineData(true, "", false)]
+    [InlineData(true, "Z", false)]
+    [InlineData(true, "y", false)]
+    public void TeklaSceneUpAcceptsOnlyAbsentOrExactZ(bool present, object? value, bool expected)
+    {
+        Assert.Equal(expected, TeklaSceneInputContract.SceneUpIsAbsentOrExactZ(present, value));
+    }
+
+    [Fact]
+    public void CanonicalModelDirectoryPathPreservesRootsWhileTrimmingOtherSeparators()
+    {
+        Assert.Equal(
+            TeklaSceneInputContract.CanonicalModelDirectoryPath(@"C:\Models\QA"),
+            TeklaSceneInputContract.CanonicalModelDirectoryPath(@"C:\Models\QA\"),
+            ignoreCase: true);
+        Assert.Equal(@"C:\", TeklaSceneInputContract.CanonicalModelDirectoryPath(@"C:\"));
     }
 
     [Fact]

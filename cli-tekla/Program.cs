@@ -1531,8 +1531,12 @@ internal static class Program
             environmentPath = null;
         try
         {
-            requestPath = requestPath is null ? null : Path.GetFullPath(requestPath);
-            environmentPath = environmentPath is null ? null : Path.GetFullPath(environmentPath);
+            requestPath = requestPath is null
+                ? null
+                : TeklaSceneInputContract.CanonicalModelDirectoryPath(requestPath);
+            environmentPath = environmentPath is null
+                ? null
+                : TeklaSceneInputContract.CanonicalModelDirectoryPath(environmentPath);
         }
         catch (Exception exception)
         {

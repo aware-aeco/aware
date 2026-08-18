@@ -2353,6 +2353,71 @@ fn number_array(value: Option<&Value>, path: &str) -> Result<Vec<f64>, AwareErro
         .collect()
 }
 
+fn validate_member_xsection(
+    object: &serde_json::Map<String, Value>,
+    path: &str,
+) -> Result<(), AwareError> {
+    let Some(value) = object.get("xsection") else {
+        return Ok(());
+    };
+    let section = value
+        .as_object()
+        .ok_or_else(|| scene_error(&format!("{path}.xsection"), "must be an object"))?;
+    let section_path = format!("{path}.xsection");
+    let shape = section
+        .get("shape")
+        .and_then(Value::as_str)
+        .ok_or_else(|| {
+            scene_error(
+                &format!("{section_path}.shape"),
+                "must be a canonical shape",
+            )
+        })?;
+    let dimension =
+        |name: &str| positive_number(section.get(name), &format!("{section_path}.{name}"));
+    let invalid = |message: &str| Err(scene_error(&section_path, message));
+    match shape {
+        "i" | "channel" => {
+            let d = dimension("d")?;
+            let bf = dimension("bf")?;
+            let tw = dimension("tw")?;
+            let tf = dimension("tf")?;
+            if tw >= bf || 2.0 * tf >= d {
+                return invalid("must have tw < bf and 2*tf < d");
+            }
+        }
+        "angle" => {
+            let d = dimension("d")?;
+            let b = dimension("b")?;
+            let t = dimension("t")?;
+            if t >= d.min(b) {
+                return invalid("must have t < min(d,b)");
+            }
+        }
+        "rhs" => {
+            let d = dimension("d")?;
+            let b = dimension("b")?;
+            let t = dimension("t")?;
+            if 2.0 * t >= d.min(b) {
+                return invalid("must have 2*t < min(d,b)");
+            }
+        }
+        "chs" => {
+            let od = dimension("od")?;
+            let t = dimension("t")?;
+            if 2.0 * t >= od {
+                return invalid("must have 2*t < od");
+            }
+        }
+        "rect" => {
+            dimension("w")?;
+            dimension("d")?;
+        }
+        _ => return invalid("shape must be one of i, channel, angle, rhs, chs, or rect"),
+    }
+    Ok(())
+}
+
 fn scene_element<'a>(scene: &'a Value, id: &str) -> Option<&'a serde_json::Map<String, Value>> {
     scene
         .get("elements")
@@ -2564,6 +2629,7 @@ fn classify_scene(scene: &Value) -> Result<SceneReceipt, AwareError> {
                     &format!("{path}.rot"),
                     "viewer-3d render",
                 )?;
+                validate_member_xsection(object, &path)?;
             }
             "node" => {
                 vector::<3>(object.get("at"), &format!("{path}.at"))?;
@@ -3780,6 +3846,27 @@ mod tests {
         .unwrap_err()
         .to_string();
         assert!(error.contains("applicable only"), "{error}");
+    }
+
+    #[test]
+    fn rejects_present_malformed_exact_cross_sections_before_rendering() {
+        let malformed = [
+            json!({ "shape": "chs", "od": 180 }),
+            json!({ "shape": "chs", "od": 180, "t": 90 }),
+            json!({ "shape": "i", "d": 200, "bf": 100, "tw": 100, "tf": 10 }),
+            json!({ "shape": "angle", "d": 200, "b": 100, "t": 100 }),
+            json!({ "shape": "rhs", "d": 200, "b": 100, "t": 50 }),
+            json!({ "shape": "rect", "w": 100, "d": 0 }),
+            json!({ "shape": "unknown", "w": 100, "d": 100 }),
+        ];
+        for xsection in malformed {
+            let mut scene = rolled_member("z", json!(0));
+            scene["elements"][0]["xsection"] = xsection;
+            let error = viewer_3d_render(&json!({ "scene": scene }), true)
+                .unwrap_err()
+                .to_string();
+            assert!(error.contains("xsection"), "{error}");
+        }
     }
 
     #[test]
