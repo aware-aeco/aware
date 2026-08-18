@@ -1,5 +1,5 @@
 agent:        tekla
-version:      0.1.0
+version:      0.1.1
 sdk-target:   2025+         # version-agnostic shorthand; structured form lands in hardening pass
 display-name: Tekla Structures
 
@@ -282,8 +282,11 @@ commands:
           Supported physical kinds are exact-profile legacy members, plate, rod,
           bolt-shank, washer, nut, and bolt-head. Supported operations are bolt-array,
           weld, and finite cylindrical boolean-cut. Structural grids include stable-id
-          X/Y axes and elevation levels. Missing units means legacy millimetres;
-          explicit non-mm units fail before mutation.
+          X/Y axes and elevation levels. Per-axis startMm/endMm values are preserved
+          by the tightest non-truncating shared Tekla Grid envelope; when that native
+          rectangle extends one or more authored axes, the result carries a
+          tekla-grid-axis-extents-expanded warning. Missing units means legacy
+          millimetres; explicit non-mm units fail before mutation.
       version:
         type: string
         required: false

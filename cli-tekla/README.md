@@ -19,6 +19,7 @@ Cross-reference: same constraint likely applies to Revit + AutoCAD. See the memo
 | `launch` | Spawn a Tekla instance via Bypass.ini (headless startup pattern). |
 | `close` | Save (via Open API + ModelSave event wait) + clean shutdown. `force: true` for force-kill. |
 | `exec` | Compile + run an ad-hoc C# script against the active Tekla model via Roslyn-in-sidecar. |
+| `bake-scene` | Materialize source-owned native members, connections, and structural grids. |
 | `watch` | `lifecycle: start` — subscribe to `ModelObjectChanged` and stream newline-delimited JSON change events. Consumed by the runtime's streaming transport (`invoke_stream`, #172/#173). |
 
 ## Prerequisites
@@ -95,6 +96,17 @@ Receipt:
 ```
 
 `host_pid` and `host_version` populated when a live Tekla is detected (v0.32.2 receipt convergence).
+
+## Structural-grid materialization
+
+Canonical grid axes may carry independent `startMm` and `endMm` values. Tekla's
+native Grid has only one rectangular envelope, so `bake-scene` derives the
+tightest envelope that contains every authored segment and both axis families'
+coordinate spans. It verifies the native origin, coordinates, labels, extensions,
+levels, and magnetic flag before replacing a prior source-owned grid. A lossy
+native expansion is explicit in `warnings` as
+`tekla-grid-axis-extents-expanded`; axes and levels share the parent Grid GUID
+through `realizedBy` rather than becoming duplicate native objects.
 
 ## Drill
 

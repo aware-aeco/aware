@@ -194,3 +194,35 @@ jobs:
       - name: node --test
         working-directory: cli-connection-reader
         run: node --test
+
+  tekla-bridge:
+    name: Tekla bridge build + test + SHA artifact
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Test net48 bridge
+        run: dotnet test cli-tekla/Tests/AwareTekla.Tests.csproj -c Release
+
+      # The proprietary Tekla assemblies are intentionally absent from hosted
+      # runners. The same script is semantically compiled against installed
+      # 2025/2026 SDKs by the mandatory local gate; CI still proves the generic
+      # bridge and publishes the exact reviewed binary for live-host QA.
+      - name: Publish bridge
+        shell: pwsh
+        run: dotnet publish cli-tekla/cli-tekla.csproj -c Release -o ".tmp/aware-tekla/${{ github.sha }}"
+
+      - name: Package SHA-addressed bridge
+        shell: pwsh
+        run: Compress-Archive -Path ".tmp/aware-tekla/${{ github.sha }}/*" -DestinationPath ".tmp/aware-tekla-${{ github.sha }}.zip"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aware-tekla-${{ github.sha }}
+          path: .tmp/aware-tekla-${{ github.sha }}.zip
+          if-no-files-found: error
