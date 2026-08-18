@@ -3,6 +3,7 @@ pub mod file;
 pub mod geom;
 pub mod html_report;
 pub mod ifc;
+pub mod scene_roll;
 pub mod table;
 pub mod topology;
 pub mod ui;

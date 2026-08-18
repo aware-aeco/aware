@@ -1,6 +1,7 @@
 using Xunit;
 using System.Text.Json.Nodes;
 using System;
+using System.Linq;
 
 namespace AwareTekla.Tests;
 
@@ -110,10 +111,24 @@ public sealed class CommitPolicyTests
         var scene = JsonNode.Parse("{\"meta\":{\"sourceId\":\"s\",\"sceneHash\":\"h\"},\"elements\":[]}")!;
         var first = Program.ComputeBakeMaterializationHash(scene, "2025.0");
 
-        Assert.Equal("tekla-connection-materializer-v2", Program.BakeMaterializerIdentity);
+        Assert.Equal("tekla-connection-materializer-v3", Program.BakeMaterializerIdentity);
         Assert.Equal(first, Program.ComputeBakeMaterializationHash(scene, "2025.0"));
         Assert.NotEqual(first, Program.ComputeBakeMaterializationHash(scene, "2026.0"));
         Assert.Equal(64, first.Length);
+    }
+
+    [Fact]
+    public void MaterializationPayloadV3DiffersFromTheMergedGridPayloadV2()
+    {
+        var scene = JsonNode.Parse("{\"meta\":{\"sourceId\":\"s\",\"sceneHash\":\"h\"},\"elements\":[]}")!;
+        var current = Program.ComputeBakeMaterializationHash(scene, "2026.0");
+        var oldPayload = "tekla-connection-materializer-v2\0" + "2026.0\0"
+            + scene.ToJsonString(new System.Text.Json.JsonSerializerOptions { WriteIndented = false });
+        using var sha = System.Security.Cryptography.SHA256.Create();
+        var old = string.Concat(sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(oldPayload))
+            .Select(value => value.ToString("x2", System.Globalization.CultureInfo.InvariantCulture)));
+
+        Assert.NotEqual(old, current);
     }
 
     [Fact]
@@ -122,6 +137,28 @@ public sealed class CommitPolicyTests
         Assert.Contains("scene.elements must be an array", BakeSceneScript.Code);
         Assert.Contains("scene.operations must be an array", BakeSceneScript.Code);
         Assert.Contains("scene.referenceSystems must be an array", BakeSceneScript.Code);
+    }
+
+    [Fact]
+    public void BakeSceneExecutesTheMemberRollAndBrepVerificationContract()
+    {
+        var code = BakeSceneScript.Code;
+        Assert.Contains("memberRoll.CreatePlan", code);
+        Assert.Contains("member rot must be a finite JSON number", code);
+        Assert.Contains("SceneUpIsAbsentOrExactZ", code);
+        Assert.Contains("CanonicalModelDirectoryPath", code);
+        Assert.Contains("EffectiveNativeDegrees", code);
+        Assert.Contains("solidVertices", code);
+        Assert.Contains("native B-rep section orientation differs", code);
+        Assert.Contains("nativeRotationOffset", code);
+
+        var guard = code.IndexOf("unexpected-model-path", StringComparison.Ordinal);
+        var workPlaneChange = code.IndexOf(
+            "SetCurrentTransformationPlane(new TransformationPlane())",
+            StringComparison.Ordinal);
+        Assert.True(guard >= 0, "expected-model guard must exist");
+        Assert.True(workPlaneChange >= 0, "global work-plane change must exist");
+        Assert.True(guard < workPlaneChange, "model-path mismatch must fail before work-plane mutation");
     }
 
     [Fact]

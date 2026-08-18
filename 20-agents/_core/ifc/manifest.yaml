@@ -1,5 +1,5 @@
 agent:        ifc
-version:      0.1.0
+version:      0.1.1
 display-name: IFC Writer
 description: |
   Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc).
@@ -64,11 +64,12 @@ commands:
              referenceSystems:[...], grids, panels }`.
           `xsection` (all mm) is one of: {shape:i,d,bf,tw,tf} | {shape:channel,d,bf,tw,tf} |
           {shape:angle,d,b,t} | {shape:rhs,d,b,t} | {shape:chs,od,t} | {shape:rect,w,d}.
-          `role`/`material`/`xsection`/`rot` are EXPORT hints this writer consumes for exact
-          geometry/typing; `viewer-3d` shares the base scene but renders shape from `section` +
-          `meta.profile` (it does not read `xsection`/`rot`), so its preview is a close approximation,
-          not byte-identical to the exported profile. The producer owns all domain meaning; the writer
-          is generic. See `viewer-3d`'s `scene-schema.md` for the canonical base scene contract.
+          `role`/`material`/`xsection` are export hints this writer consumes for exact geometry and
+          typing. Physical `member`/`line`/`box` records may carry finite numeric `rot`, interpreted
+          by the shared directed right-handed section frame. IFC currently accepts only absent/`z`
+          `meta.up`; Y-up fails until an explicit export transform is reviewed. `viewer-3d` renders
+          the same `xsection`/`rot` contract. The producer owns all domain meaning; the writer is
+          generic. See `viewer-3d`'s `scene-schema.md` for the canonical base scene contract.
       output-path:
         type: string
         description: Optional file path; when given, the IFC is written there (caller owns the path).

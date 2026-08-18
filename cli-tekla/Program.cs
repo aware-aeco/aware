@@ -36,6 +36,7 @@ public sealed class ExecGlobals
     public dynamic? model = null;
     public IDictionary<string, object?> args = new Dictionary<string, object?>();
     public TeklaGridEnvelopeContract gridEnvelope = new TeklaGridEnvelopeContract();
+    public TeklaMemberRollContract memberRoll = new TeklaMemberRollContract();
 }
 
 internal static class Program
@@ -1461,6 +1462,20 @@ internal static class Program
             EmitExecFail(pidError!, "", "bake-scene", null, null);
             return 2;
         }
+        var qaGuard = string.Equals(
+            Environment.GetEnvironmentVariable("AWARE_TEKLA_QA_GUARD"),
+            "1",
+            StringComparison.Ordinal);
+        if (!TryResolveExpectedModelPath(
+                input,
+                Environment.GetEnvironmentVariable("AWARE_TEKLA_EXPECT_MODEL_PATH"),
+                qaGuard,
+                out var expectedModelPath,
+                out var modelPathError))
+        {
+            EmitExecFail(modelPathError!, "", "bake-scene", null, null);
+            return 2;
+        }
 
         // What the user sees in Tekla while the bake compiles and runs. An optional `label` lets the
         // caller say who is doing this — the substrate has no name of its own to offer, and must not
@@ -1480,7 +1495,69 @@ internal static class Program
             ["scene"] = scene.DeepClone(),
             ["label"] = label,
         };
+        if (expectedModelPath is not null)
+            argsNode["expectedModelPath"] = expectedModelPath;
         return ExecuteResolvedScript("bake-scene", BakeSceneCode, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned, announce);
+    }
+
+    internal static bool TryResolveExpectedModelPath(
+        JsonNode? input,
+        string? environmentPath,
+        bool qaGuard,
+        out string? resolvedPath,
+        out string? error)
+    {
+        resolvedPath = null;
+        error = null;
+        string? requestPath = null;
+        if (input is JsonObject request && request.ContainsKey("expectedModelPath"))
+        {
+            if (request["expectedModelPath"] is not JsonValue value
+                || !value.TryGetValue<string>(out requestPath))
+            {
+                error = "invalid `expectedModelPath`: expected a non-empty string";
+                return false;
+            }
+            requestPath = requestPath.Trim();
+            if (requestPath.Length == 0)
+            {
+                error = "invalid `expectedModelPath`: expected a non-empty string";
+                return false;
+            }
+        }
+
+        environmentPath = environmentPath?.Trim();
+        if (environmentPath?.Length == 0)
+            environmentPath = null;
+        try
+        {
+            requestPath = requestPath is null
+                ? null
+                : TeklaSceneInputContract.CanonicalModelDirectoryPath(requestPath);
+            environmentPath = environmentPath is null
+                ? null
+                : TeklaSceneInputContract.CanonicalModelDirectoryPath(environmentPath);
+        }
+        catch (Exception exception)
+        {
+            error = $"invalid expected Tekla model path: {exception.Message}";
+            return false;
+        }
+
+        if (requestPath is not null
+            && environmentPath is not null
+            && !string.Equals(requestPath, environmentPath, StringComparison.OrdinalIgnoreCase))
+        {
+            error = "conflicting expected Tekla model paths in the request and AWARE_TEKLA_EXPECT_MODEL_PATH";
+            return false;
+        }
+        resolvedPath = requestPath ?? environmentPath;
+        if (qaGuard && resolvedPath is null)
+        {
+            error = "AWARE_TEKLA_QA_GUARD=1 requires expectedModelPath or AWARE_TEKLA_EXPECT_MODEL_PATH";
+            return false;
+        }
+        return true;
     }
 
     internal static string TrimJsonBom(string input) => input.TrimStart('\uFEFF');
@@ -1514,7 +1591,7 @@ internal static class Program
         return true;
     }
 
-    internal const string BakeMaterializerIdentity = "tekla-connection-materializer-v2";
+    internal const string BakeMaterializerIdentity = "tekla-connection-materializer-v3";
 
     internal static string ComputeBakeMaterializationHash(JsonNode scene, string? version)
     {

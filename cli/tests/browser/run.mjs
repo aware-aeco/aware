@@ -95,6 +95,38 @@ const frameScene = (up) => {
   };
 };
 
+const rollScene = (up) => {
+  const P = (x, y, z) => (up === 'z' ? [x, y, z] : [x, z, y]);
+  const members = [
+    ['I', { shape: 'i', d: 300, bf: 180, tw: 10, tf: 16 }],
+    ['C', { shape: 'channel', d: 260, bf: 90, tw: 9, tf: 14 }],
+    ['L', { shape: 'angle', d: 200, b: 120, t: 12 }],
+    ['RHS', { shape: 'rhs', d: 220, b: 140, t: 10 }],
+    ['CHS', { shape: 'chs', od: 180, t: 10 }],
+    ['RECT', { shape: 'rect', w: 120, d: 240 }],
+  ].map(([id, xsection], index) => ({
+    id, kind: 'member', group: 'g', from: P(index * 500, 0, 0), to: P(index * 500, 0, 1200),
+    rot: 82.7, xsection,
+  }));
+  members.push(
+    { id: 'DOWN', kind: 'member', group: 'g', from: P(3200, 0, 1200), to: P(3200, 0, 0), rot: 65.2, xsection: { shape: 'angle', d: 200, b: 120, t: 12 } },
+    { id: 'HORIZONTAL', kind: 'member', group: 'g', from: P(3600, 0, 300), to: P(4600, 0, 300), rot: -23.5, xsection: { shape: 'channel', d: 260, bf: 90, tw: 9, tf: 14 } },
+    { id: 'SLOPED', kind: 'member', group: 'g', from: P(3600, 500, 0), to: P(4600, 1100, 800), rot: 81, xsection: { shape: 'rhs', d: 220, b: 140, t: 10 } },
+  );
+  const boundaries = [-540, -360, -180, -0, 0, 180, 360, 540];
+  boundaries.forEach((rot, index) => members.push({
+    id: `BOUND-${index}`, kind: 'member', group: 'g', from: P(index * 260, 1700, 0), to: P(index * 260, 1700, 500),
+    rot, xsection: { shape: 'rect', w: 80, d: 140 },
+  }));
+  [0.000999, 0.001, 0.001001].forEach((horizontal, index) => {
+    const z = Math.sqrt(1 - horizontal * horizontal);
+    members.push({ id: `NEAR-${index}`, kind: 'member', group: 'g', from: P(2600 + index * 300, 1700, 0),
+      to: P(2600 + index * 300 + horizontal * 1000, 1700, z * 1000), rot: 82.7,
+      xsection: { shape: 'angle', d: 180, b: 100, t: 10 } });
+  });
+  return { meta: { name: `roll-${up}`, units: 'mm', up }, groups: [{ key: 'g', label: 'Profiles', color: '#60a5fa' }], elements: members };
+};
+
 function serve(pages) {
   const server = createServer((req, res) => {
     const body = pages[req.url];
@@ -128,9 +160,14 @@ async function loadPlaywright() {
   parseCheckTemplate();
 
   console.log('\nfixtures (rendered by the worktree build in a temp AWARE_HOME):');
-  const pages = { '/zup.html': renderFixture(frameScene('z')), '/yup.html': renderFixture(frameScene('y')) };
+  const pages = {
+    '/zup.html': renderFixture(frameScene('z')), '/yup.html': renderFixture(frameScene('y')),
+    '/roll-z.html': renderFixture(rollScene('z')), '/roll-y.html': renderFixture(rollScene('y')),
+  };
   ok('z-up fixture rendered', pages['/zup.html'].length > 10000);
   ok('y-up fixture rendered', pages['/yup.html'].length > 10000);
+  ok('z-up member-roll fixture rendered', pages['/roll-z.html'].length > 10000);
+  ok('y-up member-roll fixture rendered', pages['/roll-y.html'].length > 10000);
 
   const chromium = await loadPlaywright();
   const server = await serve(pages);
@@ -148,6 +185,59 @@ async function loadPlaywright() {
   };
 
   try {
+    // ---- canonical member roll: actual rendered bases and vertices -----------------------------
+    for (const up of ['z', 'y']) {
+      console.log(`\n${up}-up member roll:`);
+      const { page, errors } = await open(`/roll-${up}.html`);
+      const ids = ['I', 'C', 'L', 'RHS', 'CHS', 'RECT', 'DOWN', 'HORIZONTAL', 'SLOPED'];
+      for (const id of ids) {
+        const frame = await page.evaluate((memberId) => window.__viewer3d.memberFrame(memberId), id);
+        const vertices = await page.evaluate((memberId) => window.__viewer3d.memberVertices(memberId), id);
+        const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+        const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+        ok(`${up}-up ${id}: rendered roll frame is present`, !!frame);
+        ok(`${up}-up ${id}: rendered basis is orthonormal`, frame &&
+          Math.abs(dot(frame.world.x, frame.world.y)) < 1e-9 &&
+          dot(cross(frame.world.x, frame.world.y), frame.world.axis) > 1 - 1e-9);
+        ok(`${up}-up ${id}: actual profile vertices are finite`, vertices.length >= 8 && vertices.flat().every(Number.isFinite), `vertices=${vertices.length}`);
+      }
+      // Golden proof for the regression behind #425: metadata alone is not enough.  For the
+      // vertical asymmetric angle, assert both the rolled basis and one real mesh corner.  These
+      // fail if orientMember/memberFrame reports 82.7 degrees but renders the zero-roll frame.
+      const angle = await page.evaluate(() => ({
+        frame: window.__viewer3d.memberFrame('L'),
+        vertices: window.__viewer3d.memberVertices('L'),
+      }));
+      const radians = 82.7 * Math.PI / 180, c = Math.cos(radians), s = Math.sin(radians);
+      const expectedX = up === 'z' ? [c, 0, s] : [c, 0, -s];
+      const expectedY = up === 'z' ? [-s, 0, c] : [-s, 0, -c];
+      const expectedAxis = up === 'z' ? [0, -1, 0] : [0, 1, 0];
+      const vecNear = (a, b, tol = 1e-6) => a && b && a.length === b.length && a.every((v, i) => near(v, b[i], tol));
+      ok(`${up}-up L: rendered 82.7-degree X axis is golden`, vecNear(angle.frame.world.x, expectedX, 1e-9), JSON.stringify(angle.frame.world.x));
+      ok(`${up}-up L: rendered 82.7-degree Y axis is golden`, vecNear(angle.frame.world.y, expectedY, 1e-9), JSON.stringify(angle.frame.world.y));
+      const center = [1000, 600, 0];
+      const expectedCorner = center.map((v, i) => v - 60 * expectedX[i] - 100 * expectedY[i] - 600 * expectedAxis[i]);
+      const zeroCorner = up === 'z' ? [940, 1200, -100] : [940, 0, 100];
+      ok(`${up}-up L: actual asymmetric-profile vertex carries authored roll`,
+        angle.vertices.some((v) => vecNear(v, expectedCorner)), `expected=${JSON.stringify(expectedCorner)}`);
+      ok(`${up}-up L: actual asymmetric-profile vertex is not left at zero roll`,
+        !angle.vertices.some((v) => vecNear(v, zeroCorner)), `zero=${JSON.stringify(zeroCorner)}`);
+      const expectedBoundary = [-180, 0, -180, 0, 0, -180, 0, -180];
+      for (let index = 0; index < expectedBoundary.length; index++) {
+        const frame = await page.evaluate((memberId) => window.__viewer3d.memberFrame(memberId), `BOUND-${index}`);
+        ok(`${up}-up boundary ${index}: normalized half-open angle`, frame && near(frame.scene.rot, expectedBoundary[index], 1e-9), `rot=${frame && frame.scene.rot}`);
+      }
+      for (let index = 0; index < 3; index++) {
+        const frame = await page.evaluate((memberId) => window.__viewer3d.memberFrame(memberId), `NEAR-${index}`);
+        ok(`${up}-up near-vertical ${index}: frame remains finite`, frame && Object.values(frame.scene).flat(Infinity).filter((v) => typeof v === 'number').every(Number.isFinite));
+      }
+      const screenshot = join(tmpdir(), `aware-viewer-member-roll-${up}.png`);
+      await page.screenshot({ path: screenshot, fullPage: true });
+      ok(`${up}-up member-roll screenshot captured`, readFileSync(screenshot).length > 1000, screenshot);
+      ok(`${up}-up member-roll console clean`, errors.length === 0, errors.join(' | '));
+      await page.close();
+    }
+
     // ---- the coordinate invariant, in both directions ------------------------------------------
     for (const up of ['z', 'y']) {
       console.log(`\n${up}-up scene:`);

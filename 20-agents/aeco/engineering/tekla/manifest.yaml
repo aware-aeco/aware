@@ -1,5 +1,5 @@
 agent:        tekla
-version:      0.1.1
+version:      0.1.2
 sdk-target:   2025+         # version-agnostic shorthand; structured form lands in hardening pass
 display-name: Tekla Structures
 
@@ -277,7 +277,8 @@ commands:
         type: object
         required: true
         description: |
-          Canonical scene object. meta is `{name?, units?:"mm", sourceId, sceneHash}`.
+          Canonical scene object. meta is `{name?, units?:"mm", up?:"z", sourceId, sceneHash}`;
+          Y-up is rejected before mutation until an explicit export transform exists.
           Top-level collections are `elements`, `operations`, and `referenceSystems`.
           Supported physical kinds are exact-profile legacy members, plate, rod,
           bolt-shank, washer, nut, and bolt-head. Supported operations are bolt-array,
@@ -286,7 +287,17 @@ commands:
           by the tightest non-truncating shared Tekla Grid envelope; when that native
           rectangle extends one or more authored axes, the result carries a
           tekla-grid-axis-extents-expanded warning. Missing units means legacy
-          millimetres; explicit non-mm units fail before mutation.
+          millimetres; explicit non-mm units fail before mutation. Physical member/line/box
+          records may carry finite numeric `rot`: positive degrees are right-handed about
+          directed from→to and are verified against native B-rep geometry before retirement.
+      expectedModelPath:
+        type: string
+        required: false
+        description: |
+          Optional canonical full path of the model this write is allowed to mutate. A mismatch
+          fails inside the canonical script immediately before any work-plane change or insertion.
+          In QA, set AWARE_TEKLA_QA_GUARD=1; then this input or the matching
+          AWARE_TEKLA_EXPECT_MODEL_PATH environment value is mandatory.
       version:
         type: string
         required: false

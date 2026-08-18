@@ -40,6 +40,19 @@ parametric or authored contour geometry and never fall back to `100*100`.
 Profile candidates are accepted only after successful insertion and GUID
 read-back; this path does not use `CatalogHandler`.
 
+Physical `member`, `line`, and `box` records may carry optional finite numeric
+`rot`. Positive degrees follow the canonical right-hand rule about directed
+`from→to`; the bridge converts that frame to Tekla's measured FRONT/offset
+convention, then verifies both normalized native rotation read-back and the
+reselected B-rep vertex orientation before prior-set retirement. Absent/`"z"`
+is the only accepted `meta.up`; Y-up fails before mutation.
+
+For guarded automation, pass `expectedModelPath` beside `scene`, or set
+`AWARE_TEKLA_EXPECT_MODEL_PATH`. The bridge compares the resolved path with the
+live model inside the script immediately before any work-plane change or native
+insertion. `AWARE_TEKLA_QA_GUARD=1` makes an expectation mandatory and rejects
+conflicting request/environment values.
+
 The result keeps the legacy summary fields and adds exhaustive `emitted`,
 `failed`, `unsupported`, and `warnings` arrays. A child or hole effect realized
 by a native bolt array carries the bolt array GUID and `realizedBy`, and is not
