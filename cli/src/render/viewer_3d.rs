@@ -31,6 +31,7 @@ use crate::render::geom::{
     cross3, distance3, dot3, length3, normalized3, point_in_polygon, point_segment_distance,
     polygon_edges, polygon_is_simple_nonzero,
 };
+use crate::render::scene_roll::{member_roll, scene_up};
 use serde_json::Value;
 use std::collections::{HashMap, HashSet};
 
@@ -627,10 +628,13 @@ function makeLabel(text,pos,maxDim){
   sp.scale.set(maxDim*0.09, maxDim*0.045, 1); sp.position.copy(pos); return sp;
 }
 
-// ---- structural cross-section profiles (extruded), derived from the member's profile name ----
-// section.w = flange width / overall width, section.d = section depth. An optional
-// section.shape ("I"|"C"|"L"|"TUBE"|"BOX") overrides the name-based guess.
+// ---- structural cross-section profiles (extruded) ----
+// Canonical `xsection` wins and uses the same sharp-corner dimensions as IFC.
+// Legacy `section` + profile-name inference remains for older producers.
 function shapeOf(e){
+  const xs=e&&e.xsection, xshape=xs&&String(xs.shape||'').toLowerCase();
+  if(xshape==='i') return 'I'; if(xshape==='channel') return 'C'; if(xshape==='angle') return 'L';
+  if(xshape==='rhs'||xshape==='chs') return xshape.toUpperCase(); if(xshape==='rect') return 'BOX';
   const p=((e.section&&e.section.shape)||(e.meta&&e.meta.profile)||'').toString().toUpperCase().trim();
   if(/^(W|M|S|HP|UC|UB|UKC|UKB|IPE|HE)/.test(p)) return 'I';
   if(/^(C|MC|PFC)/.test(p)) return 'C';
@@ -638,41 +642,52 @@ function shapeOf(e){
   if(/^(HSS|PIPE|TS|SHS|RHS|CHS|TUBE|HSQ)/.test(p)) return 'TUBE';
   return 'BOX';
 }
-function profileShape(kind,w,d){
+function sectionSpec(e,w,d){ const xs=e&&e.xsection, shape=xs&&String(xs.shape||'').toLowerCase();
+  const pos=(...v)=>v.every(n=>typeof n==='number'&&Number.isFinite(n)&&n>0);
+  if(shape==='i'&&pos(xs.d,xs.bf,xs.tw,xs.tf)&&xs.tw<xs.bf&&2*xs.tf<xs.d)return {kind:'I',w:xs.bf,d:xs.d,tw:xs.tw,tf:xs.tf};
+  if(shape==='channel'&&pos(xs.d,xs.bf,xs.tw,xs.tf)&&xs.tw<xs.bf&&2*xs.tf<xs.d)return {kind:'C',w:xs.bf,d:xs.d,tw:xs.tw,tf:xs.tf};
+  if(shape==='angle'&&pos(xs.d,xs.b,xs.t)&&xs.t<Math.min(xs.d,xs.b))return {kind:'L',w:xs.b,d:xs.d,t:xs.t};
+  if(shape==='rhs'&&pos(xs.d,xs.b,xs.t)&&2*xs.t<Math.min(xs.d,xs.b))return {kind:'RHS',w:xs.b,d:xs.d,t:xs.t};
+  if(shape==='chs'&&pos(xs.od,xs.t)&&2*xs.t<xs.od)return {kind:'CHS',w:xs.od,d:xs.od,t:xs.t};
+  if(shape==='rect'&&pos(xs.w,xs.d))return {kind:'BOX',w:xs.w,d:xs.d};
+  return {kind:shapeOf(e),w,d}; }
+function profileShape(spec){ const kind=spec.kind,w=spec.w,d=spec.d;
   const s=new THREE.Shape(), hw=w/2, hd=d/2;
-  if(kind==='I'){ const tf=Math.min(d*0.5,Math.max(d*0.10,6)), tw=Math.min(w*0.5,Math.max(w*0.10,5));
+  if(kind==='I'){ const tf=spec.tf||Math.min(d*0.5,Math.max(d*0.10,6)), tw=spec.tw||Math.min(w*0.5,Math.max(w*0.10,5));
     s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,-hd+tf); s.lineTo(tw/2,-hd+tf);
     s.lineTo(tw/2,hd-tf); s.lineTo(hw,hd-tf); s.lineTo(hw,hd); s.lineTo(-hw,hd);
     s.lineTo(-hw,hd-tf); s.lineTo(-tw/2,hd-tf); s.lineTo(-tw/2,-hd+tf); s.lineTo(-hw,-hd+tf); s.closePath();
-  } else if(kind==='C'){ const tf=Math.max(d*0.10,5), tw=Math.max(w*0.12,5);
+  } else if(kind==='C'){ const tf=spec.tf||Math.max(d*0.10,5), tw=spec.tw||Math.max(w*0.12,5);
     s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,-hd+tf); s.lineTo(-hw+tw,-hd+tf);
     s.lineTo(-hw+tw,hd-tf); s.lineTo(hw,hd-tf); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath();
-  } else if(kind==='L'){ const t=Math.max(Math.min(w,d)*0.18,5);
+  } else if(kind==='L'){ const t=spec.t||Math.max(Math.min(w,d)*0.18,5);
     s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,-hd+t); s.lineTo(-hw+t,-hd+t); s.lineTo(-hw+t,hd); s.lineTo(-hw,hd); s.closePath();
-  } else if(kind==='TUBE'){ const t=Math.max(Math.min(w,d)*0.12,4);
+  } else if(kind==='TUBE'||kind==='RHS'){ const t=spec.t||Math.max(Math.min(w,d)*0.12,4);
     s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath();
     const h=new THREE.Path(); h.moveTo(-hw+t,-hd+t); h.lineTo(hw-t,-hd+t); h.lineTo(hw-t,hd-t); h.lineTo(-hw+t,hd-t); h.closePath(); s.holes.push(h);
+  } else if(kind==='CHS'){ const outer=w/2,inner=outer-spec.t;s.absarc(0,0,outer,0,Math.PI*2,false);const h=new THREE.Path();h.absarc(0,0,inner,0,Math.PI*2,true);s.holes.push(h);
   } else { s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath(); }
   return s;
 }
 function profileGeom(e,w,d,len){
-  const kind=shapeOf(e);
-  if(kind==='BOX') return new THREE.BoxGeometry(w,len,d);          // fallback: length on local Y
-  const g=new THREE.ExtrudeGeometry(profileShape(kind,w,d), {depth:len, bevelEnabled:false});
+  const spec=sectionSpec(e,w,d);
+  const g=new THREE.ExtrudeGeometry(profileShape(spec), {depth:len, bevelEnabled:false,curveSegments:32});
   g.translate(0,0,-len/2); return g;                                // extruded along +Z, centred
 }
-const _ZA=new THREE.Vector3(0,0,1), _YA=new THREE.Vector3(0,1,0);
-function orientMember(mesh, dir){
-  const m=dir.clone().normalize();
-  if(mesh.geometry.type==='BoxGeometry'){ mesh.quaternion.setFromUnitVectors(_YA,m); return; }
-  const q=new THREE.Quaternion().setFromUnitVectors(_ZA,m);         // member axis = extrude (Z)
-  const proj=_YA.clone().sub(m.clone().multiplyScalar(_YA.dot(m))); // world-up perpendicular to member
-  if(proj.lengthSq()>1e-6){ proj.normalize();
-    const ly=_YA.clone().applyQuaternion(q);                        // where section-depth currently points
-    const ang=Math.atan2(ly.clone().cross(proj).dot(m), ly.dot(proj));
-    q.premultiply(new THREE.Quaternion().setFromAxisAngle(m, ang)); // roll so the web stands vertical
-  }
-  mesh.quaternion.copy(q);
+function normalizeRoll(d){ let r=((d%360)+360)%360;if(r>=180)r-=360;return Object.is(r,-0)?0:r; }
+function memberFrame(e,up){ const from=e.from,to=e.to,n=new THREE.Vector3(to[0]-from[0],to[1]-from[1],to[2]-from[2]).normalize();
+  const U=up==='y'?new THREE.Vector3(0,1,0):new THREE.Vector3(0,0,1), du=n.dot(U), perp=Math.max(0,1-du*du);let x,y;
+  if(perp<=1e-6){ const seed=new THREE.Vector3(1,0,0);x=seed.addScaledVector(n,-seed.dot(n)).normalize();y=n.clone().cross(x).normalize(); }
+  else { y=U.clone().addScaledVector(n,-du).normalize();x=y.clone().cross(n).normalize(); }
+  const rot=normalizeRoll(typeof e.rot==='number'?e.rot:0),a=rot*Math.PI/180,c=Math.cos(a),s=Math.sin(a);
+  const rx=x.clone().multiplyScalar(c).addScaledVector(y,s),ry=y.clone().multiplyScalar(c).addScaledVector(x,-s);
+  return {n,x,y,rx,ry,rot}; }
+function orientMember(mesh,e,up){ const F=memberFrame(e,up),x=conv(F.rx.toArray(),up).normalize(),y=conv(F.ry.toArray(),up).normalize();
+  // Z-up's legacy screen conversion swaps Y/Z and is reflective. Extrusions are centred, so use
+  // x×y as the render axis: cross-section orientation stays exact and reversing the centred local Z
+  // axis does not move either endpoint.
+  const z=x.clone().cross(y).normalize(),M=new THREE.Matrix4().makeBasis(x,y,z);mesh.quaternion.setFromRotationMatrix(M);
+  return {scene:{axis:F.n.toArray(),zeroX:F.x.toArray(),zeroY:F.y.toArray(),x:F.rx.toArray(),y:F.ry.toArray(),rot:F.rot},world:{x:x.toArray(),y:y.toArray(),axis:z.toArray()}};
 }
 
 function vec3(P){ return Array.isArray(P)&&P.length===3 ? P : null; }
@@ -845,7 +860,7 @@ function lengthAxis(e,kind,isMesh){
   if(isMesh||kind==='node') return null;
   if(kind==='rod'||kind==='bolt-shank') return 'y';              // CylinderGeometry: Y-axial
   if(kind==='plate'||kind==='washer'||kind==='nut'||kind==='bolt-head') return 'z'; // extruded on Z (thickness)
-  return shapeOf(e)==='BOX' ? 'y' : 'z';                          // BoxGeometry vs ExtrudeGeometry
+  return 'z';                                                    // every member profile now extrudes on local Z
 }
 function applyTriplanar(material,scaleMm,axis){
   // `axis` null → WORLD projection: isotropic finishes (concrete, asphalt, paint) stay continuous
@@ -1018,7 +1033,7 @@ function renderScene(S){
     // Opacity: per-element overrides per-group; <1 makes the material translucent so
     // elements embedded in others (e.g. rebar inside concrete) can be revealed (#258).
     // Imported meshes may have inconsistent winding — DoubleSide avoids black back-faces.
-    const mat=solidMaterial(e,colorOf,opacityOf,isMesh,kind); let mesh;
+    const mat=solidMaterial(e,colorOf,opacityOf,isMesh,kind); let mesh,rollFrame=null;
     if(isMesh){ const g=new THREE.BufferGeometry(), P=e.positions, arr=new Float32Array(P.length);
       for(let i=0;i+2<P.length;i+=3){ const v=conv([P[i],P[i+1],P[i+2]],up); arr[i]=v.x; arr[i+1]=v.y; arr[i+2]=v.z; }
       g.setAttribute('position', new THREE.BufferAttribute(arr,3)); g.setIndex(e.indices); g.computeVertexNormals();
@@ -1031,9 +1046,9 @@ function renderScene(S){
     else { const a=conv(e.from,up), b=conv(e.to,up), dir=b.clone().sub(a), len=dir.length()||thick;
       const w=(e.section&&e.section.w)||thick, d=(e.section&&e.section.d)||thick;
       mesh=new THREE.Mesh(profileGeom(e,w,d,len), mat); mesh.position.copy(a).add(b).multiplyScalar(0.5);
-      orientMember(mesh, dir); }
+      rollFrame=orientMember(mesh,e,up); }
            mesh.receiveShadow=true;   // steel catches shadow from steel, not just from the ground; casting is decided per-pass in applyDisplayMode
-    mesh.userData=e; content.add(mesh); pickable.push(mesh);
+    mesh.userData=e;if(rollFrame)mesh.userData.rollFrame=rollFrame;content.add(mesh); pickable.push(mesh);
   }
   for(const g of (S.grids||[])) if(g&&Array.isArray(g.at)) content.add(makeLabel(g.label, conv(g.at,up), maxDim));
   addReferenceSystems(S);
@@ -2220,6 +2235,8 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   planePatchCorners:(hp,n)=>planePatchCorners(new THREE.Vector3(hp[0],hp[1],hp[2]),new THREE.Vector3(n[0],n[1],n[2]).normalize(),CLIP_PATCH_R).map(v=>v.toArray()),
   clipGhostShown:()=>!!(clipGhost&&clipGhost.group.visible),
   controlsEnabled:()=>controls.enabled,
+  memberFrame:(id)=>{const m=pickable.find(o=>o.userData&&o.userData.id===id);return m&&m.userData.rollFrame?JSON.parse(JSON.stringify(m.userData.rollFrame)):null;},
+  memberVertices:(id)=>{const m=pickable.find(o=>o.userData&&o.userData.id===id);if(!m||!m.geometry||!m.geometry.attributes.position)return[];m.updateMatrixWorld(true);const p=m.geometry.attributes.position,out=[];for(let i=0;i<p.count;i++){const v=new THREE.Vector3().fromBufferAttribute(p,i).applyMatrix4(m.matrixWorld),q=v.toArray();if(!out.some(a=>Math.hypot(a[0]-q[0],a[1]-q[1],a[2]-q[2])<1e-6))out.push(q);}return out;},
   // What was actually DRAWN, so a test is not limited to interrogating the transform that fed it.
   gridRenderables:()=>gridLines.map(l=>({role:l.userData.gridRole,a:l.userData.a,b:l.userData.b})),
   referenceSystemSegments:()=>(SCENE.referenceSystems||[]).filter(R=>R&&R.kind==='structural-grid').map(R=>{
@@ -2501,6 +2518,7 @@ fn validate_plate(
 }
 
 fn classify_scene(scene: &Value) -> Result<SceneReceipt, AwareError> {
+    scene_up(scene, true, "viewer-3d render")?;
     if let Some(units) = scene.get("meta").and_then(|meta| meta.get("units"))
         && units.as_str() != Some("mm")
     {
@@ -2528,6 +2546,12 @@ fn classify_scene(scene: &Value) -> Result<SceneReceipt, AwareError> {
                 }
             });
         let mut nested_rows = Vec::new();
+        if !matches!(kind.as_str(), "line" | "box" | "member") && object.contains_key("rot") {
+            return Err(scene_error(
+                &format!("{path}.rot"),
+                "is applicable only to physical member, line, and box records",
+            ));
+        }
         match kind.as_str() {
             "line" | "box" | "member" => {
                 let from = vector::<3>(object.get("from"), &format!("{path}.from"))?;
@@ -2535,6 +2559,11 @@ fn classify_scene(scene: &Value) -> Result<SceneReceipt, AwareError> {
                 if from == to {
                     return Err(scene_error(&path, "member axis must have nonzero length"));
                 }
+                member_roll(
+                    object.get("rot"),
+                    &format!("{path}.rot"),
+                    "viewer-3d render",
+                )?;
             }
             "node" => {
                 vector::<3>(object.get("at"), &format!("{path}.at"))?;
@@ -3714,6 +3743,56 @@ mod tests {
     use super::*;
     use serde_json::json;
 
+    fn rolled_member(up: &str, rot: Value) -> Value {
+        json!({
+            "meta": { "name": "roll", "units": "mm", "up": up },
+            "elements": [{
+                "id": "M", "kind": "member", "from": [0,0,0], "to": [0,0,1000],
+                "rot": rot, "section": { "w": 100, "d": 200 },
+                "xsection": { "shape": "angle", "d": 200, "b": 100, "t": 10 }
+            }]
+        })
+    }
+
+    #[test]
+    fn validates_scene_up_and_member_roll_without_coercion() {
+        for up in ["z", "y"] {
+            viewer_3d_render(&json!({ "scene": rolled_member(up, json!(82.7)) }), true).unwrap();
+        }
+        for invalid in [Value::Null, json!("82.7"), json!(true)] {
+            let error = viewer_3d_render(&json!({ "scene": rolled_member("z", invalid) }), true)
+                .unwrap_err()
+                .to_string();
+            assert!(error.contains("finite JSON number"), "{error}");
+        }
+        for invalid_up in [json!("Z"), json!("x"), json!(null), json!(42)] {
+            let mut scene = rolled_member("z", json!(0));
+            scene["meta"]["up"] = invalid_up;
+            assert!(viewer_3d_render(&json!({ "scene": scene }), true).is_err());
+        }
+        let mut plate = rolled_member("z", json!(0))["elements"][0].clone();
+        plate["kind"] = json!("node");
+        plate["at"] = json!([0, 0, 0]);
+        let error = viewer_3d_render(
+            &json!({ "scene": { "meta": { "up": "z" }, "elements": [plate] } }),
+            true,
+        )
+        .unwrap_err()
+        .to_string();
+        assert!(error.contains("applicable only"), "{error}");
+    }
+
+    #[test]
+    fn ships_exact_profiles_roll_frames_and_world_vertex_probes() {
+        let output =
+            viewer_3d_render(&json!({ "scene": rolled_member("z", json!(82.7)) }), true).unwrap();
+        let html = output["html"].as_str().unwrap();
+        assert!(html.contains("shape==='angle'"));
+        assert!(html.contains("function memberFrame(e,up)"));
+        assert!(html.contains("memberFrame:(id)=>"));
+        assert!(html.contains("memberVertices:(id)=>"));
+    }
+
     #[test]
     fn renders_scene_into_self_contained_html() {
         let scene = json!({
@@ -3816,10 +3895,10 @@ mod tests {
             "the axis reaches the shader (position AND normal) instead of only the cache key"
         );
         // The permutation is only correct if it is keyed off the geometry each element actually
-        // gets — BoxGeometry/Cylinder are Y-axial, ExtrudeGeometry is Z-axial.
+        // gets — rods remain Y-axial, while every member profile now extrudes on local Z.
         assert!(
-            compact.contains("returnshapeOf(e)==='BOX'?'y':'z'")
-                && compact.contains("if(kind==='rod'||kind==='bolt-shank')return'y'"),
+            compact.contains("if(kind==='rod'||kind==='bolt-shank')return'y'")
+                && compact.contains("return'z';//everymemberprofilenowextrudesonlocalZ"),
             "length axis is derived per geometry kind"
         );
 

@@ -206,4 +206,67 @@ public class ResolveExecTargetTests
         Assert.Equal(7, pid);
         Assert.Null(error);
     }
+
+    [Fact]
+    public void ExpectedModelPathMayComeFromRequestOrEnvironment()
+    {
+        var input = JsonNode.Parse("{\"expectedModelPath\":\"C:\\\\Models\\\\QA\"}");
+        var ok = Program.TryResolveExpectedModelPath(
+            input,
+            @"c:\Models\QA",
+            qaGuard: true,
+            out var path,
+            out var error);
+
+        Assert.True(ok);
+        Assert.Equal(@"C:\Models\QA", path, ignoreCase: true);
+        Assert.Null(error);
+    }
+
+    [Fact]
+    public void QaGuardRequiresAnExpectedModelPath()
+    {
+        var ok = Program.TryResolveExpectedModelPath(
+            JsonNode.Parse("{}"),
+            null,
+            qaGuard: true,
+            out var path,
+            out var error);
+
+        Assert.False(ok);
+        Assert.Null(path);
+        Assert.Contains("requires", error!);
+    }
+
+    [Fact]
+    public void ConflictingExpectedModelPathsFailClosed()
+    {
+        var ok = Program.TryResolveExpectedModelPath(
+            JsonNode.Parse("{\"expectedModelPath\":\"C:\\\\Models\\\\One\"}"),
+            @"C:\Models\Two",
+            qaGuard: false,
+            out var path,
+            out var error);
+
+        Assert.False(ok);
+        Assert.Null(path);
+        Assert.Contains("conflicting", error!);
+    }
+
+    [Theory]
+    [InlineData("null")]
+    [InlineData("42")]
+    [InlineData("\"   \"")]
+    public void InvalidExpectedModelPathTypesFailClosed(string value)
+    {
+        var ok = Program.TryResolveExpectedModelPath(
+            JsonNode.Parse("{\"expectedModelPath\":" + value + "}"),
+            null,
+            qaGuard: false,
+            out _,
+            out var error);
+
+        Assert.False(ok);
+        Assert.Contains("invalid", error!);
+    }
 }

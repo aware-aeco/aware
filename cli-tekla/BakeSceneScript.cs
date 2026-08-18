@@ -11,10 +11,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using Tekla.Structures;
 using Tekla.Structures.Model;
 using Tekla.Structures.Geometry3d;
+using Tekla.Structures.Solid;
 
 var inv = CultureInfo.InvariantCulture;
 Func<double,bool> finite = d => !Double.IsNaN(d) && !Double.IsInfinity(d);
@@ -26,6 +28,7 @@ Func<object,double> number = o => {
     double value;
     return Double.TryParse(o.ToString(), NumberStyles.Float, inv, out value) ? value : Double.NaN;
 };
+Func<object,bool> jsonNumber = o => o is double || o is float || o is decimal || o is long || o is int || o is short || o is byte || o is ulong || o is uint || o is ushort || o is sbyte;
 Func<object,string> text = o => o == null ? "" : o.ToString();
 Func<IDictionary<string,object>,string,string> str = (o,k) => o != null && o.TryGetValue(k, out var v) ? text(v) : "";
 Func<IDictionary<string,object>,string,IDictionary<string,object>> obj = (o,k) => o != null && o.TryGetValue(k, out var v) ? v as IDictionary<string,object> : null;
@@ -76,6 +79,7 @@ var meta = obj(scene,"meta");
 string sceneName = meta == null ? "Steel from Drawings" : str(meta,"name");
 if (String.IsNullOrWhiteSpace(sceneName)) sceneName = "Steel from Drawings";
 string units = meta == null ? "" : str(meta,"units");
+string sceneUp = meta == null ? "" : str(meta,"up");
 string sourceId = meta == null ? "" : str(meta,"sourceId").Trim();
 string sceneHash = meta == null ? "" : str(meta,"sceneHash").Trim();
 string materializationHash = args != null && args.TryGetValue("materializationHash", out var mh) ? text(mh) : "";
@@ -115,6 +119,8 @@ Func<string,string,bool> acceptId = (id,kind) => {
 
 if (!String.IsNullOrEmpty(units) && !String.Equals(units,"mm",StringComparison.OrdinalIgnoreCase))
     failed.Add(row("scene","scene","failed","unsupported-units","Tekla bake-scene accepts only millimetres"));
+if (!String.IsNullOrEmpty(sceneUp) && sceneUp != "z")
+    failed.Add(row("scene","scene","failed","unsupported-scene-up","Tekla bake-scene accepts only absent or `z` meta.up; Y-up export needs an explicit reviewed transform"));
 if (String.IsNullOrWhiteSpace(sourceId)) failed.Add(row("scene","scene","failed","missing-source-id","scene.meta.sourceId is required"));
 if (String.IsNullOrWhiteSpace(sceneHash)) failed.Add(row("scene","scene","failed","missing-scene-hash","scene.meta.sceneHash is required"));
 
@@ -161,8 +167,11 @@ foreach(var kv in operationById) if(str(kv.Value,"kind")=="bolt-array") { var in
 
 // Complete trust-boundary validation before the first Tekla Insert. Native API
 // failures remain possible, but malformed geometry/relationships never start a batch.
+var memberRollPlans = new Dictionary<string,AwareTekla.TeklaMemberRollPlan>(StringComparer.Ordinal);
 foreach(var pair in elementById) try {var id=pair.Key;var el=pair.Value;var kind=str(el,"kind").ToLowerInvariant();if(String.IsNullOrEmpty(kind))kind="member";
-    if(kind=="member"||kind=="line"||kind=="box"){var from=list(el,"from");var to=list(el,"to");var em=obj(el,"meta");string profile=str(el,"profile");if(String.IsNullOrWhiteSpace(profile)&&em!=null)profile=str(em,"profile");if(!vec3ok(from)||!vec3ok(to)||Distance.PointToPoint(point(from),point(to))<=1e-6||String.IsNullOrWhiteSpace(profile))throw new Exception("member requires a nonzero finite axis and exact profile");}
+    bool rollKind=kind=="member"||kind=="line"||kind=="box";
+    if(!rollKind&&el.ContainsKey("rot"))throw new Exception("rot is applicable only to physical member, line, and box records");
+    if(rollKind){var from=list(el,"from");var to=list(el,"to");var em=obj(el,"meta");string profile=str(el,"profile");if(String.IsNullOrWhiteSpace(profile)&&em!=null)profile=str(em,"profile");if(!vec3ok(from)||!vec3ok(to)||Distance.PointToPoint(point(from),point(to))<=1e-6||String.IsNullOrWhiteSpace(profile))throw new Exception("member requires a nonzero finite axis and exact profile");object rv;double roll=0;if(el.TryGetValue("rot",out rv)){if(!jsonNumber(rv)||!finite(number(rv)))throw new Exception("member rot must be a finite JSON number");roll=number(rv);}memberRollPlans[id]=memberRoll.CreatePlan(new[]{number(from[0]),number(from[1]),number(from[2])},new[]{number(to[0]),number(to[1]),number(to[2])},roll);}
     else if(kind=="plate"){
         var frame=obj(el,"frame");var origin=list(frame,"origin");var u=list(frame,"uDir");var v=list(frame,"vDir");var n=list(frame,"normal");var outline=list(el,"outline");double th=el.TryGetValue("thicknessMm",out var tv)?number(tv):Double.NaN;
         var polygon=polygonPoints(outline);
@@ -253,12 +262,26 @@ foreach(var item in unsupportedGridEnvelopes){var gridId=item.Key;var rows=unsup
 
 if(failed.Count>0){appendBatchAborted("Batch was aborted because another supported record failed preflight.");return new{ok=false,sourceId,sceneHash,materializationHash,attemptId,emitted=new object[0],failed,unsupported,warnings};}
 
+string expectedModelPath=args!=null&&args.TryGetValue("expectedModelPath",out var expectedModelValue)?text(expectedModelValue).Trim():"";
+if(!String.IsNullOrEmpty(expectedModelPath)){
+    string actualModelPath=Path.GetFullPath(m.GetInfo().ModelPath);
+    string canonicalExpectedPath=Path.GetFullPath(expectedModelPath);
+    if(!String.Equals(actualModelPath,canonicalExpectedPath,StringComparison.OrdinalIgnoreCase)){
+        failed.Add(row("scene","scene","failed","unexpected-model-path","Refusing to mutate Tekla model `"+actualModelPath+"`; expected `"+canonicalExpectedPath+"`."));
+        appendBatchAborted("Batch was aborted because the connected Tekla model did not match the expected QA target.");
+        return new{ok=false,sourceId,sceneHash,materializationHash,attemptId,emitted=new object[0],failed,unsupported,warnings};
+    }
+}
+
 var staged = new List<ModelObject>();
 bool retirementStarted = false;
 var parts = new Dictionary<string,Part>(StringComparer.Ordinal);
 var nativeById = new Dictionary<string,ModelObject>(StringComparer.Ordinal);
 var nativeRecordIdByGuid = new Dictionary<Guid,string>();
 var profileById = new Dictionary<string,string>(StringComparer.Ordinal);
+var memberRollById = new Dictionary<string,double>(StringComparer.Ordinal);
+var nativeRotationById = new Dictionary<string,string>(StringComparer.Ordinal);
+var nativeRotationOffsetById = new Dictionary<string,double>(StringComparer.Ordinal);
 string activeId = supportedOrder.Count>0 ? supportedOrder[0].Item1 : "scene";
 Action<ModelObject,string> tagAfterInsert = (o,id) => {
     staged.Add(o);
@@ -274,10 +297,12 @@ Action<ModelObject,string> tagTransientAfterInsert = (o,id) => {
 };
 Action<ModelObject> labelBeforeInsert = o => { if(!o.SetLabel(attemptId)) throw new Exception("failed to set pre-Insert attempt label"); };
 Action<Part,IDictionary<string,object>,string> decorate = (p,el,defaultName) => { p.Name=String.IsNullOrWhiteSpace(str(el,"name"))?defaultName:str(el,"name"); p.Class=String.IsNullOrWhiteSpace(str(el,"teklaClass"))?"1":str(el,"teklaClass"); var material=str(el,"material"); if(!String.IsNullOrWhiteSpace(material))p.Material.MaterialString=material; };
+Func<Beam,List<Point>> solidVertices = beam => {var points=new List<Point>();var faces=beam.GetSolid().GetFaceEnumerator();while(faces.MoveNext()){var face=faces.Current as Face;if(face==null)continue;var loops=face.GetLoopEnumerator();while(loops.MoveNext()){var loop=loops.Current as Loop;if(loop==null)continue;var vertices=loop.GetVertexEnumerator();while(vertices.MoveNext()){var p=vertices.Current as Point;if(p!=null&&!points.Any(q=>Distance.PointToPoint(p,q)<=0.01))points.Add(p);}}}return points;};
+Func<Point,Point,Vector,double,Point> rotateAroundAxis = (p,origin,axis,degrees) => {var n=unit(axis);var v=new Vector(p.X-origin.X,p.Y-origin.Y,p.Z-origin.Z);double radians=degrees*Math.PI/180;var rotated=new Vector(v.X*Math.Cos(radians)+cross(n,v).X*Math.Sin(radians)+n.X*dot(n,v)*(1-Math.Cos(radians)),v.Y*Math.Cos(radians)+cross(n,v).Y*Math.Sin(radians)+n.Y*dot(n,v)*(1-Math.Cos(radians)),v.Z*Math.Cos(radians)+cross(n,v).Z*Math.Sin(radians)+n.Z*dot(n,v)*(1-Math.Cos(radians)));return move(origin,rotated,1);};
 Func<string,string,string,Point,Point,IDictionary<string,object>,Beam> insertBeam = (id,kind,profiles,p1,p2,el) => {
     if(Distance.PointToPoint(p1,p2)<=1e-6)throw new Exception(id+": axis has zero length");
     Exception last=null;
-    foreach(var profile in profiles.Split(new[]{'|'},StringSplitOptions.RemoveEmptyEntries)) { Beam b;try{b=new Beam(p1,p2);b.Profile.ProfileString=profile;decorate(b,el,kind=="member"?"MEMBER":kind.ToUpperInvariant());b.Position.Depth=Position.DepthEnum.MIDDLE;b.Position.Plane=Position.PlaneEnum.MIDDLE;b.Position.Rotation=Position.RotationEnum.TOP;labelBeforeInsert(b);}catch(Exception ex){last=ex;continue;}bool inserted;try{inserted=b.Insert();}catch(Exception ex){last=ex;continue;}if(!inserted)continue;tagAfterInsert(b,id);var selected=m.SelectModelObject(new Identifier(b.Identifier.GUID)) as Beam;if(selected==null)throw new Exception(id+": authoritative Beam GUID read-back failed");string resolved=selected.Profile.ProfileString;if(!String.Equals(resolved,profile,StringComparison.OrdinalIgnoreCase))throw new Exception(id+": resolved profile `"+resolved+"` differs from requested `"+profile+"`");parts[id]=selected;profileById[id]=resolved;return selected;}
+    foreach(var profile in profiles.Split(new[]{'|'},StringSplitOptions.RemoveEmptyEntries)) { Beam b;try{b=new Beam(p1,p2);b.Profile.ProfileString=profile;decorate(b,el,kind=="member"?"MEMBER":kind.ToUpperInvariant());b.Position.Depth=Position.DepthEnum.MIDDLE;b.Position.Plane=Position.PlaneEnum.MIDDLE;AwareTekla.TeklaMemberRollPlan rollPlan;if(memberRollPlans.TryGetValue(id,out rollPlan)){b.Position.Rotation=Position.RotationEnum.FRONT;b.Position.RotationOffset=rollPlan.NativeFrontOffsetDegrees;}else b.Position.Rotation=Position.RotationEnum.TOP;labelBeforeInsert(b);}catch(Exception ex){last=ex;continue;}bool inserted;try{inserted=b.Insert();}catch(Exception ex){last=ex;continue;}if(!inserted)continue;tagAfterInsert(b,id);var selected=m.SelectModelObject(new Identifier(b.Identifier.GUID)) as Beam;if(selected==null)throw new Exception(id+": authoritative Beam GUID read-back failed");string resolved=selected.Profile.ProfileString;if(!String.Equals(resolved,profile,StringComparison.OrdinalIgnoreCase))throw new Exception(id+": resolved profile `"+resolved+"` differs from requested `"+profile+"`");AwareTekla.TeklaMemberRollPlan expectedRoll;if(memberRollPlans.TryGetValue(id,out expectedRoll)){var desiredVertices=solidVertices(selected);selected.Position.Rotation=Position.RotationEnum.FRONT;selected.Position.RotationOffset=0;if(!selected.Modify())throw new Exception(id+": native zero-roll verification Modify failed");var zeroSelected=m.SelectModelObject(new Identifier(b.Identifier.GUID)) as Beam;if(zeroSelected==null)throw new Exception(id+": native zero-roll verification read-back failed");var zeroVertices=solidVertices(zeroSelected);zeroSelected.Position.Rotation=Position.RotationEnum.FRONT;zeroSelected.Position.RotationOffset=expectedRoll.NativeFrontOffsetDegrees;if(!zeroSelected.Modify())throw new Exception(id+": native roll restoration Modify failed");selected=m.SelectModelObject(new Identifier(b.Identifier.GUID)) as Beam;if(selected==null)throw new Exception(id+": native roll restoration read-back failed");double effective=AwareTekla.TeklaMemberRollContract.EffectiveNativeDegrees(selected.Position.Rotation.ToString(),selected.Position.RotationOffset);if(!AwareTekla.TeklaMemberRollContract.AnglesMatch(expectedRoll.NativeFrontOffsetDegrees,effective))throw new Exception(id+": native rotation read-back differs from the canonical roll plan");var restoredVertices=solidVertices(selected);var memberAxis=new Vector(p2.X-p1.X,p2.Y-p1.Y,p2.Z-p1.Z);if(zeroVertices.Count<4||restoredVertices.Count!=zeroVertices.Count||desiredVertices.Count!=zeroVertices.Count||desiredVertices.Any(source=>!restoredVertices.Any(actual=>Distance.PointToPoint(source,actual)<=0.1))||zeroVertices.Any(source=>!restoredVertices.Any(actual=>Distance.PointToPoint(rotateAroundAxis(source,p1,memberAxis,expectedRoll.NativeFrontOffsetDegrees),actual)<=0.1)))throw new Exception(id+": native B-rep section orientation differs from the canonical roll plan");memberRollById[id]=expectedRoll.NormalizedDegrees;nativeRotationById[id]=selected.Position.Rotation.ToString();nativeRotationOffsetById[id]=selected.Position.RotationOffset;}parts[id]=selected;profileById[id]=resolved;return selected;}
     throw new Exception(id+": no exact requested profile inserted"+(last==null?"":": "+last.Message));
 };
 Func<IDictionary<string,object>,string,ContourPlate> insertPlate = (el,id) => {
@@ -383,7 +408,7 @@ try {
     foreach(var old in retirementOrder)if(m.SelectModelObject(new Identifier(old.Identifier.GUID))!=null)throw new Exception("prior source-owned object remains after retirement "+old.Identifier.GUID);
     if(!m.CommitChanges("AWARE bake-scene "+sceneName+" "+attemptId))throw new Exception("Tekla CommitChanges returned false");
     if(scenePlaneChanged){if(!scenePlaneHandler.SetCurrentTransformationPlane(previousScenePlane))throw new Exception("failed to restore the user's prior work plane after the committed bake");scenePlaneChanged=false;}
-    foreach(var item in supportedOrder){string id=item.Item1;string kind=item.Item2;ModelObject o=null;string realizedBy="";if(nativeById.TryGetValue(id,out o)){}else if(realizedChildren.TryGetValue(id,out realizedBy)||realizedEffects.TryGetValue(id,out realizedBy)||realizedReferences.TryGetValue(id,out realizedBy))nativeById.TryGetValue(realizedBy,out o);if(o==null)throw new Exception(id+": supported record was not classified by the materializer");var r=row(id,kind,"emitted","","");r["nativeGuid"]=o.Identifier.GUID.ToString();if(!String.IsNullOrEmpty(realizedBy))r["realizedBy"]=realizedBy;if(profileById.ContainsKey(id))r["profile"]=profileById[id];emitted.Add(r);}
+    foreach(var item in supportedOrder){string id=item.Item1;string kind=item.Item2;ModelObject o=null;string realizedBy="";if(nativeById.TryGetValue(id,out o)){}else if(realizedChildren.TryGetValue(id,out realizedBy)||realizedEffects.TryGetValue(id,out realizedBy)||realizedReferences.TryGetValue(id,out realizedBy))nativeById.TryGetValue(realizedBy,out o);if(o==null)throw new Exception(id+": supported record was not classified by the materializer");var r=row(id,kind,"emitted","","");r["nativeGuid"]=o.Identifier.GUID.ToString();if(!String.IsNullOrEmpty(realizedBy))r["realizedBy"]=realizedBy;if(profileById.ContainsKey(id))r["profile"]=profileById[id];if(memberRollById.ContainsKey(id)){r["rot"]=memberRollById[id];r["nativeRotation"]=nativeRotationById[id];r["nativeRotationOffset"]=nativeRotationOffsetById[id];}emitted.Add(r);}
     Func<IDictionary<string,object>,string> legacyMemberRole=e=>{string role=str(e,"role").ToLowerInvariant();if(String.IsNullOrEmpty(role))role=str(e,"group").ToLowerInvariant();return role;};var legacyMembers=elementById.Values.Where(e=>{string kind=str(e,"kind").ToLowerInvariant();return String.IsNullOrEmpty(kind)||kind=="member"||kind=="line"||kind=="box";}).ToList();int columns=legacyMembers.Count(e=>legacyMemberRole(e)=="column"),beams=legacyMembers.Count(e=>legacyMemberRole(e)!="column"&&legacyMemberRole(e)!="brace");string modelName;try{modelName=m.GetInfo().ModelName;}catch{modelName="Tekla model";}
     int nativeCount=nativeRecordIdByGuid.Count;
     // Replace the "adding..." message only once the bake has actually reached its successful end.

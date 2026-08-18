@@ -24,6 +24,7 @@ use crate::render::geom::{
     Vec2, Vec3, add3, cross3, distance3, dot3, length3, normalized3, point_in_polygon,
     point_segment_distance, polygon_edges, polygon_is_simple_nonzero, scale3,
 };
+use crate::render::scene_roll::{SceneUp, member_frame, member_roll, scene_up};
 use serde_json::Value;
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
@@ -31,9 +32,6 @@ use std::fmt::Write as _;
 
 /// Base-64-ish charset for IFC GlobalIds (valid IFC GUID alphabet).
 const B64: &[u8] = b"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_$";
-
-/// A member axis whose horizontal component is within this (squared) tolerance is treated as vertical.
-const VERTICAL_EPSILON_SQ: f64 = 1e-6;
 
 /// A deterministic 22-char IFC GlobalId from an integer counter (no randomness, no clock).
 fn guid(n: i64) -> String {
@@ -778,7 +776,7 @@ struct BuildResult {
 }
 
 /// Build the full IFC4 SPF document from a scene object. Pure (no IO) so it is directly unit-testable.
-fn build_ifc(scene: &Value) -> BuildResult {
+fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
     let meta = scene.get("meta").and_then(Value::as_object);
     let proj_name = meta
         .and_then(|m| m.get("name"))
@@ -1207,22 +1205,13 @@ fn build_ifc(scene: &Value) -> BuildResult {
         if len < 1e-6 {
             continue; // degenerate member
         }
-        let (zx, zy, zz) = (dx / len, dy / len, dz / len);
-        // Local frame: Z = member axis; profile Y (= Z × X) = world-up, so an I-shape web is vertical
-        // for beams and columns take a fixed +Y-depth orientation (matches the FloLess 3D viewer).
-        let [xx, xy, xz] = if zx * zx + zy * zy <= VERTICAL_EPSILON_SQ {
-            // Near-vertical: seed local X = world +X (Y = Z × X is right-handed for both +Z and −Z).
-            [1.0, 0.0, 0.0]
-        } else {
-            // General: local Y = normalize(world-up projected onto the ⟂-Z plane); local X = Y × Z.
-            let dot = zz; // up·z
-            let (mut yx, mut yy, mut yz) = (-dot * zx, -dot * zy, 1.0 - dot * zz);
-            let yl = (yx * yx + yy * yy + yz * yz).sqrt();
-            yx /= yl;
-            yy /= yl;
-            yz /= yl;
-            cross3([yx, yy, yz], [zx, zy, zz]) // x = y × z
-        };
+        let rot = member_roll(el.get("rot"), "scene element rot", "ifc write")?;
+        let frame = member_frame([x1, y1, z1], [x2, y2, z2], rot, SceneUp::Z)?;
+        debug_assert!(dot3(frame.axis, frame.zero_y).abs() <= 1e-10);
+        debug_assert!(dot3(frame.axis, frame.rolled_x).abs() <= 1e-10);
+        debug_assert!(dot3(frame.axis, frame.rolled_y).abs() <= 1e-10);
+        let [zx, zy, zz] = frame.axis;
+        let [xx, xy, xz] = frame.zero_x;
 
         let sec = el.get("section").and_then(Value::as_object);
         let mut w = sec
@@ -1275,7 +1264,7 @@ fn build_ifc(scene: &Value) -> BuildResult {
 
         // Section roll: `rot` is scene-space degrees (already reflection-corrected upstream). Apply
         // ONCE, positive, via the profile's 2D RefDirection. rot 0/absent → the shared identity pos2d.
-        let rot = el.get("rot").and_then(Value::as_f64).unwrap_or(0.0);
+        let rot = frame.normalized_degrees;
         let prof_pos = if rot.abs() > 1e-9 {
             let th = rot.to_radians();
             let rd = spf.emit(&format!("IFCDIRECTION(({},{}))", r(th.cos()), r(th.sin())));
@@ -2023,7 +2012,7 @@ fn build_ifc(scene: &Value) -> BuildResult {
     doc.push_str("ENDSEC;\n");
     doc.push_str("END-ISO-10303-21;\n");
 
-    BuildResult {
+    Ok(BuildResult {
         doc,
         members: scene_element_count,
         columns,
@@ -2034,7 +2023,7 @@ fn build_ifc(scene: &Value) -> BuildResult {
         emitted,
         failed,
         unsupported,
-    }
+    })
 }
 
 /// `ifc.write` — write a generic 3D scene to an IFC4 file. Mirrors `viewer-3d.render`'s contract:
@@ -2188,6 +2177,7 @@ fn validate_box_tool(tool: &serde_json::Map<String, Value>, path: &str) -> Resul
 }
 
 fn validate_scene(scene: &Value) -> Result<(), AwareError> {
+    scene_up(scene, false, "ifc write")?;
     if let Some(units) = scene
         .get("meta")
         .and_then(Value::as_object)
@@ -2229,6 +2219,11 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                     "member"
                 }
             });
+            if !matches!(kind, "member" | "line" | "box") && el.get("rot").is_some() {
+                return Err(AwareError::Validation(format!(
+                    "ifc write: `{path}.rot` is applicable only to physical member, line, and box records"
+                )));
+            }
             element_kinds.insert(id.to_string(), kind.to_string());
             match kind {
                 "plate" => {
@@ -2339,6 +2334,7 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                             "ifc write: `{path}` requires distinct finite from/to Vec3 points"
                         )));
                     }
+                    member_roll(el.get("rot"), &format!("{path}.rot"), "ifc write")?;
                 }
                 "rod" | "bolt-shank" => {
                     let axis = el.get("axis").and_then(Value::as_object).ok_or_else(|| {
@@ -3120,7 +3116,7 @@ pub fn ifc_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     };
 
     validate_scene(scene)?;
-    let built = build_ifc(scene);
+    let built = try_build_ifc(scene)?;
 
     let mut out = serde_json::Map::new();
     out.insert("ok".into(), Value::Bool(true));
@@ -3190,6 +3186,10 @@ mod tests {
     use super::*;
     use serde_json::json;
 
+    fn build_ifc(scene: &Value) -> BuildResult {
+        try_build_ifc(scene).unwrap()
+    }
+
     fn sample_scene() -> Value {
         json!({
             "meta": { "name": "Test frame (sample)", "units": "mm", "up": "z" },
@@ -3202,6 +3202,46 @@ mod tests {
                   "meta": { "profile": "W10x33" } }
             ]
         })
+    }
+
+    #[test]
+    fn rejects_y_up_and_malformed_roll_instead_of_coercing_to_zero() {
+        let mut scene = sample_scene();
+        scene["meta"]["up"] = json!("y");
+        assert!(
+            validate_scene(&scene)
+                .unwrap_err()
+                .to_string()
+                .contains("unsupported")
+        );
+
+        for invalid in [Value::Null, json!("82.7"), json!(true)] {
+            let mut scene = sample_scene();
+            scene["elements"][0]["rot"] = invalid;
+            let error = validate_scene(&scene).unwrap_err().to_string();
+            assert!(error.contains("finite JSON number"), "{error}");
+        }
+
+        let mut non_member = sample_scene();
+        non_member["elements"][0]["kind"] = json!("mesh");
+        non_member["elements"][0]["positions"] = json!([0, 0, 0, 1, 0, 0, 0, 1, 0]);
+        non_member["elements"][0]["indices"] = json!([0, 1, 2]);
+        non_member["elements"][0]["rot"] = json!(10);
+        assert!(
+            validate_scene(&non_member)
+                .unwrap_err()
+                .to_string()
+                .contains("applicable only")
+        );
+    }
+
+    #[test]
+    fn equivalent_normalized_rolls_emit_identical_ifc_geometry() {
+        let mut first = sample_scene();
+        first["elements"][0]["rot"] = json!(82.7);
+        let mut wrapped = sample_scene();
+        wrapped["elements"][0]["rot"] = json!(442.7);
+        assert_eq!(build_ifc(&first).doc, build_ifc(&wrapped).doc);
     }
 
     #[test]

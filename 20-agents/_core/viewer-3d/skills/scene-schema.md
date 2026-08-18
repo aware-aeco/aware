@@ -33,7 +33,7 @@ Three.js screen-up convention.
 Legacy primitives remain supported:
 
 ```jsonc
-{ "id":"M1", "kind":"line|box|member", "from":[0,0,0], "to":[0,0,3000],
+{ "id":"M1", "kind":"line|box|member", "from":[0,0,0], "to":[0,0,3000], "rot":82.7,
   "section":{"w":200,"d":300},
   "xsection":{"shape":"i","d":300,"bf":200,"tw":10,"tf":20},
   "group":"member", "meta":{"profile":"W12X40"} }
@@ -56,6 +56,18 @@ with `section.{w,d}`; thickness dimensions must be positive and leave a
 non-degenerate web, flange, leg, or void. Consumers that promise nominal
 profiles fail a present malformed descriptor rather than guessing thickness.
 An absent descriptor remains the legacy rectangular member envelope.
+
+`rot` is optional and is applicable only to physical `member`, `line`, and `box` records. When
+present it must be a finite JSON number of degrees: positive is right-handed about the directed
+`from→to` axis. Consumers normalize with `((degrees % 360) + 360) % 360`, subtracting 360 at 180,
+so the canonical range is `[-180,180)` and negative zero becomes positive zero.
+
+The deterministic zero-section frame uses declared scene up (`+Z` when absent/`"z"`, `+Y` for
+`"y"`). Let `n=normalize(to−from)` and `u` be scene up. When `1−(n·u)² <= 1e-6`, zero X is scene
+`+X` projected perpendicular to `n` and normalized, and zero Y is `n×X`. Otherwise zero Y is `u`
+projected perpendicular to `n`, and zero X is `Y×n`. `rot` rotates this frame once about `n`.
+The viewer supports both declared up axes and accounts for its reflective Z-up screen conversion;
+export sinks may explicitly reject Y-up until they implement a reviewed coordinate transform.
 
 Connection solids use direct geometry rather than member cross-section hints:
 

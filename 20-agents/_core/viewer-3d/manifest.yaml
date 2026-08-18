@@ -1,5 +1,5 @@
 agent:        viewer-3d
-version:      0.1.0
+version:      0.1.1
 display-name: 3D Viewer
 description: |
   Utility agent that renders a generic 3D scene into a single-file interactive HTML
@@ -41,7 +41,7 @@ commands:
     # (skipped under --dry-run / --simulate), so a preview never touches disk.
     description: |
       Render a generic 3D scene into a self-contained interactive HTML document. The scene is
-      domain-agnostic: `elements` include legacy members/meshes plus exact framed plates,
+      domain-agnostic: `elements` include rolled exact-profile members/meshes plus exact framed plates,
       round rods and bolt shanks, annular washers, and hexagonal nuts/bolt heads. Plate holes
       are rendered as real voids. `referenceSystems` render structural grid axes and elevation
       datums; legacy `grids` labels remain supported. Operations are classified without
@@ -55,6 +55,8 @@ commands:
           `{ meta:{name,units:"mm",up}, groups:[{key,label,color}], elements:[...],
              operations:[...], referenceSystems:[...], grids:[{label,at}],
              panels:[{title,note,columns,rows}], camera:{eye,target} }`.
+          Physical `member`/`line`/`box` records may carry canonical `xsection` and finite numeric
+          `rot`; the renderer applies the same directed right-handed section frame as IFC and Tekla.
           The producer owns all domain meaning; the renderer is generic. See `scene-schema.md`.
       output-path:
         type: string
