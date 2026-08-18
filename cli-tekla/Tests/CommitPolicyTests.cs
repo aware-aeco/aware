@@ -253,18 +253,17 @@ public sealed class CommitPolicyTests
         var code = BakeSceneScript.Code;
 
         Assert.Contains("gridEnvelope.Evaluate(axisContracts,levelContracts,number(origin[2]))", code);
-        Assert.Contains("tekla-grid-axis-extents-expanded", code);
-        Assert.Contains("warning[\"xFamilyStartMm\"]=envelope.XFamilyStartMm", code);
-        Assert.Contains("warning[\"xFamilyEndMm\"]=envelope.XFamilyEndMm", code);
-        Assert.Contains("warning[\"yFamilyStartMm\"]=envelope.YFamilyStartMm", code);
-        Assert.Contains("warning[\"yFamilyEndMm\"]=envelope.YFamilyEndMm", code);
+        Assert.Contains("gridEnvelope.CreatePlan(pair.Key,axisContracts,levelContracts,number(origin[2]))", code);
+        Assert.Contains("plan.CreateExpansionWarning()", code);
+        Assert.Contains("CoordinateX=plan.CoordinateX", code);
+        Assert.Contains("ExtensionLeftX=plan.ExtensionLeftX", code);
         Assert.Contains("Grid origin/coordinate/label/envelope/magnetism read-back", code);
         Assert.Contains("realizedReferences.TryGetValue(id,out realizedBy)", code);
         Assert.DoesNotContain("nativeById[x.Item3]=g", code);
         Assert.DoesNotContain("tekla-grid-axis-extents-unsupported", code);
 
         var commit = code.IndexOf("if(!m.CommitChanges(\"AWARE bake-scene", StringComparison.Ordinal);
-        var publishWarnings = code.IndexOf("warnings.AddRange(pendingWarnings)", StringComparison.Ordinal);
+        var publishWarnings = code.IndexOf("warnings.AddRange(gridWarningJournal.PublishAfterCommit())", StringComparison.Ordinal);
         Assert.True(commit >= 0);
         Assert.True(publishWarnings > commit);
     }
@@ -275,7 +274,7 @@ public sealed class CommitPolicyTests
         var code = BakeSceneScript.Code;
 
         Assert.Contains("unsupportedGridEnvelopes", code);
-        Assert.Contains("unsupported-parent", code);
+        Assert.Contains("gridEnvelope.CreateUnsupportedRows", code);
         Assert.Contains("supportedOrder.RemoveAll", code);
         Assert.Contains("referenceById.Remove(gridId)", code);
     }

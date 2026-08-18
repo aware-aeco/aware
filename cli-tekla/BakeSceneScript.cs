@@ -40,13 +40,6 @@ Func<Vector,Vector,Vector> cross = (a,b) => new Vector(a.Y*b.Z-a.Z*b.Y,a.Z*b.X-a
 Func<Vector,Vector,double> dot = (a,b) => a.X*b.X+a.Y*b.Y+a.Z*b.Z;
 Func<Point,Vector,double,Point> move = (p,v,s) => new Point(p.X+v.X*s,p.Y+v.Y*s,p.Z+v.Z*s);
 Func<double,string> mm = d => d.ToString("0.############", inv);
-Func<IEnumerable<double>,string> spacing = values => {
-    var ordered=values.OrderBy(x=>x).ToList();
-    if(ordered.Count==0)return "0";
-    var tokens=new List<string>{mm(ordered[0])};
-    for(int i=1;i<ordered.Count;i++)tokens.Add(mm(ordered[i]-ordered[i-1]));
-    return String.Join(" ",tokens);
-};
 Func<IList,List<Tuple<double,double>>> polygonPoints = raw => {
     if(raw==null)return null;
     var points=new List<Tuple<double,double>>();
@@ -102,7 +95,7 @@ var emitted = new List<Dictionary<string,object>>();
 var failed = new List<Dictionary<string,object>>();
 var unsupported = new List<Dictionary<string,object>>();
 var warnings = new List<Dictionary<string,object>>();
-var pendingWarnings = new List<Dictionary<string,object>>();
+var gridWarningJournal = new AwareTekla.TeklaGridWarningJournal();
 var supportedOrder = new List<Tuple<string,string>>();
 var seen = new HashSet<string>(StringComparer.Ordinal);
 IList elements, operations, references;
@@ -165,7 +158,6 @@ var realizedChildren = new Dictionary<string,string>(StringComparer.Ordinal);
 var realizedEffects = new Dictionary<string,string>(StringComparer.Ordinal);
 var realizedReferences = new Dictionary<string,string>(StringComparer.Ordinal);
 foreach(var kv in operationById) if(str(kv.Value,"kind")=="bolt-array") { var ins=list(kv.Value,"instances"); if(ins==null)continue; foreach(var ir in ins){var inst=ir as IDictionary<string,object>;if(inst==null)continue;var iid=str(inst,"id");if(!String.IsNullOrEmpty(iid))realizedChildren[iid]=kv.Key;foreach(var key in new[]{"shankId","headId"}){var cid=str(inst,key);if(!String.IsNullOrEmpty(cid))realizedChildren[cid]=kv.Key;}foreach(var key in new[]{"nutIds","washerIds"}){var ids=list(inst,key);if(ids!=null)foreach(var x in ids){var cid=text(x);if(!String.IsNullOrEmpty(cid))realizedChildren[cid]=kv.Key;}}var effects=list(inst,"holeEffects");if(effects!=null)foreach(var er in effects){var effect=er as IDictionary<string,object>;if(effect!=null)realizedEffects[str(effect,"id")]=kv.Key;}}}
-foreach(var kv in referenceById){var axes=list(kv.Value,"axes");if(axes!=null)foreach(var ar in axes){var axis=ar as IDictionary<string,object>;if(axis!=null)realizedReferences[str(axis,"id")]=kv.Key;}var levels=list(kv.Value,"levels");if(levels!=null)foreach(var lr in levels){var level=lr as IDictionary<string,object>;if(level!=null)realizedReferences[str(level,"id")]=kv.Key;}}
 
 // Complete trust-boundary validation before the first Tekla Insert. Native API
 // failures remain possible, but malformed geometry/relationships never start a batch.
@@ -232,8 +224,9 @@ foreach(var pair in operationById) try {var id=pair.Key;var op=pair.Value;var ki
     else {string target=str(op,"targetId");if(!elementById.ContainsKey(target)||realizedChildren.ContainsKey(target))throw new Exception("boolean target must resolve to an independently materialized part");var tool=obj(op,"tool");string tkind=str(tool,"kind");if(tkind=="cylinder"){var axis=obj(tool,"axis");var from=list(axis,"from");var to=list(axis,"to");double d=tool!=null&&tool.TryGetValue("diameterMm",out var dv)?number(dv):Double.NaN;if(!vec3ok(from)||!vec3ok(to)||Distance.PointToPoint(point(from),point(to))<=1e-6||!(d>0))throw new Exception("finite cylindrical boolean tool is invalid");}else if(tkind=="box"){var frame=obj(tool,"frame");var he=list(tool,"halfExtents");if(frame==null||!vec3ok(list(frame,"origin"))||!vec3ok(list(frame,"uDir"))||!vec3ok(list(frame,"vDir"))||!vec3ok(list(frame,"normal"))||he==null||he.Count!=3||!(number(he[0])>0)||!(number(he[1])>0)||!(number(he[2])>0))throw new Exception("finite box boolean tool is invalid");}else throw new Exception("boolean tool kind must be cylinder or box");}
 }catch(Exception ex){failed.Add(row(pair.Key,str(pair.Value,"kind"),"failed","invalid-operation",ex.Message));}
 
-var gridEnvelopes = new Dictionary<string,AwareTekla.TeklaGridEnvelopeResult>(StringComparer.Ordinal);
+var gridPlans = new Dictionary<string,AwareTekla.TeklaGridMaterializationPlan>(StringComparer.Ordinal);
 var unsupportedGridEnvelopes = new Dictionary<string,AwareTekla.TeklaGridEnvelopeResult>(StringComparer.Ordinal);
+var unsupportedGridRows = new Dictionary<string,IReadOnlyList<Dictionary<string,object>>>(StringComparer.Ordinal);
 foreach(var pair in referenceById) try {
     var rf=pair.Value;var origin=list(rf,"origin");var axes=list(rf,"axes");var levels=list(rf,"levels");var bounds=obj(rf,"bounds");
     if(!vec3ok(origin)||axes==null||levels==null||levels.Count==0||bounds==null)throw new Exception("grid origin, axes, non-empty levels, and bounds are required");
@@ -253,10 +246,10 @@ foreach(var pair in referenceById) try {
     var levelContracts=new List<AwareTekla.GridLevelContract>();
     foreach(var lr in levels){var l=lr as IDictionary<string,object>;if(l==null)throw new Exception("grid level must be an object");double elevation=l.TryGetValue("elevationMm",out var elevationValue)?number(elevationValue):Double.NaN;if(!finite(elevation))throw new Exception(str(l,"id")+": grid level elevation is invalid");levelContracts.Add(new AwareTekla.GridLevelContract(str(l,"id"),elevation,str(l,"label")));}
     var envelope=gridEnvelope.Evaluate(axisContracts,levelContracts,number(origin[2]));
-    if(envelope.IsSupported){gridEnvelopes[pair.Key]=envelope;if(envelope.ExpandsAuthoredExtents){var warning=row(pair.Key,"structural-grid","warning","tekla-grid-axis-extents-expanded","Tekla uses one shared rectangular grid envelope, so one or more native grid lines extend beyond their authored startMm/endMm values.");warning["xFamilyStartMm"]=envelope.XFamilyStartMm;warning["xFamilyEndMm"]=envelope.XFamilyEndMm;warning["yFamilyStartMm"]=envelope.YFamilyStartMm;warning["yFamilyEndMm"]=envelope.YFamilyEndMm;pendingWarnings.Add(warning);}}
-    else unsupportedGridEnvelopes[pair.Key]=envelope;
+    if(envelope.IsSupported){var plan=gridEnvelope.CreatePlan(pair.Key,axisContracts,levelContracts,number(origin[2]));gridPlans[pair.Key]=plan;foreach(var child in plan.Children)realizedReferences[child.Id]=child.RealizedBy;var warning=plan.CreateExpansionWarning();if(warning!=null)gridWarningJournal.Queue(warning);}
+    else {unsupportedGridEnvelopes[pair.Key]=envelope;unsupportedGridRows[pair.Key]=gridEnvelope.CreateUnsupportedRows(pair.Key,axisContracts,levelContracts,envelope);}
 }catch(Exception ex){failed.Add(row(pair.Key,"structural-grid","failed","invalid-grid",ex.Message));}
-foreach(var item in unsupportedGridEnvelopes){var gridId=item.Key;var reason=item.Value;var rf=referenceById[gridId];var childIds=new HashSet<string>(StringComparer.Ordinal);unsupported.Add(row(gridId,"structural-grid","unsupported",reason.Code,reason.Message));var axes=list(rf,"axes");if(axes!=null)foreach(var ar in axes){var axis=ar as IDictionary<string,object>;var aid=str(axis,"id");childIds.Add(aid);unsupported.Add(row(aid,"grid-axis","unsupported","unsupported-parent",reason.Message));realizedReferences.Remove(aid);}var levels=list(rf,"levels");if(levels!=null)foreach(var lr in levels){var level=lr as IDictionary<string,object>;var lid=str(level,"id");childIds.Add(lid);unsupported.Add(row(lid,"grid-level","unsupported","unsupported-parent",reason.Message));realizedReferences.Remove(lid);}supportedOrder.RemoveAll(orderItem=>orderItem.Item1==gridId||childIds.Contains(orderItem.Item1));referenceById.Remove(gridId);}
+foreach(var item in unsupportedGridEnvelopes){var gridId=item.Key;var rows=unsupportedGridRows[gridId];unsupported.AddRange(rows);var childIds=new HashSet<string>(rows.Skip(1).Select(receipt=>text(receipt["id"])),StringComparer.Ordinal);supportedOrder.RemoveAll(orderItem=>orderItem.Item1==gridId||childIds.Contains(orderItem.Item1));referenceById.Remove(gridId);}
 
 if(failed.Count>0){appendBatchAborted("Batch was aborted because another supported record failed preflight.");return new{ok=false,sourceId,sceneHash,materializationHash,attemptId,emitted=new object[0],failed,unsupported,warnings};}
 
@@ -378,7 +371,7 @@ try {
     }
 
     // Structural grids are inserted without modifying similarly named user grids.
-    foreach(var pair in referenceById){string id=pair.Key;activeId=id;var rf=pair.Value;var origin=list(rf,"origin");var axes=list(rf,"axes");var levels=list(rf,"levels");var envelope=gridEnvelopes[id];var xs=new List<Tuple<double,string,string>>();var ys=new List<Tuple<double,string,string>>();foreach(var ar in axes){var a=ar as IDictionary<string,object>;double off=number(a["offsetMm"]);(str(a,"direction")=="x"?xs:ys).Add(Tuple.Create(off,str(a,"label"),str(a,"id")));}var zs=new List<Tuple<double,string,string>>();if(levels!=null)foreach(var lr in levels){var l=lr as IDictionary<string,object>;zs.Add(Tuple.Create(number(l["elevationMm"]),str(l,"label"),str(l,"id")));}xs.Sort((a,b)=>a.Item1.CompareTo(b.Item1));ys.Sort((a,b)=>a.Item1.CompareTo(b.Item1));zs.Sort((a,b)=>a.Item1.CompareTo(b.Item1));double oz=number(origin[2]);string cx=spacing(xs.Select(x=>x.Item1)),cy=spacing(ys.Select(x=>x.Item1)),cz=spacing(zs.Select(x=>x.Item1-oz));double extensionLeftX=ys.First().Item1-envelope.XFamilyStartMm,extensionRightX=envelope.XFamilyEndMm-ys.Last().Item1,extensionLeftY=xs.First().Item1-envelope.YFamilyStartMm,extensionRightY=envelope.YFamilyEndMm-xs.Last().Item1;bool isMagnetic=rf.TryGetValue("isMagnetic",out var im)&&Convert.ToBoolean(im);var g=new Grid{Name=String.IsNullOrWhiteSpace(str(rf,"name"))?id:str(rf,"name"),Origin=point(origin),CoordinateX=cx,CoordinateY=cy,CoordinateZ=cz,LabelX=String.Join(" ",xs.Select(x=>x.Item2)),LabelY=String.Join(" ",ys.Select(x=>x.Item2)),LabelZ=String.Join(" ",zs.Select(x=>x.Item2)),ExtensionLeftX=extensionLeftX,ExtensionRightX=extensionRightX,ExtensionLeftY=extensionLeftY,ExtensionRightY=extensionRightY,ExtensionLeftZ=0,ExtensionRightZ=0,IsMagnetic=isMagnetic};labelBeforeInsert(g);if(!g.Insert())throw new Exception(id+": native Grid insert failed");tagAfterInsert(g,id);var rb=m.SelectModelObject(new Identifier(g.Identifier.GUID)) as Grid;if(rb==null)throw new Exception(id+": authoritative Grid GUID read-back failed");double rbXStart=ys.First().Item1-rb.ExtensionLeftX,rbXEnd=ys.Last().Item1+rb.ExtensionRightX,rbYStart=xs.First().Item1-rb.ExtensionLeftY,rbYEnd=xs.Last().Item1+rb.ExtensionRightY;if(Distance.PointToPoint(rb.Origin,point(origin))>0.1||rb.CoordinateX!=cx||rb.CoordinateY!=cy||rb.CoordinateZ!=cz||rb.LabelX!=g.LabelX||rb.LabelY!=g.LabelY||rb.LabelZ!=g.LabelZ||Math.Abs(rbXStart-envelope.XFamilyStartMm)>0.1||Math.Abs(rbXEnd-envelope.XFamilyEndMm)>0.1||Math.Abs(rbYStart-envelope.YFamilyStartMm)>0.1||Math.Abs(rbYEnd-envelope.YFamilyEndMm)>0.1||Math.Abs(rb.ExtensionLeftZ)>0.1||Math.Abs(rb.ExtensionRightZ)>0.1||rb.IsMagnetic!=isMagnetic)throw new Exception(id+": Grid origin/coordinate/label/envelope/magnetism read-back differs from the authored grid");}
+    foreach(var pair in referenceById){string id=pair.Key;activeId=id;var rf=pair.Value;var origin=list(rf,"origin");var plan=gridPlans[id];var envelope=plan.Envelope;bool isMagnetic=rf.TryGetValue("isMagnetic",out var im)&&Convert.ToBoolean(im);var g=new Grid{Name=String.IsNullOrWhiteSpace(str(rf,"name"))?id:str(rf,"name"),Origin=point(origin),CoordinateX=plan.CoordinateX,CoordinateY=plan.CoordinateY,CoordinateZ=plan.CoordinateZ,LabelX=plan.LabelX,LabelY=plan.LabelY,LabelZ=plan.LabelZ,ExtensionLeftX=plan.ExtensionLeftX,ExtensionRightX=plan.ExtensionRightX,ExtensionLeftY=plan.ExtensionLeftY,ExtensionRightY=plan.ExtensionRightY,ExtensionLeftZ=0,ExtensionRightZ=0,IsMagnetic=isMagnetic};labelBeforeInsert(g);if(!g.Insert())throw new Exception(id+": native Grid insert failed");tagAfterInsert(g,id);var rb=m.SelectModelObject(new Identifier(g.Identifier.GUID)) as Grid;if(rb==null)throw new Exception(id+": authoritative Grid GUID read-back failed");double rbXStart=plan.MinYOffsetMm-rb.ExtensionLeftX,rbXEnd=plan.MaxYOffsetMm+rb.ExtensionRightX,rbYStart=plan.MinXOffsetMm-rb.ExtensionLeftY,rbYEnd=plan.MaxXOffsetMm+rb.ExtensionRightY;if(Distance.PointToPoint(rb.Origin,point(origin))>0.1||rb.CoordinateX!=plan.CoordinateX||rb.CoordinateY!=plan.CoordinateY||rb.CoordinateZ!=plan.CoordinateZ||rb.LabelX!=g.LabelX||rb.LabelY!=g.LabelY||rb.LabelZ!=g.LabelZ||Math.Abs(rbXStart-envelope.XFamilyStartMm)>0.1||Math.Abs(rbXEnd-envelope.XFamilyEndMm)>0.1||Math.Abs(rbYStart-envelope.YFamilyStartMm)>0.1||Math.Abs(rbYEnd-envelope.YFamilyEndMm)>0.1||Math.Abs(rb.ExtensionLeftZ)>0.1||Math.Abs(rb.ExtensionRightZ)>0.1||rb.IsMagnetic!=isMagnetic)throw new Exception(id+": Grid origin/coordinate/label/envelope/magnetism read-back differs from the authored grid");}
 
     // GUID/tag read-back proves the staged set before replacing any old set.
     foreach(var item in nativeRecordIdByGuid){var rb=m.SelectModelObject(new Identifier(item.Key));if(rb==null)throw new Exception(item.Value+": authoritative GUID read-back failed");string src="";string sid="";string scn="";string owner="";rb.GetUserProperty("USER_FIELD_1",ref src);rb.GetUserProperty("USER_FIELD_2",ref sid);rb.GetUserProperty("USER_FIELD_3",ref scn);rb.GetUserProperty("USER_FIELD_4",ref owner);if(src!=sourceKey||sid!=recordKey(item.Value)||scn!=sceneKey||owner!=ownershipMarker)throw new Exception(item.Value+": ownership read-back failed");}
@@ -390,7 +383,7 @@ try {
     foreach(var old in retirementOrder)if(m.SelectModelObject(new Identifier(old.Identifier.GUID))!=null)throw new Exception("prior source-owned object remains after retirement "+old.Identifier.GUID);
     if(!m.CommitChanges("AWARE bake-scene "+sceneName+" "+attemptId))throw new Exception("Tekla CommitChanges returned false");
     if(scenePlaneChanged){if(!scenePlaneHandler.SetCurrentTransformationPlane(previousScenePlane))throw new Exception("failed to restore the user's prior work plane after the committed bake");scenePlaneChanged=false;}
-    warnings.AddRange(pendingWarnings);
+    warnings.AddRange(gridWarningJournal.PublishAfterCommit());
 
     foreach(var item in supportedOrder){string id=item.Item1;string kind=item.Item2;ModelObject o=null;string realizedBy="";if(nativeById.TryGetValue(id,out o)){}else if(realizedChildren.TryGetValue(id,out realizedBy)||realizedEffects.TryGetValue(id,out realizedBy)||realizedReferences.TryGetValue(id,out realizedBy))nativeById.TryGetValue(realizedBy,out o);if(o==null)throw new Exception(id+": supported record was not classified by the materializer");var r=row(id,kind,"emitted","","");r["nativeGuid"]=o.Identifier.GUID.ToString();if(!String.IsNullOrEmpty(realizedBy))r["realizedBy"]=realizedBy;if(profileById.ContainsKey(id))r["profile"]=profileById[id];emitted.Add(r);}
     Func<IDictionary<string,object>,string> legacyMemberRole=e=>{string role=str(e,"role").ToLowerInvariant();if(String.IsNullOrEmpty(role))role=str(e,"group").ToLowerInvariant();return role;};var legacyMembers=elementById.Values.Where(e=>{string kind=str(e,"kind").ToLowerInvariant();return String.IsNullOrEmpty(kind)||kind=="member"||kind=="line"||kind=="box";}).ToList();int columns=legacyMembers.Count(e=>legacyMemberRole(e)=="column"),beams=legacyMembers.Count(e=>legacyMemberRole(e)!="column"&&legacyMemberRole(e)!="brace");string modelName;try{modelName=m.GetInfo().ModelName;}catch{modelName="Tekla model";}
@@ -403,6 +396,7 @@ try {
     return new { ok=true,recovered=false,sourceId,sceneHash,materializationHash,attemptId,scene_name=sceneName,model=modelName,created=nativeCount,columns,beams,native=nativeCount,placeholder=0,failed_count=0,skipped=unsupported.Count,profiles=profileById,emitted,failed=new object[0],unsupported,warnings };
 }
 catch(Exception ex){
+    gridWarningJournal.Abort();
     // Tekla CommitChanges creates an undo step; it is not an ACID transaction.
     // Before retirement begins, cleanup is safe because the prior set was never
     // touched. Once old deletion starts, another commit could make those deletes

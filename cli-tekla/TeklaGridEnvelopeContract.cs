@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace AwareTekla;
@@ -82,6 +83,127 @@ public sealed class TeklaGridEnvelopeResult
     public double YFamilyStartMm { get; }
     public double YFamilyEndMm { get; }
     public bool ExpandsAuthoredExtents { get; }
+}
+
+public sealed class GridChildRealizationContract
+{
+    public GridChildRealizationContract(string id, string kind, string realizedBy)
+    {
+        Id = id;
+        Kind = kind;
+        RealizedBy = realizedBy;
+    }
+
+    public string Id { get; }
+    public string Kind { get; }
+    public string RealizedBy { get; }
+}
+
+/// <summary>
+/// Host-agnostic description of every Tekla Grid property the bake script writes.
+/// Keeping the translation here makes coordinate-family swaps, extension mistakes,
+/// and child-realization drift executable in tests without loading Tekla.
+/// </summary>
+public sealed class TeklaGridMaterializationPlan
+{
+    internal TeklaGridMaterializationPlan(
+        string gridId,
+        TeklaGridEnvelopeResult envelope,
+        string coordinateX,
+        string coordinateY,
+        string coordinateZ,
+        string labelX,
+        string labelY,
+        string labelZ,
+        double minXOffsetMm,
+        double maxXOffsetMm,
+        double minYOffsetMm,
+        double maxYOffsetMm,
+        double extensionLeftX,
+        double extensionRightX,
+        double extensionLeftY,
+        double extensionRightY,
+        IReadOnlyList<GridChildRealizationContract> children)
+    {
+        GridId = gridId;
+        Envelope = envelope;
+        CoordinateX = coordinateX;
+        CoordinateY = coordinateY;
+        CoordinateZ = coordinateZ;
+        LabelX = labelX;
+        LabelY = labelY;
+        LabelZ = labelZ;
+        MinXOffsetMm = minXOffsetMm;
+        MaxXOffsetMm = maxXOffsetMm;
+        MinYOffsetMm = minYOffsetMm;
+        MaxYOffsetMm = maxYOffsetMm;
+        ExtensionLeftX = extensionLeftX;
+        ExtensionRightX = extensionRightX;
+        ExtensionLeftY = extensionLeftY;
+        ExtensionRightY = extensionRightY;
+        Children = children;
+    }
+
+    public string GridId { get; }
+    public TeklaGridEnvelopeResult Envelope { get; }
+    public string CoordinateX { get; }
+    public string CoordinateY { get; }
+    public string CoordinateZ { get; }
+    public string LabelX { get; }
+    public string LabelY { get; }
+    public string LabelZ { get; }
+    public double MinXOffsetMm { get; }
+    public double MaxXOffsetMm { get; }
+    public double MinYOffsetMm { get; }
+    public double MaxYOffsetMm { get; }
+    public double ExtensionLeftX { get; }
+    public double ExtensionRightX { get; }
+    public double ExtensionLeftY { get; }
+    public double ExtensionRightY { get; }
+    public IReadOnlyList<GridChildRealizationContract> Children { get; }
+
+    public Dictionary<string, object>? CreateExpansionWarning()
+    {
+        if (!Envelope.ExpandsAuthoredExtents) return null;
+        return new Dictionary<string, object>(StringComparer.Ordinal)
+        {
+            ["id"] = GridId,
+            ["kind"] = "structural-grid",
+            ["status"] = "warning",
+            ["code"] = "tekla-grid-axis-extents-expanded",
+            ["message"] = "Tekla uses one shared rectangular grid envelope, so one or more native grid lines extend beyond their authored startMm/endMm values.",
+            ["xFamilyStartMm"] = Envelope.XFamilyStartMm,
+            ["xFamilyEndMm"] = Envelope.XFamilyEndMm,
+            ["yFamilyStartMm"] = Envelope.YFamilyStartMm,
+            ["yFamilyEndMm"] = Envelope.YFamilyEndMm,
+        };
+    }
+}
+
+/// <summary>
+/// Makes lossy warnings transactional: callers can queue them during preflight,
+/// but only the post-commit success path can publish them into a receipt.
+/// </summary>
+public sealed class TeklaGridWarningJournal
+{
+    readonly List<Dictionary<string, object>> _pending = new();
+
+    public int PendingCount => _pending.Count;
+
+    public void Queue(Dictionary<string, object> warning)
+    {
+        if (warning is null) throw new ArgumentNullException(nameof(warning));
+        _pending.Add(warning);
+    }
+
+    public IReadOnlyList<Dictionary<string, object>> PublishAfterCommit()
+    {
+        var published = _pending.ToArray();
+        _pending.Clear();
+        return published;
+    }
+
+    public void Abort() => _pending.Clear();
 }
 
 /// <summary>
@@ -176,6 +298,61 @@ public sealed class TeklaGridEnvelopeContract
             expands);
     }
 
+    public TeklaGridMaterializationPlan CreatePlan(
+        string gridId,
+        IReadOnlyList<GridAxisExtentContract> axes,
+        IReadOnlyList<GridLevelContract> levels,
+        double originZMm)
+    {
+        if (string.IsNullOrWhiteSpace(gridId)) throw new ArgumentException("Grid id is required.", nameof(gridId));
+        var envelope = Evaluate(axes, levels, originZMm);
+        if (!envelope.IsSupported)
+            throw new InvalidOperationException($"{envelope.Code}: {envelope.Message}");
+
+        var xs = axes.Where(axis => axis.Direction == "x").OrderBy(axis => axis.OffsetMm).ToList();
+        var ys = axes.Where(axis => axis.Direction == "y").OrderBy(axis => axis.OffsetMm).ToList();
+        var zs = levels.OrderBy(level => level.ElevationMm).ToList();
+        var children = axes
+            .Select(axis => new GridChildRealizationContract(axis.Id, "grid-axis", gridId))
+            .Concat(levels.Select(level => new GridChildRealizationContract(level.Id, "grid-level", gridId)))
+            .ToArray();
+
+        return new TeklaGridMaterializationPlan(
+            gridId,
+            envelope,
+            Spacing(xs.Select(axis => axis.OffsetMm)),
+            Spacing(ys.Select(axis => axis.OffsetMm)),
+            Spacing(zs.Select(level => level.ElevationMm - originZMm)),
+            string.Join(" ", xs.Select(axis => axis.Label)),
+            string.Join(" ", ys.Select(axis => axis.Label)),
+            string.Join(" ", zs.Select(level => level.Label)),
+            xs[0].OffsetMm,
+            xs[xs.Count - 1].OffsetMm,
+            ys[0].OffsetMm,
+            ys[ys.Count - 1].OffsetMm,
+            ys[0].OffsetMm - envelope.XFamilyStartMm,
+            envelope.XFamilyEndMm - ys[ys.Count - 1].OffsetMm,
+            xs[0].OffsetMm - envelope.YFamilyStartMm,
+            envelope.YFamilyEndMm - xs[xs.Count - 1].OffsetMm,
+            children);
+    }
+
+    public IReadOnlyList<Dictionary<string, object>> CreateUnsupportedRows(
+        string gridId,
+        IReadOnlyList<GridAxisExtentContract> axes,
+        IReadOnlyList<GridLevelContract> levels,
+        TeklaGridEnvelopeResult reason)
+    {
+        if (reason.IsSupported) throw new ArgumentException("A supported grid has no unsupported rows.", nameof(reason));
+        var rows = new List<Dictionary<string, object>>
+        {
+            Receipt(gridId, "structural-grid", reason.Code, reason.Message),
+        };
+        rows.AddRange(axes.Select(axis => Receipt(axis.Id, "grid-axis", "unsupported-parent", reason.Message)));
+        rows.AddRange(levels.Select(level => Receipt(level.Id, "grid-level", "unsupported-parent", reason.Message)));
+        return rows;
+    }
+
     static bool HasDuplicate(IEnumerable<double> values)
     {
         var ordered = values.OrderBy(value => value).ToList();
@@ -199,6 +376,33 @@ public sealed class TeklaGridEnvelopeContract
         !string.IsNullOrEmpty(label) && !label.Any(char.IsWhiteSpace);
 
     static bool IsFinite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
+
+    static string Spacing(IEnumerable<double> values)
+    {
+        var ordered = values.OrderBy(value => value).ToList();
+        if (ordered.Count == 0) return "0";
+        var tokens = new List<string> { Millimetres(ordered[0]) };
+        for (var i = 1; i < ordered.Count; i++)
+            tokens.Add(Millimetres(ordered[i] - ordered[i - 1]));
+        return string.Join(" ", tokens);
+    }
+
+    static string Millimetres(double value) =>
+        value.ToString("0.############", CultureInfo.InvariantCulture);
+
+    static Dictionary<string, object> Receipt(
+        string id,
+        string kind,
+        string code,
+        string message) =>
+        new(StringComparer.Ordinal)
+        {
+            ["id"] = id,
+            ["kind"] = kind,
+            ["status"] = "unsupported",
+            ["code"] = code,
+            ["message"] = message,
+        };
 
     static TeklaGridEnvelopeResult Unsupported(string code, string message) =>
         new(false, code, message, 0, 0, 0, 0, false);

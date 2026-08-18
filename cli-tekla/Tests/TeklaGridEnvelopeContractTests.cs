@@ -57,6 +57,96 @@ public sealed class TeklaGridEnvelopeContractTests
     }
 
     [Fact]
+    public void ProductionPlanMapsNativePropertiesAndEveryChildToOneParent()
+    {
+        var axes = new[]
+        {
+            Axis("Y-2", "y", 3000, "2", -250, 6250),
+            Axis("X-B", "x", 6000, "B", -200, 3200),
+            Axis("Y-1", "y", 0, "1", -500, 6500),
+            Axis("X-A", "x", 0, "A", -100, 3500),
+        };
+        var levels = new[]
+        {
+            new GridLevelContract("Z-3000", 4000, "+3000"),
+            new GridLevelContract("Z-0", 1000, "+0"),
+        };
+
+        var plan = _contract.CreatePlan("GRID-1", axes, levels, 1000);
+
+        Assert.Equal("0 6000", plan.CoordinateX);
+        Assert.Equal("0 3000", plan.CoordinateY);
+        Assert.Equal("0 3000", plan.CoordinateZ);
+        Assert.Equal("A B", plan.LabelX);
+        Assert.Equal("1 2", plan.LabelY);
+        Assert.Equal("+0 +3000", plan.LabelZ);
+        Assert.Equal(200, plan.ExtensionLeftX);
+        Assert.Equal(500, plan.ExtensionRightX);
+        Assert.Equal(500, plan.ExtensionLeftY);
+        Assert.Equal(500, plan.ExtensionRightY);
+        Assert.Equal(6, plan.Children.Count);
+        Assert.Equal(
+            new[] { "Y-2", "X-B", "Y-1", "X-A", "Z-3000", "Z-0" },
+            plan.Children.Select(child => child.Id));
+        Assert.All(plan.Children, child => Assert.Equal("GRID-1", child.RealizedBy));
+        Assert.Equal(4, plan.Children.Count(child => child.Kind == "grid-axis"));
+        Assert.Equal(2, plan.Children.Count(child => child.Kind == "grid-level"));
+    }
+
+    [Fact]
+    public void ExpansionWarningCarriesExactEnvelopeAndCannotLeakAcrossAbort()
+    {
+        var plan = _contract.CreatePlan(
+            "GRID-1",
+            new[]
+            {
+                Axis("X-A", "x", 0, "A", -100, 3500),
+                Axis("X-B", "x", 6000, "B", -200, 3200),
+                Axis("Y-1", "y", 0, "1", -500, 6500),
+                Axis("Y-2", "y", 3000, "2", -250, 6250),
+            },
+            Levels(),
+            0);
+        var warning = plan.CreateExpansionWarning();
+
+        Assert.NotNull(warning);
+        Assert.Equal("tekla-grid-axis-extents-expanded", warning!["code"]);
+        Assert.Equal(-200d, warning["xFamilyStartMm"]);
+        Assert.Equal(3500d, warning["xFamilyEndMm"]);
+        Assert.Equal(-500d, warning["yFamilyStartMm"]);
+        Assert.Equal(6500d, warning["yFamilyEndMm"]);
+
+        var aborted = new TeklaGridWarningJournal();
+        aborted.Queue(warning);
+        Assert.Equal(1, aborted.PendingCount);
+        aborted.Abort();
+        Assert.Empty(aborted.PublishAfterCommit());
+
+        var committed = new TeklaGridWarningJournal();
+        committed.Queue(plan.CreateExpansionWarning()!);
+        var published = committed.PublishAfterCommit();
+        Assert.Single(published);
+        Assert.Equal("GRID-1", published[0]["id"]);
+        Assert.Equal(0, committed.PendingCount);
+    }
+
+    [Fact]
+    public void UnsupportedRowsExhaustivelyClassifyParentAxesAndLevels()
+    {
+        var axes = new[] { Axis("X-A", "x", 0, "A", 0, 1000) };
+        var levels = Levels();
+        var reason = _contract.Evaluate(axes, levels, 0);
+
+        var rows = _contract.CreateUnsupportedRows("GRID-1", axes, levels, reason);
+
+        Assert.Equal(4, rows.Count);
+        Assert.Equal(new[] { "GRID-1", "X-A", "Z-0", "Z-3000" }, rows.Select(row => row["id"]));
+        Assert.Equal("tekla-grid-single-family-unsupported", rows[0]["code"]);
+        Assert.All(rows.Skip(1), row => Assert.Equal("unsupported-parent", row["code"]));
+        Assert.All(rows, row => Assert.Equal("unsupported", row["status"]));
+    }
+
+    [Fact]
     public void CoordinateSpansAreContainedEvenWhenAuthoredSegmentsAreShorter()
     {
         var result = _contract.Evaluate(

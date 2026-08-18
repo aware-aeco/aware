@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-08-12T16:03:21.714224300+00:00",
+  "updated-at": "2026-08-18T11:50:42.327316700+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -2740,14 +2740,20 @@
         "0.1.0": {
           "description": "Read a WHOLE IFC file as a reference model — borrowed geometry you overlay, measure and build to,",
           "status": "available",
-          "manifest-version": "1.4.0",
+          "manifest-version": "1.6.0",
           "stateful": false,
           "transport": "cli",
-          "command_count": 2,
+          "command_count": 3,
           "skills": [
             "what-this-agent-does"
           ],
           "commands": [
+            {
+              "name": "compare",
+              "description": "Match the objects of TWO versions of one IFC and say what was added, removed and changed. For",
+              "lifecycle": "single",
+              "category": "curated"
+            },
             {
               "name": "probe",
               "description": "Answer the cheap questions about an IFC WITHOUT tessellating: which schema, what length unit it",
@@ -5741,7 +5747,7 @@
         "2025.0.1": {
           "description": "Watches the active Tekla model, reads its state, and writes back via the",
           "status": "available",
-          "manifest-version": "0.1.0",
+          "manifest-version": "0.1.1",
           "stateful": true,
           "sdk-target": "2025+",
           "transport": "cli",
