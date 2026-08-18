@@ -111,24 +111,42 @@ public sealed class CommitPolicyTests
         var scene = JsonNode.Parse("{\"meta\":{\"sourceId\":\"s\",\"sceneHash\":\"h\"},\"elements\":[]}")!;
         var first = Program.ComputeBakeMaterializationHash(scene, "2025.0");
 
-        Assert.Equal("tekla-connection-materializer-v3", Program.BakeMaterializerIdentity);
+        Assert.Equal("tekla-connection-materializer-v4", Program.BakeMaterializerIdentity);
         Assert.Equal(first, Program.ComputeBakeMaterializationHash(scene, "2025.0"));
         Assert.NotEqual(first, Program.ComputeBakeMaterializationHash(scene, "2026.0"));
         Assert.Equal(64, first.Length);
     }
 
     [Fact]
-    public void MaterializationPayloadV3DiffersFromTheMergedGridPayloadV2()
+    public void MaterializationPayloadV4DiffersFromTheMemberRollPayloadV3()
     {
         var scene = JsonNode.Parse("{\"meta\":{\"sourceId\":\"s\",\"sceneHash\":\"h\"},\"elements\":[]}")!;
         var current = Program.ComputeBakeMaterializationHash(scene, "2026.0");
-        var oldPayload = "tekla-connection-materializer-v2\0" + "2026.0\0"
+        var oldPayload = "tekla-connection-materializer-v3\0" + "2026.0\0"
             + scene.ToJsonString(new System.Text.Json.JsonSerializerOptions { WriteIndented = false });
         using var sha = System.Security.Cryptography.SHA256.Create();
         var old = string.Concat(sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(oldPayload))
             .Select(value => value.ToString("x2", System.Globalization.CultureInfo.InvariantCulture)));
 
         Assert.NotEqual(old, current);
+    }
+
+    [Fact]
+    public void ResolvedBakeContextOverwritesForgedCallerCapabilities()
+    {
+        var scene = JsonNode.Parse("{\"meta\":{\"sourceId\":\"s\",\"sceneHash\":\"h\"},\"elements\":[]}")!;
+        var args = new JsonObject
+        {
+            ["resolvedHostVersion"] = "2026.0",
+            ["materializationHash"] = "forged",
+        };
+
+        Program.ApplyResolvedBakeContext(args, scene, "2025.0");
+
+        Assert.Equal("2025.0", args["resolvedHostVersion"]!.GetValue<string>());
+        Assert.Equal(
+            Program.ComputeBakeMaterializationHash(scene, "2025.0"),
+            args["materializationHash"]!.GetValue<string>());
     }
 
     [Fact]
@@ -289,15 +307,28 @@ public sealed class CommitPolicyTests
     {
         var code = BakeSceneScript.Code;
 
-        Assert.Contains("gridEnvelope.Evaluate(axisContracts,levelContracts,number(origin[2]))", code);
-        Assert.Contains("gridEnvelope.CreatePlan(pair.Key,axisContracts,levelContracts,number(origin[2]))", code);
+        Assert.Contains("gridEnvelope.Evaluate(axisContracts,levelContracts,number(origin[2]),resolvedHostVersion)", code);
+        Assert.Contains("gridEnvelope.CreatePlan(pair.Key,axisContracts,levelContracts,number(origin[2]),resolvedHostVersion)", code);
         Assert.Contains("plan.CreateExpansionWarning()", code);
+        Assert.Contains("plan.CreateLabelTokenWarning()", code);
         Assert.Contains("CoordinateX=plan.CoordinateX", code);
+        Assert.Contains("CoordinateZ=plan.CoordinateZ", code);
+        Assert.Contains("LabelZ=plan.LabelZ", code);
         Assert.Contains("ExtensionLeftX=plan.ExtensionLeftX", code);
         Assert.Contains("Grid origin/coordinate/label/envelope/magnetism read-back", code);
+        Assert.Contains("Math.Abs(dot(normal,expectedAxis))>=1-1e-9", code);
+        Assert.Contains("native Grid automatic plane label/coordinate/orientation association", code);
         Assert.Contains("realizedReferences.TryGetValue(id,out realizedBy)", code);
         Assert.DoesNotContain("nativeById[x.Item3]=g", code);
         Assert.DoesNotContain("tekla-grid-axis-extents-unsupported", code);
+
+        var gridInsert = code.IndexOf("// Structural grids are inserted", StringComparison.Ordinal);
+        var gridVerificationEnd = code.IndexOf("// GUID/tag read-back proves", StringComparison.Ordinal);
+        Assert.True(gridInsert >= 0, "parent Grid insertion block must exist");
+        Assert.True(gridVerificationEnd > gridInsert, "Grid verification block must have a bounded end");
+        var gridBlock = code.Substring(gridInsert, gridVerificationEnd - gridInsert);
+        Assert.DoesNotContain("nativePlane.Modify", gridBlock);
+        Assert.DoesNotContain("new GridPlane", gridBlock);
 
         var commit = code.IndexOf("if(!m.CommitChanges(\"AWARE bake-scene", StringComparison.Ordinal);
         var classifyRecords = code.IndexOf("foreach(var item in supportedOrder){string id=item.Item1;string kind=item.Item2;ModelObject o=null", StringComparison.Ordinal);

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3 — 2026-08-18
+
+- Keep every structural-grid elevation on one native Tekla Grid while mapping supported Tekla 2026 two-word labels to deterministic native tokens with transactional receipt warnings and read-only automatic-plane verification.
+
 ## 0.1.2 — 2026-08-18
 
 - Materialize finite canonical member roll against Tekla's measured native FRONT frame, verify native rotation plus B-rep orientation before retirement, and add an optional fail-closed expected-model QA guard.

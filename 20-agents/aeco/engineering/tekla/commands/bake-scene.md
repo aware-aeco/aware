@@ -21,9 +21,15 @@ coordinate spans, so no grid line is truncated. When this necessarily lengthens
 one or more native lines, the committed result includes a
 `tekla-grid-axis-extents-expanded` warning. Every axis and level is emitted with
 `realizedBy` pointing to the parent grid and shares that single native GUID.
-Single-family grids, duplicate family offsets/elevations, labels containing
-whitespace, and overflowing derived spacings/envelopes are exhaustively
-`unsupported` without aborting unrelated supported records.
+On resolved Tekla 2026, an exact two-word label separated by one ASCII space is
+mapped to a deterministic native token and reported in a
+`tekla-grid-label-tokenized` warning. Elevations are always populated through
+the one parent Grid's `CoordinateZ`/`LabelZ`; automatically generated grid
+planes are verified read-only, never created or modified independently.
+Single-family grids, duplicate family offsets/elevations, unproven whitespace
+grammars, Tekla 2025 multi-word labels, and overflowing derived
+spacings/envelopes are exhaustively `unsupported` without aborting unrelated
+supported records.
 
 `bake-scene` owns its commit boundary. It stages source-tagged objects, applies
 ownership UDAs after each successful `Insert()`, verifies GUID and tag read-back,
