@@ -385,4 +385,256 @@ mod tests {
             );
         }
     }
+
+    /// A syntactically complete agent manifest under a chosen `agent:` id.
+    /// Hand-written rather than copied from `20-agents/`, because the tests
+    /// below need the id and the directory name to DISAGREE, which no shipped
+    /// manifest does.
+    fn write_agent(dir: &Path, id: &str) {
+        std::fs::create_dir_all(dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            format!(
+                "agent: {id}\nversion: 1.0.0\ndescription: a loader fixture\nstateful: false\n\
+                 license: MIT\ntransport:\n  cli:\n    binary: aware-probe\n\
+                 commands:\n  probe:\n    lifecycle: single\n    description: x\n    mode: read\n"
+            ),
+        )
+        .unwrap();
+    }
+
+    /// A syntactically complete app source under a chosen `app:` id.
+    fn write_app(path: &Path, id: &str) {
+        std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+        std::fs::write(
+            path,
+            format!(
+                "app: {id}\nversion: 0.0.1\ndescription: a loader fixture\n\
+                 nodes: []\nconnections: []\nrequires: []\n"
+            ),
+        )
+        .unwrap();
+    }
+
+    /// Discovery is ordered by the `agent:` FIELD, not by directory name. The
+    /// two are the same for every real install, so the distinction only shows up
+    /// on a desynced tree — which is exactly where `agent list` output must stay
+    /// stable. Directory names here sort opposite to the fields they contain, so
+    /// sorting on `root` would reverse the result rather than merely permute it.
+    #[test]
+    fn discovery_orders_agents_by_their_declared_id_not_their_directory() {
+        let tmp = tempfile::tempdir().unwrap();
+        let agents_dir = tmp.path().join("agents");
+        write_agent(&agents_dir.join("zzz-directory"), "alpha-agent");
+        write_agent(&agents_dir.join("aaa-directory"), "beta-agent");
+
+        let found = discover_agents_in(&agents_dir).unwrap();
+        let ids: Vec<&str> = found.iter().map(|d| d.manifest.agent.as_str()).collect();
+        assert_eq!(ids, ["alpha-agent", "beta-agent"]);
+    }
+
+    /// Same question for apps, whose `app:` field desyncs from its directory
+    /// often enough to have its own re-sync command (`aware app rename`).
+    #[test]
+    fn discovery_orders_apps_by_their_declared_id_not_their_directory() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().to_path_buf(),
+        };
+        write_app(&paths.apps_dir().join("zzz-directory/src.flo"), "alpha-app");
+        write_app(&paths.apps_dir().join("aaa-directory/src.flo"), "beta-app");
+
+        let found = discover_apps(&paths).unwrap();
+        let ids: Vec<&str> = found.iter().map(|d| d.manifest.app.as_str()).collect();
+        assert_eq!(ids, ["alpha-app", "beta-app"]);
+    }
+
+    /// A subdirectory of `agents/` with no `manifest.yaml` is not an agent — it
+    /// is skipped, not read. Anything left beside an install (an unpacked
+    /// tarball's staging dir, a `.git` checkout, a half-removed agent) lands
+    /// here, and treating one as an agent turns every subsequent command into a
+    /// hard parse error over a directory nobody asked about.
+    #[test]
+    fn discovery_skips_a_directory_that_holds_no_manifest() {
+        let tmp = tempfile::tempdir().unwrap();
+        let agents_dir = tmp.path().join("agents");
+        write_agent(&agents_dir.join("real-agent"), "real-agent");
+        std::fs::create_dir_all(agents_dir.join("not-an-agent/nested")).unwrap();
+        std::fs::write(agents_dir.join("not-an-agent/README.md"), "hi").unwrap();
+
+        let found = discover_agents_in(&agents_dir).unwrap();
+        let ids: Vec<&str> = found.iter().map(|d| d.manifest.agent.as_str()).collect();
+        assert_eq!(ids, ["real-agent"]);
+    }
+
+    /// `.flo` outranks `.app` when a directory holds both — the outer loop over
+    /// extensions is what decides it, so the result does not depend on
+    /// `read_dir` order. Names are chosen so an alphabetical tie-break would
+    /// pick the `.app`, and so would swapping the two extensions.
+    ///
+    /// Not asserted here: which of two `.flo` files wins when neither is named
+    /// after the directory. `find_app_manifest` returns the first `read_dir`
+    /// yields, and that order is filesystem-defined, so there is no answer a
+    /// test could pin without asserting on the filesystem instead of on us.
+    #[test]
+    fn app_source_lookup_prefers_flo_over_app() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path().join("demo");
+        write_app(&root.join("aaa.app"), "demo");
+        write_app(&root.join("zzz.flo"), "demo");
+
+        let found = find_app_manifest(&root).unwrap();
+        assert_eq!(found.file_name().unwrap(), "zzz.flo");
+    }
+
+    /// With no `.flo` present, a `.app` is still a source — the older extension
+    /// stays installable rather than reading as "this directory holds no app".
+    #[test]
+    fn app_source_lookup_accepts_a_lone_app_extension() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path().join("demo");
+        write_app(&root.join("legacy.app"), "demo");
+
+        let found = find_app_manifest(&root).unwrap();
+        assert_eq!(found.file_name().unwrap(), "legacy.app");
+    }
+
+    /// A directory with no source, and a directory that does not exist at all,
+    /// are both `None` rather than a panic: `find_app_manifest` flattens its
+    /// `read_dir` error, and several callers reach it with a path they have not
+    /// checked (`app show` on an id resolved from a stale lockfile).
+    #[test]
+    fn app_source_lookup_is_none_for_a_sourceless_or_absent_directory() {
+        let tmp = tempfile::tempdir().unwrap();
+        let empty = tmp.path().join("empty");
+        std::fs::create_dir_all(&empty).unwrap();
+        std::fs::write(empty.join("notes.txt"), "not an app").unwrap();
+        assert!(find_app_manifest(&empty).is_none());
+        assert!(find_app_manifest(&tmp.path().join("does-not-exist")).is_none());
+    }
+
+    /// Resolution order 1 before 2: the DIRECTORY name wins over an `app:` field
+    /// match. On a tree where both exist and cross over — `apps/one/` declaring
+    /// `two` and `apps/two/` declaring `one` — the two orders return different
+    /// directories, so the fallback cannot quietly become the primary.
+    #[test]
+    fn app_resolution_prefers_the_directory_name_over_a_field_match() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().to_path_buf(),
+        };
+        write_app(&paths.apps_dir().join("one/src.flo"), "two");
+        write_app(&paths.apps_dir().join("two/src.flo"), "one");
+
+        assert_eq!(
+            resolve_app_dir(&paths, "one").unwrap(),
+            paths.apps_dir().join("one")
+        );
+    }
+
+    /// The `is_safe_segment` fence in `resolve_app_dir` has to be checked
+    /// against a target that really is there: `apps/../escapee` names a real
+    /// directory, so `direct.is_dir()` is true and the fence is the only thing
+    /// standing between a crafted id and a directory outside `apps/`.
+    #[test]
+    fn app_resolution_refuses_an_id_that_points_outside_the_apps_directory() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().to_path_buf(),
+        };
+        write_app(&paths.apps_dir().join("innocent/src.flo"), "innocent");
+        write_app(&paths.aware_home.join("escapee").join("src.flo"), "escapee");
+        assert!(paths.apps_dir().join("../escapee").is_dir());
+
+        let err = resolve_app_dir(&paths, "../escapee").unwrap_err();
+        assert!(
+            matches!(err, AwareError::NotFound(_)),
+            "expected NotFound, got {err:?}"
+        );
+    }
+
+    /// The same fence one layer down, where #365 found seventeen unguarded
+    /// joins. The manifest the id points at is a VALID agent manifest, so
+    /// nothing downstream would object: the id has to be refused here or it is
+    /// not refused at all.
+    #[test]
+    fn agent_lookup_refuses_an_id_that_reads_a_manifest_outside_the_agents_directory() {
+        let tmp = tempfile::tempdir().unwrap();
+        let agents_dir = tmp.path().join("agents");
+        std::fs::create_dir_all(&agents_dir).unwrap();
+        write_agent(&tmp.path().join("outside"), "smuggled");
+        assert!(agents_dir.join("../outside/manifest.yaml").is_file());
+
+        for id in ["../outside", "./outside"] {
+            let err = load_agent_by_id(&agents_dir, id).unwrap_err();
+            assert!(
+                matches!(err, AwareError::NotFound(_)),
+                "{id:?}: expected NotFound, got {err:?}"
+            );
+            let err = agent_manifest_path(&agents_dir, id).unwrap_err();
+            assert!(
+                matches!(err, AwareError::NotFound(_)),
+                "{id:?}: expected NotFound, got {err:?}"
+            );
+        }
+
+        // Non-vacuous: the same call on a plain id resolves and loads, so the
+        // rejections above are the fence talking and not a broken fixture.
+        write_agent(&agents_dir.join("resident"), "resident");
+        assert_eq!(
+            agent_manifest_path(&agents_dir, "resident").unwrap(),
+            agents_dir.join("resident").join("manifest.yaml")
+        );
+        assert_eq!(
+            load_agent_by_id(&agents_dir, "resident").unwrap().agent,
+            "resident"
+        );
+    }
+
+    /// An unreadable manifest names the FILE. `AwareError::Io` carries no path,
+    /// so without this the operator gets a bare `No such file or directory` and
+    /// no way to tell which of dozens of installed agents produced it.
+    #[test]
+    fn an_unreadable_manifest_names_the_file_it_failed_to_read() {
+        let tmp = tempfile::tempdir().unwrap();
+        let missing = tmp.path().join("ghost-agent").join("manifest.yaml");
+
+        let err = load_agent(&missing).unwrap_err();
+        let text = err.to_string();
+        assert!(
+            text.contains(&missing.display().to_string()),
+            "error did not name the manifest: {text}"
+        );
+        assert!(
+            matches!(err, AwareError::Io(_)),
+            "the io KIND must survive the rewrap, got {err:?}"
+        );
+    }
+
+    /// A malformed manifest names the file too, and lands as `Validation` (exit
+    /// class 3) rather than as an io error — the author has a typo to fix, not
+    /// a disk to check.
+    #[test]
+    fn a_malformed_manifest_names_the_file_and_reads_as_a_validation_error() {
+        let tmp = tempfile::tempdir().unwrap();
+        let agent_path = tmp.path().join("broken-agent.yaml");
+        std::fs::write(&agent_path, "agent: broken\nversion: [unclosed\n").unwrap();
+        let app_path = tmp.path().join("broken-app.flo");
+        std::fs::write(&app_path, "app: broken\nnodes: {not: a list}\n").unwrap();
+
+        for (path, err) in [
+            (&agent_path, load_agent(&agent_path).unwrap_err()),
+            (&app_path, load_app(&app_path).unwrap_err()),
+        ] {
+            let text = err.to_string();
+            assert!(
+                text.contains(&path.display().to_string()),
+                "error did not name the manifest: {text}"
+            );
+            assert!(
+                matches!(err, AwareError::Validation(_)),
+                "expected Validation, got {err:?}"
+            );
+        }
+    }
 }
