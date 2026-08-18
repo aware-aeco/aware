@@ -252,7 +252,7 @@ foreach(var pair in referenceById) try {
     }
     var levelContracts=new List<AwareTekla.GridLevelContract>();
     foreach(var lr in levels){var l=lr as IDictionary<string,object>;if(l==null)throw new Exception("grid level must be an object");double elevation=l.TryGetValue("elevationMm",out var elevationValue)?number(elevationValue):Double.NaN;if(!finite(elevation))throw new Exception(str(l,"id")+": grid level elevation is invalid");levelContracts.Add(new AwareTekla.GridLevelContract(str(l,"id"),elevation,str(l,"label")));}
-    var envelope=gridEnvelope.Evaluate(axisContracts,levelContracts);
+    var envelope=gridEnvelope.Evaluate(axisContracts,levelContracts,number(origin[2]));
     if(envelope.IsSupported){gridEnvelopes[pair.Key]=envelope;if(envelope.ExpandsAuthoredExtents)pendingWarnings.Add(row(pair.Key,"structural-grid","warning","tekla-grid-axis-extents-expanded","Tekla uses one shared rectangular grid envelope, so one or more native grid lines extend beyond their authored startMm/endMm values."));}
     else unsupportedGridEnvelopes[pair.Key]=envelope;
 }catch(Exception ex){failed.Add(row(pair.Key,"structural-grid","failed","invalid-grid",ex.Message));}

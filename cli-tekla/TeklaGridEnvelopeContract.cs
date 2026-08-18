@@ -96,7 +96,8 @@ public sealed class TeklaGridEnvelopeContract
 
     public TeklaGridEnvelopeResult Evaluate(
         IReadOnlyList<GridAxisExtentContract> axes,
-        IReadOnlyList<GridLevelContract> levels)
+        IReadOnlyList<GridLevelContract> levels,
+        double originZMm)
     {
         if (axes is null) throw new ArgumentNullException(nameof(axes));
         if (levels is null) throw new ArgumentNullException(nameof(levels));
@@ -109,11 +110,11 @@ public sealed class TeklaGridEnvelopeContract
                 "tekla-grid-single-family-unsupported",
                 "Tekla native Grid requires both X and Y axis families.");
 
-        if (axes.Any(axis => string.IsNullOrWhiteSpace(axis.Label))
-            || levels.Any(level => string.IsNullOrWhiteSpace(level.Label)))
+        if (axes.Any(axis => !IsLabelToken(axis.Label))
+            || levels.Any(level => !IsLabelToken(level.Label)))
             return Unsupported(
-                "tekla-grid-blank-label-unsupported",
-                "Tekla native Grid requires a non-blank label for every axis and level.");
+                "tekla-grid-label-token-unsupported",
+                "Tekla native Grid requires every axis and level label to be one whitespace-free token.");
 
         if (HasDuplicate(xs.Select(axis => axis.OffsetMm))
             || HasDuplicate(ys.Select(axis => axis.OffsetMm)))
@@ -125,6 +126,14 @@ public sealed class TeklaGridEnvelopeContract
             return Unsupported(
                 "tekla-grid-duplicate-elevation-unsupported",
                 "Tekla native Grid cannot preserve duplicate elevation levels.");
+
+        var normalizedLevels = levels.Select(level => level.ElevationMm - originZMm).ToList();
+        if (HasNonFiniteSpacing(xs.Select(axis => axis.OffsetMm))
+            || HasNonFiniteSpacing(ys.Select(axis => axis.OffsetMm))
+            || HasNonFiniteSpacing(normalizedLevels))
+            return Unsupported(
+                "tekla-grid-derived-spacing-unsupported",
+                "Tekla native Grid coordinate spacing overflows for the authored axes or levels.");
 
         var xFamilyStart = Math.Min(xs.Min(axis => axis.StartMm), ys.Min(axis => axis.OffsetMm));
         var xFamilyEnd = Math.Max(xs.Max(axis => axis.EndMm), ys.Max(axis => axis.OffsetMm));
@@ -175,6 +184,19 @@ public sealed class TeklaGridEnvelopeContract
                 return true;
         return false;
     }
+
+    static bool HasNonFiniteSpacing(IEnumerable<double> values)
+    {
+        var ordered = values.OrderBy(value => value).ToList();
+        if (ordered.Any(value => !IsFinite(value))) return true;
+        for (var i = 1; i < ordered.Count; i++)
+            if (!IsFinite(ordered[i] - ordered[i - 1]))
+                return true;
+        return false;
+    }
+
+    static bool IsLabelToken(string label) =>
+        !string.IsNullOrEmpty(label) && !label.Any(char.IsWhiteSpace);
 
     static bool IsFinite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
 

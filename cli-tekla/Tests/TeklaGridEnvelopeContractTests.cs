@@ -23,7 +23,8 @@ public sealed class TeklaGridEnvelopeContractTests
                 Axis("Y-1", "y", 0, "1", 0, 6000),
                 Axis("Y-2", "y", 3000, "2", 0, 6000),
             },
-            Levels());
+            Levels(),
+            0);
 
         Assert.True(result.IsSupported);
         Assert.False(result.ExpandsAuthoredExtents);
@@ -44,7 +45,8 @@ public sealed class TeklaGridEnvelopeContractTests
                 Axis("Y-1", "y", 0, "1", -500, 6500),
                 Axis("Y-2", "y", 3000, "2", -250, 6250),
             },
-            Levels());
+            Levels(),
+            0);
 
         Assert.True(result.IsSupported);
         Assert.True(result.ExpandsAuthoredExtents);
@@ -65,7 +67,8 @@ public sealed class TeklaGridEnvelopeContractTests
                 Axis("Y-1", "y", -500, "1", 50, 100),
                 Axis("Y-2", "y", 4000, "2", 50, 100),
             },
-            Levels());
+            Levels(),
+            0);
 
         Assert.True(result.IsSupported);
         Assert.Equal(-500, result.XFamilyStartMm);
@@ -78,8 +81,11 @@ public sealed class TeklaGridEnvelopeContractTests
     [InlineData("single-family", "tekla-grid-single-family-unsupported")]
     [InlineData("duplicate-axis", "tekla-grid-duplicate-axis-offset-unsupported")]
     [InlineData("duplicate-level", "tekla-grid-duplicate-elevation-unsupported")]
-    [InlineData("blank-label", "tekla-grid-blank-label-unsupported")]
+    [InlineData("blank-label", "tekla-grid-label-token-unsupported")]
+    [InlineData("whitespace-label", "tekla-grid-label-token-unsupported")]
     [InlineData("overflow", "tekla-grid-derived-envelope-unsupported")]
+    [InlineData("spacing-overflow", "tekla-grid-derived-spacing-unsupported")]
+    [InlineData("elevation-spacing-overflow", "tekla-grid-derived-spacing-unsupported")]
     public void TeklaOnlyLimitsAreExhaustivelyClassifiable(string scenario, string expectedCode)
     {
         IReadOnlyList<GridAxisExtentContract> axes;
@@ -104,6 +110,13 @@ public sealed class TeklaGridEnvelopeContractTests
                     Axis("Y-1", "y", 0, "1", 0, 6000),
                 };
                 break;
+            case "whitespace-label":
+                axes = new[]
+                {
+                    Axis("X-A", "x", 0, "Grid A", 0, 3000),
+                    Axis("Y-1", "y", 0, "1", 0, 6000),
+                };
+                break;
             case "overflow":
                 axes = new[]
                 {
@@ -111,11 +124,27 @@ public sealed class TeklaGridEnvelopeContractTests
                     Axis("Y-1", "y", -double.MaxValue, "1", 0, 1),
                 };
                 break;
+            case "spacing-overflow":
+                axes = new[]
+                {
+                    Axis("X-A", "x", -double.MaxValue, "A", 0, 1),
+                    Axis("X-B", "x", double.MaxValue, "B", 0, 1),
+                    Axis("Y-1", "y", 0, "1", -double.MaxValue, double.MaxValue),
+                };
+                break;
+            case "elevation-spacing-overflow":
+                axes = RectangularAxes();
+                levels = new[]
+                {
+                    new GridLevelContract("Z-low", -double.MaxValue, "low"),
+                    new GridLevelContract("Z-high", double.MaxValue, "high"),
+                };
+                break;
             default:
                 throw new InvalidOperationException(scenario);
         }
 
-        var result = _contract.Evaluate(axes, levels);
+        var result = _contract.Evaluate(axes, levels, 0);
 
         Assert.False(result.IsSupported);
         Assert.Equal(expectedCode, result.Code);
@@ -126,11 +155,24 @@ public sealed class TeklaGridEnvelopeContractTests
     {
         var unsupported = _contract.Evaluate(
             new[] { Axis("X-A", "x", 0, "A", 0, 1000) },
-            Levels());
-        var supported = _contract.Evaluate(RectangularAxes(), Levels());
+            Levels(),
+            0);
+        var supported = _contract.Evaluate(RectangularAxes(), Levels(), 0);
 
         Assert.False(unsupported.IsSupported);
         Assert.True(supported.IsSupported);
+    }
+
+    [Fact]
+    public void LevelNormalizationOverflowIsUnsupportedBeforeMutation()
+    {
+        var result = _contract.Evaluate(
+            RectangularAxes(),
+            new[] { new GridLevelContract("Z-high", double.MaxValue, "high") },
+            -double.MaxValue);
+
+        Assert.False(result.IsSupported);
+        Assert.Equal("tekla-grid-derived-spacing-unsupported", result.Code);
     }
 
     [Fact]

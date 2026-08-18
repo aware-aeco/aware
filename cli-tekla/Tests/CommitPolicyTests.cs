@@ -252,7 +252,7 @@ public sealed class CommitPolicyTests
     {
         var code = BakeSceneScript.Code;
 
-        Assert.Contains("gridEnvelope.Evaluate(axisContracts,levelContracts)", code);
+        Assert.Contains("gridEnvelope.Evaluate(axisContracts,levelContracts,number(origin[2]))", code);
         Assert.Contains("tekla-grid-axis-extents-expanded", code);
         Assert.Contains("Grid origin/coordinate/label/envelope/magnetism read-back", code);
         Assert.Contains("realizedReferences.TryGetValue(id,out realizedBy)", code);

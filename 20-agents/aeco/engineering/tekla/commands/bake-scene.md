@@ -21,9 +21,9 @@ coordinate spans, so no grid line is truncated. When this necessarily lengthens
 one or more native lines, the committed result includes a
 `tekla-grid-axis-extents-expanded` warning. Every axis and level is emitted with
 `realizedBy` pointing to the parent grid and shares that single native GUID.
-Single-family grids, duplicate family offsets/elevations, blank labels, and
-overflowing derived envelopes are exhaustively `unsupported` without aborting
-unrelated supported records.
+Single-family grids, duplicate family offsets/elevations, labels containing
+whitespace, and overflowing derived spacings/envelopes are exhaustively
+`unsupported` without aborting unrelated supported records.
 
 `bake-scene` owns its commit boundary. It stages source-tagged objects, applies
 ownership UDAs after each successful `Insert()`, verifies GUID and tag read-back,
