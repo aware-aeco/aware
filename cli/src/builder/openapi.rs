@@ -1296,26 +1296,36 @@ paths:
     // ── which media type describes a body ───────────────────────────────────
 
     #[test]
-    fn a_body_offered_only_under_a_non_json_media_type_is_still_described() {
+    fn a_body_offered_only_under_a_vendor_json_media_type_is_still_described() {
         // `body_schema` prefers `application/json` and otherwise takes the first
         // media type present. Only the preferred arm was covered, so losing the
-        // fallback would generate a POST command with no `body` input at all —
-        // the operation stays listed and becomes uncallable.
+        // fallback would generate a POST command with no `body` input at all.
+        //
+        // The media type here is a vendor JSON one deliberately. The builder does
+        // NOT record which media type it picked, and the REST sender
+        // (`runtime::invoker::build_operation_request` → `RestInvoker`) serializes
+        // an object body as JSON under `Content-Type: application/json` unless the
+        // app supplies its own header — so the fallback only yields a *callable*
+        // command for bodies the transport can serialize that way. Reaching for
+        // `application/xml` here would assert that a body input exists while the
+        // operation stayed unsatisfiable, which pins a comfort rather than a
+        // behaviour (Codex, #434). `+json` suffixed vendor types are also what
+        // real specs use far more often than XML.
         let spec = r##"{
             "openapi": "3.0.0",
-            "info": { "title": "xmlish", "version": "1.0.0" },
+            "info": { "title": "vendory", "version": "1.0.0" },
             "components": { "schemas": {
                 "Pet": { "type": "object", "properties": { "name": { "type": "string" } } }
             } },
             "paths": { "/pets": { "post": {
                 "operationId": "addPet",
-                "requestBody": { "content": { "application/xml": {
+                "requestBody": { "content": { "application/vnd.petstore.v3+json": {
                     "schema": { "$ref": "#/components/schemas/Pet" }
                 } } },
                 "responses": {}
             } } }
         }"##;
-        let agent = built(spec, "xmlish");
+        let agent = built(spec, "vendory");
         let inputs = &agent.commands["add-pet"].inputs_yaml;
         assert!(inputs.contains("body:"), "no body input: {inputs}");
         assert!(inputs.contains("Pet (request body)"), "inputs: {inputs}");
