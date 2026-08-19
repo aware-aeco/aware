@@ -242,10 +242,10 @@ fn double_angle_outlines(
     let mut left = vec![
         [-half_gap, -half_back],
         [-half_gap, half_back],
-        [-half_gap - outstanding, half_back],
-        [-half_gap - outstanding, half_back - t],
-        [-half_gap - t, half_back - t],
-        [-half_gap - t, -half_back],
+        [-half_gap - t, half_back],
+        [-half_gap - t, -half_back + t],
+        [-half_gap - outstanding, -half_back + t],
+        [-half_gap - outstanding, -half_back],
     ];
     let mut right = left
         .iter()
@@ -3577,6 +3577,21 @@ mod tests {
             assert_eq!(right_min - left_max, 12.0);
             assert_eq!(max_x - min_x, expected_width);
             assert_eq!(max_y - min_y, expected_depth);
+            let mut left_tip_y = left
+                .iter()
+                .filter(|point| point[0] == min_x)
+                .map(|point| point[1])
+                .collect::<Vec<_>>();
+            let mut right_tip_y = right
+                .iter()
+                .filter(|point| point[0] == max_x)
+                .map(|point| point[1])
+                .collect::<Vec<_>>();
+            left_tip_y.sort_by(f64::total_cmp);
+            right_tip_y.sort_by(f64::total_cmp);
+            let bottom_leg = vec![-expected_depth / 2.0, -expected_depth / 2.0 + 10.0];
+            assert_eq!(left_tip_y, bottom_leg);
+            assert_eq!(right_tip_y, bottom_leg);
         }
 
         let [left, right] =

@@ -105,9 +105,9 @@ internal static class CrossSectionProfile
         IReadOnlyList<(double X, double Y)> left =
         [
             (-halfGap, -halfBack), (-halfGap, halfBack),
-            (-halfGap - outstanding, halfBack),
-            (-halfGap - outstanding, halfBack - t),
-            (-halfGap - t, halfBack - t), (-halfGap - t, -halfBack),
+            (-halfGap - t, halfBack), (-halfGap - t, -halfBack + t),
+            (-halfGap - outstanding, -halfBack + t),
+            (-halfGap - outstanding, -halfBack),
         ];
         var right = left.Reverse().Select(point => (-point.X, point.Y)).ToArray();
         return [left, right];

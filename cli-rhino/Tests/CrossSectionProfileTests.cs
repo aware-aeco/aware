@@ -146,6 +146,15 @@ public class CrossSectionProfileTests
                             - outlines.SelectMany(points => points).Min(point => point.X));
             Assert.Equal(d, outlines.SelectMany(points => points).Max(point => point.Y)
                             - outlines.SelectMany(points => points).Min(point => point.Y));
+            var minX = outlines[0].Min(point => point.X);
+            var maxX = outlines[1].Max(point => point.X);
+            var expectedBottomLeg = new[] { -d / 2, -d / 2 + 10 };
+            Assert.Equal(
+                expectedBottomLeg,
+                outlines[0].Where(point => point.X == minX).Select(point => point.Y).OrderBy(y => y).ToArray());
+            Assert.Equal(
+                expectedBottomLeg,
+                outlines[1].Where(point => point.X == maxX).Select(point => point.Y).OrderBy(y => y).ToArray());
         }
 
         var touching = CrossSectionProfile.Decode(new JsonObject
