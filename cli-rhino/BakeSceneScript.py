@@ -173,6 +173,28 @@ def vrot(v, axis, angle):
     dot = vdot(axis, v) * (1.0 - c)
     return [v[i] * c + cross[i] * s + axis[i] * dot for i in range(3)]
 
+def member_frame_axes(axis_mm):
+    # Match scene_roll::member_frame exactly. The branch reads the RAW delta as
+    # a sum-of-squares ratio; normalizing first, or using 1-dot(up,n)^2, can
+    # move a near-vertical asymmetric member across the discontinuous seam.
+    up = [0.0, 0.0, 1.0]
+    raw_up_dot = vdot(axis_mm, up)
+    raw_perpendicular = [
+        axis_mm[i] - up[i] * raw_up_dot for i in range(3)
+    ]
+    seeded = vdot(raw_perpendicular, raw_perpendicular) <= 1.0e-6 * vdot(axis_mm, axis_mm)
+    zaxis = vnorm(axis_mm)
+    if seeded:
+        seed = [1.0, 0.0, 0.0]
+        seed_dot = vdot(seed, zaxis)
+        xaxis = vnorm([seed[i] - zaxis[i] * seed_dot for i in range(3)])
+        yaxis = vnorm(vcross(zaxis, xaxis))
+    else:
+        up_dot = vdot(up, zaxis)
+        yaxis = vnorm([up[i] - zaxis[i] * up_dot for i in range(3)])
+        xaxis = vnorm(vcross(yaxis, zaxis))
+    return xaxis, yaxis, zaxis
+
 def rectangular_outline(width, depth):
     hw = width / 2.0
     hd = depth / 2.0
@@ -360,11 +382,7 @@ for supported_row in supported:
             raise ValueError(
                 "{}: xsection edge, thickness, or void is at or below Rhino document tolerance".format(record_id))
 
-        zaxis = vnorm(axis_mm)
-        dz = vdot([0.0, 0.0, 1.0], zaxis)
-        projected_up = [-zaxis[0] * dz, -zaxis[1] * dz, 1.0 - zaxis[2] * dz]
-        yaxis = vnorm(projected_up) if vlen(projected_up) > 1.0e-9 else [0.0, 1.0, 0.0]
-        xaxis = vcross(yaxis, zaxis)
+        xaxis, yaxis, zaxis = member_frame_axes(axis_mm)
         roll = number(element.get("rot")) or 0.0
         if roll:
             radians = roll * math.pi / 180.0

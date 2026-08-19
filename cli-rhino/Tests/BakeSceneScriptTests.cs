@@ -70,6 +70,32 @@ public class BakeSceneScriptTests
     }
 
     [Fact]
+    public void EmbeddedMaterializerBranchesFromRawAxisAtTheCanonicalVerticalSeam()
+    {
+        // Rhino executes this Python inside the host, so pin the live copy of the
+        // cross-sink frame contract just as the viewer pins its embedded JavaScript.
+        // The old projected-Z fallback chooses the opposite facing for a near-vertical
+        // asymmetric double angle inside the inclusive 1e-6 band.
+        var code = BakeSceneScript.Code;
+        var start = code.IndexOf("def member_frame_axes(axis_mm):", StringComparison.Ordinal);
+        var end = code.IndexOf("def rectangular_outline", start, StringComparison.Ordinal);
+        Assert.True(start >= 0 && end > start);
+        var frame = code[start..end];
+
+        var rawBranch = frame.IndexOf(
+            "seeded = vdot(raw_perpendicular, raw_perpendicular) <= 1.0e-6 * vdot(axis_mm, axis_mm)",
+            StringComparison.Ordinal);
+        var normalization = frame.IndexOf("zaxis = vnorm(axis_mm)", StringComparison.Ordinal);
+        Assert.True(rawBranch >= 0);
+        Assert.True(rawBranch < normalization, "the seam branch must read the raw delta before normalization");
+        Assert.Contains("seed = [1.0, 0.0, 0.0]", frame);
+        Assert.Contains("xaxis = vnorm([seed[i] - zaxis[i] * seed_dot for i in range(3)])", frame);
+        Assert.Contains("yaxis = vnorm(vcross(zaxis, xaxis))", frame);
+        Assert.DoesNotContain("1.0 - zaxis[2] * dz", frame);
+        Assert.DoesNotContain("projected_up", frame);
+    }
+
+    [Fact]
     public void DirectExtrusionAndUndoSafetyOrderingArePinned()
     {
         var code = BakeSceneScript.Code;
