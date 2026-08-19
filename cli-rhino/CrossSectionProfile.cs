@@ -10,7 +10,7 @@ namespace AwareRhino;
 /// </summary>
 internal static class CrossSectionProfile
 {
-    internal const string GeometryRevision = "rhino-profile-v3";
+    internal const string GeometryRevision = "rhino-profile-v4";
 
     internal sealed record Plan(
         string Shape,
@@ -24,11 +24,12 @@ internal static class CrossSectionProfile
     {
         internal JsonObject ToJson()
         {
+            var componentCount = Shape == "double-angle" ? 2 : 1;
             var dimensions = new JsonObject();
             foreach (var (key, value) in Dimensions) dimensions[key] = value;
             var residuals = new JsonArray();
             foreach (var value in Residuals) residuals.Add(value);
-            return new JsonObject
+            var result = new JsonObject
             {
                 ["revision"] = GeometryRevision,
                 ["shape"] = Shape,
@@ -39,8 +40,21 @@ internal static class CrossSectionProfile
                 ["area"] = Area,
                 ["perimeter"] = Perimeter,
                 ["profileCount"] = ProfileCount,
-                ["capCount"] = 2,
+                ["componentCount"] = componentCount,
+                ["capCount"] = 2 * componentCount,
             };
+            if (Shape == "double-angle")
+            {
+                var components = new JsonArray();
+                foreach (var outline in DoubleAngleOutlines(Dimensions))
+                {
+                    var points = new JsonArray();
+                    foreach (var (x, y) in outline) points.Add(new JsonArray(x, y));
+                    components.Add(points);
+                }
+                result["components"] = components;
+            }
+            return result;
         }
     }
 
@@ -71,13 +85,33 @@ internal static class CrossSectionProfile
             "chs" => DecodeChs(xs, sectionWidth, sectionDepth),
             "rect" => DecodeRect(xs, sectionWidth, sectionDepth),
             "tee" => DecodeTee(xs, sectionWidth, sectionDepth),
-            "double-angle" => Fail("xsection double-angle is canonical but explicitly unsupported by the Rhino sink"),
+            "double-angle" => DecodeDoubleAngle(xs, sectionWidth, sectionDepth),
             _ => Fail("unsupported xsection.shape"),
         };
     }
 
     internal static double EnvelopeTolerance(double actual, double expected)
         => Math.Max(0.000001, 1e-9 * Math.Max(1, Math.Max(Math.Abs(actual), Math.Abs(expected))));
+
+    internal static IReadOnlyList<IReadOnlyList<(double X, double Y)>> DoubleAngleOutlines(
+        IReadOnlyDictionary<string, double> dimensions)
+    {
+        var t = dimensions["t"];
+        var gap = dimensions["gap"];
+        var back = dimensions["back"];
+        var outstanding = dimensions["outstanding"];
+        var halfGap = gap / 2;
+        var halfBack = back / 2;
+        IReadOnlyList<(double X, double Y)> left =
+        [
+            (-halfGap, -halfBack), (-halfGap, halfBack),
+            (-halfGap - outstanding, halfBack),
+            (-halfGap - outstanding, halfBack - t),
+            (-halfGap - t, halfBack - t), (-halfGap - t, -halfBack),
+        ];
+        var right = left.Reverse().Select(point => (-point.X, point.Y)).ToArray();
+        return [left, right];
+    }
 
     static DecodeResult DecodeI(JsonObject xs, double w, double d)
     {
@@ -197,6 +231,46 @@ internal static class CrossSectionProfile
         };
         return Success(new Plan("tee", w, d, v, [tw, tf, (w - tw) / 2, d - tf],
             w * tf + (d - tf) * tw, PolygonPerimeter(points), 1));
+    }
+
+    static DecodeResult DecodeDoubleAngle(JsonObject xs, double w, double d)
+    {
+        if (!Dimensions(xs, ["d", "b", "t"], out var parsed, out var error))
+            return Fail(error);
+        if (!StrictNumber(xs["gap"], out var gap) || gap < 0)
+            return Fail("xsection.gap must be a non-negative finite JSON number");
+        if (!StrictString(xs["orientation"], out var orientation)
+            || orientation is not ("llbb" or "slbb"))
+            return Fail("xsection.orientation must be exactly llbb or slbb");
+
+        var angleDepth = parsed["d"];
+        var angleWidth = parsed["b"];
+        var t = parsed["t"];
+        if (!(t < Math.Min(angleDepth, angleWidth)))
+            return Fail("xsection double-angle requires t < min(b,d)");
+
+        var back = orientation == "llbb" ? angleDepth : angleWidth;
+        var outstanding = orientation == "llbb" ? angleWidth : angleDepth;
+        if (!Matches(2 * outstanding + gap, w) || !Matches(back, d))
+            return Fail("xsection double-angle orientation and dimensions must match section {w,d}");
+
+        var dimensions = new Dictionary<string, double>(parsed, StringComparer.Ordinal)
+        {
+            ["gap"] = gap,
+            ["back"] = back,
+            ["outstanding"] = outstanding,
+        };
+        var residuals = new List<double> { t, back - t, outstanding - t };
+        if (gap > 0) residuals.Add(gap);
+        return Success(new Plan(
+            "double-angle",
+            w,
+            d,
+            dimensions,
+            residuals,
+            2 * t * (back + outstanding - t),
+            4 * (back + outstanding),
+            1));
     }
 
     static Plan Rect(double w, double d)

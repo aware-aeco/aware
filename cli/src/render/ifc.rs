@@ -4,7 +4,7 @@
 //! (members as `from`->`to` axes with an optional parametric cross-section + a `group`) and emits an
 //! IFC4 STEP (SPF) document — IfcColumn/IfcBeam/IfcMember as extruded profiles placed on the member
 //! axis, under an IfcProject -> IfcSite -> IfcBuilding -> IfcBuildingStorey spine. Each element may
-//! carry an `xsection` (i/channel/angle/rhs/chs/rect/tee/double-angle) → the matching parametric IfcProfileDef; a
+//! carry an `xsection` (i/channel/angle/rhs/chs/rect/tee/double-angle) → the matching IfcProfileDef; a
 //! neutral `role` → the element type; a `material` → an IfcMaterial association; and its `group`'s
 //! colour → an IfcStyledItem. A `kind:"mesh"` element (tessellated `positions`+`indices`) is written
 //! as an IfcTriangulatedFaceSet on an IfcBuildingElementProxy. The writer stays GENERIC: it applies
@@ -216,7 +216,72 @@ impl Spf {
     }
 }
 
-/// Emit the parametric profile for a member's `xsection`, positioned at `pos2d`. Falls back to an
+fn double_angle_outlines(
+    d: f64,
+    b: f64,
+    t: f64,
+    gap: f64,
+    orientation: &str,
+) -> Option<[Vec<Vec2>; 2]> {
+    if ![d, b, t, gap].iter().all(|value| value.is_finite())
+        || d <= 0.0
+        || b <= 0.0
+        || t <= 0.0
+        || gap < 0.0
+        || t >= d.min(b)
+    {
+        return None;
+    }
+    let (back, outstanding) = match orientation {
+        "llbb" => (d, b),
+        "slbb" => (b, d),
+        _ => return None,
+    };
+    let half_back = back / 2.0;
+    let half_gap = gap / 2.0;
+    let mut left = vec![
+        [-half_gap, -half_back],
+        [-half_gap, half_back],
+        [-half_gap - outstanding, half_back],
+        [-half_gap - outstanding, half_back - t],
+        [-half_gap - t, half_back - t],
+        [-half_gap - t, -half_back],
+    ];
+    let mut right = left
+        .iter()
+        .rev()
+        .map(|point| [-point[0], point[1]])
+        .collect::<Vec<_>>();
+    // IFC outer boundaries are counter-clockwise when viewed along the extrusion direction.
+    for outline in [&mut left, &mut right] {
+        let signed_area = outline
+            .iter()
+            .zip(outline.iter().cycle().skip(1))
+            .take(outline.len())
+            .map(|(a, b)| a[0] * b[1] - b[0] * a[1])
+            .sum::<f64>();
+        if signed_area < 0.0 {
+            outline.reverse();
+        }
+    }
+    Some([left, right])
+}
+
+fn rotate_outline(outline: &[Vec2], degrees: f64) -> Vec<Vec2> {
+    let radians = degrees.to_radians();
+    let (sin, cos) = radians.sin_cos();
+    outline
+        .iter()
+        .map(|point| {
+            [
+                point[0] * cos - point[1] * sin,
+                point[0] * sin + point[1] * cos,
+            ]
+        })
+        .collect()
+}
+
+/// Emit the profile for a member's `xsection`, positioned at `pos2d`. Falls back to an
 /// `IfcRectangleProfileDef(w,d)` for a missing / unknown / IFC-WHERE-invalid descriptor. Returns the
 /// profile entity id + an optional neutral warning reason (set only when a *present* xsection was
 /// rejected). The generic writer never emits a schema-invalid profile.
@@ -227,6 +292,7 @@ fn emit_profile(
     d: f64,
     name: &str,
     pos2d: i64,
+    profile_rotation_degrees: f64,
 ) -> (i64, Option<String>) {
     let rect = |spf: &mut Spf, ww: f64, dd: f64| {
         spf.emit(&format!(
@@ -364,31 +430,49 @@ fn emit_profile(
             (rect(spf, w, d), bad("invalid tee dims or envelope"))
         }
         "double-angle" => {
-            let valid = if let (Some(d0), Some(b), Some(t), Some(gap)) =
-                (f("d"), f("b"), f("t"), f("gap"))
+            let d0 = f("d");
+            let b = f("b");
+            let t = f("t");
+            let gap = xs
+                .get("gap")
+                .and_then(Value::as_f64)
+                .filter(|value| value.is_finite() && *value >= 0.0);
+            let orientation = xs.get("orientation").and_then(Value::as_str);
+            if let (Some(d0), Some(b), Some(t), Some(gap), Some(orientation)) =
+                (d0, b, t, gap, orientation)
             {
-                t < d0.min(b)
-                    && match xs.get("orientation").and_then(Value::as_str) {
-                        Some("llbb") => envelope(2.0 * b + gap, d0),
-                        Some("slbb") => envelope(b, 2.0 * d0 + gap),
-                        _ => false,
+                let expected = match orientation {
+                    "llbb" => envelope(2.0 * b + gap, d0),
+                    "slbb" => envelope(2.0 * d0 + gap, b),
+                    _ => false,
+                };
+                if expected
+                    && let Some(outlines) = double_angle_outlines(d0, b, t, gap, orientation)
+                {
+                    let mut profiles = Vec::with_capacity(2);
+                    for (index, outline) in outlines.iter().enumerate() {
+                        let rotated = rotate_outline(outline, profile_rotation_degrees);
+                        let curve = emit_polyline2(spf, &rotated, true);
+                        profiles.push(spf.emit(&format!(
+                            "IFCARBITRARYCLOSEDPROFILEDEF(.AREA.,{},#{curve})",
+                            s_lit(&format!("{name} angle {}", index + 1))
+                        )));
                     }
-            } else {
-                false
-            };
-            if valid {
-                // IFC export deliberately declines a disconnected two-profile section until its
-                // IfcCompositeProfileDef placement contract is implemented and tested.
-                (
-                    rect(spf, w, d),
-                    bad("double-angle is explicitly unsupported by the IFC sink"),
-                )
-            } else {
-                (
-                    rect(spf, w, d),
-                    bad("invalid double-angle dims, orientation, or envelope"),
-                )
+                    return (
+                        spf.emit(&format!(
+                            "IFCCOMPOSITEPROFILEDEF(.AREA.,{},(#{},#{}),$)",
+                            s_lit(name),
+                            profiles[0],
+                            profiles[1]
+                        )),
+                        None,
+                    );
+                }
             }
+            (
+                rect(spf, w, d),
+                bad("invalid double-angle dims, orientation, or envelope"),
+            )
         }
         other => (
             rect(spf, w, d),
@@ -1326,7 +1410,8 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
             pos2d
         };
 
-        let (prof, warn) = emit_profile(&mut spf, el.get("xsection"), w, d, &profile, prof_pos);
+        let (prof, warn) =
+            emit_profile(&mut spf, el.get("xsection"), w, d, &profile, prof_pos, rot);
         if let Some(reason) = warn {
             warnings.push((elid.clone(), reason));
         }
@@ -3442,17 +3527,66 @@ mod tests {
     }
 
     #[test]
-    fn double_angle_is_explicitly_unsupported_in_ifc() {
-        let scene = json!({ "meta": { "name": "x" }, "elements": [{
-            "id":"2L", "from":[0,0,0], "to":[3000,0,0],
-            "section":{"w":212,"d":150}, "xsection":{
-                "shape":"double-angle","d":150,"b":100,"t":10,"gap":12,"orientation":"llbb"
-            }
-        }]});
-        let result = build_ifc(&scene);
-        assert!(result.doc.contains("IFCRECTANGLEPROFILEDEF("));
-        assert_eq!(result.warnings.len(), 1);
-        assert!(result.warnings[0].1.contains("explicitly unsupported"));
+    fn double_angle_materializes_as_two_exact_composite_profiles() {
+        for (orientation, w, d) in [("llbb", 212, 150), ("slbb", 312, 100)] {
+            let scene = json!({ "meta": { "name": "x" }, "elements": [{
+                "id":"2L", "from":[0,0,0], "to":[3000,0,0],
+                "section":{"w":w,"d":d}, "xsection":{
+                    "shape":"double-angle","d":150,"b":100,"t":10,"gap":12,"orientation":orientation
+                }
+            }]});
+            let result = build_ifc(&scene);
+            assert!(result.doc.contains("IFCCOMPOSITEPROFILEDEF("));
+            assert_eq!(
+                result.doc.matches("IFCARBITRARYCLOSEDPROFILEDEF(").count(),
+                2
+            );
+            assert!(result.warnings.is_empty());
+        }
+    }
+
+    #[test]
+    fn double_angle_outlines_preserve_exact_gap_and_never_overlap() {
+        for (orientation, expected_width, expected_depth) in
+            [("llbb", 212.0, 150.0), ("slbb", 312.0, 100.0)]
+        {
+            let [left, right] = double_angle_outlines(150.0, 100.0, 10.0, 12.0, orientation)
+                .expect("valid double angle");
+            let left_max = left.iter().map(|p| p[0]).fold(f64::NEG_INFINITY, f64::max);
+            let right_min = right.iter().map(|p| p[0]).fold(f64::INFINITY, f64::min);
+            let min_x = left
+                .iter()
+                .chain(&right)
+                .map(|p| p[0])
+                .fold(f64::INFINITY, f64::min);
+            let max_x = left
+                .iter()
+                .chain(&right)
+                .map(|p| p[0])
+                .fold(f64::NEG_INFINITY, f64::max);
+            let min_y = left
+                .iter()
+                .chain(&right)
+                .map(|p| p[1])
+                .fold(f64::INFINITY, f64::min);
+            let max_y = left
+                .iter()
+                .chain(&right)
+                .map(|p| p[1])
+                .fold(f64::NEG_INFINITY, f64::max);
+            assert_eq!(right_min - left_max, 12.0);
+            assert_eq!(max_x - min_x, expected_width);
+            assert_eq!(max_y - min_y, expected_depth);
+        }
+
+        let [left, right] =
+            double_angle_outlines(150.0, 100.0, 10.0, 0.0, "slbb").expect("touching");
+        assert_eq!(
+            right.iter().map(|p| p[0]).fold(f64::INFINITY, f64::min)
+                - left.iter().map(|p| p[0]).fold(f64::NEG_INFINITY, f64::max),
+            0.0
+        );
+        assert!(double_angle_outlines(150.0, 100.0, 10.0, -0.001, "slbb").is_none());
     }
 
     #[test]
