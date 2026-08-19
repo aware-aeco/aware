@@ -171,7 +171,7 @@ fn tracked_files(root: &Path, patterns: &[&str]) -> Option<Vec<String>> {
 /// source trees while excluding local build/test scratch state. A filesystem
 /// walk remains only for the isolated synthetic-tree regression tests.
 fn project_files(root: &Path) -> Vec<String> {
-    if let Some(paths) = tracked_files(root, &["*.csproj"]) {
+    if let Some(paths) = tracked_files(root, &["*.csproj", "*.fsproj", "*.vbproj"]) {
         return paths;
     }
     let mut found = Vec::new();
@@ -192,7 +192,7 @@ fn collect(root: &Path, dir: &Path, out: &mut Vec<String>) {
             if !SKIP_DIRS.contains(&name.as_ref()) {
                 collect(root, &path, out);
             }
-        } else if name.ends_with(".csproj")
+        } else if is_dotnet_project_filename(&name)
             && let Ok(rel) = path.strip_prefix(root)
         {
             // Forward slashes regardless of host: the workflow spells these
@@ -200,6 +200,12 @@ fn collect(root: &Path, dir: &Path, out: &mut Vec<String>) {
             out.push(rel.to_string_lossy().replace('\\', "/"));
         }
     }
+}
+
+fn is_dotnet_project_filename(name: &str) -> bool {
+    [".csproj", ".fsproj", ".vbproj"]
+        .iter()
+        .any(|extension| name.ends_with(extension))
 }
 
 /// Every runnable test project under `root`.
@@ -222,7 +228,7 @@ fn tested_paths(workflow: &str) -> Vec<String> {
     let doc: serde_yaml::Value =
         serde_yaml::from_str(workflow).unwrap_or_else(|e| panic!("parse workflow yaml: {e}"));
     let mut out = Vec::new();
-    if doc.get("defaults").is_some() || has_execution_changing_test_env(&doc) {
+    if doc.get("defaults").is_some() || !workflow_env_is_exactly_trusted(&doc) {
         return out;
     }
     let Some(jobs) = doc.get("jobs").and_then(|j| j.as_mapping()) else {
@@ -231,7 +237,7 @@ fn tested_paths(workflow: &str) -> Vec<String> {
     for (_, job) in jobs {
         if job.get("if").is_some()
             || continues_on_error(job)
-            || has_execution_changing_test_env(job)
+            || job.get("env").is_some()
             || ["needs", "strategy", "defaults", "container", "services"]
                 .iter()
                 .any(|key| job.get(*key).is_some())
@@ -252,7 +258,7 @@ fn tested_paths(workflow: &str) -> Vec<String> {
         for step in steps {
             if step.get("if").is_some()
                 || continues_on_error(step)
-                || has_execution_changing_test_env(step)
+                || step.get("env").is_some()
                 || ["shell", "working-directory"]
                     .iter()
                     .any(|key| step.get(*key).is_some())
@@ -274,9 +280,6 @@ fn tested_paths(workflow: &str) -> Vec<String> {
                 // GITHUB_PATH, or later files. One fresh job proves one suite.
                 break;
             } else if let Some(action) = step.get("uses").and_then(|u| u.as_str()) {
-                if step.get("env").is_some() {
-                    break;
-                }
                 match action {
                     "actions/checkout@v6"
                         if !saw_checkout && !saw_dotnet_setup && step.get("with").is_none() =>
@@ -323,28 +326,23 @@ fn trusted_dotnet_setup(step: &serde_yaml::Value, runner: &str) -> bool {
     }
 }
 
-/// Environment variables become MSBuild properties for `dotnet test`. These
-/// entries can make a syntactically canonical command skip, list, or filter
-/// tests, so such a scope is not evidence that the complete suite gates CI.
-fn has_execution_changing_test_env(scope: &serde_yaml::Value) -> bool {
-    scope
-        .get("env")
-        .and_then(serde_yaml::Value::as_mapping)
-        .is_some_and(|env| {
-            env.keys().filter_map(serde_yaml::Value::as_str).any(|key| {
-                [
-                    "IsTestProject",
-                    "RunSettingsFilePath",
-                    "TestCaseFilter",
-                    "TreatNoTestsAsError",
-                    "VSTestListTests",
-                    "VSTestSetting",
-                    "VSTestTestCaseFilter",
-                ]
-                .iter()
-                .any(|forbidden| key.eq_ignore_ascii_case(forbidden))
-            })
-        })
+/// The repository-level color setting is unrelated to process selection. Every
+/// other key is rejected: PATH/BASH_ENV can replace `dotnet`, and MSBuild turns
+/// environment variables into properties.
+fn workflow_env_is_exactly_trusted(workflow: &serde_yaml::Value) -> bool {
+    let Some(env) = workflow.get("env") else {
+        return true;
+    };
+    let Some(env) = env.as_mapping() else {
+        return false;
+    };
+    if env.len() != 1 {
+        return false;
+    }
+    let Some((key, value)) = env.iter().next() else {
+        return false;
+    };
+    key.as_str() == Some("CARGO_TERM_COLOR") && value.as_str() == Some("always")
 }
 
 fn continues_on_error(step: &serde_yaml::Value) -> bool {
@@ -358,10 +356,9 @@ fn continues_on_error(step: &serde_yaml::Value) -> bool {
 /// Whether `path` is a literal repo-relative project path in the canonical
 /// forward-slash spelling used by the workflow.
 fn is_literal_project_path(path: &str) -> bool {
-    let lower = path.to_ascii_lowercase();
     !path.starts_with('/')
         && !path.contains(['\\', ':', '$', '"', '\'', '`'])
-        && lower.ends_with(".csproj")
+        && is_dotnet_project_filename(&path.to_ascii_lowercase())
         && path
             .split('/')
             .all(|part| !part.is_empty() && part != "." && part != "..")
@@ -474,12 +471,20 @@ fn tracked_msbuild_metadata_cannot_disable_or_filter_test_execution() {
     let root = repo_root();
     let files = tracked_files(
         &root,
-        &["*.csproj", "*.props", "*.targets", "*.runsettings"],
+        &[
+            "*.csproj",
+            "*.fsproj",
+            "*.vbproj",
+            "*.props",
+            "*.targets",
+            "*.runsettings",
+            "*.rsp",
+        ],
     )
     .expect("repository root must have a readable Git index");
     let shared_controls: Vec<_> = files
         .iter()
-        .filter(|path| !path.ends_with(".csproj"))
+        .filter(|path| !is_dotnet_project_filename(path))
         .collect();
     assert!(
         shared_controls.is_empty(),
@@ -959,6 +964,8 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
     for (rel, body) in [
         ("wired/Tests/wired.Tests.csproj", test_sdk),
         ("orphan/Tests/Tests.csproj", test_sdk),
+        ("functional/Tests/Tests.fsproj", test_sdk),
+        ("visual-basic/Tests/Tests.vbproj", test_sdk),
         (
             "wired/Tests/FixtureAssembly/FixtureAssembly.csproj",
             "<Project />",
@@ -977,7 +984,9 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
         found,
         vec![
             ".scratch/wired/Tests/temporary.Tests.csproj".to_string(),
+            "functional/Tests/Tests.fsproj".to_string(),
             "orphan/Tests/Tests.csproj".to_string(),
+            "visual-basic/Tests/Tests.vbproj".to_string(),
             "wired/Tests/wired.Tests.csproj".to_string(),
         ],
         "the walk must find test projects by their metadata regardless of \
@@ -1003,7 +1012,9 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
         unrun(&found, workflow),
         vec![
             ".scratch/wired/Tests/temporary.Tests.csproj",
+            "functional/Tests/Tests.fsproj",
             "orphan/Tests/Tests.csproj",
+            "visual-basic/Tests/Tests.vbproj",
         ],
         "the gate must flag a suite no `run:` step names — this is the exact \
          condition `every_dotnet_suite_is_run_by_ci` exists to catch, and if it \
@@ -1013,7 +1024,7 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
     // Positive control: with both named, nothing is reported. Without this, a
     // classifier that flagged *everything* would satisfy the assertion above.
     let complete = format!(
-        "{workflow}  orphan:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test orphan/Tests/Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n  hidden:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test .scratch/wired/Tests/temporary.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n"
+        "{workflow}  orphan:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test orphan/Tests/Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n  hidden:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test .scratch/wired/Tests/temporary.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n  functional:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test functional/Tests/Tests.fsproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n  visual-basic:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test visual-basic/Tests/Tests.vbproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n"
     );
     assert!(
         unrun(&found, &complete).is_empty(),
