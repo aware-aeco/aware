@@ -195,6 +195,129 @@ jobs:
         working-directory: cli-connection-reader
         run: node --test
 
+  # Every OTHER .NET bridge suite in the repo. `tekla-bridge` below has run since
+  # it was written, and that made it look like the .NET side was covered — it was
+  # the only one of seven. `cli-revit/Tests`, `cli-rhino/Tests`,
+  # `cli-roslyn/Tests`, `cli-sidecar/Tests`, `cli-sidecar/Ingest/Generator/Tests`
+  # and `cli-sketchup/Tests` are 529 xunit tests that NO workflow ran: not this
+  # one, not `release.yml` (which only ever `dotnet publish`es the bridges it
+  # ships), not `build-sidecar.yml`. Same shape as the `steel-detailer-lookup`
+  # hole above and the `cli-connection-reader` one before it — a suite whose
+  # green-ness rested on whoever last remembered to run it.
+  #
+  # It was not hypothetical: the v0.125.0 scene-contract change (5255a3bb)
+  # edited `cli-rhino/Tests/CrossSectionProfileTests.cs` and shipped with nothing
+  # having executed the file.
+  #
+  # Split by target framework, not by taste. `cli-roslyn`, `cli-sidecar` and the
+  # sidecar's ingest generator are plain `net10.0` and run here. The other three
+  # target `net*-windows` and get the windows job below: `cli-rhino` and
+  # `cli-sketchup` genuinely fail off Windows (rhino's stubs are `.cmd` batch
+  # files; sketchup asserts on a `D:\…\Plugins` path), so running them on ubuntu
+  # with `-p:EnableWindowsTargeting=true` would mean a red gate or a weakened
+  # test.
+  #
+  # `cli/tests/dotnet_suites_gate.rs` asserts every project in the repo that
+  # `dotnet test` can run — identified by its own metadata, NOT by a filename
+  # convention — is named by an isolated `run:` job below, so an
+  # eighth suite cannot arrive unrun. The generator suite above is why it reads
+  # metadata: its file is plain `Tests.csproj`, and a `*.Tests.csproj` gate
+  # reported the repo clean while those 46 tests ran nowhere (Codex review, #433).
+  dotnet-roslyn:
+    name: .NET tests — Roslyn
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Test cli-roslyn
+        run: dotnet test cli-roslyn/Tests/aware-roslyn.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
+
+  dotnet-sidecar:
+    name: .NET tests — sidecar
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Test cli-sidecar
+        run: dotnet test cli-sidecar/Tests/cli-sidecar.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
+
+  dotnet-generator:
+    name: .NET tests — ingest generator
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Test cli-sidecar ingest generator
+        run: dotnet test cli-sidecar/Ingest/Generator/Tests/Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
+
+  # The `net*-windows` half of the split described above.
+  # Separate from `tekla-bridge` so a Tekla publish failure and a bridge-suite
+  # failure stay legible as different things.
+  #
+  # Two SDKs: `cli-revit/Tests` is `net8.0-windows`, the other two `net10.0-windows`.
+  dotnet-revit:
+    name: .NET tests — Revit
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Test cli-revit
+        run: dotnet test cli-revit/Tests/cli-revit.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
+
+  dotnet-rhino:
+    name: .NET tests — Rhino
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Test cli-rhino
+        run: dotnet test cli-rhino/Tests/cli-rhino.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
+
+  dotnet-sketchup:
+    name: .NET tests — SketchUp
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Test cli-sketchup
+        run: dotnet test cli-sketchup/Tests/cli-sketchup.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
+
   tekla-bridge:
     name: Tekla bridge build + test + SHA artifact
     runs-on: windows-latest
@@ -207,7 +330,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Test net48 bridge
-        run: dotnet test cli-tekla/Tests/AwareTekla.Tests.csproj -c Release
+        run: dotnet test cli-tekla/Tests/AwareTekla.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 
       # The proprietary Tekla assemblies are intentionally absent from hosted
       # runners. The same script is semantically compiled against installed
