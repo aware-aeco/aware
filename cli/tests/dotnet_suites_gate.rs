@@ -24,7 +24,7 @@
 //! the seven names, this discovers the test projects in the tree and asserts the
 //! workflow runs each one.
 //!
-//! ## Two things this gate must not get wrong, both found by review
+//! ## Two things this gate must not get wrong, both found by review (#433)
 //!
 //! **What counts as a test project.** The first version matched the filename
 //! suffix `*.Tests.csproj`. That is a naming convention, not a fact about the
@@ -41,14 +41,28 @@
 //! which sit inside a `Tests/` directory but are fixture inputs compiled *by* a
 //! suite.
 //!
-//! **What counts as being run.** The first version searched the whole text of
-//! `ci.yml` for the project path. `ci.yml` is roughly half prose — every gate in
-//! it carries a paragraph explaining why it exists — so a `dotnet test` step
-//! could be deleted while a comment above it still named the path, and the gate
-//! would report the suite covered with no runner executing it. [`run_commands`]
-//! parses the YAML and collects only `jobs.*.steps[].run` scalars, so a mention
-//! in a comment, a `name:`, or a `with:` block does not count. Parsing also
-//! costs nothing here: `serde_yaml` is already a dependency of this crate.
+//! **What counts as being run.** This took two passes, because the first fix
+//! was not the whole hole.
+//!
+//! The original version searched the whole text of `ci.yml` for the project
+//! path. `ci.yml` is roughly half prose — every gate in it carries a paragraph
+//! explaining why it exists — so a `dotnet test` step could be deleted while a
+//! comment above it still named the path, and the gate would report the suite
+//! covered with no runner executing it.
+//!
+//! Narrowing to `jobs.*.steps[].run` scalars ([`run_scripts`]) closed the YAML
+//! comments, and only those. A `run: |` block is one opaque string to the
+//! parser, so a *shell* comment inside it survives — `# dotnet test x.csproj`
+//! reaches the scalar intact — and so does any path the script merely mentions,
+//! such as an `echo` naming it in a message. Both would still have counted.
+//!
+//! So the haystack is not script text at all: [`tested_paths`] strips shell
+//! comments, splits the script into commands, and collects only the *arguments*
+//! of `dotnet test` invocations. A path counts when a test runner is handed it,
+//! which is the property this gate claims to assert and nothing weaker.
+//!
+//! Parsing costs nothing here: `serde_yaml` is already a dependency of this
+//! crate.
 
 use std::path::{Path, PathBuf};
 
@@ -115,16 +129,16 @@ fn collect(root: &Path, dir: &Path, out: &mut Vec<String>) {
     }
 }
 
-/// Every `run:` script in `workflow`, concatenated.
+/// Every `run:` script in `workflow`.
 ///
-/// Only `jobs.<job>.steps[].run` — the shell a runner actually executes.
-/// Comments are gone by construction (the parser drops them), and `name:`,
+/// Only `jobs.<job>.steps[].run` — the shell a runner actually executes. YAML
+/// comments are gone by construction (the parser drops them), and `name:`,
 /// `uses:` and `with:` values are never collected, so naming a project path in
-/// prose or in a step's title does not make it run.
-fn run_commands(workflow: &str) -> String {
+/// prose or in a step's title does not reach this.
+fn run_scripts(workflow: &str) -> Vec<String> {
     let doc: serde_yaml::Value =
         serde_yaml::from_str(workflow).unwrap_or_else(|e| panic!("parse workflow yaml: {e}"));
-    let mut out = String::new();
+    let mut out = Vec::new();
     let Some(jobs) = doc.get("jobs").and_then(|j| j.as_mapping()) else {
         return out;
     };
@@ -134,26 +148,96 @@ fn run_commands(workflow: &str) -> String {
         };
         for step in steps {
             if let Some(run) = step.get("run").and_then(|r| r.as_str()) {
-                out.push_str(run);
-                out.push('\n');
+                out.push(run.to_string());
             }
         }
     }
     out
 }
 
-/// Those of `projects` that no `run:` script in `commands` mentions.
+/// One shell script split into the individual commands it executes.
 ///
-/// A substring match, which is what a `dotnet test <path>` invocation contains
-/// verbatim. Now that the haystack is only executable shell, a match means a
-/// runner is handed the path — which is the property being asserted. Matching
-/// the path rather than modelling `dotnet test`'s argument grammar keeps every
-/// spelling working: a one-line `run:`, a `|` block, a loop over paths.
-fn unrun<'a>(projects: &'a [String], commands: &str) -> Vec<&'a str> {
+/// Three transformations, in order, each removing a way for a path to appear in
+/// a `run:` scalar without being executed:
+///   1. line continuations are joined, so a command wrapped across `\` is seen
+///      whole rather than as two fragments;
+///   2. shell comments are stripped — reaching the YAML `run` scalar only means
+///      the *parser* kept the text, and a `# dotnet test …` line inside a `|`
+///      block is text the shell will never run;
+///   3. the result is split on the separators that end a command (`\n`, `;`,
+///      `&&`, `||`, `|`), so each piece has one command at its head.
+///
+/// A `#` is treated as starting a comment only at the beginning of a token,
+/// which is the shell's own rule and leaves `foo#bar` alone. Quoting is not
+/// modelled: a literal `#` inside quotes would be over-stripped. That direction
+/// is the safe one — it can only make this gate report a suite unrun, never
+/// report an unrun suite as covered.
+fn shell_commands(script: &str) -> Vec<String> {
+    let joined = script.replace("\\\n", " ");
+    let mut commands = Vec::new();
+    for line in joined.lines() {
+        let mut uncommented = String::new();
+        for token in line.split_inclusive(char::is_whitespace) {
+            if token.trim_start().starts_with('#') {
+                break;
+            }
+            uncommented.push_str(token);
+        }
+        for piece in uncommented
+            .split([';', '\n'])
+            .flat_map(|p| p.split("&&"))
+            .flat_map(|p| p.split("||"))
+            .flat_map(|p| p.split('|'))
+        {
+            let piece = piece.trim();
+            if !piece.is_empty() {
+                commands.push(piece.to_string());
+            }
+        }
+    }
+    commands
+}
+
+/// Every argument handed to a `dotnet test` invocation in `workflow`.
+///
+/// This is the haystack the gate matches against, and the reason it is
+/// arguments rather than script text: a `run:` scalar can carry a path the
+/// runner never acts on — a commented-out line, an `echo`, a path in a message
+/// — and only an actual `dotnet test` argument means the suite is executed.
+///
+/// Flags are dropped; their values (`Release` from `-c Release`) are kept. That
+/// is inert: the caller only ever asks whether a `.csproj` path is present, and
+/// no flag value is one.
+fn tested_paths(workflow: &str) -> Vec<String> {
+    let mut out = Vec::new();
+    for script in run_scripts(workflow) {
+        for command in shell_commands(&script) {
+            let mut words = command.split_whitespace();
+            if words.next() != Some("dotnet") || words.next() != Some("test") {
+                continue;
+            }
+            out.extend(
+                words
+                    .filter(|word| !word.starts_with('-'))
+                    .map(str::to_string),
+            );
+        }
+    }
+    out
+}
+
+/// Those of `projects` that no `dotnet test` invocation in `workflow` is given.
+///
+/// Containment rather than equality, so the spellings a workflow may reasonably
+/// use keep working — a path built from a variable, or one passed with a `./`
+/// prefix. A match still means the path reached `dotnet test` as an argument,
+/// which is the property being asserted.
+fn unrun<'a>(projects: &'a [String], workflow: &str) -> Vec<&'a str> {
+    let tested = tested_paths(workflow);
     projects
         .iter()
         .map(String::as_str)
-        .filter(|project| !commands.contains(*project))
+        .filter(|project| !tested.iter().any(|arg| arg.contains(*project)))
         .collect()
 }
 
@@ -220,18 +304,20 @@ fn the_walk_does_not_mistake_fixture_projects_for_suites() {
 #[test]
 fn every_dotnet_suite_is_run_by_ci() {
     let projects = test_projects(&repo_root());
-    let missing = unrun(&projects, &run_commands(&ci_workflow()));
+    let missing = unrun(&projects, &ci_workflow());
     assert!(
         missing.is_empty(),
-        "these .NET test projects exist but no `run:` step in \
-         `.github/workflows/ci.yml` runs them, so their tests are green only by \
-         assumption:\n  {}\n\n\
+        "these .NET test projects exist but no `dotnet test` invocation in \
+         `.github/workflows/ci.yml` is given them, so their tests are green \
+         only by assumption:\n  {}\n\n\
          Add a `dotnet test <path>` step to the `dotnet-bridges` job (plain \
          `net*` target frameworks) or `dotnet-bridges-windows` (`net*-windows` \
-         ones). Naming the path in a comment does not count and is not meant to \
-         — that was the hole this gate was rewritten to close. Do not satisfy \
-         this by deleting the suite or stripping its test-sdk reference — \
-         CLAUDE.md §Engineering rules forbids satisfying a gate by disabling it.",
+         ones). Only an executed invocation counts, and that is deliberate: a \
+         path in a YAML comment, in a shell comment inside a `run: |` block, in \
+         a step's `name:`, or in an `echo` is not a suite anybody runs — each of \
+         those was a hole this gate has been closed against. Do not satisfy this \
+         by deleting the suite or stripping its test-sdk reference — CLAUDE.md \
+         §Engineering rules forbids satisfying a gate by disabling it.",
         missing.join("\n  ")
     );
 }
@@ -302,29 +388,46 @@ jobs:
         with:
           project: configured/Tests/configured.Tests.csproj
       - run: dotnet test oneline/Tests/oneline.Tests.csproj -c Release
-      - name: block form
+      - name: block form, and the three ways a path can sit in a run scalar
         run: |
           dotnet test block/Tests/block.Tests.csproj -c Release
+          # dotnet test shellcommented/Tests/shellcommented.Tests.csproj -c Release
+          echo "skipping echoed/Tests/echoed.Tests.csproj for now"
+          dotnet test trailing/Tests/trailing.Tests.csproj # -c Release
+      - name: continued across a line break
+        run: |
+          dotnet test \
+            continued/Tests/continued.Tests.csproj -c Release
+      - name: chained after another command
+        run: cd . && dotnet test chained/Tests/chained.Tests.csproj -c Release
 "#;
-    let commands = run_commands(workflow);
 
-    for spelling in ["oneline", "block"] {
+    for spelling in ["oneline", "block", "trailing", "continued", "chained"] {
         let project = format!("{spelling}/Tests/{spelling}.Tests.csproj");
         assert!(
-            unrun(std::slice::from_ref(&project), &commands).is_empty(),
-            "a `{spelling}`-form `run:` step hands the project to a runner and \
-             must count as running it"
+            unrun(std::slice::from_ref(&project), workflow).is_empty(),
+            "a `{spelling}`-form invocation hands the project to a test runner \
+             and must count as running it"
         );
     }
 
-    for spelling in ["commented", "titled", "configured"] {
+    // `shellcommented` and `echoed` are the second half of the finding: narrowing
+    // to `run:` scalars closes YAML comments only. A `run: |` block is one opaque
+    // string to the parser, so a shell comment inside it survives intact, and so
+    // does a path an `echo` merely names. Neither is executed by a test runner.
+    for spelling in [
+        "commented",
+        "titled",
+        "configured",
+        "shellcommented",
+        "echoed",
+    ] {
         let project = format!("{spelling}/Tests/{spelling}.Tests.csproj");
         assert_eq!(
-            unrun(std::slice::from_ref(&project), &commands),
+            unrun(std::slice::from_ref(&project), workflow),
             vec![project.as_str()],
-            "a path appearing only in a {spelling} position is not executed by \
-             any runner, so it must NOT count as running the suite — this is \
-             the hole the whole-file search left open"
+            "a path appearing only in a {spelling} position is never handed to a \
+             test runner, so it must NOT count as running the suite"
         );
     }
 }
@@ -370,7 +473,7 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
 
     let workflow = "jobs:\n  x:\n    steps:\n      - run: dotnet test wired/Tests/wired.Tests.csproj -c Release\n";
     assert_eq!(
-        unrun(&found, &run_commands(workflow)),
+        unrun(&found, workflow),
         vec!["orphan/Tests/Tests.csproj"],
         "the gate must flag a suite no `run:` step names — this is the exact \
          condition `every_dotnet_suite_is_run_by_ci` exists to catch, and if it \
@@ -382,7 +485,7 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
     let complete =
         format!("{workflow}      - run: dotnet test orphan/Tests/Tests.csproj -c Release\n");
     assert!(
-        unrun(&found, &run_commands(&complete)).is_empty(),
+        unrun(&found, &complete).is_empty(),
         "the gate reported a suite a `run:` step does name, so it is flagging \
          indiscriminately rather than classifying"
     );
