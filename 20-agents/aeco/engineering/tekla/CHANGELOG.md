@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4 — 2026-08-19
+
+- Select the member-roll zero frame from the raw axis as `|q|² <= 1e-6·|d|²`, rather than a cancelling `1 - (n·u)²` on the normalized axis, so the bridge and AWARE's canonical `member_frame` never seed the same near-vertical member differently — including at the boundary, where this mirror's reciprocal-multiply normalization and Rust's divide disagreed by an ulp.
+
 ## 0.1.3 — 2026-08-18
 
 - Keep every structural-grid elevation on one native Tekla Grid while mapping supported Tekla 2026 two-word labels to deterministic native tokens with transactional receipt warnings and read-only automatic-plane verification.

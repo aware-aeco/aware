@@ -24,7 +24,7 @@ use crate::render::geom::{
     Vec2, Vec3, add3, cross3, distance3, dot3, length3, normalized3, point_in_polygon,
     point_segment_distance, polygon_edges, polygon_is_simple_nonzero, scale3,
 };
-use crate::render::scene_roll::{SceneUp, member_frame, member_roll, scene_up};
+use crate::render::scene_roll::{SceneUp, ZeroFrameSource, member_frame, member_roll, scene_up};
 use serde_json::Value;
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
@@ -1388,6 +1388,16 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
                 .into(),
             ),
         );
+        // Present only on members whose zero frame came from the vertical seed, where the
+        // section's facing is fixed by convention rather than derived from the member's
+        // own geometry (`scene_roll::member_frame` documents why that band exists and why
+        // it cannot be removed). Absent means projected-up, so the field is additive and
+        // an existing reader is unaffected. A consumer reconciling this file against
+        // another toolchain reads it to see which members are the ones whose facing two
+        // conforming implementations can legitimately disagree about — issue #432.
+        if frame.zero_frame_source == ZeroFrameSource::VerticalSeed {
+            row.insert("zeroFrame".into(), Value::String("vertical-seed".into()));
+        }
         emitted.push(Value::Object(row));
     }
 
@@ -3495,6 +3505,34 @@ mod tests {
         assert_eq!(b.doc.matches("IFCCOLUMN(").count(), 1);
         assert_eq!(b.columns, 1);
         assert_eq!(b.beams, 0);
+    }
+
+    #[test]
+    fn the_receipt_marks_only_members_whose_facing_is_convention() {
+        // Issue #432: inside the vertical band the zero frame is seeded from scene `+X`
+        // and the section's facing is convention, not geometry. The receipt says so per
+        // member, and says nothing for the ordinary case, so a reader reconciling this
+        // file against another toolchain can find the members the two may legitimately
+        // disagree about. `lean` is one step past the threshold, `plumb` a true column.
+        let scene = json!({ "meta": { "name": "x" }, "elements": [
+            { "id": "plumb", "group": "g", "from": [0,0,0], "to": [0,0,3000],
+              "section": { "w": 400, "d": 400 } },
+            { "id": "lean", "group": "g", "from": [0,0,0], "to": [3.003,0,3000],
+              "section": { "w": 400, "d": 400 } },
+            { "id": "beam", "group": "g", "from": [0,0,0], "to": [3000,0,0],
+              "section": { "w": 400, "d": 400 } }
+        ]});
+        let zero_frame_of = |id: &str| {
+            build_ifc(&scene)
+                .emitted
+                .iter()
+                .find(|row| row.get("id").and_then(Value::as_str) == Some(id))
+                .and_then(|row| row.get("zeroFrame").and_then(Value::as_str))
+                .map(str::to_string)
+        };
+        assert_eq!(zero_frame_of("plumb").as_deref(), Some("vertical-seed"));
+        assert_eq!(zero_frame_of("lean"), None);
+        assert_eq!(zero_frame_of("beam"), None);
     }
 
     #[test]

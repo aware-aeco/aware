@@ -75,9 +75,52 @@ present it must be a finite JSON number of degrees: positive is right-handed abo
 so the canonical range is `[-180,180)` and negative zero becomes positive zero.
 
 The deterministic zero-section frame uses declared scene up (`+Z` when absent/`"z"`, `+Y` for
-`"y"`). Let `n=normalize(to−from)` and `u` be scene up. When `1−(n·u)² <= 1e-6`, zero X is scene
-`+X` projected perpendicular to `n` and normalized, and zero Y is `n×X`. Otherwise zero Y is `u`
-projected perpendicular to `n`, and zero X is `Y×n`. `rot` rotates this frame once about `n`.
+`"y"`). Let `d = to−from` be the **raw, unnormalized** axis, `n=normalize(d)`, `u` be scene up, and
+`q = d − (d·u)u` be the part of the raw axis perpendicular to up. When `|q|² <= 1e-6·|d|²`, zero X
+is scene `+X` projected perpendicular to `n` and normalized, and zero Y is `n×X`. Otherwise zero Y
+is `u` projected perpendicular to `n`, and zero X is `Y×n`. `rot` rotates this frame once about
+`n`.
+
+**Compute that branch test exactly as written: the cross-multiplied comparison
+`|q|² <= 1e-6·|d|²`, on the raw `d`.** Every obvious algebraic rearrangement of it is equivalent in
+exact arithmetic and *not* in floating point, and by the paragraph below a member placed on the
+wrong side comes out with its facing up to 180° away — so two implementations that round the test
+differently disagree about real geometry while both believing they conform. Each rearrangement
+below has a witness (all with `u = +Z` and `from = [0,0,0]`), and each is forbidden:
+
+- **Do not test `1−(n·u)²`.** That subtraction cancels away about six significant digits at the
+  threshold and more than twelve deeper into the band. Witness:
+  `to = [-0.0009800740994886435, -0.00019863222178516707, 0.999999499999875]`, whose true
+  perpendicular component is just outside the threshold but which the cancelling form seeds.
+- **Do not test the normalized perpendicular `|n − (n·u)u|² <= 1e-6`.** The branch would inherit
+  however the implementation normalizes, and dividing each component by the length versus
+  multiplying by the reciprocal differ by an ulp. Witness:
+  `to = [26.55075466049515, -17.294594180470543, 31686.662128779197]` — the dividing form seeds,
+  the reciprocal form projects, frames **57°** apart.
+- **Do not divide: `|q|²/|d|² <= 1e-6` is not the same test.** The quotient rounds to a different
+  side of the threshold than the cross-multiplied comparison does. Witness:
+  `to = [1.1976826775898164, -0.5615310404423273, 1322.784621855746]`, where
+  `|q|² = 1.7497609055789547` exceeds `1e-6·|d|² = 1.7497609055789545` and the member projects,
+  while `|q|²/|d|²` rounds to exactly `1e-6` and seeds — frames **64.9°** apart. "Ratio against
+  `|d|²`" means the cross-multiplied comparison, never a division.
+
+Taken exactly as written, the test involves no normalization and no division, and is therefore
+reproducible across implementations.
+
+**The two rules do not meet, and the projected seed does not make them.** They are separate
+conventions and the frame jumps where they change over. Writing `n` as
+`[sinθ·cosφ, sinθ·sinφ, cosθ]` under Z-up, the projected-up rule leaves the threshold at exactly
+`zero X = (−sinφ, cosφ, 0)` while the seeded rule holds `zero X ≈ +X` for every `φ`, so crossing
+the threshold rotates the frame about `n` by `φ + 90°` — nothing at `φ = 270°`, a full 180°
+inversion at `φ = 90°`. No seed removes this, because the direction the projected-up rule
+approaches depends on the member's azimuth, so agreeing at one azimuth forces disagreeing at
+another; and no placement of the threshold removes it either, because a frame varying
+continuously over every axis direction does not exist. The threshold is therefore a deterministic
+convention with an accepted discontinuity, not an approximation of some continuous rule. A
+near-vertical member's facing is convention rather than geometry, and producers and consumers
+match AWARE on one only by applying this exact test with this exact constant first. AWARE's own
+implementation reports which rule ran per member (`ZeroFrameSource`) so a consumer can tell the
+two apart.
 The viewer supports both declared up axes and accounts for its reflective Z-up screen conversion;
 export sinks may explicitly reject Y-up until they implement a reviewed coordinate transform.
 
