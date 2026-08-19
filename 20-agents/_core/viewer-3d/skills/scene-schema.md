@@ -63,8 +63,11 @@ An absent descriptor remains the legacy rectangular member envelope.
 envelope is `{w:bf,d:d}`. `double-angle` describes two identical sharp-corner
 angles. `orientation:"llbb"` places their long (`d`) legs back-to-back, so its
 envelope is `{w:2*b+gap,d:d}`. `orientation:"slbb"` places their short (`b`)
-legs back-to-back, so its envelope is `{w:b,d:2*d+gap}`. `gap` is the clear,
-positive separation between the facing legs. All fields and orientation values
+legs back-to-back, so its envelope is `{w:2*d+gap,d:b}`. In both orientations
+the two angles are a side-by-side mirrored pair; the suffix changes which leg
+forms the adjacent backs, never the axis on which the pair is separated. `gap`
+is the clear, non-negative separation between the facing back surfaces; zero
+means those surfaces touch without overlap. All fields and orientation values
 are exact lowercase tokens. A sink that cannot materialize the disconnected
 double-angle geometry must report it as explicitly unsupported; it must never
 silently substitute a different section.

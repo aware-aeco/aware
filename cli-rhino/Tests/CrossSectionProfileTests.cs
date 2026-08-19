@@ -6,21 +6,23 @@ namespace AwareRhino.Tests;
 
 public class CrossSectionProfileTests
 {
-    public static TheoryData<string, double, double, string, double, int> Families => new()
+    public static TheoryData<string, double, double, string, double, int, int> Families => new()
     {
-        { """{"shape":"i","d":300,"bf":200,"tw":10,"tf":20}""", 200, 300, "i", 10600, 1 },
-        { """{"shape":"channel","d":300,"bf":200,"tw":10,"tf":20}""", 200, 300, "channel", 10600, 1 },
-        { """{"shape":"angle","d":300,"b":200,"t":10}""", 200, 300, "angle", 4900, 1 },
-        { """{"shape":"rhs","d":300,"b":200,"t":10}""", 200, 300, "rhs", 9600, 2 },
-        { """{"shape":"chs","od":200,"t":10}""", 200, 200, "chs", Math.PI * 1900, 2 },
-        { """{"shape":"rect","w":200,"d":300}""", 200, 300, "rect", 60000, 1 },
-        { """{"shape":"tee","d":300,"bf":200,"tw":10,"tf":20}""", 200, 300, "tee", 6800, 1 },
+        { """{"shape":"i","d":300,"bf":200,"tw":10,"tf":20}""", 200, 300, "i", 10600, 1, 1 },
+        { """{"shape":"channel","d":300,"bf":200,"tw":10,"tf":20}""", 200, 300, "channel", 10600, 1, 1 },
+        { """{"shape":"angle","d":300,"b":200,"t":10}""", 200, 300, "angle", 4900, 1, 1 },
+        { """{"shape":"rhs","d":300,"b":200,"t":10}""", 200, 300, "rhs", 9600, 2, 1 },
+        { """{"shape":"chs","od":200,"t":10}""", 200, 200, "chs", Math.PI * 1900, 2, 1 },
+        { """{"shape":"rect","w":200,"d":300}""", 200, 300, "rect", 60000, 1, 1 },
+        { """{"shape":"tee","d":300,"bf":200,"tw":10,"tf":20}""", 200, 300, "tee", 6800, 1, 1 },
+        { """{"shape":"double-angle","d":150,"b":100,"t":10,"gap":12,"orientation":"llbb"}""", 212, 150, "double-angle", 4800, 1, 2 },
+        { """{"shape":"double-angle","d":150,"b":100,"t":10,"gap":12,"orientation":"slbb"}""", 312, 100, "double-angle", 4800, 1, 2 },
     };
 
     [Theory]
     [MemberData(nameof(Families))]
     public void CanonicalFamiliesDecodeToExecutableNormalizedPlans(
-        string xsection, double w, double d, string shape, double area, int profiles)
+        string xsection, double w, double d, string shape, double area, int profiles, int components)
     {
         var element = new JsonObject { ["xsection"] = JsonNode.Parse(xsection) };
         var result = CrossSectionProfile.Decode(element, w, d);
@@ -33,8 +35,9 @@ public class CrossSectionProfileTests
         Assert.Equal(profiles, result.Profile.ProfileCount);
         Assert.All(result.Profile.Residuals, value => Assert.True(value > 0));
         var normalized = result.Profile.ToJson();
-        Assert.Equal("rhino-profile-v3", normalized["revision"]!.GetValue<string>());
-        Assert.Equal(2, normalized["capCount"]!.GetValue<int>());
+        Assert.Equal("rhino-profile-v4", normalized["revision"]!.GetValue<string>());
+        Assert.Equal(components, normalized["componentCount"]!.GetValue<int>());
+        Assert.Equal(2 * components, normalized["capCount"]!.GetValue<int>());
     }
 
     [Fact]
@@ -116,15 +119,73 @@ public class CrossSectionProfileTests
     }
 
     [Fact]
-    public void DoubleAngleIsRecognizedAndExplicitlyUnsupported()
+    public void DoubleAngleGapAndOrientationAreExactAndZeroGapMeansTouching()
     {
-        var result = CrossSectionProfile.Decode(new JsonObject
+        foreach (var (orientation, w, d, back, outstanding) in new[]
+                 {
+                     ("llbb", 212.0, 150.0, 150.0, 100.0),
+                     ("slbb", 312.0, 100.0, 100.0, 150.0),
+                 })
+        {
+            var result = CrossSectionProfile.Decode(new JsonObject
+            {
+                ["xsection"] = JsonNode.Parse(
+                    $$"""{"shape":"double-angle","d":150,"b":100,"t":10,"orientation":"{{orientation}}","gap":12}""")
+            }, w, d);
+            Assert.True(result.Ok, result.Error);
+            Assert.Equal(12, result.Profile!.Dimensions["gap"]);
+            Assert.Equal(back, result.Profile.Dimensions["back"]);
+            Assert.Equal(outstanding, result.Profile.Dimensions["outstanding"]);
+            Assert.Equal(4 * (back + outstanding), result.Profile.Perimeter);
+            var outlines = CrossSectionProfile.DoubleAngleOutlines(result.Profile.Dimensions);
+            Assert.Equal(2, outlines.Count);
+            var leftMax = outlines[0].Max(point => point.X);
+            var rightMin = outlines[1].Min(point => point.X);
+            Assert.Equal(12, rightMin - leftMax);
+            Assert.Equal(w, outlines.SelectMany(points => points).Max(point => point.X)
+                            - outlines.SelectMany(points => points).Min(point => point.X));
+            Assert.Equal(d, outlines.SelectMany(points => points).Max(point => point.Y)
+                            - outlines.SelectMany(points => points).Min(point => point.Y));
+            var minX = outlines[0].Min(point => point.X);
+            var maxX = outlines[1].Max(point => point.X);
+            var expectedBottomLeg = new[] { -d / 2, -d / 2 + 10 };
+            Assert.Equal(
+                expectedBottomLeg,
+                outlines[0].Where(point => point.X == minX).Select(point => point.Y).OrderBy(y => y).ToArray());
+            Assert.Equal(
+                expectedBottomLeg,
+                outlines[1].Where(point => point.X == maxX).Select(point => point.Y).OrderBy(y => y).ToArray());
+        }
+
+        var touching = CrossSectionProfile.Decode(new JsonObject
         {
             ["xsection"] = JsonNode.Parse(
-                """{"shape":"double-angle","d":150,"b":100,"t":10,"orientation":"llbb","gap":12}""")
-        }, 212, 150);
-        Assert.False(result.Ok);
-        Assert.Contains("explicitly unsupported", result.Error!);
+                """{"shape":"double-angle","d":150,"b":100,"t":10,"orientation":"slbb","gap":0}""")
+        }, 300, 100);
+        Assert.True(touching.Ok, touching.Error);
+        var touchingOutlines = CrossSectionProfile.DoubleAngleOutlines(touching.Profile!.Dimensions);
+        Assert.Equal(
+            0,
+            touchingOutlines[1].Min(point => point.X)
+            - touchingOutlines[0].Max(point => point.X));
+
+        foreach (var invalid in new[]
+                 {
+                     """{"shape":"double-angle","d":150,"b":100,"t":10,"orientation":"slbb","gap":-0.001}""",
+                     """{"shape":"double-angle","d":150,"b":100,"t":10,"orientation":"slbb","gap":"12"}""",
+                     """{"shape":"double-angle","d":150,"b":100,"t":10,"orientation":"SLBB","gap":12}""",
+                 })
+        {
+            Assert.False(CrossSectionProfile.Decode(
+                new JsonObject { ["xsection"] = JsonNode.Parse(invalid) }, 312, 100).Ok);
+        }
+
+        var oldVerticalEnvelope = CrossSectionProfile.Decode(new JsonObject
+        {
+            ["xsection"] = JsonNode.Parse(
+                """{"shape":"double-angle","d":150,"b":100,"t":10,"orientation":"slbb","gap":12}""")
+        }, 100, 312);
+        Assert.False(oldVerticalEnvelope.Ok);
     }
 
     [Theory]

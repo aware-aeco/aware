@@ -652,7 +652,7 @@ function sectionSpec(e,w,d){ const xs=e&&e.xsection, shape=xs&&String(xs.shape||
   if(shape==='chs'&&pos(xs.od,xs.t)&&2*xs.t<xs.od)return {kind:'CHS',w:xs.od,d:xs.od,t:xs.t};
   if(shape==='rect'&&pos(xs.w,xs.d))return {kind:'BOX',w:xs.w,d:xs.d};
   if(shape==='tee'&&pos(xs.d,xs.bf,xs.tw,xs.tf)&&xs.tw<xs.bf&&xs.tf<xs.d)return {kind:'T',w:xs.bf,d:xs.d,tw:xs.tw,tf:xs.tf};
-  if(shape==='double-angle'&&pos(xs.d,xs.b,xs.t,xs.gap)&&xs.t<Math.min(xs.d,xs.b)&&(xs.orientation==='llbb'||xs.orientation==='slbb'))return xs.orientation==='llbb'?{kind:'DA_LLBB',w:2*xs.b+xs.gap,d:xs.d,t:xs.t,gap:xs.gap}:{kind:'DA_SLBB',w:xs.b,d:2*xs.d+xs.gap,t:xs.t,gap:xs.gap};
+  if(shape==='double-angle'&&pos(xs.d,xs.b,xs.t)&&typeof xs.gap==='number'&&Number.isFinite(xs.gap)&&xs.gap>=0&&xs.t<Math.min(xs.d,xs.b)&&(xs.orientation==='llbb'||xs.orientation==='slbb'))return xs.orientation==='llbb'?{kind:'DA_LLBB',w:2*xs.b+xs.gap,d:xs.d,t:xs.t,gap:xs.gap}:{kind:'DA_SLBB',w:2*xs.d+xs.gap,d:xs.b,t:xs.t,gap:xs.gap};
   return {kind:shapeOf(e),w,d}; }
 function profileShape(spec){ const kind=spec.kind,w=spec.w,d=spec.d;
   const s=new THREE.Shape(), hw=w/2, hd=d/2;
@@ -668,12 +668,9 @@ function profileShape(spec){ const kind=spec.kind,w=spec.w,d=spec.d;
   } else if(kind==='T'){ const tf=spec.tf||Math.max(d*0.10,5),tw=spec.tw||Math.max(w*0.12,5);
     s.moveTo(-tw/2,-hd); s.lineTo(tw/2,-hd); s.lineTo(tw/2,hd-tf); s.lineTo(hw,hd-tf);
     s.lineTo(hw,hd); s.lineTo(-hw,hd); s.lineTo(-hw,hd-tf); s.lineTo(-tw/2,hd-tf); s.closePath();
-  } else if(kind==='DA_LLBB'){ const t=spec.t,g=spec.gap,a=new THREE.Shape(),b=new THREE.Shape();
+  } else if(kind==='DA_LLBB'||kind==='DA_SLBB'){ const t=spec.t,g=spec.gap,a=new THREE.Shape(),b=new THREE.Shape();
     a.moveTo(-g/2-t,-hd); a.lineTo(-g/2,-hd); a.lineTo(-g/2,hd); a.lineTo(-g/2-t,hd); a.lineTo(-g/2-t,-hd+t); a.lineTo(-hw,-hd+t); a.lineTo(-hw,-hd); a.closePath();
     b.moveTo(g/2,-hd); b.lineTo(g/2+t,-hd); b.lineTo(g/2+t,hd); b.lineTo(g/2,hd); b.lineTo(g/2,-hd+t); b.lineTo(hw,-hd+t); b.lineTo(hw,-hd); b.closePath(); return [a,b];
-  } else if(kind==='DA_SLBB'){ const t=spec.t,g=spec.gap,a=new THREE.Shape(),b=new THREE.Shape();
-    a.moveTo(-hw,-hd); a.lineTo(-hw+t,-hd); a.lineTo(-hw+t,-g/2-t); a.lineTo(hw,-g/2-t); a.lineTo(hw,-g/2); a.lineTo(-hw,-g/2); a.closePath();
-    b.moveTo(hw,hd); b.lineTo(hw-t,hd); b.lineTo(hw-t,g/2+t); b.lineTo(-hw,g/2+t); b.lineTo(-hw,g/2); b.lineTo(hw,g/2); b.closePath(); return [a,b];
   } else if(kind==='TUBE'||kind==='RHS'){ const t=spec.t||Math.max(Math.min(w,d)*0.12,4);
     s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath();
     const h=new THREE.Path(); h.moveTo(-hw+t,-hd+t); h.lineTo(hw-t,-hd+t); h.lineTo(hw-t,hd-t); h.lineTo(-hw+t,hd-t); h.closePath(); s.holes.push(h);
@@ -2461,13 +2458,16 @@ fn validate_member_xsection(
             let d = dimension("d")?;
             let b = dimension("b")?;
             let t = dimension("t")?;
-            let gap = dimension("gap")?;
+            let gap = finite_number(section.get("gap"), &format!("{section_path}.gap"))?;
+            if gap < 0.0 {
+                return invalid("must have gap >= 0");
+            }
             if t >= d.min(b) {
                 return invalid("must have t < min(d,b)");
             }
             match section.get("orientation").and_then(Value::as_str) {
                 Some("llbb") => envelope(2.0 * b + gap, d)?,
-                Some("slbb") => envelope(b, 2.0 * d + gap)?,
+                Some("slbb") => envelope(2.0 * d + gap, b)?,
                 _ => return invalid("orientation must be exactly llbb or slbb"),
             }
         }
@@ -3944,7 +3944,7 @@ mod tests {
         ] {
             let (w, d) = match xsection["orientation"].as_str() {
                 Some("llbb") => (212, 150),
-                Some("slbb") => (100, 312),
+                Some("slbb") => (312, 100),
                 _ => (200, 300),
             };
             let scene = json!({ "meta": { "units": "mm" }, "elements": [{
@@ -3966,6 +3966,37 @@ mod tests {
         });
         scene["elements"][0]["section"] = json!({"w":200,"d":150});
         assert!(viewer_3d_render(&json!({ "scene": scene }), true).is_err());
+    }
+
+    #[test]
+    fn double_angle_gap_is_exact_and_zero_means_touching_without_overlap() {
+        for (orientation, w, d) in [("llbb", 212, 150), ("slbb", 312, 100)] {
+            let scene = json!({ "meta": { "units": "mm" }, "elements": [{
+                "id":"M", "kind":"member", "from":[0,0,0], "to":[1000,0,0],
+                "section":{"w":w,"d":d}, "xsection":{
+                    "shape":"double-angle","d":150,"b":100,"t":10,"gap":12,"orientation":orientation
+                }
+            }]});
+            let rendered = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
+            let html = rendered["html"].as_str().unwrap();
+            assert!(html.contains("kind==='DA_LLBB'||kind==='DA_SLBB'"));
+            assert!(html.contains("a.moveTo(-g/2-t,-hd)"));
+            assert!(html.contains("b.moveTo(g/2,-hd)"));
+            assert!(!html.contains("else if(kind==='DA_SLBB')"));
+        }
+
+        let touching = json!({ "meta": { "units": "mm" }, "elements": [{
+            "id":"M", "kind":"member", "from":[0,0,0], "to":[1000,0,0],
+            "section":{"w":300,"d":100}, "xsection":{
+                "shape":"double-angle","d":150,"b":100,"t":10,"gap":0,"orientation":"slbb"
+            }
+        }]});
+        assert!(viewer_3d_render(&json!({ "scene": touching }), true).is_ok());
+
+        let mut overlap = touching;
+        overlap["elements"][0]["xsection"]["gap"] = json!(-1);
+        overlap["elements"][0]["section"]["w"] = json!(299);
+        assert!(viewer_3d_render(&json!({ "scene": overlap }), true).is_err());
     }
 
     #[test]

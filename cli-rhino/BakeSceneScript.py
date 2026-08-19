@@ -104,7 +104,7 @@ if str(ownership.get("sourceId")) != source_id:
 
 marker = str(ownership["marker"])
 geometry_revision = str(ownership["geometryRevision"])
-if geometry_revision != "rhino-profile-v3" or re.fullmatch(
+if geometry_revision != "rhino-profile-v4" or re.fullmatch(
         r"AWARE_BAKE_V2:[0-9a-f]{64}", marker) is None:
     return envelope(False, [], [
         row("scene", "scene", "failed", "invalid-ownership",
@@ -173,12 +173,34 @@ def vrot(v, axis, angle):
     dot = vdot(axis, v) * (1.0 - c)
     return [v[i] * c + cross[i] * s + axis[i] * dot for i in range(3)]
 
+def member_frame_axes(axis_mm):
+    # Match scene_roll::member_frame exactly. The branch reads the RAW delta as
+    # a sum-of-squares ratio; normalizing first, or using 1-dot(up,n)^2, can
+    # move a near-vertical asymmetric member across the discontinuous seam.
+    up = [0.0, 0.0, 1.0]
+    raw_up_dot = vdot(axis_mm, up)
+    raw_perpendicular = [
+        axis_mm[i] - up[i] * raw_up_dot for i in range(3)
+    ]
+    seeded = vdot(raw_perpendicular, raw_perpendicular) <= 1.0e-6 * vdot(axis_mm, axis_mm)
+    zaxis = vnorm(axis_mm)
+    if seeded:
+        seed = [1.0, 0.0, 0.0]
+        seed_dot = vdot(seed, zaxis)
+        xaxis = vnorm([seed[i] - zaxis[i] * seed_dot for i in range(3)])
+        yaxis = vnorm(vcross(zaxis, xaxis))
+    else:
+        up_dot = vdot(up, zaxis)
+        yaxis = vnorm([up[i] - zaxis[i] * up_dot for i in range(3)])
+        xaxis = vnorm(vcross(yaxis, zaxis))
+    return xaxis, yaxis, zaxis
+
 def rectangular_outline(width, depth):
     hw = width / 2.0
     hd = depth / 2.0
     return [[-hw, -hd], [hw, -hd], [hw, hd], [-hw, hd]]
 
-def profile_outlines(profile):
+def profile_components(profile):
     # The sidecar already decoded and normalized the canonical xsection. The
     # live script consumes that plan; it never parses a designation, accepts an
     # alias, or invents a thickness.
@@ -192,36 +214,38 @@ def profile_outlines(profile):
     if shape == "i":
         tf = float(dimensions["tf"])
         tw = float(dimensions["tw"])
-        return [
+        return [([
                 [-hw, -hd], [hw, -hd], [hw, -hd + tf], [tw / 2.0, -hd + tf],
                 [tw / 2.0, hd - tf], [hw, hd - tf], [hw, hd], [-hw, hd],
                 [-hw, hd - tf], [-tw / 2.0, hd - tf],
                 [-tw / 2.0, -hd + tf], [-hw, -hd + tf],
-            ], None
+            ], None)]
     if shape == "channel":
         tf = float(dimensions["tf"])
         tw = float(dimensions["tw"])
-        return [
+        return [([
                 [-hw, -hd], [hw, -hd], [hw, -hd + tf],
                 [-hw + tw, -hd + tf], [-hw + tw, hd - tf],
                 [hw, hd - tf], [hw, hd], [-hw, hd],
-            ], None
+            ], None)]
     if shape == "angle":
         thickness = float(dimensions["t"])
-        return [
+        return [([
                 [-hw, -hd], [hw, -hd], [hw, -hd + thickness],
                 [-hw + thickness, -hd + thickness],
                 [-hw + thickness, hd], [-hw, hd],
-            ], None
+            ], None)]
     if shape == "rhs":
         thickness = float(dimensions["t"])
-        return rectangular_outline(width, depth), [
+        return [(rectangular_outline(width, depth), [
                 [-hw + thickness, -hd + thickness],
                 [hw - thickness, -hd + thickness],
                 [hw - thickness, hd - thickness],
                 [-hw + thickness, hd - thickness],
-            ]
-    return rectangular_outline(width, depth), None
+            ])]
+    if shape == "double-angle":
+        return [(outline, None) for outline in profile["components"]]
+    return [(rectangular_outline(width, depth), None)]
 
 elements = scene.get("elements") if isinstance(scene.get("elements"), list) else []
 by_id = {str(e.get("id")): e for e in elements if isinstance(e, dict)}
@@ -252,6 +276,7 @@ def validate_brep(
             "{}: {} does not have outward solid orientation".format(record_id, context))
 
     expected_profiles = int(profile["profileCount"])
+    expected_components = int(profile["componentCount"])
     cap_loops = []
     for face in brep.Faces:
         if not face.IsPlanar(tol):
@@ -262,10 +287,11 @@ def validate_brep(
         if normal.Unitize() and abs(abs(
                 normal.X * axis.X + normal.Y * axis.Y + normal.Z * axis.Z) - 1.0) <= 1.0e-7:
             cap_loops.append(face.Loops.Count)
-    if len(cap_loops) != 2 or any(count != expected_profiles for count in cap_loops):
+    if (len(cap_loops) != 2 * expected_components
+            or any(count != expected_profiles for count in cap_loops)):
         raise ValueError(
-            "{}: {} requires two matching caps with {} profile loop(s)".format(
-                record_id, context, expected_profiles))
+            "{}: {} requires {} component cap(s) with {} profile loop(s)".format(
+                record_id, context, 2 * expected_components, expected_profiles))
 
     bbox = brep.GetBoundingBox(frame)
     width = float(profile["w"]) * scale
@@ -289,6 +315,7 @@ def validate_brep(
         "shape": str(profile["shape"]),
         "dimensions": profile["dimensions"],
         "profileCount": expected_profiles,
+        "componentCount": expected_components,
         "capCount": len(cap_loops),
     }
     # Mass properties are materially more expensive than topology and envelope
@@ -355,11 +382,7 @@ for supported_row in supported:
             raise ValueError(
                 "{}: xsection edge, thickness, or void is at or below Rhino document tolerance".format(record_id))
 
-        zaxis = vnorm(axis_mm)
-        dz = vdot([0.0, 0.0, 1.0], zaxis)
-        projected_up = [-zaxis[0] * dz, -zaxis[1] * dz, 1.0 - zaxis[2] * dz]
-        yaxis = vnorm(projected_up) if vlen(projected_up) > 1.0e-9 else [0.0, 1.0, 0.0]
-        xaxis = vcross(yaxis, zaxis)
+        xaxis, yaxis, zaxis = member_frame_axes(axis_mm)
         roll = number(element.get("rot")) or 0.0
         if roll:
             radians = roll * math.pi / 180.0
@@ -367,7 +390,7 @@ for supported_row in supported:
             yaxis = vrot(yaxis, zaxis, radians)
 
         length = length_mm * scale
-        outer_outline, inner_outline = profile_outlines(profile_plan)
+        component_curves = []
         if str(profile_plan["shape"]) == "chs":
             dimensions = profile_plan["dimensions"]
             radius = float(dimensions["od"]) * scale / 2.0
@@ -376,31 +399,39 @@ for supported_row in supported:
                 Rhino.Geometry.Plane.WorldXY, radius).ToNurbsCurve()
             inner_curve = Rhino.Geometry.Circle(
                 Rhino.Geometry.Plane.WorldXY, radius - thickness).ToNurbsCurve()
+            component_curves.append((outer_curve, inner_curve))
         else:
-            outer_curve = local_polygon(outer_outline)
-            inner_curve = local_polygon(inner_outline) if inner_outline is not None else None
-        if (not outer_curve.IsValid or not outer_curve.IsClosed
-                or (inner_curve is not None and (
-                    not inner_curve.IsValid or not inner_curve.IsClosed))):
-            raise ValueError(
-                "{}: section outline is not a valid closed curve".format(record_id))
+            for outer_outline, inner_outline in profile_components(profile_plan):
+                component_curves.append((
+                    local_polygon(outer_outline),
+                    local_polygon(inner_outline) if inner_outline is not None else None))
+        if len(component_curves) != int(profile_plan["componentCount"]):
+            raise ValueError("{}: normalized component count is wrong".format(record_id))
 
-        extrusion = Rhino.Geometry.Extrusion()
-        if not extrusion.SetPathAndUp(
-                Rhino.Geometry.Point3d.Origin,
-                Rhino.Geometry.Point3d(0.0, 0.0, length),
-                Rhino.Geometry.Vector3d.YAxis):
-            raise ValueError("{}: Rhino refused the local extrusion path".format(record_id))
-        if not extrusion.SetOuterProfile(outer_curve, True):
-            raise ValueError("{}: Rhino refused the outer section profile".format(record_id))
-        if inner_curve is not None and not extrusion.AddInnerProfile(inner_curve):
-            raise ValueError("{}: Rhino refused the inner section profile".format(record_id))
-        if extrusion.ProfileCount != int(profile_plan["profileCount"]):
-            raise ValueError("{}: Rhino extrusion profile count is wrong".format(record_id))
-        brep = extrusion.ToBrep()
-        if brep is None:
-            raise ValueError("{}: Rhino could not extrude the section".format(record_id))
-        normalize_outward(brep)
+        brep = Rhino.Geometry.Brep()
+        for outer_curve, inner_curve in component_curves:
+            if (not outer_curve.IsValid or not outer_curve.IsClosed
+                    or (inner_curve is not None and (
+                        not inner_curve.IsValid or not inner_curve.IsClosed))):
+                raise ValueError(
+                    "{}: section outline is not a valid closed curve".format(record_id))
+            extrusion = Rhino.Geometry.Extrusion()
+            if not extrusion.SetPathAndUp(
+                    Rhino.Geometry.Point3d.Origin,
+                    Rhino.Geometry.Point3d(0.0, 0.0, length),
+                    Rhino.Geometry.Vector3d.YAxis):
+                raise ValueError("{}: Rhino refused the local extrusion path".format(record_id))
+            if not extrusion.SetOuterProfile(outer_curve, True):
+                raise ValueError("{}: Rhino refused the outer section profile".format(record_id))
+            if inner_curve is not None and not extrusion.AddInnerProfile(inner_curve):
+                raise ValueError("{}: Rhino refused the inner section profile".format(record_id))
+            if extrusion.ProfileCount != int(profile_plan["profileCount"]):
+                raise ValueError("{}: Rhino extrusion profile count is wrong".format(record_id))
+            component = extrusion.ToBrep()
+            if component is None:
+                raise ValueError("{}: Rhino could not extrude the section".format(record_id))
+            normalize_outward(component)
+            brep.Append(component)
         validate_brep(
             record_id, brep, profile_plan, Rhino.Geometry.Plane.WorldXY,
             Rhino.Geometry.Vector3d.ZAxis, length, "local extrusion", False)
