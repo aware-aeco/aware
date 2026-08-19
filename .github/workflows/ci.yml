@@ -219,12 +219,12 @@ jobs:
   #
   # `cli/tests/dotnet_suites_gate.rs` asserts every project in the repo that
   # `dotnet test` can run — identified by its own metadata, NOT by a filename
-  # convention — is named by a `run:` step in one of these two jobs, so an
+  # convention — is named by an isolated `run:` job below, so an
   # eighth suite cannot arrive unrun. The generator suite above is why it reads
   # metadata: its file is plain `Tests.csproj`, and a `*.Tests.csproj` gate
   # reported the repo clean while those 46 tests ran nowhere (Codex review, #433).
-  dotnet-bridges:
-    name: .NET bridge tests (cross-platform)
+  dotnet-roslyn:
+    name: .NET tests — Roslyn
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -237,19 +237,41 @@ jobs:
       - name: Test cli-roslyn
         run: dotnet test cli-roslyn/Tests/aware-roslyn.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 
+  dotnet-sidecar:
+    name: .NET tests — sidecar
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
       - name: Test cli-sidecar
         run: dotnet test cli-sidecar/Tests/cli-sidecar.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
+
+  dotnet-generator:
+    name: .NET tests — ingest generator
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
 
       - name: Test cli-sidecar ingest generator
         run: dotnet test cli-sidecar/Ingest/Generator/Tests/Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 
-  # The `net*-windows` half of the split described on `dotnet-bridges` above.
+  # The `net*-windows` half of the split described above.
   # Separate from `tekla-bridge` so a Tekla publish failure and a bridge-suite
   # failure stay legible as different things.
   #
   # Two SDKs: `cli-revit/Tests` is `net8.0-windows`, the other two `net10.0-windows`.
-  dotnet-bridges-windows:
-    name: .NET bridge tests (Windows)
+  dotnet-revit:
+    name: .NET tests — Revit
     runs-on: windows-latest
     timeout-minutes: 25
     steps:
@@ -264,8 +286,34 @@ jobs:
       - name: Test cli-revit
         run: dotnet test cli-revit/Tests/cli-revit.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 
+  dotnet-rhino:
+    name: .NET tests — Rhino
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
       - name: Test cli-rhino
         run: dotnet test cli-rhino/Tests/cli-rhino.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
+
+  dotnet-sketchup:
+    name: .NET tests — SketchUp
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
 
       - name: Test cli-sketchup
         run: dotnet test cli-sketchup/Tests/cli-sketchup.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true

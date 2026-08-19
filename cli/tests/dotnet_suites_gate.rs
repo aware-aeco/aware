@@ -121,15 +121,29 @@ fn has_disabled_or_filtered_test_metadata(source: &str) -> bool {
         .filter(|c| !c.is_ascii_whitespace())
         .flat_map(char::to_lowercase)
         .collect();
-    [
-        "<istestproject>false</istestproject>",
-        "<vstestlisttests",
-        "<vstesttestcasefilter",
-        "<testcasefilter",
-        "<treatnotestsaserror>false",
-    ]
-    .iter()
-    .any(|needle| normalized.contains(needle))
+    let without_one_allowed_marker =
+        normalized.replacen("<istestproject>true</istestproject>", "", 1);
+    without_one_allowed_marker.contains("<istestproject")
+        || [
+            "<import",
+            "<vstestlisttests",
+            "<vstesttestcasefilter",
+            "<testcasefilter",
+            "<treatnotestsaserror",
+            "<runsettingsfilepath",
+            "<vstestsetting",
+        ]
+        .iter()
+        .any(|needle| normalized.contains(needle))
+}
+
+fn uses_plain_dotnet_sdk(source: &str) -> bool {
+    let normalized: String = source
+        .chars()
+        .filter(|c| !c.is_ascii_whitespace())
+        .flat_map(char::to_lowercase)
+        .collect();
+    normalized.starts_with("<projectsdk=\"microsoft.net.sdk\">")
 }
 
 /// Tracked paths matching `patterns`, if `root` belongs to a Git checkout.
@@ -233,6 +247,8 @@ fn tested_paths(workflow: &str) -> Vec<String> {
         let Some(steps) = job.get("steps").and_then(|s| s.as_sequence()) else {
             continue;
         };
+        let mut saw_checkout = false;
+        let mut saw_dotnet_setup = false;
         for step in steps {
             if step.get("if").is_some()
                 || continues_on_error(step)
@@ -244,16 +260,37 @@ fn tested_paths(workflow: &str) -> Vec<String> {
                 break;
             }
             if let Some(run) = step.get("run").and_then(|r| r.as_str()) {
+                if !saw_checkout || !saw_dotnet_setup {
+                    break;
+                }
                 let Some(project) = canonical_test_project(run) else {
                     break;
                 };
-                if required_runner(&project) != runner {
+                if required_runner(&project) != Some(runner) {
                     break;
                 }
                 out.push(project);
+                // A repository-controlled test process can mutate GITHUB_ENV,
+                // GITHUB_PATH, or later files. One fresh job proves one suite.
+                break;
             } else if let Some(action) = step.get("uses").and_then(|u| u.as_str()) {
-                if !matches!(action, "actions/checkout@v6" | "actions/setup-dotnet@v4") {
+                if step.get("env").is_some() {
                     break;
+                }
+                match action {
+                    "actions/checkout@v6"
+                        if !saw_checkout && !saw_dotnet_setup && step.get("with").is_none() =>
+                    {
+                        saw_checkout = true;
+                    }
+                    "actions/setup-dotnet@v4"
+                        if saw_checkout
+                            && !saw_dotnet_setup
+                            && trusted_dotnet_setup(step, runner) =>
+                    {
+                        saw_dotnet_setup = true;
+                    }
+                    _ => break,
                 }
             } else {
                 break;
@@ -261,6 +298,29 @@ fn tested_paths(workflow: &str) -> Vec<String> {
         }
     }
     out
+}
+
+fn trusted_dotnet_setup(step: &serde_yaml::Value, runner: &str) -> bool {
+    let Some(with) = step.get("with").and_then(serde_yaml::Value::as_mapping) else {
+        return false;
+    };
+    if with.len() != 1 {
+        return false;
+    }
+    let Some((key, value)) = with.iter().next() else {
+        return false;
+    };
+    if key.as_str() != Some("dotnet-version") {
+        return false;
+    }
+    let Some(version) = value.as_str() else {
+        return false;
+    };
+    match runner {
+        "ubuntu-latest" => version == "10.0.x",
+        "windows-latest" => matches!(version.trim(), "8.0.x" | "8.0.x\n10.0.x"),
+        _ => false,
+    }
 }
 
 /// Environment variables become MSBuild properties for `dotnet test`. These
@@ -336,21 +396,20 @@ fn canonical_test_project(script: &str) -> Option<String> {
         .then(|| project.to_string())
 }
 
-fn required_runner(project: &str) -> &'static str {
-    let windows_by_path = ["cli-revit/", "cli-rhino/", "cli-sketchup/", "cli-tekla/"]
-        .iter()
-        .any(|prefix| project.starts_with(prefix));
-    let windows_by_metadata = std::fs::read_to_string(repo_root().join(project))
-        .map(|source| {
-            let lower = source.to_ascii_lowercase();
-            lower.contains("-windows</targetframework")
-                || lower.contains("<targetframework>net48</targetframework>")
-        })
-        .unwrap_or(false);
-    if windows_by_path || windows_by_metadata {
-        "windows-latest"
-    } else {
-        "ubuntu-latest"
+fn required_runner(project: &str) -> Option<&'static str> {
+    match project {
+        "cli-roslyn/Tests/aware-roslyn.Tests.csproj"
+        | "cli-sidecar/Ingest/Generator/Tests/Tests.csproj"
+        | "cli-sidecar/Tests/cli-sidecar.Tests.csproj" => Some("ubuntu-latest"),
+        "cli-revit/Tests/cli-revit.Tests.csproj"
+        | "cli-rhino/Tests/cli-rhino.Tests.csproj"
+        | "cli-sketchup/Tests/cli-sketchup.Tests.csproj"
+        | "cli-tekla/Tests/AwareTekla.Tests.csproj" => Some("windows-latest"),
+        // Synthetic parser tests use paths that intentionally do not exist in
+        // the checkout. A real newly tracked suite exists and therefore stays
+        // unclassified here until its supported runner receives review.
+        _ if !repo_root().join(project).exists() => Some("ubuntu-latest"),
+        _ => None,
     }
 }
 
@@ -418,11 +477,21 @@ fn tracked_msbuild_metadata_cannot_disable_or_filter_test_execution() {
         &["*.csproj", "*.props", "*.targets", "*.runsettings"],
     )
     .expect("repository root must have a readable Git index");
+    let shared_controls: Vec<_> = files
+        .iter()
+        .filter(|path| !path.ends_with(".csproj"))
+        .collect();
+    assert!(
+        shared_controls.is_empty(),
+        "shared MSBuild/runsettings files require evaluated metadata support before they can be \
+         trusted by this gate: {shared_controls:#?}"
+    );
     let offenders: Vec<_> = files
         .iter()
         .filter(|path| {
-            std::fs::read_to_string(root.join(path))
-                .is_ok_and(|source| has_disabled_or_filtered_test_metadata(&source))
+            std::fs::read_to_string(root.join(path)).map_or(true, |source| {
+                has_disabled_or_filtered_test_metadata(&source)
+            })
         })
         .collect();
     assert!(
@@ -452,6 +521,13 @@ fn every_project_is_classified_so_new_test_forms_fail_closed() {
             !tests.iter().any(|project| project == known),
             "reviewed non-test project `{known}` now carries test metadata; remove it from \
              KNOWN_NON_TEST_PROJECTS and add a blocking CI test step"
+        );
+        let source = std::fs::read_to_string(root.join(known))
+            .unwrap_or_else(|error| panic!("read reviewed non-test project `{known}`: {error}"));
+        assert!(
+            uses_plain_dotnet_sdk(&source),
+            "reviewed non-test project `{known}` no longer uses the plain Microsoft.NET.Sdk; \
+             re-evaluate whether its SDK supplies tests before retaining the allowlist entry"
         );
     }
 }
@@ -508,9 +584,9 @@ fn every_dotnet_suite_is_run_by_ci() {
         "these .NET test projects exist but no `dotnet test` invocation in \
          `.github/workflows/ci.yml` is given them, so their tests are green \
          only by assumption:\n  {}\n\n\
-         Add a `dotnet test <path>` step to the `dotnet-bridges` job (plain \
-         `net*` target frameworks) or `dotnet-bridges-windows` (`net*-windows` \
-         ones). Only an executed invocation counts, and that is deliberate: a \
+         Add one isolated job with the canonical `dotnet test <path>` command \
+         on the project's reviewed runner. Only an executed invocation counts, \
+         and that is deliberate: a \
          path in a YAML comment, in a shell comment inside a `run: |` block, in \
          a step's `name:`, or in an `echo` is not a suite anybody runs — each of \
          those was a hole this gate has been closed against. Do not satisfy this \
@@ -590,6 +666,12 @@ fn test_project_classifier_matches_its_contract() {
         ),
         "disabled metadata must fail the separate standing control gate without hiding the suite"
     );
+    assert!(
+        has_disabled_or_filtered_test_metadata(
+            r#"<Project><PropertyGroup><IsTestProject Condition="'$(CI)' == 'true'">false</IsTestProject></PropertyGroup></Project>"#
+        ),
+        "conditional IsTestProject assignments must fail closed regardless of element attributes"
+    );
 }
 
 #[test]
@@ -606,6 +688,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
       - run: dotnet test oneline/Tests/oneline.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
       - name: Test titled/Tests/titled.Tests.csproj
         uses: some/action@v1
@@ -673,6 +758,10 @@ jobs:
   bridges:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
       - run: dotnet test canonical/Tests/canonical.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
       - if: false
         run: dotnet test disabled-step/Tests/disabled-step.Tests.csproj -c Release
@@ -795,14 +884,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: dotnet test zero/Tests/zero.Tests.csproj -c Release
+  checkout-other-ref:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - run: {other_ref}
+  two-suites-share-state:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - run: {first_shared}
+      - run: {second_shared}
 "#,
         needs = command("needs/Tests/needs.Tests.csproj"),
         matrix = command("matrix/Tests/matrix.Tests.csproj"),
         shell = command("shell/Tests/shell.Tests.csproj"),
         relocated = command("relocated/Tests/relocated.Tests.csproj"),
-        wrong_os = command("cli-revit/Tests/wrong-os.Tests.csproj"),
+        wrong_os = command("cli-revit/Tests/cli-revit.Tests.csproj"),
         poisoned = command("poisoned/Tests/poisoned.Tests.csproj"),
         defaults = command("defaults/Tests/defaults.Tests.csproj"),
+        other_ref = command("other-ref/Tests/other-ref.Tests.csproj"),
+        first_shared = command("first-shared/Tests/first-shared.Tests.csproj"),
+        second_shared = command("second-shared/Tests/second-shared.Tests.csproj"),
+    );
+
+    let first_shared = "first-shared/Tests/first-shared.Tests.csproj".to_string();
+    assert!(
+        unrun(std::slice::from_ref(&first_shared), &workflow).is_empty(),
+        "the first suite in a fresh trusted job remains valid evidence"
     );
 
     for project in [
@@ -810,11 +927,13 @@ jobs:
         "matrix/Tests/matrix.Tests.csproj",
         "shell/Tests/shell.Tests.csproj",
         "relocated/Tests/relocated.Tests.csproj",
-        "cli-revit/Tests/wrong-os.Tests.csproj",
+        "cli-revit/Tests/cli-revit.Tests.csproj",
         "poisoned/Tests/poisoned.Tests.csproj",
         "defaults/Tests/defaults.Tests.csproj",
         "debug/Tests/debug.Tests.csproj",
         "zero/Tests/zero.Tests.csproj",
+        "other-ref/Tests/other-ref.Tests.csproj",
+        "second-shared/Tests/second-shared.Tests.csproj",
     ] {
         let project = project.to_string();
         assert_eq!(
@@ -879,7 +998,7 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
         "an unfamiliar or inherited test-project form must fail the inventory gate instead of disappearing"
     );
 
-    let workflow = "jobs:\n  x:\n    runs-on: ubuntu-latest\n    steps:\n      - run: dotnet test wired/Tests/wired.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n";
+    let workflow = "jobs:\n  x:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test wired/Tests/wired.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n";
     assert_eq!(
         unrun(&found, workflow),
         vec![
@@ -894,7 +1013,7 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
     // Positive control: with both named, nothing is reported. Without this, a
     // classifier that flagged *everything* would satisfy the assertion above.
     let complete = format!(
-        "{workflow}      - run: dotnet test orphan/Tests/Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n      - run: dotnet test .scratch/wired/Tests/temporary.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n"
+        "{workflow}  orphan:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test orphan/Tests/Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n  hidden:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test .scratch/wired/Tests/temporary.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n"
     );
     assert!(
         unrun(&found, &complete).is_empty(),
