@@ -114,6 +114,48 @@ authored-to-native mapping as `tekla-grid-label-tokenized`. Tekla-generated
 `GridPlane` children are inspected read-only; the bridge never creates or edits
 one plane per elevation.
 
+## Double-angle materialization
+
+Tekla has no native 2L profile — double angles exist there only inside components,
+whose geometry comes from environment-specific component defaults rather than from
+the scene descriptor. So `bake-scene` materializes a canonical
+`xsection.shape:"double-angle"` itself, as **two plain parametric single angles**
+(`L{d}*{b}*{t}`) offset along the member's rolled section X by
+`gap/2 + outstanding/2` each way, reproducing the same figure the viewer, IFC and
+Rhino sinks draw. Both parts go through the normal `insertBeam` path, so each keeps
+the exact-profile read-back, the ownership UDAs and the B-rep roll verification.
+
+One of the two is built on the reversed `to`→`from` axis. That is the only way to
+mirror a section in Tekla, and a mirror is genuinely required: an unequal angle is
+chiral, so no roll about the member axis turns one leg of a back-to-back pair into
+the other. Which axis the reversal mirrors across depends on the canonical zero
+frame's branch — across Y for a projected (non-vertical) member, across X on the
+near-vertical seed branch — so a reversed leg of a column carries an extra 180°.
+`TeklaDoubleAngleContract` owns that arithmetic with no Tekla references, so unit
+tests exercise the production algorithm; `Tests/Fixtures/double-angle-scene.json`
+drives a live pass across beams, columns, rolled, sloped, equal-leg and zero-gap
+cases.
+
+Neither fact is provable by a unit test — a test's model of Tekla is the model the
+plan was derived from, so flipping one moves both sides together and the suite
+stays green. So the bake proves the pair instead: after both legs are inserted
+their solids are projected into the member's rolled section frame and compared,
+vertex for vertex, against the canonical outline the plan carries. A catalog whose
+parametric `L` seats differently from the probed one fails the bake rather than
+committing a wrong pair. Both premises were checked by mutation — inverting the
+chirality is refused on the first horizontal member, dropping the vertical half
+turn on the first column. The `xsection` envelope must also agree with the authored
+`section`, matching what the IFC and Rhino sinks already require.
+
+The receipt reports the pair honestly: `nativeGuids` plus per-leg
+`nativeRotation`/`nativeRotationOffset`/`offsetMm`/`reversedAxis`, `legProfile` for
+the derived single angle actually built, `profile` keeping its usual meaning of the
+authored designation, and a `tekla-double-angle-materialized-as-pair` warning naming
+both. Because one record owns two native parts, a native connection to a
+double-angle member is ambiguous, so bolt, weld and boolean-cut participants that
+reference one are refused explicitly instead of silently attaching to a single leg.
+`tee` remains explicitly unsupported.
+
 ## Drill
 
 The v0.31 release proved 13/20 prompts PASS against live Tekla 2026 (see [`docs/superpowers/handoffs/2026-05-19-v031-tekla-exec-live.md`](../docs/superpowers/handoffs/2026-05-19-v031-tekla-exec-live.md)). The 7 misses were Tekla domain issues, not substrate failures. Prompt fixtures live at `cli-tekla/Ingest/Output/prompt-*.json`.
