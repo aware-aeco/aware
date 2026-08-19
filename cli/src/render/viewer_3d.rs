@@ -688,7 +688,12 @@ function profileGeom(e,w,d,len){
 }
 function normalizeRoll(d){ let r=((d%360)+360)%360;if(r>=180)r-=360;return Object.is(r,-0)?0:r; }
 function memberFrame(e,up){ const from=e.from,to=e.to,n=new THREE.Vector3(to[0]-from[0],to[1]-from[1],to[2]-from[2]).normalize();
-  const U=up==='y'?new THREE.Vector3(0,1,0):new THREE.Vector3(0,0,1), du=n.dot(U), perp=Math.max(0,1-du*du);let x,y;
+  // Sum of squares, never the cancelling `1 - du^2` form. That subtraction loses its significant
+  // digits in precisely the near-vertical band that picks the branch below, so a viewer reading it
+  // that way seeds members the IFC and Tekla sinks project — and the two branches disagree about a
+  // section's facing by up to 180°, so the same member would be DRAWN turned around from how it
+  // exports. See scene_roll::member_frame, whose threshold and rules this mirrors exactly.
+  const U=up==='y'?new THREE.Vector3(0,1,0):new THREE.Vector3(0,0,1), du=n.dot(U), perp=n.clone().addScaledVector(U,-du).lengthSq();let x,y;
   if(perp<=1e-6){ const seed=new THREE.Vector3(1,0,0);x=seed.addScaledVector(n,-seed.dot(n)).normalize();y=n.clone().cross(x).normalize(); }
   else { y=U.clone().addScaledVector(n,-du).normalize();x=y.clone().cross(n).normalize(); }
   const rot=normalizeRoll(typeof e.rot==='number'?e.rot:0),a=rot*Math.PI/180,c=Math.cos(a),s=Math.sin(a);
@@ -3979,6 +3984,32 @@ mod tests {
         assert!(html.contains("function memberFrame(e,up)"));
         assert!(html.contains("memberFrame:(id)=>"));
         assert!(html.contains("memberVertices:(id)=>"));
+    }
+
+    #[test]
+    fn the_viewer_selects_the_zero_frame_branch_the_export_sinks_do() {
+        // The viewer carries its OWN copy of the member-roll contract, so it can drift from
+        // `scene_roll::member_frame` while every Rust test stays green — it did, and Codex
+        // caught it on #435. A cancelling `1-du*du` seeds members that `member_frame`, and
+        // therefore the IFC and Tekla sinks, project; the two branches disagree about a
+        // section's facing by up to 180°, so such a member is DRAWN turned around from how
+        // it exports. On the axis pinned by `scene_roll`'s
+        // `the_branch_test_does_not_cancel_at_the_threshold` the two differ by 78.5°.
+        //
+        // A string assertion because nothing else runs this JS in CI: the browser gate
+        // (`cli/tests/browser/run.mjs`) is a manual pre-PR step needing Playwright and a CDN.
+        // It is the same shape the surrounding template tests already use. Issue #432.
+        let output =
+            viewer_3d_render(&json!({ "scene": rolled_member("z", json!(82.7)) }), true).unwrap();
+        let html = output["html"].as_str().unwrap();
+        assert!(
+            html.contains("perp=n.clone().addScaledVector(U,-du).lengthSq()"),
+            "viewer memberFrame must take the up-perpendicular component as a sum of squares"
+        );
+        assert!(
+            !html.contains("1-du*du"),
+            "viewer memberFrame must not select the branch on a cancelling `1-du*du`"
+        );
     }
 
     #[test]
