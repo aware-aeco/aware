@@ -196,10 +196,115 @@ public sealed class CommitPolicyTests
         Assert.Contains("AwareTekla.TeklaDoubleAngleContract.CreatePlan(", code);
         Assert.Contains("memberRollPlans[id+\"#\"+leg.Suffix]=memberRoll.CreatePlan(leg.ReversedAxis?toArr:fromArr,leg.ReversedAxis?fromArr:toArr,leg.CanonicalRollDegrees)", code);
         // Both legs run through insertBeam, so both inherit its exact-profile
-        // read-back, ownership tagging and B-rep roll verification.
-        Assert.Contains("insertBeam(id,id+\"#\"+leg.Suffix,\"member\",anglePlan.LegProfile,leg.ReversedAxis?legTail:legHead,leg.ReversedAxis?legHead:legTail,el)", code);
+        // read-back, ownership tagging and B-rep roll verification. Asserted as the
+        // separate decisions they are, so a rename fails one legibly rather than all.
+        Assert.Contains("insertBeam(id,id+\"#\"+leg.Suffix,", code);
+        // The native profile is ALWAYS the derived leg profile. The authored `2L…`
+        // designation must never reach Tekla — some environment's catalog may well
+        // resolve it, and then the bake silently builds a section nobody chose.
+        Assert.Contains("\"member\",anglePlan.LegProfile,", code);
+        Assert.Contains("leg.ReversedAxis?legTail:legHead,leg.ReversedAxis?legHead:legTail", code);
         Assert.Contains("move(head,rolledX,leg.OffsetMm)", code);
         Assert.DoesNotContain("xshape==\"double-angle\")throw", code);
+    }
+
+    [Fact]
+    public void DoubleAngleGeometryIsProvedAgainstTheCanonicalOutlineBeforeCommit()
+    {
+        var code = BakeSceneScript.Code;
+        // The per-leg roll verification proves each leg against its own plan and says
+        // nothing about the pair. Without this the two empirical Tekla facts the plan
+        // rests on are unfalsifiable: a test's model of Tekla is the model the plan
+        // came from, so flipping one moves both sides and the suite stays green.
+        Assert.Contains("anglePlan.SectionOutline", code);
+        Assert.Contains("dot(d3,rolledX),dot(d3,rolledY)", code);
+        Assert.Contains("the inserted double-angle pair does not match the canonical", code);
+        // Both directions: a missing vertex means the pair is misplaced, an extra one
+        // means the resolved profile is not the sharp-cornered section assumed.
+        Assert.Contains("wanted.Any(w=>!sectionSeen.Any(", code);
+        Assert.Contains("sectionSeen.Any(q=>!wanted.Any(", code);
+    }
+
+    [Fact]
+    public void DoubleAngleEnvelopeMustAgreeWithTheAuthoredSection()
+    {
+        var code = BakeSceneScript.Code;
+        // IFC and Rhino both refuse a double angle whose envelope disagrees with
+        // `section`; before this the Tekla sink accepted the mismatch and baked the
+        // xsection, so a typo'd thickness shipped under an untouched designation.
+        Assert.Contains("anglePlan.EnvelopeWidthMm", code);
+        Assert.Contains("anglePlan.EnvelopeDepthMm", code);
+        Assert.Contains("disagrees with the authored section", code);
+    }
+
+    [Fact]
+    public void DoubleAngleLiveFixtureCoversBothBranchesWithAndWithoutRoll()
+    {
+        var scene = JsonNode.Parse(System.IO.File.ReadAllText(FixturePath("double-angle-scene.json")))!;
+        var members = scene["scene"]!["elements"]!.AsArray()
+            .Where(element => element!["xsection"]?["shape"]?.GetValue<string>() == "double-angle")
+            .ToArray();
+
+        Assert.Contains(members, m => m!["orientation"] is null && m["xsection"]!["orientation"]!.GetValue<string>() == "llbb");
+        Assert.Contains(members, m => m!["xsection"]!["orientation"]!.GetValue<string>() == "slbb");
+        Assert.Contains(members, m => m!["xsection"]!["gap"]!.GetValue<double>() == 0);
+        Assert.Contains(members, m => m!["xsection"]!["d"]!.GetValue<double>() == m["xsection"]!["b"]!.GetValue<double>());
+
+        // The vertical zero-frame branch must be driven WITH a roll as well as
+        // without: at rot 0 the reversed leg's `-rot + 180` collapses to a bare 180,
+        // so a sign error on that term passes every unrolled column.
+        var verticals = members.Where(m => IsVertical(m!)).ToArray();
+        Assert.Contains(verticals, m => m!["rot"] is null);
+        Assert.Contains(verticals, m => m!["rot"] is not null && m["rot"]!.GetValue<double>() != 0);
+        // And downward as well as upward, since the seed branch picks its native
+        // reference from the axis sign.
+        Assert.Contains(verticals, m => m!["from"]![2]!.GetValue<double>() < m["to"]![2]!.GetValue<double>());
+        Assert.Contains(verticals, m => m!["from"]![2]!.GetValue<double>() > m["to"]![2]!.GetValue<double>());
+
+        // Non-vertical coverage: a plain horizontal, a rolled one, and a sloped one.
+        var horizontals = members.Where(m => !IsVertical(m!)).ToArray();
+        Assert.Contains(horizontals, m => m!["rot"] is not null && m["rot"]!.GetValue<double>() != 0);
+        Assert.Contains(horizontals, m => m!["from"]![2]!.GetValue<double>() != m["to"]![2]!.GetValue<double>());
+    }
+
+    [Fact]
+    public void DoubleAngleLiveFixturePlansCleanlyAndMatchesItsAuthoredEnvelopes()
+    {
+        var scene = JsonNode.Parse(System.IO.File.ReadAllText(FixturePath("double-angle-scene.json")))!;
+        foreach (var element in scene["scene"]!["elements"]!.AsArray())
+        {
+            var section = element!["xsection"];
+            if (section?["shape"]?.GetValue<string>() != "double-angle") continue;
+
+            double[] from = [.. element["from"]!.AsArray().Select(v => v!.GetValue<double>())];
+            double[] to = [.. element["to"]!.AsArray().Select(v => v!.GetValue<double>())];
+            // Exactly the arguments the bake script derives, so the manual live pass
+            // and the automated contract cannot drift apart unnoticed.
+            var plan = TeklaDoubleAngleContract.CreatePlan(
+                section["d"]!.GetValue<double>(),
+                section["b"]!.GetValue<double>(),
+                section["t"]!.GetValue<double>(),
+                section["gap"]!.GetValue<double>(),
+                section["orientation"]!.GetValue<string>(),
+                element["rot"]?.GetValue<double>() ?? 0,
+                TeklaMemberRollContract.UsesVerticalSeedFrame(from, to));
+
+            var id = element["id"]!.GetValue<string>();
+            Assert.Equal(element["section"]!["w"]!.GetValue<double>(), plan.EnvelopeWidthMm, 9);
+            Assert.Equal(element["section"]!["d"]!.GetValue<double>(), plan.EnvelopeDepthMm, 9);
+            Assert.False(string.IsNullOrWhiteSpace(plan.LegProfile), $"{id}: leg profile");
+            Assert.NotEqual(element["profile"]!.GetValue<string>(), plan.LegProfile);
+        }
+    }
+
+    static string FixturePath(string name) => System.IO.Path.GetFullPath(System.IO.Path.Combine(
+        AppContext.BaseDirectory, "..", "..", "..", "Fixtures", name));
+
+    static bool IsVertical(JsonNode member)
+    {
+        double[] from = [.. member["from"]!.AsArray().Select(v => v!.GetValue<double>())];
+        double[] to = [.. member["to"]!.AsArray().Select(v => v!.GetValue<double>())];
+        return TeklaMemberRollContract.UsesVerticalSeedFrame(from, to);
     }
 
     [Fact]
@@ -215,8 +320,13 @@ public sealed class CommitPolicyTests
     {
         var code = BakeSceneScript.Code;
         Assert.Contains("so a native connection to it is ambiguous", code);
-        foreach (var field in new[] { "partToBoltTo", "partToBeBolted", "mainId", "secondaryId", "targetId" })
-            Assert.Contains($"\"{field}\"", code);
+        // Assert the guard's own field array, not the bare field names: every one of
+        // those literals appears elsewhere in the script for unrelated reasons, so
+        // per-name assertions still passed with the array trimmed to the bolt pair —
+        // and a weld to a double angle would then silently bind to leg `a` alone.
+        Assert.Contains(
+            "foreach(var field in new[]{\"partToBoltTo\",\"partToBeBolted\",\"mainId\",\"secondaryId\",\"targetId\"})rejectDoubleAngleParticipant(field,str(op,field));",
+            code);
         Assert.Contains("rejectDoubleAngleParticipant(\"holeEffects.targetId\"", code);
     }
 

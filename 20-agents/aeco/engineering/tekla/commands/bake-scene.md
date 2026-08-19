@@ -64,3 +64,18 @@ The result keeps the legacy summary fields and adds exhaustive `emitted`,
 by a native bolt array carries the bolt array GUID and `realizedBy`, and is not
 inserted as a duplicate physical object. Grid axes and levels use the same
 parent-realization receipt shape and do not inflate the native object count.
+
+A canonical `xsection.shape:"double-angle"` is the one record kind that becomes
+**two** native parts, because Tekla has no native 2L profile. Its row carries
+`nativeGuids` (both parts, `a` then `b`) alongside the usual singular
+`nativeGuid` (leg `a`), a `legs` array giving each leg's GUID, axis order,
+offset and native rotation, and `legProfile` — the derived single-angle profile
+actually built. `profile` keeps its usual meaning, the authored designation, and
+a `tekla-double-angle-materialized-as-pair` warning names both. Such a member
+does contribute 2 to `created`/`native`. The pair's geometry is proved against
+the canonical section before commit, so a catalog whose parametric `L` is seated
+differently fails the bake rather than committing a wrong pair, and its
+`xsection` envelope must agree with the authored `section` exactly as the IFC
+and Rhino sinks require. Because one record owns two parts, a bolt, weld or
+boolean-cut that names a double-angle member is refused rather than bound to one
+leg. `tee` remains explicitly unsupported.

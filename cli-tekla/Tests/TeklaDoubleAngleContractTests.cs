@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Xunit;
 
@@ -29,6 +30,10 @@ public sealed class TeklaDoubleAngleContractTests
     [InlineData("slbb", 150, 100, 10, 12, 180)]
     [InlineData("slbb", 150, 100, 10, 12, 12.345)]
     [InlineData("slbb", 100, 100, 8, 0, 0)]
+    [InlineData("llbb", 150, 100, 10, 0, 0)]
+    [InlineData("slbb", 150, 100, 10, 0, 47)]
+    [InlineData("llbb", 100, 100, 8, 12, 30)]
+    [InlineData("slbb", 100, 100, 8, 12, -137.5)]
     public void EachLegReproducesTheCanonicalOutline(string orientation, double d, double b, double t, double gap, double roll)
     {
         // Both zero-frame branches: a column mirrors across the other axis when its
@@ -148,6 +153,86 @@ public sealed class TeklaDoubleAngleContractTests
     public void NonFiniteRollIsRejected()
     {
         Assert.Throws<ArgumentException>(() => TeklaDoubleAngleContract.CreatePlan(150, 100, 10, 12, "llbb", double.NaN, false));
+    }
+
+    [Theory]
+    // Horizontal, sloped: the projected branch mirrors across Y — zero X flips.
+    [InlineData(1000, 0, 0, false)]
+    [InlineData(1000, 500, 300, false)]
+    // Up and down: the vertical seed branch mirrors across X — zero Y flips instead.
+    [InlineData(0, 0, 1000, true)]
+    [InlineData(0, 0, -1000, true)]
+    public void ReversingTheAxisMirrorsAcrossWhicheverZeroAxisTheBranchLeavesStanding(double dx, double dy, double dz, bool expectVerticalBranch)
+    {
+        // DERIVES the rule the plan's 180-degree correction encodes, from
+        // TeklaMemberRollContract's own frame construction — a code path the
+        // double-angle contract did not author. Without this the rule is only ever
+        // asserted, and an edit to the seeded branch there would silently
+        // point-reflect every double-angle column with the suite still green.
+        var contract = new TeklaMemberRollContract();
+        double[] from = [0, 0, 0];
+        double[] to = [dx, dy, dz];
+        Assert.Equal(expectVerticalBranch, TeklaMemberRollContract.UsesVerticalSeedFrame(from, to));
+
+        var forward = contract.CreatePlan(from, to, 0);
+        var reversed = contract.CreatePlan(to, from, 0);
+
+        if (expectVerticalBranch)
+        {
+            AssertSameDirection(forward.ZeroX, reversed.ZeroX, +1, "vertical branch keeps zero X");
+            AssertSameDirection(forward.ZeroY, reversed.ZeroY, -1, "vertical branch flips zero Y");
+        }
+        else
+        {
+            AssertSameDirection(forward.ZeroX, reversed.ZeroX, -1, "projected branch flips zero X");
+            AssertSameDirection(forward.ZeroY, reversed.ZeroY, +1, "projected branch keeps zero Y");
+        }
+    }
+
+    [Fact]
+    public void LegProfileStaysInvariantUnderACommaDecimalCulture()
+    {
+        // A dropped InvariantCulture yields `L88,9*63,5*6,35`, which insertBeam's
+        // exact-profile read-back only rejects at bake time, on a live model.
+        var original = CultureInfo.CurrentCulture;
+        try
+        {
+            CultureInfo.CurrentCulture = new CultureInfo("pl-PL");
+            Assert.Equal("L88.9*63.5*6.35", TeklaDoubleAngleContract.CreatePlan(88.9, 63.5, 6.35, 10, "llbb", 0, false).LegProfile);
+        }
+        finally
+        {
+            CultureInfo.CurrentCulture = original;
+        }
+    }
+
+    [Theory]
+    [InlineData("llbb", 150, 100, 10, 12)]
+    [InlineData("slbb", 150, 100, 10, 12)]
+    [InlineData("llbb", 100, 100, 8, 0)]
+    [InlineData("slbb", 150, 100, 10, 0)]
+    public void SectionOutlineIsTheCanonicalPairTheSinkMustReproduce(string orientation, double d, double b, double t, double gap)
+    {
+        // The bake compares inserted solids against this, so it has to be the same
+        // figure `double_angle_outlines` defines — checked against the independent
+        // transcription rather than against the production code that built it.
+        var plan = TeklaDoubleAngleContract.CreatePlan(d, b, t, gap, orientation, 0, false);
+        var expected = CanonicalOutlines(d, b, t, gap, orientation);
+        var actual = plan.SectionOutline.Select(p => (X: p[0], Y: p[1])).ToArray();
+
+        // Split by construction order, not by sign of x: at gap 0 the facing back
+        // vertices sit exactly on x = 0 and belong to both legs.
+        Assert.Equal(12, actual.Length);
+        AssertSameOutline(expected.Left, [.. actual.Take(6)]);
+        AssertSameOutline(expected.Right, [.. actual.Skip(6)]);
+    }
+
+    static void AssertSameDirection(double[] forward, double[] reversed, int sign, string because)
+    {
+        for (var axis = 0; axis < 3; axis++)
+            Assert.True(
+                Math.Abs(forward[axis] * sign - reversed[axis]) <= 1e-9,
+                $"{because}: axis {axis} was {forward[axis]} then {reversed[axis]}");
     }
 
 

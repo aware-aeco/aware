@@ -136,13 +136,25 @@ tests exercise the production algorithm; `Tests/Fixtures/double-angle-scene.json
 drives a live pass across beams, columns, rolled, sloped, equal-leg and zero-gap
 cases.
 
+Neither fact is provable by a unit test — a test's model of Tekla is the model the
+plan was derived from, so flipping one moves both sides together and the suite
+stays green. So the bake proves the pair instead: after both legs are inserted
+their solids are projected into the member's rolled section frame and compared,
+vertex for vertex, against the canonical outline the plan carries. A catalog whose
+parametric `L` seats differently from the probed one fails the bake rather than
+committing a wrong pair. Both premises were checked by mutation — inverting the
+chirality is refused on the first horizontal member, dropping the vertical half
+turn on the first column. The `xsection` envelope must also agree with the authored
+`section`, matching what the IFC and Rhino sinks already require.
+
 The receipt reports the pair honestly: `nativeGuids` plus per-leg
-`nativeRotation`/`nativeRotationOffset`/`offsetMm`, `profile` set to the leg profile,
-and a `tekla-double-angle-materialized-as-pair` warning naming the requested
-designation and both native GUIDs. Because one record owns two native parts, a
-native connection to a double-angle member is ambiguous, so bolt, weld and
-boolean-cut participants that reference one are refused explicitly instead of
-silently attaching to a single leg. `tee` remains explicitly unsupported.
+`nativeRotation`/`nativeRotationOffset`/`offsetMm`/`reversedAxis`, `legProfile` for
+the derived single angle actually built, `profile` keeping its usual meaning of the
+authored designation, and a `tekla-double-angle-materialized-as-pair` warning naming
+both. Because one record owns two native parts, a native connection to a
+double-angle member is ambiguous, so bolt, weld and boolean-cut participants that
+reference one are refused explicitly instead of silently attaching to a single leg.
+`tee` remains explicitly unsupported.
 
 ## Drill
 
