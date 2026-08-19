@@ -42,12 +42,13 @@ public sealed class TeklaDoubleAngleLeg
 /// </summary>
 public sealed class TeklaDoubleAnglePlan
 {
-    internal TeklaDoubleAnglePlan(string legProfile, double envelopeWidthMm, double envelopeDepthMm, TeklaDoubleAngleLeg[] legs)
+    internal TeklaDoubleAnglePlan(string legProfile, double envelopeWidthMm, double envelopeDepthMm, TeklaDoubleAngleLeg[] legs, double[][] sectionOutline)
     {
         LegProfile = legProfile;
         EnvelopeWidthMm = envelopeWidthMm;
         EnvelopeDepthMm = envelopeDepthMm;
         Legs = legs;
+        SectionOutline = sectionOutline;
     }
 
     /// <summary>Parametric Tekla profile of one leg, e.g. `L100*75*8`.</summary>
@@ -58,6 +59,22 @@ public sealed class TeklaDoubleAnglePlan
 
     /// <summary>Exactly two legs, `a` (+rolled X) then `b` (-rolled X).</summary>
     public TeklaDoubleAngleLeg[] Legs { get; }
+
+    /// <summary>
+    /// The section vertices the finished pair must occupy together, as `[x,y]` in the
+    /// member's rolled section frame — six per leg, the canonical figure every sink
+    /// draws. (At `gap == 0` the facing back vertices coincide, so ten of the twelve
+    /// are distinct.)
+    ///
+    /// This exists so the bake can PROVE the pair rather than assume it. The mirror
+    /// and roll arithmetic rests on two empirical facts about Tekla, and no unit test
+    /// can pin those: a test's model of Tekla is the same model this plan was derived
+    /// from, so flipping either fact moves both sides together and the suite still
+    /// passes. Reading the inserted solids back and comparing them against this
+    /// outline is what turns the assumptions into an invariant, and it catches a
+    /// catalog whose parametric `L` seats differently from the probed one.
+    /// </summary>
+    public double[][] SectionOutline { get; }
 }
 
 /// <summary>
@@ -67,8 +84,14 @@ public sealed class TeklaDoubleAnglePlan
 /// component defaults rather than by the descriptor. So the sink materializes the
 /// pair itself, as two plain parametric single angles.
 ///
-/// Two empirical facts drive the plan, both established by live 2026 B-rep probes
-/// and pinned by <c>TeklaDoubleAngleContractTests</c>:
+/// Two empirical facts drive the plan, both established by live 2026 B-rep probes.
+/// A green unit suite is NOT clearance for either: any test's model of what Tekla
+/// does is the same model this plan was derived from, so flipping a fact moves both
+/// sides together and every test still passes. What actually holds them is the
+/// bake-time comparison of the inserted solids against
+/// <see cref="TeklaDoubleAnglePlan.SectionOutline"/> — verified by mutation, not by
+/// assertion. The tests pin everything downstream of the facts: the offsets, the
+/// per-leg rolls, the chirality assignment, the llbb/slbb swap.
 ///
 /// 1. At canonical roll 0, Tekla's parametric `L h*b*t` places its vertical leg on
 ///    +X of the canonical section frame and its flat leg at -Y. That is the MIRROR
@@ -146,7 +169,35 @@ public static class TeklaDoubleAngleContract
                 Leg("b", true, -roll - ShortLegsBackToBackRollDegrees + reversedCorrection, -offset),
             };
 
-        return new TeklaDoubleAnglePlan(legProfile, envelopeWidth, envelopeDepth, legs);
+        return new TeklaDoubleAnglePlan(legProfile, envelopeWidth, envelopeDepth, legs, SectionOutline(t, gap, acrossMm, envelopeDepth));
+    }
+
+    /// <summary>
+    /// The canonical pair outline: a leg of thickness `t` spanning the full envelope
+    /// depth on each side of the gap, and an outstanding leg of thickness `t` along
+    /// the envelope bottom reaching `outstanding` outwards. Mirror-symmetric about
+    /// the section Y axis. Same figure as `double_angle_outlines` in
+    /// `cli/src/render/ifc.rs`, which is the sink-independent definition.
+    /// </summary>
+    static double[][] SectionOutline(double t, double gap, double outstanding, double depth)
+    {
+        double halfDepth = depth / 2d, halfGap = gap / 2d;
+        var left = new[]
+        {
+            new[] { -halfGap, -halfDepth },
+            new[] { -halfGap, halfDepth },
+            new[] { -halfGap - t, halfDepth },
+            new[] { -halfGap - t, -halfDepth + t },
+            new[] { -halfGap - outstanding, -halfDepth + t },
+            new[] { -halfGap - outstanding, -halfDepth },
+        };
+        var outline = new double[left.Length * 2][];
+        for (var index = 0; index < left.Length; index++)
+        {
+            outline[index] = left[index];
+            outline[left.Length + index] = new[] { -left[index][0], left[index][1] };
+        }
+        return outline;
     }
 
     static TeklaDoubleAngleLeg Leg(string suffix, bool reversedAxis, double rollDegrees, double offsetMm) =>
