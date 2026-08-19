@@ -1,5 +1,5 @@
 agent:        tekla
-version:      0.1.3
+version:      0.1.4
 sdk-target:   2025+         # version-agnostic shorthand; structured form lands in hardening pass
 display-name: Tekla Structures
 

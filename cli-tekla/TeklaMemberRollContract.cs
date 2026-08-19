@@ -51,7 +51,17 @@ public sealed class TeklaMemberRollContract
         var axis = Normalize(Subtract(to, from), "member axis must have nonzero finite length");
         var up = new[] { 0d, 0d, 1d };
         var upDot = Dot(axis, up);
-        var perpendicularSquared = Math.Max(0d, 1d - upDot * upDot);
+        // Sum of squares, not `1 - upDot * upDot`. The two agree in exact arithmetic, but
+        // the subtraction cancels away about six significant digits at the threshold and
+        // more than twelve deeper into the near-vertical band — the band that decides the
+        // branch below. Real members fall on opposite sides of the two readings, and the
+        // two branches disagree about a member's facing by up to 180°, so reading it the
+        // other way would make this mirror non-conforming against AWARE's canonical
+        // `member_frame` for exactly the members hardest to notice. This is the same
+        // quantity `horizontalSquared` already computes for the native-frame singularity
+        // below. See issue #432 and `viewer-3d/skills/scene-schema.md`.
+        var perpendicular = Subtract(axis, Scale(up, upDot));
+        var perpendicularSquared = Dot(perpendicular, perpendicular);
 
         double[] zeroX;
         double[] zeroY;

@@ -1,5 +1,5 @@
 agent:        ifc
-version:      0.1.1
+version:      0.1.2
 display-name: IFC Writer
 description: |
   Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc).
@@ -84,7 +84,10 @@ commands:
         beams:    int       # IfcBeam count (everything not column/brace)
         meshes:   int       # IfcTriangulatedFaceSet proxy count (kind:"mesh" elements)
         profiles: object    # profile-string -> count breakdown (for the caller's report)
-        emitted: array      # exhaustive successful identity rows with stable IFC GUIDs
+        emitted: array      # exhaustive successful identity rows with stable IFC GUIDs; a member
+                            # seeded inside the vertical band also carries
+                            # `zeroFrame:"vertical-seed"`, meaning its facing is convention
+                            # rather than geometry (absent = derived from projected scene up)
         failed: array       # empty on success; malformed supported input fails before file output
         unsupported: array  # every intentionally unsupported identity
         warnings: array     # geometry-preserving legacy profile qualifications

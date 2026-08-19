@@ -75,9 +75,29 @@ present it must be a finite JSON number of degrees: positive is right-handed abo
 so the canonical range is `[-180,180)` and negative zero becomes positive zero.
 
 The deterministic zero-section frame uses declared scene up (`+Z` when absent/`"z"`, `+Y` for
-`"y"`). Let `n=normalize(to−from)` and `u` be scene up. When `1−(n·u)² <= 1e-6`, zero X is scene
-`+X` projected perpendicular to `n` and normalized, and zero Y is `n×X`. Otherwise zero Y is `u`
-projected perpendicular to `n`, and zero X is `Y×n`. `rot` rotates this frame once about `n`.
+`"y"`). Let `n=normalize(to−from)`, `u` be scene up, and `p = n − (n·u)u` be the part of the axis
+perpendicular to up. When `|p|² <= 1e-6`, zero X is scene `+X` projected perpendicular to `n` and
+normalized, and zero Y is `n×X`. Otherwise zero Y is `u` projected perpendicular to `n`, and zero
+X is `Y×n`. `rot` rotates this frame once about `n`. Compute the branch test as `|p|²` and not as
+`1−(n·u)²`: the two agree in exact arithmetic, but the second cancels away about six significant
+digits at the threshold and more than twelve deeper into the band, and real members fall on
+opposite sides of the two readings — which, by the paragraph below, means two conforming
+implementations disagreeing about one member's facing by as much as 180°.
+
+**The two rules do not meet, and the projected seed does not make them.** They are separate
+conventions and the frame jumps where they change over. Writing `n` as
+`[sinθ·cosφ, sinθ·sinφ, cosθ]` under Z-up, the projected-up rule leaves the threshold at exactly
+`zero X = (−sinφ, cosφ, 0)` while the seeded rule holds `zero X ≈ +X` for every `φ`, so crossing
+the threshold rotates the frame about `n` by `φ + 90°` — nothing at `φ = 270°`, a full 180°
+inversion at `φ = 90°`. No seed removes this, because the direction the projected-up rule
+approaches depends on the member's azimuth, so agreeing at one azimuth forces disagreeing at
+another; and no placement of the threshold removes it either, because a frame varying
+continuously over every axis direction does not exist. The threshold is therefore a deterministic
+convention with an accepted discontinuity, not an approximation of some continuous rule. A
+near-vertical member's facing is convention rather than geometry, and producers and consumers
+match AWARE on one only by applying this exact test with this exact constant first. AWARE's own
+implementation reports which rule ran per member (`ZeroFrameSource`) so a consumer can tell the
+two apart.
 The viewer supports both declared up axes and accounts for its reflective Z-up screen conversion;
 export sinks may explicitly reject Y-up until they implement a reviewed coordinate transform.
 
