@@ -56,10 +56,13 @@
 //! reaches the scalar intact — and so does any path the script merely mentions,
 //! such as an `echo` naming it in a message. Both would still have counted.
 //!
-//! So the haystack is not script text at all: [`tested_paths`] strips shell
-//! comments, splits the script into commands, and collects only the *arguments*
-//! of `dotnet test` invocations. A path counts when a test runner is handed it,
-//! which is the property this gate claims to assert and nothing weaker.
+//! So the accepted shape is intentionally narrow: [`tested_paths`] counts only
+//! an unconditional, blocking `run:` step whose entire scalar is one literal
+//! `dotnet test <repo-relative.csproj> [flags]` command. It does not emulate
+//! Bash and PowerShell. Chaining, control flow, variables, quotes, comments,
+//! disabled jobs/steps and `continue-on-error` all make a step non-evidence.
+//! The real workflow uses this canonical cross-shell form, so an unmodelled
+//! shell construct can only make the gate fail closed.
 //!
 //! Parsing costs nothing here: `serde_yaml` is already a dependency of this
 //! crate.
@@ -78,8 +81,11 @@ fn repo_root() -> PathBuf {
 ///
 /// `obj/` in particular holds generated `*.props` / `*.targets` next to restored
 /// package graphs, and `target/` and `node_modules/` are large enough that
-/// walking them turns a millisecond check into a slow one.
-const SKIP_DIRS: [&str; 5] = ["bin", "obj", "target", "node_modules", ".git"];
+/// walking them turns a millisecond check into a slow one. Dot-prefixed trees
+/// are workspace/tool scratch state rather than repository projects; excluding
+/// all of them also prevents a temporary test fixture from becoming a phantom
+/// suite merely because `TEMP` points inside the checkout.
+const SKIP_DIRS: [&str; 4] = ["bin", "obj", "target", "node_modules"];
 
 /// Whether a `.csproj`'s own text marks it as something `dotnet test` can run.
 ///
@@ -94,12 +100,18 @@ const SKIP_DIRS: [&str; 5] = ["bin", "obj", "target", "node_modules", ".git"];
 ///     `Directory.Build.props` — at which point the package reference is not in
 ///     the file and only this signal is.
 fn is_test_project(source: &str) -> bool {
-    source.contains("Microsoft.NET.Test.Sdk") || source.contains("<IsTestProject>true")
+    let normalized: String = source
+        .chars()
+        .filter(|c| !c.is_ascii_whitespace())
+        .flat_map(char::to_lowercase)
+        .collect();
+    normalized.contains("microsoft.net.test.sdk")
+        || normalized.contains("<istestproject>true</istestproject>")
+        || normalized.contains("mstest.sdk/")
 }
 
-/// Every runnable test project under `root`, as repo-relative `/`-separated
-/// paths.
-fn test_projects(root: &Path) -> Vec<String> {
+/// Every project under `root`, as repo-relative `/`-separated paths.
+fn project_files(root: &Path) -> Vec<String> {
     let mut found = Vec::new();
     collect(root, root, &mut found);
     found.sort();
@@ -115,11 +127,10 @@ fn collect(root: &Path, dir: &Path, out: &mut Vec<String>) {
         let name = entry.file_name();
         let name = name.to_string_lossy();
         if path.is_dir() {
-            if !SKIP_DIRS.contains(&name.as_ref()) {
+            if !name.starts_with('.') && !SKIP_DIRS.contains(&name.as_ref()) {
                 collect(root, &path, out);
             }
         } else if name.ends_with(".csproj")
-            && std::fs::read_to_string(&path).is_ok_and(|s| is_test_project(&s))
             && let Ok(rel) = path.strip_prefix(root)
         {
             // Forward slashes regardless of host: the workflow spells these
@@ -129,12 +140,23 @@ fn collect(root: &Path, dir: &Path, out: &mut Vec<String>) {
     }
 }
 
-/// Every `run:` script in `workflow`.
+/// Every runnable test project under `root`.
+fn test_projects(root: &Path) -> Vec<String> {
+    project_files(root)
+        .into_iter()
+        .filter(|rel| {
+            std::fs::read_to_string(root.join(rel)).is_ok_and(|source| is_test_project(&source))
+        })
+        .collect()
+}
+
+/// Every unconditional, blocking `run:` script in `workflow`.
 ///
 /// Only `jobs.<job>.steps[].run` — the shell a runner actually executes. YAML
-/// comments are gone by construction (the parser drops them), and `name:`,
-/// `uses:` and `with:` values are never collected, so naming a project path in
-/// prose or in a step's title does not reach this.
+/// A job or step with any `if:` is conditional and therefore cannot prove the
+/// suite gates every CI run. A `continue-on-error` step is likewise not a gate.
+/// YAML comments are gone by construction, and `name:`, `uses:` and `with:`
+/// values are never collected.
 fn run_scripts(workflow: &str) -> Vec<String> {
     let doc: serde_yaml::Value =
         serde_yaml::from_str(workflow).unwrap_or_else(|e| panic!("parse workflow yaml: {e}"));
@@ -143,10 +165,16 @@ fn run_scripts(workflow: &str) -> Vec<String> {
         return out;
     };
     for (_, job) in jobs {
+        if job.get("if").is_some() || continues_on_error(job) {
+            continue;
+        }
         let Some(steps) = job.get("steps").and_then(|s| s.as_sequence()) else {
             continue;
         };
         for step in steps {
+            if step.get("if").is_some() || continues_on_error(step) {
+                continue;
+            }
             if let Some(run) = step.get("run").and_then(|r| r.as_str()) {
                 out.push(run.to_string());
             }
@@ -155,72 +183,65 @@ fn run_scripts(workflow: &str) -> Vec<String> {
     out
 }
 
-/// One shell script split into the individual commands it executes.
-///
-/// Three transformations, in order, each removing a way for a path to appear in
-/// a `run:` scalar without being executed:
-///   1. line continuations are joined, so a command wrapped across `\` is seen
-///      whole rather than as two fragments;
-///   2. shell comments are stripped — reaching the YAML `run` scalar only means
-///      the *parser* kept the text, and a `# dotnet test …` line inside a `|`
-///      block is text the shell will never run;
-///   3. the result is split on the separators that end a command (`\n`, `;`,
-///      `&&`, `||`, `|`), so each piece has one command at its head.
-///
-/// A `#` is treated as starting a comment only at the beginning of a token,
-/// which is the shell's own rule and leaves `foo#bar` alone. Quoting is not
-/// modelled: a literal `#` inside quotes would be over-stripped. That direction
-/// is the safe one — it can only make this gate report a suite unrun, never
-/// report an unrun suite as covered.
-fn shell_commands(script: &str) -> Vec<String> {
-    let joined = script.replace("\\\n", " ");
-    let mut commands = Vec::new();
-    for line in joined.lines() {
-        let mut uncommented = String::new();
-        for token in line.split_inclusive(char::is_whitespace) {
-            if token.trim_start().starts_with('#') {
-                break;
-            }
-            uncommented.push_str(token);
-        }
-        for piece in uncommented
-            .split([';', '\n'])
-            .flat_map(|p| p.split("&&"))
-            .flat_map(|p| p.split("||"))
-            .flat_map(|p| p.split('|'))
-        {
-            let piece = piece.trim();
-            if !piece.is_empty() {
-                commands.push(piece.to_string());
-            }
-        }
+fn continues_on_error(step: &serde_yaml::Value) -> bool {
+    match step.get("continue-on-error") {
+        None | Some(serde_yaml::Value::Bool(false)) => false,
+        Some(serde_yaml::Value::String(value)) if value.eq_ignore_ascii_case("false") => false,
+        Some(_) => true,
     }
-    commands
 }
 
-/// Every argument handed to a `dotnet test` invocation in `workflow`.
+/// Whether `path` is a literal repo-relative project path in the canonical
+/// forward-slash spelling used by the workflow.
+fn is_literal_project_path(path: &str) -> bool {
+    let lower = path.to_ascii_lowercase();
+    !path.starts_with('/')
+        && !path.contains(['\\', ':', '$', '"', '\'', '`'])
+        && lower.ends_with(".csproj")
+        && path
+            .split('/')
+            .all(|part| !part.is_empty() && part != "." && part != "..")
+}
+
+/// The intentionally tiny option surface accepted by the standing gate.
+/// Every real workflow step uses exactly `-c Release`. Anything broader stays
+/// fail-closed so discovery-only (`--list-tests`), filtering, and future modes
+/// cannot be mistaken for execution of the whole suite.
+fn preserves_full_test_execution(options: &[&str]) -> bool {
+    match options {
+        [] => true,
+        ["-c", value] | ["--configuration", value] => value
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '.' | '_' | '-')),
+        _ => false,
+    }
+}
+
+/// Every literal project path handed to a canonical `dotnet test` step.
 ///
 /// This is the haystack the gate matches against, and the reason it is
 /// arguments rather than script text: a `run:` scalar can carry a path the
 /// runner never acts on — a commented-out line, an `echo`, a path in a message
 /// — and only an actual `dotnet test` argument means the suite is executed.
 ///
-/// Flags are dropped; their values (`Release` from `-c Release`) are kept. That
-/// is inert: the caller only ever asks whether a `.csproj` path is present, and
-/// no flag value is one.
 fn tested_paths(workflow: &str) -> Vec<String> {
     let mut out = Vec::new();
     for script in run_scripts(workflow) {
-        for command in shell_commands(&script) {
-            let mut words = command.split_whitespace();
-            if words.next() != Some("dotnet") || words.next() != Some("test") {
-                continue;
-            }
-            out.extend(
-                words
-                    .filter(|word| !word.starts_with('-'))
-                    .map(str::to_string),
-            );
+        if script.lines().count() != 1
+            || script.contains([';', '&', '|', '#', '"', '\'', '`', '$', '<', '>'])
+        {
+            continue;
+        }
+        let mut words = script.split_whitespace();
+        if words.next() != Some("dotnet") || words.next() != Some("test") {
+            continue;
+        }
+        let Some(project) = words.next() else {
+            continue;
+        };
+        let options: Vec<_> = words.collect();
+        if is_literal_project_path(project) && preserves_full_test_execution(&options) {
+            out.push(project.to_string());
         }
     }
     out
@@ -228,16 +249,12 @@ fn tested_paths(workflow: &str) -> Vec<String> {
 
 /// Those of `projects` that no `dotnet test` invocation in `workflow` is given.
 ///
-/// Containment rather than equality, so the spellings a workflow may reasonably
-/// use keep working — a path built from a variable, or one passed with a `./`
-/// prefix. A match still means the path reached `dotnet test` as an argument,
-/// which is the property being asserted.
 fn unrun<'a>(projects: &'a [String], workflow: &str) -> Vec<&'a str> {
     let tested = tested_paths(workflow);
     projects
         .iter()
         .map(String::as_str)
-        .filter(|project| !tested.iter().any(|arg| arg.contains(*project)))
+        .filter(|project| !tested.iter().any(|arg| arg == *project))
         .collect()
 }
 
@@ -257,6 +274,54 @@ const KNOWN_SUITES: [&str; 7] = [
     "cli-sketchup/Tests/cli-sketchup.Tests.csproj",
     "cli-tekla/Tests/AwareTekla.Tests.csproj",
 ];
+
+/// Projects that intentionally have no tests of their own. Pinning this side of
+/// the partition makes discovery fail closed: a future `.csproj` whose test
+/// status is inherited from props/imports or expressed through an unfamiliar
+/// SDK cannot disappear merely because [`is_test_project`] does not understand
+/// that form yet. It arrives unclassified and fails CI until wired or explicitly
+/// reviewed as non-test.
+const KNOWN_NON_TEST_PROJECTS: [&str; 11] = [
+    "cli-reader/AwareReader.csproj",
+    "cli-revit/AwareRevit/AwareRevit.csproj",
+    "cli-revit/Shared/Shared.csproj",
+    "cli-revit/Sidecar/cli-revit.csproj",
+    "cli-rhino/cli-rhino.csproj",
+    "cli-roslyn/cli-roslyn.csproj",
+    "cli-sidecar/cli-sidecar.csproj",
+    "cli-sidecar/Tests/FixtureAssembly/FixtureAssembly.csproj",
+    "cli-sidecar/Tests/FixtureDataAssembly/FixtureDataAssembly.csproj",
+    "cli-sketchup/cli-sketchup.csproj",
+    "cli-tekla/cli-tekla.csproj",
+];
+
+fn unclassified<'a>(projects: &'a [String], tests: &[String], non_tests: &[&str]) -> Vec<&'a str> {
+    projects
+        .iter()
+        .map(String::as_str)
+        .filter(|project| !tests.iter().any(|test| test == project) && !non_tests.contains(project))
+        .collect()
+}
+
+#[test]
+fn every_project_is_classified_so_new_test_forms_fail_closed() {
+    let root = repo_root();
+    let projects = project_files(&root);
+    let tests = test_projects(&root);
+    let unknown = unclassified(&projects, &tests, &KNOWN_NON_TEST_PROJECTS);
+    assert!(
+        unknown.is_empty(),
+        "these projects are neither detected test suites nor reviewed non-test projects: {unknown:#?}. \
+         If one is a suite, teach `is_test_project` its metadata form and add a blocking CI step; \
+         otherwise add it to KNOWN_NON_TEST_PROJECTS with deliberate review"
+    );
+    for known in KNOWN_NON_TEST_PROJECTS {
+        assert!(
+            projects.iter().any(|project| project == known),
+            "stale non-test classification `{known}` must be removed"
+        );
+    }
+}
 
 #[test]
 fn the_walk_still_finds_every_known_suite() {
@@ -338,6 +403,18 @@ fn test_project_classifier_matches_its_contract() {
             "an explicit IsTestProject property",
             "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>",
         ),
+        (
+            "a case-varied test-host package reference",
+            r#"<Project><ItemGroup><PackageReference Include="microsoft.net.test.sdk" /></ItemGroup></Project>"#,
+        ),
+        (
+            "a case-varied IsTestProject property",
+            "<Project><PropertyGroup><IsTestProject>True</IsTestProject></PropertyGroup></Project>",
+        ),
+        (
+            "an SDK-style MSTest project",
+            r#"<Project Sdk="MSTest.Sdk/3.8.3"><PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup></Project>"#,
+        ),
     ] {
         assert!(
             is_test_project(source),
@@ -402,14 +479,11 @@ jobs:
         run: cd . && dotnet test chained/Tests/chained.Tests.csproj -c Release
 "#;
 
-    for spelling in ["oneline", "block", "trailing", "continued", "chained"] {
-        let project = format!("{spelling}/Tests/{spelling}.Tests.csproj");
-        assert!(
-            unrun(std::slice::from_ref(&project), workflow).is_empty(),
-            "a `{spelling}`-form invocation hands the project to a test runner \
-             and must count as running it"
-        );
-    }
+    let oneline = "oneline/Tests/oneline.Tests.csproj".to_string();
+    assert!(
+        unrun(std::slice::from_ref(&oneline), workflow).is_empty(),
+        "the canonical standalone invocation must count as running the suite"
+    );
 
     // `shellcommented` and `echoed` are the second half of the finding: narrowing
     // to `run:` scalars closes YAML comments only. A `run: |` block is one opaque
@@ -421,13 +495,65 @@ jobs:
         "configured",
         "shellcommented",
         "echoed",
+        "block",
+        "trailing",
+        "continued",
+        "chained",
     ] {
         let project = format!("{spelling}/Tests/{spelling}.Tests.csproj");
         assert_eq!(
             unrun(std::slice::from_ref(&project), workflow),
             vec![project.as_str()],
-            "a path appearing only in a {spelling} position is never handed to a \
-             test runner, so it must NOT count as running the suite"
+            "a {spelling} form is not an unconditional standalone literal test \
+             step, so it must NOT count as CI gating the suite"
+        );
+    }
+}
+
+#[test]
+fn only_unconditional_standalone_test_steps_count() {
+    let workflow = r#"
+jobs:
+  disabled-job:
+    if: false
+    steps:
+      - run: dotnet test disabled-job/Tests/disabled-job.Tests.csproj -c Release
+  nonblocking-job:
+    continue-on-error: true
+    steps:
+      - run: dotnet test nonblocking-job/Tests/nonblocking-job.Tests.csproj -c Release
+  bridges:
+    steps:
+      - if: false
+        run: dotnet test disabled-step/Tests/disabled-step.Tests.csproj -c Release
+      - continue-on-error: true
+        run: dotnet test nonblocking/Tests/nonblocking.Tests.csproj -c Release
+      - run: echo 'disabled; dotnet test quoted/Tests/quoted.Tests.csproj -c Release'
+      - run: false && dotnet test chained-false/Tests/chained-false.Tests.csproj -c Release
+      - run: dotnet test listing/Tests/listing.Tests.csproj --list-tests
+      - run: dotnet test canonical/Tests/canonical.Tests.csproj -c Release
+"#;
+
+    let canonical = "canonical/Tests/canonical.Tests.csproj".to_string();
+    assert!(
+        unrun(std::slice::from_ref(&canonical), workflow).is_empty(),
+        "an unconditional standalone literal test command must count"
+    );
+
+    for spelling in [
+        "disabled-job",
+        "nonblocking-job",
+        "disabled-step",
+        "nonblocking",
+        "quoted",
+        "chained-false",
+        "listing",
+    ] {
+        let project = format!("{spelling}/Tests/{spelling}.Tests.csproj");
+        assert_eq!(
+            unrun(std::slice::from_ref(&project), workflow),
+            vec![project.as_str()],
+            "a {spelling} command is not an unconditional blocking CI test"
         );
     }
 }
@@ -452,6 +578,8 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
             "<Project />",
         ),
         ("wired/obj/stale.Tests.csproj", test_sdk),
+        (".scratch/wired/Tests/temporary.Tests.csproj", test_sdk),
+        ("inherited/Tests/Inherited.csproj", "<Project />"),
     ] {
         let path = root.join(rel);
         std::fs::create_dir_all(path.parent().expect("parent")).expect("mkdir");
@@ -468,7 +596,19 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
         "the walk must find test projects by their metadata regardless of \
          filename — `orphan/Tests/Tests.csproj` carries no `.Tests.csproj` \
          suffix and is exactly the real project the suffix version missed — \
-         must skip a fixture assembly, and must not descend into `obj/`"
+         must skip a fixture assembly, and must not descend into `obj/` or a \
+         dot-prefixed workspace scratch directory"
+    );
+
+    let projects = project_files(root);
+    assert_eq!(
+        unclassified(
+            &projects,
+            &found,
+            &["wired/Tests/FixtureAssembly/FixtureAssembly.csproj"]
+        ),
+        vec!["inherited/Tests/Inherited.csproj"],
+        "an unfamiliar or inherited test-project form must fail the inventory gate instead of disappearing"
     );
 
     let workflow = "jobs:\n  x:\n    steps:\n      - run: dotnet test wired/Tests/wired.Tests.csproj -c Release\n";
