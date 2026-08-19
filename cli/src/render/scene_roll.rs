@@ -412,6 +412,32 @@ mod tests {
     }
 
     #[test]
+    fn the_branch_test_is_cross_multiplied_and_never_a_quotient() {
+        // The third rearrangement, and the one most likely to be written by someone
+        // reading "ratio against |d|²" as a division. Codex found this input on #435:
+        // `|q|² = 1.7497609055789547` exceeds `1e-6*|d|² = 1.7497609055789545`, so the
+        // cross-multiplied comparison this contract specifies PROJECTS it — while
+        // `|q|²/|d|²` rounds to exactly 1e-6 and seeds it, for frames 64.9° apart.
+        //
+        // Unlike `the_branch_test_does_not_depend_on_how_the_axis_is_normalized`, this
+        // one really does guard the implementation: swapping in the quotient here flips
+        // this member and fails the assertion.
+        let to = [
+            1.197_682_677_589_816_4,
+            -0.561_531_040_442_327_3,
+            1_322.784_621_855_746,
+        ];
+        let frame = member_frame([0.0; 3], to, 0.0, SceneUp::Z).unwrap();
+        assert_eq!(frame.zero_frame_source, ZeroFrameSource::ProjectedUp);
+        // Projected-up leaves the threshold at exactly `(-sin φ, cos φ, 0)`; the seeded
+        // rule would have put zero X within a whisker of `+X` instead.
+        assert!(close(
+            frame.zero_x,
+            [0.424_506_567_735_086, 0.905_424_858_257_038, 0.0]
+        ));
+    }
+
+    #[test]
     fn equivalent_y_up_and_z_up_axes_have_equivalent_frames() {
         let y = member_frame([0.0; 3], [3.0, 4.0, 2.0], 65.2, SceneUp::Y).unwrap();
         // Swapping scene Y/Z is reflective, so an equivalent right-handed roll

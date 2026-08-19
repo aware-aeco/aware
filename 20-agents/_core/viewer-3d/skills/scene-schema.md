@@ -81,18 +81,31 @@ is scene `+X` projected perpendicular to `n` and normalized, and zero Y is `n×X
 is `u` projected perpendicular to `n`, and zero X is `Y×n`. `rot` rotates this frame once about
 `n`.
 
-**Compute that branch test exactly as written.** All the obvious algebraic rearrangements are
-equivalent in exact arithmetic and *not* in floating point, and by the paragraph below a member
-placed on the wrong side comes out with its facing up to 180° away — so two implementations that
-round the test differently disagree about real geometry while both believing they conform. Two
-rearrangements are specifically forbidden. Do not test `1−(n·u)²`: that subtraction cancels away
-about six significant digits at the threshold and more than twelve deeper into the band. Do not
-test the *normalized* perpendicular `|n − (n·u)u|² <= 1e-6` either, because then the branch
-inherits however the implementation normalizes — dividing each component by the length and
-multiplying by the reciprocal differ by an ulp, and that is enough to straddle the threshold: with
-`u = +Z`, `from = [0,0,0]`, `to = [26.55075466049515, -17.294594180470543, 31686.662128779197]`
-the dividing form seeds and the reciprocal form projects, for frames 57° apart. The ratio against
-`|d|²` uses no normalization at all and is therefore reproducible across implementations.
+**Compute that branch test exactly as written: the cross-multiplied comparison
+`|q|² <= 1e-6·|d|²`, on the raw `d`.** Every obvious algebraic rearrangement of it is equivalent in
+exact arithmetic and *not* in floating point, and by the paragraph below a member placed on the
+wrong side comes out with its facing up to 180° away — so two implementations that round the test
+differently disagree about real geometry while both believing they conform. Each rearrangement
+below has a witness (all with `u = +Z` and `from = [0,0,0]`), and each is forbidden:
+
+- **Do not test `1−(n·u)²`.** That subtraction cancels away about six significant digits at the
+  threshold and more than twelve deeper into the band. Witness:
+  `to = [-0.0009800740994886435, -0.00019863222178516707, 0.999999499999875]`, whose true
+  perpendicular component is just outside the threshold but which the cancelling form seeds.
+- **Do not test the normalized perpendicular `|n − (n·u)u|² <= 1e-6`.** The branch would inherit
+  however the implementation normalizes, and dividing each component by the length versus
+  multiplying by the reciprocal differ by an ulp. Witness:
+  `to = [26.55075466049515, -17.294594180470543, 31686.662128779197]` — the dividing form seeds,
+  the reciprocal form projects, frames **57°** apart.
+- **Do not divide: `|q|²/|d|² <= 1e-6` is not the same test.** The quotient rounds to a different
+  side of the threshold than the cross-multiplied comparison does. Witness:
+  `to = [1.1976826775898164, -0.5615310404423273, 1322.784621855746]`, where
+  `|q|² = 1.7497609055789547` exceeds `1e-6·|d|² = 1.7497609055789545` and the member projects,
+  while `|q|²/|d|²` rounds to exactly `1e-6` and seeds — frames **64.9°** apart. "Ratio against
+  `|d|²`" means the cross-multiplied comparison, never a division.
+
+Taken exactly as written, the test involves no normalization and no division, and is therefore
+reproducible across implementations.
 
 **The two rules do not meet, and the projected seed does not make them.** They are separate
 conventions and the frame jumps where they change over. Writing `n` as

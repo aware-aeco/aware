@@ -85,6 +85,27 @@ public sealed class TeklaMemberRollContractTests
         AssertFrame(plan);
     }
 
+    [Fact]
+    public void BranchesByCrossMultiplicationAndNeverByAQuotient()
+    {
+        // The other rearrangement that is not equivalent in double precision, and the one
+        // an implementer is most likely to write after reading "ratio against |d|²" as a
+        // division. Here `|q|² = 1.7497609055789547` exceeds `eps*|d|² = 1.7497609055789545`,
+        // so the cross-multiplied comparison the contract specifies projects this member,
+        // while `|q|²/|d|²` rounds to exactly 1e-6 and would seed it — 64.9° apart.
+        var plan = _contract.CreatePlan(
+            new[] { 0d, 0d, 0d },
+            new[] { 1.1976826775898164, -0.5615310404423273, 1322.784621855746 },
+            0d);
+
+        // Projected-up leaves the threshold at exactly (-sin phi, cos phi, 0); seeding
+        // would have put zero X within a whisker of +X instead.
+        Assert.Equal(0.424506567735086, plan.ZeroX[0], 12);
+        Assert.Equal(0.905424858257038, plan.ZeroX[1], 12);
+        Assert.Equal(0d, plan.ZeroX[2], 12);
+        AssertFrame(plan);
+    }
+
     [Theory]
     [InlineData("FRONT", 10, 10)]
     [InlineData("TOP", -7.3, 82.7)]
