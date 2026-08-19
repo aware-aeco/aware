@@ -235,13 +235,13 @@ jobs:
           dotnet-version: 10.0.x
 
       - name: Test cli-roslyn
-        run: dotnet test cli-roslyn/Tests/aware-roslyn.Tests.csproj -c Release
+        run: dotnet test cli-roslyn/Tests/aware-roslyn.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 
       - name: Test cli-sidecar
-        run: dotnet test cli-sidecar/Tests/cli-sidecar.Tests.csproj -c Release
+        run: dotnet test cli-sidecar/Tests/cli-sidecar.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 
       - name: Test cli-sidecar ingest generator
-        run: dotnet test cli-sidecar/Ingest/Generator/Tests/Tests.csproj -c Release
+        run: dotnet test cli-sidecar/Ingest/Generator/Tests/Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 
   # The `net*-windows` half of the split described on `dotnet-bridges` above.
   # Separate from `tekla-bridge` so a Tekla publish failure and a bridge-suite
@@ -262,13 +262,13 @@ jobs:
             10.0.x
 
       - name: Test cli-revit
-        run: dotnet test cli-revit/Tests/cli-revit.Tests.csproj -c Release
+        run: dotnet test cli-revit/Tests/cli-revit.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 
       - name: Test cli-rhino
-        run: dotnet test cli-rhino/Tests/cli-rhino.Tests.csproj -c Release
+        run: dotnet test cli-rhino/Tests/cli-rhino.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 
       - name: Test cli-sketchup
-        run: dotnet test cli-sketchup/Tests/cli-sketchup.Tests.csproj -c Release
+        run: dotnet test cli-sketchup/Tests/cli-sketchup.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 
   tekla-bridge:
     name: Tekla bridge build + test + SHA artifact
@@ -282,7 +282,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Test net48 bridge
-        run: dotnet test cli-tekla/Tests/AwareTekla.Tests.csproj -c Release
+        run: dotnet test cli-tekla/Tests/AwareTekla.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 
       # The proprietary Tekla assemblies are intentionally absent from hosted
       # runners. The same script is semantically compiled against installed

@@ -50,7 +50,7 @@
 //! comment above it still named the path, and the gate would report the suite
 //! covered with no runner executing it.
 //!
-//! Narrowing to `jobs.*.steps[].run` scalars ([`run_scripts`]) closed the YAML
+//! Narrowing to `jobs.*.steps[].run` scalars closed the YAML
 //! comments, and only those. A `run: |` block is one opaque string to the
 //! parser, so a *shell* comment inside it survives — `# dotnet test x.csproj`
 //! reaches the scalar intact — and so does any path the script merely mentions,
@@ -58,7 +58,9 @@
 //!
 //! So the accepted shape is intentionally narrow: [`tested_paths`] counts only
 //! an unconditional, blocking `run:` step whose entire scalar is one literal
-//! `dotnet test <repo-relative.csproj> [flags]` command. It does not emulate
+//! `dotnet test <repo-relative.csproj> -c Release --
+//! RunConfiguration.TreatNoTestsAsError=true` command on the project's supported
+//! runner, after only trusted setup/test steps. It does not emulate
 //! Bash and PowerShell. Chaining, control flow, variables, quotes, comments,
 //! disabled jobs/steps, `continue-on-error`, and environment-level VSTest
 //! listing/filtering controls all make a step non-evidence.
@@ -69,6 +71,7 @@
 //! crate.
 
 use std::path::{Path, PathBuf};
+use std::process::Command;
 
 /// Repository root — `cli/`'s parent.
 fn repo_root() -> PathBuf {
@@ -78,15 +81,13 @@ fn repo_root() -> PathBuf {
         .to_path_buf()
 }
 
-/// Directories never worth descending into: build output and vendored deps.
+/// Directories never worth descending into when the synthetic-fixture fallback
+/// has no Git index available.
 ///
 /// `obj/` in particular holds generated `*.props` / `*.targets` next to restored
 /// package graphs, and `target/` and `node_modules/` are large enough that
-/// walking them turns a millisecond check into a slow one. Dot-prefixed trees
-/// are workspace/tool scratch state rather than repository projects; excluding
-/// all of them also prevents a temporary test fixture from becoming a phantom
-/// suite merely because `TEMP` points inside the checkout.
-const SKIP_DIRS: [&str; 4] = ["bin", "obj", "target", "node_modules"];
+/// walking them turns a millisecond check into a slow one.
+const SKIP_DIRS: [&str; 5] = [".git", "bin", "obj", "target", "node_modules"];
 
 /// Whether a `.csproj`'s own text marks it as something `dotnet test` can run.
 ///
@@ -106,16 +107,59 @@ fn is_test_project(source: &str) -> bool {
         .filter(|c| !c.is_ascii_whitespace())
         .flat_map(char::to_lowercase)
         .collect();
-    if normalized.contains("<istestproject>false</istestproject>") {
-        return false;
-    }
     normalized.contains("microsoft.net.test.sdk")
         || normalized.contains("<istestproject>true</istestproject>")
         || normalized.contains("mstest.sdk/")
 }
 
-/// Every project under `root`, as repo-relative `/`-separated paths.
+/// Static test controls that can turn a discovered suite into a no-op or a
+/// partial run. Finding one fails the standing gate instead of attempting to
+/// reproduce MSBuild's conditional/import evaluation in Rust.
+fn has_disabled_or_filtered_test_metadata(source: &str) -> bool {
+    let normalized: String = source
+        .chars()
+        .filter(|c| !c.is_ascii_whitespace())
+        .flat_map(char::to_lowercase)
+        .collect();
+    [
+        "<istestproject>false</istestproject>",
+        "<vstestlisttests",
+        "<vstesttestcasefilter",
+        "<testcasefilter",
+        "<treatnotestsaserror>false",
+    ]
+    .iter()
+    .any(|needle| normalized.contains(needle))
+}
+
+/// Tracked paths matching `patterns`, if `root` belongs to a Git checkout.
+fn tracked_files(root: &Path, patterns: &[&str]) -> Option<Vec<String>> {
+    let mut command = Command::new("git");
+    command.arg("-C").arg(root).args(["ls-files", "-z", "--"]);
+    command.args(patterns);
+    let output = command.output().ok()?;
+    if !output.status.success() {
+        return None;
+    }
+    let mut paths: Vec<_> = output
+        .stdout
+        .split(|byte| *byte == 0)
+        .filter(|path| !path.is_empty())
+        .map(|path| String::from_utf8_lossy(path).replace('\\', "/"))
+        .collect();
+    paths.sort();
+    Some(paths)
+}
+
+/// Every tracked project under `root`, as repo-relative `/`-separated paths.
+///
+/// The Git index is the authority in the real gate: it includes tracked hidden
+/// source trees while excluding local build/test scratch state. A filesystem
+/// walk remains only for the isolated synthetic-tree regression tests.
 fn project_files(root: &Path) -> Vec<String> {
+    if let Some(paths) = tracked_files(root, &["*.csproj"]) {
+        return paths;
+    }
     let mut found = Vec::new();
     collect(root, root, &mut found);
     found.sort();
@@ -131,7 +175,7 @@ fn collect(root: &Path, dir: &Path, out: &mut Vec<String>) {
         let name = entry.file_name();
         let name = name.to_string_lossy();
         if path.is_dir() {
-            if !name.starts_with('.') && !SKIP_DIRS.contains(&name.as_ref()) {
+            if !SKIP_DIRS.contains(&name.as_ref()) {
                 collect(root, &path, out);
             }
         } else if name.ends_with(".csproj")
@@ -154,20 +198,17 @@ fn test_projects(root: &Path) -> Vec<String> {
         .collect()
 }
 
-/// Every unconditional, blocking `run:` script in `workflow`.
+/// Every project proved to run by a trusted, unconditional job prefix.
 ///
-/// Only `jobs.<job>.steps[].run` — the shell a runner actually executes. YAML
-/// A job or step with any `if:` is conditional and therefore cannot prove the
-/// suite gates every CI run. A `continue-on-error` step is likewise not a gate,
-/// nor is a scope whose environment turns `dotnet test` into listing or filters
-/// the executed tests.
-/// YAML comments are gone by construction, and `name:`, `uses:` and `with:`
-/// values are never collected.
-fn run_scripts(workflow: &str) -> Vec<String> {
+/// This intentionally validates effective execution context rather than
+/// returning bare `run:` text: no dependencies/matrix/defaults/custom shell,
+/// the project's supported runner, only trusted setup actions before it, and no
+/// execution-changing environment. Any unmodelled context fails closed.
+fn tested_paths(workflow: &str) -> Vec<String> {
     let doc: serde_yaml::Value =
         serde_yaml::from_str(workflow).unwrap_or_else(|e| panic!("parse workflow yaml: {e}"));
     let mut out = Vec::new();
-    if has_execution_changing_test_env(&doc) {
+    if doc.get("defaults").is_some() || has_execution_changing_test_env(&doc) {
         return out;
     }
     let Some(jobs) = doc.get("jobs").and_then(|j| j.as_mapping()) else {
@@ -177,7 +218,16 @@ fn run_scripts(workflow: &str) -> Vec<String> {
         if job.get("if").is_some()
             || continues_on_error(job)
             || has_execution_changing_test_env(job)
+            || ["needs", "strategy", "defaults", "container", "services"]
+                .iter()
+                .any(|key| job.get(*key).is_some())
         {
+            continue;
+        }
+        let Some(runner) = job.get("runs-on").and_then(serde_yaml::Value::as_str) else {
+            continue;
+        };
+        if !matches!(runner, "ubuntu-latest" | "windows-latest") {
             continue;
         }
         let Some(steps) = job.get("steps").and_then(|s| s.as_sequence()) else {
@@ -187,11 +237,26 @@ fn run_scripts(workflow: &str) -> Vec<String> {
             if step.get("if").is_some()
                 || continues_on_error(step)
                 || has_execution_changing_test_env(step)
+                || ["shell", "working-directory"]
+                    .iter()
+                    .any(|key| step.get(*key).is_some())
             {
-                continue;
+                break;
             }
             if let Some(run) = step.get("run").and_then(|r| r.as_str()) {
-                out.push(run.to_string());
+                let Some(project) = canonical_test_project(run) else {
+                    break;
+                };
+                if required_runner(&project) != runner {
+                    break;
+                }
+                out.push(project);
+            } else if let Some(action) = step.get("uses").and_then(|u| u.as_str()) {
+                if !matches!(action, "actions/checkout@v6" | "actions/setup-dotnet@v4") {
+                    break;
+                }
+            } else {
+                break;
             }
         }
     }
@@ -199,16 +264,25 @@ fn run_scripts(workflow: &str) -> Vec<String> {
 }
 
 /// Environment variables become MSBuild properties for `dotnet test`. These
-/// two can make a syntactically canonical command list tests or execute only a
-/// subset, so such a scope is not evidence that the complete suite gates CI.
+/// entries can make a syntactically canonical command skip, list, or filter
+/// tests, so such a scope is not evidence that the complete suite gates CI.
 fn has_execution_changing_test_env(scope: &serde_yaml::Value) -> bool {
     scope
         .get("env")
         .and_then(serde_yaml::Value::as_mapping)
         .is_some_and(|env| {
             env.keys().filter_map(serde_yaml::Value::as_str).any(|key| {
-                key.eq_ignore_ascii_case("VSTestListTests")
-                    || key.eq_ignore_ascii_case("VSTestTestCaseFilter")
+                [
+                    "IsTestProject",
+                    "RunSettingsFilePath",
+                    "TestCaseFilter",
+                    "TreatNoTestsAsError",
+                    "VSTestListTests",
+                    "VSTestSetting",
+                    "VSTestTestCaseFilter",
+                ]
+                .iter()
+                .any(|forbidden| key.eq_ignore_ascii_case(forbidden))
             })
         })
 }
@@ -233,48 +307,51 @@ fn is_literal_project_path(path: &str) -> bool {
             .all(|part| !part.is_empty() && part != "." && part != "..")
 }
 
-/// The intentionally tiny option surface accepted by the standing gate.
-/// Every real workflow step uses exactly `-c Release`. Anything broader stays
-/// fail-closed so discovery-only (`--list-tests`), filtering, and future modes
-/// cannot be mistaken for execution of the whole suite.
+/// The one option sequence accepted by the standing gate. `Release` is pinned
+/// so a configuration that removes tests cannot be substituted, and the inline
+/// RunSettings value makes zero discovered/selected tests fail the CI step.
 fn preserves_full_test_execution(options: &[&str]) -> bool {
-    match options {
-        [] => true,
-        ["-c", value] | ["--configuration", value] => value
-            .chars()
-            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '.' | '_' | '-')),
-        _ => false,
-    }
+    options
+        == [
+            "-c",
+            "Release",
+            "--",
+            "RunConfiguration.TreatNoTestsAsError=true",
+        ]
 }
 
-/// Every literal project path handed to a canonical `dotnet test` step.
-///
-/// This is the haystack the gate matches against, and the reason it is
-/// arguments rather than script text: a `run:` scalar can carry a path the
-/// runner never acts on — a commented-out line, an `echo`, a path in a message
-/// — and only an actual `dotnet test` argument means the suite is executed.
-///
-fn tested_paths(workflow: &str) -> Vec<String> {
-    let mut out = Vec::new();
-    for script in run_scripts(workflow) {
-        if script.lines().count() != 1
-            || script.contains([';', '&', '|', '#', '"', '\'', '`', '$', '<', '>'])
-        {
-            continue;
-        }
-        let mut words = script.split_whitespace();
-        if words.next() != Some("dotnet") || words.next() != Some("test") {
-            continue;
-        }
-        let Some(project) = words.next() else {
-            continue;
-        };
-        let options: Vec<_> = words.collect();
-        if is_literal_project_path(project) && preserves_full_test_execution(&options) {
-            out.push(project.to_string());
-        }
+fn canonical_test_project(script: &str) -> Option<String> {
+    if script.lines().count() != 1
+        || script.contains([';', '&', '|', '#', '"', '\'', '`', '$', '<', '>'])
+    {
+        return None;
     }
-    out
+    let mut words = script.split_whitespace();
+    if words.next() != Some("dotnet") || words.next() != Some("test") {
+        return None;
+    }
+    let project = words.next()?;
+    let options: Vec<_> = words.collect();
+    (is_literal_project_path(project) && preserves_full_test_execution(&options))
+        .then(|| project.to_string())
+}
+
+fn required_runner(project: &str) -> &'static str {
+    let windows_by_path = ["cli-revit/", "cli-rhino/", "cli-sketchup/", "cli-tekla/"]
+        .iter()
+        .any(|prefix| project.starts_with(prefix));
+    let windows_by_metadata = std::fs::read_to_string(repo_root().join(project))
+        .map(|source| {
+            let lower = source.to_ascii_lowercase();
+            lower.contains("-windows</targetframework")
+                || lower.contains("<targetframework>net48</targetframework>")
+        })
+        .unwrap_or(false);
+    if windows_by_path || windows_by_metadata {
+        "windows-latest"
+    } else {
+        "ubuntu-latest"
+    }
 }
 
 /// Those of `projects` that no `dotnet test` invocation in `workflow` is given.
@@ -334,6 +411,27 @@ fn unclassified<'a>(projects: &'a [String], tests: &[String], non_tests: &[&str]
 }
 
 #[test]
+fn tracked_msbuild_metadata_cannot_disable_or_filter_test_execution() {
+    let root = repo_root();
+    let files = tracked_files(
+        &root,
+        &["*.csproj", "*.props", "*.targets", "*.runsettings"],
+    )
+    .expect("repository root must have a readable Git index");
+    let offenders: Vec<_> = files
+        .iter()
+        .filter(|path| {
+            std::fs::read_to_string(root.join(path))
+                .is_ok_and(|source| has_disabled_or_filtered_test_metadata(&source))
+        })
+        .collect();
+    assert!(
+        offenders.is_empty(),
+        "tracked MSBuild/runsettings files disable, list, or filter test execution: {offenders:#?}"
+    );
+}
+
+#[test]
 fn every_project_is_classified_so_new_test_forms_fail_closed() {
     let root = repo_root();
     let projects = project_files(&root);
@@ -349,6 +447,11 @@ fn every_project_is_classified_so_new_test_forms_fail_closed() {
         assert!(
             projects.iter().any(|project| project == known),
             "stale non-test classification `{known}` must be removed"
+        );
+        assert!(
+            !tests.iter().any(|project| project == known),
+            "reviewed non-test project `{known}` now carries test metadata; remove it from \
+             KNOWN_NON_TEST_PROJECTS and add a blocking CI test step"
         );
     }
 }
@@ -445,6 +548,11 @@ fn test_project_classifier_matches_its_contract() {
             "an SDK-style MSTest project",
             r#"<Project Sdk="MSTest.Sdk/3.8.3"><PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup></Project>"#,
         ),
+        (
+            "a test-host package even when conflicting disabled metadata is present",
+            r#"<Project><PropertyGroup><IsTestProject>False</IsTestProject></PropertyGroup>
+               <ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" /></ItemGroup></Project>"#,
+        ),
     ] {
         assert!(
             is_test_project(source),
@@ -467,11 +575,6 @@ fn test_project_classifier_matches_its_contract() {
             "IsTestProject explicitly disabled",
             "<Project><PropertyGroup><IsTestProject>false</IsTestProject></PropertyGroup></Project>",
         ),
-        (
-            "IsTestProject explicitly disabled despite a test-host package",
-            r#"<Project><PropertyGroup><IsTestProject>False</IsTestProject></PropertyGroup>
-               <ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" /></ItemGroup></Project>"#,
-        ),
     ] {
         assert!(
             !is_test_project(source),
@@ -479,6 +582,14 @@ fn test_project_classifier_matches_its_contract() {
              step for it would mean adding a step that runs nothing"
         );
     }
+
+    assert!(
+        has_disabled_or_filtered_test_metadata(
+            r#"<Project><PropertyGroup><IsTestProject>False</IsTestProject></PropertyGroup>
+               <ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" /></ItemGroup></Project>"#
+        ),
+        "disabled metadata must fail the separate standing control gate without hiding the suite"
+    );
 }
 
 #[test]
@@ -495,11 +606,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - run: dotnet test oneline/Tests/oneline.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
       - name: Test titled/Tests/titled.Tests.csproj
         uses: some/action@v1
         with:
           project: configured/Tests/configured.Tests.csproj
-      - run: dotnet test oneline/Tests/oneline.Tests.csproj -c Release
       - name: block form, and the three ways a path can sit in a run scalar
         run: |
           dotnet test block/Tests/block.Tests.csproj -c Release
@@ -551,14 +662,18 @@ fn only_unconditional_standalone_test_steps_count() {
 jobs:
   disabled-job:
     if: false
+    runs-on: ubuntu-latest
     steps:
       - run: dotnet test disabled-job/Tests/disabled-job.Tests.csproj -c Release
   nonblocking-job:
     continue-on-error: true
+    runs-on: ubuntu-latest
     steps:
       - run: dotnet test nonblocking-job/Tests/nonblocking-job.Tests.csproj -c Release
   bridges:
+    runs-on: ubuntu-latest
     steps:
+      - run: dotnet test canonical/Tests/canonical.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
       - if: false
         run: dotnet test disabled-step/Tests/disabled-step.Tests.csproj -c Release
       - continue-on-error: true
@@ -566,15 +681,15 @@ jobs:
       - run: echo 'disabled; dotnet test quoted/Tests/quoted.Tests.csproj -c Release'
       - run: false && dotnet test chained-false/Tests/chained-false.Tests.csproj -c Release
       - run: dotnet test listing/Tests/listing.Tests.csproj --list-tests
-      - run: dotnet test canonical/Tests/canonical.Tests.csproj -c Release
       - env:
           VSTestListTests: "true"
-        run: dotnet test step-listing/Tests/step-listing.Tests.csproj -c Release
+        run: dotnet test step-listing/Tests/step-listing.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
   filtered-job:
+    runs-on: ubuntu-latest
     env:
       vstesttestcasefilter: Category=Fast
     steps:
-      - run: dotnet test job-filtered/Tests/job-filtered.Tests.csproj -c Release
+      - run: dotnet test job-filtered/Tests/job-filtered.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 "#;
 
     let canonical = "canonical/Tests/canonical.Tests.csproj".to_string();
@@ -610,8 +725,9 @@ env:
   VSTESTLISTTESTS: "true"
 jobs:
   bridges:
+    runs-on: ubuntu-latest
     steps:
-      - run: dotnet test globally-listed/Tests/globally-listed.Tests.csproj -c Release
+      - run: dotnet test globally-listed/Tests/globally-listed.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 "#;
     let project = "globally-listed/Tests/globally-listed.Tests.csproj".to_string();
     assert_eq!(
@@ -619,6 +735,94 @@ jobs:
         vec![project.as_str()],
         "workflow-level VSTest controls apply to every step and must fail closed"
     );
+}
+
+#[test]
+fn runner_shell_prefix_and_configuration_must_all_be_canonical() {
+    let command = |project: &str| {
+        format!("dotnet test {project} -c Release -- RunConfiguration.TreatNoTestsAsError=true")
+    };
+    let workflow = format!(
+        r#"
+jobs:
+  dependency:
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
+  skipped-through-needs:
+    needs: dependency
+    runs-on: ubuntu-latest
+    steps:
+      - run: {needs}
+  matrix:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{{{ matrix.os }}}}
+    steps:
+      - run: {matrix}
+  custom-shell:
+    runs-on: ubuntu-latest
+    steps:
+      - shell: echo {{0}}
+        run: {shell}
+  relocated:
+    runs-on: ubuntu-latest
+    steps:
+      - working-directory: elsewhere
+        run: {relocated}
+  wrong-os:
+    runs-on: ubuntu-latest
+    steps:
+      - run: {wrong_os}
+  poisoned-prefix:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo VSTestTestCaseFilter=Category=Fast >> "$GITHUB_ENV"
+      - run: {poisoned}
+  defaults:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: echo {{0}}
+    steps:
+      - run: {defaults}
+  debug-configuration:
+    runs-on: ubuntu-latest
+    steps:
+      - run: dotnet test debug/Tests/debug.Tests.csproj -c Debug -- RunConfiguration.TreatNoTestsAsError=true
+  zero-tests-can-pass:
+    runs-on: ubuntu-latest
+    steps:
+      - run: dotnet test zero/Tests/zero.Tests.csproj -c Release
+"#,
+        needs = command("needs/Tests/needs.Tests.csproj"),
+        matrix = command("matrix/Tests/matrix.Tests.csproj"),
+        shell = command("shell/Tests/shell.Tests.csproj"),
+        relocated = command("relocated/Tests/relocated.Tests.csproj"),
+        wrong_os = command("cli-revit/Tests/wrong-os.Tests.csproj"),
+        poisoned = command("poisoned/Tests/poisoned.Tests.csproj"),
+        defaults = command("defaults/Tests/defaults.Tests.csproj"),
+    );
+
+    for project in [
+        "needs/Tests/needs.Tests.csproj",
+        "matrix/Tests/matrix.Tests.csproj",
+        "shell/Tests/shell.Tests.csproj",
+        "relocated/Tests/relocated.Tests.csproj",
+        "cli-revit/Tests/wrong-os.Tests.csproj",
+        "poisoned/Tests/poisoned.Tests.csproj",
+        "defaults/Tests/defaults.Tests.csproj",
+        "debug/Tests/debug.Tests.csproj",
+        "zero/Tests/zero.Tests.csproj",
+    ] {
+        let project = project.to_string();
+        assert_eq!(
+            unrun(std::slice::from_ref(&project), &workflow),
+            vec![project.as_str()],
+            "non-canonical execution context must not prove `{project}` ran"
+        );
+    }
 }
 
 #[test]
@@ -653,14 +857,15 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
     assert_eq!(
         found,
         vec![
+            ".scratch/wired/Tests/temporary.Tests.csproj".to_string(),
             "orphan/Tests/Tests.csproj".to_string(),
             "wired/Tests/wired.Tests.csproj".to_string(),
         ],
         "the walk must find test projects by their metadata regardless of \
          filename — `orphan/Tests/Tests.csproj` carries no `.Tests.csproj` \
          suffix and is exactly the real project the suffix version missed — \
-         must skip a fixture assembly, and must not descend into `obj/` or a \
-         dot-prefixed workspace scratch directory"
+         must skip a fixture assembly and `obj/`, while still inventorying a \
+         hidden source directory rather than silently excluding it"
     );
 
     let projects = project_files(root);
@@ -674,10 +879,13 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
         "an unfamiliar or inherited test-project form must fail the inventory gate instead of disappearing"
     );
 
-    let workflow = "jobs:\n  x:\n    steps:\n      - run: dotnet test wired/Tests/wired.Tests.csproj -c Release\n";
+    let workflow = "jobs:\n  x:\n    runs-on: ubuntu-latest\n    steps:\n      - run: dotnet test wired/Tests/wired.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n";
     assert_eq!(
         unrun(&found, workflow),
-        vec!["orphan/Tests/Tests.csproj"],
+        vec![
+            ".scratch/wired/Tests/temporary.Tests.csproj",
+            "orphan/Tests/Tests.csproj",
+        ],
         "the gate must flag a suite no `run:` step names — this is the exact \
          condition `every_dotnet_suite_is_run_by_ci` exists to catch, and if it \
          does not fire here that test cannot fire either"
@@ -685,8 +893,9 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
 
     // Positive control: with both named, nothing is reported. Without this, a
     // classifier that flagged *everything* would satisfy the assertion above.
-    let complete =
-        format!("{workflow}      - run: dotnet test orphan/Tests/Tests.csproj -c Release\n");
+    let complete = format!(
+        "{workflow}      - run: dotnet test orphan/Tests/Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n      - run: dotnet test .scratch/wired/Tests/temporary.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n"
+    );
     assert!(
         unrun(&found, &complete).is_empty(),
         "the gate reported a suite a `run:` step does name, so it is flagging \
