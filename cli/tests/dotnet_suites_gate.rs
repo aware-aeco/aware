@@ -60,7 +60,8 @@
 //! an unconditional, blocking `run:` step whose entire scalar is one literal
 //! `dotnet test <repo-relative.csproj> [flags]` command. It does not emulate
 //! Bash and PowerShell. Chaining, control flow, variables, quotes, comments,
-//! disabled jobs/steps and `continue-on-error` all make a step non-evidence.
+//! disabled jobs/steps, `continue-on-error`, and environment-level VSTest
+//! listing/filtering controls all make a step non-evidence.
 //! The real workflow uses this canonical cross-shell form, so an unmodelled
 //! shell construct can only make the gate fail closed.
 //!
@@ -105,6 +106,9 @@ fn is_test_project(source: &str) -> bool {
         .filter(|c| !c.is_ascii_whitespace())
         .flat_map(char::to_lowercase)
         .collect();
+    if normalized.contains("<istestproject>false</istestproject>") {
+        return false;
+    }
     normalized.contains("microsoft.net.test.sdk")
         || normalized.contains("<istestproject>true</istestproject>")
         || normalized.contains("mstest.sdk/")
@@ -154,25 +158,36 @@ fn test_projects(root: &Path) -> Vec<String> {
 ///
 /// Only `jobs.<job>.steps[].run` — the shell a runner actually executes. YAML
 /// A job or step with any `if:` is conditional and therefore cannot prove the
-/// suite gates every CI run. A `continue-on-error` step is likewise not a gate.
+/// suite gates every CI run. A `continue-on-error` step is likewise not a gate,
+/// nor is a scope whose environment turns `dotnet test` into listing or filters
+/// the executed tests.
 /// YAML comments are gone by construction, and `name:`, `uses:` and `with:`
 /// values are never collected.
 fn run_scripts(workflow: &str) -> Vec<String> {
     let doc: serde_yaml::Value =
         serde_yaml::from_str(workflow).unwrap_or_else(|e| panic!("parse workflow yaml: {e}"));
     let mut out = Vec::new();
+    if has_execution_changing_test_env(&doc) {
+        return out;
+    }
     let Some(jobs) = doc.get("jobs").and_then(|j| j.as_mapping()) else {
         return out;
     };
     for (_, job) in jobs {
-        if job.get("if").is_some() || continues_on_error(job) {
+        if job.get("if").is_some()
+            || continues_on_error(job)
+            || has_execution_changing_test_env(job)
+        {
             continue;
         }
         let Some(steps) = job.get("steps").and_then(|s| s.as_sequence()) else {
             continue;
         };
         for step in steps {
-            if step.get("if").is_some() || continues_on_error(step) {
+            if step.get("if").is_some()
+                || continues_on_error(step)
+                || has_execution_changing_test_env(step)
+            {
                 continue;
             }
             if let Some(run) = step.get("run").and_then(|r| r.as_str()) {
@@ -181,6 +196,21 @@ fn run_scripts(workflow: &str) -> Vec<String> {
         }
     }
     out
+}
+
+/// Environment variables become MSBuild properties for `dotnet test`. These
+/// two can make a syntactically canonical command list tests or execute only a
+/// subset, so such a scope is not evidence that the complete suite gates CI.
+fn has_execution_changing_test_env(scope: &serde_yaml::Value) -> bool {
+    scope
+        .get("env")
+        .and_then(serde_yaml::Value::as_mapping)
+        .is_some_and(|env| {
+            env.keys().filter_map(serde_yaml::Value::as_str).any(|key| {
+                key.eq_ignore_ascii_case("VSTestListTests")
+                    || key.eq_ignore_ascii_case("VSTestTestCaseFilter")
+            })
+        })
 }
 
 fn continues_on_error(step: &serde_yaml::Value) -> bool {
@@ -437,6 +467,11 @@ fn test_project_classifier_matches_its_contract() {
             "IsTestProject explicitly disabled",
             "<Project><PropertyGroup><IsTestProject>false</IsTestProject></PropertyGroup></Project>",
         ),
+        (
+            "IsTestProject explicitly disabled despite a test-host package",
+            r#"<Project><PropertyGroup><IsTestProject>False</IsTestProject></PropertyGroup>
+               <ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" /></ItemGroup></Project>"#,
+        ),
     ] {
         assert!(
             !is_test_project(source),
@@ -532,6 +567,14 @@ jobs:
       - run: false && dotnet test chained-false/Tests/chained-false.Tests.csproj -c Release
       - run: dotnet test listing/Tests/listing.Tests.csproj --list-tests
       - run: dotnet test canonical/Tests/canonical.Tests.csproj -c Release
+      - env:
+          VSTestListTests: "true"
+        run: dotnet test step-listing/Tests/step-listing.Tests.csproj -c Release
+  filtered-job:
+    env:
+      vstesttestcasefilter: Category=Fast
+    steps:
+      - run: dotnet test job-filtered/Tests/job-filtered.Tests.csproj -c Release
 "#;
 
     let canonical = "canonical/Tests/canonical.Tests.csproj".to_string();
@@ -548,6 +591,8 @@ jobs:
         "quoted",
         "chained-false",
         "listing",
+        "step-listing",
+        "job-filtered",
     ] {
         let project = format!("{spelling}/Tests/{spelling}.Tests.csproj");
         assert_eq!(
@@ -556,6 +601,24 @@ jobs:
             "a {spelling} command is not an unconditional blocking CI test"
         );
     }
+}
+
+#[test]
+fn workflow_environment_cannot_turn_a_canonical_command_into_listing() {
+    let workflow = r#"
+env:
+  VSTESTLISTTESTS: "true"
+jobs:
+  bridges:
+    steps:
+      - run: dotnet test globally-listed/Tests/globally-listed.Tests.csproj -c Release
+"#;
+    let project = "globally-listed/Tests/globally-listed.Tests.csproj".to_string();
+    assert_eq!(
+        unrun(std::slice::from_ref(&project), workflow),
+        vec![project.as_str()],
+        "workflow-level VSTest controls apply to every step and must fail closed"
+    );
 }
 
 #[test]
