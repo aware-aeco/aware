@@ -197,26 +197,32 @@ jobs:
 
   # Every OTHER .NET bridge suite in the repo. `tekla-bridge` below has run since
   # it was written, and that made it look like the .NET side was covered — it was
-  # the only one of six. `cli-revit/Tests`, `cli-rhino/Tests`, `cli-roslyn/Tests`,
-  # `cli-sidecar/Tests` and `cli-sketchup/Tests` are 483 xunit tests that NO
-  # workflow ran: not this one, not `release.yml` (which only ever `dotnet
-  # publish`es the bridges it ships), not `build-sidecar.yml`. Same shape as the
-  # `steel-detailer-lookup` hole above and the `cli-connection-reader` one before
-  # it — a suite whose green-ness rested on whoever last remembered to run it.
+  # the only one of seven. `cli-revit/Tests`, `cli-rhino/Tests`,
+  # `cli-roslyn/Tests`, `cli-sidecar/Tests`, `cli-sidecar/Ingest/Generator/Tests`
+  # and `cli-sketchup/Tests` are 529 xunit tests that NO workflow ran: not this
+  # one, not `release.yml` (which only ever `dotnet publish`es the bridges it
+  # ships), not `build-sidecar.yml`. Same shape as the `steel-detailer-lookup`
+  # hole above and the `cli-connection-reader` one before it — a suite whose
+  # green-ness rested on whoever last remembered to run it.
   #
   # It was not hypothetical: the v0.125.0 scene-contract change (5255a3bb)
   # edited `cli-rhino/Tests/CrossSectionProfileTests.cs` and shipped with nothing
   # having executed the file.
   #
-  # Split by target framework, not by taste. `cli-roslyn` and `cli-sidecar` are
-  # plain `net10.0` and run here. The other three target `net*-windows` and get
-  # the windows job below: `cli-rhino` and `cli-sketchup` genuinely fail off
-  # Windows (rhino's stubs are `.cmd` batch files; sketchup asserts on a
-  # `D:\…\Plugins` path), so running them on ubuntu with
-  # `-p:EnableWindowsTargeting=true` would mean a red gate or a weakened test.
+  # Split by target framework, not by taste. `cli-roslyn`, `cli-sidecar` and the
+  # sidecar's ingest generator are plain `net10.0` and run here. The other three
+  # target `net*-windows` and get the windows job below: `cli-rhino` and
+  # `cli-sketchup` genuinely fail off Windows (rhino's stubs are `.cmd` batch
+  # files; sketchup asserts on a `D:\…\Plugins` path), so running them on ubuntu
+  # with `-p:EnableWindowsTargeting=true` would mean a red gate or a weakened
+  # test.
   #
-  # `cli/tests/dotnet_suites_gate.rs` asserts every `*.Tests.csproj` in the repo
-  # is named by one of these two jobs, so a seventh suite cannot arrive unrun.
+  # `cli/tests/dotnet_suites_gate.rs` asserts every project in the repo that
+  # `dotnet test` can run — identified by its own metadata, NOT by a filename
+  # convention — is named by a `run:` step in one of these two jobs, so an
+  # eighth suite cannot arrive unrun. The generator suite above is why it reads
+  # metadata: its file is plain `Tests.csproj`, and a `*.Tests.csproj` gate
+  # reported the repo clean while those 46 tests ran nowhere (Codex review, #433).
   dotnet-bridges:
     name: .NET bridge tests (cross-platform)
     runs-on: ubuntu-latest
@@ -233,6 +239,9 @@ jobs:
 
       - name: Test cli-sidecar
         run: dotnet test cli-sidecar/Tests/cli-sidecar.Tests.csproj -c Release
+
+      - name: Test cli-sidecar ingest generator
+        run: dotnet test cli-sidecar/Ingest/Generator/Tests/Tests.csproj -c Release
 
   # The `net*-windows` half of the split described on `dotnet-bridges` above.
   # Separate from `tekla-bridge` so a Tekla publish failure and a bridge-suite
