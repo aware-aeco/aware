@@ -67,8 +67,7 @@ public sealed class TeklaMemberRollContract
         // by an ulp — enough for `to = [26.55075466049515, -17.294594180470543,
         // 31686.662128779197]` to seed in Rust and project here, frames 57° apart.
         // See issue #432 and `viewer-3d/skills/scene-schema.md`.
-        var rawPerpendicular = Subtract(delta, Scale(up, Dot(delta, up)));
-        var seeded = Dot(rawPerpendicular, rawPerpendicular) <= VerticalEpsilonSquared * Dot(delta, delta);
+        var seeded = UsesVerticalSeedFrame(from, to);
 
         double[] zeroX;
         double[] zeroY;
@@ -104,6 +103,26 @@ public sealed class TeklaMemberRollContract
         var nativeBaseDegrees = Math.Atan2(Dot(nativeFrontX, zeroY), Dot(nativeFrontX, zeroX)) * 180d / Math.PI;
         var nativeFrontOffset = NormalizeDegrees(normalized - nativeBaseDegrees);
         return new TeklaMemberRollPlan(normalized, nativeFrontOffset, axis, zeroX, zeroY, rolledX, rolledY);
+    }
+
+    /// <summary>
+    /// True when the member takes the canonical zero frame's vertical branch — the
+    /// one seeded from +X instead of projected from scene up.
+    ///
+    /// The branch is not only a frame detail: reversing a member's axis mirrors its
+    /// section across the zero frame's Y axis on the projected branch (zero X flips,
+    /// zero Y is unchanged) but across the X axis on this one (zero X is unchanged,
+    /// zero Y flips). Anything that mirrors a section by reversing the axis — see
+    /// <see cref="TeklaDoubleAngleContract"/> — has to know which.
+    /// </summary>
+    public static bool UsesVerticalSeedFrame(double[] from, double[] to)
+    {
+        RequirePoint(from, nameof(from));
+        RequirePoint(to, nameof(to));
+        var delta = Subtract(to, from);
+        var up = new[] { 0d, 0d, 1d };
+        var rawPerpendicular = Subtract(delta, Scale(up, Dot(delta, up)));
+        return Dot(rawPerpendicular, rawPerpendicular) <= VerticalEpsilonSquared * Dot(delta, delta);
     }
 
     public static double NormalizeDegrees(double degrees)

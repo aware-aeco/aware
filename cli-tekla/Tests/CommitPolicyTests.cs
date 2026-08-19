@@ -180,11 +180,44 @@ public sealed class CommitPolicyTests
     }
 
     [Fact]
-    public void CanonicalTeeAndDoubleAngleNeverSilentlyUseATeklaCatalogProfile()
+    public void CanonicalTeeNeverSilentlyUsesATeklaCatalogProfile()
     {
         var code = BakeSceneScript.Code;
-        Assert.Contains("xshape==\"tee\"||xshape==\"double-angle\"", code);
+        Assert.Contains("if(xshape==\"tee\")throw", code);
         Assert.Contains("is explicitly unsupported by the Tekla sink", code);
+    }
+
+    [Fact]
+    public void CanonicalDoubleAngleMaterializesAsTwoPlannedSingleAngles()
+    {
+        var code = BakeSceneScript.Code;
+        // Planned before the first Insert, so a degenerate descriptor fails
+        // preflight rather than leaving one lone angle in the model.
+        Assert.Contains("AwareTekla.TeklaDoubleAngleContract.CreatePlan(", code);
+        Assert.Contains("memberRollPlans[id+\"#\"+leg.Suffix]=memberRoll.CreatePlan(leg.ReversedAxis?toArr:fromArr,leg.ReversedAxis?fromArr:toArr,leg.CanonicalRollDegrees)", code);
+        // Both legs run through insertBeam, so both inherit its exact-profile
+        // read-back, ownership tagging and B-rep roll verification.
+        Assert.Contains("insertBeam(id,id+\"#\"+leg.Suffix,\"member\",anglePlan.LegProfile,leg.ReversedAxis?legTail:legHead,leg.ReversedAxis?legHead:legTail,el)", code);
+        Assert.Contains("move(head,rolledX,leg.OffsetMm)", code);
+        Assert.DoesNotContain("xshape==\"double-angle\")throw", code);
+    }
+
+    [Fact]
+    public void DoubleAnglePairIsReportedAsTwoNativesRatherThanOne()
+    {
+        var code = BakeSceneScript.Code;
+        Assert.Contains("r[\"nativeGuids\"]=legGuids", code);
+        Assert.Contains("tekla-double-angle-materialized-as-pair", code);
+    }
+
+    [Fact]
+    public void NativeConnectionsRefuseADoubleAngleParticipant()
+    {
+        var code = BakeSceneScript.Code;
+        Assert.Contains("so a native connection to it is ambiguous", code);
+        foreach (var field in new[] { "partToBoltTo", "partToBeBolted", "mainId", "secondaryId", "targetId" })
+            Assert.Contains($"\"{field}\"", code);
+        Assert.Contains("rejectDoubleAngleParticipant(\"holeEffects.targetId\"", code);
     }
 
     [Fact]

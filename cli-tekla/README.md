@@ -114,6 +114,36 @@ authored-to-native mapping as `tekla-grid-label-tokenized`. Tekla-generated
 `GridPlane` children are inspected read-only; the bridge never creates or edits
 one plane per elevation.
 
+## Double-angle materialization
+
+Tekla has no native 2L profile — double angles exist there only inside components,
+whose geometry comes from environment-specific component defaults rather than from
+the scene descriptor. So `bake-scene` materializes a canonical
+`xsection.shape:"double-angle"` itself, as **two plain parametric single angles**
+(`L{d}*{b}*{t}`) offset along the member's rolled section X by
+`gap/2 + outstanding/2` each way, reproducing the same figure the viewer, IFC and
+Rhino sinks draw. Both parts go through the normal `insertBeam` path, so each keeps
+the exact-profile read-back, the ownership UDAs and the B-rep roll verification.
+
+One of the two is built on the reversed `to`→`from` axis. That is the only way to
+mirror a section in Tekla, and a mirror is genuinely required: an unequal angle is
+chiral, so no roll about the member axis turns one leg of a back-to-back pair into
+the other. Which axis the reversal mirrors across depends on the canonical zero
+frame's branch — across Y for a projected (non-vertical) member, across X on the
+near-vertical seed branch — so a reversed leg of a column carries an extra 180°.
+`TeklaDoubleAngleContract` owns that arithmetic with no Tekla references, so unit
+tests exercise the production algorithm; `Tests/Fixtures/double-angle-scene.json`
+drives a live pass across beams, columns, rolled, sloped, equal-leg and zero-gap
+cases.
+
+The receipt reports the pair honestly: `nativeGuids` plus per-leg
+`nativeRotation`/`nativeRotationOffset`/`offsetMm`, `profile` set to the leg profile,
+and a `tekla-double-angle-materialized-as-pair` warning naming the requested
+designation and both native GUIDs. Because one record owns two native parts, a
+native connection to a double-angle member is ambiguous, so bolt, weld and
+boolean-cut participants that reference one are refused explicitly instead of
+silently attaching to a single leg. `tee` remains explicitly unsupported.
+
 ## Drill
 
 The v0.31 release proved 13/20 prompts PASS against live Tekla 2026 (see [`docs/superpowers/handoffs/2026-05-19-v031-tekla-exec-live.md`](../docs/superpowers/handoffs/2026-05-19-v031-tekla-exec-live.md)). The 7 misses were Tekla domain issues, not substrate failures. Prompt fixtures live at `cli-tekla/Ingest/Output/prompt-*.json`.
