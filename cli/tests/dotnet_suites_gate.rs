@@ -150,7 +150,6 @@ fn uses_plain_dotnet_sdk(source: &str) -> bool {
 fn tracked_files(root: &Path, patterns: &[&str]) -> Option<Vec<String>> {
     let mut command = Command::new("git");
     command.arg("-C").arg(root).args(["ls-files", "-z", "--"]);
-    command.args(patterns);
     let output = command.output().ok()?;
     if !output.status.success() {
         return None;
@@ -160,6 +159,12 @@ fn tracked_files(root: &Path, patterns: &[&str]) -> Option<Vec<String>> {
         .split(|byte| *byte == 0)
         .filter(|path| !path.is_empty())
         .map(|path| String::from_utf8_lossy(path).replace('\\', "/"))
+        .filter(|path| {
+            let lower = path.to_ascii_lowercase();
+            patterns.iter().any(|pattern| {
+                lower.ends_with(&pattern.trim_start_matches('*').to_ascii_lowercase())
+            })
+        })
         .collect();
     paths.sort();
     Some(paths)
@@ -203,9 +208,10 @@ fn collect(root: &Path, dir: &Path, out: &mut Vec<String>) {
 }
 
 fn is_dotnet_project_filename(name: &str) -> bool {
+    let lower = name.to_ascii_lowercase();
     [".csproj", ".fsproj", ".vbproj"]
         .iter()
-        .any(|extension| name.ends_with(extension))
+        .any(|extension| lower.ends_with(extension))
 }
 
 /// Every runnable test project under `root`.
@@ -358,7 +364,7 @@ fn continues_on_error(step: &serde_yaml::Value) -> bool {
 fn is_literal_project_path(path: &str) -> bool {
     !path.starts_with('/')
         && !path.contains(['\\', ':', '$', '"', '\'', '`'])
-        && is_dotnet_project_filename(&path.to_ascii_lowercase())
+        && is_dotnet_project_filename(path)
         && path
             .split('/')
             .all(|part| !part.is_empty() && part != "." && part != "..")
@@ -966,6 +972,7 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
         ("orphan/Tests/Tests.csproj", test_sdk),
         ("functional/Tests/Tests.fsproj", test_sdk),
         ("visual-basic/Tests/Tests.vbproj", test_sdk),
+        ("uppercase/Tests/Upper.Tests.CSPROJ", test_sdk),
         (
             "wired/Tests/FixtureAssembly/FixtureAssembly.csproj",
             "<Project />",
@@ -986,6 +993,7 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
             ".scratch/wired/Tests/temporary.Tests.csproj".to_string(),
             "functional/Tests/Tests.fsproj".to_string(),
             "orphan/Tests/Tests.csproj".to_string(),
+            "uppercase/Tests/Upper.Tests.CSPROJ".to_string(),
             "visual-basic/Tests/Tests.vbproj".to_string(),
             "wired/Tests/wired.Tests.csproj".to_string(),
         ],
@@ -1014,6 +1022,7 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
             ".scratch/wired/Tests/temporary.Tests.csproj",
             "functional/Tests/Tests.fsproj",
             "orphan/Tests/Tests.csproj",
+            "uppercase/Tests/Upper.Tests.CSPROJ",
             "visual-basic/Tests/Tests.vbproj",
         ],
         "the gate must flag a suite no `run:` step names — this is the exact \
@@ -1024,7 +1033,7 @@ fn the_gate_fires_on_a_suite_no_run_step_names() {
     // Positive control: with both named, nothing is reported. Without this, a
     // classifier that flagged *everything* would satisfy the assertion above.
     let complete = format!(
-        "{workflow}  orphan:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test orphan/Tests/Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n  hidden:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test .scratch/wired/Tests/temporary.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n  functional:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test functional/Tests/Tests.fsproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n  visual-basic:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test visual-basic/Tests/Tests.vbproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n"
+        "{workflow}  orphan:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test orphan/Tests/Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n  hidden:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test .scratch/wired/Tests/temporary.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n  functional:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test functional/Tests/Tests.fsproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n  visual-basic:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test visual-basic/Tests/Tests.vbproj -c Release -- RunConfiguration.TreatNoTestsAsError=true\n  uppercase:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v6\n      - uses: actions/setup-dotnet@v4\n        with:\n          dotnet-version: 10.0.x\n      - run: dotnet test uppercase/Tests/Upper.Tests.CSPROJ -c Release -- RunConfiguration.TreatNoTestsAsError=true\n"
     );
     assert!(
         unrun(&found, &complete).is_empty(),
