@@ -687,14 +687,18 @@ function profileGeom(e,w,d,len){
   g.translate(0,0,-len/2); return g;                                // extruded along +Z, centred
 }
 function normalizeRoll(d){ let r=((d%360)+360)%360;if(r>=180)r-=360;return Object.is(r,-0)?0:r; }
-function memberFrame(e,up){ const from=e.from,to=e.to,n=new THREE.Vector3(to[0]-from[0],to[1]-from[1],to[2]-from[2]).normalize();
-  // Sum of squares, never the cancelling `1 - du^2` form. That subtraction loses its significant
-  // digits in precisely the near-vertical band that picks the branch below, so a viewer reading it
-  // that way seeds members the IFC and Tekla sinks project — and the two branches disagree about a
-  // section's facing by up to 180°, so the same member would be DRAWN turned around from how it
-  // exports. See scene_roll::member_frame, whose threshold and rules this mirrors exactly.
-  const U=up==='y'?new THREE.Vector3(0,1,0):new THREE.Vector3(0,0,1), du=n.dot(U), perp=n.clone().addScaledVector(U,-du).lengthSq();let x,y;
-  if(perp<=1e-6){ const seed=new THREE.Vector3(1,0,0);x=seed.addScaledVector(n,-seed.dot(n)).normalize();y=n.clone().cross(x).normalize(); }
+function memberFrame(e,up){ const from=e.from,to=e.to,d=new THREE.Vector3(to[0]-from[0],to[1]-from[1],to[2]-from[2]),n=d.clone().normalize();
+  // Byte-for-byte the branch test in scene_roll::member_frame, which this mirrors exactly. It has
+  // to be: the two branches disagree about a section's facing by up to 180°, so one differing bit
+  // here means the same member is DRAWN turned around from the way the IFC and Tekla sinks export
+  // it. A sum of squares, never the cancelling `1 - du^2` form, which loses its significant digits
+  // in precisely the near-vertical band that picks the branch; and taken from the RAW delta as a
+  // ratio, never from the normalized axis, because THREE's normalize() multiplies by the
+  // reciprocal length while Rust divides by it, and that one-ulp difference is enough to put the
+  // same member on opposite sides of the threshold.
+  const U=up==='y'?new THREE.Vector3(0,1,0):new THREE.Vector3(0,0,1), du=n.dot(U),
+    seeded=d.clone().addScaledVector(U,-d.dot(U)).lengthSq()<=1e-6*d.lengthSq();let x,y;
+  if(seeded){ const seed=new THREE.Vector3(1,0,0);x=seed.addScaledVector(n,-seed.dot(n)).normalize();y=n.clone().cross(x).normalize(); }
   else { y=U.clone().addScaledVector(n,-du).normalize();x=y.clone().cross(n).normalize(); }
   const rot=normalizeRoll(typeof e.rot==='number'?e.rot:0),a=rot*Math.PI/180,c=Math.cos(a),s=Math.sin(a);
   const rx=x.clone().multiplyScalar(c).addScaledVector(y,s),ry=y.clone().multiplyScalar(c).addScaledVector(x,-s);
@@ -4003,12 +4007,21 @@ mod tests {
             viewer_3d_render(&json!({ "scene": rolled_member("z", json!(82.7)) }), true).unwrap();
         let html = output["html"].as_str().unwrap();
         assert!(
-            html.contains("perp=n.clone().addScaledVector(U,-du).lengthSq()"),
-            "viewer memberFrame must take the up-perpendicular component as a sum of squares"
+            html.contains(
+                "seeded=d.clone().addScaledVector(U,-d.dot(U)).lengthSq()<=1e-6*d.lengthSq()"
+            ),
+            "viewer memberFrame must branch on the RAW delta as a sum-of-squares ratio"
         );
         assert!(
             !html.contains("1-du*du"),
             "viewer memberFrame must not select the branch on a cancelling `1-du*du`"
+        );
+        // Normalizing before the branch test is the other way the viewer can disagree with the
+        // sinks: THREE's `normalize()` multiplies by the reciprocal length where Rust divides,
+        // and an ulp there straddles the threshold. The branch must read `d`, never `n`.
+        assert!(
+            !html.contains("perp=n.clone()") && !html.contains("n.clone().addScaledVector(U,-du)"),
+            "viewer memberFrame must not derive the branch from the normalized axis"
         );
     }
 

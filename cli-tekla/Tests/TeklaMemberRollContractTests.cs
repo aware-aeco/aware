@@ -60,6 +60,31 @@ public sealed class TeklaMemberRollContractTests
         }
     }
 
+    [Fact]
+    public void BranchesFromTheRawAxisSoNormalizationCannotMoveTheSeam()
+    {
+        // This axis sits exactly on the inclusive threshold, and it is the one input that
+        // separates the two readings of the branch test. Taken from the RAW delta as
+        // `|q|² <= eps*|d|²` it seeds, matching AWARE's canonical `scene_roll::member_frame`.
+        // Taken from the NORMALIZED axis it projects instead — because `Normalize` here
+        // multiplies by the reciprocal length while Rust's `normalized3` divides by it, and
+        // that one ulp straddles the threshold — leaving the same member with a zero frame
+        // 57° from the substrate's. Unlike the Rust side, where both readings agree on every
+        // input found, this assertion really does fail if the branch is moved back onto the
+        // normalized axis. See issue #432 and `viewer-3d/skills/scene-schema.md`.
+        var plan = _contract.CreatePlan(
+            new[] { 0d, 0d, 0d },
+            new[] { 26.55075466049515, -17.294594180470543, 31686.662128779197 },
+            0d);
+
+        // The seeded rule takes zero X from scene +X projected off the axis, so it stays
+        // essentially +X; the projected-up rule would put it near [0.198, -0.980, 0].
+        Assert.Equal(0.99999964894885041, plan.ZeroX[0], 12);
+        Assert.Equal(4.5733451360524881e-07, plan.ZeroX[1], 12);
+        Assert.Equal(-0.00083791525035048931, plan.ZeroX[2], 12);
+        AssertFrame(plan);
+    }
+
     [Theory]
     [InlineData("FRONT", 10, 10)]
     [InlineData("TOP", -7.3, 82.7)]

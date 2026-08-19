@@ -75,14 +75,24 @@ present it must be a finite JSON number of degrees: positive is right-handed abo
 so the canonical range is `[-180,180)` and negative zero becomes positive zero.
 
 The deterministic zero-section frame uses declared scene up (`+Z` when absent/`"z"`, `+Y` for
-`"y"`). Let `n=normalize(to−from)`, `u` be scene up, and `p = n − (n·u)u` be the part of the axis
-perpendicular to up. When `|p|² <= 1e-6`, zero X is scene `+X` projected perpendicular to `n` and
-normalized, and zero Y is `n×X`. Otherwise zero Y is `u` projected perpendicular to `n`, and zero
-X is `Y×n`. `rot` rotates this frame once about `n`. Compute the branch test as `|p|²` and not as
-`1−(n·u)²`: the two agree in exact arithmetic, but the second cancels away about six significant
-digits at the threshold and more than twelve deeper into the band, and real members fall on
-opposite sides of the two readings — which, by the paragraph below, means two conforming
-implementations disagreeing about one member's facing by as much as 180°.
+`"y"`). Let `d = to−from` be the **raw, unnormalized** axis, `n=normalize(d)`, `u` be scene up, and
+`q = d − (d·u)u` be the part of the raw axis perpendicular to up. When `|q|² <= 1e-6·|d|²`, zero X
+is scene `+X` projected perpendicular to `n` and normalized, and zero Y is `n×X`. Otherwise zero Y
+is `u` projected perpendicular to `n`, and zero X is `Y×n`. `rot` rotates this frame once about
+`n`.
+
+**Compute that branch test exactly as written.** All the obvious algebraic rearrangements are
+equivalent in exact arithmetic and *not* in floating point, and by the paragraph below a member
+placed on the wrong side comes out with its facing up to 180° away — so two implementations that
+round the test differently disagree about real geometry while both believing they conform. Two
+rearrangements are specifically forbidden. Do not test `1−(n·u)²`: that subtraction cancels away
+about six significant digits at the threshold and more than twelve deeper into the band. Do not
+test the *normalized* perpendicular `|n − (n·u)u|² <= 1e-6` either, because then the branch
+inherits however the implementation normalizes — dividing each component by the length and
+multiplying by the reciprocal differ by an ulp, and that is enough to straddle the threshold: with
+`u = +Z`, `from = [0,0,0]`, `to = [26.55075466049515, -17.294594180470543, 31686.662128779197]`
+the dividing form seeds and the reciprocal form projects, for frames 57° apart. The ratio against
+`|d|²` uses no normalization at all and is therefore reproducible across implementations.
 
 **The two rules do not meet, and the projected seed does not make them.** They are separate
 conventions and the frame jumps where they change over. Writing `n` as

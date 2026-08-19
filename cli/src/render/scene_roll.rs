@@ -126,25 +126,34 @@ pub fn member_frame(
     degrees: f64,
     up: SceneUp,
 ) -> Result<MemberRollFrame, AwareError> {
-    let axis =
-        normalized3([to[0] - from[0], to[1] - from[1], to[2] - from[2]]).ok_or_else(|| {
-            AwareError::Validation("member axis must have nonzero finite length".into())
-        })?;
+    let delta = [to[0] - from[0], to[1] - from[1], to[2] - from[2]];
+    let axis = normalized3(delta).ok_or_else(|| {
+        AwareError::Validation("member axis must have nonzero finite length".into())
+    })?;
     let up = up.vector();
     let up_dot = dot3(axis, up);
-    // The axis component perpendicular to scene up, squared. Equal to `1 - (n·u)²` in
-    // exact arithmetic, but taken as a sum of squares so it cannot cancel. Scene up is
-    // axis-aligned, so this subtraction merely clears one coordinate; `1.0 - up_dot *
-    // up_dot` instead cancels away about six significant digits at the threshold and
-    // more than twelve deeper into the near-vertical band — exactly the band that
-    // decides the branch. Members do land on opposite sides of the two readings, and
-    // since the two branches disagree by up to 180° (see above) that is a full facing
-    // divergence between conforming implementations, so the branch test is the last
-    // place to spend accuracy. `the_branch_test_does_not_cancel_at_the_threshold` pins
-    // one such member.
-    let perpendicular = add3(axis, scale3(up, -up_dot));
-    let perpendicular_squared = dot3(perpendicular, perpendicular);
-    let (zero_x, zero_y, zero_frame_source) = if perpendicular_squared <= VERTICAL_EPSILON_SQ {
+    // Which side of the threshold a member falls on, decided two ways at once so that no
+    // rounding an implementation is free to choose differently can move it. Both matter
+    // because the branches disagree by up to 180° (see above), so a single-bit
+    // disagreement here is a whole facing disagreement downstream.
+    //
+    // As a SUM OF SQUARES, never `1 - up_dot * up_dot`: the subtraction cancels away
+    // about six significant digits at the threshold and more than twelve deeper into the
+    // band, and real members land on opposite sides of the two readings.
+    // `the_branch_test_does_not_cancel_at_the_threshold` pins one.
+    //
+    // From the RAW delta rather than `axis`, compared as a ratio against `VERTICAL_
+    // EPSILON_SQ * |delta|²` (equivalent exactly, since `|p|²/|delta|² <= eps` iff
+    // `|p|² <= eps*|delta|²`). Normalizing first would make the branch depend on HOW an
+    // implementation normalizes: dividing each component by the length, as `normalized3`
+    // does, and multiplying by the reciprocal, as this contract's C# mirror and three.js
+    // both do, differ by an ulp — enough to straddle the threshold and hand one member
+    // frames 57° apart. `the_branch_test_does_not_depend_on_how_the_axis_is_normalized`
+    // pins the member that found it.
+    let raw_perpendicular = add3(delta, scale3(up, -dot3(delta, up)));
+    let seeded =
+        dot3(raw_perpendicular, raw_perpendicular) <= VERTICAL_EPSILON_SQ * dot3(delta, delta);
+    let (zero_x, zero_y, zero_frame_source) = if seeded {
         let seed = [1.0, 0.0, 0.0];
         let zero_x = normalized3(add3(seed, scale3(axis, -dot3(seed, axis)))).ok_or_else(|| {
             AwareError::Validation("vertical member zero frame is degenerate".into())
@@ -339,6 +348,67 @@ mod tests {
         ];
         let frame = member_frame([0.0; 3], axis, 0.0, SceneUp::Z).unwrap();
         assert_eq!(frame.zero_frame_source, ZeroFrameSource::ProjectedUp);
+    }
+
+    #[test]
+    fn the_branch_test_does_not_depend_on_how_the_axis_is_normalized() {
+        // Codex found this input on #435. Normalized by DIVIDING each component by the
+        // length — what `normalized3` does — its perpendicular component is exactly
+        // 1e-6 and it seeds; normalized by MULTIPLYING by the reciprocal — what this
+        // contract's C# mirror and three.js both do — it is 1.0000000000000002e-6 and
+        // projects. One ulp of normalization, and the same member gets frames 57° apart
+        // from two implementations both following the contract to the letter.
+        //
+        // So the branch is decided on the RAW delta as a ratio, which uses no
+        // normalization at all and cannot be moved by that choice.
+        //
+        // WHAT THIS TEST CAN AND CANNOT SEE. It pins the frame this input must produce,
+        // which is the behaviour a conforming consumer has to match. It does NOT catch a
+        // revert to the normalized-axis test here, and that was measured, not assumed:
+        // swapping the implementation back leaves all of these green, because Rust's
+        // `normalized3` divides and so happens to agree with the raw ratio — a search
+        // over 600k near-threshold axes found no input where those two disagree. The
+        // divergence is BETWEEN implementations, so no test in this language can observe
+        // it. The mirrors carry the guard instead, each where its own normalization does
+        // diverge: `BranchesFromTheRawAxisSoNormalizationCannotMoveTheSeam` in
+        // `cli-tekla/Tests`, and the source assertions in
+        // `the_viewer_selects_the_zero_frame_branch_the_export_sinks_do`.
+        let to = [
+            26.550_754_660_495_15,
+            -17.294_594_180_470_543,
+            31_686.662_128_779_197,
+        ];
+        let frame = member_frame([0.0; 3], to, 0.0, SceneUp::Z).unwrap();
+        assert_eq!(frame.zero_frame_source, ZeroFrameSource::VerticalSeed);
+        assert!(close(
+            frame.zero_x,
+            [
+                0.999_999_648_948_850_4,
+                4.573_345_136_052_488e-7,
+                -0.000_837_915_250_350_489_3,
+            ]
+        ));
+
+        // Scale invariance, checked on members that are NOT sitting on the boundary. It
+        // deliberately excludes the axis above: that one satisfies the test with exact
+        // equality (`|p|²` and `eps*|delta|²` are the same double), so scaling it re-rounds
+        // both sides of an equality and a large enough factor tips it — measured, ×1000
+        // does. No ratio test can be bit-invariant there, and claiming otherwise would be
+        // asserting something false about the contract rather than testing it.
+        for (sin_theta, expected) in [
+            (1e-3 * 0.99, ZeroFrameSource::VerticalSeed),
+            (1e-3 * 1.01, ZeroFrameSource::ProjectedUp),
+        ] {
+            for scale in [1e-3, 0.5, 7.0, 1e3, 1e6] {
+                let unit = axis_at(sin_theta, 37.0);
+                let scaled = [unit[0] * scale, unit[1] * scale, unit[2] * scale];
+                let frame = member_frame([0.0; 3], scaled, 0.0, SceneUp::Z).unwrap();
+                assert_eq!(
+                    frame.zero_frame_source, expected,
+                    "sin(theta)={sin_theta} scaled by {scale} changed branch"
+                );
+            }
+        }
     }
 
     #[test]

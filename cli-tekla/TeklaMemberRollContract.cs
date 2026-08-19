@@ -48,24 +48,31 @@ public sealed class TeklaMemberRollContract
         if (!IsFinite(degrees))
             throw new ArgumentException("member rot must be a finite JSON number", nameof(degrees));
 
-        var axis = Normalize(Subtract(to, from), "member axis must have nonzero finite length");
+        var delta = Subtract(to, from);
+        var axis = Normalize(delta, "member axis must have nonzero finite length");
         var up = new[] { 0d, 0d, 1d };
         var upDot = Dot(axis, up);
-        // Sum of squares, not `1 - upDot * upDot`. The two agree in exact arithmetic, but
-        // the subtraction cancels away about six significant digits at the threshold and
-        // more than twelve deeper into the near-vertical band — the band that decides the
-        // branch below. Real members fall on opposite sides of the two readings, and the
-        // two branches disagree about a member's facing by up to 180°, so reading it the
-        // other way would make this mirror non-conforming against AWARE's canonical
-        // `member_frame` for exactly the members hardest to notice. This is the same
-        // quantity `horizontalSquared` already computes for the native-frame singularity
-        // below. See issue #432 and `viewer-3d/skills/scene-schema.md`.
-        var perpendicular = Subtract(axis, Scale(up, upDot));
-        var perpendicularSquared = Dot(perpendicular, perpendicular);
+        // Byte-for-byte the branch test in AWARE's canonical `scene_roll::member_frame`,
+        // and it has to be: the two branches disagree about a member's facing by up to
+        // 180°, so one differing bit here is a whole facing divergence between this
+        // mirror and the substrate. Two things make it reproducible.
+        //
+        // A SUM OF SQUARES, not `1 - upDot * upDot`, which cancels away about six
+        // significant digits at the threshold and more than twelve deeper into the band.
+        //
+        // From the RAW delta, not the normalized axis, as a ratio against
+        // `VerticalEpsilonSquared * |delta|²`. Normalizing first would make the branch
+        // depend on how each side normalizes: `Normalize` below multiplies by the
+        // reciprocal while Rust's `normalized3` divides by the length, and those differ
+        // by an ulp — enough for `to = [26.55075466049515, -17.294594180470543,
+        // 31686.662128779197]` to seed in Rust and project here, frames 57° apart.
+        // See issue #432 and `viewer-3d/skills/scene-schema.md`.
+        var rawPerpendicular = Subtract(delta, Scale(up, Dot(delta, up)));
+        var seeded = Dot(rawPerpendicular, rawPerpendicular) <= VerticalEpsilonSquared * Dot(delta, delta);
 
         double[] zeroX;
         double[] zeroY;
-        if (perpendicularSquared <= VerticalEpsilonSquared)
+        if (seeded)
         {
             var seed = new[] { 1d, 0d, 0d };
             zeroX = Normalize(Subtract(seed, Scale(axis, Dot(seed, axis))), "vertical member zero frame is degenerate");
