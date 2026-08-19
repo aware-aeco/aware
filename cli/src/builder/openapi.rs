@@ -1052,4 +1052,437 @@ paths:
         assert_eq!(kebab("already-kebab"), "already-kebab");
         assert_eq!(kebab("XMLParser"), "xmlparser"); // acronym handling is loose; acceptable
     }
+
+    // ── helpers for the spec-driven cases below ─────────────────────────────
+    //
+    // Every builder path runs from a file, so each case writes its spec to a
+    // temp dir. `built` keeps that plumbing out of the assertions.
+
+    fn built(spec: &str, id: &str) -> GeneratedAgent {
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("spec.json");
+        std::fs::write(&path, spec).unwrap();
+        build_from_url_or_path(path.to_str().unwrap(), Some(id))
+            .unwrap_or_else(|e| panic!("spec did not build: {e}"))
+    }
+
+    /// Write the agent out and read it back through the real loader, which is the
+    /// only way to observe YAML corruption in the string-built `inputs:` block.
+    fn round_tripped(agent: &GeneratedAgent) -> crate::manifest::agent::Agent {
+        let out = tempfile::tempdir().unwrap();
+        let root = crate::builder::write_agent(agent, out.path()).unwrap();
+        crate::manifest::loader::load_agent(&root.join("manifest.yaml"))
+            .unwrap_or_else(|e| panic!("generated manifest did not load: {e}"))
+    }
+
+    // ── which response describes the output ─────────────────────────────────
+
+    #[test]
+    fn the_output_schema_comes_from_the_success_response_not_whichever_is_listed_first() {
+        // `responses` is an ordered map and specs routinely list error codes
+        // first. `build_outputs_yaml` therefore *prefers* 200/201/202/default and
+        // only falls back to "the first one" when none of those exist. Nothing
+        // pinned the preference: a build that took `.values().next()` outright
+        // would emit the 404 body as the command's declared output, and #103's
+        // compile-time reference checker would then validate app expressions
+        // against the error shape — silently, since the manifest still parses.
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "codes", "version": "1.0.0" },
+            "components": { "schemas": {
+                "Err": { "type": "object", "properties": { "message": { "type": "string" } } },
+                "Ok":  { "type": "object", "properties": { "pets": { "type": "integer" } } }
+            } },
+            "paths": { "/pets": { "get": {
+                "operationId": "listPets",
+                "responses": {
+                    "404": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Err" } } } },
+                    "200": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Ok" } } } }
+                }
+            } } }
+        }"##;
+        let agent = built(spec, "codes");
+        let out = &agent.commands["list-pets"].outputs_yaml;
+        assert!(out.contains("pets: integer"), "success body missing: {out}");
+        assert!(
+            !out.contains("message:"),
+            "error body leaked into the output schema: {out}"
+        );
+    }
+
+    #[test]
+    fn a_response_the_preference_list_does_not_name_is_still_described() {
+        // The `.or_else(first)` arm. An operation that documents only `204` or
+        // only a `2XX` wildcard has no 200/201/202/default entry; without the
+        // fallback its command would ship with no `outputs:` at all and every
+        // app reading from it would have nothing to reference.
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "odd", "version": "1.0.0" },
+            "paths": { "/x": { "get": {
+                "operationId": "getX",
+                "responses": { "2XX": { "content": { "application/json": {
+                    "schema": { "type": "object", "properties": { "ok": { "type": "boolean" } } }
+                } } } }
+            } } }
+        }"##;
+        let agent = built(spec, "odd");
+        let out = &agent.commands["get-x"].outputs_yaml;
+        assert!(out.contains("type: single"), "no outputs emitted: {out}");
+        assert!(out.contains("ok: boolean"), "schema not described: {out}");
+    }
+
+    // ── where a command points ──────────────────────────────────────────────
+
+    #[test]
+    fn a_path_item_server_redirects_every_operation_on_that_path() {
+        // OpenAPI allows `servers` at three levels. The operation level was
+        // covered; the PATH-ITEM level — one override shared by every method on
+        // the path — was not, so dropping that fallback would have gone
+        // unnoticed and both commands would have been generated against the root
+        // host, sending uploads to the wrong service with a valid-looking
+        // manifest. The two operations also prove the override is not consumed
+        // by the first method that reads it.
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "multi", "version": "1.0.0" },
+            "servers": [ { "url": "https://api.example.com" } ],
+            "paths": { "/blob": {
+                "servers": [ { "url": "https://storage.example.com" } ],
+                "get":  { "operationId": "getBlob",  "responses": {} },
+                "post": { "operationId": "putBlob", "responses": {} }
+            } }
+        }"##;
+        let agent = built(spec, "multi");
+        assert_eq!(
+            agent.commands["get-blob"].path.as_deref(),
+            Some("https://storage.example.com/blob")
+        );
+        assert_eq!(
+            agent.commands["put-blob"].path.as_deref(),
+            Some("https://storage.example.com/blob")
+        );
+        // The agent base is untouched — the override is per-command.
+        assert_eq!(
+            agent.rest.as_ref().and_then(|r| r.base.as_deref()),
+            Some("https://api.example.com")
+        );
+    }
+
+    #[test]
+    fn an_operation_server_wins_over_the_path_item_server() {
+        // Both levels present at once, which is the only arrangement where the
+        // precedence is observable. Reading the path-item override first would
+        // silently demote the operation's own, more specific host.
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "multi", "version": "1.0.0" },
+            "servers": [ { "url": "https://api.example.com" } ],
+            "paths": { "/blob": {
+                "servers": [ { "url": "https://storage.example.com" } ],
+                "post": {
+                    "operationId": "putBlob",
+                    "servers": [ { "url": "https://upload.example.com" } ],
+                    "responses": {}
+                }
+            } }
+        }"##;
+        let agent = built(spec, "multi");
+        assert_eq!(
+            agent.commands["put-blob"].path.as_deref(),
+            Some("https://upload.example.com/blob")
+        );
+    }
+
+    #[test]
+    fn a_bare_origin_spec_url_still_yields_a_usable_base() {
+        // `input_origin` reads the authority by finding the first `/` AFTER the
+        // scheme — and a URL with no path at all has none, which is the branch
+        // the existing case (a URL with `/v3/openapi.json`) never reaches.
+        let no_servers = serde_json::json!({});
+        assert_eq!(
+            server_base(&no_servers, "https://api.example.com").as_deref(),
+            Some("https://api.example.com")
+        );
+        // A relative server on such a document resolves against the root.
+        let rel = serde_json::json!({ "servers": [ { "url": "v1" } ] });
+        assert_eq!(
+            server_base(&rel, "https://api.example.com").as_deref(),
+            Some("https://api.example.com/v1")
+        );
+        // The port is part of the authority, not the path.
+        assert_eq!(
+            server_base(&no_servers, "http://localhost:8080/openapi.json").as_deref(),
+            Some("http://localhost:8080")
+        );
+    }
+
+    // ── which keys under a path item are operations ─────────────────────────
+
+    #[test]
+    fn only_real_http_operations_become_commands() {
+        // A path item carries `summary`, `description`, `parameters` and
+        // `servers` as siblings of its operations, and OpenAPI also defines
+        // `head` / `options` / `trace`, which this builder does not model.
+        // Without the method whitelist each of those keys would be emitted as a
+        // callable command — `aware agent describe` would advertise an operation
+        // called `parameters`, and the REST transport would try to issue it.
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "noise", "version": "1.0.0" },
+            "paths": { "/thing": {
+                "summary": "A thing",
+                "description": "Describes a thing",
+                "servers": [ { "url": "https://api.example.com" } ],
+                "parameters": [ { "name": "q", "in": "query", "schema": { "type": "string" } } ],
+                "head":    { "operationId": "headThing", "responses": {} },
+                "options": { "operationId": "optionsThing", "responses": {} },
+                "trace":   { "operationId": "traceThing", "responses": {} },
+                "get":     { "operationId": "getThing", "responses": {} }
+            } }
+        }"##;
+        let agent = built(spec, "noise");
+        let names: Vec<&str> = agent.commands.keys().map(String::as_str).collect();
+        assert_eq!(names, vec!["get-thing"], "non-operations became commands");
+        // The shared `parameters` list is still merged into the one real command.
+        assert!(agent.commands["get-thing"].inputs_yaml.contains("q:"));
+    }
+
+    // ── which parameter wins ────────────────────────────────────────────────
+
+    #[test]
+    fn an_operation_parameter_overrides_the_path_item_one_it_shadows() {
+        // OpenAPI: an operation's parameter replaces a path-item parameter with
+        // the same name+location. The existing merge case has the two lists
+        // disjoint, so it passes whichever order they are read in and whether or
+        // not the dedup exists. Here they collide: reading the path-item list
+        // first would declare `limit` a string, and dropping the dedup would emit
+        // the key twice — a duplicate YAML mapping key, where the loader keeps
+        // one silently and the other definition simply vanishes.
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "shadow", "version": "1.0.0" },
+            "paths": { "/pets": {
+                "parameters": [
+                    { "name": "limit", "in": "query", "schema": { "type": "string" }, "description": "from the path item" }
+                ],
+                "get": {
+                    "operationId": "listPets",
+                    "parameters": [
+                        { "name": "limit", "in": "query", "required": true, "schema": { "type": "integer" }, "description": "from the operation" }
+                    ],
+                    "responses": {}
+                }
+            } }
+        }"##;
+        let agent = built(spec, "shadow");
+        let inputs = &agent.commands["list-pets"].inputs_yaml;
+        assert_eq!(
+            inputs.matches("limit:").count(),
+            1,
+            "shadowed parameter emitted twice: {inputs}"
+        );
+        assert!(
+            inputs.contains("type: integer") && !inputs.contains("type: string"),
+            "path-item definition won over the operation's: {inputs}"
+        );
+        // And the operation's own `required` survived rather than the path item's default.
+        assert!(inputs.contains("required: true"), "inputs: {inputs}");
+        let loaded = round_tripped(&agent);
+        let cmd = loaded.commands.get("list-pets").unwrap();
+        assert_eq!(cmd.inputs["limit"]["description"], "from the operation");
+    }
+
+    // ── which media type describes a body ───────────────────────────────────
+
+    #[test]
+    fn a_body_offered_only_under_a_vendor_json_media_type_is_still_described() {
+        // `body_schema` prefers `application/json` and otherwise takes the first
+        // media type present. Only the preferred arm was covered, so losing the
+        // fallback would generate a POST command with no `body` input at all.
+        //
+        // The media type here is a vendor JSON one deliberately. The builder does
+        // NOT record which media type it picked, and the REST sender
+        // (`runtime::invoker::build_operation_request` → `RestInvoker`) serializes
+        // an object body as JSON under `Content-Type: application/json` unless the
+        // app supplies its own header — so the fallback only yields a *callable*
+        // command for bodies the transport can serialize that way. Reaching for
+        // `application/xml` here would assert that a body input exists while the
+        // operation stayed unsatisfiable, which pins a comfort rather than a
+        // behaviour (Codex, #434). `+json` suffixed vendor types are also what
+        // real specs use far more often than XML.
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "vendory", "version": "1.0.0" },
+            "components": { "schemas": {
+                "Pet": { "type": "object", "properties": { "name": { "type": "string" } } }
+            } },
+            "paths": { "/pets": { "post": {
+                "operationId": "addPet",
+                "requestBody": { "content": { "application/vnd.petstore.v3+json": {
+                    "schema": { "$ref": "#/components/schemas/Pet" }
+                } } },
+                "responses": {}
+            } } }
+        }"##;
+        let agent = built(spec, "vendory");
+        let inputs = &agent.commands["add-pet"].inputs_yaml;
+        assert!(inputs.contains("body:"), "no body input: {inputs}");
+        assert!(inputs.contains("Pet (request body)"), "inputs: {inputs}");
+        assert!(inputs.contains("name: string"), "inputs: {inputs}");
+    }
+
+    #[test]
+    fn json_wins_when_a_body_is_offered_in_several_media_types() {
+        // The preference only shows when JSON is NOT the first entry — with it
+        // first, "prefer json" and "take the first" agree and the case proves
+        // nothing. `Xml`/`Json` carry different properties so the winner is
+        // visible in the generated schema.
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "both", "version": "1.0.0" },
+            "components": { "schemas": {
+                "Xml":  { "type": "object", "properties": { "xmlOnly":  { "type": "string" } } },
+                "Json": { "type": "object", "properties": { "jsonOnly": { "type": "string" } } }
+            } },
+            "paths": { "/pets": { "post": {
+                "operationId": "addPet",
+                "requestBody": { "content": {
+                    "application/xml":  { "schema": { "$ref": "#/components/schemas/Xml" } },
+                    "application/json": { "schema": { "$ref": "#/components/schemas/Json" } }
+                } },
+                "responses": {}
+            } } }
+        }"##;
+        let agent = built(spec, "both");
+        let inputs = &agent.commands["add-pet"].inputs_yaml;
+        assert!(
+            inputs.contains("Json (request body)") && inputs.contains("jsonOnly: string"),
+            "did not prefer application/json: {inputs}"
+        );
+        assert!(!inputs.contains("xmlOnly"), "inputs: {inputs}");
+    }
+
+    // ── how a property's type is labelled ───────────────────────────────────
+
+    #[test]
+    fn every_schema_shape_gets_a_distinguishable_type_label() {
+        // `schema_type_label` has four arms and the suite exercised two
+        // (primitive and `array<primitive>`). The other two are the ones a
+        // reader relies on to tell "we could not determine a type" (`any`) from
+        // "a structure we did not expand" (`object`) — collapse them and the
+        // manifest stops distinguishing an undeclared field from a nested one.
+        // A `$ref` inside a property, and an array of arrays, are both shapes
+        // real specs produce and neither had a case.
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "shapes", "version": "1.0.0" },
+            "components": { "schemas": {
+                "Pet": { "type": "object", "properties": { "name": { "type": "string" } } },
+                "Wrap": { "type": "object", "properties": {
+                    "pet":    { "$ref": "#/components/schemas/Pet" },
+                    "grid":   { "type": "array", "items": { "type": "array", "items": { "type": "number" } } },
+                    "loose":  {},
+                    "nested": { "properties": { "x": { "type": "string" } } },
+                    "bag":    { "type": "array" }
+                } }
+            } },
+            "paths": { "/w": { "get": {
+                "operationId": "getW",
+                "responses": { "200": { "content": { "application/json": {
+                    "schema": { "$ref": "#/components/schemas/Wrap" }
+                } } } }
+            } } }
+        }"##;
+        let agent = built(spec, "shapes");
+        let out = &agent.commands["get-w"].outputs_yaml;
+        assert!(out.contains("pet: Pet"), "$ref label: {out}");
+        assert!(out.contains("grid: array<array<number>>"), "nested: {out}");
+        assert!(out.contains("loose: any"), "untyped: {out}");
+        assert!(out.contains("nested: object"), "properties-only: {out}");
+        assert!(out.contains("bag: array<any>"), "itemless array: {out}");
+    }
+
+    // ── keeping the generated YAML honest ───────────────────────────────────
+
+    #[test]
+    fn a_hash_in_a_description_is_not_swallowed_as_a_yaml_comment() {
+        // ` #` opens a comment in a YAML plain scalar, so an unquoted
+        // `description: batch # 3 of 7` loads as `batch` — the manifest parses
+        // cleanly and simply carries a description nobody wrote. That silent
+        // truncation is why `yaml_quote` tests for `#`, and only the `:` trigger
+        // had a case. The assertion has to run through the real loader: the
+        // generated string contains the full text either way.
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "hashy", "version": "1.0.0" },
+            "paths": { "/x": { "get": {
+                "operationId": "getX",
+                "parameters": [
+                    { "name": "batch", "in": "query", "schema": { "type": "string" },
+                      "description": "batch # 3 of 7" }
+                ],
+                "responses": {}
+            } } }
+        }"##;
+        let loaded = round_tripped(&built(spec, "hashy"));
+        let cmd = loaded.commands.get("get-x").unwrap();
+        assert_eq!(cmd.inputs["batch"]["description"], "batch # 3 of 7");
+    }
+
+    #[test]
+    fn a_description_opening_with_a_yaml_indicator_does_not_break_the_manifest() {
+        // The other half of `yaml_quote`'s guard. `*` opens an alias and `%` a
+        // directive — unquoted, these are not a truncation but a hard parse
+        // error, so the builder would emit a manifest that no longer loads at
+        // all. Vendor descriptions really do start with `*` (emphasis) and `%`.
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "starty", "version": "1.0.0" },
+            "paths": { "/x": { "get": {
+                "operationId": "getX",
+                "parameters": [
+                    { "name": "a", "in": "query", "schema": { "type": "string" },
+                      "description": "*deprecated* use b" },
+                    { "name": "b", "in": "query", "schema": { "type": "string" },
+                      "description": "% of total" },
+                    { "name": "c", "in": "query", "schema": { "type": "string" },
+                      "description": "- leading dash" }
+                ],
+                "responses": {}
+            } } }
+        }"##;
+        let loaded = round_tripped(&built(spec, "starty"));
+        let cmd = loaded.commands.get("get-x").unwrap();
+        assert_eq!(cmd.inputs["a"]["description"], "*deprecated* use b");
+        assert_eq!(cmd.inputs["b"]["description"], "% of total");
+        assert_eq!(cmd.inputs["c"]["description"], "- leading dash");
+    }
+
+    #[test]
+    fn a_quote_bearing_description_is_escaped_rather_than_terminating_the_scalar() {
+        // Once `yaml_quote` decides to quote, the payload must be escaped or the
+        // embedded `"` closes the scalar early — turning a description into a
+        // parse error or, worse, into trailing tokens the loader reinterprets.
+        // The `\` case guards the escape ORDER: escaping quotes before
+        // backslashes would double-escape the backslash it just inserted.
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "quoted", "version": "1.0.0" },
+            "paths": { "/x": { "get": {
+                "operationId": "getX",
+                "parameters": [
+                    { "name": "a", "in": "query", "schema": { "type": "string" },
+                      "description": "the \"id\": a key" },
+                    { "name": "b", "in": "query", "schema": { "type": "string" },
+                      "description": "a path: C:\\tmp\\x" }
+                ],
+                "responses": {}
+            } } }
+        }"##;
+        let loaded = round_tripped(&built(spec, "quoted"));
+        let cmd = loaded.commands.get("get-x").unwrap();
+        assert_eq!(cmd.inputs["a"]["description"], "the \"id\": a key");
+        assert_eq!(cmd.inputs["b"]["description"], "a path: C:\\tmp\\x");
+    }
 }
