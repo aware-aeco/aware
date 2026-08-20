@@ -10,13 +10,21 @@ namespace AwareTekla;
 /// </summary>
 public sealed class TeklaSingleAnglePlan
 {
-    internal TeklaSingleAnglePlan(bool reversedAxis, double canonicalRollDegrees, string parametricProfile, double[][] sectionOutline)
+    internal TeklaSingleAnglePlan(bool reversedAxis, double canonicalRollDegrees, string parametricProfile, double envelopeWidthMm, double envelopeDepthMm, double[][] sectionOutline)
     {
         ReversedAxis = reversedAxis;
         CanonicalRollDegrees = canonicalRollDegrees;
         ParametricProfile = parametricProfile;
+        EnvelopeWidthMm = envelopeWidthMm;
+        EnvelopeDepthMm = envelopeDepthMm;
         SectionOutline = sectionOutline;
     }
+
+    /// <summary>Section bounding box across the member's rolled X — the flat leg, `b`.</summary>
+    public double EnvelopeWidthMm { get; }
+
+    /// <summary>Section bounding box across the member's rolled Y — the vertical leg, `d`.</summary>
+    public double EnvelopeDepthMm { get; }
 
     /// <summary>
     /// True when the beam must be built on the reversed `to`→`from` axis.
@@ -105,6 +113,19 @@ public static class TeklaSingleAngleContract
     /// </summary>
     public const double VerticalFrameCorrectionDegrees = 180d;
 
+    /// <summary>
+    /// How far a read-back section's bounding box may sit from the descriptor's own
+    /// before the bake refuses it.
+    ///
+    /// Looser than the 0.1 mm the outline comparison uses, and deliberately: that one
+    /// compares a sharp-corner parametric profile against the figure it was derived
+    /// from, while this one compares REAL catalog geometry, which is only nominally
+    /// its designation. It stays far tighter than it needs to be to do its job —
+    /// catalog angle leg lengths step in whole millimetres and usually by five or
+    /// more, so any actual size confusion misses by a wide margin.
+    /// </summary>
+    public const double EnvelopeToleranceMm = 1d;
+
     /// <param name="verticalZeroFrame">
     /// <see cref="TeklaMemberRollContract.UsesVerticalSeedFrame"/> for this member's axis.
     /// </param>
@@ -124,7 +145,34 @@ public static class TeklaSingleAngleContract
         var correction = verticalZeroFrame ? VerticalFrameCorrectionDegrees : 0d;
         var canonicalRoll = TeklaMemberRollContract.NormalizeDegrees(-roll + correction);
         var parametricProfile = "L" + Millimetres(d) + "*" + Millimetres(b) + "*" + Millimetres(t);
-        return new TeklaSingleAnglePlan(true, canonicalRoll, parametricProfile, SectionOutline(d, b, t));
+        return new TeklaSingleAnglePlan(true, canonicalRoll, parametricProfile, b, d, SectionOutline(d, b, t));
+    }
+
+    /// <summary>
+    /// The section's bounding box as `[width, depth]` across the member's rolled X
+    /// and Y, for comparison against <see cref="TeklaSingleAnglePlan.EnvelopeWidthMm"/>
+    /// and <see cref="TeklaSingleAnglePlan.EnvelopeDepthMm"/>.
+    ///
+    /// This is what holds a CATALOG angle to the descriptor. The full outline
+    /// comparison cannot: a catalog angle's fillets move most of its vertices, so it
+    /// runs only for the sharp-corner parametric `L`. Handedness alone would let a
+    /// descriptor of 150×100×10 resolve to a differently sized catalog angle and
+    /// commit — the legs would be on the right sides and the wrong lengths. A
+    /// bounding box survives fillets, because they are cut into the inner corner and
+    /// the leg tips while the outer faces still reach the nominal leg lengths.
+    ///
+    /// What it does NOT catch, for a catalog profile, is a wrong leg THICKNESS: `t`
+    /// does not move the bounding box, and reading it off the solid means measuring
+    /// the free end of the vertical leg, which is exactly where a toe radius makes
+    /// the measurement unreliable. `insertBeam` already proves the resolved profile
+    /// string is the requested one, so what remains is a descriptor disagreeing with
+    /// its own profile about thickness — the same exposure every other `xsection`
+    /// shape in this sink carries today.
+    /// </summary>
+    public static double[] MeasureEnvelope(IReadOnlyList<double[]> sectionXy)
+    {
+        var bounds = Bounds(sectionXy);
+        return new[] { bounds[1] - bounds[0], bounds[3] - bounds[2] };
     }
 
     /// <summary>
@@ -158,20 +206,11 @@ public static class TeklaSingleAngleContract
     /// </exception>
     public static bool HeelIsOnTheCanonicalSide(IReadOnlyList<double[]> sectionXy, double toleranceMm)
     {
-        if (sectionXy is null || sectionXy.Count < 3)
-            throw new ArgumentException("a section needs at least three vertices", nameof(sectionXy));
         if (!IsFinite(toleranceMm) || toleranceMm < 0d)
             throw new ArgumentException("tolerance must be a finite non-negative number", nameof(toleranceMm));
 
-        double minX = double.MaxValue, maxX = double.MinValue, maxY = double.MinValue;
-        foreach (var vertex in sectionXy)
-        {
-            if (vertex is null || vertex.Length < 2 || !IsFinite(vertex[0]) || !IsFinite(vertex[1]))
-                throw new ArgumentException("every section vertex must be a finite [x,y] pair", nameof(sectionXy));
-            minX = Math.Min(minX, vertex[0]);
-            maxX = Math.Max(maxX, vertex[0]);
-            maxY = Math.Max(maxY, vertex[1]);
-        }
+        var bounds = Bounds(sectionXy);
+        double minX = bounds[0], maxX = bounds[1], maxY = bounds[3];
 
         if (maxX - minX <= toleranceMm)
             throw new ArgumentException("section has no measurable width across the member's rolled X", nameof(sectionXy));
@@ -212,6 +251,25 @@ public static class TeklaSingleAngleContract
             new[] { -halfWidth + t, halfDepth },
             new[] { -halfWidth, halfDepth },
         };
+    }
+
+    /// <summary>Section bounding box as `[minX, maxX, minY, maxY]`.</summary>
+    static double[] Bounds(IReadOnlyList<double[]> sectionXy)
+    {
+        if (sectionXy is null || sectionXy.Count < 3)
+            throw new ArgumentException("a section needs at least three vertices", nameof(sectionXy));
+
+        double minX = double.MaxValue, maxX = double.MinValue, minY = double.MaxValue, maxY = double.MinValue;
+        foreach (var vertex in sectionXy)
+        {
+            if (vertex is null || vertex.Length < 2 || !IsFinite(vertex[0]) || !IsFinite(vertex[1]))
+                throw new ArgumentException("every section vertex must be a finite [x,y] pair", nameof(sectionXy));
+            minX = Math.Min(minX, vertex[0]);
+            maxX = Math.Max(maxX, vertex[0]);
+            minY = Math.Min(minY, vertex[1]);
+            maxY = Math.Max(maxY, vertex[1]);
+        }
+        return new[] { minX, maxX, minY, maxY };
     }
 
     static string Millimetres(double value) => value.ToString("0.############", CultureInfo.InvariantCulture);

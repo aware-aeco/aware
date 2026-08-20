@@ -88,11 +88,16 @@ what `viewer-3d`, the IFC sink and Rhino draw. Its row therefore carries
 `reversedAxis`, saying that the native part's own from→to is the reverse of the
 authored axis and so is what its `nativeRotation` and `nativeRotationOffset` are
 measured against; `rot` keeps its usual meaning, the authored canonical roll.
-The seating is proved before commit rather than assumed: every angle is checked
-for its heel being on the canonical side, and one whose resolved profile is
-exactly the sharp-corner parametric `L` the descriptor implies is additionally
-compared vertex for vertex against the canonical section, so a catalog seated
-differently fails the bake instead of committing a mirrored member. A present
+The seating is proved before commit rather than assumed. Every angle's inserted
+solid is checked for its heel being on the canonical side and for its bounding
+box matching the descriptor's leg lengths — the second is what holds a catalog
+profile, whose fillets rule out a vertex comparison but leave its envelope
+nominal, so a descriptor cannot resolve to a differently sized catalog angle and
+commit. One whose resolved profile is exactly the sharp-corner parametric `L`
+the descriptor implies is additionally compared vertex for vertex against the
+canonical section. A catalog seated or sized differently therefore fails the bake
+instead of committing a wrong member, and its `xsection` envelope must agree with
+the authored `section` exactly as the IFC and Rhino sinks require. A present
 but malformed `angle` descriptor (a non-positive dimension, or a `t` that leaves
 no leg) fails its record as `invalid-geometry` rather than baking the authored
 profile unchecked, exactly as `double-angle` does. Single angles baked before

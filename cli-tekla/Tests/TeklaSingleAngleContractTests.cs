@@ -244,6 +244,61 @@ public sealed class TeklaSingleAngleContractTests
     }
 
     [Theory]
+    [InlineData(150, 100, 10)]
+    [InlineData(100, 100, 8)]
+    [InlineData(88.9, 63.5, 6.35)]
+    public void EnvelopeIsTheAuthoredLegLengthsAndSurvivesFillets(double d, double b, double t)
+    {
+        var plan = TeklaSingleAngleContract.CreatePlan(d, b, t, 0, false);
+        Assert.Equal(b, plan.EnvelopeWidthMm, 9);
+        Assert.Equal(d, plan.EnvelopeDepthMm, 9);
+
+        // A fillet is cut into the inner corner and the leg tips; the outer faces
+        // still reach the nominal leg lengths, so the bounding box is untouched.
+        foreach (var section in new[] { CanonicalAngle(d, b, t), FilletedAngle(d, b, t) })
+        {
+            var measured = TeklaSingleAngleContract.MeasureEnvelope(AsPairs(section));
+            Assert.Equal(b, measured[0], 9);
+            Assert.Equal(d, measured[1], 9);
+        }
+    }
+
+    [Fact]
+    public void EnvelopeCatchesACatalogAngleOfTheWrongSizeThatHandednessCannot()
+    {
+        // Codex review on #441. With only the heel test, a descriptor of 150x100x10
+        // could resolve to a differently sized catalog angle and commit: legs on the
+        // correct sides, wrong lengths. The outline comparison cannot cover it either,
+        // because it runs only for the sharp-corner parametric `L`.
+        var plan = TeklaSingleAngleContract.CreatePlan(150, 100, 10, 0, false);
+
+        var rightSize = AsPairs(FilletedAngle(150, 100, 10));
+        Assert.True(TeklaSingleAngleContract.HeelIsOnTheCanonicalSide(rightSize, 0.1));
+        var right = TeklaSingleAngleContract.MeasureEnvelope(rightSize);
+        Assert.True(Math.Abs(right[0] - plan.EnvelopeWidthMm) <= TeklaSingleAngleContract.EnvelopeToleranceMm);
+        Assert.True(Math.Abs(right[1] - plan.EnvelopeDepthMm) <= TeklaSingleAngleContract.EnvelopeToleranceMm);
+
+        // The wrong size is the RIGHT hand, so the heel test passes it and only the
+        // envelope refuses it. That asymmetry is the whole point of this check.
+        var wrongSize = AsPairs(FilletedAngle(200, 100, 10));
+        Assert.True(TeklaSingleAngleContract.HeelIsOnTheCanonicalSide(wrongSize, 0.1));
+        var wrong = TeklaSingleAngleContract.MeasureEnvelope(wrongSize);
+        Assert.True(
+            Math.Abs(wrong[1] - plan.EnvelopeDepthMm) > TeklaSingleAngleContract.EnvelopeToleranceMm,
+            $"a 200 mm leg must not pass as 150 mm; measured {wrong[1]}");
+    }
+
+    [Fact]
+    public void MeasureEnvelopeRefusesASectionItCannotRead()
+    {
+        Assert.Throws<ArgumentException>(() => TeklaSingleAngleContract.MeasureEnvelope(null!));
+        Assert.Throws<ArgumentException>(() => TeklaSingleAngleContract.MeasureEnvelope(
+            new[] { new[] { 0d, 0d }, new[] { 1d, 1d } }));
+        Assert.Throws<ArgumentException>(() => TeklaSingleAngleContract.MeasureEnvelope(
+            new[] { new[] { 0d, 0d }, new[] { 1d, double.NaN }, new[] { 2d, 2d } }));
+    }
+
+    [Theory]
     [InlineData(0, 0, 0, 0, 0, 1000, true)]
     [InlineData(0, 0, 0, 0, 0, -1000, true)]
     [InlineData(0, 0, 0, 1000, 0, 0, false)]

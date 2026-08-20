@@ -310,6 +310,12 @@ public sealed class CommitPolicyTests
         Assert.Contains("singlePlan.ReversedAxis?tail:head", code);
         Assert.Contains("HeelIsOnTheCanonicalSide", code);
         Assert.Contains("singlePlan.ParametricProfile", code);
+        // Handedness alone would let a descriptor resolve to a differently sized
+        // catalog angle: right sides, wrong leg lengths. The envelope is what holds a
+        // catalog profile to the descriptor, before and after insertion.
+        Assert.Contains("TeklaSingleAngleContract.MeasureEnvelope", code);
+        Assert.Contains("TeklaSingleAngleContract.EnvelopeToleranceMm", code);
+        Assert.Contains("angle envelope ", code);
         // The receipt must still report the AUTHORED roll, not the reversed one the
         // part is actually built at, and must say that the axis was reversed.
         Assert.Contains("memberRollById[id]=basePlan.NormalizedDegrees", code);
@@ -361,8 +367,12 @@ public sealed class CommitPolicyTests
 
             var id = element["id"]!.GetValue<string>();
             Assert.True(plan.ReversedAxis, $"{id}: must be built on the reversed axis");
-            Assert.Equal(b, element["section"]!["w"]!.GetValue<double>(), 9);
-            Assert.Equal(d, element["section"]!["d"]!.GetValue<double>(), 9);
+            // The bake refuses a descriptor whose envelope disagrees with the authored
+            // `section`, so every fixture member must clear that gate.
+            Assert.Equal(element["section"]!["w"]!.GetValue<double>(), plan.EnvelopeWidthMm, 9);
+            Assert.Equal(element["section"]!["d"]!.GetValue<double>(), plan.EnvelopeDepthMm, 9);
+            Assert.Equal(b, plan.EnvelopeWidthMm, 9);
+            Assert.Equal(d, plan.EnvelopeDepthMm, 9);
             // Every fixture member is authored with the sharp-corner parametric `L`,
             // so the live bake runs the FULL outline comparison on each rather than
             // falling back to the fillet-tolerant heel test alone.
