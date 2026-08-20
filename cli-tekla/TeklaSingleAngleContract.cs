@@ -225,15 +225,24 @@ public static class TeklaSingleAngleContract
     /// stronger proof but it only applies to a sharp-corner parametric `L`; a
     /// catalog angle's fillets move most of its vertices. What survives both is the
     /// vertical leg: it spans the section's full depth and only `t` of its width, so
-    /// the section's TOP edge reaches the -X side of the envelope for a canonical
-    /// angle and the +X side for a mirrored one — while the bottom edge, the flat
-    /// leg, spans the whole width either way and so says nothing. Fillets are cut
-    /// into the inner corner, never the leg tips, so they leave this untouched.
+    /// the section's TOP edge sits against the -X side of the envelope for a
+    /// canonical angle and the +X side for a mirrored one — while the bottom edge,
+    /// the flat leg, spans the whole width either way and so says nothing.
     ///
-    /// Which side the top edge REACHES, not which side of the envelope mid-plane it
-    /// falls on: those agree only while `t &lt; b/2`, and the descriptor permits any
-    /// `t &lt; min(d,b)`. A thick-legged angle's top edge legitimately crosses the
-    /// mid-plane, and reading that as a mirror would fail a correctly seated part.
+    /// Which side the top edge is NEARER, measured as a distance to each envelope
+    /// side. Two ways of phrasing the same question are wrong, and each fails a
+    /// correctly seated part:
+    ///
+    /// - Which side of the envelope MID-PLANE it falls on. That agrees with the
+    ///   answer only while `t &lt; b/2`, and the descriptor permits any
+    ///   `t &lt; min(d,b)`; a thick-legged angle's top edge legitimately crosses the
+    ///   mid-plane.
+    /// - Which side it REACHES, i.e. requiring a vertex within tolerance of both the
+    ///   top and an envelope side at once. A real hot-rolled angle's outer toe corner
+    ///   is ROUNDED, so no such vertex exists: the top tangent is inset in X by the
+    ///   radius and the min-X tangent is lower by the same amount. That reads as
+    ///   "neither side" and rejects exactly the filleted catalog geometry this test
+    ///   exists to serve. (Codex review on #441.)
     /// </summary>
     /// <param name="sectionXy">Section vertices as `[x,y]` in the member's rolled frame.</param>
     /// <param name="toleranceMm">
@@ -265,13 +274,15 @@ public static class TeklaSingleAngleContract
             topMaxX = Math.Max(topMaxX, vertex[0]);
         }
 
-        var reachesMinX = topMinX <= minX + toleranceMm;
-        var reachesMaxX = topMaxX >= maxX - toleranceMm;
-        if (reachesMinX == reachesMaxX)
+        // For an angle these are `radius` and `b - t`: far apart for any real section,
+        // so the comparison is decided by the leg, not by the tolerance.
+        var toLeftSide = topMinX - minX;
+        var toRightSide = maxX - topMaxX;
+        if (Math.Abs(toLeftSide - toRightSide) <= toleranceMm)
             throw new ArgumentException(
-                "section's top edge reaches " + (reachesMinX ? "both sides" : "neither side") +
-                " of its envelope, so it has no readable angle heel", nameof(sectionXy));
-        return reachesMinX;
+                "section's top edge sits equidistant from both sides of its envelope, so it has no readable angle heel",
+                nameof(sectionXy));
+        return toLeftSide < toRightSide;
     }
 
     /// <summary>

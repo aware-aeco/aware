@@ -209,19 +209,43 @@ public sealed class TeklaSingleAngleContractTests
             AsPairs(canonical.Select(MirrorAcrossY)), 0.1));
     }
 
+    [Theory]
+    [InlineData(150, 100, 10, 5)]
+    [InlineData(150, 100, 10, 8)]
+    [InlineData(100, 100, 8, 4)]
+    [InlineData(100, 100, 60, 6)]
+    public void HandednessReadsACatalogAngleWithARoundedOuterToe(double d, double b, double t, double radius)
+    {
+        // Codex review on #441. A real hot-rolled angle's outer toe corner is rounded,
+        // so NO vertex is both at the top of the section and at its -X edge: the top
+        // tangent is inset in X by the radius and the min-X tangent is lower by the
+        // same. Asking which side the top edge REACHES reads that as "neither" and
+        // rejects a correctly seated part; asking which side it is NEARER reads it.
+        var rounded = RoundedToeAngle(d, b, t, radius);
+        Assert.True(
+            TeklaSingleAngleContract.HeelIsOnTheCanonicalSide(AsPairs(rounded), 0.1),
+            $"a canonical angle with a {radius} mm toe radius must still read as canonical");
+        Assert.False(TeklaSingleAngleContract.HeelIsOnTheCanonicalSide(
+            AsPairs(rounded.Select(MirrorAcrossY)), 0.1));
+
+        // The rounding must not have quietly changed the section's size either.
+        var measured = TeklaSingleAngleContract.MeasureEnvelope(AsPairs(rounded));
+        Assert.Equal(b, measured[0], 9);
+        Assert.Equal(d, measured[1], 9);
+    }
+
     [Fact]
     public void HandednessRefusesASectionWithNoHeelToRead()
     {
         // A rectangle's top edge spans the whole envelope, so neither hand is a
         // truthful answer. Returning one would be reported to the bake as a verdict.
         (double X, double Y)[] rectangle = [(-50d, -50d), (50d, -50d), (50d, 50d), (-50d, 50d)];
-        var refused = Assert.Throws<ArgumentException>(
-            () => TeklaSingleAngleContract.HeelIsOnTheCanonicalSide(AsPairs(rectangle), 0.1));
-        Assert.Contains("both sides", refused.Message);
+        Assert.Contains("equidistant", Assert.Throws<ArgumentException>(
+            () => TeklaSingleAngleContract.HeelIsOnTheCanonicalSide(AsPairs(rectangle), 0.1)).Message);
 
-        // And the other way: a top edge that reaches neither side is not an angle either.
+        // And a top edge centred between the sides is not an angle either.
         (double X, double Y)[] floating = [(-50d, -50d), (50d, -50d), (10d, 50d), (-10d, 50d)];
-        Assert.Contains("neither side", Assert.Throws<ArgumentException>(
+        Assert.Contains("equidistant", Assert.Throws<ArgumentException>(
             () => TeklaSingleAngleContract.HeelIsOnTheCanonicalSide(AsPairs(floating), 0.1)).Message);
     }
 
@@ -373,6 +397,32 @@ public sealed class TeklaSingleAngleContractTests
             (-halfWidth + t, -halfDepth + t + fillet), (-halfWidth + t, halfDepth - fillet),
             (-halfWidth + t / 2d, halfDepth), (-halfWidth, halfDepth),
         };
+    }
+
+    /// <summary>
+    /// The canonical figure with the OUTER corner of the vertical leg's toe rounded,
+    /// so no vertex is both at the top of the section and at its -X edge. This is the
+    /// shape a real hot-rolled angle has and the one `FilletedAngle` above is too
+    /// kind about — it keeps a sharp outer corner, which is why it never exercised
+    /// the case Codex found.
+    /// </summary>
+    static (double X, double Y)[] RoundedToeAngle(double d, double b, double t, double radius)
+    {
+        double halfWidth = b / 2d, halfDepth = d / 2d;
+        double centreX = -halfWidth + radius, centreY = halfDepth - radius;
+        var section = new List<(double X, double Y)>
+        {
+            (-halfWidth, -halfDepth), (halfWidth, -halfDepth), (halfWidth, -halfDepth + t),
+            (-halfWidth + t, -halfDepth + t), (-halfWidth + t, halfDepth),
+        };
+        // The quarter arc from the -X face (theta = 180 degrees) round to the top
+        // face (90 degrees). Tessellated, as Tekla would hand it back from a B-rep.
+        for (var step = 0; step <= 8; step++)
+        {
+            var theta = Math.PI * (1d - step / 16d);
+            section.Add((centreX + radius * Math.Cos(theta), centreY + radius * Math.Sin(theta)));
+        }
+        return [.. section];
     }
 
     /// <summary>
