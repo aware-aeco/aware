@@ -704,4 +704,160 @@ mod tests {
         assert_eq!(v["flows"], serde_json::json!(["oauth"]));
         assert_eq!(v["recommended_flow"], "oauth");
     }
+
+    /// Write a credential file straight into `<home>/credentials/` — the store
+    /// `load_token` reads from under `cfg!(test)`, where the OS keychain is off.
+    fn seed_oauth_credential(home: &std::path::Path, integration: &str, expires_at: i64) {
+        use crate::auth::keychain::{StoredToken, TokenSource};
+        let creds = home.join("credentials");
+        std::fs::create_dir_all(&creds).unwrap();
+        let token = StoredToken {
+            access_token: "tk".into(),
+            refresh_token: Some("rt".into()),
+            expires_at,
+            scope: "openid".into(),
+            token_type: "Bearer".into(),
+            integration: integration.to_string(),
+            obtained_at: 0,
+            source: TokenSource::Oauth,
+        };
+        std::fs::write(
+            creds.join(format!("{integration}.json")),
+            serde_json::to_string(&token).unwrap(),
+        )
+        .unwrap();
+    }
+
+    /// An unexpired OAuth credential reports the seconds it has left, measured
+    /// against the caller's `now` rather than the wall clock — the field a UI
+    /// renders a countdown from.
+    #[test]
+    fn credential_status_json_counts_down_a_live_oauth_token() {
+        let tmp = tempfile::tempdir().unwrap();
+        seed_oauth_credential(tmp.path(), "google-workspace", 5_000);
+        let v = credential_status_json("google-workspace", None, tmp.path(), 1_400);
+        assert_eq!(v["status"], "valid");
+        assert_eq!(v["source"], "oauth");
+        assert_eq!(v["expires_in_secs"], 3_600);
+    }
+
+    /// Past its `expires_at` the same credential flips to `expired`, and the
+    /// remaining-seconds field clamps to zero instead of going negative — a
+    /// consumer subtracting it must never be handed a future deadline.
+    #[test]
+    fn credential_status_json_clamps_an_expired_oauth_token_to_zero() {
+        let tmp = tempfile::tempdir().unwrap();
+        seed_oauth_credential(tmp.path(), "google-workspace", 1_000);
+        let v = credential_status_json("google-workspace", None, tmp.path(), 5_000);
+        assert_eq!(v["status"], "expired");
+        assert_eq!(v["source"], "oauth");
+        assert_eq!(v["expires_in_secs"], 0);
+    }
+
+    /// The boundary itself: `expires_at == now` has nothing left, so it is
+    /// expired, not valid.
+    #[test]
+    fn credential_status_json_treats_the_expiry_instant_as_expired() {
+        let tmp = tempfile::tempdir().unwrap();
+        seed_oauth_credential(tmp.path(), "google-workspace", 4_242);
+        let v = credential_status_json("google-workspace", None, tmp.path(), 4_242);
+        assert_eq!(v["status"], "expired");
+    }
+
+    /// A credential file that will not parse is reported as a status, not
+    /// swallowed into `missing` — `missing` would send a UI down the "connect
+    /// this integration" path when a credential is in fact present but unreadable.
+    #[test]
+    fn credential_status_json_distinguishes_an_unreadable_store_from_missing() {
+        let tmp = tempfile::tempdir().unwrap();
+        let creds = tmp.path().join("credentials");
+        std::fs::create_dir_all(&creds).unwrap();
+        std::fs::write(creds.join("trimble-connect.json"), "not json at all").unwrap();
+        let v = credential_status_json("trimble-connect", None, tmp.path(), 0);
+        assert_eq!(v["status"], "keyring_unavailable");
+        assert_eq!(v["source"], serde_json::Value::Null);
+        assert_eq!(v["expires_in_secs"], serde_json::Value::Null);
+        // Still advertises how to re-connect, so the UI has somewhere to send the user.
+        assert_eq!(v["recommended_flow"], "oauth");
+    }
+
+    /// `--scopes` is a comma-separated list a human types, so surrounding
+    /// whitespace and stray separators have to be absorbed: a scope sent with a
+    /// leading space is a different scope to the provider, and an empty one is
+    /// rejected outright by some authorization servers.
+    #[test]
+    fn parse_scopes_trims_each_entry_and_drops_empty_ones() {
+        assert_eq!(
+            parse_scopes(Some(" openid , profile ")),
+            vec!["openid".to_string(), "profile".to_string()]
+        );
+        assert_eq!(
+            parse_scopes(Some("openid,,profile,")),
+            vec!["openid".to_string(), "profile".to_string()]
+        );
+        assert!(parse_scopes(Some(" , , ")).is_empty());
+        assert!(parse_scopes(None).is_empty());
+    }
+
+    /// Providers disagree on the field name in a dumped token blob: some write
+    /// `access_token`, some write `token`. Both are accepted so a user pasting a
+    /// provider's own JSON doesn't have to rename a key first.
+    #[test]
+    fn from_file_accepts_the_bare_token_field_as_well_as_access_token() {
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("token.json");
+        std::fs::write(&path, r#"{"token":"tk_bare"}"#).unwrap();
+        let token = load_token_from_file(&path, "trimble-connect").unwrap();
+        assert_eq!(token.access_token, "tk_bare");
+        // The fields the blob omitted fall back to usable defaults rather than
+        // leaving an unusable half-token behind.
+        assert_eq!(token.token_type, "Bearer");
+        assert_eq!(token.expires_at, 0);
+        assert!(token.refresh_token.is_none());
+        assert_eq!(token.integration, "trimble-connect");
+    }
+
+    /// `access_token` wins when a blob carries both, so the alias above can never
+    /// shadow the canonical field.
+    #[test]
+    fn from_file_prefers_access_token_over_the_alias() {
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("token.json");
+        std::fs::write(
+            &path,
+            r#"{"access_token":"tk_canonical","token":"tk_alias"}"#,
+        )
+        .unwrap();
+        let token = load_token_from_file(&path, "trimble-connect").unwrap();
+        assert_eq!(token.access_token, "tk_canonical");
+    }
+
+    /// A file that opens with `{` is a token blob, so broken JSON in it is a
+    /// parse error — never a bearer token whose value happens to be the raw text
+    /// of the malformed file, which would be sent to the provider verbatim.
+    #[test]
+    fn from_file_rejects_malformed_json_rather_than_pasting_it_as_a_bearer() {
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("token.json");
+        std::fs::write(&path, r#"{"access_token": "tk_broken"#).unwrap();
+        let err = load_token_from_file(&path, "trimble-connect").unwrap_err();
+        assert!(
+            matches!(&err, AwareError::Validation(m) if m.contains("token JSON")),
+            "expected a token-JSON validation error, got {err:?}"
+        );
+    }
+
+    /// A missing file is `NotFound`, not `Validation` — the CLI's exit code and
+    /// message differ between the two, and "your token file is invalid" is the
+    /// wrong thing to tell someone who mistyped a path.
+    #[test]
+    fn from_file_reports_a_missing_path_as_not_found() {
+        let tmp = tempfile::tempdir().unwrap();
+        let err =
+            load_token_from_file(&tmp.path().join("absent.txt"), "trimble-connect").unwrap_err();
+        assert!(
+            matches!(err, AwareError::NotFound(_)),
+            "expected NotFound, got {err:?}"
+        );
+    }
 }
