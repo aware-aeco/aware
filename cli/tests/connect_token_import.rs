@@ -12,9 +12,10 @@
 //! * That the CLI wiring in between — flag routing, and the write to the
 //!   credential store — actually happens end to end.
 //!
-//! Pure `load_token_from_env` behaviour is *not* re-tested here: the crate
-//! ships `test_env::EnvVarGuard` for exactly that (it serializes the write
-//! against the rest of the test binary), and the unit module uses it.
+//! `load_token_from_env`'s own logic is pinned by unit tests, which set the
+//! variable through `test_env::EnvVarGuard` rather than a subprocess. The
+//! overlap that remains here is deliberate and thin: these assert the exit
+//! code and the message a user actually sees, which a unit test cannot.
 //!
 //! The binary under test is not `cfg(test)`, so the unit-test keychain default
 //! in `auth/keychain.rs` does not reach it. `AWARE_DISABLE_KEYRING` makes
@@ -46,8 +47,8 @@ fn unix_now() -> i64 {
 /// That transcription can drift, and drift is *silent* in a nasty way: on a
 /// strict-parse failure `read_cred_file` falls through to a legacy branch that
 /// hardcodes `source: Paste`, so a seeded "expired oauth" credential would come
-/// back as a never-expiring paste token. [`assert_seed_round_trips`] is the
-/// tripwire; call it wherever the distinction matters.
+/// back as a never-expiring paste token. [`assert_oauth_seed_round_trips`] is
+/// the tripwire; call it wherever the oauth/paste distinction matters.
 fn seed_credential(home: &std::path::Path, integration: &str, source: &str, offset: i64) {
     let now = unix_now();
     let creds = home.join("credentials");
@@ -73,10 +74,8 @@ fn seed_oauth_credential(home: &std::path::Path, integration: &str, offset: i64)
     seed_credential(home, integration, "oauth", offset);
 }
 
-/// Fail loudly if a seeded credential no longer deserializes as the `source` it
-/// was written with — i.e. if `StoredToken` has drifted away from the JSON
-/// above and the legacy branch has quietly taken over.
-fn assert_seed_round_trips(home: &std::path::Path, integration: &str, expected_source: &str) {
+/// The `--list --json` entry for one integration.
+fn status_entry(home: &std::path::Path, integration: &str) -> serde_json::Value {
     let out = Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", home)
@@ -87,18 +86,42 @@ fn assert_seed_round_trips(home: &std::path::Path, integration: &str, expected_s
         .get_output()
         .stdout
         .clone();
-    let v: serde_json::Value = serde_json::from_slice(&out).unwrap();
-    let entry = v
+    let text = String::from_utf8(out).unwrap();
+    let v: serde_json::Value = serde_json::from_str(&text)
+        .unwrap_or_else(|e| panic!("connect --list --json printed non-JSON ({e}): {text}"));
+    let entries = v
         .as_array()
-        .unwrap()
+        .unwrap_or_else(|| panic!("connect --list --json did not print an array: {text}"));
+    entries
         .iter()
         .find(|e| e["integration"] == integration)
-        .unwrap_or_else(|| panic!("no status entry for {integration}"));
+        .unwrap_or_else(|| panic!("no status entry for {integration} in: {text}"))
+        .clone()
+}
+
+/// Fail loudly if an oauth-seeded credential no longer reads back as `oauth` —
+/// i.e. [`seed_credential`]'s JSON has drifted from `StoredToken` and the
+/// legacy branch has quietly taken over.
+///
+/// Deliberately oauth-only, and not parameterised by source. The legacy branch
+/// *hardcodes* `source: Paste`, so for a paste-seeded credential the drifted
+/// and undrifted readings are identical and no such check could ever fire —
+/// a tripwire that cannot fire is worse than none, because it reads like
+/// protection.
+fn assert_oauth_seed_round_trips(home: &std::path::Path, integration: &str) {
+    let entry = status_entry(home, integration);
     assert_eq!(
-        entry["source"], expected_source,
-        "seeded credential for {integration} did not read back as {expected_source} — \
-         the JSON in seed_credential has drifted from StoredToken in auth/keychain.rs"
+        entry["source"], "oauth",
+        "seeded credential for {integration} did not read back as oauth — the JSON \
+         in seed_credential has drifted from StoredToken in auth/keychain.rs, and the \
+         legacy reader (which forces source=paste) has taken over"
     );
+}
+
+/// Write a credential file whose contents are not a valid credential.
+fn write_unreadable_credential(home: &std::path::Path, integration: &str) {
+    std::fs::create_dir_all(home.join("credentials")).unwrap();
+    std::fs::write(cred_file(home, integration), "not json at all").unwrap();
 }
 
 /// The end-to-end import: the derived variable is read, the token is stripped,
@@ -171,7 +194,11 @@ fn from_env_rejects_a_blank_variable_instead_of_storing_it() {
         .args(["connect", "trimble-connect", "--from-env"])
         .assert()
         .failure()
-        .stderr(predicate::str::contains("empty"));
+        // Name the variable, as the unit test does — "empty" alone is one
+        // generic word that many unrelated errors contain.
+        .stderr(predicate::str::contains(
+            "env var AWARE_TOKEN_TRIMBLE_CONNECT is empty",
+        ));
 
     assert!(
         !cred_file(tmp.path(), "trimble-connect").exists(),
@@ -183,9 +210,13 @@ fn from_env_rejects_a_blank_variable_instead_of_storing_it() {
 /// branch of the `if` chain silently wins and the user gets a credential from a
 /// source they did not ask for — so the guard must reject, not pick.
 ///
-/// It covers four flags, and there is no clap `conflicts_with` backstop, so
-/// each pairing is exercised: testing only `--from-file --from-env` leaves the
-/// `--oauth` and `--device-code` arms free to be deleted unnoticed.
+/// It covers four flags with no clap `conflicts_with` backstop, so all six
+/// pairings of those four are exercised: testing only `--from-file`/`--from-env`
+/// leaves the `--oauth` and `--device-code` arms free to be deleted unnoticed.
+///
+/// Scope limit worth stating: `--refresh` returns before this guard runs, so
+/// `connect X --refresh --from-file f` is accepted and the file silently
+/// ignored. That is a product gap, not a test gap, and is left alone here.
 #[test]
 fn two_input_sources_are_rejected_rather_than_silently_ordered() {
     let tmp = tempfile::tempdir().unwrap();
@@ -193,11 +224,12 @@ fn two_input_sources_are_rejected_rather_than_silently_ordered() {
     std::fs::write(&token, "tk_from_file\n").unwrap();
     let token = token.to_str().unwrap().to_string();
 
-    let pairs: [&[&str]; 5] = [
+    let pairs: [&[&str]; 6] = [
         &["--from-file", &token, "--from-env"],
         &["--from-file", &token, "--oauth"],
         &["--from-file", &token, "--device-code"],
         &["--from-env", "--oauth"],
+        &["--from-env", "--device-code"],
         &["--oauth", "--device-code"],
     ];
 
@@ -252,11 +284,16 @@ fn tenant_is_refused_for_integrations_that_have_no_tenants() {
         ])
         .assert()
         .failure()
-        // Anchor on the flag under test. "microsoft-365" alone would also be
-        // satisfied by any future error that merely enumerates the supported
-        // integrations; "--tenant" appears in this guard and nowhere else on
-        // this path.
-        .stderr(predicate::str::contains("--tenant"));
+        // Anchor on the guard's whole sentence. `contains("--tenant")` alone is
+        // actively misleading: clap echoes the flag in its own "unexpected
+        // argument" error, so deleting `--tenant` from the CLI surface entirely
+        // would still satisfy it. `contains("microsoft-365")` has the
+        // mirror-image problem — a future error enumerating supported
+        // integrations would match. Only the full sentence is unreachable by
+        // any other path.
+        .stderr(predicate::str::contains(
+            "--tenant is only supported for microsoft-365",
+        ));
 
     assert!(
         !cred_file(tmp.path(), "google-workspace").exists(),
@@ -273,24 +310,23 @@ fn tenant_is_refused_for_integrations_that_have_no_tenants() {
 fn list_text_separates_live_expired_and_absent_credentials() {
     let tmp = tempfile::tempdir().unwrap();
     let home = tmp.path();
-    seed_oauth_credential(home, "google-workspace", 7_200);
+    seed_oauth_credential(home, "google-workspace", 7_205);
     seed_oauth_credential(home, "trimble-connect", -7_200);
     // microsoft-365 is deliberately left unseeded.
-    assert_seed_round_trips(home, "google-workspace", "oauth");
+    assert_oauth_seed_round_trips(home, "google-workspace");
 
     let text = list_text(home);
     let live = line_for(&text, "google-workspace");
     assert!(live.contains("valid"), "{live}");
-    // Reported in whole minutes. Seeded two hours out, so the countdown must
-    // land just under 120 — this kills "printed the raw seconds" (7200) and
-    // "printed the unix deadline" (~1.8e9). It does not pin floor-vs-ceil
-    // rounding, which is unpinnable at a whole-minute offset; the exact
-    // arithmetic is owned by the `credential_status_json_*` unit tests, which
-    // inject `now` instead of reading the clock.
-    let mins = minutes_in(&live);
-    assert!(
-        (118..=120).contains(&mins),
-        "expected a ~120m countdown, got {mins}m in: {live}"
+    // Reported in whole minutes, truncated. The seed is deliberately 7205s —
+    // five seconds past a whole minute — so truncation gives exactly 120 while
+    // rounding up would give 121, and dividing by anything but 60 lands
+    // elsewhere. A round two hours could not tell those apart. The five seconds
+    // of slack is the seed-to-subprocess gap, which is milliseconds in practice.
+    assert_eq!(
+        minutes_in(&live),
+        120,
+        "countdown should truncate to whole minutes: {live}"
     );
 
     let stale = line_for(&text, "trimble-connect");
@@ -316,10 +352,13 @@ fn list_text_renders_paste_and_unreadable_credentials() {
     let home = tmp.path();
     // A paste token: user-managed, so it is reported valid with no countdown
     // and no refresh hint — this CLI has no way to renew it.
+    // No drift tripwire on this one, deliberately: the legacy reader hardcodes
+    // `source: Paste`, so a drifted seed renders identically here and any such
+    // check would be incapable of failing. The branch under test is reached
+    // either way, which is what this test is for.
     seed_credential(home, "google-workspace", "paste", 0);
-    assert_seed_round_trips(home, "google-workspace", "paste");
     // An unreadable credential: present but not parseable.
-    std::fs::write(cred_file(home, "trimble-connect"), "not json at all").unwrap();
+    write_unreadable_credential(home, "trimble-connect");
 
     let text = list_text(home);
 
@@ -338,7 +377,6 @@ fn list_text_renders_paste_and_unreadable_credentials() {
     // that already has a credential.
     let unreadable = line_for(&text, "trimble-connect");
     assert!(unreadable.contains("keyring unavailable"), "{unreadable}");
-    assert!(!unreadable.contains("missing"), "{unreadable}");
 }
 
 fn list_text(home: &std::path::Path) -> String {
@@ -398,14 +436,10 @@ fn disconnect_removes_the_credential_it_reports_removing() {
         "disconnect reported success but the credential file is still there"
     );
 
-    Command::cargo_bin("aware")
-        .unwrap()
-        .env("AWARE_HOME", home)
-        .env("AWARE_DISABLE_KEYRING", "1")
-        .args(["--json", "connect", "--list"])
-        .assert()
-        .success()
-        .stdout(predicate::str::contains("\"status\": \"missing\""));
+    // Assert on this integration's own entry. A bare
+    // `contains("\"status\": \"missing\"")` would be satisfied by the two
+    // KNOWN_INTEGRATIONS that were never seeded, disconnect or no disconnect.
+    assert_eq!(status_entry(home, "google-workspace")["status"], "missing");
 }
 
 /// `disconnect --as <alias>` has to reach the alias's own slot. Dropping the
@@ -425,7 +459,11 @@ fn disconnect_with_an_alias_clears_that_alias_and_not_the_default() {
         .env("AWARE_DISABLE_KEYRING", "1")
         .args(["disconnect", "google-workspace", "--as", "personal"])
         .assert()
-        .success();
+        .success()
+        // The message names the integration but not the alias, so it cannot
+        // distinguish this from disconnecting the default — which is exactly
+        // why the filesystem assertions below are the real check.
+        .stdout(predicate::str::contains("Removed credential for"));
 
     assert!(
         !cred_file(home, "google-workspace.personal").exists(),

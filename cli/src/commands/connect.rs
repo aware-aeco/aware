@@ -645,7 +645,6 @@ mod tests {
 
     #[test]
     fn credential_status_json_missing() {
-        let _keyring = keyring_off();
         let tmp = tempfile::tempdir().unwrap();
         let v = credential_status_json("trimble-connect", None, tmp.path(), 0);
         assert_eq!(v["status"], "missing");
@@ -680,7 +679,6 @@ mod tests {
     #[test]
     fn credential_status_json_paste_token() {
         use crate::auth::keychain::{StoredToken, TokenSource};
-        let _keyring = keyring_off();
         let tmp = tempfile::tempdir().unwrap();
         let creds = tmp.path().join("credentials");
         std::fs::create_dir_all(&creds).unwrap();
@@ -707,23 +705,23 @@ mod tests {
         assert_eq!(v["recommended_flow"], "oauth");
     }
 
-    /// Pin the credentials file under `home` as the only credential store.
-    ///
-    /// `keyring_enabled` (auth/keychain.rs) is off by default in unit tests, but
-    /// only while `AWARE_TEST_KEYRING` is unset — and that variable is a
-    /// supported mode this same crate uses to exercise the real keychain. Under
-    /// it, `load_token` errors out at the keyring before it ever opens the file
-    /// these tests seed, so a test asserting on a *specific* status would pass
-    /// or fail for reasons unrelated to what it covers. Setting
-    /// `AWARE_DISABLE_KEYRING` takes the earlier branch and makes the outcome
-    /// the same either way. `EnvVarGuard` is what serializes that write against
-    /// the rest of the test binary; see `test_env.rs`.
-    fn keyring_off() -> crate::test_env::EnvVarGuard {
-        crate::test_env::EnvVarGuard::set("AWARE_DISABLE_KEYRING", "1")
-    }
+    // Every test below that goes through `load_token` reads the credentials
+    // file under its own `AWARE_HOME`, which is what `keyring_enabled`
+    // (auth/keychain.rs) selects in unit tests — `cfg!(test)` with
+    // `AWARE_TEST_KEYRING` unset, the default and what CI runs.
+    //
+    // Under `AWARE_TEST_KEYRING=1` these read the process-global OS keychain
+    // instead and are not meaningful. That is a pre-existing property of this
+    // module (`credential_status_json_missing` and `..._paste_token` predate
+    // this and behave the same), and of `auth::refresh`/`auth::keychain`, most
+    // of whose tests already fail in that mode. Forcing `AWARE_DISABLE_KEYRING`
+    // here would fix it only by writing a process-global that ~28 unguarded
+    // tests in those modules read, racing them — a worse trade. Fixing it
+    // properly means putting every reader behind `test_env::EnvVarGuard`, which
+    // is a crate-wide change and not this one's business.
 
     /// Write a credential file straight into `<home>/credentials/` — the store
-    /// `load_token` reads once [`keyring_off`] is in effect.
+    /// `load_token` reads under the unit-test default described above.
     fn seed_oauth_credential(home: &std::path::Path, integration: &str, expires_at: i64) {
         use crate::auth::keychain::{StoredToken, TokenSource};
         let creds = home.join("credentials");
@@ -750,7 +748,6 @@ mod tests {
     /// renders a countdown from.
     #[test]
     fn credential_status_json_counts_down_a_live_oauth_token() {
-        let _keyring = keyring_off();
         let tmp = tempfile::tempdir().unwrap();
         seed_oauth_credential(tmp.path(), "google-workspace", 5_000);
         let v = credential_status_json("google-workspace", None, tmp.path(), 1_400);
@@ -764,7 +761,6 @@ mod tests {
     /// consumer subtracting it must never be handed a future deadline.
     #[test]
     fn credential_status_json_clamps_an_expired_oauth_token_to_zero() {
-        let _keyring = keyring_off();
         let tmp = tempfile::tempdir().unwrap();
         seed_oauth_credential(tmp.path(), "google-workspace", 1_000);
         let v = credential_status_json("google-workspace", None, tmp.path(), 5_000);
@@ -777,7 +773,6 @@ mod tests {
     /// expired, not valid.
     #[test]
     fn credential_status_json_treats_the_expiry_instant_as_expired() {
-        let _keyring = keyring_off();
         let tmp = tempfile::tempdir().unwrap();
         seed_oauth_credential(tmp.path(), "google-workspace", 4_242);
         let v = credential_status_json("google-workspace", None, tmp.path(), 4_242);
@@ -797,7 +792,6 @@ mod tests {
     /// API change and not this test's business.
     #[test]
     fn credential_status_json_distinguishes_an_unreadable_store_from_missing() {
-        let _keyring = keyring_off();
         let tmp = tempfile::tempdir().unwrap();
         let creds = tmp.path().join("credentials");
         std::fs::create_dir_all(&creds).unwrap();
