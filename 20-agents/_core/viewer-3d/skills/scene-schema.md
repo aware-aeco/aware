@@ -60,8 +60,17 @@ profiles fail a present malformed descriptor rather than guessing thickness.
 An absent descriptor remains the legacy rectangular member envelope.
 
 `tee` has a top flange (`bf` × `tf`) and a centred web of thickness `tw`; its
-envelope is `{w:bf,d:d}`. `double-angle` describes two identical sharp-corner
-angles. `orientation:"llbb"` places their long (`d`) legs back-to-back, so its
+envelope is `{w:bf,d:d}`.
+
+`angle` is chiral, and its handedness is part of the descriptor rather than a
+rendering choice: the vertical (`d`) leg lies on the section frame's -X side and
+the flat (`b`) leg along -Y, so the heel sits at the -X,-Y corner. No `rot`
+recovers a mirrored unequal angle, and a mirrored equal one is still a quarter
+turn from where it was asked for, so a sink whose native profile seats the
+opposite hand must mirror that profile rather than bake the other hand.
+
+`double-angle` describes two identical sharp-corner angles.
+`orientation:"llbb"` places their long (`d`) legs back-to-back, so its
 envelope is `{w:2*b+gap,d:d}`. `orientation:"slbb"` places their short (`b`)
 legs back-to-back, so its envelope is `{w:2*d+gap,d:b}`. In both orientations
 the two angles are a side-by-side mirrored pair; the suffix changes which leg

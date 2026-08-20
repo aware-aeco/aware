@@ -79,3 +79,32 @@ differently fails the bake rather than committing a wrong pair, and its
 and Rhino sinks require. Because one record owns two parts, a bolt, weld or
 boolean-cut that names a double-angle member is refused rather than bound to one
 leg. `tee` remains explicitly unsupported.
+
+A canonical `xsection.shape:"angle"` is built **mirrored**, because Tekla's
+parametric `L h*b*t` seats its vertical leg on +X where the canonical descriptor
+puts it on -X. The sink reverses the member's axis — the only way to mirror a
+section in Tekla — and carries the matching roll, so the finished part matches
+what `viewer-3d`, the IFC sink and Rhino draw. Its row therefore carries
+`reversedAxis`, saying that the native part's own from→to is the reverse of the
+authored axis and so is what its `nativeRotation` and `nativeRotationOffset` are
+measured against; `rot` keeps its usual meaning, the authored canonical roll.
+The seating is proved before commit rather than assumed. Every angle's inserted
+solid is checked for its heel being on the canonical side and for its bounding
+box matching the descriptor's leg lengths — the second is what holds a catalog
+profile, whose fillets rule out a vertex comparison but leave its envelope
+nominal, so a descriptor cannot resolve to a differently sized catalog angle and
+commit. One whose resolved profile is exactly the sharp-corner parametric `L`
+the descriptor implies is additionally compared vertex for vertex against the
+canonical section. A catalog seated or sized differently therefore fails the bake
+instead of committing a wrong member. A wrong leg *thickness* on a catalog
+profile stays out of reach, since `t` does not move the envelope.
+
+Its `xsection` envelope must agree with the authored `section` exactly as the IFC
+and Rhino sinks require, and `section.w` and `section.d` must both be present and
+numeric for that comparison to mean anything — a half-written `section` is
+refused rather than quietly skipping the check. A present but malformed `angle`
+descriptor (a non-positive dimension, or a `t` that leaves no leg) likewise fails
+its record as `invalid-geometry` rather than baking the authored profile
+unchecked, exactly as `double-angle` does. Single angles baked before
+this change were built unmirrored, so an existing bake must be re-run to pick up
+the correct hand.

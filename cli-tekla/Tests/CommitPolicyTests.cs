@@ -297,6 +297,108 @@ public sealed class CommitPolicyTests
         }
     }
 
+    [Fact]
+    public void SingleAngleIsBuiltMirroredAndProvedAgainstTheCanonicalSection()
+    {
+        // The bake script is a raw string, so nothing type-checks this wiring. These
+        // are the load-bearing pieces: without the reversed axis the heel lands on
+        // the mirror of what viewer-3d, IFC and Rhino draw, and without the read-back
+        // comparison a catalog seated the other way commits silently. See #439.
+        var code = BakeSceneScript.Code;
+        Assert.Contains("TeklaSingleAngleContract.CreatePlan", code);
+        Assert.Contains("memberRollPlans[id+\"#L\"]", code);
+        Assert.Contains("singlePlan.ReversedAxis?tail:head", code);
+        Assert.Contains("HeelIsOnTheCanonicalSide", code);
+        Assert.Contains("singlePlan.ParametricProfile", code);
+        // Handedness alone would let a descriptor resolve to a differently sized
+        // catalog angle: right sides, wrong leg lengths. The envelope is what holds a
+        // catalog profile to the descriptor, before and after insertion.
+        Assert.Contains("TeklaSingleAngleContract.MeasureEnvelope", code);
+        Assert.Contains("TeklaSingleAngleContract.EnvelopeToleranceMm", code);
+        // Pre-flight envelope agreement lives in the contract, so an incomplete
+        // authored `section` is refused rather than silently skipping the check.
+        Assert.Contains("TeklaSingleAngleContract.RequireAuthoredEnvelope", code);
+        // The receipt must still report the AUTHORED roll, not the reversed one the
+        // part is actually built at, and must say that the axis was reversed.
+        Assert.Contains("memberRollById[id]=basePlan.NormalizedDegrees", code);
+        Assert.Contains("r[\"reversedAxis\"]=emittedSinglePlan.ReversedAxis", code);
+    }
+
+    [Fact]
+    public void SingleAngleLiveFixtureCoversBothBranchesWithAndWithoutRoll()
+    {
+        var members = SingleAngleMembers();
+
+        // The vertical zero-frame branch must be driven WITH a roll as well as
+        // without: at rot 0 the `-rot + 180` correction collapses to a bare 180, so a
+        // sign error on that term passes every unrolled column.
+        var verticals = members.Where(m => IsVertical(m!)).ToArray();
+        Assert.Contains(verticals, m => m!["rot"] is null);
+        Assert.Contains(verticals, m => m!["rot"] is not null && m["rot"]!.GetValue<double>() != 0);
+        // And downward as well as upward, since the seed branch picks its native
+        // reference from the axis sign.
+        Assert.Contains(verticals, m => m!["from"]![2]!.GetValue<double>() > m["to"]![2]!.GetValue<double>());
+
+        // Non-vertical coverage: a plain horizontal, a rolled one, and a sloped one.
+        var horizontals = members.Where(m => !IsVertical(m!)).ToArray();
+        Assert.Contains(horizontals, m => m!["rot"] is null && m["from"]![2]!.GetValue<double>() == m["to"]![2]!.GetValue<double>());
+        Assert.Contains(horizontals, m => m!["rot"] is not null && m["rot"]!.GetValue<double>() != 0);
+        Assert.Contains(horizontals, m => m!["from"]![2]!.GetValue<double>() != m["to"]![2]!.GetValue<double>());
+
+        // An equal-leg angle as well as unequal ones. It is not chiral, so the mirror
+        // is a quarter turn rather than unrecoverable — still the wrong seating.
+        Assert.Contains(members, m => m!["xsection"]!["d"]!.GetValue<double>() == m["xsection"]!["b"]!.GetValue<double>());
+        Assert.Contains(members, m => m!["xsection"]!["d"]!.GetValue<double>() != m["xsection"]!["b"]!.GetValue<double>());
+    }
+
+    [Fact]
+    public void SingleAngleLiveFixturePlansCleanlyAndMatchesItsAuthoredEnvelope()
+    {
+        foreach (var element in SingleAngleMembers())
+        {
+            var section = element!["xsection"]!;
+            double[] from = [.. element["from"]!.AsArray().Select(v => v!.GetValue<double>())];
+            double[] to = [.. element["to"]!.AsArray().Select(v => v!.GetValue<double>())];
+            double d = section["d"]!.GetValue<double>(), b = section["b"]!.GetValue<double>();
+            // Exactly the arguments the bake script derives, so the manual live pass
+            // and the automated contract cannot drift apart unnoticed.
+            var plan = TeklaSingleAngleContract.CreatePlan(
+                d, b, section["t"]!.GetValue<double>(),
+                element["rot"]?.GetValue<double>() ?? 0,
+                TeklaMemberRollContract.UsesVerticalSeedFrame(from, to));
+
+            var id = element["id"]!.GetValue<string>();
+            Assert.True(plan.ReversedAxis, $"{id}: must be built on the reversed axis");
+            // The bake refuses an angle whose authored `section` is incomplete or
+            // disagrees with the descriptor, so every fixture member must clear that
+            // gate through the same call the bake makes.
+            TeklaSingleAngleContract.RequireAuthoredEnvelope(
+                plan,
+                element["section"]!["w"]!.GetValue<double>(),
+                element["section"]!["d"]!.GetValue<double>());
+            Assert.Equal(b, plan.EnvelopeWidthMm, 9);
+            Assert.Equal(d, plan.EnvelopeDepthMm, 9);
+            // Every fixture member is authored with the sharp-corner parametric `L`,
+            // so the live bake runs the FULL outline comparison on each rather than
+            // falling back to the fillet-tolerant heel test alone.
+            Assert.Equal(element["profile"]!.GetValue<string>(), plan.ParametricProfile);
+            // The figure the bake compares against must itself read as canonical.
+            Assert.True(TeklaSingleAngleContract.HeelIsOnTheCanonicalSide(plan.SectionOutline, 0.1), $"{id}: canonical outline");
+        }
+    }
+
+    static JsonNode?[] SingleAngleMembers()
+    {
+        var scene = JsonNode.Parse(System.IO.File.ReadAllText(FixturePath("double-angle-scene.json")))!;
+        var members = scene["scene"]!["elements"]!.AsArray()
+            .Where(element => element!["xsection"]?["shape"]?.GetValue<string>() == "angle")
+            .ToArray();
+        // A fixture that quietly stopped carrying single angles would pass every
+        // assertion below by vacuity.
+        Assert.NotEmpty(members);
+        return members;
+    }
+
     static string FixturePath(string name) => System.IO.Path.GetFullPath(System.IO.Path.Combine(
         AppContext.BaseDirectory, "..", "..", "..", "Fixtures", name));
 
