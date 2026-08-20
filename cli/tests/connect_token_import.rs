@@ -310,7 +310,7 @@ fn tenant_is_refused_for_integrations_that_have_no_tenants() {
 fn list_text_separates_live_expired_and_absent_credentials() {
     let tmp = tempfile::tempdir().unwrap();
     let home = tmp.path();
-    seed_oauth_credential(home, "google-workspace", 7_205);
+    seed_oauth_credential(home, "google-workspace", 7_259);
     seed_oauth_credential(home, "trimble-connect", -7_200);
     // microsoft-365 is deliberately left unseeded.
     assert_oauth_seed_round_trips(home, "google-workspace");
@@ -318,11 +318,16 @@ fn list_text_separates_live_expired_and_absent_credentials() {
     let text = list_text(home);
     let live = line_for(&text, "google-workspace");
     assert!(live.contains("valid"), "{live}");
-    // Reported in whole minutes, truncated. The seed is deliberately 7205s —
-    // five seconds past a whole minute — so truncation gives exactly 120 while
-    // rounding up would give 121, and dividing by anything but 60 lands
-    // elsewhere. A round two hours could not tell those apart. The five seconds
-    // of slack is the seed-to-subprocess gap, which is milliseconds in practice.
+    // Reported in whole minutes, truncated. The seed is deliberately 7259s —
+    // 59 seconds past a whole minute — so truncation gives exactly 120 while
+    // rounding up gives 121, and dividing by anything but 60 lands elsewhere.
+    // A round two hours could not tell those apart.
+    //
+    // The offset sits at the TOP of its minute on purpose. Everything between
+    // the seed and this assertion (two `aware` subprocesses) eats into the
+    // remaining lifetime, and the bucket only changes once that spend passes
+    // 59s — versus 5s if the offset were just over the boundary at 7205.
+    // Milliseconds in practice, but CI runners are not always sane.
     assert_eq!(
         minutes_in(&live),
         120,
