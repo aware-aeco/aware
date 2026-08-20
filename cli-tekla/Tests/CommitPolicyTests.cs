@@ -315,7 +315,9 @@ public sealed class CommitPolicyTests
         // catalog profile to the descriptor, before and after insertion.
         Assert.Contains("TeklaSingleAngleContract.MeasureEnvelope", code);
         Assert.Contains("TeklaSingleAngleContract.EnvelopeToleranceMm", code);
-        Assert.Contains("angle envelope ", code);
+        // Pre-flight envelope agreement lives in the contract, so an incomplete
+        // authored `section` is refused rather than silently skipping the check.
+        Assert.Contains("TeklaSingleAngleContract.RequireAuthoredEnvelope", code);
         // The receipt must still report the AUTHORED roll, not the reversed one the
         // part is actually built at, and must say that the axis was reversed.
         Assert.Contains("memberRollById[id]=basePlan.NormalizedDegrees", code);
@@ -367,10 +369,13 @@ public sealed class CommitPolicyTests
 
             var id = element["id"]!.GetValue<string>();
             Assert.True(plan.ReversedAxis, $"{id}: must be built on the reversed axis");
-            // The bake refuses a descriptor whose envelope disagrees with the authored
-            // `section`, so every fixture member must clear that gate.
-            Assert.Equal(element["section"]!["w"]!.GetValue<double>(), plan.EnvelopeWidthMm, 9);
-            Assert.Equal(element["section"]!["d"]!.GetValue<double>(), plan.EnvelopeDepthMm, 9);
+            // The bake refuses an angle whose authored `section` is incomplete or
+            // disagrees with the descriptor, so every fixture member must clear that
+            // gate through the same call the bake makes.
+            TeklaSingleAngleContract.RequireAuthoredEnvelope(
+                plan,
+                element["section"]!["w"]!.GetValue<double>(),
+                element["section"]!["d"]!.GetValue<double>());
             Assert.Equal(b, plan.EnvelopeWidthMm, 9);
             Assert.Equal(d, plan.EnvelopeDepthMm, 9);
             // Every fixture member is authored with the sharp-corner parametric `L`,

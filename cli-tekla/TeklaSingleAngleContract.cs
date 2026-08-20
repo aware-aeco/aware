@@ -126,6 +126,14 @@ public static class TeklaSingleAngleContract
     /// </summary>
     public const double EnvelopeToleranceMm = 1d;
 
+    /// <summary>
+    /// How far the AUTHORED `section` may sit from the descriptor's own envelope.
+    /// Tighter than <see cref="EnvelopeToleranceMm"/> because both sides are numbers
+    /// the scene author wrote, not geometry read back from a model — the same 0.1 mm
+    /// the double-angle path and the IFC and Rhino sinks apply.
+    /// </summary>
+    public const double AuthoredEnvelopeToleranceMm = 0.1d;
+
     /// <param name="verticalZeroFrame">
     /// <see cref="TeklaMemberRollContract.UsesVerticalSeedFrame"/> for this member's axis.
     /// </param>
@@ -173,6 +181,39 @@ public static class TeklaSingleAngleContract
     {
         var bounds = Bounds(sectionXy);
         return new[] { bounds[1] - bounds[0], bounds[3] - bounds[2] };
+    }
+
+    /// <summary>
+    /// Hold the authored `section` envelope to the descriptor's, before anything is
+    /// inserted. `scene-schema.md`: "Shape envelope dimensions must agree with
+    /// `section.{w,d}`" — the same agreement the IFC and Rhino sinks require.
+    /// </summary>
+    /// <param name="authoredWidthMm">`section.w`, or NaN when absent or non-numeric.</param>
+    /// <param name="authoredDepthMm">`section.d`, or NaN when absent or non-numeric.</param>
+    /// <remarks>
+    /// An INCOMPLETE authored envelope is rejected rather than waved through, which
+    /// is the whole reason this lives here instead of being a pair of comparisons at
+    /// the call site. Guarding the comparison with "both values are finite" reads as
+    /// caution and behaves as a silent skip: `section:{"w":200}` on a 150×100 angle
+    /// then bypasses the check entirely, and its finite width — which disagrees with
+    /// the required 100 mm — never gets compared. `section` is required by the
+    /// schema, so an absent or half-written one is malformed input, not a reason to
+    /// stop checking. (Codex review on #441.)
+    /// </remarks>
+    public static void RequireAuthoredEnvelope(TeklaSingleAnglePlan plan, double authoredWidthMm, double authoredDepthMm)
+    {
+        if (plan is null)
+            throw new ArgumentException("a plan is required to check an authored envelope", nameof(plan));
+        if (!IsFinite(authoredWidthMm) || !IsFinite(authoredDepthMm))
+            throw new ArgumentException(
+                "angle requires the authored section envelope `section.w` and `section.d` to both be finite numbers",
+                nameof(plan));
+        if (Math.Abs(authoredWidthMm - plan.EnvelopeWidthMm) > AuthoredEnvelopeToleranceMm
+            || Math.Abs(authoredDepthMm - plan.EnvelopeDepthMm) > AuthoredEnvelopeToleranceMm)
+            throw new ArgumentException(
+                "angle envelope " + Millimetres(plan.EnvelopeWidthMm) + "x" + Millimetres(plan.EnvelopeDepthMm) +
+                " disagrees with the authored section " + Millimetres(authoredWidthMm) + "x" + Millimetres(authoredDepthMm),
+                nameof(plan));
     }
 
     /// <summary>

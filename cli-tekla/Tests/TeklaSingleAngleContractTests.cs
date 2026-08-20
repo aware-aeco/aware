@@ -289,6 +289,42 @@ public sealed class TeklaSingleAngleContractTests
     }
 
     [Fact]
+    public void AuthoredEnvelopeMustAgreeWithTheDescriptor()
+    {
+        var plan = TeklaSingleAngleContract.CreatePlan(150, 100, 10, 0, false);
+        TeklaSingleAngleContract.RequireAuthoredEnvelope(plan, 100, 150);
+        // At the tolerance it still agrees; past it, either dimension is enough.
+        TeklaSingleAngleContract.RequireAuthoredEnvelope(plan, 100 + TeklaSingleAngleContract.AuthoredEnvelopeToleranceMm, 150);
+        Assert.Throws<ArgumentException>(() => TeklaSingleAngleContract.RequireAuthoredEnvelope(plan, 212, 150));
+        Assert.Throws<ArgumentException>(() => TeklaSingleAngleContract.RequireAuthoredEnvelope(plan, 100, 212));
+        Assert.Throws<ArgumentException>(() => TeklaSingleAngleContract.RequireAuthoredEnvelope(
+            plan, 100, 150 + 2 * TeklaSingleAngleContract.AuthoredEnvelopeToleranceMm));
+    }
+
+    [Fact]
+    public void AnIncompleteAuthoredEnvelopeIsRefusedRatherThanSkipped()
+    {
+        // Codex review on #441. Guarding the comparison with "both values are finite"
+        // reads as caution and behaves as a silent skip: `section:{"w":200}` on a
+        // 150x100 angle carries a finite width that disagrees with the required
+        // 100 mm, and the missing depth must not be what lets it through. `section`
+        // is required by the schema, so a half-written one is malformed input rather
+        // than a reason to stop checking.
+        var plan = TeklaSingleAngleContract.CreatePlan(150, 100, 10, 0, false);
+        foreach (var (width, depth) in new[]
+                 {
+                     (200d, double.NaN),          // Codex's example, verbatim
+                     (100d, double.NaN),          // and the same hole with an AGREEING width
+                     (double.NaN, 150d),
+                     (double.NaN, double.NaN),    // `section` absent entirely
+                     (100d, double.PositiveInfinity),
+                 })
+            Assert.Throws<ArgumentException>(() => TeklaSingleAngleContract.RequireAuthoredEnvelope(plan, width, depth));
+
+        Assert.Throws<ArgumentException>(() => TeklaSingleAngleContract.RequireAuthoredEnvelope(null!, 100, 150));
+    }
+
+    [Fact]
     public void MeasureEnvelopeRefusesASectionItCannotRead()
     {
         Assert.Throws<ArgumentException>(() => TeklaSingleAngleContract.MeasureEnvelope(null!));

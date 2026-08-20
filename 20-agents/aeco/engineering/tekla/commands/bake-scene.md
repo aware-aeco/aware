@@ -96,10 +96,15 @@ nominal, so a descriptor cannot resolve to a differently sized catalog angle and
 commit. One whose resolved profile is exactly the sharp-corner parametric `L`
 the descriptor implies is additionally compared vertex for vertex against the
 canonical section. A catalog seated or sized differently therefore fails the bake
-instead of committing a wrong member, and its `xsection` envelope must agree with
-the authored `section` exactly as the IFC and Rhino sinks require. A present
-but malformed `angle` descriptor (a non-positive dimension, or a `t` that leaves
-no leg) fails its record as `invalid-geometry` rather than baking the authored
-profile unchecked, exactly as `double-angle` does. Single angles baked before
+instead of committing a wrong member. A wrong leg *thickness* on a catalog
+profile stays out of reach, since `t` does not move the envelope.
+
+Its `xsection` envelope must agree with the authored `section` exactly as the IFC
+and Rhino sinks require, and `section.w` and `section.d` must both be present and
+numeric for that comparison to mean anything — a half-written `section` is
+refused rather than quietly skipping the check. A present but malformed `angle`
+descriptor (a non-positive dimension, or a `t` that leaves no leg) likewise fails
+its record as `invalid-geometry` rather than baking the authored profile
+unchecked, exactly as `double-angle` does. Single angles baked before
 this change were built unmirrored, so an existing bake must be re-run to pick up
 the correct hand.
