@@ -645,6 +645,7 @@ mod tests {
 
     #[test]
     fn credential_status_json_missing() {
+        let _keyring = keyring_off();
         let tmp = tempfile::tempdir().unwrap();
         let v = credential_status_json("trimble-connect", None, tmp.path(), 0);
         assert_eq!(v["status"], "missing");
@@ -679,6 +680,7 @@ mod tests {
     #[test]
     fn credential_status_json_paste_token() {
         use crate::auth::keychain::{StoredToken, TokenSource};
+        let _keyring = keyring_off();
         let tmp = tempfile::tempdir().unwrap();
         let creds = tmp.path().join("credentials");
         std::fs::create_dir_all(&creds).unwrap();
@@ -705,8 +707,23 @@ mod tests {
         assert_eq!(v["recommended_flow"], "oauth");
     }
 
+    /// Pin the credentials file under `home` as the only credential store.
+    ///
+    /// `keyring_enabled` (auth/keychain.rs) is off by default in unit tests, but
+    /// only while `AWARE_TEST_KEYRING` is unset — and that variable is a
+    /// supported mode this same crate uses to exercise the real keychain. Under
+    /// it, `load_token` errors out at the keyring before it ever opens the file
+    /// these tests seed, so a test asserting on a *specific* status would pass
+    /// or fail for reasons unrelated to what it covers. Setting
+    /// `AWARE_DISABLE_KEYRING` takes the earlier branch and makes the outcome
+    /// the same either way. `EnvVarGuard` is what serializes that write against
+    /// the rest of the test binary; see `test_env.rs`.
+    fn keyring_off() -> crate::test_env::EnvVarGuard {
+        crate::test_env::EnvVarGuard::set("AWARE_DISABLE_KEYRING", "1")
+    }
+
     /// Write a credential file straight into `<home>/credentials/` — the store
-    /// `load_token` reads from under `cfg!(test)`, where the OS keychain is off.
+    /// `load_token` reads once [`keyring_off`] is in effect.
     fn seed_oauth_credential(home: &std::path::Path, integration: &str, expires_at: i64) {
         use crate::auth::keychain::{StoredToken, TokenSource};
         let creds = home.join("credentials");
@@ -733,6 +750,7 @@ mod tests {
     /// renders a countdown from.
     #[test]
     fn credential_status_json_counts_down_a_live_oauth_token() {
+        let _keyring = keyring_off();
         let tmp = tempfile::tempdir().unwrap();
         seed_oauth_credential(tmp.path(), "google-workspace", 5_000);
         let v = credential_status_json("google-workspace", None, tmp.path(), 1_400);
@@ -746,6 +764,7 @@ mod tests {
     /// consumer subtracting it must never be handed a future deadline.
     #[test]
     fn credential_status_json_clamps_an_expired_oauth_token_to_zero() {
+        let _keyring = keyring_off();
         let tmp = tempfile::tempdir().unwrap();
         seed_oauth_credential(tmp.path(), "google-workspace", 1_000);
         let v = credential_status_json("google-workspace", None, tmp.path(), 5_000);
@@ -758,17 +777,27 @@ mod tests {
     /// expired, not valid.
     #[test]
     fn credential_status_json_treats_the_expiry_instant_as_expired() {
+        let _keyring = keyring_off();
         let tmp = tempfile::tempdir().unwrap();
         seed_oauth_credential(tmp.path(), "google-workspace", 4_242);
         let v = credential_status_json("google-workspace", None, tmp.path(), 4_242);
         assert_eq!(v["status"], "expired");
     }
 
-    /// A credential file that will not parse is reported as a status, not
-    /// swallowed into `missing` — `missing` would send a UI down the "connect
-    /// this integration" path when a credential is in fact present but unreadable.
+    /// A credential file that will not parse gets its own status rather than
+    /// being swallowed into `missing`, which would send a UI down the "connect
+    /// this integration" path while a credential is in fact present and
+    /// unreadable.
+    ///
+    /// The status it gets is `keyring_unavailable`, which is a misnomer here:
+    /// the arm covers *any* `load_token` error (auth/keychain.rs returns
+    /// `Validation` for unparseable JSON) and the keyring is switched off in
+    /// this test. The distinction from `missing` is what this pins; the name is
+    /// part of the `--list --json` / `doctor` contract, so correcting it is an
+    /// API change and not this test's business.
     #[test]
     fn credential_status_json_distinguishes_an_unreadable_store_from_missing() {
+        let _keyring = keyring_off();
         let tmp = tempfile::tempdir().unwrap();
         let creds = tmp.path().join("credentials");
         std::fs::create_dir_all(&creds).unwrap();
@@ -781,10 +810,11 @@ mod tests {
         assert_eq!(v["recommended_flow"], "oauth");
     }
 
-    /// `--scopes` is a comma-separated list a human types, so surrounding
-    /// whitespace and stray separators have to be absorbed: a scope sent with a
-    /// leading space is a different scope to the provider, and an empty one is
-    /// rejected outright by some authorization servers.
+    /// `--scopes` is a comma-separated list a human types, and the entries are
+    /// space-joined into the OAuth `scope` parameter (auth/pkce.rs,
+    /// auth/device.rs), which RFC 6749 §3.3 defines as space-delimited.
+    /// Untrimmed and empty entries would emit doubled separators into that
+    /// list, so they are absorbed here rather than sent.
     #[test]
     fn parse_scopes_trims_each_entry_and_drops_empty_ones() {
         assert_eq!(
@@ -809,8 +839,9 @@ mod tests {
         std::fs::write(&path, r#"{"token":"tk_bare"}"#).unwrap();
         let token = load_token_from_file(&path, "trimble-connect").unwrap();
         assert_eq!(token.access_token, "tk_bare");
-        // The fields the blob omitted fall back to usable defaults rather than
-        // leaving an unusable half-token behind.
+        // The omitted fields default rather than erroring. `expires_at: 0` is a
+        // "no known expiry" sentinel, safe only because the token is stored as
+        // `paste`, whose status branch never reads it.
         assert_eq!(token.token_type, "Bearer");
         assert_eq!(token.expires_at, 0);
         assert!(token.refresh_token.is_none());
@@ -847,9 +878,10 @@ mod tests {
         );
     }
 
-    /// A missing file is `NotFound`, not `Validation` — the CLI's exit code and
-    /// message differ between the two, and "your token file is invalid" is the
-    /// wrong thing to tell someone who mistyped a path.
+    /// A missing file is `NotFound`, not `Validation` — different exit codes
+    /// (7 vs 3, see error.rs), which is what a calling script branches on.
+    /// (`NotFound`'s Display reads "agent or app not found", which is wrong for
+    /// a token path — a separate issue, not pinned here.)
     #[test]
     fn from_file_reports_a_missing_path_as_not_found() {
         let tmp = tempfile::tempdir().unwrap();
@@ -859,5 +891,51 @@ mod tests {
             matches!(err, AwareError::NotFound(_)),
             "expected NotFound, got {err:?}"
         );
+    }
+
+    /// The variable name is derived from the integration id: upper-cased, kebab
+    /// hyphens to underscores. `microsoft-365` exercises both halves at once.
+    /// The derivation is private and never returned, so setting only the
+    /// derived name and requiring the read to succeed is what pins it.
+    #[test]
+    fn from_env_derives_the_variable_name_from_the_integration_id() {
+        let _env = crate::test_env::EnvVarGuard::set("AWARE_TOKEN_MICROSOFT_365", "  tk_env  ");
+        let token = load_token_from_env("microsoft-365").unwrap();
+        // Surrounding whitespace is stripped: a bearer value is not
+        // whitespace-delimited, so a token sent with a trailing space is a
+        // different credential to the provider and 401s.
+        assert_eq!(token.access_token, "tk_env");
+        assert_eq!(token.integration, "microsoft-365");
+        assert_eq!(token.source, crate::auth::keychain::TokenSource::Paste);
+        // Nothing to renew with: `--refresh` on this credential has no
+        // refresh_token to present.
+        assert!(token.refresh_token.is_none());
+    }
+
+    /// A variable that is set but blank is refused rather than imported.
+    /// Importing it would make `connect --list` report the integration as
+    /// connected while every call it authorizes fails with an empty bearer.
+    #[test]
+    fn from_env_refuses_a_blank_variable() {
+        let _env = crate::test_env::EnvVarGuard::set("AWARE_TOKEN_TRIMBLE_CONNECT", "   \n");
+        let err = load_token_from_env("trimble-connect").unwrap_err();
+        assert!(
+            matches!(&err, AwareError::Validation(m) if m.contains("AWARE_TOKEN_TRIMBLE_CONNECT")),
+            "expected the empty-variable validation error, got {err:?}"
+        );
+    }
+
+    /// With the variable absent the error names the variable it looked for and
+    /// the other way in — the user never typed that name, so they cannot be
+    /// expected to guess its exact spelling.
+    #[test]
+    fn from_env_names_the_absent_variable_and_the_alternative() {
+        let _env = crate::test_env::EnvVarGuard::scope(&[("AWARE_TOKEN_TRIMBLE_CONNECT", None)]);
+        let err = load_token_from_env("trimble-connect").unwrap_err();
+        let AwareError::Validation(message) = &err else {
+            panic!("expected Validation, got {err:?}");
+        };
+        assert!(message.contains("AWARE_TOKEN_TRIMBLE_CONNECT"), "{message}");
+        assert!(message.contains("--from-file"), "{message}");
     }
 }
