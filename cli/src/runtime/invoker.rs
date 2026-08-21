@@ -1143,12 +1143,17 @@ fn provision_hint(secret: &str) -> String {
         Some((base, alias)) => (base, Some(alias)),
         None => (secret, None),
     };
-    let as_alias = alias.map(|a| format!(" --as {a}")).unwrap_or_default();
     if crate::auth::config::for_integration(base).is_ok() {
-        format!("aware connect {base}{as_alias}")
-    } else {
-        format!("aware credential put {base}{as_alias}")
+        let as_alias = alias.map(|a| format!(" --as {a}")).unwrap_or_default();
+        return format!("aware connect {base}{as_alias}");
     }
+    // For an unregistered handle the WHOLE string is the account — that is what
+    // the fall-through in `resolve_rest_credential` looks up, and what
+    // `credential put <handle>` stores under. Splitting it into
+    // `put <base> --as <rest>` reaches the same account only while the rest holds
+    // no dot of its own, and `credential put` refuses a dotted alias — so on
+    // `my.api.key` the split form is a suggestion the user cannot carry out.
+    format!("aware credential put {secret}")
 }
 
 /// Load a credential by handle, reusing the runtime secret loader (OS keychain,
@@ -3495,9 +3500,17 @@ commands:
     #[test]
     fn provision_hint_names_the_command_that_owns_the_handle() {
         assert_eq!(provision_hint("my-api"), "aware credential put my-api");
+        // The whole handle, not `put floless-workspace --as session`. Both name
+        // the same account here, but the split form breaks down the moment the
+        // remainder holds a dot of its own — `credential put` refuses a dotted
+        // alias, so the hint would be a command that exits 3.
         assert_eq!(
             provision_hint("floless-workspace.session"),
-            "aware credential put floless-workspace --as session"
+            "aware credential put floless-workspace.session"
+        );
+        assert_eq!(
+            provision_hint("my.api.key"),
+            "aware credential put my.api.key"
         );
         assert_eq!(
             provision_hint("trimble-connect"),
