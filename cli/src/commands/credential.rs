@@ -295,8 +295,9 @@ fn run_status(args: HandleArgs, ctx: &Context) -> Result<(), AwareError> {
 
 // ── handle validation ─────────────────────────────────────────────────────────
 
-/// Longest accepted handle or alias. Generous for a name, short of the limits a
-/// credential store or a filesystem starts refusing.
+/// Longest accepted handle, alias, or the account the two combine into.
+/// Generous for a name, short of the limits a credential store or a filesystem
+/// starts refusing.
 const MAX_LABEL: usize = 64;
 
 /// Names Windows resolves as devices whatever extension follows, so
@@ -342,10 +343,37 @@ fn validated_account(handle: &str, alias: Option<&str>) -> Result<String, AwareE
         )));
     }
 
-    Ok(match alias {
+    let account = match alias {
         Some(alias) => format!("{handle}.{alias}"),
         None => handle.to_string(),
-    })
+    };
+
+    // THE INVARIANT: every account this command can create is itself a valid
+    // handle. `put <handle> --as <alias>` and `put <handle>.<alias>` reach the
+    // same credential, an agent manifest's `auth.secret` carries the combined
+    // form, and the runtime's missing-credential hint names it — so an account
+    // this command produced but would refuse to take back is a recovery
+    // instruction the user cannot carry out.
+    //
+    // Length is the only way to break it, which is why one check closes it.
+    // Given a valid handle and a valid alias, the joined string satisfies every
+    // other rule by construction: its character set is the union of two allowed
+    // sets plus the separator; it starts on the handle's first character and
+    // ends on the alias's last, both alphanumeric; the separator cannot form
+    // `..` because the characters either side of it are those same alphanumerics;
+    // and each dot-part was checked against the reserved names already — the
+    // alias being one whole part, since a dotted alias is refused above.
+    if account.len() > MAX_LABEL {
+        return Err(AwareError::Validation(format!(
+            "handle and alias combine to {} characters, over the {MAX_LABEL}-character limit — \
+             shorten one. The combined name {account:?} is the credential's real identity: it is \
+             the file it is stored as, the string an agent manifest's `auth.secret` must carry, \
+             and the handle `aware credential put {account}` would take, so it has to satisfy the \
+             same limit a handle does",
+            account.len()
+        )));
+    }
+    Ok(account)
 }
 
 /// Accept only names that are safe as a keychain account AND as a file stem
@@ -468,6 +496,52 @@ mod tests {
     fn an_uppercase_handle_is_refused_rather_than_lowercased() {
         let err = validated_account("MyApi", None).unwrap_err();
         assert!(matches!(err, AwareError::Validation(_)), "{err:?}");
+    }
+
+    /// THE INVARIANT, asserted directly: anything `validated_account` accepts is
+    /// itself an accepted handle. `put <h> --as <a>` and `put <h>.<a>` reach the
+    /// same credential, and the runtime's missing-credential hint names the
+    /// combined form — so an account this command produces but will not take back
+    /// is a recovery instruction that exits 3.
+    ///
+    /// Codex found exactly that on this PR: the length limit was per-label, so a
+    /// 64-character handle plus `--as session` stored a 72-character account the
+    /// same validator then refused as a handle.
+    #[test]
+    fn every_account_this_accepts_is_itself_an_accepted_handle() {
+        let cases: &[(&str, Option<&str>)] = &[
+            ("my-api", None),
+            ("my.api.key", None),
+            ("floless-workspace", Some("session")),
+            ("a", Some("b")),
+            // The boundary: exactly MAX_LABEL once combined.
+            (&"a".repeat(MAX_LABEL - 8), Some("session")),
+        ];
+        for (handle, alias) in cases {
+            let account = validated_account(handle, *alias)
+                .unwrap_or_else(|e| panic!("{handle:?}/{alias:?} rejected: {e}"));
+            assert!(
+                validated_account(&account, None).is_ok(),
+                "account {account:?} came out of {handle:?}/{alias:?} but is not itself an \
+                 accepted handle — the hint that names it would exit 3"
+            );
+        }
+    }
+
+    /// The other half of that invariant: a pair whose combination would break it
+    /// is refused at `put` time, rather than stored and unrecoverable later.
+    #[test]
+    fn a_handle_and_alias_that_combine_past_the_limit_are_refused() {
+        let err = validated_account(&"a".repeat(MAX_LABEL), Some("session")).unwrap_err();
+        let AwareError::Validation(message) = &err else {
+            panic!("expected Validation, got {err:?}");
+        };
+        // Names the real problem — the combination, not either part, both of
+        // which are individually legal.
+        assert!(message.contains("combine"), "{message}");
+        // One character under the limit is accepted, so this is a boundary and
+        // not a blanket refusal of aliases on long handles.
+        assert!(validated_account(&"a".repeat(MAX_LABEL - 8), Some("session")).is_ok());
     }
 
     #[test]
