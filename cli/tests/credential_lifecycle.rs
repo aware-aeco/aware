@@ -177,18 +177,18 @@ fn deleting_an_absent_credential_succeeds_and_says_so() {
     );
 }
 
-/// A stored-but-unreadable credential is reported apart from a missing one, and
+/// A stored-but-unusable credential is reported apart from a missing one, and
 /// still at exit 0 — `status` answers in its field, not its exit code. Collapsing
 /// the two would send a caller down the "provision it" path while a credential is
 /// in fact present and broken.
 #[test]
-fn an_unreadable_credential_is_reported_apart_from_a_missing_one() {
+fn an_unusable_credential_is_reported_apart_from_a_missing_one() {
     let tmp = tempfile::tempdir().unwrap();
     let home = tmp.path();
     std::fs::create_dir_all(home.join("credentials")).unwrap();
     std::fs::write(cred_file(home, "corrupt-api"), "not json at all").unwrap();
 
-    assert_eq!(status_of(home, "corrupt-api"), "unreadable");
+    assert_eq!(status_of(home, "corrupt-api"), "unusable");
     // And it can still be revoked — a credential you cannot read is exactly one
     // you want gone.
     assert_eq!(
@@ -202,7 +202,7 @@ fn an_unreadable_credential_is_reported_apart_from_a_missing_one() {
 /// `auth::keychain::load_token` parses.
 ///
 /// Each shape here is one `runtime::invoker::secret_as_str` accepts and
-/// `load_token` does not, so before this was shared each reported `unreadable`
+/// `load_token` does not, so before this was shared each reported `unusable`
 /// while the runtime authenticated with it every call. `{"key": …}` is not a
 /// hypothetical: it is the fixture the invoker's own
 /// `rest_injects_declared_apikey_header_from_credential` uses.
@@ -232,23 +232,55 @@ fn status_recognises_every_shape_the_transport_can_authenticate_with() {
 }
 
 /// The other side of that: sharing the transport's rules must not turn
-/// `unreadable` into a state nothing can reach. A file that will not parse fails
+/// `unusable` into a state nothing can reach. A file that will not parse fails
 /// both readers and is still reported apart from a missing one.
 #[test]
-fn status_still_reports_a_genuinely_corrupt_credential_as_unreadable() {
+fn status_still_reports_a_genuinely_corrupt_credential_as_unusable() {
     let tmp = tempfile::tempdir().unwrap();
     let home = tmp.path();
     std::fs::create_dir_all(home.join("credentials")).unwrap();
 
     std::fs::write(cred_file(home, "corrupt-api"), "not json at all").unwrap();
-    assert_eq!(status_of(home, "corrupt-api"), "unreadable");
+    assert_eq!(status_of(home, "corrupt-api"), "unusable");
     // Valid JSON, but no field any reader can pull a secret out of.
     std::fs::write(
         cred_file(home, "empty-obj-api"),
         r#"{"note":"nothing here"}"#,
     )
     .unwrap();
-    assert_eq!(status_of(home, "empty-obj-api"), "unreadable");
+    assert_eq!(status_of(home, "empty-obj-api"), "unusable");
+}
+
+/// A credential that is stored but BLANK is not present.
+///
+/// `load_token` happily returns `Some(StoredToken)` for `{"access_token":""}`,
+/// so asking it made status report a credential that authorizes nothing as
+/// usable — while `credential put` refuses to store that exact value. Worse than
+/// a wrong label: the runtime sent a bare `Authorization: Bearer` and the run
+/// reported `✓ run complete` over an unauthenticated request (#443).
+///
+/// Every shape is covered, because a blank value is reachable by four different
+/// routes: the `StoredToken` field, the legacy `token` field, one of the
+/// transport's own key names, and a bare JSON string.
+#[test]
+fn a_blank_stored_credential_is_not_reported_present() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path();
+    std::fs::create_dir_all(home.join("credentials")).unwrap();
+
+    for (handle, body) in [
+        ("blank-access", r#"{"access_token":""}"#),
+        ("blank-token", r#"{"token":"   "}"#),
+        ("blank-key", r#"{"key":""}"#),
+        ("blank-bare", r#""""#),
+    ] {
+        std::fs::write(cred_file(home, handle), body).unwrap();
+        assert_eq!(
+            status_of(home, handle),
+            "unusable",
+            "{handle} holds {body}, which authorizes nothing"
+        );
+    }
 }
 
 /// The `missing` hint names the ACCOUNT, not the bare handle. With `--as session`

@@ -1118,6 +1118,11 @@ pub(crate) fn resolve_rest_credential(
         if crate::auth::config::for_integration(integration).is_ok()
             && let Some(home) = agents_dir.parent()
             && let Ok(tok) = crate::auth::refresh::ensure_fresh(integration, alias, home)
+            // A blank access token is not a credential. Same rule as
+            // `secret_as_str` applies to the stored path — returning it would
+            // send `Authorization: Bearer` with nothing after it, which reads as
+            // a successful run and is an unauthenticated request.
+            && !tok.access_token.trim().is_empty()
         {
             return Some(tok.access_token);
         }
@@ -1202,11 +1207,25 @@ fn load_secret_value(agents_dir: &std::path::Path, id: &str) -> Option<Value> {
     ctx.secrets.get(id).cloned()
 }
 
-/// Extract the usable credential string from a loaded secret: a raw string is
+/// Extract the *usable* credential string from a loaded secret: a raw string is
 /// used verbatim; an object is probed for the common token/key fields.
+///
+/// An empty (or all-whitespace) value is `None`, not `Some("")`. A blank
+/// credential authorizes nothing, and treating it as present is what let a
+/// hand-written `{"access_token":""}` send a bare `Authorization: Bearer` header
+/// and report `✓ run complete` over an unauthenticated request (#443). Refusing
+/// it here makes the caller take its missing-credential path, whose message
+/// already reads "missing **or unusable**", and lines the runtime up with
+/// `aware credential put`, which refuses to store the same value.
 fn secret_as_str(secret: &Value) -> Option<String> {
+    let usable = |s: &str| !s.trim().is_empty();
     match secret {
-        Value::String(s) => Some(s.clone()),
+        Value::String(s) => Some(s.clone()).filter(|s| usable(s)),
+        // The blank test goes INSIDE the probe, not after it. These field names
+        // are synonyms for "the credential", so a present-but-blank one is not an
+        // answer — it is a field to skip, and `{"token":"", "key":"k"}` resolves
+        // to `k`. Filtering after the probe instead would let an empty earlier
+        // field mask a usable later one and report the whole credential missing.
         Value::Object(m) => [
             "token",
             "access_token",
@@ -1217,7 +1236,12 @@ fn secret_as_str(secret: &Value) -> Option<String> {
             "secret",
         ]
         .iter()
-        .find_map(|k| m.get(*k).and_then(|v| v.as_str()).map(|s| s.to_string())),
+        .find_map(|k| {
+            m.get(*k)
+                .and_then(|v| v.as_str())
+                .filter(|s| usable(s))
+                .map(|s| s.to_string())
+        }),
         _ => None,
     }
 }
@@ -3780,6 +3804,22 @@ commands:
             Some("k".into())
         );
         assert_eq!(secret_as_str(&serde_json::json!({"other":"x"})), None);
+        // A BLANK value is not a credential. Returning `Some("")` here put a bare
+        // `Authorization: Bearer` on the wire and let the run report success over
+        // an unauthenticated request — while `aware credential put` refuses to
+        // store that same value (#443). `None` sends the caller down its
+        // missing-credential path, whose message already says "missing or
+        // unusable".
+        assert_eq!(secret_as_str(&serde_json::json!("")), None);
+        assert_eq!(secret_as_str(&serde_json::json!("   ")), None);
+        assert_eq!(secret_as_str(&serde_json::json!({"access_token":""})), None);
+        assert_eq!(secret_as_str(&serde_json::json!({"key":"  "})), None);
+        // A later field still wins if the earlier one is blank rather than
+        // absent — the probe is for a usable secret, not for a present key.
+        assert_eq!(
+            secret_as_str(&serde_json::json!({"token":"", "key":"k"})),
+            Some("k".into())
+        );
     }
 
     #[tokio::test]

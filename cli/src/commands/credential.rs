@@ -273,7 +273,7 @@ fn run_delete(args: HandleArgs, ctx: &Context) -> Result<(), AwareError> {
 fn run_status(args: HandleArgs, ctx: &Context) -> Result<(), AwareError> {
     let account = validated_account(&args.handle, args.r#as.as_deref())?;
     // `present` rather than `valid`: AWARE cannot validate an opaque bearer — it
-    // knows only that a credential is stored and readable. Only the issuing
+    // knows only that a usable secret came out of the store. Only the issuing
     // service can say whether it still works.
     //
     // All three states exit 0. This is a query, and reporting the state IS the
@@ -281,41 +281,43 @@ fn run_status(args: HandleArgs, ctx: &Context) -> Result<(), AwareError> {
     // (`aware --json credential status <handle> | jq -r .status`), not on the
     // exit code. That matches `connect --list`, which also reports a missing
     // credential at exit 0.
-    let status = match crate::auth::keychain::load_token(
-        &args.handle,
-        args.r#as.as_deref(),
-        &ctx.paths.aware_home,
-    ) {
-        Ok(Some(_)) => "present",
-        Ok(None) => "missing",
-        // `load_token` reads a NARROWER set of shapes than the REST transport
-        // does: a `StoredToken`, or a blob with `access_token` / `token`. The
-        // transport also takes a bare JSON string and an object keyed `key` /
-        // `apikey` / `api_key` / `value` / `secret`. So a credential the runtime
-        // authenticates with every call lands here — and answering `unreadable`
-        // would send its owner off to re-provision something that works.
-        //
-        // The question this command is asked is "will my agent authenticate?",
-        // so the transport's own rules decide before we call it unreadable.
-        // Nothing is lost on the genuinely-corrupt path: a file that will not
-        // parse fails both readers.
-        //
-        // Only the error arm needs this. `Ok(None)` means the store holds
-        // nothing at all, and the transport's secondary lookup reads the same
-        // file, so it has nothing to find either.
-        Err(_)
-            if crate::runtime::invoker::stored_secret_is_usable(
-                &ctx.paths.aware_home,
-                &account,
-            ) =>
-        {
+    // ONE authority for "is there a usable credential here": the REST transport's
+    // own resolver, which is the thing that will actually have to authenticate.
+    //
+    // Asking `load_token` instead got this wrong in BOTH directions. It reads a
+    // NARROWER set of shapes than the transport — a `StoredToken`, or a blob with
+    // `access_token` / `token`, where the transport also takes a bare JSON string
+    // and an object keyed `key` / `apikey` / `api_key` / `value` / `secret` — so
+    // credentials the runtime authenticates with on every call were reported
+    // unusable. And it is WIDER in the other: it returns `Some(StoredToken)` for
+    // `{"access_token":""}`, so a blank credential that authorizes nothing was
+    // reported present (#443).
+    //
+    // `load_token` is still asked the one question it is good for below: telling
+    // an empty store apart from one holding something unusable.
+    let status =
+        if crate::runtime::invoker::stored_secret_is_usable(&ctx.paths.aware_home, &account) {
             "present"
-        }
-        // Distinct from `missing` on purpose: a credential that is stored but
-        // unreadable (corrupt JSON, an unreachable keychain) sends a caller down
-        // a different road than one that was never provisioned.
-        Err(_) => "unreadable",
-    };
+        } else if matches!(
+            crate::auth::keychain::load_token(
+                &args.handle,
+                args.r#as.as_deref(),
+                &ctx.paths.aware_home
+            ),
+            Ok(None)
+        ) {
+            "missing"
+        } else {
+            // Distinct from `missing` on purpose: something IS stored here, it just
+            // cannot be used — corrupt JSON, an unreachable keychain, or a blank
+            // value. That sends a caller down a different road than a handle which
+            // was never provisioned at all.
+            //
+            // `unusable` rather than `unreadable`: a blank credential reads back
+            // perfectly well and still authorizes nothing, so the wider word is the
+            // accurate one for what this arm actually covers.
+            "unusable"
+        };
 
     if ctx.json {
         println!(
@@ -333,7 +335,9 @@ fn run_status(args: HandleArgs, ctx: &Context) -> Result<(), AwareError> {
             "missing" => {
                 println!("\u{2717} {account}  missing  run: aware credential put {account}")
             }
-            _ => println!("? {account}  unreadable (stored, but the store could not be read)"),
+            _ => println!(
+                "? {account}  unusable (something is stored, but no usable secret came out of it)"
+            ),
         }
     }
     Ok(())

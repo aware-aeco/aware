@@ -373,8 +373,14 @@ Contract:
   removal that could not be completed is an error, never a success that leaves the
   credential readable.
 - **`status` never prints the secret** and always exits 0 — it reports `present`, `missing`
-  or `unreadable` in its field, so a script branches on
+  or `unusable` in its field, so a script branches on
   `aware --json credential status <handle> | jq -r .status`, not on the exit code.
+  `present` answers the question the caller is actually asking — *would the REST transport
+  authenticate with this?* — so it is decided by the transport's own resolver, not by a
+  second reader with its own idea of what counts. `unusable` means something **is** stored
+  and no usable secret came out of it: corrupt JSON, an unreachable keychain, or a blank
+  value. A blank credential is never `present`; the runtime treats it as absent too, rather
+  than sending a bare `Authorization: Bearer` and reporting a successful run.
 - **Storage stays AWARE's.** Whether the bytes live in the OS keychain or the
   `~/.aware/credentials/` fallback is not the caller's concern and is not part of this
   contract.
