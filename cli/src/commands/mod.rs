@@ -9,6 +9,7 @@ pub mod app;
 pub mod build;
 pub mod connect;
 pub mod coverage;
+pub mod credential;
 pub mod diagram;
 pub mod doctor;
 pub mod key;

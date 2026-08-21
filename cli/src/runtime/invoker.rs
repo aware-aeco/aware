@@ -856,8 +856,9 @@ impl AgentInvoker for RestInvoker {
                 let Some(cred) = cred else {
                     return Err(AwareError::Validation(format!(
                         "agent {agent} declares `auth` but credential {:?} is missing or unusable — \
-                         provision it (`~/.aware/credentials/{}.json` or `aware connect`)",
-                        auth.secret, auth.secret
+                         provision it with `{}`",
+                        auth.secret,
+                        provision_hint(&auth.secret)
                     )));
                 };
                 inject_auth(auth, &cred, &mut headers, &mut query);
@@ -1125,6 +1126,29 @@ pub(crate) fn resolve_rest_credential(
     load_secret_value(agents_dir, &auth.secret)
         .as_ref()
         .and_then(secret_as_str)
+}
+
+/// The command that provisions this handle, for the missing-credential error.
+///
+/// It used to read "`~/.aware/credentials/<handle>.json` or `aware connect`",
+/// which was the only accurate answer at the time and is exactly the coupling
+/// #436 reports: `aware connect` refuses any handle that is not a registered
+/// integration, so for every other handle the error's only *working* half was an
+/// instruction to hand-write AWARE's storage internals. `aware credential put`
+/// is now the supported route, so the hint names whichever command actually owns
+/// the handle — split at the first dot, the same way [`resolve_rest_credential`]
+/// decides which of the two stores to read.
+fn provision_hint(secret: &str) -> String {
+    let (base, alias) = match secret.split_once('.') {
+        Some((base, alias)) => (base, Some(alias)),
+        None => (secret, None),
+    };
+    let as_alias = alias.map(|a| format!(" --as {a}")).unwrap_or_default();
+    if crate::auth::config::for_integration(base).is_ok() {
+        format!("aware connect {base}{as_alias}")
+    } else {
+        format!("aware credential put {base}{as_alias}")
+    }
 }
 
 /// Load a credential by handle, reusing the runtime secret loader (OS keychain,
@@ -3463,6 +3487,28 @@ commands:
         assert!(req.starts_with("GET /ping"), "req: {req}");
     }
 
+    /// The hint splits the handle the same way [`resolve_rest_credential`] does,
+    /// so it always names the command that owns the store the resolver just read.
+    /// Naming the other one is not a cosmetic slip: `aware connect` refuses an
+    /// unregistered handle, and `aware credential put` refuses a registered one,
+    /// so the wrong hint is an instruction that cannot be carried out.
+    #[test]
+    fn provision_hint_names_the_command_that_owns_the_handle() {
+        assert_eq!(provision_hint("my-api"), "aware credential put my-api");
+        assert_eq!(
+            provision_hint("floless-workspace.session"),
+            "aware credential put floless-workspace --as session"
+        );
+        assert_eq!(
+            provision_hint("trimble-connect"),
+            "aware connect trimble-connect"
+        );
+        assert_eq!(
+            provision_hint("google-workspace.personal"),
+            "aware connect google-workspace --as personal"
+        );
+    }
+
     #[tokio::test]
     async fn rest_injects_declared_apikey_header_from_credential() {
         // End-to-end: a rest agent declaring an `auth:` block + a stored
@@ -3973,6 +4019,14 @@ commands:
             .await
             .unwrap_err();
         assert!(matches!(err, AwareError::Validation(_)), "got: {err:?}");
+        // The message has to name a command that can actually provision THIS
+        // handle. `secured` is not a registered integration, so the `aware
+        // connect` this error used to suggest would refuse it outright (#436).
+        let message = err.to_string();
+        assert!(
+            message.contains("aware credential put secured"),
+            "the missing-credential error did not name a working provisioning command: {message}"
+        );
         assert!(
             format!("{err}").contains("credential"),
             "error should name the missing credential: {err}"

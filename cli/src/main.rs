@@ -107,6 +107,13 @@ enum Command {
     /// Delete the credential file for an integration.
     Disconnect(commands::connect::DisconnectArgs),
 
+    /// Provision / rotate / revoke an opaque credential for a handle AWARE
+    /// runs no OAuth flow for (generic REST bearers, API keys).
+    Credential {
+        #[command(subcommand)]
+        action: commands::credential::CredentialCommand,
+    },
+
     /// Author / port / modify / eval AWARE agent skills.
     Skill {
         #[command(subcommand)]
@@ -200,6 +207,7 @@ async fn main() -> anyhow::Result<()> {
         Command::App { action } => commands::app::dispatch(action, &ctx).await,
         Command::Connect(args) => commands::connect::run_connect(args, &ctx),
         Command::Disconnect(args) => commands::connect::run_disconnect(args, &ctx),
+        Command::Credential { action } => commands::credential::dispatch(action, &ctx),
         Command::Skill { action } => commands::skill::dispatch(action, &ctx),
         Command::Build { action } => commands::build::dispatch(*action, &ctx),
         Command::Coverage { action } => commands::coverage::dispatch(action, &ctx),
