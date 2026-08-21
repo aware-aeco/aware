@@ -855,10 +855,9 @@ impl AgentInvoker for RestInvoker {
                         })?;
                 let Some(cred) = cred else {
                     return Err(AwareError::Validation(format!(
-                        "agent {agent} declares `auth` but credential {:?} is missing or unusable — \
-                         provision it with `{}`",
+                        "agent {agent} declares `auth` but credential {:?} is missing or unusable — {}",
                         auth.secret,
-                        provision_hint(&auth.secret)
+                        provision_advice(&auth.secret)
                     )));
                 };
                 inject_auth(auth, &cred, &mut headers, &mut query);
@@ -1138,14 +1137,14 @@ pub(crate) fn resolve_rest_credential(
 /// is now the supported route, so the hint names whichever command actually owns
 /// the handle — split at the first dot, the same way [`resolve_rest_credential`]
 /// decides which of the two stores to read.
-fn provision_hint(secret: &str) -> String {
+fn provision_advice(secret: &str) -> String {
     let (base, alias) = match secret.split_once('.') {
         Some((base, alias)) => (base, Some(alias)),
         None => (secret, None),
     };
     if crate::auth::config::for_integration(base).is_ok() {
         let as_alias = alias.map(|a| format!(" --as {a}")).unwrap_or_default();
-        return format!("aware connect {base}{as_alias}");
+        return format!("provision it with `aware connect {base}{as_alias}`");
     }
     // For an unregistered handle the WHOLE string is the account — that is what
     // the fall-through in `resolve_rest_credential` looks up, and what
@@ -1153,7 +1152,19 @@ fn provision_hint(secret: &str) -> String {
     // `put <base> --as <rest>` reaches the same account only while the rest holds
     // no dot of its own, and `credential put` refuses a dotted alias — so on
     // `my.api.key` the split form is a suggestion the user cannot carry out.
-    format!("aware credential put {secret}")
+    if crate::commands::credential::is_provisionable(secret) {
+        return format!("provision it with `aware credential put {secret}`");
+    }
+    // The handle came from an agent manifest, and nothing validates `auth.secret`
+    // — `validate_agent` does not look at it — so the runtime resolves names this
+    // command's grammar refuses (`MyApi`, or one over the length limit). Naming
+    // the command anyway would be a third kind of instruction that exits 3, so
+    // say what is actually wrong and what fixes it.
+    format!(
+        "`aware credential put` cannot provision the handle {secret:?} (handles are lowercase \
+         letters, digits, `-` and `_`, dot-separated, at most 64 characters) — rename \
+         `auth.secret` in the agent's manifest to one it accepts, then provision that"
+    )
 }
 
 /// Whether a credential handle resolves to a usable secret, by the rules the
@@ -3517,34 +3528,60 @@ commands:
         assert!(req.starts_with("GET /ping"), "req: {req}");
     }
 
-    /// The hint splits the handle the same way [`resolve_rest_credential`] does,
+    /// The advice splits the handle the same way [`resolve_rest_credential`] does,
     /// so it always names the command that owns the store the resolver just read.
     /// Naming the other one is not a cosmetic slip: `aware connect` refuses an
     /// unregistered handle, and `aware credential put` refuses a registered one,
-    /// so the wrong hint is an instruction that cannot be carried out.
+    /// so the wrong one is an instruction that cannot be carried out.
     #[test]
-    fn provision_hint_names_the_command_that_owns_the_handle() {
-        assert_eq!(provision_hint("my-api"), "aware credential put my-api");
+    fn provision_advice_names_the_command_that_owns_the_handle() {
+        assert_eq!(
+            provision_advice("my-api"),
+            "provision it with `aware credential put my-api`"
+        );
         // The whole handle, not `put floless-workspace --as session`. Both name
         // the same account here, but the split form breaks down the moment the
         // remainder holds a dot of its own — `credential put` refuses a dotted
-        // alias, so the hint would be a command that exits 3.
+        // alias, so the advice would be a command that exits 3.
         assert_eq!(
-            provision_hint("floless-workspace.session"),
-            "aware credential put floless-workspace.session"
+            provision_advice("floless-workspace.session"),
+            "provision it with `aware credential put floless-workspace.session`"
         );
         assert_eq!(
-            provision_hint("my.api.key"),
-            "aware credential put my.api.key"
+            provision_advice("my.api.key"),
+            "provision it with `aware credential put my.api.key`"
         );
         assert_eq!(
-            provision_hint("trimble-connect"),
-            "aware connect trimble-connect"
+            provision_advice("trimble-connect"),
+            "provision it with `aware connect trimble-connect`"
         );
         assert_eq!(
-            provision_hint("google-workspace.personal"),
-            "aware connect google-workspace --as personal"
+            provision_advice("google-workspace.personal"),
+            "provision it with `aware connect google-workspace --as personal`"
         );
+    }
+
+    /// A manifest's `auth.secret` is not validated anywhere — `validate_agent`
+    /// does not look at it — so the runtime resolves handles the `credential`
+    /// grammar refuses. Naming the command for one of those would be a third
+    /// flavour of instruction that exits 3, so the advice says what is actually
+    /// wrong instead.
+    #[test]
+    fn provision_advice_refuses_to_name_the_command_for_a_handle_it_would_reject() {
+        for outside in ["MyApi", &"a".repeat(65), "bad handle", "con"] {
+            let advice = provision_advice(outside);
+            assert!(
+                !advice.contains(&format!("put {outside}")),
+                "advice named a command that would exit 3: {advice}"
+            );
+            assert!(
+                advice.contains("rename"),
+                "advice did not say how to fix it: {advice}"
+            );
+        }
+        // Still names the command for a handle it really would take, so this is a
+        // discriminator and not a blanket retreat.
+        assert!(provision_advice("my-api").contains("aware credential put my-api"));
     }
 
     #[tokio::test]

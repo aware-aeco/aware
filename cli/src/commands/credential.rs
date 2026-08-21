@@ -335,6 +335,23 @@ const RESERVED_DEVICE_NAMES: &[&str] = &[
     "com9", "lpt1", "lpt2", "lpt3", "lpt4", "lpt5", "lpt6", "lpt7", "lpt8", "lpt9",
 ];
 
+/// Whether `aware credential put <handle>` would accept this handle.
+///
+/// Exported so the runtime's missing-credential advice can name this command
+/// only when it would actually work. Nothing validates an agent manifest's
+/// `auth.secret` (`validate_agent` does not look at it), and the runtime
+/// resolves names this grammar refuses — `MyApi`, or one over the length limit —
+/// so a manifest can legitimately carry a handle that is outside it. The
+/// invariant `validated_account` enforces covers accounts *this command*
+/// creates; it says nothing about handles that arrive from a manifest.
+///
+/// One definition, asked rather than restated: a second copy of the grammar in
+/// the invoker is precisely what would drift back into suggesting a command that
+/// exits 3.
+pub(crate) fn is_provisionable(handle: &str) -> bool {
+    validated_account(handle, None).is_ok()
+}
+
 /// Validate handle and alias, and return the account name the store will use.
 ///
 /// The returned string is also what the caller must put in an agent manifest's

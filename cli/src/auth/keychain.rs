@@ -137,19 +137,46 @@ pub fn store_token(
 
 /// Remove a keychain entry that would otherwise shadow the file fallback.
 ///
-/// Only a *readable* entry is a shadowing risk, and only that case is fatal:
+/// `load_token` reads the keychain before the file, so any entry left standing
+/// wins over the value about to be written. Three cases:
 ///
 /// * `NoEntry` — nothing to shadow, nothing to do.
 /// * `Ok(_)` — a live entry `load_token` would return in preference to the file.
 ///   It must go, and a delete we cannot complete is an error rather than a
 ///   silently stale credential.
-/// * any other error — the backend is unreachable for this account, so
-///   `load_token` will fail loudly on it too rather than serve a stale value.
-///   Writing the file is then no worse than today's behaviour, and it is what a
-///   later `AWARE_DISABLE_KEYRING` run reads.
+/// * any other error — **also fatal**, because we cannot tell whether an entry is
+///   sitting there.
+///
+/// That third case was originally allowed through, on the reasoning that an
+/// unreadable backend makes `load_token` fail loudly rather than serve a stale
+/// value. Codex refuted it on #443 and it is worth recording why, because the
+/// argument is not obviously wrong: `runtime::context::load_secret` — the path
+/// REST auth actually takes — *swallows* a `load_token` error and falls through
+/// to the file. So during a transient outage the runtime reads the new
+/// credential and everything looks correct. When the backend comes back,
+/// `load_token` starts returning the untouched old entry, and calls silently
+/// revert to the superseded credential. The outage is temporary; the entry
+/// outlives it.
+///
+/// So an unverifiable keychain means the rotation cannot be completed, and
+/// saying so beats a success that decays. The error names
+/// `AWARE_DISABLE_KEYRING`, which is the supported way to keep AWARE out of the
+/// keychain entirely on a headless or locked-down machine — with it set,
+/// `keyring_enabled` is false, this path is never reached, and the file store is
+/// the only one, so nothing can shadow anything.
 fn clear_shadowing_entry(entry: &keyring::Entry, account: &str) -> Result<(), AwareError> {
-    if entry.get_password().is_err() {
-        return Ok(());
+    match entry.get_password() {
+        Err(keyring::Error::NoEntry) => return Ok(()),
+        Ok(_) => {}
+        Err(e) => {
+            return Err(AwareError::PermissionDenied(format!(
+                "the keychain entry for {account} could not be read ({e}), so whether a superseded \
+                 credential is sitting there cannot be established — refusing to write the \
+                 credentials-file fallback, which such an entry would shadow on every read once \
+                 the keychain is reachable again. Set AWARE_DISABLE_KEYRING=1 to keep AWARE out of \
+                 the keychain and use the credentials file as the only store"
+            )));
+        }
     }
     match entry.delete_credential() {
         Ok(()) | Err(keyring::Error::NoEntry) => Ok(()),
