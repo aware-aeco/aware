@@ -108,7 +108,20 @@ pub fn store_token(
         .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
 
     match entry.set_password(&body) {
-        Ok(()) => Ok(()),
+        // The keychain now holds the new value, but a file fallback written by an
+        // EARLIER store would still be sitting there — e.g. an oversized token
+        // that fell back on Windows, now rotated to a shorter one that fits. It
+        // is superseded, and `load_token` prefers the keychain, so on a good day
+        // it is merely dead. On a bad one it is the shadow bug pointing the other
+        // way: `runtime::context::load_secret` swallows a keychain read error and
+        // falls through to the file, so one transient outage silently reverts
+        // every REST call to the superseded credential — after this command
+        // reported a successful rotation.
+        //
+        // A removal we cannot complete is therefore an error, not a shrug: the
+        // caller must not be told the rotation succeeded while the value it
+        // replaced is still reachable.
+        Ok(()) => remove_cred_file(aware_home, &account),
         Err(e) => {
             // Keyring write failed — most commonly the Windows Credential Manager
             // 2 560-byte limit. Fall back to a credentials file so large OAuth
@@ -242,18 +255,28 @@ pub fn delete_token(
     // which made a revoke that left the credential readable exit 0: the caller is
     // told the credential is gone while `load_token` still returns it. Revocation
     // has to fail closed to be worth anything (#436).
-    let file_result = match std::fs::remove_file(cred_file_path(aware_home, &account)) {
-        // Already absent is success — `delete_token` is idempotent by contract.
+    let file_result = remove_cred_file(aware_home, &account);
+
+    // Both stores are attempted before either error surfaces, so a failure in one
+    // never leaves the other standing.
+    keyring_result.and(file_result)
+}
+
+/// Remove the credentials-file fallback for `account`, if there is one.
+///
+/// Absent is success — both callers want "make sure this file is not there", and
+/// for `delete_token` that is the idempotence its contract promises. Any other
+/// failure is reported rather than swallowed: a file left behind is readable by
+/// `runtime::context::load_secret`, so both callers would otherwise report
+/// success over a credential that is still reachable.
+fn remove_cred_file(aware_home: &Path, account: &str) -> Result<(), AwareError> {
+    match std::fs::remove_file(cred_file_path(aware_home, account)) {
         Ok(()) => Ok(()),
         Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
         Err(e) => Err(AwareError::PermissionDenied(format!(
             "credential file delete for {account}: {e}"
         ))),
-    };
-
-    // Both stores are attempted before either error surfaces, so a failure in one
-    // never leaves the other standing.
-    keyring_result.and(file_result)
+    }
 }
 
 // ── BYO OAuth app-secret API (Tier 2, #146) ──────────────────────────────────
@@ -491,17 +514,22 @@ fn write_atomic_restricted(path: &Path, data: &[u8]) -> std::io::Result<()> {
     // and the system temp dir is routinely on another.
     let tmp = dir.join(format!(".{stem}.{}.{serial}.tmp", std::process::id()));
 
-    write_restricted(&tmp, data)?;
-    match std::fs::rename(&tmp, path) {
-        Ok(()) => Ok(()),
-        Err(e) => {
-            // The credential never got published, so the scratch file is pure
-            // litter — and litter holding a secret. Best-effort is right here:
-            // the write's own error is the one worth reporting.
-            let _ = std::fs::remove_file(&tmp);
-            Err(e)
-        }
+    // ONE cleanup covering every way this can fail, rather than one per failure.
+    // The first version cleaned up only after a failed `rename` and let the write
+    // itself return through `?` — so a `write_all` or `sync_all` that failed (a
+    // full disk or a quota, which is not hypothetical: it happened on the runner
+    // that developed this) left a scratch file holding the whole secret. Nothing
+    // collects it: `delete_token` removes `<account>.json` and knows nothing of
+    // these, so an abandoned secret would sit there indefinitely after a
+    // provisioning attempt the caller was told had failed.
+    //
+    // Best-effort removal is right: the credential was never published either
+    // way, so the write's own error is the one worth reporting.
+    let published = write_restricted(&tmp, data).and_then(|()| std::fs::rename(&tmp, path));
+    if published.is_err() {
+        let _ = std::fs::remove_file(&tmp);
     }
+    published
 }
 
 // ── Tests ─────────────────────────────────────────────────────────────────────
@@ -605,6 +633,58 @@ mod tests {
             .permissions()
             .mode();
         assert_eq!(mode & 0o777, 0o600, "got {:o}", mode & 0o777);
+    }
+
+    /// A write that fails leaves no scratch file holding the secret.
+    ///
+    /// Publishing is `write_restricted` then `rename`, and BOTH now clean up —
+    /// the first version cleaned up only after a failed rename and let the write
+    /// return through `?`, so a full disk left the whole secret in a `.tmp`
+    /// nothing collects (`delete_token` only knows `<account>.json`).
+    ///
+    /// The failure is forced at the rename by making the destination a
+    /// directory. That is the reachable half; a `write_all`/`sync_all` failure
+    /// needs a full filesystem, which no portable test can arrange — but both
+    /// now funnel through the same single cleanup, so this covers the mechanism
+    /// rather than one branch of it.
+    #[test]
+    fn a_failed_write_leaves_no_scratch_file_holding_the_secret() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("credentials");
+        std::fs::create_dir_all(&dir).unwrap();
+        // A directory where the credential file goes: `rename` cannot replace it.
+        std::fs::create_dir_all(dir.join("blocked-api.json")).unwrap();
+
+        let err = write_cred_file(tmp.path(), "blocked-api", r#"{"access_token":"sk-secret"}"#)
+            .unwrap_err();
+        assert!(matches!(err, AwareError::PermissionDenied(_)), "{err:?}");
+
+        for entry in std::fs::read_dir(&dir).unwrap().flatten() {
+            let name = entry.file_name().to_string_lossy().into_owned();
+            assert!(
+                !name.ends_with(".tmp"),
+                "a failed write left a secret-bearing scratch file: {name}"
+            );
+        }
+    }
+
+    /// `remove_cred_file` is the one place either caller clears the fallback, so
+    /// its two contracts are pinned here: absent is success (what makes
+    /// `delete_token` idempotent), and a removal that could not happen is an
+    /// error (what stops `store_token` and `delete_token` reporting success over
+    /// a credential still readable through `load_secret`).
+    #[test]
+    fn remove_cred_file_treats_absent_as_success_and_reports_a_real_failure() {
+        let tmp = tempfile::tempdir().unwrap();
+        remove_cred_file(tmp.path(), "never-written").unwrap();
+
+        let blocked = cred_file_path(tmp.path(), "stuck-api");
+        std::fs::create_dir_all(&blocked).unwrap();
+        let err = remove_cred_file(tmp.path(), "stuck-api").unwrap_err();
+        assert!(
+            matches!(&err, AwareError::PermissionDenied(m) if m.contains("stuck-api")),
+            "{err:?}"
+        );
     }
 
     /// Deleting a credential that was never stored is success — the contract a
