@@ -130,57 +130,67 @@ pub fn store_token(
                 "aware: keyring write failed ({e}); \
                  falling back to ~/.aware/credentials file"
             );
-            // A PRIOR keychain entry for this account must go first. `load_token`
-            // reads the keychain before the file, so one left standing shadows the
-            // value we are about to write: the store reports success and every
-            // later read keeps serving the credential this write was meant to
-            // supersede. That is reachable exactly when it hurts most — a small
-            // token stored to the keychain, then rotated to one over the Windows
-            // blob limit, which is the rotation `aware credential put` exists for
-            // (#436).
-            //
-            // Clearing before the file write also fails in the safe direction: if
-            // the file write then fails there is no credential at all, which the
-            // next call surfaces, rather than a superseded one it cannot see.
-            clear_shadowing_entry(&entry, &account)?;
-            write_cred_file(aware_home, &account, &body)
+            fall_back_to_file(&entry, aware_home, &account, &body)
         }
     }
 }
 
-/// Remove a keychain entry that would otherwise shadow the file fallback.
+/// Move this account's credential from the keychain to the credentials file, in
+/// the order that leaves every reader whole at every instant.
 ///
-/// `load_token` reads the keychain before the file, so any entry left standing
-/// wins over the value about to be written. Three cases:
+/// This runs when the keychain write failed — most commonly the Windows
+/// Credential Manager 2 560-byte blob limit, i.e. a short token being rotated to
+/// a long one, which is exactly the rotation `aware credential put` exists for
+/// (#436).
 ///
-/// * `NoEntry` — nothing to shadow, nothing to do.
-/// * `Ok(_)` — a live entry `load_token` would return in preference to the file.
-///   It must go, and a delete we cannot complete is an error rather than a
-///   silently stale credential.
-/// * any other error — **also fatal**, because we cannot tell whether an entry is
-///   sitting there.
+/// **Order matters twice over, in opposite directions**, and getting it wrong
+/// either way has been a defect on this PR:
 ///
-/// That third case was originally allowed through, on the reasoning that an
-/// unreadable backend makes `load_token` fail loudly rather than serve a stale
-/// value. Codex refuted it on #443 and it is worth recording why, because the
-/// argument is not obviously wrong: `runtime::context::load_secret` — the path
-/// REST auth actually takes — *swallows* a `load_token` error and falls through
-/// to the file. So during a transient outage the runtime reads the new
-/// credential and everything looks correct. When the backend comes back,
-/// `load_token` starts returning the untouched old entry, and calls silently
-/// revert to the superseded credential. The outage is temporary; the entry
-/// outlives it.
+/// * `load_token` reads the keychain BEFORE the file, so a prior entry left
+///   standing shadows the value written here — the store reports success and
+///   every later read keeps serving the credential it was meant to supersede.
+/// * But deleting that entry FIRST opens a window in which neither store holds
+///   anything, and a REST invocation landing in it fails with a missing
+///   credential — breaking the very "either the whole old value or the whole new
+///   one" contract this atomic-replacement work promises. (Codex, #443.)
 ///
-/// So an unverifiable keychain means the rotation cannot be completed, and
-/// saying so beats a success that decays. The error names
-/// `AWARE_DISABLE_KEYRING`, which is the supported way to keep AWARE out of the
-/// keychain entirely on a headless or locked-down machine — with it set,
-/// `keyring_enabled` is false, this path is never reached, and the file store is
-/// the only one, so nothing can shadow anything.
-fn clear_shadowing_entry(entry: &keyring::Entry, account: &str) -> Result<(), AwareError> {
-    match entry.get_password() {
-        Err(keyring::Error::NoEntry) => return Ok(()),
-        Ok(_) => {}
+/// So: publish, then switch. Writing the file while the keychain entry still
+/// stands is invisible to readers — the entry wins — so they see the complete
+/// old credential throughout. Deleting the entry is then the single commit
+/// point: before it every reader sees old, after it every reader sees new, and
+/// there is no instant in between where they see neither.
+///
+/// A failed switch rolls the file back rather than leaving the new secret
+/// unreachable on disk. Readers are unaffected either way (the entry still wins
+/// every read), and an operation that reports failure must not leave a
+/// credential behind.
+fn fall_back_to_file(
+    entry: &keyring::Entry,
+    aware_home: &Path,
+    account: &str,
+    body: &str,
+) -> Result<(), AwareError> {
+    // Establish what the keychain holds BEFORE writing anything, so an
+    // unverifiable keychain fails with nothing to undo.
+    //
+    // An unreadable backend is fatal here, and that is deliberate. The first
+    // version let it through, reasoning that `load_token` would fail loudly on
+    // it rather than serve a stale value. Codex refuted that and it is worth
+    // recording why, because the argument is not obviously wrong:
+    // `runtime::context::load_secret` — the path REST auth actually takes —
+    // *swallows* a `load_token` error and falls through to the file. So during a
+    // transient outage the runtime reads the new credential and all looks
+    // correct; when the backend recovers, `load_token` starts returning the
+    // untouched old entry and calls silently revert. The outage is temporary;
+    // the entry outlives it.
+    //
+    // The error names `AWARE_DISABLE_KEYRING`, the supported way to keep AWARE
+    // out of the keychain on a headless or locked-down machine — with it set,
+    // `keyring_enabled` is false, this path is unreachable, and the file is the
+    // only store, so nothing can shadow anything.
+    let entry_stands = match entry.get_password() {
+        Ok(_) => true,
+        Err(keyring::Error::NoEntry) => false,
         Err(e) => {
             return Err(AwareError::PermissionDenied(format!(
                 "the keychain entry for {account} could not be read ({e}), so whether a superseded \
@@ -190,13 +200,36 @@ fn clear_shadowing_entry(entry: &keyring::Entry, account: &str) -> Result<(), Aw
                  the keychain and use the credentials file as the only store"
             )));
         }
+    };
+
+    // Nothing in the keychain to shadow the file or to switch away from, and the
+    // file write is itself atomic — so there is no window here to protect.
+    if !entry_stands {
+        return write_cred_file(aware_home, account, body);
     }
+
+    // 1. Publish. Readers still resolve through the keychain entry, so this is
+    //    invisible to them: they keep getting the complete old credential.
+    write_cred_file(aware_home, account, body)?;
+
+    // 2. Switch. This delete is the commit point.
     match entry.delete_credential() {
         Ok(()) | Err(keyring::Error::NoEntry) => Ok(()),
-        Err(e) => Err(AwareError::PermissionDenied(format!(
-            "keyring delete of the superseded entry for {account}: {e} — refusing to write the \
-             credentials-file fallback, which that entry would shadow on every read"
-        ))),
+        Err(del) => {
+            let rollback = remove_cred_file(aware_home, account);
+            Err(AwareError::PermissionDenied(format!(
+                "keyring delete of the superseded entry for {account}: {del} — the credential \
+                 could not be moved to the credentials file, so it was left unchanged and reads \
+                 still return the previous value{}",
+                match rollback {
+                    Ok(()) => "",
+                    // Worth naming: the file is now a secret on disk that no
+                    // reader reaches while the entry stands, and would become
+                    // live if that entry ever went away.
+                    Err(_) => "; the fallback file it wrote could not be removed either",
+                }
+            )))
+        }
     }
 }
 
