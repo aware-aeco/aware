@@ -186,11 +186,12 @@ fn read_secret(args: &PutArgs, account: &str) -> Result<String, AwareError> {
              {account} as provisioned while every call it authorizes fails"
         )));
     }
-    // A credential is interpolated straight into a request header
-    // (`runtime::invoker::inject_auth` builds `Authorization: Bearer {cred}`, and
-    // an api-key scheme puts it in a header of the agent's choosing), so what a
-    // header value can carry is what this command may accept. RFC 7230 makes that
-    // the visible ASCII range plus interior spaces, and `ureq` enforces it.
+    // The rule itself lives in `runtime::invoker::unsendable_char`, shared with
+    // the transport's own resolver. It was defined here first, on this path only,
+    // and that gap was a defect: a hand-written `{"key":"sk-café"}` bypassed
+    // `put` entirely, was reported usable, and failed every call (#443). This
+    // command's job is to report the offending character to a human; deciding
+    // what counts is the transport's.
     //
     // Two different failures are refused here, both at provisioning time where
     // there is a human to tell rather than at every call:
@@ -206,7 +207,7 @@ fn read_secret(args: &PutArgs, account: &str) -> Result<String, AwareError> {
     // end, not assumed: a secret of `tk one two` reaches the server as
     // `Authorization: Bearer tk one two`. An earlier version of this guard waved
     // non-ASCII through on the same reasoning, which was half right (#443).
-    if let Some(bad) = secret.chars().find(|c| !c.is_ascii_graphic() && *c != ' ') {
+    if let Some(bad) = crate::runtime::invoker::unsendable_char(secret) {
         let why = if bad.is_control() {
             "a credential is interpolated into an Authorization header, so a newline in one would \
              inject headers. Check for a stray line break or a file with CRLF endings"

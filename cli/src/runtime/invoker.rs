@@ -1207,25 +1207,47 @@ fn load_secret_value(agents_dir: &std::path::Path, id: &str) -> Option<Value> {
     ctx.secrets.get(id).cloned()
 }
 
+/// The first character that stops a string being usable as a credential, if any.
+///
+/// A credential is interpolated into a request header — `inject_auth` builds
+/// `Authorization: Bearer {cred}`, or an api-key header the agent names — so what
+/// a header value can carry is the whole rule: RFC 7230's visible ASCII plus
+/// interior spaces, which is what `ureq` enforces. A control character would
+/// terminate the header (injection); anything non-ASCII cannot be transmitted at
+/// all and `ureq` refuses the request before it leaves the process.
+///
+/// Shared with `commands::credential`, which reports the offending character to
+/// whoever is provisioning. One definition, because two would drift — and the
+/// drift already happened: the rule went in on the `put` path only, so a
+/// hand-written `{"key":"sk-café"}` was still reported usable and still failed
+/// every call (#443).
+pub(crate) fn unsendable_char(secret: &str) -> Option<char> {
+    secret.chars().find(|c| !c.is_ascii_graphic() && *c != ' ')
+}
+
 /// Extract the *usable* credential string from a loaded secret: a raw string is
 /// used verbatim; an object is probed for the common token/key fields.
 ///
-/// An empty (or all-whitespace) value is `None`, not `Some("")`. A blank
-/// credential authorizes nothing, and treating it as present is what let a
-/// hand-written `{"access_token":""}` send a bare `Authorization: Bearer` header
-/// and report `✓ run complete` over an unauthenticated request (#443). Refusing
-/// it here makes the caller take its missing-credential path, whose message
-/// already reads "missing **or unusable**", and lines the runtime up with
-/// `aware credential put`, which refuses to store the same value.
+/// "Usable" means it could actually authenticate a call — non-blank, and
+/// sendable per [`unsendable_char`]. Anything else is `None`, not `Some(junk)`,
+/// so the caller takes its missing-credential path (whose message already reads
+/// "missing **or unusable**") instead of putting the value on the wire. Treating
+/// a blank one as present is what let `{"access_token":""}` send a bare
+/// `Authorization: Bearer` and report `✓ run complete` over an unauthenticated
+/// request; treating an unsendable one as present traded that for a `Bad Header`
+/// at every invocation.
+///
+/// The check runs AFTER field selection, not inside it. An earlier draft skipped
+/// blank fields so `{"token":"", "key":"k"}` would resolve to `k` — and a unit
+/// test asserted exactly that, calling this function with a raw object. Through
+/// the real store it never happens: `load_secret` normalises such a blob via
+/// `read_cred_file` into a `StoredToken` carrying the blank `token` and dropping
+/// `key`, and returns before the raw object is ever offered here. So that
+/// fallthrough was reachable only from its own test. Selecting first and
+/// validating after is what the store actually does (#443).
 fn secret_as_str(secret: &Value) -> Option<String> {
-    let usable = |s: &str| !s.trim().is_empty();
-    match secret {
-        Value::String(s) => Some(s.clone()).filter(|s| usable(s)),
-        // The blank test goes INSIDE the probe, not after it. These field names
-        // are synonyms for "the credential", so a present-but-blank one is not an
-        // answer — it is a field to skip, and `{"token":"", "key":"k"}` resolves
-        // to `k`. Filtering after the probe instead would let an empty earlier
-        // field mask a usable later one and report the whole credential missing.
+    let selected = match secret {
+        Value::String(s) => Some(s.clone()),
         Value::Object(m) => [
             "token",
             "access_token",
@@ -1236,14 +1258,10 @@ fn secret_as_str(secret: &Value) -> Option<String> {
             "secret",
         ]
         .iter()
-        .find_map(|k| {
-            m.get(*k)
-                .and_then(|v| v.as_str())
-                .filter(|s| usable(s))
-                .map(|s| s.to_string())
-        }),
+        .find_map(|k| m.get(*k).and_then(|v| v.as_str()).map(|s| s.to_string())),
         _ => None,
-    }
+    };
+    selected.filter(|s| !s.trim().is_empty() && unsendable_char(s).is_none())
 }
 
 /// Inject the declared credential into the request: bearer/oauth2 as an
@@ -3814,11 +3832,35 @@ commands:
         assert_eq!(secret_as_str(&serde_json::json!("   ")), None);
         assert_eq!(secret_as_str(&serde_json::json!({"access_token":""})), None);
         assert_eq!(secret_as_str(&serde_json::json!({"key":"  "})), None);
-        // A later field still wins if the earlier one is blank rather than
-        // absent — the probe is for a usable secret, not for a present key.
+        // A blank FIRST field does not fall through to a later one, and this
+        // asserts the absence deliberately. An earlier draft skipped blanks
+        // inside the probe so this returned `Some("k")` — reachable only from a
+        // test calling this function directly. Through the real store,
+        // `load_secret` normalises the blob via `read_cred_file` into a
+        // `StoredToken` carrying the blank `token` and dropping `key`, and never
+        // offers the raw object here. The test passed; the system never did it.
         assert_eq!(
             secret_as_str(&serde_json::json!({"token":"", "key":"k"})),
-            Some("k".into())
+            None
+        );
+        // Unsendable values are not credentials either — the same rule the
+        // `credential put` path applies, now enforced by the resolver so a
+        // hand-written file cannot bypass it.
+        assert_eq!(secret_as_str(&serde_json::json!("sk-caf\u{00e9}")), None);
+        assert_eq!(
+            secret_as_str(&serde_json::json!({"key":"sk-caf\u{00e9}"})),
+            None
+        );
+        assert_eq!(
+            secret_as_str(&serde_json::json!({"key":"sk\r\nX-Admin: 1"})),
+            None
+        );
+        // An interior space is still fine: header values carry them, and this is
+        // verified end to end elsewhere. Without this the rule would be a
+        // no-whitespace rule refusing credentials that work.
+        assert_eq!(
+            secret_as_str(&serde_json::json!({"key":"sk one two"})),
+            Some("sk one two".into())
         );
     }
 

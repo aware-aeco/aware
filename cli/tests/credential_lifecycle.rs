@@ -283,6 +283,39 @@ fn a_blank_stored_credential_is_not_reported_present() {
     }
 }
 
+/// A hand-written credential that cannot be put in a header is not `present`
+/// either.
+///
+/// `credential put` refuses these, but a file written by hand never goes through
+/// it — so the rule has to live in the resolver `status` and the transport both
+/// ask, or the two disagree and `status` blesses a credential that fails every
+/// call with `Bad Header` (#443).
+#[test]
+fn a_stored_credential_that_could_never_be_sent_is_not_reported_present() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path();
+    std::fs::create_dir_all(home.join("credentials")).unwrap();
+
+    for (handle, body) in [
+        ("accented-api", "{\"key\":\"sk-caf\u{00e9}\"}"),
+        ("accented-bare", "\"sk-caf\u{00e9}\""),
+        ("newline-api", r#"{"key":"sk\r\nX-Admin: 1"}"#),
+    ] {
+        std::fs::write(cred_file(home, handle), body).unwrap();
+        assert_eq!(
+            status_of(home, handle),
+            "unusable",
+            "{handle} holds {body}, which no HTTP header could carry"
+        );
+    }
+
+    // The discriminator: an interior space really is sendable, so it stays
+    // present. Otherwise this would be a no-whitespace rule refusing credentials
+    // that demonstrably work.
+    std::fs::write(cred_file(home, "spaced-api"), r#"{"key":"sk one two"}"#).unwrap();
+    assert_eq!(status_of(home, "spaced-api"), "present");
+}
+
 /// The `missing` hint names the ACCOUNT, not the bare handle. With `--as session`
 /// the bare handle provisions a *different* credential and leaves this one
 /// missing, so the suggested command would report success and fix nothing.
