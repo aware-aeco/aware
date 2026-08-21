@@ -1167,13 +1167,17 @@ fn provision_advice(secret: &str) -> String {
         // The alias comes from the manifest's `auth.secret`, which nothing
         // validates, so it can hold a space or a shell metacharacter. Interpolated
         // bare, `google-workspace.team one` emitted
-        // `aware connect google-workspace --as team one`, which clap rejects as an
-        // extra argument — and a metacharacter would change what the copied line
-        // does. Quoted, it is one argument whatever it contains.
-        let as_alias = alias
-            .map(|a| format!(" --as {}", shell_quote(a)))
-            .unwrap_or_default();
-        return format!("provision it with `aware connect {base}{as_alias}`");
+        // `aware connect google-workspace --as team one` — two arguments, which
+        // clap rejects — and a metacharacter would change what a copied line does.
+        return match alias {
+            Some(alias) if !is_bare_shell_token(alias) => format!(
+                "provision it with `aware connect {base}`, passing `--as` the alias {alias:?} — \
+                 quote it for your shell, since it holds characters a bare argument would split \
+                 or interpret"
+            ),
+            Some(alias) => format!("provision it with `aware connect {base} --as {alias}`"),
+            None => format!("provision it with `aware connect {base}`"),
+        };
     }
     // For an unregistered handle the WHOLE string is the account — that is what
     // the fall-through in `resolve_rest_credential` looks up, and what
@@ -1231,22 +1235,23 @@ fn load_secret_value(agents_dir: &std::path::Path, id: &str) -> Option<Value> {
     ctx.secrets.get(id).cloned()
 }
 
-/// Render `arg` so a shell passes it through as exactly one argument.
+/// Whether `arg` survives being pasted into any shell as one bare argument.
 ///
-/// Bare when it is already a single unambiguous token, so the common case reads
-/// as a command someone would type; single-quoted otherwise, with embedded
-/// single quotes closed and re-opened (`'\''`), which is the one POSIX form that
-/// needs no escaping rules inside it. PowerShell reads single-quoted literals the
-/// same way.
-fn shell_quote(arg: &str) -> String {
-    let plain = !arg.is_empty()
+/// The conservative set: nothing here is special to POSIX shells, PowerShell, or
+/// `cmd`, so a bare token means the same thing in all of them.
+///
+/// There is deliberately no "quote it for them" branch. An earlier version
+/// single-quoted the rest POSIX-style (`'it'\''s'`) and claimed PowerShell read
+/// it the same way; PowerShell escapes an embedded quote by doubling it
+/// (`'it''s'`), so the suggested command did not parse there (Codex, #443).
+/// Emitting a line that runs in one shell and breaks in another is worse than
+/// not emitting one, and picking per-shell would mean guessing which shell is
+/// reading a message the runtime prints to stderr.
+fn is_bare_shell_token(arg: &str) -> bool {
+    !arg.is_empty()
         && arg
             .chars()
-            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.' | '/' | '@' | ':'));
-    if plain {
-        return arg.to_string();
-    }
-    format!("'{}'", arg.replace('\'', r"'\''"))
+            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.' | '/' | '@' | ':'))
 }
 
 /// The first character in a credential that no request could carry anywhere, if
@@ -3968,30 +3973,37 @@ commands:
     }
 
     /// The suggested `aware connect` line has to survive being pasted into a
-    /// shell. Manifest aliases are unvalidated, so one holding a space produced
-    /// `--as team one` — two arguments, which clap rejects.
+    /// shell — ANY shell. Manifest aliases are unvalidated, so one holding a
+    /// space produced `--as team one`: two arguments, which clap rejects.
+    ///
+    /// An alias that cannot be passed bare gets a description instead of a
+    /// command line. Quoting it looked better and was not portable: POSIX wants
+    /// `'it'\''s'` and PowerShell wants `'it''s'`, and stderr does not know which
+    /// shell is reading it — so a quoted line would run in one and break in the
+    /// other, which is worse than not offering one.
     #[test]
-    fn provision_advice_quotes_an_alias_that_would_not_survive_a_shell() {
-        assert_eq!(
-            provision_advice("google-workspace.team one"),
-            "provision it with `aware connect google-workspace --as 'team one'`"
-        );
-        // A metacharacter is contained rather than executed.
-        assert_eq!(
-            provision_advice("google-workspace.a;rm -rf /"),
-            "provision it with `aware connect google-workspace --as 'a;rm -rf /'`"
-        );
-        // An embedded single quote closes and reopens, so the argument survives.
-        assert_eq!(
-            provision_advice("google-workspace.it's"),
-            r"provision it with `aware connect google-workspace --as 'it'\''s'`"
-        );
-        // An ordinary alias stays bare — the common case should read like
-        // something a person would type.
+    fn provision_advice_only_offers_a_command_line_an_alias_survives() {
+        // The common case reads like something a person would type.
         assert_eq!(
             provision_advice("google-workspace.personal"),
             "provision it with `aware connect google-workspace --as personal`"
         );
+        for hostile in ["team one", "it's", "a;rm -rf /", "$(whoami)", ""] {
+            let advice = provision_advice(&format!("google-workspace.{hostile}"));
+            // Never a `--as` inside the backticks with an unquotable alias after
+            // it: that is the line that would split, or execute something else.
+            assert!(
+                !advice.contains(&format!("--as {hostile}`")),
+                "offered an unpasteable command for {hostile:?}: {advice}"
+            );
+            assert!(
+                advice.contains("aware connect google-workspace"),
+                "{advice}"
+            );
+        }
+        // The alias is still shown, unambiguously, so the user knows what to
+        // quote — `{:?}` escapes it rather than letting it blend into the prose.
+        assert!(provision_advice("google-workspace.team one").contains("\"team one\""));
     }
 
     #[tokio::test]
