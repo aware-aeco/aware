@@ -198,6 +198,91 @@ fn an_unreadable_credential_is_reported_apart_from_a_missing_one() {
     assert_eq!(status_of(home, "corrupt-api"), "missing");
 }
 
+/// `status` answers with the REST transport's format rules, not the narrower set
+/// `auth::keychain::load_token` parses.
+///
+/// Each shape here is one `runtime::invoker::secret_as_str` accepts and
+/// `load_token` does not, so before this was shared each reported `unreadable`
+/// while the runtime authenticated with it every call. `{"key": …}` is not a
+/// hypothetical: it is the fixture the invoker's own
+/// `rest_injects_declared_apikey_header_from_credential` uses.
+#[test]
+fn status_recognises_every_shape_the_transport_can_authenticate_with() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path();
+    std::fs::create_dir_all(home.join("credentials")).unwrap();
+
+    for (handle, body) in [
+        ("keyed-api", r#"{"key":"sk-live-123"}"#),
+        ("apikey-api", r#"{"apikey":"sk-live-123"}"#),
+        ("snake-api", r#"{"api_key":"sk-live-123"}"#),
+        ("value-api", r#"{"value":"sk-live-123"}"#),
+        ("secret-api", r#"{"secret":"sk-live-123"}"#),
+        // A bare JSON string is a credential file the transport also accepts.
+        ("bare-api", r#""sk-live-123""#),
+    ] {
+        std::fs::write(cred_file(home, handle), body).unwrap();
+        assert_eq!(
+            status_of(home, handle),
+            "present",
+            "{handle} holds {body}, which the REST transport authenticates with, \
+             but status did not report it as present"
+        );
+    }
+}
+
+/// The other side of that: sharing the transport's rules must not turn
+/// `unreadable` into a state nothing can reach. A file that will not parse fails
+/// both readers and is still reported apart from a missing one.
+#[test]
+fn status_still_reports_a_genuinely_corrupt_credential_as_unreadable() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path();
+    std::fs::create_dir_all(home.join("credentials")).unwrap();
+
+    std::fs::write(cred_file(home, "corrupt-api"), "not json at all").unwrap();
+    assert_eq!(status_of(home, "corrupt-api"), "unreadable");
+    // Valid JSON, but no field any reader can pull a secret out of.
+    std::fs::write(
+        cred_file(home, "empty-obj-api"),
+        r#"{"note":"nothing here"}"#,
+    )
+    .unwrap();
+    assert_eq!(status_of(home, "empty-obj-api"), "unreadable");
+}
+
+/// The `missing` hint names the ACCOUNT, not the bare handle. With `--as session`
+/// the bare handle provisions a *different* credential and leaves this one
+/// missing, so the suggested command would report success and fix nothing.
+#[test]
+fn the_missing_hint_names_the_account_so_running_it_actually_provisions_it() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path();
+
+    let out = aware(home)
+        .args(["credential", "status", "foo", "--as", "session"])
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    let text = String::from_utf8(out).unwrap();
+    assert!(
+        text.contains("aware credential put foo.session"),
+        "the missing hint would provision a different account: {text}"
+    );
+
+    // Run the hint verbatim and the handle it was reported against goes present —
+    // which is the only thing that makes it a recovery instruction.
+    aware(home)
+        .args(["credential", "put", "foo.session"])
+        .write_stdin("tk_from_the_hint")
+        .assert()
+        .success();
+    assert_eq!(status_of(home, "foo.session"), "present");
+    assert_eq!(stored_secret(home, "foo.session"), "tk_from_the_hint");
+}
+
 /// A registered OAuth integration is refused, and the message names the command
 /// that does own it. Storing one here would be shadowed at run time anyway:
 /// `resolve_rest_credential` prefers the refreshed OAuth token for a registered

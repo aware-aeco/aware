@@ -1156,6 +1156,31 @@ fn provision_hint(secret: &str) -> String {
     format!("aware credential put {secret}")
 }
 
+/// Whether a credential handle resolves to a usable secret, by the rules the
+/// REST transport itself applies — the question "will my agent authenticate?".
+///
+/// `aware credential status` reports from this rather than from
+/// `auth::keychain::load_token`, because the two accept different things and the
+/// transport's set is the wider one. `load_token` takes a `StoredToken` or a
+/// blob with `access_token` / `token`; the transport additionally takes a bare
+/// JSON string and an object keyed `key` / `apikey` / `api_key` / `value` /
+/// `secret` (see [`secret_as_str`]). `{"key":"sk-live-123"}` is not a corner
+/// case — it is the fixture `rest_injects_declared_apikey_header_from_credential`
+/// authenticates with — and reporting a credential the runtime is actively using
+/// as `unreadable` sends its owner off to re-provision something that works.
+///
+/// Exported so status is a *consumer* of the transport's format rules rather
+/// than a second, drifting copy of them.
+pub(crate) fn stored_secret_is_usable(aware_home: &std::path::Path, handle: &str) -> bool {
+    // `load_secret_value` derives the credentials directory as its argument's
+    // `credentials` sibling, so it wants `<home>/agents` — the same thing the
+    // invoker holds at a real call site.
+    load_secret_value(&aware_home.join("agents"), handle)
+        .as_ref()
+        .and_then(secret_as_str)
+        .is_some()
+}
+
 /// Load a credential by handle, reusing the runtime secret loader (OS keychain,
 /// then `<aware-home>/credentials/<id>.json`). `agents_dir` is `<home>/agents`,
 /// so the credentials directory is its `credentials` sibling.

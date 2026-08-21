@@ -269,6 +269,29 @@ fn run_status(args: HandleArgs, ctx: &Context) -> Result<(), AwareError> {
     ) {
         Ok(Some(_)) => "present",
         Ok(None) => "missing",
+        // `load_token` reads a NARROWER set of shapes than the REST transport
+        // does: a `StoredToken`, or a blob with `access_token` / `token`. The
+        // transport also takes a bare JSON string and an object keyed `key` /
+        // `apikey` / `api_key` / `value` / `secret`. So a credential the runtime
+        // authenticates with every call lands here — and answering `unreadable`
+        // would send its owner off to re-provision something that works.
+        //
+        // The question this command is asked is "will my agent authenticate?",
+        // so the transport's own rules decide before we call it unreadable.
+        // Nothing is lost on the genuinely-corrupt path: a file that will not
+        // parse fails both readers.
+        //
+        // Only the error arm needs this. `Ok(None)` means the store holds
+        // nothing at all, and the transport's secondary lookup reads the same
+        // file, so it has nothing to find either.
+        Err(_)
+            if crate::runtime::invoker::stored_secret_is_usable(
+                &ctx.paths.aware_home,
+                &account,
+            ) =>
+        {
+            "present"
+        }
         // Distinct from `missing` on purpose: a credential that is stored but
         // unreadable (corrupt JSON, an unreachable keychain) sends a caller down
         // a different road than one that was never provisioned.
@@ -283,10 +306,14 @@ fn run_status(args: HandleArgs, ctx: &Context) -> Result<(), AwareError> {
     } else {
         match status {
             "present" => println!("\u{2713} {account}  present"),
-            "missing" => println!(
-                "\u{2717} {account}  missing  run: aware credential put {}",
-                args.handle
-            ),
+            // The hint names the ACCOUNT, not the bare handle. With `--as session`
+            // the bare handle provisions a different credential and leaves this one
+            // missing, so the recovery command would report success and fix
+            // nothing. Safe because every account is itself a valid handle — the
+            // invariant `validated_account` enforces.
+            "missing" => {
+                println!("\u{2717} {account}  missing  run: aware credential put {account}")
+            }
             _ => println!("? {account}  unreadable (stored, but the store could not be read)"),
         }
     }
