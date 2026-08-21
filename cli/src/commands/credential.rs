@@ -186,18 +186,37 @@ fn read_secret(args: &PutArgs, account: &str) -> Result<String, AwareError> {
              {account} as provisioned while every call it authorizes fails"
         )));
     }
-    // A bearer is interpolated straight into a request header
-    // (`runtime::invoker::inject_auth` builds `Authorization: Bearer {cred}`), so
-    // a control character in one is a header-injection primitive: a CR/LF would
-    // end the header and start attacker-chosen ones. Refuse at provisioning time,
-    // where there is a human to tell, rather than at each call. Interior spaces
-    // and non-ASCII are left alone — some issuers really do mint those, and
-    // neither can terminate a header.
-    if secret.contains(char::is_control) {
+    // A credential is interpolated straight into a request header
+    // (`runtime::invoker::inject_auth` builds `Authorization: Bearer {cred}`, and
+    // an api-key scheme puts it in a header of the agent's choosing), so what a
+    // header value can carry is what this command may accept. RFC 7230 makes that
+    // the visible ASCII range plus interior spaces, and `ureq` enforces it.
+    //
+    // Two different failures are refused here, both at provisioning time where
+    // there is a human to tell rather than at every call:
+    //
+    // * a CONTROL character is a header-injection primitive — a CR/LF ends the
+    //   header and starts attacker-chosen ones;
+    // * a NON-ASCII character cannot be sent at all. `ureq` rejects the request
+    //   before it leaves the process (`Bad Header: invalid header 'Authorization:
+    //   Bearer tk_café_123'`), so storing one reports a provisioned credential
+    //   that fails every single invocation.
+    //
+    // Interior spaces really are fine and are deliberately kept — verified end to
+    // end, not assumed: a secret of `tk one two` reaches the server as
+    // `Authorization: Bearer tk one two`. An earlier version of this guard waved
+    // non-ASCII through on the same reasoning, which was half right (#443).
+    if let Some(bad) = secret.chars().find(|c| !c.is_ascii_graphic() && *c != ' ') {
+        let why = if bad.is_control() {
+            "a credential is interpolated into an Authorization header, so a newline in one would \
+             inject headers. Check for a stray line break or a file with CRLF endings"
+        } else {
+            "an HTTP header value carries visible ASCII only, so the request would be refused \
+             before it left the process and every call this credential authorizes would fail. \
+             Check the secret was not mangled by an encoding conversion"
+        };
         return Err(AwareError::Validation(format!(
-            "the secret from {origin} contains a control character — a credential is interpolated \
-             into an Authorization header, so a newline in one would inject headers. Check for a \
-             stray line break or a file with CRLF endings"
+            "the secret from {origin} contains {bad:?}, which cannot appear in a credential — {why}"
         )));
     }
     Ok(secret.to_string())
@@ -687,23 +706,56 @@ mod tests {
         let mut args = put_args("my-api");
         args.from_file = Some(path);
         let err = read_secret(&args, "my-api").unwrap_err();
-        assert!(
-            matches!(&err, AwareError::Validation(m) if m.contains("control character")),
-            "{err:?}"
-        );
+        let AwareError::Validation(message) = &err else {
+            panic!("expected Validation, got {err:?}");
+        };
+        // Reported as the INJECTION case, not the unsendable-character one: both
+        // are refused by one guard, but they have different causes and the
+        // message has to tell the user which one they hit.
+        assert!(message.contains("inject headers"), "{message}");
+        assert!(message.contains("CRLF"), "{message}");
     }
 
-    /// Interior spaces and non-ASCII survive: some issuers mint them, and neither
-    /// can terminate a header. Without this the guard above would be a
-    /// printable-ASCII rule refusing legitimate credentials.
+    /// An interior space survives — that one really is sendable, and this was
+    /// checked end to end rather than assumed: `tk one two` reaches the server as
+    /// `Authorization: Bearer tk one two`. Without this the guard would be a
+    /// no-whitespace rule refusing credentials that work.
     #[test]
-    fn a_secret_with_an_interior_space_or_non_ascii_is_kept() {
+    fn a_secret_with_an_interior_space_is_kept() {
         let tmp = tempfile::tempdir().unwrap();
         let path = tmp.path().join("spaced.txt");
-        std::fs::write(&path, "  tk one \u{00e9}  ").unwrap();
+        std::fs::write(&path, "  tk one two  ").unwrap();
         let mut args = put_args("my-api");
         args.from_file = Some(path);
-        assert_eq!(read_secret(&args, "my-api").unwrap(), "tk one \u{00e9}");
+        assert_eq!(read_secret(&args, "my-api").unwrap(), "tk one two");
+    }
+
+    /// A non-ASCII secret is refused, because it can never be sent. `ureq`
+    /// rejects the request before it leaves the process — `Bad Header: invalid
+    /// header 'Authorization: Bearer tk_café_123'` — so accepting one reports a
+    /// provisioned credential that fails every invocation.
+    ///
+    /// An earlier version of this guard explicitly allowed non-ASCII, on the
+    /// reasoning that it cannot terminate a header. True, and beside the point:
+    /// it cannot be transmitted at all (Codex, #443).
+    #[test]
+    fn a_non_ascii_secret_is_refused_because_it_could_never_be_sent() {
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("accented.txt");
+        std::fs::write(&path, "tk_caf\u{00e9}_123").unwrap();
+        let mut args = put_args("my-api");
+        args.from_file = Some(path);
+        let err = read_secret(&args, "my-api").unwrap_err();
+        let AwareError::Validation(message) = &err else {
+            panic!("expected Validation, got {err:?}");
+        };
+        // Names the offending character and why it cannot work, so the fix is
+        // obvious without reading the source.
+        assert!(message.contains("visible ASCII"), "{message}");
+        assert!(message.contains('\u{00e9}'), "{message}");
+        // NOT reported as the injection case — the two failures have different
+        // causes and different remedies.
+        assert!(!message.contains("inject headers"), "{message}");
     }
 
     #[test]
