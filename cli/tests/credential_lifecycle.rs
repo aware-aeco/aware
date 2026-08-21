@@ -296,16 +296,29 @@ fn a_stored_credential_that_could_never_be_sent_is_not_reported_present() {
     let home = tmp.path();
     std::fs::create_dir_all(home.join("credentials")).unwrap();
 
+    // A control character is illegitimate wherever the credential lands, so it is
+    // the one charset rule `status` can apply without knowing the agent.
+    std::fs::write(
+        cred_file(home, "newline-api"),
+        r#"{"key":"sk\r\nX-Admin: 1"}"#,
+    )
+    .unwrap();
+    assert_eq!(status_of(home, "newline-api"), "unusable");
+
+    // Non-ASCII is NOT judged here, and that is deliberate. `status` answers per
+    // handle; whether the value is sendable depends on where the agent puts it —
+    // refused as a header, URL-encoded and valid as an api-key `in: query`. An
+    // earlier version reported these `unusable` and broke the query case
+    // outright (#443). The transport applies the header charset where it knows.
     for (handle, body) in [
         ("accented-api", "{\"key\":\"sk-caf\u{00e9}\"}"),
         ("accented-bare", "\"sk-caf\u{00e9}\""),
-        ("newline-api", r#"{"key":"sk\r\nX-Admin: 1"}"#),
     ] {
         std::fs::write(cred_file(home, handle), body).unwrap();
         assert_eq!(
             status_of(home, handle),
-            "unusable",
-            "{handle} holds {body}, which no HTTP header could carry"
+            "present",
+            "{handle} holds {body}, which a query-parameter api-key agent can use"
         );
     }
 

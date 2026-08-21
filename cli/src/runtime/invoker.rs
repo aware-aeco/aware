@@ -860,6 +860,22 @@ impl AgentInvoker for RestInvoker {
                         provision_advice(&auth.secret)
                     )));
                 };
+                // The header charset applies only once the destination is known
+                // to be a header — an api-key `in: query` is URL-encoded and may
+                // legitimately be non-ASCII. Reported specifically rather than
+                // folded into the missing-credential arm above: the credential IS
+                // provisioned, and "provision it" would be the wrong advice.
+                if auth_target_is_header(auth)
+                    && let Some(bad) = unsendable_in_header_char(&cred)
+                {
+                    return Err(AwareError::Validation(format!(
+                        "agent {agent} sends credential {:?} as an HTTP header, and it contains \
+                         {bad:?} — a header value carries visible ASCII only, so the request would \
+                         be refused before it left the process. Re-provision it with a value that \
+                         can be sent, or check it was not mangled by an encoding conversion",
+                        auth.secret
+                    )));
+                }
                 inject_auth(auth, &cred, &mut headers, &mut query);
             }
         }
@@ -1148,7 +1164,15 @@ fn provision_advice(secret: &str) -> String {
         None => (secret, None),
     };
     if crate::auth::config::for_integration(base).is_ok() {
-        let as_alias = alias.map(|a| format!(" --as {a}")).unwrap_or_default();
+        // The alias comes from the manifest's `auth.secret`, which nothing
+        // validates, so it can hold a space or a shell metacharacter. Interpolated
+        // bare, `google-workspace.team one` emitted
+        // `aware connect google-workspace --as team one`, which clap rejects as an
+        // extra argument — and a metacharacter would change what the copied line
+        // does. Quoted, it is one argument whatever it contains.
+        let as_alias = alias
+            .map(|a| format!(" --as {}", shell_quote(a)))
+            .unwrap_or_default();
         return format!("provision it with `aware connect {base}{as_alias}`");
     }
     // For an unregistered handle the WHOLE string is the account — that is what
@@ -1207,29 +1231,76 @@ fn load_secret_value(agents_dir: &std::path::Path, id: &str) -> Option<Value> {
     ctx.secrets.get(id).cloned()
 }
 
-/// The first character that stops a string being usable as a credential, if any.
+/// Render `arg` so a shell passes it through as exactly one argument.
 ///
-/// A credential is interpolated into a request header — `inject_auth` builds
-/// `Authorization: Bearer {cred}`, or an api-key header the agent names — so what
-/// a header value can carry is the whole rule: RFC 7230's visible ASCII plus
-/// interior spaces, which is what `ureq` enforces. A control character would
-/// terminate the header (injection); anything non-ASCII cannot be transmitted at
-/// all and `ureq` refuses the request before it leaves the process.
+/// Bare when it is already a single unambiguous token, so the common case reads
+/// as a command someone would type; single-quoted otherwise, with embedded
+/// single quotes closed and re-opened (`'\''`), which is the one POSIX form that
+/// needs no escaping rules inside it. PowerShell reads single-quoted literals the
+/// same way.
+fn shell_quote(arg: &str) -> String {
+    let plain = !arg.is_empty()
+        && arg
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.' | '/' | '@' | ':'));
+    if plain {
+        return arg.to_string();
+    }
+    format!("'{}'", arg.replace('\'', r"'\''"))
+}
+
+/// The first character in a credential that no request could carry anywhere, if
+/// any — i.e. a control character.
 ///
-/// Shared with `commands::credential`, which reports the offending character to
-/// whoever is provisioning. One definition, because two would drift — and the
-/// drift already happened: the rule went in on the `put` path only, so a
-/// hand-written `{"key":"sk-café"}` was still reported usable and still failed
-/// every call (#443).
-pub(crate) fn unsendable_char(secret: &str) -> Option<char> {
+/// This is the rule that holds wherever a credential is stored, without knowing
+/// which agent will use it or how. A control character is never a legitimate
+/// credential and is a header-injection primitive: `inject_auth` interpolates
+/// the value into `Authorization: Bearer {cred}`, or into a `Cookie` header, so a
+/// CR/LF would end the header and start attacker-chosen ones.
+///
+/// Deliberately NOT the header charset. Whether non-ASCII is usable depends on
+/// where the credential lands, which only the transport knows — see
+/// [`unsendable_in_header_char`]. The credential store is agent-agnostic: one
+/// handle can serve several agents, so a rule applied there has to be one that
+/// holds for all of them.
+pub(crate) fn never_sendable_char(secret: &str) -> Option<char> {
+    secret.chars().find(|c| c.is_control())
+}
+
+/// The first character that stops a credential being usable **as a header
+/// value**, if any: RFC 7230 allows visible ASCII plus interior spaces, and
+/// `ureq` enforces exactly that, refusing the request before it leaves the
+/// process.
+///
+/// Applied only where the destination is known to be a header. A credential that
+/// is invalid here can be perfectly valid elsewhere: an api-key declared
+/// `in: query` is URL-encoded by `ureq::Request::query`, so `sk-café` reaches the
+/// server as `?apikey=sk-caf%C3%A9`. Applying the header charset to every stored
+/// credential broke exactly that case (#443).
+pub(crate) fn unsendable_in_header_char(secret: &str) -> Option<char> {
     secret.chars().find(|c| !c.is_ascii_graphic() && *c != ' ')
+}
+
+/// Whether a declared scheme puts the credential in a request **header**.
+///
+/// Mirrors [`inject_auth`]'s own dispatch, and must keep mirroring it: this
+/// decides whether the header charset applies, so a scheme that lands in a
+/// header while this says otherwise would put an unsendable value on the wire.
+/// `cookie` counts — a cookie IS a header. An unrecognised scheme injects
+/// nothing at all, so it constrains nothing.
+fn auth_target_is_header(auth: &crate::manifest::agent::AuthScheme) -> bool {
+    match auth.scheme.as_str() {
+        "bearer" | "oauth2" => true,
+        "api-key" => !matches!(auth.location.as_deref(), Some("query")),
+        _ => false,
+    }
 }
 
 /// Extract the *usable* credential string from a loaded secret: a raw string is
 /// used verbatim; an object is probed for the common token/key fields.
 ///
 /// "Usable" means it could actually authenticate a call — non-blank, and
-/// sendable per [`unsendable_char`]. Anything else is `None`, not `Some(junk)`,
+/// carryable anywhere per [`never_sendable_char`]. Anything else is `None`, not `Some(junk)`,
 /// so the caller takes its missing-credential path (whose message already reads
 /// "missing **or unusable**") instead of putting the value on the wire. Treating
 /// a blank one as present is what let `{"access_token":""}` send a bare
@@ -1261,7 +1332,7 @@ fn secret_as_str(secret: &Value) -> Option<String> {
         .find_map(|k| m.get(*k).and_then(|v| v.as_str()).map(|s| s.to_string())),
         _ => None,
     };
-    selected.filter(|s| !s.trim().is_empty() && unsendable_char(s).is_none())
+    selected.filter(|s| !s.trim().is_empty() && never_sendable_char(s).is_none())
 }
 
 /// Inject the declared credential into the request: bearer/oauth2 as an
@@ -3843,24 +3914,83 @@ commands:
             secret_as_str(&serde_json::json!({"token":"", "key":"k"})),
             None
         );
-        // Unsendable values are not credentials either — the same rule the
-        // `credential put` path applies, now enforced by the resolver so a
-        // hand-written file cannot bypass it.
-        assert_eq!(secret_as_str(&serde_json::json!("sk-caf\u{00e9}")), None);
-        assert_eq!(
-            secret_as_str(&serde_json::json!({"key":"sk-caf\u{00e9}"})),
-            None
-        );
+        // A control character is refused here, because it is illegitimate
+        // wherever the credential lands and is the injection primitive.
         assert_eq!(
             secret_as_str(&serde_json::json!({"key":"sk\r\nX-Admin: 1"})),
             None
         );
-        // An interior space is still fine: header values carry them, and this is
-        // verified end to end elsewhere. Without this the rule would be a
-        // no-whitespace rule refusing credentials that work.
+        // But NON-ASCII survives this resolver, and that is the point. Whether it
+        // is usable depends on where the agent puts it: refused as a header,
+        // URL-encoded and perfectly valid as an api-key `in: query`. Filtering it
+        // here — which an earlier version did — broke the query case outright
+        // (#443). `auth_target_is_header` decides, at the one place that knows.
+        assert_eq!(
+            secret_as_str(&serde_json::json!("sk-caf\u{00e9}")),
+            Some("sk-caf\u{00e9}".into())
+        );
+        assert_eq!(
+            secret_as_str(&serde_json::json!({"key":"sk-caf\u{00e9}"})),
+            Some("sk-caf\u{00e9}".into())
+        );
+        // An interior space is fine everywhere: header values carry them, and
+        // this is verified end to end elsewhere.
         assert_eq!(
             secret_as_str(&serde_json::json!({"key":"sk one two"})),
             Some("sk one two".into())
+        );
+    }
+
+    /// The header charset applies exactly where a header is what gets sent.
+    /// Mirrors `inject_auth`'s dispatch — if the two drift, either an unsendable
+    /// value goes on the wire or a valid query key is refused, and this PR has
+    /// now shipped one of each (#443).
+    #[test]
+    fn auth_target_is_header_matches_where_inject_auth_puts_the_credential() {
+        let scheme = |scheme: &str, location: Option<&str>| crate::manifest::agent::AuthScheme {
+            scheme: scheme.into(),
+            location: location.map(str::to_string),
+            name: None,
+            secret: "s".into(),
+        };
+        assert!(auth_target_is_header(&scheme("bearer", None)));
+        assert!(auth_target_is_header(&scheme("oauth2", None)));
+        // api-key defaults to a header when no location is declared.
+        assert!(auth_target_is_header(&scheme("api-key", None)));
+        assert!(auth_target_is_header(&scheme("api-key", Some("header"))));
+        // A cookie IS a header, so the charset applies there too.
+        assert!(auth_target_is_header(&scheme("api-key", Some("cookie"))));
+        // The one case that is not a header — and the one the header charset
+        // must not touch.
+        assert!(!auth_target_is_header(&scheme("api-key", Some("query"))));
+        // An unrecognised scheme injects nothing, so it constrains nothing.
+        assert!(!auth_target_is_header(&scheme("mtls", None)));
+    }
+
+    /// The suggested `aware connect` line has to survive being pasted into a
+    /// shell. Manifest aliases are unvalidated, so one holding a space produced
+    /// `--as team one` — two arguments, which clap rejects.
+    #[test]
+    fn provision_advice_quotes_an_alias_that_would_not_survive_a_shell() {
+        assert_eq!(
+            provision_advice("google-workspace.team one"),
+            "provision it with `aware connect google-workspace --as 'team one'`"
+        );
+        // A metacharacter is contained rather than executed.
+        assert_eq!(
+            provision_advice("google-workspace.a;rm -rf /"),
+            "provision it with `aware connect google-workspace --as 'a;rm -rf /'`"
+        );
+        // An embedded single quote closes and reopens, so the argument survives.
+        assert_eq!(
+            provision_advice("google-workspace.it's"),
+            r"provision it with `aware connect google-workspace --as 'it'\''s'`"
+        );
+        // An ordinary alias stays bare — the common case should read like
+        // something a person would type.
+        assert_eq!(
+            provision_advice("google-workspace.personal"),
+            "provision it with `aware connect google-workspace --as personal`"
         );
     }
 
