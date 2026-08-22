@@ -332,6 +332,62 @@ The trimble-connect agent can now make authenticated calls.
 
 Subsequent commands transparently use the credential. Refresh happens automatically inside `aware app run`.
 
+`connect` covers the integrations AWARE ships an OAuth client for, and validates its
+`INTEGRATION` argument against that list. For a handle AWARE runs no OAuth flow for, use
+`aware credential` below.
+
+### `aware credential put|delete|status <handle>`
+
+Provision, rotate and revoke an **opaque** credential — a generic REST bearer or API key
+AWARE stores but does not mint. The REST transport already resolves any handle an agent
+declares in `auth: { scheme: bearer, secret: <handle> }`; this is the supported way to put
+one there, so callers that generate their own short-lived tokens never write
+`~/.aware/credentials/` by hand.
+
+The secret is read from stdin (default), `--from-file`, or `--from-env`
+(`AWARE_TOKEN_<HANDLE>`) — **never from argv**, where it would land in shell history and in
+every process listing on the machine.
+
+```
+$ printf %s "$TOKEN" | aware credential put floless-workspace --as session
+✓ stored credential floless-workspace.session (OS keychain or ~/.aware/credentials fallback)
+
+$ aware --json credential status floless-workspace --as session
+{"status":"present","handle":"floless-workspace.session"}
+
+$ printf %s "$NEW_TOKEN" | aware --json credential put floless-workspace --as session
+{"status":"rotated","handle":"floless-workspace.session"}
+
+$ aware --json credential delete floless-workspace --as session
+{"status":"revoked","handle":"floless-workspace.session"}
+```
+
+Contract:
+
+- **`handle`** is the string an agent manifest names in `auth.secret`. With `--as <alias>`
+  the stored handle is `<handle>.<alias>`, which is what the manifest must then carry — the
+  command echoes it back as `handle` so a caller never has to derive it.
+- **`put` replaces atomically.** The next REST invocation uses the new value; a concurrent
+  one sees either the whole old credential or the whole new one, never a torn read.
+- **`delete` is idempotent and fails closed.** An absent handle is success (`absent`); a
+  removal that could not be completed is an error, never a success that leaves the
+  credential readable.
+- **`status` never prints the secret** and always exits 0 — it reports `present`, `missing`
+  or `unusable` in its field, so a script branches on
+  `aware --json credential status <handle> | jq -r .status`, not on the exit code.
+  `present` answers the question the caller is actually asking — *would the REST transport
+  authenticate with this?* — so it is decided by the transport's own resolver, not by a
+  second reader with its own idea of what counts. `unusable` means something **is** stored
+  and no usable secret came out of it: corrupt JSON, an unreachable keychain, or a blank
+  value. A blank credential is never `present`; the runtime treats it as absent too, rather
+  than sending a bare `Authorization: Bearer` and reporting a successful run.
+- **Storage stays AWARE's.** Whether the bytes live in the OS keychain or the
+  `~/.aware/credentials/` fallback is not the caller's concern and is not part of this
+  contract.
+- Handles are lowercase `a-z0-9`, `-`, `_`, dot-separated, starting and ending
+  alphanumeric. A registered OAuth integration is refused and points at `aware connect`,
+  which owns its refresh token; the `oauth-app.` prefix is reserved for BYO client secrets.
+
 ### `aware doctor`
 
 Health check. No mutations. Useful before filing a bug.

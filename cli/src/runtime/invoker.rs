@@ -855,12 +855,35 @@ impl AgentInvoker for RestInvoker {
                         })?;
                 let Some(cred) = cred else {
                     return Err(AwareError::Validation(format!(
-                        "agent {agent} declares `auth` but credential {:?} is missing or unusable — \
-                         provision it (`~/.aware/credentials/{}.json` or `aware connect`)",
-                        auth.secret, auth.secret
+                        "agent {agent} declares `auth` but credential {:?} is missing or unusable — {}",
+                        auth.secret,
+                        provision_advice(&auth.secret)
                     )));
                 };
-                inject_auth(auth, &cred, &mut headers, &mut query);
+                // Inject FIRST, then judge the credential by the slot it landed
+                // in. The header charset applies only to a header — an api-key
+                // `in: query` is URL-encoded and may legitimately be non-ASCII —
+                // and only to a credential that was actually placed: a request
+                // carrying its own `Authorization` leaves the stored value unused,
+                // so refusing the call over it fails a request that would have
+                // worked (Codex, #443). Nothing is sent between here and the
+                // error, so injecting before validating costs nothing.
+                //
+                // Reported specifically rather than folded into the
+                // missing-credential arm above: the credential IS provisioned, and
+                // "provision it" would be the wrong advice.
+                let slot = inject_auth(auth, &cred, &mut headers, &mut query);
+                if slot == Some(AuthSlot::Header)
+                    && let Some(bad) = unsendable_in_header_char(&cred)
+                {
+                    return Err(AwareError::Validation(format!(
+                        "agent {agent} sends credential {:?} as an HTTP header, and it contains \
+                         {bad:?} — a header value carries visible ASCII only, so the request would \
+                         be refused before it left the process. Re-provision it with a value that \
+                         can be sent, or check it was not mangled by an encoding conversion",
+                        auth.secret
+                    )));
+                }
             }
         }
         // Carry the body itself rather than a separate "should send" flag, so the
@@ -1118,6 +1141,11 @@ pub(crate) fn resolve_rest_credential(
         if crate::auth::config::for_integration(integration).is_ok()
             && let Some(home) = agents_dir.parent()
             && let Ok(tok) = crate::auth::refresh::ensure_fresh(integration, alias, home)
+            // A blank access token is not a credential. Same rule as
+            // `secret_as_str` applies to the stored path — returning it would
+            // send `Authorization: Bearer` with nothing after it, which reads as
+            // a successful run and is an unauthenticated request.
+            && !tok.access_token.trim().is_empty()
         {
             return Some(tok.access_token);
         }
@@ -1125,6 +1153,97 @@ pub(crate) fn resolve_rest_credential(
     load_secret_value(agents_dir, &auth.secret)
         .as_ref()
         .and_then(secret_as_str)
+}
+
+/// The command that provisions this handle, for the missing-credential error.
+///
+/// It used to read "`~/.aware/credentials/<handle>.json` or `aware connect`",
+/// which was the only accurate answer at the time and is exactly the coupling
+/// #436 reports: `aware connect` refuses any handle that is not a registered
+/// integration, so for every other handle the error's only *working* half was an
+/// instruction to hand-write AWARE's storage internals. `aware credential put`
+/// is now the supported route, so the hint names whichever command actually owns
+/// the handle — split at the first dot, the same way [`resolve_rest_credential`]
+/// decides which of the two stores to read.
+fn provision_advice(secret: &str) -> String {
+    let (base, alias) = match secret.split_once('.') {
+        Some((base, alias)) => (base, Some(alias)),
+        None => (secret, None),
+    };
+    if crate::auth::config::for_integration(base).is_ok() {
+        // The alias comes from the manifest's `auth.secret`, which nothing
+        // validates, so it can hold a space or a shell metacharacter. Interpolated
+        // bare, `google-workspace.team one` emitted
+        // `aware connect google-workspace --as team one` — two arguments, which
+        // clap rejects — and a metacharacter would change what a copied line does.
+        return match alias {
+            Some(alias) if !is_bare_shell_token(alias) => format!(
+                "provision it with `aware connect {base}`, passing `--as` the alias {alias:?} — \
+                 quote it for your shell, since it holds characters a bare argument would split \
+                 or interpret"
+            ),
+            // The value is ATTACHED with `=`, never passed as the next argument,
+            // because the alias is only dangerous where it starts a token:
+            //
+            // * `-team` — clap reads it as an option, since `ConnectArgs::as`
+            //   does not set `allow_hyphen_values` (`unexpected argument '-t'`);
+            // * `@team` — PowerShell reads a leading `@` as the splatting
+            //   operator rather than a literal (`about_Parsing`, argument mode,
+            //   which lists `@ # < >` as special at the START of a token).
+            //
+            // Both were found here one round apart, and enumerating the offenders
+            // invites a third: `--as=` moves the alias off the front of the token,
+            // so start-of-token specialness cannot arise whatever it holds. What
+            // remains inside the token is `is_bare_shell_token`'s business, which
+            // is the one question a character allowlist can actually answer.
+            Some(alias) => format!("provision it with `aware connect {base} --as={alias}`"),
+            None => format!("provision it with `aware connect {base}`"),
+        };
+    }
+    // For an unregistered handle the WHOLE string is the account — that is what
+    // the fall-through in `resolve_rest_credential` looks up, and what
+    // `credential put <handle>` stores under. Splitting it into
+    // `put <base> --as <rest>` reaches the same account only while the rest holds
+    // no dot of its own, and `credential put` refuses a dotted alias — so on
+    // `my.api.key` the split form is a suggestion the user cannot carry out.
+    if crate::commands::credential::is_provisionable(secret) {
+        return format!("provision it with `aware credential put {secret}`");
+    }
+    // The handle came from an agent manifest, and nothing validates `auth.secret`
+    // — `validate_agent` does not look at it — so the runtime resolves names this
+    // command's grammar refuses (`MyApi`, or one over the length limit). Naming
+    // the command anyway would be a third kind of instruction that exits 3, so
+    // say what is actually wrong and what fixes it.
+    format!(
+        "`aware credential put` cannot provision the handle {secret:?} (handles are lowercase \
+         letters, digits, `-` and `_`, dot-separated, at most 64 characters) — rename \
+         `auth.secret` in the agent's manifest to one it accepts, then provision that"
+    )
+}
+
+/// Whether a credential handle resolves to a usable secret, by the rules the
+/// REST transport itself applies — the question "will my agent authenticate?".
+///
+/// `aware credential status` reports from this rather than from
+/// `auth::keychain::load_token`, because the two accept different things and the
+/// transport's set is the wider one. `load_token` takes a `StoredToken` or a
+/// blob with `access_token` / `token`; the transport additionally takes a bare
+/// JSON string and an object keyed `key` / `apikey` / `api_key` / `value` /
+/// `secret` (see [`secret_as_str`]). `{"key":"sk-live-123"}` is not a corner
+/// case — it is the fixture `rest_injects_declared_apikey_header_from_credential`
+/// authenticates with — and reporting a credential the runtime is actively using
+/// as `unreadable` sends its owner off to re-provision something that works.
+///
+/// Exported so status is a *consumer* of the transport's format rules rather
+/// than a second, drifting copy of them.
+pub(crate) fn stored_secret_is_usable(aware_home: &std::path::Path, handle: &str) -> bool {
+    // `load_secret_value` derives the credentials directory as its argument's
+    // `credentials` sibling, so it wants `<home>/agents` — the same thing the
+    // invoker holds at a real call site.
+    load_secret_value(&aware_home.join("agents"), handle)
+        .as_ref()
+        .and_then(secret_as_str)
+        .is_some()
 }
 
 /// Load a credential by handle, reusing the runtime secret loader (OS keychain,
@@ -1137,10 +1256,101 @@ fn load_secret_value(agents_dir: &std::path::Path, id: &str) -> Option<Value> {
     ctx.secrets.get(id).cloned()
 }
 
-/// Extract the usable credential string from a loaded secret: a raw string is
+/// Whether `arg` survives being pasted into any shell as one bare argument.
+///
+/// The conservative set: nothing here is special to POSIX shells, PowerShell, or
+/// `cmd`, so a bare token means the same thing in all of them.
+///
+/// There is deliberately no "quote it for them" branch. An earlier version
+/// single-quoted the rest POSIX-style (`'it'\''s'`) and claimed PowerShell read
+/// it the same way; PowerShell escapes an embedded quote by doubling it
+/// (`'it''s'`), so the suggested command did not parse there (Codex, #443).
+/// Emitting a line that runs in one shell and breaks in another is worse than
+/// not emitting one, and picking per-shell would mean guessing which shell is
+/// reading a message the runtime prints to stderr.
+///
+/// This answers one question — what a shell does to characters INSIDE a token.
+/// Whether a character is special at the START of one is the caller's problem,
+/// and it does not solve it by asking here: it attaches the alias after `--as=`
+/// so the alias never starts a token at all. A `-` (clap) and a `@` (PowerShell
+/// splatting) were both found in this set that way, one review round apart.
+fn is_bare_shell_token(arg: &str) -> bool {
+    !arg.is_empty()
+        && arg
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.' | '/' | '@' | ':'))
+}
+
+/// The first character in a credential that no request could carry anywhere, if
+/// any — i.e. a control character.
+///
+/// This is the rule that holds wherever a credential is stored, without knowing
+/// which agent will use it or how. A control character is never a legitimate
+/// credential and is a header-injection primitive: `inject_auth` interpolates
+/// the value into `Authorization: Bearer {cred}`, or into a `Cookie` header, so a
+/// CR/LF would end the header and start attacker-chosen ones.
+///
+/// Deliberately NOT the header charset. Whether non-ASCII is usable depends on
+/// where the credential lands, which only the transport knows — see
+/// [`unsendable_in_header_char`]. The credential store is agent-agnostic: one
+/// handle can serve several agents, so a rule applied there has to be one that
+/// holds for all of them.
+pub(crate) fn never_sendable_char(secret: &str) -> Option<char> {
+    secret.chars().find(|c| c.is_control())
+}
+
+/// The first character that stops a credential being usable **as a header
+/// value**, if any: RFC 7230 allows visible ASCII plus interior spaces, and
+/// `ureq` enforces exactly that, refusing the request before it leaves the
+/// process.
+///
+/// Applied only where the destination is known to be a header. A credential that
+/// is invalid here can be perfectly valid elsewhere: an api-key declared
+/// `in: query` is URL-encoded by `ureq::Request::query`, so `sk-café` reaches the
+/// server as `?apikey=sk-caf%C3%A9`. Applying the header charset to every stored
+/// credential broke exactly that case (#443).
+pub(crate) fn unsendable_in_header_char(secret: &str) -> Option<char> {
+    secret.chars().find(|c| !c.is_ascii_graphic() && *c != ' ')
+}
+
+/// Where [`inject_auth`] actually put the credential, which is the only thing
+/// that decides whether the header charset applies to it.
+///
+/// A predicate over the declared scheme used to answer this, and it could not:
+/// it knew the *destination* but not whether the slot was free, so a request
+/// carrying its own `Authorization` was refused over a stored credential that
+/// would never be sent (Codex, #443). Reporting the outcome of the one function
+/// that decides removes the second opinion rather than correcting it.
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+enum AuthSlot {
+    /// A header — including `Cookie`, which is one.
+    Header,
+    /// A query parameter, which is URL-encoded and so carries any character.
+    Query,
+}
+
+/// Extract the *usable* credential string from a loaded secret: a raw string is
 /// used verbatim; an object is probed for the common token/key fields.
+///
+/// "Usable" means it could actually authenticate a call — non-blank, and
+/// carryable anywhere per [`never_sendable_char`]. Anything else is `None`, not `Some(junk)`,
+/// so the caller takes its missing-credential path (whose message already reads
+/// "missing **or unusable**") instead of putting the value on the wire. Treating
+/// a blank one as present is what let `{"access_token":""}` send a bare
+/// `Authorization: Bearer` and report `✓ run complete` over an unauthenticated
+/// request; treating an unsendable one as present traded that for a `Bad Header`
+/// at every invocation.
+///
+/// The check runs AFTER field selection, not inside it. An earlier draft skipped
+/// blank fields so `{"token":"", "key":"k"}` would resolve to `k` — and a unit
+/// test asserted exactly that, calling this function with a raw object. Through
+/// the real store it never happens: `load_secret` normalises such a blob via
+/// `read_cred_file` into a `StoredToken` carrying the blank `token` and dropping
+/// `key`, and returns before the raw object is ever offered here. So that
+/// fallthrough was reachable only from its own test. Selecting first and
+/// validating after is what the store actually does (#443).
 fn secret_as_str(secret: &Value) -> Option<String> {
-    match secret {
+    let selected = match secret {
         Value::String(s) => Some(s.clone()),
         Value::Object(m) => [
             "token",
@@ -1154,18 +1364,24 @@ fn secret_as_str(secret: &Value) -> Option<String> {
         .iter()
         .find_map(|k| m.get(*k).and_then(|v| v.as_str()).map(|s| s.to_string())),
         _ => None,
-    }
+    };
+    selected.filter(|s| !s.trim().is_empty() && never_sendable_char(s).is_none())
 }
 
 /// Inject the declared credential into the request: bearer/oauth2 as an
 /// `Authorization: Bearer` header, api-key as a header / query / cookie. A slot
 /// the caller already populated is left untouched (explicit input wins).
+///
+/// Returns the slot it filled, or `None` when it filled nothing — because the
+/// caller had already set it, or because the scheme injects nowhere. The caller
+/// validates the credential against the slot it LANDED in, so a value that was
+/// never sent is never judged by where it would have gone.
 fn inject_auth(
     auth: &crate::manifest::agent::AuthScheme,
     cred: &str,
     headers: &mut Vec<(String, String)>,
     query: &mut Vec<(String, String)>,
-) {
+) -> Option<AuthSlot> {
     match auth.scheme.as_str() {
         "bearer" | "oauth2"
             if !headers
@@ -1173,14 +1389,17 @@ fn inject_auth(
                 .any(|(k, _)| k.eq_ignore_ascii_case("authorization")) =>
         {
             headers.push(("Authorization".into(), format!("Bearer {cred}")));
+            Some(AuthSlot::Header)
         }
         "api-key" => {
             let name = auth.name.as_deref().unwrap_or("Authorization");
             match auth.location.as_deref() {
                 Some("query") => {
-                    if !query.iter().any(|(k, _)| k == name) {
-                        query.push((name.to_string(), cred.to_string()));
+                    if query.iter().any(|(k, _)| k == name) {
+                        return None;
                     }
+                    query.push((name.to_string(), cred.to_string()));
+                    Some(AuthSlot::Query)
                 }
                 // apiKey `in: cookie` → `Cookie: name=value`. Append to an
                 // existing Cookie header (e.g. one built from cookie params)
@@ -1194,23 +1413,27 @@ fn inject_auth(
                         let already = existing
                             .split(';')
                             .any(|c| c.trim_start().starts_with(&format!("{name}=")));
-                        if !already {
-                            existing.push_str("; ");
-                            existing.push_str(&pair);
+                        if already {
+                            return None;
                         }
+                        existing.push_str("; ");
+                        existing.push_str(&pair);
                     } else {
                         headers.push(("Cookie".into(), pair));
                     }
+                    Some(AuthSlot::Header)
                 }
                 // header (default).
                 _ => {
-                    if !headers.iter().any(|(k, _)| k.eq_ignore_ascii_case(name)) {
-                        headers.push((name.to_string(), cred.to_string()));
+                    if headers.iter().any(|(k, _)| k.eq_ignore_ascii_case(name)) {
+                        return None;
                     }
+                    headers.push((name.to_string(), cred.to_string()));
+                    Some(AuthSlot::Header)
                 }
             }
         }
-        _ => {}
+        _ => None,
     }
 }
 
@@ -3463,6 +3686,62 @@ commands:
         assert!(req.starts_with("GET /ping"), "req: {req}");
     }
 
+    /// The advice splits the handle the same way [`resolve_rest_credential`] does,
+    /// so it always names the command that owns the store the resolver just read.
+    /// Naming the other one is not a cosmetic slip: `aware connect` refuses an
+    /// unregistered handle, and `aware credential put` refuses a registered one,
+    /// so the wrong one is an instruction that cannot be carried out.
+    #[test]
+    fn provision_advice_names_the_command_that_owns_the_handle() {
+        assert_eq!(
+            provision_advice("my-api"),
+            "provision it with `aware credential put my-api`"
+        );
+        // The whole handle, not `put floless-workspace --as session`. Both name
+        // the same account here, but the split form breaks down the moment the
+        // remainder holds a dot of its own — `credential put` refuses a dotted
+        // alias, so the advice would be a command that exits 3.
+        assert_eq!(
+            provision_advice("floless-workspace.session"),
+            "provision it with `aware credential put floless-workspace.session`"
+        );
+        assert_eq!(
+            provision_advice("my.api.key"),
+            "provision it with `aware credential put my.api.key`"
+        );
+        assert_eq!(
+            provision_advice("trimble-connect"),
+            "provision it with `aware connect trimble-connect`"
+        );
+        assert_eq!(
+            provision_advice("google-workspace.personal"),
+            "provision it with `aware connect google-workspace --as=personal`"
+        );
+    }
+
+    /// A manifest's `auth.secret` is not validated anywhere — `validate_agent`
+    /// does not look at it — so the runtime resolves handles the `credential`
+    /// grammar refuses. Naming the command for one of those would be a third
+    /// flavour of instruction that exits 3, so the advice says what is actually
+    /// wrong instead.
+    #[test]
+    fn provision_advice_refuses_to_name_the_command_for_a_handle_it_would_reject() {
+        for outside in ["MyApi", &"a".repeat(65), "bad handle", "con"] {
+            let advice = provision_advice(outside);
+            assert!(
+                !advice.contains(&format!("put {outside}")),
+                "advice named a command that would exit 3: {advice}"
+            );
+            assert!(
+                advice.contains("rename"),
+                "advice did not say how to fix it: {advice}"
+            );
+        }
+        // Still names the command for a handle it really would take, so this is a
+        // discriminator and not a blanket retreat.
+        assert!(provision_advice("my-api").contains("aware credential put my-api"));
+    }
+
     #[tokio::test]
     async fn rest_injects_declared_apikey_header_from_credential() {
         // End-to-end: a rest agent declaring an `auth:` block + a stored
@@ -3606,7 +3885,12 @@ commands:
         };
         let mut h = Vec::new();
         let mut q = Vec::new();
-        inject_auth(&bearer, "tok", &mut h, &mut q);
+        // The reported slot is not decoration: it is what gates the header
+        // charset check at the call site, so every arm below pins it.
+        assert_eq!(
+            inject_auth(&bearer, "tok", &mut h, &mut q),
+            Some(AuthSlot::Header)
+        );
         assert_eq!(h, vec![("Authorization".into(), "Bearer tok".into())]);
 
         let apikey_query = AuthScheme {
@@ -3617,14 +3901,51 @@ commands:
         };
         let mut h2 = Vec::new();
         let mut q2 = Vec::new();
-        inject_auth(&apikey_query, "raw", &mut h2, &mut q2);
+        assert_eq!(
+            inject_auth(&apikey_query, "raw", &mut h2, &mut q2),
+            Some(AuthSlot::Query)
+        );
         assert_eq!(q2, vec![("apikey".into(), "raw".into())]);
 
-        // An explicit Authorization the caller set is never overridden.
+        // An explicit Authorization the caller set is never overridden — and the
+        // slot comes back `None`, because nothing was placed. That is what keeps
+        // the header charset off a stored credential this request never sends.
         let mut h3 = vec![("Authorization".to_string(), "Bearer explicit".to_string())];
         let mut q3 = Vec::new();
-        inject_auth(&bearer, "other", &mut h3, &mut q3);
+        assert_eq!(inject_auth(&bearer, "other", &mut h3, &mut q3), None);
         assert_eq!(h3[0].1, "Bearer explicit");
+
+        // Same for every other slot the caller can pre-fill.
+        let mut h3b = vec![("apikey".to_string(), "explicit".to_string())];
+        let apikey_header = AuthScheme {
+            scheme: "api-key".into(),
+            location: None,
+            name: Some("apikey".into()),
+            secret: "s".into(),
+        };
+        assert_eq!(
+            inject_auth(&apikey_header, "other", &mut h3b, &mut Vec::new()),
+            None
+        );
+        assert_eq!(h3b, vec![("apikey".to_string(), "explicit".to_string())]);
+        let mut q3b = vec![("apikey".to_string(), "explicit".to_string())];
+        assert_eq!(
+            inject_auth(&apikey_query, "other", &mut Vec::new(), &mut q3b),
+            None
+        );
+        assert_eq!(q3b, vec![("apikey".to_string(), "explicit".to_string())]);
+
+        // An unrecognised scheme injects nowhere, so it reports nowhere.
+        let mtls = AuthScheme {
+            scheme: "mtls".into(),
+            location: None,
+            name: None,
+            secret: "s".into(),
+        };
+        assert_eq!(
+            inject_auth(&mtls, "tok", &mut Vec::new(), &mut Vec::new()),
+            None
+        );
 
         // apiKey `in: cookie` → `Cookie: name=value` header.
         let apikey_cookie = AuthScheme {
@@ -3635,8 +3956,27 @@ commands:
         };
         let mut h4 = Vec::new();
         let mut q4 = Vec::new();
-        inject_auth(&apikey_cookie, "sid-9", &mut h4, &mut q4);
+        // A cookie IS a header, so it reports one — the charset applies to it.
+        assert_eq!(
+            inject_auth(&apikey_cookie, "sid-9", &mut h4, &mut q4),
+            Some(AuthSlot::Header)
+        );
         assert_eq!(h4, vec![("Cookie".into(), "session=sid-9".into())]);
+
+        // Appending to an existing Cookie header is still a placement; the same
+        // cookie name already set is not.
+        let mut h5 = vec![("Cookie".to_string(), "other=1".to_string())];
+        assert_eq!(
+            inject_auth(&apikey_cookie, "sid-9", &mut h5, &mut Vec::new()),
+            Some(AuthSlot::Header)
+        );
+        assert_eq!(h5[0].1, "other=1; session=sid-9");
+        let mut h6 = vec![("Cookie".to_string(), "session=mine".to_string())];
+        assert_eq!(
+            inject_auth(&apikey_cookie, "sid-9", &mut h6, &mut Vec::new()),
+            None
+        );
+        assert_eq!(h6[0].1, "session=mine");
     }
 
     #[test]
@@ -3659,6 +3999,300 @@ commands:
             Some("k".into())
         );
         assert_eq!(secret_as_str(&serde_json::json!({"other":"x"})), None);
+        // A BLANK value is not a credential. Returning `Some("")` here put a bare
+        // `Authorization: Bearer` on the wire and let the run report success over
+        // an unauthenticated request — while `aware credential put` refuses to
+        // store that same value (#443). `None` sends the caller down its
+        // missing-credential path, whose message already says "missing or
+        // unusable".
+        assert_eq!(secret_as_str(&serde_json::json!("")), None);
+        assert_eq!(secret_as_str(&serde_json::json!("   ")), None);
+        assert_eq!(secret_as_str(&serde_json::json!({"access_token":""})), None);
+        assert_eq!(secret_as_str(&serde_json::json!({"key":"  "})), None);
+        // A blank FIRST field does not fall through to a later one, and this
+        // asserts the absence deliberately. An earlier draft skipped blanks
+        // inside the probe so this returned `Some("k")` — reachable only from a
+        // test calling this function directly. Through the real store,
+        // `load_secret` normalises the blob via `read_cred_file` into a
+        // `StoredToken` carrying the blank `token` and dropping `key`, and never
+        // offers the raw object here. The test passed; the system never did it.
+        assert_eq!(
+            secret_as_str(&serde_json::json!({"token":"", "key":"k"})),
+            None
+        );
+        // A control character is refused here, because it is illegitimate
+        // wherever the credential lands and is the injection primitive.
+        assert_eq!(
+            secret_as_str(&serde_json::json!({"key":"sk\r\nX-Admin: 1"})),
+            None
+        );
+        // But NON-ASCII survives this resolver, and that is the point. Whether it
+        // is usable depends on where the agent puts it: refused as a header,
+        // URL-encoded and perfectly valid as an api-key `in: query`. Filtering it
+        // here — which an earlier version did — broke the query case outright
+        // (#443). The slot `inject_auth` reports decides, at the one place that
+        // knows both where the credential goes and whether it went there.
+        assert_eq!(
+            secret_as_str(&serde_json::json!("sk-caf\u{00e9}")),
+            Some("sk-caf\u{00e9}".into())
+        );
+        assert_eq!(
+            secret_as_str(&serde_json::json!({"key":"sk-caf\u{00e9}"})),
+            Some("sk-caf\u{00e9}".into())
+        );
+        // An interior space is fine everywhere: header values carry them, and
+        // this is verified end to end elsewhere.
+        assert_eq!(
+            secret_as_str(&serde_json::json!({"key":"sk one two"})),
+            Some("sk one two".into())
+        );
+    }
+
+    /// The header charset applies exactly where a header is what gets sent, and
+    /// only when the credential is what gets sent there.
+    ///
+    /// A predicate over the declared scheme used to answer the first half and
+    /// silently got the second wrong: it said "bearer lands in a header", which
+    /// is true, and the call site read that as "so validate the stored value",
+    /// which is not — a request carrying its own `Authorization` never sends the
+    /// stored one, and was refused over it anyway (#443). Now the slot is
+    /// whatever `inject_auth` reports it actually filled, so the two cannot
+    /// disagree; this pins the pairs that gate the check.
+    #[test]
+    fn the_reported_slot_is_where_the_credential_actually_landed() {
+        let scheme = |scheme: &str, location: Option<&str>| crate::manifest::agent::AuthScheme {
+            scheme: scheme.into(),
+            location: location.map(str::to_string),
+            name: None,
+            secret: "s".into(),
+        };
+        let slot_for = |auth: &crate::manifest::agent::AuthScheme| {
+            inject_auth(auth, "cred", &mut Vec::new(), &mut Vec::new())
+        };
+
+        for header_scheme in [
+            scheme("bearer", None),
+            scheme("oauth2", None),
+            // api-key defaults to a header when no location is declared.
+            scheme("api-key", None),
+            scheme("api-key", Some("header")),
+            // A cookie IS a header, so the charset applies there too.
+            scheme("api-key", Some("cookie")),
+        ] {
+            assert_eq!(slot_for(&header_scheme), Some(AuthSlot::Header));
+        }
+        // The one destination the header charset must not touch: a query value is
+        // URL-encoded, so a non-ASCII api-key is legitimate there.
+        assert_eq!(
+            slot_for(&scheme("api-key", Some("query"))),
+            Some(AuthSlot::Query)
+        );
+        // An unrecognised scheme injects nothing, so it constrains nothing.
+        assert_eq!(slot_for(&scheme("mtls", None)), None);
+        // And the case that started this: the destination IS a header, but the
+        // caller filled it, so nothing was placed and nothing is judged.
+        assert_eq!(
+            inject_auth(
+                &scheme("bearer", None),
+                "cred",
+                &mut vec![("authorization".into(), "Bearer explicit".into())],
+                &mut Vec::new(),
+            ),
+            None
+        );
+    }
+
+    /// The suggested `aware connect` line has to survive being pasted into a
+    /// shell — ANY shell. Manifest aliases are unvalidated, so one holding a
+    /// space produced `--as team one`: two arguments, which clap rejects.
+    ///
+    /// An alias that cannot be passed bare gets a description instead of a
+    /// command line. Quoting it looked better and was not portable: POSIX wants
+    /// `'it'\''s'` and PowerShell wants `'it''s'`, and stderr does not know which
+    /// shell is reading it — so a quoted line would run in one and break in the
+    /// other, which is worse than not offering one.
+    #[test]
+    fn provision_advice_only_offers_a_command_line_an_alias_survives() {
+        assert_eq!(
+            provision_advice("google-workspace.personal"),
+            "provision it with `aware connect google-workspace --as=personal`"
+        );
+        for hostile in ["team one", "it's", "a;rm -rf /", "$(whoami)", ""] {
+            let advice = provision_advice(&format!("google-workspace.{hostile}"));
+            // Never a `--as` inside the backticks with an unquotable alias after
+            // it: that is the line that would split, or execute something else.
+            assert!(
+                !advice.contains(&format!("--as {hostile}`")),
+                "offered an unpasteable command for {hostile:?}: {advice}"
+            );
+            assert!(
+                advice.contains("aware connect google-workspace"),
+                "{advice}"
+            );
+        }
+        // The alias is still shown, unambiguously, so the user knows what to
+        // quote — `{:?}` escapes it rather than letting it blend into the prose.
+        assert!(provision_advice("google-workspace.team one").contains("\"team one\""));
+    }
+
+    /// Surviving the shell only gets the line as far as `aware`; it still has to
+    /// parse once it arrives. `-team` is a bare token in every shell and clap
+    /// refused it anyway — `ConnectArgs::as` does not set `allow_hyphen_values`,
+    /// so a separate `-team` is read as an option (`unexpected argument '-t'`).
+    ///
+    /// So this drives the advice through the REAL parser rather than asserting a
+    /// string: the assertion is that a user who pastes the offered line gets the
+    /// alias the runtime meant, whatever the manifest put in `auth.secret`.
+    ///
+    /// The second assertion is structural, and it is the one that generalises:
+    /// no offered alias may START a token. That is where `-` is special to clap
+    /// and `@` to PowerShell — two rounds of the same defect — and attaching the
+    /// value after `--as=` puts the question beyond reach rather than answering
+    /// it one character at a time.
+    #[test]
+    fn a_suggested_connect_line_parses_back_to_the_alias_it_names() {
+        use clap::Parser;
+
+        // What a user would copy: the command inside the first pair of backticks.
+        let suggested = |secret: &str| {
+            let advice = provision_advice(secret);
+            let after = advice
+                .split_once('`')
+                .unwrap_or_else(|| panic!("no command offered in {advice:?}"))
+                .1;
+            after
+                .split_once('`')
+                .unwrap_or_else(|| panic!("unterminated command in {advice:?}"))
+                .0
+                .to_string()
+        };
+
+        assert_eq!(
+            suggested("google-workspace.-team"),
+            "aware connect google-workspace --as=-team"
+        );
+
+        for alias in [
+            "personal",
+            "team-two",
+            "-team",
+            "-",
+            "--as",
+            "-from-file",
+            "@team",
+            "@",
+            "team@example.com",
+            ":team",
+            "a/b",
+        ] {
+            let line = suggested(&format!("google-workspace.{alias}"));
+            let cli = crate::Cli::try_parse_from(line.split_whitespace())
+                .unwrap_or_else(|e| panic!("clap refused the suggested line {line:?}: {e}"));
+            let crate::Command::Connect(args) = cli.command else {
+                panic!("{line:?} is not a connect command");
+            };
+            assert_eq!(args.integration.as_deref(), Some("google-workspace"));
+            assert_eq!(args.r#as.as_deref(), Some(alias), "from {line:?}");
+            // The alias never stands as a token of its own — it is always the
+            // tail of `--as=`, so nothing a manifest puts in it can reach the
+            // front of a token, whatever that character means to the shell
+            // reading the line. Pin that here rather than trusting the character
+            // set to stay ahead of the next reviewer: `-` (clap) and `@`
+            // (PowerShell splatting) were both found in it, one round apart.
+            assert!(
+                line.split_whitespace()
+                    .any(|t| t == format!("--as={alias}")),
+                "the alias is not attached to --as in {line:?}"
+            );
+            assert!(
+                line.split_whitespace().all(|t| t != alias),
+                "the alias stands as its own token in {line:?}"
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn an_explicit_authorization_survives_an_unsendable_stored_credential() {
+        // The agent declares bearer auth, so the stored credential's destination
+        // IS a header — and the stored credential cannot go in one. But the
+        // caller supplied its own `Authorization`, so `inject_auth` leaves the
+        // stored value untouched and nothing unsendable is ever on the wire.
+        // Refusing this call was a real regression against the fill-if-absent
+        // contract the runtime documents (Codex, #443): the request worked before
+        // the charset check existed, and works again.
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("http");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            r#"agent: http
+version: 0.1.0
+description: generic http
+stateful: false
+license: MIT
+transport:
+  rest: {}
+auth:
+  scheme: bearer
+  secret: probe
+requires:
+  secrets:
+    - probe
+commands:
+  get:
+    lifecycle: single
+    description: GET
+"#,
+        )
+        .unwrap();
+        let creds = home.path().join("credentials");
+        std::fs::create_dir_all(&creds).unwrap();
+        // Provisioned and resolvable, but not sendable in a header.
+        std::fs::write(creds.join("probe.json"), "{\"key\":\"sk-caf\u{00e9}\"}").unwrap();
+
+        let inv = RestInvoker {
+            agents_dir: agents.clone(),
+        };
+        let out = inv
+            .invoke_single(
+                "http",
+                "get",
+                serde_json::json!({
+                    "url": format!("http://127.0.0.1:{port}/thing"),
+                    "headers": { "Authorization": "Bearer explicit-and-sendable" },
+                }),
+            )
+            .await
+            .expect("an explicit Authorization must not be refused over an unused credential");
+
+        assert_eq!(out["status"], serde_json::json!(200));
+        let req = rx.recv().unwrap();
+        assert!(
+            req.contains("Authorization: Bearer explicit-and-sendable"),
+            "the caller's own header did not survive: {req}"
+        );
+        assert!(
+            !req.contains("caf"),
+            "the stored credential reached the wire: {req}"
+        );
+
+        // The same agent with the slot FREE still fails closed, so this is not a
+        // hole in the charset check — only a narrowing of it to what is sent.
+        let (port2, _rx2) = mock_server(200, r#"{"ok":true}"#);
+        let err = RestInvoker { agents_dir: agents }
+            .invoke_single(
+                "http",
+                "get",
+                serde_json::json!({ "url": format!("http://127.0.0.1:{port2}/thing") }),
+            )
+            .await
+            .expect_err("an unsendable credential must still be refused when it IS the one sent");
+        assert!(
+            err.to_string().contains("as an HTTP header"),
+            "wrong error: {err}"
+        );
     }
 
     #[tokio::test]
@@ -3973,6 +4607,14 @@ commands:
             .await
             .unwrap_err();
         assert!(matches!(err, AwareError::Validation(_)), "got: {err:?}");
+        // The message has to name a command that can actually provision THIS
+        // handle. `secured` is not a registered integration, so the `aware
+        // connect` this error used to suggest would refuse it outright (#436).
+        let message = err.to_string();
+        assert!(
+            message.contains("aware credential put secured"),
+            "the missing-credential error did not name a working provisioning command: {message}"
+        );
         assert!(
             format!("{err}").contains("credential"),
             "error should name the missing credential: {err}"
