@@ -261,27 +261,52 @@ def looks_like_an_unrunnable_pytest_file(source: str) -> bool:
     except SyntaxError:
         return False
 
+    def is_test_function(node: ast.AST) -> bool:
+        return isinstance(
+            node, (ast.FunctionDef, ast.AsyncFunctionDef)
+        ) and node.name.startswith("test_")
+
+    # Both pytest shapes, not just the bare-function one (Codex review, PR #447).
+    # `class TestMath: def test_bad(self): ...` is the other common form, and
+    # looking only at module-level `FunctionDef`s missed it entirely — such a
+    # file was executed as a script and recorded exit 0 with no method having
+    # run, which is the exact silent pass this check exists to refuse.
     defines_a_test = any(
-        isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
-        and node.name.startswith("test_")
+        is_test_function(node)
+        or (
+            isinstance(node, ast.ClassDef)
+            and any(is_test_function(member) for member in node.body)
+        )
         for node in module.body
     )
     if not defines_a_test:
         return False
 
     def is_executable(statement: ast.stmt) -> bool:
-        """`True` if this top-level statement can run a test body."""
-        # `if __name__ == "__main__":`, `if True:`, `try:` — any block whose
-        # own body could call something.
-        if isinstance(statement, (ast.If, ast.Try, ast.With, ast.For, ast.While)):
-            return True
-        # A bare `test_x()` / `main()`, or `sys.exit(main())`, or
-        # `result = run()` — anything whose value contains a call.
-        if isinstance(statement, (ast.Expr, ast.Assign, ast.AugAssign, ast.AnnAssign)):
-            return any(
-                isinstance(inner, ast.Call) for inner in ast.walk(statement)
-            )
-        return False
+        """`True` if this top-level statement actually calls something.
+
+        A definition never counts: the body of a `def` or `class` does not run
+        at import, so calls inside one are not an entry point.
+
+        For everything else the question is asked of the statement's CONTENTS,
+        not its type (Codex review, PR #447). Accepting any top-level `if` /
+        `try` / `with` / `for` / `while` outright was wrong: a pytest-style file
+        opening with `try: import optional_dependency` was waved through and
+        reported as passing by a bare interpreter, having asserted nothing. An
+        `Import` is not a `Call`, so that block now correctly counts for
+        nothing.
+
+        The residual limit, stated rather than hidden: any call will do, so a
+        top-level `with open(path) as fh:` reads as an entry point even though
+        it runs no test. That direction only costs a file being executed and
+        exiting 0 — the same outcome as before this check existed — whereas the
+        opposite error refuses a valid test unrun.
+        """
+        if isinstance(
+            statement, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
+        ):
+            return False
+        return any(isinstance(inner, ast.Call) for inner in ast.walk(statement))
 
     return not any(is_executable(statement) for statement in module.body)
 
@@ -528,6 +553,25 @@ _CALLS_ITS_TEST = (
     "\n"
     "test_arithmetic()\n"
 )
+# Class-based pytest: no module-level `def test_`, so a check looking only at
+# top-level functions missed it and the file ran as a script asserting nothing
+# (Codex review, PR #447).
+_PYTEST_CLASS_STYLE = (
+    "class TestMath:\n"
+    "    def test_bad(self):\n"
+    "        assert 2 + 2 == 5\n"
+)
+# A top-level `try:` that only imports. The block is not an entry point — an
+# Import is not a Call — so this file still asserts nothing and must be refused.
+_TRY_IMPORT_ONLY = (
+    "try:\n"
+    "    import json\n"
+    "except ImportError:\n"
+    "    json = None\n"
+    "\n"
+    "def test_bad():\n"
+    "    assert 2 + 2 == 5\n"
+)
 # Defines a test, calls nothing — but mentions `__main__` and `sys.exit(` inside
 # a docstring. The old heuristic read those as an entry point and waved it
 # through; it still asserts nothing.
@@ -639,6 +683,8 @@ def self_test() -> int:
         _write(root, "tests/test_skiplike_pass.py", _SKIPLIKE_BUT_PASSING)
         _write(root, "tests/test_calls_its_test.py", _CALLS_ITS_TEST)
         _write(root, "tests/test_fake_entry.py", _FAKE_ENTRY_POINT_IN_PROSE)
+        _write(root, "tests/test_class_style.py", _PYTEST_CLASS_STYLE)
+        _write(root, "tests/test_try_import.py", _TRY_IMPORT_ONLY)
 
         check(
             declares_aware_bin(read_source(root / "tests/test_needs_bin.py"))
@@ -728,6 +774,18 @@ def self_test() -> int:
         check(
             status == "failed" and "never calls them" in detail,
             "`__main__` inside a docstring does not count as an entry point",
+        )
+        # Class-based pytest is the other common shape and must not slip past.
+        status, detail = run_one(root / "tests/test_class_style.py", None)
+        check(
+            status == "failed" and "never calls them" in detail,
+            "a class-based pytest file is refused, not run as a silent pass",
+        )
+        # A block is only an entry point if it CALLS something; an import is not.
+        status, detail = run_one(root / "tests/test_try_import.py", None)
+        check(
+            status == "failed" and "never calls them" in detail,
+            "a top-level `try: import ...` is not treated as an entry point",
         )
         status, detail = run_one(root / "tests/test_needs_bin.py", "/some/aware")
         check(
