@@ -1175,16 +1175,21 @@ fn provision_advice(secret: &str) -> String {
                  quote it for your shell, since it holds characters a bare argument would split \
                  or interpret"
             ),
-            // Surviving the shell is not enough: the receiving parser gets a say
-            // too. `ConnectArgs::as` does not set `allow_hyphen_values`, so clap
-            // reads a separate `-team` as an option and refuses the line
-            // (`error: unexpected argument '-t' found`). Attaching the value with
-            // `=` is taken literally by clap — and `--as=-team` is still one bare
-            // token in every shell, so this loses nothing the space form had.
-            Some(alias) if alias.starts_with('-') => {
-                format!("provision it with `aware connect {base} --as={alias}`")
-            }
-            Some(alias) => format!("provision it with `aware connect {base} --as {alias}`"),
+            // The value is ATTACHED with `=`, never passed as the next argument,
+            // because the alias is only dangerous where it starts a token:
+            //
+            // * `-team` — clap reads it as an option, since `ConnectArgs::as`
+            //   does not set `allow_hyphen_values` (`unexpected argument '-t'`);
+            // * `@team` — PowerShell reads a leading `@` as the splatting
+            //   operator rather than a literal (`about_Parsing`, argument mode,
+            //   which lists `@ # < >` as special at the START of a token).
+            //
+            // Both were found here one round apart, and enumerating the offenders
+            // invites a third: `--as=` moves the alias off the front of the token,
+            // so start-of-token specialness cannot arise whatever it holds. What
+            // remains inside the token is `is_bare_shell_token`'s business, which
+            // is the one question a character allowlist can actually answer.
+            Some(alias) => format!("provision it with `aware connect {base} --as={alias}`"),
             None => format!("provision it with `aware connect {base}`"),
         };
     }
@@ -1257,9 +1262,11 @@ fn load_secret_value(agents_dir: &std::path::Path, id: &str) -> Option<Value> {
 /// not emitting one, and picking per-shell would mean guessing which shell is
 /// reading a message the runtime prints to stderr.
 ///
-/// This answers the SHELL's question only. A token can reach `aware` intact and
-/// still be misread by clap once it arrives — a leading `-` is the case that
-/// matters — so the caller decides the `--as` form separately.
+/// This answers one question — what a shell does to characters INSIDE a token.
+/// Whether a character is special at the START of one is the caller's problem,
+/// and it does not solve it by asking here: it attaches the alias after `--as=`
+/// so the alias never starts a token at all. A `-` (clap) and a `@` (PowerShell
+/// splatting) were both found in this set that way, one review round apart.
 fn is_bare_shell_token(arg: &str) -> bool {
     !arg.is_empty()
         && arg
@@ -3688,7 +3695,7 @@ commands:
         );
         assert_eq!(
             provision_advice("google-workspace.personal"),
-            "provision it with `aware connect google-workspace --as personal`"
+            "provision it with `aware connect google-workspace --as=personal`"
         );
     }
 
@@ -3996,10 +4003,9 @@ commands:
     /// other, which is worse than not offering one.
     #[test]
     fn provision_advice_only_offers_a_command_line_an_alias_survives() {
-        // The common case reads like something a person would type.
         assert_eq!(
             provision_advice("google-workspace.personal"),
-            "provision it with `aware connect google-workspace --as personal`"
+            "provision it with `aware connect google-workspace --as=personal`"
         );
         for hostile in ["team one", "it's", "a;rm -rf /", "$(whoami)", ""] {
             let advice = provision_advice(&format!("google-workspace.{hostile}"));
@@ -4027,6 +4033,12 @@ commands:
     /// So this drives the advice through the REAL parser rather than asserting a
     /// string: the assertion is that a user who pastes the offered line gets the
     /// alias the runtime meant, whatever the manifest put in `auth.secret`.
+    ///
+    /// The second assertion is structural, and it is the one that generalises:
+    /// no offered alias may START a token. That is where `-` is special to clap
+    /// and `@` to PowerShell — two rounds of the same defect — and attaching the
+    /// value after `--as=` puts the question beyond reach rather than answering
+    /// it one character at a time.
     #[test]
     fn a_suggested_connect_line_parses_back_to_the_alias_it_names() {
         use clap::Parser;
@@ -4050,9 +4062,19 @@ commands:
             "aware connect google-workspace --as=-team"
         );
 
-        // A hyphen anywhere but the front is unambiguous, so the readable form
-        // stays; the leading-hyphen cases are the ones that need `=`.
-        for alias in ["personal", "team-two", "-team", "-", "--as", "-from-file"] {
+        for alias in [
+            "personal",
+            "team-two",
+            "-team",
+            "-",
+            "--as",
+            "-from-file",
+            "@team",
+            "@",
+            "team@example.com",
+            ":team",
+            "a/b",
+        ] {
             let line = suggested(&format!("google-workspace.{alias}"));
             let cli = crate::Cli::try_parse_from(line.split_whitespace())
                 .unwrap_or_else(|e| panic!("clap refused the suggested line {line:?}: {e}"));
@@ -4061,6 +4083,21 @@ commands:
             };
             assert_eq!(args.integration.as_deref(), Some("google-workspace"));
             assert_eq!(args.r#as.as_deref(), Some(alias), "from {line:?}");
+            // The alias never stands as a token of its own — it is always the
+            // tail of `--as=`, so nothing a manifest puts in it can reach the
+            // front of a token, whatever that character means to the shell
+            // reading the line. Pin that here rather than trusting the character
+            // set to stay ahead of the next reviewer: `-` (clap) and `@`
+            // (PowerShell splatting) were both found in it, one round apart.
+            assert!(
+                line.split_whitespace()
+                    .any(|t| t == format!("--as={alias}")),
+                "the alias is not attached to --as in {line:?}"
+            );
+            assert!(
+                line.split_whitespace().all(|t| t != alias),
+                "the alias stands as its own token in {line:?}"
+            );
         }
     }
 
