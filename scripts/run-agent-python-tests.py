@@ -90,6 +90,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import ast
 import os
 import subprocess
 import sys
@@ -240,12 +241,49 @@ def looks_like_an_unrunnable_pytest_file(source: str) -> bool:
     likely to write one this way and get a permanent, meaningless green. Naming
     it is better than running it wrong — the seven tests in the repo today are
     all script-style and unaffected.
+
+    Decided from the module's AST, not from substrings (Codex review, PR #447).
+    The first version asked whether the text contained `__main__` or `sys.exit(`,
+    and was wrong in both directions: a perfectly good script-style test that
+    defines `def test_x()` and then calls `test_x()` at top level carries
+    neither marker and would have been refused unrun, while either string
+    appearing in a comment, a docstring or a test body would have waved through
+    a file that still executes nothing. The AST answers the question actually
+    being asked — is there a top-level statement that CALLS anything — so both
+    directions come out right.
+
+    A file that will not parse is not pre-judged here: it is left to run and
+    fail on its own syntax error, which is louder and more accurate than
+    anything this function could say about it.
     """
-    has_test_function = any(
-        line.lstrip().startswith("def test_") for line in source.splitlines()
+    try:
+        module = ast.parse(source)
+    except SyntaxError:
+        return False
+
+    defines_a_test = any(
+        isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+        and node.name.startswith("test_")
+        for node in module.body
     )
-    runs_something = "__main__" in source or "sys.exit(" in source
-    return has_test_function and not runs_something
+    if not defines_a_test:
+        return False
+
+    def is_executable(statement: ast.stmt) -> bool:
+        """`True` if this top-level statement can run a test body."""
+        # `if __name__ == "__main__":`, `if True:`, `try:` — any block whose
+        # own body could call something.
+        if isinstance(statement, (ast.If, ast.Try, ast.With, ast.For, ast.While)):
+            return True
+        # A bare `test_x()` / `main()`, or `sys.exit(main())`, or
+        # `result = run()` — anything whose value contains a call.
+        if isinstance(statement, (ast.Expr, ast.Assign, ast.AugAssign, ast.AnnAssign)):
+            return any(
+                isinstance(inner, ast.Call) for inner in ast.walk(statement)
+            )
+        return False
+
+    return not any(is_executable(statement) for statement in module.body)
 
 
 def run_one(path: Path, aware_bin: str | None) -> tuple[str, str]:
@@ -311,7 +349,13 @@ def run_one(path: Path, aware_bin: str | None) -> tuple[str, str]:
         # files had verified anything — while the announced skip never reached
         # the named-skips list below. That is exactly the "covered" / "never ran"
         # conflation this script exists to prevent, committed by the script.
-        if last_line.upper().startswith("SKIP"):
+        # The `SKIP:` announcement format specifically, colon included (Codex
+        # review, PR #447). A bare `SKIP` prefix also swallowed ordinary output
+        # like `SKIPPED CHECKS: 0` or `skipping optional checks: none`, which
+        # would move a genuinely passing test into the skip column — and, if it
+        # were the only host-free test, the execution floor below would then
+        # fail an otherwise green suite.
+        if last_line.upper().startswith("SKIP:"):
             return "skipped", last_line
         return "passed", last_line
     if completed.returncode == SKIP_EXIT:
@@ -468,6 +512,32 @@ _PYTEST_STYLE = (
 # Exit 0 with a last line announcing a skip — the shape of the five tests that
 # predate SKIP_EXIT. Must land in the skipped bucket, not the pass count.
 _EXIT_ZERO_SKIP = "import sys\nprint('SKIP: no Blender available')\nsys.exit(0)\n"
+# Passes, and happens to end on a line beginning with the letters SKIP. Matching
+# a bare `SKIP` prefix moved this into the skip column, and with the execution
+# floor that could fail an otherwise green suite (Codex review, PR #447).
+_SKIPLIKE_BUT_PASSING = (
+    "import sys\nprint('all checks ran')\nprint('SKIPPED CHECKS: 0')\nsys.exit(0)\n"
+)
+# Script-style: defines a test and CALLS it at top level. No `__main__` block and
+# no `sys.exit(` anywhere, so the old substring heuristic refused it unrun even
+# though its assertions execute (Codex review, PR #447).
+_CALLS_ITS_TEST = (
+    "def test_arithmetic():\n"
+    "    assert 2 + 2 == 4\n"
+    "    print('arithmetic holds')\n"
+    "\n"
+    "test_arithmetic()\n"
+)
+# Defines a test, calls nothing — but mentions `__main__` and `sys.exit(` inside
+# a docstring. The old heuristic read those as an entry point and waved it
+# through; it still asserts nothing.
+_FAKE_ENTRY_POINT_IN_PROSE = (
+    '"""Run me with `python -m x` — the __main__ guard calls sys.exit(main()).\n'
+    'Except it does not: there is no such guard below.\n"""\n'
+    "\n"
+    "def test_two_plus_two():\n"
+    "    assert 2 + 2 == 5\n"
+)
 
 
 def _write(root: Path, relative: str, source: str) -> None:
@@ -566,6 +636,9 @@ def self_test() -> int:
         _write(root, "tests/test_echoes.py", _ECHOES_ARGPARSE_TEXT)
         _write(root, "tests/test_pytest_style.py", _PYTEST_STYLE)
         _write(root, "tests/test_exit_zero_skip.py", _EXIT_ZERO_SKIP)
+        _write(root, "tests/test_skiplike_pass.py", _SKIPLIKE_BUT_PASSING)
+        _write(root, "tests/test_calls_its_test.py", _CALLS_ITS_TEST)
+        _write(root, "tests/test_fake_entry.py", _FAKE_ENTRY_POINT_IN_PROSE)
 
         check(
             declares_aware_bin(read_source(root / "tests/test_needs_bin.py"))
@@ -636,6 +709,25 @@ def self_test() -> int:
         check(
             status == "skipped",
             "exit 0 whose last line announces a SKIP lands in the skipped bucket",
+        )
+        # ...but only on the real `SKIP:` announcement, not any line starting
+        # with those letters (Codex review, PR #447).
+        status, detail = run_one(root / "tests/test_skiplike_pass.py", None)
+        check(
+            status == "passed",
+            "a passing test ending in `SKIPPED CHECKS: 0` is not read as a skip",
+        )
+        # The entry-point check reads the AST, so a test that calls itself runs...
+        status, detail = run_one(root / "tests/test_calls_its_test.py", None)
+        check(
+            status == "passed" and "arithmetic holds" in detail,
+            "a script-style test that calls its own test function is run, not refused",
+        )
+        # ...and `__main__`/`sys.exit(` in prose is not an entry point.
+        status, detail = run_one(root / "tests/test_fake_entry.py", None)
+        check(
+            status == "failed" and "never calls them" in detail,
+            "`__main__` inside a docstring does not count as an entry point",
         )
         status, detail = run_one(root / "tests/test_needs_bin.py", "/some/aware")
         check(
