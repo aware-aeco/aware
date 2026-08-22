@@ -132,10 +132,33 @@ def declares_aware_bin(path: Path) -> bool:
 # argparse's exit status for a usage error, including a missing required option.
 ARGPARSE_USAGE_EXIT = 2
 
-# The literal argparse emits for a missing required option. Matched together
-# with the flag name and `ARGPARSE_USAGE_EXIT`, so an unrelated exit-2 failure
-# stays a failure.
+# The literal argparse emits before listing the options it found missing.
 ARGPARSE_REQUIRED = "the following arguments are required"
+
+
+def missing_required_options(output: str) -> set[str]:
+    """The options argparse itself named as missing, parsed from its error line.
+
+    argparse prints two things on a usage error: a `usage:` block listing EVERY
+    option the parser accepts, and then
+    `error: the following arguments are required: --a, --b`. Only the second is
+    evidence about what is missing.
+
+    Reading the whole output instead conflated them (Codex review, PR #444): a
+    test declaring an OPTIONAL `--aware-bin` while requiring some other argument
+    prints `--aware-bin` in its usage block and `required: --fixture` in its
+    error, so two independent substring checks called that failure "needs
+    --aware-bin" and skipped a test that was genuinely broken — the precise
+    silent-skip this runner exists to prevent.
+
+    A wrapped or unparsable list yields nothing here, which classifies the run
+    as failed. That is the safe direction: a skip must be earned.
+    """
+    for line in output.splitlines():
+        _, separator, listed = line.partition(ARGPARSE_REQUIRED + ":")
+        if separator:
+            return {item.strip() for item in listed.split(",") if item.strip()}
+    return set()
 
 
 def run_one(path: Path, aware_bin: str | None) -> tuple[str, str]:
@@ -156,10 +179,11 @@ def run_one(path: Path, aware_bin: str | None) -> tuple[str, str]:
     pre-skipping it meant a syntax, import or startup regression in that test
     stayed green. Its two siblings really do declare `required=True`.
 
-    So the test is launched, and only argparse's own "the following arguments
-    are required: --aware-bin" — with argparse's own exit status, and only when
-    no binary was supplied to begin with — turns into a skip. Every other
-    non-zero exit stays a failure.
+    So the test is launched, and a skip requires all three of: argparse's own
+    exit status, `--aware-bin` named in argparse's own required-arguments list
+    (see [`missing_required_options`] — not merely present in the output), and
+    no binary having been supplied to begin with. Every other non-zero exit
+    stays a failure.
     """
     argv = [sys.executable, str(path)]
     if aware_bin and declares_aware_bin(path):
@@ -188,8 +212,7 @@ def run_one(path: Path, aware_bin: str | None) -> tuple[str, str]:
     if (
         not aware_bin
         and completed.returncode == ARGPARSE_USAGE_EXIT
-        and ARGPARSE_REQUIRED in output
-        and "--aware-bin" in output
+        and "--aware-bin" in missing_required_options(output)
     ):
         return "skipped", "needs --aware-bin (not supplied)"
     return "failed", f"exit {completed.returncode}\n{output.rstrip()}"
@@ -272,6 +295,18 @@ _OPTIONAL_BIN = (
 # Exits 2 for a reason that has nothing to do with a missing argument. The
 # skip-on-usage-error branch must not swallow this.
 _USAGE_EXIT_FAILURE = "import sys\nprint('unrelated exit 2')\nsys.exit(2)\n"
+# Declares `--aware-bin` as OPTIONAL but requires a different argument. argparse
+# prints `--aware-bin` in its usage block and `required: --fixture` in its
+# error, so a runner matching those two substrings independently calls this
+# "needs --aware-bin" and skips a genuinely broken test (Codex review, PR #444).
+_OTHER_REQUIRED_ARG = (
+    "import argparse, sys\n"
+    "p = argparse.ArgumentParser()\n"
+    "p.add_argument('--aware-bin', default='aware')\n"
+    "p.add_argument('--fixture', required=True)\n"
+    "p.parse_args()\n"
+    "sys.exit(0)\n"
+)
 
 
 def _write(root: Path, relative: str, source: str) -> None:
@@ -359,6 +394,7 @@ def self_test() -> int:
 
         _write(root, "tests/test_optional_bin.py", _OPTIONAL_BIN)
         _write(root, "tests/test_usage_exit.py", _USAGE_EXIT_FAILURE)
+        _write(root, "tests/test_other_required.py", _OTHER_REQUIRED_ARG)
 
         check(
             declares_aware_bin(root / "tests/test_needs_bin.py")
@@ -383,6 +419,22 @@ def self_test() -> int:
         check(
             status == "failed",
             "an exit 2 that is not a missing-argument error stays a failure",
+        )
+        # The skip must be earned by argparse NAMING --aware-bin as missing, not
+        # by the flag appearing anywhere in the usage block.
+        check(
+            missing_required_options(
+                "usage: t [--aware-bin AWARE_BIN] --fixture F\n"
+                "t: error: the following arguments are required: --fixture\n"
+            )
+            == {"--fixture"},
+            "only argparse's required-arguments list is read, not its usage block",
+        )
+        status, _ = run_one(root / "tests/test_other_required.py", None)
+        check(
+            status == "failed",
+            "a test requiring a DIFFERENT argument fails, and is not mis-skipped "
+            "as needing --aware-bin",
         )
         status, detail = run_one(root / "tests/test_needs_bin.py", "/some/aware")
         check(
