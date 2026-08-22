@@ -1175,6 +1175,15 @@ fn provision_advice(secret: &str) -> String {
                  quote it for your shell, since it holds characters a bare argument would split \
                  or interpret"
             ),
+            // Surviving the shell is not enough: the receiving parser gets a say
+            // too. `ConnectArgs::as` does not set `allow_hyphen_values`, so clap
+            // reads a separate `-team` as an option and refuses the line
+            // (`error: unexpected argument '-t' found`). Attaching the value with
+            // `=` is taken literally by clap — and `--as=-team` is still one bare
+            // token in every shell, so this loses nothing the space form had.
+            Some(alias) if alias.starts_with('-') => {
+                format!("provision it with `aware connect {base} --as={alias}`")
+            }
             Some(alias) => format!("provision it with `aware connect {base} --as {alias}`"),
             None => format!("provision it with `aware connect {base}`"),
         };
@@ -1247,6 +1256,10 @@ fn load_secret_value(agents_dir: &std::path::Path, id: &str) -> Option<Value> {
 /// Emitting a line that runs in one shell and breaks in another is worse than
 /// not emitting one, and picking per-shell would mean guessing which shell is
 /// reading a message the runtime prints to stderr.
+///
+/// This answers the SHELL's question only. A token can reach `aware` intact and
+/// still be misread by clap once it arrives — a leading `-` is the case that
+/// matters — so the caller decides the `--as` form separately.
 fn is_bare_shell_token(arg: &str) -> bool {
     !arg.is_empty()
         && arg
@@ -4004,6 +4017,51 @@ commands:
         // The alias is still shown, unambiguously, so the user knows what to
         // quote — `{:?}` escapes it rather than letting it blend into the prose.
         assert!(provision_advice("google-workspace.team one").contains("\"team one\""));
+    }
+
+    /// Surviving the shell only gets the line as far as `aware`; it still has to
+    /// parse once it arrives. `-team` is a bare token in every shell and clap
+    /// refused it anyway — `ConnectArgs::as` does not set `allow_hyphen_values`,
+    /// so a separate `-team` is read as an option (`unexpected argument '-t'`).
+    ///
+    /// So this drives the advice through the REAL parser rather than asserting a
+    /// string: the assertion is that a user who pastes the offered line gets the
+    /// alias the runtime meant, whatever the manifest put in `auth.secret`.
+    #[test]
+    fn a_suggested_connect_line_parses_back_to_the_alias_it_names() {
+        use clap::Parser;
+
+        // What a user would copy: the command inside the first pair of backticks.
+        let suggested = |secret: &str| {
+            let advice = provision_advice(secret);
+            let after = advice
+                .split_once('`')
+                .unwrap_or_else(|| panic!("no command offered in {advice:?}"))
+                .1;
+            after
+                .split_once('`')
+                .unwrap_or_else(|| panic!("unterminated command in {advice:?}"))
+                .0
+                .to_string()
+        };
+
+        assert_eq!(
+            suggested("google-workspace.-team"),
+            "aware connect google-workspace --as=-team"
+        );
+
+        // A hyphen anywhere but the front is unambiguous, so the readable form
+        // stays; the leading-hyphen cases are the ones that need `=`.
+        for alias in ["personal", "team-two", "-team", "-", "--as", "-from-file"] {
+            let line = suggested(&format!("google-workspace.{alias}"));
+            let cli = crate::Cli::try_parse_from(line.split_whitespace())
+                .unwrap_or_else(|e| panic!("clap refused the suggested line {line:?}: {e}"));
+            let crate::Command::Connect(args) = cli.command else {
+                panic!("{line:?} is not a connect command");
+            };
+            assert_eq!(args.integration.as_deref(), Some("google-workspace"));
+            assert_eq!(args.r#as.as_deref(), Some(alias), "from {line:?}");
+        }
     }
 
     #[tokio::test]
