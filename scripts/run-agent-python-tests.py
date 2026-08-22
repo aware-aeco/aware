@@ -95,6 +95,7 @@ import os
 import subprocess
 import sys
 import tempfile
+from collections.abc import Iterator
 from pathlib import Path
 
 # Skipped wholesale during discovery: build output, dependency trees and version
@@ -266,6 +267,28 @@ def looks_like_an_unrunnable_pytest_file(source: str) -> bool:
             node, (ast.FunctionDef, ast.AsyncFunctionDef)
         ) and node.name.startswith("test_")
 
+    def module_executed(body: list[ast.stmt]) -> Iterator[ast.stmt]:
+        """Statements that run when the module is imported, control flow included.
+
+        Recurses through `if` / `try` / `with` / `for` / `while`, because a
+        declaration inside one still happens at import — `if sys.platform ==
+        "win32": def test_windows(): ...` is a real shape, and scanning only
+        `module.body` missed it even on the platform where the function is
+        created (Codex review, PR #447).
+
+        It deliberately does NOT descend into `def` or `class` bodies: those run
+        when called or defined-as-a-namespace, not as module-level execution, so
+        a `def test_x` nested inside a function is not a module-level test.
+        """
+        for statement in body:
+            yield statement
+            if isinstance(statement, (ast.If, ast.Try, ast.With, ast.For, ast.While)):
+                yield from module_executed(statement.body)
+                yield from module_executed(getattr(statement, "orelse", []))
+                yield from module_executed(getattr(statement, "finalbody", []))
+                for handler in getattr(statement, "handlers", []):
+                    yield from module_executed(handler.body)
+
     # Both pytest shapes, not just the bare-function one (Codex review, PR #447).
     # `class TestMath: def test_bad(self): ...` is the other common form, and
     # looking only at module-level `FunctionDef`s missed it entirely — such a
@@ -277,7 +300,7 @@ def looks_like_an_unrunnable_pytest_file(source: str) -> bool:
             isinstance(node, ast.ClassDef)
             and any(is_test_function(member) for member in node.body)
         )
-        for node in module.body
+        for node in module_executed(module.body)
     )
     if not defines_a_test:
         return False
@@ -561,6 +584,16 @@ _PYTEST_CLASS_STYLE = (
     "    def test_bad(self):\n"
     "        assert 2 + 2 == 5\n"
 )
+# A test declared inside a conditional block. It IS created at import on the
+# matching platform, so scanning only `module.body` missed it and the file ran
+# as a script asserting nothing (Codex review, PR #447).
+_CONDITIONAL_TEST = (
+    "import sys\n"
+    "\n"
+    "if sys.platform is not None:\n"
+    "    def test_conditional():\n"
+    "        assert 2 + 2 == 5\n"
+)
 # A top-level `try:` that only imports. The block is not an entry point — an
 # Import is not a Call — so this file still asserts nothing and must be refused.
 _TRY_IMPORT_ONLY = (
@@ -685,6 +718,7 @@ def self_test() -> int:
         _write(root, "tests/test_fake_entry.py", _FAKE_ENTRY_POINT_IN_PROSE)
         _write(root, "tests/test_class_style.py", _PYTEST_CLASS_STYLE)
         _write(root, "tests/test_try_import.py", _TRY_IMPORT_ONLY)
+        _write(root, "tests/test_conditional_decl.py", _CONDITIONAL_TEST)
 
         check(
             declares_aware_bin(read_source(root / "tests/test_needs_bin.py"))
@@ -786,6 +820,12 @@ def self_test() -> int:
         check(
             status == "failed" and "never calls them" in detail,
             "a top-level `try: import ...` is not treated as an entry point",
+        )
+        # A test declared inside a conditional block is still declared.
+        status, detail = run_one(root / "tests/test_conditional_decl.py", None)
+        check(
+            status == "failed" and "never calls them" in detail,
+            "a test declared inside an `if` block is seen, not run as a silent pass",
         )
         status, detail = run_one(root / "tests/test_needs_bin.py", "/some/aware")
         check(
