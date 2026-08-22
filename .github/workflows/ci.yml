@@ -202,11 +202,13 @@ jobs:
   # `release.yml` only builds, and nothing else looked at Python at all, so their
   # green-ness rested on whoever last remembered to run them by hand.
   #
-  # Two of the seven need nothing but the standard library — they say so in their
-  # own docstrings — and are the coverage this job actually gains. The other five
-  # need a host no hosted runner has (a real Blender, with `ifcopenshell` for two
-  # of them) and self-skip; the runner reports every skip BY NAME so "covered" and
-  # "never ran" cannot come to look alike in the log.
+  # Three of the seven run here. Two need nothing but the standard library — they
+  # say so in their own docstrings — and `test_scene_info_skips.py` defaults its
+  # `--aware-bin` and checks for Blender before using it, so it starts, gets
+  # through its imports, and self-skips. The other four need a host no hosted
+  # runner has (a real Blender, with `ifcopenshell` for two of them) or an
+  # `--aware-bin` they mark `required=True`; the runner reports every skip BY NAME
+  # so "covered" and "never ran" cannot come to look alike in the log.
   #
   # That second half is not nothing: it is what had already rotted.
   # `test_material_resolution.py` and `test_import_reconciliation.py` died on a
@@ -214,10 +216,12 @@ jobs:
   # Blender, while their five siblings skipped cleanly — so a contributor without
   # Blender could not tell "needs a host" from "broken", and nothing said which.
   #
-  # No `--aware-bin` is passed, deliberately. Three tests take one, and supplying
+  # No `--aware-bin` is passed, deliberately. Two tests require one, and supplying
   # it would mean building the CLI again in this job (minutes) to reach a test
   # that skips one line later for want of Blender regardless. They are reported
-  # as skipped-for-want-of-a-binary rather than quietly dropped.
+  # as skipped-for-want-of-a-binary rather than quietly dropped — and the runner
+  # establishes that by launching each test and reading argparse's own answer,
+  # never by assuming a file that mentions the flag must require it.
   #
   # `--self-test` first, same shape as the string-offsets gate above: without it,
   # a runner that had stopped classifying failures as failures would report every

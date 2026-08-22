@@ -43,9 +43,17 @@ SKIP_EXIT = 77
 # indistinguishable, to a contributor without Blender, from the test being
 # broken, and it is what kept this file out of any automated runner. Its five
 # siblings already announce a missing host and exit cleanly; this now does too.
+#
+# Narrowed to a missing `bpy` specifically (Codex review, PR #444). A bare
+# `except ImportError` would also swallow `_ifc_import` being renamed or moved,
+# or acquiring a broken import-time dependency of its own — real regressions,
+# which it would convert into exit 77 and a green skip even when this file is
+# launched correctly inside Blender. Anything but the absent host propagates.
 try:
     import _ifc_import  # noqa: E402
-except ImportError as exc:
+except ModuleNotFoundError as exc:
+    if exc.name != "bpy":
+        raise
     print(f"SKIP: needs Blender's Python ({exc}); run: blender -b -P {__file__}")
     sys.exit(SKIP_EXIT)
 

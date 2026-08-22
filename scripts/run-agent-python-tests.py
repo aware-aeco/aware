@@ -25,14 +25,20 @@ tests passed, and for these seven files that claim was never evaluated.
 
 ## What this runs, and what it can only skip
 
-Two of the seven need nothing but the standard library and are the real coverage
-CI gains here -- `test_look_resolution.py` and `test_environment_resolution.py`
-were written to run anywhere and say so in their own docstrings. The rest need a
-host CI does not have: a real Blender (with `bpy`, and for two of them
-`ifcopenshell`), or a built `aware` binary. Those self-skip, and this reports
-them as skipped BY NAME rather than folding them into a pass count -- a silent
-skip is how "covered" and "never ran" come to look alike, which is the failure
-this whole script exists to prevent.
+Three of the seven run on a bare runner. `test_look_resolution.py` and
+`test_environment_resolution.py` need nothing but the standard library and were
+written to run anywhere -- they say so in their own docstrings.
+`test_scene_info_skips.py` defaults its `--aware-bin` and looks for Blender
+before using it, so it starts, gets through its imports, and self-skips: real
+coverage of that file's syntax, imports and startup path, which an earlier
+version of this runner threw away by pre-skipping every file whose text
+mentioned the flag (Codex review, PR #444).
+
+The remaining four need a host CI does not have: a real Blender (with `bpy`, and
+`ifcopenshell` for two of them), or an `--aware-bin` they mark `required=True`.
+This reports them as skipped BY NAME rather than folding them into a pass count
+-- a silent skip is how "covered" and "never ran" come to look alike, which is
+the failure this whole script exists to prevent.
 
 So CI proves the host-free tests and proves the rest are still *invokable*. That
 second half is not nothing: it is exactly what had rotted. Before this,
@@ -109,19 +115,27 @@ def discover(root: Path) -> list[Path]:
     return sorted(found)
 
 
-def needs_aware_bin(path: Path) -> bool:
-    """Whether `path` takes an `--aware-bin` argument.
+def declares_aware_bin(path: Path) -> bool:
+    """Whether `path` accepts an `--aware-bin` argument at all.
 
-    Read from the file's own source rather than guessed from its location: the
-    flag is the argument name argparse is configured with, so its presence in
-    the text is a fact about the file's interface. Tests that declare it are
-    driven through the real CLI and cannot run without one; this runner reports
-    them skipped rather than handing argparse a path that does not exist.
+    Read from the file's own source: the flag is the argument name argparse is
+    configured with, so its presence in the text is a fact about the file's
+    interface. This decides only whether a supplied binary is worth FORWARDING —
+    never whether the test can run without one. See [`run_one`].
     """
     try:
         return "--aware-bin" in path.read_text(encoding="utf-8", errors="replace")
     except OSError:
         return False
+
+
+# argparse's exit status for a usage error, including a missing required option.
+ARGPARSE_USAGE_EXIT = 2
+
+# The literal argparse emits for a missing required option. Matched together
+# with the flag name and `ARGPARSE_USAGE_EXIT`, so an unrelated exit-2 failure
+# stays a failure.
+ARGPARSE_REQUIRED = "the following arguments are required"
 
 
 def run_one(path: Path, aware_bin: str | None) -> tuple[str, str]:
@@ -132,12 +146,23 @@ def run_one(path: Path, aware_bin: str | None) -> tuple[str, str]:
     Each test runs with its own directory as the working directory: several
     resolve fixture paths relative to `__file__` but shell out to Blender, and
     the ones that do not are indifferent to it.
-    """
-    if needs_aware_bin(path) and not aware_bin:
-        return "skipped", "needs --aware-bin (not supplied)"
 
+    **Whether a test needs `--aware-bin` is asked of the test, not guessed from
+    its source** (Codex review, PR #444). Mentioning the flag and *requiring* it
+    are different facts, and this originally conflated them: it pre-skipped
+    every file whose text contained the string. `test_scene_info_skips.py`
+    declares `--aware-bin` with `default="aware"` and checks for Blender before
+    touching the binary, so it can run and self-skip on a hosted runner — and
+    pre-skipping it meant a syntax, import or startup regression in that test
+    stayed green. Its two siblings really do declare `required=True`.
+
+    So the test is launched, and only argparse's own "the following arguments
+    are required: --aware-bin" — with argparse's own exit status, and only when
+    no binary was supplied to begin with — turns into a skip. Every other
+    non-zero exit stays a failure.
+    """
     argv = [sys.executable, str(path)]
-    if needs_aware_bin(path) and aware_bin:
+    if aware_bin and declares_aware_bin(path):
         argv += ["--aware-bin", aware_bin]
 
     try:
@@ -160,6 +185,13 @@ def run_one(path: Path, aware_bin: str | None) -> tuple[str, str]:
         return "passed", last_line
     if completed.returncode == SKIP_EXIT:
         return "skipped", last_line or f"exit {SKIP_EXIT}"
+    if (
+        not aware_bin
+        and completed.returncode == ARGPARSE_USAGE_EXIT
+        and ARGPARSE_REQUIRED in output
+        and "--aware-bin" in output
+    ):
+        return "skipped", "needs --aware-bin (not supplied)"
     return "failed", f"exit {completed.returncode}\n{output.rstrip()}"
 
 
@@ -226,6 +258,20 @@ _NEEDS_BIN = (
     "print('got', a.aware_bin)\n"
     "sys.exit(0)\n"
 )
+# Declares `--aware-bin` but defaults it — the shape of
+# `test_scene_info_skips.py`. It must RUN when no binary is supplied, not be
+# pre-skipped for merely containing the string (Codex review, PR #444).
+_OPTIONAL_BIN = (
+    "import argparse, sys\n"
+    "p = argparse.ArgumentParser()\n"
+    "p.add_argument('--aware-bin', default='aware')\n"
+    "a = p.parse_args()\n"
+    "print('ran with', a.aware_bin)\n"
+    "sys.exit(0)\n"
+)
+# Exits 2 for a reason that has nothing to do with a missing argument. The
+# skip-on-usage-error branch must not swallow this.
+_USAGE_EXIT_FAILURE = "import sys\nprint('unrelated exit 2')\nsys.exit(2)\n"
 
 
 def _write(root: Path, relative: str, source: str) -> None:
@@ -311,22 +357,44 @@ def self_test() -> int:
         _write(root, "tests/test_needs_bin.py", _NEEDS_BIN)
         _write(root, "tests/test_plain.py", _PASSING)
 
+        _write(root, "tests/test_optional_bin.py", _OPTIONAL_BIN)
+        _write(root, "tests/test_usage_exit.py", _USAGE_EXIT_FAILURE)
+
         check(
-            needs_aware_bin(root / "tests/test_needs_bin.py")
-            and not needs_aware_bin(root / "tests/test_plain.py"),
+            declares_aware_bin(root / "tests/test_needs_bin.py")
+            and not declares_aware_bin(root / "tests/test_plain.py"),
             "the --aware-bin declaration is read from the test's own source",
         )
         status, detail = run_one(root / "tests/test_needs_bin.py", None)
         check(
             status == "skipped" and "needs --aware-bin" in detail,
-            "a test requiring --aware-bin is skipped, not failed, when none is given",
+            "a test REQUIRING --aware-bin is skipped, not failed, when none is given",
+        )
+        # Codex review, PR #444: declaring the flag is not requiring it. A test
+        # that defaults it must actually run, or a syntax/import/startup
+        # regression in it stays green behind a pre-emptive skip.
+        status, detail = run_one(root / "tests/test_optional_bin.py", None)
+        check(
+            status == "passed" and "ran with aware" in detail,
+            "a test that merely DECLARES --aware-bin still runs when none is given",
+        )
+        # ...and the skip branch must not swallow an unrelated exit 2.
+        status, _ = run_one(root / "tests/test_usage_exit.py", None)
+        check(
+            status == "failed",
+            "an exit 2 that is not a missing-argument error stays a failure",
         )
         status, detail = run_one(root / "tests/test_needs_bin.py", "/some/aware")
         check(
             status == "passed" and "/some/aware" in detail,
             "--aware-bin is forwarded to the test that declares it",
         )
-        check(run_all(root, "/some/aware") == 0, "the whole tree passes with a binary")
+
+        # The unrelated-exit-2 test is a genuine failure, so the tree must be red.
+        check(
+            run_all(root, "/some/aware") == 1,
+            "a tree containing a real failure fails even with a binary supplied",
+        )
 
     print(f"\nself-test: {'FAILED' if failures else 'OK'}")
     for label in failures:
