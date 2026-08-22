@@ -73,12 +73,22 @@ fn repo_root() -> PathBuf {
 /// The runner, repo-relative. Named once so the two assertions cannot drift.
 const RUNNER: &str = "scripts/run-agent-python-tests.py";
 
-/// `true` when `value` is a mapping key set to a truthy `continue-on-error`.
+/// `true` unless `value` carries no `continue-on-error`, or one explicitly false.
+///
+/// Fail-closed on everything else, and the difference matters: GitHub accepts an
+/// expression there, so `continue-on-error: ${{ true }}` reaches `serde_yaml` as
+/// a *string*. Asking `as_bool()` for a verdict yields `None` for it, and a
+/// reader that read `None` as "blocking" would call the step evidence while
+/// GitHub tolerated its failure at runtime — the gate green, the suite optional.
+/// Only a literal `false` (in either spelling) is a promise this reader can
+/// check now; anything else is decided later, elsewhere, and is not accepted.
+/// Same shape, for the same reason, as `dotnet_suites_gate.rs`.
 fn continues_on_error(value: &serde_yaml::Value) -> bool {
-    value
-        .get("continue-on-error")
-        .and_then(serde_yaml::Value::as_bool)
-        .unwrap_or(false)
+    match value.get("continue-on-error") {
+        None | Some(serde_yaml::Value::Bool(false)) => false,
+        Some(serde_yaml::Value::String(value)) if value.eq_ignore_ascii_case("false") => false,
+        Some(_) => true,
+    }
 }
 
 /// The command lines of a `run:` scalar, with whole-line shell comments dropped.
@@ -193,7 +203,27 @@ jobs:
          nothing — it would reject anything at all"
     );
 
-    let cases: [(&str, &str); 7] = [
+    // An explicit `false` is a promise this reader can check, so it must not be
+    // swept up by the fail-closed rule below — otherwise every rejection there
+    // would hold for a reader that simply refused any `continue-on-error` key.
+    let explicitly_blocking = r#"
+jobs:
+  agent-python-tests:
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    steps:
+      - continue-on-error: "false"
+        run: |
+          python3 scripts/run-agent-python-tests.py --self-test
+          python3 scripts/run-agent-python-tests.py
+"#;
+    assert!(
+        runs_python_suite(explicitly_blocking),
+        "the reader rejected a step that spells out `continue-on-error: false`, \
+         which is the blocking case it exists to accept"
+    );
+
+    let cases: [(&str, &str); 9] = [
         (
             "commented out inside the run block",
             r#"
@@ -252,6 +282,32 @@ jobs:
     steps:
       - if: github.event_name == 'schedule'
         run: |
+          python3 scripts/run-agent-python-tests.py --self-test
+          python3 scripts/run-agent-python-tests.py
+"#,
+        ),
+        (
+            "step tolerates its failure through an expression GitHub resolves later",
+            r#"
+jobs:
+  agent-python-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - continue-on-error: ${{ true }}
+        run: |
+          python3 scripts/run-agent-python-tests.py --self-test
+          python3 scripts/run-agent-python-tests.py
+"#,
+        ),
+        (
+            "job tolerates its failure through an expression GitHub resolves later",
+            r#"
+jobs:
+  agent-python-tests:
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
+    steps:
+      - run: |
           python3 scripts/run-agent-python-tests.py --self-test
           python3 scripts/run-agent-python-tests.py
 "#,
