@@ -232,7 +232,21 @@ def main() -> int:
     try:
         ifcopenshell = _ifc_import._import_ifcopenshell()
     except _result.AwareBlenderError as exc:
-        if exc.code != _result.ERR_IFCOPENSHELL_MISSING:
+        # `ERR_IFCOPENSHELL_MISSING` is broader than its name: `_ifc_import`
+        # raises it for ANY `ImportError` out of `import ifcopenshell` or
+        # `import ifcopenshell.geom`, so an installed-but-broken wheel — a
+        # native extension that will not load, a missing numpy, an ABI mismatch
+        # after a Blender upgrade — arrived here too. Skipping on those told a
+        # developer the machine "cannot run this test" when it can and the test
+        # is failing, on the one host where these tests run at all (review,
+        # PR #444). Only a genuine absence is a missing host; anything else
+        # propagates and stays red, as it did before this guard existed.
+        cause = exc.__cause__
+        absent = isinstance(cause, ModuleNotFoundError) and cause.name in {
+            "ifcopenshell",
+            "ifcopenshell.geom",
+        }
+        if exc.code != _result.ERR_IFCOPENSHELL_MISSING or not absent:
             raise
         print(f"SKIP: {exc.message}")
         return SKIP_EXIT

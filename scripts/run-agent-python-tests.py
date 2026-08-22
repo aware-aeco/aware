@@ -6,8 +6,8 @@ blender/` ships seven `test_*.py` regression tests -- and NOTHING ran them. Not
 `ci.yml`, not `release.yml`, not `cargo test`, which never leaves `cli/`. Their
 green-ness rested entirely on whoever last remembered to run them by hand.
 
-That is the same hole this repo has now closed four times, each after it had
-already shipped a real defect through it:
+That is the fourth instance of one hole, and each of the previous three was
+found only after it had already shipped a real defect through it:
 
   * `cli-connection-reader` (#343) -- `read-model` returned a different
     coordinate frame from `probe`, and the bridge's own tests encoded the wrong
@@ -34,36 +34,50 @@ coverage of that file's syntax, imports and startup path, which an earlier
 version of this runner threw away by pre-skipping every file whose text
 mentioned the flag (Codex review, PR #444).
 
-The remaining four need a host CI does not have: a real Blender (with `bpy`, and
-`ifcopenshell` for two of them), or an `--aware-bin` they mark `required=True`.
-This reports them as skipped BY NAME rather than folding them into a pass count
--- a silent skip is how "covered" and "never ran" come to look alike, which is
-the failure this whole script exists to prevent.
+The remaining four are not run HERE. Two need a real Blender (with
+`ifcopenshell`); two mark `--aware-bin` `required=True` and need a built CLI.
+Neither is impossible on a hosted runner -- `bpy` and `ifcopenshell` both ship
+manylinux wheels, and CI already builds the CLI in another job -- so this is a
+cost trade-off, not an impossibility: a 355 MB `bpy` download per run, or a
+second Rust build, to reach tests that would then still need a display-less
+render path. Stated plainly because "the runner cannot" would be false.
+
+Every one of them is reported as skipped BY NAME rather than folded into a pass
+count -- a silent skip is how "covered" and "never ran" come to look alike,
+which is the failure this whole script exists to prevent.
 
 So CI proves the host-free tests and proves the rest are still *invokable*. That
 second half is not nothing: it is exactly what had rotted. Before this,
 `test_material_resolution.py` and `test_import_reconciliation.py` died on a
-`ModuleNotFoundError` traceback the moment they were launched outside Blender,
-while their five siblings skipped cleanly -- so a contributor without Blender
-could not tell "needs a host" from "broken", and nothing said which.
+`ModuleNotFoundError` traceback the moment they were launched outside Blender.
+No sibling did: `test_scene_info_skips.py` announces the missing host and exits
+0, `test_camera_lens.py` and `test_ground_isolation.py` do the same once given
+`--aware-bin`, and the remaining two need no host at all. So a contributor
+without Blender could not tell "needs a host" from "broken", and nothing said
+which.
 
 ## Contract
 
 Exit status of a test file:
-  * `0`  -- passed (or self-skipped and said so; several print `SKIP:` and exit
-           0, which predates this runner and stays valid -- the last line of
-           their output is echoed below so the log still distinguishes them);
+  * `0`  -- passed, UNLESS its last line announces a skip, which several tests
+           predating `SKIP_EXIT` do; those are counted as skips, because
+           counting them as passes made the headline claim verification that
+           had not happened;
   * `77` -- skipped, the conventional "could not run here" code `run_smoke.py`
            already documents and uses for exactly this;
   * anything else -- failed.
 
-This script exits non-zero if any test failed, and ALSO if discovery found no
-tests at all. A gate that silently matches nothing reports a clean repo while
-checking exactly nothing, which is worse than no gate.
+This script exits non-zero if any test failed, if discovery found no tests at
+all, and if no discovered test ran to a pass. All three are the same rule: a
+gate that verified nothing must not report a clean repo. The last of them is
+the one review had to add -- refusing an empty tree while accepting a tree in
+which every single test skipped was the same hole, one step further along.
 
 `--self-test` drives the discovery and classification below over a synthetic
-tree with a known-passing, known-skipping and known-failing test in it, and
-asserts each is called correctly. Run it first (`ci.yml` does): without it, a
+tree carrying a known-passing, known-skipping, known-failing and known-CRASHING
+test -- plus the argparse shapes that review found being mis-skipped -- and
+asserts each is called correctly. The crashing case is the load-bearing one: an
+uncaught traceback must count as failed, not skipped. Run it first (`ci.yml` does): without it, a
 runner that had stopped classifying failures as failures would report every
 repo green forever.
 
@@ -82,10 +96,31 @@ import sys
 import tempfile
 from pathlib import Path
 
-# Skipped wholesale during discovery. `target/` and `node_modules/` are large
-# enough to turn a millisecond walk into a slow one, and nothing under them is
-# repo source; `.git` likewise.
-SKIP_DIRS = {".git", "node_modules", "target", "bin", "obj", "__pycache__", ".venv"}
+# Skipped wholesale during discovery: build output, dependency trees and version
+# control, none of which hold repo source, and the big ones (`target/`,
+# `node_modules/`, virtualenvs) turn a millisecond walk into a slow one.
+#
+# `bin` and `obj` were here for .NET build output and have been REMOVED (review,
+# PR #444): these names match by directory name at ANY depth, so a real test at
+# `.../tests/bin/test_x.py` was silently undiscovered — a gate whose whole thesis
+# is that silent skips are the enemy, skipping silently. Nothing in this repo
+# keeps Python under a `bin/`, and the .NET build output holds no `test_*.py`, so
+# dropping them costs nothing and closes that.
+#
+# The virtualenv names are the other half, and matter for the opposite reason:
+# `venv/` (not just `.venv/`) is untracked-but-expected local state, and without
+# it discovery reached `site-packages` and EXECUTED vendored third-party
+# `test_*.py` as a subprocess.
+SKIP_DIRS = {
+    ".git",
+    ".tox",
+    ".venv",
+    "__pycache__",
+    "node_modules",
+    "site-packages",
+    "target",
+    "venv",
+}
 
 # The conventional "test could not run here" status. Chosen by `run_smoke.py`
 # before this script existed, for the reason its docstring gives: so a human
@@ -101,10 +136,17 @@ def discover(root: Path) -> list[Path]:
     """Every `test_*.py` under `root`, sorted, excluding `SKIP_DIRS`.
 
     Named for what it is rather than for a directory: a Python test added under
-    a *different* agent tomorrow is picked up with no edit here. That is the
-    difference between this and the enumerate-the-known-suites gate that let
-    `cli-sidecar/Ingest/Generator/Tests` sit unrun -- discovery cannot go stale
-    the way a list can.
+    a *different* agent tomorrow is picked up with no edit here.
+
+    The convention it keys on is `test_*.py`, and that is the part to be careful
+    about. `dotnet_suites_gate.rs` records a gate that matched `*.Tests.csproj`
+    and reported the repo clean while `cli-sidecar/Ingest/Generator/Tests` --
+    whose file is plain `Tests.csproj` -- ran nowhere. A filename convention is
+    not a fact about the file. Python has no equivalent of `Test.Sdk` to read
+    instead, so this keeps the convention and makes it load-bearing elsewhere:
+    [`looks_like_an_unrunnable_pytest_file`] refuses a discovered file that
+    would not actually execute, and [`run_all`] refuses a run in which nothing
+    executed.
     """
     found: list[Path] = []
     for dirpath, dirnames, filenames in os.walk(root):
@@ -115,18 +157,34 @@ def discover(root: Path) -> list[Path]:
     return sorted(found)
 
 
-def declares_aware_bin(path: Path) -> bool:
-    """Whether `path` accepts an `--aware-bin` argument at all.
+def read_source(path: Path) -> str:
+    """The test file's text.
 
-    Read from the file's own source: the flag is the argument name argparse is
-    configured with, so its presence in the text is a fact about the file's
-    interface. This decides only whether a supplied binary is worth FORWARDING —
-    never whether the test can run without one. See [`run_one`].
+    An `OSError` is deliberately NOT swallowed (review, PR #444). A file the
+    runner cannot read — a broken symlink named `test_x.py`, which `os.walk`
+    happily lists, or a permissions problem — is a defect, and answering a
+    default to "what does this file say?" is the stub-value-on-error this whole
+    script exists to argue against. Let it surface with the path in the
+    traceback.
     """
-    try:
-        return "--aware-bin" in path.read_text(encoding="utf-8", errors="replace")
-    except OSError:
-        return False
+    return path.read_text(encoding="utf-8", errors="replace")
+
+
+def declares_aware_bin(source: str) -> bool:
+    """Whether `--aware-bin` appears anywhere in the file's text.
+
+    A plain substring search, docstrings and comments included — deliberately
+    stated that way rather than as "the argument argparse is configured with",
+    which it is not (review, PR #444): two files in the same directory name the
+    flag in prose.
+
+    That looseness is safe because of what this decides — only whether a
+    SUPPLIED binary is worth forwarding, never whether the test can run without
+    one. A flag forwarded to a test that does not accept it draws
+    `unrecognized arguments`, exit 2, and no required-arguments line, so it
+    lands as failed rather than as a silent skip. See [`run_one`].
+    """
+    return "--aware-bin" in source
 
 
 # argparse's exit status for a usage error, including a missing required option.
@@ -136,29 +194,58 @@ ARGPARSE_USAGE_EXIT = 2
 ARGPARSE_REQUIRED = "the following arguments are required"
 
 
-def missing_required_options(output: str) -> set[str]:
+def missing_required_options(stderr: str, program: str) -> set[str]:
     """The options argparse itself named as missing, parsed from its error line.
 
-    argparse prints two things on a usage error: a `usage:` block listing EVERY
-    option the parser accepts, and then
-    `error: the following arguments are required: --a, --b`. Only the second is
-    evidence about what is missing.
+    Three narrowings, each closing a measured silent-skip (Codex review and
+    review panel, PR #444). Every one of them was reachable, and every one
+    turned a genuinely broken test into a green skip:
 
-    Reading the whole output instead conflated them (Codex review, PR #444): a
-    test declaring an OPTIONAL `--aware-bin` while requiring some other argument
-    prints `--aware-bin` in its usage block and `required: --fixture` in its
-    error, so two independent substring checks called that failure "needs
-    --aware-bin" and skipped a test that was genuinely broken — the precise
-    silent-skip this runner exists to prevent.
+      * **The error line, not the usage block.** argparse prints a `usage:` block
+        naming EVERY option the parser accepts, then
+        `error: the following arguments are required: --a`. Only the second says
+        what is missing. Matching them independently meant a test declaring an
+        optional `--aware-bin` while requiring `--fixture` satisfied both halves
+        and was skipped.
+      * **argparse's line, not the test's.** The line must start with
+        `<program>: error: `, argparse's own prefix, and is read from STDERR
+        only. A test asserting on some other tool's `--aware-bin` handling
+        prints that sentence on stdout as data; without the anchor the runner
+        read the test's own output as a verdict about the test.
+      * **The last such line, not the first.** A test that prints one before
+        failing for real would otherwise shadow argparse's.
 
-    A wrapped or unparsable list yields nothing here, which classifies the run
+    An unparsable or wrapped list yields nothing here, which classifies the run
     as failed. That is the safe direction: a skip must be earned.
     """
-    for line in output.splitlines():
-        _, separator, listed = line.partition(ARGPARSE_REQUIRED + ":")
-        if separator:
+    prefix = f"{program}: error: {ARGPARSE_REQUIRED}:"
+    for line in reversed(stderr.splitlines()):
+        stripped = line.strip()
+        if stripped.startswith(prefix):
+            listed = stripped[len(prefix) :]
             return {item.strip() for item in listed.split(",") if item.strip()}
     return set()
+
+
+def looks_like_an_unrunnable_pytest_file(source: str) -> bool:
+    """`True` for a file whose `def test_` bodies a bare interpreter never runs.
+
+    This runner executes each file as a script. A file written in the dominant
+    pytest convention — `def test_x(): assert ...` with no `if __name__` block
+    and no `sys.exit(main())` — therefore defines its functions, calls none of
+    them, and exits 0 having asserted NOTHING (review, PR #444).
+
+    That matters precisely because discovery is sold on picking up a test added
+    under a different agent tomorrow with no edit here: the next contributor is
+    likely to write one this way and get a permanent, meaningless green. Naming
+    it is better than running it wrong — the seven tests in the repo today are
+    all script-style and unaffected.
+    """
+    has_test_function = any(
+        line.lstrip().startswith("def test_") for line in source.splitlines()
+    )
+    runs_something = "__main__" in source or "sys.exit(" in source
+    return has_test_function and not runs_something
 
 
 def run_one(path: Path, aware_bin: str | None) -> tuple[str, str]:
@@ -166,9 +253,10 @@ def run_one(path: Path, aware_bin: str | None) -> tuple[str, str]:
 
     `status` is one of `passed` / `skipped` / `failed`.
 
-    Each test runs with its own directory as the working directory: several
-    resolve fixture paths relative to `__file__` but shell out to Blender, and
-    the ones that do not are indifferent to it.
+    Each test runs with its own directory as the working directory. Every test
+    in the repo today resolves its paths from `__file__` and is indifferent to
+    this; setting it means one added later that reads a fixture by relative path
+    behaves the same under the runner as it does when run by hand.
 
     **Whether a test needs `--aware-bin` is asked of the test, not guessed from
     its source** (Codex review, PR #444). Mentioning the flag and *requiring* it
@@ -179,14 +267,25 @@ def run_one(path: Path, aware_bin: str | None) -> tuple[str, str]:
     pre-skipping it meant a syntax, import or startup regression in that test
     stayed green. Its two siblings really do declare `required=True`.
 
-    So the test is launched, and a skip requires all three of: argparse's own
-    exit status, `--aware-bin` named in argparse's own required-arguments list
-    (see [`missing_required_options`] — not merely present in the output), and
-    no binary having been supplied to begin with. Every other non-zero exit
-    stays a failure.
+    So the test is launched, and a skip requires ALL of: no binary supplied,
+    argparse's own exit status, and `--aware-bin` being the *entire* set of
+    options argparse named as missing (see [`missing_required_options`]).
+    Requiring the whole set — rather than membership in it — is what stops a
+    test missing `--aware-bin` AND `--fixture` from reading as a clean skip
+    when only one of the two is something this runner could ever supply.
     """
+    source = read_source(path)
+    if looks_like_an_unrunnable_pytest_file(source):
+        return "failed", (
+            "defines `def test_` functions but never calls them — this runner "
+            "executes each file as a script, so a bare interpreter would exit 0 "
+            "having asserted nothing. Give it an `if __name__ == \"__main__\"` "
+            "entry point (see the other tests in this repo) rather than relying "
+            "on a pytest collector that nothing here runs."
+        )
+
     argv = [sys.executable, str(path)]
-    if aware_bin and declares_aware_bin(path):
+    if aware_bin and declares_aware_bin(source):
         argv += ["--aware-bin", aware_bin]
 
     try:
@@ -206,13 +305,22 @@ def run_one(path: Path, aware_bin: str | None) -> tuple[str, str]:
     )
 
     if completed.returncode == 0:
+        # Exit 0 whose last line announces a skip IS a skip (review, PR #444).
+        # Five tests here predate `SKIP_EXIT` and self-skip with `return 0`, and
+        # counting those as passes made the headline read "3 passed" when two
+        # files had verified anything — while the announced skip never reached
+        # the named-skips list below. That is exactly the "covered" / "never ran"
+        # conflation this script exists to prevent, committed by the script.
+        if last_line.upper().startswith("SKIP"):
+            return "skipped", last_line
         return "passed", last_line
     if completed.returncode == SKIP_EXIT:
         return "skipped", last_line or f"exit {SKIP_EXIT}"
     if (
         not aware_bin
         and completed.returncode == ARGPARSE_USAGE_EXIT
-        and "--aware-bin" in missing_required_options(output)
+        and missing_required_options(completed.stderr or "", path.name)
+        == {"--aware-bin"}
     ):
         return "skipped", "needs --aware-bin (not supplied)"
     return "failed", f"exit {completed.returncode}\n{output.rstrip()}"
@@ -262,6 +370,25 @@ def run_all(root: Path, aware_bin: str | None) -> int:
         for relative, detail in failed:
             print(f"\n--- {relative} ---\n{detail}", file=sys.stderr)
         return 1
+
+    # The floor is on EXECUTION, not on discovery (review, PR #444). Refusing an
+    # empty tree above was the right instinct applied one step too early: a run
+    # where every discovered file skipped has verified exactly as much as a run
+    # that found no files, and returned 0 for it. That is reachable — delete the
+    # two host-free tests and five skipping files remain, green forever — and it
+    # is the same "reports a clean repo while checking nothing" this script was
+    # written to make impossible.
+    if not passed:
+        print(
+            f"\nERROR: {len(tests)} test file(s) were discovered and NONE of them "
+            "ran to a pass — every one skipped. A run that verified nothing is "
+            "not a green run, whatever the skip reasons say. If the host-free "
+            "tests were removed or renamed, this gate is now measuring nothing "
+            "and needs re-pointing; if a host went missing on a machine that "
+            "should have one, fix the host.",
+            file=sys.stderr,
+        )
+        return 1
     return 0
 
 
@@ -307,6 +434,40 @@ _OTHER_REQUIRED_ARG = (
     "p.parse_args()\n"
     "sys.exit(0)\n"
 )
+# Requires `--aware-bin` AND another argument. `--aware-bin` IS in argparse's
+# required list here, so membership is satisfied — but supplying a binary would
+# still leave the test broken, so this must fail rather than read as a clean
+# skip (review, PR #444).
+_TWO_REQUIRED_ARGS = (
+    "import argparse, sys\n"
+    "p = argparse.ArgumentParser()\n"
+    "p.add_argument('--aware-bin', required=True)\n"
+    "p.add_argument('--fixture', required=True)\n"
+    "p.parse_args()\n"
+    "sys.exit(0)\n"
+)
+# Prints argparse's sentence as DATA on stdout and exits 2 — the shape of a test
+# asserting on some other tool's `--aware-bin` handling. Reading the test's own
+# output as a verdict about the test turned this into a green skip (review).
+_ECHOES_ARGPARSE_TEXT = (
+    "import sys\n"
+    "print('expected: t: error: "
+    "the following arguments are required: --aware-bin')\n"
+    "print('REGRESSION: the wrapper accepted a missing binary')\n"
+    "sys.exit(2)\n"
+)
+# pytest-style: defines tests, calls none. A bare interpreter exits 0 having
+# asserted nothing, so this must be REFUSED rather than counted as a pass.
+_PYTEST_STYLE = (
+    "def test_two_plus_two():\n"
+    "    assert 2 + 2 == 5, 'arithmetic is broken'\n"
+    "\n"
+    "def test_other():\n"
+    "    raise AssertionError('also broken')\n"
+)
+# Exit 0 with a last line announcing a skip — the shape of the five tests that
+# predate SKIP_EXIT. Must land in the skipped bucket, not the pass count.
+_EXIT_ZERO_SKIP = "import sys\nprint('SKIP: no Blender available')\nsys.exit(0)\n"
 
 
 def _write(root: Path, relative: str, source: str) -> None:
@@ -349,11 +510,17 @@ def self_test() -> int:
         _write(root, "agent/tests/pass_test.py", _FAILING)  # wrong convention
         _write(root, "node_modules/pkg/test_ignored.py", _FAILING)
         _write(root, "target/debug/test_ignored.py", _FAILING)
+        # Must NOT be swallowed: `bin`/`obj` used to be pruned by name at any
+        # depth, which hid a real test (review, PR #444).
+        _write(root, "agent/tests/bin/test_under_bin.py", _PASSING)
+        # Must be pruned: vendored third-party tests are not ours to execute.
+        _write(root, "venv/lib/python3.11/site-packages/pkg/test_vendored.py", _FAILING)
 
         discovered = [p.relative_to(root).as_posix() for p in discover(root)]
         check(
             discovered
             == [
+                "agent/tests/bin/test_under_bin.py",
                 "agent/tests/test_pass.py",
                 "agent/tests/test_skip.py",
                 "deep/nested/further/test_pass_two.py",
@@ -395,10 +562,14 @@ def self_test() -> int:
         _write(root, "tests/test_optional_bin.py", _OPTIONAL_BIN)
         _write(root, "tests/test_usage_exit.py", _USAGE_EXIT_FAILURE)
         _write(root, "tests/test_other_required.py", _OTHER_REQUIRED_ARG)
+        _write(root, "tests/test_two_required.py", _TWO_REQUIRED_ARGS)
+        _write(root, "tests/test_echoes.py", _ECHOES_ARGPARSE_TEXT)
+        _write(root, "tests/test_pytest_style.py", _PYTEST_STYLE)
+        _write(root, "tests/test_exit_zero_skip.py", _EXIT_ZERO_SKIP)
 
         check(
-            declares_aware_bin(root / "tests/test_needs_bin.py")
-            and not declares_aware_bin(root / "tests/test_plain.py"),
+            declares_aware_bin(read_source(root / "tests/test_needs_bin.py"))
+            and not declares_aware_bin(read_source(root / "tests/test_plain.py")),
             "the --aware-bin declaration is read from the test's own source",
         )
         status, detail = run_one(root / "tests/test_needs_bin.py", None)
@@ -424,17 +595,47 @@ def self_test() -> int:
         # by the flag appearing anywhere in the usage block.
         check(
             missing_required_options(
-                "usage: t [--aware-bin AWARE_BIN] --fixture F\n"
-                "t: error: the following arguments are required: --fixture\n"
+                "usage: t.py [--aware-bin AWARE_BIN] --fixture F\n"
+                "t.py: error: the following arguments are required: --fixture\n",
+                "t.py",
             )
             == {"--fixture"},
             "only argparse's required-arguments list is read, not its usage block",
+        )
+        # ...and it must be ARGPARSE's line, not a line the test printed itself.
+        check(
+            missing_required_options(
+                "the following arguments are required: --aware-bin\n", "t.py"
+            )
+            == set(),
+            "an unprefixed required-arguments line is not argparse's verdict",
         )
         status, _ = run_one(root / "tests/test_other_required.py", None)
         check(
             status == "failed",
             "a test requiring a DIFFERENT argument fails, and is not mis-skipped "
             "as needing --aware-bin",
+        )
+        status, _ = run_one(root / "tests/test_two_required.py", None)
+        check(
+            status == "failed",
+            "a test missing --aware-bin AND another argument fails: supplying a "
+            "binary would not make it runnable, so it is not a clean skip",
+        )
+        status, _ = run_one(root / "tests/test_echoes.py", None)
+        check(
+            status == "failed",
+            "a test that PRINTS argparse's sentence as data is not skipped on it",
+        )
+        status, detail = run_one(root / "tests/test_pytest_style.py", None)
+        check(
+            status == "failed" and "never calls them" in detail,
+            "a pytest-style file that would exit 0 asserting nothing is refused",
+        )
+        status, detail = run_one(root / "tests/test_exit_zero_skip.py", None)
+        check(
+            status == "skipped",
+            "exit 0 whose last line announces a SKIP lands in the skipped bucket",
         )
         status, detail = run_one(root / "tests/test_needs_bin.py", "/some/aware")
         check(
@@ -446,6 +647,23 @@ def self_test() -> int:
         check(
             run_all(root, "/some/aware") == 1,
             "a tree containing a real failure fails even with a binary supplied",
+        )
+
+    # The execution floor. A tree whose every test skips has verified exactly as
+    # much as an empty tree, and used to return 0 for it (review, PR #444).
+    with tempfile.TemporaryDirectory(prefix="aware-pytest-selftest-allskip-") as tmp:
+        root = Path(tmp)
+        _write(root, "tests/test_skip_one.py", _SKIPPING)
+        _write(root, "tests/test_skip_two.py", _EXIT_ZERO_SKIP)
+        check(
+            run_all(root, None) == 1,
+            "a tree where every test skips fails: nothing was verified",
+        )
+        # ...and one real pass is enough to clear that floor.
+        _write(root, "tests/test_real.py", _PASSING)
+        check(
+            run_all(root, None) == 0,
+            "one genuinely passing test clears the execution floor",
         )
 
     print(f"\nself-test: {'FAILED' if failures else 'OK'}")
