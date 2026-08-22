@@ -195,6 +195,50 @@ jobs:
         working-directory: cli-connection-reader
         run: node --test
 
+  # The repo's Python tests. Same hole as `cli-connection-reader` above, as
+  # `steel-detailer-lookup`, and as the six .NET suites below — a real regression
+  # suite that NO workflow ran. `20-agents/aeco/visualization/blender/tests/`
+  # carries seven `test_*.py` files; `cargo test` never leaves `cli/`,
+  # `release.yml` only builds, and nothing else looked at Python at all, so their
+  # green-ness rested on whoever last remembered to run them by hand.
+  #
+  # Two of the seven need nothing but the standard library — they say so in their
+  # own docstrings — and are the coverage this job actually gains. The other five
+  # need a host no hosted runner has (a real Blender, with `ifcopenshell` for two
+  # of them) and self-skip; the runner reports every skip BY NAME so "covered" and
+  # "never ran" cannot come to look alike in the log.
+  #
+  # That second half is not nothing: it is what had already rotted.
+  # `test_material_resolution.py` and `test_import_reconciliation.py` died on a
+  # `ModuleNotFoundError` traceback the moment they were launched outside
+  # Blender, while their five siblings skipped cleanly — so a contributor without
+  # Blender could not tell "needs a host" from "broken", and nothing said which.
+  #
+  # No `--aware-bin` is passed, deliberately. Three tests take one, and supplying
+  # it would mean building the CLI again in this job (minutes) to reach a test
+  # that skips one line later for want of Blender regardless. They are reported
+  # as skipped-for-want-of-a-binary rather than quietly dropped.
+  #
+  # `--self-test` first, same shape as the string-offsets gate above: without it,
+  # a runner that had stopped classifying failures as failures would report every
+  # repo green forever. `cli/tests/agent_python_suites_gate.rs` asserts this step
+  # still carries both halves.
+  agent-python-tests:
+    name: agent Python tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: run every Python test in the repo
+        run: |
+          python3 scripts/run-agent-python-tests.py --self-test
+          python3 scripts/run-agent-python-tests.py
+
   # Every OTHER .NET bridge suite in the repo. `tekla-bridge` below has run since
   # it was written, and that made it look like the .NET side was covered — it was
   # the only one of seven. `cli-revit/Tests`, `cli-rhino/Tests`,

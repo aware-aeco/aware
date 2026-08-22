@@ -28,7 +28,26 @@ import tempfile
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.normpath(os.path.join(HERE, os.pardir, "scripts")))
 
-import _ifc_import  # noqa: E402
+import _result  # noqa: E402
+
+# The conventional "test could not run here" status, as `run_smoke.py` documents
+# and uses -- so a human glancing at `$?`, and `scripts/run-agent-python-tests.py`
+# reading the same code, do not mistake "nothing to check here" for a red gate.
+SKIP_EXIT = 77
+
+# `_ifc_import` imports `bpy` at module scope, so this line is where the harness
+# meets its host. Launched the documented way (`blender -b -P ...`) that import
+# succeeds; launched on a plain interpreter -- which is what
+# `scripts/run-agent-python-tests.py` does to every `test_*.py` in the repo --
+# it raised an uncaught `ModuleNotFoundError` traceback and exited 1. That is
+# indistinguishable, to a contributor without Blender, from the test being
+# broken, and it is what kept this file out of any automated runner. Its five
+# siblings already announce a missing host and exit cleanly; this now does too.
+try:
+    import _ifc_import  # noqa: E402
+except ImportError as exc:
+    print(f"SKIP: needs Blender's Python ({exc}); run: blender -b -P {__file__}")
+    sys.exit(SKIP_EXIT)
 
 
 def _build_model(ifcopenshell):
@@ -260,7 +279,16 @@ def _build_model(ifcopenshell):
 
 
 def main() -> int:
-    ifcopenshell = _ifc_import._import_ifcopenshell()
+    # The second host dependency, and the same reasoning as the guarded import
+    # above: a Blender without ifcopenshell installed is a machine that cannot
+    # run this test, not a machine on which it fails.
+    try:
+        ifcopenshell = _ifc_import._import_ifcopenshell()
+    except _result.AwareBlenderError as exc:
+        if exc.code != _result.ERR_IFCOPENSHELL_MISSING:
+            raise
+        print(f"SKIP: {exc.message}")
+        return SKIP_EXIT
 
     workdir = tempfile.mkdtemp(prefix="aware-blender-mattest-")
     try:
