@@ -860,12 +860,20 @@ impl AgentInvoker for RestInvoker {
                         provision_advice(&auth.secret)
                     )));
                 };
-                // The header charset applies only once the destination is known
-                // to be a header — an api-key `in: query` is URL-encoded and may
-                // legitimately be non-ASCII. Reported specifically rather than
-                // folded into the missing-credential arm above: the credential IS
-                // provisioned, and "provision it" would be the wrong advice.
-                if auth_target_is_header(auth)
+                // Inject FIRST, then judge the credential by the slot it landed
+                // in. The header charset applies only to a header — an api-key
+                // `in: query` is URL-encoded and may legitimately be non-ASCII —
+                // and only to a credential that was actually placed: a request
+                // carrying its own `Authorization` leaves the stored value unused,
+                // so refusing the call over it fails a request that would have
+                // worked (Codex, #443). Nothing is sent between here and the
+                // error, so injecting before validating costs nothing.
+                //
+                // Reported specifically rather than folded into the
+                // missing-credential arm above: the credential IS provisioned, and
+                // "provision it" would be the wrong advice.
+                let slot = inject_auth(auth, &cred, &mut headers, &mut query);
+                if slot == Some(AuthSlot::Header)
                     && let Some(bad) = unsendable_in_header_char(&cred)
                 {
                     return Err(AwareError::Validation(format!(
@@ -876,7 +884,6 @@ impl AgentInvoker for RestInvoker {
                         auth.secret
                     )));
                 }
-                inject_auth(auth, &cred, &mut headers, &mut query);
             }
         }
         // Carry the body itself rather than a separate "should send" flag, so the
@@ -1306,19 +1313,20 @@ pub(crate) fn unsendable_in_header_char(secret: &str) -> Option<char> {
     secret.chars().find(|c| !c.is_ascii_graphic() && *c != ' ')
 }
 
-/// Whether a declared scheme puts the credential in a request **header**.
+/// Where [`inject_auth`] actually put the credential, which is the only thing
+/// that decides whether the header charset applies to it.
 ///
-/// Mirrors [`inject_auth`]'s own dispatch, and must keep mirroring it: this
-/// decides whether the header charset applies, so a scheme that lands in a
-/// header while this says otherwise would put an unsendable value on the wire.
-/// `cookie` counts — a cookie IS a header. An unrecognised scheme injects
-/// nothing at all, so it constrains nothing.
-fn auth_target_is_header(auth: &crate::manifest::agent::AuthScheme) -> bool {
-    match auth.scheme.as_str() {
-        "bearer" | "oauth2" => true,
-        "api-key" => !matches!(auth.location.as_deref(), Some("query")),
-        _ => false,
-    }
+/// A predicate over the declared scheme used to answer this, and it could not:
+/// it knew the *destination* but not whether the slot was free, so a request
+/// carrying its own `Authorization` was refused over a stored credential that
+/// would never be sent (Codex, #443). Reporting the outcome of the one function
+/// that decides removes the second opinion rather than correcting it.
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+enum AuthSlot {
+    /// A header — including `Cookie`, which is one.
+    Header,
+    /// A query parameter, which is URL-encoded and so carries any character.
+    Query,
 }
 
 /// Extract the *usable* credential string from a loaded secret: a raw string is
@@ -1363,12 +1371,17 @@ fn secret_as_str(secret: &Value) -> Option<String> {
 /// Inject the declared credential into the request: bearer/oauth2 as an
 /// `Authorization: Bearer` header, api-key as a header / query / cookie. A slot
 /// the caller already populated is left untouched (explicit input wins).
+///
+/// Returns the slot it filled, or `None` when it filled nothing — because the
+/// caller had already set it, or because the scheme injects nowhere. The caller
+/// validates the credential against the slot it LANDED in, so a value that was
+/// never sent is never judged by where it would have gone.
 fn inject_auth(
     auth: &crate::manifest::agent::AuthScheme,
     cred: &str,
     headers: &mut Vec<(String, String)>,
     query: &mut Vec<(String, String)>,
-) {
+) -> Option<AuthSlot> {
     match auth.scheme.as_str() {
         "bearer" | "oauth2"
             if !headers
@@ -1376,14 +1389,17 @@ fn inject_auth(
                 .any(|(k, _)| k.eq_ignore_ascii_case("authorization")) =>
         {
             headers.push(("Authorization".into(), format!("Bearer {cred}")));
+            Some(AuthSlot::Header)
         }
         "api-key" => {
             let name = auth.name.as_deref().unwrap_or("Authorization");
             match auth.location.as_deref() {
                 Some("query") => {
-                    if !query.iter().any(|(k, _)| k == name) {
-                        query.push((name.to_string(), cred.to_string()));
+                    if query.iter().any(|(k, _)| k == name) {
+                        return None;
                     }
+                    query.push((name.to_string(), cred.to_string()));
+                    Some(AuthSlot::Query)
                 }
                 // apiKey `in: cookie` → `Cookie: name=value`. Append to an
                 // existing Cookie header (e.g. one built from cookie params)
@@ -1397,23 +1413,27 @@ fn inject_auth(
                         let already = existing
                             .split(';')
                             .any(|c| c.trim_start().starts_with(&format!("{name}=")));
-                        if !already {
-                            existing.push_str("; ");
-                            existing.push_str(&pair);
+                        if already {
+                            return None;
                         }
+                        existing.push_str("; ");
+                        existing.push_str(&pair);
                     } else {
                         headers.push(("Cookie".into(), pair));
                     }
+                    Some(AuthSlot::Header)
                 }
                 // header (default).
                 _ => {
-                    if !headers.iter().any(|(k, _)| k.eq_ignore_ascii_case(name)) {
-                        headers.push((name.to_string(), cred.to_string()));
+                    if headers.iter().any(|(k, _)| k.eq_ignore_ascii_case(name)) {
+                        return None;
                     }
+                    headers.push((name.to_string(), cred.to_string()));
+                    Some(AuthSlot::Header)
                 }
             }
         }
-        _ => {}
+        _ => None,
     }
 }
 
@@ -3865,7 +3885,12 @@ commands:
         };
         let mut h = Vec::new();
         let mut q = Vec::new();
-        inject_auth(&bearer, "tok", &mut h, &mut q);
+        // The reported slot is not decoration: it is what gates the header
+        // charset check at the call site, so every arm below pins it.
+        assert_eq!(
+            inject_auth(&bearer, "tok", &mut h, &mut q),
+            Some(AuthSlot::Header)
+        );
         assert_eq!(h, vec![("Authorization".into(), "Bearer tok".into())]);
 
         let apikey_query = AuthScheme {
@@ -3876,14 +3901,51 @@ commands:
         };
         let mut h2 = Vec::new();
         let mut q2 = Vec::new();
-        inject_auth(&apikey_query, "raw", &mut h2, &mut q2);
+        assert_eq!(
+            inject_auth(&apikey_query, "raw", &mut h2, &mut q2),
+            Some(AuthSlot::Query)
+        );
         assert_eq!(q2, vec![("apikey".into(), "raw".into())]);
 
-        // An explicit Authorization the caller set is never overridden.
+        // An explicit Authorization the caller set is never overridden — and the
+        // slot comes back `None`, because nothing was placed. That is what keeps
+        // the header charset off a stored credential this request never sends.
         let mut h3 = vec![("Authorization".to_string(), "Bearer explicit".to_string())];
         let mut q3 = Vec::new();
-        inject_auth(&bearer, "other", &mut h3, &mut q3);
+        assert_eq!(inject_auth(&bearer, "other", &mut h3, &mut q3), None);
         assert_eq!(h3[0].1, "Bearer explicit");
+
+        // Same for every other slot the caller can pre-fill.
+        let mut h3b = vec![("apikey".to_string(), "explicit".to_string())];
+        let apikey_header = AuthScheme {
+            scheme: "api-key".into(),
+            location: None,
+            name: Some("apikey".into()),
+            secret: "s".into(),
+        };
+        assert_eq!(
+            inject_auth(&apikey_header, "other", &mut h3b, &mut Vec::new()),
+            None
+        );
+        assert_eq!(h3b, vec![("apikey".to_string(), "explicit".to_string())]);
+        let mut q3b = vec![("apikey".to_string(), "explicit".to_string())];
+        assert_eq!(
+            inject_auth(&apikey_query, "other", &mut Vec::new(), &mut q3b),
+            None
+        );
+        assert_eq!(q3b, vec![("apikey".to_string(), "explicit".to_string())]);
+
+        // An unrecognised scheme injects nowhere, so it reports nowhere.
+        let mtls = AuthScheme {
+            scheme: "mtls".into(),
+            location: None,
+            name: None,
+            secret: "s".into(),
+        };
+        assert_eq!(
+            inject_auth(&mtls, "tok", &mut Vec::new(), &mut Vec::new()),
+            None
+        );
 
         // apiKey `in: cookie` → `Cookie: name=value` header.
         let apikey_cookie = AuthScheme {
@@ -3894,8 +3956,27 @@ commands:
         };
         let mut h4 = Vec::new();
         let mut q4 = Vec::new();
-        inject_auth(&apikey_cookie, "sid-9", &mut h4, &mut q4);
+        // A cookie IS a header, so it reports one — the charset applies to it.
+        assert_eq!(
+            inject_auth(&apikey_cookie, "sid-9", &mut h4, &mut q4),
+            Some(AuthSlot::Header)
+        );
         assert_eq!(h4, vec![("Cookie".into(), "session=sid-9".into())]);
+
+        // Appending to an existing Cookie header is still a placement; the same
+        // cookie name already set is not.
+        let mut h5 = vec![("Cookie".to_string(), "other=1".to_string())];
+        assert_eq!(
+            inject_auth(&apikey_cookie, "sid-9", &mut h5, &mut Vec::new()),
+            Some(AuthSlot::Header)
+        );
+        assert_eq!(h5[0].1, "other=1; session=sid-9");
+        let mut h6 = vec![("Cookie".to_string(), "session=mine".to_string())];
+        assert_eq!(
+            inject_auth(&apikey_cookie, "sid-9", &mut h6, &mut Vec::new()),
+            None
+        );
+        assert_eq!(h6[0].1, "session=mine");
     }
 
     #[test]
@@ -3949,7 +4030,8 @@ commands:
         // is usable depends on where the agent puts it: refused as a header,
         // URL-encoded and perfectly valid as an api-key `in: query`. Filtering it
         // here — which an earlier version did — broke the query case outright
-        // (#443). `auth_target_is_header` decides, at the one place that knows.
+        // (#443). The slot `inject_auth` reports decides, at the one place that
+        // knows both where the credential goes and whether it went there.
         assert_eq!(
             secret_as_str(&serde_json::json!("sk-caf\u{00e9}")),
             Some("sk-caf\u{00e9}".into())
@@ -3966,30 +4048,58 @@ commands:
         );
     }
 
-    /// The header charset applies exactly where a header is what gets sent.
-    /// Mirrors `inject_auth`'s dispatch — if the two drift, either an unsendable
-    /// value goes on the wire or a valid query key is refused, and this PR has
-    /// now shipped one of each (#443).
+    /// The header charset applies exactly where a header is what gets sent, and
+    /// only when the credential is what gets sent there.
+    ///
+    /// A predicate over the declared scheme used to answer the first half and
+    /// silently got the second wrong: it said "bearer lands in a header", which
+    /// is true, and the call site read that as "so validate the stored value",
+    /// which is not — a request carrying its own `Authorization` never sends the
+    /// stored one, and was refused over it anyway (#443). Now the slot is
+    /// whatever `inject_auth` reports it actually filled, so the two cannot
+    /// disagree; this pins the pairs that gate the check.
     #[test]
-    fn auth_target_is_header_matches_where_inject_auth_puts_the_credential() {
+    fn the_reported_slot_is_where_the_credential_actually_landed() {
         let scheme = |scheme: &str, location: Option<&str>| crate::manifest::agent::AuthScheme {
             scheme: scheme.into(),
             location: location.map(str::to_string),
             name: None,
             secret: "s".into(),
         };
-        assert!(auth_target_is_header(&scheme("bearer", None)));
-        assert!(auth_target_is_header(&scheme("oauth2", None)));
-        // api-key defaults to a header when no location is declared.
-        assert!(auth_target_is_header(&scheme("api-key", None)));
-        assert!(auth_target_is_header(&scheme("api-key", Some("header"))));
-        // A cookie IS a header, so the charset applies there too.
-        assert!(auth_target_is_header(&scheme("api-key", Some("cookie"))));
-        // The one case that is not a header — and the one the header charset
-        // must not touch.
-        assert!(!auth_target_is_header(&scheme("api-key", Some("query"))));
+        let slot_for = |auth: &crate::manifest::agent::AuthScheme| {
+            inject_auth(auth, "cred", &mut Vec::new(), &mut Vec::new())
+        };
+
+        for header_scheme in [
+            scheme("bearer", None),
+            scheme("oauth2", None),
+            // api-key defaults to a header when no location is declared.
+            scheme("api-key", None),
+            scheme("api-key", Some("header")),
+            // A cookie IS a header, so the charset applies there too.
+            scheme("api-key", Some("cookie")),
+        ] {
+            assert_eq!(slot_for(&header_scheme), Some(AuthSlot::Header));
+        }
+        // The one destination the header charset must not touch: a query value is
+        // URL-encoded, so a non-ASCII api-key is legitimate there.
+        assert_eq!(
+            slot_for(&scheme("api-key", Some("query"))),
+            Some(AuthSlot::Query)
+        );
         // An unrecognised scheme injects nothing, so it constrains nothing.
-        assert!(!auth_target_is_header(&scheme("mtls", None)));
+        assert_eq!(slot_for(&scheme("mtls", None)), None);
+        // And the case that started this: the destination IS a header, but the
+        // caller filled it, so nothing was placed and nothing is judged.
+        assert_eq!(
+            inject_auth(
+                &scheme("bearer", None),
+                "cred",
+                &mut vec![("authorization".into(), "Bearer explicit".into())],
+                &mut Vec::new(),
+            ),
+            None
+        );
     }
 
     /// The suggested `aware connect` line has to survive being pasted into a
@@ -4099,6 +4209,90 @@ commands:
                 "the alias stands as its own token in {line:?}"
             );
         }
+    }
+
+    #[tokio::test]
+    async fn an_explicit_authorization_survives_an_unsendable_stored_credential() {
+        // The agent declares bearer auth, so the stored credential's destination
+        // IS a header — and the stored credential cannot go in one. But the
+        // caller supplied its own `Authorization`, so `inject_auth` leaves the
+        // stored value untouched and nothing unsendable is ever on the wire.
+        // Refusing this call was a real regression against the fill-if-absent
+        // contract the runtime documents (Codex, #443): the request worked before
+        // the charset check existed, and works again.
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("http");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            r#"agent: http
+version: 0.1.0
+description: generic http
+stateful: false
+license: MIT
+transport:
+  rest: {}
+auth:
+  scheme: bearer
+  secret: probe
+requires:
+  secrets:
+    - probe
+commands:
+  get:
+    lifecycle: single
+    description: GET
+"#,
+        )
+        .unwrap();
+        let creds = home.path().join("credentials");
+        std::fs::create_dir_all(&creds).unwrap();
+        // Provisioned and resolvable, but not sendable in a header.
+        std::fs::write(creds.join("probe.json"), "{\"key\":\"sk-caf\u{00e9}\"}").unwrap();
+
+        let inv = RestInvoker {
+            agents_dir: agents.clone(),
+        };
+        let out = inv
+            .invoke_single(
+                "http",
+                "get",
+                serde_json::json!({
+                    "url": format!("http://127.0.0.1:{port}/thing"),
+                    "headers": { "Authorization": "Bearer explicit-and-sendable" },
+                }),
+            )
+            .await
+            .expect("an explicit Authorization must not be refused over an unused credential");
+
+        assert_eq!(out["status"], serde_json::json!(200));
+        let req = rx.recv().unwrap();
+        assert!(
+            req.contains("Authorization: Bearer explicit-and-sendable"),
+            "the caller's own header did not survive: {req}"
+        );
+        assert!(
+            !req.contains("caf"),
+            "the stored credential reached the wire: {req}"
+        );
+
+        // The same agent with the slot FREE still fails closed, so this is not a
+        // hole in the charset check — only a narrowing of it to what is sent.
+        let (port2, _rx2) = mock_server(200, r#"{"ok":true}"#);
+        let err = RestInvoker { agents_dir: agents }
+            .invoke_single(
+                "http",
+                "get",
+                serde_json::json!({ "url": format!("http://127.0.0.1:{port2}/thing") }),
+            )
+            .await
+            .expect_err("an unsendable credential must still be refused when it IS the one sent");
+        assert!(
+            err.to_string().contains("as an HTTP header"),
+            "wrong error: {err}"
+        );
     }
 
     #[tokio::test]
