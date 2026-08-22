@@ -1876,3 +1876,359 @@ mod freeze_tests {
         );
     }
 }
+
+/// `render_progress` — the one line a person watches a long read through (#405).
+///
+/// Every field it reads is optional and producer-supplied, so each of the five
+/// branches below is a distinct way for the line to come out wrong against a
+/// record that is otherwise well-formed. Nothing exercised this function: the
+/// `node-progress` assertions in `tests/app_run.rs` read the JSONL trace, which
+/// is the record *before* this renders it.
+#[cfg(test)]
+mod render_progress_tests {
+    use super::render_progress;
+    use serde_json::json;
+
+    /// The floor: a record with nothing this renderer knows about still names the
+    /// channel. Dropping the `unwrap_or` default would leave a bare `progress `.
+    #[test]
+    fn a_record_with_no_known_fields_still_names_the_phase_channel() {
+        assert_eq!(render_progress(&json!({})), "progress progress");
+        assert_eq!(
+            render_progress(&json!({"unrelated": "noise"})),
+            "progress progress"
+        );
+        assert_eq!(
+            render_progress(&json!({"phase": "enumerate"})),
+            "progress enumerate"
+        );
+    }
+
+    /// `done` alone is a running count; `done` with `total` is a fraction. A
+    /// producer that only knows how far it has come must not be rendered as
+    /// `12/0` or have its count dropped.
+    #[test]
+    fn done_renders_as_a_fraction_only_when_total_is_known() {
+        assert_eq!(
+            render_progress(&json!({"phase": "fetch", "done": 12})),
+            "progress fetch 12"
+        );
+        assert_eq!(
+            render_progress(&json!({"phase": "fetch", "done": 12, "total": 40})),
+            "progress fetch 12/40"
+        );
+        // `total` without `done` is not half a fraction — it renders nothing,
+        // because the numerator is what the reader is tracking.
+        assert_eq!(
+            render_progress(&json!({"phase": "fetch", "total": 40})),
+            "progress fetch"
+        );
+        // Zero is a real count, not an absence: the guard is `is_some`, not truthiness.
+        assert_eq!(
+            render_progress(&json!({"phase": "fetch", "done": 0, "total": 40})),
+            "progress fetch 0/40"
+        );
+    }
+
+    /// The segment id lives one level down, under `artifact`. Reading it off the
+    /// record's own `id` — the obvious mis-edit — would name the *node* instead
+    /// of the segment that just became fetchable.
+    #[test]
+    fn the_segment_id_comes_from_the_nested_artifact_record() {
+        assert_eq!(
+            render_progress(&json!({"phase": "split", "artifact": {"id": "seg-3"}})),
+            "progress split segment seg-3"
+        );
+        // A top-level `id` is not the artifact's, and an `artifact` without an
+        // `id` names no segment.
+        assert_eq!(
+            render_progress(&json!({"phase": "split", "id": "node-7"})),
+            "progress split"
+        );
+        assert_eq!(
+            render_progress(&json!({"phase": "split", "artifact": {"bytes": 12}})),
+            "progress split"
+        );
+    }
+
+    /// Order is the contract: where it is, how far along, which segment, then the
+    /// prose. Swapping any pair still produces every substring, so this asserts
+    /// the whole line rather than `contains`.
+    #[test]
+    fn a_full_record_renders_every_part_in_reading_order() {
+        assert_eq!(
+            render_progress(&json!({
+                "phase": "fetch",
+                "done": 3,
+                "total": 9,
+                "artifact": {"id": "seg-3"},
+                "message": "chunk ready",
+            })),
+            "progress fetch 3/9 segment seg-3 — chunk ready"
+        );
+    }
+
+    /// A producer that sends the right keys with the wrong JSON types must not
+    /// take the line with it. `as_u64` / `as_str` return `None` for a mismatch,
+    /// so each wrong-typed field drops out and the rest still renders.
+    #[test]
+    fn wrongly_typed_fields_drop_out_instead_of_corrupting_the_line() {
+        assert_eq!(
+            render_progress(&json!({
+                "phase": 7,
+                "done": "3",
+                "total": 9,
+                "artifact": "seg-3",
+                "message": ["chunk ready"],
+            })),
+            "progress progress"
+        );
+        // A negative or fractional `done` is not a count either — and the
+        // surrounding fields survive it.
+        assert_eq!(
+            render_progress(&json!({"phase": "fetch", "done": -1, "message": "odd"})),
+            "progress fetch — odd"
+        );
+    }
+}
+
+/// The Glass Box viewer — `aware app inspect` writes this HTML next to the lock
+/// and opens it in the maintainer's browser.
+///
+/// Nothing tested it. Two things ride on that: the escaping (every string in the
+/// page comes from an app file the maintainer may not have written) and the
+/// badge logic, which is the only place a reader is told that a write-mode node
+/// declared no safety contract.
+#[cfg(test)]
+mod glass_box_tests {
+    use super::{glass_box_html_path, html_escape_local, render_glass_box_html};
+    use crate::app_lock::{CompiledNode, LockFile};
+    use std::collections::BTreeMap;
+    use std::path::Path;
+
+    fn node(id: &str, kind: &str, mode: &str) -> CompiledNode {
+        CompiledNode {
+            id: id.to_string(),
+            kind: kind.to_string(),
+            agent: None,
+            command: None,
+            mode: mode.to_string(),
+            safety: None,
+            inputs: None,
+            output_schema: None,
+            notes: Vec::new(),
+            runtime_model: false,
+            model_pin: None,
+        }
+    }
+
+    fn lock(nodes: Vec<CompiledNode>) -> LockFile {
+        LockFile {
+            source_hash: "abc123".into(),
+            compiled_at: "2026-08-22T00:00:00Z".into(),
+            compiler_version: "0.128.0".into(),
+            app: "demo".into(),
+            version: "0.1.0".into(),
+            agent_pins: BTreeMap::new(),
+            nodes,
+            schedule: None,
+            engineering: None,
+        }
+    }
+
+    /// `&` must be replaced first, or every other entity this function emits gets
+    /// its own ampersand escaped a second time and the page renders `&lt;` as
+    /// literal text where a `<` was meant to be neutralised.
+    #[test]
+    fn html_escape_neutralises_all_five_characters_without_double_escaping() {
+        assert_eq!(
+            html_escape_local("<a href=\"x\">it's & so</a>"),
+            "&lt;a href=&quot;x&quot;&gt;it&#39;s &amp; so&lt;/a&gt;"
+        );
+        // The ordering property on its own: an ampersand already in the input
+        // survives as exactly one entity, and so does a bracket next to it.
+        assert_eq!(html_escape_local("&<"), "&amp;&lt;");
+        assert_eq!(html_escape_local("plain text"), "plain text");
+    }
+
+    /// Node ids, agent ids and command names are author-written text from a
+    /// `.flo` file. Dropping the escape on any one of them turns
+    /// `aware app inspect` on someone else's app into script execution in the
+    /// maintainer's browser.
+    #[test]
+    fn author_controlled_strings_reach_the_page_escaped() {
+        let mut n = node("<script>alert(1)</script>", "agent", "read");
+        n.agent = Some("tek<la".into());
+        n.command = Some("exec\">".into());
+        let mut lock = lock(vec![n]);
+        lock.app = "de<mo".into();
+        lock.version = "0.1.0\"".into();
+        lock.compiled_at = "<compiled>".into();
+        lock.compiler_version = "<compiler>".into();
+        lock.source_hash = "<hash>".into();
+        lock.agent_pins
+            .insert("pin<key".into(), "pin\"value".into());
+
+        let html = render_glass_box_html(&lock);
+        assert!(
+            !html.contains("<script>alert(1)</script>"),
+            "raw node id reached the page: {html}"
+        );
+        for raw in ["tek<la", "exec\">", "de<mo", "pin<key", "pin\"value"] {
+            assert!(
+                !html.contains(raw),
+                "unescaped {raw:?} reached the page: {html}"
+            );
+        }
+        // The escaped forms are present, so the fields are rendered at all and
+        // the assertions above are not passing on an empty page.
+        assert!(html.contains("&lt;script&gt;alert(1)&lt;/script&gt;"));
+        assert!(html.contains("<code>tek&lt;la.exec&quot;&gt;</code>"));
+        assert!(html.contains("<li><code>pin&lt;key</code> &rarr; <code>pin&quot;value</code>"));
+        // The three provenance fields are the ones a reader trusts to say which
+        // source this page describes.
+        for escaped in ["&lt;compiled&gt;", "&lt;compiler&gt;", "&lt;hash&gt;"] {
+            assert!(html.contains(escaped), "missing {escaped} in: {html}");
+        }
+    }
+
+    /// Red border and red badge mean "this node writes". A node rendered on the
+    /// read styling is the mis-rendering that costs an approver the most.
+    ///
+    /// Asserted as whole cards, keyed by node id. Checking that the page merely
+    /// *contains* `node-write` and `node-read` proves nothing here: swapping the
+    /// two arms of `mode_class` leaves both strings on a page with one node of
+    /// each mode, so that weaker form stays green through the very inversion it
+    /// exists to catch (measured — the mutation survived it).
+    #[test]
+    fn each_node_card_carries_the_styling_of_its_own_mode() {
+        let html = render_glass_box_html(&lock(vec![
+            node("w", "agent", "write"),
+            node("r", "agent", "read"),
+        ]));
+        assert!(
+            html.contains(concat!(
+                "<div class=\"node node-write\"><div class=\"node-id\">w</div>",
+                "<div class=\"node-cmd\"><em>agent</em></div>",
+                "<div class=\"node-meta\"><span class=\"badge badge-write\">write</span> ",
+                "<span class=\"badge badge-warn\">safety MISSING</span></div></div>"
+            )),
+            "write node card wrong: {html}"
+        );
+        assert!(
+            html.contains(concat!(
+                "<div class=\"node node-read\"><div class=\"node-id\">r</div>",
+                "<div class=\"node-cmd\"><em>agent</em></div>",
+                "<div class=\"node-meta\"><span class=\"badge badge-read\">read</span> </div></div>"
+            )),
+            "read node card wrong: {html}"
+        );
+    }
+
+    /// Three states, not two. A write node with no safety block is the warning
+    /// this page exists to raise; a read node with none is unremarkable and must
+    /// not be badged as if it were.
+    #[test]
+    fn the_safety_badge_distinguishes_declared_missing_and_not_applicable() {
+        let mut declared = node("declared", "agent", "write");
+        declared.safety = Some(serde_yaml::Value::Bool(true));
+        let html = render_glass_box_html(&lock(vec![
+            declared,
+            node("undeclared", "agent", "write"),
+            node("reader", "agent", "read"),
+        ]));
+        // `badge badge-safety`, with the space — `.badge-safety` also appears in
+        // the stylesheet, and counting that would pass whatever the nodes render.
+        assert_eq!(
+            html.matches("badge badge-safety").count(),
+            1,
+            "exactly the declared node is badged safe: {html}"
+        );
+        assert_eq!(
+            html.matches("safety MISSING").count(),
+            1,
+            "exactly the undeclared write node is warned about: {html}"
+        );
+        // The read node carries neither badge — its `node-meta` closes right
+        // after the mode badge.
+        assert!(
+            html.contains("badge badge-read\">read</span> </div>"),
+            "read node picked up a safety badge: {html}"
+        );
+    }
+
+    /// `agent.command` is only meaningful when both halves are there. A node
+    /// missing either — every non-`agent` kind, and a malformed agent node —
+    /// falls back to naming its kind, rather than rendering `.` or a bare id.
+    #[test]
+    fn a_node_without_both_agent_and_command_is_labelled_by_its_kind() {
+        let mut half = node("half", "agent", "read");
+        half.agent = Some("tekla".into());
+        let mut whole = node("whole", "agent", "read");
+        whole.agent = Some("tekla".into());
+        whole.command = Some("exec".into());
+
+        let html =
+            render_glass_box_html(&lock(vec![node("loop", "for-each", "read"), half, whole]));
+        assert!(html.contains("<em>for-each</em>"), "{html}");
+        assert!(
+            html.contains("<em>agent</em>"),
+            "an agent node with no command must fall back to its kind: {html}"
+        );
+        assert!(html.contains("<code>tekla.exec</code>"), "{html}");
+    }
+
+    /// An app with no pins and no nodes still has to render as a page a person
+    /// can read, not as two empty containers.
+    #[test]
+    fn empty_pins_and_nodes_render_placeholders_and_zero_counts() {
+        let html = render_glass_box_html(&lock(Vec::new()));
+        assert!(html.contains("Agent pins (0)"), "{html}");
+        assert!(html.contains("<ul><li><em>(none)</em></li></ul>"), "{html}");
+        assert!(html.contains("Nodes (0)"), "{html}");
+        assert!(html.contains("<em>(no nodes)</em>"), "{html}");
+    }
+
+    /// The counts in the two headings are what a reader checks the lists against.
+    #[test]
+    fn the_headings_count_what_is_actually_rendered() {
+        let mut lock = lock(vec![
+            node("a", "agent", "read"),
+            node("b", "agent", "write"),
+            node("c", "inline", "read"),
+        ]);
+        lock.agent_pins.insert("tekla".into(), "1.0.0".into());
+        lock.agent_pins.insert("rhino".into(), "2.0.0".into());
+        let html = render_glass_box_html(&lock);
+        assert!(html.contains("Agent pins (2)"), "{html}");
+        assert!(html.contains("Nodes (3)"), "{html}");
+        assert_eq!(html.matches("class=\"node ").count(), 3, "{html}");
+    }
+
+    /// The page is written beside the lock it describes, so `aware app inspect`
+    /// on two apps in one directory does not have them overwrite each other.
+    #[test]
+    fn the_html_lands_beside_its_lockfile_under_the_lock_stem() {
+        assert_eq!(
+            glass_box_html_path(Path::new("/tmp/proj/demo.lock")),
+            Path::new("/tmp/proj/demo.glass-box.html")
+        );
+        assert_eq!(
+            glass_box_html_path(Path::new("/tmp/proj/other.lock")),
+            Path::new("/tmp/proj/other.glass-box.html")
+        );
+        // A bare filename stays relative — `Path::parent` answers `Some("")` for
+        // one, so the join keeps it in the working directory rather than
+        // rooting it anywhere.
+        assert_eq!(
+            glass_box_html_path(Path::new("demo.lock")),
+            Path::new("demo.glass-box.html")
+        );
+        // The `app` fallback is for a path with no stem at all — `..`, which
+        // `compile` cannot hand this function, but which must not panic here.
+        assert_eq!(
+            glass_box_html_path(Path::new("/tmp/proj/..")),
+            Path::new("/tmp/proj/app.glass-box.html")
+        );
+    }
+}
