@@ -78,3 +78,24 @@ test('a failed host handshake terminates the spawned client before rejecting', a
   await assert.rejects(() => requireReadyClient(client), failure);
   assert.equal(terminated, true);
 });
+
+test('forced host termination follows an ignored graceful signal and waits for confirmed exit', async () => {
+  const child = new EventEmitter();
+  child.stdout = new EventEmitter(); child.stderr = new EventEmitter();
+  child.stdout.destroy = () => {}; child.stderr.destroy = () => {};
+  child.stdin = { destroy: () => {} };
+  child.exitCode = null;
+  const signals = [];
+  child.kill = (signal) => {
+    signals.push(signal ?? 'SIGTERM');
+    if (signal === 'SIGKILL') {
+      child.exitCode = 137;
+      queueMicrotask(() => child.emit('exit', child.exitCode));
+    }
+    return true;
+  };
+  const client = new ModelHostClient(child);
+  await client.terminate({ gracefulTimeoutMs: 1 });
+  assert.deepEqual(signals, ['SIGTERM', 'SIGKILL']);
+  assert.equal(child.exitCode, 137);
+});

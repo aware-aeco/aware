@@ -451,15 +451,16 @@ async fn execute_provider(
     active.lock().await.remove(&handle);
 }
 
-pub async fn run() -> Result<(), AwareError> {
-    let mut reader = tokio::io::BufReader::new(tokio::io::stdin());
-    let writer: SharedWriter = Arc::new(Mutex::new(tokio::io::stdout()));
-    let active: ActiveRuns = Arc::new(Mutex::new(HashMap::new()));
-    let mut provider_tasks: Vec<tokio::task::JoinHandle<()>> = Vec::new();
+async fn protocol_loop<R: AsyncRead + Unpin>(
+    reader: &mut R,
+    writer: SharedWriter,
+    active: ActiveRuns,
+    provider_tasks: &mut Vec<tokio::task::JoinHandle<()>>,
+) -> Result<(), AwareError> {
     let mut pending: HashMap<(u64, [u8; 32]), PendingRun> = HashMap::new();
     let mut locks: HashMap<[u8; 32], std::fs::File> = HashMap::new();
     let mut last_control_id = 0u64;
-    while let Some(frame) = Frame::read(&mut reader).await? {
+    while let Some(frame) = Frame::read(&mut *reader).await? {
         if frame.kind == KIND_STDIN {
             let Some(pending_run) = pending.remove(&(frame.request_id, frame.run_handle)) else {
                 return Err(AwareError::Validation(
@@ -523,14 +524,63 @@ pub async fn run() -> Result<(), AwareError> {
                 file.unlock()?; send_control(&writer, frame.request_id, frame.run_handle, json!({"status":"released"})).await;
             }
             Some("shutdown") => {
-                cancel_and_join(&active, &mut provider_tasks).await;
+                cancel_and_join(&active, provider_tasks).await;
                 send_control(&writer, frame.request_id, [0; 32], json!({"status":"bye"})).await; break;
             }
             _ => return Err(AwareError::Validation("model-reader host control operation is unknown".into())),
         }
     }
-    cancel_and_join(&active, &mut provider_tasks).await;
     Ok(())
+}
+
+#[cfg(unix)]
+async fn termination_signal() {
+    use tokio::signal::unix::{SignalKind, signal};
+    let mut terminate = signal(SignalKind::terminate()).expect("install SIGTERM handler");
+    tokio::select! {
+        _ = tokio::signal::ctrl_c() => {}
+        _ = terminate.recv() => {}
+    }
+}
+
+#[cfg(not(unix))]
+async fn termination_signal() {
+    let _ = tokio::signal::ctrl_c().await;
+}
+
+async fn supervise_protocol<R, S>(
+    reader: &mut R,
+    writer: SharedWriter,
+    active: ActiveRuns,
+    provider_tasks: &mut Vec<tokio::task::JoinHandle<()>>,
+    shutdown: S,
+) -> Result<(), AwareError>
+where
+    R: AsyncRead + Unpin,
+    S: std::future::Future<Output = ()>,
+{
+    tokio::pin!(shutdown);
+    let result = tokio::select! {
+        result = protocol_loop(reader, writer, active.clone(), provider_tasks) => result,
+        _ = &mut shutdown => Ok(()),
+    };
+    cancel_and_join(&active, provider_tasks).await;
+    result
+}
+
+pub async fn run() -> Result<(), AwareError> {
+    let mut reader = tokio::io::BufReader::new(tokio::io::stdin());
+    let writer: SharedWriter = Arc::new(Mutex::new(tokio::io::stdout()));
+    let active: ActiveRuns = Arc::new(Mutex::new(HashMap::new()));
+    let mut provider_tasks: Vec<tokio::task::JoinHandle<()>> = Vec::new();
+    supervise_protocol(
+        &mut reader,
+        writer,
+        active,
+        &mut provider_tasks,
+        termination_signal(),
+    )
+    .await
 }
 
 #[cfg(test)]
@@ -609,5 +659,62 @@ mod tests {
         cancel_and_join(&active, &mut tasks).await;
         assert!(cleaned.load(std::sync::atomic::Ordering::SeqCst));
         assert!(tasks.is_empty());
+    }
+
+    #[tokio::test]
+    async fn protocol_errors_and_termination_signals_always_cleanup_provider_tasks() {
+        async fn active_provider() -> (
+            ActiveRuns,
+            Vec<tokio::task::JoinHandle<()>>,
+            Arc<std::sync::atomic::AtomicBool>,
+        ) {
+            let active: ActiveRuns = Arc::new(Mutex::new(HashMap::new()));
+            let (cancel_tx, cancel_rx) = oneshot::channel();
+            active.lock().await.insert([7; 32], cancel_tx);
+            let cleaned = Arc::new(std::sync::atomic::AtomicBool::new(false));
+            let observed = cleaned.clone();
+            let task = tokio::spawn(async move {
+                let _ = cancel_rx.await;
+                observed.store(true, std::sync::atomic::Ordering::SeqCst);
+            });
+            (active, vec![task], cleaned)
+        }
+
+        let invalid = Frame {
+            kind: KIND_STDIN,
+            request_id: 1,
+            run_handle: [9; 32],
+            sequence: 0,
+            flags: FINAL,
+            payload: Vec::new(),
+        };
+        let mut bytes = Vec::new();
+        invalid.write(&mut bytes).await.unwrap();
+        let (active, mut tasks, cleaned) = active_provider().await;
+        let writer: SharedWriter = Arc::new(Mutex::new(tokio::io::stdout()));
+        let result = supervise_protocol(
+            &mut bytes.as_slice(),
+            writer,
+            active,
+            &mut tasks,
+            std::future::pending(),
+        )
+        .await;
+        assert!(result.is_err());
+        assert!(cleaned.load(std::sync::atomic::Ordering::SeqCst));
+
+        let (_input, mut reader) = tokio::io::duplex(64);
+        let (active, mut tasks, cleaned) = active_provider().await;
+        let writer: SharedWriter = Arc::new(Mutex::new(tokio::io::stdout()));
+        supervise_protocol(
+            &mut reader,
+            writer,
+            active,
+            &mut tasks,
+            std::future::ready(()),
+        )
+        .await
+        .unwrap();
+        assert!(cleaned.load(std::sync::atomic::Ordering::SeqCst));
     }
 }

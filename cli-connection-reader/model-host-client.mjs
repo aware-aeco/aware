@@ -184,26 +184,25 @@ export class ModelHostClient {
     this.closed = true; this.child.stdin.end();
   }
 
-  async terminate() {
+  async terminate(options = {}) {
     if (this.closed) return;
     this.closed = true;
+    if (this.child.exitCode !== null && this.child.exitCode !== undefined) return;
     const exited = new Promise((resolve) => {
-      if (this.child.exitCode !== null && this.child.exitCode !== undefined) { resolve(); return; }
-      let settled = false;
-      let timer;
-      const finish = () => {
-        if (settled) return;
-        settled = true;
-        clearTimeout(timer);
-        this.child.stdout.destroy?.(); this.child.stderr.destroy?.(); this.child.unref?.();
-        resolve();
-      };
+      const finish = () => resolve();
       this.child.once('exit', finish); this.child.once('error', finish);
-      timer = setTimeout(finish, 1000); timer.unref?.();
     });
     this.child.stdin.destroy?.();
-    this.child.kill?.();
+    this.child.kill?.('SIGTERM');
+    let gracefulTimer;
+    const graceful = await Promise.race([
+      exited.then(() => true),
+      new Promise((resolve) => { gracefulTimer = setTimeout(() => resolve(false), options.gracefulTimeoutMs ?? 1000); }),
+    ]);
+    clearTimeout(gracefulTimer);
+    if (!graceful && (this.child.exitCode === null || this.child.exitCode === undefined)) this.child.kill?.('SIGKILL');
     await exited;
+    this.child.stdout.destroy?.(); this.child.stderr.destroy?.();
   }
 }
 
