@@ -625,7 +625,10 @@ impl Orchestrator {
                     // Re-rendered with the vault blinded rather than reusing
                     // `args`: this record is persisted, and `args` is what the
                     // live run would put on the wire, credential included (#448).
-                    proposed_inputs: render_config(&params, &self.ctx.with_redacted_secrets())?,
+                    proposed_inputs: render_config(
+                        &params,
+                        &self.ctx.with_redacted_secrets(&params),
+                    )?,
                     safety: safety_block,
                 })
                 .await?;
@@ -869,7 +872,7 @@ impl Orchestrator {
                         // included (#448).
                         proposed_inputs: render_config(
                             &config_json,
-                            &self.ctx.with_redacted_secrets(),
+                            &self.ctx.with_redacted_secrets(&config_json),
                         )?,
                         safety: safety_block,
                     })
@@ -1026,6 +1029,10 @@ impl Orchestrator {
         // element would leak into a sibling body node's `{{ item }}` — a topology
         // the compiler explicitly scopes (app_lock `nested_body_keeps_outer_iteration_var_in_scope`).
         let prev_item = self.ctx.upstream.get("item").cloned();
+        // Saved and restored with the binding it describes: an inner loop over a
+        // plain list must not clear the flag an enclosing vault-drawn loop set.
+        let prev_item_from_vault = self.ctx.item_from_vault;
+        self.ctx.item_from_vault = template::reads_secrets_namespace(expr);
 
         let mut collection = match template::resolve_value(expr, &self.ctx) {
             Value::Array(items) => items,
@@ -1079,6 +1086,7 @@ impl Orchestrator {
                 self.ctx.upstream.remove("item");
             }
         }
+        self.ctx.item_from_vault = prev_item_from_vault;
 
         let aggregate = Value::Array(results);
         self.emit(RunEvent::NodeOutput {

@@ -332,8 +332,9 @@ requires: []
     );
 }
 
-/// A credential whose secret material is in an object **key** is blinded too
-/// (#450, Codex).
+/// A credential whose secret material is in an object **key** is blinded too,
+/// and a CUSTOM field the template names still previews as `[redacted]` rather
+/// than going missing (#450, Codex).
 ///
 /// `{{ secrets.<id> }}` is a whole-value ref, so `render_config` resolves the
 /// object structurally into the record. Blinding only the values left
@@ -341,17 +342,22 @@ requires: []
 /// app template names only the credential id, so nothing else in the record
 /// would have revealed it.
 ///
-/// The other half of the assertion is what makes this a redaction rather than a
-/// wrecking ball: the addressable field names still survive, which is what keeps
-/// `{{ secrets.h.access_token }}` resolving. Collapsing the whole credential to a
-/// bare string closes the leak too, and previews the documented header as
-/// `Bearer ` — an operator reads that as *no credential at all*.
+/// The second half is what keeps this a redaction rather than a wrecking ball.
+/// A key the template DOES name is already written in the app file, so keeping
+/// it reveals nothing; and it has to be kept, or `{{ secrets.teams.coord }}` —
+/// the shape `revit-2026/commands/link.reload-all.md` documents — previews as an
+/// empty `channel-id`, which an operator reads as a missing credential.
 #[test]
-fn a_credential_hiding_in_an_object_key_is_blinded_too() {
+fn a_credential_hiding_in_an_object_key_is_blinded_but_a_named_field_is_not_lost() {
     let tmp = tempfile::tempdir().unwrap();
     let home = tmp.path().join("aware");
     std::fs::create_dir_all(home.join("credentials")).unwrap();
     std::fs::write(home.join("credentials/pin.json"), r#"{"987654": true}"#).unwrap();
+    std::fs::write(
+        home.join("credentials/teams.json"),
+        r#"{"coord":"19:abcdef@thread","unnamed":"sk-sibling"}"#,
+    )
+    .unwrap();
     copy_dir(
         &repo_root().join("20-agents/_core/http"),
         &home.join("agents/http"),
@@ -370,7 +376,7 @@ fn a_credential_hiding_in_an_object_key_is_blinded_too() {
         app_dir.join("key-probe.flo"),
         r#"app: key-probe
 version: 0.0.1
-description: passes a whole hand-written credential, and a field of a real one
+description: a whole hand-written credential, a custom field, and a real bearer
 nodes:
   - id: call
     agent: http
@@ -382,6 +388,7 @@ nodes:
       url: "http://127.0.0.1:1/unused"
       headers:
         X-Whole: "{{ secrets.pin }}"
+        X-Channel: "{{ secrets.teams.coord }}"
         Authorization: "Bearer {{ secrets['my-api'].access_token }}"
 connections: []
 requires: []
@@ -395,13 +402,95 @@ requires: []
         .success();
 
     let trace = traces(&home);
+    for leaked in ["987654", "19:abcdef@thread", "sk-sibling"] {
+        assert!(
+            !trace.contains(leaked),
+            "credential material reached the trace ({leaked}):\n{trace}"
+        );
+    }
     assert!(
-        !trace.contains("987654"),
-        "a credential hiding in an object key reached the trace:\n{trace}"
+        trace.contains(r#""X-Channel":"[redacted]""#),
+        "a template-named custom field must preview as blinded, not missing — an \
+         empty value reads as no credential at all:\n{trace}"
     );
     assert!(
         trace.contains("Bearer [redacted]"),
-        "an addressable field must still resolve, or the preview says `Bearer ` \
-         and reads as a missing credential:\n{trace}"
+        "the documented bearer must still resolve:\n{trace}"
+    );
+}
+
+/// A credential the runtime itself lifted into a `for-each` binding is blinded
+/// (#450, Codex).
+///
+/// `run_for_each` resolves its collection against the LIVE context and binds each
+/// element under `upstream["item"]`, so a `for-each: "{{ secrets.batch }}"` walks
+/// the credential out of the namespace the redaction covers. The body node's
+/// `{{ item }}` then wrote the real element into the trace.
+///
+/// This is the one hop past `secrets` that gets covered, and the reason is
+/// provenance, not proximity: the runtime created this binding out of the vault,
+/// so it knows what it is. A credential a node READ — out of a file, or computed
+/// by a `compare` — is that node's output, which the trace records in full
+/// regardless of this change.
+#[test]
+fn a_for_each_binding_drawn_from_the_vault_is_blinded() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    std::fs::create_dir_all(home.join("credentials")).unwrap();
+    std::fs::write(
+        home.join("credentials/batch.json"),
+        r#"["sk-batch-one","sk-batch-two"]"#,
+    )
+    .unwrap();
+    copy_dir(
+        &repo_root().join("20-agents/_core/http"),
+        &home.join("agents/http"),
+    )
+    .unwrap();
+
+    let app_dir = home.join("apps/loop-probe");
+    std::fs::create_dir_all(&app_dir).unwrap();
+    std::fs::write(
+        app_dir.join("loop-probe.flo"),
+        r#"app: loop-probe
+version: 0.0.1
+description: iterates the vault and posts each element
+nodes:
+  - id: loop
+    for-each: "{{ secrets.batch }}"
+    do:
+      - id: send
+        agent: http
+        command: post
+        safety:
+          transaction-group: loop-probe
+          snapshot: false
+        config:
+          url: "http://127.0.0.1:1/unused"
+          body:
+            token: "{{ item }}"
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "loop-probe", "--dry-run"])
+        .assert()
+        .success();
+
+    let trace = traces(&home);
+    for leaked in ["sk-batch-one", "sk-batch-two"] {
+        assert!(
+            !trace.contains(leaked),
+            "a for-each element lifted out of the vault reached the trace \
+             ({leaked}):\n{trace}"
+        );
+    }
+    assert_eq!(
+        trace.matches(r#""token":"[redacted]""#).count(),
+        2,
+        "both iterations must preview the element as blinded:\n{trace}"
     );
 }

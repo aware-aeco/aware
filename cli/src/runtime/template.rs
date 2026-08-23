@@ -8,6 +8,8 @@
 //! is also inserted for bracket-syntax access.
 
 use minijinja::{Environment, Value};
+use std::collections::BTreeSet;
+
 use serde_json::Map;
 
 use crate::error::AwareError;
@@ -27,6 +29,16 @@ pub struct RenderContext {
     /// `{{ run.* }}` ref degrades to empty rather than erroring on attribute
     /// access against an undefined `run` (#127).
     pub run: Map<String, serde_json::Value>,
+    /// Whether the current `for-each` binding at `upstream["item"]` was drawn
+    /// from the `secrets` namespace (`for-each: "{{ secrets.batch }}"`).
+    ///
+    /// `run_for_each` resolves the collection against the live context and binds
+    /// each element under `item`, so a credential reaches a node's params through
+    /// `upstream` rather than through `secrets` — where blinding the vault alone
+    /// never saw it, and the element went to the trace verbatim (#450, Codex).
+    /// Set and restored alongside the `item` binding it describes, so a nested
+    /// loop cannot leave it claiming something about the enclosing one.
+    pub item_from_vault: bool,
 }
 
 /// What a value the credential vault supplied looks like once it is safe to
@@ -36,39 +48,129 @@ pub struct RenderContext {
 /// (or anyone who later reads the trace) what it is populated with.
 pub const REDACTED: &str = "[redacted]";
 
-/// The credential field names the substrate itself defines — every key a
-/// template can address and get a usable value out of.
+/// Every identifier that appears inside a `{{ … }}` / `{% … %}` block anywhere
+/// in `params`.
 ///
-/// Used by [`RenderContext::with_redacted_secrets`] to decide which KEYS of a
-/// credential object survive into a trace. A key outside this set is blinded,
-/// because `context::load_secret` parses arbitrary JSON off the raw
-/// `<creds_dir>/<id>.json` path, so a hand-written `{"<the-secret>": true}` puts
-/// the secret in the key — where blinding the values alone left it (#450, Codex).
+/// Used to decide which KEYS of a credential survive into a trace record. A key
+/// the node's own template names is, by construction, already written in the app
+/// file — so keeping it reveals nothing the reader could not read there. A key
+/// the template does not name is one only the vault knows, which is exactly the
+/// case where the key itself can BE the secret.
 ///
-/// This is an allowlist, and the direction matters: an entry MISSING from it
-/// costs a preview one readable field name, while a sensitive name missing from
-/// a denylist would be a leak. It cannot go stale dangerously — the two sources
-/// are `auth::keychain::StoredToken`'s fields (what `credential put` and
-/// `connect` write) and the shapes `runtime::invoker::secret_as_str` probes,
-/// which are the only keys anything in AWARE resolves.
-const ADDRESSABLE_CREDENTIAL_FIELDS: &[&str] = &[
-    // `StoredToken` — the shape every AWARE-written credential has.
-    "access_token",
-    "refresh_token",
-    "expires_at",
-    "scope",
-    "token_type",
-    "integration",
-    "obtained_at",
-    "source",
-    // The hand-written / legacy shapes `secret_as_str` accepts.
-    "token",
-    "key",
-    "apikey",
-    "api_key",
-    "value",
-    "secret",
-];
+/// Quotes, dots and brackets all end a run, so `secrets['my-api'].access_token`
+/// contributes `secrets`, `my-api` and `access_token`. Over-collecting is the
+/// safe direction here: every extra name is a string the app already contains.
+pub fn template_identifiers(params: &serde_json::Value) -> BTreeSet<String> {
+    fn scan(text: &str, out: &mut BTreeSet<String>) {
+        let bytes = text.as_bytes();
+        let mut i = 0;
+        while i + 1 < bytes.len() {
+            // Both delimiters open an expression; `{#` (a comment) has no refs.
+            let (close, open_len) = match (bytes[i], bytes[i + 1]) {
+                (b'{', b'{') => ("}}", 2),
+                (b'{', b'%') => ("%}", 2),
+                _ => {
+                    i += 1;
+                    continue;
+                }
+            };
+            let body_start = i + open_len;
+            let Some(rel) = text[body_start..].find(close) else {
+                return; // unterminated — nothing further is an expression
+            };
+            for token in text[body_start..body_start + rel]
+                .split(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-'))
+                .filter(|t| !t.is_empty())
+            {
+                out.insert(token.to_string());
+            }
+            i = body_start + rel + close.len();
+        }
+    }
+    fn walk(v: &serde_json::Value, out: &mut BTreeSet<String>) {
+        match v {
+            serde_json::Value::String(s) => scan(s, out),
+            serde_json::Value::Array(items) => items.iter().for_each(|v| walk(v, out)),
+            serde_json::Value::Object(fields) => {
+                for (k, v) in fields {
+                    // A key can carry a template too (`"{{ inputs.h }}": …`).
+                    scan(k, out);
+                    walk(v, out);
+                }
+            }
+            _ => {}
+        }
+    }
+    let mut out = BTreeSet::new();
+    walk(params, &mut out);
+    out
+}
+
+/// Replace everything a value carries with [`REDACTED`], keeping only the keys
+/// named in `keep_keys` and the shape around them.
+///
+/// EVERY leaf goes — not the subset of field names that hold token material, and
+/// not only the strings. A denylist of "sensitive" names would leak the first
+/// shape nobody thought to add to it, which is a leak that looks exactly like
+/// working code. Over-redacting `token_type` costs a preview the word `Bearer`,
+/// which is in the template beside it anyway.
+///
+/// Numbers and booleans go for the same reason. `access_token` is always a
+/// string, so sparing `expires_at` looked free — but `context::load_secret` also
+/// takes the raw `<creds_dir>/<id>.json` path, which parses **arbitrary** JSON
+/// into the namespace. A hand-written `pin.json` holding `123456` is a
+/// credential whose value is a number (#450, Codex).
+///
+/// `null` is the one exception, and deliberate: it is the *absence* of a value,
+/// so there is nothing there to leak, and blinding it would claim the credential
+/// carries a hidden `refresh_token` when it carries none.
+pub fn blinded(v: &serde_json::Value, keep_keys: &BTreeSet<String>) -> serde_json::Value {
+    match v {
+        serde_json::Value::Null => serde_json::Value::Null,
+        serde_json::Value::Array(items) => {
+            serde_json::Value::Array(items.iter().map(|v| blinded(v, keep_keys)).collect())
+        }
+        serde_json::Value::Object(fields) => serde_json::Value::Object(
+            fields
+                .iter()
+                .map(|(k, v)| {
+                    // An unnamed key can itself BE the secret, so it collapses to
+                    // one `[redacted]` entry. That costs nothing: a key the
+                    // template never names is one no reader was going to use.
+                    let key = if keep_keys.contains(k) {
+                        k.clone()
+                    } else {
+                        REDACTED.to_string()
+                    };
+                    (key, blinded(v, keep_keys))
+                })
+                .collect(),
+        ),
+        // String, Number, Bool — every scalar that can carry a value.
+        _ => serde_json::Value::String(REDACTED.to_string()),
+    }
+}
+
+/// Whether `expr` reads the `secrets` namespace directly — the head of the
+/// path, which is the same thing [`resolve_value`] dispatches on.
+///
+/// Deliberately just the head. `{{ upstream.x }}` where `x` happens to hold a
+/// credential is a node's own output, which the trace records in full
+/// regardless; claiming to catch that would be a promise this cannot keep.
+pub fn reads_secrets_namespace(expr: &str) -> bool {
+    let Some(start) = expr.find("{{") else {
+        return false;
+    };
+    let after = &expr[start + 2..];
+    let Some(end) = after.find("}}") else {
+        return false;
+    };
+    after[..end]
+        .trim()
+        .split(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-'))
+        .find(|t| !t.is_empty())
+        == Some("secrets")
+}
 
 impl RenderContext {
     /// Insert a node output, populating both raw kebab and underscore-translated forms.
@@ -80,8 +182,8 @@ impl RenderContext {
         }
     }
 
-    /// This context with every value in the `secrets` namespace replaced by
-    /// [`REDACTED`].
+    /// This context with the `secrets` namespace blinded for a record that will
+    /// be written down.
     ///
     /// Rendering a node's params against this yields what the live run would
     /// send, minus anything the credential vault contributed — the only shape of
@@ -91,73 +193,44 @@ impl RenderContext {
     /// a `0644` file that `aware app logs` prints on request, so a rendered
     /// credential reaching one undoes both of those (#448).
     ///
-    /// EVERY leaf goes, not the subset of field names that hold token material,
-    /// and not only the strings. The narrower rule needs a list of "sensitive"
-    /// keys, and a credential shape nobody thought to add to that list would
-    /// then be written out in full — a leak that looks exactly like working
-    /// code. Over-redacting `token_type` costs a preview the word `Bearer`,
-    /// which is in the template beside it anyway.
+    /// `params` is the node's own **unrendered** template source, and it is here
+    /// to decide which credential KEYS survive — see [`template_identifiers`].
+    /// Keeping the names the template addresses is what makes the record worth
+    /// reading: collapsing a credential to a bare `[redacted]` string closes the
+    /// same leak, but attribute access then resolves to nothing and the
+    /// documented `Bearer {{ secrets.h.access_token }}` previews as `Bearer `,
+    /// which an operator reviewing a proposed write reads as *no credential at
+    /// all*. A fixed list of known field names fails the same way on the
+    /// repo's own `{{ secrets.teams.coord }}` (#450, Codex).
     ///
-    /// Numbers and booleans go for the same reason. `access_token` is always a
-    /// string, so keeping `expires_at` readable looked free — but
-    /// `context::load_secret` also takes the raw `<creds_dir>/<id>.json` path,
-    /// which parses **arbitrary** JSON into this namespace. A hand-written
-    /// `pin.json` holding `123456`, or `{"token":123456}`, is a credential whose
-    /// value is a number, and sparing scalars wrote both of those to the trace
-    /// verbatim. "Only strings can be secret" is an assumption about the store,
-    /// and this function does not get to make one.
-    ///
-    /// `null` is the exception, and not an oversight: it is the *absence* of a
-    /// value, so there is nothing there to leak, and blinding it would claim the
-    /// credential carries a hidden `refresh_token` when it carries none.
-    ///
-    /// KEYS go too, unless they are in [`ADDRESSABLE_CREDENTIAL_FIELDS`]. A
-    /// hand-written `{"<the-secret>": true}` passed whole as `{{ secrets.pin }}`
-    /// resolves structurally, so blinding values alone wrote the secret out as a
-    /// key. Keeping the substrate's own field names is what makes the preview
-    /// worth having — collapsing a credential to a bare `[redacted]` string
-    /// instead breaks attribute access, and the documented
-    /// `Bearer {{ secrets.h.access_token }}` then previews as `Bearer `, which
-    /// an operator reads as *no credential at all*. Unknown keys can collapse
-    /// onto one `[redacted]` entry; that is fine, because a key nothing in
-    /// AWARE resolves is not information the preview owes anyone.
-    ///
-    /// The boundary is the vault: this hides what `secrets.*` put into the
-    /// params. A credential that reached them some other way — read out of a
-    /// file by an upstream node, say — is that node's output, which the trace
-    /// records in full regardless, and is not something this can see.
-    pub fn with_redacted_secrets(&self) -> RenderContext {
-        fn blind(v: &serde_json::Value) -> serde_json::Value {
-            match v {
-                serde_json::Value::Null => serde_json::Value::Null,
-                serde_json::Value::Array(items) => {
-                    serde_json::Value::Array(items.iter().map(blind).collect())
-                }
-                serde_json::Value::Object(fields) => serde_json::Value::Object(
-                    fields
-                        .iter()
-                        .map(|(k, v)| {
-                            let key = if ADDRESSABLE_CREDENTIAL_FIELDS.contains(&k.as_str()) {
-                                k.clone()
-                            } else {
-                                REDACTED.to_string()
-                            };
-                            (key, blind(v))
-                        })
-                        .collect(),
-                ),
-                // String, Number, Bool — every scalar that can carry a value.
-                _ => serde_json::Value::String(REDACTED.to_string()),
-            }
-        }
-        RenderContext {
+    /// The boundary is the vault, and one hop from it. This hides what
+    /// `secrets.*` put into the params, and the caller additionally blinds a
+    /// `for-each` binding drawn from `secrets`. A credential that reached the
+    /// params any further round — computed by a `compare`, or read out of a file
+    /// by an upstream node — is that node's *output*, which the trace records in
+    /// full regardless of this function and which nothing here can tell from any
+    /// other value.
+    pub fn with_redacted_secrets(&self, params: &serde_json::Value) -> RenderContext {
+        let keep = template_identifiers(params);
+        let mut out = RenderContext {
             secrets: self
                 .secrets
                 .iter()
-                .map(|(id, v)| (id.clone(), blind(v)))
+                .map(|(id, v)| (id.clone(), blinded(v, &keep)))
                 .collect(),
             ..self.clone()
+        };
+        // The one hop: a `for-each` element the runtime itself lifted out of the
+        // vault. It sits in `upstream`, not `secrets`, so the walk above cannot
+        // reach it — but its provenance is known, which is what separates it
+        // from every other upstream value.
+        if out.item_from_vault
+            && let Some(item) = out.upstream.get("item")
+        {
+            let safe = blinded(item, &keep);
+            out.upstream.insert("item".to_string(), safe);
         }
+        out
     }
 }
 
@@ -954,11 +1027,11 @@ mod tests {
         );
     }
 
-    // ── #448: the secrets namespace, blinded for anything written down ─────
+    // ── #448 / #450: the secrets namespace, blinded for anything written down ─
 
-    /// One context holding a credential in each shape the store produces: a
-    /// `StoredToken` object, a bare string (a legacy `<id>.json`), and a nested
-    /// one, plus a value in every OTHER namespace to prove the blinding is
+    /// One context holding a credential in each shape the store produces — a
+    /// `StoredToken` object, a bare string, a bare number, a custom-field object
+    /// — plus a value in every OTHER namespace, to prove the blinding is
     /// confined to `secrets`.
     fn ctx_with_secrets() -> RenderContext {
         let mut ctx = RenderContext::default();
@@ -970,11 +1043,9 @@ mod tests {
                 "token_type": "Bearer",
                 "expires_at": 0,
                 "obtained_at": 1_700_000_000i64,
-                // Allowlisted keys carrying a bool and a nested object+array, so
-                // the value walk is exercised without the key rule hiding it.
-                "key": true,
-                "value": { "deep": ["sk-inner"] },
-                // An UNKNOWN key — and here the key IS the secret material.
+                "rotatable": true,
+                "nested": { "deep": ["sk-inner"] },
+                // An unnamed key where the key IS the secret material.
                 "987654": true,
             }),
         );
@@ -986,10 +1057,12 @@ mod tests {
             .insert("pinobj".into(), serde_json::json!({ "token": 987_654 }));
         ctx.secrets
             .insert("legacy".into(), serde_json::json!("sk-bare"));
-        // Hyphen-free so `{{ secrets.vault }}` stays a bare path: a hyphenated
-        // id normalizes to bracket syntax, which `resolve_value` truncates.
-        ctx.secrets
-            .insert("vault".into(), serde_json::json!({ "token": "sk-whole" }));
+        // The repo's own documented custom shape: `{{ secrets.teams.coord }}`
+        // in `revit-2026/commands/link.reload-all.md`.
+        ctx.secrets.insert(
+            "teams".into(),
+            serde_json::json!({ "coord": "19:abc@thread", "unnamed": "sk-other" }),
+        );
         ctx.inputs = serde_json::json!({ "phase": "design" });
         ctx.record_output("src", serde_json::json!({ "id": "p1" }));
         ctx.config.insert("region".into(), serde_json::json!("EU"));
@@ -998,29 +1071,34 @@ mod tests {
         ctx
     }
 
+    /// The params a node would carry. Passed to `with_redacted_secrets` because
+    /// the template is what decides which credential KEYS survive.
+    fn params() -> serde_json::Value {
+        serde_json::json!({
+            "authorization": "Bearer {{ secrets['my-api'].access_token }}",
+            "channel-id": "{{ secrets.teams.coord }}",
+            "whole": "{{ secrets.pin }}",
+        })
+    }
+
     #[test]
     fn with_redacted_secrets_blinds_every_value_at_every_depth() {
-        let blinded = ctx_with_secrets().with_redacted_secrets();
+        let blinded = ctx_with_secrets().with_redacted_secrets(&params());
         let api = &blinded.secrets["my-api"];
         // Token material, obviously …
         assert_eq!(api["access_token"], REDACTED);
-        // … and the string that merely describes it. Blinding every value is
-        // what makes this safe against a credential shape nobody enumerated; a
-        // denylist of "sensitive" field names would leak the first one it missed.
-        assert_eq!(api["token_type"], REDACTED);
-        // Through objects and arrays alike.
-        assert_eq!(api["value"][REDACTED][0], REDACTED);
-        // A bare-string secret is a value, not a map — it must be blinded too,
-        // not skipped for having no fields to walk.
-        assert_eq!(blinded.secrets["legacy"], REDACTED);
+        // … and the value that merely describes it. Blinding every value is what
+        // makes this safe against a credential shape nobody enumerated; a
+        // denylist of "sensitive" names would leak the first one it missed.
+        assert_eq!(api[REDACTED], REDACTED);
         // Scalars of every type, because the raw credential-file path parses
         // arbitrary JSON: sparing numbers wrote a hand-written PIN to the trace
         // verbatim, bare and in a field alike (#450, Codex).
         assert_eq!(blinded.secrets["pin"], REDACTED);
-        assert_eq!(blinded.secrets["pinobj"]["token"], REDACTED);
-        assert_eq!(api["expires_at"], REDACTED);
-        assert_eq!(api["obtained_at"], REDACTED);
-        assert_eq!(api["key"], REDACTED);
+        assert_eq!(blinded.secrets["pinobj"][REDACTED], REDACTED);
+        // A bare-string secret is a value, not a map — blinded too, not skipped
+        // for having no fields to walk.
+        assert_eq!(blinded.secrets["legacy"], REDACTED);
         // `null` alone survives: it is the ABSENCE of a value, so it hides
         // nothing, and blinding it would claim a refresh token this credential
         // does not have.
@@ -1028,32 +1106,86 @@ mod tests {
     }
 
     #[test]
-    fn with_redacted_secrets_blinds_keys_outside_the_addressable_set() {
-        // The second half of the leak: values alone were not enough, because a
-        // hand-written credential can put the secret in the KEY, and a
-        // whole-value `{{ secrets.<id> }}` resolves the object structurally
-        // (#450, Codex).
-        let blinded = ctx_with_secrets().with_redacted_secrets();
+    fn with_redacted_secrets_keeps_only_the_keys_the_template_names() {
+        // Values alone were not enough: a hand-written credential can put the
+        // secret in the KEY, and `{{ secrets.<id> }}` resolves the object
+        // structurally into the record (#450, Codex).
+        let blinded = ctx_with_secrets().with_redacted_secrets(&params());
         let api = &blinded.secrets["my-api"];
         assert!(
             api.get("987654").is_none(),
-            "an unknown key is secret material and must not survive: {api}"
+            "a key the template never names can BE the secret: {api}"
         );
         assert_eq!(api[REDACTED], REDACTED, "it is blinded, not dropped");
-        // Nested objects are walked the same way — `deep` is not an addressable
-        // credential field either.
-        assert!(api["value"].get("deep").is_none());
+        // Nested objects are walked the same way.
+        assert!(
+            api["nested"].is_null(),
+            "`nested` is not named either: {api}"
+        );
 
-        // The keys AWARE itself defines stay, and that is the whole point: they
-        // are what keeps `{{ secrets.h.access_token }}` resolving, so the
-        // documented header still previews as `Bearer [redacted]` rather than
-        // `Bearer `, which an operator would read as no credential at all.
-        for field in ["access_token", "refresh_token", "token_type", "expires_at"] {
-            assert!(
-                api.get(field).is_some(),
-                "{field} is addressable and must survive as a key: {api}"
-            );
+        // What the template DOES name survives, and that is the whole point: it
+        // is what keeps `{{ secrets.h.access_token }}` resolving, so the header
+        // previews as `Bearer [redacted]` rather than `Bearer `, which an
+        // operator would read as no credential at all.
+        assert!(api.get("access_token").is_some());
+        // Including a CUSTOM field name no fixed list would have held — the
+        // repo's own `{{ secrets.teams.coord }}`. An allowlist of `StoredToken`
+        // fields renamed this one and previewed an empty `channel-id`.
+        assert_eq!(blinded.secrets["teams"]["coord"], REDACTED);
+        assert!(
+            blinded.secrets["teams"].get("unnamed").is_none(),
+            "a sibling key the template does not name still goes"
+        );
+    }
+
+    #[test]
+    fn with_redacted_secrets_blinds_a_for_each_binding_drawn_from_the_vault() {
+        // `run_for_each` lifts elements out of `secrets` into `upstream["item"]`,
+        // so blinding the vault alone never saw them (#450, Codex).
+        let mut ctx = ctx_with_secrets();
+        ctx.record_output("item", serde_json::json!("sk-batch-1"));
+        let loop_params = serde_json::json!({ "body": "{{ item }}" });
+
+        // Not flagged → an ordinary loop element, previewed as itself.
+        assert_eq!(
+            ctx.with_redacted_secrets(&loop_params).upstream["item"],
+            "sk-batch-1"
+        );
+
+        ctx.item_from_vault = true;
+        let blinded = ctx.with_redacted_secrets(&loop_params);
+        assert_eq!(blinded.upstream["item"], REDACTED);
+        // Only that binding: every other upstream value is a node output, which
+        // the trace records in full regardless.
+        assert_eq!(blinded.upstream["src"]["id"], "p1");
+    }
+
+    #[test]
+    fn reads_secrets_namespace_keys_on_the_path_head() {
+        assert!(reads_secrets_namespace("{{ secrets.batch }}"));
+        assert!(reads_secrets_namespace("{{ secrets['my-api'].pages }}"));
+        // A node output that happens to hold a credential is NOT claimed — the
+        // trace records node outputs in full regardless, and pretending
+        // otherwise would be a promise this cannot keep.
+        assert!(!reads_secrets_namespace("{{ upstream.secrets }}"));
+        assert!(!reads_secrets_namespace("{{ inputs.rows }}"));
+        assert!(!reads_secrets_namespace("no template here"));
+        assert!(!reads_secrets_namespace("{{ unterminated"));
+    }
+
+    #[test]
+    fn template_identifiers_collects_names_from_every_expression_form() {
+        let ids = template_identifiers(&serde_json::json!({
+            "a": "Bearer {{ secrets['my-api'].access_token }}",
+            "b": ["{% if secrets.teams.coord %}x{% endif %}"],
+            "c": 7,
+        }));
+        for name in ["secrets", "my-api", "access_token", "teams", "coord"] {
+            assert!(ids.contains(name), "missing {name}: {ids:?}");
         }
+        // Literal text outside an expression is not a reference, so it cannot
+        // keep a credential key alive.
+        assert!(!ids.contains("Bearer"));
     }
 
     #[test]
@@ -1061,7 +1193,7 @@ mod tests {
         // The record is still a useful preview: everything the operator needs to
         // judge the write — the inputs, the upstream values, the app config, the
         // run identity — is untouched. Only the vault goes dark.
-        let blinded = ctx_with_secrets().with_redacted_secrets();
+        let blinded = ctx_with_secrets().with_redacted_secrets(&params());
         assert_eq!(blinded.inputs, serde_json::json!({ "phase": "design" }));
         assert_eq!(blinded.upstream["src"]["id"], "p1");
         assert_eq!(blinded.config["region"], "EU");
@@ -1075,7 +1207,7 @@ mod tests {
         // the operator can still see the header is populated — they just cannot
         // read, and neither can anyone who opens the trace later, what with.
         let ctx = ctx_with_secrets();
-        let blinded = ctx.with_redacted_secrets();
+        let blinded = ctx.with_redacted_secrets(&params());
         assert_eq!(
             render("Bearer {{ secrets['my-api'].access_token }}", &ctx).unwrap(),
             "Bearer sk-live-abc",
@@ -1092,7 +1224,7 @@ mod tests {
         assert_eq!(resolve_value("{{ secrets.legacy }}", &ctx), "sk-bare");
         assert_eq!(resolve_value("{{ secrets.legacy }}", &blinded), REDACTED);
         assert_eq!(
-            resolve_value("{{ secrets.vault }}", &blinded)["token"],
+            resolve_value("{{ secrets.teams }}", &blinded)["coord"],
             REDACTED,
             "a whole-credential ref must come back blinded field by field"
         );
@@ -1102,7 +1234,7 @@ mod tests {
     fn an_empty_vault_blinds_to_an_empty_vault() {
         // No secrets loaded is the common case, and it must not invent an entry
         // — a `{{ secrets.x }}` ref renders empty either way, as it did before.
-        let blinded = RenderContext::default().with_redacted_secrets();
+        let blinded = RenderContext::default().with_redacted_secrets(&params());
         assert!(blinded.secrets.is_empty());
     }
 }
