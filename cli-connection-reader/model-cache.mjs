@@ -75,8 +75,22 @@ function boundedCacheLimits(overrides = {}) {
 async function receiptDigests(entry) {
   try {
     const receipt = parseJsonStrict(await fs.readFile(path.join(entry, 'receipt.json')));
-    return Object.values(receipt.blobs ?? {}).map((record) => record?.sha256).filter((value) => typeof value === 'string');
-  } catch { return []; }
+    assertClosedObject(receipt, ['schemaVersion', 'key', 'identitySha256', 'blobs'], [], 'cache receipt');
+    assertSha256(receipt.key, 'cache key');
+    assertSha256(receipt.identitySha256, 'cache identity');
+    if (receipt.schemaVersion !== 'model-reference-cache-receipt/v1' || receipt.key !== path.basename(entry)) throw new TypeError('cache receipt identity mismatch');
+    const expectedNames = [...REQUIRED_ARTIFACTS, 'manifest.json'].sort();
+    if (JSON.stringify(Object.keys(receipt.blobs).sort()) !== JSON.stringify(expectedNames)) throw new TypeError('cache receipt artifact set mismatch');
+    return expectedNames.map((name) => {
+      const record = receipt.blobs[name];
+      assertClosedObject(record, ['sha256', 'bytes'], [], `cache artifact ${name}`);
+      assertSha256(record.sha256);
+      if (!Number.isSafeInteger(record.bytes) || record.bytes < 0) throw new TypeError('cache receipt byte count is invalid');
+      return record.sha256;
+    });
+  } catch (error) {
+    cacheError('reference-cache-invalid', 'Cache maintenance found an unreadable visible receipt.', error);
+  }
 }
 
 async function maintainCache(root, key, blobs, overrides) {

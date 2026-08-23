@@ -23,6 +23,7 @@ async function setup(t) {
   await fs.writeFile(secretPath, `ed25519-secret-key-v1 ${privateKey.export({ format: 'der', type: 'pkcs8' }).subarray(-32).toString('base64')}\n`);
   await fs.writeFile(publicPath, `ed25519-public-key-v1 ${publicKey.export({ format: 'der', type: 'spki' }).subarray(-32).toString('base64')}\n`);
   const calls = [];
+  const lockCalls = [];
   let nextLock = 0;
   const hostRun = async (request) => {
     calls.push(request.operation);
@@ -35,10 +36,13 @@ async function setup(t) {
     });
   };
   return {
-    root, sourcePath, executable, secretPath, publicPath, calls,
+    root, sourcePath, executable, secretPath, publicPath, calls, lockCalls,
     deps: {
       hostRun,
-      hostAcquireLock: async () => Buffer.from(`lock-${nextLock += 1}`),
+      hostAcquireLock: async (lockPath, options) => {
+        lockCalls.push({ lockPath, options });
+        return Buffer.from(`lock-${nextLock += 1}`);
+      },
       hostReleaseLock: async () => {},
       cacheRoot: path.join(root, 'cache'), privateRoot: path.join(root, 'runs'), artifactDirectory: path.join(root, 'artifacts'),
     },
@@ -96,6 +100,22 @@ test('probe is bounded, cache-aware, and two cold conversions produce identical 
   const secondArtifacts = path.join(first.root, 'second-artifacts');
   const second = await runModelCommand('read-model', args, { ...first.deps, cacheRoot: secondCache, artifactDirectory: secondArtifacts, privateRoot: path.join(first.root, 'second-runs') });
   assert.deepEqual(Object.fromEntries(Object.entries(cold.artifacts).map(([name, value]) => [name, value.sha256])), Object.fromEntries(Object.entries(second.artifacts).map(([name, value]) => [name, value.sha256])));
+});
+
+test('every production cache lock wait receives the command cancellation signal', async (t) => {
+  const state = await setup(t);
+  const controller = new AbortController();
+  state.deps.signal = controller.signal;
+  const preflight = await runModelCommand('preflight', {
+    'provider-path': state.executable, 'signing-secret-path': state.secretPath, 'signing-public-path': state.publicPath,
+  }, state.deps);
+  await runModelCommand('read-model', {
+    ...state.args,
+    'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  }, state.deps);
+  assert.equal(state.lockCalls.length > 0, true);
+  assert.equal(state.lockCalls.every((call) => call.options?.signal === controller.signal), true);
 });
 
 test('a wrong provider pin refuses before convert and errors never disclose paths', async (t) => {

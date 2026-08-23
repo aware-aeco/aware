@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
+import { EventEmitter } from 'node:events';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { serializeModelResult } from './model-dispatcher.mjs';
+import { createProcessCancellation, serializeModelResult } from './model-dispatcher.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const dispatcher = path.join(here, 'model-dispatcher.mjs');
@@ -50,4 +51,15 @@ test('RVT command responses enforce the declared byte ceiling before stdout', ()
     () => serializeModelResult({ coverage: { unclaimedGeometryNodes: ['x'.repeat(200)] } }, { maxCommandResponseBytes: 128 }),
     (error) => error.code === 'reference-response-too-large',
   );
+});
+
+test('the default dispatcher turns process cancellation into an AbortSignal and removes its handlers', () => {
+  const processEvents = new EventEmitter();
+  const cancellation = createProcessCancellation(processEvents);
+  assert.equal(cancellation.signal.aborted, false);
+  processEvents.emit('SIGTERM');
+  assert.equal(cancellation.signal.aborted, true);
+  cancellation.dispose();
+  assert.equal(processEvents.listenerCount('SIGINT'), 0);
+  assert.equal(processEvents.listenerCount('SIGTERM'), 0);
 });

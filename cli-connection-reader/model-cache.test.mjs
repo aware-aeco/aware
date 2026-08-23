@@ -242,3 +242,42 @@ test('cache maintenance removes crash-left orphan blobs before applying quota', 
   await assert.rejects(() => fs.access(orphan));
   await fs.access(path.join(cacheRoot, 'entries', published.key));
 });
+
+test('cache maintenance aborts before reclaiming blobs referenced by an unreadable visible receipt', async (t) => {
+  const root = await temporaryDirectory(t);
+  const { key } = await signingFixture(root);
+  const cacheRoot = path.join(root, 'cache');
+  const signer = signerFingerprintSha256(key.publicKeyBytes);
+  const firstIdentity = identity({ signerFingerprintSha256: signer });
+  const first = await publishCacheEntry({ root: cacheRoot, identity: firstIdentity, artifacts: artifacts(), signingKey: key });
+  const receiptPath = path.join(cacheRoot, 'entries', first.key, 'receipt.json');
+  const receipt = JSON.parse(await fs.readFile(receiptPath, 'utf8'));
+  const protectedBlob = path.join(cacheRoot, 'blobs', receipt.blobs['geometry.glb'].sha256);
+  await fs.writeFile(receiptPath, '{corrupt');
+
+  await assert.rejects(
+    () => publishCacheEntry({
+      root: cacheRoot,
+      identity: identity({ ...firstIdentity, sourceSha256: '8'.repeat(64) }),
+      artifacts: artifacts(),
+      signingKey: key,
+      cacheLimits: { maxEntries: 1, maxBytes: 1024 * 1024, staleStagingMs: 1 },
+    }),
+    (error) => error.code === 'reference-cache-invalid',
+  );
+  await fs.access(protectedBlob);
+  await fs.access(path.join(cacheRoot, 'entries', first.key));
+
+  await fs.writeFile(receiptPath, '{}');
+  await assert.rejects(
+    () => publishCacheEntry({
+      root: cacheRoot,
+      identity: identity({ ...firstIdentity, sourceSha256: '7'.repeat(64) }),
+      artifacts: artifacts(),
+      signingKey: key,
+      cacheLimits: { maxEntries: 1, maxBytes: 1024 * 1024, staleStagingMs: 1 },
+    }),
+    (error) => error.code === 'reference-cache-invalid',
+  );
+  await fs.access(protectedBlob);
+});

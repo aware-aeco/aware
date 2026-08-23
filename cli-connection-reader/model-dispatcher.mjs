@@ -21,6 +21,20 @@ export function serializeModelResult(result, limits = undefined) {
   return text;
 }
 
+export function createProcessCancellation(processEvents = process) {
+  const controller = new AbortController();
+  const abort = () => controller.abort();
+  processEvents.once('SIGINT', abort);
+  processEvents.once('SIGTERM', abort);
+  return {
+    signal: controller.signal,
+    dispose() {
+      processEvents.removeListener('SIGINT', abort);
+      processEvents.removeListener('SIGTERM', abort);
+    },
+  };
+}
+
 export async function main(command = process.argv[2], stdinText = undefined, dependencies = undefined) {
   const raw = stdinText ?? readFileSync(0, 'utf8');
   let args;
@@ -31,13 +45,19 @@ export async function main(command = process.argv[2], stdinText = undefined, dep
     const ifc = await import('./index.mjs');
     return await ifc.main(command, raw);
   }
+  const cancellation = dependencies ? null : createProcessCancellation();
   const runtimeDependencies = dependencies ?? {
+    signal: cancellation.signal,
     progress: process.env.AWARE_PROGRESS_FILE ? (record) => {
       appendFileSync(process.env.AWARE_PROGRESS_FILE, `${JSON.stringify({ '$aware-progress': record })}\n`, { encoding: 'utf8' });
     } : undefined,
   };
-  const result = await runModelCommand(command, args, runtimeDependencies);
-  process.stdout.write(serializeModelResult(result, dependencies?.limits));
+  try {
+    const result = await runModelCommand(command, args, runtimeDependencies);
+    process.stdout.write(serializeModelResult(result, dependencies?.limits));
+  } finally {
+    cancellation?.dispose();
+  }
 }
 
 const invokedDirectly = isSea() || (!!process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href);

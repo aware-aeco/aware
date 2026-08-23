@@ -127,7 +127,9 @@ async function convertAndCache(args, deps, config, readiness) {
   });
   try { return { hit: true, key, cache: await read() }; }
   catch (error) { if (error?.code !== 'reference-cache-miss') throw error; }
-  const fence = deps.hostAcquireLock ? await deps.hostAcquireLock(await cacheFencePath(config.cacheRoot, key)) : null;
+  const fence = deps.hostAcquireLock
+    ? await deps.hostAcquireLock(await cacheFencePath(config.cacheRoot, key), { signal: deps.signal })
+    : null;
   let owner;
   try {
     owner = await acquireCacheOwner({ root: config.cacheRoot, key, fenced: fence !== null });
