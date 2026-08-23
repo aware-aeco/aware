@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aware-aeco.org/schemas/model-provider-v1.schema.json",
+  "title": "AWARE local model provider v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["protocolVersion", "provider", "engine", "engineVersion", "adapterBuildId", "formats", "execution", "destination"],
+  "properties": {
+    "protocolVersion": { "const": "1" },
+    "provider": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "engine": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "engineVersion": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "adapterBuildId": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "formats": { "type": "array", "prefixItems": [{ "const": "rvt" }], "items": false },
+    "execution": { "const": "local" },
+    "destination": { "type": "null" }
+  }
+}
