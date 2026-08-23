@@ -13,7 +13,7 @@ export const MODEL_LIMITS = Object.freeze({
   maxInputGlbBytes: { default: 128 * 1024 * 1024, hard: 512 * 1024 * 1024 },
   maxMetadataBytes: { default: 16 * 1024 * 1024, hard: 64 * 1024 * 1024 },
   maxProviderOutputBytes: { default: 144 * 1024 * 1024, hard: 576 * 1024 * 1024 },
-  maxGlbJsonBytes: { default: 4 * 1024 * 1024, hard: 16 * 1024 * 1024 },
+  maxGlbJsonBytes: { default: 16 * 1024 * 1024, hard: 16 * 1024 * 1024 },
   maxJsonDepth: { default: 64, hard: 128 },
   maxScenes: { default: 8, hard: 32 },
   maxNodes: { default: 100_000, hard: 250_000 },

@@ -267,3 +267,29 @@ The five-round cap is reached without a literal `APPROVED` verdict, so the trans
 non-convergence rather than claiming approval. There is no remaining builder/critic disagreement: every
 round-5 finding is incorporated, and the user's continuation request already supplied the human gate to
 implement after resolving the final material findings.
+
+## Post-integration real xeoRVT validation — 2026-08-23
+
+The user supplied `Residential building.rvt` and evaluation API credentials after the bounded review.
+The managed xeoRVT 0.2.0 job imported the exact 30,695,424-byte source and produced a 13,754,080-byte
+GLB plus 1,679,898-byte native metadata JSON. Google Drive access was changed from Restricted to
+Anyone-with-link/Viewer only for the import window and verified owner-only/`shared: false` immediately
+after import. The API's signed output URLs were malformed as `https:/...`; local normalization of that
+transport typo was required to download the successful job outputs.
+
+Test-first validation exposed and resolved four concrete GLB-profile mismatches: the real 8,879,700-byte
+JSON chunk exceeded the 4 MiB default; xeoRVT uses a second strict Base64 data buffer; its materials carry
+names plus metallic/roughness, BLEND alpha and double-sided presentation; and one primitive carries a
+NORMAL accessor. The revised reader keeps the existing 16 MiB hard JSON ceiling, accepts only canonical
+embedded buffer data, preserves render-affecting material state, transforms normals correctly, and keeps
+all external resources and unsupported semantics refused. The real GLB now normalizes to 6,001 parts and
+23,786,172 canonical bytes from 738,232 input triangles, dropping 189 degenerate triangles.
+
+The native xeoRVT metadata has 2,470 explicit elements, 747 drawable elements with `appearances`, 51
+referenced types, and 11 referenced levels. A conservative one-off translator using only those explicit
+indexes passed the AWARE normalizer; the sole unclaimed node is `EVALUATION_WATERMARK`. This also proved
+that v1 must allow indexed non-drawable entities with empty `appearances`. The cloud metadata does not,
+however, provide the reviewed parameter storage types or explicit relationship semantics: 2,934 of its
+3,311 parameter rows use negative IDs, 139 ID values repeat (one 776 times), and values expose only JSON
+string/number types. Therefore no provider-specific translator was added to AWARE core and the cloud run
+is recorded as real-output compatibility evidence, not proof of the local provider execution contract.

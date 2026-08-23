@@ -186,7 +186,7 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
     if (elementIds.has(id)) invalid(`elements contains duplicate id ${id}`);
     elementIds.add(id);
     const appearances = list(element.appearances, `elements[${elementOrdinal}].appearances`, limits.maxNodes);
-    if (!appearances.length || new Set(appearances).size !== appearances.length || appearances.some((name) => typeof name !== 'string' || !name)) invalid(`element ${id} appearances must be unique non-empty strings`);
+    if (new Set(appearances).size !== appearances.length || appearances.some((name) => typeof name !== 'string' || !name)) invalid(`element ${id} appearances must be unique non-empty strings`);
     const joined = [];
     for (const name of appearances) {
       const parts = geometryByName.get(name);

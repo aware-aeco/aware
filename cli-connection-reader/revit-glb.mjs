@@ -5,6 +5,8 @@ const JSON_CHUNK = 0x4e4f534a;
 const BIN_CHUNK = 0x004e4942;
 const COMPONENT_BYTES = new Map([[5121, 1], [5123, 2], [5125, 4], [5126, 4]]);
 const IDENTITY = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+const MAX_GLTF_BUFFERS = 16;
+const DATA_BUFFER_PREFIX = 'data:application/octet-stream;base64,';
 
 function invalid(message, code = 'reference-geometry-invalid') {
   throw new ModelReaderError(code, 'normalize-geometry', false, message);
@@ -112,6 +114,21 @@ function transform(matrix, point) {
   return canonicalVector([tx * 1000, -tz * 1000, ty * 1000]);
 }
 
+function transformNormal(matrix, normal) {
+  const [x, y, z] = normal;
+  const a = matrix[0], b = matrix[4], c = matrix[8];
+  const d = matrix[1], e = matrix[5], f = matrix[9];
+  const g = matrix[2], h = matrix[6], i = matrix[10];
+  const determinant = determinant3(matrix);
+  const nx = ((e * i - f * h) * x + (f * g - d * i) * y + (d * h - e * g) * z) / determinant;
+  const ny = ((c * h - b * i) * x + (a * i - c * g) * y + (b * g - a * h) * z) / determinant;
+  const nz = ((b * f - c * e) * x + (c * d - a * f) * y + (a * e - b * d) * z) / determinant;
+  const framed = [nx, -nz, ny];
+  const length = Math.hypot(...framed);
+  if (!Number.isFinite(length) || length === 0) invalid('NORMAL transforms to a zero or non-finite vector');
+  return canonicalVector(framed.map((value) => value / length));
+}
+
 function canonicalFloat(value) {
   const rounded = Math.fround(value);
   if (!Number.isFinite(rounded)) invalid('transformed coordinate overflows float32');
@@ -132,7 +149,7 @@ function positionBounds(positions) {
   return { min, max };
 }
 
-function accessorReader(document, binary, accessorIndex, expected, label) {
+function accessorReader(document, buffers, accessorIndex, expected, label) {
   const accessors = document.accessors;
   const views = document.bufferViews;
   const accessor = accessors[safeIndex(accessorIndex, accessors.length, `${label} accessor`)];
@@ -144,13 +161,14 @@ function accessorReader(document, binary, accessorIndex, expected, label) {
   const componentBytes = COMPONENT_BYTES.get(accessor.componentType);
   if (!width || !componentBytes) invalid(`${label} accessor layout is unsupported`, 'reference-geometry-unsupported');
   const view = views[safeIndex(accessor.bufferView, views.length, `${label} bufferView`)];
-  if (view.buffer !== 0) invalid(`${label} accessor does not bind buffers[0]`);
+  const bufferIndex = safeIndex(view.buffer, buffers.length, `${label} bufferView buffer`);
+  const binary = buffers[bufferIndex];
   const stride = view.byteStride ?? width * componentBytes;
   if (!Number.isSafeInteger(stride) || stride < width * componentBytes || stride % componentBytes !== 0) invalid(`${label} byteStride is invalid`);
   const viewOffset = view.byteOffset ?? 0;
   const accessorOffset = accessor.byteOffset ?? 0;
   const viewLength = view.byteLength;
-  checkedRange(viewOffset, viewLength, document.buffers[0].byteLength, `${label} bufferView`);
+  checkedRange(viewOffset, viewLength, document.buffers[bufferIndex].byteLength, `${label} bufferView`);
   if (accessorOffset % componentBytes !== 0) invalid(`${label} accessor is misaligned`);
   const required = accessor.count === 0 ? 0 : (accessor.count - 1) * stride + width * componentBytes;
   checkedRange(accessorOffset, required, viewLength, `${label} accessor`);
@@ -175,14 +193,14 @@ function accessorReader(document, binary, accessorIndex, expected, label) {
   };
 }
 
-function indicesFor(primitive, document, binary, vertexCount, remainingIndices) {
+function indicesFor(primitive, document, buffers, vertexCount, remainingIndices) {
   let indices;
   if (primitive.indices === undefined) {
     if (vertexCount > remainingIndices) invalid('model index count exceeds its limit', 'reference-output-too-large');
     indices = Array.from({ length: vertexCount }, (_, index) => index);
   }
   else {
-    const reader = accessorReader(document, binary, primitive.indices, { types: ['SCALAR'], components: [5121, 5123, 5125] }, 'indices');
+    const reader = accessorReader(document, buffers, primitive.indices, { types: ['SCALAR'], components: [5121, 5123, 5125] }, 'indices');
     if (reader.count > remainingIndices) invalid('model index count exceeds its limit', 'reference-output-too-large');
     indices = Array.from({ length: reader.count }, (_, index) => reader.read(index)[0]);
   }
@@ -203,25 +221,42 @@ function expandTriangles(indices, mode) {
   return triangles;
 }
 
-function baseColor(document, primitive) {
-  if (primitive.material === undefined) return [1, 1, 1, 1];
+function materialAppearance(document, primitive) {
+  if (primitive.material === undefined) {
+    return { factor: [1, 1, 1, 1], alphaMode: 'OPAQUE', doubleSided: false, metallicFactor: 1, roughnessFactor: 1 };
+  }
   const material = document.materials[safeIndex(primitive.material, document.materials.length, 'material')];
-  const allowed = new Set(['pbrMetallicRoughness', 'alphaMode', 'doubleSided', 'emissiveFactor']);
+  if (!material || typeof material !== 'object' || Array.isArray(material)) invalid('material must be an object');
+  const allowed = new Set(['name', 'pbrMetallicRoughness', 'alphaMode', 'doubleSided', 'emissiveFactor']);
   for (const key of Object.keys(material)) if (!allowed.has(key)) invalid(`material property '${key}' is unsupported`, 'reference-geometry-unsupported');
-  if (material.alphaMode !== undefined && material.alphaMode !== 'OPAQUE') invalid('non-opaque material is unsupported', 'reference-geometry-unsupported');
-  if (material.doubleSided === true) invalid('double-sided material is unsupported', 'reference-geometry-unsupported');
-  if (material.emissiveFactor && finiteArray(material.emissiveFactor, 3, 'emissiveFactor').some((entry) => entry !== 0)) invalid('emissive material is unsupported', 'reference-geometry-unsupported');
-  const pbr = material.pbrMetallicRoughness ?? {};
+  if (material.name !== undefined && typeof material.name !== 'string') invalid('material name must be a string');
+  const alphaMode = material.alphaMode ?? 'OPAQUE';
+  if (!['OPAQUE', 'BLEND'].includes(alphaMode)) invalid('material alphaMode is unsupported', 'reference-geometry-unsupported');
+  const doubleSided = material.doubleSided ?? false;
+  if (typeof doubleSided !== 'boolean') invalid('material doubleSided must be boolean');
+  if (material.emissiveFactor !== undefined && finiteArray(material.emissiveFactor, 3, 'emissiveFactor').some((entry) => entry !== 0)) invalid('emissive material is unsupported', 'reference-geometry-unsupported');
+  const pbr = material.pbrMetallicRoughness === undefined ? {} : material.pbrMetallicRoughness;
+  if (!pbr || typeof pbr !== 'object' || Array.isArray(pbr)) invalid('PBR material must be an object');
   for (const key of Object.keys(pbr)) if (!['baseColorFactor', 'metallicFactor', 'roughnessFactor'].includes(key)) invalid(`material PBR property '${key}' is unsupported`, 'reference-geometry-unsupported');
   const factor = pbr.baseColorFactor === undefined ? [1, 1, 1, 1] : finiteArray(pbr.baseColorFactor, 4, 'baseColorFactor');
   if (factor.some((entry) => entry < 0 || entry > 1)) invalid('baseColorFactor is outside [0,1]');
-  return factor;
+  const metallicFactor = pbr.metallicFactor ?? 1;
+  const roughnessFactor = pbr.roughnessFactor ?? 1;
+  for (const [label, value] of [['metallicFactor', metallicFactor], ['roughnessFactor', roughnessFactor]]) {
+    if (typeof value !== 'number' || !Number.isFinite(value) || value < 0 || value > 1) invalid(`${label} is outside [0,1]`);
+  }
+  return {
+    factor,
+    alphaMode,
+    doubleSided,
+    metallicFactor: canonicalFloat(metallicFactor),
+    roughnessFactor: canonicalFloat(roughnessFactor),
+  };
 }
 
-function colorsFor(primitive, document, binary, count) {
-  const factor = baseColor(document, primitive);
+function colorsFor(primitive, document, buffers, count, factor) {
   if (primitive.attributes.COLOR_0 === undefined) return Array.from({ length: count }, () => factor.map(canonicalFloat));
-  const reader = accessorReader(document, binary, primitive.attributes.COLOR_0,
+  const reader = accessorReader(document, buffers, primitive.attributes.COLOR_0,
     { types: ['VEC3', 'VEC4'], components: [5121, 5123, 5126] }, 'COLOR_0');
   if (reader.count !== count) invalid('COLOR_0 count does not match POSITION');
   if (reader.componentType === 5126 && reader.normalized) invalid('FLOAT COLOR_0 cannot be normalized');
@@ -234,6 +269,15 @@ function colorsFor(primitive, document, binary, count) {
   });
 }
 
+function normalsFor(primitive, document, buffers, count, world) {
+  if (primitive.attributes.NORMAL === undefined) return null;
+  const reader = accessorReader(document, buffers, primitive.attributes.NORMAL,
+    { types: ['VEC3'], components: [5126] }, 'NORMAL');
+  if (reader.normalized) invalid('FLOAT NORMAL cannot be normalized');
+  if (reader.count !== count) invalid('NORMAL count does not match POSITION');
+  return Array.from({ length: count }, (_, index) => transformNormal(world, reader.read(index)));
+}
+
 function tupleCompare(a, b) {
   for (let index = 0; index < a.length; index += 1) {
     if (a[index] < b[index]) return -1;
@@ -242,8 +286,11 @@ function tupleCompare(a, b) {
   return 0;
 }
 
-function canonicalPart({ nodeName, primitiveOrdinal, positions, colors, triangles, reverseWinding }) {
-  const sourceRecords = positions.map((position, index) => ({ tuple: [...position, ...colors[index]], position, color: colors[index] }));
+function canonicalPart({ nodeName, primitiveOrdinal, positions, colors, normals, triangles, reverseWinding, material }) {
+  const sourceRecords = positions.map((position, index) => {
+    const normal = normals?.[index] ?? null;
+    return { tuple: [...position, ...colors[index], ...(normal ?? [])], position, color: colors[index], normal };
+  });
   const unique = new Map();
   for (const record of sourceRecords) unique.set(record.tuple.join(','), record);
   const records = [...unique.values()].sort((a, b) => tupleCompare(a.tuple, b.tuple));
@@ -263,16 +310,42 @@ function canonicalPart({ nodeName, primitiveOrdinal, positions, colors, triangle
     primitiveOrdinal,
     positions: records.map((record) => record.position),
     colors: records.map((record) => record.color),
+    ...(normals ? { normals: records.map((record) => record.normal) } : {}),
     triangles: remapped,
+    material,
   };
+}
+
+function decodeBuffers(document, binary, limits) {
+  const definitions = array(document.buffers, 'buffers', MAX_GLTF_BUFFERS);
+  if (!definitions.length) invalid('buffers is missing or empty');
+  let totalBytes = 0;
+  return definitions.map((definition, index) => {
+    if (!definition || typeof definition !== 'object' || Array.isArray(definition)) invalid(`buffers[${index}] is invalid`);
+    if (Object.keys(definition).some((key) => !['byteLength', 'uri'].includes(key))) invalid(`buffers[${index}] has an unsupported property`);
+    if (!Number.isSafeInteger(definition.byteLength) || definition.byteLength < 0) invalid(`buffers[${index}].byteLength is invalid`);
+    totalBytes += definition.byteLength;
+    if (!Number.isSafeInteger(totalBytes) || totalBytes > limits.maxInputGlbBytes) invalid('decoded GLB buffers exceed the byte limit', 'reference-output-too-large');
+    if (index === 0) {
+      if (definition.uri !== undefined) invalid('external resource URI is refused: buffers[0] must be URI-less and bind the BIN chunk', 'reference-external-resource-refused');
+      if (definition.byteLength > binary.length || binary.length - definition.byteLength > 3) invalid('BIN chunk length does not match buffers[0]');
+      return Buffer.from(binary.subarray(0, definition.byteLength));
+    }
+    if (typeof definition.uri !== 'string' || !definition.uri.startsWith(DATA_BUFFER_PREFIX)) {
+      invalid('external resource URI is refused', 'reference-external-resource-refused');
+    }
+    const payload = definition.uri.slice(DATA_BUFFER_PREFIX.length);
+    if (payload.length !== Math.ceil(definition.byteLength / 3) * 4) invalid(`buffers[${index}] data URI length is invalid`);
+    const decoded = Buffer.from(payload, 'base64');
+    if (decoded.length !== definition.byteLength || decoded.toString('base64') !== payload) invalid(`buffers[${index}] Base64 data URI is invalid`);
+    return decoded;
+  });
 }
 
 function profile(document, binary, limits) {
   if (!document || typeof document !== 'object' || document.asset?.version !== '2.0') invalid('GLB asset version must be 2.0');
   for (const field of ['extensions', 'extensionsUsed', 'extensionsRequired']) if (document[field] !== undefined) invalid('GLB extensions are unsupported', 'reference-geometry-unsupported');
-  const buffers = array(document.buffers, 'buffers', 1);
-  if (buffers.length !== 1 || buffers[0].uri !== undefined) invalid('external resource URI is refused', 'reference-external-resource-refused');
-  if (!Number.isSafeInteger(buffers[0].byteLength) || buffers[0].byteLength < 0 || buffers[0].byteLength > binary.length || binary.length - buffers[0].byteLength > 3) invalid('BIN chunk length does not match buffers[0]');
+  const buffers = decodeBuffers(document, binary, limits);
   const scenes = array(document.scenes, 'scenes', limits.maxScenes);
   const nodes = array(document.nodes, 'nodes', limits.maxNodes);
   const meshes = array(document.meshes, 'meshes', limits.maxMeshes);
@@ -305,7 +378,7 @@ function profile(document, binary, limits) {
     visiting.delete(nodeIndex);
   };
   for (const root of roots) walk(root, IDENTITY, 0);
-  return walked;
+  return { nodes: walked, buffers };
 }
 
 function degenerate(a, b, c) {
@@ -320,7 +393,7 @@ export function normalizeRevitGlb(input, options = {}) {
   const { json: document, binary } = parseGlb(input, { limits });
   if (document.skins !== undefined || document.animations !== undefined) invalid('skins and animations are unsupported', 'reference-geometry-unsupported');
   if (Array.isArray(document.nodes) && document.nodes.some((node) => node?.skin !== undefined)) invalid('skinned nodes are unsupported', 'reference-geometry-unsupported');
-  const nodes = profile(document, binary, limits);
+  const { nodes, buffers } = profile(document, binary, limits);
   const parts = [];
   let inputTriangles = 0;
   let droppedDegenerateTriangles = 0;
@@ -335,13 +408,15 @@ export function normalizeRevitGlb(input, options = {}) {
       totalPrimitives += 1;
       if (totalPrimitives > limits.maxPrimitives) invalid('model primitive count exceeds its limit', 'reference-output-too-large');
       if (primitive.targets !== undefined || primitive.extensions !== undefined) invalid('primitive extensions or morph targets are unsupported', 'reference-geometry-unsupported');
-      if (!primitive.attributes || typeof primitive.attributes !== 'object' || Object.keys(primitive.attributes).some((key) => !['POSITION', 'COLOR_0'].includes(key))) invalid('primitive attributes are unsupported', 'reference-geometry-unsupported');
-      const positionsReader = accessorReader(document, binary, primitive.attributes.POSITION, { types: ['VEC3'], components: [5126] }, 'POSITION');
+      if (!primitive.attributes || typeof primitive.attributes !== 'object' || Object.keys(primitive.attributes).some((key) => !['POSITION', 'COLOR_0', 'NORMAL'].includes(key))) invalid('primitive attributes are unsupported', 'reference-geometry-unsupported');
+      const positionsReader = accessorReader(document, buffers, primitive.attributes.POSITION, { types: ['VEC3'], components: [5126] }, 'POSITION');
       if (positionsReader.normalized || positionsReader.count > limits.maxVertices - totalVertices) invalid('model vertex count exceeds its limit', 'reference-output-too-large');
       totalVertices += positionsReader.count;
       const positions = Array.from({ length: positionsReader.count }, (_, index) => transform(world, positionsReader.read(index)));
-      const colors = colorsFor(primitive, document, binary, positions.length);
-      const indices = indicesFor(primitive, document, binary, positions.length, limits.maxIndices - totalIndices);
+      const appearance = materialAppearance(document, primitive);
+      const colors = colorsFor(primitive, document, buffers, positions.length, appearance.factor);
+      const normals = normalsFor(primitive, document, buffers, positions.length, world);
+      const indices = indicesFor(primitive, document, buffers, positions.length, limits.maxIndices - totalIndices);
       totalIndices += indices.length;
       const expanded = expandTriangles(indices, primitive.mode ?? 4);
       inputTriangles += expanded.length;
@@ -350,7 +425,21 @@ export function normalizeRevitGlb(input, options = {}) {
         if (drop) droppedDegenerateTriangles += 1;
         return !drop;
       });
-      parts.push(canonicalPart({ nodeName: node.name, primitiveOrdinal, positions, colors, triangles: drawable, reverseWinding: determinant < 0 }));
+      parts.push(canonicalPart({
+        nodeName: node.name,
+        primitiveOrdinal,
+        positions,
+        colors,
+        normals,
+        triangles: drawable,
+        reverseWinding: determinant < 0,
+        material: {
+          alphaMode: appearance.alphaMode,
+          doubleSided: appearance.doubleSided,
+          metallicFactor: appearance.metallicFactor,
+          roughnessFactor: appearance.roughnessFactor,
+        },
+      }));
     });
   }
   parts.sort((a, b) => Buffer.compare(Buffer.from(a.nodeName), Buffer.from(b.nodeName)) || a.primitiveOrdinal - b.primitiveOrdinal);
@@ -370,6 +459,8 @@ function buildCanonicalGlb(parts) {
   const bufferViews = [];
   const accessors = [];
   const meshes = [];
+  const materials = [];
+  const materialIndices = new Map();
   const nodes = [];
   let offset = 0;
   const append = (bytes, target) => {
@@ -386,21 +477,56 @@ function buildCanonicalGlb(parts) {
     part.positions.forEach((point, index) => point.forEach((value, axis) => positions.writeFloatLE(value, index * 12 + axis * 4)));
     const colors = Buffer.alloc(part.colors.length * 16);
     part.colors.forEach((color, index) => color.forEach((value, channel) => colors.writeFloatLE(value, index * 16 + channel * 4)));
+    const normals = part.normals ? Buffer.alloc(part.normals.length * 12) : null;
+    part.normals?.forEach((normal, index) => normal.forEach((value, axis) => normals.writeFloatLE(value, index * 12 + axis * 4)));
     const flatIndices = part.triangles.flat();
     const indices = Buffer.alloc(flatIndices.length * 4);
     flatIndices.forEach((value, index) => indices.writeUInt32LE(value, index * 4));
     const positionView = append(positions, 34962);
     const colorView = append(colors, 34962);
+    const normalView = normals ? append(normals, 34962) : null;
     const indexView = append(indices, 34963);
     const positionAccessor = accessors.length;
     const { min: mins, max: maxs } = positionBounds(part.positions);
     accessors.push({ bufferView: positionView, byteOffset: 0, componentType: 5126, count: part.positions.length, type: 'VEC3', min: mins, max: maxs });
     const colorAccessor = accessors.length;
     accessors.push({ bufferView: colorView, byteOffset: 0, componentType: 5126, count: part.colors.length, type: 'VEC4' });
+    let normalAccessor = null;
+    if (normalView !== null) {
+      normalAccessor = accessors.length;
+      accessors.push({ bufferView: normalView, byteOffset: 0, componentType: 5126, count: part.normals.length, type: 'VEC3' });
+    }
     const indexAccessor = accessors.length;
     accessors.push({ bufferView: indexView, byteOffset: 0, componentType: 5125, count: flatIndices.length, type: 'SCALAR' });
+    const primitive = {
+      attributes: { POSITION: positionAccessor, COLOR_0: colorAccessor, ...(normalAccessor === null ? {} : { NORMAL: normalAccessor }) },
+      indices: indexAccessor,
+      mode: 4,
+    };
+    const presentation = part.material;
+    const isDefault = presentation.alphaMode === 'OPAQUE' && presentation.doubleSided === false
+      && presentation.metallicFactor === 1 && presentation.roughnessFactor === 1;
+    if (!isDefault) {
+      const canonicalMaterial = {
+        alphaMode: presentation.alphaMode,
+        doubleSided: presentation.doubleSided,
+        pbrMetallicRoughness: {
+          baseColorFactor: [1, 1, 1, 1],
+          metallicFactor: presentation.metallicFactor,
+          roughnessFactor: presentation.roughnessFactor,
+        },
+      };
+      const key = JSON.stringify(canonicalMaterial);
+      let materialIndex = materialIndices.get(key);
+      if (materialIndex === undefined) {
+        materialIndex = materials.length;
+        materials.push(canonicalMaterial);
+        materialIndices.set(key, materialIndex);
+      }
+      primitive.material = materialIndex;
+    }
     const mesh = meshes.length;
-    meshes.push({ primitives: [{ attributes: { POSITION: positionAccessor, COLOR_0: colorAccessor }, indices: indexAccessor, mode: 4 }] });
+    meshes.push({ primitives: [primitive] });
     nodes.push({ name: part.nodeName, mesh });
   }
   const binary = Buffer.concat(chunks);
@@ -410,6 +536,7 @@ function buildCanonicalGlb(parts) {
     bufferViews,
     buffers: [{ byteLength: binary.length }],
     meshes,
+    ...(materials.length ? { materials } : {}),
     nodes,
     scene: 0,
     scenes: [{ nodes: nodes.map((_, index) => index) }],

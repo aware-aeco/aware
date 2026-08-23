@@ -191,7 +191,7 @@ is intentionally cache/authentication metadata outside deterministic manifest/ar
 `revit-glb.mjs` parses GLB v2 directly from bytes and rejects duplicate JSON keys at every nesting level
 before profile validation. It accepts exactly one JSON chunk and at most one
 BIN chunk, verifies declared/file/chunk lengths with checked arithmetic, and rejects unknown required
-extensions, external/data/file/HTTP buffer URIs, sparse accessors, Draco/meshopt compression,
+extensions, external/file/HTTP buffer URIs, sparse accessors, Draco/meshopt compression,
 morph targets, skins, animations, non-finite values, and unbounded structures.
 
 An explicit integer `scene` is required; missing active-scene selection is refused rather than guessed.
@@ -200,15 +200,22 @@ The walk detects cycles, excessive depth, duplicate child references, and a node
 than one parent; those are malformed/ambiguous rather than silently instanced. World matrices compose
 parent then local transforms. A node may use either `matrix` or TRS, never both.
 
-The accepted GLB profile has exactly one URI-less `buffers[0]` bound to the BIN chunk; POSITION is
+The accepted GLB profile has a URI-less `buffers[0]` bound to the BIN chunk and at most 15 additional
+buffers using the exact canonical `data:application/octet-stream;base64,` form emitted by xeoRVT.
+Encoded and decoded lengths, canonical Base64, cumulative decoded bytes, and every buffer reference are
+validated before accessor reads; all external or other URI forms remain refused. POSITION is
 `VEC3/FLOAT`, all counts and references are safe integers, and chunk, buffer-view, accessor, stride,
 alignment, and index ranges are checked with overflow-safe arithmetic. Unused external resources are
-still refused. Textures, images, samplers, UVs, normals, tangents, morphs, skins, animations, cameras,
+still refused. Textures, images, samplers, UVs, tangents, morphs, skins, animations, cameras,
 lights, sparse accessors, and compression are unsupported in v1. Every `extensions` object and both
 `extensionsUsed`/`extensionsRequired` must be absent; no optional extension semantics are discarded.
-Materials may contain only `pbrMetallicRoughness.baseColorFactor`; metallic/roughness use glTF defaults
-but do not affect color, `alphaMode` must be absent/`OPAQUE`, `alphaCutoff` absent, `doubleSided` false/
-absent, emissive factor zero/absent, and all texture fields absent. A missing material is opaque white.
+NORMAL may be `VEC3/FLOAT`, must match POSITION count, and is transformed by inverse-transpose plus the
+canonical frame rotation and unit normalization. Materials may contain a provider-specific string name
+(discarded), bounded `pbrMetallicRoughness` base-color/metallic/roughness factors, `alphaMode` OPAQUE or
+BLEND, Boolean `doubleSided`, and zero/absent emissive factor. Canonical output moves base color into
+vertex color while retaining metallic, roughness, alpha mode, and double-sided presentation; masks,
+textures, nonzero emissive values, and all other material fields remain refused. A missing material uses
+glTF defaults.
 
 Supported primitives are TRIANGLES, TRIANGLE_STRIP, and TRIANGLE_FAN, indexed or non-indexed, with
 `UNSIGNED_BYTE`, `UNSIGNED_SHORT`, or `UNSIGNED_INT` indices. Strides and offsets are checked against
@@ -236,7 +243,7 @@ geometry parts by `(entityId numeric,appearance ordinal,nodeName UTF-8)`; proper
 group ordinal,parameter ordinal,parameter id)`; relations by `(kind UTF-8,from numeric,to numeric,
 relation id)`; coverage buckets by `(reason UTF-8,stableId UTF-8)`. Exact duplicate IDs/edges are refused.
 JSON object keys use JCS. Permutation invariance is tested only for set-like arrays.
-Transformed `(position,color)` records are first encoded to their final canonical bytes, sorted
+Transformed `(position,color,normal?)` records are first encoded to their final canonical bytes, sorted
 lexicographically, deduplicated, and assigned canonical indices independent of provider order. Triangles
 are then remapped to those indices, rotated to their lexicographically smallest oriented tuple, sorted,
 and deduplicated only according to the explicit duplicate-triangle policy. Provider-assigned indices are
@@ -275,8 +282,9 @@ from explicit referenced metadata/parameters. Values preserve group order, dupli
 null, empty, unreadable, numeric, Boolean, and string distinctions; no localized string is parsed into
 meaning.
 
-Geometry joins are explicit: metadata `appearances[]` supplies an ordered non-empty set of exact GLB
-node names for an entity. Build multimaps on both sides. Multipart entities are valid, but each active-
+Geometry joins are explicit: metadata `appearances[]` supplies an ordered set of exact GLB node names
+for an entity; it may be empty only for an explicitly indexed non-drawable entity. Build multimaps on
+both sides. Multipart entities are valid, but each active-
 scene geometry node must have exactly one entity owner and each claimed name must resolve exactly once.
 Duplicate claims, duplicate node names, missing nodes, and unclaimed/watermark nodes are separate
 coverage reasons. The reader never
@@ -445,7 +453,7 @@ hand-forced around a failing guard.
 Defaults and hard ceilings are committed constants and canonical-request fields: provider request/
 stdout 256 KiB/1 MiB, stderr 64 KiB/256 KiB, conversion 10/30 minutes, staged RVT 150 MiB/4 GiB (staged
 by streaming copy, never resident), input GLB 128/512 MiB, metadata 16/64 MiB, aggregate provider output
-144/576 MiB, GLB JSON 4/16 MiB with nesting 64/128, scenes 8/32, active nodes 100,000/250,000 at depth
+144/576 MiB, GLB JSON 16/16 MiB with nesting 64/128, scenes 8/32, active nodes 100,000/250,000 at depth
 128/256, meshes 100,000/250,000, primitives 200,000/500,000, accessors and buffer views
 250,000/1,000,000, vertices 5,000,000/10,000,000, indices 15,000,000/30,000,000, entities
 250,000/1,000,000, parameters 2,000,000/5,000,000, relationships 1,000,000/2,000,000, component JSON
@@ -512,10 +520,12 @@ hash.
 
 **Create:** `revit-glb.mjs`, `revit-glb.test.mjs`.
 
-Write failing tests for GLB headers/chunks, external URIs, accessors/stride/offset/index types, indexed
+Write failing tests for GLB headers/chunks, external URIs and strict embedded Base64 buffers,
+accessors/stride/offset/index types, indexed
 and non-indexed triangles/strips/fans, degenerates, active versus inactive and missing scenes, nested
 matrix/TRS world transforms, duplicate parents/cycles/depth, positive/negative determinant winding,
-Y-up metres to Z-up millimetres, vertex/material colors, multiple primitives, unsupported extensions/
+Y-up metres to Z-up millimetres, vertex/material colors, material presentation, inverse-transpose
+normals, multiple primitives, unsupported extensions/
 geometry, missing/extra BIN bindings, singular transforms, quaternion tolerance, float32 overflow,
 negative-zero, post-transform degeneracy, stable sort ties/permutations, malformed ranges/checked
 overflow, non-finite values, and every limit. Implement only the minimum parser

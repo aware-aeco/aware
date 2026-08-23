@@ -78,6 +78,18 @@ test('set-like element permutations produce identical canonical artifact bytes a
   assert.equal(first.coverage.unclaimedGeometryNodes.length, 0);
 });
 
+test('explicit non-drawable elements remain indexed with empty geometry', () => {
+  const metadata = makeMetadataFixture();
+  const nonDrawable = { ...metadata.elements[0], id: '1002', appearances: [] };
+  delete nonDrawable.ifcGuid;
+  metadata.elements.push(nonDrawable);
+  const result = normalizeRevitMetadata(metadata, geometry.slice(0, 1));
+  assert.equal(result.coverage.discoveredEntities, 2);
+  assert.equal(result.coverage.indexedEntities, 2);
+  assert.equal(result.coverage.drawableEntities, 1);
+  assert.deepEqual(result.entities.find((entity) => entity.id === 'element:1002').geometry, []);
+});
+
 test('duplicate authoritative IfcGUID values make every matching entity uncomparable', () => {
   const metadata = makeMetadataFixture({ elementId: '2', nodeNames: ['part-b'] });
   const firstElement = { ...metadata.elements[0], id: '1', appearances: ['part-a'] };
