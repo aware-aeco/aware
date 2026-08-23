@@ -36,6 +36,40 @@ pub struct RenderContext {
 /// (or anyone who later reads the trace) what it is populated with.
 pub const REDACTED: &str = "[redacted]";
 
+/// The credential field names the substrate itself defines — every key a
+/// template can address and get a usable value out of.
+///
+/// Used by [`RenderContext::with_redacted_secrets`] to decide which KEYS of a
+/// credential object survive into a trace. A key outside this set is blinded,
+/// because `context::load_secret` parses arbitrary JSON off the raw
+/// `<creds_dir>/<id>.json` path, so a hand-written `{"<the-secret>": true}` puts
+/// the secret in the key — where blinding the values alone left it (#450, Codex).
+///
+/// This is an allowlist, and the direction matters: an entry MISSING from it
+/// costs a preview one readable field name, while a sensitive name missing from
+/// a denylist would be a leak. It cannot go stale dangerously — the two sources
+/// are `auth::keychain::StoredToken`'s fields (what `credential put` and
+/// `connect` write) and the shapes `runtime::invoker::secret_as_str` probes,
+/// which are the only keys anything in AWARE resolves.
+const ADDRESSABLE_CREDENTIAL_FIELDS: &[&str] = &[
+    // `StoredToken` — the shape every AWARE-written credential has.
+    "access_token",
+    "refresh_token",
+    "expires_at",
+    "scope",
+    "token_type",
+    "integration",
+    "obtained_at",
+    "source",
+    // The hand-written / legacy shapes `secret_as_str` accepts.
+    "token",
+    "key",
+    "apikey",
+    "api_key",
+    "value",
+    "secret",
+];
+
 impl RenderContext {
     /// Insert a node output, populating both raw kebab and underscore-translated forms.
     pub fn record_output(&mut self, node_id: &str, output: serde_json::Value) {
@@ -75,9 +109,18 @@ impl RenderContext {
     ///
     /// `null` is the exception, and not an oversight: it is the *absence* of a
     /// value, so there is nothing there to leak, and blinding it would claim the
-    /// credential carries a hidden `refresh_token` when it carries none. Keys
-    /// are not blinded either — they are already visible in the app's own
-    /// template text.
+    /// credential carries a hidden `refresh_token` when it carries none.
+    ///
+    /// KEYS go too, unless they are in [`ADDRESSABLE_CREDENTIAL_FIELDS`]. A
+    /// hand-written `{"<the-secret>": true}` passed whole as `{{ secrets.pin }}`
+    /// resolves structurally, so blinding values alone wrote the secret out as a
+    /// key. Keeping the substrate's own field names is what makes the preview
+    /// worth having — collapsing a credential to a bare `[redacted]` string
+    /// instead breaks attribute access, and the documented
+    /// `Bearer {{ secrets.h.access_token }}` then previews as `Bearer `, which
+    /// an operator reads as *no credential at all*. Unknown keys can collapse
+    /// onto one `[redacted]` entry; that is fine, because a key nothing in
+    /// AWARE resolves is not information the preview owes anyone.
     ///
     /// The boundary is the vault: this hides what `secrets.*` put into the
     /// params. A credential that reached them some other way — read out of a
@@ -91,7 +134,17 @@ impl RenderContext {
                     serde_json::Value::Array(items.iter().map(blind).collect())
                 }
                 serde_json::Value::Object(fields) => serde_json::Value::Object(
-                    fields.iter().map(|(k, v)| (k.clone(), blind(v))).collect(),
+                    fields
+                        .iter()
+                        .map(|(k, v)| {
+                            let key = if ADDRESSABLE_CREDENTIAL_FIELDS.contains(&k.as_str()) {
+                                k.clone()
+                            } else {
+                                REDACTED.to_string()
+                            };
+                            (key, blind(v))
+                        })
+                        .collect(),
                 ),
                 // String, Number, Bool — every scalar that can carry a value.
                 _ => serde_json::Value::String(REDACTED.to_string()),
@@ -913,13 +966,16 @@ mod tests {
             "my-api".into(),
             serde_json::json!({
                 "access_token": "sk-live-abc",
-                "refresh_token": "rt-def",
+                "refresh_token": serde_json::Value::Null,
                 "token_type": "Bearer",
                 "expires_at": 0,
                 "obtained_at": 1_700_000_000i64,
-                "nested": { "deep": ["sk-inner"] },
-                "rotatable": true,
-                "absent": serde_json::Value::Null,
+                // Allowlisted keys carrying a bool and a nested object+array, so
+                // the value walk is exercised without the key rule hiding it.
+                "key": true,
+                "value": { "deep": ["sk-inner"] },
+                // An UNKNOWN key — and here the key IS the secret material.
+                "987654": true,
             }),
         );
         // The raw `<creds_dir>/<id>.json` path parses arbitrary JSON into this
@@ -948,13 +1004,12 @@ mod tests {
         let api = &blinded.secrets["my-api"];
         // Token material, obviously …
         assert_eq!(api["access_token"], REDACTED);
-        assert_eq!(api["refresh_token"], REDACTED);
-        // … and the strings that merely describe it. Blinding every string is
+        // … and the string that merely describes it. Blinding every value is
         // what makes this safe against a credential shape nobody enumerated; a
-        // list of "sensitive" field names would leak the first one it missed.
+        // denylist of "sensitive" field names would leak the first one it missed.
         assert_eq!(api["token_type"], REDACTED);
         // Through objects and arrays alike.
-        assert_eq!(api["nested"]["deep"][0], REDACTED);
+        assert_eq!(api["value"][REDACTED][0], REDACTED);
         // A bare-string secret is a value, not a map — it must be blinded too,
         // not skipped for having no fields to walk.
         assert_eq!(blinded.secrets["legacy"], REDACTED);
@@ -965,11 +1020,40 @@ mod tests {
         assert_eq!(blinded.secrets["pinobj"]["token"], REDACTED);
         assert_eq!(api["expires_at"], REDACTED);
         assert_eq!(api["obtained_at"], REDACTED);
-        assert_eq!(api["rotatable"], REDACTED);
+        assert_eq!(api["key"], REDACTED);
         // `null` alone survives: it is the ABSENCE of a value, so it hides
         // nothing, and blinding it would claim a refresh token this credential
         // does not have.
-        assert!(api["absent"].is_null());
+        assert!(api["refresh_token"].is_null());
+    }
+
+    #[test]
+    fn with_redacted_secrets_blinds_keys_outside_the_addressable_set() {
+        // The second half of the leak: values alone were not enough, because a
+        // hand-written credential can put the secret in the KEY, and a
+        // whole-value `{{ secrets.<id> }}` resolves the object structurally
+        // (#450, Codex).
+        let blinded = ctx_with_secrets().with_redacted_secrets();
+        let api = &blinded.secrets["my-api"];
+        assert!(
+            api.get("987654").is_none(),
+            "an unknown key is secret material and must not survive: {api}"
+        );
+        assert_eq!(api[REDACTED], REDACTED, "it is blinded, not dropped");
+        // Nested objects are walked the same way — `deep` is not an addressable
+        // credential field either.
+        assert!(api["value"].get("deep").is_none());
+
+        // The keys AWARE itself defines stay, and that is the whole point: they
+        // are what keeps `{{ secrets.h.access_token }}` resolving, so the
+        // documented header still previews as `Bearer [redacted]` rather than
+        // `Bearer `, which an operator would read as no credential at all.
+        for field in ["access_token", "refresh_token", "token_type", "expires_at"] {
+            assert!(
+                api.get(field).is_some(),
+                "{field} is addressable and must survive as a key: {api}"
+            );
+        }
     }
 
     #[test]

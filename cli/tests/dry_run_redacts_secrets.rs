@@ -331,3 +331,77 @@ requires: []
         "both numeric credentials must be previewed as blinded, not dropped:\n{trace}"
     );
 }
+
+/// A credential whose secret material is in an object **key** is blinded too
+/// (#450, Codex).
+///
+/// `{{ secrets.<id> }}` is a whole-value ref, so `render_config` resolves the
+/// object structurally into the record. Blinding only the values left
+/// `{"987654":"[redacted]"}` in the trace — the key carrying the secret, and the
+/// app template names only the credential id, so nothing else in the record
+/// would have revealed it.
+///
+/// The other half of the assertion is what makes this a redaction rather than a
+/// wrecking ball: the addressable field names still survive, which is what keeps
+/// `{{ secrets.h.access_token }}` resolving. Collapsing the whole credential to a
+/// bare string closes the leak too, and previews the documented header as
+/// `Bearer ` — an operator reads that as *no credential at all*.
+#[test]
+fn a_credential_hiding_in_an_object_key_is_blinded_too() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    std::fs::create_dir_all(home.join("credentials")).unwrap();
+    std::fs::write(home.join("credentials/pin.json"), r#"{"987654": true}"#).unwrap();
+    copy_dir(
+        &repo_root().join("20-agents/_core/http"),
+        &home.join("agents/http"),
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["credential", "put", "my-api"])
+        .write_stdin(SECRET)
+        .assert()
+        .success();
+
+    let app_dir = home.join("apps/key-probe");
+    std::fs::create_dir_all(&app_dir).unwrap();
+    std::fs::write(
+        app_dir.join("key-probe.flo"),
+        r#"app: key-probe
+version: 0.0.1
+description: passes a whole hand-written credential, and a field of a real one
+nodes:
+  - id: call
+    agent: http
+    command: post
+    safety:
+      transaction-group: key-probe
+      snapshot: false
+    config:
+      url: "http://127.0.0.1:1/unused"
+      headers:
+        X-Whole: "{{ secrets.pin }}"
+        Authorization: "Bearer {{ secrets['my-api'].access_token }}"
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "key-probe", "--dry-run"])
+        .assert()
+        .success();
+
+    let trace = traces(&home);
+    assert!(
+        !trace.contains("987654"),
+        "a credential hiding in an object key reached the trace:\n{trace}"
+    );
+    assert!(
+        trace.contains("Bearer [redacted]"),
+        "an addressable field must still resolve, or the preview says `Bearer ` \
+         and reads as a missing credential:\n{trace}"
+    );
+}
