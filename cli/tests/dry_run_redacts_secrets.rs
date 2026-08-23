@@ -459,6 +459,13 @@ fn a_for_each_binding_drawn_from_the_vault_is_blinded() {
         r#"["sk-batch-one","sk-batch-two"]"#,
     )
     .unwrap();
+    // The nested-loop shape: an inner `for-each` selecting out of an element the
+    // outer loop already lifted from the vault.
+    std::fs::write(
+        home.join("credentials/nested.json"),
+        r#"[{"tokens":["sk-inner-one","sk-inner-two"]}]"#,
+    )
+    .unwrap();
     copy_dir(
         &repo_root().join("20-agents/_core/http"),
         &home.join("agents/http"),
@@ -486,6 +493,22 @@ nodes:
           url: "http://127.0.0.1:1/unused"
           body:
             token: "{{ item }}"
+  - id: outer
+    for-each: "{{ secrets.nested }}"
+    do:
+      - id: inner
+        for-each: "{{ item.tokens }}"
+        do:
+          - id: send-inner
+            agent: http
+            command: post
+            safety:
+              transaction-group: loop-probe
+              snapshot: false
+            config:
+              url: "http://127.0.0.1:1/unused"
+              body:
+                token: "{{ item }}"
 connections: []
 requires: []
 "#,
@@ -498,7 +521,14 @@ requires: []
         .success();
 
     let trace = traces(&home);
-    for leaked in ["sk-batch-one", "sk-batch-two"] {
+    for leaked in [
+        "sk-batch-one",
+        "sk-batch-two",
+        // A nested loop inherits the outer loop's provenance; keying on the
+        // inner loop's own head alone called it clean (#450, Codex).
+        "sk-inner-one",
+        "sk-inner-two",
+    ] {
         assert!(
             !trace.contains(leaked),
             "a for-each element lifted out of the vault reached the trace \
@@ -507,7 +537,8 @@ requires: []
     }
     assert_eq!(
         trace.matches(r#""token":"[redacted]""#).count(),
-        2,
-        "both iterations must preview the element as blinded:\n{trace}"
+        4,
+        "every iteration, outer loop and nested alike, must preview the element \
+         as blinded:\n{trace}"
     );
 }

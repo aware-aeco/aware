@@ -68,6 +68,57 @@ pub const REDACTED: &str = "[redacted]";
 /// rather than a parser: collecting too FEW names only blinds more, and
 /// collecting too many only keeps a name the app file already spells out.
 pub fn template_identifiers(params: &serde_json::Value) -> BTreeSet<String> {
+    /// The escape sequences a quoted key can be written with, resolved to the
+    /// key minijinja actually looks up: `['api\x2ekey']` addresses `api.key`, so
+    /// the source spelling alone would miss it (#450, Codex).
+    ///
+    /// BOTH spellings are recorded by the caller rather than just this one,
+    /// because an escape form this does not know stays covered by the raw span.
+    /// An unknown escape yields the escaped character itself, which is what
+    /// every engine in this family does with `\q`.
+    fn decode_escapes(raw: &str) -> String {
+        let mut out = String::with_capacity(raw.len());
+        let mut chars = raw.chars();
+        while let Some(c) = chars.next() {
+            if c != '\\' {
+                out.push(c);
+                continue;
+            }
+            let Some(esc) = chars.next() else {
+                out.push('\\');
+                break;
+            };
+            match esc {
+                'n' => out.push('\n'),
+                'r' => out.push('\r'),
+                't' => out.push('\t'),
+                '0' => out.push('\0'),
+                'x' | 'u' => {
+                    let width = if esc == 'x' { 2 } else { 4 };
+                    let digits: String = chars.clone().take(width).collect();
+                    match u32::from_str_radix(&digits, 16)
+                        .ok()
+                        .filter(|_| digits.len() == width)
+                        .and_then(char::from_u32)
+                    {
+                        Some(ch) => {
+                            chars.nth(width - 1);
+                            out.push(ch);
+                        }
+                        // Not a well-formed escape after all — keep it verbatim
+                        // rather than silently eating characters.
+                        None => {
+                            out.push('\\');
+                            out.push(esc);
+                        }
+                    }
+                }
+                other => out.push(other),
+            }
+        }
+        out
+    }
+
     /// Names inside one expression body, quoted spans kept intact.
     fn collect(expr: &str, out: &mut BTreeSet<String>) {
         let mut bare = String::new();
@@ -78,12 +129,29 @@ pub fn template_identifiers(params: &serde_json::Value) -> BTreeSet<String> {
                     if !bare.is_empty() {
                         out.insert(std::mem::take(&mut bare));
                     }
-                    // Everything up to the matching quote is one name. An
-                    // unterminated literal ends the scan of this expression:
-                    // there is no further reference to find in it.
-                    let literal: String = chars.by_ref().take_while(|&q| q != c).collect();
-                    if !literal.is_empty() {
-                        out.insert(literal);
+                    // Everything up to the matching quote is one name. A
+                    // backslash escapes the next character, so an escaped quote
+                    // does not end the span — reading `['it\'s']` as ending at
+                    // the middle quote would both miss the key and misread the
+                    // rest of the expression.
+                    let mut raw = String::new();
+                    while let Some(q) = chars.next() {
+                        if q == c {
+                            break;
+                        }
+                        raw.push(q);
+                        if q == '\\'
+                            && let Some(escaped) = chars.next()
+                        {
+                            raw.push(escaped);
+                        }
+                    }
+                    if !raw.is_empty() {
+                        let decoded = decode_escapes(&raw);
+                        if decoded != raw {
+                            out.insert(decoded);
+                        }
+                        out.insert(raw);
                     }
                 }
                 _ if c.is_alphanumeric() || c == '_' || c == '-' => bare.push(c),
@@ -182,25 +250,38 @@ pub fn blinded(v: &serde_json::Value, keep_keys: &BTreeSet<String>) -> serde_jso
     }
 }
 
-/// Whether `expr` reads the `secrets` namespace directly — the head of the
-/// path, which is the same thing [`resolve_value`] dispatches on.
+/// The head of the path `expr` reads — the same token [`resolve_value`]
+/// dispatches its namespace arm on.
 ///
-/// Deliberately just the head. `{{ upstream.x }}` where `x` happens to hold a
-/// credential is a node's own output, which the trace records in full
-/// regardless; claiming to catch that would be a promise this cannot keep.
-pub fn reads_secrets_namespace(expr: &str) -> bool {
-    let Some(start) = expr.find("{{") else {
-        return false;
-    };
+/// Deliberately just the head, and deliberately not a full parse. It answers one
+/// question: which namespace is this collection drawn from.
+pub fn path_head(expr: &str) -> Option<&str> {
+    let start = expr.find("{{")?;
     let after = &expr[start + 2..];
-    let Some(end) = after.find("}}") else {
-        return false;
-    };
+    let end = after.find("}}")?;
     after[..end]
         .trim()
         .split(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-'))
         .find(|t| !t.is_empty())
-        == Some("secrets")
+}
+
+/// Whether `expr` draws straight from the credential vault.
+///
+/// `{{ upstream.x }}` where `x` happens to hold a credential is a node's own
+/// output, which the trace records in full regardless; claiming to catch that
+/// would be a promise this cannot keep.
+pub fn reads_secrets_namespace(expr: &str) -> bool {
+    path_head(expr) == Some("secrets")
+}
+
+/// Whether `expr` draws from the enclosing `for-each` binding.
+///
+/// A nested `for-each: "{{ item.tokens }}"` inside a loop over the vault selects
+/// from a credential the outer loop already lifted out of it, so the inner
+/// elements are vault material too — and reading the head alone would call the
+/// inner loop clean and write its tokens to the trace (#450, Codex).
+pub fn reads_item_binding(expr: &str) -> bool {
+    path_head(expr) == Some("item")
 }
 
 impl RenderContext {
@@ -1205,6 +1286,18 @@ mod tests {
     }
 
     #[test]
+    fn reads_item_binding_spots_a_nested_loop_over_the_enclosing_element() {
+        // An inner `for-each` selecting out of the outer element carries the
+        // outer loop's provenance with it; keying on this loop's own head alone
+        // called a nested vault loop clean (#450, Codex).
+        assert!(reads_item_binding("{{ item.tokens }}"));
+        assert!(reads_item_binding("{{ item }}"));
+        // A sibling collection from anywhere else does NOT inherit it.
+        assert!(!reads_item_binding("{{ inputs.rows }}"));
+        assert!(!reads_item_binding("{{ upstream.src.items }}"));
+    }
+
+    #[test]
     fn template_identifiers_collects_names_from_every_expression_form() {
         let ids = template_identifiers(&serde_json::json!({
             "a": "Bearer {{ secrets['my-api'].access_token }}",
@@ -1221,6 +1314,23 @@ mod tests {
         // would show it empty — the missing-credential read this exists to avoid
         // (#450, Codex).
         assert!(ids.contains("api.key"), "dotted bracket key: {ids:?}");
+
+        // An ESCAPED key: minijinja decodes the literal and looks up `api.key`,
+        // so the source spelling alone would miss it. Both are recorded, so an
+        // escape form this does not know still stays covered by the raw span
+        // (#450, Codex).
+        let escaped = template_identifiers(&serde_json::json!({
+            "a": r"{{ secrets.custom['api\x2ekey'] }}",
+            "b": r"{{ secrets.custom['pa\u0067e'] }}",
+            // An escaped quote must not end the span early.
+            "c": r"{{ secrets.custom['it\'s'] }}",
+        }));
+        assert!(escaped.contains("api.key"), "\\x escape: {escaped:?}");
+        assert!(escaped.contains("page"), "\\u escape: {escaped:?}");
+        assert!(escaped.contains("it's"), "escaped quote: {escaped:?}");
+        // The raw spelling is kept too — belt and braces for an escape form
+        // this decoder does not know.
+        assert!(escaped.contains(r"api\x2ekey"));
         // Literal text outside an expression is not a reference, so it cannot
         // keep a credential key alive.
         assert!(!ids.contains("Bearer"));

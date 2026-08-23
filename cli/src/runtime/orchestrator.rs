@@ -1032,7 +1032,12 @@ impl Orchestrator {
         // Saved and restored with the binding it describes: an inner loop over a
         // plain list must not clear the flag an enclosing vault-drawn loop set.
         let prev_item_from_vault = self.ctx.item_from_vault;
-        self.ctx.item_from_vault = template::reads_secrets_namespace(expr);
+        // Straight from the vault, OR selected out of an element an enclosing
+        // vault-drawn loop already lifted from it: `{{ item.tokens }}` nested
+        // inside `for-each: "{{ secrets.batch }}"` is still credential material,
+        // and keying on this loop's own head alone called it clean.
+        self.ctx.item_from_vault = template::reads_secrets_namespace(expr)
+            || (prev_item_from_vault && template::reads_item_binding(expr));
 
         let mut collection = match template::resolve_value(expr, &self.ctx) {
             Value::Array(items) => items,
