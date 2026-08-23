@@ -169,6 +169,35 @@ pub fn template_identifiers(params: &serde_json::Value) -> BTreeSet<String> {
         (pending == 0).then_some(out)
     }
 
+    /// Where an expression ends, skipping any `}}` or `%}` that is INSIDE a
+    /// string literal.
+    ///
+    /// minijinja's lexer treats a delimiter inside a string as data, so
+    /// `{{ secrets.custom['api}}key'] }}` is one expression naming the key
+    /// `api}}key`. A plain `find` truncated it at the middle `}}`, the key was
+    /// never recorded as template-named, and the field previewed empty (#450,
+    /// Codex). `normalize_hyphenated_paths` below is quote-aware for the same
+    /// reason — this brings the scanner in line with it.
+    fn find_terminator(s: &str, close: &str) -> Option<usize> {
+        let mut chars = s.char_indices();
+        while let Some((i, c)) = chars.next() {
+            if c == '\'' || c == '"' {
+                // Consume the literal; a backslash escapes the next character,
+                // so an escaped quote does not close it.
+                while let Some((_, q)) = chars.next() {
+                    if q == '\\' {
+                        chars.next();
+                    } else if q == c {
+                        break;
+                    }
+                }
+            } else if s[i..].starts_with(close) {
+                return Some(i);
+            }
+        }
+        None
+    }
+
     /// Names inside one expression body, quoted spans kept intact.
     fn collect(expr: &str, out: &mut BTreeSet<String>) {
         let mut bare = String::new();
@@ -233,7 +262,7 @@ pub fn template_identifiers(params: &serde_json::Value) -> BTreeSet<String> {
                 }
             };
             let body_start = i + open_len;
-            let Some(rel) = text[body_start..].find(close) else {
+            let Some(rel) = find_terminator(&text[body_start..], close) else {
                 return; // unterminated — nothing further is an expression
             };
             collect(&text[body_start..body_start + rel], out);
@@ -400,10 +429,22 @@ impl RenderContext {
     pub fn with_redacted_secrets(&self, params: &serde_json::Value) -> RenderContext {
         let keep = template_identifiers(params);
         let mut out = RenderContext {
+            // The credential ID is a key too, and `load_secret` takes it from the
+            // FILE STEM — so a hand-written `sk-live-token.json` puts credential
+            // material in the id itself, which a whole-value `{{ secrets }}`
+            // writes straight into the record. Same rule as the fields inside:
+            // an id the template names is already in the app file (#450, Codex).
             secrets: self
                 .secrets
                 .iter()
-                .map(|(id, v)| (id.clone(), blinded(v, &keep)))
+                .map(|(id, v)| {
+                    let id = if keep.contains(id) {
+                        id.clone()
+                    } else {
+                        REDACTED.to_string()
+                    };
+                    (id, blinded(v, &keep))
+                })
                 .collect(),
             ..self.clone()
         };
@@ -1240,6 +1281,10 @@ mod tests {
         // namespace, so a credential whose value is a NUMBER is reachable —
         // a hand-written PIN, bare or in a field (#450, Codex).
         ctx.secrets.insert("pin".into(), serde_json::json!(123_456));
+        // `load_secret` takes the ID from the FILE STEM, so a hand-written
+        // `sk-live-….json` puts credential material in the id (#450, Codex).
+        ctx.secrets
+            .insert("sk-live-in-the-id".into(), serde_json::json!("tok"));
         ctx.secrets
             .insert("pinobj".into(), serde_json::json!({ "token": 987_654 }));
         ctx.secrets
@@ -1265,6 +1310,9 @@ mod tests {
             "authorization": "Bearer {{ secrets['my-api'].access_token }}",
             "channel-id": "{{ secrets.teams.coord }}",
             "whole": "{{ secrets.pin }}",
+            "legacy": "{{ secrets.legacy }}",
+            "from-field": "{{ secrets.pinobj.token }}",
+            "vaulted": "{{ secrets.vault }}",
         })
     }
 
@@ -1282,7 +1330,9 @@ mod tests {
         // arbitrary JSON: sparing numbers wrote a hand-written PIN to the trace
         // verbatim, bare and in a field alike (#450, Codex).
         assert_eq!(blinded.secrets["pin"], REDACTED);
-        assert_eq!(blinded.secrets["pinobj"][REDACTED], REDACTED);
+        // `token` is named by the params, so the KEY survives and its numeric
+        // value is what gets blinded — the two rules acting independently.
+        assert_eq!(blinded.secrets["pinobj"]["token"], REDACTED);
         // A bare-string secret is a value, not a map — blinded too, not skipped
         // for having no fields to walk.
         assert_eq!(blinded.secrets["legacy"], REDACTED);
@@ -1448,6 +1498,45 @@ mod tests {
         // Literal text outside an expression is not a reference, so it cannot
         // keep a credential key alive.
         assert!(!ids.contains("Bearer"));
+    }
+
+    #[test]
+    fn with_redacted_secrets_blinds_credential_ids_the_template_does_not_name() {
+        // A whole-value `{{ secrets }}` puts the entire vault MAP in the record,
+        // and its keys are credential ids taken from file stems — so an id can
+        // itself be the secret. Same rule as the fields inside (#450, Codex).
+        let blinded = ctx_with_secrets().with_redacted_secrets(&params());
+        assert!(
+            blinded.secrets.get("sk-live-in-the-id").is_none(),
+            "an id the template never names must not survive: {:?}",
+            blinded.secrets.keys().collect::<Vec<_>>()
+        );
+        assert!(blinded.secrets.contains_key(REDACTED));
+        // The ids the template DOES name stay, or every reference would break.
+        for named in ["my-api", "teams", "pin"] {
+            assert!(
+                blinded.secrets.contains_key(named),
+                "{named} is named by the params and must survive"
+            );
+        }
+    }
+
+    #[test]
+    fn template_identifiers_finds_the_terminator_outside_quoted_literals() {
+        // minijinja's lexer treats `}}` inside a string as data, so this is ONE
+        // expression naming the key `api}}key`. A plain `find` truncated it at
+        // the middle `}}`, so the key was never recorded and the field previewed
+        // empty (#450, Codex).
+        let ids = template_identifiers(&serde_json::json!({
+            "k": r#"{{ secrets.custom["api}}key"] }}"#,
+        }));
+        assert!(ids.contains("api}}key"), "{ids:?}");
+        // The scan resumes after the REAL terminator, so a later expression is
+        // still seen.
+        let ids = template_identifiers(&serde_json::json!({
+            "k": r#"{{ s["a}}b"] }} then {{ secrets.teams.coord }}"#,
+        }));
+        assert!(ids.contains("a}}b") && ids.contains("coord"), "{ids:?}");
     }
 
     #[test]

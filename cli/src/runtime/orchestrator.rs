@@ -625,10 +625,10 @@ impl Orchestrator {
                     // Re-rendered with the vault blinded rather than reusing
                     // `args`: this record is persisted, and `args` is what the
                     // live run would put on the wire, credential included (#448).
-                    proposed_inputs: render_config(
+                    proposed_inputs: render_for_record(
                         &params,
                         &self.ctx.with_redacted_secrets(&params),
-                    )?,
+                    ),
                     safety: safety_block,
                 })
                 .await?;
@@ -870,10 +870,10 @@ impl Orchestrator {
                         // `args`: this record is persisted, and `args` is what
                         // the live run would put on the wire, credential
                         // included (#448).
-                        proposed_inputs: render_config(
+                        proposed_inputs: render_for_record(
                             &config_json,
                             &self.ctx.with_redacted_secrets(&config_json),
-                        )?,
+                        ),
                         safety: safety_block,
                     })
                     .await?;
@@ -1550,6 +1550,43 @@ fn yaml_to_json(v: serde_yaml::Value) -> Result<Value, AwareError> {
     let s = serde_json::to_string(&v)?;
     let j: Value = serde_json::from_str(&s)?;
     Ok(j)
+}
+
+/// Render a node's params for a **record**, against a vault-blinded context.
+///
+/// Never fails. `render_config` can error on the blinded context where it
+/// succeeded on the live one — `{{ secrets.pin + 1 }}` is arithmetic on a
+/// numeric credential, and `[redacted]` is a string, so the second render hits
+/// `tried to use + operator on unsupported types` and the whole dry-run dies
+/// (#450, Codex). The live render already succeeded, so the value exists; it is
+/// only the *preview* that cannot be computed without the secret, and a preview
+/// must never be the reason a run fails.
+///
+/// A failing subtree is retried entry by entry, so one unpreviewable leaf
+/// becomes `[redacted]` while its siblings still render. The fallback
+/// substitutes the redaction, so it cannot widen what gets written down.
+///
+/// What this does NOT promise is fidelity for a template that BRANCHES on a
+/// credential's value: `{% if secrets.flag %}` sees a redacted value and may
+/// pick the other arm. That is inherent — a value cannot be both hidden and
+/// computed with — and it is why this record is a preview of the write rather
+/// than a second source of truth about it.
+fn render_for_record(params: &Value, ctx: &RuntimeContext) -> Value {
+    if let Ok(rendered) = render_config(params, ctx) {
+        return rendered;
+    }
+    match params {
+        Value::Object(fields) => Value::Object(
+            fields
+                .iter()
+                .map(|(k, v)| (k.clone(), render_for_record(v, ctx)))
+                .collect(),
+        ),
+        Value::Array(items) => {
+            Value::Array(items.iter().map(|v| render_for_record(v, ctx)).collect())
+        }
+        _ => Value::String(crate::runtime::template::REDACTED.to_string()),
+    }
 }
 
 fn render_config(config: &Value, ctx: &RuntimeContext) -> Result<Value, AwareError> {

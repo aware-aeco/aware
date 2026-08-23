@@ -544,3 +544,78 @@ requires: []
          as blinded:\n{trace}"
     );
 }
+
+/// A credential ID is a key too, and a dry-run must not fail because of the
+/// preview (#450, Codex).
+///
+/// Two things this pins, both regressions the redaction itself introduced:
+///
+/// * `load_secret` takes the credential ID from the **file stem**, so a
+///   hand-written `sk-live-….json` puts credential material in the id — and a
+///   whole-value `{{ secrets }}` writes the entire vault map, keys included.
+/// * Blinding changes a value's TYPE. `{{ secrets.pin + 1 }}` is arithmetic on
+///   a numeric credential: it renders fine live, but the record's re-render adds
+///   `1` to `"[redacted]"` and minijinja refuses. That aborted the whole
+///   dry-run — a preview taking down a run that otherwise works.
+#[test]
+fn a_preview_never_leaks_the_id_and_never_fails_the_run() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    std::fs::create_dir_all(home.join("credentials")).unwrap();
+    std::fs::write(home.join("credentials/sk-live-in-the-id.json"), r#""tok""#).unwrap();
+    std::fs::write(home.join("credentials/pin.json"), "123456").unwrap();
+    copy_dir(
+        &repo_root().join("20-agents/_core/http"),
+        &home.join("agents/http"),
+    )
+    .unwrap();
+
+    let app_dir = home.join("apps/preview-probe");
+    std::fs::create_dir_all(&app_dir).unwrap();
+    std::fs::write(
+        app_dir.join("preview-probe.flo"),
+        r#"app: preview-probe
+version: 0.0.1
+description: whole-vault reference and arithmetic on a numeric credential
+nodes:
+  - id: call
+    agent: http
+    command: post
+    safety:
+      transaction-group: preview-probe
+      snapshot: false
+    config:
+      url: "http://127.0.0.1:1/unused"
+      headers:
+        X-Vault: "{{ secrets }}"
+        X-Computed: "{{ secrets.pin + 1 }}"
+        X-Plain: "literal stays"
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    // Succeeds at all: before the lenient record render this exited non-zero
+    // with `tried to use + operator on unsupported types`.
+    aware(&home)
+        .args(["app", "run", "preview-probe", "--dry-run"])
+        .assert()
+        .success();
+
+    let trace = traces(&home);
+    for leaked in ["sk-live-in-the-id", "123456", "123457"] {
+        assert!(
+            !trace.contains(leaked),
+            "credential material reached the trace ({leaked}):\n{trace}"
+        );
+    }
+    assert!(
+        trace.contains(r#""X-Computed":"[redacted]""#),
+        "an unpreviewable leaf becomes the redaction, not an error:\n{trace}"
+    );
+    assert!(
+        trace.contains(r#""X-Plain":"literal stays""#),
+        "one unpreviewable leaf must not take its siblings down with it:\n{trace}"
+    );
+}
