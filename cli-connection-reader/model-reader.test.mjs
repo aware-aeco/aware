@@ -23,10 +23,12 @@ async function setup(t) {
   await fs.writeFile(secretPath, `ed25519-secret-key-v1 ${privateKey.export({ format: 'der', type: 'pkcs8' }).subarray(-32).toString('base64')}\n`);
   await fs.writeFile(publicPath, `ed25519-public-key-v1 ${publicKey.export({ format: 'der', type: 'spki' }).subarray(-32).toString('base64')}\n`);
   const calls = [];
+  const hostRequests = [];
   const lockCalls = [];
   let nextLock = 0;
   const hostRun = async (request) => {
     calls.push(request.operation);
+    hostRequests.push(request);
     return await new Promise((resolve, reject) => {
       const child = spawn(process.execPath, [fixture, request.operation], { cwd: request.cwd, env: request.environment, windowsHide: true, shell: false, stdio: ['pipe', 'pipe', 'pipe'] });
       const stdout = []; const stderr = [];
@@ -36,7 +38,7 @@ async function setup(t) {
     });
   };
   return {
-    root, sourcePath, executable, secretPath, publicPath, calls, lockCalls,
+    root, sourcePath, executable, secretPath, publicPath, calls, hostRequests, lockCalls,
     deps: {
       hostRun,
       hostAcquireLock: async (lockPath, options) => {
@@ -116,6 +118,7 @@ test('every production cache lock wait receives the command cancellation signal'
   }, state.deps);
   assert.equal(state.lockCalls.length > 0, true);
   assert.equal(state.lockCalls.every((call) => call.options?.signal === controller.signal), true);
+  assert.equal(state.hostRequests.every((request) => request.signal === controller.signal), true);
 });
 
 test('a wrong provider pin refuses before convert and errors never disclose paths', async (t) => {

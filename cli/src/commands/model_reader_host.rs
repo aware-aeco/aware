@@ -120,6 +120,18 @@ struct PendingRun {
 type SharedWriter = Arc<Mutex<tokio::io::Stdout>>;
 type ActiveRuns = Arc<Mutex<HashMap<[u8; 32], oneshot::Sender<()>>>>;
 
+async fn cancel_and_join(active: &ActiveRuns, tasks: &mut Vec<tokio::task::JoinHandle<()>>) {
+    {
+        let mut runs = active.lock().await;
+        for (_, cancel) in runs.drain() {
+            let _ = cancel.send(());
+        }
+    }
+    for task in tasks.drain(..) {
+        let _ = task.await;
+    }
+}
+
 async fn send_control(
     writer: &SharedWriter,
     request_id: u64,
@@ -443,6 +455,7 @@ pub async fn run() -> Result<(), AwareError> {
     let mut reader = tokio::io::BufReader::new(tokio::io::stdin());
     let writer: SharedWriter = Arc::new(Mutex::new(tokio::io::stdout()));
     let active: ActiveRuns = Arc::new(Mutex::new(HashMap::new()));
+    let mut provider_tasks: Vec<tokio::task::JoinHandle<()>> = Vec::new();
     let mut pending: HashMap<(u64, [u8; 32]), PendingRun> = HashMap::new();
     let mut locks: HashMap<[u8; 32], std::fs::File> = HashMap::new();
     let mut last_control_id = 0u64;
@@ -463,7 +476,8 @@ pub async fn run() -> Result<(), AwareError> {
             }
             let (cancel_tx, cancel_rx) = oneshot::channel();
             active.lock().await.insert(pending_run.handle, cancel_tx);
-            tokio::spawn(execute_provider(
+            provider_tasks.retain(|task| !task.is_finished());
+            provider_tasks.push(tokio::spawn(execute_provider(
                 frame.request_id,
                 pending_run.handle,
                 pending_run.request,
@@ -471,7 +485,7 @@ pub async fn run() -> Result<(), AwareError> {
                 writer.clone(),
                 active.clone(),
                 cancel_rx,
-            ));
+            )));
             continue;
         }
         if frame.kind != KIND_CONTROL || frame.request_id <= last_control_id {
@@ -509,16 +523,13 @@ pub async fn run() -> Result<(), AwareError> {
                 file.unlock()?; send_control(&writer, frame.request_id, frame.run_handle, json!({"status":"released"})).await;
             }
             Some("shutdown") => {
-                let mut runs = active.lock().await; for (_, cancel) in runs.drain() { let _ = cancel.send(()); }
+                cancel_and_join(&active, &mut provider_tasks).await;
                 send_control(&writer, frame.request_id, [0; 32], json!({"status":"bye"})).await; break;
             }
             _ => return Err(AwareError::Validation("model-reader host control operation is unknown".into())),
         }
     }
-    let mut runs = active.lock().await;
-    for (_, cancel) in runs.drain() {
-        let _ = cancel.send(());
-    }
+    cancel_and_join(&active, &mut provider_tasks).await;
     Ok(())
 }
 
@@ -581,5 +592,22 @@ mod tests {
         });
         let error = join_bounded_stream(task).await.unwrap_err();
         assert_eq!(error.kind(), std::io::ErrorKind::FileTooLarge);
+    }
+
+    #[tokio::test]
+    async fn host_shutdown_waits_for_cancelled_provider_cleanup() {
+        let active: ActiveRuns = Arc::new(Mutex::new(HashMap::new()));
+        let (cancel_tx, cancel_rx) = oneshot::channel();
+        active.lock().await.insert([7; 32], cancel_tx);
+        let cleaned = Arc::new(std::sync::atomic::AtomicBool::new(false));
+        let observed = cleaned.clone();
+        let task = tokio::spawn(async move {
+            let _ = cancel_rx.await;
+            observed.store(true, std::sync::atomic::Ordering::SeqCst);
+        });
+        let mut tasks = vec![task];
+        cancel_and_join(&active, &mut tasks).await;
+        assert!(cleaned.load(std::sync::atomic::Ordering::SeqCst));
+        assert!(tasks.is_empty());
     }
 }

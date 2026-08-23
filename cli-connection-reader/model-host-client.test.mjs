@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
+import { EventEmitter } from 'node:events';
 import test from 'node:test';
-import { HostFrameDecoder, encodeHostFrame, waitForCacheLock } from './model-host-client.mjs';
+import {
+  HostFrameDecoder, ModelHostClient, encodeHostFrame, requireReadyClient, waitForCacheLock,
+} from './model-host-client.mjs';
 
 test('host frames preserve request id, run handle, sequence, final flag, and binary payload across arbitrary chunks', () => {
   const expected = {
@@ -39,4 +42,39 @@ test('cache lock contention waits boundedly for the winner and honors cancellati
     () => waitForCacheLock(async () => ({ body: { status: 'busy' }, handle: Buffer.alloc(32) }), { signal: controller.signal }),
     (error) => error.code === 'reference-cancelled',
   );
+});
+
+test('provider cancellation requested before acceptance is sent as soon as the run handle arrives', async () => {
+  const child = new EventEmitter();
+  child.stdout = new EventEmitter(); child.stderr = new EventEmitter(); child.stdin = { write: () => true, once: () => {}, end: () => {} };
+  const client = new ModelHostClient(child);
+  const controls = [];
+  client.write = () => {};
+  client.simple = async (body, handle) => { controls.push({ body, handle }); return { status: 'cancel-requested' }; };
+  const controller = new AbortController();
+  const request = {
+    executable: 'provider', operation: 'convert', cwd: 'work', environment: {}, stdin: Buffer.alloc(0),
+    timeoutMs: 1, stdoutLimit: 1, stderrLimit: 1, signal: controller.signal,
+  };
+  const result = client.run(request);
+  controller.abort();
+  const handle = Buffer.alloc(32, 7);
+  client.onFrame({ kind: 1, requestId: 1n, runHandle: handle, sequence: 0, final: true, payload: Buffer.from('{"status":"accepted"}') });
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(controls.some((call) => call.body.op === 'provider-cancel' && call.handle.equals(handle)), true);
+  client.onFrame({ kind: 2, requestId: 1n, runHandle: handle, sequence: 0, final: true, payload: Buffer.alloc(0) });
+  client.onFrame({ kind: 3, requestId: 1n, runHandle: handle, sequence: 0, final: true, payload: Buffer.alloc(0) });
+  client.onFrame({ kind: 1, requestId: 1n, runHandle: handle, sequence: 0, final: true, payload: Buffer.from('{"status":"complete","exitCode":130}') });
+  await result;
+});
+
+test('a failed host handshake terminates the spawned client before rejecting', async () => {
+  let terminated = false;
+  const failure = new Error('incompatible');
+  const client = {
+    ready: async () => { throw failure; },
+    terminate: async () => { terminated = true; },
+  };
+  await assert.rejects(() => requireReadyClient(client), failure);
+  assert.equal(terminated, true);
 });

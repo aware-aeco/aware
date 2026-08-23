@@ -3,11 +3,12 @@ import { spawn } from 'node:child_process';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
+import { Readable } from 'node:stream';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { sha256 } from './model-contract.mjs';
 import {
-  describeAndConvert, minimalProviderEnvironment, stageImmutableSource,
+  describeAndConvert, hashRegularFile, minimalProviderEnvironment, stageImmutableSource,
   validateProviderExecutable,
 } from './model-provider.mjs';
 
@@ -83,20 +84,46 @@ test('describe and convert agree on provenance and return only bounded private o
   await fs.writeFile(executable, 'fixture-provider-binary');
   await fs.writeFile(source, 'fixture-rvt');
   const calls = [];
+  const controller = new AbortController();
   const result = await describeAndConvert({
     executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
-    privateRoot: path.join(root, 'private'), hostRun: fixtureHostRun(calls),
+    privateRoot: path.join(root, 'private'), hostRun: fixtureHostRun(calls), signal: controller.signal,
   });
   assert.equal(calls.length, 2);
   assert.deepEqual(calls.map((call) => call.operation), ['describe', 'convert']);
   assert.equal(calls[0].cwd.startsWith(path.join(root, 'private')), true);
   assert.equal(calls[0].environment.PATH, undefined);
+  assert.equal(calls.every((call) => call.signal === controller.signal), true);
   assert.equal(result.describe.provider, 'fixture-provider');
   assert.equal(result.receipt.sourceSha256, sha256(Buffer.from('fixture-rvt')));
   assert.equal(result.outputs.geometry.path.endsWith('geometry.glb'), true);
   assert.equal(result.outputs.metadata.path.endsWith('metadata.json'), true);
   assert.equal(result.outputs.geometry.sha256, sha256(result.outputs.geometry.bytes));
   assert.equal(result.outputs.metadata.sha256, sha256(result.outputs.metadata.bytes));
+});
+
+test('streaming hash and staging stop at the byte limit even when the source grows after stat', async (t) => {
+  const root = await temporaryDirectory(t);
+  const source = path.join(root, 'growing.rvt');
+  await fs.writeFile(source, 'a');
+  await assert.rejects(
+    () => hashRegularFile(source, 4, 'source', {
+      createReadStream: () => Readable.from([Buffer.from('abc'), Buffer.from('de')]),
+    }),
+    (error) => error.code === 'reference-source-too-large',
+  );
+
+  let reads = 0;
+  await assert.rejects(
+    () => stageImmutableSource(source, path.join(root, 'stage'), sha256(Buffer.from('a')), {
+      limits: { maxSourceBytes: 4 },
+      createReadStream: () => {
+        reads += 1;
+        return Readable.from([reads === 1 ? Buffer.from('a') : Buffer.from('abcde')]);
+      },
+    }),
+    (error) => error.code === 'reference-source-too-large',
+  );
 });
 
 test('malformed receipts, provenance drift, extra files, non-zero exits, and provider text stay bounded and redacted', async (t) => {

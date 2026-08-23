@@ -92,6 +92,10 @@ function assertUnicodeScalars(value) {
   }
 }
 
+function defineJsonProperty(target, key, value) {
+  Object.defineProperty(target, key, { value, enumerable: true, configurable: true, writable: true });
+}
+
 function normalizeJson(value, seen = new Set()) {
   if (value === null || typeof value === 'boolean') return value;
   if (typeof value === 'string') {
@@ -113,7 +117,7 @@ function normalizeJson(value, seen = new Set()) {
     for (const key of Object.keys(value).sort()) {
       assertUnicodeScalars(key);
       if (value[key] === undefined) throw new TypeError('undefined is not JSON data');
-      out[key] = normalizeJson(value[key], seen);
+      defineJsonProperty(out, key, normalizeJson(value[key], seen));
     }
     return out;
   } finally {
@@ -171,7 +175,7 @@ export function parseJsonStrict(input, options = {}) {
         white();
         if (text[cursor] !== ':') fail('expected colon');
         cursor += 1;
-        out[key] = value(depth + 1);
+        defineJsonProperty(out, key, value(depth + 1));
         white();
         if (text[cursor] === '}') { cursor += 1; return out; }
         if (text[cursor] !== ',') fail('expected comma');

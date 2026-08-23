@@ -107,3 +107,13 @@ test('long valid relationship chains are checked without recursive stack overflo
   const result = normalizeRevitMetadata(metadata, geometry);
   assert.equal(result.relationships.length, count - 1);
 });
+
+test('aggregate property expansion is bounded before repeated references allocate rows', () => {
+  const metadata = makeMetadataFixture();
+  metadata.parameterGroups[0].parameters = [0, 0];
+  metadata.elements[0].parameterGroups = [0, 0];
+  assert.throws(
+    () => normalizeRevitMetadata(metadata, geometry.slice(0, 1), { limits: { maxParameters: 3 } }),
+    (error) => error.code === 'reference-output-too-large',
+  );
+});

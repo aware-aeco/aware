@@ -59,6 +59,7 @@ async function providerReadiness(args, deps, config, expectedProviderSha256) {
     const provider = await describeProvider({
       executable: config.executable, privateRoot: path.join(runRoot, 'describe'),
       hostRun: deps.hostRun, environment: config.environment, limits: deps.limits,
+      signal: deps.signal,
       expectedProviderSha256,
     });
     return {
@@ -144,6 +145,7 @@ async function convertAndCache(args, deps, config, readiness) {
         expectedProviderSha256: readiness.providerFingerprintSha256,
         privateRoot: path.join(runRoot, 'conversion'), hostRun: deps.hostRun,
         environment: config.environment, limits: deps.limits,
+        signal: deps.signal,
         conversionSettings: args['conversion-settings'] ?? {},
       });
       emit(deps, 'normalize');

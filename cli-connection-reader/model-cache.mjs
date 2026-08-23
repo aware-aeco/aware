@@ -116,7 +116,6 @@ async function maintainCache(root, key, blobs, overrides) {
   let blobBytes = 0;
   const existing = new Set();
   for (const name of await fs.readdir(blobDirectory)) {
-    if (name.startsWith('.')) continue;
     try { const stat = await fs.stat(path.join(blobDirectory, name)); if (stat.isFile()) { blobBytes += stat.size; existing.add(name); } }
     catch { /* concurrent publication */ }
   }

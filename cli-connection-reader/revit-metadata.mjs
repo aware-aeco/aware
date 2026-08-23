@@ -199,6 +199,7 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
       .map((value, ordinal) => tableIndex(value, parameterGroups, `elements[${elementOrdinal}].parameterGroups[${ordinal}]`));
     const guidValues = [];
     groups.forEach((group, groupOrdinal) => group.parameters.forEach((parameter, parameterOrdinal) => {
+      if (propertyRows.length >= limits.maxParameters) invalid('expanded property count exceeds its limit', 'reference-output-too-large');
       propertyRows.push({
         entityId: `element:${id}`,
         groupId: `parameter-group:${group.id}`,

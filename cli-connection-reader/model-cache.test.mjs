@@ -232,14 +232,17 @@ test('cache maintenance removes crash-left orphan blobs before applying quota', 
   const { key } = await signingFixture(root);
   const cacheRoot = path.join(root, 'cache');
   const orphan = path.join(cacheRoot, 'blobs', 'f'.repeat(64));
+  const temporary = path.join(cacheRoot, 'blobs', `.${'e'.repeat(64)}-00000000-0000-4000-8000-000000000000.tmp`);
   await fs.mkdir(path.dirname(orphan), { recursive: true });
   await fs.writeFile(orphan, Buffer.alloc(1024 * 1024 - 1));
+  await fs.writeFile(temporary, Buffer.alloc(1024 * 1024 - 1));
   const cacheIdentity = identity({ signerFingerprintSha256: signerFingerprintSha256(key.publicKeyBytes) });
   const published = await publishCacheEntry({
     root: cacheRoot, identity: cacheIdentity, artifacts: artifacts(), signingKey: key,
     cacheLimits: { maxEntries: 1, maxBytes: 1024 * 1024, staleStagingMs: 1 },
   });
   await assert.rejects(() => fs.access(orphan));
+  await assert.rejects(() => fs.access(temporary));
   await fs.access(path.join(cacheRoot, 'entries', published.key));
 });
 

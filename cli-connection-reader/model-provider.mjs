@@ -33,13 +33,20 @@ async function fileHash(filePath, limit, label) {
   return { stat, bytes, sha256: sha256(bytes) };
 }
 
-export async function hashRegularFile(filePath, limit, label = 'source') {
+export async function hashRegularFile(filePath, limit, label = 'source', options = {}) {
   const stat = await regularNonLink(filePath, label);
   if (stat.size > limit) providerError(`reference-${label}-too-large`, `${label} exceeds its byte limit.`);
   const hash = createHash('sha256');
+  let streamedBytes = 0;
   try {
-    for await (const chunk of createReadStream(filePath, { highWaterMark: 1024 * 1024 })) hash.update(chunk);
+    const stream = (options.createReadStream ?? createReadStream)(filePath, { highWaterMark: 1024 * 1024 });
+    for await (const chunk of stream) {
+      streamedBytes += chunk.length;
+      if (streamedBytes > limit) providerError(`reference-${label}-too-large`, `${label} exceeds its byte limit.`);
+      hash.update(chunk);
+    }
   } catch (error) {
+    if (error instanceof ModelReaderError) throw error;
     providerError(`reference-${label}-unavailable`, `${label} is unavailable.`, false, error);
   }
   return { stat, sha256: hash.digest('hex') };
@@ -68,14 +75,18 @@ async function privateDirectory(directory) {
 export async function stageImmutableSource(sourcePath, stagingRoot, expectedSourceSha256, options = {}) {
   assertSha256(expectedSourceSha256, 'expectedSourceSha256');
   const limits = lowerableLimits(options.limits);
-  const before = await hashRegularFile(sourcePath, limits.maxSourceBytes, 'source');
+  const before = await hashRegularFile(sourcePath, limits.maxSourceBytes, 'source', options);
   if (before.sha256 !== expectedSourceSha256) providerError('reference-source-changed', 'The model source changed before staging.');
   await privateDirectory(stagingRoot);
   const stagedPath = path.join(stagingRoot, 'source.rvt');
   const handle = await fs.open(stagedPath, 'wx', 0o600);
   const copiedHash = createHash('sha256');
+  let copiedBytes = 0;
   try {
-    for await (const chunk of createReadStream(sourcePath, { highWaterMark: 1024 * 1024 })) {
+    const stream = (options.createReadStream ?? createReadStream)(sourcePath, { highWaterMark: 1024 * 1024 });
+    for await (const chunk of stream) {
+      copiedBytes += chunk.length;
+      if (copiedBytes > limits.maxSourceBytes) providerError('reference-source-too-large', 'source exceeds its byte limit.');
       copiedHash.update(chunk);
       await handle.writeFile(chunk);
     }
@@ -83,7 +94,7 @@ export async function stageImmutableSource(sourcePath, stagingRoot, expectedSour
   }
   finally { await handle.close(); }
   const staged = await hashRegularFile(stagedPath, limits.maxSourceBytes, 'source');
-  const after = await hashRegularFile(sourcePath, limits.maxSourceBytes, 'source');
+  const after = await hashRegularFile(sourcePath, limits.maxSourceBytes, 'source', options);
   if (copiedHash.digest('hex') !== expectedSourceSha256 || staged.sha256 !== expectedSourceSha256 || after.sha256 !== expectedSourceSha256) {
     providerError('reference-source-changed', 'The model source changed while staging.');
   }
@@ -154,7 +165,7 @@ export async function describeProvider(options) {
   const stdout = await callProvider(options.hostRun, {
     executable: initialExecutable.path, operation: 'describe', stdin, stdinLength: stdin.length,
     cwd, environment, timeoutMs: limits.conversionMs,
-    stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes,
+    stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes, signal: options.signal,
   }, limits);
   const afterDescribe = await validateProviderExecutable(options.executable);
   if (afterDescribe.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during description.');
@@ -182,7 +193,7 @@ export async function describeAndConvert(options) {
   const describeBytes = await callProvider(options.hostRun, {
     executable: initialExecutable.path, operation: 'describe', stdin: describeRequest,
     stdinLength: describeRequest.length, cwd: describeCwd, environment,
-    timeoutMs: limits.conversionMs, stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes,
+    timeoutMs: limits.conversionMs, stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes, signal: options.signal,
   }, limits);
   const afterDescribe = await validateProviderExecutable(options.executable);
   if (afterDescribe.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during description.');
@@ -207,7 +218,7 @@ export async function describeAndConvert(options) {
   const receiptBytes = await callProvider(options.hostRun, {
     executable: initialExecutable.path, operation: 'convert', stdin: convertRequest,
     stdinLength: convertRequest.length, cwd: outputDirectory, environment,
-    timeoutMs: limits.conversionMs, stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes,
+    timeoutMs: limits.conversionMs, stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes, signal: options.signal,
   }, limits);
   const afterConvert = await validateProviderExecutable(options.executable);
   if (afterConvert.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during conversion.');

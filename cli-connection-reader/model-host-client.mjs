@@ -61,7 +61,7 @@ export class HostFrameDecoder {
   }
 }
 
-class ModelHostClient {
+export class ModelHostClient {
   constructor(child) {
     this.child = child; this.nextRequestId = 1n; this.pending = new Map(); this.decoder = new HostFrameDecoder(); this.closed = false;
     this.stderr = Buffer.alloc(0);
@@ -113,14 +113,18 @@ class ModelHostClient {
       timeoutMs: request.timeoutMs, stdoutLimit: request.stdoutLimit, stderrLimit: request.stderrLimit,
     });
     const promise = new Promise((resolve, reject) => this.pending.set(requestId.toString(), {
-      type: 'run', request, resolve, reject, handle: null, stdout: [], stderr: [], stdoutSequence: 0, stderrSequence: 0, stdoutFinal: false, stderrFinal: false,
+      type: 'run', request, resolve, reject, handle: null, cancelRequested: false, abortHandler: null,
+      stdout: [], stderr: [], stdoutSequence: 0, stderrSequence: 0, stdoutFinal: false, stderrFinal: false,
     }));
     this.write(frame);
     if (request.signal) {
       const cancel = () => {
         const state = this.pending.get(requestId.toString());
+        if (state) state.cancelRequested = true;
         if (state?.handle) void this.simple({ op: 'provider-cancel' }, state.handle).catch(() => {});
       };
+      const state = this.pending.get(requestId.toString());
+      if (state) state.abortHandler = cancel;
       if (request.signal.aborted) cancel(); else request.signal.addEventListener('abort', cancel, { once: true });
     }
     return await promise;
@@ -141,11 +145,13 @@ class ModelHostClient {
         if (state.handle || frame.runHandle.equals(ZERO_HANDLE)) throw new Error('invalid model-reader host run acceptance');
         state.handle = frame.runHandle;
         this.write({ kind: 4, requestId: frame.requestId, runHandle: state.handle, sequence: 0, final: true, payload: state.request.stdin });
+        if (state.cancelRequested) void this.simple({ op: 'provider-cancel' }, state.handle).catch(() => {});
         return;
       }
       if (control.status === 'complete') {
         if (!state.handle || !frame.runHandle.equals(state.handle) || !state.stdoutFinal || !state.stderrFinal) throw new Error('model-reader host completed before correlated streams');
         this.pending.delete(frame.requestId.toString());
+        if (state.abortHandler) state.request.signal?.removeEventListener('abort', state.abortHandler);
         if (control.hostErrorCode) {
           state.reject(new ModelReaderError(control.hostErrorCode, 'provider-host', false, 'The managed provider stream failed its bounded read.'));
           return;
@@ -165,7 +171,10 @@ class ModelHostClient {
   }
 
   failAll(error) {
-    for (const state of this.pending.values()) state.reject(new ModelReaderError('reference-provider-host-failed', 'provider-host', true, 'The managed provider host failed.', error));
+    for (const state of this.pending.values()) {
+      if (state.abortHandler) state.request.signal?.removeEventListener('abort', state.abortHandler);
+      state.reject(new ModelReaderError('reference-provider-host-failed', 'provider-host', true, 'The managed provider host failed.', error));
+    }
     this.pending.clear();
   }
 
@@ -174,6 +183,33 @@ class ModelHostClient {
     try { await this.simple({ op: 'shutdown' }); } catch { /* host death already rejects callers */ }
     this.closed = true; this.child.stdin.end();
   }
+
+  async terminate() {
+    if (this.closed) return;
+    this.closed = true;
+    const exited = new Promise((resolve) => {
+      if (this.child.exitCode !== null && this.child.exitCode !== undefined) { resolve(); return; }
+      let settled = false;
+      let timer;
+      const finish = () => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        this.child.stdout.destroy?.(); this.child.stderr.destroy?.(); this.child.unref?.();
+        resolve();
+      };
+      this.child.once('exit', finish); this.child.once('error', finish);
+      timer = setTimeout(finish, 1000); timer.unref?.();
+    });
+    this.child.stdin.destroy?.();
+    this.child.kill?.();
+    await exited;
+  }
+}
+
+export async function requireReadyClient(client) {
+  try { await client.ready(); return client; }
+  catch (error) { await client.terminate(); throw error; }
 }
 
 export async function createModelHostClient(hostPath, options = {}) {
@@ -183,5 +219,5 @@ export async function createModelHostClient(hostPath, options = {}) {
   catch (error) { hostError('reference-provider-host-unavailable', 'The managed provider host is unavailable.', error); }
   if (!stat.isFile() || stat.isSymbolicLink() || path.resolve(real).toLowerCase() !== path.resolve(hostPath).toLowerCase()) hostError('reference-provider-host-unavailable', 'The managed provider host path is unsafe.');
   const child = spawn(hostPath, ['__model-reader-host'], { shell: false, windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'], env: options.environment ?? process.env });
-  const client = new ModelHostClient(child); await client.ready(); return client;
+  return await requireReadyClient(new ModelHostClient(child));
 }

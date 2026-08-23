@@ -29,6 +29,14 @@ test('strict JSON parsing rejects duplicate keys, trailing bytes, and unsafe int
   assert.throws(() => parseJsonStrict('{"a":9007199254740992}'), /safe integer/);
 });
 
+test('legal __proto__ keys remain own JSON data through strict parsing and canonicalization', () => {
+  const parsed = parseJsonStrict('{"__proto__":{"polluted":true},"stable":1}');
+  assert.equal(Object.hasOwn(parsed, '__proto__'), true);
+  assert.equal(Object.getPrototypeOf(parsed), Object.prototype);
+  assert.equal(Object.getPrototypeOf(parsed).polluted, undefined);
+  assert.equal(canonicalJsonBytes(parsed).toString('utf8'), '{"__proto__":{"polluted":true},"stable":1}');
+});
+
 test('every canonical request leaf affects the cache/request preimage', () => {
   const request = buildCanonicalRequest();
   const baseline = requestSha256(request);
