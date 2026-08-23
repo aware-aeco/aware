@@ -283,7 +283,7 @@ async function readCacheEntryUnsafe({ root, key, expectedIdentity, expectedPubli
   for (const name of REQUIRED_ARTIFACTS) {
     if (manifest.artifacts?.[name]?.sha256 !== receipt.blobs[name].sha256 || manifest.artifacts?.[name]?.bytes !== receipt.blobs[name].bytes) cacheError('reference-cache-entry-invalid', 'Cached manifest does not reconcile with its blobs.');
   }
-  return { manifest, receipt, artifacts };
+  return { manifest, receipt, receiptSha256: sha256(receiptBytes), artifacts };
 }
 
 export async function readCacheEntry(options) {

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { generateKeyPairSync } from 'node:crypto';
+import { createHash, createPublicKey, generateKeyPairSync, verify } from 'node:crypto';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs/promises';
 import os from 'node:os';
@@ -10,9 +10,40 @@ import { sha256 } from './model-contract.mjs';
 import { runModelCommand } from './model-reader.mjs';
 
 const fixture = fileURLToPath(new URL('./test-fixtures/model-provider-fixture.mjs', import.meta.url));
+const PUBLIC_PREFIX = Buffer.from('302a300506032b6570032100', 'hex');
+
+function uint64be(value) {
+  const bytes = Buffer.alloc(8);
+  bytes.writeBigUInt64BE(BigInt(value));
+  return bytes;
+}
+
+function canonicalFixture(value) {
+  if (Array.isArray(value)) return `[${value.map(canonicalFixture).join(',')}]`;
+  if (value && typeof value === 'object') {
+    return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${canonicalFixture(value[key])}`).join(',')}}`;
+  }
+  return JSON.stringify(value);
+}
+
+function verifyEnvelope(domain, preimage, envelope) {
+  const preimageBytes = Buffer.from(canonicalFixture(preimage), 'utf8');
+  const digest = createHash('sha256').update(preimageBytes).digest('hex');
+  assert.equal(envelope.preimageSha256, digest);
+  const signatureInput = createHash('sha256')
+    .update(Buffer.from(domain, 'ascii'))
+    .update(uint64be(preimageBytes.length))
+    .update(preimageBytes)
+    .digest();
+  const publicKey = createPublicKey({
+    key: Buffer.concat([PUBLIC_PREFIX, Buffer.from(envelope.publicKeyBase64, 'base64')]),
+    format: 'der', type: 'spki',
+  });
+  assert.equal(verify(null, signatureInput, publicKey, Buffer.from(envelope.signatureBase64, 'base64')), true);
+}
 
 async function setup(t) {
-  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'aware-model-reader-'));
+  const root = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'aware-model-reader-'));
   t.after(() => fs.rm(root, { recursive: true, force: true }));
   const sourcePath = path.join(root, 'fixture.rvt');
   const executable = path.join(root, 'provider.exe');
@@ -77,6 +108,7 @@ test('read-model publishes five binary-safe artifacts with reconciled coverage a
   assert.equal(out.coverage.discoveredEntities, 1);
   assert.equal(Object.keys(out.artifacts).length, 5);
   for (const descriptor of Object.values(out.artifacts)) {
+    assert.deepEqual(Object.keys(descriptor).sort(), ['bytes', 'id', 'mediaType', 'sha256']);
     assert.match(descriptor.id, /^[a-z0-9.-]+$/);
     const bytes = await fs.readFile(path.join(state.deps.artifactDirectory, descriptor.id));
     assert.equal(sha256(bytes), descriptor.sha256);
@@ -84,6 +116,74 @@ test('read-model publishes five binary-safe artifacts with reconciled coverage a
   }
   const geometry = await fs.readFile(path.join(state.deps.artifactDirectory, out.artifacts.geometry.id));
   assert.equal(geometry.readUInt32LE(0), 0x46546c67);
+  assert.equal('sourceArtifactEnvelope' in out, false);
+  assert.equal('sourceArtifactPreimage' in out, false);
+});
+
+test('read-snapshot derives public source and package envelopes after private cache verification', async (t) => {
+  const state = await setup(t);
+  const preflight = await runModelCommand('preflight', {
+    'provider-path': state.executable, 'signing-secret-path': state.secretPath, 'signing-public-path': state.publicPath,
+  }, state.deps);
+  const args = {
+    ...state.args, 'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  };
+  const out = await runModelCommand('read-snapshot', args, state.deps);
+
+  assert.equal(out.schemaVersion, 'model-reference-reader/v1');
+  assert.equal(out.sourceArtifactPreimage.outputs.length, 5);
+  assert.deepEqual(out.sourceArtifactPreimage.outputs.map((item) => item.logicalName),
+    ['geometry', 'entities', 'properties', 'relationships', 'manifest']);
+  verifyEnvelope('AWARE\0model-reference-reader\0source-artifact-set\0v1\0', out.sourceArtifactPreimage, out.sourceArtifactEnvelope);
+
+  assert.equal(out.packagePreimage.outputs.length, 6);
+  assert.deepEqual(out.packagePreimage.outputs.map((item) => item.logicalName),
+    ['manifest', 'tile-000000', 'entities-000000', 'properties-000000', 'relationships-000000', 'index']);
+  verifyEnvelope('AWARE\0model-reference-reader\0package-set\0v1\0', out.packagePreimage, out.packageArtifactEnvelope);
+  assert.equal(out.packageConfiguration.maximumTileTriangles, 15_000_000);
+  assert.equal(out.packageConfiguration.maximumAggregateBytes, (256 * 1024 * 1024) + (32 * 1024 * 1024 * 5));
+  assert.equal(out.packagePreimage.source.sourceArtifactPreimageSha256, out.sourceArtifactEnvelope.preimageSha256);
+
+  for (const [logicalName, descriptor] of Object.entries({ ...out.artifacts, ...out.packageArtifacts })) {
+    const bytes = await fs.readFile(path.join(state.deps.artifactDirectory, descriptor.id));
+    assert.equal(bytes.length, descriptor.bytes, logicalName);
+    assert.equal(sha256(bytes), descriptor.sha256, logicalName);
+  }
+  assert.equal(JSON.stringify(out).includes('receipt.sig'), false);
+  assert.equal(JSON.stringify(out).includes('receipt.json'), false);
+  assert.equal(state.calls.filter((operation) => operation === 'convert').length, 1);
+
+  const warm = await runModelCommand('read-snapshot', args, state.deps);
+  assert.equal(warm.cache, 'hit');
+  assert.equal(state.calls.filter((operation) => operation === 'convert').length, 1);
+  assert.deepEqual(warm.sourceArtifactPreimage, out.sourceArtifactPreimage);
+  assert.deepEqual(warm.packagePreimage, out.packagePreimage);
+});
+
+test('read-snapshot refuses a tampered private cache receipt before public artifact publication', async (t) => {
+  const state = await setup(t);
+  const preflight = await runModelCommand('preflight', {
+    'provider-path': state.executable, 'signing-secret-path': state.secretPath, 'signing-public-path': state.publicPath,
+  }, state.deps);
+  const args = {
+    ...state.args, 'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  };
+  await runModelCommand('read-model', args, state.deps);
+  const entries = await fs.readdir(path.join(state.deps.cacheRoot, 'entries'));
+  assert.equal(entries.length, 1);
+  const receiptPath = path.join(state.deps.cacheRoot, 'entries', entries[0], 'receipt.json');
+  const receipt = JSON.parse(await fs.readFile(receiptPath, 'utf8'));
+  receipt.identitySha256 = '0'.repeat(64);
+  await fs.writeFile(receiptPath, JSON.stringify(receipt));
+
+  await assert.rejects(
+    () => runModelCommand('read-snapshot', args, state.deps),
+    (error) => error.code === 'reference-cache-signature-invalid',
+  );
+  const published = await fs.readdir(state.deps.artifactDirectory);
+  assert.equal(published.some((name) => name.startsWith('snapshot-')), false);
 });
 
 test('probe is bounded, cache-aware, and two cold conversions produce identical artifact hashes', async (t) => {

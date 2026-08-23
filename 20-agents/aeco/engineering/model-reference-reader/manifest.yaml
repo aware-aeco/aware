@@ -1,5 +1,5 @@
 agent: model-reference-reader
-version: 0.1.0
+version: 0.2.0
 display-name: Local RVT Reference Reader
 description: |
   Convert a local Revit project into deterministic, authenticated reference-model artifacts without
@@ -84,7 +84,7 @@ commands:
     category: curated
     description: |
       Publish five deterministic run-owned artifacts: binary GLB geometry, entities, properties,
-      relationships and the manifest that authenticates their provenance and exact coverage.
+      relationships and the manifest that records their provenance and exact coverage.
     inputs:
       rvt-path:
         type: string
@@ -113,3 +113,43 @@ commands:
         frame: object
         coverage: object
         artifacts: object
+  read-snapshot:
+    lifecycle: single
+    category: curated
+    description: |
+      Publish the unchanged five model artifacts plus a bounded display package, with separate signed
+      source and package envelopes derived only after the private cache receipt verifies.
+    inputs:
+      rvt-path:
+        type: string
+        required: true
+        description: Absolute path to the local .rvt source.
+      source-sha256:
+        type: string
+        required: true
+        description: Expected SHA-256 of the source bytes, measured before the run.
+      expected-provider-sha256:
+        type: string
+        required: true
+        description: Pinned SHA-256 of the complete seven-field provider fingerprint.
+      expected-signer-sha256:
+        type: string
+        required: true
+        description: Out-of-band pinned SHA-256 of the trusted AWARE-format public key.
+    outputs:
+      type: single
+      schema:
+        sourceSha256: string
+        canonicalRequestSha256: string
+        providerFingerprint: object
+        providerFingerprintSha256: string
+        signerFingerprintSha256: string
+        frame: object
+        coverage: object
+        artifacts: object
+        sourceArtifactPreimage: object
+        sourceArtifactEnvelope: object
+        packageArtifacts: object
+        packageConfiguration: object
+        packagePreimage: object
+        packageArtifactEnvelope: object

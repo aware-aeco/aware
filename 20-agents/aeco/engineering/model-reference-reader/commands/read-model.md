@@ -8,6 +8,10 @@
 - `relationships` — explicit provider relationships with validated endpoints and hierarchy;
 - `manifest` — source/request/provider/signer provenance, hashes, frame and reconciled coverage.
 
+`read-model@0.1.0` and the compatibility form retained in `0.2.0` return only the five descriptors;
+their signed cache receipt remains private to AWARE. Consumers that need a portable authenticated
+boundary must use `read-snapshot` and verify its public source and package envelopes.
+
 Supply the preflight provider fingerprint and an out-of-band trusted signer fingerprint on every call.
 The reader refuses provider or signing-key rotation before cache access or conversion.
 

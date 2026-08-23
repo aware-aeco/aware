@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-08-23T13:22:38.880734300+00:00",
+  "updated-at": "2026-08-23T21:07:52.510518200+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -4245,13 +4245,13 @@
         "local"
       ],
       "versions": {
-        "0.1.0": {
+        "0.2.0": {
           "description": "Convert a local Revit project into deterministic, authenticated reference-model artifacts without",
           "status": "available",
-          "manifest-version": "0.1.0",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "transport": "cli",
-          "command_count": 3,
+          "command_count": 4,
           "skills": [
             "provider-and-artifact-contract"
           ],
@@ -4271,6 +4271,12 @@
             {
               "name": "read-model",
               "description": "Publish five deterministic run-owned artifacts: binary GLB geometry, entities, properties,",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "read-snapshot",
+              "description": "Publish the unchanged five model artifacts plus a bounded display package, with separate signed",
               "lifecycle": "single",
               "category": "curated"
             }

@@ -13,6 +13,7 @@ import {
   releaseCacheOwner, signerFingerprintSha256,
 } from './model-cache.mjs';
 import { createModelHostClient } from './model-host-client.mjs';
+import { buildAndPublishSnapshot } from './model-snapshot.mjs';
 
 function readerError(code, phase, message, retryable = false, details = undefined) {
   throw new ModelReaderError(code, phase, retryable, message, details);
@@ -230,7 +231,7 @@ export async function runModelCommand(command, args = {}, deps = {}) {
   try {
     const pin = args['expected-provider-sha256'];
     if (command !== 'preflight') {
-      if (command !== 'probe' && command !== 'read-model') readerError('reference-command-invalid', 'request', 'Unknown model-reader command.');
+      if (!['probe', 'read-model', 'read-snapshot'].includes(command)) readerError('reference-command-invalid', 'request', 'Unknown model-reader command.');
       if (typeof pin !== 'string') readerError('reference-provider-pin-required', 'preflight', 'The expected provider fingerprint is required.');
       if (typeof args['expected-signer-sha256'] !== 'string') readerError('reference-signer-pin-required', 'preflight', 'The expected signer fingerprint is required.');
     }
@@ -249,6 +250,12 @@ export async function runModelCommand(command, args = {}, deps = {}) {
     const out = summary(result);
     if (command === 'probe') return out;
     emit(executionDeps, 'artifacts');
+    if (command === 'read-snapshot') {
+      return {
+        ...out,
+        ...await buildAndPublishSnapshot(result, readiness.signingKey, config.artifactDirectory, { limits: deps.limits }),
+      };
+    }
     return { ...out, artifacts: await publishRunArtifacts(result, config.artifactDirectory) };
   } finally {
     await ownedHost?.close();

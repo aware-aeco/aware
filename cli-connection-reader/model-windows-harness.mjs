@@ -2,7 +2,6 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
@@ -14,7 +13,9 @@ if (process.platform !== 'win32') {
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.dirname(here);
-const temporary = mkdtempSync(path.join(os.tmpdir(), 'aware-rvt-harness-'));
+const temporaryParent = path.join(root, '.tmp');
+mkdirSync(temporaryParent, { recursive: true });
+const temporary = mkdtempSync(path.join(temporaryParent, 'aware-rvt-harness-'));
 const FUSE = 'NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2';
 const aware = process.env.AWARE_SOURCE_BUILT || path.join(root, 'cli', 'target', 'debug', 'aware.exe');
 
@@ -45,6 +46,18 @@ function findArtifactSet(value) {
   }
   for (const child of Object.values(value)) {
     const found = findArtifactSet(child);
+    if (found) return found;
+  }
+  return null;
+}
+
+function findPackageArtifactSet(value) {
+  if (!value || typeof value !== 'object') return null;
+  if (value.packageArtifacts && typeof value.packageArtifacts === 'object' && Object.keys(value.packageArtifacts).length === 6) {
+    return value.packageArtifacts;
+  }
+  for (const child of Object.values(value)) {
+    const found = findPackageArtifactSet(child);
     if (found) return found;
   }
   return null;
@@ -101,6 +114,12 @@ try {
   const geometry = readFileSync(path.join(artifacts, model.artifacts.geometry.id));
   assert.equal(geometry.readUInt32LE(0), 0x46546c67); assert.equal(sha256(geometry), model.artifacts.geometry.sha256);
   for (const descriptor of Object.values(model.artifacts)) assert.equal(sha256(readFileSync(path.join(artifacts, descriptor.id))), descriptor.sha256);
+  assert.equal(Object.hasOwn(model, 'sourceArtifactEnvelope'), false, 'read-model compatibility response must remain unchanged');
+  const snapshot = run(packaged, 'read-snapshot', request, environment, unrelatedCwd);
+  assert.equal(Object.keys(snapshot.artifacts).length, 5);
+  assert.equal(Object.keys(snapshot.packageArtifacts).length, 6);
+  assert.equal(snapshot.sourceArtifactPreimage.outputs.length, 5);
+  assert.equal(snapshot.packagePreimage.outputs.length, 6);
 
   const ifc = run(packaged, 'probe', { 'ifc-path': path.join(here, 'test-fixtures', 'baseplate-bp1.ifc') }, environment, unrelatedCwd);
   assert.equal(ifc.schema, 'IFC4'); assert.equal(ifc.frame, 'z-up');
@@ -111,12 +130,12 @@ try {
   const appDirectory = path.join(temporary, 'rvt-reader-e2e'); mkdirSync(appDirectory);
   const appSource = path.join(appDirectory, 'rvt-reader-e2e.flo');
   writeFileSync(appSource, `app: rvt-reader-e2e
-version: 0.1.0
+version: 0.2.0
 display-name: RVT Reader E2E
 description: Exercise the authenticated local RVT reader through a real one-shot AWARE app.
 exposes-as-agent: false
 requires:
-  - model-reference-reader@0.1.x
+  - model-reference-reader@0.2.0
 requires-permissions:
   filesystem:
     - read: '*.rvt'
@@ -124,7 +143,7 @@ layout: linear
 nodes:
   - id: read-reference
     agent: model-reference-reader
-    command: read-model
+    command: read-snapshot
     inputs:
       rvt-path: '{{ inputs.rvt-path }}'
       source-sha256: '{{ inputs.source-sha256 }}'
@@ -146,8 +165,17 @@ nodes:
   }).trim().split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line));
   const appArtifacts = findArtifactSet(trace);
   assert.ok(appArtifacts, 'real aware app run must return all five artifact descriptors');
+  const appPackageArtifacts = findPackageArtifactSet(trace);
+  assert.ok(appPackageArtifacts, 'real aware app run must return all six package artifact descriptors');
   for (const [kind, descriptor] of Object.entries(appArtifacts)) {
     const retrieved = path.join(temporary, `retrieved-${kind}${kind === 'geometry' ? '.glb' : '.json'}`);
+    execFileSync(aware, ['app', 'artifact', 'rvt-reader-e2e', descriptor.id, '--run-id', runId, '--output', retrieved], {
+      env: environment, stdio: 'pipe', windowsHide: true,
+    });
+    assert.equal(sha256(readFileSync(retrieved)), descriptor.sha256);
+  }
+  for (const [kind, descriptor] of Object.entries(appPackageArtifacts)) {
+    const retrieved = path.join(temporary, `retrieved-package-${kind}${descriptor.mediaType === 'model/gltf-binary' ? '.glb' : '.json'}`);
     execFileSync(aware, ['app', 'artifact', 'rvt-reader-e2e', descriptor.id, '--run-id', runId, '--output', retrieved], {
       env: environment, stdio: 'pipe', windowsHide: true,
     });

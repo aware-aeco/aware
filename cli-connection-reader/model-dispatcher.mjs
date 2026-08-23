@@ -9,7 +9,7 @@ function route(command, args) {
   const hasRvt = ['rvt-path', 'rvtPath', 'model-path'].some((key) => args[key] !== undefined);
   if (hasIfc && hasRvt) throw new ModelReaderError('reference-mixed-model-paths', 'request', false, 'IFC and RVT paths cannot be mixed in one command.');
   if (command === 'preflight') return 'rvt';
-  if ((command === 'probe' || command === 'read-model') && hasRvt) return 'rvt';
+  if ((command === 'probe' || command === 'read-model' || command === 'read-snapshot') && hasRvt) return 'rvt';
   return 'ifc';
 }
 

@@ -15,7 +15,7 @@ import {
 const fixture = fileURLToPath(new URL('./test-fixtures/model-provider-fixture.mjs', import.meta.url));
 
 async function temporaryDirectory(t) {
-  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'aware-model-provider-'));
+  const directory = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'aware-model-provider-'));
   t.after(() => fs.rm(directory, { recursive: true, force: true }));
   return directory;
 }
