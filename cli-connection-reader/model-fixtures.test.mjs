@@ -16,4 +16,3 @@ test('generated metadata uses decimal-string identities and explicit appearance 
   assert.deepEqual(metadata.elements[0].appearances, ['part-a', 'part-b']);
   assert.equal(metadata.parameters[0].storageType, 'string');
 });
-
