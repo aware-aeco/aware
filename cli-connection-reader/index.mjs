@@ -231,22 +231,19 @@ function tessellate(api, modelID, wantById) {
 // ---------------------------------------------------------------------------------------------
 
 /**
- * What the file DECLARES as its length unit, verbatim: "MILLI.METRE" | "METRE" | … | null.
+ * The declared LENGTHUNIT as `{ declared, id }` — the label for humans, the express id so the scale
+ * can be resolved. Both null when the file declares no length unit.
  *
- * This is PROVENANCE, not a conversion factor for geometry. Measured 2026-07-25: web-ifc reads
+ * `declared` is what the file SAYS its length unit is, verbatim: "MILLI.METRE" | "METRE" | … | null.
+ * It is PROVENANCE, not a conversion factor for geometry. Measured 2026-07-25: web-ifc reads
  * IfcUnitAssignment itself and normalises tessellated geometry to metres before we ever see a vertex,
- * so nothing downstream may multiply mesh coordinates by this. It exists so a user can see what they
+ * so nothing downstream may multiply mesh coordinates by it. It exists so a user can see what they
  * were handed, and so a file that LIES about its units can be spotted and overridden.
  * (floless.app/docs/superpowers/specs/2026-07-25-reference-objects-units-evidence.md)
  *
- * null means the file did not say — an honest "unknown", never a guess.
+ * null means the file did not say — an honest "unknown", never a guess. `id` is what
+ * `unitToMM` resolves for the approximate preflight extent; see `probeModel`.
  */
-export function declaredUnit(api, modelID) {
-  return lengthUnit(api, modelID).declared;
-}
-
-/** The declared LENGTHUNIT as `{ declared, id }` — the label for humans, the express id so the scale
- *  can be resolved. Both null when the file declares no length unit. */
 function lengthUnit(api, modelID) {
   const ids = api.GetLineIDsWithType(modelID, WebIFC.IFCUNITASSIGNMENT);
   for (let i = 0; i < ids.size(); i++) {

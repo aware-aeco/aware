@@ -1,0 +1,29 @@
+{
+  "scene": {
+    "meta": {
+      "name": "AWARE double-angle verification",
+      "units": "mm",
+      "sourceId": "aware-live-double-angle-v1",
+      "sceneHash": "live-verification-double-angle-2026-v1"
+    },
+    "elements": [
+      { "id": "DA-LLBB-BEAM", "kind": "member", "role": "beam", "from": [0, 0, 0], "to": [3000, 0, 0], "profile": "2L150X100X10 LLBB", "material": "S355JR", "section": { "w": 212, "d": 150 }, "xsection": { "shape": "double-angle", "d": 150, "b": 100, "t": 10, "gap": 12, "orientation": "llbb" } },
+      { "id": "DA-SLBB-BEAM", "kind": "member", "role": "beam", "from": [0, 1000, 0], "to": [3000, 1000, 0], "profile": "2L150X100X10 SLBB", "material": "S355JR", "section": { "w": 312, "d": 100 }, "xsection": { "shape": "double-angle", "d": 150, "b": 100, "t": 10, "gap": 12, "orientation": "slbb" } },
+      { "id": "DA-LLBB-COLUMN", "kind": "member", "role": "column", "from": [0, 2000, 0], "to": [0, 2000, 3000], "profile": "2L150X100X10 LLBB", "material": "S355JR", "section": { "w": 212, "d": 150 }, "xsection": { "shape": "double-angle", "d": 150, "b": 100, "t": 10, "gap": 12, "orientation": "llbb" } },
+      { "id": "DA-SLBB-COLUMN", "kind": "member", "role": "column", "from": [0, 3000, 0], "to": [0, 3000, 3000], "profile": "2L150X100X10 SLBB", "material": "S355JR", "section": { "w": 312, "d": 100 }, "xsection": { "shape": "double-angle", "d": 150, "b": 100, "t": 10, "gap": 12, "orientation": "slbb" } },
+      { "id": "DA-LLBB-ROLLED", "kind": "member", "role": "brace", "from": [0, 4000, 0], "to": [3000, 4000, 0], "rot": 30, "profile": "2L150X100X10 LLBB", "material": "S355JR", "section": { "w": 212, "d": 150 }, "xsection": { "shape": "double-angle", "d": 150, "b": 100, "t": 10, "gap": 12, "orientation": "llbb" } },
+      { "id": "DA-SLBB-SLOPED", "kind": "member", "role": "brace", "from": [0, 5000, 0], "to": [3000, 5000, 1500], "profile": "2L150X100X10 SLBB", "material": "S355JR", "section": { "w": 312, "d": 100 }, "xsection": { "shape": "double-angle", "d": 150, "b": 100, "t": 10, "gap": 12, "orientation": "slbb" } },
+      { "id": "DA-EQUAL-TOUCHING", "kind": "member", "role": "beam", "from": [0, 6000, 0], "to": [3000, 6000, 0], "profile": "2L100X100X8 SLBB", "material": "S355JR", "section": { "w": 200, "d": 100 }, "xsection": { "shape": "double-angle", "d": 100, "b": 100, "t": 8, "gap": 0, "orientation": "slbb" } },
+      { "id": "DA-LLBB-COLUMN-ROLLED", "kind": "member", "role": "column", "from": [0, 8000, 0], "to": [0, 8000, 3000], "rot": 30, "profile": "2L150X100X10 LLBB", "material": "S355JR", "section": { "w": 212, "d": 150 }, "xsection": { "shape": "double-angle", "d": 150, "b": 100, "t": 10, "gap": 12, "orientation": "llbb" } },
+      { "id": "DA-SLBB-COLUMN-DOWNWARD", "kind": "member", "role": "column", "from": [0, 9000, 3000], "to": [0, 9000, 0], "rot": -115, "profile": "2L150X100X10 SLBB", "material": "S355JR", "section": { "w": 312, "d": 100 }, "xsection": { "shape": "double-angle", "d": 150, "b": 100, "t": 10, "gap": 12, "orientation": "slbb" } },
+      { "id": "L-SINGLE-REFERENCE", "kind": "member", "role": "beam", "from": [0, 7000, 0], "to": [3000, 7000, 0], "profile": "L150*100*10", "material": "S355JR", "section": { "w": 100, "d": 150 }, "xsection": { "shape": "angle", "d": 150, "b": 100, "t": 10 } },
+      { "id": "L-SINGLE-COLUMN", "kind": "member", "role": "column", "from": [0, 10000, 0], "to": [0, 10000, 3000], "profile": "L150*100*10", "material": "S355JR", "section": { "w": 100, "d": 150 }, "xsection": { "shape": "angle", "d": 150, "b": 100, "t": 10 } },
+      { "id": "L-SINGLE-COLUMN-ROLLED", "kind": "member", "role": "column", "from": [0, 11000, 0], "to": [0, 11000, 3000], "rot": 30, "profile": "L150*100*10", "material": "S355JR", "section": { "w": 100, "d": 150 }, "xsection": { "shape": "angle", "d": 150, "b": 100, "t": 10 } },
+      { "id": "L-SINGLE-COLUMN-DOWNWARD", "kind": "member", "role": "column", "from": [0, 12000, 3000], "to": [0, 12000, 0], "rot": -115, "profile": "L150*100*10", "material": "S355JR", "section": { "w": 100, "d": 150 }, "xsection": { "shape": "angle", "d": 150, "b": 100, "t": 10 } },
+      { "id": "L-SINGLE-ROLLED", "kind": "member", "role": "brace", "from": [0, 13000, 0], "to": [3000, 13000, 0], "rot": 30, "profile": "L150*100*10", "material": "S355JR", "section": { "w": 100, "d": 150 }, "xsection": { "shape": "angle", "d": 150, "b": 100, "t": 10 } },
+      { "id": "L-SINGLE-SLOPED", "kind": "member", "role": "brace", "from": [0, 14000, 0], "to": [3000, 14000, 1500], "profile": "L150*100*10", "material": "S355JR", "section": { "w": 100, "d": 150 }, "xsection": { "shape": "angle", "d": 150, "b": 100, "t": 10 } },
+      { "id": "L-SINGLE-EQUAL", "kind": "member", "role": "beam", "from": [0, 15000, 0], "to": [3000, 15000, 0], "profile": "L100*100*8", "material": "S355JR", "section": { "w": 100, "d": 100 }, "xsection": { "shape": "angle", "d": 100, "b": 100, "t": 8 } }
+    ]
+  },
+  "label": "AWARE double-angle verification"
+}

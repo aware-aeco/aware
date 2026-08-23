@@ -1152,4 +1152,398 @@ mod tests {
         let written = std::fs::read_to_string(&path).unwrap();
         assert_eq!(written, out["html"].as_str().unwrap());
     }
+
+    // ── the structural arms the validator has but nothing exercised ─────────
+    //
+    // `validate_descriptor` / `validate_panel` / `validate_block` each carry a
+    // "wrong shape entirely" arm beside the "missing field" arm that the tests
+    // above cover. Those arms are what stand between a malformed descriptor and
+    // an `unwrap()` in the renderer — `ui_render` refuses only on `errors`, so
+    // an arm that pushes nothing lets the shape through to `render_panel`,
+    // which reads every field with `.and_then(|v| v.as_str()).unwrap_or("")`
+    // and would silently emit a blank panel instead of saying what was wrong.
+
+    /// Validate `d` as a descriptor and return its errors joined into one
+    /// searchable string. Unescaped, unlike `Value::to_string()`.
+    fn errors_for(d: Value) -> String {
+        joined(&ui_validate(&json!({ "descriptor": d })).unwrap()["errors"])
+    }
+
+    #[test]
+    fn panels_of_the_wrong_shape_are_named_rather_than_skipped() {
+        // `panels` itself not an array: the whole block is unreadable.
+        let errs = errors_for(json!({ "version": 1, "panels": { "id": "p" } }));
+        assert!(
+            errs.contains("panels: must be an array (got object)"),
+            "{errs}"
+        );
+        // A non-object ENTRY is reported at its own index, and the panels around
+        // it still validate — index drift here would point a user at the wrong
+        // panel, which is worse than no message.
+        let errs = errors_for(json!({
+            "version": 1,
+            "panels": [
+                { "id": "ok", "slot": "s", "title": "T", "blocks": [] },
+                "not-a-panel",
+                { "id": "ok", "slot": "s", "title": "T", "blocks": [] },
+            ],
+        }));
+        assert!(
+            errs.contains("panels[1]: must be an object (got string)"),
+            "{errs}"
+        );
+        // …and the duplicate id at index 2 is still caught, so the bad entry did
+        // not abort the walk.
+        assert!(
+            errs.contains("panels[2].id: duplicate panel id \"ok\""),
+            "{errs}"
+        );
+    }
+
+    #[test]
+    fn a_slot_that_is_present_but_says_nothing_is_refused() {
+        // `slot` is the one field the fallback renderer does not interpret — the
+        // HOST does. An empty or whitespace-only slot therefore renders a
+        // perfectly fine-looking badge with nothing in it while the host has no
+        // idea where the panel wants to live, so it has to fail at validation.
+        let panel = |slot: Value| {
+            json!({
+                "version": 1,
+                "panels": [{ "id": "p", "slot": slot, "title": "T", "blocks": [] }],
+            })
+        };
+        assert!(errors_for(panel(json!(""))).contains("panels[0].slot: must not be empty"));
+        assert!(errors_for(panel(json!("   "))).contains("panels[0].slot: must not be empty"));
+        let errs = errors_for(panel(json!(3)));
+        assert!(
+            errs.contains("panels[0].slot: must be a string (got number)"),
+            "{errs}"
+        );
+        // A slot with real content is accepted — otherwise the two asserts above
+        // would pass against a rule that rejects every slot.
+        assert_eq!(errors_for(panel(json!("dashboard"))), "");
+    }
+
+    #[test]
+    fn a_block_whose_type_cannot_be_read_is_refused_not_treated_as_unknown() {
+        // The forward-compatibility rule (unknown type → warning) must not
+        // swallow a block whose type is missing or isn't a string: those are
+        // malformed, not "written for a newer renderer", and letting them
+        // through as warnings would render them as placeholders forever.
+        let blocks = |b: Value| {
+            json!({
+                "version": 1,
+                "panels": [{ "id": "p", "slot": "s", "title": "T", "blocks": [b] }],
+            })
+        };
+        let errs = errors_for(blocks(json!("stat")));
+        assert!(
+            errs.contains("panels[0].blocks[0]: must be an object (got string)"),
+            "{errs}"
+        );
+        assert!(errors_for(blocks(json!({ "label": "L" }))).contains("blocks[0].type: missing"));
+        let errs = errors_for(blocks(json!({ "type": 7 })));
+        assert!(
+            errs.contains("blocks[0].type: must be a string (got number)"),
+            "{errs}"
+        );
+    }
+
+    #[test]
+    fn a_stringified_version_is_refused_and_the_message_shows_the_quotes() {
+        // `"1"` is the mistake a descriptor composed by a prompt actually makes,
+        // and it is the reason `compact()` exists rather than `type_name()`: a
+        // message reading `must be 1 (got string)` leaves the author staring at
+        // a value that looks correct. The quotes are the whole point.
+        let errs = errors_for(json!({ "version": "1", "panels": [] }));
+        assert!(errs.contains("version: must be 1 (got \"1\")"), "{errs}");
+        // The integer 1 is what passes; 1.0 is not an i64 and does not.
+        assert_eq!(errors_for(json!({ "version": 1, "panels": [] })), "");
+        assert!(errors_for(json!({ "version": 1.5, "panels": [] })).contains("version: must be 1"));
+    }
+
+    #[test]
+    fn fields_nobody_declared_are_warnings_at_every_level() {
+        // Forward compatibility is a contract, not a courtesy: a descriptor
+        // written for a newer schema must still VALIDATE on an old build. The
+        // block-level half is covered above; the descriptor and panel levels
+        // each have their own loop and neither was exercised.
+        let out = ui_validate(&json!({
+            "descriptor": {
+                "version": 1,
+                "theme": "dark",
+                "panels": [{
+                    "id": "p", "slot": "s", "title": "T", "blocks": [],
+                    "collapsed": true,
+                }],
+            },
+        }))
+        .unwrap();
+        assert_eq!(out["valid"], json!(true), "errors: {}", out["errors"]);
+        let warnings = joined(&out["warnings"]);
+        assert!(
+            warnings.contains("theme: unknown descriptor field"),
+            "{warnings}"
+        );
+        assert!(
+            warnings.contains("panels[0].collapsed: unknown panel field"),
+            "{warnings}"
+        );
+    }
+
+    #[test]
+    fn an_array_of_string_field_checks_the_elements_not_just_the_array() {
+        // `wrong_field_types_error_with_expected_type` passes a plain string for
+        // `columns`, which fails on `as_array()` alone — so the element check
+        // could be deleted and that test would still pass. This one only passes
+        // if the elements are actually inspected.
+        let columns = |v: Value| {
+            json!({
+                "version": 1,
+                "panels": [{
+                    "id": "p", "slot": "s", "title": "T",
+                    "blocks": [{ "type": "table", "source": "x", "columns": v }],
+                }],
+            })
+        };
+        let errs = errors_for(columns(json!(["name", 2])));
+        assert!(
+            errs.contains("columns: must be array<string> (got array)"),
+            "{errs}"
+        );
+        assert_eq!(errors_for(columns(json!(["name", "weight"]))), "");
+        assert_eq!(
+            errors_for(columns(json!([]))),
+            "",
+            "an empty list is a valid selection"
+        );
+    }
+
+    #[test]
+    fn a_non_string_schema_version_is_refused_before_the_descriptor_is_walked() {
+        // `schema-version` is compared against a `&str`; a caller sending the
+        // number 1 must get a clear args error rather than the version check
+        // being skipped and an unsupported descriptor validating anyway.
+        let err = ui_validate(&json!({
+            "descriptor": full_descriptor(),
+            "schema-version": 1,
+        }))
+        .unwrap_err();
+        assert!(
+            format!("{err}").contains("`schema-version` must be a string"),
+            "got: {err}"
+        );
+    }
+
+    // ── renderer branches that only fire on shapes the tests above never built ─
+
+    #[test]
+    fn a_multi_panel_document_gets_a_neutral_title_and_keeps_every_panel() {
+        // One panel lends its title (covered above); more than one must NOT —
+        // titling a whole dashboard after whichever panel happens to be first is
+        // the failure this guards, and it is invisible in a single-panel test.
+        let args = json!({
+            "descriptor": {
+                "version": 1,
+                "panels": [
+                    { "id": "a", "slot": "s1", "title": "First", "blocks": [] },
+                    { "id": "b", "slot": "s2", "title": "Second", "blocks": [] },
+                ],
+            },
+        });
+        let html = ui_render(&args, false).unwrap()["html"]
+            .as_str()
+            .unwrap()
+            .to_string();
+        assert!(html.contains("<title>AWARE UI</title>"), "{html}");
+        assert!(!html.contains("<title>First</title>"));
+        // Both panels are still rendered, in declaration order.
+        assert!(
+            html.find("data-panel-id=\"a\"").unwrap() < html.find("data-panel-id=\"b\"").unwrap()
+        );
+        assert!(html.contains("<h2>Second</h2>"));
+    }
+
+    #[test]
+    fn a_descriptor_with_no_panels_says_so_instead_of_rendering_a_blank_page() {
+        // `panels: []` is valid, so it reaches the renderer. An empty body would
+        // be a self-contained HTML document that looks like a broken page.
+        let html = ui_render(
+            &json!({ "descriptor": { "version": 1, "panels": [] } }),
+            false,
+        )
+        .unwrap()["html"]
+            .as_str()
+            .unwrap()
+            .to_string();
+        assert!(html.contains("No panels."), "{html}");
+        assert!(html.starts_with("<!DOCTYPE html>"));
+    }
+
+    #[test]
+    fn a_stat_run_is_broken_by_any_other_block() {
+        // The existing test proves consecutive stats SHARE a grid, which a
+        // renderer that wrapped every stat run and a renderer that wrapped all
+        // stats in the panel would both satisfy. Interleaving is what separates
+        // them: three stats around a text block must produce TWO grids, in
+        // source order, not one grid with the text pushed out of place.
+        let args = json!({
+            "descriptor": {
+                "version": 1,
+                "panels": [{
+                    "id": "p", "slot": "s", "title": "T",
+                    "blocks": [
+                        { "type": "stat", "label": "A", "value": 1 },
+                        { "type": "text", "content": "divider" },
+                        { "type": "stat", "label": "B", "value": 2 },
+                        { "type": "stat", "label": "C", "value": 3 },
+                    ],
+                }],
+            },
+        });
+        let html = ui_render(&args, false).unwrap()["html"]
+            .as_str()
+            .unwrap()
+            .to_string();
+        assert_eq!(
+            html.matches("<div class=\"summary-cards\">").count(),
+            2,
+            "a non-stat block must close the open grid: {html}"
+        );
+        let at = |needle: &str| html.find(needle).expect("block rendered");
+        assert!(at("<div class=\"label\">A</div>") < at("<p>divider</p>"));
+        assert!(at("<p>divider</p>") < at("<div class=\"label\">B</div>"));
+        assert!(at("<div class=\"label\">B</div>") < at("<div class=\"label\">C</div>"));
+    }
+
+    #[test]
+    fn text_keeps_the_line_breaks_an_author_wrote_without_letting_markup_through() {
+        // Blank line → new paragraph; single newline → `<br>`. Both are the
+        // author's formatting, and the ONLY formatting the block honors: the
+        // `<br>` substitution happens after escaping, so a `<br>` the author
+        // typed stays literal text.
+        let args = json!({
+            "descriptor": {
+                "version": 1,
+                "panels": [{
+                    "id": "p", "slot": "s", "title": "T",
+                    "blocks": [{ "type": "text",
+                                 "content": "one\ntwo\n\n\n   \n\nthree <br> four" }],
+                }],
+            },
+        });
+        let html = ui_render(&args, false).unwrap()["html"]
+            .as_str()
+            .unwrap()
+            .to_string();
+        assert!(html.contains("<p>one<br>two</p>"), "{html}");
+        // A whitespace-only run between blank lines produces no empty paragraph.
+        assert!(!html.contains("<p></p>"), "{html}");
+        // The author's literal `<br>` is escaped, not honored as markup.
+        assert!(html.contains("<p>three &lt;br&gt; four</p>"), "{html}");
+    }
+
+    #[test]
+    fn an_action_carries_data_inputs_only_when_the_inputs_are_an_object() {
+        // `inputs` is optional and declared `object`. A block that omits it must
+        // not emit an empty `data-inputs` attribute — a host reading the
+        // attribute would parse `""` as an intent payload.
+        let action = |block: Value| {
+            ui_render(
+                &json!({
+                    "descriptor": {
+                        "version": 1,
+                        "panels": [{ "id": "p", "slot": "s", "title": "T", "blocks": [block] }],
+                    },
+                }),
+                false,
+            )
+            .unwrap()["html"]
+                .as_str()
+                .unwrap()
+                .to_string()
+        };
+        let without = action(json!({ "type": "action", "label": "Go", "action-id": "go" }));
+        assert!(without.contains("data-action-id=\"go\""), "{without}");
+        assert!(!without.contains("data-inputs"), "{without}");
+        let with = action(json!({
+            "type": "action", "label": "Go", "action-id": "go", "inputs": { "phase": 2 },
+        }));
+        assert!(
+            with.contains("data-inputs=\"{&quot;phase&quot;:2}\""),
+            "{with}"
+        );
+    }
+
+    #[test]
+    fn a_render_with_no_data_map_places_a_holder_for_every_bound_block() {
+        // A descriptor outlives any one run, so `data` is optional — both when
+        // it is absent and when it is an explicit null (the shape a `.flo` node
+        // produces from an upstream that returned nothing). Neither may error,
+        // and neither may render an empty table that reads as "zero rows".
+        for data in [None, Some(Value::Null)] {
+            let mut args = json!({ "descriptor": full_descriptor() });
+            if let Some(d) = data.clone() {
+                args["data"] = d;
+            }
+            let html = ui_render(&args, false).unwrap()["html"]
+                .as_str()
+                .unwrap()
+                .to_string();
+            assert!(
+                html.contains("no data for &#39;parts&#39;"),
+                "{data:?}: {html}"
+            );
+            assert!(
+                html.contains("no data for &#39;summary&#39;"),
+                "{data:?}: {html}"
+            );
+            // The blocks that need no data still render.
+            assert!(
+                html.contains("<div class=\"label\">Parts</div>"),
+                "{data:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn a_data_map_that_is_not_a_map_is_refused_rather_than_ignored() {
+        // Silently treating a non-object `data` as "no data" would render a page
+        // full of placeholders and report success — the caller's payload would
+        // have vanished with nothing said.
+        let mut args = render_args();
+        args["data"] = json!([{ "name": "Beam" }]);
+        let err = ui_render(&args, false).unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "got: {err:?}");
+        assert!(
+            format!("{err}").contains("`data` must be an object"),
+            "{err}"
+        );
+    }
+
+    #[test]
+    fn a_blank_output_path_is_ignored_rather_than_written() {
+        // `output-path: ""` is what an unresolved `{{ … }}` config leaf collapses
+        // to. Writing it would fail on an empty filename; reporting it back would
+        // tell the caller a file exists where none does.
+        for blank in ["", "   "] {
+            let mut args = render_args();
+            args["output-path"] = json!(blank);
+            let out = ui_render(&args, false).unwrap();
+            assert!(
+                out.get("output-path").is_none(),
+                "blank path {blank:?} must not be reported as written: {out:?}"
+            );
+            assert!(out["bytes"].as_u64().unwrap() > 0);
+        }
+        // A path with surrounding whitespace is trimmed and honored, so the
+        // guard above is trimming rather than refusing everything.
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("ui.html");
+        let mut args = render_args();
+        args["output-path"] = json!(format!("  {}  ", path.to_string_lossy()));
+        let out = ui_render(&args, false).unwrap();
+        assert_eq!(out["output-path"].as_str().unwrap(), path.to_string_lossy());
+        assert!(path.exists(), "a trimmed path is still written");
+    }
 }
