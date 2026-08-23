@@ -57,10 +57,46 @@ pub const REDACTED: &str = "[redacted]";
 /// the template does not name is one only the vault knows, which is exactly the
 /// case where the key itself can BE the secret.
 ///
-/// Quotes, dots and brackets all end a run, so `secrets['my-api'].access_token`
-/// contributes `secrets`, `my-api` and `access_token`. Over-collecting is the
-/// safe direction here: every extra name is a string the app already contains.
+/// A **quoted** span is taken whole, because a bracket lookup names its key
+/// verbatim: `secrets.custom['api.key']` addresses the key `api.key`, and
+/// splitting it into `api` and `key` would blind the very field the template
+/// asked for, previewing it empty (#450, Codex). Outside quotes, a run of
+/// `[A-Za-z0-9_-]` is a name, so `secrets['my-api'].access_token` contributes
+/// `secrets`, `my-api` and `access_token`.
+///
+/// Both directions of imprecision are safe, which is why this can stay a scanner
+/// rather than a parser: collecting too FEW names only blinds more, and
+/// collecting too many only keeps a name the app file already spells out.
 pub fn template_identifiers(params: &serde_json::Value) -> BTreeSet<String> {
+    /// Names inside one expression body, quoted spans kept intact.
+    fn collect(expr: &str, out: &mut BTreeSet<String>) {
+        let mut bare = String::new();
+        let mut chars = expr.chars();
+        while let Some(c) = chars.next() {
+            match c {
+                '\'' | '"' => {
+                    if !bare.is_empty() {
+                        out.insert(std::mem::take(&mut bare));
+                    }
+                    // Everything up to the matching quote is one name. An
+                    // unterminated literal ends the scan of this expression:
+                    // there is no further reference to find in it.
+                    let literal: String = chars.by_ref().take_while(|&q| q != c).collect();
+                    if !literal.is_empty() {
+                        out.insert(literal);
+                    }
+                }
+                _ if c.is_alphanumeric() || c == '_' || c == '-' => bare.push(c),
+                _ if !bare.is_empty() => {
+                    out.insert(std::mem::take(&mut bare));
+                }
+                _ => {}
+            }
+        }
+        if !bare.is_empty() {
+            out.insert(bare);
+        }
+    }
     fn scan(text: &str, out: &mut BTreeSet<String>) {
         let bytes = text.as_bytes();
         let mut i = 0;
@@ -78,12 +114,7 @@ pub fn template_identifiers(params: &serde_json::Value) -> BTreeSet<String> {
             let Some(rel) = text[body_start..].find(close) else {
                 return; // unterminated — nothing further is an expression
             };
-            for token in text[body_start..body_start + rel]
-                .split(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-'))
-                .filter(|t| !t.is_empty())
-            {
-                out.insert(token.to_string());
-            }
+            collect(&text[body_start..body_start + rel], out);
             i = body_start + rel + close.len();
         }
     }
@@ -1178,11 +1209,18 @@ mod tests {
         let ids = template_identifiers(&serde_json::json!({
             "a": "Bearer {{ secrets['my-api'].access_token }}",
             "b": ["{% if secrets.teams.coord %}x{% endif %}"],
-            "c": 7,
+            // A bracket lookup names its key VERBATIM, punctuation included.
+            "c": "{{ secrets.custom['api.key'] }}",
+            "d": 7,
         }));
         for name in ["secrets", "my-api", "access_token", "teams", "coord"] {
             assert!(ids.contains(name), "missing {name}: {ids:?}");
         }
+        // The whole quoted span, not its pieces: splitting `api.key` on the dot
+        // would blind the very field the template asked for, and the preview
+        // would show it empty — the missing-credential read this exists to avoid
+        // (#450, Codex).
+        assert!(ids.contains("api.key"), "dotted bracket key: {ids:?}");
         // Literal text outside an expression is not a reference, so it cannot
         // keep a credential key alive.
         assert!(!ids.contains("Bearer"));

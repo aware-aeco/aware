@@ -358,6 +358,12 @@ fn a_credential_hiding_in_an_object_key_is_blinded_but_a_named_field_is_not_lost
         r#"{"coord":"19:abcdef@thread","unnamed":"sk-sibling"}"#,
     )
     .unwrap();
+    // A field whose name needs bracket syntax because it carries punctuation.
+    std::fs::write(
+        home.join("credentials/custom.json"),
+        r#"{"api.key":"sk-dotted-secret"}"#,
+    )
+    .unwrap();
     copy_dir(
         &repo_root().join("20-agents/_core/http"),
         &home.join("agents/http"),
@@ -389,6 +395,7 @@ nodes:
       headers:
         X-Whole: "{{ secrets.pin }}"
         X-Channel: "{{ secrets.teams.coord }}"
+        X-Dotted: "{{ secrets.custom['api.key'] }}"
         Authorization: "Bearer {{ secrets['my-api'].access_token }}"
 connections: []
 requires: []
@@ -402,7 +409,12 @@ requires: []
         .success();
 
     let trace = traces(&home);
-    for leaked in ["987654", "19:abcdef@thread", "sk-sibling"] {
+    for leaked in [
+        "987654",
+        "19:abcdef@thread",
+        "sk-sibling",
+        "sk-dotted-secret",
+    ] {
         assert!(
             !trace.contains(leaked),
             "credential material reached the trace ({leaked}):\n{trace}"
@@ -412,6 +424,11 @@ requires: []
         trace.contains(r#""X-Channel":"[redacted]""#),
         "a template-named custom field must preview as blinded, not missing — an \
          empty value reads as no credential at all:\n{trace}"
+    );
+    assert!(
+        trace.contains(r#""X-Dotted":"[redacted]""#),
+        "a bracket-lookup key names the field verbatim; splitting it on the dot \
+         blinds the field the template asked for and previews it empty:\n{trace}"
     );
     assert!(
         trace.contains("Bearer [redacted]"),
