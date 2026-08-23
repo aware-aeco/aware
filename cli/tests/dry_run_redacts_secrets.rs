@@ -263,3 +263,71 @@ fn a_live_run_still_sends_the_real_credential() {
     );
     server.join().unwrap();
 }
+
+/// A credential whose value is a **number** is blinded too (#450, Codex).
+///
+/// `aware credential put` always stores a string, so blinding only strings
+/// looked complete. But `runtime::context::load_secret` also reads
+/// `<AWARE_HOME>/credentials/<id>.json` directly and parses **arbitrary** JSON
+/// into the `secrets` namespace — the legacy / hand-written path the loader
+/// exists to support. A `pin.json` holding `123456` is a credential whose value
+/// is a number, and it was written to the trace verbatim.
+///
+/// Both routes to one, because they are separate arms of the walk: the whole
+/// value being a scalar, and a scalar sitting in a field.
+#[test]
+fn a_numeric_hand_written_credential_is_blinded_too() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    std::fs::create_dir_all(home.join("credentials")).unwrap();
+    std::fs::write(home.join("credentials/pin.json"), "123456").unwrap();
+    std::fs::write(home.join("credentials/pinobj.json"), r#"{"token":987654}"#).unwrap();
+    copy_dir(
+        &repo_root().join("20-agents/_core/http"),
+        &home.join("agents/http"),
+    )
+    .unwrap();
+
+    let app_dir = home.join("apps/pin-probe");
+    std::fs::create_dir_all(&app_dir).unwrap();
+    std::fs::write(
+        app_dir.join("pin-probe.flo"),
+        r#"app: pin-probe
+version: 0.0.1
+description: interpolates numeric hand-written credentials
+nodes:
+  - id: call
+    agent: http
+    command: post
+    safety:
+      transaction-group: pin-probe
+      snapshot: false
+    config:
+      url: "http://127.0.0.1:1/unused"
+      headers:
+        X-Bare: "{{ secrets.pin }}"
+        X-Field: "{{ secrets.pinobj.token }}"
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["app", "run", "pin-probe", "--dry-run"])
+        .assert()
+        .success();
+
+    let trace = traces(&home);
+    for pin in ["123456", "987654"] {
+        assert!(
+            !trace.contains(pin),
+            "a numeric credential reached the trace ({pin}):\n{trace}"
+        );
+    }
+    assert_eq!(
+        trace.matches("[redacted]").count(),
+        2,
+        "both numeric credentials must be previewed as blinded, not dropped:\n{trace}"
+    );
+}

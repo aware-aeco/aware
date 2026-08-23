@@ -46,7 +46,7 @@ impl RenderContext {
         }
     }
 
-    /// This context with every string in the `secrets` namespace replaced by
+    /// This context with every value in the `secrets` namespace replaced by
     /// [`REDACTED`].
     ///
     /// Rendering a node's params against this yields what the live run would
@@ -57,13 +57,27 @@ impl RenderContext {
     /// a `0644` file that `aware app logs` prints on request, so a rendered
     /// credential reaching one undoes both of those (#448).
     ///
-    /// EVERY string goes, not the subset of field names that hold token
-    /// material. The narrower rule needs a list of "sensitive" keys, and a
-    /// credential shape nobody thought to add to that list would then be written
-    /// out in full — a leak that looks exactly like working code. Over-redacting
-    /// `token_type` costs a preview the word `Bearer`, which is in the template
-    /// beside it anyway. Non-strings (`expires_at`, `obtained_at`) are numbers
-    /// that carry no secret and are left alone.
+    /// EVERY leaf goes, not the subset of field names that hold token material,
+    /// and not only the strings. The narrower rule needs a list of "sensitive"
+    /// keys, and a credential shape nobody thought to add to that list would
+    /// then be written out in full — a leak that looks exactly like working
+    /// code. Over-redacting `token_type` costs a preview the word `Bearer`,
+    /// which is in the template beside it anyway.
+    ///
+    /// Numbers and booleans go for the same reason. `access_token` is always a
+    /// string, so keeping `expires_at` readable looked free — but
+    /// `context::load_secret` also takes the raw `<creds_dir>/<id>.json` path,
+    /// which parses **arbitrary** JSON into this namespace. A hand-written
+    /// `pin.json` holding `123456`, or `{"token":123456}`, is a credential whose
+    /// value is a number, and sparing scalars wrote both of those to the trace
+    /// verbatim. "Only strings can be secret" is an assumption about the store,
+    /// and this function does not get to make one.
+    ///
+    /// `null` is the exception, and not an oversight: it is the *absence* of a
+    /// value, so there is nothing there to leak, and blinding it would claim the
+    /// credential carries a hidden `refresh_token` when it carries none. Keys
+    /// are not blinded either — they are already visible in the app's own
+    /// template text.
     ///
     /// The boundary is the vault: this hides what `secrets.*` put into the
     /// params. A credential that reached them some other way — read out of a
@@ -72,14 +86,15 @@ impl RenderContext {
     pub fn with_redacted_secrets(&self) -> RenderContext {
         fn blind(v: &serde_json::Value) -> serde_json::Value {
             match v {
-                serde_json::Value::String(_) => serde_json::Value::String(REDACTED.to_string()),
+                serde_json::Value::Null => serde_json::Value::Null,
                 serde_json::Value::Array(items) => {
                     serde_json::Value::Array(items.iter().map(blind).collect())
                 }
                 serde_json::Value::Object(fields) => serde_json::Value::Object(
                     fields.iter().map(|(k, v)| (k.clone(), blind(v))).collect(),
                 ),
-                scalar => scalar.clone(),
+                // String, Number, Bool — every scalar that can carry a value.
+                _ => serde_json::Value::String(REDACTED.to_string()),
             }
         }
         RenderContext {
@@ -903,8 +918,16 @@ mod tests {
                 "expires_at": 0,
                 "obtained_at": 1_700_000_000i64,
                 "nested": { "deep": ["sk-inner"] },
+                "rotatable": true,
+                "absent": serde_json::Value::Null,
             }),
         );
+        // The raw `<creds_dir>/<id>.json` path parses arbitrary JSON into this
+        // namespace, so a credential whose value is a NUMBER is reachable —
+        // a hand-written PIN, bare or in a field (#450, Codex).
+        ctx.secrets.insert("pin".into(), serde_json::json!(123_456));
+        ctx.secrets
+            .insert("pinobj".into(), serde_json::json!({ "token": 987_654 }));
         ctx.secrets
             .insert("legacy".into(), serde_json::json!("sk-bare"));
         // Hyphen-free so `{{ secrets.vault }}` stays a bare path: a hyphenated
@@ -920,7 +943,7 @@ mod tests {
     }
 
     #[test]
-    fn with_redacted_secrets_blinds_every_string_at_every_depth() {
+    fn with_redacted_secrets_blinds_every_value_at_every_depth() {
         let blinded = ctx_with_secrets().with_redacted_secrets();
         let api = &blinded.secrets["my-api"];
         // Token material, obviously …
@@ -935,10 +958,18 @@ mod tests {
         // A bare-string secret is a value, not a map — it must be blinded too,
         // not skipped for having no fields to walk.
         assert_eq!(blinded.secrets["legacy"], REDACTED);
-        // Numbers carry no secret and stay, so the preview keeps saying whether
-        // the credential has a recorded expiry.
-        assert_eq!(api["expires_at"], serde_json::json!(0));
-        assert_eq!(api["obtained_at"], serde_json::json!(1_700_000_000i64));
+        // Scalars of every type, because the raw credential-file path parses
+        // arbitrary JSON: sparing numbers wrote a hand-written PIN to the trace
+        // verbatim, bare and in a field alike (#450, Codex).
+        assert_eq!(blinded.secrets["pin"], REDACTED);
+        assert_eq!(blinded.secrets["pinobj"]["token"], REDACTED);
+        assert_eq!(api["expires_at"], REDACTED);
+        assert_eq!(api["obtained_at"], REDACTED);
+        assert_eq!(api["rotatable"], REDACTED);
+        // `null` alone survives: it is the ABSENCE of a value, so it hides
+        // nothing, and blinding it would claim a refresh token this credential
+        // does not have.
+        assert!(api["absent"].is_null());
     }
 
     #[test]
