@@ -1,0 +1,113 @@
+import assert from 'node:assert/strict';
+import { generateKeyPairSync } from 'node:crypto';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import test from 'node:test';
+import { canonicalJsonBytes, sha256 } from './model-contract.mjs';
+import {
+  acquireCacheOwner, cacheKeySha256, loadAwareSigningKey, publishCacheEntry,
+  readCacheEntry, releaseCacheOwner, signerFingerprintSha256,
+} from './model-cache.mjs';
+
+async function temporaryDirectory(t) {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'aware-model-cache-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  return directory;
+}
+
+async function signingFixture(root) {
+  const { privateKey, publicKey } = generateKeyPairSync('ed25519');
+  const privateDer = privateKey.export({ format: 'der', type: 'pkcs8' });
+  const publicDer = publicKey.export({ format: 'der', type: 'spki' });
+  const secretPath = path.join(root, 'model-reader.sec');
+  const publicPath = path.join(root, 'model-reader.pub');
+  await fs.writeFile(secretPath, `ed25519-secret-key-v1 ${privateDer.subarray(-32).toString('base64')}\n`);
+  await fs.writeFile(publicPath, `ed25519-public-key-v1 ${publicDer.subarray(-32).toString('base64')}\n`);
+  return { secretPath, publicPath, key: await loadAwareSigningKey(secretPath, publicPath) };
+}
+
+function identity(overrides = {}) {
+  return {
+    sourceSha256: '1'.repeat(64), canonicalRequest: { schemaVersion: '1', value: 'request' },
+    providerFingerprint: { protocolVersion: '1', provider: 'fixture', engine: 'engine', engineVersion: '1', adapterBuildId: 'b', adapterExecutableSha256: '2'.repeat(64), readerSchemaVersion: 'model-reference-reader/v1' },
+    signerFingerprintSha256: '3'.repeat(64), ...overrides,
+  };
+}
+
+function artifacts() {
+  return {
+    'geometry.glb': Buffer.from([0x67, 0x6c, 0x54, 0x46]),
+    'entities.json': canonicalJsonBytes({ schemaVersion: '1', entities: [] }),
+    'properties.json': canonicalJsonBytes({ schemaVersion: '1', properties: [] }),
+    'relationships.json': canonicalJsonBytes({ schemaVersion: '1', relationships: [] }),
+  };
+}
+
+test('cache identity changes for source, request, every provider fingerprint leaf, and signer trust', () => {
+  const base = identity();
+  const first = cacheKeySha256(base);
+  for (const [field, changed] of [
+    ['sourceSha256', '4'.repeat(64)], ['signerFingerprintSha256', '5'.repeat(64)],
+    ['canonicalRequest', { schemaVersion: '1', value: 'changed' }],
+  ]) assert.notEqual(cacheKeySha256({ ...base, [field]: changed }), first);
+  for (const field of Object.keys(base.providerFingerprint)) {
+    const value = field === 'adapterExecutableSha256' ? '6'.repeat(64) : `${base.providerFingerprint[field]}-changed`;
+    assert.notEqual(cacheKeySha256({ ...base, providerFingerprint: { ...base.providerFingerprint, [field]: value } }), first, field);
+  }
+});
+
+test('AWARE-format Ed25519 keys sign complete entries and every hit verifies signatures and bytes', async (t) => {
+  const root = await temporaryDirectory(t);
+  const { key } = await signingFixture(root);
+  const cacheRoot = path.join(root, 'cache');
+  const cacheIdentity = identity({ signerFingerprintSha256: signerFingerprintSha256(key.publicKeyBytes) });
+  const published = await publishCacheEntry({ root: cacheRoot, identity: cacheIdentity, artifacts: artifacts(), signingKey: key });
+  const hit = await readCacheEntry({ root: cacheRoot, key: published.key, expectedIdentity: cacheIdentity, expectedPublicKey: key.publicKeyBytes });
+  assert.deepEqual(Object.keys(hit.artifacts).sort(), ['entities.json', 'geometry.glb', 'manifest.json', 'properties.json', 'relationships.json']);
+  assert.equal(hit.manifest.artifacts['geometry.glb'].sha256, sha256(artifacts()['geometry.glb']));
+  const geometryBlob = path.join(cacheRoot, 'blobs', hit.manifest.artifacts['geometry.glb'].sha256);
+  await fs.writeFile(geometryBlob, Buffer.from([1, 2, 3, 4]));
+  await assert.rejects(() => readCacheEntry({ root: cacheRoot, key: published.key, expectedIdentity: cacheIdentity, expectedPublicKey: key.publicKeyBytes }), /tampered|digest|invalid/);
+});
+
+test('missing, extra, wrong signer, and identity-mismatched cache entries are never hits', async (t) => {
+  const root = await temporaryDirectory(t);
+  const firstKey = (await signingFixture(path.join(root, 'first').replace(/first$/, ''))).key;
+  const otherRoot = path.join(root, 'other'); await fs.mkdir(otherRoot);
+  const secondKey = (await signingFixture(otherRoot)).key;
+  const cacheRoot = path.join(root, 'cache');
+  const cacheIdentity = identity({ signerFingerprintSha256: signerFingerprintSha256(firstKey.publicKeyBytes) });
+  const published = await publishCacheEntry({ root: cacheRoot, identity: cacheIdentity, artifacts: artifacts(), signingKey: firstKey });
+  await assert.rejects(() => readCacheEntry({ root: cacheRoot, key: published.key, expectedIdentity: identity(), expectedPublicKey: firstKey.publicKeyBytes }), /identity/);
+  await assert.rejects(() => readCacheEntry({ root: cacheRoot, key: published.key, expectedIdentity: cacheIdentity, expectedPublicKey: secondKey.publicKeyBytes }), /signer/);
+  await fs.writeFile(path.join(cacheRoot, 'entries', published.key, 'extra'), 'no');
+  await assert.rejects(() => readCacheEntry({ root: cacheRoot, key: published.key, expectedIdentity: cacheIdentity, expectedPublicKey: firstKey.publicKeyBytes }), /extra|closed/);
+});
+
+test('owner leases serialize same-key publishers and stale/dead owners are fenced by token', async (t) => {
+  const root = await temporaryDirectory(t);
+  const first = await acquireCacheOwner({ root, key: 'a'.repeat(64), processIdentity: { pid: 101, start: 'one' } });
+  await assert.rejects(() => acquireCacheOwner({ root, key: 'a'.repeat(64), processIdentity: { pid: 102, start: 'two' }, isOwnerAlive: async () => true }), /owned/);
+  const lockPath = path.join(root, 'locks', 'a'.repeat(64), 'owner.json');
+  const stale = JSON.parse(await fs.readFile(lockPath, 'utf8'));
+  stale.heartbeatAt = '2000-01-01T00:00:00.000Z';
+  await fs.writeFile(lockPath, JSON.stringify(stale));
+  const second = await acquireCacheOwner({ root, key: 'a'.repeat(64), processIdentity: { pid: 102, start: 'two' }, isOwnerAlive: async () => false });
+  await assert.rejects(() => releaseCacheOwner(first), /token/);
+  await releaseCacheOwner(second);
+});
+
+test('concurrent publication converges on one complete winner with identical deterministic bytes', async (t) => {
+  const root = await temporaryDirectory(t);
+  const { key } = await signingFixture(root);
+  const cacheRoot = path.join(root, 'cache');
+  const cacheIdentity = identity({ signerFingerprintSha256: signerFingerprintSha256(key.publicKeyBytes) });
+  const [a, b] = await Promise.all([
+    publishCacheEntry({ root: cacheRoot, identity: cacheIdentity, artifacts: artifacts(), signingKey: key }),
+    publishCacheEntry({ root: cacheRoot, identity: cacheIdentity, artifacts: artifacts(), signingKey: key }),
+  ]);
+  assert.equal(a.key, b.key);
+  const hit = await readCacheEntry({ root: cacheRoot, key: a.key, expectedIdentity: cacheIdentity, expectedPublicKey: key.publicKeyBytes });
+  assert.deepEqual(hit.artifacts['geometry.glb'], artifacts()['geometry.glb']);
+});
