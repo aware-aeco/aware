@@ -68,55 +68,105 @@ pub const REDACTED: &str = "[redacted]";
 /// rather than a parser: collecting too FEW names only blinds more, and
 /// collecting too many only keeps a name the app file already spells out.
 pub fn template_identifiers(params: &serde_json::Value) -> BTreeSet<String> {
-    /// The escape sequences a quoted key can be written with, resolved to the
-    /// key minijinja actually looks up: `['api\x2ekey']` addresses `api.key`, so
-    /// the source spelling alone would miss it (#450, Codex).
+    /// minijinja's own string-literal escape grammar, mirrored exactly.
     ///
-    /// BOTH spellings are recorded by the caller rather than just this one,
-    /// because an escape form this does not know stays covered by the raw span.
-    /// An unknown escape yields the escaped character itself, which is what
-    /// every engine in this family does with `\q`.
-    fn decode_escapes(raw: &str) -> String {
+    /// A bracket lookup names its key through a string literal, and minijinja
+    /// unescapes that literal before looking the key up: `['api\056key']`
+    /// addresses `api.key`. Recording only the source spelling leaves the key
+    /// unrecognised as template-named, so it is blinded and the field previews
+    /// empty (#450, Codex).
+    ///
+    /// This mirrors `minijinja::utils::unescape` (2.19) rather than
+    /// approximating it — `\" \\ \/ \'` literal, `\b \f \n \r \t`, `\xNN`,
+    /// `\uNNNN` with UTF-16 surrogate pairing, and `\NNN` octal up to three
+    /// digits, with anything else keeping its backslash. An earlier partial
+    /// table read `\0` as NUL where minijinja starts an octal escape, which is
+    /// how this went wrong. That module is private so it cannot be called, but
+    /// the grammar is finite and the version is pinned by `Cargo.lock`, so
+    /// mirroring is bounded work rather than an open-ended chase.
+    ///
+    /// `None` exactly where minijinja errors. The caller keeps the raw span
+    /// alongside any decode, so neither an unknown form nor a decode failure can
+    /// widen what gets written down — it can only blind more.
+    fn decode_escapes(raw: &str) -> Option<String> {
+        // A lone high surrogate awaiting its pair; minijinja refuses any other
+        // character while one is outstanding.
+        fn push(out: &mut String, pending: u16, c: char) -> Option<()> {
+            if pending != 0 {
+                return None;
+            }
+            out.push(c);
+            Some(())
+        }
+
         let mut out = String::with_capacity(raw.len());
+        let mut pending: u16 = 0;
         let mut chars = raw.chars();
         while let Some(c) = chars.next() {
             if c != '\\' {
-                out.push(c);
+                push(&mut out, pending, c)?;
                 continue;
             }
-            let Some(esc) = chars.next() else {
-                out.push('\\');
-                break;
-            };
-            match esc {
-                'n' => out.push('\n'),
-                'r' => out.push('\r'),
-                't' => out.push('\t'),
-                '0' => out.push('\0'),
-                'x' | 'u' => {
-                    let width = if esc == 'x' { 2 } else { 4 };
-                    let digits: String = chars.clone().take(width).collect();
-                    match u32::from_str_radix(&digits, 16)
-                        .ok()
-                        .filter(|_| digits.len() == width)
-                        .and_then(char::from_u32)
-                    {
-                        Some(ch) => {
-                            chars.nth(width - 1);
-                            out.push(ch);
-                        }
-                        // Not a well-formed escape after all — keep it verbatim
-                        // rather than silently eating characters.
-                        None => {
-                            out.push('\\');
-                            out.push(esc);
+            match chars.next()? {
+                d @ ('"' | '\\' | '/' | '\'') => push(&mut out, pending, d)?,
+                'b' => push(&mut out, pending, '\u{8}')?,
+                'f' => push(&mut out, pending, '\u{c}')?,
+                'n' => push(&mut out, pending, '\n')?,
+                'r' => push(&mut out, pending, '\r')?,
+                't' => push(&mut out, pending, '\t')?,
+                'u' => {
+                    // Short tails are NUL-padded rather than refused, as upstream.
+                    let hex: String = chars
+                        .by_ref()
+                        .chain(std::iter::repeat('\u{0}'))
+                        .take(4)
+                        .collect();
+                    let val = u16::from_str_radix(&hex, 16).ok()?;
+                    match (pending, (0xD800..=0xDFFF).contains(&val)) {
+                        (0, false) => out.push(char::decode_utf16([val]).next()?.ok()?),
+                        (_, false) => return None,
+                        (0, true) => pending = val,
+                        (prev, true) => {
+                            out.push(char::decode_utf16([prev, val]).next()?.ok()?);
+                            pending = 0;
                         }
                     }
                 }
-                other => out.push(other),
+                'x' => {
+                    let hex: String = chars.by_ref().take(2).collect();
+                    if hex.len() != 2 {
+                        return None;
+                    }
+                    push(
+                        &mut out,
+                        pending,
+                        u8::from_str_radix(&hex, 16).ok()? as char,
+                    )?;
+                }
+                d @ '0'..='7' => {
+                    let mut octal = String::from(d);
+                    for _ in 0..2 {
+                        match chars.as_str().chars().next() {
+                            Some(n) if n.is_digit(8) => {
+                                octal.push(n);
+                                chars.next();
+                            }
+                            _ => break,
+                        }
+                    }
+                    push(
+                        &mut out,
+                        pending,
+                        u8::from_str_radix(&octal, 8).ok()? as char,
+                    )?;
+                }
+                other => {
+                    push(&mut out, pending, '\\')?;
+                    push(&mut out, pending, other)?;
+                }
             }
         }
-        out
+        (pending == 0).then_some(out)
     }
 
     /// Names inside one expression body, quoted spans kept intact.
@@ -147,8 +197,12 @@ pub fn template_identifiers(params: &serde_json::Value) -> BTreeSet<String> {
                         }
                     }
                     if !raw.is_empty() {
-                        let decoded = decode_escapes(&raw);
-                        if decoded != raw {
+                        // Both spellings, always: the decode is what minijinja
+                        // looks up, and the raw span is the fallback when the
+                        // literal is malformed (which minijinja refuses too).
+                        if let Some(decoded) = decode_escapes(&raw)
+                            && decoded != raw
+                        {
                             out.insert(decoded);
                         }
                         out.insert(raw);
@@ -256,13 +310,28 @@ pub fn blinded(v: &serde_json::Value, keep_keys: &BTreeSet<String>) -> serde_jso
 /// Deliberately just the head, and deliberately not a full parse. It answers one
 /// question: which namespace is this collection drawn from.
 pub fn path_head(expr: &str) -> Option<&str> {
-    let start = expr.find("{{")?;
+    path_segments(expr).first().copied()
+}
+
+/// The dotted path `expr` reads, split into segments.
+///
+/// Bracket syntax collapses into the same list (`upstream['item'].x` yields
+/// `upstream`, `item`, `x`). `resolve_value` truncates at `[` and would not
+/// resolve that form, so treating it as a path here can only over-taint — which
+/// is the safe direction for every caller below.
+fn path_segments(expr: &str) -> Vec<&str> {
+    let Some(start) = expr.find("{{") else {
+        return Vec::new();
+    };
     let after = &expr[start + 2..];
-    let end = after.find("}}")?;
+    let Some(end) = after.find("}}") else {
+        return Vec::new();
+    };
     after[..end]
         .trim()
         .split(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-'))
-        .find(|t| !t.is_empty())
+        .filter(|t| !t.is_empty())
+        .collect()
 }
 
 /// Whether `expr` draws straight from the credential vault.
@@ -281,7 +350,13 @@ pub fn reads_secrets_namespace(expr: &str) -> bool {
 /// elements are vault material too — and reading the head alone would call the
 /// inner loop clean and write its tokens to the trace (#450, Codex).
 pub fn reads_item_binding(expr: &str) -> bool {
-    path_head(expr) == Some("item")
+    // `upstream.item` too: `render()` exposes the whole upstream map as a
+    // top-level object, so that is a supported alias for the same binding, and
+    // reading only the head called it a different namespace (#450, Codex).
+    matches!(
+        path_segments(expr).as_slice(),
+        ["item", ..] | ["upstream", "item", ..]
+    )
 }
 
 impl RenderContext {
@@ -1292,9 +1367,48 @@ mod tests {
         // called a nested vault loop clean (#450, Codex).
         assert!(reads_item_binding("{{ item.tokens }}"));
         assert!(reads_item_binding("{{ item }}"));
+        // `upstream.item` is a supported alias for the SAME binding — `render`
+        // exposes the whole upstream map at the top level — so reading only the
+        // head called it a different namespace and cleared the provenance
+        // (#450, Codex).
+        assert!(reads_item_binding("{{ upstream.item.tokens }}"));
+        assert!(reads_item_binding("{{ upstream['item'].tokens }}"));
         // A sibling collection from anywhere else does NOT inherit it.
         assert!(!reads_item_binding("{{ inputs.rows }}"));
         assert!(!reads_item_binding("{{ upstream.src.items }}"));
+        // A node whose id merely starts with the same letters is not the binding.
+        assert!(!reads_item_binding("{{ itemized.rows }}"));
+        assert!(!reads_item_binding("{{ upstream.items.rows }}"));
+    }
+
+    #[test]
+    fn decode_escapes_matches_minijinjas_string_literal_grammar() {
+        // Mirrored from `minijinja::utils::unescape` (2.19), which is private and
+        // so cannot be called. Every form it accepts is pinned here, because an
+        // escape this decoder gets WRONG renames the key minijinja looks up, and
+        // the field then previews empty (#450, Codex).
+        let ids =
+            |lit: &str| template_identifiers(&serde_json::json!(format!("{{{{ s['{lit}'] }}}}")));
+
+        // Octal, up to three digits — and its first digit is NOT a NUL escape,
+        // which is exactly what the earlier partial table got wrong.
+        assert!(ids(r"api\056key").contains("api.key"));
+        // Hex, and the simple forms including the two the partial table missed.
+        assert!(ids(r"api\x2ekey").contains("api.key"));
+        assert!(ids(r"a\tb").contains("a\tb"));
+        assert!(ids(r"a\bc").contains("a\u{8}c"));
+        assert!(ids(r"a\fc").contains("a\u{c}c"));
+        assert!(ids(r"a\/b").contains("a/b"));
+        // `\uNNNN`, and a UTF-16 surrogate PAIR — which a decoder handling one
+        // code unit at a time rejects outright.
+        assert!(ids(r"pa\u0067e").contains("page"));
+        assert!(ids(r"e\ud83d\ude00j").contains("e\u{1f600}j"));
+        // An unknown escape keeps its backslash, as upstream does.
+        assert!(ids(r"a\qb").contains(r"a\qb"));
+        // A malformed literal (an unpaired surrogate) decodes to nothing — but
+        // the RAW span is still recorded, so a decode failure can only ever
+        // blind more, never less.
+        assert!(ids(r"lone\ud83dx").contains(r"lone\ud83dx"));
     }
 
     #[test]

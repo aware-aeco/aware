@@ -497,7 +497,7 @@ nodes:
     for-each: "{{ secrets.nested }}"
     do:
       - id: inner
-        for-each: "{{ item.tokens }}"
+        for-each: "{{ upstream.item.tokens }}"
         do:
           - id: send-inner
             agent: http
@@ -524,8 +524,10 @@ requires: []
     for leaked in [
         "sk-batch-one",
         "sk-batch-two",
-        // A nested loop inherits the outer loop's provenance; keying on the
-        // inner loop's own head alone called it clean (#450, Codex).
+        // A nested loop inherits the outer loop's provenance. The inner one
+        // uses the `upstream.item` ALIAS, so this pins both gaps at once:
+        // keying on the inner loop's own head called it clean, and reading only
+        // the head called the alias a different namespace (#450, Codex).
         "sk-inner-one",
         "sk-inner-two",
     ] {
