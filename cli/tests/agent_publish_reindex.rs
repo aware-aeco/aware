@@ -103,6 +103,37 @@ fn home_in(tmp: &Path) -> PathBuf {
     home
 }
 
+/// Guard the two "there is no checkout here" tests before they spawn a command
+/// that WRITES what it finds by walking up.
+///
+/// Those tests assert on the absence of a `registry-index.json` above the
+/// fixture, and a `TempDir` only guarantees a fresh *leaf* — its ancestors are
+/// whatever `TMPDIR` points at. Point `TMPDIR` inside an aware checkout (a
+/// configuration a developer or a CI image may well have) and the fixture is
+/// born UNDER the real `registry-index.json`: `publish` would then walk up into
+/// the tracked index and rewrite it, and `reindex` would rebuild the tracked
+/// `registry-catalog.json` from the whole repo — both before the assertion that
+/// was supposed to catch it. The assertion would fail, but only after the damage.
+///
+/// So refuse to run at all in that case, and say which ancestor is the problem.
+/// This runs before the binary is spawned, which is what makes it a guard rather
+/// than a second detector. (Codex review, PR #449.)
+fn assert_no_index_above(dir: &Path) {
+    let start = dir.canonicalize().expect("fixture dir exists");
+    let mut cursor = Some(start.as_path());
+    while let Some(d) = cursor {
+        assert!(
+            !d.join("registry-index.json").is_file(),
+            "refusing to run: {} is inside a registry checkout ({} holds a registry-index.json), \
+             so this test would rewrite tracked files instead of exercising the \
+             no-checkout path. Point TMPDIR outside any aware checkout.",
+            start.display(),
+            d.display(),
+        );
+        cursor = d.parent();
+    }
+}
+
 // ---------------------------------------------------------------- publish ---
 
 #[test]
@@ -210,7 +241,8 @@ fn publish_outside_a_checkout_explains_itself_and_creates_no_index() {
     let root = tmp.path();
     let agent_dir = root.join("standalone/demo");
     write_agent(&agent_dir, "demo", "1.0.0", "A demo agent.");
-    // No registry-index.json anywhere above the agent.
+    // No registry-index.json anywhere above the agent — enforced, not assumed.
+    assert_no_index_above(&agent_dir);
 
     aware()
         .env("AWARE_HOME", home_in(root))
@@ -384,6 +416,7 @@ fn reindex_outside_a_checkout_names_the_remedy_and_writes_nothing() {
     let root = tmp.path();
     let bare = root.join("not-a-checkout");
     std::fs::create_dir_all(&bare).unwrap();
+    assert_no_index_above(&bare);
 
     aware()
         .current_dir(&bare)
