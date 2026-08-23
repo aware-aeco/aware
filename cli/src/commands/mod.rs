@@ -12,6 +12,7 @@ pub mod coverage;
 pub mod diagram;
 pub mod doctor;
 pub mod key;
+pub mod model_reader_host;
 pub mod plugins;
 pub mod receipt_cli;
 pub mod report;

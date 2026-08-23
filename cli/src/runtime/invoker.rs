@@ -290,6 +290,40 @@ fn failure_detail(stdout: &str, stderr: &str) -> String {
     truncate_detail(detail)
 }
 
+#[derive(serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct StructuredBridgeError {
+    code: String,
+    phase: String,
+    retryable: bool,
+    message: String,
+    diagnostic_id: String,
+}
+
+/// Preserve a bridge's bounded typed error instead of flattening it into an opaque network string.
+/// Only the closed model-reader envelope is accepted; arbitrary bridge stderr keeps the historical
+/// reporting path below.
+fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
+    let parsed: StructuredBridgeError = serde_json::from_str(stderr.trim()).ok()?;
+    if !parsed.code.starts_with("reference-")
+        || parsed.code.len() > 96
+        || parsed.phase.is_empty()
+        || parsed.phase.len() > 64
+        || parsed.message.is_empty()
+        || parsed.message.chars().count() > 240
+        || parsed.diagnostic_id.len() > 64
+    {
+        return None;
+    }
+    Some(AwareError::AgentStructured {
+        code: parsed.code,
+        phase: parsed.phase,
+        retryable: parsed.retryable,
+        message: parsed.message,
+        diagnostic_id: parsed.diagnostic_id,
+    })
+}
+
 /// Production invoker: spawn the agent's CLI transport binary,
 /// talk JSON over stdin/stdout.
 pub struct CliInvoker {
@@ -367,6 +401,18 @@ impl CliInvoker {
         if let Some(path) = progress_path {
             process.env("AWARE_PROGRESS_FILE", path);
         }
+        // The RVT reader is the only bridge allowed to ask AWARE to supervise a commercial
+        // provider. Pass the exact current executable privately; no manifest field or PATH lookup
+        // can redirect the internal host. IFC commands sharing the same SEA do not receive it.
+        if agent == "model-reference-reader" {
+            // `canonicalize` adds a `\\?\` prefix on Windows. Node's `realpath` removes that
+            // prefix, so an otherwise identical source-built host would fail the reader's exact
+            // path check. `current_exe` is already absolute; the reader independently rejects
+            // symlinks and verifies that this spelling resolves to the same regular file.
+            let host = std::env::current_exe()
+                .map_err(|e| AwareError::Internal(format!("resolve model-reader host: {e}")))?;
+            process.env("AWARE_MODEL_READER_HOST", host);
+        }
         let child = process.spawn().map_err(|e| {
             // When the binary is missing, surface an actionable hint — but only
             // point at `aware sidecar install` for binaries that command actually
@@ -441,6 +487,9 @@ impl CliInvoker {
         if !output.status.success() {
             let stdout = String::from_utf8_lossy(&output.stdout);
             let stderr = String::from_utf8_lossy(&output.stderr);
+            if let Some(error) = structured_bridge_error(&stderr) {
+                return Err(error);
+            }
             return Err(AwareError::Network(format!(
                 "agent {agent}/{command} failed (exit {:?}): {}",
                 output.status.code(),
@@ -4397,6 +4446,34 @@ mod builtin_invoker_tests {
             failure_detail(stdout, stderr),
             stderr,
             "the half-written payload won over the real error"
+        );
+    }
+
+    #[test]
+    fn model_reader_structured_errors_keep_their_typed_fields() {
+        let stderr = r#"{"code":"reference-provider-pin-mismatch","phase":"preflight","retryable":false,"message":"The local provider does not match the expected fingerprint.","diagnosticId":"123e4567-e89b-12d3-a456-426614174000"}"#;
+        let error = structured_bridge_error(stderr).expect("closed model-reader envelope");
+        match error {
+            AwareError::AgentStructured {
+                code,
+                phase,
+                retryable,
+                message,
+                diagnostic_id,
+            } => {
+                assert_eq!(code, "reference-provider-pin-mismatch");
+                assert_eq!(phase, "preflight");
+                assert!(!retryable);
+                assert!(message.contains("expected fingerprint"));
+                assert_eq!(diagnostic_id, "123e4567-e89b-12d3-a456-426614174000");
+            }
+            other => panic!("typed envelope was flattened: {other:?}"),
+        }
+        assert!(
+            structured_bridge_error(
+                r#"{"code":"other","phase":"x","retryable":false,"message":"x","diagnosticId":"x"}"#
+            )
+            .is_none()
         );
     }
 

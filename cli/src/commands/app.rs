@@ -443,6 +443,20 @@ async fn run(
     }
 
     // One-shot path.
+    // The commercial RVT provider is intentionally single-control per app instance. Scope the
+    // kernel-backed fence to the exact agent id: other one-shot apps, including IFC reads through
+    // the shared bridge binary, retain their historical concurrency.
+    let _model_reader_control = if app
+        .nodes
+        .iter()
+        .any(|node| node.agent.as_deref() == Some("model-reference-reader"))
+    {
+        Some(crate::runtime::pidfile::ExclusiveControl::acquire(
+            &ctx.paths.app_instance_dir(app_id, &instance),
+        )?)
+    } else {
+        None
+    };
     let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
     let provenance = ProvenanceWriter::open(&log_path).await?;
     let artifact_dir = crate::runtime::provenance::artifact_dir_for(

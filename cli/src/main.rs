@@ -88,6 +88,10 @@ struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Command {
+    /// Internal managed process host for the model reference reader.
+    #[command(name = "__model-reader-host", hide = true)]
+    ModelReaderHost,
+
     /// Manage installed agents (list, describe, install, validate, …).
     Agent {
         #[command(subcommand)]
@@ -196,6 +200,7 @@ async fn main() -> anyhow::Result<()> {
     };
 
     let result: Result<(), AwareError> = match cli.command {
+        Command::ModelReaderHost => commands::model_reader_host::run().await,
         Command::Agent { action } => commands::agent::dispatch(action, &ctx).await,
         Command::App { action } => commands::app::dispatch(action, &ctx).await,
         Command::Connect(args) => commands::connect::run_connect(args, &ctx),

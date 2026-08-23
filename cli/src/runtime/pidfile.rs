@@ -6,6 +6,37 @@ use serde::{Deserialize, Serialize};
 
 use crate::error::AwareError;
 
+/// Kernel-backed, crash-released single-run fence used only by app graphs that contain the exact
+/// `model-reference-reader` agent. Ordinary one-shot apps never acquire it.
+pub struct ExclusiveControl {
+    file: std::fs::File,
+}
+
+impl ExclusiveControl {
+    pub fn acquire(instance_dir: &Path) -> Result<Self, AwareError> {
+        use fs2::FileExt;
+        std::fs::create_dir_all(instance_dir)?;
+        let file = std::fs::OpenOptions::new()
+            .read(true)
+            .write(true)
+            .create(true)
+            .truncate(false)
+            .open(instance_dir.join("model-reader-control.lock"))?;
+        file.try_lock_exclusive().map_err(|_| {
+            AwareError::Conflict(
+                "a model-reference-reader run already owns this app instance".into(),
+            )
+        })?;
+        Ok(Self { file })
+    }
+}
+
+impl Drop for ExclusiveControl {
+    fn drop(&mut self) {
+        let _ = fs2::FileExt::unlock(&self.file);
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Pidfile {
     pub app: String,
@@ -68,5 +99,14 @@ mod tests {
         write(&p, tmp.path()).unwrap();
         remove(tmp.path());
         assert!(!tmp.path().join("pidfile.yaml").exists());
+    }
+
+    #[test]
+    fn exclusive_control_refuses_a_second_owner_and_releases_on_drop() {
+        let tmp = tempfile::tempdir().unwrap();
+        let first = ExclusiveControl::acquire(tmp.path()).unwrap();
+        assert!(ExclusiveControl::acquire(tmp.path()).is_err());
+        drop(first);
+        ExclusiveControl::acquire(tmp.path()).unwrap();
     }
 }
