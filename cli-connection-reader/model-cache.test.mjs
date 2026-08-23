@@ -214,3 +214,19 @@ test('cache maintenance evicts deterministically, sweeps stale staging, and refu
     (error) => error.code === 'reference-cache-full',
   );
 });
+
+test('cache maintenance removes crash-left orphan blobs before applying quota', async (t) => {
+  const root = await temporaryDirectory(t);
+  const { key } = await signingFixture(root);
+  const cacheRoot = path.join(root, 'cache');
+  const orphan = path.join(cacheRoot, 'blobs', 'f'.repeat(64));
+  await fs.mkdir(path.dirname(orphan), { recursive: true });
+  await fs.writeFile(orphan, Buffer.alloc(1024 * 1024 - 1));
+  const cacheIdentity = identity({ signerFingerprintSha256: signerFingerprintSha256(key.publicKeyBytes) });
+  const published = await publishCacheEntry({
+    root: cacheRoot, identity: cacheIdentity, artifacts: artifacts(), signingKey: key,
+    cacheLimits: { maxEntries: 1, maxBytes: 1024 * 1024, staleStagingMs: 1 },
+  });
+  await assert.rejects(() => fs.access(orphan));
+  await fs.access(path.join(cacheRoot, 'entries', published.key));
+});

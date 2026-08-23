@@ -106,6 +106,19 @@ async function maintainCache(root, key, blobs, overrides) {
     try { const stat = await fs.stat(path.join(blobDirectory, name)); if (stat.isFile()) { blobBytes += stat.size; existing.add(name); } }
     catch { /* concurrent publication */ }
   }
+  const initiallyReachable = new Set();
+  for (const entry of entries) {
+    for (const digest of await receiptDigests(entry.entry)) initiallyReachable.add(digest);
+  }
+  for (const digest of [...existing].sort()) {
+    if (initiallyReachable.has(digest)) continue;
+    try {
+      const stat = await fs.stat(path.join(blobDirectory, digest));
+      await fs.rm(path.join(blobDirectory, digest), { force: true });
+      blobBytes -= stat.size;
+      existing.delete(digest);
+    } catch { /* crash cleanup is best-effort under the held maintenance fence */ }
+  }
   const incomingRecords = new Map(Object.values(blobs).map((record) => [record.sha256, record.bytes]));
   let incoming = [...incomingRecords].filter(([digest]) => !existing.has(digest)).reduce((sum, [, bytes]) => sum + bytes, 0);
   const targetExists = entries.some((entry) => entry.name === key);
