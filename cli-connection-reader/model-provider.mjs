@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
   assertClosedObject, assertSha256, buildCanonicalRequest, buildProviderFingerprint,
-  canonicalJsonBytes, lowerableLimits, ModelReaderError, parseJsonStrict, sha256,
+  canonicalJsonBytes, lowerableLimits, ModelReaderError, parseJsonStrict, providerFingerprintSha256, sha256,
 } from './model-contract.mjs';
 
 function providerError(code, message, retryable = false, details = undefined) {
@@ -123,6 +123,33 @@ async function validatedOutput(outputPath, expectedPath, limit, label) {
   return { path: outputPath, bytes: output.bytes, size: output.stat.size, sha256: output.sha256 };
 }
 
+export async function describeProvider(options) {
+  const limits = lowerableLimits(options.limits);
+  const initialExecutable = await validateProviderExecutable(options.executable);
+  await privateDirectory(options.privateRoot);
+  const cwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
+  const environment = minimalProviderEnvironment(options.environment);
+  const stdin = canonicalJsonBytes({ protocolVersion: '1', limits });
+  const stdout = await callProvider(options.hostRun, {
+    executable: initialExecutable.path, operation: 'describe', stdin, stdinLength: stdin.length,
+    cwd, environment, timeoutMs: limits.conversionMs,
+    stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes,
+  }, limits);
+  const afterDescribe = await validateProviderExecutable(options.executable);
+  if (afterDescribe.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during description.');
+  const describe = validateDescribe(parseProviderJson(stdout, limits, 'description'));
+  const fingerprint = buildProviderFingerprint({
+    protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
+    engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
+    adapterExecutableSha256: initialExecutable.sha256,
+  });
+  if (options.expectedProviderSha256 !== undefined) {
+    assertSha256(options.expectedProviderSha256, 'expectedProviderSha256');
+    if (providerFingerprintSha256(fingerprint) !== options.expectedProviderSha256) providerError('reference-provider-pin-mismatch', 'The local provider does not match the expected fingerprint.');
+  }
+  return { describe, fingerprint, providerExecutableSha256: initialExecutable.sha256 };
+}
+
 export async function describeAndConvert(options) {
   const limits = lowerableLimits(options.limits);
   const initialExecutable = await validateProviderExecutable(options.executable);
@@ -139,6 +166,15 @@ export async function describeAndConvert(options) {
   const afterDescribe = await validateProviderExecutable(options.executable);
   if (afterDescribe.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during description.');
   const describe = validateDescribe(parseProviderJson(describeBytes, limits, 'description'));
+  const describedFingerprint = buildProviderFingerprint({
+    protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
+    engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
+    adapterExecutableSha256: initialExecutable.sha256,
+  });
+  if (options.expectedProviderSha256 !== undefined) {
+    assertSha256(options.expectedProviderSha256, 'expectedProviderSha256');
+    if (providerFingerprintSha256(describedFingerprint) !== options.expectedProviderSha256) providerError('reference-provider-pin-mismatch', 'The local provider does not match the expected fingerprint.');
+  }
   const canonicalRequest = buildCanonicalRequest({ limits, conversionSettings: options.conversionSettings ?? {} });
   const outputDirectory = await privateDirectory(path.join(options.privateRoot, 'output'));
   const beforeConvert = await validateProviderExecutable(options.executable);
@@ -164,14 +200,7 @@ export async function describeAndConvert(options) {
   if (geometry.size + metadata.size > limits.maxProviderOutputBytes) providerError('reference-provider-output-too-large', 'Provider files exceed their total byte limit.');
   return {
     describe, receipt, canonicalRequest,
-    fingerprint: buildProviderFingerprint({
-      protocolVersion: describe.protocolVersion,
-      provider: describe.provider,
-      engine: describe.engine,
-      engineVersion: describe.engineVersion,
-      adapterBuildId: describe.adapterBuildId,
-      adapterExecutableSha256: initialExecutable.sha256,
-    }),
+    fingerprint: describedFingerprint,
     providerExecutableSha256: initialExecutable.sha256,
     stagedSource: staging, outputs: { geometry, metadata },
   };

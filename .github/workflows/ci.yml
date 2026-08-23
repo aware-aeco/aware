@@ -195,6 +195,34 @@ jobs:
         working-directory: cli-connection-reader
         run: node --test
 
+  bridge-windows-packaged:
+    name: connection-reader packaged RVT/IFC harness
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: cli-connection-reader/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.88.0
+
+      - name: Build source AWARE host
+        run: cargo build --manifest-path cli/Cargo.toml --locked
+
+      - name: npm ci
+        working-directory: cli-connection-reader
+        run: npm ci
+
+      - name: Clean-stage SEA/provider harness
+        working-directory: cli-connection-reader
+        run: npm run test:windows-harness
+
   # Every OTHER .NET bridge suite in the repo. `tekla-bridge` below has run since
   # it was written, and that made it look like the .NET side was covered — it was
   # the only one of seven. `cli-revit/Tests`, `cli-rhino/Tests`,

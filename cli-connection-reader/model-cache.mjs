@@ -92,7 +92,9 @@ function verifySignature(receiptBytes, signatureBytes, expectedPublicKey) {
   if (signature.length !== 64 || !verify(null, Buffer.from(sha256(receiptBytes), 'hex'), publicKey, signature)) cacheError('reference-cache-signature-invalid', 'Cache receipt signature does not verify.');
 }
 
-function artifactManifest(identity, artifacts) {
+function artifactManifest(identity, artifacts, details = {}) {
+  try { assertClosedObject(details, [], ['coverage', 'frame', 'canonicalRequestSha256', 'providerFingerprintSha256'], 'manifest details'); }
+  catch (error) { cacheError('reference-cache-artifacts-invalid', 'Manifest details are not closed.', error); }
   const names = Object.keys(artifacts).sort();
   if (names.length !== REQUIRED_ARTIFACTS.length || !REQUIRED_ARTIFACTS.every((name) => names.includes(name))) cacheError('reference-cache-artifacts-invalid', 'A conversion must publish exactly four component artifacts.');
   const records = {};
@@ -100,13 +102,13 @@ function artifactManifest(identity, artifacts) {
     if (!Buffer.isBuffer(artifacts[name])) cacheError('reference-cache-artifacts-invalid', `Artifact ${name} is not binary-safe bytes.`);
     records[name] = { sha256: sha256(artifacts[name]), bytes: artifacts[name].length };
   }
-  return { schemaVersion: 'model-reference-manifest/v1', identity, artifacts: records };
+  return { schemaVersion: 'model-reference-manifest/v1', identity, ...details, artifacts: records };
 }
 
-export async function publishCacheEntry({ root, identity, artifacts, signingKey }) {
+export async function publishCacheEntry({ root, identity, artifacts, signingKey, details = {} }) {
   await ensureLayout(root);
   const key = cacheKeySha256(identity);
-  const manifest = artifactManifest(identity, artifacts);
+  const manifest = artifactManifest(identity, artifacts, details);
   const manifestBytes = canonicalJsonBytes(manifest);
   const all = { ...artifacts, 'manifest.json': manifestBytes };
   const blobs = {};

@@ -1,0 +1,221 @@
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {
+  assertSha256, buildCanonicalRequest, ModelReaderError, providerFingerprintSha256,
+  requestSha256, sha256,
+} from './model-contract.mjs';
+import { normalizeRevitGlb } from './revit-glb.mjs';
+import { normalizeRevitMetadata } from './revit-metadata.mjs';
+import { describeAndConvert, describeProvider } from './model-provider.mjs';
+import {
+  acquireCacheOwner, cacheKeySha256, loadAwareSigningKey, publishCacheEntry, readCacheEntry,
+  releaseCacheOwner, signerFingerprintSha256,
+} from './model-cache.mjs';
+import { createModelHostClient } from './model-host-client.mjs';
+
+function readerError(code, phase, message, retryable = false, details = undefined) {
+  throw new ModelReaderError(code, phase, retryable, message, details);
+}
+
+function awareHome(environment) {
+  return environment.AWARE_HOME || path.join(os.homedir(), '.aware');
+}
+
+function configuration(args, deps) {
+  const environment = deps.environment ?? process.env;
+  const home = awareHome(environment);
+  const executable = args['provider-path'] ?? environment.AWARE_MODEL_REFERENCE_PROVIDER;
+  if (typeof executable !== 'string' || !executable) readerError('reference-provider-unavailable', 'preflight', 'A local model provider is not configured.');
+  const secretPath = args['signing-secret-path'] ?? environment.AWARE_MODEL_REFERENCE_SIGNING_KEY ?? path.join(home, 'keys', 'model-reference-reader.sec');
+  const publicPath = args['signing-public-path'] ?? environment.AWARE_MODEL_REFERENCE_PUBLIC_KEY ?? secretPath.replace(/\.sec$/i, '.pub');
+  return {
+    executable, secretPath, publicPath, environment,
+    cacheRoot: deps.cacheRoot ?? path.join(home, 'cache', 'model-reference-reader'),
+    privateRoot: deps.privateRoot ?? path.join(home, 'cache', 'model-reference-reader', 'provider-runs'),
+    artifactDirectory: deps.artifactDirectory ?? environment.AWARE_ARTIFACT_DIR,
+  };
+}
+
+async function newRunRoot(parent) {
+  await fs.mkdir(parent, { recursive: true, mode: 0o700 });
+  return await fs.mkdtemp(path.join(parent, 'run-'));
+}
+
+function emit(deps, phase, extra = {}) {
+  if (typeof deps.progress === 'function') deps.progress({ phase, ...extra });
+}
+
+async function providerReadiness(args, deps, config, expectedProviderSha256) {
+  const signingKey = await loadAwareSigningKey(config.secretPath, config.publicPath);
+  const runRoot = await newRunRoot(config.privateRoot);
+  try {
+    const provider = await describeProvider({
+      executable: config.executable, privateRoot: path.join(runRoot, 'describe'),
+      hostRun: deps.hostRun, environment: config.environment, limits: deps.limits,
+      expectedProviderSha256,
+    });
+    return {
+      signingKey, provider,
+      signerFingerprintSha256: signerFingerprintSha256(signingKey.publicKeyBytes),
+      providerFingerprintSha256: providerFingerprintSha256(provider.fingerprint),
+    };
+  } finally {
+    await fs.rm(runRoot, { recursive: true, force: true });
+  }
+}
+
+function sourcePathFrom(args) {
+  const values = [args['rvt-path'], args.rvtPath, args['model-path']].filter((value) => value !== undefined);
+  if (values.length !== 1 || typeof values[0] !== 'string' || !values[0]) readerError('reference-source-invalid', 'source', 'Exactly one absolute RVT source path is required.');
+  if (!path.isAbsolute(values[0]) || !/\.rvt$/i.test(values[0])) readerError('reference-source-invalid', 'source', 'The source must be an absolute .rvt path.');
+  return values[0];
+}
+
+async function hashSource(sourcePath) {
+  let bytes;
+  try { bytes = await fs.readFile(sourcePath); }
+  catch (error) { readerError('reference-source-unavailable', 'source', 'The RVT source is unavailable.', false, error); }
+  return { bytes, sha256: sha256(bytes) };
+}
+
+function exactExpectedSource(args, actual) {
+  const expected = args['source-sha256'];
+  assertSha256(expected, 'source-sha256');
+  if (expected !== actual) readerError('reference-source-changed', 'source', 'The RVT source does not match the expected digest.');
+  return expected;
+}
+
+function manifestDetails(geometry, metadata, canonicalRequestSha256, fingerprintSha256) {
+  return {
+    frame: { units: 'mm', up: 'z', handedness: 'right', axes: ['x', 'y', 'z'] },
+    canonicalRequestSha256,
+    providerFingerprintSha256: fingerprintSha256,
+    coverage: { ...metadata.coverage, geometry: geometry.coverage },
+  };
+}
+
+async function convertAndCache(args, deps, config, readiness) {
+  const sourcePath = sourcePathFrom(args);
+  const initial = await hashSource(sourcePath);
+  const sourceSha256 = exactExpectedSource(args, initial.sha256);
+  const canonicalRequest = buildCanonicalRequest({ limits: deps.limits, conversionSettings: args['conversion-settings'] ?? {} });
+  const identity = {
+    sourceSha256, canonicalRequest, providerFingerprint: readiness.provider.fingerprint,
+    signerFingerprintSha256: readiness.signerFingerprintSha256,
+  };
+  const key = cacheKeySha256(identity);
+  const read = async () => await readCacheEntry({ root: config.cacheRoot, key, expectedIdentity: identity, expectedPublicKey: readiness.signingKey.publicKeyBytes });
+  try { return { hit: true, key, cache: await read() }; }
+  catch (error) { if (error?.code !== 'reference-cache-miss') throw error; }
+  const owner = await acquireCacheOwner({ root: config.cacheRoot, key });
+  try {
+    try { return { hit: true, key, cache: await read() }; }
+    catch (error) { if (error?.code !== 'reference-cache-miss') throw error; }
+    emit(deps, 'convert');
+    const runRoot = await newRunRoot(config.privateRoot);
+    let conversion;
+    try {
+      conversion = await describeAndConvert({
+        executable: config.executable, sourcePath, expectedSourceSha256: sourceSha256,
+        expectedProviderSha256: readiness.providerFingerprintSha256,
+        privateRoot: path.join(runRoot, 'conversion'), hostRun: deps.hostRun,
+        environment: config.environment, limits: deps.limits,
+        conversionSettings: args['conversion-settings'] ?? {},
+      });
+      emit(deps, 'normalize');
+      const geometry = normalizeRevitGlb(conversion.outputs.geometry.bytes, { limits: deps.limits });
+      const metadata = normalizeRevitMetadata(conversion.outputs.metadata.bytes, geometry.parts, { limits: deps.limits });
+      const finalSource = await hashSource(sourcePath);
+      if (finalSource.sha256 !== sourceSha256) readerError('reference-source-changed', 'source', 'The RVT source changed during conversion.');
+      const artifacts = {
+        'geometry.glb': geometry.glb,
+        'entities.json': metadata.entitiesBytes,
+        'properties.json': metadata.propertiesBytes,
+        'relationships.json': metadata.relationshipsBytes,
+      };
+      const details = manifestDetails(geometry, metadata, requestSha256(canonicalRequest), readiness.providerFingerprintSha256);
+      emit(deps, 'publish');
+      await publishCacheEntry({ root: config.cacheRoot, identity, artifacts, signingKey: readiness.signingKey, details });
+    } finally {
+      await fs.rm(runRoot, { recursive: true, force: true });
+    }
+    return { hit: false, key, cache: await read() };
+  } finally {
+    await releaseCacheOwner(owner);
+  }
+}
+
+function summary(result) {
+  const coverage = result.cache.manifest.coverage;
+  const entityDocument = JSON.parse(result.cache.artifacts['entities.json'].toString('utf8'));
+  const bounds = entityDocument.entities.reduce((box, entity) => {
+    if (!entity.bounds) return box;
+    if (!box) return structuredClone(entity.bounds);
+    for (let axis = 0; axis < 3; axis += 1) {
+      box.min[axis] = Math.min(box.min[axis], entity.bounds.min[axis]);
+      box.max[axis] = Math.max(box.max[axis], entity.bounds.max[axis]);
+    }
+    return box;
+  }, null);
+  return {
+    schemaVersion: 'model-reference-reader/v1', cache: result.hit ? 'hit' : 'miss',
+    sourceSha256: result.cache.manifest.identity.sourceSha256,
+    canonicalRequestSha256: result.cache.manifest.canonicalRequestSha256,
+    providerFingerprint: result.cache.manifest.identity.providerFingerprint,
+    providerFingerprintSha256: result.cache.manifest.providerFingerprintSha256,
+    signerFingerprintSha256: result.cache.manifest.identity.signerFingerprintSha256,
+    frame: result.cache.manifest.frame, coverage, bounds,
+    entities: coverage.indexedEntities, geometryNodes: coverage.geometryNodes,
+    properties: coverage.properties, relationships: coverage.relationships,
+  };
+}
+
+async function publishRunArtifacts(result, directory) {
+  if (typeof directory !== 'string' || !path.isAbsolute(directory)) readerError('reference-artifact-directory-missing', 'publish', 'A run-owned artifact directory is required.');
+  await fs.mkdir(directory, { recursive: true, mode: 0o700 });
+  const logical = { geometry: 'geometry.glb', entities: 'entities.json', properties: 'properties.json', relationships: 'relationships.json', manifest: 'manifest.json' };
+  const descriptors = {};
+  for (const [name, cacheName] of Object.entries(logical)) {
+    const bytes = result.cache.artifacts[cacheName];
+    const digest = sha256(bytes);
+    const id = `model-${result.key.slice(0, 16)}-${cacheName}`;
+    const target = path.join(directory, id);
+    try { await fs.writeFile(target, bytes, { flag: 'wx', mode: 0o600 }); }
+    catch (error) {
+      if (error?.code !== 'EEXIST' || sha256(await fs.readFile(target)) !== digest) readerError('reference-artifact-collision', 'publish', 'A run artifact id collided with different bytes.', false, error);
+    }
+    descriptors[name] = { id, mediaType: cacheName.endsWith('.glb') ? 'model/gltf-binary' : 'application/json', bytes: bytes.length, sha256: digest };
+  }
+  return descriptors;
+}
+
+export async function runModelCommand(command, args = {}, deps = {}) {
+  if (!args || typeof args !== 'object' || Array.isArray(args)) readerError('reference-request-invalid', 'request', 'Command input must be a JSON object.');
+  const config = configuration(args, deps);
+  const ownedHost = deps.hostRun ? null : await createModelHostClient(config.environment.AWARE_MODEL_READER_HOST, { environment: config.environment });
+  const executionDeps = ownedHost ? { ...deps, hostRun: ownedHost.run } : deps;
+  try {
+    const pin = args['expected-provider-sha256'];
+    emit(executionDeps, 'preflight');
+    const readiness = await providerReadiness(args, executionDeps, config, pin);
+    if (command === 'preflight') {
+      return {
+        schemaVersion: 'model-reference-reader/v1', ready: true, execution: 'local',
+        provider: readiness.provider.describe, providerFingerprint: readiness.provider.fingerprint,
+        providerFingerprintSha256: readiness.providerFingerprintSha256,
+        signerFingerprintSha256: readiness.signerFingerprintSha256,
+        secretProvisioning: 'provider-local; AWARE generic secrets unavailable (#448)',
+      };
+    }
+    if (command !== 'probe' && command !== 'read-model') readerError('reference-command-invalid', 'request', 'Unknown model-reader command.');
+    if (typeof pin !== 'string') readerError('reference-provider-pin-required', 'preflight', 'The expected provider fingerprint is required.');
+    const result = await convertAndCache(args, executionDeps, config, readiness);
+    const out = summary(result);
+    if (command === 'probe') return out;
+    emit(executionDeps, 'artifacts');
+    return { ...out, artifacts: await publishRunArtifacts(result, config.artifactDirectory) };
+  } finally {
+    await ownedHost?.close();
+  }
+}

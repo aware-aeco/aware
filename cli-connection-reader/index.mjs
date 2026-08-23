@@ -1340,9 +1340,8 @@ export function closeApi({ api, modelID }) {
   api.CloseModel(modelID);
 }
 
-async function main() {
-  const command = process.argv[2];
-  const args = JSON.parse(readStdin() || '{}');
+export async function main(command = process.argv[2], stdinText = undefined) {
+  const args = JSON.parse((stdinText ?? readStdin()) || '{}');
 
   // ARGUMENT VALIDATION HAPPENS BEFORE THE STDOUT GUARD GOES UP. The guard swaps `process.stdout.write`
   // for stderr's; a `throw` between installing it and the `finally` that restores it leaves the process
@@ -1718,12 +1717,10 @@ class SegmentWriter {
 // Only run as a CLI when this file IS the entry point. Without this guard, importing the module from a
 // test executes main(), which reads fd 0 and exits non-zero.
 //
-// The packaged case is checked FIRST and does not depend on argv[1]. Shipped as a SEA the bundle is
-// CJS inside a renamed node.exe, where argv[1] is not this script and may be absent entirely — an
-// argv-first guard would evaluate false and leave the bridge silently doing nothing, which is a far
-// worse failure than the one the guard prevents.
-const invokedDirectly = isPackagedExe()
-  || (!!process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href);
+// SEA ownership belongs to `model-dispatcher.mjs`, the package/bin and build entrypoint. Keeping an
+// `isPackagedExe()` arm here would make this lazily imported IFC module launch a second main inside
+// the same executable and race the dispatcher for stdin. Plain source invocation remains supported.
+const invokedDirectly = !!process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
 if (invokedDirectly) {
   main().catch((e) => {
     process.stderr.write(`connection-reader: ${e && e.message ? e.message : e}\n`);
