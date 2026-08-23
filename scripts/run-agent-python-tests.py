@@ -319,18 +319,56 @@ def looks_like_an_unrunnable_pytest_file(source: str) -> bool:
         `Import` is not a `Call`, so that block now correctly counts for
         nothing.
 
-        The residual limit, stated rather than hidden: any call will do, so a
-        top-level `with open(path) as fh:` reads as an entry point even though
-        it runs no test. That direction only costs a file being executed and
-        exiting 0 — the same outcome as before this check existed — whereas the
-        opposite error refuses a valid test unrun.
-        """
-        if isinstance(
-            statement, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
-        ):
-            return False
-        return any(isinstance(inner, ast.Call) for inner in ast.walk(statement))
+        A bare call to an `async def` is NOT an entry point: `test_broken()` on
+        a coroutine function only builds a coroutine, and the interpreter exits
+        0 after an unawaited-coroutine `RuntimeWarning` with the assertions
+        never run (Codex review, PR #447). It counts only with evidence the
+        coroutine is actually driven — `await test_broken()`, or passed to
+        something that runs it such as `asyncio.run(...)`.
 
+        The residual limit, stated rather than hidden: any other call will do,
+        so a top-level `with open(path) as fh:` reads as an entry point even
+        though it runs no test. That direction only costs a file being executed
+        and exiting 0 — the same outcome as before this check existed — whereas
+        the opposite error refuses a valid test unrun.
+        """
+
+        def drives_a_call(node: ast.AST, driven: bool) -> bool:
+            # A `def`/`class` body does not run where it is written, so nothing
+            # inside one is evidence that this file executes anything.
+            if isinstance(
+                node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
+            ):
+                return False
+            if isinstance(node, ast.Await):
+                return any(
+                    drives_a_call(child, True) for child in ast.iter_child_nodes(node)
+                )
+            if isinstance(node, ast.Call):
+                undriven_coroutine = (
+                    not driven
+                    and isinstance(node.func, ast.Name)
+                    and node.func.id in coroutine_functions
+                )
+                if not undriven_coroutine:
+                    return True
+                # The call itself runs nothing, but its ARGUMENTS are still
+                # evaluated, so a real call in there still counts.
+                return any(
+                    drives_a_call(child, driven)
+                    for child in ast.iter_child_nodes(node)
+                )
+            return any(
+                drives_a_call(child, driven) for child in ast.iter_child_nodes(node)
+            )
+
+        return drives_a_call(statement, False)
+
+    coroutine_functions = {
+        node.name
+        for node in module_executed(module.body)
+        if isinstance(node, ast.AsyncFunctionDef)
+    }
     return not any(is_executable(statement) for statement in module.body)
 
 
@@ -594,6 +632,26 @@ _CONDITIONAL_TEST = (
     "    def test_conditional():\n"
     "        assert 2 + 2 == 5\n"
 )
+# A bare call to an `async def` builds a coroutine and runs nothing: Python
+# exits 0 after a RuntimeWarning with the assertion never evaluated, so this
+# must be refused, not recorded as a pass (Codex review, PR #447).
+_UNAWAITED_ASYNC = (
+    "async def test_broken():\n"
+    "    assert 2 + 2 == 5\n"
+    "\n"
+    "test_broken()\n"
+)
+# The same file with the coroutine actually driven. This one DOES run, so it
+# must be executed and allowed to fail on its own assertion — the control that
+# keeps the fix above from simply refusing all async tests.
+_DRIVEN_ASYNC = (
+    "import asyncio\n"
+    "\n"
+    "async def test_broken():\n"
+    "    assert 2 + 2 == 5\n"
+    "\n"
+    "asyncio.run(test_broken())\n"
+)
 # A top-level `try:` that only imports. The block is not an entry point — an
 # Import is not a Call — so this file still asserts nothing and must be refused.
 _TRY_IMPORT_ONLY = (
@@ -719,6 +777,8 @@ def self_test() -> int:
         _write(root, "tests/test_class_style.py", _PYTEST_CLASS_STYLE)
         _write(root, "tests/test_try_import.py", _TRY_IMPORT_ONLY)
         _write(root, "tests/test_conditional_decl.py", _CONDITIONAL_TEST)
+        _write(root, "tests/test_unawaited_async.py", _UNAWAITED_ASYNC)
+        _write(root, "tests/test_driven_async.py", _DRIVEN_ASYNC)
 
         check(
             declares_aware_bin(read_source(root / "tests/test_needs_bin.py"))
@@ -820,6 +880,18 @@ def self_test() -> int:
         check(
             status == "failed" and "never calls them" in detail,
             "a top-level `try: import ...` is not treated as an entry point",
+        )
+        # A bare `test_x()` on a coroutine function runs nothing.
+        status, detail = run_one(root / "tests/test_unawaited_async.py", None)
+        check(
+            status == "failed" and "never calls them" in detail,
+            "an unawaited async test call is refused, not recorded as a pass",
+        )
+        # ...but a driven one is real execution and must be allowed to run.
+        status, detail = run_one(root / "tests/test_driven_async.py", None)
+        check(
+            status == "failed" and "never calls them" not in detail,
+            "an `asyncio.run(...)` async test is executed, not refused",
         )
         # A test declared inside a conditional block is still declared.
         status, detail = run_one(root / "tests/test_conditional_decl.py", None)

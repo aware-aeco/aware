@@ -303,10 +303,14 @@ def main() -> int:
         # PR #444). Only a genuine absence is a missing host; anything else
         # propagates and stays red, as it did before this guard existed.
         cause = exc.__cause__
-        absent = isinstance(cause, ModuleNotFoundError) and cause.name in {
-            "ifcopenshell",
-            "ifcopenshell.geom",
-        }
+        # ONLY the top-level package name. `import ifcopenshell.geom` on a host
+        # with no ifcopenshell at all fails on the top-level import first and
+        # reports `name == "ifcopenshell"`; the submodule name appears only when
+        # the package itself imported fine and `.geom` did not — an installed
+        # but incomplete wheel, which is the broken-install case the comment
+        # above says must stay red. Accepting it here skipped exactly what this
+        # guard exists to catch (Codex review, PR #447).
+        absent = isinstance(cause, ModuleNotFoundError) and cause.name == "ifcopenshell"
         if exc.code != _result.ERR_IFCOPENSHELL_MISSING or not absent:
             raise
         print(f"SKIP: {exc.message}")
