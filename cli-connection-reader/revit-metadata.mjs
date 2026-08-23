@@ -89,10 +89,15 @@ function validateParameter(parameter, index) {
 function bounds(parts) {
   const positions = parts.flatMap((part) => part.positions ?? []);
   if (!positions.length) return null;
-  return {
-    min: [0, 1, 2].map((axis) => Math.min(...positions.map((point) => point[axis]))),
-    max: [0, 1, 2].map((axis) => Math.max(...positions.map((point) => point[axis]))),
-  };
+  const min = [...positions[0]];
+  const max = [...positions[0]];
+  for (let index = 1; index < positions.length; index += 1) {
+    for (let axis = 0; axis < 3; axis += 1) {
+      if (positions[index][axis] < min[axis]) min[axis] = positions[index][axis];
+      if (positions[index][axis] > max[axis]) max[axis] = positions[index][axis];
+    }
+  }
+  return { min, max };
 }
 
 function compareDecimal(a, b) {
@@ -114,14 +119,26 @@ function assertAcyclic(relations, kind) {
   }
   const visiting = new Set();
   const visited = new Set();
-  const visit = (id) => {
-    if (visiting.has(id)) invalid(`${kind} relationship contains a cycle`, 'reference-relationship-invalid');
-    if (visited.has(id)) return;
-    visiting.add(id);
-    for (const target of adjacency.get(id) ?? []) visit(target);
-    visiting.delete(id); visited.add(id);
-  };
-  for (const id of adjacency.keys()) visit(id);
+  for (const start of adjacency.keys()) {
+    if (visited.has(start)) continue;
+    const stack = [{ id: start, exit: false }];
+    while (stack.length) {
+      const frame = stack.pop();
+      if (frame.exit) {
+        visiting.delete(frame.id);
+        visited.add(frame.id);
+        continue;
+      }
+      if (visiting.has(frame.id)) invalid(`${kind} relationship contains a cycle`, 'reference-relationship-invalid');
+      if (visited.has(frame.id)) continue;
+      visiting.add(frame.id);
+      stack.push({ id: frame.id, exit: true });
+      const targets = adjacency.get(frame.id) ?? [];
+      for (let index = targets.length - 1; index >= 0; index -= 1) {
+        stack.push({ id: targets[index], exit: false });
+      }
+    }
+  }
 }
 
 export function normalizeRevitMetadata(input, geometryParts, options = {}) {

@@ -70,11 +70,22 @@ class ModelHostClient {
     return { requestId, frame: { kind: 1, requestId, runHandle, sequence: 0, final: true, payload: canonicalJsonBytes(body) } };
   }
 
-  simple(body, runHandle = ZERO_HANDLE) {
+  simple(body, runHandle = ZERO_HANDLE, captureHandle = false) {
     const { requestId, frame } = this.control(body, runHandle);
-    const promise = new Promise((resolve, reject) => this.pending.set(requestId.toString(), { type: 'simple', resolve, reject }));
+    const promise = new Promise((resolve, reject) => this.pending.set(requestId.toString(), { type: 'simple', resolve, reject, captureHandle }));
     this.write(frame); return promise;
   }
+
+  acquireLock = async (lockPath) => {
+    const response = await this.simple({ op: 'lock-acquire', path: lockPath }, ZERO_HANDLE, true);
+    if (response.body.status !== 'acquired' || response.handle.equals(ZERO_HANDLE)) hostError('reference-cache-owned', 'The cache key is owned by another conversion.');
+    return response.handle;
+  };
+
+  releaseLock = async (handle) => {
+    const response = await this.simple({ op: 'lock-release' }, handle);
+    if (response.status !== 'released') hostError('reference-cache-owner-token', 'The cache fence could not be released.');
+  };
 
   async ready() {
     const hello = await this.simple({ op: 'hello' });
@@ -106,7 +117,9 @@ class ModelHostClient {
     if (!state) throw new Error('uncorrelated model-reader host frame');
     if (state.type === 'simple') {
       if (frame.kind !== 1 || !frame.final || frame.sequence !== 0) throw new Error('invalid model-reader host control response');
-      this.pending.delete(frame.requestId.toString()); state.resolve(JSON.parse(frame.payload.toString('utf8'))); return;
+      this.pending.delete(frame.requestId.toString());
+      const body = JSON.parse(frame.payload.toString('utf8'));
+      state.resolve(state.captureHandle ? { body, handle: frame.runHandle } : body); return;
     }
     if (frame.kind === 1) {
       const control = JSON.parse(frame.payload.toString('utf8'));
@@ -119,6 +132,10 @@ class ModelHostClient {
       if (control.status === 'complete') {
         if (!state.handle || !frame.runHandle.equals(state.handle) || !state.stdoutFinal || !state.stderrFinal) throw new Error('model-reader host completed before correlated streams');
         this.pending.delete(frame.requestId.toString());
+        if (control.hostErrorCode) {
+          state.reject(new ModelReaderError(control.hostErrorCode, 'provider-host', false, 'The managed provider stream failed its bounded read.'));
+          return;
+        }
         state.resolve({ exitCode: control.exitCode, stdout: Buffer.concat(state.stdout), stderr: Buffer.concat(state.stderr) }); return;
       }
       throw new Error('unknown model-reader host run control');

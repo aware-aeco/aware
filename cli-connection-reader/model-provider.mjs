@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+import { createReadStream } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
@@ -31,6 +33,18 @@ async function fileHash(filePath, limit, label) {
   return { stat, bytes, sha256: sha256(bytes) };
 }
 
+export async function hashRegularFile(filePath, limit, label = 'source') {
+  const stat = await regularNonLink(filePath, label);
+  if (stat.size > limit) providerError(`reference-${label}-too-large`, `${label} exceeds its byte limit.`);
+  const hash = createHash('sha256');
+  try {
+    for await (const chunk of createReadStream(filePath, { highWaterMark: 1024 * 1024 })) hash.update(chunk);
+  } catch (error) {
+    providerError(`reference-${label}-unavailable`, `${label} is unavailable.`, false, error);
+  }
+  return { stat, sha256: hash.digest('hex') };
+}
+
 export async function validateProviderExecutable(executable) {
   const stat = await regularNonLink(executable, 'provider');
   return { path: executable, size: stat.size, sha256: sha256(await fs.readFile(executable)) };
@@ -54,16 +68,23 @@ async function privateDirectory(directory) {
 export async function stageImmutableSource(sourcePath, stagingRoot, expectedSourceSha256, options = {}) {
   assertSha256(expectedSourceSha256, 'expectedSourceSha256');
   const limits = lowerableLimits(options.limits);
-  const before = await fileHash(sourcePath, limits.maxSourceBytes, 'source');
+  const before = await hashRegularFile(sourcePath, limits.maxSourceBytes, 'source');
   if (before.sha256 !== expectedSourceSha256) providerError('reference-source-changed', 'The model source changed before staging.');
   await privateDirectory(stagingRoot);
   const stagedPath = path.join(stagingRoot, 'source.rvt');
   const handle = await fs.open(stagedPath, 'wx', 0o600);
-  try { await handle.writeFile(before.bytes); await handle.sync(); }
+  const copiedHash = createHash('sha256');
+  try {
+    for await (const chunk of createReadStream(sourcePath, { highWaterMark: 1024 * 1024 })) {
+      copiedHash.update(chunk);
+      await handle.writeFile(chunk);
+    }
+    await handle.sync();
+  }
   finally { await handle.close(); }
-  const staged = await fileHash(stagedPath, limits.maxSourceBytes, 'source');
-  const after = await fileHash(sourcePath, limits.maxSourceBytes, 'source');
-  if (staged.sha256 !== expectedSourceSha256 || after.sha256 !== expectedSourceSha256) {
+  const staged = await hashRegularFile(stagedPath, limits.maxSourceBytes, 'source');
+  const after = await hashRegularFile(sourcePath, limits.maxSourceBytes, 'source');
+  if (copiedHash.digest('hex') !== expectedSourceSha256 || staged.sha256 !== expectedSourceSha256 || after.sha256 !== expectedSourceSha256) {
     providerError('reference-source-changed', 'The model source changed while staging.');
   }
   await fs.chmod(stagedPath, 0o400);

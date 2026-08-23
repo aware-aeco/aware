@@ -9,5 +9,8 @@ The source is copied into a private immutable staging file and hashed on both si
 only that staged path. A source or executable change at any bracket refuses the run. Execution is
 `local` with `destination: null`; remote destinations and external GLB resources are unsupported.
 
+The call must carry both `expected-provider-sha256` and the independently trusted
+`expected-signer-sha256`. Neither pin is learned from the conversion being authenticated.
+
 Bounds come from normalized active-scene geometry, not from names or metadata. Unclaimed geometry is
 reported in coverage rather than assigned by guesswork.

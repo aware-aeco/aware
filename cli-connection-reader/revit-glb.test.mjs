@@ -86,3 +86,26 @@ test('duplicate keys in the GLB JSON chunk are rejected before profile validatio
   const offset = 20 + padded; out.writeUInt32LE(bin.length, offset); out.writeUInt32LE(0x004e4942, offset + 4); bin.copy(out, offset + 8);
   assert.throws(() => normalizeRevitGlb(out), /duplicate JSON key/);
 });
+
+test('large valid vertex sets compute bounds without variadic stack overflow', () => {
+  const positions = Array.from({ length: 130_000 }, (_, index) => [index, index % 3, 0]);
+  const result = normalizeRevitGlb(makeGlbFixture({ positions, indices: [0, 1, 2] }), {
+    limits: { maxVertices: positions.length },
+  });
+  const canonical = parseGlb(result.glb).json;
+  assert.deepEqual(canonical.accessors[0].min, [0, 0, 0]);
+  assert.deepEqual(canonical.accessors[0].max, [129_999_000, 0, 2000]);
+});
+
+test('vertex and index limits apply to the complete active model, not each primitive', () => {
+  const input = makeGlbFixture({ primitiveCopies: 2 });
+  assert.throws(
+    () => normalizeRevitGlb(input, { limits: { maxVertices: 3, maxIndices: 3 } }),
+    /count exceeds its limit/,
+  );
+});
+
+test('skins and animations are rejected instead of publishing untransformed bind-pose geometry', () => {
+  assert.throws(() => normalizeRevitGlb(makeGlbFixture({ skin: 0, skins: [{ joints: [0] }] })), /skin/);
+  assert.throws(() => normalizeRevitGlb(makeGlbFixture({ animations: [{ channels: [], samplers: [] }] })), /animation/);
+});

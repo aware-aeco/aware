@@ -86,3 +86,24 @@ test('duplicate authoritative IfcGUID values make every matching entity uncompar
   const result = normalizeRevitMetadata(metadata, geometry);
   assert.deepEqual(result.entities.map((entity) => entity.ifcGuid), [null, null]);
 });
+
+test('long valid relationship chains are checked without recursive stack overflow', () => {
+  const count = 15_000;
+  const metadata = {
+    schemaVersion: '1',
+    document: { kind: 'revit-project', id: 'long-chain' },
+    types: [], levels: [], parameterGroups: [], parameters: [],
+    elements: Array.from({ length: count }, (_, index) => ({
+      id: String(index + 1), revitClass: null, category: null, family: null,
+      type: null, level: null, parameterGroups: [], appearances: [`node-${index + 1}`],
+    })),
+    relations: Array.from({ length: count - 1 }, (_, index) => ({
+      id: String(index + 1), kind: 'contains', from: String(index + 1), to: String(index + 2),
+    })),
+  };
+  const geometry = Array.from({ length: count }, (_, index) => ({
+    nodeName: `node-${index + 1}`, primitiveOrdinal: 0, positions: [],
+  }));
+  const result = normalizeRevitMetadata(metadata, geometry);
+  assert.equal(result.relationships.length, count - 1);
+});

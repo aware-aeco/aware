@@ -3,7 +3,8 @@
 Treat the provider as a separately installed local trusted dependency. Configure its absolute regular
 executable path with `AWARE_MODEL_REFERENCE_PROVIDER`; never use PATH lookup, a shell command, URL or
 committed binary. Configure the AWARE-format signing key locally. Run `preflight`, pin the returned full
-provider fingerprint, then call `probe` and `read-model` with the source SHA-256.
+provider fingerprint, obtain the signer fingerprint through an independent operator trust channel, then
+call `probe` and `read-model` with both pins and the source SHA-256.
 
 The canonical request, provider fingerprint, source digest and signer trust anchor jointly define a
 cache key. Every cache hit verifies its signature, closed receipt, complete file set and every blob

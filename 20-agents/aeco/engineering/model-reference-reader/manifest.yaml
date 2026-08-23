@@ -55,13 +55,20 @@ commands:
     inputs:
       rvt-path:
         type: string
+        required: true
         description: Absolute path to the local .rvt source.
       source-sha256:
         type: string
+        required: true
         description: Expected SHA-256 of the source bytes, measured before the run.
       expected-provider-sha256:
         type: string
+        required: true
         description: Pinned SHA-256 of the complete seven-field provider fingerprint.
+      expected-signer-sha256:
+        type: string
+        required: true
+        description: Out-of-band pinned SHA-256 of the trusted AWARE-format public key.
     outputs:
       type: single
       schema:
@@ -81,13 +88,20 @@ commands:
     inputs:
       rvt-path:
         type: string
+        required: true
         description: Absolute path to the local .rvt source.
       source-sha256:
         type: string
+        required: true
         description: Expected SHA-256 of the source bytes, measured before the run.
       expected-provider-sha256:
         type: string
+        required: true
         description: Pinned SHA-256 of the complete seven-field provider fingerprint.
+      expected-signer-sha256:
+        type: string
+        required: true
+        description: Out-of-band pinned SHA-256 of the trusted AWARE-format public key.
     outputs:
       type: single
       schema:

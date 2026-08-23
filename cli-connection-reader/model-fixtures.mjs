@@ -23,11 +23,12 @@ export function makeGlbFixture(options = {}) {
   if (options.rotation) defaultNode.rotation = options.rotation;
   if (options.scale) defaultNode.scale = options.scale;
   if (options.matrix) defaultNode.matrix = options.matrix;
+  if (options.skin !== undefined) defaultNode.skin = options.skin;
   const json = {
     asset: { version: '2.0' },
     scenes: options.scenes ?? [{ nodes: [0] }],
     nodes: options.nodes ?? [defaultNode],
-    meshes: options.meshes ?? [{ primitives: [primitive] }],
+    meshes: options.meshes ?? [{ primitives: Array.from({ length: options.primitiveCopies ?? 1 }, () => ({ ...primitive, attributes: { ...primitive.attributes } })) }],
     buffers: [{ byteLength: binary.length, ...(options.externalUri ? { uri: options.externalUri } : {}) }],
     bufferViews: [
       { buffer: 0, byteOffset: 0, byteLength: positionBytes.length },
@@ -41,6 +42,8 @@ export function makeGlbFixture(options = {}) {
     ],
     ...(options.materialColor ? { materials: [{ pbrMetallicRoughness: { baseColorFactor: options.materialColor } }] } : {}),
     ...(options.extensionsUsed ? { extensionsUsed: options.extensionsUsed } : {}),
+    ...(options.skins ? { skins: options.skins } : {}),
+    ...(options.animations ? { animations: options.animations } : {}),
   };
   if (!options.omitScene) json.scene = options.scene ?? 0;
   const jsonBytes = canonicalJsonBytes(json);

@@ -23,6 +23,7 @@ async function setup(t) {
   await fs.writeFile(secretPath, `ed25519-secret-key-v1 ${privateKey.export({ format: 'der', type: 'pkcs8' }).subarray(-32).toString('base64')}\n`);
   await fs.writeFile(publicPath, `ed25519-public-key-v1 ${publicKey.export({ format: 'der', type: 'spki' }).subarray(-32).toString('base64')}\n`);
   const calls = [];
+  let nextLock = 0;
   const hostRun = async (request) => {
     calls.push(request.operation);
     return await new Promise((resolve, reject) => {
@@ -35,7 +36,12 @@ async function setup(t) {
   };
   return {
     root, sourcePath, executable, secretPath, publicPath, calls,
-    deps: { hostRun, cacheRoot: path.join(root, 'cache'), privateRoot: path.join(root, 'runs'), artifactDirectory: path.join(root, 'artifacts') },
+    deps: {
+      hostRun,
+      hostAcquireLock: async () => Buffer.from(`lock-${nextLock += 1}`),
+      hostReleaseLock: async () => {},
+      cacheRoot: path.join(root, 'cache'), privateRoot: path.join(root, 'runs'), artifactDirectory: path.join(root, 'artifacts'),
+    },
     args: { 'rvt-path': sourcePath, 'source-sha256': sha256(Buffer.from('fixture-rvt')), 'provider-path': executable, 'signing-secret-path': secretPath, 'signing-public-path': publicPath },
   };
 }
@@ -56,7 +62,10 @@ test('read-model publishes five binary-safe artifacts with reconciled coverage a
   const preflight = await runModelCommand('preflight', {
     'provider-path': state.executable, 'signing-secret-path': state.secretPath, 'signing-public-path': state.publicPath,
   }, state.deps);
-  const out = await runModelCommand('read-model', { ...state.args, 'expected-provider-sha256': preflight.providerFingerprintSha256 }, state.deps);
+  const out = await runModelCommand('read-model', {
+    ...state.args, 'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  }, state.deps);
   assert.equal(out.schemaVersion, 'model-reference-reader/v1');
   assert.equal(out.frame.units, 'mm'); assert.equal(out.frame.up, 'z');
   assert.equal(out.coverage.discoveredEntities, 1);
@@ -73,8 +82,11 @@ test('read-model publishes five binary-safe artifacts with reconciled coverage a
 
 test('probe is bounded, cache-aware, and two cold conversions produce identical artifact hashes', async (t) => {
   const first = await setup(t);
-  const pin = (await runModelCommand('preflight', { 'provider-path': first.executable, 'signing-secret-path': first.secretPath, 'signing-public-path': first.publicPath }, first.deps)).providerFingerprintSha256;
-  const args = { ...first.args, 'expected-provider-sha256': pin };
+  const preflight = await runModelCommand('preflight', { 'provider-path': first.executable, 'signing-secret-path': first.secretPath, 'signing-public-path': first.publicPath }, first.deps);
+  const args = {
+    ...first.args, 'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  };
   const cold = await runModelCommand('read-model', args, first.deps);
   const probe = await runModelCommand('probe', args, first.deps);
   assert.equal(probe.cache, 'hit');
@@ -88,10 +100,36 @@ test('probe is bounded, cache-aware, and two cold conversions produce identical 
 
 test('a wrong provider pin refuses before convert and errors never disclose paths', async (t) => {
   const state = await setup(t);
-  await assert.rejects(() => runModelCommand('read-model', { ...state.args, 'expected-provider-sha256': '0'.repeat(64) }, state.deps), (error) => {
+  const preflight = await runModelCommand('preflight', {
+    'provider-path': state.executable, 'signing-secret-path': state.secretPath, 'signing-public-path': state.publicPath,
+  }, state.deps);
+  state.calls.length = 0;
+  await assert.rejects(() => runModelCommand('read-model', {
+    ...state.args, 'expected-provider-sha256': '0'.repeat(64),
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  }, state.deps), (error) => {
     assert.equal(error.code, 'reference-provider-pin-mismatch');
     assert.equal(error.message.includes(state.sourcePath), false);
     return true;
   });
+  assert.deepEqual(state.calls, ['describe']);
+});
+
+test('converting commands require the caller-pinned signer and refuse rotation before conversion', async (t) => {
+  const state = await setup(t);
+  const preflight = await runModelCommand('preflight', {
+    'provider-path': state.executable, 'signing-secret-path': state.secretPath, 'signing-public-path': state.publicPath,
+  }, state.deps);
+  const providerPin = preflight.providerFingerprintSha256;
+  await assert.rejects(
+    () => runModelCommand('read-model', { ...state.args, 'expected-provider-sha256': providerPin }, state.deps),
+    (error) => error.code === 'reference-signer-pin-required',
+  );
+  await assert.rejects(
+    () => runModelCommand('read-model', {
+      ...state.args, 'expected-provider-sha256': providerPin, 'expected-signer-sha256': '0'.repeat(64),
+    }, state.deps),
+    (error) => error.code === 'reference-signer-pin-mismatch',
+  );
   assert.deepEqual(state.calls, ['describe']);
 });

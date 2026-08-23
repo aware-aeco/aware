@@ -3,6 +3,7 @@ import { spawn } from 'node:child_process';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
+import { serializeModelResult } from './model-dispatcher.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const dispatcher = path.join(here, 'model-dispatcher.mjs');
@@ -42,4 +43,11 @@ test('documented IFC probe bytes remain identical through the lazy dispatcher', 
   assert.equal(before.exitCode, 0); assert.equal(after.exitCode, 0);
   assert.deepEqual(after.stdout, before.stdout);
   assert.deepEqual(after.stderr, before.stderr);
+});
+
+test('RVT command responses enforce the declared byte ceiling before stdout', () => {
+  assert.throws(
+    () => serializeModelResult({ coverage: { unclaimedGeometryNodes: ['x'.repeat(200)] } }, { maxCommandResponseBytes: 128 }),
+    (error) => error.code === 'reference-response-too-large',
+  );
 });

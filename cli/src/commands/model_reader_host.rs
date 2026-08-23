@@ -183,7 +183,19 @@ fn provider_command(request: &ProviderRun) -> Result<tokio::process::Command, Aw
         use std::os::unix::process::CommandExt;
         command.as_std_mut().process_group(0);
     }
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        command
+            .as_std_mut()
+            .creation_flags(provider_creation_flags());
+    }
     Ok(command)
+}
+
+#[cfg(windows)]
+fn provider_creation_flags() -> u32 {
+    windows_sys::Win32::System::Threading::CREATE_SUSPENDED
 }
 
 async fn kill_tree(child: &mut tokio::process::Child) {
@@ -207,6 +219,90 @@ async fn kill_tree(child: &mut tokio::process::Child) {
     }
     let _ = child.start_kill();
     let _ = child.wait().await;
+}
+
+#[cfg(windows)]
+fn provider_job(child: &tokio::process::Child) -> Result<win32job::Job, AwareError> {
+    let job = win32job::Job::create()
+        .map_err(|error| AwareError::Internal(format!("create provider Job Object: {error}")))?;
+    let mut limits = job
+        .query_extended_limit_info()
+        .map_err(|error| AwareError::Internal(format!("query provider Job Object: {error}")))?;
+    limits.limit_kill_on_job_close();
+    job.set_extended_limit_info(&limits)
+        .map_err(|error| AwareError::Internal(format!("configure provider Job Object: {error}")))?;
+    let handle = child
+        .raw_handle()
+        .ok_or_else(|| AwareError::Internal("provider process handle is unavailable".into()))?;
+    job.assign_process(handle as isize)
+        .map_err(|error| AwareError::Internal(format!("assign provider Job Object: {error}")))?;
+    Ok(job)
+}
+
+#[cfg(windows)]
+fn resume_provider(child: &tokio::process::Child) -> Result<(), AwareError> {
+    use windows_sys::Win32::Foundation::{CloseHandle, INVALID_HANDLE_VALUE};
+    use windows_sys::Win32::System::Diagnostics::ToolHelp::{
+        CreateToolhelp32Snapshot, TH32CS_SNAPTHREAD, THREADENTRY32, Thread32First, Thread32Next,
+    };
+    use windows_sys::Win32::System::Threading::{OpenThread, ResumeThread, THREAD_SUSPEND_RESUME};
+
+    let pid = child
+        .id()
+        .ok_or_else(|| AwareError::Internal("provider process id is unavailable".into()))?;
+    // SAFETY: every handle is checked and closed on this path; THREADENTRY32 carries the documented
+    // size, and the suspended process cannot create another thread before its primary one is resumed.
+    unsafe {
+        let snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
+        if snapshot == INVALID_HANDLE_VALUE {
+            return Err(AwareError::Internal(
+                "snapshot provider threads before resume failed".into(),
+            ));
+        }
+        let mut entry = THREADENTRY32 {
+            dwSize: std::mem::size_of::<THREADENTRY32>() as u32,
+            ..Default::default()
+        };
+        let mut found = Thread32First(snapshot, &mut entry) != 0;
+        let mut resumed = false;
+        while found {
+            if entry.th32OwnerProcessID == pid {
+                let thread = OpenThread(THREAD_SUSPEND_RESUME, 0, entry.th32ThreadID);
+                if !thread.is_null() {
+                    resumed = ResumeThread(thread) != u32::MAX;
+                    let _ = CloseHandle(thread);
+                    break;
+                }
+            }
+            found = Thread32Next(snapshot, &mut entry) != 0;
+        }
+        let _ = CloseHandle(snapshot);
+        if !resumed {
+            return Err(AwareError::Internal(
+                "resume contained provider thread failed".into(),
+            ));
+        }
+    }
+    Ok(())
+}
+
+async fn join_bounded_stream(
+    task: tokio::task::JoinHandle<std::io::Result<Vec<u8>>>,
+) -> std::io::Result<Vec<u8>> {
+    task.await
+        .map_err(|error| std::io::Error::other(format!("provider stream task failed: {error}")))?
+}
+
+#[cfg(unix)]
+async fn terminate_provider_group(pid: Option<u32>) {
+    if let Some(pid) = pid {
+        let _ = tokio::process::Command::new("kill")
+            .args(["-KILL", &format!("-{pid}")])
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .status()
+            .await;
+    }
 }
 
 async fn execute_provider(
@@ -234,6 +330,38 @@ async fn execute_provider(
             return;
         }
     };
+    #[cfg(unix)]
+    let provider_pid = child.id();
+    #[cfg(windows)]
+    let provider_job = match provider_job(&child) {
+        Ok(job) => job,
+        Err(error) => {
+            kill_tree(&mut child).await;
+            send_control(
+                &writer,
+                request_id,
+                handle,
+                json!({"status":"complete","exitCode":127,"hostError":error.to_string()}),
+            )
+            .await;
+            active.lock().await.remove(&handle);
+            return;
+        }
+    };
+    #[cfg(windows)]
+    if let Err(error) = resume_provider(&child) {
+        drop(provider_job);
+        kill_tree(&mut child).await;
+        send_control(
+            &writer,
+            request_id,
+            handle,
+            json!({"status":"complete","exitCode":127,"hostError":error.to_string()}),
+        )
+        .await;
+        active.lock().await.remove(&handle);
+        return;
+    }
     let mut stdin = child.stdin.take();
     let stdout = child.stdout.take();
     let stderr = child.stderr.take();
@@ -264,17 +392,27 @@ async fn execute_provider(
         _ = tokio::time::sleep(std::time::Duration::from_millis(request.timeout_ms)) => { kill_tree(&mut child).await; Ok((124, Some("timeout"))) },
         _ = &mut cancel_rx => { kill_tree(&mut child).await; Ok((130, Some("cancelled"))) },
     };
+    // A successful provider parent is not sufficient: descendants may still own output handles or
+    // mutate the private directory. Closing the Windows Job kills the complete nested tree; Unix
+    // providers run in their own process group, which is force-terminated here. Only then may pipe
+    // drains finish and output validation begin.
+    #[cfg(windows)]
+    drop(provider_job);
+    #[cfg(unix)]
+    terminate_provider_group(provider_pid).await;
     let _ = input.await;
-    let stdout = stdout_task
-        .await
-        .ok()
-        .and_then(Result::ok)
-        .unwrap_or_default();
-    let stderr = stderr_task
-        .await
-        .ok()
-        .and_then(Result::ok)
-        .unwrap_or_default();
+    let stdout = join_bounded_stream(stdout_task).await;
+    let stderr = join_bounded_stream(stderr_task).await;
+    let stream_failure = stdout.as_ref().err().or_else(|| stderr.as_ref().err());
+    let stream_failure_code = stream_failure.map(|error| {
+        if error.kind() == std::io::ErrorKind::FileTooLarge {
+            "reference-provider-output-limit"
+        } else {
+            "reference-provider-host-failed"
+        }
+    });
+    let stdout = stdout.unwrap_or_default();
+    let stderr = stderr.unwrap_or_default();
     for (kind, payload) in [(KIND_STDOUT, stdout), (KIND_STDERR, stderr)] {
         let frame = Frame {
             kind,
@@ -286,12 +424,16 @@ async fn execute_provider(
         };
         let _ = frame.write(&mut *writer.lock().await).await;
     }
-    let (exit_code, reason) = outcome.unwrap_or((1, Some("host-wait-failed")));
+    let (mut exit_code, mut reason) = outcome.unwrap_or((1, Some("host-wait-failed")));
+    if stream_failure_code.is_some() {
+        exit_code = 1;
+        reason = Some("provider-stream-failed");
+    }
     send_control(
         &writer,
         request_id,
         handle,
-        json!({"status":"complete","exitCode":exit_code,"reason":reason}),
+        json!({"status":"complete","exitCode":exit_code,"reason":reason,"hostErrorCode":stream_failure_code}),
     )
     .await;
     active.lock().await.remove(&handle);
@@ -355,9 +497,12 @@ pub async fn run() -> Result<(), AwareError> {
             Some("lock-acquire") => {
                 let lock_path = control.get("path").and_then(|value| value.as_str()).map(PathBuf::from).filter(|value| value.is_absolute()).ok_or_else(|| AwareError::Validation("model-reader host lock path must be absolute".into()))?;
                 let file = std::fs::OpenOptions::new().read(true).write(true).create(true).truncate(false).open(lock_path)?;
-                file.try_lock_exclusive().map_err(|_| AwareError::Conflict("model-reader host lock is held".into()))?;
-                let mut handle = [0u8; 32]; rand::thread_rng().fill_bytes(&mut handle); locks.insert(handle, file);
-                send_control(&writer, frame.request_id, handle, json!({"status":"acquired"})).await;
+                if file.try_lock_exclusive().is_err() {
+                    send_control(&writer, frame.request_id, [0; 32], json!({"status":"busy"})).await;
+                } else {
+                    let mut handle = [0u8; 32]; rand::thread_rng().fill_bytes(&mut handle); locks.insert(handle, file);
+                    send_control(&writer, frame.request_id, handle, json!({"status":"acquired"})).await;
+                }
             }
             Some("lock-release") => {
                 let file = locks.remove(&frame.run_handle).ok_or_else(|| AwareError::Validation("model-reader host lock handle is unknown".into()))?;
@@ -415,5 +560,26 @@ mod tests {
         assert!(debug.contains("convert"));
         assert!(debug.contains("--json-stdin"));
         assert!(!debug.contains("secret.rvt"));
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn provider_is_created_suspended_until_its_job_is_attached() {
+        assert_eq!(
+            provider_creation_flags() & windows_sys::Win32::System::Threading::CREATE_SUSPENDED,
+            windows_sys::Win32::System::Threading::CREATE_SUSPENDED
+        );
+    }
+
+    #[tokio::test]
+    async fn bounded_stream_failure_is_preserved_for_the_completion_frame() {
+        let task = tokio::spawn(async {
+            Err::<Vec<u8>, std::io::Error>(std::io::Error::new(
+                std::io::ErrorKind::FileTooLarge,
+                "provider stream exceeds limit",
+            ))
+        });
+        let error = join_bounded_stream(task).await.unwrap_err();
+        assert_eq!(error.kind(), std::io::ErrorKind::FileTooLarge);
     }
 }

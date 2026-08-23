@@ -1,7 +1,7 @@
 import { appendFileSync, readFileSync } from 'node:fs';
 import { isSea } from 'node:sea';
 import { pathToFileURL } from 'node:url';
-import { ModelReaderError, safeErrorEnvelope } from './model-contract.mjs';
+import { lowerableLimits, ModelReaderError, safeErrorEnvelope } from './model-contract.mjs';
 import { runModelCommand } from './model-reader.mjs';
 
 function route(command, args) {
@@ -11,6 +11,14 @@ function route(command, args) {
   if (command === 'preflight') return 'rvt';
   if ((command === 'probe' || command === 'read-model') && hasRvt) return 'rvt';
   return 'ifc';
+}
+
+export function serializeModelResult(result, limits = undefined) {
+  const text = JSON.stringify(result);
+  if (Buffer.byteLength(text) > lowerableLimits(limits).maxCommandResponseBytes) {
+    throw new ModelReaderError('reference-response-too-large', 'response', false, 'The bounded model-reader response exceeds its byte limit.');
+  }
+  return text;
 }
 
 export async function main(command = process.argv[2], stdinText = undefined, dependencies = undefined) {
@@ -29,7 +37,7 @@ export async function main(command = process.argv[2], stdinText = undefined, dep
     } : undefined,
   };
   const result = await runModelCommand(command, args, runtimeDependencies);
-  process.stdout.write(JSON.stringify(result));
+  process.stdout.write(serializeModelResult(result, dependencies?.limits));
 }
 
 const invokedDirectly = isSea() || (!!process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href);

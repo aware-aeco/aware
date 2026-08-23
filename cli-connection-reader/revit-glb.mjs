@@ -119,6 +119,19 @@ function canonicalFloat(value) {
 }
 const canonicalVector = (values) => values.map(canonicalFloat);
 
+function positionBounds(positions) {
+  if (!positions.length) return { min: [0, 0, 0], max: [0, 0, 0] };
+  const min = [...positions[0]];
+  const max = [...positions[0]];
+  for (let index = 1; index < positions.length; index += 1) {
+    for (let axis = 0; axis < 3; axis += 1) {
+      if (positions[index][axis] < min[axis]) min[axis] = positions[index][axis];
+      if (positions[index][axis] > max[axis]) max[axis] = positions[index][axis];
+    }
+  }
+  return { min, max };
+}
+
 function accessorReader(document, binary, accessorIndex, expected, label) {
   const accessors = document.accessors;
   const views = document.bufferViews;
@@ -162,12 +175,15 @@ function accessorReader(document, binary, accessorIndex, expected, label) {
   };
 }
 
-function indicesFor(primitive, document, binary, vertexCount, limits) {
+function indicesFor(primitive, document, binary, vertexCount, remainingIndices) {
   let indices;
-  if (primitive.indices === undefined) indices = Array.from({ length: vertexCount }, (_, index) => index);
+  if (primitive.indices === undefined) {
+    if (vertexCount > remainingIndices) invalid('model index count exceeds its limit', 'reference-output-too-large');
+    indices = Array.from({ length: vertexCount }, (_, index) => index);
+  }
   else {
     const reader = accessorReader(document, binary, primitive.indices, { types: ['SCALAR'], components: [5121, 5123, 5125] }, 'indices');
-    if (reader.count > limits.maxIndices) invalid('index count exceeds its limit', 'reference-output-too-large');
+    if (reader.count > remainingIndices) invalid('model index count exceeds its limit', 'reference-output-too-large');
     indices = Array.from({ length: reader.count }, (_, index) => reader.read(index)[0]);
   }
   for (const index of indices) if (index >= vertexCount) invalid('index value exceeds POSITION count');
@@ -302,22 +318,32 @@ function degenerate(a, b, c) {
 export function normalizeRevitGlb(input, options = {}) {
   const limits = lowerableLimits(options.limits);
   const { json: document, binary } = parseGlb(input, { limits });
+  if (document.skins !== undefined || document.animations !== undefined) invalid('skins and animations are unsupported', 'reference-geometry-unsupported');
+  if (Array.isArray(document.nodes) && document.nodes.some((node) => node?.skin !== undefined)) invalid('skinned nodes are unsupported', 'reference-geometry-unsupported');
   const nodes = profile(document, binary, limits);
   const parts = [];
   let inputTriangles = 0;
   let droppedDegenerateTriangles = 0;
+  let totalVertices = 0;
+  let totalIndices = 0;
+  let totalPrimitives = 0;
   for (const { node, world, mesh } of nodes) {
     const determinant = determinant3(world);
     if (!Number.isFinite(determinant) || Math.abs(determinant) < 1e-12) invalid('node transform is singular');
     const primitives = array(mesh.primitives, 'mesh primitives', limits.maxPrimitives);
     primitives.forEach((primitive, primitiveOrdinal) => {
+      totalPrimitives += 1;
+      if (totalPrimitives > limits.maxPrimitives) invalid('model primitive count exceeds its limit', 'reference-output-too-large');
       if (primitive.targets !== undefined || primitive.extensions !== undefined) invalid('primitive extensions or morph targets are unsupported', 'reference-geometry-unsupported');
       if (!primitive.attributes || typeof primitive.attributes !== 'object' || Object.keys(primitive.attributes).some((key) => !['POSITION', 'COLOR_0'].includes(key))) invalid('primitive attributes are unsupported', 'reference-geometry-unsupported');
       const positionsReader = accessorReader(document, binary, primitive.attributes.POSITION, { types: ['VEC3'], components: [5126] }, 'POSITION');
-      if (positionsReader.normalized || positionsReader.count > limits.maxVertices) invalid('POSITION accessor is unsupported or exceeds its limit', 'reference-output-too-large');
+      if (positionsReader.normalized || positionsReader.count > limits.maxVertices - totalVertices) invalid('model vertex count exceeds its limit', 'reference-output-too-large');
+      totalVertices += positionsReader.count;
       const positions = Array.from({ length: positionsReader.count }, (_, index) => transform(world, positionsReader.read(index)));
       const colors = colorsFor(primitive, document, binary, positions.length);
-      const expanded = expandTriangles(indicesFor(primitive, document, binary, positions.length, limits), primitive.mode ?? 4);
+      const indices = indicesFor(primitive, document, binary, positions.length, limits.maxIndices - totalIndices);
+      totalIndices += indices.length;
+      const expanded = expandTriangles(indices, primitive.mode ?? 4);
       inputTriangles += expanded.length;
       const drawable = expanded.filter(([a, b, c]) => {
         const drop = a === b || b === c || a === c || degenerate(positions[a], positions[b], positions[c]);
@@ -367,8 +393,7 @@ function buildCanonicalGlb(parts) {
     const colorView = append(colors, 34962);
     const indexView = append(indices, 34963);
     const positionAccessor = accessors.length;
-    const mins = [0, 1, 2].map((axis) => part.positions.length ? Math.min(...part.positions.map((point) => point[axis])) : 0);
-    const maxs = [0, 1, 2].map((axis) => part.positions.length ? Math.max(...part.positions.map((point) => point[axis])) : 0);
+    const { min: mins, max: maxs } = positionBounds(part.positions);
     accessors.push({ bufferView: positionView, byteOffset: 0, componentType: 5126, count: part.positions.length, type: 'VEC3', min: mins, max: maxs });
     const colorAccessor = accessors.length;
     accessors.push({ bufferView: colorView, byteOffset: 0, componentType: 5126, count: part.colors.length, type: 'VEC4' });

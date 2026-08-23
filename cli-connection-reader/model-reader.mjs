@@ -3,13 +3,13 @@ import os from 'node:os';
 import path from 'node:path';
 import {
   assertSha256, buildCanonicalRequest, ModelReaderError, providerFingerprintSha256,
-  requestSha256, sha256,
+  lowerableLimits, requestSha256, sha256,
 } from './model-contract.mjs';
 import { normalizeRevitGlb } from './revit-glb.mjs';
 import { normalizeRevitMetadata } from './revit-metadata.mjs';
-import { describeAndConvert, describeProvider } from './model-provider.mjs';
+import { describeAndConvert, describeProvider, hashRegularFile } from './model-provider.mjs';
 import {
-  acquireCacheOwner, cacheKeySha256, loadAwareSigningKey, publishCacheEntry, readCacheEntry,
+  acquireCacheOwner, cacheFencePath, cacheKeySha256, cacheMaintenanceFencePath, loadAwareSigningKey, publishCacheEntry, readCacheEntry,
   releaseCacheOwner, signerFingerprintSha256,
 } from './model-cache.mjs';
 import { createModelHostClient } from './model-host-client.mjs';
@@ -48,6 +48,12 @@ function emit(deps, phase, extra = {}) {
 
 async function providerReadiness(args, deps, config, expectedProviderSha256) {
   const signingKey = await loadAwareSigningKey(config.secretPath, config.publicPath);
+  const signerSha256 = signerFingerprintSha256(signingKey.publicKeyBytes);
+  const expectedSignerSha256 = args['expected-signer-sha256'];
+  if (expectedSignerSha256 !== undefined) {
+    assertSha256(expectedSignerSha256, 'expected-signer-sha256');
+    if (expectedSignerSha256 !== signerSha256) readerError('reference-signer-pin-mismatch', 'preflight', 'The model-reader signing key does not match the expected fingerprint.');
+  }
   const runRoot = await newRunRoot(config.privateRoot);
   try {
     const provider = await describeProvider({
@@ -57,7 +63,7 @@ async function providerReadiness(args, deps, config, expectedProviderSha256) {
     });
     return {
       signingKey, provider,
-      signerFingerprintSha256: signerFingerprintSha256(signingKey.publicKeyBytes),
+      signerFingerprintSha256: signerSha256,
       providerFingerprintSha256: providerFingerprintSha256(provider.fingerprint),
     };
   } finally {
@@ -72,11 +78,12 @@ function sourcePathFrom(args) {
   return values[0];
 }
 
-async function hashSource(sourcePath) {
-  let bytes;
-  try { bytes = await fs.readFile(sourcePath); }
-  catch (error) { readerError('reference-source-unavailable', 'source', 'The RVT source is unavailable.', false, error); }
-  return { bytes, sha256: sha256(bytes) };
+async function hashSource(sourcePath, limits) {
+  try { return await hashRegularFile(sourcePath, lowerableLimits(limits).maxSourceBytes, 'source'); }
+  catch (error) {
+    if (error instanceof ModelReaderError) throw error;
+    readerError('reference-source-unavailable', 'source', 'The RVT source is unavailable.', false, error);
+  }
 }
 
 function exactExpectedSource(args, actual) {
@@ -97,7 +104,7 @@ function manifestDetails(geometry, metadata, canonicalRequestSha256, fingerprint
 
 async function convertAndCache(args, deps, config, readiness) {
   const sourcePath = sourcePathFrom(args);
-  const initial = await hashSource(sourcePath);
+  const initial = await hashSource(sourcePath, deps.limits);
   const sourceSha256 = exactExpectedSource(args, initial.sha256);
   const canonicalRequest = buildCanonicalRequest({ limits: deps.limits, conversionSettings: args['conversion-settings'] ?? {} });
   const identity = {
@@ -108,8 +115,10 @@ async function convertAndCache(args, deps, config, readiness) {
   const read = async () => await readCacheEntry({ root: config.cacheRoot, key, expectedIdentity: identity, expectedPublicKey: readiness.signingKey.publicKeyBytes });
   try { return { hit: true, key, cache: await read() }; }
   catch (error) { if (error?.code !== 'reference-cache-miss') throw error; }
-  const owner = await acquireCacheOwner({ root: config.cacheRoot, key });
+  const fence = deps.hostAcquireLock ? await deps.hostAcquireLock(await cacheFencePath(config.cacheRoot, key)) : null;
+  let owner;
   try {
+    owner = await acquireCacheOwner({ root: config.cacheRoot, key, fenced: fence !== null });
     try { return { hit: true, key, cache: await read() }; }
     catch (error) { if (error?.code !== 'reference-cache-miss') throw error; }
     emit(deps, 'convert');
@@ -126,7 +135,7 @@ async function convertAndCache(args, deps, config, readiness) {
       emit(deps, 'normalize');
       const geometry = normalizeRevitGlb(conversion.outputs.geometry.bytes, { limits: deps.limits });
       const metadata = normalizeRevitMetadata(conversion.outputs.metadata.bytes, geometry.parts, { limits: deps.limits });
-      const finalSource = await hashSource(sourcePath);
+      const finalSource = await hashSource(sourcePath, deps.limits);
       if (finalSource.sha256 !== sourceSha256) readerError('reference-source-changed', 'source', 'The RVT source changed during conversion.');
       const artifacts = {
         'geometry.glb': geometry.glb,
@@ -136,13 +145,23 @@ async function convertAndCache(args, deps, config, readiness) {
       };
       const details = manifestDetails(geometry, metadata, requestSha256(canonicalRequest), readiness.providerFingerprintSha256);
       emit(deps, 'publish');
-      await publishCacheEntry({ root: config.cacheRoot, identity, artifacts, signingKey: readiness.signingKey, details });
+      await publishCacheEntry({
+        root: config.cacheRoot, identity, artifacts, signingKey: readiness.signingKey, details,
+        cacheLimits: deps.cacheLimits,
+        withMaintenanceFence: async (publish) => {
+          if (!deps.hostAcquireLock || !deps.hostReleaseLock) readerError('reference-provider-host-unavailable', 'publish', 'The managed cache fence is unavailable.');
+          const maintenanceFence = await deps.hostAcquireLock(await cacheMaintenanceFencePath(config.cacheRoot));
+          try { return await publish(); }
+          finally { await deps.hostReleaseLock(maintenanceFence); }
+        },
+      });
     } finally {
       await fs.rm(runRoot, { recursive: true, force: true });
     }
     return { hit: false, key, cache: await read() };
   } finally {
-    await releaseCacheOwner(owner);
+    if (owner) await releaseCacheOwner(owner);
+    if (fence !== null) await deps.hostReleaseLock(fence);
   }
 }
 
@@ -194,9 +213,16 @@ export async function runModelCommand(command, args = {}, deps = {}) {
   if (!args || typeof args !== 'object' || Array.isArray(args)) readerError('reference-request-invalid', 'request', 'Command input must be a JSON object.');
   const config = configuration(args, deps);
   const ownedHost = deps.hostRun ? null : await createModelHostClient(config.environment.AWARE_MODEL_READER_HOST, { environment: config.environment });
-  const executionDeps = ownedHost ? { ...deps, hostRun: ownedHost.run } : deps;
+  const executionDeps = ownedHost ? {
+    ...deps, hostRun: ownedHost.run, hostAcquireLock: ownedHost.acquireLock, hostReleaseLock: ownedHost.releaseLock,
+  } : deps;
   try {
     const pin = args['expected-provider-sha256'];
+    if (command !== 'preflight') {
+      if (command !== 'probe' && command !== 'read-model') readerError('reference-command-invalid', 'request', 'Unknown model-reader command.');
+      if (typeof pin !== 'string') readerError('reference-provider-pin-required', 'preflight', 'The expected provider fingerprint is required.');
+      if (typeof args['expected-signer-sha256'] !== 'string') readerError('reference-signer-pin-required', 'preflight', 'The expected signer fingerprint is required.');
+    }
     emit(executionDeps, 'preflight');
     const readiness = await providerReadiness(args, executionDeps, config, pin);
     if (command === 'preflight') {
@@ -208,8 +234,6 @@ export async function runModelCommand(command, args = {}, deps = {}) {
         secretProvisioning: 'provider-local; AWARE generic secrets unavailable (#448)',
       };
     }
-    if (command !== 'probe' && command !== 'read-model') readerError('reference-command-invalid', 'request', 'Unknown model-reader command.');
-    if (typeof pin !== 'string') readerError('reference-provider-pin-required', 'preflight', 'The expected provider fingerprint is required.');
     const result = await convertAndCache(args, executionDeps, config, readiness);
     const out = summary(result);
     if (command === 'probe') return out;

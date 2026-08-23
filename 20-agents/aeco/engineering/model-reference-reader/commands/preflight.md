@@ -6,8 +6,9 @@ and the provider describes the exact closed local-RVT contract. It does not rece
 does not convert a model.
 
 `ready: true` is specific to the provider and signer fingerprints returned beside it. Pin
-`providerFingerprintSha256` into `probe` and `read-model`; a changed executable, engine, version or
-build then refuses before conversion. A missing provider and a missing signing key are setup failures.
+`providerFingerprintSha256` into `probe` and `read-model`, and obtain/pin `signerFingerprintSha256`
+through the operator's out-of-band trust channel. A changed executable, engine, version, build, or
+signing key then refuses before conversion. A missing provider and a missing signing key are setup failures.
 They are distinct from a conversion failure after readiness.
 
 AWARE 0.126.0 has no generic secret-provisioning facility (issue #448). Provider licensing and

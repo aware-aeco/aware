@@ -8,6 +8,9 @@
 - `relationships` — explicit provider relationships with validated endpoints and hierarchy;
 - `manifest` — source/request/provider/signer provenance, hashes, frame and reconciled coverage.
 
+Supply the preflight provider fingerprint and an out-of-band trusted signer fingerprint on every call.
+The reader refuses provider or signing-key rotation before cache access or conversion.
+
 The GLB is never JSON-encoded. Entity meaning is never inferred from node names or geometry. One entity
 may own several appearance nodes; every claimed node has exactly one owner, and unclaimed nodes remain
 explicit in coverage. `IfcGUID` is comparable only when the authoritative exact parameter is present

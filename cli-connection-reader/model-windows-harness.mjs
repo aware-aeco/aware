@@ -34,7 +34,7 @@ async function buildSea(entry, output) {
 }
 
 function run(entry, command, input, environment, cwd) {
-  const stdout = execFileSync(entry, [command, '--json-stdin'], { input: JSON.stringify(input), encoding: 'utf8', env: environment, cwd, windowsHide: true, maxBuffer: 4 * 1024 * 1024 });
+  const stdout = execFileSync(entry, [command, '--json-stdin'], { input: JSON.stringify(input), encoding: 'utf8', env: environment, cwd, windowsHide: true, timeout: 5000, maxBuffer: 4 * 1024 * 1024 });
   return JSON.parse(stdout);
 }
 
@@ -55,6 +55,8 @@ try {
   const providerDirectory = path.join(temporary, 'authorized-provider'); mkdirSync(providerDirectory);
   const provider = path.join(providerDirectory, 'fixture-model-provider.exe');
   await buildSea(path.join(here, 'test-fixtures', 'model-provider-fixture.mjs'), provider);
+  const descendantProvider = path.join(providerDirectory, 'descendant-model-provider.exe');
+  await buildSea(path.join(here, 'test-fixtures', 'model-provider-descendant-fixture.mjs'), descendantProvider);
 
   execFileSync(process.execPath, [path.join(here, 'build.mjs')], { cwd: here, stdio: 'inherit' });
   const stage = path.join(temporary, 'clean-stage'); mkdirSync(stage);
@@ -79,9 +81,19 @@ try {
   const bridges = path.join(home, 'bridges'); mkdirSync(bridges, { recursive: true });
   copyFileSync(packaged, path.join(bridges, 'aware-connection-reader.exe'));
   copyFileSync(path.join(stage, 'web-ifc-node.wasm'), path.join(bridges, 'web-ifc-node.wasm'));
+  const awareVersion = execFileSync(aware, ['--version'], { encoding: 'utf8', windowsHide: true }).trim().split(/\s+/).at(-1);
+  writeFileSync(path.join(bridges, 'aware-connection-reader.version'), awareVersion);
   const preflight = run(packaged, 'preflight', {}, environment, unrelatedCwd);
   assert.equal(preflight.ready, true); assert.equal(preflight.execution, 'local');
-  const request = { 'rvt-path': source, 'source-sha256': sha256(readFileSync(source)), 'expected-provider-sha256': preflight.providerFingerprintSha256 };
+  const descendantPreflight = run(packaged, 'preflight', {}, {
+    ...environment, AWARE_MODEL_REFERENCE_PROVIDER: descendantProvider,
+  }, unrelatedCwd);
+  assert.equal(descendantPreflight.ready, true, 'successful provider descendants must be killed before inherited pipes can hang');
+  const request = {
+    'rvt-path': source, 'source-sha256': sha256(readFileSync(source)),
+    'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  };
   const probe = run(packaged, 'probe', request, environment, unrelatedCwd);
   assert.equal(probe.entities, 1); assert.equal(probe.frame.up, 'z');
   const model = run(packaged, 'read-model', request, environment, unrelatedCwd);
@@ -117,6 +129,7 @@ nodes:
       rvt-path: '{{ inputs.rvt-path }}'
       source-sha256: '{{ inputs.source-sha256 }}'
       expected-provider-sha256: '{{ inputs.expected-provider-sha256 }}'
+      expected-signer-sha256: '{{ inputs.expected-signer-sha256 }}'
 `);
   execFileSync(aware, ['app', 'install', appDirectory], { env: environment, stdio: 'pipe', windowsHide: true });
   const appStdout = execFileSync(aware, [
@@ -124,6 +137,7 @@ nodes:
     '--input', `rvt-path=${source}`,
     '--input', `source-sha256=${request['source-sha256']}`,
     '--input', `expected-provider-sha256=${preflight.providerFingerprintSha256}`,
+    '--input', `expected-signer-sha256=${preflight.signerFingerprintSha256}`,
   ], { env: environment, encoding: 'utf8', windowsHide: true, maxBuffer: 4 * 1024 * 1024 });
   const runId = appStdout.match(/run-id ([0-9a-f-]{36})/)?.[1];
   assert.ok(runId, 'real aware app run must report its run id');

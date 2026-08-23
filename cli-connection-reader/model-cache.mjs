@@ -9,6 +9,7 @@ const SECRET_PREFIX = Buffer.from('302e020100300506032b657004220420', 'hex');
 const PUBLIC_PREFIX = Buffer.from('302a300506032b6570032100', 'hex');
 const REQUIRED_ARTIFACTS = ['geometry.glb', 'entities.json', 'properties.json', 'relationships.json'];
 const ENTRY_FILES = ['receipt.json', 'receipt.sig'];
+const DEFAULT_CACHE_LIMITS = Object.freeze({ maxEntries: 64, maxBytes: 1024 * 1024 * 1024, staleStagingMs: 60 * 60_000 });
 
 function cacheError(code, message, details = undefined) {
   throw new ModelReaderError(code, 'cache', false, message, details);
@@ -58,16 +59,101 @@ async function ensureLayout(root) {
   await fs.mkdir(path.join(root, 'entries'), { recursive: true, mode: 0o700 });
   await fs.mkdir(path.join(root, 'staging'), { recursive: true, mode: 0o700 });
   await fs.mkdir(path.join(root, 'locks'), { recursive: true, mode: 0o700 });
+  await fs.mkdir(path.join(root, 'kernel-locks'), { recursive: true, mode: 0o700 });
+}
+
+function boundedCacheLimits(overrides = {}) {
+  const limits = { ...DEFAULT_CACHE_LIMITS, ...overrides };
+  for (const name of Object.keys(DEFAULT_CACHE_LIMITS)) {
+    if (!Number.isSafeInteger(limits[name]) || limits[name] <= 0 || limits[name] > DEFAULT_CACHE_LIMITS[name]) {
+      cacheError('reference-cache-limits-invalid', 'Cache limits are invalid.');
+    }
+  }
+  return limits;
+}
+
+async function receiptDigests(entry) {
+  try {
+    const receipt = parseJsonStrict(await fs.readFile(path.join(entry, 'receipt.json')));
+    return Object.values(receipt.blobs ?? {}).map((record) => record?.sha256).filter((value) => typeof value === 'string');
+  } catch { return []; }
+}
+
+async function maintainCache(root, key, blobs, overrides) {
+  const limits = boundedCacheLimits(overrides);
+  const now = Date.now();
+  for (const name of await fs.readdir(path.join(root, 'staging'))) {
+    const candidate = path.join(root, 'staging', name);
+    try {
+      const stat = await fs.stat(candidate);
+      if (now - stat.mtimeMs > limits.staleStagingMs) await fs.rm(candidate, { recursive: true, force: true });
+    } catch { /* a concurrent publisher moved or removed it */ }
+  }
+  const entries = [];
+  for (const name of await fs.readdir(path.join(root, 'entries'))) {
+    const entry = path.join(root, 'entries', name);
+    try {
+      const stat = await fs.stat(entry);
+      if (stat.isDirectory()) entries.push({ name, entry, mtimeMs: stat.mtimeMs });
+    } catch { /* concurrent eviction */ }
+  }
+  entries.sort((a, b) => a.mtimeMs - b.mtimeMs || Buffer.compare(Buffer.from(a.name), Buffer.from(b.name)));
+  const blobDirectory = path.join(root, 'blobs');
+  let blobBytes = 0;
+  const existing = new Set();
+  for (const name of await fs.readdir(blobDirectory)) {
+    if (name.startsWith('.')) continue;
+    try { const stat = await fs.stat(path.join(blobDirectory, name)); if (stat.isFile()) { blobBytes += stat.size; existing.add(name); } }
+    catch { /* concurrent publication */ }
+  }
+  const incomingRecords = new Map(Object.values(blobs).map((record) => [record.sha256, record.bytes]));
+  let incoming = [...incomingRecords].filter(([digest]) => !existing.has(digest)).reduce((sum, [, bytes]) => sum + bytes, 0);
+  const targetExists = entries.some((entry) => entry.name === key);
+  while ((!targetExists && entries.length >= limits.maxEntries) || blobBytes + incoming > limits.maxBytes) {
+    const victim = entries.find((entry) => entry.name !== key);
+    if (!victim) cacheError('reference-cache-full', 'The bounded model-reader cache is full.');
+    await fs.rm(victim.entry, { recursive: true, force: true });
+    entries.splice(entries.indexOf(victim), 1);
+    const reachable = new Set();
+    for (const entry of entries) for (const digest of await receiptDigests(entry.entry)) reachable.add(digest);
+    for (const digest of [...existing].sort()) {
+      if (reachable.has(digest)) continue;
+      try {
+        const stat = await fs.stat(path.join(blobDirectory, digest)); blobBytes -= stat.size;
+        await fs.rm(path.join(blobDirectory, digest), { force: true });
+        if (incomingRecords.has(digest)) incoming += incomingRecords.get(digest);
+      }
+      catch { /* concurrent publication or cleanup */ }
+      existing.delete(digest);
+    }
+  }
+  if (blobBytes + incoming > limits.maxBytes) cacheError('reference-cache-full', 'The bounded model-reader cache is full.');
+}
+
+export async function cacheFencePath(root, key) {
+  assertSha256(key, 'cache key');
+  await ensureLayout(root);
+  return path.resolve(root, 'kernel-locks', `${key}.lock`);
+}
+
+export async function cacheMaintenanceFencePath(root) {
+  await ensureLayout(root);
+  return path.resolve(root, 'kernel-locks', 'maintenance.lock');
 }
 
 async function writeBlob(root, digest, bytes) {
   const target = path.join(root, 'blobs', digest);
+  const temporary = path.join(root, 'blobs', `.${digest}-${randomUUID()}.tmp`);
   try {
-    const handle = await fs.open(target, 'wx', 0o600);
+    const handle = await fs.open(temporary, 'wx', 0o600);
     try { await handle.writeFile(bytes); await handle.sync(); }
     finally { await handle.close(); }
+    try { await fs.link(temporary, target); }
+    catch (error) { if (error?.code !== 'EEXIST') throw error; }
   } catch (error) {
     if (error?.code !== 'EEXIST') throw error;
+  } finally {
+    await fs.rm(temporary, { force: true });
   }
   const stored = await fs.readFile(target);
   if (sha256(stored) !== digest) cacheError('reference-cache-tampered', 'A content-addressed cache blob has an invalid digest.');
@@ -105,31 +191,35 @@ function artifactManifest(identity, artifacts, details = {}) {
   return { schemaVersion: 'model-reference-manifest/v1', identity, ...details, artifacts: records };
 }
 
-export async function publishCacheEntry({ root, identity, artifacts, signingKey, details = {} }) {
+export async function publishCacheEntry({ root, identity, artifacts, signingKey, details = {}, cacheLimits = undefined, withMaintenanceFence }) {
   await ensureLayout(root);
   const key = cacheKeySha256(identity);
   const manifest = artifactManifest(identity, artifacts, details);
   const manifestBytes = canonicalJsonBytes(manifest);
   const all = { ...artifacts, 'manifest.json': manifestBytes };
   const blobs = {};
-  for (const [name, bytes] of Object.entries(all)) {
-    const digest = sha256(bytes); await writeBlob(root, digest, bytes);
-    blobs[name] = { sha256: digest, bytes: bytes.length };
-  }
-  const receipt = { schemaVersion: 'model-reference-cache-receipt/v1', key, identitySha256: sha256(canonicalJsonBytes(identity)), blobs };
-  const receiptBytes = canonicalJsonBytes(receipt);
-  const signatureBytes = signatureText(receiptBytes, signingKey);
-  const staging = path.join(root, 'staging', `${key}-${randomUUID()}`);
-  await fs.mkdir(staging, { mode: 0o700 });
-  await fs.writeFile(path.join(staging, 'receipt.json'), receiptBytes, { mode: 0o600, flag: 'wx' });
-  await fs.writeFile(path.join(staging, 'receipt.sig'), signatureBytes, { mode: 0o600, flag: 'wx' });
-  const target = path.join(root, 'entries', key);
-  try { await fs.rename(staging, target); }
-  catch (error) {
-    if (!['EEXIST', 'ENOTEMPTY', 'EPERM'].includes(error?.code)) throw error;
-    await fs.rm(staging, { recursive: true, force: true });
-  }
-  return { key, manifest, receipt };
+  for (const [name, bytes] of Object.entries(all)) blobs[name] = { sha256: sha256(bytes), bytes: bytes.length };
+  if (typeof withMaintenanceFence !== 'function') cacheError('reference-cache-fence-missing', 'Cache publication requires a process-wide maintenance fence.');
+  return await withMaintenanceFence(async () => {
+    await maintainCache(root, key, blobs, cacheLimits);
+    for (const [name, bytes] of Object.entries(all)) {
+      await writeBlob(root, blobs[name].sha256, bytes);
+    }
+    const receipt = { schemaVersion: 'model-reference-cache-receipt/v1', key, identitySha256: sha256(canonicalJsonBytes(identity)), blobs };
+    const receiptBytes = canonicalJsonBytes(receipt);
+    const signatureBytes = signatureText(receiptBytes, signingKey);
+    const staging = path.join(root, 'staging', `${key}-${randomUUID()}`);
+    await fs.mkdir(staging, { mode: 0o700 });
+    await fs.writeFile(path.join(staging, 'receipt.json'), receiptBytes, { mode: 0o600, flag: 'wx' });
+    await fs.writeFile(path.join(staging, 'receipt.sig'), signatureBytes, { mode: 0o600, flag: 'wx' });
+    const target = path.join(root, 'entries', key);
+    try { await fs.rename(staging, target); }
+    catch (error) {
+      if (!['EEXIST', 'ENOTEMPTY', 'EPERM'].includes(error?.code)) throw error;
+      await fs.rm(staging, { recursive: true, force: true });
+    }
+    return { key, manifest, receipt };
+  });
 }
 
 export async function readCacheEntry({ root, key, expectedIdentity, expectedPublicKey }) {
@@ -171,10 +261,10 @@ export async function readCacheEntry({ root, key, expectedIdentity, expectedPubl
 
 function defaultProcessIdentity() { return { pid: process.pid, start: process.uptime().toFixed(6) }; }
 async function defaultIsAlive(owner) {
-  try { process.kill(owner.pid, 0); return true; } catch { return false; }
+  try { process.kill(owner.pid, 0); return true; } catch { return null; }
 }
 
-export async function acquireCacheOwner({ root, key, processIdentity = defaultProcessIdentity(), isOwnerAlive = defaultIsAlive, staleMs = 30_000, now = () => Date.now() }) {
+export async function acquireCacheOwner({ root, key, processIdentity = defaultProcessIdentity(), isOwnerAlive = defaultIsAlive, staleMs = 30_000, now = () => Date.now(), fenced = false }) {
   assertSha256(key, 'cache key'); await ensureLayout(root);
   const lockDirectory = path.join(root, 'locks', key);
   const ownerPath = path.join(lockDirectory, 'owner.json');
@@ -192,7 +282,8 @@ export async function acquireCacheOwner({ root, key, processIdentity = defaultPr
   try { owner = parseJsonStrict(await fs.readFile(ownerPath)); }
   catch (error) { cacheError('reference-cache-owned', 'The cache key has an unverifiable owner.', error); }
   const age = now() - Date.parse(owner.heartbeatAt);
-  if (!Number.isFinite(age) || age <= staleMs || await isOwnerAlive(owner)) cacheError('reference-cache-owned', 'The cache key is owned by another live conversion.');
+  const alive = fenced ? false : await isOwnerAlive(owner);
+  if (!fenced && (!Number.isFinite(age) || age <= staleMs || alive !== false)) cacheError('reference-cache-owned', 'The cache key is owned by another live or unverifiable conversion.');
   await fs.rm(lockDirectory, { recursive: true, force: true });
   try { return await create(); }
   catch (error) { cacheError('reference-cache-owned', 'Another conversion won cache ownership.', error); }

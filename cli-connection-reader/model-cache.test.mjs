@@ -6,9 +6,27 @@ import path from 'node:path';
 import test from 'node:test';
 import { canonicalJsonBytes, sha256 } from './model-contract.mjs';
 import {
-  acquireCacheOwner, cacheKeySha256, loadAwareSigningKey, publishCacheEntry,
+  acquireCacheOwner, cacheKeySha256, loadAwareSigningKey, publishCacheEntry as publishCacheEntryRaw,
   readCacheEntry, releaseCacheOwner, signerFingerprintSha256,
 } from './model-cache.mjs';
+
+function processFence() {
+  let tail = Promise.resolve();
+  return async (work) => {
+    const previous = tail;
+    let release;
+    tail = new Promise((resolve) => { release = resolve; });
+    await previous;
+    try { return await work(); }
+    finally { release(); }
+  };
+}
+
+const withMaintenanceFence = processFence();
+const publishCacheEntry = (options) => publishCacheEntryRaw({
+  ...options,
+  withMaintenanceFence: options.withMaintenanceFence ?? withMaintenanceFence,
+});
 
 async function temporaryDirectory(t) {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'aware-model-cache-'));
@@ -93,9 +111,63 @@ test('owner leases serialize same-key publishers and stale/dead owners are fence
   const stale = JSON.parse(await fs.readFile(lockPath, 'utf8'));
   stale.heartbeatAt = '2000-01-01T00:00:00.000Z';
   await fs.writeFile(lockPath, JSON.stringify(stale));
+  await assert.rejects(
+    () => acquireCacheOwner({ root, key: 'a'.repeat(64), processIdentity: { pid: 102, start: 'two' }, isOwnerAlive: async () => null }),
+    /unverifiable|owned/,
+  );
   const second = await acquireCacheOwner({ root, key: 'a'.repeat(64), processIdentity: { pid: 102, start: 'two' }, isOwnerAlive: async () => false });
   await assert.rejects(() => releaseCacheOwner(first), /token/);
   await releaseCacheOwner(second);
+});
+
+test('different cache keys sharing content never observe a partially published final blob', async (t) => {
+  const root = await temporaryDirectory(t);
+  const { key } = await signingFixture(root);
+  const cacheRoot = path.join(root, 'cache');
+  const signer = signerFingerprintSha256(key.publicKeyBytes);
+  const firstIdentity = identity({ sourceSha256: '1'.repeat(64), signerFingerprintSha256: signer });
+  const secondIdentity = identity({ sourceSha256: '2'.repeat(64), signerFingerprintSha256: signer });
+  const [first, second] = await Promise.all([
+    publishCacheEntry({ root: cacheRoot, identity: firstIdentity, artifacts: artifacts(), signingKey: key }),
+    publishCacheEntry({ root: cacheRoot, identity: secondIdentity, artifacts: artifacts(), signingKey: key }),
+  ]);
+  await Promise.all([
+    readCacheEntry({ root: cacheRoot, key: first.key, expectedIdentity: firstIdentity, expectedPublicKey: key.publicKeyBytes }),
+    readCacheEntry({ root: cacheRoot, key: second.key, expectedIdentity: secondIdentity, expectedPublicKey: key.publicKeyBytes }),
+  ]);
+});
+
+test('different-key publication enters one cache-wide maintenance fence at a time', async (t) => {
+  const root = await temporaryDirectory(t);
+  const { key } = await signingFixture(root);
+  const cacheRoot = path.join(root, 'cache');
+  const signer = signerFingerprintSha256(key.publicKeyBytes);
+  let active = 0;
+  let maximum = 0;
+  let tail = Promise.resolve();
+  const withMaintenanceFence = async (publish) => {
+    const previous = tail;
+    let release;
+    tail = new Promise((resolve) => { release = resolve; });
+    await previous;
+    active += 1;
+    maximum = Math.max(maximum, active);
+    try { await new Promise((resolve) => setTimeout(resolve, 20)); return await publish(); }
+    finally { active -= 1; release(); }
+  };
+  await Promise.all([
+    publishCacheEntry({
+      root: cacheRoot,
+      identity: identity({ sourceSha256: '3'.repeat(64), signerFingerprintSha256: signer }),
+      artifacts: artifacts(), signingKey: key, withMaintenanceFence,
+    }),
+    publishCacheEntry({
+      root: cacheRoot,
+      identity: identity({ sourceSha256: '4'.repeat(64), signerFingerprintSha256: signer }),
+      artifacts: artifacts(), signingKey: key, withMaintenanceFence,
+    }),
+  ]);
+  assert.equal(maximum, 1);
 });
 
 test('concurrent publication converges on one complete winner with identical deterministic bytes', async (t) => {
@@ -110,4 +182,35 @@ test('concurrent publication converges on one complete winner with identical det
   assert.equal(a.key, b.key);
   const hit = await readCacheEntry({ root: cacheRoot, key: a.key, expectedIdentity: cacheIdentity, expectedPublicKey: key.publicKeyBytes });
   assert.deepEqual(hit.artifacts['geometry.glb'], artifacts()['geometry.glb']);
+});
+
+test('cache maintenance evicts deterministically, sweeps stale staging, and refuses an impossible quota', async (t) => {
+  const root = await temporaryDirectory(t);
+  const { key } = await signingFixture(root);
+  const cacheRoot = path.join(root, 'cache');
+  const staleStage = path.join(cacheRoot, 'staging', 'abandoned');
+  await fs.mkdir(staleStage, { recursive: true });
+  await fs.utimes(staleStage, new Date(0), new Date(0));
+  const firstIdentity = identity({ signerFingerprintSha256: signerFingerprintSha256(key.publicKeyBytes) });
+  const first = await publishCacheEntry({
+    root: cacheRoot, identity: firstIdentity, artifacts: artifacts(), signingKey: key,
+    cacheLimits: { maxEntries: 1, maxBytes: 1024 * 1024, staleStagingMs: 1 },
+  });
+  const secondIdentity = identity({
+    ...firstIdentity, sourceSha256: '9'.repeat(64),
+  });
+  const second = await publishCacheEntry({
+    root: cacheRoot, identity: secondIdentity, artifacts: artifacts(), signingKey: key,
+    cacheLimits: { maxEntries: 1, maxBytes: 1024 * 1024, staleStagingMs: 1 },
+  });
+  await assert.rejects(() => fs.access(path.join(cacheRoot, 'entries', first.key)));
+  await fs.access(path.join(cacheRoot, 'entries', second.key));
+  await assert.rejects(() => fs.access(staleStage));
+  await assert.rejects(
+    () => publishCacheEntry({
+      root: path.join(root, 'tiny-cache'), identity: firstIdentity, artifacts: artifacts(), signingKey: key,
+      cacheLimits: { maxEntries: 1, maxBytes: 1, staleStagingMs: 1 },
+    }),
+    (error) => error.code === 'reference-cache-full',
+  );
 });

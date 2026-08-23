@@ -234,9 +234,11 @@ fn bridges_dir() -> std::path::PathBuf {
 /// ship the same scene/materialization contract. Other CLI transports retain the
 /// historical warn-and-try posture because their protocols are backwards
 /// compatible in practice; `tekla.bake-scene` is deliberately stricter.
-fn current_bridge_is_required(binary: &str, command: &str, current: bool) -> bool {
+fn current_bridge_is_required(agent: &str, binary: &str, command: &str, current: bool) -> bool {
     let binary = binary.strip_suffix(".exe").unwrap_or(binary);
-    !current && binary == "aware-tekla" && command == "bake-scene"
+    !current
+        && ((binary == "aware-tekla" && command == "bake-scene")
+            || (agent == "model-reference-reader" && binary == "aware-connection-reader"))
 }
 
 /// How much of a failed bridge's output may appear in the error message.
@@ -369,11 +371,11 @@ impl CliInvoker {
             &bridges,
             env!("CARGO_PKG_VERSION"),
         );
-        if current_bridge_is_required(&binary, command, bridge_is_current) {
+        if current_bridge_is_required(agent, &binary, command, bridge_is_current) {
             let id = binary.strip_prefix("aware-").unwrap_or(&binary);
             return Err(AwareError::Validation(format!(
                 "{agent}.{command} requires the managed {binary} bridge installed by aware {}; \
-                 run `aware sidecar install {id}` to refresh it before baking",
+                 run `aware sidecar install {id}` to refresh it before running this command",
                 env!("CARGO_PKG_VERSION")
             )));
         }
@@ -2942,20 +2944,39 @@ mod cli_invoker_tests {
     }
 
     #[test]
-    fn current_managed_bridge_is_required_only_for_tekla_bake_scene() {
+    fn current_managed_bridge_is_required_for_tekla_bake_and_every_model_reader_command() {
         assert!(current_bridge_is_required(
+            "tekla",
             "aware-tekla",
             "bake-scene",
             false
         ));
         assert!(current_bridge_is_required(
+            "tekla",
             "aware-tekla.exe",
             "bake-scene",
             false
         ));
-        assert!(!current_bridge_is_required("aware-tekla", "exec", false));
-        assert!(!current_bridge_is_required("aware-rhino", "exec", false));
+        assert!(current_bridge_is_required(
+            "model-reference-reader",
+            "aware-connection-reader",
+            "preflight",
+            false
+        ));
         assert!(!current_bridge_is_required(
+            "tekla",
+            "aware-tekla",
+            "exec",
+            false
+        ));
+        assert!(!current_bridge_is_required(
+            "rhino",
+            "aware-rhino",
+            "exec",
+            false
+        ));
+        assert!(!current_bridge_is_required(
+            "tekla",
             "aware-tekla",
             "bake-scene",
             true
