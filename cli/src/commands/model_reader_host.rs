@@ -456,7 +456,7 @@ async fn protocol_loop<R: AsyncRead + Unpin>(
     writer: SharedWriter,
     active: ActiveRuns,
     provider_tasks: &mut Vec<tokio::task::JoinHandle<()>>,
-) -> Result<(), AwareError> {
+) -> Result<Option<u64>, AwareError> {
     let mut pending: HashMap<(u64, [u8; 32]), PendingRun> = HashMap::new();
     let mut locks: HashMap<[u8; 32], std::fs::File> = HashMap::new();
     let mut last_control_id = 0u64;
@@ -524,13 +524,12 @@ async fn protocol_loop<R: AsyncRead + Unpin>(
                 file.unlock()?; send_control(&writer, frame.request_id, frame.run_handle, json!({"status":"released"})).await;
             }
             Some("shutdown") => {
-                cancel_and_join(&active, provider_tasks).await;
-                send_control(&writer, frame.request_id, [0; 32], json!({"status":"bye"})).await; break;
+                return Ok(Some(frame.request_id));
             }
             _ => return Err(AwareError::Validation("model-reader host control operation is unknown".into())),
         }
     }
-    Ok(())
+    Ok(None)
 }
 
 #[cfg(unix)]
@@ -561,11 +560,18 @@ where
 {
     tokio::pin!(shutdown);
     let result = tokio::select! {
-        result = protocol_loop(reader, writer, active.clone(), provider_tasks) => result,
-        _ = &mut shutdown => Ok(()),
+        result = protocol_loop(reader, writer.clone(), active.clone(), provider_tasks) => result,
+        _ = &mut shutdown => Ok(None),
     };
     cancel_and_join(&active, provider_tasks).await;
-    result
+    match result {
+        Ok(Some(request_id)) => {
+            send_control(&writer, request_id, [0; 32], json!({"status":"bye"})).await;
+            Ok(())
+        }
+        Ok(None) => Ok(()),
+        Err(error) => Err(error),
+    }
 }
 
 pub async fn run() -> Result<(), AwareError> {
@@ -716,5 +722,52 @@ mod tests {
         .await
         .unwrap();
         assert!(cleaned.load(std::sync::atomic::Ordering::SeqCst));
+
+        let mut shutdown_bytes = Vec::new();
+        Frame {
+            kind: KIND_CONTROL,
+            request_id: 1,
+            run_handle: [0; 32],
+            sequence: 0,
+            flags: FINAL,
+            payload: serde_json::to_vec(&json!({"op":"shutdown"})).unwrap(),
+        }
+        .write(&mut shutdown_bytes)
+        .await
+        .unwrap();
+        let (active, mut tasks, _cleaned) = active_provider().await;
+        let cancel_seen = Arc::new(tokio::sync::Notify::new());
+        let observed = cancel_seen.clone();
+        let (cancel_tx, cancel_rx) = oneshot::channel();
+        active.lock().await.insert([8; 32], cancel_tx);
+        let (release_tx, release_rx) = oneshot::channel();
+        tasks.push(tokio::spawn(async move {
+            let _ = cancel_rx.await;
+            observed.notify_one();
+            let _ = release_rx.await;
+        }));
+        let (signal_tx, signal_rx) = oneshot::channel();
+        let writer: SharedWriter = Arc::new(Mutex::new(tokio::io::stdout()));
+        let supervisor = tokio::spawn(async move {
+            supervise_protocol(
+                &mut shutdown_bytes.as_slice(),
+                writer,
+                active,
+                &mut tasks,
+                async {
+                    let _ = signal_rx.await;
+                },
+            )
+            .await
+        });
+        cancel_seen.notified().await;
+        let _ = signal_tx.send(());
+        tokio::time::sleep(std::time::Duration::from_millis(10)).await;
+        assert!(
+            !supervisor.is_finished(),
+            "signal must not detach cleanup already in progress"
+        );
+        let _ = release_tx.send(());
+        supervisor.await.unwrap().unwrap();
     }
 }

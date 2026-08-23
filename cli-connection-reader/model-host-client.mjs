@@ -190,7 +190,7 @@ export class ModelHostClient {
     if (this.child.exitCode !== null && this.child.exitCode !== undefined) return;
     const exited = new Promise((resolve) => {
       const finish = () => resolve();
-      this.child.once('exit', finish); this.child.once('error', finish);
+      this.child.once('exit', finish); this.child.once('close', finish);
     });
     this.child.stdin.destroy?.();
     this.child.kill?.('SIGTERM');

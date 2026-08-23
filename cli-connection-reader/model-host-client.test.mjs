@@ -88,6 +88,7 @@ test('forced host termination follows an ignored graceful signal and waits for c
   const signals = [];
   child.kill = (signal) => {
     signals.push(signal ?? 'SIGTERM');
+    if (signal === 'SIGTERM') queueMicrotask(() => child.emit('error', new Error('graceful kill failed')));
     if (signal === 'SIGKILL') {
       child.exitCode = 137;
       queueMicrotask(() => child.emit('exit', child.exitCode));
