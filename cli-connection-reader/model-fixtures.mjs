@@ -8,25 +8,41 @@ export function makeGlbFixture(options = {}) {
   const positionBytes = Buffer.alloc(positions.length * 12);
   positions.forEach((point, index) => point.forEach((coordinate, axis) => positionBytes.writeFloatLE(coordinate, index * 12 + axis * 4)));
   const indexOffset = align4(positionBytes.length);
-  const binary = Buffer.alloc(indexOffset + indices.length * 4);
+  const indexEnd = indexOffset + indices.length * 4;
+  const colorOffset = align4(indexEnd);
+  const colors = options.colors ?? null;
+  const binary = Buffer.alloc(colorOffset + (colors ? colors.length * 16 : 0));
   positionBytes.copy(binary);
   indices.forEach((value, index) => binary.writeUInt32LE(value, indexOffset + index * 4));
+  colors?.forEach((color, index) => color.forEach((component, channel) => binary.writeFloatLE(component, colorOffset + index * 16 + channel * 4)));
+  const primitive = { attributes: { POSITION: 0 }, indices: 1, mode: options.mode ?? 4 };
+  if (colors) primitive.attributes.COLOR_0 = 2;
+  if (options.materialColor) primitive.material = 0;
+  const defaultNode = { name: options.nodeName ?? 'part-a', mesh: 0 };
+  if (options.translation) defaultNode.translation = options.translation;
+  if (options.rotation) defaultNode.rotation = options.rotation;
+  if (options.scale) defaultNode.scale = options.scale;
+  if (options.matrix) defaultNode.matrix = options.matrix;
   const json = {
     asset: { version: '2.0' },
-    scene: options.scene ?? 0,
     scenes: options.scenes ?? [{ nodes: [0] }],
-    nodes: options.nodes ?? [{ name: options.nodeName ?? 'part-a', mesh: 0 }],
-    meshes: options.meshes ?? [{ primitives: [{ attributes: { POSITION: 0 }, indices: 1, mode: options.mode ?? 4 }] }],
-    buffers: [{ byteLength: binary.length }],
+    nodes: options.nodes ?? [defaultNode],
+    meshes: options.meshes ?? [{ primitives: [primitive] }],
+    buffers: [{ byteLength: binary.length, ...(options.externalUri ? { uri: options.externalUri } : {}) }],
     bufferViews: [
       { buffer: 0, byteOffset: 0, byteLength: positionBytes.length },
       { buffer: 0, byteOffset: indexOffset, byteLength: indices.length * 4 },
+      ...(colors ? [{ buffer: 0, byteOffset: colorOffset, byteLength: colors.length * 16 }] : []),
     ],
     accessors: [
       { bufferView: 0, byteOffset: 0, componentType: 5126, count: positions.length, type: 'VEC3' },
       { bufferView: 1, byteOffset: 0, componentType: 5125, count: indices.length, type: 'SCALAR' },
+      ...(colors ? [{ bufferView: 2, byteOffset: 0, componentType: 5126, count: colors.length, type: 'VEC4' }] : []),
     ],
+    ...(options.materialColor ? { materials: [{ pbrMetallicRoughness: { baseColorFactor: options.materialColor } }] } : {}),
+    ...(options.extensionsUsed ? { extensionsUsed: options.extensionsUsed } : {}),
   };
+  if (!options.omitScene) json.scene = options.scene ?? 0;
   const jsonBytes = canonicalJsonBytes(json);
   const jsonLength = align4(jsonBytes.length);
   const binaryLength = align4(binary.length);
@@ -68,4 +84,3 @@ export function makeMetadataFixture(options = {}) {
     relations: [],
   };
 }
-
