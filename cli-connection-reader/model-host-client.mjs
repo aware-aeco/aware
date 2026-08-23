@@ -11,6 +11,21 @@ function hostError(code, message, details = undefined) {
   throw new ModelReaderError(code, 'provider-host', false, message, details);
 }
 
+export async function waitForCacheLock(acquire, options = {}) {
+  const timeoutMs = options.timeoutMs ?? 30_000;
+  const now = options.now ?? Date.now;
+  const delay = options.delay ?? ((milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds)));
+  const started = now();
+  while (true) {
+    if (options.signal?.aborted) throw new ModelReaderError('reference-cancelled', 'cache', false, 'Cache lock waiting was cancelled.');
+    const response = await acquire();
+    if (response?.body?.status === 'acquired' && Buffer.isBuffer(response.handle) && !response.handle.equals(ZERO_HANDLE)) return response.handle;
+    if (response?.body?.status !== 'busy') hostError('reference-provider-host-protocol', 'The managed cache fence returned an invalid response.');
+    if (now() - started >= timeoutMs) throw new ModelReaderError('reference-cache-owned', 'cache', true, 'Timed out waiting for another model conversion.');
+    await delay(25);
+  }
+}
+
 export function encodeHostFrame({ kind, requestId, runHandle, sequence, final, payload }) {
   if (![1, 2, 3, 4].includes(kind)) throw new TypeError('unknown host frame kind');
   if (typeof requestId !== 'bigint' || requestId <= 0n || requestId > 0xffffffffffffffffn) throw new TypeError('invalid host frame request id');
@@ -76,11 +91,10 @@ class ModelHostClient {
     this.write(frame); return promise;
   }
 
-  acquireLock = async (lockPath) => {
-    const response = await this.simple({ op: 'lock-acquire', path: lockPath }, ZERO_HANDLE, true);
-    if (response.body.status !== 'acquired' || response.handle.equals(ZERO_HANDLE)) hostError('reference-cache-owned', 'The cache key is owned by another conversion.');
-    return response.handle;
-  };
+  acquireLock = async (lockPath, options = {}) => await waitForCacheLock(
+    async () => await this.simple({ op: 'lock-acquire', path: lockPath }, ZERO_HANDLE, true),
+    options,
+  );
 
   releaseLock = async (handle) => {
     const response = await this.simple({ op: 'lock-release' }, handle);

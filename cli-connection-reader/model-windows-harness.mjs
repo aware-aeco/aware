@@ -33,8 +33,8 @@ async function buildSea(entry, output) {
   execFileSync(process.execPath, [path.join(here, 'node_modules', 'postject', 'dist', 'cli.js'), output, 'NODE_SEA_BLOB', blob, '--sentinel-fuse', FUSE], { stdio: 'pipe' });
 }
 
-function run(entry, command, input, environment, cwd) {
-  const stdout = execFileSync(entry, [command, '--json-stdin'], { input: JSON.stringify(input), encoding: 'utf8', env: environment, cwd, windowsHide: true, timeout: 5000, maxBuffer: 4 * 1024 * 1024 });
+function run(entry, command, input, environment, cwd, timeout = 30_000) {
+  const stdout = execFileSync(entry, [command, '--json-stdin'], { input: JSON.stringify(input), encoding: 'utf8', env: environment, cwd, windowsHide: true, timeout, maxBuffer: 4 * 1024 * 1024 });
   return JSON.parse(stdout);
 }
 
@@ -87,7 +87,7 @@ try {
   assert.equal(preflight.ready, true); assert.equal(preflight.execution, 'local');
   const descendantPreflight = run(packaged, 'preflight', {}, {
     ...environment, AWARE_MODEL_REFERENCE_PROVIDER: descendantProvider,
-  }, unrelatedCwd);
+  }, unrelatedCwd, 15_000);
   assert.equal(descendantPreflight.ready, true, 'successful provider descendants must be killed before inherited pipes can hang');
   const request = {
     'rvt-path': source, 'source-sha256': sha256(readFileSync(source)),

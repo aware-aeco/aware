@@ -112,7 +112,19 @@ async function convertAndCache(args, deps, config, readiness) {
     signerFingerprintSha256: readiness.signerFingerprintSha256,
   };
   const key = cacheKeySha256(identity);
-  const read = async () => await readCacheEntry({ root: config.cacheRoot, key, expectedIdentity: identity, expectedPublicKey: readiness.signingKey.publicKeyBytes });
+  const withMaintenanceFence = async (work) => {
+    if (!deps.hostAcquireLock || !deps.hostReleaseLock) readerError('reference-provider-host-unavailable', 'cache', 'The managed cache fence is unavailable.');
+    const maintenanceFence = await deps.hostAcquireLock(
+      await cacheMaintenanceFencePath(config.cacheRoot),
+      { signal: deps.signal },
+    );
+    try { return await work(); }
+    finally { await deps.hostReleaseLock(maintenanceFence); }
+  };
+  const read = async () => await readCacheEntry({
+    root: config.cacheRoot, key, expectedIdentity: identity,
+    expectedPublicKey: readiness.signingKey.publicKeyBytes, withMaintenanceFence,
+  });
   try { return { hit: true, key, cache: await read() }; }
   catch (error) { if (error?.code !== 'reference-cache-miss') throw error; }
   const fence = deps.hostAcquireLock ? await deps.hostAcquireLock(await cacheFencePath(config.cacheRoot, key)) : null;
@@ -148,12 +160,7 @@ async function convertAndCache(args, deps, config, readiness) {
       await publishCacheEntry({
         root: config.cacheRoot, identity, artifacts, signingKey: readiness.signingKey, details,
         cacheLimits: deps.cacheLimits,
-        withMaintenanceFence: async (publish) => {
-          if (!deps.hostAcquireLock || !deps.hostReleaseLock) readerError('reference-provider-host-unavailable', 'publish', 'The managed cache fence is unavailable.');
-          const maintenanceFence = await deps.hostAcquireLock(await cacheMaintenanceFencePath(config.cacheRoot));
-          try { return await publish(); }
-          finally { await deps.hostReleaseLock(maintenanceFence); }
-        },
+        withMaintenanceFence,
       });
     } finally {
       await fs.rm(runRoot, { recursive: true, force: true });

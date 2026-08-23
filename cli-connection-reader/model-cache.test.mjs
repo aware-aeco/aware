@@ -7,7 +7,7 @@ import test from 'node:test';
 import { canonicalJsonBytes, sha256 } from './model-contract.mjs';
 import {
   acquireCacheOwner, cacheKeySha256, loadAwareSigningKey, publishCacheEntry as publishCacheEntryRaw,
-  readCacheEntry, releaseCacheOwner, signerFingerprintSha256,
+  readCacheEntry as readCacheEntryRaw, releaseCacheOwner, signerFingerprintSha256,
 } from './model-cache.mjs';
 
 function processFence() {
@@ -24,6 +24,10 @@ function processFence() {
 
 const withMaintenanceFence = processFence();
 const publishCacheEntry = (options) => publishCacheEntryRaw({
+  ...options,
+  withMaintenanceFence: options.withMaintenanceFence ?? withMaintenanceFence,
+});
+const readCacheEntry = (options) => readCacheEntryRaw({
   ...options,
   withMaintenanceFence: options.withMaintenanceFence ?? withMaintenanceFence,
 });
@@ -101,6 +105,14 @@ test('missing, extra, wrong signer, and identity-mismatched cache entries are ne
   await assert.rejects(() => readCacheEntry({ root: cacheRoot, key: published.key, expectedIdentity: cacheIdentity, expectedPublicKey: secondKey.publicKeyBytes }), /signer/);
   await fs.writeFile(path.join(cacheRoot, 'entries', published.key, 'extra'), 'no');
   await assert.rejects(() => readCacheEntry({ root: cacheRoot, key: published.key, expectedIdentity: cacheIdentity, expectedPublicKey: firstKey.publicKeyBytes }), /extra|closed/);
+});
+
+test('cache reads require the same maintenance fence that protects eviction', async (t) => {
+  const root = await temporaryDirectory(t);
+  await assert.rejects(
+    () => readCacheEntryRaw({ root: path.join(root, 'cache'), key: 'a'.repeat(64), expectedIdentity: identity(), expectedPublicKey: Buffer.alloc(32) }),
+    (error) => error.code === 'reference-cache-fence-missing',
+  );
 });
 
 test('owner leases serialize same-key publishers and stale/dead owners are fenced by token', async (t) => {

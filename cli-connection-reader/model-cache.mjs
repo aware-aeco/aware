@@ -132,12 +132,13 @@ async function maintainCache(root, key, blobs, overrides) {
     for (const digest of [...existing].sort()) {
       if (reachable.has(digest)) continue;
       try {
-        const stat = await fs.stat(path.join(blobDirectory, digest)); blobBytes -= stat.size;
+        const stat = await fs.stat(path.join(blobDirectory, digest));
         await fs.rm(path.join(blobDirectory, digest), { force: true });
+        blobBytes -= stat.size;
         if (incomingRecords.has(digest)) incoming += incomingRecords.get(digest);
+        existing.delete(digest);
       }
       catch { /* concurrent publication or cleanup */ }
-      existing.delete(digest);
     }
   }
   if (blobBytes + incoming > limits.maxBytes) cacheError('reference-cache-full', 'The bounded model-reader cache is full.');
@@ -235,7 +236,7 @@ export async function publishCacheEntry({ root, identity, artifacts, signingKey,
   });
 }
 
-export async function readCacheEntry({ root, key, expectedIdentity, expectedPublicKey }) {
+async function readCacheEntryUnsafe({ root, key, expectedIdentity, expectedPublicKey }) {
   assertSha256(key, 'cache key');
   const entry = path.join(root, 'entries', key);
   let names;
@@ -270,6 +271,11 @@ export async function readCacheEntry({ root, key, expectedIdentity, expectedPubl
     if (manifest.artifacts?.[name]?.sha256 !== receipt.blobs[name].sha256 || manifest.artifacts?.[name]?.bytes !== receipt.blobs[name].bytes) cacheError('reference-cache-entry-invalid', 'Cached manifest does not reconcile with its blobs.');
   }
   return { manifest, receipt, artifacts };
+}
+
+export async function readCacheEntry(options) {
+  if (typeof options?.withMaintenanceFence !== 'function') cacheError('reference-cache-fence-missing', 'Cache reads require the process-wide maintenance fence.');
+  return await options.withMaintenanceFence(async () => await readCacheEntryUnsafe(options));
 }
 
 function defaultProcessIdentity() { return { pid: process.pid, start: process.uptime().toFixed(6) }; }

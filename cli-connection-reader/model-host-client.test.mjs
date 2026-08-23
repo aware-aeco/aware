@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { HostFrameDecoder, encodeHostFrame } from './model-host-client.mjs';
+import { HostFrameDecoder, encodeHostFrame, waitForCacheLock } from './model-host-client.mjs';
 
 test('host frames preserve request id, run handle, sequence, final flag, and binary payload across arbitrary chunks', () => {
   const expected = {
@@ -21,4 +21,22 @@ test('frame decoder refuses unknown kinds and oversized payload declarations bef
   assert.throws(() => new HostFrameDecoder().push(unknown), /kind/);
   const oversized = Buffer.alloc(50); oversized[0] = 1; oversized.writeUInt32BE(1024 * 1024 + 1, 46);
   assert.throws(() => new HostFrameDecoder().push(oversized), /limit/);
+});
+
+test('cache lock contention waits boundedly for the winner and honors cancellation', async () => {
+  let attempts = 0;
+  const handle = Buffer.alloc(32, 7);
+  const acquired = await waitForCacheLock(async () => {
+    attempts += 1;
+    return attempts < 3 ? { body: { status: 'busy' }, handle: Buffer.alloc(32) } : { body: { status: 'acquired' }, handle };
+  }, { delay: async () => {}, now: (() => { let value = 0; return () => value += 1; })(), timeoutMs: 10 });
+  assert.deepEqual(acquired, handle);
+  assert.equal(attempts, 3);
+
+  const controller = new AbortController();
+  controller.abort();
+  await assert.rejects(
+    () => waitForCacheLock(async () => ({ body: { status: 'busy' }, handle: Buffer.alloc(32) }), { signal: controller.signal }),
+    (error) => error.code === 'reference-cancelled',
+  );
 });
