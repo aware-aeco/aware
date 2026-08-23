@@ -1,0 +1,101 @@
+agent: model-reference-reader
+version: 0.1.0
+display-name: Local RVT Reference Reader
+description: |
+  Convert a local Revit project into deterministic, authenticated reference-model artifacts without
+  importing ownership into AWARE. The reader returns canonical Z-up millimetre GLB geometry plus
+  separate entity, property and relationship JSON. Revit meaning comes only from explicit provider
+  metadata and appearance joins; names and geometry are never used to infer it.
+
+  Execution is local-only through an operator-installed trusted provider. AWARE contains no provider,
+  license, cloud URL or credential. First probe may perform the full conversion; later reads use a
+  signed content-addressed cache after revalidating every receipt and byte.
+stateful: false
+vendor: aware-aeco
+license: Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/model-reference-reader
+keywords: [aware, revit, rvt, reference, model, glb, deterministic, local]
+provenance:
+  generated-by: hand-curated
+  generator-version: 0.126.0
+  refined-by: [pawellisowski]
+requires:
+  filesystem:
+    - read: '*.rvt'
+skills:
+  - provider-and-artifact-contract.md
+transport:
+  cli:
+    binary: aware-connection-reader
+commands:
+  preflight:
+    lifecycle: single
+    category: curated
+    description: |
+      Check that the exact local provider, managed AWARE host and model-reader signing key are ready.
+      This describes the provider but never opens or converts an RVT file.
+    inputs:
+      expected-provider-sha256:
+        type: string
+        required: false
+        description: Optional pinned SHA-256 of the complete seven-field provider fingerprint.
+    outputs:
+      type: single
+      schema:
+        ready: boolean
+        execution: string
+        providerFingerprintSha256: string
+        signerFingerprintSha256: string
+  probe:
+    lifecycle: single
+    category: curated
+    description: |
+      Return bounded counts, exact reconciled coverage and canonical geometry bounds for an RVT.
+      A cold probe performs the full deterministic conversion; a warm probe validates the signed cache.
+    inputs:
+      rvt-path:
+        type: string
+        description: Absolute path to the local .rvt source.
+      source-sha256:
+        type: string
+        description: Expected SHA-256 of the source bytes, measured before the run.
+      expected-provider-sha256:
+        type: string
+        description: Pinned SHA-256 of the complete seven-field provider fingerprint.
+    outputs:
+      type: single
+      schema:
+        cache: string
+        sourceSha256: string
+        canonicalRequestSha256: string
+        providerFingerprintSha256: string
+        frame: object
+        coverage: object
+        bounds: object
+  read-model:
+    lifecycle: single
+    category: curated
+    description: |
+      Publish five deterministic run-owned artifacts: binary GLB geometry, entities, properties,
+      relationships and the manifest that authenticates their provenance and exact coverage.
+    inputs:
+      rvt-path:
+        type: string
+        description: Absolute path to the local .rvt source.
+      source-sha256:
+        type: string
+        description: Expected SHA-256 of the source bytes, measured before the run.
+      expected-provider-sha256:
+        type: string
+        description: Pinned SHA-256 of the complete seven-field provider fingerprint.
+    outputs:
+      type: single
+      schema:
+        sourceSha256: string
+        canonicalRequestSha256: string
+        providerFingerprint: object
+        providerFingerprintSha256: string
+        signerFingerprintSha256: string
+        frame: object
+        coverage: object
+        artifacts: object

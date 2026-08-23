@@ -72,8 +72,10 @@ fn json_output_returns_envelope() {
     //              → 77 (the `blender` builtin visualization agent — IFC in, headless PNG/MP4 out).
     //              → 78 (the `ifc-reference-reader` cli agent — a WHOLE IFC as reference geometry.
     //                    Shares connection-reader's bridge binary, so it adds no sidecar asset).
+    //              → 79 (the `model-reference-reader` local RVT normalizer — deterministic GLB plus
+    //                    separate metadata artifacts, sharing the connection-reader SEA asset).
     // A strict equality keeps this honest — adjust it whenever an agent lands or retires.
-    assert_eq!(agents.len(), 78);
+    assert_eq!(agents.len(), 79);
     assert!(agents.iter().any(|a| a["id"] == "tekla"));
     assert!(agents.iter().any(|a| a["id"] == "vision"));
     assert!(agents.iter().any(|a| a["id"] == "viewer-3d"));
@@ -81,4 +83,5 @@ fn json_output_returns_envelope() {
     assert!(agents.iter().any(|a| a["id"] == "steel-detailer-us"));
     assert!(agents.iter().any(|a| a["id"] == "connection-reader"));
     assert!(agents.iter().any(|a| a["id"] == "blender"));
+    assert!(agents.iter().any(|a| a["id"] == "model-reference-reader"));
 }
