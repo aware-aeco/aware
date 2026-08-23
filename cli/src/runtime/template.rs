@@ -29,6 +29,13 @@ pub struct RenderContext {
     pub run: Map<String, serde_json::Value>,
 }
 
+/// What a value the credential vault supplied looks like once it is safe to
+/// write down. Deliberately readable rather than a fixed-width mask: a dry-run
+/// preview is read by a human deciding whether to let the write happen, and
+/// `Bearer [redacted]` tells them the header is populated without telling them
+/// (or anyone who later reads the trace) what it is populated with.
+pub const REDACTED: &str = "[redacted]";
+
 impl RenderContext {
     /// Insert a node output, populating both raw kebab and underscore-translated forms.
     pub fn record_output(&mut self, node_id: &str, output: serde_json::Value) {
@@ -36,6 +43,52 @@ impl RenderContext {
         let translated = node_id.replace('-', "_");
         if translated != node_id {
             self.upstream.insert(translated, output);
+        }
+    }
+
+    /// This context with every string in the `secrets` namespace replaced by
+    /// [`REDACTED`].
+    ///
+    /// Rendering a node's params against this yields what the live run would
+    /// send, minus anything the credential vault contributed — the only shape of
+    /// rendered params that may be persisted. `~/.aware/credentials/` is written
+    /// `0600` and `aware credential put` refuses to take a secret from argv
+    /// because argv is readable by every process on the machine; a run trace is
+    /// a `0644` file that `aware app logs` prints on request, so a rendered
+    /// credential reaching one undoes both of those (#448).
+    ///
+    /// EVERY string goes, not the subset of field names that hold token
+    /// material. The narrower rule needs a list of "sensitive" keys, and a
+    /// credential shape nobody thought to add to that list would then be written
+    /// out in full — a leak that looks exactly like working code. Over-redacting
+    /// `token_type` costs a preview the word `Bearer`, which is in the template
+    /// beside it anyway. Non-strings (`expires_at`, `obtained_at`) are numbers
+    /// that carry no secret and are left alone.
+    ///
+    /// The boundary is the vault: this hides what `secrets.*` put into the
+    /// params. A credential that reached them some other way — read out of a
+    /// file by an upstream node, say — is that node's output, which the trace
+    /// records in full regardless, and is not something this can see.
+    pub fn with_redacted_secrets(&self) -> RenderContext {
+        fn blind(v: &serde_json::Value) -> serde_json::Value {
+            match v {
+                serde_json::Value::String(_) => serde_json::Value::String(REDACTED.to_string()),
+                serde_json::Value::Array(items) => {
+                    serde_json::Value::Array(items.iter().map(blind).collect())
+                }
+                serde_json::Value::Object(fields) => serde_json::Value::Object(
+                    fields.iter().map(|(k, v)| (k.clone(), blind(v))).collect(),
+                ),
+                scalar => scalar.clone(),
+            }
+        }
+        RenderContext {
+            secrets: self
+                .secrets
+                .iter()
+                .map(|(id, v)| (id.clone(), blind(v)))
+                .collect(),
+            ..self.clone()
         }
     }
 }
@@ -831,5 +884,110 @@ mod tests {
             normalize_hyphenated_paths("{{ inputs.count - discount }}"),
             "{{ inputs.count - discount }}"
         );
+    }
+
+    // ── #448: the secrets namespace, blinded for anything written down ─────
+
+    /// One context holding a credential in each shape the store produces: a
+    /// `StoredToken` object, a bare string (a legacy `<id>.json`), and a nested
+    /// one, plus a value in every OTHER namespace to prove the blinding is
+    /// confined to `secrets`.
+    fn ctx_with_secrets() -> RenderContext {
+        let mut ctx = RenderContext::default();
+        ctx.secrets.insert(
+            "my-api".into(),
+            serde_json::json!({
+                "access_token": "sk-live-abc",
+                "refresh_token": "rt-def",
+                "token_type": "Bearer",
+                "expires_at": 0,
+                "obtained_at": 1_700_000_000i64,
+                "nested": { "deep": ["sk-inner"] },
+            }),
+        );
+        ctx.secrets
+            .insert("legacy".into(), serde_json::json!("sk-bare"));
+        // Hyphen-free so `{{ secrets.vault }}` stays a bare path: a hyphenated
+        // id normalizes to bracket syntax, which `resolve_value` truncates.
+        ctx.secrets
+            .insert("vault".into(), serde_json::json!({ "token": "sk-whole" }));
+        ctx.inputs = serde_json::json!({ "phase": "design" });
+        ctx.record_output("src", serde_json::json!({ "id": "p1" }));
+        ctx.config.insert("region".into(), serde_json::json!("EU"));
+        ctx.run
+            .insert("operator".into(), serde_json::json!("pawel"));
+        ctx
+    }
+
+    #[test]
+    fn with_redacted_secrets_blinds_every_string_at_every_depth() {
+        let blinded = ctx_with_secrets().with_redacted_secrets();
+        let api = &blinded.secrets["my-api"];
+        // Token material, obviously …
+        assert_eq!(api["access_token"], REDACTED);
+        assert_eq!(api["refresh_token"], REDACTED);
+        // … and the strings that merely describe it. Blinding every string is
+        // what makes this safe against a credential shape nobody enumerated; a
+        // list of "sensitive" field names would leak the first one it missed.
+        assert_eq!(api["token_type"], REDACTED);
+        // Through objects and arrays alike.
+        assert_eq!(api["nested"]["deep"][0], REDACTED);
+        // A bare-string secret is a value, not a map — it must be blinded too,
+        // not skipped for having no fields to walk.
+        assert_eq!(blinded.secrets["legacy"], REDACTED);
+        // Numbers carry no secret and stay, so the preview keeps saying whether
+        // the credential has a recorded expiry.
+        assert_eq!(api["expires_at"], serde_json::json!(0));
+        assert_eq!(api["obtained_at"], serde_json::json!(1_700_000_000i64));
+    }
+
+    #[test]
+    fn with_redacted_secrets_touches_no_other_namespace() {
+        // The record is still a useful preview: everything the operator needs to
+        // judge the write — the inputs, the upstream values, the app config, the
+        // run identity — is untouched. Only the vault goes dark.
+        let blinded = ctx_with_secrets().with_redacted_secrets();
+        assert_eq!(blinded.inputs, serde_json::json!({ "phase": "design" }));
+        assert_eq!(blinded.upstream["src"]["id"], "p1");
+        assert_eq!(blinded.config["region"], "EU");
+        assert_eq!(blinded.run["operator"], "pawel");
+    }
+
+    #[test]
+    fn rendering_against_a_blinded_context_keeps_the_template_around_the_secret() {
+        // What the `would-write` record actually shows. The literal text of the
+        // template is the author's, not the vault's, so `Bearer ` survives and
+        // the operator can still see the header is populated — they just cannot
+        // read, and neither can anyone who opens the trace later, what with.
+        let ctx = ctx_with_secrets();
+        let blinded = ctx.with_redacted_secrets();
+        assert_eq!(
+            render("Bearer {{ secrets['my-api'].access_token }}", &ctx).unwrap(),
+            "Bearer sk-live-abc",
+            "the live render is unchanged — this fix must not reach the wire"
+        );
+        assert_eq!(
+            render("Bearer {{ secrets['my-api'].access_token }}", &blinded).unwrap(),
+            format!("Bearer {REDACTED}")
+        );
+        // The documented `{{ secrets.<credential-id> }}` form (app-spec
+        // § Templating) is a WHOLE-VALUE ref: `render_config` resolves it
+        // structurally rather than rendering it, so it bypasses the assertion
+        // above and has to be blinded in its own right.
+        assert_eq!(resolve_value("{{ secrets.legacy }}", &ctx), "sk-bare");
+        assert_eq!(resolve_value("{{ secrets.legacy }}", &blinded), REDACTED);
+        assert_eq!(
+            resolve_value("{{ secrets.vault }}", &blinded)["token"],
+            REDACTED,
+            "a whole-credential ref must come back blinded field by field"
+        );
+    }
+
+    #[test]
+    fn an_empty_vault_blinds_to_an_empty_vault() {
+        // No secrets loaded is the common case, and it must not invent an entry
+        // — a `{{ secrets.x }}` ref renders empty either way, as it did before.
+        let blinded = RenderContext::default().with_redacted_secrets();
+        assert!(blinded.secrets.is_empty());
     }
 }

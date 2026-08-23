@@ -601,10 +601,8 @@ impl Orchestrator {
         }
         self.ctx.record_output(&node.id, current_event.clone());
 
-        let args = render_config(
-            &yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?,
-            &self.ctx,
-        )?;
+        let params = yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?;
+        let args = render_config(&params, &self.ctx)?;
 
         // Dry-run / simulate short-circuit — mirrors `execute_node` so that
         // streaming (watcher) compositions validate end-to-end without touching
@@ -624,7 +622,10 @@ impl Orchestrator {
                     node: node.id.clone(),
                     agent: agent_id.clone(),
                     command: command.to_string(),
-                    proposed_inputs: args.clone(),
+                    // Re-rendered with the vault blinded rather than reusing
+                    // `args`: this record is persisted, and `args` is what the
+                    // live run would put on the wire, credential included (#448).
+                    proposed_inputs: render_config(&params, &self.ctx.with_redacted_secrets())?,
                     safety: safety_block,
                 })
                 .await?;
@@ -862,7 +863,14 @@ impl Orchestrator {
                         node: node.id.clone(),
                         agent: agent_id.clone(),
                         command: command.to_string(),
-                        proposed_inputs: args.clone(),
+                        // Re-rendered with the vault blinded rather than reusing
+                        // `args`: this record is persisted, and `args` is what
+                        // the live run would put on the wire, credential
+                        // included (#448).
+                        proposed_inputs: render_config(
+                            &config_json,
+                            &self.ctx.with_redacted_secrets(),
+                        )?,
                         safety: safety_block,
                     })
                     .await?;

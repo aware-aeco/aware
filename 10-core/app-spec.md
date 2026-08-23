@@ -843,6 +843,8 @@ The author taking responsibility for an `exec` script's mode is the only authori
 
 `aware app run <app> --dry-run` exercises the full DAG **without** committing any write-mode side effects. Each write-mode node emits a structured `would-write:` block in the trace instead of calling the agent's mutation transport. The dry-run trace is replayable but rolls back nothing (because nothing was written).
 
+The `would-write:` block carries the node's params **as rendered**, with one exception: anything `{{ secrets.<credential-id> }}` resolved is written as `[redacted]`. The credential vault is `0600` and `aware credential put` refuses to take a secret from argv; a trace is a `0644` file that `aware app logs` prints on request, so the preview would otherwise undo both. The live run is unaffected — the real value still reaches the transport. This is confined to what the vault supplied: a credential a node read some other way is that node's own output, which the trace records in full.
+
 Dry-run is mandatory **before** any production write run against a real Revit / Tekla central file. The CLI prints a one-line summary at the end:
 
 ```
