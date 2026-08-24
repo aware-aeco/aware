@@ -311,7 +311,7 @@ where
         // `manifest-version` differing from the index key is intended and untouched
         // (calendar keys like `tekla@2025.0.1` over a `0.30.0` manifest) — only a shared
         // subdir is the defect, never a differing version.
-        let mut seen_subdirs: BTreeMap<String, (&String, &str)> = BTreeMap::new();
+        let mut seen_subdirs: BTreeMap<String, (&String, &str, String)> = BTreeMap::new();
         for (ver, ve) in &entry.versions {
             // A subdir that is not portably written resolves to different manifests on
             // different platforms, so no key computed from it means anything. Report it
@@ -321,10 +321,13 @@ where
                 continue;
             }
             // Keyed through the SAME routine `reindex`'s loader resolves with, so the
-            // guard and the load cannot disagree about which entries reach one manifest.
+            // guard and the load cannot disagree about which entries reach one manifest —
+            // then case-folded, because the index is one artifact and a case-insensitive
+            // checkout (Windows, macOS) resolves `foo` and `Foo` to a single folder.
             let subdir = crate::registry::checkout_relative_subdir(&ve.subdir);
-            if let Some((other, other_tarball)) =
-                seen_subdirs.insert(subdir.clone(), (ver, ve.tarball.as_str()))
+            let key = crate::registry::portable_subdir_key(&ve.subdir);
+            if let Some((other, other_tarball, other_subdir)) =
+                seen_subdirs.insert(key, (ver, ve.tarball.as_str(), subdir.clone()))
             {
                 // Name the newer key as the failing one and the older as the peer, so
                 // the message reads the same whichever iteration order surfaced them.
@@ -336,7 +339,14 @@ where
                 // Distinct tarballs are a DIFFERENT mistake from one archive reused, and
                 // the remedy differs too, so say which one this is rather than emitting a
                 // message that fits neither.
-                let detail = if other_tarball == ve.tarball {
+                let detail = if other_subdir != subdir {
+                    // Same folder only where the filesystem ignores case — so the index
+                    // would mean different things on Linux and on Windows/macOS.
+                    "The two differ only in case. `registry-index.json` is one file served \
+                     to every platform, and a case-insensitive checkout (Windows, macOS) \
+                     resolves both to a single folder, so this index cannot mean the same \
+                     thing everywhere. Name one of the folders distinctly."
+                } else if other_tarball == ve.tarball {
                     "Both keys name one subdir of one archive, so both are indexed from \
                      that path's single current manifest and the older key would \
                      advertise the newer build's metadata. Give each version its own \
@@ -865,6 +875,33 @@ mod tests {
         assert!(
             errs[0].1.contains("backslash"),
             "and says why: {}",
+            errs[0].1
+        );
+    }
+
+    #[test]
+    fn build_catalog_refuses_subdirs_that_differ_only_in_case() {
+        // Codex review (PR #457 round 9): a case-insensitive checkout (Windows, macOS —
+        // both default) resolves `demo` and `Demo` to ONE folder, so both entries load one
+        // manifest there while Linux sees two. `registry-index.json` is a single file
+        // served to every platform, so a pair that resolves differently per platform
+        // cannot be a valid registry whichever machine ran `reindex`.
+        let index = index_multi(
+            "demo",
+            &[
+                ("0.1.0", "main.tar.gz", "aware-main/demo"),
+                ("0.2.0", "main.tar.gz", "aware-main/Demo"),
+            ],
+        );
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            Ok(agent_from_yaml("demo", "the current build"))
+        });
+        assert_eq!(errs.len(), 1, "the case collision is reported: {errs:?}");
+        assert_eq!(errs[0].0, "demo@0.2.0");
+        assert!(
+            errs[0].1.contains("differ only in case"),
+            "and is diagnosed AS a case collision, whose remedy differs from a plain \
+             duplicate: {}",
             errs[0].1
         );
     }

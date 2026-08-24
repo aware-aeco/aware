@@ -15,5 +15,5 @@ pub mod index;
 #[allow(unused_imports)]
 pub use index::{
     Index, IndexEntry, VersionEntry, check_subdir_portable, checkout_relative_subdir,
-    normalize_subdir,
+    normalize_subdir, portable_subdir_key,
 };

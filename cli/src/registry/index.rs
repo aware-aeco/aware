@@ -115,6 +115,30 @@ pub fn checkout_relative_subdir(subdir: &str) -> String {
         .to_string()
 }
 
+/// The key two subdirs must differ on to be *portably* different directories:
+/// [`checkout_relative_subdir`] ASCII-lowercased.
+///
+/// Windows and macOS checkouts are case-insensitive by default, so `foo` and `Foo` are
+/// one directory there and two on Linux. `registry-index.json` is a SINGLE artifact
+/// served to all three, so a pair differing only in case cannot be resolved consistently
+/// by the consumers of one registry — whichever platform the author happened to run
+/// `reindex` on (Codex review, PR #457 round 9).
+///
+/// This is the deliberate false-positive direction, and the one place in this guard where
+/// that is right: on Linux such a pair IS two directories, so refusing it rejects an index
+/// that would work *there*. A registry that only works on the maintainer's filesystem is
+/// the worse outcome, and the remedy — name the second version's folder distinctly — costs
+/// nothing.
+///
+/// ASCII-only folding, not [`str::to_lowercase`]: Unicode folding brings in mappings
+/// (dotless i, final sigma) whose behaviour differs from any given filesystem's, so it
+/// would collapse names no platform actually treats as one. Registry subdirs are ASCII in
+/// practice, and under-folding merely misses an exotic case rather than refusing a valid
+/// registry.
+pub fn portable_subdir_key(subdir: &str) -> String {
+    checkout_relative_subdir(subdir).to_ascii_lowercase()
+}
+
 /// A version's `subdir` reduced to the directory it actually names, so two spellings of
 /// one location compare equal.
 ///

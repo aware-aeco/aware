@@ -634,22 +634,47 @@ fn merge_publish_entry(
     // Keyed through the routine `reindex`'s guard AND loader use, so publish cannot stage
     // a pair reindex then refuses — which is exactly how the producer came to emit what
     // the generator rejects (Codex review, PR #457, rounds 3 and 7).
-    let target = crate::registry::checkout_relative_subdir(subdir);
+    // Case-folded for the same reason the guard folds: the index is one file served to
+    // every platform, and a case-insensitive checkout resolves `foo` and `Foo` to one
+    // folder (Codex review, PR #457 round 9).
+    let target = crate::registry::portable_subdir_key(subdir);
     let conflict = versions.iter().find(|(ver, ve)| {
         ver.as_str() != version
             && ve
                 .get("subdir")
                 .and_then(|s| s.as_str())
-                .is_some_and(|s| crate::registry::checkout_relative_subdir(s) == target)
+                .is_some_and(|s| crate::registry::portable_subdir_key(s) == target)
     });
-    if let Some((other, _)) = conflict {
+    if let Some((other, other_entry)) = conflict {
+        // Quote the OCCUPYING entry's subdir as written, not the folded key — the author
+        // has to find that string in the file, and `foo` shown for `Foo` sends them
+        // looking for a line that is not there.
+        let occupied = other_entry
+            .get("subdir")
+            .and_then(|s| s.as_str())
+            .unwrap_or(subdir);
+        // A case-only difference is a different mistake with a different remedy: on the
+        // author's Linux checkout those ARE two folders, so "already publishes it" would
+        // read as simply wrong unless the message says why they collide anyway.
+        let why = if crate::registry::checkout_relative_subdir(occupied)
+            == crate::registry::checkout_relative_subdir(subdir)
+        {
+            String::new()
+        } else {
+            format!(
+                " Those two differ only in case, which is two folders on Linux but ONE on a \
+                 case-insensitive checkout (Windows, macOS) — and registry-index.json is a \
+                 single file served to every platform, so '{subdir}' cannot be a distinct \
+                 location for all of them."
+            )
+        };
         return Err(AwareError::Validation(format!(
-            "{id}@{other} already publishes subdir '{target}', so staging {id}@{version} there \
-             would leave two versions sharing one folder — that folder holds a single \
-             manifest, so `aware agent reindex` cannot describe both and will refuse. Give \
-             {version} its own subdir, or remove the {other} entry from registry-index.json \
-             first if that release is genuinely retired (check nothing still pins it — \
-             bundles name exact versions)."
+            "{id}@{other} already publishes subdir '{occupied}', so staging {id}@{version} \
+             there would leave two versions sharing one folder — that folder holds a single \
+             manifest, so `aware agent reindex` cannot describe both and will refuse.{why} \
+             Give {version} its own subdir, or remove the {other} entry from \
+             registry-index.json first if that release is genuinely retired (check nothing \
+             still pins it — bundles name exact versions)."
         )));
     }
 
@@ -781,6 +806,27 @@ mod publish_tests {
         assert!(
             err.contains("backslash") && err.contains("demo@0.1.0"),
             "the malformed entry is named: {err}"
+        );
+    }
+
+    #[test]
+    fn merge_refuses_a_subdir_differing_only_in_case() {
+        // Codex review (PR #457 round 9): two folders on Linux, one on a case-insensitive
+        // checkout. The message has to explain that, or on the author's Linux machine
+        // "already publishes it" reads as simply wrong.
+        let src = r#"{"version":"1.0","updated-at":"old","agents":{"demo":{"versions":{"0.1.0":{"tarball":"t","subdir":"aware-main/demo"}}}},"bundles":{}}"#;
+        let err = merge_publish_entry(src, "demo", "0.2.0", "t", "aware-main/Demo")
+            .unwrap_err()
+            .to_string();
+        assert!(err.contains("demo@0.1.0"), "names the occupying key: {err}");
+        assert!(
+            err.contains("differ only in case"),
+            "and says why they collide: {err}"
+        );
+        // The OCCUPYING entry is quoted as written, so the author can find that line.
+        assert!(
+            err.contains("'aware-main/demo'"),
+            "quotes the real stored subdir, not the folded key: {err}"
         );
     }
 
