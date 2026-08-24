@@ -854,6 +854,29 @@ mod tests {
     }
 
     #[test]
+    fn build_catalog_rejects_a_subdir_that_escapes_its_root() {
+        // Codex review (PR #457 round 10): a leading `..` climbs out of the checkout, and
+        // `repo_root.join("../aware/foo")` can resolve BACK inside when the checkout is
+        // named `aware` — so `aware-main/foo` and `../aware/foo` load one manifest while
+        // reading as two escaping paths. Neither is a real archive member; reported.
+        let index = index_multi(
+            "demo",
+            &[
+                ("0.1.0", "main.tar.gz", "aware-main/foo"),
+                ("0.2.0", "main.tar.gz", "../aware/foo"),
+            ],
+        );
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            Ok(agent_from_yaml("demo", "the current build"))
+        });
+        assert!(
+            errs.iter()
+                .any(|(k, m)| k == "demo@0.2.0" && m.contains("points above its root")),
+            "the escaping entry is reported: {errs:?}"
+        );
+    }
+
+    #[test]
     fn build_catalog_reports_a_backslash_subdir_instead_of_keying_on_it() {
         // Codex review (PR #457 round 8): `Path::join` treats `\\` as a separator on
         // Windows but not on Linux, so `foo/bar` and `foo\\bar` load ONE manifest there

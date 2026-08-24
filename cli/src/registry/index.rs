@@ -89,6 +89,25 @@ pub fn check_subdir_portable(subdir: &str) -> Result<(), String> {
              manifests per platform. Write it with '/'."
         ));
     }
+    // A normalised subdir that still starts with `..` climbs OUT of its root — out of the
+    // archive when the installer matches it, out of `repo_root` when `reindex` joins it.
+    // The latter is the trap: `repo_root.join("../aware/foo")` resolves back inside when the
+    // checkout is itself named `aware`, so `aware-main/foo` and `../aware/foo` load one
+    // manifest while reading as two distinct escaping paths. Neither names a real member of
+    // `main.tar.gz`, so this is malformed input, not a location in use (Codex review, PR
+    // #457 round 10).
+    // The FIRST path component, not a string prefix: a directory literally named `..foo`
+    // is legitimate and must not be caught. `normalize_subdir` already popped every
+    // interior `..`, so a surviving one can only be leading.
+    if normalize_subdir(subdir).split('/').next() == Some("..") {
+        return Err(format!(
+            "subdir '{subdir}' points above its root with '..'. A registry subdir names a \
+             path INSIDE the archive (under '{SUBSTRATE_ARCHIVE_ROOT}'); one that climbs out \
+             matches no archive member and, when the catalog is generated, can resolve back \
+             into the checkout by a different route than it appears to. Write a path that \
+             stays within the archive."
+        ));
+    }
     Ok(())
 }
 
@@ -278,6 +297,18 @@ impl Index {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn check_subdir_portable_rejects_escaping_and_backslash_but_allows_dotdot_names() {
+        assert!(check_subdir_portable("aware-main/20-agents/demo").is_ok());
+        // A directory literally named `..foo` is fine — only a `..` COMPONENT escapes.
+        assert!(check_subdir_portable("aware-main/..foo/demo").is_ok());
+        // Leading parent component escapes the root (#457 round 10).
+        assert!(check_subdir_portable("../aware/foo").is_err());
+        assert!(check_subdir_portable("aware-main/../../etc").is_err());
+        // Backslash resolves differently per platform (#457 round 8).
+        assert!(check_subdir_portable("aware-main/foo\\bar").is_err());
+    }
 
     const SAMPLE: &str = r#"{
         "version": "1.0",
