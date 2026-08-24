@@ -62,6 +62,26 @@ pub struct VersionEntry {
     pub subdir: String,
 }
 
+/// The identity of a version's **payload**: its tarball paired with its subdir as the
+/// INSTALLER resolves that subdir. Two version keys with equal payload ids install
+/// byte-identical bytes, which is what makes them indistinguishable to anything reading
+/// one checkout (#454).
+///
+/// Shared by the registry's producer (`agent publish`, which must not emit a duplicate)
+/// and its generator (`build_catalog`, which must not fabricate a catalog entry from
+/// one). Both had to agree on "same payload" and a second copy of this rule would let
+/// them drift — publish emitting exactly what reindex refuses is the failure that put
+/// this here (Codex review, PR #457).
+///
+/// The subdir is trimmed of trailing slashes because `extract_subdir`
+/// ([`crate::install`]) does: `foo` and `foo/` are one directory to the installer, so
+/// they must be one payload here. The tarball is compared VERBATIM — two spellings of
+/// one URL read as distinct payloads and are allowed through, which is the safe
+/// direction for a rule whose false positive rejects a valid registry.
+pub fn payload_id<'a>(tarball: &'a str, subdir: &'a str) -> (&'a str, &'a str) {
+    (tarball, subdir.trim_end_matches('/'))
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BundleEntry {
     pub description: String,

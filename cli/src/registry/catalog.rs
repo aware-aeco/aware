@@ -289,13 +289,9 @@ where
         // supported shape (`probe-agent` 1.2.0 / 1.3.0, one subdir, a tarball each) —
         // and keying on the subdir would reject it. (Codex review, PR #457.)
         //
-        // Subdirs are compared as the INSTALLER resolves them: `extract_subdir`
-        // (`install/registry.rs`) trims trailing slashes, so `foo` and `foo/` are one
-        // directory to it and must be one key here, or a collision spelled with a
-        // slash slips past this guard into the catalog it exists to prevent. Tarballs
-        // are compared verbatim: two spellings of one URL then read as distinct and
-        // are ALLOWED, which is the safe direction for a guard whose false positive
-        // rejects a valid registry.
+        // "Same payload" is [`crate::registry::payload_id`], shared with `agent publish`
+        // so the registry's producer and its generator cannot drift on the rule — a
+        // second copy here is what let publish emit exactly what this refuses.
         //
         // The check is WITHIN one agent id. Two DIFFERENT ids sharing a subdir is the
         // legitimate rename-alias shape (#256: `steel-detailer-aisc` → the `us` subdir),
@@ -305,7 +301,7 @@ where
         // shared payload is the defect, never a differing version.
         let mut seen_sources: BTreeMap<(&str, &str), &String> = BTreeMap::new();
         for (ver, ve) in &entry.versions {
-            let source = (ve.tarball.as_str(), ve.subdir.trim_end_matches('/'));
+            let source = crate::registry::payload_id(&ve.tarball, &ve.subdir);
             if let Some(other) = seen_sources.insert(source, ver) {
                 // Name the newer key as the failing one and the older as the peer, so
                 // the message reads the same whichever iteration order surfaced them.

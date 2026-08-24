@@ -289,6 +289,67 @@ fn publish_outside_a_checkout_explains_itself_and_creates_no_index() {
     assert!(!agent_dir.join("registry-index.json").exists());
 }
 
+#[test]
+fn an_in_place_version_bump_publishes_to_an_index_reindex_accepts() {
+    // Codex review (PR #457, P1): the registry's PRODUCER must not emit what its
+    // generator refuses. `publish` always derives the substrate tarball and the agent's
+    // repo-relative subdir, so an ordinary in-place bump (0.1.0 → 0.2.0, same folder)
+    // left both keys on one path — publish said "✓ staged", and the next `reindex` exited
+    // 3. This drives the whole loop the way a contributor does and asserts it stays green.
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let agent_dir = root.join("20-agents/aeco/demo");
+    let home = home_in(root);
+    std::fs::write(
+        root.join("registry-index.json"),
+        r#"{"version":"1.0","updated-at":"2026-01-01T00:00:00Z","agents":{},"bundles":{}}"#,
+    )
+    .unwrap();
+
+    write_agent(&agent_dir, "demo", "0.1.0", "The original build.");
+    aware()
+        .env("AWARE_HOME", &home)
+        .args(["agent", "publish"])
+        .arg(&agent_dir)
+        .assert()
+        .success();
+
+    // The bump: same folder, new version — exactly what a contributor does.
+    write_agent(&agent_dir, "demo", "0.2.0", "The current build.");
+    aware()
+        .env("AWARE_HOME", &home)
+        .args(["agent", "publish"])
+        .arg(&agent_dir)
+        .assert()
+        .success()
+        // The retirement is announced, never silent.
+        .stdout(predicate::str::contains("superseded: 0.1.0"));
+
+    let doc = index_of(root);
+    let versions = &doc["agents"]["demo"]["versions"];
+    assert!(
+        versions.get("0.1.0").is_none(),
+        "the stale key is retired — that path no longer holds 0.1.0: {doc:#}"
+    );
+    assert!(versions.get("0.2.0").is_some());
+
+    // The whole point: reindex now succeeds on what publish produced.
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", &home)
+        .args(["agent", "reindex"])
+        .assert()
+        .success();
+
+    let cat: serde_json::Value =
+        serde_json::from_str(&std::fs::read_to_string(root.join("registry-catalog.json")).unwrap())
+            .unwrap();
+    assert_eq!(
+        cat["agents"]["demo"]["versions"]["0.2.0"]["description"], "The current build.",
+        "and the catalog describes the build that is actually there: {cat:#}"
+    );
+}
+
 // ---------------------------------------------------------------- reindex ---
 
 #[test]
