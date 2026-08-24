@@ -13,4 +13,7 @@ pub mod index;
 // `catalog::{Catalog, CatalogAgent, build_catalog, search}` re-export, since
 // every caller names `catalog::` directly. Both are gone.
 #[allow(unused_imports)]
-pub use index::{Index, IndexEntry, VersionEntry};
+pub use index::{
+    Index, IndexEntry, VersionEntry, check_subdir_portable, checkout_relative_subdir,
+    normalize_subdir, portable_subdir_key,
+};

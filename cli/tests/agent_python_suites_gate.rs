@@ -29,10 +29,13 @@
 //! carries its own negative control (`--self-test`): a synthetic tree with a
 //! known-passing, known-skipping, known-failing and known-crashing test in it,
 //! asserting each is classified correctly and that one failure fails the run.
-//! Because discovery walks the tree rather than naming known suites, a Python
-//! test added under a *different* agent tomorrow is picked up with no edit —
-//! which is what the enumerate-the-suites approach could not do, and is how
-//! `cli-sidecar/Ingest/Generator/Tests` came to sit unrun.
+//! Because discovery walks the tree, a Python test added under a *different*
+//! agent tomorrow is picked up with no edit. It still keys on a filename
+//! convention (`test_*.py`), which is the weak part and is why the script backs
+//! it with two execution checks: `dotnet_suites_gate.rs` records a gate that
+//! matched `*.Tests.csproj` and reported the repo clean while
+//! `cli-sidecar/Ingest/Generator/Tests` — file name plain `Tests.csproj` — ran
+//! nowhere. A filename convention is not a fact about the file.
 //!
 //! What that script cannot prove is that anything still *invokes* it. Delete the
 //! CI step and every assertion inside the script stays green while nothing runs.
@@ -48,17 +51,33 @@
 //! reading `# python3 scripts/run-agent-python-tests.py` would satisfy a
 //! substring search while running nothing at all, which is precisely the trap
 //! `dotnet_suites_gate.rs` documents falling into twice. [`runs_python_suite`]
-//! therefore drops whole-line shell comments and requires an exact line match,
-//! in a step and a job that carry no `if:` and no `continue-on-error`. It does
-//! not emulate a shell: chaining, quoting and variables all make a step
-//! non-evidence, so an unmodelled construct can only make this gate fail closed.
+//! therefore drops whole-line shell comments and requires the two commands to be
+//! the step's ONLY content, in a step and a job that carry no `if:` and no
+//! `continue-on-error`, in a workflow that still triggers on `pull_request`.
+//!
+//! Every one of those clauses is there because its absence was measured to let
+//! a do-nothing workflow through (Codex review and review panel, PR #444): a
+//! leading `exit 0`, an `if false; then … fi` wrapper, a `continue-on-error`
+//! written as a string or a `${{ }}` expression, and `on:` reduced to
+//! `workflow_dispatch`. An earlier draft of this paragraph claimed an unmodelled
+//! construct "can only make this gate fail closed" — it did not, and the claim
+//! was the kind of unearned safety assertion CLAUDE.md §Verify before answering
+//! exists to stop. It holds now because the accepted shape is exact rather than
+//! a substring or a set membership, which is also why this file does not
+//! emulate a shell.
 //!
 //! Because that reader scans an artefact that is correct today, it would report
 //! success both when it works and when it has stopped matching anything at all.
 //! [`reader_rejects_every_weakened_form`] is its negative control: it drives the
-//! same function over synthetic workflows in which the step has been commented
-//! out, made non-blocking, gated behind an `if:`, or stripped of one of its two
-//! halves, and requires each to be rejected.
+//! same function over fifteen synthetic workflows in which the step has been
+//! commented out, merely echoed, made non-blocking (as a bool, a string and an
+//! expression, at step and job level), gated behind an `if:` (step and job),
+//! stripped of one of its two halves, short-circuited by `exit 0`, softened with
+//! `set +e`, wrapped in `if false`, or left perfect in a workflow that no longer
+//! triggers on pull requests — and requires each to be rejected. Two positive
+//! fixtures pin the other side, and every fixture is parsed before it is judged,
+//! because an unparsable one would be rejected for the wrong reason and prove
+//! nothing.
 
 use std::path::PathBuf;
 
@@ -112,6 +131,24 @@ fn runs_python_suite(workflow: &str) -> bool {
     let Ok(doc) = serde_yaml::from_str::<serde_yaml::Value>(workflow) else {
         return false;
     };
+    // A perfect job that never triggers runs nothing. `on:` reduced to
+    // `workflow_dispatch:` left every other assertion here green while the
+    // suite executed on no commit at all (review, PR #444). `on` is the YAML
+    // 1.1 boolean `true` after parsing, which is why it is looked up both ways.
+    let triggers = doc
+        .get("on")
+        .or_else(|| doc.get(serde_yaml::Value::Bool(true)));
+    let runs_on_pull_requests = triggers.is_some_and(|value| match value {
+        serde_yaml::Value::Mapping(map) => map.contains_key("pull_request"),
+        serde_yaml::Value::Sequence(items) => items
+            .iter()
+            .any(|item| item.as_str() == Some("pull_request")),
+        other => other.as_str() == Some("pull_request"),
+    });
+    if !runs_on_pull_requests {
+        return false;
+    }
+
     let Some(jobs) = doc.get("jobs").and_then(serde_yaml::Value::as_mapping) else {
         return false;
     };
@@ -136,10 +173,21 @@ fn runs_python_suite(workflow: &str) -> bool {
                 continue;
             };
             let lines = command_lines(run);
-            // Both halves in ONE step: a self-test in a step that no longer
-            // runs the suite (or the reverse) is half a gate, and the halves
-            // are worth nothing apart.
-            if lines.contains(&self_test) && lines.contains(&real_run) {
+            // Both halves in ONE step, and NOTHING ELSE in that step.
+            //
+            // Set membership alone was order- and reachability-blind, and three
+            // shell constructs defeated it while both exact lines sat in the
+            // block untouched (review, PR #444): a leading `exit 0`, a `set +e`
+            // plus trailing `exit 0`, and an `if false; then … fi` wrapper. The
+            // module doc claimed an unmodelled construct "can only make this
+            // gate fail closed"; for those it failed open.
+            //
+            // Requiring the two commands to be the block's only content is what
+            // makes that claim true. It is strict — a legitimate future edit
+            // adding a third command turns the gate red until someone updates
+            // this test — and that is the correct direction for a gate whose
+            // failure mode is otherwise "nothing ran and nobody noticed".
+            if lines.len() == 2 && lines.contains(&self_test) && lines.contains(&real_run) {
                 return true;
             }
         }
@@ -187,6 +235,8 @@ fn ci_runs_the_python_suite_in_a_blocking_step() {
 #[test]
 fn reader_rejects_every_weakened_form() {
     let good = r#"
+on:
+  pull_request:
 jobs:
   agent-python-tests:
     runs-on: ubuntu-latest
@@ -197,6 +247,7 @@ jobs:
           python3 scripts/run-agent-python-tests.py --self-test
           python3 scripts/run-agent-python-tests.py
 "#;
+    parses_or_panics("the canonical form", good);
     assert!(
         runs_python_suite(good),
         "the reader rejects the canonical form, so every rejection below proves \
@@ -207,6 +258,8 @@ jobs:
     // swept up by the fail-closed rule below — otherwise every rejection there
     // would hold for a reader that simply refused any `continue-on-error` key.
     let explicitly_blocking = r#"
+on:
+  pull_request:
 jobs:
   agent-python-tests:
     runs-on: ubuntu-latest
@@ -217,16 +270,19 @@ jobs:
           python3 scripts/run-agent-python-tests.py --self-test
           python3 scripts/run-agent-python-tests.py
 "#;
+    parses_or_panics("explicitly blocking", explicitly_blocking);
     assert!(
         runs_python_suite(explicitly_blocking),
         "the reader rejected a step that spells out `continue-on-error: false`, \
          which is the blocking case it exists to accept"
     );
 
-    let cases: [(&str, &str); 9] = [
+    let cases: [(&str, &str); 15] = [
         (
             "commented out inside the run block",
             r#"
+on:
+  pull_request:
 jobs:
   agent-python-tests:
     runs-on: ubuntu-latest
@@ -240,6 +296,8 @@ jobs:
         (
             "merely echoed, never run",
             r#"
+on:
+  pull_request:
 jobs:
   agent-python-tests:
     runs-on: ubuntu-latest
@@ -250,6 +308,8 @@ jobs:
         (
             "step tolerates its own failure",
             r#"
+on:
+  pull_request:
 jobs:
   agent-python-tests:
     runs-on: ubuntu-latest
@@ -263,6 +323,8 @@ jobs:
         (
             "job tolerates its own failure",
             r#"
+on:
+  pull_request:
 jobs:
   agent-python-tests:
     runs-on: ubuntu-latest
@@ -276,6 +338,8 @@ jobs:
         (
             "step gated behind a condition",
             r#"
+on:
+  pull_request:
 jobs:
   agent-python-tests:
     runs-on: ubuntu-latest
@@ -289,6 +353,8 @@ jobs:
         (
             "step tolerates its failure through an expression GitHub resolves later",
             r#"
+on:
+  pull_request:
 jobs:
   agent-python-tests:
     runs-on: ubuntu-latest
@@ -302,6 +368,8 @@ jobs:
         (
             "job tolerates its failure through an expression GitHub resolves later",
             r#"
+on:
+  pull_request:
 jobs:
   agent-python-tests:
     runs-on: ubuntu-latest
@@ -315,6 +383,8 @@ jobs:
         (
             "self-test only — the runner is never pointed at the repo",
             r#"
+on:
+  pull_request:
 jobs:
   agent-python-tests:
     runs-on: ubuntu-latest
@@ -325,6 +395,8 @@ jobs:
         (
             "real run only — a runner that stopped detecting failures goes unnoticed",
             r#"
+on:
+  pull_request:
 jobs:
   agent-python-tests:
     runs-on: ubuntu-latest
@@ -332,12 +404,121 @@ jobs:
       - run: python3 scripts/run-agent-python-tests.py
 "#,
         ),
+        (
+            "job gated behind a condition",
+            r#"
+on:
+  pull_request:
+jobs:
+  agent-python-tests:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    steps:
+      - run: |
+          python3 scripts/run-agent-python-tests.py --self-test
+          python3 scripts/run-agent-python-tests.py
+"#,
+        ),
+        (
+            "step tolerance written as a plain string, not a bool",
+            r#"
+on:
+  pull_request:
+jobs:
+  agent-python-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - continue-on-error: "true"
+        run: |
+          python3 scripts/run-agent-python-tests.py --self-test
+          python3 scripts/run-agent-python-tests.py
+"#,
+        ),
+        (
+            "short-circuited by a leading exit 0, both commands intact below it",
+            r#"
+on:
+  pull_request:
+jobs:
+  agent-python-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          exit 0
+          python3 scripts/run-agent-python-tests.py --self-test
+          python3 scripts/run-agent-python-tests.py
+"#,
+        ),
+        (
+            "failures swallowed by set +e and a trailing exit 0",
+            r#"
+on:
+  pull_request:
+jobs:
+  agent-python-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          set +e
+          python3 scripts/run-agent-python-tests.py --self-test
+          python3 scripts/run-agent-python-tests.py
+          exit 0
+"#,
+        ),
+        (
+            "wrapped in a branch that never runs",
+            r#"
+on:
+  pull_request:
+jobs:
+  agent-python-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          if false; then
+          python3 scripts/run-agent-python-tests.py --self-test
+          python3 scripts/run-agent-python-tests.py
+          fi
+"#,
+        ),
+        (
+            "a perfect job in a workflow that no longer triggers on pull requests",
+            r#"
+on:
+  workflow_dispatch:
+jobs:
+  agent-python-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          python3 scripts/run-agent-python-tests.py --self-test
+          python3 scripts/run-agent-python-tests.py
+"#,
+        ),
     ];
 
     for (label, workflow) in cases {
+        // Parse FIRST. `runs_python_suite` returns false on any YAML error, so
+        // a fixture with broken indentation, a tab, or an unquoted `${{ }}`
+        // would satisfy the rejection below for a reason having nothing to do
+        // with the weakening it is meant to isolate (review, PR #444) — a
+        // negative control passing vacuously, in the file whose whole job is
+        // being a negative control.
+        parses_or_panics(label, workflow);
         assert!(
             !runs_python_suite(workflow),
             "the reader accepted a workflow that runs nothing: {label}"
+        );
+    }
+}
+
+/// Panic unless `workflow` is valid YAML, naming the fixture that is not.
+fn parses_or_panics(label: &str, workflow: &str) {
+    if let Err(error) = serde_yaml::from_str::<serde_yaml::Value>(workflow) {
+        panic!(
+            "the `{label}` fixture is not valid YAML, so any assertion about it \
+             proves nothing — `runs_python_suite` rejects an unparsable workflow \
+             outright: {error}"
         );
     }
 }

@@ -601,10 +601,8 @@ impl Orchestrator {
         }
         self.ctx.record_output(&node.id, current_event.clone());
 
-        let args = render_config(
-            &yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?,
-            &self.ctx,
-        )?;
+        let params = yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?;
+        let args = render_config(&params, &self.ctx)?;
 
         // Dry-run / simulate short-circuit — mirrors `execute_node` so that
         // streaming (watcher) compositions validate end-to-end without touching
@@ -624,7 +622,13 @@ impl Orchestrator {
                     node: node.id.clone(),
                     agent: agent_id.clone(),
                     command: command.to_string(),
-                    proposed_inputs: args.clone(),
+                    // Re-rendered with the vault blinded rather than reusing
+                    // `args`: this record is persisted, and `args` is what the
+                    // live run would put on the wire, credential included (#448).
+                    proposed_inputs: render_for_record(
+                        &params,
+                        &self.ctx.with_redacted_secrets(&params),
+                    ),
                     safety: safety_block,
                 })
                 .await?;
@@ -862,7 +866,14 @@ impl Orchestrator {
                         node: node.id.clone(),
                         agent: agent_id.clone(),
                         command: command.to_string(),
-                        proposed_inputs: args.clone(),
+                        // Re-rendered with the vault blinded rather than reusing
+                        // `args`: this record is persisted, and `args` is what
+                        // the live run would put on the wire, credential
+                        // included (#448).
+                        proposed_inputs: render_for_record(
+                            &config_json,
+                            &self.ctx.with_redacted_secrets(&config_json),
+                        ),
                         safety: safety_block,
                     })
                     .await?;
@@ -1018,6 +1029,15 @@ impl Orchestrator {
         // element would leak into a sibling body node's `{{ item }}` — a topology
         // the compiler explicitly scopes (app_lock `nested_body_keeps_outer_iteration_var_in_scope`).
         let prev_item = self.ctx.upstream.get("item").cloned();
+        // Saved and restored with the binding it describes: an inner loop over a
+        // plain list must not clear the flag an enclosing vault-drawn loop set.
+        let prev_item_from_vault = self.ctx.item_from_vault;
+        // Straight from the vault, OR selected out of an element an enclosing
+        // vault-drawn loop already lifted from it: `{{ item.tokens }}` nested
+        // inside `for-each: "{{ secrets.batch }}"` is still credential material,
+        // and keying on this loop's own head alone called it clean.
+        self.ctx.item_from_vault = template::reads_secrets_namespace(expr)
+            || (prev_item_from_vault && template::reads_item_binding(expr));
 
         let mut collection = match template::resolve_value(expr, &self.ctx) {
             Value::Array(items) => items,
@@ -1071,6 +1091,7 @@ impl Orchestrator {
                 self.ctx.upstream.remove("item");
             }
         }
+        self.ctx.item_from_vault = prev_item_from_vault;
 
         let aggregate = Value::Array(results);
         self.emit(RunEvent::NodeOutput {
@@ -1529,6 +1550,43 @@ fn yaml_to_json(v: serde_yaml::Value) -> Result<Value, AwareError> {
     let s = serde_json::to_string(&v)?;
     let j: Value = serde_json::from_str(&s)?;
     Ok(j)
+}
+
+/// Render a node's params for a **record**, against a vault-blinded context.
+///
+/// Never fails. `render_config` can error on the blinded context where it
+/// succeeded on the live one — `{{ secrets.pin + 1 }}` is arithmetic on a
+/// numeric credential, and `[redacted]` is a string, so the second render hits
+/// `tried to use + operator on unsupported types` and the whole dry-run dies
+/// (#450, Codex). The live render already succeeded, so the value exists; it is
+/// only the *preview* that cannot be computed without the secret, and a preview
+/// must never be the reason a run fails.
+///
+/// A failing subtree is retried entry by entry, so one unpreviewable leaf
+/// becomes `[redacted]` while its siblings still render. The fallback
+/// substitutes the redaction, so it cannot widen what gets written down.
+///
+/// What this does NOT promise is fidelity for a template that BRANCHES on a
+/// credential's value: `{% if secrets.flag %}` sees a redacted value and may
+/// pick the other arm. That is inherent — a value cannot be both hidden and
+/// computed with — and it is why this record is a preview of the write rather
+/// than a second source of truth about it.
+fn render_for_record(params: &Value, ctx: &RuntimeContext) -> Value {
+    if let Ok(rendered) = render_config(params, ctx) {
+        return rendered;
+    }
+    match params {
+        Value::Object(fields) => Value::Object(
+            fields
+                .iter()
+                .map(|(k, v)| (k.clone(), render_for_record(v, ctx)))
+                .collect(),
+        ),
+        Value::Array(items) => {
+            Value::Array(items.iter().map(|v| render_for_record(v, ctx)).collect())
+        }
+        _ => Value::String(crate::runtime::template::REDACTED.to_string()),
+    }
 }
 
 fn render_config(config: &Value, ctx: &RuntimeContext) -> Result<Value, AwareError> {

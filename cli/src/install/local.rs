@@ -9,6 +9,13 @@ use crate::manifest::loader::{load_agent, load_app};
 use crate::paths::Paths;
 use crate::validate::{Severity, has_errors, validate_agent_on_disk, validate_app};
 
+// `copy_dir_recursive` used to live in this module. It moved to `crate::fs`
+// when three modules turned out to be running near-identical walks (one with a
+// subtle missing `create_dir_all(dst)`). Re-exported here so `install::rename`
+// and `install::registry` — the in-tree callers that already imported it via
+// `super::local::copy_dir_recursive` — don't have to update their imports.
+pub(crate) use crate::fs::copy_dir_recursive;
+
 /// Install an agent folder. `src` must contain `manifest.yaml`.
 /// Destination is `<paths.agents_dir>/<agent-id>/`. Existing agents are
 /// rejected (use `aware agent update` to refresh).
@@ -177,20 +184,6 @@ pub(crate) fn is_app_backed_agent(agent_dir: &Path, app_id: &str) -> bool {
         .ok()
         .and_then(|a| a.transport.app)
         .is_some_and(|t| t.backed_by == app_id)
-}
-
-pub(crate) fn copy_dir_recursive(src: &Path, dst: &Path) -> std::io::Result<()> {
-    std::fs::create_dir_all(dst)?;
-    for entry in std::fs::read_dir(src)?.flatten() {
-        let from = entry.path();
-        let to = dst.join(entry.file_name());
-        if entry.file_type()?.is_dir() {
-            copy_dir_recursive(&from, &to)?;
-        } else {
-            std::fs::copy(&from, &to)?;
-        }
-    }
-    Ok(())
 }
 
 #[cfg(test)]

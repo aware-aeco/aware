@@ -45,6 +45,7 @@ mod commands;
 mod context;
 mod envelope;
 mod error;
+mod fs;
 mod install;
 mod json;
 mod lockfile;
@@ -60,6 +61,7 @@ mod skill_builder;
 #[cfg(test)]
 mod test_env;
 mod text;
+mod time;
 mod validate;
 mod which;
 

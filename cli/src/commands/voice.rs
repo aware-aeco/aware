@@ -259,7 +259,11 @@ fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
     let dst = voices_dir(ctx).join(&scope).join(&id).join(&version);
     std::fs::create_dir_all(&dst)
         .map_err(|e| AwareError::Internal(format!("create {}: {e}", dst.display())))?;
-    copy_dir_recursive(src, &dst)?;
+    // `copy_dir_recursive` also `create_dir_all(&dst)`s, so the explicit call
+    // above is redundant with the shared helper. Kept for its richer error
+    // message: the shared helper returns a bare `io::Error`, and this call
+    // site's context ("create <voice-pack path>") is worth surfacing.
+    crate::fs::copy_dir_recursive(src, &dst)?;
     println!(
         "\u{2713} installed voice pack {scope}/{id}@{version} \u{2192} {}",
         dst.display()
@@ -276,26 +280,6 @@ fn yaml_to_string(v: Option<&serde_yaml::Value>) -> Option<String> {
         serde_yaml::Value::Bool(b) => Some(b.to_string()),
         _ => None,
     }
-}
-
-fn copy_dir_recursive(src: &std::path::Path, dst: &std::path::Path) -> Result<(), AwareError> {
-    for entry in std::fs::read_dir(src)
-        .map_err(|e| AwareError::Internal(format!("read_dir {}: {e}", src.display())))?
-        .flatten()
-    {
-        let from = entry.path();
-        let to = dst.join(entry.file_name());
-        if from.is_dir() {
-            std::fs::create_dir_all(&to)
-                .map_err(|e| AwareError::Internal(format!("create {}: {e}", to.display())))?;
-            copy_dir_recursive(&from, &to)?;
-        } else {
-            std::fs::copy(&from, &to).map_err(|e| {
-                AwareError::Internal(format!("copy {} -> {}: {e}", from.display(), to.display()))
-            })?;
-        }
-    }
-    Ok(())
 }
 
 fn uninstall(ctx: &Context, pack: &str) -> Result<(), AwareError> {
@@ -409,29 +393,32 @@ mod tests {
         );
     }
 
+    // Which directory an unpinned `aware voice uninstall` DELETES is pinned in
+    // `tests/voice_cmds.rs::an_unpinned_uninstall_deletes_the_newest_version_and_leaves_the_rest`,
+    // which runs the command. The test that used to sit here only resolved a path and
+    // then asserted the loser still existed — true of any `uninstall` whatsoever,
+    // because the test never deleted anything.
+
     #[test]
-    fn an_unpinned_uninstall_removes_the_newest_pack() {
-        // `resolve_pack_dir` is shared with `uninstall`, where the resolved path goes
-        // straight to `remove_dir_all` — so this fix silently changed which directory an
-        // unpinned `aware voice uninstall` DELETES (it used to take 2025.9). Pinned
-        // there, because a destructive command changing target deserves a test rather
-        // than a paragraph.
+    fn a_pack_directory_holding_no_version_directory_resolves_to_nothing() {
+        // `<scope>/<id>/` exists but carries only files — a half-removed pack, or a
+        // stray file where a version directory belongs. There is no version to describe
+        // and, more to the point, nothing `uninstall` may hand to `remove_dir_all`: the
+        // pack directory itself is not a candidate.
         let tmp = tempfile::tempdir().unwrap();
         let parent = tmp.path().join("voices").join("acme").join("reviewer");
-        for v in ["2025.9", "2025.10"] {
-            std::fs::create_dir_all(parent.join(v)).unwrap();
-        }
+        std::fs::create_dir_all(&parent).unwrap();
+        std::fs::write(parent.join("README.md"), "not a version").unwrap();
         let ctx = Context {
             paths: crate::paths::Paths {
                 aware_home: tmp.path().to_path_buf(),
             },
             json: false,
         };
-        let doomed = resolve_pack_dir(&ctx, "acme/reviewer").unwrap();
-        assert_eq!(doomed.file_name().unwrap(), "2025.10");
+        let err = resolve_pack_dir(&ctx, "acme/reviewer").unwrap_err();
         assert!(
-            parent.join("2025.9").is_dir(),
-            "the older pack is untouched"
+            matches!(&err, AwareError::NotFound(m) if m.contains("no installed versions")),
+            "expected a not-found naming the pack, got {err:?}"
         );
     }
 }
