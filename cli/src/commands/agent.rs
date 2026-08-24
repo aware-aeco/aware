@@ -542,21 +542,28 @@ fn publish(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
 
     let subdir = format!("aware-main/{}", rel.replace('\\', "/"));
     let raw = std::fs::read_to_string(&index_path)?;
-    let (updated, superseded) =
-        merge_publish_entry(&raw, &id, &version, SUBSTRATE_TARBALL, &subdir)?;
-    std::fs::write(&index_path, &updated)?;
+    let merged = merge_publish_entry(&raw, &id, &version, SUBSTRATE_TARBALL, &subdir)?;
+    std::fs::write(&index_path, &merged.index_json)?;
 
     println!("✓ staged {id}@{version} in {}", index_path.display());
     println!("  subdir: {subdir}");
-    // Removing an index key is not something to do quietly, even when it is the right
-    // bookkeeping — say which keys went and why, so the contributor reviewing the diff
-    // is not surprised by a deletion they did not ask for.
-    if !superseded.is_empty() {
+    // Removing an index key, or rewriting a bundle the contributor did not name, is not
+    // something to do quietly even when it is the right bookkeeping — say what changed
+    // and why, so nobody meets a deletion they did not ask for in the diff.
+    if !merged.superseded.is_empty() {
         println!(
             "  superseded: {} — that subdir now holds {version}, so the old key(s) could \
              no longer install what they advertised. Publish a version you need to keep \
              installable from its own subdir or its own tarball.",
-            superseded.join(", ")
+            merged.superseded.join(", ")
+        );
+    }
+    if !merged.retargeted_bundles.is_empty() {
+        println!(
+            "  bundles repinned to {version}: {} — they pinned a superseded key, which \
+             would no longer resolve. The payload is unchanged, so this preserves what \
+             those bundles already installed.",
+            merged.retargeted_bundles.join(", ")
         );
     }
     println!();
@@ -582,9 +589,20 @@ fn find_registry_root(start: &std::path::Path) -> Option<(std::path::PathBuf, St
     None
 }
 
+/// What one `publish` did to the index, beyond inserting its own entry. Returned rather
+/// than printed so the merge stays pure (string → string) and testable, and so `publish`
+/// can tell the contributor about every consequence of a command they ran.
+struct PublishMerge {
+    /// The updated index document.
+    index_json: String,
+    /// Version keys retired because the published version now owns their payload.
+    superseded: Vec<String>,
+    /// Bundle names whose pinned specs were retargeted onto the published version.
+    retargeted_bundles: Vec<String>,
+}
+
 /// Insert `id@version → {tarball, subdir}` into a registry index document,
-/// refreshing `updated-at`. Returns the updated document and the version keys it
-/// SUPERSEDED. Pure (string → string) for testability.
+/// refreshing `updated-at`. Pure (string → string) for testability.
 ///
 /// Merges at the JSON-value level (relying on serde_json's `preserve_order`)
 /// so existing agents keep their on-disk order — a new agent is appended, and
@@ -606,13 +624,24 @@ fn find_registry_root(start: &std::path::Path) -> Option<(std::path::PathBuf, St
 ///
 /// Without this, the registry's producer emitted exactly what its generator rejects:
 /// publish printed "✓ staged" and the next `reindex` exited 3 (Codex review, PR #457).
+///
+/// **Bundles follow the supersede.** A bundle pins exact specs (`tekla@2025.0.1`) and
+/// [`install_bundle`](crate::install) hands that pin straight to
+/// [`Index::resolve`](crate::registry::Index::resolve), which fails when the key is gone
+/// — so retiring a key without touching the bundles would leave every one of the shipped
+/// `aware-aeco` bundle's 72 pins able to break on an ordinary publish, with publish and
+/// reindex both reporting success. Each pin on a superseded version is therefore
+/// retargeted onto the published one. That preserves the bundle's existing behaviour
+/// exactly rather than changing it: the superseded key had the SAME payload, so the
+/// bundle was already installing these bytes — the pin now says so (Codex review, PR
+/// #457).
 fn merge_publish_entry(
     index_json: &str,
     id: &str,
     version: &str,
     tarball: &str,
     subdir: &str,
-) -> Result<(String, Vec<String>), AwareError> {
+) -> Result<PublishMerge, AwareError> {
     let mut doc: serde_json::Value = serde_json::from_str(index_json)?;
     let agents = doc
         .get_mut("agents")
@@ -652,10 +681,43 @@ fn merge_publish_entry(
         version.to_string(),
         serde_json::json!({ "tarball": tarball, "subdir": subdir }),
     );
+
+    // Retarget every bundle pin that named a version this publish just retired. The spec
+    // grammar is `<id>[@<version>]`, split exactly as `install_bundle` splits it, so a
+    // bare id (no pin, resolves to latest) is untouched and an id that merely starts with
+    // ours cannot match.
+    let mut retargeted_bundles: Vec<String> = Vec::new();
+    if !superseded.is_empty()
+        && let Some(bundles) = doc.get_mut("bundles").and_then(|b| b.as_object_mut())
+    {
+        for (bundle_name, bundle) in bundles.iter_mut() {
+            let Some(specs) = bundle.get_mut("agents").and_then(|a| a.as_array_mut()) else {
+                continue;
+            };
+            let mut touched = false;
+            for spec in specs.iter_mut() {
+                let Some((spec_id, pin)) = spec.as_str().and_then(|s| s.split_once('@')) else {
+                    continue;
+                };
+                if spec_id == id && superseded.iter().any(|v| v == pin) {
+                    *spec = serde_json::Value::String(format!("{id}@{version}"));
+                    touched = true;
+                }
+            }
+            if touched {
+                retargeted_bundles.push(bundle_name.clone());
+            }
+        }
+    }
+
     doc["updated-at"] = serde_json::Value::String(crate::builder::now_iso());
-    let mut out = serde_json::to_string_pretty(&doc)?;
-    out.push('\n');
-    Ok((out, superseded))
+    let mut index_json = serde_json::to_string_pretty(&doc)?;
+    index_json.push('\n');
+    Ok(PublishMerge {
+        index_json,
+        superseded,
+        retargeted_bundles,
+    })
 }
 
 #[cfg(test)]
@@ -666,7 +728,7 @@ mod publish_tests {
 
     #[test]
     fn merge_adds_new_agent_and_preserves_existing() {
-        let (out, superseded) = merge_publish_entry(
+        let m = merge_publish_entry(
             SAMPLE,
             "bcf-file",
             "0.2.0",
@@ -675,10 +737,10 @@ mod publish_tests {
         )
         .unwrap();
         assert!(
-            superseded.is_empty(),
+            m.superseded.is_empty(),
             "a brand-new agent supersedes nothing"
         );
-        let parsed = crate::registry::Index::parse(out.as_bytes()).unwrap();
+        let parsed = crate::registry::Index::parse(m.index_json.as_bytes()).unwrap();
         assert!(parsed.agents.contains_key("tekla"), "existing agent kept");
         let (v, e) = parsed.resolve("bcf-file", Some("0.2.0")).unwrap();
         assert_eq!(v, "0.2.0");
@@ -691,13 +753,13 @@ mod publish_tests {
     fn merge_adds_version_to_existing_agent() {
         // A DIFFERENT payload (tarball `tb`, subdir `sd` vs the sample's `t`/`s`), so the
         // existing version keeps its place — this is the multi-version shape that stays.
-        let (out, superseded) =
-            merge_publish_entry(SAMPLE, "tekla", "2026.0.0", "tb", "sd").unwrap();
+        let m = merge_publish_entry(SAMPLE, "tekla", "2026.0.0", "tb", "sd").unwrap();
         assert!(
-            superseded.is_empty(),
-            "a distinct payload supersedes nothing: {superseded:?}"
+            m.superseded.is_empty(),
+            "a distinct payload supersedes nothing: {:?}",
+            m.superseded
         );
-        let parsed = crate::registry::Index::parse(out.as_bytes()).unwrap();
+        let parsed = crate::registry::Index::parse(m.index_json.as_bytes()).unwrap();
         let tekla = parsed.agents.get("tekla").unwrap();
         assert!(tekla.versions.contains_key("2025.0.1"), "old version kept");
         assert!(tekla.versions.contains_key("2026.0.0"), "new version added");
@@ -709,13 +771,13 @@ mod publish_tests {
         // the agent's repo-relative subdir, so an ordinary in-place version bump used to
         // leave BOTH keys on one path — an index `agent reindex` then refused (#454).
         // The old key can no longer install what it advertises, so publishing retires it.
-        let (out, superseded) = merge_publish_entry(SAMPLE, "tekla", "2026.0.0", "t", "s").unwrap();
+        let m = merge_publish_entry(SAMPLE, "tekla", "2026.0.0", "t", "s").unwrap();
         assert_eq!(
-            superseded,
+            m.superseded,
             vec!["2025.0.1".to_string()],
             "the stale key is reported, never dropped silently"
         );
-        let parsed = crate::registry::Index::parse(out.as_bytes()).unwrap();
+        let parsed = crate::registry::Index::parse(m.index_json.as_bytes()).unwrap();
         let tekla = parsed.agents.get("tekla").unwrap();
         assert!(
             !tekla.versions.contains_key("2025.0.1"),
@@ -733,17 +795,82 @@ mod publish_tests {
         // `foo` and `foo/` are one directory to the installer, so a stale key spelled
         // either way is still the same payload and still gets retired.
         let src = r#"{"version":"1.0","updated-at":"old","agents":{"demo":{"versions":{"0.1.0":{"tarball":"t","subdir":"s/"}}}},"bundles":{}}"#;
-        let (_out, superseded) = merge_publish_entry(src, "demo", "0.2.0", "t", "s").unwrap();
-        assert_eq!(superseded, vec!["0.1.0".to_string()]);
+        let m = merge_publish_entry(src, "demo", "0.2.0", "t", "s").unwrap();
+        assert_eq!(m.superseded, vec!["0.1.0".to_string()]);
+    }
+
+    /// The shipped index's shape in miniature: an agent plus a bundle that pins it by
+    /// exact version, which is how all 72 entries of the real `aware-aeco` bundle are
+    /// written.
+    const SAMPLE_WITH_BUNDLE: &str = r#"{"version":"1.0","updated-at":"old","agents":{"tekla":{"versions":{"2025.0.1":{"tarball":"t","subdir":"s"}}},"other":{"versions":{"1.0.0":{"tarball":"t","subdir":"o"}}}},"bundles":{"aware-aeco":{"description":"all","agents":["tekla@2025.0.1","other@1.0.0","tekla-2026"]}}}"#;
+
+    #[test]
+    fn merge_retargets_a_bundle_pin_onto_the_superseding_version() {
+        // Codex review (PR #457, P1): `install_bundle` hands a bundle's exact pin to
+        // `Index::resolve`, which fails when the key is gone. Superseding without
+        // following the bundles would leave the shipped `aware-aeco` bundle pointing at a
+        // version that no longer exists — bundle install reporting a failed agent while
+        // publish and reindex both said success.
+        let m = merge_publish_entry(SAMPLE_WITH_BUNDLE, "tekla", "2026.0.0", "t", "s").unwrap();
+        assert_eq!(m.superseded, vec!["2025.0.1".to_string()]);
+        assert_eq!(
+            m.retargeted_bundles,
+            vec!["aware-aeco".to_string()],
+            "the rewrite is reported, never silent"
+        );
+
+        let parsed = crate::registry::Index::parse(m.index_json.as_bytes()).unwrap();
+        let specs = &parsed.bundles["aware-aeco"].agents;
+        assert!(
+            specs.contains(&"tekla@2026.0.0".to_string()),
+            "the pin follows the supersede: {specs:?}"
+        );
+        assert!(
+            !specs.contains(&"tekla@2025.0.1".to_string()),
+            "the dead pin is gone: {specs:?}"
+        );
+        // Only OUR agent's pin moves. Another agent's pin and an unpinned entry are
+        // untouched — a publish must not quietly rewrite references it has no claim on.
+        assert!(specs.contains(&"other@1.0.0".to_string()), "{specs:?}");
+        assert!(specs.contains(&"tekla-2026".to_string()), "{specs:?}");
+
+        // The retargeted pin actually resolves, which is the property that broke.
+        assert!(
+            parsed.resolve("tekla", Some("2026.0.0")).is_ok(),
+            "every bundle pin must still resolve after a publish"
+        );
+    }
+
+    #[test]
+    fn merge_leaves_bundles_alone_when_nothing_is_superseded() {
+        // A distinct payload retires no key, so no pin may move.
+        let m = merge_publish_entry(SAMPLE_WITH_BUNDLE, "tekla", "2026.0.0", "tb", "sd").unwrap();
+        assert!(m.superseded.is_empty());
+        assert!(
+            m.retargeted_bundles.is_empty(),
+            "no supersede, no rewrite: {:?}",
+            m.retargeted_bundles
+        );
+        let parsed = crate::registry::Index::parse(m.index_json.as_bytes()).unwrap();
+        assert!(
+            parsed.bundles["aware-aeco"]
+                .agents
+                .contains(&"tekla@2025.0.1".to_string()),
+            "the still-live pin stays put"
+        );
     }
 
     #[test]
     fn merge_republishing_one_version_is_an_overwrite_not_a_supersede() {
         // Re-publishing the SAME version at the same payload overwrites its entry. It
         // must not report itself as superseded — nothing was retired.
-        let (out, superseded) = merge_publish_entry(SAMPLE, "tekla", "2025.0.1", "t", "s").unwrap();
-        assert!(superseded.is_empty(), "no key was retired: {superseded:?}");
-        let parsed = crate::registry::Index::parse(out.as_bytes()).unwrap();
+        let m = merge_publish_entry(SAMPLE, "tekla", "2025.0.1", "t", "s").unwrap();
+        assert!(
+            m.superseded.is_empty(),
+            "no key was retired: {:?}",
+            m.superseded
+        );
+        let parsed = crate::registry::Index::parse(m.index_json.as_bytes()).unwrap();
         assert!(parsed.agents["tekla"].versions.contains_key("2025.0.1"));
     }
 
@@ -751,7 +878,9 @@ mod publish_tests {
     fn merge_preserves_existing_agent_order_and_appends() {
         // Deliberately non-alphabetical on-disk order: zebra before alpha.
         let src = r#"{"version":"1.0","updated-at":"old","agents":{"zebra":{"versions":{"1.0.0":{"tarball":"t","subdir":"z"}}},"alpha":{"versions":{"1.0.0":{"tarball":"t","subdir":"a"}}}},"bundles":{}}"#;
-        let (out, _superseded) = merge_publish_entry(src, "middle", "1.0.0", "t", "m").unwrap();
+        let out = merge_publish_entry(src, "middle", "1.0.0", "t", "m")
+            .unwrap()
+            .index_json;
         let zebra = out.find("\"zebra\"").unwrap();
         let alpha = out.find("\"alpha\"").unwrap();
         let middle = out.find("\"middle\"").unwrap();
