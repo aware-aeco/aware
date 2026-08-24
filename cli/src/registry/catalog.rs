@@ -313,9 +313,9 @@ where
         // subdir is the defect, never a differing version.
         let mut seen_subdirs: BTreeMap<String, (&String, &str)> = BTreeMap::new();
         for (ver, ve) in &entry.versions {
-            // Reduced to the directory it names, so `foo`, `foo/` and `foo/.` are one key
-            // here exactly as they are one directory to the loader.
-            let subdir = crate::registry::normalize_subdir(&ve.subdir);
+            // Keyed through the SAME routine `reindex`'s loader resolves with, so the
+            // guard and the load cannot disagree about which entries reach one manifest.
+            let subdir = crate::registry::checkout_relative_subdir(&ve.subdir);
             if let Some((other, other_tarball)) =
                 seen_subdirs.insert(subdir.clone(), (ver, ve.tarball.as_str()))
             {
@@ -807,6 +807,31 @@ mod tests {
             errs.len(),
             1,
             "a trailing slash is the same directory, so still one collision: {errs:?}"
+        );
+        assert_eq!(errs[0].0, "demo@0.2.0");
+    }
+
+    #[test]
+    fn build_catalog_sees_through_the_archive_root_prefix() {
+        // Codex review (PR #457 round 7): `reindex`'s loader strips `aware-main/` before
+        // joining onto the checkout, so `aware-main/demo` and `demo` reach ONE
+        // `repo_root/demo/manifest.yaml` while normalising to different strings. The guard
+        // passed and both versions were stamped from that single manifest — the corruption
+        // it exists to prevent. Guard and loader now share one routine.
+        let index = index_multi(
+            "demo",
+            &[
+                ("0.1.0", "main.tar.gz", "aware-main/demo"),
+                ("0.2.0", "main.tar.gz", "demo"),
+            ],
+        );
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            Ok(agent_from_yaml("demo", "the current build"))
+        });
+        assert_eq!(
+            errs.len(),
+            1,
+            "both entries load one manifest, so it is one collision: {errs:?}"
         );
         assert_eq!(errs[0].0, "demo@0.2.0");
     }

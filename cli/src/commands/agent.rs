@@ -620,13 +620,16 @@ fn merge_publish_entry(
 
     // Re-publishing the SAME key is an overwrite of that entry, not a conflict — it is how
     // a subdir or tarball correction lands — so only OTHER keys are considered.
-    let target = crate::registry::normalize_subdir(subdir);
+    // Keyed through the routine `reindex`'s guard AND loader use, so publish cannot stage
+    // a pair reindex then refuses — which is exactly how the producer came to emit what
+    // the generator rejects (Codex review, PR #457, rounds 3 and 7).
+    let target = crate::registry::checkout_relative_subdir(subdir);
     let conflict = versions.iter().find(|(ver, ve)| {
         ver.as_str() != version
             && ve
                 .get("subdir")
                 .and_then(|s| s.as_str())
-                .is_some_and(|s| crate::registry::normalize_subdir(s) == target)
+                .is_some_and(|s| crate::registry::checkout_relative_subdir(s) == target)
     });
     if let Some((other, _)) = conflict {
         return Err(AwareError::Validation(format!(
@@ -735,6 +738,22 @@ mod publish_tests {
         assert!(
             untouched.agents["tekla"].versions.contains_key("2025.0.1"),
             "the release key survives"
+        );
+    }
+
+    #[test]
+    fn merge_refuses_a_conflict_hidden_by_the_archive_root_prefix() {
+        // Codex review (PR #457 round 7): `reindex` strips `aware-main/` before reading the
+        // checkout, so an entry written WITHOUT the prefix names the same folder as one
+        // written with it. Publish keys on the same routine, so it refuses here too rather
+        // than staging an index reindex will reject.
+        let src = r#"{"version":"1.0","updated-at":"old","agents":{"demo":{"versions":{"0.1.0":{"tarball":"t","subdir":"20-agents/demo"}}}},"bundles":{}}"#;
+        let err = merge_publish_entry(src, "demo", "0.2.0", "t", "aware-main/20-agents/demo")
+            .unwrap_err()
+            .to_string();
+        assert!(
+            err.contains("demo@0.1.0"),
+            "the prefixed and bare spellings are one folder: {err}"
         );
     }
 
@@ -1320,7 +1339,9 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     let index = crate::registry::Index::parse(std::fs::File::open(&index_path)?)?;
 
     let (cat, errors) = catalog::build_catalog(&index, crate::builder::now_iso(), |subdir| {
-        let rel = subdir.strip_prefix("aware-main/").unwrap_or(subdir);
+        // The SAME mapping the collision guard keys on, so the two cannot disagree about
+        // which entries land on one manifest (Codex review, PR #457 round 7).
+        let rel = crate::registry::checkout_relative_subdir(subdir);
         let manifest = repo_root.join(rel).join("manifest.yaml");
         crate::manifest::loader::load_agent(&manifest)
     });

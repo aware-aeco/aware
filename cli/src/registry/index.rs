@@ -62,6 +62,34 @@ pub struct VersionEntry {
     pub subdir: String,
 }
 
+/// The archive's top-level folder, which every substrate-hosted `subdir` is written
+/// under (`aware-main/20-agents/...`) because that is the prefix the entry must carry to
+/// resolve inside `main.tar.gz`.
+pub const SUBSTRATE_ARCHIVE_ROOT: &str = "aware-main/";
+
+/// The checkout-relative directory a `subdir` names — [`normalize_subdir`] plus the
+/// archive-root prefix a checkout does not have, since the checkout IS that root.
+///
+/// This is the mapping `agent reindex` applies to reach a manifest, and it must be the
+/// SAME routine the collision guard keys on or the two disagree: `aware-main/foo` and
+/// `foo` normalize to different strings while resolving to one
+/// `repo_root/foo/manifest.yaml`, so the guard passed and both versions were stamped
+/// from that single manifest — the corruption it exists to prevent (Codex review, PR
+/// #457 round 7). Sharing one function is what makes that class of drift unrepresentable
+/// rather than merely fixed.
+///
+/// Only the *checkout* reader strips this prefix. `extract_subdir`
+/// ([`crate::install`]) matches the subdir inside the tarball, where `aware-main/` is a
+/// real component of the path — so it is deliberately not folded into
+/// [`normalize_subdir`], which both readers share.
+pub fn checkout_relative_subdir(subdir: &str) -> String {
+    let normalized = normalize_subdir(subdir);
+    normalized
+        .strip_prefix(SUBSTRATE_ARCHIVE_ROOT)
+        .unwrap_or(&normalized)
+        .to_string()
+}
+
 /// A version's `subdir` reduced to the directory it actually names, so two spellings of
 /// one location compare equal.
 ///
