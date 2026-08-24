@@ -67,6 +67,31 @@ pub struct VersionEntry {
 /// resolve inside `main.tar.gz`.
 pub const SUBSTRATE_ARCHIVE_ROOT: &str = "aware-main/";
 
+/// `Err(reason)` when a `subdir` is not written in the one portable form the registry
+/// accepts: `/`-separated, with no backslash.
+///
+/// A backslash is REJECTED rather than normalised, because normalising it is only
+/// correct on one platform. `Path::join` treats `\` as a separator on Windows, so
+/// `foo/bar` and `foo\bar` load one manifest there — but on Linux `\` is an ordinary
+/// filename character, so they are two different directories and folding them together
+/// would make the guard refuse a registry that is actually fine. There is no
+/// normalisation that is right on both; refusing is (Codex review, PR #457 round 8).
+///
+/// Refusing is also what the value already is: `agent publish` writes
+/// `rel.replace('\\', "/")`, and tar member paths are `/`-separated by the POSIX format
+/// itself, so a backslash here is malformed input rather than a spelling in use.
+pub fn check_subdir_portable(subdir: &str) -> Result<(), String> {
+    if subdir.contains('\\') {
+        return Err(format!(
+            "subdir '{subdir}' contains a backslash. Registry subdirs name a path inside a \
+             tar archive and are always '/'-separated; a backslash is a directory name on \
+             Linux but a separator on Windows, so the same entry would resolve to different \
+             manifests per platform. Write it with '/'."
+        ));
+    }
+    Ok(())
+}
+
 /// The checkout-relative directory a `subdir` names — [`normalize_subdir`] plus the
 /// archive-root prefix a checkout does not have, since the checkout IS that root.
 ///

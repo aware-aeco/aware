@@ -313,6 +313,13 @@ where
         // subdir is the defect, never a differing version.
         let mut seen_subdirs: BTreeMap<String, (&String, &str)> = BTreeMap::new();
         for (ver, ve) in &entry.versions {
+            // A subdir that is not portably written resolves to different manifests on
+            // different platforms, so no key computed from it means anything. Report it
+            // and move on rather than guessing which reading was intended.
+            if let Err(reason) = crate::registry::check_subdir_portable(&ve.subdir) {
+                errors.push((format!("{id}@{ver}"), reason));
+                continue;
+            }
             // Keyed through the SAME routine `reindex`'s loader resolves with, so the
             // guard and the load cannot disagree about which entries reach one manifest.
             let subdir = crate::registry::checkout_relative_subdir(&ve.subdir);
@@ -834,6 +841,32 @@ mod tests {
             "both entries load one manifest, so it is one collision: {errs:?}"
         );
         assert_eq!(errs[0].0, "demo@0.2.0");
+    }
+
+    #[test]
+    fn build_catalog_reports_a_backslash_subdir_instead_of_keying_on_it() {
+        // Codex review (PR #457 round 8): `Path::join` treats `\\` as a separator on
+        // Windows but not on Linux, so `foo/bar` and `foo\\bar` load ONE manifest there
+        // and two here. No key computed from such a subdir means the same thing on both
+        // platforms, so it is reported rather than guessed at — and normalising instead
+        // would fold two genuinely distinct Linux directories together.
+        let index = index_multi(
+            "demo",
+            &[
+                ("0.1.0", "main.tar.gz", "aware-main/demo/one"),
+                ("0.2.0", "main.tar.gz", "aware-main/demo\\one"),
+            ],
+        );
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            Ok(agent_from_yaml("demo", "the current build"))
+        });
+        assert_eq!(errs.len(), 1, "the malformed entry is reported: {errs:?}");
+        assert_eq!(errs[0].0, "demo@0.2.0");
+        assert!(
+            errs[0].1.contains("backslash"),
+            "and says why: {}",
+            errs[0].1
+        );
     }
 
     #[test]

@@ -620,6 +620,17 @@ fn merge_publish_entry(
 
     // Re-publishing the SAME key is an overwrite of that entry, not a conflict — it is how
     // a subdir or tarball correction lands — so only OTHER keys are considered.
+    // Both sides of the comparison must be portably written or the keys are meaningless.
+    // `publish` derives its own subdir with `/`, so this fires on an entry ALREADY in the
+    // index — malformed input that would resolve differently per platform.
+    crate::registry::check_subdir_portable(subdir).map_err(AwareError::Validation)?;
+    for (ver, ve) in versions.iter() {
+        if let Some(s) = ve.get("subdir").and_then(|s| s.as_str())
+            && let Err(reason) = crate::registry::check_subdir_portable(s)
+        {
+            return Err(AwareError::Validation(format!("{id}@{ver}: {reason}")));
+        }
+    }
     // Keyed through the routine `reindex`'s guard AND loader use, so publish cannot stage
     // a pair reindex then refuses — which is exactly how the producer came to emit what
     // the generator rejects (Codex review, PR #457, rounds 3 and 7).
@@ -754,6 +765,22 @@ mod publish_tests {
         assert!(
             err.contains("demo@0.1.0"),
             "the prefixed and bare spellings are one folder: {err}"
+        );
+    }
+
+    #[test]
+    fn merge_refuses_a_backslash_subdir_already_in_the_index() {
+        // Codex review (PR #457 round 8): a backslash separates on Windows and does not on
+        // Linux, so an entry carrying one resolves to different manifests per platform and
+        // no collision key over it is meaningful. `publish` derives its own subdir with
+        // `/`, so this can only arrive as malformed input already in the index.
+        let src = r#"{"version":"1.0","updated-at":"old","agents":{"demo":{"versions":{"0.1.0":{"tarball":"t","subdir":"aware-main\\demo"}}}},"bundles":{}}"#;
+        let err = merge_publish_entry(src, "demo", "0.2.0", "t", "aware-main/other")
+            .unwrap_err()
+            .to_string();
+        assert!(
+            err.contains("backslash") && err.contains("demo@0.1.0"),
+            "the malformed entry is named: {err}"
         );
     }
 
