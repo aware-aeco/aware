@@ -23,6 +23,14 @@ use std::path::{Path, PathBuf};
 /// the active ancestry path. Depth itself is *not* capped: an ordinary deep
 /// tree copies fine, which is what the implementations this replaces did.
 ///
+/// A second guard covers the case the ancestry check structurally cannot: a
+/// followed symlink whose target is `dst` — or anything beneath it — such as an
+/// installed app being renamed via `link -> ../new-name`. That is not a cycle in
+/// the source; it is the destination copied into itself, growing `dst/link/link/…`
+/// without bound because each level is a *new* canonical path the ancestry set
+/// never matches. `dst` is canonicalized once at entry and any directory that
+/// resolves into it is refused before it is descended into.
+///
 /// Non-atomic on failure: a mid-copy error leaves whatever was already written
 /// in place. That is pre-existing for every IO error this can hit (a full disk,
 /// a permission denial) and is not specific to the cycle case; callers that
@@ -47,18 +55,49 @@ use std::path::{Path, PathBuf};
 /// shadow; that copy is small enough to leave alone until the CLI grows a `lib`
 /// target worth having.
 pub(crate) fn copy_dir_recursive(src: &Path, dst: &Path) -> std::io::Result<()> {
+    // Create `dst` up front so it can be canonicalized: the walk must refuse to
+    // descend into the destination tree, and comparing canonical paths needs the
+    // real directory to exist first. `copy_dir_tracked` also calls
+    // `create_dir_all(dst)` per level; re-creating this one is idempotent.
+    std::fs::create_dir_all(dst)?;
+    let dst_root = std::fs::canonicalize(dst)?;
     let mut ancestry = Vec::new();
-    copy_dir_tracked(src, dst, &mut ancestry)
+    copy_dir_tracked(src, dst, &dst_root, &mut ancestry)
 }
 
 /// `ancestry` holds the canonical path of every directory currently open on the
 /// recursion stack — the walk's active path, not every directory it has seen.
 /// A sibling subtree reached twice by two different links is fine and copies
 /// twice; only re-entering a directory that is still open above us is a cycle.
-fn copy_dir_tracked(src: &Path, dst: &Path, ancestry: &mut Vec<PathBuf>) -> std::io::Result<()> {
+fn copy_dir_tracked(
+    src: &Path,
+    dst: &Path,
+    dst_root: &Path,
+    ancestry: &mut Vec<PathBuf>,
+) -> std::io::Result<()> {
     // `canonicalize` resolves every link in the path, so two names for the same
     // directory compare equal — which is the whole point of the check.
     let identity = std::fs::canonicalize(src)?;
+
+    // Containment check on the destination, orthogonal to the ancestry check on
+    // the source below. A followed symlink resolving to `dst` — or anything
+    // inside it — must not be descended into: copying the destination into
+    // itself grows without bound, since every `dst/link/link/…` level is a fresh
+    // canonical path the ancestry set never matches. Checked before this level's
+    // `create_dir_all`, which is what would make such a link resolvable.
+    if identity == *dst_root || identity.starts_with(dst_root) {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            format!(
+                "copy_dir_recursive: refusing to copy the destination into itself — \
+                 {} resolves to {}, which is inside the copy target {}",
+                src.display(),
+                identity.display(),
+                dst_root.display()
+            ),
+        ));
+    }
+
     if ancestry.contains(&identity) {
         return Err(std::io::Error::new(
             std::io::ErrorKind::InvalidInput,
@@ -80,7 +119,7 @@ fn copy_dir_tracked(src: &Path, dst: &Path, ancestry: &mut Vec<PathBuf>) -> std:
         // resolves a symlink to its target, so a symlinked directory is walked
         // rather than handed to `fs::copy` (which would fail on a directory).
         if from.is_dir() {
-            copy_dir_tracked(&from, &to, ancestry)?;
+            copy_dir_tracked(&from, &to, dst_root, ancestry)?;
         } else {
             std::fs::copy(&from, &to)?;
         }
@@ -226,6 +265,35 @@ mod tests {
         assert!(
             err.to_string().contains("cycle"),
             "the error should name the cycle, got: {err}"
+        );
+    }
+
+    /// A followed symlink in `src` that resolves to `dst` (or beneath it) must
+    /// be refused, not copied into the destination endlessly. This is the
+    /// rename/install shape `link -> ../new-name` where `new-name` is the copy
+    /// target. The ancestry check structurally cannot catch it — every
+    /// `dst/link/link/…` level is a fresh canonical path — so the destination
+    /// containment guard is what stops the runaway growth (previously an
+    /// `ENAMETOOLONG` abort leaving a partial install).
+    #[cfg(unix)]
+    #[test]
+    fn a_source_link_into_the_destination_is_refused_not_copied_forever() {
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("src");
+        let dst = tmp.path().join("dst");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("a.txt"), b"a").unwrap();
+        // A link in SRC resolving to DST. `dst` need not exist yet — the copy
+        // creates it, at which point the link resolves and the walk would
+        // otherwise begin copying `dst` into `dst/link`.
+        std::os::unix::fs::symlink(&dst, src.join("link")).unwrap();
+
+        let err = copy_dir_recursive(&src, &dst)
+            .expect_err("a source link resolving to the destination must be refused");
+        assert_eq!(err.kind(), std::io::ErrorKind::InvalidInput);
+        assert!(
+            err.to_string().contains("into itself"),
+            "the error should explain the destination self-copy, got: {err}"
         );
     }
 
