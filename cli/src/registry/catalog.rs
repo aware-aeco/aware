@@ -273,6 +273,46 @@ where
     let mut agents: BTreeMap<String, CatalogAgent> = BTreeMap::new();
     let mut errors: Vec<(String, String)> = Vec::new();
     for (id, entry) in &index.agents {
+        // Two version keys of ONE agent that resolve to the same subdir cannot each
+        // be built into a faithful catalog entry (#454). The tarball is a mutable
+        // `main` archive and a subdir holds exactly one manifest, so both keys load
+        // that ONE current manifest: the older key's entry is then stamped with the
+        // newer build's description, commands and `manifest-version`, advertising a
+        // historical version whose files that path no longer holds. It cannot be
+        // reconciled from the manifest alone — the old build is simply gone from the
+        // path — so refuse it rather than emit the fiction. The author gives each
+        // version its own frozen subdir, or drops the stale key.
+        //
+        // The check is WITHIN one agent id. Two DIFFERENT ids sharing a subdir is the
+        // legitimate rename-alias shape (#256: `steel-detailer-aisc` → the `us` subdir),
+        // which this never sees, since it only compares an entry's own versions.
+        // `manifest-version` differing from the index key is intended and untouched
+        // (calendar keys like `tekla@2025.0.1` over a `0.30.0` manifest) — only a
+        // SHARED subdir is the defect, never a differing version.
+        let mut seen_subdirs: BTreeMap<&str, &String> = BTreeMap::new();
+        for (ver, ve) in &entry.versions {
+            if let Some(other) = seen_subdirs.insert(ve.subdir.as_str(), ver) {
+                // Name the newer key as the failing one and the older as the peer, so
+                // the message reads the same whichever iteration order surfaced them.
+                let (older, newer) = if crate::validate::compare_version_keys(other, ver).is_le() {
+                    (other, ver)
+                } else {
+                    (ver, other)
+                };
+                errors.push((
+                    format!("{id}@{newer}"),
+                    format!(
+                        "shares subdir '{}' with version {older}. Two version keys \
+                         resolving to one subdir are both indexed from that path's single \
+                         current manifest, so the older key would advertise the newer \
+                         build's metadata. Give each version its own subdir, or remove \
+                         the stale key.",
+                        ve.subdir
+                    ),
+                ));
+            }
+        }
+
         let mut ca = CatalogAgent {
             display_name: None,
             vendor: None,
@@ -604,6 +644,99 @@ mod tests {
         assert!(
             errs[0].0.contains("retired"),
             "the failure names the hidden entry: {errs:?}"
+        );
+    }
+
+    /// Build an index with one agent carrying SEVERAL version entries, each with its
+    /// own subdir — the multi-version shape the collision guard must still accept.
+    fn index_multi(id: &str, versions: &[(&str, &str)]) -> Index {
+        let mut vmap = BTreeMap::new();
+        for (ver, subdir) in versions {
+            vmap.insert(
+                (*ver).to_string(),
+                VersionEntry {
+                    tarball: "t".to_string(),
+                    subdir: (*subdir).to_string(),
+                },
+            );
+        }
+        let mut agents = BTreeMap::new();
+        agents.insert(
+            id.to_string(),
+            IndexEntry {
+                versions: vmap,
+                ..Default::default()
+            },
+        );
+        Index {
+            version: "1.0".to_string(),
+            updated_at: "x".to_string(),
+            agents,
+            bundles: BTreeMap::new(),
+        }
+    }
+
+    #[test]
+    fn build_catalog_refuses_two_versions_sharing_one_subdir() {
+        // #454: bumping an agent's manifest and adding a new index version that reuses
+        // the SAME subdir makes reindex build both keys from that path's one current
+        // manifest, so the older key advertises the newer build. That is a registry
+        // defect, reported (so reindex refuses) rather than silently fabricated.
+        let index = index_multi(
+            "demo",
+            &[("0.1.0", "aware-main/demo"), ("0.2.0", "aware-main/demo")],
+        );
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            // Both keys resolve here; the manifest declares only the current (0.2.0) build.
+            Ok(agent_from_yaml("demo", "the current build"))
+        });
+        assert_eq!(
+            errs.len(),
+            1,
+            "the collision is reported exactly once: {errs:?}"
+        );
+        assert_eq!(
+            errs[0].0, "demo@0.2.0",
+            "the NEWER key is named as the offender"
+        );
+        assert!(
+            errs[0].1.contains("shares subdir") && errs[0].1.contains("with version 0.1.0"),
+            "the message names the shared subdir and the peer version: {}",
+            errs[0].1
+        );
+    }
+
+    #[test]
+    fn build_catalog_accepts_multi_version_with_distinct_subdirs() {
+        // The correct multi-version shape: each version frozen at its own subdir. The
+        // guard must NOT flag it, and every version is listed with the manifest that
+        // subdir actually holds.
+        let index = index_multi(
+            "demo",
+            &[
+                ("0.1.0", "aware-main/demo-0.1.0"),
+                ("0.2.0", "aware-main/demo"),
+            ],
+        );
+        let (cat, errs) = build_catalog(&index, "now".to_string(), |subdir| {
+            let desc = if subdir.ends_with("0.1.0") {
+                "the frozen 0.1.0 build"
+            } else {
+                "the current build"
+            };
+            Ok(agent_from_yaml("demo", desc))
+        });
+        assert!(errs.is_empty(), "distinct subdirs are legitimate: {errs:?}");
+        let demo = cat.agents.get("demo").unwrap();
+        assert_eq!(demo.versions.len(), 2, "both versions listed");
+        assert_eq!(
+            demo.versions.get("0.1.0").unwrap().description,
+            "the frozen 0.1.0 build",
+            "the 0.1.0 entry reflects its OWN subdir's manifest, not the current one"
+        );
+        assert_eq!(
+            demo.versions.get("0.2.0").unwrap().description,
+            "the current build"
         );
     }
 

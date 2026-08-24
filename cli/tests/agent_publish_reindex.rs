@@ -65,6 +65,32 @@ fn write_agent_with_missing_skill(dir: &Path, id: &str) {
     .unwrap();
 }
 
+/// A `registry-index.json` where ONE agent carries several version entries, each
+/// `(version, subdir)`. Distinct from [`write_index`], which gives every entry its
+/// own agent id — this is the multi-version-of-one-agent shape #454 is about.
+fn write_index_multiversion(root: &Path, id: &str, versions: &[(&str, &str)]) {
+    let vmap: serde_json::Map<String, serde_json::Value> = versions
+        .iter()
+        .map(|(ver, subdir)| {
+            (
+                (*ver).to_string(),
+                serde_json::json!({ "tarball": SUBSTRATE_TARBALL, "subdir": *subdir }),
+            )
+        })
+        .collect();
+    let doc = serde_json::json!({
+        "version": "1.0",
+        "updated-at": "2026-01-01T00:00:00Z",
+        "agents": { id: { "versions": vmap } },
+        "bundles": {},
+    });
+    std::fs::write(
+        root.join("registry-index.json"),
+        serde_json::to_string_pretty(&doc).unwrap(),
+    )
+    .unwrap();
+}
+
 /// `registry-index.json` naming `entries` as `(id, version, subdir)`.
 fn write_index(root: &Path, entries: &[(&str, &str, &str)]) {
     let agents: serde_json::Map<String, serde_json::Value> = entries
@@ -408,6 +434,92 @@ fn reindex_refuses_a_partial_catalog_and_leaves_the_previous_one_intact() {
         good_catalog,
         "a refused reindex must not half-write over the last good catalog"
     );
+}
+
+#[test]
+fn reindex_refuses_two_versions_sharing_one_subdir_and_writes_nothing() {
+    // #454: an agent bumped from 0.1.0 to 0.2.0 whose index gains a 0.2.0 entry at the
+    // SAME subdir. Both keys resolve to that path's single (0.2.0) manifest, so the
+    // historical 0.1.0 catalog entry would be stamped with the current build's
+    // description/commands/manifest-version. reindex must refuse rather than write that
+    // fiction — and it must not have half-written a catalog before refusing.
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let agent_dir = root.join("20-agents/aeco/demo");
+    write_agent(&agent_dir, "demo", "0.2.0", "The current 0.2.0 build.");
+    write_index_multiversion(
+        root,
+        "demo",
+        &[
+            ("0.1.0", "aware-main/20-agents/aeco/demo"),
+            ("0.2.0", "aware-main/20-agents/aeco/demo"),
+        ],
+    );
+
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .args(["agent", "reindex"])
+        .assert()
+        .failure()
+        .code(3)
+        // The failing key is the newer one, and the message points at the shared subdir.
+        .stderr(predicate::str::contains("demo@0.2.0"))
+        .stderr(predicate::str::contains("shares subdir"));
+
+    assert!(
+        !root.join("registry-catalog.json").exists(),
+        "a refused reindex must not write the misleading catalog"
+    );
+}
+
+#[test]
+fn reindex_accepts_two_versions_at_distinct_subdirs() {
+    // The correct multi-version shape: 0.1.0 frozen at its own subdir, 0.2.0 at the
+    // live path. No collision, so reindex succeeds and each catalog entry reflects the
+    // manifest its OWN subdir holds — the 0.1.0 entry is NOT rewritten from 0.2.0.
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    write_agent(
+        &root.join("archive/demo-0.1.0"),
+        "demo",
+        "0.1.0",
+        "The frozen 0.1.0 build.",
+    );
+    write_agent(
+        &root.join("20-agents/aeco/demo"),
+        "demo",
+        "0.2.0",
+        "The current 0.2.0 build.",
+    );
+    write_index_multiversion(
+        root,
+        "demo",
+        &[
+            ("0.1.0", "aware-main/archive/demo-0.1.0"),
+            ("0.2.0", "aware-main/20-agents/aeco/demo"),
+        ],
+    );
+
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .args(["agent", "reindex"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("1 agents"));
+
+    let cat: serde_json::Value =
+        serde_json::from_str(&std::fs::read_to_string(root.join("registry-catalog.json")).unwrap())
+            .unwrap();
+    let versions = &cat["agents"]["demo"]["versions"];
+    assert_eq!(
+        versions["0.1.0"]["description"], "The frozen 0.1.0 build.",
+        "the 0.1.0 entry keeps its own subdir's metadata, not the current build's: {cat:#}"
+    );
+    assert_eq!(versions["0.1.0"]["manifest-version"], "0.1.0");
+    assert_eq!(versions["0.2.0"]["description"], "The current 0.2.0 build.");
+    assert_eq!(versions["0.2.0"]["manifest-version"], "0.2.0");
 }
 
 #[test]

@@ -1218,15 +1218,16 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
         crate::manifest::loader::load_agent(&manifest)
     });
 
-    // Refuse to emit (or pass --check on) a partial catalog: a manifest that fails to load is a
-    // real problem to fix, not something to silently drop from the published catalog.
+    // Refuse to emit (or pass --check on) a partial or misleading catalog: a manifest that
+    // fails to load, or a version key that shares a subdir with another (#454), is a real
+    // problem to fix, not something to silently drop from — or fabricate into — the catalog.
     if !errors.is_empty() {
-        eprintln!("⚠ {} agent(s) failed to load:", errors.len());
+        eprintln!("⚠ {} registry problem(s):", errors.len());
         for (id, e) in &errors {
             eprintln!("  ✗ {id}: {e}");
         }
         return Err(AwareError::Validation(format!(
-            "{} agent(s) failed to load — fix the manifest(s) and re-run",
+            "{} registry problem(s) — fix the index/manifest(s) and re-run",
             errors.len()
         )));
     }
