@@ -79,9 +79,11 @@ pub fn run_id_now() -> String {
     uuid::Uuid::new_v4().to_string()
 }
 
-pub fn now_iso() -> String {
-    chrono::Utc::now().to_rfc3339()
-}
+// Byte-identical to the copy that used to live in `builder::mod`. Both are
+// now re-exports of `crate::time::now_iso`; existing imports
+// (`use crate::runtime::provenance::{..., now_iso}` in `runtime::orchestrator`)
+// still resolve.
+pub use crate::time::now_iso;
 
 pub fn log_dir_for(logs_dir: &Path, app: &str, instance: &str) -> PathBuf {
     logs_dir.join(app).join(instance)

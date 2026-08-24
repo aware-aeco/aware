@@ -473,13 +473,9 @@ fn no_result_error(
 
 // ─────────────────────────────── dry run ───────────────────────────────
 
-/// Resolve a (possibly relative) path to an absolute string for the output contract — same helper
-/// shape as `render::file::abs_path`; never resolves symlinks or requires existence.
-fn abs_path(path: &str) -> String {
-    std::path::absolute(path)
-        .map(|p| p.to_string_lossy().into_owned())
-        .unwrap_or_else(|_| path.to_string())
-}
+// `abs_path` moved to `render::mod`; imported so this file's call sites (and
+// their existing bare `abs_path(...)` calls) still resolve unchanged.
+use super::abs_path;
 
 /// A required, non-empty string input, named the way the script would name it.
 fn require_str(command: &str, args: &Value, key: &str) -> Result<String, AwareError> {

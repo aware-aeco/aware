@@ -115,22 +115,8 @@ mod tests {
             .to_path_buf();
         // Copy tekla agent for the test
         let tekla_src = repo.join("20-agents/aeco/engineering/tekla");
-        copy_dir_recursive(&tekla_src, &aware.join("agents/tekla")).unwrap();
+        crate::fs::copy_dir_recursive(&tekla_src, &aware.join("agents/tekla")).unwrap();
         tmp
-    }
-
-    fn copy_dir_recursive(src: &Path, dst: &Path) -> std::io::Result<()> {
-        std::fs::create_dir_all(dst)?;
-        for entry in std::fs::read_dir(src)?.flatten() {
-            let from = entry.path();
-            let to = dst.join(entry.file_name());
-            if entry.file_type()?.is_dir() {
-                copy_dir_recursive(&from, &to)?;
-            } else {
-                std::fs::copy(&from, &to)?;
-            }
-        }
-        Ok(())
     }
 
     #[test]

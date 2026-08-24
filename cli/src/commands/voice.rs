@@ -259,7 +259,11 @@ fn install(ctx: &Context, args: &InstallArgs) -> Result<(), AwareError> {
     let dst = voices_dir(ctx).join(&scope).join(&id).join(&version);
     std::fs::create_dir_all(&dst)
         .map_err(|e| AwareError::Internal(format!("create {}: {e}", dst.display())))?;
-    copy_dir_recursive(src, &dst)?;
+    // `copy_dir_recursive` also `create_dir_all(&dst)`s, so the explicit call
+    // above is redundant with the shared helper. Kept for its richer error
+    // message: the shared helper returns a bare `io::Error`, and this call
+    // site's context ("create <voice-pack path>") is worth surfacing.
+    crate::fs::copy_dir_recursive(src, &dst)?;
     println!(
         "\u{2713} installed voice pack {scope}/{id}@{version} \u{2192} {}",
         dst.display()
@@ -276,26 +280,6 @@ fn yaml_to_string(v: Option<&serde_yaml::Value>) -> Option<String> {
         serde_yaml::Value::Bool(b) => Some(b.to_string()),
         _ => None,
     }
-}
-
-fn copy_dir_recursive(src: &std::path::Path, dst: &std::path::Path) -> Result<(), AwareError> {
-    for entry in std::fs::read_dir(src)
-        .map_err(|e| AwareError::Internal(format!("read_dir {}: {e}", src.display())))?
-        .flatten()
-    {
-        let from = entry.path();
-        let to = dst.join(entry.file_name());
-        if from.is_dir() {
-            std::fs::create_dir_all(&to)
-                .map_err(|e| AwareError::Internal(format!("create {}: {e}", to.display())))?;
-            copy_dir_recursive(&from, &to)?;
-        } else {
-            std::fs::copy(&from, &to).map_err(|e| {
-                AwareError::Internal(format!("copy {} -> {}: {e}", from.display(), to.display()))
-            })?;
-        }
-    }
-    Ok(())
 }
 
 fn uninstall(ctx: &Context, pack: &str) -> Result<(), AwareError> {
