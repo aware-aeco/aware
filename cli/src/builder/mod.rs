@@ -101,9 +101,10 @@ pub struct Provenance {
     pub generated_at: String,
 }
 
-pub fn now_iso() -> String {
-    chrono::Utc::now().to_rfc3339()
-}
+// Byte-identical to the copy that used to live in `runtime::provenance`. Both
+// are now re-exports of `crate::time::now_iso`; existing imports
+// (`use crate::builder::{..., now_iso, ...}` in `sidecar.rs`) still resolve.
+pub use crate::time::now_iso;
 
 /// Slugify a reflected symbol name into the kebab-case id the substrate uses for
 /// agent ids and command names.

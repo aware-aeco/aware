@@ -29,14 +29,9 @@ fn req_path(args: &Value, verb: &str) -> Result<String, AwareError> {
     }
 }
 
-/// Resolve a (possibly relative) path to an absolute string for the output contract — joins the
-/// current dir without resolving symlinks or requiring the file to exist; falls back to the input
-/// on the rare error so a downstream node always gets a usable path.
-fn abs_path(path: &str) -> String {
-    std::path::absolute(path)
-        .map(|p| p.to_string_lossy().into_owned())
-        .unwrap_or_else(|_| path.to_string())
-}
+// `abs_path` moved to `render::mod`; imported so this file's call sites (and
+// their existing bare `abs_path(...)` calls) still resolve unchanged.
+use super::abs_path;
 
 /// Create the parent directory of `path` when `create-dirs` is on (the default).
 fn ensure_parent(path: &str, create_dirs: bool) -> Result<(), AwareError> {
