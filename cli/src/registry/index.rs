@@ -68,10 +68,17 @@ pub struct VersionEntry {
 pub const SUBSTRATE_ARCHIVE_ROOT: &str = "aware-main/";
 
 /// `Err(reason)` when a `subdir` is not written in the one portable form the registry
-/// accepts: `/`-separated, with no backslash.
+/// accepts: a RELATIVE, `/`-separated path that stays inside the archive — no backslash,
+/// no absolute or drive-prefixed path, no leading `..`.
 ///
-/// A backslash is REJECTED rather than normalised, because normalising it is only
-/// correct on one platform. `Path::join` treats `\` as a separator on Windows, so
+/// Each rejected form is one a reader resolves to a path the string does not look like,
+/// so two entries can name a single manifest while comparing as distinct. Every one of
+/// them is REJECTED rather than normalised, because there is no normalisation that is
+/// right on every platform, and because none of these is a spelling in real use: `agent
+/// publish` emits `aware-main/<repo-relative>` with `/` separators, and tar members are
+/// relative and `/`-separated by the POSIX format itself. They are malformed input.
+///
+/// Take the backslash as the worked example, since normalising it is the tempting move: `Path::join` treats `\` as a separator on Windows, so
 /// `foo/bar` and `foo\bar` load one manifest there — but on Linux `\` is an ordinary
 /// filename character, so they are two different directories and folding them together
 /// would make the guard refuse a registry that is actually fine. There is no
@@ -89,13 +96,43 @@ pub fn check_subdir_portable(subdir: &str) -> Result<(), String> {
              manifests per platform. Write it with '/'."
         ));
     }
-    // A normalised subdir that still starts with `..` climbs OUT of its root — out of the
+    // An ABSOLUTE subdir is not a location inside the archive at all, and `Path::join`
+    // DISCARDS its base when given one — so `repo_root.join("/etc/foo")` is `/etc/foo`, and
+    // on Windows `repo_root.join("C:/repo/foo")` is `C:/repo/foo`. Two entries can then
+    // name one manifest by different-looking strings, or reach outside the checkout
+    // entirely (Codex review, PR #457 round 11).
+    //
+    // Checked on the RAW value, not the normalised one: `normalize_subdir` drops a leading
+    // `/` as an empty segment, so `/foo` and `foo` normalise identically and the evidence
+    // is gone by then.
+    if subdir.starts_with('/') {
+        return Err(format!(
+            "subdir '{subdir}' is an absolute path. A registry subdir is relative to the \
+             archive root; an absolute one replaces the base it is joined to instead of \
+             naming a member of the archive. Write it relative, under \
+             '{SUBSTRATE_ARCHIVE_ROOT}'."
+        ));
+    }
+    // A drive prefix (`C:`, `C:/repo/foo`) is absolute or drive-relative on Windows and an
+    // ordinary directory name on Linux — so the same entry means different things per
+    // platform. Only the drive-letter SHAPE is rejected: a colon elsewhere in a name is a
+    // legal Linux filename and is left alone.
+    let first = subdir.split('/').next().unwrap_or("");
+    if first.len() >= 2 && first.as_bytes()[1] == b':' && first.as_bytes()[0].is_ascii_alphabetic()
+    {
+        return Err(format!(
+            "subdir '{subdir}' starts with a drive letter. That is absolute (or \
+             drive-relative) on Windows and an ordinary directory name on Linux, so one \
+             registry entry would resolve to different manifests per platform. Write it \
+             relative, under '{SUBSTRATE_ARCHIVE_ROOT}'."
+        ));
+    }
+    // A normalised subdir that still leads with `..` climbs OUT of its root — out of the
     // archive when the installer matches it, out of `repo_root` when `reindex` joins it.
-    // The latter is the trap: `repo_root.join("../aware/foo")` resolves back inside when the
+    // The latter is the trap: `repo_root.join("../aware/foo")` resolves back INSIDE when the
     // checkout is itself named `aware`, so `aware-main/foo` and `../aware/foo` load one
-    // manifest while reading as two distinct escaping paths. Neither names a real member of
-    // `main.tar.gz`, so this is malformed input, not a location in use (Codex review, PR
-    // #457 round 10).
+    // manifest while reading as two distinct escaping paths (Codex review, PR #457 r10).
+    //
     // The FIRST path component, not a string prefix: a directory literally named `..foo`
     // is legitimate and must not be caught. `normalize_subdir` already popped every
     // interior `..`, so a surviving one can only be leading.
@@ -308,6 +345,16 @@ mod tests {
         assert!(check_subdir_portable("aware-main/../../etc").is_err());
         // Backslash resolves differently per platform (#457 round 8).
         assert!(check_subdir_portable("aware-main/foo\\bar").is_err());
+        // Absolute and drive-prefixed paths replace the base they are joined to
+        // (#457 round 11). Checked on the RAW value: `normalize_subdir` drops the
+        // leading `/` as an empty segment, so `/foo` and `foo` normalise alike.
+        assert!(check_subdir_portable("/etc/foo").is_err());
+        assert!(check_subdir_portable("C:/repo/foo").is_err());
+        assert!(check_subdir_portable("c:foo").is_err());
+        assert_eq!(normalize_subdir("/foo"), normalize_subdir("foo"));
+        // A colon that is NOT a drive prefix is an ordinary Linux filename.
+        assert!(check_subdir_portable("aware-main/a:b/demo").is_ok());
+        assert!(check_subdir_portable("aware-main/ab:/demo").is_ok());
     }
 
     const SAMPLE: &str = r#"{
