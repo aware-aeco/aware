@@ -273,6 +273,97 @@ where
     let mut agents: BTreeMap<String, CatalogAgent> = BTreeMap::new();
     let mut errors: Vec<(String, String)> = Vec::new();
     for (id, entry) in &index.agents {
+        // Two version keys of ONE agent that resolve to the same SUBDIR cannot each be
+        // built into a faithful catalog entry (#454), so refuse rather than emit the
+        // fiction.
+        //
+        // The key is the subdir alone, and deliberately so: it is exactly what decides
+        // which manifest this build reads. `load` is handed a subdir and nothing else —
+        // `agent reindex` resolves it against the local checkout
+        // (`repo_root/<subdir>/manifest.yaml`) and never opens `tarball` at all. So two
+        // versions sharing a subdir get the SAME manifest whatever their tarballs say,
+        // and the older key's entry is stamped with the current build's description,
+        // commands and `manifest-version` — a historical version described by files that
+        // path no longer holds.
+        //
+        // Keying this on the installer's payload identity (a `(tarball, subdir)` pair)
+        // was wrong in a way worth recording, because it is the natural mistake: it
+        // describes when two keys INSTALL alike, which is a different question from when
+        // this generator can TELL THEM APART. Under that key, versions in distinct
+        // immutable tarballs sharing one subdir passed the guard and were then both
+        // described from the one checkout manifest — reindex reporting success while
+        // reproducing the exact defect #454 is about. (Codex review, PR #457, rounds 1
+        // and 5: round 1 caught the pair being ignored, round 5 caught that honouring it
+        // here reopened the hole.)
+        //
+        // Refusing that shape is the honest answer while this reads one checkout: a
+        // remote archive's bytes are not present to describe. Teaching `reindex` to fetch
+        // each version's tarball would lift the restriction and is a real option — it is
+        // also a new mechanism (network access inside a CI gate, caching, offline
+        // behaviour), so it belongs to a maintainer, not to this fix.
+        //
+        // `agent publish` enforces the SAME rule before it writes, so the registry's
+        // producer cannot emit an index its generator refuses.
+        //
+        // The check is WITHIN one agent id. Two DIFFERENT ids sharing a subdir is the
+        // legitimate rename-alias shape (#256: `steel-detailer-aisc` → the `us` subdir),
+        // which this never sees, since it only compares an entry's own versions.
+        // `manifest-version` differing from the index key is intended and untouched
+        // (calendar keys like `tekla@2025.0.1` over a `0.30.0` manifest) — only a shared
+        // subdir is the defect, never a differing version.
+        let mut seen_subdirs: BTreeMap<String, (&String, &str, String)> = BTreeMap::new();
+        for (ver, ve) in &entry.versions {
+            // A subdir that is not portably written resolves to different manifests on
+            // different platforms, so no key computed from it means anything. Report it
+            // and move on rather than guessing which reading was intended.
+            if let Err(reason) = crate::registry::check_subdir_portable(&ve.subdir) {
+                errors.push((format!("{id}@{ver}"), reason));
+                continue;
+            }
+            // Keyed through the SAME routine `reindex`'s loader resolves with, so the
+            // guard and the load cannot disagree about which entries reach one manifest —
+            // then case-folded, because the index is one artifact and a case-insensitive
+            // checkout (Windows, macOS) resolves `foo` and `Foo` to a single folder.
+            let subdir = crate::registry::checkout_relative_subdir(&ve.subdir);
+            let key = crate::registry::portable_subdir_key(&ve.subdir);
+            if let Some((other, other_tarball, other_subdir)) =
+                seen_subdirs.insert(key, (ver, ve.tarball.as_str(), subdir.clone()))
+            {
+                // Name the newer key as the failing one and the older as the peer, so
+                // the message reads the same whichever iteration order surfaced them.
+                let (older, newer) = if crate::validate::compare_version_keys(other, ver).is_le() {
+                    (other, ver)
+                } else {
+                    (ver, other)
+                };
+                // Distinct tarballs are a DIFFERENT mistake from one archive reused, and
+                // the remedy differs too, so say which one this is rather than emitting a
+                // message that fits neither.
+                let detail = if other_subdir != subdir {
+                    // Same folder only where the filesystem ignores case — so the index
+                    // would mean different things on Linux and on Windows/macOS.
+                    "The two differ only in case. `registry-index.json` is one file served \
+                     to every platform, and a case-insensitive checkout (Windows, macOS) \
+                     resolves both to a single folder, so this index cannot mean the same \
+                     thing everywhere. Name one of the folders distinctly."
+                } else if other_tarball == ve.tarball {
+                    "Both keys name one subdir of one archive, so both are indexed from \
+                     that path's single current manifest and the older key would \
+                     advertise the newer build's metadata. Give each version its own \
+                     subdir, or remove the stale key."
+                } else {
+                    "The tarballs differ, but `reindex` reads this checkout and never \
+                     opens either archive — so both keys are indexed from this one \
+                     path's manifest and the older key would advertise the current \
+                     build's metadata. Give each version its own subdir."
+                };
+                errors.push((
+                    format!("{id}@{newer}"),
+                    format!("shares subdir '{subdir}' with version {older}. {detail}"),
+                ));
+            }
+        }
+
         let mut ca = CatalogAgent {
             display_name: None,
             vendor: None,
@@ -604,6 +695,271 @@ mod tests {
         assert!(
             errs[0].0.contains("retired"),
             "the failure names the hidden entry: {errs:?}"
+        );
+    }
+
+    /// Build an index with one agent carrying SEVERAL version entries, each named as
+    /// `(version, tarball, subdir)` — the multi-version shapes the collision guard has
+    /// to tell apart. The tarball is explicit because it is half the payload identity.
+    fn index_multi(id: &str, versions: &[(&str, &str, &str)]) -> Index {
+        let mut vmap = BTreeMap::new();
+        for (ver, tarball, subdir) in versions {
+            vmap.insert(
+                (*ver).to_string(),
+                VersionEntry {
+                    tarball: (*tarball).to_string(),
+                    subdir: (*subdir).to_string(),
+                },
+            );
+        }
+        let mut agents = BTreeMap::new();
+        agents.insert(
+            id.to_string(),
+            IndexEntry {
+                versions: vmap,
+                ..Default::default()
+            },
+        );
+        Index {
+            version: "1.0".to_string(),
+            updated_at: "x".to_string(),
+            agents,
+            bundles: BTreeMap::new(),
+        }
+    }
+
+    #[test]
+    fn build_catalog_refuses_two_versions_sharing_one_payload() {
+        // #454: bumping an agent's manifest and adding a new index version that reuses
+        // the SAME tarball and subdir makes reindex build both keys from that path's
+        // one current manifest, so the older key advertises the newer build. That is a
+        // registry defect, reported (so reindex refuses) rather than silently fabricated.
+        let index = index_multi(
+            "demo",
+            &[
+                ("0.1.0", "main.tar.gz", "aware-main/demo"),
+                ("0.2.0", "main.tar.gz", "aware-main/demo"),
+            ],
+        );
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            // Both keys resolve here; the manifest declares only the current (0.2.0) build.
+            Ok(agent_from_yaml("demo", "the current build"))
+        });
+        assert_eq!(
+            errs.len(),
+            1,
+            "the collision is reported exactly once: {errs:?}"
+        );
+        assert_eq!(
+            errs[0].0, "demo@0.2.0",
+            "the NEWER key is named as the offender"
+        );
+        assert!(
+            errs[0].1.contains("shares subdir") && errs[0].1.contains("with version 0.1.0"),
+            "the message names the shared subdir and the peer version: {}",
+            errs[0].1
+        );
+    }
+
+    #[test]
+    fn build_catalog_refuses_one_subdir_even_across_distinct_tarballs() {
+        // Codex review (PR #457, round 5): allowing this shape — which round 3 did, keyed
+        // on the installer's `(tarball, subdir)` payload identity — reopened the very hole
+        // #454 is about. `load` receives only a subdir and `reindex` resolves it against
+        // the local checkout, never opening either tarball, so BOTH keys were described
+        // from the one checkout manifest while reindex reported success.
+        //
+        // The distinction is the point: `payload_id` says when two keys INSTALL alike;
+        // this guard needs to know when this generator can TELL THEM APART, and reading
+        // one checkout it cannot. Refusing is honest until reindex fetches each archive.
+        let index = index_multi(
+            "probe-agent",
+            &[
+                (
+                    "1.2.0",
+                    "probe-1.2.0.tar.gz",
+                    "aware-main/20-agents/probe-agent",
+                ),
+                (
+                    "1.3.0",
+                    "probe-1.3.0.tar.gz",
+                    "aware-main/20-agents/probe-agent",
+                ),
+            ],
+        );
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            Ok(agent_from_yaml("probe-agent", "a probe"))
+        });
+        assert_eq!(
+            errs.len(),
+            1,
+            "one subdir, one manifest, one refusal: {errs:?}"
+        );
+        assert_eq!(errs[0].0, "probe-agent@1.3.0");
+        assert!(
+            errs[0].1.contains("tarballs differ"),
+            "the message names the distinct-tarball case specifically, since its remedy \
+             differs from the one-archive case: {}",
+            errs[0].1
+        );
+    }
+
+    #[test]
+    fn build_catalog_sees_through_a_trailing_slash_spelling() {
+        // Codex review (PR #457, P2): `extract_subdir` (`install/registry.rs`) trims
+        // trailing slashes, so `foo` and `foo/` are ONE directory to the installer. A
+        // raw-string key treated them as two and let the collision through into the
+        // very catalog this guard exists to prevent.
+        let index = index_multi(
+            "demo",
+            &[
+                ("0.1.0", "main.tar.gz", "aware-main/demo"),
+                ("0.2.0", "main.tar.gz", "aware-main/demo/"),
+            ],
+        );
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            Ok(agent_from_yaml("demo", "the current build"))
+        });
+        assert_eq!(
+            errs.len(),
+            1,
+            "a trailing slash is the same directory, so still one collision: {errs:?}"
+        );
+        assert_eq!(errs[0].0, "demo@0.2.0");
+    }
+
+    #[test]
+    fn build_catalog_sees_through_the_archive_root_prefix() {
+        // Codex review (PR #457 round 7): `reindex`'s loader strips `aware-main/` before
+        // joining onto the checkout, so `aware-main/demo` and `demo` reach ONE
+        // `repo_root/demo/manifest.yaml` while normalising to different strings. The guard
+        // passed and both versions were stamped from that single manifest — the corruption
+        // it exists to prevent. Guard and loader now share one routine.
+        let index = index_multi(
+            "demo",
+            &[
+                ("0.1.0", "main.tar.gz", "aware-main/demo"),
+                ("0.2.0", "main.tar.gz", "demo"),
+            ],
+        );
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            Ok(agent_from_yaml("demo", "the current build"))
+        });
+        assert_eq!(
+            errs.len(),
+            1,
+            "both entries load one manifest, so it is one collision: {errs:?}"
+        );
+        assert_eq!(errs[0].0, "demo@0.2.0");
+    }
+
+    #[test]
+    fn build_catalog_rejects_a_subdir_that_escapes_its_root() {
+        // Codex review (PR #457 round 10): a leading `..` climbs out of the checkout, and
+        // `repo_root.join("../aware/foo")` can resolve BACK inside when the checkout is
+        // named `aware` — so `aware-main/foo` and `../aware/foo` load one manifest while
+        // reading as two escaping paths. Neither is a real archive member; reported.
+        let index = index_multi(
+            "demo",
+            &[
+                ("0.1.0", "main.tar.gz", "aware-main/foo"),
+                ("0.2.0", "main.tar.gz", "../aware/foo"),
+            ],
+        );
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            Ok(agent_from_yaml("demo", "the current build"))
+        });
+        assert!(
+            errs.iter()
+                .any(|(k, m)| k == "demo@0.2.0" && m.contains("points above its root")),
+            "the escaping entry is reported: {errs:?}"
+        );
+    }
+
+    #[test]
+    fn build_catalog_reports_a_backslash_subdir_instead_of_keying_on_it() {
+        // Codex review (PR #457 round 8): `Path::join` treats `\\` as a separator on
+        // Windows but not on Linux, so `foo/bar` and `foo\\bar` load ONE manifest there
+        // and two here. No key computed from such a subdir means the same thing on both
+        // platforms, so it is reported rather than guessed at — and normalising instead
+        // would fold two genuinely distinct Linux directories together.
+        let index = index_multi(
+            "demo",
+            &[
+                ("0.1.0", "main.tar.gz", "aware-main/demo/one"),
+                ("0.2.0", "main.tar.gz", "aware-main/demo\\one"),
+            ],
+        );
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            Ok(agent_from_yaml("demo", "the current build"))
+        });
+        assert_eq!(errs.len(), 1, "the malformed entry is reported: {errs:?}");
+        assert_eq!(errs[0].0, "demo@0.2.0");
+        assert!(
+            errs[0].1.contains("backslash"),
+            "and says why: {}",
+            errs[0].1
+        );
+    }
+
+    #[test]
+    fn build_catalog_refuses_subdirs_that_differ_only_in_case() {
+        // Codex review (PR #457 round 9): a case-insensitive checkout (Windows, macOS —
+        // both default) resolves `demo` and `Demo` to ONE folder, so both entries load one
+        // manifest there while Linux sees two. `registry-index.json` is a single file
+        // served to every platform, so a pair that resolves differently per platform
+        // cannot be a valid registry whichever machine ran `reindex`.
+        let index = index_multi(
+            "demo",
+            &[
+                ("0.1.0", "main.tar.gz", "aware-main/demo"),
+                ("0.2.0", "main.tar.gz", "aware-main/Demo"),
+            ],
+        );
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            Ok(agent_from_yaml("demo", "the current build"))
+        });
+        assert_eq!(errs.len(), 1, "the case collision is reported: {errs:?}");
+        assert_eq!(errs[0].0, "demo@0.2.0");
+        assert!(
+            errs[0].1.contains("differ only in case"),
+            "and is diagnosed AS a case collision, whose remedy differs from a plain \
+             duplicate: {}",
+            errs[0].1
+        );
+    }
+
+    #[test]
+    fn build_catalog_accepts_multi_version_with_distinct_subdirs() {
+        // The correct same-tarball multi-version shape: each version frozen at its own
+        // subdir. The guard must NOT flag it, and every version is listed with the
+        // manifest that subdir actually holds.
+        let index = index_multi(
+            "demo",
+            &[
+                ("0.1.0", "main.tar.gz", "aware-main/demo-0.1.0"),
+                ("0.2.0", "main.tar.gz", "aware-main/demo"),
+            ],
+        );
+        let (cat, errs) = build_catalog(&index, "now".to_string(), |subdir| {
+            let desc = if subdir.ends_with("0.1.0") {
+                "the frozen 0.1.0 build"
+            } else {
+                "the current build"
+            };
+            Ok(agent_from_yaml("demo", desc))
+        });
+        assert!(errs.is_empty(), "distinct subdirs are legitimate: {errs:?}");
+        let demo = cat.agents.get("demo").unwrap();
+        assert_eq!(demo.versions.len(), 2, "both versions listed");
+        assert_eq!(
+            demo.versions.get("0.1.0").unwrap().description,
+            "the frozen 0.1.0 build",
+            "the 0.1.0 entry reflects its OWN subdir's manifest, not the current one"
+        );
+        assert_eq!(
+            demo.versions.get("0.2.0").unwrap().description,
+            "the current build"
         );
     }
 

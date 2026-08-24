@@ -542,6 +542,8 @@ fn publish(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
 
     let subdir = format!("aware-main/{}", rel.replace('\\', "/"));
     let raw = std::fs::read_to_string(&index_path)?;
+    // A subdir conflict is an error, so nothing is written and the index is left exactly
+    // as it was — the same shape as a failing agent being refused above.
     let updated = merge_publish_entry(&raw, &id, &version, SUBSTRATE_TARBALL, &subdir)?;
     std::fs::write(&index_path, &updated)?;
 
@@ -577,6 +579,23 @@ fn find_registry_root(start: &std::path::Path) -> Option<(std::path::PathBuf, St
 /// so existing agents keep their on-disk order — a new agent is appended, and
 /// a new version is appended within an existing agent — which keeps the
 /// publish diff minimal and reviewable instead of re-sorting the whole index.
+///
+/// **Refuses to put two of this agent's versions in one subdir.** That subdir holds
+/// exactly one manifest, so `agent reindex` cannot describe both keys from it and
+/// refuses to build a catalog (#454). Enforcing the same rule here is what stops the
+/// registry's producer emitting an index its own generator rejects — publish printing
+/// "✓ staged", and the next `reindex` exiting 3 (Codex review, PR #457 round 3).
+///
+/// **It refuses rather than retiring the old key, and that distinction is the whole
+/// point.** An earlier revision superseded any version sharing the payload, which reads
+/// as tidy bookkeeping and is in fact destructive: the index key is a RELEASE key on its
+/// own axis, not a restatement of `manifest.version`. 68 of the 78 shipped entries prove
+/// it — `tekla` is published as `2025.0.1` over a manifest declaring `0.1.4`. Superseding
+/// therefore deleted `2025.0.1` and inserted `0.1.4` on an ordinary publish of an
+/// UNCHANGED agent, breaking every external pin on the released key, which no rewrite of
+/// this repo's own bundles can reach. Whether an existing release key is stale or still
+/// pinned is not knowable from the manifest, so this refuses and lets a human decide
+/// (Codex review, PR #457 round 6).
 fn merge_publish_entry(
     index_json: &str,
     id: &str,
@@ -598,6 +617,67 @@ fn merge_publish_entry(
         .ok_or_else(|| {
             AwareError::Validation(format!("registry entry {id} missing a `versions` object"))
         })?;
+
+    // Re-publishing the SAME key is an overwrite of that entry, not a conflict — it is how
+    // a subdir or tarball correction lands — so only OTHER keys are considered.
+    // Both sides of the comparison must be portably written or the keys are meaningless.
+    // `publish` derives its own subdir with `/`, so this fires on an entry ALREADY in the
+    // index — malformed input that would resolve differently per platform.
+    crate::registry::check_subdir_portable(subdir).map_err(AwareError::Validation)?;
+    for (ver, ve) in versions.iter() {
+        if let Some(s) = ve.get("subdir").and_then(|s| s.as_str())
+            && let Err(reason) = crate::registry::check_subdir_portable(s)
+        {
+            return Err(AwareError::Validation(format!("{id}@{ver}: {reason}")));
+        }
+    }
+    // Keyed through the routine `reindex`'s guard AND loader use, so publish cannot stage
+    // a pair reindex then refuses — which is exactly how the producer came to emit what
+    // the generator rejects (Codex review, PR #457, rounds 3 and 7).
+    // Case-folded for the same reason the guard folds: the index is one file served to
+    // every platform, and a case-insensitive checkout resolves `foo` and `Foo` to one
+    // folder (Codex review, PR #457 round 9).
+    let target = crate::registry::portable_subdir_key(subdir);
+    let conflict = versions.iter().find(|(ver, ve)| {
+        ver.as_str() != version
+            && ve
+                .get("subdir")
+                .and_then(|s| s.as_str())
+                .is_some_and(|s| crate::registry::portable_subdir_key(s) == target)
+    });
+    if let Some((other, other_entry)) = conflict {
+        // Quote the OCCUPYING entry's subdir as written, not the folded key — the author
+        // has to find that string in the file, and `foo` shown for `Foo` sends them
+        // looking for a line that is not there.
+        let occupied = other_entry
+            .get("subdir")
+            .and_then(|s| s.as_str())
+            .unwrap_or(subdir);
+        // A case-only difference is a different mistake with a different remedy: on the
+        // author's Linux checkout those ARE two folders, so "already publishes it" would
+        // read as simply wrong unless the message says why they collide anyway.
+        let why = if crate::registry::checkout_relative_subdir(occupied)
+            == crate::registry::checkout_relative_subdir(subdir)
+        {
+            String::new()
+        } else {
+            format!(
+                " Those two differ only in case, which is two folders on Linux but ONE on a \
+                 case-insensitive checkout (Windows, macOS) — and registry-index.json is a \
+                 single file served to every platform, so '{subdir}' cannot be a distinct \
+                 location for all of them."
+            )
+        };
+        return Err(AwareError::Validation(format!(
+            "{id}@{other} already publishes subdir '{occupied}', so staging {id}@{version} \
+             there would leave two versions sharing one folder — that folder holds a single \
+             manifest, so `aware agent reindex` cannot describe both and will refuse.{why} \
+             Give {version} its own subdir, or remove the {other} entry from \
+             registry-index.json first if that release is genuinely retired (check nothing \
+             still pins it — bundles name exact versions)."
+        )));
+    }
+
     versions.insert(
         version.to_string(),
         serde_json::json!({ "tarball": tarball, "subdir": subdir }),
@@ -635,11 +715,130 @@ mod publish_tests {
 
     #[test]
     fn merge_adds_version_to_existing_agent() {
+        // A DIFFERENT subdir, so both versions coexist — the multi-version shape that
+        // `reindex` can describe, because each key has its own manifest to read.
         let out = merge_publish_entry(SAMPLE, "tekla", "2026.0.0", "tb", "sd").unwrap();
         let parsed = crate::registry::Index::parse(out.as_bytes()).unwrap();
         let tekla = parsed.agents.get("tekla").unwrap();
         assert!(tekla.versions.contains_key("2025.0.1"), "old version kept");
         assert!(tekla.versions.contains_key("2026.0.0"), "new version added");
+    }
+
+    #[test]
+    fn merge_refuses_to_put_two_versions_in_one_subdir() {
+        // #454 at the producer: staging a second key on a folder that already has one
+        // would build an index `agent reindex` refuses, since that folder holds a single
+        // manifest. Publish says so instead of emitting it (Codex review, PR #457 r3).
+        let err = merge_publish_entry(SAMPLE, "tekla", "2026.0.0", "t", "s").unwrap_err();
+        let msg = err.to_string();
+        assert!(
+            msg.contains("tekla@2025.0.1") && msg.contains("already publishes subdir"),
+            "the message names the occupying key: {msg}"
+        );
+        assert!(msg.contains("own subdir"), "and states the remedy: {msg}");
+    }
+
+    #[test]
+    fn merge_refuses_a_conflict_spelled_differently() {
+        // The occupying entry's subdir and the incoming one name one directory in two
+        // spellings. A raw-string comparison would miss it and stage the conflict anyway
+        // (Codex review, PR #457, rounds 2 and 6).
+        for spelling in ["s/", "s/.", "./s", "x/../s"] {
+            let err = merge_publish_entry(SAMPLE, "tekla", "2026.0.0", "t", spelling)
+                .unwrap_err()
+                .to_string();
+            assert!(
+                err.contains("tekla@2025.0.1"),
+                "'{spelling}' is the same folder as 's': {err}"
+            );
+        }
+    }
+
+    #[test]
+    fn merge_does_not_delete_a_release_key_whose_axis_differs_from_the_manifest() {
+        // The defect this refusal replaced, pinned so it cannot come back. An index key is
+        // a RELEASE key on its own axis: 68 of 78 shipped entries differ from their
+        // manifest version, `tekla` being published as `2025.0.1` over a `0.1.4` manifest.
+        // An earlier revision "superseded" the payload-sharing key, so publishing that
+        // UNCHANGED agent deleted `2025.0.1` — breaking every external pin on the released
+        // version (Codex review, PR #457 round 6).
+        let err = merge_publish_entry(SAMPLE, "tekla", "0.1.4", "t", "s");
+        assert!(
+            err.is_err(),
+            "the conflict is refused, not resolved by deletion"
+        );
+
+        // And nothing in the returned document can have dropped it, because no document
+        // is returned at all — the caller writes only on Ok.
+        let untouched = crate::registry::Index::parse(SAMPLE.as_bytes()).unwrap();
+        assert!(
+            untouched.agents["tekla"].versions.contains_key("2025.0.1"),
+            "the release key survives"
+        );
+    }
+
+    #[test]
+    fn merge_refuses_a_conflict_hidden_by_the_archive_root_prefix() {
+        // Codex review (PR #457 round 7): `reindex` strips `aware-main/` before reading the
+        // checkout, so an entry written WITHOUT the prefix names the same folder as one
+        // written with it. Publish keys on the same routine, so it refuses here too rather
+        // than staging an index reindex will reject.
+        let src = r#"{"version":"1.0","updated-at":"old","agents":{"demo":{"versions":{"0.1.0":{"tarball":"t","subdir":"20-agents/demo"}}}},"bundles":{}}"#;
+        let err = merge_publish_entry(src, "demo", "0.2.0", "t", "aware-main/20-agents/demo")
+            .unwrap_err()
+            .to_string();
+        assert!(
+            err.contains("demo@0.1.0"),
+            "the prefixed and bare spellings are one folder: {err}"
+        );
+    }
+
+    #[test]
+    fn merge_refuses_a_backslash_subdir_already_in_the_index() {
+        // Codex review (PR #457 round 8): a backslash separates on Windows and does not on
+        // Linux, so an entry carrying one resolves to different manifests per platform and
+        // no collision key over it is meaningful. `publish` derives its own subdir with
+        // `/`, so this can only arrive as malformed input already in the index.
+        let src = r#"{"version":"1.0","updated-at":"old","agents":{"demo":{"versions":{"0.1.0":{"tarball":"t","subdir":"aware-main\\demo"}}}},"bundles":{}}"#;
+        let err = merge_publish_entry(src, "demo", "0.2.0", "t", "aware-main/other")
+            .unwrap_err()
+            .to_string();
+        assert!(
+            err.contains("backslash") && err.contains("demo@0.1.0"),
+            "the malformed entry is named: {err}"
+        );
+    }
+
+    #[test]
+    fn merge_refuses_a_subdir_differing_only_in_case() {
+        // Codex review (PR #457 round 9): two folders on Linux, one on a case-insensitive
+        // checkout. The message has to explain that, or on the author's Linux machine
+        // "already publishes it" reads as simply wrong.
+        let src = r#"{"version":"1.0","updated-at":"old","agents":{"demo":{"versions":{"0.1.0":{"tarball":"t","subdir":"aware-main/demo"}}}},"bundles":{}}"#;
+        let err = merge_publish_entry(src, "demo", "0.2.0", "t", "aware-main/Demo")
+            .unwrap_err()
+            .to_string();
+        assert!(err.contains("demo@0.1.0"), "names the occupying key: {err}");
+        assert!(
+            err.contains("differ only in case"),
+            "and says why they collide: {err}"
+        );
+        // The OCCUPYING entry is quoted as written, so the author can find that line.
+        assert!(
+            err.contains("'aware-main/demo'"),
+            "quotes the real stored subdir, not the folded key: {err}"
+        );
+    }
+
+    #[test]
+    fn merge_republishing_one_version_overwrites_its_own_entry() {
+        // Re-publishing the SAME key is how a subdir/tarball correction lands, so it must
+        // not be mistaken for a conflict with itself.
+        let out = merge_publish_entry(SAMPLE, "tekla", "2025.0.1", "t2", "s").unwrap();
+        let parsed = crate::registry::Index::parse(out.as_bytes()).unwrap();
+        let (_, e) = parsed.resolve("tekla", Some("2025.0.1")).unwrap();
+        assert_eq!(e.tarball, "t2", "the entry is updated in place");
+        assert_eq!(parsed.agents["tekla"].versions.len(), 1);
     }
 
     #[test]
@@ -1213,20 +1412,23 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     let index = crate::registry::Index::parse(std::fs::File::open(&index_path)?)?;
 
     let (cat, errors) = catalog::build_catalog(&index, crate::builder::now_iso(), |subdir| {
-        let rel = subdir.strip_prefix("aware-main/").unwrap_or(subdir);
+        // The SAME mapping the collision guard keys on, so the two cannot disagree about
+        // which entries land on one manifest (Codex review, PR #457 round 7).
+        let rel = crate::registry::checkout_relative_subdir(subdir);
         let manifest = repo_root.join(rel).join("manifest.yaml");
         crate::manifest::loader::load_agent(&manifest)
     });
 
-    // Refuse to emit (or pass --check on) a partial catalog: a manifest that fails to load is a
-    // real problem to fix, not something to silently drop from the published catalog.
+    // Refuse to emit (or pass --check on) a partial or misleading catalog: a manifest that
+    // fails to load, or a version key that shares a subdir with another (#454), is a real
+    // problem to fix, not something to silently drop from — or fabricate into — the catalog.
     if !errors.is_empty() {
-        eprintln!("⚠ {} agent(s) failed to load:", errors.len());
+        eprintln!("⚠ {} registry problem(s):", errors.len());
         for (id, e) in &errors {
             eprintln!("  ✗ {id}: {e}");
         }
         return Err(AwareError::Validation(format!(
-            "{} agent(s) failed to load — fix the manifest(s) and re-run",
+            "{} registry problem(s) — fix the index/manifest(s) and re-run",
             errors.len()
         )));
     }
