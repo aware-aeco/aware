@@ -66,15 +66,18 @@ fn write_agent_with_missing_skill(dir: &Path, id: &str) {
 }
 
 /// A `registry-index.json` where ONE agent carries several version entries, each
-/// `(version, subdir)`. Distinct from [`write_index`], which gives every entry its
-/// own agent id — this is the multi-version-of-one-agent shape #454 is about.
-fn write_index_multiversion(root: &Path, id: &str, versions: &[(&str, &str)]) {
+/// `(version, tarball, subdir)`. Distinct from [`write_index`], which gives every
+/// entry its own agent id — this is the multi-version-of-one-agent shape #454 is
+/// about. The tarball is explicit per version because a version's payload is the
+/// `(tarball, subdir)` PAIR: one subdir across two immutable tarballs is a supported
+/// shape, while one subdir in one tarball is the collision.
+fn write_index_multiversion(root: &Path, id: &str, versions: &[(&str, &str, &str)]) {
     let vmap: serde_json::Map<String, serde_json::Value> = versions
         .iter()
-        .map(|(ver, subdir)| {
+        .map(|(ver, tarball, subdir)| {
             (
                 (*ver).to_string(),
-                serde_json::json!({ "tarball": SUBSTRATE_TARBALL, "subdir": *subdir }),
+                serde_json::json!({ "tarball": *tarball, "subdir": *subdir }),
             )
         })
         .collect();
@@ -451,8 +454,8 @@ fn reindex_refuses_two_versions_sharing_one_subdir_and_writes_nothing() {
         root,
         "demo",
         &[
-            ("0.1.0", "aware-main/20-agents/aeco/demo"),
-            ("0.2.0", "aware-main/20-agents/aeco/demo"),
+            ("0.1.0", SUBSTRATE_TARBALL, "aware-main/20-agents/aeco/demo"),
+            ("0.2.0", SUBSTRATE_TARBALL, "aware-main/20-agents/aeco/demo"),
         ],
     );
 
@@ -471,6 +474,94 @@ fn reindex_refuses_two_versions_sharing_one_subdir_and_writes_nothing() {
         !root.join("registry-catalog.json").exists(),
         "a refused reindex must not write the misleading catalog"
     );
+}
+
+#[test]
+fn reindex_allows_one_subdir_published_from_distinct_tarballs() {
+    // Codex review (PR #457, P1): versions shipped as separate IMMUTABLE tarballs
+    // legitimately reuse one archive-relative subdir — `agent_update.rs`'s
+    // `two_version_registry` builds exactly that supported shape. Keying the collision
+    // guard on the subdir alone made `reindex` exit 3 on a perfectly valid registry, so
+    // this pins the payload as the `(tarball, subdir)` PAIR through the real binary.
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    write_agent(
+        &root.join("20-agents/aeco/demo"),
+        "demo",
+        "1.3.0",
+        "A demo agent.",
+    );
+    write_index_multiversion(
+        root,
+        "demo",
+        &[
+            (
+                "1.2.0",
+                "https://example.invalid/demo-1.2.0.tar.gz",
+                "aware-main/20-agents/aeco/demo",
+            ),
+            (
+                "1.3.0",
+                "https://example.invalid/demo-1.3.0.tar.gz",
+                "aware-main/20-agents/aeco/demo",
+            ),
+        ],
+    );
+
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .args(["agent", "reindex"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("1 agents"));
+
+    let cat: serde_json::Value =
+        serde_json::from_str(&std::fs::read_to_string(root.join("registry-catalog.json")).unwrap())
+            .unwrap();
+    let versions = &cat["agents"]["demo"]["versions"];
+    assert!(
+        versions.get("1.2.0").is_some() && versions.get("1.3.0").is_some(),
+        "both versions survive — distinct tarballs are not a collision: {cat:#}"
+    );
+}
+
+#[test]
+fn reindex_refuses_a_collision_spelled_with_a_trailing_slash() {
+    // Codex review (PR #457, P2): the installer's `extract_subdir` trims trailing
+    // slashes, so `foo` and `foo/` are one directory. A raw-string guard let that
+    // spelling through into the catalog it exists to prevent.
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    write_agent(
+        &root.join("20-agents/aeco/demo"),
+        "demo",
+        "0.2.0",
+        "The current 0.2.0 build.",
+    );
+    write_index_multiversion(
+        root,
+        "demo",
+        &[
+            ("0.1.0", SUBSTRATE_TARBALL, "aware-main/20-agents/aeco/demo"),
+            (
+                "0.2.0",
+                SUBSTRATE_TARBALL,
+                "aware-main/20-agents/aeco/demo/",
+            ),
+        ],
+    );
+
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .args(["agent", "reindex"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("demo@0.2.0"));
+
+    assert!(!root.join("registry-catalog.json").exists());
 }
 
 #[test]
@@ -496,8 +587,8 @@ fn reindex_accepts_two_versions_at_distinct_subdirs() {
         root,
         "demo",
         &[
-            ("0.1.0", "aware-main/archive/demo-0.1.0"),
-            ("0.2.0", "aware-main/20-agents/aeco/demo"),
+            ("0.1.0", SUBSTRATE_TARBALL, "aware-main/archive/demo-0.1.0"),
+            ("0.2.0", SUBSTRATE_TARBALL, "aware-main/20-agents/aeco/demo"),
         ],
     );
 

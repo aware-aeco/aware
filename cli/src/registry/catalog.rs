@@ -273,25 +273,40 @@ where
     let mut agents: BTreeMap<String, CatalogAgent> = BTreeMap::new();
     let mut errors: Vec<(String, String)> = Vec::new();
     for (id, entry) in &index.agents {
-        // Two version keys of ONE agent that resolve to the same subdir cannot each
-        // be built into a faithful catalog entry (#454). The tarball is a mutable
-        // `main` archive and a subdir holds exactly one manifest, so both keys load
-        // that ONE current manifest: the older key's entry is then stamped with the
-        // newer build's description, commands and `manifest-version`, advertising a
-        // historical version whose files that path no longer holds. It cannot be
+        // Two version keys of ONE agent that name the same PAYLOAD — the same tarball
+        // AND the same subdir — cannot each be built into a faithful catalog entry
+        // (#454). One subdir of one archive holds exactly one manifest, so both keys
+        // load that ONE current manifest: the older key's entry is then stamped with
+        // the newer build's description, commands and `manifest-version`, advertising
+        // a historical version whose files that path no longer holds. It cannot be
         // reconciled from the manifest alone — the old build is simply gone from the
         // path — so refuse it rather than emit the fiction. The author gives each
         // version its own frozen subdir, or drops the stale key.
+        //
+        // The pair is `(tarball, subdir)`, never the subdir alone. Versions published
+        // as separate immutable tarballs legitimately reuse one archive-relative
+        // subdir — `tests/agent_update.rs`'s `two_version_registry` is exactly that
+        // supported shape (`probe-agent` 1.2.0 / 1.3.0, one subdir, a tarball each) —
+        // and keying on the subdir would reject it. (Codex review, PR #457.)
+        //
+        // Subdirs are compared as the INSTALLER resolves them: `extract_subdir`
+        // (`install/registry.rs`) trims trailing slashes, so `foo` and `foo/` are one
+        // directory to it and must be one key here, or a collision spelled with a
+        // slash slips past this guard into the catalog it exists to prevent. Tarballs
+        // are compared verbatim: two spellings of one URL then read as distinct and
+        // are ALLOWED, which is the safe direction for a guard whose false positive
+        // rejects a valid registry.
         //
         // The check is WITHIN one agent id. Two DIFFERENT ids sharing a subdir is the
         // legitimate rename-alias shape (#256: `steel-detailer-aisc` → the `us` subdir),
         // which this never sees, since it only compares an entry's own versions.
         // `manifest-version` differing from the index key is intended and untouched
         // (calendar keys like `tekla@2025.0.1` over a `0.30.0` manifest) — only a
-        // SHARED subdir is the defect, never a differing version.
-        let mut seen_subdirs: BTreeMap<&str, &String> = BTreeMap::new();
+        // shared payload is the defect, never a differing version.
+        let mut seen_sources: BTreeMap<(&str, &str), &String> = BTreeMap::new();
         for (ver, ve) in &entry.versions {
-            if let Some(other) = seen_subdirs.insert(ve.subdir.as_str(), ver) {
+            let source = (ve.tarball.as_str(), ve.subdir.trim_end_matches('/'));
+            if let Some(other) = seen_sources.insert(source, ver) {
                 // Name the newer key as the failing one and the older as the peer, so
                 // the message reads the same whichever iteration order surfaced them.
                 let (older, newer) = if crate::validate::compare_version_keys(other, ver).is_le() {
@@ -302,12 +317,13 @@ where
                 errors.push((
                     format!("{id}@{newer}"),
                     format!(
-                        "shares subdir '{}' with version {older}. Two version keys \
-                         resolving to one subdir are both indexed from that path's single \
-                         current manifest, so the older key would advertise the newer \
-                         build's metadata. Give each version its own subdir, or remove \
-                         the stale key.",
-                        ve.subdir
+                        "shares subdir '{}' in tarball '{}' with version {older}. Two \
+                         version keys resolving to one subdir of one archive are both \
+                         indexed from that path's single current manifest, so the older \
+                         key would advertise the newer build's metadata. Give each \
+                         version its own subdir or its own tarball, or remove the stale \
+                         key.",
+                        source.1, source.0
                     ),
                 ));
             }
@@ -647,15 +663,16 @@ mod tests {
         );
     }
 
-    /// Build an index with one agent carrying SEVERAL version entries, each with its
-    /// own subdir — the multi-version shape the collision guard must still accept.
-    fn index_multi(id: &str, versions: &[(&str, &str)]) -> Index {
+    /// Build an index with one agent carrying SEVERAL version entries, each named as
+    /// `(version, tarball, subdir)` — the multi-version shapes the collision guard has
+    /// to tell apart. The tarball is explicit because it is half the payload identity.
+    fn index_multi(id: &str, versions: &[(&str, &str, &str)]) -> Index {
         let mut vmap = BTreeMap::new();
-        for (ver, subdir) in versions {
+        for (ver, tarball, subdir) in versions {
             vmap.insert(
                 (*ver).to_string(),
                 VersionEntry {
-                    tarball: "t".to_string(),
+                    tarball: (*tarball).to_string(),
                     subdir: (*subdir).to_string(),
                 },
             );
@@ -677,14 +694,17 @@ mod tests {
     }
 
     #[test]
-    fn build_catalog_refuses_two_versions_sharing_one_subdir() {
+    fn build_catalog_refuses_two_versions_sharing_one_payload() {
         // #454: bumping an agent's manifest and adding a new index version that reuses
-        // the SAME subdir makes reindex build both keys from that path's one current
-        // manifest, so the older key advertises the newer build. That is a registry
-        // defect, reported (so reindex refuses) rather than silently fabricated.
+        // the SAME tarball and subdir makes reindex build both keys from that path's
+        // one current manifest, so the older key advertises the newer build. That is a
+        // registry defect, reported (so reindex refuses) rather than silently fabricated.
         let index = index_multi(
             "demo",
-            &[("0.1.0", "aware-main/demo"), ("0.2.0", "aware-main/demo")],
+            &[
+                ("0.1.0", "main.tar.gz", "aware-main/demo"),
+                ("0.2.0", "main.tar.gz", "aware-main/demo"),
+            ],
         );
         let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
             // Both keys resolve here; the manifest declares only the current (0.2.0) build.
@@ -707,15 +727,71 @@ mod tests {
     }
 
     #[test]
-    fn build_catalog_accepts_multi_version_with_distinct_subdirs() {
-        // The correct multi-version shape: each version frozen at its own subdir. The
-        // guard must NOT flag it, and every version is listed with the manifest that
-        // subdir actually holds.
+    fn build_catalog_allows_one_subdir_across_distinct_tarballs() {
+        // Codex review (PR #457, P1): versions published as separate IMMUTABLE tarballs
+        // legitimately reuse one archive-relative subdir — `tests/agent_update.rs`'s
+        // `two_version_registry` builds exactly this (`probe-agent` 1.2.0 / 1.3.0, one
+        // subdir, a tarball each) and it is a supported registry shape. Keying the guard
+        // on the subdir alone rejected it with exit 3; the payload is `(tarball, subdir)`.
+        let index = index_multi(
+            "probe-agent",
+            &[
+                (
+                    "1.2.0",
+                    "probe-1.2.0.tar.gz",
+                    "aware-main/20-agents/probe-agent",
+                ),
+                (
+                    "1.3.0",
+                    "probe-1.3.0.tar.gz",
+                    "aware-main/20-agents/probe-agent",
+                ),
+            ],
+        );
+        let (cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            Ok(agent_from_yaml("probe-agent", "a probe"))
+        });
+        assert!(
+            errs.is_empty(),
+            "distinct tarballs are independent payloads, not a collision: {errs:?}"
+        );
+        assert_eq!(cat.agents.get("probe-agent").unwrap().versions.len(), 2);
+    }
+
+    #[test]
+    fn build_catalog_sees_through_a_trailing_slash_spelling() {
+        // Codex review (PR #457, P2): `extract_subdir` (`install/registry.rs`) trims
+        // trailing slashes, so `foo` and `foo/` are ONE directory to the installer. A
+        // raw-string key treated them as two and let the collision through into the
+        // very catalog this guard exists to prevent.
         let index = index_multi(
             "demo",
             &[
-                ("0.1.0", "aware-main/demo-0.1.0"),
-                ("0.2.0", "aware-main/demo"),
+                ("0.1.0", "main.tar.gz", "aware-main/demo"),
+                ("0.2.0", "main.tar.gz", "aware-main/demo/"),
+            ],
+        );
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            Ok(agent_from_yaml("demo", "the current build"))
+        });
+        assert_eq!(
+            errs.len(),
+            1,
+            "a trailing slash is the same directory, so still one collision: {errs:?}"
+        );
+        assert_eq!(errs[0].0, "demo@0.2.0");
+    }
+
+    #[test]
+    fn build_catalog_accepts_multi_version_with_distinct_subdirs() {
+        // The correct same-tarball multi-version shape: each version frozen at its own
+        // subdir. The guard must NOT flag it, and every version is listed with the
+        // manifest that subdir actually holds.
+        let index = index_multi(
+            "demo",
+            &[
+                ("0.1.0", "main.tar.gz", "aware-main/demo-0.1.0"),
+                ("0.2.0", "main.tar.gz", "aware-main/demo"),
             ],
         );
         let (cat, errs) = build_catalog(&index, "now".to_string(), |subdir| {
