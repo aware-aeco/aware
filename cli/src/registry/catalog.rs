@@ -273,36 +273,54 @@ where
     let mut agents: BTreeMap<String, CatalogAgent> = BTreeMap::new();
     let mut errors: Vec<(String, String)> = Vec::new();
     for (id, entry) in &index.agents {
-        // Two version keys of ONE agent that name the same PAYLOAD — the same tarball
-        // AND the same subdir — cannot each be built into a faithful catalog entry
-        // (#454). One subdir of one archive holds exactly one manifest, so both keys
-        // load that ONE current manifest: the older key's entry is then stamped with
-        // the newer build's description, commands and `manifest-version`, advertising
-        // a historical version whose files that path no longer holds. It cannot be
-        // reconciled from the manifest alone — the old build is simply gone from the
-        // path — so refuse it rather than emit the fiction. The author gives each
-        // version its own frozen subdir, or drops the stale key.
+        // Two version keys of ONE agent that resolve to the same SUBDIR cannot each be
+        // built into a faithful catalog entry (#454), so refuse rather than emit the
+        // fiction.
         //
-        // The pair is `(tarball, subdir)`, never the subdir alone. Versions published
-        // as separate immutable tarballs legitimately reuse one archive-relative
-        // subdir — `tests/agent_update.rs`'s `two_version_registry` is exactly that
-        // supported shape (`probe-agent` 1.2.0 / 1.3.0, one subdir, a tarball each) —
-        // and keying on the subdir would reject it. (Codex review, PR #457.)
+        // The key is the subdir alone, and deliberately so: it is exactly what decides
+        // which manifest this build reads. `load` is handed a subdir and nothing else —
+        // `agent reindex` resolves it against the local checkout
+        // (`repo_root/<subdir>/manifest.yaml`) and never opens `tarball` at all. So two
+        // versions sharing a subdir get the SAME manifest whatever their tarballs say,
+        // and the older key's entry is stamped with the current build's description,
+        // commands and `manifest-version` — a historical version described by files that
+        // path no longer holds.
         //
-        // "Same payload" is [`crate::registry::payload_id`], shared with `agent publish`
-        // so the registry's producer and its generator cannot drift on the rule — a
-        // second copy here is what let publish emit exactly what this refuses.
+        // Keying this on the installer's payload identity (`registry::payload_id`, the
+        // `(tarball, subdir)` pair) was wrong in a way worth recording, because it is the
+        // natural mistake: it describes when two keys INSTALL alike, which is a different
+        // question from when this generator can TELL THEM APART. Under that key, versions
+        // in distinct immutable tarballs sharing one subdir passed the guard and were then
+        // both described from the one checkout manifest — reindex reporting success while
+        // reproducing the exact defect #454 is about. (Codex review, PR #457, rounds 1
+        // and 5: round 1 caught the pair being ignored, round 5 caught that honouring it
+        // here reopened the hole.)
+        //
+        // Refusing that shape is the honest answer while this reads one checkout: a
+        // remote archive's bytes are not present to describe. Teaching `reindex` to fetch
+        // each version's tarball would lift the restriction and is a real option — it is
+        // also a new mechanism (network access inside a CI gate, caching, offline
+        // behaviour), so it belongs to a maintainer, not to this fix.
+        //
+        // `agent publish` keeps `payload_id`, which is right THERE: superseding is about
+        // which keys install identically, and it must not retire an entry pinned to a
+        // different archive. Publish only ever writes the substrate tarball, so what it
+        // emits always satisfies this guard.
         //
         // The check is WITHIN one agent id. Two DIFFERENT ids sharing a subdir is the
         // legitimate rename-alias shape (#256: `steel-detailer-aisc` → the `us` subdir),
         // which this never sees, since it only compares an entry's own versions.
         // `manifest-version` differing from the index key is intended and untouched
-        // (calendar keys like `tekla@2025.0.1` over a `0.30.0` manifest) — only a
-        // shared payload is the defect, never a differing version.
-        let mut seen_sources: BTreeMap<(&str, &str), &String> = BTreeMap::new();
+        // (calendar keys like `tekla@2025.0.1` over a `0.30.0` manifest) — only a shared
+        // subdir is the defect, never a differing version.
+        let mut seen_subdirs: BTreeMap<&str, (&String, &str)> = BTreeMap::new();
         for (ver, ve) in &entry.versions {
-            let source = crate::registry::payload_id(&ve.tarball, &ve.subdir);
-            if let Some(other) = seen_sources.insert(source, ver) {
+            // Trimmed as `extract_subdir` trims it, so `foo` and `foo/` are one directory
+            // here as they are to the installer.
+            let (_, subdir) = crate::registry::payload_id(&ve.tarball, &ve.subdir);
+            if let Some((other, other_tarball)) =
+                seen_subdirs.insert(subdir, (ver, ve.tarball.as_str()))
+            {
                 // Name the newer key as the failing one and the older as the peer, so
                 // the message reads the same whichever iteration order surfaced them.
                 let (older, newer) = if crate::validate::compare_version_keys(other, ver).is_le() {
@@ -310,17 +328,23 @@ where
                 } else {
                     (ver, other)
                 };
+                // Distinct tarballs are a DIFFERENT mistake from one archive reused, and
+                // the remedy differs too, so say which one this is rather than emitting a
+                // message that fits neither.
+                let detail = if other_tarball == ve.tarball {
+                    "Both keys name one subdir of one archive, so both are indexed from \
+                     that path's single current manifest and the older key would \
+                     advertise the newer build's metadata. Give each version its own \
+                     subdir, or remove the stale key."
+                } else {
+                    "The tarballs differ, but `reindex` reads this checkout and never \
+                     opens either archive — so both keys are indexed from this one \
+                     path's manifest and the older key would advertise the current \
+                     build's metadata. Give each version its own subdir."
+                };
                 errors.push((
                     format!("{id}@{newer}"),
-                    format!(
-                        "shares subdir '{}' in tarball '{}' with version {older}. Two \
-                         version keys resolving to one subdir of one archive are both \
-                         indexed from that path's single current manifest, so the older \
-                         key would advertise the newer build's metadata. Give each \
-                         version its own subdir or its own tarball, or remove the stale \
-                         key.",
-                        source.1, source.0
-                    ),
+                    format!("shares subdir '{subdir}' with version {older}. {detail}"),
                 ));
             }
         }
@@ -723,12 +747,16 @@ mod tests {
     }
 
     #[test]
-    fn build_catalog_allows_one_subdir_across_distinct_tarballs() {
-        // Codex review (PR #457, P1): versions published as separate IMMUTABLE tarballs
-        // legitimately reuse one archive-relative subdir — `tests/agent_update.rs`'s
-        // `two_version_registry` builds exactly this (`probe-agent` 1.2.0 / 1.3.0, one
-        // subdir, a tarball each) and it is a supported registry shape. Keying the guard
-        // on the subdir alone rejected it with exit 3; the payload is `(tarball, subdir)`.
+    fn build_catalog_refuses_one_subdir_even_across_distinct_tarballs() {
+        // Codex review (PR #457, round 5): allowing this shape — which round 3 did, keyed
+        // on the installer's `(tarball, subdir)` payload identity — reopened the very hole
+        // #454 is about. `load` receives only a subdir and `reindex` resolves it against
+        // the local checkout, never opening either tarball, so BOTH keys were described
+        // from the one checkout manifest while reindex reported success.
+        //
+        // The distinction is the point: `payload_id` says when two keys INSTALL alike;
+        // this guard needs to know when this generator can TELL THEM APART, and reading
+        // one checkout it cannot. Refusing is honest until reindex fetches each archive.
         let index = index_multi(
             "probe-agent",
             &[
@@ -744,14 +772,21 @@ mod tests {
                 ),
             ],
         );
-        let (cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+        let (_cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
             Ok(agent_from_yaml("probe-agent", "a probe"))
         });
-        assert!(
-            errs.is_empty(),
-            "distinct tarballs are independent payloads, not a collision: {errs:?}"
+        assert_eq!(
+            errs.len(),
+            1,
+            "one subdir, one manifest, one refusal: {errs:?}"
         );
-        assert_eq!(cat.agents.get("probe-agent").unwrap().versions.len(), 2);
+        assert_eq!(errs[0].0, "probe-agent@1.3.0");
+        assert!(
+            errs[0].1.contains("tarballs differ"),
+            "the message names the distinct-tarball case specifically, since its remedy \
+             differs from the one-archive case: {}",
+            errs[0].1
+        );
     }
 
     #[test]

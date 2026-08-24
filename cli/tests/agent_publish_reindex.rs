@@ -68,9 +68,10 @@ fn write_agent_with_missing_skill(dir: &Path, id: &str) {
 /// A `registry-index.json` where ONE agent carries several version entries, each
 /// `(version, tarball, subdir)`. Distinct from [`write_index`], which gives every
 /// entry its own agent id — this is the multi-version-of-one-agent shape #454 is
-/// about. The tarball is explicit per version because a version's payload is the
-/// `(tarball, subdir)` PAIR: one subdir across two immutable tarballs is a supported
-/// shape, while one subdir in one tarball is the collision.
+/// about. The tarball is explicit per version so a test can vary it independently of
+/// the subdir: `reindex` refuses a shared subdir either way (it reads the checkout,
+/// not the archives), but the two cases get different diagnostics and different
+/// remedies, and `publish` treats them differently when superseding.
 fn write_index_multiversion(root: &Path, id: &str, versions: &[(&str, &str, &str)]) {
     let vmap: serde_json::Map<String, serde_json::Value> = versions
         .iter()
@@ -538,12 +539,12 @@ fn reindex_refuses_two_versions_sharing_one_subdir_and_writes_nothing() {
 }
 
 #[test]
-fn reindex_allows_one_subdir_published_from_distinct_tarballs() {
-    // Codex review (PR #457, P1): versions shipped as separate IMMUTABLE tarballs
-    // legitimately reuse one archive-relative subdir — `agent_update.rs`'s
-    // `two_version_registry` builds exactly that supported shape. Keying the collision
-    // guard on the subdir alone made `reindex` exit 3 on a perfectly valid registry, so
-    // this pins the payload as the `(tarball, subdir)` PAIR through the real binary.
+fn reindex_refuses_one_subdir_even_when_the_tarballs_differ() {
+    // Codex review (PR #457, round 5): reindex resolves a version's subdir against the
+    // LOCAL CHECKOUT and never opens its tarball, so two versions sharing a subdir are
+    // both described by that path's single manifest however their tarballs differ —
+    // reproducing #454 while reporting success. Refusing is honest until reindex can
+    // fetch each archive.
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path();
     write_agent(
@@ -574,16 +575,14 @@ fn reindex_allows_one_subdir_published_from_distinct_tarballs() {
         .env("AWARE_HOME", home_in(root))
         .args(["agent", "reindex"])
         .assert()
-        .success()
-        .stdout(predicate::str::contains("1 agents"));
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("demo@1.3.0"))
+        .stderr(predicate::str::contains("tarballs differ"));
 
-    let cat: serde_json::Value =
-        serde_json::from_str(&std::fs::read_to_string(root.join("registry-catalog.json")).unwrap())
-            .unwrap();
-    let versions = &cat["agents"]["demo"]["versions"];
     assert!(
-        versions.get("1.2.0").is_some() && versions.get("1.3.0").is_some(),
-        "both versions survive — distinct tarballs are not a collision: {cat:#}"
+        !root.join("registry-catalog.json").exists(),
+        "a refused reindex must not write the misleading catalog"
     );
 }
 
