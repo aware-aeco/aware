@@ -286,12 +286,12 @@ where
         // commands and `manifest-version` — a historical version described by files that
         // path no longer holds.
         //
-        // Keying this on the installer's payload identity (`registry::payload_id`, the
-        // `(tarball, subdir)` pair) was wrong in a way worth recording, because it is the
-        // natural mistake: it describes when two keys INSTALL alike, which is a different
-        // question from when this generator can TELL THEM APART. Under that key, versions
-        // in distinct immutable tarballs sharing one subdir passed the guard and were then
-        // both described from the one checkout manifest — reindex reporting success while
+        // Keying this on the installer's payload identity (a `(tarball, subdir)` pair)
+        // was wrong in a way worth recording, because it is the natural mistake: it
+        // describes when two keys INSTALL alike, which is a different question from when
+        // this generator can TELL THEM APART. Under that key, versions in distinct
+        // immutable tarballs sharing one subdir passed the guard and were then both
+        // described from the one checkout manifest — reindex reporting success while
         // reproducing the exact defect #454 is about. (Codex review, PR #457, rounds 1
         // and 5: round 1 caught the pair being ignored, round 5 caught that honouring it
         // here reopened the hole.)
@@ -302,10 +302,8 @@ where
         // also a new mechanism (network access inside a CI gate, caching, offline
         // behaviour), so it belongs to a maintainer, not to this fix.
         //
-        // `agent publish` keeps `payload_id`, which is right THERE: superseding is about
-        // which keys install identically, and it must not retire an entry pinned to a
-        // different archive. Publish only ever writes the substrate tarball, so what it
-        // emits always satisfies this guard.
+        // `agent publish` enforces the SAME rule before it writes, so the registry's
+        // producer cannot emit an index its generator refuses.
         //
         // The check is WITHIN one agent id. Two DIFFERENT ids sharing a subdir is the
         // legitimate rename-alias shape (#256: `steel-detailer-aisc` → the `us` subdir),
@@ -313,13 +311,13 @@ where
         // `manifest-version` differing from the index key is intended and untouched
         // (calendar keys like `tekla@2025.0.1` over a `0.30.0` manifest) — only a shared
         // subdir is the defect, never a differing version.
-        let mut seen_subdirs: BTreeMap<&str, (&String, &str)> = BTreeMap::new();
+        let mut seen_subdirs: BTreeMap<String, (&String, &str)> = BTreeMap::new();
         for (ver, ve) in &entry.versions {
-            // Trimmed as `extract_subdir` trims it, so `foo` and `foo/` are one directory
-            // here as they are to the installer.
-            let (_, subdir) = crate::registry::payload_id(&ve.tarball, &ve.subdir);
+            // Reduced to the directory it names, so `foo`, `foo/` and `foo/.` are one key
+            // here exactly as they are one directory to the loader.
+            let subdir = crate::registry::normalize_subdir(&ve.subdir);
             if let Some((other, other_tarball)) =
-                seen_subdirs.insert(subdir, (ver, ve.tarball.as_str()))
+                seen_subdirs.insert(subdir.clone(), (ver, ve.tarball.as_str()))
             {
                 // Name the newer key as the failing one and the older as the peer, so
                 // the message reads the same whichever iteration order surfaced them.

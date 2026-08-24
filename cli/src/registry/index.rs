@@ -62,24 +62,41 @@ pub struct VersionEntry {
     pub subdir: String,
 }
 
-/// The identity of a version's **payload**: its tarball paired with its subdir as the
-/// INSTALLER resolves that subdir. Two version keys with equal payload ids install
-/// byte-identical bytes, which is what makes them indistinguishable to anything reading
-/// one checkout (#454).
+/// A version's `subdir` reduced to the directory it actually names, so two spellings of
+/// one location compare equal.
 ///
-/// Shared by the registry's producer (`agent publish`, which must not emit a duplicate)
-/// and its generator (`build_catalog`, which must not fabricate a catalog entry from
-/// one). Both had to agree on "same payload" and a second copy of this rule would let
-/// them drift — publish emitting exactly what reindex refuses is the failure that put
-/// this here (Codex review, PR #457).
+/// Both consumers resolve a subdir as a path — `extract_subdir` ([`crate::install`])
+/// matches it inside the archive after trimming trailing slashes, and `agent reindex`
+/// joins it onto the checkout root — so `foo`, `foo/`, `foo/.` and `foo//bar` are the
+/// same directory to them and must be one key here. A guard keyed on the raw string
+/// misses a collision spelled any other way, which is the hole it exists to close
+/// (#454; Codex review, PR #457, rounds 2 and 6, each naming a spelling the previous
+/// normalisation still let through).
 ///
-/// The subdir is trimmed of trailing slashes because `extract_subdir`
-/// ([`crate::install`]) does: `foo` and `foo/` are one directory to the installer, so
-/// they must be one payload here. The tarball is compared VERBATIM — two spellings of
-/// one URL read as distinct payloads and are allowed through, which is the safe
-/// direction for a rule whose false positive rejects a valid registry.
-pub fn payload_id<'a>(tarball: &'a str, subdir: &'a str) -> (&'a str, &'a str) {
-    (tarball, subdir.trim_end_matches('/'))
+/// `..` pops, matching how both the archive matcher and the filesystem read the path.
+/// That is lexical: through a symlinked directory the OS would resolve differently, but
+/// these name locations inside a tar archive and a source checkout, where no such link
+/// is meaningful, and erring toward treating two paths as EQUAL is the safe direction
+/// for a guard whose miss corrupts the catalog.
+pub fn normalize_subdir(subdir: &str) -> String {
+    let mut parts: Vec<&str> = Vec::new();
+    for seg in subdir.split('/') {
+        match seg {
+            // Empty (a repeated or trailing slash) and `.` name the current directory.
+            "" | "." => {}
+            ".." => {
+                // A leading `..` has nothing to pop; keep it so two different paths that
+                // both escape the root do not collapse onto each other.
+                if matches!(parts.last(), Some(&last) if last != "..") {
+                    parts.pop();
+                } else {
+                    parts.push(seg);
+                }
+            }
+            other => parts.push(other),
+        }
+    }
+    parts.join("/")
 }
 
 #[derive(Debug, Serialize, Deserialize)]

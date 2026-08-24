@@ -70,8 +70,8 @@ fn write_agent_with_missing_skill(dir: &Path, id: &str) {
 /// entry its own agent id — this is the multi-version-of-one-agent shape #454 is
 /// about. The tarball is explicit per version so a test can vary it independently of
 /// the subdir: `reindex` refuses a shared subdir either way (it reads the checkout,
-/// not the archives), but the two cases get different diagnostics and different
-/// remedies, and `publish` treats them differently when superseding.
+/// not the archives), but the two cases get different diagnostics because their
+/// remedies differ.
 fn write_index_multiversion(root: &Path, id: &str, versions: &[(&str, &str, &str)]) {
     let vmap: serde_json::Map<String, serde_json::Value> = versions
         .iter()
@@ -291,15 +291,56 @@ fn publish_outside_a_checkout_explains_itself_and_creates_no_index() {
 }
 
 #[test]
-fn an_in_place_version_bump_publishes_to_an_index_reindex_accepts() {
-    // Codex review (PR #457, P1): the registry's PRODUCER must not emit what its
-    // generator refuses. `publish` always derives the substrate tarball and the agent's
-    // repo-relative subdir, so an ordinary in-place bump (0.1.0 → 0.2.0, same folder)
-    // left both keys on one path — publish said "✓ staged", and the next `reindex` exited
-    // 3. This drives the whole loop the way a contributor does and asserts it stays green.
+fn publishing_a_second_version_into_one_subdir_is_refused_and_writes_nothing() {
+    // The producer half of #454. `publish` always derives the substrate tarball and the
+    // agent's repo-relative subdir, so an in-place version bump would stage a second key
+    // on one folder — an index `agent reindex` refuses, after publish said "✓ staged".
+    //
+    // It REFUSES rather than retiring the old key. An index key is a RELEASE key on its
+    // own axis (68 of 78 shipped entries differ from their manifest version), so deleting
+    // the one that shares the folder breaks external pins on a released version, and
+    // whether it is stale is not knowable from the manifest (Codex review, PR #457 r6).
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path();
     let agent_dir = root.join("20-agents/aeco/demo");
+    let home = home_in(root);
+    // A release key deliberately on a different axis from the manifest version, exactly
+    // as `tekla@2025.0.1` sits over a `0.1.4` manifest.
+    write_index_multiversion(
+        root,
+        "demo",
+        &[(
+            "2025.0.1",
+            SUBSTRATE_TARBALL,
+            "aware-main/20-agents/aeco/demo",
+        )],
+    );
+    let before = std::fs::read(root.join("registry-index.json")).unwrap();
+
+    write_agent(&agent_dir, "demo", "0.2.0", "The current build.");
+    aware()
+        .env("AWARE_HOME", &home)
+        .args(["agent", "publish"])
+        .arg(&agent_dir)
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("demo@2025.0.1"))
+        .stderr(predicate::str::contains("already publishes subdir"));
+
+    assert_eq!(
+        std::fs::read(root.join("registry-index.json")).unwrap(),
+        before,
+        "a refused publish must leave the index byte-identical — the release key survives"
+    );
+}
+
+#[test]
+fn publishing_each_version_to_its_own_subdir_yields_an_index_reindex_accepts() {
+    // The shape that works, driven end to end: two versions, each frozen at its own
+    // folder, so every key has a manifest of its own for `reindex` to read.
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
     let home = home_in(root);
     std::fs::write(
         root.join("registry-index.json"),
@@ -307,34 +348,27 @@ fn an_in_place_version_bump_publishes_to_an_index_reindex_accepts() {
     )
     .unwrap();
 
-    write_agent(&agent_dir, "demo", "0.1.0", "The original build.");
-    aware()
-        .env("AWARE_HOME", &home)
-        .args(["agent", "publish"])
-        .arg(&agent_dir)
-        .assert()
-        .success();
-
-    // The bump: same folder, new version — exactly what a contributor does.
-    write_agent(&agent_dir, "demo", "0.2.0", "The current build.");
-    aware()
-        .env("AWARE_HOME", &home)
-        .args(["agent", "publish"])
-        .arg(&agent_dir)
-        .assert()
-        .success()
-        // The retirement is announced, never silent.
-        .stdout(predicate::str::contains("superseded: 0.1.0"));
-
-    let doc = index_of(root);
-    let versions = &doc["agents"]["demo"]["versions"];
-    assert!(
-        versions.get("0.1.0").is_none(),
-        "the stale key is retired — that path no longer holds 0.1.0: {doc:#}"
+    write_agent(
+        &root.join("archive/demo-0.1.0"),
+        "demo",
+        "0.1.0",
+        "The frozen 0.1.0 build.",
     );
-    assert!(versions.get("0.2.0").is_some());
+    write_agent(
+        &root.join("20-agents/aeco/demo"),
+        "demo",
+        "0.2.0",
+        "The current build.",
+    );
+    for dir in ["archive/demo-0.1.0", "20-agents/aeco/demo"] {
+        aware()
+            .env("AWARE_HOME", &home)
+            .args(["agent", "publish"])
+            .arg(root.join(dir))
+            .assert()
+            .success();
+    }
 
-    // The whole point: reindex now succeeds on what publish produced.
     aware()
         .current_dir(root)
         .env("AWARE_HOME", &home)
@@ -345,10 +379,12 @@ fn an_in_place_version_bump_publishes_to_an_index_reindex_accepts() {
     let cat: serde_json::Value =
         serde_json::from_str(&std::fs::read_to_string(root.join("registry-catalog.json")).unwrap())
             .unwrap();
+    let versions = &cat["agents"]["demo"]["versions"];
     assert_eq!(
-        cat["agents"]["demo"]["versions"]["0.2.0"]["description"], "The current build.",
-        "and the catalog describes the build that is actually there: {cat:#}"
+        versions["0.1.0"]["description"], "The frozen 0.1.0 build.",
+        "each entry describes its OWN subdir's manifest: {cat:#}"
     );
+    assert_eq!(versions["0.2.0"]["description"], "The current build.");
 }
 
 // ---------------------------------------------------------------- reindex ---
