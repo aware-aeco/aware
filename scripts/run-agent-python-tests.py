@@ -305,71 +305,108 @@ def looks_like_an_unrunnable_pytest_file(source: str) -> bool:
     if not defines_a_test:
         return False
 
-    def is_executable(statement: ast.stmt) -> bool:
-        """`True` if this top-level statement actually calls something.
+    # The declared test names, split by sync/async and gathered across
+    # module-executed control flow so a test declared under `if sys.platform`
+    # still counts. `class` methods are collected too, but only for the
+    # `defines_a_test` gate above — they cannot be invoked by a bare module-level
+    # name, so a class-based file with no runner is correctly refused below.
+    sync_tests: set[str] = set()
+    async_tests: set[str] = set()
+    for node in module_executed(module.body):
+        if isinstance(node, ast.AsyncFunctionDef) and node.name.startswith("test_"):
+            async_tests.add(node.name)
+        elif isinstance(node, ast.FunctionDef) and node.name.startswith("test_"):
+            sync_tests.add(node.name)
 
-        A definition never counts: the body of a `def` or `class` does not run
-        at import, so calls inside one are not an entry point.
+    # The two stdlib calls that actually drive a coroutine to completion:
+    # `asyncio.run(coro)` and `loop.run_until_complete(coro)`. Matched on the
+    # callee's final name so a bound `loop.run_until_complete` qualifies too.
+    coroutine_drivers = {"run", "run_until_complete"}
 
-        For everything else the question is asked of the statement's CONTENTS,
-        not its type (Codex review, PR #447). Accepting any top-level `if` /
-        `try` / `with` / `for` / `while` outright was wrong: a pytest-style file
-        opening with `try: import optional_dependency` was waved through and
-        reported as passing by a bare interpreter, having asserted nothing. An
-        `Import` is not a `Call`, so that block now correctly counts for
-        nothing.
+    def called_name(call: ast.Call) -> str | None:
+        """The bare name a call invokes: `f()` -> 'f', `a.b.f()` -> 'f'."""
+        if isinstance(call.func, ast.Name):
+            return call.func.id
+        if isinstance(call.func, ast.Attribute):
+            return call.func.attr
+        return None
 
-        A bare call to an `async def` is NOT an entry point: `test_broken()` on
-        a coroutine function only builds a coroutine, and the interpreter exits
-        0 after an unawaited-coroutine `RuntimeWarning` with the assertions
-        never run (Codex review, PR #447). It counts only with evidence the
-        coroutine is actually driven — `await test_broken()`, or passed to
-        something that runs it such as `asyncio.run(...)`.
+    def invokes_a_test(node: ast.AST, driven: bool) -> bool:
+        """`True` if `node`, as it runs at import, executes a declared test body.
 
-        The residual limit, stated rather than hidden: any other call will do,
-        so a top-level `with open(path) as fh:` reads as an entry point even
-        though it runs no test. That direction only costs a file being executed
-        and exiting 0 — the same outcome as before this check existed — whereas
-        the opposite error refuses a valid test unrun.
+        Not "does it call *something*" — the earlier version of this check
+        accepted any module-level call, so `logging.basicConfig()` beside an
+        uncalled failing `test_*` was reported as passing, and the coroutine
+        guard was bypassed by `print(test_broken())` where the outer call
+        tripped the unconditional accept (Codex review, PR #447). The question
+        is now tied to the declared test names.
+
+        A sync test counts wherever it is *called*: `test_x()`, `print(test_x())`
+        and `sys.exit(test_x())` all evaluate `test_x()` before the outer call,
+        so the assertions run. A coroutine test counts only when `driven` — under
+        an `await`, or in the argument of a driver call — because calling it bare
+        merely builds a coroutine the interpreter discards after a warning.
+
+        `driven` propagates into the arguments of a driver call and through an
+        `await`, and never into a `def`/`class` body, whose statements do not run
+        where they are written.
         """
-
-        def drives_a_call(node: ast.AST, driven: bool) -> bool:
-            # A `def`/`class` body does not run where it is written, so nothing
-            # inside one is evidence that this file executes anything.
-            if isinstance(
-                node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
-            ):
-                return False
-            if isinstance(node, ast.Await):
-                return any(
-                    drives_a_call(child, True) for child in ast.iter_child_nodes(node)
-                )
-            if isinstance(node, ast.Call):
-                undriven_coroutine = (
-                    not driven
-                    and isinstance(node.func, ast.Name)
-                    and node.func.id in coroutine_functions
-                )
-                if not undriven_coroutine:
-                    return True
-                # The call itself runs nothing, but its ARGUMENTS are still
-                # evaluated, so a real call in there still counts.
-                return any(
-                    drives_a_call(child, driven)
-                    for child in ast.iter_child_nodes(node)
-                )
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            return False
+        if isinstance(node, ast.Await):
             return any(
-                drives_a_call(child, driven) for child in ast.iter_child_nodes(node)
+                invokes_a_test(child, True) for child in ast.iter_child_nodes(node)
             )
+        if isinstance(node, ast.Call):
+            name = called_name(node)
+            if name in sync_tests:
+                return True
+            if name in async_tests and driven:
+                return True
+            child_driven = driven or name in coroutine_drivers
+            args = [*node.args, *(kw.value for kw in node.keywords)]
+            if any(invokes_a_test(arg, child_driven) for arg in args):
+                return True
+            return invokes_a_test(node.func, driven)
+        return any(
+            invokes_a_test(child, driven) for child in ast.iter_child_nodes(node)
+        )
 
-        return drives_a_call(statement, False)
+    def is_main_guard(statement: ast.stmt) -> bool:
+        """`True` for `if __name__ == "__main__":` — the documented entry point.
 
-    coroutine_functions = {
-        node.name
-        for node in module_executed(module.body)
-        if isinstance(node, ast.AsyncFunctionDef)
-    }
-    return not any(is_executable(statement) for statement in module.body)
+        The error this check raises tells authors to add exactly this guard, so a
+        file that has one carrying any call is trusted to be a real entry point
+        (`if __name__ == "__main__": sys.exit(main())` is the repo's own pattern,
+        and `main` is not a `test_*` name to resolve). The trust is bounded to a
+        guard that contains a call — an empty `__main__` still runs nothing — and
+        stated as the one residual: this check cannot follow `main()` inside to
+        confirm it reaches the tests, so a guard is taken at its word.
+        """
+        if not isinstance(statement, ast.If):
+            return False
+        if not isinstance(statement.test, ast.Compare) or len(statement.test.ops) != 1:
+            return False
+        if not isinstance(statement.test.ops[0], ast.Eq):
+            return False
+        sides = (statement.test.left, statement.test.comparators[0])
+        has_name = any(
+            isinstance(s, ast.Name) and s.id == "__name__" for s in sides
+        )
+        has_main = any(
+            isinstance(s, ast.Constant) and s.value == "__main__" for s in sides
+        )
+        return has_name and has_main
+
+    def has_runner() -> bool:
+        for statement in module_executed(module.body):
+            if is_main_guard(statement) and any(
+                isinstance(inner, ast.Call) for inner in ast.walk(statement)
+            ):
+                return True
+        return any(invokes_a_test(statement, False) for statement in module.body)
+
+    return not has_runner()
 
 
 def run_one(path: Path, aware_bin: str | None) -> tuple[str, str]:
@@ -663,6 +700,40 @@ _TRY_IMPORT_ONLY = (
     "def test_bad():\n"
     "    assert 2 + 2 == 5\n"
 )
+# Defines a failing test, calls it nowhere, but DOES make an unrelated
+# module-level call. The old "any call is an entry point" rule reported this as
+# passed; the call must resolve to the declared test to count (Codex review,
+# PR #447).
+_UNRELATED_CALL_ONLY = (
+    "import logging\n"
+    "\n"
+    "logging.basicConfig()\n"
+    "\n"
+    "def test_bad():\n"
+    "    assert 2 + 2 == 5\n"
+)
+# An async test whose coroutine is wrapped in an unrelated call rather than
+# driven. `print(test_broken())` builds the coroutine, prints it, and never
+# runs the body — the outer `print` call used to trip the accept.
+_ASYNC_WRAPPED_UNDRIVEN = (
+    "async def test_broken():\n"
+    "    assert 2 + 2 == 5\n"
+    "\n"
+    "print(test_broken())\n"
+)
+# A `main()` dispatcher behind the documented `__main__` guard, in a file that
+# also declares `test_*`. `main` is not a test name to resolve, so this is
+# honored via the guard — and it genuinely runs, failing on its assertion.
+_MAIN_DISPATCHER = (
+    "def test_bad():\n"
+    "    assert 2 + 2 == 5\n"
+    "\n"
+    "def main():\n"
+    "    test_bad()\n"
+    "\n"
+    'if __name__ == "__main__":\n'
+    "    main()\n"
+)
 # Defines a test, calls nothing — but mentions `__main__` and `sys.exit(` inside
 # a docstring. The old heuristic read those as an entry point and waved it
 # through; it still asserts nothing.
@@ -779,6 +850,9 @@ def self_test() -> int:
         _write(root, "tests/test_conditional_decl.py", _CONDITIONAL_TEST)
         _write(root, "tests/test_unawaited_async.py", _UNAWAITED_ASYNC)
         _write(root, "tests/test_driven_async.py", _DRIVEN_ASYNC)
+        _write(root, "tests/test_unrelated_call.py", _UNRELATED_CALL_ONLY)
+        _write(root, "tests/test_async_wrapped.py", _ASYNC_WRAPPED_UNDRIVEN)
+        _write(root, "tests/test_main_dispatcher.py", _MAIN_DISPATCHER)
 
         check(
             declares_aware_bin(read_source(root / "tests/test_needs_bin.py"))
@@ -892,6 +966,24 @@ def self_test() -> int:
         check(
             status == "failed" and "never calls them" not in detail,
             "an `asyncio.run(...)` async test is executed, not refused",
+        )
+        # An unrelated module-level call is not an entry point on its own.
+        status, detail = run_one(root / "tests/test_unrelated_call.py", None)
+        check(
+            status == "failed" and "never calls them" in detail,
+            "a call unrelated to any declared test is not an entry point",
+        )
+        # A coroutine wrapped in `print(...)` is built, not driven.
+        status, detail = run_one(root / "tests/test_async_wrapped.py", None)
+        check(
+            status == "failed" and "never calls them" in detail,
+            "a coroutine wrapped in an unrelated call is refused, not run",
+        )
+        # A `main()` dispatcher behind the `__main__` guard is honored, and runs.
+        status, detail = run_one(root / "tests/test_main_dispatcher.py", None)
+        check(
+            status == "failed" and "never calls them" not in detail,
+            "a `__main__`-guarded `main()` dispatcher is honored, not refused",
         )
         # A test declared inside a conditional block is still declared.
         status, detail = run_one(root / "tests/test_conditional_decl.py", None)
