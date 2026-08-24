@@ -88,9 +88,30 @@ pub const SUBSTRATE_ARCHIVE_ROOT: &str = "aware-main/";
 /// `rel.replace('\\', "/")`, and tar member paths are `/`-separated by the POSIX format
 /// itself, so a backslash here is malformed input rather than a spelling in use.
 pub fn check_subdir_portable(subdir: &str) -> Result<(), String> {
-    if subdir.contains('\\') {
+    check_one_form(subdir, subdir)?;
+    // ...and again on the form `agent reindex` actually joins. The mapping can EXPOSE a
+    // shape the raw value hid: `aware-main/C:/repo/foo` has an innocent first component,
+    // but `checkout_relative_subdir` strips the archive root and hands the loader
+    // `C:/repo/foo`, which `join` treats as absolute. Validating only the raw value checks
+    // a string nothing resolves (Codex review, PR #457 round 12).
+    //
+    // This is the general shape of the bug, not one more spelling: any check that runs
+    // BEFORE a transformation is checking the wrong string. Both ends of the only
+    // transformation there is are now checked.
+    let mapped = checkout_relative_subdir(subdir);
+    if mapped != subdir {
+        check_one_form(&mapped, subdir)?;
+    }
+    Ok(())
+}
+
+/// The portability rules applied to ONE spelling. `value` is what gets tested; `shown` is
+/// what the message quotes — always the subdir as written in the index, so the author can
+/// find that line rather than a derived string that appears nowhere in the file.
+fn check_one_form(value: &str, shown: &str) -> Result<(), String> {
+    if value.contains('\\') {
         return Err(format!(
-            "subdir '{subdir}' contains a backslash. Registry subdirs name a path inside a \
+            "subdir '{shown}' contains a backslash. Registry subdirs name a path inside a \
              tar archive and are always '/'-separated; a backslash is a directory name on \
              Linux but a separator on Windows, so the same entry would resolve to different \
              manifests per platform. Write it with '/'."
@@ -102,12 +123,12 @@ pub fn check_subdir_portable(subdir: &str) -> Result<(), String> {
     // name one manifest by different-looking strings, or reach outside the checkout
     // entirely (Codex review, PR #457 round 11).
     //
-    // Checked on the RAW value, not the normalised one: `normalize_subdir` drops a leading
-    // `/` as an empty segment, so `/foo` and `foo` normalise identically and the evidence
-    // is gone by then.
-    if subdir.starts_with('/') {
+    // Checked on the given spelling, not its normalised form: `normalize_subdir` drops a
+    // leading `/` as an empty segment, so `/foo` and `foo` normalise identically and the
+    // evidence is gone by then.
+    if value.starts_with('/') {
         return Err(format!(
-            "subdir '{subdir}' is an absolute path. A registry subdir is relative to the \
+            "subdir '{shown}' is an absolute path. A registry subdir is relative to the \
              archive root; an absolute one replaces the base it is joined to instead of \
              naming a member of the archive. Write it relative, under \
              '{SUBSTRATE_ARCHIVE_ROOT}'."
@@ -117,11 +138,11 @@ pub fn check_subdir_portable(subdir: &str) -> Result<(), String> {
     // ordinary directory name on Linux — so the same entry means different things per
     // platform. Only the drive-letter SHAPE is rejected: a colon elsewhere in a name is a
     // legal Linux filename and is left alone.
-    let first = subdir.split('/').next().unwrap_or("");
+    let first = value.split('/').next().unwrap_or("");
     if first.len() >= 2 && first.as_bytes()[1] == b':' && first.as_bytes()[0].is_ascii_alphabetic()
     {
         return Err(format!(
-            "subdir '{subdir}' starts with a drive letter. That is absolute (or \
+            "subdir '{shown}' has a drive letter as a path component. That is absolute (or \
              drive-relative) on Windows and an ordinary directory name on Linux, so one \
              registry entry would resolve to different manifests per platform. Write it \
              relative, under '{SUBSTRATE_ARCHIVE_ROOT}'."
@@ -136,9 +157,9 @@ pub fn check_subdir_portable(subdir: &str) -> Result<(), String> {
     // The FIRST path component, not a string prefix: a directory literally named `..foo`
     // is legitimate and must not be caught. `normalize_subdir` already popped every
     // interior `..`, so a surviving one can only be leading.
-    if normalize_subdir(subdir).split('/').next() == Some("..") {
+    if normalize_subdir(value).split('/').next() == Some("..") {
         return Err(format!(
-            "subdir '{subdir}' points above its root with '..'. A registry subdir names a \
+            "subdir '{shown}' points above its root with '..'. A registry subdir names a \
              path INSIDE the archive (under '{SUBSTRATE_ARCHIVE_ROOT}'); one that climbs out \
              matches no archive member and, when the catalog is generated, can resolve back \
              into the checkout by a different route than it appears to. Write a path that \
@@ -352,9 +373,30 @@ mod tests {
         assert!(check_subdir_portable("C:/repo/foo").is_err());
         assert!(check_subdir_portable("c:foo").is_err());
         assert_eq!(normalize_subdir("/foo"), normalize_subdir("foo"));
-        // A colon that is NOT a drive prefix is an ordinary Linux filename.
-        assert!(check_subdir_portable("aware-main/a:b/demo").is_ok());
+        // A colon that cannot be read as a drive prefix is an ordinary Linux filename and
+        // stays allowed: `ab:` is two letters before the colon, and a colon below the
+        // first component is never a drive prefix on any platform.
         assert!(check_subdir_portable("aware-main/ab:/demo").is_ok());
+        assert!(check_subdir_portable("aware-main/demo/a:b").is_ok());
+        // But `aware-main/a:b/demo` is NOT ok, and this case corrected a positive
+        // assertion written a round earlier: the archive-root strip makes `a:b` the FIRST
+        // component, and `C:foo` is drive-RELATIVE on Windows ("foo on drive C"). So that
+        // entry is ambiguous exactly like `C:/repo/foo`, and only looked safe while the
+        // check ignored the mapping (#457 rounds 11 and 12).
+        assert!(check_subdir_portable("aware-main/a:b/demo").is_err());
+        // The archive-root strip can EXPOSE a shape the raw value hid, so both ends of
+        // that mapping are checked (#457 round 12). The raw first component here is the
+        // innocent `aware-main`; the mapped one is `C:`.
+        let hidden = check_subdir_portable("aware-main/C:/repo/foo").unwrap_err();
+        assert!(hidden.contains("drive letter"), "{hidden}");
+        // The message quotes the subdir AS WRITTEN, not the derived mapped string — the
+        // author has to find that line in registry-index.json.
+        assert!(hidden.contains("'aware-main/C:/repo/foo'"), "{hidden}");
+        // A doubled slash is NOT this vector — it normalises away, so `aware-main//etc/foo`
+        // simply names `etc/foo` inside the archive and is fine.
+        assert!(check_subdir_portable("aware-main//etc/foo").is_ok());
+        // Escaping through the archive root still is.
+        assert!(check_subdir_portable("aware-main/../../etc/foo").is_err());
     }
 
     const SAMPLE: &str = r#"{
