@@ -1,17 +1,6 @@
 //! Small filesystem helpers shared across the crate.
 
-use std::path::Path;
-
-/// How deep [`copy_dir_recursive`] will descend before giving up.
-///
-/// This exists because the walk follows directory symlinks (see below), and a
-/// pack containing a link back to one of its own ancestors would otherwise
-/// recurse until the stack overflows — an abort, with no message a user could
-/// act on. Every tree this helper actually copies (an agent folder, a voice
-/// pack, a staged registry payload) is a handful of levels deep, so the cap is
-/// far above anything legitimate and turns the pathological case into a plain
-/// error naming the path.
-const MAX_DEPTH: usize = 64;
+use std::path::{Path, PathBuf};
 
 /// Recursively copy every file under `src` into `dst`, creating `dst` and any
 /// missing subdirectories along the way. Delegates to [`std::fs::copy`] for
@@ -25,11 +14,21 @@ const MAX_DEPTH: usize = 64;
 /// hands a directory to `fs::copy`, which fails with `InvalidInput` — possibly
 /// after the walk has already written part of the destination. This function
 /// therefore tests `Path::is_dir()`, which resolves the link, so files and
-/// directories behave consistently. Bounded by [`MAX_DEPTH`].
+/// directories behave consistently.
+///
+/// Following directory symlinks makes a cycle reachable (a link pointing back
+/// into its own ancestry), which would otherwise recurse until the stack
+/// overflowed — an abort, with nothing a user could act on. Guarded by
+/// canonicalizing each directory and refusing to descend into one already on
+/// the active ancestry path. Depth itself is *not* capped: an ordinary deep
+/// tree copies fine, which is what the implementations this replaces did.
 ///
 /// Non-atomic on failure: a mid-copy error leaves whatever was already written
-/// in place. Callers that need permission bits, xattrs, or symlinks preserved
-/// verbatim should reach for the platform tool instead.
+/// in place. That is pre-existing for every IO error this can hit (a full disk,
+/// a permission denial) and is not specific to the cycle case; callers that
+/// need an all-or-nothing install must stage and swap. Callers that need
+/// permission bits, xattrs, or symlinks preserved verbatim should reach for the
+/// platform tool instead.
 ///
 /// Previously reinvented in `install::local`, `commands::voice`, and
 /// `plugins::claude_code`'s tests — three walks with subtle behaviour drift.
@@ -37,31 +36,42 @@ const MAX_DEPTH: usize = 64;
 /// having created it; one returned `AwareError` and the others `io::Result`;
 /// and two used `DirEntry::file_type()` where `commands::voice` used
 /// `Path::is_dir()`, which is exactly the symlink difference above. The
-/// `is_dir()` behaviour is the one kept, so no caller loses anything it had.
-/// Consolidated here so the next symlink / permissions / atomicity question has
-/// a single place to change; callers wanting a non-`io::Error` result wrap this
-/// at the boundary.
+/// `is_dir()` behaviour is the one kept, so no caller loses anything it had —
+/// and `commands::voice`, the one caller that already followed directory
+/// links, gains a cycle guard it never had. Consolidated here so the next
+/// symlink / permissions / atomicity question has a single place to change;
+/// callers wanting a non-`io::Error` result wrap this at the boundary.
 ///
 /// The integration-test helper in `tests/common` cannot use this (it lives in a
 /// separate crate root that cannot see internal modules) and stays a deliberate
 /// shadow; that copy is small enough to leave alone until the CLI grows a `lib`
 /// target worth having.
 pub(crate) fn copy_dir_recursive(src: &Path, dst: &Path) -> std::io::Result<()> {
-    copy_dir_at_depth(src, dst, 0)
+    let mut ancestry = Vec::new();
+    copy_dir_tracked(src, dst, &mut ancestry)
 }
 
-fn copy_dir_at_depth(src: &Path, dst: &Path, depth: usize) -> std::io::Result<()> {
-    if depth > MAX_DEPTH {
+/// `ancestry` holds the canonical path of every directory currently open on the
+/// recursion stack — the walk's active path, not every directory it has seen.
+/// A sibling subtree reached twice by two different links is fine and copies
+/// twice; only re-entering a directory that is still open above us is a cycle.
+fn copy_dir_tracked(src: &Path, dst: &Path, ancestry: &mut Vec<PathBuf>) -> std::io::Result<()> {
+    // `canonicalize` resolves every link in the path, so two names for the same
+    // directory compare equal — which is the whole point of the check.
+    let identity = std::fs::canonicalize(src)?;
+    if ancestry.contains(&identity) {
         return Err(std::io::Error::new(
             std::io::ErrorKind::InvalidInput,
             format!(
-                "copy_dir_recursive: exceeded {MAX_DEPTH} levels at {} — \
-                 the source tree is nested past any legitimate depth, \
-                 or a directory symlink points back into its own ancestry",
-                src.display()
+                "copy_dir_recursive: directory symlink cycle at {} — \
+                 it resolves to {}, which the copy is already inside",
+                src.display(),
+                identity.display()
             ),
         ));
     }
+    ancestry.push(identity);
+
     std::fs::create_dir_all(dst)?;
     for entry in std::fs::read_dir(src)?.flatten() {
         let from = entry.path();
@@ -70,11 +80,15 @@ fn copy_dir_at_depth(src: &Path, dst: &Path, depth: usize) -> std::io::Result<()
         // resolves a symlink to its target, so a symlinked directory is walked
         // rather than handed to `fs::copy` (which would fail on a directory).
         if from.is_dir() {
-            copy_dir_at_depth(&from, &to, depth + 1)?;
+            copy_dir_tracked(&from, &to, ancestry)?;
         } else {
             std::fs::copy(&from, &to)?;
         }
     }
+
+    // Only on the success path; an error unwinds the whole call chain, so the
+    // vector is dropped rather than reused.
+    ancestry.pop();
     Ok(())
 }
 
@@ -114,6 +128,38 @@ mod tests {
         copy_dir_recursive(&src, &dst).unwrap();
 
         assert_eq!(std::fs::read(dst.join("f")).unwrap(), b"one");
+    }
+
+    /// An ordinary acyclic tree copies at any depth. The cycle guard must key
+    /// on directory identity, not on a depth counter: all three
+    /// implementations this replaces copied arbitrarily deep trees, and a
+    /// structural depth limit would reject a valid agent / app / voice pack
+    /// (leaving a partial install behind, since the copy is not atomic).
+    #[test]
+    fn a_deep_acyclic_tree_copies_rather_than_tripping_the_cycle_guard() {
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("src");
+        let dst = tmp.path().join("dst");
+
+        // Comfortably past any depth cap a guard might have been tempted to use.
+        let mut deep = src.clone();
+        for i in 0..100 {
+            deep = deep.join(format!("d{i}"));
+        }
+        std::fs::create_dir_all(&deep).unwrap();
+        std::fs::write(deep.join("bottom.txt"), b"bottom").unwrap();
+
+        copy_dir_recursive(&src, &dst).unwrap();
+
+        let mut copied = dst.clone();
+        for i in 0..100 {
+            copied = copied.join(format!("d{i}"));
+        }
+        assert_eq!(
+            std::fs::read(copied.join("bottom.txt")).unwrap(),
+            b"bottom",
+            "a 100-level acyclic tree must copy through"
+        );
     }
 
     /// A symlinked directory is walked through, not handed to `fs::copy`.
@@ -161,11 +207,11 @@ mod tests {
         assert_eq!(std::fs::read(dst.join("link.txt")).unwrap(), b"payload");
     }
 
-    /// Following directory symlinks makes an ancestor loop reachable. The
-    /// depth cap must turn that into an error rather than a stack overflow.
+    /// Following directory symlinks makes an ancestry cycle reachable. It must
+    /// become an error rather than a stack overflow.
     #[cfg(unix)]
     #[test]
-    fn a_symlink_loop_errors_instead_of_overflowing_the_stack() {
+    fn a_symlink_cycle_errors_instead_of_overflowing_the_stack() {
         let tmp = tempfile::tempdir().unwrap();
         let src = tmp.path().join("src");
         let dst = tmp.path().join("dst");
@@ -175,11 +221,40 @@ mod tests {
         std::os::unix::fs::symlink(&src, src.join("sub/loop")).unwrap();
 
         let err = copy_dir_recursive(&src, &dst)
-            .expect_err("a symlink loop must be reported, not recursed forever");
+            .expect_err("a symlink cycle must be reported, not recursed forever");
         assert_eq!(err.kind(), std::io::ErrorKind::InvalidInput);
         assert!(
-            err.to_string().contains("exceeded"),
-            "the error should name the depth cap, got: {err}"
+            err.to_string().contains("cycle"),
+            "the error should name the cycle, got: {err}"
+        );
+    }
+
+    /// The guard tracks the ACTIVE ancestry, not every directory seen. Two
+    /// links to the same subtree from different branches are not a cycle and
+    /// must both copy — tracking "visited" instead would wrongly reject this.
+    #[cfg(unix)]
+    #[test]
+    fn the_same_directory_reached_twice_from_different_branches_is_not_a_cycle() {
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("src");
+        let dst = tmp.path().join("dst");
+        let shared = tmp.path().join("shared");
+        std::fs::create_dir_all(src.join("one")).unwrap();
+        std::fs::create_dir_all(src.join("two")).unwrap();
+        std::fs::create_dir_all(&shared).unwrap();
+        std::fs::write(shared.join("s.txt"), b"shared").unwrap();
+        std::os::unix::fs::symlink(&shared, src.join("one/link")).unwrap();
+        std::os::unix::fs::symlink(&shared, src.join("two/link")).unwrap();
+
+        copy_dir_recursive(&src, &dst).unwrap();
+
+        assert_eq!(
+            std::fs::read(dst.join("one/link/s.txt")).unwrap(),
+            b"shared"
+        );
+        assert_eq!(
+            std::fs::read(dst.join("two/link/s.txt")).unwrap(),
+            b"shared"
         );
     }
 }
