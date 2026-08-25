@@ -152,6 +152,7 @@ async function convertAndCache(args, deps, config, readiness) {
         conversionSettings: args['conversion-settings'] ?? {},
         expectedProtocolVersion: args['expected-provider-protocol'] ?? '1',
         expectedDestination: args['expected-provider-destination'],
+        authorityStorePath: args['authority-store-path'],
       });
       emit(deps, 'normalize');
       const geometry = normalizeRevitGlb(conversion.outputs.geometry.bytes, { limits: deps.limits });

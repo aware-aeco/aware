@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-08-23T13:22:37.477284300+00:00",
+  "updated-at": "2026-08-25T19:40:00.000000000+00:00",
   "agents": {
     "tekla": {
       "versions": {
@@ -628,7 +628,7 @@
     },
     "model-reference-reader": {
       "versions": {
-        "0.3.0": {
+        "0.4.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
           "subdir": "aware-main/20-agents/aeco/engineering/model-reference-reader"
         }

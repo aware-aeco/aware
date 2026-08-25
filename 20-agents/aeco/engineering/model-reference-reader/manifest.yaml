@@ -1,5 +1,5 @@
 agent: model-reference-reader
-version: 0.3.0
+version: 0.4.0
 display-name: Authenticated RVT Reference Reader
 description: |
   Convert a local Revit project into deterministic, authenticated reference-model artifacts without
@@ -48,6 +48,10 @@ commands:
         type: string
         required: false
         description: Exact canonical HTTPS origin required for a managed-cloud v2 provider.
+      authority-store-path:
+        type: string
+        required: false
+        description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
     outputs:
       type: single
       schema:
@@ -83,6 +87,10 @@ commands:
         type: string
         required: false
         description: Exact canonical HTTPS origin required for a managed-cloud v2 provider.
+      authority-store-path:
+        type: string
+        required: false
+        description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
       expected-signer-sha256:
         type: string
         required: true
@@ -124,6 +132,10 @@ commands:
         type: string
         required: false
         description: Exact canonical HTTPS origin required for a managed-cloud v2 provider.
+      authority-store-path:
+        type: string
+        required: false
+        description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
       expected-signer-sha256:
         type: string
         required: true
@@ -166,6 +178,10 @@ commands:
         type: string
         required: false
         description: Exact canonical HTTPS origin required for a managed-cloud v2 provider.
+      authority-store-path:
+        type: string
+        required: false
+        description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
       expected-signer-sha256:
         type: string
         required: true

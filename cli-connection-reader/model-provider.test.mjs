@@ -129,6 +129,44 @@ test('managed-cloud protocol requires an exact canonical HTTPS destination pin',
   }), (error) => error.code === 'reference-provider-destination-mismatch');
 });
 
+test('managed-cloud conversion passes only an absolute caller-bound authority store', async (t) => {
+  const root = await temporaryDirectory(t);
+  const executable = path.join(root, 'provider.exe');
+  const source = path.join(root, 'source.rvt');
+  const authorityStorePath = path.join(root, 'authority');
+  await fs.writeFile(executable, 'fixture-provider-binary');
+  await fs.writeFile(source, 'fixture-rvt');
+  const description = {
+    protocolVersion: '2', provider: 'fixture-provider', engine: 'xeoRvt', engineVersion: '0.2.0',
+    adapterBuildId: 'fixture-v2', formats: ['rvt'], execution: 'managed-cloud',
+    destination: 'https://api.stage.floless.io',
+  };
+  const calls = [];
+  const hostRun = async (request) => {
+    calls.push(request);
+    if (request.operation === 'describe') return { exitCode: 0, stdout: Buffer.from(JSON.stringify(description)), stderr: Buffer.alloc(0) };
+    const body = JSON.parse(request.stdin.toString('utf8'));
+    await fs.writeFile(path.join(body.outputDirectory, 'geometry.glb'), Buffer.from('glb'));
+    await fs.writeFile(path.join(body.outputDirectory, 'metadata.json'), Buffer.from('{}'));
+    return { exitCode: 0, stdout: Buffer.from(JSON.stringify({
+      ...description, documentKind: 'revit-project', sourceSha256: body.sourceSha256,
+      geometryPath: path.join(body.outputDirectory, 'geometry.glb'), metadataPath: path.join(body.outputDirectory, 'metadata.json'),
+    })), stderr: Buffer.alloc(0) };
+  };
+  await describeAndConvert({
+    executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
+    privateRoot: path.join(root, 'accepted'), hostRun,
+    expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
+  });
+  const convert = JSON.parse(calls[1].stdin.toString('utf8'));
+  assert.equal(convert.authorityStorePath, path.resolve(authorityStorePath));
+  await assert.rejects(() => describeAndConvert({
+    executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
+    privateRoot: path.join(root, 'relative'), hostRun,
+    expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath: 'relative',
+  }), (error) => error.code === 'reference-provider-protocol');
+});
+
 test('streaming hash and staging stop at the byte limit even when the source grows after stat', async (t) => {
   const root = await temporaryDirectory(t);
   const source = path.join(root, 'growing.rvt');

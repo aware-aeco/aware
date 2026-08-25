@@ -117,6 +117,17 @@ function canonicalHttpsOrigin(value) {
   } catch { return null; }
 }
 
+function managedAuthorityStore(value, expectedProtocolVersion) {
+  if (expectedProtocolVersion !== '2') {
+    if (value !== undefined) providerError('reference-provider-protocol', 'Local providers cannot receive a managed authority store.');
+    return undefined;
+  }
+  if (typeof value !== 'string' || !value || value.length > 4096 || value.includes('\0') || !path.isAbsolute(value)) {
+    providerError('reference-provider-protocol', 'Managed providers require an absolute authority-store path.');
+  }
+  return path.resolve(value);
+}
+
 function validateDescribe(value, expectedProtocolVersion = '1', expectedDestination = undefined) {
   try { assertClosedObject(value, ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'formats', 'execution', 'destination'], [], 'provider description'); }
   catch (error) { providerError('reference-provider-protocol', `Provider description does not match protocol v${expectedProtocolVersion}.`, false, error); }
@@ -236,11 +247,13 @@ export async function describeAndConvert(options) {
   }
   const canonicalRequest = buildCanonicalRequest({ limits, conversionSettings: options.conversionSettings ?? {} });
   const outputDirectory = await privateDirectory(path.join(options.privateRoot, 'output'));
+  const authorityStorePath = managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
   const beforeConvert = await validateProviderExecutable(options.executable);
   if (beforeConvert.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed before conversion.');
   const convertRequest = canonicalJsonBytes({
     protocolVersion: expectedProtocolVersion, sourcePath: staging.path, outputDirectory,
     sourceSha256: staging.sourceSha256, canonicalRequest, limits,
+    ...(authorityStorePath ? { authorityStorePath } : {}),
   });
   const receiptBytes = await callProvider(options.hostRun, {
     executable: initialExecutable.path, operation: 'convert', stdin: convertRequest,
