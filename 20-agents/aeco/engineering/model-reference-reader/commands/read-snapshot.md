@@ -1,7 +1,7 @@
 # read-snapshot
 
 `read-snapshot` first runs the same deterministic conversion/cache path as `read-model`. A cache miss
-invokes the pinned local provider once; an authenticated cache hit invokes it zero times. AWARE verifies
+invokes the pinned installed adapter once; an authenticated cache hit invokes it zero times. AWARE verifies
 the private cache receipt and every source byte before it creates any public authentication object.
 
 The command publishes:

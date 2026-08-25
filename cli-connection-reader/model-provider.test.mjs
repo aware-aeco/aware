@@ -8,7 +8,7 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { sha256 } from './model-contract.mjs';
 import {
-  describeAndConvert, hashRegularFile, minimalProviderEnvironment, stageImmutableSource,
+  describeAndConvert, describeProvider, hashRegularFile, minimalProviderEnvironment, stageImmutableSource,
   validateProviderExecutable,
 } from './model-provider.mjs';
 
@@ -100,6 +100,33 @@ test('describe and convert agree on provenance and return only bounded private o
   assert.equal(result.outputs.metadata.path.endsWith('metadata.json'), true);
   assert.equal(result.outputs.geometry.sha256, sha256(result.outputs.geometry.bytes));
   assert.equal(result.outputs.metadata.sha256, sha256(result.outputs.metadata.bytes));
+});
+
+test('managed-cloud protocol requires an exact canonical HTTPS destination pin', async (t) => {
+  const root = await temporaryDirectory(t);
+  const executable = path.join(root, 'provider.exe');
+  await fs.writeFile(executable, 'fixture-provider-binary');
+  const description = {
+    protocolVersion: '2', provider: 'fixture-provider', engine: 'xeoRvt', engineVersion: '0.2.0',
+    adapterBuildId: 'fixture-v2', formats: ['rvt'], execution: 'managed-cloud',
+    destination: 'https://api.stage.floless.io',
+  };
+  const hostRun = async () => ({ exitCode: 0, stdout: Buffer.from(JSON.stringify(description)), stderr: Buffer.alloc(0) });
+  const accepted = await describeProvider({
+    executable, privateRoot: path.join(root, 'accepted'), hostRun,
+    expectedProtocolVersion: '2', expectedDestination: description.destination,
+  });
+  assert.equal(accepted.describe.execution, 'managed-cloud');
+  assert.equal(accepted.fingerprint.destination, description.destination);
+  await assert.rejects(() => describeProvider({
+    executable, privateRoot: path.join(root, 'wrong'), hostRun,
+    expectedProtocolVersion: '2', expectedDestination: 'https://api.floless.io',
+  }), (error) => error.code === 'reference-provider-destination-mismatch');
+  await assert.rejects(() => describeProvider({
+    executable, privateRoot: path.join(root, 'noncanonical'),
+    hostRun: async () => ({ ...await hostRun(), stdout: Buffer.from(JSON.stringify({ ...description, destination: `${description.destination}/` })) }),
+    expectedProtocolVersion: '2', expectedDestination: description.destination,
+  }), (error) => error.code === 'reference-provider-destination-mismatch');
 });
 
 test('streaming hash and staging stop at the byte limit even when the source grows after stat', async (t) => {

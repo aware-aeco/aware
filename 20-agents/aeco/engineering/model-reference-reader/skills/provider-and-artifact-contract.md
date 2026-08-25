@@ -1,10 +1,13 @@
 # Provider and artifact contract
 
-Treat the provider as a separately installed local trusted dependency. Configure its absolute regular
-executable path with `AWARE_MODEL_REFERENCE_PROVIDER`; never use PATH lookup, a shell command, URL or
-committed binary. Configure the AWARE-format signing key locally. Run `preflight`, pin the returned full
-provider fingerprint, obtain the signer fingerprint through an independent operator trust channel, then
-call `probe`, `read-model` or `read-snapshot` with both pins and the source SHA-256.
+Treat the provider adapter as a separately installed local trusted dependency. Configure its absolute
+regular executable path with `AWARE_MODEL_REFERENCE_PROVIDER`; never use PATH lookup, a shell command,
+URL or committed binary. Protocol v1 accepts only local execution. Protocol v2 accepts managed-cloud
+execution only when the caller supplies the exact canonical HTTPS origin returned by `preflight`; the
+origin is part of the complete provider fingerprint. Configure the AWARE-format signing key locally.
+Run `preflight`, pin the returned full provider fingerprint, obtain the signer fingerprint through an
+independent operator trust channel, then call `probe`, `read-model` or `read-snapshot` with both pins,
+the selected protocol/destination and the source SHA-256.
 
 The canonical request, provider fingerprint, source digest and signer trust anchor jointly define a
 cache key. Every cache hit verifies its signature, closed receipt, complete file set and every blob

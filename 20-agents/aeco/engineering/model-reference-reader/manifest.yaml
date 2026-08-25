@@ -1,15 +1,16 @@
 agent: model-reference-reader
-version: 0.2.0
-display-name: Local RVT Reference Reader
+version: 0.3.0
+display-name: Authenticated RVT Reference Reader
 description: |
   Convert a local Revit project into deterministic, authenticated reference-model artifacts without
   importing ownership into AWARE. The reader returns canonical Z-up millimetre GLB geometry plus
   separate entity, property and relationship JSON. Revit meaning comes only from explicit provider
   metadata and appearance joins; names and geometry are never used to infer it.
 
-  Execution is local-only through an operator-installed trusted provider. AWARE contains no provider,
-  license, cloud URL or credential. First probe may perform the full conversion; later reads use a
-  signed content-addressed cache after revalidating every receipt and byte.
+  Protocol v1 remains local-only. Protocol v2 permits an operator-installed managed-cloud adapter only
+  when the caller pins both its complete fingerprint and exact HTTPS destination. AWARE contains no
+  provider, license, cloud credential or vendor HTTP client. First probe may perform the full conversion;
+  later reads use a signed content-addressed cache after revalidating every receipt and byte.
 stateful: false
 vendor: aware-aeco
 license: Apache-2.0
@@ -32,13 +33,21 @@ commands:
     lifecycle: single
     category: curated
     description: |
-      Check that the exact local provider, managed AWARE host and model-reader signing key are ready.
+      Check that the exact provider, managed AWARE host and model-reader signing key are ready.
       This describes the provider but never opens or converts an RVT file.
     inputs:
       expected-provider-sha256:
         type: string
         required: false
-        description: Optional pinned SHA-256 of the complete seven-field provider fingerprint.
+        description: Optional pinned SHA-256 of the complete versioned provider fingerprint.
+      expected-provider-protocol:
+        type: string
+        required: false
+        description: Provider protocol to request; defaults to local-only v1. Managed cloud requires v2.
+      expected-provider-destination:
+        type: string
+        required: false
+        description: Exact canonical HTTPS origin required for a managed-cloud v2 provider.
     outputs:
       type: single
       schema:
@@ -46,6 +55,7 @@ commands:
         execution: string
         providerFingerprintSha256: string
         signerFingerprintSha256: string
+        signerPublicKeyBase64: string
   probe:
     lifecycle: single
     category: curated
@@ -64,7 +74,15 @@ commands:
       expected-provider-sha256:
         type: string
         required: true
-        description: Pinned SHA-256 of the complete seven-field provider fingerprint.
+        description: Pinned SHA-256 of the complete versioned provider fingerprint.
+      expected-provider-protocol:
+        type: string
+        required: false
+        description: Provider protocol to request; defaults to local-only v1. Managed cloud requires v2.
+      expected-provider-destination:
+        type: string
+        required: false
+        description: Exact canonical HTTPS origin required for a managed-cloud v2 provider.
       expected-signer-sha256:
         type: string
         required: true
@@ -97,7 +115,15 @@ commands:
       expected-provider-sha256:
         type: string
         required: true
-        description: Pinned SHA-256 of the complete seven-field provider fingerprint.
+        description: Pinned SHA-256 of the complete versioned provider fingerprint.
+      expected-provider-protocol:
+        type: string
+        required: false
+        description: Provider protocol to request; defaults to local-only v1. Managed cloud requires v2.
+      expected-provider-destination:
+        type: string
+        required: false
+        description: Exact canonical HTTPS origin required for a managed-cloud v2 provider.
       expected-signer-sha256:
         type: string
         required: true
@@ -131,7 +157,15 @@ commands:
       expected-provider-sha256:
         type: string
         required: true
-        description: Pinned SHA-256 of the complete seven-field provider fingerprint.
+        description: Pinned SHA-256 of the complete versioned provider fingerprint.
+      expected-provider-protocol:
+        type: string
+        required: false
+        description: Provider protocol to request; defaults to local-only v1. Managed cloud requires v2.
+      expected-provider-destination:
+        type: string
+        required: false
+        description: Exact canonical HTTPS origin required for a managed-cloud v2 provider.
       expected-signer-sha256:
         type: string
         required: true

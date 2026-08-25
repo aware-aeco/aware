@@ -91,6 +91,8 @@ test('preflight describes provider and key readiness without conversion or sourc
   assert.equal(out.ready, true);
   assert.equal(out.execution, 'local');
   assert.match(out.providerFingerprintSha256, /^[0-9a-f]{64}$/);
+  assert.equal(Buffer.from(out.signerPublicKeyBase64, 'base64').length, 32);
+  assert.equal(sha256(Buffer.from(out.signerPublicKeyBase64, 'base64')), out.signerFingerprintSha256);
   assert.deepEqual(state.calls, ['describe']);
 });
 

@@ -68,6 +68,21 @@ test('provider fingerprint is the exact seven-field JCS tuple', () => {
   }
 });
 
+test('managed-cloud provider fingerprint binds execution and exact destination', () => {
+  const fingerprint = buildProviderFingerprint({
+    protocolVersion: '2', provider: 'fixture', engine: 'fixture-engine', engineVersion: '1.2.3',
+    adapterBuildId: 'fixture-build', adapterExecutableSha256: 'a'.repeat(64),
+    execution: 'managed-cloud', destination: 'https://api.stage.floless.io',
+  });
+  assert.deepEqual(Object.keys(fingerprint).sort(), [
+    'adapterBuildId', 'adapterExecutableSha256', 'destination', 'engine', 'engineVersion', 'execution',
+    'protocolVersion', 'provider', 'readerSchemaVersion',
+  ]);
+  const baseline = providerFingerprintSha256(fingerprint);
+  assert.notEqual(providerFingerprintSha256({ ...fingerprint, destination: 'https://api.floless.io' }), baseline);
+  assert.throws(() => buildProviderFingerprint({ ...fingerprint, execution: 'local' }), /managed-cloud/);
+});
+
 test('structured errors expose bounded safe fields and never paths or provider output', () => {
   const error = new ModelReaderError('reference-provider-failed', 'convert', false, 'provider failed', {
     sourcePath: 'C:\\private\\Residential.rvt', stderr: 'secret-provider-output', count: 3,

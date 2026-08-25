@@ -107,20 +107,43 @@ function boundedString(value, label, maximum = 256) {
   return value;
 }
 
-function validateDescribe(value) {
+function canonicalHttpsOrigin(value) {
+  if (typeof value !== 'string' || value.length > 512) return null;
+  try {
+    const parsed = new URL(value);
+    if (parsed.protocol !== 'https:' || parsed.username || parsed.password || parsed.pathname !== '/'
+      || parsed.search || parsed.hash || value !== parsed.origin) return null;
+    return parsed.origin;
+  } catch { return null; }
+}
+
+function validateDescribe(value, expectedProtocolVersion = '1', expectedDestination = undefined) {
   try { assertClosedObject(value, ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'formats', 'execution', 'destination'], [], 'provider description'); }
-  catch (error) { providerError('reference-provider-protocol', 'Provider description does not match protocol v1.', false, error); }
-  if (value.protocolVersion !== '1' || value.execution !== 'local' || value.destination !== null || !Array.isArray(value.formats) || value.formats.length !== 1 || value.formats[0] !== 'rvt') {
-    providerError('reference-provider-protocol', 'Provider description does not match the local RVT protocol.');
+  catch (error) { providerError('reference-provider-protocol', `Provider description does not match protocol v${expectedProtocolVersion}.`, false, error); }
+  if (!Array.isArray(value.formats) || value.formats.length !== 1 || value.formats[0] !== 'rvt') {
+    providerError('reference-provider-protocol', 'Provider supports an invalid model format set.');
+  }
+  if (expectedProtocolVersion === '1') {
+    if (value.protocolVersion !== '1' || value.execution !== 'local' || value.destination !== null) {
+      providerError('reference-provider-protocol', 'Provider description does not match the local RVT protocol.');
+    }
+  } else if (expectedProtocolVersion === '2') {
+    const destination = canonicalHttpsOrigin(value.destination);
+    if (value.protocolVersion !== '2' || value.execution !== 'managed-cloud' || !destination
+      || typeof expectedDestination !== 'string' || destination !== expectedDestination) {
+      providerError('reference-provider-destination-mismatch', 'Managed-cloud provider destination does not match the exact caller pin.');
+    }
+  } else {
+    providerError('reference-provider-protocol', 'The requested provider protocol is unsupported.');
   }
   for (const key of ['provider', 'engine', 'engineVersion', 'adapterBuildId']) boundedString(value[key], key);
   return value;
 }
 
-function validateReceipt(value, describe, sourceSha256) {
+function validateReceipt(value, describe, sourceSha256, expectedProtocolVersion, expectedDestination) {
   try { assertClosedObject(value, ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'formats', 'execution', 'destination', 'documentKind', 'sourceSha256', 'geometryPath', 'metadataPath'], [], 'provider receipt'); }
-  catch (error) { providerError('reference-provider-protocol', 'Provider receipt does not match protocol v1.', false, error); }
-  validateDescribe(Object.fromEntries(['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'formats', 'execution', 'destination'].map((key) => [key, value[key]])));
+  catch (error) { providerError('reference-provider-protocol', `Provider receipt does not match protocol v${expectedProtocolVersion}.`, false, error); }
+  validateDescribe(Object.fromEntries(['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'formats', 'execution', 'destination'].map((key) => [key, value[key]])), expectedProtocolVersion, expectedDestination);
   for (const key of ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'execution', 'destination']) {
     if (value[key] !== describe[key]) providerError('reference-provider-changed', 'Provider provenance changed during conversion.');
   }
@@ -161,7 +184,8 @@ export async function describeProvider(options) {
   await privateDirectory(options.privateRoot);
   const cwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
   const environment = minimalProviderEnvironment(options.environment);
-  const stdin = canonicalJsonBytes({ protocolVersion: '1', limits });
+  const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
+  const stdin = canonicalJsonBytes({ protocolVersion: expectedProtocolVersion, limits });
   const stdout = await callProvider(options.hostRun, {
     executable: initialExecutable.path, operation: 'describe', stdin, stdinLength: stdin.length,
     cwd, environment, timeoutMs: limits.conversionMs,
@@ -169,11 +193,12 @@ export async function describeProvider(options) {
   }, limits);
   const afterDescribe = await validateProviderExecutable(options.executable);
   if (afterDescribe.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during description.');
-  const describe = validateDescribe(parseProviderJson(stdout, limits, 'description'));
+  const describe = validateDescribe(parseProviderJson(stdout, limits, 'description'), expectedProtocolVersion, options.expectedDestination);
   const fingerprint = buildProviderFingerprint({
     protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
     engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
     adapterExecutableSha256: initialExecutable.sha256,
+    ...(describe.protocolVersion === '2' ? { execution: describe.execution, destination: describe.destination } : {}),
   });
   if (options.expectedProviderSha256 !== undefined) {
     assertSha256(options.expectedProviderSha256, 'expectedProviderSha256');
@@ -189,7 +214,8 @@ export async function describeAndConvert(options) {
   const staging = await stageImmutableSource(options.sourcePath, path.join(options.privateRoot, 'source'), options.expectedSourceSha256, { limits });
   const describeCwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
   const environment = minimalProviderEnvironment(options.environment);
-  const describeRequest = canonicalJsonBytes({ protocolVersion: '1', limits });
+  const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
+  const describeRequest = canonicalJsonBytes({ protocolVersion: expectedProtocolVersion, limits });
   const describeBytes = await callProvider(options.hostRun, {
     executable: initialExecutable.path, operation: 'describe', stdin: describeRequest,
     stdinLength: describeRequest.length, cwd: describeCwd, environment,
@@ -197,11 +223,12 @@ export async function describeAndConvert(options) {
   }, limits);
   const afterDescribe = await validateProviderExecutable(options.executable);
   if (afterDescribe.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during description.');
-  const describe = validateDescribe(parseProviderJson(describeBytes, limits, 'description'));
+  const describe = validateDescribe(parseProviderJson(describeBytes, limits, 'description'), expectedProtocolVersion, options.expectedDestination);
   const describedFingerprint = buildProviderFingerprint({
     protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
     engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
     adapterExecutableSha256: initialExecutable.sha256,
+    ...(describe.protocolVersion === '2' ? { execution: describe.execution, destination: describe.destination } : {}),
   });
   if (options.expectedProviderSha256 !== undefined) {
     assertSha256(options.expectedProviderSha256, 'expectedProviderSha256');
@@ -212,7 +239,7 @@ export async function describeAndConvert(options) {
   const beforeConvert = await validateProviderExecutable(options.executable);
   if (beforeConvert.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed before conversion.');
   const convertRequest = canonicalJsonBytes({
-    protocolVersion: '1', sourcePath: staging.path, outputDirectory,
+    protocolVersion: expectedProtocolVersion, sourcePath: staging.path, outputDirectory,
     sourceSha256: staging.sourceSha256, canonicalRequest, limits,
   });
   const receiptBytes = await callProvider(options.hostRun, {
@@ -222,7 +249,7 @@ export async function describeAndConvert(options) {
   }, limits);
   const afterConvert = await validateProviderExecutable(options.executable);
   if (afterConvert.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during conversion.');
-  const receipt = validateReceipt(parseProviderJson(receiptBytes, limits, 'receipt'), describe, staging.sourceSha256);
+  const receipt = validateReceipt(parseProviderJson(receiptBytes, limits, 'receipt'), describe, staging.sourceSha256, expectedProtocolVersion, options.expectedDestination);
   const geometryPath = path.join(outputDirectory, 'geometry.glb');
   const metadataPath = path.join(outputDirectory, 'metadata.json');
   const entries = await fs.readdir(outputDirectory);

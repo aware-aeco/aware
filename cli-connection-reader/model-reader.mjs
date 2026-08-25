@@ -62,6 +62,8 @@ async function providerReadiness(args, deps, config, expectedProviderSha256) {
       hostRun: deps.hostRun, environment: config.environment, limits: deps.limits,
       signal: deps.signal,
       expectedProviderSha256,
+      expectedProtocolVersion: args['expected-provider-protocol'] ?? '1',
+      expectedDestination: args['expected-provider-destination'],
     });
     return {
       signingKey, provider,
@@ -148,6 +150,8 @@ async function convertAndCache(args, deps, config, readiness) {
         environment: config.environment, limits: deps.limits,
         signal: deps.signal,
         conversionSettings: args['conversion-settings'] ?? {},
+        expectedProtocolVersion: args['expected-provider-protocol'] ?? '1',
+        expectedDestination: args['expected-provider-destination'],
       });
       emit(deps, 'normalize');
       const geometry = normalizeRevitGlb(conversion.outputs.geometry.bytes, { limits: deps.limits });
@@ -239,10 +243,11 @@ export async function runModelCommand(command, args = {}, deps = {}) {
     const readiness = await providerReadiness(args, executionDeps, config, pin);
     if (command === 'preflight') {
       return {
-        schemaVersion: 'model-reference-reader/v1', ready: true, execution: 'local',
+        schemaVersion: 'model-reference-reader/v1', ready: true, execution: readiness.provider.describe.execution,
         provider: readiness.provider.describe, providerFingerprint: readiness.provider.fingerprint,
         providerFingerprintSha256: readiness.providerFingerprintSha256,
         signerFingerprintSha256: readiness.signerFingerprintSha256,
+        signerPublicKeyBase64: readiness.signingKey.publicKeyBytes.toString('base64'),
         secretProvisioning: 'provider-local; AWARE generic secrets unavailable (#448)',
       };
     }

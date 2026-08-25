@@ -264,14 +264,17 @@ export function requestSha256(request) {
 }
 
 export function buildProviderFingerprint(describe) {
+  const v2 = describe?.protocolVersion === '2';
   assertClosedObject(describe,
-    ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'adapterExecutableSha256'],
+    v2
+      ? ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'adapterExecutableSha256', 'execution', 'destination']
+      : ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'adapterExecutableSha256'],
     ['readerSchemaVersion'], 'provider fingerprint');
   assertSha256(describe.adapterExecutableSha256, 'adapterExecutableSha256');
   for (const key of ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId']) {
     if (typeof describe[key] !== 'string' || !describe[key]) throw new TypeError(`${key} must be a non-empty string`);
   }
-  return {
+  const fingerprint = {
     protocolVersion: describe.protocolVersion,
     provider: describe.provider,
     engine: describe.engine,
@@ -280,6 +283,13 @@ export function buildProviderFingerprint(describe) {
     adapterExecutableSha256: describe.adapterExecutableSha256,
     readerSchemaVersion: describe.readerSchemaVersion ?? READER_SCHEMA_VERSION,
   };
+  if (v2) {
+    if (describe.execution !== 'managed-cloud') throw new TypeError('protocol v2 execution must be managed-cloud');
+    if (typeof describe.destination !== 'string' || !describe.destination) throw new TypeError('protocol v2 destination is required');
+    fingerprint.execution = describe.execution;
+    fingerprint.destination = describe.destination;
+  }
+  return fingerprint;
 }
 
 export function providerFingerprintSha256(fingerprint) {
