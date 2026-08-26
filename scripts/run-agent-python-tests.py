@@ -115,6 +115,7 @@ from pathlib import Path
 # `test_*.py` as a subprocess.
 SKIP_DIRS = {
     ".git",
+    ".tmp",
     ".tox",
     ".venv",
     "__pycache__",
@@ -766,7 +767,7 @@ def self_test() -> int:
       * `77` must count as skipped, or the host-dependent tests turn CI red on
         every runner without Blender and the step gets deleted within a week;
       * discovery must find tests nested at any depth, must ignore non-`test_*`
-        files, and must not descend into `node_modules`/`target`;
+        files, and must not descend into `.tmp`/`node_modules`/`target`;
       * an empty tree must FAIL rather than pass vacuously;
       * `--aware-bin` must reach the test that declares it and only that one.
     """
@@ -786,6 +787,10 @@ def self_test() -> int:
         _write(root, "agent/tests/pass_test.py", _FAILING)  # wrong convention
         _write(root, "node_modules/pkg/test_ignored.py", _FAILING)
         _write(root, "target/debug/test_ignored.py", _FAILING)
+        # Repository-ignored review scratch must not duplicate committed tests.
+        # A real `.tmp/review-temp/` copy made the repo gate discover 28 files
+        # instead of seven and execute stale host-dependent Blender tests (#452).
+        _write(root, ".tmp/review-temp/test_ignored.py", _FAILING)
         # Must NOT be swallowed: `bin`/`obj` used to be pruned by name at any
         # depth, which hid a real test (review, PR #444).
         _write(root, "agent/tests/bin/test_under_bin.py", _PASSING)
