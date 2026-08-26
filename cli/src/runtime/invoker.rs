@@ -2623,10 +2623,20 @@ impl DispatchInvoker {
                     *record_value = live_value.clone();
                 } else if std::mem::discriminant(record_value) != std::mem::discriminant(live_value)
                 {
-                    *record_value = crate::runtime::template::blinded(
-                        live_value,
-                        &std::collections::BTreeSet::new(),
-                    );
+                    // Templating can leave a partially redacted structured value
+                    // as JSON text. Parse that safe text before falling back to
+                    // blinding the live shape, so ordinary sibling fields survive.
+                    let parsed_safe = record_value.as_str().and_then(|text| {
+                        serde_json::from_str::<Value>(text).ok().filter(|parsed| {
+                            std::mem::discriminant(parsed) == std::mem::discriminant(live_value)
+                        })
+                    });
+                    *record_value = parsed_safe.unwrap_or_else(|| {
+                        crate::runtime::template::blinded(
+                            live_value,
+                            &std::collections::BTreeSet::new(),
+                        )
+                    });
                 }
             }
         }
@@ -3481,17 +3491,20 @@ mod tests {
         let original = json!({
             "count": "05",
             "token": "secret-live-value",
-            "tokens": "[\"secret-one\",\"secret-two\"]"
+            "tokens": "[\"secret-one\",\"secret-two\"]",
+            "items": "[{\"token\":\"secret-live-value\",\"label\":\"visible\"}]"
         });
         let live = json!({
             "count": 5,
             "token": "secret-live-value",
-            "tokens": ["secret-one", "secret-two"]
+            "tokens": ["secret-one", "secret-two"],
+            "items": [{"token": "secret-live-value", "label": "visible"}]
         });
         let mut record = json!({
             "count": "05",
             "token": "[redacted]",
-            "tokens": "[redacted]"
+            "tokens": "[redacted]",
+            "items": "[{\"token\":\"[redacted]\",\"label\":\"visible\"}]"
         });
 
         DispatchInvoker::align_record_args_after_coercion(&original, &live, &mut record);
@@ -3501,7 +3514,8 @@ mod tests {
             json!({
                 "count": 5,
                 "token": "[redacted]",
-                "tokens": ["[redacted]", "[redacted]"]
+                "tokens": ["[redacted]", "[redacted]"],
+                "items": [{"token": "[redacted]", "label": "visible"}]
             })
         );
     }

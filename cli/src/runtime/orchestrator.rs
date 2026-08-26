@@ -1094,14 +1094,16 @@ impl Orchestrator {
             // A non-array, non-null value iterates once over itself.
             other => vec![other],
         };
-        if collection.is_empty() && self.simulate {
-            collection.push(serde_json::json!({ "simulated": true }));
-        }
-        let record_collection = match record_collection {
+        let mut record_collection = match record_collection {
             Value::Array(items) => items,
             Value::Null => Vec::new(),
             other => vec![other],
         };
+        if collection.is_empty() && self.simulate {
+            let simulated = serde_json::json!({ "simulated": true });
+            collection.push(simulated.clone());
+            record_collection.push(simulated);
+        }
 
         let body = node.do_.clone().unwrap_or_default();
         let mut results: Vec<Value> = Vec::with_capacity(collection.len());
@@ -2508,6 +2510,7 @@ nodes:
         command: post
         inputs:
           url: https://example.test/x
+          marker: '{{ item.simulated }}'
         safety:
           snapshot: false
 connections:
@@ -2572,12 +2575,19 @@ commands:
         let events = read_run_events(&log_path).await.unwrap();
         // The write body node ran (once, for the synthetic iteration) and was
         // stubbed as a would-write rather than dispatched to the host.
-        let would_write = events
-            .iter()
-            .any(|e| matches!(e, RunEvent::WouldWrite { node, .. } if node == "upsert"));
+        let would_write = events.iter().any(|e| {
+            matches!(
+                e,
+                RunEvent::WouldWrite {
+                    node,
+                    proposed_inputs,
+                    ..
+                } if node == "upsert" && proposed_inputs["marker"] == serde_json::json!(true)
+            )
+        });
         assert!(
             would_write,
-            "for-each body write node must emit a would-write under simulate"
+            "for-each body write node must emit its record-safe synthetic item under simulate"
         );
         if let RunEvent::RunEnd { status, .. } = events.last().unwrap() {
             assert_eq!(status, "ok");
