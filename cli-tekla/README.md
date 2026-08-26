@@ -73,6 +73,13 @@ The user-supplied `code` is a Roslyn script. Globals available:
 - `dynamic model` — `Tekla.Structures.Model.Model` instance (or null if no live Tekla)
 - `IDictionary<string, object?> args` — args block from input JSON
 
+Scripts that use only the BCL and `args` take a model-free fast path. The bridge
+first proves that the script compiles without Tekla references and does not read
+the `model` global; it then skips Tekla DLL discovery and `Model()` construction.
+Scripts that mention `model`, explicit `Tekla.*` names, or imported Tekla types
+keep the full host-connected path. This avoids the first-invocation Open API cold
+start for orchestration and report-shaping nodes that do not touch the model.
+
 ```json
 {
   "verb": "exec",

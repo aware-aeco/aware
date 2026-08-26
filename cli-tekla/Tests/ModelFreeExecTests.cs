@@ -1,0 +1,25 @@
+using Xunit;
+
+namespace AwareTekla.Tests;
+
+public sealed class ModelFreeExecTests
+{
+    [Theory]
+    [InlineData("return new { ok = true, title = args[\"title\"] }; ")]
+    [InlineData("return 1 + 2;")]
+    [InlineData("// model is deliberately unused\nreturn \"model\";")]
+    public void BclAndArgsOnlyScriptsUseTheFastPath(string code)
+    {
+        Assert.True(Program.CanExecuteWithoutTekla(code));
+    }
+
+    [Theory]
+    [InlineData("return model;")]
+    [InlineData("var model = 1; return model;")]
+    [InlineData("return new Tekla.Structures.Model.Beam();")]
+    [InlineData("return new Beam();")]
+    public void HostOrTeklaTypeReferencesKeepTheConnectedPath(string code)
+    {
+        Assert.False(Program.CanExecuteWithoutTekla(code));
+    }
+}

@@ -17,6 +17,7 @@ using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 
@@ -1704,10 +1705,18 @@ internal static class Program
             ApplyResolvedBakeContext(argsNode, bakeScene, hostVersion);
         }
 
-        // Resolve the Tekla install dir for the version we'll connect to (the running instance
-        // when one is open, else the requested version). Standard path + registry. Missing-install
-        // is non-fatal: the script may not reference Tekla types (smoke-test path returns primitives).
-        string? hostInstall = string.IsNullOrEmpty(resolveVersion) ? null : DiscoverTeklaInstall(resolveVersion!);
+        // Model-free scripts compile against the small BCL/globals reference set
+        // first. If that succeeds and the syntax never reads `model`, skip Tekla
+        // DLL discovery and Model() construction entirely; both are irrelevant to
+        // the result and dominate a cold first invocation on Windows (#458).
+        bool modelFree = CanExecuteWithoutTekla(code);
+
+        // Resolve the Tekla install dir for scripts that actually need the host
+        // or its types. Standard path + registry. Missing-install is non-fatal:
+        // the eventual compile/runtime diagnostic remains authoritative.
+        string? hostInstall = modelFree || string.IsNullOrEmpty(resolveVersion)
+            ? null
+            : DiscoverTeklaInstall(resolveVersion!);
         var (probedReferences, probedDir) = ResolveTeklaReferences(hostInstall);
 
         // Wire AssemblyResolve so Roslyn can load Tekla DLLs at script-runtime
@@ -1889,6 +1898,33 @@ internal static class Program
             .WithReferences(refs)
             .WithImports(imports)
             .WithEmitDebugInformation(false);
+    }
+
+    // A script that needs only BCL + `args` should not pay the Tekla Open API
+    // cold start. On a Windows machine with a large Tekla install, enumerating
+    // every Tekla.Structures assembly and constructing Model() can take nearly
+    // two minutes on the first process while Defender/JIT caches are cold (#458).
+    //
+    // The fast path is conservative: any real `model` identifier opts out, and
+    // the script must compile successfully against the model-free reference set.
+    // That second check catches explicit `Tekla.*` names and unqualified types
+    // supplied by the normal Tekla imports (Beam, Point, Drawing, ...). Comments
+    // and string literals named "model" are trivia/tokens of another kind, so
+    // they do not spuriously disable the path.
+    internal static bool CanExecuteWithoutTekla(string code)
+    {
+        var usesModel = CSharpSyntaxTree.ParseText(code)
+            .GetRoot()
+            .DescendantTokens(descendIntoTrivia: false)
+            .Any(token => token.IsKind(SyntaxKind.IdentifierToken)
+                       && string.Equals(token.ValueText, "model", StringComparison.Ordinal));
+        if (usesModel) return false;
+
+        var script = CSharpScript.Create<object>(
+            code,
+            options: CreateScriptOptions(Array.Empty<MetadataReference>()),
+            globalsType: typeof(ExecGlobals));
+        return !script.Compile().Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error);
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
