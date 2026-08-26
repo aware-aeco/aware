@@ -645,6 +645,11 @@ fn an_exposed_app_records_safe_inputs_at_both_nested_provenance_sites() {
         .write_stdin(SECRET)
         .assert()
         .success();
+    std::fs::write(
+        home.join("credentials/batch.json"),
+        r#"["sk-nested-loop-one","sk-nested-loop-two"]"#,
+    )
+    .unwrap();
 
     let inner_dir = src.join("inner");
     std::fs::create_dir_all(&inner_dir).unwrap();
@@ -662,6 +667,8 @@ exposed-commands:
         type: string
       label:
         type: string
+      tokens:
+        type: array
     outputs:
       type: single
       schema:
@@ -678,6 +685,19 @@ nodes:
       headers:
         Authorization: "{{ inputs.token }}"
         X-Label: "{{ inputs.label }}"
+  - id: loop
+    for-each: "{{ inputs.tokens }}"
+    do:
+      - id: write-each
+        agent: http
+        command: post
+        safety:
+          transaction-group: nested-redaction-probe
+          snapshot: false
+        config:
+          url: "http://127.0.0.1:1/unused"
+          headers:
+            Authorization: "Bearer {{ item }}"
 connections: []
 requires: []
 "#,
@@ -698,6 +718,7 @@ nodes:
     config:
       token: "Bearer {{ secrets['my-api'].access_token }}"
       label: "{{ inputs.label }}"
+      tokens: "{{ secrets.batch }}"
 connections: []
 requires: []
 "#,
@@ -725,14 +746,16 @@ requires: []
         .success();
 
     let trace = traces(&home);
-    assert!(
-        !trace.contains(SECRET),
-        "the caller's credential crossed into a nested trace:\n{trace}"
-    );
+    for leaked in [SECRET, "sk-nested-loop-one", "sk-nested-loop-two"] {
+        assert!(
+            !trace.contains(leaked),
+            "the caller's credential crossed into a nested trace ({leaked}):\n{trace}"
+        );
+    }
     assert_eq!(
         trace.matches("Bearer [redacted]").count(),
-        2,
-        "nested run-start and would-write must both carry the record-safe value:\n{trace}"
+        4,
+        "nested run-start, the scalar write, and both loop iterations must carry the record-safe value:\n{trace}"
     );
     assert_eq!(
         trace.matches("ordinary-value").count(),

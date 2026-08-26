@@ -1068,14 +1068,22 @@ impl Orchestrator {
         // Saved and restored with the binding it describes: an inner loop over a
         // plain list must not clear the flag an enclosing vault-drawn loop set.
         let prev_item_from_vault = self.ctx.item_from_vault;
+        let live_collection = template::resolve_value(expr, &self.ctx);
+        let expr_param = Value::String(expr.to_string());
+        let record_collection =
+            template::resolve_value(expr, &self.record_render_context(&expr_param));
         // Straight from the vault, OR selected out of an element an enclosing
         // vault-drawn loop already lifted from it: `{{ item.tokens }}` nested
         // inside `for-each: "{{ secrets.batch }}"` is still credential material,
-        // and keying on this loop's own head alone called it clean.
+        // and keying on this loop's own head alone called it clean. A nested app
+        // also receives already-rendered inputs, so compare the live collection
+        // with its record-safe counterpart to retain provenance across that
+        // transport boundary (#451).
         self.ctx.item_from_vault = template::reads_secrets_namespace(expr)
-            || (prev_item_from_vault && template::reads_item_binding(expr));
+            || (prev_item_from_vault && template::reads_item_binding(expr))
+            || record_collection != live_collection;
 
-        let mut collection = match template::resolve_value(expr, &self.ctx) {
+        let mut collection = match live_collection {
             Value::Array(items) => items,
             Value::Null => Vec::new(),
             // A non-array, non-null value iterates once over itself.
