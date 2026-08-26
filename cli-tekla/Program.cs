@@ -1707,17 +1707,29 @@ internal static class Program
 
         // Model-free scripts compile against the small BCL/globals reference set
         // first. If that succeeds and the syntax never reads `model`, skip Tekla
-        // DLL discovery and Model() construction entirely; both are irrelevant to
+        // metadata enumeration and Model() construction; both are irrelevant to
         // the result and dominate a cold first invocation on Windows (#458).
         bool modelFree = CanExecuteWithoutTekla(code);
 
-        // Resolve the Tekla install dir for scripts that actually need the host
-        // or its types. Standard path + registry. Missing-install is non-fatal:
-        // the eventual compile/runtime diagnostic remains authoritative.
-        string? hostInstall = modelFree || string.IsNullOrEmpty(resolveVersion)
+        // Keep the lightweight install/bin lookup even on the fast path. A script
+        // can load Tekla dynamically through reflection without a static type for
+        // the classifier to see; wiring AssemblyResolve preserves that supported
+        // behavior without paying to enumerate Roslyn metadata or construct Model().
+        string? hostInstall = string.IsNullOrEmpty(resolveVersion)
             ? null
             : DiscoverTeklaInstall(resolveVersion!);
-        var (probedReferences, probedDir) = ResolveTeklaReferences(hostInstall);
+        IReadOnlyList<MetadataReference> probedReferences;
+        string? probedDir;
+        if (modelFree)
+        {
+            probedReferences = Array.Empty<MetadataReference>();
+            var binDir = hostInstall is null ? null : Path.Combine(hostInstall, "bin");
+            probedDir = binDir is not null && Directory.Exists(binDir) ? binDir : null;
+        }
+        else
+        {
+            (probedReferences, probedDir) = ResolveTeklaReferences(hostInstall);
+        }
 
         // Wire AssemblyResolve so Roslyn can load Tekla DLLs at script-runtime
         // (the references list tells Roslyn at compile-time which assemblies
@@ -1760,7 +1772,8 @@ internal static class Program
                 probedDir,
                 hostPid,
                 commitPolicy ?? CommitPolicyForVerb(verb),
-                announce);
+                announce,
+                connectModel: !modelFree);
             // Losing the disarm race means a last-resort hook already emitted
             // a fail receipt (a background-thread fault) — ours is suppressed.
             if (!TryClaimReceipt()) return 2;
@@ -1820,7 +1833,8 @@ internal static class Program
         string? teklaBinDir,
         int? expectedPid,
         ScriptCommitPolicy commitPolicy,
-        string? announce = null)
+        string? announce = null,
+        bool connectModel = true)
     {
         JsonNode? result = null;
         Exception? fault = null;
@@ -1829,7 +1843,8 @@ internal static class Program
             try
             {
                 result = SerializeResult(
-                    RunScript(code, teklaReferences, argsNode, teklaBinDir, expectedPid, commitPolicy, announce));
+                    RunScript(code, teklaReferences, argsNode, teklaBinDir, expectedPid,
+                              commitPolicy, announce, connectModel));
             }
             catch (Exception e) { fault = e; }
         })
@@ -1942,7 +1957,8 @@ internal static class Program
         string? teklaBinDir,
         int? expectedPid,
         ScriptCommitPolicy commitPolicy,
-        string? announce = null)
+        string? announce = null,
+        bool connectModel = true)
     {
         var options = CreateScriptOptions(teklaReferences);
 
@@ -1953,7 +1969,7 @@ internal static class Program
         // model=null and let the script blow up at its own dynamic call site
         // if it tries to use Tekla without a live host.
         object? modelInstance = null;
-        if (teklaBinDir is not null)
+        if (teklaBinDir is not null && connectModel)
         {
             // TOCTOU recheck (#290 review): the process set was snapshotted in ExecuteResolvedScript
             // BEFORE DLL probing, bake hashing, and STA thread startup — a window in which the Tekla

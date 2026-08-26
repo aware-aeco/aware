@@ -8,6 +8,7 @@ public sealed class ModelFreeExecTests
     [InlineData("return new { ok = true, title = args[\"title\"] }; ")]
     [InlineData("return 1 + 2;")]
     [InlineData("// model is deliberately unused\nreturn \"model\";")]
+    [InlineData("return System.Reflection.Assembly.Load(args[\"assembly\"].ToString()).FullName;")]
     public void BclAndArgsOnlyScriptsUseTheFastPath(string code)
     {
         Assert.True(Program.CanExecuteWithoutTekla(code));
