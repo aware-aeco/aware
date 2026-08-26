@@ -8,7 +8,8 @@ Single source of truth (all computed, never hand-counted):
                                    commands, catalog entries, meta-primitives
   - 30-apps/_examples/*.{flo,app} → reference-app count (top-level only)
   - 00-vision/decalog.md        → number of structural truths
-  - cli/Cargo.toml              → CLI version
+  - cli/Cargo.toml              → authoritative CLI version
+  - cli-npm/package.json        → checked npm-wrapper mirror of CLI version
 
 Each managed number in the docs is wrapped in an invisible marker:
 
@@ -25,12 +26,12 @@ list does a single targeted regex replacement instead.
 Usage (run from the repo root):
     python scripts/sync_stats.py --check       # verify; exit 1 + diff if stale
     python scripts/sync_stats.py --write        # rewrite the docs in place
-    python scripts/sync_stats.py --bump 0.89.0  # set cli/Cargo.toml version + sync docs
+    python scripts/sync_stats.py --bump 0.89.0  # set Cargo/npm versions + sync docs
     python scripts/sync_stats.py --selftest     # unit-test the pure logic
 
-`--bump` is the release seam: it welds the version bump and the doc mirror into
-one command, so a release can't land the Cargo.toml bump while leaving the
-`cli_version` doc stat stale (which is exactly what turns the Stats CI red).
+`--bump` is the release seam: it welds the authoritative Cargo version, the npm
+wrapper mirror, and the doc mirror into one command. A release therefore cannot
+land with either consumer-facing version stale.
 """
 
 from __future__ import annotations
@@ -188,6 +189,7 @@ def _write(path: Path, text: str) -> None:
 
 
 PLAYGROUND = "40-diagrams/substrate-playground.html"
+NPM_PACKAGE = "cli-npm/package.json"
 
 
 def _committed_raw_agents(path: Path):
@@ -249,6 +251,11 @@ def collect_mismatches(stats: dict[str, str]) -> list[tuple]:
     pg = _playground_mismatch()
     if pg is not None:
         mismatches.append((PLAYGROUND, *pg))
+    npm_version = npm_package_version(_read(REPO / NPM_PACKAGE))
+    if npm_version != stats["cli_version"]:
+        mismatches.append(
+            (NPM_PACKAGE, "cli_version", npm_version, stats["cli_version"])
+        )
     return mismatches
 
 
@@ -271,6 +278,12 @@ def apply_writes(stats: dict[str, str]) -> list[str]:
             changed.append(rel)
     _regen_playground()
     changed.append(PLAYGROUND)
+    npm_path = REPO / NPM_PACKAGE
+    npm_text = _read(npm_path)
+    npm_new = bump_npm_package_version(npm_text, stats["cli_version"])
+    if npm_new != npm_text:
+        _write(npm_path, npm_new)
+        changed.append(NPM_PACKAGE)
     return changed
 
 
@@ -293,10 +306,37 @@ def bump_package_version(cargo_text: str, new_version: str) -> str:
     return new
 
 
+def npm_package_version(package_text: str) -> str:
+    """Read the npm wrapper's authoritative package version, failing loudly.
+
+    The npm shim uses this exact field to choose both the GitHub release it
+    downloads and the versioned rescue directory it will execute, so a missing
+    or non-string value is not a tolerable default.
+    """
+    package = json.loads(package_text)
+    if not isinstance(package, dict) or not isinstance(package.get("version"), str):
+        raise ValueError("cli-npm/package.json needs a string top-level version")
+    return package["version"]
+
+
+def bump_npm_package_version(package_text: str, new_version: str) -> str:
+    """Return package.json with only its top-level version changed.
+
+    Serializing through JSON mirrors release.yml's Node rewrite and avoids a
+    regex accidentally changing a nested field. The first rewrite normalizes
+    formatting; later bumps touch only the version line.
+    """
+    package = json.loads(package_text)
+    if not isinstance(package, dict) or not isinstance(package.get("version"), str):
+        raise ValueError("cli-npm/package.json needs a string top-level version")
+    package["version"] = new_version
+    return json.dumps(package, indent=2, ensure_ascii=False) + "\n"
+
+
 def run_bump(version: str) -> int:
-    """Set the CLI version in Cargo.toml, then --write so the cli_version doc
-    stat lands in the same breath. Cargo.lock is refreshed by the caller's
-    `cargo build`; this owns only the version + doc mirror."""
+    """Set the authoritative Cargo version, then --write so the npm wrapper
+    and cli_version doc stat land in the same breath. Cargo.lock is refreshed
+    by the caller's `cargo build`."""
     if not SEMVER_RE.match(version):
         print(f"sync_stats: --bump needs a semver version like 0.89.0 (got '{version}')")
         return 2
@@ -336,7 +376,7 @@ def run(write: bool) -> int:
         return 1
 
     total = sum(len(MARKER_RE.findall(_read(REPO / rel))) for rel in MANAGED_FILES)
-    total += len(ANCHOR_RULES) + 1  # + the playground dataset check
+    total += len(ANCHOR_RULES) + 2  # + playground data + npm version mirror
     print(f"sync_stats: all {total} managed stats current ({len(stats)} keys).")
     return 0
 
@@ -414,6 +454,20 @@ def run_selftest() -> int:
         def test_bump_requires_exactly_one_package_version(self):
             with self.assertRaises(ValueError):
                 bump_package_version('[dependencies]\nx = 1\n', "0.89.0")
+
+        def test_npm_bump_changes_only_the_top_level_version(self):
+            package = '{"name":"@aware-aeco/cli","version":"0.41.0","scripts":{"version":"leave-me"}}\n'
+            new = bump_npm_package_version(package, "0.89.0")
+            parsed = json.loads(new)
+            self.assertEqual(parsed["version"], "0.89.0")
+            self.assertEqual(parsed["scripts"]["version"], "leave-me")
+            self.assertEqual(npm_package_version(new), "0.89.0")
+
+        def test_npm_version_requires_a_string_top_level_field(self):
+            with self.assertRaises(ValueError):
+                npm_package_version('{"name":"@aware-aeco/cli"}')
+            with self.assertRaises(ValueError):
+                bump_npm_package_version('{"version":129}', "0.89.0")
 
         def test_semver_guard(self):
             self.assertTrue(SEMVER_RE.match("0.89.0"))
