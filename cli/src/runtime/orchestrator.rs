@@ -48,6 +48,9 @@ pub struct Orchestrator {
     /// runs keep ordinary CLI inputs here; exposed nested apps receive the
     /// caller's separately rendered input channel.
     pub record_inputs: Value,
+    /// Record-safe counterpart of the current `for-each` binding. This keeps
+    /// ordinary fields visible when only part of an item came from a credential.
+    pub record_item: Option<Value>,
     pub fan_in: FanInState,
     /// When `true`, write-mode nodes skip the agent transport and emit a
     /// `would-write:` provenance event instead of mutating state. Read-mode
@@ -716,6 +719,9 @@ impl Orchestrator {
         let live_inputs = self.ctx.inputs.clone();
         let mut record = self.ctx.clone();
         record.inputs = self.record_inputs.clone();
+        if let Some(item) = &self.record_item {
+            record.upstream.insert("item".to_string(), item.clone());
+        }
 
         if let (Value::Object(live), Value::Object(safe), Some(Value::Object(overlay))) = (
             &live_inputs,
@@ -1065,6 +1071,7 @@ impl Orchestrator {
         // element would leak into a sibling body node's `{{ item }}` — a topology
         // the compiler explicitly scopes (app_lock `nested_body_keeps_outer_iteration_var_in_scope`).
         let prev_item = self.ctx.upstream.get("item").cloned();
+        let prev_record_item = self.record_item.clone();
         // Saved and restored with the binding it describes: an inner loop over a
         // plain list must not clear the flag an enclosing vault-drawn loop set.
         let prev_item_from_vault = self.ctx.item_from_vault;
@@ -1075,13 +1082,11 @@ impl Orchestrator {
         // Straight from the vault, OR selected out of an element an enclosing
         // vault-drawn loop already lifted from it: `{{ item.tokens }}` nested
         // inside `for-each: "{{ secrets.batch }}"` is still credential material,
-        // and keying on this loop's own head alone called it clean. A nested app
-        // also receives already-rendered inputs, so compare the live collection
-        // with its record-safe counterpart to retain provenance across that
-        // transport boundary (#451).
+        // and keying on this loop's own head alone called it clean. Nested apps
+        // bind the corresponding `record_collection` item below, preserving a
+        // mixed item's ordinary fields while its credential leaves stay blind.
         self.ctx.item_from_vault = template::reads_secrets_namespace(expr)
-            || (prev_item_from_vault && template::reads_item_binding(expr))
-            || record_collection != live_collection;
+            || (prev_item_from_vault && template::reads_item_binding(expr));
 
         let mut collection = match live_collection {
             Value::Array(items) => items,
@@ -1092,13 +1097,19 @@ impl Orchestrator {
         if collection.is_empty() && self.simulate {
             collection.push(serde_json::json!({ "simulated": true }));
         }
+        let record_collection = match record_collection {
+            Value::Array(items) => items,
+            Value::Null => Vec::new(),
+            other => vec![other],
+        };
 
         let body = node.do_.clone().unwrap_or_default();
         let mut results: Vec<Value> = Vec::with_capacity(collection.len());
-        for item in collection {
+        for (index, item) in collection.into_iter().enumerate() {
             // Bind the per-iteration variable `{{ item }}` — the reserved
             // for-each prefix the compiler scopes inside the body (#117-3).
             self.ctx.record_output("item", item);
+            self.record_item = record_collection.get(index).cloned();
             let mut iter_output = Value::Null;
             let mut gated = false;
             for body_node in &body {
@@ -1136,6 +1147,7 @@ impl Orchestrator {
             }
         }
         self.ctx.item_from_vault = prev_item_from_vault;
+        self.record_item = prev_record_item;
 
         let aggregate = Value::Array(results);
         self.emit(RunEvent::NodeOutput {
@@ -1426,6 +1438,7 @@ pub async fn run_exposed_app_one_shot(
         ctx,
         run_config: record_inputs.clone(),
         record_inputs,
+        record_item: None,
         fan_in: FanInState::default(),
         dry_run,
         simulate,
@@ -1465,6 +1478,7 @@ pub async fn run_exposed_app_stream(
         ctx,
         run_config: record_inputs.clone(),
         record_inputs,
+        record_item: None,
         fan_in: FanInState::default(),
         dry_run,
         simulate,
@@ -1960,6 +1974,7 @@ requires: []
             ctx: RuntimeContext::default(),
             run_config: serde_json::json!({}),
             record_inputs: serde_json::json!({}),
+            record_item: None,
             fan_in: FanInState::default(),
             dry_run: false,
             simulate: false,

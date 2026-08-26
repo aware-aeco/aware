@@ -2601,6 +2601,27 @@ pub struct AppTransportCtx {
 }
 
 impl DispatchInvoker {
+    /// Mirror exposed-input coercions into the record-safe channel only when a
+    /// value was unchanged by redaction. Credential-derived leaves differ from
+    /// the original and stay blinded; ordinary values acquire the exact type the
+    /// nested execution receives.
+    fn align_record_args_after_coercion(original: &Value, live: &Value, record: &mut Value) {
+        let (Some(original), Some(live), Some(record)) = (
+            original.as_object(),
+            live.as_object(),
+            record.as_object_mut(),
+        ) else {
+            return;
+        };
+        for (key, live_value) in live {
+            if let (Some(original_value), Some(record_value)) = (original.get(key), record.get(key))
+                && record_value == original_value
+            {
+                record.insert(key.clone(), live_value.clone());
+            }
+        }
+    }
+
     /// Construct the top-level dispatch invoker, wiring app-backed-agent support
     /// from the given paths + run posture.
     pub fn new(
@@ -2733,9 +2754,11 @@ impl DispatchInvoker {
         agent: &str,
         command: &str,
         mut args: Value,
-        record_args: Value,
+        mut record_args: Value,
     ) -> Result<Value, AwareError> {
+        let original_args = args.clone();
         let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
+        Self::align_record_args_after_coercion(&original_args, &args, &mut record_args);
         let backed_by = app.app.clone();
         let run_id = crate::runtime::provenance::run_id_now();
         let log_path = crate::runtime::provenance::log_path_for(
@@ -2767,9 +2790,11 @@ impl DispatchInvoker {
         agent: &str,
         command: &str,
         mut args: Value,
-        record_args: Value,
+        mut record_args: Value,
     ) -> Result<StreamingHandle, AwareError> {
+        let original_args = args.clone();
         let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
+        Self::align_record_args_after_coercion(&original_args, &args, &mut record_args);
         let backed_by = app.app.clone();
         let run_id = crate::runtime::provenance::run_id_now();
         let log_path = crate::runtime::provenance::log_path_for(
@@ -3440,6 +3465,17 @@ mod stream_pump_tests {
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn record_safe_args_follow_coercion_without_restoring_redacted_values() {
+        let original = json!({ "count": "05", "token": "secret-live-value" });
+        let live = json!({ "count": 5, "token": "secret-live-value" });
+        let mut record = json!({ "count": "05", "token": "[redacted]" });
+
+        DispatchInvoker::align_record_args_after_coercion(&original, &live, &mut record);
+
+        assert_eq!(record, json!({ "count": 5, "token": "[redacted]" }));
+    }
 
     #[test]
     fn vision_cache_key_is_content_addressed() {

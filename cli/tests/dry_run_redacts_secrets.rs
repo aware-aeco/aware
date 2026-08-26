@@ -669,6 +669,10 @@ exposed-commands:
         type: string
       tokens:
         type: array
+      items:
+        type: array
+      count:
+        type: integer
     outputs:
       type: single
       schema:
@@ -685,6 +689,7 @@ nodes:
       headers:
         Authorization: "{{ inputs.token }}"
         X-Label: "{{ inputs.label }}"
+        X-Count: "{{ inputs.count }}"
   - id: loop
     for-each: "{{ inputs.tokens }}"
     do:
@@ -698,6 +703,20 @@ nodes:
           url: "http://127.0.0.1:1/unused"
           headers:
             Authorization: "Bearer {{ item }}"
+  - id: mixed-loop
+    for-each: "{{ inputs.items }}"
+    do:
+      - id: write-mixed
+        agent: http
+        command: post
+        safety:
+          transaction-group: nested-redaction-probe
+          snapshot: false
+        config:
+          url: "http://127.0.0.1:1/unused"
+          headers:
+            Authorization: "Bearer {{ item.token }}"
+            X-Label: "{{ item.label }}"
 connections: []
 requires: []
 "#,
@@ -719,6 +738,10 @@ nodes:
       token: "Bearer {{ secrets['my-api'].access_token }}"
       label: "{{ inputs.label }}"
       tokens: "{{ secrets.batch }}"
+      items:
+        - token: "{{ secrets['my-api'].access_token }}"
+          label: visible-loop-label
+      count: "{{ inputs.count }}"
 connections: []
 requires: []
 "#,
@@ -741,6 +764,8 @@ requires: []
             "--dry-run",
             "--input",
             "label=ordinary-value",
+            "--input",
+            "count=05",
         ])
         .assert()
         .success();
@@ -754,12 +779,25 @@ requires: []
     }
     assert_eq!(
         trace.matches("Bearer [redacted]").count(),
-        4,
-        "nested run-start, the scalar write, and both loop iterations must carry the record-safe value:\n{trace}"
+        5,
+        "nested run-start, the scalar write, and all loop iterations must carry the record-safe value:\n{trace}"
     );
     assert_eq!(
         trace.matches("ordinary-value").count(),
         2,
         "record-safe routing must preserve ordinary top-level inputs in both nested records:\n{trace}"
+    );
+    assert_eq!(
+        trace.matches("visible-loop-label").count(),
+        2,
+        "a mixed item's ordinary field must survive in run-start and would-write:\n{trace}"
+    );
+    assert!(
+        trace.contains(r#""count":5"#) && trace.contains(r#""X-Count":5"#),
+        "record-safe inputs must receive the same exposed-input coercion as execution:\n{trace}"
+    );
+    assert!(
+        !trace.contains("\"05\""),
+        "the uncoerced input must not remain in nested provenance:\n{trace}"
     );
 }
