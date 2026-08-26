@@ -1905,16 +1905,23 @@ internal static class Program
     // every Tekla.Structures assembly and constructing Model() can take nearly
     // two minutes on the first process while Defender/JIT caches are cold (#458).
     //
-    // The fast path is conservative: any real `model` identifier opts out, and
-    // the script must compile successfully against the model-free reference set.
+    // The fast path is conservative: any real `model` identifier or external
+    // source/reference directive opts out, and the script must compile
+    // successfully against the model-free reference set.
     // That second check catches explicit `Tekla.*` names and unqualified types
     // supplied by the normal Tekla imports (Beam, Point, Drawing, ...). Comments
     // and string literals named "model" are trivia/tokens of another kind, so
     // they do not spuriously disable the path.
     internal static bool CanExecuteWithoutTekla(string code)
     {
-        var usesModel = CSharpSyntaxTree.ParseText(code)
-            .GetRoot()
+        var root = CSharpSyntaxTree.ParseText(code).GetRoot();
+        var usesExternalSource = root
+            .DescendantTrivia(descendIntoTrivia: true)
+            .Any(trivia => trivia.IsKind(SyntaxKind.LoadDirectiveTrivia)
+                        || trivia.IsKind(SyntaxKind.ReferenceDirectiveTrivia));
+        if (usesExternalSource) return false;
+
+        var usesModel = root
             .DescendantTokens(descendIntoTrivia: false)
             .Any(token => token.IsKind(SyntaxKind.IdentifierToken)
                        && string.Equals(token.ValueText, "model", StringComparison.Ordinal));

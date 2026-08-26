@@ -18,6 +18,8 @@ public sealed class ModelFreeExecTests
     [InlineData("var model = 1; return model;")]
     [InlineData("return new Tekla.Structures.Model.Beam();")]
     [InlineData("return new Beam();")]
+    [InlineData("#load \"script-that-may-use-model.csx\"")]
+    [InlineData("#r \"Tekla.Structures.Model.dll\"\nreturn 1;")]
     public void HostOrTeklaTypeReferencesKeepTheConnectedPath(string code)
     {
         Assert.False(Program.CanExecuteWithoutTekla(code));
