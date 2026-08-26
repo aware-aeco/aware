@@ -46,6 +46,33 @@ pub trait AgentInvoker: Send + Sync {
         args: Value,
     ) -> Result<StreamingHandle, AwareError>;
 
+    /// Invoke a single-lifecycle command while carrying the separately rendered
+    /// value that is safe to persist. Ordinary transports never record their
+    /// arguments, so the default ignores `record_args`. App-backed transports
+    /// override this and pass both channels into the nested orchestrator.
+    async fn invoke_single_record_safe(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+        record_args: Value,
+    ) -> Result<Value, AwareError> {
+        let _ = record_args;
+        self.invoke_single(agent, command, args).await
+    }
+
+    /// Streaming counterpart of [`Self::invoke_single_record_safe`].
+    async fn invoke_stream_record_safe(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+        record_args: Value,
+    ) -> Result<StreamingHandle, AwareError> {
+        let _ = record_args;
+        self.invoke_stream(agent, command, args).await
+    }
+
     /// [`Self::invoke_single`], plus a sink for the progress records the command publishes WHILE it
     /// runs (#405). Records arrive on `progress` in the order the producer wrote them; the caller
     /// mirrors them into the trace so a consumer can act on them before the single output exists.
@@ -62,6 +89,23 @@ pub trait AgentInvoker: Send + Sync {
     ) -> Result<Value, AwareError> {
         let _ = progress;
         self.invoke_single(agent, command, args).await
+    }
+
+    /// Progress-reporting counterpart of [`Self::invoke_single_record_safe`].
+    /// Default transports preserve their existing progress behavior and ignore
+    /// the record-only channel; [`DispatchInvoker`] overrides this for app-backed
+    /// agents so nested provenance receives it.
+    async fn invoke_single_progress_record_safe(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+        record_args: Value,
+        progress: Option<mpsc::Sender<Value>>,
+    ) -> Result<Value, AwareError> {
+        let _ = record_args;
+        self.invoke_single_progress(agent, command, args, progress)
+            .await
     }
 }
 
@@ -2689,6 +2733,7 @@ impl DispatchInvoker {
         agent: &str,
         command: &str,
         mut args: Value,
+        record_args: Value,
     ) -> Result<Value, AwareError> {
         let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
         let backed_by = app.app.clone();
@@ -2703,6 +2748,7 @@ impl DispatchInvoker {
         crate::runtime::orchestrator::run_exposed_app_one_shot(
             app,
             args,
+            record_args,
             self.agents_dir.clone(),
             self.nested_leaf(),
             provenance,
@@ -2721,6 +2767,7 @@ impl DispatchInvoker {
         agent: &str,
         command: &str,
         mut args: Value,
+        record_args: Value,
     ) -> Result<StreamingHandle, AwareError> {
         let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
         let backed_by = app.app.clone();
@@ -2754,6 +2801,7 @@ impl DispatchInvoker {
             let res = crate::runtime::orchestrator::run_exposed_app_stream(
                 app,
                 args,
+                record_args,
                 agents_dir,
                 leaf,
                 provenance,
@@ -2865,6 +2913,17 @@ impl AgentInvoker for DispatchInvoker {
         command: &str,
         args: Value,
     ) -> Result<Value, AwareError> {
+        self.invoke_single_record_safe(agent, command, args.clone(), args)
+            .await
+    }
+
+    async fn invoke_single_record_safe(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+        record_args: Value,
+    ) -> Result<Value, AwareError> {
         let dir = self.agents_dir.clone();
         match self.transport_kind(agent)? {
             TransportKind::Cli => {
@@ -2882,7 +2941,7 @@ impl AgentInvoker for DispatchInvoker {
             }
             TransportKind::App => match &self.app_ctx {
                 Some(app_ctx) => {
-                    self.dispatch_app_single(app_ctx, agent, command, args)
+                    self.dispatch_app_single(app_ctx, agent, command, args, record_args)
                         .await
                 }
                 None => Err(Self::nested_recursion_error(agent)),
@@ -2907,6 +2966,18 @@ impl AgentInvoker for DispatchInvoker {
         args: Value,
         progress: Option<mpsc::Sender<Value>>,
     ) -> Result<Value, AwareError> {
+        self.invoke_single_progress_record_safe(agent, command, args.clone(), args, progress)
+            .await
+    }
+
+    async fn invoke_single_progress_record_safe(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+        record_args: Value,
+        progress: Option<mpsc::Sender<Value>>,
+    ) -> Result<Value, AwareError> {
         match self.transport_kind(agent)? {
             TransportKind::Cli => {
                 CliInvoker {
@@ -2916,7 +2987,10 @@ impl AgentInvoker for DispatchInvoker {
                 .invoke_single_progress(agent, command, args, progress)
                 .await
             }
-            _ => self.invoke_single(agent, command, args).await,
+            _ => {
+                self.invoke_single_record_safe(agent, command, args, record_args)
+                    .await
+            }
         }
     }
 
@@ -2925,6 +2999,17 @@ impl AgentInvoker for DispatchInvoker {
         agent: &str,
         command: &str,
         args: Value,
+    ) -> Result<StreamingHandle, AwareError> {
+        self.invoke_stream_record_safe(agent, command, args.clone(), args)
+            .await
+    }
+
+    async fn invoke_stream_record_safe(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+        record_args: Value,
     ) -> Result<StreamingHandle, AwareError> {
         let dir = self.agents_dir.clone();
         match self.transport_kind(agent)? {
@@ -2943,7 +3028,7 @@ impl AgentInvoker for DispatchInvoker {
             }
             TransportKind::App => match &self.app_ctx {
                 Some(app_ctx) => {
-                    self.dispatch_app_stream(app_ctx, agent, command, args)
+                    self.dispatch_app_stream(app_ctx, agent, command, args, record_args)
                         .await
                 }
                 None => Err(Self::nested_recursion_error(agent)),

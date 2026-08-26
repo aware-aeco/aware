@@ -619,3 +619,108 @@ requires: []
         "one unpreviewable leaf must not take its siblings down with it:\n{trace}"
     );
 }
+
+/// An exposed app is a second provenance boundary (#451). The caller renders
+/// its vault reference before dispatch, so the nested app receives an ordinary
+/// `inputs.token` value with no `secrets` reference left to blind. The runtime
+/// must carry the caller's record-safe rendering across that boundary while it
+/// keeps sending the real rendering to the nested app's live execution context.
+///
+/// Both nested records are pinned here: `run-start.config` records the routed
+/// inputs directly, and the inner write node re-renders that same value into a
+/// `would-write.proposed_inputs` record.
+#[test]
+fn an_exposed_app_records_safe_inputs_at_both_nested_provenance_sites() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    let src = tmp.path().join("src");
+    copy_dir(
+        &repo_root().join("20-agents/_core/http"),
+        &home.join("agents/http"),
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["credential", "put", "my-api"])
+        .write_stdin(SECRET)
+        .assert()
+        .success();
+
+    let inner_dir = src.join("inner");
+    std::fs::create_dir_all(&inner_dir).unwrap();
+    std::fs::write(
+        inner_dir.join("inner.flo"),
+        r#"app: inner
+version: 0.2.0
+description: exposed writer receiving a caller-routed token
+exposes-as-agent: true
+exposed-commands:
+  run:
+    lifecycle: single
+    inputs:
+      token:
+        type: string
+    outputs:
+      type: single
+      schema:
+        ok: bool
+nodes:
+  - id: write-it
+    agent: http
+    command: post
+    safety:
+      transaction-group: nested-redaction-probe
+      snapshot: false
+    config:
+      url: "http://127.0.0.1:1/unused"
+      headers:
+        Authorization: "{{ inputs.token }}"
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    let outer_dir = src.join("outer");
+    std::fs::create_dir_all(&outer_dir).unwrap();
+    std::fs::write(
+        outer_dir.join("outer.flo"),
+        r#"app: outer
+version: 0.1.0
+description: routes a vault credential into an exposed app
+nodes:
+  - id: call-inner
+    agent: inner
+    command: run
+    config:
+      token: "Bearer {{ secrets['my-api'].access_token }}"
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    for app in [&inner_dir, &outer_dir] {
+        aware(&home)
+            .args(["app", "install"])
+            .arg(app)
+            .assert()
+            .success();
+    }
+
+    aware(&home)
+        .args(["app", "run", "outer", "--dry-run"])
+        .assert()
+        .success();
+
+    let trace = traces(&home);
+    assert!(
+        !trace.contains(SECRET),
+        "the caller's credential crossed into a nested trace:\n{trace}"
+    );
+    assert_eq!(
+        trace.matches("Bearer [redacted]").count(),
+        2,
+        "nested run-start and would-write must both carry the record-safe value:\n{trace}"
+    );
+}
