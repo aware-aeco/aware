@@ -8,7 +8,6 @@ public sealed class ModelFreeExecTests
     [InlineData("return new { ok = true, title = args[\"title\"] }; ")]
     [InlineData("return 1 + 2;")]
     [InlineData("// model is deliberately unused\nreturn \"model\";")]
-    [InlineData("return System.Reflection.Assembly.Load(args[\"assembly\"].ToString()).FullName;")]
     public void BclAndArgsOnlyScriptsUseTheFastPath(string code)
     {
         Assert.True(Program.CanExecuteWithoutTekla(code));
@@ -21,6 +20,8 @@ public sealed class ModelFreeExecTests
     [InlineData("return new Beam();")]
     [InlineData("#load \"script-that-may-use-model.csx\"")]
     [InlineData("#r \"Tekla.Structures.Model.dll\"\nreturn 1;")]
+    [InlineData("return System.Reflection.Assembly.Load(args[\"assembly\"].ToString()).FullName;")]
+    [InlineData("dynamic loader = args[\"loader\"]; return loader.Load();")]
     public void HostOrTeklaTypeReferencesKeepTheConnectedPath(string code)
     {
         Assert.False(Program.CanExecuteWithoutTekla(code));

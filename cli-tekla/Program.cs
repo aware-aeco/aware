@@ -1920,9 +1920,9 @@ internal static class Program
     // every Tekla.Structures assembly and constructing Model() can take nearly
     // two minutes on the first process while Defender/JIT caches are cold (#458).
     //
-    // The fast path is conservative: any real `model` identifier or external
-    // source/reference directive opts out, and the script must compile
-    // successfully against the model-free reference set.
+    // The fast path is conservative: any real `model` identifier, external
+    // source/reference directive, or runtime reflection/loading primitive opts
+    // out, and the script must compile against the model-free reference set.
     // That second check catches explicit `Tekla.*` names and unqualified types
     // supplied by the normal Tekla imports (Beam, Point, Drawing, ...). Comments
     // and string literals named "model" are trivia/tokens of another kind, so
@@ -1941,6 +1941,21 @@ internal static class Program
             .Any(token => token.IsKind(SyntaxKind.IdentifierToken)
                        && string.Equals(token.ValueText, "model", StringComparison.Ordinal));
         if (usesModel) return false;
+
+        // Reflection can acquire Tekla without a static type (`Assembly.Load`,
+        // `Type.GetType`, an Activator, or a dynamic indirection). Such a script
+        // must retain the connected path's late instance-set recheck and automatic
+        // CommitChanges; a resolver alone would make it run but not make it safe.
+        var connectedOnlyIdentifiers = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "Assembly", "AppDomain", "Activator", "Type", "Reflection",
+            "GetType", "DynamicInvoke", "Load", "LoadFile", "LoadFrom", "dynamic",
+        };
+        var usesRuntimeLoading = root
+            .DescendantTokens(descendIntoTrivia: false)
+            .Any(token => token.IsKind(SyntaxKind.IdentifierToken)
+                       && connectedOnlyIdentifiers.Contains(token.ValueText));
+        if (usesRuntimeLoading) return false;
 
         var script = CSharpScript.Create<object>(
             code,
