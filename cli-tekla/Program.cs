@@ -1709,7 +1709,7 @@ internal static class Program
         // first. If that succeeds and the syntax never reads `model`, skip Tekla
         // metadata enumeration and Model() construction; both are irrelevant to
         // the result and dominate a cold first invocation on Windows (#458).
-        bool modelFree = CanExecuteWithoutTekla(code);
+        bool modelFree = TryCreateModelFreeScript(code, out var modelFreeScript);
 
         // Keep the lightweight install/bin lookup even on the fast path. A script
         // can load Tekla dynamically through reflection without a static type for
@@ -1773,7 +1773,8 @@ internal static class Program
                 hostPid,
                 commitPolicy ?? CommitPolicyForVerb(verb),
                 announce,
-                connectModel: !modelFree);
+                connectModel: !modelFree,
+                preparedScript: modelFreeScript);
             // Losing the disarm race means a last-resort hook already emitted
             // a fail receipt (a background-thread fault) — ours is suppressed.
             if (!TryClaimReceipt()) return 2;
@@ -1834,7 +1835,8 @@ internal static class Program
         int? expectedPid,
         ScriptCommitPolicy commitPolicy,
         string? announce = null,
-        bool connectModel = true)
+        bool connectModel = true,
+        Script<object>? preparedScript = null)
     {
         JsonNode? result = null;
         Exception? fault = null;
@@ -1844,7 +1846,7 @@ internal static class Program
             {
                 result = SerializeResult(
                     RunScript(code, teklaReferences, argsNode, teklaBinDir, expectedPid,
-                              commitPolicy, announce, connectModel));
+                              commitPolicy, announce, connectModel, preparedScript));
             }
             catch (Exception e) { fault = e; }
         })
@@ -1928,7 +1930,11 @@ internal static class Program
     // and string literals named "model" are trivia/tokens of another kind, so
     // they do not spuriously disable the path.
     internal static bool CanExecuteWithoutTekla(string code)
+        => TryCreateModelFreeScript(code, out _);
+
+    internal static bool TryCreateModelFreeScript(string code, out Script<object>? script)
     {
+        script = null;
         var root = CSharpSyntaxTree.ParseText(code).GetRoot();
         var usesExternalSource = root
             .DescendantTrivia(descendIntoTrivia: true)
@@ -1957,11 +1963,17 @@ internal static class Program
                        && connectedOnlyIdentifiers.Contains(token.ValueText));
         if (usesRuntimeLoading) return false;
 
-        var script = CSharpScript.Create<object>(
+        var candidate = CSharpScript.Create<object>(
             code,
             options: CreateScriptOptions(Array.Empty<MetadataReference>()),
             globalsType: typeof(ExecGlobals));
-        return !script.Compile().Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error);
+        if (candidate.Compile().Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error))
+            return false;
+
+        // Keep the validated Script instance: RunAsync can reuse its parsed and
+        // compiled state instead of rebuilding the same model-free submission.
+        script = candidate;
+        return true;
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
@@ -1973,10 +1985,9 @@ internal static class Program
         int? expectedPid,
         ScriptCommitPolicy commitPolicy,
         string? announce = null,
-        bool connectModel = true)
+        bool connectModel = true,
+        Script<object>? preparedScript = null)
     {
-        var options = CreateScriptOptions(teklaReferences);
-
         // Construct the Tekla Model lazily. If teklaBinDir is null OR Tekla
         // isn't running, the constructor either throws or returns a model
         // with GetConnectionStatus()==false — neither is fatal here: a
@@ -2057,9 +2068,9 @@ internal static class Program
             catch { /* a status message is never worth failing a bake for */ }
         }
 
-        var script = CSharpScript.Create<object>(
+        var script = preparedScript ?? CSharpScript.Create<object>(
             code,
-            options: options,
+            options: CreateScriptOptions(teklaReferences),
             globalsType: typeof(ExecGlobals));
 
         // Compile + execute. Top-level `await` continuations resume on the

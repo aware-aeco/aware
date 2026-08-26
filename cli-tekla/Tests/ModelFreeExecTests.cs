@@ -10,7 +10,8 @@ public sealed class ModelFreeExecTests
     [InlineData("// model is deliberately unused\nreturn \"model\";")]
     public void BclAndArgsOnlyScriptsUseTheFastPath(string code)
     {
-        Assert.True(Program.CanExecuteWithoutTekla(code));
+        Assert.True(Program.TryCreateModelFreeScript(code, out var script));
+        Assert.NotNull(script);
     }
 
     [Theory]
@@ -24,6 +25,7 @@ public sealed class ModelFreeExecTests
     [InlineData("dynamic loader = args[\"loader\"]; return loader.Load();")]
     public void HostOrTeklaTypeReferencesKeepTheConnectedPath(string code)
     {
-        Assert.False(Program.CanExecuteWithoutTekla(code));
+        Assert.False(Program.TryCreateModelFreeScript(code, out var script));
+        Assert.Null(script);
     }
 }
