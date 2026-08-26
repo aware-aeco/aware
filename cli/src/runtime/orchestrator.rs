@@ -728,9 +728,34 @@ impl Orchestrator {
             &self.record_inputs,
             record.upstream.get_mut("inputs"),
         ) {
+            // Replace only values inherited from the app's live inputs; event
+            // fields that happen to share a name but carry a different value
+            // retain their own provenance. Redaction can also rename an object
+            // key, so a live key with no safe counterpart must be removed rather
+            // than surviving as an alias around the record-safe channel.
+            let inherited_live_keys: Vec<String> = live
+                .iter()
+                .filter(|(key, live_value)| overlay.get(*key) == Some(*live_value))
+                .map(|(key, _)| key.clone())
+                .collect();
+            for key in inherited_live_keys {
+                match safe.get(&key) {
+                    Some(safe_value) => {
+                        overlay.insert(key, safe_value.clone());
+                    }
+                    None => {
+                        overlay.remove(&key);
+                    }
+                }
+            }
+            // A credential-derived key is itself secret material, so blinding
+            // may replace it with `[redacted]`. Add that safe-only shape without
+            // overwriting a genuine streaming event field of the same name.
             for (key, safe_value) in safe {
-                if overlay.get(key) == live.get(key) {
-                    overlay.insert(key.clone(), safe_value.clone());
+                if !live.contains_key(key) {
+                    overlay
+                        .entry(key.clone())
+                        .or_insert_with(|| safe_value.clone());
                 }
             }
         }
@@ -1990,6 +2015,45 @@ requires: []
             exposed_tx: None,
         };
         (orch, tmp, log_path)
+    }
+
+    #[tokio::test]
+    async fn record_overlay_removes_live_keys_renamed_by_redaction() {
+        let app: App = serde_yaml::from_str(
+            r#"
+app: safe-overlay
+version: 0.1.0
+description: x
+nodes: []
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+        let (mut orch, _tmp, _log_path) =
+            make_orchestrator(app, Arc::new(MockInvoker::new())).await;
+        orch.ctx.inputs = serde_json::json!({ "access_token": "secret-live-value" });
+        orch.record_inputs = serde_json::json!({ "[redacted]": "[redacted]" });
+        orch.ctx.upstream.insert(
+            "inputs".to_string(),
+            serde_json::json!({
+                "access_token": "secret-live-value",
+                "event_field": "event-value"
+            }),
+        );
+
+        let record = orch.record_render_context(&serde_json::json!({}));
+        let overlay = &record.upstream["inputs"];
+        assert_eq!(overlay["[redacted]"], serde_json::json!("[redacted]"));
+        assert_eq!(overlay["event_field"], serde_json::json!("event-value"));
+        assert!(
+            overlay.get("access_token").is_none(),
+            "a live-only credential key survived in the record overlay: {overlay}"
+        );
+        assert!(
+            !overlay.to_string().contains("secret-live-value"),
+            "credential material survived in the record overlay: {overlay}"
+        );
     }
 
     #[tokio::test]
