@@ -392,6 +392,7 @@ async fn run(
         // Load `<app-dir>/config.yaml` into the `config` namespace so
         // `{{ config.<key> }}` resolves (app-spec § Templating; #230).
         crate::runtime::context::load_app_config(&mut rt_ctx, &app_dir)?;
+        let record_inputs = rt_ctx.inputs.clone();
 
         let orch = Orchestrator {
             app,
@@ -401,7 +402,8 @@ async fn run(
             invoker,
             provenance,
             ctx: rt_ctx,
-            record_inputs: serde_json::Value::Object(serde_json::Map::new()),
+            run_config: serde_json::Value::Object(serde_json::Map::new()),
+            record_inputs,
             fan_in: Default::default(),
             dry_run,
             simulate,
@@ -480,6 +482,7 @@ async fn run(
     // Load `<app-dir>/config.yaml` into the `config` namespace so
     // `{{ config.<key> }}` resolves (app-spec § Templating; #230).
     crate::runtime::context::load_app_config(&mut rt_ctx, &app_dir)?;
+    let record_inputs = rt_ctx.inputs.clone();
 
     let orch = Orchestrator {
         app,
@@ -489,7 +492,8 @@ async fn run(
         invoker,
         provenance,
         ctx: rt_ctx,
-        record_inputs: serde_json::Value::Object(serde_json::Map::new()),
+        run_config: serde_json::Value::Object(serde_json::Map::new()),
+        record_inputs,
         fan_in: Default::default(),
         dry_run,
         simulate,

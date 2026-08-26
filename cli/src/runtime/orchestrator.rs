@@ -41,9 +41,12 @@ pub struct Orchestrator {
     pub invoker: Arc<dyn AgentInvoker>,
     pub provenance: ProvenanceWriter,
     pub ctx: RuntimeContext,
-    /// Inputs safe to persist in provenance. Top-level runs use their existing
-    /// policy-selected config; exposed nested apps receive a separate rendering
-    /// from the caller.
+    /// The policy-selected config written to `run-start`. Top-level runs retain
+    /// their existing empty config; nested apps receive the caller's safe inputs.
+    pub run_config: Value,
+    /// Inputs safe to use when rendering other provenance records. Top-level
+    /// runs keep ordinary CLI inputs here; exposed nested apps receive the
+    /// caller's separately rendered input channel.
     pub record_inputs: Value,
     pub fan_in: FanInState,
     /// When `true`, write-mode nodes skip the agent transport and emit a
@@ -85,7 +88,7 @@ impl Orchestrator {
             run_id: self.run_id.clone(),
             app: self.app.app.clone(),
             instance: self.instance.clone(),
-            config: self.record_inputs.clone(),
+            config: self.run_config.clone(),
         })
         .await?;
 
@@ -162,7 +165,7 @@ impl Orchestrator {
             run_id: self.run_id.clone(),
             app: self.app.app.clone(),
             instance: self.instance.clone(),
-            config: self.record_inputs.clone(),
+            config: self.run_config.clone(),
         })
         .await?;
 
@@ -1413,6 +1416,7 @@ pub async fn run_exposed_app_one_shot(
         invoker,
         provenance,
         ctx,
+        run_config: record_inputs.clone(),
         record_inputs,
         fan_in: FanInState::default(),
         dry_run,
@@ -1451,6 +1455,7 @@ pub async fn run_exposed_app_stream(
         invoker,
         provenance,
         ctx,
+        run_config: record_inputs.clone(),
         record_inputs,
         fan_in: FanInState::default(),
         dry_run,
@@ -1945,6 +1950,7 @@ requires: []
             invoker,
             provenance: prov,
             ctx: RuntimeContext::default(),
+            run_config: serde_json::json!({}),
             record_inputs: serde_json::json!({}),
             fan_in: FanInState::default(),
             dry_run: false,

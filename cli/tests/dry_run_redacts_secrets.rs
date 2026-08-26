@@ -660,6 +660,8 @@ exposed-commands:
     inputs:
       token:
         type: string
+      label:
+        type: string
     outputs:
       type: single
       schema:
@@ -675,6 +677,7 @@ nodes:
       url: "http://127.0.0.1:1/unused"
       headers:
         Authorization: "{{ inputs.token }}"
+        X-Label: "{{ inputs.label }}"
 connections: []
 requires: []
 "#,
@@ -694,6 +697,7 @@ nodes:
     command: run
     config:
       token: "Bearer {{ secrets['my-api'].access_token }}"
+      label: "{{ inputs.label }}"
 connections: []
 requires: []
 "#,
@@ -709,7 +713,14 @@ requires: []
     }
 
     aware(&home)
-        .args(["app", "run", "outer", "--dry-run"])
+        .args([
+            "app",
+            "run",
+            "outer",
+            "--dry-run",
+            "--input",
+            "label=ordinary-value",
+        ])
         .assert()
         .success();
 
@@ -722,5 +733,10 @@ requires: []
         trace.matches("Bearer [redacted]").count(),
         2,
         "nested run-start and would-write must both carry the record-safe value:\n{trace}"
+    );
+    assert_eq!(
+        trace.matches("ordinary-value").count(),
+        2,
+        "record-safe routing must preserve ordinary top-level inputs in both nested records:\n{trace}"
     );
 }
