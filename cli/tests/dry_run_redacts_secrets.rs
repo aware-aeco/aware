@@ -650,6 +650,14 @@ fn an_exposed_app_records_safe_inputs_at_both_nested_provenance_sites() {
         r#"["sk-nested-loop-one","sk-nested-loop-two"]"#,
     )
     .unwrap();
+    // The credential is itself a JSON string. The exposed array contract parses
+    // it into two live loop items; the record-safe channel must acquire the same
+    // cardinality without restoring either secret.
+    std::fs::write(
+        home.join("credentials/coerced-batch.json"),
+        r#""[\"sk-coerced-one\",\"sk-coerced-two\"]""#,
+    )
+    .unwrap();
 
     let inner_dir = src.join("inner");
     std::fs::create_dir_all(&inner_dir).unwrap();
@@ -668,6 +676,8 @@ exposed-commands:
       label:
         type: string
       tokens:
+        type: array
+      coerced_tokens:
         type: array
       items:
         type: array
@@ -717,6 +727,19 @@ nodes:
           headers:
             Authorization: "Bearer {{ item.token }}"
             X-Label: "{{ item.label }}"
+  - id: coerced-loop
+    for-each: "{{ inputs.coerced_tokens }}"
+    do:
+      - id: write-coerced
+        agent: http
+        command: post
+        safety:
+          transaction-group: nested-redaction-probe
+          snapshot: false
+        config:
+          url: "http://127.0.0.1:1/unused"
+          headers:
+            Authorization: "Coerced {{ item }}"
 connections: []
 requires: []
 "#,
@@ -738,6 +761,7 @@ nodes:
       token: "Bearer {{ secrets['my-api'].access_token }}"
       label: "{{ inputs.label }}"
       tokens: "{{ secrets.batch }}"
+      coerced_tokens: "{{ secrets['coerced-batch'] }}"
       items:
         - token: "{{ secrets['my-api'].access_token }}"
           label: visible-loop-label
@@ -771,7 +795,13 @@ requires: []
         .success();
 
     let trace = traces(&home);
-    for leaked in [SECRET, "sk-nested-loop-one", "sk-nested-loop-two"] {
+    for leaked in [
+        SECRET,
+        "sk-nested-loop-one",
+        "sk-nested-loop-two",
+        "sk-coerced-one",
+        "sk-coerced-two",
+    ] {
         assert!(
             !trace.contains(leaked),
             "the caller's credential crossed into a nested trace ({leaked}):\n{trace}"
@@ -781,6 +811,11 @@ requires: []
         trace.matches("Bearer [redacted]").count(),
         5,
         "nested run-start, the scalar write, and all loop iterations must carry the record-safe value:\n{trace}"
+    );
+    assert_eq!(
+        trace.matches("Coerced [redacted]").count(),
+        2,
+        "every item created by exposed-input array coercion needs a record-safe counterpart:\n{trace}"
     );
     assert_eq!(
         trace.matches("ordinary-value").count(),

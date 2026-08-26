@@ -2604,7 +2604,9 @@ impl DispatchInvoker {
     /// Mirror exposed-input coercions into the record-safe channel only when a
     /// value was unchanged by redaction. Credential-derived leaves differ from
     /// the original and stay blinded; ordinary values acquire the exact type the
-    /// nested execution receives.
+    /// nested execution receives. When coercion changes a credential-derived
+    /// scalar into an array or object, rebuild the blinded value with the live
+    /// shape so every nested iteration still has a record-safe counterpart.
     fn align_record_args_after_coercion(original: &Value, live: &Value, record: &mut Value) {
         let (Some(original), Some(live), Some(record)) = (
             original.as_object(),
@@ -2614,10 +2616,18 @@ impl DispatchInvoker {
             return;
         };
         for (key, live_value) in live {
-            if let (Some(original_value), Some(record_value)) = (original.get(key), record.get(key))
-                && record_value == original_value
+            if let (Some(original_value), Some(record_value)) =
+                (original.get(key), record.get_mut(key))
             {
-                record.insert(key.clone(), live_value.clone());
+                if record_value == original_value {
+                    *record_value = live_value.clone();
+                } else if std::mem::discriminant(record_value) != std::mem::discriminant(live_value)
+                {
+                    *record_value = crate::runtime::template::blinded(
+                        live_value,
+                        &std::collections::BTreeSet::new(),
+                    );
+                }
             }
         }
     }
@@ -3468,13 +3478,32 @@ mod tests {
 
     #[test]
     fn record_safe_args_follow_coercion_without_restoring_redacted_values() {
-        let original = json!({ "count": "05", "token": "secret-live-value" });
-        let live = json!({ "count": 5, "token": "secret-live-value" });
-        let mut record = json!({ "count": "05", "token": "[redacted]" });
+        let original = json!({
+            "count": "05",
+            "token": "secret-live-value",
+            "tokens": "[\"secret-one\",\"secret-two\"]"
+        });
+        let live = json!({
+            "count": 5,
+            "token": "secret-live-value",
+            "tokens": ["secret-one", "secret-two"]
+        });
+        let mut record = json!({
+            "count": "05",
+            "token": "[redacted]",
+            "tokens": "[redacted]"
+        });
 
         DispatchInvoker::align_record_args_after_coercion(&original, &live, &mut record);
 
-        assert_eq!(record, json!({ "count": 5, "token": "[redacted]" }));
+        assert_eq!(
+            record,
+            json!({
+                "count": 5,
+                "token": "[redacted]",
+                "tokens": ["[redacted]", "[redacted]"]
+            })
+        );
     }
 
     #[test]

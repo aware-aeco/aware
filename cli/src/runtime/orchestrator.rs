@@ -1108,8 +1108,15 @@ impl Orchestrator {
         for (index, item) in collection.into_iter().enumerate() {
             // Bind the per-iteration variable `{{ item }}` — the reserved
             // for-each prefix the compiler scopes inside the body (#117-3).
+            // A missing safe counterpart is never permission to fall back to
+            // the live item. This is a defensive backstop for any future input
+            // coercion that changes collection cardinality.
+            let record_item = record_collection
+                .get(index)
+                .cloned()
+                .unwrap_or_else(|| template::blinded(&item, &std::collections::BTreeSet::new()));
             self.ctx.record_output("item", item);
-            self.record_item = record_collection.get(index).cloned();
+            self.record_item = Some(record_item);
             let mut iter_output = Value::Null;
             let mut gated = false;
             for body_node in &body {
