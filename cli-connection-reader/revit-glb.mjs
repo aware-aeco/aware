@@ -7,6 +7,13 @@ const COMPONENT_BYTES = new Map([[5121, 1], [5123, 2], [5125, 4], [5126, 4]]);
 const IDENTITY = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 const MAX_GLTF_BUFFERS = 16;
 const DATA_BUFFER_PREFIX = 'data:application/octet-stream;base64,';
+// The v1 normalizer deliberately uses object graphs for canonical sorting. Reserve a checked,
+// conservative worst-case working-set estimate before creating those graphs so a GLB that fits the
+// wire limits cannot exhaust V8's heap. The committed profile specifies a 1 GiB resident hard gate.
+const MAX_CANONICAL_WORK_BYTES = 1024 * 1024 * 1024;
+const CANONICAL_VERTEX_WORK_BYTES = 1024;
+const CANONICAL_INDEX_WORK_BYTES = 128;
+const CANONICAL_PRIMITIVE_WORK_BYTES = 4096;
 
 function invalid(message, code = 'reference-geometry-invalid') {
   throw new ModelReaderError(code, 'normalize-geometry', false, message);
@@ -40,7 +47,9 @@ export function parseGlb(input, options = {}) {
     if (type === JSON_CHUNK) {
       if (jsonText !== null || binary !== null) invalid('GLB JSON chunk must be first and unique');
       if (length > limits.maxGlbJsonBytes) invalid('GLB JSON exceeds its byte limit', 'reference-output-too-large');
-      jsonText = payload.toString('utf8').replace(/[\u0000\u0020]+$/u, '');
+      let end = payload.length;
+      while (end > 0 && (payload[end - 1] === 0 || payload[end - 1] === 0x20)) end -= 1;
+      jsonText = payload.subarray(0, end);
     } else if (type === BIN_CHUNK) {
       if (jsonText === null || binary !== null) invalid('GLB BIN chunk is duplicated or precedes JSON');
       binary = Buffer.from(payload);
@@ -52,7 +61,7 @@ export function parseGlb(input, options = {}) {
   let json;
   try { json = parseJsonStrict(jsonText, { maxBytes: limits.maxGlbJsonBytes, maxDepth: limits.maxJsonDepth }); }
   catch (error) { invalid(error instanceof Error ? error.message : 'GLB JSON is invalid'); }
-  return { json, binary: binary ?? Buffer.alloc(0), jsonText };
+  return { json, binary: binary ?? Buffer.alloc(0), jsonText: jsonText.toString('utf8') };
 }
 
 function array(value, label, max) {
@@ -156,11 +165,12 @@ function accessorReader(document, buffers, accessorIndex, expected, label) {
   if (!accessor || typeof accessor !== 'object' || accessor.sparse !== undefined) invalid(`${label} accessor is sparse or invalid`, 'reference-geometry-unsupported');
   if (expected.types && !expected.types.includes(accessor.type)) invalid(`${label} accessor has unsupported type`, 'reference-geometry-unsupported');
   if (expected.components && !expected.components.includes(accessor.componentType)) invalid(`${label} accessor has unsupported component type`, 'reference-geometry-unsupported');
-  if (!Number.isSafeInteger(accessor.count) || accessor.count < 0) invalid(`${label} accessor count is invalid`);
+  if (!Number.isSafeInteger(accessor.count) || accessor.count < 1) invalid(`${label} accessor count is invalid`);
   const width = accessor.type === 'VEC4' ? 4 : accessor.type === 'VEC3' ? 3 : accessor.type === 'SCALAR' ? 1 : 0;
   const componentBytes = COMPONENT_BYTES.get(accessor.componentType);
   if (!width || !componentBytes) invalid(`${label} accessor layout is unsupported`, 'reference-geometry-unsupported');
   const view = views[safeIndex(accessor.bufferView, views.length, `${label} bufferView`)];
+  if (!view || typeof view !== 'object' || Array.isArray(view)) invalid(`${label} bufferView must be an object`);
   const bufferIndex = safeIndex(view.buffer, buffers.length, `${label} bufferView buffer`);
   const binary = buffers[bufferIndex];
   const stride = view.byteStride ?? width * componentBytes;
@@ -193,15 +203,17 @@ function accessorReader(document, buffers, accessorIndex, expected, label) {
   };
 }
 
-function indicesFor(primitive, document, buffers, vertexCount, remainingIndices) {
+function indicesFor(primitive, document, buffers, vertexCount, remainingIndices, reserveWork) {
   let indices;
   if (primitive.indices === undefined) {
     if (vertexCount > remainingIndices) invalid('model index count exceeds its limit', 'reference-output-too-large');
+    reserveWork(vertexCount, CANONICAL_INDEX_WORK_BYTES);
     indices = Array.from({ length: vertexCount }, (_, index) => index);
   }
   else {
     const reader = accessorReader(document, buffers, primitive.indices, { types: ['SCALAR'], components: [5121, 5123, 5125] }, 'indices');
     if (reader.count > remainingIndices) invalid('model index count exceeds its limit', 'reference-output-too-large');
+    reserveWork(reader.count, CANONICAL_INDEX_WORK_BYTES);
     indices = Array.from({ length: reader.count }, (_, index) => reader.read(index)[0]);
   }
   for (const index of indices) if (index >= vertexCount) invalid('index value exceeds POSITION count');
@@ -219,6 +231,15 @@ function expandTriangles(indices, mode) {
     for (let index = 2; index < indices.length; index += 1) triangles.push([indices[0], indices[index - 1], indices[index]]);
   } else invalid('primitive mode is unsupported', 'reference-geometry-unsupported');
   return triangles;
+}
+
+function expandedIndexCount(indexCount, mode) {
+  if (mode === 4) {
+    if (indexCount % 3 !== 0) invalid('TRIANGLES index count is not divisible by three');
+    return indexCount;
+  }
+  if (mode === 5 || mode === 6) return Math.max(0, indexCount - 2) * 3;
+  invalid('primitive mode is unsupported', 'reference-geometry-unsupported');
 }
 
 function materialAppearance(document, primitive) {
@@ -286,18 +307,25 @@ function tupleCompare(a, b) {
   return 0;
 }
 
+function encodedVertexBytes(tuple) {
+  const bytes = Buffer.allocUnsafe(tuple.length * 4);
+  tuple.forEach((value, index) => bytes.writeFloatLE(value, index * 4));
+  return bytes;
+}
+
 function canonicalPart({ nodeName, primitiveOrdinal, positions, colors, normals, triangles, reverseWinding, material }) {
   const sourceRecords = positions.map((position, index) => {
     const normal = normals?.[index] ?? null;
-    return { tuple: [...position, ...colors[index], ...(normal ?? [])], position, color: colors[index], normal };
+    const tuple = [...position, ...colors[index], ...(normal ?? [])];
+    return { tuple, bytes: encodedVertexBytes(tuple), position, color: colors[index], normal };
   });
   const unique = new Map();
-  for (const record of sourceRecords) unique.set(record.tuple.join(','), record);
-  const records = [...unique.values()].sort((a, b) => tupleCompare(a.tuple, b.tuple));
-  const canonicalIndex = new Map(records.map((record, index) => [record.tuple.join(','), index]));
+  for (const record of sourceRecords) unique.set(record.bytes.toString('hex'), record);
+  const records = [...unique.values()].sort((a, b) => Buffer.compare(a.bytes, b.bytes));
+  const canonicalIndex = new Map(records.map((record, index) => [record.bytes.toString('hex'), index]));
   const remapped = [];
   for (const triangle of triangles) {
-    let indices = triangle.map((sourceIndex) => canonicalIndex.get(sourceRecords[sourceIndex].tuple.join(',')));
+    let indices = triangle.map((sourceIndex) => canonicalIndex.get(sourceRecords[sourceIndex].bytes.toString('hex')));
     if (new Set(indices).size !== 3) continue;
     if (reverseWinding) indices = [indices[0], indices[2], indices[1]];
     const rotations = [indices, [indices[1], indices[2], indices[0]], [indices[2], indices[0], indices[1]]];
@@ -354,6 +382,7 @@ function profile(document, binary, limits) {
   document.materials = document.materials === undefined ? [] : array(document.materials, 'materials', limits.maxPrimitives);
   if (!Number.isSafeInteger(document.scene)) invalid('GLB requires an explicit active scene');
   const active = scenes[safeIndex(document.scene, scenes.length, 'active scene')];
+  if (!active || typeof active !== 'object' || Array.isArray(active)) invalid('active scene must be an object');
   const roots = array(active.nodes, 'active scene nodes', limits.maxNodes);
   const visiting = new Set();
   const visited = new Set();
@@ -366,13 +395,19 @@ function profile(document, binary, limits) {
     if (visited.has(nodeIndex)) invalid('active scene node has more than one parent');
     visiting.add(nodeIndex); visited.add(nodeIndex);
     const node = nodes[nodeIndex];
+    if (!node || typeof node !== 'object' || Array.isArray(node)) invalid('active scene node must be an object');
+    if (Object.keys(node).some((key) => !['name', 'mesh', 'children', 'matrix', 'translation', 'rotation', 'scale'].includes(key))) {
+      invalid('active scene node has an unsupported property', 'reference-geometry-unsupported');
+    }
     const world = multiply(parent, nodeMatrix(node));
     if (node.mesh !== undefined) {
       safeIndex(node.mesh, meshes.length, 'node mesh');
       if (typeof node.name !== 'string' || !node.name) invalid('drawable node requires a non-empty name');
       if (names.has(node.name)) invalid('drawable node names must be unique');
       names.add(node.name);
-      walked.push({ node, world, mesh: meshes[node.mesh] });
+      const mesh = meshes[node.mesh];
+      if (!mesh || typeof mesh !== 'object' || Array.isArray(mesh)) invalid('node mesh must be an object');
+      walked.push({ node, world, mesh });
     }
     if (node.children !== undefined) for (const child of array(node.children, 'node children', limits.maxNodes)) walk(child, world, depth + 1);
     visiting.delete(nodeIndex);
@@ -399,25 +434,40 @@ export function normalizeRevitGlb(input, options = {}) {
   let droppedDegenerateTriangles = 0;
   let totalVertices = 0;
   let totalIndices = 0;
+  let totalExpandedIndices = 0;
   let totalPrimitives = 0;
+  let canonicalWorkBytes = 0;
+  const reserveWork = (count, bytesPerItem) => {
+    if (!Number.isSafeInteger(count) || count < 0 || count > Math.floor((MAX_CANONICAL_WORK_BYTES - canonicalWorkBytes) / bytesPerItem)) {
+      invalid('canonical geometry working set exceeds its 1 GiB limit', 'reference-output-too-large');
+    }
+    canonicalWorkBytes += count * bytesPerItem;
+  };
   for (const { node, world, mesh } of nodes) {
     const determinant = determinant3(world);
     if (!Number.isFinite(determinant) || Math.abs(determinant) < 1e-12) invalid('node transform is singular');
     const primitives = array(mesh.primitives, 'mesh primitives', limits.maxPrimitives);
     primitives.forEach((primitive, primitiveOrdinal) => {
+      if (!primitive || typeof primitive !== 'object' || Array.isArray(primitive)) invalid('mesh primitive must be an object');
       totalPrimitives += 1;
       if (totalPrimitives > limits.maxPrimitives) invalid('model primitive count exceeds its limit', 'reference-output-too-large');
+      reserveWork(1, CANONICAL_PRIMITIVE_WORK_BYTES);
       if (primitive.targets !== undefined || primitive.extensions !== undefined) invalid('primitive extensions or morph targets are unsupported', 'reference-geometry-unsupported');
       if (!primitive.attributes || typeof primitive.attributes !== 'object' || Object.keys(primitive.attributes).some((key) => !['POSITION', 'COLOR_0', 'NORMAL'].includes(key))) invalid('primitive attributes are unsupported', 'reference-geometry-unsupported');
       const positionsReader = accessorReader(document, buffers, primitive.attributes.POSITION, { types: ['VEC3'], components: [5126] }, 'POSITION');
       if (positionsReader.normalized || positionsReader.count > limits.maxVertices - totalVertices) invalid('model vertex count exceeds its limit', 'reference-output-too-large');
       totalVertices += positionsReader.count;
+      reserveWork(positionsReader.count, CANONICAL_VERTEX_WORK_BYTES);
       const positions = Array.from({ length: positionsReader.count }, (_, index) => transform(world, positionsReader.read(index)));
       const appearance = materialAppearance(document, primitive);
       const colors = colorsFor(primitive, document, buffers, positions.length, appearance.factor);
       const normals = normalsFor(primitive, document, buffers, positions.length, world);
-      const indices = indicesFor(primitive, document, buffers, positions.length, limits.maxIndices - totalIndices);
+      const indices = indicesFor(primitive, document, buffers, positions.length, limits.maxIndices - totalIndices, reserveWork);
       totalIndices += indices.length;
+      const expandedIndices = expandedIndexCount(indices.length, primitive.mode ?? 4);
+      if (expandedIndices > limits.maxIndices - totalExpandedIndices) invalid('expanded model index count exceeds its limit', 'reference-output-too-large');
+      totalExpandedIndices += expandedIndices;
+      reserveWork(expandedIndices, CANONICAL_INDEX_WORK_BYTES);
       const expanded = expandTriangles(indices, primitive.mode ?? 4);
       inputTriangles += expanded.length;
       const drawable = expanded.filter(([a, b, c]) => {
@@ -443,7 +493,7 @@ export function normalizeRevitGlb(input, options = {}) {
     });
   }
   parts.sort((a, b) => Buffer.compare(Buffer.from(a.nodeName), Buffer.from(b.nodeName)) || a.primitiveOrdinal - b.primitiveOrdinal);
-  const glb = buildCanonicalGlb(parts);
+  const glb = buildCanonicalGlb(parts, limits);
   if (glb.length > limits.maxCanonicalGlbBytes) invalid('canonical GLB exceeds its limit', 'reference-output-too-large');
   return {
     glb,
@@ -454,7 +504,7 @@ export function normalizeRevitGlb(input, options = {}) {
 
 function align4(value) { return (value + 3) & ~3; }
 
-function buildCanonicalGlb(parts) {
+function buildCanonicalGlb(parts, limits) {
   const chunks = [];
   const bufferViews = [];
   const accessors = [];
@@ -462,6 +512,7 @@ function buildCanonicalGlb(parts) {
   const materials = [];
   const materialIndices = new Map();
   const nodes = [];
+  const primitivesByNode = new Map();
   let offset = 0;
   const append = (bytes, target) => {
     const aligned = align4(offset);
@@ -473,6 +524,10 @@ function buildCanonicalGlb(parts) {
     return view;
   };
   for (const part of parts) {
+    // A provider primitive may contain only degenerate triangles. Keep that part
+    // in the conversion coverage/join result, but do not publish zero-count glTF
+    // accessors: the canonical GLB represents drawable geometry only.
+    if (part.triangles.length === 0) continue;
     const positions = Buffer.alloc(part.positions.length * 12);
     part.positions.forEach((point, index) => point.forEach((value, axis) => positions.writeFloatLE(value, index * 12 + axis * 4)));
     const colors = Buffer.alloc(part.colors.length * 16);
@@ -525,9 +580,14 @@ function buildCanonicalGlb(parts) {
       }
       primitive.material = materialIndex;
     }
+    const nodePrimitives = primitivesByNode.get(part.nodeName) ?? [];
+    nodePrimitives.push(primitive);
+    primitivesByNode.set(part.nodeName, nodePrimitives);
+  }
+  for (const [nodeName, primitives] of primitivesByNode) {
     const mesh = meshes.length;
-    meshes.push({ primitives: [primitive] });
-    nodes.push({ name: part.nodeName, mesh });
+    meshes.push({ primitives });
+    nodes.push({ name: nodeName, mesh });
   }
   const binary = Buffer.concat(chunks);
   const document = {
@@ -541,7 +601,14 @@ function buildCanonicalGlb(parts) {
     scene: 0,
     scenes: [{ nodes: nodes.map((_, index) => index) }],
   };
+  if (bufferViews.length > limits.maxBufferViews || accessors.length > limits.maxAccessors
+      || meshes.length > limits.maxMeshes || nodes.length > limits.maxNodes) {
+    invalid('canonical GLB exceeds its structural count limits', 'reference-output-too-large');
+  }
   const jsonBytes = canonicalJsonBytes(document);
+  if (jsonBytes.length > limits.maxGlbJsonBytes) {
+    invalid('canonical GLB JSON exceeds its byte limit', 'reference-output-too-large');
+  }
   const jsonLength = align4(jsonBytes.length);
   const binaryLength = align4(binary.length);
   const output = Buffer.alloc(12 + 8 + jsonLength + 8 + binaryLength);

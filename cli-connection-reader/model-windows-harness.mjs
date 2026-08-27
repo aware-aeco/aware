@@ -107,7 +107,8 @@ try {
   const legacyHost = await createModelHostClient(aware, { environment });
   try {
     const legacy = await legacyHost.run({
-      executable: provider, operation: 'describe', cwd: unrelatedCwd,
+      executable: provider, executableSha256: sha256(readFileSync(provider)),
+      operation: 'describe', cwd: unrelatedCwd,
       environment: { LANG: 'C', LC_ALL: 'C', TZ: 'UTC' }, stdin: Buffer.from('{}'),
       timeoutMs: 10_000, stdoutLimit: 1024 * 1024, stderrLimit: 1024 * 1024,
     });

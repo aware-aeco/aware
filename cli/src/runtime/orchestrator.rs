@@ -130,12 +130,12 @@ impl Orchestrator {
                     gated_out.insert(node.id.clone());
                 }
                 Err(e) => {
-                    self.emit(RunEvent::NodeError {
-                        ts: now_iso(),
-                        run_id: self.run_id.clone(),
-                        node: node.id.clone(),
-                        error: e.to_string(),
-                    })
+                    self.emit(RunEvent::node_error(
+                        now_iso(),
+                        self.run_id.clone(),
+                        node.id.clone(),
+                        &e,
+                    ))
                     .await?;
                     self.emit(RunEvent::RunEnd {
                         ts: now_iso(),
@@ -298,12 +298,12 @@ impl Orchestrator {
                             // multiple sources, a still-running sibling would keep
                             // `event_rx` open forever and the run would hang. The
                             // stop-senders loop below tears down any other sources.
-                            self.emit(RunEvent::NodeError {
-                                ts: now_iso(),
-                                run_id: self.run_id.clone(),
-                                node: source_id.clone(),
-                                error: e.to_string(),
-                            })
+                            self.emit(RunEvent::node_error(
+                                now_iso(),
+                                self.run_id.clone(),
+                                source_id.clone(),
+                                &e,
+                            ))
                             .await?;
                             source_error = Some(e);
                             break;
@@ -321,12 +321,12 @@ impl Orchestrator {
 
                     // Propagate through downstream chain synchronously per event.
                     if let Err(e) = self.propagate_from(&source_id, &event).await {
-                        self.emit(RunEvent::NodeError {
-                            ts: now_iso(),
-                            run_id: self.run_id.clone(),
-                            node: source_id.clone(),
-                            error: e.to_string(),
-                        })
+                        self.emit(RunEvent::node_error(
+                            now_iso(),
+                            self.run_id.clone(),
+                            source_id.clone(),
+                            &e,
+                        ))
                         .await?;
                         // Keep the run alive — a single downstream error doesn't tear down the watcher.
                     }

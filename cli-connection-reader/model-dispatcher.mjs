@@ -1,15 +1,18 @@
+#!/usr/bin/env node
+
 import { appendFileSync, readFileSync } from 'node:fs';
 import { isSea } from 'node:sea';
 import { pathToFileURL } from 'node:url';
 import { lowerableLimits, ModelReaderError, safeErrorEnvelope } from './model-contract.mjs';
 import { runModelCommand } from './model-reader.mjs';
 
-function route(command, args) {
+function route(command, args, environment = process.env) {
   const hasIfc = ['ifc-path', 'ifcPath', 'base-ifc-path', 'revised-ifc-path'].some((key) => args[key] !== undefined);
   const hasRvt = ['rvt-path', 'rvtPath', 'model-path'].some((key) => args[key] !== undefined);
   if (hasIfc && hasRvt) throw new ModelReaderError('reference-mixed-model-paths', 'request', false, 'IFC and RVT paths cannot be mixed in one command.');
   if (command === 'preflight') return 'rvt';
-  if ((command === 'probe' || command === 'read-model' || command === 'read-snapshot') && hasRvt) return 'rvt';
+  if ((command === 'probe' || command === 'read-model' || command === 'read-snapshot')
+      && (hasRvt || (!hasIfc && environment.AWARE_MODEL_READER_HOST))) return 'rvt';
   return 'ifc';
 }
 
@@ -19,6 +22,10 @@ export function serializeModelResult(result, limits = undefined) {
     throw new ModelReaderError('reference-response-too-large', 'response', false, 'The bounded model-reader response exceeds its byte limit.');
   }
   return text;
+}
+
+export function responseLimits(args, dependencies = undefined) {
+  return Object.hasOwn(args, 'limits') ? args.limits : dependencies?.limits;
 }
 
 export function createProcessCancellation(processEvents = process) {
@@ -33,6 +40,14 @@ export function createProcessCancellation(processEvents = process) {
       processEvents.removeListener('SIGTERM', abort);
     },
   };
+}
+
+export function sanitizeRvtError(error) {
+  if (error instanceof ModelReaderError) return error;
+  return new ModelReaderError(
+    'reference-internal-error', 'internal', false,
+    'The model reader failed unexpectedly.', error,
+  );
 }
 
 export async function main(command = process.argv[2], stdinText = undefined, dependencies = undefined) {
@@ -54,7 +69,9 @@ export async function main(command = process.argv[2], stdinText = undefined, dep
   };
   try {
     const result = await runModelCommand(command, args, runtimeDependencies);
-    process.stdout.write(serializeModelResult(result, dependencies?.limits));
+    process.stdout.write(serializeModelResult(result, responseLimits(args, dependencies)));
+  } catch (error) {
+    throw sanitizeRvtError(error);
   } finally {
     cancellation?.dispose();
   }

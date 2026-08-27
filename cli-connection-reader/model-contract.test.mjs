@@ -27,6 +27,11 @@ test('strict JSON parsing rejects duplicate keys, trailing bytes, and unsafe int
   assert.throws(() => parseJsonStrict('{"a":1,"a":2}'), /duplicate JSON key/);
   assert.throws(() => parseJsonStrict('{"a":1}x'), /trailing JSON data/);
   assert.throws(() => parseJsonStrict('{"a":9007199254740992}'), /safe integer/);
+  assert.throws(() => parseJsonStrict(Buffer.from([0x22, 0x80, 0x22])), /valid UTF-8/);
+  assert.deepEqual(parseJsonStrict(' \t\r\n{"a":1} \t\r\n'), { a: 1 });
+  for (const whitespace of ['\u00a0', '\ufeff', '\u2028', '\u2029']) {
+    assert.throws(() => parseJsonStrict(`{"a":1}${whitespace}`), /trailing JSON data/);
+  }
 });
 
 test('legal __proto__ keys remain own JSON data through strict parsing and canonicalization', () => {
@@ -49,6 +54,8 @@ test('every canonical request leaf affects the cache/request preimage', () => {
   ];
   for (const mutation of mutations) assert.notEqual(requestSha256(mutation), baseline);
   assert.equal(request.limits.maxInputGlbBytes, MODEL_LIMITS.maxInputGlbBytes.default);
+  assert.equal(buildCanonicalRequest({ protocolVersion: '2' }).protocolVersion, '2');
+  assert.throws(() => buildCanonicalRequest({ protocolVersion: '3' }), /protocolVersion/);
 });
 
 test('provider fingerprint is the exact seven-field JCS tuple', () => {

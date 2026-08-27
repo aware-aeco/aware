@@ -51,6 +51,16 @@ test('explicit relations validate endpoints, provider kinds, acyclic parents, an
   assert.throws(() => normalizeRevitMetadata(metadata, geometry), /cycle/);
 });
 
+test('directed multigraph relationship kinds preserve parallel edges with distinct ids', () => {
+  const metadata = makeMetadataFixture();
+  metadata.relations = [
+    { id: '10', kind: 'depends-on', from: '1001', to: '1001' },
+    { id: '11', kind: 'depends-on', from: '1001', to: '1001' },
+  ];
+  const result = normalizeRevitMetadata(metadata, geometry.slice(0, 1));
+  assert.deepEqual(result.relationships.map((edge) => edge.id), ['relation:10', 'relation:11']);
+});
+
 test('ambiguous, missing, and duplicate appearance ownership is refused without name inference', () => {
   const duplicate = makeMetadataFixture({ nodeNames: ['part-a'] });
   const duplicateOwner = { ...duplicate.elements[0], id: '1002', appearances: ['part-a'] };

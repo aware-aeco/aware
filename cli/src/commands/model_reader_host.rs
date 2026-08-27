@@ -5,6 +5,7 @@
 //! request-correlated binary protocol. It is not a public agent surface.
 
 use std::collections::{BTreeMap, HashMap};
+use std::io::{Read, Seek, SeekFrom};
 use std::path::PathBuf;
 use std::process::Stdio;
 use std::sync::Arc;
@@ -13,8 +14,9 @@ use fs2::FileExt;
 use rand::RngCore;
 use serde::Deserialize;
 use serde_json::json;
+use sha2::{Digest, Sha256};
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt};
-use tokio::sync::{Mutex, oneshot};
+use tokio::sync::{Mutex, mpsc, oneshot};
 
 use crate::error::AwareError;
 
@@ -103,6 +105,7 @@ impl Frame {
 struct ProviderRun {
     op: String,
     executable: PathBuf,
+    executable_sha256: String,
     operation: String,
     cwd: PathBuf,
     environment: BTreeMap<String, String>,
@@ -149,6 +152,20 @@ async fn send_control(
     let _ = frame.write(&mut *writer.lock().await).await;
 }
 
+async fn send_empty_streams(writer: &SharedWriter, request_id: u64, handle: [u8; 32]) {
+    for kind in [KIND_STDOUT, KIND_STDERR] {
+        let frame = Frame {
+            kind,
+            request_id,
+            run_handle: handle,
+            sequence: 0,
+            flags: FINAL,
+            payload: Vec::new(),
+        };
+        let _ = frame.write(&mut *writer.lock().await).await;
+    }
+}
+
 async fn read_bounded<R: AsyncRead + Unpin>(
     mut reader: R,
     limit: usize,
@@ -170,16 +187,113 @@ async fn read_bounded<R: AsyncRead + Unpin>(
     }
 }
 
-fn provider_command(request: &ProviderRun) -> Result<tokio::process::Command, AwareError> {
+#[derive(Clone, Copy)]
+enum ProviderIoFailure {
+    Stdin,
+    Stream,
+}
+
+async fn read_bounded_supervised<R: AsyncRead + Unpin>(
+    reader: R,
+    limit: usize,
+    failures: mpsc::UnboundedSender<ProviderIoFailure>,
+) -> std::io::Result<Vec<u8>> {
+    let result = read_bounded(reader, limit).await;
+    if result.is_err() {
+        let _ = failures.send(ProviderIoFailure::Stream);
+    }
+    result
+}
+
+async fn write_input_supervised<W: AsyncWrite + Unpin>(
+    mut stream: W,
+    bytes: Vec<u8>,
+    failures: mpsc::UnboundedSender<ProviderIoFailure>,
+) -> std::io::Result<()> {
+    let result = async {
+        stream.write_all(&bytes).await?;
+        stream.shutdown().await?;
+        Ok(())
+    }
+    .await;
+    if result.is_err() {
+        let _ = failures.send(ProviderIoFailure::Stdin);
+    }
+    result
+}
+
+struct PreparedProvider {
+    command: tokio::process::Command,
+    image: std::fs::File,
+}
+
+fn provider_command(request: &ProviderRun) -> Result<PreparedProvider, AwareError> {
     if !request.executable.is_absolute()
         || !request.cwd.is_absolute()
         || !matches!(request.operation.as_str(), "describe" | "convert")
+        || request.executable_sha256.len() != 64
+        || !request
+            .executable_sha256
+            .bytes()
+            .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
     {
         return Err(AwareError::Validation(
             "model-reader host received an unsafe provider request".into(),
         ));
     }
-    let mut command = tokio::process::Command::new(&request.executable);
+    let link_metadata = std::fs::symlink_metadata(&request.executable)?;
+    if !link_metadata.is_file() || link_metadata.file_type().is_symlink() {
+        return Err(AwareError::Validation(
+            "model-reader host provider image must be a regular non-link file".into(),
+        ));
+    }
+    let mut options = std::fs::OpenOptions::new();
+    options.read(true);
+    #[cfg(windows)]
+    {
+        use std::os::windows::fs::OpenOptionsExt;
+        use windows_sys::Win32::Storage::FileSystem::FILE_SHARE_READ;
+        // Denying write/delete sharing keeps the verified pathname bound until CreateProcess has
+        // mapped the suspended image. The file remains open through spawn below.
+        options.share_mode(FILE_SHARE_READ);
+    }
+    let mut image = options.open(&request.executable)?;
+    if !image.metadata()?.is_file() {
+        return Err(AwareError::Validation(
+            "model-reader host provider image must be a regular file".into(),
+        ));
+    }
+    let mut hasher = Sha256::new();
+    let mut chunk = [0u8; 64 * 1024];
+    loop {
+        let count = image.read(&mut chunk)?;
+        if count == 0 {
+            break;
+        }
+        hasher.update(&chunk[..count]);
+    }
+    let actual_sha256 = format!("{:x}", hasher.finalize());
+    if actual_sha256 != request.executable_sha256 {
+        return Err(AwareError::Validation(
+            "model-reader host provider image does not match its expected digest".into(),
+        ));
+    }
+    image.seek(SeekFrom::Start(0))?;
+
+    #[cfg(windows)]
+    let launch_path = request.executable.clone();
+    #[cfg(target_os = "linux")]
+    let launch_path = {
+        use std::os::fd::AsRawFd;
+        PathBuf::from(format!("/proc/self/fd/{}", image.as_raw_fd()))
+    };
+    #[cfg(all(unix, not(target_os = "linux")))]
+    let launch_path = {
+        use std::os::fd::AsRawFd;
+        PathBuf::from(format!("/dev/fd/{}", image.as_raw_fd()))
+    };
+
+    let mut command = tokio::process::Command::new(launch_path);
     command
         .arg(&request.operation)
         .arg("--json-stdin")
@@ -202,7 +316,7 @@ fn provider_command(request: &ProviderRun) -> Result<tokio::process::Command, Aw
             .as_std_mut()
             .creation_flags(provider_creation_flags());
     }
-    Ok(command)
+    Ok(PreparedProvider { command, image })
 }
 
 #[cfg(windows)]
@@ -306,7 +420,7 @@ async fn join_bounded_stream(
 }
 
 #[cfg(unix)]
-async fn terminate_provider_group(pid: Option<u32>) {
+async fn terminate_provider_group(pid: Option<u32>) -> Result<(), AwareError> {
     if let Some(pid) = pid {
         let _ = tokio::process::Command::new("kill")
             .args(["-KILL", &format!("-{pid}")])
@@ -314,7 +428,62 @@ async fn terminate_provider_group(pid: Option<u32>) {
             .stderr(Stdio::null())
             .status()
             .await;
+        let deadline = tokio::time::Instant::now() + std::time::Duration::from_secs(5);
+        loop {
+            let alive = tokio::process::Command::new("kill")
+                .args(["-0", &format!("-{pid}")])
+                .stdout(Stdio::null())
+                .stderr(Stdio::null())
+                .status()
+                .await
+                .map(|status| status.success())
+                .unwrap_or(false);
+            if !alive {
+                break;
+            }
+            if tokio::time::Instant::now() >= deadline {
+                return Err(AwareError::Internal(
+                    "provider process group did not terminate".into(),
+                ));
+            }
+            tokio::time::sleep(std::time::Duration::from_millis(10)).await;
+        }
     }
+    Ok(())
+}
+
+#[cfg(windows)]
+async fn terminate_provider_job(job: win32job::Job) -> Result<(), AwareError> {
+    tokio::task::spawn_blocking(move || {
+        use windows_sys::Win32::Foundation::{HANDLE, WAIT_OBJECT_0};
+        use windows_sys::Win32::System::JobObjects::TerminateJobObject;
+        use windows_sys::Win32::System::Threading::WaitForSingleObject;
+        let handle = job.handle() as HANDLE;
+        // SAFETY: the Job owns `handle` for this closure's lifetime. Termination is initiated while
+        // the handle is retained, then the signaled state proves the Job has zero active processes.
+        let (terminated, wait_result) = unsafe {
+            let terminated = TerminateJobObject(handle, 1);
+            let wait_result = if terminated == 0 {
+                WAIT_OBJECT_0
+            } else {
+                WaitForSingleObject(handle, 5_000)
+            };
+            (terminated, wait_result)
+        };
+        if terminated == 0 {
+            return Err(AwareError::Internal(
+                "terminate provider Job Object failed".into(),
+            ));
+        }
+        if wait_result != WAIT_OBJECT_0 {
+            return Err(AwareError::Internal(
+                "provider Job Object did not reach zero active processes".into(),
+            ));
+        }
+        Ok(())
+    })
+    .await
+    .map_err(|error| AwareError::Internal(format!("provider Job waiter failed: {error}")))?
 }
 
 async fn execute_provider(
@@ -326,22 +495,41 @@ async fn execute_provider(
     active: ActiveRuns,
     cancel_rx: oneshot::Receiver<()>,
 ) {
-    let mut child = match provider_command(&request)
-        .and_then(|mut command| command.spawn().map_err(AwareError::Io))
-    {
-        Ok(child) => child,
+    let prepared = match provider_command(&request) {
+        Ok(prepared) => prepared,
         Err(error) => {
+            send_empty_streams(&writer, request_id, handle).await;
             send_control(
                 &writer,
                 request_id,
                 handle,
-                json!({"status":"complete","exitCode":127,"hostError":error.to_string()}),
+                json!({"status":"complete","exitCode":127,"hostError":error.to_string(),"hostErrorCode":"reference-provider-executable-mismatch"}),
             )
             .await;
             active.lock().await.remove(&handle);
             return;
         }
     };
+    let PreparedProvider { mut command, image } = prepared;
+    let mut child = match command.spawn() {
+        Ok(child) => child,
+        Err(error) => {
+            drop(image);
+            send_empty_streams(&writer, request_id, handle).await;
+            send_control(
+                &writer,
+                request_id,
+                handle,
+                json!({"status":"complete","exitCode":127,"hostError":error.to_string(),"hostErrorCode":"reference-provider-host-failed"}),
+            )
+            .await;
+            active.lock().await.remove(&handle);
+            return;
+        }
+    };
+    // Windows has mapped the still-suspended image; Unix exec resolved the descriptor-backed path.
+    // Only now can the verification handle be released without reopening the pathname for launch.
+    drop(image);
     #[cfg(unix)]
     let provider_pid = child.id();
     #[cfg(windows)]
@@ -349,11 +537,12 @@ async fn execute_provider(
         Ok(job) => job,
         Err(error) => {
             kill_tree(&mut child).await;
+            send_empty_streams(&writer, request_id, handle).await;
             send_control(
                 &writer,
                 request_id,
                 handle,
-                json!({"status":"complete","exitCode":127,"hostError":error.to_string()}),
+                json!({"status":"complete","exitCode":127,"hostError":error.to_string(),"hostErrorCode":"reference-provider-host-failed"}),
             )
             .await;
             active.lock().await.remove(&handle);
@@ -364,42 +553,61 @@ async fn execute_provider(
     if let Err(error) = resume_provider(&child) {
         drop(provider_job);
         kill_tree(&mut child).await;
+        send_empty_streams(&writer, request_id, handle).await;
         send_control(
             &writer,
             request_id,
             handle,
-            json!({"status":"complete","exitCode":127,"hostError":error.to_string()}),
+            json!({"status":"complete","exitCode":127,"hostError":error.to_string(),"hostErrorCode":"reference-provider-host-failed"}),
         )
         .await;
         active.lock().await.remove(&handle);
         return;
     }
-    let mut stdin = child.stdin.take();
+    let stdin = child.stdin.take();
     let stdout = child.stdout.take();
     let stderr = child.stderr.take();
-    let input = tokio::spawn(async move {
-        if let Some(mut stream) = stdin.take() {
-            stream.write_all(&stdin_bytes).await?;
-            stream.shutdown().await?;
-        }
-        Ok::<(), std::io::Error>(())
-    });
-    let (Some(stdout), Some(stderr)) = (stdout, stderr) else {
+    let (Some(stdin), Some(stdout), Some(stderr)) = (stdin, stdout, stderr) else {
         kill_tree(&mut child).await;
+        send_empty_streams(&writer, request_id, handle).await;
         send_control(
             &writer,
             request_id,
             handle,
-            json!({"status":"complete","exitCode":127,"hostError":"provider pipes unavailable"}),
+            json!({"status":"complete","exitCode":127,"hostError":"provider pipes unavailable","hostErrorCode":"reference-provider-host-failed"}),
         )
         .await;
         active.lock().await.remove(&handle);
         return;
     };
-    let stdout_task = tokio::spawn(read_bounded(stdout, request.stdout_limit));
-    let stderr_task = tokio::spawn(read_bounded(stderr, request.stderr_limit));
+    let (io_failure_tx, mut io_failure_rx) = mpsc::unbounded_channel();
+    let input = tokio::spawn(write_input_supervised(
+        stdin,
+        stdin_bytes,
+        io_failure_tx.clone(),
+    ));
+    let stdout_task = tokio::spawn(read_bounded_supervised(
+        stdout,
+        request.stdout_limit,
+        io_failure_tx.clone(),
+    ));
+    let stderr_task = tokio::spawn(read_bounded_supervised(
+        stderr,
+        request.stderr_limit,
+        io_failure_tx.clone(),
+    ));
+    drop(io_failure_tx);
     let mut cancel_rx = cancel_rx;
     let outcome = tokio::select! {
+        biased;
+        Some(failure) = io_failure_rx.recv() => {
+            kill_tree(&mut child).await;
+            let reason = match failure {
+                ProviderIoFailure::Stdin => "provider-stdin-failed",
+                ProviderIoFailure::Stream => "provider-stream-failed",
+            };
+            Ok((1, Some(reason)))
+        },
         status = child.wait() => status.map(|status| (status.code().unwrap_or(1), None)),
         _ = tokio::time::sleep(std::time::Duration::from_millis(request.timeout_ms)) => { kill_tree(&mut child).await; Ok((124, Some("timeout"))) },
         _ = &mut cancel_rx => { kill_tree(&mut child).await; Ok((130, Some("cancelled"))) },
@@ -409,20 +617,30 @@ async fn execute_provider(
     // providers run in their own process group, which is force-terminated here. Only then may pipe
     // drains finish and output validation begin.
     #[cfg(windows)]
-    drop(provider_job);
+    let containment = terminate_provider_job(provider_job).await;
     #[cfg(unix)]
-    terminate_provider_group(provider_pid).await;
-    let _ = input.await;
+    let containment = terminate_provider_group(provider_pid).await;
+    let input_failure = match input.await {
+        Ok(Ok(())) => None,
+        Ok(Err(error)) => Some(error),
+        Err(error) => Some(std::io::Error::other(format!(
+            "provider stdin task failed: {error}"
+        ))),
+    };
     let stdout = join_bounded_stream(stdout_task).await;
     let stderr = join_bounded_stream(stderr_task).await;
     let stream_failure = stdout.as_ref().err().or_else(|| stderr.as_ref().err());
-    let stream_failure_code = stream_failure.map(|error| {
-        if error.kind() == std::io::ErrorKind::FileTooLarge {
-            "reference-provider-output-limit"
-        } else {
-            "reference-provider-host-failed"
-        }
-    });
+    let mut host_failure_code = if containment.is_err() {
+        Some("reference-provider-host-failed")
+    } else {
+        stream_failure.map(|error| {
+            if error.kind() == std::io::ErrorKind::FileTooLarge {
+                "reference-provider-output-limit"
+            } else {
+                "reference-provider-host-failed"
+            }
+        })
+    };
     let stdout = stdout.unwrap_or_default();
     let stderr = stderr.unwrap_or_default();
     for (kind, payload) in [(KIND_STDOUT, stdout), (KIND_STDERR, stderr)] {
@@ -437,15 +655,20 @@ async fn execute_provider(
         let _ = frame.write(&mut *writer.lock().await).await;
     }
     let (mut exit_code, mut reason) = outcome.unwrap_or((1, Some("host-wait-failed")));
-    if stream_failure_code.is_some() {
+    if host_failure_code.is_none() && input_failure.is_some() {
+        host_failure_code = Some("reference-provider-host-failed");
         exit_code = 1;
-        reason = Some("provider-stream-failed");
+        reason = Some("provider-stdin-failed");
+    }
+    if host_failure_code.is_some() {
+        exit_code = 1;
+        reason.get_or_insert("provider-io-failed");
     }
     send_control(
         &writer,
         request_id,
         handle,
-        json!({"status":"complete","exitCode":exit_code,"reason":reason,"hostErrorCode":stream_failure_code}),
+        json!({"status":"complete","exitCode":exit_code,"reason":reason,"hostErrorCode":host_failure_code}),
     )
     .await;
     active.lock().await.remove(&handle);
@@ -535,7 +758,10 @@ async fn protocol_loop<R: AsyncRead + Unpin>(
 #[cfg(unix)]
 async fn termination_signal() {
     use tokio::signal::unix::{SignalKind, signal};
-    let mut terminate = signal(SignalKind::terminate()).expect("install SIGTERM handler");
+    let Ok(mut terminate) = signal(SignalKind::terminate()) else {
+        let _ = tokio::signal::ctrl_c().await;
+        return;
+    };
     tokio::select! {
         _ = tokio::signal::ctrl_c() => {}
         _ = terminate.recv() => {}
@@ -575,6 +801,29 @@ where
 }
 
 pub async fn run() -> Result<(), AwareError> {
+    // This cross-process fence is independent of the Node bridge. If the bridge crashes, EOF
+    // drives `supervise_protocol` through provider cancellation/join while this lock remains held;
+    // the next app run cannot admit another host until the cleanup has actually completed.
+    let _cleanup_fence = match std::env::var_os("AWARE_MODEL_READER_HOST_CLEANUP_FENCE") {
+        Some(value) => {
+            use fs2::FileExt;
+            let path = PathBuf::from(value);
+            if !path.is_absolute() {
+                return Err(AwareError::Validation(
+                    "model-reader host cleanup fence must be absolute".into(),
+                ));
+            }
+            let file = std::fs::OpenOptions::new()
+                .read(true)
+                .write(true)
+                .create(true)
+                .truncate(false)
+                .open(path)?;
+            file.lock_exclusive()?;
+            Some(file)
+        }
+        None => None,
+    };
     let mut reader = tokio::io::BufReader::new(tokio::io::stdin());
     let writer: SharedWriter = Arc::new(Mutex::new(tokio::io::stdout()));
     let active: ActiveRuns = Arc::new(Mutex::new(HashMap::new()));
@@ -592,6 +841,10 @@ pub async fn run() -> Result<(), AwareError> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn file_sha256(path: &std::path::Path) -> String {
+        format!("{:x}", Sha256::digest(std::fs::read(path).unwrap()))
+    }
 
     #[tokio::test]
     async fn frames_preserve_request_run_sequence_final_and_binary_payload() {
@@ -611,9 +864,11 @@ mod tests {
 
     #[test]
     fn provider_command_has_only_protocol_argv_and_clears_ambient_environment() {
+        let executable = std::env::current_exe().unwrap();
         let request = ProviderRun {
             op: "provider-run".into(),
-            executable: std::env::current_exe().unwrap(),
+            executable_sha256: file_sha256(&executable),
+            executable,
             operation: "convert".into(),
             cwd: std::env::current_dir().unwrap(),
             environment: BTreeMap::from([("TZ".into(), "UTC".into())]),
@@ -622,11 +877,29 @@ mod tests {
             stdout_limit: 10,
             stderr_limit: 10,
         };
-        let command = provider_command(&request).unwrap();
-        let debug = format!("{command:?}");
+        let prepared = provider_command(&request).unwrap();
+        let debug = format!("{:?}", prepared.command);
         assert!(debug.contains("convert"));
         assert!(debug.contains("--json-stdin"));
         assert!(!debug.contains("secret.rvt"));
+    }
+
+    #[test]
+    fn provider_command_refuses_an_image_that_does_not_match_the_host_digest() {
+        let executable = std::env::current_exe().unwrap();
+        let request = ProviderRun {
+            op: "provider-run".into(),
+            executable,
+            executable_sha256: "0".repeat(64),
+            operation: "describe".into(),
+            cwd: std::env::current_dir().unwrap(),
+            environment: BTreeMap::new(),
+            stdin_length: 0,
+            timeout_ms: 1000,
+            stdout_limit: 10,
+            stderr_limit: 10,
+        };
+        assert!(provider_command(&request).is_err());
     }
 
     #[cfg(windows)]
@@ -648,6 +921,36 @@ mod tests {
         });
         let error = join_bounded_stream(task).await.unwrap_err();
         assert_eq!(error.kind(), std::io::ErrorKind::FileTooLarge);
+    }
+
+    #[tokio::test]
+    async fn output_limit_notifies_supervision_before_the_provider_closes_its_pipe() {
+        let (mut writer, reader) = tokio::io::duplex(64);
+        let (failure_tx, mut failure_rx) = mpsc::unbounded_channel();
+        let task = tokio::spawn(read_bounded_supervised(reader, 2, failure_tx));
+        writer.write_all(b"three").await.unwrap();
+        let failure = tokio::time::timeout(std::time::Duration::from_secs(1), failure_rx.recv())
+            .await
+            .expect("output-limit notification timed out")
+            .expect("output reader dropped its notification channel");
+        assert!(matches!(failure, ProviderIoFailure::Stream));
+        assert_eq!(
+            task.await.unwrap().unwrap_err().kind(),
+            std::io::ErrorKind::FileTooLarge
+        );
+    }
+
+    #[tokio::test]
+    async fn closed_provider_stdin_is_reported_as_a_supervision_failure() {
+        let (writer, reader) = tokio::io::duplex(1);
+        drop(reader);
+        let (failure_tx, mut failure_rx) = mpsc::unbounded_channel();
+        let result = write_input_supervised(writer, vec![1, 2, 3], failure_tx).await;
+        assert!(result.is_err());
+        assert!(matches!(
+            failure_rx.recv().await,
+            Some(ProviderIoFailure::Stdin)
+        ));
     }
 
     #[tokio::test]

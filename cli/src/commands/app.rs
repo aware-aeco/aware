@@ -353,6 +353,33 @@ async fn run(
         false
     });
 
+    // The commercial RVT provider is intentionally single-control per app instance. Acquire the
+    // fence before choosing the one-shot or long-running path so a lifecycle-start graph cannot
+    // bypass it. Simulation dispatches no agents and therefore must not contend with a real read;
+    // dry-run still executes read-mode nodes and retains the fence.
+    let contains_model_reader = app_uses_model_reader(&ctx.paths, &app)?;
+    let model_reader_control =
+        if should_acquire_model_reader_control(contains_model_reader, simulate) {
+            let pidfile = crate::runtime::pidfile::Pidfile {
+                app: app_id.to_string(),
+                instance: instance.clone(),
+                pid: std::process::id(),
+                started_at: crate::runtime::provenance::now_iso(),
+                run_id: run_id.clone(),
+            };
+            Some(crate::runtime::pidfile::ExclusiveControl::acquire(
+                &ctx.paths.app_instance_dir(app_id, &instance),
+                &pidfile,
+            )?)
+        } else {
+            None
+        };
+    let model_reader_cleanup_fence = model_reader_control.as_ref().map(|_| {
+        crate::runtime::pidfile::ExclusiveControl::host_cleanup_fence_path(
+            &ctx.paths.app_instance_dir(app_id, &instance),
+        )
+    });
+
     if is_long_running {
         use crate::runtime::lifecycle::{install_ctrl_c_handler, stop_channel};
         use crate::runtime::pidfile;
@@ -366,12 +393,15 @@ async fn run(
             &run_id,
         );
         tokio::fs::create_dir_all(&artifact_dir).await?;
-        let invoker = std::sync::Arc::new(DispatchInvoker::new(
+        let dispatch = DispatchInvoker::new(
             &ctx.paths,
             dry_run,
             simulate,
             Some(artifact_dir),
-        ));
+            model_reader_cleanup_fence.clone(),
+        );
+        let reader_cancellation = dispatch.reader_cancellation();
+        let invoker = std::sync::Arc::new(dispatch);
 
         let mut rt_ctx = RuntimeContext {
             inputs: serde_json::Value::Object(inputs.clone()),
@@ -411,20 +441,35 @@ async fn run(
             exposed_tx: None,
         };
 
-        // Write pidfile.
+        // The reader control already owns this pidfile. Other long-running apps retain the
+        // historical pidfile lifecycle without taking the reader's kernel-backed lock.
         let instance_dir = ctx.paths.app_instance_dir(app_id, &instance);
-        let pf = pidfile::Pidfile {
-            app: app_id.to_string(),
-            instance: instance.clone(),
-            pid: std::process::id(),
-            started_at: crate::runtime::provenance::now_iso(),
-            run_id: run_id.clone(),
-        };
-        pidfile::write(&pf, &instance_dir)?;
+        let manages_ordinary_pidfile =
+            should_manage_ordinary_pidfile(contains_model_reader, model_reader_control.is_some());
+        if manages_ordinary_pidfile {
+            let pf = pidfile::Pidfile {
+                app: app_id.to_string(),
+                instance: instance.clone(),
+                pid: std::process::id(),
+                started_at: crate::runtime::provenance::now_iso(),
+                run_id: run_id.clone(),
+            };
+            pidfile::write(&pf, &instance_dir)?;
+        }
 
-        // Set up stop channel + Ctrl+C handler.
+        // Set up stop channel + signal handler. Reader graphs explicitly signal the bridge before
+        // stopping orchestration because Unix `app stop` targets only this AWARE process.
         let (stop_tx, stop_rx) = stop_channel();
-        let _ctrl_handle = install_ctrl_c_handler(stop_tx);
+        let _ctrl_handle = if model_reader_control.is_some() {
+            tokio::spawn(async move {
+                if model_reader_termination_signal().await.is_ok() {
+                    reader_cancellation.cancel();
+                    let _ = stop_tx.send(true);
+                }
+            })
+        } else {
+            install_ctrl_c_handler(stop_tx)
+        };
 
         println!("\u{25b6} run {app_id} (instance {instance}, run-id {run_id})");
         println!(
@@ -433,8 +478,10 @@ async fn run(
 
         let result = orch.run_long_running(stop_rx).await;
 
-        // Always remove pidfile on exit (success or interrupt).
-        pidfile::remove(&instance_dir);
+        // The reader control removes its pidfile only when its lock is released after cleanup.
+        if manages_ordinary_pidfile {
+            pidfile::remove(&instance_dir);
+        }
 
         return match result {
             Ok(()) => {
@@ -446,20 +493,6 @@ async fn run(
     }
 
     // One-shot path.
-    // The commercial RVT provider is intentionally single-control per app instance. Scope the
-    // kernel-backed fence to the exact agent id: other one-shot apps, including IFC reads through
-    // the shared bridge binary, retain their historical concurrency.
-    let _model_reader_control = if app
-        .nodes
-        .iter()
-        .any(|node| node.agent.as_deref() == Some("model-reference-reader"))
-    {
-        Some(crate::runtime::pidfile::ExclusiveControl::acquire(
-            &ctx.paths.app_instance_dir(app_id, &instance),
-        )?)
-    } else {
-        None
-    };
     let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
     let provenance = ProvenanceWriter::open(&log_path).await?;
     let artifact_dir = crate::runtime::provenance::artifact_dir_for(
@@ -469,12 +502,15 @@ async fn run(
         &run_id,
     );
     tokio::fs::create_dir_all(&artifact_dir).await?;
-    let invoker = std::sync::Arc::new(DispatchInvoker::new(
+    let dispatch = DispatchInvoker::new(
         &ctx.paths,
         dry_run,
         simulate,
         Some(artifact_dir),
-    ));
+        model_reader_cleanup_fence,
+    );
+    let reader_cancellation = dispatch.reader_cancellation();
+    let invoker = std::sync::Arc::new(dispatch);
 
     let mut rt_ctx = RuntimeContext {
         inputs: serde_json::Value::Object(inputs),
@@ -527,9 +563,163 @@ async fn run(
     } else {
         println!("\u{25b6} run {app_id} (instance {instance}, run-id {run_id})");
     }
-    orch.run_one_shot().await?;
+    let result = if model_reader_control.is_some() {
+        let run = orch.run_one_shot();
+        tokio::pin!(run);
+        tokio::select! {
+            result = &mut run => result,
+            signal = model_reader_termination_signal() => {
+                signal?;
+                // Unix `app stop` signals only AWARE, so explicitly forward termination to the
+                // registered bridge. Keep the reader fence until that bridge has cancelled its host,
+                // the host has joined provider cleanup, and the orchestration future has observed
+                // the bridge exit. Dropping `run` here would only request kill-on-drop and could
+                // unlock while the commercial provider process tree was still terminating.
+                reader_cancellation.cancel();
+                let _ = (&mut run).await;
+                Err(AwareError::Conflict("model-reference-reader run interrupted".into()))
+            }
+        }
+    } else {
+        orch.run_one_shot().await
+    };
+    result?;
     println!("\u{2713} run complete; trace at {}", log_path.display());
     Ok(())
+}
+
+/// Whether the executable graph reaches the commercial model reader directly or through the one
+/// app-backed hop allowed by the v0 composition rules. The top-level instance fence must cover
+/// both shapes because the nested runner deliberately does not create a second app instance.
+fn app_uses_model_reader(
+    paths: &crate::paths::Paths,
+    app: &crate::manifest::app::App,
+) -> Result<bool, AwareError> {
+    let dispatchable = crate::validate::dispatchable_agents(app);
+    if dispatchable.contains("model-reference-reader") {
+        return Ok(true);
+    }
+    for agent_id in dispatchable {
+        let Ok(manifest_path) =
+            crate::manifest::loader::agent_manifest_path(&paths.agents_dir(), agent_id)
+        else {
+            continue;
+        };
+        match std::fs::symlink_metadata(&manifest_path) {
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => continue,
+            Err(error) => {
+                return Err(std::io::Error::new(
+                    error.kind(),
+                    format!("{}: {error}", manifest_path.display()),
+                )
+                .into());
+            }
+            Ok(_) => {}
+        }
+        let manifest = crate::manifest::loader::load_agent(&manifest_path)?;
+        if effective_transport(&manifest, agent_id)? != TransportKind::App {
+            continue;
+        }
+        let Some(backed_by) = manifest
+            .transport
+            .app
+            .as_ref()
+            .map(|transport| transport.backed_by.as_str())
+        else {
+            continue;
+        };
+        if !crate::manifest::loader::is_safe_segment(backed_by) {
+            continue;
+        }
+        let backing_dir = paths.apps_dir().join(backed_by);
+        let Some(manifest_path) = crate::manifest::loader::find_app_manifest(&backing_dir) else {
+            continue;
+        };
+        let backing = crate::manifest::loader::load_app(&manifest_path)?;
+        if crate::validate::dispatchable_agents(&backing).contains("model-reference-reader") {
+            return Ok(true);
+        }
+    }
+    Ok(false)
+}
+
+fn should_acquire_model_reader_control(contains_model_reader: bool, simulate: bool) -> bool {
+    contains_model_reader && !simulate
+}
+
+fn should_manage_ordinary_pidfile(
+    contains_model_reader: bool,
+    has_model_reader_control: bool,
+) -> bool {
+    !contains_model_reader && !has_model_reader_control
+}
+
+#[cfg(test)]
+mod model_reader_control_tests {
+    use super::{
+        app_uses_model_reader, should_acquire_model_reader_control, should_manage_ordinary_pidfile,
+    };
+
+    #[test]
+    fn app_backed_reader_is_included_in_the_top_level_control_fence() {
+        let root = tempfile::tempdir().unwrap();
+        let paths = crate::paths::Paths {
+            aware_home: root.path().to_path_buf(),
+        };
+        let agent_dir = paths.agents_dir().join("reader-wrapper");
+        let backing_dir = paths.apps_dir().join("reader-backing");
+        std::fs::create_dir_all(&agent_dir).unwrap();
+        std::fs::create_dir_all(&backing_dir).unwrap();
+        std::fs::write(
+            agent_dir.join("manifest.yaml"),
+            "agent: reader-wrapper\nversion: 0.1.0\ndescription: wrapper\nstateful: false\nlicense: Apache-2.0\ntransport:\n  app:\n    backed-by: reader-backing\ncommands: {}\n",
+        )
+        .unwrap();
+        std::fs::write(
+            backing_dir.join("reader-backing.flo"),
+            "app: reader-backing\nversion: 0.1.0\ndescription: backing\nnodes:\n  - id: read\n    agent: model-reference-reader\n    command: read-model\nconnections: []\n",
+        )
+        .unwrap();
+        let top: crate::manifest::app::App = serde_yaml::from_str(
+            "app: top\nversion: 0.1.0\ndescription: top\nnodes:\n  - id: wrapped\n    agent: reader-wrapper\n    command: run\nconnections: []\n",
+        )
+        .unwrap();
+
+        assert!(app_uses_model_reader(&paths, &top).unwrap());
+    }
+
+    #[test]
+    fn an_uninstalled_agent_does_not_break_reader_fence_discovery() {
+        let root = tempfile::tempdir().unwrap();
+        let paths = crate::paths::Paths {
+            aware_home: root.path().to_path_buf(),
+        };
+        let app: crate::manifest::app::App = serde_yaml::from_str(
+            "app: top\nversion: 0.1.0\ndescription: top\nnodes:\n  - id: missing\n    agent: definitely-not-an-agent-xyz\n    command: run\nconnections: []\n",
+        )
+        .unwrap();
+
+        assert!(!app_uses_model_reader(&paths, &app).unwrap());
+    }
+
+    #[test]
+    fn simulation_neither_takes_the_reader_fence_nor_manages_its_pidfile() {
+        let root = tempfile::tempdir().unwrap();
+        let paths = crate::paths::Paths {
+            aware_home: root.path().to_path_buf(),
+        };
+        let app: crate::manifest::app::App = serde_yaml::from_str(
+            "app: top\nversion: 0.1.0\ndescription: top\nnodes:\n  - id: read\n    agent: model-reference-reader\n    command: read-model\nconnections: []\n",
+        )
+        .unwrap();
+
+        // Simulation still discovers the reader graph so it can avoid touching the live
+        // instance pidfile; the caller uses `simulate` only to skip lock acquisition.
+        assert!(app_uses_model_reader(&paths, &app).unwrap());
+        assert!(!should_acquire_model_reader_control(true, true));
+        assert!(!should_manage_ordinary_pidfile(true, false));
+        assert!(should_manage_ordinary_pidfile(false, false));
+    }
 }
 
 /// Unreadable `requires:` pins in the apps behind this app's app-backed agents.
@@ -917,6 +1107,12 @@ async fn artifact(
 fn stop(ctx: &Context, app_id: &str, instance: Option<&str>) -> Result<(), AwareError> {
     let instance = instance.unwrap_or("default");
     let instance_dir = ctx.paths.app_instance_dir(app_id, instance);
+    if crate::runtime::pidfile::ExclusiveControl::reclaim_stale(&instance_dir)? {
+        println!(
+            "\u{2713} {app_id} (instance {instance}) was already stopped; removed stale control state"
+        );
+        return Ok(());
+    }
     let pid = crate::runtime::pidfile::read(&instance_dir)?;
     println!(
         "Stopping {} instance {} (pid {})",
@@ -939,6 +1135,23 @@ fn stop(ctx: &Context, app_id: &str, instance: Option<&str>) -> Result<(), Aware
     }
     crate::runtime::pidfile::remove(&instance_dir);
     println!("\u{2713} stopped {app_id} (instance {instance})");
+    Ok(())
+}
+
+#[cfg(unix)]
+async fn model_reader_termination_signal() -> Result<(), AwareError> {
+    use tokio::signal::unix::{SignalKind, signal};
+    let mut terminate = signal(SignalKind::terminate())?;
+    tokio::select! {
+        result = tokio::signal::ctrl_c() => result?,
+        _ = terminate.recv() => {}
+    }
+    Ok(())
+}
+
+#[cfg(not(unix))]
+async fn model_reader_termination_signal() -> Result<(), AwareError> {
+    tokio::signal::ctrl_c().await?;
     Ok(())
 }
 

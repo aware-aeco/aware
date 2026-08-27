@@ -837,3 +837,62 @@ Acceptance is deliberately narrower than the issue's initial lifecycle hypothesi
 missing-`SystemRoot` crash is eliminated in source and packaged paths; conflicting aliases fail closed;
 the child receives only the canonical closed environment; all four packaged model commands return valid
 outputs; and no Job Object, suspended-start, provider retry, or ambient Rust-environment behavior changes.
+
+## 9. Pre-integration lifecycle and contract hardening
+
+The final implementation review identified five gaps in the preserved reader stack. They are release
+gates for #453 even though they are independent of the #464 environment-casing defect:
+
+1. Once the authoritative host kernel fence is held, a missing or malformed cache-owner diagnostic is
+   crash debris, not an ownership authority. Replace it under that fence; without the fence, continue to
+   fail closed.
+2. A one-shot app graph containing `model-reference-reader` writes the normal app pidfile while holding
+   its exclusive control lock. The guard removes that pidfile on every return so `aware app stop` can
+   target the active AWARE/provider process tree without changing unrelated one-shot concurrency.
+3. Before allocating a provider run directory, reclaim only real, non-link `run-*` directories older
+   than one hour whose private heartbeat lease is also stale. Live conversions renew that filesystem
+   lease, while crash-left staged RVT and output bytes are eventually removed without PID-reuse ambiguity.
+4. Normalize `args.limits` once at command admission (falling back to injected test limits), attach the
+   resulting complete closed limit set to every provider, hashing, normalization, cache identity and
+   package boundary, and return `reference-limits-invalid` for malformed requests.
+5. If the command signal is aborted while the host rejects or returns, preserve a non-retryable
+   `reference-cancelled` error instead of relabeling the outcome as a retryable provider failure.
+6. Validate cache-owner diagnostics as a closed, typed lease before field access. Even syntactically
+   valid non-owner JSON is unverifiable debris and follows the same fenced/unfenced recovery policy.
+7. Reader one-shots race Ctrl+C and SIGTERM against orchestration. Cancellation drops the reader bridge,
+   whose host-pipe closure drops the provider child, while unrelated invoker processes keep their
+   historical lifecycle.
+8. Before `app stop` trusts a reader pidfile, verify that the model-reader kernel fence is still held.
+   Reclaim an unheld stale pidfile without signalling its possibly recycled PID.
+9. Persist managed-host failure as terminal client state. Reject requests registered after host exit
+   immediately and make close a no-op once that terminal state is observed.
+10. Bound cache receipt and signature control files before parsing, validate declared artifact sizes
+    against the canonical request limits, and read blobs through fixed-size handles that detect mutation.
+11. Check an unheld model-reader control fence before parsing pidfile diagnostics so missing or malformed
+    crash debris is reclaimable without weakening active-run ownership.
+12. Stamp the signed package preimage with model-reference-reader `0.4.0`; keep the bridge build ID at its
+    separately versioned `aware-connection-reader@0.2.0` value.
+13. Group canonical primitives by drawable node so emitted GLB node names remain unique and the output
+    is accepted by the same closed normalizer.
+14. Carry the prevalidated provider executable digest into the Rust host, hash an open image handle,
+    and retain that handle through process creation so pathname replacement cannot select other bytes.
+15. Apply protocol-specific managed authority-store validation during preflight as well as conversion,
+    before any provider process launches.
+16. Preserve the closed set of managed-host error codes across the provider boundary, including bounded
+    output and executable-image mismatch failures.
+17. Validate active glTF nodes as closed non-null objects and reject extensions or other unsupported
+    node properties with stable geometry errors.
+18. Convert cache-owner release removal failures to a stable redacted cache error.
+19. Detect `model-reference-reader` recursively in every live `do:` subtree before acquiring one-shot
+    control; frozen subtrees remain non-dispatchable.
+20. Apply the committed 1 GiB resident hard gate as a checked worst-case canonical working-set
+    estimate before allocating vertex, index, tuple, and sorting object graphs.
+21. Validate emitted canonical GLB structural counts and JSON bytes against the same profile that
+    admits provider GLB, before allocating the final output buffer.
+22. Decode every byte-backed JSON boundary as fatal UTF-8 so malformed provider, metadata, and GLB
+    strings cannot collapse through replacement characters.
+23. Use the private model-reader invocation marker to route malformed pathless shared-bridge calls to
+    RVT admission, and validate source shape before provider or host startup.
+
+Each branch requires a focused regression test, followed by the complete Node/Rust/packaged Windows
+gate and a fresh independent Codex review before the integration PR may open.

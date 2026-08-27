@@ -21,7 +21,16 @@ async function main() {
   } else if (operation === 'convert') {
     const geometryPath = path.join(request.outputDirectory, 'geometry.glb');
     const metadataPath = path.join(request.outputDirectory, 'metadata.json');
-    await fs.writeFile(geometryPath, makeGlbFixture());
+    const geometryOptions = request.canonicalRequest?.conversionSettings?.fixtureUnclaimedOffset
+      ? {
+          scenes: [{ nodes: [0, 1] }],
+          nodes: [
+            { name: 'part-a', mesh: 0 },
+            { name: 'unclaimed-offset', mesh: 0, translation: [10, 0, 0] },
+          ],
+        }
+      : {};
+    await fs.writeFile(geometryPath, makeGlbFixture(geometryOptions));
     await fs.writeFile(metadataPath, JSON.stringify(makeMetadataFixture()));
     process.stdout.write(JSON.stringify({
       ...provenance, documentKind: 'revit-project', sourceSha256: request.sourceSha256,
