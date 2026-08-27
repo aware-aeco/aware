@@ -209,6 +209,7 @@ export async function describeProvider(options) {
     protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
     engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
     adapterExecutableSha256: initialExecutable.sha256,
+    ...(options.readerSchemaVersion ? { readerSchemaVersion: options.readerSchemaVersion } : {}),
     ...(describe.protocolVersion === '2' ? { execution: describe.execution, destination: describe.destination } : {}),
   });
   if (options.expectedProviderSha256 !== undefined) {
@@ -239,13 +240,19 @@ export async function describeAndConvert(options) {
     protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
     engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
     adapterExecutableSha256: initialExecutable.sha256,
+    ...(options.readerSchemaVersion ? { readerSchemaVersion: options.readerSchemaVersion } : {}),
     ...(describe.protocolVersion === '2' ? { execution: describe.execution, destination: describe.destination } : {}),
   });
   if (options.expectedProviderSha256 !== undefined) {
     assertSha256(options.expectedProviderSha256, 'expectedProviderSha256');
     if (providerFingerprintSha256(describedFingerprint) !== options.expectedProviderSha256) providerError('reference-provider-pin-mismatch', 'The local provider does not match the expected fingerprint.');
   }
-  const canonicalRequest = buildCanonicalRequest({ limits, conversionSettings: options.conversionSettings ?? {} });
+  const canonicalRequest = buildCanonicalRequest({
+    limits,
+    conversionSettings: options.conversionSettings ?? {},
+    readerSchemaVersion: options.readerSchemaVersion,
+    propertyExpansionLimits: options.propertyExpansionLimits,
+  });
   const outputDirectory = await privateDirectory(path.join(options.privateRoot, 'output'));
   const authorityStorePath = managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
   const beforeConvert = await validateProviderExecutable(options.executable);
