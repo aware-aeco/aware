@@ -83,6 +83,25 @@ async function setup(t) {
   };
 }
 
+test('request-only failures precede provider configuration and managed host setup', async () => {
+  const unconfigured = { environment: {} };
+  await assert.rejects(
+    () => runModelCommand('preflight', { limits: null }, unconfigured),
+    (error) => error.code === 'reference-limits-invalid',
+  );
+  await assert.rejects(
+    () => runModelCommand('preflight', { 'expected-provider-protocol': '9' }, unconfigured),
+    (error) => error.code === 'reference-request-invalid',
+  );
+  await assert.rejects(
+    () => runModelCommand('read-model', {
+      'rvt-path': path.resolve('admission-only.rvt'),
+      'source-sha256': '0'.repeat(64),
+    }, unconfigured),
+    (error) => error.code === 'reference-provider-pin-required',
+  );
+});
+
 test('preflight describes provider and key readiness without conversion or source access', async (t) => {
   const state = await setup(t);
   const out = await runModelCommand('preflight', {
@@ -94,6 +113,90 @@ test('preflight describes provider and key readiness without conversion or sourc
   assert.equal(Buffer.from(out.signerPublicKeyBase64, 'base64').length, 32);
   assert.equal(sha256(Buffer.from(out.signerPublicKeyBase64, 'base64')), out.signerFingerprintSha256);
   assert.deepEqual(state.calls, ['describe']);
+});
+test('preflight enforces the managed authority-store contract before provider launch', async (t) => {
+  const state = await setup(t);
+  const base = {
+    'provider-path': state.executable,
+    'signing-secret-path': state.secretPath,
+    'signing-public-path': state.publicPath,
+  };
+  await assert.rejects(() => runModelCommand('preflight', {
+    ...base,
+    'expected-provider-protocol': '2',
+    'expected-provider-destination': 'https://api.example.test',
+  }, state.deps), (error) => error.code === 'reference-provider-protocol');
+  await assert.rejects(() => runModelCommand('preflight', {
+    ...base,
+    'expected-provider-protocol': '1',
+    'authority-store-path': path.join(state.root, 'authority'),
+  }, state.deps), (error) => error.code === 'reference-provider-protocol');
+  assert.deepEqual(state.calls, []);
+});
+
+test('request limits are validated once and propagated through provider and package boundaries', async (t) => {
+  const state = await setup(t);
+  const limits = { maxSourceBytes: 32, maxCanonicalGlbBytes: 1024 * 1024 };
+  const preflight = await runModelCommand('preflight', {
+    'provider-path': state.executable, 'signing-secret-path': state.secretPath,
+    'signing-public-path': state.publicPath, limits,
+  }, state.deps);
+  const out = await runModelCommand('read-snapshot', {
+    ...state.args, limits,
+    'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  }, state.deps);
+  assert.equal(out.packageConfiguration.maximumTileBytes, limits.maxCanonicalGlbBytes);
+  for (const request of state.hostRequests) {
+    const body = JSON.parse(request.stdin.toString('utf8'));
+    assert.equal(body.limits.maxSourceBytes, limits.maxSourceBytes);
+    assert.equal(body.limits.maxCanonicalGlbBytes, limits.maxCanonicalGlbBytes);
+  }
+  await assert.rejects(
+    () => runModelCommand('preflight', {
+      'provider-path': state.executable, 'signing-secret-path': state.secretPath,
+      'signing-public-path': state.publicPath, limits: { unknownLimit: 1 },
+    }, state.deps),
+    (error) => error.code === 'reference-limits-invalid',
+  );
+  await assert.rejects(
+    () => runModelCommand('preflight', {
+      'provider-path': state.executable, 'signing-secret-path': state.secretPath,
+      'signing-public-path': state.publicPath, limits: null,
+    }, state.deps),
+    (error) => error.code === 'reference-limits-invalid',
+  );
+  await assert.rejects(
+    () => runModelCommand('preflight', {
+      'provider-path': state.executable, 'signing-secret-path': state.secretPath,
+      'signing-public-path': state.publicPath, limits: { maxSourceBytes: null },
+    }, state.deps),
+    (error) => error.code === 'reference-limits-invalid',
+  );
+});
+
+test('starting a model command reclaims only stale abandoned provider run directories', async (t) => {
+  const state = await setup(t);
+  const stale = path.join(state.deps.privateRoot, 'run-abandoned');
+  const active = path.join(state.deps.privateRoot, 'run-active');
+  const current = path.join(state.deps.privateRoot, 'run-current');
+  await fs.mkdir(stale, { recursive: true });
+  await fs.writeFile(path.join(stale, 'sensitive.rvt'), 'staged-model');
+  await fs.writeFile(path.join(stale, '.active'), '');
+  await fs.mkdir(active, { recursive: true });
+  await fs.writeFile(path.join(active, '.active'), '');
+  await fs.mkdir(current, { recursive: true });
+  const old = new Date(Date.now() - (2 * 60 * 60_000));
+  await fs.utimes(stale, old, old);
+  await fs.utimes(path.join(stale, '.active'), old, old);
+  await fs.utimes(active, old, old);
+  await runModelCommand('preflight', {
+    'provider-path': state.executable, 'signing-secret-path': state.secretPath,
+    'signing-public-path': state.publicPath,
+  }, state.deps);
+  await assert.rejects(() => fs.access(stale), (error) => error.code === 'ENOENT');
+  await fs.access(active);
+  await fs.access(current);
 });
 
 test('read-model publishes five binary-safe artifacts with reconciled coverage and provenance', async (t) => {
@@ -186,8 +289,10 @@ test('read-snapshot derives public source and package envelopes after private ca
   assert.equal(JSON.stringify(out).includes('receipt.json'), false);
   assert.equal(state.calls.filter((operation) => operation === 'convert').length, 1);
 
+  const providerCalls = [...state.calls];
   const warm = await runModelCommand('read-snapshot', args, state.deps);
   assert.equal(warm.cache, 'hit');
+  assert.deepEqual(state.calls, providerCalls);
   assert.equal(state.calls.filter((operation) => operation === 'convert').length, 1);
   assert.deepEqual(warm.sourceArtifactPreimage, out.sourceArtifactPreimage);
   assert.deepEqual(warm.packagePreimage, out.packagePreimage);
@@ -229,6 +334,21 @@ test('probe is bounded, cache-aware, and two cold conversions produce identical 
   const probe = await runModelCommand('probe', args, first.deps);
   assert.equal(probe.cache, 'hit');
   assert.equal(probe.entities, 1);
+
+  const unclaimed = await setup(t);
+  const unclaimedPreflight = await runModelCommand('preflight', {
+    'provider-path': unclaimed.executable,
+    'signing-secret-path': unclaimed.secretPath,
+    'signing-public-path': unclaimed.publicPath,
+  }, unclaimed.deps);
+  const unclaimedProbe = await runModelCommand('probe', {
+    ...unclaimed.args,
+    'conversion-settings': { fixtureUnclaimedOffset: true },
+    'expected-provider-sha256': unclaimedPreflight.providerFingerprintSha256,
+    'expected-signer-sha256': unclaimedPreflight.signerFingerprintSha256,
+  }, unclaimed.deps);
+  assert.deepEqual(unclaimedProbe.coverage.unclaimedGeometryNodes, ['unclaimed-offset']);
+  assert.deepEqual(unclaimedProbe.bounds, { min: [0, 0, 0], max: [11000, 0, 1000] });
 
   const secondCache = path.join(first.root, 'second-cache');
   const secondArtifacts = path.join(first.root, 'second-artifacts');

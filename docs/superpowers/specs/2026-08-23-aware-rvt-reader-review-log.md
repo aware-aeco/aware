@@ -293,3 +293,397 @@ however, provide the reviewed parameter storage types or explicit relationship s
 3,311 parameter rows use negative IDs, 139 ID values repeat (one 776 times), and values expose only JSON
 string/number types. Therefore no provider-specific translator was added to AWARE core and the cloud run
 is recorded as real-output compatibility evidence, not proof of the local provider execution contract.
+
+## Issue #464 addendum review — Round 1
+
+Codex returned `VERDICT: REVISE`. The proposed JavaScript-only casing fix identified a deterministic
+failure, but the plan incorrectly treated a plain copied environment as the already-proven production
+path. The critic required: separation of the original app failure from the later direct diagnostic;
+an actual packaged red/green path; explicit exit/output/version/non-skip acceptance; deterministic
+semantics for differently cased duplicate variables; all-allowlist and forbidden-variable coverage;
+unchanged POSIX semantics; and a behavioral proof of the environment received after Rust `env_clear()`.
+
+### Builder response
+
+Accepted every finding. Section 8 now distinguishes the observations and records the current
+live-environment stress result rather than claiming a lifecycle cause. Production snapshots its chosen
+environment into a plain object, so the existing packaged command path deterministically crosses the
+fixed seam. Windows normalization uses canonical uppercase output and fails closed on conflicting
+aliases; tests cover every allowed key, forbidden mixed-case keys, aliases, and POSIX behavior. The
+fixture provider itself checks `SYSTEMROOT` and the exact received key set, while the Windows harness
+requires valid outputs from all packaged model commands and reports both executable versions.
+
+## Issue #464 addendum review — Round 2
+
+Codex returned `VERDICT: REVISE` with four gaps: snapshotting the whole configuration would remove
+Windows' case-insensitive lookup for the bridge's own `AWARE_*` controls; the packaged CI job still used
+Node 22 and did not force mixed-case OS variables; the fixture could not know which optional values were
+supposed to arrive; and Unicode uppercasing could turn a non-ASCII near-alias into an ASCII allowlisted
+name.
+
+### Builder response
+
+Accepted all four. The snapshot now exists only inside the provider allowlist boundary, leaving AWARE
+control lookup and host launch semantics intact. The packaged environment deletes all aliases and seeds
+all five allowed values under controlled mixed-case spellings, plus a forbidden sentinel; the fixture
+requires the exact fixed eight-entry result. The harness and CI pin Node 24.14, include an automated
+legacy red control, and ASCII-only folding leaves Unicode near-aliases forbidden.
+
+## Issue #464 addendum review — Round 3
+
+Codex returned `VERDICT: REVISE` because the harness was pinned to Node 24.14 while the release workflow
+still built the shipped connection-reader SEA with Node 22. A green Node-24 reader/provider pair would
+not prove the production Node-22 reader/Node-24 provider combination.
+
+### Builder response
+
+Accepted. Section 8 now pins the release connection-reader build to Node 24.14.0 as well, making the
+tested bridge/provider runtime combination identical to the one shipped by this release.
+
+### Codex follow-up
+
+The mixed-runtime gap is resolved: section 8 now requires both CI and the release connection-reader SEA
+build to use Node 24.14.0.
+
+`VERDICT: APPROVED`
+
+## Final implementation review — 2026-08-27
+
+Codex found five material gaps in the preserved #453 implementation: an authoritative cache fence
+could not recover a missing/malformed owner diagnostic; one-shot reader apps held a control lock but
+published no pidfile for `aware app stop`; crash-left provider run directories were never swept;
+request-supplied limits were ignored in favor of test-only dependency limits; and an aborted provider
+run was flattened into retryable `reference-provider-failed`.
+
+### Builder response
+
+Accepted all five. Fenced ownership now replaces unverifiable diagnostics while unfenced callers still
+fail closed. The model-only one-shot guard publishes and removes the standard pidfile. Provider startup
+reclaims only non-link `run-*` directories older than one hour, twice the hard conversion timeout.
+Command admission validates one complete limit set and propagates it through every downstream boundary.
+An aborted host rejection or result now returns non-retryable `reference-cancelled`. Focused regression
+tests cover every branch; the full release gate and a clean follow-up Codex review remain required.
+
+## Final implementation review — follow-up
+
+Codex found two additional runtime edge cases: age-only provider-run cleanup could reclaim a legitimate
+conversion whose sequential bounded phases exceed one hour, and explicit `"limits": null` was treated as
+an omitted field by nullish fallback.
+
+### Builder response
+
+Accepted both. Every live provider run now renews a private filesystem heartbeat; the stale sweep preserves
+an old directory while that lease is fresh and reclaims it after a crash without relying on reusable PIDs.
+Limit selection distinguishes
+an absent request field from an explicit null, so malformed null limits receive the stable
+`reference-limits-invalid` refusal and can never inherit dependency defaults. Regression tests cover an
+old live run, an old abandoned run, and null-limit precedence at both command and response boundaries.
+
+## Final implementation review — second follow-up
+
+Codex found that fenced cache-debris removal could still propagate a raw filesystem error and that a
+PID-only active-run marker could retain sensitive crash debris after PID reuse.
+
+### Builder response
+
+Accepted both. Every cache-owner removal path now converts I/O failures into bounded
+`reference-cache-owned` errors. Provider-run ownership is a renewable filesystem heartbeat lease rather
+than a process-id assertion: active runs refresh it, crashes stop refreshing it, and the sweep reclaims
+the directory after the lease ages out. Tests inject a fenced removal failure and distinguish fresh from
+stale heartbeat markers without exposing private paths.
+
+## Final implementation review — third follow-up
+
+Codex found that a null value nested inside the limits object still selected its default and that failure
+to remove a just-created directory after marker creation failed could escape as raw filesystem stderr.
+
+### Builder response
+
+Accepted both. The shared limit normalizer now distinguishes absent properties from present null values,
+so every malformed nested override is rejected at admission. Run-root inspection, allocation, ownership
+creation, failed-creation cleanup, sweeping, and final cleanup all convert filesystem failures to the
+bounded `reference-provider-run-cleanup-failed` envelope. Focused tests cover both top-level and nested
+null limits; the independent review gate must be clean before integration.
+
+## Final implementation review — fourth follow-up
+
+Codex found three remaining lifecycle and validation gaps: a direct Ctrl+C or SIGTERM could terminate a
+one-shot reader without unwinding its control guard; Unix `aware app stop` signalled only the AWARE PID
+without ensuring the reader bridge/provider descendants stopped; and a syntactically valid `null`
+cache-owner diagnostic reached raw property access.
+
+### Builder response
+
+Accepted all three. Reader one-shots now race their orchestration against Ctrl+C/SIGTERM, so interruption
+drops the run future and its guard; the reader bridge is the only invoker child configured kill-on-drop,
+and the provider host already owns its provider child the same way. `app stop` verifies the kernel-held
+reader control before trusting its pidfile, which prevents crash-left pidfiles and recycled PIDs from
+being signalled; Windows retains explicit tree termination. Cache owners now pass a complete closed
+schema and value validation before any field access, including release-time token checks. Focused tests
+cover held/released kernel control, stale stop state, and JSON `null` owner debris.
+
+## Final implementation review — fifth follow-up
+
+Codex found four final boundary gaps: requests issued after the managed host exited could be registered
+after the pending-request rejection sweep and hang forever; cache receipts, signatures, and blobs were
+loaded before their sizes were bounded; stale reader control attempted to parse a missing or malformed
+pidfile before consulting the crash-released kernel fence; and signed package provenance still claimed
+agent version `0.2.0` after the manifest advanced to `0.4.0`.
+
+### Builder response
+
+Accepted all four. Host failure is now a persistent terminal state, so every later request rejects with
+the same stable host error and close performs no dead-pipe write. Cache control files have small fixed
+ceilings, artifact records are checked against request limits, and fixed-size reads verify the file did
+not change without allocating from attacker-controlled post-check growth. Reader stop consults the
+kernel fence before reading diagnostic pidfile state, allowing absent and malformed crash debris to be
+reclaimed safely. Signed package provenance now reports agent `0.4.0` while retaining the independently
+versioned bridge build identifier. Focused regressions cover each branch; full gates and a fresh clean
+independent review remain required before integration.
+
+## Final implementation review — sixth follow-up
+
+Codex found six remaining contract and trust-boundary defects: canonical GLB output duplicated a node
+name for each source primitive and could not be normalized again; the JavaScript executable digest
+bracket did not bind the verified bytes to the image opened by the Rust host; preflight omitted the
+managed authority-store validation used by conversion; stable managed-host output-limit errors were
+flattened into retryable provider failures; nested glTF node extensions and null nodes escaped the
+closed geometry contract; and cache-owner removal errors escaped as raw filesystem failures.
+
+### Builder response
+
+Accepted all six. Canonical meshes now retain every primitive for one named node, preserving primitive
+ordinals without duplicate drawable names. Every host request carries the executable digest; the Rust
+host hashes an open image handle and retains it through process creation, denying Windows write/delete
+sharing until the suspended image is mapped and using a descriptor-backed launch path on Unix. Both
+preflight and conversion apply the same protocol-specific authority-store validator. The client admits
+only the host's closed stable error-code set and the provider boundary preserves those codes. Active
+glTF nodes must be closed objects with only supported transform/topology properties. Cache-owner release
+maps removal failure to a redacted stable cache error. Focused regressions cover each branch; full gates
+and a fresh clean independent review remain required before integration.
+
+## Final implementation review — seventh follow-up
+
+Codex found five remaining admission and lifecycle defects: nested reader nodes did not acquire the
+one-shot control fence; valid input could expand into canonical object graphs beyond the specified
+resident gate; canonical output could exceed the normalizer's own JSON/count profile; byte-backed JSON
+accepted malformed UTF-8 through replacement decoding; and pathless model-reader calls fell through to
+the legacy IFC route.
+
+### Builder response
+
+Accepted all five. Reader control now uses the same recursive live-node traversal as dispatchability.
+Canonicalization reserves a conservative worst-case working-set estimate against the committed 1 GiB
+gate before object expansion, then checks emitted JSON and structural counts before final allocation.
+The shared strict parser performs fatal UTF-8 validation for byte inputs, including GLB chunks. The
+private model-reader invocation marker selects RVT admission even for malformed calls, and source shape
+is validated before provider or host setup. Focused regressions cover each branch; complete release
+gates and a fresh clean independent review remain required before integration.
+
+## Final implementation review — eighth follow-up
+
+Codex found four remaining failure-boundary and lifecycle defects: unexpected RVT failures exposed raw
+private paths; stale reader pidfile cleanup released the kernel fence before removal; provider-tree
+termination was initiated but not awaited; and cache hits did not refresh deterministic LRU recency.
+
+### Builder response
+
+Accepted all four. Unexpected RVT failures are wrapped in a stable redacted internal-error envelope while
+legacy IFC behavior is retained. Stale pidfile reclamation now owns the reader kernel fence through
+removal. The managed host terminates and waits for the Windows Job or Unix process group to reach zero
+active processes before accepting output. Successful publications and reads append bounded, crash-tolerant
+access observations under the maintenance fence, and eviction uses their total order with a deterministic
+key tie-break. Focused regressions cover redaction, fenced reclamation, and read-refreshed LRU eviction;
+complete release gates and another clean independent review remain required before integration.
+
+## Final implementation review — ninth follow-up
+
+Codex found three remaining bounded-runtime defects: generated cache manifests could exceed the active
+component limit and become unreadable immediately after publication; the managed host's exit-124 timeout
+reason was flattened into a generic provider failure; and provider executable provenance hashing loaded
+the complete image into one JavaScript buffer.
+
+### Builder response
+
+Accepted all three. Cache publication now normalizes the active request limits and rejects an oversized
+manifest before exposing an entry. Managed-host timeout completion becomes retryable
+`reference-provider-timeout` and is preserved through the provider boundary. Provider executable
+provenance uses the same incremental bounded-memory hashing path as source files while retaining the
+existing absolute regular non-link admission. Focused regressions cover the publication fence, typed
+timeout, and streamed image digest; complete release gates and a fresh clean independent review remain
+required before integration.
+
+## Final implementation review — tenth follow-up
+
+Codex found three remaining supported-input defects: probe bounds omitted active unclaimed geometry;
+managed-cloud selection remained hardcoded to protocol v1 inside the signed canonical request; and
+null mesh objects escaped the typed geometry-validation boundary as raw JavaScript errors.
+
+### Builder response
+
+Accepted all three. Probe bounds now derive from every canonical active-scene POSITION accessor, including
+unclaimed nodes. The selected provider protocol is carried into both canonical-request builders, binding
+the provider request, cache identity, and signed provenance to the same v1 or v2 choice. Meshes and
+primitives must be objects before field access. Focused regressions cover offset unclaimed geometry, the
+managed-cloud request preimage, and null mesh/primitive entries; complete release gates and a fresh clean
+independent review remain required before integration.
+
+## Final implementation review — eleventh follow-up
+
+Codex found three remaining public-boundary and lifecycle defects: typed provider failures were reduced
+to a display string in app run traces; an unlocked reader control file could cause `app stop` to remove
+the pidfile of a later live non-reader run; and the new npm executable target had no Unix Node shebang.
+
+### Builder response
+
+Accepted all three. `node-error` records now retain the legacy display text and add the bridge's bounded
+machine-readable `{code, phase, retryable, message, diagnosticId}` object. Reader control persists its
+exact run identity under the kernel lock, so stale reclamation removes a pidfile only when it belongs to
+that crashed reader and otherwise lets normal stop handling signal the current process. The dispatcher
+starts with the portable Node shebang. Focused regressions cover structured trace serialization and
+stale-owner mismatch; complete release gates and another clean independent review remain required before
+integration.
+
+## Final implementation review — twelfth follow-up
+
+Codex found four remaining control and determinism defects: interruption released the reader fence
+before the provider tree had confirmed shutdown; a reader reached through the permitted app-backed hop
+bypassed the top-level fence; authenticated warm hits still invoked provider `describe`; and canonical
+vertices were sorted as JavaScript numbers rather than by their final little-endian float32 bytes.
+
+### Builder response
+
+Accepted all four. The interrupted one-shot future is retained and awaited so the bridge aborts its
+request, the managed host joins provider cleanup, and only then does the control guard drop. The
+top-level graph check resolves the one allowed app-backed hop and fences its full run when that backing
+graph reaches `model-reference-reader`. Warm lookup scans only closed cache-key directories under the
+maintenance fence, authenticates the signed receipt and every blob, and matches the pinned source,
+request, provider, and signer identities before deciding whether provider readiness is needed. Vertex
+deduplication and ordering use the exact concatenated float32 LE attribute bytes consumed by GLB
+publication. Focused regressions cover the nested reader graph, zero provider calls on a warm snapshot,
+and byte-order cases where numeric and encoded order differ; complete release gates and a fresh clean
+independent review remain required before integration.
+
+## Final implementation review — thirteenth follow-up
+
+The complete Rust gate found one simulation regression in the new nested reader-fence discovery: on
+Windows, loading an uninstalled agent surfaced `ERROR_PATH_NOT_FOUND` as a raw I/O failure before the
+existing `--simulate` escape hatch could synthesize the node output.
+
+### Builder response
+
+Accepted. Reader-fence discovery now performs the same fenced absent-versus-unreadable manifest check
+as the established nested-app scanner: a genuinely absent agent is skipped, while a present malformed
+or unreadable manifest still fails closed. A focused unit regression and the existing end-to-end
+`--simulate` missing-agent regression cover the boundary; complete release gates and a fresh clean
+independent review remain required before integration.
+
+## Final implementation review — fourteenth follow-up
+
+Codex found four remaining lifecycle and validation defects: Unix interruption waited for reader
+cleanup without explicitly signalling the child bridge; lifecycle-start graphs reached the commercial
+reader before acquiring its instance fence; simulation unnecessarily contended on that fence despite
+dispatching no agents; and null glTF buffer-view objects escaped as raw JavaScript errors.
+
+### Builder response
+
+Accepted all four. Every app run now owns a reader-cancellation registry shared through its nested
+dispatch invokers. Unix interruption forwards SIGTERM to each registered model-reader bridge before
+awaiting orchestration, while a cancellation bit closes the pre-spawn race. Reader control is acquired
+before the one-shot/long-running split, retained for the full run, and deliberately bypassed only by
+simulation. Active scenes and buffer views must be non-null objects before field access. Focused
+regressions cover cancellation registration, the simulation exemption, and typed malformed-GLB errors;
+complete release gates and a fresh clean independent review remain required before integration.
+
+## Final implementation review — fifteenth follow-up
+
+Codex found three remaining bounded-validation defects: pinned warm-cache discovery authenticated and
+loaded every component blob before filtering candidate identity; the strict JSON parser treated all
+JavaScript whitespace as JSON whitespace; and provider provenance string limits disagreed with the
+published schemas in both maximum length and byte-versus-character semantics.
+
+### Builder response
+
+Accepted all three. Cache discovery now authenticates each signed receipt and its bounded manifest,
+applies the source/request/provider/signer pins, and reads component blobs only for the matching entry;
+cache reads also preserve cancellation instead of reducing it to a miss. Strict parsing accepts only
+space, tab, carriage return, and line feed between tokens. Provider, engine, and engine-version fields
+use the schemas' 128-code-point ceiling while adapter build IDs retain their 256-code-point ceiling.
+Focused regressions cover a damaged large blob on an earlier nonmatching candidate, cancelled lookup,
+Unicode non-JSON whitespace, multibyte 128-character provenance, and 129-character refusal. The full
+276-test Node suite, packaged build, and Windows lifecycle harness pass; a fresh clean independent review
+remains required before integration.
+
+## Final implementation review — sixteenth follow-up
+
+Codex found five remaining lifecycle and bounded-validation defects: a simulated long-running reader
+graph could overwrite and then remove the live reader instance pidfile; closing a client after a
+terminal protocol error could leave the managed host child running; provider output-limit failures did
+not interrupt a provider that kept its pipe open; provider stdin delivery failures were ignored; and
+zero-length glTF accessors passed structural validation.
+
+### Builder response
+
+Accepted all five. Simulation still discovers reader graphs and therefore neither acquires their live
+control fence nor manages their ordinary pidfile. Client close now terminates and awaits a still-live
+host after terminal protocol failure. The managed host supervises stdin and bounded stdout/stderr tasks,
+kills the provider tree on the first I/O failure, and emits a typed host failure only after containment
+and task cleanup; missing stdin is also fail-closed. Accessors require a positive element count. Focused
+regressions preserve an existing reader pidfile byte-for-byte, await host termination, prove immediate
+output-limit supervision and failed stdin delivery, and reject zero-length accessors. Complete release
+gates and a fresh clean independent review remain required before integration.
+
+## Final implementation review — seventeenth follow-up
+
+Codex found four remaining admission, normalization, and lifecycle defects: triangle-strip/fan
+expansion could exceed the canonical index limit; an abnormal Node bridge exit could release the app
+fence before the orphan host finished provider-tree cleanup; request-only validation still followed
+provider configuration and managed-host startup; and duplicate semantic relationship edges were
+accepted when their provider relation IDs differed.
+
+### Builder response
+
+Accepted all four. Geometry admission now bounds and reserves the expanded topology before allocating
+triangle records, independently of the input accessor limit. The app and Rust host share a second
+per-instance kernel fence: the host owns it from startup through protocol shutdown and provider-task
+joining, while every replacement run must pass it before launching another host. This remains safe in
+the bridge-crash/startup race because competing old and new hosts serialize before either can accept a
+provider request. Limits, protocol, canonical request settings, source digest, and required/optional
+pins are validated before configuration or host work. Relationship normalization rejects duplicate
+`(kind, from, to, providerRelationKind)` tuples as well as duplicate IDs. Focused regressions cover the
+expanded-index ceiling, cross-process cleanup-fence blocking, environment-independent request errors,
+and duplicate edges. The 280-test Node suite, Rust lint/model-reader/app-run gates, packaged build, and
+Windows lifecycle harness pass; a fresh clean independent review remains required before integration.
+
+## Final implementation review — eighteenth follow-up
+
+The bounded fresh pass found that an input primitive containing only degenerate triangles produced a
+canonical GLB with a zero-count index accessor, so the output could not pass the same positive-accessor
+profile on a second normalization. Rechecking the relationship finding against D5 also showed that the
+seventeenth pass had incorrectly treated endpoint equality as duplication: `depends-on` and
+`provider-explicit` are explicitly directed multigraphs, and distinct relation IDs may therefore bind
+the same endpoints.
+
+### Builder response
+
+Accepted the geometry finding and corrected the relationship response. Degenerate-only parts remain in
+the immediate metadata join and coverage result, but are omitted from the drawable canonical GLB, which
+now contains no zero-count accessors and is byte-identical after a second normalization. Parallel edges
+for directed-multigraph kinds are preserved and deterministically ordered by their distinct relation
+IDs; duplicate IDs remain refused. Focused regressions cover both contracts before the final release
+gates.
+
+## Final implementation review — nineteenth follow-up
+
+The first pull-request CI run exposed three platform-specific gate failures hidden by the Windows
+workspace: Linux reported a symbolic link as merely non-regular before reaching the explicit link
+refusal, the Unix SIGTERM handler used `expect` in a non-test binary that denies panic helpers, and two
+small libc `kill` calls lacked the safety comments required by the repository-wide Clippy policy.
+
+### Builder response
+
+Accepted all three. Provider path validation now reports link/reparse refusal before the regular-file
+shape check. Unix signal installation falls back to the existing Ctrl+C future without panicking, and
+both PID-only libc calls document their range and memory-safety invariants immediately above the unsafe
+blocks. The focused provider suite and the exact local formatting/Clippy commands pass before the CI
+rerun.

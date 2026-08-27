@@ -5,6 +5,7 @@ import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
+import { createModelHostClient } from './model-host-client.mjs';
 
 if (process.platform !== 'win32') {
   process.stdout.write('model Windows harness: skipped (requires Windows process semantics)\n');
@@ -18,6 +19,7 @@ mkdirSync(temporaryParent, { recursive: true });
 const temporary = mkdtempSync(path.join(temporaryParent, 'aware-rvt-harness-'));
 const FUSE = 'NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2';
 const aware = process.env.AWARE_SOURCE_BUILT || path.join(root, 'cli', 'target', 'debug', 'aware.exe');
+const allowedWindowsEnvironment = ['SYSTEMROOT', 'WINDIR', 'COMSPEC', 'TEMP', 'TMP'];
 
 function sha256(bytes) { return createHash('sha256').update(bytes).digest('hex'); }
 
@@ -65,9 +67,10 @@ function findPackageArtifactSet(value) {
 
 try {
   assert.equal(path.isAbsolute(aware), true, 'AWARE_SOURCE_BUILT must be absolute');
+  assert.match(process.versions.node, /^24\.14\./, 'the Windows packaged harness must use the shipped Node 24.14 runtime');
   const providerDirectory = path.join(temporary, 'authorized-provider'); mkdirSync(providerDirectory);
   const provider = path.join(providerDirectory, 'fixture-model-provider.exe');
-  await buildSea(path.join(here, 'test-fixtures', 'model-provider-fixture.mjs'), provider);
+  await buildSea(path.join(here, 'test-fixtures', 'model-provider-environment-fixture.mjs'), provider);
   const descendantProvider = path.join(providerDirectory, 'descendant-model-provider.exe');
   await buildSea(path.join(here, 'test-fixtures', 'model-provider-descendant-fixture.mjs'), descendantProvider);
 
@@ -84,23 +87,40 @@ try {
   const source = path.join(inputDirectory, 'fixture.rvt'); writeFileSync(source, 'fixture-rvt');
   const artifacts = path.join(temporary, 'artifacts'); mkdirSync(artifacts);
   const unrelatedCwd = path.join(temporary, 'unrelated-cwd'); mkdirSync(unrelatedCwd);
-  const environment = {
-    ...process.env, AWARE_HOME: home, AWARE_MODEL_READER_HOST: aware,
+  const environment = Object.fromEntries(Object.entries(process.env).filter(([key]) => (
+    !allowedWindowsEnvironment.includes(key.replace(/[a-z]/g, (letter) => String.fromCharCode(letter.charCodeAt(0) - 32)))
+  )));
+  Object.assign(environment, {
+    SystemRoot: 'C:\\Windows', wInDiR: 'C:\\Windows', ComSpec: 'C:\\Windows\\System32\\cmd.exe',
+    Temp: 'C:\\Windows\\Temp', tMp: 'C:\\Windows\\Temp', Aware_Provider_Forbidden_Sentinel: 'must-not-cross',
+    AWARE_HOME: home, AWARE_MODEL_READER_HOST: aware,
     AWARE_MODEL_REFERENCE_PROVIDER: provider,
     AWARE_MODEL_REFERENCE_SIGNING_KEY: path.join(home, 'keys', 'model-reference-reader.sec'),
     AWARE_MODEL_REFERENCE_PUBLIC_KEY: path.join(home, 'keys', 'model-reference-reader.pub'),
     AWARE_ARTIFACT_DIR: artifacts,
-  };
+  });
   const bridges = path.join(home, 'bridges'); mkdirSync(bridges, { recursive: true });
   copyFileSync(packaged, path.join(bridges, 'aware-connection-reader.exe'));
   copyFileSync(path.join(stage, 'web-ifc-node.wasm'), path.join(bridges, 'web-ifc-node.wasm'));
   const awareVersion = execFileSync(aware, ['--version'], { encoding: 'utf8', windowsHide: true }).trim().split(/\s+/).at(-1);
   writeFileSync(path.join(bridges, 'aware-connection-reader.version'), awareVersion);
+  const legacyHost = await createModelHostClient(aware, { environment });
+  try {
+    const legacy = await legacyHost.run({
+      executable: provider, executableSha256: sha256(readFileSync(provider)),
+      operation: 'describe', cwd: unrelatedCwd,
+      environment: { LANG: 'C', LC_ALL: 'C', TZ: 'UTC' }, stdin: Buffer.from('{}'),
+      timeoutMs: 10_000, stdoutLimit: 1024 * 1024, stderrLimit: 1024 * 1024,
+    });
+    assert.equal(legacy.exitCode, 134, 'the legacy case-sensitive provider environment must reproduce the Node SEA CSPRNG abort');
+  } finally {
+    await legacyHost.close();
+  }
   const preflight = run(packaged, 'preflight', {}, environment, unrelatedCwd);
   assert.equal(preflight.ready, true); assert.equal(preflight.execution, 'local');
   const descendantPreflight = run(packaged, 'preflight', {}, {
     ...environment, AWARE_MODEL_REFERENCE_PROVIDER: descendantProvider,
-  }, unrelatedCwd, 15_000);
+  }, unrelatedCwd);
   assert.equal(descendantPreflight.ready, true, 'successful provider descendants must be killed before inherited pipes can hang');
   const request = {
     'rvt-path': source, 'source-sha256': sha256(readFileSync(source)),
@@ -130,7 +150,7 @@ try {
   const appDirectory = path.join(temporary, 'rvt-reader-e2e'); mkdirSync(appDirectory);
   const appSource = path.join(appDirectory, 'rvt-reader-e2e.flo');
   writeFileSync(appSource, `app: rvt-reader-e2e
-version: 0.3.0
+version: 0.5.0
 display-name: RVT Reader E2E
 description: Exercise the authenticated local RVT reader through a real one-shot AWARE app.
 exposes-as-agent: false
@@ -182,7 +202,7 @@ nodes:
     assert.equal(sha256(readFileSync(retrieved)), descriptor.sha256);
   }
   assert.equal(readdirSync(stage).some((name) => /\.(?:mjs|json)$/i.test(name)), false);
-  process.stdout.write(`model Windows harness: PASS (${model.sourceSha256}, ${model.providerFingerprintSha256})\n`);
+  process.stdout.write(`model Windows harness: PASS (aware ${awareVersion}, node ${process.versions.node}, ${model.sourceSha256}, ${model.providerFingerprintSha256})\n`);
 } finally {
   rmSync(temporary, { recursive: true, force: true });
 }

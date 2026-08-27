@@ -5,15 +5,21 @@ import {
   assertSha256, buildCanonicalRequest, ModelReaderError, providerFingerprintSha256,
   lowerableLimits, READER_SCHEMA_VERSION_V1, READER_SCHEMA_VERSION_V2, requestSha256, sha256,
 } from './model-contract.mjs';
-import { normalizeRevitGlb } from './revit-glb.mjs';
+import { normalizeRevitGlb, parseGlb } from './revit-glb.mjs';
 import { normalizeRevitMetadata } from './revit-metadata.mjs';
 import { describeAndConvert, describeProvider, hashRegularFile } from './model-provider.mjs';
 import {
-  acquireCacheOwner, cacheFencePath, cacheKeySha256, cacheMaintenanceFencePath, loadAwareSigningKey, publishCacheEntry, readCacheEntry,
+  acquireCacheOwner, cacheFencePath, cacheKeySha256, cacheMaintenanceFencePath, findCacheEntry,
+  loadAwareSigningKey, publishCacheEntry, readCacheEntry,
   releaseCacheOwner, signerFingerprintSha256,
 } from './model-cache.mjs';
 import { createModelHostClient } from './model-host-client.mjs';
 import { buildAndPublishSnapshot } from './model-snapshot.mjs';
+
+const STALE_PROVIDER_RUN_MS = 60 * 60_000;
+const ACTIVE_RUN_MARKER = '.active';
+const PROVIDER_RUN_HEARTBEAT_MS = 60_000;
+const providerRunHeartbeats = new Map();
 
 function readerError(code, phase, message, retryable = false, details = undefined) {
   throw new ModelReaderError(code, phase, retryable, message, details);
@@ -38,13 +44,76 @@ function configuration(args, deps) {
   };
 }
 
-async function newRunRoot(parent) {
-  await fs.mkdir(parent, { recursive: true, mode: 0o700 });
-  return await fs.mkdtemp(path.join(parent, 'run-'));
+async function hasFreshHeartbeat(candidate, now) {
+  const marker = path.join(candidate, ACTIVE_RUN_MARKER);
+  try {
+    const stat = await fs.lstat(marker);
+    if (!stat.isFile() || stat.isSymbolicLink()) return false;
+    const age = now - stat.mtimeMs;
+    return Number.isFinite(age) && age >= -PROVIDER_RUN_HEARTBEAT_MS && age <= STALE_PROVIDER_RUN_MS;
+  } catch (error) {
+    if (error?.code === 'ENOENT') return false;
+    throw error;
+  }
 }
 
-function emit(deps, phase, extra = {}) {
-  if (typeof deps.progress === 'function') deps.progress({ phase, ...extra });
+async function sweepAbandonedRunRoots(parent, now = Date.now()) {
+  let names;
+  try {
+    await fs.mkdir(parent, { recursive: true, mode: 0o700 });
+    names = await fs.readdir(parent);
+  } catch (error) {
+    readerError('reference-provider-run-cleanup-failed', 'cleanup', 'Provider staging could not be inspected.', false, error);
+  }
+  for (const name of names) {
+    if (!name.startsWith('run-')) continue;
+    const candidate = path.join(parent, name);
+    try {
+      const stat = await fs.lstat(candidate);
+      if (stat.isDirectory() && !stat.isSymbolicLink() && now - stat.mtimeMs > STALE_PROVIDER_RUN_MS && !await hasFreshHeartbeat(candidate, now)) {
+        await fs.rm(candidate, { recursive: true, force: true });
+      }
+    } catch (error) {
+      if (error?.code !== 'ENOENT') {
+        readerError('reference-provider-run-cleanup-failed', 'cleanup', 'Abandoned provider staging could not be reclaimed.', false, error);
+      }
+    }
+  }
+}
+
+async function newRunRoot(parent) {
+  await sweepAbandonedRunRoots(parent);
+  let runRoot;
+  try { runRoot = await fs.mkdtemp(path.join(parent, 'run-')); }
+  catch (error) { readerError('reference-provider-run-cleanup-failed', 'cleanup', 'Provider staging could not be allocated.', false, error); }
+  try {
+    const marker = path.join(runRoot, ACTIVE_RUN_MARKER);
+    await fs.writeFile(marker, '', { flag: 'wx', mode: 0o600 });
+    const heartbeat = setInterval(() => {
+      const current = new Date();
+      void fs.utimes(marker, current, current).catch(() => {});
+    }, PROVIDER_RUN_HEARTBEAT_MS);
+    heartbeat.unref();
+    providerRunHeartbeats.set(runRoot, heartbeat);
+    return runRoot;
+  } catch (error) {
+    try { await fs.rm(runRoot, { recursive: true, force: true }); }
+    catch (removeError) { readerError('reference-provider-run-cleanup-failed', 'cleanup', 'Unowned provider staging could not be removed.', false, removeError); }
+    readerError('reference-provider-run-cleanup-failed', 'cleanup', 'Provider staging ownership could not be recorded.', false, error);
+  }
+}
+
+async function removeRunRoot(runRoot) {
+  clearInterval(providerRunHeartbeats.get(runRoot));
+  providerRunHeartbeats.delete(runRoot);
+  try { await fs.rm(runRoot, { recursive: true, force: true }); }
+  catch (error) { readerError('reference-provider-run-cleanup-failed', 'cleanup', 'Provider staging could not be removed.', false, error); }
+}
+
+function requestLimits(args, deps) {
+  const configured = Object.hasOwn(args, 'limits') ? args.limits : deps.limits;
+  try { return lowerableLimits(configured); }
+  catch (error) { readerError('reference-limits-invalid', 'request', 'Model reader limits are invalid.', false, error); }
 }
 
 function requestedReaderSchemaVersion(args) {
@@ -55,7 +124,43 @@ function requestedReaderSchemaVersion(args) {
   return version;
 }
 
-async function providerReadiness(args, deps, config, expectedProviderSha256) {
+function validateRequest(command, args, deps) {
+  const limits = requestLimits(args, deps);
+  // This constructs and canonicalizes the complete request-only contract without touching the
+  // provider, signing key, cache, or source filesystem. It validates protocol, conversion
+  // settings, and all lowerable limits before an environment-dependent error can mask them.
+  try {
+    requestSha256(buildCanonicalRequest({
+      limits,
+      protocolVersion: args['expected-provider-protocol'] ?? '1',
+      conversionSettings: args['conversion-settings'] ?? {},
+      readerSchemaVersion: requestedReaderSchemaVersion(args),
+      propertyExpansionLimits: args['property-expansion-limits'] ?? {},
+    }));
+  } catch (error) {
+    if (error instanceof ModelReaderError) throw error;
+    readerError('reference-request-invalid', 'request', 'The model reader request is invalid.', false, error);
+  }
+  if (command !== 'preflight') {
+    sourcePathFrom(args);
+    assertSha256(args['source-sha256'], 'source-sha256');
+    if (typeof args['expected-provider-sha256'] !== 'string') readerError('reference-provider-pin-required', 'preflight', 'The expected provider fingerprint is required.');
+    if (typeof args['expected-signer-sha256'] !== 'string') readerError('reference-signer-pin-required', 'preflight', 'The expected signer fingerprint is required.');
+  }
+  for (const [field, label] of [
+    ['expected-provider-sha256', 'expected-provider-sha256'],
+    ['expected-signer-sha256', 'expected-signer-sha256'],
+  ]) {
+    if (args[field] !== undefined) assertSha256(args[field], label);
+  }
+  return { limits, pin: args['expected-provider-sha256'] };
+}
+
+function emit(deps, phase, extra = {}) {
+  if (typeof deps.progress === 'function') deps.progress({ phase, ...extra });
+}
+
+async function signingReadiness(args, config) {
   const signingKey = await loadAwareSigningKey(config.secretPath, config.publicPath);
   const signerSha256 = signerFingerprintSha256(signingKey.publicKeyBytes);
   const expectedSignerSha256 = args['expected-signer-sha256'];
@@ -63,6 +168,10 @@ async function providerReadiness(args, deps, config, expectedProviderSha256) {
     assertSha256(expectedSignerSha256, 'expected-signer-sha256');
     if (expectedSignerSha256 !== signerSha256) readerError('reference-signer-pin-mismatch', 'preflight', 'The model-reader signing key does not match the expected fingerprint.');
   }
+  return { signingKey, signerFingerprintSha256: signerSha256 };
+}
+
+async function providerReadiness(args, deps, config, expectedProviderSha256, signing) {
   const runRoot = await newRunRoot(config.privateRoot);
   try {
     const provider = await describeProvider({
@@ -72,15 +181,15 @@ async function providerReadiness(args, deps, config, expectedProviderSha256) {
       expectedProviderSha256,
       expectedProtocolVersion: args['expected-provider-protocol'] ?? '1',
       expectedDestination: args['expected-provider-destination'],
+      authorityStorePath: args['authority-store-path'],
       readerSchemaVersion: requestedReaderSchemaVersion(args),
     });
     return {
-      signingKey, provider,
-      signerFingerprintSha256: signerSha256,
+      ...signing, provider,
       providerFingerprintSha256: providerFingerprintSha256(provider.fingerprint),
     };
   } finally {
-    await fs.rm(runRoot, { recursive: true, force: true });
+    await removeRunRoot(runRoot);
   }
 }
 
@@ -119,10 +228,12 @@ async function convertAndCache(args, deps, config, readiness) {
   const sourcePath = sourcePathFrom(args);
   const initial = await hashSource(sourcePath, deps.limits);
   const sourceSha256 = exactExpectedSource(args, initial.sha256);
+  const expectedProtocolVersion = args['expected-provider-protocol'] ?? '1';
   const readerSchemaVersion = requestedReaderSchemaVersion(args);
   const propertyExpansionLimits = args['property-expansion-limits'] ?? {};
   const canonicalRequest = buildCanonicalRequest({
     limits: deps.limits,
+    protocolVersion: expectedProtocolVersion,
     conversionSettings: args['conversion-settings'] ?? {},
     readerSchemaVersion,
     propertyExpansionLimits,
@@ -143,7 +254,7 @@ async function convertAndCache(args, deps, config, readiness) {
   };
   const read = async () => await readCacheEntry({
     root: config.cacheRoot, key, expectedIdentity: identity,
-    expectedPublicKey: readiness.signingKey.publicKeyBytes, withMaintenanceFence,
+    expectedPublicKey: readiness.signingKey.publicKeyBytes, withMaintenanceFence, limits: deps.limits,
   });
   try { return { hit: true, key, cache: await read() }; }
   catch (error) { if (error?.code !== 'reference-cache-miss') throw error; }
@@ -166,7 +277,7 @@ async function convertAndCache(args, deps, config, readiness) {
         environment: config.environment, limits: deps.limits,
         signal: deps.signal,
         conversionSettings: args['conversion-settings'] ?? {},
-        expectedProtocolVersion: args['expected-provider-protocol'] ?? '1',
+        expectedProtocolVersion,
         expectedDestination: args['expected-provider-destination'],
         authorityStorePath: args['authority-store-path'],
         readerSchemaVersion,
@@ -194,11 +305,12 @@ async function convertAndCache(args, deps, config, readiness) {
       emit(deps, 'publish');
       await publishCacheEntry({
         root: config.cacheRoot, identity, artifacts, signingKey: readiness.signingKey, details,
+        limits: deps.limits,
         cacheLimits: deps.cacheLimits,
         withMaintenanceFence,
       });
     } finally {
-      await fs.rm(runRoot, { recursive: true, force: true });
+      await removeRunRoot(runRoot);
     }
     return { hit: false, key, cache: await read() };
   } finally {
@@ -207,18 +319,74 @@ async function convertAndCache(args, deps, config, readiness) {
   }
 }
 
-function summary(result) {
-  const coverage = result.cache.manifest.coverage;
-  const entityDocument = JSON.parse(result.cache.artifacts['entities.json'].toString('utf8'));
-  const bounds = entityDocument.entities.reduce((box, entity) => {
-    if (!entity.bounds) return box;
-    if (!box) return structuredClone(entity.bounds);
-    for (let axis = 0; axis < 3; axis += 1) {
-      box.min[axis] = Math.min(box.min[axis], entity.bounds.min[axis]);
-      box.max[axis] = Math.max(box.max[axis], entity.bounds.max[axis]);
+function canonicalGeometryBounds(bytes, limits) {
+  const document = parseGlb(bytes, { limits }).json;
+  const positionAccessors = new Set();
+  for (const mesh of document.meshes ?? []) {
+    for (const primitive of mesh?.primitives ?? []) {
+      const index = primitive?.attributes?.POSITION;
+      if (Number.isSafeInteger(index)) positionAccessors.add(index);
     }
-    return box;
-  }, null);
+  }
+  let bounds = null;
+  for (const index of positionAccessors) {
+    const accessor = document.accessors?.[index];
+    if (!accessor || !Array.isArray(accessor.min) || !Array.isArray(accessor.max)
+        || accessor.min.length !== 3 || accessor.max.length !== 3
+        || [...accessor.min, ...accessor.max].some((value) => typeof value !== 'number' || !Number.isFinite(value))) {
+      readerError('reference-cache-entry-invalid', 'cache', 'Cached canonical geometry bounds are invalid.');
+    }
+    if (!bounds) bounds = { min: [...accessor.min], max: [...accessor.max] };
+    else for (let axis = 0; axis < 3; axis += 1) {
+      bounds.min[axis] = Math.min(bounds.min[axis], accessor.min[axis]);
+      bounds.max[axis] = Math.max(bounds.max[axis], accessor.max[axis]);
+    }
+  }
+  return bounds;
+}
+
+async function findCachedConversion(args, deps, config, signing, expectedProviderSha256) {
+  const sourcePath = sourcePathFrom(args);
+  const initial = await hashSource(sourcePath, deps.limits);
+  const sourceSha256 = exactExpectedSource(args, initial.sha256);
+  const canonicalRequest = buildCanonicalRequest({
+    limits: deps.limits,
+    protocolVersion: args['expected-provider-protocol'] ?? '1',
+    conversionSettings: args['conversion-settings'] ?? {},
+    readerSchemaVersion: requestedReaderSchemaVersion(args),
+    propertyExpansionLimits: args['property-expansion-limits'] ?? {},
+  });
+  if (!deps.hostAcquireLock || !deps.hostReleaseLock) readerError('reference-provider-host-unavailable', 'cache', 'The managed cache fence is unavailable.');
+  const withMaintenanceFence = async (work) => {
+    const maintenanceFence = await deps.hostAcquireLock(
+      await cacheMaintenanceFencePath(config.cacheRoot),
+      { signal: deps.signal },
+    );
+    try { return await work(); }
+    finally { await deps.hostReleaseLock(maintenanceFence); }
+  };
+  try {
+    const cache = await findCacheEntry({
+      root: config.cacheRoot,
+      expectedSourceSha256: sourceSha256,
+      expectedCanonicalRequest: canonicalRequest,
+      expectedProviderFingerprintSha256: expectedProviderSha256,
+      expectedSignerFingerprintSha256: signing.signerFingerprintSha256,
+      expectedPublicKey: signing.signingKey.publicKeyBytes,
+      withMaintenanceFence,
+      limits: deps.limits,
+      signal: deps.signal,
+    });
+    return { hit: true, key: cache.key, cache };
+  } catch (error) {
+    if (error?.code === 'reference-cache-miss') return null;
+    throw error;
+  }
+}
+
+function summary(result, limits) {
+  const coverage = result.cache.manifest.coverage;
+  const bounds = canonicalGeometryBounds(result.cache.artifacts['geometry.glb'], limits);
   return {
     schemaVersion: result.cache.manifest.identity.canonicalRequest.readerSchemaVersion, cache: result.hit ? 'hit' : 'miss',
     sourceSha256: result.cache.manifest.identity.sourceSha256,
@@ -253,21 +421,23 @@ async function publishRunArtifacts(result, directory) {
 
 export async function runModelCommand(command, args = {}, deps = {}) {
   if (!args || typeof args !== 'object' || Array.isArray(args)) readerError('reference-request-invalid', 'request', 'Command input must be a JSON object.');
+  if (!['preflight', 'probe', 'read-model', 'read-snapshot'].includes(command)) {
+    readerError('reference-command-invalid', 'request', 'Unknown model-reader command.');
+  }
+  // Validate the complete request-only contract before resolving credentials, starting a host,
+  // or probing a provider. Malformed calls retain stable errors on an unconfigured machine.
+  const { limits, pin } = validateRequest(command, args, deps);
   const config = configuration(args, deps);
   const ownedHost = deps.hostRun ? null : await createModelHostClient(config.environment.AWARE_MODEL_READER_HOST, { environment: config.environment });
-  const executionDeps = ownedHost ? {
-    ...deps, hostRun: ownedHost.run, hostAcquireLock: ownedHost.acquireLock, hostReleaseLock: ownedHost.releaseLock,
-  } : deps;
+  const executionDeps = {
+    ...deps, limits,
+    ...(ownedHost ? { hostRun: ownedHost.run, hostAcquireLock: ownedHost.acquireLock, hostReleaseLock: ownedHost.releaseLock } : {}),
+  };
   try {
-    const pin = args['expected-provider-sha256'];
-    if (command !== 'preflight') {
-      if (!['probe', 'read-model', 'read-snapshot'].includes(command)) readerError('reference-command-invalid', 'request', 'Unknown model-reader command.');
-      if (typeof pin !== 'string') readerError('reference-provider-pin-required', 'preflight', 'The expected provider fingerprint is required.');
-      if (typeof args['expected-signer-sha256'] !== 'string') readerError('reference-signer-pin-required', 'preflight', 'The expected signer fingerprint is required.');
-    }
     emit(executionDeps, 'preflight');
-    const readiness = await providerReadiness(args, executionDeps, config, pin);
+    const signing = await signingReadiness(args, config);
     if (command === 'preflight') {
+      const readiness = await providerReadiness(args, executionDeps, config, pin, signing);
       return {
         schemaVersion: requestedReaderSchemaVersion(args), ready: true, execution: readiness.provider.describe.execution,
         provider: readiness.provider.describe, providerFingerprint: readiness.provider.fingerprint,
@@ -277,14 +447,19 @@ export async function runModelCommand(command, args = {}, deps = {}) {
         secretProvisioning: 'provider-local; AWARE generic secrets unavailable (#448)',
       };
     }
-    const result = await convertAndCache(args, executionDeps, config, readiness);
-    const out = summary(result);
+    let result = await findCachedConversion(args, executionDeps, config, signing, pin);
+    let readiness = signing;
+    if (!result) {
+      readiness = await providerReadiness(args, executionDeps, config, pin, signing);
+      result = await convertAndCache(args, executionDeps, config, readiness);
+    }
+    const out = summary(result, limits);
     if (command === 'probe') return out;
     emit(executionDeps, 'artifacts');
     if (command === 'read-snapshot') {
       return {
         ...out,
-        ...await buildAndPublishSnapshot(result, readiness.signingKey, config.artifactDirectory, { limits: deps.limits }),
+        ...await buildAndPublishSnapshot(result, readiness.signingKey, config.artifactDirectory, { limits }),
       };
     }
     return { ...out, artifacts: await publishRunArtifacts(result, config.artifactDirectory) };

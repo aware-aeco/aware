@@ -781,3 +781,118 @@ its full post-merge acceptance gate on the exact final Xeorvt HEAD. It may creat
 merge commits only. It does not authorize a push, PR, release, worktree deletion, force operation, or
 merge of Xeorvt into product `master`. If current FloLess master or the integration worktree is dirty,
 divergent, or otherwise unsafe, stop and report the precise blocker rather than widening scope.
+
+## 8. Issue #464 Windows Node SEA host regression addendum
+
+The original installed-app run ended as `reference-provider-failed`; a later direct
+`runModelCommand(..., { environment: { ...process.env } })` diagnostic produced the captured
+`ncrypto::CSPRNG(nullptr, 0)` exit 134. Those observations are related evidence, not proof of one root
+cause. On the current Node 24.14 provider, the source-built host completed 20 live-environment
+`describe` launches and 20 live-environment `describe`/invalid-`convert` sequences without an abort.
+Neither disabling `CREATE_SUSPENDED` nor removing Job Object assignment repaired the deterministic
+diagnostic. This change therefore makes no process-lifecycle claim.
+
+The deterministic defect is the environment normalization seam. The Rust host intentionally calls
+`env_clear()`, and a Node SEA aborts before JavaScript when `SystemRoot` is absent. The bridge's Windows
+allowlist currently performs uppercase property lookup. A plain copy of `process.env` preserves this
+machine's `SystemRoot`, `windir`, and `ComSpec` spellings, so those values are silently dropped. The
+fix remains at the JavaScript trust boundary and does not broaden the allowlist or inject ambient Rust
+state:
+
+1. Snapshot the environment only inside `minimalProviderEnvironment()`, at the provider-bound trust
+   boundary. Do not replace the live environment used to resolve or launch the AWARE host: Windows'
+   case-insensitive `process.env` semantics for `AWARE_HOME`, provider/key/artifact paths, and
+   `AWARE_MODEL_READER_HOST` remain unchanged. The provider view is always an ordinary immutable input,
+   so source and packaged commands exercise the same casing seam.
+2. On Windows only, build an ASCII-case-insensitive index, then emit the existing canonical keys
+   `SYSTEMROOT`, `WINDIR`, `COMSPEC`, `TEMP`, and `TMP`. If differently cased aliases for one canonical
+   key contain different non-empty values, fail closed with
+   `reference-provider-environment-ambiguous`; identical aliases collapse. Empty/non-string values are
+   ignored. Folding accepts only ASCII letters; non-ASCII near-aliases remain forbidden. Non-Windows
+   lookup stays case-sensitive and unchanged. `LANG=C`, `LC_ALL=C`, and `TZ=UTC` remain deterministic
+   additions.
+3. Add unit cases covering mixed-case forms of all five Windows keys, identical and conflicting aliases,
+   mixed-case forbidden path/proxy/token/AWARE keys, non-ASCII near-aliases, and unchanged POSIX case
+   sensitivity. Mutation back to case-sensitive lookup must fail the mixed-case regression.
+4. Give the Windows packaged process a controlled environment that first removes every case-insensitive
+   alias of the five allowed names, then inserts all five under deliberately mixed-case spellings with
+   fixed values (`C:\\Windows`, `C:\\Windows\\System32\\cmd.exe`, and `C:\\Windows\\Temp`) plus a
+   mixed-case forbidden sentinel. Make the fixture provider fail before `describe` unless its environment
+   equals the fixed eight-entry canonical map exactly: the five known allowed values plus `LANG=C`,
+   `LC_ALL=C`, and `TZ=UTC`. This is a behavioral assertion on the child after Rust `env_clear()`, not a
+   circular check derived from received variables.
+5. Run the existing packaged Windows harness on locally asserted Node 24.14.x and pin both its Windows
+   CI job and the release workflow's connection-reader SEA build to Node 24.14.0, so the tested bridge
+   runtime is the shipped bridge runtime and matches the diagnosed provider runtime. It must use
+   the source-built `aware` host and newly built fixture SEA, complete `preflight` (`describe`), `probe`
+   (`describe` then `convert` through one owned host), `read-model`, and `read-snapshot` with exit 0 and
+   valid JSON/artifact hashes, and print the AWARE and Node versions in its non-skipped Windows PASS line.
+   Add an automated legacy-lookup child control using the same controlled input; it must exit 134 while
+   the fixed packaged path exits 0. The gate fails if the red control unexpectedly starts.
+6. Run focused provider/reader tests, the complete connection-reader suite and build, the non-skipped
+   Windows packaged harness, then `cargo fmt`, all-target clippy with warnings denied, and the full CLI
+   test suite. Do not label #464 QA-ready unless those exact gates pass.
+
+Acceptance is deliberately narrower than the issue's initial lifecycle hypothesis: the reproducible
+missing-`SystemRoot` crash is eliminated in source and packaged paths; conflicting aliases fail closed;
+the child receives only the canonical closed environment; all four packaged model commands return valid
+outputs; and no Job Object, suspended-start, provider retry, or ambient Rust-environment behavior changes.
+
+## 9. Pre-integration lifecycle and contract hardening
+
+The final implementation review identified five gaps in the preserved reader stack. They are release
+gates for #453 even though they are independent of the #464 environment-casing defect:
+
+1. Once the authoritative host kernel fence is held, a missing or malformed cache-owner diagnostic is
+   crash debris, not an ownership authority. Replace it under that fence; without the fence, continue to
+   fail closed.
+2. A one-shot app graph containing `model-reference-reader` writes the normal app pidfile while holding
+   its exclusive control lock. The guard removes that pidfile on every return so `aware app stop` can
+   target the active AWARE/provider process tree without changing unrelated one-shot concurrency.
+3. Before allocating a provider run directory, reclaim only real, non-link `run-*` directories older
+   than one hour whose private heartbeat lease is also stale. Live conversions renew that filesystem
+   lease, while crash-left staged RVT and output bytes are eventually removed without PID-reuse ambiguity.
+4. Normalize `args.limits` once at command admission (falling back to injected test limits), attach the
+   resulting complete closed limit set to every provider, hashing, normalization, cache identity and
+   package boundary, and return `reference-limits-invalid` for malformed requests.
+5. If the command signal is aborted while the host rejects or returns, preserve a non-retryable
+   `reference-cancelled` error instead of relabeling the outcome as a retryable provider failure.
+6. Validate cache-owner diagnostics as a closed, typed lease before field access. Even syntactically
+   valid non-owner JSON is unverifiable debris and follows the same fenced/unfenced recovery policy.
+7. Reader one-shots race Ctrl+C and SIGTERM against orchestration. Cancellation drops the reader bridge,
+   whose host-pipe closure drops the provider child, while unrelated invoker processes keep their
+   historical lifecycle.
+8. Before `app stop` trusts a reader pidfile, verify that the model-reader kernel fence is still held.
+   Reclaim an unheld stale pidfile without signalling its possibly recycled PID.
+9. Persist managed-host failure as terminal client state. Reject requests registered after host exit
+   immediately and make close a no-op once that terminal state is observed.
+10. Bound cache receipt and signature control files before parsing, validate declared artifact sizes
+    against the canonical request limits, and read blobs through fixed-size handles that detect mutation.
+11. Check an unheld model-reader control fence before parsing pidfile diagnostics so missing or malformed
+    crash debris is reclaimable without weakening active-run ownership.
+12. Stamp the signed package preimage with model-reference-reader `0.4.0`; keep the bridge build ID at its
+    separately versioned `aware-connection-reader@0.2.0` value.
+13. Group canonical primitives by drawable node so emitted GLB node names remain unique and the output
+    is accepted by the same closed normalizer.
+14. Carry the prevalidated provider executable digest into the Rust host, hash an open image handle,
+    and retain that handle through process creation so pathname replacement cannot select other bytes.
+15. Apply protocol-specific managed authority-store validation during preflight as well as conversion,
+    before any provider process launches.
+16. Preserve the closed set of managed-host error codes across the provider boundary, including bounded
+    output and executable-image mismatch failures.
+17. Validate active glTF nodes as closed non-null objects and reject extensions or other unsupported
+    node properties with stable geometry errors.
+18. Convert cache-owner release removal failures to a stable redacted cache error.
+19. Detect `model-reference-reader` recursively in every live `do:` subtree before acquiring one-shot
+    control; frozen subtrees remain non-dispatchable.
+20. Apply the committed 1 GiB resident hard gate as a checked worst-case canonical working-set
+    estimate before allocating vertex, index, tuple, and sorting object graphs.
+21. Validate emitted canonical GLB structural counts and JSON bytes against the same profile that
+    admits provider GLB, before allocating the final output buffer.
+22. Decode every byte-backed JSON boundary as fatal UTF-8 so malformed provider, metadata, and GLB
+    strings cannot collapse through replacement characters.
+23. Use the private model-reader invocation marker to route malformed pathless shared-bridge calls to
+    RVT admission, and validate source shape before provider or host startup.
+
+Each branch requires a focused regression test, followed by the complete Node/Rust/packaged Windows
+gate and a fresh independent Codex review before the integration PR may open.

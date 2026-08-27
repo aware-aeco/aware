@@ -21,8 +21,8 @@ async function regularNonLink(filePath, label) {
   let stat; let real;
   try { stat = await fs.lstat(filePath); real = await fs.realpath(filePath); }
   catch (error) { providerError(`reference-${label}-unavailable`, `${label} is unavailable.`, false, error); }
-  if (!stat.isFile()) providerError(`reference-${label}-unsafe`, `${label} must be a regular file.`);
   if (stat.isSymbolicLink() || !samePath(real, filePath)) providerError(`reference-${label}-unsafe`, `${label} cannot be a link or reparse point.`);
+  if (!stat.isFile()) providerError(`reference-${label}-unsafe`, `${label} must be a regular file.`);
   return stat;
 }
 
@@ -52,15 +52,31 @@ export async function hashRegularFile(filePath, limit, label = 'source', options
   return { stat, sha256: hash.digest('hex') };
 }
 
-export async function validateProviderExecutable(executable) {
-  const stat = await regularNonLink(executable, 'provider');
-  return { path: executable, size: stat.size, sha256: sha256(await fs.readFile(executable)) };
+export async function validateProviderExecutable(executable, options = {}) {
+  const image = await hashRegularFile(executable, Number.MAX_SAFE_INTEGER, 'provider', options);
+  return { path: executable, size: image.stat.size, sha256: image.sha256 };
 }
 
 export function minimalProviderEnvironment(source = process.env, platform = process.platform) {
   const allowed = platform === 'win32' ? ['SYSTEMROOT', 'WINDIR', 'COMSPEC', 'TEMP', 'TMP'] : ['HOME', 'TMPDIR'];
   const result = {};
-  for (const key of allowed) if (typeof source[key] === 'string' && source[key]) result[key] = source[key];
+  if (platform === 'win32') {
+    const allowedSet = new Set(allowed);
+    const indexed = new Map();
+    for (const [sourceKey, value] of Object.entries({ ...source })) {
+      if (!/^[\x00-\x7f]+$/.test(sourceKey)) continue;
+      const canonicalKey = sourceKey.replace(/[a-z]/g, (letter) => String.fromCharCode(letter.charCodeAt(0) - 32));
+      if (!allowedSet.has(canonicalKey) || typeof value !== 'string' || !value) continue;
+      const existing = indexed.get(canonicalKey);
+      if (existing !== undefined && existing !== value) {
+        providerError('reference-provider-environment-ambiguous', 'The provider environment contains conflicting Windows aliases.');
+      }
+      indexed.set(canonicalKey, value);
+    }
+    for (const key of allowed) if (indexed.has(key)) result[key] = indexed.get(key);
+  } else {
+    for (const key of allowed) if (typeof source[key] === 'string' && source[key]) result[key] = source[key];
+  }
   result.LANG = 'C'; result.LC_ALL = 'C'; result.TZ = 'UTC';
   return result;
 }
@@ -103,7 +119,7 @@ export async function stageImmutableSource(sourcePath, stagingRoot, expectedSour
 }
 
 function boundedString(value, label, maximum = 256) {
-  if (typeof value !== 'string' || !value || Buffer.byteLength(value) > maximum) providerError('reference-provider-protocol', `Provider returned an invalid ${label}.`);
+  if (typeof value !== 'string' || !value || Array.from(value).length > maximum) providerError('reference-provider-protocol', `Provider returned an invalid ${label}.`);
   return value;
 }
 
@@ -147,7 +163,8 @@ function validateDescribe(value, expectedProtocolVersion = '1', expectedDestinat
   } else {
     providerError('reference-provider-protocol', 'The requested provider protocol is unsupported.');
   }
-  for (const key of ['provider', 'engine', 'engineVersion', 'adapterBuildId']) boundedString(value[key], key);
+  for (const key of ['provider', 'engine', 'engineVersion']) boundedString(value[key], key, 128);
+  boundedString(value.adapterBuildId, 'adapterBuildId', 256);
   return value;
 }
 
@@ -176,7 +193,19 @@ async function callProvider(hostRun, request, limits) {
   if (request.stdin.length > limits.providerRequestBytes) providerError('reference-provider-request-too-large', 'Provider request exceeds its byte limit.');
   let result;
   try { result = await hostRun(request); }
-  catch (error) { providerError('reference-provider-failed', 'The local model provider failed.', true, error); }
+  catch (error) {
+    if (request.signal?.aborted || (error instanceof ModelReaderError && error.code === 'reference-cancelled')) {
+      providerError('reference-cancelled', 'The model provider run was cancelled.', false, error);
+    }
+    if (error instanceof ModelReaderError && [
+      'reference-provider-executable-mismatch',
+      'reference-provider-host-failed',
+      'reference-provider-output-limit',
+      'reference-provider-timeout',
+    ].includes(error.code)) throw error;
+    providerError('reference-provider-failed', 'The local model provider failed.', true, error);
+  }
+  if (request.signal?.aborted) providerError('reference-cancelled', 'The model provider run was cancelled.');
   if (!result || !Number.isSafeInteger(result.exitCode) || !Buffer.isBuffer(result.stdout) || !Buffer.isBuffer(result.stderr)) providerError('reference-provider-host-protocol', 'The managed provider host returned an invalid result.');
   if (result.stdout.length > limits.providerStdoutBytes || result.stderr.length > limits.providerStderrBytes) providerError('reference-provider-output-too-large', 'Provider diagnostics exceeded their byte limit.');
   if (result.exitCode !== 0) providerError('reference-provider-failed', 'The local model provider failed.', true, { exitCode: result.exitCode, stderr: result.stderr });
@@ -196,9 +225,11 @@ export async function describeProvider(options) {
   const cwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
   const environment = minimalProviderEnvironment(options.environment);
   const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
+  managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
   const stdin = canonicalJsonBytes({ protocolVersion: expectedProtocolVersion, limits });
   const stdout = await callProvider(options.hostRun, {
-    executable: initialExecutable.path, operation: 'describe', stdin, stdinLength: stdin.length,
+    executable: initialExecutable.path, executableSha256: initialExecutable.sha256,
+    operation: 'describe', stdin, stdinLength: stdin.length,
     cwd, environment, timeoutMs: limits.conversionMs,
     stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes, signal: options.signal,
   }, limits);
@@ -227,9 +258,11 @@ export async function describeAndConvert(options) {
   const describeCwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
   const environment = minimalProviderEnvironment(options.environment);
   const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
+  const authorityStorePath = managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
   const describeRequest = canonicalJsonBytes({ protocolVersion: expectedProtocolVersion, limits });
   const describeBytes = await callProvider(options.hostRun, {
-    executable: initialExecutable.path, operation: 'describe', stdin: describeRequest,
+    executable: initialExecutable.path, executableSha256: initialExecutable.sha256,
+    operation: 'describe', stdin: describeRequest,
     stdinLength: describeRequest.length, cwd: describeCwd, environment,
     timeoutMs: limits.conversionMs, stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes, signal: options.signal,
   }, limits);
@@ -249,12 +282,12 @@ export async function describeAndConvert(options) {
   }
   const canonicalRequest = buildCanonicalRequest({
     limits,
+    protocolVersion: expectedProtocolVersion,
     conversionSettings: options.conversionSettings ?? {},
     readerSchemaVersion: options.readerSchemaVersion,
     propertyExpansionLimits: options.propertyExpansionLimits,
   });
   const outputDirectory = await privateDirectory(path.join(options.privateRoot, 'output'));
-  const authorityStorePath = managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
   const beforeConvert = await validateProviderExecutable(options.executable);
   if (beforeConvert.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed before conversion.');
   const convertRequest = canonicalJsonBytes({
@@ -263,7 +296,8 @@ export async function describeAndConvert(options) {
     ...(authorityStorePath ? { authorityStorePath } : {}),
   });
   const receiptBytes = await callProvider(options.hostRun, {
-    executable: initialExecutable.path, operation: 'convert', stdin: convertRequest,
+    executable: initialExecutable.path, executableSha256: initialExecutable.sha256,
+    operation: 'convert', stdin: convertRequest,
     stdinLength: convertRequest.length, cwd: outputDirectory, environment,
     timeoutMs: limits.conversionMs, stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes, signal: options.signal,
   }, limits);

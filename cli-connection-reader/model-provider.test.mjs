@@ -6,7 +6,7 @@ import path from 'node:path';
 import { Readable } from 'node:stream';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { sha256 } from './model-contract.mjs';
+import { ModelReaderError, sha256 } from './model-contract.mjs';
 import {
   describeAndConvert, describeProvider, hashRegularFile, minimalProviderEnvironment, stageImmutableSource,
   validateProviderExecutable,
@@ -57,10 +57,49 @@ test('provider executable and source must be absolute regular non-link files', a
 
 test('minimal provider environment omits paths, proxies, credentials, and AWARE state', () => {
   const environment = minimalProviderEnvironment({
-    SYSTEMROOT: 'C:\\Windows', TEMP: 'C:\\Temp', PATH: 'secret', HTTP_PROXY: 'secret',
-    AWARE_HOME: 'secret', AWS_SECRET_ACCESS_KEY: 'secret', TOKEN: 'secret',
+    SystemRoot: 'C:\\Windows', windir: 'C:\\Windows', ComSpec: 'C:\\Windows\\System32\\cmd.exe',
+    Temp: 'C:\\Temp', tMp: 'C:\\Scratch', PaTh: 'secret', Http_Proxy: 'secret',
+    Aware_Home: 'secret', Aws_Secret_Access_Key: 'secret', ToKeN: 'secret',
+    'ſYSTEMROOT': 'unicode-near-alias',
   }, 'win32');
-  assert.deepEqual(environment, { SYSTEMROOT: 'C:\\Windows', TEMP: 'C:\\Temp', LANG: 'C', LC_ALL: 'C', TZ: 'UTC' });
+  assert.deepEqual(environment, {
+    SYSTEMROOT: 'C:\\Windows', WINDIR: 'C:\\Windows', COMSPEC: 'C:\\Windows\\System32\\cmd.exe',
+    TEMP: 'C:\\Temp', TMP: 'C:\\Scratch', LANG: 'C', LC_ALL: 'C', TZ: 'UTC',
+  });
+});
+
+test('provider executable validation hashes incrementally without a whole-image allocation', async (t) => {
+  const root = await temporaryDirectory(t);
+  const executable = path.join(root, 'provider.exe');
+  await fs.writeFile(executable, 'fixture');
+  let opened = 0;
+  const result = await validateProviderExecutable(executable, {
+    createReadStream: (receivedPath, options) => {
+      opened += 1;
+      assert.equal(receivedPath, executable);
+      assert.equal(options.highWaterMark, 1024 * 1024);
+      return Readable.from([Buffer.from('fix'), Buffer.from('ture')]);
+    },
+  });
+  assert.equal(opened, 1);
+  assert.equal(result.size, 7);
+  assert.equal(result.sha256, sha256(Buffer.from('fixture')));
+});
+
+test('minimal Windows environment collapses identical aliases and refuses conflicting aliases', () => {
+  assert.deepEqual(minimalProviderEnvironment({ SystemRoot: 'C:\\Windows', SYSTEMROOT: 'C:\\Windows' }, 'win32'), {
+    SYSTEMROOT: 'C:\\Windows', LANG: 'C', LC_ALL: 'C', TZ: 'UTC',
+  });
+  assert.throws(
+    () => minimalProviderEnvironment({ SystemRoot: 'C:\\Windows', SYSTEMROOT: 'D:\\Windows' }, 'win32'),
+    (error) => error.code === 'reference-provider-environment-ambiguous',
+  );
+});
+
+test('minimal POSIX environment remains case-sensitive', () => {
+  assert.deepEqual(minimalProviderEnvironment({ home: '/forbidden', HOME: '/home/aware', TmpDir: '/forbidden', TMPDIR: '/tmp/aware' }, 'linux'), {
+    HOME: '/home/aware', TMPDIR: '/tmp/aware', LANG: 'C', LC_ALL: 'C', TZ: 'UTC',
+  });
 });
 
 test('source staging hashes both sides, creates an immutable private copy, and detects expected-hash drift', async (t) => {
@@ -94,6 +133,7 @@ test('describe and convert agree on provenance and return only bounded private o
   assert.equal(calls[0].cwd.startsWith(path.join(root, 'private')), true);
   assert.equal(calls[0].environment.PATH, undefined);
   assert.equal(calls.every((call) => call.signal === controller.signal), true);
+  assert.equal(calls.every((call) => call.executableSha256 === sha256(Buffer.from('fixture-provider-binary'))), true);
   assert.equal(result.describe.provider, 'fixture-provider');
   assert.equal(result.receipt.sourceSha256, sha256(Buffer.from('fixture-rvt')));
   assert.equal(result.outputs.geometry.path.endsWith('geometry.glb'), true);
@@ -112,21 +152,68 @@ test('managed-cloud protocol requires an exact canonical HTTPS destination pin',
     destination: 'https://api.stage.floless.io',
   };
   const hostRun = async () => ({ exitCode: 0, stdout: Buffer.from(JSON.stringify(description)), stderr: Buffer.alloc(0) });
+  const authorityStorePath = path.join(root, 'authority');
   const accepted = await describeProvider({
     executable, privateRoot: path.join(root, 'accepted'), hostRun,
-    expectedProtocolVersion: '2', expectedDestination: description.destination,
+    expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
   });
   assert.equal(accepted.describe.execution, 'managed-cloud');
   assert.equal(accepted.fingerprint.destination, description.destination);
   await assert.rejects(() => describeProvider({
     executable, privateRoot: path.join(root, 'wrong'), hostRun,
-    expectedProtocolVersion: '2', expectedDestination: 'https://api.floless.io',
+    expectedProtocolVersion: '2', expectedDestination: 'https://api.floless.io', authorityStorePath,
   }), (error) => error.code === 'reference-provider-destination-mismatch');
   await assert.rejects(() => describeProvider({
     executable, privateRoot: path.join(root, 'noncanonical'),
     hostRun: async () => ({ ...await hostRun(), stdout: Buffer.from(JSON.stringify({ ...description, destination: `${description.destination}/` })) }),
-    expectedProtocolVersion: '2', expectedDestination: description.destination,
+    expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
   }), (error) => error.code === 'reference-provider-destination-mismatch');
+});
+
+test('provider provenance strings use the published schema character limits', async (t) => {
+  const root = await temporaryDirectory(t);
+  const executable = path.join(root, 'provider.exe');
+  await fs.writeFile(executable, 'fixture-provider-binary');
+  const description = (provider) => ({
+    protocolVersion: '1', provider, engine: 'engine', engineVersion: '1',
+    adapterBuildId: 'b'.repeat(256), formats: ['rvt'], execution: 'local', destination: null,
+  });
+  const describe = (provider, directory) => describeProvider({
+    executable,
+    privateRoot: path.join(root, directory),
+    hostRun: async () => ({ exitCode: 0, stdout: Buffer.from(JSON.stringify(description(provider))), stderr: Buffer.alloc(0) }),
+  });
+  assert.equal((await describe('é'.repeat(128), 'unicode')).describe.provider, 'é'.repeat(128));
+  await assert.rejects(() => describe('p'.repeat(129), 'too-long'), (error) => error.code === 'reference-provider-protocol');
+});
+
+test('provider preflight validates the authority-store contract before launching', async (t) => {
+  const root = await temporaryDirectory(t);
+  const executable = path.join(root, 'provider.exe');
+  await fs.writeFile(executable, 'fixture-provider-binary');
+  let launches = 0;
+  const hostRun = async () => { launches += 1; return { exitCode: 0, stdout: Buffer.alloc(0), stderr: Buffer.alloc(0) }; };
+  await assert.rejects(() => describeProvider({
+    executable, privateRoot: path.join(root, 'missing'), hostRun,
+    expectedProtocolVersion: '2', expectedDestination: 'https://api.example.test',
+  }), (error) => error.code === 'reference-provider-protocol');
+  await assert.rejects(() => describeProvider({
+    executable, privateRoot: path.join(root, 'local'), hostRun,
+    expectedProtocolVersion: '1', authorityStorePath: path.join(root, 'authority'),
+  }), (error) => error.code === 'reference-provider-protocol');
+  assert.equal(launches, 0);
+});
+
+test('managed host errors retain their stable codes instead of becoming provider failures', async (t) => {
+  const root = await temporaryDirectory(t);
+  const executable = path.join(root, 'provider.exe');
+  await fs.writeFile(executable, 'fixture-provider-binary');
+  for (const code of ['reference-provider-output-limit', 'reference-provider-executable-mismatch', 'reference-provider-timeout']) {
+    await assert.rejects(() => describeProvider({
+      executable, privateRoot: path.join(root, code),
+      hostRun: async () => { throw new ModelReaderError(code, 'provider-host', code === 'reference-provider-timeout', 'bounded host failure'); },
+    }), (error) => error.code === code);
+  }
 });
 
 test('managed-cloud conversion passes only an absolute caller-bound authority store', async (t) => {
@@ -153,13 +240,16 @@ test('managed-cloud conversion passes only an absolute caller-bound authority st
       geometryPath: path.join(body.outputDirectory, 'geometry.glb'), metadataPath: path.join(body.outputDirectory, 'metadata.json'),
     })), stderr: Buffer.alloc(0) };
   };
-  await describeAndConvert({
+  const result = await describeAndConvert({
     executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
     privateRoot: path.join(root, 'accepted'), hostRun,
     expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
   });
   const convert = JSON.parse(calls[1].stdin.toString('utf8'));
   assert.equal(convert.authorityStorePath, path.resolve(authorityStorePath));
+  assert.equal(convert.protocolVersion, '2');
+  assert.equal(convert.canonicalRequest.protocolVersion, '2');
+  assert.equal(result.canonicalRequest.protocolVersion, '2');
   await assert.rejects(() => describeAndConvert({
     executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
     privateRoot: path.join(root, 'relative'), hostRun,
@@ -212,6 +302,25 @@ test('malformed receipts, provenance drift, extra files, non-zero exits, and pro
     assert.equal(error.message.includes('secret'), false);
     return true;
   });
+});
+
+test('an aborted provider request retains cancellation semantics for rejection and exit', async (t) => {
+  const root = await temporaryDirectory(t);
+  const executable = path.join(root, 'provider.exe');
+  await fs.writeFile(executable, 'fixture-provider-binary');
+  for (const [name, hostRun] of [
+    ['rejection', async () => { throw new Error('host cancelled'); }],
+    ['exit', async () => ({ exitCode: 130, stdout: Buffer.alloc(0), stderr: Buffer.alloc(0) })],
+  ]) {
+    const controller = new AbortController();
+    controller.abort();
+    await assert.rejects(
+      () => describeProvider({
+        executable, privateRoot: path.join(root, name), hostRun, signal: controller.signal,
+      }),
+      (error) => error.code === 'reference-cancelled' && error.retryable === false,
+    );
+  }
 });
 
 test('provider executable mutation at a provenance bracket and undeclared output files are refused', async (t) => {

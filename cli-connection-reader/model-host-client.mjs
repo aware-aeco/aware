@@ -6,6 +6,11 @@ import { canonicalJsonBytes, ModelReaderError } from './model-contract.mjs';
 const HEADER_BYTES = 50;
 const MAX_PAYLOAD_BYTES = 1024 * 1024;
 const ZERO_HANDLE = Buffer.alloc(32);
+const MANAGED_HOST_ERROR_CODES = new Set([
+  'reference-provider-executable-mismatch',
+  'reference-provider-host-failed',
+  'reference-provider-output-limit',
+]);
 
 function hostError(code, message, details = undefined) {
   throw new ModelReaderError(code, 'provider-host', false, message, details);
@@ -64,23 +69,28 @@ export class HostFrameDecoder {
 export class ModelHostClient {
   constructor(child) {
     this.child = child; this.nextRequestId = 1n; this.pending = new Map(); this.decoder = new HostFrameDecoder(); this.closed = false;
+    this.terminalError = null;
     this.stderr = Buffer.alloc(0);
     child.stdout.on('data', (chunk) => {
       try { for (const frame of this.decoder.push(chunk)) this.onFrame(frame); }
       catch (error) { this.failAll(error); }
     });
     child.stderr.on('data', (chunk) => { this.stderr = Buffer.concat([this.stderr, chunk]).subarray(-8192); });
+    child.stdin.on?.('error', (error) => this.failAll(error));
     child.on('error', (error) => this.failAll(error));
     child.on('exit', (code) => { if (!this.closed) this.failAll(new Error(`model-reader host exited ${code}`)); });
   }
 
   write(frame) {
-    if (!this.child.stdin.write(encodeHostFrame(frame))) {
-      this.child.stdin.once('drain', () => {});
-    }
+    if (this.terminalError) return;
+    try {
+      if (!this.child.stdin.write(encodeHostFrame(frame))) this.child.stdin.once('drain', () => {});
+    } catch (error) { this.failAll(error); }
   }
 
   control(body, runHandle = ZERO_HANDLE) {
+    if (this.terminalError) throw this.terminalError;
+    if (this.closed) throw new ModelReaderError('reference-provider-host-failed', 'provider-host', true, 'The managed provider host is closed.');
     const requestId = this.nextRequestId++;
     return { requestId, frame: { kind: 1, requestId, runHandle, sequence: 0, final: true, payload: canonicalJsonBytes(body) } };
   }
@@ -109,6 +119,7 @@ export class ModelHostClient {
   run = async (request) => {
     const { requestId, frame } = this.control({
       op: 'provider-run', executable: request.executable, operation: request.operation,
+      executableSha256: request.executableSha256,
       cwd: request.cwd, environment: request.environment, stdinLength: request.stdin.length,
       timeoutMs: request.timeoutMs, stdoutLimit: request.stdoutLimit, stderrLimit: request.stderrLimit,
     });
@@ -150,10 +161,15 @@ export class ModelHostClient {
       }
       if (control.status === 'complete') {
         if (!state.handle || !frame.runHandle.equals(state.handle) || !state.stdoutFinal || !state.stderrFinal) throw new Error('model-reader host completed before correlated streams');
+        if (control.hostErrorCode && !MANAGED_HOST_ERROR_CODES.has(control.hostErrorCode)) throw new Error('model-reader host returned an unknown error code');
         this.pending.delete(frame.requestId.toString());
         if (state.abortHandler) state.request.signal?.removeEventListener('abort', state.abortHandler);
         if (control.hostErrorCode) {
-          state.reject(new ModelReaderError(control.hostErrorCode, 'provider-host', false, 'The managed provider stream failed its bounded read.'));
+          state.reject(new ModelReaderError(control.hostErrorCode, 'provider-host', false, 'The managed provider host rejected or failed the provider run.'));
+          return;
+        }
+        if (control.exitCode === 124 && control.reason === 'timeout') {
+          state.reject(new ModelReaderError('reference-provider-timeout', 'provider-host', true, 'The managed provider timed out.'));
           return;
         }
         state.resolve({ exitCode: control.exitCode, stdout: Buffer.concat(state.stdout), stderr: Buffer.concat(state.stderr) }); return;
@@ -171,15 +187,21 @@ export class ModelHostClient {
   }
 
   failAll(error) {
+    if (!this.terminalError) {
+      this.terminalError = error instanceof ModelReaderError
+        ? error
+        : new ModelReaderError('reference-provider-host-failed', 'provider-host', true, 'The managed provider host failed.', error);
+    }
     for (const state of this.pending.values()) {
       if (state.abortHandler) state.request.signal?.removeEventListener('abort', state.abortHandler);
-      state.reject(new ModelReaderError('reference-provider-host-failed', 'provider-host', true, 'The managed provider host failed.', error));
+      state.reject(this.terminalError);
     }
     this.pending.clear();
   }
 
   async close() {
     if (this.closed) return;
+    if (this.terminalError) { await this.terminate(); return; }
     try { await this.simple({ op: 'shutdown' }); } catch { /* host death already rejects callers */ }
     this.closed = true; this.child.stdin.end();
   }

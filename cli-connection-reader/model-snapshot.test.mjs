@@ -42,6 +42,10 @@ test('snapshot parsing honors the configured component limit above the strict pa
   });
   assert.equal(output.sourceArtifactPreimage.outputs.find((item) => item.logicalName === 'properties').bytes, largeProperties.length);
   assert.equal(output.packageArtifacts['properties-000000'].bytes, largeProperties.length);
+  assert.deepEqual(output.packagePreimage.packager, {
+    agent: 'model-reference-reader', version: '0.4.0', bridgeBuildId: 'aware-connection-reader@0.2.0',
+    configurationSha256: output.packagePreimage.packager.configurationSha256,
+  });
 });
 
 test('reader v2 publishes independently versioned package schemas and authentication preimages', async (t) => {

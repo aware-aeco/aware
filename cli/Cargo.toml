@@ -1,6 +1,6 @@
 [package]
 name        = "aware"
-version     = "0.130.0"
+version     = "0.131.0"
 edition     = "2024"
 authors     = ["AWARE contributors"]
 license     = "Apache-2.0"
@@ -59,7 +59,7 @@ fs2 = "0.4"
 
 [target.'cfg(windows)'.dependencies]
 win32job = "2.0.3"
-windows-sys = { version = "0.61.2", features = ["Win32_Foundation", "Win32_System_Diagnostics_ToolHelp", "Win32_System_Threading"] }
+windows-sys = { version = "0.61.2", features = ["Win32_Foundation", "Win32_Storage_FileSystem", "Win32_System_Diagnostics_ToolHelp", "Win32_System_JobObjects", "Win32_System_Threading"] }
 
 [dev-dependencies]
 assert_cmd  = "2.0"

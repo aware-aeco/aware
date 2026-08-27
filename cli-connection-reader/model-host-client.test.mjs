@@ -53,7 +53,7 @@ test('provider cancellation requested before acceptance is sent as soon as the r
   client.simple = async (body, handle) => { controls.push({ body, handle }); return { status: 'cancel-requested' }; };
   const controller = new AbortController();
   const request = {
-    executable: 'provider', operation: 'convert', cwd: 'work', environment: {}, stdin: Buffer.alloc(0),
+    executable: 'provider', executableSha256: 'a'.repeat(64), operation: 'convert', cwd: 'work', environment: {}, stdin: Buffer.alloc(0),
     timeoutMs: 1, stdoutLimit: 1, stderrLimit: 1, signal: controller.signal,
   };
   const result = client.run(request);
@@ -68,6 +68,49 @@ test('provider cancellation requested before acceptance is sent as soon as the r
   await result;
 });
 
+test('recognized managed-host completion codes reject with their original stable code', async () => {
+  const child = new EventEmitter();
+  child.stdout = new EventEmitter(); child.stderr = new EventEmitter();
+  child.stdin = { write: () => true, once: () => {}, end: () => {} };
+  const client = new ModelHostClient(child);
+  client.write = () => {};
+  const request = {
+    executable: 'provider', executableSha256: 'a'.repeat(64), operation: 'convert', cwd: 'work',
+    environment: {}, stdin: Buffer.alloc(0), timeoutMs: 1, stdoutLimit: 1, stderrLimit: 1,
+  };
+  const result = client.run(request);
+  const handle = Buffer.alloc(32, 9);
+  client.onFrame({ kind: 1, requestId: 1n, runHandle: handle, sequence: 0, final: true, payload: Buffer.from('{"status":"accepted"}') });
+  client.onFrame({ kind: 2, requestId: 1n, runHandle: handle, sequence: 0, final: true, payload: Buffer.alloc(0) });
+  client.onFrame({ kind: 3, requestId: 1n, runHandle: handle, sequence: 0, final: true, payload: Buffer.alloc(0) });
+  client.onFrame({
+    kind: 1, requestId: 1n, runHandle: handle, sequence: 0, final: true,
+    payload: Buffer.from('{"status":"complete","exitCode":1,"hostErrorCode":"reference-provider-output-limit"}'),
+  });
+  await assert.rejects(result, (error) => error.code === 'reference-provider-output-limit');
+});
+
+test('managed-host deadline completion preserves the typed provider timeout', async () => {
+  const child = new EventEmitter();
+  child.stdout = new EventEmitter(); child.stderr = new EventEmitter();
+  child.stdin = { write: () => true, once: () => {}, end: () => {} };
+  const client = new ModelHostClient(child);
+  client.write = () => {};
+  const result = client.run({
+    executable: 'provider', executableSha256: 'a'.repeat(64), operation: 'convert', cwd: 'work',
+    environment: {}, stdin: Buffer.alloc(0), timeoutMs: 1, stdoutLimit: 1, stderrLimit: 1,
+  });
+  const handle = Buffer.alloc(32, 10);
+  client.onFrame({ kind: 1, requestId: 1n, runHandle: handle, sequence: 0, final: true, payload: Buffer.from('{"status":"accepted"}') });
+  client.onFrame({ kind: 2, requestId: 1n, runHandle: handle, sequence: 0, final: true, payload: Buffer.alloc(0) });
+  client.onFrame({ kind: 3, requestId: 1n, runHandle: handle, sequence: 0, final: true, payload: Buffer.alloc(0) });
+  client.onFrame({
+    kind: 1, requestId: 1n, runHandle: handle, sequence: 0, final: true,
+    payload: Buffer.from('{"status":"complete","exitCode":124,"reason":"timeout"}'),
+  });
+  await assert.rejects(result, (error) => error.code === 'reference-provider-timeout' && error.retryable === true);
+});
+
 test('a failed host handshake terminates the spawned client before rejecting', async () => {
   let terminated = false;
   const failure = new Error('incompatible');
@@ -77,6 +120,41 @@ test('a failed host handshake terminates the spawned client before rejecting', a
   };
   await assert.rejects(() => requireReadyClient(client), failure);
   assert.equal(terminated, true);
+});
+
+test('host exit becomes terminal so later requests reject and close never writes a dead pipe', async () => {
+  const child = new EventEmitter();
+  child.stdout = new EventEmitter(); child.stderr = new EventEmitter(); child.stdin = new EventEmitter();
+  child.stdin.write = () => true; child.stdin.once = () => {}; child.stdin.end = () => assert.fail('close wrote to a dead host');
+  const client = new ModelHostClient(child);
+  child.exitCode = 134;
+  child.emit('exit', 134);
+  await assert.rejects(
+    async () => await client.simple({ op: 'hello' }),
+    (error) => error.code === 'reference-provider-host-failed',
+  );
+  await client.close();
+  assert.equal(client.pending.size, 0);
+});
+
+test('a terminal protocol failure makes close terminate and await a still-live host', async () => {
+  const child = new EventEmitter();
+  child.stdout = new EventEmitter(); child.stderr = new EventEmitter();
+  child.stdout.destroy = () => {}; child.stderr.destroy = () => {};
+  child.stdin = { destroy: () => {} };
+  child.exitCode = null;
+  const signals = [];
+  child.kill = (signal) => {
+    signals.push(signal ?? 'SIGTERM');
+    child.exitCode = 143;
+    queueMicrotask(() => child.emit('exit', child.exitCode));
+    return true;
+  };
+  const client = new ModelHostClient(child);
+  client.failAll(new Error('uncorrelated frame'));
+  await client.close();
+  assert.deepEqual(signals, ['SIGTERM']);
+  assert.equal(client.closed, true);
 });
 
 test('forced host termination follows an ignored graceful signal and waits for confirmed exit', async () => {

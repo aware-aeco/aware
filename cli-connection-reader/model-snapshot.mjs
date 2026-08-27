@@ -204,7 +204,7 @@ export async function buildAndPublishSnapshot(result, signingKey, artifactDirect
       signerFingerprintSha256: identity.signerFingerprintSha256,
     },
     packager: {
-      agent: 'model-reference-reader', version: v2 ? '0.5.0' : '0.2.0',
+      agent: 'model-reference-reader', version: v2 ? '0.5.0' : '0.4.0',
       bridgeBuildId: v2 ? 'aware-connection-reader@0.3.0' : 'aware-connection-reader@0.2.0', configurationSha256,
     },
     outputs: packageReceipts,

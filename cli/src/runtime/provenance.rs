@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use tokio::fs::OpenOptions;
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 
-use crate::error::AwareError;
+use crate::error::{AwareError, StructuredAgentError};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "kebab-case")]
@@ -48,6 +48,8 @@ pub enum RunEvent {
         run_id: String,
         node: String,
         error: String,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        structured: Option<StructuredAgentError>,
     },
     NodeStop {
         ts: String,
@@ -73,6 +75,18 @@ pub enum RunEvent {
         run_id: String,
         status: String,
     },
+}
+
+impl RunEvent {
+    pub fn node_error(ts: String, run_id: String, node: String, error: &AwareError) -> Self {
+        Self::NodeError {
+            ts,
+            run_id,
+            node,
+            error: error.to_string(),
+            structured: error.structured_agent_error(),
+        }
+    }
 }
 
 pub fn run_id_now() -> String {
@@ -242,6 +256,45 @@ mod tests {
         let id = run_id_now();
         assert_eq!(id.len(), 36);
         assert!(id.contains('-'));
+    }
+
+    #[test]
+    fn node_error_preserves_bounded_structured_agent_fields() {
+        let error = AwareError::AgentStructured {
+            code: "reference-provider-timeout".into(),
+            phase: "convert".into(),
+            retryable: true,
+            message: "The model provider timed out.".into(),
+            diagnostic_id: "123e4567-e89b-12d3-a456-426614174000".into(),
+        };
+        let event = RunEvent::node_error("now".into(), "run".into(), "reader".into(), &error);
+        let value = serde_json::to_value(event).unwrap();
+        assert_eq!(value["structured"]["code"], "reference-provider-timeout");
+        assert_eq!(value["structured"]["phase"], "convert");
+        assert_eq!(value["structured"]["retryable"], true);
+        assert_eq!(
+            value["structured"]["diagnosticId"],
+            "123e4567-e89b-12d3-a456-426614174000"
+        );
+        assert!(
+            value["error"]
+                .as_str()
+                .unwrap()
+                .contains("provider-timeout")
+        );
+
+        let ordinary = RunEvent::node_error(
+            "now".into(),
+            "run".into(),
+            "reader".into(),
+            &AwareError::Validation("bad input".into()),
+        );
+        assert!(
+            serde_json::to_value(ordinary)
+                .unwrap()
+                .get("structured")
+                .is_none()
+        );
     }
 
     #[test]

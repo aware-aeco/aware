@@ -7,7 +7,7 @@ import test from 'node:test';
 import { canonicalJsonBytes, sha256 } from './model-contract.mjs';
 import {
   acquireCacheOwner, cacheKeySha256, loadAwareSigningKey, publishCacheEntry as publishCacheEntryRaw,
-  readCacheEntry as readCacheEntryRaw, releaseCacheOwner, signerFingerprintSha256,
+  findCacheEntry as findCacheEntryRaw, readCacheEntry as readCacheEntryRaw, releaseCacheOwner, signerFingerprintSha256,
 } from './model-cache.mjs';
 
 function processFence() {
@@ -28,6 +28,10 @@ const publishCacheEntry = (options) => publishCacheEntryRaw({
   withMaintenanceFence: options.withMaintenanceFence ?? withMaintenanceFence,
 });
 const readCacheEntry = (options) => readCacheEntryRaw({
+  ...options,
+  withMaintenanceFence: options.withMaintenanceFence ?? withMaintenanceFence,
+});
+const findCacheEntry = (options) => findCacheEntryRaw({
   ...options,
   withMaintenanceFence: options.withMaintenanceFence ?? withMaintenanceFence,
 });
@@ -107,6 +111,54 @@ test('missing, extra, wrong signer, and identity-mismatched cache entries are ne
   await assert.rejects(() => readCacheEntry({ root: cacheRoot, key: published.key, expectedIdentity: cacheIdentity, expectedPublicKey: firstKey.publicKeyBytes }), /extra|closed/);
 });
 
+test('pinned cache lookup filters authenticated manifests before reading component blobs', async (t) => {
+  const root = await temporaryDirectory(t);
+  const { key } = await signingFixture(root);
+  const cacheRoot = path.join(root, 'cache');
+  const signer = signerFingerprintSha256(key.publicKeyBytes);
+  const orderedIdentities = Array.from({ length: 16 }, (_, index) => identity({
+    sourceSha256: index.toString(16).padStart(64, '0'),
+    signerFingerprintSha256: signer,
+  })).sort((left, right) => cacheKeySha256(left).localeCompare(cacheKeySha256(right)));
+  const missedIdentity = orderedIdentities[0];
+  const wantedIdentity = orderedIdentities.at(-1);
+  const missedArtifacts = { ...artifacts(), 'geometry.glb': Buffer.from('missed-geometry') };
+  const missed = await publishCacheEntry({ root: cacheRoot, identity: missedIdentity, artifacts: missedArtifacts, signingKey: key });
+  const wanted = await publishCacheEntry({ root: cacheRoot, identity: wantedIdentity, artifacts: artifacts(), signingKey: key });
+  const missedGeometry = missed.manifest.artifacts['geometry.glb'];
+  await fs.truncate(path.join(cacheRoot, 'blobs', missedGeometry.sha256), missedGeometry.bytes + 1);
+
+  const hit = await findCacheEntry({
+    root: cacheRoot,
+    expectedSourceSha256: wantedIdentity.sourceSha256,
+    expectedCanonicalRequest: wantedIdentity.canonicalRequest,
+    expectedProviderFingerprintSha256: sha256(canonicalJsonBytes(wantedIdentity.providerFingerprint)),
+    expectedSignerFingerprintSha256: signer,
+    expectedPublicKey: key.publicKeyBytes,
+  });
+  assert.equal(hit.key, wanted.key);
+});
+
+test('pinned cache lookup preserves cancellation instead of treating it as a miss', async (t) => {
+  const root = await temporaryDirectory(t);
+  const { key } = await signingFixture(root);
+  const cacheRoot = path.join(root, 'cache');
+  const signer = signerFingerprintSha256(key.publicKeyBytes);
+  const cacheIdentity = identity({ signerFingerprintSha256: signer });
+  await publishCacheEntry({ root: cacheRoot, identity: cacheIdentity, artifacts: artifacts(), signingKey: key });
+  const controller = new AbortController();
+  controller.abort();
+  await assert.rejects(() => findCacheEntry({
+    root: cacheRoot,
+    expectedSourceSha256: cacheIdentity.sourceSha256,
+    expectedCanonicalRequest: cacheIdentity.canonicalRequest,
+    expectedProviderFingerprintSha256: sha256(canonicalJsonBytes(cacheIdentity.providerFingerprint)),
+    expectedSignerFingerprintSha256: signer,
+    expectedPublicKey: key.publicKeyBytes,
+    signal: controller.signal,
+  }), (error) => error.code === 'reference-cancelled');
+});
+
 test('cache reads require the same maintenance fence that protects eviction', async (t) => {
   const root = await temporaryDirectory(t);
   await assert.rejects(
@@ -130,6 +182,92 @@ test('owner leases serialize same-key publishers and stale/dead owners are fence
   const second = await acquireCacheOwner({ root, key: 'a'.repeat(64), processIdentity: { pid: 102, start: 'two' }, isOwnerAlive: async () => false });
   await assert.rejects(() => releaseCacheOwner(first), /token/);
   await releaseCacheOwner(second);
+});
+
+test('publication refuses an oversized generated manifest before exposing a cache entry', async (t) => {
+  const root = await temporaryDirectory(t);
+  const { key } = await signingFixture(root);
+  const cacheRoot = path.join(root, 'cache');
+  const cacheIdentity = identity({ signerFingerprintSha256: signerFingerprintSha256(key.publicKeyBytes) });
+  await assert.rejects(
+    () => publishCacheEntry({
+      root: cacheRoot,
+      identity: cacheIdentity,
+      artifacts: artifacts(),
+      signingKey: key,
+      details: { coverage: { padding: 'x'.repeat(512) } },
+      limits: { maxComponentJsonBytes: 128 },
+    }),
+    (error) => error.code === 'reference-cache-artifacts-invalid',
+  );
+  assert.deepEqual(await fs.readdir(path.join(cacheRoot, 'entries')), []);
+});
+
+test('cache-owner release failures use a stable redacted cache error', async (t) => {
+  const root = await temporaryDirectory(t);
+  const lease = await acquireCacheOwner({ root, key: 'f'.repeat(64), processIdentity: { pid: 101, start: 'one' } });
+  await assert.rejects(
+    () => releaseCacheOwner(lease, {
+      removeLockDirectory: async () => { throw new Error(`cannot remove ${lease.lockDirectory}`); },
+    }),
+    (error) => error.code === 'reference-cache-owner-release' && !error.message.includes(root),
+  );
+});
+
+test('cache hits reject oversized control files and blobs before reading their contents', async (t) => {
+  const root = await temporaryDirectory(t);
+  const { key } = await signingFixture(root);
+  const cacheRoot = path.join(root, 'cache');
+  const cacheIdentity = identity({ signerFingerprintSha256: signerFingerprintSha256(key.publicKeyBytes) });
+  const published = await publishCacheEntry({ root: cacheRoot, identity: cacheIdentity, artifacts: artifacts(), signingKey: key });
+  const entry = path.join(cacheRoot, 'entries', published.key);
+  const receiptPath = path.join(entry, 'receipt.json');
+  const signaturePath = path.join(entry, 'receipt.sig');
+  const receiptBytes = await fs.readFile(receiptPath);
+  const signatureBytes = await fs.readFile(signaturePath);
+
+  await fs.truncate(receiptPath, (64 * 1024) + 1);
+  await assert.rejects(() => readCacheEntry({ root: cacheRoot, key: published.key, expectedIdentity: cacheIdentity, expectedPublicKey: key.publicKeyBytes }), /limit|invalid/);
+  await fs.writeFile(receiptPath, receiptBytes);
+  await fs.truncate(signaturePath, (4 * 1024) + 1);
+  await assert.rejects(() => readCacheEntry({ root: cacheRoot, key: published.key, expectedIdentity: cacheIdentity, expectedPublicKey: key.publicKeyBytes }), /limit|invalid/);
+  await fs.writeFile(signaturePath, signatureBytes);
+
+  const receipt = JSON.parse(receiptBytes.toString('utf8'));
+  const geometryBlob = path.join(cacheRoot, 'blobs', receipt.blobs['geometry.glb'].sha256);
+  await fs.truncate(geometryBlob, 1024 * 1024);
+  await assert.rejects(() => readCacheEntry({ root: cacheRoot, key: published.key, expectedIdentity: cacheIdentity, expectedPublicKey: key.publicKeyBytes }), /limit|tampered|invalid/);
+});
+
+test('authoritative kernel fences recover missing or malformed owner diagnostics', async (t) => {
+  const root = await temporaryDirectory(t);
+  for (const [key, owner] of [
+    ['b'.repeat(64), null],
+    ['c'.repeat(64), '{broken'],
+    ['e'.repeat(64), 'null'],
+  ]) {
+    const lockDirectory = path.join(root, 'locks', key);
+    await fs.mkdir(lockDirectory, { recursive: true });
+    if (owner !== null) await fs.writeFile(path.join(lockDirectory, 'owner.json'), owner);
+    await assert.rejects(
+      () => acquireCacheOwner({ root, key, processIdentity: { pid: 201, start: 'replacement' } }),
+      (error) => error.code === 'reference-cache-owned',
+    );
+    const replacement = await acquireCacheOwner({
+      root, key, processIdentity: { pid: 201, start: 'replacement' }, fenced: true,
+    });
+    assert.equal(JSON.parse(await fs.readFile(replacement.ownerPath, 'utf8')).processStart, 'replacement');
+    await releaseCacheOwner(replacement);
+  }
+  const key = 'd'.repeat(64);
+  await fs.mkdir(path.join(root, 'locks', key), { recursive: true });
+  await assert.rejects(
+    () => acquireCacheOwner({
+      root, key, fenced: true,
+      removeLockDirectory: async () => { throw Object.assign(new Error('private path'), { code: 'EACCES' }); },
+    }),
+    (error) => error.code === 'reference-cache-owned' && !error.message.includes(root),
+  );
 });
 
 test('different cache keys sharing content never observe a partially published final blob', async (t) => {
@@ -225,6 +363,25 @@ test('cache maintenance evicts deterministically, sweeps stale staging, and refu
     }),
     (error) => error.code === 'reference-cache-full',
   );
+});
+
+test('successful reads refresh deterministic LRU recency before eviction', async (t) => {
+  const root = await temporaryDirectory(t);
+  const { key } = await signingFixture(root);
+  const cacheRoot = path.join(root, 'cache');
+  const signer = signerFingerprintSha256(key.publicKeyBytes);
+  const firstIdentity = identity({ sourceSha256: '1'.repeat(64), signerFingerprintSha256: signer });
+  const secondIdentity = identity({ sourceSha256: '2'.repeat(64), signerFingerprintSha256: signer });
+  const thirdIdentity = identity({ sourceSha256: '3'.repeat(64), signerFingerprintSha256: signer });
+  const limits = { maxEntries: 2, maxBytes: 1024 * 1024, staleStagingMs: 1 };
+  const first = await publishCacheEntry({ root: cacheRoot, identity: firstIdentity, artifacts: artifacts(), signingKey: key, cacheLimits: limits });
+  const second = await publishCacheEntry({ root: cacheRoot, identity: secondIdentity, artifacts: artifacts(), signingKey: key, cacheLimits: limits });
+  await fs.appendFile(path.join(cacheRoot, 'access.log'), 'crash-truncated-tail');
+  await readCacheEntry({ root: cacheRoot, key: first.key, expectedIdentity: firstIdentity, expectedPublicKey: key.publicKeyBytes });
+  const third = await publishCacheEntry({ root: cacheRoot, identity: thirdIdentity, artifacts: artifacts(), signingKey: key, cacheLimits: limits });
+  await fs.access(path.join(cacheRoot, 'entries', first.key));
+  await assert.rejects(() => fs.access(path.join(cacheRoot, 'entries', second.key)));
+  await fs.access(path.join(cacheRoot, 'entries', third.key));
 });
 
 test('cache maintenance removes crash-left orphan blobs before applying quota', async (t) => {

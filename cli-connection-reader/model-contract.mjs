@@ -1,4 +1,5 @@
 import { createHash, randomUUID } from 'node:crypto';
+import { isUtf8 } from 'node:buffer';
 
 export const READER_SCHEMA_VERSION_V1 = 'model-reference-reader/v1';
 export const READER_SCHEMA_VERSION_V2 = 'model-reference-reader/v2';
@@ -138,12 +139,21 @@ export function canonicalJsonBytes(value) {
 }
 
 export function parseJsonStrict(input, options = {}) {
-  const text = Buffer.isBuffer(input) || input instanceof Uint8Array ? Buffer.from(input).toString('utf8') : String(input);
+  let text;
+  if (Buffer.isBuffer(input) || input instanceof Uint8Array) {
+    const bytes = Buffer.from(input);
+    if (!isUtf8(bytes)) throw new SyntaxError('JSON input is not valid UTF-8');
+    text = bytes.toString('utf8');
+  } else {
+    text = String(input);
+  }
   const maxBytes = options.maxBytes ?? 16 * 1024 * 1024;
   const maxDepth = options.maxDepth ?? 128;
   if (Buffer.byteLength(text, 'utf8') > maxBytes) throw new SyntaxError('JSON input exceeds its byte limit');
   let cursor = 0;
-  const white = () => { while (/\s/.test(text[cursor] ?? '')) cursor += 1; };
+  // RFC 8259 permits exactly space, tab, carriage return, and line feed between tokens.
+  // JavaScript's `\s` also accepts BOM, NBSP, and Unicode separators.
+  const white = () => { while (text[cursor] === ' ' || text[cursor] === '\t' || text[cursor] === '\r' || text[cursor] === '\n') cursor += 1; };
   const fail = (message) => { throw new SyntaxError(`${message} at byte ${cursor}`); };
   const stringValue = () => {
     if (text[cursor] !== '"') fail('expected JSON string');
@@ -232,7 +242,7 @@ export function lowerableLimits(overrides = {}) {
   assertClosedObject(overrides, [], Object.keys(MODEL_LIMITS), 'limits');
   const result = {};
   for (const [name, range] of Object.entries(MODEL_LIMITS)) {
-    const selected = overrides[name] ?? range.default;
+    const selected = Object.hasOwn(overrides, name) ? overrides[name] : range.default;
     if (!Number.isSafeInteger(selected) || selected <= 0 || selected > range.hard) throw new TypeError(`${name} exceeds its hard ceiling`);
     result[name] = selected;
   }
@@ -243,7 +253,7 @@ export function lowerablePropertyExpansionLimits(overrides = {}) {
   assertClosedObject(overrides, [], Object.keys(PROPERTY_EXPANSION_LIMITS), 'propertyExpansionLimits');
   const result = {};
   for (const [name, range] of Object.entries(PROPERTY_EXPANSION_LIMITS)) {
-    const selected = overrides[name] ?? range.default;
+    const selected = Object.hasOwn(overrides, name) ? overrides[name] : range.default;
     if (!Number.isSafeInteger(selected) || selected <= 0 || selected > range.hard) {
       throw new TypeError(`${name} exceeds its hard ceiling`);
     }
@@ -254,13 +264,15 @@ export function lowerablePropertyExpansionLimits(overrides = {}) {
 
 export function buildCanonicalRequest(options = {}) {
   const limits = lowerableLimits(options.limits);
+  const protocolVersion = options.protocolVersion ?? '1';
+  if (!['1', '2'].includes(protocolVersion)) throw new TypeError('protocolVersion must be 1 or 2');
   const readerSchemaVersion = options.readerSchemaVersion ?? READER_SCHEMA_VERSION_V1;
   if (![READER_SCHEMA_VERSION_V1, READER_SCHEMA_VERSION_V2].includes(readerSchemaVersion)) {
     throw new TypeError('readerSchemaVersion is unsupported');
   }
   const request = {
     schemaVersion: '1',
-    protocolVersion: '1',
+    protocolVersion,
     readerSchemaVersion,
     format: 'rvt',
     documentKind: 'revit-project',
