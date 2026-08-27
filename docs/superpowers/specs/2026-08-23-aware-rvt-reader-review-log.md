@@ -293,3 +293,56 @@ however, provide the reviewed parameter storage types or explicit relationship s
 3,311 parameter rows use negative IDs, 139 ID values repeat (one 776 times), and values expose only JSON
 string/number types. Therefore no provider-specific translator was added to AWARE core and the cloud run
 is recorded as real-output compatibility evidence, not proof of the local provider execution contract.
+
+## Issue #464 addendum review — Round 1
+
+Codex returned `VERDICT: REVISE`. The proposed JavaScript-only casing fix identified a deterministic
+failure, but the plan incorrectly treated a plain copied environment as the already-proven production
+path. The critic required: separation of the original app failure from the later direct diagnostic;
+an actual packaged red/green path; explicit exit/output/version/non-skip acceptance; deterministic
+semantics for differently cased duplicate variables; all-allowlist and forbidden-variable coverage;
+unchanged POSIX semantics; and a behavioral proof of the environment received after Rust `env_clear()`.
+
+### Builder response
+
+Accepted every finding. Section 8 now distinguishes the observations and records the current
+live-environment stress result rather than claiming a lifecycle cause. Production snapshots its chosen
+environment into a plain object, so the existing packaged command path deterministically crosses the
+fixed seam. Windows normalization uses canonical uppercase output and fails closed on conflicting
+aliases; tests cover every allowed key, forbidden mixed-case keys, aliases, and POSIX behavior. The
+fixture provider itself checks `SYSTEMROOT` and the exact received key set, while the Windows harness
+requires valid outputs from all packaged model commands and reports both executable versions.
+
+## Issue #464 addendum review — Round 2
+
+Codex returned `VERDICT: REVISE` with four gaps: snapshotting the whole configuration would remove
+Windows' case-insensitive lookup for the bridge's own `AWARE_*` controls; the packaged CI job still used
+Node 22 and did not force mixed-case OS variables; the fixture could not know which optional values were
+supposed to arrive; and Unicode uppercasing could turn a non-ASCII near-alias into an ASCII allowlisted
+name.
+
+### Builder response
+
+Accepted all four. The snapshot now exists only inside the provider allowlist boundary, leaving AWARE
+control lookup and host launch semantics intact. The packaged environment deletes all aliases and seeds
+all five allowed values under controlled mixed-case spellings, plus a forbidden sentinel; the fixture
+requires the exact fixed eight-entry result. The harness and CI pin Node 24.14, include an automated
+legacy red control, and ASCII-only folding leaves Unicode near-aliases forbidden.
+
+## Issue #464 addendum review — Round 3
+
+Codex returned `VERDICT: REVISE` because the harness was pinned to Node 24.14 while the release workflow
+still built the shipped connection-reader SEA with Node 22. A green Node-24 reader/provider pair would
+not prove the production Node-22 reader/Node-24 provider combination.
+
+### Builder response
+
+Accepted. Section 8 now pins the release connection-reader build to Node 24.14.0 as well, making the
+tested bridge/provider runtime combination identical to the one shipped by this release.
+
+### Codex follow-up
+
+The mixed-runtime gap is resolved: section 8 now requires both CI and the release connection-reader SEA
+build to use Node 24.14.0.
+
+`VERDICT: APPROVED`

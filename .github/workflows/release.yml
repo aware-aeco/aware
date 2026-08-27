@@ -44,7 +44,7 @@ jobs:
       - name: Install Node (for the connection-reader SEA bridge build)
         uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          node-version: '24.14.0'
 
       - name: Install .NET SDKs (8 / 9 / 10)
         uses: actions/setup-dotnet@v5

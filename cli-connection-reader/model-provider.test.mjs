@@ -57,10 +57,31 @@ test('provider executable and source must be absolute regular non-link files', a
 
 test('minimal provider environment omits paths, proxies, credentials, and AWARE state', () => {
   const environment = minimalProviderEnvironment({
-    SYSTEMROOT: 'C:\\Windows', TEMP: 'C:\\Temp', PATH: 'secret', HTTP_PROXY: 'secret',
-    AWARE_HOME: 'secret', AWS_SECRET_ACCESS_KEY: 'secret', TOKEN: 'secret',
+    SystemRoot: 'C:\\Windows', windir: 'C:\\Windows', ComSpec: 'C:\\Windows\\System32\\cmd.exe',
+    Temp: 'C:\\Temp', tMp: 'C:\\Scratch', PaTh: 'secret', Http_Proxy: 'secret',
+    Aware_Home: 'secret', Aws_Secret_Access_Key: 'secret', ToKeN: 'secret',
+    'ſYSTEMROOT': 'unicode-near-alias',
   }, 'win32');
-  assert.deepEqual(environment, { SYSTEMROOT: 'C:\\Windows', TEMP: 'C:\\Temp', LANG: 'C', LC_ALL: 'C', TZ: 'UTC' });
+  assert.deepEqual(environment, {
+    SYSTEMROOT: 'C:\\Windows', WINDIR: 'C:\\Windows', COMSPEC: 'C:\\Windows\\System32\\cmd.exe',
+    TEMP: 'C:\\Temp', TMP: 'C:\\Scratch', LANG: 'C', LC_ALL: 'C', TZ: 'UTC',
+  });
+});
+
+test('minimal Windows environment collapses identical aliases and refuses conflicting aliases', () => {
+  assert.deepEqual(minimalProviderEnvironment({ SystemRoot: 'C:\\Windows', SYSTEMROOT: 'C:\\Windows' }, 'win32'), {
+    SYSTEMROOT: 'C:\\Windows', LANG: 'C', LC_ALL: 'C', TZ: 'UTC',
+  });
+  assert.throws(
+    () => minimalProviderEnvironment({ SystemRoot: 'C:\\Windows', SYSTEMROOT: 'D:\\Windows' }, 'win32'),
+    (error) => error.code === 'reference-provider-environment-ambiguous',
+  );
+});
+
+test('minimal POSIX environment remains case-sensitive', () => {
+  assert.deepEqual(minimalProviderEnvironment({ home: '/forbidden', HOME: '/home/aware', TmpDir: '/forbidden', TMPDIR: '/tmp/aware' }, 'linux'), {
+    HOME: '/home/aware', TMPDIR: '/tmp/aware', LANG: 'C', LC_ALL: 'C', TZ: 'UTC',
+  });
 });
 
 test('source staging hashes both sides, creates an immutable private copy, and detects expected-hash drift', async (t) => {

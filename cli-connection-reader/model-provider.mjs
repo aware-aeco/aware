@@ -60,7 +60,23 @@ export async function validateProviderExecutable(executable) {
 export function minimalProviderEnvironment(source = process.env, platform = process.platform) {
   const allowed = platform === 'win32' ? ['SYSTEMROOT', 'WINDIR', 'COMSPEC', 'TEMP', 'TMP'] : ['HOME', 'TMPDIR'];
   const result = {};
-  for (const key of allowed) if (typeof source[key] === 'string' && source[key]) result[key] = source[key];
+  if (platform === 'win32') {
+    const allowedSet = new Set(allowed);
+    const indexed = new Map();
+    for (const [sourceKey, value] of Object.entries({ ...source })) {
+      if (!/^[\x00-\x7f]+$/.test(sourceKey)) continue;
+      const canonicalKey = sourceKey.replace(/[a-z]/g, (letter) => String.fromCharCode(letter.charCodeAt(0) - 32));
+      if (!allowedSet.has(canonicalKey) || typeof value !== 'string' || !value) continue;
+      const existing = indexed.get(canonicalKey);
+      if (existing !== undefined && existing !== value) {
+        providerError('reference-provider-environment-ambiguous', 'The provider environment contains conflicting Windows aliases.');
+      }
+      indexed.set(canonicalKey, value);
+    }
+    for (const key of allowed) if (indexed.has(key)) result[key] = indexed.get(key);
+  } else {
+    for (const key of allowed) if (typeof source[key] === 'string' && source[key]) result[key] = source[key];
+  }
   result.LANG = 'C'; result.LC_ALL = 'C'; result.TZ = 'UTC';
   return result;
 }
