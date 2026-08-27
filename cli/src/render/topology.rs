@@ -145,28 +145,46 @@ mod tests {
         assert!(s.contains("excel-lookup → match-build"));
     }
 
-    /// The fixture test above reads a real substrate app, and those are
-    /// well-behaved by construction: one source, one edge out of each node, no
-    /// orphans, no loops, nodes declared in flow order.
-    /// Everything below feeds `format_topology` the shapes a hand-written `.app`
-    /// can have and a fixture never does. `App` is `Deserialize`-only, so the
-    /// graph is spelled as YAML rather than built field-by-field — which also
-    /// keeps the assertions pointed at the renderer instead of at a struct the
-    /// test just filled in.
+    /// Every app in `30-apps/_examples/` shares three properties: no orphans, no
+    /// loops, and nodes declared in flow order. (Fan-out and multiple sources are
+    /// NOT in that list — `qa-drawings-to-tekla.app`, read by the fixture test
+    /// above, has both, and its own description says so.) Those three are exactly
+    /// what the shapes below give up, along with the label forms no example app
+    /// happens to use. `App` is `Deserialize`-only, so the graph is spelled as
+    /// YAML rather than built field-by-field — which also keeps the assertions
+    /// pointed at the renderer instead of at a struct the test just filled in.
     fn app_from(body: &str) -> App {
         serde_yaml::from_str(&format!("app: t\nversion: 0.1.0\ndescription: t\n{body}")).unwrap()
     }
 
-    /// How many times `[<id>]` — the label prefix every node gets — appears.
+    /// How many lines begin with `[<id>]` — the label prefix every node gets.
+    ///
+    /// Anchored to the start of a line rather than matched anywhere in the render,
+    /// because `format_dag` puts connection LABELS in the same brackets
+    /// (`  a → b  [welded parts]`). An unanchored `matches("[a]")` would count a
+    /// node named `a` twice in any dag whose edges carry a label `a`. Node ids
+    /// cannot collide with each other — the closing bracket is part of the needle,
+    /// so `[ab]` does not contain `[a]`.
     fn listed(rendered: &str, id: &str) -> usize {
-        rendered.matches(&format!("[{id}]")).count()
+        let needle = format!("[{id}]");
+        rendered
+            .lines()
+            .filter(|l| l.trim_start().starts_with(&needle))
+            .count()
     }
 
     /// `topological_order` walks the edge chain and then sweeps up whatever the
-    /// walk missed. Both halves have to hold for the header's node count to be
-    /// true, and neither is exercised by a linear fixture: this graph forks
-    /// (`a` has two outgoing edges, and `next_by_id` keeps only one of them) and
-    /// carries a node no edge mentions at all.
+    /// walk missed. Both halves have to hold for the BODY to list as many nodes as
+    /// the header claims — the header itself is `app.nodes.len()`
+    /// (`format_linear`), so it is true whatever the walk does, and the count
+    /// assertion below only guards the header's own format string.
+    ///
+    /// This graph forks (`a` has two outgoing edges, and `next_by_id` keeps only
+    /// one of them) and carries a node no edge mentions. WHICH branch survives the
+    /// fork is deliberately not asserted: last-write-wins is an implementation
+    /// detail of `next_by_id`, not a promise, and pinning it here would freeze an
+    /// arbitrary choice. What is asserted is that losing a branch never costs a
+    /// node its place in the render.
     #[test]
     fn every_node_is_listed_exactly_once_however_the_edges_run() {
         let app = app_from(
@@ -224,12 +242,17 @@ connections:
 ",
         );
         let s = format_topology(&app);
-        let (pa, pb, pc) = (
-            s.find("[a]").unwrap(),
-            s.find("[b]").unwrap(),
-            s.find("[c]").unwrap(),
+        // `unwrap_or_else` rather than `unwrap`: if the renderer regresses to
+        // dropping a node, the panic should name which one and show the render,
+        // not just say `Option::unwrap() on a None value`.
+        let pos = |id: &str| {
+            s.find(&format!("[{id}]"))
+                .unwrap_or_else(|| panic!("node {id} missing from the render: {s}"))
+        };
+        assert!(
+            pos("a") < pos("b") && pos("b") < pos("c"),
+            "edges did not drive the order: {s}"
         );
-        assert!(pa < pb && pb < pc, "edges did not drive the order: {s}");
     }
 
     /// One arrow BETWEEN each pair, so a three-node chain gets two — and the
@@ -264,10 +287,57 @@ connections:
         );
     }
 
+    /// A connection naming an id that is not in `nodes:` — the likeliest typo in a
+    /// hand-written `.app`. `by_id.remove(id)` returns `None` for it, so the walk
+    /// marks it seen and hops straight through to the next id without rendering
+    /// anything. Nothing else in this file reaches that `None` arm: replacing the
+    /// `if let` with `by_id.remove(id).expect(..)` passes every other test here.
+    ///
+    /// `aware app validate` does reject this app (`E_APP_DANGLING_TO`), but
+    /// `app show` never validates — `show()` loads the manifest and prints — so
+    /// this is a render a user can actually get.
+    #[test]
+    fn a_connection_naming_an_unknown_node_renders_the_real_nodes_and_no_ghost() {
+        let app = app_from(
+            "layout: linear
+nodes:
+  - id: a
+    agent: x
+    command: go
+  - id: b
+    agent: x
+    command: go
+connections:
+  - from: a
+    to: ghost
+  - from: ghost
+    to: b
+",
+        );
+        let s = format_topology(&app);
+        for id in ["a", "b"] {
+            assert_eq!(listed(&s, id), 1, "node {id} not listed exactly once: {s}");
+        }
+        assert_eq!(
+            listed(&s, "ghost"),
+            0,
+            "a node that does not exist was rendered: {s}"
+        );
+        assert!(s.contains("2 nodes"), "header counted the ghost: {s}");
+    }
+
     /// A closed loop has no node that is never a destination, so the walk has no
     /// source to start from and contributes nothing. The sweep is then the only
     /// thing standing between a cyclic app and a `Topology (3 nodes, linear):`
     /// header with no nodes under it.
+    ///
+    /// Note what this does NOT claim: `format_linear` still joins the three nodes
+    /// with `│ ▼` arrows, so a cyclic app renders as a straight pipeline and the
+    /// `c → a` edge is invisible. That is a real shortcoming of the linear view
+    /// (the dag view exists for graphs this one cannot draw), and it is a
+    /// production-behaviour question, not a test one — asserting only membership
+    /// here is deliberate, so that a later fix to how cycles are DRAWN does not
+    /// have to fight a test that froze today's drawing as correct.
     #[test]
     fn a_closed_loop_of_edges_still_lists_every_node() {
         let app = app_from(
@@ -297,22 +367,35 @@ connections:
         }
     }
 
-    /// A chain that re-enters itself (`a → b → c → b`) DOES have a source, so the
-    /// walk runs and reaches `b` twice. It has to stop there: the guard is what
-    /// makes `app show` terminate on a hand-written app with a loop in it, and
-    /// what keeps `b` off the list twice.
+    /// A chain that re-enters itself (`a → b → c → b`) DOES have a source, so
+    /// unlike the closed loop above the walk actually runs, and it reaches `b`
+    /// twice. `if !seen.insert(id) { break; }` is what stops it — this is the only
+    /// test that reaches that guard, and `app show` hanging on a hand-written app
+    /// with a loop in it is what it prevents.
+    ///
+    /// Two honest limits on what this can detect. The no-duplicate half is NOT
+    /// this guard's doing — `by_id.remove(id)` takes `b` out of the map on the
+    /// first visit, so a second visit pushes nothing regardless; swapping `remove`
+    /// for `get` leaves every assertion here green. And deleting the guard makes
+    /// the walk non-terminating, so the regression surfaces as a hung test binary
+    /// (libtest has no per-test timeout) rather than a red one. The order
+    /// assertion below is what gives this test a failure mode it can actually
+    /// report: it pins WHERE the walk stopped, not merely that it did.
     #[test]
     fn a_path_that_re_enters_itself_terminates_without_repeating_a_node() {
+        // Declared c, a, b — deliberately NOT the flow order, so the order
+        // assertion below distinguishes "the walk produced this" from "the sweep
+        // fell back to declaration order".
         let app = app_from(
             "layout: linear
 nodes:
+  - id: c
+    agent: x
+    command: go
   - id: a
     agent: x
     command: go
   - id: b
-    agent: x
-    command: go
-  - id: c
     agent: x
     command: go
 connections:
@@ -328,12 +411,28 @@ connections:
         for id in ["a", "b", "c"] {
             assert_eq!(listed(&s, id), 1, "node {id} not listed once: {s}");
         }
+        // The walk ran (unlike the closed loop) and stopped on re-entry, so the
+        // render is the walk's order a, b, c — not the sweep's fallback.
+        let pos = |id: &str| {
+            s.find(&format!("[{id}]"))
+                .unwrap_or_else(|| panic!("node {id} missing from the render: {s}"))
+        };
+        assert!(
+            pos("a") < pos("b") && pos("b") < pos("c"),
+            "walk did not stop where the path re-enters: {s}"
+        );
     }
 
     /// The three label shapes. A node can name an agent (with or without a
-    /// command), carry inline code instead, or be a bare primitive node —
+    /// command), carry inline glue instead, or be a bare primitive node —
     /// `for-each`, `approve`, `assert` and friends all render through this last
-    /// branch, and the substrate fixtures above exercise only the first.
+    /// branch, and the fixture test above exercises only the first.
+    ///
+    /// `kind: predicate` rather than any other word: `validate_app` rejects every
+    /// inline kind but that one (`E_APP_INLINE_KIND`), so any other value would
+    /// make this fixture an app the substrate refuses to install or run, reachable
+    /// only because `app show` does not validate. The renderer is kind-agnostic —
+    /// it prints whatever string is there — so the valid value costs no coverage.
     #[test]
     fn a_node_label_names_its_agent_command_its_inline_kind_or_neither() {
         let app = app_from(
@@ -346,7 +445,7 @@ nodes:
     agent: tekla
   - id: inline-node
     inline:
-      kind: python
+      kind: predicate
       description: filter the rows
   - id: bare
 ",
@@ -354,7 +453,7 @@ nodes:
         let s = format_topology(&app);
         assert!(s.contains("[with-command] (tekla/watch)"), "{s}");
         assert!(s.contains("[without-command] (tekla/?)"), "{s}");
-        assert!(s.contains("[inline-node] (inline/python)"), "{s}");
+        assert!(s.contains("[inline-node] (inline/predicate)"), "{s}");
         // A bare node gets the id and nothing else — no empty parens, no `/?`.
         assert!(
             s.lines().any(|l| l.trim() == "[bare]"),
@@ -363,8 +462,16 @@ nodes:
     }
 
     /// The dag view annotates a node with its grid slot, and a slot needs both
-    /// halves to mean anything. A node given only one of the two is rendered as
-    /// unpositioned rather than as half a coordinate.
+    /// halves to mean anything. A node given only one of the two — in either
+    /// direction — is rendered as unpositioned rather than as half a coordinate.
+    ///
+    /// The three "is not positioned" checks below are guarded by an explicit
+    /// presence assertion each. Without that they are conditional on finding the
+    /// node's line at all, so a `format_dag` that stopped emitting unpositioned
+    /// nodes entirely would leave the loop iterating over nothing and the test
+    /// green — which is exactly the shape of vacuity this file is being audited
+    /// for. Replacing the `_ => String::new()` arm with `_ => continue` is the
+    /// mutation that catches it.
     #[test]
     fn dag_shows_a_grid_position_only_when_both_row_and_col_are_given() {
         let app = app_from(
@@ -375,25 +482,41 @@ nodes:
     command: go
     row: 1
     col: 2
-  - id: half-placed
+  - id: half-a
     agent: x
     command: go
     row: 3
+  - id: half-b
+    agent: x
+    command: go
+    col: 4
   - id: unplaced
     agent: x
     command: go
 ",
         );
         let s = format_topology(&app);
+        // The header counts nodes on the dag side too, not just the linear side.
+        assert!(s.contains("4 nodes"), "dag header lost the node count: {s}");
         // Row and col in that order — a swap here silently mislabels the grid.
-        assert!(s.contains("[placed] (x/go)  (row 1, col 2)"), "{s}");
-        for line in s.lines() {
-            if line.contains("[half-placed]") || line.contains("[unplaced]") {
-                assert!(
-                    !line.contains("row") && !line.contains("col"),
-                    "partial coordinate rendered as a position: {line}"
-                );
-            }
+        // Asserted as a fragment rather than against the whole line, so an
+        // unrelated change to `node_label` cannot break a coordinate test.
+        assert!(s.contains("(row 1, col 2)"), "grid slot not rendered: {s}");
+        assert_eq!(listed(&s, "placed"), 1, "{s}");
+        // Ids deliberately free of the substrings "row" and "col" — the check
+        // below greps the whole line, so a node called `row-only` would fail on
+        // its own name.
+        for id in ["half-a", "half-b", "unplaced"] {
+            // Presence first — otherwise the check below is vacuous.
+            assert_eq!(listed(&s, id), 1, "node {id} missing from the render: {s}");
+            let line = s
+                .lines()
+                .find(|l| l.trim_start().starts_with(&format!("[{id}]")))
+                .unwrap_or_else(|| panic!("node {id} missing from the render: {s}"));
+            assert!(
+                !line.contains("row") && !line.contains("col"),
+                "partial coordinate rendered as a position: {line}"
+            );
         }
     }
 
