@@ -58,6 +58,30 @@ fn status_of(home: &std::path::Path, handle: &str) -> String {
         .to_string()
 }
 
+/// Downstream callers must feature-detect the generic vault seam rather than
+/// infer it from a CLI version. The identifiers deliberately retain the
+/// consumer-facing `secret.*` vocabulary while mapping to AWARE's canonical
+/// `credential put/delete` verbs.
+#[test]
+fn capabilities_publish_the_versioned_put_and_revoke_fingerprints() {
+    let tmp = tempfile::tempdir().unwrap();
+    let output = json_run(tmp.path(), &["capabilities"], None);
+
+    assert_eq!(output["schemaVersion"], 1);
+    assert_eq!(
+        output["capabilities"],
+        serde_json::json!(["secret.put.v1", "secret.revoke.v1"])
+    );
+    assert_eq!(output.as_object().unwrap().len(), 2);
+
+    aware(tmp.path())
+        .args(["credential", "capabilities"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("secret.put.v1"))
+        .stdout(predicate::str::contains("secret.revoke.v1"));
+}
+
 /// The full lifecycle the issue asks for, in the order a caller performs it:
 /// provision, rotate, revoke — with `status` as the observer at each step and
 /// the store never touched by hand.

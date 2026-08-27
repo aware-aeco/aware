@@ -46,6 +46,33 @@ pub trait AgentInvoker: Send + Sync {
         args: Value,
     ) -> Result<StreamingHandle, AwareError>;
 
+    /// Invoke a single-lifecycle command while carrying the separately rendered
+    /// value that is safe to persist. Ordinary transports never record their
+    /// arguments, so the default ignores `record_args`. App-backed transports
+    /// override this and pass both channels into the nested orchestrator.
+    async fn invoke_single_record_safe(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+        record_args: Value,
+    ) -> Result<Value, AwareError> {
+        let _ = record_args;
+        self.invoke_single(agent, command, args).await
+    }
+
+    /// Streaming counterpart of [`Self::invoke_single_record_safe`].
+    async fn invoke_stream_record_safe(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+        record_args: Value,
+    ) -> Result<StreamingHandle, AwareError> {
+        let _ = record_args;
+        self.invoke_stream(agent, command, args).await
+    }
+
     /// [`Self::invoke_single`], plus a sink for the progress records the command publishes WHILE it
     /// runs (#405). Records arrive on `progress` in the order the producer wrote them; the caller
     /// mirrors them into the trace so a consumer can act on them before the single output exists.
@@ -62,6 +89,23 @@ pub trait AgentInvoker: Send + Sync {
     ) -> Result<Value, AwareError> {
         let _ = progress;
         self.invoke_single(agent, command, args).await
+    }
+
+    /// Progress-reporting counterpart of [`Self::invoke_single_record_safe`].
+    /// Default transports preserve their existing progress behavior and ignore
+    /// the record-only channel; [`DispatchInvoker`] overrides this for app-backed
+    /// agents so nested provenance receives it.
+    async fn invoke_single_progress_record_safe(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+        record_args: Value,
+        progress: Option<mpsc::Sender<Value>>,
+    ) -> Result<Value, AwareError> {
+        let _ = record_args;
+        self.invoke_single_progress(agent, command, args, progress)
+            .await
     }
 }
 
@@ -2608,6 +2652,47 @@ pub struct AppTransportCtx {
 }
 
 impl DispatchInvoker {
+    /// Mirror exposed-input coercions into the record-safe channel only when a
+    /// value was unchanged by redaction. Credential-derived leaves differ from
+    /// the original and stay blinded; ordinary values acquire the exact type the
+    /// nested execution receives. When coercion changes a credential-derived
+    /// scalar into an array or object, rebuild the blinded value with the live
+    /// shape so every nested iteration still has a record-safe counterpart.
+    fn align_record_args_after_coercion(original: &Value, live: &Value, record: &mut Value) {
+        let (Some(original), Some(live), Some(record)) = (
+            original.as_object(),
+            live.as_object(),
+            record.as_object_mut(),
+        ) else {
+            return;
+        };
+        for (key, live_value) in live {
+            if let (Some(original_value), Some(record_value)) =
+                (original.get(key), record.get_mut(key))
+            {
+                if record_value == original_value {
+                    *record_value = live_value.clone();
+                } else if std::mem::discriminant(record_value) != std::mem::discriminant(live_value)
+                {
+                    // Templating can leave a partially redacted structured value
+                    // as JSON text. Parse that safe text before falling back to
+                    // blinding the live shape, so ordinary sibling fields survive.
+                    let parsed_safe = record_value.as_str().and_then(|text| {
+                        serde_json::from_str::<Value>(text).ok().filter(|parsed| {
+                            std::mem::discriminant(parsed) == std::mem::discriminant(live_value)
+                        })
+                    });
+                    *record_value = parsed_safe.unwrap_or_else(|| {
+                        crate::runtime::template::blinded(
+                            live_value,
+                            &std::collections::BTreeSet::new(),
+                        )
+                    });
+                }
+            }
+        }
+    }
+
     /// Construct the top-level dispatch invoker, wiring app-backed-agent support
     /// from the given paths + run posture.
     pub fn new(
@@ -2740,8 +2825,11 @@ impl DispatchInvoker {
         agent: &str,
         command: &str,
         mut args: Value,
+        mut record_args: Value,
     ) -> Result<Value, AwareError> {
+        let original_args = args.clone();
         let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
+        Self::align_record_args_after_coercion(&original_args, &args, &mut record_args);
         let backed_by = app.app.clone();
         let run_id = crate::runtime::provenance::run_id_now();
         let log_path = crate::runtime::provenance::log_path_for(
@@ -2754,6 +2842,7 @@ impl DispatchInvoker {
         crate::runtime::orchestrator::run_exposed_app_one_shot(
             app,
             args,
+            record_args,
             self.agents_dir.clone(),
             self.nested_leaf(),
             provenance,
@@ -2772,8 +2861,11 @@ impl DispatchInvoker {
         agent: &str,
         command: &str,
         mut args: Value,
+        mut record_args: Value,
     ) -> Result<StreamingHandle, AwareError> {
+        let original_args = args.clone();
         let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
+        Self::align_record_args_after_coercion(&original_args, &args, &mut record_args);
         let backed_by = app.app.clone();
         let run_id = crate::runtime::provenance::run_id_now();
         let log_path = crate::runtime::provenance::log_path_for(
@@ -2805,6 +2897,7 @@ impl DispatchInvoker {
             let res = crate::runtime::orchestrator::run_exposed_app_stream(
                 app,
                 args,
+                record_args,
                 agents_dir,
                 leaf,
                 provenance,
@@ -2916,6 +3009,17 @@ impl AgentInvoker for DispatchInvoker {
         command: &str,
         args: Value,
     ) -> Result<Value, AwareError> {
+        self.invoke_single_record_safe(agent, command, args.clone(), args)
+            .await
+    }
+
+    async fn invoke_single_record_safe(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+        record_args: Value,
+    ) -> Result<Value, AwareError> {
         let dir = self.agents_dir.clone();
         match self.transport_kind(agent)? {
             TransportKind::Cli => {
@@ -2933,7 +3037,7 @@ impl AgentInvoker for DispatchInvoker {
             }
             TransportKind::App => match &self.app_ctx {
                 Some(app_ctx) => {
-                    self.dispatch_app_single(app_ctx, agent, command, args)
+                    self.dispatch_app_single(app_ctx, agent, command, args, record_args)
                         .await
                 }
                 None => Err(Self::nested_recursion_error(agent)),
@@ -2958,6 +3062,18 @@ impl AgentInvoker for DispatchInvoker {
         args: Value,
         progress: Option<mpsc::Sender<Value>>,
     ) -> Result<Value, AwareError> {
+        self.invoke_single_progress_record_safe(agent, command, args.clone(), args, progress)
+            .await
+    }
+
+    async fn invoke_single_progress_record_safe(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+        record_args: Value,
+        progress: Option<mpsc::Sender<Value>>,
+    ) -> Result<Value, AwareError> {
         match self.transport_kind(agent)? {
             TransportKind::Cli => {
                 CliInvoker {
@@ -2967,7 +3083,10 @@ impl AgentInvoker for DispatchInvoker {
                 .invoke_single_progress(agent, command, args, progress)
                 .await
             }
-            _ => self.invoke_single(agent, command, args).await,
+            _ => {
+                self.invoke_single_record_safe(agent, command, args, record_args)
+                    .await
+            }
         }
     }
 
@@ -2976,6 +3095,17 @@ impl AgentInvoker for DispatchInvoker {
         agent: &str,
         command: &str,
         args: Value,
+    ) -> Result<StreamingHandle, AwareError> {
+        self.invoke_stream_record_safe(agent, command, args.clone(), args)
+            .await
+    }
+
+    async fn invoke_stream_record_safe(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+        record_args: Value,
     ) -> Result<StreamingHandle, AwareError> {
         let dir = self.agents_dir.clone();
         match self.transport_kind(agent)? {
@@ -2994,7 +3124,7 @@ impl AgentInvoker for DispatchInvoker {
             }
             TransportKind::App => match &self.app_ctx {
                 Some(app_ctx) => {
-                    self.dispatch_app_stream(app_ctx, agent, command, args)
+                    self.dispatch_app_stream(app_ctx, agent, command, args, record_args)
                         .await
                 }
                 None => Err(Self::nested_recursion_error(agent)),
@@ -3425,6 +3555,40 @@ mod stream_pump_tests {
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn record_safe_args_follow_coercion_without_restoring_redacted_values() {
+        let original = json!({
+            "count": "05",
+            "token": "secret-live-value",
+            "tokens": "[\"secret-one\",\"secret-two\"]",
+            "items": "[{\"token\":\"secret-live-value\",\"label\":\"visible\"}]"
+        });
+        let live = json!({
+            "count": 5,
+            "token": "secret-live-value",
+            "tokens": ["secret-one", "secret-two"],
+            "items": [{"token": "secret-live-value", "label": "visible"}]
+        });
+        let mut record = json!({
+            "count": "05",
+            "token": "[redacted]",
+            "tokens": "[redacted]",
+            "items": "[{\"token\":\"[redacted]\",\"label\":\"visible\"}]"
+        });
+
+        DispatchInvoker::align_record_args_after_coercion(&original, &live, &mut record);
+
+        assert_eq!(
+            record,
+            json!({
+                "count": 5,
+                "token": "[redacted]",
+                "tokens": ["[redacted]", "[redacted]"],
+                "items": [{"token": "[redacted]", "label": "visible"}]
+            })
+        );
+    }
 
     #[test]
     fn vision_cache_key_is_content_addressed() {

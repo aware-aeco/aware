@@ -54,6 +54,12 @@ aware
 │
 ├── disconnect <integration> [--as <alias>]    delete credential file
 │
+├── credential ...                      manage opaque credentials AWARE does not mint
+│   ├── put <handle>                    store/rotate from stdin (or file/env)
+│   ├── delete <handle>                 revoke idempotently
+│   ├── status <handle>                 report present/missing/unusable
+│   └── capabilities                    advertise stable machine-readable fingerprints
+│
 ├── skill ...                           skill-builder commands
 │   ├── create <agent> <skill-name>     new skill via skill-creator
 │   ├── port <source> <target-agent>    port from external source
@@ -387,6 +393,20 @@ Contract:
 - Handles are lowercase `a-z0-9`, `-`, `_`, dot-separated, starting and ending
   alphanumeric. A registered OAuth integration is refused and points at `aware connect`,
   which owns its refresh token; the `oauth-app.` prefix is reserved for BYO client secrets.
+
+`aware --json credential capabilities` is the fail-closed discovery surface for callers
+that provision generic local-agent credentials. It returns the bare JSON object:
+
+```json
+{"schemaVersion":1,"capabilities":["secret.put.v1","secret.revoke.v1"]}
+```
+
+`secret.put.v1` means the canonical `credential put <handle>` contract above: raw opaque
+secret bytes arrive through stdin by default, never argv, and success returns only
+`status` plus the resolved `handle`. `secret.revoke.v1` means the canonical idempotent
+`credential delete <handle>` contract. The identifiers describe semantic capabilities;
+they do not introduce a second `secret` command group. Callers must check the exact
+identifiers rather than infer support from `aware --version`.
 
 ### `aware doctor`
 
