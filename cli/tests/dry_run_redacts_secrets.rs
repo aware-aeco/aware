@@ -619,3 +619,220 @@ requires: []
         "one unpreviewable leaf must not take its siblings down with it:\n{trace}"
     );
 }
+
+/// An exposed app is a second provenance boundary (#451). The caller renders
+/// its vault reference before dispatch, so the nested app receives an ordinary
+/// `inputs.token` value with no `secrets` reference left to blind. The runtime
+/// must carry the caller's record-safe rendering across that boundary while it
+/// keeps sending the real rendering to the nested app's live execution context.
+///
+/// Both nested records are pinned here: `run-start.config` records the routed
+/// inputs directly, and the inner write node re-renders that same value into a
+/// `would-write.proposed_inputs` record.
+#[test]
+fn an_exposed_app_records_safe_inputs_at_both_nested_provenance_sites() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    let src = tmp.path().join("src");
+    copy_dir(
+        &repo_root().join("20-agents/_core/http"),
+        &home.join("agents/http"),
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["credential", "put", "my-api"])
+        .write_stdin(SECRET)
+        .assert()
+        .success();
+    std::fs::write(
+        home.join("credentials/batch.json"),
+        r#"["sk-nested-loop-one","sk-nested-loop-two"]"#,
+    )
+    .unwrap();
+    // The credential is itself a JSON string. The exposed array contract parses
+    // it into two live loop items; the record-safe channel must acquire the same
+    // cardinality without restoring either secret.
+    std::fs::write(
+        home.join("credentials/coerced-batch.json"),
+        r#""[\"sk-coerced-one\",\"sk-coerced-two\"]""#,
+    )
+    .unwrap();
+
+    let inner_dir = src.join("inner");
+    std::fs::create_dir_all(&inner_dir).unwrap();
+    std::fs::write(
+        inner_dir.join("inner.flo"),
+        r#"app: inner
+version: 0.2.0
+description: exposed writer receiving a caller-routed token
+exposes-as-agent: true
+exposed-commands:
+  run:
+    lifecycle: single
+    inputs:
+      token:
+        type: string
+      label:
+        type: string
+      tokens:
+        type: array
+      coerced_tokens:
+        type: array
+      items:
+        type: array
+      count:
+        type: integer
+    outputs:
+      type: single
+      schema:
+        ok: bool
+nodes:
+  - id: write-it
+    agent: http
+    command: post
+    safety:
+      transaction-group: nested-redaction-probe
+      snapshot: false
+    config:
+      url: "http://127.0.0.1:1/unused"
+      headers:
+        Authorization: "{{ inputs.token }}"
+        X-Label: "{{ inputs.label }}"
+        X-Count: "{{ inputs.count }}"
+  - id: loop
+    for-each: "{{ inputs.tokens }}"
+    do:
+      - id: write-each
+        agent: http
+        command: post
+        safety:
+          transaction-group: nested-redaction-probe
+          snapshot: false
+        config:
+          url: "http://127.0.0.1:1/unused"
+          headers:
+            Authorization: "Bearer {{ item }}"
+  - id: mixed-loop
+    for-each: "{{ inputs.items }}"
+    do:
+      - id: write-mixed
+        agent: http
+        command: post
+        safety:
+          transaction-group: nested-redaction-probe
+          snapshot: false
+        config:
+          url: "http://127.0.0.1:1/unused"
+          headers:
+            Authorization: "Bearer {{ item.token }}"
+            X-Label: "{{ item.label }}"
+  - id: coerced-loop
+    for-each: "{{ inputs.coerced_tokens }}"
+    do:
+      - id: write-coerced
+        agent: http
+        command: post
+        safety:
+          transaction-group: nested-redaction-probe
+          snapshot: false
+        config:
+          url: "http://127.0.0.1:1/unused"
+          headers:
+            Authorization: "Coerced {{ item }}"
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    let outer_dir = src.join("outer");
+    std::fs::create_dir_all(&outer_dir).unwrap();
+    std::fs::write(
+        outer_dir.join("outer.flo"),
+        r#"app: outer
+version: 0.1.0
+description: routes a vault credential into an exposed app
+nodes:
+  - id: call-inner
+    agent: inner
+    command: run
+    config:
+      token: "Bearer {{ secrets['my-api'].access_token }}"
+      label: "{{ inputs.label }}"
+      tokens: "{{ secrets.batch }}"
+      coerced_tokens: "{{ secrets['coerced-batch'] }}"
+      items:
+        - token: "{{ secrets['my-api'].access_token }}"
+          label: visible-loop-label
+      count: "{{ inputs.count }}"
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    for app in [&inner_dir, &outer_dir] {
+        aware(&home)
+            .args(["app", "install"])
+            .arg(app)
+            .assert()
+            .success();
+    }
+
+    aware(&home)
+        .args([
+            "app",
+            "run",
+            "outer",
+            "--dry-run",
+            "--input",
+            "label=ordinary-value",
+            "--input",
+            "count=05",
+        ])
+        .assert()
+        .success();
+
+    let trace = traces(&home);
+    for leaked in [
+        SECRET,
+        "sk-nested-loop-one",
+        "sk-nested-loop-two",
+        "sk-coerced-one",
+        "sk-coerced-two",
+    ] {
+        assert!(
+            !trace.contains(leaked),
+            "the caller's credential crossed into a nested trace ({leaked}):\n{trace}"
+        );
+    }
+    assert_eq!(
+        trace.matches("Bearer [redacted]").count(),
+        5,
+        "nested run-start, the scalar write, and all loop iterations must carry the record-safe value:\n{trace}"
+    );
+    assert_eq!(
+        trace.matches("Coerced [redacted]").count(),
+        2,
+        "every item created by exposed-input array coercion needs a record-safe counterpart:\n{trace}"
+    );
+    assert_eq!(
+        trace.matches("ordinary-value").count(),
+        2,
+        "record-safe routing must preserve ordinary top-level inputs in both nested records:\n{trace}"
+    );
+    assert_eq!(
+        trace.matches("visible-loop-label").count(),
+        2,
+        "a mixed item's ordinary field must survive in run-start and would-write:\n{trace}"
+    );
+    assert!(
+        trace.contains(r#""count":5"#) && trace.contains(r#""X-Count":5"#),
+        "record-safe inputs must receive the same exposed-input coercion as execution:\n{trace}"
+    );
+    assert!(
+        !trace.contains("\"05\""),
+        "the uncoerced input must not remain in nested provenance:\n{trace}"
+    );
+}

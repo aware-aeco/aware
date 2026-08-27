@@ -41,7 +41,16 @@ pub struct Orchestrator {
     pub invoker: Arc<dyn AgentInvoker>,
     pub provenance: ProvenanceWriter,
     pub ctx: RuntimeContext,
-    pub inputs: Value,
+    /// The policy-selected config written to `run-start`. Top-level runs retain
+    /// their existing empty config; nested apps receive the caller's safe inputs.
+    pub run_config: Value,
+    /// Inputs safe to use when rendering other provenance records. Top-level
+    /// runs keep ordinary CLI inputs here; exposed nested apps receive the
+    /// caller's separately rendered input channel.
+    pub record_inputs: Value,
+    /// Record-safe counterpart of the current `for-each` binding. This keeps
+    /// ordinary fields visible when only part of an item came from a credential.
+    pub record_item: Option<Value>,
     pub fan_in: FanInState,
     /// When `true`, write-mode nodes skip the agent transport and emit a
     /// `would-write:` provenance event instead of mutating state. Read-mode
@@ -82,7 +91,7 @@ impl Orchestrator {
             run_id: self.run_id.clone(),
             app: self.app.app.clone(),
             instance: self.instance.clone(),
-            config: self.inputs.clone(),
+            config: self.run_config.clone(),
         })
         .await?;
 
@@ -159,7 +168,7 @@ impl Orchestrator {
             run_id: self.run_id.clone(),
             app: self.app.app.clone(),
             instance: self.instance.clone(),
-            config: self.inputs.clone(),
+            config: self.run_config.clone(),
         })
         .await?;
 
@@ -206,10 +215,9 @@ impl Orchestrator {
                 AwareError::Validation(format!("node `{source_id}` declares no agent"))
             })?;
             let command = node.command.as_deref().unwrap_or("");
-            let args = render_config(
-                &yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?,
-                &self.ctx,
-            )?;
+            let params = yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?;
+            let args = render_config(&params, &self.ctx)?;
+            let record_args = render_for_record(&params, &self.record_render_context(&params));
 
             self.emit(RunEvent::NodeStart {
                 ts: now_iso(),
@@ -235,7 +243,10 @@ impl Orchestrator {
                     // tx clone dropped here → contributes to channel closure.
                 });
             } else {
-                let handle = self.invoker.invoke_stream(agent, command, args).await?;
+                let handle = self
+                    .invoker
+                    .invoke_stream_record_safe(agent, command, args, record_args)
+                    .await?;
                 // Destructure — take rx into the forwarding task, keep stop for shutdown.
                 let (rx, stop) = (handle.rx, handle.stop);
                 stop_senders.push(stop);
@@ -603,6 +614,7 @@ impl Orchestrator {
 
         let params = yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?;
         let args = render_config(&params, &self.ctx)?;
+        let record_args = render_for_record(&params, &self.record_render_context(&params));
 
         // Dry-run / simulate short-circuit — mirrors `execute_node` so that
         // streaming (watcher) compositions validate end-to-end without touching
@@ -627,7 +639,7 @@ impl Orchestrator {
                     // live run would put on the wire, credential included (#448).
                     proposed_inputs: render_for_record(
                         &params,
-                        &self.ctx.with_redacted_secrets(&params),
+                        &self.record_render_context(&params),
                     ),
                     safety: safety_block,
                 })
@@ -649,11 +661,11 @@ impl Orchestrator {
             if self.simulate {
                 self.synthesize_output(agent_id, command)
             } else {
-                self.invoke_reporting_progress(&node.id, agent_id, command, args)
+                self.invoke_reporting_progress(&node.id, agent_id, command, args, record_args)
                     .await?
             }
         } else {
-            self.invoke_reporting_progress(&node.id, agent_id, command, args)
+            self.invoke_reporting_progress(&node.id, agent_id, command, args, record_args)
                 .await?
         };
 
@@ -699,6 +711,58 @@ impl Orchestrator {
         self.provenance.write(&event).await
     }
 
+    /// Clone the live render context and replace caller-routed inputs with the
+    /// separately rendered values that are safe to persist. A streaming event
+    /// may overlay `upstream.inputs`; replace only entries that still equal the
+    /// live app input so genuine event fields keep their own provenance.
+    fn record_render_context(&self, params: &Value) -> RuntimeContext {
+        let live_inputs = self.ctx.inputs.clone();
+        let mut record = self.ctx.clone();
+        record.inputs = self.record_inputs.clone();
+        if let Some(item) = &self.record_item {
+            record.upstream.insert("item".to_string(), item.clone());
+        }
+
+        if let (Value::Object(live), Value::Object(safe), Some(Value::Object(overlay))) = (
+            &live_inputs,
+            &self.record_inputs,
+            record.upstream.get_mut("inputs"),
+        ) {
+            // Replace only values inherited from the app's live inputs; event
+            // fields that happen to share a name but carry a different value
+            // retain their own provenance. Redaction can also rename an object
+            // key, so a live key with no safe counterpart must be removed rather
+            // than surviving as an alias around the record-safe channel.
+            let inherited_live_keys: Vec<String> = live
+                .iter()
+                .filter(|(key, live_value)| overlay.get(*key) == Some(*live_value))
+                .map(|(key, _)| key.clone())
+                .collect();
+            for key in inherited_live_keys {
+                match safe.get(&key) {
+                    Some(safe_value) => {
+                        overlay.insert(key, safe_value.clone());
+                    }
+                    None => {
+                        overlay.remove(&key);
+                    }
+                }
+            }
+            // A credential-derived key is itself secret material, so blinding
+            // may replace it with `[redacted]`. Add that safe-only shape without
+            // overwriting a genuine streaming event field of the same name.
+            for (key, safe_value) in safe {
+                if !live.contains_key(key) {
+                    overlay
+                        .entry(key.clone())
+                        .or_insert_with(|| safe_value.clone());
+                }
+            }
+        }
+
+        record.with_redacted_secrets(params)
+    }
+
     /// Invoke a one-shot command, writing every progress record it publishes into the trace AS IT
     /// ARRIVES (#405).
     ///
@@ -716,13 +780,14 @@ impl Orchestrator {
         agent: &str,
         command: &str,
         args: Value,
+        record_args: Value,
     ) -> Result<Value, AwareError> {
         let (tx, mut rx) = tokio::sync::mpsc::channel::<Value>(64);
         let invoker = std::sync::Arc::clone(&self.invoker);
         let (agent, command) = (agent.to_string(), command.to_string());
         let call = async move {
             invoker
-                .invoke_single_progress(&agent, &command, args, Some(tx))
+                .invoke_single_progress_record_safe(&agent, &command, args, record_args, Some(tx))
                 .await
         };
         tokio::pin!(call);
@@ -846,6 +911,8 @@ impl Orchestrator {
             let config_json =
                 yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?;
             let args = render_config(&config_json, &self.ctx)?;
+            let record_args =
+                render_for_record(&config_json, &self.record_render_context(&config_json));
 
             // Dry-run / simulate short-circuit. Write-mode nodes never touch
             // the transport in either mode: they emit a `would-write:` event
@@ -872,7 +939,7 @@ impl Orchestrator {
                         // included (#448).
                         proposed_inputs: render_for_record(
                             &config_json,
-                            &self.ctx.with_redacted_secrets(&config_json),
+                            &self.record_render_context(&config_json),
                         ),
                         safety: safety_block,
                     })
@@ -905,7 +972,7 @@ impl Orchestrator {
             }
 
             let output = self
-                .invoke_reporting_progress(&node.id, agent_id, command, args)
+                .invoke_reporting_progress(&node.id, agent_id, command, args, record_args)
                 .await?;
             self.emit(RunEvent::NodeOutput {
                 ts: now_iso(),
@@ -1029,32 +1096,54 @@ impl Orchestrator {
         // element would leak into a sibling body node's `{{ item }}` — a topology
         // the compiler explicitly scopes (app_lock `nested_body_keeps_outer_iteration_var_in_scope`).
         let prev_item = self.ctx.upstream.get("item").cloned();
+        let prev_record_item = self.record_item.clone();
         // Saved and restored with the binding it describes: an inner loop over a
         // plain list must not clear the flag an enclosing vault-drawn loop set.
         let prev_item_from_vault = self.ctx.item_from_vault;
+        let live_collection = template::resolve_value(expr, &self.ctx);
+        let expr_param = Value::String(expr.to_string());
+        let record_collection =
+            template::resolve_value(expr, &self.record_render_context(&expr_param));
         // Straight from the vault, OR selected out of an element an enclosing
         // vault-drawn loop already lifted from it: `{{ item.tokens }}` nested
         // inside `for-each: "{{ secrets.batch }}"` is still credential material,
-        // and keying on this loop's own head alone called it clean.
+        // and keying on this loop's own head alone called it clean. Nested apps
+        // bind the corresponding `record_collection` item below, preserving a
+        // mixed item's ordinary fields while its credential leaves stay blind.
         self.ctx.item_from_vault = template::reads_secrets_namespace(expr)
             || (prev_item_from_vault && template::reads_item_binding(expr));
 
-        let mut collection = match template::resolve_value(expr, &self.ctx) {
+        let mut collection = match live_collection {
             Value::Array(items) => items,
             Value::Null => Vec::new(),
             // A non-array, non-null value iterates once over itself.
             other => vec![other],
         };
+        let mut record_collection = match record_collection {
+            Value::Array(items) => items,
+            Value::Null => Vec::new(),
+            other => vec![other],
+        };
         if collection.is_empty() && self.simulate {
-            collection.push(serde_json::json!({ "simulated": true }));
+            let simulated = serde_json::json!({ "simulated": true });
+            collection.push(simulated.clone());
+            record_collection.push(simulated);
         }
 
         let body = node.do_.clone().unwrap_or_default();
         let mut results: Vec<Value> = Vec::with_capacity(collection.len());
-        for item in collection {
+        for (index, item) in collection.into_iter().enumerate() {
             // Bind the per-iteration variable `{{ item }}` — the reserved
             // for-each prefix the compiler scopes inside the body (#117-3).
+            // A missing safe counterpart is never permission to fall back to
+            // the live item. This is a defensive backstop for any future input
+            // coercion that changes collection cardinality.
+            let record_item = record_collection
+                .get(index)
+                .cloned()
+                .unwrap_or_else(|| template::blinded(&item, &std::collections::BTreeSet::new()));
             self.ctx.record_output("item", item);
+            self.record_item = Some(record_item);
             let mut iter_output = Value::Null;
             let mut gated = false;
             for body_node in &body {
@@ -1092,6 +1181,7 @@ impl Orchestrator {
             }
         }
         self.ctx.item_from_vault = prev_item_from_vault;
+        self.record_item = prev_record_item;
 
         let aggregate = Value::Array(results);
         self.emit(RunEvent::NodeOutput {
@@ -1361,6 +1451,7 @@ fn nested_runtime_context(
 pub async fn run_exposed_app_one_shot(
     app: App,
     inputs: Value,
+    record_inputs: Value,
     agents_dir: PathBuf,
     invoker: Arc<dyn AgentInvoker>,
     provenance: ProvenanceWriter,
@@ -1379,7 +1470,9 @@ pub async fn run_exposed_app_one_shot(
         invoker,
         provenance,
         ctx,
-        inputs,
+        run_config: record_inputs.clone(),
+        record_inputs,
+        record_item: None,
         fan_in: FanInState::default(),
         dry_run,
         simulate,
@@ -1396,6 +1489,7 @@ pub async fn run_exposed_app_one_shot(
 pub async fn run_exposed_app_stream(
     app: App,
     inputs: Value,
+    record_inputs: Value,
     agents_dir: PathBuf,
     invoker: Arc<dyn AgentInvoker>,
     provenance: ProvenanceWriter,
@@ -1416,7 +1510,9 @@ pub async fn run_exposed_app_stream(
         invoker,
         provenance,
         ctx,
-        inputs,
+        run_config: record_inputs.clone(),
+        record_inputs,
+        record_item: None,
         fan_in: FanInState::default(),
         dry_run,
         simulate,
@@ -1910,13 +2006,54 @@ requires: []
             invoker,
             provenance: prov,
             ctx: RuntimeContext::default(),
-            inputs: serde_json::json!({}),
+            run_config: serde_json::json!({}),
+            record_inputs: serde_json::json!({}),
+            record_item: None,
             fan_in: FanInState::default(),
             dry_run: false,
             simulate: false,
             exposed_tx: None,
         };
         (orch, tmp, log_path)
+    }
+
+    #[tokio::test]
+    async fn record_overlay_removes_live_keys_renamed_by_redaction() {
+        let app: App = serde_yaml::from_str(
+            r#"
+app: safe-overlay
+version: 0.1.0
+description: x
+nodes: []
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+        let (mut orch, _tmp, _log_path) =
+            make_orchestrator(app, Arc::new(MockInvoker::new())).await;
+        orch.ctx.inputs = serde_json::json!({ "access_token": "secret-live-value" });
+        orch.record_inputs = serde_json::json!({ "[redacted]": "[redacted]" });
+        orch.ctx.upstream.insert(
+            "inputs".to_string(),
+            serde_json::json!({
+                "access_token": "secret-live-value",
+                "event_field": "event-value"
+            }),
+        );
+
+        let record = orch.record_render_context(&serde_json::json!({}));
+        let overlay = &record.upstream["inputs"];
+        assert_eq!(overlay["[redacted]"], serde_json::json!("[redacted]"));
+        assert_eq!(overlay["event_field"], serde_json::json!("event-value"));
+        assert!(
+            overlay.get("access_token").is_none(),
+            "a live-only credential key survived in the record overlay: {overlay}"
+        );
+        assert!(
+            !overlay.to_string().contains("secret-live-value"),
+            "credential material survived in the record overlay: {overlay}"
+        );
     }
 
     #[tokio::test]
@@ -2437,6 +2574,7 @@ nodes:
         command: post
         inputs:
           url: https://example.test/x
+          marker: '{{ item.simulated }}'
         safety:
           snapshot: false
 connections:
@@ -2501,12 +2639,19 @@ commands:
         let events = read_run_events(&log_path).await.unwrap();
         // The write body node ran (once, for the synthetic iteration) and was
         // stubbed as a would-write rather than dispatched to the host.
-        let would_write = events
-            .iter()
-            .any(|e| matches!(e, RunEvent::WouldWrite { node, .. } if node == "upsert"));
+        let would_write = events.iter().any(|e| {
+            matches!(
+                e,
+                RunEvent::WouldWrite {
+                    node,
+                    proposed_inputs,
+                    ..
+                } if node == "upsert" && proposed_inputs["marker"] == serde_json::json!(true)
+            )
+        });
         assert!(
             would_write,
-            "for-each body write node must emit a would-write under simulate"
+            "for-each body write node must emit its record-safe synthetic item under simulate"
         );
         if let RunEvent::RunEnd { status, .. } = events.last().unwrap() {
             assert_eq!(status, "ok");
@@ -4126,6 +4271,7 @@ requires: []
         let out = run_exposed_app_one_shot(
             app,
             serde_json::json!({ "phase": "design" }),
+            serde_json::json!({ "phase": "design" }),
             tmp.path().join("agents"),
             inv,
             prov,
@@ -4147,6 +4293,56 @@ requires: []
             _ => None,
         });
         assert_eq!(config, Some(serde_json::json!({ "phase": "design" })));
+    }
+
+    #[tokio::test]
+    async fn exposed_app_one_shot_executes_real_inputs_but_records_safe_inputs() {
+        let app: App = serde_yaml::from_str(
+            r#"
+app: record-safe-inner
+version: 0.1.0
+description: x
+exposes-as-agent: true
+exposed-commands:
+  run:
+    lifecycle: single
+nodes:
+  - id: echo
+    agent: echo
+    command: echo
+    config:
+      token: '{{ inputs.token }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let tmp = tempfile::tempdir().unwrap();
+        let log = tmp.path().join("record-safe.jsonl");
+        let prov = ProvenanceWriter::open(&log).await.unwrap();
+
+        let out = run_exposed_app_one_shot(
+            app,
+            serde_json::json!({ "token": "secret-live-value" }),
+            serde_json::json!({ "token": "[redacted]" }),
+            tmp.path().join("agents"),
+            Arc::new(EchoInvoker),
+            prov,
+            "r_nested".into(),
+            "nested".into(),
+            None,
+            false,
+            false,
+        )
+        .await
+        .unwrap();
+
+        assert_eq!(out, serde_json::json!({ "token": "secret-live-value" }));
+        let events = read_run_events(&log).await.unwrap();
+        let config = events.iter().find_map(|event| match event {
+            RunEvent::RunStart { config, .. } => Some(config.clone()),
+            _ => None,
+        });
+        assert_eq!(config, Some(serde_json::json!({ "token": "[redacted]" })));
     }
 
     #[tokio::test]
@@ -4189,6 +4385,7 @@ requires: []
         let (_stop_tx, stop_rx) = stop_channel();
         let handle = tokio::spawn(run_exposed_app_stream(
             app,
+            serde_json::json!({}),
             serde_json::json!({}),
             tmp.path().join("agents"),
             inv,
@@ -4275,14 +4472,14 @@ requires: []
         )
         .unwrap();
         let tmp = tempfile::tempdir().unwrap();
-        let prov = ProvenanceWriter::open(&tmp.path().join("s.jsonl"))
-            .await
-            .unwrap();
+        let log = tmp.path().join("s.jsonl");
+        let prov = ProvenanceWriter::open(&log).await.unwrap();
         let (tx, mut rx) = mpsc::channel(8);
         let (_stop_tx, stop_rx) = stop_channel();
         let handle = tokio::spawn(run_exposed_app_stream(
             app,
             serde_json::json!({ "proj": "P-1" }),
+            serde_json::json!({ "proj": "[redacted]" }),
             tmp.path().join("agents"),
             Arc::new(EchoInvoker),
             prov,
@@ -4303,5 +4500,11 @@ requires: []
         assert_eq!(out["proj"], serde_json::json!("P-1"));
         assert_eq!(out["evt"], serde_json::json!("A"));
         handle.await.unwrap().unwrap();
+        let events = read_run_events(&log).await.unwrap();
+        let config = events.iter().find_map(|event| match event {
+            RunEvent::RunStart { config, .. } => Some(config.clone()),
+            _ => None,
+        });
+        assert_eq!(config, Some(serde_json::json!({ "proj": "[redacted]" })));
     }
 }

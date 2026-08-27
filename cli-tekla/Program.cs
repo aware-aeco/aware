@@ -17,6 +17,7 @@ using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 
@@ -1704,11 +1705,31 @@ internal static class Program
             ApplyResolvedBakeContext(argsNode, bakeScene, hostVersion);
         }
 
-        // Resolve the Tekla install dir for the version we'll connect to (the running instance
-        // when one is open, else the requested version). Standard path + registry. Missing-install
-        // is non-fatal: the script may not reference Tekla types (smoke-test path returns primitives).
-        string? hostInstall = string.IsNullOrEmpty(resolveVersion) ? null : DiscoverTeklaInstall(resolveVersion!);
-        var (probedReferences, probedDir) = ResolveTeklaReferences(hostInstall);
+        // Model-free scripts compile against the small BCL/globals reference set
+        // first. If that succeeds and the syntax never reads `model`, skip Tekla
+        // metadata enumeration and Model() construction; both are irrelevant to
+        // the result and dominate a cold first invocation on Windows (#458).
+        bool modelFree = TryCreateModelFreeScript(code, out var modelFreeScript);
+
+        // Keep the lightweight install/bin lookup even on the fast path. A script
+        // can load Tekla dynamically through reflection without a static type for
+        // the classifier to see; wiring AssemblyResolve preserves that supported
+        // behavior without paying to enumerate Roslyn metadata or construct Model().
+        string? hostInstall = string.IsNullOrEmpty(resolveVersion)
+            ? null
+            : DiscoverTeklaInstall(resolveVersion!);
+        IReadOnlyList<MetadataReference> probedReferences;
+        string? probedDir;
+        if (modelFree)
+        {
+            probedReferences = Array.Empty<MetadataReference>();
+            var binDir = hostInstall is null ? null : Path.Combine(hostInstall, "bin");
+            probedDir = binDir is not null && Directory.Exists(binDir) ? binDir : null;
+        }
+        else
+        {
+            (probedReferences, probedDir) = ResolveTeklaReferences(hostInstall);
+        }
 
         // Wire AssemblyResolve so Roslyn can load Tekla DLLs at script-runtime
         // (the references list tells Roslyn at compile-time which assemblies
@@ -1751,7 +1772,9 @@ internal static class Program
                 probedDir,
                 hostPid,
                 commitPolicy ?? CommitPolicyForVerb(verb),
-                announce);
+                announce,
+                connectModel: !modelFree,
+                preparedScript: modelFreeScript);
             // Losing the disarm race means a last-resort hook already emitted
             // a fail receipt (a background-thread fault) — ours is suppressed.
             if (!TryClaimReceipt()) return 2;
@@ -1811,7 +1834,9 @@ internal static class Program
         string? teklaBinDir,
         int? expectedPid,
         ScriptCommitPolicy commitPolicy,
-        string? announce = null)
+        string? announce = null,
+        bool connectModel = true,
+        Script<object>? preparedScript = null)
     {
         JsonNode? result = null;
         Exception? fault = null;
@@ -1820,7 +1845,8 @@ internal static class Program
             try
             {
                 result = SerializeResult(
-                    RunScript(code, teklaReferences, argsNode, teklaBinDir, expectedPid, commitPolicy, announce));
+                    RunScript(code, teklaReferences, argsNode, teklaBinDir, expectedPid,
+                              commitPolicy, announce, connectModel, preparedScript));
             }
             catch (Exception e) { fault = e; }
         })
@@ -1891,6 +1917,65 @@ internal static class Program
             .WithEmitDebugInformation(false);
     }
 
+    // A script that needs only BCL + `args` should not pay the Tekla Open API
+    // cold start. On a Windows machine with a large Tekla install, enumerating
+    // every Tekla.Structures assembly and constructing Model() can take nearly
+    // two minutes on the first process while Defender/JIT caches are cold (#458).
+    //
+    // The fast path is conservative: any real `model` identifier, external
+    // source/reference directive, or runtime reflection/loading primitive opts
+    // out, and the script must compile against the model-free reference set.
+    // That second check catches explicit `Tekla.*` names and unqualified types
+    // supplied by the normal Tekla imports (Beam, Point, Drawing, ...). Comments
+    // and string literals named "model" are trivia/tokens of another kind, so
+    // they do not spuriously disable the path.
+    internal static bool CanExecuteWithoutTekla(string code)
+        => TryCreateModelFreeScript(code, out _);
+
+    internal static bool TryCreateModelFreeScript(string code, out Script<object>? script)
+    {
+        script = null;
+        var root = CSharpSyntaxTree.ParseText(code).GetRoot();
+        var usesExternalSource = root
+            .DescendantTrivia(descendIntoTrivia: true)
+            .Any(trivia => trivia.IsKind(SyntaxKind.LoadDirectiveTrivia)
+                        || trivia.IsKind(SyntaxKind.ReferenceDirectiveTrivia));
+        if (usesExternalSource) return false;
+
+        var usesModel = root
+            .DescendantTokens(descendIntoTrivia: false)
+            .Any(token => token.IsKind(SyntaxKind.IdentifierToken)
+                       && string.Equals(token.ValueText, "model", StringComparison.Ordinal));
+        if (usesModel) return false;
+
+        // Reflection can acquire Tekla without a static type (`Assembly.Load`,
+        // `Type.GetType`, an Activator, or a dynamic indirection). Such a script
+        // must retain the connected path's late instance-set recheck and automatic
+        // CommitChanges; a resolver alone would make it run but not make it safe.
+        var connectedOnlyIdentifiers = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "Assembly", "AppDomain", "Activator", "Type", "Reflection",
+            "GetType", "DynamicInvoke", "Load", "LoadFile", "LoadFrom", "dynamic",
+        };
+        var usesRuntimeLoading = root
+            .DescendantTokens(descendIntoTrivia: false)
+            .Any(token => token.IsKind(SyntaxKind.IdentifierToken)
+                       && connectedOnlyIdentifiers.Contains(token.ValueText));
+        if (usesRuntimeLoading) return false;
+
+        var candidate = CSharpScript.Create<object>(
+            code,
+            options: CreateScriptOptions(Array.Empty<MetadataReference>()),
+            globalsType: typeof(ExecGlobals));
+        if (candidate.Compile().Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error))
+            return false;
+
+        // Keep the validated Script instance: RunAsync can reuse its parsed and
+        // compiled state instead of rebuilding the same model-free submission.
+        script = candidate;
+        return true;
+    }
+
     [MethodImpl(MethodImplOptions.NoInlining)]
     static object? RunScript(
         string code,
@@ -1899,10 +1984,10 @@ internal static class Program
         string? teklaBinDir,
         int? expectedPid,
         ScriptCommitPolicy commitPolicy,
-        string? announce = null)
+        string? announce = null,
+        bool connectModel = true,
+        Script<object>? preparedScript = null)
     {
-        var options = CreateScriptOptions(teklaReferences);
-
         // Construct the Tekla Model lazily. If teklaBinDir is null OR Tekla
         // isn't running, the constructor either throws or returns a model
         // with GetConnectionStatus()==false — neither is fatal here: a
@@ -1910,7 +1995,7 @@ internal static class Program
         // model=null and let the script blow up at its own dynamic call site
         // if it tries to use Tekla without a live host.
         object? modelInstance = null;
-        if (teklaBinDir is not null)
+        if (teklaBinDir is not null && connectModel)
         {
             // TOCTOU recheck (#290 review): the process set was snapshotted in ExecuteResolvedScript
             // BEFORE DLL probing, bake hashing, and STA thread startup — a window in which the Tekla
@@ -1983,9 +2068,9 @@ internal static class Program
             catch { /* a status message is never worth failing a bake for */ }
         }
 
-        var script = CSharpScript.Create<object>(
+        var script = preparedScript ?? CSharpScript.Create<object>(
             code,
-            options: options,
+            options: CreateScriptOptions(teklaReferences),
             globalsType: typeof(ExecGlobals));
 
         // Compile + execute. Top-level `await` continuations resume on the
