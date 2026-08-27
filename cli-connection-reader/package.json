@@ -1,15 +1,16 @@
 {
   "name": "aware-connection-reader",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "AWARE cli-transport bridge: extract steel connections from an IFC as tessellated mesh scene primitives (drives web-ifc WASM).",
   "bin": {
-    "aware-connection-reader": "./index.mjs"
+    "aware-connection-reader": "./model-dispatcher.mjs"
   },
   "scripts": {
     "build": "node build.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "test:windows-harness": "node model-windows-harness.mjs"
   },
   "dependencies": {
     "fflate": "^0.8.3",

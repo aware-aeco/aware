@@ -278,9 +278,11 @@ fn bridges_dir() -> std::path::PathBuf {
 /// ship the same scene/materialization contract. Other CLI transports retain the
 /// historical warn-and-try posture because their protocols are backwards
 /// compatible in practice; `tekla.bake-scene` is deliberately stricter.
-fn current_bridge_is_required(binary: &str, command: &str, current: bool) -> bool {
+fn current_bridge_is_required(agent: &str, binary: &str, command: &str, current: bool) -> bool {
     let binary = binary.strip_suffix(".exe").unwrap_or(binary);
-    !current && binary == "aware-tekla" && command == "bake-scene"
+    !current
+        && ((binary == "aware-tekla" && command == "bake-scene")
+            || (agent == "model-reference-reader" && binary == "aware-connection-reader"))
 }
 
 /// How much of a failed bridge's output may appear in the error message.
@@ -334,6 +336,40 @@ fn failure_detail(stdout: &str, stderr: &str) -> String {
     truncate_detail(detail)
 }
 
+#[derive(serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct StructuredBridgeError {
+    code: String,
+    phase: String,
+    retryable: bool,
+    message: String,
+    diagnostic_id: String,
+}
+
+/// Preserve a bridge's bounded typed error instead of flattening it into an opaque network string.
+/// Only the closed model-reader envelope is accepted; arbitrary bridge stderr keeps the historical
+/// reporting path below.
+fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
+    let parsed: StructuredBridgeError = serde_json::from_str(stderr.trim()).ok()?;
+    if !parsed.code.starts_with("reference-")
+        || parsed.code.len() > 96
+        || parsed.phase.is_empty()
+        || parsed.phase.len() > 64
+        || parsed.message.is_empty()
+        || parsed.message.chars().count() > 240
+        || parsed.diagnostic_id.len() > 64
+    {
+        return None;
+    }
+    Some(AwareError::AgentStructured {
+        code: parsed.code,
+        phase: parsed.phase,
+        retryable: parsed.retryable,
+        message: parsed.message,
+        diagnostic_id: parsed.diagnostic_id,
+    })
+}
+
 /// Production invoker: spawn the agent's CLI transport binary,
 /// talk JSON over stdin/stdout.
 pub struct CliInvoker {
@@ -341,6 +377,130 @@ pub struct CliInvoker {
     /// Run-owned destination for an opt-in large artifact. Kept out of agent
     /// stdin so it cannot collide with an agent's public command schema.
     pub artifact_dir: Option<PathBuf>,
+    reader_cancellation: ReaderCancellation,
+}
+
+/// Run-scoped cancellation for the commercial model reader bridge. Unix `app stop` sends
+/// SIGTERM to the AWARE pid rather than its children, so the command handler uses this registry
+/// to forward that signal to the exact bridge processes it owns before awaiting cleanup.
+#[derive(Clone, Default)]
+pub(crate) struct ReaderCancellation {
+    state: Arc<ReaderCancellationState>,
+}
+
+#[derive(Default)]
+struct ReaderCancellationState {
+    cancelled: std::sync::atomic::AtomicBool,
+    pids: std::sync::Mutex<std::collections::HashSet<u32>>,
+    cleanup_fence: Option<PathBuf>,
+}
+
+impl ReaderCancellation {
+    fn with_cleanup_fence(cleanup_fence: Option<PathBuf>) -> Self {
+        Self {
+            state: Arc::new(ReaderCancellationState {
+                cleanup_fence,
+                ..ReaderCancellationState::default()
+            }),
+        }
+    }
+
+    fn pids(&self) -> std::sync::MutexGuard<'_, std::collections::HashSet<u32>> {
+        self.state
+            .pids
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner)
+    }
+
+    fn register(&self, pid: u32) -> Result<ReaderProcessRegistration, AwareError> {
+        if self
+            .state
+            .cancelled
+            .load(std::sync::atomic::Ordering::Acquire)
+        {
+            return Err(AwareError::Conflict(
+                "model-reference-reader run interrupted".into(),
+            ));
+        }
+        self.pids().insert(pid);
+        // Close the race where interruption lands between the first check and insertion.
+        if self
+            .state
+            .cancelled
+            .load(std::sync::atomic::Ordering::Acquire)
+        {
+            self.pids().remove(&pid);
+            terminate_reader_pid(pid);
+            return Err(AwareError::Conflict(
+                "model-reference-reader run interrupted".into(),
+            ));
+        }
+        Ok(ReaderProcessRegistration {
+            cancellation: self.clone(),
+            pid,
+        })
+    }
+
+    pub(crate) fn cancel(&self) {
+        self.state
+            .cancelled
+            .store(true, std::sync::atomic::Ordering::Release);
+        let pids = self.pids().clone();
+        for pid in pids {
+            terminate_reader_pid(pid);
+        }
+    }
+}
+
+struct ReaderProcessRegistration {
+    cancellation: ReaderCancellation,
+    pid: u32,
+}
+
+impl Drop for ReaderProcessRegistration {
+    fn drop(&mut self) {
+        self.cancellation.pids().remove(&self.pid);
+    }
+}
+
+#[cfg(unix)]
+fn terminate_reader_pid(pid: u32) {
+    // POSIX SIGTERM. The bridge handles it by aborting the request and closing the private host
+    // pipe; the Rust host then joins provider process-group cleanup before the bridge exits.
+    unsafe extern "C" {
+        fn kill(pid: i32, signal: i32) -> i32;
+    }
+    const SIGTERM: i32 = 15;
+    // A concurrent natural exit can make this ESRCH; cleanup has already achieved the goal then.
+    // SAFETY: `kill` does not dereference memory; the PID was returned by the spawned child and
+    // the signal value is the POSIX SIGTERM constant.
+    let _ = unsafe { kill(pid as i32, SIGTERM) };
+}
+
+#[cfg(not(unix))]
+fn terminate_reader_pid(_pid: u32) {
+    // Console Ctrl+C is delivered to the bridge on Windows, while `app stop` uses taskkill /T.
+}
+
+#[cfg(test)]
+mod reader_cancellation_tests {
+    use super::ReaderCancellation;
+
+    #[test]
+    fn registration_is_removed_when_the_invocation_finishes() {
+        let cancellation = ReaderCancellation::default();
+        let registration = cancellation.register(u32::MAX).unwrap();
+        assert!(cancellation.state.pids.lock().unwrap().contains(&u32::MAX));
+        drop(registration);
+        assert!(cancellation.state.pids.lock().unwrap().is_empty());
+    }
+
+    #[test]
+    fn cancellation_fences_a_bridge_that_has_not_spawned_yet() {
+        let cancellation = ReaderCancellation::default();
+        cancellation.cancel();
+        assert!(cancellation.register(u32::MAX).is_err());
+    }
 }
 
 impl CliInvoker {
@@ -354,7 +514,14 @@ impl CliInvoker {
         agent: &str,
         command: &str,
         progress_path: Option<&std::path::Path>,
-    ) -> Result<(tokio::process::Child, String), AwareError> {
+    ) -> Result<
+        (
+            tokio::process::Child,
+            String,
+            Option<ReaderProcessRegistration>,
+        ),
+        AwareError,
+    > {
         let m = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent)?;
         let cli =
             m.transport.cli.as_ref().ok_or_else(|| {
@@ -379,11 +546,11 @@ impl CliInvoker {
             &bridges,
             env!("CARGO_PKG_VERSION"),
         );
-        if current_bridge_is_required(&binary, command, bridge_is_current) {
+        if current_bridge_is_required(agent, &binary, command, bridge_is_current) {
             let id = binary.strip_prefix("aware-").unwrap_or(&binary);
             return Err(AwareError::Validation(format!(
                 "{agent}.{command} requires the managed {binary} bridge installed by aware {}; \
-                 run `aware sidecar install {id}` to refresh it before baking",
+                 run `aware sidecar install {id}` to refresh it before running this command",
                 env!("CARGO_PKG_VERSION")
             )));
         }
@@ -410,6 +577,24 @@ impl CliInvoker {
         // nobody drains would have it pay to describe work to a file no one reads.
         if let Some(path) = progress_path {
             process.env("AWARE_PROGRESS_FILE", path);
+        }
+        // The RVT reader is the only bridge allowed to ask AWARE to supervise a commercial
+        // provider. Pass the exact current executable privately; no manifest field or PATH lookup
+        // can redirect the internal host. IFC commands sharing the same SEA do not receive it.
+        if agent == "model-reference-reader" {
+            // `canonicalize` adds a `\\?\` prefix on Windows. Node's `realpath` removes that
+            // prefix, so an otherwise identical source-built host would fail the reader's exact
+            // path check. `current_exe` is already absolute; the reader independently rejects
+            // symlinks and verifies that this spelling resolves to the same regular file.
+            let host = std::env::current_exe()
+                .map_err(|e| AwareError::Internal(format!("resolve model-reader host: {e}")))?;
+            process.env("AWARE_MODEL_READER_HOST", host);
+            if let Some(path) = &self.reader_cancellation.state.cleanup_fence {
+                process.env("AWARE_MODEL_READER_HOST_CLEANUP_FENCE", path);
+            }
+            // A cancelled one-shot run must not orphan the bridge. The bridge closing its host
+            // pipe in turn makes the Rust host drop its kill-on-drop provider child.
+            process.kill_on_drop(true);
         }
         let child = process.spawn().map_err(|e| {
             // When the binary is missing, surface an actionable hint — but only
@@ -439,7 +624,15 @@ impl CliInvoker {
             };
             AwareError::Network(format!("spawn {binary}: {e}{hint}"))
         })?;
-        Ok((child, binary))
+        let registration = if agent == "model-reference-reader" {
+            let pid = child.id().ok_or_else(|| {
+                AwareError::Internal("model-reader bridge pid unavailable after spawn".into())
+            })?;
+            Some(self.reader_cancellation.register(pid)?)
+        } else {
+            None
+        };
+        Ok((child, binary, registration))
     }
 }
 
@@ -462,7 +655,8 @@ impl CliInvoker {
             (Some(dir), Some(_)) => Some(crate::runtime::progress::channel_path(dir)),
             _ => None,
         };
-        let (mut child, _binary) = self.spawn_cli(agent, command, channel.as_deref())?;
+        let (mut child, _binary, _reader_registration) =
+            self.spawn_cli(agent, command, channel.as_deref())?;
 
         if let Some(mut stdin) = child.stdin.take() {
             use tokio::io::AsyncWriteExt;
@@ -482,9 +676,17 @@ impl CliInvoker {
             _ => child.wait_with_output().await,
         }
         .map_err(|e| AwareError::Network(format!("wait: {e}")))?;
+        // A reaped pid can be recycled immediately; remove it before parsing output so a signal
+        // cannot be forwarded to an unrelated process during the remainder of this function.
+        // On an abnormal bridge exit the independent host cleanup lock remains held through
+        // provider-tree cancellation/join, and the next app run must pass that lock before spawn.
+        drop(_reader_registration);
         if !output.status.success() {
             let stdout = String::from_utf8_lossy(&output.stdout);
             let stderr = String::from_utf8_lossy(&output.stderr);
+            if let Some(error) = structured_bridge_error(&stderr) {
+                return Err(error);
+            }
             return Err(AwareError::Network(format!(
                 "agent {agent}/{command} failed (exit {:?}): {}",
                 output.status.code(),
@@ -643,7 +845,7 @@ impl AgentInvoker for CliInvoker {
         // A streaming command needs no second channel: its whole output IS a live event stream, so
         // it reports progress by emitting events. The progress channel exists for the `single`
         // lifecycle, which has exactly one output and no other way to speak while it works.
-        let (mut child, binary) = self.spawn_cli(agent, command, None)?;
+        let (mut child, binary, reader_registration) = self.spawn_cli(agent, command, None)?;
         let label = format!("{agent}/{command}");
 
         // Deliver the rendered command args once over stdin, then close it — on a
@@ -703,6 +905,7 @@ impl AgentInvoker for CliInvoker {
         // Drive the child's stdout on a background task. The returned handle's
         // `stop` cancels it; events arrive on `rx` until the stream ends.
         tokio::spawn(async move {
+            let _reader_registration = reader_registration;
             let mut child = child;
             match pump_jsonl_stream(stdout, &tx, stop_rx).await {
                 // Cancellation or a downstream drop / read error: terminate the
@@ -710,6 +913,7 @@ impl AgentInvoker for CliInvoker {
                 StreamEnd::Stopped | StreamEnd::ReceiverGone | StreamEnd::ReadError => {
                     let _ = child.start_kill();
                     let _ = child.wait().await;
+                    drop(_reader_registration);
                     stderr_drain.abort();
                 }
                 // Natural EOF: reap, and surface a non-zero exit as a terminal
@@ -718,6 +922,7 @@ impl AgentInvoker for CliInvoker {
                 // and fails the run.
                 StreamEnd::Eof => {
                     let status = child.wait().await;
+                    drop(_reader_registration);
                     let detail = stderr_drain.await.unwrap_or_default();
                     if let Ok(status) = status
                         && !status.success()
@@ -2585,6 +2790,7 @@ pub struct DispatchInvoker {
     /// side effects (e.g. the html-report file write) even inside a nested
     /// exposes-as-agent app run.
     pub preview: bool,
+    reader_cancellation: ReaderCancellation,
 }
 
 /// Filesystem + run context a `DispatchInvoker` needs to dispatch an app-backed
@@ -2649,6 +2855,7 @@ impl DispatchInvoker {
         dry_run: bool,
         simulate: bool,
         artifact_dir: Option<PathBuf>,
+        reader_cleanup_fence: Option<PathBuf>,
     ) -> Self {
         Self {
             agents_dir: paths.agents_dir(),
@@ -2661,7 +2868,12 @@ impl DispatchInvoker {
                 simulate,
             }),
             preview: dry_run || simulate,
+            reader_cancellation: ReaderCancellation::with_cleanup_fence(reader_cleanup_fence),
         }
+    }
+
+    pub(crate) fn reader_cancellation(&self) -> ReaderCancellation {
+        self.reader_cancellation.clone()
     }
 
     fn transport_kind(&self, agent: &str) -> Result<TransportKind, AwareError> {
@@ -2765,6 +2977,7 @@ impl DispatchInvoker {
             // Carry the preview posture into the nested run so its built-ins still
             // suppress side effects under --dry-run / --simulate (#201 Codex).
             preview: self.preview,
+            reader_cancellation: self.reader_cancellation.clone(),
         })
     }
 
@@ -2975,6 +3188,7 @@ impl AgentInvoker for DispatchInvoker {
                 CliInvoker {
                     agents_dir: dir,
                     artifact_dir: self.artifact_dir.clone(),
+                    reader_cancellation: self.reader_cancellation.clone(),
                 }
                 .invoke_single(agent, command, args)
                 .await
@@ -3028,6 +3242,7 @@ impl AgentInvoker for DispatchInvoker {
                 CliInvoker {
                     agents_dir: self.agents_dir.clone(),
                     artifact_dir: self.artifact_dir.clone(),
+                    reader_cancellation: self.reader_cancellation.clone(),
                 }
                 .invoke_single_progress(agent, command, args, progress)
                 .await
@@ -3062,6 +3277,7 @@ impl AgentInvoker for DispatchInvoker {
                 CliInvoker {
                     agents_dir: dir,
                     artifact_dir: self.artifact_dir.clone(),
+                    reader_cancellation: self.reader_cancellation.clone(),
                 }
                 .invoke_stream(agent, command, args)
                 .await
@@ -3246,20 +3462,39 @@ mod cli_invoker_tests {
     }
 
     #[test]
-    fn current_managed_bridge_is_required_only_for_tekla_bake_scene() {
+    fn current_managed_bridge_is_required_for_tekla_bake_and_every_model_reader_command() {
         assert!(current_bridge_is_required(
+            "tekla",
             "aware-tekla",
             "bake-scene",
             false
         ));
         assert!(current_bridge_is_required(
+            "tekla",
             "aware-tekla.exe",
             "bake-scene",
             false
         ));
-        assert!(!current_bridge_is_required("aware-tekla", "exec", false));
-        assert!(!current_bridge_is_required("aware-rhino", "exec", false));
+        assert!(current_bridge_is_required(
+            "model-reference-reader",
+            "aware-connection-reader",
+            "preflight",
+            false
+        ));
         assert!(!current_bridge_is_required(
+            "tekla",
+            "aware-tekla",
+            "exec",
+            false
+        ));
+        assert!(!current_bridge_is_required(
+            "rhino",
+            "aware-rhino",
+            "exec",
+            false
+        ));
+        assert!(!current_bridge_is_required(
+            "tekla",
             "aware-tekla",
             "bake-scene",
             true
@@ -3293,6 +3528,7 @@ commands:
         let inv = CliInvoker {
             agents_dir: tmp.path().to_path_buf(),
             artifact_dir: None,
+            reader_cancellation: ReaderCancellation::default(),
         };
         let err = inv
             .invoke_single("phantom", "do", serde_json::json!({}))
@@ -3327,6 +3563,7 @@ commands:
         let inv = CliInvoker {
             agents_dir: tmp.path().to_path_buf(),
             artifact_dir: None,
+            reader_cancellation: ReaderCancellation::default(),
         };
         let err = inv
             .invoke_single("no-transport", "do", serde_json::json!({}))
@@ -3367,6 +3604,7 @@ commands:
         let inv = CliInvoker {
             agents_dir: tmp.path().to_path_buf(),
             artifact_dir: None,
+            reader_cancellation: ReaderCancellation::default(),
         };
         let err = inv
             .invoke_stream("phantom-watcher", "watch", serde_json::json!({}))
@@ -3399,6 +3637,7 @@ commands:
         let inv = CliInvoker {
             agents_dir: tmp.path().to_path_buf(),
             artifact_dir: None,
+            reader_cancellation: ReaderCancellation::default(),
         };
         let err = inv
             .invoke_stream("no-cli", "watch", serde_json::json!({}))
@@ -3836,6 +4075,7 @@ commands:
             artifact_dir: None,
             app_ctx: None,
             preview: false,
+            reader_cancellation: ReaderCancellation::default(),
         };
         let out = inv
             .invoke_single(
@@ -5086,6 +5326,7 @@ mod builtin_invoker_tests {
             artifact_dir: None,
             app_ctx: None, // nested-invoker shape
             preview: true,
+            reader_cancellation: ReaderCancellation::default(),
         };
         let res = inv
             .invoke_single(
@@ -5203,6 +5444,34 @@ mod builtin_invoker_tests {
             failure_detail(stdout, stderr),
             stderr,
             "the half-written payload won over the real error"
+        );
+    }
+
+    #[test]
+    fn model_reader_structured_errors_keep_their_typed_fields() {
+        let stderr = r#"{"code":"reference-provider-pin-mismatch","phase":"preflight","retryable":false,"message":"The local provider does not match the expected fingerprint.","diagnosticId":"123e4567-e89b-12d3-a456-426614174000"}"#;
+        let error = structured_bridge_error(stderr).expect("closed model-reader envelope");
+        match error {
+            AwareError::AgentStructured {
+                code,
+                phase,
+                retryable,
+                message,
+                diagnostic_id,
+            } => {
+                assert_eq!(code, "reference-provider-pin-mismatch");
+                assert_eq!(phase, "preflight");
+                assert!(!retryable);
+                assert!(message.contains("expected fingerprint"));
+                assert_eq!(diagnostic_id, "123e4567-e89b-12d3-a456-426614174000");
+            }
+            other => panic!("typed envelope was flattened: {other:?}"),
+        }
+        assert!(
+            structured_bridge_error(
+                r#"{"code":"other","phase":"x","retryable":false,"message":"x","diagnosticId":"x"}"#
+            )
+            .is_none()
         );
     }
 

@@ -69,11 +69,12 @@ const BRIDGES: &[Bridge] = &[
     },
     Bridge {
         // Headless data bridge (not a live-host bridge): a Node exe bundling the web-ifc WASM
-        // parser, used by the `connection-reader` agent to tessellate steel connections from IFC.
+        // parser plus deterministic RVT normalization, shared by the IFC connection/reference
+        // readers and `model-reference-reader`. The commercial RVT provider remains separate.
         id: "connection-reader",
         binary: "aware-connection-reader",
         asset_kind: AssetKind::Zip,
-        description: "Connection Reader (Node + web-ifc WASM; extract steel connections from IFC)",
+        description: "Connection/Model Reader (shared SEA; IFC via web-ifc, local RVT via provider)",
         note: None,
     },
 ];

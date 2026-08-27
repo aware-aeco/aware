@@ -248,6 +248,100 @@ requires: []
 }
 
 #[test]
+fn simulated_reader_app_preserves_an_existing_reader_pidfile() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+
+    let watcher_dir = aware.join("agents/stub-reader-watcher");
+    std::fs::create_dir_all(&watcher_dir).unwrap();
+    std::fs::write(
+        watcher_dir.join("manifest.yaml"),
+        r#"agent: stub-reader-watcher
+version: 0.0.1
+description: x
+stateful: true
+license: MIT
+transport:
+  cli:
+    binary: this-watch-binary-does-not-exist
+commands:
+  watch:
+    lifecycle: start
+    category: curated
+    mode: read
+    description: stream of marks
+    outputs:
+      type: stream
+      schema:
+        mark: string
+"#,
+    )
+    .unwrap();
+
+    let reader_dir = aware.join("agents/model-reference-reader");
+    std::fs::create_dir_all(&reader_dir).unwrap();
+    std::fs::write(
+        reader_dir.join("manifest.yaml"),
+        r#"agent: model-reference-reader
+version: 0.4.0
+description: x
+stateful: false
+license: MIT
+transport:
+  cli:
+    binary: this-reader-binary-does-not-exist
+commands:
+  read-model:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: normalize model
+    outputs:
+      type: object
+      schema:
+        snapshotId: string
+"#,
+    )
+    .unwrap();
+
+    let app_dir = aware.join("apps/reader-watchapp");
+    std::fs::create_dir_all(&app_dir).unwrap();
+    std::fs::write(
+        app_dir.join("reader-watchapp.flo"),
+        r#"app: reader-watchapp
+version: 0.0.1
+description: x
+nodes:
+  - id: watch
+    agent: stub-reader-watcher
+    command: watch
+  - id: read
+    agent: model-reference-reader
+    command: read-model
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    let instance_dir = app_dir.join("instances/default");
+    std::fs::create_dir_all(&instance_dir).unwrap();
+    let pidfile = instance_dir.join("pidfile.yaml");
+    let existing_pidfile = b"pid: 4242\nstartedAt: preserved\n";
+    std::fs::write(&pidfile, existing_pidfile).unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .timeout(std::time::Duration::from_secs(30))
+        .args(["app", "run", "reader-watchapp", "--simulate"])
+        .assert()
+        .success();
+
+    assert_eq!(std::fs::read(pidfile).unwrap(), existing_pidfile);
+}
+
+#[test]
 fn run_renders_hyphenated_input_ref_in_dot_syntax() {
     // The #117-4 scenario: a node config references `{{ inputs.supabase-url }}`
     // (kebab input name, dot syntax). Before the template normalizer this failed

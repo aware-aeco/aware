@@ -4,6 +4,16 @@
 
 use thiserror::Error;
 
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct StructuredAgentError {
+    pub code: String,
+    pub phase: String,
+    pub retryable: bool,
+    pub message: String,
+    pub diagnostic_id: String,
+}
+
 #[derive(Debug, Error)]
 pub enum AwareError {
     #[error("not yet implemented: {0} (see cli-roadmap.md for phasing)")]
@@ -14,6 +24,17 @@ pub enum AwareError {
 
     #[error("network error: {0}")]
     Network(String),
+
+    #[error(
+        "agent error {code} ({phase}, retryable={retryable}, diagnostic-id={diagnostic_id}): {message}"
+    )]
+    AgentStructured {
+        code: String,
+        phase: String,
+        retryable: bool,
+        message: String,
+        diagnostic_id: String,
+    },
 
     #[error("permission denied: {0}")]
     PermissionDenied(String),
@@ -41,12 +62,32 @@ pub enum AwareError {
 }
 
 impl AwareError {
+    /// Return the bounded machine-readable agent failure carried across a bridge boundary.
+    pub fn structured_agent_error(&self) -> Option<StructuredAgentError> {
+        match self {
+            Self::AgentStructured {
+                code,
+                phase,
+                retryable,
+                message,
+                diagnostic_id,
+            } => Some(StructuredAgentError {
+                code: code.clone(),
+                phase: phase.clone(),
+                retryable: *retryable,
+                message: message.clone(),
+                diagnostic_id: diagnostic_id.clone(),
+            }),
+            _ => None,
+        }
+    }
+
     /// Exit code per `cli-spec.md` § Exit codes.
     pub fn exit_code(&self) -> i32 {
         match self {
             Self::NotYetImplemented(_) => 1,
             Self::Validation(_) => 3,
-            Self::Network(_) => 4,
+            Self::Network(_) | Self::AgentStructured { .. } => 4,
             Self::PermissionDenied(_) => 5,
             Self::AuthExpired(_) => 6,
             Self::NotFound(_) => 7,

@@ -22,7 +22,7 @@ mkdirSync(dist, { recursive: true });
 // 1. Bundle ESM entry + web-ifc into one CJS file (SEA embeds a single file; node_modules aren't shipped).
 console.log('[build] bundling with esbuild…');
 await build({
-  entryPoints: [join(here, 'index.mjs')],
+  entryPoints: [join(here, 'model-dispatcher.mjs')],
   bundle: true,
   platform: 'node',
   format: 'cjs',

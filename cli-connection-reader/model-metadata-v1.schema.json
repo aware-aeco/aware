@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aware-aeco.org/schemas/model-metadata-v1.schema.json",
+  "title": "AWARE explicit Revit metadata v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "document", "types", "levels", "parameterGroups", "parameters", "elements", "relations"],
+  "properties": {
+    "schemaVersion": { "const": "1" },
+    "document": { "type": "object", "additionalProperties": false, "required": ["kind", "id"], "properties": { "kind": { "const": "revit-project" }, "id": { "type": "string", "minLength": 1 } } },
+    "types": { "type": "array" },
+    "levels": { "type": "array" },
+    "parameterGroups": { "type": "array" },
+    "parameters": { "type": "array" },
+    "elements": { "type": "array" },
+    "relations": { "type": "array" }
+  }
+}
