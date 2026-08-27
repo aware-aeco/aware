@@ -28,6 +28,9 @@ use crate::auth::keychain::{StoredToken, TokenSource};
 use crate::context::Context;
 use crate::error::AwareError;
 
+const CAPABILITIES_SCHEMA_VERSION: u8 = 1;
+const CAPABILITIES: [&str; 2] = ["secret.put.v1", "secret.revoke.v1"];
+
 #[derive(Subcommand, Debug)]
 pub enum CredentialCommand {
     /// Store the secret behind an opaque handle, replacing any current value.
@@ -42,6 +45,9 @@ pub enum CredentialCommand {
 
     /// Report whether a handle has a usable credential. Never prints the secret.
     Status(HandleArgs),
+
+    /// Print the stable machine-readable capabilities of this credential seam.
+    Capabilities,
 }
 
 #[derive(Args, Debug)]
@@ -81,7 +87,28 @@ pub fn dispatch(cmd: CredentialCommand, ctx: &Context) -> Result<(), AwareError>
         CredentialCommand::Put(args) => run_put(args, ctx),
         CredentialCommand::Delete(args) => run_delete(args, ctx),
         CredentialCommand::Status(args) => run_status(args, ctx),
+        CredentialCommand::Capabilities => run_capabilities(ctx),
     }
+}
+
+// ── capabilities ──────────────────────────────────────────────────────────────
+
+fn run_capabilities(ctx: &Context) -> Result<(), AwareError> {
+    if ctx.json {
+        println!(
+            "{}",
+            serde_json::json!({
+                "schemaVersion": CAPABILITIES_SCHEMA_VERSION,
+                "capabilities": CAPABILITIES,
+            })
+        );
+    } else {
+        println!("credential capabilities (schema v{CAPABILITIES_SCHEMA_VERSION}):");
+        for capability in CAPABILITIES {
+            println!("  {capability}");
+        }
+    }
+    Ok(())
 }
 
 // ── put ───────────────────────────────────────────────────────────────────────
