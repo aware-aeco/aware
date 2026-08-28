@@ -11,9 +11,12 @@ pub mod index;
 // allow. `Index` is used by both. `BundleEntry` used to sit here too and was
 // unused in *either* build; so was the whole
 // `catalog::{Catalog, CatalogAgent, build_catalog, search}` re-export, since
-// every caller names `catalog::` directly. Both are gone.
+// every caller names `catalog::` directly. `normalize_subdir` joined them: it
+// is live inside `index` (both `check_subdir_portable` and
+// `checkout_relative_subdir` call it) but nothing ever reached it through this
+// facade, in either build. All three are gone.
 #[allow(unused_imports)]
 pub use index::{
     Index, IndexEntry, VersionEntry, check_subdir_portable, checkout_relative_subdir,
-    normalize_subdir, portable_subdir_key,
+    portable_subdir_key,
 };
