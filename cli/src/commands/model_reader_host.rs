@@ -41,11 +41,17 @@ struct Frame {
 impl Frame {
     async fn read<R: AsyncRead + Unpin>(reader: &mut R) -> std::io::Result<Option<Self>> {
         let mut header = [0u8; HEADER_BYTES];
-        match reader.read_exact(&mut header).await {
+        // Tell "the peer closed between frames" apart from "the peer died mid-header". Reading
+        // the whole header with one `read_exact` collapses both into `UnexpectedEof`, so a
+        // truncated frame was indistinguishable from a clean shutdown and the host exited 0 on
+        // a protocol violation. Probe the first byte alone: EOF there is the clean end, EOF
+        // after it is a frame that was cut short, which propagates as the error it is.
+        match reader.read_exact(&mut header[..1]).await {
             Ok(_) => {}
             Err(error) if error.kind() == std::io::ErrorKind::UnexpectedEof => return Ok(None),
             Err(error) => return Err(error),
         }
+        reader.read_exact(&mut header[1..]).await?;
         let kind = header[0];
         if !matches!(kind, KIND_CONTROL | KIND_STDOUT | KIND_STDERR | KIND_STDIN) {
             return Err(std::io::Error::new(
@@ -1094,7 +1100,9 @@ mod tests {
     // in another language, so the 50-byte header is a contract between two implementations
     // and every field of it is reachable by a peer that is buggy, out of date, or hostile.
 
-    /// A control frame carrying `body`, at the sequence/flags the protocol requires.
+    /// A control frame carrying `body`, at the sequence/flags the host itself emits. The loop
+    /// checks those two fields only on `KIND_STDIN`, so an inbound control frame is not in fact
+    /// required to carry them — this matches what the bridge sends, not what the host enforces.
     fn control(request_id: u64, body: serde_json::Value) -> Frame {
         Frame {
             kind: KIND_CONTROL,
@@ -1108,6 +1116,13 @@ mod tests {
 
     /// Feed `frames` to `protocol_loop` as one byte stream and return what it made of them,
     /// joining any provider task it started so a refusal can't leave one running.
+    ///
+    /// This observes the loop's REFUSALS only. `SharedWriter` is `Arc<Mutex<tokio::io::Stdout>>`
+    /// — a concrete type, not a parameter — so everything the host says back (`ok`, `accepted`
+    /// and the run handle it mints, `acquired`/`busy`, `released`, `bye`) goes to fd 1 and is
+    /// unreadable from here. Making the writer generic would open all of that, and would also
+    /// stop these tests emitting binary frames into the test runner's output; it is a change to
+    /// production types, so it is not made here.
     async fn drive(frames: &[Frame]) -> Result<Option<u64>, AwareError> {
         let mut wire = Vec::new();
         for frame in frames {
@@ -1188,10 +1203,13 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn the_decoder_refuses_a_declared_length_over_the_limit_before_allocating_it() {
+    async fn the_decoder_refuses_a_declared_length_over_the_limit_before_reading_the_payload() {
         // A peer that declares 4 GiB must be refused on the header alone. Only 50 bytes are on
-        // the wire here, so a decoder that trusted the length would fail with UnexpectedEof
-        // after trying to allocate and fill the payload — a different error, and far too late.
+        // the wire here, so a decoder that trusted the length would go on to read the payload
+        // and fail with UnexpectedEof — a different error, and one that says nothing about the
+        // limit. What this pins is that the refusal happens before that read, not that it
+        // happens before the `vec![0u8; length]` above it: the allocation is lazily paged, so
+        // moving the check to sit between the two would leave this assertion green.
         let mut header = [0u8; HEADER_BYTES];
         header[0] = KIND_CONTROL;
         header[46..50].copy_from_slice(&u32::MAX.to_be_bytes());
@@ -1219,9 +1237,11 @@ mod tests {
 
     #[tokio::test]
     async fn the_decoder_separates_a_clean_end_of_stream_from_a_truncated_frame() {
-        // Nothing at all is how the bridge closes; a header whose payload never arrives is a
-        // half-written frame, and accepting it would hand the host a short `stdin` body as if
-        // the peer had sent it in full.
+        // Nothing at all is how the bridge closes. A frame that stops part-way is a different
+        // event, and returning it as if the stream had ended cleanly loses the distinction: the
+        // host would exit 0 on a torn stream, and a decoder that instead returned the short
+        // bytes as a whole frame would leave the remainder in the stream, so every frame after
+        // it parses from the middle of this one.
         assert!(Frame::read(&mut &b""[..]).await.unwrap().is_none());
 
         let mut wire = Vec::new();
@@ -1236,9 +1256,19 @@ mod tests {
         .write(&mut wire)
         .await
         .unwrap();
-        wire.truncate(HEADER_BYTES + 3);
-        let error = Frame::read(&mut wire.as_slice()).await.unwrap_err();
-        assert_eq!(error.kind(), std::io::ErrorKind::UnexpectedEof);
+        // Cut short in the payload, and cut short inside the header itself. Both are the same
+        // event — the peer stopped mid-frame — and both must reach the caller as an error,
+        // including the header case, where the only signal is that the read ended early.
+        for cut in [HEADER_BYTES + 3, HEADER_BYTES - 1, 1] {
+            let mut truncated = wire.clone();
+            truncated.truncate(cut);
+            let error = Frame::read(&mut truncated.as_slice()).await.unwrap_err();
+            assert_eq!(
+                error.kind(),
+                std::io::ErrorKind::UnexpectedEof,
+                "a frame cut short at {cut} bytes is a protocol error, not a clean shutdown",
+            );
+        }
     }
 
     // ── the control loop's refusals ──────────────────────────────────────────────────
@@ -1283,7 +1313,14 @@ mod tests {
         );
 
         // `stdout`/`stderr` travel host → bridge. Inbound they are not control frames, so the
-        // loop must refuse them rather than fall through to the control dispatch.
+        // loop must refuse them rather than fall through to the control dispatch — a payload
+        // that WOULD dispatch is what makes that fall-through observable.
+        //
+        // The message is the one the guard actually produces, not the one it ought to: the kind
+        // check and the request-id check share a single `||` and a single "ids must increase"
+        // string, so a stdout frame is reported to the bridge as an id violation. Asserted as
+        // it stands, because a bare `is_err()` here is equally satisfied by a `Frame::read`
+        // regression that narrowed the accepted kinds, which is a different bug entirely.
         for kind in [KIND_STDOUT, KIND_STDERR] {
             let frame = Frame {
                 kind,
@@ -1293,9 +1330,12 @@ mod tests {
                 flags: FINAL,
                 payload: b"{\"op\":\"hello\"}".to_vec(),
             };
+            let error = drive(&[frame]).await.unwrap_err();
             assert!(
-                drive(&[frame]).await.is_err(),
-                "kind {kind:#04x} must not be accepted inbound",
+                error
+                    .to_string()
+                    .contains("control request ids must increase"),
+                "kind {kind:#04x} must be refused by the control-frame guard: {error}",
             );
         }
     }
@@ -1320,8 +1360,9 @@ mod tests {
 
     #[tokio::test]
     async fn the_lock_ops_refuse_a_relative_path_and_a_handle_the_host_never_issued() {
-        // `lock-acquire` locks whatever path it is handed. A relative one would resolve against
-        // the HOST's working directory, not the bridge's, and silently guard the wrong file.
+        // `lock-acquire` locks whatever path it is handed. A relative one resolves against
+        // whatever directory the host happened to inherit — it is spawned without a `cwd`, so
+        // that is the bridge's, which is not the cache directory the path is meant to name.
         for body in [
             json!({"op": "lock-acquire", "path": "relative/provider.lock"}),
             json!({"op": "lock-acquire"}),
@@ -1341,7 +1382,12 @@ mod tests {
             "releasing an unissued handle must not be reported as a release: {error}",
         );
 
-        // An absolute path is the accepted case, so the refusals above are not vacuous.
+        // An absolute path is the accepted case, so the refusals above are not vacuous. What
+        // this half can and cannot show: the op opens the path and does not refuse it. Whether
+        // the lock was TAKEN or reported busy is not observable here — both are `Ok`, and the
+        // status that tells them apart goes out over the writer, which is hard-wired to stdout
+        // (see the note on `drive`). The file is opened before the lock is attempted, so its
+        // existence proves the open, not the lock.
         let tmp = tempfile::tempdir().unwrap();
         let lock = tmp.path().join("provider.lock");
         assert!(
@@ -1354,8 +1400,9 @@ mod tests {
             ])
             .await
             .is_ok(),
+            "an absolute path must not be refused",
         );
-        assert!(lock.is_file(), "lock-acquire creates the file it locks");
+        assert!(lock.is_file(), "lock-acquire opens the path it was handed");
     }
 
     #[tokio::test]
@@ -1454,9 +1501,20 @@ mod tests {
         for (what, break_it) in cases {
             let mut request = provider_run_for(&image, tmp.path());
             break_it(&mut request);
+            // `is_err()` alone would not do. Four of these six reach a DIFFERENT rejection when
+            // their own guard is deleted — a relative path fails at `symlink_metadata`, and a
+            // malformed digest fails the later comparison — so a bare `is_err()` stays green
+            // through the regression it is here to catch. Name the guard by its own message.
+            // That message is shared by all five conditions in one `||`, so this pins that the
+            // shape guard fired and not which clause — swapping two of them stays green.
+            let Err(error) = provider_command(&request) else {
+                panic!("the host must refuse {what}");
+            };
             assert!(
-                provider_command(&request).is_err(),
-                "the host must refuse {what}",
+                error
+                    .to_string()
+                    .contains("received an unsafe provider request"),
+                "{what} must be refused by the protocol guard, not by a later failure: {error}",
             );
         }
     }
@@ -1466,8 +1524,11 @@ mod tests {
     fn provider_command_refuses_indirection_even_when_it_resolves_to_the_verified_image() {
         // The digest is taken from whatever the path resolves to at verification time. A symlink
         // can be repointed between that read and the launch, so the host refuses the indirection
-        // outright rather than trying to win the race. Same for a directory: `symlink_metadata`
-        // is what decides, so neither can reach the hashing step below it.
+        // outright rather than trying to win the race. Choosing `symlink_metadata` over
+        // `metadata` is what makes that possible, and it is the only thing that does: the
+        // adjacent `file_type().is_symlink()` clause is redundant, since `is_file()` is already
+        // false for a symlink's own metadata. A directory is refused by `is_file()` under
+        // either call. Neither reaches the hashing step below.
         let tmp = tempfile::tempdir().unwrap();
         let image = tmp.path().join("provider-image");
         std::fs::write(&image, b"provider image bytes").unwrap();
