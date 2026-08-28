@@ -554,11 +554,19 @@ fn the_job_reader_matches_its_contract() {
     );
 }
 
-/// Every `.rs` file under `cli/src` and `cli/tests`, excluding this one.
+/// Every `.rs` file in the `cli` package — `src/`, `tests/`, and the Rust
+/// targets that sit at the crate root — excluding this one.
 ///
 /// This file is excluded because its own prose and its negative-control fixtures
 /// contain the very string the scan looks for; including it would make the scan
 /// fail on itself and prove nothing about the crate.
+///
+/// `build.rs` is in scope and is not an afterthought. A build script is compiled
+/// for the HOST, never for `--target`, so a `#[cfg(target_env = "msvc")]` in it
+/// is invisible to both ubuntu clippy runs — host and windows cross-check alike —
+/// while a Windows release build, whose host IS msvc, compiles the unlinted arm.
+/// Walking only `src/` and `tests/` therefore left the very invariant this file
+/// asserts breakable in the one file most likely to break it (Codex review, #469).
 fn crate_sources() -> Vec<PathBuf> {
     fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
         let Ok(entries) = std::fs::read_dir(dir) else {
@@ -577,6 +585,20 @@ fn crate_sources() -> Vec<PathBuf> {
     let mut out = Vec::new();
     walk(&root.join("src"), &mut out);
     walk(&root.join("tests"), &mut out);
+    // `benches/` and `examples/` are absent today; walking them costs nothing
+    // and means adding one does not silently fall outside the scan.
+    walk(&root.join("benches"), &mut out);
+    walk(&root.join("examples"), &mut out);
+    // Crate-root targets — `build.rs` above all. Not recursive: the crate root
+    // also holds `target/`, which is build output and not this package's source.
+    if let Ok(entries) = std::fs::read_dir(&root) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_file() && path.extension().is_some_and(|ext| ext == "rs") {
+                out.push(path);
+            }
+        }
+    }
     out.retain(|path| {
         path.file_name()
             .is_some_and(|name| name != "windows_target_gate.rs")
@@ -692,8 +714,25 @@ fn target_env_branches(source: &str) -> Vec<(usize, String)> {
 /// branch would ship a path CI has never compiled, and this is what says so.
 #[test]
 fn no_target_env_cfg_leaves_the_gnu_proxy_faithful() {
+    let scanned = crate_sources();
+
+    // The scan is over sources that are clean today, so its inventory needs a
+    // tripwire of its own: a walk that quietly stopped reaching a file would
+    // report exactly the same clean result. `build.rs` is named because it is
+    // the file the walk used to miss, and the one where a `target_env` branch
+    // hides best — compiled for the host, so no `--target` run ever lints it.
+    assert!(
+        scanned
+            .iter()
+            .any(|path| path.file_name().is_some_and(|name| name == "build.rs")),
+        "cli/build.rs is outside the target_env scan, so an msvc branch in the \
+         build script would ship uncompiled by either clippy run while this test \
+         reported the gnu proxy faithful. Scanned {} files",
+        scanned.len()
+    );
+
     let mut found = Vec::new();
-    for path in crate_sources() {
+    for path in scanned {
         let Ok(source) = std::fs::read_to_string(&path) else {
             continue;
         };
