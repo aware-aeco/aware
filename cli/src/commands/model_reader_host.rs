@@ -41,11 +41,17 @@ struct Frame {
 impl Frame {
     async fn read<R: AsyncRead + Unpin>(reader: &mut R) -> std::io::Result<Option<Self>> {
         let mut header = [0u8; HEADER_BYTES];
-        match reader.read_exact(&mut header).await {
+        // Tell "the peer closed between frames" apart from "the peer died mid-header". Reading
+        // the whole header with one `read_exact` collapses both into `UnexpectedEof`, so a
+        // truncated frame was indistinguishable from a clean shutdown and the host exited 0 on
+        // a protocol violation. Probe the first byte alone: EOF there is the clean end, EOF
+        // after it is a frame that was cut short, which propagates as the error it is.
+        match reader.read_exact(&mut header[..1]).await {
             Ok(_) => {}
             Err(error) if error.kind() == std::io::ErrorKind::UnexpectedEof => return Ok(None),
             Err(error) => return Err(error),
         }
+        reader.read_exact(&mut header[1..]).await?;
         let kind = header[0];
         if !matches!(kind, KIND_CONTROL | KIND_STDOUT | KIND_STDERR | KIND_STDIN) {
             return Err(std::io::Error::new(
@@ -881,7 +887,21 @@ mod tests {
         let debug = format!("{:?}", prepared.command);
         assert!(debug.contains("convert"));
         assert!(debug.contains("--json-stdin"));
-        assert!(!debug.contains("secret.rvt"));
+        // The two halves the name claims, asserted rather than gestured at. `Command`'s Debug
+        // renders an env-cleared command with a leading `env -i` and lists only the argv it will
+        // pass, so both are observable — on unix, where that rendering is defined.
+        #[cfg(unix)]
+        {
+            assert!(
+                debug.contains("env -i TZ=\"UTC\""),
+                "the provider gets the requested environment and nothing it inherited: {debug}"
+            );
+            let after_argv = debug.split_once("\"--json-stdin\"").unwrap().1;
+            assert!(
+                !after_argv.contains('"'),
+                "no argument may follow the protocol's own two: {debug}"
+            );
+        }
     }
 
     #[test]
@@ -1072,5 +1092,498 @@ mod tests {
         );
         let _ = release_tx.send(());
         supervisor.await.unwrap().unwrap();
+    }
+
+    // ── the wire format and the decoder's refusals ───────────────────────────────────
+    //
+    // Everything below reads bytes the host did not write. The bridge is a separate process
+    // in another language, so the 50-byte header is a contract between two implementations
+    // and every field of it is reachable by a peer that is buggy, out of date, or hostile.
+
+    /// A control frame carrying `body`, at the sequence/flags the host itself emits. The loop
+    /// checks those two fields only on `KIND_STDIN`, so an inbound control frame is not in fact
+    /// required to carry them — this matches what the bridge sends, not what the host enforces.
+    fn control(request_id: u64, body: serde_json::Value) -> Frame {
+        Frame {
+            kind: KIND_CONTROL,
+            request_id,
+            run_handle: [0; 32],
+            sequence: 0,
+            flags: FINAL,
+            payload: serde_json::to_vec(&body).unwrap(),
+        }
+    }
+
+    /// Feed `frames` to `protocol_loop` as one byte stream and return what it made of them,
+    /// joining any provider task it started so a refusal can't leave one running.
+    ///
+    /// This observes the loop's REFUSALS only. `SharedWriter` is `Arc<Mutex<tokio::io::Stdout>>`
+    /// — a concrete type, not a parameter — so everything the host says back (`ok`, `accepted`
+    /// and the run handle it mints, `acquired`/`busy`, `released`, `bye`) goes to fd 1 and is
+    /// unreadable from here. Making the writer generic would open all of that, and would also
+    /// stop these tests emitting binary frames into the test runner's output; it is a change to
+    /// production types, so it is not made here.
+    async fn drive(frames: &[Frame]) -> Result<Option<u64>, AwareError> {
+        let mut wire = Vec::new();
+        for frame in frames {
+            frame.write(&mut wire).await.unwrap();
+        }
+        let writer: SharedWriter = Arc::new(Mutex::new(tokio::io::stdout()));
+        let active: ActiveRuns = Arc::new(Mutex::new(HashMap::new()));
+        let mut tasks: Vec<tokio::task::JoinHandle<()>> = Vec::new();
+        let result = protocol_loop(&mut wire.as_slice(), writer, active.clone(), &mut tasks).await;
+        cancel_and_join(&active, &mut tasks).await;
+        result
+    }
+
+    #[tokio::test]
+    async fn the_frame_header_layout_is_the_documented_wire_format() {
+        // Field OFFSETS are the half a round-trip test cannot see: move `sequence` and `flags`
+        // in `read` and `write` together and `frames_preserve_...` stays green while every
+        // bridge build in the field stops parsing. Pin the bytes themselves, both directions.
+        let frame = Frame {
+            kind: KIND_STDERR,
+            request_id: 0x0102_0304_0506_0708,
+            run_handle: [0xAB; 32],
+            sequence: 0x0000_00FF,
+            flags: FINAL,
+            payload: vec![0xDE, 0xAD],
+        };
+        let mut expected = vec![KIND_STDERR]; // [0]      kind
+        expected.extend_from_slice(&[1, 2, 3, 4, 5, 6, 7, 8]); // [1..9]   request id, big-endian
+        expected.extend_from_slice(&[0xAB; 32]); // [9..41]  run handle
+        expected.extend_from_slice(&[0, 0, 0, 0xFF]); // [41..45] sequence, big-endian
+        expected.push(FINAL); // [45]     flags
+        expected.extend_from_slice(&[0, 0, 0, 2]); // [46..50] payload length, big-endian
+        expected.extend_from_slice(&[0xDE, 0xAD]); // payload
+
+        let mut written = Vec::new();
+        frame.write(&mut written).await.unwrap();
+        assert_eq!(
+            written, expected,
+            "the encoder drifted from the wire format"
+        );
+        assert_eq!(
+            Frame::read(&mut expected.as_slice())
+                .await
+                .unwrap()
+                .unwrap(),
+            frame,
+            "the decoder drifted from the wire format",
+        );
+    }
+
+    #[tokio::test]
+    async fn the_decoder_accepts_every_protocol_kind_and_refuses_any_other() {
+        for kind in [KIND_CONTROL, KIND_STDOUT, KIND_STDERR, KIND_STDIN] {
+            let frame = Frame {
+                kind,
+                request_id: 1,
+                run_handle: [0; 32],
+                sequence: 0,
+                flags: FINAL,
+                payload: Vec::new(),
+            };
+            let mut wire = Vec::new();
+            frame.write(&mut wire).await.unwrap();
+            assert_eq!(
+                Frame::read(&mut wire.as_slice()).await.unwrap().unwrap(),
+                frame,
+                "kind {kind:#04x} is part of the protocol and must decode",
+            );
+            // The same frame with an off-protocol kind byte, and nothing else changed.
+            wire[0] = 0x7F;
+            let error = Frame::read(&mut wire.as_slice()).await.unwrap_err();
+            assert_eq!(
+                error.kind(),
+                std::io::ErrorKind::InvalidData,
+                "an unknown kind must be rejected, not routed by whatever it resembles",
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn the_decoder_refuses_a_declared_length_over_the_limit_before_reading_the_payload() {
+        // A peer that declares 4 GiB must be refused on the header alone. Only 50 bytes are on
+        // the wire here, so a decoder that trusted the length would go on to read the payload
+        // and fail with UnexpectedEof — a different error, and one that says nothing about the
+        // limit. What this pins is that the refusal happens before that read, not that it
+        // happens before the `vec![0u8; length]` above it: the allocation is lazily paged, so
+        // moving the check to sit between the two would leave this assertion green.
+        let mut header = [0u8; HEADER_BYTES];
+        header[0] = KIND_CONTROL;
+        header[46..50].copy_from_slice(&u32::MAX.to_be_bytes());
+        let error = Frame::read(&mut header.as_slice()).await.unwrap_err();
+        assert_eq!(error.kind(), std::io::ErrorKind::InvalidData);
+
+        // The boundary is inclusive: a payload of exactly the limit is legal traffic.
+        let frame = Frame {
+            kind: KIND_CONTROL,
+            request_id: 1,
+            run_handle: [0; 32],
+            sequence: 0,
+            flags: FINAL,
+            payload: vec![7; MAX_CONTROL_BYTES],
+        };
+        let mut wire = Vec::new();
+        frame.write(&mut wire).await.unwrap();
+        let decoded = Frame::read(&mut wire.as_slice()).await.unwrap().unwrap();
+        assert_eq!(
+            decoded.payload.len(),
+            MAX_CONTROL_BYTES,
+            "a payload exactly at the limit must decode",
+        );
+    }
+
+    #[tokio::test]
+    async fn the_decoder_separates_a_clean_end_of_stream_from_a_truncated_frame() {
+        // Nothing at all is how the bridge closes. A frame that stops part-way is a different
+        // event, and returning it as if the stream had ended cleanly loses the distinction: the
+        // host would exit 0 on a torn stream, and a decoder that instead returned the short
+        // bytes as a whole frame would leave the remainder in the stream, so every frame after
+        // it parses from the middle of this one.
+        assert!(Frame::read(&mut &b""[..]).await.unwrap().is_none());
+
+        let mut wire = Vec::new();
+        Frame {
+            kind: KIND_STDIN,
+            request_id: 3,
+            run_handle: [1; 32],
+            sequence: 0,
+            flags: FINAL,
+            payload: vec![9; 8],
+        }
+        .write(&mut wire)
+        .await
+        .unwrap();
+        // Cut short in the payload, and cut short inside the header itself. Both are the same
+        // event — the peer stopped mid-frame — and both must reach the caller as an error,
+        // including the header case, where the only signal is that the read ended early.
+        for cut in [HEADER_BYTES + 3, HEADER_BYTES - 1, 1] {
+            let mut truncated = wire.clone();
+            truncated.truncate(cut);
+            let error = Frame::read(&mut truncated.as_slice()).await.unwrap_err();
+            assert_eq!(
+                error.kind(),
+                std::io::ErrorKind::UnexpectedEof,
+                "a frame cut short at {cut} bytes is a protocol error, not a clean shutdown",
+            );
+        }
+    }
+
+    // ── the control loop's refusals ──────────────────────────────────────────────────
+
+    #[tokio::test]
+    async fn control_request_ids_must_strictly_increase() {
+        // The request id is what correlates a reply to its request. Re-using one would let a
+        // replayed frame collect the answer to an exchange that has already completed.
+        assert!(
+            drive(&[
+                control(1, json!({"op": "hello"})),
+                control(2, json!({"op": "hello"})),
+            ])
+            .await
+            .is_ok(),
+            "increasing ids are ordinary traffic",
+        );
+        for repeat in [1u64, 0] {
+            let error = drive(&[
+                control(1, json!({"op": "hello"})),
+                control(repeat, json!({"op": "hello"})),
+            ])
+            .await
+            .unwrap_err();
+            assert!(
+                error
+                    .to_string()
+                    .contains("control request ids must increase"),
+                "id {repeat} after 1 must be refused, got: {error}",
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn the_host_refuses_unknown_ops_and_frames_only_it_may_send() {
+        let error = drive(&[control(1, json!({"op": "exec"}))])
+            .await
+            .unwrap_err();
+        assert!(
+            error.to_string().contains("control operation is unknown"),
+            "{error}",
+        );
+
+        // `stdout`/`stderr` travel host → bridge. Inbound they are not control frames, so the
+        // loop must refuse them rather than fall through to the control dispatch — a payload
+        // that WOULD dispatch is what makes that fall-through observable.
+        //
+        // The message is the one the guard actually produces, not the one it ought to: the kind
+        // check and the request-id check share a single `||` and a single "ids must increase"
+        // string, so a stdout frame is reported to the bridge as an id violation. Asserted as
+        // it stands, because a bare `is_err()` here is equally satisfied by a `Frame::read`
+        // regression that narrowed the accepted kinds, which is a different bug entirely.
+        for kind in [KIND_STDOUT, KIND_STDERR] {
+            let frame = Frame {
+                kind,
+                request_id: 1,
+                run_handle: [0; 32],
+                sequence: 0,
+                flags: FINAL,
+                payload: b"{\"op\":\"hello\"}".to_vec(),
+            };
+            let error = drive(&[frame]).await.unwrap_err();
+            assert!(
+                error
+                    .to_string()
+                    .contains("control request ids must increase"),
+                "kind {kind:#04x} must be refused by the control-frame guard: {error}",
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn stdin_that_matches_no_pending_run_is_refused() {
+        // The run handle is minted by the host and never guessable by the peer. A stdin body
+        // carrying an unknown one has no run to feed, and treating it as a no-op would let a
+        // peer probe for live handles without ever being told it was wrong.
+        let error = drive(&[Frame {
+            kind: KIND_STDIN,
+            request_id: 1,
+            run_handle: [5; 32],
+            sequence: 0,
+            flags: FINAL,
+            payload: Vec::new(),
+        }])
+        .await
+        .unwrap_err();
+        assert!(error.to_string().contains("uncorrelated stdin"), "{error}");
+    }
+
+    #[tokio::test]
+    async fn the_lock_ops_refuse_a_relative_path_and_a_handle_the_host_never_issued() {
+        // `lock-acquire` locks whatever path it is handed. A relative one resolves against
+        // whatever directory the host happened to inherit — it is spawned without a `cwd`, so
+        // that is the bridge's, which is not the cache directory the path is meant to name.
+        for body in [
+            json!({"op": "lock-acquire", "path": "relative/provider.lock"}),
+            json!({"op": "lock-acquire"}),
+        ] {
+            let error = drive(&[control(1, body.clone())]).await.unwrap_err();
+            assert!(
+                error.to_string().contains("lock path must be absolute"),
+                "{body} must be refused, got: {error}",
+            );
+        }
+
+        let error = drive(&[control(1, json!({"op": "lock-release"}))])
+            .await
+            .unwrap_err();
+        assert!(
+            error.to_string().contains("lock handle is unknown"),
+            "releasing an unissued handle must not be reported as a release: {error}",
+        );
+
+        // An absolute path is the accepted case, so the refusals above are not vacuous. What
+        // this half can and cannot show: the op opens the path and does not refuse it. Whether
+        // the lock was TAKEN or reported busy is not observable here — both are `Ok`, and the
+        // status that tells them apart goes out over the writer, which is hard-wired to stdout
+        // (see the note on `drive`). The file is opened before the lock is attempted, so its
+        // existence proves the open, not the lock.
+        let tmp = tempfile::tempdir().unwrap();
+        let lock = tmp.path().join("provider.lock");
+        assert!(
+            drive(&[
+                control(
+                    1,
+                    json!({"op": "lock-acquire", "path": lock.to_str().unwrap()})
+                ),
+                control(2, json!({"op": "shutdown"})),
+            ])
+            .await
+            .is_ok(),
+            "an absolute path must not be refused",
+        );
+        assert!(lock.is_file(), "lock-acquire opens the path it was handed");
+    }
+
+    #[tokio::test]
+    async fn a_provider_run_may_not_declare_more_stdin_than_one_control_frame_can_carry() {
+        // `stdin_length` is checked against the frame limit HERE, before a handle is minted,
+        // because the stdin body arrives in a single frame and the loop later requires its
+        // payload to equal this number exactly. A larger declaration could never be satisfied.
+        let request = |stdin_length: usize| {
+            json!({
+                "op": "provider-run",
+                "executable": "/opt/provider/reader",
+                "executableSha256": "0".repeat(64),
+                "operation": "describe",
+                "cwd": "/tmp",
+                "environment": {},
+                "stdinLength": stdin_length,
+                "timeoutMs": 1000,
+                "stdoutLimit": 16,
+                "stderrLimit": 16,
+            })
+        };
+        let error = drive(&[control(1, request(MAX_CONTROL_BYTES + 1))])
+            .await
+            .unwrap_err();
+        assert!(
+            error.to_string().contains("provider request exceeds limit"),
+            "{error}",
+        );
+        // Exactly the limit is accepted. Staging a run launches nothing — the provider only
+        // starts once its stdin frame arrives — so this stops at the guard under test.
+        assert!(
+            drive(&[
+                control(1, request(MAX_CONTROL_BYTES)),
+                control(2, json!({"op": "shutdown"})),
+            ])
+            .await
+            .is_ok(),
+            "a declaration exactly at the limit is satisfiable and must be accepted",
+        );
+    }
+
+    // ── the provider-launch guard ────────────────────────────────────────────────────
+
+    /// A well-formed request for `image`, which the caller has already written.
+    fn provider_run_for(image: &std::path::Path, cwd: &std::path::Path) -> ProviderRun {
+        ProviderRun {
+            op: "provider-run".into(),
+            executable: image.to_path_buf(),
+            executable_sha256: file_sha256(image),
+            operation: "describe".into(),
+            cwd: cwd.to_path_buf(),
+            environment: BTreeMap::new(),
+            stdin_length: 0,
+            timeout_ms: 1000,
+            stdout_limit: 16,
+            stderr_limit: 16,
+        }
+    }
+
+    #[test]
+    fn provider_command_refuses_a_request_outside_the_protocol_before_it_opens_the_image() {
+        let tmp = tempfile::tempdir().unwrap();
+        let image = tmp.path().join("provider-image");
+        std::fs::write(&image, b"provider image bytes").unwrap();
+
+        // Accepted unmodified — without this every case below could "pass" for the wrong reason.
+        assert!(provider_command(&provider_run_for(&image, tmp.path())).is_ok());
+
+        #[allow(clippy::type_complexity)]
+        let cases: [(&str, Box<dyn Fn(&mut ProviderRun)>); 6] = [
+            (
+                "a relative executable, which would resolve against the host's cwd",
+                Box::new(|r| r.executable = PathBuf::from("provider/reader")),
+            ),
+            (
+                "a relative working directory",
+                Box::new(|r| r.cwd = PathBuf::from("work")),
+            ),
+            (
+                "an operation the host does not implement",
+                Box::new(|r| r.operation = "exec".into()),
+            ),
+            (
+                "a digest shorter than sha-256",
+                Box::new(|r| r.executable_sha256.truncate(63)),
+            ),
+            (
+                "a digest with a byte outside lower-case hex",
+                Box::new(|r| r.executable_sha256.replace_range(0..1, "g")),
+            ),
+            (
+                "an upper-case digest, which the host's own formatting never produces",
+                Box::new(|r| r.executable_sha256 = r.executable_sha256.to_uppercase()),
+            ),
+        ];
+        for (what, break_it) in cases {
+            let mut request = provider_run_for(&image, tmp.path());
+            break_it(&mut request);
+            // `is_err()` alone would not do. Four of these six reach a DIFFERENT rejection when
+            // their own guard is deleted — a relative path fails at `symlink_metadata`, and a
+            // malformed digest fails the later comparison — so a bare `is_err()` stays green
+            // through the regression it is here to catch. Name the guard by its own message.
+            // That message is shared by all five conditions in one `||`, so this pins that the
+            // shape guard fired and not which clause — swapping two of them stays green.
+            let Err(error) = provider_command(&request) else {
+                panic!("the host must refuse {what}");
+            };
+            assert!(
+                error
+                    .to_string()
+                    .contains("received an unsafe provider request"),
+                "{what} must be refused by the protocol guard, not by a later failure: {error}",
+            );
+        }
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn provider_command_refuses_indirection_even_when_it_resolves_to_the_verified_image() {
+        // The digest is taken from whatever the path resolves to at verification time. A symlink
+        // can be repointed between that read and the launch, so the host refuses the indirection
+        // outright rather than trying to win the race. Choosing `symlink_metadata` over
+        // `metadata` is what makes that possible, and it is the only thing that does: the
+        // adjacent `file_type().is_symlink()` clause is redundant, since `is_file()` is already
+        // false for a symlink's own metadata. A directory is refused by `is_file()` under
+        // either call. Neither reaches the hashing step below.
+        let tmp = tempfile::tempdir().unwrap();
+        let image = tmp.path().join("provider-image");
+        std::fs::write(&image, b"provider image bytes").unwrap();
+        let link = tmp.path().join("provider-link");
+        std::os::unix::fs::symlink(&image, &link).unwrap();
+
+        // The link and the image are byte-identical and carry the same digest, so the ONLY
+        // thing separating the two outcomes below is the indirection itself.
+        assert!(provider_command(&provider_run_for(&image, tmp.path())).is_ok());
+        let mut through_link = provider_run_for(&image, tmp.path());
+        through_link.executable = link;
+        let Err(error) = provider_command(&through_link) else {
+            panic!("a symlink to the verified image must still be refused");
+        };
+        assert!(
+            error.to_string().contains("regular non-link file"),
+            "a symlink must be refused: {error}",
+        );
+
+        let mut directory = provider_run_for(&image, tmp.path());
+        directory.executable = tmp.path().to_path_buf();
+        assert!(
+            provider_command(&directory).is_err(),
+            "a directory is not a provider image",
+        );
+    }
+
+    #[tokio::test]
+    async fn a_bounded_stream_accepts_exactly_its_limit_and_refuses_one_byte_more() {
+        // The limit is the provider's entire output budget. One byte of slack either truncates a
+        // legitimate result or lets a runaway provider fill the host's memory.
+        assert_eq!(
+            read_bounded(&b"1234"[..], 4).await.unwrap(),
+            b"1234".to_vec()
+        );
+        assert_eq!(
+            read_bounded(&b"12345"[..], 4).await.unwrap_err().kind(),
+            std::io::ErrorKind::FileTooLarge,
+        );
+
+        // Across two reads, which is the shape a pipe actually delivers: the budget is spent by
+        // the TOTAL, so neither chunk on its own exceeding it makes the stream legal.
+        assert_eq!(
+            read_bounded(AsyncReadExt::chain(&b"12"[..], &b"34"[..]), 4)
+                .await
+                .unwrap(),
+            b"1234".to_vec(),
+        );
+        assert_eq!(
+            read_bounded(AsyncReadExt::chain(&b"12"[..], &b"345"[..]), 4)
+                .await
+                .unwrap_err()
+                .kind(),
+            std::io::ErrorKind::FileTooLarge,
+            "a limit checked per read instead of per stream is unbounded",
+        );
     }
 }
