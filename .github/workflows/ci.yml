@@ -51,11 +51,17 @@ jobs:
           echo "Pinned toolchain: $channel"
           echo "channel=$channel" >> "$GITHUB_OUTPUT"
 
+      # `targets:` is load-bearing, not tidiness — it is what makes the
+      # "clippy (windows target)" step below possible. Declared here so the
+      # target is installed by the same action that pins the compiler, and the
+      # cross-check therefore runs on the pinned toolchain rather than whatever
+      # a later `rustup target add` happened to attach it to.
       - name: Install Rust ${{ steps.pin.outputs.channel }}
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ steps.pin.outputs.channel }}
           components: rustfmt, clippy
+          targets: x86_64-pc-windows-gnu
 
       - name: Cache cargo registry + build
         uses: Swatinem/rust-cache@v2
@@ -132,6 +138,41 @@ jobs:
       - name: cargo clippy -D warnings
         working-directory: cli
         run: cargo clippy --all-targets --locked -- -D warnings
+
+      # The step above compiles for the HOST only, so every `#[cfg(windows)]` and
+      # `#[cfg(target_os = "macos")]` line in `cli/src` is invisible to it — 262
+      # lines across six files, `commands/model_reader_host.rs` (the v0.131.0
+      # managed Windows host) being 182 of them. Nothing else reached them
+      # either: `release.yml` and `bridge-windows-packaged` DO build the crate on
+      # Windows, but with `cargo build`, and rustc accepts and then ignores
+      # `clippy::` tool lints. So all three of CLAUDE.md §Code style's mechanised
+      # rules — `cargo clippy -D warnings`, the crate-root
+      # `deny(clippy::unwrap_used, clippy::expect_used)` in `src/main.rs`, and
+      # `undocumented_unsafe_blocks` in `Cargo.toml` — applied to none of that
+      # code.
+      #
+      # Measured, not assumed: an `unwrap()` planted in the `#[cfg(windows)]`
+      # `process_is_alive` in `src/runtime/pidfile.rs` passes the step above with
+      # zero errors and is rejected here with `used `unwrap()` on a `Result``.
+      #
+      # `x86_64-pc-windows-gnu`, not `-msvc`, and the difference is a Linux
+      # runner's C toolchain: `ring` and `zstd-sys` build C for the target, and
+      # their build scripts refuse an msvc target under GNU cc ("GNU compiler is
+      # not supported for this target"), while the gnu target needs only mingw.
+      # The two triples differ solely under `target_env`, so gnu is a faithful
+      # proxy for the shipped msvc binary exactly as long as no `target_env` cfg
+      # exists — which `cli/tests/windows_target_gate.rs` is what enforces.
+      #
+      # Check-only. Nothing is linked and nothing is run, so this is not a
+      # Windows build and does not duplicate one.
+      - name: cargo clippy -D warnings (windows target)
+        working-directory: cli
+        env:
+          CC_x86_64_pc_windows_gnu: x86_64-w64-mingw32-gcc
+          AR_x86_64_pc_windows_gnu: x86_64-w64-mingw32-ar
+        run: |
+          sudo apt-get install -y gcc-mingw-w64-x86-64
+          cargo clippy --target x86_64-pc-windows-gnu --all-targets --locked -- -D warnings
 
       # `clippy::string_slice` is a `restriction` lint, so the step above does not
       # enable it and a hard-coded byte offset into a `str` reaches users as a
