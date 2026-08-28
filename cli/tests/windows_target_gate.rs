@@ -338,11 +338,15 @@ fn ci_still_cross_checks_a_windows_target() {
     // The host step has to stay too. This one only ADDS a cfg set; it is not a
     // replacement, and a step that swapped `--target` onto the existing call
     // would trade one blind spot for another.
+    let host_clippy = &step(&steps, "cargo clippy -D warnings").body;
+    assert_eq!(
+        explicit_target(host_clippy),
+        None,
+        "ci.yml's host clippy step now passes an explicit target, so it no longer checks \
+         the crate for the platform CI actually runs on"
+    );
     assert!(
-        matches!(
-            cross_check(&step(&steps, "cargo clippy -D warnings").body),
-            CrossCheck::Missing("--target <a *-pc-windows-* triple>")
-        ),
+        matches!(cross_check(host_clippy), CrossCheck::Missing(_)),
         "ci.yml's host clippy step now passes a windows `--target`, so nothing checks \
          the crate for the platform CI actually runs on"
     );
@@ -703,6 +707,68 @@ fn target_env_branches(source: &str) -> Vec<(usize, String)> {
         .collect()
 }
 
+/// Windows-host-specific logic in a build script, as `(line, text)` pairs.
+///
+/// A build script is compiled for the HOST, not Cargo's `--target`. The Ubuntu
+/// host clippy run and the Windows-GNU cross-check therefore both compile
+/// `build.rs` as Linux, while a release build on `windows-latest` compiles its
+/// Windows-only branches. Keep the inventory deliberately conservative: any
+/// Windows cfg or Cargo-provided target/host query requires either a Windows
+/// clippy job or an explicit update to this gate.
+fn windows_host_branches(source: &str) -> Vec<(usize, String)> {
+    let mut found = cfg_attributes(source)
+        .into_iter()
+        .filter(|(_, text)| {
+            (text.starts_with("#[cfg") || text.starts_with("#![cfg") || text.contains("cfg!("))
+                && text.contains("windows")
+        })
+        .collect::<Vec<_>>();
+
+    // Strip comments and whitespace so ordinary multi-line env reads cannot
+    // evade the check. The markers are calls/macros, not bare words, to avoid
+    // rejecting a diagnostic that merely mentions TARGET or HOST.
+    let compact = source
+        .lines()
+        .map(strip_comment)
+        .flat_map(|line| line.chars().filter(|character| !character.is_whitespace()))
+        .collect::<String>();
+    const CARGO_HOST_TARGET_MARKERS: &[&str] = &[
+        "var(\"TARGET\")",
+        "var_os(\"TARGET\")",
+        "env!(\"TARGET\")",
+        "option_env!(\"TARGET\")",
+        "var(\"HOST\")",
+        "var_os(\"HOST\")",
+        "env!(\"HOST\")",
+        "option_env!(\"HOST\")",
+        "var(\"CARGO_CFG_WINDOWS\")",
+        "var_os(\"CARGO_CFG_WINDOWS\")",
+        "env!(\"CARGO_CFG_WINDOWS\")",
+        "option_env!(\"CARGO_CFG_WINDOWS\")",
+        "var(\"CARGO_CFG_TARGET_OS\")",
+        "var_os(\"CARGO_CFG_TARGET_OS\")",
+        "env!(\"CARGO_CFG_TARGET_OS\")",
+        "option_env!(\"CARGO_CFG_TARGET_OS\")",
+        "var(\"CARGO_CFG_TARGET_ENV\")",
+        "var_os(\"CARGO_CFG_TARGET_ENV\")",
+        "env!(\"CARGO_CFG_TARGET_ENV\")",
+        "option_env!(\"CARGO_CFG_TARGET_ENV\")",
+    ];
+    for marker in CARGO_HOST_TARGET_MARKERS {
+        if compact.contains(marker) {
+            let line = source
+                .lines()
+                .enumerate()
+                .find(|(_, raw)| strip_comment(raw).contains(marker))
+                .map(|(index, _)| index + 1)
+                .unwrap_or(1);
+            found.push((line, (*marker).to_owned()));
+        }
+    }
+    found.sort_by_key(|(line, _)| *line);
+    found
+}
+
 /// The condition that makes `-gnu` a faithful stand-in for the shipped `-msvc`.
 ///
 /// `x86_64-pc-windows-gnu` and `x86_64-pc-windows-msvc` agree on `target_os`,
@@ -748,6 +814,49 @@ fn no_target_env_cfg_leaves_the_gnu_proxy_faithful() {
          the CI step to a target that reaches it and update this test.\n{}",
         found.join("\n")
     );
+}
+
+/// Build scripts run for the host, so a Windows-only build-script branch is
+/// invisible to both Ubuntu clippy invocations. Keep that gap explicit until
+/// CI gains a Windows-host clippy job that compiles `build.rs` as Windows too.
+#[test]
+fn build_rs_has_no_unchecked_windows_host_logic() {
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("build.rs");
+    let source =
+        std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("read {}: {e}", path.display()));
+    let found = windows_host_branches(&source);
+    assert!(
+        found.is_empty(),
+        "cli/build.rs contains Windows-host-specific logic that neither Ubuntu clippy gate \
+         compiles: {found:?}. Add a Windows-host clippy job or update this test with the \
+         corresponding coverage before adding the branch."
+    );
+}
+
+/// Negative control for [`windows_host_branches`]: it must catch cfg, cfg!,
+/// and Cargo target/host environment queries, including wrapped calls.
+#[test]
+fn the_build_rs_windows_scanner_matches_its_contract() {
+    for (source, expected) in [
+        ("#[cfg(windows)]\nfn main() {}\n", true),
+        ("fn main() { if cfg!(target_os = \"windows\") {} }\n", true),
+        (
+            "fn main() { let target = std::env::var(\n    \"TARGET\"\n); }\n",
+            true,
+        ),
+        ("fn main() { let host = option_env!(\"HOST\"); }\n", true),
+        (
+            "// cfg!(windows) and env!(\"TARGET\") are documentation\nfn main() {}\n",
+            false,
+        ),
+        ("fn main() { let value = \"TARGET\"; }\n", false),
+    ] {
+        assert_eq!(
+            !windows_host_branches(source).is_empty(),
+            expected,
+            "the build.rs scanner misclassified: {source}"
+        );
+    }
 }
 
 /// Negative control for [`target_env_branches`]: the scan above runs over
