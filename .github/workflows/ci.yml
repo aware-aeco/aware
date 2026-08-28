@@ -165,6 +165,11 @@ jobs:
       #
       # Check-only. Nothing is linked and nothing is run, so this is not a
       # Windows build and does not duplicate one.
+      #
+      # This step closes the WINDOWS half only — a windows target compiles no
+      # `#[cfg(target_os = "macos")]` arm. The macOS half is the `gates-macos`
+      # job below, which has to be a real macOS runner for reasons measured
+      # there. Neither is coverage for the other.
       - name: cargo clippy -D warnings (windows target)
         working-directory: cli
         env:
@@ -210,6 +215,68 @@ jobs:
           cargo fmt --all -- --check
           cargo clippy --all-targets --locked -- -D warnings
           cargo test --locked
+
+  # The windows cross-check in `gates` closes the WINDOWS half of the
+  # platform-gated lint hole and cannot close the macOS half. Measured, not
+  # assumed: `cargo clippy --target aarch64-apple-darwin` from a Linux runner
+  # never reaches this crate's code at all — it dies in `zstd-sys`'s build
+  # script with `cc: error: unrecognized command-line option '-arch'`, because
+  # the runner's `cc` is not an Apple cross-compiler and has no SDK. `ring`
+  # compiles C for the target too. That is the same wall `-msvc` hits, and it is
+  # why the windows step uses `-gnu`; darwin has no equivalent proxy triple,
+  # because what is missing is a toolchain rather than a `target_env`.
+  #
+  # So macOS coverage needs a macOS runner. `release.yml` already builds this
+  # crate on `macos-latest`, but with `cargo build`, and rustc accepts a
+  # `clippy::` tool lint and then ignores it — precisely the reason the windows
+  # cross-check exists despite `release.yml` and `bridge-windows-packaged`
+  # building for Windows. Without this job `src/commands/app.rs`'s
+  # `#[cfg(target_os = "macos")]` arm and `model_reader_host.rs`'s
+  # `#[cfg(all(unix, not(target_os = "linux")))]` arm are checked by nothing.
+  #
+  # Check-only: nothing is linked and nothing is run, so it is not a second
+  # macOS build and does not duplicate the release one. It needs none of the
+  # apt deps either — libsecret and libdbus are the Linux credential backend;
+  # on macOS the keychain binding is pure Rust.
+  gates-macos:
+    name: clippy (macos)
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+
+      # Same single source of truth as `gates` — `cli/rust-toolchain.toml`, read
+      # rather than restated, so the two jobs cannot drift onto different
+      # compilers and disagree about what a lint is.
+      - name: Read pinned toolchain
+        id: pin
+        run: |
+          channel=$(sed -n 's/^[[:space:]]*channel[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' cli/rust-toolchain.toml | head -1)
+          if [ -z "$channel" ]; then
+            echo "::error::could not read [toolchain] channel from cli/rust-toolchain.toml"
+            exit 1
+          fi
+          echo "Pinned toolchain: $channel"
+          echo "channel=$channel" >> "$GITHUB_OUTPUT"
+
+      - name: Install Rust ${{ steps.pin.outputs.channel }}
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ steps.pin.outputs.channel }}
+          components: clippy
+
+      - name: Cache cargo registry + build
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: cli
+
+      # No `--target`: the point of this job is that the HOST cfg set is the
+      # macOS one. `--all-targets` so `cli/tests/` is compiled too, `--locked`
+      # so it fails on a stale lockfile rather than resolving around it, and
+      # `-D warnings` because clippy otherwise prints and exits 0.
+      - name: cargo clippy -D warnings (macos)
+        working-directory: cli
+        run: cargo clippy --all-targets --locked -- -D warnings
 
   # The IFC bridge is a Node package, so `cargo test` never touches it — its suite only ever ran on
   # whoever last remembered to. That is how `read-model` shipped returning a different coordinate
