@@ -324,10 +324,10 @@ struct Reopener {
 /// bracket inside a comment — `// TODO(#412): first element is items[0` — and
 /// then runs on until the brackets happen to rebalance, swallowing every
 /// attribute in between. That is the same whole-file blindness the `#[cfg(test)]`
-/// cutoff used to cause, re-entering through a different door, and `src/` already
-/// carries four attributes of the shape `#[allow(unused_imports)] // <prose>`
-/// (`src/install/mod.rs:12,18`, `src/registry/mod.rs:9,11`) that sit one bracket
-/// away from triggering it.
+/// cutoff used to cause, re-entering through a different door, and `src/` still
+/// carries a commented `#[allow(unused_imports)]` (on the `pub use index::{…}`
+/// facade in `src/registry/mod.rs`) that sits one bracket away from triggering
+/// it.
 ///
 /// Blanking string contents earns its keep twice more: it removes the
 /// false-positive class where a trailing comment or an `#[expect(…, reason =

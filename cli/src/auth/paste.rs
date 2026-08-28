@@ -32,8 +32,6 @@ pub fn run_paste_flow(integration: &str) -> Result<StoredToken, AwareError> {
                 let _ = request.respond(response);
             }
             tiny_http::Method::Post => {
-                #[allow(unused_imports)]
-                use std::io::Read as _;
                 let mut body = String::new();
                 request
                     .as_reader()
