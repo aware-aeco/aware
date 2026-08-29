@@ -33,7 +33,7 @@ on:
         required: true
         type: string
       sha:
-        description: "Commit to tag (default: the commit this workflow is dispatched at)"
+        description: "Commit SHA to tag, 7-40 hex characters (default: the commit this workflow is dispatched at)"
         required: false
         type: string
       release:
@@ -65,20 +65,46 @@ jobs:
         run: |
           set -euo pipefail
 
+          # $VERSION reaches GITHUB_ENV below, and every later step sources that
+          # file, so a value carrying a newline would land there as a second
+          # assignment — BASH_ENV=... would then run a script of the dispatcher's
+          # choosing in each step that holds the write-capable token. A
+          # line-oriented test like `grep -E '^...$'` cannot see that, because it
+          # succeeds when ANY line matches. These `case` patterns match the whole
+          # value, newlines included, so a multiline input dies on the first one.
           case "$VERSION" in
             v*)
-              echo "::error::version takes no leading v — pass 0.131.1, not $VERSION"
+              echo "::error::version takes no leading v — pass 0.131.1, not the tag name"
+              exit 1
+              ;;
+            "" | *[!0-9.]*)
+              echo "::error::version may hold only digits and dots — got $(printf '%q' "$VERSION")"
               exit 1
               ;;
           esac
-          if ! printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+          # Shape, now that the alphabet is known safe. Bash's =~ matches the
+          # whole string rather than line by line, so this is a second wall
+          # rather than the same one twice.
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "::error::version must be a plain semver like 0.131.1 (got '$VERSION')"
             exit 1
           fi
 
           if [ -n "$SHA_INPUT" ]; then
+            # A commit SHA, not a revision expression: same whole-value reasoning,
+            # and it keeps the tagged commit unambiguous at dispatch time.
+            case "$SHA_INPUT" in
+              *[!0-9a-fA-F]*)
+                echo "::error::sha must be a hex commit SHA — got $(printf '%q' "$SHA_INPUT")"
+                exit 1
+                ;;
+            esac
+            if [ "${#SHA_INPUT}" -lt 7 ] || [ "${#SHA_INPUT}" -gt 40 ]; then
+              echo "::error::sha must be 7 to 40 hex characters (got ${#SHA_INPUT})"
+              exit 1
+            fi
             if ! sha="$(git rev-parse --verify --quiet "${SHA_INPUT}^{commit}")"; then
-              echo "::error::'$SHA_INPUT' does not name a commit in this repository"
+              echo "::error::$SHA_INPUT does not name a commit in this repository"
               exit 1
             fi
           else
