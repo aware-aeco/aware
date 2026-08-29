@@ -118,14 +118,28 @@ jobs:
             exit 1
           fi
 
-          if git rev-parse --verify --quiet "refs/tags/v$VERSION" >/dev/null; then
-            echo "::error::tag v$VERSION already exists — a published tag is never moved"
-            exit 1
+          # An existing tag is fatal only when it names a different commit.
+          # Releasing is a two-step chain — create the ref, then dispatch
+          # release.yml at it — and a tag authored by GITHUB_TOKEN raises no push
+          # event, so if the dispatch half fails there is no other way back in.
+          # Refusing every existing tag would strand exactly the release this
+          # workflow exists to rescue, so a rerun for the same commit skips
+          # creation and goes on to the dispatch. A tag pointing anywhere else is
+          # still refused: a published tag is never moved.
+          tag_exists=false
+          if existing="$(git rev-parse --verify --quiet "refs/tags/v$VERSION^{commit}")"; then
+            if [ "$existing" != "$sha" ]; then
+              echo "::error::tag v$VERSION already exists at $existing, not $sha — a published tag is never moved"
+              exit 1
+            fi
+            tag_exists=true
+            echo "::notice::tag v$VERSION already exists at $sha — skipping creation, dispatching the release"
           fi
 
           {
             echo "SHA=$sha"
             echo "TAG=v$VERSION"
+            echo "TAG_EXISTS=$tag_exists"
           } >> "$GITHUB_ENV"
 
       # The version is welded across cli/Cargo.toml and cli-npm/package.json by
@@ -176,6 +190,7 @@ jobs:
           esac
 
       - name: Create the tag
+        if: env.TAG_EXISTS != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -199,9 +214,15 @@ jobs:
 
       - name: Summarise
         run: |
+          if [ "$TAG_EXISTS" = true ]; then
+            state="already existed at this commit, creation skipped"
+          else
+            state="created by this run"
+          fi
           {
-            echo "### Tagged \`$TAG\`"
+            echo "### \`$TAG\`"
             echo
             echo "- commit: \`$SHA\`"
+            echo "- tag: $state"
             echo "- release.yml dispatched: ${{ inputs.release }}"
           } >> "$GITHUB_STEP_SUMMARY"
