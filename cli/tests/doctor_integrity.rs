@@ -93,17 +93,12 @@ fn doctor_reports_no_running_instances_when_empty() {
         .stdout(predicate::str::contains("no running instances"));
 }
 
-#[test]
-fn doctor_credentials_block_appears() {
-    let tmp = tempfile::tempdir().unwrap();
-    Command::cargo_bin("aware")
-        .unwrap()
-        .env("AWARE_HOME", tmp.path())
-        .arg("doctor")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains("Credentials:"));
-}
+// `doctor_credentials_block_appears` used to sit here. It asserted the literal
+// `"Credentials:"` header and nothing else — and that header is a `println!` in
+// `commands::doctor::run_text` itself, emitted before the per-integration helper is
+// reached, so deleting every call to `print_credential_status_text` left it green.
+// What it claimed to cover is now asserted line by line, per status, in
+// `tests/doctor.rs::each_credential_line_states_the_status_and_the_action_it_implies`.
 
 #[test]
 fn doctor_lists_known_integrations() {
