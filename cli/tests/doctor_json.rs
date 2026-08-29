@@ -259,7 +259,8 @@ fn a_host_bridge_is_reported_installed_only_when_its_binary_is_on_disk() {
     assert_eq!(
         tekla["path"],
         bridges
-            .join("aware-tekla/aware-tekla.exe")
+            .join("aware-tekla")
+            .join("aware-tekla.exe")
             .display()
             .to_string()
     );
