@@ -234,7 +234,7 @@ fn a_host_bridge_is_reported_installed_only_when_its_binary_is_on_disk() {
     let bridges = tmp.path().join("bridges");
     std::fs::create_dir_all(bridges.join("aware-tekla")).unwrap();
     std::fs::write(bridges.join("aware-rhino.exe"), "").unwrap();
-    std::fs::write(bridges.join("aware-tekla/aware-tekla.exe"), "").unwrap();
+    std::fs::write(bridges.join("aware-tekla").join("aware-tekla.exe"), "").unwrap();
 
     let report = doctor_json(tmp.path());
     let by_id = |name: &str| -> serde_json::Value {
@@ -256,10 +256,17 @@ fn a_host_bridge_is_reported_installed_only_when_its_binary_is_on_disk() {
 
     let tekla = by_id("tekla");
     assert_eq!(tekla["installed"], true);
+    // One `join` PER SEGMENT, never `join("a/b")`. `Path::join` treats an embedded
+    // `/` as literal text and keeps it in the display string, so the expectation
+    // would read `...\bridges\aware-tekla/aware-tekla.exe` on Windows while the
+    // product — which composes a segment at a time in `find_bridge_in_dir` — reports
+    // the native `...\bridges\aware-tekla\aware-tekla.exe`. Comparing rendered paths
+    // only works when both sides are built the same way.
     assert_eq!(
         tekla["path"],
         bridges
-            .join("aware-tekla/aware-tekla.exe")
+            .join("aware-tekla")
+            .join("aware-tekla.exe")
             .display()
             .to_string()
     );
