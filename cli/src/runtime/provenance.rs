@@ -550,134 +550,110 @@ mod tests {
     const RUN: &str = "r1";
     const NODE: &str = "reader";
 
-    /// The trace's variants, mirrored so the fixture below is DERIVED from a list of variants
-    /// rather than hand-assembled beside one.
+    /// Expands one list of trace variants into the whole fixture: `Kind`, [`Kind::ALL`],
+    /// [`Kind::wire`], [`Kind::sample`] and [`kind_of`].
     ///
-    /// Three wildcard-free matches hang off this (`wire`, `sample`, and [`kind_of`]), which is
-    /// what makes a new `RunEvent` variant a compile error until it has been given an external
-    /// name AND a sample event. Three earlier spellings each enforced less than they claimed,
-    /// and Codex caught every one of them on this PR: `assert_eq!(cases.len(), 8)` was satisfied
-    /// by the fixture that produced it; a wildcard-free `RunEvent -> &str` match forced a new arm
-    /// but let the sample list go unchanged; and `ALL` was a hand-maintained array that Rust does
-    /// not check for exhaustiveness, so the matches could all be updated while the new variant
-    /// was never iterated. `Sentinel` closes that last one — see [`Kind::ALL`].
-    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
-    #[repr(usize)]
-    enum Kind {
-        RunStart,
-        NodeStart,
-        NodeOutput,
-        NodeProgress,
-        NodeError,
-        NodeStop,
-        WouldWrite,
-        RunEnd,
-        /// Not a trace event, and MUST STAY LAST. Its discriminant is the number of real
-        /// variants, which is what lets the const assertion below check `ALL` for completeness
-        /// — the one step of this fixture the compiler could not otherwise reach, since stable
-        /// Rust cannot enumerate the variants of a data-carrying enum (`variant_count` is
-        /// unstable; `strum::EnumIter` does not apply to variants with fields).
-        Sentinel,
+    /// The point is that there is exactly ONE place a variant can be named. `kind_of` matches
+    /// `RunEvent` without a wildcard, so adding a variant to `RunEvent` stops this file
+    /// compiling; and the only repair is an entry in the list below, which cannot be written
+    /// without an external name AND a sample event, and which lands the variant in `ALL` at the
+    /// same time. A `Kind` with no matching `RunEvent` variant fails the same way, so the two
+    /// lists are one-to-one in both directions.
+    ///
+    /// Four earlier spellings each enforced less than they claimed, and Codex caught every one
+    /// on this PR: `assert_eq!(cases.len(), 8)` was satisfied by the fixture that produced it;
+    /// a wildcard-free `RunEvent -> &str` match forced a new arm but let the sample list go
+    /// unchanged; a hand-maintained `ALL` array was one Rust does not check for exhaustiveness;
+    /// and — the reason the fixture is generated rather than hand-written — a hand-written
+    /// `kind_of` arm could satisfy the compiler by pointing a NEW variant at an EXISTING `Kind`
+    /// (`RunEvent::NodeRetry { .. } => Kind::NodeError`), leaving the new variant never
+    /// constructed and its wire name never pinned. Generating both sides from one list leaves
+    /// no per-variant arm to write, so that repair is not available.
+    macro_rules! trace_kinds {
+        ($( $variant:ident => $wire:literal, $sample:expr ; )+) => {
+            #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
+            enum Kind {
+                $( $variant, )+
+            }
+
+            impl Kind {
+                const ALL: &'static [Kind] = &[ $( Kind::$variant, )+ ];
+
+                /// The `kind` string this variant must serialize as. Hand-written on purpose:
+                /// reading it back out of serde would compare serde with itself and pin nothing.
+                fn wire(self) -> &'static str {
+                    match self {
+                        $( Kind::$variant => $wire, )+
+                    }
+                }
+
+                /// An event of this variant, so a variant cannot be given a name here without
+                /// also being given something to serialize.
+                fn sample(self) -> RunEvent {
+                    match self {
+                        $( Kind::$variant => $sample, )+
+                    }
+                }
+            }
+
+            /// Which variant an event is, decided by the compiler rather than by its `kind`
+            /// string — so the round trip below can assert the VARIANT came back, not merely a
+            /// matching tag. Exhaustive over `RunEvent` by construction.
+            fn kind_of(event: &RunEvent) -> Kind {
+                match event {
+                    $( RunEvent::$variant { .. } => Kind::$variant, )+
+                }
+            }
+        };
     }
 
-    impl Kind {
-        const ALL: [Kind; Kind::Sentinel as usize] = [
-            Kind::RunStart,
-            Kind::NodeStart,
-            Kind::NodeOutput,
-            Kind::NodeProgress,
-            Kind::NodeError,
-            Kind::NodeStop,
-            Kind::WouldWrite,
-            Kind::RunEnd,
-        ];
-
-        /// The `kind` string this variant must serialize as. Hand-written on purpose: reading it
-        /// back out of serde would compare serde with itself and pin nothing.
-        fn wire(self) -> &'static str {
-            match self {
-                Kind::RunStart => "run-start",
-                Kind::NodeStart => "node-start",
-                Kind::NodeOutput => "node-output",
-                Kind::NodeProgress => "node-progress",
-                Kind::NodeError => "node-error",
-                Kind::NodeStop => "node-stop",
-                Kind::WouldWrite => "would-write",
-                Kind::RunEnd => "run-end",
-                // Never in `ALL`, so never reached. Spelled out rather than covered by a
-                // wildcard, which would also swallow a genuinely new variant.
-                Kind::Sentinel => unreachable!("Sentinel is a count, not a trace event"),
-            }
-        }
-
-        /// An event of this variant. The fixture, so a variant cannot be given a name here
-        /// without also being given something to serialize.
-        fn sample(self) -> RunEvent {
-            match self {
-                Kind::RunStart => run_start(RUN),
-                Kind::NodeStart => RunEvent::NodeStart {
-                    ts: TS.into(),
-                    run_id: RUN.into(),
-                    node: NODE.into(),
-                    agent: None,
-                    command: None,
-                },
-                Kind::NodeOutput => RunEvent::NodeOutput {
-                    ts: TS.into(),
-                    run_id: RUN.into(),
-                    node: NODE.into(),
-                    data: serde_json::json!({}),
-                },
-                Kind::NodeProgress => RunEvent::NodeProgress {
-                    ts: TS.into(),
-                    run_id: RUN.into(),
-                    node: NODE.into(),
-                    data: serde_json::json!({}),
-                },
-                Kind::NodeError => RunEvent::node_error(
-                    TS.into(),
-                    RUN.into(),
-                    NODE.into(),
-                    &AwareError::Validation("x".into()),
-                ),
-                Kind::NodeStop => RunEvent::NodeStop {
-                    ts: TS.into(),
-                    run_id: RUN.into(),
-                    node: NODE.into(),
-                    reason: "cancelled".into(),
-                },
-                Kind::WouldWrite => RunEvent::WouldWrite {
-                    ts: TS.into(),
-                    run_id: RUN.into(),
-                    node: NODE.into(),
-                    agent: "tekla".into(),
-                    command: "write".into(),
-                    proposed_inputs: serde_json::json!({}),
-                    safety: serde_json::json!({}),
-                },
-                Kind::RunEnd => RunEvent::RunEnd {
-                    ts: TS.into(),
-                    run_id: RUN.into(),
-                    status: "ok".into(),
-                },
-                Kind::Sentinel => unreachable!("Sentinel is a count, not a trace event"),
-            }
-        }
-    }
-
-    /// Which variant an event is, decided by the compiler rather than by its `kind` string —
-    /// so the round trip below can assert the VARIANT came back, not merely a matching tag.
-    fn kind_of(event: &RunEvent) -> Kind {
-        match event {
-            RunEvent::RunStart { .. } => Kind::RunStart,
-            RunEvent::NodeStart { .. } => Kind::NodeStart,
-            RunEvent::NodeOutput { .. } => Kind::NodeOutput,
-            RunEvent::NodeProgress { .. } => Kind::NodeProgress,
-            RunEvent::NodeError { .. } => Kind::NodeError,
-            RunEvent::NodeStop { .. } => Kind::NodeStop,
-            RunEvent::WouldWrite { .. } => Kind::WouldWrite,
-            RunEvent::RunEnd { .. } => Kind::RunEnd,
-        }
+    trace_kinds! {
+        RunStart => "run-start", run_start(RUN);
+        NodeStart => "node-start", RunEvent::NodeStart {
+            ts: TS.into(),
+            run_id: RUN.into(),
+            node: NODE.into(),
+            agent: None,
+            command: None,
+        };
+        NodeOutput => "node-output", RunEvent::NodeOutput {
+            ts: TS.into(),
+            run_id: RUN.into(),
+            node: NODE.into(),
+            data: serde_json::json!({}),
+        };
+        NodeProgress => "node-progress", RunEvent::NodeProgress {
+            ts: TS.into(),
+            run_id: RUN.into(),
+            node: NODE.into(),
+            data: serde_json::json!({}),
+        };
+        NodeError => "node-error", RunEvent::node_error(
+            TS.into(),
+            RUN.into(),
+            NODE.into(),
+            &AwareError::Validation("x".into()),
+        );
+        NodeStop => "node-stop", RunEvent::NodeStop {
+            ts: TS.into(),
+            run_id: RUN.into(),
+            node: NODE.into(),
+            reason: "cancelled".into(),
+        };
+        WouldWrite => "would-write", RunEvent::WouldWrite {
+            ts: TS.into(),
+            run_id: RUN.into(),
+            node: NODE.into(),
+            agent: "tekla".into(),
+            command: "write".into(),
+            proposed_inputs: serde_json::json!({}),
+            safety: serde_json::json!({}),
+        };
+        RunEnd => "run-end", RunEvent::RunEnd {
+            ts: TS.into(),
+            run_id: RUN.into(),
+            status: "ok".into(),
+        };
     }
 
     #[test]
@@ -693,7 +669,7 @@ mod tests {
             "two variants claim one kind, so a reader cannot tell them apart: {wires:?}"
         );
 
-        for kind in Kind::ALL {
+        for &kind in Kind::ALL {
             let event = kind.sample();
             assert_eq!(
                 kind_of(&event),
