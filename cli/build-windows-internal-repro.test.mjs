@@ -1,7 +1,11 @@
 import assert from 'node:assert/strict';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import test from 'node:test';
 import {
   assertVerboseCargoProof, cargoArguments, controlledEnvironment, rejectedAmbientKeys,
+  writeBuilderManifestEvidence,
 } from './build-windows-internal-repro.mjs';
 
 test('Cargo invocation is locked, offline, release, verbose, and Windows-specific', () => {
@@ -34,4 +38,20 @@ test('verbose proof goes red if the actual command loses /Brepro or a locked fla
   assert.doesNotThrow(() => assertVerboseCargoProof(complete));
   assert.throws(() => assertVerboseCargoProof(complete.replace('/Brepro', '/DEBUG')), /rustc \/Brepro/);
   assert.throws(() => assertVerboseCargoProof(complete.replace('--locked', '')), /locked mode/);
+});
+
+test('builder manifest is retained byte-for-byte as independently digestible evidence', () => {
+  const root = mkdtempSync(join(tmpdir(), 'aware-builder-manifest-'));
+  try {
+    const manifestText = '{\n  "schema": "aware-windows-repro-builder/v1"\n}\n';
+    const record = writeBuilderManifestEvidence({ artifactsRoot: root, manifestText });
+    assert.equal(readFileSync(join(root, 'builder-manifest.json'), 'utf8'), manifestText);
+    assert.equal(record.size, Buffer.byteLength(manifestText));
+    assert.match(record.sha256, /^[0-9a-f]{64}$/);
+    assert.throws(() => writeBuilderManifestEvidence({ artifactsRoot: root, manifestText }), /EEXIST/);
+    assert.throws(() => writeBuilderManifestEvidence({ artifactsRoot: root, manifestText: '{"schema":"x"}\n' }),
+      /canonical JSON/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });

@@ -29,6 +29,15 @@ const canonical = (value) => Array.isArray(value) ? value.map(canonical)
 const canonicalJson = (value) => `${JSON.stringify(canonical(value), null, 2)}\n`;
 const portable = (path) => path.split(sep).join('/');
 
+export function writeBuilderManifestEvidence({ artifactsRoot, manifestText }) {
+  if (canonicalJson(JSON.parse(manifestText)) !== manifestText) {
+    throw new Error('builder manifest evidence must already be canonical JSON');
+  }
+  const path = join(artifactsRoot, 'builder-manifest.json');
+  writeFileSync(path, manifestText, { encoding: 'utf8', flag: 'wx' });
+  return { size: lstatSync(path).size, sha256: sha256File(path) };
+}
+
 export function rejectedAmbientKeys(env) {
   return Object.keys(env).filter((key) => EXACT_POISON.has(key)
     || POISON_PREFIXES.some((prefix) => key.toLowerCase().startsWith(prefix.toLowerCase())))
@@ -206,6 +215,7 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
   const awareSource = join(work, 'cargo-target', TARGET, 'release', 'aware.exe');
   if (!existsSync(awareSource)) throw new Error('Cargo did not produce aware.exe');
   copyFileSync(awareSource, join(artifacts, 'aware.exe'));
+  const builderManifestRecord = writeBuilderManifestEvidence({ artifactsRoot: artifacts, manifestText });
   const receipt = {
     schema: 'aware-windows-runtime-build-receipt/v1',
     buildId: sha256Bytes(Buffer.from(manifestText)), builderManifestSha256: sha256Bytes(Buffer.from(manifestText)),
@@ -213,6 +223,7 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
     flags: { rust: '-C link-arg=/Brepro', native: '/Brepro', cargo: ['--release', '--locked', '--offline'] },
     outputs: {
       'aware.exe': { size: lstatSync(join(artifacts, 'aware.exe')).size, sha256: sha256File(join(artifacts, 'aware.exe')) },
+      'builder-manifest.json': builderManifestRecord,
       'reader/build-receipt.json': {
         size: lstatSync(join(artifacts, 'reader', 'build-receipt.json')).size,
         sha256: sha256File(join(artifacts, 'reader', 'build-receipt.json')),
