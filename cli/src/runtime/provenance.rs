@@ -555,85 +555,87 @@ mod tests {
         let ts = || "2026-08-30T00:00:00Z".to_string();
         let run = || "r1".to_string();
         let node = || "reader".to_string();
-        let cases: Vec<(RunEvent, &str)> = vec![
-            (run_start("r1"), "run-start"),
-            (
-                RunEvent::NodeStart {
-                    ts: ts(),
-                    run_id: run(),
-                    node: node(),
-                    agent: None,
-                    command: None,
-                },
-                "node-start",
-            ),
-            (
-                RunEvent::NodeOutput {
-                    ts: ts(),
-                    run_id: run(),
-                    node: node(),
-                    data: serde_json::json!({}),
-                },
-                "node-output",
-            ),
-            (
-                RunEvent::NodeProgress {
-                    ts: ts(),
-                    run_id: run(),
-                    node: node(),
-                    data: serde_json::json!({}),
-                },
-                "node-progress",
-            ),
-            (
-                RunEvent::node_error(ts(), run(), node(), &AwareError::Validation("x".into())),
-                "node-error",
-            ),
-            (
-                RunEvent::NodeStop {
-                    ts: ts(),
-                    run_id: run(),
-                    node: node(),
-                    reason: "cancelled".into(),
-                },
-                "node-stop",
-            ),
-            (
-                RunEvent::WouldWrite {
-                    ts: ts(),
-                    run_id: run(),
-                    node: node(),
-                    agent: "tekla".into(),
-                    command: "write".into(),
-                    proposed_inputs: serde_json::json!({}),
-                    safety: serde_json::json!({}),
-                },
-                "would-write",
-            ),
-            (
-                RunEvent::RunEnd {
-                    ts: ts(),
-                    run_id: run(),
-                    status: "ok".into(),
-                },
-                "run-end",
-            ),
+        //
+        // The expected name comes from the WILDCARD-FREE match below, not from a literal
+        // beside each sample: adding a `RunEvent` variant then stops this test COMPILING
+        // until someone decides that variant's external name. An earlier spelling paired
+        // each sample with its own string and asserted `cases.len() == 8`, which a new
+        // variant leaves untouched — it enforced nothing (Codex review, PR #475).
+        fn pinned_kind(event: &RunEvent) -> &'static str {
+            match event {
+                RunEvent::RunStart { .. } => "run-start",
+                RunEvent::NodeStart { .. } => "node-start",
+                RunEvent::NodeOutput { .. } => "node-output",
+                RunEvent::NodeProgress { .. } => "node-progress",
+                RunEvent::NodeError { .. } => "node-error",
+                RunEvent::NodeStop { .. } => "node-stop",
+                RunEvent::WouldWrite { .. } => "would-write",
+                RunEvent::RunEnd { .. } => "run-end",
+            }
+        }
+
+        let cases: Vec<RunEvent> = vec![
+            run_start("r1"),
+            RunEvent::NodeStart {
+                ts: ts(),
+                run_id: run(),
+                node: node(),
+                agent: None,
+                command: None,
+            },
+            RunEvent::NodeOutput {
+                ts: ts(),
+                run_id: run(),
+                node: node(),
+                data: serde_json::json!({}),
+            },
+            RunEvent::NodeProgress {
+                ts: ts(),
+                run_id: run(),
+                node: node(),
+                data: serde_json::json!({}),
+            },
+            RunEvent::node_error(ts(), run(), node(), &AwareError::Validation("x".into())),
+            RunEvent::NodeStop {
+                ts: ts(),
+                run_id: run(),
+                node: node(),
+                reason: "cancelled".into(),
+            },
+            RunEvent::WouldWrite {
+                ts: ts(),
+                run_id: run(),
+                node: node(),
+                agent: "tekla".into(),
+                command: "write".into(),
+                proposed_inputs: serde_json::json!({}),
+                safety: serde_json::json!({}),
+            },
+            RunEvent::RunEnd {
+                ts: ts(),
+                run_id: run(),
+                status: "ok".into(),
+            },
         ];
+        // One sample per variant, so a fixture that quietly loses one stops covering it.
+        let covered: std::collections::BTreeSet<&str> =
+            cases.iter().map(|e| pinned_kind(e)).collect();
         assert_eq!(
+            covered.len(),
             cases.len(),
-            8,
-            "a new variant needs its kind pinned here too"
+            "two samples share a variant, so another is unexercised: {covered:?}"
         );
 
-        for (event, kind) in cases {
-            let value = serde_json::to_value(&event).unwrap();
+        for event in &cases {
+            let kind = pinned_kind(event);
+            let value = serde_json::to_value(event).unwrap();
             assert_eq!(value["kind"], kind, "wrong discriminator for {kind}");
             // The discriminator is inline, not a wrapper object: a reader matches on
             // `.kind` and reads the payload's fields from the same map.
             assert_eq!(value["ts"], ts(), "{kind} lost its timestamp");
             assert_eq!(value["run_id"], run(), "{kind} lost its run id");
             // And it survives the round trip back through the reader.
-            let line = serde_json::to_string(&event).unwrap();
+            let line = serde_json::to_string(event).unwrap();
             let back: RunEvent = serde_json::from_str(&line).unwrap();
             assert_eq!(serde_json::to_value(back).unwrap()["kind"], kind);
         }
