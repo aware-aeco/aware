@@ -555,11 +555,14 @@ mod tests {
     ///
     /// Three wildcard-free matches hang off this (`wire`, `sample`, and [`kind_of`]), which is
     /// what makes a new `RunEvent` variant a compile error until it has been given an external
-    /// name AND a sample event. Two earlier spellings each enforced less than they claimed, and
-    /// both were caught by Codex on this PR: `assert_eq!(cases.len(), 8)` was satisfied by the
-    /// fixture that produced it, and a wildcard-free `RunEvent -> &str` match forced a new arm
-    /// but still let the sample list go unchanged.
+    /// name AND a sample event. Three earlier spellings each enforced less than they claimed,
+    /// and Codex caught every one of them on this PR: `assert_eq!(cases.len(), 8)` was satisfied
+    /// by the fixture that produced it; a wildcard-free `RunEvent -> &str` match forced a new arm
+    /// but let the sample list go unchanged; and `ALL` was a hand-maintained array that Rust does
+    /// not check for exhaustiveness, so the matches could all be updated while the new variant
+    /// was never iterated. `Sentinel` closes that last one — see [`Kind::ALL`].
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
+    #[repr(usize)]
     enum Kind {
         RunStart,
         NodeStart,
@@ -569,10 +572,16 @@ mod tests {
         NodeStop,
         WouldWrite,
         RunEnd,
+        /// Not a trace event, and MUST STAY LAST. Its discriminant is the number of real
+        /// variants, which is what lets the const assertion below check `ALL` for completeness
+        /// — the one step of this fixture the compiler could not otherwise reach, since stable
+        /// Rust cannot enumerate the variants of a data-carrying enum (`variant_count` is
+        /// unstable; `strum::EnumIter` does not apply to variants with fields).
+        Sentinel,
     }
 
     impl Kind {
-        const ALL: [Kind; 8] = [
+        const ALL: [Kind; Kind::Sentinel as usize] = [
             Kind::RunStart,
             Kind::NodeStart,
             Kind::NodeOutput,
@@ -595,6 +604,9 @@ mod tests {
                 Kind::NodeStop => "node-stop",
                 Kind::WouldWrite => "would-write",
                 Kind::RunEnd => "run-end",
+                // Never in `ALL`, so never reached. Spelled out rather than covered by a
+                // wildcard, which would also swallow a genuinely new variant.
+                Kind::Sentinel => unreachable!("Sentinel is a count, not a trace event"),
             }
         }
 
@@ -648,6 +660,7 @@ mod tests {
                     run_id: RUN.into(),
                     status: "ok".into(),
                 },
+                Kind::Sentinel => unreachable!("Sentinel is a count, not a trace event"),
             }
         }
     }
