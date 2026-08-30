@@ -44,6 +44,17 @@ export function rejectedAmbientKeys(env) {
     .sort();
 }
 
+export function closedGitEnvironment(systemEnv) {
+  return {
+    ...systemEnv,
+    GIT_ALLOW_PROTOCOL: 'file',
+    GIT_CONFIG_COUNT: '0',
+    GIT_CONFIG_GLOBAL: 'NUL',
+    GIT_CONFIG_NOSYSTEM: '1',
+    GIT_TERMINAL_PROMPT: '0',
+  };
+}
+
 function verifyFileRecord(id, manifest, locator) {
   const record = manifest.tools?.[id]; const path = locator.tools?.[id];
   if (!record || record.id !== id || !SHA256.test(record.sha256 ?? '')) throw new Error(`invalid tool record: ${id}`);
@@ -157,10 +168,11 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
   const systemEnv = Object.fromEntries(['SystemRoot', 'WINDIR', 'ComSpec', 'PATHEXT']
     .map((key) => [key, locator.environment?.[key]]));
   if (Object.values(systemEnv).some((value) => typeof value !== 'string')) throw new Error('locator lacks the system environment required for Git');
-  run(authority.tools.git, ['clone', '--no-checkout', '--config', 'core.autocrlf=false', authority.bundle, source], { env: systemEnv });
-  run(authority.tools.git, ['checkout', '--detach', manifest.source.commit], { cwd: source, env: systemEnv });
-  const commit = run(authority.tools.git, ['rev-parse', 'HEAD'], { cwd: source, env: systemEnv }).trim();
-  const tree = run(authority.tools.git, ['rev-parse', 'HEAD^{tree}'], { cwd: source, env: systemEnv }).trim();
+  const gitEnv = closedGitEnvironment(systemEnv);
+  run(authority.tools.git, ['clone', '--no-checkout', '--config', 'core.autocrlf=false', authority.bundle, source], { env: gitEnv });
+  run(authority.tools.git, ['checkout', '--detach', manifest.source.commit], { cwd: source, env: gitEnv });
+  const commit = run(authority.tools.git, ['rev-parse', 'HEAD'], { cwd: source, env: gitEnv }).trim();
+  const tree = run(authority.tools.git, ['rev-parse', 'HEAD^{tree}'], { cwd: source, env: gitEnv }).trim();
   if (commit !== manifest.source.commit || tree !== manifest.source.tree) throw new Error('extracted source identity mismatch');
 
   const controlled = controlledEnvironment({ locator, workRoot: work, sourceRoot: source, cargoHome, tempRoot });

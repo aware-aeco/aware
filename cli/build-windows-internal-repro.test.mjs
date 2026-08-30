@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
 import {
-  assertVerboseCargoProof, cargoArguments, controlledEnvironment, rejectedAmbientKeys,
+  assertVerboseCargoProof, cargoArguments, closedGitEnvironment, controlledEnvironment, rejectedAmbientKeys,
   writeBuilderManifestEvidence,
 } from './build-windows-internal-repro.mjs';
 
@@ -31,6 +31,15 @@ test('controlled environment owns reproducible Rust and native MSVC flags', () =
 test('ambient authority detector covers compiler, npm, dotnet, and credentials', () => {
   assert.deepEqual(rejectedAmbientKeys({ PATH: 'ok', LINK: 'poison', npm_config_cache: 'x', COREHOST_TRACE: '1' }),
     ['COREHOST_TRACE', 'LINK', 'npm_config_cache']);
+});
+
+test('Git cannot consult host configuration, templates, prompts, or network transports', () => {
+  const env = closedGitEnvironment({ SystemRoot: 'WINDOWS' });
+  assert.equal(env.GIT_CONFIG_NOSYSTEM, '1');
+  assert.equal(env.GIT_CONFIG_GLOBAL, 'NUL');
+  assert.equal(env.GIT_CONFIG_COUNT, '0');
+  assert.equal(env.GIT_ALLOW_PROTOCOL, 'file');
+  assert.equal(env.GIT_TERMINAL_PROMPT, '0');
 });
 
 test('verbose proof goes red if the actual command loses /Brepro or a locked flag', () => {
