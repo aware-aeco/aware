@@ -546,98 +546,168 @@ mod tests {
         );
     }
 
+    const TS: &str = "2026-08-30T00:00:00Z";
+    const RUN: &str = "r1";
+    const NODE: &str = "reader";
+
+    /// The trace's variants, mirrored so the fixture below is DERIVED from a list of variants
+    /// rather than hand-assembled beside one.
+    ///
+    /// Three wildcard-free matches hang off this (`wire`, `sample`, and [`kind_of`]), which is
+    /// what makes a new `RunEvent` variant a compile error until it has been given an external
+    /// name AND a sample event. Two earlier spellings each enforced less than they claimed, and
+    /// both were caught by Codex on this PR: `assert_eq!(cases.len(), 8)` was satisfied by the
+    /// fixture that produced it, and a wildcard-free `RunEvent -> &str` match forced a new arm
+    /// but still let the sample list go unchanged.
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
+    enum Kind {
+        RunStart,
+        NodeStart,
+        NodeOutput,
+        NodeProgress,
+        NodeError,
+        NodeStop,
+        WouldWrite,
+        RunEnd,
+    }
+
+    impl Kind {
+        const ALL: [Kind; 8] = [
+            Kind::RunStart,
+            Kind::NodeStart,
+            Kind::NodeOutput,
+            Kind::NodeProgress,
+            Kind::NodeError,
+            Kind::NodeStop,
+            Kind::WouldWrite,
+            Kind::RunEnd,
+        ];
+
+        /// The `kind` string this variant must serialize as. Hand-written on purpose: reading it
+        /// back out of serde would compare serde with itself and pin nothing.
+        fn wire(self) -> &'static str {
+            match self {
+                Kind::RunStart => "run-start",
+                Kind::NodeStart => "node-start",
+                Kind::NodeOutput => "node-output",
+                Kind::NodeProgress => "node-progress",
+                Kind::NodeError => "node-error",
+                Kind::NodeStop => "node-stop",
+                Kind::WouldWrite => "would-write",
+                Kind::RunEnd => "run-end",
+            }
+        }
+
+        /// An event of this variant. The fixture, so a variant cannot be given a name here
+        /// without also being given something to serialize.
+        fn sample(self) -> RunEvent {
+            match self {
+                Kind::RunStart => run_start(RUN),
+                Kind::NodeStart => RunEvent::NodeStart {
+                    ts: TS.into(),
+                    run_id: RUN.into(),
+                    node: NODE.into(),
+                    agent: None,
+                    command: None,
+                },
+                Kind::NodeOutput => RunEvent::NodeOutput {
+                    ts: TS.into(),
+                    run_id: RUN.into(),
+                    node: NODE.into(),
+                    data: serde_json::json!({}),
+                },
+                Kind::NodeProgress => RunEvent::NodeProgress {
+                    ts: TS.into(),
+                    run_id: RUN.into(),
+                    node: NODE.into(),
+                    data: serde_json::json!({}),
+                },
+                Kind::NodeError => RunEvent::node_error(
+                    TS.into(),
+                    RUN.into(),
+                    NODE.into(),
+                    &AwareError::Validation("x".into()),
+                ),
+                Kind::NodeStop => RunEvent::NodeStop {
+                    ts: TS.into(),
+                    run_id: RUN.into(),
+                    node: NODE.into(),
+                    reason: "cancelled".into(),
+                },
+                Kind::WouldWrite => RunEvent::WouldWrite {
+                    ts: TS.into(),
+                    run_id: RUN.into(),
+                    node: NODE.into(),
+                    agent: "tekla".into(),
+                    command: "write".into(),
+                    proposed_inputs: serde_json::json!({}),
+                    safety: serde_json::json!({}),
+                },
+                Kind::RunEnd => RunEvent::RunEnd {
+                    ts: TS.into(),
+                    run_id: RUN.into(),
+                    status: "ok".into(),
+                },
+            }
+        }
+    }
+
+    /// Which variant an event is, decided by the compiler rather than by its `kind` string —
+    /// so the round trip below can assert the VARIANT came back, not merely a matching tag.
+    fn kind_of(event: &RunEvent) -> Kind {
+        match event {
+            RunEvent::RunStart { .. } => Kind::RunStart,
+            RunEvent::NodeStart { .. } => Kind::NodeStart,
+            RunEvent::NodeOutput { .. } => Kind::NodeOutput,
+            RunEvent::NodeProgress { .. } => Kind::NodeProgress,
+            RunEvent::NodeError { .. } => Kind::NodeError,
+            RunEvent::NodeStop { .. } => Kind::NodeStop,
+            RunEvent::WouldWrite { .. } => Kind::WouldWrite,
+            RunEvent::RunEnd { .. } => Kind::RunEnd,
+        }
+    }
+
     #[test]
     fn every_trace_event_carries_its_documented_kind() {
         // The `kind` strings are the trace's external contract — `aware app logs`, `app output`
         // and downstream readers switch on them, and a trace already on disk is read by a LATER
         // build of the CLI. Renaming one is a silent, unversioned break, so they are pinned here
         // rather than left to whatever `rename_all` happens to be set to.
-        let ts = || "2026-08-30T00:00:00Z".to_string();
-        let run = || "r1".to_string();
-        let node = || "reader".to_string();
-        //
-        // The expected name comes from the WILDCARD-FREE match below, not from a literal
-        // beside each sample: adding a `RunEvent` variant then stops this test COMPILING
-        // until someone decides that variant's external name. An earlier spelling paired
-        // each sample with its own string and asserted `cases.len() == 8`, which a new
-        // variant leaves untouched — it enforced nothing (Codex review, PR #475).
-        fn pinned_kind(event: &RunEvent) -> &'static str {
-            match event {
-                RunEvent::RunStart { .. } => "run-start",
-                RunEvent::NodeStart { .. } => "node-start",
-                RunEvent::NodeOutput { .. } => "node-output",
-                RunEvent::NodeProgress { .. } => "node-progress",
-                RunEvent::NodeError { .. } => "node-error",
-                RunEvent::NodeStop { .. } => "node-stop",
-                RunEvent::WouldWrite { .. } => "would-write",
-                RunEvent::RunEnd { .. } => "run-end",
-            }
-        }
-
-        let cases: Vec<RunEvent> = vec![
-            run_start("r1"),
-            RunEvent::NodeStart {
-                ts: ts(),
-                run_id: run(),
-                node: node(),
-                agent: None,
-                command: None,
-            },
-            RunEvent::NodeOutput {
-                ts: ts(),
-                run_id: run(),
-                node: node(),
-                data: serde_json::json!({}),
-            },
-            RunEvent::NodeProgress {
-                ts: ts(),
-                run_id: run(),
-                node: node(),
-                data: serde_json::json!({}),
-            },
-            RunEvent::node_error(ts(), run(), node(), &AwareError::Validation("x".into())),
-            RunEvent::NodeStop {
-                ts: ts(),
-                run_id: run(),
-                node: node(),
-                reason: "cancelled".into(),
-            },
-            RunEvent::WouldWrite {
-                ts: ts(),
-                run_id: run(),
-                node: node(),
-                agent: "tekla".into(),
-                command: "write".into(),
-                proposed_inputs: serde_json::json!({}),
-                safety: serde_json::json!({}),
-            },
-            RunEvent::RunEnd {
-                ts: ts(),
-                run_id: run(),
-                status: "ok".into(),
-            },
-        ];
-        // One sample per variant, so a fixture that quietly loses one stops covering it.
-        let covered: std::collections::BTreeSet<&str> =
-            cases.iter().map(|e| pinned_kind(e)).collect();
+        let wires: std::collections::BTreeSet<&str> = Kind::ALL.iter().map(|k| k.wire()).collect();
         assert_eq!(
-            covered.len(),
-            cases.len(),
-            "two samples share a variant, so another is unexercised: {covered:?}"
+            wires.len(),
+            Kind::ALL.len(),
+            "two variants claim one kind, so a reader cannot tell them apart: {wires:?}"
         );
 
-        for event in &cases {
-            let kind = pinned_kind(event);
-            let value = serde_json::to_value(event).unwrap();
-            assert_eq!(value["kind"], kind, "wrong discriminator for {kind}");
+        for kind in Kind::ALL {
+            let event = kind.sample();
+            assert_eq!(
+                kind_of(&event),
+                kind,
+                "the sample for {kind:?} is a different variant"
+            );
+
+            let value = serde_json::to_value(&event).unwrap();
+            assert_eq!(
+                value["kind"],
+                kind.wire(),
+                "wrong discriminator for {kind:?}"
+            );
             // The discriminator is inline, not a wrapper object: a reader matches on
             // `.kind` and reads the payload's fields from the same map.
-            assert_eq!(value["ts"], ts(), "{kind} lost its timestamp");
-            assert_eq!(value["run_id"], run(), "{kind} lost its run id");
-            // And it survives the round trip back through the reader.
-            let line = serde_json::to_string(event).unwrap();
+            assert_eq!(value["ts"], TS, "{kind:?} lost its timestamp");
+            assert_eq!(value["run_id"], RUN, "{kind:?} lost its run id");
+
+            // And the tag routes back to the SAME variant through the reader — the property a
+            // later build of the CLI depends on when it opens an older trace.
+            let line = serde_json::to_string(&event).unwrap();
             let back: RunEvent = serde_json::from_str(&line).unwrap();
-            assert_eq!(serde_json::to_value(back).unwrap()["kind"], kind);
+            assert_eq!(
+                kind_of(&back),
+                kind,
+                "{kind:?} did not survive the round trip"
+            );
         }
     }
 }
