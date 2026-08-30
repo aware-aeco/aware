@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "node build.mjs",
+    "verify:repro": "node verify-reproducible-builds.mjs",
     "test": "node --test",
     "test:windows-harness": "node model-windows-harness.mjs"
   },
