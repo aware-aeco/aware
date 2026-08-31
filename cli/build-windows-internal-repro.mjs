@@ -97,6 +97,7 @@ export function controlledEnvironment({ locator, workRoot, sourceRoot, cargoHome
     ...Object.fromEntries(required.map((key) => [key, locator.environment[key]])),
     TEMP: tempRoot, TMP: tempRoot,
     CARGO_HOME: cargoHome, CARGO_TARGET_DIR: join(workRoot, 'cargo-target'), CARGO_NET_OFFLINE: 'true',
+    CARGO_SOURCE_VENDORED_SOURCES_DIRECTORY: join(cargoHome, 'vendor'),
     RUSTC: locator.tools.rustc, RUSTDOC: locator.tools.rustdoc,
     RUSTFLAGS: `-C link-arg=/Brepro --remap-path-prefix=${sourceRoot}=<source> --remap-path-prefix=${workRoot}=<work> --remap-path-prefix=${cargoHome}=<cargo-home>`,
     CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER: locator.tools.link,
@@ -143,6 +144,10 @@ export function verifyBuildAuthority({ manifest, locator, env = process.env }) {
   }
   const toolIds = ['git', 'node', 'npm-cli', 'cargo', 'rustc', 'rustdoc', 'cl', 'link', 'lib', 'postject', 'web-ifc-wasm'];
   const tools = Object.fromEntries(toolIds.map((id) => [id, verifyFileRecord(id, manifest, locator)]));
+  if (!SHA256.test(manifest.inputs?.['builder-script'] ?? '')
+    || sha256File(scriptPath) !== manifest.inputs['builder-script']) {
+    throw new Error('running builder script differs from its manifest authority');
+  }
   if (realpathSync(tools.node) !== realpathSync(process.execPath)) throw new Error('verified node.exe is not the running Node');
   const bundle = locator.sourceBundle;
   if (typeof bundle !== 'string' || !existsSync(bundle) || sha256File(bundle) !== manifest.source?.bundleSha256) {
@@ -194,7 +199,9 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
     'aware-cargo-lock': sha256File(join(source, 'cli', 'Cargo.lock')),
     'reader-package-lock': sha256File(join(readerRoot, 'package-lock.json')),
   };
-  if (canonicalJson(expectedInputs) !== canonicalJson(manifest.inputs)) throw new Error('final source lockfile digests do not match builder manifest');
+  if (Object.entries(expectedInputs).some(([id, digest]) => manifest.inputs?.[id] !== digest)) {
+    throw new Error('final source lockfile digests do not match builder manifest');
+  }
 
   const cargoArgs = cargoArguments(join(source, 'cli', 'Cargo.toml'));
   const cargoLog = run(authority.tools.cargo, cargoArgs, { cwd: source, env: controlled });

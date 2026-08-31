@@ -25,6 +25,7 @@ test('controlled environment owns reproducible Rust and native MSVC flags', () =
   assert.match(env.RUSTFLAGS, /--remap-path-prefix=SOURCE=<source>/);
   assert.equal(env.CFLAGS, '/Brepro'); assert.equal(env.CL, '/Brepro');
   assert.equal(env.CARGO_NET_OFFLINE, 'true'); assert.equal(env.RUSTC, 'RUSTC');
+  assert.equal(env.CARGO_SOURCE_VENDORED_SOURCES_DIRECTORY, join('CARGO', 'vendor'));
   assert.equal(env.NODE_OPTIONS, undefined); assert.equal(env.GOOGLE_CLIENT_SECRET, undefined);
 });
 
