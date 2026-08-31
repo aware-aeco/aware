@@ -44,12 +44,12 @@ export function verifyInternalInputs({ manifest, locator, env = process.env }) {
   if (canonicalJson(manifest.settings) !== canonicalJson(READER_BUILD_SETTINGS)) {
     throw new Error('reader build settings differ from the closed implementation');
   }
-  if (process.platform !== 'win32' || process.arch !== 'x64' || process.versions.node !== manifest.nodeVersion) {
-    throw new Error(`running Node must be exactly ${manifest.nodeVersion} on Windows x64`);
-  }
   const paths = Object.fromEntries(['node', 'postject', 'web-ifc-wasm'].map((id) => [id,
     verifyRecord(id, manifest.tools?.[id], locator),
   ]));
+  if (process.platform !== 'win32' || process.arch !== 'x64' || process.versions.node !== manifest.nodeVersion) {
+    throw new Error(`running Node must be exactly ${manifest.nodeVersion} on Windows x64`);
+  }
   if (realpathSync(paths.node) !== realpathSync(process.execPath)) throw new Error('the verified Node is not the running Node');
   for (const [name, path] of Object.entries({
     'reader-package-lock': join(here, 'package-lock.json'),

@@ -42,14 +42,14 @@ export async function buildConnectionReader(options = {}) {
   const wasmPath = resolve(options.wasmPath ?? join(here, 'node_modules', 'web-ifc', 'web-ifc-node.wasm'));
   const receipt = options.receipt ?? null;
 
-  if (process.platform !== 'win32' || process.arch !== 'x64') {
-    throw new Error('aware-connection-reader SEA build requires Windows x64');
-  }
-  if (basename(nodePath).toLowerCase() !== 'node.exe') throw new Error('SEA base runtime must be node.exe');
   const outputOwnsSource = relative(outputDir, here);
   if (outputOwnsSource === '' || (!outputOwnsSource.startsWith('..') && !isAbsolute(outputOwnsSource))) {
     throw new Error('SEA output root must not be the reader source root or one of its ancestors');
   }
+  if (process.platform !== 'win32' || process.arch !== 'x64') {
+    throw new Error('aware-connection-reader SEA build requires Windows x64');
+  }
+  if (basename(nodePath).toLowerCase() !== 'node.exe') throw new Error('SEA base runtime must be node.exe');
   for (const path of [postjectPath, wasmPath]) {
     if (!options.verifiedExternalTools && !under(here, path)) {
       throw new Error(`reader dependency escaped the package root without verified external-tool authority: ${path}`);
