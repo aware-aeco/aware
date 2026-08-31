@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
 import {
   assertVerboseCargoProof, cargoArguments, closedGitEnvironment, COMMAND_OUTPUT_BUFFER_BYTES,
-  controlledEnvironment, rejectedAmbientKeys,
+  controlledEnvironment, materializeClosure, rejectedAmbientKeys,
   writeBuilderManifestEvidence,
 } from './build-windows-internal-repro.mjs';
 
@@ -31,7 +32,24 @@ test('controlled environment owns reproducible Rust and native MSVC flags', () =
   assert.match(env.RUSTFLAGS, /--remap-path-prefix=SOURCE=<source>/);
   assert.equal(env.CFLAGS, '/Brepro'); assert.equal(env.CL, '/Brepro');
   assert.equal(env.CARGO_NET_OFFLINE, 'true'); assert.equal(env.RUSTC, 'RUSTC');
+  assert.equal(env.CARGO_BUILD_JOBS, '1');
   assert.equal(env.NODE_OPTIONS, undefined); assert.equal(env.GOOGLE_CLIENT_SECRET, undefined);
+});
+
+test('offline cache use is isolated in a verified private copy', () => {
+  const root = mkdtempSync(join(tmpdir(), 'aware-builder-closure-'));
+  try {
+    const source = join(root, 'source'); const destination = join(root, 'destination');
+    mkdirSync(join(source, 'cache'), { recursive: true });
+    writeFileSync(join(source, 'cache', 'index'), 'closed');
+    const digest = createHash('sha256').update('closed').digest('hex');
+    const manifest = { closures: { cache: { files: [{ path: 'cache/index', size: 6, sha256: digest }] } } };
+    assert.equal(materializeClosure('cache', source, destination, manifest), destination);
+    writeFileSync(join(destination, 'cache', 'index'), 'mutate');
+    assert.equal(readFileSync(join(source, 'cache', 'index'), 'utf8'), 'closed');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });
 
 test('ambient authority detector covers compiler, npm, dotnet, and credentials', () => {

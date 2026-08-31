@@ -5,7 +5,7 @@
 import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
-  copyFileSync, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync, rmSync,
+  copyFileSync, cpSync, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync, rmSync,
   writeFileSync,
 } from 'node:fs';
 import { basename, dirname, join, relative, resolve, sep } from 'node:path';
@@ -86,6 +86,14 @@ function verifyClosure(id, manifest, locator) {
   return resolve(root);
 }
 
+export function materializeClosure(id, source, destination, manifest) {
+  cpSync(source, destination, { recursive: true, errorOnExist: true, force: false });
+  if (canonicalJson(inventory(destination)) !== canonicalJson(manifest.closures?.[id]?.files)) {
+    throw new Error(`materialized offline closure inventory mismatch: ${id}`);
+  }
+  return destination;
+}
+
 export function cargoArguments(manifestPath, vendorDirectory) {
   if (typeof vendorDirectory !== 'string' || !vendorDirectory) throw new Error('Cargo vendor directory is required');
   const vendor = vendorDirectory.replaceAll('\\', '/').replaceAll('"', '\\"');
@@ -101,6 +109,7 @@ export function controlledEnvironment({ locator, workRoot, sourceRoot, cargoHome
     ...Object.fromEntries(required.map((key) => [key, locator.environment[key]])),
     TEMP: tempRoot, TMP: tempRoot,
     CARGO_HOME: cargoHome, CARGO_TARGET_DIR: join(workRoot, 'cargo-target'), CARGO_NET_OFFLINE: 'true',
+    CARGO_BUILD_JOBS: '1',
     RUSTC: locator.tools.rustc, RUSTDOC: locator.tools.rustdoc,
     RUSTFLAGS: `-C link-arg=/Brepro --remap-path-prefix=${sourceRoot}=<source> --remap-path-prefix=${workRoot}=<work> --remap-path-prefix=${cargoHome}=<cargo-home>`,
     CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER: locator.tools.link,
@@ -166,14 +175,17 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
   const manifestText = canonicalJson(JSON.parse(readFileSync(manifestPath, 'utf8')));
   const manifest = JSON.parse(manifestText); const locator = JSON.parse(readFileSync(locatorPath, 'utf8'));
   const authority = verifyBuildAuthority({ manifest, locator, env });
-  const npmCache = verifyClosure('npm-cache', manifest, locator);
-  const cargoHome = verifyClosure('cargo-home', manifest, locator);
+  const npmClosure = verifyClosure('npm-cache', manifest, locator);
+  const cargoClosure = verifyClosure('cargo-home', manifest, locator);
   const output = resolve(outputRoot);
   if (existsSync(output) && readdirSync(output).length) throw new Error('output root must be absent or empty');
   mkdirSync(output, { recursive: true });
   const work = join(output, 'work'); const artifacts = join(output, 'artifacts'); const evidence = join(output, 'evidence');
   const source = join(work, 'source'); const tempRoot = join(work, 'temp');
   mkdirSync(tempRoot, { recursive: true }); mkdirSync(source); mkdirSync(artifacts); mkdirSync(evidence);
+  const npmCache = materializeClosure('npm-cache', npmClosure, join(work, 'npm-cache'), manifest);
+  const cargoHome = join(work, 'cargo-home');
+  mkdirSync(cargoHome);
 
   const systemEnv = Object.fromEntries(['SystemRoot', 'WINDIR', 'ComSpec', 'PATHEXT']
     .map((key) => [key, locator.environment?.[key]]));
@@ -208,11 +220,12 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
     throw new Error('final source lockfile digests do not match builder manifest');
   }
 
-  const cargoArgs = cargoArguments(join(source, 'cli', 'Cargo.toml'), join(cargoHome, 'vendor'));
+  const cargoArgs = cargoArguments(join(source, 'cli', 'Cargo.toml'), join(cargoClosure, 'vendor'));
   const cargoLog = run(authority.tools.cargo, cargoArgs, { cwd: source, env: controlled });
   const normalizedCargo = `<cargo> ${cargoArgs.join(' ')}\n${cargoLog}`
     .replaceAll(source, '<source>').replaceAll(work, '<work>').replaceAll(output, '<output>')
     .replaceAll(cargoHome, '<cargo-home>')
+    .replaceAll(cargoClosure, '<cargo-closure>')
     .replaceAll(dirname(authority.tools.cargo), '<rust-toolchain>')
     .replaceAll(dirname(authority.tools.link), '<msvc-toolchain>');
   assertVerboseCargoProof(`${cargoArgs.join(' ')}\n${normalizedCargo}`);
