@@ -290,15 +290,178 @@ mod tests {
     }
 
     #[test]
-    fn random_token_uses_alphanumerics_only() {
-        let t = random_token(16);
-        assert_eq!(t.len(), 16);
-        assert!(t.chars().all(|c| c.is_alphanumeric()));
+    fn the_csrf_state_is_unguessable_and_survives_a_url_round_trip() {
+        // This is the `state` the flow sends to the provider and then compares the
+        // callback's copy against, so its only real property is that a third party
+        // cannot predict it — and a shape check alone cannot see that. `random_token`
+        // hard-coded to one constant satisfies "16 alphanumeric characters" while
+        // making every authorization forgeable, so the collision check below is the
+        // load-bearing half.
+        let mut seen = std::collections::HashSet::new();
+        for _ in 0..32 {
+            let token = random_token(16);
+            assert_eq!(token.len(), 16, "state must be the requested length");
+            // ASCII specifically, not `char::is_alphanumeric`: the state rides in the
+            // authorization URL's query string unencoded (it is interpolated into
+            // `auth_url` without passing through `urlencode`), so a non-ASCII
+            // character would go out raw and the returned copy would not match.
+            assert!(
+                token.chars().all(|c| c.is_ascii_alphanumeric()),
+                "state must be url-safe as-is: {token}",
+            );
+            assert!(
+                seen.insert(token.clone()),
+                "state repeated within 32 draws — {token} is predictable enough to forge",
+            );
+        }
     }
 
     #[test]
     fn bind_callback_server_returns_a_port_in_range() {
         let (_server, port) = bind_callback_server().unwrap();
         assert!((7421..=7430).contains(&port));
+    }
+
+    // ── the BYO loopback pin (#159) ──────────────────────────────────────────
+    //
+    // A provider whose registered callback is a fixed value cannot be reached by
+    // the default 7421–7430 scan: the port is whatever happened to be free, and
+    // the advertised `redirect_uri` is derived from it, so the provider rejects
+    // the authorization before the user ever sees a consent screen. The profile
+    // keys below exist to pin both halves, and `bind_loopback` is the only place
+    // that reads them. Only the *default* branch was covered.
+
+    /// A port nothing is listening on, taken from the ephemeral range so these
+    /// tests never contend with the 7421–7430 scan the other tests exercise.
+    fn free_port() -> u16 {
+        let probe = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = probe.local_addr().unwrap().port();
+        drop(probe);
+        port
+    }
+
+    /// `trimble-connect` with `oauth/trimble-connect.yaml` set to `keys`.
+    ///
+    /// The tempdir is returned alongside the config because it owns the profile
+    /// file: dropping it deletes the directory, and `with_profile` has already
+    /// read it by then, but keeping the guard alive documents that the config is
+    /// not still pointing at it.
+    fn config_with_profile(keys: &str) -> (tempfile::TempDir, IntegrationConfig) {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("trimble-connect.yaml"),
+            format!("client_id: byo-client\n{keys}"),
+        )
+        .unwrap();
+        let cfg = crate::auth::config::for_integration("trimble-connect")
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap();
+        (tmp, cfg)
+    }
+
+    #[test]
+    fn a_pinned_callback_port_is_bound_instead_of_scanning_the_default_range() {
+        let port = free_port();
+        let (_tmp, cfg) = config_with_profile(&format!("callback_port: {port}\n"));
+
+        let (server, redirect) = bind_loopback(&cfg).unwrap();
+
+        // Both halves, and the second is not implied by the first. The listener has
+        // to be on the pinned port — ask the socket, not the string we built — and
+        // the URL handed to the provider has to name that same port, because the
+        // provider matches it against its registration. A `bind_loopback` that
+        // bound the pin but still derived the redirect from a scan, or scanned but
+        // reported the pin, fails exactly one of these.
+        assert_eq!(
+            server.server_addr().to_ip().unwrap().port(),
+            port,
+            "the listener must be on the pinned port",
+        );
+        assert_eq!(redirect, format!("http://localhost:{port}/callback"));
+    }
+
+    #[test]
+    fn a_pinned_redirect_uri_is_advertised_verbatim_and_supplies_the_port() {
+        // No `callback_port` here: the port has to come out of the `redirect_uri`
+        // itself, which is the case the doc comment calls out. And the URI goes to
+        // the provider exactly as written — re-deriving it as
+        // `http://localhost:<port>/callback` would append a path the registration
+        // does not have and the provider would refuse it.
+        let port = free_port();
+        let (_tmp, cfg) = config_with_profile(&format!("redirect_uri: http://localhost:{port}\n"));
+
+        let (server, redirect) = bind_loopback(&cfg).unwrap();
+
+        assert_eq!(
+            server.server_addr().to_ip().unwrap().port(),
+            port,
+            "the port must be read back out of the pinned redirect_uri",
+        );
+        assert_eq!(
+            redirect,
+            format!("http://localhost:{port}"),
+            "the pinned redirect_uri must reach the provider unchanged",
+        );
+    }
+
+    #[test]
+    fn an_explicit_callback_port_outranks_the_one_the_redirect_uri_implies() {
+        // The two keys are allowed to disagree, and they do so for a reason: a
+        // provider may register `http://localhost` (port 80, which needs elevation)
+        // while the profile pins a high port the listener can actually take. So the
+        // advertised URI and the bound port are deliberately different values, and
+        // `callback_port` is what decides the socket.
+        let bound = free_port();
+        let advertised = free_port();
+        assert_ne!(
+            bound, advertised,
+            "the two pins must differ to tell them apart"
+        );
+        let (_tmp, cfg) = config_with_profile(&format!(
+            "callback_port: {bound}\nredirect_uri: http://localhost:{advertised}/oauth\n"
+        ));
+
+        let (server, redirect) = bind_loopback(&cfg).unwrap();
+
+        assert_eq!(
+            server.server_addr().to_ip().unwrap().port(),
+            bound,
+            "callback_port decides where the listener binds",
+        );
+        assert_eq!(
+            redirect,
+            format!("http://localhost:{advertised}/oauth"),
+            "redirect_uri decides what the provider is told",
+        );
+    }
+
+    #[test]
+    fn a_pinned_port_that_cannot_be_bound_is_reported_rather_than_silently_scanned() {
+        // Falling back to the 7421–7430 scan here would be the worst outcome
+        // available: the flow would come up on a port the provider has never heard
+        // of and fail later, at the redirect, with an error from the provider
+        // instead of from us. The pin is a requirement, so an unavailable pin is
+        // fatal — and the message has to name the port, since that is the one thing
+        // the user has to go free up.
+        let port = free_port();
+        let occupied = std::net::TcpListener::bind(("127.0.0.1", port)).unwrap();
+        let (_tmp, cfg) = config_with_profile(&format!("callback_port: {port}\n"));
+
+        let Err(error) = bind_loopback(&cfg) else {
+            panic!("binding an occupied pinned port must fail, not fall back to the scan");
+        };
+        let message = error.to_string();
+        assert!(
+            message.contains(&port.to_string()),
+            "the refusal must name the port that is taken: {message}",
+        );
+        assert!(
+            matches!(error, AwareError::Network(_)),
+            "an unbindable pin is a network-level failure: {error:?}",
+        );
+        drop(occupied);
     }
 }
