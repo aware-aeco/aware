@@ -9,8 +9,9 @@ import {
 } from './build-windows-internal-repro.mjs';
 
 test('Cargo invocation is locked, offline, release, verbose, and Windows-specific', () => {
-  assert.deepEqual(cargoArguments('C:/src/cli/Cargo.toml'), [
+  assert.deepEqual(cargoArguments('C:/src/cli/Cargo.toml', 'C:\\closure\\vendor'), [
     'build', '--manifest-path', 'C:/src/cli/Cargo.toml', '--release', '--locked', '--offline',
+    '--config', 'source.vendored-sources.directory="C:/closure/vendor"',
     '--target', 'x86_64-pc-windows-msvc', '--verbose', '--verbose',
   ]);
 });
@@ -25,7 +26,6 @@ test('controlled environment owns reproducible Rust and native MSVC flags', () =
   assert.match(env.RUSTFLAGS, /--remap-path-prefix=SOURCE=<source>/);
   assert.equal(env.CFLAGS, '/Brepro'); assert.equal(env.CL, '/Brepro');
   assert.equal(env.CARGO_NET_OFFLINE, 'true'); assert.equal(env.RUSTC, 'RUSTC');
-  assert.equal(env.CARGO_SOURCE_VENDORED_SOURCES_DIRECTORY, join('CARGO', 'vendor'));
   assert.equal(env.NODE_OPTIONS, undefined); assert.equal(env.GOOGLE_CLIENT_SECRET, undefined);
 });
 

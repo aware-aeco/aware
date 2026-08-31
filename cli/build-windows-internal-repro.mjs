@@ -85,8 +85,11 @@ function verifyClosure(id, manifest, locator) {
   return resolve(root);
 }
 
-export function cargoArguments(manifestPath) {
+export function cargoArguments(manifestPath, vendorDirectory) {
+  if (typeof vendorDirectory !== 'string' || !vendorDirectory) throw new Error('Cargo vendor directory is required');
+  const vendor = vendorDirectory.replaceAll('\\', '/').replaceAll('"', '\\"');
   return ['build', '--manifest-path', manifestPath, '--release', '--locked', '--offline',
+    '--config', `source.vendored-sources.directory="${vendor}"`,
     '--target', TARGET, '--verbose', '--verbose'];
 }
 
@@ -97,7 +100,6 @@ export function controlledEnvironment({ locator, workRoot, sourceRoot, cargoHome
     ...Object.fromEntries(required.map((key) => [key, locator.environment[key]])),
     TEMP: tempRoot, TMP: tempRoot,
     CARGO_HOME: cargoHome, CARGO_TARGET_DIR: join(workRoot, 'cargo-target'), CARGO_NET_OFFLINE: 'true',
-    CARGO_SOURCE_VENDORED_SOURCES_DIRECTORY: join(cargoHome, 'vendor'),
     RUSTC: locator.tools.rustc, RUSTDOC: locator.tools.rustdoc,
     RUSTFLAGS: `-C link-arg=/Brepro --remap-path-prefix=${sourceRoot}=<source> --remap-path-prefix=${workRoot}=<work> --remap-path-prefix=${cargoHome}=<cargo-home>`,
     CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER: locator.tools.link,
@@ -203,7 +205,7 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
     throw new Error('final source lockfile digests do not match builder manifest');
   }
 
-  const cargoArgs = cargoArguments(join(source, 'cli', 'Cargo.toml'));
+  const cargoArgs = cargoArguments(join(source, 'cli', 'Cargo.toml'), join(cargoHome, 'vendor'));
   const cargoLog = run(authority.tools.cargo, cargoArgs, { cwd: source, env: controlled });
   const normalizedCargo = `<cargo> ${cargoArgs.join(' ')}\n${cargoLog}`
     .replaceAll(source, '<source>').replaceAll(work, '<work>').replaceAll(output, '<output>')
@@ -249,7 +251,7 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
       },
     },
     commands: {
-      cargo: '<cargo> build --manifest-path <source>/cli/Cargo.toml --release --locked --offline --target x86_64-pc-windows-msvc --verbose --verbose',
+      cargo: '<cargo> build --manifest-path <source>/cli/Cargo.toml --release --locked --offline --config source.vendored-sources.directory="<cargo-home>/vendor" --target x86_64-pc-windows-msvc --verbose --verbose',
       reader: '<node> <source>/cli-connection-reader/build-internal-repro.mjs --manifest <manifest> --locator <local-locator> --output <artifacts>/reader',
     },
     unsignedTestMedia: true,
