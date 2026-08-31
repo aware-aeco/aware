@@ -11,6 +11,7 @@ pub mod paste;
 pub mod pkce; // Task 4
 pub mod profile; // Tier 2 BYO OAuth app profiles (#146)
 pub mod refresh; // Task 5
+pub mod token_response; // the token-endpoint reply shape the three flows share
 
 /// Seconds since the Unix epoch.
 ///
@@ -37,11 +38,13 @@ pub(crate) fn unix_now_secs() -> Result<i64, AwareError> {
 /// The `Content-Type` is a compile-time constant, so the parse cannot fail in
 /// practice — but panicking mid-round-trip would strand the user half-way
 /// through a browser login with no token and no error. Degrade instead: the
-/// response keeps the `text/plain` content type `Response::from_string` seeds
-/// (`add_header` appends rather than replaces), so the worst case is the
-/// success page rendering as raw HTML source — not a crashed flow. The
-/// explicit `charset=utf-8` is what keeps the ✓ glyph from becoming mojibake
-/// (#157).
+/// response keeps the `text/plain` content type `Response::from_string` seeds,
+/// so the worst case is the success page rendering as raw HTML source — not a
+/// crashed flow. On the happy path `add_header` *replaces* that seeded value
+/// rather than appending beside it — `tiny_http` special-cases `Content-Type`
+/// — so exactly one content type reaches the browser and there is no ordering
+/// question about which of two wins. The explicit `charset=utf-8` is what keeps
+/// the ✓ glyph from becoming mojibake (#157).
 pub(crate) fn html_response(
     body: impl Into<String>,
 ) -> tiny_http::Response<std::io::Cursor<Vec<u8>>> {
@@ -84,5 +87,46 @@ mod tests {
     #[test]
     fn leaves_unreserved_characters_alone() {
         assert_eq!(urlencode("hello.world-test_X"), "hello.world-test_X");
+    }
+
+    #[test]
+    fn the_loopback_pages_declare_html_and_utf8_and_nothing_else() {
+        // #157: both OAuth loopback pages carry a ✓, and every one of them is
+        // served through here. `Response::from_string` seeds
+        // `text/plain; charset=UTF-8`; without the `add_header` below it the
+        // browser renders the page as literal source. Two things have to hold and
+        // only one of them is the charset:
+        //
+        //   1. the type is `text/html`, or the markup is shown rather than run;
+        //   2. exactly ONE `Content-Type` survives. `tiny_http` special-cases the
+        //      field and overwrites the seeded value — but that is a property of
+        //      the dependency, not of this call, so a version bump that made
+        //      `add_header` push instead would leave a response carrying both
+        //      `text/plain` and `text/html` and no defined winner. Counting the
+        //      header is what notices; asserting only that the utf-8 one is
+        //      present would not.
+        let response = html_response("<html><body><h1>\u{2713} Authenticated</h1></body></html>");
+
+        let content_types: Vec<String> = response
+            .headers()
+            .iter()
+            .filter(|h| h.field.equiv("Content-Type"))
+            .map(|h| h.value.as_str().to_string())
+            .collect();
+        assert_eq!(
+            content_types,
+            vec!["text/html; charset=utf-8".to_string()],
+            "the loopback page must be served as utf-8 HTML, once",
+        );
+
+        // The body is handed to the browser byte-for-byte: the glyph that #157 was
+        // about has to still be in it, and still be the two UTF-8 bytes the header
+        // now promises rather than anything re-encoded on the way through.
+        let mut served = Vec::new();
+        std::io::Read::read_to_end(&mut response.into_reader(), &mut served).unwrap();
+        assert_eq!(
+            String::from_utf8(served).unwrap(),
+            "<html><body><h1>\u{2713} Authenticated</h1></body></html>",
+        );
     }
 }

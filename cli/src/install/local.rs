@@ -7,7 +7,7 @@ use crate::error::AwareError;
 use crate::manifest::App;
 use crate::manifest::loader::{load_agent, load_app};
 use crate::paths::Paths;
-use crate::validate::{Severity, has_errors, validate_agent_on_disk, validate_app};
+use crate::validate::{error_summary, validate_agent_on_disk, validate_app};
 
 // `copy_dir_recursive` used to live in this module. It moved to `crate::fs`
 // when three modules turned out to be running near-identical walks (one with a
@@ -38,13 +38,7 @@ pub fn install_agent_from_path(
     }
     let agent = load_agent(&manifest_path)?;
     let issues = validate_agent_on_disk(&agent, src);
-    if has_errors(&issues) {
-        let summary = issues
-            .iter()
-            .filter(|i| i.severity == Severity::Error)
-            .map(|i| format!("[{}] {}", i.code, i.message))
-            .collect::<Vec<_>>()
-            .join("; ");
+    if let Some(summary) = error_summary(&issues) {
         return Err(AwareError::Validation(summary));
     }
 
@@ -86,13 +80,7 @@ pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<String, AwareE
 
     let app = load_app(&manifest_path)?;
     let issues = validate_app(&app);
-    if has_errors(&issues) {
-        let summary = issues
-            .iter()
-            .filter(|i| i.severity == Severity::Error)
-            .map(|i| format!("[{}] {}", i.code, i.message))
-            .collect::<Vec<_>>()
-            .join("; ");
+    if let Some(summary) = error_summary(&issues) {
         return Err(AwareError::Validation(summary));
     }
 
