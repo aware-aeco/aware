@@ -331,13 +331,32 @@ mod tests {
     // keys below exist to pin both halves, and `bind_loopback` is the only place
     // that reads them. Only the *default* branch was covered.
 
-    /// A port nothing is listening on, taken from the ephemeral range so these
-    /// tests never contend with the 7421–7430 scan the other tests exercise.
-    fn free_port() -> u16 {
-        let probe = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
-        let port = probe.local_addr().unwrap().port();
-        drop(probe);
-        port
+    /// Pin `bind_loopback` to an ephemeral port and return that port with what it
+    /// gave back, retrying while the port is stolen between the two steps.
+    ///
+    /// `TcpListener::bind("127.0.0.1:0")` is the only portable way to have the OS
+    /// name a port nothing is on, but the reservation lasts only as long as that
+    /// listener — and `bind_loopback` must do the binding itself, so the probe has
+    /// to be closed first. In that window anything on the machine can take the
+    /// port, including a parallel test asking for an ephemeral port of its own.
+    ///
+    /// That race belongs to the test, not to `bind_loopback`, so it is retried
+    /// rather than asserted on. Retrying does not hide a regression: a
+    /// `bind_loopback` that refuses a pin it should accept refuses every attempt
+    /// and this panics with the error it last produced. Ephemeral ports also keep
+    /// these tests clear of the 7421–7430 range the default-scan tests occupy.
+    fn on_a_pinned_port<T>(bind: impl Fn(u16) -> Result<T, AwareError>) -> (u16, T) {
+        let mut last: Option<AwareError> = None;
+        for _ in 0..25 {
+            let probe = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+            let port = probe.local_addr().unwrap().port();
+            drop(probe);
+            match bind(port) {
+                Ok(bound) => return (port, bound),
+                Err(error) => last = Some(error),
+            }
+        }
+        panic!("no ephemeral port stayed free across 25 attempts; last error: {last:?}");
     }
 
     /// `trimble-connect` with `oauth/trimble-connect.yaml` set to `keys`.
@@ -364,10 +383,10 @@ mod tests {
 
     #[test]
     fn a_pinned_callback_port_is_bound_instead_of_scanning_the_default_range() {
-        let port = free_port();
-        let (_tmp, cfg) = config_with_profile(&format!("callback_port: {port}\n"));
-
-        let (server, redirect) = bind_loopback(&cfg).unwrap();
+        let (port, (server, redirect)) = on_a_pinned_port(|port| {
+            let (_tmp, cfg) = config_with_profile(&format!("callback_port: {port}\n"));
+            bind_loopback(&cfg)
+        });
 
         // Both halves, and the second is not implied by the first. The listener has
         // to be on the pinned port — ask the socket, not the string we built — and
@@ -390,10 +409,11 @@ mod tests {
         // the provider exactly as written — re-deriving it as
         // `http://localhost:<port>/callback` would append a path the registration
         // does not have and the provider would refuse it.
-        let port = free_port();
-        let (_tmp, cfg) = config_with_profile(&format!("redirect_uri: http://localhost:{port}\n"));
-
-        let (server, redirect) = bind_loopback(&cfg).unwrap();
+        let (port, (server, redirect)) = on_a_pinned_port(|port| {
+            let (_tmp, cfg) =
+                config_with_profile(&format!("redirect_uri: http://localhost:{port}\n"));
+            bind_loopback(&cfg)
+        });
 
         assert_eq!(
             server.server_addr().to_ip().unwrap().port(),
@@ -414,17 +434,25 @@ mod tests {
         // while the profile pins a high port the listener can actually take. So the
         // advertised URI and the bound port are deliberately different values, and
         // `callback_port` is what decides the socket.
-        let bound = free_port();
-        let advertised = free_port();
+        //
+        // The advertised port is held open for the whole test rather than probed
+        // and released. Nothing binds it — `bind_loopback` only ever binds
+        // `callback_port` — so holding it costs nothing, and it is what guarantees
+        // the two numbers differ: the OS cannot hand the same port to the probe
+        // inside `on_a_pinned_port` while this listener is still on it.
+        let advertised_probe = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let advertised = advertised_probe.local_addr().unwrap().port();
+
+        let (bound, (server, redirect)) = on_a_pinned_port(|bound| {
+            let (_tmp, cfg) = config_with_profile(&format!(
+                "callback_port: {bound}\nredirect_uri: http://localhost:{advertised}/oauth\n"
+            ));
+            bind_loopback(&cfg)
+        });
         assert_ne!(
             bound, advertised,
-            "the two pins must differ to tell them apart"
+            "the two pins must differ for the assertions below to tell them apart",
         );
-        let (_tmp, cfg) = config_with_profile(&format!(
-            "callback_port: {bound}\nredirect_uri: http://localhost:{advertised}/oauth\n"
-        ));
-
-        let (server, redirect) = bind_loopback(&cfg).unwrap();
 
         assert_eq!(
             server.server_addr().to_ip().unwrap().port(),
@@ -446,8 +474,12 @@ mod tests {
         // instead of from us. The pin is a requirement, so an unavailable pin is
         // fatal — and the message has to name the port, since that is the one thing
         // the user has to go free up.
-        let port = free_port();
-        let occupied = std::net::TcpListener::bind(("127.0.0.1", port)).unwrap();
+        //
+        // No probe-and-release here, and so no race either: the listener this test
+        // needs is one it holds itself, so asking the OS for an ephemeral port and
+        // simply never closing it makes the port occupied by construction.
+        let occupied = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = occupied.local_addr().unwrap().port();
         let (_tmp, cfg) = config_with_profile(&format!("callback_port: {port}\n"));
 
         let Err(error) = bind_loopback(&cfg) else {
