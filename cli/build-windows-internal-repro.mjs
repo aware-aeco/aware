@@ -15,6 +15,7 @@ const scriptPath = fileURLToPath(import.meta.url);
 const SHA256 = /^[0-9a-f]{64}$/;
 const SHA1 = /^[0-9a-f]{40}$/;
 const TARGET = 'x86_64-pc-windows-msvc';
+export const COMMAND_OUTPUT_BUFFER_BYTES = 128 * 1024 * 1024;
 const EXACT_POISON = new Set([
   'RUSTFLAGS', 'CARGO_ENCODED_RUSTFLAGS', 'CC', 'CFLAGS', 'CL', 'LINK', 'LIB', 'INCLUDE',
   'NODE_OPTIONS', 'ESBUILD_BINARY_PATH', 'GOOGLE_CLIENT_SECRET', 'AWARE_GOOGLE_CLIENT_SECRET',
@@ -118,7 +119,9 @@ export function assertVerboseCargoProof(text) {
 }
 
 function run(path, args, options = {}) {
-  const result = spawnSync(path, args, { encoding: 'utf8', windowsHide: true, ...options });
+  const result = spawnSync(path, args, {
+    encoding: 'utf8', windowsHide: true, maxBuffer: COMMAND_OUTPUT_BUFFER_BYTES, ...options,
+  });
   const combined = `${result.stdout ?? ''}${result.stderr ?? ''}`;
   if (result.error || result.status !== 0) throw new Error(`${basename(path)} failed (${result.status}): ${result.error?.message ?? combined}`);
   return combined;

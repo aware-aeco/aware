@@ -4,9 +4,14 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
 import {
-  assertVerboseCargoProof, cargoArguments, closedGitEnvironment, controlledEnvironment, rejectedAmbientKeys,
+  assertVerboseCargoProof, cargoArguments, closedGitEnvironment, COMMAND_OUTPUT_BUFFER_BYTES,
+  controlledEnvironment, rejectedAmbientKeys,
   writeBuilderManifestEvidence,
 } from './build-windows-internal-repro.mjs';
+
+test('verbose command evidence has an explicit bounded buffer large enough for a full Cargo proof', () => {
+  assert.equal(COMMAND_OUTPUT_BUFFER_BYTES, 128 * 1024 * 1024);
+});
 
 test('Cargo invocation is locked, offline, release, verbose, and Windows-specific', () => {
   assert.deepEqual(cargoArguments('C:/src/cli/Cargo.toml', 'C:\\closure\\vendor'), [
