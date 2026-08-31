@@ -418,4 +418,88 @@ mod tests {
         let e = device_endpoints_for(&cfg, None);
         assert!(e.device_authorization_url.is_empty());
     }
+
+    #[test]
+    fn a_profile_tenant_is_used_when_no_cli_tenant_is_given_and_loses_when_one_is() {
+        // `tenant.or_else(|| cfg.tenant()).unwrap_or("common")` is this module's own
+        // three-way precedence — the PKCE path resolves the tenant inside
+        // `IntegrationConfig` instead, so the equivalent test over there does not
+        // reach this line. The middle rung is the one that was uncovered: with no
+        // `--tenant`, a profile that names a single-tenant directory must not fall
+        // through to `common`, or every device-code login for that org is posted to
+        // the multi-tenant endpoint and refused.
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("microsoft-365.yaml"),
+            "client_id: x\ntenant: profile-tenant.onmicrosoft.com\n",
+        )
+        .unwrap();
+        let cfg = config::for_integration("microsoft-365")
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap();
+
+        let from_profile = device_endpoints_for(&cfg, None);
+        for url in [
+            &from_profile.device_authorization_url,
+            &from_profile.token_url,
+        ] {
+            assert!(
+                url.contains("/profile-tenant.onmicrosoft.com/"),
+                "the profile tenant must reach the device endpoints: {url}",
+            );
+            assert!(!url.contains("/common/"), "must not fall through: {url}");
+        }
+
+        // And an explicit `--tenant` outranks it, so a maintainer can authorize
+        // against another directory without editing the profile file.
+        let from_cli = device_endpoints_for(&cfg, Some("cli-tenant.onmicrosoft.com"));
+        for url in [&from_cli.device_authorization_url, &from_cli.token_url] {
+            assert!(
+                url.contains("/cli-tenant.onmicrosoft.com/"),
+                "--tenant must win over the profile: {url}",
+            );
+            assert!(!url.contains("profile-tenant"), "{url}");
+        }
+    }
+
+    #[test]
+    fn a_trimble_profile_endpoint_opts_the_integration_back_into_device_code() {
+        // The empty default above is a policy choice, not an absence: Trimble
+        // Identity does implement RFC 8628, we just have no stable published URL to
+        // bundle. So a profile that supplies one has to switch the flow back on —
+        // the `_ => empty` refusal is otherwise unconditional and the opt-in is
+        // unreachable, which the `trimble_returns_empty_...` test above cannot see.
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("trimble-connect.yaml"),
+            "client_id: x\ndevice_authorization_url: https://id.trimble.com/oauth/device/code\n",
+        )
+        .unwrap();
+        let cfg = config::for_integration("trimble-connect")
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap();
+
+        let e = device_endpoints_for(&cfg, None);
+        assert_eq!(
+            e.device_authorization_url,
+            "https://id.trimble.com/oauth/device/code",
+        );
+        // The token endpoint is not part of the opt-in and must stay the resolved
+        // bundled one — a profile that set only the device URL still has to post its
+        // polls somewhere real.
+        assert_eq!(e.token_url, "https://id.trimble.com/oauth/token");
+
+        // The guard `run_device_code_flow` consults is emptiness, so a non-empty URL
+        // here is exactly what lifts it. That is asserted rather than exercised:
+        // calling the flow would post to the network and, on any reply that parses,
+        // enter the poll loop and sleep — a test that hangs on a sandbox's DNS is
+        // worse than no test.
+        assert!(!e.device_authorization_url.is_empty());
+    }
 }
