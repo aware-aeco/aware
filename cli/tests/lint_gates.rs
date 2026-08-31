@@ -1216,6 +1216,7 @@ fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
     // character position, so index `n` is the same line in both.
     let blanked: String = code.iter().collect();
     let code_lines: Vec<&str> = blanked.lines().collect();
+    let block_lines = block_comment_lines(source);
 
     // `unsafe` must be a whole word, so a trailing-`unsafe` identifier such as
     // `my_unsafe extern_thing` cannot open a match.
@@ -1238,18 +1239,53 @@ fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
             .enumerate()
             .all(|(o, c)| code.get(k + o) == Some(&c))
     };
-    // The nearest non-whitespace character before `at`, used to recognise an
-    // attribute position. See the `unsafe(` arm below for why that is positional.
-    let prev_non_ws = |at: usize| {
-        let mut k = at;
-        while k > 0 {
-            k -= 1;
-            match code.get(k) {
-                Some(c) if c.is_whitespace() => continue,
-                other => return other.copied(),
+    // The character ranges an attribute covers — `#[…]` or `#![…]`, brackets
+    // matched, so `#[cfg_attr(unix, unsafe(no_mangle))]` is one span and the
+    // nested level sits inside it. Whitespace after `#` is allowed, since
+    // `# [unsafe(no_mangle)]` is legal.
+    //
+    // Membership in one of these, not "the previous character opens a list", is
+    // what makes `unsafe(` an attribute. A bare list-opener test also matched
+    // `m!(unsafe(foo))` and `macro_rules! m { (unsafe($x:ident)) => … }`, where
+    // no attribute exists and no obligation is owed — a false positive
+    // satisfiable only by a meaningless `SAFETY:` comment (Codex review, #479).
+    let attribute_spans = {
+        let mut spans: Vec<(usize, usize)> = Vec::new();
+        let mut k = 0;
+        while k < code.len() {
+            if code.get(k) != Some(&'#') {
+                k += 1;
+                continue;
             }
+            let after_hash = if code.get(k + 1) == Some(&'!') {
+                k + 2
+            } else {
+                k + 1
+            };
+            let open = skip_ws(after_hash);
+            if code.get(open) != Some(&'[') {
+                k += 1;
+                continue;
+            }
+            let mut depth = 0usize;
+            let mut end = code.len();
+            for j in open..code.len() {
+                match code.get(j) {
+                    Some('[') => depth += 1,
+                    Some(']') => {
+                        depth -= 1;
+                        if depth == 0 {
+                            end = j;
+                            break;
+                        }
+                    }
+                    _ => {}
+                }
+            }
+            spans.push((open, end));
+            k = end.saturating_add(1).max(open + 1);
         }
-        None
+        spans
     };
 
     let mut found = Vec::new();
@@ -1278,16 +1314,19 @@ fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
             }
             code.get(k) == Some(&'{')
         } else {
-            // `unsafe(` in attribute position, found BY POSITION rather than by
-            // requiring `unsafe` to be the first token inside `#[`. This mirrors
-            // `opens_a_lint`, and for the same reason: an `#[unsafe(no_mangle)]`
-            // that applies on one platform is written
-            // `#[cfg_attr(unix, unsafe(no_mangle))]`, and a first-token test
-            // never sees it. Measured — that form compiles, really does export
-            // the symbol, and draws no clippy diagnostic. Both real sites here
-            // are unix-only, so it is the first thing an author would reach for.
-            // A list opens with `[`, `(` or `,`, which also admits `# [unsafe(`.
-            code.get(after) == Some(&'(') && matches!(prev_non_ws(i), Some('[' | '(' | ','))
+            // `unsafe(` anywhere INSIDE an attribute, rather than only as the
+            // first token after `#[`. Same reason `opens_a_lint` finds a lint
+            // level by position: an `#[unsafe(no_mangle)]` that applies on one
+            // platform is written `#[cfg_attr(unix, unsafe(no_mangle))]`, and a
+            // first-token test never sees it. Measured — that form compiles,
+            // really does export the symbol, and draws no clippy diagnostic; both
+            // real sites here are unix-only, so it is the first spelling an
+            // author would reach for. Bounded to `attribute_spans` so macro
+            // syntax spelling the same tokens is not mistaken for one.
+            code.get(after) == Some(&'(')
+                && attribute_spans
+                    .iter()
+                    .any(|(start, end)| i > *start && i < *end)
         };
         if !hit {
             continue;
@@ -1310,10 +1349,111 @@ fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
                 .get(line - 1)
                 .map(|l| l.trim().to_string())
                 .expect("line index derived from the same source"),
-            documented: has_safety_comment_above(&lines, &code_lines, line),
+            documented: has_safety_comment_above(&lines, &code_lines, &block_lines, line),
         });
     }
     found
+}
+
+/// For each line of `source`, whether any of it lies inside a `/* … */` block
+/// comment (the marker lines included).
+///
+/// [`blank_comments_and_strings`] cannot answer this, which is why this exists
+/// rather than reusing it: it blanks a comment's characters to whitespace, so an
+/// empty interior line of a block comment and a blank separator line outside one
+/// are *identical* in its output. The difference is load-bearing — the first
+/// continues a justification, the second ends it.
+///
+/// Strings are skipped, so a `/*` inside a literal cannot open a phantom comment
+/// that swallows the rest of the file.
+fn block_comment_lines(source: &str) -> Vec<bool> {
+    let chars: Vec<char> = source.chars().collect();
+    let at = |k: usize| chars.get(k).copied();
+    let mut inside = vec![false; source.split('\n').count()];
+    let mut line = 0usize;
+    let mut i = 0usize;
+    while i < chars.len() {
+        match (chars[i], at(i + 1)) {
+            ('/', Some('/')) => {
+                while i < chars.len() && chars[i] != '\n' {
+                    i += 1;
+                }
+            }
+            ('/', Some('*')) => {
+                let mut depth = 0usize;
+                while i < chars.len() {
+                    if let Some(slot) = inside.get_mut(line) {
+                        *slot = true;
+                    }
+                    if chars[i] == '/' && at(i + 1) == Some('*') {
+                        depth += 1;
+                        i += 2;
+                        continue;
+                    }
+                    if chars[i] == '*' && at(i + 1) == Some('/') {
+                        depth -= 1;
+                        i += 2;
+                        if depth == 0 {
+                            break;
+                        }
+                        continue;
+                    }
+                    if chars[i] == '\n' {
+                        line += 1;
+                    }
+                    i += 1;
+                }
+            }
+            ('r', Some('"' | '#')) => {
+                let mut hashes = 0;
+                let mut j = i + 1;
+                while at(j) == Some('#') {
+                    hashes += 1;
+                    j += 1;
+                }
+                if at(j) != Some('"') {
+                    i += 1;
+                    continue;
+                }
+                j += 1;
+                while j < chars.len() {
+                    if chars[j] == '"' && (1..=hashes).all(|n| at(j + n) == Some('#')) {
+                        j += hashes + 1;
+                        break;
+                    }
+                    if chars[j] == '\n' {
+                        line += 1;
+                    }
+                    j += 1;
+                }
+                i = j;
+            }
+            ('"', _) => {
+                let mut j = i + 1;
+                while j < chars.len() && chars[j] != '"' {
+                    let escaped = chars[j] == '\\';
+                    if chars[j] == '\n' {
+                        line += 1;
+                    }
+                    j += 1;
+                    if escaped && j < chars.len() {
+                        if chars[j] == '\n' {
+                            line += 1;
+                        }
+                        j += 1;
+                    }
+                }
+                i = j + 1;
+            }
+            (c, _) => {
+                if c == '\n' {
+                    line += 1;
+                }
+                i += 1;
+            }
+        }
+    }
+    inside
 }
 
 /// `true` when a `SAFETY:` comment sits in the unbroken run of comment and
@@ -1335,16 +1475,33 @@ fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
 ///
 /// Attribute lines are walked through so a `#[cfg(unix)]`-gated construct can
 /// carry its comment above the `cfg` rather than wedged beneath it. Blank lines
-/// are **not**: walking them let a file-header `//! … SAFETY: …` document the
-/// first construct in the file from any distance, and an unbounded false
-/// clearance is worse than asking an author to close up one blank line.
-fn has_safety_comment_above(lines: &[&str], code_lines: &[&str], line: usize) -> bool {
+/// **outside a comment** are not: walking them let a file-header
+/// `//! … SAFETY: …` document the first construct in the file from any distance,
+/// and an unbounded false clearance is worse than asking an author to close up
+/// one blank line. A blank line *inside* a block comment is a different thing
+/// entirely and is walked through — hence `block_lines`.
+fn has_safety_comment_above(
+    lines: &[&str],
+    code_lines: &[&str],
+    block_lines: &[bool],
+    line: usize,
+) -> bool {
     for above in (0..line.saturating_sub(1)).rev() {
         let Some(text) = lines.get(above).map(|l| l.trim()) else {
             return false;
         };
-        let is_comment =
-            !text.is_empty() && code_lines.get(above).is_some_and(|c| c.trim().is_empty());
+        if text.is_empty() {
+            // An empty line INSIDE a `/* … */` continues the justification;
+            // rustfmt preserves one, so `/* SAFETY: …` / `` / `details` / `*/`
+            // is documentation the gate must accept (Codex review, #479). An
+            // empty line OUTSIDE a comment ends the run, which is what stops a
+            // file-header `//! … SAFETY: …` reaching down the file.
+            if block_lines.get(above).copied().unwrap_or(false) {
+                continue;
+            }
+            return false;
+        }
+        let is_comment = code_lines.get(above).is_some_and(|c| c.trim().is_empty());
         if is_comment {
             // Case-insensitive: clippy accepts `// Safety:` for the blocks it
             // does lint, and two gates for one CLAUDE.md rule disagreeing about
@@ -1616,6 +1773,13 @@ fn undocumented_unsafe_classifier_matches_its_contract() {
             "documented unsafe attribute nested in a cfg_attr",
             "// SAFETY: the symbol is unique to this crate.\n#[cfg_attr(unix, unsafe(no_mangle))]\npub extern \"C\" fn f() {}\n",
         ),
+        // Codex review, PR #479 round 2: rustfmt preserves an empty line inside
+        // a `/* … */`, so this is documentation the gate must accept — while a
+        // blank line OUTSIDE a comment still ends the run (see `must_catch`).
+        (
+            "documented with a block comment containing a blank interior line",
+            "/* SAFETY: matches POSIX `int kill(pid_t, int)`.\n\n   The invariant holds.\n*/\nunsafe extern \"C\" {\n    fn kill(p: i32);\n}\n",
+        ),
     ];
     for (what, source) in must_not_catch {
         let found = unsafe_constructs(source);
@@ -1676,6 +1840,14 @@ fn undocumented_unsafe_classifier_matches_its_contract() {
             "an unsafe extern fn pointer in a struct field",
             "struct S {\n    cb: Option<unsafe extern \"system\" fn(u32) -> i32>,\n}\n",
         ),
+        // Codex review, PR #479 round 2: `unsafe(` spelled in macro syntax opens
+        // no attribute and owes no justification. A "the previous character
+        // opens a list" test matched both of these.
+        (
+            "unsafe( in a macro_rules pattern",
+            "macro_rules! m {\n    (unsafe($x:ident)) => { $x };\n}\n",
+        ),
+        ("unsafe( in a macro invocation", "m!(unsafe(foo));\n"),
     ];
     for (what, source) in must_not_match {
         assert!(
