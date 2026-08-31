@@ -16,6 +16,7 @@ const SHA256 = /^[0-9a-f]{64}$/;
 const SHA1 = /^[0-9a-f]{40}$/;
 const TARGET = 'x86_64-pc-windows-msvc';
 export const COMMAND_OUTPUT_BUFFER_BYTES = 128 * 1024 * 1024;
+export const SOURCE_PATHS = Object.freeze(['cli', 'cli-connection-reader']);
 const EXACT_POISON = new Set([
   'RUSTFLAGS', 'CARGO_ENCODED_RUSTFLAGS', 'CC', 'CFLAGS', 'CL', 'LINK', 'LIB', 'INCLUDE',
   'NODE_OPTIONS', 'ESBUILD_BINARY_PATH', 'GOOGLE_CLIENT_SECRET', 'AWARE_GOOGLE_CLIENT_SECRET',
@@ -192,10 +193,15 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
   if (Object.values(systemEnv).some((value) => typeof value !== 'string')) throw new Error('locator lacks the system environment required for Git');
   const gitEnv = closedGitEnvironment(systemEnv);
   run(authority.tools.git, ['clone', '--no-checkout', '--config', 'core.autocrlf=false', authority.bundle, source], { env: gitEnv });
+  run(authority.tools.git, ['sparse-checkout', 'init', '--no-cone'], { cwd: source, env: gitEnv });
+  run(authority.tools.git, ['sparse-checkout', 'set', '--no-cone', ...SOURCE_PATHS.map((path) => `/${path}/`)],
+    { cwd: source, env: gitEnv });
   run(authority.tools.git, ['checkout', '--detach', manifest.source.commit], { cwd: source, env: gitEnv });
   const commit = run(authority.tools.git, ['rev-parse', 'HEAD'], { cwd: source, env: gitEnv }).trim();
   const tree = run(authority.tools.git, ['rev-parse', 'HEAD^{tree}'], { cwd: source, env: gitEnv }).trim();
   if (commit !== manifest.source.commit || tree !== manifest.source.tree) throw new Error('extracted source identity mismatch');
+  const unexpectedSource = readdirSync(source).filter((name) => name !== '.git' && !SOURCE_PATHS.includes(name));
+  if (unexpectedSource.length) throw new Error(`sparse source boundary contains unexpected roots: ${unexpectedSource.join(', ')}`);
 
   const controlled = controlledEnvironment({ locator, workRoot: work, sourceRoot: source, cargoHome, tempRoot });
   const cargoVersion = run(authority.tools.cargo, ['--version'], { env: controlled }).trim();

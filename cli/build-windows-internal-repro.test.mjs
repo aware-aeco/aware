@@ -6,12 +6,17 @@ import { join } from 'node:path';
 import test from 'node:test';
 import {
   assertVerboseCargoProof, cargoArguments, closedGitEnvironment, COMMAND_OUTPUT_BUFFER_BYTES,
-  controlledEnvironment, materializeClosure, rejectedAmbientKeys,
+  controlledEnvironment, materializeClosure, rejectedAmbientKeys, SOURCE_PATHS,
   writeBuilderManifestEvidence,
 } from './build-windows-internal-repro.mjs';
 
 test('verbose command evidence has an explicit bounded buffer large enough for a full Cargo proof', () => {
   assert.equal(COMMAND_OUTPUT_BUFFER_BYTES, 128 * 1024 * 1024);
+});
+
+test('builder extracts only the two closed runtime source roots', () => {
+  assert.deepEqual(SOURCE_PATHS, ['cli', 'cli-connection-reader']);
+  assert.equal(Object.isFrozen(SOURCE_PATHS), true);
 });
 
 test('Cargo invocation is locked, offline, release, verbose, and Windows-specific', () => {
