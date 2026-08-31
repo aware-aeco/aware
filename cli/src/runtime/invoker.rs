@@ -465,15 +465,30 @@ impl Drop for ReaderProcessRegistration {
 
 #[cfg(unix)]
 fn terminate_reader_pid(pid: u32) {
+    // Refuse a PID that `as i32` would wrap negative; see the SAFETY note below. No production
+    // caller can reach this — the pid comes from `child.id()` — but `ReaderCancellation::register`
+    // takes any `u32`, so the invariant is enforced rather than assumed.
+    if pid > i32::MAX as u32 {
+        return;
+    }
     // POSIX SIGTERM. The bridge handles it by aborting the request and closing the private host
     // pipe; the Rust host then joins provider process-group cleanup before the bridge exits.
     // SAFETY: the invariant is that this declaration matches the platform's real `kill` — a
     // mismatched signature is undefined behaviour at the call site below, not a compile error.
-    // POSIX declares `int kill(pid_t, int)`, and both `pid_t` and `int` are `i32` on the two Unix
-    // targets this crate ships (`linux-x64` and `osx-arm64` in `release.yml`), so `fn kill(i32,
-    // i32) -> i32` is that signature. `clippy::undocumented_unsafe_blocks` does not reach an
-    // `unsafe extern` block — measured, see `tests/lint_gates.rs` — so this comment is the gate,
-    // and `every_unsafe_construct_clippy_misses_is_documented` there is what keeps it present.
+    // POSIX declares `int kill(pid_t, int)` and requires `pid_t` to be a signed integer type; it
+    // is `i32` on both targets this crate ships (`linux-x64` and `osx-arm64` in `release.yml`) and
+    // on every other unix `cargo install --path cli` builds on today, so `fn kill(i32, i32) -> i32`
+    // is that signature. A platform with a 64-bit `pid_t` would need this revisited — POSIX permits
+    // one, so this is the assumption to check first if a new unix target is ever added.
+    //
+    // The `pid > i32::MAX` guard below is load-bearing, and mirrors `runtime::pidfile`: `as i32`
+    // would wrap a large `u32` into a negative PID, and `kill` reads a negative PID as a process
+    // *group* — `kill(-1, SIGTERM)` signals every process the caller may signal. It is enforced
+    // here rather than left to callers because `ReaderCancellation::register` accepts any `u32`
+    // and this crate's own tests already register `u32::MAX`.
+    //
+    // `clippy::undocumented_unsafe_blocks` does not reach an `unsafe extern` block: measured in
+    // `cli/tests/lint_gates.rs`, which is also what keeps this comment present.
     unsafe extern "C" {
         fn kill(pid: i32, signal: i32) -> i32;
     }

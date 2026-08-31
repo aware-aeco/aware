@@ -27,16 +27,20 @@
 //!     from `[lints.clippy]` in the manifest, where a group entry that outranks
 //!     a specific `deny` switches it off.
 //!
-//! The last two scan artefacts that are correct today — real `src/`, the real
+//! Three of those scan artefacts that are correct today — real `src/`, the real
 //! `Cargo.toml` — so they report clean both when they work and when they have
 //! stopped matching anything at all. Each therefore has a negative control
 //! driving its classifier over synthetic input:
-//! `gate_reopener_classifier_matches_its_contract` and
-//! `manifest_lint_reader_matches_its_contract`.
+//! `gate_reopener_classifier_matches_its_contract`,
+//! `manifest_lint_reader_matches_its_contract` and
+//! `undocumented_unsafe_classifier_matches_its_contract` — the last paired with
+//! `the_unsafe_scan_reports_planted_offenders_by_line_and_text`, which drives the
+//! walk itself over a planted file so the scan is controlled end to end and not
+//! only at the classifier.
 //!
 //! The clippy-backed ones shell out to `cargo clippy` on a two-file scratch
 //! crate with no dependencies (hence `--offline`); the rest are pure file and
-//! string checks. If clippy is missing those four skip — except under `CI`,
+//! string checks. If clippy is missing those five skip — except under `CI`,
 //! where the workflow installs the component explicitly and a silent skip would
 //! be a hole rather than a courtesy.
 
@@ -1187,16 +1191,20 @@ struct UnsafeConstruct {
 /// measured by [`clippy_still_misses_the_constructs_this_gate_covers`], not
 /// assumed:
 ///
-///   * `unsafe extern "C" { … }`, where the assertion being made is that the
-///     declared signature matches the platform's real one. A wrong signature is
-///     undefined behaviour at every call site, and the `// SAFETY:` comment on
-///     the *call* does not cover it — the call's comment is about the arguments.
+///   * `unsafe extern "C" { … }` **blocks**, where the assertion being made is
+///     that the declared signature matches the platform's real one. A wrong
+///     signature is undefined behaviour at every call site, and the `// SAFETY:`
+///     comment on the *call* does not cover it — that one is about the
+///     arguments.
 ///   * `#[unsafe(…)]` attributes (`no_mangle`, `export_name`, `link_section`),
-///     where the assertion is that the symbol it forces does not collide.
+///     where the assertion is about the symbol it forces.
 ///
-/// `unsafe impl` is deliberately absent: clippy *does* reach that one (measured
-/// in the same test), so listing it here would duplicate a live lint with a
-/// text scan.
+/// `unsafe impl` is deliberately absent: clippy *does* reach that one, measured
+/// alongside the two above, so listing it here would duplicate a live lint with
+/// a text scan. A private `unsafe fn` is a third construct the lint misses
+/// (`missing_safety_doc` only fires on exported items) — this crate has none, so
+/// the scan does not cover it; the enumeration above is what is covered, not the
+/// whole of what clippy misses.
 ///
 /// Matching runs over [`blank_comments_and_strings`] so that prose mentioning
 /// `unsafe extern` — this crate has several — cannot be mistaken for code.
@@ -1204,8 +1212,13 @@ fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
     let chars: Vec<char> = source.chars().collect();
     let code = blank_comments_and_strings(&chars);
     let lines: Vec<&str> = source.lines().collect();
+    // Line-for-line with `lines`: blanking preserves every newline and every
+    // character position, so index `n` is the same line in both.
+    let blanked: String = code.iter().collect();
+    let code_lines: Vec<&str> = blanked.lines().collect();
 
-    // `unsafe` must be a whole word: `unsafely_extern` is an identifier.
+    // `unsafe` must be a whole word, so a trailing-`unsafe` identifier such as
+    // `my_unsafe extern_thing` cannot open a match.
     let word_start = |at: usize| {
         !code
             .get(at.wrapping_sub(1))
@@ -1218,32 +1231,63 @@ fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
         k
     };
     // Compared char-by-char rather than by collecting `word`: this runs at every
-    // byte of every file the crate compiles, and an allocation per position
+    // char of every file the crate compiles, and an allocation per position
     // turned the scan from milliseconds into seconds.
     let matches_at = |k: usize, word: &str| {
         word.chars()
             .enumerate()
             .all(|(o, c)| code.get(k + o) == Some(&c))
     };
+    // The nearest non-whitespace character before `at`, used to recognise an
+    // attribute position. See the `unsafe(` arm below for why that is positional.
+    let prev_non_ws = |at: usize| {
+        let mut k = at;
+        while k > 0 {
+            k -= 1;
+            match code.get(k) {
+                Some(c) if c.is_whitespace() => continue,
+                other => return other.copied(),
+            }
+        }
+        None
+    };
 
     let mut found = Vec::new();
     for i in 0..code.len() {
-        let hit = if matches_at(i, "unsafe") && word_start(i) {
-            // `unsafe` + whitespace + `extern`. Whitespace is required, so
-            // `unsafe_externs` cannot match.
-            let after = i + "unsafe".len();
-            skip_ws(after) > after && matches_at(skip_ws(after), "extern")
-        } else if code.get(i) == Some(&'#') {
-            // `#[unsafe(` or `#![unsafe(`, with rustfmt-tolerant whitespace.
-            let open = match (code.get(i + 1), code.get(i + 2)) {
-                (Some('['), _) => i + 2,
-                (Some('!'), Some('[')) => i + 3,
-                _ => continue,
-            };
-            let name = skip_ws(open);
-            matches_at(name, "unsafe") && code.get(skip_ws(name + "unsafe".len())) == Some(&'(')
+        if !(matches_at(i, "unsafe") && word_start(i)) {
+            continue;
+        }
+        let bare = i + "unsafe".len();
+        let after = skip_ws(bare);
+        let hit = if after > bare && matches_at(after, "extern") {
+            // A BLOCK, not merely the token pair. `pub unsafe extern "C" fn f()`,
+            // `type Cb = unsafe extern "C" fn(i32)`, and an
+            // `Option<unsafe extern "system" fn(u32)>` struct field are all
+            // `unsafe extern`, and none of them declares a foreign signature: a
+            // function-pointer type asserts nothing, so demanding a `// SAFETY:`
+            // above one would be a comment about nothing — a gate satisfiable
+            // only by writing something meaningless, which is the failure this
+            // whole file exists to avoid. So: optional ABI string, then `{`.
+            let mut k = skip_ws(after + "extern".len());
+            if code.get(k) == Some(&'"') {
+                k += 1;
+                while k < code.len() && code.get(k) != Some(&'"') {
+                    k += 1;
+                }
+                k = skip_ws(k + 1);
+            }
+            code.get(k) == Some(&'{')
         } else {
-            false
+            // `unsafe(` in attribute position, found BY POSITION rather than by
+            // requiring `unsafe` to be the first token inside `#[`. This mirrors
+            // `opens_a_lint`, and for the same reason: an `#[unsafe(no_mangle)]`
+            // that applies on one platform is written
+            // `#[cfg_attr(unix, unsafe(no_mangle))]`, and a first-token test
+            // never sees it. Measured — that form compiles, really does export
+            // the symbol, and draws no clippy diagnostic. Both real sites here
+            // are unix-only, so it is the first thing an author would reach for.
+            // A list opens with `[`, `(` or `,`, which also admits `# [unsafe(`.
+            code.get(after) == Some(&'(') && matches!(prev_non_ws(i), Some('[' | '(' | ','))
         };
         if !hit {
             continue;
@@ -1258,38 +1302,63 @@ fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
         }
         found.push(UnsafeConstruct {
             line,
+            // `.expect`, not `.unwrap_or_default()`: `line` is derived from this
+            // same source, so a miss is impossible — and an empty `text` would
+            // render as `src/foo.rs:12: `, a location naming nothing. Silence is
+            // the failure mode this file rejects four lines below.
             text: lines
                 .get(line - 1)
                 .map(|l| l.trim().to_string())
-                .unwrap_or_default(),
-            documented: has_safety_comment_above(&lines, line),
+                .expect("line index derived from the same source"),
+            documented: has_safety_comment_above(&lines, &code_lines, line),
         });
     }
     found
 }
 
-/// `true` when a `// SAFETY:` comment sits in the contiguous run of comment and
-/// attribute lines immediately above `line` (1-indexed).
+/// `true` when a `SAFETY:` comment sits in the unbroken run of comment and
+/// attribute lines directly above `line` (1-indexed). `code_lines` is the
+/// [`blank_comments_and_strings`] copy of the same source, line for line.
 ///
-/// Attribute lines are walked through rather than stopped at, because the
-/// construct is routinely `#[cfg(unix)]`-gated and the comment belongs above the
-/// `cfg`, not between it and the item. Blank lines are walked through for the
-/// same reason — forgiving here costs a false *negative* at worst, whereas
-/// stopping early would reject correctly documented code and teach the next
-/// author to reach for `#[allow]`.
-fn has_safety_comment_above(lines: &[&str], line: usize) -> bool {
+/// **A line is a comment when it carries no code**, per the blanked copy — never
+/// because it starts with `//`, `*` or `/*`. A prefix test gets two things wrong,
+/// in both directions:
+///
+///   * it rejects valid documentation. A block comment's continuation lines
+///     carry no marker of their own, so `/* SAFETY:` / `the invariant holds.` /
+///     `*/` reads as comment, *code*, comment — and the walk stops one line
+///     short of the justification it was looking for.
+///   * it clears undocumented code. `*slot = ' ';` — a real line in this very
+///     file — starts with `*`, so the walk crossed statements and credited a
+///     `SAFETY:` comment written about something else entirely. That is a false
+///     *clearance*, the one direction a gate must never fail in.
+///
+/// Attribute lines are walked through so a `#[cfg(unix)]`-gated construct can
+/// carry its comment above the `cfg` rather than wedged beneath it. Blank lines
+/// are **not**: walking them let a file-header `//! … SAFETY: …` document the
+/// first construct in the file from any distance, and an unbounded false
+/// clearance is worse than asking an author to close up one blank line.
+fn has_safety_comment_above(lines: &[&str], code_lines: &[&str], line: usize) -> bool {
     for above in (0..line.saturating_sub(1)).rev() {
         let Some(text) = lines.get(above).map(|l| l.trim()) else {
             return false;
         };
-        let is_comment = text.starts_with("//") || text.starts_with('*') || text.starts_with("/*");
-        let is_attribute = text.starts_with("#[") || text.starts_with("#![");
-        if is_comment && text.contains("SAFETY:") {
-            return true;
+        let is_comment =
+            !text.is_empty() && code_lines.get(above).is_some_and(|c| c.trim().is_empty());
+        if is_comment {
+            // Case-insensitive: clippy accepts `// Safety:` for the blocks it
+            // does lint, and two gates for one CLAUDE.md rule disagreeing about
+            // casing would reject a comment that visibly says Safety — then tell
+            // the author not to reach for `#[allow]`.
+            if text.to_ascii_uppercase().contains("SAFETY:") {
+                return true;
+            }
+            continue;
         }
-        if !(is_comment || is_attribute || text.is_empty()) {
-            return false;
+        if text.starts_with("#[") || text.starts_with("#![") {
+            continue;
         }
+        return false;
     }
     false
 }
@@ -1297,17 +1366,35 @@ fn has_safety_comment_above(lines: &[&str], line: usize) -> bool {
 /// CLAUDE.md §Code style: "No `unsafe` unless explicitly justified with a
 /// comment block explaining the invariant." `undocumented_unsafe_blocks` in
 /// `Cargo.toml` is the gate for that rule — and it has a hole. It reaches
-/// `unsafe { … }` blocks and `unsafe impl`, and nothing else; an
-/// `unsafe extern "C"` block with no justification at all passes
-/// `cargo clippy -D warnings` with zero diagnostics
-/// ([`clippy_still_misses_the_constructs_this_gate_covers`] measures both
-/// halves). This crate declares `kill` in two such blocks — `runtime/invoker.rs`
-/// and `runtime/pidfile.rs` — so the rule was unenforced exactly where the
-/// crate makes its only raw FFI declarations.
+/// `unsafe { … }` blocks and `unsafe impl`, and nothing else; with that deny in
+/// force, an `unsafe extern "C"` block carrying no justification at all still
+/// exits clean ([`clippy_still_misses_the_constructs_this_gate_covers`] measures
+/// every half, the `unsafe impl` exclusion included). Note the deny has to come
+/// from the manifest or a crate root — `cargo clippy -D warnings` alone does not
+/// enable a `restriction` lint at all, as `Cargo.toml` says. This crate declares
+/// `kill` in two such blocks — `runtime/invoker.rs` and `runtime/pidfile.rs` —
+/// so the rule was unenforced exactly where the crate makes its only raw FFI
+/// declarations.
 ///
 /// Scanned over every `.rs` file the crate compiles, `tests/` included: the
 /// manifest `[lints]` table reaches every Cargo target, so this gate's reach
-/// should match it rather than stop at `src/`.
+/// should match it rather than stop at `src/`. It does stop at `cli/`, though —
+/// `20-agents/aeco/engineering/steel-detailer-lookup` is a separate workspace,
+/// gated separately in `ci.yml`, and has no `unsafe` at all today.
+///
+/// Two limits worth stating plainly, so nobody reads more into a green run than
+/// it earns:
+///
+///   * this proves a `SAFETY:` comment is *present*, never that it is *true* or
+///     even that it is about the construct beneath it. A justification written
+///     for one item, followed by prose that disclaims it, still reads as
+///     documented. That is not a defect peculiar to this scan —
+///     `undocumented_unsafe_blocks` has exactly the same property for the
+///     blocks it does lint — and no text scan can close it. Reviewing whether
+///     the words are true is a human's job; this only guarantees there are
+///     words to review, which is the difference from the state before.
+///   * the constructs covered are the two enumerated on [`unsafe_constructs`],
+///     not everything clippy misses.
 #[test]
 fn every_unsafe_construct_clippy_misses_is_documented() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
@@ -1321,8 +1408,24 @@ fn every_unsafe_construct_clippy_misses_is_documented() {
         files.len(),
         root.display()
     );
+    // A count is not coverage. `src/runtime/` is 11 of these ~156 files, so
+    // losing it entirely still clears the floor above — and `offenders` would
+    // then be empty because nothing was scanned rather than because nothing is
+    // wrong. Assert the walk reaches the two files that hold the constructs.
+    //
+    // Named as *files*, deliberately, rather than as an expected construct
+    // count: that is what lets this survive replacing either hand-rolled
+    // declaration with `libc::kill`, which deletes the hazard outright instead
+    // of documenting it. A control that punishes the better fix is worse than
+    // no control.
+    for required in ["src/runtime/invoker.rs", "src/runtime/pidfile.rs"] {
+        assert!(
+            files.iter().any(|f| f.ends_with(required)),
+            "the walk never reached {required}, which is where this crate's raw \
+             FFI declarations live — so a clean result means nothing"
+        );
+    }
 
-    let mut seen = 0usize;
     let mut offenders = Vec::new();
     for file in &files {
         // As in `no_targeted_allow_reopens_the_gate_in_src`: a file this gate
@@ -1336,23 +1439,11 @@ fn every_unsafe_construct_clippy_misses_is_documented() {
             .display()
             .to_string();
         for construct in unsafe_constructs(&source) {
-            seen += 1;
             if !construct.documented {
                 offenders.push(format!("{relative}:{}: {}", construct.line, construct.text));
             }
         }
     }
-
-    // A floor, not an is-empty check — the same reasoning as the file-count
-    // assertion above. This crate carries two `unsafe extern` blocks; a
-    // classifier that had stopped matching would find zero constructs and
-    // report a spotless crate, which is indistinguishable from a real pass.
-    assert!(
-        seen >= 2,
-        "found {seen} unsafe constructs, but this crate has at least two \
-         `unsafe extern` blocks — the classifier has stopped matching, so a \
-         clean result means nothing"
-    );
 
     assert!(
         offenders.is_empty(),
@@ -1361,6 +1452,56 @@ fn every_unsafe_construct_clippy_misses_is_documented() {
          not silence this with `#[allow]`; CLAUDE.md §Engineering rules forbids \
          satisfying a gate by disabling it:\n  {}",
         offenders.join("\n  ")
+    );
+}
+
+/// The end-to-end control for the scan above, and the analogue of
+/// [`the_scan_finds_a_planted_reopener_in_a_nested_file`]. That scan walks real
+/// sources which are correct today, so it reports clean whether it works or has
+/// stopped matching entirely; this plants **both** covered constructs in a
+/// nested file, drives the same walk and classifier over them, and asserts what
+/// the failure message would actually say — line and text, which are what a
+/// maintainer navigates by.
+///
+/// This replaces a `seen >= 2` floor taken over the real crate, which counted
+/// the wrong thing in two ways. It was satisfied by any two matches of *either*
+/// kind, so the `#[unsafe(…)]` half could rot away undetected while the two real
+/// `unsafe extern` blocks kept it green — and it was exactly tight, so replacing
+/// either hand-rolled declaration with `libc::kill`, which deletes the hazard
+/// rather than documenting it, would have failed the suite with "the classifier
+/// has stopped matching". A control that punishes the better fix is worse than
+/// no control.
+#[test]
+fn the_unsafe_scan_reports_planted_offenders_by_line_and_text() {
+    let dir = tempfile::tempdir().expect("tempdir");
+    let nested = dir.path().join("a/b");
+    std::fs::create_dir_all(&nested).expect("create nested dirs");
+    std::fs::write(
+        nested.join("deep.rs"),
+        "fn pad() {}\n\nunsafe extern \"C\" {\n    fn kill(pid: i32) -> i32;\n}\n\n\
+         #[unsafe(no_mangle)]\npub extern \"C\" fn exported() {}\n",
+    )
+    .expect("write the planted file");
+
+    let mut files = Vec::new();
+    collect_rs_files(dir.path(), &mut files);
+    assert_eq!(
+        files.len(),
+        1,
+        "the walk did not reach the nested file: {files:?}"
+    );
+
+    let source = std::fs::read_to_string(&files[0]).expect("read the planted file");
+    let found = unsafe_constructs(&source);
+    let reported: Vec<(usize, &str)> = found.iter().map(|c| (c.line, c.text.as_str())).collect();
+    assert_eq!(
+        reported,
+        vec![(3, "unsafe extern \"C\" {"), (7, "#[unsafe(no_mangle)]")],
+        "the scan must find both covered constructs and name each at its own line"
+    );
+    assert!(
+        found.iter().all(|c| !c.documented),
+        "neither planted construct carries a SAFETY comment: {found:?}"
     );
 }
 
@@ -1393,6 +1534,37 @@ fn undocumented_unsafe_classifier_matches_its_contract() {
             "inner unsafe attribute",
             "#![unsafe(link_section = \".text\")]\n",
         ),
+        // A first-token test misses these three. Measured: the `cfg_attr` form
+        // compiles, exports the symbol, and draws no clippy diagnostic.
+        (
+            "unsafe attribute nested in a cfg_attr",
+            "#[cfg_attr(unix, unsafe(no_mangle))]\npub extern \"C\" fn f() {}\n",
+        ),
+        (
+            "unsafe attribute nested in a feature cfg_attr",
+            "#[cfg_attr(feature = \"x\", unsafe(export_name = \"y\"))]\npub extern \"C\" fn f() {}\n",
+        ),
+        (
+            "unsafe attribute with a space before the bracket",
+            "# [unsafe(no_mangle)]\npub extern \"C\" fn f() {}\n",
+        ),
+        // False *clearances* — each of these once reported `documented: true`.
+        (
+            "a SAFETY comment separated from the construct by blank lines",
+            "// SAFETY: about something else.\n\n\n\nunsafe extern \"C\" {\n    fn kill(p: i32);\n}\n",
+        ),
+        (
+            "a module-doc SAFETY mention does not document a construct below it",
+            "//! SAFETY: this module wraps libc.\n\n#![allow(dead_code)]\n\nunsafe extern \"C\" {\n    fn kill(p: i32);\n}\n",
+        ),
+        (
+            "a SAFETY comment the walk would have to cross a statement to reach",
+            "// SAFETY: about the line below.\n*slot = ' ';\nunsafe extern \"C\" {\n    fn kill(p: i32);\n}\n",
+        ),
+        (
+            "a multi-line string mentioning SAFETY does not document what follows",
+            "let s = \"SAFETY: not a comment\n\";\nunsafe extern \"C\" {\n    fn kill(p: i32);\n}\n",
+        ),
     ];
     for (what, source) in must_catch {
         let found = unsafe_constructs(source);
@@ -1423,6 +1595,26 @@ fn undocumented_unsafe_classifier_matches_its_contract() {
         (
             "documented unsafe attribute",
             "// SAFETY: the symbol is unique to this crate.\n#[unsafe(no_mangle)]\nfn f() {}\n",
+        ),
+        // Codex review, PR #479: a block comment's continuation lines carry no
+        // marker of their own, so a prefix test read the middle line as code and
+        // stopped one line short of the justification — rejecting documentation
+        // that complies with the rule the gate is enforcing.
+        (
+            "documented with a multiline block comment",
+            "/* SAFETY: matches POSIX `int kill(pid_t, int)`.\n   The invariant holds.\n*/\nunsafe extern \"C\" {\n    fn kill(p: i32);\n}\n",
+        ),
+        (
+            "documented with a starred block comment",
+            "/*\n * SAFETY: matches POSIX.\n */\nunsafe extern \"C\" {\n    fn kill(p: i32);\n}\n",
+        ),
+        (
+            "documented in the casing clippy also accepts",
+            "// Safety: matches POSIX.\nunsafe extern \"C\" {\n    fn kill(p: i32);\n}\n",
+        ),
+        (
+            "documented unsafe attribute nested in a cfg_attr",
+            "// SAFETY: the symbol is unique to this crate.\n#[cfg_attr(unix, unsafe(no_mangle))]\npub extern \"C\" fn f() {}\n",
         ),
     ];
     for (what, source) in must_not_catch {
@@ -1467,6 +1659,23 @@ fn undocumented_unsafe_classifier_matches_its_contract() {
             "a safe extern block",
             "extern \"C\" {\n    fn kill(p: i32);\n}\n",
         ),
+        // `unsafe extern` is also the spelling of a callback signature, and none
+        // of these declares anything: a function-pointer type asserts no
+        // signature match, so a `// SAFETY:` above one would be a comment about
+        // nothing. The crate already links `windows-sys`, so the struct-field
+        // form is what the next Windows callback will look like.
+        (
+            "an unsafe extern fn definition",
+            "pub unsafe extern \"C\" fn cb(a: i32) -> i32 { a }\n",
+        ),
+        (
+            "an unsafe extern fn-pointer type alias",
+            "type Cb = unsafe extern \"C\" fn(i32) -> i32;\n",
+        ),
+        (
+            "an unsafe extern fn pointer in a struct field",
+            "struct S {\n    cb: Option<unsafe extern \"system\" fn(u32) -> i32>,\n}\n",
+        ),
     ];
     for (what, source) in must_not_match {
         assert!(
@@ -1508,18 +1717,45 @@ fn clippy_still_misses_the_constructs_this_gate_covers() {
          half should be deleted. Diagnostics:\n{diagnostics}"
     );
 
-    // An `#[unsafe(…)]` attribute, likewise unreached.
+    // An `#[unsafe(…)]` attribute, likewise unreached — in both the plain and
+    // the `cfg_attr`-nested spelling, since the scan covers both.
+    for attribute in [
+        "#[unsafe(no_mangle)]",
+        "#[cfg_attr(all(), unsafe(no_mangle))]",
+    ] {
+        let (accepted, diagnostics) = run_gate_with(
+            UNSAFE_GATE,
+            &format!("{attribute}\npub extern \"C\" fn probe() {{}}\n\nfn main() {{}}\n"),
+        );
+        assert!(
+            accepted,
+            "clippy now rejects an undocumented `{attribute}`, so that half of \
+             the scan is a duplicate. Diagnostics:\n{diagnostics}"
+        );
+    }
+
+    // The exclusion, measured rather than trusted. `unsafe impl` is deliberately
+    // left OUT of `unsafe_constructs` because clippy reaches it — and that was
+    // the one clippy fact this file asserted without checking. If a future
+    // clippy narrows the lint off `unsafe impl`, every other test here stays
+    // green while an undocumented `unsafe impl Send` ships ungated.
     let (accepted, diagnostics) = run_gate_with(
         UNSAFE_GATE,
-        "#[unsafe(no_mangle)]\npub extern \"C\" fn probe() {}\n\nfn main() {}\n",
+        "struct T;\nunsafe impl Send for T {}\n\nfn main() {}\n",
     );
     assert!(
-        accepted,
-        "clippy now rejects an undocumented `#[unsafe(…)]` attribute, so that \
-         half of the scan is a duplicate. Diagnostics:\n{diagnostics}"
+        !accepted,
+        "clippy no longer rejects an undocumented `unsafe impl`. \
+         `unsafe_constructs` excludes it on the strength of this measurement, so \
+         the scan must now grow to cover it. Diagnostics:\n{diagnostics}"
+    );
+    assert!(
+        diagnostics.contains("unsafe impl missing a safety comment"),
+        "the `unsafe impl` probe was rejected, but not by the unsafe gate. \
+         Diagnostics:\n{diagnostics}"
     );
 
-    // The control. Without it the two assertions above would also pass if the
+    // The control. Without it the assertions above would also pass if the
     // probe silently stopped enforcing anything at all.
     let (accepted, diagnostics) = run_gate_with(
         UNSAFE_GATE,
