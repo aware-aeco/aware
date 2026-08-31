@@ -4,7 +4,7 @@ import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
-import { buildConnectionReader, canonicalJson } from './build.mjs';
+import { buildConnectionReader, canonicalJson, READER_BUILD_SETTINGS } from './build.mjs';
 import { rejectedAmbientKeys, verifyInternalInputs } from './build-internal-repro.mjs';
 
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -14,7 +14,8 @@ test('SEA configuration is path-independent and every injection operand is relat
   assert.match(text, /main: 'bundle\.cjs'/);
   assert.match(text, /output: 'sea-prep\.blob'/);
   assert.match(text, /cwd: outputDir/);
-  assert.match(text, /EXE_NAME, 'NODE_SEA_BLOB', 'sea-prep\.blob'/);
+  assert.match(text, /EXE_NAME, READER_BUILD_SETTINGS\.sea\.section, 'sea-prep\.blob'/);
+  assert.match(text, /'--sentinel-fuse', READER_BUILD_SETTINGS\.sea\.sentinelFuse/);
   assert.doesNotMatch(text, /main:\s*join\(outputDir/);
   assert.doesNotMatch(text, /output:\s*join\(outputDir/);
 });
@@ -40,6 +41,7 @@ test('tool verification goes red when a declared tool byte changes', () => {
   const tool = join(root, 'tool.bin'); writeFileSync(tool, 'one');
   const manifest = {
     schema: 'aware-windows-repro-builder/v1', platform: 'win32', arch: 'x64', nodeVersion: '24.14.0',
+    settings: READER_BUILD_SETTINGS,
     source: { bundleSha256: 'a'.repeat(64), commit: 'b'.repeat(40), tree: 'c'.repeat(40) },
     tools: {
       node: { id: 'node', sha256: sha('one') },
@@ -51,4 +53,21 @@ test('tool verification goes red when a declared tool byte changes', () => {
   const locator = { schema: 'aware-windows-repro-locator/v1', tools: { node: tool, postject: tool, 'web-ifc-wasm': tool } };
   writeFileSync(tool, 'two');
   assert.throws(() => verifyInternalInputs({ manifest, locator, env: {} }), /tool digest mismatch/);
+});
+
+test('controlled reader rejects omitted or changed byte-affecting settings', () => {
+  const root = mkdtempSync(join(tmpdir(), 'aware-repro-settings-'));
+  const tool = join(root, 'tool.bin'); writeFileSync(tool, 'one');
+  const manifest = {
+    schema: 'aware-windows-repro-builder/v1', platform: 'win32', arch: 'x64', nodeVersion: '24.14.0',
+    source: { bundleSha256: 'a'.repeat(64), commit: 'b'.repeat(40), tree: 'c'.repeat(40) },
+    tools: Object.fromEntries(['node', 'postject', 'web-ifc-wasm'].map((id) => [id, { id, sha256: sha('one') }])),
+    inputs: { 'reader-package-lock': 'd'.repeat(64), 'aware-cargo-lock': 'e'.repeat(64) },
+  };
+  const locator = { schema: 'aware-windows-repro-locator/v1', tools: { node: tool, postject: tool, 'web-ifc-wasm': tool } };
+  assert.throws(() => verifyInternalInputs({ manifest, locator, env: {} }), /reader build settings differ/);
+  assert.throws(() => verifyInternalInputs({
+    manifest: { ...manifest, settings: { ...READER_BUILD_SETTINGS, sea: { ...READER_BUILD_SETTINGS.sea, section: 'evil' } } },
+    locator, env: {},
+  }), /reader build settings differ/);
 });

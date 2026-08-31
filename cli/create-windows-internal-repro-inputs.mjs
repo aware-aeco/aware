@@ -6,6 +6,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, lstatSync, readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
 import { isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { READER_BUILD_SETTINGS } from '../cli-connection-reader/repro-settings.mjs';
 
 const SCRIPT = fileURLToPath(import.meta.url);
 const SHA1 = /^[0-9a-f]{40}$/;
@@ -70,6 +71,7 @@ export function createWindowsBuilderRecords(input) {
     schema: 'aware-windows-repro-builder/v1', platform: 'win32', arch: 'x64',
     nodeVersion: '24.14.0', rustVersion: '1.95.0', target: 'x86_64-pc-windows-msvc',
     source: { commit: input.source.commit, tree: input.source.tree, bundleSha256: sha256(sourceBundle) },
+    settings: READER_BUILD_SETTINGS,
     inputs: Object.fromEntries(Object.entries(locks).map(([id, path]) => [id, sha256(path)])),
     tools: Object.fromEntries(TOOL_IDS.map((id) => [id, { id, sha256: sha256(tools[id]) }])),
     closures: Object.fromEntries(Object.entries(closures).map(([id, root]) => [id, { files: inventory(root) }])),

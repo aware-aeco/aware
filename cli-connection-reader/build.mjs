@@ -11,9 +11,11 @@ import {
 } from 'node:fs';
 import { basename, dirname, isAbsolute, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { READER_BUILD_SETTINGS } from './repro-settings.mjs';
+
+export { READER_BUILD_SETTINGS } from './repro-settings.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const FUSE = 'NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2';
 const EXE_NAME = 'aware-connection-reader.exe';
 
 export const sha256File = (path) => createHash('sha256').update(readFileSync(path)).digest('hex');
@@ -62,9 +64,9 @@ export async function buildConnectionReader(options = {}) {
     absWorkingDir: here,
     entryPoints: ['model-dispatcher.mjs'],
     bundle: true,
-    platform: 'node',
-    format: 'cjs',
-    target: 'node24',
+    platform: READER_BUILD_SETTINGS.bundle.platform,
+    format: READER_BUILD_SETTINGS.bundle.format,
+    target: READER_BUILD_SETTINGS.bundle.target,
     outfile: join(outputDir, 'bundle.cjs'),
   });
 
@@ -72,7 +74,7 @@ export async function buildConnectionReader(options = {}) {
   // into the SEA blob by Node even though the bundled JavaScript itself is byte-identical.
   console.log('[build] generating SEA blob…');
   writeFileSync(join(outputDir, 'sea-config.json'), canonicalJson({
-    disableExperimentalSEAWarning: true,
+    disableExperimentalSEAWarning: READER_BUILD_SETTINGS.sea.disableExperimentalWarning,
     main: 'bundle.cjs',
     output: 'sea-prep.blob',
   }), 'utf8');
@@ -84,7 +86,8 @@ export async function buildConnectionReader(options = {}) {
   const exe = join(outputDir, EXE_NAME);
   copyFileSync(nodePath, exe);
   execFileSync(nodePath, [
-    postjectPath, EXE_NAME, 'NODE_SEA_BLOB', 'sea-prep.blob', '--sentinel-fuse', FUSE,
+    postjectPath, EXE_NAME, READER_BUILD_SETTINGS.sea.section, 'sea-prep.blob',
+    '--sentinel-fuse', READER_BUILD_SETTINGS.sea.sentinelFuse,
   ], { cwd: outputDir, stdio: 'inherit', windowsHide: true });
   copyFileSync(wasmPath, join(outputDir, 'web-ifc-node.wasm'));
 

@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildConnectionReader, canonicalJson, sha256File } from './build.mjs';
+import { buildConnectionReader, canonicalJson, READER_BUILD_SETTINGS, sha256File } from './build.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const SHA256 = /^[0-9a-f]{64}$/;
@@ -40,6 +40,9 @@ export function verifyInternalInputs({ manifest, locator, env = process.env }) {
   if (poison.length) throw new Error(`ambient build authority is forbidden: ${poison.join(', ')}`);
   if (manifest.platform !== 'win32' || manifest.arch !== 'x64' || manifest.nodeVersion !== '24.14.0') {
     throw new Error('builder manifest must pin Windows x64 and Node 24.14.0');
+  }
+  if (canonicalJson(manifest.settings) !== canonicalJson(READER_BUILD_SETTINGS)) {
+    throw new Error('reader build settings differ from the closed implementation');
   }
   if (process.platform !== 'win32' || process.arch !== 'x64' || process.versions.node !== manifest.nodeVersion) {
     throw new Error(`running Node must be exactly ${manifest.nodeVersion} on Windows x64`);

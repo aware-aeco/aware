@@ -10,6 +10,7 @@ import {
 } from 'node:fs';
 import { basename, dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { READER_BUILD_SETTINGS } from '../cli-connection-reader/repro-settings.mjs';
 
 const scriptPath = fileURLToPath(import.meta.url);
 const SHA256 = /^[0-9a-f]{64}$/;
@@ -155,6 +156,9 @@ export function verifyBuildAuthority({ manifest, locator, env = process.env }) {
   if (poisoned.length) throw new Error(`ambient build authority is forbidden: ${poisoned.join(', ')}`);
   if (manifest.platform !== 'win32' || manifest.arch !== 'x64' || manifest.nodeVersion !== '24.14.0'
     || manifest.rustVersion !== '1.95.0' || manifest.target !== TARGET) throw new Error('unsupported pinned build platform/toolchain');
+  if (canonicalJson(manifest.settings) !== canonicalJson(READER_BUILD_SETTINGS)) {
+    throw new Error('reader build settings differ from the closed implementation');
+  }
   if (process.platform !== 'win32' || process.arch !== 'x64' || process.versions.node !== manifest.nodeVersion) {
     throw new Error('wrapper must run under the pinned Windows x64 Node');
   }
