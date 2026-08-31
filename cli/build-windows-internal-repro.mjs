@@ -99,6 +99,7 @@ export function cargoArguments(manifestPath, vendorDirectory) {
   if (typeof vendorDirectory !== 'string' || !vendorDirectory) throw new Error('Cargo vendor directory is required');
   const vendor = vendorDirectory.replaceAll('\\', '/').replaceAll('"', '\\"');
   return ['build', '--manifest-path', manifestPath, '--release', '--locked', '--offline',
+    '--config', 'source.crates-io.replace-with="vendored-sources"',
     '--config', `source.vendored-sources.directory="${vendor}"`,
     '--target', TARGET, '--verbose', '--verbose'];
 }

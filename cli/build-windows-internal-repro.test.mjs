@@ -22,6 +22,7 @@ test('builder extracts only the two closed runtime source roots', () => {
 test('Cargo invocation is locked, offline, release, verbose, and Windows-specific', () => {
   assert.deepEqual(cargoArguments('C:/src/cli/Cargo.toml', 'C:\\closure\\vendor'), [
     'build', '--manifest-path', 'C:/src/cli/Cargo.toml', '--release', '--locked', '--offline',
+    '--config', 'source.crates-io.replace-with="vendored-sources"',
     '--config', 'source.vendored-sources.directory="C:/closure/vendor"',
     '--target', 'x86_64-pc-windows-msvc', '--verbose', '--verbose',
   ]);
