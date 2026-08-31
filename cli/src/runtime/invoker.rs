@@ -467,6 +467,13 @@ impl Drop for ReaderProcessRegistration {
 fn terminate_reader_pid(pid: u32) {
     // POSIX SIGTERM. The bridge handles it by aborting the request and closing the private host
     // pipe; the Rust host then joins provider process-group cleanup before the bridge exits.
+    // SAFETY: the invariant is that this declaration matches the platform's real `kill` — a
+    // mismatched signature is undefined behaviour at the call site below, not a compile error.
+    // POSIX declares `int kill(pid_t, int)`, and both `pid_t` and `int` are `i32` on the two Unix
+    // targets this crate ships (`linux-x64` and `osx-arm64` in `release.yml`), so `fn kill(i32,
+    // i32) -> i32` is that signature. `clippy::undocumented_unsafe_blocks` does not reach an
+    // `unsafe extern` block — measured, see `tests/lint_gates.rs` — so this comment is the gate,
+    // and `every_unsafe_construct_clippy_misses_is_documented` there is what keeps it present.
     unsafe extern "C" {
         fn kill(pid: i32, signal: i32) -> i32;
     }

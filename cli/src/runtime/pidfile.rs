@@ -172,6 +172,15 @@ fn process_is_alive(pid: u32) -> bool {
     if pid > i32::MAX as u32 {
         return false;
     }
+    // SAFETY: the invariant is that this declaration matches the platform's real `kill` — a
+    // mismatched signature is undefined behaviour at the call site below, not a compile error.
+    // POSIX declares `int kill(pid_t, int)`, and both `pid_t` and `int` are `i32` on the two Unix
+    // targets this crate ships (`linux-x64` and `osx-arm64` in `release.yml`), so `fn kill(i32,
+    // i32) -> i32` is that signature. The `pid > i32::MAX` guard above is what keeps the `as i32`
+    // at the call site from wrapping into a negative PID, which `kill` reads as a process *group*.
+    // `clippy::undocumented_unsafe_blocks` does not reach an `unsafe extern` block — measured, see
+    // `tests/lint_gates.rs` — so this comment is the gate, and
+    // `every_unsafe_construct_clippy_misses_is_documented` there is what keeps it present.
     unsafe extern "C" {
         fn kill(pid: i32, signal: i32) -> i32;
     }
