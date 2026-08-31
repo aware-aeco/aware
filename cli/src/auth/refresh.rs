@@ -4,6 +4,7 @@ use std::io::Read;
 
 use crate::auth::config;
 use crate::auth::keychain::{self, StoredToken};
+use crate::auth::token_response::TokenResponse;
 use crate::auth::urlencode;
 use crate::error::AwareError;
 
@@ -53,34 +54,26 @@ pub fn ensure_fresh(
     resp.into_reader()
         .read_to_string(&mut body_str)
         .map_err(|e| AwareError::Network(format!("refresh body: {e}")))?;
-    let token_json: serde_json::Value = serde_json::from_str(&body_str)
-        .map_err(|e| AwareError::Validation(format!("refresh response: {e}")))?;
+    let refreshed = TokenResponse::new(
+        serde_json::from_str(&body_str)
+            .map_err(|e| AwareError::Validation(format!("refresh response: {e}")))?,
+    );
 
-    let expires_in = token_json
-        .get("expires_in")
-        .and_then(|v| v.as_i64())
-        .unwrap_or(3600);
-    let access_token = token_json
-        .get("access_token")
-        .and_then(|v| v.as_str())
-        .ok_or_else(|| AwareError::Validation("refresh: missing access_token".into()))?
-        .to_string();
-    let new_refresh = token_json
-        .get("refresh_token")
-        .and_then(|v| v.as_str())
-        .map(String::from)
-        .or_else(|| token.refresh_token.clone());
-    let scope = token_json
-        .get("scope")
-        .and_then(|v| v.as_str())
-        .unwrap_or(&token.scope)
-        .to_string();
-
+    // Not `into_new_credential`: a refresh starts from a credential that already
+    // exists, and RFC 6749 §6 lets the reply omit `refresh_token` and `scope` —
+    // omitted means "unchanged", so each falls back to what `token` already holds
+    // rather than to the empty value a fresh grant would take. `token_type` and
+    // `source` are carried over wholesale for the same reason.
+    let access_token = refreshed
+        .access_token()
+        .ok_or_else(|| AwareError::Validation("refresh: missing access_token".into()))?;
     let new_token = StoredToken {
         access_token,
-        refresh_token: new_refresh,
-        expires_at: now + expires_in,
-        scope,
+        refresh_token: refreshed
+            .refresh_token()
+            .or_else(|| token.refresh_token.clone()),
+        expires_at: refreshed.expires_at(now),
+        scope: refreshed.scope().unwrap_or(&token.scope).to_string(),
         token_type: token.token_type.clone(),
         integration: integration.to_string(),
         obtained_at: now,

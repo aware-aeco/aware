@@ -13,7 +13,8 @@ use std::thread::sleep;
 use std::time::{Duration, SystemTime};
 
 use crate::auth::config::IntegrationConfig;
-use crate::auth::keychain::{StoredToken, TokenSource};
+use crate::auth::keychain::StoredToken;
+use crate::auth::token_response::TokenResponse;
 use crate::auth::urlencode;
 use crate::error::AwareError;
 
@@ -218,10 +219,12 @@ pub fn run_device_code_flow(
             }
         };
         let body = read_body(resp)?;
-        let parsed: serde_json::Value = serde_json::from_str(&body)
-            .map_err(|e| AwareError::Validation(format!("token response: {e}")))?;
+        let parsed = TokenResponse::new(
+            serde_json::from_str(&body)
+                .map_err(|e| AwareError::Validation(format!("token response: {e}")))?,
+        );
 
-        if let Some(err) = parsed.get("error").and_then(|v| v.as_str()) {
+        if let Some(err) = parsed.error_code() {
             match err {
                 "authorization_pending" => continue,
                 "slow_down" => {
@@ -243,41 +246,8 @@ pub fn run_device_code_flow(
         }
 
         // No `error` field → success.
-        let access_token = parsed
-            .get("access_token")
-            .and_then(|v| v.as_str())
-            .ok_or_else(|| AwareError::Validation("token response missing access_token".into()))?
-            .to_string();
-        let refresh_token = parsed
-            .get("refresh_token")
-            .and_then(|v| v.as_str())
-            .map(String::from);
-        let expires_in = parsed
-            .get("expires_in")
-            .and_then(|v| v.as_i64())
-            .unwrap_or(3600);
-        let scope = parsed
-            .get("scope")
-            .and_then(|v| v.as_str())
-            .unwrap_or("")
-            .to_string();
-        let token_type = parsed
-            .get("token_type")
-            .and_then(|v| v.as_str())
-            .unwrap_or("Bearer")
-            .to_string();
         let now = super::unix_now_secs()?;
-
-        return Ok(StoredToken {
-            access_token,
-            refresh_token,
-            expires_at: now + expires_in,
-            scope,
-            token_type,
-            integration: cfg.id.to_string(),
-            obtained_at: now,
-            source: TokenSource::Oauth,
-        });
+        return parsed.into_new_credential(&cfg.id, now);
     }
 }
 

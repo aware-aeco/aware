@@ -5,7 +5,8 @@ use rand::RngCore;
 use sha2::Digest;
 
 use crate::auth::config::IntegrationConfig;
-use crate::auth::keychain::{StoredToken, TokenSource};
+use crate::auth::keychain::StoredToken;
+use crate::auth::token_response::TokenResponse;
 use crate::auth::urlencode;
 use crate::error::AwareError;
 
@@ -120,41 +121,7 @@ pub fn run_pkce_flow(
 
     // 9. Build StoredToken
     let now = super::unix_now_secs()?;
-    let expires_in = token_json
-        .get("expires_in")
-        .and_then(|v| v.as_i64())
-        .unwrap_or(3600);
-    let access_token = token_json
-        .get("access_token")
-        .and_then(|v| v.as_str())
-        .ok_or_else(|| AwareError::Validation("token response missing access_token".into()))?
-        .to_string();
-    let refresh_token = token_json
-        .get("refresh_token")
-        .and_then(|v| v.as_str())
-        .map(String::from);
-    let scope = token_json
-        .get("scope")
-        .and_then(|v| v.as_str())
-        .unwrap_or("")
-        .to_string();
-    let token_type = token_json
-        .get("token_type")
-        .and_then(|v| v.as_str())
-        .unwrap_or("Bearer")
-        .to_string();
-
-    let token = StoredToken {
-        access_token,
-        refresh_token,
-        expires_at: now + expires_in,
-        scope,
-        token_type,
-        integration: config.id.to_string(),
-        obtained_at: now,
-        source: TokenSource::Oauth,
-    };
-    Ok(token)
+    TokenResponse::new(token_json).into_new_credential(&config.id, now)
 }
 
 fn make_pkce_pair() -> (String, String) {

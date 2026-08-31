@@ -11,6 +11,7 @@ pub mod paste;
 pub mod pkce; // Task 4
 pub mod profile; // Tier 2 BYO OAuth app profiles (#146)
 pub mod refresh; // Task 5
+pub mod token_response; // the token-endpoint reply shape the three flows share
 
 /// Seconds since the Unix epoch.
 ///
