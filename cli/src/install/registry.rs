@@ -15,7 +15,7 @@ use crate::manifest::loader::load_agent;
 use crate::paths::Paths;
 use crate::registry::Index;
 use crate::registry::fetch::CACHE_TTL;
-use crate::validate::{Severity, has_errors, validate_agent_on_disk};
+use crate::validate::{error_summary, validate_agent_on_disk};
 
 pub fn install_agent_from_registry(
     id: &str,
@@ -252,13 +252,7 @@ pub fn update_agent_from_registry(
     }
     let agent = load_agent(&manifest_path)?;
     let issues = validate_agent_on_disk(&agent, &subdir);
-    if has_errors(&issues) {
-        let summary = issues
-            .iter()
-            .filter(|i| i.severity == Severity::Error)
-            .map(|i| format!("[{}] {}", i.code, i.message))
-            .collect::<Vec<_>>()
-            .join("; ");
+    if let Some(summary) = error_summary(&issues) {
         return Err(AwareError::Validation(summary));
     }
     let new_name = agent.agent.clone();

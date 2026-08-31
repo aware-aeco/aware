@@ -57,6 +57,33 @@ pub fn has_errors(issues: &[ValidationIssue]) -> bool {
     issues.iter().any(|i| i.severity == Severity::Error)
 }
 
+/// The `[CODE] message; [CODE] message` line an install refuses with, or `None`
+/// when nothing in `issues` is an error.
+///
+/// Both install routes reject on the same rule and render the rejection the same
+/// way, so this is one sentence about what a refusal reads like, not three.
+/// `install::local` (agent and app) and `install::registry` each carried a
+/// byte-identical `has_errors` + filter + `format!("[{code}] {message}")` + join,
+/// which is also why the `Some`/`None` shape is the whole answer: a caller cannot
+/// ask "are there errors?" and then render them out of step with a caller that
+/// asked the other copy.
+///
+/// Warnings are deliberately absent. They do not block an install, and a refusal
+/// that listed them would name lines the user cannot act on to get unblocked.
+pub fn error_summary(issues: &[ValidationIssue]) -> Option<String> {
+    if !has_errors(issues) {
+        return None;
+    }
+    Some(
+        issues
+            .iter()
+            .filter(|i| i.severity == Severity::Error)
+            .map(|i| format!("[{}] {}", i.code, i.message))
+            .collect::<Vec<_>>()
+            .join("; "),
+    )
+}
+
 /// Validate an `Agent` manifest without touching disk. Catches issues
 /// `serde` can't (empty command map, missing transport, stateful-without-start, etc.).
 pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
@@ -1188,6 +1215,32 @@ fn has_cycle<'a>(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The refusal line both install routes now render from here: errors only,
+    /// each as `[CODE] message`, joined with `; `.
+    #[test]
+    fn error_summary_renders_only_the_errors_and_names_each_code() {
+        let issues = vec![
+            ValidationIssue::warning("W_SOFT", "a warning nobody is blocked on"),
+            ValidationIssue::error("E_ONE", "first problem"),
+            ValidationIssue::error("E_TWO", "second problem"),
+        ];
+        assert_eq!(
+            error_summary(&issues).as_deref(),
+            Some("[E_ONE] first problem; [E_TWO] second problem")
+        );
+    }
+
+    /// `None`, not `Some("")` — an install that reads a blank string as a reason
+    /// to refuse would reject a manifest whose only findings are warnings.
+    #[test]
+    fn error_summary_is_none_when_nothing_blocks() {
+        assert_eq!(error_summary(&[]), None);
+        assert_eq!(
+            error_summary(&[ValidationIssue::warning("W_SOFT", "cosmetic")]),
+            None
+        );
+    }
 
     #[test]
     fn latest_is_semver_precedence_not_string_order() {

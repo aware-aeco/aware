@@ -457,17 +457,45 @@ fn read_cred_file(
         .as_secs() as i64;
     let v: serde_json::Value = serde_json::from_str(&body)
         .map_err(|e| AwareError::Validation(format!("credential file JSON: {e}")))?;
+    stored_token_from_credential_json(&v, integration, now).map(Some)
+}
+
+/// Read a hand-written or legacy credential object into a [`StoredToken`].
+///
+/// This is the *stored* credential shape, not the one a token endpoint answers
+/// with: the lifetime arrives as an absolute `expires_at` (0 meaning "no stated
+/// expiry"), and the access token may be spelled either `access_token` or the
+/// shorter `token` that hand-written files and the runtime's documented
+/// manual-override path use. `auth::token_response::TokenResponse` is the other
+/// shape — `expires_in` relative to now, no `token` spelling — and the two are
+/// kept apart on purpose: they are two wire formats that happen to share four
+/// field names.
+///
+/// Two readers of this shape exist and had drifted into two copies: the
+/// credentials-file fallback here, and `commands::connect`'s `--from-file`
+/// import. They agreed on every field and every default, including stamping
+/// [`TokenSource::Paste`] — a credential that arrives as a bare blob was not
+/// minted by a flow this CLI ran, whichever door it came through, and `status`
+/// reports it on that basis.
+///
+/// `access_token` wins when a file carries both spellings, which is the
+/// precedence both copies already had.
+pub(crate) fn stored_token_from_credential_json(
+    v: &serde_json::Value,
+    integration: &str,
+    now: i64,
+) -> Result<StoredToken, AwareError> {
     let access_token = v
         .get("access_token")
         .and_then(|x| x.as_str())
         .or_else(|| v.get("token").and_then(|x| x.as_str()))
         .ok_or_else(|| {
             AwareError::Validation(
-                "credential file has neither access_token nor token field".into(),
+                "credential JSON has neither access_token nor token field".into(),
             )
         })?
         .to_string();
-    Ok(Some(StoredToken {
+    Ok(StoredToken {
         access_token,
         refresh_token: v
             .get("refresh_token")
@@ -487,7 +515,7 @@ fn read_cred_file(
         integration: integration.to_string(),
         obtained_at: now,
         source: TokenSource::Paste,
-    }))
+    })
 }
 
 #[cfg(unix)]
@@ -570,6 +598,57 @@ fn write_atomic_restricted(path: &Path, data: &[u8]) -> std::io::Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn credential_json(body: &str) -> Result<StoredToken, AwareError> {
+        stored_token_from_credential_json(
+            &serde_json::from_str(body).unwrap(),
+            "trimble-connect",
+            99,
+        )
+    }
+
+    /// The defaults both readers of this shape relied on, pinned in the one
+    /// place that now applies them.
+    #[test]
+    fn a_bare_credential_object_takes_the_shared_defaults() {
+        let token = credential_json(r#"{"access_token":"tk"}"#).unwrap();
+        assert_eq!(token.access_token, "tk");
+        assert!(token.refresh_token.is_none());
+        // Absolute, not `now + something`: a file that states no expiry is not
+        // given one, and `status` reads 0 as "no stated expiry" rather than
+        // "expired in 1970".
+        assert_eq!(token.expires_at, 0);
+        assert_eq!(token.scope, "");
+        assert_eq!(token.token_type, "Bearer");
+        assert_eq!(token.obtained_at, 99);
+        assert_eq!(token.source, TokenSource::Paste);
+    }
+
+    /// `token` is the shorter spelling hand-written files use; `access_token`
+    /// wins when a file carries both, which is the precedence the two former
+    /// copies already had.
+    #[test]
+    fn the_short_token_spelling_is_accepted_and_the_long_one_wins() {
+        assert_eq!(
+            credential_json(r#"{"token":"tk"}"#).unwrap().access_token,
+            "tk"
+        );
+        assert_eq!(
+            credential_json(r#"{"access_token":"long","token":"short"}"#)
+                .unwrap()
+                .access_token,
+            "long"
+        );
+    }
+
+    #[test]
+    fn an_object_with_neither_spelling_is_a_validation_error() {
+        let err = credential_json(r#"{"note":"nothing here"}"#).unwrap_err();
+        assert!(
+            matches!(&err, AwareError::Validation(m) if m.contains("neither access_token nor token")),
+            "got {err:?}"
+        );
+    }
 
     #[test]
     fn account_name_with_alias() {

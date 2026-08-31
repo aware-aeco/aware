@@ -512,37 +512,13 @@ fn load_token_from_file(
         .as_secs() as i64;
 
     if body.starts_with('{') {
+        // The `{` is what decides this is a credential blob rather than a bearer
+        // string, so the parse error stays here and names the file the user
+        // pointed at; the field mapping itself is the same one the credentials-file
+        // fallback reads, and lives with `StoredToken`.
         let v: serde_json::Value = serde_json::from_str(&body)
             .map_err(|e| AwareError::Validation(format!("token JSON: {e}")))?;
-        let access_token = v
-            .get("access_token")
-            .and_then(|x| x.as_str())
-            .or_else(|| v.get("token").and_then(|x| x.as_str()))
-            .ok_or_else(|| {
-                AwareError::Validation("token JSON has neither access_token nor token field".into())
-            })?
-            .to_string();
-        Ok(StoredToken {
-            access_token,
-            refresh_token: v
-                .get("refresh_token")
-                .and_then(|x| x.as_str())
-                .map(String::from),
-            expires_at: v.get("expires_at").and_then(|x| x.as_i64()).unwrap_or(0),
-            scope: v
-                .get("scope")
-                .and_then(|x| x.as_str())
-                .unwrap_or("")
-                .to_string(),
-            token_type: v
-                .get("token_type")
-                .and_then(|x| x.as_str())
-                .unwrap_or("Bearer")
-                .to_string(),
-            integration: integration.to_string(),
-            obtained_at: now,
-            source: TokenSource::Paste,
-        })
+        crate::auth::keychain::stored_token_from_credential_json(&v, integration, now)
     } else {
         // Plain bearer token.
         Ok(StoredToken {
