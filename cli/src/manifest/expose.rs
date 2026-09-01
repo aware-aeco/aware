@@ -425,4 +425,330 @@ requires: []
         validate_exposed_inputs("run", &cmd, &mut floaty).unwrap();
         assert_eq!(floaty["n"], serde_json::json!(4));
     }
+
+    /// The synthesized `mode:` is what decides whether a caller must wrap the
+    /// node in a `safety:` block, so both halves of `exposed_mode` are
+    /// load-bearing: an omitted `mode:` must land as `read` (an un-annotated
+    /// caller stays legal) and an authored `mode: write` must survive
+    /// synthesis (a caller is forced to declare the safety contract). Nothing
+    /// covered either half — `mode` appeared in no test in the tree.
+    #[test]
+    fn an_omitted_mode_synthesizes_read_and_an_authored_write_survives() {
+        let app: App = serde_yaml::from_str(
+            r#"
+app: gatekeeper
+version: 1.0.0
+description: exposes one read and one write command
+exposes-as-agent: true
+exposed-commands:
+  peek:
+    lifecycle: single
+  push:
+    lifecycle: single
+    mode: write
+nodes:
+  - id: n
+    inline:
+      kind: predicate
+      description: pass
+      code: 'true'
+requires: []
+"#,
+        )
+        .unwrap();
+        let agent: Agent = serde_yaml::from_str(&synthesize_agent_manifest(&app).unwrap()).unwrap();
+        assert_eq!(
+            agent.commands["peek"].mode,
+            Some(Mode::Read),
+            "an exposed command with no mode: must present as read"
+        );
+        assert_eq!(
+            agent.commands["push"].mode,
+            Some(Mode::Write),
+            "an authored mode: write must reach the caller, or the safety gate is lost"
+        );
+    }
+
+    /// `stateful` is `any`, not `all`: one `lifecycle: start` command makes the
+    /// whole synthesized agent stateful, however many single-shot commands sit
+    /// beside it. The existing tests pin only the all-start and all-single
+    /// apps, which an `any` → `all` slip survives.
+    #[test]
+    fn one_start_command_among_singles_still_synthesizes_a_stateful_agent() {
+        let app: App = serde_yaml::from_str(
+            r#"
+app: mixed
+version: 2.0.0
+description: mostly single, one long-running
+exposes-as-agent: true
+exposed-commands:
+  compute:
+    lifecycle: single
+  serve:
+    lifecycle: start
+  halt:
+    lifecycle: stop
+nodes:
+  - id: n
+    inline:
+      kind: predicate
+      description: pass
+      code: 'true'
+requires: []
+"#,
+        )
+        .unwrap();
+        let agent: Agent = serde_yaml::from_str(&synthesize_agent_manifest(&app).unwrap()).unwrap();
+        assert!(
+            agent.stateful,
+            "a single `start` among singles must still make the agent stateful"
+        );
+        assert_eq!(agent.commands.len(), 3);
+        assert_eq!(agent.commands["serve"].lifecycle, Lifecycle::Start);
+        assert_eq!(agent.commands["halt"].lifecycle, Lifecycle::Stop);
+    }
+
+    /// An agent `description:` is a one-line field; an app's is free prose. The
+    /// synthesizer takes the first line and trims it, so a multi-line app
+    /// description cannot smuggle a newline into the agent manifest.
+    #[test]
+    fn the_synthesized_description_is_the_first_line_trimmed() {
+        let app: App = serde_yaml::from_str(
+            "app: wordy\nversion: 1.0.0\ndescription: \"  headline sentence  \\nbody paragraph that must not travel\"\n\
+             exposes-as-agent: true\nexposed-commands:\n  run:\n    lifecycle: single\n\
+             nodes:\n  - id: n\n    inline:\n      kind: predicate\n      description: pass\n      code: 'true'\nrequires: []\n",
+        )
+        .unwrap();
+        let agent: Agent = serde_yaml::from_str(&synthesize_agent_manifest(&app).unwrap()).unwrap();
+        assert_eq!(agent.description, "headline sentence");
+        assert!(
+            !agent.description.contains("body paragraph"),
+            "only the first line belongs on the agent: {:?}",
+            agent.description
+        );
+    }
+
+    /// When an exposed command names no `description:`, the synthesizer writes a
+    /// generated one — the field is required on an agent command, so an empty
+    /// or missing description would make the manifest unparseable/invalid.
+    #[test]
+    fn a_command_without_a_description_gets_a_generated_one_naming_it() {
+        let app: App = serde_yaml::from_str(
+            "app: terse\nversion: 1.0.0\ndescription: no command descriptions\nexposes-as-agent: true\n\
+             exposed-commands:\n  run:\n    lifecycle: single\n  spelt:\n    lifecycle: single\n    description: authored text\n\
+             nodes:\n  - id: n\n    inline:\n      kind: predicate\n      description: pass\n      code: 'true'\nrequires: []\n",
+        )
+        .unwrap();
+        let agent: Agent = serde_yaml::from_str(&synthesize_agent_manifest(&app).unwrap()).unwrap();
+        let generated = &agent.commands["run"].description;
+        assert!(
+            generated.contains("run") && generated.contains("terse"),
+            "the generated description should name the command and its app: {generated:?}"
+        );
+        assert_eq!(
+            agent.commands["spelt"].description, "authored text",
+            "an authored description must not be replaced by the generated one"
+        );
+    }
+
+    /// Every spelling in `coerce_to_declared`'s alias table has to keep working:
+    /// an alias that falls out of its match arm becomes an *unknown* type, which
+    /// is permissive — the routed value would then pass through uncoerced and
+    /// reach the nested app with the wrong JSON type instead of erroring. Each
+    /// case below therefore feeds a value the coercion must *change*, so a
+    /// dropped alias shows up as an unchanged value rather than as an error.
+    #[test]
+    fn every_declared_type_alias_still_coerces_its_routed_value() {
+        let cmd = exposed(
+            "lifecycle: single\ninputs:\n\
+             \x20 as_string: { type: string }\n\x20 as_str: { type: str }\n\x20 as_text: { type: text }\n\
+             \x20 as_number: { type: number }\n\x20 as_num: { type: num }\n\x20 as_float: { type: float }\n\x20 as_double: { type: double }\n\
+             \x20 as_integer: { type: integer }\n\x20 as_int: { type: int }\n\
+             \x20 as_boolean: { type: boolean }\n\x20 as_bool: { type: bool }\n\
+             \x20 as_object: { type: object }\n\x20 as_map: { type: map }\n\x20 as_mapping: { type: mapping }\n\
+             \x20 as_array: { type: array }\n\x20 as_list: { type: list }\n",
+        );
+        let mut args = serde_json::json!({
+            // A scalar routed into a string input stringifies.
+            "as_string": 7, "as_str": 7, "as_text": 7,
+            // Templating stringified these; they must come back as numbers.
+            "as_number": "2.5", "as_num": "2.5", "as_float": "2.5", "as_double": "2.5",
+            "as_integer": "3", "as_int": "3",
+            "as_boolean": "true", "as_bool": "true",
+            "as_object": "{\"k\": 1}", "as_map": "{\"k\": 1}", "as_mapping": "{\"k\": 1}",
+            "as_array": "[1]", "as_list": "[1]",
+        });
+        validate_exposed_inputs("run", &cmd, &mut args).unwrap();
+        for key in ["as_string", "as_str", "as_text"] {
+            assert_eq!(args[key], serde_json::json!("7"), "{key} should stringify");
+        }
+        for key in ["as_number", "as_num", "as_float", "as_double"] {
+            assert_eq!(args[key], serde_json::json!(2.5), "{key} should parse");
+        }
+        for key in ["as_integer", "as_int"] {
+            assert_eq!(args[key], serde_json::json!(3), "{key} should parse");
+        }
+        for key in ["as_boolean", "as_bool"] {
+            assert_eq!(args[key], serde_json::json!(true), "{key} should parse");
+        }
+        for key in ["as_object", "as_map", "as_mapping"] {
+            assert_eq!(
+                args[key],
+                serde_json::json!({ "k": 1 }),
+                "{key} should parse"
+            );
+        }
+        for key in ["as_array", "as_list"] {
+            assert_eq!(args[key], serde_json::json!([1]), "{key} should parse");
+        }
+    }
+
+    /// A string input takes scalars, but a container has no sensible string
+    /// form — accepting one would hand the nested app the debug spelling of a
+    /// structure. Null likewise: it is an absent value, not the empty string.
+    #[test]
+    fn a_container_or_null_routed_into_a_string_input_is_refused() {
+        let cmd = exposed("lifecycle: single\ninputs:\n  s:\n    type: string\n");
+        for bad in [
+            serde_json::json!([1, 2]),
+            serde_json::json!({ "a": 1 }),
+            serde_json::Value::Null,
+        ] {
+            let mut args = serde_json::json!({ "s": bad });
+            let err = validate_exposed_inputs("run", &cmd, &mut args).unwrap_err();
+            assert!(
+                matches!(err, AwareError::Validation(ref m) if m.contains("expected string")),
+                "expected a string-type rejection, got {err:?}"
+            );
+        }
+        // A bool is a scalar and does stringify.
+        let mut ok = serde_json::json!({ "s": true });
+        validate_exposed_inputs("run", &cmd, &mut ok).unwrap();
+        assert_eq!(ok["s"], serde_json::json!("true"));
+    }
+
+    /// A stringified container must parse into the *declared* container kind.
+    /// Both arms parse arbitrary JSON, so without the `is_object` / `is_array`
+    /// filter an array string would satisfy an `object` input (and vice versa)
+    /// and the nested app would receive a shape its schema does not describe.
+    #[test]
+    fn a_stringified_container_must_match_the_declared_kind() {
+        let obj = exposed("lifecycle: single\ninputs:\n  v:\n    type: object\n");
+        let arr = exposed("lifecycle: single\ninputs:\n  v:\n    type: array\n");
+        // Right JSON, wrong kind.
+        let mut arr_into_obj = serde_json::json!({ "v": "[1, 2]" });
+        assert!(validate_exposed_inputs("run", &obj, &mut arr_into_obj).is_err());
+        let mut obj_into_arr = serde_json::json!({ "v": "{\"a\": 1}" });
+        assert!(validate_exposed_inputs("run", &arr, &mut obj_into_arr).is_err());
+        // A bare scalar in a string is JSON too, and is neither.
+        let mut scalar_into_obj = serde_json::json!({ "v": "42" });
+        assert!(validate_exposed_inputs("run", &obj, &mut scalar_into_obj).is_err());
+        // Not JSON at all.
+        let mut junk = serde_json::json!({ "v": "{oops" });
+        assert!(validate_exposed_inputs("run", &obj, &mut junk).is_err());
+    }
+
+    /// String→bool and string→integer parsing is deliberately strict: only the
+    /// exact JSON/Rust spellings convert. A near-miss (`"True"`, `"1"`,
+    /// `"5.0"`) must error rather than be guessed at, because guessing wrong at
+    /// an app boundary silently changes what the nested app runs.
+    #[test]
+    fn strings_convert_to_booleans_and_integers_only_on_an_exact_spelling() {
+        let b = exposed("lifecycle: single\ninputs:\n  v:\n    type: boolean\n");
+        for good in ["true", "false"] {
+            let mut args = serde_json::json!({ "v": good });
+            validate_exposed_inputs("run", &b, &mut args).unwrap();
+            assert_eq!(args["v"], serde_json::json!(good == "true"));
+        }
+        for near_miss in ["True", "TRUE", "1", "yes", "on", ""] {
+            let mut args = serde_json::json!({ "v": near_miss });
+            assert!(
+                validate_exposed_inputs("run", &b, &mut args).is_err(),
+                "{near_miss:?} must not be read as a boolean"
+            );
+        }
+        // A number is not a boolean either.
+        let mut numeric = serde_json::json!({ "v": 1 });
+        assert!(validate_exposed_inputs("run", &b, &mut numeric).is_err());
+
+        let i = exposed("lifecycle: single\ninputs:\n  v:\n    type: integer\n");
+        let mut negative = serde_json::json!({ "v": "-5" });
+        validate_exposed_inputs("run", &i, &mut negative).unwrap();
+        assert_eq!(negative["v"], serde_json::json!(-5));
+        // The float 5.0 is accepted (see `integer_rejects_fractional_values`)
+        // but the *string* "5.0" is not — `str::parse::<i64>` has no float path.
+        for near_miss in ["5.0", "5 ", " 5", "+5.0", "0x10", ""] {
+            let mut args = serde_json::json!({ "v": near_miss });
+            assert!(
+                validate_exposed_inputs("run", &i, &mut args).is_err(),
+                "{near_miss:?} must not be read as an integer"
+            );
+        }
+    }
+
+    /// `parse_number` tries i64, then u64, then f64, so a value above
+    /// `i64::MAX` stays an exact integer instead of degrading to a lossy float.
+    /// The f64 arm goes through `Number::from_f64`, which rejects the
+    /// non-finite results `str::parse::<f64>` happily produces — an infinity or
+    /// a NaN reaching a nested app's arithmetic is worse than a refusal.
+    #[test]
+    fn number_parsing_keeps_big_integers_exact_and_refuses_non_finite() {
+        let cmd = exposed("lifecycle: single\ninputs:\n  v:\n    type: number\n");
+
+        let mut big = serde_json::json!({ "v": "9223372036854775808" }); // i64::MAX + 1
+        validate_exposed_inputs("run", &cmd, &mut big).unwrap();
+        assert!(
+            big["v"].is_u64() && !big["v"].is_f64(),
+            "a value past i64::MAX must stay an exact integer, got {:?}",
+            big["v"]
+        );
+        assert_eq!(big["v"].as_u64(), Some(9_223_372_036_854_775_808));
+
+        let mut small = serde_json::json!({ "v": "-9223372036854775808" }); // i64::MIN
+        validate_exposed_inputs("run", &cmd, &mut small).unwrap();
+        assert_eq!(small["v"].as_i64(), Some(i64::MIN));
+
+        // A plain integer string stays integral rather than becoming 7.0.
+        let mut whole = serde_json::json!({ "v": "7" });
+        validate_exposed_inputs("run", &cmd, &mut whole).unwrap();
+        assert!(whole["v"].is_i64(), "got {:?}", whole["v"]);
+
+        let mut exponent = serde_json::json!({ "v": "1e3" });
+        validate_exposed_inputs("run", &cmd, &mut exponent).unwrap();
+        assert_eq!(exponent["v"].as_f64(), Some(1000.0));
+
+        for non_finite in ["inf", "-inf", "NaN", "infinity", "1e400"] {
+            let mut args = serde_json::json!({ "v": non_finite });
+            assert!(
+                validate_exposed_inputs("run", &cmd, &mut args).is_err(),
+                "{non_finite:?} must not reach the nested app as a number"
+            );
+        }
+    }
+
+    /// Two documented escape hatches, neither of which had a test. Routed args
+    /// that are not a JSON object cannot be indexed by input name, and an input
+    /// declared without a `type:` states no type to check — both must be handed
+    /// on untouched rather than turned into a validation failure.
+    #[test]
+    fn untypable_declarations_and_non_object_args_pass_through_untouched() {
+        let cmd = exposed("lifecycle: single\ninputs:\n  v:\n    type: integer\n");
+        let mut not_a_map = serde_json::json!([1, 2, 3]);
+        validate_exposed_inputs("run", &cmd, &mut not_a_map).unwrap();
+        assert_eq!(not_a_map, serde_json::json!([1, 2, 3]));
+
+        // Declared, but with no `type:` — nothing to enforce, so anything goes
+        // and the value is left exactly as routed.
+        let untyped = exposed("lifecycle: single\ninputs:\n  blob:\n    description: freeform\n");
+        let mut args = serde_json::json!({ "blob": [1, 2] });
+        validate_exposed_inputs("run", &untyped, &mut args).unwrap();
+        assert_eq!(args["blob"], serde_json::json!([1, 2]));
+
+        // An input the caller did not supply is not invented, and an input
+        // beyond the declared set is neither checked nor rewritten.
+        let mut partial = serde_json::json!({ "extra": "9" });
+        validate_exposed_inputs("run", &cmd, &mut partial).unwrap();
+        assert_eq!(partial, serde_json::json!({ "extra": "9" }));
+        assert!(!partial.as_object().unwrap().contains_key("v"));
+    }
 }
