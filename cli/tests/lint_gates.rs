@@ -1209,14 +1209,15 @@ struct UnsafeConstruct {
 /// Matching runs over [`blank_comments_and_strings`] so that prose mentioning
 /// `unsafe extern` — this crate has several — cannot be mistaken for code.
 ///
-/// **Limit, and it is a deliberate trade.** An `#[unsafe(…)]` written inside a
-/// macro invocation's delimiters is not counted, because the tokens there are
-/// arguments the macro may discard — see [`attribute_spans`]. A macro that
-/// *expands* to an undocumented unsafe attribute therefore escapes this scan.
-/// That is the same trade the `m!(unsafe(foo))` exclusion already made one level
-/// down: no text scan resolves macro expansion, and the alternative is a gate
-/// satisfiable only by writing a `SAFETY:` comment about an attribute that never
-/// exists. This crate has no such macro today.
+/// **Limit, and it is a deliberate trade.** *Either* construct written inside a
+/// macro invocation's delimiters is uncounted — `discard!(#[unsafe(no_mangle)]);`
+/// and `discard!(unsafe extern "C" {});` alike — because the tokens there are
+/// arguments the macro may discard. A macro that *expands* to an undocumented
+/// unsafe construct therefore escapes this scan. That is the same trade the
+/// `m!(unsafe(foo))` exclusion already made one level down: no text scan
+/// resolves macro expansion, and the alternative is a gate satisfiable only by
+/// writing a `SAFETY:` comment about something that never exists. This crate has
+/// no such macro today.
 fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
     let chars: Vec<char> = source.chars().collect();
     let code = blank_comments_and_strings(&chars);
@@ -1248,12 +1249,26 @@ fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
             .enumerate()
             .all(|(o, c)| code.get(k + o) == Some(&c))
     };
-    let attributes = attribute_spans(&code);
+    let macros = macro_token_spans(&code);
+    let attributes = attribute_spans(&code, &macros);
     let attribute_lines = attribute_only_lines(&code, &attributes);
+    let unsafe_attributes = unsafe_attribute_hits(&code, &attributes);
+    let in_macro = |k: usize| macros.iter().any(|(start, end)| k > *start && k < *end);
 
     let mut found = Vec::new();
     for i in 0..code.len() {
         if !(matches_at(i, "unsafe") && word_start(i)) {
+            continue;
+        }
+        // Tokens a macro consumes are not constructs, whichever of the two they
+        // spell. `discard!(unsafe extern "C" {});` creates no extern block and
+        // `discard!(#[unsafe(no_mangle)]);` applies no attribute — rustc accepts
+        // both and rustfmt preserves them, so flagging either demands a `SAFETY:`
+        // comment about something that never exists. Applied here rather than in
+        // the attribute branch alone: the first version of this exclusion covered
+        // attributes only, and Codex found the extern twin the very next round
+        // (#479). See the limit this trades for, on the doc comment above.
+        if in_macro(i) {
             continue;
         }
         let bare = i + "unsafe".len();
@@ -1277,17 +1292,10 @@ fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
             }
             code.get(k) == Some(&'{')
         } else {
-            // `unsafe(` anywhere INSIDE an attribute, rather than only as the
-            // first token after `#[`. Same reason `opens_a_lint` finds a lint
-            // level by position: an `#[unsafe(no_mangle)]` that applies on one
-            // platform is written `#[cfg_attr(unix, unsafe(no_mangle))]`, and a
-            // first-token test never sees it. Measured — that form compiles,
-            // really does export the symbol, and draws no clippy diagnostic; both
-            // real sites here are unix-only, so it is the first spelling an
-            // author would reach for. Bounded to `attribute_spans` so macro
-            // syntax spelling the same tokens is not mistaken for one.
-            code.get(after) == Some(&'(')
-                && attributes.iter().any(|span| i > span.open && i < span.end)
+            // An attribute *path* — either the attribute's own, or a meta item
+            // of a `cfg_attr`. See `unsafe_attribute_hits`, which is where that
+            // distinction is drawn.
+            unsafe_attributes.contains(&i)
         };
         if !hit {
             continue;
@@ -1349,7 +1357,7 @@ struct AttributeSpan {
 /// preserves it, but wrapping the tokens in `#[…]` does not make them an applied
 /// attribute — they are arguments, and the macro is free to drop them. The limit
 /// this trades for is recorded on [`unsafe_constructs`].
-fn attribute_spans(code: &[char]) -> Vec<AttributeSpan> {
+fn attribute_spans(code: &[char], macros: &[(usize, usize)]) -> Vec<AttributeSpan> {
     let at = |k: usize| code.get(k).copied();
     let skip_ws = |mut k: usize| {
         while at(k).is_some_and(|c| c.is_whitespace()) {
@@ -1357,7 +1365,6 @@ fn attribute_spans(code: &[char]) -> Vec<AttributeSpan> {
         }
         k
     };
-    let macros = macro_token_spans(code);
     let mut spans = Vec::new();
     let mut k = 0;
     while k < code.len() {
@@ -1392,6 +1399,83 @@ fn attribute_spans(code: &[char]) -> Vec<AttributeSpan> {
         k = end.saturating_add(1).max(open + 1);
     }
     spans
+}
+
+/// Where an `unsafe(…)` **attribute** starts, for each attribute in `spans`.
+///
+/// Position, not mere containment. `unsafe(` counts in exactly two places:
+///
+///   * the attribute's own path — `#[unsafe(no_mangle)]`, `#![unsafe(…)]`;
+///   * a meta item of a `cfg_attr` — `#[cfg_attr(unix, unsafe(no_mangle))]`,
+///     nesting included. A first-token test never sees this one, and it is the
+///     spelling both real sites here would reach for, being unix-only. Measured:
+///     that form compiles, really does export the symbol, and draws no clippy
+///     diagnostic.
+///
+/// Anywhere-inside-the-span was the earlier rule, and it counted an attribute
+/// that merely *quotes* the tokens: `#[doc = stringify!(unsafe(no_mangle))]`
+/// applies no unsafe attribute, yet the gate demanded a `SAFETY:` comment for
+/// one (Codex review, #479). `doc` is not `unsafe` and not `cfg_attr`, so
+/// reading the path settles it without needing to know what `stringify!` does.
+fn unsafe_attribute_hits(code: &[char], spans: &[AttributeSpan]) -> Vec<usize> {
+    let at = |k: usize| code.get(k).copied();
+    let is_ident = |c: char| c.is_alphanumeric() || c == '_';
+    let skip_ws = |mut k: usize| {
+        while at(k).is_some_and(|c| c.is_whitespace()) {
+            k += 1;
+        }
+        k
+    };
+    let ident_end = |mut k: usize| {
+        while at(k).is_some_and(is_ident) {
+            k += 1;
+        }
+        k
+    };
+    let name_at = |k: usize| -> String {
+        code.get(k..ident_end(k))
+            .unwrap_or_default()
+            .iter()
+            .collect()
+    };
+    // `unsafe` as a whole word, followed by its argument list.
+    let opens_unsafe_list = |k: usize| {
+        name_at(k) == "unsafe"
+            && !at(k.wrapping_sub(1)).is_some_and(is_ident)
+            && at(skip_ws(ident_end(k))) == Some('(')
+    };
+    let mut hits = Vec::new();
+    for span in spans {
+        let path = skip_ws(span.open + 1);
+        if opens_unsafe_list(path) {
+            hits.push(path);
+            continue;
+        }
+        if name_at(path) != "cfg_attr" {
+            continue;
+        }
+        // Inside a `cfg_attr`, a meta item is what follows `(` or `,`. That
+        // position test is only safe here because the path above has already
+        // established this is a `cfg_attr` and not, say, a `doc` holding macro
+        // input — and because tokens a macro consumes never reach this scan.
+        for k in path..span.end {
+            let meta_item = at(prev_non_ws(code, k)).is_some_and(|c| c == '(' || c == ',');
+            if meta_item && opens_unsafe_list(k) {
+                hits.push(k);
+            }
+        }
+    }
+    hits
+}
+
+/// The index of the last non-whitespace character before `k`, or `usize::MAX`
+/// when there is none — an index that reads back as `None`, so a construct at
+/// the very start of a file is not credited with a neighbour it does not have.
+fn prev_non_ws(code: &[char], k: usize) -> usize {
+    (0..k)
+        .rev()
+        .find(|j| code.get(*j).is_some_and(|c| !c.is_whitespace()))
+        .unwrap_or(usize::MAX)
 }
 
 /// The character ranges a macro invocation's delimiters enclose — `ident!(…)`,
@@ -2051,6 +2135,19 @@ fn undocumented_unsafe_classifier_matches_its_contract() {
         (
             "attribute-shaped tokens in a macro_rules body",
             "macro_rules! m {\n    () => { discard!(#[unsafe(no_mangle)]) };\n}\n",
+        ),
+        // Codex review, PR #479 round 4. The first is the extern twin of the
+        // case above: the macro-token exclusion went in on the attribute branch
+        // alone, so this one was still reported as a real extern block. The
+        // second is an attribute that merely *quotes* the tokens — `doc` applies
+        // no unsafe attribute, and an anywhere-inside-the-span test counted it.
+        (
+            "unsafe extern tokens passed to a macro",
+            "discard!(unsafe extern \"C\" {});\n",
+        ),
+        (
+            "unsafe( quoted as macro input inside an unrelated attribute",
+            "#[doc = stringify!(unsafe(no_mangle))]\npub extern \"C\" fn f() {}\n",
         ),
     ];
     for (what, source) in must_not_match {
