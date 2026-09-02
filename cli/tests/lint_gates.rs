@@ -1208,6 +1208,15 @@ struct UnsafeConstruct {
 ///
 /// Matching runs over [`blank_comments_and_strings`] so that prose mentioning
 /// `unsafe extern` — this crate has several — cannot be mistaken for code.
+///
+/// **Limit, and it is a deliberate trade.** An `#[unsafe(…)]` written inside a
+/// macro invocation's delimiters is not counted, because the tokens there are
+/// arguments the macro may discard — see [`attribute_spans`]. A macro that
+/// *expands* to an undocumented unsafe attribute therefore escapes this scan.
+/// That is the same trade the `m!(unsafe(foo))` exclusion already made one level
+/// down: no text scan resolves macro expansion, and the alternative is a gate
+/// satisfiable only by writing a `SAFETY:` comment about an attribute that never
+/// exists. This crate has no such macro today.
 fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
     let chars: Vec<char> = source.chars().collect();
     let code = blank_comments_and_strings(&chars);
@@ -1239,54 +1248,8 @@ fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
             .enumerate()
             .all(|(o, c)| code.get(k + o) == Some(&c))
     };
-    // The character ranges an attribute covers — `#[…]` or `#![…]`, brackets
-    // matched, so `#[cfg_attr(unix, unsafe(no_mangle))]` is one span and the
-    // nested level sits inside it. Whitespace after `#` is allowed, since
-    // `# [unsafe(no_mangle)]` is legal.
-    //
-    // Membership in one of these, not "the previous character opens a list", is
-    // what makes `unsafe(` an attribute. A bare list-opener test also matched
-    // `m!(unsafe(foo))` and `macro_rules! m { (unsafe($x:ident)) => … }`, where
-    // no attribute exists and no obligation is owed — a false positive
-    // satisfiable only by a meaningless `SAFETY:` comment (Codex review, #479).
-    let attribute_spans = {
-        let mut spans: Vec<(usize, usize)> = Vec::new();
-        let mut k = 0;
-        while k < code.len() {
-            if code.get(k) != Some(&'#') {
-                k += 1;
-                continue;
-            }
-            let after_hash = if code.get(k + 1) == Some(&'!') {
-                k + 2
-            } else {
-                k + 1
-            };
-            let open = skip_ws(after_hash);
-            if code.get(open) != Some(&'[') {
-                k += 1;
-                continue;
-            }
-            let mut depth = 0usize;
-            let mut end = code.len();
-            for j in open..code.len() {
-                match code.get(j) {
-                    Some('[') => depth += 1,
-                    Some(']') => {
-                        depth -= 1;
-                        if depth == 0 {
-                            end = j;
-                            break;
-                        }
-                    }
-                    _ => {}
-                }
-            }
-            spans.push((open, end));
-            k = end.saturating_add(1).max(open + 1);
-        }
-        spans
-    };
+    let attributes = attribute_spans(&code);
+    let attribute_lines = attribute_only_lines(&code, &attributes);
 
     let mut found = Vec::new();
     for i in 0..code.len() {
@@ -1324,9 +1287,7 @@ fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
             // author would reach for. Bounded to `attribute_spans` so macro
             // syntax spelling the same tokens is not mistaken for one.
             code.get(after) == Some(&'(')
-                && attribute_spans
-                    .iter()
-                    .any(|(start, end)| i > *start && i < *end)
+                && attributes.iter().any(|span| i > span.open && i < span.end)
         };
         if !hit {
             continue;
@@ -1349,10 +1310,193 @@ fn unsafe_constructs(source: &str) -> Vec<UnsafeConstruct> {
                 .get(line - 1)
                 .map(|l| l.trim().to_string())
                 .expect("line index derived from the same source"),
-            documented: has_safety_comment_above(&lines, &code_lines, &block_lines, line),
+            documented: has_safety_comment_above(
+                &lines,
+                &code_lines,
+                &block_lines,
+                &attribute_lines,
+                line,
+            ),
         });
     }
     found
+}
+
+/// One `#[…]` or `#![…]` attribute, brackets matched.
+#[derive(Debug)]
+struct AttributeSpan {
+    /// Index of the `[` that opens it.
+    open: usize,
+    /// Index of the `]` that closes it, or the end of input if unterminated.
+    end: usize,
+    /// Index of the `#`. `open` is not enough to bound the *lines* an attribute
+    /// covers: `# [unsafe(no_mangle)]` is legal, so the two can differ.
+    hash: usize,
+}
+
+/// Every attribute in `code` (a [`blank_comments_and_strings`] copy), brackets
+/// matched, so `#[cfg_attr(unix, unsafe(no_mangle))]` is one span with the
+/// nested level inside it.
+///
+/// Membership in one of these, not "the previous character opens a list", is
+/// what makes `unsafe(` an attribute. A bare list-opener test also matched
+/// `m!(unsafe(foo))` and `macro_rules! m { (unsafe($x:ident)) => … }`, where no
+/// attribute exists and no obligation is owed — a false positive satisfiable
+/// only by a meaningless `SAFETY:` comment (Codex review, #479).
+///
+/// Tokens inside a macro invocation's delimiters are excluded for the same
+/// reason, one level up: `discard!(#[unsafe(no_mangle)]);` compiles and rustfmt
+/// preserves it, but wrapping the tokens in `#[…]` does not make them an applied
+/// attribute — they are arguments, and the macro is free to drop them. The limit
+/// this trades for is recorded on [`unsafe_constructs`].
+fn attribute_spans(code: &[char]) -> Vec<AttributeSpan> {
+    let at = |k: usize| code.get(k).copied();
+    let skip_ws = |mut k: usize| {
+        while at(k).is_some_and(|c| c.is_whitespace()) {
+            k += 1;
+        }
+        k
+    };
+    let macros = macro_token_spans(code);
+    let mut spans = Vec::new();
+    let mut k = 0;
+    while k < code.len() {
+        if at(k) != Some('#') {
+            k += 1;
+            continue;
+        }
+        let after_hash = if at(k + 1) == Some('!') { k + 2 } else { k + 1 };
+        let open = skip_ws(after_hash);
+        if at(open) != Some('[') {
+            k += 1;
+            continue;
+        }
+        let mut depth = 0usize;
+        let mut end = code.len();
+        for j in open..code.len() {
+            match at(j) {
+                Some('[') => depth += 1,
+                Some(']') => {
+                    depth -= 1;
+                    if depth == 0 {
+                        end = j;
+                        break;
+                    }
+                }
+                _ => {}
+            }
+        }
+        if !macros.iter().any(|(start, stop)| k > *start && k < *stop) {
+            spans.push(AttributeSpan { open, end, hash: k });
+        }
+        k = end.saturating_add(1).max(open + 1);
+    }
+    spans
+}
+
+/// The character ranges a macro invocation's delimiters enclose — `ident!(…)`,
+/// `ident![…]`, `ident!{…}`, and the body of a `macro_rules! name { … }`, whose
+/// name sits between the `!` and the body.
+///
+/// A `!` that is not preceded by an identifier character is the negation
+/// operator (`if !flag`, `a != b`), never a macro, so it opens nothing.
+fn macro_token_spans(code: &[char]) -> Vec<(usize, usize)> {
+    let at = |k: usize| code.get(k).copied();
+    let is_ident = |c: char| c.is_alphanumeric() || c == '_';
+    let skip_ws = |mut k: usize| {
+        while at(k).is_some_and(|c| c.is_whitespace()) {
+            k += 1;
+        }
+        k
+    };
+    let closing = |c: char| match c {
+        '(' => Some(')'),
+        '[' => Some(']'),
+        '{' => Some('}'),
+        _ => None,
+    };
+    let mut spans = Vec::new();
+    let mut i = 0usize;
+    while i < code.len() {
+        if at(i) != Some('!') || !at(i.wrapping_sub(1)).is_some_and(is_ident) {
+            i += 1;
+            continue;
+        }
+        let mut k = skip_ws(i + 1);
+        // `macro_rules! m { … }` — skip the name to reach the body.
+        if at(k).is_some_and(is_ident) {
+            while at(k).is_some_and(is_ident) {
+                k += 1;
+            }
+            k = skip_ws(k);
+        }
+        let (Some(open), Some(close)) = (at(k), at(k).and_then(closing)) else {
+            i += 1;
+            continue;
+        };
+        let mut depth = 0usize;
+        let mut end = code.len();
+        for j in k..code.len() {
+            if at(j) == Some(open) {
+                depth += 1;
+            } else if at(j) == Some(close) {
+                depth -= 1;
+                if depth == 0 {
+                    end = j;
+                    break;
+                }
+            }
+        }
+        spans.push((k, end));
+        i = end.saturating_add(1).max(k + 1);
+    }
+    spans
+}
+
+/// For each line, whether it belongs to an attribute and to nothing else: it
+/// touches one of `spans` and carries no code outside them.
+///
+/// This is what lets [`has_safety_comment_above`] walk a rustfmt-wrapped
+/// attribute. `#[cfg_attr(` / `unix,` / `unsafe(no_mangle)` / `)]` records the
+/// construct on its third line, and a walk that recognised only a line *starting*
+/// with `#[` met the predicate line first, read it as code, and stopped short of
+/// the justification sitting right above the attribute (Codex review, #479).
+///
+/// "And to nothing else" is the half that keeps this from clearing anything: a
+/// line like `let x = 1; #[attr] f();` carries code outside the span, so the walk
+/// still stops there rather than crediting a comment written about something
+/// further up.
+fn attribute_only_lines(code: &[char], spans: &[AttributeSpan]) -> Vec<bool> {
+    let mut in_span = vec![false; code.len()];
+    for span in spans {
+        for slot in in_span
+            .get_mut(span.hash..=span.end.min(code.len().saturating_sub(1)))
+            .unwrap_or_default()
+        {
+            *slot = true;
+        }
+    }
+    let mut touches = Vec::new();
+    let mut outside = Vec::new();
+    let (mut line_touches, mut line_outside) = (false, false);
+    for (i, c) in code.iter().enumerate() {
+        if *c == '\n' {
+            touches.push(line_touches);
+            outside.push(line_outside);
+            (line_touches, line_outside) = (false, false);
+            continue;
+        }
+        let marked = in_span.get(i).copied().unwrap_or(false);
+        line_touches |= marked;
+        line_outside |= !marked && !c.is_whitespace();
+    }
+    touches.push(line_touches);
+    outside.push(line_outside);
+    touches
+        .into_iter()
+        .zip(outside)
+        .map(|(touches, outside)| touches && !outside)
+        .collect()
 }
 
 /// For each line of `source`, whether any of it lies inside a `/* … */` block
@@ -1445,6 +1589,24 @@ fn block_comment_lines(source: &str) -> Vec<bool> {
                 }
                 i = j + 1;
             }
+            // A char literal, not a lifetime: `'x'`, `'\n'`. A lifetime (`'a`)
+            // has no closing quote and must be left alone — the same test
+            // [`blank_comments_and_strings`] makes.
+            //
+            // Without this arm a char literal holding a quote — `let quote =
+            // '"';`, and this file has one — read as a string opener, and the
+            // scan ran to the next `"` anywhere below it. Every `/* … */` in
+            // between went unmarked, so a blank interior line in one of them
+            // ended the walk in `has_safety_comment_above` and rejected a
+            // justification that was really there (Codex review, #479).
+            ('\'', _) => {
+                let width = if at(i + 1) == Some('\\') { 3 } else { 2 };
+                i += if at(i + width) == Some('\'') {
+                    width + 1
+                } else {
+                    1
+                };
+            }
             (c, _) => {
                 if c == '\n' {
                     line += 1;
@@ -1474,7 +1636,10 @@ fn block_comment_lines(source: &str) -> Vec<bool> {
 ///     *clearance*, the one direction a gate must never fail in.
 ///
 /// Attribute lines are walked through so a `#[cfg(unix)]`-gated construct can
-/// carry its comment above the `cfg` rather than wedged beneath it. Blank lines
+/// carry its comment above the `cfg` rather than wedged beneath it. That comes
+/// from `attribute_lines` — [`attribute_only_lines`], brackets matched — rather
+/// than from a `starts_with("#[")` test, so a rustfmt-wrapped attribute is
+/// walked at every line of it and not just the one it opens on. Blank lines
 /// **outside a comment** are not: walking them let a file-header
 /// `//! … SAFETY: …` document the first construct in the file from any distance,
 /// and an unbounded false clearance is worse than asking an author to close up
@@ -1484,19 +1649,21 @@ fn has_safety_comment_above(
     lines: &[&str],
     code_lines: &[&str],
     block_lines: &[bool],
+    attribute_lines: &[bool],
     line: usize,
 ) -> bool {
     for above in (0..line.saturating_sub(1)).rev() {
         let Some(text) = lines.get(above).map(|l| l.trim()) else {
             return false;
         };
+        let in_attribute = attribute_lines.get(above).copied().unwrap_or(false);
         if text.is_empty() {
             // An empty line INSIDE a `/* … */` continues the justification;
             // rustfmt preserves one, so `/* SAFETY: …` / `` / `details` / `*/`
             // is documentation the gate must accept (Codex review, #479). An
             // empty line OUTSIDE a comment ends the run, which is what stops a
             // file-header `//! … SAFETY: …` reaching down the file.
-            if block_lines.get(above).copied().unwrap_or(false) {
+            if block_lines.get(above).copied().unwrap_or(false) || in_attribute {
                 continue;
             }
             return false;
@@ -1512,7 +1679,7 @@ fn has_safety_comment_above(
             }
             continue;
         }
-        if text.starts_with("#[") || text.starts_with("#![") {
+        if in_attribute {
             continue;
         }
         return false;
@@ -1780,6 +1947,29 @@ fn undocumented_unsafe_classifier_matches_its_contract() {
             "documented with a block comment containing a blank interior line",
             "/* SAFETY: matches POSIX `int kill(pid_t, int)`.\n\n   The invariant holds.\n*/\nunsafe extern \"C\" {\n    fn kill(p: i32);\n}\n",
         ),
+        // Codex review, PR #479 round 3: rustfmt wraps a long `cfg_attr` across
+        // lines, and the construct is then recorded on the inner `unsafe(…)`
+        // line. A walk that starts there meets the predicate line first — no
+        // `#[`, no comment — and stopped short of a justification that is
+        // sitting right above the attribute. Both roles of a wrapped attribute
+        // are the same defect: the one *carrying* the construct, and one merely
+        // standing between the comment and it.
+        (
+            "documented through a rustfmt-wrapped cfg_attr carrying the construct",
+            "// SAFETY: the symbol is unique to this crate.\n#[cfg_attr(\n    unix,\n    unsafe(no_mangle)\n)]\npub extern \"C\" fn f() {}\n",
+        ),
+        (
+            "documented through an intervening rustfmt-wrapped attribute",
+            "// SAFETY: matches POSIX.\n#[cfg_attr(\n    unix,\n    allow(dead_code)\n)]\nunsafe extern \"C\" {\n    fn kill(p: i32);\n}\n",
+        ),
+        // Codex review, PR #479 round 3: a char literal holding a double quote
+        // is not a string opener. Reading it as one skips to the next `"` in the
+        // file — here the one in `extern "C"` — so the block comment in between
+        // is never marked, and its blank interior line then ends the walk.
+        (
+            "documented below a char literal holding a double quote",
+            "let quote = '\"';\n/* SAFETY: matches POSIX.\n\n   The invariant holds.\n*/\nunsafe extern \"C\" {\n    fn kill(p: i32);\n}\n",
+        ),
     ];
     for (what, source) in must_not_catch {
         let found = unsafe_constructs(source);
@@ -1848,6 +2038,20 @@ fn undocumented_unsafe_classifier_matches_its_contract() {
             "macro_rules! m {\n    (unsafe($x:ident)) => { $x };\n}\n",
         ),
         ("unsafe( in a macro invocation", "m!(unsafe(foo));\n"),
+        // Codex review, PR #479 round 3: wrapping the tokens in `#[…]` does not
+        // make them an applied attribute — inside a macro's delimiters they are
+        // arguments, which the macro is free to discard. rustc accepts this and
+        // rustfmt preserves it, so flagging it demands a `SAFETY:` comment about
+        // an attribute that never exists. See the limit this trades for, in the
+        // doc comment on `unsafe_constructs`.
+        (
+            "attribute-shaped tokens passed to a macro",
+            "discard!(#[unsafe(no_mangle)]);\n",
+        ),
+        (
+            "attribute-shaped tokens in a macro_rules body",
+            "macro_rules! m {\n    () => { discard!(#[unsafe(no_mangle)]) };\n}\n",
+        ),
     ];
     for (what, source) in must_not_match {
         assert!(
