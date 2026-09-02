@@ -332,8 +332,40 @@ pub(crate) fn quote_yaml_scalar(s: &str) -> String {
     if plain_scalar_is_safe(s) {
         s.to_string()
     } else {
-        format!("\"{}\"", s.replace('\\', "\\\\").replace('"', "\\\""))
+        format!("\"{}\"", escape_double_quoted(s))
     }
+}
+
+/// Escape `s` for a YAML **double-quoted** scalar, which is the one YAML style
+/// that interprets `\` escapes — so everything it would interpret has to be
+/// written as an escape rather than emitted raw.
+///
+/// Escaping only `\` and `"` (which is all this did) is not enough, and the gap
+/// is worse than it looks because a double-quoted scalar may span lines: a raw
+/// newline inside the quotes is FOLDED to a space, so `"a\nb"` read back as
+/// `a b` — a silent corruption, where the same value emitted bare at least
+/// failed loudly. A raw `\r` folded the same way, and a raw NUL or ESC made the
+/// document unparseable ("control characters are not allowed").
+///
+/// Control characters reach here rather than being rejected: they are exactly
+/// what `plain_scalar_is_safe` refuses, so the quoted branch is the only branch
+/// that can carry them and it has to carry them losslessly.
+fn escape_double_quoted(s: &str) -> String {
+    let mut out = String::with_capacity(s.len());
+    for ch in s.chars() {
+        match ch {
+            '\\' => out.push_str("\\\\"),
+            '"' => out.push_str("\\\""),
+            '\n' => out.push_str("\\n"),
+            '\r' => out.push_str("\\r"),
+            '\t' => out.push_str("\\t"),
+            // Every remaining control character is C0, DEL or C1 — all <= 0x9F,
+            // so YAML's 8-bit `\xNN` escape covers the set exhaustively.
+            c if c.is_control() => out.push_str(&format!("\\x{:02x}", c as u32)),
+            c => out.push(c),
+        }
+    }
+    out
 }
 
 /// Whether `s` can be emitted with no quotes and be read back as itself.
@@ -504,6 +536,35 @@ mod tests {
             assert_eq!(
                 loaded.commands["op"].description, text,
                 "description {text:?} did not survive the manifest round-trip"
+            );
+        }
+    }
+
+    /// Quoting is only half the job: the quoted form has to read back as the same
+    /// string. A YAML double-quoted scalar may span lines, so a raw newline inside
+    /// the quotes FOLDS to a space — quoting a multi-line value without escaping it
+    /// turns a loud parse failure into a silent one-space-instead-of-a-newline
+    /// corruption. `sidecar.rs` sends plug-in-supplied names and defaults through
+    /// this same function, and nothing upstream of it strips control characters.
+    #[test]
+    fn a_quoted_scalar_reads_back_as_the_string_that_went_in() {
+        for s in [
+            "line one\nline two", // folded to a space when not escaped
+            "carriage\rreturn",   // likewise
+            "tab\tseparated",
+            "nul\u{0}byte",   // unescaped: "control characters are not allowed"
+            "esc\u{1b}[0m",   // likewise
+            "back\\slash: x", // the `\` must not be eaten as an escape introducer
+            "already \\n two chars",
+            "quote\"inside: x",
+        ] {
+            let doc = format!("v: {}\n", quote_yaml_scalar(s));
+            let parsed: serde_yaml::Value = serde_yaml::from_str(&doc)
+                .unwrap_or_else(|e| panic!("{s:?} emitted an unparseable scalar: {e}"));
+            assert_eq!(
+                parsed["v"].as_str(),
+                Some(s),
+                "{s:?} did not survive quoting; emitted {doc:?}"
             );
         }
     }
