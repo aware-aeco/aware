@@ -5,12 +5,11 @@
 import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
-  copyFileSync, cpSync, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync, rmSync,
+  copyFileSync, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync, rmSync,
   writeFileSync,
 } from 'node:fs';
-import { basename, dirname, join, relative, resolve, sep } from 'node:path';
+import { basename, dirname, join, relative, resolve, sep, win32 } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { READER_BUILD_SETTINGS } from '../cli-connection-reader/repro-settings.mjs';
 
 const scriptPath = fileURLToPath(import.meta.url);
 const SHA256 = /^[0-9a-f]{64}$/;
@@ -24,10 +23,69 @@ export const WINDOWS_LOGICAL_RUST_FLAGS = ['-C', 'link-arg=/Brepro',
 ].join(' ');
 export const LOGICAL_CARGO_COMMAND = '<cargo> build --manifest-path <source>/cli/Cargo.toml --release --locked --offline --config source.crates-io.replace-with="vendored-sources" --config source.vendored-sources.directory="<cargo-vendor>" --target x86_64-pc-windows-msvc --verbose --verbose';
 const EXACT_POISON = new Set([
-  'RUSTFLAGS', 'CARGO_ENCODED_RUSTFLAGS', 'CC', 'CFLAGS', 'CL', 'LINK', 'LIB', 'INCLUDE',
+  'RUSTFLAGS', 'RUSTDOCFLAGS', 'CARGO_ENCODED_RUSTFLAGS', 'CC', 'AR', 'CFLAGS', 'CL', 'LINK', 'LIB', 'INCLUDE',
+  'PATH', 'LIBPATH', '_CL_', 'RUSTC', 'RUSTDOC', 'VSLANG', 'VCINSTALLDIR', 'VCTOOLSINSTALLDIR', 'VSINSTALLDIR', 'SDKROOT',
   'NODE_OPTIONS', 'ESBUILD_BINARY_PATH', 'GOOGLE_CLIENT_SECRET', 'AWARE_GOOGLE_CLIENT_SECRET',
 ]);
-const POISON_PREFIXES = ['npm_config_', 'DOTNET_', 'COREHOST_'];
+const POISON_PREFIXES = ['npm_config_', 'DOTNET_', 'COREHOST_', 'COMPLUS_', 'CARGO_', 'RUSTUP_',
+  'VSCMD_', 'WINDOWSSDK', 'SDK_', 'CC_', 'AR_', 'CFLAGS_', 'RUSTC_', 'RUSTDOC_'];
+const CODE_INPUT_IDS = ['builder-script', 'compiler-closure-script', 'reader-settings-script', 'compiler-audit-script'];
+export function runningInputFiles(builderScript = scriptPath) {
+  const cli = dirname(builderScript);
+  return { 'builder-script': builderScript, 'compiler-closure-script': join(cli, 'windows-compiler-closure.mjs'),
+    'reader-settings-script': join(cli, '..', 'cli-connection-reader', 'repro-settings.mjs'),
+    'compiler-audit-script': join(cli, 'windows-compiler-audit.ps1') };
+}
+export function verifyBootstrapInputs(inputs, files = runningInputFiles()) {
+  const bytes = {};
+  for (const id of CODE_INPUT_IDS) {
+    if (!SHA256.test(inputs?.[id] ?? '') || !existsSync(files[id])) {
+      throw new Error(`running ${id} differs from its manifest authority`);
+    }
+    bytes[id] = readFileSync(files[id]);
+    if (sha256Bytes(bytes[id]) !== inputs[id]) throw new Error(`running ${id} differs from its manifest authority`);
+  }
+  return bytes;
+}
+export async function loadVerifiedBuildModules(inputs, files = runningInputFiles(), sourceRoot) {
+  const bytes = verifyBootstrapInputs(inputs, files);
+  if (!sourceRoot) throw new Error('extracted source must be authenticated before helper evaluation');
+  verifyExtractedInputs(sourceRoot, inputs, files['builder-script']);
+  const compiler = await import(`data:text/javascript;base64,${bytes['compiler-closure-script'].toString('base64')}`);
+  const settings = await import(`data:text/javascript;base64,${bytes['reader-settings-script'].toString('base64')}`);
+  return { compiler, settings: settings.READER_BUILD_SETTINGS };
+}
+
+// These small validators are deliberately inline: no unauthenticated helper or
+// rejected network/device path may be evaluated or dereferenced during bootstrap.
+export function validateBootstrapPath(path, label) {
+  if (typeof path !== 'string' || !/^[a-z]:[\\/]/i.test(path) || path.length > 200
+    || /[;=<>"|?*\x00-\x1f\x7f]/.test(path) || path.slice(2).includes(':')
+    || path.slice(3).split(/[\\/]/).some(part => !part || part === '.' || part === '..' || /[. ]$/.test(part)
+      || /^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/i.test(part))) throw new Error(`unsafe bootstrap ${label} path`);
+}
+export function validateBootstrapLocator(locator) {
+  if (!locator || canonicalJson(Object.keys(locator).sort()) !== canonicalJson(['closures', 'schema', 'sourceBundle', 'tools'])) throw new Error('invalid bootstrap locator keys');
+  if (locator.schema !== 'aware-windows-repro-locator/v1') throw new Error('unsupported bootstrap locator schema');
+  const toolIds = ['git', 'node', 'npm-cli', 'postject', 'web-ifc-wasm', 'powershell'];
+  const closureIds = ['npm-cache', 'cargo-home', ...['rust-bin', 'rust-lib', 'msvc-bin', 'msvc-include', 'msvc-lib', 'sdk-include', 'sdk-um-lib', 'sdk-ucrt-lib', 'sdk-bin'].map(id => `compiler-${id}`)];
+  for (const [kind, ids] of [['tools', toolIds], ['closures', closureIds]]) {
+    if (!locator[kind] || canonicalJson(Object.keys(locator[kind]).sort()) !== canonicalJson([...ids].sort())) throw new Error(`invalid bootstrap ${kind}`);
+    for (const id of ids) validateBootstrapPath(locator[kind][id], id);
+  }
+  validateBootstrapPath(locator.sourceBundle, 'source bundle');
+}
+export function bootstrapSystemEnvironment(tempRoot, sharedObjects = process.report.getReport().sharedObjects) {
+  const dirs = ['kernel32.dll', 'ntdll.dll'].map(name => {
+    const matches = [...new Set(sharedObjects.filter(path => win32.basename(path).toLowerCase() === name).map(path => win32.dirname(path).toLowerCase()))];
+    if (matches.length !== 1 || win32.basename(matches[0]) !== 'system32') throw new Error(`invalid loader-observed ${name}`);
+    return matches[0];
+  });
+  if (dirs[0] !== dirs[1]) throw new Error('loader-observed Windows modules disagree');
+  const system32 = dirs[0], windows = win32.dirname(system32);
+  return { SystemRoot: windows, WINDIR: windows, ComSpec: win32.join(system32, 'cmd.exe'), PATH: system32,
+    PATHEXT: '.COM;.EXE;.BAT;.CMD', TEMP: tempRoot, TMP: tempRoot };
+}
 
 const sha256Bytes = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const sha256File = (path) => sha256Bytes(readFileSync(path));
@@ -47,7 +105,8 @@ export function writeBuilderManifestEvidence({ artifactsRoot, manifestText }) {
 }
 
 export function rejectedAmbientKeys(env) {
-  return Object.keys(env).filter((key) => EXACT_POISON.has(key)
+  const counts = Object.keys(env).reduce((map, key) => map.set(key.toLowerCase(), (map.get(key.toLowerCase()) ?? 0) + 1), new Map());
+  return Object.keys(env).filter((key) => counts.get(key.toLowerCase()) > 1 || EXACT_POISON.has(key.toUpperCase())
     || POISON_PREFIXES.some((prefix) => key.toLowerCase().startsWith(prefix.toLowerCase())))
     .sort();
 }
@@ -85,17 +144,27 @@ function inventory(root) {
   })).sort((a, b) => Buffer.compare(Buffer.from(a.path), Buffer.from(b.path)));
 }
 
-function verifyClosure(id, manifest, locator) {
+function verifyClosure(id, manifest, locator, inventoryFunction = inventory) {
   const root = locator.closures?.[id]; const expected = manifest.closures?.[id];
   if (typeof root !== 'string' || !existsSync(root) || !lstatSync(root).isDirectory()) throw new Error(`missing closure: ${id}`);
-  const actual = inventory(resolve(root));
+  const actual = inventoryFunction(resolve(root));
   if (canonicalJson(actual) !== canonicalJson(expected?.files)) throw new Error(`offline closure inventory mismatch: ${id}`);
   return resolve(root);
 }
+export function verifyConsumedClosure(id, root, manifest, inventoryFunction = inventory) {
+  return verifyClosure(id, manifest, { closures: { [id]: root } }, inventoryFunction);
+}
 
-export function materializeClosure(id, source, destination, manifest) {
-  cpSync(source, destination, { recursive: true, errorOnExist: true, force: false });
-  if (canonicalJson(inventory(destination)) !== canonicalJson(manifest.closures?.[id]?.files)) {
+export function materializeClosure(id, source, destination, manifest, inventoryFunction = inventory) {
+  const files = inventoryFunction(source);
+  if (canonicalJson(files) !== canonicalJson(manifest.closures?.[id]?.files)) throw new Error(`source offline closure inventory mismatch: ${id}`);
+  if (existsSync(destination)) throw new Error('private closure destination must be fresh');
+  mkdirSync(destination, { recursive: true });
+  for (const record of files) {
+    const output = join(destination, ...record.path.split('/')); mkdirSync(dirname(output), { recursive: true });
+    copyFileSync(join(source, ...record.path.split('/')), output);
+  }
+  if (canonicalJson(inventoryFunction(destination)) !== canonicalJson(manifest.closures?.[id]?.files)) {
     throw new Error(`materialized offline closure inventory mismatch: ${id}`);
   }
   return destination;
@@ -148,19 +217,19 @@ export function normalizeBuildText(text, roots) {
   return text;
 }
 
-export function controlledEnvironment({ locator, workRoot, sourceRoot, cargoHome, cargoVendor, tempRoot }) {
-  const required = ['PATH', 'INCLUDE', 'LIB', 'LIBPATH', 'SystemRoot', 'WINDIR', 'ComSpec', 'PATHEXT'];
-  for (const key of required) if (typeof locator.environment?.[key] !== 'string') throw new Error(`locator environment is missing ${key}`);
+export function controlledEnvironment({ compiler, workRoot, sourceRoot, cargoHome, cargoVendor, tempRoot }) {
+  if (!compiler?.host?.windows || !compiler.host.system32 || !compiler.environment || !compiler.tools) throw new Error('verified private compiler is required');
   return {
-    ...Object.fromEntries(required.map((key) => [key, locator.environment[key]])),
+    SystemRoot: compiler.host.windows, WINDIR: compiler.host.windows, ComSpec: join(compiler.host.system32, 'cmd.exe'),
+    ...compiler.environment,
     TEMP: tempRoot, TMP: tempRoot,
     CARGO_HOME: cargoHome, CARGO_TARGET_DIR: join(workRoot, 'cargo-target'), CARGO_NET_OFFLINE: 'true',
     CARGO_BUILD_JOBS: '1',
-    RUSTC: locator.tools.rustc, RUSTDOC: locator.tools.rustdoc,
+    RUSTC: compiler.tools.rustc, RUSTDOC: compiler.tools.rustdoc,
     CARGO_ENCODED_RUSTFLAGS: rustCompilerArguments({ workRoot, sourceRoot, cargoHome, cargoVendor }).join('\x1f'),
-    CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER: locator.tools.link,
-    CC: locator.tools.cl, AR: locator.tools.lib, CFLAGS: '/Brepro', CL: '/Brepro',
-    CC_x86_64_pc_windows_msvc: locator.tools.cl, AR_x86_64_pc_windows_msvc: locator.tools.lib,
+    CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER: compiler.tools.link,
+    CC: compiler.tools.cl, AR: compiler.tools.lib, CFLAGS: '/Brepro', CL: '/Brepro',
+    CC_x86_64_pc_windows_msvc: compiler.tools.cl, AR_x86_64_pc_windows_msvc: compiler.tools.lib,
     SOURCE_DATE_EPOCH: '0', TZ: 'UTC',
   };
 }
@@ -181,9 +250,9 @@ export function logicalCargoCommand(args, roots) {
   return command;
 }
 
-export function createCargoBuild({ locator, workRoot, sourceRoot, cargoHome, cargoClosure, tempRoot }) {
+export function createCargoBuild({ compiler, workRoot, sourceRoot, cargoHome, cargoClosure, tempRoot }) {
   const cargoVendor = verifiedVendorDirectory(cargoClosure);
-  const env = Object.freeze(controlledEnvironment({ locator, workRoot, sourceRoot, cargoHome, cargoVendor, tempRoot }));
+  const env = Object.freeze(controlledEnvironment({ compiler, workRoot, sourceRoot, cargoHome, cargoVendor, tempRoot }));
   const args = Object.freeze(cargoArguments(join(sourceRoot, 'cli', 'Cargo.toml'), cargoVendor));
   verifyCargoVendorBinding({ args, env, cargoVendor });
   const command = logicalCargoCommand(args, [[sourceRoot, '<source>'], [cargoVendor, '<cargo-vendor>']]);
@@ -204,13 +273,14 @@ export function assertVerboseCargoProof(text, rustArgs = []) {
 }
 
 export function verifyExtractedInputs(source, inputs, runningScript = scriptPath) {
+  const running = runningInputFiles(runningScript), extracted = runningInputFiles(join(source, 'cli', 'build-windows-internal-repro.mjs'));
   const actual = {
     'aware-cargo-lock': sha256File(join(source, 'cli', 'Cargo.lock')),
     'reader-package-lock': sha256File(join(source, 'cli-connection-reader', 'package-lock.json')),
-    'builder-script': sha256File(join(source, 'cli', 'build-windows-internal-repro.mjs')),
+    ...Object.fromEntries(CODE_INPUT_IDS.map(id => [id, sha256File(extracted[id])])),
   };
   if (Object.entries(actual).some(([id, digest]) => inputs?.[id] !== digest)
-    || actual['builder-script'] !== sha256File(runningScript)) {
+    || CODE_INPUT_IDS.some(id => actual[id] !== sha256File(running[id]))) {
     throw new Error('extracted source locks or builder script differ from running builder and manifest');
   }
 }
@@ -235,24 +305,19 @@ function parseArgs(argv) {
 }
 
 export function verifyBuildAuthority({ manifest, locator, env = process.env }) {
+  validateBootstrapLocator(locator);
   if (manifest?.schema !== 'aware-windows-repro-builder/v1') throw new Error('unsupported builder manifest schema');
   if (locator?.schema !== 'aware-windows-repro-locator/v1') throw new Error('unsupported builder locator schema');
   const poisoned = rejectedAmbientKeys(env);
   if (poisoned.length) throw new Error(`ambient build authority is forbidden: ${poisoned.join(', ')}`);
   if (manifest.platform !== 'win32' || manifest.arch !== 'x64' || manifest.nodeVersion !== '24.14.0'
     || manifest.rustVersion !== '1.95.0' || manifest.target !== TARGET) throw new Error('unsupported pinned build platform/toolchain');
-  if (canonicalJson(manifest.settings) !== canonicalJson(READER_BUILD_SETTINGS)) {
-    throw new Error('reader build settings differ from the closed implementation');
-  }
   if (process.platform !== 'win32' || process.arch !== 'x64' || process.versions.node !== manifest.nodeVersion) {
     throw new Error('wrapper must run under the pinned Windows x64 Node');
   }
-  const toolIds = ['git', 'node', 'npm-cli', 'cargo', 'rustc', 'rustdoc', 'cl', 'link', 'lib', 'postject', 'web-ifc-wasm'];
+  const toolIds = ['git', 'node', 'npm-cli', 'postject', 'web-ifc-wasm', 'powershell'];
   const tools = Object.fromEntries(toolIds.map((id) => [id, verifyFileRecord(id, manifest, locator)]));
-  if (!SHA256.test(manifest.inputs?.['builder-script'] ?? '')
-    || sha256File(scriptPath) !== manifest.inputs['builder-script']) {
-    throw new Error('running builder script differs from its manifest authority');
-  }
+  verifyBootstrapInputs(manifest.inputs);
   if (realpathSync(tools.node) !== realpathSync(process.execPath)) throw new Error('verified node.exe is not the running Node');
   const bundle = locator.sourceBundle;
   if (typeof bundle !== 'string' || !existsSync(bundle) || sha256File(bundle) !== manifest.source?.bundleSha256) {
@@ -263,25 +328,17 @@ export function verifyBuildAuthority({ manifest, locator, env = process.env }) {
 }
 
 export async function buildWindowsInternal({ manifestPath, locatorPath, outputRoot, env = process.env }) {
+  for (const [label, path] of Object.entries({ manifestPath, locatorPath, outputRoot })) validateBootstrapPath(path, label);
   const manifestText = canonicalJson(JSON.parse(readFileSync(manifestPath, 'utf8')));
   const manifest = JSON.parse(manifestText); const locator = JSON.parse(readFileSync(locatorPath, 'utf8'));
   const authority = verifyBuildAuthority({ manifest, locator, env });
-  const npmClosure = verifyClosure('npm-cache', manifest, locator);
-  const cargoClosure = verifyClosure('cargo-home', manifest, locator);
   const output = resolve(outputRoot);
   if (existsSync(output) && readdirSync(output).length) throw new Error('output root must be absent or empty');
   mkdirSync(output, { recursive: true });
   const work = join(output, 'work'); const artifacts = join(output, 'artifacts'); const evidence = join(output, 'evidence');
   const source = join(work, 'source'); const tempRoot = join(work, 'temp');
   mkdirSync(tempRoot, { recursive: true }); mkdirSync(source); mkdirSync(artifacts); mkdirSync(evidence);
-  const npmCache = materializeClosure('npm-cache', npmClosure, join(work, 'npm-cache'), manifest);
-  const cargoHome = join(work, 'cargo-home');
-  mkdirSync(cargoHome);
-
-  const systemEnv = Object.fromEntries(['SystemRoot', 'WINDIR', 'ComSpec', 'PATHEXT']
-    .map((key) => [key, locator.environment?.[key]]));
-  if (Object.values(systemEnv).some((value) => typeof value !== 'string')) throw new Error('locator lacks the system environment required for Git');
-  const gitEnv = closedGitEnvironment(systemEnv);
+  const gitEnv = closedGitEnvironment(bootstrapSystemEnvironment(tempRoot));
   run(authority.tools.git, ['clone', '--no-checkout', '--config', 'core.autocrlf=false', authority.bundle, source], { env: gitEnv });
   run(authority.tools.git, ['sparse-checkout', 'init', '--no-cone'], { cwd: source, env: gitEnv });
   run(authority.tools.git, ['sparse-checkout', 'set', '--no-cone', ...SOURCE_PATHS.map((path) => `/${path}/`)],
@@ -294,29 +351,55 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
   if (unexpectedSource.length) throw new Error(`sparse source boundary contains unexpected roots: ${unexpectedSource.join(', ')}`);
 
   verifyExtractedInputs(source, manifest.inputs);
-  const cargoBuild = createCargoBuild({ locator, workRoot: work, sourceRoot: source, cargoHome, cargoClosure, tempRoot });
+  const { compiler: compilerModule, settings } = await loadVerifiedBuildModules(manifest.inputs, runningInputFiles(), source);
+  if (canonicalJson(manifest.settings) !== canonicalJson(settings)) throw new Error('reader build settings differ from the closed implementation');
+  compilerModule.validateCompilerManifest(manifest); compilerModule.validateCompilerLocator(locator);
+  compilerModule.validateWindowsPath(outputRoot, 'output root');
+  const npmClosure = verifyClosure('npm-cache', manifest, locator, compilerModule.inventory);
+  const cargoSourceClosure = verifyClosure('cargo-home', manifest, locator, compilerModule.inventory);
+  const auditScript = runningInputFiles()['compiler-audit-script'];
+  const host = compilerModule.discoverSystemHost({ locator, manifest, auditScript, workRoot: work });
+  const compiler = compilerModule.materializeCompiler({ manifest, locator, workRoot: work, host });
+  const npmCache = materializeClosure('npm-cache', npmClosure, join(work, 'npm-cache'), manifest, compilerModule.inventory);
+  const cargoClosure = materializeClosure('cargo-home', cargoSourceClosure, join(work, 'cargo-closure'), manifest, compilerModule.inventory);
+  const cargoHome = join(work, 'cargo-home'); mkdirSync(cargoHome);
+  const cargoBuild = createCargoBuild({ compiler, workRoot: work, sourceRoot: source, cargoHome, cargoClosure, tempRoot });
   const { cargoVendor, env: controlled, args: cargoArgs } = cargoBuild;
   const rustArgs = controlled.CARGO_ENCODED_RUSTFLAGS.split('\x1f');
   const roots = [[source, '<source>'], [work, '<work>'], [output, '<output>'],
     [cargoHome, '<cargo-home>'], [cargoVendor, '<cargo-vendor>'], [cargoClosure, '<cargo-closure>'],
-    [dirname(authority.tools.cargo), '<rust-toolchain>'], [dirname(authority.tools.link), '<msvc-toolchain>']];
+    [compiler.root, '<compiler>']];
   const logicalRustFlags = normalizeBuildText(rustArgs.join(' '), roots);
   if (logicalRustFlags !== WINDOWS_LOGICAL_RUST_FLAGS) throw new Error('compiler flags differ from the closed Windows build contract');
-  const cargoVersion = run(authority.tools.cargo, ['--version'], { env: controlled }).trim();
-  const rustVersion = run(authority.tools.rustc, ['--version'], { env: controlled }).trim();
+  const audits = [];
+  const executeCompiler = (id, args, label) => {
+    const result = compilerModule.runAuditedCompiler({ compiler, toolPath: compiler.tools[id], args, label,
+      cwd: source, env: controlled, auditScript, evidenceRoot: evidence, targetRoot: join(work, 'cargo-target') });
+    audits.push({ label, path: portable(relative(output, result.evidencePath)), sha256: result.evidenceSha256 });
+    return result.text;
+  };
+  const cargoVersion = executeCompiler('cargo', ['--version'], 'cargo-version').trim();
+  const rustVersion = executeCompiler('rustc', ['--version'], 'rust-version').trim();
   if (!/^cargo 1\.95\.0\b/.test(cargoVersion) || !/^rustc 1\.95\.0\b/.test(rustVersion)) {
     throw new Error(`pinned Rust toolchain version mismatch: ${cargoVersion}; ${rustVersion}`);
+  }
+  for (const query of ['sysroot', 'target-libdir']) {
+    const path = executeCompiler('rustc', ['--print', query], `rust-${query}`).trim();
+    if (!existsSync(path) || !compilerModule.beneath(realpathSync.native(path), join(compiler.root, 'rust'))) throw new Error(`rustc ${query} escaped its private compiler`);
   }
   const npmEnv = {
     SystemRoot: controlled.SystemRoot, WINDIR: controlled.WINDIR, ComSpec: controlled.ComSpec,
     PATHEXT: controlled.PATHEXT, PATH: dirname(authority.tools.node), TEMP: tempRoot, TMP: tempRoot,
     npm_config_cache: npmCache, npm_config_offline: 'true', npm_config_ignore_scripts: 'true',
     npm_config_audit: 'false', npm_config_fund: 'false', npm_config_update_notifier: 'false',
+    npm_config_logs_dir: join(work, 'npm-logs'), npm_config_logs_max: '0',
   };
   const readerRoot = join(source, 'cli-connection-reader');
   run(authority.tools.node, [authority.tools['npm-cli'], 'ci', '--offline', '--ignore-scripts'], { cwd: readerRoot, env: npmEnv });
 
-  const cargoLog = run(authority.tools.cargo, cargoArgs, { cwd: source, env: controlled });
+  const cargoLog = executeCompiler('cargo', cargoArgs, 'cargo-build');
+  compilerModule.verifyPrivateCompiler(compiler);
+  if (canonicalJson(compilerModule.inventory(cargoClosure)) !== canonicalJson(manifest.closures['cargo-home'].files)) throw new Error('private Cargo source changed during compilation');
   assertVerboseCargoProof(`${cargoArgs.join(' ')}\n${cargoLog}`, rustArgs);
   const normalizedCargo = normalizeBuildText(`<cargo> ${cargoArgs.join(' ')}\n${cargoLog}`, roots);
   writeFileSync(join(evidence, 'cargo-verbose.local.txt'), cargoLog, 'utf8');
@@ -342,11 +425,13 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
   const awareSource = join(work, 'cargo-target', TARGET, 'release', 'aware.exe');
   if (!existsSync(awareSource)) throw new Error('Cargo did not produce aware.exe');
   copyFileSync(awareSource, join(artifacts, 'aware.exe'));
+  verifyConsumedClosure('npm-cache', npmCache, manifest, compilerModule.inventory);
   const builderManifestRecord = writeBuilderManifestEvidence({ artifactsRoot: artifacts, manifestText });
   const receipt = {
     schema: 'aware-windows-runtime-build-receipt/v1',
     buildId: sha256Bytes(Buffer.from(manifestText)), builderManifestSha256: sha256Bytes(Buffer.from(manifestText)),
     source: manifest.source, inputs: manifest.inputs, target: TARGET,
+    compiler: compilerModule.compilerSummary(manifest),
     flags: { rust: logicalRustFlags, native: '/Brepro', cargo: ['--release', '--locked', '--offline'] },
     outputs: {
       'aware.exe': { size: lstatSync(join(artifacts, 'aware.exe')).size, sha256: sha256File(join(artifacts, 'aware.exe')) },
@@ -363,6 +448,9 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
     unsignedTestMedia: true,
   };
   writeFileSync(join(artifacts, 'build-receipt.json'), canonicalJson(receipt), 'utf8');
+  writeFileSync(join(evidence, 'compiler-provenance.json'), canonicalJson({ schema: 'aware-compiler-provenance/v1',
+    source: manifest.source, buildId: receipt.buildId, compiler: receipt.compiler, audits,
+    artifacts: inventory(artifacts) }), 'utf8');
   return receipt;
 }
 

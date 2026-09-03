@@ -3,23 +3,21 @@
 // local-only locator. The manifest digest is the immutable identity of the Windows build authority.
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, lstatSync, readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
-import { isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { existsSync, lstatSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { isAbsolute, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { READER_BUILD_SETTINGS } from '../cli-connection-reader/repro-settings.mjs';
+import { CLOSURE_IDS, COMPILER_DESCRIPTOR, INPUT_IDS, NONCOMPILER_TOOL_IDS, exactKeys,
+  inventory as compilerInventory, validateCompilerManifest, validateCompilerLocator, validateWindowsPath } from './windows-compiler-closure.mjs';
 
 const SCRIPT = fileURLToPath(import.meta.url);
 const SHA1 = /^[0-9a-f]{40}$/;
-const TOOL_IDS = Object.freeze([
-  'git', 'node', 'npm-cli', 'cargo', 'rustc', 'rustdoc', 'cl', 'link', 'lib', 'postject', 'web-ifc-wasm',
-]);
-const ENVIRONMENT_KEYS = Object.freeze(['PATH', 'INCLUDE', 'LIB', 'LIBPATH', 'SystemRoot', 'WINDIR', 'ComSpec', 'PATHEXT']);
+const TOOL_IDS = NONCOMPILER_TOOL_IDS;
 const sha256 = (path) => createHash('sha256').update(readFileSync(path)).digest('hex');
 const canonical = (value) => Array.isArray(value) ? value.map(canonical)
   : value && typeof value === 'object'
     ? Object.fromEntries(Object.keys(value).sort().map((key) => [key, canonical(value[key])])) : value;
 export const canonicalJson = (value) => `${JSON.stringify(canonical(value), null, 2)}\n`;
-const portable = (path) => path.split(sep).join('/');
 
 function requireFile(path, label) {
   if (typeof path !== 'string' || !isAbsolute(path) || !existsSync(path) || !lstatSync(path).isFile()) {
@@ -30,57 +28,47 @@ function requireFile(path, label) {
 
 function requireDirectory(path, label) {
   if (typeof path !== 'string' || !isAbsolute(path) || !existsSync(path) || !lstatSync(path).isDirectory()) {
-    throw new Error(`${label} must be an absolute existing directory`);
+    throw new Error(`${label} must be an absolute existing directory: ${path}`);
   }
   return resolve(path);
 }
 
-export function inventory(root) {
-  const walk = (directory) => readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-    const path = join(directory, entry.name);
-    if (entry.isSymbolicLink()) throw new Error(`offline closure contains symbolic link: ${path}`);
-    if (entry.isDirectory()) return walk(path);
-    if (!entry.isFile()) throw new Error(`offline closure contains unsupported entry: ${path}`);
-    return [path];
-  });
-  return walk(root).map((path) => ({
-    path: portable(relative(root, path)), size: lstatSync(path).size, sha256: sha256(path),
-  })).sort((a, b) => Buffer.compare(Buffer.from(a.path), Buffer.from(b.path)));
-}
+export const inventory = compilerInventory;
 
 export function createWindowsBuilderRecords(input) {
   if (input?.schema !== 'aware-windows-repro-builder-inputs/v1') throw new Error('unsupported builder-input schema');
+  exactKeys(input, ['schema', 'source', 'inputs', 'tools', 'closures'], 'builder inputs');
+  exactKeys(input.source, ['commit', 'tree', 'bundle'], 'builder input source');
+  exactKeys(input.inputs, INPUT_IDS, 'builder script/lock inputs');
+  exactKeys(input.tools, TOOL_IDS, 'builder noncompiler tools');
+  exactKeys(input.closures, CLOSURE_IDS, 'builder compiler/dependency roots');
+  // Physical Windows admission occurs before stat/hash calls. POSIX fixtures exercise
+  // only portable manifest semantics; production builders require Windows.
+  if (process.platform === 'win32') {
+    for (const [id, path] of [...Object.entries(input.inputs), ...Object.entries(input.tools), ...Object.entries(input.closures), ['bundle', input.source.bundle]]) validateWindowsPath(path, id);
+  }
   if (!SHA1.test(input.source?.commit ?? '') || !SHA1.test(input.source?.tree ?? '')) throw new Error('invalid source commit/tree');
   const sourceBundle = requireFile(input.source.bundle, 'source bundle');
-  const locks = {
-    'aware-cargo-lock': requireFile(input.inputs?.['aware-cargo-lock'], 'AWARE Cargo.lock'),
-    'reader-package-lock': requireFile(input.inputs?.['reader-package-lock'], 'reader package-lock.json'),
-    'builder-script': requireFile(input.inputs?.['builder-script'], 'running builder script'),
-  };
+  const locks = Object.fromEntries(INPUT_IDS.map(id => [id, requireFile(input.inputs[id], id)]));
   const tools = Object.fromEntries(TOOL_IDS.map((id) => [id, requireFile(input.tools?.[id], `${id} tool`)]));
-  const closures = {
-    'npm-cache': requireDirectory(input.closures?.['npm-cache'], 'npm-cache closure'),
-    'cargo-home': requireDirectory(input.closures?.['cargo-home'], 'cargo-home closure'),
-  };
-  const environment = Object.fromEntries(ENVIRONMENT_KEYS.map((key) => {
-    const value = input.environment?.[key];
-    if (typeof value !== 'string' || value.length === 0) throw new Error(`environment is missing ${key}`);
-    return [key, value];
-  }));
+  const closures = Object.fromEntries(CLOSURE_IDS.map(id => [id, requireDirectory(input.closures[id], id)]));
   const manifest = {
     schema: 'aware-windows-repro-builder/v1', platform: 'win32', arch: 'x64',
     nodeVersion: '24.14.0', rustVersion: '1.95.0', target: 'x86_64-pc-windows-msvc',
     source: { commit: input.source.commit, tree: input.source.tree, bundleSha256: sha256(sourceBundle) },
     settings: READER_BUILD_SETTINGS,
+    compiler: COMPILER_DESCRIPTOR,
     inputs: Object.fromEntries(Object.entries(locks).map(([id, path]) => [id, sha256(path)])),
     tools: Object.fromEntries(TOOL_IDS.map((id) => [id, { id, sha256: sha256(tools[id]) }])),
-    closures: Object.fromEntries(Object.entries(closures).map(([id, root]) => [id, { files: inventory(root) }])),
+    closures: Object.fromEntries(Object.entries(closures).map(([id, root]) => [id, { files: compilerInventory(root) }])),
   };
+  validateCompilerManifest(manifest);
   const manifestText = canonicalJson(manifest);
   const buildId = createHash('sha256').update(manifestText).digest('hex');
   const locator = {
-    schema: 'aware-windows-repro-locator/v1', sourceBundle, tools, closures, environment,
+    schema: 'aware-windows-repro-locator/v1', sourceBundle, tools, closures,
   };
+  if (process.platform === 'win32') validateCompilerLocator(locator);
   return { manifest, manifestText, locator, locatorText: canonicalJson(locator), buildId };
 }
 

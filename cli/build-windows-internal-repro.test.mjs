@@ -10,7 +10,12 @@ import {
   writeBuilderManifestEvidence, rustCompilerArguments, verifiedVendorDirectory, normalizeBuildText,
   verifyExtractedInputs,
   createCargoBuild, verifyCargoVendorBinding, logicalCargoCommand, LOGICAL_CARGO_COMMAND,
+  runningInputFiles, loadVerifiedBuildModules,
 } from './build-windows-internal-repro.mjs';
+
+const fakeCompiler = () => ({ tools: { rustc: 'RUSTC', rustdoc: 'RUSTDOC', cl: 'CL', lib: 'LIB', link: 'LINK' },
+  host: { windows: 'SYSTEM', system32: 'SYSTEM32' },
+  environment: { PATH: 'PRIVATE_PATH', INCLUDE: 'PRIVATE_INCLUDE', LIB: 'PRIVATE_LIB', LIBPATH: 'PRIVATE_LIBPATH', PATHEXT: '.EXE' } });
 
 test('verbose command evidence has an explicit bounded buffer large enough for a full Cargo proof', () => {
   assert.equal(COMMAND_OUTPUT_BUFFER_BYTES, 128 * 1024 * 1024);
@@ -39,7 +44,7 @@ test('controlled environment owns reproducible Rust and native MSVC flags', () =
     WINDIR: 'WINDOWS', ComSpec: 'CMD', PATHEXT: '.EXE',
   } };
   const vendor = verifiedVendorDirectory(root);
-  const options = { locator, workRoot: 'C:\\WORK', sourceRoot: 'C:\\WORK\\SOURCE', cargoHome: 'C:\\WORK\\CARGO', cargoVendor: vendor, tempRoot: 'TEMP' };
+  const options = { compiler: fakeCompiler(), workRoot: 'C:\\WORK', sourceRoot: 'C:\\WORK\\SOURCE', cargoHome: 'C:\\WORK\\CARGO', cargoVendor: vendor, tempRoot: 'TEMP' };
   const env = controlledEnvironment(options);
   assert.equal(env.RUSTFLAGS, undefined);
   assert.deepEqual(env.CARGO_ENCODED_RUSTFLAGS.split('\x1f'), [
@@ -81,7 +86,7 @@ test('the production Cargo contract rejects divergent existing vendor roots and 
       PATH: 'PATH', INCLUDE: 'INCLUDE', LIB: 'LIBS', LIBPATH: 'LIBPATH', SystemRoot: 'SYSTEM',
       WINDIR: 'WINDOWS', ComSpec: 'CMD', PATHEXT: '.EXE',
     } };
-    const options = { locator, workRoot: join(root, 'work'), sourceRoot: join(root, 'work', 'source'), cargoHome: join(root, 'work', 'cargo-home'), tempRoot: join(root, 'temp') };
+    const options = { compiler: fakeCompiler(), workRoot: join(root, 'work'), sourceRoot: join(root, 'work', 'source'), cargoHome: join(root, 'work', 'cargo-home'), tempRoot: join(root, 'temp') };
     const [a, b] = closures.map(cargoClosure => createCargoBuild({ ...options, cargoClosure }));
     assert.equal(a.command, LOGICAL_CARGO_COMMAND);
     assert.doesNotThrow(() => verifyCargoVendorBinding(a));
@@ -108,9 +113,11 @@ test('a new source builder cannot be built using an old running script and lock-
   const root = mkdtempSync(join(tmpdir(), 'aware-builder-source-'));
   try {
     mkdirSync(join(root, 'cli')); mkdirSync(join(root, 'cli-connection-reader'));
-    const files = { 'aware-cargo-lock': join(root, 'cli', 'Cargo.lock'), 'reader-package-lock': join(root, 'cli-connection-reader', 'package-lock.json'), 'builder-script': join(root, 'cli', 'build-windows-internal-repro.mjs') };
+    const files = { 'aware-cargo-lock': join(root, 'cli', 'Cargo.lock'), 'reader-package-lock': join(root, 'cli-connection-reader', 'package-lock.json'), ...runningInputFiles(join(root, 'cli', 'build-windows-internal-repro.mjs')) };
     for (const [id, path] of Object.entries(files)) writeFileSync(path, id);
-    const running = join(root, 'running.mjs'); writeFileSync(running, 'builder-script');
+    const running = join(root, 'running', 'cli', 'build-windows-internal-repro.mjs');
+    mkdirSync(join(root, 'running', 'cli'), { recursive: true }); mkdirSync(join(root, 'running', 'cli-connection-reader'));
+    for (const [id, path] of Object.entries(runningInputFiles(running))) writeFileSync(path, id);
     const inputs = Object.fromEntries(Object.entries(files).map(([id, path]) => [id, createHash('sha256').update(readFileSync(path)).digest('hex')]));
     assert.doesNotThrow(() => verifyExtractedInputs(root, inputs, running));
     writeFileSync(files['builder-script'], 'new source builder');
@@ -138,7 +145,7 @@ test('offline cache use is isolated in a verified private copy', () => {
 
 test('ambient authority detector covers compiler, npm, dotnet, and credentials', () => {
   assert.deepEqual(rejectedAmbientKeys({ PATH: 'ok', LINK: 'poison', npm_config_cache: 'x', COREHOST_TRACE: '1' }),
-    ['COREHOST_TRACE', 'LINK', 'npm_config_cache']);
+    ['COREHOST_TRACE', 'LINK', 'PATH', 'npm_config_cache']);
 });
 
 test('Git cannot consult host configuration, templates, prompts, or network transports', () => {
