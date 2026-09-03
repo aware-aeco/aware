@@ -268,19 +268,21 @@ Persona audit (structural engineer, **dealbreaker**): *"There is no answer to 'w
 
 v0.21 introduces the **engineering envelope** — a manifest extension on agents (declares what they pin) + an app-spec extension (binds the pins to a run) + a `signed-output` primitive that produces a chain-of-custody record.
 
-> **Status: schema published, behaviour `planned`.** Every key in this section is accepted
-> and type-checked by the manifest loader, and an app's `engineering:` block is carried
-> verbatim into the lockfile — but **nothing in the runtime acts on it yet**. This is
-> `planned` in exactly the sense [§ Runnability](#runnability-status) gives the word: the
-> contract is published so agents and apps can be authored against it, the implementation
-> is not shipped. Concretely:
+> **Status: schema published, behaviour `planned`.** The `engineering:` blocks below are
+> typed — the manifest loader deserializes them on both the agent and the app side, and an
+> app's is carried verbatim into the lockfile — but **nothing in the runtime acts on them
+> yet**. `signed-output` is weaker still: `Node` has no such field and the app manifest sets
+> no `deny_unknown_fields`, so the directive is silently discarded at parse rather than
+> rejected. This is `planned` in exactly the sense [§ Runnability](#runnability-status)
+> gives the word: the contract is published so agents and apps can be authored against it,
+> the implementation is not shipped. Concretely:
 >
 > | Piece | State |
 > |---|---|
 > | Agent `engineering.pinnable` | parsed, then never read (`cli/src/manifest/agent.rs`) |
 > | App `engineering.pins` | parsed; copied into the lock verbatim — **not** checked against the agent's declared pinnable set |
 > | `engineering.output-seal` | parsed; no `.aware-receipt.json` is written |
-> | `signed-output` node | **not a node kind** — the runtime has no such primitive |
+> | `signed-output` node | **not a node kind** — unmapped on `Node`, so serde discards it silently; not even rejected |
 > | `aware.units()` | not implemented — see [Unit-typed numerics](#unit-typed-numerics) |
 > | `aware app reproduce` | not wired — see [`cli-roadmap.md`](./cli-roadmap.md) |
 >
@@ -371,11 +373,12 @@ Mixing kN/m² with kN/m or m would throw at run time, not produce silent garbage
 
 ### `signed-output` topology node
 
-**Planned — `signed-output` is not a node kind.** The runtime has no such primitive, and
-an app declaring one is not executed as a seal. The `engineering.output-seal` block above
-is parsed but never acted on, so no `.aware-receipt.json` is written by a run today. What
-*does* ship is the lower-level pair that this node would build on: `aware key` and
-`aware receipt sign|verify` (ed25519).
+**Planned — `signed-output` is not a node kind.** `Node` (`cli/src/manifest/app.rs`) has no
+field for it and the app manifest sets no `deny_unknown_fields`, so an app declaring one is
+not rejected — the directive is **silently dropped at parse**, and the node seals nothing.
+The `engineering.output-seal` block above *is* typed, but is never read, so no
+`.aware-receipt.json` is written by a run today either. What *does* ship is the lower-level
+pair this node would build on: `aware key` and `aware receipt sign|verify` (ed25519).
 
 The end-of-run step that produces a chain-of-custody record:
 
