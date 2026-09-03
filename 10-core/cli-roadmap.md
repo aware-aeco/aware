@@ -28,7 +28,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 | v0.18 spec authoring | ✅ agents present | nbs-chorus, avitru-speclink, csi-masterformat |
 | v0.19 substrate primitives | 🟡 partial | parsed + validated, but only `assert:` executes at runtime — for-each/compare/sweep/approve/snapshot/model-lock (+ schedule) return `NotYetImplemented` pending v0.19.x |
 | v0.20 named atoms | ✅ shipped | 33 atoms — 20 cross-cutting (`atoms/`) + 5 tekla + 8 revit (matches app-spec) |
-| v0.21 engineering envelope | ✅ shipped | agent-spec `engineering:`, `signed-output`, units (CLI `app reproduce` not yet wired) |
+| v0.21 engineering envelope | 🟡 schema only | `engineering:` is parsed on both agent + app and copied into the lock, but nothing executes it: pins are never checked against the agent's `pinnable` set, `output-seal` writes no receipt, `signed-output` is not a node kind, `aware.units()` does not exist, `app reproduce` is not wired. See agent-spec § Engineering envelope. |
 | v0.22 persona apps | ✅ shipped | all 5 reference apps present |
 | v0.23 decalog #9 | ✅ shipped | "AI composes the plan; deterministic code is the plan" |
 | v0.24 lockfile + Glass Box | ✅ shipped | `app compile\|inspect`, `app_lock.rs` |
