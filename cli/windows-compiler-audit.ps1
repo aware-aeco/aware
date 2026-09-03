@@ -44,16 +44,55 @@ public static class AwareCompilerAudit {
   [StructLayout(LayoutKind.Sequential)] struct Accounting {
     public long user,kernel,periodUser,periodKernel; public uint faults,total,active,terminated;
   }
-  public class Image { public uint pid; public string path,kind,sha256; public long size; }
-  public class ProcessRecord { public uint pid; public string path,action="observed"; public uint? exitCode; }
+  public class Image { public uint pid,instance; public string path,kind,sha256; public long size,@event; }
+  public class ProcessRecord { public uint pid,instance; public long startEvent; public long? exitEvent; public string path,action="observed"; public uint? exitCode; }
   public class DeniedImage { public string closure,relativePath,path,sha256; public long size; public uint exitCode; }
   public class StartupPolicy { public string identity; public DeniedImage deniedImage; }
   public class Report {
-    public string schema="aware-compiler-debug-audit/v2", error;
+    public string schema="aware-compiler-debug-audit/v3", error;
+    public long eventCount;
     public StartupPolicy startupPolicy;
     public bool complete; public uint exitCode=uint.MaxValue,totalProcesses,activeProcesses;
     public List<ProcessRecord> processes=new List<ProcessRecord>();
     public List<Image> images=new List<Image>();
+  }
+  // Windows may recycle a PID after EXIT. Only the active lifetime owns its
+  // debugger handle and initial breakpoint; history is identified by instance.
+  public class ProcessLifetimes {
+    class Active { public ProcessRecord record; public IntPtr handle; public bool breakpoint; }
+    readonly Report report;
+    readonly Dictionary<uint,Active> active=new Dictionary<uint,Active>();
+    public ProcessLifetimes(Report report) { this.report=report; }
+    public int Count { get { return active.Count; } }
+    public bool RootExited { get { return report.processes.Count>0&&report.processes[0].exitCode.HasValue; } }
+    public void RequireNew(uint pid) { if(pid==0||active.ContainsKey(pid))throw new Exception("Duplicate active compiler process"); }
+    Active Current(uint pid) { Active value; if(!active.TryGetValue(pid,out value))throw new Exception("Event has no active compiler lifetime"); return value; }
+    public ProcessRecord RequireActive(uint pid) { return Current(pid).record; }
+    public IntPtr Handle(uint pid) { return Current(pid).handle; }
+    public ProcessRecord Begin(Image image,IntPtr handle) {
+      RequireNew(image.pid);
+      if(image.kind!="process")throw new Exception("Lifetime requires a process image");
+      var record=new ProcessRecord {pid=image.pid,instance=(uint)report.processes.Count+1,path=image.path,startEvent=report.eventCount};
+      image.instance=record.instance;image.@event=report.eventCount;
+      active.Add(record.pid,new Active {record=record,handle=handle});
+      report.processes.Add(record);report.images.Add(image);return record;
+    }
+    public void Dll(Image image) {
+      var value=Current(image.pid);
+      if(image.kind!="dll")throw new Exception("Expected a DLL image");
+      image.instance=value.record.instance;image.@event=report.eventCount;report.images.Add(image);
+    }
+    public ProcessRecord End(uint pid,uint exit) {
+      var record=Current(pid).record;record.exitCode=exit;record.exitEvent=report.eventCount;
+      active.Remove(pid);
+      if(record.instance==1)report.exitCode=exit;
+      // ContinueDebugEvent(EXIT) closes the debugger-provided process/thread
+      // handles. Do not close them here (Microsoft debugging-event contract).
+      return record;
+    }
+    public bool InitialBreakpoint(uint pid) {
+      var value=Current(pid);if(value.breakpoint)return false;value.breakpoint=true;return true;
+    }
   }
   [DllImport("kernel32.dll",CharSet=CharSet.Unicode)] static extern uint GetSystemWindowsDirectoryW(StringBuilder text,uint size);
   [DllImport("kernel32.dll",CharSet=CharSet.Unicode)] static extern uint GetSystemDirectoryW(StringBuilder text,uint size);
@@ -129,8 +168,7 @@ public static class AwareCompilerAudit {
     Check(DuplicateHandle(current,GetStdHandle(id),current,out result,0,true,2),"Duplicate standard handle"); return result;
   }
   public static Report Run(string executable,string[] args,string cwd,string environment,int timeoutMs,StartupPolicy policy) {
-    var report=new Report(); var handles=new Dictionary<uint,IntPtr>(); var records=new Dictionary<uint,ProcessRecord>();
-    var breakpoints=new HashSet<uint>(); var active=new HashSet<uint>();
+    var report=new Report(); var lifetimes=new ProcessLifetimes(report);
     IntPtr job=IntPtr.Zero,limits=IntPtr.Zero,eventBuffer=IntPtr.Zero,env=IntPtr.Zero;
     IntPtr input=IntPtr.Zero,output=IntPtr.Zero,error=IntPtr.Zero; ProcessInfo initial=new ProcessInfo();
     bool assigned=false; var clock=Stopwatch.StartNew();
@@ -159,22 +197,26 @@ public static class AwareCompilerAudit {
       Check(CreateProcessW(executable,command,IntPtr.Zero,IntPtr.Zero,true,0x08000401,env,cwd,ref startup,out initial),"Create private debug process");
       Check(AssignProcessToJobObject(job,initial.process),"Assign private debug process to job");assigned=true;
       Check(DebugSetProcessKillOnExit(true),"Keep private debugger kill-on-exit");
-      bool rootExited=false;
       while(true) {
         if(clock.ElapsedMilliseconds>timeoutMs)throw new Exception("Compiler audit deadline exceeded");
         if(!WaitForDebugEventEx(eventBuffer,100)) {
           int code=Marshal.GetLastWin32Error(); if(code!=121)throw new System.ComponentModel.Win32Exception(code,"WaitForDebugEventEx");
-          if(rootExited&&active.Count==0)break; continue;
+          if(lifetimes.RootExited&&lifetimes.Count==0)break; continue;
         }
         uint kind=(uint)Marshal.ReadInt32(eventBuffer,0),pid=(uint)Marshal.ReadInt32(eventBuffer,4),tid=(uint)Marshal.ReadInt32(eventBuffer,8);
+        report.eventCount++;
+        if(kind==3) {
+          lifetimes.RequireNew(pid);
+          if(report.processes.Count==0&&pid!=initial.pid)throw new Exception("First creation is not the requested root");
+        } else lifetimes.RequireActive(pid);
         uint status=0x00010002; // DBG_CONTINUE for nonexception events.
         if(kind==3) {
           IntPtr file=Marshal.ReadIntPtr(eventBuffer,16),process=Marshal.ReadIntPtr(eventBuffer,24);
           try {
-            Image image=Capture(pid,"process",file,process,Marshal.ReadIntPtr(eventBuffer,40));report.images.Add(image);
-            var record=new ProcessRecord {pid=pid,path=image.path};report.processes.Add(record);records.Add(pid,record);handles.Add(pid,process);active.Add(pid);
+            Image image=Capture(pid,"process",file,process,Marshal.ReadIntPtr(eventBuffer,40));
+            var record=lifetimes.Begin(image,process);
             if(denied!=null&&String.Equals(image.path,denied.path,StringComparison.OrdinalIgnoreCase)) {
-              if(pid==initial.pid||image.size!=denied.size||image.sha256!=denied.sha256) throw new Exception("Telemetry creation differs from private authority");
+              if(record.instance==1||image.size!=denied.size||image.sha256!=denied.sha256) throw new Exception("Telemetry creation differs from private authority");
               // The creation event has not been continued: no user entry point has run.
               Check(TerminateProcess(process,denied.exitCode),"Deny private telemetry startup");
               record.action="blocked-telemetry";
@@ -182,18 +224,17 @@ public static class AwareCompilerAudit {
           } finally {if(file!=IntPtr.Zero&&file!=new IntPtr(-1))CloseHandle(file);}
         } else if(kind==6) {
           IntPtr file=Marshal.ReadIntPtr(eventBuffer,16);
-          try {if(!handles.ContainsKey(pid))throw new Exception("DLL event has no observed process");report.images.Add(Capture(pid,"dll",file,handles[pid],Marshal.ReadIntPtr(eventBuffer,24)));}
+          try {lifetimes.Dll(Capture(pid,"dll",file,lifetimes.Handle(pid),Marshal.ReadIntPtr(eventBuffer,24)));}
           finally {if(file!=IntPtr.Zero&&file!=new IntPtr(-1))CloseHandle(file);}
         } else if(kind==5) {
-          if(!records.ContainsKey(pid))throw new Exception("Exit event has no observed process");
-          uint exit=(uint)Marshal.ReadInt32(eventBuffer,16);records[pid].exitCode=exit;active.Remove(pid);handles.Remove(pid);
-          if(pid==initial.pid){rootExited=true;report.exitCode=exit;}
+          lifetimes.End(pid,(uint)Marshal.ReadInt32(eventBuffer,16));
         } else if(kind==1) {
           uint exception=(uint)Marshal.ReadInt32(eventBuffer,16);
-          status=exception==0x80000003 && breakpoints.Add(pid)?0x00010002u:0x80010001u;
+          status=exception==0x80000003 && lifetimes.InitialBreakpoint(pid)?0x00010002u:0x80010001u;
         } else if(kind==9) throw new Exception("Compiler debugger reported a RIP event");
+        else if(kind!=2&&kind!=4&&kind!=7&&kind!=8)throw new Exception("Unknown compiler debugger event");
         Check(ContinueDebugEvent(pid,tid,status),"ContinueDebugEvent");
-        if(rootExited&&active.Count==0)break;
+        if(lifetimes.RootExited&&lifetimes.Count==0)break;
       }
       Accounting accounting;long exitDeadline=clock.ElapsedMilliseconds+2000;
       do {
@@ -202,7 +243,7 @@ public static class AwareCompilerAudit {
         System.Threading.Thread.Sleep(10);
       } while(clock.ElapsedMilliseconds<exitDeadline);
       report.totalProcesses=accounting.total;report.activeProcesses=accounting.active;
-      if(accounting.active!=0||accounting.total!=(uint)report.processes.Count||!rootExited)throw new Exception("Incomplete compiler descendant coverage");
+      if(accounting.active!=0||accounting.total!=(uint)report.processes.Count||!lifetimes.RootExited)throw new Exception("Incomplete compiler descendant coverage");
       report.complete=true;
     } catch(Exception exception) {
       report.error=exception.ToString(); if(assigned)TerminateJobObject(job,1);else if(initial.process!=IntPtr.Zero)TerminateProcess(initial.process,1);

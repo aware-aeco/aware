@@ -56,9 +56,11 @@ local absolute Windows drive paths of at most 200 characters, without redirectio
 links, ambiguous path components, controls, semicolons or equals signs. Spaces and
 Unicode are supported. Retain local evidence privately: it contains physical paths.
 
-Launch the exact digest-bound builder with the exact Node executable and a cleared
-environment (`spawnSync(nodePath, [builderPath, '--manifest', manifestPath,
-'--locator', locatorPath, '--output', outputPath], {env: {}, windowsHide: true})`).
+Launch the exact digest-bound builder with the exact Node executable and an explicit
+native Windows environment containing only the OS-derived `SystemRoot`. Node's
+Windows child launcher can add PATH even with `env: {}`; that launch is refused.
+A native ProcessStartInfo launcher must clear EnvironmentVariables, supply only
+SystemRoot, preserve exact argv/cwd, and concurrently drain both redirected streams.
 Do not forward the Visual Studio developer shell environment. PATH, INCLUDE, LIB,
 LIBPATH and tool roles are constructed from fresh verified private copies. Cargo
 and Rust receive descriptor-owned `VCINSTALLDIR` pointing at the private MSVC
@@ -75,7 +77,7 @@ and all images must be declared private inputs, derived Cargo outputs or files i
 the explicitly protected Windows locations. It never attaches to unrelated work.
 Pre/post inventories and private Rust sysroot checks are mandatory.
 
-Every v2 audit records its effective, fixed startup policy, including an explicit
+Every v3 audit records its effective, fixed startup policy, including an explicit
 null when the MSVC inventory has no `vctip.exe`. When that exact private file is
 created as a descendant, the auditor verifies its size/hash while the creation
 event is paused, stops only that process before its entry point, and observes its
@@ -84,6 +86,21 @@ completion requirements still apply. No telemetry file is omitted or changed, no
 machine policy is changed, and an unrelated process is never targeted. The native
 Cargo fixture explicitly starts the copied helper from a build script to prove
 this branch even when the linker does not request telemetry itself.
+
+Process lifetime ordinals distinguish legitimate PID reuse from overlapping live
+processes. Creation, DLL and exit events bind to that lifetime, and root identity
+never follows a reused numeric PID. The event counter includes every observed debug
+event; retained lifetime/image events are ordered within it, while thread, exception,
+unload and debug-string events need not retain their payloads. Exited lifetimes lose
+their active handle/breakpoint state. Windows owns closure of debugger-provided
+handles when EXIT is continued; see Microsoft's [debugging-event contract](https://learn.microsoft.com/en-us/windows/win32/debug/debugging-events).
+The v2 schema/policy is not accepted by new-source provenance validation.
+
+Each exclusive request retains raw stdout/stderr, a combined command log and a
+launch sidecar with status, signal, timeout budget and spawn error details, even
+when PowerShell itself fails. Capture files refuse replacement; all writes are
+attempted and execution/persistence errors are preserved together. An incomplete
+audit remains diagnostic evidence and can never authorize successful provenance.
 
 Before comparing A/B artifact inventories, call `verifyCompilerProvenance` from
 the reviewed compiler helper separately for both output roots and retain the returned

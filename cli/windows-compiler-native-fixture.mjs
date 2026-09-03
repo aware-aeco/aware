@@ -1,10 +1,11 @@
 // Native test support; all compiler execution uses the production closure and auditor helpers.
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, resolve, win32 } from 'node:path';
 import { runningInputFiles, materializeClosure } from './build-windows-internal-repro.mjs';
 import { COMPILER_IDS, INPUT_IDS, NONCOMPILER_TOOL_IDS, inventory, copyDirectory, fileDigest, canonicalJson, discoverSystemHost,
-  loaderObservedWindows, exactKeys, materializeCompiler, verifyPrivateCompiler, validateCompilerLocator, runAuditedCompiler, beneath } from './windows-compiler-closure.mjs';
+  loaderObservedWindows, systemEnvironment, auditorTempParent, exactKeys, materializeCompiler, verifyPrivateCompiler, validateCompilerLocator, runAuditedCompiler, beneath } from './windows-compiler-closure.mjs';
 import { createWindowsBuilderRecords } from './create-windows-internal-repro-inputs.mjs';
 
 const windowsPath = path => win32.normalize(path).toLowerCase();
@@ -57,7 +58,15 @@ export function nativeBootstrapProof(root) {
     const options = { locator: { tools: { powershell: host.powershell } },
       manifest: { tools: { powershell: { sha256: fileDigest(host.powershell) } }, inputs: { 'compiler-audit-script': fileDigest(instrumented) } },
       auditScript: instrumented, workRoot: work };
-    if (failure) assert.throws(() => discoverSystemHost(options), /compiler auditor failed/);
+    if (failure) assert.throws(() => discoverSystemHost(options), error => {
+      const stdout = readFileSync(join(work, 'windows-host-stdout.local.bin'));
+      const stderr = readFileSync(join(work, 'windows-host-stderr.local.bin'));
+      const launch = JSON.parse(readFileSync(join(work, 'windows-host-launch.local.json'), 'utf8'));
+      assert.equal(launch.status, 1); assert.equal(launch.error, null);
+      assert.ok(stderr.length > 0); assert.equal(readFileSync(join(work, 'windows-host-command.local.log'), 'utf8'), `${stdout}${stderr}`);
+      assert.equal(error.message, `compiler auditor failed: 1\n${stdout}${stderr}`);
+      assert.equal(existsSync(join(work, 'windows-host.local.json')), false); return true;
+    });
     else assert.equal(windowsPath(discoverSystemHost(options).system32), windowsPath(host.system32));
     const owned = readFileSync(captured, 'utf8').replace(/^\uFEFF/, '');
     assert.equal(windowsPath(win32.dirname(owned)), windowsPath(win32.join(host.windows, 'Temp')));
@@ -65,6 +74,78 @@ export function nativeBootstrapProof(root) {
     assert.equal(existsSync(owned), false, 'bootstrap temporary directory must be removed on success and compilation failure');
   }
   console.log('Native bootstrap: Unicode work paths and owned-temp cleanup passed on success and failure');
+}
+
+export function nativeLifecycleProof(root, sourceOverride) {
+  const source = sourceOverride ?? readFileSync(runningInputFiles()['compiler-audit-script'], 'utf8');
+  const marker = '$utf8 = New-Object System.Text.UTF8Encoding($false)';
+  assert.equal(source.split(marker).length, 2, 'unique authenticated bootstrap boundary');
+  assert.equal(source.split("Add-Type -TypeDefinition @'").length, 2, 'unique production C# literal');
+  assert.equal(source.split("\n'@").length, 2, 'unique production C# terminator');
+  // The replay compiles the actual type; these checks also prevent an unused
+  // helper from satisfying the replay while Run keeps the defective old state.
+  for (const call of ['var lifetimes=new ProcessLifetimes(report)', 'lifetimes.RequireNew(pid)',
+    'else lifetimes.RequireActive(pid)', 'lifetimes.Begin(image,process)',
+    'lifetimes.Dll(Capture(pid,"dll",file,lifetimes.Handle(pid)',
+    'lifetimes.End(pid,(uint)Marshal.ReadInt32(eventBuffer,16))', 'lifetimes.InitialBreakpoint(pid)']) {
+    assert.ok(source.includes(call), `native loop must use lifetime transition: ${call}`);
+  }
+  const work = join(root, 'lifetime replay'); mkdirSync(work);
+  const script = join(work, 'replay.ps1'), request = join(work, 'request.json'), output = join(work, 'report.json');
+  writeFileSync(request, JSON.stringify({ output }));
+  writeFileSync(script, source.slice(0, source.indexOf(marker)) + `
+function Check($condition, $message) { if (!$condition) { throw $message } }
+function Refused([scriptblock]$operation) { $failed = $false; try { & $operation } catch { $failed = $true }; Check $failed 'Invalid lifecycle transition was accepted' }
+function NewImage([uint32]$number, [string]$kind) {
+  $image = New-Object AwareCompilerAudit+Image
+  $image.pid = $number; $image.kind = $kind; $image.path = 'C:\\private\\compiler.exe'; $image.size = 1; $image.sha256 = 'a' * 64
+  return $image
+}
+$report = New-Object AwareCompilerAudit+Report
+$state = [AwareCompilerAudit+ProcessLifetimes]::new($report)
+Refused { $state.End(480, 0) }
+Refused { $state.Dll((NewImage 480 'dll')) }
+Refused { $state.InitialBreakpoint(480) }
+$report.eventCount = 1; $first = $state.Begin((NewImage 42 'process'), [IntPtr]42)
+$report.eventCount = 2; $old = $state.Begin((NewImage 480 'process'), [IntPtr]100)
+Refused { $state.RequireNew(480) }
+Refused { $state.Begin((NewImage 480 'process'), [IntPtr]999) }
+Check ($report.processes.Count -eq 2 -and $report.images.Count -eq 2) 'Duplicate appended history'
+$report.eventCount = 3
+Check ($state.InitialBreakpoint(480)) 'First breakpoint missing'
+Check (!$state.InitialBreakpoint(480)) 'Repeated breakpoint was accepted'
+$report.eventCount = 4; $state.Dll((NewImage 480 'dll'))
+$report.eventCount = 5; [void]$state.End(480, 0)
+Check ($state.Count -eq 1) 'Exited lifetime remains active'
+Refused { $state.Handle(480) }
+Refused { $state.RequireActive(480) }
+Refused { $state.End(480, 99) }
+$report.eventCount = 6; $new = $state.Begin((NewImage 480 'process'), [IntPtr]200)
+Check ($new.instance -eq 3 -and $state.Handle(480) -eq [IntPtr]200) 'Reused lifetime has stale identity or handle'
+Check ($state.InitialBreakpoint(480)) 'Reused lifetime inherited a breakpoint'
+Check (!$state.InitialBreakpoint(480)) 'Reused lifetime accepts duplicate breakpoint'
+$report.eventCount = 7; $state.Dll((NewImage 480 'dll'))
+$report.eventCount = 8; [void]$state.End(480, 7)
+$report.eventCount = 9; [void]$state.End(42, 0)
+Check ($state.Count -eq 0 -and $state.RootExited) 'Replay did not retire all processes'
+Check ($old.exitCode -eq 0 -and $old.exitEvent -eq 5 -and $new.exitCode -eq 7 -and $new.exitEvent -eq 8) 'History was overwritten'
+# Reuse the root PID too; its later exit must not replace the original root status.
+$report.eventCount = 10; [void]$state.Begin((NewImage 42 'process'), [IntPtr]300)
+$report.eventCount = 11; [void]$state.End(42, 9)
+Check ($report.exitCode -eq 0 -and $state.RootExited) 'Root identity followed a reused PID'
+[IO.File]::WriteAllText($request.output, ($report | ConvertTo-Json -Depth 15), [Text.UTF8Encoding]::new($false))
+`);
+  const host = loaderObservedWindows();
+  const result = spawnSync(host.powershell, ['-NoProfile', '-NonInteractive', '-File', script, '-RequestPath', request],
+    { env: systemEnvironment(host, auditorTempParent(host)), encoding: null, windowsHide: true, timeout: 30000 });
+  writeFileSync(join(work, 'stdout.bin'), result.stdout ?? Buffer.alloc(0)); writeFileSync(join(work, 'stderr.bin'), result.stderr ?? Buffer.alloc(0));
+  assert.ifError(result.error); assert.equal(result.status, 0, String(result.stderr));
+  const report = JSON.parse(readFileSync(output, 'utf8'));
+  assert.deepEqual(report.processes.map(record => [record.instance, record.pid, record.startEvent, record.exitEvent, record.exitCode]),
+    [[1,42,1,9,0],[2,480,2,5,0],[3,480,6,8,7],[4,42,10,11,9]]);
+  assert.deepEqual(report.images.map(image => [image.instance, image.pid, image.event, image.kind]),
+    [[1,42,1,'process'],[2,480,2,'process'],[2,480,4,'dll'],[3,480,6,'process'],[3,480,7,'dll'],[4,42,10,'process']]);
+  console.log('Native production lifecycle replay: PID reuse, root identity, breakpoint and handle retirement passed');
 }
 
 function installedRoots(run) {
@@ -102,9 +183,9 @@ export function prepareNativeCompiler({ base, work, source, closure, side, run }
   renameSync(owned, join(base, 'hidden original compiler')); renameSync(closure, join(base, 'hidden original cargo'));
   for (const path of Object.values(closures)) assert.equal(existsSync(path), false, 'original source path is unavailable');
   const audits = [];
-  function audit(id, args, env, label) {
+  function audit(id, args, env, label, timeout = 180000) {
     const result = runAuditedCompiler({ compiler, toolPath: compiler.tools[id], args, env, label, cwd: source,
-      auditScript, evidenceRoot: evidence, targetRoot: join(work, 'cargo-target'), timeout: 180000 });
+      auditScript, evidenceRoot: evidence, targetRoot: join(work, 'cargo-target'), timeout });
     audits.push({ label, sha256: result.evidenceSha256, processes: result.report.processes.length });
     writeFileSync(join(evidence, `${label}.log`), result.text); return result.text;
   }
@@ -125,6 +206,12 @@ export function nativeVersionProof({ native, env }) {
     const path = audit('rustc', ['--print', query], env, `rust-${query}`).trim();
     assert.ok(existsSync(path) && beneath(path, join(compiler.root, 'rust')));
   }
+  assert.throws(() => audit('rustc', ['--version'], env, 'audit-deadline', 1), /compiler auditor failed/);
+  const incomplete = JSON.parse(readFileSync(join(native.evidence, 'audit-deadline-audit.local.json'), 'utf8'));
+  assert.equal(incomplete.complete, false); assert.match(incomplete.error, /deadline exceeded/);
+  const launch = JSON.parse(readFileSync(join(native.evidence, 'audit-deadline-launch.local.json'), 'utf8'));
+  assert.equal(launch.status, 1);
+  assert.ok(readFileSync(join(native.evidence, 'audit-deadline-stderr.local.bin')).length > 0);
 }
 export function nativeToolsProof({ native, env, run }) {
   const { compiler, audit, evidence, source, work, locator } = native, target = join(work, 'cargo-target');

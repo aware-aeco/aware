@@ -39,7 +39,7 @@ export const COMPILER_DESCRIPTOR = Object.freeze({
     LIB: ['msvc/lib', 'sdk/ucrt-lib', 'sdk/um-lib'], LIBPATH: ['msvc/lib', 'sdk/ucrt-lib', 'sdk/um-lib'],
     PATHEXT: '.COM;.EXE;.BAT;.CMD', VSLANG: '1033',
     VCINSTALLDIR: ['msvc'], VSCMD_ARG_TGT_ARCH: 'x64' }),
-  auditPolicy: 'aware-private-compiler-debug-events/v2',
+  auditPolicy: 'aware-private-compiler-debug-events/v3',
   startupPolicy: Object.freeze({ identity: 'aware-private-msvc-telemetry-denial/v1',
     closure: 'compiler-msvc-bin', path: 'vctip.exe', exitCode: 0xe0000488 }),
 });
@@ -197,6 +197,23 @@ export function auditorTempParent(host) {
   assert.equal(realpathSync.native(parent).toLowerCase(), parent.toLowerCase(), 'auditor temporary parent redirects elsewhere');
   return parent;
 }
+export function retainAuditorResult(requestPath, result, timeout) {
+  assert.match(requestPath, /-request\.local\.json$/);
+  const prefix = requestPath.replace(/-request\.local\.json$/, '');
+  const stdout = result.stdout ?? Buffer.alloc(0), stderr = result.stderr ?? Buffer.alloc(0);
+  assert.ok(Buffer.isBuffer(stdout) && Buffer.isBuffer(stderr), 'auditor capture must preserve raw bytes');
+  const text = `${stdout}${stderr}`, errors = [];
+  if (result.error || result.status !== 0) errors.push(new Error(`compiler auditor failed: ${result.error?.message ?? result.status}\n${text}`, { cause: result.error }));
+  const launch = { status: result.status ?? null, signal: result.signal ?? null, timeoutMs: timeout,
+    error: result.error ? { code: result.error.code ?? null, message: result.error.message } : null };
+  for (const [suffix, bytes] of [['stdout.local.bin', stdout], ['stderr.local.bin', stderr],
+    ['command.local.log', text], ['launch.local.json', canonicalJson(launch)]]) {
+    try { writeFileSync(`${prefix}-${suffix}`, bytes, { flag: 'wx' }); } catch (error) { errors.push(error); }
+  }
+  if (errors.length > 1) throw new AggregateError(errors, 'compiler auditor execution or evidence persistence failed', { cause: errors[0] });
+  if (errors.length) throw errors[0];
+  return { text, stdout, stderr };
+}
 function launchAuditor({ host, auditScript, auditDigest, request, requestPath, cwd, timeout = 120000 }) {
   const bytes = readFileSync(auditScript);
   assert.equal(digest(bytes), auditDigest, 'compiler auditor script changed before evaluation');
@@ -207,8 +224,7 @@ function launchAuditor({ host, auditScript, auditDigest, request, requestPath, c
   const command = `& ([ScriptBlock]::Create([Text.Encoding]::UTF8.GetString([Convert]::FromBase64String([Console]::In.ReadToEnd())))) -RequestPath ([Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('${pathBytes}')))`;
   const result = spawnSync(host.powershell, ['-NoProfile', '-NonInteractive', '-Command', command],
     { cwd, env: systemEnvironment(host, auditorTempParent(host)), input: bytes.toString('base64'), encoding: null, windowsHide: true, timeout, maxBuffer: 128 * 1024 * 1024 });
-  if (result.error || result.status !== 0) throw new Error(`compiler auditor failed: ${result.error?.message ?? result.status}\n${result.stdout ?? ''}${result.stderr ?? ''}`);
-  return { text: `${result.stdout ?? ''}${result.stderr ?? ''}`, stdout: result.stdout, stderr: result.stderr };
+  return retainAuditorResult(requestPath, result, timeout);
 }
 export function discoverSystemHost({ locator, manifest, auditScript, workRoot }) {
   const observed = loaderObservedWindows();
@@ -241,8 +257,8 @@ export function compilerStartupPolicy(compiler) {
     path: win32.resolve(compiler.roots[policy.closure], file.path), size: file.size, sha256: file.sha256, exitCode: policy.exitCode } : null };
 }
 export function verifyCompilerAudit(report, { compiler, targetRoot, toolPath }) {
-  exactKeys(report, ['schema', 'error', 'complete', 'exitCode', 'totalProcesses', 'activeProcesses', 'processes', 'images', 'identity', 'startupPolicy'], 'compiler audit');
-  assert.equal(report.schema, 'aware-compiler-debug-audit/v2'); assert.equal(report.complete, true, 'compiler audit is incomplete');
+  exactKeys(report, ['schema', 'error', 'complete', 'exitCode', 'totalProcesses', 'activeProcesses', 'processes', 'images', 'identity', 'startupPolicy', 'eventCount'], 'compiler audit');
+  assert.equal(report.schema, 'aware-compiler-debug-audit/v3'); assert.equal(report.complete, true, 'compiler audit is incomplete');
   const startupPolicy = compilerStartupPolicy(compiler), denied = startupPolicy.deniedImage;
   same(report.startupPolicy, startupPolicy, 'compiler startup policy differs');
   assert.equal(report.error, null, 'compiler audit contains an error');
@@ -250,29 +266,53 @@ export function verifyCompilerAudit(report, { compiler, targetRoot, toolPath }) 
   assert.ok(report.processes.length > 0 && report.images.length >= report.processes.length, 'compiler audit is empty');
   assert.equal(report.totalProcesses, report.processes.length, 'compiler audit missed a child process'); assert.equal(report.activeProcesses, 0);
   assert.ok(Number.isSafeInteger(report.exitCode) && report.exitCode >= 0, 'compiler audit exit status is invalid');
-  const pids = new Set();
+  assert.ok(Number.isSafeInteger(report.eventCount) && report.eventCount > 0, 'invalid debugger event count');
+  const instances = new Map(), pids = new Map(), events = new Set();
+  const claimEvent = event => {
+    assert.ok(Number.isSafeInteger(event) && event > 0 && event <= report.eventCount && !events.has(event), 'invalid or repeated debugger event'); events.add(event);
+  };
+  let previousStart = 0, lastExit = 0;
   for (const process of report.processes) {
-    exactKeys(process, ['pid', 'path', 'exitCode', 'action'], 'audited process');
-    assert.ok(Number.isSafeInteger(process.pid) && process.pid > 0 && !pids.has(process.pid), 'invalid or repeated audited process'); pids.add(process.pid);
+    exactKeys(process, ['pid', 'path', 'exitCode', 'action', 'instance', 'startEvent', 'exitEvent'], 'audited process');
+    assert.ok(Number.isSafeInteger(process.pid) && process.pid > 0 && process.pid <= 0xffffffff, 'invalid audited process PID');
+    assert.equal(process.instance, instances.size + 1, 'invalid process instance order');
+    claimEvent(process.startEvent); claimEvent(process.exitEvent);
+    assert.ok(process.startEvent > previousStart && process.exitEvent > process.startEvent, 'invalid process lifetime event order');
+    assert.ok(!pids.has(process.pid) || pids.get(process.pid).exitEvent < process.startEvent, 'overlapping reused process PID');
+    previousStart = process.startEvent; lastExit = Math.max(lastExit, process.exitEvent);
+    instances.set(process.instance, process); pids.set(process.pid, process);
     assert.ok(Number.isSafeInteger(process.exitCode) && process.exitCode >= 0, 'audited process never exited');
-    assert.equal(report.images.filter(image => image.pid === process.pid && image.kind === 'process' && image.path === process.path).length, 1, 'audited process image is missing or repeated');
+    assert.equal(report.images.filter(image => image.instance === process.instance && image.kind === 'process').length, 1, 'audited process image is missing or repeated');
     const matches = denied && win32.resolve(process.path).toLowerCase() === denied.path.toLowerCase();
     assert.equal(process.action, matches ? 'blocked-telemetry' : 'observed', 'compiler process disposition differs');
     if (matches) {
-      assert.notEqual(process.pid, report.processes[0].pid, 'root compiler cannot be blocked telemetry');
+      assert.notEqual(process.instance, 1, 'root compiler cannot be blocked telemetry');
       assert.equal(process.exitCode, denied.exitCode, 'blocked telemetry exit status differs');
-      const image = report.images.find(image => image.pid === process.pid && image.kind === 'process');
+      const image = report.images.find(image => image.instance === process.instance && image.kind === 'process');
       assert.equal(image.sha256, denied.sha256, 'blocked telemetry digest differs');
       assert.equal(image.size, denied.size, 'blocked telemetry size differs');
     }
   }
+  assert.equal(report.processes[0].startEvent, 1, 'root must be the first debugger event');
+  assert.equal(lastExit, report.eventCount, 'completed audit must end at the final process exit');
   assert.equal(report.processes[0].exitCode, report.exitCode, 'root compiler exit status differs');
   assert.ok(toolPath && win32.resolve(report.processes[0].path).toLowerCase() === win32.resolve(toolPath).toLowerCase(), 'compiler audit root differs from the requested tool');
   same(report.identity, { source: compiler.manifest.source, buildId: digest(canonicalJson(compiler.manifest)),
     auditScriptSha256: compiler.manifest.inputs['compiler-audit-script'] }, 'compiler audit identity differs');
+  let previousImage = 0;
   const classified = report.images.map(image => {
-    exactKeys(image, ['pid', 'path', 'kind', 'sha256', 'size'], 'audited image');
-    assert.ok(pids.has(image.pid) && ['process', 'dll'].includes(image.kind), 'unclassified process/image event');
+    exactKeys(image, ['pid', 'path', 'kind', 'sha256', 'size', 'instance', 'event'], 'audited image');
+    const process = instances.get(image.instance);
+    assert.ok(process && process.pid === image.pid && ['process', 'dll'].includes(image.kind), 'unclassified process/image lifetime');
+    assert.ok(Number.isSafeInteger(image.event) && image.event > previousImage && image.event <= report.eventCount, 'invalid image event order');
+    previousImage = image.event;
+    if (image.kind === 'process') {
+      assert.equal(image.event, process.startEvent, 'process image must identify its creation event');
+      assert.equal(image.path, process.path, 'process image path differs');
+    } else {
+      claimEvent(image.event);
+      assert.ok(image.event > process.startEvent && image.event < process.exitEvent, 'DLL image outside its process lifetime');
+    }
     validateWindowsPath(image.path, 'audited image', 32760);
     assert.ok(Number.isSafeInteger(image.size) && image.size > 0 && SHA256.test(image.sha256), 'unhashed compiler image');
     if (protectedWindowsPath(image.path, compiler.host)) return { ...image, role: 'windows' };
@@ -299,9 +339,6 @@ export function runAuditedCompiler({ compiler, toolPath, args, cwd, env, auditSc
     identity: { source: compiler.manifest.source, buildId: digest(canonicalJson(compiler.manifest)), auditScriptSha256: compiler.manifest.inputs['compiler-audit-script'] } };
   const captured = launchAuditor({ host: compiler.host, auditScript, auditDigest: compiler.manifest.inputs['compiler-audit-script'], request, requestPath: join(evidenceRoot, `${label}-request.local.json`), cwd: join(dirname(compiler.root), 'bootstrap'), timeout: timeout + 30000 });
   const { text } = captured;
-  writeFileSync(join(evidenceRoot, `${label}-command.local.log`), text);
-  writeFileSync(join(evidenceRoot, `${label}-stdout.local.bin`), captured.stdout);
-  writeFileSync(join(evidenceRoot, `${label}-stderr.local.bin`), captured.stderr);
   const report = verifyCompilerAudit(JSON.parse(readFileSync(output, 'utf8')), { compiler, targetRoot, toolPath });
   assert.equal(report.exitCode, 0, `private compiler failed: ${text}`);
   return { ...captured, report, evidencePath: output, evidenceSha256: fileDigest(output) };

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import test from 'node:test';
@@ -6,7 +7,7 @@ import { compilerFixture, COMPILER_FIXTURE_FILES } from './windows-compiler-fixt
 import { createWindowsBuilderRecords } from './create-windows-internal-repro-inputs.mjs';
 import { verifyNativeIncludes, verifyNativeLinkInputs } from './windows-compiler-native-fixture.mjs';
 import { COMPILER_IDS, COMPILER_LAYOUT, COMPILER_DESCRIPTOR, compilerStartupPolicy, canonicalJson, digest, fileDigest, inventory, copyDirectory, loaderObservedWindows, verifyCompilerAudit,
-  protectedWindowsPath, validateCompilerLocator, validateCompilerManifest, validateInventory, validateRecordPath, validateWindowsPath } from './windows-compiler-closure.mjs';
+  protectedWindowsPath, retainAuditorResult, validateCompilerLocator, validateCompilerManifest, validateInventory, validateRecordPath, validateWindowsPath } from './windows-compiler-closure.mjs';
 import { loadVerifiedBuildModules, runningInputFiles, rejectedAmbientKeys, validateBootstrapLocator, verifyBuildAuthority,
   bootstrapSystemEnvironment, verifyConsumedClosure } from './build-windows-internal-repro.mjs';
 
@@ -23,6 +24,40 @@ test('structured native include proof preserves Unicode and refuses foreign or m
     copy => { copy.Data.Includes.push('C:\\private Łódź 😀\\sdk\\..\\foreign.h'); },
     copy => { copy.Data.Includes.push('relative.h'); },
   ]) { const changed = structuredClone(report); modify(changed); assert.throws(() => verifyNativeIncludes(changed, source, roots)); }
+});
+
+test('auditor diagnostics retain real nonzero, startup and timeout results before throwing', () => {
+  const fixture = compilerFixture();
+  try {
+    const samples = [
+      ['exit', spawnSync(process.execPath, ['-e', 'process.stdout.write(Buffer.from([0,255,1]));process.stderr.write(Buffer.from([254,0,2]));process.exitCode=7'], { encoding: null, windowsHide: true }), undefined],
+      ['startup', spawnSync(join(fixture.root, 'missing-executable'), [], { encoding: null, windowsHide: true }), 'ENOENT'],
+      ['timeout', spawnSync(process.execPath, ['-e', 'setTimeout(()=>{},30000)'], { encoding: null, windowsHide: true, timeout: 100 }), 'ETIMEDOUT'],
+    ];
+    for (const [label, result, code] of samples) {
+      if (code) assert.equal(result.error?.code, code); else assert.equal(result.status, 7);
+      const prefix = join(fixture.root, label), request = `${prefix}-request.local.json`;
+      writeFileSync(request, '{}', { flag: 'wx' });
+      assert.throws(() => retainAuditorResult(request, result, 100), error => {
+        assert.match(error.message, /compiler auditor failed/);
+        assert.equal(error.cause, result.error); return true;
+      });
+      assert.deepEqual(readFileSync(`${prefix}-stdout.local.bin`), result.stdout ?? Buffer.alloc(0));
+      assert.deepEqual(readFileSync(`${prefix}-stderr.local.bin`), result.stderr ?? Buffer.alloc(0));
+      const launch = JSON.parse(readFileSync(`${prefix}-launch.local.json`, 'utf8'));
+      assert.equal(launch.error?.code, code); assert.equal(launch.status, result.status ?? null);
+      assert.equal(launch.signal, result.signal ?? null); assert.equal(launch.timeoutMs, 100);
+    }
+    const result = samples[0][1], prefix = join(fixture.root, 'collision');
+    writeFileSync(`${prefix}-stdout.local.bin`, 'preserve');
+    assert.throws(() => retainAuditorResult(`${prefix}-request.local.json`, result, 100), error => {
+      assert.ok(error instanceof AggregateError); assert.equal(error.errors.length, 2);
+      assert.match(error.errors[0].message, /compiler auditor failed/); assert.equal(error.errors[1].code, 'EEXIST'); return true;
+    });
+    assert.equal(readFileSync(`${prefix}-stdout.local.bin`, 'utf8'), 'preserve');
+    assert.deepEqual(readFileSync(`${prefix}-stderr.local.bin`), result.stderr);
+    assert.ok(existsSync(`${prefix}-command.local.log`) && existsSync(`${prefix}-launch.local.json`));
+  } finally { rmSync(fixture.root, { recursive: true, force: true }); }
 });
 
 test('native link capture binds every library and object to actual declared bytes', () => {
@@ -86,6 +121,8 @@ test('self-consistent manifests cannot drop mandatory compiler inputs', () => {
     assert.throws(() => validateCompilerManifest(shims), /rustup shims/);
     const reordered = structuredClone(original); reordered.compiler.environment.LIB.reverse();
     assert.throws(() => validateCompilerManifest(reordered), /descriptor differs/);
+    const oldPolicy = structuredClone(original); oldPolicy.compiler.auditPolicy = 'aware-private-compiler-debug-events/v2';
+    assert.throws(() => validateCompilerManifest(oldPolicy), /descriptor differs/);
   } finally { rmSync(fixture.root, { recursive: true, force: true }); }
 });
 
@@ -230,9 +267,9 @@ test('compiler audit requires complete bound process/image evidence and the requ
     const rustc = manifest.closures['compiler-rust-bin'].files.find(file => file.path === 'rustc.exe');
     const compiler = { manifest, roots, host: { windows: 'C:/Windows', system32: 'C:/Windows/System32' } };
     const options = { compiler, toolPath, targetRoot: 'C:/private/cargo-target' };
-    const report = { schema: 'aware-compiler-debug-audit/v2', startupPolicy: compilerStartupPolicy(compiler), error: null, complete: true, exitCode: 0, totalProcesses: 1, activeProcesses: 0,
-      processes: [{ pid: 42, path: toolPath, exitCode: 0, action: 'observed' }],
-      images: [{ pid: 42, path: toolPath, kind: 'process', sha256: rustc.sha256, size: rustc.size }],
+    const report = { schema: 'aware-compiler-debug-audit/v3', eventCount: 10, startupPolicy: compilerStartupPolicy(compiler), error: null, complete: true, exitCode: 0, totalProcesses: 1, activeProcesses: 0,
+      processes: [{ pid: 42, instance: 1, startEvent: 1, exitEvent: 10, path: toolPath, exitCode: 0, action: 'observed' }],
+      images: [{ pid: 42, instance: 1, event: 1, path: toolPath, kind: 'process', sha256: rustc.sha256, size: rustc.size }],
       identity: { source: manifest.source, buildId: digest(canonicalJson(manifest)), auditScriptSha256: manifest.inputs['compiler-audit-script'] } };
     assert.equal(verifyCompilerAudit(report, options).images[0].role, 'compiler-rust-bin');
     const omittedPolicy = structuredClone(report); delete omittedPolicy.startupPolicy;
@@ -242,8 +279,8 @@ test('compiler audit requires complete bound process/image evidence and the requ
     }
     const denied = report.startupPolicy.deniedImage;
     const blocked = { ...structuredClone(report), totalProcesses: 2,
-      processes: [...report.processes, { pid: 43, path: denied.path, exitCode: denied.exitCode, action: 'blocked-telemetry' }],
-      images: [...report.images, { pid: 43, path: denied.path, kind: 'process', size: denied.size, sha256: denied.sha256 }] };
+      processes: [...report.processes, { pid: 43, instance: 2, startEvent: 3, exitEvent: 7, path: denied.path, exitCode: denied.exitCode, action: 'blocked-telemetry' }],
+      images: [...report.images, { pid: 43, instance: 2, event: 3, path: denied.path, kind: 'process', size: denied.size, sha256: denied.sha256 }] };
     assert.doesNotThrow(() => verifyCompilerAudit(blocked, options));
     for (const mutate of [
       r => { r.processes[1].action = 'observed'; }, r => { r.processes[1].exitCode = 0; },
@@ -259,9 +296,48 @@ test('compiler audit requires complete bound process/image evidence and the requ
       { ...report, totalProcesses: 2 }, { ...report, processes: [{ ...report.processes[0], exitCode: null }] },
       { ...report, images: [{ ...report.images[0], sha256: 'f'.repeat(64) }] }]) assert.throws(() => verifyCompilerAudit(changed, options));
     assert.throws(() => verifyCompilerAudit(report, { ...options, toolPath: join(roots['compiler-rust-bin'], 'cargo.exe') }), /requested tool/);
-    const outside = { ...report, images: [...report.images, { ...report.images[0], kind: 'dll', path: 'C:/Windows/Temp/evil.dll' }] };
+    const outside = { ...report, images: [...report.images, { ...report.images[0], event: 2, kind: 'dll', path: 'C:/Windows/Temp/evil.dll' }] };
     assert.throws(() => verifyCompilerAudit(outside, options), /outside its authority/);
-    const missingHash = { ...report, images: [...report.images, { ...report.images[0], kind: 'dll', path: 'C:/Windows/System32/kernel32.dll', sha256: '' }] };
+    const missingHash = { ...report, images: [...report.images, { ...report.images[0], event: 2, kind: 'dll', path: 'C:/Windows/System32/kernel32.dll', sha256: '' }] };
     assert.throws(() => verifyCompilerAudit(missingHash, options), /unhashed/);
+
+    // The root exits before its descendants. Its numeric PID can then reappear
+    // as a different compiler lifetime without changing the root's exit status.
+    const reused = structuredClone(report);
+    reused.eventCount = 30; reused.totalProcesses = 3; reused.processes[0].exitEvent = 5;
+    reused.processes.push(
+      { ...report.processes[0], instance: 2, pid: 480, startEvent: 3, exitEvent: 30, exitCode: 7 },
+      { ...report.processes[0], instance: 3, startEvent: 8, exitEvent: 20, exitCode: 9 });
+    reused.images.push(
+      { ...report.images[0], instance: 2, pid: 480, event: 3 },
+      { ...report.images[0], instance: 2, pid: 480, event: 4, kind: 'dll', path: 'C:/Windows/System32/kernel32.dll' },
+      { ...report.images[0], instance: 3, event: 8 },
+      { ...report.images[0], instance: 3, event: 9, kind: 'dll', path: 'C:/Windows/System32/kernel32.dll' });
+    assert.equal(verifyCompilerAudit(reused, options).processes[2].exitCode, 9);
+    for (const mutate of [
+      r => { r.schema = 'aware-compiler-debug-audit/v2'; },
+      r => { r.processes[2].instance = 2; },
+      r => { r.processes[2].startEvent = r.images[3].event = 4; },
+      r => { r.processes[2].exitEvent = null; },
+      r => { r.processes[2].exitEvent = r.processes[2].startEvent; },
+      r => { r.processes[2].startEvent = 31; },
+      r => { r.eventCount = 31; },
+      r => { r.eventCount = 29; },
+      r => { r.images[4].instance = 1; },
+      r => { r.images[4].pid = 480; },
+      r => { r.images[4].instance = 4; },
+      r => { r.images[4].event = 20; },
+      r => { r.images[4].event = 21; },
+      r => { r.images[4].event = 7; },
+      r => { r.images[3].event = 9; r.images[4].event = 10; },
+      r => { r.images[3].path = 'C:/Windows/System32/kernel32.dll'; },
+      r => { r.images[4].kind = 'process'; },
+      r => { r.images.push({ ...r.images[4], event: 11, kind: 'process' }); },
+      r => { r.images[2].event = 5; },
+      r => { r.images.reverse(); },
+      r => { r.processes.reverse(); },
+      r => { r.images.splice(3, 1); },
+      r => { r.exitCode = 9; },
+    ]) { const changed = structuredClone(reused); mutate(changed); assert.throws(() => verifyCompilerAudit(changed, options)); }
   } finally { rmSync(fixture.root, { recursive: true, force: true }); }
 });

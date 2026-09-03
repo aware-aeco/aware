@@ -7,7 +7,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { createCargoBuild, assertVerboseCargoProof, verifyExtractedInputs, runningInputFiles,
   normalizeBuildText, WINDOWS_LOGICAL_RUST_FLAGS } from './build-windows-internal-repro.mjs';
-import { prepareNativeCompiler, nativeVersionProof, nativeToolsProof, nativeBootstrapProof } from './windows-compiler-native-fixture.mjs';
+import { prepareNativeCompiler, nativeVersionProof, nativeToolsProof, nativeBootstrapProof, nativeLifecycleProof } from './windows-compiler-native-fixture.mjs';
 import { beneath, loaderObservedWindows, compilerStartupPolicy } from './windows-compiler-closure.mjs';
 
 assert.equal(process.platform, 'win32', 'native repro gate requires Windows');
@@ -27,6 +27,7 @@ const records = [];
 try {
   run(join(loaderObservedWindows().system32, 'compact.exe'), ['/U', root]);
   nativeBootstrapProof(root);
+  nativeLifecycleProof(root);
   for (const side of ['a', 'b']) {
     const base = join(root, `builder ${side} Łódź 😀 with a supported long source location`), work = join(base, 'work'), source = join(work, 'source'), crateRoot = join(source, 'cli');
     const closure = join(base, 'sealed cache'), vendor = join(closure, 'vendor'), dependency = join(vendor, 'path-probe');
