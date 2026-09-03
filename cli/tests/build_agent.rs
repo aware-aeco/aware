@@ -159,3 +159,60 @@ fn build_into_existing_agent_dir_is_conflict() {
         .failure()
         .code(8); // Conflict
 }
+
+/// `--from-yard` had no coverage past the unit tests on its parser: nothing
+/// checked that the agent it generates is one the CLI will then accept.
+/// The build is only half the contract — `agent validate` is the other half,
+/// and a manifest that lists a skill file the builder never wrote (or a command
+/// name that is not a safe segment) passes the parser and fails here.
+#[test]
+fn build_from_yard_writes_an_agent_that_validates() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let site = tmp.path().join("yard-site");
+    std::fs::create_dir_all(site.join("Sketchup")).unwrap();
+    std::fs::write(
+        site.join("_index.html"),
+        r#"<html><body>
+          <a class="object_link" href="Sketchup/View.html">View</a>
+        </body></html>"#,
+    )
+    .unwrap();
+    std::fs::write(
+        site.join("Sketchup/View.html"),
+        r#"<html><body>
+          <h1>Class: Sketchup::View</h1>
+          <div id="description"><div class="docstring"><div class="discussion">
+            <p>The drawing surface of a model.</p>
+          </div></div></div>
+          <div class="method_details"><h3 class="signature"><strong>invalidate</strong></h3>
+            <div class="docstring"><div class="discussion"><p>Redraw the view.</p></div></div>
+          </div>
+        </body></html>"#,
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args(["build", "agent", "--from-yard"])
+        .arg(&site)
+        .args(["--output", "yard-demo"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("generated yard-demo"));
+
+    let dst = aware.join("agents/yard-demo");
+    assert!(dst.join("manifest.yaml").is_file());
+    assert!(dst.join("commands/sketchup-view-invalidate.md").is_file());
+    assert!(dst.join("skills/sketchup-view.md").is_file());
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args(["agent", "validate"])
+        .arg(&dst)
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("is valid"));
+}
