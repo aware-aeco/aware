@@ -268,6 +268,31 @@ Persona audit (structural engineer, **dealbreaker**): *"There is no answer to 'w
 
 v0.21 introduces the **engineering envelope** — a manifest extension on agents (declares what they pin) + an app-spec extension (binds the pins to a run) + a `signed-output` primitive that produces a chain-of-custody record.
 
+> **Status: schema published, behaviour `planned`.** The `engineering:` blocks below are
+> typed — the manifest loader deserializes them on both the agent and the app side, and an
+> app's is carried verbatim into the lockfile — but **nothing in the runtime acts on them
+> yet**. `signed-output` is weaker still: `Node` has no such field and the app manifest sets
+> no `deny_unknown_fields`, so the directive is silently discarded at parse rather than
+> rejected. This is `planned` in exactly the sense [§ Runnability](#runnability-status)
+> gives the word: the contract is published so agents and apps can be authored against it,
+> the implementation is not shipped. Concretely:
+>
+> | Piece | State |
+> |---|---|
+> | Agent `engineering.pinnable` | parsed, then never read (`cli/src/manifest/agent.rs`) |
+> | App `engineering.pins` | parsed; copied into the lock verbatim — **not** checked against the agent's declared pinnable set |
+> | `engineering.output-seal` | parsed; no `.aware-receipt.json` is written |
+> | `signed-output` node | **not a node kind** — unmapped on `Node`, so serde discards it silently; not even rejected |
+> | `aware.units()` | not implemented — see [Unit-typed numerics](#unit-typed-numerics) |
+> | `aware app reproduce` | not wired — see [`cli-roadmap.md`](./cli-roadmap.md) |
+>
+> Signed receipts themselves *do* ship, as the separate `aware key` + `aware receipt
+> sign|verify` command groups (ed25519, v0.26/v0.27). They are simply not reachable from
+> this envelope's `output-seal` yet.
+>
+> Read the rest of this section as the contract the envelope will satisfy, not as a
+> description of what `aware app run` does today.
+
 ### Agent-side declaration
 
 Engineering agents (`tsd-26`, `idea-statica-26`, `csi-api`, `allplan-2025`, etc.) MAY declare an `engineering:` block:
@@ -297,7 +322,7 @@ engineering:
       example: 'tsd-26.0.3-build-19834'
 ```
 
-The agent's transport binary is responsible for resolving these pins at runtime against the actual installed product. The values appear in the provenance log (per-run record).
+*Planned:* the agent's transport binary is responsible for resolving these pins at runtime against the actual installed product, and the values appear in the provenance log (per-run record). **Not implemented today** — `pinnable` is parsed and never read, and the provenance writer records no engineering pins.
 
 ### App-side declaration
 
@@ -317,11 +342,21 @@ engineering:
     credential:  '{{ secrets.ceng-seal }}'  # optional digital cert
 ```
 
-At install time, `aware app install` resolves the pins against the installed engineering agent's declared pinnable values. Mismatch = install fails with a clear error pointing at which pin doesn't match.
+*Planned:* at install time, `aware app install` resolves the pins against the installed engineering agent's declared pinnable values, and a mismatch fails the install with a clear error pointing at which pin doesn't match. **Not implemented today** — the pins are parsed and copied into the lockfile, and no comparison against the agent's `pinnable` set happens at install, compile or run. An app whose pins name values the agent never declared installs and runs exactly as if they matched.
 
 ### Unit-typed numerics
 
-The `{{ ... }}` template engine gains optional unit tags. Values can carry SI units that the engine refuses to combine wrongly:
+**Planned — `aware.units()` does not exist.** Nothing in the runtime or in `atoms/`
+implements it, and the example below cannot run for a second, independent reason: the
+inline expression engine (`cli/src/runtime/inline.rs`) is a *predicate* evaluator — paths,
+literals, `==`, `!=`, `&&`, `||` — with no function-call or arithmetic syntax at all, and
+`validate` rejects any inline node whose `kind` is not `predicate` with `E_APP_INLINE_KIND`.
+So an app carrying the `map` node below fails at validate/compile, before any missing
+helper could be reached. Shipping this means giving the expression engine calls and
+arithmetic first; it is tracked under [v0.21 in the roadmap](./cli-roadmap.md).
+
+The contract the helper is intended to satisfy — the `{{ ... }}` template engine gains
+optional unit tags, and values carry SI units that the engine refuses to combine wrongly:
 
 ```yaml
 - id: load
@@ -334,9 +369,16 @@ The `{{ ... }}` template engine gains optional unit tags. Values can carry SI un
       return aware.units(dead.plus(live));   // returns "6.5 kN/m^2"
 ```
 
-Mixing kN/m² with kN/m or m would throw at run time, not produce silent garbage. The expression engine ships with the SI base + derived units library; per-discipline conventions (kip, klf, kN/m) round-trip cleanly.
+Mixing kN/m² with kN/m or m would throw at run time, not produce silent garbage. The expression engine would carry the SI base + derived units library, so that per-discipline conventions (kip, klf, kN/m) round-trip cleanly. Until that ships, an app needing unit-safe arithmetic must do it inside an agent command, where real code runs.
 
 ### `signed-output` topology node
+
+**Planned — `signed-output` is not a node kind.** `Node` (`cli/src/manifest/app.rs`) has no
+field for it and the app manifest sets no `deny_unknown_fields`, so an app declaring one is
+not rejected — the directive is **silently dropped at parse**, and the node seals nothing.
+The `engineering.output-seal` block above *is* typed, but is never read, so no
+`.aware-receipt.json` is written by a run today either. What *does* ship is the lower-level
+pair this node would build on: `aware key` and `aware receipt sign|verify` (ed25519).
 
 The end-of-run step that produces a chain-of-custody record:
 
@@ -360,7 +402,10 @@ Output: a `*.aware-receipt.json` next to the artifact containing:
 
 A checker years from now can re-create the receipt against a fresh AWARE install + the same app file + the same pins. Mismatch = the calc is no longer reproducible; investigate.
 
-### What this guarantees
+### What this guarantees (once the envelope executes)
+
+These are the guarantees the envelope is designed to deliver. None of them holds today —
+see the status note at the top of this section.
 
 - **Code revisions are visible.** No silent EC3:2005 → EC3:2022 drift.
 - **Section catalogues are visible.** No silent BS 4-1 → EN 10365 drift.

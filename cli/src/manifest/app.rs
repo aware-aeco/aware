@@ -121,12 +121,17 @@ pub struct ExposedCommand {
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct EngineeringBinding {
     /// Map of pin-id → pin-value (e.g. `code-of-practice: "eurocode-3@2022+uk-na"`).
-    /// Validated at install time against the engineering agent's declared
-    /// pinnable set.
+    ///
+    /// Parsed and copied verbatim into the lockfile, and nothing more. The
+    /// agent-spec describes these as validated at install against the engineering
+    /// agent's declared `pinnable` set — that is `planned`, not shipped: no such
+    /// comparison exists at install, compile or run, and the agent-side
+    /// `EngineeringDecl::pinnable` is never read (see `manifest/agent.rs`).
     #[serde(default)]
     pub pins: std::collections::BTreeMap<String, String>,
-    /// Optional output-seal block — produces an `.aware-receipt.json`
-    /// chain-of-custody record next to the named artifact.
+    /// Optional output-seal block. Parsed only — no `.aware-receipt.json` is
+    /// written by a run, and `signed-output` is not a node kind. Signing ships
+    /// separately as `aware key` + `aware receipt sign|verify`.
     #[serde(rename = "output-seal", default)]
     pub output_seal: Option<OutputSeal>,
 }
