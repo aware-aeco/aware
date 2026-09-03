@@ -1406,7 +1406,7 @@ fn attribute_spans(code: &[char], macros: &[(usize, usize)]) -> Vec<AttributeSpa
 /// Position, not mere containment. `unsafe(` counts in exactly two places:
 ///
 ///   * the attribute's own path — `#[unsafe(no_mangle)]`, `#![unsafe(…)]`;
-///   * a meta item of a `cfg_attr` — `#[cfg_attr(unix, unsafe(no_mangle))]`,
+///   * an attribute a `cfg_attr` applies — `#[cfg_attr(unix, unsafe(no_mangle))]`,
 ///     nesting included. A first-token test never sees this one, and it is the
 ///     spelling both real sites here would reach for, being unix-only. Measured:
 ///     that form compiles, really does export the symbol, and draws no clippy
@@ -1417,6 +1417,16 @@ fn attribute_spans(code: &[char], macros: &[(usize, usize)]) -> Vec<AttributeSpa
 /// applies no unsafe attribute, yet the gate demanded a `SAFETY:` comment for
 /// one (Codex review, #479). `doc` is not `unsafe` and not `cfg_attr`, so
 /// reading the path settles it without needing to know what `stringify!` does.
+///
+/// Reading the path is not enough by itself, though. "The previous token opens
+/// a list" then still matched `unsafe` at *any* depth beneath a `cfg_attr`, so
+/// `#[cfg_attr(any(), some(unsafe(no_mangle)))]` — which applies nothing, and
+/// which rustc accepts because a false predicate leaves the tokens unexpanded —
+/// was reported as an undocumented attribute (Codex review, #479). Hence the
+/// walk by depth below: a `cfg_attr` applies the arguments *after* its
+/// predicate and only those, one of which may be a further `cfg_attr`. A level
+/// nested under anything else names a meta item of that thing, not an
+/// attribute, and owes no justification.
 fn unsafe_attribute_hits(code: &[char], spans: &[AttributeSpan]) -> Vec<usize> {
     let at = |k: usize| code.get(k).copied();
     let is_ident = |c: char| c.is_alphanumeric() || c == '_';
@@ -1444,6 +1454,59 @@ fn unsafe_attribute_hits(code: &[char], spans: &[AttributeSpan]) -> Vec<usize> {
             && !at(k.wrapping_sub(1)).is_some_and(is_ident)
             && at(skip_ws(ident_end(k))) == Some('(')
     };
+    // The `(`…`)` holding the arguments of the identifier at `k`, parens
+    // matched, bounded by `limit`. `None` when no list follows it, or when the
+    // list is left unterminated.
+    let arg_list = |k: usize, limit: usize| -> Option<(usize, usize)> {
+        let open = skip_ws(ident_end(k));
+        if at(open) != Some('(') {
+            return None;
+        }
+        let mut depth = 0usize;
+        for j in open..limit {
+            match at(j) {
+                Some('(') => depth += 1,
+                Some(')') => {
+                    depth -= 1;
+                    if depth == 0 {
+                        return Some((open, j));
+                    }
+                }
+                _ => {}
+            }
+        }
+        None
+    };
+    // Where each *direct* argument of a matched `(`…`)` begins: the token runs
+    // separated by commas at depth zero. A nested list is one argument, not
+    // several — which is the whole distinction the anywhere-inside rule lost.
+    let direct_args = |open: usize, close: usize| -> Vec<usize> {
+        let mut args = Vec::new();
+        let mut depth = 0usize;
+        let mut starting = true;
+        for j in (open + 1)..close {
+            let Some(c) = at(j) else { break };
+            match c {
+                '(' | '[' | '{' => {
+                    depth += 1;
+                    starting = false;
+                }
+                ')' | ']' | '}' => {
+                    depth = depth.saturating_sub(1);
+                    starting = false;
+                }
+                ',' if depth == 0 => starting = true,
+                c if c.is_whitespace() => {}
+                _ => {
+                    if starting {
+                        args.push(j);
+                        starting = false;
+                    }
+                }
+            }
+        }
+        args
+    };
     let mut hits = Vec::new();
     for span in spans {
         let path = skip_ws(span.open + 1);
@@ -1451,31 +1514,27 @@ fn unsafe_attribute_hits(code: &[char], spans: &[AttributeSpan]) -> Vec<usize> {
             hits.push(path);
             continue;
         }
-        if name_at(path) != "cfg_attr" {
-            continue;
+        // Walk `cfg_attr` argument lists, innermost included. `pending` holds
+        // the lists still to read; a nested `cfg_attr` pushes its own, so
+        // `#[cfg_attr(unix, cfg_attr(test, unsafe(no_mangle)))]` is reached
+        // while `some(unsafe(…))` is not.
+        let mut pending: Vec<(usize, usize)> = Vec::new();
+        if name_at(path) == "cfg_attr" {
+            pending.extend(arg_list(path, span.end));
         }
-        // Inside a `cfg_attr`, a meta item is what follows `(` or `,`. That
-        // position test is only safe here because the path above has already
-        // established this is a `cfg_attr` and not, say, a `doc` holding macro
-        // input — and because tokens a macro consumes never reach this scan.
-        for k in path..span.end {
-            let meta_item = at(prev_non_ws(code, k)).is_some_and(|c| c == '(' || c == ',');
-            if meta_item && opens_unsafe_list(k) {
-                hits.push(k);
+        while let Some((open, close)) = pending.pop() {
+            // `.skip(1)`: the first argument is the cfg predicate — a
+            // condition, never an attribute this gate is about.
+            for arg in direct_args(open, close).into_iter().skip(1) {
+                if opens_unsafe_list(arg) {
+                    hits.push(arg);
+                } else if name_at(arg) == "cfg_attr" {
+                    pending.extend(arg_list(arg, close));
+                }
             }
         }
     }
     hits
-}
-
-/// The index of the last non-whitespace character before `k`, or `usize::MAX`
-/// when there is none — an index that reads back as `None`, so a construct at
-/// the very start of a file is not credited with a neighbour it does not have.
-fn prev_non_ws(code: &[char], k: usize) -> usize {
-    (0..k)
-        .rev()
-        .find(|j| code.get(*j).is_some_and(|c| !c.is_whitespace()))
-        .unwrap_or(usize::MAX)
 }
 
 /// The character ranges a macro invocation's delimiters enclose — `ident!(…)`,
@@ -1956,6 +2015,13 @@ fn undocumented_unsafe_classifier_matches_its_contract() {
             "unsafe attribute with a space before the bracket",
             "# [unsafe(no_mangle)]\npub extern \"C\" fn f() {}\n",
         ),
+        // A `cfg_attr` may expand to another `cfg_attr`, so the applied
+        // attribute can sit a level down and still be applied. The depth walk
+        // that excludes `some(unsafe(…))` below has to keep reaching this.
+        (
+            "unsafe attribute nested in a cfg_attr inside a cfg_attr",
+            "#[cfg_attr(unix, cfg_attr(feature = \"x\", unsafe(no_mangle)))]\npub extern \"C\" fn f() {}\n",
+        ),
         // False *clearances* — each of these once reported `documented: true`.
         (
             "a SAFETY comment separated from the construct by blank lines",
@@ -2148,6 +2214,16 @@ fn undocumented_unsafe_classifier_matches_its_contract() {
         (
             "unsafe( quoted as macro input inside an unrelated attribute",
             "#[doc = stringify!(unsafe(no_mangle))]\npub extern \"C\" fn f() {}\n",
+        ),
+        // Codex review, PR #479 round 5. Reading the attribute path fixed the
+        // `doc` case above but left the depth unbounded, so `unsafe(` anywhere
+        // under a `cfg_attr` still counted. `some` is not an attribute this
+        // `cfg_attr` applies — `unsafe(no_mangle)` is a meta item *of* `some`,
+        // applied to nothing. rustc accepts it because the false predicate
+        // leaves it unexpanded, and rustfmt preserves it.
+        (
+            "unsafe( nested below the attribute a cfg_attr applies",
+            "#[cfg_attr(any(), some(unsafe(no_mangle)))]\npub extern \"C\" fn f() {}\n",
         ),
     ];
     for (what, source) in must_not_match {
