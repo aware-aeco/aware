@@ -7,7 +7,9 @@ import test from 'node:test';
 import {
   assertVerboseCargoProof, cargoArguments, closedGitEnvironment, COMMAND_OUTPUT_BUFFER_BYTES,
   controlledEnvironment, materializeClosure, rejectedAmbientKeys, SOURCE_PATHS,
-  writeBuilderManifestEvidence,
+  writeBuilderManifestEvidence, rustCompilerArguments, verifiedVendorDirectory, normalizeBuildText,
+  verifyExtractedInputs,
+  createCargoBuild, verifyCargoVendorBinding, logicalCargoCommand, LOGICAL_CARGO_COMMAND,
 } from './build-windows-internal-repro.mjs';
 
 test('verbose command evidence has an explicit bounded buffer large enough for a full Cargo proof', () => {
@@ -29,17 +31,93 @@ test('Cargo invocation is locked, offline, release, verbose, and Windows-specifi
 });
 
 test('controlled environment owns reproducible Rust and native MSVC flags', () => {
+  const root = mkdtempSync(join(tmpdir(), 'aware-vendor-'));
+  mkdirSync(join(root, 'vendor'));
+  try {
   const locator = { tools: { rustc: 'RUSTC', rustdoc: 'RUSTDOC', cl: 'CL', lib: 'LIB' }, environment: {
     PATH: 'PATH', INCLUDE: 'INCLUDE', LIB: 'LIBS', LIBPATH: 'LIBPATH', SystemRoot: 'SYSTEM',
     WINDIR: 'WINDOWS', ComSpec: 'CMD', PATHEXT: '.EXE',
   } };
-  const env = controlledEnvironment({ locator, workRoot: 'WORK', sourceRoot: 'SOURCE', cargoHome: 'CARGO', tempRoot: 'TEMP' });
-  assert.match(env.RUSTFLAGS, /^-C link-arg=\/Brepro/);
-  assert.match(env.RUSTFLAGS, /--remap-path-prefix=SOURCE=<source>/);
+  const vendor = verifiedVendorDirectory(root);
+  const options = { locator, workRoot: 'C:\\WORK', sourceRoot: 'C:\\WORK\\SOURCE', cargoHome: 'C:\\WORK\\CARGO', cargoVendor: vendor, tempRoot: 'TEMP' };
+  const env = controlledEnvironment(options);
+  assert.equal(env.RUSTFLAGS, undefined);
+  assert.deepEqual(env.CARGO_ENCODED_RUSTFLAGS.split('\x1f'), [
+    '-C', 'link-arg=/Brepro',
+    '--remap-path-prefix=C:\\WORK=<work>', '--remap-path-prefix=C:/WORK=<work>',
+    '--remap-path-prefix=C:\\WORK\\SOURCE=<source>', '--remap-path-prefix=C:/WORK/SOURCE=<source>',
+    '--remap-path-prefix=C:\\WORK\\CARGO=<cargo-home>', '--remap-path-prefix=C:/WORK/CARGO=<cargo-home>',
+    ...[...new Set([vendor, vendor.replaceAll('\\', '/')])].map(path => `--remap-path-prefix=${path}=<cargo-vendor>`),
+  ]);
+  for (const cargoVendor of [undefined, '', join(root, 'missing')]) {
+    assert.throws(() => controlledEnvironment({ ...options, cargoVendor }), /vendor path/);
+  }
+  writeFileSync(join(root, 'not-a-directory'), 'x');
+  assert.throws(() => rustCompilerArguments({ ...options, cargoVendor: join(root, 'not-a-directory') }), /vendor path/);
   assert.equal(env.CFLAGS, '/Brepro'); assert.equal(env.CL, '/Brepro');
   assert.equal(env.CARGO_NET_OFFLINE, 'true'); assert.equal(env.RUSTC, 'RUSTC');
   assert.equal(env.CARGO_BUILD_JOBS, '1');
   assert.equal(env.NODE_OPTIONS, undefined); assert.equal(env.GOOGLE_CLIENT_SECRET, undefined);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test('verified closure and vendor operands cannot silently become an empty Cargo home', () => {
+  const root = mkdtempSync(join(tmpdir(), 'aware-vendor-root-'));
+  try {
+    assert.throws(() => verifiedVendorDirectory(undefined), /closure is required/);
+    assert.throws(() => verifiedVendorDirectory(''), /closure is required/);
+    assert.throws(() => verifiedVendorDirectory(root), /existing directory/);
+    writeFileSync(join(root, 'vendor'), 'not a directory');
+    assert.throws(() => verifiedVendorDirectory(root), /existing directory/);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test('the production Cargo contract rejects divergent existing vendor roots and missing config operands', () => {
+  const root = mkdtempSync(join(tmpdir(), 'aware-cargo-contract-'));
+  try {
+    const closures = [join(root, 'sealed a'), join(root, 'sealed b')];
+    for (const closure of closures) mkdirSync(join(closure, 'vendor'), { recursive: true });
+    const locator = { tools: { rustc: 'RUSTC', rustdoc: 'RUSTDOC', cl: 'CL', lib: 'LIB' }, environment: {
+      PATH: 'PATH', INCLUDE: 'INCLUDE', LIB: 'LIBS', LIBPATH: 'LIBPATH', SystemRoot: 'SYSTEM',
+      WINDIR: 'WINDOWS', ComSpec: 'CMD', PATHEXT: '.EXE',
+    } };
+    const options = { locator, workRoot: join(root, 'work'), sourceRoot: join(root, 'work', 'source'), cargoHome: join(root, 'work', 'cargo-home'), tempRoot: join(root, 'temp') };
+    const [a, b] = closures.map(cargoClosure => createCargoBuild({ ...options, cargoClosure }));
+    assert.equal(a.command, LOGICAL_CARGO_COMMAND);
+    assert.doesNotThrow(() => verifyCargoVendorBinding(a));
+    const isVendor = arg => arg.startsWith('source.vendored-sources.directory=');
+    const divergentArgs = a.args.map(arg => isVendor(arg) ? b.args.find(isVendor) : arg);
+    assert.throws(() => verifyCargoVendorBinding({ ...a, args: divergentArgs }), /vendor operand differs/);
+    assert.throws(() => verifyCargoVendorBinding({ ...a, env: b.env }), /vendor remaps differ/);
+    for (let index = 0; index < a.args.length; index++) {
+      if (a.args[index] !== '--config') continue;
+      const missingOperand = [...a.args]; missingOperand.splice(index, 2);
+      assert.throws(() => logicalCargoCommand(missingOperand, [[options.sourceRoot, '<source>'], [a.cargoVendor, '<cargo-vendor>']]), /closed build contract/);
+    }
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test('logical evidence replaces specific roots first in both Windows spellings and case variants', () => {
+  const roots = [['C:\\WORK', '<work>'], ['C:\\WORK\\source', '<source>'], ['C:\\SEALED A\\vendor', '<cargo-vendor>']];
+  assert.equal(normalizeBuildText('C:\\WORK\\source\\main.rs c:/work/source/main.rs C:\\SEALED A\\vendor\\dep.rs', roots),
+    '<source>\\main.rs <source>/main.rs <cargo-vendor>\\dep.rs');
+  assert.equal(normalizeBuildText('C:\\\\SEALED A\\\\vendor\\\\dep.rs', roots), '<cargo-vendor>\\\\dep.rs');
+});
+
+test('a new source builder cannot be built using an old running script and lock-only manifest', () => {
+  const root = mkdtempSync(join(tmpdir(), 'aware-builder-source-'));
+  try {
+    mkdirSync(join(root, 'cli')); mkdirSync(join(root, 'cli-connection-reader'));
+    const files = { 'aware-cargo-lock': join(root, 'cli', 'Cargo.lock'), 'reader-package-lock': join(root, 'cli-connection-reader', 'package-lock.json'), 'builder-script': join(root, 'cli', 'build-windows-internal-repro.mjs') };
+    for (const [id, path] of Object.entries(files)) writeFileSync(path, id);
+    const running = join(root, 'running.mjs'); writeFileSync(running, 'builder-script');
+    const inputs = Object.fromEntries(Object.entries(files).map(([id, path]) => [id, createHash('sha256').update(readFileSync(path)).digest('hex')]));
+    assert.doesNotThrow(() => verifyExtractedInputs(root, inputs, running));
+    writeFileSync(files['builder-script'], 'new source builder');
+    assert.throws(() => verifyExtractedInputs(root, inputs, running), /extracted source/);
+    inputs['builder-script'] = createHash('sha256').update(readFileSync(files['builder-script'])).digest('hex');
+    assert.throws(() => verifyExtractedInputs(root, inputs, running), /extracted source/);
+  } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
 test('offline cache use is isolated in a verified private copy', () => {
@@ -77,6 +155,11 @@ test('verbose proof goes red if the actual command loses /Brepro or a locked fla
   assert.doesNotThrow(() => assertVerboseCargoProof(complete));
   assert.throws(() => assertVerboseCargoProof(complete.replace('/Brepro', '/DEBUG')), /rustc \/Brepro/);
   assert.throws(() => assertVerboseCargoProof(complete.replace('--locked', '')), /locked mode/);
+  const vendorArgs = ['--remap-path-prefix=C:\\sealed cache\\vendor=<cargo-vendor>', '--remap-path-prefix=C:/sealed cache/vendor=<cargo-vendor>'];
+  assert.doesNotThrow(() => assertVerboseCargoProof(`${complete} ${vendorArgs.join(' ')}`, vendorArgs));
+  for (const missing of vendorArgs) {
+    assert.throws(() => assertVerboseCargoProof(`${complete} ${vendorArgs.filter(arg => arg !== missing).join(' ')}`, vendorArgs), /compiler remap/);
+  }
 });
 
 test('builder manifest is retained byte-for-byte as independently digestible evidence', () => {

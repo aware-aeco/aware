@@ -18,6 +18,11 @@ const SHA1 = /^[0-9a-f]{40}$/;
 const TARGET = 'x86_64-pc-windows-msvc';
 export const COMMAND_OUTPUT_BUFFER_BYTES = 128 * 1024 * 1024;
 export const SOURCE_PATHS = Object.freeze(['cli', 'cli-connection-reader']);
+const LOGICAL_ROOTS = ['<work>', '<source>', '<cargo-home>', '<cargo-vendor>'];
+export const WINDOWS_LOGICAL_RUST_FLAGS = ['-C', 'link-arg=/Brepro',
+  ...LOGICAL_ROOTS.flatMap((root) => Array(2).fill(`--remap-path-prefix=${root}=${root}`)),
+].join(' ');
+export const LOGICAL_CARGO_COMMAND = '<cargo> build --manifest-path <source>/cli/Cargo.toml --release --locked --offline --config source.crates-io.replace-with="vendored-sources" --config source.vendored-sources.directory="<cargo-vendor>" --target x86_64-pc-windows-msvc --verbose --verbose';
 const EXACT_POISON = new Set([
   'RUSTFLAGS', 'CARGO_ENCODED_RUSTFLAGS', 'CC', 'CFLAGS', 'CL', 'LINK', 'LIB', 'INCLUDE',
   'NODE_OPTIONS', 'ESBUILD_BINARY_PATH', 'GOOGLE_CLIENT_SECRET', 'AWARE_GOOGLE_CLIENT_SECRET',
@@ -105,7 +110,45 @@ export function cargoArguments(manifestPath, vendorDirectory) {
     '--target', TARGET, '--verbose', '--verbose'];
 }
 
-export function controlledEnvironment({ locator, workRoot, sourceRoot, cargoHome, tempRoot }) {
+export function verifiedVendorDirectory(cargoClosure) {
+  if (typeof cargoClosure !== 'string' || !cargoClosure.trim()) throw new Error('verified Cargo closure is required');
+  const vendor = resolve(cargoClosure, 'vendor');
+  if (!existsSync(vendor) || !lstatSync(vendor).isDirectory() || lstatSync(vendor).isSymbolicLink()) {
+    throw new Error('verified Cargo vendor path must be an existing directory');
+  }
+  return vendor;
+}
+
+function pathSpellings(path) {
+  return [...new Set([path, path.replaceAll('\\', '/')])];
+}
+
+export function rustCompilerArguments({ workRoot, sourceRoot, cargoHome, cargoVendor }) {
+  if (typeof cargoVendor !== 'string' || !cargoVendor.trim()
+    || !existsSync(cargoVendor) || !lstatSync(cargoVendor).isDirectory() || lstatSync(cargoVendor).isSymbolicLink()) {
+    throw new Error('Cargo vendor path must be an existing directory');
+  }
+  // rustc applies the LAST matching textual prefix: broad roots precede their children.
+  const roots = [[workRoot, '<work>'], [sourceRoot, '<source>'], [cargoHome, '<cargo-home>'], [cargoVendor, '<cargo-vendor>']];
+  const remaps = roots.flatMap(([path, token]) => {
+    if (typeof path !== 'string' || !path || /[\x00\x1f]/.test(path)) throw new Error('invalid compiler remap root');
+    return pathSpellings(path).map((spelling) => `--remap-path-prefix=${spelling}=${token}`);
+  });
+  return ['-C', 'link-arg=/Brepro', ...remaps];
+}
+
+export function normalizeBuildText(text, roots) {
+  const replacements = roots.flatMap(([path, token]) => pathSpellings(path)
+    .flatMap((spelling) => [[spelling, token], [spelling.replaceAll('\\', '\\\\'), token]]))
+    .sort((left, right) => right[0].length - left[0].length);
+  for (const [path, token] of replacements) {
+    const escaped = path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    text = text.replace(new RegExp(escaped, 'gi'), () => token);
+  }
+  return text;
+}
+
+export function controlledEnvironment({ locator, workRoot, sourceRoot, cargoHome, cargoVendor, tempRoot }) {
   const required = ['PATH', 'INCLUDE', 'LIB', 'LIBPATH', 'SystemRoot', 'WINDIR', 'ComSpec', 'PATHEXT'];
   for (const key of required) if (typeof locator.environment?.[key] !== 'string') throw new Error(`locator environment is missing ${key}`);
   return {
@@ -114,7 +157,7 @@ export function controlledEnvironment({ locator, workRoot, sourceRoot, cargoHome
     CARGO_HOME: cargoHome, CARGO_TARGET_DIR: join(workRoot, 'cargo-target'), CARGO_NET_OFFLINE: 'true',
     CARGO_BUILD_JOBS: '1',
     RUSTC: locator.tools.rustc, RUSTDOC: locator.tools.rustdoc,
-    RUSTFLAGS: `-C link-arg=/Brepro --remap-path-prefix=${sourceRoot}=<source> --remap-path-prefix=${workRoot}=<work> --remap-path-prefix=${cargoHome}=<cargo-home>`,
+    CARGO_ENCODED_RUSTFLAGS: rustCompilerArguments({ workRoot, sourceRoot, cargoHome, cargoVendor }).join('\x1f'),
     CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER: locator.tools.link,
     CC: locator.tools.cl, AR: locator.tools.lib, CFLAGS: '/Brepro', CL: '/Brepro',
     CC_x86_64_pc_windows_msvc: locator.tools.cl, AR_x86_64_pc_windows_msvc: locator.tools.lib,
@@ -122,12 +165,54 @@ export function controlledEnvironment({ locator, workRoot, sourceRoot, cargoHome
   };
 }
 
-export function assertVerboseCargoProof(text) {
+export function verifyCargoVendorBinding({ args, env, cargoVendor }) {
+  const operand = `source.vendored-sources.directory="${cargoVendor.replaceAll('\\', '/')}"`;
+  const vendors = args.filter(arg => arg.startsWith('source.vendored-sources.directory='));
+  if (vendors.length !== 1 || vendors[0] !== operand) throw new Error('Cargo vendor operand differs from the verified root');
+  const flags = env.CARGO_ENCODED_RUSTFLAGS.split('\x1f');
+  const vendorMaps = flags.filter(arg => arg.endsWith('=<cargo-vendor>'));
+  const expected = pathSpellings(cargoVendor).map(path => `--remap-path-prefix=${path}=<cargo-vendor>`);
+  if (canonicalJson(vendorMaps) !== canonicalJson(expected)) throw new Error('compiler vendor remaps differ from the verified root');
+}
+
+export function logicalCargoCommand(args, roots) {
+  const command = normalizeBuildText(['<cargo>', ...args].join(' '), roots).replaceAll('\\', '/');
+  if (command !== LOGICAL_CARGO_COMMAND) throw new Error('Cargo command differs from the closed build contract');
+  return command;
+}
+
+export function createCargoBuild({ locator, workRoot, sourceRoot, cargoHome, cargoClosure, tempRoot }) {
+  const cargoVendor = verifiedVendorDirectory(cargoClosure);
+  const env = Object.freeze(controlledEnvironment({ locator, workRoot, sourceRoot, cargoHome, cargoVendor, tempRoot }));
+  const args = Object.freeze(cargoArguments(join(sourceRoot, 'cli', 'Cargo.toml'), cargoVendor));
+  verifyCargoVendorBinding({ args, env, cargoVendor });
+  const command = logicalCargoCommand(args, [[sourceRoot, '<source>'], [cargoVendor, '<cargo-vendor>']]);
+  return Object.freeze({ cargoVendor, env, args, command });
+}
+
+export function assertVerboseCargoProof(text, rustArgs = []) {
   const checks = [
     [/--release/, 'release profile'], [/--locked/, 'locked mode'], [/--offline/, 'offline mode'],
     [/x86_64-pc-windows-msvc/, 'Windows MSVC target'], [/(?:link-arg=|link-arg\s+)\/?Brepro/i, 'rustc /Brepro'],
   ];
   for (const [pattern, label] of checks) if (!pattern.test(text)) throw new Error(`verbose Cargo proof omitted ${label}`);
+  for (const argument of rustArgs.filter((arg) => arg.startsWith('--remap-path-prefix='))) {
+    if (!text.includes(argument) && !text.includes(argument.replaceAll('\\', '\\\\'))) {
+      throw new Error(`verbose Cargo proof omitted compiler remap: ${argument}`);
+    }
+  }
+}
+
+export function verifyExtractedInputs(source, inputs, runningScript = scriptPath) {
+  const actual = {
+    'aware-cargo-lock': sha256File(join(source, 'cli', 'Cargo.lock')),
+    'reader-package-lock': sha256File(join(source, 'cli-connection-reader', 'package-lock.json')),
+    'builder-script': sha256File(join(source, 'cli', 'build-windows-internal-repro.mjs')),
+  };
+  if (Object.entries(actual).some(([id, digest]) => inputs?.[id] !== digest)
+    || actual['builder-script'] !== sha256File(runningScript)) {
+    throw new Error('extracted source locks or builder script differ from running builder and manifest');
+  }
 }
 
 function run(path, args, options = {}) {
@@ -208,7 +293,15 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
   const unexpectedSource = readdirSync(source).filter((name) => name !== '.git' && !SOURCE_PATHS.includes(name));
   if (unexpectedSource.length) throw new Error(`sparse source boundary contains unexpected roots: ${unexpectedSource.join(', ')}`);
 
-  const controlled = controlledEnvironment({ locator, workRoot: work, sourceRoot: source, cargoHome, tempRoot });
+  verifyExtractedInputs(source, manifest.inputs);
+  const cargoBuild = createCargoBuild({ locator, workRoot: work, sourceRoot: source, cargoHome, cargoClosure, tempRoot });
+  const { cargoVendor, env: controlled, args: cargoArgs } = cargoBuild;
+  const rustArgs = controlled.CARGO_ENCODED_RUSTFLAGS.split('\x1f');
+  const roots = [[source, '<source>'], [work, '<work>'], [output, '<output>'],
+    [cargoHome, '<cargo-home>'], [cargoVendor, '<cargo-vendor>'], [cargoClosure, '<cargo-closure>'],
+    [dirname(authority.tools.cargo), '<rust-toolchain>'], [dirname(authority.tools.link), '<msvc-toolchain>']];
+  const logicalRustFlags = normalizeBuildText(rustArgs.join(' '), roots);
+  if (logicalRustFlags !== WINDOWS_LOGICAL_RUST_FLAGS) throw new Error('compiler flags differ from the closed Windows build contract');
   const cargoVersion = run(authority.tools.cargo, ['--version'], { env: controlled }).trim();
   const rustVersion = run(authority.tools.rustc, ['--version'], { env: controlled }).trim();
   if (!/^cargo 1\.95\.0\b/.test(cargoVersion) || !/^rustc 1\.95\.0\b/.test(rustVersion)) {
@@ -223,23 +316,9 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
   const readerRoot = join(source, 'cli-connection-reader');
   run(authority.tools.node, [authority.tools['npm-cli'], 'ci', '--offline', '--ignore-scripts'], { cwd: readerRoot, env: npmEnv });
 
-  const expectedInputs = {
-    'aware-cargo-lock': sha256File(join(source, 'cli', 'Cargo.lock')),
-    'reader-package-lock': sha256File(join(readerRoot, 'package-lock.json')),
-  };
-  if (Object.entries(expectedInputs).some(([id, digest]) => manifest.inputs?.[id] !== digest)) {
-    throw new Error('final source lockfile digests do not match builder manifest');
-  }
-
-  const cargoArgs = cargoArguments(join(source, 'cli', 'Cargo.toml'), join(cargoClosure, 'vendor'));
   const cargoLog = run(authority.tools.cargo, cargoArgs, { cwd: source, env: controlled });
-  const normalizedCargo = `<cargo> ${cargoArgs.join(' ')}\n${cargoLog}`
-    .replaceAll(source, '<source>').replaceAll(work, '<work>').replaceAll(output, '<output>')
-    .replaceAll(cargoHome, '<cargo-home>')
-    .replaceAll(cargoClosure, '<cargo-closure>')
-    .replaceAll(dirname(authority.tools.cargo), '<rust-toolchain>')
-    .replaceAll(dirname(authority.tools.link), '<msvc-toolchain>');
-  assertVerboseCargoProof(`${cargoArgs.join(' ')}\n${normalizedCargo}`);
+  assertVerboseCargoProof(`${cargoArgs.join(' ')}\n${cargoLog}`, rustArgs);
+  const normalizedCargo = normalizeBuildText(`<cargo> ${cargoArgs.join(' ')}\n${cargoLog}`, roots);
   writeFileSync(join(evidence, 'cargo-verbose.local.txt'), cargoLog, 'utf8');
   writeFileSync(join(evidence, 'cargo-verbose.normalized.txt'), normalizedCargo, 'utf8');
 
@@ -268,7 +347,7 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
     schema: 'aware-windows-runtime-build-receipt/v1',
     buildId: sha256Bytes(Buffer.from(manifestText)), builderManifestSha256: sha256Bytes(Buffer.from(manifestText)),
     source: manifest.source, inputs: manifest.inputs, target: TARGET,
-    flags: { rust: '-C link-arg=/Brepro', native: '/Brepro', cargo: ['--release', '--locked', '--offline'] },
+    flags: { rust: logicalRustFlags, native: '/Brepro', cargo: ['--release', '--locked', '--offline'] },
     outputs: {
       'aware.exe': { size: lstatSync(join(artifacts, 'aware.exe')).size, sha256: sha256File(join(artifacts, 'aware.exe')) },
       'builder-manifest.json': builderManifestRecord,
@@ -278,7 +357,7 @@ export async function buildWindowsInternal({ manifestPath, locatorPath, outputRo
       },
     },
     commands: {
-      cargo: '<cargo> build --manifest-path <source>/cli/Cargo.toml --release --locked --offline --config source.vendored-sources.directory="<cargo-home>/vendor" --target x86_64-pc-windows-msvc --verbose --verbose',
+      cargo: cargoBuild.command,
       reader: '<node> <source>/cli-connection-reader/build-internal-repro.mjs --manifest <manifest> --locator <local-locator> --output <artifacts>/reader',
     },
     unsignedTestMedia: true,

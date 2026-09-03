@@ -375,9 +375,20 @@ jobs:
           cache: npm
           cache-dependency-path: cli-connection-reader/package-lock.json
 
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: 1.88.0
+          toolchain: 1.95.0
+
+      - name: Configure the native x64 compiler environment
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1
+        with:
+          arch: x64
+
+      - name: Verify private builder authority
+        run: node --test cli/build-windows-internal-repro.test.mjs cli/create-windows-internal-repro-inputs.test.mjs
+
+      - name: Verify native vendor-path reproducibility
+        run: node cli/windows-vendor-repro.native.mjs
 
       - name: Build source AWARE host
         run: cargo build --manifest-path cli/Cargo.toml --locked
