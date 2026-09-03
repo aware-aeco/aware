@@ -1566,7 +1566,16 @@ fn macro_token_spans(code: &[char]) -> Vec<(usize, usize)> {
             continue;
         }
         let mut k = skip_ws(i + 1);
-        // `macro_rules! m { … }` — skip the name to reach the body.
+        // `macro_rules! m { … }` — skip the name to reach the body. The name
+        // may be a raw identifier, and `#` is not an identifier character: on
+        // `macro_rules! r#try { … }` the skip consumed the `r`, stopped at the
+        // `#`, found no delimiter and recorded no span at all — so the
+        // matcher's discarded tokens were read as real constructs, which is
+        // the false positive this whole exclusion exists to prevent (Codex
+        // review, #479). Consume the `r#` prefix first.
+        if at(k) == Some('r') && at(k + 1) == Some('#') && at(k + 2).is_some_and(is_ident) {
+            k += 2;
+        }
         if at(k).is_some_and(is_ident) {
             while at(k).is_some_and(is_ident) {
                 k += 1;
@@ -2224,6 +2233,18 @@ fn undocumented_unsafe_classifier_matches_its_contract() {
         (
             "unsafe( nested below the attribute a cfg_attr applies",
             "#[cfg_attr(any(), some(unsafe(no_mangle)))]\npub extern \"C\" fn f() {}\n",
+        ),
+        // Codex review, PR #479 round 6. A `macro_rules!` name may be a raw
+        // identifier, and `#` is not an identifier character — so the name-skip
+        // stopped on it, recorded no span, and the macro-token exclusion above
+        // silently did not apply to this macro at all.
+        (
+            "unsafe extern in a raw-identifier macro_rules matcher",
+            "macro_rules! r#try {\n    (unsafe extern \"C\" {}) => {};\n}\n",
+        ),
+        (
+            "an attribute-shaped token in a raw-identifier macro_rules matcher",
+            "macro_rules! r#try {\n    (#[unsafe(no_mangle)]) => {};\n}\n",
         ),
     ];
     for (what, source) in must_not_match {
