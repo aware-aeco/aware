@@ -456,7 +456,11 @@ struct CargoJob {
     key: String,
     /// (position, action ref, `toolchain:` input) for each toolchain step.
     toolchain_steps: Vec<(usize, String, Option<String>)>,
-    step_ids: Vec<String>,
+    /// (position, `id:`) for each step that declares one. Positional for the
+    /// same reason as `toolchain_steps`: a step's outputs do not exist until it
+    /// has run, so an `id` that appears *after* the action reading it is not
+    /// available to that action (Codex review, PR #490).
+    step_ids: Vec<(usize, String)>,
     /// Position of the first step that invokes cargo.
     first_cargo: usize,
     /// The name of that step, so a failure can point at it.
@@ -486,7 +490,8 @@ fn cargo_jobs(workflows: &[(String, String)]) -> Vec<CargoJob> {
             let step_ids = job
                 .steps
                 .iter()
-                .filter_map(|step| step.id.clone())
+                .enumerate()
+                .filter_map(|(at, step)| step.id.clone().map(|id| (at, id)))
                 .collect();
             found.push(CargoJob {
                 workflow: name.clone(),
@@ -542,7 +547,7 @@ fn every_cargo_job_installs_the_pin_and_none_restates_it() {
             job.first_cargo_name
         );
 
-        for (_, uses, input) in &job.toolchain_steps {
+        for (consumer_at, uses, input) in &job.toolchain_steps {
             let Some(value) = input else {
                 panic!(
                     "{where_} installs `{uses}` with no `toolchain:` input, so the \
@@ -560,11 +565,33 @@ fn every_cargo_job_installs_the_pin_and_none_restates_it() {
             );
             let id = referenced_step_id(value)
                 .unwrap_or_else(|| panic!("{where_}: could not read a step id out of `{value}`"));
+            let producer_at = job
+                .step_ids
+                .iter()
+                .find(|(_, declared)| *declared == id)
+                .map(|(at, _)| *at);
+            let Some(producer_at) = producer_at else {
+                panic!(
+                    "{where_} reads `{value}`, but no step in that job declares \
+                     `id: {id}`. Step ids present: {:?}",
+                    job.step_ids
+                );
+            };
+            // Presence is not enough: the producer must have RUN. `steps.<id>.
+            // outputs.*` is resolved when the consuming step is evaluated, so an
+            // id declared further down the job resolves to the empty string, the
+            // action falls back to its ref's default channel, and the compiler is
+            // unpinned with every other assertion here green. Moving `Read pinned
+            // toolchain` below `Install Rust` — both still above the build — is
+            // the case that passed before this check existed (Codex review,
+            // PR #490).
             assert!(
-                job.step_ids.contains(&id),
-                "{where_} reads `{value}`, but no step in that job declares \
-                 `id: {id}`. Step ids present: {:?}",
-                job.step_ids
+                producer_at < *consumer_at,
+                "{where_} reads `{value}` at step {consumer_at}, but the step \
+                 declaring `id: {id}` is step {producer_at} — at or after the one \
+                 consuming it. A step's outputs do not exist until it has run, so \
+                 `{uses}` would receive an empty toolchain and fall back to its \
+                 ref's default channel. Move `id: {id}` above step {consumer_at}."
             );
         }
     }
@@ -1209,10 +1236,105 @@ jobs:
         "the corrected form was not recognised as reading the pin: {value:?}"
     );
     let id = referenced_step_id(&value).expect("expression names a step");
-    assert!(
-        job.step_ids.contains(&id),
-        "the walk did not collect the `id: {id}` the expression refers to; ids \
-         seen: {:?}",
+    let producer_at = job
+        .step_ids
+        .iter()
+        .find(|(_, declared)| *declared == id)
+        .map(|(at, _)| *at);
+    assert_eq!(
+        producer_at,
+        Some(0),
+        "the walk did not collect the `id: {id}` the expression refers to at its \
+         real position; ids seen: {:?}",
         job.step_ids
+    );
+    assert!(
+        producer_at.unwrap() < job.toolchain_steps[0].0,
+        "the corrected form declares the id before the step consuming it, and the \
+         positive control must accept that ordering"
+    );
+}
+
+#[test]
+fn the_step_declaring_the_id_must_come_before_the_step_reading_it() {
+    // The gap left after round three. `Install Rust` is above the build, so the
+    // install-before-cargo check passes, and `id: pin` exists in the job, so the
+    // presence check passes — but it is declared BELOW the action reading its
+    // output. `steps.pin.outputs.channel` is resolved when the install runs, at
+    // which point that step has not run, so the action is handed an empty
+    // toolchain and silently falls back to its ref's default (Codex review,
+    // PR #490).
+    let producer_too_late = r#"jobs:
+  probe:
+    steps:
+      - name: Install Rust ${{ steps.pin.outputs.channel }}
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ steps.pin.outputs.channel }}
+
+      - name: Read pinned toolchain
+        id: pin
+        shell: bash
+        run: |
+          channel=$(sed -n 's/^channel = "\(.*\)"/\1/p' cli/rust-toolchain.toml | head -1)
+          echo "channel=$channel" >> "$GITHUB_OUTPUT"
+
+      - name: Build
+        run: cargo build --locked
+"#;
+    let found = cargo_jobs(&[("late.yml".to_string(), producer_too_late.to_string())]);
+    assert_eq!(found.len(), 1);
+    let job = &found[0];
+    // Everything the earlier rounds check is satisfied by this job: the install
+    // is present, it precedes cargo, and the id it names is declared somewhere.
+    assert_eq!(job.toolchain_steps[0].0, 0, "the install is the first step");
+    assert!(
+        job.toolchain_steps[0].0 < job.first_cargo,
+        "the install still precedes cargo, so round three's check passes here"
+    );
+    assert!(
+        job.step_ids.iter().any(|(_, declared)| declared == "pin"),
+        "the id is present, so a contains-only check passes here too"
+    );
+    // Only the position separates this from the correct form.
+    assert_eq!(
+        job.step_ids
+            .iter()
+            .find(|(_, declared)| declared == "pin")
+            .map(|(at, _)| *at),
+        Some(1),
+        "the producer is the second step, i.e. after the step consuming it"
+    );
+
+    // The same three steps with the producer first: the ordering that must be
+    // accepted, or the assertion rejects everything and proves nothing.
+    let producer_first = producer_too_late.replace(
+        "      - name: Install Rust ${{ steps.pin.outputs.channel }}\n        uses: dtolnay/rust-toolchain@master\n        with:\n          toolchain: ${{ steps.pin.outputs.channel }}\n\n      - name: Read pinned toolchain\n        id: pin\n        shell: bash\n        run: |\n          channel=$(sed -n 's/^channel = \"\\(.*\\)\"/\\1/p' cli/rust-toolchain.toml | head -1)\n          echo \"channel=$channel\" >> \"$GITHUB_OUTPUT\"\n",
+        "      - name: Read pinned toolchain\n        id: pin\n        shell: bash\n        run: |\n          channel=$(sed -n 's/^channel = \"\\(.*\\)\"/\\1/p' cli/rust-toolchain.toml | head -1)\n          echo \"channel=$channel\" >> \"$GITHUB_OUTPUT\"\n\n      - name: Install Rust ${{ steps.pin.outputs.channel }}\n        uses: dtolnay/rust-toolchain@master\n        with:\n          toolchain: ${{ steps.pin.outputs.channel }}\n",
+    );
+    assert_ne!(
+        producer_first, producer_too_late,
+        "the reordering must actually apply, or the positive control is the \
+         negative one again"
+    );
+    let found = cargo_jobs(&[("early.yml".to_string(), producer_first)]);
+    assert_eq!(found.len(), 1);
+    let job = &found[0];
+    assert_eq!(
+        job.step_ids
+            .iter()
+            .find(|(_, declared)| declared == "pin")
+            .map(|(at, _)| *at),
+        Some(0),
+        "the producer is now the first step"
+    );
+    assert!(
+        job.step_ids
+            .iter()
+            .find(|(_, declared)| declared == "pin")
+            .map(|(at, _)| *at)
+            .unwrap()
+            < job.toolchain_steps[0].0,
+        "the correct ordering must be accepted"
     );
 }
