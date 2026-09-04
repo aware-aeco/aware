@@ -38,8 +38,43 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      # `cli/rust-toolchain.toml` is the single source of truth for the compiler
+      # version — read here rather than restated, exactly as `ci.yml` does, so
+      # the release cannot build on a different compiler than the one CI linted
+      # and tested.
+      #
+      # `shell: bash` because this job's matrix includes `windows-latest`, where
+      # the default shell is pwsh and neither this heredoc-free sed nor
+      # `>> "$GITHUB_OUTPUT"` would run. Git Bash ships `sed`; the expression is
+      # POSIX for the reason `ci.yml` gives — Git Bash rejects `-P`.
+      - name: Read pinned toolchain
+        id: pin
+        shell: bash
+        run: |
+          channel=$(sed -n 's/^[[:space:]]*channel[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' cli/rust-toolchain.toml | head -1)
+          if [ -z "$channel" ]; then
+            echo "::error::could not read [toolchain] channel from cli/rust-toolchain.toml"
+            exit 1
+          fi
+          echo "Pinned toolchain: $channel"
+          echo "channel=$channel" >> "$GITHUB_OUTPUT"
+
+      # `@stable` with no `toolchain:` input, which is what stood here, made the
+      # released binaries a build on whatever stable shipped that day — the exact
+      # condition #298 added the pin to remove. The pin file's own header still
+      # described that as past tense while this line kept it true.
+      #
+      # It looked closed because the CLI build below sets `working-directory: cli`
+      # and rustup honours `cli/rust-toolchain.toml` from the CWD, so that one
+      # step silently overrode `@stable` back to the pin. Nothing else did: the
+      # steel-detailer build runs from `20-agents/aeco/engineering/steel-detailer-lookup`,
+      # which carries no toolchain file, so those three shipped binaries were
+      # compiled by floating stable. Naming the channel on the action pins every
+      # cargo invocation in the job regardless of the directory it runs from.
+      - name: Install Rust ${{ steps.pin.outputs.channel }}
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ steps.pin.outputs.channel }}
 
       - name: Install Node (for the connection-reader SEA bridge build)
         uses: actions/setup-node@v6

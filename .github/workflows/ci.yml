@@ -375,9 +375,37 @@ jobs:
           cache: npm
           cache-dependency-path: cli-connection-reader/package-lock.json
 
-      - uses: dtolnay/rust-toolchain@stable
+      # Read, not restated — same single source of truth as `gates` and
+      # `gates-macos` above. This step used to name `1.88.0` literally, seven
+      # minor versions behind the `cli/rust-toolchain.toml` pin, and it was the
+      # compiler that actually built the host: `--manifest-path` does NOT move
+      # rustup's toolchain-file lookup, which resolves from the CWD only, and
+      # this step's CWD is the repo root, where no `rust-toolchain.toml` exists.
+      # Measured on a probe crate, not assumed — a toolchain file sitting beside
+      # the manifest named by `--manifest-path` is ignored.
+      #
+      # So the harness below exercised a binary built by a compiler no other job
+      # uses, and any language feature stabilised after 1.88 would have failed
+      # here alone, in a job whose name says nothing about Rust.
+      #
+      # `shell: bash` because this job runs on `windows-latest`, where the
+      # default shell is pwsh.
+      - name: Read pinned toolchain
+        id: pin
+        shell: bash
+        run: |
+          channel=$(sed -n 's/^[[:space:]]*channel[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' cli/rust-toolchain.toml | head -1)
+          if [ -z "$channel" ]; then
+            echo "::error::could not read [toolchain] channel from cli/rust-toolchain.toml"
+            exit 1
+          fi
+          echo "Pinned toolchain: $channel"
+          echo "channel=$channel" >> "$GITHUB_OUTPUT"
+
+      - name: Install Rust ${{ steps.pin.outputs.channel }}
+        uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: 1.88.0
+          toolchain: ${{ steps.pin.outputs.channel }}
 
       - name: Build source AWARE host
         run: cargo build --manifest-path cli/Cargo.toml --locked
