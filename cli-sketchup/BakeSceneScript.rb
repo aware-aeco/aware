@@ -170,27 +170,100 @@ real_thk = lambda do |xs, key, half|
   (!t.nil? && t > 0 && t < 2 * half) ? t : nil
 end
 
-# Which outline family a member draws with. Mirrors the viewer's shapeOf,
-# INCLUDING its ordering: a "CHS..." designation matches the channel rule before
-# the tube rule. Divergence here would bake something other than what was shown.
+# Which outline family a member draws with.
+#
+# THE SUPPLIED `xsection` DECIDES, and the designation is only a legacy fallback. That is this
+# substrate's own rule -- "producers own domain meaning; the renderer owns exact visualization"
+# (viewer-3d/skills/scene-schema.md) -- and `_core/viewer-3d`, `_core/ifc` and `rhino-8` already
+# follow it. This sink did not, and the consequences were not subtle:
+#
+#   * The `explicit` branch below read `section['shape']`, a key producers do not emit. floless sends
+#     `section: {w, d, round}`. So the branch never once executed and every member was classified by
+#     the designation regex, which is a US-only prefix list.
+#   * `CHS508.0*14.2` matched the CHANNEL rule (a bare `C`) before the tube rule, so a 508 mm round
+#     column baked as a channel. The old comment above called that ordering deliberate "so what
+#     SketchUp receives is the shape the user was looking at" -- but the viewer resolves from
+#     `xsection.shape`, so mirroring its REGRESSION rather than its answer is what caused the drift.
+#   * Every UK angle (`UKA…`, `RSA…`) and channel (`UKPFC…`, `RSC…`) matched nothing and fell through
+#     to `BOX` -- a solid rectangle where a 100x100x10 angle belongs, with the supplied `t` ignored.
+#
+# `round` is carried too: a circular section is NOT a square tube. `TUBE` here draws a rectangle, so
+# a US `PIPE` has always baked square. That is a shipped US defect the same rule fixes.
+#
+# Returns [kind, round]. `kind` is one of I, C, L, T, TUBE, BOX.
+#
+# A LOCAL, not a constant: the bridge wraps this script in a lambda and Ruby makes constant
+# assignment a SyntaxError inside one. The sink's own test pins that footgun.
+xs_kind = {
+  'i' => 'I', 'channel' => 'C', 'tee' => 'T', 'angle' => 'L',
+  'rhs' => 'TUBE', 'chs' => 'TUBE', 'double-angle' => 'LL',
+  'rect' => 'BOX', 'solid-circle' => 'BOX',
+  # A shape the catalogue refuses has no drawable geometry; `BOX` is the honest placeholder and the
+  # receipt records it, exactly as the producer's own viewer does.
+  'unsupported-custom' => 'BOX', 'joist' => 'BOX'
+}.freeze
+
 shape_of = lambda do |el|
   sec = el['section'].is_a?(Hash) ? el['section'] : {}
-  explicit = sec['shape'].to_s.upcase.strip
-  return explicit if ['I', 'C', 'L', 'TUBE', 'BOX'].include?(explicit)
+  round = sec['round'] == true
+  xs = el['xsection']
+  if xs.is_a?(Hash)
+    mapped = xs_kind[xs['shape'].to_s.downcase.strip]
+    return [mapped, xs['shape'].to_s.downcase.strip == 'chs' || round] if mapped
+  end
+  # LEGACY ONLY: a producer that predates `xsection`. Kept so an older scene still bakes, and
+  # ordered longest-prefix-first so `CHS`/`SHS` cannot be eaten by the one-letter families -- the
+  # exact shadowing that made `C` swallow `CHS`.
   m = el['meta'].is_a?(Hash) ? el['meta'] : {}
   prof = m['profile'].to_s.upcase.strip
-  return 'I' if prof =~ /\A(W|M|S|HP|UC|UB|UKC|UKB|IPE|HE)/
-  return 'C' if prof =~ /\A(C|MC|PFC)/
-  return 'L' if prof =~ /\AL/
-  return 'TUBE' if prof =~ /\A(HSS|PIPE|TS|SHS|RHS|CHS|TUBE|HSQ)/
-  'BOX'
+  return ['TUBE', prof =~ /\A(PIPE|CHS)/ ? true : round] if prof =~ /\A(HSS|PIPE|TS|SHS|RHS|CHS|TUBE|HSQ|EHS)/
+  return ['C', round] if prof =~ /\A(UKPFC|RSC|MC|PFC|C)/
+  return ['L', round] if prof =~ /\A(UKA|RSA|L)/
+  return ['T', round] if prof =~ /\A(UKT|TEE|WT|ST|MT)/
+  return ['I', round] if prof =~ /\A(UKBP|UKB|UKC|RSJ|JUMBO|IPE|HE|HP|UB|UC|W|M|S)/
+  ['BOX', round]
 end
 
 # Returns [outer_points_mm, inner_points_mm_or_nil].
-outline = lambda do |kind, w, d, xs|
+#
+# ROUND_SEGMENTS matches floless's `web/steel-3d-core.js` exactly (48, inscribed). The polygon is
+# INSCRIBED, so its widest point between two vertices is r*cos(pi/48); a different count here would
+# put a baked pipe's flush face a fraction off the one the user approved on screen. A LOCAL, not a
+# constant, for the same lambda-scope reason as `xs_kind` above.
+round_segments = 48
+
+ring = lambda do |rad|
+  (0...round_segments).map do |i|
+    a = (i.to_f / round_segments) * Math::PI * 2.0
+    [rad * Math.cos(a), rad * Math.sin(a)]
+  end
+end
+
+outline = lambda do |kind, w, d, xs, round = false|
   hw = w / 2.0
   hd = d / 2.0
-  if kind == 'I'
+  if kind == 'TUBE' && round
+    # A ROUND section is a CIRCLE, not the w x d rectangle those two numbers imply: `profileDims`
+    # squares a pipe into w = d = OD, and this sink took that at face value and baked a square tube
+    # for every PIPE and every CHS. The producer says `section.round` / `xsection.shape == 'chs'`.
+    r = [hw, hd].min
+    t = real_thk.call(xs, 't', r) || [r * 0.12, 4.0].max
+    [ring.call(r), (r - t > 1.0e-6 ? ring.call(r - t) : nil)]
+  elsif kind == 'T'
+    # A TEE is half an I: one flange plus a stem hanging off it. Baking it as a full I (which the
+    # designation classifier did, because `WT`/`UKT` start with letters the I-rule claims) doubles
+    # the steel. UK ships UKT/TEE families and US ships WT/ST/MT, so both were wrong.
+    tf = real_thk.call(xs, 'tf', hd) || [[d * 0.10, 6.0].max, d * 0.5].min
+    tw = real_thk.call(xs, 'tw', hw) || [[w * 0.10, 5.0].max, w * 0.5].min
+    [[[-hw, -hd], [hw, -hd], [hw, -hd + tf], [tw / 2.0, -hd + tf],
+      [tw / 2.0, hd], [-tw / 2.0, hd], [-tw / 2.0, -hd + tf], [-hw, -hd + tf]], nil]
+  elsif kind == 'LL'
+    # A DOUBLE ANGLE is two separate legs with a gap; one closed loop cannot express it, so this
+    # bakes the pair's ENVELOPE and the receipt says so. Better than the solid box it used to get,
+    # and honest about what it is not.
+    t = real_thk.call(xs, 't', [hw, hd].min) || [[w, d].min * 0.18, 5.0].max
+    [[[-hw, -hd], [hw, -hd], [hw, -hd + t], [-hw + t, -hd + t], [-hw + t, hd], [-hw, hd]], nil]
+  elsif kind == 'I'
     tf = real_thk.call(xs, 'tf', hd) || [[d * 0.10, 6.0].max, d * 0.5].min
     tw = real_thk.call(xs, 'tw', hw) || [[w * 0.10, 5.0].max, w * 0.5].min
     [[[-hw, -hd], [hw, -hd], [hw, -hd + tf], [tw / 2.0, -hd + tf],
@@ -258,7 +331,8 @@ supported.each do |entry|
       raise "#{id}: member section #{w} x #{d} mm is below SketchUp's 0.001 inch tolerance"
     end
 
-    outer, inner = outline.call(shape_of.call(el), w, d, el['xsection'])
+    member_kind, member_round = shape_of.call(el)
+    outer, inner = outline.call(member_kind, w, d, el['xsection'], member_round)
 
     # Local frame. mv is the member axis (local z); ydir is the section depth and
     # is rolled so the web stands vertical, exactly as the viewer orients it; a
