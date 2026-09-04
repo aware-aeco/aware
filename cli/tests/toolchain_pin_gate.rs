@@ -48,8 +48,11 @@
 //!   * every workflow job that runs `cargo` has a `dtolnay/rust-toolchain` step;
 //!   * that step's `toolchain:` is a workflow expression, never a literal
 //!     version and never left implicit on the action ref (`@stable`);
-//!   * the expression reads a step in the same job that names
-//!     `cli/rust-toolchain.toml`, so the value cannot come from somewhere else;
+//!   * the line in that step which ASSIGNS `channel` reads
+//!     `cli/rust-toolchain.toml`, and the step publishes it to `$GITHUB_OUTPUT`
+//!     — the command, never a mention of the path in a comment or an
+//!     `::error::` message, both of which survive deleting the command they
+//!     describe;
 //!   * no `rust-toolchain.toml` anywhere in the repo disagrees with the pin,
 //!     which is the other way a directory-sensitive lookup can drift;
 //!   * the pin names a concrete version rather than a moving channel.
@@ -234,12 +237,57 @@ fn invokes_cargo(shell: &str) -> bool {
 
 /// The `toolchain:` input a step passes, if it passes one.
 fn toolchain_input(step_body: &str) -> Option<String> {
-    step_body
+    let value = step_body
         .lines()
         .map(str::trim_start)
         .filter(|line| !line.starts_with('#'))
-        .find_map(|line| line.strip_prefix("toolchain:"))
-        .map(|value| value.trim().to_string())
+        .find_map(|line| line.strip_prefix("toolchain:"))?
+        .trim()
+        .to_string();
+    // An empty value, `~` or `null` is the ABSENT case, not a restated one:
+    // YAML resolves all three to null and the action falls back to its ref's
+    // default channel, leaving the compiler unpinned. Returning `Some("")` here
+    // made the gate report a bare `toolchain:` as ``pins `toolchain: `
+    // literally``, which names the wrong defect and points at the wrong fix.
+    if value.is_empty() || value == "~" || value == "null" {
+        return None;
+    }
+    Some(value)
+}
+
+/// The line of a shell script that ASSIGNS the `channel` variable.
+///
+/// Command position only — a line whose first token is `channel=`. That is what
+/// separates the assignment producing the value from the two lines that merely
+/// mention it: `echo "channel=$channel" >> "$GITHUB_OUTPUT"`, which emits it,
+/// and the `::error::` message, which names the pin file in prose.
+///
+/// The distinction is load-bearing and was measured, not argued. The check this
+/// feeds used to be `run_blocks(..).contains("cli/rust-toolchain.toml")`, and
+/// `ci.yml`'s pin step names that path in its error message as well as in its
+/// `sed` — so the assertion was already vacuous with respect to the command it
+/// was meant to guard. Replacing the `sed` with `channel=stable` while leaving
+/// the error text alone kept all eleven tests green (Codex review, PR #490;
+/// reproduced against the real `ci.yml` before this fix).
+fn channel_assignment(shell: &str) -> Option<&str> {
+    shell
+        .lines()
+        .map(str::trim)
+        .filter(|line| !line.starts_with('#'))
+        .find(|line| line.starts_with("channel="))
+}
+
+/// Does this script publish `channel` as a step output?
+///
+/// The other half of the contract: the expression the action reads is
+/// `steps.<id>.outputs.channel`, so a step that computes the pin correctly and
+/// never writes it to `$GITHUB_OUTPUT` hands the action an empty toolchain.
+fn emits_channel_output(shell: &str) -> bool {
+    shell
+        .lines()
+        .map(str::trim)
+        .filter(|line| !line.starts_with('#'))
+        .any(|line| line.contains("GITHUB_OUTPUT") && line.contains("channel="))
 }
 
 /// Does this `toolchain:` value read the pin rather than restate it?
@@ -266,18 +314,33 @@ fn referenced_step_id(value: &str) -> Option<String> {
     Some(rest[..end].to_string())
 }
 
-/// Every `.yml` under `.github/workflows/`, as (name, text).
+/// Every workflow under `.github/workflows/`, as (name, text).
+///
+/// Both extensions. GitHub reads `.yml` and `.yaml` alike, so scanning only
+/// `.yml` would let a cargo-building workflow added as `.yaml` restate or omit
+/// the pin with this gate still green (Codex review, PR #490). The tree happens
+/// to use `.yml` throughout today, which is exactly why the filter has to be
+/// about what GitHub accepts rather than about what is currently there.
+///
+/// A file that cannot be read is a hard failure rather than a skip: silently
+/// dropping a workflow from the scan would shrink the gate's coverage with no
+/// signal, which is the failure mode this whole file exists to prevent.
 fn workflows() -> Vec<(String, String)> {
     let dir = repo_root().join(".github/workflows");
     let mut found: Vec<(String, String)> = std::fs::read_dir(&dir)
         .unwrap_or_else(|e| panic!("read {}: {e}", dir.display()))
         .filter_map(|entry| {
-            let path = entry.ok()?.path();
-            if path.extension()? != "yml" {
+            let path = entry
+                .unwrap_or_else(|e| panic!("read a dir entry: {e}"))
+                .path();
+            let ext = path.extension()?.to_string_lossy().into_owned();
+            if ext != "yml" && ext != "yaml" {
                 return None;
             }
             let name = path.file_name()?.to_string_lossy().into_owned();
-            Some((name, std::fs::read_to_string(&path).ok()?))
+            let text = std::fs::read_to_string(&path)
+                .unwrap_or_else(|e| panic!("read {}: {e}", path.display()));
+            Some((name, text))
         })
         .collect();
     found.sort_by(|a, b| a.0.cmp(&b.0));
@@ -417,11 +480,30 @@ fn the_step_the_pin_is_read_from_names_the_pin_file() {
                     .unwrap_or_else(|| {
                         panic!("{name}: job `{}` has no step with `id: {id}`", job.key)
                     });
+                let run = run_blocks(&source.body);
+                let assignment = channel_assignment(&run).unwrap_or_else(|| {
+                    panic!(
+                        "{name}: job `{}` takes its toolchain from step `{id}`, but that \
+                         step's script never assigns `channel=` — nothing in it \
+                         computes the value the action is handed. Script:\n{run}",
+                        job.key
+                    )
+                });
                 assert!(
-                    run_blocks(&source.body).contains("cli/rust-toolchain.toml"),
-                    "{name}: job `{}` takes its toolchain from step `{id}`, but that \
-                     step's script never reads cli/rust-toolchain.toml — so the \
-                     version it emits is not the pin.",
+                    assignment.contains("cli/rust-toolchain.toml"),
+                    "{name}: job `{}` takes its toolchain from step `{id}`, but the line \
+                     that assigns it — `{assignment}` — does not read \
+                     cli/rust-toolchain.toml, so the version it emits is not the pin. \
+                     A mention of the path elsewhere in the script (an `::error::` \
+                     message, a comment) is prose and does not count.",
+                    job.key
+                );
+                assert!(
+                    emits_channel_output(&run),
+                    "{name}: job `{}` reads `steps.{id}.outputs.channel`, but step \
+                     `{id}` never writes `channel=` to $GITHUB_OUTPUT — the action \
+                     would receive an empty toolchain and fall back to its ref's \
+                     default. Script:\n{run}",
                     job.key
                 );
             }
@@ -609,6 +691,111 @@ fn the_pin_expression_classifier_matches_its_contract() {
         Some("pin")
     );
     assert_eq!(referenced_step_id("1.88.0"), None);
+}
+
+#[test]
+fn the_channel_assignment_reader_separates_the_command_from_the_prose() {
+    // The real pin step in shape: the path appears three times and only ONE of
+    // those lines computes anything.
+    let real = r#"# POSIX sed, not `grep -oP` — cli/rust-toolchain.toml
+channel=$(sed -n 's/^channel = "\(.*\)"/\1/p' cli/rust-toolchain.toml | head -1)
+if [ -z "$channel" ]; then
+  echo "::error::could not read [toolchain] channel from cli/rust-toolchain.toml"
+  exit 1
+fi
+echo "channel=$channel" >> "$GITHUB_OUTPUT"
+"#;
+    let found = channel_assignment(real).expect("the real step assigns channel");
+    assert!(
+        found.starts_with("channel=$(sed"),
+        "picked the wrong line as the assignment: {found:?}"
+    );
+    assert!(found.contains("cli/rust-toolchain.toml"));
+    assert!(emits_channel_output(real));
+
+    // Codex's scenario, PR #490: hard-code the channel, keep every mention of
+    // the pin file. A `contains` over the whole block accepts this.
+    let gutted = r#"# was: sed ... cli/rust-toolchain.toml
+channel=stable
+if [ -z "$channel" ]; then
+  echo "::error::could not read [toolchain] channel from cli/rust-toolchain.toml"
+  exit 1
+fi
+echo "channel=$channel" >> "$GITHUB_OUTPUT"
+"#;
+    assert!(
+        gutted.contains("cli/rust-toolchain.toml"),
+        "the planted script must still MENTION the pin file — otherwise this \
+         proves nothing about prose being rejected"
+    );
+    let found = channel_assignment(gutted).expect("the planted step assigns channel");
+    assert_eq!(found, "channel=stable");
+    assert!(
+        !found.contains("cli/rust-toolchain.toml"),
+        "the gutted assignment must not read the pin file — this is the exact \
+         comparison that now fails the gate"
+    );
+
+    // Computes the pin, never publishes it: the action gets an empty input.
+    let unpublished = "channel=$(sed -n 's/x/y/p' cli/rust-toolchain.toml)\necho \"$channel\"\n";
+    assert!(channel_assignment(unpublished).is_some());
+    assert!(
+        !emits_channel_output(unpublished),
+        "a step that never writes to $GITHUB_OUTPUT must be reported"
+    );
+
+    // No assignment at all — an emit is not an assignment, nor is a comment.
+    assert_eq!(channel_assignment("echo \"channel=1.95.0\"\n"), None);
+    assert_eq!(channel_assignment("# channel=1.95.0\n"), None);
+    assert_eq!(channel_assignment(""), None);
+}
+
+#[test]
+fn an_empty_toolchain_input_reads_as_absent_not_as_a_literal() {
+    // YAML resolves all three to null; the action then falls back to its ref's
+    // default channel. That is the unpinned case, and reporting it as a restated
+    // literal names the wrong defect and sends the reader to the wrong fix.
+    for empty in [
+        "        with:\n          toolchain:\n",
+        "        with:\n          toolchain: ~\n",
+        "        with:\n          toolchain: null\n",
+    ] {
+        assert_eq!(
+            toolchain_input(empty),
+            None,
+            "an empty toolchain input must read as absent: {empty:?}"
+        );
+    }
+    assert_eq!(
+        toolchain_input("        with:\n          toolchain: 1.88.0\n").as_deref(),
+        Some("1.88.0")
+    );
+    assert_eq!(
+        toolchain_input("        with:\n          components: clippy\n"),
+        None
+    );
+}
+
+#[test]
+fn the_workflow_scan_covers_both_extensions_github_accepts() {
+    // Not a style point: GitHub runs `.yaml` exactly as it runs `.yml`, so a
+    // scan narrowed to one of them is a hole a new file walks straight through
+    // (Codex review, PR #490).
+    let dir = repo_root().join(".github/workflows");
+    let on_disk: Vec<String> = std::fs::read_dir(&dir)
+        .unwrap_or_else(|e| panic!("read {}: {e}", dir.display()))
+        .filter_map(|entry| Some(entry.ok()?.file_name().to_string_lossy().into_owned()))
+        .filter(|name| name.ends_with(".yml") || name.ends_with(".yaml"))
+        .collect();
+    let scanned: Vec<String> = workflows().into_iter().map(|(name, _)| name).collect();
+    assert_eq!(
+        scanned.len(),
+        on_disk.len(),
+        "the scan reached {} of the {} workflow files on disk. Scanned: {scanned:?}; \
+         on disk: {on_disk:?}",
+        scanned.len(),
+        on_disk.len()
+    );
 }
 
 #[test]
