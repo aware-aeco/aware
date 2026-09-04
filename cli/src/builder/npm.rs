@@ -27,8 +27,14 @@ use crate::builder::{
 };
 use crate::error::AwareError;
 
-pub fn build_from_npm(spec: &str, agent_id: Option<&str>) -> Result<GeneratedAgent, AwareError> {
-    let (name, version) = match spec.split_once('@') {
+/// Split a `--from-npm` spec into `(package name, version)`.
+///
+/// Kept separate from `build_from_npm` so the split can be asserted without a
+/// network round-trip: reaching the fetch only proves the spec was *not*
+/// rejected, never that the name and version came out right.
+fn parse_npm_spec(spec: &str) -> Result<(String, String), AwareError> {
+    let missing = || AwareError::Validation("--from-npm requires <pkg>@<version>".into());
+    match spec.split_once('@') {
         // Handle scoped packages like `@xeokit/xeokit-sdk@2.6.109`. The first
         // `@` belongs to the scope; the version `@` is whatever comes after
         // the last `/<lastsegment>` part.
@@ -40,32 +46,29 @@ pub fn build_from_npm(spec: &str, agent_id: Option<&str>) -> Result<GeneratedAge
             // `@`, so the two agree — but the safe form costs nothing.
             let after_scope = spec.strip_prefix('@').unwrap_or(spec);
             match after_scope.rsplit_once('@') {
-                Some((pkg_after, v)) => (format!("@{pkg_after}"), v.to_string()),
-                None => {
-                    return Err(AwareError::Validation(
-                        "--from-npm requires <pkg>@<version>".into(),
-                    ));
-                }
+                Some((pkg_after, v)) => Ok((format!("@{pkg_after}"), v.to_string())),
+                None => Err(missing()),
             }
         }
-        Some((p, v)) => (p.to_string(), v.to_string()),
-        None => {
-            return Err(AwareError::Validation(
-                "--from-npm requires <pkg>@<version>".into(),
-            ));
-        }
-    };
+        Some((p, v)) => Ok((p.to_string(), v.to_string())),
+        None => Err(missing()),
+    }
+}
 
-    // Build tarball URL. Scoped packages keep the scope in the URL path but
-    // the tarball filename drops the scope.
-    //   @xeokit/xeokit-sdk@2.6.109 → registry/.../@xeokit/xeokit-sdk/-/xeokit-sdk-2.6.109.tgz
-    //   typescript@5.4.5           → registry/.../typescript/-/typescript-5.4.5.tgz
-    let tarball_basename = name
-        .rsplit('/')
-        .next()
-        .map(String::from)
-        .unwrap_or_else(|| name.clone());
-    let url = format!("https://registry.npmjs.org/{name}/-/{tarball_basename}-{version}.tgz");
+/// Tarball URL for a resolved package name + version.
+///
+/// Scoped packages keep the scope in the URL path but the tarball filename
+/// drops it:
+///   `@xeokit/xeokit-sdk@2.6.109` → `registry/.../@xeokit/xeokit-sdk/-/xeokit-sdk-2.6.109.tgz`
+///   `typescript@5.4.5`           → `registry/.../typescript/-/typescript-5.4.5.tgz`
+fn tarball_url(name: &str, version: &str) -> String {
+    let tarball_basename = name.rsplit('/').next().unwrap_or(name);
+    format!("https://registry.npmjs.org/{name}/-/{tarball_basename}-{version}.tgz")
+}
+
+pub fn build_from_npm(spec: &str, agent_id: Option<&str>) -> Result<GeneratedAgent, AwareError> {
+    let (name, version) = parse_npm_spec(spec)?;
+    let url = tarball_url(&name, &version);
 
     let resp = ureq::get(&url)
         .call()
@@ -595,18 +598,275 @@ mod tests {
     }
 
     #[test]
-    fn scoped_package_spec_parses_correctly() {
-        // We can't reach the network in unit tests, but we can confirm the
-        // pre-network parse succeeds (the URL-build step would run before the
-        // first network attempt). Use an unreachable host to skip the actual
-        // fetch — the test only checks we recognized the scope.
-        // Easier: just check that the split logic doesn't fail by reaching
-        // build_from_npm and having it return a network error rather than a
-        // validation error.
-        let result = build_from_npm("@scope/pkg@1.0.0", None);
-        assert!(
-            matches!(result, Err(AwareError::Network(_))),
-            "expected network error, got {result:?}",
+    fn parse_package_json_falls_back_when_absent_malformed_or_empty() {
+        for json in [None, Some("not json at all"), Some("{}")] {
+            let (d, l, h) = parse_package_json(json);
+            assert_eq!(d, "", "description for {json:?}");
+            assert_eq!(l, "UNKNOWN", "license for {json:?}");
+            assert_eq!(h, "", "homepage for {json:?}");
+        }
+    }
+
+    #[test]
+    fn npm_spec_keeps_the_scope_on_the_name_and_the_version_off_it() {
+        assert_eq!(
+            parse_npm_spec("@xeokit/xeokit-sdk@2.6.109").unwrap(),
+            ("@xeokit/xeokit-sdk".to_string(), "2.6.109".to_string()),
         );
+        assert_eq!(
+            parse_npm_spec("typescript@5.4.5").unwrap(),
+            ("typescript".to_string(), "5.4.5".to_string()),
+        );
+    }
+
+    #[test]
+    fn npm_spec_without_a_version_is_rejected_scoped_or_not() {
+        for spec in ["just-a-name", "@scope/pkg"] {
+            assert!(
+                matches!(parse_npm_spec(spec), Err(AwareError::Validation(_))),
+                "expected {spec} to be rejected",
+            );
+        }
+    }
+
+    #[test]
+    fn tarball_url_keeps_the_scope_in_the_path_but_drops_it_from_the_filename() {
+        assert_eq!(
+            tarball_url("@xeokit/xeokit-sdk", "2.6.109"),
+            "https://registry.npmjs.org/@xeokit/xeokit-sdk/-/xeokit-sdk-2.6.109.tgz",
+        );
+        assert_eq!(
+            tarball_url("typescript", "5.4.5"),
+            "https://registry.npmjs.org/typescript/-/typescript-5.4.5.tgz",
+        );
+    }
+
+    #[test]
+    fn strip_modifiers_peels_stacked_keywords_and_leaves_bare_identifiers_alone() {
+        assert_eq!(
+            strip_modifiers("  export declare abstract class Foo {"),
+            "class Foo {",
+        );
+        assert_eq!(
+            strip_modifiers("public static readonly x: number;"),
+            "x: number;"
+        );
+        // A keyword only counts as a modifier when it is a whole word — an
+        // identifier that merely starts with one must survive untouched.
+        assert_eq!(strip_modifiers("exported class Foo"), "exported class Foo");
+        assert_eq!(
+            strip_modifiers("staticRoute(): void;"),
+            "staticRoute(): void;"
+        );
+    }
+
+    #[test]
+    fn extract_params_balances_nested_parens_rather_than_stopping_at_the_first_close() {
+        assert_eq!(
+            extract_params("(cb: (x: number) => void, n: number): void;"),
+            "cb: (x: number) => void, n: number",
+        );
+    }
+
+    #[test]
+    fn extract_params_is_empty_for_no_args_and_for_an_unclosed_list() {
+        assert_eq!(extract_params("(): void;"), "");
+        // A declaration wrapped onto several lines: the args are not on this
+        // line, so we must not report a truncated fragment as the signature.
+        assert_eq!(extract_params("(src: string,"), "");
+        assert_eq!(extract_params("no parens here"), "");
+    }
+
+    #[test]
+    fn method_decl_skips_generic_parameters_before_the_argument_list() {
+        let (n, a) = parse_method_decl("pick<T>(id: string): T;").unwrap();
+        assert_eq!(n, "pick");
+        assert_eq!(a, "id: string");
+    }
+
+    #[test]
+    fn method_decl_rejects_methods_named_get_or_set() {
+        // Accessors are property reads/writes rather than discrete calls, and
+        // a method literally named `get`/`set` is skipped along with them.
+        for line in ["get(): Camera;", "set(v: Camera): void;"] {
+            assert!(
+                parse_method_decl(line).is_none(),
+                "expected {line} not to be read as a method",
+            );
+        }
+    }
+
+    #[test]
+    fn a_closing_brace_ends_the_container_so_later_functions_are_top_level() {
+        let dts = concat!(
+            "export declare class Viewer {\n",
+            "    loadModel(src: string): Promise<Model>;\n",
+            "}\n",
+            "export declare function createViewer(cfg: any): Viewer;\n",
+        );
+        let mut srcs = BTreeMap::new();
+        srcs.insert("index.d.ts".to_string(), dts.to_string());
+        let (cmds, skills) = extract_surface("xeokit", &srcs);
+
+        assert_eq!(
+            cmds["viewer-load-model"].description,
+            "Viewer.loadModel(src: string)",
+        );
+        assert_eq!(cmds["create-viewer"].description, "createViewer(cfg: any)");
+        let names: Vec<_> = skills.iter().map(|s| s.filename.as_str()).collect();
+        assert_eq!(names, vec!["top-level.md", "viewer.md"]);
+        // The function landed outside the class, not inside it.
+        let viewer = skills.iter().find(|s| s.filename == "viewer.md").unwrap();
+        assert!(
+            !viewer.body.contains("createViewer"),
+            "createViewer leaked into the class skill:\n{}",
+            viewer.body,
+        );
+    }
+
+    #[test]
+    fn a_brace_inside_a_signature_does_not_close_the_container() {
+        let dts = concat!(
+            "export declare class Viewer {\n",
+            "    configure(opts: { alpha: boolean }): void;\n",
+            "    reset(): void;\n",
+            "}\n",
+        );
+        let mut srcs = BTreeMap::new();
+        srcs.insert("index.d.ts".to_string(), dts.to_string());
+        let (cmds, _) = extract_surface("xeokit", &srcs);
+        // `reset` sits after the inline object type; if the brace tracking were
+        // off by one the container would already have been popped and `reset`
+        // would be missing (or filed under the wrong name).
+        assert_eq!(cmds["viewer-reset"].description, "Viewer.reset()");
+        assert_eq!(
+            cmds["viewer-configure"].description,
+            "Viewer.configure(opts: { alpha: boolean })",
+        );
+    }
+
+    /// A minimal npm tarball: gzipped tar whose entries live under `package/`.
+    fn fake_tarball(files: &[(&str, &str)]) -> Vec<u8> {
+        let mut tar_bytes = Vec::new();
+        {
+            let mut builder = tar::Builder::new(&mut tar_bytes);
+            for (path, body) in files {
+                let mut header = tar::Header::new_gnu();
+                header.set_path(path).unwrap();
+                header.set_size(body.len() as u64);
+                header.set_mode(0o644);
+                header.set_cksum();
+                builder.append(&header, body.as_bytes()).unwrap();
+            }
+            builder.finish().unwrap();
+        }
+        let mut gz = Vec::new();
+        {
+            let mut enc = flate2::write::GzEncoder::new(&mut gz, flate2::Compression::default());
+            std::io::Write::write_all(&mut enc, &tar_bytes).unwrap();
+            enc.finish().unwrap();
+        }
+        gz
+    }
+
+    #[test]
+    fn build_from_bytes_end_to_end() {
+        let bytes = fake_tarball(&[
+            (
+                "package/package.json",
+                r#"{"description":"A fake viewer","license":"MIT","homepage":"https://x.dev"}"#,
+            ),
+            (
+                "package/types/index.d.ts",
+                "export declare class Viewer {\n    loadModel(src: string): void;\n}\n",
+            ),
+        ]);
+        let agent = build_from_bytes(&bytes, "fakepkg", "1.2.3", None).unwrap();
+
+        assert_eq!(agent.id, "fakepkg");
+        assert_eq!(agent.version, "0.1.0");
+        assert_eq!(agent.sdk_target.as_deref(), Some("1.2.3"));
+        assert_eq!(agent.description, "A fake viewer");
+        assert_eq!(agent.license, "MIT");
+        assert!(!agent.stateful);
+        assert!(agent.commands.contains_key("viewer-load-model"));
+        assert_eq!(agent.skills.len(), 1);
+        assert_eq!(agent.skills[0].filename, "viewer.md");
+        assert_eq!(agent.provenance.source["type"], "npm");
+        assert_eq!(agent.provenance.source["package"], "fakepkg");
+        assert_eq!(agent.provenance.source["version"], "1.2.3");
+        assert_eq!(agent.provenance.source["homepage"], "https://x.dev");
+        assert_eq!(agent.provenance.source["dts_files"], 1);
+    }
+
+    #[test]
+    fn declarations_are_collected_from_every_d_ts_in_the_tarball() {
+        let bytes = fake_tarball(&[
+            (
+                "package/package.json",
+                r#"{"description":"Two-file package","license":"MIT"}"#,
+            ),
+            (
+                "package/dist/viewer.d.ts",
+                "export declare class Viewer {\n    render(): void;\n}\n",
+            ),
+            (
+                "package/lib/nested/camera.d.ts",
+                "export declare class Camera {\n    zoom(factor: number): void;\n}\n",
+            ),
+        ]);
+        let agent = build_from_bytes(&bytes, "fakepkg", "1.0.0", None).unwrap();
+        assert!(agent.commands.contains_key("viewer-render"));
+        assert!(agent.commands.contains_key("camera-zoom"));
+        assert_eq!(agent.provenance.source["dts_files"], 2);
+    }
+
+    #[test]
+    fn a_package_shipping_no_type_declarations_is_a_validation_error() {
+        let bytes = fake_tarball(&[
+            ("package/package.json", r#"{"description":"No types"}"#),
+            ("package/index.js", "module.exports = {};\n"),
+        ]);
+        let err = build_from_bytes(&bytes, "fakepkg", "1.0.0", None).unwrap_err();
+        let AwareError::Validation(msg) = err else {
+            panic!("expected a validation error, got {err:?}");
+        };
+        assert!(msg.contains("fakepkg@1.0.0"), "message was: {msg}");
+        assert!(msg.contains(".d.ts"), "message was: {msg}");
+    }
+
+    #[test]
+    fn a_package_without_package_json_still_builds_with_a_synthesised_description() {
+        let bytes = fake_tarball(&[(
+            "package/index.d.ts",
+            "export declare function ping(): void;\n",
+        )]);
+        let agent = build_from_bytes(&bytes, "fakepkg", "1.0.0", None).unwrap();
+        assert_eq!(
+            agent.description,
+            "Generated from npm package fakepkg@1.0.0",
+        );
+        assert_eq!(agent.license, "UNKNOWN");
+        assert!(agent.commands.contains_key("ping"));
+    }
+
+    #[test]
+    fn the_default_agent_id_is_the_unscoped_package_name_normalised() {
+        let bytes = fake_tarball(&[(
+            "package/index.d.ts",
+            "export declare function ping(): void;\n",
+        )]);
+        let agent = build_from_bytes(&bytes, "@Scope/My_Pkg", "1.0.0", None).unwrap();
+        assert_eq!(agent.id, "my-pkg");
+    }
+
+    #[test]
+    fn an_explicit_agent_id_overrides_the_package_name() {
+        let bytes = fake_tarball(&[(
+            "package/index.d.ts",
+            "export declare function ping(): void;\n",
+        )]);
+        let agent = build_from_bytes(&bytes, "@Scope/My_Pkg", "1.0.0", Some("custom-id")).unwrap();
+        assert_eq!(agent.id, "custom-id");
     }
 }
