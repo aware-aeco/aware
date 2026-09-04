@@ -241,7 +241,7 @@ export function nativeToolsProof({ native, env, run }) {
   writeFileSync(header, '#include <assert.h>\nstatic const char *header_file = __FILE__;\nstatic const wchar_t *wide_header_file = __FILEW__;\nstatic void positive(int value) { assert(value > 0); }\n');
   writeFileSync(cSource, '#include <windows.h>\n#include <stdio.h>\n#include <wchar.h>\n#include <native-header.h>\nint main(int argc, char **argv) { positive(argc); puts(GetCurrentProcessId() ? "private-compiler-ok" : "error"); puts(__FILE__); puts(header_file); wprintf(L"%ls\\n", wide_header_file); return 0; }\n');
   const dependencies = join(target, 'includes.json'), linkRepro = join(target, 'link-repro');
-  const nativeLog = audit('cl', ['/nologo', '/c', '/MT', '/showIncludes', '/sourceDependencies', dependencies, `/I${source}`, `/Fo${object}`, cSource], env, 'native-compile');
+  const nativeLog = audit('cl', ['/nologo', '/utf-8', '/c', '/MT', '/showIncludes', '/sourceDependencies', dependencies, `/I${source}`, `/Fo${object}`, cSource], env, 'native-compile');
   assert.doesNotMatch(nativeLog, /D900[27]|LNK4044|option ignored/i);
   const includeReport = JSON.parse(readFileSync(dependencies, 'utf8').replace(/^\uFEFF/, ''));
   verifyNativeIncludes(includeReport, cSource, [compiler.roots['compiler-sdk-include'], compiler.roots['compiler-msvc-include'], source]);
@@ -254,7 +254,7 @@ export function nativeToolsProof({ native, env, run }) {
   assert.equal(run(executable, [], { env }).trim().replaceAll('\\','/').replaceAll('\r',''),
     'private-compiler-ok\n<work>/source/native.c\n<work>/source/native-header.h\n<work>/source/native-header.h');
   const unmappedObject = join(target, 'native-unmapped.obj');
-  audit('cl', ['/nologo', '/c', '/MT', `/I${source}`, `/Fo${unmappedObject}`, cSource], { ...env, CL: '/Brepro' }, 'native-pathmap-negative');
+  audit('cl', ['/nologo', '/utf-8', '/c', '/MT', `/I${source}`, `/Fo${unmappedObject}`, cSource], { ...env, CL: '/Brepro' }, 'native-pathmap-negative');
   const unmappedBytes = readFileSync(unmappedObject);
   assert.ok(unmappedBytes.includes(Buffer.from(header)) && unmappedBytes.includes(Buffer.from(header, 'utf16le')),
     'removing the native maps must expose both narrow and wide physical header paths');
