@@ -192,8 +192,13 @@ enum Command {
     },
 }
 
+// Returns `()`, not a `Result`: every error path below ends in
+// `std::process::exit`, which diverges, so no `Err` ever reaches the runtime's
+// `Termination` impl. Naming an error type here would only claim a failure mode
+// that cannot happen — and `AwareError::exit_code` is what actually decides the
+// process's exit status, not a returned `Err`.
 #[tokio::main]
-async fn main() -> anyhow::Result<()> {
+async fn main() {
     let cli = Cli::parse();
 
     let paths = match crate::paths::Paths::from_env() {
@@ -230,11 +235,8 @@ async fn main() -> anyhow::Result<()> {
         Command::Sidecar { action } => commands::sidecar::dispatch(action, &ctx),
     };
 
-    match result {
-        Ok(()) => Ok(()),
-        Err(err) => {
-            eprintln!("error: {err}");
-            std::process::exit(err.exit_code());
-        }
+    if let Err(err) = result {
+        eprintln!("error: {err}");
+        std::process::exit(err.exit_code());
     }
 }

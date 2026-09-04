@@ -19,7 +19,6 @@ serde         = { version = "1.0",  features = ["derive"] }
 serde_yaml    = "0.9"
 serde_json    = { version = "1.0", features = ["preserve_order"] }
 thiserror     = "2.0"
-anyhow        = "1.0"
 dirs          = "6.0"
 ureq          = { version = "2", default-features = false, features = ["tls"] }
 flate2        = "1"
