@@ -62,11 +62,31 @@
 //! has stopped matching anything at all. Every classifier is therefore also
 //! driven over synthetic input (`the_channel_reader_matches_its_contract`,
 //! `the_cargo_classifier_matches_its_contract`,
-//! `the_pin_expression_classifier_matches_its_contract`), the walk itself is
-//! driven over a planted offender end to end
+//! `the_pin_expression_classifier_matches_its_contract`,
+//! `the_publish_check_requires_the_real_output_file`), the walk itself is driven
+//! over a planted offender end to end
 //! (`the_scan_reports_a_planted_literal_pin_by_job_and_value`), and the coverage
 //! assertion names the jobs it found so a gate guarding an empty set fails
 //! loudly (`the_scan_still_reaches_the_two_jobs_that_had_drifted`).
+//!
+//! The workflows are read with `serde_yaml`, not scraped. An earlier version
+//! split on this repo's own indentation — job keys at exactly two spaces, steps
+//! on `"\n      - "` — and a four-space workflow, which YAML permits and GitHub
+//! runs, therefore produced no jobs and vanished from the scan in silence with
+//! every test green (Codex review, PR #490). Neither coverage assertion caught
+//! it: the file-count check passes because the file *was* read, and the
+//! named-job check only asserts the four known jobs are still found. A gate that
+//! scrapes text can be blind to a whole file while reporting that it read it.
+//! `the_parser_reads_a_workflow_whatever_its_indentation` is the control.
+//!
+//! Known limits, stated plainly because a gate described as absolute gets
+//! trusted like one:
+//!   * it proves a job INSTALLS the pin, never that the compiler it names can
+//!     build the crate;
+//!   * its reach stops at `.github/workflows/` — a cargo invocation reached
+//!     through a script the workflow calls is outside it;
+//!   * it reads the `dtolnay/rust-toolchain` action specifically, so a different
+//!     toolchain action would need teaching here.
 //!
 //! Pure file and string checks throughout — nothing here shells out to cargo or
 //! rustup, so it costs nothing and cannot skip.
@@ -99,108 +119,109 @@ fn pinned_channel(toml: &str) -> Option<String> {
         })
 }
 
-/// One workflow job: its YAML key and its body.
+/// One workflow job: its YAML key and its steps, in order.
 struct Job {
     key: String,
-    body: String,
+    steps: Vec<Step>,
 }
 
-/// Split a workflow's `jobs:` into jobs, in order.
+/// One step of a job.
 ///
-/// A job key is the only thing in these files indented by exactly two spaces and
-/// ending in a colon, which is what makes this reliable without a YAML parser.
-fn jobs(workflow: &str) -> Vec<Job> {
-    let mut jobs: Vec<Job> = Vec::new();
-    let mut in_jobs = false;
-    for line in workflow.lines() {
-        if line.trim_end() == "jobs:" {
-            in_jobs = true;
-            continue;
-        }
-        if !in_jobs {
-            continue;
-        }
-        let is_key = line.starts_with("  ")
-            && !line.starts_with("   ")
-            && line.trim_end().ends_with(':')
-            && !line.trim_start().starts_with('#');
-        if is_key {
-            jobs.push(Job {
-                key: line.trim().trim_end_matches(':').to_string(),
-                body: String::new(),
-            });
-        } else if let Some(current) = jobs.last_mut() {
-            current.body.push_str(line);
-            current.body.push('\n');
-        }
-    }
-    jobs
-}
-
-/// One step of a job: the `uses:` it names (empty if none) and its body.
+/// Every field is taken from the parsed document rather than scraped out of
+/// text, so none of them depends on how the file happens to be indented.
 struct Step {
+    /// The action ref, empty when the step has no `uses:`.
     uses: String,
-    body: String,
+    /// The step's `id:`, which is what `steps.<id>.…` resolves against.
+    id: Option<String>,
+    /// The shell of the step's `run:`, empty when it has none.
+    run: String,
+    /// `with.toolchain`, absent when the key is missing or resolves to null.
+    toolchain: Option<String>,
 }
 
-/// Split a job body into steps.
+/// Parse a workflow's jobs with a real YAML parser.
 ///
-/// Steps sit at six spaces in these workflows, so `\n      - ` is the separator —
-/// the same split `tests/windows_target_gate.rs` uses.
-fn steps(job_body: &str) -> Vec<Step> {
-    let padded = format!("\n{job_body}");
-    padded
-        .split("\n      - ")
-        .skip(1) // the job header, before the first step
-        .map(|chunk| Step {
-            uses: chunk
-                .lines()
-                .map(str::trim_start)
-                .find_map(|line| line.strip_prefix("uses:"))
-                .unwrap_or_default()
-                .trim()
-                .to_string(),
-            body: chunk.to_string(),
+/// This used to split on fixed indentation — job keys at exactly two spaces,
+/// steps on `"\n      - "` — copied from the sibling gates. YAML does not
+/// promise either. A workflow indented four spaces under `jobs:` is perfectly
+/// valid, produced no jobs at all under that rule, and so was dropped from the
+/// scan in silence: measured before this rewrite, a four-space workflow whose
+/// cargo job pinned `1.88.0` left all fourteen tests green (Codex review,
+/// PR #490).
+///
+/// Neither coverage assertion caught it, which is the part worth remembering:
+/// the file-count check passes because the file *was* read, and the named-job
+/// check only asserts the four known jobs are still found. A gate that scrapes
+/// text can be blind to a whole file while reporting that it read it.
+///
+/// `serde_yaml` is already a dependency of this crate, so this costs nothing
+/// and removes the entire class.
+fn jobs(workflow: &str) -> Vec<Job> {
+    let doc: serde_yaml::Value = match serde_yaml::from_str(workflow) {
+        Ok(doc) => doc,
+        // A workflow this gate cannot parse is a hard failure, never a skip —
+        // an unparseable file would otherwise vanish from the scan exactly the
+        // way a four-space one used to.
+        Err(e) => panic!("workflow is not valid YAML: {e}"),
+    };
+    let Some(jobs) = doc.get("jobs").and_then(serde_yaml::Value::as_mapping) else {
+        return Vec::new();
+    };
+    jobs.iter()
+        .map(|(key, job)| Job {
+            key: scalar(key).unwrap_or_default(),
+            steps: job
+                .get("steps")
+                .and_then(serde_yaml::Value::as_sequence)
+                .map(|steps| steps.iter().map(step).collect())
+                .unwrap_or_default(),
         })
         .collect()
 }
 
-/// The text of every `run:` block in a step, joined.
+/// One step of the parsed `steps:` sequence.
+fn step(value: &serde_yaml::Value) -> Step {
+    Step {
+        uses: value.get("uses").and_then(scalar).unwrap_or_default(),
+        id: value.get("id").and_then(scalar),
+        run: value.get("run").and_then(scalar).unwrap_or_default(),
+        // An empty value, `~` or `null` reads back as absent rather than as
+        // `Some("")`. YAML resolves all three to null, the action then falls
+        // back to its ref's default channel, and the compiler is unpinned — the
+        // ABSENT case, not a restated one. Reporting it as ``pins `toolchain: `
+        // literally`` names the wrong defect and points at the wrong fix.
+        toolchain: value
+            .get("with")
+            .and_then(|with| with.get("toolchain"))
+            .and_then(scalar)
+            .filter(|value| !value.trim().is_empty()),
+    }
+}
+
+/// A YAML scalar as the string a workflow author wrote.
+///
+/// Numbers are rendered rather than dropped: `toolchain: 1.88` parses as a
+/// float, and a restated pin must be caught whether or not it happens to have
+/// two dots in it.
+fn scalar(value: &serde_yaml::Value) -> Option<String> {
+    match value {
+        serde_yaml::Value::String(s) => Some(s.clone()),
+        serde_yaml::Value::Number(n) => Some(n.to_string()),
+        serde_yaml::Value::Bool(b) => Some(b.to_string()),
+        _ => None,
+    }
+}
+
+/// The shell of a step's `run:`, taken from the parsed document.
 ///
 /// Only `run:` content, never the whole step — a `name:` is prose, and this
-/// repo has a step called "Cache cargo registry + build" that a naive scan of
-/// the step text would read as a cargo invocation.
-fn run_blocks(step_body: &str) -> String {
-    let lines: Vec<&str> = step_body.lines().collect();
-    let mut out = String::new();
-    let mut idx = 0;
-    while idx < lines.len() {
-        let line = lines[idx];
-        let indent = line.len() - line.trim_start().len();
-        let Some(rest) = line.trim_start().strip_prefix("run:") else {
-            idx += 1;
-            continue;
-        };
-        let rest = rest.trim();
-        if rest == "|" || rest == ">" || rest == "|-" || rest == ">-" {
-            idx += 1;
-            while idx < lines.len() {
-                let body = lines[idx];
-                let body_indent = body.len() - body.trim_start().len();
-                if !body.trim().is_empty() && body_indent <= indent {
-                    break;
-                }
-                out.push_str(body);
-                out.push('\n');
-                idx += 1;
-            }
-        } else {
-            out.push_str(rest);
-            out.push('\n');
-            idx += 1;
-        }
-    }
-    out
+/// repo has a step called "Cache cargo registry + build" that a scan of the
+/// step text would read as a cargo invocation. The parser hands back the block
+/// scalar already unindented and joined, so the `|` / `>` / `|-` / `>-` forms
+/// and every indentation style come out identical here.
+fn run_blocks(step: &Step) -> &str {
+    &step.run
 }
 
 /// Does this shell text invoke `cargo`?
@@ -235,24 +256,11 @@ fn invokes_cargo(shell: &str) -> bool {
     false
 }
 
-/// The `toolchain:` input a step passes, if it passes one.
-fn toolchain_input(step_body: &str) -> Option<String> {
-    let value = step_body
-        .lines()
-        .map(str::trim_start)
-        .filter(|line| !line.starts_with('#'))
-        .find_map(|line| line.strip_prefix("toolchain:"))?
-        .trim()
-        .to_string();
-    // An empty value, `~` or `null` is the ABSENT case, not a restated one:
-    // YAML resolves all three to null and the action falls back to its ref's
-    // default channel, leaving the compiler unpinned. Returning `Some("")` here
-    // made the gate report a bare `toolchain:` as ``pins `toolchain: `
-    // literally``, which names the wrong defect and points at the wrong fix.
-    if value.is_empty() || value == "~" || value == "null" {
-        return None;
-    }
-    Some(value)
+/// The `toolchain:` input a step passes, if it passes a usable one.
+///
+/// Read off the parsed step; the absent/null/empty collapse happens in `step`.
+fn toolchain_input(step: &Step) -> Option<String> {
+    step.toolchain.clone()
 }
 
 /// The line of a shell script that ASSIGNS the `channel` variable.
@@ -282,12 +290,32 @@ fn channel_assignment(shell: &str) -> Option<&str> {
 /// The other half of the contract: the expression the action reads is
 /// `steps.<id>.outputs.channel`, so a step that computes the pin correctly and
 /// never writes it to `$GITHUB_OUTPUT` hands the action an empty toolchain.
+///
+/// The redirection TARGET is checked, not merely the presence of both
+/// substrings on one line. `echo "channel=$channel" >> "${GITHUB_OUTPUT}.bak"`
+/// mentions `GITHUB_OUTPUT` and `channel=` and publishes nothing — the action
+/// falls back to its default, which is the regression this assertion exists to
+/// prevent (Codex review, PR #490).
 fn emits_channel_output(shell: &str) -> bool {
     shell
         .lines()
         .map(str::trim)
         .filter(|line| !line.starts_with('#'))
-        .any(|line| line.contains("GITHUB_OUTPUT") && line.contains("channel="))
+        .any(|line| {
+            line.contains("channel=") && line.split(">>").skip(1).any(redirects_to_github_output)
+        })
+}
+
+/// Is this the target of a `>>` redirection to `$GITHUB_OUTPUT` itself?
+///
+/// The first whitespace-delimited word after the operator, stripped of quotes,
+/// must be exactly the variable — `${GITHUB_OUTPUT}.bak` is a different file.
+fn redirects_to_github_output(target: &str) -> bool {
+    let Some(word) = target.split_whitespace().next() else {
+        return false;
+    };
+    let word = word.trim_matches(|c| c == '"' || c == '\'');
+    word == "$GITHUB_OUTPUT" || word == "${GITHUB_OUTPUT}"
 }
 
 /// Does this `toolchain:` value read the pin rather than restate it?
@@ -378,27 +406,19 @@ fn cargo_jobs(workflows: &[(String, String)]) -> Vec<CargoJob> {
     let mut found = Vec::new();
     for (name, text) in workflows {
         for job in jobs(text) {
-            let steps = steps(&job.body);
-            if !steps
-                .iter()
-                .any(|step| invokes_cargo(&run_blocks(&step.body)))
-            {
+            if !job.steps.iter().any(|step| invokes_cargo(run_blocks(step))) {
                 continue;
             }
-            let toolchain_steps = steps
+            let toolchain_steps = job
+                .steps
                 .iter()
                 .filter(|step| step.uses.starts_with("dtolnay/rust-toolchain"))
-                .map(|step| (step.uses.clone(), toolchain_input(&step.body)))
+                .map(|step| (step.uses.clone(), toolchain_input(step)))
                 .collect();
-            let step_ids = steps
+            let step_ids = job
+                .steps
                 .iter()
-                .filter_map(|step| {
-                    step.body
-                        .lines()
-                        .map(str::trim_start)
-                        .find_map(|line| line.strip_prefix("id:"))
-                        .map(|id| id.trim().to_string())
-                })
+                .filter_map(|step| step.id.clone())
                 .collect();
             found.push(CargoJob {
                 workflow: name.clone(),
@@ -462,26 +482,23 @@ fn every_cargo_job_installs_the_pin_and_none_restates_it() {
 fn the_step_the_pin_is_read_from_names_the_pin_file() {
     for (name, text) in workflows() {
         for job in jobs(&text) {
-            let steps = steps(&job.body);
-            let ids: Vec<String> = steps
+            let ids: Vec<String> = job
+                .steps
                 .iter()
                 .filter(|step| step.uses.starts_with("dtolnay/rust-toolchain"))
-                .filter_map(|step| toolchain_input(&step.body))
+                .filter_map(toolchain_input)
                 .filter_map(|value| referenced_step_id(&value))
                 .collect();
             for id in ids {
-                let source = steps
+                let source = job
+                    .steps
                     .iter()
-                    .find(|step| {
-                        step.body.lines().map(str::trim_start).any(|line| {
-                            line.strip_prefix("id:").map(str::trim) == Some(id.as_str())
-                        })
-                    })
+                    .find(|step| step.id.as_deref() == Some(id.as_str()))
                     .unwrap_or_else(|| {
                         panic!("{name}: job `{}` has no step with `id: {id}`", job.key)
                     });
-                let run = run_blocks(&source.body);
-                let assignment = channel_assignment(&run).unwrap_or_else(|| {
+                let run = run_blocks(source);
+                let assignment = channel_assignment(run).unwrap_or_else(|| {
                     panic!(
                         "{name}: job `{}` takes its toolchain from step `{id}`, but that \
                          step's script never assigns `channel=` — nothing in it \
@@ -499,7 +516,7 @@ fn the_step_the_pin_is_read_from_names_the_pin_file() {
                     job.key
                 );
                 assert!(
-                    emits_channel_output(&run),
+                    emits_channel_output(run),
                     "{name}: job `{}` reads `steps.{id}.outputs.channel`, but step \
                      `{id}` never writes `channel=` to $GITHUB_OUTPUT — the action \
                      would receive an empty toolchain and fall back to its ref's \
@@ -750,30 +767,86 @@ echo "channel=$channel" >> "$GITHUB_OUTPUT"
     assert_eq!(channel_assignment(""), None);
 }
 
+/// One step, parsed out of a one-job workflow, for the classifier tests below.
+fn only_step(step_yaml: &str) -> Step {
+    let workflow = format!("jobs:\n  j:\n    steps:\n      - {step_yaml}");
+    let mut jobs = jobs(&workflow);
+    assert_eq!(jobs.len(), 1, "probe workflow did not parse to one job");
+    let mut job = jobs.remove(0);
+    assert_eq!(
+        job.steps.len(),
+        1,
+        "probe workflow did not parse to one step"
+    );
+    job.steps.remove(0)
+}
+
 #[test]
 fn an_empty_toolchain_input_reads_as_absent_not_as_a_literal() {
     // YAML resolves all three to null; the action then falls back to its ref's
     // default channel. That is the unpinned case, and reporting it as a restated
     // literal names the wrong defect and sends the reader to the wrong fix.
     for empty in [
-        "        with:\n          toolchain:\n",
-        "        with:\n          toolchain: ~\n",
-        "        with:\n          toolchain: null\n",
+        "uses: a@v1\n        with:\n          toolchain:",
+        "uses: a@v1\n        with:\n          toolchain: ~",
+        "uses: a@v1\n        with:\n          toolchain: null",
+        "uses: a@v1\n        with:\n          toolchain: \"\"",
     ] {
         assert_eq!(
-            toolchain_input(empty),
+            toolchain_input(&only_step(empty)),
             None,
             "an empty toolchain input must read as absent: {empty:?}"
         );
     }
     assert_eq!(
-        toolchain_input("        with:\n          toolchain: 1.88.0\n").as_deref(),
+        toolchain_input(&only_step(
+            "uses: a@v1\n        with:\n          toolchain: 1.88.0"
+        ))
+        .as_deref(),
         Some("1.88.0")
     );
+    // `1.88` parses as a FLOAT, not a string. A restated pin must be caught
+    // whether or not it happens to carry two dots.
     assert_eq!(
-        toolchain_input("        with:\n          components: clippy\n"),
+        toolchain_input(&only_step(
+            "uses: a@v1\n        with:\n          toolchain: 1.88"
+        ))
+        .as_deref(),
+        Some("1.88")
+    );
+    assert_eq!(
+        toolchain_input(&only_step(
+            "uses: a@v1\n        with:\n          components: clippy"
+        )),
         None
     );
+    assert_eq!(toolchain_input(&only_step("uses: a@v1")), None);
+}
+
+#[test]
+fn the_publish_check_requires_the_real_output_file() {
+    // Both substrings on one line is not enough: this writes a DIFFERENT file
+    // and publishes nothing, so the action falls back to its default — the
+    // regression the assertion exists to prevent (Codex review, PR #490).
+    assert!(!emits_channel_output(
+        "echo \"channel=$channel\" >> \"${GITHUB_OUTPUT}.bak\"\n"
+    ));
+    assert!(!emits_channel_output(
+        "echo \"channel=$channel\" >> /tmp/GITHUB_OUTPUT\n"
+    ));
+    assert!(!emits_channel_output("echo \"channel=$channel\"\n"));
+    // The forms the real workflows use, and the quoting variants around them.
+    for good in [
+        "echo \"channel=$channel\" >> \"$GITHUB_OUTPUT\"\n",
+        "echo \"channel=$channel\" >> $GITHUB_OUTPUT\n",
+        "echo \"channel=$channel\" >> \"${GITHUB_OUTPUT}\"\n",
+        "echo \"channel=$channel\" >>\"$GITHUB_OUTPUT\"\n",
+    ] {
+        assert!(
+            emits_channel_output(good),
+            "a real publish was rejected: {good:?}"
+        );
+    }
 }
 
 #[test]
@@ -800,26 +873,75 @@ fn the_workflow_scan_covers_both_extensions_github_accepts() {
 
 #[test]
 fn the_run_block_reader_takes_scripts_and_not_step_names() {
-    let step = "name: Cache cargo registry + build\n        uses: Swatinem/rust-cache@v2\n        with:\n          workspaces: cli\n";
+    let named = only_step(
+        "name: Cache cargo registry + build\n        uses: Swatinem/rust-cache@v2\n        with:\n          workspaces: cli",
+    );
     assert!(
-        !invokes_cargo(&run_blocks(step)),
+        !invokes_cargo(run_blocks(&named)),
         "a step NAMED `Cache cargo registry + build` was read as a cargo \
          invocation — the reader is scanning prose, so every job with that step \
          would be required to pin a compiler it never uses"
     );
 
-    let block =
-        "name: gates\n        run: |\n          cargo fmt --all -- --check\n          cargo test\n";
-    assert!(invokes_cargo(&run_blocks(block)));
+    let block = only_step(
+        "name: gates\n        run: |\n          cargo fmt --all -- --check\n          cargo test",
+    );
+    assert!(invokes_cargo(run_blocks(&block)));
 
-    let inline = "name: build\n        run: cargo build --release\n";
-    assert!(invokes_cargo(&run_blocks(inline)));
+    let inline = only_step("name: build\n        run: cargo build --release");
+    assert!(invokes_cargo(run_blocks(&inline)));
 
-    // A block ends where the indent returns to the key's level; a cargo call in
-    // the NEXT step must not be attributed to this one.
-    let bounded =
-        "name: echo\n        run: |\n          echo hi\n        env:\n          X: cargo build\n";
-    assert!(!invokes_cargo(&run_blocks(bounded)));
+    // `env:` is not script. A cargo string sitting in an environment value must
+    // not be read as a command the job runs.
+    let env_only = only_step(
+        "name: echo\n        run: |\n          echo hi\n        env:\n          X: cargo build",
+    );
+    assert!(!invokes_cargo(run_blocks(&env_only)));
+
+    // Every block-scalar form yields the same script, which is the property the
+    // hand-rolled reader had to special-case and this one gets for free.
+    for form in ["|", ">", "|-", ">-"] {
+        let scalar = only_step(&format!("run: {form}\n          cargo build --release"));
+        assert!(
+            invokes_cargo(run_blocks(&scalar)),
+            "block scalar form `{form}` did not yield the script"
+        );
+    }
+}
+
+#[test]
+fn the_parser_reads_a_workflow_whatever_its_indentation() {
+    // The hole this rewrite closed. Four-space indentation under `jobs:` is
+    // valid YAML that GitHub runs; the old fixed-indent split produced NO jobs
+    // for it, so such a file was dropped from the scan in silence while the
+    // file-count assertion still passed (Codex review, PR #490).
+    let four_space = "name: Probe\njobs:\n    probe:\n        runs-on: ubuntu-latest\n        steps:\n            - uses: dtolnay/rust-toolchain@stable\n              with:\n                  toolchain: 1.88.0\n            - name: Build\n              run: cargo build --release\n";
+    let parsed = jobs(four_space);
+    assert_eq!(
+        parsed.len(),
+        1,
+        "a four-space workflow produced no jobs — the parser is back to \
+         assuming this repo's indentation"
+    );
+    assert_eq!(parsed[0].key, "probe");
+    assert_eq!(parsed[0].steps.len(), 2);
+    assert_eq!(
+        toolchain_input(&parsed[0].steps[0]).as_deref(),
+        Some("1.88.0")
+    );
+    assert!(invokes_cargo(run_blocks(&parsed[0].steps[1])));
+
+    // And the whole walk sees it, which is what the coverage assertions could
+    // not tell us before.
+    let found = cargo_jobs(&[("four.yaml".to_string(), four_space.to_string())]);
+    assert_eq!(found.len(), 1, "the walk did not reach the four-space job");
+    assert_eq!(found[0].toolchain_steps[0].1.as_deref(), Some("1.88.0"));
+
+    // Two-space, tab-free, and flow-style mappings all reach the same place.
+    let flow = "jobs:\n  a: { runs-on: ubuntu-latest, steps: [ { run: cargo test } ] }\n";
+    let parsed = jobs(flow);
+    assert_eq!(parsed.len(), 1, "a flow-style job was not parsed");
+    assert!(invokes_cargo(run_blocks(&parsed[0].steps[0])));
 }
 
 #[test]
