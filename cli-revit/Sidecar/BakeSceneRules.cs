@@ -170,6 +170,122 @@ internal static class AwareBakeRules
     internal const double FallbackSectionDepthMm = 200.0;
     internal const double FallbackSectionWidthMm = 100.0;
 
+    /// <summary>Segments in an inscribed circle. MATCHES floless's `ROUND_SEGMENTS` and the SketchUp
+    /// sink exactly: the polygon is inscribed, so its widest point between two vertices is
+    /// r*cos(pi/48), and a different count would put a baked pipe's flush face a fraction off the one
+    /// the user approved on screen.</summary>
+    internal const int RoundSegments = 48;
+
+    static double Thk(Dictionary<string, double> dims, string key, double half)
+    {
+        double t;
+        if (dims != null && dims.TryGetValue(key, out t) && t > 0 && t < 2 * half) return t;
+        return double.NaN;
+    }
+
+    static double[][] Ring(double radius)
+    {
+        var pts = new double[RoundSegments][];
+        for (var i = 0; i < RoundSegments; i++)
+        {
+            var a = (i / (double)RoundSegments) * Math.PI * 2.0;
+            pts[i] = new[] { radius * Math.Cos(a), radius * Math.Sin(a) };
+        }
+        return pts;
+    }
+
+    /// <summary>
+    /// The member's cross-section as millimetre outline points, centred on the reference line —
+    /// `u` across the width, `v` across the depth. `inner` is the bore of a hollow section, or null.
+    ///
+    /// MIRRORS the SketchUp sink and floless's own viewer point for point, so all three draw the same
+    /// steel. The shape comes from the producer's `xsection`, never from the designation: Revit's
+    /// designation path resolves a LOADED FAMILY, and when none matches this is what the member gets
+    /// instead of a nominal rectangle.
+    /// </summary>
+    internal static bool TrySectionOutlineMm(
+        string shape, Dictionary<string, double> dims, double widthMm, double depthMm, bool round,
+        out double[][] outer, out double[][] inner)
+    {
+        outer = null;
+        inner = null;
+        if (!(widthMm > 0) || !(depthMm > 0)) return false;
+        var hw = widthMm / 2.0;
+        var hd = depthMm / 2.0;
+        switch (shape)
+        {
+            case "chs":
+            {
+                var r = Math.Min(hw, hd);
+                var t = Thk(dims, "t", r);
+                if (double.IsNaN(t)) t = Math.Max(r * 0.12, 4.0);
+                outer = Ring(r);
+                if (r - t > 1e-6) inner = Ring(r - t);
+                return true;
+            }
+            case "i":
+            {
+                var tf = Thk(dims, "tf", hd); if (double.IsNaN(tf)) tf = Math.Min(Math.Max(depthMm * 0.10, 6.0), depthMm * 0.5);
+                var tw = Thk(dims, "tw", hw); if (double.IsNaN(tw)) tw = Math.Min(Math.Max(widthMm * 0.10, 5.0), widthMm * 0.5);
+                outer = new[] {
+                    new[]{-hw,-hd}, new[]{hw,-hd}, new[]{hw,-hd+tf}, new[]{tw/2.0,-hd+tf},
+                    new[]{tw/2.0,hd-tf}, new[]{hw,hd-tf}, new[]{hw,hd}, new[]{-hw,hd},
+                    new[]{-hw,hd-tf}, new[]{-tw/2.0,hd-tf}, new[]{-tw/2.0,-hd+tf}, new[]{-hw,-hd+tf} };
+                return true;
+            }
+            case "tee":
+            {
+                var tf = Thk(dims, "tf", hd); if (double.IsNaN(tf)) tf = Math.Min(Math.Max(depthMm * 0.10, 6.0), depthMm * 0.5);
+                var tw = Thk(dims, "tw", hw); if (double.IsNaN(tw)) tw = Math.Min(Math.Max(widthMm * 0.10, 5.0), widthMm * 0.5);
+                outer = new[] {
+                    new[]{-hw,-hd}, new[]{hw,-hd}, new[]{hw,-hd+tf}, new[]{tw/2.0,-hd+tf},
+                    new[]{tw/2.0,hd}, new[]{-tw/2.0,hd}, new[]{-tw/2.0,-hd+tf}, new[]{-hw,-hd+tf} };
+                return true;
+            }
+            case "channel":
+            {
+                var tf = Thk(dims, "tf", hd); if (double.IsNaN(tf)) tf = Math.Max(depthMm * 0.10, 5.0);
+                var tw = Thk(dims, "tw", hw); if (double.IsNaN(tw)) tw = Math.Max(widthMm * 0.12, 5.0);
+                outer = new[] {
+                    new[]{-hw,-hd}, new[]{hw,-hd}, new[]{hw,-hd+tf}, new[]{-hw+tw,-hd+tf},
+                    new[]{-hw+tw,hd-tf}, new[]{hw,hd-tf}, new[]{hw,hd}, new[]{-hw,hd} };
+                return true;
+            }
+            case "angle":
+            case "double-angle":
+            {
+                var t = Thk(dims, "t", Math.Min(hw, hd));
+                if (double.IsNaN(t)) t = Math.Max(Math.Min(widthMm, depthMm) * 0.18, 5.0);
+                outer = new[] {
+                    new[]{-hw,-hd}, new[]{hw,-hd}, new[]{hw,-hd+t}, new[]{-hw+t,-hd+t},
+                    new[]{-hw+t,hd}, new[]{-hw,hd} };
+                return true;
+            }
+            case "rhs":
+            {
+                var t = Thk(dims, "t", Math.Min(hw, hd));
+                if (double.IsNaN(t)) t = Math.Max(Math.Min(widthMm, depthMm) * 0.12, 4.0);
+                outer = new[] { new[]{-hw,-hd}, new[]{hw,-hd}, new[]{hw,hd}, new[]{-hw,hd} };
+                if (hw - t > 1e-6 && hd - t > 1e-6)
+                    inner = new[] { new[]{-hw+t,-hd+t}, new[]{hw-t,-hd+t}, new[]{hw-t,hd-t}, new[]{-hw+t,hd-t} };
+                return true;
+            }
+            case "rect":
+            {
+                // A round `rect` is a solid bar, not a square one — the same distinction the tube
+                // branch makes, and `section.round` is the only thing that carries it.
+                if (round) { outer = Ring(Math.Min(hw, hd)); return true; }
+                outer = new[] { new[]{-hw,-hd}, new[]{hw,-hd}, new[]{hw,hd}, new[]{-hw,hd} };
+                return true;
+            }
+            default:
+                // `unsupported-custom`, `joist`, or a shape this build does not know: REFUSE rather
+                // than invent one. The caller then falls back to the nominal placeholder and says so,
+                // which is the honest answer for a section the catalogue itself will not draw.
+                return false;
+        }
+    }
+
     static readonly string[] ImperialPrefixes = { "W", "M", "S", "HP", "C", "MC", "WT", "MT", "ST", "L", "HSS", "PIPE" };
     static readonly string[] MetricPrefixes = { "UB", "UC", "UKB", "UKC", "UBP", "IPE", "IPN", "HE", "HEA", "HEB", "HEM", "HD", "UPN", "PFC", "RHS", "SHS", "CHS" };
     // Designations whose SECOND `X`-separated token is a width rather than a
@@ -336,6 +452,15 @@ internal static class AwareBakeRules
         public double[] ToMm = new double[3];
         public string Profile = "";
         public string Name = "";
+        /// <summary>The section the PRODUCER resolved, verbatim: `xsection.shape` plus its named
+        /// dimensions in millimetres, and the envelope `section.w`/`section.d`. Empty when the scene
+        /// carried none (a legacy producer), which is the only case that still gets a placeholder.</summary>
+        public string XsShape = "";
+        public Dictionary<string, double> XsDims = new Dictionary<string, double>();
+        public double SectionWidthMm;
+        public double SectionDepthMm;
+        public bool Round;
+        public bool HasSection { get { return !string.IsNullOrEmpty(XsShape) && SectionWidthMm > 0 && SectionDepthMm > 0; } }
     }
 
     internal sealed class RecordRef
@@ -516,7 +641,11 @@ internal static class AwareBakeRules
         var name = Str(el, "name");
         if (string.IsNullOrWhiteSpace(name) && hasMeta) name = Str(metaEl, "name");
 
-        return new MemberRecord
+        // THE SUPPLIED SECTION. Revit used to ignore `xsection` entirely and rebuild a nominal
+        // rectangle from the designation, so a `CHS508.0*14.2` became a 508 x 254 box. The producer
+        // already resolved the true section against its own catalogue; this reads it rather than
+        // guessing it back out of a name.
+        var record = new MemberRecord
         {
             Id = id,
             Kind = kind,
@@ -525,6 +654,27 @@ internal static class AwareBakeRules
             Profile = profile.Trim(),
             Name = name ?? "",
         };
+        System.Text.Json.JsonElement sectionEl;
+        if (el.TryGetProperty("section", out sectionEl) && sectionEl.ValueKind == System.Text.Json.JsonValueKind.Object)
+        {
+            record.SectionWidthMm = Num(sectionEl, "w");
+            record.SectionDepthMm = Num(sectionEl, "d");
+            System.Text.Json.JsonElement roundEl;
+            record.Round = sectionEl.TryGetProperty("round", out roundEl)
+                           && roundEl.ValueKind == System.Text.Json.JsonValueKind.True;
+        }
+        System.Text.Json.JsonElement xsEl;
+        if (el.TryGetProperty("xsection", out xsEl) && xsEl.ValueKind == System.Text.Json.JsonValueKind.Object)
+        {
+            record.XsShape = (Str(xsEl, "shape") ?? "").Trim().ToLowerInvariant();
+            foreach (var prop in xsEl.EnumerateObject())
+            {
+                if (prop.Value.ValueKind != System.Text.Json.JsonValueKind.Number) continue;
+                double v;
+                if (prop.Value.TryGetDouble(out v)) record.XsDims[prop.Name] = v;
+            }
+        }
+        return record;
     }
 
     /// <param name="parseChildren">Walks the nested records THIS collection's parents carry, given
@@ -628,6 +778,16 @@ internal static class AwareBakeRules
     }
 
     // ── Small JSON helpers ───────────────────────────────────────────────────
+    /// <summary>A finite number off a JSON object, or 0. Used for the supplied section envelope.</summary>
+    internal static double Num(System.Text.Json.JsonElement obj, string property)
+    {
+        System.Text.Json.JsonElement value;
+        if (!obj.TryGetProperty(property, out value)) return 0;
+        if (value.ValueKind != System.Text.Json.JsonValueKind.Number) return 0;
+        double result;
+        return value.TryGetDouble(out result) && double.IsFinite(result) ? result : 0;
+    }
+
     internal static string Str(System.Text.Json.JsonElement obj, string property)
     {
         System.Text.Json.JsonElement value;

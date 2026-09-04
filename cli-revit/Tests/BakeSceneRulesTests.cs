@@ -655,4 +655,102 @@ public class BakeSceneRulesTests
         Assert.Single(plan.Delete);
         Assert.Equal(AwareBakeRules.ReasonRemoved, plan.Delete[0].Reason);
     }
+
+    // ── the SUPPLIED cross-section ──────────────────────────────────────────
+    // Revit used to ignore `xsection` and rebuild a nominal rectangle from the designation, so a
+    // `CHS508.0*14.2` became a 508 x 254 box. These pin the outline it builds instead. Point counts
+    // are the discriminator a shape can be recognised by, exactly as they are in the live host.
+
+    static System.Collections.Generic.Dictionary<string, double> Dims(params (string, double)[] pairs)
+    {
+        var d = new System.Collections.Generic.Dictionary<string, double>();
+        foreach (var (k, v) in pairs) d[k] = v;
+        return d;
+    }
+
+    [Fact]
+    public void SectionOutline_RoundTubeIsACircleWithABore()
+    {
+        double[][] outer, inner;
+        Assert.True(AwareBakeRules.TrySectionOutlineMm("chs", Dims(("od", 508), ("t", 14.2)), 508, 508, true, out outer, out inner));
+        // 48 inscribed segments — the SAME count as floless's viewer and the SketchUp sink, so all
+        // three draw one circle rather than three approximations of one.
+        Assert.Equal(48, outer.Length);
+        Assert.NotNull(inner);
+        Assert.Equal(48, inner.Length);
+        // Measured, not counted: the outer ring reaches the real radius and the bore is one wall in.
+        var rOuter = System.Linq.Enumerable.Max(System.Linq.Enumerable.Select(outer, p => Math.Sqrt(p[0] * p[0] + p[1] * p[1])));
+        var rInner = System.Linq.Enumerable.Max(System.Linq.Enumerable.Select(inner, p => Math.Sqrt(p[0] * p[0] + p[1] * p[1])));
+        Assert.Equal(254.0, rOuter, 6);
+        Assert.Equal(254.0 - 14.2, rInner, 6);
+    }
+
+    [Fact]
+    public void SectionOutline_EachShapeHasItsOwnSignature()
+    {
+        double[][] outer, inner;
+        Assert.True(AwareBakeRules.TrySectionOutlineMm("i", Dims(("tw", 6.7), ("tf", 11.8)), 165.7, 306.6, false, out outer, out inner));
+        Assert.Equal(12, outer.Length);                        // an I traces 12 points
+        Assert.Null(inner);
+
+        Assert.True(AwareBakeRules.TrySectionOutlineMm("angle", Dims(("t", 10)), 100, 100, false, out outer, out inner));
+        Assert.Equal(6, outer.Length);                         // an L traces 6 — NOT the 4 of a box
+        Assert.Null(inner);
+
+        Assert.True(AwareBakeRules.TrySectionOutlineMm("channel", Dims(("tw", 5), ("tf", 8.5)), 50, 100, false, out outer, out inner));
+        Assert.Equal(8, outer.Length);
+
+        Assert.True(AwareBakeRules.TrySectionOutlineMm("tee", Dims(("tw", 6), ("tf", 10)), 102, 127, false, out outer, out inner));
+        Assert.Equal(8, outer.Length);                         // half an I, not the 12 of a full one
+
+        Assert.True(AwareBakeRules.TrySectionOutlineMm("rhs", Dims(("t", 10)), 100, 100, false, out outer, out inner));
+        Assert.Equal(4, outer.Length);
+        Assert.NotNull(inner);                                 // a tube is hollow
+        Assert.Equal(4, inner.Length);
+    }
+
+    [Fact]
+    public void SectionOutline_RefusesAShapeTheCatalogueWillNotDraw()
+    {
+        // An ellipse is carried as data and refused as geometry. Inventing a rectangle for it here is
+        // exactly the silent-wrong-answer this change exists to remove, so it must return false and
+        // let the caller fall back to a placeholder that SAYS it is one.
+        double[][] outer, inner;
+        Assert.False(AwareBakeRules.TrySectionOutlineMm("unsupported-custom", Dims(), 150, 75, false, out outer, out inner));
+        Assert.Null(outer);
+        Assert.False(AwareBakeRules.TrySectionOutlineMm("joist", Dims(), 200, 400, false, out outer, out inner));
+        // And a section with no envelope cannot be drawn at any shape.
+        Assert.False(AwareBakeRules.TrySectionOutlineMm("i", Dims(("tw", 6)), 0, 300, false, out outer, out inner));
+    }
+
+    [Fact]
+    public void SectionOutline_ARoundBarIsRoundAndASquareOneIsNot()
+    {
+        // `rect` covers both a solid bar and a plate; only `section.round` separates them, and the
+        // tube branch makes the same distinction. Getting this wrong squares a round bar silently.
+        double[][] outer, inner;
+        Assert.True(AwareBakeRules.TrySectionOutlineMm("rect", Dims(), 50, 50, true, out outer, out inner));
+        Assert.Equal(48, outer.Length);
+        Assert.True(AwareBakeRules.TrySectionOutlineMm("rect", Dims(), 50, 50, false, out outer, out inner));
+        Assert.Equal(4, outer.Length);
+    }
+
+    [Fact]
+    public void SectionOutline_FallsBackToAnEstimateOnlyWhenAThicknessIsMissing()
+    {
+        // The catalogue's own thickness must win. Pinned by measuring the web position: a 6.7 mm web
+        // puts the inner faces at +/-3.35, which the estimate (10% of width) would not.
+        double[][] outer, inner;
+        Assert.True(AwareBakeRules.TrySectionOutlineMm("i", Dims(("tw", 6.7), ("tf", 11.8)), 165.7, 306.6, false, out outer, out inner));
+        var webHalf = System.Linq.Enumerable.Min(System.Linq.Enumerable.Select(
+            System.Linq.Enumerable.Where(outer, p => p[0] > 0), p => p[0]));
+        Assert.Equal(3.35, webHalf, 6);
+
+        // With no `tw` supplied the estimate stands in, and it is a DIFFERENT number — so the first
+        // assertion is measuring the catalogue value, not something both paths would produce.
+        Assert.True(AwareBakeRules.TrySectionOutlineMm("i", Dims(("tf", 11.8)), 165.7, 306.6, false, out outer, out inner));
+        var estimated = System.Linq.Enumerable.Min(System.Linq.Enumerable.Select(
+            System.Linq.Enumerable.Where(outer, p => p[0] > 0), p => p[0]));
+        Assert.True(Math.Abs(estimated - 3.35) > 1.0, "the estimate must differ from the catalogue web, got " + estimated);
+    }
 }
