@@ -353,8 +353,14 @@ fn emits_parsed_channel(line: &str) -> bool {
     let Some(idx) = emitted.rfind("channel=") else {
         return false;
     };
-    let value = emitted[idx + "channel=".len()..].trim_start();
-    value.starts_with("$channel") || value.starts_with("${channel}")
+    let value = emitted[idx + "channel=".len()..].trim();
+    // Exactly the variable, not merely a prefix of one. `$channels` and
+    // `$channel_override` both start with `$channel` and are different variables
+    // — usually unset, so the step publishes an empty value, the action falls
+    // back to its ref's default, and this gate reports success (Codex review,
+    // PR #490). Shell quoting is stripped; the name is not.
+    let value = value.trim_matches(|c| c == '"' || c == '\'');
+    value == "$channel" || value == "${channel}"
 }
 
 /// Is this the target of a `>>` redirection to `$GITHUB_OUTPUT` itself?
@@ -375,22 +381,29 @@ fn redirects_to_github_output(target: &str) -> bool {
 /// moving channel (`stable`) is exactly the drift this gate exists to catch, and
 /// so is an expression pointing at an input or a variable rather than a step.
 fn reads_a_step_output(value: &str) -> bool {
-    let Some(inner) = value.strip_prefix("${{") else {
-        return false;
-    };
-    let Some(inner) = inner.strip_suffix("}}") else {
-        return false;
-    };
-    let inner = inner.trim();
-    inner.starts_with("steps.") && inner.ends_with(".outputs.channel")
+    referenced_step_id(value).is_some()
 }
 
-/// The step id an expression like `${{ steps.pin.outputs.channel }}` names.
+/// The step id in an expression reading exactly `steps.<id>.outputs.channel`.
+///
+/// The path is matched segment by segment rather than by prefix and suffix.
+/// `${{ steps.pin.typo.outputs.channel }}` starts with `steps.` and ends with
+/// `.outputs.channel`, so a prefix/suffix test accepts it and reports `pin` as
+/// the producer — but the expression reads a property that step never published,
+/// the action receives an empty toolchain, and the compiler is unpinned with
+/// every other assertion here green (Codex review, PR #490).
 fn referenced_step_id(value: &str) -> Option<String> {
     let inner = value.strip_prefix("${{")?.strip_suffix("}}")?.trim();
-    let rest = inner.strip_prefix("steps.")?;
-    let end = rest.find('.')?;
-    Some(rest[..end].to_string())
+    let mut segments = inner.strip_prefix("steps.")?.split('.');
+    let id = segments.next()?;
+    if id.is_empty() || segments.next()? != "outputs" || segments.next()? != "channel" {
+        return None;
+    }
+    // `steps.pin.outputs.channel.extra` is not the path either.
+    if segments.next().is_some() {
+        return None;
+    }
+    Some(id.to_string())
 }
 
 /// Every workflow under `.github/workflows/`, as (name, text).
@@ -556,15 +569,32 @@ fn every_cargo_job_installs_the_pin_and_none_restates_it() {
                      remove (#298). Pass `toolchain: ${{{{ steps.<id>.outputs.channel }}}}`."
                 );
             };
-            assert!(
-                reads_a_step_output(value),
-                "{where_} pins `toolchain: {value}` literally. The pin lives in \
-                 cli/rust-toolchain.toml and must be read, never restated — a \
-                 restated version drifts silently, which is how this job came to \
-                 build on 1.88.0 while the pin said {pin}."
-            );
-            let id = referenced_step_id(value)
-                .unwrap_or_else(|| panic!("{where_}: could not read a step id out of `{value}`"));
+            // Two different mistakes, so two different sentences. Restating the
+            // version is the drift this gate exists to catch; an expression that
+            // names a step but reads the wrong property off it is a typo that
+            // silently yields an empty toolchain. Reporting the first for the
+            // second sends the reader looking for a hard-coded version that is
+            // not there.
+            let Some(id) = referenced_step_id(value) else {
+                let names_a_step = value
+                    .strip_prefix("${{")
+                    .and_then(|inner| inner.strip_suffix("}}"))
+                    .is_some_and(|inner| inner.trim().starts_with("steps."));
+                if names_a_step {
+                    panic!(
+                        "{where_} reads `toolchain: {value}`, which is not \
+                         `${{{{ steps.<id>.outputs.channel }}}}`. The expression \
+                         resolves to the empty string, so `{uses}` falls back to \
+                         its ref's default channel rather than the pin."
+                    );
+                }
+                panic!(
+                    "{where_} pins `toolchain: {value}` literally. The pin lives in \
+                     cli/rust-toolchain.toml and must be read, never restated — a \
+                     restated version drifts silently, which is how this job came to \
+                     build on 1.88.0 while the pin said {pin}."
+                );
+            };
             let producer_at = job
                 .step_ids
                 .iter()
@@ -813,6 +843,17 @@ fn the_pin_expression_classifier_matches_its_contract() {
         ("${{ env.RUST_VERSION }}", false),
         ("${{ matrix.toolchain }}", false),
         ("${{ steps.pin.outputs.version }}", false),
+        // A property path that is not `steps.<id>.outputs.channel`. Each starts
+        // with `steps.` and the first ends with `.outputs.channel`, so a
+        // prefix/suffix test accepts it while the expression reads something the
+        // producer never published — an empty toolchain, silently (Codex review,
+        // PR #490).
+        ("${{ steps.pin.typo.outputs.channel }}", false),
+        ("${{ steps.pin.outputs.channel.extra }}", false),
+        ("${{ steps.pin.outputs }}", false),
+        ("${{ steps.pin }}", false),
+        ("${{ steps..outputs.channel }}", false),
+        ("${{ steps. }}", false),
         ("", false),
     ] {
         assert_eq!(
@@ -825,7 +866,19 @@ fn the_pin_expression_classifier_matches_its_contract() {
         referenced_step_id("${{ steps.pin.outputs.channel }}").as_deref(),
         Some("pin")
     );
+    assert_eq!(
+        referenced_step_id("${{ steps.read-the-pin.outputs.channel }}").as_deref(),
+        Some("read-the-pin"),
+        "a hyphenated id is a valid step id and must still be read"
+    );
     assert_eq!(referenced_step_id("1.88.0"), None);
+    // The id reader and the acceptance test must agree, or a rejected
+    // expression could still name a producer the ordering checks then trust.
+    assert_eq!(
+        referenced_step_id("${{ steps.pin.typo.outputs.channel }}"),
+        None,
+        "a wrong property path must yield no step id, not `pin`"
+    );
 }
 
 #[test]
@@ -992,12 +1045,32 @@ fn the_publish_check_requires_the_parsed_channel_not_a_literal() {
          assignment above it reads the pin"
     );
 
-    // The real form, and the braced variable.
+    // A variable whose name merely BEGINS with `channel` is a different
+    // variable. Both of these are typically unset, so the step publishes an
+    // empty value and the action falls back to its ref's default — while a
+    // `starts_with("$channel")` test reports success (Codex review, PR #490).
+    for near_miss in [
+        "channel=$(sed -n 's/x/y/p' cli/rust-toolchain.toml)\necho \"channel=$channels\" >> \"$GITHUB_OUTPUT\"\n",
+        "channel=$(sed -n 's/x/y/p' cli/rust-toolchain.toml)\necho \"channel=$channel_override\" >> \"$GITHUB_OUTPUT\"\n",
+        "channel=$(sed -n 's/x/y/p' cli/rust-toolchain.toml)\necho \"channel=${channel}x\" >> \"$GITHUB_OUTPUT\"\n",
+    ] {
+        assert!(
+            !emits_channel_output(near_miss),
+            "a variable that is not `$channel` must be rejected: {near_miss:?}"
+        );
+    }
+
+    // The real form, and the braced variable. Without these the check could
+    // reject everything and prove nothing.
     assert!(emits_channel_output(
         "echo \"channel=$channel\" >> \"$GITHUB_OUTPUT\"\n"
     ));
     assert!(emits_channel_output(
         "echo \"channel=${channel}\" >> \"$GITHUB_OUTPUT\"\n"
+    ));
+    // The unquoted form is the same publish.
+    assert!(emits_channel_output(
+        "echo channel=$channel >> $GITHUB_OUTPUT\n"
     ));
 }
 
