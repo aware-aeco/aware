@@ -37,7 +37,8 @@ export const COMPILER_DESCRIPTOR = Object.freeze({
   environment: Object.freeze({ PATH: ['msvc/bin', 'sdk/bin', 'rust/bin', '<system32>'],
     INCLUDE: ['msvc/include', 'sdk/include/ucrt', 'sdk/include/shared', 'sdk/include/um', 'sdk/include/winrt', 'sdk/include/cppwinrt'],
     LIB: ['msvc/lib', 'sdk/ucrt-lib', 'sdk/um-lib'], LIBPATH: ['msvc/lib', 'sdk/ucrt-lib', 'sdk/um-lib'],
-    PATHEXT: '.COM;.EXE;.BAT;.CMD', VSLANG: '1033',
+    // Disable the debugger-induced heap penalty without disabling DEBUG_PROCESS or image auditing.
+    PATHEXT: '.COM;.EXE;.BAT;.CMD', VSLANG: '1033', _NO_DEBUG_HEAP: '1',
     VCINSTALLDIR: ['msvc'], VSCMD_ARG_TGT_ARCH: 'x64' }),
   auditPolicy: 'aware-private-compiler-debug-events/v3',
   startupPolicy: Object.freeze({ identity: 'aware-private-msvc-telemetry-denial/v1',
@@ -328,6 +329,10 @@ export function verifyCompilerAudit(report, { compiler, targetRoot, toolPath }) 
   return { ...report, images: classified };
 }
 export function runAuditedCompiler({ compiler, toolPath, args, cwd, env, auditScript, evidenceRoot, label, targetRoot, timeout = 5400000 }) {
+  // Windows environment names are case-insensitive. Reject ambiguous spellings before any launch.
+  const heapKeys = Object.keys(env ?? {}).filter(key => key.toUpperCase() === '_NO_DEBUG_HEAP');
+  assert.ok(heapKeys.length === 1 && heapKeys[0] === '_NO_DEBUG_HEAP' && env._NO_DEBUG_HEAP === '1',
+    'audited compiler requires the fixed _NO_DEBUG_HEAP=1 environment');
   verifyPrivateCompiler(compiler);
   assert.equal(fileDigest(auditScript), compiler.manifest.inputs['compiler-audit-script'], 'compiler auditor script changed');
   assert.ok(Object.values(compiler.tools).some(path => resolve(path).toLowerCase() === resolve(toolPath).toLowerCase()), 'audited command is not a private compiler role');

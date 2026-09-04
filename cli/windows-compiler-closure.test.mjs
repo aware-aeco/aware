@@ -7,7 +7,7 @@ import { compilerFixture, COMPILER_FIXTURE_FILES } from './windows-compiler-fixt
 import { createWindowsBuilderRecords } from './create-windows-internal-repro-inputs.mjs';
 import { verifyNativeIncludes, verifyNativeLinkInputs } from './windows-compiler-native-fixture.mjs';
 import { COMPILER_IDS, COMPILER_LAYOUT, COMPILER_DESCRIPTOR, compilerStartupPolicy, canonicalJson, digest, fileDigest, inventory, copyDirectory, loaderObservedWindows, verifyCompilerAudit,
-  protectedWindowsPath, retainAuditorResult, validateCompilerLocator, validateCompilerManifest, validateInventory, validateRecordPath, validateWindowsPath } from './windows-compiler-closure.mjs';
+  protectedWindowsPath, retainAuditorResult, runAuditedCompiler, validateCompilerLocator, validateCompilerManifest, validateInventory, validateRecordPath, validateWindowsPath } from './windows-compiler-closure.mjs';
 import { loadVerifiedBuildModules, runningInputFiles, rejectedAmbientKeys, validateBootstrapLocator, verifyBuildAuthority,
   bootstrapSystemEnvironment, verifyConsumedClosure } from './build-windows-internal-repro.mjs';
 
@@ -177,9 +177,37 @@ test('private npm cache mutation is refused at the post-consumption boundary', (
 });
 
 test('ambient compiler overrides are rejected case-insensitively', () => {
-  const poisoned = { Path: 'x', RustFlags: 'x', _cl_: 'x', RuStUp_HoMe: 'x', cArGo_HoMe: 'x', CC_x86_64_pc_windows_msvc: 'x', WindowsSdkDir: 'x', VCToolsInstallDir: 'x', vcInstallDir: 'x', vScMd_ArG_TgT_ArCh: 'x64' };
+  const poisoned = { Path: 'x', RustFlags: 'x', _cl_: 'x', RuStUp_HoMe: 'x', cArGo_HoMe: 'x', CC_x86_64_pc_windows_msvc: 'x', WindowsSdkDir: 'x', VCToolsInstallDir: 'x', vcInstallDir: 'x', vScMd_ArG_TgT_ArCh: 'x64', _nO_dEbUg_HeAp: '1' };
   assert.deepEqual(rejectedAmbientKeys(poisoned), Object.keys(poisoned).sort());
   assert.deepEqual(rejectedAmbientKeys({ SystemRoot: 'a', systemroot: 'b' }), ['SystemRoot', 'systemroot']);
+});
+
+test('compiler heap setting is fixed manifest authority and rejects alternate spellings', () => {
+  const fixture = compilerFixture();
+  try {
+    const { manifest } = createWindowsBuilderRecords(fixture.input);
+    assert.equal(manifest.compiler.environment._NO_DEBUG_HEAP, '1');
+    for (const value of [undefined, '0', 1]) {
+      const changed = structuredClone(manifest);
+      if (value === undefined) delete changed.compiler.environment._NO_DEBUG_HEAP;
+      else changed.compiler.environment._NO_DEBUG_HEAP = value;
+      assert.throws(() => validateCompilerManifest(changed), /descriptor differs/);
+    }
+    for (const duplicate of [false, true]) {
+      const changed = structuredClone(manifest);
+      changed.compiler.environment._no_debug_heap = '1';
+      if (!duplicate) delete changed.compiler.environment._NO_DEBUG_HEAP;
+      assert.throws(() => validateCompilerManifest(changed), /descriptor differs/);
+    }
+  } finally { rmSync(fixture.root, { recursive: true, force: true }); }
+});
+
+test('auditor rejects missing, altered or ambiguous heap mode before filesystem access', () => {
+  for (const env of [undefined, {}, { _NO_DEBUG_HEAP: '0' }, { _NO_DEBUG_HEAP: 1 },
+    { _no_debug_heap: '1' }, { _NO_DEBUG_HEAP: '1', _no_debug_heap: '0' }]) {
+    // No compiler or paths exist: a bypass would reach private-compiler verification and fail differently.
+    assert.throws(() => runAuditedCompiler({ env }), /fixed _NO_DEBUG_HEAP=1/);
+  }
 });
 
 test('MSVC discovery markers are fixed descriptor authority, never host inputs', () => {

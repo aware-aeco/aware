@@ -15,7 +15,7 @@ import {
 
 const fakeCompiler = () => ({ tools: { rustc: 'RUSTC', rustdoc: 'RUSTDOC', cl: 'CL', lib: 'LIB', link: 'LINK' },
   host: { windows: 'SYSTEM', system32: 'SYSTEM32' },
-  environment: { PATH: 'PRIVATE_PATH', INCLUDE: 'PRIVATE_INCLUDE', LIB: 'PRIVATE_LIB', LIBPATH: 'PRIVATE_LIBPATH', PATHEXT: '.EXE' } });
+  environment: { PATH: 'PRIVATE_PATH', INCLUDE: 'PRIVATE_INCLUDE', LIB: 'PRIVATE_LIB', LIBPATH: 'PRIVATE_LIBPATH', PATHEXT: '.EXE', _NO_DEBUG_HEAP: '1' } });
 
 test('verbose command evidence has an explicit bounded buffer large enough for a full Cargo proof', () => {
   assert.equal(COMMAND_OUTPUT_BUFFER_BYTES, 128 * 1024 * 1024);
@@ -62,6 +62,7 @@ test('controlled environment owns reproducible Rust and native MSVC flags', () =
   assert.equal(env.CFLAGS, '/Brepro'); assert.equal(env.CL, '/Brepro');
   assert.equal(env.CARGO_NET_OFFLINE, 'true'); assert.equal(env.RUSTC, 'RUSTC');
   assert.equal(env.CARGO_BUILD_JOBS, '1');
+  assert.equal(env._NO_DEBUG_HEAP, '1');
   assert.equal(env.NODE_OPTIONS, undefined); assert.equal(env.GOOGLE_CLIENT_SECRET, undefined);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });

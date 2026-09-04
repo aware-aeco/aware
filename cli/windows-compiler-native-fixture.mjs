@@ -200,6 +200,15 @@ export function nativeVersionProof({ native, env }) {
   const { compiler, audit } = native;
   assert.equal(env.VCINSTALLDIR, join(compiler.root, 'msvc'));
   assert.equal(env.VSCMD_ARG_TGT_ARCH, 'x64');
+  assert.equal(env._NO_DEBUG_HEAP, '1');
+  for (const [index, altered] of [undefined, '0', 1].entries()) {
+    const changed = { ...env }, label = `heap-refusal-${index}`;
+    if (altered === undefined) delete changed._NO_DEBUG_HEAP; else changed._NO_DEBUG_HEAP = altered;
+    assert.throws(() => audit('rustc', ['--version'], changed, label), /fixed _NO_DEBUG_HEAP=1/);
+    assert.equal(existsSync(join(native.evidence, `${label}-request.local.json`)), false);
+  }
+  assert.throws(() => audit('rustc', ['--version'], { ...env, _no_debug_heap: '0' }, 'heap-case-refusal'), /fixed _NO_DEBUG_HEAP=1/);
+  assert.equal(existsSync(join(native.evidence, 'heap-case-refusal-request.local.json')), false);
   assert.match(audit('cargo', ['--version'], env, 'cargo-version'), /^cargo 1\.95\.0\b/);
   assert.match(audit('rustc', ['--version'], env, 'rust-version'), /^rustc 1\.95\.0\b/);
   for (const query of ['sysroot', 'target-libdir']) {
