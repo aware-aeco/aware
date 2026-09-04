@@ -45,14 +45,17 @@
 //! of where a future step happens to `cd`.
 //!
 //! Assertions over the real tree:
-//!   * every workflow job that runs `cargo` has a `dtolnay/rust-toolchain` step;
+//!   * every workflow job that runs `cargo` has a `dtolnay/rust-toolchain` step,
+//!     and it runs BEFORE the first cargo invocation — steps run in order, so a
+//!     job that installs the pin after a build did not pin that build;
 //!   * that step's `toolchain:` is a workflow expression, never a literal
 //!     version and never left implicit on the action ref (`@stable`);
 //!   * the line in that step which ASSIGNS `channel` reads
-//!     `cli/rust-toolchain.toml`, and the step publishes it to `$GITHUB_OUTPUT`
-//!     — the command, never a mention of the path in a comment or an
-//!     `::error::` message, both of which survive deleting the command they
-//!     describe;
+//!     `cli/rust-toolchain.toml`, and the step publishes `channel=$channel` to
+//!     `$GITHUB_OUTPUT` — the command, never a mention of the path in a comment
+//!     or an `::error::` message, both of which survive deleting the command
+//!     they describe, and the parsed value, never a literal written to the
+//!     right file;
 //!   * no `rust-toolchain.toml` anywhere in the repo disagrees with the pin,
 //!     which is the other way a directory-sensitive lookup can drift;
 //!   * the pin names a concrete version rather than a moving channel.
@@ -130,6 +133,9 @@ struct Job {
 /// Every field is taken from the parsed document rather than scraped out of
 /// text, so none of them depends on how the file happens to be indented.
 struct Step {
+    /// The step's `name:`, for failure messages only — never scanned, since a
+    /// name is prose and this repo has one reading "Cache cargo registry".
+    name: String,
     /// The action ref, empty when the step has no `uses:`.
     uses: String,
     /// The step's `id:`, which is what `steps.<id>.…` resolves against.
@@ -183,6 +189,7 @@ fn jobs(workflow: &str) -> Vec<Job> {
 /// One step of the parsed `steps:` sequence.
 fn step(value: &serde_yaml::Value) -> Step {
     Step {
+        name: value.get("name").and_then(scalar).unwrap_or_default(),
         uses: value.get("uses").and_then(scalar).unwrap_or_default(),
         id: value.get("id").and_then(scalar),
         run: value.get("run").and_then(scalar).unwrap_or_default(),
@@ -291,19 +298,63 @@ fn channel_assignment(shell: &str) -> Option<&str> {
 /// `steps.<id>.outputs.channel`, so a step that computes the pin correctly and
 /// never writes it to `$GITHUB_OUTPUT` hands the action an empty toolchain.
 ///
-/// The redirection TARGET is checked, not merely the presence of both
-/// substrings on one line. `echo "channel=$channel" >> "${GITHUB_OUTPUT}.bak"`
-/// mentions `GITHUB_OUTPUT` and `channel=` and publishes nothing — the action
-/// falls back to its default, which is the regression this assertion exists to
-/// prevent (Codex review, PR #490).
+/// Three things are checked, and each was a hole the previous version had
+/// (Codex review, PR #490, rounds two and three):
+///
+///   * the redirection TARGET is `$GITHUB_OUTPUT` itself, not merely a word
+///     containing it — `>> "${GITHUB_OUTPUT}.bak"` publishes nothing;
+///   * the key written is `channel`, the one the action's expression reads;
+///   * the VALUE is the `$channel` the script computed. Without this last one
+///     `echo "channel=stable" >> "$GITHUB_OUTPUT"` passes while the `sed` above
+///     it still reads the pin: the assignment check is satisfied, the publish
+///     check is satisfied, and the action is handed a moving channel.
 fn emits_channel_output(shell: &str) -> bool {
-    shell
+    publish_problem(shell).is_none()
+}
+
+/// Why this script does not publish the parsed channel, or `None` if it does.
+///
+/// The two failures are different mistakes with different fixes, so they get
+/// different sentences. Reporting "never writes to $GITHUB_OUTPUT" for a step
+/// that writes `channel=stable` to exactly the right file sends the reader
+/// looking for the wrong thing.
+fn publish_problem(shell: &str) -> Option<&'static str> {
+    let mut redirects = false;
+    for line in shell
         .lines()
         .map(str::trim)
         .filter(|line| !line.starts_with('#'))
-        .any(|line| {
-            line.contains("channel=") && line.split(">>").skip(1).any(redirects_to_github_output)
-        })
+    {
+        if !line.split(">>").skip(1).any(redirects_to_github_output) {
+            continue;
+        }
+        redirects = true;
+        if emits_parsed_channel(line) {
+            return None;
+        }
+    }
+    if redirects {
+        Some(
+            "it writes to $GITHUB_OUTPUT but not `channel=$channel` — the value \
+             published is not the one the script parsed, so the action is handed \
+             a channel nobody read out of the pin file",
+        )
+    } else {
+        Some(
+            "it never writes `channel=` to $GITHUB_OUTPUT, so the action receives \
+             an empty toolchain and falls back to its ref's default",
+        )
+    }
+}
+
+/// Does this line publish `channel=` with the value the script parsed?
+fn emits_parsed_channel(line: &str) -> bool {
+    let emitted = line.split(">>").next().unwrap_or(line);
+    let Some(idx) = emitted.rfind("channel=") else {
+        return false;
+    };
+    let value = emitted[idx + "channel=".len()..].trim_start();
+    value.starts_with("$channel") || value.starts_with("${channel}")
 }
 
 /// Is this the target of a `>>` redirection to `$GITHUB_OUTPUT` itself?
@@ -394,11 +445,22 @@ fn pin() -> String {
 }
 
 /// A job that runs cargo, with the toolchain step it installs (if any).
+///
+/// Step POSITIONS are carried, not just their contents. Steps run in order and
+/// the action sets the job's default toolchain when it runs, so an install that
+/// happens after a build did not pin that build — and a check that merely asks
+/// "does this job contain both" cannot tell the difference (Codex review,
+/// PR #490).
 struct CargoJob {
     workflow: String,
     key: String,
-    toolchain_steps: Vec<(String, Option<String>)>,
+    /// (position, action ref, `toolchain:` input) for each toolchain step.
+    toolchain_steps: Vec<(usize, String, Option<String>)>,
     step_ids: Vec<String>,
+    /// Position of the first step that invokes cargo.
+    first_cargo: usize,
+    /// The name of that step, so a failure can point at it.
+    first_cargo_name: String,
 }
 
 /// Every job across `workflows` that invokes cargo.
@@ -406,14 +468,20 @@ fn cargo_jobs(workflows: &[(String, String)]) -> Vec<CargoJob> {
     let mut found = Vec::new();
     for (name, text) in workflows {
         for job in jobs(text) {
-            if !job.steps.iter().any(|step| invokes_cargo(run_blocks(step))) {
+            let Some((first_cargo, cargo_step)) = job
+                .steps
+                .iter()
+                .enumerate()
+                .find(|(_, step)| invokes_cargo(run_blocks(step)))
+            else {
                 continue;
-            }
+            };
             let toolchain_steps = job
                 .steps
                 .iter()
-                .filter(|step| step.uses.starts_with("dtolnay/rust-toolchain"))
-                .map(|step| (step.uses.clone(), toolchain_input(step)))
+                .enumerate()
+                .filter(|(_, step)| step.uses.starts_with("dtolnay/rust-toolchain"))
+                .map(|(at, step)| (at, step.uses.clone(), toolchain_input(step)))
                 .collect();
             let step_ids = job
                 .steps
@@ -425,6 +493,8 @@ fn cargo_jobs(workflows: &[(String, String)]) -> Vec<CargoJob> {
                 key: job.key.clone(),
                 toolchain_steps,
                 step_ids,
+                first_cargo,
+                first_cargo_name: cargo_step.name.clone(),
             });
         }
     }
@@ -450,7 +520,29 @@ fn every_cargo_job_installs_the_pin_and_none_restates_it() {
              `ci.yml`'s `gates` job does."
         );
 
-        for (uses, input) in &job.toolchain_steps {
+        // Order, not just presence. The action sets the job's default toolchain
+        // when it runs, so an install placed after a build did not pin that
+        // build. Moving `Install Rust` below the steel-detailer build in
+        // `release.yml` would leave those shipped binaries on the runner's
+        // default compiler — the very defect this PR fixes — and a
+        // contains-both check cannot see it (Codex review, PR #490).
+        let first_install = job
+            .toolchain_steps
+            .iter()
+            .map(|(at, _, _)| *at)
+            .min()
+            .unwrap_or(usize::MAX);
+        assert!(
+            first_install < job.first_cargo,
+            "{where_} installs its Rust toolchain at step {first_install}, but \
+             already invokes cargo at step {} (`{}`). Steps run in order, so that \
+             cargo call uses whatever compiler the runner shipped, not the pin. \
+             Move the toolchain install above it.",
+            job.first_cargo,
+            job.first_cargo_name
+        );
+
+        for (_, uses, input) in &job.toolchain_steps {
             let Some(value) = input else {
                 panic!(
                     "{where_} installs `{uses}` with no `toolchain:` input, so the \
@@ -515,14 +607,13 @@ fn the_step_the_pin_is_read_from_names_the_pin_file() {
                      message, a comment) is prose and does not count.",
                     job.key
                 );
-                assert!(
-                    emits_channel_output(run),
-                    "{name}: job `{}` reads `steps.{id}.outputs.channel`, but step \
-                     `{id}` never writes `channel=` to $GITHUB_OUTPUT — the action \
-                     would receive an empty toolchain and fall back to its ref's \
-                     default. Script:\n{run}",
-                    job.key
-                );
+                if let Some(problem) = publish_problem(run) {
+                    panic!(
+                        "{name}: job `{}` reads `steps.{id}.outputs.channel`, but {problem}. \
+                         Script:\n{run}",
+                        job.key
+                    );
+                }
             }
         }
     }
@@ -824,6 +915,66 @@ fn an_empty_toolchain_input_reads_as_absent_not_as_a_literal() {
 }
 
 #[test]
+fn the_install_must_come_before_the_cargo_call() {
+    // Steps run in order, so a job containing both an install and a build is
+    // not thereby pinned. Codex's case: move `Install Rust` below the build in
+    // `release.yml` and those shipped binaries are on the runner's default
+    // compiler, with a contains-both check none the wiser (PR #490).
+    let after = "jobs:\n  build:\n    steps:\n      - name: Build\n        run: cargo build --release\n      - name: Install Rust\n        uses: dtolnay/rust-toolchain@master\n        with:\n          toolchain: ${{ steps.pin.outputs.channel }}\n";
+    let found = cargo_jobs(&[("after.yml".to_string(), after.to_string())]);
+    assert_eq!(found.len(), 1);
+    assert_eq!(found[0].first_cargo, 0, "the cargo step is the first step");
+    assert_eq!(
+        found[0].toolchain_steps[0].0, 1,
+        "the install is the second step, i.e. too late"
+    );
+    assert!(
+        found[0].toolchain_steps[0].0 > found[0].first_cargo,
+        "this ordering is exactly what the assertion must reject"
+    );
+    assert_eq!(found[0].first_cargo_name, "Build");
+
+    // The same two steps the right way round.
+    let before = "jobs:\n  build:\n    steps:\n      - name: Install Rust\n        uses: dtolnay/rust-toolchain@master\n        with:\n          toolchain: ${{ steps.pin.outputs.channel }}\n      - name: Build\n        run: cargo build --release\n";
+    let found = cargo_jobs(&[("before.yml".to_string(), before.to_string())]);
+    assert_eq!(found.len(), 1);
+    assert!(
+        found[0].toolchain_steps[0].0 < found[0].first_cargo,
+        "the correct ordering must be accepted, or the assertion rejects \
+         everything and proves nothing"
+    );
+}
+
+#[test]
+fn the_publish_check_requires_the_parsed_channel_not_a_literal() {
+    // The gap left after round two: the assignment reads the pin, the redirect
+    // target is right, and the step still publishes a hard-coded channel. Every
+    // other check passes and the action is handed `stable` (Codex review,
+    // PR #490).
+    let gutted_publish = "channel=$(sed -n 's/x/y/p' cli/rust-toolchain.toml | head -1)\necho \"channel=stable\" >> \"$GITHUB_OUTPUT\"\n";
+    assert!(
+        channel_assignment(gutted_publish)
+            .expect("assignment present")
+            .contains("cli/rust-toolchain.toml"),
+        "the assignment half must still pass — otherwise this proves nothing \
+         about the publish half"
+    );
+    assert!(
+        !emits_channel_output(gutted_publish),
+        "a publish of a hard-coded channel must be rejected even though the \
+         assignment above it reads the pin"
+    );
+
+    // The real form, and the braced variable.
+    assert!(emits_channel_output(
+        "echo \"channel=$channel\" >> \"$GITHUB_OUTPUT\"\n"
+    ));
+    assert!(emits_channel_output(
+        "echo \"channel=${channel}\" >> \"$GITHUB_OUTPUT\"\n"
+    ));
+}
+
+#[test]
 fn the_publish_check_requires_the_real_output_file() {
     // Both substrings on one line is not enough: this writes a DIFFERENT file
     // and publishes nothing, so the action falls back to its default — the
@@ -935,7 +1086,7 @@ fn the_parser_reads_a_workflow_whatever_its_indentation() {
     // not tell us before.
     let found = cargo_jobs(&[("four.yaml".to_string(), four_space.to_string())]);
     assert_eq!(found.len(), 1, "the walk did not reach the four-space job");
-    assert_eq!(found[0].toolchain_steps[0].1.as_deref(), Some("1.88.0"));
+    assert_eq!(found[0].toolchain_steps[0].2.as_deref(), Some("1.88.0"));
 
     // Two-space, tab-free, and flow-style mappings all reach the same place.
     let flow = "jobs:\n  a: { runs-on: ubuntu-latest, steps: [ { run: cargo test } ] }\n";
@@ -999,7 +1150,7 @@ jobs:
         1,
         "the walk lost the toolchain step it is supposed to inspect"
     );
-    let (uses, input) = &restated.toolchain_steps[0];
+    let (_, uses, input) = &restated.toolchain_steps[0];
     assert_eq!(uses, "dtolnay/rust-toolchain@stable");
     assert_eq!(
         input.as_deref(),
@@ -1014,7 +1165,7 @@ jobs:
     let floating = &found[1];
     assert_eq!(floating.toolchain_steps.len(), 1);
     assert_eq!(
-        floating.toolchain_steps[0].1, None,
+        floating.toolchain_steps[0].2, None,
         "a `@stable` step with no `toolchain:` input must read back as no input \
          at all — that is the case the gate reports as an unpinned compiler"
     );
@@ -1050,7 +1201,7 @@ jobs:
     let job = &found[0];
     assert_eq!(job.toolchain_steps.len(), 1);
     let value = job.toolchain_steps[0]
-        .1
+        .2
         .clone()
         .expect("the corrected form passes a `toolchain:` input");
     assert!(
