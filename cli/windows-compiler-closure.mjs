@@ -11,6 +11,166 @@ const canonical = value => Array.isArray(value) ? value.map(canonical) : value &
 export const canonicalJson = value => `${JSON.stringify(canonical(value), null, 2)}\n`;
 export const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 export const fileDigest = path => digest(readFileSync(path));
+// Embedded in authenticated helper bytes; never loaded from an ambient source or executable.
+export const NATIVE_ARCHIVE_ADAPTER_SOURCE = String.raw`
+use std::{env, fs, path::{Component, Path, PathBuf}, process::{Command, ExitCode}};
+use std::os::windows::fs::MetadataExt;
+
+fn ordinary(path: &Path) -> Result<PathBuf, String> {
+    let text = path.to_str().ok_or("non-Unicode path")?;
+    Ok(PathBuf::from(text.strip_prefix(r"\\?\").unwrap_or(text)))
+}
+fn clean_components(path: &Path) -> Result<(), String> {
+    let mut current = PathBuf::new();
+    for component in path.components() {
+        current.push(component);
+        if matches!(component, Component::Normal(_)) {
+            let meta = fs::symlink_metadata(&current).map_err(|e| e.to_string())?;
+            if meta.file_attributes() & 0x400 != 0 { return Err("reparse path is forbidden".into()); }
+        }
+    }
+    Ok(())
+}
+fn existing(path: &Path) -> Result<PathBuf, String> {
+    clean_components(path)?;
+    ordinary(&fs::canonicalize(path).map_err(|e| e.to_string())?)
+}
+fn beneath(path: &Path, root: &Path) -> bool { path.starts_with(root) && path != root }
+fn lexical(value: &str, cwd: &Path, work: &Path) -> Result<PathBuf, String> {
+    if value.is_empty() || value.chars().any(|c| c < ' ' || "<>\"|?*".contains(c))
+        || value.starts_with('\\') || value.starts_with('/') { return Err("unsafe path spelling".into()); }
+    let path = Path::new(value);
+    let absolute = path.is_absolute();
+    if value.contains(':') && (!absolute || value[2..].contains(':')) { return Err("drive-relative/stream path forbidden".into()); }
+    let mut result = if absolute { PathBuf::new() } else { cwd.to_path_buf() };
+    for component in path.components() {
+        match component {
+            Component::ParentDir => {
+                if absolute || result == work || !beneath(&result, work) { return Err("path traversal escaped work".into()); }
+                result.pop();
+            },
+            Component::Normal(name) => {
+                let name = name.to_str().ok_or("non-Unicode component")?;
+                if name.ends_with('.') || name.ends_with(' ') { return Err("ambiguous path component".into()); }
+                // Win32 reserves superscript port digits too, even with an extension.
+                // Trim the stem's spaces so an extension cannot hide a device alias.
+                let stem = name.split('.').next().unwrap_or("").trim_end_matches(' ').to_ascii_uppercase();
+                let port = stem.strip_prefix("COM").or_else(|| stem.strip_prefix("LPT"));
+                if ["CON", "PRN", "AUX", "NUL", "CONIN$", "CONOUT$", "CLOCK$"].contains(&stem.as_str())
+                    || matches!(port, Some("1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "¹" | "²" | "³")) {
+                    return Err("reserved device component".into());
+                }
+                result.push(name);
+            },
+            Component::CurDir => (),
+            _ if absolute => result.push(component),
+            _ => return Err("unexpected path prefix".into()),
+        }
+    }
+    if !beneath(&result, work) { return Err("path outside work".into()); }
+    Ok(result)
+}
+fn relative(path: &Path, cwd: &Path, work: &Path) -> Result<PathBuf, String> {
+    let target: Vec<_> = path.strip_prefix(work).map_err(|_| "object outside work")?.components().collect();
+    let base: Vec<_> = cwd.strip_prefix(work).map_err(|_| "cwd outside work")?.components().collect();
+    let shared = target.iter().zip(&base).take_while(|(a,b)| a == b).count();
+    let mut result = PathBuf::new();
+    for _ in shared..base.len() { result.push(".."); }
+    for component in &target[shared..] { result.push(component); }
+    if result.to_str().ok_or("non-Unicode relative object")?.starts_with(['@', '-']) {
+        return Err("relative object would become a librarian option/response file".into());
+    }
+    if existing(&cwd.join(&result))? != path { return Err("relative object identity changed".into()); }
+    Ok(result)
+}
+fn run() -> Result<i32, String> {
+    let exe = existing(&env::current_exe().map_err(|e| e.to_string())?)?;
+    let tools = exe.parent().ok_or("missing tools parent")?;
+    let target = tools.parent().ok_or("missing target parent")?;
+    let work = target.parent().ok_or("missing work parent")?;
+    if exe.file_name().and_then(|s| s.to_str()) != Some("aware-lib.exe")
+        || tools.file_name().and_then(|s| s.to_str()) != Some("native-tools")
+        || target.file_name().and_then(|s| s.to_str()) != Some("cargo-target") {
+        return Err("adapter must occupy its fixed build location".into());
+    }
+    let cwd = existing(&env::current_dir().map_err(|e| e.to_string())?)?;
+    if !beneath(&cwd, work) { return Err("cwd outside work".into()); }
+    let args: Vec<String> = env::args_os().skip(1).map(|a| a.into_string().map_err(|_| "non-Unicode argument".to_string())).collect::<Result<_,_>>()?;
+    let mut output = None; let mut nologo = false; let mut brepro = false;
+    for arg in &args {
+        let lower = arg.to_ascii_lowercase();
+        if lower.starts_with("-out:") || lower.starts_with("/out:") {
+            if output.is_some() { return Err("duplicate archive output".into()); }
+            let path = lexical(&arg[5..], &cwd, work)?;
+            let parent = existing(path.parent().ok_or("missing output parent")?)?;
+            let destination = parent.join(path.file_name().ok_or("missing output filename")?);
+            if !beneath(&destination, target) { return Err("output outside cargo target".into()); }
+            match fs::symlink_metadata(&destination) {
+                Ok(meta) if meta.file_attributes() & 0x400 != 0 || !meta.is_file() => return Err("invalid existing output".into()),
+                Ok(_) => (),
+                Err(error) if error.kind() == std::io::ErrorKind::NotFound => (),
+                Err(error) => return Err(error.to_string()),
+            }
+            if !matches!(destination.extension().and_then(|x| x.to_str()).map(str::to_ascii_lowercase).as_deref(), Some("a" | "lib")) { return Err("invalid archive extension".into()); }
+            output = Some(destination);
+        } else if lower == "-nologo" || lower == "/nologo" {
+            if nologo { return Err("duplicate nologo".into()); } nologo = true;
+        } else if lower == "-brepro" || lower == "/brepro" {
+            if brepro { return Err("duplicate Brepro".into()); } brepro = true;
+        } else if arg.starts_with(['-', '/', '@']) { return Err("unknown archive option/response file".into()); }
+    }
+    let output = output.ok_or("missing archive output")?;
+    let mut forwarded = Vec::new(); let mut appended = false; let mut objects = 0;
+    for arg in &args {
+        let lower = arg.to_ascii_lowercase();
+        if lower.starts_with("-out:") || lower.starts_with("/out:") { forwarded.push(format!("/OUT:{}", output.display())); }
+        else if arg.starts_with(['-', '/']) { forwarded.push(arg.clone()); }
+        else {
+            let path = existing(&lexical(arg, &cwd, work)?)?;
+            if !beneath(&path, work) || !fs::metadata(&path).map_err(|e| e.to_string())?.is_file() { return Err("invalid archive input".into()); }
+            match path.extension().and_then(|x| x.to_str()).map(str::to_ascii_lowercase).as_deref() {
+                Some("o" | "obj") => { forwarded.push(relative(&path, &cwd, work)?.to_str().ok_or("non-Unicode relative object")?.to_string()); objects += 1; },
+                Some("a" | "lib") if path == output && !appended && objects == 0 => { forwarded.push(path.to_str().ok_or("non-Unicode archive")?.to_string()); appended = true; },
+                _ => return Err("extra archive or unsupported input".into()),
+            }
+        }
+    }
+    if objects == 0 { return Err("no object inputs".into()); }
+    if !brepro { forwarded.insert(0, "/Brepro".into()); }
+    let lib = existing(&work.join("compiler/msvc/bin/lib.exe"))?;
+    if lib != work.join("compiler/msvc/bin/lib.exe") { return Err("private librarian identity changed".into()); }
+    let status = Command::new(lib).args(forwarded).current_dir(cwd).status().map_err(|e| e.to_string())?;
+    status.code().ok_or_else(|| "librarian terminated without exit status".into())
+}
+fn main() -> ExitCode {
+    match run() {
+        Ok(0) => ExitCode::SUCCESS,
+        Ok(code) => std::process::exit(code),
+        Err(error) => { eprintln!("AWARE_NATIVE_ARCHIVE_REFUSED: {error}"); ExitCode::from(2) },
+    }
+}
+`;
+export function prepareNativeArchiveAdapter(workRoot) {
+  const directory = join(workRoot, 'cargo-target', 'native-tools');
+  mkdirSync(join(workRoot, 'cargo-target'), { recursive: true }); mkdirSync(directory);
+  const source = join(directory, 'aware-lib.rs'), executable = join(directory, 'aware-lib.exe');
+  writeFileSync(source, NATIVE_ARCHIVE_ADAPTER_SOURCE, { flag: 'wx' });
+  return { source, executable };
+}
+export function nativeArchiveAdapterRecord(buildRoot) {
+  const path = 'work/cargo-target/native-tools/aware-lib.exe', file = join(buildRoot, ...path.split('/'));
+  return { path, size: lstatSync(file).size, sha256: fileDigest(file) };
+}
+export function verifyNativeArchiveAdapter(record, report, buildRoot) {
+  same(record, nativeArchiveAdapterRecord(buildRoot), 'native archive adapter changed after its compilation');
+  const expected = win32.resolve(buildRoot, record.path).toLowerCase();
+  const images = report.images.filter(image => win32.resolve(image.path).toLowerCase() === expected);
+  assert.ok(images.length > 0, 'Cargo did not execute the bound native archive adapter');
+  for (const image of images) {
+    assert.equal(image.kind, 'process'); assert.equal(image.size, record.size);
+    assert.equal(image.sha256, record.sha256, 'Cargo executed a different native archive adapter');
+  }
+}
 const portable = path => path.split(sep).join('/');
 const same = (a, b, label) => assert.equal(canonicalJson(a), canonicalJson(b), label);
 export function exactKeys(value, keys, label) {
@@ -354,7 +514,7 @@ export function verifyCompilerProvenance({ buildRoot, manifest, host = loaderObs
   validateCompilerManifest(manifest);
   const read = path => JSON.parse(readFileSync(path, 'utf8'));
   const record = read(join(buildRoot, 'evidence', 'compiler-provenance.json'));
-  exactKeys(record, ['schema', 'source', 'buildId', 'compiler', 'audits', 'artifacts'], 'compiler provenance');
+  exactKeys(record, ['schema', 'source', 'buildId', 'compiler', 'audits', 'artifacts', 'nativeArchiveAdapter'], 'compiler provenance');
   assert.equal(record.schema, 'aware-compiler-provenance/v1');
   same(record.source, manifest.source, 'compiler provenance source differs');
   assert.equal(record.buildId, digest(canonicalJson(manifest)), 'compiler provenance build differs');
@@ -364,7 +524,7 @@ export function verifyCompilerProvenance({ buildRoot, manifest, host = loaderObs
   const roots = Object.fromEntries(COMPILER_IDS.map(id => [id, join(root, ...COMPILER_LAYOUT[id].split('/'))]));
   const compiler = { root, roots, host, manifest };
   verifyPrivateCompiler(compiler);
-  const labels = ['cargo-version', 'rust-version', 'rust-sysroot', 'rust-target-libdir', 'cargo-build'];
+  const labels = ['cargo-version', 'rust-version', 'rust-sysroot', 'rust-target-libdir', 'native-archive-adapter-build', 'cargo-build'];
   assert.ok(Array.isArray(record.audits) && record.audits.length === labels.length, 'compiler provenance audit set is incomplete');
   same(record.audits.map(audit => audit.label).sort(), [...labels].sort(), 'compiler provenance audit labels differ');
   for (const audit of record.audits) {
@@ -375,6 +535,7 @@ export function verifyCompilerProvenance({ buildRoot, manifest, host = loaderObs
     const toolPath = join(roots[role.closure], role.path);
     const report = verifyCompilerAudit(read(join(buildRoot, ...audit.path.split('/'))), { compiler, toolPath, targetRoot: join(buildRoot, 'work', 'cargo-target') });
     assert.equal(report.exitCode, 0, 'retained compiler failed');
+    if (audit.label === 'cargo-build') verifyNativeArchiveAdapter(record.nativeArchiveAdapter, report, buildRoot);
   }
   return { sha256: fileDigest(join(buildRoot, 'evidence', 'compiler-provenance.json')), audits: record.audits };
 }

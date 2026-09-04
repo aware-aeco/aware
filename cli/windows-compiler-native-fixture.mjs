@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, resolve, win32 } from 'node:path';
-import { runningInputFiles, materializeClosure } from './build-windows-internal-repro.mjs';
+import { runningInputFiles, materializeClosure, verifyRustHostVersion, rejectSourceCargoConfiguration } from './build-windows-internal-repro.mjs';
 import { COMPILER_IDS, INPUT_IDS, NONCOMPILER_TOOL_IDS, inventory, copyDirectory, fileDigest, canonicalJson, discoverSystemHost,
   loaderObservedWindows, systemEnvironment, auditorTempParent, exactKeys, materializeCompiler, verifyPrivateCompiler, validateCompilerLocator, runAuditedCompiler, beneath } from './windows-compiler-closure.mjs';
 import { createWindowsBuilderRecords } from './create-windows-internal-repro-inputs.mjs';
@@ -210,7 +210,8 @@ export function nativeVersionProof({ native, env }) {
   assert.throws(() => audit('rustc', ['--version'], { ...env, _no_debug_heap: '0' }, 'heap-case-refusal'), /fixed _NO_DEBUG_HEAP=1/);
   assert.equal(existsSync(join(native.evidence, 'heap-case-refusal-request.local.json')), false);
   assert.match(audit('cargo', ['--version'], env, 'cargo-version'), /^cargo 1\.95\.0\b/);
-  assert.match(audit('rustc', ['--version'], env, 'rust-version'), /^rustc 1\.95\.0\b/);
+  rejectSourceCargoConfiguration(native.source, env.CARGO_HOME);
+  verifyRustHostVersion(audit('rustc', ['--version', '--verbose'], env, 'rust-version'));
   for (const query of ['sysroot', 'target-libdir']) {
     const path = audit('rustc', ['--print', query], env, `rust-${query}`).trim();
     assert.ok(existsSync(path) && beneath(path, join(compiler.root, 'rust')));
@@ -236,18 +237,30 @@ export function nativeToolsProof({ native, env, run }) {
   assert.throws(() => { validateCompilerLocator({ ...locator, environment: { PATH: 'C:\\untrusted' } }); audit('rustc', ['--version'], env, 'hostile-locator'); }, /locator/);
   assert.equal(existsSync(join(evidence, 'hostile-locator-request.local.json')), false);
   const cSource = join(source, 'native.c'), object = join(target, 'native.obj'), library = join(target, 'native.lib'), executable = join(target, 'native.exe');
-  writeFileSync(cSource, '#include <windows.h>\n#include <stdio.h>\nint main(void) { puts(GetCurrentProcessId() ? "private-compiler-ok" : "error"); return 0; }\n');
+  const header = join(source, 'native-header.h');
+  writeFileSync(header, '#include <assert.h>\nstatic const char *header_file = __FILE__;\nstatic const wchar_t *wide_header_file = __FILEW__;\nstatic void positive(int value) { assert(value > 0); }\n');
+  writeFileSync(cSource, '#include <windows.h>\n#include <stdio.h>\n#include <wchar.h>\n#include <native-header.h>\nint main(int argc, char **argv) { positive(argc); puts(GetCurrentProcessId() ? "private-compiler-ok" : "error"); puts(__FILE__); puts(header_file); wprintf(L"%ls\\n", wide_header_file); return 0; }\n');
   const dependencies = join(target, 'includes.json'), linkRepro = join(target, 'link-repro');
-  audit('cl', ['/nologo', '/c', '/MT', '/showIncludes', '/sourceDependencies', dependencies, `/Fo${object}`, cSource], env, 'native-compile');
+  const nativeLog = audit('cl', ['/nologo', '/c', '/MT', '/showIncludes', '/sourceDependencies', dependencies, `/I${source}`, `/Fo${object}`, cSource], env, 'native-compile');
+  assert.doesNotMatch(nativeLog, /D900[27]|LNK4044|option ignored/i);
   const includeReport = JSON.parse(readFileSync(dependencies, 'utf8').replace(/^\uFEFF/, ''));
-  verifyNativeIncludes(includeReport, cSource, [compiler.roots['compiler-sdk-include'], compiler.roots['compiler-msvc-include']]);
+  verifyNativeIncludes(includeReport, cSource, [compiler.roots['compiler-sdk-include'], compiler.roots['compiler-msvc-include'], source]);
   writeFileSync(join(evidence, 'native-includes.json'), canonicalJson(includeReport));
-  audit('lib', ['/nologo', '/Brepro', `/OUT:${library}`, object], env, 'native-library');
+  audit('lib', ['/nologo', '/Brepro', `/OUT:${library}`, win32.relative(source, object)], env, 'native-library');
   mkdirSync(linkRepro);
   audit('link', ['/nologo', '/Brepro', '/VERBOSE:LIB', `/LINKREPRO:${linkRepro}`, `/OUT:${executable}`, object, 'kernel32.lib'], env, 'native-link');
   const linkInputs = verifyNativeLinkInputs(linkRepro, compiler, object);
   writeFileSync(join(evidence, 'native-link-inputs.json'), canonicalJson(linkInputs));
-  assert.equal(run(executable, [], { env }).trim(), 'private-compiler-ok');
+  assert.equal(run(executable, [], { env }).trim().replaceAll('\\','/').replaceAll('\r',''),
+    'private-compiler-ok\n<work>/source/native.c\n<work>/source/native-header.h\n<work>/source/native-header.h');
+  const unmappedObject = join(target, 'native-unmapped.obj');
+  audit('cl', ['/nologo', '/c', '/MT', `/I${source}`, `/Fo${unmappedObject}`, cSource], { ...env, CL: '/Brepro' }, 'native-pathmap-negative');
+  const unmappedBytes = readFileSync(unmappedObject);
+  assert.ok(unmappedBytes.includes(Buffer.from(header)) && unmappedBytes.includes(Buffer.from(header, 'utf16le')),
+    'removing the native maps must expose both narrow and wide physical header paths');
+  const mappedBytes = readFileSync(object);
+  assert.ok(!mappedBytes.includes(Buffer.from(source)) && !mappedBytes.includes(Buffer.from(source, 'utf16le')),
+    'mapped native object must not retain either physical source spelling');
   const resource = join(source, 'native.rc'), res = join(target, 'native.res');
   writeFileSync(resource, '1 RCDATA\nBEGIN\n123\nEND\n'); audit('rc', ['/nologo', `/fo${res}`, resource], env, 'native-resource'); assert.ok(existsSync(res));
   const docSource = join(source, 'docs.rs'); writeFileSync(docSource, '/// Private documentation probe.\npub fn probe() {}\n');

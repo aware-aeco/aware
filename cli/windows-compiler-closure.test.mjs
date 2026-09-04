@@ -7,9 +7,25 @@ import { compilerFixture, COMPILER_FIXTURE_FILES } from './windows-compiler-fixt
 import { createWindowsBuilderRecords } from './create-windows-internal-repro-inputs.mjs';
 import { verifyNativeIncludes, verifyNativeLinkInputs } from './windows-compiler-native-fixture.mjs';
 import { COMPILER_IDS, COMPILER_LAYOUT, COMPILER_DESCRIPTOR, compilerStartupPolicy, canonicalJson, digest, fileDigest, inventory, copyDirectory, loaderObservedWindows, verifyCompilerAudit,
-  protectedWindowsPath, retainAuditorResult, runAuditedCompiler, validateCompilerLocator, validateCompilerManifest, validateInventory, validateRecordPath, validateWindowsPath } from './windows-compiler-closure.mjs';
+  protectedWindowsPath, retainAuditorResult, runAuditedCompiler, validateCompilerLocator, validateCompilerManifest, validateInventory, validateRecordPath, validateWindowsPath,
+  prepareNativeArchiveAdapter, nativeArchiveAdapterRecord, verifyNativeArchiveAdapter } from './windows-compiler-closure.mjs';
 import { loadVerifiedBuildModules, runningInputFiles, rejectedAmbientKeys, validateBootstrapLocator, verifyBuildAuthority,
   bootstrapSystemEnvironment, verifyConsumedClosure } from './build-windows-internal-repro.mjs';
+
+test('every observed native adapter image must match its original compiled bytes', () => {
+  const fixture=compilerFixture(),work=join(fixture.root,'work');
+  try {
+    mkdirSync(work); const adapter=prepareNativeArchiveAdapter(work); writeFileSync(adapter.executable,'compiled trusted adapter');
+    const record=nativeArchiveAdapterRecord(fixture.root);
+    const image={path:adapter.executable,kind:'process',size:record.size,sha256:record.sha256};
+    assert.doesNotThrow(()=>verifyNativeArchiveAdapter(record,{images:[image,{...image}]},fixture.root));
+    for(const images of [[],[{...image,sha256:'f'.repeat(64)}],[{...image,size:record.size+1}],[image,{...image,sha256:'f'.repeat(64)}]]) {
+      assert.throws(()=>verifyNativeArchiveAdapter(record,{images},fixture.root));
+    }
+    writeFileSync(adapter.executable,'changed later adapter');
+    assert.throws(()=>verifyNativeArchiveAdapter(record,{images:[image]},fixture.root),/changed after its compilation/);
+  } finally {rmSync(fixture.root,{recursive:true,force:true});}
+});
 
 test('structured native include proof preserves Unicode and refuses foreign or missing inputs', () => {
   const source = 'C:\\build Łódź 😀\\native.c', roots = ['C:\\private Łódź 😀\\sdk', 'C:\\private Łódź 😀\\msvc'];

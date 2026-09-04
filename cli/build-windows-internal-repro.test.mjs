@@ -11,6 +11,7 @@ import {
   verifyExtractedInputs,
   createCargoBuild, verifyCargoVendorBinding, logicalCargoCommand, LOGICAL_CARGO_COMMAND,
   runningInputFiles, loadVerifiedBuildModules,
+  nativeCompilerEnvironmentFlags, WINDOWS_LOGICAL_NATIVE_FLAGS, verifyRustHostVersion, rejectSourceCargoConfiguration,
 } from './build-windows-internal-repro.mjs';
 
 const fakeCompiler = () => ({ tools: { rustc: 'RUSTC', rustdoc: 'RUSTDOC', cl: 'CL', lib: 'LIB', link: 'LINK' },
@@ -31,7 +32,7 @@ test('Cargo invocation is locked, offline, release, verbose, and Windows-specifi
     'build', '--manifest-path', 'C:/src/cli/Cargo.toml', '--release', '--locked', '--offline',
     '--config', 'source.crates-io.replace-with="vendored-sources"',
     '--config', 'source.vendored-sources.directory="C:/closure/vendor"',
-    '--target', 'x86_64-pc-windows-msvc', '--verbose', '--verbose',
+    '--verbose', '--verbose',
   ]);
 });
 
@@ -59,7 +60,10 @@ test('controlled environment owns reproducible Rust and native MSVC flags', () =
   }
   writeFileSync(join(root, 'not-a-directory'), 'x');
   assert.throws(() => rustCompilerArguments({ ...options, cargoVendor: join(root, 'not-a-directory') }), /vendor path/);
-  assert.equal(env.CFLAGS, '/Brepro'); assert.equal(env.CL, '/Brepro');
+  assert.equal(env.CFLAGS, '/Brepro');
+  assert.equal(normalizeBuildText(env.CL, [['C:\\WORK', '<work>']]), WINDOWS_LOGICAL_NATIVE_FLAGS);
+  assert.equal(env.AR, join('C:\\WORK', 'cargo-target', 'native-tools', 'aware-lib.exe'));
+  assert.equal(env.AR_x86_64_pc_windows_msvc, env.AR);
   assert.equal(env.CARGO_NET_OFFLINE, 'true'); assert.equal(env.RUSTC, 'RUSTC');
   assert.equal(env.CARGO_BUILD_JOBS, '1');
   assert.equal(env._NO_DEBUG_HEAP, '1');
@@ -87,7 +91,8 @@ test('the production Cargo contract rejects divergent existing vendor roots and 
       PATH: 'PATH', INCLUDE: 'INCLUDE', LIB: 'LIBS', LIBPATH: 'LIBPATH', SystemRoot: 'SYSTEM',
       WINDIR: 'WINDOWS', ComSpec: 'CMD', PATHEXT: '.EXE',
     } };
-    const options = { compiler: fakeCompiler(), workRoot: join(root, 'work'), sourceRoot: join(root, 'work', 'source'), cargoHome: join(root, 'work', 'cargo-home'), tempRoot: join(root, 'temp') };
+    // This is a Windows command contract even when its pure tests run on Linux.
+    const options = { compiler: fakeCompiler(), workRoot: 'C:\\WORK', sourceRoot: join(root, 'work', 'source'), cargoHome: join(root, 'work', 'cargo-home'), tempRoot: join(root, 'temp') };
     const [a, b] = closures.map(cargoClosure => createCargoBuild({ ...options, cargoClosure }));
     assert.equal(a.command, LOGICAL_CARGO_COMMAND);
     assert.doesNotThrow(() => verifyCargoVendorBinding(a));
@@ -159,15 +164,65 @@ test('Git cannot consult host configuration, templates, prompts, or network tran
 });
 
 test('verbose proof goes red if the actual command loses /Brepro or a locked flag', () => {
-  const complete = 'cargo build --release --locked --offline --target x86_64-pc-windows-msvc -C link-arg=/Brepro';
+  const header = 'cargo build --release --locked --offline';
+  const command = args => '     Running `set CARGO=private&& "C:\\private compiler\\rustc.exe" --crate-name probe -C link-arg=/Brepro '+args+'`';
+  const complete = header+'\n'+command('');
   assert.doesNotThrow(() => assertVerboseCargoProof(complete));
-  assert.throws(() => assertVerboseCargoProof(complete.replace('/Brepro', '/DEBUG')), /rustc \/Brepro/);
+  assert.throws(() => assertVerboseCargoProof(complete.replace('/Brepro', '/DEBUG')), /omitted \/Brepro/);
   assert.throws(() => assertVerboseCargoProof(complete.replace('--locked', '')), /locked mode/);
   const vendorArgs = ['--remap-path-prefix=C:\\sealed cache\\vendor=<cargo-vendor>', '--remap-path-prefix=C:/sealed cache/vendor=<cargo-vendor>'];
-  assert.doesNotThrow(() => assertVerboseCargoProof(`${complete} ${vendorArgs.join(' ')}`, vendorArgs));
+  const mapped = header+'\n'+command(vendorArgs.map(a=>'"'+a+'"').join(' '));
+  assert.doesNotThrow(() => assertVerboseCargoProof(mapped, vendorArgs, 'C:\\private compiler\\rustc.exe'));
+  const rawExecutable = mapped.replace('"C:\\private compiler\\rustc.exe"', 'C:\\private compiler\\rustc.exe');
+  assert.doesNotThrow(() => assertVerboseCargoProof(rawExecutable, vendorArgs, 'C:\\private compiler\\rustc.exe'), 'real Windows Cargo display leaves the spaced executable unquoted');
+  const buildScript = '     Running `set RUSTC=C:\\private compiler\\rustc.exe&& C:\\target path\\build-script-build.exe`';
+  assert.doesNotThrow(() => assertVerboseCargoProof(rawExecutable+'\n'+buildScript, vendorArgs, 'C:\\private compiler\\rustc.exe'), 'an environment assignment does not turn a build script into rustc');
   for (const missing of vendorArgs) {
-    assert.throws(() => assertVerboseCargoProof(`${complete} ${vendorArgs.filter(arg => arg !== missing).join(' ')}`, vendorArgs), /compiler remap/);
+    assert.throws(() => assertVerboseCargoProof(header+'\n'+command(vendorArgs.filter(arg => arg !== missing).join(' ')), vendorArgs), /compiler remap/);
   }
+  assert.throws(() => assertVerboseCargoProof(mapped+'\n'+command(''), vendorArgs), /compiler remap/, 'a fully mapped target cannot cover a host compilation');
+  assert.throws(() => assertVerboseCargoProof(mapped+'\n'+command('').slice(0, -1), vendorArgs), /unparseable rustc/, 'a malformed host command cannot disappear');
+  assert.throws(() => assertVerboseCargoProof(mapped+'\n'+command('"unterminated'), vendorArgs), /unparseable rustc/);
+  assert.throws(() => assertVerboseCargoProof(mapped.replaceAll('=<cargo-vendor>', '=<cargo-vendor>-wrong'), vendorArgs), /compiler remap/, 'a partial remap match is not proof');
+  assert.throws(() => assertVerboseCargoProof(mapped.replace('link-arg=/Brepro', 'link-arg=/Brepro-wrong'), vendorArgs), /omitted \/Brepro/);
+  assert.throws(() => assertVerboseCargoProof(header+' '+vendorArgs.join(' ')), /actual rustc compilations/);
+  assert.throws(() => assertVerboseCargoProof(mapped, vendorArgs, 'C:\\different\\rustc.exe'), /different rustc/);
+});
+
+test('native mappings fit CL limits and quote supported long Unicode paths', () => {
+  const work = 'C:\\'+('long Łódź directory '.repeat(9)).trim();
+  const flags = nativeCompilerEnvironmentFlags(work);
+  assert.ok(flags.length <= 1024);
+  assert.equal(normalizeBuildText(flags, [[work, '<work>']]), WINDOWS_LOGICAL_NATIVE_FLAGS);
+  for (const bad of ['C:\\root"injection', 'C:\\root;extra', '\\\\server\\share', 'C:relative', 'C:\\'+('a'.repeat(200))]) {
+    assert.throws(() => nativeCompilerEnvironmentFlags(bad), /unsafe bootstrap/);
+  }
+});
+
+test('implicit native Cargo target requires the exact audited Rust host', () => {
+  const proof = 'rustc 1.95.0 (59807616e 2026-04-14)\nbinary: rustc\nhost: x86_64-pc-windows-msvc\nrelease: 1.95.0\n';
+  assert.doesNotThrow(() => verifyRustHostVersion(proof));
+  for (const bad of [proof.replace('1.95.0', '1.94.0'), proof.replace('x86_64-pc-windows-msvc', 'aarch64-pc-windows-msvc'), proof+'host: x86_64-pc-windows-msvc\n', 'rustc 1.95.0']) {
+    assert.throws(() => verifyRustHostVersion(bad), /version\/host mismatch/);
+  }
+});
+
+test('Cargo source, private home and every ancestor config refuse before a launch', () => {
+  const root = mkdtempSync(join(tmpdir(), 'aware-config-refusal-'));
+  const source = join(root, 'output', 'work', 'source'), home = join(root, 'output', 'work', 'cargo-home');
+  mkdirSync(source, {recursive:true}); mkdirSync(home);
+  try {
+    assert.doesNotThrow(() => rejectSourceCargoConfiguration(source, home));
+    for (const directory of [join(root,'.cargo'), join(source,'.cargo'), join(source,'cli','.cargo'), home]) {
+      mkdirSync(directory,{recursive:true});
+      for (const name of ['config','config.toml']) {
+        const file=join(directory,name); writeFileSync(file,'[build]\ntarget="x86_64-pc-windows-msvc"\n');
+        let launched=false;
+        assert.throws(()=>{rejectSourceCargoConfiguration(source,home);launched=true;},/Cargo configuration/);
+        assert.equal(launched,false); rmSync(file);
+      }
+    }
+  } finally { rmSync(root,{recursive:true,force:true}); }
 });
 
 test('builder manifest is retained byte-for-byte as independently digestible evidence', () => {
