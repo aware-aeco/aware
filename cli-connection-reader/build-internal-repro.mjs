@@ -19,7 +19,14 @@ const digestText = (text) => createHash('sha256').update(text).digest('hex');
 const readJson = (path) => JSON.parse(readFileSync(path, 'utf8'));
 
 export function rejectedAmbientKeys(env) {
-  return Object.keys(env).filter((key) => POISONED_EXACT.has(key)
+  // Windows environment names are case-insensitive, so an ambient
+  // `esbuild_binary_path` still resolves as ESBUILD_BINARY_PATH. Match the outer
+  // builder: fold case before the exact lookup, and reject names that collide
+  // only by case, since which one a child reads is not ours to decide.
+  const counts = Object.keys(env).reduce(
+    (map, key) => map.set(key.toLowerCase(), (map.get(key.toLowerCase()) ?? 0) + 1), new Map());
+  return Object.keys(env).filter((key) => counts.get(key.toLowerCase()) > 1
+    || POISONED_EXACT.has(key.toUpperCase())
     || POISONED_PREFIXES.some((prefix) => key.toLowerCase().startsWith(prefix.toLowerCase())))
     .sort();
 }

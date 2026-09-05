@@ -36,6 +36,18 @@ test('ambient compiler, Node, npm, dotnet, and credential authority is rejected'
     ['AWARE_GOOGLE_CLIENT_SECRET', 'NODE_OPTIONS']);
 });
 
+test('ambient authority is rejected by folded case and by case-only collisions', () => {
+  // Windows resolves process.env.ESBUILD_BINARY_PATH from an ambient
+  // `esbuild_binary_path`, so a case-sensitive exact match let esbuild run an
+  // undeclared binary inside a supposedly closed build.
+  assert.deepEqual(rejectedAmbientKeys({ esbuild_binary_path: 'C:\evil.exe' }), ['esbuild_binary_path']);
+  assert.deepEqual(rejectedAmbientKeys({ NoDe_OpTiOnS: '--require evil' }), ['NoDe_OpTiOnS']);
+  // Two spellings of one name: which one a child reads is not ours to decide.
+  assert.deepEqual(rejectedAmbientKeys({ Path: 'a', PATH: 'b' }), ['PATH', 'Path']);
+  // A single ordinary Path is still authority the reader needs.
+  assert.deepEqual(rejectedAmbientKeys({ Path: 'ok' }), []);
+});
+
 test('tool verification goes red when a declared tool byte changes', () => {
   const root = mkdtempSync(join(tmpdir(), 'aware-repro-test-'));
   const tool = join(root, 'tool.bin'); writeFileSync(tool, 'one');
