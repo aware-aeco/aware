@@ -24,7 +24,6 @@
 //! that misleads: the report above was filed off a search that *found*
 //! something, which is why the note is not conditional on an empty result.
 
-use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::time::Instant;
 
@@ -202,40 +201,31 @@ pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
 /// complete in a way an empty one does not, so the case that most needs the
 /// caveat is the one that found something — see the module header.
 fn print_scope_note(term: &str) {
-    // A term starting with `-` needs the `--` end-of-options delimiter, not
-    // quoting: `aware agent search` takes `query` as an ordinary positional, so
-    // clap reads a leading hyphen as an option and rejects it before any value
-    // parsing happens. Quotes are consumed by the shell and never reach clap, so
-    // they cannot fix this — the delimiter is what makes the printed command
-    // pasteable. (`aware search -- --send` is itself reachable the same way.)
-    let delimiter = if term.starts_with('-') { "-- " } else { "" };
     println!(
         "Only INSTALLED agents are searched. To search every agent in the registry\n\
-         catalog, including ones not installed here:\n  \
-         aware agent search {delimiter}{}",
-        shell_quote(term)
+         catalog, including ones not installed here:"
     );
-}
-
-/// Quote `term` so the suggested command can be pasted into a POSIX shell
-/// verbatim.
-///
-/// `aware search "load IFC"` is a documented multi-word use, and
-/// `aware agent search` takes the query as ONE positional — so echoing a
-/// multi-word term bare would print advice that fails when followed. Only
-/// wraps when the term is not already a plain word, to keep the common
-/// single-word hint free of noise.
-fn shell_quote(term: &str) -> Cow<'_, str> {
-    let plain = !term.is_empty()
-        && term
-            .chars()
-            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.' | '/' | ':' | '@'));
-    if plain {
-        return Cow::Borrowed(term);
+    // A ready-to-paste command only when the term survives every supported
+    // shell as one bare argument. This deliberately does NOT quote an awkward
+    // term: an earlier revision single-quoted POSIX-style (`'it'\''s'`), which
+    // PowerShell parses differently (it doubles an embedded quote), so the line
+    // ran in one shell and broke in another — the same defect #443 fixed in
+    // `provision_advice`, reached for again here and caught by the same reviewer
+    // (Codex, #497). One shared predicate now answers it for both.
+    //
+    // The leading `-` case is different in kind and IS emitted: `--` is an
+    // argv-level end-of-options delimiter, not shell quoting, so it means the
+    // same thing everywhere. Without it clap reads `--send` as an option and
+    // rejects the suggested command outright.
+    if text::is_bare_shell_token(term) && text::starts_token_safely(term) {
+        let delimiter = if term.starts_with('-') { "-- " } else { "" };
+        println!("  aware agent search {delimiter}{term}");
+    } else {
+        println!(
+            "  aware agent search {term:?} — quote it for your shell, since it holds\n  \
+             characters a bare argument would split or interpret"
+        );
     }
-    // POSIX single-quoting: everything is literal inside '…', and an embedded
-    // single quote is spelled by closing, escaping one, and reopening.
-    Cow::Owned(format!("'{}'", term.replace('\'', r"'\''")))
 }
 
 #[derive(Serialize)]

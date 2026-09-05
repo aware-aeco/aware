@@ -443,26 +443,35 @@ fn the_scope_count_follows_the_agent_filter_rather_than_the_install_set() {
 }
 
 #[test]
-fn a_multi_word_term_is_quoted_so_the_suggested_command_can_be_pasted() {
-    // `aware agent search` takes the query as ONE positional, so echoing a
-    // multi-word term bare would print advice that fails when followed.
-    let text = search(&["load model"]);
-    assert!(
-        text.contains(&format!("{CATALOG_HINT} 'load model'")),
-        "a multi-word term must be quoted in the hint:\n{text}"
-    );
-    // A plain single word stays unquoted, so the common case is not noisy.
-    // Asserted against the hint LINE, not the whole output: the summary line
-    // legitimately renders the term in quotes, so a document-wide negative
-    // would fail for the wrong reason.
+fn an_awkward_term_is_described_rather_than_shell_quoted() {
+    // The repo's settled rule (#443, re-applied here as #497): never emit a
+    // command line whose quoting is correct in one shell and wrong in another.
+    // POSIX `'load model'` is not how cmd.exe groups, and `'it'\''s'` is not how
+    // PowerShell escapes — so an awkward term gets described, not quoted.
+    for awkward in ["load model", "it's", "a|b", "@team"] {
+        let text = search(&[awkward]);
+        assert!(
+            text.contains("quote it for your shell"),
+            "{awkward:?} must be described, not handed a fake-portable command:\n{text}"
+        );
+        assert!(
+            !text.contains(&format!("{CATALOG_HINT} '{awkward}'")),
+            "{awkward:?} must not be POSIX-quoted into a runnable-looking line:\n{text}"
+        );
+    }
+
+    // A plain single word still gets the real, pasteable command — the
+    // conservative branch must not swallow the common case. Asserted against the
+    // hint LINE, not the whole output, since the summary line legitimately
+    // renders the term in quotes.
     let plain = search(&[TERM]);
     assert!(
         plain.contains(&format!("{CATALOG_HINT} {TERM}")),
-        "a single-word term must appear bare in the hint:\n{plain}"
+        "a bare term must still get a runnable command:\n{plain}"
     );
     assert!(
-        !plain.contains(&format!("{CATALOG_HINT} '{TERM}'")),
-        "a single-word term must not be quoted in the hint:\n{plain}"
+        !plain.contains("quote it for your shell"),
+        "a bare term must not be pushed down the descriptive branch:\n{plain}"
     );
 }
 
