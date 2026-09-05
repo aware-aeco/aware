@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, relative, resolve } from 'node:path';
 import { createCargoBuild, assertVerboseCargoProof, verifyExtractedInputs, runningInputFiles,
@@ -18,7 +18,11 @@ function run(tool, args, options = {}) {
   assert.equal(result.status, 0, `${tool} ${args.join(' ')}\n${result.stdout}\n${result.stderr}`);
   return `${result.stdout ?? ''}${result.stderr ?? ''}`;
 }
-const root = mkdtempSync(join(tmpdir(), 'aware vendor repro '));
+// Canonical long form: os.tmpdir() yields an 8.3 short path on a CI runner
+// (C:/Users/RUNNER~1/...), while every path the debugger reports is the expanded
+// spelling, so an un-canonicalized root made the compiler's own build artifacts
+// look like images loaded from outside its authority.
+const root = realpathSync.native(mkdtempSync(join(tmpdir(), 'aware vendor repro ')));
 // Only this fresh empty fixture changes its compression attribute. Two uncompressed
 // compiler copies fit the native gate's budget and avoid repeated decompression on
 // every mandatory byte check; source installations and retained evidence are untouched.
@@ -263,8 +267,12 @@ fn main() {
   console.log(`Windows Cargo vendor-path repro passed: 2 byte-identical executables, both path spellings, spaced paths, two red mutations, old-runner/new-bundle refusal. ${records[0].goodHash}`);
   completed = true;
 } finally {
-  // This test owns the unique temporary directory it created above.
-  if (!beneath(root, tmpdir()) || resolve(root) === resolve(tmpdir())) throw new Error('test cleanup escaped its temporary parent');
+  // This test owns the unique temporary directory it created above. Compare
+  // canonical against canonical: `root` is the expanded spelling, so an
+  // un-canonicalized tmpdir() (C:/Users/RUNNER~1/... on CI) would make the
+  // directory this test just created look like it sits outside its own parent.
+  const temporaryParent = realpathSync.native(tmpdir());
+  if (!beneath(root, temporaryParent) || resolve(root) === resolve(temporaryParent)) throw new Error('test cleanup escaped its temporary parent');
   if (completed) rmSync(root, { recursive: true, force: true });
   else console.error(`Native failure evidence retained: ${root}`);
 }

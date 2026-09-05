@@ -323,13 +323,23 @@ export function materializeCompiler({ manifest, locator, workRoot, host }) {
   for (const id of COMPILER_IDS) {
     same(inventory(locator.closures[id]), manifest.closures[id].files, `${id} source inventory changed`);
     const destination = join(root, ...COMPILER_LAYOUT[id].split('/')); mkdirSync(dirname(destination), { recursive: true });
-    copyDirectory(locator.closures[id], destination); roots[id] = destination;
-    same(inventory(destination), manifest.closures[id].files, `${id} private inventory changed`);
+    copyDirectory(locator.closures[id], destination);
+    // Bind the CANONICAL long path. The auditor validates every path it is given
+    // with .NET GetFullPath, which expands 8.3 short components once they exist
+    // on disk; join()/win32.resolve never do. A work root under a short temp
+    // path -- C:\Users\RUNNER~1 on a CI runner, or an AppData\Local\TEMP_~1 --
+    // therefore produced a startup policy whose own path failed the auditor's
+    // self-consistency check ("Invalid private telemetry policy"), and left image
+    // attribution comparing a canonical observed path against a short root.
+    // Canonicalizing here is the single place that fixes both.
+    roots[id] = realpathSync.native(destination);
+    same(inventory(roots[id]), manifest.closures[id].files, `${id} private inventory changed`);
   }
+  const canonicalRoot = realpathSync.native(root);
   const tools = Object.fromEntries(Object.entries(COMPILER_DESCRIPTOR.tools).map(([id, role]) => [id, join(roots[role.closure], role.path)]));
   const environment = Object.fromEntries(Object.entries(COMPILER_DESCRIPTOR.environment).map(([key, value]) => [key,
-    Array.isArray(value) ? value.map(path => path === '<system32>' ? host.system32 : join(root, ...path.split('/'))).join(';') : value]));
-  return Object.freeze({ root, roots: Object.freeze(roots), tools: Object.freeze(tools), environment: Object.freeze(environment), host, manifest });
+    Array.isArray(value) ? value.map(path => path === '<system32>' ? host.system32 : join(canonicalRoot, ...path.split('/'))).join(';') : value]));
+  return Object.freeze({ root: canonicalRoot, roots: Object.freeze(roots), tools: Object.freeze(tools), environment: Object.freeze(environment), host, manifest });
 }
 export function verifyPrivateCompiler(compiler) {
   validateCompilerManifest(compiler.manifest);
