@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
-  canonicalJsonBytes, lowerableLimits, ModelReaderError, parseJsonStrict, sha256,
+  canonicalJsonBytes, lowerableLimits, lowerablePropertyExpansionLimits, ModelReaderError, parseJsonStrict, sha256,
 } from './model-contract.mjs';
 import { signArtifactPreimage } from './model-artifact-auth.mjs';
 
@@ -56,7 +56,7 @@ function receipts(order, bytesByName, itemsByName) {
   });
 }
 
-function packageConfiguration(limits, v2) {
+function packageConfiguration(limits, v2, propertyExpansionLimits) {
   return {
     schemaVersion: `model-reference-package-configuration/v${v2 ? '2' : '1'}`,
     partitionPolicy: 'single-canonical-glb-v1',
@@ -65,7 +65,12 @@ function packageConfiguration(limits, v2) {
     maximumTileBytes: limits.maxCanonicalGlbBytes,
     maximumTileTriangles: limits.maxIndices,
     maximumShardBytes: limits.maxComponentJsonBytes,
-    maximumShardRecords: Math.max(limits.maxEntities, limits.maxParameters, limits.maxRelationships),
+    // v2 property rows are bounded by the request's own expansion limits, not by
+    // the entity/parameter/relationship ceilings. Omitting them let a valid
+    // document publish more property records than its SIGNED configuration
+    // claimed, so downstream validation rejected reader-produced output.
+    maximumShardRecords: Math.max(limits.maxEntities, limits.maxParameters, limits.maxRelationships,
+      ...(v2 ? [propertyExpansionLimits.maxExpandedPropertyRows] : [])),
     maximumPackageArtifacts: 6,
     maximumAggregateBytes: limits.maxCanonicalGlbBytes + (limits.maxComponentJsonBytes * 5),
     supportedGlb: { version: '2.0', extensions: [], componentTypes: [5121, 5123, 5125, 5126] },
@@ -180,7 +185,8 @@ export async function buildAndPublishSnapshot(result, signingKey, artifactDirect
     outputs: sourceReceipts,
   };
   const sourceArtifactEnvelope = signArtifactPreimage(v2 ? SOURCE_ARTIFACT_DOMAIN_V2 : SOURCE_ARTIFACT_DOMAIN, sourceArtifactPreimage, signingKey);
-  const configuration = packageConfiguration(limits, v2);
+  const configuration = packageConfiguration(limits, v2,
+    lowerablePropertyExpansionLimits(result.cache.manifest.identity?.canonicalRequest?.propertyExpansionLimits ?? {}));
   const configurationSha256 = sha256(canonicalJsonBytes(configuration));
   const packageBytes = packagedBytes(result, parsed, sourceArtifactEnvelope, configuration, v2);
   const aggregateBytes = Object.values(packageBytes).reduce((sum, bytes) => sum + bytes.length, 0);

@@ -85,3 +85,47 @@ test('reader v2 publishes independently versioned package schemas and authentica
   const manifest = JSON.parse(await fs.readFile(path.join(root, 'artifacts', output.packageArtifacts.manifest.id), 'utf8'));
   assert.equal(manifest.schemaVersion, 'floless.model-snapshot-package/v2');
 });
+
+test('a v2 shard configuration advertises the property expansion ceiling it must cover', async (t) => {
+  // v2 property rows are bounded by propertyExpansionLimits, not by the
+  // entity/parameter/relationship ceilings. Signing a configuration that omits
+  // them advertised fewer records than a valid document may legitimately
+  // publish, so downstream package validation rejected reader-produced output.
+  const root = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'aware-model-snapshot-v2-limits-'));
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  const { privateKey, publicKey } = generateKeyPairSync('ed25519');
+  const publicKeyBytes = publicKey.export({ format: 'der', type: 'spki' }).subarray(-32);
+  const artifacts = {
+    'geometry.glb': Buffer.from([0x67, 0x6c, 0x54, 0x46]),
+    'entities.json': canonicalJsonBytes({ schemaVersion: '2', entities: [] }),
+    'properties.json': canonicalJsonBytes({ schemaVersion: '2', properties: [] }),
+    'relationships.json': canonicalJsonBytes({ schemaVersion: '2', relationships: [] }),
+    'manifest.json': canonicalJsonBytes({ schemaVersion: 'model-reference-manifest/v1' }),
+  };
+  const result = {
+    key: '6'.repeat(64),
+    cache: {
+      receiptSha256: '7'.repeat(64), artifacts,
+      manifest: {
+        identity: {
+          sourceSha256: '8'.repeat(64), signerFingerprintSha256: sha256(publicKeyBytes),
+          canonicalRequest: {
+            readerSchemaVersion: 'model-reference-reader/v2',
+            // Lowered model limits, a deliberately HIGHER expansion ceiling.
+            propertyExpansionLimits: { maxExpandedPropertyRows: 4096 },
+          },
+        },
+        canonicalRequestSha256: '9'.repeat(64), providerFingerprintSha256: 'a'.repeat(64),
+        frame: { units: 'mm', up: 'z', handedness: 'right', axes: ['x', 'y', 'z'] },
+        coverage: { unclaimedGeometryNodes: [] },
+      },
+    },
+  };
+  // Lowered model ceilings, a deliberately higher property expansion ceiling:
+  // exactly the shape where the two disagree.
+  const output = await buildAndPublishSnapshot(result, { privateKey, publicKeyBytes }, path.join(root, 'artifacts'),
+    { limits: { maxEntities: 2, maxParameters: 2, maxRelationships: 2 } });
+  assert.equal(Math.max(2, 2, 2) < 4096, true, 'fixture must put the expansion ceiling above the model ceilings');
+  assert.ok(output.packageConfiguration.maximumShardRecords >= 4096,
+    `signed maximumShardRecords ${output.packageConfiguration.maximumShardRecords} is below the expansion ceiling it must cover`);
+});
