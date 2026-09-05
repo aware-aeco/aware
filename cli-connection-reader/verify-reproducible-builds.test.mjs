@@ -3,7 +3,8 @@ import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
-import { verifyReproducibleOutputs } from './verify-reproducible-builds.mjs';
+import { resolve } from 'node:path';
+import { forbiddenEncodings, verifyReproducibleOutputs } from './verify-reproducible-builds.mjs';
 
 function roots() {
   const root = mkdtempSync(join(tmpdir(), 'aware-repro-compare-'));
@@ -30,13 +31,18 @@ test('checkout roots are rejected in raw, normalized, JSON, URI, case, and UTF-1
   assert.throws(() => verifyReproducibleOutputs({ left, right, forbiddenRoots: [root] }), /root leaked/);
 });
 
-test('a root that is BOTH case-folded and JSON-escaped is still a leak', () => {
-  // The scanner lowercases file content, so an escaped needle that kept its
-  // original casing matched nothing: a serialized Windows path written as
-  // c:\users\alice slipped through the proof that no builder root leaked.
-  const { root, left, right } = roots();
-  const escapedFolded = JSON.stringify(root).slice(1, -1).toLowerCase();
-  writeFileSync(join(left, 'receipt.json'), escapedFolded, 'utf8');
-  writeFileSync(join(right, 'receipt.json'), escapedFolded, 'utf8');
-  assert.throws(() => verifyReproducibleOutputs({ left, right, forbiddenRoots: [root] }), /root leaked/);
+test('a root that is BOTH case-folded and JSON-escaped is a needle on every platform', () => {
+  // Derived from a SYNTHETIC Windows root, not from tmpdir(): this suite runs on
+  // ubuntu in CI, where a real temp path has no backslashes, so
+  // JSON.stringify(root) is the identity and the needle collapses to
+  // root.toLowerCase() -- which the unfixed code already emitted. The literal
+  // backslashes below survive resolve() on POSIX as ordinary characters, so the
+  // fold-then-escape combination is genuinely absent before the fix everywhere.
+  const root = 'C:\\Users\\Alice\\src\\aware';
+  const labels = new Set(forbiddenEncodings(root).map((entry) => entry.label));
+  const escapedFolded = JSON.stringify(resolve(root).toLowerCase()).slice(1, -1);
+  assert.ok(labels.has(escapedFolded), `missing lowercased JSON-escaped needle: ${escapedFolded}`);
+  // The separately-generated forms must still be there.
+  assert.ok(labels.has(resolve(root).toLowerCase()), 'missing folded needle');
+  assert.ok(labels.has(JSON.stringify(resolve(root)).slice(1, -1)), 'missing escaped needle');
 });
