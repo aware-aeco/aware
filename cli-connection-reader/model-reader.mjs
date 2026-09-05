@@ -285,11 +285,12 @@ async function convertAndCache(args, deps, config, readiness) {
       });
       emit(deps, 'normalize');
       const geometry = normalizeRevitGlb(conversion.outputs.geometry.bytes, { limits: deps.limits });
+      const expectedMetadataSchema = readerSchemaVersion === READER_SCHEMA_VERSION_V2 ? '2' : '1';
       const metadata = normalizeRevitMetadata(conversion.outputs.metadata.bytes, geometry.parts, {
         limits: deps.limits,
         propertyExpansionLimits: canonicalRequest.propertyExpansionLimits,
+        expectedSchemaVersion: expectedMetadataSchema,
       });
-      const expectedMetadataSchema = readerSchemaVersion === READER_SCHEMA_VERSION_V2 ? '2' : '1';
       if (JSON.parse(metadata.propertiesBytes.toString('utf8')).schemaVersion !== expectedMetadataSchema) {
         readerError('reference-metadata-invalid', 'normalize-metadata', 'Provider metadata does not match the requested reader schema version.');
       }

@@ -183,6 +183,13 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
     ['schemaVersion', 'document', 'types', 'levels', 'parameterGroups', 'parameters', 'elements', 'relations'], [], 'metadata');
   if (!['1', '2'].includes(metadata.schemaVersion)) invalid('unsupported metadata schemaVersion');
   const metadataV2 = metadata.schemaVersion === '2';
+  // Enforce the REQUESTED schema before anything is expanded. Checked after the
+  // fact, a v1 response to a v2 request normalizes under v1's far larger
+  // expansion allowance, so a compact document can allocate millions of
+  // property rows before the mismatch is noticed.
+  if (options.expectedSchemaVersion !== undefined && metadata.schemaVersion !== options.expectedSchemaVersion) {
+    invalid('Provider metadata does not match the requested reader schema version.');
+  }
   closed(metadata.document, ['kind', 'id'], [], 'document');
   if (metadata.document.kind !== 'revit-project' || typeof metadata.document.id !== 'string' || !metadata.document.id) invalid('document must be an identified Revit project');
 

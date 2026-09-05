@@ -226,3 +226,20 @@ test('aggregate property expansion is bounded before repeated references allocat
     (error) => error.code === 'reference-output-too-large',
   );
 });
+
+test('a schema mismatch is refused before the requested limits can be bypassed', () => {
+  // A v1 response to a v2 request used to be normalized first and compared
+  // after, so it expanded under v1's far larger allowance. The mismatch must be
+  // refused up front: the error is the schema mismatch, NOT an expansion
+  // ceiling, which is what proves nothing was expanded first.
+  const v1 = makeMetadataFixture();
+  const tight = { maxExpandedPropertyRows: 1, maxCanonicalPropertyBytes: 1 };
+  assert.throws(
+    () => normalizeRevitMetadata(v1, geometry, { propertyExpansionLimits: tight, expectedSchemaVersion: '2' }),
+    (error) => error.code === 'reference-metadata-invalid'
+      && /does not match the requested reader schema version/.test(error.message));
+  // The matching request still normalizes, so the guard is not simply refusing everything.
+  assert.ok(normalizeRevitMetadata(v1, geometry, { expectedSchemaVersion: '1' }));
+  // Absent an expectation the normalizer keeps its existing both-schemas contract.
+  assert.ok(normalizeRevitMetadata(v1, geometry, {}));
+});
