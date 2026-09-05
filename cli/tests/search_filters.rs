@@ -301,15 +301,145 @@ fn match_flags_record_which_column_matched() {
 #[test]
 fn a_term_matching_nothing_says_so_instead_of_printing_an_empty_report() {
     let text = search(&["zzz-no-such-concept"]);
-    assert_eq!(
-        text.trim(),
-        "(no matches for 'zzz-no-such-concept')",
-        "the empty case has its own message, not a 0-count report"
+    assert!(
+        text.contains("(no matches for 'zzz-no-such-concept' among 2 installed agent(s))"),
+        "the empty case has its own message, not a 0-count report:\n{text}"
     );
 
     let data = search_json(&["zzz-no-such-concept"]);
     assert_eq!(data["total_matches"], 0);
     assert!(data["results"].as_array().unwrap().is_empty());
+    // A miss still reports the corpus it missed in: `total_matches: 0` alone
+    // cannot tell a consumer "nothing does this" from "nothing here does this".
+    assert_eq!(data["searched_agents"], 2);
+    assert_eq!(data["scope"], "installed");
+}
+
+// ── Scope reporting (#495) ───────────────────────────────────────────────────
+//
+// `aware search` reads installed agents only; `aware agent search` reads the
+// registry catalogue. #495 was filed because the first answered a capability
+// question "no" without ever saying which corpus it had consulted — the
+// commands it was declared missing (`outlook.mail.send`, `gmail.send`) existed
+// all along, in agents that were not installed on the reporting machine.
+//
+// The note is asserted on the HIT path as well as the miss, because the report
+// that prompted this was filed off a search that found four unrelated commands.
+// A test covering only the empty case would leave the actual failure uncovered.
+
+/// The suggested follow-up command, which must name the catalogue verb rather
+/// than repeat this one.
+const CATALOG_HINT: &str = "aware agent search";
+
+#[test]
+fn a_hit_still_reports_which_corpus_was_searched() {
+    let text = search(&[TERM]);
+    assert!(
+        text.contains("Searched 2 installed agent(s)."),
+        "a result that found something must still name its corpus:\n{text}"
+    );
+    assert!(
+        text.contains("Only INSTALLED agents are searched."),
+        "the scope caveat must not be conditional on an empty result:\n{text}"
+    );
+    assert!(
+        text.contains(&format!("{CATALOG_HINT} {TERM}")),
+        "the caveat must name the command that searches the catalogue:\n{text}"
+    );
+}
+
+#[test]
+fn a_miss_points_at_the_catalogue_instead_of_ending_the_search() {
+    let text = search(&["zzz-no-such-concept"]);
+    assert!(
+        text.contains(&format!("{CATALOG_HINT} zzz-no-such-concept")),
+        "a miss is exactly when the other corpus matters most:\n{text}"
+    );
+}
+
+#[test]
+fn an_empty_home_is_distinguished_from_a_genuine_miss() {
+    // "nothing matched" and "there was nothing to match against" are different
+    // answers. Collapsing them is how an unpopulated home reads as proof that a
+    // capability does not exist anywhere.
+    let tmp = tempfile::tempdir().unwrap(); // no fixture written: zero agents
+    let out = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .args(["search", TERM])
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    let text = String::from_utf8(out).unwrap();
+    assert!(
+        text.contains("no installed agents to search"),
+        "an empty home must say so, not report a plain miss:\n{text}"
+    );
+    assert!(
+        !text.contains("among 0 installed agent(s)"),
+        "the zero case must not fall through to the counted phrasing:\n{text}"
+    );
+    assert!(text.contains(CATALOG_HINT), "{text}");
+}
+
+#[test]
+fn the_scope_count_follows_the_agent_filter_rather_than_the_install_set() {
+    // Counted after `--agent`, so a narrowed search cannot imply it swept
+    // everything installed. Two agents exist; one was consulted.
+    let text = search(&[TERM, "--agent", "beta-agent"]);
+    assert!(
+        text.contains("Searched 1 installed agent(s)."),
+        "the count must describe what was scanned, not what is installed:\n{text}"
+    );
+    assert_eq!(
+        search_json(&[TERM, "--agent", "beta-agent"])["searched_agents"],
+        1
+    );
+
+    // The unnarrowed baseline, so a count hard-coded to 1 fails here.
+    assert_eq!(search_json(&[TERM])["searched_agents"], 2);
+}
+
+#[test]
+fn a_multi_word_term_is_quoted_so_the_suggested_command_can_be_pasted() {
+    // `aware agent search` takes the query as ONE positional, so echoing a
+    // multi-word term bare would print advice that fails when followed.
+    let text = search(&["load model"]);
+    assert!(
+        text.contains(&format!("{CATALOG_HINT} 'load model'")),
+        "a multi-word term must be quoted in the hint:\n{text}"
+    );
+    // A plain single word stays unquoted, so the common case is not noisy.
+    // Asserted against the hint LINE, not the whole output: the summary line
+    // legitimately renders the term in quotes, so a document-wide negative
+    // would fail for the wrong reason.
+    let plain = search(&[TERM]);
+    assert!(
+        plain.contains(&format!("{CATALOG_HINT} {TERM}")),
+        "a single-word term must appear bare in the hint:\n{plain}"
+    );
+    assert!(
+        !plain.contains(&format!("{CATALOG_HINT} '{TERM}'")),
+        "a single-word term must not be quoted in the hint:\n{plain}"
+    );
+}
+
+#[test]
+fn json_reports_scope_without_the_prose() {
+    let data = search_json(&[TERM]);
+    assert_eq!(data["searched_agents"], 2);
+    assert_eq!(data["scope"], "installed");
+
+    // The machine surface must stay clean: the human caveat is prose for the
+    // text path only, and leaking it into stdout would break JSON parsing —
+    // which `search_json` already proves by parsing, so assert the fields are
+    // the carrier instead.
+    assert!(
+        data["results"].is_array() && data["term"] == TERM,
+        "unexpected JSON shape: {data}"
+    );
 }
 
 /// The envelope frame `search --json` prints, including the two `meta` keys

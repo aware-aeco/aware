@@ -4,7 +4,27 @@
 //! Use this when you want to find which agents expose a concept (e.g.
 //! `aware search "load IFC"` shows xeokit / thatopen / web-ifc / revit
 //! variants of loading IFC).
+//!
+//! **Scope, and why every result says so.** This verb reads
+//! `<aware_home>/agents/` — the INSTALLED agents — and nothing else. The
+//! registry catalogue of not-yet-installed agents is a separate corpus behind
+//! `aware agent search`. Two commands whose names differ by one word search
+//! two different worlds, and the narrower one is the shorter to type.
+//!
+//! Left unsaid, that produced a confident false negative (#495): `aware search
+//! mail` returned four unrelated hits from the agents that happened to be
+//! installed, and the absence of `outlook.mail.send` / `gmail.send` from the
+//! output was read as those commands not existing. They do exist, and always
+//! did — `microsoft-365` and `google-workspace` were simply not installed on
+//! the machine that ran the search. A capability question was answered "no"
+//! by a command that had never looked at the corpus holding the answer.
+//!
+//! So the scope is printed on every text result, hit or miss, and carried in
+//! `--json` as `searched_agents` / `scope`. The miss case is not the only one
+//! that misleads: the report above was filed off a search that *found*
+//! something, which is why the note is not conditional on an empty result.
 
+use std::borrow::Cow;
 use std::collections::BTreeMap;
 use std::time::Instant;
 
@@ -51,12 +71,18 @@ pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
         None
     };
 
+    // Agents actually scanned, counted after the `--agent` filter rather than
+    // before it: a `--agent foo` run must report the one agent it consulted,
+    // not imply it swept the whole installed set.
+    let mut searched_agents = 0usize;
+
     for d in &discovered {
         if let Some(filter) = &args.agent
             && d.manifest.agent != *filter
         {
             continue;
         }
+        searched_agents += 1;
         let mut agent_hits: Vec<Hit> = Vec::new();
         for (name, cmd) in &d.manifest.commands {
             if let Some(want) = category_filter
@@ -86,6 +112,8 @@ pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
         let data = SearchData {
             term: &args.term,
             total_matches: total,
+            searched_agents,
+            scope: SCOPE,
             limit: args.limit,
             results: results
                 .iter()
@@ -105,7 +133,22 @@ pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
     }
 
     if results.is_empty() {
-        println!("(no matches for '{}')", args.term);
+        // "no matches" and "nothing to match against" are different answers, and
+        // only the second tells a user with an empty `~/.aware/agents/` what to
+        // do next. Reporting them identically is how an unpopulated home reads
+        // as a definitive "this capability does not exist".
+        if searched_agents == 0 {
+            println!(
+                "(no matches for '{}' — no installed agents to search)",
+                args.term
+            );
+        } else {
+            println!(
+                "(no matches for '{}' among {searched_agents} installed agent(s))",
+                args.term
+            );
+        }
+        print_scope_note(&args.term);
         return Ok(());
     }
 
@@ -140,7 +183,44 @@ pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
             println!("  … {} more (use --limit 0 to see all)", total_hits - shown);
         }
     }
+    println!("\nSearched {searched_agents} installed agent(s).");
+    print_scope_note(&args.term);
     Ok(())
+}
+
+/// What this verb did NOT look at, and the command that does.
+///
+/// Printed on hits as well as misses. A result that lists four commands looks
+/// complete in a way an empty one does not, so the case that most needs the
+/// caveat is the one that found something — see the module header.
+fn print_scope_note(term: &str) {
+    println!(
+        "Only INSTALLED agents are searched. To search every agent in the registry\n\
+         catalog, including ones not installed here:\n  \
+         aware agent search {}",
+        shell_quote(term)
+    );
+}
+
+/// Quote `term` so the suggested command can be pasted into a POSIX shell
+/// verbatim.
+///
+/// `aware search "load IFC"` is a documented multi-word use, and
+/// `aware agent search` takes the query as ONE positional — so echoing a
+/// multi-word term bare would print advice that fails when followed. Only
+/// wraps when the term is not already a plain word, to keep the common
+/// single-word hint free of noise.
+fn shell_quote(term: &str) -> Cow<'_, str> {
+    let plain = !term.is_empty()
+        && term
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.' | '/' | ':' | '@'));
+    if plain {
+        return Cow::Borrowed(term);
+    }
+    // POSIX single-quoting: everything is literal inside '…', and an embedded
+    // single quote is spelled by closing, escaping one, and reopening.
+    Cow::Owned(format!("'{}'", term.replace('\'', r"'\''")))
 }
 
 #[derive(Serialize)]
@@ -151,10 +231,25 @@ struct Hit {
     in_description: bool,
 }
 
+/// What corpus this verb reads, reported verbatim in `--json`.
+///
+/// A machine consumer (floless.app builds its agent surface off `--json`) has
+/// the same false-negative problem a human does: `total_matches: 0` alone
+/// cannot distinguish "no agent does this" from "no agent that does this is
+/// installed here". This names the corpus so the caller can tell.
+const SCOPE: &str = "installed";
+
+// Fields stay snake_case: `total_matches` is already the published key that
+// `--json` consumers read, so kebab-casing this struct to match `meta` would
+// silently break them. New keys follow the surface that exists, not the one
+// that would have been tidier.
 #[derive(Serialize)]
 struct SearchData<'a> {
     term: &'a str,
     total_matches: usize,
+    /// Installed agents actually scanned, after any `--agent` narrowing.
+    searched_agents: usize,
+    scope: &'static str,
     limit: usize,
     results: Vec<AgentResults<'a>>,
 }
