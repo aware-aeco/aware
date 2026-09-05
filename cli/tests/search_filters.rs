@@ -301,15 +301,211 @@ fn match_flags_record_which_column_matched() {
 #[test]
 fn a_term_matching_nothing_says_so_instead_of_printing_an_empty_report() {
     let text = search(&["zzz-no-such-concept"]);
-    assert_eq!(
-        text.trim(),
-        "(no matches for 'zzz-no-such-concept')",
-        "the empty case has its own message, not a 0-count report"
+    assert!(
+        text.contains("(no matches for 'zzz-no-such-concept' among 2 installed agent(s))"),
+        "the empty case has its own message, not a 0-count report:\n{text}"
     );
 
     let data = search_json(&["zzz-no-such-concept"]);
     assert_eq!(data["total_matches"], 0);
     assert!(data["results"].as_array().unwrap().is_empty());
+    // A miss still reports the corpus it missed in: `total_matches: 0` alone
+    // cannot tell a consumer "nothing does this" from "nothing here does this".
+    assert_eq!(data["searched_agents"], 2);
+    assert_eq!(data["scope"], "installed");
+}
+
+// ── Scope reporting (#495) ───────────────────────────────────────────────────
+//
+// `aware search` reads installed agents only; `aware agent search` reads the
+// registry catalogue. #495 was filed because the first answered a capability
+// question "no" without ever saying which corpus it had consulted — the
+// commands it was declared missing (`outlook.mail.send`, `gmail.send`) existed
+// all along, in agents that were not installed on the reporting machine.
+//
+// The note is asserted on the HIT path as well as the miss, because the report
+// that prompted this was filed off a search that found four unrelated commands.
+// A test covering only the empty case would leave the actual failure uncovered.
+
+/// The suggested follow-up command, which must name the catalogue verb rather
+/// than repeat this one.
+const CATALOG_HINT: &str = "aware agent search";
+
+#[test]
+fn a_hit_still_reports_which_corpus_was_searched() {
+    let text = search(&[TERM]);
+    assert!(
+        text.contains("Searched 2 installed agent(s)."),
+        "a result that found something must still name its corpus:\n{text}"
+    );
+    assert!(
+        text.contains("Only INSTALLED agents are searched."),
+        "the scope caveat must not be conditional on an empty result:\n{text}"
+    );
+    assert!(
+        text.contains(&format!("{CATALOG_HINT} {TERM}")),
+        "the caveat must name the command that searches the catalogue:\n{text}"
+    );
+}
+
+#[test]
+fn a_miss_points_at_the_catalogue_instead_of_ending_the_search() {
+    let text = search(&["zzz-no-such-concept"]);
+    assert!(
+        text.contains(&format!("{CATALOG_HINT} zzz-no-such-concept")),
+        "a miss is exactly when the other corpus matters most:\n{text}"
+    );
+}
+
+#[test]
+fn an_empty_home_is_distinguished_from_a_genuine_miss() {
+    // "nothing matched" and "there was nothing to match against" are different
+    // answers. Collapsing them is how an unpopulated home reads as proof that a
+    // capability does not exist anywhere.
+    let tmp = tempfile::tempdir().unwrap(); // no fixture written: zero agents
+    let out = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .args(["search", TERM])
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    let text = String::from_utf8(out).unwrap();
+    assert!(
+        text.contains("no installed agents to search"),
+        "an empty home must say so, not report a plain miss:\n{text}"
+    );
+    assert!(
+        !text.contains("among 0 installed agent(s)"),
+        "the zero case must not fall through to the counted phrasing:\n{text}"
+    );
+    assert!(text.contains(CATALOG_HINT), "{text}");
+}
+
+#[test]
+fn an_agent_filter_matching_nothing_is_not_reported_as_an_empty_home() {
+    // `--agent` skips every discovered agent before the counter, so
+    // `searched_agents == 0` here even though two agents ARE installed. Keying
+    // the empty-home message off that counter alone told a user with a typo'd
+    // `--agent` that they had no agents at all. (Codex review, PR #497.)
+    let text = search(&[TERM, "--agent", "no-such-agent"]);
+    assert!(
+        text.contains("no agent named 'no-such-agent' is installed"),
+        "a missing filter target must be named as such:\n{text}"
+    );
+    assert!(
+        text.contains("2 other agent(s) are"),
+        "and must say the home is not in fact empty:\n{text}"
+    );
+    assert!(
+        !text.contains("no installed agents to search"),
+        "the empty-home diagnosis is reserved for an actually empty home:\n{text}"
+    );
+}
+
+#[test]
+fn a_hyphen_prefixed_term_gets_the_end_of_options_delimiter() {
+    // `aware agent search` takes `query` as an ordinary positional, so clap
+    // rejects a leading hyphen as an unknown option. Quoting cannot fix that —
+    // the shell strips quotes before clap ever sees the argv — so the printed
+    // command needs `--`. Without it the hint advertises a command that errors
+    // out. (Codex review, PR #497.)
+    let text = search(&["--", "--send"]);
+    assert!(
+        text.contains(&format!("{CATALOG_HINT} -- --send")),
+        "a hyphen-prefixed term needs the end-of-options delimiter:\n{text}"
+    );
+    // A normal term must NOT pick up the delimiter.
+    assert!(
+        !search(&[TERM]).contains(&format!("{CATALOG_HINT} --")),
+        "the delimiter must not leak onto ordinary terms"
+    );
+
+    // The combined case: a term that needs BOTH the delimiter and quoting.
+    // Quotes make it one argv value; `--` stops clap reading that value as an
+    // option. Either alone yields an instruction the user cannot follow, which
+    // is what shipped when the delimiter was computed inside the bare branch
+    // only (Codex, #497).
+    // `--` here is for THIS invocation's own clap, exactly as a user would have
+    // to type it; the term itself is the quoted half.
+    let both = search(&["--", "--send mail"]);
+    assert!(
+        both.contains(&format!("{CATALOG_HINT} -- \"--send mail\"")),
+        "a hyphen-prefixed term that also needs quoting must get both:\n{both}"
+    );
+    assert!(
+        both.contains("quote it for your shell"),
+        "and must still say the quoting is the reader's to do:\n{both}"
+    );
+}
+
+#[test]
+fn the_scope_count_follows_the_agent_filter_rather_than_the_install_set() {
+    // Counted after `--agent`, so a narrowed search cannot imply it swept
+    // everything installed. Two agents exist; one was consulted.
+    let text = search(&[TERM, "--agent", "beta-agent"]);
+    assert!(
+        text.contains("Searched 1 installed agent(s)."),
+        "the count must describe what was scanned, not what is installed:\n{text}"
+    );
+    assert_eq!(
+        search_json(&[TERM, "--agent", "beta-agent"])["searched_agents"],
+        1
+    );
+
+    // The unnarrowed baseline, so a count hard-coded to 1 fails here.
+    assert_eq!(search_json(&[TERM])["searched_agents"], 2);
+}
+
+#[test]
+fn an_awkward_term_is_described_rather_than_shell_quoted() {
+    // The repo's settled rule (#443, re-applied here as #497): never emit a
+    // command line whose quoting is correct in one shell and wrong in another.
+    // POSIX `'load model'` is not how cmd.exe groups, and `'it'\''s'` is not how
+    // PowerShell escapes — so an awkward term gets described, not quoted.
+    for awkward in ["load model", "it's", "a|b", "@team"] {
+        let text = search(&[awkward]);
+        assert!(
+            text.contains("quote it for your shell"),
+            "{awkward:?} must be described, not handed a fake-portable command:\n{text}"
+        );
+        assert!(
+            !text.contains(&format!("{CATALOG_HINT} '{awkward}'")),
+            "{awkward:?} must not be POSIX-quoted into a runnable-looking line:\n{text}"
+        );
+    }
+
+    // A plain single word still gets the real, pasteable command — the
+    // conservative branch must not swallow the common case. Asserted against the
+    // hint LINE, not the whole output, since the summary line legitimately
+    // renders the term in quotes.
+    let plain = search(&[TERM]);
+    assert!(
+        plain.contains(&format!("{CATALOG_HINT} {TERM}")),
+        "a bare term must still get a runnable command:\n{plain}"
+    );
+    assert!(
+        !plain.contains("quote it for your shell"),
+        "a bare term must not be pushed down the descriptive branch:\n{plain}"
+    );
+}
+
+#[test]
+fn json_reports_scope_without_the_prose() {
+    let data = search_json(&[TERM]);
+    assert_eq!(data["searched_agents"], 2);
+    assert_eq!(data["scope"], "installed");
+
+    // The machine surface must stay clean: the human caveat is prose for the
+    // text path only, and leaking it into stdout would break JSON parsing —
+    // which `search_json` already proves by parsing, so assert the fields are
+    // the carrier instead.
+    assert!(
+        data["results"].is_array() && data["term"] == TERM,
+        "unexpected JSON shape: {data}"
+    );
 }
 
 /// The envelope frame `search --json` prints, including the two `meta` keys

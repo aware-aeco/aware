@@ -1448,7 +1448,7 @@ fn provision_advice(secret: &str) -> String {
         // `aware connect google-workspace --as team one` — two arguments, which
         // clap rejects — and a metacharacter would change what a copied line does.
         return match alias {
-            Some(alias) if !is_bare_shell_token(alias) => format!(
+            Some(alias) if !crate::text::is_bare_shell_token(alias) => format!(
                 "provision it with `aware connect {base}`, passing `--as` the alias {alias:?} — \
                  quote it for your shell, since it holds characters a bare argument would split \
                  or interpret"
@@ -1465,7 +1465,7 @@ fn provision_advice(secret: &str) -> String {
             // Both were found here one round apart, and enumerating the offenders
             // invites a third: `--as=` moves the alias off the front of the token,
             // so start-of-token specialness cannot arise whatever it holds. What
-            // remains inside the token is `is_bare_shell_token`'s business, which
+            // remains inside the token is `text::is_bare_shell_token`'s business, which
             // is the one question a character allowlist can actually answer.
             Some(alias) => format!("provision it with `aware connect {base} --as={alias}`"),
             None => format!("provision it with `aware connect {base}`"),
@@ -1525,31 +1525,6 @@ fn load_secret_value(agents_dir: &std::path::Path, id: &str) -> Option<Value> {
     let mut ctx = crate::runtime::template::RenderContext::default();
     crate::runtime::context::load_secret(&mut ctx, &creds_dir, id).ok()?;
     ctx.secrets.get(id).cloned()
-}
-
-/// Whether `arg` survives being pasted into any shell as one bare argument.
-///
-/// The conservative set: nothing here is special to POSIX shells, PowerShell, or
-/// `cmd`, so a bare token means the same thing in all of them.
-///
-/// There is deliberately no "quote it for them" branch. An earlier version
-/// single-quoted the rest POSIX-style (`'it'\''s'`) and claimed PowerShell read
-/// it the same way; PowerShell escapes an embedded quote by doubling it
-/// (`'it''s'`), so the suggested command did not parse there (Codex, #443).
-/// Emitting a line that runs in one shell and breaks in another is worse than
-/// not emitting one, and picking per-shell would mean guessing which shell is
-/// reading a message the runtime prints to stderr.
-///
-/// This answers one question — what a shell does to characters INSIDE a token.
-/// Whether a character is special at the START of one is the caller's problem,
-/// and it does not solve it by asking here: it attaches the alias after `--as=`
-/// so the alias never starts a token at all. A `-` (clap) and a `@` (PowerShell
-/// splatting) were both found in this set that way, one review round apart.
-fn is_bare_shell_token(arg: &str) -> bool {
-    !arg.is_empty()
-        && arg
-            .chars()
-            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.' | '/' | '@' | ':'))
 }
 
 /// The first character in a credential that no request could carry anywhere, if
