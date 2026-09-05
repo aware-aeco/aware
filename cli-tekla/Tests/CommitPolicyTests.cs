@@ -180,11 +180,33 @@ public sealed class CommitPolicyTests
     }
 
     [Fact]
-    public void CanonicalTeeNeverSilentlyUsesATeklaCatalogProfile()
+    public void CanonicalTeeRidesTheNamedProfilePathLikeEveryOtherRolledSection()
     {
+        // THE REFUSAL THIS REPLACES, and why it is gone rather than merely deleted.
+        //
+        // The sink used to throw on `xshape == "tee"`, and its own message named the condition for
+        // lifting it: "supply an exact native profile after verifying its catalog geometry". That
+        // verification has now been done against a live Tekla 2026 UK environment, by asking the
+        // catalogue itself through `CatalogHandler.GetLibraryProfileItems()` rather than by assuming:
+        //
+        //   UKT  ->  UKT102*127*11, UKT102*127*13, UKT102*152*13
+        //   TEE  ->  TEE102*102*12, TEE102*127*11, TEE102*127*13
+        //
+        // Those are byte-identical to the names the producer emits, so a tee is not a guess at a
+        // catalogue entry — it IS the catalogue entry. Refusing it meant a UK model carrying any UKT
+        // or TEE member could not be exported at all.
+        //
+        // A tee needs no special plan the way an angle and a double angle do (those are rebuilt from
+        // legs). It is one named profile with a roll, exactly like an I or a channel, so it takes the
+        // same path they do.
         var code = BakeSceneScript.Code;
-        Assert.Contains("if(xshape==\"tee\")throw", code);
-        Assert.Contains("is explicitly unsupported by the Tekla sink", code);
+        Assert.DoesNotContain("if(xshape==\"tee\")throw", code);
+        Assert.DoesNotContain("is explicitly unsupported by the Tekla sink", code);
+
+        // What must NOT have been lost with it: a tee is still held to an EXACT profile name, and is
+        // still planned before any Insert. Nothing may fabricate a section for it.
+        Assert.Contains("member requires a nonzero finite axis and exact profile", code);
+        Assert.Contains("memberRollPlans[id]=memberRoll.CreatePlan(fromArr,toArr,roll)", code);
     }
 
     [Fact]

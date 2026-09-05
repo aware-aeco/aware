@@ -288,10 +288,31 @@ fn tfm_rank(tfm: &str) -> i32 {
     0
 }
 
+/// The `<license>` element's text — the SPDX expression this package ships
+/// under — or `"UNKNOWN"` when the nuspec carries none.
+///
+/// The element name has to end where the search says it does. `<licenseUrl>`
+/// is `<license>`'s deprecated predecessor and real nuspecs carry BOTH, the
+/// URL first, so a bare `find("<license")` opens on the URL element and then
+/// closes on the *real* `</license>` — returning the whole span between them
+/// as the license. That string is in no permissive list, so an MIT package is
+/// refused with `PermissionDenied`, and `--accept-license` past it records the
+/// garbage span as the agent's license and in its provenance.
 fn extract_nuspec_license(nuspec: &str) -> String {
-    if let Some(idx) = nuspec.find("<license")
-        && let Some(end) = nuspec[idx..].find("</license>")
-    {
+    const OPEN: &str = "<license";
+    let mut offset = 0;
+    while let Some(rel) = nuspec[offset..].find(OPEN) {
+        let idx = offset + rel;
+        let after = &nuspec[idx + OPEN.len()..];
+        // `<licenseUrl`, `<licenseNames`, … — the name continues, so this is a
+        // different element. Resume the scan past it.
+        if !after.starts_with('>') && !after.starts_with(char::is_whitespace) {
+            offset = idx + OPEN.len();
+            continue;
+        }
+        let Some(end) = nuspec[idx..].find("</license>") else {
+            break;
+        };
         let chunk = &nuspec[idx..idx + end];
         if let Some(content_start) = chunk.find('>') {
             let content = &chunk[content_start + 1..];
@@ -300,6 +321,7 @@ fn extract_nuspec_license(nuspec: &str) -> String {
                 return trimmed.to_string();
             }
         }
+        break;
     }
     "UNKNOWN".to_string()
 }
@@ -315,32 +337,43 @@ mod tests {
     use super::*;
     use std::io::Write;
 
+    /// A `.nupkg` with exactly the entries given, in the order given — zip
+    /// order is load-bearing for the nuspec and XML-doc scans, so the tests
+    /// that care about it need to choose it.
+    fn nupkg(entries: &[(&str, &str)]) -> Vec<u8> {
+        let mut buf = Vec::new();
+        {
+            let mut zip = zip::ZipWriter::new(std::io::Cursor::new(&mut buf));
+            let opts: zip::write::SimpleFileOptions = Default::default();
+            for (name, body) in entries {
+                zip.start_file(*name, opts).unwrap();
+                zip.write_all(body.as_bytes()).unwrap();
+            }
+            zip.finish().unwrap();
+        }
+        buf
+    }
+
+    /// A nuspec carrying the `<metadata>` children given verbatim.
+    fn nuspec(metadata: &str) -> String {
+        format!(
+            "<?xml version=\"1.0\"?>\n<package><metadata>\n<id>FakePkg</id><version>1.0.0</version>\n{metadata}\n</metadata></package>\n"
+        )
+    }
+
     fn build_fake_nupkg(
         license: &str,
         description: &str,
         xml_filename: &str,
         xml_body: &str,
     ) -> Vec<u8> {
-        let mut buf = Vec::new();
-        {
-            let mut zip = zip::ZipWriter::new(std::io::Cursor::new(&mut buf));
-            let opts: zip::write::SimpleFileOptions = Default::default();
-
-            // Top-level .nuspec
-            zip.start_file("FakePkg.nuspec", opts).unwrap();
-            let nuspec = format!(
-                "<?xml version=\"1.0\"?>\n<package><metadata>\n<id>FakePkg</id><version>1.0.0</version>\n<description>{description}</description>\n<license type=\"expression\">{license}</license>\n</metadata></package>\n"
-            );
-            zip.write_all(nuspec.as_bytes()).unwrap();
-
-            // lib/net6.0/FakePkg.xml — XML doc
-            zip.start_file(format!("lib/net6.0/{xml_filename}"), opts)
-                .unwrap();
-            zip.write_all(xml_body.as_bytes()).unwrap();
-
-            zip.finish().unwrap();
-        }
-        buf
+        let meta = format!(
+            "<description>{description}</description>\n<license type=\"expression\">{license}</license>"
+        );
+        nupkg(&[
+            ("FakePkg.nuspec", &nuspec(&meta)),
+            (&format!("lib/net6.0/{xml_filename}"), xml_body),
+        ])
     }
 
     #[test]
@@ -384,8 +417,175 @@ mod tests {
 
     #[test]
     fn unknown_license_treated_as_non_permissive() {
-        let nuspec = "<package><metadata><description>x</description></metadata></package>";
-        assert_eq!(extract_nuspec_license(nuspec), "UNKNOWN");
+        let text = "<package><metadata><description>x</description></metadata></package>";
+        assert_eq!(extract_nuspec_license(text), "UNKNOWN");
+
+        // …and "treated as non-permissive" is the half the assertion above
+        // does not reach: a package with no `<license>` at all must be refused
+        // without `--accept-license`, and recorded as UNKNOWN with it.
+        let bytes = nupkg(&[("FakePkg.nuspec", &nuspec("<description>x</description>"))]);
+        let err = build_from_bytes(&bytes, "FakePkg", "1.0.0", None, false).unwrap_err();
+        assert!(matches!(err, AwareError::PermissionDenied(_)), "{err:?}");
+        let agent = build_from_bytes(&bytes, "FakePkg", "1.0.0", None, true).unwrap();
+        assert_eq!(agent.license, "UNKNOWN");
+    }
+
+    #[test]
+    fn deprecated_license_url_does_not_shadow_the_license_element() {
+        // The shape every modern nuspec has: `<licenseUrl>` (deprecated, kept
+        // for old clients) immediately followed by the real `<license>`.
+        let meta = "<description>x</description>\n<licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>\n<license type=\"expression\">MIT</license>";
+        assert_eq!(extract_nuspec_license(&nuspec(meta)), "MIT");
+
+        // The consequence, end to end: MIT is permissive, so this builds with
+        // no `--accept-license` and records MIT — not the span between the two
+        // elements, which is neither permissive nor UNKNOWN.
+        let bytes = nupkg(&[("FakePkg.nuspec", &nuspec(meta))]);
+        let agent = build_from_bytes(&bytes, "FakePkg", "1.0.0", None, false).unwrap();
+        assert_eq!(agent.license, "MIT");
+    }
+
+    #[test]
+    fn license_url_alone_is_not_a_license() {
+        // `<licenseUrl>` is a URL, not an SPDX expression — resolving it means
+        // fetching and reading the page, which the builder does not do. So it
+        // is UNKNOWN, and UNKNOWN is refused rather than waved through.
+        let meta =
+            "<description>x</description>\n<licenseUrl>https://example.test/LICENSE</licenseUrl>";
+        assert_eq!(extract_nuspec_license(&nuspec(meta)), "UNKNOWN");
+    }
+
+    #[test]
+    fn empty_license_element_is_unknown() {
+        let meta = "<description>x</description>\n<license type=\"expression\">  </license>";
+        assert_eq!(extract_nuspec_license(&nuspec(meta)), "UNKNOWN");
+    }
+
+    #[test]
+    fn missing_description_falls_back_to_the_package_name() {
+        let bytes = nupkg(&[(
+            "FakePkg.nuspec",
+            &nuspec("<license type=\"expression\">MIT</license>"),
+        )]);
+        let agent = build_from_bytes(&bytes, "FakePkg", "1.0.0", None, false).unwrap();
+        // The package name as given, not the lowercased id.
+        assert_eq!(agent.description, "FakePkg");
+    }
+
+    #[test]
+    fn explicit_agent_id_overrides_the_lowercased_package_name() {
+        let bytes = build_fake_nupkg("MIT", "x", "FakePkg.xml", "<doc/>");
+        let agent = build_from_bytes(&bytes, "FakePkg", "1.0.0", Some("my-agent"), false).unwrap();
+        assert_eq!(agent.id, "my-agent");
+        // The package name still reaches provenance, un-lowercased, so the
+        // renamed agent stays traceable to what it was built from.
+        assert_eq!(agent.provenance.source["package"], "FakePkg");
+    }
+
+    #[test]
+    fn nested_nuspec_is_ignored() {
+        // Only the top-level `.nuspec` is the package manifest. A `.nuspec`
+        // shipped as *content* — vendored sources, a packaging sample — must
+        // not contribute metadata: `read_to_string` appends, so a second one
+        // read first would win the `<license>` scan outright.
+        let bytes = nupkg(&[
+            (
+                "content/Vendored.nuspec",
+                &nuspec(
+                    "<description>vendored</description>\n<license type=\"expression\">Proprietary</license>",
+                ),
+            ),
+            (
+                "FakePkg.nuspec",
+                &nuspec(
+                    "<description>the real one</description>\n<license type=\"expression\">MIT</license>",
+                ),
+            ),
+        ]);
+        let agent = build_from_bytes(&bytes, "FakePkg", "1.0.0", None, false).unwrap();
+        assert_eq!(agent.license, "MIT");
+        assert_eq!(agent.description, "the real one");
+    }
+
+    #[test]
+    fn xml_docs_are_only_read_from_lib_and_ref() {
+        // `tools/` and `build/` are payload, not API surface — build-time
+        // executables and MSBuild props. Scanning them would turn a package's
+        // toolchain notes into a "skill". Both are given the SAME
+        // `<root>/<tfm>/<file>` shape `lib/` has, because that is the only
+        // shape the prefix check is what rejects: a shallower path is already
+        // dropped for having no tfm directory.
+        let bytes = nupkg(&[
+            (
+                "FakePkg.nuspec",
+                &nuspec("<description>x</description>\n<license type=\"expression\">MIT</license>"),
+            ),
+            ("tools/net8.0/Notes.xml", "<doc>not an API</doc>"),
+            ("build/net8.0/Targets.xml", "<doc>not an API either</doc>"),
+            // Two path segments — no tfm directory — so there is nothing to
+            // bucket it under, even under the right root.
+            ("lib/Stray.xml", "<doc>no tfm</doc>"),
+        ]);
+        let agent = build_from_bytes(&bytes, "FakePkg", "1.0.0", None, false).unwrap();
+        assert!(
+            agent.skills.is_empty(),
+            "expected no skills, got {:?}",
+            agent.skills.iter().map(|s| &s.filename).collect::<Vec<_>>()
+        );
+    }
+
+    #[test]
+    fn lib_and_ref_paths_are_matched_case_insensitively() {
+        // Zip entry casing is whatever the packing tool wrote. `REF/` and
+        // `.XML` are the same content as `ref/` and `.xml`.
+        let bytes = nupkg(&[
+            (
+                "FakePkg.nuspec",
+                &nuspec("<description>x</description>\n<license type=\"expression\">MIT</license>"),
+            ),
+            ("REF/NET8.0/FakePkg.XML", "<doc>uppercase path</doc>"),
+        ]);
+        let agent = build_from_bytes(&bytes, "FakePkg", "1.0.0", None, false).unwrap();
+        assert_eq!(agent.skills.len(), 1);
+        assert!(agent.skills[0].body.contains("uppercase path"));
+    }
+
+    #[test]
+    fn pick_best_tfm_skips_buckets_holding_no_dll() {
+        // Not the same case as the empty-bucket test above: this bucket has
+        // files, they are just XML docs. Ranking it would hand the sidecar a
+        // DLL list of length zero instead of falling through to net48.
+        let mut tfms: BTreeMap<String, Vec<(String, Vec<u8>)>> = BTreeMap::new();
+        tfms.insert("net9.0".into(), vec![("FakePkg.xml".into(), vec![1])]);
+        tfms.insert("net48".into(), vec![("FakePkg.dll".into(), vec![1])]);
+        assert_eq!(pick_best_tfm(&tfms).as_deref(), Some("net48"));
+    }
+
+    #[test]
+    fn tfm_rank_orders_by_version_not_by_string() {
+        // net10.0 is the trap: it sorts BELOW net9.0 lexically, and the
+        // BTreeMap `pick_best_tfm` reads from is ordered exactly that way.
+        assert!(tfm_rank("net10.0") > tfm_rank("net9.0"));
+        // The `n >= 5` boundary — net5.0 is modern .NET, net48 is Framework.
+        assert!(tfm_rank("net5.0") > tfm_rank("net48"));
+        // net2x/net3x, the oldest rung, ordered among themselves down to the
+        // minor digit — net35 vs net30 is what pins that, since net35 outranks
+        // net20 on the major digit alone.
+        assert!(tfm_rank("net35") > tfm_rank("net30"));
+        assert!(tfm_rank("net30") > tfm_rank("net20"));
+        assert!(tfm_rank("net20") > tfm_rank("garbage"));
+    }
+
+    #[test]
+    fn tfm_rank_is_case_insensitive() {
+        for tfm in ["net8.0", "netstandard2.1", "netcoreapp3.1", "net48"] {
+            assert_eq!(
+                tfm_rank(&tfm.to_uppercase()),
+                tfm_rank(tfm),
+                "{tfm} ranked differently in upper case"
+            );
+            assert_ne!(tfm_rank(tfm), 0, "{tfm} should be a recognised tfm");
+        }
     }
 
     #[test]
@@ -408,14 +608,6 @@ mod tests {
         tfms.insert("netstandard2.0".into(), vec![("a.dll".into(), vec![1])]);
         tfms.insert("net8.0".into(), vec![("a.dll".into(), vec![1])]);
         assert_eq!(pick_best_tfm(&tfms).as_deref(), Some("net8.0"));
-    }
-
-    #[test]
-    fn pick_best_tfm_skips_empty_buckets() {
-        let mut tfms: BTreeMap<String, Vec<(String, Vec<u8>)>> = BTreeMap::new();
-        tfms.insert("net9.0".into(), vec![]); // empty
-        tfms.insert("net48".into(), vec![("a.dll".into(), vec![1])]);
-        assert_eq!(pick_best_tfm(&tfms).as_deref(), Some("net48"));
     }
 
     #[test]

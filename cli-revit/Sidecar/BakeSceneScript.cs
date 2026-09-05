@@ -264,6 +264,49 @@ XYZ ToFeet(double[] mm)
     return new XYZ(AwareBakeRules.MmToFeet(mm[0]), AwareBakeRules.MmToFeet(mm[1]), AwareBakeRules.MmToFeet(mm[2]));
 }
 
+// The member's REAL cross-section, extruded along its axis, from the outline the producer supplied.
+//
+// Revit resolves a designation to a LOADED FAMILY first, which is still the better outcome — it is
+// parametric and schedulable. This is what happens when no family matches, and it used to be a
+// nominal rectangle parsed back out of the designation: a `CHS508.0*14.2` became a 508 x 254 box
+// while `xsection {shape:"chs", od:508, t:14.2}` sat unused in the same payload. A UK model has no
+// matching families at all (Revit's British types are named `305x165x46UB`, not `UKB305*165*46`), so
+// every UK member took that path.
+//
+// `inner` punches the bore of a hollow section, so a tube is a tube rather than a solid billet.
+Solid SectionSolid(XYZ start, XYZ end, double[][] outerMm, double[][] innerMm)
+{
+    var axis = end - start;
+    var length = axis.GetLength();
+    var direction = axis.Normalize();
+    var seed = Math.Abs(direction.Z) > 0.9 ? XYZ.BasisX : XYZ.BasisZ;
+    var side = direction.CrossProduct(seed).Normalize();
+    var up = side.CrossProduct(direction).Normalize();
+
+    Func<double[][], CurveLoop> loopOf = pts =>
+    {
+        var xyz = new List<XYZ>();
+        foreach (var p in pts)
+            xyz.Add(start + side * AwareBakeRules.MmToFeet(p[0]) + up * AwareBakeRules.MmToFeet(p[1]));
+        var curves = new List<Curve>();
+        for (var i = 0; i < xyz.Count; i++)
+        {
+            var a = xyz[i];
+            var b = xyz[(i + 1) % xyz.Count];
+            // Revit rejects a zero-length segment outright, and a section outline can legitimately
+            // carry a coincident pair (a zero-thickness leg the catalogue rounds to nothing). Skipping
+            // is correct: the loop stays closed because the NEXT segment starts where this one would
+            // have ended.
+            if (a.DistanceTo(b) > 1e-9) curves.Add(Line.CreateBound(a, b));
+        }
+        return CurveLoop.Create(curves);
+    };
+
+    var loops = new List<CurveLoop> { loopOf(outerMm) };
+    if (innerMm != null && innerMm.Length >= 3) loops.Add(loopOf(innerMm));
+    return GeometryCreationUtilities.CreateExtrusionGeometry(loops, direction, length);
+}
+
 Solid PlaceholderSolid(XYZ start, XYZ end, double depthMm, double widthMm)
 {
     var axis = end - start;
@@ -389,20 +432,45 @@ try
                 // the member still lands, as a DirectShape carrying an extruded
                 // placeholder solid, and says so in the receipt.
                 usedFallback = true;
-                double depthMm;
-                double widthMm;
-                var recognised = AwareBakeRules.TryParseNominalSectionMm(member.Profile, out depthMm, out widthMm);
                 var directShape = DirectShape.CreateElement(doc, new ElementId(BuiltInCategory.OST_StructuralFraming));
-                directShape.SetShape(new List<GeometryObject> { PlaceholderSolid(start, end, depthMm, widthMm) });
-                created = directShape;
-                warnings.Add(AwareBakeRules.Row(member.Id, member.Kind, "warning", "profile-family-not-loaded",
-                    "No loaded Revit family type matches profile `" + member.Profile + "`"
-                    + (vertical ? " in Structural Columns" : " in Structural Framing")
-                    + ". A placeholder DirectShape solid was created instead ("
-                    + (recognised ? "nominal" : "default") + " section "
-                    + depthMm.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture) + " x "
-                    + widthMm.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture)
-                    + " mm). Load the family to get the real section."));
+
+                // THE SUPPLIED SECTION FIRST. Only a scene that carried none falls back to the
+                // nominal rectangle, and the receipt tells the two apart — "the real section, as a
+                // DirectShape" is a different answer from "a placeholder box", and a detailer needs
+                // to know which one is on screen.
+                double[][] outerMm;
+                double[][] innerMm;
+                if (member.HasSection && AwareBakeRules.TrySectionOutlineMm(
+                        member.XsShape, member.XsDims, member.SectionWidthMm, member.SectionDepthMm,
+                        member.Round, out outerMm, out innerMm))
+                {
+                    directShape.SetShape(new List<GeometryObject> { SectionSolid(start, end, outerMm, innerMm) });
+                    created = directShape;
+                    warnings.Add(AwareBakeRules.Row(member.Id, member.Kind, "warning", "profile-family-not-loaded",
+                        "No loaded Revit family type matches profile `" + member.Profile + "`"
+                        + (vertical ? " in Structural Columns" : " in Structural Framing")
+                        + ". The member was built as a DirectShape from the section the model supplies ("
+                        + member.XsShape + ", "
+                        + member.SectionDepthMm.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture) + " x "
+                        + member.SectionWidthMm.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture)
+                        + " mm), so the geometry is exact. Load the family to get a parametric Revit type instead."));
+                }
+                else
+                {
+                    double depthMm;
+                    double widthMm;
+                    var recognised = AwareBakeRules.TryParseNominalSectionMm(member.Profile, out depthMm, out widthMm);
+                    directShape.SetShape(new List<GeometryObject> { PlaceholderSolid(start, end, depthMm, widthMm) });
+                    created = directShape;
+                    warnings.Add(AwareBakeRules.Row(member.Id, member.Kind, "warning", "profile-family-not-loaded",
+                        "No loaded Revit family type matches profile `" + member.Profile + "`"
+                        + (vertical ? " in Structural Columns" : " in Structural Framing")
+                        + ", and the scene carried no drawable section. A placeholder DirectShape solid was created instead ("
+                        + (recognised ? "nominal" : "default") + " section "
+                        + depthMm.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture) + " x "
+                        + widthMm.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture)
+                        + " mm). Load the family to get the real section."));
+                }
             }
 
             if (created == null)

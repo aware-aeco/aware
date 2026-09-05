@@ -40,9 +40,73 @@ pub fn ellipsize(s: &str, max_chars: usize) -> Cow<'_, str> {
     }
 }
 
+/// Whether `arg` survives being pasted into any shell as one bare argument.
+///
+/// The conservative set: nothing here is special to POSIX shells, PowerShell, or
+/// `cmd`, so a bare token means the same thing in all of them.
+///
+/// There is deliberately no "quote it for them" branch. An earlier version
+/// single-quoted the rest POSIX-style (`'it'\''s'`) and claimed PowerShell read
+/// it the same way; PowerShell escapes an embedded quote by doubling it
+/// (`'it''s'`), so the suggested command did not parse there (Codex, #443).
+/// Emitting a line that runs in one shell and breaks in another is worse than
+/// not emitting one, and picking per-shell would mean guessing which shell is
+/// reading a message the CLI prints. `aware search`'s catalogue hint reached for
+/// exactly that POSIX quoting and was caught the same way (Codex, #497) — which
+/// is why this now lives here, shared, instead of once per caller.
+///
+/// This answers one question — what a shell does to characters INSIDE a token.
+/// Whether a character is special at the START of one is the caller's problem;
+/// see [`starts_token_safely`].
+pub fn is_bare_shell_token(arg: &str) -> bool {
+    !arg.is_empty()
+        && arg
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.' | '/' | '@' | ':'))
+}
+
+/// Whether `arg` can safely BEGIN a pasted command-line token.
+///
+/// Separate from [`is_bare_shell_token`] because the two failures are different:
+/// that one asks what a shell does to characters inside a token, this asks what
+/// it does to the first one. PowerShell's argument mode gives `@ # < >` meaning
+/// at the start of a token (`about_Parsing`) — `@` is the splatting operator —
+/// and a leading `-` is read as an option by clap rather than by a shell.
+///
+/// A caller that can move the value off the front of the token (`--as=<value>`,
+/// or an `--` end-of-options delimiter) makes this question moot and should do
+/// that instead of consulting this.
+pub fn starts_token_safely(arg: &str) -> bool {
+    !arg.starts_with(['@', '#', '<', '>'])
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn a_bare_token_is_one_no_shell_rewrites() {
+        for ok in ["model", "load-model", "a_b.c/d:e@f", "123"] {
+            assert!(is_bare_shell_token(ok), "{ok} should be bare");
+        }
+        // A space splits the token; the rest are metacharacters in at least one
+        // supported shell. An empty string is not a token at all.
+        for bad in ["load model", "it's", "a\"b", "a|b", "a$b", "a;b", "a*b", ""] {
+            assert!(!is_bare_shell_token(bad), "{bad:?} should not be bare");
+        }
+    }
+
+    #[test]
+    fn start_of_token_specials_are_judged_separately_from_the_rest() {
+        // `@` is legal INSIDE a token but not at the front — the two predicates
+        // must disagree here, or the split has no purpose.
+        assert!(is_bare_shell_token("@team"));
+        assert!(!starts_token_safely("@team"));
+        assert!(starts_token_safely("team@example"));
+        for bad in ["#c", "<in", ">out"] {
+            assert!(!starts_token_safely(bad), "{bad} should be unsafe to lead");
+        }
+    }
 
     /// The exact string that panicked `aware search` before this module existed:
     /// `20-agents/aeco/architecture/sketchup-2026` → `commands.color-to-s`.

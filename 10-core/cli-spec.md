@@ -24,7 +24,8 @@ aware
 │   ├── --curated                       filter to hand-written workflow verbs only
 │   └── --reflected                     filter to auto-generated API methods only
 │
-├── search <term>                       cross-agent substring search over command names + descriptions
+├── search <term>                       substring search over INSTALLED agents' command names + descriptions
+│                                       (not-yet-installed agents live in `agent search`; every result says so)
 │   ├── --limit <n>                     max results per agent (default 5; 0 = unlimited)
 │   ├── --agent <id>                    restrict to one agent
 │   ├── --curated                       filter to curated workflow verbs only
