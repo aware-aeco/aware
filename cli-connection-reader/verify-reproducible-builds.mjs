@@ -29,10 +29,17 @@ export function forbiddenEncodings(root) {
   const variants = new Set();
   const add = (value) => {
     if (!value) return;
-    variants.add(value); variants.add(value.toLowerCase());
-    variants.add(value.replaceAll('\\', '/')); variants.add(value.replaceAll('\\', '/').toLowerCase());
-    variants.add(JSON.stringify(value).slice(1, -1));
-    try { variants.add(new URL(`file:///${value.replaceAll('\\', '/')}`).href); } catch { /* invalid path is still checked raw */ }
+    // Case folding and escaping compose. A serialized Windows path with altered
+    // casing (c:\\users\\alice) is BOTH lowercased and JSON-escaped, and deriving
+    // each transform only from the raw spelling never produced that combination,
+    // so a forbidden root could survive this proof. Fold first, then escape.
+    for (const separator of [value, value.replaceAll('\\', '/')]) {
+      for (const cased of [separator, separator.toLowerCase()]) {
+        variants.add(cased);
+        variants.add(JSON.stringify(cased).slice(1, -1));
+        try { variants.add(new URL(`file:///${cased.replaceAll('\\', '/')}`).href); } catch { /* invalid path is still checked raw */ }
+      }
+    }
   };
   add(resolve(root));
   return [...variants].flatMap((value) => [

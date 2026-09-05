@@ -29,3 +29,14 @@ test('checkout roots are rejected in raw, normalized, JSON, URI, case, and UTF-1
   writeFileSync(join(right, 'receipt.json'), Buffer.from(root.toUpperCase(), 'utf16le'));
   assert.throws(() => verifyReproducibleOutputs({ left, right, forbiddenRoots: [root] }), /root leaked/);
 });
+
+test('a root that is BOTH case-folded and JSON-escaped is still a leak', () => {
+  // The scanner lowercases file content, so an escaped needle that kept its
+  // original casing matched nothing: a serialized Windows path written as
+  // c:\users\alice slipped through the proof that no builder root leaked.
+  const { root, left, right } = roots();
+  const escapedFolded = JSON.stringify(root).slice(1, -1).toLowerCase();
+  writeFileSync(join(left, 'receipt.json'), escapedFolded, 'utf8');
+  writeFileSync(join(right, 'receipt.json'), escapedFolded, 'utf8');
+  assert.throws(() => verifyReproducibleOutputs({ left, right, forbiddenRoots: [root] }), /root leaked/);
+});
