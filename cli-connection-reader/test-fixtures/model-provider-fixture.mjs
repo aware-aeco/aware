@@ -31,7 +31,17 @@ async function main() {
         }
       : {};
     await fs.writeFile(geometryPath, makeGlbFixture(geometryOptions));
-    await fs.writeFile(metadataPath, JSON.stringify(makeMetadataFixture()));
+    const metadata = makeMetadataFixture();
+    if (request.canonicalRequest?.readerSchemaVersion === 'model-reference-reader/v2') {
+      metadata.schemaVersion = '2';
+      metadata.parameterGroups[0].id = '1';
+      metadata.parameters = [{
+        id: '1', name: 'Display Mark', unit: null,
+        valueEncoding: 'provider-display', valueType: 'string', value: 'A-1',
+      }];
+      delete metadata.elements[0].ifcGuid;
+    }
+    await fs.writeFile(metadataPath, JSON.stringify(metadata));
     process.stdout.write(JSON.stringify({
       ...provenance, documentKind: 'revit-project', sourceSha256: request.sourceSha256,
       geometryPath, metadataPath,

@@ -240,6 +240,7 @@ export async function describeProvider(options) {
     protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
     engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
     adapterExecutableSha256: initialExecutable.sha256,
+    ...(options.readerSchemaVersion ? { readerSchemaVersion: options.readerSchemaVersion } : {}),
     ...(describe.protocolVersion === '2' ? { execution: describe.execution, destination: describe.destination } : {}),
   });
   if (options.expectedProviderSha256 !== undefined) {
@@ -272,6 +273,7 @@ export async function describeAndConvert(options) {
     protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
     engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
     adapterExecutableSha256: initialExecutable.sha256,
+    ...(options.readerSchemaVersion ? { readerSchemaVersion: options.readerSchemaVersion } : {}),
     ...(describe.protocolVersion === '2' ? { execution: describe.execution, destination: describe.destination } : {}),
   });
   if (options.expectedProviderSha256 !== undefined) {
@@ -282,6 +284,8 @@ export async function describeAndConvert(options) {
     limits,
     protocolVersion: expectedProtocolVersion,
     conversionSettings: options.conversionSettings ?? {},
+    readerSchemaVersion: options.readerSchemaVersion,
+    propertyExpansionLimits: options.propertyExpansionLimits,
   });
   const outputDirectory = await privateDirectory(path.join(options.privateRoot, 'output'));
   const beforeConvert = await validateProviderExecutable(options.executable);

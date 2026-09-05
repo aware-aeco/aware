@@ -1,7 +1,10 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { isUtf8 } from 'node:buffer';
 
-export const READER_SCHEMA_VERSION = 'model-reference-reader/v1';
+export const READER_SCHEMA_VERSION_V1 = 'model-reference-reader/v1';
+export const READER_SCHEMA_VERSION_V2 = 'model-reference-reader/v2';
+// Kept as v1 for callers that have not opted into the additive v2 contract.
+export const READER_SCHEMA_VERSION = READER_SCHEMA_VERSION_V1;
 const SHA256 = /^[0-9a-f]{64}$/;
 const PLAIN = Object.getPrototypeOf({});
 
@@ -31,6 +34,11 @@ export const MODEL_LIMITS = Object.freeze({
   maxComponentJsonBytes: { default: 32 * 1024 * 1024, hard: 128 * 1024 * 1024 },
   maxCanonicalGlbBytes: { default: 256 * 1024 * 1024, hard: 512 * 1024 * 1024 },
   maxCommandResponseBytes: { default: 1024 * 1024, hard: 1024 * 1024 },
+});
+
+export const PROPERTY_EXPANSION_LIMITS = Object.freeze({
+  maxExpandedPropertyRows: { default: 100_000, hard: 2_000_000 },
+  maxCanonicalPropertyBytes: { default: 16 * 1024 * 1024, hard: 32 * 1024 * 1024 },
 });
 
 export class ModelReaderError extends Error {
@@ -241,14 +249,31 @@ export function lowerableLimits(overrides = {}) {
   return result;
 }
 
+export function lowerablePropertyExpansionLimits(overrides = {}) {
+  assertClosedObject(overrides, [], Object.keys(PROPERTY_EXPANSION_LIMITS), 'propertyExpansionLimits');
+  const result = {};
+  for (const [name, range] of Object.entries(PROPERTY_EXPANSION_LIMITS)) {
+    const selected = Object.hasOwn(overrides, name) ? overrides[name] : range.default;
+    if (!Number.isSafeInteger(selected) || selected <= 0 || selected > range.hard) {
+      throw new TypeError(`${name} exceeds its hard ceiling`);
+    }
+    result[name] = selected;
+  }
+  return result;
+}
+
 export function buildCanonicalRequest(options = {}) {
   const limits = lowerableLimits(options.limits);
   const protocolVersion = options.protocolVersion ?? '1';
   if (!['1', '2'].includes(protocolVersion)) throw new TypeError('protocolVersion must be 1 or 2');
-  return {
+  const readerSchemaVersion = options.readerSchemaVersion ?? READER_SCHEMA_VERSION_V1;
+  if (![READER_SCHEMA_VERSION_V1, READER_SCHEMA_VERSION_V2].includes(readerSchemaVersion)) {
+    throw new TypeError('readerSchemaVersion is unsupported');
+  }
+  const request = {
     schemaVersion: '1',
     protocolVersion,
-    readerSchemaVersion: READER_SCHEMA_VERSION,
+    readerSchemaVersion,
     format: 'rvt',
     documentKind: 'revit-project',
     activeScenePolicy: 'declared-active-scene-only',
@@ -268,6 +293,17 @@ export function buildCanonicalRequest(options = {}) {
     canonicalGlb: 'model-reference-reader-glb/v1',
     conversionSettings: options.conversionSettings ?? {},
     limits,
+  };
+  if (readerSchemaVersion === READER_SCHEMA_VERSION_V1) return request;
+  return {
+    ...request,
+    schemaVersion: '2',
+    metadata: {
+      ...request.metadata,
+      propertyValues: ['source-storage', 'provider-display'],
+      providerDisplayIdentity: 'excluded',
+    },
+    propertyExpansionLimits: lowerablePropertyExpansionLimits(options.propertyExpansionLimits),
   };
 }
 

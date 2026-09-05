@@ -1,12 +1,14 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
-  canonicalJsonBytes, lowerableLimits, ModelReaderError, parseJsonStrict, sha256,
+  canonicalJsonBytes, lowerableLimits, lowerablePropertyExpansionLimits, ModelReaderError, parseJsonStrict, sha256,
 } from './model-contract.mjs';
 import { signArtifactPreimage } from './model-artifact-auth.mjs';
 
 export const SOURCE_ARTIFACT_DOMAIN = 'AWARE\0model-reference-reader\0source-artifact-set\0v1\0';
 export const PACKAGE_ARTIFACT_DOMAIN = 'AWARE\0model-reference-reader\0package-set\0v1\0';
+export const SOURCE_ARTIFACT_DOMAIN_V2 = 'AWARE\0model-reference-reader\0source-artifact-set\0v2\0';
+export const PACKAGE_ARTIFACT_DOMAIN_V2 = 'AWARE\0model-reference-reader\0package-set\0v2\0';
 
 const SOURCE_ORDER = [
   ['geometry', 'geometry.glb', 'model/gltf-binary'],
@@ -29,11 +31,11 @@ function snapshotError(code, message, details = undefined) {
   throw new ModelReaderError(code, 'package', false, message, details);
 }
 
-function document(bytes, key, limits) {
+function document(bytes, key, limits, expectedSchemaVersion) {
   let parsed;
   try { parsed = parseJsonStrict(bytes, { maxBytes: limits.maxComponentJsonBytes, maxDepth: limits.maxJsonDepth }); }
   catch (error) { snapshotError('reference-snapshot-source-invalid', `${key} source artifact is invalid.`, error); }
-  if (parsed?.schemaVersion !== '1' || !Array.isArray(parsed[key])) {
+  if (parsed?.schemaVersion !== expectedSchemaVersion || !Array.isArray(parsed[key])) {
     snapshotError('reference-snapshot-source-invalid', `${key} source artifact has an invalid closed document.`);
   }
   return parsed;
@@ -54,30 +56,36 @@ function receipts(order, bytesByName, itemsByName) {
   });
 }
 
-function packageConfiguration(limits) {
+function packageConfiguration(limits, v2, propertyExpansionLimits) {
   return {
-    schemaVersion: 'model-reference-package-configuration/v1',
+    schemaVersion: `model-reference-package-configuration/v${v2 ? '2' : '1'}`,
     partitionPolicy: 'single-canonical-glb-v1',
     canonicalOrdering: 'utf8-byte-order-v1',
     tileBoundaryDuplication: 'none',
     maximumTileBytes: limits.maxCanonicalGlbBytes,
     maximumTileTriangles: limits.maxIndices,
     maximumShardBytes: limits.maxComponentJsonBytes,
-    maximumShardRecords: Math.max(limits.maxEntities, limits.maxParameters, limits.maxRelationships),
+    // v2 property rows are bounded by the request's own expansion limits, not by
+    // the entity/parameter/relationship ceilings. Omitting them let a valid
+    // document publish more property records than its SIGNED configuration
+    // claimed, so downstream validation rejected reader-produced output.
+    maximumShardRecords: Math.max(limits.maxEntities, limits.maxParameters, limits.maxRelationships,
+      ...(v2 ? [propertyExpansionLimits.maxExpandedPropertyRows] : [])),
     maximumPackageArtifacts: 6,
     maximumAggregateBytes: limits.maxCanonicalGlbBytes + (limits.maxComponentJsonBytes * 5),
     supportedGlb: { version: '2.0', extensions: [], componentTypes: [5121, 5123, 5125, 5126] },
     schemas: {
-      manifest: 'floless.model-snapshot-package/v1',
-      entities: '1', properties: '1', relationships: '1', index: 'floless.model-snapshot-index/v1',
+      manifest: `floless.model-snapshot-package/v${v2 ? '2' : '1'}`,
+      entities: v2 ? '2' : '1', properties: v2 ? 'aware.model-properties/v2' : '1',
+      relationships: v2 ? '2' : '1', index: `floless.model-snapshot-index/v${v2 ? '2' : '1'}`,
     },
   };
 }
 
-function packagedBytes(result, parsed, sourceArtifactEnvelope, configuration) {
+function packagedBytes(result, parsed, sourceArtifactEnvelope, configuration, v2) {
   const entities = parsed.entities.entities;
   const index = canonicalJsonBytes({
-    schemaVersion: 'floless.model-snapshot-index/v1',
+    schemaVersion: `floless.model-snapshot-index/v${v2 ? '2' : '1'}`,
     entities: entities.map((entity, ordinal) => ({
       id: entity.id, ordinal, tiles: Array.isArray(entity.geometry) && entity.geometry.length > 0 ? ['tile-000000'] : [],
     })),
@@ -97,7 +105,7 @@ function packagedBytes(result, parsed, sourceArtifactEnvelope, configuration) {
     index: entities.length,
   });
   const manifest = canonicalJsonBytes({
-    schemaVersion: 'floless.model-snapshot-package/v1',
+    schemaVersion: `floless.model-snapshot-package/v${v2 ? '2' : '1'}`,
     sourceArtifactEnvelopeSha256: sha256(canonicalJsonBytes(sourceArtifactEnvelope)),
     configurationSha256: sha256(canonicalJsonBytes(configuration)),
     frame: result.cache.manifest.frame,
@@ -149,10 +157,16 @@ async function publishArtifacts(result, directory, sourceBytes, packageBytes) {
 export async function buildAndPublishSnapshot(result, signingKey, artifactDirectory, options = {}) {
   if (!result.cache.receiptSha256) snapshotError('reference-cache-authentication-missing', 'The private cache receipt was not authenticated.');
   const limits = lowerableLimits(options.limits);
+  const readerSchemaVersion = result.cache.manifest.identity?.canonicalRequest?.readerSchemaVersion ?? 'model-reference-reader/v1';
+  const v2 = readerSchemaVersion === 'model-reference-reader/v2';
+  if (!v2 && readerSchemaVersion !== 'model-reference-reader/v1') {
+    snapshotError('reference-snapshot-source-invalid', 'The reader schema version is unsupported.');
+  }
+  const artifactSchemaVersion = v2 ? '2' : '1';
   const parsed = {
-    entities: document(result.cache.artifacts['entities.json'], 'entities', limits),
-    properties: document(result.cache.artifacts['properties.json'], 'properties', limits),
-    relationships: document(result.cache.artifacts['relationships.json'], 'relationships', limits),
+    entities: document(result.cache.artifacts['entities.json'], 'entities', limits, artifactSchemaVersion),
+    properties: document(result.cache.artifacts['properties.json'], 'properties', limits, artifactSchemaVersion),
+    relationships: document(result.cache.artifacts['relationships.json'], 'relationships', limits, artifactSchemaVersion),
   };
   const sourceReceipts = receipts(SOURCE_ORDER, result.cache.artifacts, {
     geometry: 1, entities: sourceItems('entities', parsed), properties: sourceItems('properties', parsed),
@@ -160,7 +174,7 @@ export async function buildAndPublishSnapshot(result, signingKey, artifactDirect
   });
   const identity = result.cache.manifest.identity;
   const sourceArtifactPreimage = {
-    schemaVersion: '1',
+    schemaVersion: artifactSchemaVersion,
     source: {
       sourceSha256: identity.sourceSha256,
       canonicalRequestSha256: result.cache.manifest.canonicalRequestSha256,
@@ -170,10 +184,11 @@ export async function buildAndPublishSnapshot(result, signingKey, artifactDirect
     },
     outputs: sourceReceipts,
   };
-  const sourceArtifactEnvelope = signArtifactPreimage(SOURCE_ARTIFACT_DOMAIN, sourceArtifactPreimage, signingKey);
-  const configuration = packageConfiguration(limits);
+  const sourceArtifactEnvelope = signArtifactPreimage(v2 ? SOURCE_ARTIFACT_DOMAIN_V2 : SOURCE_ARTIFACT_DOMAIN, sourceArtifactPreimage, signingKey);
+  const configuration = packageConfiguration(limits, v2,
+    lowerablePropertyExpansionLimits(result.cache.manifest.identity?.canonicalRequest?.propertyExpansionLimits ?? {}));
   const configurationSha256 = sha256(canonicalJsonBytes(configuration));
-  const packageBytes = packagedBytes(result, parsed, sourceArtifactEnvelope, configuration);
+  const packageBytes = packagedBytes(result, parsed, sourceArtifactEnvelope, configuration, v2);
   const aggregateBytes = Object.values(packageBytes).reduce((sum, bytes) => sum + bytes.length, 0);
   if (aggregateBytes > configuration.maximumAggregateBytes) {
     snapshotError('reference-output-too-large', 'Snapshot package exceeds its aggregate byte limit.');
@@ -184,7 +199,7 @@ export async function buildAndPublishSnapshot(result, signingKey, artifactDirect
     'relationships-000000': parsed.relationships.relationships.length, index: parsed.entities.entities.length,
   });
   const packagePreimage = {
-    schemaVersion: '1',
+    schemaVersion: artifactSchemaVersion,
     source: {
       sourceArtifactPreimageSha256: sourceArtifactEnvelope.preimageSha256,
       sourceArtifactEnvelopeSha256: sha256(canonicalJsonBytes(sourceArtifactEnvelope)),
@@ -195,12 +210,12 @@ export async function buildAndPublishSnapshot(result, signingKey, artifactDirect
       signerFingerprintSha256: identity.signerFingerprintSha256,
     },
     packager: {
-      agent: 'model-reference-reader', version: '0.4.0',
-      bridgeBuildId: 'aware-connection-reader@0.2.0', configurationSha256,
+      agent: 'model-reference-reader', version: v2 ? '0.5.0' : '0.4.0',
+      bridgeBuildId: v2 ? 'aware-connection-reader@0.3.0' : 'aware-connection-reader@0.2.0', configurationSha256,
     },
     outputs: packageReceipts,
   };
-  const packageArtifactEnvelope = signArtifactPreimage(PACKAGE_ARTIFACT_DOMAIN, packagePreimage, signingKey);
+  const packageArtifactEnvelope = signArtifactPreimage(v2 ? PACKAGE_ARTIFACT_DOMAIN_V2 : PACKAGE_ARTIFACT_DOMAIN, packagePreimage, signingKey);
   const descriptors = await publishArtifacts(result, artifactDirectory, result.cache.artifacts, packageBytes);
   return {
     ...descriptors, sourceArtifactPreimage, sourceArtifactEnvelope,

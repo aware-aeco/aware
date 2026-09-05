@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   MODEL_LIMITS,
+  PROPERTY_EXPANSION_LIMITS,
   ModelReaderError,
   buildCanonicalRequest,
   buildProviderFingerprint,
@@ -73,6 +74,27 @@ test('provider fingerprint is the exact seven-field JCS tuple', () => {
     const mutation = { ...fingerprint, [key]: key === 'adapterExecutableSha256' ? 'b'.repeat(64) : `${value}-changed` };
     assert.notEqual(providerFingerprintSha256(mutation), baseline, key);
   }
+});
+
+test('reader v2 binds closed effective expansion limits while v1 canonical bytes remain unchanged', () => {
+  const v1 = buildCanonicalRequest();
+  assert.equal(v1.schemaVersion, '1');
+  assert.equal('propertyExpansionLimits' in v1, false);
+  const v2 = buildCanonicalRequest({
+    readerSchemaVersion: 'model-reference-reader/v2',
+    propertyExpansionLimits: { maxExpandedPropertyRows: 12, maxCanonicalPropertyBytes: 4096 },
+  });
+  assert.equal(v2.schemaVersion, '2');
+  assert.deepEqual(v2.propertyExpansionLimits, { maxExpandedPropertyRows: 12, maxCanonicalPropertyBytes: 4096 });
+  assert.deepEqual(v2.metadata.propertyValues, ['source-storage', 'provider-display']);
+  assert.equal(v2.metadata.providerDisplayIdentity, 'excluded');
+  assert.equal(PROPERTY_EXPANSION_LIMITS.maxExpandedPropertyRows.hard, 2_000_000);
+  assert.equal(PROPERTY_EXPANSION_LIMITS.maxCanonicalPropertyBytes.hard, 32 * 1024 * 1024);
+  assert.throws(() => buildCanonicalRequest({
+    readerSchemaVersion: 'model-reference-reader/v2',
+    propertyExpansionLimits: { maxExpandedPropertyRows: 2_000_001 },
+  }), /hard ceiling/);
+  assert.throws(() => buildCanonicalRequest({ readerSchemaVersion: 'model-reference-reader/v3' }), /unsupported/);
 });
 
 test('managed-cloud provider fingerprint binds execution and exact destination', () => {

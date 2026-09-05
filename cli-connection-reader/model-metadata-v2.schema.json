@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aware-aeco.org/schemas/model-metadata-v2.schema.json",
+  "title": "AWARE explicit Revit metadata v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "document", "types", "levels", "parameterGroups", "parameters", "elements", "relations"],
+  "properties": {
+    "schemaVersion": { "const": "2" },
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": { "const": "revit-project" },
+        "id": { "type": "string", "minLength": 1 }
+      }
+    },
+    "types": { "type": "array" },
+    "levels": { "type": "array" },
+    "parameterGroups": { "type": "array" },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "unit", "valueEncoding", "valueType", "value"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[1-9][0-9]*$" },
+              "name": { "type": "string" },
+              "unit": { "type": ["string", "null"] },
+              "valueEncoding": { "const": "provider-display" },
+              "valueType": { "enum": ["string", "number"] },
+              "value": { "type": ["string", "number"] }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "unit", "valueEncoding", "readable", "storageType", "value"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[1-9][0-9]*$" },
+              "name": { "type": "string" },
+              "unit": { "type": ["string", "null"] },
+              "valueEncoding": { "const": "source-storage" },
+              "readable": { "type": "boolean" },
+              "storageType": { "enum": ["none", "boolean", "integer", "double", "string", "element-id"] },
+              "value": {}
+            }
+          }
+        ]
+      }
+    },
+    "elements": { "type": "array" },
+    "relations": { "type": "array" }
+  }
+}
