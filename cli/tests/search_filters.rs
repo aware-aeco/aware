@@ -422,6 +422,23 @@ fn a_hyphen_prefixed_term_gets_the_end_of_options_delimiter() {
         !search(&[TERM]).contains(&format!("{CATALOG_HINT} --")),
         "the delimiter must not leak onto ordinary terms"
     );
+
+    // The combined case: a term that needs BOTH the delimiter and quoting.
+    // Quotes make it one argv value; `--` stops clap reading that value as an
+    // option. Either alone yields an instruction the user cannot follow, which
+    // is what shipped when the delimiter was computed inside the bare branch
+    // only (Codex, #497).
+    // `--` here is for THIS invocation's own clap, exactly as a user would have
+    // to type it; the term itself is the quoted half.
+    let both = search(&["--", "--send mail"]);
+    assert!(
+        both.contains(&format!("{CATALOG_HINT} -- \"--send mail\"")),
+        "a hyphen-prefixed term that also needs quoting must get both:\n{both}"
+    );
+    assert!(
+        both.contains("quote it for your shell"),
+        "and must still say the quoting is the reader's to do:\n{both}"
+    );
 }
 
 #[test]

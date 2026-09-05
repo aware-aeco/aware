@@ -217,13 +217,19 @@ fn print_scope_note(term: &str) {
     // argv-level end-of-options delimiter, not shell quoting, so it means the
     // same thing everywhere. Without it clap reads `--send` as an option and
     // rejects the suggested command outright.
+    //
+    // It belongs on BOTH branches. Quoting and delimiting solve different halves
+    // of the same line: quotes make the text one argv value, `--` stops clap
+    // reading that value as an option. A term that needs both — `--send mail` —
+    // gets an unfollowable instruction from either alone, which is what happened
+    // when this was computed inside the bare branch only (Codex, #497).
+    let delimiter = if term.starts_with('-') { "-- " } else { "" };
     if text::is_bare_shell_token(term) && text::starts_token_safely(term) {
-        let delimiter = if term.starts_with('-') { "-- " } else { "" };
         println!("  aware agent search {delimiter}{term}");
     } else {
         println!(
-            "  aware agent search {term:?} — quote it for your shell, since it holds\n  \
-             characters a bare argument would split or interpret"
+            "  aware agent search {delimiter}{term:?} — quote it for your shell, since it\n  \
+             holds characters a bare argument would split or interpret"
         );
     }
 }
