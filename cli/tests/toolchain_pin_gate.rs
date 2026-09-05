@@ -348,19 +348,33 @@ fn publish_problem(shell: &str) -> Option<&'static str> {
 }
 
 /// Does this line publish `channel=` with the value the script parsed?
+///
+/// The assignment is matched as a whole word, so the KEY has to be `channel`
+/// and not merely end with it. A substring search finds the `channel=` inside
+/// `toolchain_channel=$channel` and reads the right value out of it, so the
+/// publish looks correct here while GitHub publishes `toolchain_channel` and
+/// leaves `steps.<id>.outputs.channel` — the property the action's expression
+/// actually reads — empty (Codex review, PR #490).
 fn emits_parsed_channel(line: &str) -> bool {
     let emitted = line.split(">>").next().unwrap_or(line);
-    let Some(idx) = emitted.rfind("channel=") else {
-        return false;
-    };
-    let value = emitted[idx + "channel=".len()..].trim();
-    // Exactly the variable, not merely a prefix of one. `$channels` and
-    // `$channel_override` both start with `$channel` and are different variables
-    // — usually unset, so the step publishes an empty value, the action falls
-    // back to its ref's default, and this gate reports success (Codex review,
-    // PR #490). Shell quoting is stripped; the name is not.
-    let value = value.trim_matches(|c| c == '"' || c == '\'');
-    value == "$channel" || value == "${channel}"
+    emitted
+        .split_whitespace()
+        .filter_map(|word| unquote(word).strip_prefix("channel="))
+        .any(|value| {
+            // Exactly the variable, not merely a prefix of one. `$channels` and
+            // `$channel_override` both start with `$channel` and are different
+            // variables — usually unset, so the step publishes an empty value,
+            // the action falls back to its ref's default, and this gate reports
+            // success (Codex review, PR #490). Shell quoting is stripped; the
+            // name is not.
+            let value = unquote(value);
+            value == "$channel" || value == "${channel}"
+        })
+}
+
+/// A shell word with its surrounding quotes removed.
+fn unquote(word: &str) -> &str {
+    word.trim_matches(|c| c == '"' || c == '\'')
 }
 
 /// Is this the target of a `>>` redirection to `$GITHUB_OUTPUT` itself?
@@ -371,7 +385,7 @@ fn redirects_to_github_output(target: &str) -> bool {
     let Some(word) = target.split_whitespace().next() else {
         return false;
     };
-    let word = word.trim_matches(|c| c == '"' || c == '\'');
+    let word = unquote(word);
     word == "$GITHUB_OUTPUT" || word == "${GITHUB_OUTPUT}"
 }
 
@@ -1057,6 +1071,22 @@ fn the_publish_check_requires_the_parsed_channel_not_a_literal() {
         assert!(
             !emits_channel_output(near_miss),
             "a variable that is not `$channel` must be rejected: {near_miss:?}"
+        );
+    }
+
+    // An output key that merely ENDS with `channel` is a different key. The
+    // value published is the parsed one, and the redirection target is right,
+    // but GitHub publishes `toolchain_channel` and the action's
+    // `steps.<id>.outputs.channel` resolves to empty — so it falls back to its
+    // ref's default while a substring search reports success (Codex review,
+    // PR #490).
+    for renamed_key in [
+        "channel=$(sed -n 's/x/y/p' cli/rust-toolchain.toml)\necho \"toolchain_channel=$channel\" >> \"$GITHUB_OUTPUT\"\n",
+        "channel=$(sed -n 's/x/y/p' cli/rust-toolchain.toml)\necho \"rust_channel=${channel}\" >> \"$GITHUB_OUTPUT\"\n",
+    ] {
+        assert!(
+            !emits_channel_output(renamed_key),
+            "an output key that is not `channel` must be rejected: {renamed_key:?}"
         );
     }
 
