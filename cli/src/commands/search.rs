@@ -133,20 +133,28 @@ pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
     }
 
     if results.is_empty() {
-        // "no matches" and "nothing to match against" are different answers, and
-        // only the second tells a user with an empty `~/.aware/agents/` what to
-        // do next. Reporting them identically is how an unpopulated home reads
-        // as a definitive "this capability does not exist".
-        if searched_agents == 0 {
-            println!(
+        // Three distinct answers, not one. "Nothing matched", "there was nothing
+        // to match against", and "the agent you named isn't installed" send the
+        // reader somewhere different, and collapsing them is how an empty result
+        // reads as proof that a capability does not exist.
+        //
+        // `searched_agents == 0` alone does NOT mean an empty home: a `--agent`
+        // that matches nothing skips every discovered agent before the counter,
+        // so the install set has to be consulted separately to tell the two
+        // apart.
+        match (searched_agents, discovered.is_empty(), &args.agent) {
+            (0, false, Some(filter)) => println!(
+                "(no agent named '{filter}' is installed — {} other agent(s) are)",
+                discovered.len()
+            ),
+            (0, _, _) => println!(
                 "(no matches for '{}' — no installed agents to search)",
                 args.term
-            );
-        } else {
-            println!(
+            ),
+            _ => println!(
                 "(no matches for '{}' among {searched_agents} installed agent(s))",
                 args.term
-            );
+            ),
         }
         print_scope_note(&args.term);
         return Ok(());
@@ -194,10 +202,17 @@ pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
 /// complete in a way an empty one does not, so the case that most needs the
 /// caveat is the one that found something — see the module header.
 fn print_scope_note(term: &str) {
+    // A term starting with `-` needs the `--` end-of-options delimiter, not
+    // quoting: `aware agent search` takes `query` as an ordinary positional, so
+    // clap reads a leading hyphen as an option and rejects it before any value
+    // parsing happens. Quotes are consumed by the shell and never reach clap, so
+    // they cannot fix this — the delimiter is what makes the printed command
+    // pasteable. (`aware search -- --send` is itself reachable the same way.)
+    let delimiter = if term.starts_with('-') { "-- " } else { "" };
     println!(
         "Only INSTALLED agents are searched. To search every agent in the registry\n\
          catalog, including ones not installed here:\n  \
-         aware agent search {}",
+         aware agent search {delimiter}{}",
         shell_quote(term)
     );
 }

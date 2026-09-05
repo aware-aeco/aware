@@ -385,6 +385,46 @@ fn an_empty_home_is_distinguished_from_a_genuine_miss() {
 }
 
 #[test]
+fn an_agent_filter_matching_nothing_is_not_reported_as_an_empty_home() {
+    // `--agent` skips every discovered agent before the counter, so
+    // `searched_agents == 0` here even though two agents ARE installed. Keying
+    // the empty-home message off that counter alone told a user with a typo'd
+    // `--agent` that they had no agents at all. (Codex review, PR #497.)
+    let text = search(&[TERM, "--agent", "no-such-agent"]);
+    assert!(
+        text.contains("no agent named 'no-such-agent' is installed"),
+        "a missing filter target must be named as such:\n{text}"
+    );
+    assert!(
+        text.contains("2 other agent(s) are"),
+        "and must say the home is not in fact empty:\n{text}"
+    );
+    assert!(
+        !text.contains("no installed agents to search"),
+        "the empty-home diagnosis is reserved for an actually empty home:\n{text}"
+    );
+}
+
+#[test]
+fn a_hyphen_prefixed_term_gets_the_end_of_options_delimiter() {
+    // `aware agent search` takes `query` as an ordinary positional, so clap
+    // rejects a leading hyphen as an unknown option. Quoting cannot fix that —
+    // the shell strips quotes before clap ever sees the argv — so the printed
+    // command needs `--`. Without it the hint advertises a command that errors
+    // out. (Codex review, PR #497.)
+    let text = search(&["--", "--send"]);
+    assert!(
+        text.contains(&format!("{CATALOG_HINT} -- --send")),
+        "a hyphen-prefixed term needs the end-of-options delimiter:\n{text}"
+    );
+    // A normal term must NOT pick up the delimiter.
+    assert!(
+        !search(&[TERM]).contains(&format!("{CATALOG_HINT} --")),
+        "the delimiter must not leak onto ordinary terms"
+    );
+}
+
+#[test]
 fn the_scope_count_follows_the_agent_filter_rather_than_the_install_set() {
     // Counted after `--agent`, so a narrowed search cannot imply it swept
     // everything installed. Two agents exist; one was consulted.
