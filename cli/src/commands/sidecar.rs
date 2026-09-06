@@ -841,12 +841,20 @@ mod tests {
     }
 
     // Not covered here, deliberately: `extract_zip` joins each entry name onto
-    // `dest_dir` without rejecting one that escapes it, so an archive entry named
-    // `../evil` is written outside `~/.aware/bridges` and the call still returns
-    // `Ok`. The `zip` crate's `enclosed_name()` exists for exactly this. No test
-    // below asserts that traversal is safe — the gap is unguarded in the code, so
-    // pinning current behaviour would pin the defect. Closing it is a behaviour
-    // change and belongs in its own PR, with the traversal test that proves it.
+    // `dest_dir` without rejecting one that escapes it, and still returns `Ok`.
+    //
+    // The shape matters, because the obvious one does NOT reproduce: a
+    // single-entry archive of `../evil` has `../` detected as its shared prefix
+    // and stripped, so the file lands safely inside. What escapes is an entry
+    // whose prefix is not shared (`[("a.dll", ..), ("../evil", ..)]`), a
+    // doubly-dotted name (`../../evil` strips once and still escapes), or an
+    // absolute name — `dest_dir.join("/etc/passwd")` discards `dest_dir`
+    // entirely on unix.
+    //
+    // The `zip` crate's `enclosed_name()` exists for exactly this. No test below
+    // asserts traversal is safe — the gap is unguarded in the code, so pinning
+    // current behaviour would pin the defect. Closing it is a behaviour change
+    // and belongs in its own PR, with the traversal test that proves it.
 
     #[test]
     fn a_nested_bridge_layout_still_resolves() {
@@ -887,7 +895,13 @@ mod tests {
     fn lookup_unknown_bridge_errors() {
         let err = lookup_bridge("autocad").unwrap_err();
         assert!(err.to_string().contains("autocad"));
+        // Both ends of the catalogue: `tekla` is BRIDGES[0], so asserting it
+        // alone cannot tell a full list from a truncated one.
         assert!(err.to_string().contains("tekla"));
+        assert!(
+            err.to_string().contains("connection-reader"),
+            "the error must name every installable bridge, not just the first: {err}"
+        );
     }
 
     #[test]

@@ -163,11 +163,7 @@ fn list_json_reports_a_path_only_copy_as_legacy_and_never_offers_to_repair_it() 
         tekla["status"], "legacy",
         "a copy resolvable only through PATH is legacy, not current and not missing"
     );
-    assert_eq!(
-        tekla["installed-version"],
-        Value::Null,
-        "an unmanaged copy has no marker, so the CLI must not claim a version for it"
-    );
+    assert_eq!(tekla["installed-version"], Value::Null);
     assert_eq!(tekla["repair-eligible"], false);
 }
 
@@ -198,25 +194,53 @@ fn list_names_every_catalogue_state_in_the_form_a_user_types() {
     let stdout = String::from_utf8_lossy(&output.stdout);
 
     assert!(
-        stdout.contains(&format!("{}", home.path().join("bridges").display())),
+        stdout.contains(&format!(
+            "install dir: {}",
+            home.path().join("bridges").display()
+        )),
         "the header names the install dir, which is off PATH and otherwise unguessable:\n{stdout}"
     );
+
+    // Per line, not per buffer: `contains` over the whole output cannot tell a
+    // hint attached to the right state from one attached to the wrong bridge.
+    let line = |id: &str| -> &str {
+        stdout
+            .lines()
+            .find(|l| l.contains(&format!(" {id} ")) || l.trim_end().ends_with(&format!(" {id}")))
+            .unwrap_or_else(|| panic!("no line for {id}:\n{stdout}"))
+    };
+
     assert!(
-        stdout.contains("\u{2713} tekla"),
-        "a current bridge gets a clean check:\n{stdout}"
+        line("tekla").contains('\u{2713}'),
+        "current: {}",
+        line("tekla")
     );
     assert!(
-        stdout.contains("\u{21bb} rhino") && stdout.contains("aware sidecar install rhino"),
-        "a stale bridge is flagged and told how to refresh:\n{stdout}"
+        !line("tekla").contains("aware sidecar install"),
+        "a current bridge must not be told to reinstall: {}",
+        line("tekla")
     );
     assert!(
-        stdout.contains("\u{26a0} sketchup") && stdout.contains("legacy/on PATH"),
-        "a PATH-only bridge is flagged for migration, not reported as installed:\n{stdout}"
+        line("rhino").contains('\u{21bb}') && line("rhino").contains("aware sidecar install rhino"),
+        "stale: {}",
+        line("rhino")
     );
     assert!(
-        stdout.contains("\u{2717} revit") && stdout.contains("aware sidecar install revit"),
-        "a missing bridge names the command that installs it:\n{stdout}"
+        line("sketchup").contains('\u{26a0}') && line("sketchup").contains("legacy"),
+        "PATH-only, flagged for migration rather than reported installed: {}",
+        line("sketchup")
     );
+    assert!(
+        line("revit").contains('\u{2717}') && line("revit").contains("aware sidecar install revit"),
+        "missing: {}",
+        line("revit")
+    );
+
+    // Every catalogue entry is listed. Without this a bridge could drop out of
+    // the human listing entirely and only the `--json` count would notice.
+    for id in ["tekla", "rhino", "sketchup", "revit", "connection-reader"] {
+        let _ = line(id);
+    }
 }
 
 #[test]
@@ -274,20 +298,43 @@ fn uninstall_removes_the_managed_binary_and_its_version_marker() {
 }
 
 #[test]
-fn uninstall_refuses_to_touch_a_legacy_copy_that_only_exists_on_path() {
+fn uninstall_removes_the_managed_copy_and_never_the_one_on_path() {
     // `uninstall` is dir-only on purpose: reaching out to PATH would delete a
     // binary AWARE never installed and does not manage.
+    //
+    // Both directions in one environment, because either alone is satisfiable
+    // without running the lookup at all. The first invocation proves the managed
+    // copy is found and removed while the identically-named PATH copy is left
+    // alone; the second proves that with nothing left to manage the command
+    // refuses rather than falling through to PATH. An `uninstall` stubbed to fail
+    // before consulting the dir passes the second and fails the first.
     let home = tempfile::tempdir().unwrap();
     let on_path = tempfile::tempdir().unwrap();
     let legacy = on_path.path().join(legacy_name("aware-tekla"));
     std::fs::write(&legacy, b"fake").unwrap();
+    let managed = plant_managed(home.path(), "aware-tekla", env!("CARGO_PKG_VERSION"));
 
-    // A different bridge IS managed here, so the command has to reach a working
-    // managed-dir lookup and come back empty for *tekla* specifically. Without
-    // it, an uninstall that bailed out before consulting the dir at all would
-    // satisfy every assertion below.
-    let other = plant_managed(home.path(), "aware-rhino", env!("CARGO_PKG_VERSION"));
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .env("PATH", on_path.path())
+        .args(["sidecar", "uninstall", "tekla"])
+        .assert()
+        .success()
+        .stdout(predicates::str::contains(format!("{}", managed.display())));
 
+    assert!(
+        !managed.exists(),
+        "the managed copy is what uninstall removes"
+    );
+    assert!(
+        legacy.exists(),
+        "the PATH copy shares the bridge id and must still be untouched"
+    );
+
+    // Nothing managed now. The PATH copy is still there and still must not be
+    // reached — this is the arm that regresses if `find_bridge_in_dir` is ever
+    // swapped for the PATH-reaching `find_bridge`.
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", home.path())
@@ -300,10 +347,6 @@ fn uninstall_refuses_to_touch_a_legacy_copy_that_only_exists_on_path() {
     assert!(
         legacy.exists(),
         "the on-PATH copy must survive an uninstall that found nothing it manages"
-    );
-    assert!(
-        other.exists(),
-        "a failed uninstall must not touch a different bridge it does manage"
     );
 }
 
