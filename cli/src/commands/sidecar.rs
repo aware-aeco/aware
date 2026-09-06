@@ -637,6 +637,249 @@ fn extract_zip(bytes: &[u8], dest_dir: &std::path::Path, _binary: &str) -> Resul
 #[cfg(test)]
 mod tests {
     use super::*;
+    /// Build an in-memory zip from `(entry-name, contents)` pairs. A name ending
+    /// in `/` is written as a directory entry, which is what `extract_zip` has to
+    /// skip.
+    fn zip_bytes(entries: &[(&str, &[u8])]) -> Vec<u8> {
+        use zip::write::SimpleFileOptions;
+        let mut cursor = std::io::Cursor::new(Vec::new());
+        {
+            let mut writer = zip::ZipWriter::new(&mut cursor);
+            let options = SimpleFileOptions::default();
+            for (name, body) in entries {
+                if let Some(dir) = name.strip_suffix('/') {
+                    writer.add_directory(dir, options).unwrap();
+                } else {
+                    writer.start_file(*name, options).unwrap();
+                    writer.write_all(body).unwrap();
+                }
+            }
+            writer.finish().unwrap();
+        }
+        cursor.into_inner()
+    }
+
+    /// Every path under `root`, `/`-joined relative to it and sorted, with
+    /// directories carried as a trailing-slash entry.
+    ///
+    /// Listing directories is what makes "extraction wrote nothing" falsifiable:
+    /// a files-only walk cannot see a stray tree left under the install dir, so
+    /// an extractor that created directories and no files would satisfy an
+    /// `is_empty()` assertion while still littering `~/.aware/bridges`.
+    fn tree(root: &std::path::Path) -> Vec<String> {
+        fn walk(dir: &std::path::Path, prefix: &str, out: &mut Vec<String>) {
+            let mut entries: Vec<_> = std::fs::read_dir(dir)
+                .unwrap()
+                .map(|e| e.unwrap().path())
+                .collect();
+            entries.sort();
+            for path in entries {
+                let name = path.file_name().unwrap().to_string_lossy().to_string();
+                let joined = if prefix.is_empty() {
+                    name
+                } else {
+                    format!("{prefix}/{name}")
+                };
+                if path.is_dir() {
+                    out.push(format!("{joined}/"));
+                    walk(&path, &joined, out);
+                } else {
+                    out.push(joined);
+                }
+            }
+        }
+        let mut out = Vec::new();
+        walk(root, "", &mut out);
+        out.sort();
+        out
+    }
+
+    #[test]
+    fn a_shared_leading_directory_is_stripped_and_nesting_below_it_is_kept() {
+        // An archive wrapped in one directory: the wrapper must not survive, or
+        // the exe lands at `<dir>/publish/aware-tekla.exe`, where neither probe
+        // in `find_bridge_in_dir` looks for it.
+        let tmp = tempfile::tempdir().unwrap();
+        let bytes = zip_bytes(&[
+            ("publish/", b""),
+            ("publish/aware-tekla.exe", b"MZ-exe"),
+            ("publish/Aware.Tekla.dll", b"dll"),
+            ("publish/runtimes/win-x64/native/libx.dll", b"native"),
+        ]);
+
+        extract_zip(&bytes, tmp.path(), "aware-tekla").unwrap();
+
+        assert_eq!(
+            tree(tmp.path()),
+            vec![
+                "Aware.Tekla.dll".to_string(),
+                "aware-tekla.exe".to_string(),
+                "runtimes/".to_string(),
+                "runtimes/win-x64/".to_string(),
+                "runtimes/win-x64/native/".to_string(),
+                "runtimes/win-x64/native/libx.dll".to_string(),
+            ]
+        );
+        assert_eq!(
+            std::fs::read(tmp.path().join("aware-tekla.exe")).unwrap(),
+            b"MZ-exe",
+            "entry bodies are written verbatim, not truncated"
+        );
+    }
+
+    #[test]
+    fn a_leading_directory_is_stripped_only_when_every_entry_shares_it() {
+        let tmp = tempfile::tempdir().unwrap();
+        // Entry 0 has a leading directory, a later one has a different one — so
+        // stripping `a/` would hoist one entry to the install-dir root and leave
+        // the other nested, an layout matching neither input nor intent.
+        let bytes = zip_bytes(&[("a/aware-tekla.exe", b"exe"), ("b/other.dll", b"dll")]);
+
+        extract_zip(&bytes, tmp.path(), "aware-tekla").unwrap();
+
+        assert_eq!(
+            tree(tmp.path()),
+            vec![
+                "a/".to_string(),
+                "a/aware-tekla.exe".to_string(),
+                "b/".to_string(),
+                "b/other.dll".to_string(),
+            ]
+        );
+    }
+
+    #[test]
+    fn a_shared_prefix_must_lead_an_entry_rather_than_merely_appear_in_it() {
+        // `vendor/publish/b.dll` *contains* `publish/` but is not under it.
+        // Matching anywhere in the name rather than at the front would treat the
+        // prefix as shared and strip the first entry down to `a.dll`.
+        let tmp = tempfile::tempdir().unwrap();
+        let bytes = zip_bytes(&[("publish/a.dll", b"a"), ("vendor/publish/b.dll", b"b")]);
+
+        extract_zip(&bytes, tmp.path(), "aware-tekla").unwrap();
+
+        assert_eq!(
+            tree(tmp.path()),
+            vec![
+                "publish/".to_string(),
+                "publish/a.dll".to_string(),
+                "vendor/".to_string(),
+                "vendor/publish/".to_string(),
+                "vendor/publish/b.dll".to_string(),
+            ]
+        );
+    }
+
+    #[test]
+    fn a_flat_archive_keeps_every_entry_where_it_was() {
+        // Entry 0 has no `/` at all, so there is no candidate prefix and the
+        // sibling directory below must survive untouched. This is the shape every
+        // bridge asset actually ships in: `release.yml` builds each zip with
+        // `Compress-Archive -Path "$stage/*"`, which has no wrapper directory.
+        let tmp = tempfile::tempdir().unwrap();
+        let bytes = zip_bytes(&[("aware-tekla.exe", b"exe"), ("assets/ruby.rb", b"rb")]);
+
+        extract_zip(&bytes, tmp.path(), "aware-tekla").unwrap();
+
+        assert_eq!(
+            tree(tmp.path()),
+            vec![
+                "assets/".to_string(),
+                "assets/ruby.rb".to_string(),
+                "aware-tekla.exe".to_string(),
+            ]
+        );
+    }
+
+    #[test]
+    fn directory_entries_never_become_files() {
+        // `publish/` strips to the empty string, so writing it would mean
+        // `File::create` on the install dir itself — an `EISDIR` that aborts the
+        // install. `publish/nested/` would leave a zero-byte file where the next
+        // entry needs a directory.
+        let tmp = tempfile::tempdir().unwrap();
+        let bytes = zip_bytes(&[
+            ("publish/", b""),
+            ("publish/nested/", b""),
+            ("publish/nested/aware-revit.exe", b"exe"),
+        ]);
+
+        extract_zip(&bytes, tmp.path(), "aware-revit").unwrap();
+
+        assert_eq!(
+            tree(tmp.path()),
+            vec!["nested/".to_string(), "nested/aware-revit.exe".to_string(),]
+        );
+    }
+
+    #[test]
+    fn an_archive_that_cannot_be_opened_is_a_typed_error_and_writes_nothing() {
+        // A 404 HTML body saved as a .zip is the shape a broken release URL
+        // produces. `ZipArchive::new` rejects it before the write loop starts,
+        // which is the only failure `extract_zip` is atomic across — a failure
+        // part-way through the loop leaves the entries already written on disk.
+        let tmp = tempfile::tempdir().unwrap();
+        let err =
+            extract_zip(b"<html>404 Not Found</html>", tmp.path(), "aware-tekla").unwrap_err();
+        assert!(
+            matches!(err, AwareError::Internal(ref m) if m.contains("open zip")),
+            "unexpected error: {err:?}"
+        );
+        assert!(
+            tree(tmp.path()).is_empty(),
+            "an archive rejected at open writes no entries and creates no directories"
+        );
+    }
+
+    #[test]
+    fn an_empty_archive_extracts_to_nothing() {
+        // Prefix detection probes entry 0; an archive with no entries must leave
+        // that a tolerated `Err` rather than a panic.
+        let tmp = tempfile::tempdir().unwrap();
+        extract_zip(&zip_bytes(&[]), tmp.path(), "aware-tekla").unwrap();
+        assert!(tree(tmp.path()).is_empty());
+    }
+
+    // Not covered here, deliberately: `extract_zip` joins each entry name onto
+    // `dest_dir` without rejecting one that escapes it, and still returns `Ok`.
+    //
+    // The shape matters, because the obvious one does NOT reproduce: a
+    // single-entry archive of `../evil` has `../` detected as its shared prefix
+    // and stripped, so the file lands safely inside. What escapes is an entry
+    // whose prefix is not shared (`[("a.dll", ..), ("../evil", ..)]`), a
+    // doubly-dotted name (`../../evil` strips once and still escapes), or an
+    // absolute name — `dest_dir.join("/etc/passwd")` discards `dest_dir`
+    // entirely on unix.
+    //
+    // The `zip` crate's `enclosed_name()` exists for exactly this. No test below
+    // asserts traversal is safe — the gap is unguarded in the code, so pinning
+    // current behaviour would pin the defect. Closing it is a behaviour change
+    // and belongs in its own PR, with the traversal test that proves it.
+
+    #[test]
+    fn a_nested_bridge_layout_still_resolves() {
+        // `find_bridge_in_dir` has a second probe at `<dir>/<binary>/<binary>.exe`.
+        // No release zip lands there today — every bridge asset is flat, and
+        // `extract_zip` would strip a wrapper named after the binary anyway — but
+        // the probe is live, so a copy left nested by hand or by an older install
+        // resolves rather than reading as missing.
+        let tmp = tempfile::tempdir().unwrap();
+        let nested = tmp.path().join("aware-tekla");
+        std::fs::create_dir_all(&nested).unwrap();
+        std::fs::write(nested.join("aware-tekla.exe"), b"fake").unwrap();
+
+        let bridge = lookup_bridge("tekla").unwrap();
+        assert_eq!(
+            find_bridge_in_dir(bridge, tmp.path()),
+            Some(nested.join("aware-tekla.exe"))
+        );
+
+        // A flat copy is preferred when both exist, so a stale nested tree cannot
+        // shadow the binary the last install wrote.
+        let flat = tmp.path().join("aware-tekla.exe");
+        std::fs::write(&flat, b"fake").unwrap();
+        assert_eq!(find_bridge_in_dir(bridge, tmp.path()), Some(flat));
+    }
 
     #[test]
     fn lookup_known_bridges() {
@@ -652,7 +895,13 @@ mod tests {
     fn lookup_unknown_bridge_errors() {
         let err = lookup_bridge("autocad").unwrap_err();
         assert!(err.to_string().contains("autocad"));
+        // Both ends of the catalogue: `tekla` is BRIDGES[0], so asserting it
+        // alone cannot tell a full list from a truncated one.
         assert!(err.to_string().contains("tekla"));
+        assert!(
+            err.to_string().contains("connection-reader"),
+            "the error must name every installable bridge, not just the first: {err}"
+        );
     }
 
     #[test]
@@ -670,13 +919,6 @@ mod tests {
         // `aware-` prefixed but not in BRIDGES — the #276 dead-end case.
         assert_eq!(bridge_id_for_binary("aware-ifc-inspector"), None);
         assert_eq!(bridge_id_for_binary("web-ifc"), None);
-    }
-
-    #[test]
-    fn find_bridge_returns_none_when_missing() {
-        let tmp = tempfile::tempdir().unwrap();
-        let result = find_bridge_by_id("tekla", tmp.path());
-        assert!(result.is_none());
     }
 
     #[test]
