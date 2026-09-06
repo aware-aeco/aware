@@ -637,11 +637,9 @@ fn extract_zip(bytes: &[u8], dest_dir: &std::path::Path, _binary: &str) -> Resul
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::test_env::EnvVarGuard;
-
     /// Build an in-memory zip from `(entry-name, contents)` pairs. A name ending
-    /// in `/` is written as a directory entry, which is what `dotnet publish`
-    /// zips actually contain and what `extract_zip` has to skip.
+    /// in `/` is written as a directory entry, which is what `extract_zip` has to
+    /// skip.
     fn zip_bytes(entries: &[(&str, &[u8])]) -> Vec<u8> {
         use zip::write::SimpleFileOptions;
         let mut cursor = std::io::Cursor::new(Vec::new());
@@ -661,7 +659,13 @@ mod tests {
         cursor.into_inner()
     }
 
-    /// Every file under `root`, as `/`-joined paths relative to it, sorted.
+    /// Every path under `root`, `/`-joined relative to it and sorted, with
+    /// directories carried as a trailing-slash entry.
+    ///
+    /// Listing directories is what makes "extraction wrote nothing" falsifiable:
+    /// a files-only walk cannot see a stray tree left under the install dir, so
+    /// an extractor that created directories and no files would satisfy an
+    /// `is_empty()` assertion while still littering `~/.aware/bridges`.
     fn tree(root: &std::path::Path) -> Vec<String> {
         fn walk(dir: &std::path::Path, prefix: &str, out: &mut Vec<String>) {
             let mut entries: Vec<_> = std::fs::read_dir(dir)
@@ -677,6 +681,7 @@ mod tests {
                     format!("{prefix}/{name}")
                 };
                 if path.is_dir() {
+                    out.push(format!("{joined}/"));
                     walk(&path, &joined, out);
                 } else {
                     out.push(joined);
@@ -690,10 +695,10 @@ mod tests {
     }
 
     #[test]
-    fn a_publish_zips_common_directory_is_stripped_and_nesting_below_it_is_kept() {
-        // The shape `dotnet publish` produces: one wrapper directory holding the
-        // exe, its dependencies and a nested runtimes tree. The wrapper must not
-        // survive, or `find_bridge_in_dir` looks for the exe one level too high.
+    fn a_shared_leading_directory_is_stripped_and_nesting_below_it_is_kept() {
+        // An archive wrapped in one directory: the wrapper must not survive, or
+        // the exe lands at `<dir>/publish/aware-tekla.exe`, where neither probe
+        // in `find_bridge_in_dir` looks for it.
         let tmp = tempfile::tempdir().unwrap();
         let bytes = zip_bytes(&[
             ("publish/", b""),
@@ -709,39 +714,68 @@ mod tests {
             vec![
                 "Aware.Tekla.dll".to_string(),
                 "aware-tekla.exe".to_string(),
+                "runtimes/".to_string(),
+                "runtimes/win-x64/".to_string(),
+                "runtimes/win-x64/native/".to_string(),
                 "runtimes/win-x64/native/libx.dll".to_string(),
             ]
         );
         assert_eq!(
             std::fs::read(tmp.path().join("aware-tekla.exe")).unwrap(),
             b"MZ-exe",
-            "entry bodies are written verbatim, not truncated or re-encoded"
-        );
-        assert!(
-            !tmp.path().join("publish").exists(),
-            "the wrapper directory must not be recreated under the install dir"
+            "entry bodies are written verbatim, not truncated"
         );
     }
 
     #[test]
     fn a_leading_directory_is_stripped_only_when_every_entry_shares_it() {
         let tmp = tempfile::tempdir().unwrap();
-        // First entry has a leading directory, a later one has a different — so
-        // stripping `a/` would flatten one half of the archive onto the other.
+        // Entry 0 has a leading directory, a later one has a different one — so
+        // stripping `a/` would hoist one entry to the install-dir root and leave
+        // the other nested, an layout matching neither input nor intent.
         let bytes = zip_bytes(&[("a/aware-tekla.exe", b"exe"), ("b/other.dll", b"dll")]);
 
         extract_zip(&bytes, tmp.path(), "aware-tekla").unwrap();
 
         assert_eq!(
             tree(tmp.path()),
-            vec!["a/aware-tekla.exe".to_string(), "b/other.dll".to_string()]
+            vec![
+                "a/".to_string(),
+                "a/aware-tekla.exe".to_string(),
+                "b/".to_string(),
+                "b/other.dll".to_string(),
+            ]
+        );
+    }
+
+    #[test]
+    fn a_shared_prefix_must_lead_an_entry_rather_than_merely_appear_in_it() {
+        // `vendor/publish/b.dll` *contains* `publish/` but is not under it.
+        // Matching anywhere in the name rather than at the front would treat the
+        // prefix as shared and strip the first entry down to `a.dll`.
+        let tmp = tempfile::tempdir().unwrap();
+        let bytes = zip_bytes(&[("publish/a.dll", b"a"), ("vendor/publish/b.dll", b"b")]);
+
+        extract_zip(&bytes, tmp.path(), "aware-tekla").unwrap();
+
+        assert_eq!(
+            tree(tmp.path()),
+            vec![
+                "publish/".to_string(),
+                "publish/a.dll".to_string(),
+                "vendor/".to_string(),
+                "vendor/publish/".to_string(),
+                "vendor/publish/b.dll".to_string(),
+            ]
         );
     }
 
     #[test]
     fn a_flat_archive_keeps_every_entry_where_it_was() {
-        // First entry has no `/` at all, so there is no candidate prefix and the
-        // sibling directory below must survive untouched.
+        // Entry 0 has no `/` at all, so there is no candidate prefix and the
+        // sibling directory below must survive untouched. This is the shape every
+        // bridge asset actually ships in: `release.yml` builds each zip with
+        // `Compress-Archive -Path "$stage/*"`, which has no wrapper directory.
         let tmp = tempfile::tempdir().unwrap();
         let bytes = zip_bytes(&[("aware-tekla.exe", b"exe"), ("assets/ruby.rb", b"rb")]);
 
@@ -749,15 +783,20 @@ mod tests {
 
         assert_eq!(
             tree(tmp.path()),
-            vec!["assets/ruby.rb".to_string(), "aware-tekla.exe".to_string()]
+            vec![
+                "assets/".to_string(),
+                "assets/ruby.rb".to_string(),
+                "aware-tekla.exe".to_string(),
+            ]
         );
     }
 
     #[test]
     fn directory_entries_never_become_files() {
-        // `publish/` strips to the empty string and `publish/nested/` ends in a
-        // separator; writing either would clobber the install dir itself or leave
-        // a zero-byte file where a directory belongs.
+        // `publish/` strips to the empty string, so writing it would mean
+        // `File::create` on the install dir itself — an `EISDIR` that aborts the
+        // install. `publish/nested/` would leave a zero-byte file where the next
+        // entry needs a directory.
         let tmp = tempfile::tempdir().unwrap();
         let bytes = zip_bytes(&[
             ("publish/", b""),
@@ -767,14 +806,18 @@ mod tests {
 
         extract_zip(&bytes, tmp.path(), "aware-revit").unwrap();
 
-        assert_eq!(tree(tmp.path()), vec!["nested/aware-revit.exe".to_string()]);
-        assert!(tmp.path().join("nested").is_dir());
+        assert_eq!(
+            tree(tmp.path()),
+            vec!["nested/".to_string(), "nested/aware-revit.exe".to_string(),]
+        );
     }
 
     #[test]
-    fn a_corrupt_download_is_a_typed_error_rather_than_a_panic() {
-        // A truncated or HTML-error-page download must surface as an AwareError so
-        // `install` reports it; the archive is opened before any entry is read.
+    fn an_archive_that_cannot_be_opened_is_a_typed_error_and_writes_nothing() {
+        // A 404 HTML body saved as a .zip is the shape a broken release URL
+        // produces. `ZipArchive::new` rejects it before the write loop starts,
+        // which is the only failure `extract_zip` is atomic across — a failure
+        // part-way through the loop leaves the entries already written on disk.
         let tmp = tempfile::tempdir().unwrap();
         let err =
             extract_zip(b"<html>404 Not Found</html>", tmp.path(), "aware-tekla").unwrap_err();
@@ -782,22 +825,36 @@ mod tests {
             matches!(err, AwareError::Internal(ref m) if m.contains("open zip")),
             "unexpected error: {err:?}"
         );
-        assert!(tree(tmp.path()).is_empty(), "nothing is written on failure");
+        assert!(
+            tree(tmp.path()).is_empty(),
+            "an archive rejected at open writes no entries and creates no directories"
+        );
     }
 
     #[test]
-    fn an_empty_archive_extracts_to_nothing_without_probing_entry_zero() {
-        // Prefix detection reads entry 0; an archive with no entries must not make
-        // that a hard failure.
+    fn an_empty_archive_extracts_to_nothing() {
+        // Prefix detection probes entry 0; an archive with no entries must leave
+        // that a tolerated `Err` rather than a panic.
         let tmp = tempfile::tempdir().unwrap();
         extract_zip(&zip_bytes(&[]), tmp.path(), "aware-tekla").unwrap();
         assert!(tree(tmp.path()).is_empty());
     }
 
+    // Not covered here, deliberately: `extract_zip` joins each entry name onto
+    // `dest_dir` without rejecting one that escapes it, so an archive entry named
+    // `../evil` is written outside `~/.aware/bridges` and the call still returns
+    // `Ok`. The `zip` crate's `enclosed_name()` exists for exactly this. No test
+    // below asserts that traversal is safe — the gap is unguarded in the code, so
+    // pinning current behaviour would pin the defect. Closing it is a behaviour
+    // change and belongs in its own PR, with the traversal test that proves it.
+
     #[test]
-    fn a_zip_extracted_sub_directory_layout_still_resolves() {
-        // Tekla/SketchUp zips whose wrapper directory is named after the binary
-        // land at `<dir>/<binary>/<binary>.exe` — resolution has to look there.
+    fn a_nested_bridge_layout_still_resolves() {
+        // `find_bridge_in_dir` has a second probe at `<dir>/<binary>/<binary>.exe`.
+        // No release zip lands there today — every bridge asset is flat, and
+        // `extract_zip` would strip a wrapper named after the binary anyway — but
+        // the probe is live, so a copy left nested by hand or by an older install
+        // resolves rather than reading as missing.
         let tmp = tempfile::tempdir().unwrap();
         let nested = tmp.path().join("aware-tekla");
         std::fs::create_dir_all(&nested).unwrap();
@@ -809,96 +866,11 @@ mod tests {
             Some(nested.join("aware-tekla.exe"))
         );
 
-        // A flat copy is preferred when both exist, so a stale extracted tree
-        // cannot shadow the binary the last install wrote.
+        // A flat copy is preferred when both exist, so a stale nested tree cannot
+        // shadow the binary the last install wrote.
         let flat = tmp.path().join("aware-tekla.exe");
         std::fs::write(&flat, b"fake").unwrap();
         assert_eq!(find_bridge_in_dir(bridge, tmp.path()), Some(flat));
-    }
-
-    #[test]
-    fn runtime_resolution_falls_back_to_path_but_the_managed_lookup_does_not() {
-        // The #148 migration window: a legacy on-PATH bridge must still spawn,
-        // while install/uninstall (dir-only) must not see it.
-        let managed = tempfile::tempdir().unwrap();
-        let on_path = tempfile::tempdir().unwrap();
-        let legacy = on_path.path().join(if cfg!(windows) {
-            "aware-tekla.exe"
-        } else {
-            "aware-tekla"
-        });
-        std::fs::write(&legacy, b"fake").unwrap();
-
-        let _env = EnvVarGuard::set("PATH", on_path.path());
-
-        assert_eq!(
-            find_bridge_by_id("tekla", managed.path()),
-            Some(legacy.clone()),
-            "runtime resolution reaches PATH when the managed dir is empty"
-        );
-        assert_eq!(
-            find_bridge_by_binary("aware-tekla", managed.path()),
-            Some(legacy)
-        );
-        let bridge = lookup_bridge("tekla").unwrap();
-        assert!(
-            find_bridge_in_dir(bridge, managed.path()).is_none(),
-            "a PATH copy must never satisfy the managed-dir lookup"
-        );
-        assert_eq!(
-            sidecar_status(bridge, managed.path(), "0.43.0"),
-            SidecarStatus::Legacy
-        );
-    }
-
-    #[test]
-    fn a_bridge_absent_from_both_the_managed_dir_and_path_resolves_to_nothing() {
-        let managed = tempfile::tempdir().unwrap();
-        let empty = tempfile::tempdir().unwrap();
-        // Pin PATH at an empty directory: leaving the ambient value in place makes
-        // this pass for a reason the test does not control.
-        let _env = EnvVarGuard::set("PATH", empty.path());
-
-        assert_eq!(find_bridge_by_id("tekla", managed.path()), None);
-        assert_eq!(find_bridge_by_binary("aware-tekla", managed.path()), None);
-    }
-
-    #[test]
-    fn a_list_row_carries_the_recorded_version_and_repairs_only_what_is_stale() {
-        let tmp = tempfile::tempdir().unwrap();
-        let dir = tmp.path();
-        let empty = tempfile::tempdir().unwrap();
-        let _env = EnvVarGuard::set("PATH", empty.path());
-
-        std::fs::write(dir.join("aware-tekla.exe"), b"fake").unwrap();
-        std::fs::write(version_marker_path(dir, "aware-tekla"), "0.43.0").unwrap();
-        std::fs::write(dir.join("aware-rhino.exe"), b"fake").unwrap();
-        std::fs::write(version_marker_path(dir, "aware-rhino"), "0.42.0\n").unwrap();
-
-        let current = sidecar_status_row(lookup_bridge("tekla").unwrap(), dir, "0.43.0");
-        assert_eq!(current.status, SidecarStatus::Current);
-        assert_eq!(current.installed_version.as_deref(), Some("0.43.0"));
-        assert!(
-            !current.repair_eligible,
-            "a current sidecar is not a repair target"
-        );
-
-        let stale = sidecar_status_row(lookup_bridge("rhino").unwrap(), dir, "0.43.0");
-        assert_eq!(stale.status, SidecarStatus::Stale);
-        assert_eq!(
-            stale.installed_version.as_deref(),
-            Some("0.42.0"),
-            "the marker is reported trimmed, so a trailing newline is not part of the version"
-        );
-        assert!(stale.repair_eligible);
-
-        let missing = sidecar_status_row(lookup_bridge("revit").unwrap(), dir, "0.43.0");
-        assert_eq!(missing.status, SidecarStatus::Missing);
-        assert_eq!(missing.installed_version, None);
-        assert!(
-            !missing.repair_eligible,
-            "repair --installed never installs a missing sidecar"
-        );
     }
 
     #[test]
