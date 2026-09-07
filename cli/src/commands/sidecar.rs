@@ -821,9 +821,20 @@ mod tests {
         let tmp = tempfile::tempdir().unwrap();
         let err =
             extract_zip(b"<html>404 Not Found</html>", tmp.path(), "aware-tekla").unwrap_err();
+        let AwareError::Internal(ref message) = err else {
+            panic!("unexpected error variant: {err:?}");
+        };
+        // Matching `contains("open zip")` anywhere in the message would accept a
+        // message describing a *different* operation, and would still pass with
+        // the `{e}` cause dropped entirely — leaving a user unable to tell a
+        // corrupt download from a 404 body. Pin the operation to the front of the
+        // message and require the underlying cause to survive after it.
+        let cause = message.strip_prefix("open zip: ").unwrap_or_else(|| {
+            panic!("the message must name the failing operation first: {message}")
+        });
         assert!(
-            matches!(err, AwareError::Internal(ref m) if m.contains("open zip")),
-            "unexpected error: {err:?}"
+            !cause.trim().is_empty(),
+            "the underlying zip error must reach the message, not just the prefix: {message}"
         );
         assert!(
             tree(tmp.path()).is_empty(),
