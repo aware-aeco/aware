@@ -41,13 +41,18 @@ fn doctor_empty_home_succeeds() {
 /// `AWARE_DISABLE_KEYRING` and an emptied `PATH` for the same reasons as
 /// `tests/doctor_json.rs`: without them the credential status depends on whether the
 /// machine has a reachable secret service, and the bridge status on whether it has a
-/// real `aware-*` binary on PATH. `tests/sidecar_cli.rs` empties `PATH` already.
+/// real `aware-*` binary on PATH.
+///
+/// PATH is pointed at an empty directory rather than set to `""`: `split_paths("")`
+/// yields one *empty* entry, so the lookup probes the bare name relative to the
+/// child's working directory instead of probing nothing at all.
 fn doctor_text(home: &std::path::Path) -> String {
+    let nowhere = tempfile::tempdir().unwrap();
     let out = Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", home)
         .env("AWARE_DISABLE_KEYRING", "1")
-        .env("PATH", "")
+        .env("PATH", nowhere.path())
         .arg("doctor")
         .assert()
         .success()

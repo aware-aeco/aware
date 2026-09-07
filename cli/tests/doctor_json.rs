@@ -18,13 +18,18 @@ use assert_cmd::Command;
 /// and a status that varies by host pins nothing. `PATH` is emptied for the same
 /// reason on the bridge side — `find_bridge_by_id` falls back to a `which`-style
 /// lookup, so a real `aware-tekla` on the tester's PATH would otherwise decide the
-/// answer. Both mirror what `tests/sidecar_cli.rs` already does.
+/// answer.
+///
+/// PATH is pointed at an empty directory rather than set to `""`: `split_paths("")`
+/// yields one *empty* entry, so the lookup probes the bare name relative to the
+/// child's working directory instead of probing nothing at all.
 fn doctor_json(home: &std::path::Path) -> serde_json::Value {
+    let nowhere = tempfile::tempdir().unwrap();
     let out = Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", home)
         .env("AWARE_DISABLE_KEYRING", "1")
-        .env("PATH", "")
+        .env("PATH", nowhere.path())
         .args(["doctor", "--json"])
         .assert()
         .success()
@@ -278,6 +283,62 @@ fn a_host_bridge_is_reported_installed_only_when_its_binary_is_on_disk() {
         assert_eq!(b["installed"], false, "{id}");
         assert_eq!(b["path"], serde_json::Value::Null, "{id}");
     }
+}
+
+#[test]
+fn a_bridge_reachable_only_through_path_is_still_reported_installed() {
+    // The #148 migration window, at the boundary that depends on it: until a user
+    // re-installs into `~/.aware/bridges`, a legacy copy on PATH is the only one
+    // there is, and the runtime spawns it through this same `find_bridge_by_id`.
+    // Reporting it missing would tell an operator to reinstall a bridge that works.
+    //
+    // Driven through a spawned process on purpose. The lookup reads `PATH`, and
+    // overriding that in-process would race every other test in the unit binary
+    // that resolves a command by bare name; a child's environment races nothing.
+    let home = tempfile::tempdir().unwrap();
+    let on_path = tempfile::tempdir().unwrap();
+    let legacy = on_path.path().join(if cfg!(windows) {
+        "aware-tekla.exe"
+    } else {
+        "aware-tekla"
+    });
+    std::fs::write(&legacy, "").unwrap();
+
+    let out = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .env("AWARE_DISABLE_KEYRING", "1")
+        .env("PATH", on_path.path())
+        .args(["doctor", "--json"])
+        .assert()
+        .success();
+    let report: serde_json::Value =
+        serde_json::from_slice(&out.get_output().stdout).expect("doctor --json emits JSON");
+
+    let tekla = report["host_bridges"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|b| b["id"] == "tekla")
+        .expect("tekla missing from host_bridges")
+        .clone();
+
+    assert_eq!(
+        tekla["installed"], true,
+        "nothing is in the managed dir, so this can only be the PATH fallback"
+    );
+    assert_eq!(tekla["path"], legacy.display().to_string());
+
+    // And a bridge with no copy anywhere still reports missing, so the assertion
+    // above is not just "doctor says installed for everything".
+    let rhino = report["host_bridges"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|b| b["id"] == "rhino")
+        .expect("rhino missing from host_bridges")
+        .clone();
+    assert_eq!(rhino["installed"], false);
 }
 
 #[test]
