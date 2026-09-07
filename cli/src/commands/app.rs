@@ -1222,12 +1222,20 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
 
     let app_id = crate::install::install_app_from_path(&path, &ctx.paths)?;
 
-    // Locate the installed .flo / .app file
+    // The installed manifest is the one selected above, under its own name —
+    // NOT whatever re-running the selector on the installed directory returns.
+    // `install_app_from_path` copies the folder to `apps/<app-id>`, so the
+    // directory's basename changes, and the selector prefers `<dir-name>.flo`:
+    // a folder `bundle/` holding `bundle.flo` (`app: alpha`) beside an
+    // `alpha.flo` is validated and copied as `bundle.flo`, then re-read here as
+    // `alpha.flo` — locking and discovering an app nobody installed (Codex,
+    // #499). The rename is precisely what makes a second lookup a different
+    // question, so there is no second lookup.
     let app_dir = ctx.paths.apps_dir().join(&app_id);
-    std::fs::read_dir(&app_dir)?;
-    let manifest_path = crate::manifest::loader::find_app_manifest(&app_dir).ok_or_else(|| {
+    let manifest_name = src_manifest.file_name().ok_or_else(|| {
         AwareError::Internal(format!("installed app {app_id} missing .flo/.app file"))
     })?;
+    let manifest_path = app_dir.join(manifest_name);
 
     let app = crate::manifest::loader::load_app(&manifest_path)?;
 
