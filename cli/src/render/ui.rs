@@ -518,27 +518,7 @@ pub fn ui_render(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     out.insert("html".into(), Value::String(html.clone()));
     out.insert("bytes".into(), Value::from(html.len() as u64));
 
-    if let Some(path) = args
-        .get("output-path")
-        .and_then(|v| v.as_str())
-        .map(str::trim)
-        .filter(|s| !s.is_empty())
-    {
-        // Real run only: a preview (--dry-run / --simulate) returns the HTML and
-        // the would-be path but never touches disk (same contract as html-report).
-        if !dry_run {
-            if let Some(parent) = std::path::Path::new(path).parent()
-                && !parent.as_os_str().is_empty()
-            {
-                std::fs::create_dir_all(parent).map_err(|e| {
-                    AwareError::Internal(format!("ui render: create {}: {e}", parent.display()))
-                })?;
-            }
-            std::fs::write(path, html.as_bytes())
-                .map_err(|e| AwareError::Internal(format!("ui render: write {path}: {e}")))?;
-        }
-        out.insert("output-path".into(), Value::String(path.to_string()));
-    }
+    super::write_artifact(&mut out, args, dry_run, html.as_bytes(), "ui render")?;
 
     Ok(Value::Object(out))
 }

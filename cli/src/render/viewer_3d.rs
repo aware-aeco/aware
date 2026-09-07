@@ -3844,28 +3844,7 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
     out.insert("unsupported".into(), Value::Array(receipt.unsupported));
     out.insert("warnings".into(), Value::Array(receipt.warnings));
 
-    if let Some(path) = args
-        .get("output-path")
-        .and_then(|v| v.as_str())
-        .map(str::trim)
-        .filter(|s| !s.is_empty())
-    {
-        // Real run only: a preview (--dry-run / --simulate) returns the HTML and the would-be
-        // path but never touches disk (same contract as html-report / ui).
-        if !dry_run {
-            if let Some(parent) = std::path::Path::new(path).parent()
-                && !parent.as_os_str().is_empty()
-            {
-                std::fs::create_dir_all(parent).map_err(|e| {
-                    AwareError::Internal(format!("viewer-3d: create {}: {e}", parent.display()))
-                })?;
-            }
-            std::fs::write(path, html.as_bytes())
-                .map_err(|e| AwareError::Internal(format!("viewer-3d: write {path}: {e}")))?;
-        }
-        out.insert("output-path".into(), Value::String(path.to_string()));
-        out.insert("path".into(), Value::String(path.to_string()));
-    }
+    super::write_artifact(&mut out, args, dry_run, html.as_bytes(), "viewer-3d")?;
 
     Ok(Value::Object(out))
 }
