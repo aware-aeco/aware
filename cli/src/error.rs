@@ -12,6 +12,8 @@ pub struct StructuredAgentError {
     pub retryable: bool,
     pub message: String,
     pub diagnostic_id: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub provider_code: Option<String>,
 }
 
 #[derive(Debug, Error)]
@@ -34,6 +36,7 @@ pub enum AwareError {
         retryable: bool,
         message: String,
         diagnostic_id: String,
+        provider_code: Option<String>,
     },
 
     #[error("permission denied: {0}")]
@@ -71,12 +74,14 @@ impl AwareError {
                 retryable,
                 message,
                 diagnostic_id,
+                provider_code,
             } => Some(StructuredAgentError {
                 code: code.clone(),
                 phase: phase.clone(),
                 retryable: *retryable,
                 message: message.clone(),
                 diagnostic_id: diagnostic_id.clone(),
+                provider_code: provider_code.clone(),
             }),
             _ => None,
         }

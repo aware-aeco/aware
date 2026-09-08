@@ -7,8 +7,8 @@ import {
   canonicalJsonBytes, lowerableLimits, ModelReaderError, parseJsonStrict, providerFingerprintSha256, sha256,
 } from './model-contract.mjs';
 
-function providerError(code, message, retryable = false, details = undefined) {
-  throw new ModelReaderError(code, 'provider', retryable, message, details);
+function providerError(code, message, retryable = false, details = undefined, providerCode = undefined) {
+  throw new ModelReaderError(code, 'provider', retryable, message, details, providerCode);
 }
 
 function samePath(left, right) {
@@ -208,7 +208,12 @@ async function callProvider(hostRun, request, limits) {
   if (request.signal?.aborted) providerError('reference-cancelled', 'The model provider run was cancelled.');
   if (!result || !Number.isSafeInteger(result.exitCode) || !Buffer.isBuffer(result.stdout) || !Buffer.isBuffer(result.stderr)) providerError('reference-provider-host-protocol', 'The managed provider host returned an invalid result.');
   if (result.stdout.length > limits.providerStdoutBytes || result.stderr.length > limits.providerStderrBytes) providerError('reference-provider-output-too-large', 'Provider diagnostics exceeded their byte limit.');
-  if (result.exitCode !== 0) providerError('reference-provider-failed', 'The local model provider failed.', true, { exitCode: result.exitCode, stderr: result.stderr });
+  if (result.exitCode !== 0) {
+    const diagnostic = result.stderr.toString('utf8');
+    const providerCode = /^xeorvt-[a-z0-9-]{1,90}\r?\n?$/.test(diagnostic) ? diagnostic.trim() : undefined;
+    providerError('reference-provider-failed', 'The Revit model service could not complete the import.', true,
+      { exitCode: result.exitCode, stderr: result.stderr }, providerCode);
+  }
   return result.stdout;
 }
 
@@ -258,6 +263,10 @@ export async function describeAndConvert(options) {
   const describeCwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
   const environment = minimalProviderEnvironment(options.environment);
   const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
+  if (expectedProtocolVersion === '2' && (typeof options.conversionAttemptId !== 'string'
+    || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(options.conversionAttemptId))) {
+    providerError('reference-provider-request-invalid', 'The managed Revit conversion attempt identity is invalid.');
+  }
   const authorityStorePath = managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
   const describeRequest = canonicalJsonBytes({ protocolVersion: expectedProtocolVersion, limits });
   const describeBytes = await callProvider(options.hostRun, {
@@ -294,6 +303,7 @@ export async function describeAndConvert(options) {
     protocolVersion: expectedProtocolVersion, sourcePath: staging.path, outputDirectory,
     sourceSha256: staging.sourceSha256, canonicalRequest, limits,
     ...(authorityStorePath ? { authorityStorePath } : {}),
+    ...(expectedProtocolVersion === '2' ? { conversionAttemptId: options.conversionAttemptId } : {}),
   });
   const receiptBytes = await callProvider(options.hostRun, {
     executable: initialExecutable.path, executableSha256: initialExecutable.sha256,

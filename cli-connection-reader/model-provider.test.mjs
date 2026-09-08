@@ -244,16 +244,19 @@ test('managed-cloud conversion passes only an absolute caller-bound authority st
     executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
     privateRoot: path.join(root, 'accepted'), hostRun,
     expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
+    conversionAttemptId: '123e4567-e89b-42d3-a456-426614174000',
   });
   const convert = JSON.parse(calls[1].stdin.toString('utf8'));
   assert.equal(convert.authorityStorePath, path.resolve(authorityStorePath));
   assert.equal(convert.protocolVersion, '2');
+  assert.equal(convert.conversionAttemptId, '123e4567-e89b-42d3-a456-426614174000');
   assert.equal(convert.canonicalRequest.protocolVersion, '2');
   assert.equal(result.canonicalRequest.protocolVersion, '2');
   await assert.rejects(() => describeAndConvert({
     executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
     privateRoot: path.join(root, 'relative'), hostRun,
     expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath: 'relative',
+    conversionAttemptId: '123e4567-e89b-42d3-a456-426614174000',
   }), (error) => error.code === 'reference-provider-protocol');
 });
 

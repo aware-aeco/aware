@@ -280,6 +280,7 @@ async function convertAndCache(args, deps, config, readiness) {
         expectedProtocolVersion,
         expectedDestination: args['expected-provider-destination'],
         authorityStorePath: args['authority-store-path'],
+        conversionAttemptId: args['conversion-attempt-id'],
         readerSchemaVersion,
         propertyExpansionLimits,
       });

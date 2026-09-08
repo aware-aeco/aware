@@ -344,6 +344,7 @@ struct StructuredBridgeError {
     retryable: bool,
     message: String,
     diagnostic_id: String,
+    provider_code: Option<String>,
 }
 
 /// Preserve a bridge's bounded typed error instead of flattening it into an opaque network string.
@@ -358,6 +359,13 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
         || parsed.message.is_empty()
         || parsed.message.chars().count() > 240
         || parsed.diagnostic_id.len() > 64
+        || parsed.provider_code.as_ref().is_some_and(|code| {
+            code.len() > 98
+                || !code.starts_with("xeorvt-")
+                || !code
+                    .chars()
+                    .all(|ch| ch.is_ascii_lowercase() || ch.is_ascii_digit() || ch == '-')
+        })
     {
         return None;
     }
@@ -367,6 +375,7 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
         retryable: parsed.retryable,
         message: parsed.message,
         diagnostic_id: parsed.diagnostic_id,
+        provider_code: parsed.provider_code,
     })
 }
 
@@ -5446,7 +5455,7 @@ mod builtin_invoker_tests {
 
     #[test]
     fn model_reader_structured_errors_keep_their_typed_fields() {
-        let stderr = r#"{"code":"reference-provider-pin-mismatch","phase":"preflight","retryable":false,"message":"The local provider does not match the expected fingerprint.","diagnosticId":"123e4567-e89b-12d3-a456-426614174000"}"#;
+        let stderr = r#"{"code":"reference-provider-pin-mismatch","phase":"preflight","retryable":false,"message":"The local provider does not match the expected fingerprint.","diagnosticId":"123e4567-e89b-12d3-a456-426614174000","providerCode":"xeorvt-auth-unavailable"}"#;
         let error = structured_bridge_error(stderr).expect("closed model-reader envelope");
         match error {
             AwareError::AgentStructured {
@@ -5455,12 +5464,14 @@ mod builtin_invoker_tests {
                 retryable,
                 message,
                 diagnostic_id,
+                provider_code,
             } => {
                 assert_eq!(code, "reference-provider-pin-mismatch");
                 assert_eq!(phase, "preflight");
                 assert!(!retryable);
                 assert!(message.contains("expected fingerprint"));
                 assert_eq!(diagnostic_id, "123e4567-e89b-12d3-a456-426614174000");
+                assert_eq!(provider_code.as_deref(), Some("xeorvt-auth-unavailable"));
             }
             other => panic!("typed envelope was flattened: {other:?}"),
         }

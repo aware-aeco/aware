@@ -1,5 +1,5 @@
 agent: model-reference-reader
-version: 0.5.0
+version: 0.6.0
 display-name: Authenticated RVT Reference Reader
 description: |
   Convert a local Revit project into deterministic, authenticated reference-model artifacts without
@@ -52,6 +52,10 @@ commands:
         type: string
         required: false
         description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+      conversion-attempt-id:
+        type: string
+        required: false
+        description: Installer-owned durable attempt identity required for a managed-cloud v2 conversion.
       reader-schema-version:
         type: string
         required: false
@@ -95,6 +99,10 @@ commands:
         type: string
         required: false
         description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+      conversion-attempt-id:
+        type: string
+        required: false
+        description: Installer-owned durable attempt identity required for a managed-cloud v2 conversion.
       reader-schema-version:
         type: string
         required: false
@@ -148,6 +156,10 @@ commands:
         type: string
         required: false
         description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+      conversion-attempt-id:
+        type: string
+        required: false
+        description: Installer-owned durable attempt identity required for a managed-cloud v2 conversion.
       reader-schema-version:
         type: string
         required: false
@@ -202,6 +214,10 @@ commands:
         type: string
         required: false
         description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+      conversion-attempt-id:
+        type: string
+        required: false
+        description: Installer-owned durable attempt identity required for a managed-cloud v2 conversion.
       reader-schema-version:
         type: string
         required: false

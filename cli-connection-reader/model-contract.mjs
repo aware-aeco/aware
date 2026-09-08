@@ -42,13 +42,14 @@ export const PROPERTY_EXPANSION_LIMITS = Object.freeze({
 });
 
 export class ModelReaderError extends Error {
-  constructor(code, phase, retryable, message, unsafeDetails = undefined) {
+  constructor(code, phase, retryable, message, unsafeDetails = undefined, providerCode = undefined) {
     super(message);
     this.name = 'ModelReaderError';
     this.code = code;
     this.phase = phase;
     this.retryable = retryable;
     this.diagnosticId = randomUUID();
+    if (typeof providerCode === 'string' && /^xeorvt-[a-z0-9-]{1,90}$/.test(providerCode)) this.providerCode = providerCode;
     Object.defineProperty(this, 'unsafeDetails', { value: unsafeDetails, enumerable: false });
   }
 }
@@ -61,6 +62,7 @@ export function safeErrorEnvelope(error) {
       retryable: error.retryable,
       message: boundedMessage(error.message),
       diagnosticId: error.diagnosticId,
+      ...(error.providerCode ? { providerCode: error.providerCode } : {}),
     };
   }
   return {
