@@ -1,6 +1,8 @@
 //! End-to-end tests for `exposes-as-agent`: an app installed as a callable
 //! agent, invoked from another app's `nodes:` block (issue #178).
 
+mod common;
+
 use assert_cmd::Command;
 use predicates::prelude::*;
 
@@ -8,7 +10,9 @@ use predicates::prelude::*;
 fn write_app(src_root: &std::path::Path, name: &str, flo: &str) -> std::path::PathBuf {
     let dir = src_root.join(name);
     std::fs::create_dir_all(&dir).unwrap();
-    std::fs::write(dir.join(format!("{name}.flo")), flo).unwrap();
+    let source = dir.join(format!("{name}.flo"));
+    std::fs::write(&source, flo).unwrap();
+    common::approve_app_source(&source);
     dir
 }
 

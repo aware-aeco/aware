@@ -13,7 +13,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
 use crate::error::AwareError;
@@ -23,7 +23,7 @@ use crate::manifest::loader::{DiscoveredAgent, discover_agents};
 use crate::paths::Paths;
 
 /// The lockfile schema. Serialized as YAML to `<app>.lock`.
-#[derive(Debug, Serialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct LockFile {
     /// SHA-256 of the source app file (UTF-8 bytes).
     #[serde(rename = "source-hash")]
@@ -62,7 +62,7 @@ pub struct LockFile {
     pub engineering: Option<serde_yaml::Value>,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct CompiledNode {
     pub id: String,
 
@@ -101,7 +101,7 @@ pub struct CompiledNode {
     /// `kind` (info / warn / error) so consumers can render by severity
     /// without string-matching the prose (#170). Serialized as a list of
     /// `{ kind, text }` maps.
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub notes: Vec<CompileNote>,
 
     /// RFC #223: `true` when this node resolves to a curated `model-extraction`
@@ -127,7 +127,7 @@ fn is_false(b: &bool) -> bool {
 /// Severity of a compile-time [`CompileNote`]. Consumers (the CLI, the lock
 /// audit, floless.app) render by `kind` — `info` quiet/collapsible, `warn` /
 /// `error` prominent — and stay correct across note-wording changes (#170).
-#[derive(Debug, Serialize, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Deserialize, Serialize, Clone, Copy, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum NoteKind {
     /// Benign provenance / FYI — e.g. "the compiler trusted the node-level
@@ -146,7 +146,7 @@ pub enum NoteKind {
 }
 
 /// A single compile-time note: a severity [`kind`](NoteKind) plus its prose.
-#[derive(Debug, Serialize, Clone, PartialEq, Eq)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Eq)]
 pub struct CompileNote {
     pub kind: NoteKind,
     pub text: String,
@@ -180,6 +180,62 @@ impl CompileNote {
     }
 }
 
+fn hash_source(source_path: &Path) -> Result<String, AwareError> {
+    let source_bytes = std::fs::read(source_path)
+        .map_err(|e| AwareError::Internal(format!("read {}: {e}", source_path.display())))?;
+    let mut hasher = Sha256::new();
+    hasher.update(&source_bytes);
+    Ok(format!("sha256:{:x}", hasher.finalize()))
+}
+
+/// Enforce the compiled-approval gate before an installed app can run.
+///
+/// The lock is named by the source app id and its `source-hash` covers the raw
+/// source bytes. Missing, unreadable, malformed, or stale approval artifacts
+/// are validation failures: none may reach provenance setup or node dispatch.
+pub fn verify_run_lock(app: &App, source_path: &Path) -> Result<(), AwareError> {
+    let source_dir = source_path
+        .parent()
+        .ok_or_else(|| AwareError::Internal("source path has no parent".into()))?;
+    let lock_path = source_dir.join(format!("{}.lock", app.app));
+    let lock_text = match std::fs::read_to_string(&lock_path) {
+        Ok(text) => text,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+            return Err(AwareError::Validation(format!(
+                "[E_APP_LOCK_MISSING] app {} has no compiled approval at {}; run `aware app compile {}` first",
+                app.app,
+                lock_path.display(),
+                source_path.display()
+            )));
+        }
+        Err(error) => {
+            return Err(AwareError::Validation(format!(
+                "[E_APP_LOCK_INVALID] cannot read compiled approval {}: {error}; run `aware app compile {}` again",
+                lock_path.display(),
+                source_path.display()
+            )));
+        }
+    };
+    let lock: LockFile = serde_yaml::from_str(&lock_text).map_err(|error| {
+        AwareError::Validation(format!(
+            "[E_APP_LOCK_INVALID] compiled approval {} is invalid: {error}; run `aware app compile {}` again",
+            lock_path.display(),
+            source_path.display()
+        ))
+    })?;
+    let current_hash = hash_source(source_path)?;
+    if lock.source_hash != current_hash {
+        return Err(AwareError::Validation(format!(
+            "[E_APP_LOCK_STALE] compiled approval {} does not match the installed source (approved {}, current {}); run `aware app compile {}` again",
+            lock_path.display(),
+            lock.source_hash,
+            current_hash,
+            source_path.display()
+        )));
+    }
+    Ok(())
+}
+
 /// Compile a parsed app + the installed agent catalogue into a lockfile.
 ///
 /// The lockfile is *not* written to disk here — callers (typically
@@ -189,11 +245,7 @@ pub fn compile(
     agents: &[DiscoveredAgent],
     source_path: &Path,
 ) -> Result<LockFile, AwareError> {
-    let source_bytes = std::fs::read(source_path)
-        .map_err(|e| AwareError::Internal(format!("read {}: {e}", source_path.display())))?;
-    let mut hasher = Sha256::new();
-    hasher.update(&source_bytes);
-    let source_hash = format!("sha256:{:x}", hasher.finalize());
+    let source_hash = hash_source(source_path)?;
 
     // Flatten the node tree: top-level nodes plus the bodies of `do:`-bearing
     // primitives (for-each / sweep), so inner nodes are pinned, compiled, and

@@ -12,6 +12,7 @@
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
+use sha2::{Digest, Sha256};
 use tempfile::TempDir;
 
 static FIXTURE: OnceLock<TempDir> = OnceLock::new();
@@ -99,4 +100,57 @@ fn copy_dir_recursive(src: &Path, dst: &Path) -> std::io::Result<()> {
         }
     }
     Ok(())
+}
+
+/// Write the smallest structurally valid compiled approval needed by runtime
+/// integration fixtures. Tests that exercise compilation itself use the real
+/// `aware app compile` command instead.
+pub fn approve_app_source(source: &Path) {
+    let bytes = std::fs::read(source).expect("read app source for approval");
+    let parsed: serde_yaml::Value =
+        serde_yaml::from_slice(&bytes).expect("parse app source for approval");
+    let app = parsed["app"].as_str().expect("app id in fixture");
+    let version = parsed["version"].as_str().expect("app version in fixture");
+    let hash = format!("sha256:{:x}", Sha256::digest(&bytes));
+    let lock = format!(
+        "source-hash: {hash}\ncompiled-at: test\ncompiler-version: test\napp: {app}\nversion: {version}\nagent-pins: {{}}\nnodes: []\n"
+    );
+    std::fs::write(source.with_file_name(format!("{app}.lock")), lock)
+        .expect("write app approval fixture");
+}
+
+/// Approve every installed app source under `<AWARE_HOME>/apps/`.
+pub fn approve_installed_apps(home: &Path) {
+    let apps = home.join("apps");
+    let Ok(entries) = std::fs::read_dir(apps) else {
+        return;
+    };
+    for entry in entries.flatten() {
+        let dir = entry.path();
+        let Ok(files) = std::fs::read_dir(&dir) else {
+            continue;
+        };
+        for file in files.flatten() {
+            let source = file.path();
+            if source
+                .extension()
+                .and_then(|ext| ext.to_str())
+                .is_some_and(|ext| matches!(ext, "flo" | "app" | "flow" | "aware"))
+            {
+                // Some negative-path tests deliberately make a nested source
+                // unreadable or malformed. Leave those untouched so the
+                // production command reports the intended fault; approve only
+                // ordinary fixtures that can actually represent an app.
+                let approvable = std::fs::read(&source)
+                    .ok()
+                    .and_then(|bytes| serde_yaml::from_slice::<serde_yaml::Value>(&bytes).ok())
+                    .is_some_and(|value| {
+                        value["app"].as_str().is_some() && value["version"].as_str().is_some()
+                    });
+                if approvable {
+                    approve_app_source(&source);
+                }
+            }
+        }
+    }
 }

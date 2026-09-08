@@ -548,7 +548,7 @@ nodes:
 | `aware app compile <app>` | Explicit compile. Emits `<app>.lock` next to the source file. Fails if validation fails. |
 | `aware app validate <app>` | Now also writes `<app>.lock` as a side effect (was: silent pass) |
 | `aware app inspect <app>` | Opens Glass Box — a single-file HTML viewer of the lockfile — in the user's default browser |
-| `aware app run <app>` | Refuses to execute unless a fresh `.lock` matches the source's `source-hash`. Prompts the user to run `aware app compile` first |
+| `aware app run <app>` | Refuses before trace creation or node dispatch unless a present `.lock` matches the raw source bytes' `source-hash`. Missing lock: `E_APP_LOCK_MISSING`; unreadable/malformed lock: `E_APP_LOCK_INVALID`; hash mismatch: `E_APP_LOCK_STALE`. Each prompts the user to run `aware app compile` first. The gate applies to real, dry, and simulated runs. |
 
 ### Why this matters
 

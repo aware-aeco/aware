@@ -49,6 +49,10 @@ fn fixture(version: &str, pin: &str) -> (tempfile::TempDir, std::path::PathBuf) 
 }
 
 fn aware(home: &std::path::Path) -> Command {
+    // Pin-focused tests construct installed apps directly or through install;
+    // give those fixtures a current compiled approval so they reach the pin
+    // gate they are intended to exercise.
+    common::approve_installed_apps(home);
     let mut c = Command::cargo_bin("aware").unwrap();
     c.env("AWARE_HOME", home);
     c
