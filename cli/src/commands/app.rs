@@ -236,7 +236,7 @@ async fn run(
         .ok_or_else(|| AwareError::Validation(format!("app {app_id} has no .flo/.app file")))?;
     // Parse and hash one source buffer so the compiled sidecar approves the
     // exact app we execute. Gate every run mode before provenance or dispatch.
-    let app = crate::app_lock::load_approved_app(&manifest_path)?;
+    let (app, approved_lock) = crate::app_lock::load_approved_app_with_lock(&manifest_path)?;
 
     // Safety-contract pre-flight: refuse to run an app whose write-mode
     // nodes are missing `safety:` blocks. Skipped in --dry-run (a dry-run
@@ -272,6 +272,7 @@ async fn run(
 
     if !simulate {
         let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
+        crate::app_lock::verify_agent_pins(&app, &approved_lock, &agents)?;
 
         // Planned-agent check: a plain `--dry-run` still dispatches to live read-mode
         // binaries (only `--simulate`, excluded above, stubs everything), so refuse a
@@ -1551,6 +1552,7 @@ fn validate_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError>
     }
 
     if issues.is_empty() {
+        crate::app_lock::validate_to_disk(&manifest_path, &ctx.paths)?;
         println!("\u{2713} {} is valid", manifest_path.display());
         return Ok(());
     }

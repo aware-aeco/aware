@@ -118,6 +118,39 @@ fn run_refuses_an_app_whose_pin_the_installed_agent_does_not_satisfy() {
 }
 
 #[test]
+fn run_refuses_an_agent_version_that_drifted_from_the_compiled_plan() {
+    let (tmp, src) = fixture("1.3.0", "1.x");
+    let home = tmp.path().join("home");
+    aware(&home)
+        .args(["app", "compile"])
+        .arg(src.join("pin-test.flo"))
+        .assert()
+        .success();
+    aware(&home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+
+    let manifest = home.join("agents/probe-agent/manifest.yaml");
+    let changed = std::fs::read_to_string(&manifest)
+        .unwrap()
+        .replace("version: 1.3.0", "version: 1.4.0");
+    std::fs::write(manifest, changed).unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "run", "pin-test", "--dry-run"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_APP_LOCK_AGENT_PIN_MISMATCH"))
+        .stderr(predicate::str::contains("1.3.0"))
+        .stderr(predicate::str::contains("1.4.0"));
+}
+
+#[test]
 fn install_warns_but_still_installs() {
     // Installing an app before the agent it pins is legitimate (#170), and the
     // matching version may still be on its way — so install names the mismatch
@@ -246,6 +279,10 @@ fn validate_judges_the_file_not_the_machine() {
         .assert()
         .success()
         .stdout(predicate::str::contains("is valid"));
+    assert!(
+        src.join("pin-test.lock").is_file(),
+        "successful validation must emit the approval required by app run"
+    );
 
     let (tmp2, src2) = fixture("1.3.0", "not-a-version");
     aware(&tmp2.path().join("home"))

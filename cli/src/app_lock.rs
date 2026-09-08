@@ -219,6 +219,11 @@ fn read_source_snapshot(source_path: &Path) -> Result<AppSourceSnapshot, AwareEr
 /// parsed app is exactly the artifact the lock approves even if the file is
 /// replaced concurrently.
 pub fn load_approved_app(source_path: &Path) -> Result<App, AwareError> {
+    load_approved_app_with_lock(source_path).map(|(app, _)| app)
+}
+
+/// Load the approved source together with the exact compiled plan it matched.
+pub fn load_approved_app_with_lock(source_path: &Path) -> Result<(App, LockFile), AwareError> {
     let snapshot = read_source_snapshot(source_path)?;
     let app = snapshot.app;
     let source_dir = source_path
@@ -260,7 +265,32 @@ pub fn load_approved_app(source_path: &Path) -> Result<App, AwareError> {
             source_path.display()
         )));
     }
-    Ok(app)
+    Ok((app, lock))
+}
+
+/// Refuse execution when a dispatchable agent no longer matches the exact
+/// version captured in the engineer-approved plan.
+pub fn verify_agent_pins(
+    app: &App,
+    lock: &LockFile,
+    agents: &[DiscoveredAgent],
+) -> Result<(), AwareError> {
+    for agent_id in crate::validate::dispatchable_agents(app) {
+        let Some(approved) = lock.agent_pins.get(agent_id) else {
+            continue;
+        };
+        let current = agents
+            .iter()
+            .find(|agent| agent.manifest.agent == agent_id)
+            .map(|agent| agent.manifest.version.as_str());
+        if current != Some(approved.as_str()) {
+            return Err(AwareError::Validation(format!(
+                "[E_APP_LOCK_AGENT_PIN_MISMATCH] compiled approval pins agent {agent_id} at {approved}, but the installed version is {}; run `aware app compile` again",
+                current.unwrap_or("missing")
+            )));
+        }
+    }
+    Ok(())
 }
 
 /// Compile a source snapshot + the installed agent catalogue into a lockfile.
@@ -974,6 +1004,29 @@ pub fn compile_to_disk_with_lock(
     let lock = compile_snapshot(app, &agents, snapshot.source_hash)?;
     let path = write_lockfile(&lock, source)?;
     Ok((path, lock))
+}
+
+/// Validate one source snapshot using `app validate` semantics, then persist
+/// the plan and hash derived from that same snapshot. Ambient missing or
+/// unsatisfied agent versions remain outside validation's file-only verdict.
+pub fn validate_to_disk(source: &Path, paths: &Paths) -> Result<std::path::PathBuf, AwareError> {
+    let snapshot = read_source_snapshot(source)?;
+    let app = &snapshot.app;
+    let mut issues = crate::validate::validate_app(app);
+    let agents = crate::manifest::loader::discover_agents(paths).unwrap_or_default();
+    issues.extend(crate::validate::validate_app_safety(app, &agents));
+    issues.extend(crate::validate::validate_app_agents(app, &agents));
+    if let Some(error) = issues
+        .iter()
+        .find(|issue| issue.severity == crate::validate::Severity::Error)
+    {
+        return Err(AwareError::Validation(format!(
+            "app failed validation: [{}] {}",
+            error.code, error.message
+        )));
+    }
+    let lock = compile_snapshot(app, &agents, snapshot.source_hash)?;
+    write_lockfile(&lock, source)
 }
 
 #[cfg(test)]
