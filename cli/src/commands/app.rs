@@ -1730,10 +1730,7 @@ fn inspect_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> 
         ))
     })?;
     // Compile first so the viewer renders the freshly-resolved lockfile.
-    let lock_path = crate::app_lock::compile_to_disk(&source, &ctx.paths)?;
-    let app = crate::manifest::loader::load_app(&source)?;
-    let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
-    let lock = crate::app_lock::compile(&app, &agents, &source)?;
+    let (lock_path, lock) = crate::app_lock::compile_to_disk_with_lock(&source, &ctx.paths)?;
 
     let html_path = glass_box_html_path(&lock_path);
     let html = render_glass_box_html(&lock);
