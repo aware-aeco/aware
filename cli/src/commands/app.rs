@@ -724,19 +724,17 @@ mod model_reader_control_tests {
     }
 }
 
-/// Unreadable `requires:` pins in the apps behind this app's app-backed agents.
+/// File-level preflight for apps behind this app's app-backed agents.
 ///
-/// Whether a constraint can be *read* is a fact about a file — true on every
-/// machine, needing no binary — so the `--simulate` exemption, which is about
-/// the environment, must not swallow it one level down any more than it does at
-/// the top level. Under a real run the nested pins are read at dispatch by
-/// [`crate::runtime::invoker::DispatchInvoker::resolve_exposed`]; under
-/// `--simulate` the orchestrator short-circuits with a synthesized output before
-/// the app transport, so nothing ever loaded the backing app to look.
+/// Approval and constraint readability are facts about files — true on every
+/// machine, needing no binary — so preview-mode transport short-circuits must
+/// not swallow them one level down. Real dispatch repeats the approval gate at
+/// [`crate::runtime::invoker::DispatchInvoker::resolve_exposed`].
 ///
 /// Deliberately narrow, and the narrowness is the point:
 ///
-/// - It reads a **file**, and only for the `requires:` *syntax*. It does not
+/// - It reads the backing **source and approval**, then checks only `requires:`
+///   *syntax*. It does not
 ///   dispatch to the nested app, run it, or apply the catalogue checks
 ///   (installed / version-satisfied) that `--simulate` is legitimately excused
 ///   from because it contacts no binary.
@@ -896,7 +894,7 @@ fn nested_malformed_requires(
         // which yields `Io` for the same file on a real run. `cli-spec.md` keeps 1
         // ("general failure") and 3 ("validation failed") distinct: a file that
         // cannot be read is not an invalid one.
-        let backing = crate::manifest::loader::load_app(&manifest_path).map_err(|e| {
+        let backing = crate::app_lock::load_approved_app(&manifest_path).map_err(|e| {
             let hop = format!(
                 "app-backed agent {:?} (backing app {:?})",
                 agent_id, app_transport.backed_by
@@ -904,8 +902,8 @@ fn nested_malformed_requires(
             match e {
                 AwareError::Validation(m) => AwareError::Validation(format!("{hop}: {m}")),
                 AwareError::Io(io) => std::io::Error::new(io.kind(), format!("{hop}: {io}")).into(),
-                // `load_app` yields only those two; anything else keeps its own
-                // class and loses only the hop, which fails safe.
+                // Loading/approval can also produce other classes; those keep
+                // their own class and lose only the hop, which fails safe.
                 other => other,
             }
         })?;

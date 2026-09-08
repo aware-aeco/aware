@@ -163,6 +163,40 @@ fn outer_app_refuses_a_stale_inner_app_approval() {
 }
 
 #[test]
+fn preview_modes_refuse_a_stale_inner_app_approval() {
+    for mode in ["--dry-run", "--simulate"] {
+        let tmp = tempfile::tempdir().unwrap();
+        let aware = tmp.path().join("aware");
+        let src = tmp.path().join("src");
+
+        install_app(&aware, &write_app(&src, "inner", INNER_FLO)).success();
+        install_app(&aware, &write_app(&src, "outer", OUTER_FLO)).success();
+
+        let installed_inner = aware.join("apps/inner/inner.flo");
+        let source = std::fs::read_to_string(&installed_inner).unwrap();
+        std::fs::write(
+            &installed_inner,
+            source.replace("always pass", "changed before preview"),
+        )
+        .unwrap();
+
+        Command::cargo_bin("aware")
+            .unwrap()
+            .env("AWARE_HOME", &aware)
+            .args(["app", "run", "outer", mode])
+            .assert()
+            .failure()
+            .code(3)
+            .stderr(predicate::str::contains("E_APP_LOCK_STALE"));
+
+        assert!(
+            !aware.join("logs/inner/nested").exists(),
+            "{mode} must check nested approval before preview short-circuits"
+        );
+    }
+}
+
+#[test]
 fn wrong_typed_exposed_input_is_rejected() {
     let tmp = tempfile::tempdir().unwrap();
     let aware = tmp.path().join("aware");
