@@ -3309,26 +3309,7 @@ pub fn ifc_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
         ),
     );
 
-    if let Some(path) = args
-        .get("output-path")
-        .and_then(|v| v.as_str())
-        .map(str::trim)
-        .filter(|s| !s.is_empty())
-    {
-        if !dry_run {
-            if let Some(parent) = std::path::Path::new(path).parent()
-                && !parent.as_os_str().is_empty()
-            {
-                std::fs::create_dir_all(parent).map_err(|e| {
-                    AwareError::Internal(format!("ifc: create {}: {e}", parent.display()))
-                })?;
-            }
-            std::fs::write(path, built.doc.as_bytes())
-                .map_err(|e| AwareError::Internal(format!("ifc: write {path}: {e}")))?;
-        }
-        out.insert("output-path".into(), Value::String(path.to_string()));
-        out.insert("path".into(), Value::String(path.to_string()));
-    }
+    super::write_artifact(&mut out, args, dry_run, built.doc.as_bytes(), "ifc")?;
 
     Ok(Value::Object(out))
 }

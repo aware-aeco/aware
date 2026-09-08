@@ -525,18 +525,15 @@ fn find_bridge_in_dir(bridge: &Bridge, install_dir: &std::path::Path) -> Option<
     None
 }
 
+/// A bridge binary found on `PATH` — the "legacy" install shape, from before
+/// bridges moved under `<aware-home>/bridges`.
+///
+/// Delegates to [`crate::which`] rather than scanning `PATH` here. This had
+/// grown its own copy that appended `.exe` and nothing else, so on Windows a
+/// bridge installed as a `.cmd` shim read as absent — the exact miss that
+/// module's doc comment describes and that its suffix list exists to close.
 fn which_binary(name: &str) -> Option<PathBuf> {
-    let name_exe = if cfg!(windows) {
-        format!("{name}.exe")
-    } else {
-        name.to_string()
-    };
-    std::env::var_os("PATH")
-        .map(|paths| std::env::split_paths(&paths).collect::<Vec<_>>())
-        .unwrap_or_default()
-        .into_iter()
-        .map(|dir| dir.join(&name_exe))
-        .find(|p| p.is_file())
+    crate::which::find_on_path(name)
 }
 
 fn lookup_bridge(host: &str) -> Result<&'static Bridge, AwareError> {

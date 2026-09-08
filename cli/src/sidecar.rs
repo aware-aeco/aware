@@ -70,15 +70,14 @@ fn discover_named(env_var: &str, stem: &str) -> Result<PathBuf, AwareError> {
         }
     }
 
-    // 3. On PATH
-    if let Ok(path_var) = std::env::var("PATH") {
-        let sep = if cfg!(windows) { ';' } else { ':' };
-        for entry in path_var.split(sep) {
-            let candidate = PathBuf::from(entry).join(&bin_name);
-            if candidate.is_file() {
-                return Ok(candidate);
-            }
-        }
+    // 3. On PATH. Through `crate::which`, which exists to be the one answer to
+    //    "what will `Command::new` actually launch": it splits `PATH` with
+    //    `std::env::split_paths` (a quoted Windows entry survives, where a hand
+    //    `split(';')` does not) and searches the spawnable Windows suffixes
+    //    rather than `.exe` alone. `stem`, not `bin_name` — appending the
+    //    platform suffix is that module's job.
+    if let Some(found) = crate::which::find_on_path(stem) {
+        return Ok(found);
     }
 
     Err(AwareError::NotFound(format!(
