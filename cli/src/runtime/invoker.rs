@@ -1816,32 +1816,7 @@ fn render_html_report(args: Value, dry_run: bool) -> Result<Value, AwareError> {
     out.insert("htmlReport".into(), Value::String(html.clone()));
     out.insert("item-count".into(), Value::from(count));
 
-    if let Some(path) = args
-        .get("output-path")
-        .and_then(|v| v.as_str())
-        .map(str::trim)
-        .filter(|s| !s.is_empty())
-    {
-        // Real run only: a preview (--dry-run / --simulate) returns the HTML + the
-        // would-be path/size but never touches disk.
-        if !dry_run {
-            if let Some(parent) = std::path::Path::new(path).parent()
-                && !parent.as_os_str().is_empty()
-            {
-                std::fs::create_dir_all(parent).map_err(|e| {
-                    AwareError::Internal(format!("html-report: create {}: {e}", parent.display()))
-                })?;
-            }
-            std::fs::write(path, html.as_bytes())
-                .map_err(|e| AwareError::Internal(format!("html-report: write {path}: {e}")))?;
-        }
-        out.insert("output-path".into(), Value::String(path.to_string()));
-        // `path` alias: existing apps reference the artifact under both names —
-        // `{{ node.output-path }}` (e.g. an email attachment) and `{{ node.path }}`
-        // (e.g. an engineering output seal). Both are declared in the manifest schema.
-        out.insert("path".into(), Value::String(path.to_string()));
-        out.insert("bytes".into(), Value::from(html.len() as u64));
-    }
+    crate::render::write_artifact(&mut out, &args, dry_run, html.as_bytes(), "html-report")?;
 
     Ok(Value::Object(out))
 }

@@ -56,11 +56,11 @@ fn plant_managed(home: &std::path::Path, binary: &str, version: &str) -> std::pa
     exe
 }
 
-/// The name a legacy on-PATH bridge has to carry to be found by `which_binary`,
-/// which appends `.exe` only on Windows.
+/// Exercise the Windows npm-shim shape that the old local PATH scan missed.
+/// On Unix a bare file is the corresponding spawnable shape.
 fn legacy_name(binary: &str) -> String {
     if cfg!(windows) {
-        format!("{binary}.exe")
+        format!("{binary}.cmd")
     } else {
         binary.to_string()
     }

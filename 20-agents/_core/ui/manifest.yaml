@@ -104,6 +104,7 @@ commands:
         html:        string    # the self-contained HTML document
         bytes:       int       # size of `html` in bytes
         output-path: string    # present only when an output-path was given
+        path:        string    # alias of `output-path` (the written artifact location)
 
 skills:
   - descriptor-authoring.md

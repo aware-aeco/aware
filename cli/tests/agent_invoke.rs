@@ -139,7 +139,8 @@ fn invoke_ui_render_writes_html_artifact() {
         .args(["agent", "invoke", "ui", "render", "--inputs", &args])
         .assert()
         .success()
-        .stdout(predicate::str::contains("\"bytes\""));
+        .stdout(predicate::str::contains("\"bytes\""))
+        .stdout(predicate::str::contains("\"path\":"));
     let html = std::fs::read_to_string(&out_path).expect("render wrote the artifact");
     assert!(html.starts_with("<!DOCTYPE html>"));
     assert!(html.contains("data-panel-id=\"p\""));
