@@ -9,6 +9,7 @@
 // `common` is compiled once per test binary; not every binary uses every item.
 #![allow(dead_code)]
 
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
@@ -112,8 +113,43 @@ pub fn approve_app_source(source: &Path) {
     let app = parsed["app"].as_str().expect("app id in fixture");
     let version = parsed["version"].as_str().expect("app version in fixture");
     let hash = format!("sha256:{:x}", Sha256::digest(&bytes));
+    let home = source
+        .parent()
+        .and_then(Path::parent)
+        .and_then(Path::parent);
+    let mut pins = BTreeMap::new();
+    if let Some(agents_dir) = home.map(|path| path.join("agents"))
+        && let Ok(entries) = std::fs::read_dir(agents_dir)
+    {
+        for entry in entries.flatten() {
+            let manifest = entry.path().join("manifest.yaml");
+            let Some(value) = std::fs::read(&manifest)
+                .ok()
+                .and_then(|body| serde_yaml::from_slice::<serde_yaml::Value>(&body).ok())
+            else {
+                continue;
+            };
+            if let (Some(id), Some(agent_version)) =
+                (value["agent"].as_str(), value["version"].as_str())
+            {
+                pins.insert(id.to_string(), agent_version.to_string());
+            }
+        }
+    }
+    let pins_yaml = if pins.is_empty() {
+        "{}".to_string()
+    } else {
+        let yaml = serde_yaml::to_string(&pins).expect("serialize fixture agent pins");
+        format!(
+            "\n{}",
+            yaml.lines()
+                .map(|line| format!("  {line}"))
+                .collect::<Vec<_>>()
+                .join("\n")
+        )
+    };
     let lock = format!(
-        "source-hash: {hash}\ncompiled-at: test\ncompiler-version: test\napp: {app}\nversion: {version}\nagent-pins: {{}}\nnodes: []\n"
+        "source-hash: {hash}\ncompiled-at: test\ncompiler-version: test\napp: {app}\nversion: {version}\nagent-pins: {pins_yaml}\nnodes: []\n"
     );
     std::fs::write(source.with_file_name(format!("{app}.lock")), lock)
         .expect("write app approval fixture");

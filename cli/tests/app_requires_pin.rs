@@ -151,6 +151,37 @@ fn run_refuses_an_agent_version_that_drifted_from_the_compiled_plan() {
 }
 
 #[test]
+fn run_refuses_an_installed_agent_that_was_absent_from_the_compiled_plan() {
+    let (tmp, src) = fixture("1.3.0", "1.x");
+    let home = tmp.path().join("home");
+    let agent = home.join("agents/probe-agent");
+    let parked = home.join("probe-agent-parked");
+    std::fs::rename(&agent, &parked).unwrap();
+    aware(&home)
+        .args(["app", "compile"])
+        .arg(src.join("pin-test.flo"))
+        .assert()
+        .success();
+    std::fs::rename(&parked, &agent).unwrap();
+    aware(&home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "run", "pin-test", "--dry-run"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_APP_LOCK_AGENT_PIN_MISMATCH"))
+        .stderr(predicate::str::contains("no version"))
+        .stderr(predicate::str::contains("1.3.0"));
+}
+
+#[test]
 fn install_warns_but_still_installs() {
     // Installing an app before the agent it pins is legitimate (#170), and the
     // matching version may still be on its way — so install names the mismatch

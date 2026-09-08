@@ -276,16 +276,18 @@ pub fn verify_agent_pins(
     agents: &[DiscoveredAgent],
 ) -> Result<(), AwareError> {
     for agent_id in crate::validate::dispatchable_agents(app) {
-        let Some(approved) = lock.agent_pins.get(agent_id) else {
-            continue;
-        };
         let current = agents
             .iter()
             .find(|agent| agent.manifest.agent == agent_id)
             .map(|agent| agent.manifest.version.as_str());
-        if current != Some(approved.as_str()) {
+        let approved = lock.agent_pins.get(agent_id).map(String::as_str);
+        // A missing agent is reported by the existing missing-agent preflight.
+        // An installed agent absent from the lock was never approved and must
+        // not become executable merely because it appeared after compilation.
+        if current.is_some() && current != approved {
             return Err(AwareError::Validation(format!(
-                "[E_APP_LOCK_AGENT_PIN_MISMATCH] compiled approval pins agent {agent_id} at {approved}, but the installed version is {}; run `aware app compile` again",
+                "[E_APP_LOCK_AGENT_PIN_MISMATCH] compiled approval pins agent {agent_id} at {}, but the installed version is {}; run `aware app compile` again",
+                approved.unwrap_or("no version"),
                 current.unwrap_or("missing")
             )));
         }
