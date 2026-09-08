@@ -1169,13 +1169,18 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     // (app-spec § Safety contract: "aware app validate refuses to install an
     // app missing `safety:` on a write-mode node"; install must enforce the
     // same contract as the standalone `validate` command, #134).
-    // Same selection rule as `install_app_from_path` below and as
-    // `resolve_validate_target` — otherwise this pre-flight validates one
-    // manifest and the install that follows writes another.
-    std::fs::read_dir(&path)?;
-    let src_manifest = crate::manifest::loader::find_app_manifest(&path).ok_or_else(|| {
-        AwareError::Validation(format!("no .flo or .app file in {}", path.display()))
-    })?;
+    let src_manifest = std::fs::read_dir(&path)?
+        .flatten()
+        .map(|e| e.path())
+        .find(|p| {
+            matches!(
+                p.extension().and_then(|e| e.to_str()),
+                Some("flo") | Some("app")
+            )
+        })
+        .ok_or_else(|| {
+            AwareError::Validation(format!("no .flo or .app file in {}", path.display()))
+        })?;
     let src_app = crate::manifest::loader::load_app(&src_manifest)?;
     let mut issues = crate::validate::validate_app(&src_app);
     // Missing agents are reported separately from `issues` so they surface even
@@ -1222,20 +1227,20 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
 
     let app_id = crate::install::install_app_from_path(&path, &ctx.paths)?;
 
-    // The installed manifest is the one selected above, under its own name —
-    // NOT whatever re-running the selector on the installed directory returns.
-    // `install_app_from_path` copies the folder to `apps/<app-id>`, so the
-    // directory's basename changes, and the selector prefers `<dir-name>.flo`:
-    // a folder `bundle/` holding `bundle.flo` (`app: alpha`) beside an
-    // `alpha.flo` is validated and copied as `bundle.flo`, then re-read here as
-    // `alpha.flo` — locking and discovering an app nobody installed (Codex,
-    // #499). The rename is precisely what makes a second lookup a different
-    // question, so there is no second lookup.
+    // Locate the installed .flo / .app file
     let app_dir = ctx.paths.apps_dir().join(&app_id);
-    let manifest_name = src_manifest.file_name().ok_or_else(|| {
-        AwareError::Internal(format!("installed app {app_id} missing .flo/.app file"))
-    })?;
-    let manifest_path = app_dir.join(manifest_name);
+    let manifest_path = std::fs::read_dir(&app_dir)?
+        .flatten()
+        .map(|e| e.path())
+        .find(|p| {
+            matches!(
+                p.extension().and_then(|e| e.to_str()),
+                Some("flo") | Some("app")
+            )
+        })
+        .ok_or_else(|| {
+            AwareError::Internal(format!("installed app {app_id} missing .flo/.app file"))
+        })?;
 
     let app = crate::manifest::loader::load_app(&manifest_path)?;
 

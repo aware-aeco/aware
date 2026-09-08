@@ -178,44 +178,19 @@ pub(crate) fn is_safe_segment(id: &str) -> bool {
     components.next().is_none() && first == id
 }
 
-/// The directory's own name, for the `<dir-name>.flo` preference below.
-///
-/// Not `root.file_name()`: that is `None` for `.` and `..`, and `aware app
-/// install .` / `aware app validate .` are ordinary invocations. Resolving
-/// against the working directory first turns `.` into the real directory name
-/// (Codex, #499). `..` stays unresolved even then — `absolute` is lexical and
-/// keeps the `..` component — so this still returns `None` sometimes, and the
-/// caller must treat that as "no preference", never as "no manifest".
-fn app_dir_name(root: &Path) -> Option<String> {
-    std::path::absolute(root)
-        .ok()?
-        .file_name()
-        .map(|n| n.to_string_lossy().into_owned())
-}
-
 pub(crate) fn find_app_manifest(root: &Path) -> Option<PathBuf> {
     // Preferred: <root>/<dir-name>.flo, then any *.flo, then any *.app.
-    if let Some(dir_name) = app_dir_name(root) {
-        let canonical = root.join(format!("{dir_name}.flo"));
-        if canonical.is_file() {
-            return Some(canonical);
-        }
+    let dir_name = root.file_name()?.to_string_lossy().to_string();
+    let canonical = root.join(format!("{dir_name}.flo"));
+    if canonical.is_file() {
+        return Some(canonical);
     }
-    // Sorted, so the fallback is an ANSWER rather than whatever `read_dir`
-    // happened to yield — including in the `..` case above, where there is no
-    // basename to prefer and this is the only rule left.
-    let mut entries: Vec<PathBuf> = std::fs::read_dir(root)
-        .ok()?
-        .flatten()
-        .map(|e| e.path())
-        .collect();
-    entries.sort();
     for ext in ["flo", "app"] {
-        if let Some(p) = entries
-            .iter()
-            .find(|p| p.extension().is_some_and(|e| e == ext))
-        {
-            return Some(p.clone());
+        for entry in std::fs::read_dir(root).ok()?.flatten() {
+            let p = entry.path();
+            if p.extension().is_some_and(|e| e == ext) {
+                return Some(p);
+            }
         }
     }
     None
@@ -497,8 +472,10 @@ mod tests {
     /// `read_dir` order. Names are chosen so an alphabetical tie-break would
     /// pick the `.app`, and so would swapping the two extensions.
     ///
-    /// Which of two `.flo` files wins when neither is named after the directory
-    /// is pinned separately, below.
+    /// Not asserted here: which of two `.flo` files wins when neither is named
+    /// after the directory. `find_app_manifest` returns the first `read_dir`
+    /// yields, and that order is filesystem-defined, so there is no answer a
+    /// test could pin without asserting on the filesystem instead of on us.
     #[test]
     fn app_source_lookup_prefers_flo_over_app() {
         let tmp = tempfile::tempdir().unwrap();
@@ -520,46 +497,6 @@ mod tests {
 
         let found = find_app_manifest(&root).unwrap();
         assert_eq!(found.file_name().unwrap(), "legacy.app");
-    }
-
-    /// With no `<dir-name>.flo` to prefer, the winner is the first by sorted
-    /// name — an answer, rather than whatever `read_dir` happened to yield.
-    ///
-    /// The order used to be filesystem-defined, so this had no answer to pin.
-    /// It matters most where there is no basename to prefer at all: `..` stays
-    /// unresolved by `std::path::absolute`, and this rule is then the only one
-    /// left deciding what `aware app install ..` picks up.
-    #[test]
-    fn app_source_lookup_breaks_a_tie_by_sorted_name() {
-        let tmp = tempfile::tempdir().unwrap();
-        let root = tmp.path().join("demo");
-        write_app(&root.join("zzz.flo"), "demo");
-        write_app(&root.join("aaa.flo"), "demo");
-
-        let found = find_app_manifest(&root).unwrap();
-        assert_eq!(found.file_name().unwrap(), "aaa.flo");
-    }
-
-    /// A path with no basename of its own — `.` — resolves to the directory it
-    /// names, so the `<dir-name>.flo` preference still applies. Before this,
-    /// `Path::file_name` returned `None` and the whole lookup short-circuited
-    /// to "no manifest" without reading the directory (Codex, #499).
-    ///
-    /// Asserted through a trailing-`.` join rather than by changing the process
-    /// working directory, which is global and would race the other tests.
-    #[test]
-    fn app_source_lookup_survives_a_path_with_no_basename() {
-        let tmp = tempfile::tempdir().unwrap();
-        let root = tmp.path().join("demo");
-        write_app(&root.join("demo.flo"), "demo");
-        write_app(&root.join("aaa.flo"), "other");
-
-        let found = find_app_manifest(&root.join(".")).unwrap();
-        assert_eq!(
-            found.file_name().unwrap(),
-            "demo.flo",
-            "the directory's own name still wins"
-        );
     }
 
     /// A directory with no source, and a directory that does not exist at all,

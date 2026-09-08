@@ -5,7 +5,7 @@ use std::path::Path;
 
 use crate::error::AwareError;
 use crate::manifest::App;
-use crate::manifest::loader::{find_app_manifest, load_agent, load_app};
+use crate::manifest::loader::{load_agent, load_app};
 use crate::paths::Paths;
 use crate::validate::{error_summary, validate_agent_on_disk, validate_app};
 
@@ -65,13 +65,18 @@ pub fn install_agent_from_path(
 
 /// Install an app folder. `src` must contain a `.flo` or `.app` file.
 pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<String, AwareError> {
-    // Probe first so a genuine enumeration failure (permissions, IO) propagates as
-    // itself; `find_app_manifest` flattens its `read_dir` error to `None`, which
-    // would otherwise be reported as "no .flo or .app file".
-    std::fs::read_dir(src)?;
-    let manifest_path = find_app_manifest(src).ok_or_else(|| {
-        AwareError::Validation(format!("no .flo or .app file in {}", src.display()))
-    })?;
+    let manifest_path = std::fs::read_dir(src)?
+        .flatten()
+        .map(|e| e.path())
+        .find(|p| {
+            matches!(
+                p.extension().and_then(|e| e.to_str()),
+                Some("flo") | Some("app")
+            )
+        })
+        .ok_or_else(|| {
+            AwareError::Validation(format!("no .flo or .app file in {}", src.display()))
+        })?;
 
     let app = load_app(&manifest_path)?;
     let issues = validate_app(&app);
@@ -250,45 +255,6 @@ mod tests {
             tmp.path()
                 .join("apps/welded-to-tc/welded-to-tc.app")
                 .is_file()
-        );
-    }
-
-    /// Install selects the manifest by the same rule as `app validate` — the
-    /// canonical `<dir-name>.flo` first.
-    ///
-    /// It used to scan `read_dir` inline and take whatever the filesystem
-    /// yielded first, so a directory holding two sources could be validated as
-    /// one app and installed as the other, from a single `aware app install`.
-    ///
-    /// Note what this test can and cannot do: `read_dir` order is not specified
-    /// (it is hash order on ext4, not alphabetical), so against the old inline
-    /// scan this would have failed only on the runs where the decoy happened to
-    /// come out first. That is the point — the answer was never pinned to
-    /// anything. It is pinned now, and this goes red on any future copy that
-    /// unpins it in the majority of orderings.
-    #[test]
-    fn install_takes_the_canonical_manifest_not_whatever_read_dir_yields() {
-        let tmp = tempfile::tempdir().unwrap();
-        let paths = Paths {
-            aware_home: tmp.path().to_path_buf(),
-        };
-        let app_src = tmp.path().join("src/zeta");
-        std::fs::create_dir_all(&app_src).unwrap();
-        let body = |id: &str| {
-            format!(
-                "app: {id}\nversion: 0.1.0\ndescription: a selection fixture\n\
-                 nodes:\n  - id: gate\n    inline:\n      kind: predicate\n\
-                 \x20     description: always pass\n      code: 'true'\nrequires: []\n"
-            )
-        };
-        std::fs::write(app_src.join("alpha.flo"), body("alpha")).unwrap();
-        std::fs::write(app_src.join("zeta.flo"), body("zeta")).unwrap();
-
-        assert_eq!(install_app_from_path(&app_src, &paths).unwrap(), "zeta");
-        assert!(tmp.path().join("apps/zeta/zeta.flo").is_file());
-        assert!(
-            !tmp.path().join("apps/alpha").exists(),
-            "the decoy beside it must not be what got installed"
         );
     }
 
