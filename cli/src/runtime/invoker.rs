@@ -2922,7 +2922,9 @@ impl DispatchInvoker {
             crate::manifest::loader::find_app_manifest(&app_dir).ok_or_else(|| {
                 AwareError::Validation(format!("backing app {backed_by} has no .flo/.app file"))
             })?;
-        let app = crate::manifest::loader::load_app(&manifest_path)?;
+        // Nested app-backed dispatch is still app execution: require its own
+        // compiled approval and bind parsing to the exact bytes that were hashed.
+        let app = crate::app_lock::load_approved_app(&manifest_path)?;
         if !app.exposes_as_agent {
             return Err(AwareError::Validation(format!(
                 "app {backed_by} is not declared exposes-as-agent"

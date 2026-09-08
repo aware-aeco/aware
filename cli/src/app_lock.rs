@@ -183,17 +183,28 @@ impl CompileNote {
 fn hash_source(source_path: &Path) -> Result<String, AwareError> {
     let source_bytes = std::fs::read(source_path)
         .map_err(|e| AwareError::Internal(format!("read {}: {e}", source_path.display())))?;
-    let mut hasher = Sha256::new();
-    hasher.update(&source_bytes);
-    Ok(format!("sha256:{:x}", hasher.finalize()))
+    Ok(hash_source_bytes(&source_bytes))
 }
 
-/// Enforce the compiled-approval gate before an installed app can run.
+fn hash_source_bytes(source_bytes: &[u8]) -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(source_bytes);
+    format!("sha256:{:x}", hasher.finalize())
+}
+
+/// Load an installed app and enforce its compiled approval over the same bytes.
 ///
 /// The lock is named by the source app id and its `source-hash` covers the raw
 /// source bytes. Missing, unreadable, malformed, or stale approval artifacts
-/// are validation failures: none may reach provenance setup or node dispatch.
-pub fn verify_run_lock(app: &App, source_path: &Path) -> Result<(), AwareError> {
+/// are validation failures. Reading, parsing, and hashing one buffer ensures the
+/// parsed app is exactly the artifact the lock approves even if the file is
+/// replaced concurrently.
+pub fn load_approved_app(source_path: &Path) -> Result<App, AwareError> {
+    let source_text = std::fs::read_to_string(source_path).map_err(|error| {
+        std::io::Error::new(error.kind(), format!("{}: {error}", source_path.display()))
+    })?;
+    let app: App = serde_yaml::from_str(&source_text)
+        .map_err(|error| AwareError::Validation(format!("{}: {error}", source_path.display())))?;
     let source_dir = source_path
         .parent()
         .ok_or_else(|| AwareError::Internal("source path has no parent".into()))?;
@@ -223,7 +234,7 @@ pub fn verify_run_lock(app: &App, source_path: &Path) -> Result<(), AwareError> 
             source_path.display()
         ))
     })?;
-    let current_hash = hash_source(source_path)?;
+    let current_hash = hash_source_bytes(source_text.as_bytes());
     if lock.source_hash != current_hash {
         return Err(AwareError::Validation(format!(
             "[E_APP_LOCK_STALE] compiled approval {} does not match the installed source (approved {}, current {}); run `aware app compile {}` again",
@@ -233,7 +244,7 @@ pub fn verify_run_lock(app: &App, source_path: &Path) -> Result<(), AwareError> 
             source_path.display()
         )));
     }
-    Ok(())
+    Ok(app)
 }
 
 /// Compile a parsed app + the installed agent catalogue into a lockfile.

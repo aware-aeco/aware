@@ -234,12 +234,9 @@ async fn run(
         .unwrap_or(app_id);
     let manifest_path = crate::manifest::loader::find_app_manifest(&app_dir)
         .ok_or_else(|| AwareError::Validation(format!("app {app_id} has no .flo/.app file")))?;
-    let app = crate::manifest::loader::load_app(&manifest_path)?;
-
-    // The compiled sidecar is the approval artifact for these exact source
-    // bytes. Gate every run mode before provenance setup or node dispatch: a
-    // missing or stale lock means the installed source has not been approved.
-    crate::app_lock::verify_run_lock(&app, &manifest_path)?;
+    // Parse and hash one source buffer so the compiled sidecar approves the
+    // exact app we execute. Gate every run mode before provenance or dispatch.
+    let app = crate::app_lock::load_approved_app(&manifest_path)?;
 
     // Safety-contract pre-flight: refuse to run an app whose write-mode
     // nodes are missing `safety:` blocks. Skipped in --dry-run (a dry-run

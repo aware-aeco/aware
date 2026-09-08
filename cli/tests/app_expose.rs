@@ -128,6 +128,41 @@ fn outer_app_invokes_inner_app_as_agent() {
 }
 
 #[test]
+fn outer_app_refuses_a_stale_inner_app_approval() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let src = tmp.path().join("src");
+
+    install_app(&aware, &write_app(&src, "inner", INNER_FLO)).success();
+    install_app(&aware, &write_app(&src, "outer", OUTER_FLO)).success();
+
+    // The outer app remains approved, but its app-backed agent has changed
+    // since compilation. Nested dispatch must enforce the backing app's own
+    // approval before it opens a nested provenance trace or runs any node.
+    let installed_inner = aware.join("apps/inner/inner.flo");
+    let source = std::fs::read_to_string(&installed_inner).unwrap();
+    std::fs::write(
+        &installed_inner,
+        source.replace("always pass", "changed after approval"),
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args(["app", "run", "outer"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_APP_LOCK_STALE"));
+
+    assert!(
+        !aware.join("logs/inner/nested").exists(),
+        "a stale backing app must fail before nested provenance or dispatch"
+    );
+}
+
+#[test]
 fn wrong_typed_exposed_input_is_rejected() {
     let tmp = tempfile::tempdir().unwrap();
     let aware = tmp.path().join("aware");
