@@ -114,7 +114,6 @@ test('preflight describes provider and key readiness without conversion or sourc
   assert.equal(sha256(Buffer.from(out.signerPublicKeyBase64, 'base64')), out.signerFingerprintSha256);
   assert.deepEqual(state.calls, ['describe']);
 });
-
 test('preflight enforces the managed authority-store contract before provider launch', async (t) => {
   const state = await setup(t);
   const base = {
@@ -224,6 +223,36 @@ test('read-model publishes five binary-safe artifacts with reconciled coverage a
   assert.equal(geometry.readUInt32LE(0), 0x46546c67);
   assert.equal('sourceArtifactEnvelope' in out, false);
   assert.equal('sourceArtifactPreimage' in out, false);
+});
+
+test('reader v2 binds expansion limits and publishes tagged provider-display property artifacts', async (t) => {
+  const state = await setup(t);
+  const versionArgs = {
+    'reader-schema-version': 'model-reference-reader/v2',
+    'property-expansion-limits': { maxExpandedPropertyRows: 100, maxCanonicalPropertyBytes: 4096 },
+  };
+  const preflight = await runModelCommand('preflight', {
+    'provider-path': state.executable, 'signing-secret-path': state.secretPath,
+    'signing-public-path': state.publicPath, ...versionArgs,
+  }, state.deps);
+  assert.equal(preflight.schemaVersion, 'model-reference-reader/v2');
+  const out = await runModelCommand('read-snapshot', {
+    ...state.args, ...versionArgs,
+    'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  }, state.deps);
+  assert.equal(out.schemaVersion, 'model-reference-reader/v2');
+  assert.equal(out.coverage.expandedProperties, 1);
+  assert.deepEqual(out.coverage.effectivePropertyLimits, versionArgs['property-expansion-limits']);
+  assert.equal(out.packageConfiguration.schemaVersion, 'model-reference-package-configuration/v2');
+  const properties = JSON.parse(await fs.readFile(path.join(state.deps.artifactDirectory, out.artifacts.properties.id), 'utf8'));
+  assert.equal(properties.schemaVersion, '2');
+  assert.deepEqual(properties.properties[0], {
+    entityId: 'element:1001', groupId: 'parameter-group:1', groupName: 'Identity Data', groupOrdinal: 0,
+    parameterId: 'parameter:1', parameterOrdinal: 0, name: 'Display Mark', unit: null,
+    valueEncoding: 'provider-display', valueType: 'string', value: 'A-1',
+  });
+  assert.equal(JSON.stringify(out).includes('A-1'), false, 'summary and receipts must not leak property values');
 });
 
 test('read-snapshot derives public source and package envelopes after private cache verification', async (t) => {

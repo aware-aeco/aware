@@ -110,7 +110,15 @@ try {
       executable: provider, executableSha256: sha256(readFileSync(provider)),
       operation: 'describe', cwd: unrelatedCwd,
       environment: { LANG: 'C', LC_ALL: 'C', TZ: 'UTC' }, stdin: Buffer.from('{}'),
-      timeoutMs: 10_000, stdoutLimit: 1024 * 1024, stderrLimit: 1024 * 1024,
+      // First execution of a freshly written .exe, and this job now runs it after
+      // two compiler/SDK closure copies, a native vendor-repro build, cargo build
+      // and SEA staging -- so the launch pays a cold Defender scan on a runner
+      // that is already worked hard, and 10s expired before the provider could
+      // reach its abort (exit 124 instead of the expected 134). The assertion
+      // below is what makes this test mean something; the budget only decides how
+      // long a genuine hang takes to surface, so give the launch the same order
+      // of room this file's own run() default allows.
+      timeoutMs: 60_000, stdoutLimit: 1024 * 1024, stderrLimit: 1024 * 1024,
     });
     assert.equal(legacy.exitCode, 134, 'the legacy case-sensitive provider environment must reproduce the Node SEA CSPRNG abort');
   } finally {
@@ -150,12 +158,12 @@ try {
   const appDirectory = path.join(temporary, 'rvt-reader-e2e'); mkdirSync(appDirectory);
   const appSource = path.join(appDirectory, 'rvt-reader-e2e.flo');
   writeFileSync(appSource, `app: rvt-reader-e2e
-version: 0.4.0
+version: 0.5.0
 display-name: RVT Reader E2E
 description: Exercise the authenticated local RVT reader through a real one-shot AWARE app.
 exposes-as-agent: false
 requires:
-  - model-reference-reader@0.4.0
+  - model-reference-reader@0.5.0
 requires-permissions:
   filesystem:
     - read: '*.rvt'

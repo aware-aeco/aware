@@ -1,5 +1,5 @@
 agent: model-reference-reader
-version: 0.4.0
+version: 0.5.0
 display-name: Authenticated RVT Reference Reader
 description: |
   Convert a local Revit project into deterministic, authenticated reference-model artifacts without
@@ -52,6 +52,10 @@ commands:
         type: string
         required: false
         description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+      reader-schema-version:
+        type: string
+        required: false
+        description: Exact AWARE reader contract; defaults to model-reference-reader/v1, or opt into model-reference-reader/v2.
     outputs:
       type: single
       schema:
@@ -91,6 +95,14 @@ commands:
         type: string
         required: false
         description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+      reader-schema-version:
+        type: string
+        required: false
+        description: Exact AWARE reader contract; defaults to model-reference-reader/v1, or opt into model-reference-reader/v2.
+      property-expansion-limits:
+        type: object
+        required: false
+        description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
       expected-signer-sha256:
         type: string
         required: true
@@ -136,6 +148,14 @@ commands:
         type: string
         required: false
         description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+      reader-schema-version:
+        type: string
+        required: false
+        description: Exact AWARE reader contract; defaults to model-reference-reader/v1, or opt into model-reference-reader/v2.
+      property-expansion-limits:
+        type: object
+        required: false
+        description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
       expected-signer-sha256:
         type: string
         required: true
@@ -182,6 +202,14 @@ commands:
         type: string
         required: false
         description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+      reader-schema-version:
+        type: string
+        required: false
+        description: Exact AWARE reader contract; defaults to model-reference-reader/v1, or opt into model-reference-reader/v2.
+      property-expansion-limits:
+        type: object
+        required: false
+        description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
       expected-signer-sha256:
         type: string
         required: true

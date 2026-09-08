@@ -492,7 +492,8 @@ async fn run(
         };
     }
 
-    // One-shot path.
+    // One-shot path. The reader fence was acquired above for both one-shot and long-running
+    // graphs so provider cleanup remains serialized across the complete run lifecycle.
     let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
     let provenance = ProvenanceWriter::open(&log_path).await?;
     let artifact_dir = crate::runtime::provenance::artifact_dir_for(

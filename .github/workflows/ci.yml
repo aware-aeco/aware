@@ -303,6 +303,9 @@ jobs:
         working-directory: cli-connection-reader
         run: node --test
 
+      - name: Verify portable private compiler authority
+        run: node --test cli/build-windows-internal-repro.test.mjs cli/create-windows-internal-repro-inputs.test.mjs cli/windows-compiler-closure.test.mjs
+
   # The repo's Python tests. Same hole as `cli-connection-reader` above, as
   # `steel-detailer-lookup`, and as the six .NET suites below — a real regression
   # suite that NO workflow ran. `20-agents/aeco/visualization/blender/tests/`
@@ -365,7 +368,8 @@ jobs:
   bridge-windows-packaged:
     name: connection-reader packaged RVT/IFC harness
     runs-on: windows-latest
-    timeout-minutes: 15
+    # Two fresh compiler/SDK copies plus debug-event audits precede the packaged host build.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v6
 
@@ -375,9 +379,20 @@ jobs:
           cache: npm
           cache-dependency-path: cli-connection-reader/package-lock.json
 
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: 1.88.0
+          toolchain: 1.95.0
+
+      - name: Configure the native x64 compiler environment
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1
+        with:
+          arch: x64
+
+      - name: Verify private builder authority
+        run: node --test cli/build-windows-internal-repro.test.mjs cli/create-windows-internal-repro-inputs.test.mjs cli/windows-compiler-closure.test.mjs
+
+      - name: Verify native vendor-path reproducibility
+        run: node cli/windows-vendor-repro.native.mjs
 
       - name: Build source AWARE host
         run: cargo build --manifest-path cli/Cargo.toml --locked

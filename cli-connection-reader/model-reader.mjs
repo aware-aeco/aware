@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {
   assertSha256, buildCanonicalRequest, ModelReaderError, providerFingerprintSha256,
-  lowerableLimits, requestSha256, sha256,
+  lowerableLimits, READER_SCHEMA_VERSION_V1, READER_SCHEMA_VERSION_V2, requestSha256, sha256,
 } from './model-contract.mjs';
 import { normalizeRevitGlb, parseGlb } from './revit-glb.mjs';
 import { normalizeRevitMetadata } from './revit-metadata.mjs';
@@ -116,6 +116,14 @@ function requestLimits(args, deps) {
   catch (error) { readerError('reference-limits-invalid', 'request', 'Model reader limits are invalid.', false, error); }
 }
 
+function requestedReaderSchemaVersion(args) {
+  const version = args['reader-schema-version'] ?? READER_SCHEMA_VERSION_V1;
+  if (![READER_SCHEMA_VERSION_V1, READER_SCHEMA_VERSION_V2].includes(version)) {
+    readerError('reference-request-invalid', 'request', 'The requested model-reader schema version is unsupported.');
+  }
+  return version;
+}
+
 function validateRequest(command, args, deps) {
   const limits = requestLimits(args, deps);
   // This constructs and canonicalizes the complete request-only contract without touching the
@@ -126,6 +134,8 @@ function validateRequest(command, args, deps) {
       limits,
       protocolVersion: args['expected-provider-protocol'] ?? '1',
       conversionSettings: args['conversion-settings'] ?? {},
+      readerSchemaVersion: requestedReaderSchemaVersion(args),
+      propertyExpansionLimits: args['property-expansion-limits'] ?? {},
     }));
   } catch (error) {
     if (error instanceof ModelReaderError) throw error;
@@ -172,6 +182,7 @@ async function providerReadiness(args, deps, config, expectedProviderSha256, sig
       expectedProtocolVersion: args['expected-provider-protocol'] ?? '1',
       expectedDestination: args['expected-provider-destination'],
       authorityStorePath: args['authority-store-path'],
+      readerSchemaVersion: requestedReaderSchemaVersion(args),
     });
     return {
       ...signing, provider,
@@ -218,10 +229,14 @@ async function convertAndCache(args, deps, config, readiness) {
   const initial = await hashSource(sourcePath, deps.limits);
   const sourceSha256 = exactExpectedSource(args, initial.sha256);
   const expectedProtocolVersion = args['expected-provider-protocol'] ?? '1';
+  const readerSchemaVersion = requestedReaderSchemaVersion(args);
+  const propertyExpansionLimits = args['property-expansion-limits'] ?? {};
   const canonicalRequest = buildCanonicalRequest({
     limits: deps.limits,
     protocolVersion: expectedProtocolVersion,
     conversionSettings: args['conversion-settings'] ?? {},
+    readerSchemaVersion,
+    propertyExpansionLimits,
   });
   const identity = {
     sourceSha256, canonicalRequest, providerFingerprint: readiness.provider.fingerprint,
@@ -265,10 +280,24 @@ async function convertAndCache(args, deps, config, readiness) {
         expectedProtocolVersion,
         expectedDestination: args['expected-provider-destination'],
         authorityStorePath: args['authority-store-path'],
+        readerSchemaVersion,
+        propertyExpansionLimits,
       });
       emit(deps, 'normalize');
       const geometry = normalizeRevitGlb(conversion.outputs.geometry.bytes, { limits: deps.limits });
-      const metadata = normalizeRevitMetadata(conversion.outputs.metadata.bytes, geometry.parts, { limits: deps.limits });
+      const expectedMetadataSchema = readerSchemaVersion === READER_SCHEMA_VERSION_V2 ? '2' : '1';
+      const metadata = normalizeRevitMetadata(conversion.outputs.metadata.bytes, geometry.parts, {
+        limits: deps.limits,
+        propertyExpansionLimits: canonicalRequest.propertyExpansionLimits,
+        expectedSchemaVersion: expectedMetadataSchema,
+      });
+      // The normalizer refuses a mismatch up front, so this is defence in depth
+      // against that guard being weakened. Assert on the coverage the normalizer
+      // already returned rather than re-parsing propertiesBytes, which can reach
+      // maxCanonicalPropertyBytes (16 MB default, 32 MB hard) on every read.
+      if ((metadata.coverage.metadataSchemaVersion ?? '1') !== expectedMetadataSchema) {
+        readerError('reference-metadata-invalid', 'normalize-metadata', 'Provider metadata does not match the requested reader schema version.');
+      }
       const finalSource = await hashSource(sourcePath, deps.limits);
       if (finalSource.sha256 !== sourceSha256) readerError('reference-source-changed', 'source', 'The RVT source changed during conversion.');
       const artifacts = {
@@ -329,6 +358,8 @@ async function findCachedConversion(args, deps, config, signing, expectedProvide
     limits: deps.limits,
     protocolVersion: args['expected-provider-protocol'] ?? '1',
     conversionSettings: args['conversion-settings'] ?? {},
+    readerSchemaVersion: requestedReaderSchemaVersion(args),
+    propertyExpansionLimits: args['property-expansion-limits'] ?? {},
   });
   if (!deps.hostAcquireLock || !deps.hostReleaseLock) readerError('reference-provider-host-unavailable', 'cache', 'The managed cache fence is unavailable.');
   const withMaintenanceFence = async (work) => {
@@ -362,7 +393,7 @@ function summary(result, limits) {
   const coverage = result.cache.manifest.coverage;
   const bounds = canonicalGeometryBounds(result.cache.artifacts['geometry.glb'], limits);
   return {
-    schemaVersion: 'model-reference-reader/v1', cache: result.hit ? 'hit' : 'miss',
+    schemaVersion: result.cache.manifest.identity.canonicalRequest.readerSchemaVersion, cache: result.hit ? 'hit' : 'miss',
     sourceSha256: result.cache.manifest.identity.sourceSha256,
     canonicalRequestSha256: result.cache.manifest.canonicalRequestSha256,
     providerFingerprint: result.cache.manifest.identity.providerFingerprint,
@@ -413,7 +444,7 @@ export async function runModelCommand(command, args = {}, deps = {}) {
     if (command === 'preflight') {
       const readiness = await providerReadiness(args, executionDeps, config, pin, signing);
       return {
-        schemaVersion: 'model-reference-reader/v1', ready: true, execution: readiness.provider.describe.execution,
+        schemaVersion: requestedReaderSchemaVersion(args), ready: true, execution: readiness.provider.describe.execution,
         provider: readiness.provider.describe, providerFingerprint: readiness.provider.fingerprint,
         providerFingerprintSha256: readiness.providerFingerprintSha256,
         signerFingerprintSha256: readiness.signerFingerprintSha256,
