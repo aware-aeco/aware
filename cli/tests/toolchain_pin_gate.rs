@@ -6,6 +6,7 @@
 
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
+use std::process::Command;
 
 const PIN_RUN: &str = r#"channel=$(sed -n 's/^[[:space:]]*channel[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' cli/rust-toolchain.toml | head -1)
 if [ -z "$channel" ]; then
@@ -111,37 +112,33 @@ fn declares_rustup_toolchain(value: &serde_yaml::Value) -> bool {
 }
 
 fn toolchain_files(root: &Path) -> Vec<PathBuf> {
-    fn visit(root: &Path, directory: &Path, found: &mut Vec<PathBuf>) {
-        for entry in std::fs::read_dir(directory)
-            .unwrap_or_else(|error| panic!("read {}: {error}", directory.display()))
-        {
-            let entry = entry.expect("read repository entry");
-            let path = entry.path();
-            let name = entry.file_name();
-            let name = name.to_string_lossy();
+    let output = Command::new("git")
+        .args(["-C"])
+        .arg(root)
+        .args(["ls-files", "-z"])
+        .output()
+        .unwrap_or_else(|error| panic!("list tracked files under {}: {error}", root.display()));
+    assert!(
+        output.status.success(),
+        "git ls-files failed under {}: {}",
+        root.display(),
+        String::from_utf8_lossy(&output.stderr)
+    );
 
-            if entry
-                .file_type()
-                .expect("read repository entry type")
-                .is_dir()
-            {
-                if !matches!(name.as_ref(), ".git" | "target") {
-                    visit(root, &path, found);
-                }
-            } else if name.eq_ignore_ascii_case("rust-toolchain")
-                || name.eq_ignore_ascii_case("rust-toolchain.toml")
-            {
-                found.push(
-                    path.strip_prefix(root)
-                        .expect("walked path remains under root")
-                        .to_path_buf(),
-                );
-            }
-        }
-    }
-
-    let mut found = Vec::new();
-    visit(root, root, &mut found);
+    let mut found = output
+        .stdout
+        .split(|byte| *byte == 0)
+        .filter(|path| !path.is_empty())
+        .map(|path| PathBuf::from(String::from_utf8_lossy(path).as_ref()))
+        .filter(|path| {
+            path.file_name()
+                .and_then(|name| name.to_str())
+                .is_some_and(|name| {
+                    name.eq_ignore_ascii_case("rust-toolchain")
+                        || name.eq_ignore_ascii_case("rust-toolchain.toml")
+                })
+        })
+        .collect::<Vec<_>>();
     found.sort();
     found
 }
@@ -226,6 +223,7 @@ fn cargo_job_problems(
 
     if declares_rustup_toolchain(workflow)
         || declares_rustup_toolchain(job)
+        || job.get("container").is_some_and(declares_rustup_toolchain)
         || steps.iter().any(declares_rustup_toolchain)
     {
         problems.push(format!(
@@ -389,6 +387,12 @@ fn rustup_toolchain_environment_overrides_are_rejected_at_every_scope() {
     step_scope["steps"][2]["env"] = environment.clone();
     assert!(!fixture_problems(&step_scope).is_empty());
 
+    let mut container_scope = fixture_job();
+    container_scope["container"] =
+        serde_yaml::from_str("image: rust:latest\nenv:\n  rustup_toolchain: stable")
+            .expect("fixture container is valid YAML");
+    assert!(!fixture_problems(&container_scope).is_empty());
+
     let mut workflow_scope: serde_yaml::Value =
         serde_yaml::from_str("jobs: {}").expect("fixture workflow is valid YAML");
     workflow_scope["env"] = environment;
@@ -411,6 +415,28 @@ fn a_nested_toolchain_file_is_detected_without_parsing_its_contents() {
     .expect("write canonical fixture pin");
     std::fs::write(nested.join("rust-toolchain"), "stable\n")
         .expect("write nested fixture override");
+    let ignored = root.path().join(".claude/worktrees/ignored/cli");
+    std::fs::create_dir_all(&ignored).expect("create ignored fixture worktree");
+    std::fs::write(root.path().join(".gitignore"), ".claude/worktrees/\n")
+        .expect("write fixture ignore rule");
+    std::fs::write(ignored.join("rust-toolchain.toml"), "stable\n")
+        .expect("write ignored fixture pin");
+
+    let git = |arguments: &[&str]| {
+        let output = Command::new("git")
+            .arg("-C")
+            .arg(root.path())
+            .args(arguments)
+            .output()
+            .expect("run git for fixture repository");
+        assert!(
+            output.status.success(),
+            "git {arguments:?} failed: {}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+    };
+    git(&["init", "--quiet"]);
+    git(&["add", ".gitignore", "cli", "nested"]);
 
     assert_eq!(
         toolchain_files(root.path()),
