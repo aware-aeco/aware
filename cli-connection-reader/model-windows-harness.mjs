@@ -171,6 +171,8 @@ nodes:
       expected-signer-sha256: '{{ inputs.expected-signer-sha256 }}'
 `);
   execFileSync(aware, ['app', 'install', appDirectory], { env: environment, stdio: 'pipe', windowsHide: true });
+  const installedAppSource = path.join(home, 'apps', 'rvt-reader-e2e', 'rvt-reader-e2e.flo');
+  execFileSync(aware, ['app', 'compile', installedAppSource], { env: environment, stdio: 'pipe', windowsHide: true });
   const appStdout = execFileSync(aware, [
     'app', 'run', 'rvt-reader-e2e',
     '--input', `rvt-path=${source}`,

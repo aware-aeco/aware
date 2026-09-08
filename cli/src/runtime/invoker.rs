@@ -2897,7 +2897,9 @@ impl DispatchInvoker {
             crate::manifest::loader::find_app_manifest(&app_dir).ok_or_else(|| {
                 AwareError::Validation(format!("backing app {backed_by} has no .flo/.app file"))
             })?;
-        let app = crate::manifest::loader::load_app(&manifest_path)?;
+        // Nested app-backed dispatch is still app execution: require its own
+        // compiled approval and bind parsing to the exact bytes that were hashed.
+        let (app, approved_lock) = crate::app_lock::load_approved_app_with_lock(&manifest_path)?;
         if !app.exposes_as_agent {
             return Err(AwareError::Validation(format!(
                 "app {backed_by} is not declared exposes-as-agent"
@@ -2917,6 +2919,7 @@ impl DispatchInvoker {
         // skips it: every node is stubbed and no binary is contacted.
         if !app_ctx.simulate {
             let agents = crate::manifest::loader::discover_agents_in(&self.agents_dir)?;
+            crate::app_lock::verify_agent_pins(&app, &approved_lock, &agents)?;
             // The nested app gets the same two catalogue pre-flights `aware app run`
             // applies to the app the operator named — it never had either, because
             // the command-level pre-flight only ever sees the top-level app. Missing

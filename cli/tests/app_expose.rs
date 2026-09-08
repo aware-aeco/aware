@@ -8,11 +8,24 @@ use predicates::prelude::*;
 fn write_app(src_root: &std::path::Path, name: &str, flo: &str) -> std::path::PathBuf {
     let dir = src_root.join(name);
     std::fs::create_dir_all(&dir).unwrap();
-    std::fs::write(dir.join(format!("{name}.flo")), flo).unwrap();
+    let source = dir.join(format!("{name}.flo"));
+    std::fs::write(&source, flo).unwrap();
     dir
 }
 
 fn install_app(aware: &std::path::Path, src_dir: &std::path::Path) -> assert_cmd::assert::Assert {
+    let source = std::fs::read_dir(src_dir)
+        .unwrap()
+        .flatten()
+        .map(|entry| entry.path())
+        .find(|path| path.extension().is_some_and(|extension| extension == "flo"))
+        .unwrap();
+    let _ = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", aware)
+        .args(["app", "compile"])
+        .arg(source)
+        .output();
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", aware)
@@ -121,6 +134,75 @@ fn outer_app_invokes_inner_app_as_agent() {
         "nested run trace not written under {}",
         nested.display()
     );
+}
+
+#[test]
+fn outer_app_refuses_a_stale_inner_app_approval() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let src = tmp.path().join("src");
+
+    install_app(&aware, &write_app(&src, "inner", INNER_FLO)).success();
+    install_app(&aware, &write_app(&src, "outer", OUTER_FLO)).success();
+
+    // The outer app remains approved, but its app-backed agent has changed
+    // since compilation. Nested dispatch must enforce the backing app's own
+    // approval before it opens a nested provenance trace or runs any node.
+    let installed_inner = aware.join("apps/inner/inner.flo");
+    let source = std::fs::read_to_string(&installed_inner).unwrap();
+    std::fs::write(
+        &installed_inner,
+        source.replace("always pass", "changed after approval"),
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args(["app", "run", "outer"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_APP_LOCK_STALE"));
+
+    assert!(
+        !aware.join("logs/inner/nested").exists(),
+        "a stale backing app must fail before nested provenance or dispatch"
+    );
+}
+
+#[test]
+fn preview_modes_refuse_a_stale_inner_app_approval() {
+    for mode in ["--dry-run", "--simulate"] {
+        let tmp = tempfile::tempdir().unwrap();
+        let aware = tmp.path().join("aware");
+        let src = tmp.path().join("src");
+
+        install_app(&aware, &write_app(&src, "inner", INNER_FLO)).success();
+        install_app(&aware, &write_app(&src, "outer", OUTER_FLO)).success();
+
+        let installed_inner = aware.join("apps/inner/inner.flo");
+        let source = std::fs::read_to_string(&installed_inner).unwrap();
+        std::fs::write(
+            &installed_inner,
+            source.replace("always pass", "changed before preview"),
+        )
+        .unwrap();
+
+        Command::cargo_bin("aware")
+            .unwrap()
+            .env("AWARE_HOME", &aware)
+            .args(["app", "run", "outer", mode])
+            .assert()
+            .failure()
+            .code(3)
+            .stderr(predicate::str::contains("E_APP_LOCK_STALE"));
+
+        assert!(
+            !aware.join("logs/inner/nested").exists(),
+            "{mode} must check nested approval before preview short-circuits"
+        );
+    }
 }
 
 #[test]
