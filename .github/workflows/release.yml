@@ -38,8 +38,24 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      # Read the repository pin explicitly because this job builds Rust from
+      # more than one working directory.
+      - name: Read pinned toolchain
+        id: pin
+        shell: bash
+        run: |
+          channel=$(sed -n 's/^[[:space:]]*channel[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' cli/rust-toolchain.toml | head -1)
+          if [ -z "$channel" ]; then
+            echo "::error::could not read [toolchain] channel from cli/rust-toolchain.toml"
+            exit 1
+          fi
+          echo "Pinned toolchain: $channel"
+          echo "channel=$channel" >> "$GITHUB_OUTPUT"
+
+      - name: Install Rust ${{ steps.pin.outputs.channel }}
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ steps.pin.outputs.channel }}
 
       - name: Install Node (for the connection-reader SEA bridge build)
         uses: actions/setup-node@v6
