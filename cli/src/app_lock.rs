@@ -2403,4 +2403,501 @@ requires: []
             "note must serialize its prose under `text:`; yaml:\n{yaml}"
         );
     }
+
+    // ── node classification and the kind → mode default ───────────────────────
+    //
+    // `kind` and `mode` are the two lockfile fields an approver actually reads.
+    // `aware app glass-box` colours a card red and demands a `safety:` block on
+    // `mode: write`, grey and silent on `mode: read` (`commands::app::
+    // render_glass_box_html`). That renderer is tested against hand-built
+    // `CompiledNode`s; nothing tested that `compile` puts the right two strings
+    // into the lock in the first place, so a primitive that mutates a live model
+    // could have compiled to `read` and shown up grey with no missing-safety
+    // badge, on the one surface a human approves the run from.
+
+    /// One agent whose two commands pin the ends of the mode axis, so an
+    /// `agent` node's mode is unambiguously the manifest's and not a default.
+    fn mode_axis_agents() -> Vec<crate::manifest::loader::DiscoveredAgent> {
+        let manifest: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: testagent
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-test } }
+commands:
+  emit:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: reads
+    outputs:
+      type: single
+      schema:
+        path: string
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: writes
+"#,
+        )
+        .unwrap();
+        vec![crate::manifest::loader::DiscoveredAgent {
+            manifest,
+            root: std::path::PathBuf::from("/dev/null"),
+        }]
+    }
+
+    /// One node per declarable shape, including a node that declares no
+    /// primitive at all. Returns the compiled lock so a test can read the two
+    /// published fields off it rather than off an internal.
+    fn compile_one_node_of_every_kind(tmp: &Path) -> LockFile {
+        let src = tmp.join("kinds.flo");
+        std::fs::write(
+            &src,
+            r#"app: kinds
+version: 0.0.1
+description: x
+nodes:
+  - id: n-agent-read
+    agent: testagent
+    command: emit
+  - id: n-agent-write
+    agent: testagent
+    command: consume
+  - id: n-inline
+    inline:
+      kind: transform
+      description: glue
+      code: 'return 1;'
+  - id: n-assert
+    assert:
+      expr: '1 == 1'
+  - id: n-compare
+    compare:
+      a: '{{ n-agent-read.path }}'
+      b: '{{ n-agent-read.path }}'
+      by: id
+  - id: n-snapshot
+    snapshot:
+      of:
+        agent: testagent
+        target: model
+      name: before
+  - id: n-for-each
+    for-each: '[1, 2]'
+    do:
+      - id: inner
+        inline:
+          kind: transform
+          description: inner glue
+          code: 'return 2;'
+  - id: n-sweep
+    sweep:
+      var: t
+      values: [1, 2]
+  - id: n-approve
+    approve:
+      channel: cli
+      prompt: proceed?
+  - id: n-model-lock
+    model-lock:
+      agent: testagent
+      target: model
+  - id: n-nothing
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        compile(&app, &mode_axis_agents(), &src).unwrap()
+    }
+
+    fn compiled<'a>(lock: &'a LockFile, id: &str) -> &'a CompiledNode {
+        lock.nodes
+            .iter()
+            .find(|n| n.id == id)
+            .unwrap_or_else(|| panic!("node {id} missing from lock"))
+    }
+
+    #[test]
+    fn every_declared_primitive_is_named_by_its_own_kind_in_the_lock() {
+        // `kind` is what the Glass Box prints for a node with no agent/command
+        // pair (`<em>{kind}</em>`), and what a consumer switches on to render a
+        // plan. Each arm is asserted separately: a classifier that answered
+        // "for-each" for a `sweep:` would still satisfy a test that only counted
+        // the kinds present.
+        let tmp = tempfile::tempdir().unwrap();
+        let lock = compile_one_node_of_every_kind(tmp.path());
+        for (id, want) in [
+            ("n-agent-read", "agent"),
+            ("n-inline", "inline"),
+            ("n-assert", "assert"),
+            ("n-compare", "compare"),
+            ("n-snapshot", "snapshot"),
+            ("n-for-each", "for-each"),
+            ("n-sweep", "sweep"),
+            ("n-approve", "approve"),
+            ("n-model-lock", "model-lock"),
+            ("n-nothing", "unknown"),
+        ] {
+            let node = compiled(&lock, id);
+            assert_eq!(
+                node.kind, want,
+                "node {id} compiled as kind {:?}, expected {want:?}",
+                node.kind
+            );
+        }
+    }
+
+    #[test]
+    fn only_the_observing_primitives_default_to_read_mode() {
+        // The safety-relevant half. A primitive with no agent behind it takes
+        // its mode from `kind` alone, and the split is not cosmetic: `read`
+        // renders grey and is exempt from the "safety MISSING" badge, so any
+        // model-touching primitive that landed on the read side would be
+        // approved as an observer. `for-each` and `sweep` drive their `do:`
+        // bodies, `approve` gates a write, `model-lock` takes a writer's lock on
+        // a live model — none of them belongs there.
+        let tmp = tempfile::tempdir().unwrap();
+        let lock = compile_one_node_of_every_kind(tmp.path());
+        for (id, want) in [
+            ("n-inline", "read"),
+            ("n-assert", "read"),
+            ("n-compare", "read"),
+            ("n-snapshot", "read"),
+            ("n-for-each", "write"),
+            ("n-sweep", "write"),
+            ("n-approve", "write"),
+            ("n-model-lock", "write"),
+        ] {
+            let node = compiled(&lock, id);
+            assert_eq!(
+                node.mode, want,
+                "node {id} (kind {}) compiled as mode {:?}, expected {want:?}",
+                node.kind, node.mode
+            );
+        }
+        // An agent node is NOT decided by the kind table — `agent` sits on the
+        // write side of it, yet a read-mode command must still compile to read.
+        // Without this the two rules are indistinguishable on every agent node
+        // whose command happens to be a writer.
+        assert_eq!(compiled(&lock, "n-agent-read").mode, "read");
+        assert_eq!(compiled(&lock, "n-agent-write").mode, "write");
+    }
+
+    #[test]
+    fn a_node_that_declares_no_primitive_is_unknown_and_falls_to_write() {
+        // The fail-safe, asserted on its own because it is the one case with no
+        // author intent to read: a node the compiler cannot place must be
+        // presented as a writer, so the approver sees a red card demanding a
+        // safety block rather than a grey one that reads as harmless.
+        let tmp = tempfile::tempdir().unwrap();
+        let lock = compile_one_node_of_every_kind(tmp.path());
+        let node = compiled(&lock, "n-nothing");
+        assert_eq!(node.kind, "unknown");
+        assert_eq!(
+            node.mode, "write",
+            "an unclassifiable node must default to write-mode for safety"
+        );
+        assert!(
+            node.agent.is_none() && node.command.is_none(),
+            "the fixture node declares neither, so the Glass Box labels it by kind"
+        );
+    }
+
+    #[test]
+    fn a_do_body_node_is_classified_by_its_own_declaration_not_its_parents() {
+        // `do:` bodies are flattened into the same flat node list under a scoped
+        // id and rendered as their own cards. The body of a write-mode
+        // `for-each` is an inline transform and must compile as one — inheriting
+        // the parent's kind would mislabel every body node in the lock.
+        let tmp = tempfile::tempdir().unwrap();
+        let lock = compile_one_node_of_every_kind(tmp.path());
+        let inner = compiled(&lock, "n-for-each.inner");
+        assert_eq!(inner.kind, "inline");
+        assert_eq!(inner.mode, "read");
+        assert_eq!(
+            compiled(&lock, "n-for-each").kind,
+            "for-each",
+            "the parent keeps its own kind"
+        );
+    }
+
+    #[test]
+    fn an_uninstalled_agent_is_warned_about_whatever_mode_the_author_declared() {
+        // #170 draws a line the note text alone does not: when the agent is
+        // missing, the mode is the lesser fact and every note is a WARN — an
+        // author-declared `mode: read` does not downgrade it to info, because
+        // what is actually wrong is that no manifest was consulted at all and
+        // the output schema is unknowable. Nothing exercised this branch, so a
+        // compiler that emitted `info` here (or resolved the missing agent to a
+        // silent read) would have compiled clean.
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("ghost.flo");
+        std::fs::write(
+            &src,
+            r#"app: ghost
+version: 0.0.1
+description: x
+nodes:
+  - id: silent
+    agent: ghost-agent
+    command: whatever
+  - id: says-read
+    agent: ghost-agent
+    command: whatever
+    mode: read
+  - id: says-write
+    agent: ghost-agent
+    command: whatever
+    mode: write
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        // Deliberately compiled against an EMPTY agent set — that is the
+        // "not installed" condition.
+        let lock = compile(&app, &[], &src).unwrap();
+
+        for (id, want_mode) in [
+            ("silent", "write"),
+            ("says-read", "read"),
+            ("says-write", "write"),
+        ] {
+            let node = compiled(&lock, id);
+            assert_eq!(
+                node.mode, want_mode,
+                "node {id} compiled as mode {:?}",
+                node.mode
+            );
+            assert_eq!(
+                node.notes.len(),
+                1,
+                "node {id} must carry exactly one note; got {:?}",
+                node.notes
+            );
+            assert_eq!(
+                node.notes[0].kind,
+                NoteKind::Warn,
+                "an uninstalled agent is a warning whatever the declared mode; node {id} note: {:?}",
+                node.notes[0]
+            );
+            assert!(
+                node.notes[0].text.contains("not installed"),
+                "the note must name the missing agent as the cause; got {:?}",
+                node.notes[0].text
+            );
+            assert!(
+                node.output_schema.is_none(),
+                "no manifest was read, so node {id} can carry no output schema"
+            );
+        }
+    }
+
+    #[test]
+    fn a_command_missing_from_an_installed_manifest_informs_when_told_and_warns_when_guessing() {
+        // The other half of the #170 severity split, and the discriminating one:
+        // both branches land on `mode: write`, so mode alone cannot tell them
+        // apart. An author who wrote `mode: write` has already made the call —
+        // that is provenance (info). A compiler that had to guess is reporting
+        // its own uncertainty (warn), and collapsing the two would either bury
+        // the guess or nag about a decision already made.
+        let manifest: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: testagent
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-test } }
+commands:
+  known:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: the only command this agent has
+"#,
+        )
+        .unwrap();
+        let agents = vec![crate::manifest::loader::DiscoveredAgent {
+            manifest,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("missing-cmd.flo");
+        std::fs::write(
+            &src,
+            r#"app: missing-cmd
+version: 0.0.1
+description: x
+nodes:
+  - id: declared
+    agent: testagent
+    command: absent
+    mode: write
+  - id: guessed
+    agent: testagent
+    command: absent
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+
+        let declared = compiled(&lock, "declared");
+        assert_eq!(declared.mode, "write");
+        assert_eq!(
+            declared.notes[0].kind,
+            NoteKind::Info,
+            "an author-declared write is provenance, not a warning: {:?}",
+            declared.notes[0]
+        );
+        assert!(
+            declared.notes[0]
+                .text
+                .contains("using author-declared mode: write"),
+            "the note must say the declaration was honoured; got {:?}",
+            declared.notes[0].text
+        );
+
+        let guessed = compiled(&lock, "guessed");
+        assert_eq!(guessed.mode, "write");
+        assert_eq!(
+            guessed.notes[0].kind,
+            NoteKind::Warn,
+            "a silent write-mode fallback must be surfaced: {:?}",
+            guessed.notes[0]
+        );
+        assert_ne!(
+            declared.notes[0].kind, guessed.notes[0].kind,
+            "the two branches must be distinguishable by severity, since both compile to write"
+        );
+    }
+
+    #[test]
+    fn a_reference_from_an_assert_or_a_sweep_still_orders_the_node_after_its_source() {
+        // #208 scans the substrate primitives that carry cross-node references
+        // OUTSIDE `config:`/`inputs:` — the assert expression and the sweep
+        // values are resolved at run time, so without a derived edge the
+        // scheduler is free to run them before the node they read. Both
+        // scanners were untested: deleting either left every existing test
+        // green while the assert raced its source.
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("prims.flo");
+        std::fs::write(
+            &src,
+            r#"app: prims
+version: 0.0.1
+description: x
+nodes:
+  - id: src
+    agent: testagent
+    command: emit
+  - id: gate
+    assert:
+      expr: '{{ src.rows }} > 0'
+  - id: sweeper
+    sweep:
+      var: t
+      values:
+        - '{{ src.path }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let edges: Vec<(String, String)> = derive_connections(&app)
+            .into_iter()
+            .map(|c| (c.from, c.to))
+            .collect();
+        assert!(
+            edges.contains(&("src".to_string(), "gate".to_string())),
+            "an assert reading {{{{ src.rows }}}} must be ordered after src; edges: {edges:?}"
+        );
+        assert!(
+            edges.contains(&("src".to_string(), "sweeper".to_string())),
+            "a sweep value reading {{{{ src.path }}}} must be ordered after src; edges: {edges:?}"
+        );
+    }
+
+    #[test]
+    fn a_reference_buried_in_a_list_value_is_ref_checked_like_any_other() {
+        // `collect_refs` recurses through mappings AND sequences, but only the
+        // mapping arm was exercised. App authors routinely pass lists of
+        // templated paths, and a broken reference inside one is exactly as fatal
+        // at run time (`template render: undefined value`) as a scalar — it just
+        // used to compile without a note.
+        let manifest: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: testagent
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-test } }
+commands:
+  emit:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: emits
+    outputs:
+      type: single
+      schema:
+        path: string
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: consumes
+"#,
+        )
+        .unwrap();
+        let agents = vec![crate::manifest::loader::DiscoveredAgent {
+            manifest,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("list-ref.flo");
+        std::fs::write(
+            &src,
+            r#"app: list-ref
+version: 0.0.1
+description: x
+nodes:
+  - id: src
+    agent: testagent
+    command: emit
+  - id: sink
+    agent: testagent
+    command: consume
+    config:
+      files:
+        - '{{ src.path }}'
+        - '{{ src.nope }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let sink = compiled(&lock, "sink");
+        assert!(
+            sink.notes.iter().any(|n| n.text.contains("src.nope")),
+            "a bad reference inside a list must be flagged; notes: {:?}",
+            sink.notes
+        );
+        assert!(
+            !sink.notes.iter().any(|n| n.text.contains("src.path")),
+            "the valid sibling in the same list must not be flagged; notes: {:?}",
+            sink.notes
+        );
+    }
 }
