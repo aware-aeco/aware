@@ -39,8 +39,10 @@ jobs:
       # between CI and a developer's checkout.
       - name: Read pinned toolchain
         id: pin
-        shell: bash
         run: |
+          # POSIX sed, not `grep -oP` — PCRE isn't available in every shell this
+          # might get run in (Git Bash on Windows rejects `-P` outright), and a
+          # portable expression is one a maintainer can verify locally.
           channel=$(sed -n 's/^[[:space:]]*channel[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' cli/rust-toolchain.toml | head -1)
           if [ -z "$channel" ]; then
             echo "::error::could not read [toolchain] channel from cli/rust-toolchain.toml"
@@ -248,7 +250,6 @@ jobs:
       # compilers and disagree about what a lint is.
       - name: Read pinned toolchain
         id: pin
-        shell: bash
         run: |
           channel=$(sed -n 's/^[[:space:]]*channel[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' cli/rust-toolchain.toml | head -1)
           if [ -z "$channel" ]; then
