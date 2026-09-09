@@ -48,19 +48,23 @@ pub fn checkout_tree_digests(
         "--",
     ]);
     status.args(&paths);
-    let status = status.output();
-    let status = match status {
-        Ok(output) if output.status.success() => output,
-        Ok(_) | Err(_) => {
-            return unique
-                .into_iter()
-                .map(|root| {
-                    let digest = tree_digest(&root)?;
-                    Ok((root, digest))
-                })
-                .collect();
-        }
-    };
+    let status = status.output().map_err(|error| {
+        AwareError::Validation(format!(
+            "cannot run `git status` while hashing registry bundles: {error}; run publish/reindex inside a Git checkout with Git available"
+        ))
+    })?;
+    if !status.status.success() {
+        let stderr = String::from_utf8_lossy(&status.stderr);
+        let detail = stderr.trim();
+        return Err(AwareError::Validation(format!(
+            "`git status` failed while hashing registry bundles{}; run publish/reindex inside a Git checkout and stage the exact bundle content first",
+            if detail.is_empty() {
+                String::new()
+            } else {
+                format!(": {detail}")
+            }
+        )));
+    }
     for item in status.stdout.split(|b| *b == 0).filter(|p| !p.is_empty()) {
         if item.len() < 3 || item[1] != b' ' || item[0] == b'?' || matches!(item[0], b'R' | b'C') {
             return Err(AwareError::Validation(
@@ -318,6 +322,19 @@ mod tests {
         expected.update(blob);
         assert_eq!(actual, format!("sha256:{:x}", expected.finalize()));
         assert_ne!(actual, tree_digest(&repo.join("agent")).unwrap());
+    }
+
+    #[test]
+    fn checkout_hash_fails_closed_when_git_status_fails() {
+        let tmp = tempfile::tempdir().unwrap();
+        let bundle = tmp.path().join("agent");
+        std::fs::create_dir(&bundle).unwrap();
+        std::fs::write(bundle.join("manifest.yaml"), b"agent: probe\n").unwrap();
+
+        let error = checkout_tree_digest(tmp.path(), &bundle).unwrap_err();
+        let message = error.to_string();
+        assert!(message.contains("git status"), "{message}");
+        assert!(message.contains("Git checkout"), "{message}");
     }
 
     #[cfg(unix)]

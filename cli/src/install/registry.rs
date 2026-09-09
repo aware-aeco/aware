@@ -49,6 +49,10 @@ fn install_staged_registry(
     expected_digest: Option<&str>,
 ) -> Result<String, AwareError> {
     let agent = load_agent(&src.join("manifest.yaml"))?;
+    let issues = validate_agent_on_disk(&agent, src);
+    if let Some(summary) = error_summary(&issues) {
+        return Err(AwareError::Validation(summary));
+    }
     let dst = paths.agents_dir().join(&agent.agent);
     if dst.exists() {
         return Err(AwareError::Conflict(format!(
@@ -546,6 +550,35 @@ mod tests {
     use crate::registry::{IndexEntry, VersionEntry};
     use std::collections::BTreeMap;
     use std::io::Write;
+
+    #[test]
+    fn staged_registry_install_validates_before_promotion() {
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("extracted/probe");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(
+            src.join("manifest.yaml"),
+            "agent: probe\nversion: 1.0.0\ndescription: Missing skill fixture.\nstateful: false\nlicense: MIT\ntransport:\n  cli:\n    binary: probe\ncommands:\n  ping:\n    lifecycle: single\n    description: Ping.\nskills:\n  - absent.md\n",
+        )
+        .unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+
+        let error = install_staged_registry(
+            &src,
+            &paths,
+            RegistryTrust::Unverified,
+            "probe",
+            "1.0.0",
+            None,
+        )
+        .unwrap_err();
+
+        assert!(error.to_string().contains("absent.md"), "{error}");
+        assert!(!paths.agents_dir().join("probe").exists());
+        assert!(!paths.cache_dir().join("install-staging/probe").exists());
+    }
 
     #[test]
     fn tarball_cache_name_shares_one_file_per_url_and_snapshot() {

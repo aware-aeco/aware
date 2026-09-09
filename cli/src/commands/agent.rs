@@ -1495,27 +1495,31 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
             digest_targets.push((format!("{id}@{version}"), expected_digest.to_string(), root));
         }
     }
-    match crate::install::integrity::checkout_tree_digests(
-        &repo_root,
-        &digest_targets
-            .iter()
-            .map(|(_, _, root)| root.clone())
-            .collect::<Vec<_>>(),
-    ) {
-        Ok(actual) => {
-            for (release, expected, root) in &digest_targets {
-                match actual.get(root) {
-                    Some(found) if found == expected => {}
-                    Some(found) => digest_errors.push((
-                        release.clone(),
-                        format!("bundle-digest drift: index has {expected}, checkout has {found}"),
-                    )),
-                    None => digest_errors
-                        .push((release.clone(), "bundle digest was not computed".into())),
+    if !digest_targets.is_empty() {
+        match crate::install::integrity::checkout_tree_digests(
+            &repo_root,
+            &digest_targets
+                .iter()
+                .map(|(_, _, root)| root.clone())
+                .collect::<Vec<_>>(),
+        ) {
+            Ok(actual) => {
+                for (release, expected, root) in &digest_targets {
+                    match actual.get(root) {
+                        Some(found) if found == expected => {}
+                        Some(found) => digest_errors.push((
+                            release.clone(),
+                            format!(
+                                "bundle-digest drift: index has {expected}, checkout has {found}"
+                            ),
+                        )),
+                        None => digest_errors
+                            .push((release.clone(), "bundle digest was not computed".into())),
+                    }
                 }
             }
+            Err(error) => digest_errors.push(("bundle-digests".into(), error.to_string())),
         }
-        Err(error) => digest_errors.push(("bundle-digests".into(), error.to_string())),
     }
 
     let (cat, errors) = catalog::build_catalog(&index, crate::builder::now_iso(), |subdir| {
