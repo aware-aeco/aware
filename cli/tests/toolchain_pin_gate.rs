@@ -64,6 +64,16 @@
 //! a workflow calls is outside it. It knows `dtolnay/rust-toolchain`
 //! specifically, and the Cargo-running actions named below — the classification
 //! check is what keeps that knowledge honest.
+//!
+//! The `rustup`/selector check reads the script as text, after joining the line
+//! continuations the shell joins. So it sees a selector a contributor *wrote*,
+//! in any layout — which is the failure this file exists for: a pin quietly
+//! reintroduced by an edit. It does not see one the shell assembles at run time
+//! (`c=cargo; $c +nightly build`, a selector arriving in an environment
+//! variable, a script file the step calls). Nothing that reads YAML can, and a
+//! version that tried would be back to modelling shell, which is what sank the
+//! guard this one replaced. Against a deliberate bypass the protection is review
+//! of a two-line workflow diff; this is the tripwire for the accident.
 
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
@@ -150,6 +160,27 @@ fn run_text(step: &serde_yaml::Value) -> Option<&str> {
     step.get("run").and_then(serde_yaml::Value::as_str)
 }
 
+/// The line continuations of the three shells GitHub Actions runs — bash `\`,
+/// PowerShell `` ` ``, cmd `^` — each with the newline that follows it. The
+/// shell removes these before it does anything else, so this file does too, and
+/// every check then reads the same text the shell will run.
+const LINE_CONTINUATIONS: [&str; 3] = ["\\\n", "`\n", "^\n"];
+
+/// The script as the shell will see it, lowercased: continuations joined.
+///
+/// One place, because the continuation is not only *between* words — PowerShell
+/// runs `car` + backtick-newline + `go.exe +nightly build` as
+/// `cargo.exe +nightly build` (Codex review, PR #506). Splitting first can never
+/// put that word back together, and a check that could not see the executable
+/// would not see the job as a Cargo job at all.
+fn joined_script(run: &str) -> String {
+    let mut script = run.to_ascii_lowercase();
+    for continuation in LINE_CONTINUATIONS {
+        script = script.replace(continuation, "");
+    }
+    script
+}
+
 /// A token with the shell punctuation trimmed off either end — quotes, parens,
 /// a trailing `;`. `+` is kept, because a toolchain selector is one.
 fn bare_token(token: &str) -> &str {
@@ -178,10 +209,12 @@ fn is_cargo_executable(token: &str) -> bool {
 }
 
 fn invokes_cargo(run: &str) -> bool {
-    run.split(|character: char| {
-        !(character.is_ascii_alphanumeric() || matches!(character, '_' | '-' | '.' | '/' | '\\'))
-    })
-    .any(is_cargo_executable)
+    joined_script(run)
+        .split(|character: char| {
+            !(character.is_ascii_alphanumeric()
+                || matches!(character, '_' | '-' | '.' | '/' | '\\'))
+        })
+        .any(is_cargo_executable)
 }
 
 /// The action a step (or a reusable-workflow job) names, without its `@ref` and
@@ -253,24 +286,21 @@ fn is_canonical_install(step: &serde_yaml::Value) -> bool {
 /// [`is_cargo_executable`] accepts is covered: `cargo.exe`, an absolute path, a
 /// quoted invocation.
 ///
-/// "Adjacent" has to survive a line continuation, and the three shells GitHub
-/// Actions runs spell that differently: bash `\`, PowerShell `` ` ``, cmd `^`.
-/// Rather than learn three shells, anything left of a word once the surrounding
-/// punctuation is stripped — which is what a lone `` ` `` or `^` is — does not
-/// separate two words, so it is dropped. The backslash needs the one rewrite
-/// above it, because `\` is also a legitimate character *inside* a Windows path
-/// and so cannot be treated as punctuation.
+/// "Adjacent" survives a continuation because [`joined_script`] has already
+/// removed it, and survives stray punctuation because a word that is *only*
+/// punctuation once trimmed does not separate two others.
 ///
 /// That is still not a model of shell syntax: the question is only whether these
 /// two words stand next to each other. Every finding this file has taken has been
-/// a place where two of its own notions disagreed — what Cargo is called, and now
-/// what counts as adjacent — so both are single definitions.
+/// a place where two of its own notions disagreed — what Cargo is called, what
+/// counts as adjacent, which text is read — so each of those is now one
+/// definition, shared.
 fn has_toolchain_override(run: &str) -> bool {
-    let lower = run.to_ascii_lowercase().replace("\\\n", "");
-    if lower.contains("rustup") {
+    let script = joined_script(run);
+    if script.contains("rustup") {
         return true;
     }
-    lower
+    script
         .split_whitespace()
         .map(bare_token)
         .filter(|word| !word.is_empty())
@@ -670,6 +700,10 @@ fn later_toolchain_overrides_are_rejected_without_parsing_shell() {
         // pwsh and the backtick form is in scope (Codex review, PR #506).
         "cargo.exe `\n  +nightly build",
         "cargo ^\n  +stable build",
+        // A continuation inside the word itself: the shell joins it, so this is
+        // `cargo.exe +nightly build` (Codex review, PR #506).
+        "car`\ngo.exe +nightly build",
+        "car\\\ngo +nightly build",
     ] {
         assert!(has_toolchain_override(run), "accepted override: {run}");
         let mut job = fixture_job();
@@ -701,6 +735,19 @@ fn later_toolchain_overrides_are_rejected_without_parsing_shell() {
     assert!(!has_toolchain_override(
         "cargo build `\n  --locked `\n  --all-targets"
     ));
+    // Joining a word must not manufacture Cargo where the script names something
+    // else.
+    assert!(!has_toolchain_override("my-car`\ngo-tool build +x"));
+    assert!(!invokes_cargo("my-car`\ngo-tool build"));
+
+    // The same joining has to happen for the Cargo-invocation check, or a job
+    // whose only Cargo call is wrapped this way is not seen as a Cargo job at
+    // all and the whole guard skips it.
+    assert!(invokes_cargo("car`\ngo.exe build --locked"));
+    let mut split_word = fixture_job();
+    split_word["steps"][2]["run"] =
+        serde_yaml::Value::String("car`\ngo.exe +nightly build".to_owned());
+    assert!(!fixture_problems(&split_word).is_empty());
 }
 
 #[test]
