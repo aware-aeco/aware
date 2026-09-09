@@ -52,6 +52,7 @@ pub fn run_paste_flow(integration: &str) -> Result<StoredToken, AwareError> {
                     token_type: "Bearer".into(),
                     integration: integration.to_string(),
                     obtained_at: now,
+                    generation: Some(crate::auth::keychain::new_credential_generation()),
                     source: TokenSource::Paste,
                 });
             }

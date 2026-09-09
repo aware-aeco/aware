@@ -341,6 +341,27 @@ The trimble-connect agent can now make authenticated calls.
 
 Subsequent commands transparently use the credential. Refresh happens automatically inside `aware app run`.
 
+Machine-readable connect surfaces expose capability metadata without exposing
+token material. A successful `aware --json connect ...` result, each entry from
+`aware --json connect --list [--as <alias>]`, and each credential entry in
+`aware doctor --json` includes:
+
+- `scopes`: the granted OAuth scope identifiers, sorted and deduplicated. When a
+  successful OAuth token response omits `scope`, the scopes sent in that grant
+  request are recorded. User-imported opaque tokens report only scope metadata
+  supplied by the imported credential object; AWARE never infers a grant from a
+  bearer token.
+- `generation`: an opaque random identifier for the stored material grant. A
+  fresh connection or import mints a new generation. Refresh preserves it when
+  the normalized grant is unchanged and replaces it when the provider reports a
+  materially different scope set. Disconnect removes it with the credential.
+
+Credentials stored by older CLI versions remain valid. Their first read lazily
+materializes and persists a generation; repeated reads therefore return the same
+value. Missing or unreadable credentials report `generation: null` and an empty
+`scopes` array. The generation is not derived from access or refresh token bytes
+and is not an authenticator.
+
 `connect` covers the integrations AWARE ships an OAuth client for, and validates its
 `INTEGRATION` argument against that list. For a handle AWARE runs no OAuth flow for, use
 `aware credential` below.

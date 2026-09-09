@@ -67,16 +67,24 @@ pub fn ensure_fresh(
     let access_token = refreshed
         .access_token()
         .ok_or_else(|| AwareError::Validation("refresh: missing access_token".into()))?;
+    let old_scope = keychain::normalized_scope_string(&token.scope);
+    let new_scope = keychain::normalized_scope_string(refreshed.scope().unwrap_or(&token.scope));
+    let generation = if new_scope == old_scope {
+        token.generation.clone()
+    } else {
+        Some(keychain::new_credential_generation())
+    };
     let new_token = StoredToken {
         access_token,
         refresh_token: refreshed
             .refresh_token()
             .or_else(|| token.refresh_token.clone()),
         expires_at: refreshed.expires_at(now),
-        scope: refreshed.scope().unwrap_or(&token.scope).to_string(),
+        scope: new_scope,
         token_type: token.token_type.clone(),
         integration: integration.to_string(),
         obtained_at: now,
+        generation,
         source: token.source.clone(),
     };
     keychain::store_token(&new_token, alias, aware_home)?;
@@ -238,6 +246,7 @@ mod tests {
             token_type: "Bearer".into(),
             integration: INTEGRATION.into(),
             obtained_at: now - 3600,
+            generation: Some(keychain::new_credential_generation()),
             source: TokenSource::Oauth,
         };
         keychain::store_token(&token, Some(alias), home).unwrap();
@@ -464,9 +473,13 @@ mod tests {
         let endpoint = spawn_token_endpoint(r#"{"access_token":"refreshed-access"}"#);
         write_profile(tmp.path(), &endpoint.url);
         let _seeded = seed_token(tmp.path(), "awaretest-keep-scope", -10, Some("rt-stored"));
+        let old_generation = stored(tmp.path(), "awaretest-keep-scope")
+            .unwrap()
+            .generation;
 
         let token = ensure_fresh(INTEGRATION, Some("awaretest-keep-scope"), tmp.path()).unwrap();
-        assert_eq!(token.scope, "openid offline_access");
+        assert_eq!(token.scope, "offline_access openid");
+        assert_eq!(token.generation, old_generation);
     }
 
     #[test]
@@ -477,8 +490,35 @@ mod tests {
         write_profile(tmp.path(), &endpoint.url);
         let _seeded = seed_token(tmp.path(), "awaretest-new-scope", -10, Some("rt-stored"));
 
+        let old_generation = stored(tmp.path(), "awaretest-new-scope")
+            .unwrap()
+            .generation;
         let token = ensure_fresh(INTEGRATION, Some("awaretest-new-scope"), tmp.path()).unwrap();
         assert_eq!(token.scope, "openid");
+        assert_ne!(token.generation, old_generation);
+    }
+
+    #[test]
+    fn semantically_identical_reordered_scope_preserves_generation() {
+        let tmp = tempfile::tempdir().unwrap();
+        let endpoint = spawn_token_endpoint(
+            r#"{"access_token":"refreshed-access","scope":"offline_access openid openid"}"#,
+        );
+        write_profile(tmp.path(), &endpoint.url);
+        let _seeded = seed_token(
+            tmp.path(),
+            "awaretest-normalized-scope",
+            -10,
+            Some("rt-stored"),
+        );
+        let old_generation = stored(tmp.path(), "awaretest-normalized-scope")
+            .unwrap()
+            .generation;
+
+        let token =
+            ensure_fresh(INTEGRATION, Some("awaretest-normalized-scope"), tmp.path()).unwrap();
+        assert_eq!(token.scope, "offline_access openid");
+        assert_eq!(token.generation, old_generation);
     }
 
     #[test]

@@ -212,6 +212,8 @@ fn credentials_distinguish_valid_expired_and_missing_for_every_known_integration
     let tc = by_id("trimble-connect");
     assert_eq!(tc["status"], "valid");
     assert_eq!(tc["source"], "oauth");
+    assert_eq!(tc["scopes"], serde_json::json!(["s"]));
+    assert!(tc["generation"].as_str().is_some());
     assert!(
         tc["expires_in_secs"].as_i64().unwrap() > 0,
         "a valid token reports the time it has left: {tc:#?}"
@@ -228,6 +230,8 @@ fn credentials_distinguish_valid_expired_and_missing_for_every_known_integration
     assert_eq!(gw["status"], "missing");
     assert_eq!(gw["source"], serde_json::Value::Null);
     assert_eq!(gw["expires_in_secs"], serde_json::Value::Null);
+    assert_eq!(gw["scopes"], serde_json::json!([]));
+    assert_eq!(gw["generation"], serde_json::Value::Null);
 }
 
 #[test]

@@ -13,6 +13,7 @@ use crate::error::AwareError;
 pub fn run_pkce_flow(
     config: &IntegrationConfig,
     extra_scopes: &[String],
+    json: bool,
 ) -> Result<StoredToken, AwareError> {
     // 1. PKCE pair
     let (verifier, challenge) = make_pkce_pair();
@@ -41,12 +42,18 @@ pub fn run_pkce_flow(
     );
 
     // 5. Open browser
-    println!("Opening {} OAuth in your default browser...", config.id);
-    println!("If it doesn't open automatically, visit:\n  {auth_url}");
+    progress(
+        json,
+        &format!("Opening {} OAuth in your default browser...", config.id),
+    );
+    progress(
+        json,
+        &format!("If it doesn't open automatically, visit:\n  {auth_url}"),
+    );
     let _ = webbrowser::open(&auth_url);
 
     // 6. Wait for callback
-    println!("\u{2713} Listening on {redirect_uri}");
+    progress(json, &format!("\u{2713} Listening on {redirect_uri}"));
     let request = server
         .recv()
         .map_err(|e| AwareError::Network(format!("callback recv: {e}")))?;
@@ -84,8 +91,8 @@ pub fn run_pkce_flow(
     let _ = request.respond(response);
 
     // 8. Exchange code for token
-    println!("\u{2713} Received auth code");
-    println!("\u{2713} Exchanging for tokens...");
+    progress(json, "\u{2713} Received auth code");
+    progress(json, "\u{2713} Exchanging for tokens...");
 
     let mut body_params = vec![
         ("grant_type", "authorization_code".to_string()),
@@ -121,7 +128,15 @@ pub fn run_pkce_flow(
 
     // 9. Build StoredToken
     let now = super::unix_now_secs()?;
-    TokenResponse::new(token_json).into_new_credential(&config.id, now)
+    TokenResponse::new(token_json).into_new_credential(&config.id, now, &all_scopes)
+}
+
+fn progress(json: bool, message: &str) {
+    if json {
+        eprintln!("{message}");
+    } else {
+        println!("{message}");
+    }
 }
 
 fn make_pkce_pair() -> (String, String) {

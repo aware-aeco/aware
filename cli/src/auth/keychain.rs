@@ -39,8 +39,29 @@ pub struct StoredToken {
     pub token_type: String,
     pub integration: String,
     pub obtained_at: i64,
+    /// Opaque identity for the material grant. It is deliberately random rather
+    /// than derived from any secret-bearing token bytes.
+    #[serde(default)]
+    pub generation: Option<String>,
     #[serde(default = "default_source")]
     pub source: TokenSource,
+}
+
+pub(crate) fn new_credential_generation() -> String {
+    uuid::Uuid::new_v4().to_string()
+}
+
+/// OAuth scope identifiers are case-sensitive. Normalization therefore only
+/// removes representation differences: whitespace, duplicates and ordering.
+pub(crate) fn normalized_scopes(scope: &str) -> Vec<String> {
+    let mut scopes: Vec<String> = scope.split_whitespace().map(String::from).collect();
+    scopes.sort();
+    scopes.dedup();
+    scopes
+}
+
+pub(crate) fn normalized_scope_string(scope: &str) -> String {
+    normalized_scopes(scope).join(" ")
 }
 
 fn account_name(integration: &str, alias: Option<&str>) -> String {
@@ -242,24 +263,44 @@ pub fn load_token(
 ) -> Result<Option<StoredToken>, AwareError> {
     let account = account_name(integration, alias);
 
-    if !keyring_enabled() {
-        return read_cred_file(integration, alias, aware_home);
-    }
+    let loaded = if !keyring_enabled() {
+        read_cred_file(integration, alias, aware_home)?
+    } else {
+        let entry = keyring::Entry::new(SERVICE_NAME, &account)
+            .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
 
-    let entry = keyring::Entry::new(SERVICE_NAME, &account)
-        .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+        match entry.get_password() {
+            Ok(body) => Some(
+                serde_json::from_str(&body)
+                    .map_err(|e| AwareError::Validation(format!("token JSON: {e}")))?,
+            ),
+            Err(keyring::Error::NoEntry) => {
+                // Nothing in the keychain — check the file fallback.
+                read_cred_file(integration, alias, aware_home)?
+            }
+            Err(e) => return Err(AwareError::PermissionDenied(format!("keyring read: {e}"))),
+        }
+    };
 
-    match entry.get_password() {
-        Ok(body) => {
-            let token: StoredToken = serde_json::from_str(&body)
-                .map_err(|e| AwareError::Validation(format!("token JSON: {e}")))?;
+    match loaded {
+        Some(mut token) => {
+            // Credentials written before generation metadata existed stay
+            // usable. Materialize one stable opaque value on their first read
+            // and persist it through the same atomic/keychain path as any other
+            // credential update. Scope normalization alone is not a grant
+            // change, so an already-present generation is preserved.
+            let normalized_scope = normalized_scope_string(&token.scope);
+            let needs_write = token.generation.is_none() || token.scope != normalized_scope;
+            token.scope = normalized_scope;
+            if token.generation.is_none() {
+                token.generation = Some(new_credential_generation());
+            }
+            if needs_write {
+                store_token(&token, alias, aware_home)?;
+            }
             Ok(Some(token))
         }
-        Err(keyring::Error::NoEntry) => {
-            // Nothing in the keychain — check the file fallback.
-            read_cred_file(integration, alias, aware_home)
-        }
-        Err(e) => Err(AwareError::PermissionDenied(format!("keyring read: {e}"))),
+        None => Ok(None),
     }
 }
 
@@ -514,6 +555,10 @@ pub(crate) fn stored_token_from_credential_json(
             .to_string(),
         integration: integration.to_string(),
         obtained_at: now,
+        // The shared parser is also used for legacy credentials read from the
+        // store. Leave generation absent here so `load_token` can materialize
+        // and persist it exactly once; fresh import callers mint explicitly.
+        generation: None,
         source: TokenSource::Paste,
     })
 }
@@ -651,6 +696,41 @@ mod tests {
     }
 
     #[test]
+    fn scope_normalization_is_stable_and_case_sensitive() {
+        assert_eq!(
+            normalized_scopes("  Mail.Send openid Mail.Send mail.send  "),
+            ["Mail.Send", "mail.send", "openid"]
+        );
+    }
+
+    #[test]
+    fn a_legacy_credential_lazily_gets_one_stable_generation() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("credentials");
+        std::fs::create_dir_all(&dir).unwrap();
+        let path = dir.join("google-workspace.json");
+        std::fs::write(
+            &path,
+            r#"{"access_token":"tk","scope":"openid  email openid"}"#,
+        )
+        .unwrap();
+
+        let first = load_token("google-workspace", None, tmp.path())
+            .unwrap()
+            .unwrap();
+        let second = load_token("google-workspace", None, tmp.path())
+            .unwrap()
+            .unwrap();
+        assert_eq!(first.scope, "email openid");
+        assert_eq!(first.generation, second.generation);
+        assert!(first.generation.is_some());
+
+        let persisted: serde_json::Value =
+            serde_json::from_str(&std::fs::read_to_string(path).unwrap()).unwrap();
+        assert_eq!(persisted["generation"], first.generation.unwrap());
+    }
+
+    #[test]
     fn account_name_with_alias() {
         assert_eq!(account_name("trimble-connect", None), "trimble-connect");
         assert_eq!(
@@ -671,6 +751,7 @@ mod tests {
             token_type: "Bearer".into(),
             integration: "microsoft-365".into(),
             obtained_at: 1_735_686_000,
+            generation: Some("test-generation".into()),
             source: TokenSource::Paste,
         };
 
@@ -921,6 +1002,7 @@ mod tests {
             token_type: "Bearer".into(),
             integration: "test-integration-keyring".into(),
             obtained_at: 1_735_686_000,
+            generation: Some("test-generation".into()),
             source: TokenSource::Oauth,
         };
         store_token(&token, None, aware_home).unwrap();
@@ -943,6 +1025,7 @@ mod tests {
             token_type: "Bearer".into(),
             integration: "test".into(),
             obtained_at: 0,
+            generation: Some("test-generation".into()),
             source: TokenSource::Paste,
         };
         let s = serde_json::to_string(&t).unwrap();

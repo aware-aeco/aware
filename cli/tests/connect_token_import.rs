@@ -479,3 +479,88 @@ fn disconnect_with_an_alias_clears_that_alias_and_not_the_default() {
         "disconnecting an alias must not clear the default account"
     );
 }
+
+#[test]
+fn successful_json_import_returns_non_secret_capability_metadata() {
+    let tmp = tempfile::tempdir().unwrap();
+    let input = tmp.path().join("token.json");
+    std::fs::write(
+        &input,
+        r#"{"access_token":"must-not-leak","scope":"openid  mail.send openid"}"#,
+    )
+    .unwrap();
+
+    let run = || {
+        let out = Command::cargo_bin("aware")
+            .unwrap()
+            .env("AWARE_HOME", tmp.path())
+            .env("AWARE_DISABLE_KEYRING", "1")
+            .args([
+                "--json",
+                "connect",
+                "google-workspace",
+                "--from-file",
+                input.to_str().unwrap(),
+            ])
+            .assert()
+            .success()
+            .get_output()
+            .stdout
+            .clone();
+        serde_json::from_slice::<serde_json::Value>(&out).unwrap()
+    };
+
+    let first = run();
+    assert_eq!(first["status"], "connected");
+    assert_eq!(first["scopes"], serde_json::json!(["mail.send", "openid"]));
+    assert!(first["generation"].as_str().is_some());
+    assert!(!first.to_string().contains("must-not-leak"));
+
+    let stored: serde_json::Value = serde_json::from_str(
+        &std::fs::read_to_string(cred_file(tmp.path(), "google-workspace")).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(stored["generation"], first["generation"]);
+
+    let second = run();
+    assert_ne!(second["generation"], first["generation"]);
+}
+
+#[test]
+fn list_as_alias_reads_the_alias_slot_and_reports_which_account_was_checked() {
+    let tmp = tempfile::tempdir().unwrap();
+    seed_oauth_credential(tmp.path(), "google-workspace.personal", 7_200);
+
+    let out = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .env("AWARE_DISABLE_KEYRING", "1")
+        .args(["--json", "connect", "--list", "--as", "personal"])
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    let entries: serde_json::Value = serde_json::from_slice(&out).unwrap();
+    let google = entries
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|entry| entry["integration"] == "google-workspace")
+        .unwrap();
+    assert_eq!(google["alias"], "personal");
+    assert_eq!(google["status"], "valid");
+    assert_eq!(google["scopes"], serde_json::json!(["openid"]));
+    assert!(google["generation"].as_str().is_some());
+}
+
+#[test]
+fn list_lazily_materializes_one_stable_generation_for_legacy_credentials() {
+    let tmp = tempfile::tempdir().unwrap();
+    seed_oauth_credential(tmp.path(), "google-workspace", 7_200);
+
+    let first = status_entry(tmp.path(), "google-workspace");
+    let second = status_entry(tmp.path(), "google-workspace");
+    assert!(first["generation"].as_str().is_some());
+    assert_eq!(first["generation"], second["generation"]);
+}
