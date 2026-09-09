@@ -9,6 +9,16 @@ use crate::error::AwareError;
 const DOMAIN: &[u8] = b"aware-agent-bundle-tree-v1\0";
 
 pub fn tree_digest(root: &Path) -> Result<String, AwareError> {
+    // Inspect the path as named before canonicalizing it. Canonicalization follows
+    // a root symlink/junction and would otherwise erase the evidence that the
+    // caller crossed an indirection boundary before `collect` can reject it.
+    let root_metadata = std::fs::symlink_metadata(root)?;
+    if root_metadata.file_type().is_symlink() || is_reparse_point(&root_metadata) {
+        return Err(AwareError::Validation(format!(
+            "agent bundle root contains symlink/reparse indirection: {}",
+            root.display()
+        )));
+    }
     let root = root.canonicalize()?;
     let mut files = Vec::new();
     collect(&root, &root, &mut files)?;
@@ -339,11 +349,50 @@ mod tests {
 
     #[cfg(unix)]
     #[test]
-    fn rejects_symlinks() {
+    fn rejects_nested_symlinks() {
         use std::os::unix::fs::symlink;
         let tmp = tempfile::tempdir().unwrap();
         std::fs::write(tmp.path().join("target"), b"x").unwrap();
         symlink("target", tmp.path().join("link")).unwrap();
         assert!(tree_digest(tmp.path()).is_err());
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn rejects_symlink_bundle_root_before_canonicalizing() {
+        use std::os::unix::fs::symlink;
+        let tmp = tempfile::tempdir().unwrap();
+        let target = tmp.path().join("target");
+        std::fs::create_dir(&target).unwrap();
+        std::fs::write(target.join("manifest.yaml"), b"agent: probe\n").unwrap();
+        let link = tmp.path().join("bundle-link");
+        symlink(&target, &link).unwrap();
+
+        let error = tree_digest(&link).unwrap_err();
+        assert!(error.to_string().contains("bundle root"), "{error}");
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn rejects_junction_bundle_root_before_canonicalizing() {
+        let tmp = tempfile::tempdir().unwrap();
+        let target = tmp.path().join("target");
+        std::fs::create_dir(&target).unwrap();
+        std::fs::write(target.join("manifest.yaml"), b"agent: probe\n").unwrap();
+        let junction = tmp.path().join("bundle-junction");
+        // Directory junction creation does not require the symlink privilege and
+        // exercises the NTFS reparse-point case that canonicalize would follow.
+        let status = std::process::Command::new("cmd.exe")
+            .args(["/C", "mklink", "/J"])
+            .arg(&junction)
+            .arg(&target)
+            .stdout(std::process::Stdio::null())
+            .stderr(std::process::Stdio::null())
+            .status()
+            .unwrap();
+        assert!(status.success(), "failed to create test junction");
+
+        let error = tree_digest(&junction).unwrap_err();
+        assert!(error.to_string().contains("bundle root"), "{error}");
     }
 }
