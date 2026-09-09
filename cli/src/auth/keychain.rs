@@ -122,7 +122,7 @@ pub fn store_token(
     let account = account_name(&token.integration, alias);
     let _lock = acquire_account_lock(aware_home, &account)
         .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
-    store_token_unlocked(token, alias, aware_home)
+    store_token_unlocked(token, aware_home, &account)
 }
 
 /// Replace `expected` only if it is still the complete credential currently
@@ -132,28 +132,26 @@ pub fn store_token(
 pub(crate) fn compare_and_store_token(
     expected: &CredentialSnapshot,
     replacement: &StoredToken,
-    alias: Option<&str>,
     aware_home: &Path,
 ) -> Result<(), AwareError> {
-    if expected.integration != replacement.integration {
-        return Err(AwareError::Internal(
-            "credential compare-and-store integration mismatch".into(),
-        ));
-    }
-    let account = account_name(&expected.integration, alias);
-    let _lock = acquire_account_lock(aware_home, &account)
+    let account = &expected.account;
+    let _lock = acquire_account_lock(aware_home, account)
         .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
-    let current = load_token_raw(&expected.integration, alias, aware_home)?;
+    let current = load_token_raw(
+        &expected.requested_integration,
+        expected.alias.as_deref(),
+        aware_home,
+    )?;
     let Some(current) = current else {
-        return Err(refresh_conflict(&account));
+        return Err(refresh_conflict(account));
     };
     if &current.snapshot != expected {
-        return Err(refresh_conflict(&account));
+        return Err(refresh_conflict(account));
     }
     // A successful refresh is a credential rotation, so retain store_token's
     // normal backend-selection/fallback policy. Only metadata migration is
     // constrained to the backend it was read from.
-    store_token_unlocked(replacement, alias, aware_home)
+    store_token_unlocked(replacement, aware_home, account)
 }
 
 fn refresh_conflict(account: &str) -> AwareError {
@@ -166,18 +164,16 @@ fn refresh_conflict(account: &str) -> AwareError {
 /// per-account lock.
 fn store_token_unlocked(
     token: &StoredToken,
-    alias: Option<&str>,
     aware_home: &Path,
+    account: &str,
 ) -> Result<(), AwareError> {
     let body = serde_json::to_string(token)
         .map_err(|e| AwareError::Internal(format!("serialize token: {e}")))?;
-    let account = account_name(&token.integration, alias);
-
     if !keyring_enabled() {
-        return write_cred_file(aware_home, &account, &body);
+        return write_cred_file(aware_home, account, &body);
     }
 
-    let entry = keyring::Entry::new(SERVICE_NAME, &account)
+    let entry = keyring::Entry::new(SERVICE_NAME, account)
         .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
 
     match entry.set_password(&body) {
@@ -194,7 +190,7 @@ fn store_token_unlocked(
         // A removal we cannot complete is therefore an error, not a shrug: the
         // caller must not be told the rotation succeeded while the value it
         // replaced is still reachable.
-        Ok(()) => remove_cred_file(aware_home, &account),
+        Ok(()) => remove_cred_file(aware_home, account),
         Err(e) => {
             // Keyring write failed — most commonly the Windows Credential Manager
             // 2 560-byte limit. Fall back to a credentials file so large OAuth
@@ -203,7 +199,7 @@ fn store_token_unlocked(
                 "aware: keyring write failed ({e}); \
                  falling back to ~/.aware/credentials file"
             );
-            fall_back_to_file(&entry, aware_home, &account, &body)
+            fall_back_to_file(&entry, aware_home, account, &body)
         }
     }
 }
@@ -225,18 +221,23 @@ struct LoadedToken {
 /// presentation/authentication token.
 #[derive(PartialEq, Eq)]
 pub(crate) struct CredentialSnapshot {
-    integration: String,
+    account: String,
+    requested_integration: String,
+    alias: Option<String>,
     backend: TokenBackend,
     body_sha256: [u8; 32],
 }
 
 fn credential_snapshot(
     integration: &str,
+    alias: Option<&str>,
     backend: TokenBackend,
     body: &[u8],
 ) -> CredentialSnapshot {
     CredentialSnapshot {
-        integration: integration.to_string(),
+        account: account_name(integration, alias),
+        requested_integration: integration.to_string(),
+        alias: alias.map(String::from),
         backend,
         body_sha256: Sha256::digest(body).into(),
     }
@@ -244,11 +245,18 @@ fn credential_snapshot(
 
 fn snapshot_for_token(
     token: &StoredToken,
+    requested_integration: &str,
+    alias: Option<&str>,
     backend: TokenBackend,
 ) -> Result<CredentialSnapshot, AwareError> {
     let body = serde_json::to_vec(token)
         .map_err(|e| AwareError::Internal(format!("serialize token snapshot: {e}")))?;
-    Ok(credential_snapshot(&token.integration, backend, &body))
+    Ok(credential_snapshot(
+        requested_integration,
+        alias,
+        backend,
+        &body,
+    ))
 }
 
 pub(crate) struct RefreshTokenLoad {
@@ -262,17 +270,16 @@ pub(crate) struct RefreshTokenLoad {
 /// The caller must hold the per-account lock.
 fn store_token_to_backend_unlocked(
     token: &StoredToken,
-    alias: Option<&str>,
     aware_home: &Path,
     backend: TokenBackend,
+    account: &str,
 ) -> Result<(), AwareError> {
     let body = serde_json::to_string(token)
         .map_err(|e| AwareError::Internal(format!("serialize token: {e}")))?;
-    let account = account_name(&token.integration, alias);
     match backend {
-        TokenBackend::File => write_cred_file(aware_home, &account, &body),
+        TokenBackend::File => write_cred_file(aware_home, account, &body),
         TokenBackend::Keyring => {
-            let entry = keyring::Entry::new(SERVICE_NAME, &account)
+            let entry = keyring::Entry::new(SERVICE_NAME, account)
                 .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
             entry
                 .set_password(&body)
@@ -436,10 +443,10 @@ pub(crate) fn load_token_for_refresh(
     let backend = under_lock.backend;
     let authoritative_snapshot = under_lock.snapshot;
     let (token, persisted) = materialize_generation_with_status(under_lock.token, |updated| {
-        store_token_to_backend_unlocked(updated, alias, aware_home, backend)
+        store_token_to_backend_unlocked(updated, aware_home, backend, &account)
     });
     let snapshot = if persisted {
-        snapshot_for_token(&token, backend)?
+        snapshot_for_token(&token, integration, alias, backend)?
     } else {
         authoritative_snapshot
     };
@@ -466,9 +473,9 @@ fn load_token_raw(
 ) -> Result<Option<LoadedToken>, AwareError> {
     let account = account_name(integration, alias);
 
-    let mut loaded = if !keyring_enabled() {
+    let loaded = if !keyring_enabled() {
         read_cred_file_with_body(integration, alias, aware_home)?.map(|(token, body)| LoadedToken {
-            snapshot: credential_snapshot(integration, TokenBackend::File, &body),
+            snapshot: credential_snapshot(integration, alias, TokenBackend::File, &body),
             token,
             backend: TokenBackend::File,
         })
@@ -481,13 +488,23 @@ fn load_token_raw(
                 token: serde_json::from_str(&body)
                     .map_err(|e| AwareError::Validation(format!("token JSON: {e}")))?,
                 backend: TokenBackend::Keyring,
-                snapshot: credential_snapshot(integration, TokenBackend::Keyring, body.as_bytes()),
+                snapshot: credential_snapshot(
+                    integration,
+                    alias,
+                    TokenBackend::Keyring,
+                    body.as_bytes(),
+                ),
             }),
             Err(keyring::Error::NoEntry) => {
                 // Nothing in the keychain — check the file fallback.
                 read_cred_file_with_body(integration, alias, aware_home)?.map(|(token, body)| {
                     LoadedToken {
-                        snapshot: credential_snapshot(integration, TokenBackend::File, &body),
+                        snapshot: credential_snapshot(
+                            integration,
+                            alias,
+                            TokenBackend::File,
+                            &body,
+                        ),
                         token,
                         backend: TokenBackend::File,
                     }
@@ -496,20 +513,6 @@ fn load_token_raw(
             Err(e) => return Err(AwareError::PermissionDenied(format!("keyring read: {e}"))),
         }
     };
-
-    if let Some(value) = loaded.as_mut() {
-        if value.token.integration == account && alias.is_some() {
-            // Older/manual alias files sometimes embedded the qualified account
-            // instead of the base integration. Preserve that readable shape but
-            // canonicalize the in-memory destination so metadata cannot be
-            // written to `<integration>.<alias>.<alias>`.
-            value.token.integration = integration.to_string();
-        } else if value.token.integration != integration {
-            return Err(AwareError::Validation(format!(
-                "credential integration metadata does not match requested account {account}"
-            )));
-        }
-    }
 
     Ok(loaded)
 }
@@ -1013,7 +1016,7 @@ mod tests {
     }
 
     #[test]
-    fn copied_credential_with_mismatched_integration_cannot_write_another_slot() {
+    fn copied_credential_materializes_only_the_requested_account_slot() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().join("credentials");
         std::fs::create_dir_all(&dir).unwrap();
@@ -1033,17 +1036,26 @@ mod tests {
         let copied_path = dir.join("google-workspace.json");
         std::fs::write(&real_path, &body).unwrap();
         std::fs::write(&copied_path, &body).unwrap();
-        let entries_before = credential_entry_names(&dir);
-
-        let err = load_token("google-workspace", None, tmp.path()).unwrap_err();
-        assert!(
-            matches!(&err, AwareError::Validation(message) if message.contains("google-workspace")),
-            "expected an account-bound validation error, got {err:?}"
-        );
-        assert!(!err.to_string().contains("other-slot-secret"));
+        let loaded = load_token("google-workspace", None, tmp.path())
+            .unwrap()
+            .unwrap();
+        assert_eq!(loaded.access_token, "other-slot-secret");
+        assert!(loaded.generation.is_some());
         assert_eq!(std::fs::read(&real_path).unwrap(), body);
-        assert_eq!(std::fs::read(&copied_path).unwrap(), body);
-        assert_eq!(credential_entry_names(&dir), entries_before);
+        assert_ne!(std::fs::read(&copied_path).unwrap(), body);
+
+        let requested_lock = generation_lock_path(tmp.path(), "google-workspace");
+        let embedded_lock = generation_lock_path(tmp.path(), "microsoft-365");
+        assert!(requested_lock.is_file());
+        assert!(!embedded_lock.exists());
+        assert_eq!(
+            credential_entry_names(&dir),
+            vec![
+                requested_lock.file_name().unwrap().to_os_string(),
+                copied_path.file_name().unwrap().to_os_string(),
+                real_path.file_name().unwrap().to_os_string(),
+            ]
+        );
     }
 
     fn credential_entry_names(dir: &Path) -> Vec<std::ffi::OsString> {
@@ -1053,6 +1065,39 @@ mod tests {
             .collect();
         entries.sort();
         entries
+    }
+
+    fn generation_lock_path(aware_home: &Path, account: &str) -> PathBuf {
+        let key = format!("{:x}", Sha256::digest(account.as_bytes()));
+        aware_home
+            .join("credentials")
+            .join(format!(".generation-{key}.lock"))
+    }
+
+    #[test]
+    fn direct_alias_qualified_lookup_materializes_the_exact_account() {
+        let tmp = tempfile::tempdir().unwrap();
+        let token = StoredToken {
+            access_token: "aliased-token".into(),
+            refresh_token: None,
+            expires_at: 0,
+            scope: "b a".into(),
+            token_type: "Bearer".into(),
+            integration: "custom-handle".into(),
+            obtained_at: 1,
+            generation: None,
+            source: TokenSource::Paste,
+        };
+        store_token(&token, Some("personal"), tmp.path()).unwrap();
+
+        let loaded = load_token("custom-handle.personal", None, tmp.path())
+            .unwrap()
+            .unwrap();
+        assert_eq!(loaded.access_token, "aliased-token");
+        assert_eq!(loaded.scope, "a b");
+        assert!(loaded.generation.is_some());
+        assert!(cred_file_path(tmp.path(), "custom-handle.personal").is_file());
+        assert!(!cred_file_path(tmp.path(), "custom-handle.personal.personal").exists());
     }
 
     #[test]
@@ -1098,7 +1143,7 @@ mod tests {
 
         let mut refreshed = view;
         refreshed.access_token = "fresh-access".into();
-        compare_and_store_token(&snapshot, &refreshed, None, tmp.path()).unwrap();
+        compare_and_store_token(&snapshot, &refreshed, tmp.path()).unwrap();
         assert_eq!(
             load_token_read_only("trimble-connect", None, tmp.path())
                 .unwrap()
@@ -1164,7 +1209,7 @@ mod tests {
         let account = account_name("google-workspace", None);
         let _lock = acquire_account_lock(tmp.path(), &account).unwrap();
         let migrated = materialize_generation(loaded.token, |updated| {
-            store_token_to_backend_unlocked(updated, None, tmp.path(), loaded.backend)
+            store_token_to_backend_unlocked(updated, tmp.path(), loaded.backend, &account)
         });
 
         assert!(
@@ -1252,7 +1297,7 @@ mod tests {
 
         let mut stale_refresh = expected.clone();
         stale_refresh.access_token = "stale-refresh".into();
-        let err = compare_and_store_token(&snapshot, &stale_refresh, None, tmp.path()).unwrap_err();
+        let err = compare_and_store_token(&snapshot, &stale_refresh, tmp.path()).unwrap_err();
         assert!(matches!(err, AwareError::Conflict(_)));
         assert_eq!(
             load_token_read_only("trimble-connect", None, tmp.path())

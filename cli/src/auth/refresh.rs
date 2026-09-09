@@ -88,7 +88,7 @@ pub fn ensure_fresh(
         generation,
         source: token.source.clone(),
     };
-    keychain::compare_and_store_token(&loaded.snapshot, &new_token, alias, aware_home)?;
+    keychain::compare_and_store_token(&loaded.snapshot, &new_token, aware_home)?;
     Ok(new_token)
 }
 

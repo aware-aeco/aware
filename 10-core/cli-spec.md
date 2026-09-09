@@ -368,10 +368,11 @@ credentials likewise report `generation: null` and an empty `scopes` array. The
 generation is not derived from access or refresh token bytes and is not an
 authenticator.
 
-A stored full credential object whose embedded `integration` does not match the
-requested account is rejected before lock acquisition or metadata migration. A
-credential file may be moved to another account only through an explicit import,
-which binds fresh metadata to that destination.
+Credential reads, metadata migration, and refresh CAS bind their lock, snapshot,
+and write destination to the exact requested account slot. Embedded `integration`
+metadata is descriptive and never selects another account. Both base-plus-alias
+lookups and direct alias-qualified handles therefore resolve and materialize the
+same slot without allowing copied metadata to mutate its original account.
 
 Refresh does not hold the credential lock during provider network I/O. It keeps
 the complete raw backend snapshot it started from (distinct from the normalized
