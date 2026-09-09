@@ -466,7 +466,7 @@ fn load_token_raw(
 ) -> Result<Option<LoadedToken>, AwareError> {
     let account = account_name(integration, alias);
 
-    let loaded = if !keyring_enabled() {
+    let mut loaded = if !keyring_enabled() {
         read_cred_file_with_body(integration, alias, aware_home)?.map(|(token, body)| LoadedToken {
             snapshot: credential_snapshot(integration, TokenBackend::File, &body),
             token,
@@ -496,6 +496,20 @@ fn load_token_raw(
             Err(e) => return Err(AwareError::PermissionDenied(format!("keyring read: {e}"))),
         }
     };
+
+    if let Some(value) = loaded.as_mut() {
+        if value.token.integration == account && alias.is_some() {
+            // Older/manual alias files sometimes embedded the qualified account
+            // instead of the base integration. Preserve that readable shape but
+            // canonicalize the in-memory destination so metadata cannot be
+            // written to `<integration>.<alias>.<alias>`.
+            value.token.integration = integration.to_string();
+        } else if value.token.integration != integration {
+            return Err(AwareError::Validation(format!(
+                "credential integration metadata does not match requested account {account}"
+            )));
+        }
+    }
 
     Ok(loaded)
 }
@@ -996,6 +1010,49 @@ mod tests {
         let persisted: serde_json::Value =
             serde_json::from_str(&std::fs::read_to_string(path).unwrap()).unwrap();
         assert_eq!(persisted["generation"], first.generation.unwrap());
+    }
+
+    #[test]
+    fn copied_credential_with_mismatched_integration_cannot_write_another_slot() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("credentials");
+        std::fs::create_dir_all(&dir).unwrap();
+        let embedded = StoredToken {
+            access_token: "other-slot-secret".into(),
+            refresh_token: Some("other-slot-refresh".into()),
+            expires_at: 123,
+            scope: "z a".into(),
+            token_type: "Bearer".into(),
+            integration: "microsoft-365".into(),
+            obtained_at: 99,
+            generation: None,
+            source: TokenSource::Oauth,
+        };
+        let body = serde_json::to_vec(&embedded).unwrap();
+        let real_path = dir.join("microsoft-365.json");
+        let copied_path = dir.join("google-workspace.json");
+        std::fs::write(&real_path, &body).unwrap();
+        std::fs::write(&copied_path, &body).unwrap();
+        let entries_before = credential_entry_names(&dir);
+
+        let err = load_token("google-workspace", None, tmp.path()).unwrap_err();
+        assert!(
+            matches!(&err, AwareError::Validation(message) if message.contains("google-workspace")),
+            "expected an account-bound validation error, got {err:?}"
+        );
+        assert!(!err.to_string().contains("other-slot-secret"));
+        assert_eq!(std::fs::read(&real_path).unwrap(), body);
+        assert_eq!(std::fs::read(&copied_path).unwrap(), body);
+        assert_eq!(credential_entry_names(&dir), entries_before);
+    }
+
+    fn credential_entry_names(dir: &Path) -> Vec<std::ffi::OsString> {
+        let mut entries: Vec<_> = std::fs::read_dir(dir)
+            .unwrap()
+            .map(|entry| entry.unwrap().file_name())
+            .collect();
+        entries.sort();
+        entries
     }
 
     #[test]

@@ -368,6 +368,11 @@ credentials likewise report `generation: null` and an empty `scopes` array. The
 generation is not derived from access or refresh token bytes and is not an
 authenticator.
 
+A stored full credential object whose embedded `integration` does not match the
+requested account is rejected before lock acquisition or metadata migration. A
+credential file may be moved to another account only through an explicit import,
+which binds fresh metadata to that destination.
+
 Refresh does not hold the credential lock during provider network I/O. It keeps
 the complete raw backend snapshot it started from (distinct from the normalized
 view returned to callers), then acquires the account lock,
