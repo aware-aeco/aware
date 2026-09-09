@@ -129,8 +129,8 @@ pub fn store_token(
 /// stored for the account. Refresh performs network I/O without holding the
 /// account lock, then uses this compare-and-store step so a stale provider
 /// response cannot roll back a connect/import that completed in the meantime.
-pub fn compare_and_store_token(
-    expected: &StoredToken,
+pub(crate) fn compare_and_store_token(
+    expected: &CredentialSnapshot,
     replacement: &StoredToken,
     alias: Option<&str>,
     aware_home: &Path,
@@ -147,7 +147,7 @@ pub fn compare_and_store_token(
     let Some(current) = current else {
         return Err(refresh_conflict(&account));
     };
-    if current.token != *expected {
+    if &current.snapshot != expected {
         return Err(refresh_conflict(&account));
     }
     // A successful refresh is a credential rotation, so retain store_token's
@@ -214,10 +214,46 @@ enum TokenBackend {
     File,
 }
 
-#[derive(Debug)]
 struct LoadedToken {
     token: StoredToken,
     backend: TokenBackend,
+    snapshot: CredentialSnapshot,
+}
+
+/// Exact authoritative token shape observed before refresh network I/O. Kept
+/// opaque so callers can use it only for compare-and-store, never as a second
+/// presentation/authentication token.
+#[derive(PartialEq, Eq)]
+pub(crate) struct CredentialSnapshot {
+    integration: String,
+    backend: TokenBackend,
+    body_sha256: [u8; 32],
+}
+
+fn credential_snapshot(
+    integration: &str,
+    backend: TokenBackend,
+    body: &[u8],
+) -> CredentialSnapshot {
+    CredentialSnapshot {
+        integration: integration.to_string(),
+        backend,
+        body_sha256: Sha256::digest(body).into(),
+    }
+}
+
+fn snapshot_for_token(
+    token: &StoredToken,
+    backend: TokenBackend,
+) -> Result<CredentialSnapshot, AwareError> {
+    let body = serde_json::to_vec(token)
+        .map_err(|e| AwareError::Internal(format!("serialize token snapshot: {e}")))?;
+    Ok(credential_snapshot(&token.integration, backend, &body))
+}
+
+pub(crate) struct RefreshTokenLoad {
+    pub token: StoredToken,
+    pub snapshot: CredentialSnapshot,
 }
 
 /// Persist metadata to the backend that supplied the credential. Migration is
@@ -350,42 +386,64 @@ pub fn load_token(
     alias: Option<&str>,
     aware_home: &Path,
 ) -> Result<Option<StoredToken>, AwareError> {
+    load_token_for_refresh(integration, alias, aware_home)
+        .map(|loaded| loaded.map(|value| value.token))
+}
+
+/// Load the normalized/materialized token view together with the exact backend
+/// snapshot refresh must compare after its network request.
+pub(crate) fn load_token_for_refresh(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<Option<RefreshTokenLoad>, AwareError> {
     let account = account_name(integration, alias);
     let Some(loaded) = load_token_raw(integration, alias, aware_home)? else {
         return Ok(None);
     };
+    let original_snapshot = loaded.snapshot;
     let token = loaded.token;
 
     let normalized_scope = normalized_scope_string(&token.scope);
     if token.generation.is_some() && token.scope == normalized_scope {
-        return Ok(Some(token));
+        return Ok(Some(RefreshTokenLoad {
+            snapshot: original_snapshot,
+            token,
+        }));
     }
 
     // Generation materialization is a read-modify-write operation. Serialize it
     // across processes, then re-read under the lock so exactly one reader mints
     // and every waiter observes the value that was actually persisted.
     let Ok(_generation_lock) = acquire_account_lock(aware_home, &account) else {
-        return Ok(Some(readable_without_ephemeral_generation(
-            token,
-            normalized_scope,
-        )));
+        return Ok(Some(RefreshTokenLoad {
+            token: readable_without_ephemeral_generation(token, normalized_scope),
+            snapshot: original_snapshot,
+        }));
     };
     let under_lock = match load_token_raw(integration, alias, aware_home) {
         Ok(Some(current)) => current,
         // The credential was readable before metadata migration. A lock/re-read
         // failure must not turn that usable credential into an auth outage.
         _ => {
-            return Ok(Some(readable_without_ephemeral_generation(
-                token,
-                normalized_scope,
-            )));
+            return Ok(Some(RefreshTokenLoad {
+                token: readable_without_ephemeral_generation(token, normalized_scope),
+                snapshot: original_snapshot,
+            }));
         }
     };
 
     let backend = under_lock.backend;
-    Ok(Some(materialize_generation(under_lock.token, |updated| {
+    let authoritative_snapshot = under_lock.snapshot;
+    let (token, persisted) = materialize_generation_with_status(under_lock.token, |updated| {
         store_token_to_backend_unlocked(updated, alias, aware_home, backend)
-    })))
+    });
+    let snapshot = if persisted {
+        snapshot_for_token(&token, backend)?
+    } else {
+        authoritative_snapshot
+    };
+    Ok(Some(RefreshTokenLoad { token, snapshot }))
 }
 
 /// Inspect a credential without changing any persistent state. In particular,
@@ -409,7 +467,8 @@ fn load_token_raw(
     let account = account_name(integration, alias);
 
     let loaded = if !keyring_enabled() {
-        read_cred_file(integration, alias, aware_home)?.map(|token| LoadedToken {
+        read_cred_file_with_body(integration, alias, aware_home)?.map(|(token, body)| LoadedToken {
+            snapshot: credential_snapshot(integration, TokenBackend::File, &body),
             token,
             backend: TokenBackend::File,
         })
@@ -422,12 +481,16 @@ fn load_token_raw(
                 token: serde_json::from_str(&body)
                     .map_err(|e| AwareError::Validation(format!("token JSON: {e}")))?,
                 backend: TokenBackend::Keyring,
+                snapshot: credential_snapshot(integration, TokenBackend::Keyring, body.as_bytes()),
             }),
             Err(keyring::Error::NoEntry) => {
                 // Nothing in the keychain — check the file fallback.
-                read_cred_file(integration, alias, aware_home)?.map(|token| LoadedToken {
-                    token,
-                    backend: TokenBackend::File,
+                read_cred_file_with_body(integration, alias, aware_home)?.map(|(token, body)| {
+                    LoadedToken {
+                        snapshot: credential_snapshot(integration, TokenBackend::File, &body),
+                        token,
+                        backend: TokenBackend::File,
+                    }
                 })
             }
             Err(e) => return Err(AwareError::PermissionDenied(format!("keyring read: {e}"))),
@@ -465,19 +528,32 @@ fn readable_without_ephemeral_generation(
     token
 }
 
+#[cfg(test)]
 fn materialize_generation(
-    mut token: StoredToken,
+    token: StoredToken,
     persist: impl FnOnce(&StoredToken) -> Result<(), AwareError>,
 ) -> StoredToken {
+    materialize_generation_with_status(token, persist).0
+}
+
+fn materialize_generation_with_status(
+    mut token: StoredToken,
+    persist: impl FnOnce(&StoredToken) -> Result<(), AwareError>,
+) -> (StoredToken, bool) {
     let lacked_generation = token.generation.is_none();
     token.scope = normalized_scope_string(&token.scope);
     if lacked_generation {
         token.generation = Some(new_credential_generation());
     }
-    if persist(&token).is_err() && lacked_generation {
-        token.generation = None;
+    match persist(&token) {
+        Ok(()) => (token, true),
+        Err(_) => {
+            if lacked_generation {
+                token.generation = None;
+            }
+            (token, false)
+        }
     }
-    token
 }
 
 /// Remove the credential from the OS keychain and the file fallback (if any).
@@ -654,22 +730,32 @@ fn write_cred_file(aware_home: &Path, account: &str, body: &str) -> Result<(), A
         .map_err(|e| AwareError::PermissionDenied(format!("credential file write: {e}")))
 }
 
+#[cfg(test)]
 fn read_cred_file(
     integration: &str,
     alias: Option<&str>,
     aware_home: &Path,
 ) -> Result<Option<StoredToken>, AwareError> {
+    read_cred_file_with_body(integration, alias, aware_home)
+        .map(|loaded| loaded.map(|(token, _)| token))
+}
+
+fn read_cred_file_with_body(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<Option<(StoredToken, Vec<u8>)>, AwareError> {
     let account = account_name(integration, alias);
     let path = cred_file_path(aware_home, &account);
     if !path.is_file() {
         return Ok(None);
     }
-    let body = std::fs::read_to_string(&path)
+    let body = std::fs::read(&path)
         .map_err(|e| AwareError::Internal(format!("credential file read: {e}")))?;
 
     // Try the full StoredToken shape first (written by this module's fallback).
-    if let Ok(token) = serde_json::from_str::<StoredToken>(&body) {
-        return Ok(Some(token));
+    if let Ok(token) = serde_json::from_slice::<StoredToken>(&body) {
+        return Ok(Some((token, body)));
     }
 
     // Legacy / manual format: {"access_token": "...", ...} written by users or
@@ -678,9 +764,9 @@ fn read_cred_file(
         .duration_since(std::time::UNIX_EPOCH)
         .unwrap_or_default()
         .as_secs() as i64;
-    let v: serde_json::Value = serde_json::from_str(&body)
+    let v: serde_json::Value = serde_json::from_slice(&body)
         .map_err(|e| AwareError::Validation(format!("credential file JSON: {e}")))?;
-    stored_token_from_credential_json(&v, integration, now).map(Some)
+    stored_token_from_credential_json(&v, integration, now).map(|token| Some((token, body)))
 }
 
 /// Read a hand-written or legacy credential object into a [`StoredToken`].
@@ -927,6 +1013,44 @@ mod tests {
     }
 
     #[test]
+    fn failed_legacy_materialization_keeps_raw_snapshot_valid_for_refresh_cas() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("credentials");
+        std::fs::create_dir_all(&dir).unwrap();
+        // The hand-written shape is important: parsing it synthesizes obtained_at,
+        // so comparing parsed views can differ even while these bytes do not.
+        std::fs::write(
+            dir.join("trimble-connect.json"),
+            r#"{"access_token":"still-usable","refresh_token":"rt","scope":"b a"}"#,
+        )
+        .unwrap();
+
+        let loaded = load_token_raw("trimble-connect", None, tmp.path())
+            .unwrap()
+            .unwrap();
+        let authoritative = loaded.token;
+        let snapshot = loaded.snapshot;
+        let (view, persisted) = materialize_generation_with_status(authoritative, |_| {
+            Err(AwareError::PermissionDenied(
+                "synthetic metadata failure".into(),
+            ))
+        });
+        assert!(!persisted);
+        assert_eq!(view.scope, "a b");
+        assert_eq!(view.generation, None);
+
+        let mut refreshed = view;
+        refreshed.access_token = "fresh-access".into();
+        compare_and_store_token(&snapshot, &refreshed, None, tmp.path()).unwrap();
+        assert_eq!(
+            load_token_read_only("trimble-connect", None, tmp.path())
+                .unwrap()
+                .unwrap(),
+            refreshed
+        );
+    }
+
+    #[test]
     fn concurrent_first_reads_publish_and_return_one_generation() {
         use std::sync::{Arc, Barrier};
 
@@ -1060,6 +1184,10 @@ mod tests {
         let tmp = tempfile::tempdir().unwrap();
         let expected = credential_json(r#"{"access_token":"legacy-old","scope":"a"}"#).unwrap();
         store_token(&expected, None, tmp.path()).unwrap();
+        let snapshot = load_token_raw("trimble-connect", None, tmp.path())
+            .unwrap()
+            .unwrap()
+            .snapshot;
 
         let mut rotated = expected.clone();
         rotated.access_token = "legacy-new".into();
@@ -1067,7 +1195,7 @@ mod tests {
 
         let mut stale_refresh = expected.clone();
         stale_refresh.access_token = "stale-refresh".into();
-        let err = compare_and_store_token(&expected, &stale_refresh, None, tmp.path()).unwrap_err();
+        let err = compare_and_store_token(&snapshot, &stale_refresh, None, tmp.path()).unwrap_err();
         assert!(matches!(err, AwareError::Conflict(_)));
         assert_eq!(
             load_token_read_only("trimble-connect", None, tmp.path())

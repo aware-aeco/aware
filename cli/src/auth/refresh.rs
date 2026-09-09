@@ -15,8 +15,9 @@ pub fn ensure_fresh(
     alias: Option<&str>,
     aware_home: &std::path::Path,
 ) -> Result<StoredToken, AwareError> {
-    let token = keychain::load_token(integration, alias, aware_home)?
+    let loaded = keychain::load_token_for_refresh(integration, alias, aware_home)?
         .ok_or_else(|| AwareError::AuthExpired(integration.to_string()))?;
+    let token = loaded.token;
 
     let now = super::unix_now_secs()?;
     if token.expires_at > now + REFRESH_BUFFER_SECS {
@@ -87,7 +88,7 @@ pub fn ensure_fresh(
         generation,
         source: token.source.clone(),
     };
-    keychain::compare_and_store_token(&token, &new_token, alias, aware_home)?;
+    keychain::compare_and_store_token(&loaded.snapshot, &new_token, alias, aware_home)?;
     Ok(new_token)
 }
 

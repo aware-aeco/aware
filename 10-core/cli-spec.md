@@ -369,7 +369,8 @@ generation is not derived from access or refresh token bytes and is not an
 authenticator.
 
 Refresh does not hold the credential lock during provider network I/O. It keeps
-the complete credential snapshot it started from, then acquires the account lock,
+the complete raw backend snapshot it started from (distinct from the normalized
+view returned to callers), then acquires the account lock,
 re-reads the authoritative backend, and compare-and-stores the refresh response
 only when that snapshot is unchanged, using the normal credential backend
 selection and fallback policy. A concurrent connect, import, or rotation wins;
