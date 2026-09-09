@@ -8,17 +8,28 @@
 use crate::auth::keychain::{StoredToken, TokenSource};
 use crate::error::AwareError;
 
-pub fn run_paste_flow(integration: &str) -> Result<StoredToken, AwareError> {
+pub fn run_paste_flow(integration: &str, json: bool) -> Result<StoredToken, AwareError> {
     let (server, port) = bind_paste_server()?;
     let paste_url = format!("http://localhost:{port}/");
 
-    println!("Opening token entry form in your browser...");
-    println!("If it doesn't open automatically, visit:\n  {paste_url}");
-    let _ = webbrowser::open(&paste_url);
-    println!("\u{2713} Listening on {paste_url}");
-    println!("Paste your {integration} token into the browser form to continue.");
-    println!(
-        "The form is the ONLY place to enter your token \u{2014} never paste it into this chat."
+    progress(json, "Opening token entry form in your browser...");
+    progress(
+        json,
+        &format!("If it doesn't open automatically, visit:\n  {paste_url}"),
+    );
+    // Headless automation can suppress the best-effort launch while still
+    // driving the exact localhost flow through the printed URL.
+    if std::env::var_os("AWARE_DISABLE_BROWSER_OPEN").is_none() {
+        let _ = webbrowser::open(&paste_url);
+    }
+    progress(json, &format!("\u{2713} Listening on {paste_url}"));
+    progress(
+        json,
+        &format!("Paste your {integration} token into the browser form to continue."),
+    );
+    progress(
+        json,
+        "The form is the ONLY place to enter your token \u{2014} never paste it into this chat.",
     );
 
     loop {
@@ -60,6 +71,14 @@ pub fn run_paste_flow(integration: &str) -> Result<StoredToken, AwareError> {
                 let _ = request.respond(tiny_http::Response::empty(405));
             }
         }
+    }
+}
+
+fn progress(json: bool, message: &str) {
+    if json {
+        eprintln!("{message}");
+    } else {
+        println!("{message}");
     }
 }
 

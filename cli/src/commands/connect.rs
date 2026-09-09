@@ -242,7 +242,7 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
         crate::auth::pkce::run_pkce_flow(&cfg, &extra_scopes, ctx.json)?
     } else {
         // Default: browser-paste flow.
-        crate::auth::paste::run_paste_flow(integration)?
+        crate::auth::paste::run_paste_flow(integration, ctx.json)?
     };
 
     crate::auth::keychain::store_token(&token, args.r#as.as_deref(), &ctx.paths.aware_home)?;

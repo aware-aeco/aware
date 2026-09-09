@@ -358,9 +358,12 @@ token material. A successful `aware --json connect ...` result, each entry from
 
 Credentials stored by older CLI versions remain valid. Their first read lazily
 materializes and persists a generation; repeated reads therefore return the same
-value. Missing or unreadable credentials report `generation: null` and an empty
-`scopes` array. The generation is not derived from access or refresh token bytes
-and is not an authenticator.
+value. Materialization is serialized across processes. If its metadata lock or
+write cannot be completed, the readable credential remains usable and reports
+`generation: null` until a later read can persist one; AWARE never reports an
+ephemeral generation as stable. Missing or unreadable credentials likewise
+report `generation: null` and an empty `scopes` array. The generation is not
+derived from access or refresh token bytes and is not an authenticator.
 
 `connect` covers the integrations AWARE ships an OAuth client for, and validates its
 `INTEGRATION` argument against that list. For a handle AWARE runs no OAuth flow for, use

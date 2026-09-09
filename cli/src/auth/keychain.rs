@@ -13,7 +13,9 @@
 
 use std::path::{Path, PathBuf};
 
+use fs2::FileExt;
 use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 
 use crate::error::AwareError;
 
@@ -262,6 +264,49 @@ pub fn load_token(
     aware_home: &Path,
 ) -> Result<Option<StoredToken>, AwareError> {
     let account = account_name(integration, alias);
+    let Some(token) = load_token_raw(integration, alias, aware_home)? else {
+        return Ok(None);
+    };
+
+    let normalized_scope = normalized_scope_string(&token.scope);
+    if token.generation.is_some() && token.scope == normalized_scope {
+        return Ok(Some(token));
+    }
+
+    // Generation materialization is a read-modify-write operation. Serialize it
+    // across processes, then re-read under the lock so exactly one reader mints
+    // and every waiter observes the value that was actually persisted.
+    let Ok(_generation_lock) = acquire_generation_lock(aware_home, &account) else {
+        return Ok(Some(readable_without_ephemeral_generation(
+            token,
+            normalized_scope,
+        )));
+    };
+    let under_lock = match load_token_raw(integration, alias, aware_home) {
+        Ok(Some(current)) => current,
+        // The credential was readable before metadata migration. A lock/re-read
+        // failure must not turn that usable credential into an auth outage.
+        _ => {
+            return Ok(Some(readable_without_ephemeral_generation(
+                token,
+                normalized_scope,
+            )));
+        }
+    };
+
+    Ok(Some(materialize_generation(under_lock, |updated| {
+        store_token(updated, alias, aware_home)
+    })))
+}
+
+/// Load without metadata migration. Kept separate so the generation lock can
+/// re-read the authoritative value without recursively trying to acquire itself.
+fn load_token_raw(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<Option<StoredToken>, AwareError> {
+    let account = account_name(integration, alias);
 
     let loaded = if !keyring_enabled() {
         read_cred_file(integration, alias, aware_home)?
@@ -282,26 +327,47 @@ pub fn load_token(
         }
     };
 
-    match loaded {
-        Some(mut token) => {
-            // Credentials written before generation metadata existed stay
-            // usable. Materialize one stable opaque value on their first read
-            // and persist it through the same atomic/keychain path as any other
-            // credential update. Scope normalization alone is not a grant
-            // change, so an already-present generation is preserved.
-            let normalized_scope = normalized_scope_string(&token.scope);
-            let needs_write = token.generation.is_none() || token.scope != normalized_scope;
-            token.scope = normalized_scope;
-            if token.generation.is_none() {
-                token.generation = Some(new_credential_generation());
-            }
-            if needs_write {
-                store_token(&token, alias, aware_home)?;
-            }
-            Ok(Some(token))
-        }
-        None => Ok(None),
+    Ok(loaded)
+}
+
+fn acquire_generation_lock(aware_home: &Path, account: &str) -> std::io::Result<std::fs::File> {
+    let dir = aware_home.join("credentials");
+    std::fs::create_dir_all(&dir)?;
+    // Hash the non-secret account name so aliases can never influence the path.
+    let key = format!("{:x}", Sha256::digest(account.as_bytes()));
+    let file = std::fs::OpenOptions::new()
+        .read(true)
+        .write(true)
+        .create(true)
+        .truncate(false)
+        .open(dir.join(format!(".generation-{key}.lock")))?;
+    file.lock_exclusive()?;
+    Ok(file)
+}
+
+fn readable_without_ephemeral_generation(
+    mut token: StoredToken,
+    normalized_scope: String,
+) -> StoredToken {
+    token.scope = normalized_scope;
+    // Only a persisted generation is truthful. If this was a legacy token,
+    // never return a process-local UUID that the next read cannot reproduce.
+    token
+}
+
+fn materialize_generation(
+    mut token: StoredToken,
+    persist: impl FnOnce(&StoredToken) -> Result<(), AwareError>,
+) -> StoredToken {
+    let lacked_generation = token.generation.is_none();
+    token.scope = normalized_scope_string(&token.scope);
+    if lacked_generation {
+        token.generation = Some(new_credential_generation());
     }
+    if persist(&token).is_err() && lacked_generation {
+        token.generation = None;
+    }
+    token
 }
 
 /// Remove the credential from the OS keychain and the file fallback (if any).
@@ -728,6 +794,62 @@ mod tests {
         let persisted: serde_json::Value =
             serde_json::from_str(&std::fs::read_to_string(path).unwrap()).unwrap();
         assert_eq!(persisted["generation"], first.generation.unwrap());
+    }
+
+    #[test]
+    fn failed_legacy_metadata_persistence_keeps_the_token_and_reports_no_generation() {
+        let token = credential_json(r#"{"access_token":"still-usable","scope":"b a"}"#).unwrap();
+        let loaded = materialize_generation(token, |_| {
+            Err(AwareError::PermissionDenied(
+                "synthetic metadata failure".into(),
+            ))
+        });
+
+        assert_eq!(loaded.access_token, "still-usable");
+        assert_eq!(loaded.scope, "a b");
+        assert_eq!(loaded.generation, None);
+    }
+
+    #[test]
+    fn concurrent_first_reads_publish_and_return_one_generation() {
+        use std::sync::{Arc, Barrier};
+
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("credentials");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("google-workspace.json"),
+            r#"{"access_token":"tk","scope":"openid email"}"#,
+        )
+        .unwrap();
+
+        let home = Arc::new(tmp.path().to_path_buf());
+        let barrier = Arc::new(Barrier::new(8));
+        let readers: Vec<_> = (0..8)
+            .map(|_| {
+                let home = Arc::clone(&home);
+                let barrier = Arc::clone(&barrier);
+                std::thread::spawn(move || {
+                    barrier.wait();
+                    load_token("google-workspace", None, &home)
+                        .unwrap()
+                        .unwrap()
+                        .generation
+                        .unwrap()
+                })
+            })
+            .collect();
+        let generations: Vec<String> = readers
+            .into_iter()
+            .map(|reader| reader.join().unwrap())
+            .collect();
+
+        assert!(generations.iter().all(|value| value == &generations[0]));
+        let persisted: StoredToken = serde_json::from_str(
+            &std::fs::read_to_string(dir.join("google-workspace.json")).unwrap(),
+        )
+        .unwrap();
+        assert_eq!(persisted.generation.as_ref(), Some(&generations[0]));
     }
 
     #[test]
