@@ -31,6 +31,7 @@ fn run_one_shot_app_with_no_installed_agents_fails_clearly() {
         .success();
 
     // Now `app run` — should fail with a clear error (binary not found or network)
+    common::approve_installed_apps(&aware);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
@@ -91,6 +92,7 @@ requires: []
     )
     .unwrap();
 
+    common::approve_installed_apps(&aware);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
@@ -163,6 +165,7 @@ requires: []
         .failure();
 
     // `--simulate` stubs the read node — no host contact — and succeeds.
+    common::approve_installed_apps(&aware);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
@@ -228,6 +231,7 @@ requires: []
 
     // A real run takes the long-running path and fails: invoke_stream tries to
     // spawn `this-watch-binary-does-not-exist`, which isn't on PATH (#172).
+    common::approve_installed_apps(&aware);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
@@ -238,6 +242,7 @@ requires: []
 
     // `--simulate` stubs the stream source (one placeholder event, then the
     // source closes) and the run completes — no invoke_stream.
+    common::approve_installed_apps(&aware);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
@@ -330,6 +335,7 @@ requires: []
     let existing_pidfile = b"pid: 4242\nstartedAt: preserved\n";
     std::fs::write(&pidfile, existing_pidfile).unwrap();
 
+    common::approve_installed_apps(&aware);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
@@ -395,6 +401,7 @@ requires: []
 
     // `--simulate` renders the write node's config (for the would-write event),
     // exercising the hyphenated dot-path. Must succeed.
+    common::approve_installed_apps(&aware);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
@@ -480,6 +487,7 @@ requires: []
 
     // Try to run — will fail because the binary doesn't exist;
     // we just verify the pidfile is cleaned up afterwards.
+    common::approve_installed_apps(&aware);
     let _ = Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
@@ -564,6 +572,7 @@ requires: []
     )
     .unwrap();
 
+    common::approve_installed_apps(&aware);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
@@ -650,6 +659,7 @@ requires: []
     )
     .unwrap();
 
+    common::approve_installed_apps(&aware);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
@@ -781,6 +791,7 @@ requires: []
     )
     .unwrap();
 
+    common::approve_installed_apps(&aware);
     let exe = assert_cmd::cargo::cargo_bin("aware");
     let mut run = std::process::Command::new(&exe)
         .env("AWARE_HOME", &aware)
@@ -920,6 +931,7 @@ fn main() {
 
     let aware = tmp.path().join("aware");
     install_watcher_app(&aware, &bin);
+    common::approve_installed_apps(&aware);
 
     // A real (non-simulated) run: the long-running path consumes the stream and
     // completes when the source closes.
@@ -971,7 +983,7 @@ fn main() {
 
     let aware = tmp.path().join("aware");
     install_watcher_app(&aware, &bin);
-
+    common::approve_installed_apps(&aware);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
@@ -1120,6 +1132,7 @@ requires: []
     )
     .unwrap();
 
+    common::approve_installed_apps(&aware);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
@@ -1255,6 +1268,7 @@ fn run_refuses_app_whose_agent_is_not_installed() {
         // but must no longer be silent about the gap.
         .stderr(predicate::str::contains("W_APP_AGENT_NOT_INSTALLED"));
 
+    common::approve_installed_apps(&home);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &home)
@@ -1297,6 +1311,7 @@ fn simulate_still_runs_an_app_whose_agent_is_not_installed() {
         .assert()
         .success();
 
+    common::approve_installed_apps(&home);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &home)
@@ -1329,10 +1344,137 @@ fn run_allows_a_frozen_node_whose_agent_is_not_installed() {
         .assert()
         .success();
 
+    common::approve_installed_apps(&home);
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &home)
         .args(["app", "run", "frozen-app"])
         .assert()
         .success();
+}
+
+fn install_ui_agent(home: &std::path::Path) {
+    let ui = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .join("20-agents/_core/ui");
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home)
+        .args(["agent", "install"])
+        .arg(ui)
+        .assert()
+        .success();
+}
+
+fn write_lock_gate_probe(source_dir: &std::path::Path) -> std::path::PathBuf {
+    std::fs::create_dir_all(source_dir).unwrap();
+    let source = source_dir.join("chat-storage-probe.flo");
+    std::fs::write(
+        &source,
+        r#"app: chat-storage-probe
+version: 0.1.0
+description: A harmless local catalogue probe for storage verification.
+requires:
+  - ui@1.0.0
+nodes:
+  - id: catalog
+    agent: ui
+    command: catalog
+    mode: read
+    description: Read the installed built-in UI catalogue without external services.
+"#,
+    )
+    .unwrap();
+    source
+}
+
+#[test]
+fn run_requires_a_present_lock_matching_the_installed_source() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    let source_dir = tmp.path().join("source");
+    let source = write_lock_gate_probe(&source_dir);
+    install_ui_agent(&home);
+
+    // Missing is a defined rejection, not an implicit approval. This is the
+    // state produced by installing an authoring directory that was never
+    // compiled.
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "install"])
+        .arg(&source_dir)
+        .assert()
+        .success();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "run", "chat-storage-probe"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_APP_LOCK_MISSING"))
+        .stderr(predicate::str::contains("aware app compile"));
+    assert!(
+        !home.join("logs/chat-storage-probe").exists(),
+        "a missing approval lock must stop before a run trace or node dispatch"
+    );
+
+    // Reinstall the same app with a real compiled approval artifact. The fresh
+    // lock is the positive control: a gate that rejected every run would pass
+    // both negative assertions below.
+    std::fs::remove_dir_all(home.join("apps/chat-storage-probe")).unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "compile"])
+        .arg(&source)
+        .assert()
+        .success();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "install"])
+        .arg(&source_dir)
+        .assert()
+        .success();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "run", "chat-storage-probe"])
+        .assert()
+        .success();
+
+    // Change the installed bytes without touching the compiled lock. The run
+    // must reject the stale approval before it dispatches the changed command.
+    let installed = home.join("apps/chat-storage-probe/chat-storage-probe.flo");
+    let edited = std::fs::read_to_string(&installed).unwrap().replace(
+        "command: catalog",
+        "command: validate\n    config:\n      descriptor: {}",
+    );
+    std::fs::write(&installed, edited).unwrap();
+    let trace_count_before = std::fs::read_dir(home.join("logs/chat-storage-probe/default"))
+        .unwrap()
+        .flatten()
+        .filter(|entry| entry.path().extension().is_some_and(|ext| ext == "jsonl"))
+        .count();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "run", "chat-storage-probe"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_APP_LOCK_STALE"))
+        .stderr(predicate::str::contains("aware app compile"));
+    let trace_count_after = std::fs::read_dir(home.join("logs/chat-storage-probe/default"))
+        .unwrap()
+        .flatten()
+        .filter(|entry| entry.path().extension().is_some_and(|ext| ext == "jsonl"))
+        .count();
+    assert_eq!(
+        trace_count_after, trace_count_before,
+        "a stale approval lock must stop before a run trace or node dispatch"
+    );
 }

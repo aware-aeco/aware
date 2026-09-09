@@ -291,7 +291,9 @@ skills (31):
 
 ### `aware app run <app>`
 
-The heaviest command. Loads the app file, resolves agent dependencies via the lockfile, starts any stateful agents, wires connections, and either:
+The heaviest command. It first verifies the installed source against the engineer-approved `<app>.lock`: the lock must be present, parseable, and carry the SHA-256 of the exact raw source bytes. Compilation and runtime each parse and hash one source snapshot, so the compiled plan, approved bytes, and executed app cannot drift between reads. An unsafe `app:` id is rejected before it can become a lock path. A missing (`E_APP_LOCK_MISSING`), unreadable/malformed (`E_APP_LOCK_INVALID`), or mismatched (`E_APP_LOCK_STALE`) lock exits 3 before trace creation or node dispatch and tells the operator to run `aware app compile` again. Before real dispatch, every reachable agent must also match the exact compiled `agent-pins` version (`E_APP_LOCK_AGENT_PIN_MISMATCH`); simulation remains independent of ambient agent versions because it contacts no binary. Source approval applies independently to the top-level app and every app-backed agent it invokes, including `--dry-run` and `--simulate`.
+
+After that gate, it loads the app file, resolves agent dependencies via the lockfile, starts any stateful agents, wires connections, and either:
 - Returns immediately (one-shot app with only stateless nodes)
 - Blocks until stopped (long-running app with stateful nodes)
 

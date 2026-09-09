@@ -4629,6 +4629,463 @@ mod tests {
         assert!(error.to_string().contains("nonzero simple polygon"));
     }
 
+    /// A plate carrying `frame`, `outline` and `thicknessMm`, valid unless the
+    /// caller edits one field. Every plate test below starts here and breaks
+    /// exactly one thing, so a refusal can only be the guard under test talking
+    /// — the unedited fixture is asserted to render, just above.
+    fn plate_scene() -> Value {
+        json!({
+            "meta": { "units": "mm", "up": "z" },
+            "elements": [{
+                "id": "PL-1", "kind": "plate",
+                "frame": { "origin": [0,0,0], "uDir": [1,0,0], "vDir": [0,1,0], "normal": [0,0,1] },
+                "outline": [[-100,-100],[100,-100],[100,100],[-100,100]],
+                "thicknessMm": 10
+            }]
+        })
+    }
+
+    /// The fixture above must RENDER, or every refusal below proves nothing.
+    #[test]
+    fn the_plate_fixture_the_refusal_tests_edit_is_itself_valid() {
+        let out = viewer_3d_render(&json!({ "scene": plate_scene() }), true).unwrap();
+        assert!(
+            out["emitted"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|row| row["id"] == "PL-1" && row["renderedKind"] == "plate"),
+            "the baseline plate must be receipted: {}",
+            out["emitted"]
+        );
+    }
+
+    /// A plate's frame is a right-handed orthogonal basis, and all three checks
+    /// that make it one were unreached: only the happy-path frame (`uDir` x,
+    /// `vDir` y, `normal` z) had ever been rendered under test.
+    ///
+    /// The flipped-normal case is the one with teeth. `[0,0,-1]` is a perfectly
+    /// good unit normal to that outline, so nothing downstream objects — it
+    /// simply mirrors the plate, and the extrusion then grows the opposite way
+    /// from the face the author drew.
+    ///
+    /// A degenerate direction has to be refused HERE rather than by the
+    /// arithmetic that follows: with `uDir` zero, `dot3(u,v)/(ul*vl)` is `0/0`,
+    /// and `NaN > 1e-6` is false — so the orthogonality test waves it through,
+    /// as does the right-handed test for the same reason. Delete the nonzero
+    /// guard and a zero-direction frame renders.
+    #[test]
+    fn a_plate_frame_must_be_nonzero_orthogonal_and_right_handed() {
+        for (label, patch, expected) in [
+            (
+                "zero uDir",
+                json!({ "origin": [0,0,0], "uDir": [0,0,0], "vDir": [0,1,0], "normal": [0,0,1] }),
+                "directions must be nonzero",
+            ),
+            (
+                "zero normal",
+                json!({ "origin": [0,0,0], "uDir": [1,0,0], "vDir": [0,1,0], "normal": [0,0,0] }),
+                "directions must be nonzero",
+            ),
+            (
+                "uDir and vDir at 45 degrees",
+                json!({ "origin": [0,0,0], "uDir": [1,0,0], "vDir": [1,1,0], "normal": [0,0,1] }),
+                "uDir and vDir must be orthogonal",
+            ),
+            (
+                "normal flipped against uDir cross vDir",
+                json!({ "origin": [0,0,0], "uDir": [1,0,0], "vDir": [0,1,0], "normal": [0,0,-1] }),
+                "must align with the right-handed",
+            ),
+            (
+                "normal perpendicular to uDir cross vDir",
+                json!({ "origin": [0,0,0], "uDir": [1,0,0], "vDir": [0,1,0], "normal": [1,0,0] }),
+                "must align with the right-handed",
+            ),
+        ] {
+            let mut scene = plate_scene();
+            scene["elements"][0]["frame"] = patch;
+            let error = viewer_3d_render(&json!({ "scene": scene }), true)
+                .unwrap_err()
+                .to_string();
+            assert!(error.contains(expected), "{label}: {error}");
+        }
+
+        // A basis that is right-handed but neither axis-aligned nor unit-length
+        // is still a basis — the checks normalise, so they must not demand the
+        // one frame every other fixture happens to use.
+        let mut scene = plate_scene();
+        scene["elements"][0]["frame"] =
+            json!({ "origin": [0,0,0], "uDir": [0,3,0], "vDir": [0,0,7], "normal": [5,0,0] });
+        viewer_3d_render(&json!({ "scene": scene }), true)
+            .expect("a scaled, rotated right-handed basis is valid");
+    }
+
+    /// Thickness and outline arity. A zero or negative thickness extrudes to
+    /// nothing or inside-out, and an outline of fewer than three points encloses
+    /// no area — `polygon_is_simple_nonzero` never sees either, because the
+    /// arity filter runs first and a missing thickness is caught before it.
+    #[test]
+    fn a_plate_needs_a_positive_thickness_and_three_outline_points() {
+        for (label, thickness, expected) in [
+            ("zero", json!(0), "must be greater than zero"),
+            ("negative", json!(-10), "must be greater than zero"),
+            ("absent", Value::Null, "must be a finite number"),
+            ("a string", json!("10"), "must be a finite number"),
+        ] {
+            let mut scene = plate_scene();
+            scene["elements"][0]["thicknessMm"] = thickness;
+            let error = viewer_3d_render(&json!({ "scene": scene }), true)
+                .unwrap_err()
+                .to_string();
+            assert!(error.contains(expected), "thickness {label}: {error}");
+            assert!(error.contains("thicknessMm"), "thickness {label}: {error}");
+        }
+
+        for (label, outline) in [
+            ("two points", json!([[0, 0], [100, 0]])),
+            ("empty", json!([])),
+            ("not an array", json!({ "u": 0, "v": 0 })),
+        ] {
+            let mut scene = plate_scene();
+            scene["elements"][0]["outline"] = outline;
+            let error = viewer_3d_render(&json!({ "scene": scene }), true)
+                .unwrap_err()
+                .to_string();
+            assert!(
+                error.contains("must contain at least three points"),
+                "outline {label}: {error}"
+            );
+        }
+    }
+
+    /// Holes are bored through the plate, so two that overlap describe a slot
+    /// nobody asked for and two that merely touch leave a knife-edge of steel
+    /// between them. Both are refused; the separation test compares centre
+    /// distance against summed radii, so the exactly-touching case is the one
+    /// that pins which side of the boundary is legal.
+    ///
+    /// `uv` is the older spelling of `center` and is still accepted — nothing
+    /// covered the alias, so deleting it would have looked free.
+    #[test]
+    fn plate_holes_must_stay_clear_of_each_other_and_accept_the_uv_alias() {
+        let holes = |second: Value| {
+            let mut scene = plate_scene();
+            scene["elements"][0]["holes"] =
+                json!([{ "id": "H-1", "center": [0,0], "diameterMm": 24 }, second]);
+            scene
+        };
+
+        for (label, second) in [
+            (
+                "overlapping",
+                json!({ "id": "H-2", "center": [20,0], "diameterMm": 24 }),
+            ),
+            (
+                "exactly touching",
+                json!({ "id": "H-2", "center": [24,0], "diameterMm": 24 }),
+            ),
+        ] {
+            let error = viewer_3d_render(&json!({ "scene": holes(second) }), true)
+                .unwrap_err()
+                .to_string();
+            assert!(
+                error.contains("must not overlap or touch another hole"),
+                "{label}: {error}"
+            );
+        }
+
+        // A hair clear of touching is legal, so the refusals above are the
+        // separation test and not a blanket ban on a second hole.
+        let scene = holes(json!({ "id": "H-2", "center": [24.001,0], "diameterMm": 24 }));
+        viewer_3d_render(&json!({ "scene": scene }), true)
+            .expect("two holes that do not touch are legal");
+
+        // The legacy `uv` spelling reaches the same containment check and the
+        // same receipt row as `center`.
+        let mut scene = plate_scene();
+        scene["elements"][0]["holes"] = json!([{ "id": "H-1", "uv": [0,0], "diameterMm": 24 }]);
+        let out = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
+        assert!(
+            out["emitted"].as_array().unwrap().iter().any(|row| {
+                row["id"] == "H-1"
+                    && row["parentId"] == "PL-1"
+                    && row["renderedKind"] == "plate-hole"
+            }),
+            "a `uv` hole must be receipted like a `center` one: {}",
+            out["emitted"]
+        );
+
+        // And a `uv` hole is still bounds-checked — the alias is a spelling, not
+        // an escape hatch past containment.
+        let mut scene = plate_scene();
+        scene["elements"][0]["holes"] = json!([{ "id": "H-1", "uv": [99,0], "diameterMm": 24 }]);
+        let error = viewer_3d_render(&json!({ "scene": scene }), true)
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("must lie wholly inside"), "{error}");
+    }
+
+    /// `holes` present but not an array is refused rather than read as "no
+    /// holes". The arm exists precisely so a producer that emits an object here
+    /// hears about it instead of shipping a plate with its bolt holes silently
+    /// missing.
+    #[test]
+    fn a_non_array_holes_field_is_refused_rather_than_treated_as_none() {
+        for holes in [json!({ "H-1": { "diameterMm": 24 } }), json!(0), json!("")] {
+            let mut scene = plate_scene();
+            scene["elements"][0]["holes"] = holes.clone();
+            let error = viewer_3d_render(&json!({ "scene": scene }), true)
+                .unwrap_err()
+                .to_string();
+            assert!(
+                error.contains("holes` must be an array"),
+                "{holes}: {error}"
+            );
+        }
+
+        // Absent and explicitly null both mean "no holes" and must still render.
+        for holes in [None, Some(Value::Null)] {
+            let mut scene = plate_scene();
+            if let Some(value) = holes {
+                scene["elements"][0]["holes"] = value;
+            }
+            viewer_3d_render(&json!({ "scene": scene }), true)
+                .expect("a plate with no holes is valid");
+        }
+    }
+
+    /// The tessellated-mesh contract. Only the well-formed shape had ever been
+    /// rendered under test, so every refusal here was unreached: a positions
+    /// array that does not divide into xyz triples, a coordinate that is not a
+    /// finite number, an index list that does not divide into triangles, and an
+    /// index pointing past the last vertex — which is the one that reaches the
+    /// browser as a truncated or absent solid rather than as an error.
+    #[test]
+    fn a_mesh_needs_complete_triples_and_indices_that_name_a_real_vertex() {
+        let mesh = |positions: Value, indices: Value| {
+            json!({
+                "meta": { "units": "mm", "up": "z" },
+                "elements": [{ "id": "M-1", "kind": "mesh",
+                    "positions": positions, "indices": indices }]
+            })
+        };
+        let square = json!([0, 0, 0, 100, 0, 0, 100, 100, 0, 0, 100, 0]);
+        let two_faces = json!([0, 1, 2, 0, 2, 3]);
+
+        // The baseline renders, so the refusals below are not a broken fixture.
+        viewer_3d_render(
+            &json!({ "scene": mesh(square.clone(), two_faces.clone()) }),
+            true,
+        )
+        .expect("a square of two triangles is a valid mesh");
+
+        for (label, positions, expected) in [
+            (
+                "not divisible into triples",
+                json!([0, 0, 0, 100, 0, 0, 100, 100, 0, 0]),
+                "complete xyz triples",
+            ),
+            (
+                "two vertices, too few for a triangle",
+                json!([0, 0, 0, 100, 0, 0]),
+                "complete xyz triples",
+            ),
+            ("absent", Value::Null, "complete xyz triples"),
+            (
+                "a coordinate that is not a number",
+                json!([0, 0, 0, 100, "0", 0, 100, 100, 0]),
+                "must be a finite number",
+            ),
+        ] {
+            let error = viewer_3d_render(
+                &json!({ "scene": mesh(positions, two_faces.clone()) }),
+                true,
+            )
+            .unwrap_err()
+            .to_string();
+            assert!(error.contains(expected), "positions {label}: {error}");
+        }
+
+        for (label, indices, expected) in [
+            (
+                "not divisible into triangles",
+                json!([0, 1]),
+                "complete index triples",
+            ),
+            ("empty", json!([]), "complete index triples"),
+            ("absent", Value::Null, "complete index triples"),
+            (
+                "past the last vertex",
+                json!([0, 1, 4]),
+                "must reference an existing vertex",
+            ),
+            (
+                "negative",
+                json!([0, 1, -1]),
+                "must reference an existing vertex",
+            ),
+            (
+                "fractional",
+                json!([0, 1, 2.5]),
+                "must reference an existing vertex",
+            ),
+        ] {
+            let error = viewer_3d_render(&json!({ "scene": mesh(square.clone(), indices) }), true)
+                .unwrap_err()
+                .to_string();
+            assert!(error.contains(expected), "indices {label}: {error}");
+        }
+    }
+
+    /// A structural grid, valid unless the caller edits one field.
+    fn grid_scene() -> Value {
+        json!({
+            "meta": { "units": "mm", "up": "z" },
+            "elements": [],
+            "referenceSystems": [{
+                "id": "GRID-1", "kind": "structural-grid", "origin": [0,0,0],
+                "bounds": { "minX": -1000, "maxX": 3000, "minY": -2000, "maxY": 2000 },
+                "axes": [{ "id": "GA-X", "direction": "x", "offsetMm": 0, "label": "1" }],
+                "levels": [{ "id": "GL-1", "elevationMm": 3000, "label": "L1" }]
+            }]
+        })
+    }
+
+    /// Grid extents, which nothing reached — every grid under test carried the
+    /// same valid bounds. The two comparisons are OR'd, so a test that only ever
+    /// breaks X would stay green with the Y half deleted; both halves are broken
+    /// separately here, each with the other left valid.
+    ///
+    /// Equal extents, not merely inverted ones: `minX == maxX` is a grid of zero
+    /// width, which draws as a single line where the author asked for a region,
+    /// and it is the case a `>` comparison would let through.
+    #[test]
+    fn a_structural_grid_needs_bounds_with_increasing_extents_on_both_axes() {
+        viewer_3d_render(&json!({ "scene": grid_scene() }), true)
+            .expect("the baseline grid must be valid");
+
+        for (label, bounds, expected) in [
+            (
+                "x inverted",
+                json!({ "minX": 3000, "maxX": -1000, "minY": -2000, "maxY": 2000 }),
+                "increasing min/max extents",
+            ),
+            (
+                "x collapsed to a line",
+                json!({ "minX": 0, "maxX": 0, "minY": -2000, "maxY": 2000 }),
+                "increasing min/max extents",
+            ),
+            (
+                "y inverted",
+                json!({ "minX": -1000, "maxX": 3000, "minY": 2000, "maxY": -2000 }),
+                "increasing min/max extents",
+            ),
+            (
+                "y collapsed to a line",
+                json!({ "minX": -1000, "maxX": 3000, "minY": 5, "maxY": 5 }),
+                "increasing min/max extents",
+            ),
+            (
+                "a non-numeric extent",
+                json!({ "minX": "-1000", "maxX": 3000, "minY": -2000, "maxY": 2000 }),
+                "must be a finite number",
+            ),
+        ] {
+            let mut scene = grid_scene();
+            scene["referenceSystems"][0]["bounds"] = bounds;
+            let error = viewer_3d_render(&json!({ "scene": scene }), true)
+                .unwrap_err()
+                .to_string();
+            assert!(error.contains(expected), "bounds {label}: {error}");
+        }
+
+        let mut scene = grid_scene();
+        scene["referenceSystems"][0]
+            .as_object_mut()
+            .unwrap()
+            .remove("bounds");
+        let error = viewer_3d_render(&json!({ "scene": scene }), true)
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("bounds` is required"), "{error}");
+    }
+
+    /// The axis and level guards an existing test does NOT reach. A grid axis
+    /// runs in plan, so `x` or `y` and nothing else; its offset and optional
+    /// extents are numbers; and a level carries a label and a numeric elevation.
+    ///
+    /// Two neighbouring cases are deliberately absent because
+    /// `renders_parametric_connection_solids_and_structural_references_with_receipts`
+    /// already covers them: an axis with no `label`, and an empty `levels` list.
+    #[test]
+    fn grid_axes_and_levels_must_be_planar_numeric_and_labelled() {
+        for (label, patch, expected) in [
+            (
+                "a vertical axis direction",
+                json!({ "id": "GA-Z", "direction": "z", "offsetMm": 0, "label": "1" }),
+                "must be `x` or `y`",
+            ),
+            (
+                "an absent axis direction",
+                json!({ "id": "GA-X", "offsetMm": 0, "label": "1" }),
+                "must be `x` or `y`",
+            ),
+            (
+                "a non-numeric axis offset",
+                json!({ "id": "GA-X", "direction": "x", "offsetMm": "0", "label": "1" }),
+                "offsetMm` must be a finite number",
+            ),
+            (
+                "a non-numeric axis extent",
+                json!({ "id": "GA-X", "direction": "x", "offsetMm": 0, "startMm": "0", "label": "1" }),
+                "startMm` must be a finite number",
+            ),
+        ] {
+            let mut scene = grid_scene();
+            scene["referenceSystems"][0]["axes"] = json!([patch]);
+            let error = viewer_3d_render(&json!({ "scene": scene }), true)
+                .unwrap_err()
+                .to_string();
+            assert!(error.contains(expected), "{label}: {error}");
+        }
+
+        for (label, patch, expected) in [
+            (
+                "an unlabelled level",
+                json!([{ "id": "GL-1", "elevationMm": 3000 }]),
+                "label` must be a string",
+            ),
+            (
+                "a non-numeric elevation",
+                json!([{ "id": "GL-1", "elevationMm": "3000", "label": "L1" }]),
+                "elevationMm` must be a finite number",
+            ),
+        ] {
+            let mut scene = grid_scene();
+            scene["referenceSystems"][0]["levels"] = patch;
+            let error = viewer_3d_render(&json!({ "scene": scene }), true)
+                .unwrap_err()
+                .to_string();
+            assert!(error.contains(expected), "{label}: {error}");
+        }
+
+        // An empty `axes` list is fine — a grid can be levels-only — but the key
+        // still has to be there, so a producer that forgot it is told.
+        let mut scene = grid_scene();
+        scene["referenceSystems"][0]["axes"] = json!([]);
+        viewer_3d_render(&json!({ "scene": scene }), true).expect("a levels-only grid is valid");
+        let mut scene = grid_scene();
+        scene["referenceSystems"][0]
+            .as_object_mut()
+            .unwrap()
+            .remove("axes");
+        let error = viewer_3d_render(&json!({ "scene": scene }), true)
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("axes` must be an array"), "{error}");
+    }
+
     #[test]
     fn explicit_null_scene_collections_are_rejected() {
         for collection in ["elements", "operations", "referenceSystems"] {

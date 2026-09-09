@@ -20,6 +20,8 @@
 //! developer's real login keyring (the OS keychain is process-global and not
 //! scoped by `AWARE_HOME`).
 
+mod common;
+
 use assert_cmd::Command;
 
 /// Long and distinctive so a substring search for it cannot match anything the
@@ -27,6 +29,7 @@ use assert_cmd::Command;
 const SECRET: &str = "sk-live-must-never-reach-a-trace-9f13a7";
 
 fn aware(home: &std::path::Path) -> Command {
+    common::approve_installed_apps(home);
     let mut cmd = Command::cargo_bin("aware").unwrap();
     cmd.env("AWARE_HOME", home)
         .env("AWARE_DISABLE_KEYRING", "1");

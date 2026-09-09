@@ -49,6 +49,10 @@ fn fixture(version: &str, pin: &str) -> (tempfile::TempDir, std::path::PathBuf) 
 }
 
 fn aware(home: &std::path::Path) -> Command {
+    // Pin-focused tests construct installed apps directly or through install;
+    // give those fixtures a current compiled approval so they reach the pin
+    // gate they are intended to exercise.
+    common::approve_installed_apps(home);
     let mut c = Command::cargo_bin("aware").unwrap();
     c.env("AWARE_HOME", home);
     c
@@ -111,6 +115,70 @@ fn run_refuses_an_app_whose_pin_the_installed_agent_does_not_satisfy() {
         .failure()
         .code(3)
         .stderr(predicate::str::contains("E_APP_AGENT_PIN_UNSATISFIED"));
+}
+
+#[test]
+fn run_refuses_an_agent_version_that_drifted_from_the_compiled_plan() {
+    let (tmp, src) = fixture("1.3.0", "1.x");
+    let home = tmp.path().join("home");
+    aware(&home)
+        .args(["app", "compile"])
+        .arg(src.join("pin-test.flo"))
+        .assert()
+        .success();
+    aware(&home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+
+    let manifest = home.join("agents/probe-agent/manifest.yaml");
+    let changed = std::fs::read_to_string(&manifest)
+        .unwrap()
+        .replace("version: 1.3.0", "version: 1.4.0");
+    std::fs::write(manifest, changed).unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "run", "pin-test", "--dry-run"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_APP_LOCK_AGENT_PIN_MISMATCH"))
+        .stderr(predicate::str::contains("1.3.0"))
+        .stderr(predicate::str::contains("1.4.0"));
+}
+
+#[test]
+fn run_refuses_an_installed_agent_that_was_absent_from_the_compiled_plan() {
+    let (tmp, src) = fixture("1.3.0", "1.x");
+    let home = tmp.path().join("home");
+    let agent = home.join("agents/probe-agent");
+    let parked = home.join("probe-agent-parked");
+    std::fs::rename(&agent, &parked).unwrap();
+    aware(&home)
+        .args(["app", "compile"])
+        .arg(src.join("pin-test.flo"))
+        .assert()
+        .success();
+    std::fs::rename(&parked, &agent).unwrap();
+    aware(&home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "run", "pin-test", "--dry-run"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_APP_LOCK_AGENT_PIN_MISMATCH"))
+        .stderr(predicate::str::contains("no version"))
+        .stderr(predicate::str::contains("1.3.0"));
 }
 
 #[test]
@@ -242,6 +310,10 @@ fn validate_judges_the_file_not_the_machine() {
         .assert()
         .success()
         .stdout(predicate::str::contains("is valid"));
+    assert!(
+        src.join("pin-test.lock").is_file(),
+        "successful validation must emit the approval required by app run"
+    );
 
     let (tmp2, src2) = fixture("1.3.0", "not-a-version");
     aware(&tmp2.path().join("home"))

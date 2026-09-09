@@ -13,7 +13,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
 use crate::error::AwareError;
@@ -23,7 +23,7 @@ use crate::manifest::loader::{DiscoveredAgent, discover_agents};
 use crate::paths::Paths;
 
 /// The lockfile schema. Serialized as YAML to `<app>.lock`.
-#[derive(Debug, Serialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct LockFile {
     /// SHA-256 of the source app file (UTF-8 bytes).
     #[serde(rename = "source-hash")]
@@ -62,7 +62,7 @@ pub struct LockFile {
     pub engineering: Option<serde_yaml::Value>,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct CompiledNode {
     pub id: String,
 
@@ -101,7 +101,7 @@ pub struct CompiledNode {
     /// `kind` (info / warn / error) so consumers can render by severity
     /// without string-matching the prose (#170). Serialized as a list of
     /// `{ kind, text }` maps.
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub notes: Vec<CompileNote>,
 
     /// RFC #223: `true` when this node resolves to a curated `model-extraction`
@@ -127,7 +127,7 @@ fn is_false(b: &bool) -> bool {
 /// Severity of a compile-time [`CompileNote`]. Consumers (the CLI, the lock
 /// audit, floless.app) render by `kind` — `info` quiet/collapsible, `warn` /
 /// `error` prominent — and stay correct across note-wording changes (#170).
-#[derive(Debug, Serialize, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Deserialize, Serialize, Clone, Copy, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum NoteKind {
     /// Benign provenance / FYI — e.g. "the compiler trusted the node-level
@@ -146,7 +146,7 @@ pub enum NoteKind {
 }
 
 /// A single compile-time note: a severity [`kind`](NoteKind) plus its prose.
-#[derive(Debug, Serialize, Clone, PartialEq, Eq)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Eq)]
 pub struct CompileNote {
     pub kind: NoteKind,
     pub text: String,
@@ -180,21 +180,136 @@ impl CompileNote {
     }
 }
 
-/// Compile a parsed app + the installed agent catalogue into a lockfile.
+fn hash_source_bytes(source_bytes: &[u8]) -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(source_bytes);
+    format!("sha256:{:x}", hasher.finalize())
+}
+
+struct AppSourceSnapshot {
+    app: App,
+    source_hash: String,
+}
+
+/// Read, parse, validate the path-bearing id, and hash one immutable buffer.
+/// Every approval producer and consumer goes through this snapshot boundary.
+fn read_source_snapshot(source_path: &Path) -> Result<AppSourceSnapshot, AwareError> {
+    let source_text = std::fs::read_to_string(source_path).map_err(|error| {
+        std::io::Error::new(error.kind(), format!("{}: {error}", source_path.display()))
+    })?;
+    let app: App = serde_yaml::from_str(&source_text)
+        .map_err(|error| AwareError::Validation(format!("{}: {error}", source_path.display())))?;
+    if !crate::manifest::loader::is_safe_segment(&app.app) {
+        return Err(AwareError::Validation(format!(
+            "[E_APP_ID_NOT_A_SEGMENT] app id {:?} is not a plain name",
+            app.app
+        )));
+    }
+    Ok(AppSourceSnapshot {
+        app,
+        source_hash: hash_source_bytes(source_text.as_bytes()),
+    })
+}
+
+/// Load an installed app and enforce its compiled approval over the same bytes.
+///
+/// The lock is named by the source app id and its `source-hash` covers the raw
+/// source bytes. Missing, unreadable, malformed, or stale approval artifacts
+/// are validation failures. Reading, parsing, and hashing one buffer ensures the
+/// parsed app is exactly the artifact the lock approves even if the file is
+/// replaced concurrently.
+pub fn load_approved_app(source_path: &Path) -> Result<App, AwareError> {
+    load_approved_app_with_lock(source_path).map(|(app, _)| app)
+}
+
+/// Load the approved source together with the exact compiled plan it matched.
+pub fn load_approved_app_with_lock(source_path: &Path) -> Result<(App, LockFile), AwareError> {
+    let snapshot = read_source_snapshot(source_path)?;
+    let app = snapshot.app;
+    let source_dir = source_path
+        .parent()
+        .ok_or_else(|| AwareError::Internal("source path has no parent".into()))?;
+    let lock_path = source_dir.join(format!("{}.lock", app.app));
+    let lock_text = match std::fs::read_to_string(&lock_path) {
+        Ok(text) => text,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+            return Err(AwareError::Validation(format!(
+                "[E_APP_LOCK_MISSING] app {} has no compiled approval at {}; run `aware app compile {}` first",
+                app.app,
+                lock_path.display(),
+                source_path.display()
+            )));
+        }
+        Err(error) => {
+            return Err(AwareError::Validation(format!(
+                "[E_APP_LOCK_INVALID] cannot read compiled approval {}: {error}; run `aware app compile {}` again",
+                lock_path.display(),
+                source_path.display()
+            )));
+        }
+    };
+    let lock: LockFile = serde_yaml::from_str(&lock_text).map_err(|error| {
+        AwareError::Validation(format!(
+            "[E_APP_LOCK_INVALID] compiled approval {} is invalid: {error}; run `aware app compile {}` again",
+            lock_path.display(),
+            source_path.display()
+        ))
+    })?;
+    let current_hash = snapshot.source_hash;
+    if lock.source_hash != current_hash {
+        return Err(AwareError::Validation(format!(
+            "[E_APP_LOCK_STALE] compiled approval {} does not match the installed source (approved {}, current {}); run `aware app compile {}` again",
+            lock_path.display(),
+            lock.source_hash,
+            current_hash,
+            source_path.display()
+        )));
+    }
+    Ok((app, lock))
+}
+
+/// Refuse execution when a dispatchable agent no longer matches the exact
+/// version captured in the engineer-approved plan.
+pub fn verify_agent_pins(
+    app: &App,
+    lock: &LockFile,
+    agents: &[DiscoveredAgent],
+) -> Result<(), AwareError> {
+    for agent_id in crate::validate::dispatchable_agents(app) {
+        let current = agents
+            .iter()
+            .find(|agent| agent.manifest.agent == agent_id)
+            .map(|agent| agent.manifest.version.as_str());
+        let approved = lock.agent_pins.get(agent_id).map(String::as_str);
+        // A missing agent is reported by the existing missing-agent preflight.
+        // An installed agent absent from the lock was never approved and must
+        // not become executable merely because it appeared after compilation.
+        if current.is_some() && current != approved {
+            return Err(AwareError::Validation(format!(
+                "[E_APP_LOCK_AGENT_PIN_MISMATCH] compiled approval pins agent {agent_id} at {}, but the installed version is {}; run `aware app compile` again",
+                approved.unwrap_or("no version"),
+                current.unwrap_or("missing")
+            )));
+        }
+    }
+    Ok(())
+}
+
+/// Compile a source snapshot + the installed agent catalogue into a lockfile.
 ///
 /// The lockfile is *not* written to disk here — callers (typically
 /// `aware app compile`) handle the write.
-pub fn compile(
+#[cfg(test)]
+fn compile(source_path: &Path, agents: &[DiscoveredAgent]) -> Result<LockFile, AwareError> {
+    let snapshot = read_source_snapshot(source_path)?;
+    compile_snapshot(&snapshot.app, agents, snapshot.source_hash)
+}
+
+fn compile_snapshot(
     app: &App,
     agents: &[DiscoveredAgent],
-    source_path: &Path,
+    source_hash: String,
 ) -> Result<LockFile, AwareError> {
-    let source_bytes = std::fs::read(source_path)
-        .map_err(|e| AwareError::Internal(format!("read {}: {e}", source_path.display())))?;
-    let mut hasher = Sha256::new();
-    hasher.update(&source_bytes);
-    let source_hash = format!("sha256:{:x}", hasher.finalize());
-
     // Flatten the node tree: top-level nodes plus the bodies of `do:`-bearing
     // primitives (for-each / sweep), so inner nodes are pinned, compiled, and
     // ref-checked rather than silently ignored (#117 finding #3). Body nodes
@@ -830,12 +945,21 @@ pub fn find_app_source(path: &Path) -> Option<std::path::PathBuf> {
 
 /// End-to-end: load + compile + write. Called by `aware app compile`.
 pub fn compile_to_disk(source: &Path, paths: &Paths) -> Result<std::path::PathBuf, AwareError> {
-    let app = crate::manifest::loader::load_app(source)?;
+    compile_to_disk_with_lock(source, paths).map(|(path, _)| path)
+}
+
+/// Compile and persist one source snapshot, returning the exact plan written.
+pub fn compile_to_disk_with_lock(
+    source: &Path,
+    paths: &Paths,
+) -> Result<(std::path::PathBuf, LockFile), AwareError> {
+    let snapshot = read_source_snapshot(source)?;
+    let app = &snapshot.app;
     // Refuse to produce a lock for an app the runtime can't execute (e.g. an
     // inline kind the orchestrator rejects). Gating here covers every
     // lock-producing path — `app compile`, `app inspect`, … — so an unrunnable
     // construct fails before locking, not at run (#160).
-    let issues = crate::validate::validate_app(&app);
+    let issues = crate::validate::validate_app(app);
     if let Some(err) = issues
         .iter()
         .find(|i| i.severity == crate::validate::Severity::Error)
@@ -849,7 +973,7 @@ pub fn compile_to_disk(source: &Path, paths: &Paths) -> Result<std::path::PathBu
     // Refuse to lock an app that references a not-yet-runnable agent (e.g.
     // html-report, whose transport binary isn't shipped) — fail here, not at run
     // with "program not found" (#161).
-    if let Some(err) = crate::validate::validate_app_agents(&app, &agents)
+    if let Some(err) = crate::validate::validate_app_agents(app, &agents)
         .into_iter()
         .find(|i| i.severity == crate::validate::Severity::Error)
     {
@@ -864,7 +988,7 @@ pub fn compile_to_disk(source: &Path, paths: &Paths) -> Result<std::path::PathBu
     // and is the wrong one, so the lock would record a version the author never
     // asked for, and the lock is the approved artifact.
     if let Some(err) =
-        crate::validate::unsatisfied_pins(&app, &agents, crate::validate::Severity::Error).first()
+        crate::validate::unsatisfied_pins(app, &agents, crate::validate::Severity::Error).first()
     {
         return Err(AwareError::Validation(format!(
             "app failed validation: [{}] {}",
@@ -876,16 +1000,81 @@ pub fn compile_to_disk(source: &Path, paths: &Paths) -> Result<std::path::PathBu
     // author-declared mode and no resolved schema (#170) — but that gap used to
     // be silent, and only showed up at run as a bare `os error 3`. `aware app
     // run` refuses it; here the user just gets told, with the remedy.
-    for m in crate::validate::missing_agents(&app, &agents, crate::validate::Severity::Warning) {
+    for m in crate::validate::missing_agents(app, &agents, crate::validate::Severity::Warning) {
         eprintln!("\u{26a0} [{}] {}", m.code, m.message);
     }
-    let lock = compile(&app, &agents, source)?;
+    let lock = compile_snapshot(app, &agents, snapshot.source_hash)?;
+    let path = write_lockfile(&lock, source)?;
+    Ok((path, lock))
+}
+
+/// Validate one source snapshot using `app validate` semantics, then persist
+/// the plan and hash derived from that same snapshot. Ambient missing or
+/// unsatisfied agent versions remain outside validation's file-only verdict.
+pub fn validate_to_disk(source: &Path, paths: &Paths) -> Result<std::path::PathBuf, AwareError> {
+    let snapshot = read_source_snapshot(source)?;
+    let app = &snapshot.app;
+    let mut issues = crate::validate::validate_app(app);
+    let agents = crate::manifest::loader::discover_agents(paths).unwrap_or_default();
+    issues.extend(crate::validate::validate_app_safety(app, &agents));
+    issues.extend(crate::validate::validate_app_agents(app, &agents));
+    if let Some(error) = issues
+        .iter()
+        .find(|issue| issue.severity == crate::validate::Severity::Error)
+    {
+        return Err(AwareError::Validation(format!(
+            "app failed validation: [{}] {}",
+            error.code, error.message
+        )));
+    }
+    let lock = compile_snapshot(app, &agents, snapshot.source_hash)?;
     write_lockfile(&lock, source)
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn compilation_plan_and_hash_share_one_source_snapshot() {
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("snapshot.flo");
+        let approved =
+            "app: snapshot\nversion: 0.1.0\ndescription: first\nnodes: []\nrequires: []\n";
+        std::fs::write(&source, approved).unwrap();
+
+        let snapshot = read_source_snapshot(&source).unwrap();
+        std::fs::write(
+            &source,
+            "app: replacement\nversion: 9.9.9\ndescription: later\nnodes: []\nrequires: []\n",
+        )
+        .unwrap();
+
+        let lock = compile_snapshot(&snapshot.app, &[], snapshot.source_hash).unwrap();
+        assert_eq!(lock.app, "snapshot");
+        assert_eq!(lock.version, "0.1.0");
+        assert_eq!(lock.source_hash, hash_source_bytes(approved.as_bytes()));
+    }
+
+    #[test]
+    fn unsafe_app_id_is_rejected_before_any_lock_path_lookup() {
+        let tmp = tempfile::tempdir().unwrap();
+        let app_dir = tmp.path().join("apps/installed");
+        std::fs::create_dir_all(&app_dir).unwrap();
+        let source = app_dir.join("installed.flo");
+        std::fs::write(
+            &source,
+            "app: ../../outside\nversion: 0.1.0\ndescription: escape\nnodes: []\nrequires: []\n",
+        )
+        .unwrap();
+        // If the unsafe id is joined before validation, this deliberately
+        // malformed external file changes the verdict to E_APP_LOCK_INVALID.
+        std::fs::write(tmp.path().join("outside.lock"), "not: [a lock").unwrap();
+
+        let error = load_approved_app(&source).unwrap_err().to_string();
+        assert!(error.contains("E_APP_ID_NOT_A_SEGMENT"), "{error}");
+        assert!(!error.contains("E_APP_LOCK_INVALID"), "{error}");
+    }
 
     #[test]
     fn write_lockfile_uses_substrate_correct_filename() {
@@ -1204,8 +1393,7 @@ requires: []
         )
         .unwrap();
 
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let sink = lock.nodes.iter().find(|n| n.id == "sink").unwrap();
         assert!(
             sink.notes.iter().any(|n| n.text.contains("src.nope")),
@@ -1262,8 +1450,7 @@ requires: []
 "#,
         )
         .unwrap();
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let n = lock.nodes.iter().find(|n| n.id == "extract").unwrap();
         assert!(
             n.runtime_model,
@@ -1369,8 +1556,7 @@ requires: []
         )
         .unwrap();
 
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
 
         // Inner do: agent is pinned.
         assert_eq!(
@@ -1471,8 +1657,7 @@ requires: []
 "#,
         )
         .unwrap();
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         // `{{ dup.rows }}` (on `loop`) must validate against the TOP-LEVEL dup,
         // which has `rows` — not the body dup, which doesn't. So: no note.
         let lp = lock.nodes.iter().find(|n| n.id == "loop").unwrap();
@@ -1554,8 +1739,7 @@ requires: []
 "#,
         )
         .unwrap();
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let consumer = lock.nodes.iter().find(|n| n.id == "loop.consumer").unwrap();
         assert!(
             !consumer.notes.iter().any(|n| n.text.contains("rfis")),
@@ -1623,8 +1807,7 @@ requires: []
 "#,
         )
         .unwrap();
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         // The body `{{ item.foo }}` is the per-iteration var — no note. The
         // top-level `{{ item.bar }}` on `loop` is a real ref that resolves.
         let consumer = lock.nodes.iter().find(|n| n.id == "loop.consumer").unwrap();
@@ -1696,8 +1879,7 @@ requires: []
 "#,
         )
         .unwrap();
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let worker = lock.nodes.iter().find(|n| n.id == "loop.worker").unwrap();
         let inputs = worker
             .inputs
@@ -1786,8 +1968,7 @@ requires: []
 "#,
         )
         .unwrap();
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let worker = lock.nodes.iter().find(|n| n.id == "study.worker").unwrap();
         assert!(
             worker
@@ -1881,8 +2062,7 @@ requires: []
 "#,
         )
         .unwrap();
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let worker = lock
             .nodes
             .iter()
@@ -1987,8 +2167,7 @@ requires: []
 "#,
         )
         .unwrap();
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let worker = lock
             .nodes
             .iter()
@@ -2058,8 +2237,7 @@ requires: []
 "#,
         )
         .unwrap();
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let sink = lock.nodes.iter().find(|n| n.id == "sink").unwrap();
         assert!(
             !sink.notes.iter().any(|n| n.text.contains("nope")),
@@ -2114,8 +2292,7 @@ requires: []
         )
         .unwrap();
 
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let probe = lock.nodes.iter().find(|n| n.id == "probe").unwrap();
 
         assert_eq!(
@@ -2180,8 +2357,7 @@ requires: []
         )
         .unwrap();
 
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let probe = lock.nodes.iter().find(|n| n.id == "probe").unwrap();
 
         assert_eq!(
@@ -2250,8 +2426,7 @@ requires: []
         )
         .unwrap();
 
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let probe = lock.nodes.iter().find(|n| n.id == "probe").unwrap();
 
         assert_eq!(
@@ -2324,8 +2499,7 @@ requires: []
         )
         .unwrap();
 
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let probe = lock.nodes.iter().find(|n| n.id == "probe").unwrap();
 
         assert_eq!(
@@ -2386,8 +2560,7 @@ requires: []
         )
         .unwrap();
 
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let yaml = serde_yaml::to_string(&lock).unwrap();
 
         // The note must serialize as a `{ kind, text }` map with a lowercase
@@ -2511,8 +2684,7 @@ requires: []
 "#,
         )
         .unwrap();
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        compile(&app, &mode_axis_agents(), &src).unwrap()
+        compile(&src, &mode_axis_agents()).unwrap()
     }
 
     fn compiled<'a>(lock: &'a LockFile, id: &str) -> &'a CompiledNode {
@@ -2658,10 +2830,9 @@ requires: []
 "#,
         )
         .unwrap();
-        let app = crate::manifest::loader::load_app(&src).unwrap();
         // Deliberately compiled against an EMPTY agent set — that is the
         // "not installed" condition.
-        let lock = compile(&app, &[], &src).unwrap();
+        let lock = compile(&src, &[]).unwrap();
 
         for (id, want_mode) in [
             ("silent", "write"),
@@ -2747,8 +2918,7 @@ requires: []
 "#,
         )
         .unwrap();
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
 
         let declared = compiled(&lock, "declared");
         assert_eq!(declared.mode, "write");
@@ -2886,8 +3056,7 @@ requires: []
 "#,
         )
         .unwrap();
-        let app = crate::manifest::loader::load_app(&src).unwrap();
-        let lock = compile(&app, &agents, &src).unwrap();
+        let lock = compile(&src, &agents).unwrap();
         let sink = compiled(&lock, "sink");
         assert!(
             sink.notes.iter().any(|n| n.text.contains("src.nope")),
