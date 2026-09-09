@@ -212,6 +212,8 @@ fn credentials_distinguish_valid_expired_and_missing_for_every_known_integration
     let tc = by_id("trimble-connect");
     assert_eq!(tc["status"], "valid");
     assert_eq!(tc["source"], "oauth");
+    assert_eq!(tc["scopes"], serde_json::json!(["s"]));
+    assert_eq!(tc["generation"], serde_json::Value::Null);
     assert!(
         tc["expires_in_secs"].as_i64().unwrap() > 0,
         "a valid token reports the time it has left: {tc:#?}"
@@ -228,6 +230,53 @@ fn credentials_distinguish_valid_expired_and_missing_for_every_known_integration
     assert_eq!(gw["status"], "missing");
     assert_eq!(gw["source"], serde_json::Value::Null);
     assert_eq!(gw["expires_in_secs"], serde_json::Value::Null);
+    assert_eq!(gw["scopes"], serde_json::json!([]));
+    assert_eq!(gw["generation"], serde_json::Value::Null);
+}
+
+#[test]
+fn doctor_does_not_materialize_or_rewrite_legacy_credentials() {
+    let tmp = tempfile::tempdir().unwrap();
+    let credentials = tmp.path().join("credentials");
+    std::fs::create_dir_all(&credentials).unwrap();
+    let path = credentials.join("trimble-connect.json");
+    let original = br#"{"access_token":"legacy-token","scope":"z  a z","expires_at":4102444800}"#;
+    std::fs::write(&path, original).unwrap();
+
+    let entries_before = credential_dir_entries(&credentials);
+    let report = doctor_json(tmp.path());
+    assert_eq!(
+        report["credentials"][0]["generation"],
+        serde_json::Value::Null
+    );
+    assert_eq!(
+        report["credentials"][0]["scopes"],
+        serde_json::json!(["a", "z"])
+    );
+
+    // Exercise the independent text renderer too; both doctor surfaces are
+    // contractually observational even though connect --list may materialize.
+    let nowhere = tempfile::tempdir().unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .env("AWARE_DISABLE_KEYRING", "1")
+        .env("PATH", nowhere.path())
+        .arg("doctor")
+        .assert()
+        .success();
+
+    assert_eq!(std::fs::read(&path).unwrap(), original);
+    assert_eq!(credential_dir_entries(&credentials), entries_before);
+}
+
+fn credential_dir_entries(dir: &std::path::Path) -> Vec<std::ffi::OsString> {
+    let mut entries: Vec<_> = std::fs::read_dir(dir)
+        .unwrap()
+        .map(|entry| entry.unwrap().file_name())
+        .collect();
+    entries.sort();
+    entries
 }
 
 #[test]

@@ -341,6 +341,56 @@ The trimble-connect agent can now make authenticated calls.
 
 Subsequent commands transparently use the credential. Refresh happens automatically inside `aware app run`.
 
+Machine-readable connect surfaces expose capability metadata without exposing
+token material. A successful `aware --json connect ...` result, each entry from
+`aware --json connect --list [--as <alias>]`, and each credential entry in
+`aware doctor --json` includes:
+
+- `scopes`: the granted OAuth scope identifiers, sorted and deduplicated. When a
+  successful OAuth token response omits `scope`, the scopes sent in that grant
+  request are recorded. User-imported opaque tokens report only scope metadata
+  supplied by the imported credential object; AWARE never infers a grant from a
+  bearer token.
+- `generation`: an opaque random identifier for the stored material grant. A
+  fresh connection or import mints a new generation. Refresh preserves it when
+  the normalized grant is unchanged and replaces it when the provider reports a
+  materially different scope set. Disconnect removes it with the credential.
+
+Credentials stored by older CLI versions remain valid. Their first materializing
+read (including `connect --list`, but excluding `doctor`) lazily persists a
+generation; repeated reads therefore return the same value. Materialization and
+credential rotation are serialized per account across processes, and metadata is
+written back to the same backend that supplied the credential. If the metadata
+lock or write cannot be completed, the readable credential remains usable and
+reports `generation: null` until a later materializing read can persist one;
+AWARE never reports an ephemeral generation as stable. Missing or unreadable
+credentials likewise report `generation: null` and an empty `scopes` array. The
+generation is not derived from access or refresh token bytes and is not an
+authenticator.
+
+Lock domains follow storage domains. OS-keyring accounts use a stable per-user
+lock namespace resolved from the native current-user identity/location rather
+than `HOME`, `XDG_DATA_HOME`, `LOCALAPPDATA`, or `AWARE_HOME`, because the keyring
+account itself is global to that user. Credentials-file locks remain inside their
+owning `AWARE_HOME`. An operation that may touch both acquires the keyring lock
+first and the file lock second; account-derived lock filenames are SHA-256 hashes
+rather than user-controlled path segments.
+
+Credential reads, metadata migration, and refresh CAS bind their lock, snapshot,
+and write destination to the exact requested account slot. Embedded `integration`
+metadata is descriptive and never selects another account. Both base-plus-alias
+lookups and direct alias-qualified handles therefore resolve and materialize the
+same slot without allowing copied metadata to mutate its original account.
+
+Refresh does not hold the credential lock during provider network I/O. It keeps
+the complete raw backend snapshot it started from (distinct from the normalized
+view returned to callers), then acquires the account lock,
+re-reads the authoritative backend, and compare-and-stores the refresh response
+only when that snapshot is unchanged, using the normal credential backend
+selection and fallback policy. A concurrent connect, import, or rotation wins;
+the stale refresh returns a conflict asking the caller to retry and never
+overwrites the newer credential.
+
 `connect` covers the integrations AWARE ships an OAuth client for, and validates its
 `INTEGRATION` argument against that list. For a handle AWARE runs no OAuth flow for, use
 `aware credential` below.
@@ -413,7 +463,10 @@ identifiers rather than infer support from `aware --version`.
 
 ### `aware doctor`
 
-Health check. No mutations. Useful before filing a bug.
+Health check. No mutations. Credential inspection does not create lock files,
+rewrite legacy credentials, normalize stored bytes, or materialize generation
+metadata; a legacy credential therefore reports `generation: null`. Useful
+before filing a bug.
 
 ```
 $ aware doctor

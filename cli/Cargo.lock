@@ -288,6 +288,7 @@ dependencies = [
  "fs2",
  "jsonschema",
  "keyring",
+ "libc",
  "lol_html",
  "minijinja",
  "predicates",
