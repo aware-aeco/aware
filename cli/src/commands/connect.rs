@@ -401,12 +401,38 @@ pub fn credential_status_json(
     aware_home: &std::path::Path,
     now: i64,
 ) -> serde_json::Value {
+    credential_status_json_with_mode(integration, alias, aware_home, now, false)
+}
+
+/// Doctor variant: inspect credential state without materializing legacy
+/// metadata or otherwise changing the credential store.
+pub fn credential_status_json_read_only(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    now: i64,
+) -> serde_json::Value {
+    credential_status_json_with_mode(integration, alias, aware_home, now, true)
+}
+
+fn credential_status_json_with_mode(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    now: i64,
+    read_only: bool,
+) -> serde_json::Value {
     let app = active_app_label(integration, alias, aware_home);
     // Which interactive flow(s) a UI should use for this integration (#158).
     let (flows, recommended_flow) = crate::auth::config::for_integration(integration)
         .map(|c| (c.supported_flows().to_vec(), c.recommended_flow()))
         .unwrap_or_default();
-    match crate::auth::keychain::load_token(integration, alias, aware_home) {
+    let loaded = if read_only {
+        crate::auth::keychain::load_token_read_only(integration, alias, aware_home)
+    } else {
+        crate::auth::keychain::load_token(integration, alias, aware_home)
+    };
+    match loaded {
         Ok(Some(token)) => {
             let (status, source, expires_in) = match token.source {
                 TokenSource::Paste => ("valid".to_string(), "paste".to_string(), None),
@@ -466,6 +492,26 @@ pub fn print_credential_status_text(
     aware_home: &std::path::Path,
     now: i64,
 ) {
+    print_credential_status_text_with_mode(integration, alias, aware_home, now, false);
+}
+
+/// Human-readable doctor variant that does not mutate credential state.
+pub fn print_credential_status_text_read_only(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    now: i64,
+) {
+    print_credential_status_text_with_mode(integration, alias, aware_home, now, true);
+}
+
+fn print_credential_status_text_with_mode(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    now: i64,
+    read_only: bool,
+) {
     let app = active_app_label(integration, alias, aware_home);
     // Suggest the integration's recommended flow in the "missing" hint (#158).
     let recommended_flag = crate::auth::config::for_integration(integration)
@@ -473,7 +519,12 @@ pub fn print_credential_status_text(
         .and_then(|c| c.recommended_flow())
         .map(|f| format!(" --{f}"))
         .unwrap_or_default();
-    match crate::auth::keychain::load_token(integration, alias, aware_home) {
+    let loaded = if read_only {
+        crate::auth::keychain::load_token_read_only(integration, alias, aware_home)
+    } else {
+        crate::auth::keychain::load_token(integration, alias, aware_home)
+    };
+    match loaded {
         Ok(Some(token)) => match token.source {
             TokenSource::Paste => {
                 println!(

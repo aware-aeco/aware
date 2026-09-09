@@ -356,14 +356,17 @@ token material. A successful `aware --json connect ...` result, each entry from
   the normalized grant is unchanged and replaces it when the provider reports a
   materially different scope set. Disconnect removes it with the credential.
 
-Credentials stored by older CLI versions remain valid. Their first read lazily
-materializes and persists a generation; repeated reads therefore return the same
-value. Materialization is serialized across processes. If its metadata lock or
-write cannot be completed, the readable credential remains usable and reports
-`generation: null` until a later read can persist one; AWARE never reports an
-ephemeral generation as stable. Missing or unreadable credentials likewise
-report `generation: null` and an empty `scopes` array. The generation is not
-derived from access or refresh token bytes and is not an authenticator.
+Credentials stored by older CLI versions remain valid. Their first materializing
+read (including `connect --list`, but excluding `doctor`) lazily persists a
+generation; repeated reads therefore return the same value. Materialization and
+credential rotation are serialized per account across processes, and metadata is
+written back to the same backend that supplied the credential. If the metadata
+lock or write cannot be completed, the readable credential remains usable and
+reports `generation: null` until a later materializing read can persist one;
+AWARE never reports an ephemeral generation as stable. Missing or unreadable
+credentials likewise report `generation: null` and an empty `scopes` array. The
+generation is not derived from access or refresh token bytes and is not an
+authenticator.
 
 `connect` covers the integrations AWARE ships an OAuth client for, and validates its
 `INTEGRATION` argument against that list. For a handle AWARE runs no OAuth flow for, use
@@ -437,7 +440,10 @@ identifiers rather than infer support from `aware --version`.
 
 ### `aware doctor`
 
-Health check. No mutations. Useful before filing a bug.
+Health check. No mutations. Credential inspection does not create lock files,
+rewrite legacy credentials, normalize stored bytes, or materialize generation
+metadata; a legacy credential therefore reports `generation: null`. Useful
+before filing a bug.
 
 ```
 $ aware doctor

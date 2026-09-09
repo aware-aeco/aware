@@ -119,6 +119,19 @@ pub fn store_token(
     alias: Option<&str>,
     aware_home: &Path,
 ) -> Result<(), AwareError> {
+    let account = account_name(&token.integration, alias);
+    let _lock = acquire_account_lock(aware_home, &account)
+        .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
+    store_token_unlocked(token, alias, aware_home)
+}
+
+/// Store through the normal backend-selection policy. The caller must hold the
+/// per-account lock.
+fn store_token_unlocked(
+    token: &StoredToken,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<(), AwareError> {
     let body = serde_json::to_string(token)
         .map_err(|e| AwareError::Internal(format!("serialize token: {e}")))?;
     let account = account_name(&token.integration, alias);
@@ -154,6 +167,43 @@ pub fn store_token(
                  falling back to ~/.aware/credentials file"
             );
             fall_back_to_file(&entry, aware_home, &account, &body)
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum TokenBackend {
+    Keyring,
+    File,
+}
+
+#[derive(Debug)]
+struct LoadedToken {
+    token: StoredToken,
+    backend: TokenBackend,
+}
+
+/// Persist metadata to the backend that supplied the credential. Migration is
+/// not a credential rotation: it must not move a file fallback into the keyring
+/// (or a keyring value into a file) merely because backend availability changed.
+/// The caller must hold the per-account lock.
+fn store_token_to_backend_unlocked(
+    token: &StoredToken,
+    alias: Option<&str>,
+    aware_home: &Path,
+    backend: TokenBackend,
+) -> Result<(), AwareError> {
+    let body = serde_json::to_string(token)
+        .map_err(|e| AwareError::Internal(format!("serialize token: {e}")))?;
+    let account = account_name(&token.integration, alias);
+    match backend {
+        TokenBackend::File => write_cred_file(aware_home, &account, &body),
+        TokenBackend::Keyring => {
+            let entry = keyring::Entry::new(SERVICE_NAME, &account)
+                .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+            entry
+                .set_password(&body)
+                .map_err(|e| AwareError::PermissionDenied(format!("keyring write: {e}")))
         }
     }
 }
@@ -264,9 +314,10 @@ pub fn load_token(
     aware_home: &Path,
 ) -> Result<Option<StoredToken>, AwareError> {
     let account = account_name(integration, alias);
-    let Some(token) = load_token_raw(integration, alias, aware_home)? else {
+    let Some(loaded) = load_token_raw(integration, alias, aware_home)? else {
         return Ok(None);
     };
+    let token = loaded.token;
 
     let normalized_scope = normalized_scope_string(&token.scope);
     if token.generation.is_some() && token.scope == normalized_scope {
@@ -276,7 +327,7 @@ pub fn load_token(
     // Generation materialization is a read-modify-write operation. Serialize it
     // across processes, then re-read under the lock so exactly one reader mints
     // and every waiter observes the value that was actually persisted.
-    let Ok(_generation_lock) = acquire_generation_lock(aware_home, &account) else {
+    let Ok(_generation_lock) = acquire_account_lock(aware_home, &account) else {
         return Ok(Some(readable_without_ephemeral_generation(
             token,
             normalized_scope,
@@ -294,9 +345,21 @@ pub fn load_token(
         }
     };
 
-    Ok(Some(materialize_generation(under_lock, |updated| {
-        store_token(updated, alias, aware_home)
+    let backend = under_lock.backend;
+    Ok(Some(materialize_generation(under_lock.token, |updated| {
+        store_token_to_backend_unlocked(updated, alias, aware_home, backend)
     })))
+}
+
+/// Inspect a credential without changing any persistent state. In particular,
+/// this path never creates a lock file, normalizes stored bytes, or materializes
+/// legacy generation metadata. `aware doctor` uses it to remain read-only.
+pub fn load_token_read_only(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<Option<StoredToken>, AwareError> {
+    load_token_raw(integration, alias, aware_home).map(|loaded| loaded.map(|value| value.token))
 }
 
 /// Load without metadata migration. Kept separate so the generation lock can
@@ -305,23 +368,30 @@ fn load_token_raw(
     integration: &str,
     alias: Option<&str>,
     aware_home: &Path,
-) -> Result<Option<StoredToken>, AwareError> {
+) -> Result<Option<LoadedToken>, AwareError> {
     let account = account_name(integration, alias);
 
     let loaded = if !keyring_enabled() {
-        read_cred_file(integration, alias, aware_home)?
+        read_cred_file(integration, alias, aware_home)?.map(|token| LoadedToken {
+            token,
+            backend: TokenBackend::File,
+        })
     } else {
         let entry = keyring::Entry::new(SERVICE_NAME, &account)
             .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
 
         match entry.get_password() {
-            Ok(body) => Some(
-                serde_json::from_str(&body)
+            Ok(body) => Some(LoadedToken {
+                token: serde_json::from_str(&body)
                     .map_err(|e| AwareError::Validation(format!("token JSON: {e}")))?,
-            ),
+                backend: TokenBackend::Keyring,
+            }),
             Err(keyring::Error::NoEntry) => {
                 // Nothing in the keychain — check the file fallback.
-                read_cred_file(integration, alias, aware_home)?
+                read_cred_file(integration, alias, aware_home)?.map(|token| LoadedToken {
+                    token,
+                    backend: TokenBackend::File,
+                })
             }
             Err(e) => return Err(AwareError::PermissionDenied(format!("keyring read: {e}"))),
         }
@@ -330,7 +400,7 @@ fn load_token_raw(
     Ok(loaded)
 }
 
-fn acquire_generation_lock(aware_home: &Path, account: &str) -> std::io::Result<std::fs::File> {
+fn acquire_account_lock(aware_home: &Path, account: &str) -> std::io::Result<std::fs::File> {
     let dir = aware_home.join("credentials");
     std::fs::create_dir_all(&dir)?;
     // Hash the non-secret account name so aliases can never influence the path.
@@ -340,6 +410,9 @@ fn acquire_generation_lock(aware_home: &Path, account: &str) -> std::io::Result<
         .write(true)
         .create(true)
         .truncate(false)
+        // Keep the original generation-lock filename: rotations now share it,
+        // and an already-running pre-upgrade process must contend on the same
+        // OS lock rather than opening a second coordination domain.
         .open(dir.join(format!(".generation-{key}.lock")))?;
     file.lock_exclusive()?;
     Ok(file)
@@ -377,9 +450,15 @@ pub fn delete_token(
     aware_home: &Path,
 ) -> Result<(), AwareError> {
     let account = account_name(integration, alias);
+    let _lock = acquire_account_lock(aware_home, &account)
+        .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
+    delete_token_unlocked(aware_home, &account)
+}
 
+/// Remove both possible token backends. The caller must hold the account lock.
+fn delete_token_unlocked(aware_home: &Path, account: &str) -> Result<(), AwareError> {
     let keyring_result = if keyring_enabled() {
-        let entry = keyring::Entry::new(SERVICE_NAME, &account)
+        let entry = keyring::Entry::new(SERVICE_NAME, account)
             .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
         match entry.delete_credential() {
             Ok(()) => Ok(()),
@@ -395,7 +474,7 @@ pub fn delete_token(
     // which made a revoke that left the credential readable exit 0: the caller is
     // told the credential is gone while `load_token` still returns it. Revocation
     // has to fail closed to be worth anything (#436).
-    let file_result = remove_cred_file(aware_home, &account);
+    let file_result = remove_cred_file(aware_home, account);
 
     // Both stores are attempted before either error surfaces, so a failure in one
     // never leaves the other standing.
@@ -850,6 +929,93 @@ mod tests {
         )
         .unwrap();
         assert_eq!(persisted.generation.as_ref(), Some(&generations[0]));
+    }
+
+    #[test]
+    fn file_backed_metadata_materialization_stays_in_the_file_backend() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("credentials");
+        std::fs::create_dir_all(&dir).unwrap();
+        let path = dir.join("google-workspace.json");
+        std::fs::write(&path, r#"{"access_token":"file-token","scope":"b a"}"#).unwrap();
+
+        let loaded = load_token_raw("google-workspace", None, tmp.path())
+            .unwrap()
+            .unwrap();
+        assert_eq!(loaded.backend, TokenBackend::File);
+        let account = account_name("google-workspace", None);
+        let _lock = acquire_account_lock(tmp.path(), &account).unwrap();
+        let migrated = materialize_generation(loaded.token, |updated| {
+            store_token_to_backend_unlocked(updated, None, tmp.path(), loaded.backend)
+        });
+
+        assert!(
+            path.is_file(),
+            "metadata migration must retain the source file"
+        );
+        let persisted: StoredToken =
+            serde_json::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();
+        assert_eq!(persisted.access_token, "file-token");
+        assert_eq!(persisted.scope, "a b");
+        assert_eq!(persisted.generation, migrated.generation);
+    }
+
+    #[test]
+    fn metadata_migration_cannot_roll_back_a_concurrent_rotation() {
+        use std::sync::{Arc, Barrier};
+
+        // Exercise both possible lock acquisition orders repeatedly. If migration
+        // reads the legacy value first, it must re-read after acquiring the same
+        // account lock used by the rotation before it writes any metadata.
+        for attempt in 0..32 {
+            let tmp = tempfile::tempdir().unwrap();
+            let dir = tmp.path().join("credentials");
+            std::fs::create_dir_all(&dir).unwrap();
+            std::fs::write(
+                dir.join("google-workspace.json"),
+                r#"{"access_token":"legacy","scope":"openid"}"#,
+            )
+            .unwrap();
+
+            let home = Arc::new(tmp.path().to_path_buf());
+            let barrier = Arc::new(Barrier::new(3));
+            let reader = {
+                let home = Arc::clone(&home);
+                let barrier = Arc::clone(&barrier);
+                std::thread::spawn(move || {
+                    barrier.wait();
+                    load_token("google-workspace", None, &home).unwrap()
+                })
+            };
+            let writer = {
+                let home = Arc::clone(&home);
+                let barrier = Arc::clone(&barrier);
+                std::thread::spawn(move || {
+                    let replacement = StoredToken {
+                        access_token: format!("rotated-{attempt}"),
+                        refresh_token: None,
+                        expires_at: 0,
+                        scope: "email".into(),
+                        token_type: "Bearer".into(),
+                        integration: "google-workspace".into(),
+                        obtained_at: 1,
+                        generation: Some(format!("rotation-{attempt}")),
+                        source: TokenSource::Paste,
+                    };
+                    barrier.wait();
+                    store_token(&replacement, None, &home).unwrap();
+                })
+            };
+            barrier.wait();
+            reader.join().unwrap();
+            writer.join().unwrap();
+
+            let final_token = load_token_read_only("google-workspace", None, &home)
+                .unwrap()
+                .unwrap();
+            assert_eq!(final_token.access_token, format!("rotated-{attempt}"));
+            assert_eq!(final_token.generation, Some(format!("rotation-{attempt}")));
+        }
     }
 
     #[test]
