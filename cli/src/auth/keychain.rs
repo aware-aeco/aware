@@ -662,14 +662,9 @@ fn acquire_lock(path: &Path, domain: LockDomain) -> std::io::Result<std::fs::Fil
 fn ensure_keyring_lock_dir(dir: &Path) -> std::io::Result<()> {
     use std::os::unix::fs::{DirBuilderExt, MetadataExt, PermissionsExt};
 
-    match std::fs::symlink_metadata(dir) {
-        Ok(_) => {}
-        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
-            std::fs::DirBuilder::new().mode(0o700).create(dir)?;
-        }
-        Err(e) => return Err(e),
-    }
-    let metadata = std::fs::symlink_metadata(dir)?;
+    let metadata = ensure_lock_dir_exists_with(dir, |path| {
+        std::fs::DirBuilder::new().mode(0o700).create(path)
+    })?;
     // SAFETY: `geteuid` has no pointer arguments or caller-side preconditions.
     let uid = unsafe { libc::geteuid() };
     if metadata.file_type().is_symlink()
@@ -682,6 +677,26 @@ fn ensure_keyring_lock_dir(dir: &Path) -> std::io::Result<()> {
         ));
     }
     Ok(())
+}
+
+/// Create a lock directory once while allowing another process to win the same
+/// first-use race. The authoritative metadata is always read after creation, so
+/// callers can still reject a file, symlink, wrong owner, or unsafe mode.
+#[cfg(any(unix, test))]
+fn ensure_lock_dir_exists_with(
+    dir: &Path,
+    create: impl FnOnce(&Path) -> std::io::Result<()>,
+) -> std::io::Result<std::fs::Metadata> {
+    match std::fs::symlink_metadata(dir) {
+        Ok(_) => {}
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => match create(dir) {
+            Ok(()) => {}
+            Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => {}
+            Err(e) => return Err(e),
+        },
+        Err(e) => return Err(e),
+    }
+    std::fs::symlink_metadata(dir)
 }
 
 #[cfg(windows)]
@@ -1480,6 +1495,21 @@ mod tests {
             std::fs::read_to_string(first).unwrap(),
             std::fs::read_to_string(second).unwrap()
         );
+    }
+
+    #[test]
+    fn first_use_lock_dir_creation_tolerates_a_concurrent_winner() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("global-locks");
+        let metadata = ensure_lock_dir_exists_with(&dir, |path| {
+            // Deterministically model another process creating the directory
+            // after our initial lookup but before our create reaches the OS.
+            std::fs::create_dir(path)?;
+            Err(std::io::Error::from(std::io::ErrorKind::AlreadyExists))
+        })
+        .unwrap();
+
+        assert!(metadata.is_dir());
     }
 
     #[test]
