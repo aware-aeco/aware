@@ -225,8 +225,17 @@ fn is_canonical_install(step: &serde_yaml::Value) -> bool {
         && step.get("continue-on-error").is_none()
 }
 
+/// A `rustup` command or an explicit `cargo +toolchain` selector anywhere in the
+/// job, which either overrides or bypasses the installed pin.
+///
+/// The backslash-newline is dropped first. The shell removes a line continuation
+/// before it splits words, so `cargo \` + newline + `+nightly build` runs as
+/// `cargo +nightly build`; leaving it in put a `\` between the two tokens and the
+/// selector went unseen. That is a lexical rewrite of two characters, not a step
+/// toward interpreting the script — the guard still asks only whether these
+/// substrings appear at all, which is why it needs no shell model to reject them.
 fn has_toolchain_override(run: &str) -> bool {
-    let lower = run.to_ascii_lowercase();
+    let lower = run.to_ascii_lowercase().replace("\\\n", "");
     let normalized = lower.split_whitespace().collect::<Vec<_>>().join(" ");
     lower.contains("rustup") || normalized.contains("cargo +")
 }
@@ -608,6 +617,9 @@ fn later_toolchain_overrides_are_rejected_without_parsing_shell() {
         "rustup run stable cargo build",
         "cargo +stable build",
         "/usr/bin/cargo   +nightly test",
+        // The shell removes a backslash-newline before it splits words, so this
+        // runs as `cargo +nightly build` (Codex review, PR #506).
+        "cargo \\\n  +nightly build",
     ] {
         assert!(has_toolchain_override(run), "accepted override: {run}");
         let mut job = fixture_job();
@@ -622,7 +634,13 @@ fn later_toolchain_overrides_are_rejected_without_parsing_shell() {
             .insert(2, serde_yaml::Value::Mapping(override_step));
         assert!(!fixture_problems(&job).is_empty());
     }
+    // …and dropping the continuation must not invent a selector where there is
+    // none: a wrapped command is still just a wrapped command.
     assert!(!has_toolchain_override("cargo build --locked"));
+    assert!(!has_toolchain_override("cargo build \\\n  --locked"));
+    assert!(!has_toolchain_override(
+        "cargo clippy --all-targets \\\n  -- -D warnings"
+    ));
 }
 
 #[test]
