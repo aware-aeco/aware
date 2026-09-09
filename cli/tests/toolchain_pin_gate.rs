@@ -248,18 +248,23 @@ fn is_canonical_install(step: &serde_yaml::Value) -> bool {
 /// A `rustup` command or an explicit `cargo +toolchain` selector anywhere in the
 /// job, which either overrides or bypasses the installed pin.
 ///
-/// The backslash-newline is dropped first. The shell removes a line continuation
-/// before it splits words, so `cargo \` + newline + `+nightly build` runs as
-/// `cargo +nightly build`; leaving it in put a `\` between the two tokens and the
-/// selector went unseen. That is a lexical rewrite of two characters, not a step
-/// toward interpreting the script.
+/// The selector is read as two adjacent *words* — a Cargo executable followed by
+/// a `+…` — rather than as the literal text `cargo +`, so every spelling
+/// [`is_cargo_executable`] accepts is covered: `cargo.exe`, an absolute path, a
+/// quoted invocation.
 ///
-/// The selector itself is then read as two adjacent words — a Cargo executable
-/// followed by a `+…` — rather than as the literal text `cargo +`, so every
-/// spelling [`is_cargo_executable`] already accepts is covered: `cargo.exe`, an
-/// absolute path, a quoted invocation. Both findings on this file were the gap
-/// between those two notions of "Cargo". No shell model is needed for either:
-/// the question is still only whether these words appear next to each other.
+/// "Adjacent" has to survive a line continuation, and the three shells GitHub
+/// Actions runs spell that differently: bash `\`, PowerShell `` ` ``, cmd `^`.
+/// Rather than learn three shells, anything left of a word once the surrounding
+/// punctuation is stripped — which is what a lone `` ` `` or `^` is — does not
+/// separate two words, so it is dropped. The backslash needs the one rewrite
+/// above it, because `\` is also a legitimate character *inside* a Windows path
+/// and so cannot be treated as punctuation.
+///
+/// That is still not a model of shell syntax: the question is only whether these
+/// two words stand next to each other. Every finding this file has taken has been
+/// a place where two of its own notions disagreed — what Cargo is called, and now
+/// what counts as adjacent — so both are single definitions.
 fn has_toolchain_override(run: &str) -> bool {
     let lower = run.to_ascii_lowercase().replace("\\\n", "");
     if lower.contains("rustup") {
@@ -267,9 +272,11 @@ fn has_toolchain_override(run: &str) -> bool {
     }
     lower
         .split_whitespace()
+        .map(bare_token)
+        .filter(|word| !word.is_empty())
         .collect::<Vec<_>>()
         .windows(2)
-        .any(|pair| is_cargo_executable(pair[0]) && bare_token(pair[1]).starts_with('+'))
+        .any(|pair| is_cargo_executable(pair[0]) && pair[1].starts_with('+'))
 }
 
 fn declares_rustup_toolchain(value: &serde_yaml::Value) -> bool {
@@ -658,6 +665,11 @@ fn later_toolchain_overrides_are_rejected_without_parsing_shell() {
         "cargo.exe +nightly build",
         "C:\\Users\\runner\\.cargo\\bin\\cargo.exe +stable build",
         "sh -c \"cargo +nightly build\"",
+        // The other two continuations. `bridge-windows-packaged` runs on
+        // windows-latest and its Cargo step selects no shell, so its default is
+        // pwsh and the backtick form is in scope (Codex review, PR #506).
+        "cargo.exe `\n  +nightly build",
+        "cargo ^\n  +stable build",
     ] {
         assert!(has_toolchain_override(run), "accepted override: {run}");
         let mut job = fixture_job();
@@ -683,6 +695,12 @@ fn later_toolchain_overrides_are_rejected_without_parsing_shell() {
     // Cargo itself rather than merely appear somewhere in the script.
     assert!(!has_toolchain_override("cargo-nextest run +extra"));
     assert!(!has_toolchain_override("echo 1 + 2 && cargo build"));
+    assert!(!has_toolchain_override(
+        "cargo build --locked\necho \"+done\""
+    ));
+    assert!(!has_toolchain_override(
+        "cargo build `\n  --locked `\n  --all-targets"
+    ));
 }
 
 #[test]
