@@ -137,6 +137,52 @@ fn outer_app_invokes_inner_app_as_agent() {
 }
 
 #[test]
+fn verified_policy_traverses_app_backed_agent_to_unverified_leaf() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let src = tmp.path().join("src");
+    let leaf = aware.join("agents/local-leaf");
+    std::fs::create_dir_all(&leaf).unwrap();
+    std::fs::write(
+        leaf.join("manifest.yaml"),
+        r#"agent: local-leaf
+version: 1.0.0
+description: local leaf
+stateful: false
+license: MIT
+transport:
+  cli:
+    binary: must-not-run
+commands:
+  read:
+    lifecycle: single
+    mode: read
+    description: read
+    outputs:
+      type: single
+      schema: { ok: boolean }
+"#,
+    )
+    .unwrap();
+    let nested = INNER_FLO.replace(
+        "  - id: gate\n    inline:\n      kind: predicate\n      description: always pass\n      code: 'true'",
+        "  - id: leaf\n    agent: local-leaf\n    command: read",
+    );
+    install_app(&aware, &write_app(&src, "inner", &nested)).success();
+    install_app(&aware, &write_app(&src, "outer", OUTER_FLO)).success();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_REGISTRY", "file:///must-not-be-read.json")
+        .args(["app", "run", "outer", "--require-verified-agents"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains("local-leaf"))
+        .stderr(predicate::str::contains("E_APP_AGENT_BUNDLE_UNVERIFIED"));
+    assert!(!aware.join("logs/outer").exists());
+}
+
+#[test]
 fn outer_app_refuses_a_stale_inner_app_approval() {
     let tmp = tempfile::tempdir().unwrap();
     let aware = tmp.path().join("aware");

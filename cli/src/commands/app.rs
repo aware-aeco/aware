@@ -255,13 +255,6 @@ async fn run(
     // exact app we execute. Gate every run mode before provenance or dispatch.
     let (app, approved_lock) = crate::app_lock::load_approved_app_with_lock(&manifest_path)?;
     let mut verified_at_start = serde_json::Map::new();
-    let official_index = if require_verified_agents && !simulate {
-        Some(crate::registry::fetch::fetch_fresh_official_index().map_err(|error| {
-            AwareError::Validation(format!("[E_APP_AGENT_BUNDLE_UNVERIFIED] cannot fetch fresh official registry index: {error}"))
-        })?)
-    } else {
-        None
-    };
 
     // Safety-contract pre-flight: refuse to run an app whose write-mode
     // nodes are missing `safety:` blocks. Skipped in --dry-run (a dry-run
@@ -298,7 +291,36 @@ async fn run(
     if !simulate {
         let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
         crate::app_lock::verify_agent_pins(&app, &approved_lock, &agents)?;
-        for agent_id in crate::validate::dispatchable_agents(&app) {
+        let reachable = reachable_agent_ids(&ctx.paths, &app, &agents)?;
+        if require_verified_agents {
+            for agent_id in &reachable {
+                let Some(agent) = agents.iter().find(|a| a.manifest.agent == *agent_id) else {
+                    return Err(AwareError::Validation(format!(
+                        "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {agent_id} is not installed"
+                    )));
+                };
+                if !crate::install::provenance::claims_official(&agent.root) {
+                    let assessment = crate::install::provenance::assess_against_index(
+                        &agent.root,
+                        &agent.manifest.agent,
+                        &agent.manifest.version,
+                        None,
+                    );
+                    return Err(AwareError::Validation(format!(
+                        "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {agent_id} is not verified: {}",
+                        assessment.reason
+                    )));
+                }
+            }
+        }
+        let official_index = if require_verified_agents && !reachable.is_empty() {
+            Some(crate::registry::fetch::fetch_fresh_official_index().map_err(|error| {
+                AwareError::Validation(format!("[E_APP_AGENT_BUNDLE_UNVERIFIED] cannot fetch fresh official registry index: {error}"))
+            })?)
+        } else {
+            None
+        };
+        for agent_id in reachable {
             if let Some(agent) = agents.iter().find(|a| a.manifest.agent == agent_id) {
                 let assessment = crate::install::provenance::assess_against_index(
                     &agent.root,
@@ -306,7 +328,7 @@ async fn run(
                     &agent.manifest.version,
                     official_index.as_ref(),
                 );
-                verified_at_start.insert(agent_id.to_string(), serde_json::to_value(&assessment)?);
+                verified_at_start.insert(agent_id.clone(), serde_json::to_value(&assessment)?);
                 if require_verified_agents && !assessment.verified {
                     return Err(AwareError::Validation(format!(
                         "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {agent_id} is not verified: {}",
@@ -965,6 +987,61 @@ fn nested_malformed_requires(
         );
     }
     Ok(out)
+}
+
+/// Resolve the exact one-hop set whose transports can execute. App-backed
+/// wrapper manifests are routing metadata; their approved backing app's leaf
+/// agents are the executable bundles that strict provenance must assess.
+fn reachable_agent_ids(
+    paths: &crate::paths::Paths,
+    app: &crate::manifest::app::App,
+    agents: &[crate::manifest::loader::DiscoveredAgent],
+) -> Result<std::collections::BTreeSet<String>, AwareError> {
+    let mut reachable = std::collections::BTreeSet::new();
+    for id in crate::validate::dispatchable_agents(app) {
+        let Some(agent) = agents.iter().find(|agent| agent.manifest.agent == id) else {
+            continue; // existing missing-agent preflight reports it below
+        };
+        if !matches!(
+            effective_transport(&agent.manifest, id),
+            Ok(TransportKind::App)
+        ) {
+            reachable.insert(id.to_string());
+            continue;
+        }
+        let transport = agent.manifest.transport.app.as_ref().ok_or_else(|| {
+            AwareError::Validation(format!("app-backed agent {id} has no app transport"))
+        })?;
+        if !crate::manifest::loader::is_safe_segment(&transport.backed_by) {
+            return Err(AwareError::Validation(format!(
+                "app-backed agent {id} has unsafe backing app id {:?}",
+                transport.backed_by
+            )));
+        }
+        let backing_dir = paths.apps_dir().join(&transport.backed_by);
+        let source = crate::manifest::loader::find_app_manifest(&backing_dir).ok_or_else(|| {
+            AwareError::Validation(format!(
+                "app-backed agent {id}: backing app {} is not installed",
+                transport.backed_by
+            ))
+        })?;
+        let (backing, lock) = crate::app_lock::load_approved_app_with_lock(&source)?;
+        crate::app_lock::verify_agent_pins(&backing, &lock, agents)?;
+        for leaf in crate::validate::dispatchable_agents(&backing) {
+            if let Some(leaf_agent) = agents.iter().find(|agent| agent.manifest.agent == leaf)
+                && matches!(
+                    effective_transport(&leaf_agent.manifest, leaf),
+                    Ok(TransportKind::App)
+                )
+            {
+                return Err(AwareError::Validation(format!(
+                    "app-backed agent {id}: nested app-backed agent {leaf} exceeds the v0 one-hop limit"
+                )));
+            }
+            reachable.insert(leaf.to_string());
+        }
+    }
+    Ok(reachable)
 }
 
 async fn logs(

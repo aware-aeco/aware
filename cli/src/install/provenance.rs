@@ -213,13 +213,13 @@ pub fn receipt_digest_pin(
 }
 
 pub fn claims_official(agent_dir: &Path) -> bool {
-    matches!(
-        read(agent_dir),
-        Some(InstallSource::Registry {
-            official_source: true,
-            ..
-        })
-    )
+    matches!(read(agent_dir), Some(InstallSource::Registry {
+        official_source: true, key, version,
+        manifest_agent: Some(_), manifest_version: Some(_),
+        entry_digest: Some(entry), installed_digest: Some(installed),
+    }) if !key.is_empty() && !version.is_empty()
+        && crate::registry::index::is_bundle_digest(&entry)
+        && crate::registry::index::is_bundle_digest(&installed))
 }
 
 /// Where this agent came from, or `None` when nothing says.

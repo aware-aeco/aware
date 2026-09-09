@@ -1393,6 +1393,44 @@ nodes:
 }
 
 #[test]
+fn verified_agent_policy_does_not_fetch_for_inline_only_app() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    let src = tmp.path().join("inline-src");
+    std::fs::create_dir_all(&src).unwrap();
+    std::fs::write(
+        src.join("inline.flo"),
+        r#"app: inline
+version: 1.0.0
+description: offline inline
+requires: []
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: pass
+      code: 'true'
+"#,
+    )
+    .unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+    common::approve_installed_apps(&home);
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .env("AWARE_REGISTRY", "file:///must-not-be-read.json")
+        .args(["app", "run", "inline", "--require-verified-agents"])
+        .assert()
+        .success();
+}
+
+#[test]
 fn run_allows_a_frozen_node_whose_agent_is_not_installed() {
     // A frozen node emits its pinned output and never dispatches, so the #308
     // pre-flight must not require its agent to exist (app-spec § Frozen nodes).
@@ -1420,7 +1458,8 @@ fn run_allows_a_frozen_node_whose_agent_is_not_installed() {
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &home)
-        .args(["app", "run", "frozen-app"])
+        .env("AWARE_REGISTRY", "file:///must-not-be-read.json")
+        .args(["app", "run", "frozen-app", "--require-verified-agents"])
         .assert()
         .success();
 }

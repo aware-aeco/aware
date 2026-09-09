@@ -15,56 +15,13 @@ pub fn tree_digest(root: &Path) -> Result<String, AwareError> {
     digest_files(files)
 }
 
-/// Hash the files a repository archive will contain, including untracked
-/// publish candidates but excluding ignored build outputs.
+/// Hash the exact Git index blobs a repository archive will contain. Staged
+/// additions/changes are supported; unstaged or untracked bundle content is
+/// refused rather than hashing stale index bytes or checkout-translated bytes.
 pub fn checkout_tree_digest(repo_root: &Path, root: &Path) -> Result<String, AwareError> {
-    let relative_root = root.strip_prefix(repo_root).map_err(|_| {
-        AwareError::Validation(format!("{} is outside registry checkout", root.display()))
-    })?;
-    let output = std::process::Command::new("git")
-        .current_dir(repo_root)
-        .args([
-            "ls-files",
-            "-z",
-            "--cached",
-            "--others",
-            "--exclude-standard",
-            "--",
-        ])
-        .arg(relative_root)
-        .output();
-    let output = match output {
-        Ok(output) if output.status.success() => output,
-        // External/custom registry authoring fixtures need not be Git checkouts.
-        // In that case their complete directory is the publish payload.
-        Ok(_) | Err(_) => return tree_digest(root),
-    };
-    let mut files = Vec::new();
-    for raw in output.stdout.split(|b| *b == 0).filter(|p| !p.is_empty()) {
-        let repo_relative = std::str::from_utf8(raw)
-            .map_err(|_| AwareError::Validation("bundle path is not UTF-8".into()))?;
-        let path = repo_root.join(repo_relative);
-        let metadata = std::fs::symlink_metadata(&path)?;
-        if !metadata.is_file() || metadata.file_type().is_symlink() || is_reparse_point(&metadata) {
-            return Err(AwareError::Validation(format!(
-                "bundle contains non-regular or indirect entry: {}",
-                path.display()
-            )));
-        }
-        let relative = path
-            .strip_prefix(root)
-            .map_err(|_| AwareError::Validation("git returned a path outside bundle".into()))?;
-        let normalized = relative
-            .components()
-            .map(|c| c.as_os_str().to_str())
-            .collect::<Option<Vec<_>>>()
-            .ok_or_else(|| AwareError::Validation("bundle path is not UTF-8".into()))?
-            .join("/");
-        if normalized != super::provenance::FILE {
-            files.push((normalized, path));
-        }
-    }
-    digest_files(files)
+    checkout_tree_digests(repo_root, &[root.to_path_buf()])?
+        .remove(root)
+        .ok_or_else(|| AwareError::Validation("bundle digest was not computed".into()))
 }
 
 /// Batch form used by `reindex`: one `git ls-files` snapshot for every release
@@ -76,22 +33,23 @@ pub fn checkout_tree_digests(
     let mut unique = roots.to_vec();
     unique.sort();
     unique.dedup();
-    let mut command = std::process::Command::new("git");
-    command.current_dir(repo_root).args([
-        "ls-files",
-        "-z",
-        "--cached",
-        "--others",
-        "--exclude-standard",
-        "--",
-    ]);
+    let mut paths = Vec::new();
     for root in &unique {
-        command.arg(root.strip_prefix(repo_root).map_err(|_| {
+        paths.push(root.strip_prefix(repo_root).map_err(|_| {
             AwareError::Validation(format!("{} is outside registry checkout", root.display()))
         })?);
     }
-    let output = command.output();
-    let output = match output {
+    let mut status = std::process::Command::new("git");
+    status.current_dir(repo_root).args([
+        "status",
+        "--porcelain=v1",
+        "-z",
+        "--untracked-files=all",
+        "--",
+    ]);
+    status.args(&paths);
+    let status = status.output();
+    let status = match status {
         Ok(output) if output.status.success() => output,
         Ok(_) | Err(_) => {
             return unique
@@ -103,14 +61,46 @@ pub fn checkout_tree_digests(
                 .collect();
         }
     };
-    let mut grouped: std::collections::BTreeMap<PathBuf, Vec<(String, PathBuf)>> = unique
-        .iter()
-        .cloned()
-        .map(|root| (root, Vec::new()))
-        .collect();
-    for raw in output.stdout.split(|b| *b == 0).filter(|p| !p.is_empty()) {
-        let repo_relative = std::str::from_utf8(raw)
+    for item in status.stdout.split(|b| *b == 0).filter(|p| !p.is_empty()) {
+        if item.len() < 3 || item[1] != b' ' || item[0] == b'?' || matches!(item[0], b'R' | b'C') {
+            return Err(AwareError::Validation(
+                "agent bundle has unstaged, untracked, or renamed content; run `git add <agent-folder>` (and commit/resolve renames) before publish/reindex so the digest binds the exact archive bytes".into(),
+            ));
+        }
+    }
+    let mut listed = std::process::Command::new("git");
+    listed
+        .current_dir(repo_root)
+        .args(["ls-files", "--stage", "-z", "--"]);
+    listed.args(&paths);
+    let listed = listed.output()?;
+    if !listed.status.success() {
+        return Err(AwareError::Validation(
+            "git ls-files failed while hashing registry bundles".into(),
+        ));
+    }
+    #[derive(Clone)]
+    struct BlobRecord {
+        root: PathBuf,
+        relative: String,
+        oid: String,
+    }
+    let mut records = Vec::new();
+    for raw in listed.stdout.split(|b| *b == 0).filter(|p| !p.is_empty()) {
+        let text = std::str::from_utf8(raw)
             .map_err(|_| AwareError::Validation("bundle path is not UTF-8".into()))?;
+        let (header, repo_relative) = text
+            .split_once('\t')
+            .ok_or_else(|| AwareError::Validation("malformed git index entry".into()))?;
+        let mut fields = header.split_whitespace();
+        let mode = fields.next().unwrap_or("");
+        let oid = fields.next().unwrap_or("");
+        let stage = fields.next().unwrap_or("");
+        if stage != "0" || !matches!(mode, "100644" | "100755") {
+            return Err(AwareError::Validation(format!(
+                "bundle contains conflicted, symlink, gitlink, or non-regular index entry: {repo_relative}"
+            )));
+        }
         let path = repo_root.join(repo_relative);
         let root = unique
             .iter()
@@ -119,13 +109,6 @@ pub fn checkout_tree_digests(
             .ok_or_else(|| {
                 AwareError::Validation("git returned a path outside requested bundles".into())
             })?;
-        let metadata = std::fs::symlink_metadata(&path)?;
-        if !metadata.is_file() || metadata.file_type().is_symlink() || is_reparse_point(&metadata) {
-            return Err(AwareError::Validation(format!(
-                "bundle contains non-regular or indirect entry: {}",
-                path.display()
-            )));
-        }
         let relative = path
             .strip_prefix(root)
             .map_err(|_| AwareError::Validation("bundle path escaped root".into()))?;
@@ -135,16 +118,90 @@ pub fn checkout_tree_digests(
             .collect::<Option<Vec<_>>>()
             .ok_or_else(|| AwareError::Validation("bundle path is not UTF-8".into()))?
             .join("/");
-        if normalized != super::provenance::FILE
-            && let Some(files) = grouped.get_mut(root)
-        {
-            files.push((normalized, path));
+        if normalized != super::provenance::FILE {
+            records.push(BlobRecord {
+                root: root.clone(),
+                relative: normalized,
+                oid: oid.into(),
+            });
         }
     }
-    grouped
+    records.sort_by(|a, b| {
+        a.relative
+            .as_bytes()
+            .cmp(b.relative.as_bytes())
+            .then(a.root.cmp(&b.root))
+    });
+    let mut child = std::process::Command::new("git")
+        .current_dir(repo_root)
+        .args(["cat-file", "--batch"])
+        .stdin(std::process::Stdio::piped())
+        .stdout(std::process::Stdio::piped())
+        .spawn()?;
+    let mut input = child
+        .stdin
+        .take()
+        .ok_or_else(|| AwareError::Internal("git cat-file stdin unavailable".into()))?;
+    let stdout = child
+        .stdout
+        .take()
+        .ok_or_else(|| AwareError::Internal("git cat-file stdout unavailable".into()))?;
+    let mut reader = std::io::BufReader::new(stdout);
+    let mut hashers: std::collections::BTreeMap<PathBuf, Sha256> = unique
+        .iter()
+        .cloned()
+        .map(|root| {
+            let mut h = Sha256::new();
+            h.update(DOMAIN);
+            (root, h)
+        })
+        .collect();
+    for record in records {
+        use std::io::{BufRead, Read, Write};
+        writeln!(input, "{}", record.oid)?;
+        input.flush()?;
+        let mut header = String::new();
+        reader.read_line(&mut header)?;
+        let mut fields = header.split_whitespace();
+        let _oid = fields.next();
+        if fields.next() != Some("blob") {
+            return Err(AwareError::Validation(format!(
+                "{} is not a Git blob",
+                record.oid
+            )));
+        }
+        let size: usize = fields
+            .next()
+            .and_then(|s| s.parse().ok())
+            .ok_or_else(|| AwareError::Validation("malformed git cat-file response".into()))?;
+        let mut bytes = vec![0; size];
+        reader.read_exact(&mut bytes)?;
+        let mut newline = [0];
+        reader.read_exact(&mut newline)?;
+        if newline[0] != b'\n' {
+            return Err(AwareError::Validation(
+                "malformed git cat-file framing".into(),
+            ));
+        }
+        let h = hashers
+            .get_mut(&record.root)
+            .ok_or_else(|| AwareError::Internal("missing bundle hasher".into()))?;
+        let name = record.relative.as_bytes();
+        h.update((name.len() as u64).to_be_bytes());
+        h.update(name);
+        h.update((bytes.len() as u64).to_be_bytes());
+        h.update(&bytes);
+    }
+    drop(input);
+    if !child.wait()?.success() {
+        return Err(AwareError::Validation(
+            "git cat-file failed while hashing bundles".into(),
+        ));
+    }
+    Ok(hashers
         .into_iter()
-        .map(|(root, files)| Ok((root, digest_files(files)?)))
-        .collect()
+        .map(|(root, h)| (root, format!("sha256:{:x}", h.finalize())))
+        .collect())
 }
 
 fn digest_files(mut files: Vec<(String, PathBuf)>) -> Result<String, AwareError> {
@@ -226,6 +283,41 @@ mod tests {
         assert_eq!(first, tree_digest(tmp.path()).unwrap());
         std::fs::write(tmp.path().join("x/a"), b"two").unwrap();
         assert_ne!(first, tree_digest(tmp.path()).unwrap());
+    }
+
+    #[test]
+    fn checkout_hash_uses_git_blob_bytes_not_crlf_worktree_bytes() {
+        let tmp = tempfile::tempdir().unwrap();
+        let repo = tmp.path();
+        let git = |args: &[&str]| {
+            let status = std::process::Command::new("git")
+                .current_dir(repo)
+                .args(args)
+                .status()
+                .unwrap();
+            assert!(status.success(), "git {args:?}");
+        };
+        git(&["init", "--quiet"]);
+        git(&["config", "core.autocrlf", "true"]);
+        std::fs::create_dir(repo.join("agent")).unwrap();
+        std::fs::write(
+            repo.join("agent/manifest.yaml"),
+            b"agent: probe\r\nversion: 1\r\n",
+        )
+        .unwrap();
+        git(&["add", "agent/manifest.yaml"]);
+
+        let actual = checkout_tree_digest(repo, &repo.join("agent")).unwrap();
+        let mut expected = Sha256::new();
+        expected.update(DOMAIN);
+        let name = b"manifest.yaml";
+        let blob = b"agent: probe\nversion: 1\n";
+        expected.update((name.len() as u64).to_be_bytes());
+        expected.update(name);
+        expected.update((blob.len() as u64).to_be_bytes());
+        expected.update(blob);
+        assert_eq!(actual, format!("sha256:{:x}", expected.finalize()));
+        assert_ne!(actual, tree_digest(&repo.join("agent")).unwrap());
     }
 
     #[cfg(unix)]
