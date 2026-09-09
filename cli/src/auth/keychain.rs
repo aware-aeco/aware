@@ -523,6 +523,12 @@ struct AccountLocks {
     _file: std::fs::File,
 }
 
+#[derive(Clone, Copy)]
+enum LockDomain {
+    Keyring,
+    File,
+}
+
 fn acquire_account_locks(
     aware_home: &Path,
     account: &str,
@@ -548,11 +554,11 @@ fn acquire_account_locks_in(
     // can touch both uses this order, preventing cross-process lock inversion.
     let (keyring_path, file_path) = account_lock_paths(aware_home, keyring_dir, account);
     let keyring = if include_keyring {
-        Some(acquire_lock(&keyring_path)?)
+        Some(acquire_lock(&keyring_path, LockDomain::Keyring)?)
     } else {
         None
     };
-    let file = acquire_lock(&file_path)?;
+    let file = acquire_lock(&file_path, LockDomain::File)?;
     Ok(AccountLocks {
         _keyring: keyring,
         _file: file,
@@ -566,10 +572,51 @@ fn account_lock_paths(aware_home: &Path, keyring_dir: &Path, account: &str) -> (
     )
 }
 
+#[cfg(windows)]
 fn keyring_lock_dir() -> std::io::Result<PathBuf> {
-    dirs::data_local_dir()
-        .map(|dir| dir.join("aware").join("credential-locks"))
-        .ok_or_else(|| std::io::Error::other("per-user local data directory is unavailable"))
+    use std::ffi::{OsString, c_void};
+    use std::os::windows::ffi::OsStringExt;
+
+    use windows_sys::Win32::Globalization::lstrlenW;
+    use windows_sys::Win32::System::Com::CoTaskMemFree;
+    use windows_sys::Win32::UI::Shell::{FOLDERID_LocalAppData, SHGetKnownFolderPath};
+
+    // SHGetKnownFolderPath resolves against the current user token, not
+    // LOCALAPPDATA/HOME process environment variables.
+    // SAFETY: Shell allocates `raw` for the current-user known-folder result;
+    // we check the HRESULT and pointer before reading it and free it exactly once.
+    unsafe {
+        let mut raw = std::ptr::null_mut();
+        // `KF_FLAG_DONT_VERIFY` keeps this a location lookup: the lock directory
+        // is created below with our own ACL checks, so Shell must not reject a
+        // valid native location merely because it has not been created yet.
+        const KF_FLAG_DONT_VERIFY: u32 = 0x0000_4000;
+        let result = SHGetKnownFolderPath(
+            &FOLDERID_LocalAppData,
+            KF_FLAG_DONT_VERIFY,
+            std::ptr::null_mut(),
+            &mut raw,
+        );
+        if result < 0 || raw.is_null() {
+            CoTaskMemFree(raw.cast::<c_void>());
+            return Err(std::io::Error::other(format!(
+                "resolve native LocalAppData known folder: HRESULT {result:#x}"
+            )));
+        }
+        let len = lstrlenW(raw) as usize;
+        let path = PathBuf::from(OsString::from_wide(std::slice::from_raw_parts(raw, len)));
+        CoTaskMemFree(raw.cast::<c_void>());
+        Ok(path.join("aware").join("credential-locks"))
+    }
+}
+
+#[cfg(unix)]
+fn keyring_lock_dir() -> std::io::Result<PathBuf> {
+    // `/tmp` is fixed by platform convention; effective UID is OS identity, so
+    // HOME/XDG overrides cannot split the lock domain for the same keyring user.
+    // SAFETY: `geteuid` has no pointer arguments or caller-side preconditions.
+    let uid = unsafe { libc::geteuid() };
+    Ok(PathBuf::from(format!("/tmp/aware-credential-locks-{uid}")))
 }
 
 fn lock_key(account: &str) -> String {
@@ -588,11 +635,14 @@ fn file_lock_path(aware_home: &Path, account: &str) -> PathBuf {
         .join(format!(".generation-{}.lock", lock_key(account)))
 }
 
-fn acquire_lock(path: &Path) -> std::io::Result<std::fs::File> {
+fn acquire_lock(path: &Path, domain: LockDomain) -> std::io::Result<std::fs::File> {
     let dir = path
         .parent()
         .ok_or_else(|| std::io::Error::other("credential lock path has no parent"))?;
-    ensure_private_lock_dir(dir)?;
+    match domain {
+        LockDomain::Keyring => ensure_keyring_lock_dir(dir)?,
+        LockDomain::File => ensure_private_lock_dir(dir)?,
+    }
     match std::fs::symlink_metadata(path) {
         Ok(metadata) if metadata.file_type().is_symlink() => {
             return Err(std::io::Error::other(
@@ -606,6 +656,39 @@ fn acquire_lock(path: &Path) -> std::io::Result<std::fs::File> {
     let file = open_lock_file(path)?;
     file.lock_exclusive()?;
     Ok(file)
+}
+
+#[cfg(unix)]
+fn ensure_keyring_lock_dir(dir: &Path) -> std::io::Result<()> {
+    use std::os::unix::fs::{DirBuilderExt, MetadataExt, PermissionsExt};
+
+    match std::fs::symlink_metadata(dir) {
+        Ok(_) => {}
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
+            std::fs::DirBuilder::new().mode(0o700).create(dir)?;
+        }
+        Err(e) => return Err(e),
+    }
+    let metadata = std::fs::symlink_metadata(dir)?;
+    // SAFETY: `geteuid` has no pointer arguments or caller-side preconditions.
+    let uid = unsafe { libc::geteuid() };
+    if metadata.file_type().is_symlink()
+        || !metadata.is_dir()
+        || metadata.uid() != uid
+        || metadata.permissions().mode() & 0o077 != 0
+    {
+        return Err(std::io::Error::other(
+            "keyring lock directory must be a private, real directory owned by the effective user",
+        ));
+    }
+    Ok(())
+}
+
+#[cfg(windows)]
+fn ensure_keyring_lock_dir(dir: &Path) -> std::io::Result<()> {
+    // The native LocalAppData root carries the current user's ACL. Reject a
+    // reparse/symlink at our final directory instead of following it elsewhere.
+    ensure_private_lock_dir(dir)
 }
 
 fn ensure_private_lock_dir(dir: &Path) -> std::io::Result<()> {
@@ -1366,6 +1449,49 @@ mod tests {
         file_rx.recv_timeout(Duration::from_secs(2)).unwrap();
         drop(first_file);
         file_waiter.join().unwrap();
+    }
+
+    #[test]
+    fn native_keyring_lock_root_ignores_process_directory_environment() {
+        let tmp = tempfile::tempdir().unwrap();
+        let first = tmp.path().join("first.txt");
+        let second = tmp.path().join("second.txt");
+        for (output, marker) in [(&first, "one"), (&second, "two")] {
+            let status = std::process::Command::new(std::env::current_exe().unwrap())
+                .args([
+                    "--exact",
+                    "auth::keychain::tests::emit_native_keyring_lock_dir_for_subprocess",
+                ])
+                .env("AWARE_LOCK_TEST_OUTPUT", output)
+                .env("HOME", tmp.path().join(format!("fake-home-{marker}")))
+                .env(
+                    "XDG_DATA_HOME",
+                    tmp.path().join(format!("fake-xdg-{marker}")),
+                )
+                .env(
+                    "LOCALAPPDATA",
+                    tmp.path().join(format!("fake-local-{marker}")),
+                )
+                .status()
+                .unwrap();
+            assert!(status.success());
+        }
+        assert_eq!(
+            std::fs::read_to_string(first).unwrap(),
+            std::fs::read_to_string(second).unwrap()
+        );
+    }
+
+    #[test]
+    fn emit_native_keyring_lock_dir_for_subprocess() {
+        let Some(output) = std::env::var_os("AWARE_LOCK_TEST_OUTPUT") else {
+            return;
+        };
+        std::fs::write(
+            output,
+            keyring_lock_dir().unwrap().to_string_lossy().as_bytes(),
+        )
+        .unwrap();
     }
 
     #[test]
