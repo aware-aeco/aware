@@ -134,6 +134,11 @@ if (response.IsSuccessStatusCode is false)
 | 429 | Throttled | Agent retries with `Retry-After` header value. Surfaces after 3 attempts. |
 | 503 | Service unavailable | Agent retries with exponential backoff. Surfaces after 3 attempts. |
 
+Those retry rules apply only when retrying is known to be safe. A mail-send request
+is a non-idempotent side effect: if the request may have reached Graph but its
+response was lost, the outcome is indeterminate and the transport must not retry
+automatically because that can send the message twice.
+
 ## Security notes (substrate-level)
 
 - The agent restricts outbound calls to `https://graph.microsoft.com` and `https://login.microsoftonline.com`. Calls to other domains are blocked.

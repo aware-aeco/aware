@@ -83,6 +83,8 @@ nodes:
         pins:     '{{ engineering.pins }}'
       output-path: '{{ inputs.report-dir }}/peer-review-delta-{{ run.date }}.html'
 
+  # Planned: validation intentionally rejects this node until the Microsoft 365
+  # transport ships a truthful Outlook acceptance receipt.
   - id: notify
     agent: microsoft-365
     command: outlook.mail.send-with-attachment
