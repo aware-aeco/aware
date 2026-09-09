@@ -543,6 +543,7 @@ mod tests {
             versions.insert(
                 (*ver).to_string(),
                 VersionEntry {
+                    bundle_digest: None,
                     tarball: "t".to_string(),
                     subdir: (*subdir).to_string(),
                 },
@@ -556,6 +557,7 @@ mod tests {
             );
         }
         Index {
+            trust: Default::default(),
             version: "1.0".to_string(),
             updated_at: "x".to_string(),
             agents,
@@ -601,6 +603,7 @@ mod tests {
         alias_versions.insert(
             "0.1.0".to_string(),
             VersionEntry {
+                bundle_digest: None,
                 tarball: "t".to_string(),
                 subdir: "us".to_string(),
             },
@@ -618,6 +621,7 @@ mod tests {
         dep_versions.insert(
             "0.1.0".to_string(),
             VersionEntry {
+                bundle_digest: None,
                 tarball: "t".to_string(),
                 subdir: "sunset".to_string(),
             },
@@ -665,6 +669,7 @@ mod tests {
         bad_versions.insert(
             "1.0.0".to_string(),
             VersionEntry {
+                bundle_digest: None,
                 tarball: "t".to_string(),
                 subdir: "broken".to_string(),
             },
@@ -707,6 +712,7 @@ mod tests {
             vmap.insert(
                 (*ver).to_string(),
                 VersionEntry {
+                    bundle_digest: None,
                     tarball: (*tarball).to_string(),
                     subdir: (*subdir).to_string(),
                 },
@@ -721,6 +727,7 @@ mod tests {
             },
         );
         Index {
+            trust: Default::default(),
             version: "1.0".to_string(),
             updated_at: "x".to_string(),
             agents,

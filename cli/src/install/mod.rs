@@ -1,6 +1,7 @@
 //! Install agents + apps into `~/.aware/`.
 
 pub mod bundle;
+pub mod integrity;
 pub mod local;
 pub mod provenance;
 pub mod registry;

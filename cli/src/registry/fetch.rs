@@ -4,8 +4,8 @@ use std::path::Path;
 use std::time::{Duration, SystemTime};
 
 use crate::error::AwareError;
-use crate::registry::Index;
 use crate::registry::catalog::Catalog;
+use crate::registry::{Index, RegistryTrust};
 
 /// Default location of the AWARE registry index. Override via `AWARE_REGISTRY`.
 pub const DEFAULT_REGISTRY_URL: &str =
@@ -115,8 +115,66 @@ pub fn fetch_index(cache_dir: &Path) -> Result<Index, AwareError> {
         }
     };
 
-    let index = Index::parse(body.as_bytes())?;
+    let mut index = Index::parse(body.as_bytes())?;
+    // Only a fresh response from the exact built-in HTTPS endpoint crosses the
+    // registry trust boundary. Overrides, file registries and cache fallbacks
+    // remain useful distribution mechanisms, but are not AWARE attestations.
+    if source == DEFAULT_REGISTRY_URL && std::env::var_os("AWARE_REGISTRY").is_none() {
+        index.trust = RegistryTrust::FreshOfficial;
+    }
     std::fs::write(&cache_path, &body)?;
+    Ok(index)
+}
+
+/// Fetch an index for an operation that will write registry provenance.
+///
+/// The default official source is always fetched live: a warm TTL cache is useful
+/// for browsing, but cannot prove what the official registry says at install/update
+/// time. If that fetch is unavailable, an existing cache may still support an
+/// offline install/update, explicitly as unverified. Custom overrides retain the
+/// ordinary cache behavior and can never confer official trust.
+pub fn fetch_index_for_install(cache_dir: &Path) -> Result<Index, AwareError> {
+    if std::env::var_os("AWARE_REGISTRY").is_some() {
+        return fetch_index(cache_dir);
+    }
+    fetch_default_index_for_install(cache_dir, || fetch_body(DEFAULT_REGISTRY_URL))
+}
+
+fn fetch_default_index_for_install<F>(cache_dir: &Path, fetch: F) -> Result<Index, AwareError>
+where
+    F: FnOnce() -> Result<String, AwareError>,
+{
+    std::fs::create_dir_all(cache_dir)?;
+    let cache_path = cache_dir.join("registry-index.json");
+    match fetch() {
+        Ok(body) => {
+            let mut index = Index::parse(body.as_bytes())?;
+            index.trust = RegistryTrust::FreshOfficial;
+            std::fs::write(cache_path, body)?;
+            Ok(index)
+        }
+        Err(fetch_error) if cache_path.is_file() => {
+            eprintln!(
+                "warning: fresh official registry fetch failed, using unverified cache: {fetch_error}"
+            );
+            Index::parse(std::fs::File::open(cache_path)?)
+        }
+        Err(fetch_error) => Err(fetch_error),
+    }
+}
+
+/// Fetch the built-in official index without consulting or writing cache.
+/// Overrides are intentionally refused: callers use this only as an online
+/// trust oracle immediately before reporting or enforcing verification.
+pub fn fetch_fresh_official_index() -> Result<Index, AwareError> {
+    if std::env::var_os("AWARE_REGISTRY").is_some() {
+        return Err(AwareError::Validation(
+            "AWARE_REGISTRY override cannot confer official provenance".into(),
+        ));
+    }
+    let body = fetch_body(DEFAULT_REGISTRY_URL)?;
+    let mut index = Index::parse(body.as_bytes())?;
+    index.trust = RegistryTrust::FreshOfficial;
     Ok(index)
 }
 
@@ -173,6 +231,76 @@ mod tests {
         std::fs::remove_file(&idx).unwrap();
         let idx2 = fetch_index(&cache).unwrap();
         assert_eq!(idx2.version, "1.0");
+    }
+
+    #[test]
+    fn install_and_update_fetches_ignore_warm_cache_when_official_is_available() {
+        let tmp = tempfile::tempdir().unwrap();
+        let cache = tmp.path().join("cache");
+        std::fs::create_dir_all(&cache).unwrap();
+        std::fs::write(
+            cache.join("registry-index.json"),
+            r#"{"version":"1.0","updated-at":"cached","agents":{},"bundles":{}}"#,
+        )
+        .unwrap();
+
+        let installed_with = fetch_default_index_for_install(&cache, || {
+            Ok(r#"{"version":"1.0","updated-at":"install-fresh","agents":{},"bundles":{}}"#.into())
+        })
+        .unwrap();
+
+        assert_eq!(installed_with.updated_at, "install-fresh");
+        assert_eq!(installed_with.trust, RegistryTrust::FreshOfficial);
+
+        // The successful install just warmed the cache. An update must still use
+        // another fresh response rather than downgrading its replacement receipt.
+        let updated_with = fetch_default_index_for_install(&cache, || {
+            Ok(r#"{"version":"1.0","updated-at":"update-fresh","agents":{},"bundles":{}}"#.into())
+        })
+        .unwrap();
+        assert_eq!(updated_with.updated_at, "update-fresh");
+        assert_eq!(updated_with.trust, RegistryTrust::FreshOfficial);
+        assert!(
+            std::fs::read_to_string(cache.join("registry-index.json"))
+                .unwrap()
+                .contains("update-fresh")
+        );
+    }
+
+    #[test]
+    fn offline_install_cache_remains_unverified() {
+        let tmp = tempfile::tempdir().unwrap();
+        let cache = tmp.path().join("cache");
+        std::fs::create_dir_all(&cache).unwrap();
+        std::fs::write(
+            cache.join("registry-index.json"),
+            r#"{"version":"1.0","updated-at":"cached","agents":{},"bundles":{}}"#,
+        )
+        .unwrap();
+
+        let index =
+            fetch_default_index_for_install(&cache, || Err(AwareError::Network("offline".into())))
+                .unwrap();
+
+        assert_eq!(index.updated_at, "cached");
+        assert_eq!(index.trust, RegistryTrust::Unverified);
+    }
+
+    #[test]
+    fn custom_install_registry_remains_unverified() {
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("custom-index.json");
+        std::fs::write(
+            &source,
+            r#"{"version":"1.0","updated-at":"custom","agents":{},"bundles":{}}"#,
+        )
+        .unwrap();
+        let _registry = EnvVarGuard::set("AWARE_REGISTRY", format!("file://{}", source.display()));
+
+        let index = fetch_index_for_install(&tmp.path().join("cache")).unwrap();
+
+        assert_eq!(index.updated_at, "custom");
+        assert_eq!(index.trust, RegistryTrust::Unverified);
     }
 
     #[test]

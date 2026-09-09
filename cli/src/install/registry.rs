@@ -10,11 +10,11 @@ use sha2::{Digest, Sha256};
 use tar::Archive;
 
 use crate::error::AwareError;
-use crate::install::local::{copy_dir_recursive, install_agent_from_path};
+use crate::install::local::copy_dir_recursive;
 use crate::manifest::loader::load_agent;
 use crate::paths::Paths;
-use crate::registry::Index;
 use crate::registry::fetch::CACHE_TTL;
+use crate::registry::{Index, RegistryTrust};
 use crate::validate::{error_summary, validate_agent_on_disk};
 
 pub fn install_agent_from_registry(
@@ -26,17 +26,76 @@ pub fn install_agent_from_registry(
     // `id` is used as the key directly, exactly as before — resolving it through
     // `resolve_key` here would quietly make `install <suffixed-id>` succeed where it has
     // always errored, which is a behaviour change that does not belong in a bug fix.
-    let (resolved, _) = index.resolve(id, version_pin)?;
+    let (resolved, entry) = index.resolve(id, version_pin)?;
     let resolved = resolved.clone();
+    let expected = entry.bundle_digest.clone();
     let (_scratch, subdir) = stage_agent_from_registry(id, version_pin, paths, index)?;
-    install_agent_from_path(
+    install_staged_registry(
         &subdir,
         paths,
-        &crate::install::provenance::InstallSource::Registry {
-            key: id.to_string(),
-            version: resolved,
-        },
+        index.trust,
+        id,
+        &resolved,
+        expected.as_deref(),
     )
+}
+
+fn install_staged_registry(
+    src: &Path,
+    paths: &Paths,
+    trust: RegistryTrust,
+    key: &str,
+    registry_version: &str,
+    expected_digest: Option<&str>,
+) -> Result<String, AwareError> {
+    let agent = load_agent(&src.join("manifest.yaml"))?;
+    let issues = validate_agent_on_disk(&agent, src);
+    if let Some(summary) = error_summary(&issues) {
+        return Err(AwareError::Validation(summary));
+    }
+    let dst = paths.agents_dir().join(&agent.agent);
+    if dst.exists() {
+        return Err(AwareError::Conflict(format!(
+            "agent {} already installed; use `aware agent update {}` to refresh",
+            agent.agent, agent.agent
+        )));
+    }
+    let staging = paths.cache_dir().join("install-staging").join(&agent.agent);
+    if staging.exists() {
+        std::fs::remove_dir_all(&staging)?;
+    }
+    if let Some(parent) = staging.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
+    copy_dir_recursive(src, &staging)?;
+    let digest = crate::install::integrity::tree_digest(&staging)?;
+    let official = trust == RegistryTrust::FreshOfficial;
+    if official {
+        let expected = expected_digest.ok_or_else(|| {
+            AwareError::Validation(format!(
+                "official registry entry {key}@{registry_version} has no bundle-digest"
+            ))
+        })?;
+        if digest != expected {
+            let _ = std::fs::remove_dir_all(&staging);
+            return Err(AwareError::Validation(format!(
+                "official registry bundle digest mismatch for {key}@{registry_version}: expected {expected}, got {digest}"
+            )));
+        }
+    }
+    let receipt = crate::install::provenance::InstallSource::Registry {
+        key: key.into(),
+        version: registry_version.into(),
+        manifest_agent: Some(agent.agent.clone()),
+        manifest_version: Some(agent.version.clone()),
+        entry_digest: expected_digest.map(str::to_owned),
+        installed_digest: Some(digest),
+        official_source: official,
+    };
+    crate::install::provenance::write_required(&staging, &receipt)?;
+    std::fs::create_dir_all(paths.agents_dir())?;
+    std::fs::rename(&staging, &dst)?;
+    Ok(agent.agent)
 }
 
 /// Resolve `<key>[@version]`, fetch the tarball (cache → `file://` → network),
@@ -241,6 +300,9 @@ pub fn update_agent_from_registry(
     //    fails with the install untouched. That is the whole reason a version
     //    argument belongs on `update` rather than on `install --force`: the
     //    atomic resolve-fetch-validate-then-swap already exists here (#174).
+    let (resolved_registry_version, release) = index.resolve(&key, version_pin)?;
+    let resolved_registry_version = resolved_registry_version.clone();
+    let expected_digest = release.bundle_digest.clone();
     let (_scratch, subdir) = stage_agent_from_registry(&key, version_pin, paths, index)?;
 
     // 3. Validate the freshly fetched copy before it can replace a good install.
@@ -288,13 +350,33 @@ pub fn update_agent_from_registry(
     }
     // The staged copy came from the registry, whatever the one it replaces came from — record it
     // BEFORE the rename, so the marker lands atomically with the agent it describes (#370).
-    crate::install::provenance::write(
+    let staged_digest = crate::install::integrity::tree_digest(&staging)?;
+    let official = index.trust == RegistryTrust::FreshOfficial;
+    if official {
+        let expected = expected_digest.as_deref().ok_or_else(|| {
+            AwareError::Validation(format!(
+                "official registry entry {key}@{resolved_registry_version} has no bundle-digest"
+            ))
+        })?;
+        if staged_digest != expected {
+            let _ = std::fs::remove_dir_all(&staging);
+            return Err(AwareError::Validation(format!(
+                "official registry bundle digest mismatch for {key}@{resolved_registry_version}: expected {expected}, got {staged_digest}"
+            )));
+        }
+    }
+    crate::install::provenance::write_required(
         &staging,
         &crate::install::provenance::InstallSource::Registry {
             key: key.clone(),
-            version: agent.version.clone(),
+            version: resolved_registry_version,
+            manifest_agent: Some(agent.agent.clone()),
+            manifest_version: Some(agent.version.clone()),
+            entry_digest: expected_digest,
+            installed_digest: Some(staged_digest),
+            official_source: official,
         },
-    );
+    )?;
 
     // #370, second route: this removes TWO directories, and step 0 only judged the
     // first. `new_name` is the PAYLOAD's id, which differs from the spec you typed in
@@ -470,6 +552,35 @@ mod tests {
     use std::io::Write;
 
     #[test]
+    fn staged_registry_install_validates_before_promotion() {
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("extracted/probe");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(
+            src.join("manifest.yaml"),
+            "agent: probe\nversion: 1.0.0\ndescription: Missing skill fixture.\nstateful: false\nlicense: MIT\ntransport:\n  cli:\n    binary: probe\ncommands:\n  ping:\n    lifecycle: single\n    description: Ping.\nskills:\n  - absent.md\n",
+        )
+        .unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+
+        let error = install_staged_registry(
+            &src,
+            &paths,
+            RegistryTrust::Unverified,
+            "probe",
+            "1.0.0",
+            None,
+        )
+        .unwrap_err();
+
+        assert!(error.to_string().contains("absent.md"), "{error}");
+        assert!(!paths.agents_dir().join("probe").exists());
+        assert!(!paths.cache_dir().join("install-staging/probe").exists());
+    }
+
+    #[test]
     fn tarball_cache_name_shares_one_file_per_url_and_snapshot() {
         let url = "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz";
         // Two different agents in the SAME registry snapshot share one cache file (#243).
@@ -587,6 +698,7 @@ mod tests {
         versions.insert(
             "2025.0.1".into(),
             VersionEntry {
+                bundle_digest: None,
                 tarball: format!("file://{}", tarball.display()),
                 subdir: "aware-main/20-agents/tekla".into(),
             },
@@ -600,6 +712,7 @@ mod tests {
             },
         );
         let index = Index {
+            trust: Default::default(),
             version: "1.0".into(),
             updated_at: "x".into(),
             agents,
@@ -688,6 +801,7 @@ mod tests {
             versions.insert(
                 "0.1.0".to_string(),
                 VersionEntry {
+                    bundle_digest: None,
                     tarball: url.clone(),
                     subdir: subdir.to_string(),
                 },
@@ -706,6 +820,7 @@ mod tests {
             },
         );
         let before = Index {
+            trust: Default::default(),
             version: "1.0".into(),
             updated_at: "2026-06-18T00:00:00Z".into(),
             agents: before_agents,
@@ -741,6 +856,7 @@ mod tests {
             },
         );
         let after = Index {
+            trust: Default::default(),
             version: "1.0".into(),
             updated_at: "2026-06-20T00:00:00Z".into(),
             agents: after_agents,
@@ -832,6 +948,7 @@ mod tests {
         versions.insert(
             "1".to_string(),
             VersionEntry {
+                bundle_digest: None,
                 tarball: url.to_string(),
                 subdir: "aware-main/20-agents/alpha".to_string(),
             },
@@ -845,6 +962,7 @@ mod tests {
             },
         );
         Index {
+            trust: Default::default(),
             version: "1.0".into(),
             updated_at: "2026-06-25T00:00:00Z".into(),
             agents,
@@ -1109,6 +1227,7 @@ mod tests {
                 versions.insert(
                     "1".to_string(),
                     VersionEntry {
+                        bundle_digest: None,
                         tarball: url.clone(),
                         subdir: format!("aware-main/20-agents/{n}"),
                     },
@@ -1122,6 +1241,7 @@ mod tests {
                 );
             }
             Index {
+                trust: Default::default(),
                 version: "1.0".into(),
                 updated_at: updated_at.into(),
                 agents,
