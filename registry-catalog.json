@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-08-25T19:34:58.563537200+00:00",
+  "updated-at": "2026-09-09T15:59:48.692026600+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -4055,7 +4055,7 @@
       "versions": {
         "1.0.0": {
           "description": "Read and write across the Microsoft 365 surface — OneDrive, SharePoint,",
-          "status": "available",
+          "status": "planned",
           "manifest-version": "0.2.0",
           "stateful": false,
           "sdk-target": "1.0.0",
@@ -4140,14 +4140,14 @@
             },
             {
               "name": "outlook.mail.send",
-              "description": "Send an email. Plain text or HTML, with optional CC / BCC.",
+              "description": "Planned: send an email in plain text or HTML, with optional CC / BCC.",
               "lifecycle": "single",
               "category": "curated",
               "mode": "write"
             },
             {
               "name": "outlook.mail.send-with-attachment",
-              "description": "Send an email with file attachments. Each attachment ≤ 4 MB simple,",
+              "description": "Planned: send an email with file attachments. Each attachment under 3 MB",
               "lifecycle": "single",
               "category": "curated",
               "mode": "write"

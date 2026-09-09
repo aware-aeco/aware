@@ -904,6 +904,7 @@ fn describe_installed(ctx: &Context, m: &Agent, started: Instant) -> Result<(), 
             name: String,
             lifecycle: String,
             category: String,
+            status: String,
             description: String,
         }
         #[derive(Serialize)]
@@ -915,6 +916,7 @@ fn describe_installed(ctx: &Context, m: &Agent, started: Instant) -> Result<(), 
             display_name: Option<&'a str>,
             description: &'a str,
             stateful: bool,
+            status: &'static str,
             license: &'a str,
             vendor: Option<&'a str>,
             commands: Vec<CommandRow>,
@@ -932,6 +934,11 @@ fn describe_installed(ctx: &Context, m: &Agent, started: Instant) -> Result<(), 
                 name: n.clone(),
                 lifecycle: format!("{:?}", c.lifecycle).to_lowercase(),
                 category: format!("{:?}", m.category_of(c)).to_lowercase(),
+                status: match c.status {
+                    crate::manifest::agent::AgentStatus::Available => "available",
+                    crate::manifest::agent::AgentStatus::Planned => "planned",
+                }
+                .to_string(),
                 description: c.description.clone(),
             })
             .collect();
@@ -943,6 +950,10 @@ fn describe_installed(ctx: &Context, m: &Agent, started: Instant) -> Result<(), 
             display_name: m.display_name.as_deref(),
             description: &m.description,
             stateful: m.stateful,
+            status: match m.status {
+                crate::manifest::agent::AgentStatus::Available => "available",
+                crate::manifest::agent::AgentStatus::Planned => "planned",
+            },
             license: &m.license,
             vendor: m.vendor.as_deref(),
             command_count: m.command_count(),

@@ -2,6 +2,12 @@
 
 > **Status:** Brainstormed & approved 2026-05-18. Implementation plan to follow via `superpowers:writing-plans`.
 >
+> **Superseded for Microsoft 365:** the proposed `aware-microsoft-365` / `aware-m365`
+> bridge was never shipped. The Outlook examples below also assumed a `message_id`
+> that Graph `sendMail` cannot return from its empty `202 Accepted` response. The
+> current agent manifest is authoritative and keeps Microsoft 365 planned until a
+> runnable transport with a truthful acceptance receipt exists.
+>
 > **Goal:** Close the substrate's biggest credibility gap — currently AWARE *describes* 3,000+ commands but cannot execute any of them. v0.29 ships the first executable loop: a single command fires the same message into Tekla Structures 2025/2026, Microsoft Teams, and Outlook email, with a signed receipt at the end.
 
 ---
