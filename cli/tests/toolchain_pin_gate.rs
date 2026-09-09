@@ -150,18 +150,38 @@ fn run_text(step: &serde_yaml::Value) -> Option<&str> {
     step.get("run").and_then(serde_yaml::Value::as_str)
 }
 
+/// A token with the shell punctuation trimmed off either end — quotes, parens,
+/// a trailing `;`. `+` is kept, because a toolchain selector is one.
+fn bare_token(token: &str) -> &str {
+    token.trim_matches(|character: char| {
+        !(character.is_ascii_alphanumeric()
+            || matches!(character, '_' | '-' | '.' | '/' | '\\' | '+'))
+    })
+}
+
+/// Whether a token names the Cargo executable — path prefix and `.exe` suffix
+/// included, `cargo-nextest` and friends excluded.
+///
+/// [`invokes_cargo`] and [`has_toolchain_override`] both go through this so they
+/// cannot disagree about what Cargo is called. That disagreement was itself a
+/// bypass (Codex review, PR #506): `cargo.exe +nightly build` counted as a Cargo
+/// invocation, so the job was guarded, while the selector check looked for the
+/// literal `cargo ` and never saw it.
+fn is_cargo_executable(token: &str) -> bool {
+    let token = bare_token(token);
+    let executable = token
+        .rsplit(['/', '\\'])
+        .next()
+        .unwrap_or(token)
+        .to_ascii_lowercase();
+    matches!(executable.as_str(), "cargo" | "cargo.exe")
+}
+
 fn invokes_cargo(run: &str) -> bool {
     run.split(|character: char| {
         !(character.is_ascii_alphanumeric() || matches!(character, '_' | '-' | '.' | '/' | '\\'))
     })
-    .any(|token| {
-        let executable = token
-            .rsplit(['/', '\\'])
-            .next()
-            .unwrap_or(token)
-            .to_ascii_lowercase();
-        matches!(executable.as_str(), "cargo" | "cargo.exe")
-    })
+    .any(is_cargo_executable)
 }
 
 /// The action a step (or a reusable-workflow job) names, without its `@ref` and
@@ -232,12 +252,24 @@ fn is_canonical_install(step: &serde_yaml::Value) -> bool {
 /// before it splits words, so `cargo \` + newline + `+nightly build` runs as
 /// `cargo +nightly build`; leaving it in put a `\` between the two tokens and the
 /// selector went unseen. That is a lexical rewrite of two characters, not a step
-/// toward interpreting the script — the guard still asks only whether these
-/// substrings appear at all, which is why it needs no shell model to reject them.
+/// toward interpreting the script.
+///
+/// The selector itself is then read as two adjacent words — a Cargo executable
+/// followed by a `+…` — rather than as the literal text `cargo +`, so every
+/// spelling [`is_cargo_executable`] already accepts is covered: `cargo.exe`, an
+/// absolute path, a quoted invocation. Both findings on this file were the gap
+/// between those two notions of "Cargo". No shell model is needed for either:
+/// the question is still only whether these words appear next to each other.
 fn has_toolchain_override(run: &str) -> bool {
     let lower = run.to_ascii_lowercase().replace("\\\n", "");
-    let normalized = lower.split_whitespace().collect::<Vec<_>>().join(" ");
-    lower.contains("rustup") || normalized.contains("cargo +")
+    if lower.contains("rustup") {
+        return true;
+    }
+    lower
+        .split_whitespace()
+        .collect::<Vec<_>>()
+        .windows(2)
+        .any(|pair| is_cargo_executable(pair[0]) && bare_token(pair[1]).starts_with('+'))
 }
 
 fn declares_rustup_toolchain(value: &serde_yaml::Value) -> bool {
@@ -620,6 +652,12 @@ fn later_toolchain_overrides_are_rejected_without_parsing_shell() {
         // The shell removes a backslash-newline before it splits words, so this
         // runs as `cargo +nightly build` (Codex review, PR #506).
         "cargo \\\n  +nightly build",
+        // Every spelling of the executable the Cargo-invocation check already
+        // accepts, since a job spelling it this way is guarded but was having
+        // its selector read past (Codex review, PR #506).
+        "cargo.exe +nightly build",
+        "C:\\Users\\runner\\.cargo\\bin\\cargo.exe +stable build",
+        "sh -c \"cargo +nightly build\"",
     ] {
         assert!(has_toolchain_override(run), "accepted override: {run}");
         let mut job = fixture_job();
@@ -641,6 +679,10 @@ fn later_toolchain_overrides_are_rejected_without_parsing_shell() {
     assert!(!has_toolchain_override(
         "cargo clippy --all-targets \\\n  -- -D warnings"
     ));
+    // A cargo-prefixed subcommand binary is not Cargo, and the `+` has to follow
+    // Cargo itself rather than merely appear somewhere in the script.
+    assert!(!has_toolchain_override("cargo-nextest run +extra"));
+    assert!(!has_toolchain_override("echo 1 + 2 && cargo build"));
 }
 
 #[test]
