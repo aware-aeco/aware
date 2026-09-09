@@ -305,7 +305,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     }
 
     // Otherwise: treat as registry id [@version] or bundle name.
-    let index = crate::registry::fetch::fetch_index(&ctx.paths.cache_dir())?;
+    let index = crate::registry::fetch::fetch_index_for_install(&ctx.paths.cache_dir())?;
     if index.bundles.contains_key(spec) {
         let report = crate::install::install_bundle(spec, &ctx.paths, &index)?;
         println!(
@@ -377,7 +377,7 @@ fn update_one(ctx: &Context, spec: &str, force: bool) -> Result<(), AwareError> 
         Some((id, v)) => (id, Some(v)),
         None => (spec, None),
     };
-    let index = crate::registry::fetch::fetch_index(&ctx.paths.cache_dir())?;
+    let index = crate::registry::fetch::fetch_index_for_install(&ctx.paths.cache_dir())?;
     // Atomic: resolve + fetch + validate before the on-disk install is touched,
     // so a failed re-pull — including a version the registry does not have —
     // leaves the existing agent intact (#174). That property is exactly why the
@@ -403,7 +403,7 @@ fn update_all(ctx: &Context, force: bool) -> Result<(), AwareError> {
     }
     let ids: Vec<String> = installed.iter().map(|d| d.manifest.agent.clone()).collect();
     println!("updating {} installed agents...", ids.len());
-    let index = crate::registry::fetch::fetch_index(&ctx.paths.cache_dir())?;
+    let index = crate::registry::fetch::fetch_index_for_install(&ctx.paths.cache_dir())?;
 
     let mut ok = 0usize;
     let mut failed: Vec<(String, String)> = Vec::new();
