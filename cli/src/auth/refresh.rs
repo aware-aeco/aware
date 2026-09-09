@@ -87,7 +87,7 @@ pub fn ensure_fresh(
         generation,
         source: token.source.clone(),
     };
-    keychain::store_token(&new_token, alias, aware_home)?;
+    keychain::compare_and_store_token(&token, &new_token, alias, aware_home)?;
     Ok(new_token)
 }
 
@@ -145,6 +145,13 @@ mod tests {
     }
 
     fn spawn_token_endpoint(response_body: &str) -> TokenEndpoint {
+        spawn_token_endpoint_with_release(response_body, None)
+    }
+
+    fn spawn_token_endpoint_with_release(
+        response_body: &str,
+        release: Option<mpsc::Receiver<()>>,
+    ) -> TokenEndpoint {
         let server = std::sync::Arc::new(tiny_http::Server::http("127.0.0.1:0").unwrap());
         let port = server.server_addr().to_ip().unwrap().port();
         let (tx, requests) = mpsc::channel();
@@ -165,6 +172,9 @@ mod tests {
                     .map(|h| h.value.as_str().to_string()),
                 body: received,
             });
+            if let Some(release) = release {
+                let _ = release.recv();
+            }
             let response = tiny_http::Response::from_string(body).with_header(
                 "Content-Type: application/json"
                     .parse::<tiny_http::Header>()
@@ -317,6 +327,52 @@ mod tests {
 
         let token = ensure_fresh(INTEGRATION, Some("awaretest-inside-buffer"), tmp.path()).unwrap();
         assert_eq!(token.access_token, "refreshed-access");
+    }
+
+    #[test]
+    fn stale_refresh_response_cannot_overwrite_a_concurrent_rotation() {
+        let tmp = tempfile::tempdir().unwrap();
+        let (release_tx, release_rx) = mpsc::channel();
+        let endpoint = spawn_token_endpoint_with_release(
+            r#"{"access_token":"stale-refreshed-access"}"#,
+            Some(release_rx),
+        );
+        write_profile(tmp.path(), &endpoint.url);
+        let alias = "awaretest-refresh-cas";
+        let _seeded = seed_token(tmp.path(), alias, -10, Some("rt-stored"));
+        let original_generation = stored(tmp.path(), alias).unwrap().generation;
+
+        let home = tmp.path().to_path_buf();
+        let refresh = std::thread::spawn(move || ensure_fresh(INTEGRATION, Some(alias), &home));
+
+        // The request proves refresh captured its old credential and is now
+        // waiting on the provider, without holding the account lock.
+        endpoint.requests.recv().unwrap();
+        let replacement = StoredToken {
+            access_token: "new-connect-token".into(),
+            refresh_token: Some("new-connect-refresh".into()),
+            expires_at: unix_now() + 3600,
+            scope: "openid profile".into(),
+            token_type: "Bearer".into(),
+            integration: INTEGRATION.into(),
+            obtained_at: unix_now(),
+            // Deliberately retain the old generation: comparing generation alone
+            // would miss this rotation and let the stale response overwrite it.
+            generation: original_generation,
+            source: TokenSource::Oauth,
+        };
+        keychain::store_token(&replacement, Some(alias), tmp.path()).unwrap();
+        release_tx.send(()).unwrap();
+
+        let err = refresh.join().unwrap().unwrap_err();
+        assert!(
+            matches!(&err, AwareError::Conflict(message) if message.contains("changed") && message.contains("retry")),
+            "expected a non-secret retryable conflict, got {err:?}"
+        );
+        let final_token = stored(tmp.path(), alias).unwrap();
+        assert_eq!(final_token, replacement);
+        assert!(!err.to_string().contains("new-connect-token"));
+        assert!(!err.to_string().contains("stale-refreshed-access"));
     }
 
     #[test]

@@ -368,6 +368,14 @@ credentials likewise report `generation: null` and an empty `scopes` array. The
 generation is not derived from access or refresh token bytes and is not an
 authenticator.
 
+Refresh does not hold the credential lock during provider network I/O. It keeps
+the complete credential snapshot it started from, then acquires the account lock,
+re-reads the authoritative backend, and compare-and-stores the refresh response
+only when that snapshot is unchanged, using the normal credential backend
+selection and fallback policy. A concurrent connect, import, or rotation wins;
+the stale refresh returns a conflict asking the caller to retry and never
+overwrites the newer credential.
+
 `connect` covers the integrations AWARE ships an OAuth client for, and validates its
 `INTEGRATION` argument against that list. For a handle AWARE runs no OAuth flow for, use
 `aware credential` below.

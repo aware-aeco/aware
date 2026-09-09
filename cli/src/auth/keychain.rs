@@ -32,7 +32,7 @@ fn default_source() -> TokenSource {
     TokenSource::Oauth
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct StoredToken {
     pub access_token: String,
     pub refresh_token: Option<String>,
@@ -123,6 +123,43 @@ pub fn store_token(
     let _lock = acquire_account_lock(aware_home, &account)
         .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
     store_token_unlocked(token, alias, aware_home)
+}
+
+/// Replace `expected` only if it is still the complete credential currently
+/// stored for the account. Refresh performs network I/O without holding the
+/// account lock, then uses this compare-and-store step so a stale provider
+/// response cannot roll back a connect/import that completed in the meantime.
+pub fn compare_and_store_token(
+    expected: &StoredToken,
+    replacement: &StoredToken,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<(), AwareError> {
+    if expected.integration != replacement.integration {
+        return Err(AwareError::Internal(
+            "credential compare-and-store integration mismatch".into(),
+        ));
+    }
+    let account = account_name(&expected.integration, alias);
+    let _lock = acquire_account_lock(aware_home, &account)
+        .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
+    let current = load_token_raw(&expected.integration, alias, aware_home)?;
+    let Some(current) = current else {
+        return Err(refresh_conflict(&account));
+    };
+    if current.token != *expected {
+        return Err(refresh_conflict(&account));
+    }
+    // A successful refresh is a credential rotation, so retain store_token's
+    // normal backend-selection/fallback policy. Only metadata migration is
+    // constrained to the backend it was read from.
+    store_token_unlocked(replacement, alias, aware_home)
+}
+
+fn refresh_conflict(account: &str) -> AwareError {
+    AwareError::Conflict(format!(
+        "credential {account} changed while its token was being refreshed; retry the operation"
+    ))
 }
 
 /// Store through the normal backend-selection policy. The caller must hold the
@@ -1016,6 +1053,28 @@ mod tests {
             assert_eq!(final_token.access_token, format!("rotated-{attempt}"));
             assert_eq!(final_token.generation, Some(format!("rotation-{attempt}")));
         }
+    }
+
+    #[test]
+    fn compare_and_store_detects_a_rotation_when_both_generations_are_null() {
+        let tmp = tempfile::tempdir().unwrap();
+        let expected = credential_json(r#"{"access_token":"legacy-old","scope":"a"}"#).unwrap();
+        store_token(&expected, None, tmp.path()).unwrap();
+
+        let mut rotated = expected.clone();
+        rotated.access_token = "legacy-new".into();
+        store_token(&rotated, None, tmp.path()).unwrap();
+
+        let mut stale_refresh = expected.clone();
+        stale_refresh.access_token = "stale-refresh".into();
+        let err = compare_and_store_token(&expected, &stale_refresh, None, tmp.path()).unwrap_err();
+        assert!(matches!(err, AwareError::Conflict(_)));
+        assert_eq!(
+            load_token_read_only("trimble-connect", None, tmp.path())
+                .unwrap()
+                .unwrap(),
+            rotated
+        );
     }
 
     #[test]
