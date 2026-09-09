@@ -38,6 +38,8 @@ nodes:
       version: "2026.0"
 
   # ── Disabled until `aware connect microsoft-365` is run ──────────────
+  # NOTE: connect alone is insufficient; this remains planned until a runnable
+  # Microsoft 365 transport with a truthful acceptance receipt ships.
   # - id: email-me
   #   agent: microsoft-365
   #   command: outlook.mail.send

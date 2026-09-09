@@ -108,6 +108,8 @@ nodes:
       transaction-group: notify
       snapshot: false
 
+  # Planned: validation intentionally rejects this node until the Microsoft 365
+  # transport ships a truthful Outlook acceptance receipt.
   - id: email-pm
     agent: microsoft-365
     command: outlook.mail.send-with-attachment

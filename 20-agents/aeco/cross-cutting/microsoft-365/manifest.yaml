@@ -13,6 +13,7 @@ description: |
   SharePoint, Teams channels for project comms).
 
 stateful: false
+status: planned
 
 vendor:   microsoft
 license:  Apache-2.0
@@ -223,8 +224,15 @@ commands:
   outlook.mail.send:
     lifecycle: single
     category: curated
+    # No microsoft-365 transport is shipped yet. Keep this command unavailable
+    # until an implementation can return a truthful receipt for Graph's empty
+    # 202 Accepted response without risking a duplicate send on retry.
+    status: planned
     mode: write
-    description: Send an email. Plain text or HTML, with optional CC / BCC.
+    description: |
+      Planned: send an email in plain text or HTML, with optional CC / BCC.
+      Graph's sendMail endpoint returns 202 Accepted with no response body; that
+      proves provider acceptance only and does not provide a message id.
     inputs:
       to:
         type: array
@@ -248,18 +256,20 @@ commands:
         description: |
           Optional `from` address — defaults to the authenticated user.
           Requires `Mail.Send.Shared` scope for shared mailboxes.
-    outputs:
-      type: single
-      schema:
-        message-id: string
-
   outlook.mail.send-with-attachment:
     lifecycle: single
     category: curated
+    # Sending the final draft has the same empty 202 response and ambiguous
+    # post-dispatch failure boundary as sendMail. Do not advertise it as runnable
+    # until a real transport implements an honest, at-most-once-safe receipt.
+    status: planned
     mode: write
     description: |
-      Send an email with file attachments. Each attachment ≤ 4 MB simple,
-      ≤ 150 MB resumable. Transport picks the upload mode automatically.
+      Planned: send an email with file attachments. Each attachment under 3 MB
+      may use a simple request; 3–150 MB requires an upload session. Graph's final
+      send returns 202 Accepted with
+      no response body; that proves provider acceptance only, not delivery or a
+      durable message id.
     inputs:
       to:
         type: array
@@ -275,11 +285,6 @@ commands:
         items:
           path:     string
           filename: string
-    outputs:
-      type: single
-      schema:
-        message-id: string
-
   outlook.mail.search:
     lifecycle: single
     category: curated
