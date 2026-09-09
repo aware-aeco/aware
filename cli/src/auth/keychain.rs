@@ -120,7 +120,7 @@ pub fn store_token(
     aware_home: &Path,
 ) -> Result<(), AwareError> {
     let account = account_name(&token.integration, alias);
-    let _lock = acquire_account_lock(aware_home, &account)
+    let _locks = acquire_account_locks(aware_home, &account, keyring_enabled())
         .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
     store_token_unlocked(token, aware_home, &account)
 }
@@ -135,7 +135,7 @@ pub(crate) fn compare_and_store_token(
     aware_home: &Path,
 ) -> Result<(), AwareError> {
     let account = &expected.account;
-    let _lock = acquire_account_lock(aware_home, account)
+    let _locks = acquire_account_locks(aware_home, account, keyring_enabled())
         .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
     let current = load_token_raw(
         &expected.requested_integration,
@@ -422,7 +422,8 @@ pub(crate) fn load_token_for_refresh(
     // Generation materialization is a read-modify-write operation. Serialize it
     // across processes, then re-read under the lock so exactly one reader mints
     // and every waiter observes the value that was actually persisted.
-    let Ok(_generation_lock) = acquire_account_lock(aware_home, &account) else {
+    let Ok(_generation_locks) = acquire_account_locks(aware_home, &account, keyring_enabled())
+    else {
         return Ok(Some(RefreshTokenLoad {
             token: readable_without_ephemeral_generation(token, normalized_scope),
             snapshot: original_snapshot,
@@ -517,22 +518,132 @@ fn load_token_raw(
     Ok(loaded)
 }
 
-fn acquire_account_lock(aware_home: &Path, account: &str) -> std::io::Result<std::fs::File> {
-    let dir = aware_home.join("credentials");
-    std::fs::create_dir_all(&dir)?;
-    // Hash the non-secret account name so aliases can never influence the path.
-    let key = format!("{:x}", Sha256::digest(account.as_bytes()));
-    let file = std::fs::OpenOptions::new()
+struct AccountLocks {
+    _keyring: Option<std::fs::File>,
+    _file: std::fs::File,
+}
+
+fn acquire_account_locks(
+    aware_home: &Path,
+    account: &str,
+    include_keyring: bool,
+) -> std::io::Result<AccountLocks> {
+    if include_keyring {
+        let keyring_dir = keyring_lock_dir()?;
+        acquire_account_locks_in(aware_home, &keyring_dir, account, true)
+    } else {
+        // The global path is unused in file-only mode; do not make a local
+        // credentials file depend on discovery of an unrelated user data dir.
+        acquire_account_locks_in(aware_home, Path::new("."), account, false)
+    }
+}
+
+fn acquire_account_locks_in(
+    aware_home: &Path,
+    keyring_dir: &Path,
+    account: &str,
+    include_keyring: bool,
+) -> std::io::Result<AccountLocks> {
+    // Global keyring first, AWARE_HOME-local file second. Every operation that
+    // can touch both uses this order, preventing cross-process lock inversion.
+    let (keyring_path, file_path) = account_lock_paths(aware_home, keyring_dir, account);
+    let keyring = if include_keyring {
+        Some(acquire_lock(&keyring_path)?)
+    } else {
+        None
+    };
+    let file = acquire_lock(&file_path)?;
+    Ok(AccountLocks {
+        _keyring: keyring,
+        _file: file,
+    })
+}
+
+fn account_lock_paths(aware_home: &Path, keyring_dir: &Path, account: &str) -> (PathBuf, PathBuf) {
+    (
+        keyring_lock_path(keyring_dir, account),
+        file_lock_path(aware_home, account),
+    )
+}
+
+fn keyring_lock_dir() -> std::io::Result<PathBuf> {
+    dirs::data_local_dir()
+        .map(|dir| dir.join("aware").join("credential-locks"))
+        .ok_or_else(|| std::io::Error::other("per-user local data directory is unavailable"))
+}
+
+fn lock_key(account: &str) -> String {
+    format!("{:x}", Sha256::digest(account.as_bytes()))
+}
+
+fn keyring_lock_path(dir: &Path, account: &str) -> PathBuf {
+    dir.join(format!(".keyring-{}.lock", lock_key(account)))
+}
+
+fn file_lock_path(aware_home: &Path, account: &str) -> PathBuf {
+    // Keep the original filename so already-running older processes contend on
+    // the file-backend lock after an in-place upgrade.
+    aware_home
+        .join("credentials")
+        .join(format!(".generation-{}.lock", lock_key(account)))
+}
+
+fn acquire_lock(path: &Path) -> std::io::Result<std::fs::File> {
+    let dir = path
+        .parent()
+        .ok_or_else(|| std::io::Error::other("credential lock path has no parent"))?;
+    ensure_private_lock_dir(dir)?;
+    match std::fs::symlink_metadata(path) {
+        Ok(metadata) if metadata.file_type().is_symlink() => {
+            return Err(std::io::Error::other(
+                "credential lock file must not be a symbolic link",
+            ));
+        }
+        Ok(_) => {}
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+        Err(e) => return Err(e),
+    }
+    let file = open_lock_file(path)?;
+    file.lock_exclusive()?;
+    Ok(file)
+}
+
+fn ensure_private_lock_dir(dir: &Path) -> std::io::Result<()> {
+    std::fs::create_dir_all(dir)?;
+    let metadata = std::fs::symlink_metadata(dir)?;
+    if metadata.file_type().is_symlink() || !metadata.is_dir() {
+        return Err(std::io::Error::other(
+            "credential lock directory must be a real directory",
+        ));
+    }
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        std::fs::set_permissions(dir, std::fs::Permissions::from_mode(0o700))?;
+    }
+    Ok(())
+}
+
+#[cfg(unix)]
+fn open_lock_file(path: &Path) -> std::io::Result<std::fs::File> {
+    use std::os::unix::fs::OpenOptionsExt;
+    std::fs::OpenOptions::new()
         .read(true)
         .write(true)
         .create(true)
         .truncate(false)
-        // Keep the original generation-lock filename: rotations now share it,
-        // and an already-running pre-upgrade process must contend on the same
-        // OS lock rather than opening a second coordination domain.
-        .open(dir.join(format!(".generation-{key}.lock")))?;
-    file.lock_exclusive()?;
-    Ok(file)
+        .mode(0o600)
+        .open(path)
+}
+
+#[cfg(not(unix))]
+fn open_lock_file(path: &Path) -> std::io::Result<std::fs::File> {
+    std::fs::OpenOptions::new()
+        .read(true)
+        .write(true)
+        .create(true)
+        .truncate(false)
+        .open(path)
 }
 
 fn readable_without_ephemeral_generation(
@@ -580,7 +691,7 @@ pub fn delete_token(
     aware_home: &Path,
 ) -> Result<(), AwareError> {
     let account = account_name(integration, alias);
-    let _lock = acquire_account_lock(aware_home, &account)
+    let _locks = acquire_account_locks(aware_home, &account, keyring_enabled())
         .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
     delete_token_unlocked(aware_home, &account)
 }
@@ -639,6 +750,8 @@ pub fn store_app_secret(
     aware_home: &Path,
 ) -> Result<(), AwareError> {
     let account = app_account_name(integration, alias);
+    let _locks = acquire_account_locks(aware_home, &account, keyring_enabled())
+        .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
     if !keyring_enabled() {
         return write_app_secret_file(aware_home, &account, secret);
     }
@@ -695,6 +808,8 @@ pub fn delete_app_secret(
     aware_home: &Path,
 ) -> Result<(), AwareError> {
     let account = app_account_name(integration, alias);
+    let _locks = acquire_account_locks(aware_home, &account, keyring_enabled())
+        .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
     let keyring_result = if keyring_enabled() {
         let entry = keyring::Entry::new(SERVICE_NAME, &account)
             .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
@@ -1195,6 +1310,65 @@ mod tests {
     }
 
     #[test]
+    fn keyring_locks_are_global_while_file_locks_are_home_scoped() {
+        use std::sync::mpsc;
+        use std::time::Duration;
+
+        let tmp = tempfile::tempdir().unwrap();
+        let home_one = tmp.path().join("home-one");
+        let home_two = tmp.path().join("home-two");
+        let global = tmp.path().join("per-user-global-locks");
+        let account = "google-workspace.personal";
+
+        let (keyring_one, file_one) = account_lock_paths(&home_one, &global, account);
+        let (keyring_two, file_two) = account_lock_paths(&home_two, &global, account);
+        assert_eq!(
+            keyring_one, keyring_two,
+            "keyring lock identity must not include AWARE_HOME"
+        );
+        assert!(!keyring_one.to_string_lossy().contains(account));
+        assert_ne!(
+            file_one, file_two,
+            "file credentials in distinct homes need independent lock domains"
+        );
+
+        let first = acquire_account_locks_in(&home_one, &global, account, true).unwrap();
+        let (started_tx, started_rx) = mpsc::channel();
+        let (acquired_tx, acquired_rx) = mpsc::channel();
+        let other_home = home_two.clone();
+        let other_global = global.clone();
+        let waiter = std::thread::spawn(move || {
+            started_tx.send(()).unwrap();
+            let locks =
+                acquire_account_locks_in(&other_home, &other_global, account, true).unwrap();
+            acquired_tx.send(()).unwrap();
+            drop(locks);
+        });
+        started_rx.recv().unwrap();
+        let early = acquired_rx.recv_timeout(Duration::from_millis(100));
+        drop(first);
+        acquired_rx.recv_timeout(Duration::from_secs(2)).unwrap();
+        waiter.join().unwrap();
+        assert!(
+            matches!(early, Err(mpsc::RecvTimeoutError::Timeout)),
+            "a second AWARE_HOME bypassed the shared keyring lock"
+        );
+
+        // With no keyring backend involved, the same account in another home is
+        // intentionally independent and must not wait for home one's file lock.
+        let first_file = acquire_account_locks_in(&home_one, &global, account, false).unwrap();
+        let (file_tx, file_rx) = mpsc::channel();
+        let file_waiter = std::thread::spawn(move || {
+            let locks = acquire_account_locks_in(&home_two, &global, account, false).unwrap();
+            file_tx.send(()).unwrap();
+            drop(locks);
+        });
+        file_rx.recv_timeout(Duration::from_secs(2)).unwrap();
+        drop(first_file);
+        file_waiter.join().unwrap();
+    }
+
+    #[test]
     fn file_backed_metadata_materialization_stays_in_the_file_backend() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().join("credentials");
@@ -1207,7 +1381,8 @@ mod tests {
             .unwrap();
         assert_eq!(loaded.backend, TokenBackend::File);
         let account = account_name("google-workspace", None);
-        let _lock = acquire_account_lock(tmp.path(), &account).unwrap();
+        let keyring_dir = tmp.path().join("global-locks");
+        let _locks = acquire_account_locks_in(tmp.path(), &keyring_dir, &account, false).unwrap();
         let migrated = materialize_generation(loaded.token, |updated| {
             store_token_to_backend_unlocked(updated, tmp.path(), loaded.backend, &account)
         });

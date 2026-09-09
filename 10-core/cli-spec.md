@@ -368,6 +368,13 @@ credentials likewise report `generation: null` and an empty `scopes` array. The
 generation is not derived from access or refresh token bytes and is not an
 authenticator.
 
+Lock domains follow storage domains. OS-keyring accounts use a stable per-user
+lock namespace independent of `AWARE_HOME`, because the keyring account itself is
+global to that user. Credentials-file locks remain inside their owning
+`AWARE_HOME`. An operation that may touch both acquires the keyring lock first and
+the file lock second; account-derived lock filenames are SHA-256 hashes rather
+than user-controlled path segments.
+
 Credential reads, metadata migration, and refresh CAS bind their lock, snapshot,
 and write destination to the exact requested account slot. Embedded `integration`
 metadata is descriptive and never selects another account. Both base-plus-alias
