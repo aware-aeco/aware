@@ -152,28 +152,35 @@ pub fn checkout_tree_digests(
             )));
         }
         let path = repo_root.join(repo_relative);
-        let root = unique
+        let containing_roots = unique
             .iter()
             .filter(|root| path.starts_with(root))
-            .max_by_key(|root| root.components().count())
-            .ok_or_else(|| {
-                AwareError::Validation("git returned a path outside requested bundles".into())
-            })?;
-        let relative = path
-            .strip_prefix(root)
-            .map_err(|_| AwareError::Validation("bundle path escaped root".into()))?;
-        let normalized = relative
-            .components()
-            .map(|c| c.as_os_str().to_str())
-            .collect::<Option<Vec<_>>>()
-            .ok_or_else(|| AwareError::Validation("bundle path is not UTF-8".into()))?
-            .join("/");
-        if normalized != super::provenance::FILE {
-            records.push(BlobRecord {
-                root: root.clone(),
-                relative: normalized,
-                oid: oid.into(),
-            });
+            .collect::<Vec<_>>();
+        if containing_roots.is_empty() {
+            return Err(AwareError::Validation(
+                "git returned a path outside requested bundles".into(),
+            ));
+        }
+        // Overlapping release roots are uncommon but valid. A file below the
+        // child is also part of the parent's archive subtree, so feed it to every
+        // containing root just as independent `checkout_tree_digest` calls would.
+        for root in containing_roots {
+            let relative = path
+                .strip_prefix(root)
+                .map_err(|_| AwareError::Validation("bundle path escaped root".into()))?;
+            let normalized = relative
+                .components()
+                .map(|c| c.as_os_str().to_str())
+                .collect::<Option<Vec<_>>>()
+                .ok_or_else(|| AwareError::Validation("bundle path is not UTF-8".into()))?
+                .join("/");
+            if normalized != super::provenance::FILE {
+                records.push(BlobRecord {
+                    root: root.clone(),
+                    relative: normalized,
+                    oid: oid.into(),
+                });
+            }
         }
     }
     for root in &unique {
@@ -453,6 +460,34 @@ mod tests {
             error.to_string().contains("no staged regular files"),
             "{error}"
         );
+    }
+
+    #[test]
+    fn batch_checkout_hash_includes_nested_root_files_in_parent() {
+        let tmp = tempfile::tempdir().unwrap();
+        let repo = tmp.path();
+        let git = |args: &[&str]| {
+            let status = std::process::Command::new("git")
+                .current_dir(repo)
+                .args(args)
+                .status()
+                .unwrap();
+            assert!(status.success(), "git {args:?}");
+        };
+        git(&["init", "--quiet"]);
+        let parent = repo.join("releases/parent");
+        let child = parent.join("nested-child");
+        std::fs::create_dir_all(&child).unwrap();
+        std::fs::write(parent.join("parent.txt"), b"parent\n").unwrap();
+        std::fs::write(child.join("child.txt"), b"child\n").unwrap();
+        git(&["add", "releases"]);
+
+        let batched = checkout_tree_digests(repo, &[parent.clone(), child.clone()]).unwrap();
+        let parent_alone = checkout_tree_digest(repo, &parent).unwrap();
+        let child_alone = checkout_tree_digest(repo, &child).unwrap();
+
+        assert_eq!(batched.get(&parent), Some(&parent_alone));
+        assert_eq!(batched.get(&child), Some(&child_alone));
     }
 
     #[cfg(unix)]
