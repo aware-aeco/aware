@@ -76,11 +76,47 @@ pub fn checkout_tree_digests(
         )));
     }
     for item in status.stdout.split(|b| *b == 0).filter(|p| !p.is_empty()) {
-        if item.len() < 3 || item[1] != b' ' || item[0] == b'?' || matches!(item[0], b'R' | b'C') {
+        if item.len() < 3 {
+            return Err(AwareError::Validation(
+                "malformed `git status --porcelain` response while hashing agent bundle".into(),
+            ));
+        }
+        let index_status = item[0];
+        let worktree_status = item[1];
+        if worktree_status != b' ' || index_status == b'?' || matches!(index_status, b'R' | b'C') {
             return Err(AwareError::Validation(
                 "agent bundle has unstaged, untracked, or renamed content; run `git add <agent-folder>` (and commit/resolve renames) before publish/reindex so the digest binds the exact archive bytes".into(),
             ));
         }
+    }
+    // `git status --untracked-files=all` deliberately follows ignore rules. An
+    // ignored file can still affect on-disk manifest validation while being absent
+    // from both the Git archive and the digest, so inventory ignored untracked
+    // content separately and reject it rather than blessing two different trees.
+    let mut ignored = std::process::Command::new("git");
+    ignored.current_dir(repo_root).args([
+        "ls-files",
+        "--others",
+        "--ignored",
+        "--exclude-standard",
+        "-z",
+        "--",
+    ]);
+    ignored.args(&paths);
+    let ignored = ignored.output().map_err(|error| {
+        AwareError::Validation(format!(
+            "cannot inspect ignored agent bundle content with `git ls-files`: {error}"
+        ))
+    })?;
+    if !ignored.status.success() {
+        return Err(AwareError::Validation(
+            "git ls-files failed while inspecting ignored agent bundle content".into(),
+        ));
+    }
+    if !ignored.stdout.is_empty() {
+        return Err(AwareError::Validation(
+            "agent bundle contains ignored untracked content; remove it or explicitly force-add and stage it so validation, digest, and archive bind the same files".into(),
+        ));
     }
     let mut listed = std::process::Command::new("git");
     listed
@@ -138,6 +174,14 @@ pub fn checkout_tree_digests(
                 relative: normalized,
                 oid: oid.into(),
             });
+        }
+    }
+    for root in &unique {
+        if !records.iter().any(|record| &record.root == root) {
+            return Err(AwareError::Validation(format!(
+                "agent bundle {} has no staged regular files; ignored or empty bundle trees cannot be hashed for publish/reindex",
+                root.display()
+            )));
         }
     }
     records.sort_by(|a, b| {
@@ -345,6 +389,70 @@ mod tests {
         let message = error.to_string();
         assert!(message.contains("git status"), "{message}");
         assert!(message.contains("Git checkout"), "{message}");
+    }
+
+    #[test]
+    fn checkout_hash_rejects_unstaged_worktree_modification() {
+        let tmp = tempfile::tempdir().unwrap();
+        let repo = tmp.path();
+        let git = |args: &[&str]| {
+            let status = std::process::Command::new("git")
+                .current_dir(repo)
+                .args(args)
+                .status()
+                .unwrap();
+            assert!(status.success(), "git {args:?}");
+        };
+        git(&["init", "--quiet"]);
+        std::fs::create_dir(repo.join("agent")).unwrap();
+        std::fs::write(repo.join("agent/manifest.yaml"), b"agent: staged\n").unwrap();
+        git(&["add", "agent/manifest.yaml"]);
+        std::fs::write(repo.join("agent/manifest.yaml"), b"agent: unstaged\n").unwrap();
+
+        let error = checkout_tree_digest(repo, &repo.join("agent")).unwrap_err();
+        assert!(error.to_string().contains("unstaged"), "{error}");
+    }
+
+    #[test]
+    fn checkout_hash_rejects_entirely_ignored_new_bundle() {
+        let tmp = tempfile::tempdir().unwrap();
+        let repo = tmp.path();
+        let git = |args: &[&str]| {
+            let status = std::process::Command::new("git")
+                .current_dir(repo)
+                .args(args)
+                .status()
+                .unwrap();
+            assert!(status.success(), "git {args:?}");
+        };
+        git(&["init", "--quiet"]);
+        std::fs::write(repo.join(".gitignore"), b"agent/\n").unwrap();
+        git(&["add", ".gitignore"]);
+        std::fs::create_dir(repo.join("agent")).unwrap();
+        std::fs::write(repo.join("agent/manifest.yaml"), b"agent: ignored\n").unwrap();
+
+        let error = checkout_tree_digest(repo, &repo.join("agent")).unwrap_err();
+        assert!(error.to_string().contains("ignored"), "{error}");
+    }
+
+    #[test]
+    fn checkout_hash_rejects_empty_bundle_tree() {
+        let tmp = tempfile::tempdir().unwrap();
+        let repo = tmp.path();
+        let status = std::process::Command::new("git")
+            .current_dir(repo)
+            .args(["init", "--quiet"])
+            .status()
+            .unwrap();
+        assert!(status.success());
+        let bundle = repo.join("agent");
+        std::fs::create_dir(&bundle).unwrap();
+
+        let error = checkout_tree_digest(repo, &bundle).unwrap_err();
+        assert!(
+            error.to_string().contains("no staged regular files"),
+            "{error}"
+        );
     }
 
     #[cfg(unix)]
