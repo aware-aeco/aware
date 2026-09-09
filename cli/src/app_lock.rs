@@ -48,6 +48,14 @@ pub struct LockFile {
     #[serde(rename = "agent-pins")]
     pub agent_pins: BTreeMap<String, String>,
 
+    /// Verified agent id → immutable installed bundle digest at compile time.
+    #[serde(
+        rename = "agent-bundle-pins",
+        default,
+        skip_serializing_if = "BTreeMap::is_empty"
+    )]
+    pub agent_bundle_pins: BTreeMap<String, String>,
+
     /// Compiled nodes — every template that can be resolved at compile
     /// time IS resolved; runtime expressions are tagged with the
     /// `{{ runtime: ... }}` prefix to make their dynamic nature explicit.
@@ -291,6 +299,16 @@ pub fn verify_agent_pins(
                 current.unwrap_or("missing")
             )));
         }
+        if let Some(expected) = lock.agent_bundle_pins.get(agent_id)
+            && let Some(agent) = agents.iter().find(|agent| agent.manifest.agent == agent_id)
+        {
+            let actual = crate::install::integrity::tree_digest(&agent.root).ok();
+            if actual.as_deref() != Some(expected) {
+                return Err(AwareError::Validation(format!(
+                    "[E_APP_LOCK_AGENT_BUNDLE_PIN_MISMATCH] compiled approval pins agent {agent_id} at bundle {expected}, but those installed bytes are no longer verified; run `aware app compile` again after restoring an official bundle"
+                )));
+            }
+        }
     }
     Ok(())
 }
@@ -319,11 +337,19 @@ fn compile_snapshot(
 
     // Pin every agent referenced by any node (incl. `do:` bodies).
     let mut agent_pins: BTreeMap<String, String> = BTreeMap::new();
+    let mut agent_bundle_pins: BTreeMap<String, String> = BTreeMap::new();
     for (node, _, _, _) in &flat {
         if let Some(aid) = &node.agent
             && let Some(d) = agents.iter().find(|d| d.manifest.agent == *aid)
         {
             agent_pins.insert(aid.clone(), d.manifest.version.clone());
+            if let Some(digest) = crate::install::provenance::receipt_digest_pin(
+                &d.root,
+                &d.manifest.agent,
+                &d.manifest.version,
+            ) {
+                agent_bundle_pins.insert(aid.clone(), digest);
+            }
         }
     }
 
@@ -432,6 +458,7 @@ fn compile_snapshot(
         app: app.app.clone(),
         version: app.version.clone(),
         agent_pins,
+        agent_bundle_pins,
         nodes,
         schedule,
         engineering,
@@ -1085,6 +1112,7 @@ mod tests {
         let source = tmp.path().join("my-app.flo");
         std::fs::write(&source, "app: my-cool-app\n").unwrap();
         let lock = LockFile {
+            agent_bundle_pins: BTreeMap::new(),
             source_hash: "sha256:test".into(),
             compiled_at: "2026-05-17T00:00:00Z".into(),
             compiler_version: "0.24.0".into(),

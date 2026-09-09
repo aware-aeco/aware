@@ -399,6 +399,8 @@ aware app export welded-to-tc /tmp/exported.app
 ```bash
 # One-shot app (all nodes stateless): runs to completion, exits
 aware app run my-oneshot-app
+# Fail closed unless every dispatched agent bundle has an intact official receipt
+aware app run my-oneshot-app --require-verified-agents
 
 # Long-running app (any stateful node like a watcher): blocks until Ctrl+C
 aware app run welded-to-tc --instance fab-east

@@ -6,7 +6,8 @@
       "versions": {
         "2025.0.1": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/tekla"
+          "subdir": "aware-main/20-agents/aeco/engineering/tekla",
+          "bundle-digest": "sha256:1a0b9ec5bd3414bcfb6ac1987c17dc749310c98ac57a2f9855ecf057cfdad5b3"
         }
       }
     },
@@ -14,7 +15,8 @@
       "versions": {
         "2025.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/tekla-2025"
+          "subdir": "aware-main/20-agents/aeco/engineering/tekla-2025",
+          "bundle-digest": "sha256:4a4dd80c5e675084e2b8e8519373a59cbac1f546a2f677fcab5ea66e240f23b2"
         }
       }
     },
@@ -22,7 +24,8 @@
       "versions": {
         "2026.0.3": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/tekla-2026"
+          "subdir": "aware-main/20-agents/aeco/engineering/tekla-2026",
+          "bundle-digest": "sha256:40fcf5d41bbcc4b93347388dcd12209dff63060c1cb345aa8c7f522d1a436481"
         }
       }
     },
@@ -30,7 +33,8 @@
       "versions": {
         "2025.0.2.419": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/revit-2025"
+          "subdir": "aware-main/20-agents/aeco/architecture/revit-2025",
+          "bundle-digest": "sha256:e532d35b4cf1cfaf4963707b259d6df81d903f985757ad1b855c849dd335d2a0"
         }
       }
     },
@@ -38,7 +42,8 @@
       "versions": {
         "2026.0.0.9999": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/revit-2026"
+          "subdir": "aware-main/20-agents/aeco/architecture/revit-2026",
+          "bundle-digest": "sha256:b1b24819b9c0e5aaa425d8942b705391659517dc1f915c5b89e474b469f6c969"
         }
       }
     },
@@ -46,7 +51,8 @@
       "versions": {
         "7.38.24338.17001": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/rhino-7"
+          "subdir": "aware-main/20-agents/aeco/architecture/rhino-7",
+          "bundle-digest": "sha256:e660ca2bd38b9186359667b0370212d36cb4fb995321448fd021e7f80c0ab366"
         }
       }
     },
@@ -54,7 +60,8 @@
       "versions": {
         "8.31.26126.13431": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/rhino-8"
+          "subdir": "aware-main/20-agents/aeco/architecture/rhino-8",
+          "bundle-digest": "sha256:4277f413f1d16c75061356ecd7974d36f2f9a4ce261cb83095d83b54a30f26d5"
         }
       }
     },
@@ -62,7 +69,8 @@
       "versions": {
         "7.38.24338.17001": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/grasshopper-7"
+          "subdir": "aware-main/20-agents/aeco/architecture/grasshopper-7",
+          "bundle-digest": "sha256:4ca33a40c5420db75b9b1dcf3937f57fdac2e07cb64bc78480b1905aafaafd2a"
         }
       }
     },
@@ -70,7 +78,8 @@
       "versions": {
         "8.31.26126.13431": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/grasshopper-8"
+          "subdir": "aware-main/20-agents/aeco/architecture/grasshopper-8",
+          "bundle-digest": "sha256:dc8007dd365137cfa178952aaf955d95d0c6884aa2ebd4d3b49fe37c560b16be"
         }
       }
     },
@@ -78,7 +87,8 @@
       "versions": {
         "2025.0.3": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/sketchup-2025"
+          "subdir": "aware-main/20-agents/aeco/architecture/sketchup-2025",
+          "bundle-digest": "sha256:dcae70ce9cac49dbaa22bf9f658f4070dced33dd113361e6cd8e2101c3fb9402"
         }
       }
     },
@@ -86,7 +96,8 @@
       "versions": {
         "2026.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/sketchup-2026"
+          "subdir": "aware-main/20-agents/aeco/architecture/sketchup-2026",
+          "bundle-digest": "sha256:86ca035e2da535eed1136d071faa57f11d9ebf26d269a99f91b234734ed57be8"
         }
       }
     },
@@ -94,7 +105,8 @@
       "versions": {
         "2.6.109": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/visualization/xeokit"
+          "subdir": "aware-main/20-agents/aeco/visualization/xeokit",
+          "bundle-digest": "sha256:0446ceabe9e6373fedc9339bcdeea4cce4ea132f47450f7b84989d0aa26b37ae"
         }
       }
     },
@@ -102,7 +114,8 @@
       "versions": {
         "0.184.1": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/visualization/three"
+          "subdir": "aware-main/20-agents/aeco/visualization/three",
+          "bundle-digest": "sha256:3aceaefe563fadbd6ad52b973c56b7fbf160ad6b0420d6e8bd73f4f4aefe7379"
         }
       }
     },
@@ -110,7 +123,8 @@
       "versions": {
         "1.7.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/slack"
+          "subdir": "aware-main/20-agents/aeco/construction/slack",
+          "bundle-digest": "sha256:a8293ffe8203795543a0e7ac82f8eb64fa1e9493c2f258d07e1bbb272c4a781d"
         }
       }
     },
@@ -118,7 +132,8 @@
       "versions": {
         "2.12.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/csi-api"
+          "subdir": "aware-main/20-agents/aeco/engineering/csi-api",
+          "bundle-digest": "sha256:798435244b558e1d58103d4f93ac6806b90ac42cd65a37dc13b1b162d5dc6b58"
         }
       }
     },
@@ -126,7 +141,8 @@
       "versions": {
         "3.4.6": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/visualization/thatopen-components"
+          "subdir": "aware-main/20-agents/aeco/visualization/thatopen-components",
+          "bundle-digest": "sha256:f094cfaad6fbdef7431c49145b216e35c86c14cf755034827fd7f1a29b80bfd7"
         }
       }
     },
@@ -134,7 +150,8 @@
       "versions": {
         "0.0.77": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/visualization/web-ifc"
+          "subdir": "aware-main/20-agents/aeco/visualization/web-ifc",
+          "bundle-digest": "sha256:18cf621b1f9d60e379fbd2b31cb7c69d8c5e89c4eb4c24838e049451c963d5ca"
         }
       }
     },
@@ -142,7 +159,8 @@
       "versions": {
         "2.28.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/visualization/speckle-viewer"
+          "subdir": "aware-main/20-agents/aeco/visualization/speckle-viewer",
+          "bundle-digest": "sha256:5be1a9299d7b9c3afd77aaf42d7a86e04b6f7cdc0ca49d61a47d238ac391d514"
         }
       }
     },
@@ -150,7 +168,8 @@
       "versions": {
         "2024.0.1.35": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/allplan-2024"
+          "subdir": "aware-main/20-agents/aeco/architecture/allplan-2024",
+          "bundle-digest": "sha256:24893c10791b73e95a959e85d689198120465cd85c1f8430fc130cf4b7b2954a"
         }
       }
     },
@@ -158,7 +177,8 @@
       "versions": {
         "2025.0.0.15": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/allplan-2025"
+          "subdir": "aware-main/20-agents/aeco/architecture/allplan-2025",
+          "bundle-digest": "sha256:e21265c64c2835f8cee4da4979b99cd8f6a2ca71885f9e7fcd1729cd9124cda2"
         }
       }
     },
@@ -166,7 +186,8 @@
       "versions": {
         "25.1.5.1431": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/idea-statica-25"
+          "subdir": "aware-main/20-agents/aeco/engineering/idea-statica-25",
+          "bundle-digest": "sha256:8ec9cf1ab1f5e0cf858a6309d24afe97602672a1c546c6d904ca4b46877b3654"
         }
       }
     },
@@ -174,7 +195,8 @@
       "versions": {
         "26.0.1.2450": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/idea-statica-26"
+          "subdir": "aware-main/20-agents/aeco/engineering/idea-statica-26",
+          "bundle-digest": "sha256:e97161e2c661bbfee3fb318c146c49e5f1f7deb56068497cb5816308d1d2cb68"
         }
       }
     },
@@ -182,7 +204,8 @@
       "versions": {
         "25.3.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/tsd-25"
+          "subdir": "aware-main/20-agents/aeco/engineering/tsd-25",
+          "bundle-digest": "sha256:65be92dd7e577886dd912477f69b5e74ac624f1632f6437da0e77fdd026a3b82"
         }
       }
     },
@@ -190,7 +213,8 @@
       "versions": {
         "26.0.1": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/tsd-26"
+          "subdir": "aware-main/20-agents/aeco/engineering/tsd-26",
+          "bundle-digest": "sha256:0703d5f4379ac020f4b00cb7805956641f8f8ddc809ea663ae495bc08461a221"
         }
       }
     },
@@ -198,7 +222,8 @@
       "versions": {
         "25.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/autocad-2025"
+          "subdir": "aware-main/20-agents/aeco/architecture/autocad-2025",
+          "bundle-digest": "sha256:06f4375af365e3be87da7faf93ced66292a1fb876d780aade7d5969ce112428f"
         }
       }
     },
@@ -206,7 +231,8 @@
       "versions": {
         "26.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/autocad-2026"
+          "subdir": "aware-main/20-agents/aeco/architecture/autocad-2026",
+          "bundle-digest": "sha256:b6c8dc35edc8aa490807711812421a490d43fabb7888fb9418edc1b3864613fd"
         }
       }
     },
@@ -214,7 +240,8 @@
       "versions": {
         "5.8.5": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/visualization/itwin-5-8"
+          "subdir": "aware-main/20-agents/aeco/visualization/itwin-5-8",
+          "bundle-digest": "sha256:9debfce6f34d8fcb4b32b561a3eae5d92b6094216b8ef2a543c12f095dde2506"
         }
       }
     },
@@ -222,7 +249,8 @@
       "versions": {
         "5.9.3": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/visualization/itwin-5-9"
+          "subdir": "aware-main/20-agents/aeco/visualization/itwin-5-9",
+          "bundle-digest": "sha256:31d767e4bac7f06aba33222f3b668bc27866273e00d68c344f12316004eb5cb5"
         }
       }
     },
@@ -230,7 +258,8 @@
       "versions": {
         "1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/acc-issues"
+          "subdir": "aware-main/20-agents/aeco/construction/acc-issues",
+          "bundle-digest": "sha256:35122cf4e781a5c63cb9e1799eef0d143d1310a9f46396c335ebbfca8b176314"
         }
       }
     },
@@ -238,7 +267,8 @@
       "versions": {
         "1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/acc-account-admin"
+          "subdir": "aware-main/20-agents/aeco/construction/acc-account-admin",
+          "bundle-digest": "sha256:ea57b410b34fe7ef9d7b191ba5758e28e3c56e8d57508abb51fd3fb5a261b5bc"
         }
       }
     },
@@ -246,7 +276,8 @@
       "versions": {
         "1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/aps-data-management"
+          "subdir": "aware-main/20-agents/aeco/construction/aps-data-management",
+          "bundle-digest": "sha256:f717c95470166321383dfe8ddd0704801758e6fab6f3d01a699ee4ba7238d703"
         }
       }
     },
@@ -254,7 +285,8 @@
       "versions": {
         "4.1.0.4845": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/dynamo-4-1-0"
+          "subdir": "aware-main/20-agents/aeco/architecture/dynamo-4-1-0",
+          "bundle-digest": "sha256:5add7f47a0a96576901dfde7b373fbf242b1c3e9f5a02767866505f99b542b78"
         }
       }
     },
@@ -262,7 +294,8 @@
       "versions": {
         "4.1.1.4941": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/dynamo-4-1-1"
+          "subdir": "aware-main/20-agents/aeco/architecture/dynamo-4-1-1",
+          "bundle-digest": "sha256:4c2804095bfe7b8c9c3bf547b788da022b7aa6e00023b5c0870be20829d84d09"
         }
       }
     },
@@ -270,7 +303,8 @@
       "versions": {
         "2.4.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/trimble-connect"
+          "subdir": "aware-main/20-agents/aeco/construction/trimble-connect",
+          "bundle-digest": "sha256:d81f576e3e6c144023b4001c0a0250211c482f44dba60567659a861c0d7079b0"
         }
       }
     },
@@ -278,7 +312,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/cross-cutting/microsoft-365"
+          "subdir": "aware-main/20-agents/aeco/cross-cutting/microsoft-365",
+          "bundle-digest": "sha256:48f2d2a0ea5991e773656d8f48d1b045946b045a045388b00c91ae0a08e66748"
         }
       }
     },
@@ -286,7 +321,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/cross-cutting/google-workspace"
+          "subdir": "aware-main/20-agents/aeco/cross-cutting/google-workspace",
+          "bundle-digest": "sha256:7022ee9e7c4f6489897d6221176f2bedfb57bf4b311a2c726ef0a11aab143f53"
         }
       }
     },
@@ -294,7 +330,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/_core/html-report"
+          "subdir": "aware-main/20-agents/_core/html-report",
+          "bundle-digest": "sha256:bbf249f99449acccb20aba17de051730ca729fef04cbb198e0a1683b824ca694"
         }
       }
     },
@@ -302,7 +339,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/_core/file"
+          "subdir": "aware-main/20-agents/_core/file",
+          "bundle-digest": "sha256:c210aeeed6266e30aad5e72daa2b399c47f1a502438141c95606b63c1d26352f"
         }
       }
     },
@@ -310,7 +348,8 @@
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/_core/shell"
+          "subdir": "aware-main/20-agents/_core/shell",
+          "bundle-digest": "sha256:699e79ea55a3238b2505933130747cb06f993ce34894dbf88666810771722040"
         }
       }
     },
@@ -318,7 +357,8 @@
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/_core/vision"
+          "subdir": "aware-main/20-agents/_core/vision",
+          "bundle-digest": "sha256:739237dfdf902be1093067471fec0e594aec1468f8e3216383637e565c3ddc8a"
         }
       }
     },
@@ -326,7 +366,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/_core/ui"
+          "subdir": "aware-main/20-agents/_core/ui",
+          "bundle-digest": "sha256:432f7b6b1d729d23c1b74b95c59b39ab27e4face4f777b4d252472044045377f"
         }
       }
     },
@@ -334,7 +375,8 @@
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/_core/ifc"
+          "subdir": "aware-main/20-agents/_core/ifc",
+          "bundle-digest": "sha256:e6852f32ed9bc468dc8a7389d7d34ceec01abb8ede3d42cc78420f9eb772269b"
         }
       }
     },
@@ -342,7 +384,8 @@
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/_core/viewer-3d"
+          "subdir": "aware-main/20-agents/_core/viewer-3d",
+          "bundle-digest": "sha256:b91c3caad9064295b81feab98c9c4f9b420b64358bc8c28b6b30b5b471159098"
         }
       }
     },
@@ -350,7 +393,8 @@
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/_core/http"
+          "subdir": "aware-main/20-agents/_core/http",
+          "bundle-digest": "sha256:da2cc28718cee6bca9f2128d2831ecfd76f1f96f00e534a15810693754a39eed"
         }
       }
     },
@@ -358,7 +402,8 @@
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/_core/aware-agent-builder"
+          "subdir": "aware-main/20-agents/_core/aware-agent-builder",
+          "bundle-digest": "sha256:6aa7fce48528a43036fec36a981f78aaa4300201d84a6daa417334ed4c4fca1e"
         }
       }
     },
@@ -366,7 +411,8 @@
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/_core/aware-skill-builder"
+          "subdir": "aware-main/20-agents/_core/aware-skill-builder",
+          "bundle-digest": "sha256:2938be4049ac22ced38cd7cbcafa1b20fc0a648614215e30dbbb91fca2906746"
         }
       }
     },
@@ -374,7 +420,8 @@
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/_core/ui-inspector"
+          "subdir": "aware-main/20-agents/_core/ui-inspector",
+          "bundle-digest": "sha256:27d4d3cfdb802c6370bf2103662e7006198d94a01056b371791cc82526a67271"
         }
       }
     },
@@ -382,7 +429,8 @@
       "versions": {
         "2026.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/navisworks"
+          "subdir": "aware-main/20-agents/aeco/construction/navisworks",
+          "bundle-digest": "sha256:da7fcc5b55679b6f83d812497a138b7bb935e30325f214f6fd3ae41a43e26594"
         }
       }
     },
@@ -390,7 +438,8 @@
       "versions": {
         "2026.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/navisworks-2026"
+          "subdir": "aware-main/20-agents/aeco/architecture/navisworks-2026",
+          "bundle-digest": "sha256:c22718181bf74d914efa2f6837eb94cb00ce6255acb2d73042dfe713dafe81f6"
         }
       }
     },
@@ -398,7 +447,8 @@
       "versions": {
         "9.13.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/solibri"
+          "subdir": "aware-main/20-agents/aeco/construction/solibri",
+          "bundle-digest": "sha256:c5df1967475432da4eb451eb26c3733e38a270d80dd376301e3dce65156f91a4"
         }
       }
     },
@@ -406,7 +456,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/bcf-file"
+          "subdir": "aware-main/20-agents/aeco/construction/bcf-file",
+          "bundle-digest": "sha256:623abd60dabe7e23d33b27dd27193552ebffa8057b2d6d612dd9041d3a8103d3"
         }
       }
     },
@@ -414,7 +465,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/ifc-inspector"
+          "subdir": "aware-main/20-agents/aeco/construction/ifc-inspector",
+          "bundle-digest": "sha256:fef8c25259cafae9f01d8868771873e3a2a3e3e8863cb50cd6291f9c43e3f1bf"
         }
       }
     },
@@ -422,7 +474,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/bluebeam-studio"
+          "subdir": "aware-main/20-agents/aeco/construction/bluebeam-studio",
+          "bundle-digest": "sha256:f8dc7ab9a16939389cd1e2ac753f573c301999f741c7551357b6acc013bf986d"
         }
       }
     },
@@ -430,7 +483,8 @@
       "versions": {
         "3.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/procore"
+          "subdir": "aware-main/20-agents/aeco/construction/procore",
+          "bundle-digest": "sha256:033949fb41108338ae9f2a74c7c1015aec3eee66b458cda4be7270a366c539dd"
         }
       }
     },
@@ -438,7 +492,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/aconex"
+          "subdir": "aware-main/20-agents/aeco/construction/aconex",
+          "bundle-digest": "sha256:1f2d993631638ed024aa57e6c731f6e21565efe3e9dc5efb6cb84564601b0246"
         }
       }
     },
@@ -446,7 +501,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/acc-docs"
+          "subdir": "aware-main/20-agents/aeco/construction/acc-docs",
+          "bundle-digest": "sha256:2ef0284ae68329175ae007813a763f89d38411a3b0c873253f3471d9ea81f905"
         }
       }
     },
@@ -454,7 +510,8 @@
       "versions": {
         "24.2.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/tekla-powerfab"
+          "subdir": "aware-main/20-agents/aeco/engineering/tekla-powerfab",
+          "bundle-digest": "sha256:5b37a0c4a022570ec4ae9cb4d6a2ab490027cebd6b4a3e45c6bba7d43d104f7b"
         }
       }
     },
@@ -462,7 +519,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/peddinghaus-translator"
+          "subdir": "aware-main/20-agents/aeco/engineering/peddinghaus-translator",
+          "bundle-digest": "sha256:3a380394aa4ca1a1a02f56ea00fd153956c34fb88ed9980482b3dc528434c5c0"
         }
       }
     },
@@ -470,7 +528,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/visualization/enscape-prep"
+          "subdir": "aware-main/20-agents/aeco/visualization/enscape-prep",
+          "bundle-digest": "sha256:159a9a47c1b2a86e6762c903e26d5bb3b937f9e39e1378529c61b840887b4a8d"
         }
       }
     },
@@ -478,7 +537,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/visualization/twinmotion-prep"
+          "subdir": "aware-main/20-agents/aeco/visualization/twinmotion-prep",
+          "bundle-digest": "sha256:77894c23500423b582aff50a722e1a76fa6dfd63a092171cea8de04a25ee6b6b"
         }
       }
     },
@@ -486,7 +546,8 @@
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/visualization/blender"
+          "subdir": "aware-main/20-agents/aeco/visualization/blender",
+          "bundle-digest": "sha256:e3be742f33257d7ee1287a86fe3d309670b03d2d28c2fa54bed4f07c430988ee"
         }
       }
     },
@@ -494,7 +555,8 @@
       "versions": {
         "4.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/nbs-chorus"
+          "subdir": "aware-main/20-agents/aeco/architecture/nbs-chorus",
+          "bundle-digest": "sha256:2a84e0ec59d65cea69749aef224a008fd49070ca633281008dc1a54b78bcb873"
         }
       }
     },
@@ -502,7 +564,8 @@
       "versions": {
         "7.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/avitru-speclink"
+          "subdir": "aware-main/20-agents/aeco/architecture/avitru-speclink",
+          "bundle-digest": "sha256:918845a3bcedb56f600eae2df793fcf13f30f5a580228b02746892372a149236"
         }
       }
     },
@@ -510,7 +573,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/csi-masterformat"
+          "subdir": "aware-main/20-agents/aeco/architecture/csi-masterformat",
+          "bundle-digest": "sha256:2054ae9d4321a61219954a8868ef50c877882f652c186af3761950a52baf5c74"
         }
       }
     },
@@ -518,7 +582,8 @@
       "versions": {
         "28.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/archicad-28"
+          "subdir": "aware-main/20-agents/aeco/architecture/archicad-28",
+          "bundle-digest": "sha256:29eb86f0af81ef4ed50df11749d87aa17da453f8fa18f699ad374aa16d60a3ed"
         }
       }
     },
@@ -526,7 +591,8 @@
       "versions": {
         "29.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/archicad-29"
+          "subdir": "aware-main/20-agents/aeco/architecture/archicad-29",
+          "bundle-digest": "sha256:4b1cb8c278cd13a6833ecac27e490cde87e8b7577e0f9cab856faa9a54df175b"
         }
       }
     },
@@ -534,7 +600,8 @@
       "versions": {
         "2.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/cross-cutting/dropbox"
+          "subdir": "aware-main/20-agents/aeco/cross-cutting/dropbox",
+          "bundle-digest": "sha256:b58476e625ba25eaf7ae2088b57d354ab36eb6b0f0b41937ad6467fa6886ef87"
         }
       }
     },
@@ -542,7 +609,8 @@
       "versions": {
         "2025.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/tekla-plugin-sdk-2025"
+          "subdir": "aware-main/20-agents/aeco/engineering/tekla-plugin-sdk-2025",
+          "bundle-digest": "sha256:94fa009077bbc4b9ebf84d230de286aa705b59dc6bb7ecea5e22e16fb32059c2"
         }
       }
     },
@@ -550,7 +618,8 @@
       "versions": {
         "2026.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/tekla-plugin-sdk-2026"
+          "subdir": "aware-main/20-agents/aeco/engineering/tekla-plugin-sdk-2026",
+          "bundle-digest": "sha256:bc76f906f70f03c51660bbf1b1d7cfee0886d639906cd41a570060da5c646ee1"
         }
       }
     },
@@ -558,7 +627,8 @@
       "versions": {
         "25.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/tekla-tedds-25"
+          "subdir": "aware-main/20-agents/aeco/engineering/tekla-tedds-25",
+          "bundle-digest": "sha256:cc6ec8f9d2e89c338f94f97d2111fd74e792b3bf7bcb0e054c751bd5b855a45e"
         }
       }
     },
@@ -566,7 +636,8 @@
       "versions": {
         "26.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/tekla-tedds-26"
+          "subdir": "aware-main/20-agents/aeco/engineering/tekla-tedds-26",
+          "bundle-digest": "sha256:407e4afafb7b224bc625b9b3abe882fee22da518976eb77d3bb399d57ec5f195"
         }
       }
     },
@@ -574,7 +645,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/bluebeam-v1"
+          "subdir": "aware-main/20-agents/aeco/architecture/bluebeam-v1",
+          "bundle-digest": "sha256:58871ef04afa5ab1bd4fcfc7e38b03636b641ee60e2a16e181183a1b5cca585e"
         }
       }
     },
@@ -582,7 +654,8 @@
       "versions": {
         "26.4.1": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/solibri-26.4.1"
+          "subdir": "aware-main/20-agents/aeco/architecture/solibri-26.4.1",
+          "bundle-digest": "sha256:ea8216b336a776ee6e4849f633adf819e22dd47d946c9ffe60e09ea43b0de8c8"
         }
       }
     },
@@ -590,7 +663,8 @@
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-us"
+          "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-us",
+          "bundle-digest": "sha256:c70d5ab0143e5be8b73955812b3161f88f4aed0fa969d48f109fa828de1147dd"
         }
       }
     },
@@ -598,7 +672,8 @@
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-uk"
+          "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-uk",
+          "bundle-digest": "sha256:cbede44bd98b6ea3e486fa12b27ae12fab2fb0befc1ec46146a0e439cbea4818"
         }
       }
     },
@@ -606,7 +681,8 @@
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-eu"
+          "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-eu",
+          "bundle-digest": "sha256:63350f7f4b6529862c0b5c94a242fa19244ba2a961ec60b46b775672cffc2a40"
         }
       }
     },
@@ -614,7 +690,8 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/connection-reader"
+          "subdir": "aware-main/20-agents/aeco/engineering/connection-reader",
+          "bundle-digest": "sha256:163ff0b75f511531892afbea490143a4bffd89e8575b43540126317932b24073"
         }
       }
     },
@@ -622,7 +699,8 @@
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/ifc-reference-reader"
+          "subdir": "aware-main/20-agents/aeco/engineering/ifc-reference-reader",
+          "bundle-digest": "sha256:3da8b6c3db487929a4d524426a0467a8548d2831f05e4175981dcd7beaff621a"
         }
       }
     },
@@ -630,7 +708,8 @@
       "versions": {
         "0.4.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/model-reference-reader"
+          "subdir": "aware-main/20-agents/aeco/engineering/model-reference-reader",
+          "bundle-digest": "sha256:740fc034d33937df633a0103003bf9b87ff261fd3e97ffd831b04f6e12ca5b0c"
         }
       }
     }

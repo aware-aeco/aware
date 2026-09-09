@@ -4,8 +4,8 @@ use std::path::Path;
 use std::time::{Duration, SystemTime};
 
 use crate::error::AwareError;
-use crate::registry::Index;
 use crate::registry::catalog::Catalog;
+use crate::registry::{Index, RegistryTrust};
 
 /// Default location of the AWARE registry index. Override via `AWARE_REGISTRY`.
 pub const DEFAULT_REGISTRY_URL: &str =
@@ -115,8 +115,29 @@ pub fn fetch_index(cache_dir: &Path) -> Result<Index, AwareError> {
         }
     };
 
-    let index = Index::parse(body.as_bytes())?;
+    let mut index = Index::parse(body.as_bytes())?;
+    // Only a fresh response from the exact built-in HTTPS endpoint crosses the
+    // registry trust boundary. Overrides, file registries and cache fallbacks
+    // remain useful distribution mechanisms, but are not AWARE attestations.
+    if source == DEFAULT_REGISTRY_URL && std::env::var_os("AWARE_REGISTRY").is_none() {
+        index.trust = RegistryTrust::FreshOfficial;
+    }
     std::fs::write(&cache_path, &body)?;
+    Ok(index)
+}
+
+/// Fetch the built-in official index without consulting or writing cache.
+/// Overrides are intentionally refused: callers use this only as an online
+/// trust oracle immediately before reporting or enforcing verification.
+pub fn fetch_fresh_official_index() -> Result<Index, AwareError> {
+    if std::env::var_os("AWARE_REGISTRY").is_some() {
+        return Err(AwareError::Validation(
+            "AWARE_REGISTRY override cannot confer official provenance".into(),
+        ));
+    }
+    let body = fetch_body(DEFAULT_REGISTRY_URL)?;
+    let mut index = Index::parse(body.as_bytes())?;
+    index.trust = RegistryTrust::FreshOfficial;
     Ok(index)
 }
 

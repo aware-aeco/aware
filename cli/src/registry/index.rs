@@ -14,6 +14,15 @@ pub struct Index {
     pub agents: BTreeMap<String, IndexEntry>,
     #[serde(default)]
     pub bundles: BTreeMap<String, BundleEntry>,
+    #[serde(skip)]
+    pub trust: RegistryTrust,
+}
+
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
+pub enum RegistryTrust {
+    #[default]
+    Unverified,
+    FreshOfficial,
 }
 
 #[derive(Debug, Default, Serialize, Deserialize)]
@@ -60,6 +69,12 @@ impl IndexEntry {
 pub struct VersionEntry {
     pub tarball: String,
     pub subdir: String,
+    #[serde(
+        rename = "bundle-digest",
+        default,
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub bundle_digest: Option<String>,
 }
 
 /// The archive's top-level folder, which every substrate-hosted `subdir` is written
@@ -263,7 +278,20 @@ impl Index {
     pub fn parse<R: Read>(mut r: R) -> Result<Self, AwareError> {
         let mut s = String::new();
         r.read_to_string(&mut s)?;
-        serde_json::from_str(&s).map_err(|e| AwareError::Validation(format!("registry index: {e}")))
+        let index: Self = serde_json::from_str(&s)
+            .map_err(|e| AwareError::Validation(format!("registry index: {e}")))?;
+        for (agent, entry) in &index.agents {
+            for (version, release) in &entry.versions {
+                if let Some(digest) = &release.bundle_digest
+                    && !is_bundle_digest(digest)
+                {
+                    return Err(AwareError::Validation(format!(
+                        "registry index: {agent}@{version} has invalid bundle-digest {digest:?}; expected sha256: followed by 64 lowercase hex characters"
+                    )));
+                }
+            }
+        }
+        Ok(index)
     }
 
     /// A stable fingerprint of the WHOLE index snapshot — every field that could
@@ -350,6 +378,14 @@ impl Index {
             .max_by_key(|k| k.len())
             .map(String::as_str)
     }
+}
+
+pub fn is_bundle_digest(value: &str) -> bool {
+    value.len() == 71
+        && value.starts_with("sha256:")
+        && value.as_bytes()[7..]
+            .iter()
+            .all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
 }
 
 #[cfg(test)]
@@ -596,5 +632,15 @@ mod tests {
 
         // Stable across runs for an identical index.
         assert_eq!(fp, base.snapshot_fingerprint());
+    }
+
+    #[test]
+    fn bundle_digest_is_optional_but_strict_when_present() {
+        assert!(Index::parse(SAMPLE.as_bytes()).is_ok());
+        let invalid = SAMPLE.replace(
+            "\"subdir\": \"tekla\"",
+            "\"subdir\": \"tekla\", \"bundle-digest\": \"sha256:ABC\"",
+        );
+        assert!(Index::parse(invalid.as_bytes()).is_err());
     }
 }
