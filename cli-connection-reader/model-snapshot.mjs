@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
   canonicalJsonBytes, lowerableLimits, lowerablePropertyExpansionLimits, ModelReaderError, parseJsonStrict, sha256,
+  PROPERTY_EXPANSION_LIMITS,
 } from './model-contract.mjs';
 import { signArtifactPreimage } from './model-artifact-auth.mjs';
 
@@ -70,7 +71,7 @@ function packageConfiguration(limits, v2, propertyExpansionLimits) {
     // document publish more property records than its SIGNED configuration
     // claimed, so downstream validation rejected reader-produced output.
     maximumShardRecords: Math.max(limits.maxEntities, limits.maxParameters, limits.maxRelationships,
-      ...(v2 ? [propertyExpansionLimits.maxExpandedPropertyRows] : [])),
+      ...(v2 ? [PROPERTY_EXPANSION_LIMITS.maxExpandedPropertyRows.hard] : [])),
     maximumPackageArtifacts: 6,
     maximumAggregateBytes: limits.maxCanonicalGlbBytes + (limits.maxComponentJsonBytes * 5),
     supportedGlb: { version: '2.0', extensions: [], componentTypes: [5121, 5123, 5125, 5126] },
@@ -210,8 +211,8 @@ export async function buildAndPublishSnapshot(result, signingKey, artifactDirect
       signerFingerprintSha256: identity.signerFingerprintSha256,
     },
     packager: {
-      agent: 'model-reference-reader', version: v2 ? '0.7.1' : '0.4.0',
-      bridgeBuildId: v2 ? 'aware-connection-reader@0.5.1' : 'aware-connection-reader@0.2.0', configurationSha256,
+      agent: 'model-reference-reader', version: v2 ? '0.7.2' : '0.4.0',
+      bridgeBuildId: v2 ? 'aware-connection-reader@0.5.2' : 'aware-connection-reader@0.2.0', configurationSha256,
     },
     outputs: packageReceipts,
   };

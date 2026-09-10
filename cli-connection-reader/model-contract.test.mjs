@@ -92,11 +92,11 @@ test('reader v2 binds closed effective expansion limits while v1 canonical bytes
   assert.deepEqual(v2.propertyExpansionLimits, { maxExpandedPropertyRows: 12, maxCanonicalPropertyBytes: 4096 });
   assert.deepEqual(v2.metadata.propertyValues, ['source-storage', 'provider-display']);
   assert.equal(v2.metadata.providerDisplayIdentity, 'excluded');
-  assert.equal(PROPERTY_EXPANSION_LIMITS.maxExpandedPropertyRows.hard, 2_000_000);
-  assert.equal(PROPERTY_EXPANSION_LIMITS.maxCanonicalPropertyBytes.hard, 32 * 1024 * 1024);
+  assert.equal(PROPERTY_EXPANSION_LIMITS.maxExpandedPropertyRows.hard, 5_000_000);
+  assert.equal(PROPERTY_EXPANSION_LIMITS.maxCanonicalPropertyBytes.hard, 128 * 1024 * 1024);
   assert.throws(() => buildCanonicalRequest({
     readerSchemaVersion: 'model-reference-reader/v2',
-    propertyExpansionLimits: { maxExpandedPropertyRows: 2_000_001 },
+    propertyExpansionLimits: { maxExpandedPropertyRows: 5_000_001 },
   }), /hard ceiling/);
   assert.throws(() => buildCanonicalRequest({ readerSchemaVersion: 'model-reference-reader/v3' }), /unsupported/);
 });

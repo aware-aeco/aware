@@ -129,7 +129,7 @@ test('v2 enforces independent pre-append row and canonical property byte ceiling
     propertyExpansionLimits: { maxCanonicalPropertyBytes: 64 },
   }), (error) => error.code === 'reference-output-too-large');
   assert.throws(() => normalizeRevitMetadata(metadata, geometry.slice(0, 1), {
-    propertyExpansionLimits: { maxExpandedPropertyRows: 2_000_001 },
+    propertyExpansionLimits: { maxExpandedPropertyRows: 5_000_001 },
   }), /hard ceiling/);
 });
 

@@ -245,6 +245,9 @@ test('reader v2 binds expansion limits and publishes tagged provider-display pro
   assert.equal(out.coverage.expandedProperties, 1);
   assert.deepEqual(out.coverage.effectivePropertyLimits, versionArgs['property-expansion-limits']);
   assert.equal(out.packageConfiguration.schemaVersion, 'model-reference-package-configuration/v2');
+  assert.equal(out.packageConfiguration.maximumShardBytes, 128 * 1024 * 1024);
+  assert.equal(out.packageConfiguration.maximumShardRecords, 5_000_000);
+  assert.equal(out.packageConfiguration.maximumAggregateBytes, (256 * 1024 * 1024) + (128 * 1024 * 1024 * 5));
   const properties = JSON.parse(await fs.readFile(path.join(state.deps.artifactDirectory, out.artifacts.properties.id), 'utf8'));
   assert.equal(properties.schemaVersion, '2');
   assert.deepEqual(properties.properties[0], {
@@ -277,6 +280,8 @@ test('read-snapshot derives public source and package envelopes after private ca
     ['manifest', 'tile-000000', 'entities-000000', 'properties-000000', 'relationships-000000', 'index']);
   verifyEnvelope('AWARE\0model-reference-reader\0package-set\0v1\0', out.packagePreimage, out.packageArtifactEnvelope);
   assert.equal(out.packageConfiguration.maximumTileTriangles, 15_000_000);
+  assert.equal(out.packageConfiguration.maximumShardBytes, 32 * 1024 * 1024);
+  assert.equal(out.packageConfiguration.maximumShardRecords, 2_000_000);
   assert.equal(out.packageConfiguration.maximumAggregateBytes, (256 * 1024 * 1024) + (32 * 1024 * 1024 * 5));
   assert.equal(out.packagePreimage.source.sourceArtifactPreimageSha256, out.sourceArtifactEnvelope.preimageSha256);
 

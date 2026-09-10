@@ -37,8 +37,8 @@ export const MODEL_LIMITS = Object.freeze({
 });
 
 export const PROPERTY_EXPANSION_LIMITS = Object.freeze({
-  maxExpandedPropertyRows: { default: 100_000, hard: 2_000_000 },
-  maxCanonicalPropertyBytes: { default: 16 * 1024 * 1024, hard: 32 * 1024 * 1024 },
+  maxExpandedPropertyRows: { default: 100_000, hard: 5_000_000 },
+  maxCanonicalPropertyBytes: { default: 16 * 1024 * 1024, hard: 128 * 1024 * 1024 },
 });
 
 export class ModelReaderError extends Error {

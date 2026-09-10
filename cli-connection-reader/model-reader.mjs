@@ -112,7 +112,11 @@ async function removeRunRoot(runRoot) {
 
 function requestLimits(args, deps) {
   const configured = Object.hasOwn(args, 'limits') ? args.limits : deps.limits;
-  try { return lowerableLimits(configured); }
+  const effective = args['reader-schema-version'] === READER_SCHEMA_VERSION_V2
+    && configured !== null && configured?.maxComponentJsonBytes === undefined
+    ? { ...(configured ?? {}), maxComponentJsonBytes: 128 * 1024 * 1024 }
+    : configured;
+  try { return lowerableLimits(effective); }
   catch (error) { readerError('reference-limits-invalid', 'request', 'Model reader limits are invalid.', false, error); }
 }
 
@@ -295,7 +299,7 @@ async function convertAndCache(args, deps, config, readiness) {
       // The normalizer refuses a mismatch up front, so this is defence in depth
       // against that guard being weakened. Assert on the coverage the normalizer
       // already returned rather than re-parsing propertiesBytes, which can reach
-      // maxCanonicalPropertyBytes (16 MB default, 32 MB hard) on every read.
+      // maxCanonicalPropertyBytes (16 MB default, 128 MB hard) on every read.
       if ((metadata.coverage.metadataSchemaVersion ?? '1') !== expectedMetadataSchema) {
         readerError('reference-metadata-invalid', 'normalize-metadata', 'Provider metadata does not match the requested reader schema version.');
       }
