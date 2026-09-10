@@ -1,6 +1,6 @@
 # Breaking changes
 
-## 1.0.0 — Gmail send becomes the only runnable command
+## 2.0.0 — Gmail send becomes the only runnable command
 
 The earlier `0.2.0` manifest advertised 24 Google Workspace commands through an
 `aware-google` executable that was not shipped. This release replaces that

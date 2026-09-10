@@ -4,7 +4,7 @@ Irreversibly submit one email through Gmail as the authenticated mailbox.
 
 ## Availability and safety
 
-This is the only runnable Google Workspace command in agent version `1.0.0`.
+This is the only runnable Google Workspace command in agent version `2.0.0`.
 It requires AWARE CLI `0.136.0` or newer. Every other command in the agent is
 `planned`.
 

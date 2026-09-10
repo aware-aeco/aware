@@ -64,7 +64,7 @@ fn mapping_keys(value: &Value) -> BTreeSet<String> {
 fn manifest_is_rest_only_runtime_gated_and_least_privilege() {
     let manifest = load_manifest();
 
-    assert_eq!(manifest["version"].as_str(), Some("1.0.0"));
+    assert_eq!(manifest["version"].as_str(), Some("2.0.0"));
     assert_eq!(manifest["status"].as_str(), Some("requires-runtime"));
     assert_eq!(manifest["minimum-cli-version"].as_str(), Some("0.136.0"));
     assert_eq!(
@@ -72,7 +72,7 @@ fn manifest_is_rest_only_runtime_gated_and_least_privilege() {
         Some("~/.aware/outbox/google-workspace")
     );
     let breaking = fs::read_to_string(agent_path("BREAKING.md")).expect("read BREAKING.md");
-    assert!(breaking.contains("## 1.0.0"), "{breaking}");
+    assert!(breaking.contains("## 2.0.0"), "{breaking}");
     assert!(breaking.contains("attempt-id"), "{breaking}");
     assert!(breaking.contains("attachments"), "{breaking}");
 

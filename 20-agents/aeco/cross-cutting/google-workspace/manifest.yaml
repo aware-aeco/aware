@@ -1,5 +1,5 @@
 agent:        google-workspace
-version:      1.0.0
+version:      2.0.0
 sdk-target:   1.0.0
 display-name: Google Workspace
 description: |
