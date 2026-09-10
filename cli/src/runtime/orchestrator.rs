@@ -1723,9 +1723,14 @@ fn trace_safe_agent_inputs(
 /// Gmail send primitive, caller inputs can be renamed before reaching that leaf,
 /// so field-name redaction at the outer boundary is insufficient.
 pub(crate) fn app_routes_to_gmail(app: &App) -> bool {
-    app.nodes.iter().any(|node| {
+    nodes_route_to_gmail(&app.nodes)
+}
+
+fn nodes_route_to_gmail(nodes: &[crate::manifest::app::Node]) -> bool {
+    nodes.iter().any(|node| {
         node.agent.as_deref() == Some("google-workspace")
             && node.command.as_deref() == Some("gmail.send")
+            || node.do_.as_deref().is_some_and(nodes_route_to_gmail)
     })
 }
 
@@ -2163,9 +2168,12 @@ exposed-commands:
     inputs: {}
 requires: []
 nodes:
-  - id: send
-    agent: google-workspace
-    command: gmail.send
+  - id: messages
+    for-each: '{{ inputs.messages }}'
+    do:
+      - id: send
+        agent: google-workspace
+        command: gmail.send
 connections: []
 "#;
         let app: App = serde_yaml::from_str(source).unwrap();

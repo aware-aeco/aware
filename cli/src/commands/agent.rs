@@ -1741,10 +1741,10 @@ fn describe_from_catalog(
     }
     for c in &v.commands {
         let star = if c.category == "curated" { "★" } else { " " };
-        let status = if c.status == "available" {
-            ""
-        } else {
-            " [planned]"
+        let status = match c.status.as_str() {
+            "available" => "",
+            "requires-runtime" => " [requires-runtime]",
+            _ => " [planned]",
         };
         println!(
             "  {star} {:<20} {:<8} {}{}",

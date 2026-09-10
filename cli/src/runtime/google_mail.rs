@@ -191,11 +191,11 @@ fn send_blocking(
     args: Value,
     http: &impl GoogleHttp,
 ) -> Result<Value, AwareError> {
-    let input: GmailSendInput = serde_json::from_value(args).map_err(|error| {
+    let input: GmailSendInput = serde_json::from_value(args).map_err(|_| {
         structured(
             "gmail.send.validation",
             "preflight",
-            format!("invalid gmail.send input: {error}"),
+            "invalid gmail.send input: request does not match the documented schema",
             "gmail-send-input",
             None,
         )
@@ -1639,7 +1639,7 @@ mod tests {
     }
 
     #[test]
-    fn structured_validation_truncates_unicode_without_panicking() {
+    fn structured_validation_does_not_echo_unknown_fields() {
         let key = format!("{}é", "a".repeat(600));
         let mock = MockHttp::responding(accepted());
         let error = send_blocking(
@@ -1649,15 +1649,37 @@ mod tests {
                 "subject": "subject",
                 "body": "body",
                 "attempt-id": "attempt",
-                key: "value"
+                key.clone(): "value"
             }),
             &mock,
         )
         .unwrap_err();
         let structured = error.structured_agent_error().unwrap();
         assert_eq!(structured.code, "gmail.send.validation");
-        assert!(structured.message.chars().count() <= 513);
-        assert!(structured.message.ends_with('…'));
+        assert!(!structured.message.contains(&key));
+        assert!(!structured.message.contains("value"));
+        assert!(structured.message.len() < 128);
+    }
+
+    #[test]
+    fn structured_validation_does_not_echo_malformed_recipient_values() {
+        let recipient = "private-recipient@example.com";
+        let mock = MockHttp::responding(accepted());
+        let error = send_blocking(
+            Path::new("agents"),
+            json!({
+                "to": recipient,
+                "subject": "subject",
+                "body": "body",
+                "attempt-id": "attempt"
+            }),
+            &mock,
+        )
+        .unwrap_err();
+        let structured = error.structured_agent_error().unwrap();
+        assert_eq!(structured.code, "gmail.send.validation");
+        assert!(!structured.message.contains(recipient));
+        assert_eq!(mock.send_count(), 0);
     }
 
     #[test]
