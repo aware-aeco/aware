@@ -410,30 +410,39 @@ mod tests {
         (base, rx)
     }
 
+    /// Lay out an AWARE home with `manifest` installed as `trimble-connect`, and a
+    /// stored credential when one is asked for. Split out of [`mock_agents`] so the
+    /// `auth_and_base` refusals below can each drop exactly one of the three things
+    /// that function requires and keep the rest intact.
+    fn agents_with(manifest: &str, credential: Option<&str>) -> tempfile::TempDir {
+        let tmp = tempfile::tempdir().unwrap();
+        let agent = tmp.path().join("agents").join("trimble-connect");
+        std::fs::create_dir_all(&agent).unwrap();
+        std::fs::write(agent.join("manifest.yaml"), manifest).unwrap();
+        if let Some(secret) = credential {
+            let creds = tmp.path().join("credentials");
+            std::fs::create_dir_all(&creds).unwrap();
+            std::fs::write(
+                creds.join(format!("{secret}.json")),
+                r#"{"access_token":"TESTTOKEN"}"#,
+            )
+            .unwrap();
+        }
+        tmp
+    }
+
     /// Install a trimble-connect manifest pointing at `base` with a NON-registered
     /// secret (so credential resolution is a hermetic raw file load — no real keychain
     /// or token-endpoint refresh) plus a stored token `TESTTOKEN`.
     fn mock_agents(base: &str) -> tempfile::TempDir {
-        let tmp = tempfile::tempdir().unwrap();
-        let agent = tmp.path().join("agents").join("trimble-connect");
-        std::fs::create_dir_all(&agent).unwrap();
-        std::fs::write(
-            agent.join("manifest.yaml"),
-            format!(
+        agents_with(
+            &format!(
                 "agent: trimble-connect\nversion: 0.1.0\ndescription: x\nstateful: false\n\
                  license: MIT\ntransport:\n  rest:\n    base: {base}/\nauth:\n  scheme: oauth2\n  \
                  secret: mock-tc-tok\ncommands:\n  upload:\n    lifecycle: single\n    description: x\n"
             ),
+            Some("mock-tc-tok"),
         )
-        .unwrap();
-        let creds = tmp.path().join("credentials");
-        std::fs::create_dir_all(&creds).unwrap();
-        std::fs::write(
-            creds.join("mock-tc-tok.json"),
-            r#"{"access_token":"TESTTOKEN"}"#,
-        )
-        .unwrap();
-        tmp
     }
 
     #[tokio::test]
@@ -549,5 +558,398 @@ mod tests {
         assert_eq!(out["file-id"], "DUPFID");
         assert_eq!(out["version-id"], "DUPVER");
         assert_eq!(out["replaced"], true);
+    }
+
+    // ── refusals ────────────────────────────────────────────────────────────
+    //
+    // Everything above drives a flow that works. Nothing covered what happens
+    // when TC answers 4xx, when a 2xx carries none of the identifiers the next
+    // step needs, or when a required input is absent — and those are exactly the
+    // paths that decide whether a half-finished upload is reported as a success.
+    // Both multi-step flows persist their result downstream, so a refusal that
+    // leaks through as `Ok` writes an identifier that points at nothing.
+
+    /// A base URL nothing is listening on: bind a port to learn a free one, then
+    /// drop the listener. A test that reaches the network against it fails with a
+    /// transport error instead of passing, which is the point — it is what proves
+    /// the refusal happened BEFORE any request went out.
+    fn dead_base() -> String {
+        let l = TcpListener::bind("127.0.0.1:0").unwrap();
+        let base = format!("http://127.0.0.1:{}", l.local_addr().unwrap().port());
+        drop(l);
+        base
+    }
+
+    /// Drain whatever the mock captured, stopping when it goes quiet. Used where
+    /// the assertion is about a request that must NOT have been made, so the
+    /// count matters and a blocking `recv` would hang instead of failing.
+    fn drain(rx: &mpsc::Receiver<String>) -> Vec<String> {
+        std::iter::from_fn(|| rx.recv_timeout(Duration::from_millis(750)).ok()).collect()
+    }
+
+    #[tokio::test]
+    async fn a_required_input_that_is_missing_blank_or_unreadable_is_refused_before_any_request() {
+        // `str_arg` rejects three shapes, and the blank one is the one worth
+        // pinning: an empty `file-id` would otherwise build
+        // `…/files/fs//downloadurl` and ask TC about a path with a hole in it.
+        // The base points at a closed port, so anything that gets past the guard
+        // fails as Network rather than Validation and this goes red.
+        let agents = mock_agents(&dead_base());
+        let dir = agents.path().join("agents");
+        for args in [
+            json!({ "filename": "a.txt", "bytes": "aGk=" }),
+            json!({ "folder-id": "", "filename": "a.txt", "bytes": "aGk=" }),
+            json!({ "folder-id": 7, "filename": "a.txt", "bytes": "aGk=" }),
+            json!({ "folder-id": "f", "bytes": "aGk=" }),
+            json!({ "folder-id": "f", "filename": "", "bytes": "aGk=" }),
+        ] {
+            let err = upload(dir.clone(), args.clone()).await.unwrap_err();
+            assert!(
+                matches!(err, AwareError::Validation(_)),
+                "upload {args}: {err}"
+            );
+        }
+        for args in [json!({}), json!({ "file-id": "" }), json!({ "file-id": 3 })] {
+            let err = download(dir.clone(), args.clone()).await.unwrap_err();
+            assert!(
+                matches!(err, AwareError::Validation(_)),
+                "download {args}: {err}"
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn each_thing_the_transport_needs_is_named_when_it_is_the_one_that_is_missing() {
+        // Three separate failures with three separate remedies. Reporting them
+        // through one message would send an operator whose token expired off to
+        // edit a manifest that is fine.
+        let base = dead_base();
+        let head = "agent: trimble-connect\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n";
+        let tail = "commands:\n  upload:\n    lifecycle: single\n    description: x\n";
+        let auth = "auth:\n  scheme: oauth2\n  secret: mock-tc-tok\n";
+
+        let no_auth = agents_with(
+            &format!("{head}transport:\n  rest:\n    base: {base}/\n{tail}"),
+            Some("mock-tc-tok"),
+        );
+        let err = download(no_auth.path().join("agents"), json!({ "file-id": "f" }))
+            .await
+            .unwrap_err();
+        assert!(err.to_string().contains("no `auth:` block"), "{err}");
+
+        let no_cred = agents_with(
+            &format!("{head}transport:\n  rest:\n    base: {base}/\n{auth}{tail}"),
+            None,
+        );
+        let err = download(no_cred.path().join("agents"), json!({ "file-id": "f" }))
+            .await
+            .unwrap_err();
+        assert!(
+            err.to_string().contains("aware connect trimble-connect"),
+            "{err}"
+        );
+
+        let no_base = agents_with(
+            &format!("{head}transport:\n  builtin: {{}}\n{auth}{tail}"),
+            Some("mock-tc-tok"),
+        );
+        let err = download(no_base.path().join("agents"), json!({ "file-id": "f" }))
+            .await
+            .unwrap_err();
+        assert!(
+            err.to_string().contains("no `transport.rest.base`"),
+            "{err}"
+        );
+    }
+
+    #[tokio::test]
+    async fn a_non_2xx_is_reported_with_the_step_the_status_and_what_the_server_said() {
+        // The body matters as much as the code: TC puts the reason in it, and a
+        // 403 whose text is dropped is indistinguishable from a 403 for any other
+        // reason. `ok_response` is the only place that reads it.
+        let (base, _rx) = mock_routed(1, |_b| {
+            vec![(
+                "downloadurl",
+                403,
+                r#"{"message":"token has expired"}"#.to_string(),
+            )]
+        });
+        let agents = mock_agents(&base);
+        let err = download(agents.path().join("agents"), json!({ "file-id": "f1" }))
+            .await
+            .unwrap_err();
+        let text = err.to_string();
+        assert!(text.contains("download url"), "names the step: {text}");
+        assert!(text.contains("403"), "carries the status: {text}");
+        assert!(text.contains("token has expired"), "quotes TC: {text}");
+    }
+
+    #[tokio::test]
+    async fn a_2xx_that_is_not_json_fails_at_the_parse_rather_than_reading_as_empty() {
+        // A proxy or a login wall answering 200 with HTML. Treating an unparseable
+        // body as an empty object would push the failure one step downstream and
+        // report it as "no pre-signed url" — a true statement about the wrong
+        // thing, and one that hides the interception.
+        let (base, _rx) = mock_routed(1, |_b| {
+            vec![(
+                "downloadurl",
+                200,
+                "<html><body>sign in</body></html>".to_string(),
+            )]
+        });
+        let agents = mock_agents(&base);
+        let err = download(agents.path().join("agents"), json!({ "file-id": "f1" }))
+            .await
+            .unwrap_err();
+        let text = err.to_string();
+        assert!(text.contains("download url"), "{text}");
+        assert!(text.contains("bad JSON"), "{text}");
+    }
+
+    #[tokio::test]
+    async fn a_failed_bytes_put_aborts_the_upload_instead_of_completing_it() {
+        // The worst outcome this module can produce: S3 refuses the bytes, the
+        // completion step is asked anyway, and TC hands back a fileId for a file
+        // whose content never arrived. `check_ok` is all that stands between the
+        // two, and it is the one step whose result is otherwise discarded.
+        let (base, rx) = mock_routed(3, |b| {
+            vec![
+                (
+                    "uploadId=",
+                    200,
+                    r#"{"fileId":"FID","versionId":"VID"}"#.to_string(),
+                ),
+                (
+                    "POST /files/fs/upload",
+                    200,
+                    format!(r#"{{"uploadId":"up1","contents":[{{"url":"{b}/s3-put"}}]}}"#),
+                ),
+                ("/s3-put", 403, "AccessDenied".to_string()),
+            ]
+        });
+        let agents = mock_agents(&base);
+        let err = upload(
+            agents.path().join("agents"),
+            json!({ "folder-id": "f", "filename": "a.txt", "bytes": "aGk=" }),
+        )
+        .await
+        .unwrap_err();
+        let text = err.to_string();
+        assert!(
+            text.contains("upload PUT") && text.contains("403"),
+            "{text}"
+        );
+        // Asserting the error alone would not catch a `check_ok` whose result is
+        // dropped — the run would then return Ok and never reach this line. The
+        // request log is what pins "stopped", not merely "complained".
+        let seen = drain(&rx);
+        assert_eq!(seen.len(), 2, "expected initiate + PUT only: {seen:#?}");
+        assert!(
+            !seen.iter().any(|r| r.contains("uploadId=")),
+            "completion must not be attempted: {seen:#?}"
+        );
+    }
+
+    #[tokio::test]
+    async fn an_initiate_that_names_no_upload_id_or_no_url_stops_there() {
+        // Two 2xx responses that are each missing the one field the next step
+        // consumes. Defaulting either to an empty string would PUT the bytes at
+        // `""` or complete an upload that was never identified.
+        for (body, want) in [
+            (r#"{"status":"UPLOADABLE"}"#, "no uploadId"),
+            (r#"{"uploadId":"up1"}"#, "no pre-signed url"),
+            (r#"{"uploadId":"up1","contents":[{}]}"#, "no pre-signed url"),
+        ] {
+            let owned = body.to_string();
+            let (base, rx) = mock_routed(2, move |_b| vec![("POST /files/fs/upload", 200, owned)]);
+            let agents = mock_agents(&base);
+            let err = upload(
+                agents.path().join("agents"),
+                json!({ "folder-id": "f", "filename": "a.txt", "bytes": "aGk=" }),
+            )
+            .await
+            .unwrap_err();
+            assert!(err.to_string().contains(want), "{body}: {err}");
+            assert_eq!(drain(&rx).len(), 1, "{body}: nothing follows the initiate");
+        }
+    }
+
+    #[tokio::test]
+    async fn a_completion_missing_its_identifiers_is_a_failure_not_a_blank_success() {
+        // The bytes are stored by this point, so the temptation is to call it a
+        // win and hand back whatever came out. But `file-id` / `version-id` are
+        // what downstream nodes persist, and an empty one is a reference to
+        // nothing that only fails much later, somewhere else.
+        for (body, want) in [
+            ("{}", "no fileId"),
+            (r#"{"versionId":"VID"}"#, "no fileId"),
+            (r#"{"fileId":"FID"}"#, "no versionId"),
+            (r#"{"fileId":"FID","versionId":null}"#, "no versionId"),
+        ] {
+            let owned = body.to_string();
+            let (base, _rx) = mock_routed(3, move |b| {
+                vec![
+                    ("uploadId=", 200, owned),
+                    (
+                        "POST /files/fs/upload",
+                        200,
+                        format!(r#"{{"uploadId":"up1","contents":[{{"url":"{b}/s3-put"}}]}}"#),
+                    ),
+                    ("/s3-put", 200, "{}".to_string()),
+                ]
+            });
+            let agents = mock_agents(&base);
+            let err = upload(
+                agents.path().join("agents"),
+                json!({ "folder-id": "f", "filename": "a.txt", "bytes": "aGk=" }),
+            )
+            .await
+            .unwrap_err();
+            assert!(err.to_string().contains(want), "{body}: {err}");
+        }
+    }
+
+    #[tokio::test]
+    async fn a_duplicate_that_cannot_be_identified_is_refused_rather_than_returned_half_filled() {
+        // `upload_duplicate_fetches_version_from_metadata` covers the recovery.
+        // These are the two ways it runs out of road — and the DUPLICATE branch
+        // returns early, so nothing further would have caught them.
+        let (base, _rx) = mock_routed(1, |_b| {
+            vec![(
+                "POST /files/fs/upload",
+                200,
+                r#"{"status":"DUPLICATE"}"#.to_string(),
+            )]
+        });
+        let agents = mock_agents(&base);
+        let err = upload(
+            agents.path().join("agents"),
+            json!({ "folder-id": "f", "filename": "a.txt", "bytes": "aGk=" }),
+        )
+        .await
+        .unwrap_err();
+        assert!(err.to_string().contains("DUPLICATE: no fileId"), "{err}");
+
+        let (base, _rx) = mock_routed(2, |_b| {
+            vec![
+                (
+                    "POST /files/fs/upload",
+                    200,
+                    r#"{"status":"DUPLICATE","fileId":"DUPFID"}"#.to_string(),
+                ),
+                ("/files/DUPFID", 200, r#"{"name":"a.txt"}"#.to_string()),
+            ]
+        });
+        let agents = mock_agents(&base);
+        let err = upload(
+            agents.path().join("agents"),
+            json!({ "folder-id": "f", "filename": "a.txt", "bytes": "aGk=" }),
+        )
+        .await
+        .unwrap_err();
+        assert!(
+            err.to_string()
+                .contains("duplicate file metadata: no versionId"),
+            "{err}"
+        );
+    }
+
+    #[tokio::test]
+    async fn a_download_url_response_without_a_url_stops_before_the_second_leg() {
+        let (base, rx) = mock_routed(2, |_b| {
+            vec![("downloadurl", 200, r#"{"expiresIn":60}"#.to_string())]
+        });
+        let agents = mock_agents(&base);
+        let err = download(agents.path().join("agents"), json!({ "file-id": "f1" }))
+            .await
+            .unwrap_err();
+        assert!(
+            err.to_string().contains("download: no pre-signed url"),
+            "{err}"
+        );
+        assert_eq!(drain(&rx).len(), 1, "no second leg without a url");
+    }
+
+    #[tokio::test]
+    async fn a_version_pinned_download_asks_for_that_version_and_a_blank_pin_asks_for_none() {
+        // `version-id` is optional, and the empty string is the shape an
+        // unfilled app input arrives as. Appending `?versionId=` with nothing
+        // after it asks TC for a version named "" instead of the current one.
+        for (pin, expect_query) in [
+            (json!("v7"), true),
+            (json!(""), false),
+            (json!(null), false),
+        ] {
+            let (base, rx) = mock_routed(2, |b| {
+                vec![
+                    ("downloadurl", 200, format!(r#"{{"url":"{b}/s3-get"}}"#)),
+                    ("/s3-get", 200, "BYTES".to_string()),
+                ]
+            });
+            let agents = mock_agents(&base);
+            download(
+                agents.path().join("agents"),
+                json!({ "file-id": "f1", "version-id": pin }),
+            )
+            .await
+            .unwrap();
+            let first = rx.recv().unwrap();
+            let line = first.lines().next().unwrap_or_default().to_string();
+            assert_eq!(
+                line.contains("versionId="),
+                expect_query,
+                "pin {pin}: {line}"
+            );
+            if expect_query {
+                assert!(line.contains("versionId=v7"), "{line}");
+            }
+        }
+    }
+
+    #[tokio::test]
+    async fn a_download_reports_the_size_of_what_it_actually_fetched_in_kib() {
+        // 2048 bytes is 2 KiB and 2.048 kB — a payload that tells the two apart,
+        // unlike the 9-byte one the round-trip test uses.
+        let (base, _rx) = mock_routed(2, |b| {
+            vec![
+                ("downloadurl", 200, format!(r#"{{"url":"{b}/s3-get"}}"#)),
+                ("/s3-get", 200, "x".repeat(2048)),
+            ]
+        });
+        let agents = mock_agents(&base);
+        let out = download(agents.path().join("agents"), json!({ "file-id": "f1" }))
+            .await
+            .unwrap();
+        assert_eq!(out["size-kb"], json!(2.0));
+    }
+
+    #[tokio::test]
+    async fn a_fresh_upload_is_not_marked_as_a_replacement() {
+        // The DUPLICATE path sets `replaced: true`, and an app branches on it to
+        // decide whether it created something. Nothing asserted the false side,
+        // so hard-coding either value passed.
+        let (base, _rx) = mock_routed(3, |b| {
+            vec![
+                (
+                    "uploadId=",
+                    200,
+                    r#"{"fileId":"FID","versionId":"VID"}"#.to_string(),
+                ),
+                (
+                    "POST /files/fs/upload",
+                    200,
+                    format!(r#"{{"uploadId":"up1","contents":[{{"url":"{b}/s3-put"}}]}}"#),
+                ),
+                ("/s3-put", 200, "{}".to_string()),
+            ]
+        });
+        let agents = mock_agents(&base);
+        let out = upload(
+            agents.path().join("agents"),
+            json!({ "folder-id": "f", "filename": "a.txt", "bytes": "aGk=" }),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out["replaced"], json!(false));
     }
 }
