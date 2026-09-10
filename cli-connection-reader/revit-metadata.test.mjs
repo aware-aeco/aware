@@ -76,6 +76,17 @@ test('v2 preserves provider-display provenance, normalizes negative zero, and ne
   });
 });
 
+test('v2 rejects unsafe integral provider-display numbers before canonicalization', () => {
+  const metadata = makeMetadataV2();
+  metadata.parameters[1].value = 9.223372036854776e18;
+  assert.throws(
+    () => normalizeRevitMetadata(metadata, geometry.slice(0, 1)),
+    (error) => error.code === 'reference-metadata-invalid'
+      && error.phase === 'normalize-metadata'
+      && /safe integer or a provider-display string/.test(error.message),
+  );
+});
+
 test('v2 source-storage rows retain authoritative semantics and alone may supply IfcGUID identity', () => {
   const metadata = makeMetadataV2();
   metadata.parameters[0] = {

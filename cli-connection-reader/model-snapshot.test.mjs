@@ -81,8 +81,8 @@ test('reader v2 publishes independently versioned package schemas and authentica
   assert.equal(output.packageConfiguration.schemaVersion, 'model-reference-package-configuration/v2');
   assert.equal(output.packageConfiguration.schemas.manifest, 'floless.model-snapshot-package/v2');
   assert.equal(output.packageConfiguration.schemas.properties, 'aware.model-properties/v2');
-  assert.equal(output.packagePreimage.packager.version, '0.7.0');
-  assert.equal(output.packagePreimage.packager.bridgeBuildId, 'aware-connection-reader@0.5.0');
+  assert.equal(output.packagePreimage.packager.version, '0.7.1');
+  assert.equal(output.packagePreimage.packager.bridgeBuildId, 'aware-connection-reader@0.5.1');
   const manifest = JSON.parse(await fs.readFile(path.join(root, 'artifacts', output.packageArtifacts.manifest.id), 'utf8'));
   assert.equal(manifest.schemaVersion, 'floless.model-snapshot-package/v2');
 });

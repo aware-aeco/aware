@@ -105,6 +105,9 @@ function validateV2Parameter(parameter, index) {
   if (parameter.valueType === 'string') value = text(value, `parameters[${index}].value`);
   else {
     if (typeof value !== 'number' || !Number.isFinite(value)) invalid(`parameters[${index}].value must be a finite number`);
+    if (Number.isInteger(value) && !Number.isSafeInteger(value)) {
+      invalid(`parameters[${index}].value must be a safe integer or a provider-display string`);
+    }
     value = Object.is(value, -0) ? 0 : value;
   }
   return { id, name, unit, valueEncoding: 'provider-display', valueType: parameter.valueType, value };
