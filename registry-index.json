@@ -328,11 +328,6 @@
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
           "subdir": "aware-main/registry-history/agents/google-workspace/1.1.0",
           "bundle-digest": "sha256:9af11a819b7350f78e6fcc2460b032545f9cdce31aeee9b4065c38cf79b34c97"
-        },
-        "1.1.2": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/e62e35694d80e403941c82b80cee3df70982bdb8.tar.gz",
-          "subdir": "aware-e62e35694d80e403941c82b80cee3df70982bdb8/20-agents/aeco/cross-cutting/google-workspace",
-          "bundle-digest": "sha256:fa07d7d5cfe3dc9484213c1b528fa476a62f1a20f12058beb345e03ab8191a2d"
         }
       }
     },
@@ -763,7 +758,7 @@
         "dynamo-4-1-1@4.1.1.4941",
         "trimble-connect@2.4.0",
         "microsoft-365@1.0.0",
-        "google-workspace@1.1.2",
+        "google-workspace@1.0.0",
         "html-report@1.0.0",
         "file@1.0.0",
         "shell@0.1.0",

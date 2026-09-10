@@ -1,5 +1,5 @@
 agent:        google-workspace
-version:      0.3.0
+version:      1.0.0
 sdk-target:   1.0.0
 display-name: Google Workspace
 description: |
@@ -27,6 +27,8 @@ provenance:
   ported-from:      D:/Repos/floless-app/src/FloLess/Core/Skills/Resources/Google/
 
 requires:
+  filesystem:
+    - write: ~/.aware/outbox/google-workspace
   network:
     - https://gmail.googleapis.com
     - https://openidconnect.googleapis.com

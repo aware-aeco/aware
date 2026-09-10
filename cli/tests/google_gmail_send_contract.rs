@@ -28,7 +28,7 @@ fn load_manifest() -> Value {
 }
 
 #[test]
-fn first_party_bundle_installs_the_corrected_immutable_release() {
+fn first_party_bundle_stays_on_the_existing_release_until_the_code_commit_is_on_main() {
     let path = repository_root().join("registry-index.json");
     let index: serde_json::Value = serde_json::from_str(
         &fs::read_to_string(&path)
@@ -39,8 +39,8 @@ fn first_party_bundle_installs_the_corrected_immutable_release() {
         .as_array()
         .expect("aware-aeco bundle must list agents");
 
-    assert!(agents.iter().any(|entry| entry == "google-workspace@1.1.2"));
-    assert!(!agents.iter().any(|entry| entry == "google-workspace@1.0.0"));
+    assert!(agents.iter().any(|entry| entry == "google-workspace@1.0.0"));
+    assert!(!agents.iter().any(|entry| entry == "google-workspace@2.0.0"));
 }
 
 fn mapping_keys(value: &Value) -> BTreeSet<String> {
@@ -56,9 +56,17 @@ fn mapping_keys(value: &Value) -> BTreeSet<String> {
 fn manifest_is_rest_only_runtime_gated_and_least_privilege() {
     let manifest = load_manifest();
 
-    assert_eq!(manifest["version"].as_str(), Some("0.3.0"));
+    assert_eq!(manifest["version"].as_str(), Some("1.0.0"));
     assert_eq!(manifest["status"].as_str(), Some("requires-runtime"));
     assert_eq!(manifest["minimum-cli-version"].as_str(), Some("0.136.0"));
+    assert_eq!(
+        manifest["requires"]["filesystem"][0]["write"].as_str(),
+        Some("~/.aware/outbox/google-workspace")
+    );
+    let breaking = fs::read_to_string(agent_path("BREAKING.md")).expect("read BREAKING.md");
+    assert!(breaking.contains("## 1.0.0"), "{breaking}");
+    assert!(breaking.contains("attempt-id"), "{breaking}");
+    assert!(breaking.contains("attachments"), "{breaking}");
 
     assert_eq!(
         mapping_keys(&manifest["transport"]),
