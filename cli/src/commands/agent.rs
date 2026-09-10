@@ -1728,9 +1728,14 @@ fn describe_from_catalog(
     }
     for c in &v.commands {
         let star = if c.category == "curated" { "★" } else { " " };
+        let status = if c.status == "available" {
+            ""
+        } else {
+            " [planned]"
+        };
         println!(
-            "  {star} {:<20} {:<8} {}",
-            c.name, c.lifecycle, c.description
+            "  {star} {:<20} {:<8} {}{}",
+            c.name, c.lifecycle, c.description, status
         );
     }
     println!();

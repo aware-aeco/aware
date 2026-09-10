@@ -21,7 +21,8 @@ that external evidence.
    for this logical canary and must remain unchanged for any replay check.
 6. Confirm the connected credential has exactly `openid`, `userinfo.email`, and
    `gmail.send`. A legacy broad grant must fail closed; disconnect and reconnect
-   it before proceeding.
+   it with `aware connect google-workspace --oauth` before proceeding. Google
+   consent must issue a refresh token for the offline connection.
 
 ## Execute
 

@@ -6,7 +6,7 @@ description: Use when connecting or troubleshooting the Gmail-only Google Worksp
 # Google Workspace Gmail authentication
 
 Authentication is handled by the AWARE runtime, not by composition code. Run
-`aware connect google-workspace` once; do not put access tokens, refresh tokens,
+`aware connect google-workspace --oauth` once; do not put access tokens, refresh tokens,
 client secrets, or hand-built `Authorization` headers in an app.
 
 Agent version `0.3.0` exposes only `gmail.send`. Drive, Sheets, Calendar, Gmail
@@ -32,14 +32,14 @@ dispatch when it detects one of these legacy broad grants. Migrate deliberately:
 
 ```text
 aware disconnect google-workspace
-aware connect google-workspace
+aware connect google-workspace --oauth
 ```
 
 For an aliased connection, use the same alias for both operations:
 
 ```text
 aware disconnect google-workspace --as=<alias>
-aware connect google-workspace --as=<alias>
+aware connect google-workspace --as=<alias> --oauth
 ```
 
 Do not bypass this check merely because the old token also includes
@@ -94,7 +94,11 @@ attempt ID.
 ## Secret hygiene
 
 - Never log bearer tokens, recipients, Bcc addresses, subjects, or bodies.
-- AWARE redacts authorization material and mail content from traces.
+- AWARE redacts authorization material. Direct `gmail.send` dry-run previews also
+  redact `to`, `cc`, `bcc`, `subject`, and `body`.
+- App-level run configuration and arbitrary intermediate values can be persisted in
+  traces. Do not pass mail content through exposed-app configuration or unrelated
+  nodes unless that trace is protected as sensitive data.
 - Only bounded status and correlation metadata belong in errors and QA records.
 - Credentials remain per-host and are protected by the operating-system
   credential store.

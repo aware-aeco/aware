@@ -31,15 +31,7 @@ pub fn run_pkce_flow(
         all_scopes.push(s.clone());
     }
     let scope_param = all_scopes.join(" ");
-    let auth_url = format!(
-        "{base}?response_type=code&client_id={cid}&redirect_uri={ru}&scope={sc}&code_challenge={ch}&code_challenge_method=S256&state={st}",
-        base = config.auth_url(),
-        cid = urlencode(&config.client_id()),
-        ru = urlencode(&redirect_uri),
-        sc = urlencode(&scope_param),
-        ch = challenge,
-        st = state,
-    );
+    let auth_url = authorization_url(config, &redirect_uri, &scope_param, &challenge, &state);
 
     // 5. Open browser
     progress(
@@ -129,6 +121,32 @@ pub fn run_pkce_flow(
     // 9. Build StoredToken
     let now = super::unix_now_secs()?;
     TokenResponse::new(token_json).into_new_credential(&config.id, now, &all_scopes)
+}
+
+fn authorization_url(
+    config: &IntegrationConfig,
+    redirect_uri: &str,
+    scope_param: &str,
+    challenge: &str,
+    state: &str,
+) -> String {
+    let mut url = format!(
+        "{base}?response_type=code&client_id={cid}&redirect_uri={ru}&scope={sc}&code_challenge={ch}&code_challenge_method=S256&state={st}",
+        base = config.auth_url(),
+        cid = urlencode(&config.client_id()),
+        ru = urlencode(redirect_uri),
+        sc = urlencode(scope_param),
+        ch = challenge,
+        st = state,
+    );
+    if config.id == "google-workspace" {
+        // Google does not issue a refresh token for its default online flow. The
+        // Gmail transport refreshes before every dispatch, so reconnect must
+        // explicitly obtain durable offline consent rather than creating a
+        // credential that stops working when its first access token expires.
+        url.push_str("&access_type=offline&prompt=consent");
+    }
+    url
 }
 
 fn progress(json: bool, message: &str) {
@@ -248,6 +266,38 @@ mod tests {
         let expected = base64::engine::general_purpose::URL_SAFE_NO_PAD
             .encode(sha2::Sha256::digest(verifier.as_bytes()));
         assert_eq!(challenge, expected);
+    }
+
+    #[test]
+    fn google_authorization_requests_durable_offline_consent() {
+        let google = crate::auth::config::for_integration("google-workspace").unwrap();
+        let url = authorization_url(
+            &google,
+            "http://localhost:7421/callback",
+            "openid",
+            "c",
+            "s",
+        );
+        let parsed = url::Url::parse(&url).unwrap();
+        let query = parsed
+            .query_pairs()
+            .collect::<std::collections::HashMap<_, _>>();
+        assert_eq!(
+            query.get("access_type").map(|v| v.as_ref()),
+            Some("offline")
+        );
+        assert_eq!(query.get("prompt").map(|v| v.as_ref()), Some("consent"));
+
+        let trimble = crate::auth::config::for_integration("trimble-connect").unwrap();
+        let url = authorization_url(
+            &trimble,
+            "http://localhost:7421/callback",
+            "openid",
+            "c",
+            "s",
+        );
+        assert!(!url.contains("access_type="));
+        assert!(!url.contains("prompt="));
     }
 
     #[test]

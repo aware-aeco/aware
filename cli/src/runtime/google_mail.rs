@@ -640,7 +640,7 @@ fn validate_token(token: &StoredToken, alias: Option<&str>) -> Result<(), AwareE
             .map(|value| format!(" --as={value}"))
             .unwrap_or_default();
         return Err(auth_error(format!(
-            "Google grant is missing required scopes or retains legacy broad scopes; run `aware disconnect {INTEGRATION}{alias_hint}` and reconnect with the narrowed Gmail grant"
+            "Google grant is missing required scopes or retains legacy broad scopes; run `aware disconnect {INTEGRATION}{alias_hint}` and reconnect with `aware connect {INTEGRATION}{alias_hint} --oauth`"
         )));
     }
     Ok(())
@@ -755,6 +755,8 @@ fn ensure_private_dir(path: &Path) -> Result<(), AwareError> {
             path.display()
         )));
     }
+    #[cfg(windows)]
+    apply_private_windows_acl(path)?;
     verify_private_dir_metadata(path, &metadata)?;
     Ok(())
 }
@@ -795,19 +797,396 @@ fn verify_private_dir_metadata(
     Ok(())
 }
 
-#[cfg(not(unix))]
+#[cfg(windows)]
 fn verify_private_dir_metadata(
     path: &Path,
     _metadata: &std::fs::Metadata,
 ) -> Result<(), AwareError> {
-    // AWARE_HOME is created below the current user's profile and inherits its
-    // protected DACL. Reparse points are rejected above so inheritance cannot
-    // be redirected to an attacker-selected location.
-    let profile = std::env::var_os("USERPROFILE").map(PathBuf::from);
-    if !profile.as_ref().is_some_and(|root| path.starts_with(root)) {
+    verify_private_windows_acl(path)
+}
+
+#[cfg(not(any(unix, windows)))]
+fn verify_private_dir_metadata(
+    path: &Path,
+    _metadata: &std::fs::Metadata,
+) -> Result<(), AwareError> {
+    Err(outbox_error(format!(
+        "cannot verify private outbox permissions on this platform: {}",
+        path.display()
+    )))
+}
+
+#[cfg(windows)]
+struct WindowsHandle(windows_sys::Win32::Foundation::HANDLE);
+
+#[cfg(windows)]
+impl Drop for WindowsHandle {
+    fn drop(&mut self) {
+        // SAFETY: the handle is returned by OpenProcessToken and remains owned
+        // by this guard until its single CloseHandle call.
+        unsafe { windows_sys::Win32::Foundation::CloseHandle(self.0) };
+    }
+}
+
+#[cfg(windows)]
+struct LocalSecurityDescriptor(windows_sys::Win32::Security::PSECURITY_DESCRIPTOR);
+
+#[cfg(windows)]
+impl Drop for LocalSecurityDescriptor {
+    fn drop(&mut self) {
+        // SAFETY: GetNamedSecurityInfoW allocates this descriptor with LocalAlloc.
+        unsafe { windows_sys::Win32::Foundation::LocalFree(self.0.cast()) };
+    }
+}
+
+#[cfg(windows)]
+fn windows_last_error() -> u32 {
+    // SAFETY: GetLastError has no pointer arguments or caller preconditions.
+    unsafe { windows_sys::Win32::Foundation::GetLastError() }
+}
+
+#[cfg(windows)]
+fn windows_sids_equal(
+    left: windows_sys::Win32::Security::PSID,
+    right: windows_sys::Win32::Security::PSID,
+) -> bool {
+    // SAFETY: callers pass SIDs returned by Windows security APIs whose backing
+    // allocations remain live for this comparison.
+    unsafe { windows_sys::Win32::Security::EqualSid(left, right) != 0 }
+}
+
+#[cfg(windows)]
+fn apply_private_windows_acl(path: &Path) -> Result<(), AwareError> {
+    use std::os::windows::ffi::OsStrExt;
+    use std::ptr::null_mut;
+
+    use windows_sys::Win32::Foundation::ERROR_INSUFFICIENT_BUFFER;
+    use windows_sys::Win32::Security::Authorization::{SE_FILE_OBJECT, SetNamedSecurityInfoW};
+    use windows_sys::Win32::Security::{
+        ACCESS_ALLOWED_ACE, ACL, ACL_REVISION, AddAccessAllowedAceEx, CONTAINER_INHERIT_ACE,
+        DACL_SECURITY_INFORMATION, GetLengthSid, GetTokenInformation, InitializeAcl,
+        OBJECT_INHERIT_ACE, PROTECTED_DACL_SECURITY_INFORMATION, TOKEN_QUERY, TOKEN_USER,
+        TokenUser, WinBuiltinAdministratorsSid, WinLocalSystemSid,
+    };
+    use windows_sys::Win32::Storage::FileSystem::FILE_ALL_ACCESS;
+    use windows_sys::Win32::System::Threading::{GetCurrentProcess, OpenProcessToken};
+
+    let resolved = std::fs::canonicalize(path)
+        .map_err(|error| outbox_error(format!("resolve {}: {error}", path.display())))?;
+    let mut token = null_mut();
+    // SAFETY: GetCurrentProcess returns a process pseudo-handle and `token` is
+    // writable. A successful token handle is closed by WindowsHandle.
+    if unsafe { OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &mut token) } == 0 {
         return Err(outbox_error(format!(
-            "{} is outside the current user's ACL-protected profile",
-            path.display()
+            "open current Windows security token: error {}",
+            windows_last_error()
+        )));
+    }
+    let _token = WindowsHandle(token);
+    let mut token_bytes = 0u32;
+    // SAFETY: the first call deliberately supplies no buffer to obtain its size.
+    let first = unsafe { GetTokenInformation(token, TokenUser, null_mut(), 0, &mut token_bytes) };
+    if first != 0 || token_bytes == 0 || windows_last_error() != ERROR_INSUFFICIENT_BUFFER {
+        return Err(outbox_error("size current Windows user SID"));
+    }
+    let word = std::mem::size_of::<usize>();
+    let mut token_buffer = vec![0usize; (token_bytes as usize).div_ceil(word)];
+    // SAFETY: the usize-backed allocation is aligned and at least token_bytes long.
+    if unsafe {
+        GetTokenInformation(
+            token,
+            TokenUser,
+            token_buffer.as_mut_ptr().cast(),
+            token_bytes,
+            &mut token_bytes,
+        )
+    } == 0
+    {
+        return Err(outbox_error(format!(
+            "read current Windows user SID: error {}",
+            windows_last_error()
+        )));
+    }
+    // SAFETY: GetTokenInformation(TokenUser) initialized TOKEN_USER in the
+    // aligned buffer, which remains live until SetNamedSecurityInfoW returns.
+    let current_sid = unsafe { (*(token_buffer.as_ptr().cast::<TOKEN_USER>())).User.Sid };
+
+    fn well_known_sid(kind: i32) -> Result<Vec<usize>, AwareError> {
+        use std::ptr::null_mut;
+        use windows_sys::Win32::Security::{CreateWellKnownSid, SECURITY_MAX_SID_SIZE};
+        let word = std::mem::size_of::<usize>();
+        let mut buffer = vec![0usize; (SECURITY_MAX_SID_SIZE as usize).div_ceil(word)];
+        let mut bytes = SECURITY_MAX_SID_SIZE;
+        // SAFETY: the aligned buffer has SECURITY_MAX_SID_SIZE writable bytes.
+        if unsafe { CreateWellKnownSid(kind, null_mut(), buffer.as_mut_ptr().cast(), &mut bytes) }
+            == 0
+        {
+            return Err(outbox_error(format!(
+                "construct Windows well-known SID: error {}",
+                windows_last_error()
+            )));
+        }
+        Ok(buffer)
+    }
+
+    let system = well_known_sid(WinLocalSystemSid)?;
+    let administrators = well_known_sid(WinBuiltinAdministratorsSid)?;
+    let sids = [
+        current_sid,
+        system.as_ptr().cast_mut().cast(),
+        administrators.as_ptr().cast_mut().cast(),
+    ];
+    let ace_base = std::mem::size_of::<ACCESS_ALLOWED_ACE>() - std::mem::size_of::<u32>();
+    let acl_bytes = std::mem::size_of::<ACL>()
+        + sids
+            .iter()
+            // SAFETY: each SID comes from a successful Windows SID API call and
+            // its backing allocation remains live through ACL construction.
+            .map(|sid| ace_base + unsafe { GetLengthSid(*sid) } as usize)
+            .sum::<usize>();
+    let mut acl_buffer = vec![0usize; acl_bytes.div_ceil(word)];
+    let acl = acl_buffer.as_mut_ptr().cast::<ACL>();
+    // SAFETY: the aligned allocation is at least acl_bytes long.
+    if unsafe { InitializeAcl(acl, acl_bytes as u32, ACL_REVISION) } == 0 {
+        return Err(outbox_error(format!(
+            "initialize private Windows ACL: error {}",
+            windows_last_error()
+        )));
+    }
+    for sid in sids {
+        // The inheritable allow-list ensures a newly created child journal does
+        // not inherit a broader token-default DACL before it is verified.
+        // SAFETY: the ACL and SID pointers are initialized and live.
+        if unsafe {
+            AddAccessAllowedAceEx(
+                acl,
+                ACL_REVISION,
+                OBJECT_INHERIT_ACE | CONTAINER_INHERIT_ACE,
+                FILE_ALL_ACCESS,
+                sid,
+            )
+        } == 0
+        {
+            return Err(outbox_error(format!(
+                "build private Windows ACL: error {}",
+                windows_last_error()
+            )));
+        }
+    }
+    let wide: Vec<u16> = resolved.as_os_str().encode_wide().chain(Some(0)).collect();
+    // SAFETY: `wide` is NUL terminated and the initialized ACL remains live.
+    let status = unsafe {
+        SetNamedSecurityInfoW(
+            wide.as_ptr(),
+            SE_FILE_OBJECT,
+            DACL_SECURITY_INFORMATION | PROTECTED_DACL_SECURITY_INFORMATION,
+            null_mut(),
+            null_mut(),
+            acl,
+            null_mut(),
+        )
+    };
+    if status != 0 {
+        return Err(outbox_error(format!(
+            "apply private Windows ACL to {}: error {status}",
+            resolved.display()
+        )));
+    }
+    Ok(())
+}
+
+#[cfg(windows)]
+fn verify_private_windows_acl(path: &Path) -> Result<(), AwareError> {
+    use std::ffi::c_void;
+    use std::os::windows::ffi::OsStrExt;
+    use std::ptr::null_mut;
+
+    use windows_sys::Win32::Foundation::ERROR_INSUFFICIENT_BUFFER;
+    use windows_sys::Win32::Security::Authorization::{GetNamedSecurityInfoW, SE_FILE_OBJECT};
+    use windows_sys::Win32::Security::{
+        ACCESS_ALLOWED_ACE, ACL, ACL_SIZE_INFORMATION, AclSizeInformation,
+        DACL_SECURITY_INFORMATION, GetAce, GetAclInformation, GetTokenInformation,
+        OWNER_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, PSID, TOKEN_QUERY, TOKEN_USER, TokenUser,
+        WinBuiltinAdministratorsSid, WinLocalSystemSid,
+    };
+    use windows_sys::Win32::System::SystemServices::{
+        ACCESS_ALLOWED_ACE_TYPE, ACCESS_ALLOWED_CALLBACK_ACE_TYPE,
+        ACCESS_ALLOWED_CALLBACK_OBJECT_ACE_TYPE, ACCESS_ALLOWED_OBJECT_ACE_TYPE,
+    };
+    use windows_sys::Win32::System::Threading::{GetCurrentProcess, OpenProcessToken};
+
+    let resolved = std::fs::canonicalize(path)
+        .map_err(|error| outbox_error(format!("resolve {}: {error}", path.display())))?;
+    let wide: Vec<u16> = resolved.as_os_str().encode_wide().chain(Some(0)).collect();
+    let mut owner: PSID = null_mut();
+    let mut dacl: *mut ACL = null_mut();
+    let mut descriptor: PSECURITY_DESCRIPTOR = null_mut();
+    // SAFETY: `wide` is a live NUL-terminated UTF-16 path; all output pointers
+    // are valid for writes and the returned descriptor is guarded below.
+    let status = unsafe {
+        GetNamedSecurityInfoW(
+            wide.as_ptr(),
+            SE_FILE_OBJECT,
+            OWNER_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION,
+            &mut owner,
+            null_mut(),
+            &mut dacl,
+            null_mut(),
+            &mut descriptor,
+        )
+    };
+    if status != 0 {
+        return Err(outbox_error(format!(
+            "inspect Windows ACL for {}: error {status}",
+            resolved.display()
+        )));
+    }
+    if descriptor.is_null() {
+        return Err(outbox_error(format!(
+            "{} has no Windows security descriptor",
+            resolved.display()
+        )));
+    }
+    let _descriptor = LocalSecurityDescriptor(descriptor);
+    if owner.is_null() || dacl.is_null() {
+        return Err(outbox_error(format!(
+            "{} must have an owner and a non-null private DACL",
+            resolved.display()
+        )));
+    }
+
+    let mut token = null_mut();
+    // SAFETY: GetCurrentProcess returns a process pseudo-handle and `token` is
+    // writable. A successful token handle is closed by WindowsHandle.
+    if unsafe { OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &mut token) } == 0 {
+        return Err(outbox_error(format!(
+            "open current Windows security token: error {}",
+            windows_last_error()
+        )));
+    }
+    let _token = WindowsHandle(token);
+    let mut token_bytes = 0u32;
+    // SAFETY: the first call deliberately supplies no buffer to obtain its size.
+    let first = unsafe { GetTokenInformation(token, TokenUser, null_mut(), 0, &mut token_bytes) };
+    if first != 0 || token_bytes == 0 || windows_last_error() != ERROR_INSUFFICIENT_BUFFER {
+        return Err(outbox_error("size current Windows user SID"));
+    }
+    let word = std::mem::size_of::<usize>();
+    let mut token_buffer = vec![0usize; (token_bytes as usize).div_ceil(word)];
+    // SAFETY: the usize-backed allocation is aligned and at least token_bytes long.
+    if unsafe {
+        GetTokenInformation(
+            token,
+            TokenUser,
+            token_buffer.as_mut_ptr().cast(),
+            token_bytes,
+            &mut token_bytes,
+        )
+    } == 0
+    {
+        return Err(outbox_error(format!(
+            "read current Windows user SID: error {}",
+            windows_last_error()
+        )));
+    }
+    // SAFETY: GetTokenInformation(TokenUser) initialized a TOKEN_USER in the
+    // aligned buffer, which remains live throughout every SID comparison.
+    let current_sid = unsafe { (*(token_buffer.as_ptr().cast::<TOKEN_USER>())).User.Sid };
+    if current_sid.is_null() || !windows_sids_equal(owner, current_sid) {
+        return Err(outbox_error(format!(
+            "{} must be owned by the current Windows user",
+            resolved.display()
+        )));
+    }
+
+    fn well_known_sid(kind: i32) -> Result<Vec<usize>, AwareError> {
+        use windows_sys::Win32::Security::{CreateWellKnownSid, SECURITY_MAX_SID_SIZE};
+        let word = std::mem::size_of::<usize>();
+        let mut buffer = vec![0usize; (SECURITY_MAX_SID_SIZE as usize).div_ceil(word)];
+        let mut bytes = SECURITY_MAX_SID_SIZE;
+        // SAFETY: the aligned buffer has SECURITY_MAX_SID_SIZE writable bytes;
+        // a null domain requests a machine-independent well-known SID.
+        if unsafe { CreateWellKnownSid(kind, null_mut(), buffer.as_mut_ptr().cast(), &mut bytes) }
+            == 0
+        {
+            return Err(outbox_error(format!(
+                "construct Windows well-known SID: error {}",
+                windows_last_error()
+            )));
+        }
+        Ok(buffer)
+    }
+
+    let system = well_known_sid(WinLocalSystemSid)?;
+    let administrators = well_known_sid(WinBuiltinAdministratorsSid)?;
+    let system_sid = system.as_ptr().cast_mut().cast::<c_void>();
+    let administrators_sid = administrators.as_ptr().cast_mut().cast::<c_void>();
+    let mut info = ACL_SIZE_INFORMATION::default();
+    // SAFETY: dacl belongs to the live security descriptor; info is writable.
+    if unsafe {
+        GetAclInformation(
+            dacl,
+            (&mut info as *mut ACL_SIZE_INFORMATION).cast(),
+            std::mem::size_of::<ACL_SIZE_INFORMATION>() as u32,
+            AclSizeInformation,
+        )
+    } == 0
+    {
+        return Err(outbox_error(format!(
+            "read Windows DACL for {}: error {}",
+            resolved.display(),
+            windows_last_error()
+        )));
+    }
+
+    let mut current_user_allowed = false;
+    for index in 0..info.AceCount {
+        let mut raw_ace: *mut c_void = null_mut();
+        // SAFETY: index is bounded by AceCount from this same ACL.
+        if unsafe { GetAce(dacl, index, &mut raw_ace) } == 0 || raw_ace.is_null() {
+            return Err(outbox_error(format!(
+                "read Windows DACL entry for {}: error {}",
+                resolved.display(),
+                windows_last_error()
+            )));
+        }
+        // SAFETY: every ACE begins with ACE_HEADER; GetAce returned a live entry.
+        let ace_type =
+            unsafe { (*(raw_ace.cast::<windows_sys::Win32::Security::ACE_HEADER>())).AceType };
+        if [
+            ACCESS_ALLOWED_OBJECT_ACE_TYPE as u8,
+            ACCESS_ALLOWED_CALLBACK_ACE_TYPE as u8,
+            ACCESS_ALLOWED_CALLBACK_OBJECT_ACE_TYPE as u8,
+        ]
+        .contains(&ace_type)
+        {
+            return Err(outbox_error(format!(
+                "{} has an unsupported Windows allow ACE; refusing a journal whose privacy cannot be proved",
+                resolved.display()
+            )));
+        }
+        if ace_type != ACCESS_ALLOWED_ACE_TYPE as u8 {
+            continue;
+        }
+        // SAFETY: a basic ACCESS_ALLOWED_ACE carries its SID at SidStart.
+        let ace = unsafe { &*raw_ace.cast::<ACCESS_ALLOWED_ACE>() };
+        let sid = (&ace.SidStart as *const u32).cast_mut().cast::<c_void>();
+        let is_current = windows_sids_equal(sid, current_sid);
+        let is_system = windows_sids_equal(sid, system_sid);
+        let is_administrator = windows_sids_equal(sid, administrators_sid);
+        if is_current {
+            current_user_allowed = true;
+        } else if !is_system && !is_administrator {
+            return Err(outbox_error(format!(
+                "{} grants access to a Windows principal other than its owner, SYSTEM, or Administrators",
+                resolved.display()
+            )));
+        }
+    }
+    if !current_user_allowed {
+        return Err(outbox_error(format!(
+            "{} does not grant the current Windows user explicit access",
+            resolved.display()
         )));
     }
     Ok(())
@@ -848,6 +1227,8 @@ fn open_locked_journal(path: &Path) -> Result<(File, bool), AwareError> {
     file.lock_exclusive().map_err(|error| {
         outbox_error(format!("lock outbox journal {}: {error}", path.display()))
     })?;
+    #[cfg(windows)]
+    apply_private_windows_acl(path)?;
     verify_private_file(path, &file)?;
     Ok((file, is_new))
 }
@@ -909,6 +1290,13 @@ fn verify_private_file(path: &Path, file: &File) -> Result<(), AwareError> {
             )));
         }
     }
+    #[cfg(windows)]
+    verify_private_windows_acl(path)?;
+    #[cfg(not(any(unix, windows)))]
+    return Err(outbox_error(format!(
+        "cannot verify private outbox permissions on this platform: {}",
+        path.display()
+    )));
     Ok(())
 }
 
@@ -1128,8 +1516,7 @@ fn structured(
     diagnostic_id: &str,
     details: Option<BTreeMap<String, String>>,
 ) -> AwareError {
-    let mut message = message.into();
-    message.truncate(512);
+    let message = crate::text::ellipsize(&message.into(), 512).into_owned();
     AwareError::AgentStructured {
         code: code.into(),
         phase: phase.into(),
@@ -1251,6 +1638,28 @@ mod tests {
         invalid.attempt_id = "ok".into();
         invalid.to[0] = "victim@example.com\r\nBcc:x@example.com".into();
         assert!(validate_input(&invalid).is_err());
+    }
+
+    #[test]
+    fn structured_validation_truncates_unicode_without_panicking() {
+        let key = format!("{}é", "a".repeat(600));
+        let mock = MockHttp::responding(accepted());
+        let error = send_blocking(
+            Path::new("agents"),
+            json!({
+                "to": ["person@example.com"],
+                "subject": "subject",
+                "body": "body",
+                "attempt-id": "attempt",
+                key: "value"
+            }),
+            &mock,
+        )
+        .unwrap_err();
+        let structured = error.structured_agent_error().unwrap();
+        assert_eq!(structured.code, "gmail.send.validation");
+        assert!(structured.message.chars().count() <= 513);
+        assert!(structured.message.ends_with('…'));
     }
 
     #[test]

@@ -92,12 +92,27 @@ pub struct CatalogCommand {
     pub description: String,
     pub lifecycle: String, // "start" | "stop" | "single"
     pub category: String,  // "curated" | "reflected"
+    /// Per-command runnability. Omitted for the historical `available` default
+    /// so existing catalog snapshots remain compact; `planned` is explicit.
+    #[serde(
+        default = "available_command_status",
+        skip_serializing_if = "command_status_is_available"
+    )]
+    pub status: String,
     #[serde(skip_serializing_if = "Option::is_none", default)]
     pub mode: Option<String>, // "read" | "write"
     #[serde(skip_serializing_if = "Option::is_none", default)]
     pub method: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none", default)]
     pub path: Option<String>,
+}
+
+fn available_command_status() -> String {
+    "available".to_string()
+}
+
+fn command_status_is_available(status: &String) -> bool {
+    status == "available"
 }
 
 /// One capability/search match within an agent (a command, a method, or a skill).
@@ -238,6 +253,7 @@ fn version_from_agent(a: &Agent) -> CatalogVersion {
             description: first_line(&c.description),
             lifecycle: c.lifecycle.as_str().to_string(),
             category: category_str(a.category_of(c)).to_string(),
+            status: status_str(c.status).to_string(),
             mode: c.mode.map(|m| m.as_str().to_string()),
             method: c.method.clone(),
             path: c.path.clone(),
@@ -563,6 +579,28 @@ mod tests {
         let json = serde_json::to_value(version).unwrap();
         assert_eq!(json["status"], "requires-runtime");
         assert_eq!(json["minimum-cli-version"], "0.136.0");
+    }
+
+    #[test]
+    fn catalog_preserves_planned_command_status() {
+        let yaml = r#"agent: partial
+version: 1.0.0
+description: partial
+stateful: false
+license: MIT
+transport: { cli: { binary: partial } }
+commands:
+  ready: { lifecycle: single, description: Ready. }
+  later: { lifecycle: single, description: Later., status: planned }
+"#;
+        let agent: Agent = serde_yaml::from_str(yaml).unwrap();
+        let version = version_from_agent(&agent);
+        let ready = version.commands.iter().find(|c| c.name == "ready").unwrap();
+        let later = version.commands.iter().find(|c| c.name == "later").unwrap();
+        assert_eq!(ready.status, "available");
+        assert_eq!(later.status, "planned");
+        assert!(serde_json::to_value(ready).unwrap().get("status").is_none());
+        assert_eq!(serde_json::to_value(later).unwrap()["status"], "planned");
     }
 
     fn index_with(entries: &[(&str, &str, &str)]) -> Index {

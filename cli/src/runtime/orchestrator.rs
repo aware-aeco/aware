@@ -637,9 +637,10 @@ impl Orchestrator {
                     // Re-rendered with the vault blinded rather than reusing
                     // `args`: this record is persisted, and `args` is what the
                     // live run would put on the wire, credential included (#448).
-                    proposed_inputs: render_for_record(
-                        &params,
-                        &self.record_render_context(&params),
+                    proposed_inputs: trace_safe_agent_inputs(
+                        agent_id,
+                        command,
+                        render_for_record(&params, &self.record_render_context(&params)),
                     ),
                     safety: safety_block,
                 })
@@ -937,9 +938,13 @@ impl Orchestrator {
                         // `args`: this record is persisted, and `args` is what
                         // the live run would put on the wire, credential
                         // included (#448).
-                        proposed_inputs: render_for_record(
-                            &config_json,
-                            &self.record_render_context(&config_json),
+                        proposed_inputs: trace_safe_agent_inputs(
+                            agent_id,
+                            command,
+                            render_for_record(
+                                &config_json,
+                                &self.record_render_context(&config_json),
+                            ),
                         ),
                         safety: safety_block,
                     })
@@ -1685,6 +1690,26 @@ fn render_for_record(params: &Value, ctx: &RuntimeContext) -> Value {
     }
 }
 
+/// Remove message content from the persisted preview of the built-in Gmail send
+/// primitive. Credentials are already blinded by `record_render_context`; these
+/// fields are sensitive business data even when they contain no credential.
+fn trace_safe_agent_inputs(agent: &str, command: &str, mut inputs: Value) -> Value {
+    if agent == "google-workspace"
+        && command == "gmail.send"
+        && let Value::Object(fields) = &mut inputs
+    {
+        for key in ["to", "cc", "bcc", "subject", "body"] {
+            if fields.contains_key(key) {
+                fields.insert(
+                    key.to_string(),
+                    Value::String(crate::runtime::template::REDACTED.to_string()),
+                );
+            }
+        }
+    }
+    inputs
+}
+
 fn render_config(config: &Value, ctx: &RuntimeContext) -> Result<Value, AwareError> {
     // Streaming fan-in overlays per-event fields at `upstream["inputs"]` (merged over
     // base inputs). Config rendering must see that overlay for whole-value
@@ -2015,6 +2040,35 @@ requires: []
             exposed_tx: None,
         };
         (orch, tmp, log_path)
+    }
+
+    #[test]
+    fn gmail_write_preview_redacts_message_content_but_keeps_correlation() {
+        let safe = trace_safe_agent_inputs(
+            "google-workspace",
+            "gmail.send",
+            serde_json::json!({
+                "to": ["recipient@example.com"],
+                "cc": ["copy@example.com"],
+                "bcc": ["blind@example.com"],
+                "subject": "private subject",
+                "body": "private body",
+                "content-type": "text",
+                "attempt-id": "stable-attempt"
+            }),
+        );
+        for key in ["to", "cc", "bcc", "subject", "body"] {
+            assert_eq!(safe[key], crate::runtime::template::REDACTED, "{key}");
+        }
+        assert_eq!(safe["content-type"], "text");
+        assert_eq!(safe["attempt-id"], "stable-attempt");
+
+        let untouched = trace_safe_agent_inputs(
+            "microsoft-365",
+            "mail.send",
+            serde_json::json!({ "subject": "ordinary preview" }),
+        );
+        assert_eq!(untouched["subject"], "ordinary preview");
     }
 
     #[tokio::test]
