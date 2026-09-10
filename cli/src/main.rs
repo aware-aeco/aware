@@ -46,6 +46,7 @@ mod context;
 mod envelope;
 mod error;
 mod fs;
+mod http_body;
 mod install;
 mod json;
 mod lockfile;

@@ -6,7 +6,7 @@
 
 use std::collections::BTreeMap;
 use std::fs::{File, OpenOptions};
-use std::io::{BufRead, BufReader, Read, Seek, SeekFrom, Write};
+use std::io::{Read, Seek, SeekFrom, Write};
 use std::path::{Path, PathBuf};
 use std::time::{Duration, Instant};
 
@@ -116,12 +116,12 @@ impl PinnedGoogleHttp {
         let remaining = REQUEST_DEADLINE
             .checked_sub(started.elapsed())
             .ok_or_else(|| "request deadline exceeded before reading response body".to_string())?;
-        let body = read_body_with_deadline(response.into_reader(), remaining)?;
-        if body.len() > MAX_RESPONSE_BYTES {
-            return Err(format!(
-                "response exceeds the {MAX_RESPONSE_BYTES}-byte limit"
-            ));
-        }
+        let body = crate::http_body::read_with_deadline(
+            response.into_reader(),
+            remaining,
+            MAX_RESPONSE_BYTES,
+            "aware-gmail-response-reader",
+        )?;
         Ok(HttpResponse { status, body })
     }
 }
@@ -148,69 +148,6 @@ impl GoogleHttp for PinnedGoogleHttp {
             .set("Content-Type", "application/json")
             .send_bytes(request_body);
         Self::collect(result, started)
-    }
-}
-
-/// `ureq`'s overall request deadline ends when response headers are returned;
-/// its detached body reader retains only the per-read socket timeout. Read on a
-/// bounded worker so a peer that sends one byte before every socket timeout
-/// cannot keep the Gmail send path alive indefinitely. The worker owns no
-/// credential and checks the same absolute deadline after every read. A single
-/// read already in progress can outlive the caller only until ureq's ten-second
-/// per-read timeout fires.
-fn read_body_with_deadline(
-    reader: Box<dyn Read + Send + Sync + 'static>,
-    remaining: Duration,
-) -> Result<Vec<u8>, String> {
-    let deadline = Instant::now()
-        .checked_add(remaining)
-        .ok_or_else(|| "response body deadline overflowed".to_string())?;
-    let (tx, rx) = std::sync::mpsc::sync_channel(1);
-    std::thread::Builder::new()
-        .name("aware-gmail-response-reader".into())
-        .spawn(move || {
-            let mut body = Vec::new();
-            let result = DeadlineReader { reader, deadline }
-                .take((MAX_RESPONSE_BYTES + 1) as u64)
-                .read_to_end(&mut body)
-                .map(|_| body)
-                .map_err(|error| format!("read response: {error}"));
-            let _ = tx.send(result);
-        })
-        .map_err(|error| format!("start bounded response reader: {error}"))?;
-
-    match rx.recv_timeout(deadline.saturating_duration_since(Instant::now())) {
-        Ok(result) => result,
-        Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {
-            Err("request deadline exceeded while reading response body".into())
-        }
-        Err(std::sync::mpsc::RecvTimeoutError::Disconnected) => {
-            Err("response reader stopped before returning a result".into())
-        }
-    }
-}
-
-struct DeadlineReader<R> {
-    reader: R,
-    deadline: Instant,
-}
-
-impl<R: Read> Read for DeadlineReader<R> {
-    fn read(&mut self, buffer: &mut [u8]) -> std::io::Result<usize> {
-        if Instant::now() >= self.deadline {
-            return Err(std::io::Error::new(
-                std::io::ErrorKind::TimedOut,
-                "request deadline exceeded while reading response body",
-            ));
-        }
-        let read = self.reader.read(buffer)?;
-        if Instant::now() >= self.deadline {
-            return Err(std::io::Error::new(
-                std::io::ErrorKind::TimedOut,
-                "request deadline exceeded while reading response body",
-            ));
-        }
-        Ok(read)
     }
 }
 
@@ -1400,14 +1337,24 @@ fn read_last_record(file: &mut File) -> Result<Option<JournalRecord>, AwareError
     }
     file.seek(SeekFrom::Start(0))
         .map_err(|error| outbox_error(format!("seek outbox journal: {error}")))?;
-    let reader = BufReader::new(&mut *file);
+    let mut bytes = Vec::with_capacity(len);
+    file.read_to_end(&mut bytes)
+        .map_err(|error| outbox_error(format!("read outbox journal: {error}")))?;
     let mut last = None;
-    for line in reader.lines() {
-        let line = line.map_err(|error| outbox_error(format!("read outbox journal: {error}")))?;
-        if line.trim().is_empty() {
+    let complete = bytes.ends_with(b"\n");
+    let lines = bytes.split(|byte| *byte == b'\n').collect::<Vec<_>>();
+    for (index, line) in lines.iter().enumerate() {
+        if !complete && index + 1 == lines.len() {
+            // A record is committed only when its terminating newline was
+            // written and the append was fsynced. Ignore a torn final append so
+            // the preceding durable Dispatching record remains available for
+            // reconciliation after a crash.
+            break;
+        }
+        if line.iter().all(u8::is_ascii_whitespace) {
             continue;
         }
-        last = Some(serde_json::from_str(&line).map_err(|_| {
+        last = Some(serde_json::from_slice(line).map_err(|_| {
             outbox_error("outbox journal contains a malformed record; refusing dispatch")
         })?);
     }
@@ -1901,6 +1848,64 @@ mod tests {
     }
 
     #[test]
+    fn torn_terminal_record_preserves_the_last_durable_dispatching_state() {
+        let home = tempfile::tempdir().unwrap();
+        let account = sha256_hex(b"stable-google-sub");
+        let attempt = sha256_hex(b"attempt-torn-terminal");
+        let request = input("attempt-torn-terminal");
+        let request_hash = canonical_request_hash(&request).unwrap();
+        let path = journal_path(home.path(), &account, &attempt).unwrap();
+        let mut journal = open_locked_journal(&path).unwrap();
+        append_record(
+            &mut journal,
+            &base_record(
+                &account,
+                &attempt,
+                &request_hash,
+                &token("g1"),
+                "<aware.test@example.invalid>",
+                JournalState::Prepared,
+            ),
+        )
+        .unwrap();
+        append_record(
+            &mut journal,
+            &base_record(
+                &account,
+                &attempt,
+                &request_hash,
+                &token("g1"),
+                "<aware.test@example.invalid>",
+                JournalState::Dispatching,
+            ),
+        )
+        .unwrap();
+        journal
+            .write_all(br#"{"version":1,"state":"accepted"#)
+            .unwrap();
+        journal.sync_all().unwrap();
+
+        let recovered = read_last_record(&mut journal).unwrap().unwrap();
+        assert_eq!(recovered.state, JournalState::Dispatching);
+        assert_eq!(recovered.attempt_hash, attempt);
+        assert_eq!(recovered.rfc_message_id, "<aware.test@example.invalid>");
+    }
+
+    #[test]
+    fn malformed_newline_terminated_journal_record_still_fails_closed() {
+        let home = tempfile::tempdir().unwrap();
+        let account = sha256_hex(b"stable-google-sub");
+        let attempt = sha256_hex(b"attempt-corrupt-terminal");
+        let path = journal_path(home.path(), &account, &attempt).unwrap();
+        let mut journal = open_locked_journal(&path).unwrap();
+        journal.write_all(b"not-json\n").unwrap();
+        journal.sync_all().unwrap();
+
+        let error = read_last_record(&mut journal).unwrap_err();
+        assert_eq!(code(&error), "gmail.send.outbox");
+    }
+
+    #[test]
     fn attempt_reuse_with_different_input_is_a_conflict() {
         let home = tempfile::tempdir().unwrap();
         let mock = MockHttp::responding(accepted());
@@ -1949,9 +1954,11 @@ mod tests {
         }
 
         let started = Instant::now();
-        let error = read_body_with_deadline(
+        let error = crate::http_body::read_with_deadline(
             Box::new(SlowDribble { remaining: 20 }),
             Duration::from_millis(35),
+            MAX_RESPONSE_BYTES,
+            "aware-gmail-test-response-reader",
         )
         .unwrap_err();
         assert!(error.contains("deadline exceeded"), "{error}");

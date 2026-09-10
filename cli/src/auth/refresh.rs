@@ -1,7 +1,7 @@
 //! Lazy token refresh — call before any access_token read; refreshes when within 60s of expiry.
 
 use std::io::Read;
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
 use crate::auth::config;
 use crate::auth::keychain::{self, StoredToken};
@@ -11,6 +11,7 @@ use crate::error::AwareError;
 
 const REFRESH_BUFFER_SECS: i64 = 60;
 const REFRESH_DEADLINE: Duration = Duration::from_secs(30);
+const MAX_REFRESH_RESPONSE_BYTES: usize = 64 * 1024;
 
 pub fn ensure_fresh(
     integration: &str,
@@ -94,18 +95,16 @@ fn refresh_loaded(
         .timeout_read(Duration::from_secs(10))
         .timeout(REFRESH_DEADLINE)
         .build();
+    let started = Instant::now();
     let resp = agent
         .post(cfg.token_url())
         .set("Content-Type", "application/x-www-form-urlencoded")
         .send_string(&body)
         .map_err(|e| AwareError::Network(format!("refresh: {e}")))?;
 
-    let mut body_str = String::new();
-    resp.into_reader()
-        .read_to_string(&mut body_str)
-        .map_err(|e| AwareError::Network(format!("refresh body: {e}")))?;
+    let body = read_refresh_body(resp.into_reader(), started, REFRESH_DEADLINE)?;
     let refreshed = TokenResponse::new(
-        serde_json::from_str(&body_str)
+        serde_json::from_slice(&body)
             .map_err(|e| AwareError::Validation(format!("refresh response: {e}")))?,
     );
 
@@ -141,6 +140,23 @@ fn refresh_loaded(
     Ok(new_token)
 }
 
+fn read_refresh_body(
+    reader: Box<dyn Read + Send + Sync + 'static>,
+    started: Instant,
+    deadline: Duration,
+) -> Result<Vec<u8>, AwareError> {
+    let remaining = deadline.checked_sub(started.elapsed()).ok_or_else(|| {
+        AwareError::Network("refresh deadline exceeded before reading response body".into())
+    })?;
+    crate::http_body::read_with_deadline(
+        reader,
+        remaining,
+        MAX_REFRESH_RESPONSE_BYTES,
+        "aware-oauth-refresh-response-reader",
+    )
+    .map_err(|error| AwareError::Network(format!("refresh body: {error}")))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -154,6 +170,22 @@ mod tests {
     /// Public client (no `client_secret_env`), so nothing in these tests depends on
     /// process env — the resolved `client_secret` is always `None`.
     const INTEGRATION: &str = "trimble-connect";
+
+    struct SlowDribble {
+        remaining: usize,
+    }
+
+    impl Read for SlowDribble {
+        fn read(&mut self, buffer: &mut [u8]) -> std::io::Result<usize> {
+            if self.remaining == 0 || buffer.is_empty() {
+                return Ok(0);
+            }
+            std::thread::sleep(Duration::from_millis(10));
+            buffer[0] = b'x';
+            self.remaining -= 1;
+            Ok(1)
+        }
+    }
 
     fn unix_now() -> i64 {
         SystemTime::now()
@@ -196,6 +228,36 @@ mod tests {
 
     fn spawn_token_endpoint(response_body: &str) -> TokenEndpoint {
         spawn_token_endpoint_with_release(response_body, None)
+    }
+
+    #[test]
+    fn refresh_body_honors_the_total_deadline_after_headers() {
+        let started = Instant::now();
+        let error = read_refresh_body(
+            Box::new(SlowDribble { remaining: 20 }),
+            started,
+            Duration::from_millis(35),
+        )
+        .unwrap_err();
+        assert!(error.to_string().contains("deadline exceeded"), "{error}");
+        assert!(
+            started.elapsed() < Duration::from_millis(150),
+            "refresh followed the dribbling body instead of its total deadline"
+        );
+    }
+
+    #[test]
+    fn refresh_body_is_size_bounded() {
+        let error = read_refresh_body(
+            Box::new(std::io::Cursor::new(vec![
+                b'x';
+                MAX_REFRESH_RESPONSE_BYTES + 1
+            ])),
+            Instant::now(),
+            Duration::from_secs(1),
+        )
+        .unwrap_err();
+        assert!(error.to_string().contains("byte limit"), "{error}");
     }
 
     fn spawn_token_endpoint_with_release(

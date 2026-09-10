@@ -3,7 +3,7 @@ version: 0.1.0
 description: Controlled live-provider canary for the Gmail send contract.
 
 requires:
-  - google-workspace@1.x
+  - google-workspace@2.x
 
 layout: linear
 nodes:

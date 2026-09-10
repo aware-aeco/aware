@@ -269,6 +269,7 @@ fn docs_and_canary_preserve_acceptance_retry_and_live_verification_boundaries() 
     )
     .expect("parse Gmail canary fixture");
     let config = &canary["nodes"][0]["config"];
+    assert_eq!(canary["requires"][0].as_str(), Some("google-workspace@2.x"));
     assert!(
         config["attempt-id"]
             .as_str()
