@@ -3,8 +3,16 @@
 // fixtures through the WORKTREE build, serves them, drives Playwright, cleans up, and exits nonzero
 // on any failed assertion — so "the gate passed" is distinguishable from clicking around by hand.
 //
-// This is a pre-PR gate run on demand, NOT CI: this repo has no Rust CI job at all, declares no
-// Playwright dependency, and the template loads Three.js from a CDN (so the run needs network).
+// This is a pre-PR gate run on demand, NOT CI: it declares a Playwright dependency the workflows do
+// not install, and the template loads Three.js from a CDN (so the run needs network). It used to say
+// "this repo has no Rust CI job at all" as well; `ci.yml` (#298) ended that, and the parse check
+// below was left stranded outside CI on a reason that had stopped being true.
+//
+// The parse check is therefore no longer implemented here. `cli/scripts/parse-check-embedded-js.mjs`
+// owns it, runs in `ci.yml` on every PR, and covers every inline script the crate emits rather than
+// only this template's module — the viewer's classic bootstrap script and `aware report`'s search
+// script were checked by nothing at all while this file looked like their gate. Step 0 delegates to
+// it so the two can never drift into disagreeing parse checks.
 //
 // Usage:  node cli/tests/browser/run.mjs
 
@@ -14,6 +22,7 @@ import { mkdtempSync, rmSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { collect, parseError } from '../../scripts/parse-check-embedded-js.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CLI = resolve(HERE, '../..');           // cli/
@@ -27,24 +36,27 @@ const ok = (name, cond, detail = '') => {
 };
 const near = (a, b, tol = 0.5) => Math.abs(a - b) <= tol;
 
-// ---- step 0: the template must be syntactically valid JS -------------------------------------
-// The Rust tests are all string-contains, so a syntax error in the embedded module would still
+// ---- step 0: every script the crate emits must be syntactically valid JS ----------------------
+// The Rust tests are all string-contains, so a syntax error in an embedded script would still
 // "render" and pass every one of them. This catches it in milliseconds, with no browser.
+//
+// Delegated to the CI gate rather than reimplemented: this file's own version parsed the template's
+// module and nothing else, and ran only when somebody remembered to. Keeping one implementation is
+// what stops a script from being covered here, there, or — as the classic bootstrap script was —
+// neither.
 function parseCheckTemplate() {
-  const src = readFileSync(join(CLI, 'src/render/viewer_3d.rs'), 'utf8');
-  const t0 = src.indexOf('const TEMPLATE'), t1 = src.indexOf('"##;', t0);
-  const tpl = src.slice(t0, t1);
-  const a = tpl.indexOf('<script type="module">'), b = tpl.indexOf('</script>', a);
-  const js = tpl.slice(a + '<script type="module">'.length, b)
-    .replace(/^\s*import[^;]+;\s*$/gm, '')
-    .replace('__SCENE_JSON__', '{}');
-  // `new Function` here COMPILES but never runs the body, and the input is this repo's own source
-  // file — anyone able to change it already has code execution. It is a parse check, not an eval of
-  // anything external; the alternative is adding a JS parser dependency to a Rust repo.
-  // An empty slice would compile happily and report PASS, so prove the extraction found something.
-  if (js.length < 5000) { ok('template module script parses', false, `extraction produced only ${js.length} chars — the script markers moved`); return; }
-  try { new Function(js); ok('template module script parses', true); }
-  catch (e) { ok('template module script parses', false, e.message); }
+  const blocks = collect(CLI);
+  if (blocks.length < 5) {
+    ok('inline scripts discovered', false, `found only ${blocks.length} — the templates moved`);
+    return;
+  }
+  const scratch = mkdtempSync(join(tmpdir(), 'aware-browser-parse-'));
+  try {
+    for (const b of blocks) {
+      const err = parseError(b.body, b.goal, scratch);
+      ok(`${b.file}:${b.line} ${b.goal} script parses`, err === null, err || '');
+    }
+  } finally { rmSync(scratch, { recursive: true, force: true }); }
 }
 
 // ---- fixtures: rendered by the WORKTREE build, never a globally installed release --------------

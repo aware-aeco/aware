@@ -199,6 +199,31 @@ jobs:
           python3 scripts/no-hardcoded-string-offsets.py --self-test
           python3 scripts/no-hardcoded-string-offsets.py
 
+      # The crate bakes ~148 KB of JavaScript into the HTML it emits — the
+      # viewer-3d renderer, `aware report`, and the two OAuth callback pages —
+      # and every Rust assertion on it is `String::contains`, which a syntax
+      # error passes. Measured: with `const input = =` planted in
+      # `commands/report.rs` and `var var post=` in `render/viewer_3d.rs`, all
+      # 51 `render::viewer_3d` and all 17 `commands::report` unit tests still
+      # reported ok, and the broken script would have shipped to a browser.
+      #
+      # `cli/tests/browser/run.mjs` carried the only parse check, and it reached
+      # one of the six blocks and ran nowhere: it is a manual pre-PR gate needing
+      # Playwright and a CDN. Parsing needs neither, so this is that step split
+      # out and widened to every block the crate emits, discovered rather than
+      # named so a seventh cannot arrive unchecked.
+      #
+      # Node only, no npm install — `ubuntu-latest` ships one, and the script has
+      # no dependencies. `--self-test` first, same shape as the string-offsets
+      # gate above: without it a scanner that had stopped matching anything would
+      # report every crate clean forever. `cli/tests/embedded_js_gate.rs` asserts
+      # this step still carries both halves.
+      - name: shipped inline JavaScript parses
+        working-directory: cli
+        run: |
+          node scripts/parse-check-embedded-js.mjs --self-test
+          node scripts/parse-check-embedded-js.mjs
+
       - name: cargo test
         working-directory: cli
         run: cargo test --locked
