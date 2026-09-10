@@ -2979,6 +2979,7 @@ impl DispatchInvoker {
         let original_args = args.clone();
         let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
         Self::align_record_args_after_coercion(&original_args, &args, &mut record_args);
+        record_args = crate::runtime::orchestrator::trace_safe_app_inputs(&app, record_args);
         let backed_by = app.app.clone();
         let run_id = crate::runtime::provenance::run_id_now();
         let log_path = crate::runtime::provenance::log_path_for(
@@ -3015,6 +3016,7 @@ impl DispatchInvoker {
         let original_args = args.clone();
         let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
         Self::align_record_args_after_coercion(&original_args, &args, &mut record_args);
+        record_args = crate::runtime::orchestrator::trace_safe_app_inputs(&app, record_args);
         let backed_by = app.app.clone();
         let run_id = crate::runtime::provenance::run_id_now();
         let log_path = crate::runtime::provenance::log_path_for(

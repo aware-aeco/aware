@@ -292,7 +292,7 @@ fn execute_authenticated(
     let request_hash = canonical_request_hash(input)?;
     let generated_rfc_id = format!("<aware.{account_hash}.{attempt_hash}@aware.local>");
     let path = journal_path(aware_home, &account_hash, &attempt_hash)?;
-    let (mut journal, is_new) = open_locked_journal(&path)?;
+    let mut journal = open_locked_journal(&path)?;
     let previous = read_last_record(&mut journal)?;
 
     let rfc_message_id = match previous {
@@ -336,12 +336,6 @@ fn execute_authenticated(
                 timestamp: chrono::Utc::now().timestamp(),
             },
         )?;
-        if is_new {
-            let parent = path
-                .parent()
-                .ok_or_else(|| outbox_error("outbox journal path has no account directory"))?;
-            sync_parent(parent)?;
-        }
     }
 
     // Identity resolution precedes MIME construction; From is never caller supplied.
@@ -501,7 +495,7 @@ fn replay_for_credential_generation(
         if !path.exists() {
             continue;
         }
-        let (mut journal, _) = open_locked_journal(&path)?;
+        let mut journal = open_locked_journal(&path)?;
         let Some(record) = read_last_record(&mut journal)? else {
             return Err(outbox_error("existing outbox journal is empty"));
         };
@@ -1205,13 +1199,9 @@ fn is_reparse_point(_: &std::fs::Metadata) -> bool {
     false
 }
 
-fn open_locked_journal(path: &Path) -> Result<(File, bool), AwareError> {
-    let mut is_new = false;
+fn open_locked_journal(path: &Path) -> Result<File, AwareError> {
     let file = match open_journal(path, true) {
-        Ok(file) => {
-            is_new = true;
-            file
-        }
+        Ok(file) => file,
         Err(error) if error.kind() == std::io::ErrorKind::AlreadyExists => {
             open_journal(path, false).map_err(|error| {
                 outbox_error(format!("open outbox journal {}: {error}", path.display()))
@@ -1230,7 +1220,15 @@ fn open_locked_journal(path: &Path) -> Result<(File, bool), AwareError> {
     #[cfg(windows)]
     apply_private_windows_acl(path)?;
     verify_private_file(path, &file)?;
-    Ok((file, is_new))
+    // `create_new` and the advisory lock are separate operations: the creator
+    // can be preempted between them and a second process can become the first
+    // lock holder. Sync from every lock holder before returning so nobody can
+    // append/dispatch while the journal's directory entry is still volatile.
+    let parent = path
+        .parent()
+        .ok_or_else(|| outbox_error("outbox journal path has no account directory"))?;
+    sync_parent(parent)?;
+    Ok(file)
 }
 
 #[cfg(unix)]
@@ -1736,6 +1734,39 @@ mod tests {
         assert_eq!(rotated, first);
         assert_eq!(mock.send_count(), 1);
         assert_eq!(mock.identity_count(), 2);
+    }
+
+    #[test]
+    fn existing_empty_journal_is_safely_initialized_by_the_first_lock_holder() {
+        // Reproduce the creation/locking interleave: another process wins
+        // `create_new` but has not locked or written yet. This caller must be
+        // allowed to become the initializer; `open_locked_journal` performs the
+        // parent sync before returning it for the first durable append/send.
+        let home = tempfile::tempdir().unwrap();
+        let account = sha256_hex(b"stable-google-sub");
+        let attempt = sha256_hex(b"attempt-precreated");
+        let path = journal_path(home.path(), &account, &attempt).unwrap();
+        drop(open_journal(&path, true).unwrap());
+
+        let mock = MockHttp::responding(accepted());
+        let mut credential = token("g1");
+        // Skip the generation fast-path just as two fresh processes can both do
+        // before either has created the journal.
+        credential.generation = None;
+        let result = execute_authenticated(
+            home.path(),
+            &input("attempt-precreated"),
+            &credential,
+            &mock,
+        )
+        .unwrap();
+        assert_eq!(result["message-id"], "gmail-123");
+        assert_eq!(mock.send_count(), 1);
+        let mut journal = open_locked_journal(&path).unwrap();
+        assert_eq!(
+            read_last_record(&mut journal).unwrap().unwrap().state,
+            JournalState::Accepted
+        );
     }
 
     #[test]
