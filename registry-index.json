@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-10T05:40:58.445030200+00:00",
+  "updated-at": "2026-09-10T06:55:11.743507400+00:00",
   "agents": {
     "tekla": {
       "versions": {
@@ -325,9 +325,14 @@
           "bundle-digest": "sha256:56753c0bafbbe41b7bf29dbac8302e639cef7d74a24022f771df50b71277fbcb"
         },
         "1.1.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/47bf5a3b607cc8b8439e9e9c758b7d35c66e105e.tar.gz",
-          "subdir": "aware-47bf5a3b607cc8b8439e9e9c758b7d35c66e105e/20-agents/aeco/cross-cutting/google-workspace",
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/registry-history/agents/google-workspace/1.1.0",
           "bundle-digest": "sha256:9af11a819b7350f78e6fcc2460b032545f9cdce31aeee9b4065c38cf79b34c97"
+        },
+        "1.1.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/cef93a779ab51e47b947a8d90e8a7e80d7a6e948.tar.gz",
+          "subdir": "aware-cef93a779ab51e47b947a8d90e8a7e80d7a6e948/20-agents/aeco/cross-cutting/google-workspace",
+          "bundle-digest": "sha256:48759852fc20d3b1dde78ae26c85b59ca8a6d864c3b2ae7b96207ae776d001ed"
         }
       }
     },
