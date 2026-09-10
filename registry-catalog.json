@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-10T06:57:01.080801600+00:00",
+  "updated-at": "2026-09-10T09:35:47.413209600+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -2525,7 +2525,7 @@
             }
           ]
         },
-        "1.1.1": {
+        "1.1.2": {
           "description": "Submit plain-text or HTML email through Gmail as the authenticated Google",
           "status": "requires-runtime",
           "minimum-cli-version": "0.136.0",

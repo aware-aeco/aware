@@ -300,30 +300,10 @@ where
         // built into a faithful catalog entry (#454), so refuse rather than emit the
         // fiction.
         //
-        // The key is the subdir alone, and deliberately so: it is exactly what decides
-        // which manifest this build reads. `load` is handed a subdir and nothing else —
-        // `agent reindex` resolves it against the local checkout
-        // (`repo_root/<subdir>/manifest.yaml`) and never opens `tarball` at all. So two
-        // versions sharing a subdir get the SAME manifest whatever their tarballs say,
-        // and the older key's entry is stamped with the current build's description,
-        // commands and `manifest-version` — a historical version described by files that
-        // path no longer holds.
-        //
-        // Keying this on the installer's payload identity (a `(tarball, subdir)` pair)
-        // was wrong in a way worth recording, because it is the natural mistake: it
-        // describes when two keys INSTALL alike, which is a different question from when
-        // this generator can TELL THEM APART. Under that key, versions in distinct
-        // immutable tarballs sharing one subdir passed the guard and were then both
-        // described from the one checkout manifest — reindex reporting success while
-        // reproducing the exact defect #454 is about. (Codex review, PR #457, rounds 1
-        // and 5: round 1 caught the pair being ignored, round 5 caught that honouring it
-        // here reopened the hole.)
-        //
-        // Refusing that shape is the honest answer while this reads one checkout: a
-        // remote archive's bytes are not present to describe. Teaching `reindex` to fetch
-        // each version's tarball would lift the restriction and is a real option — it is
-        // also a new mechanism (network access inside a CI gate, caching, offline
-        // behaviour), so it belongs to a maintainer, not to this fix.
+        // Mutable releases are keyed by the checkout path from which reindex reads them.
+        // Immutable commit archives are keyed by commit plus repository-relative path:
+        // reindex reads those exact local Git objects, so two commits may safely publish
+        // different historical payloads from the same path without consulting the network.
         //
         // `agent publish` enforces the SAME rule before it writes, so the registry's
         // producer cannot emit an index its generator refuses.

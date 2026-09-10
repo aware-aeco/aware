@@ -39,7 +39,7 @@ fn first_party_bundle_installs_the_corrected_immutable_release() {
         .as_array()
         .expect("aware-aeco bundle must list agents");
 
-    assert!(agents.iter().any(|entry| entry == "google-workspace@1.1.1"));
+    assert!(agents.iter().any(|entry| entry == "google-workspace@1.1.2"));
     assert!(!agents.iter().any(|entry| entry == "google-workspace@1.0.0"));
 }
 
