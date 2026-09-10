@@ -1263,7 +1263,7 @@ fn open_journal(path: &Path, create_new: bool) -> std::io::Result<File> {
     use std::os::unix::fs::OpenOptionsExt;
     OpenOptions::new()
         .read(true)
-        .append(true)
+        .write(true)
         .create_new(create_new)
         .create(false)
         .mode(0o600)
@@ -1276,7 +1276,7 @@ fn open_journal(path: &Path, create_new: bool) -> std::io::Result<File> {
     use std::os::windows::fs::OpenOptionsExt;
     OpenOptions::new()
         .read(true)
-        .append(true)
+        .write(true)
         .create_new(create_new)
         .create(false)
         .custom_flags(windows_sys::Win32::Storage::FileSystem::FILE_FLAG_OPEN_REPARSE_POINT)
@@ -1287,7 +1287,7 @@ fn open_journal(path: &Path, create_new: bool) -> std::io::Result<File> {
 fn open_journal(path: &Path, create_new: bool) -> std::io::Result<File> {
     OpenOptions::new()
         .read(true)
-        .append(true)
+        .write(true)
         .create_new(create_new)
         .create(false)
         .open(path)
@@ -1340,23 +1340,29 @@ fn read_last_record(file: &mut File) -> Result<Option<JournalRecord>, AwareError
     let mut bytes = Vec::with_capacity(len);
     file.read_to_end(&mut bytes)
         .map_err(|error| outbox_error(format!("read outbox journal: {error}")))?;
+    let committed_len = bytes
+        .iter()
+        .rposition(|byte| *byte == b'\n')
+        .map_or(0, |index| index + 1);
     let mut last = None;
-    let complete = bytes.ends_with(b"\n");
-    let lines = bytes.split(|byte| *byte == b'\n').collect::<Vec<_>>();
-    for (index, line) in lines.iter().enumerate() {
-        if !complete && index + 1 == lines.len() {
-            // A record is committed only when its terminating newline was
-            // written and the append was fsynced. Ignore a torn final append so
-            // the preceding durable Dispatching record remains available for
-            // reconciliation after a crash.
-            break;
-        }
+    for line in bytes[..committed_len].split(|byte| *byte == b'\n') {
         if line.iter().all(u8::is_ascii_whitespace) {
             continue;
         }
         last = Some(serde_json::from_slice(line).map_err(|_| {
             outbox_error("outbox journal contains a malformed record; refusing dispatch")
         })?);
+    }
+    if committed_len < bytes.len() {
+        // The newline is the record's commit marker. Remove an unterminated
+        // append only after all preceding committed records have parsed: a safe
+        // retry must not append valid JSON directly after torn bytes, while a
+        // malformed committed record must still fail closed without mutation.
+        file.set_len(committed_len as u64)
+            .and_then(|_| file.sync_all())
+            .map_err(|error| {
+                outbox_error(format!("truncate torn outbox journal append: {error}"))
+            })?;
     }
     file.seek(SeekFrom::End(0))
         .map_err(|error| outbox_error(format!("seek outbox journal: {error}")))?;
@@ -1367,7 +1373,8 @@ fn append_record(file: &mut File, record: &JournalRecord) -> Result<(), AwareErr
     let mut line = serde_json::to_vec(record)
         .map_err(|error| AwareError::Internal(format!("serialize outbox record: {error}")))?;
     line.push(b'\n');
-    file.write_all(&line)
+    file.seek(SeekFrom::End(0))
+        .and_then(|_| file.write_all(&line))
         .and_then(|_| file.sync_all())
         .map_err(|error| outbox_error(format!("durably append outbox record: {error}")))
 }
@@ -1848,7 +1855,7 @@ mod tests {
     }
 
     #[test]
-    fn torn_terminal_record_preserves_the_last_durable_dispatching_state() {
+    fn torn_terminal_record_is_truncated_after_the_last_durable_state() {
         let home = tempfile::tempdir().unwrap();
         let account = sha256_hex(b"stable-google-sub");
         let attempt = sha256_hex(b"attempt-torn-terminal");
@@ -1889,6 +1896,42 @@ mod tests {
         assert_eq!(recovered.state, JournalState::Dispatching);
         assert_eq!(recovered.attempt_hash, attempt);
         assert_eq!(recovered.rfc_message_id, "<aware.test@example.invalid>");
+        drop(journal);
+        let bytes = std::fs::read(&path).unwrap();
+        assert!(bytes.ends_with(b"\n"));
+        assert!(!String::from_utf8(bytes).unwrap().contains("accepted"));
+    }
+
+    #[test]
+    fn torn_first_record_is_removed_before_a_safe_retry_appends() {
+        let home = tempfile::tempdir().unwrap();
+        let account = sha256_hex(b"stable-google-sub");
+        let attempt = sha256_hex(b"attempt-torn-first-record");
+        let request = input("attempt-torn-first-record");
+        let request_hash = canonical_request_hash(&request).unwrap();
+        let path = journal_path(home.path(), &account, &attempt).unwrap();
+        let mut journal = open_locked_journal(&path).unwrap();
+        journal
+            .write_all(br#"{"version":1,"state":"prepared"#)
+            .unwrap();
+        journal.sync_all().unwrap();
+
+        assert!(read_last_record(&mut journal).unwrap().is_none());
+        assert_eq!(journal.metadata().unwrap().len(), 0);
+
+        let prepared = base_record(
+            &account,
+            &attempt,
+            &request_hash,
+            &token("g1"),
+            "<aware.test@example.invalid>",
+            JournalState::Prepared,
+        );
+        append_record(&mut journal, &prepared).unwrap();
+        assert_eq!(
+            read_last_record(&mut journal).unwrap().unwrap().state,
+            JournalState::Prepared
+        );
     }
 
     #[test]

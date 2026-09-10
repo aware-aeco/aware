@@ -263,6 +263,42 @@ fn docs_and_canary_preserve_acceptance_retry_and_live_verification_boundaries() 
         );
     }
 
+    let oauth_registration =
+        fs::read_to_string(repository_root().join("10-core/oauth-registration.md"))
+            .expect("read canonical OAuth registration guide");
+    let google_registration = oauth_registration
+        .split("## Google Workspace")
+        .nth(1)
+        .and_then(|section| section.split("## After registration").next())
+        .expect("find Google registration section")
+        .to_ascii_lowercase()
+        .split_whitespace()
+        .collect::<Vec<_>>()
+        .join(" ");
+    for required in [
+        "currently runnable google workspace agent exposes only `gmail.send`",
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/gmail.send",
+        "`gmail.send` is a google **sensitive** scope, not a restricted scope",
+        "`gmail.readonly` is restricted, but aware does not request it",
+    ] {
+        assert!(
+            google_registration.contains(required),
+            "canonical Google OAuth guide is missing: {required}"
+        );
+    }
+    for forbidden in [
+        "https://www.googleapis.com/auth/drive",
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/calendar",
+        "https://www.googleapis.com/auth/gmail.readonly",
+    ] {
+        assert!(
+            !google_registration.contains(forbidden),
+            "canonical Google OAuth guide still requests broad scope: {forbidden}"
+        );
+    }
+
     let canary: Value = serde_yaml::from_str(
         &fs::read_to_string(agent_path("fixtures/issue-495-gmail-send-canary.app"))
             .expect("read Gmail canary fixture"),
