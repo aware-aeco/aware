@@ -179,9 +179,16 @@ pub(crate) fn is_safe_segment(id: &str) -> bool {
 }
 
 /// The extensions that name an app manifest for `app install` and for every
-/// installed-app verb. `compile`/`inspect` additionally accept `.flow`/`.aware`
-/// on a loose source file — see [`crate::app_lock::find_app_source`].
+/// installed-app verb, in PRECEDENCE order.
 pub(crate) const APP_MANIFEST_EXTENSIONS: [&str; 2] = ["flo", "app"];
+
+/// [`APP_MANIFEST_EXTENSIONS`] plus the two `compile`/`inspect` also accept on a
+/// loose source directory, again in precedence order — see
+/// [`crate::app_lock::find_app_source`]. The first two entries and their order
+/// match `APP_MANIFEST_EXTENSIONS` on purpose: a directory holding `a.app` and
+/// `b.flo` must compile the same file that `list`/`show`/`run` load, or the
+/// cross-command disagreement of #502 survives in the compile path.
+pub(crate) const APP_SOURCE_EXTENSIONS: [&str; 4] = ["flo", "app", "flow", "aware"];
 
 /// Every entry DIRECTLY in `dir` whose extension is one of `exts`, sorted by path.
 ///
@@ -215,48 +222,55 @@ pub(crate) fn sorted_manifest_candidates(
     Ok(out)
 }
 
-/// The app manifests in `dir`, sorted. Enumeration failure reads as "none",
-/// because most callers reach here with a path they have not checked (`app show`
-/// on an id resolved from a stale lockfile) and want a `NotFound`, not an IO
-/// error. [`require_single_app_manifest`] is the variant that propagates it.
-fn app_manifest_candidates(dir: &Path) -> Vec<PathBuf> {
-    sorted_manifest_candidates(dir, &APP_MANIFEST_EXTENSIONS).unwrap_or_default()
-}
-
-/// The authoritative manifest of an app directory: `<dir-name>.flo`, else the
-/// first `.flo`, else the first `.app` — each tier resolved over the sorted
-/// candidate list, so the answer never depends on `read_dir` order.
+/// The authoritative manifest of `dir` under the precedence list `exts`:
+/// `<dir-name>.<first ext>`, else the first file of each extension in the order
+/// `exts` gives them. Every tier resolves over the SORTED candidate list, so the
+/// answer never depends on `read_dir` order.
 ///
-/// `aware app install` refuses a source folder holding more than one manifest
-/// ([`require_single_app_manifest`]), so for anything installed since that gate
-/// the tiers below never have to choose. They still can for a directory placed
-/// under `apps/` by hand or installed before the gate existed, and a directory
-/// whose authoritative manifest is a matter of tie-break is a defect worth
-/// naming — hence the warning, to stderr so `--json` stdout stays clean.
-pub(crate) fn find_app_manifest(root: &Path) -> Option<PathBuf> {
-    let candidates = app_manifest_candidates(root);
+/// This is the one selector. Two callers with two extension lists is the point:
+/// a flat lexical pick over a wider list would answer `a.app` where the narrower
+/// list answers `b.flo`, and two commands disagreeing about which file an app
+/// directory *is* is the whole of #502. Sharing the tiers means the wider list
+/// can only ever extend the narrower one's answer, never contradict it.
+///
+/// A directory whose manifest is a matter of tie-break is a defect: `aware app
+/// install` refuses one ([`require_single_app_manifest`]), so the tiers only
+/// have to choose for a directory placed under `apps/` by hand or installed
+/// before that gate existed. Those are worth naming, hence the warning — to
+/// stderr, leaving `--json` stdout clean.
+pub(crate) fn select_manifest(dir: &Path, exts: &[&str]) -> Option<PathBuf> {
+    let candidates = sorted_manifest_candidates(dir, exts).unwrap_or_default();
     if candidates.len() > 1 {
         eprintln!(
             "warning: {} holds {} app manifests ({}) — an app directory must hold exactly one; \
              leave the authoritative one and remove the rest",
-            root.display(),
+            dir.display(),
             candidates.len(),
             file_names(&candidates)
         );
     }
-    let canonical = root
-        .file_name()
-        .map(|n| root.join(format!("{}.flo", n.to_string_lossy())));
-    if let Some(canonical) = canonical
-        && candidates.contains(&canonical)
+    if let Some(name) = dir.file_name()
+        && let Some(primary) = exts.first()
     {
-        return Some(canonical);
+        let canonical = dir.join(format!("{}.{primary}", name.to_string_lossy()));
+        if candidates.contains(&canonical) {
+            return Some(canonical);
+        }
     }
-    candidates
-        .iter()
-        .find(|p| p.extension().is_some_and(|e| e == "flo"))
-        .or_else(|| candidates.first())
+    exts.iter()
+        .find_map(|ext| {
+            candidates
+                .iter()
+                .find(|p| p.extension().is_some_and(|e| e == *ext))
+        })
         .cloned()
+}
+
+/// The authoritative manifest of an installed app directory — [`select_manifest`]
+/// over [`APP_MANIFEST_EXTENSIONS`]. What `list`, `show`, `run`, `explain` and
+/// `export` all load.
+pub(crate) fn find_app_manifest(root: &Path) -> Option<PathBuf> {
+    select_manifest(root, &APP_MANIFEST_EXTENSIONS)
 }
 
 /// The manifest of a source folder being installed, refusing anything but

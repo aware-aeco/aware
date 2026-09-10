@@ -955,20 +955,20 @@ pub fn write_lockfile(
 }
 
 /// Find the source app file (`.flo` / `.app` / `.flow` / `.aware`) at a path.
-/// If `path` is a file, returned directly. If a directory, the first source in
-/// sorted order — sorted rather than `read_dir` order so `aware app compile
-/// <dir>` locks the same file on every run and on every machine (#502).
+/// If `path` is a file, returned directly. If a directory, the same tiered
+/// selector every other verb uses — `<dir-name>.flo`, then `.flo`, `.app`,
+/// `.flow`, `.aware` in that order, each resolved over a sorted candidate list.
 ///
 /// Extension-agnostic where an installed app is not: `.flow`/`.aware` compile
 /// and inspect from a loose source directory, but only `.flo`/`.app` install.
+/// The two lists must nevertheless AGREE on any directory both can read, or
+/// `app compile <dir>` locks a different manifest than `app run` executes —
+/// which is #502 again, moved into the compile path.
 pub fn find_app_source(path: &Path) -> Option<std::path::PathBuf> {
     if path.is_file() {
         return Some(path.to_path_buf());
     }
-    crate::manifest::loader::sorted_manifest_candidates(path, &["flo", "app", "flow", "aware"])
-        .ok()?
-        .into_iter()
-        .next()
+    crate::manifest::loader::select_manifest(path, &crate::manifest::loader::APP_SOURCE_EXTENSIONS)
 }
 
 /// End-to-end: load + compile + write. Called by `aware app compile`.
@@ -1131,12 +1131,52 @@ mod tests {
     }
 
     #[test]
-    fn find_app_source_picks_first_matching_extension() {
+    fn find_app_source_ignores_files_that_are_not_app_sources() {
         let tmp = tempfile::tempdir().unwrap();
         std::fs::write(tmp.path().join("README.md"), "x").unwrap();
         std::fs::write(tmp.path().join("my.app"), "x").unwrap();
         let found = find_app_source(tmp.path()).unwrap();
         assert_eq!(found.extension().unwrap(), "app");
+    }
+
+    /// `compile`/`inspect` read a wider extension set than the installed-app
+    /// verbs, and a flat lexical pick over that wider set answered `a.app` where
+    /// `find_app_manifest` answered `b.flo` — `app compile <dir>` would then lock
+    /// a different manifest than `app run` executes, which is #502 relocated into
+    /// the compile path. The two selectors are asserted to AGREE, not merely to
+    /// be individually deterministic.
+    #[test]
+    fn find_app_source_agrees_with_installed_app_discovery() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("bundle");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("a.app"), "x").unwrap();
+        std::fs::write(dir.join("b.flo"), "x").unwrap();
+
+        let source = find_app_source(&dir).unwrap();
+        assert_eq!(source.file_name().unwrap(), "b.flo");
+        assert_eq!(
+            source,
+            crate::manifest::loader::find_app_manifest(&dir).unwrap()
+        );
+    }
+
+    /// The `<dir-name>` tier reaches the wider set too: `compile` must not fall
+    /// back to lexical order and pick `aaa.flo` over the directory's own file.
+    #[test]
+    fn find_app_source_honors_the_directory_named_source() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("bundle");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("aaa.flo"), "x").unwrap();
+        std::fs::write(dir.join("bundle.flo"), "x").unwrap();
+
+        let source = find_app_source(&dir).unwrap();
+        assert_eq!(source.file_name().unwrap(), "bundle.flo");
+        assert_eq!(
+            source,
+            crate::manifest::loader::find_app_manifest(&dir).unwrap()
+        );
     }
 
     #[test]
