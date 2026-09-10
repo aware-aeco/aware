@@ -1647,6 +1647,23 @@ fn read_pinned_release(
     commit: &str,
     relative: &str,
 ) -> Result<(Vec<u8>, String), AwareError> {
+    let base_ref = pinned_release_base_ref(repo_root)?;
+    let ancestry = std::process::Command::new("git")
+        .current_dir(repo_root)
+        .args(["merge-base", "--is-ancestor", commit, &base_ref])
+        .status()
+        .map_err(|error| {
+            AwareError::Validation(format!(
+                "cannot verify pinned commit {commit} against base ref {base_ref}: {error}"
+            ))
+        })?;
+    if !ancestry.success() {
+        return Err(AwareError::Validation(format!(
+            "pinned commit {commit} is not an ancestor of base ref {base_ref}; pin a commit \
+             already merged into the base branch (after a squash merge, pin the squash commit) and ensure \
+             the checkout has full history (for actions/checkout use `fetch-depth: 0`)"
+        )));
+    }
     let output = std::process::Command::new("git")
         .current_dir(repo_root)
         .args(["archive", "--format=tar", commit, "--", relative])
@@ -1657,7 +1674,8 @@ fn read_pinned_release(
     if !output.status.success() {
         let detail = String::from_utf8_lossy(&output.stderr);
         return Err(AwareError::Validation(format!(
-            "git archive {commit}:{relative} failed: {}",
+            "git archive {commit}:{relative} failed: {}; ensure the checkout contains the pinned \
+             commit (for actions/checkout use `fetch-depth: 0`)",
             detail.trim()
         )));
     }
@@ -1679,6 +1697,57 @@ fn read_pinned_release(
         ))
     })?;
     Ok((manifest, digest))
+}
+
+/// Resolve the branch that a registry change will ultimately land on. Checking
+/// against `HEAD` is insufficient in pull requests: the PR's own commits (and
+/// GitHub's synthetic merge commit) are ancestors of `HEAD`, even though a
+/// required squash merge will discard those object IDs.
+fn pinned_release_base_ref(repo_root: &std::path::Path) -> Result<String, AwareError> {
+    if let Ok(explicit) = std::env::var("AWARE_REGISTRY_BASE_REF")
+        && !explicit.trim().is_empty()
+    {
+        return Ok(explicit);
+    }
+    if let Ok(branch) = std::env::var("GITHUB_BASE_REF")
+        && !branch.trim().is_empty()
+    {
+        return Ok(format!("refs/remotes/origin/{}", branch.trim()));
+    }
+    if std::env::var("GITHUB_REF_TYPE").as_deref() == Ok("branch")
+        && let Ok(branch) = std::env::var("GITHUB_REF_NAME")
+        && !branch.trim().is_empty()
+    {
+        return Ok(format!("refs/remotes/origin/{}", branch.trim()));
+    }
+
+    let output = std::process::Command::new("git")
+        .current_dir(repo_root)
+        .args(["symbolic-ref", "--quiet", "refs/remotes/origin/HEAD"])
+        .output()
+        .map_err(|error| {
+            AwareError::Validation(format!(
+                "cannot resolve the registry base branch from origin/HEAD: {error}"
+            ))
+        })?;
+    if !output.status.success() {
+        return Err(AwareError::Validation(
+            "cannot resolve the registry base branch from origin/HEAD; set \
+             AWARE_REGISTRY_BASE_REF to the fetched base/default branch"
+                .into(),
+        ));
+    }
+    let reference = String::from_utf8(output.stdout)
+        .map_err(|error| AwareError::Validation(format!("origin/HEAD is not UTF-8: {error}")))?;
+    let reference = reference.trim();
+    if reference.is_empty() {
+        return Err(AwareError::Validation(
+            "origin/HEAD resolved to an empty ref; set AWARE_REGISTRY_BASE_REF to the fetched \
+             base/default branch"
+                .into(),
+        ));
+    }
+    Ok(reference.to_string())
 }
 
 /// Two serialized catalogs are "the same" iff they're equal as JSON once the
