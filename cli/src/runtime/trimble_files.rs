@@ -411,9 +411,9 @@ mod tests {
     }
 
     /// Lay out an AWARE home with `manifest` installed as `trimble-connect`, and a
-    /// stored credential when one is asked for. Split out of [`mock_agents`] so the
+    /// stored credential when one is asked for. Split out of `mock_agents` so the
     /// `auth_and_base` refusals below can each drop exactly one of the three things
-    /// that function requires and keep the rest intact.
+    /// `auth_and_base` requires and keep the other two intact.
     fn agents_with(manifest: &str, credential: Option<&str>) -> tempfile::TempDir {
         let tmp = tempfile::tempdir().unwrap();
         let agent = tmp.path().join("agents").join("trimble-connect");
@@ -466,12 +466,12 @@ mod tests {
             .unwrap();
         assert_eq!(decoded, b"FILEBYTES");
         // Step 1 (downloadurl) carries the bearer; step 2 (pre-signed S3) must NOT.
-        let r1 = rx.recv().unwrap();
+        let r1 = next_request(&rx);
         assert!(
             r1.contains("downloadurl") && r1.contains("Bearer TESTTOKEN"),
             "{r1}"
         );
-        let r2 = rx.recv().unwrap();
+        let r2 = next_request(&rx);
         assert!(
             r2.contains("/s3-get") && !r2.contains("Authorization"),
             "{r2}"
@@ -510,7 +510,7 @@ mod tests {
         .unwrap();
         assert_eq!(out["file-id"], "FID");
         assert_eq!(out["version-id"], "VID");
-        let reqs: Vec<String> = (0..3).map(|_| rx.recv().unwrap()).collect();
+        let reqs: Vec<String> = (0..3).map(|_| next_request(&rx)).collect();
         // initiate carries the bearer + name; the S3 PUT carries the decoded bytes and NO auth.
         assert!(
             reqs.iter()
@@ -560,19 +560,25 @@ mod tests {
         assert_eq!(out["replaced"], true);
     }
 
-    // ── refusals ────────────────────────────────────────────────────────────
+    // ── transport refusals ──────────────────────────────────────────────────
     //
-    // Everything above drives a flow that works. Nothing covered what happens
-    // when TC answers 4xx, when a 2xx carries none of the identifiers the next
-    // step needs, or when a required input is absent — and those are exactly the
-    // paths that decide whether a half-finished upload is reported as a success.
-    // Both multi-step flows persist their result downstream, so a refusal that
-    // leaks through as `Ok` writes an identifier that points at nothing.
+    // The `extract_bytes` tests above already cover one refusal — a `bytes`
+    // input the runtime will not accept. What nothing covered is the transport
+    // itself: TC answering 4xx, a 2xx that carries none of the identifiers the
+    // next step consumes, and the `str_arg` guards on the flow arguments. Those
+    // are the paths that decide whether a half-finished transfer is reported as
+    // a success, and both flows persist their result downstream, so a refusal
+    // that leaks through as `Ok` writes an identifier pointing at nothing.
 
-    /// A base URL nothing is listening on: bind a port to learn a free one, then
-    /// drop the listener. A test that reaches the network against it fails with a
-    /// transport error instead of passing, which is the point — it is what proves
-    /// the refusal happened BEFORE any request went out.
+    /// A syntactically valid base URL that nothing is listening on: bind a port
+    /// to learn a free one, then drop the listener.
+    ///
+    /// At [`a_required_input_that_is_missing_blank_or_unreadable_is_refused_before_any_request`]
+    /// this is load-bearing — a guard that leaked would reach the network and
+    /// fail as `Network` rather than `Validation`, turning the test red. The
+    /// `auth_and_base` refusals use it only for a well-formed base; they never
+    /// reach the network under any mutation. The port is released before use, so
+    /// this is a strong signal rather than a hermetic seal.
     fn dead_base() -> String {
         let l = TcpListener::bind("127.0.0.1:0").unwrap();
         let base = format!("http://127.0.0.1:{}", l.local_addr().unwrap().port());
@@ -580,11 +586,38 @@ mod tests {
         base
     }
 
+    /// The next request the mock captured, or a named failure. Never a blocking
+    /// `recv`: every caller gives `mock_routed` a higher `count` than its flow
+    /// will use, so the server thread stays parked in `accept()` holding the
+    /// sender — a `recv` for a request that was never made would hang the test
+    /// binary rather than fail it, and a hang in CI reads as an infra problem.
+    fn next_request(rx: &mpsc::Receiver<String>) -> String {
+        rx.recv_timeout(Duration::from_secs(20))
+            .expect("mock server received no further request")
+    }
+
     /// Drain whatever the mock captured, stopping when it goes quiet. Used where
     /// the assertion is about a request that must NOT have been made, so the
-    /// count matters and a blocking `recv` would hang instead of failing.
+    /// count itself is the evidence.
     fn drain(rx: &mpsc::Receiver<String>) -> Vec<String> {
-        std::iter::from_fn(|| rx.recv_timeout(Duration::from_millis(750)).ok()).collect()
+        let mut out = Vec::new();
+        loop {
+            match rx.recv_timeout(Duration::from_millis(750)) {
+                Ok(req) => out.push(req),
+                // Quiet, with the sender still alive: no more requests are
+                // coming, which is the answer these assertions want.
+                Err(mpsc::RecvTimeoutError::Timeout) => return out,
+                // Disconnected means the mock thread ENDED — it panicked, or its
+                // listener died. Folding that into "quiet" would let a test
+                // asserting one request pass on a mock that served one and then
+                // died, which is a pass for the wrong reason.
+                Err(mpsc::RecvTimeoutError::Disconnected) => panic!(
+                    "mock server ended after {} request(s); what follows would be \
+                     an assertion about the harness, not about the code",
+                    out.len()
+                ),
+            }
+        }
     }
 
     #[tokio::test]
@@ -592,21 +625,38 @@ mod tests {
         // `str_arg` rejects three shapes, and the blank one is the one worth
         // pinning: an empty `file-id` would otherwise build
         // `…/files/fs//downloadurl` and ask TC about a path with a hole in it.
-        // The base points at a closed port, so anything that gets past the guard
-        // fails as Network rather than Validation and this goes red.
+        //
+        // Each case asserts the MESSAGE, not the variant. `auth_and_base` runs
+        // first and its three refusals are `Validation` too, so a variant-only
+        // assertion would still hold if `str_arg` were deleted and something
+        // upstream happened to fail instead — it would pass for the wrong reason.
         let agents = mock_agents(&dead_base());
         let dir = agents.path().join("agents");
-        for args in [
-            json!({ "filename": "a.txt", "bytes": "aGk=" }),
-            json!({ "folder-id": "", "filename": "a.txt", "bytes": "aGk=" }),
-            json!({ "folder-id": 7, "filename": "a.txt", "bytes": "aGk=" }),
-            json!({ "folder-id": "f", "bytes": "aGk=" }),
-            json!({ "folder-id": "f", "filename": "", "bytes": "aGk=" }),
+        for (args, want) in [
+            (json!({ "filename": "a.txt", "bytes": "aGk=" }), "folder-id"),
+            (
+                json!({ "folder-id": "", "filename": "a.txt", "bytes": "aGk=" }),
+                "folder-id",
+            ),
+            (
+                json!({ "folder-id": 7, "filename": "a.txt", "bytes": "aGk=" }),
+                "folder-id",
+            ),
+            (json!({ "folder-id": "f", "bytes": "aGk=" }), "filename"),
+            (
+                json!({ "folder-id": "f", "filename": "", "bytes": "aGk=" }),
+                "filename",
+            ),
         ] {
             let err = upload(dir.clone(), args.clone()).await.unwrap_err();
             assert!(
                 matches!(err, AwareError::Validation(_)),
                 "upload {args}: {err}"
+            );
+            assert!(
+                err.to_string()
+                    .contains(&format!("missing required input `{want}`")),
+                "upload {args} must name {want}: {err}"
             );
         }
         for args in [json!({}), json!({ "file-id": "" }), json!({ "file-id": 3 })] {
@@ -614,6 +664,10 @@ mod tests {
             assert!(
                 matches!(err, AwareError::Validation(_)),
                 "download {args}: {err}"
+            );
+            assert!(
+                err.to_string().contains("missing required input `file-id`"),
+                "download {args} must name file-id: {err}"
             );
         }
     }
@@ -649,24 +703,35 @@ mod tests {
             "{err}"
         );
 
-        let no_base = agents_with(
-            &format!("{head}transport:\n  builtin: {{}}\n{auth}{tail}"),
-            Some("mock-tc-tok"),
-        );
-        let err = download(no_base.path().join("agents"), json!({ "file-id": "f" }))
-            .await
-            .unwrap_err();
-        assert!(
-            err.to_string().contains("no `transport.rest.base`"),
-            "{err}"
-        );
+        // Two shapes reach the third refusal, and the likelier regression is the
+        // second: an agent with no `rest:` transport at all, and one that has a
+        // `rest:` block whose `base:` key went missing. `rest_base_url` answers
+        // None to both, and both have to arrive here rather than as an empty base
+        // that would build `/files/fs/…` against nothing.
+        for transport in [
+            "transport:\n  builtin: {}\n",
+            "transport:\n  rest:\n    x: 1\n",
+        ] {
+            let no_base = agents_with(
+                &format!("{head}{transport}{auth}{tail}"),
+                Some("mock-tc-tok"),
+            );
+            let err = download(no_base.path().join("agents"), json!({ "file-id": "f" }))
+                .await
+                .unwrap_err();
+            assert!(
+                err.to_string().contains("no `transport.rest.base`"),
+                "{transport:?}: {err}"
+            );
+        }
     }
 
     #[tokio::test]
     async fn a_non_2xx_is_reported_with_the_step_the_status_and_what_the_server_said() {
         // The body matters as much as the code: TC puts the reason in it, and a
         // 403 whose text is dropped is indistinguishable from a 403 for any other
-        // reason. `ok_response` is the only place that reads it.
+        // reason. `ok_response` is the only place that reads a FAILURE body —
+        // everywhere else a non-2xx has already been converted to an error.
         let (base, _rx) = mock_routed(1, |_b| {
             vec![(
                 "downloadurl",
@@ -707,11 +772,14 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn a_failed_bytes_put_aborts_the_upload_instead_of_completing_it() {
+    async fn a_failed_bytes_put_stops_before_the_completion_step() {
         // The worst outcome this module can produce: S3 refuses the bytes, the
         // completion step is asked anyway, and TC hands back a fileId for a file
         // whose content never arrived. `check_ok` is all that stands between the
         // two, and it is the one step whose result is otherwise discarded.
+        //
+        // "Stops before completing", not "aborts": nothing cancels the upload
+        // session that step 1 opened, and this test does not pretend otherwise.
         let (base, rx) = mock_routed(3, |b| {
             vec![
                 (
@@ -739,9 +807,11 @@ mod tests {
             text.contains("upload PUT") && text.contains("403"),
             "{text}"
         );
-        // Asserting the error alone would not catch a `check_ok` whose result is
-        // dropped — the run would then return Ok and never reach this line. The
-        // request log is what pins "stopped", not merely "complained".
+        // `unwrap_err` above already rules out a `check_ok` whose result is
+        // discarded — the run would return Ok and panic there. What it cannot see
+        // is a run that reports the PUT failure correctly but has already asked TC
+        // to complete. The request log is the only witness that step 3 never went
+        // out at all.
         let seen = drain(&rx);
         assert_eq!(seen.len(), 2, "expected initiate + PUT only: {seen:#?}");
         assert!(
@@ -752,9 +822,11 @@ mod tests {
 
     #[tokio::test]
     async fn an_initiate_that_names_no_upload_id_or_no_url_stops_there() {
-        // Two 2xx responses that are each missing the one field the next step
-        // consumes. Defaulting either to an empty string would PUT the bytes at
-        // `""` or complete an upload that was never identified.
+        // Three 2xx initiate responses, each starving the next step: no
+        // `uploadId`; no `contents` at all; and a `contents` slot that came back
+        // exactly as step 1 sent it — present, but with no `url`. Defaulting any
+        // of them to an empty string would PUT the bytes at `""` or complete an
+        // upload that was never identified.
         for (body, want) in [
             (r#"{"status":"UPLOADABLE"}"#, "no uploadId"),
             (r#"{"uploadId":"up1"}"#, "no pre-signed url"),
@@ -872,9 +944,10 @@ mod tests {
 
     #[tokio::test]
     async fn a_version_pinned_download_asks_for_that_version_and_a_blank_pin_asks_for_none() {
-        // `version-id` is optional, and the empty string is the shape an
-        // unfilled app input arrives as. Appending `?versionId=` with nothing
-        // after it asks TC for a version named "" instead of the current one.
+        // `version-id` is optional, and the empty string is what a `{{ }}`
+        // substitution over an unset input renders to. Appending `?versionId=`
+        // with nothing after it asks TC for a version named "" instead of the
+        // current one.
         for (pin, expect_query) in [
             (json!("v7"), true),
             (json!(""), false),
@@ -893,7 +966,7 @@ mod tests {
             )
             .await
             .unwrap();
-            let first = rx.recv().unwrap();
+            let first = next_request(&rx);
             let line = first.lines().next().unwrap_or_default().to_string();
             assert_eq!(
                 line.contains("versionId="),
@@ -908,8 +981,11 @@ mod tests {
 
     #[tokio::test]
     async fn a_download_reports_the_size_of_what_it_actually_fetched_in_kib() {
-        // 2048 bytes is 2 KiB and 2.048 kB — a payload that tells the two apart,
-        // unlike the 9-byte one the round-trip test uses.
+        // The field is spelled `size-kb` but divided by 1024, and the agent's
+        // `commands/download.md` documents it that way — the name says kB, the
+        // contract says KiB, and the code follows the contract. 2048 bytes pins
+        // that: exactly `2.0` under KiB, `2.048` under kB, with no float slop
+        // either way.
         let (base, _rx) = mock_routed(2, |b| {
             vec![
                 ("downloadurl", 200, format!(r#"{{"url":"{b}/s3-get"}}"#)),
@@ -925,9 +1001,10 @@ mod tests {
 
     #[tokio::test]
     async fn a_fresh_upload_is_not_marked_as_a_replacement() {
-        // The DUPLICATE path sets `replaced: true`, and an app branches on it to
-        // decide whether it created something. Nothing asserted the false side,
-        // so hard-coding either value passed.
+        // `replaced` is a published output — the agent manifest declares it
+        // ("true when TC returned DUPLICATE") and `welded-to-tc.app` forwards it
+        // downstream in its exposed stream schema. Only the DUPLICATE path had a
+        // test, so hard-coding either value passed.
         let (base, _rx) = mock_routed(3, |b| {
             vec![
                 (
