@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-10T10:48:28.120571400+00:00",
+  "updated-at": "2026-09-10T18:15:09.413891100+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -2320,6 +2320,207 @@
               "description": "Write values to a range in a Google Sheet.",
               "lifecycle": "single",
               "category": "curated",
+              "mode": "write"
+            }
+          ]
+        },
+        "2.0.0": {
+          "description": "Submit plain-text or HTML email through Gmail as the authenticated Google",
+          "status": "requires-runtime",
+          "minimum-cli-version": "0.136.0",
+          "manifest-version": "2.0.0",
+          "stateful": false,
+          "sdk-target": "1.0.0",
+          "transport": "rest",
+          "command_count": 24,
+          "skills": [
+            "auth",
+            "api-snippets",
+            "drive",
+            "sheets"
+          ],
+          "commands": [
+            {
+              "name": "calendar.create-event",
+              "description": "Create a Google Calendar event with attendees + optional Meet link.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "calendar.find-availability",
+              "description": "Find free time across attendees within a window using freebusy.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "chat.post-message",
+              "description": "Post a message to a Google Chat space (room / DM). Plain text",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "chat.post-with-card",
+              "description": "Post a Card v2 message to a Google Chat space — the rich-data",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "chat.post-with-screenshot",
+              "description": "Post a message with an attached image. Image is uploaded first then",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "download-file",
+              "description": "Download a Drive file's bytes by id.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "drive.folder.create",
+              "description": "Create a Drive folder. Optional parent (defaults to root).",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "drive.share",
+              "description": "Share a Drive file / folder with one or more users. Sets the",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "forms.list",
+              "description": "List Google Forms the user has access to. Read-only. Used as the",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "forms.responses.list",
+              "description": "Pull responses from a Google Form. The \"what did people submit",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "gmail.search",
+              "description": "Search the user's mailbox using Gmail's `q` search syntax.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "gmail.send",
+              "description": "Irreversibly submit one plain-text or HTML email through Gmail as the",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write",
+              "method": "POST",
+              "path": "users/me/messages/send"
+            },
+            {
+              "name": "list-files",
+              "description": "List files in Drive matching an optional query.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "meet.create",
+              "description": "Create a standalone Google Meet link (not tied to a calendar",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "read-sheet",
+              "description": "Read a range of cells from a Google Sheet.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "sheets.row.append",
+              "description": "Append a single row to the bottom of a sheet (vs. write-sheet which",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "sheets.worksheet.list",
+              "description": "List worksheet names + IDs in a spreadsheet. Read-only.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "slides.export-pdf",
+              "description": "Export a Google Slides deck as PDF. The designer / architect",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "slides.replace-text",
+              "description": "Bulk-replace `{{ token }}` placeholders in a Slides deck with",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "tasks.complete",
+              "description": "Mark a Google Task complete.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "tasks.create",
+              "description": "Create a Google Task. Optional notes + due-date.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "tasks.list",
+              "description": "List tasks in a Tasklist. Optional show-completed.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "upload-file",
+              "description": "Upload bytes to Drive. Uses simple (≤ 5MB) or resumable (large) upload.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "write-sheet",
+              "description": "Write values to a range in a Google Sheet.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
               "mode": "write"
             }
           ]

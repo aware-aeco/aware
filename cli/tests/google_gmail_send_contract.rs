@@ -28,7 +28,7 @@ fn load_manifest() -> Value {
 }
 
 #[test]
-fn first_party_bundle_stays_on_the_existing_release_until_the_code_commit_is_on_main() {
+fn first_party_bundle_installs_the_corrected_immutable_release() {
     let path = repository_root().join("registry-index.json");
     let index: serde_json::Value = serde_json::from_str(
         &fs::read_to_string(&path)
@@ -39,15 +39,15 @@ fn first_party_bundle_stays_on_the_existing_release_until_the_code_commit_is_on_
         .as_array()
         .expect("aware-aeco bundle must list agents");
 
-    assert!(agents.iter().any(|entry| entry == "google-workspace@1.0.0"));
-    assert!(!agents.iter().any(|entry| entry == "google-workspace@2.0.0"));
+    assert!(agents.iter().any(|entry| entry == "google-workspace@2.0.0"));
+    assert!(!agents.iter().any(|entry| entry == "google-workspace@1.0.0"));
     let versions = index["agents"]["google-workspace"]["versions"]
         .as_object()
         .expect("Google Workspace versions must be an object");
     assert_eq!(
         versions.keys().map(String::as_str).collect::<Vec<_>>(),
-        vec!["1.0.0"],
-        "a corrected release must not be published until its immutable source commit is on main"
+        vec!["1.0.0", "2.0.0"],
+        "the rejected release remains addressable while the corrected release becomes current"
     );
 }
 
