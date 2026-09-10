@@ -27,7 +27,9 @@
 
 use serde_json::Value;
 
-use crate::auth::keychain::{StoredToken, TokenSource};
+use crate::auth::keychain::{
+    StoredToken, TokenSource, new_credential_generation, normalized_scope_string,
+};
 use crate::error::AwareError;
 
 /// A token endpoint's reply, already parsed as JSON.
@@ -99,19 +101,23 @@ impl TokenResponse {
         self,
         integration: &str,
         now: i64,
+        requested_scopes: &[String],
     ) -> Result<StoredToken, AwareError> {
         let expires_at = self.expires_at(now);
         let access_token = self
             .access_token()
             .ok_or_else(|| AwareError::Validation("token response missing access_token".into()))?;
+        let requested_scope = requested_scopes.join(" ");
+        let scope = self.scope().unwrap_or(&requested_scope);
         Ok(StoredToken {
             access_token,
             refresh_token: self.refresh_token(),
             expires_at,
-            scope: self.scope().unwrap_or("").to_string(),
+            scope: normalized_scope_string(scope),
             token_type: self.str_field("token_type").unwrap_or("Bearer").to_string(),
             integration: integration.to_string(),
             obtained_at: now,
+            generation: Some(new_credential_generation()),
             source: TokenSource::Oauth,
         })
     }
@@ -131,7 +137,7 @@ mod tests {
             r#"{"access_token":"tk","refresh_token":"rt","expires_in":120,
                 "scope":"a b","token_type":"MAC"}"#,
         )
-        .into_new_credential("trimble-connect", 1_000)
+        .into_new_credential("trimble-connect", 1_000, &[])
         .unwrap();
 
         assert_eq!(token.access_token, "tk");
@@ -150,7 +156,7 @@ mod tests {
     #[test]
     fn the_optional_fields_fall_back_the_way_all_three_flows_did() {
         let token = parse(r#"{"access_token":"tk"}"#)
-            .into_new_credential("microsoft-365", 0)
+            .into_new_credential("microsoft-365", 0, &[])
             .unwrap();
 
         assert_eq!(token.expires_at, DEFAULT_EXPIRES_IN_SECS);
@@ -162,7 +168,7 @@ mod tests {
     #[test]
     fn a_reply_without_an_access_token_is_a_validation_error() {
         let err = parse(r#"{"token_type":"Bearer"}"#)
-            .into_new_credential("google-workspace", 0)
+            .into_new_credential("google-workspace", 0, &[])
             .unwrap_err();
         assert!(
             matches!(&err, AwareError::Validation(m) if m.contains("missing access_token")),
@@ -178,6 +184,19 @@ mod tests {
     fn a_non_numeric_expires_in_falls_back_instead_of_failing() {
         let response = parse(r#"{"access_token":"tk","expires_in":"3600"}"#);
         assert_eq!(response.expires_at(10), 10 + DEFAULT_EXPIRES_IN_SECS);
+    }
+
+    #[test]
+    fn omitted_scope_falls_back_to_the_normalized_requested_grant() {
+        let requested = vec![
+            "mail.send".to_string(),
+            "openid".to_string(),
+            "mail.send".to_string(),
+        ];
+        let token = parse(r#"{"access_token":"tk"}"#)
+            .into_new_credential("microsoft-365", 0, &requested)
+            .unwrap();
+        assert_eq!(token.scope, "mail.send openid");
     }
 
     #[test]

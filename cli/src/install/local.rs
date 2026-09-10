@@ -63,20 +63,18 @@ pub fn install_agent_from_path(
     Ok(agent.agent)
 }
 
-/// Install an app folder. `src` must contain a `.flo` or `.app` file.
-pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<String, AwareError> {
-    let manifest_path = std::fs::read_dir(src)?
-        .flatten()
-        .map(|e| e.path())
-        .find(|p| {
-            matches!(
-                p.extension().and_then(|e| e.to_str()),
-                Some("flo") | Some("app")
-            )
-        })
-        .ok_or_else(|| {
-            AwareError::Validation(format!("no .flo or .app file in {}", src.display()))
-        })?;
+/// Install an app folder. `src` must contain exactly one `.flo` or `.app` file
+/// — see [`crate::manifest::loader::require_single_app_manifest`] for why more
+/// than one is refused rather than resolved.
+///
+/// Returns the manifest it validated (its `app:` field is the installed id, and
+/// the directory name under `apps/`), rather than the id alone. The caller needs
+/// the manifest to write `lockfile.yaml`, and re-reading it from the installed
+/// directory meant a second, differently-ordered selector: on a directory
+/// holding two manifests the lock could describe one app while every later verb
+/// loaded the other (#502).
+pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<App, AwareError> {
+    let manifest_path = crate::manifest::loader::require_single_app_manifest(src)?;
 
     let app = load_app(&manifest_path)?;
     let issues = validate_app(&app);
@@ -109,11 +107,56 @@ pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<String, AwareE
     std::fs::create_dir_all(paths.apps_dir())?;
     copy_dir_recursive(src, &dst)?;
 
+    // The copy preserves file names, and the source held exactly one manifest,
+    // so this is the same file `app` was parsed from — under its new root.
+    let installed_manifest = dst.join(
+        manifest_path
+            .file_name()
+            .ok_or_else(|| AwareError::Internal("app manifest has no file name".into()))?,
+    );
+
+    // The postcondition #502 is about, checked rather than assumed: the file
+    // every later verb will load must be the file install just validated. It
+    // holds by construction — one manifest in, one manifest copied, and the
+    // canonical selector can only return that one — so reaching the refusal
+    // means a selector has drifted apart from install again. Checked BEFORE the
+    // synthesized agent is written, so a refused install registers no agent.
+    //
+    // It deletes NOTHING, deliberately. Being unreachable for a lone install is
+    // exactly what makes cleanup dangerous here: the way to reach it is a SECOND
+    // `app install` of the same id running concurrently. `dst.exists()` above is
+    // a check, not a reservation, so both can pass it and both can copy into
+    // `dst`; the merged directory then holds two manifests and whichever process
+    // loses the selection arrives here — with the other process's files, possibly
+    // already reported to its user as installed. A `remove_dir_all(&dst)` on that
+    // path destroys a successful install to tidy up after a failed one. Naming
+    // the directory and leaving it costs an operator one `aware app uninstall`;
+    // the alternative costs them someone else's app. (The `exists()` race itself
+    // predates this check and is not this change's to fix — see #516.)
+    let resolved = crate::manifest::loader::find_app_manifest(&dst);
+    if resolved.as_deref() != Some(installed_manifest.as_path()) {
+        return Err(AwareError::Internal(format!(
+            "installed {} from {}, but discovery in {} resolves to {} — the install-time and \
+             run-time manifests disagree, so {} is NOT safe to run; inspect it and remove it \
+             with `aware app uninstall {}` (left in place: a concurrent install of the same id \
+             may own these files)",
+            app.app,
+            manifest_path.display(),
+            dst.display(),
+            resolved
+                .as_deref()
+                .map(|p| p.display().to_string())
+                .unwrap_or_else(|| "nothing".into()),
+            app.app,
+            app.app,
+        )));
+    }
+
     if app.exposes_as_agent {
         write_synthesized_agent(&app, paths)?;
     }
 
-    Ok(app.app)
+    Ok(app)
 }
 
 /// Write the synthesized callable agent manifest for an `exposes-as-agent` app
@@ -250,7 +293,7 @@ mod tests {
         std::fs::copy(&flo, app_src.join("welded-to-tc.app")).unwrap();
 
         let installed = install_app_from_path(&app_src, &paths).unwrap();
-        assert_eq!(installed, "welded-to-tc");
+        assert_eq!(installed.app, "welded-to-tc");
         assert!(
             tmp.path()
                 .join("apps/welded-to-tc/welded-to-tc.app")
@@ -290,7 +333,7 @@ requires: []
         .unwrap();
 
         let installed = install_app_from_path(&app_src, &paths).unwrap();
-        assert_eq!(installed, "inner");
+        assert_eq!(installed.app, "inner");
         // The synthesized agent manifest was registered and is app-backed.
         let agent_manifest = tmp.path().join("agents/inner/manifest.yaml");
         assert!(agent_manifest.is_file(), "synth agent manifest not written");
@@ -332,5 +375,78 @@ requires: []
         assert!(matches!(err, AwareError::Conflict(_)), "got: {err:?}");
         // The app must NOT have been partially installed.
         assert!(!paths.apps_dir().join("inner").exists());
+    }
+
+    /// The #502 repro. `bundle/` holds `bundle.flo` (`app: alpha`) beside
+    /// `alpha.flo` (`app: decoy`). Install used to take one of them by
+    /// filesystem order and copy the whole folder, after which discovery — which
+    /// prefers the manifest named after the now-`alpha` directory — loaded the
+    /// OTHER one: the lock said `alpha`, `app list` and `app show` said `decoy`.
+    ///
+    /// The folder is refused, and nothing is copied: a half-installed app whose
+    /// identity is already in dispute is worse than no app.
+    #[test]
+    fn install_refuses_a_source_folder_holding_two_manifests() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().to_path_buf(),
+        };
+        let app_src = tmp.path().join("src/bundle");
+        write_fixture_app(&app_src.join("bundle.flo"), "alpha", "selected manifest");
+        write_fixture_app(
+            &app_src.join("alpha.flo"),
+            "decoy",
+            "sibling decoy manifest",
+        );
+
+        let err = install_app_from_path(&app_src, &paths).unwrap_err();
+        let AwareError::Validation(msg) = &err else {
+            panic!("expected a validation error, got: {err:?}");
+        };
+        assert!(
+            msg.contains("alpha.flo") && msg.contains("bundle.flo"),
+            "{msg}"
+        );
+        assert!(
+            !paths.apps_dir().join("alpha").exists(),
+            "an ambiguous folder must not be copied"
+        );
+        assert!(!paths.apps_dir().join("decoy").exists());
+    }
+
+    /// The invariant the refusal buys, on the shape that made #502 reachable: a
+    /// manifest whose file name is NOT the app id, so the installed directory is
+    /// renamed out from under it. What install validated, what it reports, and
+    /// what discovery later loads must all be the one file.
+    #[test]
+    fn the_installed_manifest_is_the_one_discovery_resolves() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().to_path_buf(),
+        };
+        let app_src = tmp.path().join("src/bundle");
+        write_fixture_app(&app_src.join("bundle.flo"), "alpha", "selected manifest");
+
+        let installed = install_app_from_path(&app_src, &paths).unwrap();
+        assert_eq!(installed.app, "alpha");
+
+        let app_dir = paths.apps_dir().join("alpha");
+        let discovered = crate::manifest::loader::find_app_manifest(&app_dir)
+            .expect("installed app must be discoverable");
+        assert_eq!(discovered, app_dir.join("bundle.flo"));
+        assert_eq!(load_app(&discovered).unwrap().app, "alpha");
+    }
+
+    fn write_fixture_app(path: &Path, id: &str, description: &str) {
+        std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+        std::fs::write(
+            path,
+            format!(
+                "app: {id}\nversion: 0.1.0\ndescription: {description}\n\
+                 nodes:\n  - id: gate\n    inline:\n      kind: predicate\n\
+                 \x20     description: always pass\n      code: 'true'\nrequires: []\n"
+            ),
+        )
+        .unwrap();
     }
 }

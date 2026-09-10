@@ -64,7 +64,8 @@ fn run_json(ctx: &Context) -> Result<(), AwareError> {
         }
     }
 
-    // Credentials — delegate to connect's shared helper (same logic as connect --list).
+    // Credentials — use the read-only status renderer. Doctor must never
+    // materialize legacy metadata or create credential lock files.
     let now = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
         .unwrap_or_default()
@@ -73,7 +74,12 @@ fn run_json(ctx: &Context) -> Result<(), AwareError> {
         ["trimble-connect", "microsoft-365", "google-workspace"]
             .iter()
             .map(|integration| {
-                crate::commands::connect::credential_status_json(integration, None, aware_home, now)
+                crate::commands::connect::credential_status_json_read_only(
+                    integration,
+                    None,
+                    aware_home,
+                    now,
+                )
             })
             .collect();
 
@@ -237,7 +243,12 @@ fn run_text(ctx: &Context) -> Result<(), AwareError> {
         .unwrap_or_default()
         .as_secs() as i64;
     for integration in &["trimble-connect", "microsoft-365", "google-workspace"] {
-        crate::commands::connect::print_credential_status_text(integration, None, aware_home, now);
+        crate::commands::connect::print_credential_status_text_read_only(
+            integration,
+            None,
+            aware_home,
+            now,
+        );
     }
 
     println!();

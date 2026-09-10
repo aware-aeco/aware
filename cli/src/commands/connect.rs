@@ -83,7 +83,7 @@ const KNOWN_INTEGRATIONS: &[&str] = &["trimble-connect", "microsoft-365", "googl
 pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
     // --list: show all credential statuses and exit.
     if args.list {
-        return run_list(ctx);
+        return run_list(args.r#as.as_deref(), ctx);
     }
 
     // clap's `required_unless_present = "list"` should guarantee this is `Some`,
@@ -117,6 +117,8 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
                     "status": "refreshed",
                     "integration": integration,
                     "expires_at": token.expires_at,
+                    "scopes": crate::auth::keychain::normalized_scopes(&token.scope),
+                    "generation": token.generation,
                 })
             );
         } else {
@@ -178,6 +180,8 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
                             "status": "connected",
                             "integration": integration,
                             "expires_at": token.expires_at,
+                            "scopes": crate::auth::keychain::normalized_scopes(&token.scope),
+                            "generation": token.generation,
                         })
                     );
                 } else {
@@ -235,10 +239,10 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
             )));
         }
         let extra_scopes = parse_scopes(args.scopes.as_deref());
-        crate::auth::pkce::run_pkce_flow(&cfg, &extra_scopes)?
+        crate::auth::pkce::run_pkce_flow(&cfg, &extra_scopes, ctx.json)?
     } else {
         // Default: browser-paste flow.
-        crate::auth::paste::run_paste_flow(integration)?
+        crate::auth::paste::run_paste_flow(integration, ctx.json)?
     };
 
     crate::auth::keychain::store_token(&token, args.r#as.as_deref(), &ctx.paths.aware_home)?;
@@ -248,10 +252,23 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
     };
     // store_token may fall back to a credentials file on Windows (keyring blob limit);
     // print a generic success that's accurate either way.
-    println!(
-        "\u{2713} stored {} {} (OS keychain or ~/.aware/credentials fallback)",
-        integration, kind
-    );
+    if ctx.json {
+        println!(
+            "{}",
+            serde_json::json!({
+                "status": "connected",
+                "integration": integration,
+                "expires_at": if token.expires_at == 0 { None } else { Some(token.expires_at) },
+                "scopes": crate::auth::keychain::normalized_scopes(&token.scope),
+                "generation": token.generation,
+            })
+        );
+    } else {
+        println!(
+            "\u{2713} stored {} {} (OS keychain or ~/.aware/credentials fallback)",
+            integration, kind
+        );
+    }
     Ok(())
 }
 
@@ -336,7 +353,7 @@ pub fn run_disconnect(args: DisconnectArgs, ctx: &Context) -> Result<(), AwareEr
 
 /// List credential status for all known integrations.
 /// Used by `aware connect --list [--json]`.
-fn run_list(ctx: &Context) -> Result<(), AwareError> {
+fn run_list(alias: Option<&str>, ctx: &Context) -> Result<(), AwareError> {
     let aware_home = &ctx.paths.aware_home;
     let now = SystemTime::now()
         .duration_since(UNIX_EPOCH)
@@ -346,7 +363,7 @@ fn run_list(ctx: &Context) -> Result<(), AwareError> {
     if ctx.json {
         let items: Vec<serde_json::Value> = KNOWN_INTEGRATIONS
             .iter()
-            .map(|integration| credential_status_json(integration, None, aware_home, now))
+            .map(|integration| credential_status_json(integration, alias, aware_home, now))
             .collect();
         println!(
             "{}",
@@ -355,7 +372,7 @@ fn run_list(ctx: &Context) -> Result<(), AwareError> {
     } else {
         println!("Credentials:");
         for integration in KNOWN_INTEGRATIONS {
-            print_credential_status_text(integration, None, aware_home, now);
+            print_credential_status_text(integration, alias, aware_home, now);
         }
     }
     Ok(())
@@ -384,12 +401,38 @@ pub fn credential_status_json(
     aware_home: &std::path::Path,
     now: i64,
 ) -> serde_json::Value {
+    credential_status_json_with_mode(integration, alias, aware_home, now, false)
+}
+
+/// Doctor variant: inspect credential state without materializing legacy
+/// metadata or otherwise changing the credential store.
+pub fn credential_status_json_read_only(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    now: i64,
+) -> serde_json::Value {
+    credential_status_json_with_mode(integration, alias, aware_home, now, true)
+}
+
+fn credential_status_json_with_mode(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    now: i64,
+    read_only: bool,
+) -> serde_json::Value {
     let app = active_app_label(integration, alias, aware_home);
     // Which interactive flow(s) a UI should use for this integration (#158).
     let (flows, recommended_flow) = crate::auth::config::for_integration(integration)
         .map(|c| (c.supported_flows().to_vec(), c.recommended_flow()))
         .unwrap_or_default();
-    match crate::auth::keychain::load_token(integration, alias, aware_home) {
+    let loaded = if read_only {
+        crate::auth::keychain::load_token_read_only(integration, alias, aware_home)
+    } else {
+        crate::auth::keychain::load_token(integration, alias, aware_home)
+    };
+    match loaded {
         Ok(Some(token)) => {
             let (status, source, expires_in) = match token.source {
                 TokenSource::Paste => ("valid".to_string(), "paste".to_string(), None),
@@ -404,31 +447,40 @@ pub fn credential_status_json(
             };
             serde_json::json!({
                 "integration": integration,
+                "alias": alias,
                 "status": status,
                 "source": source,
                 "expires_in_secs": expires_in,
                 "app": app,
                 "flows": flows,
                 "recommended_flow": recommended_flow,
+                "scopes": crate::auth::keychain::normalized_scopes(&token.scope),
+                "generation": token.generation,
             })
         }
         Ok(None) => serde_json::json!({
             "integration": integration,
+            "alias": alias,
             "status": "missing",
             "source": null,
             "expires_in_secs": null,
             "app": app,
             "flows": flows,
             "recommended_flow": recommended_flow,
+            "scopes": [],
+            "generation": null,
         }),
         Err(_) => serde_json::json!({
             "integration": integration,
+            "alias": alias,
             "status": "keyring_unavailable",
             "source": null,
             "expires_in_secs": null,
             "app": app,
             "flows": flows,
             "recommended_flow": recommended_flow,
+            "scopes": [],
+            "generation": null,
         }),
     }
 }
@@ -440,6 +492,26 @@ pub fn print_credential_status_text(
     aware_home: &std::path::Path,
     now: i64,
 ) {
+    print_credential_status_text_with_mode(integration, alias, aware_home, now, false);
+}
+
+/// Human-readable doctor variant that does not mutate credential state.
+pub fn print_credential_status_text_read_only(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    now: i64,
+) {
+    print_credential_status_text_with_mode(integration, alias, aware_home, now, true);
+}
+
+fn print_credential_status_text_with_mode(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    now: i64,
+    read_only: bool,
+) {
     let app = active_app_label(integration, alias, aware_home);
     // Suggest the integration's recommended flow in the "missing" hint (#158).
     let recommended_flag = crate::auth::config::for_integration(integration)
@@ -447,7 +519,12 @@ pub fn print_credential_status_text(
         .and_then(|c| c.recommended_flow())
         .map(|f| format!(" --{f}"))
         .unwrap_or_default();
-    match crate::auth::keychain::load_token(integration, alias, aware_home) {
+    let loaded = if read_only {
+        crate::auth::keychain::load_token_read_only(integration, alias, aware_home)
+    } else {
+        crate::auth::keychain::load_token(integration, alias, aware_home)
+    };
+    match loaded {
         Ok(Some(token)) => match token.source {
             TokenSource::Paste => {
                 println!(
@@ -518,7 +595,10 @@ fn load_token_from_file(
         // fallback reads, and lives with `StoredToken`.
         let v: serde_json::Value = serde_json::from_str(&body)
             .map_err(|e| AwareError::Validation(format!("token JSON: {e}")))?;
-        crate::auth::keychain::stored_token_from_credential_json(&v, integration, now)
+        let mut token =
+            crate::auth::keychain::stored_token_from_credential_json(&v, integration, now)?;
+        token.generation = Some(crate::auth::keychain::new_credential_generation());
+        Ok(token)
     } else {
         // Plain bearer token.
         Ok(StoredToken {
@@ -529,6 +609,7 @@ fn load_token_from_file(
             token_type: "Bearer".into(),
             integration: integration.to_string(),
             obtained_at: now,
+            generation: Some(crate::auth::keychain::new_credential_generation()),
             source: TokenSource::Paste,
         })
     }
@@ -565,6 +646,7 @@ fn load_token_from_env(
         token_type: "Bearer".into(),
         integration: integration.to_string(),
         obtained_at: now,
+        generation: Some(crate::auth::keychain::new_credential_generation()),
         source: TokenSource::Paste,
     })
 }
@@ -666,6 +748,7 @@ mod tests {
             token_type: "Bearer".into(),
             integration: "trimble-connect".into(),
             obtained_at: 0,
+            generation: Some("test-generation".into()),
             source: TokenSource::Paste,
         };
         std::fs::write(
@@ -710,6 +793,7 @@ mod tests {
             token_type: "Bearer".into(),
             integration: integration.to_string(),
             obtained_at: 0,
+            generation: Some("test-generation".into()),
             source: TokenSource::Oauth,
         };
         std::fs::write(

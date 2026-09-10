@@ -13,7 +13,9 @@
 
 use std::path::{Path, PathBuf};
 
+use fs2::FileExt;
 use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 
 use crate::error::AwareError;
 
@@ -30,7 +32,7 @@ fn default_source() -> TokenSource {
     TokenSource::Oauth
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct StoredToken {
     pub access_token: String,
     pub refresh_token: Option<String>,
@@ -39,8 +41,29 @@ pub struct StoredToken {
     pub token_type: String,
     pub integration: String,
     pub obtained_at: i64,
+    /// Opaque identity for the material grant. It is deliberately random rather
+    /// than derived from any secret-bearing token bytes.
+    #[serde(default)]
+    pub generation: Option<String>,
     #[serde(default = "default_source")]
     pub source: TokenSource,
+}
+
+pub(crate) fn new_credential_generation() -> String {
+    uuid::Uuid::new_v4().to_string()
+}
+
+/// OAuth scope identifiers are case-sensitive. Normalization therefore only
+/// removes representation differences: whitespace, duplicates and ordering.
+pub(crate) fn normalized_scopes(scope: &str) -> Vec<String> {
+    let mut scopes: Vec<String> = scope.split_whitespace().map(String::from).collect();
+    scopes.sort();
+    scopes.dedup();
+    scopes
+}
+
+pub(crate) fn normalized_scope_string(scope: &str) -> String {
+    normalized_scopes(scope).join(" ")
 }
 
 fn account_name(integration: &str, alias: Option<&str>) -> String {
@@ -96,15 +119,61 @@ pub fn store_token(
     alias: Option<&str>,
     aware_home: &Path,
 ) -> Result<(), AwareError> {
+    let account = account_name(&token.integration, alias);
+    let _locks = acquire_account_locks(aware_home, &account, keyring_enabled())
+        .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
+    store_token_unlocked(token, aware_home, &account)
+}
+
+/// Replace `expected` only if it is still the complete credential currently
+/// stored for the account. Refresh performs network I/O without holding the
+/// account lock, then uses this compare-and-store step so a stale provider
+/// response cannot roll back a connect/import that completed in the meantime.
+pub(crate) fn compare_and_store_token(
+    expected: &CredentialSnapshot,
+    replacement: &StoredToken,
+    aware_home: &Path,
+) -> Result<(), AwareError> {
+    let account = &expected.account;
+    let _locks = acquire_account_locks(aware_home, account, keyring_enabled())
+        .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
+    let current = load_token_raw(
+        &expected.requested_integration,
+        expected.alias.as_deref(),
+        aware_home,
+    )?;
+    let Some(current) = current else {
+        return Err(refresh_conflict(account));
+    };
+    if &current.snapshot != expected {
+        return Err(refresh_conflict(account));
+    }
+    // A successful refresh is a credential rotation, so retain store_token's
+    // normal backend-selection/fallback policy. Only metadata migration is
+    // constrained to the backend it was read from.
+    store_token_unlocked(replacement, aware_home, account)
+}
+
+fn refresh_conflict(account: &str) -> AwareError {
+    AwareError::Conflict(format!(
+        "credential {account} changed while its token was being refreshed; retry the operation"
+    ))
+}
+
+/// Store through the normal backend-selection policy. The caller must hold the
+/// per-account lock.
+fn store_token_unlocked(
+    token: &StoredToken,
+    aware_home: &Path,
+    account: &str,
+) -> Result<(), AwareError> {
     let body = serde_json::to_string(token)
         .map_err(|e| AwareError::Internal(format!("serialize token: {e}")))?;
-    let account = account_name(&token.integration, alias);
-
     if !keyring_enabled() {
-        return write_cred_file(aware_home, &account, &body);
+        return write_cred_file(aware_home, account, &body);
     }
 
-    let entry = keyring::Entry::new(SERVICE_NAME, &account)
+    let entry = keyring::Entry::new(SERVICE_NAME, account)
         .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
 
     match entry.set_password(&body) {
@@ -121,7 +190,7 @@ pub fn store_token(
         // A removal we cannot complete is therefore an error, not a shrug: the
         // caller must not be told the rotation succeeded while the value it
         // replaced is still reachable.
-        Ok(()) => remove_cred_file(aware_home, &account),
+        Ok(()) => remove_cred_file(aware_home, account),
         Err(e) => {
             // Keyring write failed — most commonly the Windows Credential Manager
             // 2 560-byte limit. Fall back to a credentials file so large OAuth
@@ -130,7 +199,91 @@ pub fn store_token(
                 "aware: keyring write failed ({e}); \
                  falling back to ~/.aware/credentials file"
             );
-            fall_back_to_file(&entry, aware_home, &account, &body)
+            fall_back_to_file(&entry, aware_home, account, &body)
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum TokenBackend {
+    Keyring,
+    File,
+}
+
+struct LoadedToken {
+    token: StoredToken,
+    backend: TokenBackend,
+    snapshot: CredentialSnapshot,
+}
+
+/// Exact authoritative token shape observed before refresh network I/O. Kept
+/// opaque so callers can use it only for compare-and-store, never as a second
+/// presentation/authentication token.
+#[derive(PartialEq, Eq)]
+pub(crate) struct CredentialSnapshot {
+    account: String,
+    requested_integration: String,
+    alias: Option<String>,
+    backend: TokenBackend,
+    body_sha256: [u8; 32],
+}
+
+fn credential_snapshot(
+    integration: &str,
+    alias: Option<&str>,
+    backend: TokenBackend,
+    body: &[u8],
+) -> CredentialSnapshot {
+    CredentialSnapshot {
+        account: account_name(integration, alias),
+        requested_integration: integration.to_string(),
+        alias: alias.map(String::from),
+        backend,
+        body_sha256: Sha256::digest(body).into(),
+    }
+}
+
+fn snapshot_for_token(
+    token: &StoredToken,
+    requested_integration: &str,
+    alias: Option<&str>,
+    backend: TokenBackend,
+) -> Result<CredentialSnapshot, AwareError> {
+    let body = serde_json::to_vec(token)
+        .map_err(|e| AwareError::Internal(format!("serialize token snapshot: {e}")))?;
+    Ok(credential_snapshot(
+        requested_integration,
+        alias,
+        backend,
+        &body,
+    ))
+}
+
+pub(crate) struct RefreshTokenLoad {
+    pub token: StoredToken,
+    pub snapshot: CredentialSnapshot,
+}
+
+/// Persist metadata to the backend that supplied the credential. Migration is
+/// not a credential rotation: it must not move a file fallback into the keyring
+/// (or a keyring value into a file) merely because backend availability changed.
+/// The caller must hold the per-account lock.
+fn store_token_to_backend_unlocked(
+    token: &StoredToken,
+    aware_home: &Path,
+    backend: TokenBackend,
+    account: &str,
+) -> Result<(), AwareError> {
+    let body = serde_json::to_string(token)
+        .map_err(|e| AwareError::Internal(format!("serialize token: {e}")))?;
+    match backend {
+        TokenBackend::File => write_cred_file(aware_home, account, &body),
+        TokenBackend::Keyring => {
+            let entry = keyring::Entry::new(SERVICE_NAME, account)
+                .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+            entry
+                .set_password(&body)
+                .map_err(|e| AwareError::PermissionDenied(format!("keyring write: {e}")))
         }
     }
 }
@@ -240,26 +393,392 @@ pub fn load_token(
     alias: Option<&str>,
     aware_home: &Path,
 ) -> Result<Option<StoredToken>, AwareError> {
-    let account = account_name(integration, alias);
+    load_token_for_refresh(integration, alias, aware_home)
+        .map(|loaded| loaded.map(|value| value.token))
+}
 
-    if !keyring_enabled() {
-        return read_cred_file(integration, alias, aware_home);
+/// Load the normalized/materialized token view together with the exact backend
+/// snapshot refresh must compare after its network request.
+pub(crate) fn load_token_for_refresh(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<Option<RefreshTokenLoad>, AwareError> {
+    let account = account_name(integration, alias);
+    let Some(loaded) = load_token_raw(integration, alias, aware_home)? else {
+        return Ok(None);
+    };
+    let original_snapshot = loaded.snapshot;
+    let token = loaded.token;
+
+    let normalized_scope = normalized_scope_string(&token.scope);
+    if token.generation.is_some() && token.scope == normalized_scope {
+        return Ok(Some(RefreshTokenLoad {
+            snapshot: original_snapshot,
+            token,
+        }));
     }
 
-    let entry = keyring::Entry::new(SERVICE_NAME, &account)
-        .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+    // Generation materialization is a read-modify-write operation. Serialize it
+    // across processes, then re-read under the lock so exactly one reader mints
+    // and every waiter observes the value that was actually persisted.
+    let Ok(_generation_locks) = acquire_account_locks(aware_home, &account, keyring_enabled())
+    else {
+        return Ok(Some(RefreshTokenLoad {
+            token: readable_without_ephemeral_generation(token, normalized_scope),
+            snapshot: original_snapshot,
+        }));
+    };
+    let under_lock = match load_token_raw(integration, alias, aware_home) {
+        Ok(Some(current)) => current,
+        // The credential was readable before metadata migration. A lock/re-read
+        // failure must not turn that usable credential into an auth outage.
+        _ => {
+            return Ok(Some(RefreshTokenLoad {
+                token: readable_without_ephemeral_generation(token, normalized_scope),
+                snapshot: original_snapshot,
+            }));
+        }
+    };
 
-    match entry.get_password() {
-        Ok(body) => {
-            let token: StoredToken = serde_json::from_str(&body)
-                .map_err(|e| AwareError::Validation(format!("token JSON: {e}")))?;
-            Ok(Some(token))
+    let backend = under_lock.backend;
+    let authoritative_snapshot = under_lock.snapshot;
+    let (token, persisted) = materialize_generation_with_status(under_lock.token, |updated| {
+        store_token_to_backend_unlocked(updated, aware_home, backend, &account)
+    });
+    let snapshot = if persisted {
+        snapshot_for_token(&token, integration, alias, backend)?
+    } else {
+        authoritative_snapshot
+    };
+    Ok(Some(RefreshTokenLoad { token, snapshot }))
+}
+
+/// Inspect a credential without changing any persistent state. In particular,
+/// this path never creates a lock file, normalizes stored bytes, or materializes
+/// legacy generation metadata. `aware doctor` uses it to remain read-only.
+pub fn load_token_read_only(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<Option<StoredToken>, AwareError> {
+    load_token_raw(integration, alias, aware_home).map(|loaded| loaded.map(|value| value.token))
+}
+
+/// Load without metadata migration. Kept separate so the generation lock can
+/// re-read the authoritative value without recursively trying to acquire itself.
+fn load_token_raw(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<Option<LoadedToken>, AwareError> {
+    let account = account_name(integration, alias);
+
+    let loaded = if !keyring_enabled() {
+        read_cred_file_with_body(integration, alias, aware_home)?.map(|(token, body)| LoadedToken {
+            snapshot: credential_snapshot(integration, alias, TokenBackend::File, &body),
+            token,
+            backend: TokenBackend::File,
+        })
+    } else {
+        let entry = keyring::Entry::new(SERVICE_NAME, &account)
+            .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+
+        match entry.get_password() {
+            Ok(body) => Some(LoadedToken {
+                token: serde_json::from_str(&body)
+                    .map_err(|e| AwareError::Validation(format!("token JSON: {e}")))?,
+                backend: TokenBackend::Keyring,
+                snapshot: credential_snapshot(
+                    integration,
+                    alias,
+                    TokenBackend::Keyring,
+                    body.as_bytes(),
+                ),
+            }),
+            Err(keyring::Error::NoEntry) => {
+                // Nothing in the keychain — check the file fallback.
+                read_cred_file_with_body(integration, alias, aware_home)?.map(|(token, body)| {
+                    LoadedToken {
+                        snapshot: credential_snapshot(
+                            integration,
+                            alias,
+                            TokenBackend::File,
+                            &body,
+                        ),
+                        token,
+                        backend: TokenBackend::File,
+                    }
+                })
+            }
+            Err(e) => return Err(AwareError::PermissionDenied(format!("keyring read: {e}"))),
         }
-        Err(keyring::Error::NoEntry) => {
-            // Nothing in the keychain — check the file fallback.
-            read_cred_file(integration, alias, aware_home)
+    };
+
+    Ok(loaded)
+}
+
+struct AccountLocks {
+    _keyring: Option<std::fs::File>,
+    _file: std::fs::File,
+}
+
+#[derive(Clone, Copy)]
+enum LockDomain {
+    Keyring,
+    File,
+}
+
+fn acquire_account_locks(
+    aware_home: &Path,
+    account: &str,
+    include_keyring: bool,
+) -> std::io::Result<AccountLocks> {
+    if include_keyring {
+        let keyring_dir = keyring_lock_dir()?;
+        acquire_account_locks_in(aware_home, &keyring_dir, account, true)
+    } else {
+        // The global path is unused in file-only mode; do not make a local
+        // credentials file depend on discovery of an unrelated user data dir.
+        acquire_account_locks_in(aware_home, Path::new("."), account, false)
+    }
+}
+
+fn acquire_account_locks_in(
+    aware_home: &Path,
+    keyring_dir: &Path,
+    account: &str,
+    include_keyring: bool,
+) -> std::io::Result<AccountLocks> {
+    // Global keyring first, AWARE_HOME-local file second. Every operation that
+    // can touch both uses this order, preventing cross-process lock inversion.
+    let (keyring_path, file_path) = account_lock_paths(aware_home, keyring_dir, account);
+    let keyring = if include_keyring {
+        Some(acquire_lock(&keyring_path, LockDomain::Keyring)?)
+    } else {
+        None
+    };
+    let file = acquire_lock(&file_path, LockDomain::File)?;
+    Ok(AccountLocks {
+        _keyring: keyring,
+        _file: file,
+    })
+}
+
+fn account_lock_paths(aware_home: &Path, keyring_dir: &Path, account: &str) -> (PathBuf, PathBuf) {
+    (
+        keyring_lock_path(keyring_dir, account),
+        file_lock_path(aware_home, account),
+    )
+}
+
+#[cfg(windows)]
+fn keyring_lock_dir() -> std::io::Result<PathBuf> {
+    use std::ffi::{OsString, c_void};
+    use std::os::windows::ffi::OsStringExt;
+
+    use windows_sys::Win32::Globalization::lstrlenW;
+    use windows_sys::Win32::System::Com::CoTaskMemFree;
+    use windows_sys::Win32::UI::Shell::{FOLDERID_LocalAppData, SHGetKnownFolderPath};
+
+    // SHGetKnownFolderPath resolves against the current user token, not
+    // LOCALAPPDATA/HOME process environment variables.
+    // SAFETY: Shell allocates `raw` for the current-user known-folder result;
+    // we check the HRESULT and pointer before reading it and free it exactly once.
+    unsafe {
+        let mut raw = std::ptr::null_mut();
+        // `KF_FLAG_DONT_VERIFY` keeps this a location lookup: the lock directory
+        // is created below with our own ACL checks, so Shell must not reject a
+        // valid native location merely because it has not been created yet.
+        const KF_FLAG_DONT_VERIFY: u32 = 0x0000_4000;
+        let result = SHGetKnownFolderPath(
+            &FOLDERID_LocalAppData,
+            KF_FLAG_DONT_VERIFY,
+            std::ptr::null_mut(),
+            &mut raw,
+        );
+        if result < 0 || raw.is_null() {
+            CoTaskMemFree(raw.cast::<c_void>());
+            return Err(std::io::Error::other(format!(
+                "resolve native LocalAppData known folder: HRESULT {result:#x}"
+            )));
         }
-        Err(e) => Err(AwareError::PermissionDenied(format!("keyring read: {e}"))),
+        let len = lstrlenW(raw) as usize;
+        let path = PathBuf::from(OsString::from_wide(std::slice::from_raw_parts(raw, len)));
+        CoTaskMemFree(raw.cast::<c_void>());
+        Ok(path.join("aware").join("credential-locks"))
+    }
+}
+
+#[cfg(unix)]
+fn keyring_lock_dir() -> std::io::Result<PathBuf> {
+    // `/tmp` is fixed by platform convention; effective UID is OS identity, so
+    // HOME/XDG overrides cannot split the lock domain for the same keyring user.
+    // SAFETY: `geteuid` has no pointer arguments or caller-side preconditions.
+    let uid = unsafe { libc::geteuid() };
+    Ok(PathBuf::from(format!("/tmp/aware-credential-locks-{uid}")))
+}
+
+fn lock_key(account: &str) -> String {
+    format!("{:x}", Sha256::digest(account.as_bytes()))
+}
+
+fn keyring_lock_path(dir: &Path, account: &str) -> PathBuf {
+    dir.join(format!(".keyring-{}.lock", lock_key(account)))
+}
+
+fn file_lock_path(aware_home: &Path, account: &str) -> PathBuf {
+    // Keep the original filename so already-running older processes contend on
+    // the file-backend lock after an in-place upgrade.
+    aware_home
+        .join("credentials")
+        .join(format!(".generation-{}.lock", lock_key(account)))
+}
+
+fn acquire_lock(path: &Path, domain: LockDomain) -> std::io::Result<std::fs::File> {
+    let dir = path
+        .parent()
+        .ok_or_else(|| std::io::Error::other("credential lock path has no parent"))?;
+    match domain {
+        LockDomain::Keyring => ensure_keyring_lock_dir(dir)?,
+        LockDomain::File => ensure_private_lock_dir(dir)?,
+    }
+    match std::fs::symlink_metadata(path) {
+        Ok(metadata) if metadata.file_type().is_symlink() => {
+            return Err(std::io::Error::other(
+                "credential lock file must not be a symbolic link",
+            ));
+        }
+        Ok(_) => {}
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+        Err(e) => return Err(e),
+    }
+    let file = open_lock_file(path)?;
+    file.lock_exclusive()?;
+    Ok(file)
+}
+
+#[cfg(unix)]
+fn ensure_keyring_lock_dir(dir: &Path) -> std::io::Result<()> {
+    use std::os::unix::fs::{DirBuilderExt, MetadataExt, PermissionsExt};
+
+    let metadata = ensure_lock_dir_exists_with(dir, |path| {
+        std::fs::DirBuilder::new().mode(0o700).create(path)
+    })?;
+    // SAFETY: `geteuid` has no pointer arguments or caller-side preconditions.
+    let uid = unsafe { libc::geteuid() };
+    if metadata.file_type().is_symlink()
+        || !metadata.is_dir()
+        || metadata.uid() != uid
+        || metadata.permissions().mode() & 0o077 != 0
+    {
+        return Err(std::io::Error::other(
+            "keyring lock directory must be a private, real directory owned by the effective user",
+        ));
+    }
+    Ok(())
+}
+
+/// Create a lock directory once while allowing another process to win the same
+/// first-use race. The authoritative metadata is always read after creation, so
+/// callers can still reject a file, symlink, wrong owner, or unsafe mode.
+#[cfg(any(unix, test))]
+fn ensure_lock_dir_exists_with(
+    dir: &Path,
+    create: impl FnOnce(&Path) -> std::io::Result<()>,
+) -> std::io::Result<std::fs::Metadata> {
+    match std::fs::symlink_metadata(dir) {
+        Ok(_) => {}
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => match create(dir) {
+            Ok(()) => {}
+            Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => {}
+            Err(e) => return Err(e),
+        },
+        Err(e) => return Err(e),
+    }
+    std::fs::symlink_metadata(dir)
+}
+
+#[cfg(windows)]
+fn ensure_keyring_lock_dir(dir: &Path) -> std::io::Result<()> {
+    // The native LocalAppData root carries the current user's ACL. Reject a
+    // reparse/symlink at our final directory instead of following it elsewhere.
+    ensure_private_lock_dir(dir)
+}
+
+fn ensure_private_lock_dir(dir: &Path) -> std::io::Result<()> {
+    std::fs::create_dir_all(dir)?;
+    let metadata = std::fs::symlink_metadata(dir)?;
+    if metadata.file_type().is_symlink() || !metadata.is_dir() {
+        return Err(std::io::Error::other(
+            "credential lock directory must be a real directory",
+        ));
+    }
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        std::fs::set_permissions(dir, std::fs::Permissions::from_mode(0o700))?;
+    }
+    Ok(())
+}
+
+#[cfg(unix)]
+fn open_lock_file(path: &Path) -> std::io::Result<std::fs::File> {
+    use std::os::unix::fs::OpenOptionsExt;
+    std::fs::OpenOptions::new()
+        .read(true)
+        .write(true)
+        .create(true)
+        .truncate(false)
+        .mode(0o600)
+        .open(path)
+}
+
+#[cfg(not(unix))]
+fn open_lock_file(path: &Path) -> std::io::Result<std::fs::File> {
+    std::fs::OpenOptions::new()
+        .read(true)
+        .write(true)
+        .create(true)
+        .truncate(false)
+        .open(path)
+}
+
+fn readable_without_ephemeral_generation(
+    mut token: StoredToken,
+    normalized_scope: String,
+) -> StoredToken {
+    token.scope = normalized_scope;
+    // Only a persisted generation is truthful. If this was a legacy token,
+    // never return a process-local UUID that the next read cannot reproduce.
+    token
+}
+
+#[cfg(test)]
+fn materialize_generation(
+    token: StoredToken,
+    persist: impl FnOnce(&StoredToken) -> Result<(), AwareError>,
+) -> StoredToken {
+    materialize_generation_with_status(token, persist).0
+}
+
+fn materialize_generation_with_status(
+    mut token: StoredToken,
+    persist: impl FnOnce(&StoredToken) -> Result<(), AwareError>,
+) -> (StoredToken, bool) {
+    let lacked_generation = token.generation.is_none();
+    token.scope = normalized_scope_string(&token.scope);
+    if lacked_generation {
+        token.generation = Some(new_credential_generation());
+    }
+    match persist(&token) {
+        Ok(()) => (token, true),
+        Err(_) => {
+            if lacked_generation {
+                token.generation = None;
+            }
+            (token, false)
+        }
     }
 }
 
@@ -270,9 +789,15 @@ pub fn delete_token(
     aware_home: &Path,
 ) -> Result<(), AwareError> {
     let account = account_name(integration, alias);
+    let _locks = acquire_account_locks(aware_home, &account, keyring_enabled())
+        .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
+    delete_token_unlocked(aware_home, &account)
+}
 
+/// Remove both possible token backends. The caller must hold the account lock.
+fn delete_token_unlocked(aware_home: &Path, account: &str) -> Result<(), AwareError> {
     let keyring_result = if keyring_enabled() {
-        let entry = keyring::Entry::new(SERVICE_NAME, &account)
+        let entry = keyring::Entry::new(SERVICE_NAME, account)
             .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
         match entry.delete_credential() {
             Ok(()) => Ok(()),
@@ -288,7 +813,7 @@ pub fn delete_token(
     // which made a revoke that left the credential readable exit 0: the caller is
     // told the credential is gone while `load_token` still returns it. Revocation
     // has to fail closed to be worth anything (#436).
-    let file_result = remove_cred_file(aware_home, &account);
+    let file_result = remove_cred_file(aware_home, account);
 
     // Both stores are attempted before either error surfaces, so a failure in one
     // never leaves the other standing.
@@ -323,6 +848,8 @@ pub fn store_app_secret(
     aware_home: &Path,
 ) -> Result<(), AwareError> {
     let account = app_account_name(integration, alias);
+    let _locks = acquire_account_locks(aware_home, &account, keyring_enabled())
+        .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
     if !keyring_enabled() {
         return write_app_secret_file(aware_home, &account, secret);
     }
@@ -379,6 +906,8 @@ pub fn delete_app_secret(
     aware_home: &Path,
 ) -> Result<(), AwareError> {
     let account = app_account_name(integration, alias);
+    let _locks = acquire_account_locks(aware_home, &account, keyring_enabled())
+        .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
     let keyring_result = if keyring_enabled() {
         let entry = keyring::Entry::new(SERVICE_NAME, &account)
             .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
@@ -431,22 +960,32 @@ fn write_cred_file(aware_home: &Path, account: &str, body: &str) -> Result<(), A
         .map_err(|e| AwareError::PermissionDenied(format!("credential file write: {e}")))
 }
 
+#[cfg(test)]
 fn read_cred_file(
     integration: &str,
     alias: Option<&str>,
     aware_home: &Path,
 ) -> Result<Option<StoredToken>, AwareError> {
+    read_cred_file_with_body(integration, alias, aware_home)
+        .map(|loaded| loaded.map(|(token, _)| token))
+}
+
+fn read_cred_file_with_body(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<Option<(StoredToken, Vec<u8>)>, AwareError> {
     let account = account_name(integration, alias);
     let path = cred_file_path(aware_home, &account);
     if !path.is_file() {
         return Ok(None);
     }
-    let body = std::fs::read_to_string(&path)
+    let body = std::fs::read(&path)
         .map_err(|e| AwareError::Internal(format!("credential file read: {e}")))?;
 
     // Try the full StoredToken shape first (written by this module's fallback).
-    if let Ok(token) = serde_json::from_str::<StoredToken>(&body) {
-        return Ok(Some(token));
+    if let Ok(token) = serde_json::from_slice::<StoredToken>(&body) {
+        return Ok(Some((token, body)));
     }
 
     // Legacy / manual format: {"access_token": "...", ...} written by users or
@@ -455,9 +994,9 @@ fn read_cred_file(
         .duration_since(std::time::UNIX_EPOCH)
         .unwrap_or_default()
         .as_secs() as i64;
-    let v: serde_json::Value = serde_json::from_str(&body)
+    let v: serde_json::Value = serde_json::from_slice(&body)
         .map_err(|e| AwareError::Validation(format!("credential file JSON: {e}")))?;
-    stored_token_from_credential_json(&v, integration, now).map(Some)
+    stored_token_from_credential_json(&v, integration, now).map(|token| Some((token, body)))
 }
 
 /// Read a hand-written or legacy credential object into a [`StoredToken`].
@@ -514,6 +1053,10 @@ pub(crate) fn stored_token_from_credential_json(
             .to_string(),
         integration: integration.to_string(),
         obtained_at: now,
+        // The shared parser is also used for legacy credentials read from the
+        // store. Leave generation absent here so `load_token` can materialize
+        // and persist it exactly once; fresh import callers mint explicitly.
+        generation: None,
         source: TokenSource::Paste,
     })
 }
@@ -651,6 +1194,451 @@ mod tests {
     }
 
     #[test]
+    fn scope_normalization_is_stable_and_case_sensitive() {
+        assert_eq!(
+            normalized_scopes("  Mail.Send openid Mail.Send mail.send  "),
+            ["Mail.Send", "mail.send", "openid"]
+        );
+    }
+
+    #[test]
+    fn a_legacy_credential_lazily_gets_one_stable_generation() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("credentials");
+        std::fs::create_dir_all(&dir).unwrap();
+        let path = dir.join("google-workspace.json");
+        std::fs::write(
+            &path,
+            r#"{"access_token":"tk","scope":"openid  email openid"}"#,
+        )
+        .unwrap();
+
+        let first = load_token("google-workspace", None, tmp.path())
+            .unwrap()
+            .unwrap();
+        let second = load_token("google-workspace", None, tmp.path())
+            .unwrap()
+            .unwrap();
+        assert_eq!(first.scope, "email openid");
+        assert_eq!(first.generation, second.generation);
+        assert!(first.generation.is_some());
+
+        let persisted: serde_json::Value =
+            serde_json::from_str(&std::fs::read_to_string(path).unwrap()).unwrap();
+        assert_eq!(persisted["generation"], first.generation.unwrap());
+    }
+
+    #[test]
+    fn copied_credential_materializes_only_the_requested_account_slot() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("credentials");
+        std::fs::create_dir_all(&dir).unwrap();
+        let embedded = StoredToken {
+            access_token: "other-slot-secret".into(),
+            refresh_token: Some("other-slot-refresh".into()),
+            expires_at: 123,
+            scope: "z a".into(),
+            token_type: "Bearer".into(),
+            integration: "microsoft-365".into(),
+            obtained_at: 99,
+            generation: None,
+            source: TokenSource::Oauth,
+        };
+        let body = serde_json::to_vec(&embedded).unwrap();
+        let real_path = dir.join("microsoft-365.json");
+        let copied_path = dir.join("google-workspace.json");
+        std::fs::write(&real_path, &body).unwrap();
+        std::fs::write(&copied_path, &body).unwrap();
+        let loaded = load_token("google-workspace", None, tmp.path())
+            .unwrap()
+            .unwrap();
+        assert_eq!(loaded.access_token, "other-slot-secret");
+        assert!(loaded.generation.is_some());
+        assert_eq!(std::fs::read(&real_path).unwrap(), body);
+        assert_ne!(std::fs::read(&copied_path).unwrap(), body);
+
+        let requested_lock = generation_lock_path(tmp.path(), "google-workspace");
+        let embedded_lock = generation_lock_path(tmp.path(), "microsoft-365");
+        assert!(requested_lock.is_file());
+        assert!(!embedded_lock.exists());
+        assert_eq!(
+            credential_entry_names(&dir),
+            vec![
+                requested_lock.file_name().unwrap().to_os_string(),
+                copied_path.file_name().unwrap().to_os_string(),
+                real_path.file_name().unwrap().to_os_string(),
+            ]
+        );
+    }
+
+    fn credential_entry_names(dir: &Path) -> Vec<std::ffi::OsString> {
+        let mut entries: Vec<_> = std::fs::read_dir(dir)
+            .unwrap()
+            .map(|entry| entry.unwrap().file_name())
+            .collect();
+        entries.sort();
+        entries
+    }
+
+    fn generation_lock_path(aware_home: &Path, account: &str) -> PathBuf {
+        let key = format!("{:x}", Sha256::digest(account.as_bytes()));
+        aware_home
+            .join("credentials")
+            .join(format!(".generation-{key}.lock"))
+    }
+
+    #[test]
+    fn direct_alias_qualified_lookup_materializes_the_exact_account() {
+        let tmp = tempfile::tempdir().unwrap();
+        let token = StoredToken {
+            access_token: "aliased-token".into(),
+            refresh_token: None,
+            expires_at: 0,
+            scope: "b a".into(),
+            token_type: "Bearer".into(),
+            integration: "custom-handle".into(),
+            obtained_at: 1,
+            generation: None,
+            source: TokenSource::Paste,
+        };
+        store_token(&token, Some("personal"), tmp.path()).unwrap();
+
+        let loaded = load_token("custom-handle.personal", None, tmp.path())
+            .unwrap()
+            .unwrap();
+        assert_eq!(loaded.access_token, "aliased-token");
+        assert_eq!(loaded.scope, "a b");
+        assert!(loaded.generation.is_some());
+        assert!(cred_file_path(tmp.path(), "custom-handle.personal").is_file());
+        assert!(!cred_file_path(tmp.path(), "custom-handle.personal.personal").exists());
+    }
+
+    #[test]
+    fn failed_legacy_metadata_persistence_keeps_the_token_and_reports_no_generation() {
+        let token = credential_json(r#"{"access_token":"still-usable","scope":"b a"}"#).unwrap();
+        let loaded = materialize_generation(token, |_| {
+            Err(AwareError::PermissionDenied(
+                "synthetic metadata failure".into(),
+            ))
+        });
+
+        assert_eq!(loaded.access_token, "still-usable");
+        assert_eq!(loaded.scope, "a b");
+        assert_eq!(loaded.generation, None);
+    }
+
+    #[test]
+    fn failed_legacy_materialization_keeps_raw_snapshot_valid_for_refresh_cas() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("credentials");
+        std::fs::create_dir_all(&dir).unwrap();
+        // The hand-written shape is important: parsing it synthesizes obtained_at,
+        // so comparing parsed views can differ even while these bytes do not.
+        std::fs::write(
+            dir.join("trimble-connect.json"),
+            r#"{"access_token":"still-usable","refresh_token":"rt","scope":"b a"}"#,
+        )
+        .unwrap();
+
+        let loaded = load_token_raw("trimble-connect", None, tmp.path())
+            .unwrap()
+            .unwrap();
+        let authoritative = loaded.token;
+        let snapshot = loaded.snapshot;
+        let (view, persisted) = materialize_generation_with_status(authoritative, |_| {
+            Err(AwareError::PermissionDenied(
+                "synthetic metadata failure".into(),
+            ))
+        });
+        assert!(!persisted);
+        assert_eq!(view.scope, "a b");
+        assert_eq!(view.generation, None);
+
+        let mut refreshed = view;
+        refreshed.access_token = "fresh-access".into();
+        compare_and_store_token(&snapshot, &refreshed, tmp.path()).unwrap();
+        assert_eq!(
+            load_token_read_only("trimble-connect", None, tmp.path())
+                .unwrap()
+                .unwrap(),
+            refreshed
+        );
+    }
+
+    #[test]
+    fn concurrent_first_reads_publish_and_return_one_generation() {
+        use std::sync::{Arc, Barrier};
+
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("credentials");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("google-workspace.json"),
+            r#"{"access_token":"tk","scope":"openid email"}"#,
+        )
+        .unwrap();
+
+        let home = Arc::new(tmp.path().to_path_buf());
+        let barrier = Arc::new(Barrier::new(8));
+        let readers: Vec<_> = (0..8)
+            .map(|_| {
+                let home = Arc::clone(&home);
+                let barrier = Arc::clone(&barrier);
+                std::thread::spawn(move || {
+                    barrier.wait();
+                    load_token("google-workspace", None, &home)
+                        .unwrap()
+                        .unwrap()
+                        .generation
+                        .unwrap()
+                })
+            })
+            .collect();
+        let generations: Vec<String> = readers
+            .into_iter()
+            .map(|reader| reader.join().unwrap())
+            .collect();
+
+        assert!(generations.iter().all(|value| value == &generations[0]));
+        let persisted: StoredToken = serde_json::from_str(
+            &std::fs::read_to_string(dir.join("google-workspace.json")).unwrap(),
+        )
+        .unwrap();
+        assert_eq!(persisted.generation.as_ref(), Some(&generations[0]));
+    }
+
+    #[test]
+    fn keyring_locks_are_global_while_file_locks_are_home_scoped() {
+        use std::sync::mpsc;
+        use std::time::Duration;
+
+        let tmp = tempfile::tempdir().unwrap();
+        let home_one = tmp.path().join("home-one");
+        let home_two = tmp.path().join("home-two");
+        let global = tmp.path().join("per-user-global-locks");
+        let account = "google-workspace.personal";
+
+        let (keyring_one, file_one) = account_lock_paths(&home_one, &global, account);
+        let (keyring_two, file_two) = account_lock_paths(&home_two, &global, account);
+        assert_eq!(
+            keyring_one, keyring_two,
+            "keyring lock identity must not include AWARE_HOME"
+        );
+        assert!(!keyring_one.to_string_lossy().contains(account));
+        assert_ne!(
+            file_one, file_two,
+            "file credentials in distinct homes need independent lock domains"
+        );
+
+        let first = acquire_account_locks_in(&home_one, &global, account, true).unwrap();
+        let (started_tx, started_rx) = mpsc::channel();
+        let (acquired_tx, acquired_rx) = mpsc::channel();
+        let other_home = home_two.clone();
+        let other_global = global.clone();
+        let waiter = std::thread::spawn(move || {
+            started_tx.send(()).unwrap();
+            let locks =
+                acquire_account_locks_in(&other_home, &other_global, account, true).unwrap();
+            acquired_tx.send(()).unwrap();
+            drop(locks);
+        });
+        started_rx.recv().unwrap();
+        let early = acquired_rx.recv_timeout(Duration::from_millis(100));
+        drop(first);
+        acquired_rx.recv_timeout(Duration::from_secs(2)).unwrap();
+        waiter.join().unwrap();
+        assert!(
+            matches!(early, Err(mpsc::RecvTimeoutError::Timeout)),
+            "a second AWARE_HOME bypassed the shared keyring lock"
+        );
+
+        // With no keyring backend involved, the same account in another home is
+        // intentionally independent and must not wait for home one's file lock.
+        let first_file = acquire_account_locks_in(&home_one, &global, account, false).unwrap();
+        let (file_tx, file_rx) = mpsc::channel();
+        let file_waiter = std::thread::spawn(move || {
+            let locks = acquire_account_locks_in(&home_two, &global, account, false).unwrap();
+            file_tx.send(()).unwrap();
+            drop(locks);
+        });
+        file_rx.recv_timeout(Duration::from_secs(2)).unwrap();
+        drop(first_file);
+        file_waiter.join().unwrap();
+    }
+
+    #[test]
+    fn native_keyring_lock_root_ignores_process_directory_environment() {
+        let tmp = tempfile::tempdir().unwrap();
+        let first = tmp.path().join("first.txt");
+        let second = tmp.path().join("second.txt");
+        for (output, marker) in [(&first, "one"), (&second, "two")] {
+            let status = std::process::Command::new(std::env::current_exe().unwrap())
+                .args([
+                    "--exact",
+                    "auth::keychain::tests::emit_native_keyring_lock_dir_for_subprocess",
+                ])
+                .env("AWARE_LOCK_TEST_OUTPUT", output)
+                .env("HOME", tmp.path().join(format!("fake-home-{marker}")))
+                .env(
+                    "XDG_DATA_HOME",
+                    tmp.path().join(format!("fake-xdg-{marker}")),
+                )
+                .env(
+                    "LOCALAPPDATA",
+                    tmp.path().join(format!("fake-local-{marker}")),
+                )
+                .status()
+                .unwrap();
+            assert!(status.success());
+        }
+        assert_eq!(
+            std::fs::read_to_string(first).unwrap(),
+            std::fs::read_to_string(second).unwrap()
+        );
+    }
+
+    #[test]
+    fn first_use_lock_dir_creation_tolerates_a_concurrent_winner() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("global-locks");
+        let metadata = ensure_lock_dir_exists_with(&dir, |path| {
+            // Deterministically model another process creating the directory
+            // after our initial lookup but before our create reaches the OS.
+            std::fs::create_dir(path)?;
+            Err(std::io::Error::from(std::io::ErrorKind::AlreadyExists))
+        })
+        .unwrap();
+
+        assert!(metadata.is_dir());
+    }
+
+    #[test]
+    fn emit_native_keyring_lock_dir_for_subprocess() {
+        let Some(output) = std::env::var_os("AWARE_LOCK_TEST_OUTPUT") else {
+            return;
+        };
+        std::fs::write(
+            output,
+            keyring_lock_dir().unwrap().to_string_lossy().as_bytes(),
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn file_backed_metadata_materialization_stays_in_the_file_backend() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("credentials");
+        std::fs::create_dir_all(&dir).unwrap();
+        let path = dir.join("google-workspace.json");
+        std::fs::write(&path, r#"{"access_token":"file-token","scope":"b a"}"#).unwrap();
+
+        let loaded = load_token_raw("google-workspace", None, tmp.path())
+            .unwrap()
+            .unwrap();
+        assert_eq!(loaded.backend, TokenBackend::File);
+        let account = account_name("google-workspace", None);
+        let keyring_dir = tmp.path().join("global-locks");
+        let _locks = acquire_account_locks_in(tmp.path(), &keyring_dir, &account, false).unwrap();
+        let migrated = materialize_generation(loaded.token, |updated| {
+            store_token_to_backend_unlocked(updated, tmp.path(), loaded.backend, &account)
+        });
+
+        assert!(
+            path.is_file(),
+            "metadata migration must retain the source file"
+        );
+        let persisted: StoredToken =
+            serde_json::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();
+        assert_eq!(persisted.access_token, "file-token");
+        assert_eq!(persisted.scope, "a b");
+        assert_eq!(persisted.generation, migrated.generation);
+    }
+
+    #[test]
+    fn metadata_migration_cannot_roll_back_a_concurrent_rotation() {
+        use std::sync::{Arc, Barrier};
+
+        // Exercise both possible lock acquisition orders repeatedly. If migration
+        // reads the legacy value first, it must re-read after acquiring the same
+        // account lock used by the rotation before it writes any metadata.
+        for attempt in 0..32 {
+            let tmp = tempfile::tempdir().unwrap();
+            let dir = tmp.path().join("credentials");
+            std::fs::create_dir_all(&dir).unwrap();
+            std::fs::write(
+                dir.join("google-workspace.json"),
+                r#"{"access_token":"legacy","scope":"openid"}"#,
+            )
+            .unwrap();
+
+            let home = Arc::new(tmp.path().to_path_buf());
+            let barrier = Arc::new(Barrier::new(3));
+            let reader = {
+                let home = Arc::clone(&home);
+                let barrier = Arc::clone(&barrier);
+                std::thread::spawn(move || {
+                    barrier.wait();
+                    load_token("google-workspace", None, &home).unwrap()
+                })
+            };
+            let writer = {
+                let home = Arc::clone(&home);
+                let barrier = Arc::clone(&barrier);
+                std::thread::spawn(move || {
+                    let replacement = StoredToken {
+                        access_token: format!("rotated-{attempt}"),
+                        refresh_token: None,
+                        expires_at: 0,
+                        scope: "email".into(),
+                        token_type: "Bearer".into(),
+                        integration: "google-workspace".into(),
+                        obtained_at: 1,
+                        generation: Some(format!("rotation-{attempt}")),
+                        source: TokenSource::Paste,
+                    };
+                    barrier.wait();
+                    store_token(&replacement, None, &home).unwrap();
+                })
+            };
+            barrier.wait();
+            reader.join().unwrap();
+            writer.join().unwrap();
+
+            let final_token = load_token_read_only("google-workspace", None, &home)
+                .unwrap()
+                .unwrap();
+            assert_eq!(final_token.access_token, format!("rotated-{attempt}"));
+            assert_eq!(final_token.generation, Some(format!("rotation-{attempt}")));
+        }
+    }
+
+    #[test]
+    fn compare_and_store_detects_a_rotation_when_both_generations_are_null() {
+        let tmp = tempfile::tempdir().unwrap();
+        let expected = credential_json(r#"{"access_token":"legacy-old","scope":"a"}"#).unwrap();
+        store_token(&expected, None, tmp.path()).unwrap();
+        let snapshot = load_token_raw("trimble-connect", None, tmp.path())
+            .unwrap()
+            .unwrap()
+            .snapshot;
+
+        let mut rotated = expected.clone();
+        rotated.access_token = "legacy-new".into();
+        store_token(&rotated, None, tmp.path()).unwrap();
+
+        let mut stale_refresh = expected.clone();
+        stale_refresh.access_token = "stale-refresh".into();
+        let err = compare_and_store_token(&snapshot, &stale_refresh, tmp.path()).unwrap_err();
+        assert!(matches!(err, AwareError::Conflict(_)));
+        assert_eq!(
+            load_token_read_only("trimble-connect", None, tmp.path())
+                .unwrap()
+                .unwrap(),
+            rotated
+        );
+    }
+
+    #[test]
     fn account_name_with_alias() {
         assert_eq!(account_name("trimble-connect", None), "trimble-connect");
         assert_eq!(
@@ -671,6 +1659,7 @@ mod tests {
             token_type: "Bearer".into(),
             integration: "microsoft-365".into(),
             obtained_at: 1_735_686_000,
+            generation: Some("test-generation".into()),
             source: TokenSource::Paste,
         };
 
@@ -921,6 +1910,7 @@ mod tests {
             token_type: "Bearer".into(),
             integration: "test-integration-keyring".into(),
             obtained_at: 1_735_686_000,
+            generation: Some("test-generation".into()),
             source: TokenSource::Oauth,
         };
         store_token(&token, None, aware_home).unwrap();
@@ -943,6 +1933,7 @@ mod tests {
             token_type: "Bearer".into(),
             integration: "test".into(),
             obtained_at: 0,
+            generation: Some("test-generation".into()),
             source: TokenSource::Paste,
         };
         let s = serde_json::to_string(&t).unwrap();

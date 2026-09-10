@@ -1315,7 +1315,117 @@ fn simulate_still_runs_an_app_whose_agent_is_not_installed() {
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &home)
-        .args(["app", "run", "probe-sim", "--simulate"])
+        .args([
+            "app",
+            "run",
+            "probe-sim",
+            "--simulate",
+            "--require-verified-agents",
+        ])
+        .assert()
+        .success();
+}
+
+#[test]
+fn verified_agent_policy_refuses_a_local_bundle_before_dispatch() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    let agent = home.join("agents/local-reader");
+    std::fs::create_dir_all(&agent).unwrap();
+    std::fs::write(
+        agent.join("manifest.yaml"),
+        r#"agent: local-reader
+version: 1.0.0
+description: local
+stateful: false
+license: MIT
+transport:
+  cli:
+    binary: should-never-run
+commands:
+  read:
+    lifecycle: single
+    mode: read
+    description: read
+    outputs:
+      type: single
+      schema: { ok: boolean }
+"#,
+    )
+    .unwrap();
+    let src = tmp.path().join("app-src");
+    std::fs::create_dir_all(&src).unwrap();
+    std::fs::write(
+        src.join("verified.flo"),
+        r#"app: verified
+version: 1.0.0
+description: test
+requires: []
+nodes:
+  - id: read
+    agent: local-reader
+    command: read
+"#,
+    )
+    .unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+    common::approve_installed_apps(&home);
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        // An override can distribute packages, but can never be the trust oracle.
+        .env("AWARE_REGISTRY", "file:///not-official.json")
+        .args(["app", "run", "verified", "--require-verified-agents"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains("E_APP_AGENT_BUNDLE_UNVERIFIED"))
+        .stderr(predicate::str::contains("should-never-run").not());
+    assert!(
+        !home.join("logs/verified").exists(),
+        "gate precedes trace creation"
+    );
+}
+
+#[test]
+fn verified_agent_policy_does_not_fetch_for_inline_only_app() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    let src = tmp.path().join("inline-src");
+    std::fs::create_dir_all(&src).unwrap();
+    std::fs::write(
+        src.join("inline.flo"),
+        r#"app: inline
+version: 1.0.0
+description: offline inline
+requires: []
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: pass
+      code: 'true'
+"#,
+    )
+    .unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+    common::approve_installed_apps(&home);
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .env("AWARE_REGISTRY", "file:///must-not-be-read.json")
+        .args(["app", "run", "inline", "--require-verified-agents"])
         .assert()
         .success();
 }
@@ -1348,7 +1458,8 @@ fn run_allows_a_frozen_node_whose_agent_is_not_installed() {
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &home)
-        .args(["app", "run", "frozen-app"])
+        .env("AWARE_REGISTRY", "file:///must-not-be-read.json")
+        .args(["app", "run", "frozen-app", "--require-verified-agents"])
         .assert()
         .success();
 }

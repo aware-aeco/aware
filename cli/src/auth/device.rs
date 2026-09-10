@@ -247,7 +247,7 @@ pub fn run_device_code_flow(
 
         // No `error` field → success.
         let now = super::unix_now_secs()?;
-        return parsed.into_new_credential(&cfg.id, now);
+        return parsed.into_new_credential(&cfg.id, now, &scopes);
     }
 }
 

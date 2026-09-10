@@ -133,6 +133,26 @@ fn home_in(tmp: &Path) -> PathBuf {
     home
 }
 
+/// Publish hashes Git index blobs because those are the bytes the repository
+/// archive will contain. Make successful publish fixtures real checkouts and
+/// stage the exact content under test.
+fn init_and_stage_checkout(root: &Path) {
+    if !root.join(".git").exists() {
+        let status = std::process::Command::new("git")
+            .current_dir(root)
+            .args(["init", "--quiet"])
+            .status()
+            .unwrap();
+        assert!(status.success());
+    }
+    let status = std::process::Command::new("git")
+        .current_dir(root)
+        .args(["add", "--all"])
+        .status()
+        .unwrap();
+    assert!(status.success());
+}
+
 /// Guard the two "there is no checkout here" tests before they spawn a command
 /// that WRITES what it finds by walking up.
 ///
@@ -176,6 +196,7 @@ fn publish_stages_the_agent_under_a_repo_relative_subdir() {
         root,
         &[("keeper", "0.1.0", "aware-main/20-agents/aeco/keeper")],
     );
+    init_and_stage_checkout(root);
 
     aware()
         .env("AWARE_HOME", home_in(root))
@@ -213,6 +234,7 @@ fn publish_stages_into_the_nearest_index_not_the_outermost() {
     std::fs::create_dir_all(&inner).unwrap();
     write_index(outer, &[("outer-only", "0.1.0", "aware-main/outer")]);
     write_index(&inner, &[("inner-only", "0.1.0", "aware-main/inner")]);
+    init_and_stage_checkout(&inner);
 
     let outer_before = std::fs::read(outer.join("registry-index.json")).unwrap();
 
@@ -318,6 +340,7 @@ fn publishing_a_second_version_into_one_subdir_is_refused_and_writes_nothing() {
     let before = std::fs::read(root.join("registry-index.json")).unwrap();
 
     write_agent(&agent_dir, "demo", "0.2.0", "The current build.");
+    init_and_stage_checkout(root);
     aware()
         .env("AWARE_HOME", &home)
         .args(["agent", "publish"])
@@ -361,6 +384,7 @@ fn publishing_each_version_to_its_own_subdir_yields_an_index_reindex_accepts() {
         "The current build.",
     );
     for dir in ["archive/demo-0.1.0", "20-agents/aeco/demo"] {
+        init_and_stage_checkout(root);
         aware()
             .env("AWARE_HOME", &home)
             .args(["agent", "publish"])
@@ -388,6 +412,30 @@ fn publishing_each_version_to_its_own_subdir_yields_an_index_reindex_accepts() {
 }
 
 // ---------------------------------------------------------------- reindex ---
+
+#[test]
+fn reindex_supports_digest_free_legacy_index_outside_git_checkout() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    write_agent(
+        &root.join("20-agents/aeco/demo"),
+        "demo",
+        "1.0.0",
+        "A legacy custom registry entry.",
+    );
+    write_index(root, &[("demo", "1.0.0", "aware-main/20-agents/aeco/demo")]);
+    assert!(!root.join(".git").exists());
+
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .args(["agent", "reindex"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("1 agents"));
+
+    assert!(root.join("registry-catalog.json").is_file());
+}
 
 #[test]
 fn reindex_writes_the_catalog_beside_the_index_it_walked_up_to() {

@@ -48,6 +48,14 @@ pub struct LockFile {
     #[serde(rename = "agent-pins")]
     pub agent_pins: BTreeMap<String, String>,
 
+    /// Verified agent id → immutable installed bundle digest at compile time.
+    #[serde(
+        rename = "agent-bundle-pins",
+        default,
+        skip_serializing_if = "BTreeMap::is_empty"
+    )]
+    pub agent_bundle_pins: BTreeMap<String, String>,
+
     /// Compiled nodes — every template that can be resolved at compile
     /// time IS resolved; runtime expressions are tagged with the
     /// `{{ runtime: ... }}` prefix to make their dynamic nature explicit.
@@ -291,6 +299,16 @@ pub fn verify_agent_pins(
                 current.unwrap_or("missing")
             )));
         }
+        if let Some(expected) = lock.agent_bundle_pins.get(agent_id)
+            && let Some(agent) = agents.iter().find(|agent| agent.manifest.agent == agent_id)
+        {
+            let actual = crate::install::integrity::tree_digest(&agent.root).ok();
+            if actual.as_deref() != Some(expected) {
+                return Err(AwareError::Validation(format!(
+                    "[E_APP_LOCK_AGENT_BUNDLE_PIN_MISMATCH] compiled approval pins agent {agent_id} at bundle {expected}, but those installed bytes are no longer verified; run `aware app compile` again after restoring an official bundle"
+                )));
+            }
+        }
     }
     Ok(())
 }
@@ -319,11 +337,19 @@ fn compile_snapshot(
 
     // Pin every agent referenced by any node (incl. `do:` bodies).
     let mut agent_pins: BTreeMap<String, String> = BTreeMap::new();
+    let mut agent_bundle_pins: BTreeMap<String, String> = BTreeMap::new();
     for (node, _, _, _) in &flat {
         if let Some(aid) = &node.agent
             && let Some(d) = agents.iter().find(|d| d.manifest.agent == *aid)
         {
             agent_pins.insert(aid.clone(), d.manifest.version.clone());
+            if let Some(digest) = crate::install::provenance::receipt_digest_pin(
+                &d.root,
+                &d.manifest.agent,
+                &d.manifest.version,
+            ) {
+                agent_bundle_pins.insert(aid.clone(), digest);
+            }
         }
     }
 
@@ -432,6 +458,7 @@ fn compile_snapshot(
         app: app.app.clone(),
         version: app.version.clone(),
         agent_pins,
+        agent_bundle_pins,
         nodes,
         schedule,
         engineering,
@@ -928,19 +955,20 @@ pub fn write_lockfile(
 }
 
 /// Find the source app file (`.flo` / `.app` / `.flow` / `.aware`) at a path.
-/// If `path` is a file, returned directly. If a directory, searched for the
-/// first matching extension.
+/// If `path` is a file, returned directly. If a directory, the same tiered
+/// selector every other verb uses — `<dir-name>.flo`, then `.flo`, `.app`,
+/// `.flow`, `.aware` in that order, each resolved over a sorted candidate list.
+///
+/// Extension-agnostic where an installed app is not: `.flow`/`.aware` compile
+/// and inspect from a loose source directory, but only `.flo`/`.app` install.
+/// The two lists must nevertheless AGREE on any directory both can read, or
+/// `app compile <dir>` locks a different manifest than `app run` executes —
+/// which is #502 again, moved into the compile path.
 pub fn find_app_source(path: &Path) -> Option<std::path::PathBuf> {
     if path.is_file() {
         return Some(path.to_path_buf());
     }
-    std::fs::read_dir(path).ok()?.flatten().find_map(|entry| {
-        let p = entry.path();
-        match p.extension().and_then(|e| e.to_str()) {
-            Some("flo") | Some("app") | Some("flow") | Some("aware") => Some(p),
-            _ => None,
-        }
-    })
+    crate::manifest::loader::select_manifest(path, &crate::manifest::loader::APP_SOURCE_EXTENSIONS)
 }
 
 /// End-to-end: load + compile + write. Called by `aware app compile`.
@@ -1085,6 +1113,7 @@ mod tests {
         let source = tmp.path().join("my-app.flo");
         std::fs::write(&source, "app: my-cool-app\n").unwrap();
         let lock = LockFile {
+            agent_bundle_pins: BTreeMap::new(),
             source_hash: "sha256:test".into(),
             compiled_at: "2026-05-17T00:00:00Z".into(),
             compiler_version: "0.24.0".into(),
@@ -1102,12 +1131,52 @@ mod tests {
     }
 
     #[test]
-    fn find_app_source_picks_first_matching_extension() {
+    fn find_app_source_ignores_files_that_are_not_app_sources() {
         let tmp = tempfile::tempdir().unwrap();
         std::fs::write(tmp.path().join("README.md"), "x").unwrap();
         std::fs::write(tmp.path().join("my.app"), "x").unwrap();
         let found = find_app_source(tmp.path()).unwrap();
         assert_eq!(found.extension().unwrap(), "app");
+    }
+
+    /// `compile`/`inspect` read a wider extension set than the installed-app
+    /// verbs, and a flat lexical pick over that wider set answered `a.app` where
+    /// `find_app_manifest` answered `b.flo` — `app compile <dir>` would then lock
+    /// a different manifest than `app run` executes, which is #502 relocated into
+    /// the compile path. The two selectors are asserted to AGREE, not merely to
+    /// be individually deterministic.
+    #[test]
+    fn find_app_source_agrees_with_installed_app_discovery() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("bundle");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("a.app"), "x").unwrap();
+        std::fs::write(dir.join("b.flo"), "x").unwrap();
+
+        let source = find_app_source(&dir).unwrap();
+        assert_eq!(source.file_name().unwrap(), "b.flo");
+        assert_eq!(
+            source,
+            crate::manifest::loader::find_app_manifest(&dir).unwrap()
+        );
+    }
+
+    /// The `<dir-name>` tier reaches the wider set too: `compile` must not fall
+    /// back to lexical order and pick `aaa.flo` over the directory's own file.
+    #[test]
+    fn find_app_source_honors_the_directory_named_source() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("bundle");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("aaa.flo"), "x").unwrap();
+        std::fs::write(dir.join("bundle.flo"), "x").unwrap();
+
+        let source = find_app_source(&dir).unwrap();
+        assert_eq!(source.file_name().unwrap(), "bundle.flo");
+        assert_eq!(
+            source,
+            crate::manifest::loader::find_app_manifest(&dir).unwrap()
+        );
     }
 
     #[test]

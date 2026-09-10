@@ -27,6 +27,11 @@
 use assert_cmd::Command;
 use predicates::prelude::*;
 
+use std::io::{BufRead, BufReader};
+use std::process::Stdio;
+use std::sync::mpsc;
+use std::time::Duration;
+
 /// Where a credential lands with the keyring disabled — the sole store here,
 /// not a fallback. Mirrors `cred_file_path` in `auth/keychain.rs`.
 fn cred_file(home: &std::path::Path, integration: &str) -> std::path::PathBuf {
@@ -478,4 +483,143 @@ fn disconnect_with_an_alias_clears_that_alias_and_not_the_default() {
         cred_file(home, "google-workspace").exists(),
         "disconnecting an alias must not clear the default account"
     );
+}
+
+#[test]
+fn successful_json_import_returns_non_secret_capability_metadata() {
+    let tmp = tempfile::tempdir().unwrap();
+    let input = tmp.path().join("token.json");
+    std::fs::write(
+        &input,
+        r#"{"access_token":"must-not-leak","scope":"openid  mail.send openid"}"#,
+    )
+    .unwrap();
+
+    let run = || {
+        let out = Command::cargo_bin("aware")
+            .unwrap()
+            .env("AWARE_HOME", tmp.path())
+            .env("AWARE_DISABLE_KEYRING", "1")
+            .args([
+                "--json",
+                "connect",
+                "google-workspace",
+                "--from-file",
+                input.to_str().unwrap(),
+            ])
+            .assert()
+            .success()
+            .get_output()
+            .stdout
+            .clone();
+        serde_json::from_slice::<serde_json::Value>(&out).unwrap()
+    };
+
+    let first = run();
+    assert_eq!(first["status"], "connected");
+    assert_eq!(first["scopes"], serde_json::json!(["mail.send", "openid"]));
+    assert!(first["generation"].as_str().is_some());
+    assert!(!first.to_string().contains("must-not-leak"));
+
+    let stored: serde_json::Value = serde_json::from_str(
+        &std::fs::read_to_string(cred_file(tmp.path(), "google-workspace")).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(stored["generation"], first["generation"]);
+
+    let second = run();
+    assert_ne!(second["generation"], first["generation"]);
+}
+
+#[test]
+fn list_as_alias_reads_the_alias_slot_and_reports_which_account_was_checked() {
+    let tmp = tempfile::tempdir().unwrap();
+    seed_oauth_credential(tmp.path(), "google-workspace.personal", 7_200);
+
+    let out = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .env("AWARE_DISABLE_KEYRING", "1")
+        .args(["--json", "connect", "--list", "--as", "personal"])
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    let entries: serde_json::Value = serde_json::from_slice(&out).unwrap();
+    let google = entries
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|entry| entry["integration"] == "google-workspace")
+        .unwrap();
+    assert_eq!(google["alias"], "personal");
+    assert_eq!(google["status"], "valid");
+    assert_eq!(google["scopes"], serde_json::json!(["openid"]));
+    assert!(google["generation"].as_str().is_some());
+}
+
+#[test]
+fn list_lazily_materializes_one_stable_generation_for_legacy_credentials() {
+    let tmp = tempfile::tempdir().unwrap();
+    seed_oauth_credential(tmp.path(), "google-workspace", 7_200);
+
+    let first = status_entry(tmp.path(), "google-workspace");
+    let second = status_entry(tmp.path(), "google-workspace");
+    assert!(first["generation"].as_str().is_some());
+    assert_eq!(first["generation"], second["generation"]);
+}
+
+#[test]
+fn browser_paste_json_keeps_progress_off_stdout_and_never_echoes_the_token() {
+    let tmp = tempfile::tempdir().unwrap();
+    let executable = assert_cmd::cargo::cargo_bin("aware");
+    let mut child = std::process::Command::new(executable)
+        .env("AWARE_HOME", tmp.path())
+        .env("AWARE_DISABLE_KEYRING", "1")
+        .env("AWARE_DISABLE_BROWSER_OPEN", "1")
+        .args(["--json", "connect", "google-workspace"])
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .unwrap();
+
+    let stderr = child.stderr.take().unwrap();
+    let (url_tx, url_rx) = mpsc::channel();
+    let stderr_reader = std::thread::spawn(move || {
+        let mut captured = String::new();
+        for line in BufReader::new(stderr).lines() {
+            let line = line.unwrap();
+            if line.trim_start().starts_with("http://localhost:") {
+                let _ = url_tx.send(line.trim().to_string());
+            }
+            captured.push_str(&line);
+            captured.push('\n');
+        }
+        captured
+    });
+
+    let paste_url = url_rx
+        .recv_timeout(Duration::from_secs(10))
+        .expect("paste flow did not print its localhost URL to stderr");
+    ureq::post(&paste_url)
+        .set("Content-Type", "application/x-www-form-urlencoded")
+        .send_string("token=browser-secret-must-not-print")
+        .unwrap();
+
+    let output = child.wait_with_output().unwrap();
+    let stderr = stderr_reader.join().unwrap();
+    assert!(output.status.success(), "stderr: {stderr}");
+    let result: serde_json::Value =
+        serde_json::from_slice(&output.stdout).unwrap_or_else(|error| {
+            panic!(
+                "stdout was not one JSON value ({error}): {:?}",
+                output.stdout
+            )
+        });
+    assert_eq!(result["status"], "connected");
+    assert!(result["generation"].as_str().is_some());
+    assert!(stderr.contains("Opening token entry form"));
+    assert!(!String::from_utf8_lossy(&output.stdout).contains("browser-secret"));
+    assert!(!stderr.contains("browser-secret"));
 }

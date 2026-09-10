@@ -305,7 +305,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     }
 
     // Otherwise: treat as registry id [@version] or bundle name.
-    let index = crate::registry::fetch::fetch_index(&ctx.paths.cache_dir())?;
+    let index = crate::registry::fetch::fetch_index_for_install(&ctx.paths.cache_dir())?;
     if index.bundles.contains_key(spec) {
         let report = crate::install::install_bundle(spec, &ctx.paths, &index)?;
         println!(
@@ -377,7 +377,7 @@ fn update_one(ctx: &Context, spec: &str, force: bool) -> Result<(), AwareError> 
         Some((id, v)) => (id, Some(v)),
         None => (spec, None),
     };
-    let index = crate::registry::fetch::fetch_index(&ctx.paths.cache_dir())?;
+    let index = crate::registry::fetch::fetch_index_for_install(&ctx.paths.cache_dir())?;
     // Atomic: resolve + fetch + validate before the on-disk install is touched,
     // so a failed re-pull — including a version the registry does not have —
     // leaves the existing agent intact (#174). That property is exactly why the
@@ -403,7 +403,7 @@ fn update_all(ctx: &Context, force: bool) -> Result<(), AwareError> {
     }
     let ids: Vec<String> = installed.iter().map(|d| d.manifest.agent.clone()).collect();
     println!("updating {} installed agents...", ids.len());
-    let index = crate::registry::fetch::fetch_index(&ctx.paths.cache_dir())?;
+    let index = crate::registry::fetch::fetch_index_for_install(&ctx.paths.cache_dir())?;
 
     let mut ok = 0usize;
     let mut failed: Vec<(String, String)> = Vec::new();
@@ -544,7 +544,18 @@ fn publish(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
     let raw = std::fs::read_to_string(&index_path)?;
     // A subdir conflict is an error, so nothing is written and the index is left exactly
     // as it was — the same shape as a failing agent being refused above.
-    let updated = merge_publish_entry(&raw, &id, &version, SUBSTRATE_TARBALL, &subdir)?;
+    let repo_root = index_path
+        .parent()
+        .unwrap_or_else(|| std::path::Path::new("."));
+    let bundle_digest = crate::install::integrity::checkout_tree_digest(repo_root, &abs)?;
+    let updated = merge_publish_entry_with_digest(
+        &raw,
+        &id,
+        &version,
+        SUBSTRATE_TARBALL,
+        &subdir,
+        &bundle_digest,
+    )?;
     std::fs::write(&index_path, &updated)?;
 
     println!("✓ staged {id}@{version} in {}", index_path.display());
@@ -596,12 +607,24 @@ fn find_registry_root(start: &std::path::Path) -> Option<(std::path::PathBuf, St
 /// this repo's own bundles can reach. Whether an existing release key is stale or still
 /// pinned is not knowable from the manifest, so this refuses and lets a human decide
 /// (Codex review, PR #457 round 6).
+#[cfg(test)]
 fn merge_publish_entry(
     index_json: &str,
     id: &str,
     version: &str,
     tarball: &str,
     subdir: &str,
+) -> Result<String, AwareError> {
+    merge_publish_entry_with_digest(index_json, id, version, tarball, subdir, "")
+}
+
+fn merge_publish_entry_with_digest(
+    index_json: &str,
+    id: &str,
+    version: &str,
+    tarball: &str,
+    subdir: &str,
+    bundle_digest: &str,
 ) -> Result<String, AwareError> {
     let mut doc: serde_json::Value = serde_json::from_str(index_json)?;
     let agents = doc
@@ -680,7 +703,11 @@ fn merge_publish_entry(
 
     versions.insert(
         version.to_string(),
-        serde_json::json!({ "tarball": tarball, "subdir": subdir }),
+        if bundle_digest.is_empty() {
+            serde_json::json!({ "tarball": tarball, "subdir": subdir })
+        } else {
+            serde_json::json!({ "tarball": tarball, "subdir": subdir, "bundle-digest": bundle_digest })
+        },
     );
     doc["updated-at"] = serde_json::Value::String(crate::builder::now_iso());
     let mut out = serde_json::to_string_pretty(&doc)?;
@@ -893,11 +920,27 @@ fn describe(ctx: &Context, agent_id: &str, available: bool) -> Result<(), AwareE
                  `aware agent describe {agent_id} --available` to view it in the registry catalog"
             ))
         })?;
-    describe_installed(ctx, &d.manifest, started)
+    describe_installed(ctx, &d.manifest, &d.root, started)
 }
 
 /// Render an INSTALLED agent's manifest.
-fn describe_installed(ctx: &Context, m: &Agent, started: Instant) -> Result<(), AwareError> {
+fn describe_installed(
+    ctx: &Context,
+    m: &Agent,
+    root: &std::path::Path,
+    started: Instant,
+) -> Result<(), AwareError> {
+    let official_index = crate::install::provenance::claims_official(root)
+        .then(crate::registry::fetch::fetch_fresh_official_index)
+        .transpose()
+        .ok()
+        .flatten();
+    let bundle_provenance = crate::install::provenance::assess_against_index(
+        root,
+        &m.agent,
+        &m.version,
+        official_index.as_ref(),
+    );
     if ctx.json {
         #[derive(Serialize)]
         struct CommandRow {
@@ -925,6 +968,8 @@ fn describe_installed(ctx: &Context, m: &Agent, started: Instant) -> Result<(), 
             command_count: usize,
             curated_count: usize,
             reflected_count: usize,
+            #[serde(rename = "agent-bundle-provenance")]
+            bundle_provenance: crate::install::provenance::BundleProvenance,
         }
 
         let cmds: Vec<CommandRow> = m
@@ -962,6 +1007,7 @@ fn describe_installed(ctx: &Context, m: &Agent, started: Instant) -> Result<(), 
             reflected_count: m.reflected_count(),
             commands: cmds,
             skills: &m.skills,
+            bundle_provenance,
         };
         envelope::print_ok("agent describe", data, started).ok();
         return Ok(());
@@ -984,6 +1030,21 @@ fn describe_installed(ctx: &Context, m: &Agent, started: Instant) -> Result<(), 
         println!("vendor:       {v}");
     }
     println!("license:      {}", m.license);
+    println!(
+        "bundle:       {} — {}",
+        if bundle_provenance.verified {
+            "verified"
+        } else {
+            "unverified"
+        },
+        bundle_provenance.reason
+    );
+    if let Some(digest) = &bundle_provenance.installed_digest {
+        println!("bundle-digest: {digest}");
+    }
+    println!(
+        "executable:   unverified — bundle integrity does not attest PATH/managed executables or REST services"
+    );
     print_transport(&m.transport);
     if m.status == crate::manifest::agent::AgentStatus::Planned {
         println!(
@@ -1422,6 +1483,45 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
         .to_path_buf();
     let index = crate::registry::Index::parse(std::fs::File::open(&index_path)?)?;
 
+    let mut digest_errors = Vec::new();
+    let mut digest_targets = Vec::new();
+    for (id, entry) in &index.agents {
+        for (version, release) in &entry.versions {
+            let Some(expected_digest) = release.bundle_digest.as_deref() else {
+                continue; // backward-compatible custom/legacy index entry
+            };
+            let rel = crate::registry::checkout_relative_subdir(&release.subdir);
+            let root = repo_root.join(rel);
+            digest_targets.push((format!("{id}@{version}"), expected_digest.to_string(), root));
+        }
+    }
+    if !digest_targets.is_empty() {
+        match crate::install::integrity::checkout_tree_digests(
+            &repo_root,
+            &digest_targets
+                .iter()
+                .map(|(_, _, root)| root.clone())
+                .collect::<Vec<_>>(),
+        ) {
+            Ok(actual) => {
+                for (release, expected, root) in &digest_targets {
+                    match actual.get(root) {
+                        Some(found) if found == expected => {}
+                        Some(found) => digest_errors.push((
+                            release.clone(),
+                            format!(
+                                "bundle-digest drift: index has {expected}, checkout has {found}"
+                            ),
+                        )),
+                        None => digest_errors
+                            .push((release.clone(), "bundle digest was not computed".into())),
+                    }
+                }
+            }
+            Err(error) => digest_errors.push(("bundle-digests".into(), error.to_string())),
+        }
+    }
+
     let (cat, errors) = catalog::build_catalog(&index, crate::builder::now_iso(), |subdir| {
         // The SAME mapping the collision guard keys on, so the two cannot disagree about
         // which entries land on one manifest (Codex review, PR #457 round 7).
@@ -1433,6 +1533,8 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     // Refuse to emit (or pass --check on) a partial or misleading catalog: a manifest that
     // fails to load, or a version key that shares a subdir with another (#454), is a real
     // problem to fix, not something to silently drop from — or fabricate into — the catalog.
+    let mut errors = errors;
+    errors.extend(digest_errors);
     if !errors.is_empty() {
         eprintln!("⚠ {} registry problem(s):", errors.len());
         for (id, e) in &errors {

@@ -152,6 +152,7 @@ fn run_put(args: PutArgs, ctx: &Context) -> Result<(), AwareError> {
         token_type: "Bearer".into(),
         integration: args.handle.clone(),
         obtained_at: now,
+        generation: Some(crate::auth::keychain::new_credential_generation()),
         // `Paste` = user-managed, no refresh token. That is exactly an opaque
         // bearer, and it keeps `connect --list` / `doctor` from offering
         // `--refresh` on a credential nothing can refresh.

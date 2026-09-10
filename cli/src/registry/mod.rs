@@ -17,6 +17,6 @@ pub mod index;
 // facade, in either build. All three are gone.
 #[allow(unused_imports)]
 pub use index::{
-    Index, IndexEntry, VersionEntry, check_subdir_portable, checkout_relative_subdir,
-    portable_subdir_key,
+    Index, IndexEntry, RegistryTrust, VersionEntry, check_subdir_portable,
+    checkout_relative_subdir, portable_subdir_key,
 };
