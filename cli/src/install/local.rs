@@ -118,17 +118,28 @@ pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<App, AwareErro
     // The postcondition #502 is about, checked rather than assumed: the file
     // every later verb will load must be the file install just validated. It
     // holds by construction — one manifest in, one manifest copied, and the
-    // canonical selector can only return that one — so a failure here means a
-    // selector has drifted apart from install again, and the honest response is
-    // to refuse rather than leave an app whose identity is already in dispute.
-    // Checked BEFORE the synthesized agent is written, so unwinding is one
-    // directory removal.
+    // canonical selector can only return that one — so reaching the refusal
+    // means a selector has drifted apart from install again. Checked BEFORE the
+    // synthesized agent is written, so a refused install registers no agent.
+    //
+    // It deletes NOTHING, deliberately. Being unreachable for a lone install is
+    // exactly what makes cleanup dangerous here: the way to reach it is a SECOND
+    // `app install` of the same id running concurrently. `dst.exists()` above is
+    // a check, not a reservation, so both can pass it and both can copy into
+    // `dst`; the merged directory then holds two manifests and whichever process
+    // loses the selection arrives here — with the other process's files, possibly
+    // already reported to its user as installed. A `remove_dir_all(&dst)` on that
+    // path destroys a successful install to tidy up after a failed one. Naming
+    // the directory and leaving it costs an operator one `aware app uninstall`;
+    // the alternative costs them someone else's app. (The `exists()` race itself
+    // predates this check and is not this change's to fix — see #516.)
     let resolved = crate::manifest::loader::find_app_manifest(&dst);
     if resolved.as_deref() != Some(installed_manifest.as_path()) {
-        let _ = std::fs::remove_dir_all(&dst);
         return Err(AwareError::Internal(format!(
-            "installed {} from {}, but discovery in {} resolves to {} — refusing to leave an \
-             app whose install-time and run-time manifests disagree",
+            "installed {} from {}, but discovery in {} resolves to {} — the install-time and \
+             run-time manifests disagree, so {} is NOT safe to run; inspect it and remove it \
+             with `aware app uninstall {}` (left in place: a concurrent install of the same id \
+             may own these files)",
             app.app,
             manifest_path.display(),
             dst.display(),
@@ -136,6 +147,8 @@ pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<App, AwareErro
                 .as_deref()
                 .map(|p| p.display().to_string())
                 .unwrap_or_else(|| "nothing".into()),
+            app.app,
+            app.app,
         )));
     }
 
