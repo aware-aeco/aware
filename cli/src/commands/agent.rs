@@ -1666,7 +1666,19 @@ fn read_pinned_release(
     }
     let output = std::process::Command::new("git")
         .current_dir(repo_root)
-        .args(["archive", "--format=tar", commit, "--", relative])
+        // `git archive` otherwise honors `core.autocrlf` on Git for Windows,
+        // making the same immutable Git tree hash differently from Linux and
+        // from GitHub's commit archive. Hash canonical blob line endings on
+        // every platform.
+        .args([
+            "-c",
+            "core.autocrlf=false",
+            "archive",
+            "--format=tar",
+            commit,
+            "--",
+            relative,
+        ])
         .output()
         .map_err(|error| {
             AwareError::Validation(format!("cannot run git archive for {commit}: {error}"))
