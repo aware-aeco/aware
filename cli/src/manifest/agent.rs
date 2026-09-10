@@ -48,12 +48,19 @@ pub struct Agent {
     pub description: String,
     pub stateful: bool,
     /// Runnability of the agent's transport. `available` (default) means the
-    /// transport binary ships / is installable; `planned` means the agent is
-    /// declared but not yet runnable (no shipped/installable binary), so apps
-    /// referencing it are rejected at validate/compile rather than failing at run
-    /// with "program not found" (#161).
+    /// transport ships / is installable; `planned` means it is not wired yet;
+    /// `requires-runtime` means it is runnable only on a CLI at or above
+    /// `minimum-cli-version`. Lifecycle validation enforces that requirement at
+    /// install, compile, and run instead of allowing an older runtime to fall
+    /// through to a transport it cannot execute (#495).
     #[serde(default)]
     pub status: AgentStatus,
+    /// The first AWARE CLI version that understands this agent's implementation.
+    /// Required when `status: requires-runtime`; otherwise omitted. Kept at agent
+    /// level because the runtime implementation is shipped by the CLI, not by an
+    /// individual command.
+    #[serde(rename = "minimum-cli-version", default)]
+    pub minimum_cli_version: Option<String>,
     pub vendor: Option<String>,
     pub license: String,
     #[allow(dead_code)]
@@ -110,6 +117,20 @@ pub enum AgentStatus {
     /// Declared but not yet runnable (no shipped/installable transport binary).
     /// Apps referencing it fail validation/compile rather than at run time (#161).
     Planned,
+    /// The implementation exists, but only in AWARE CLI versions at or above the
+    /// manifest's `minimum-cli-version`. Older CLIs that predate this enum value
+    /// reject the manifest during deserialization instead of misrouting it (#495).
+    RequiresRuntime,
+}
+
+impl AgentStatus {
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::Available => "available",
+            Self::Planned => "planned",
+            Self::RequiresRuntime => "requires-runtime",
+        }
+    }
 }
 
 /// Declarative authentication for a REST-transport agent.
@@ -525,7 +546,43 @@ skills:
         assert_eq!(a.license, "Apache-2.0");
         assert_eq!(a.skill_count(), 2);
         assert_eq!(a.command_count(), 2);
+        assert_eq!(a.status, AgentStatus::Available);
+        assert!(a.minimum_cli_version.is_none());
         assert_eq!(a.transport.cli.unwrap().binary, "aware-tekla");
+    }
+
+    #[test]
+    fn parses_runtime_gated_manifest() {
+        let yaml = TEKLA_MIN.replace(
+            "stateful: true\n",
+            "stateful: true\nstatus: requires-runtime\nminimum-cli-version: 0.136.0\n",
+        );
+        let a: Agent = serde_yaml::from_str(&yaml).unwrap();
+        assert_eq!(a.status, AgentStatus::RequiresRuntime);
+        assert_eq!(a.minimum_cli_version.as_deref(), Some("0.136.0"));
+    }
+
+    #[test]
+    fn legacy_v0_135_status_enum_rejects_requires_runtime() {
+        // This mirrors the closed status enum shipped by v0.135.0. The unknown
+        // value is intentionally not caught by `#[serde(other)]`: an old runtime
+        // must reject the manifest before it can route through its generic REST
+        // path. The release test can additionally exercise the tagged binary.
+        #[derive(Debug, Deserialize)]
+        #[serde(rename_all = "kebab-case")]
+        enum V0_135AgentStatus {
+            Available,
+            Planned,
+        }
+        #[derive(Debug, Deserialize)]
+        struct V0_135Manifest {
+            #[allow(dead_code)]
+            status: V0_135AgentStatus,
+        }
+
+        let err = serde_yaml::from_str::<V0_135Manifest>("status: requires-runtime\n")
+            .expect_err("v0.135.0 semantics must reject the new status");
+        assert!(err.to_string().contains("unknown variant"), "{err}");
     }
 
     #[test]

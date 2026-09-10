@@ -4,6 +4,11 @@
 
 use thiserror::Error;
 
+/// Heap-owned correlation fields keep the global error enum compact without
+/// changing the structured JSON representation.
+#[derive(Debug, Clone)]
+pub(crate) struct AgentErrorDetails(pub std::collections::BTreeMap<String, String>);
+
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct StructuredAgentError {
@@ -12,6 +17,9 @@ pub struct StructuredAgentError {
     pub retryable: bool,
     pub message: String,
     pub diagnostic_id: String,
+    /// Optional bounded, non-secret correlation data for a failed operation.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub details: Option<std::collections::BTreeMap<String, String>>,
 }
 
 #[derive(Debug, Error)]
@@ -34,6 +42,7 @@ pub enum AwareError {
         retryable: bool,
         message: String,
         diagnostic_id: String,
+        details: Option<Box<AgentErrorDetails>>,
     },
 
     #[error("permission denied: {0}")]
@@ -71,14 +80,32 @@ impl AwareError {
                 retryable,
                 message,
                 diagnostic_id,
+                details,
             } => Some(StructuredAgentError {
                 code: code.clone(),
                 phase: phase.clone(),
                 retryable: *retryable,
                 message: message.clone(),
                 diagnostic_id: diagnostic_id.clone(),
+                details: details.as_deref().map(|value| value.0.clone()),
             }),
             _ => None,
+        }
+    }
+
+    /// Render a command-line failure without dropping safe structured
+    /// reconciliation fields. Ordinary error text remains unchanged; only an
+    /// error carrying details gains a compact JSON suffix.
+    pub fn cli_message(&self) -> String {
+        let Some(structured) = self.structured_agent_error() else {
+            return self.to_string();
+        };
+        let Some(details) = structured.details else {
+            return self.to_string();
+        };
+        match serde_json::to_string(&details) {
+            Ok(details) => format!("{self}; details={details}"),
+            Err(_) => self.to_string(),
         }
     }
 
@@ -94,5 +121,56 @@ impl AwareError {
             Self::Conflict(_) => 8,
             Self::Io(_) | Self::Yaml(_) | Self::Json(_) | Self::Internal(_) => 1,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn structured_error_details_are_optional_and_backward_compatible() {
+        let legacy =
+            r#"{"code":"x","phase":"dispatch","retryable":false,"message":"m","diagnosticId":"d"}"#;
+        let parsed: StructuredAgentError = serde_json::from_str(legacy).unwrap();
+        assert!(parsed.details.is_none());
+
+        let mut details = std::collections::BTreeMap::new();
+        details.insert("attemptId".into(), "rfi-001-mail-v1".into());
+        details.insert("rfcMessageId".into(), "<rfi-001@example.invalid>".into());
+        let value = serde_json::to_value(StructuredAgentError {
+            code: "gmail.send.outcome-unknown".into(),
+            phase: "dispatch".into(),
+            retryable: false,
+            message: "Send outcome is unknown; reconcile before retrying.".into(),
+            diagnostic_id: "rfi-001-mail-v1".into(),
+            details: Some(details),
+        })
+        .unwrap();
+        assert_eq!(value["details"]["attemptId"], "rfi-001-mail-v1");
+        assert_eq!(
+            value["details"]["rfcMessageId"],
+            "<rfi-001@example.invalid>"
+        );
+    }
+
+    #[test]
+    fn cli_message_includes_reconciliation_identifiers() {
+        let details = std::collections::BTreeMap::from([
+            ("attemptId".into(), "rfi-001-mail-v1".into()),
+            ("rfcMessageId".into(), "<rfi-001@example.invalid>".into()),
+        ]);
+        let error = AwareError::AgentStructured {
+            code: "gmail.send.outcome-unknown".into(),
+            phase: "dispatch".into(),
+            retryable: false,
+            message: "reconcile before retrying".into(),
+            diagnostic_id: "gmail-attempt".into(),
+            details: Some(Box::new(AgentErrorDetails(details))),
+        };
+
+        let rendered = error.cli_message();
+        assert!(rendered.contains("\"attemptId\":\"rfi-001-mail-v1\""));
+        assert!(rendered.contains("\"rfcMessageId\":\"<rfi-001@example.invalid>\""));
     }
 }

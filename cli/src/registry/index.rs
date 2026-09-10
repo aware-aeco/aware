@@ -82,6 +82,114 @@ pub struct VersionEntry {
 /// resolve inside `main.tar.gz`.
 pub const SUBSTRATE_ARCHIVE_ROOT: &str = "aware-main/";
 
+/// Return GitHub's deterministic top-level directory for a tarball pinned to a
+/// full commit SHA (`https://github.com/<owner>/<repo>/archive/<sha>.tar.gz`).
+/// Branch/tag archive URLs deliberately return `None`: only a full, lowercase
+/// 40-hex object name is immutable enough for a registry release pin.
+pub fn github_commit_archive_root(tarball: &str) -> Option<String> {
+    let path = tarball.strip_prefix("https://github.com/")?;
+    let mut parts = path.split('/');
+    let owner = parts.next()?;
+    let repo_part = parts.next()?;
+    let repo = repo_part.strip_suffix(".git").unwrap_or(repo_part);
+    if owner.is_empty() || repo.is_empty() || parts.next()? != "archive" {
+        return None;
+    }
+    let file = parts.next()?;
+    if parts.next().is_some() {
+        return None;
+    }
+    let commit = file.strip_suffix(".tar.gz")?;
+    if commit.len() != 40
+        || !commit
+            .bytes()
+            .all(|byte| byte.is_ascii_hexdigit() && !byte.is_ascii_uppercase())
+    {
+        return None;
+    }
+    Some(format!("{repo}-{commit}/"))
+}
+
+/// Resolve a validated immutable GitHub archive entry to the Git commit and
+/// repository-relative subtree that produced its install payload.
+pub fn github_commit_archive_source(tarball: &str, subdir: &str) -> Option<(String, String)> {
+    let root = github_commit_archive_root(tarball)?;
+    check_immutable_archive_root(tarball, subdir).ok()?;
+    let commit = root.trim_end_matches('/').rsplit_once('-')?.1.to_string();
+    let normalized = normalize_subdir(subdir);
+    let relative = normalized.strip_prefix(&root)?.to_string();
+    (!relative.is_empty()).then_some((commit, relative))
+}
+
+/// Identity of the source bytes used by local catalog generation. Immutable
+/// releases are distinct by commit even when their repository path is reused;
+/// mutable/legacy releases continue to resolve through the checkout path.
+pub fn catalog_source_key(tarball: &str, subdir: &str) -> String {
+    if let Some((commit, relative)) = github_commit_archive_source(tarball, subdir) {
+        format!("git:{commit}:{}", relative.to_ascii_lowercase())
+    } else {
+        format!("checkout:{}", portable_subdir_key(subdir))
+    }
+}
+
+/// Verify that an immutable GitHub commit archive and its declared subdir agree
+/// on the archive's generated root. This prevents a commit-looking root from
+/// being stripped during local catalog generation unless the tarball pins the
+/// same repository and commit, and catches a correctly pinned URL whose subdir
+/// would never exist in the downloaded archive.
+pub fn check_immutable_archive_root(tarball: &str, subdir: &str) -> Result<(), String> {
+    let expected = github_commit_archive_root(tarball);
+    if expected.is_none()
+        && let Some(object) = github_direct_archive_object(tarball)
+        && object.bytes().all(|byte| byte.is_ascii_hexdigit())
+    {
+        return Err(format!(
+            "tarball {tarball:?} looks commit-pinned but uses an abbreviated or uppercase object name; immutable registry archives require exactly 40 lowercase hex characters"
+        ));
+    }
+    let normalized = normalize_subdir(subdir);
+    let first = normalized.split('/').next().unwrap_or("");
+    let actual_commit_root = commit_archive_root_component(first).map(|root| format!("{root}/"));
+
+    match (expected, actual_commit_root) {
+        (Some(expected), Some(actual)) if expected == actual => Ok(()),
+        (Some(expected), Some(actual)) => Err(format!(
+            "subdir {subdir:?} starts with immutable archive root {actual:?}, but tarball {tarball:?} requires {expected:?}"
+        )),
+        (Some(expected), None) => Err(format!(
+            "subdir {subdir:?} does not start with {expected:?}, the root produced by immutable tarball {tarball:?}"
+        )),
+        (None, Some(actual)) => Err(format!(
+            "subdir {subdir:?} uses commit archive root {actual:?}, but tarball {tarball:?} is not the matching immutable GitHub commit archive"
+        )),
+        (None, None) => Ok(()),
+    }
+}
+
+fn github_direct_archive_object(tarball: &str) -> Option<&str> {
+    let path = tarball.strip_prefix("https://github.com/")?;
+    let mut parts = path.split('/');
+    let _owner = parts.next()?;
+    let _repo = parts.next()?;
+    if parts.next()? != "archive" {
+        return None;
+    }
+    let file = parts.next()?;
+    if parts.next().is_some() {
+        return None;
+    }
+    file.strip_suffix(".tar.gz")
+}
+
+fn commit_archive_root_component(component: &str) -> Option<&str> {
+    let (_, commit) = component.rsplit_once('-')?;
+    (commit.len() == 40
+        && commit
+            .bytes()
+            .all(|byte| byte.is_ascii_hexdigit() && !byte.is_ascii_uppercase()))
+    .then_some(component)
+}
+
 /// `Err(reason)` when a `subdir` is not written in the one portable form the registry
 /// accepts: a RELATIVE, `/`-separated path that stays inside the archive — no backslash,
 /// no absolute or drive-prefixed path, no leading `..`.
@@ -201,10 +309,18 @@ fn check_one_form(value: &str, shown: &str) -> Result<(), String> {
 /// [`normalize_subdir`], which both readers share.
 pub fn checkout_relative_subdir(subdir: &str) -> String {
     let normalized = normalize_subdir(subdir);
+    if let Some(relative) = normalized.strip_prefix(SUBSTRATE_ARCHIVE_ROOT) {
+        return relative.to_string();
+    }
+    let first = normalized.split('/').next().unwrap_or("");
+    if commit_archive_root_component(first).is_some() {
+        return normalized
+            .strip_prefix(first)
+            .and_then(|rest| rest.strip_prefix('/'))
+            .unwrap_or("")
+            .to_string();
+    }
     normalized
-        .strip_prefix(SUBSTRATE_ARCHIVE_ROOT)
-        .unwrap_or(&normalized)
-        .to_string()
 }
 
 /// The key two subdirs must differ on to be *portably* different directories:
@@ -282,6 +398,12 @@ impl Index {
             .map_err(|e| AwareError::Validation(format!("registry index: {e}")))?;
         for (agent, entry) in &index.agents {
             for (version, release) in &entry.versions {
+                if let Err(reason) = check_immutable_archive_root(&release.tarball, &release.subdir)
+                {
+                    return Err(AwareError::Validation(format!(
+                        "registry index: {agent}@{version}: {reason}"
+                    )));
+                }
                 if let Some(digest) = &release.bundle_digest
                     && !is_bundle_digest(digest)
                 {
@@ -433,6 +555,78 @@ mod tests {
         assert!(check_subdir_portable("aware-main//etc/foo").is_ok());
         // Escaping through the archive root still is.
         assert!(check_subdir_portable("aware-main/../../etc/foo").is_err());
+    }
+
+    #[test]
+    fn immutable_github_commit_archive_root_is_derived_and_stripped() {
+        let sha = "0123456789abcdef0123456789abcdef01234567";
+        let tarball = format!("https://github.com/aware-aeco/aware/archive/{sha}.tar.gz");
+        let subdir = format!("aware-{sha}/20-agents/aeco/cross-cutting/google-workspace");
+
+        assert_eq!(
+            github_commit_archive_root(&tarball).as_deref(),
+            Some(format!("aware-{sha}/").as_str())
+        );
+        assert!(check_immutable_archive_root(&tarball, &subdir).is_ok());
+        assert_eq!(
+            github_commit_archive_source(&tarball, &subdir),
+            Some((
+                sha.to_string(),
+                "20-agents/aeco/cross-cutting/google-workspace".to_string()
+            ))
+        );
+        assert_eq!(
+            catalog_source_key(&tarball, &subdir),
+            format!("git:{sha}:20-agents/aeco/cross-cutting/google-workspace")
+        );
+        assert_eq!(
+            checkout_relative_subdir(&subdir),
+            "20-agents/aeco/cross-cutting/google-workspace"
+        );
+    }
+
+    #[test]
+    fn immutable_archive_root_must_match_tarball_repository_and_commit() {
+        let sha = "0123456789abcdef0123456789abcdef01234567";
+        let other = "89abcdef0123456789abcdef0123456789abcdef";
+        let tarball = format!("https://github.com/aware-aeco/aware/archive/{sha}.tar.gz");
+
+        assert!(
+            check_immutable_archive_root(
+                &tarball,
+                &format!("aware-{other}/20-agents/google-workspace")
+            )
+            .is_err()
+        );
+        assert!(
+            check_immutable_archive_root(
+                "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+                &format!("aware-{sha}/20-agents/google-workspace")
+            )
+            .is_err()
+        );
+        assert!(
+            github_commit_archive_root(
+                "https://github.com/aware-aeco/aware/archive/01234567.tar.gz"
+            )
+            .is_none()
+        );
+        assert!(
+            check_immutable_archive_root(
+                "https://github.com/aware-aeco/aware/archive/01234567.tar.gz",
+                "aware-01234567/20-agents/google-workspace"
+            )
+            .is_err()
+        );
+        assert!(github_commit_archive_root(
+            "https://github.com/aware-aeco/aware/archive/0123456789ABCDEF0123456789ABCDEF01234567.tar.gz"
+        )
+        .is_none());
+        assert!(check_immutable_archive_root(
+            "https://github.com/aware-aeco/aware/archive/0123456789ABCDEF0123456789ABCDEF01234567.tar.gz",
+            "aware-0123456789ABCDEF0123456789ABCDEF01234567/20-agents/google-workspace"
+        )
+        .is_err());
     }
 
     const SAMPLE: &str = r#"{

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-08-25T19:40:00.000000000+00:00",
+  "updated-at": "2026-09-10T06:55:11.743507400+00:00",
   "agents": {
     "tekla": {
       "versions": {
@@ -321,7 +321,7 @@
       "versions": {
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/cross-cutting/google-workspace",
+          "subdir": "aware-main/registry-history/agents/google-workspace/1.0.0",
           "bundle-digest": "sha256:56753c0bafbbe41b7bf29dbac8302e639cef7d74a24022f771df50b71277fbcb"
         }
       }

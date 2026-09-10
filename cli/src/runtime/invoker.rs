@@ -344,6 +344,8 @@ struct StructuredBridgeError {
     retryable: bool,
     message: String,
     diagnostic_id: String,
+    #[serde(default)]
+    details: Option<std::collections::BTreeMap<String, String>>,
 }
 
 /// Preserve a bridge's bounded typed error instead of flattening it into an opaque network string.
@@ -358,6 +360,12 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
         || parsed.message.is_empty()
         || parsed.message.chars().count() > 240
         || parsed.diagnostic_id.len() > 64
+        || parsed.details.as_ref().is_some_and(|details| {
+            details.len() > 8
+                || details
+                    .iter()
+                    .any(|(key, value)| key.is_empty() || key.len() > 64 || value.len() > 256)
+        })
     {
         return None;
     }
@@ -367,6 +375,10 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
         retryable: parsed.retryable,
         message: parsed.message,
         diagnostic_id: parsed.diagnostic_id,
+        details: parsed
+            .details
+            .map(crate::error::AgentErrorDetails)
+            .map(Box::new),
     })
 }
 
@@ -1047,6 +1059,12 @@ impl AgentInvoker for RestInvoker {
         command: &str,
         args: Value,
     ) -> Result<Value, AwareError> {
+        // Gmail send is a pinned, at-most-once flow whose identity preflight,
+        // MIME construction and durable outbox cannot be expressed by the
+        // generic one-request REST renderer (#495).
+        if agent == "google-workspace" && command == "gmail.send" {
+            return crate::runtime::google_mail::send(self.agents_dir.clone(), args).await;
+        }
         // Trimble Connect file ops are multi-step, binary, cross-domain flows the
         // single-call REST path can't express, so they're handled out-of-line (#200).
         if agent == "trimble-connect" {
@@ -2857,6 +2875,11 @@ impl DispatchInvoker {
         // the same id onto `agents_dir` again, and a traversal manifest declaring
         // `cli:` or `rest:` never touches the app-transport path (#349, #365).
         let m = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent)?;
+        if let Some((code, reason)) =
+            crate::validate::runtime_requirement_error(&m, crate::validate::CURRENT_CLI_VERSION)
+        {
+            return Err(AwareError::Validation(format!("[{code}] {reason}")));
+        }
         effective_transport(&m, agent)
     }
 
@@ -2967,6 +2990,7 @@ impl DispatchInvoker {
         let original_args = args.clone();
         let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
         Self::align_record_args_after_coercion(&original_args, &args, &mut record_args);
+        record_args = crate::runtime::orchestrator::trace_safe_app_inputs(&app, record_args);
         let backed_by = app.app.clone();
         let run_id = crate::runtime::provenance::run_id_now();
         let log_path = crate::runtime::provenance::log_path_for(
@@ -3003,6 +3027,7 @@ impl DispatchInvoker {
         let original_args = args.clone();
         let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
         Self::align_record_args_after_coercion(&original_args, &args, &mut record_args);
+        record_args = crate::runtime::orchestrator::trace_safe_app_inputs(&app, record_args);
         let backed_by = app.app.clone();
         let run_id = crate::runtime::provenance::run_id_now();
         let log_path = crate::runtime::provenance::log_path_for(
@@ -3699,6 +3724,39 @@ mod stream_pump_tests {
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn common_dispatch_funnel_rejects_a_newer_runtime_requirement() {
+        let tmp = tempfile::tempdir().unwrap();
+        let agents_dir = tmp.path().join("agents");
+        let agent_dir = agents_dir.join("future");
+        std::fs::create_dir_all(&agent_dir).unwrap();
+        std::fs::write(
+            agent_dir.join("manifest.yaml"),
+            "agent: future\n\
+             version: 1.0.0\n\
+             description: Needs a future runtime.\n\
+             stateful: false\n\
+             status: requires-runtime\n\
+             minimum-cli-version: 999.0.0\n\
+             license: MIT\n\
+             transport:\n  cli:\n    binary: future\n\
+             commands:\n  ping:\n    lifecycle: single\n    description: Ping.\n",
+        )
+        .unwrap();
+
+        let invoker = DispatchInvoker {
+            agents_dir,
+            artifact_dir: None,
+            app_ctx: None,
+            preview: false,
+            reader_cancellation: ReaderCancellation::default(),
+        };
+        let error = invoker.transport_kind("future").unwrap_err().to_string();
+
+        assert!(error.contains("E_AGENT_RUNTIME_TOO_OLD"), "{error}");
+        assert!(error.contains("999.0.0"), "{error}");
+    }
 
     #[test]
     fn record_safe_args_follow_coercion_without_restoring_redacted_values() {
@@ -5424,7 +5482,7 @@ mod builtin_invoker_tests {
 
     #[test]
     fn model_reader_structured_errors_keep_their_typed_fields() {
-        let stderr = r#"{"code":"reference-provider-pin-mismatch","phase":"preflight","retryable":false,"message":"The local provider does not match the expected fingerprint.","diagnosticId":"123e4567-e89b-12d3-a456-426614174000"}"#;
+        let stderr = r#"{"code":"reference-provider-pin-mismatch","phase":"preflight","retryable":false,"message":"The local provider does not match the expected fingerprint.","diagnosticId":"123e4567-e89b-12d3-a456-426614174000","details":{"expectedPin":"sha256:abc"}}"#;
         let error = structured_bridge_error(stderr).expect("closed model-reader envelope");
         match error {
             AwareError::AgentStructured {
@@ -5433,12 +5491,17 @@ mod builtin_invoker_tests {
                 retryable,
                 message,
                 diagnostic_id,
+                details,
             } => {
                 assert_eq!(code, "reference-provider-pin-mismatch");
                 assert_eq!(phase, "preflight");
                 assert!(!retryable);
                 assert!(message.contains("expected fingerprint"));
                 assert_eq!(diagnostic_id, "123e4567-e89b-12d3-a456-426614174000");
+                assert_eq!(
+                    details.unwrap().0.get("expectedPin").map(String::as_str),
+                    Some("sha256:abc")
+                );
             }
             other => panic!("typed envelope was flattened: {other:?}"),
         }
@@ -5448,6 +5511,11 @@ mod builtin_invoker_tests {
             )
             .is_none()
         );
+        let oversized = "x".repeat(257);
+        let payload = format!(
+            r#"{{"code":"reference-x","phase":"x","retryable":false,"message":"x","diagnosticId":"x","details":{{"key":"{oversized}"}}}}"#
+        );
+        assert!(structured_bridge_error(&payload).is_none());
     }
 
     #[test]

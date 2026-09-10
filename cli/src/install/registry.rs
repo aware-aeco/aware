@@ -581,6 +581,45 @@ mod tests {
     }
 
     #[test]
+    fn registry_install_rejects_agent_requiring_a_newer_cli_before_promotion() {
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("extracted/future-agent");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(
+            src.join("manifest.yaml"),
+            "agent: future-agent\nversion: 1.0.0\ndescription: future\nstateful: false\n\
+             status: requires-runtime\nminimum-cli-version: 999.0.0\nlicense: MIT\n\
+             transport: { builtin: {} }\ncommands: { run: { lifecycle: single, description: x } }\n",
+        )
+        .unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+
+        let error = install_staged_registry(
+            &src,
+            &paths,
+            RegistryTrust::Unverified,
+            "future-agent",
+            "1.0.0",
+            None,
+        )
+        .unwrap_err();
+
+        assert!(
+            error.to_string().contains("E_AGENT_RUNTIME_TOO_OLD"),
+            "{error}"
+        );
+        assert!(!paths.agents_dir().join("future-agent").exists());
+        assert!(
+            !paths
+                .cache_dir()
+                .join("install-staging/future-agent")
+                .exists()
+        );
+    }
+
+    #[test]
     fn tarball_cache_name_shares_one_file_per_url_and_snapshot() {
         let url = "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz";
         // Two different agents in the SAME registry snapshot share one cache file (#243).

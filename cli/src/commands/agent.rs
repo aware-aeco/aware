@@ -223,6 +223,16 @@ async fn invoke_cmd(
         return Err(not_installed());
     }
     let m = crate::manifest::loader::load_agent(&manifest_path)?;
+    if m.status == crate::manifest::agent::AgentStatus::Planned {
+        return Err(AwareError::Validation(format!(
+            "agent '{agent_id}' is planned and not runnable"
+        )));
+    }
+    if let Some((code, message)) =
+        crate::validate::runtime_requirement_error(&m, crate::validate::CURRENT_CLI_VERSION)
+    {
+        return Err(AwareError::Validation(format!("[{code}] {message}")));
+    }
     // Resolve the EFFECTIVE transport through the same priority order workflow
     // dispatch uses (cli > rest > app > builtin) — NOT a bare `builtin` probe.
     // A crafted MIXED-transport manifest (builtin + cli/rest/app) dispatches as
@@ -237,11 +247,16 @@ async fn invoke_cmd(
              to drive a `{kind}` agent, compose it in a .flo app and `aware app run` it."
         )));
     }
-    if !m.commands.contains_key(command) {
+    let Some(command_manifest) = m.commands.get(command) else {
         let available: Vec<&str> = m.commands.keys().map(String::as_str).collect();
         return Err(AwareError::Validation(format!(
             "agent '{agent_id}' has no command '{command}' (available: {})",
             available.join(", ")
+        )));
+    };
+    if command_manifest.status == crate::manifest::agent::AgentStatus::Planned {
+        return Err(AwareError::Validation(format!(
+            "command '{command}' of agent '{agent_id}' is planned and not runnable"
         )));
     }
 
@@ -494,9 +509,9 @@ fn validate_cmd(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError
     Ok(())
 }
 
-/// Standard tarball for substrate-hosted agents: every entry in the
-/// aware-aeco/aware registry points at the repo's `main` archive and is
-/// distinguished only by `subdir` (see `registry-index.json`).
+/// Standard tarball for ordinary substrate-hosted agents. Runtime-gated agents
+/// must instead use an immutable full-commit archive and are rejected below
+/// until this command can derive and stage that shape safely.
 const SUBSTRATE_TARBALL: &str =
     "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz";
 
@@ -528,6 +543,19 @@ fn publish(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
 
     let id = agent.agent.clone();
     let version = agent.version.clone();
+
+    let runtime_gated = agent.status == crate::manifest::agent::AgentStatus::RequiresRuntime
+        || agent
+            .commands
+            .values()
+            .any(|command| command.status == crate::manifest::agent::AgentStatus::RequiresRuntime);
+    if runtime_gated {
+        return Err(AwareError::Validation(format!(
+            "agent {id}@{version} is runtime-gated and must be published from an immutable \
+             full-commit archive; `aware agent publish` currently emits the mutable main-branch \
+             archive, so create the commit-pinned registry entry explicitly"
+        )));
+    }
 
     let abs = path.canonicalize()?;
     let Some((index_path, rel)) = find_registry_root(&abs) else {
@@ -960,6 +988,11 @@ fn describe_installed(
             description: &'a str,
             stateful: bool,
             status: &'static str,
+            #[serde(
+                rename = "minimum-cli-version",
+                skip_serializing_if = "Option::is_none"
+            )]
+            minimum_cli_version: Option<&'a str>,
             license: &'a str,
             vendor: Option<&'a str>,
             commands: Vec<CommandRow>,
@@ -979,11 +1012,7 @@ fn describe_installed(
                 name: n.clone(),
                 lifecycle: format!("{:?}", c.lifecycle).to_lowercase(),
                 category: format!("{:?}", m.category_of(c)).to_lowercase(),
-                status: match c.status {
-                    crate::manifest::agent::AgentStatus::Available => "available",
-                    crate::manifest::agent::AgentStatus::Planned => "planned",
-                }
-                .to_string(),
+                status: c.status.as_str().to_string(),
                 description: c.description.clone(),
             })
             .collect();
@@ -995,10 +1024,8 @@ fn describe_installed(
             display_name: m.display_name.as_deref(),
             description: &m.description,
             stateful: m.stateful,
-            status: match m.status {
-                crate::manifest::agent::AgentStatus::Available => "available",
-                crate::manifest::agent::AgentStatus::Planned => "planned",
-            },
+            status: m.status.as_str(),
+            minimum_cli_version: m.minimum_cli_version.as_deref(),
             license: &m.license,
             vendor: m.vendor.as_deref(),
             command_count: m.command_count(),
@@ -1046,11 +1073,17 @@ fn describe_installed(
         "executable:   unverified — bundle integrity does not attest PATH/managed executables or REST services"
     );
     print_transport(&m.transport);
-    if m.status == crate::manifest::agent::AgentStatus::Planned {
-        println!(
+    match m.status {
+        crate::manifest::agent::AgentStatus::Available => {}
+        crate::manifest::agent::AgentStatus::Planned => println!(
             "status:       \u{26a0} planned — not yet runnable (no shipped transport binary); \
              apps referencing it are rejected at validate/compile (#161)"
-        );
+        ),
+        crate::manifest::agent::AgentStatus::RequiresRuntime => println!(
+            "status:       requires-runtime — needs AWARE CLI {} or newer (running {})",
+            m.minimum_cli_version.as_deref().unwrap_or("<missing>"),
+            crate::validate::CURRENT_CLI_VERSION
+        ),
     }
     println!();
     let curated = m.curated_count();
@@ -1484,9 +1517,35 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     let index = crate::registry::Index::parse(std::fs::File::open(&index_path)?)?;
 
     let mut digest_errors = Vec::new();
+    let mut pinned_sources: std::collections::BTreeMap<String, (Vec<u8>, String)> =
+        std::collections::BTreeMap::new();
     let mut digest_targets = Vec::new();
     for (id, entry) in &index.agents {
         for (version, release) in &entry.versions {
+            if let Some((commit, relative)) =
+                crate::registry::github_commit_archive_source(&release.tarball, &release.subdir)
+            {
+                match read_pinned_release(&repo_root, &commit, &relative) {
+                    Ok((manifest, digest)) => {
+                        if let Some(expected) = release.bundle_digest.as_deref()
+                            && digest != expected
+                        {
+                            digest_errors.push((
+                                format!("{id}@{version}"),
+                                format!(
+                                    "bundle-digest drift: index has {expected}, pinned Git tree has {digest}"
+                                ),
+                            ));
+                        }
+                        pinned_sources.insert(release.subdir.clone(), (manifest, digest));
+                    }
+                    Err(error) => digest_errors.push((
+                        format!("{id}@{version}"),
+                        format!("cannot read pinned release source: {error}"),
+                    )),
+                }
+                continue;
+            }
             let Some(expected_digest) = release.bundle_digest.as_deref() else {
                 continue; // backward-compatible custom/legacy index entry
             };
@@ -1523,6 +1582,9 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     }
 
     let (cat, errors) = catalog::build_catalog(&index, crate::builder::now_iso(), |subdir| {
+        if let Some((manifest, _digest)) = pinned_sources.get(subdir) {
+            return serde_yaml::from_slice(manifest).map_err(AwareError::from);
+        }
         // The SAME mapping the collision guard keys on, so the two cannot disagree about
         // which entries land on one manifest (Codex review, PR #457 round 7).
         let rel = crate::registry::checkout_relative_subdir(subdir);
@@ -1577,6 +1639,117 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     Ok(())
 }
 
+/// Read the exact agent payload from a commit-pinned GitHub archive using the
+/// equivalent local Git object. This keeps `reindex` offline while ensuring an
+/// old release is never described or hashed from today's mutable checkout tree.
+fn read_pinned_release(
+    repo_root: &std::path::Path,
+    commit: &str,
+    relative: &str,
+) -> Result<(Vec<u8>, String), AwareError> {
+    let base_ref = pinned_release_base_ref(repo_root)?;
+    let ancestry = std::process::Command::new("git")
+        .current_dir(repo_root)
+        .args(["merge-base", "--is-ancestor", commit, &base_ref])
+        .status()
+        .map_err(|error| {
+            AwareError::Validation(format!(
+                "cannot verify pinned commit {commit} against base ref {base_ref}: {error}"
+            ))
+        })?;
+    if !ancestry.success() {
+        return Err(AwareError::Validation(format!(
+            "pinned commit {commit} is not an ancestor of base ref {base_ref}; pin a commit \
+             already merged into the base branch (after a squash merge, pin the squash commit) and ensure \
+             the checkout has full history (for actions/checkout use `fetch-depth: 0`)"
+        )));
+    }
+    let output = std::process::Command::new("git")
+        .current_dir(repo_root)
+        .args(["archive", "--format=tar", commit, "--", relative])
+        .output()
+        .map_err(|error| {
+            AwareError::Validation(format!("cannot run git archive for {commit}: {error}"))
+        })?;
+    if !output.status.success() {
+        let detail = String::from_utf8_lossy(&output.stderr);
+        return Err(AwareError::Validation(format!(
+            "git archive {commit}:{relative} failed: {}; ensure the checkout contains the pinned \
+             commit (for actions/checkout use `fetch-depth: 0`)",
+            detail.trim()
+        )));
+    }
+    let temp = tempfile::tempdir()?;
+    tar::Archive::new(std::io::Cursor::new(output.stdout))
+        .unpack(temp.path())
+        .map_err(|error| {
+            AwareError::Validation(format!(
+                "extract pinned Git tree {commit}:{relative}: {error}"
+            ))
+        })?;
+    let root = temp.path().join(relative);
+    let digest = crate::install::integrity::tree_digest(&root)?;
+    let manifest_path = root.join("manifest.yaml");
+    let manifest = std::fs::read(&manifest_path).map_err(|error| {
+        AwareError::Validation(format!(
+            "read pinned manifest {}: {error}",
+            manifest_path.display()
+        ))
+    })?;
+    Ok((manifest, digest))
+}
+
+/// Resolve the branch that a registry change will ultimately land on. Checking
+/// against `HEAD` is insufficient in pull requests: the PR's own commits (and
+/// GitHub's synthetic merge commit) are ancestors of `HEAD`, even though a
+/// required squash merge will discard those object IDs.
+fn pinned_release_base_ref(repo_root: &std::path::Path) -> Result<String, AwareError> {
+    if let Ok(explicit) = std::env::var("AWARE_REGISTRY_BASE_REF")
+        && !explicit.trim().is_empty()
+    {
+        return Ok(explicit);
+    }
+    if let Ok(branch) = std::env::var("GITHUB_BASE_REF")
+        && !branch.trim().is_empty()
+    {
+        return Ok(format!("refs/remotes/origin/{}", branch.trim()));
+    }
+    if std::env::var("GITHUB_REF_TYPE").as_deref() == Ok("branch")
+        && let Ok(branch) = std::env::var("GITHUB_REF_NAME")
+        && !branch.trim().is_empty()
+    {
+        return Ok(format!("refs/remotes/origin/{}", branch.trim()));
+    }
+
+    let output = std::process::Command::new("git")
+        .current_dir(repo_root)
+        .args(["symbolic-ref", "--quiet", "refs/remotes/origin/HEAD"])
+        .output()
+        .map_err(|error| {
+            AwareError::Validation(format!(
+                "cannot resolve the registry base branch from origin/HEAD: {error}"
+            ))
+        })?;
+    if !output.status.success() {
+        return Err(AwareError::Validation(
+            "cannot resolve the registry base branch from origin/HEAD; set \
+             AWARE_REGISTRY_BASE_REF to the fetched base/default branch"
+                .into(),
+        ));
+    }
+    let reference = String::from_utf8(output.stdout)
+        .map_err(|error| AwareError::Validation(format!("origin/HEAD is not UTF-8: {error}")))?;
+    let reference = reference.trim();
+    if reference.is_empty() {
+        return Err(AwareError::Validation(
+            "origin/HEAD resolved to an empty ref; set AWARE_REGISTRY_BASE_REF to the fetched \
+             base/default branch"
+                .into(),
+        ));
+    }
+    Ok(reference.to_string())
+}
+
 /// Two serialized catalogs are "the same" iff they're equal as JSON once the
 /// volatile `updated-at` timestamp is dropped — so `reindex --check` ignores the
 /// per-run timestamp and JSON-insignificant whitespace / line-ending churn.
@@ -1627,6 +1800,11 @@ fn describe_from_catalog(
             display_name: Option<&'a str>,
             description: &'a str,
             status: &'a str,
+            #[serde(
+                rename = "minimum-cli-version",
+                skip_serializing_if = "Option::is_none"
+            )]
+            minimum_cli_version: Option<&'a str>,
             stateful: bool,
             #[serde(skip_serializing_if = "Option::is_none")]
             vendor: Option<&'a str>,
@@ -1650,6 +1828,7 @@ fn describe_from_catalog(
             display_name: agent.display_name.as_deref(),
             description: &v.description,
             status: &v.status,
+            minimum_cli_version: v.minimum_cli_version.as_deref(),
             stateful: v.stateful,
             vendor: agent.vendor.as_deref(),
             transport: &v.transport,
@@ -1680,6 +1859,9 @@ fn describe_from_catalog(
     }
     println!("description:  {}", v.description);
     println!("status:       {}", v.status);
+    if let Some(minimum) = &v.minimum_cli_version {
+        println!("minimum-cli:  {minimum}");
+    }
     println!("stateful:     {}", v.stateful);
     if let Some(vd) = &agent.vendor {
         println!("vendor:       {vd}");
@@ -1699,9 +1881,14 @@ fn describe_from_catalog(
     }
     for c in &v.commands {
         let star = if c.category == "curated" { "★" } else { " " };
+        let status = match c.status.as_str() {
+            "available" => "",
+            "requires-runtime" => " [requires-runtime]",
+            _ => " [planned]",
+        };
         println!(
-            "  {star} {:<20} {:<8} {}",
-            c.name, c.lifecycle, c.description
+            "  {star} {:<20} {:<8} {}{}",
+            c.name, c.lifecycle, c.description, status
         );
     }
     println!();

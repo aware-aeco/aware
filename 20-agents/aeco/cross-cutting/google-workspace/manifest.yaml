@@ -1,17 +1,15 @@
 agent:        google-workspace
-version:      0.2.0
+version:      2.0.0
 sdk-target:   1.0.0
 display-name: Google Workspace
 description: |
-  Read and write across Google Drive, Sheets, Calendar, and Gmail. Auto-generated
-  from the public Google API Discovery documents + refined to capture auth,
-  throttling, and Drive/Sheets-specific conventions the discovery surface alone
-  doesn't encode.
-
-  Cross-cutting in AECO (project file shares, schedule sheets, RFI emails) —
-  parallel to microsoft-365 for teams that prefer the Google stack.
+  Submit plain-text or HTML email through Gmail as the authenticated Google
+  mailbox. The remaining Drive, Sheets, Calendar, Chat, Forms, Slides, Meet,
+  Tasks, and Gmail search commands are declared as planned, not runnable.
 
 stateful: false
+status: requires-runtime
+minimum-cli-version: 0.136.0
 
 vendor:   google
 license:  Apache-2.0
@@ -29,24 +27,28 @@ provenance:
   ported-from:      D:/Repos/floless-app/src/FloLess/Core/Skills/Resources/Google/
 
 requires:
+  filesystem:
+    - write: ~/.aware/outbox/google-workspace
   network:
-    - https://www.googleapis.com
-    - https://sheets.googleapis.com
-    - https://accounts.google.com
+    - https://gmail.googleapis.com
+    - https://openidconnect.googleapis.com
+    - https://oauth2.googleapis.com
   secrets:
     - google-workspace      # cross-references ~/.aware/credentials/google-workspace.json
 
 transport:
-  cli:
-    binary: aware-google
   rest:
-    drive:    https://www.googleapis.com/drive/v3/
-    sheets:   https://sheets.googleapis.com/v4/spreadsheets/
+    base: https://gmail.googleapis.com/gmail/v1/
+
+auth:
+  scheme: oauth2
+  secret: google-workspace
 
 commands:
   # ---- Drive (the original 5) -------------------------------------------
 
   list-files:
+    status: planned
     lifecycle: single
     category: curated
     description: List files in Drive matching an optional query.
@@ -69,6 +71,7 @@ commands:
             size:      number
 
   download-file:
+    status: planned
     lifecycle: single
     category: curated
     description: Download a Drive file's bytes by id.
@@ -81,6 +84,7 @@ commands:
         filename: string
 
   upload-file:
+    status: planned
     lifecycle: single
     category: curated
     mode: write
@@ -98,6 +102,7 @@ commands:
         web-url: string
 
   read-sheet:
+    status: planned
     lifecycle: single
     category: curated
     description: Read a range of cells from a Google Sheet.
@@ -114,6 +119,7 @@ commands:
           items: array
 
   write-sheet:
+    status: planned
     lifecycle: single
     category: curated
     mode: write
@@ -135,36 +141,67 @@ commands:
     lifecycle: single
     category: curated
     mode: write
+    rollback: unsupported
+    method: POST
+    path: users/me/messages/send
     description: |
-      Send an email via Gmail. Plain text or HTML body, optional
-      cc / bcc / attachments. Requires the `gmail.send` OAuth scope.
+      Irreversibly submit one plain-text or HTML email through Gmail as the
+      authenticated mailbox. Requires a caller-stable attempt-id and never
+      automatically retries an outcome that could already have been accepted.
     inputs:
       to:
         type: array
         items: string
+        required: true
       cc:
         type: array
         items: string
+        required: false
       bcc:
         type: array
         items: string
-      subject: string
-      body:    string
+        required: false
+      subject:
+        type: string
+        required: true
+      body:
+        type: string
+        required: true
       content-type:
         type: enum
         values: [text, html]
         default: text
-      attachments:
-        type: array
-        items:
-          path:     string
-          filename: string
+        required: false
+      attempt-id:
+        type: string
+        required: true
+        description: |
+          Stable identifier for this logical send. Reuse with different inputs
+          is rejected; an identical accepted replay returns the cached result.
     outputs:
       type: single
       schema:
-        message-id: string
+        status:
+          type: enum
+          values: [accepted]
+        message-id:
+          type: string
+          description: Gmail Message resource id; identical to gmail-message-id.
+        gmail-message-id:
+          type: string
+          description: Gmail Message resource id returned by users.messages.send.
+        thread-id:
+          type: string
+          description: Gmail thread resource id returned by users.messages.send.
+        rfc-message-id:
+          type: string
+          description: RFC 5322 Message-ID header generated before dispatch.
+        attempt-id:
+          type: string
+          description: The caller-stable attempt-id supplied in the request.
 
   gmail.search:
+    status: planned
     lifecycle: single
     category: curated
     description: |
@@ -192,6 +229,7 @@ commands:
   # ---- Calendar ---------------------------------------------------------
 
   calendar.create-event:
+    status: planned
     lifecycle: single
     category: curated
     mode: write
@@ -227,6 +265,7 @@ commands:
         web-url:  string
 
   calendar.find-availability:
+    status: planned
     lifecycle: single
     category: curated
     description: |
@@ -255,6 +294,7 @@ commands:
   # ---- Google Chat ------------------------------------------------------
 
   chat.post-message:
+    status: planned
     lifecycle: single
     category: curated
     mode: write
@@ -277,6 +317,7 @@ commands:
         web-url:      string
 
   chat.post-with-screenshot:
+    status: planned
     lifecycle: single
     category: curated
     mode: write
@@ -294,6 +335,7 @@ commands:
         web-url:      string
 
   chat.post-with-card:
+    status: planned
     lifecycle: single
     category: curated
     mode: write
@@ -324,6 +366,7 @@ commands:
   # ---- Google Forms -----------------------------------------------------
 
   forms.list:
+    status: planned
     lifecycle: single
     category: curated
     description: |
@@ -345,6 +388,7 @@ commands:
             web-url:    string
 
   forms.responses.list:
+    status: planned
     lifecycle: single
     category: curated
     description: |
@@ -371,6 +415,7 @@ commands:
   # ---- Google Slides ----------------------------------------------------
 
   slides.export-pdf:
+    status: planned
     lifecycle: single
     category: curated
     description: |
@@ -391,6 +436,7 @@ commands:
         size-bytes:  number
 
   slides.replace-text:
+    status: planned
     lifecycle: single
     category: curated
     mode: write
@@ -413,6 +459,7 @@ commands:
   # ---- Google Meet ------------------------------------------------------
 
   meet.create:
+    status: planned
     lifecycle: single
     category: curated
     mode: write
@@ -433,6 +480,7 @@ commands:
   # ---- Tasks ------------------------------------------------------------
 
   tasks.create:
+    status: planned
     lifecycle: single
     category: curated
     mode: write
@@ -454,6 +502,7 @@ commands:
         task-id: string
 
   tasks.list:
+    status: planned
     lifecycle: single
     category: curated
     description: List tasks in a Tasklist. Optional show-completed.
@@ -477,6 +526,7 @@ commands:
             notes:    string
 
   tasks.complete:
+    status: planned
     lifecycle: single
     category: curated
     mode: write
@@ -494,6 +544,7 @@ commands:
   # ---- Sheets (extended ops) --------------------------------------------
 
   sheets.worksheet.list:
+    status: planned
     lifecycle: single
     category: curated
     description: List worksheet names + IDs in a spreadsheet. Read-only.
@@ -509,6 +560,7 @@ commands:
             id:    number
 
   sheets.row.append:
+    status: planned
     lifecycle: single
     category: curated
     mode: write
@@ -529,6 +581,7 @@ commands:
   # ---- Drive — folder ops + sharing -------------------------------------
 
   drive.folder.create:
+    status: planned
     lifecycle: single
     category: curated
     mode: write
@@ -547,6 +600,7 @@ commands:
         web-url:   string
 
   drive.share:
+    status: planned
     lifecycle: single
     category: curated
     mode: write

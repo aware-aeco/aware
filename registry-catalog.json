@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-09T15:59:48.692026600+00:00",
+  "updated-at": "2026-09-10T10:48:28.120571400+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -2114,6 +2114,7 @@
               "description": "Subscribe to filesystem events under a folder and stream one record per",
               "lifecycle": "start",
               "category": "curated",
+              "status": "planned",
               "mode": "read"
             },
             {
@@ -4143,6 +4144,7 @@
               "description": "Planned: send an email in plain text or HTML, with optional CC / BCC.",
               "lifecycle": "single",
               "category": "curated",
+              "status": "planned",
               "mode": "write"
             },
             {
@@ -4150,6 +4152,7 @@
               "description": "Planned: send an email with file attachments. Each attachment under 3 MB",
               "lifecycle": "single",
               "category": "curated",
+              "status": "planned",
               "mode": "write"
             },
             {
