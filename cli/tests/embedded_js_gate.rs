@@ -202,12 +202,14 @@ fn the_crate_still_carries_inline_scripts_for_the_gate_to_reach() {
 fn the_scan_floor_still_names_every_file_that_carries_a_script() {
     let script = read(&format!("cli/{SCRIPT}"));
 
-    // Scoped to the table's own braces, not to the file. The first draft searched
-    // the whole script for `'<path>'` and passed for the wrong reason: the same
-    // quoted paths appear again in `FLOOR_FIXTURES` further down, so deleting a
-    // real `EXPECTED` entry left this green and the JavaScript self-test green
-    // too, and that file's floor vanished unnoticed (Codex review, #518).
-    let table = expected_table(&script);
+    // The ACTIVE keys of the object, not a substring of its text. Two ways a text
+    // scan passed for the wrong reason, each found by review (#518): the same
+    // quoted paths appear again in `FLOOR_FIXTURES` further down (so scope to the
+    // braces), and an entry COMMENTED OUT rather than deleted still leaves its
+    // path in the braces (so drop `//` lines). `Object.entries(EXPECTED)` ignores
+    // a commented entry, and the JS self-test adapts to the smaller object, so
+    // without this the file's floor could vanish with every guard green.
+    let keys = expected_keys(&script);
 
     for file in [
         "src/render/viewer_3d.rs",
@@ -216,30 +218,58 @@ fn the_scan_floor_still_names_every_file_that_carries_a_script() {
         "src/auth/paste.rs",
     ] {
         assert!(
-            table.contains(&format!("'{file}'")),
-            "cli/{SCRIPT}'s EXPECTED table no longer names {file:?}, so a refactor \
-             that stops the scan reaching that file's script would leave its \
-             syntax checked by nothing while the gate reports green. Table \
-             read:\n{table}"
+            keys.iter().any(|k| k == file),
+            "cli/{SCRIPT}'s EXPECTED table no longer has an active entry for \
+             {file:?} (deleted, or commented out), so a refactor that stops the \
+             scan reaching that file's script would leave its syntax checked by \
+             nothing while the gate reports green. Active keys: {keys:?}"
         );
     }
 }
 
-/// The body of `const EXPECTED = { … }` in the scan script, braces excluded.
+/// The active keys of `const EXPECTED = { … }` in the scan script.
 ///
-/// Fails loudly rather than returning an empty string: a table this cannot find
-/// is a table nothing is checking, and a silent empty result would turn the
-/// assertions above into a test that always fails for the wrong reason — or,
-/// worse under a `contains`, always passes.
-fn expected_table(script: &str) -> String {
+/// A commented-out entry is not a key: lines whose first non-space characters are
+/// `//` are dropped before the `'key':` on each surviving line is read. Fails
+/// loudly rather than returning an empty list — a table this cannot find is a
+/// table nothing is checking, and a silent empty result would turn the assertions
+/// above into a test that passes for want of anything to disagree with.
+fn expected_keys(script: &str) -> Vec<String> {
     let start = script
         .find("const EXPECTED = {")
         .unwrap_or_else(|| panic!("cli/{SCRIPT} no longer declares `const EXPECTED = {{`"));
-    let rest = &script[start..];
+    let rest = &script[start + "const EXPECTED = {".len()..];
     let end = rest
         .find("};")
         .unwrap_or_else(|| panic!("cli/{SCRIPT}'s EXPECTED table is not closed by `}};`"));
-    rest[..end].to_string()
+    let body = &rest[..end];
+
+    let mut keys = Vec::new();
+    for line in body.lines() {
+        let line = line.trim();
+        if line.is_empty() || line.starts_with("//") {
+            continue; // blank or a commented-out entry — not an active key
+        }
+        // `'path': n,` — the key is the first single-quoted span, and the colon
+        // after it is what distinguishes a key from any other quoted text.
+        let Some(open) = line.find('\'') else {
+            continue;
+        };
+        let Some(close_rel) = line[open + 1..].find('\'') else {
+            continue;
+        };
+        let close = open + 1 + close_rel;
+        if line[close + 1..].trim_start().starts_with(':') {
+            keys.push(line[open + 1..close].to_string());
+        }
+    }
+    assert!(
+        !keys.is_empty(),
+        "cli/{SCRIPT}'s EXPECTED table parsed to zero active keys — the parser or \
+         the table's shape changed, and every assertion resting on it is now \
+         meaningless. Body read:\n{body}"
+    );
+    keys
 }
 
 /// One parse check, not two.
@@ -269,11 +299,19 @@ fn the_browser_gate_delegates_its_parse_check_rather_than_repeating_it() {
                  parse checks drift; none at all aborts."
             )
         });
+
+    // The exact LOCAL bindings, not a substring. `import.contains("collect")` is
+    // satisfied by `collect as scan` — which binds `scan`, leaving step 0's
+    // `collect(CLI)` call unbound — and by any longer name containing the
+    // substring (Codex review, #518). So parse the `{ … }` and compare each
+    // binding's local name (the part after `as`, or the whole spec) exactly.
+    let bindings = import_local_names(import);
     for name in ["collect", "parseError"] {
         assert!(
-            import.contains(name),
-            "tests/browser/run.mjs imports from cli/{SCRIPT} but no longer binds \
-             {name:?}, which its step 0 calls. Import line read: {import}"
+            bindings.iter().any(|b| b == name),
+            "tests/browser/run.mjs imports from cli/{SCRIPT} but does not bind the \
+             local name {name:?} its step 0 calls (an alias binds a different name). \
+             Local names bound: {bindings:?}"
         );
     }
     assert!(
@@ -283,4 +321,32 @@ fn the_browser_gate_delegates_its_parse_check_rather_than_repeating_it() {
          module rejects; cli/{SCRIPT} parses each block under the goal symbol a \
          browser would use."
     );
+}
+
+/// The local names bound by an `import { … } from '…'` line.
+///
+/// For `{ collect, parseError as pe }` this is `["collect", "pe"]` — the name
+/// actually in scope, which is the part after `as` when a spec is aliased and the
+/// whole spec otherwise. Anything outside the braces (a default or namespace
+/// import) is not what step 0 relies on and is ignored.
+fn import_local_names(import: &str) -> Vec<String> {
+    let Some(open) = import.find('{') else {
+        return Vec::new();
+    };
+    let Some(close_rel) = import[open + 1..].find('}') else {
+        return Vec::new();
+    };
+    let inner = &import[open + 1..open + 1 + close_rel];
+    inner
+        .split(',')
+        .filter_map(|spec| {
+            let spec = spec.trim();
+            if spec.is_empty() {
+                return None;
+            }
+            // `orig as local` binds `local`; a bare `orig` binds `orig`.
+            let local = spec.rsplit(" as ").next().unwrap_or(spec);
+            Some(local.trim().to_string())
+        })
+        .collect()
 }
