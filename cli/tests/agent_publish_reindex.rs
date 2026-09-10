@@ -288,6 +288,40 @@ fn publish_refuses_a_failing_agent_and_leaves_the_index_byte_identical() {
 }
 
 #[test]
+fn publish_refuses_runtime_gated_agents_until_it_can_pin_a_commit_archive() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let agent_dir = root.join("20-agents/aeco/future");
+    write_agent(&agent_dir, "future", "1.0.0", "A runtime-gated agent.");
+    let manifest_path = agent_dir.join("manifest.yaml");
+    let manifest = std::fs::read_to_string(&manifest_path).unwrap().replace(
+        "stateful: false\n",
+        "stateful: false\nstatus: requires-runtime\nminimum-cli-version: 0.136.0\n",
+    );
+    std::fs::write(&manifest_path, manifest).unwrap();
+    write_index(
+        root,
+        &[("keeper", "0.1.0", "aware-main/20-agents/aeco/keeper")],
+    );
+    let before = std::fs::read(root.join("registry-index.json")).unwrap();
+
+    aware()
+        .env("AWARE_HOME", home_in(root))
+        .args(["agent", "publish"])
+        .arg(&agent_dir)
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("immutable full-commit archive"));
+
+    assert_eq!(
+        std::fs::read(root.join("registry-index.json")).unwrap(),
+        before,
+        "a runtime-gated release must not be staged against mutable main"
+    );
+}
+
+#[test]
 fn publish_outside_a_checkout_explains_itself_and_creates_no_index() {
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path();

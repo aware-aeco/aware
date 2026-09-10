@@ -27,6 +27,22 @@ fn load_manifest() -> Value {
     .unwrap_or_else(|error| panic!("parse {}: {error}", path.display()))
 }
 
+#[test]
+fn first_party_bundle_installs_the_corrected_immutable_release() {
+    let path = repository_root().join("registry-index.json");
+    let index: serde_json::Value = serde_json::from_str(
+        &fs::read_to_string(&path)
+            .unwrap_or_else(|error| panic!("read {}: {error}", path.display())),
+    )
+    .unwrap_or_else(|error| panic!("parse {}: {error}", path.display()));
+    let agents = index["bundles"]["aware-aeco"]["agents"]
+        .as_array()
+        .expect("aware-aeco bundle must list agents");
+
+    assert!(agents.iter().any(|entry| entry == "google-workspace@1.1.1"));
+    assert!(!agents.iter().any(|entry| entry == "google-workspace@1.0.0"));
+}
+
 fn mapping_keys(value: &Value) -> BTreeSet<String> {
     value
         .as_mapping()

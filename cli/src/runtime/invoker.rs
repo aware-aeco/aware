@@ -2864,6 +2864,11 @@ impl DispatchInvoker {
         // the same id onto `agents_dir` again, and a traversal manifest declaring
         // `cli:` or `rest:` never touches the app-transport path (#349, #365).
         let m = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent)?;
+        if let Some((code, reason)) =
+            crate::validate::runtime_requirement_error(&m, crate::validate::CURRENT_CLI_VERSION)
+        {
+            return Err(AwareError::Validation(format!("[{code}] {reason}")));
+        }
         effective_transport(&m, agent)
     }
 
@@ -3706,6 +3711,39 @@ mod stream_pump_tests {
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn common_dispatch_funnel_rejects_a_newer_runtime_requirement() {
+        let tmp = tempfile::tempdir().unwrap();
+        let agents_dir = tmp.path().join("agents");
+        let agent_dir = agents_dir.join("future");
+        std::fs::create_dir_all(&agent_dir).unwrap();
+        std::fs::write(
+            agent_dir.join("manifest.yaml"),
+            "agent: future\n\
+             version: 1.0.0\n\
+             description: Needs a future runtime.\n\
+             stateful: false\n\
+             status: requires-runtime\n\
+             minimum-cli-version: 999.0.0\n\
+             license: MIT\n\
+             transport:\n  cli:\n    binary: future\n\
+             commands:\n  ping:\n    lifecycle: single\n    description: Ping.\n",
+        )
+        .unwrap();
+
+        let invoker = DispatchInvoker {
+            agents_dir,
+            artifact_dir: None,
+            app_ctx: None,
+            preview: false,
+            reader_cancellation: ReaderCancellation::default(),
+        };
+        let error = invoker.transport_kind("future").unwrap_err().to_string();
+
+        assert!(error.contains("E_AGENT_RUNTIME_TOO_OLD"), "{error}");
+        assert!(error.contains("999.0.0"), "{error}");
+    }
 
     #[test]
     fn record_safe_args_follow_coercion_without_restoring_redacted_values() {

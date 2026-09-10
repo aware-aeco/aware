@@ -509,9 +509,9 @@ fn validate_cmd(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError
     Ok(())
 }
 
-/// Standard tarball for substrate-hosted agents: every entry in the
-/// aware-aeco/aware registry points at the repo's `main` archive and is
-/// distinguished only by `subdir` (see `registry-index.json`).
+/// Standard tarball for ordinary substrate-hosted agents. Runtime-gated agents
+/// must instead use an immutable full-commit archive and are rejected below
+/// until this command can derive and stage that shape safely.
 const SUBSTRATE_TARBALL: &str =
     "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz";
 
@@ -543,6 +543,19 @@ fn publish(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
 
     let id = agent.agent.clone();
     let version = agent.version.clone();
+
+    let runtime_gated = agent.status == crate::manifest::agent::AgentStatus::RequiresRuntime
+        || agent
+            .commands
+            .values()
+            .any(|command| command.status == crate::manifest::agent::AgentStatus::RequiresRuntime);
+    if runtime_gated {
+        return Err(AwareError::Validation(format!(
+            "agent {id}@{version} is runtime-gated and must be published from an immutable \
+             full-commit archive; `aware agent publish` currently emits the mutable main-branch \
+             archive, so create the commit-pinned registry entry explicitly"
+        )));
+    }
 
     let abs = path.canonicalize()?;
     let Some((index_path, rel)) = find_registry_root(&abs) else {
