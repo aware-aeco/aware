@@ -1517,9 +1517,35 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     let index = crate::registry::Index::parse(std::fs::File::open(&index_path)?)?;
 
     let mut digest_errors = Vec::new();
+    let mut pinned_sources: std::collections::BTreeMap<String, (Vec<u8>, String)> =
+        std::collections::BTreeMap::new();
     let mut digest_targets = Vec::new();
     for (id, entry) in &index.agents {
         for (version, release) in &entry.versions {
+            if let Some((commit, relative)) =
+                crate::registry::github_commit_archive_source(&release.tarball, &release.subdir)
+            {
+                match read_pinned_release(&repo_root, &commit, &relative) {
+                    Ok((manifest, digest)) => {
+                        if let Some(expected) = release.bundle_digest.as_deref()
+                            && digest != expected
+                        {
+                            digest_errors.push((
+                                format!("{id}@{version}"),
+                                format!(
+                                    "bundle-digest drift: index has {expected}, pinned Git tree has {digest}"
+                                ),
+                            ));
+                        }
+                        pinned_sources.insert(release.subdir.clone(), (manifest, digest));
+                    }
+                    Err(error) => digest_errors.push((
+                        format!("{id}@{version}"),
+                        format!("cannot read pinned release source: {error}"),
+                    )),
+                }
+                continue;
+            }
             let Some(expected_digest) = release.bundle_digest.as_deref() else {
                 continue; // backward-compatible custom/legacy index entry
             };
@@ -1556,6 +1582,9 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     }
 
     let (cat, errors) = catalog::build_catalog(&index, crate::builder::now_iso(), |subdir| {
+        if let Some((manifest, _digest)) = pinned_sources.get(subdir) {
+            return serde_yaml::from_slice(manifest).map_err(AwareError::from);
+        }
         // The SAME mapping the collision guard keys on, so the two cannot disagree about
         // which entries land on one manifest (Codex review, PR #457 round 7).
         let rel = crate::registry::checkout_relative_subdir(subdir);
@@ -1608,6 +1637,48 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
         cat.agents.len()
     );
     Ok(())
+}
+
+/// Read the exact agent payload from a commit-pinned GitHub archive using the
+/// equivalent local Git object. This keeps `reindex` offline while ensuring an
+/// old release is never described or hashed from today's mutable checkout tree.
+fn read_pinned_release(
+    repo_root: &std::path::Path,
+    commit: &str,
+    relative: &str,
+) -> Result<(Vec<u8>, String), AwareError> {
+    let output = std::process::Command::new("git")
+        .current_dir(repo_root)
+        .args(["archive", "--format=tar", commit, "--", relative])
+        .output()
+        .map_err(|error| {
+            AwareError::Validation(format!("cannot run git archive for {commit}: {error}"))
+        })?;
+    if !output.status.success() {
+        let detail = String::from_utf8_lossy(&output.stderr);
+        return Err(AwareError::Validation(format!(
+            "git archive {commit}:{relative} failed: {}",
+            detail.trim()
+        )));
+    }
+    let temp = tempfile::tempdir()?;
+    tar::Archive::new(std::io::Cursor::new(output.stdout))
+        .unpack(temp.path())
+        .map_err(|error| {
+            AwareError::Validation(format!(
+                "extract pinned Git tree {commit}:{relative}: {error}"
+            ))
+        })?;
+    let root = temp.path().join(relative);
+    let digest = crate::install::integrity::tree_digest(&root)?;
+    let manifest_path = root.join("manifest.yaml");
+    let manifest = std::fs::read(&manifest_path).map_err(|error| {
+        AwareError::Validation(format!(
+            "read pinned manifest {}: {error}",
+            manifest_path.display()
+        ))
+    })?;
+    Ok((manifest, digest))
 }
 
 /// Two serialized catalogs are "the same" iff they're equal as JSON once the

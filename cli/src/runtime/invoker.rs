@@ -344,6 +344,8 @@ struct StructuredBridgeError {
     retryable: bool,
     message: String,
     diagnostic_id: String,
+    #[serde(default)]
+    details: Option<std::collections::BTreeMap<String, String>>,
 }
 
 /// Preserve a bridge's bounded typed error instead of flattening it into an opaque network string.
@@ -358,6 +360,12 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
         || parsed.message.is_empty()
         || parsed.message.chars().count() > 240
         || parsed.diagnostic_id.len() > 64
+        || parsed.details.as_ref().is_some_and(|details| {
+            details.len() > 8
+                || details
+                    .iter()
+                    .any(|(key, value)| key.is_empty() || key.len() > 64 || value.len() > 256)
+        })
     {
         return None;
     }
@@ -367,7 +375,10 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
         retryable: parsed.retryable,
         message: parsed.message,
         diagnostic_id: parsed.diagnostic_id,
-        details: None,
+        details: parsed
+            .details
+            .map(crate::error::AgentErrorDetails)
+            .map(Box::new),
     })
 }
 
@@ -5471,7 +5482,7 @@ mod builtin_invoker_tests {
 
     #[test]
     fn model_reader_structured_errors_keep_their_typed_fields() {
-        let stderr = r#"{"code":"reference-provider-pin-mismatch","phase":"preflight","retryable":false,"message":"The local provider does not match the expected fingerprint.","diagnosticId":"123e4567-e89b-12d3-a456-426614174000"}"#;
+        let stderr = r#"{"code":"reference-provider-pin-mismatch","phase":"preflight","retryable":false,"message":"The local provider does not match the expected fingerprint.","diagnosticId":"123e4567-e89b-12d3-a456-426614174000","details":{"expectedPin":"sha256:abc"}}"#;
         let error = structured_bridge_error(stderr).expect("closed model-reader envelope");
         match error {
             AwareError::AgentStructured {
@@ -5487,7 +5498,10 @@ mod builtin_invoker_tests {
                 assert!(!retryable);
                 assert!(message.contains("expected fingerprint"));
                 assert_eq!(diagnostic_id, "123e4567-e89b-12d3-a456-426614174000");
-                assert!(details.is_none());
+                assert_eq!(
+                    details.unwrap().0.get("expectedPin").map(String::as_str),
+                    Some("sha256:abc")
+                );
             }
             other => panic!("typed envelope was flattened: {other:?}"),
         }
@@ -5497,6 +5511,11 @@ mod builtin_invoker_tests {
             )
             .is_none()
         );
+        let oversized = "x".repeat(257);
+        let payload = format!(
+            r#"{{"code":"reference-x","phase":"x","retryable":false,"message":"x","diagnosticId":"x","details":{{"key":"{oversized}"}}}}"#
+        );
+        assert!(structured_bridge_error(&payload).is_none());
     }
 
     #[test]

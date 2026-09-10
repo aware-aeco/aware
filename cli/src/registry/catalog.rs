@@ -354,7 +354,7 @@ where
             // then case-folded, because the index is one artifact and a case-insensitive
             // checkout (Windows, macOS) resolves `foo` and `Foo` to a single folder.
             let subdir = crate::registry::checkout_relative_subdir(&ve.subdir);
-            let key = crate::registry::portable_subdir_key(&ve.subdir);
+            let key = crate::registry::catalog_source_key(&ve.tarball, &ve.subdir);
             if let Some((other, other_tarball, other_subdir)) =
                 seen_subdirs.insert(key, (ver, ve.tarball.as_str(), subdir.clone()))
             {
@@ -875,6 +875,44 @@ commands:
             "the message names the distinct-tarball case specifically, since its remedy \
              differs from the one-archive case: {}",
             errs[0].1
+        );
+    }
+
+    #[test]
+    fn build_catalog_distinguishes_the_same_path_in_two_immutable_commits() {
+        let first = "0123456789abcdef0123456789abcdef01234567";
+        let second = "89abcdef0123456789abcdef0123456789abcdef";
+        let index = index_multi(
+            "probe-agent",
+            &[
+                (
+                    "1.2.0",
+                    &format!("https://github.com/aware-aeco/aware/archive/{first}.tar.gz"),
+                    &format!("aware-{first}/20-agents/probe-agent"),
+                ),
+                (
+                    "1.3.0",
+                    &format!("https://github.com/aware-aeco/aware/archive/{second}.tar.gz"),
+                    &format!("aware-{second}/20-agents/probe-agent"),
+                ),
+            ],
+        );
+        let (cat, errs) = build_catalog(&index, "now".to_string(), |subdir| {
+            let description = if subdir.contains(first) {
+                "first pinned build"
+            } else {
+                "second pinned build"
+            };
+            Ok(agent_from_yaml("probe-agent", description))
+        });
+        assert!(errs.is_empty(), "{errs:?}");
+        assert_eq!(
+            cat.agents["probe-agent"].versions["1.2.0"].description,
+            "first pinned build"
+        );
+        assert_eq!(
+            cat.agents["probe-agent"].versions["1.3.0"].description,
+            "second pinned build"
         );
     }
 

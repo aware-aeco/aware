@@ -110,6 +110,28 @@ pub fn github_commit_archive_root(tarball: &str) -> Option<String> {
     Some(format!("{repo}-{commit}/"))
 }
 
+/// Resolve a validated immutable GitHub archive entry to the Git commit and
+/// repository-relative subtree that produced its install payload.
+pub fn github_commit_archive_source(tarball: &str, subdir: &str) -> Option<(String, String)> {
+    let root = github_commit_archive_root(tarball)?;
+    check_immutable_archive_root(tarball, subdir).ok()?;
+    let commit = root.trim_end_matches('/').rsplit_once('-')?.1.to_string();
+    let normalized = normalize_subdir(subdir);
+    let relative = normalized.strip_prefix(&root)?.to_string();
+    (!relative.is_empty()).then_some((commit, relative))
+}
+
+/// Identity of the source bytes used by local catalog generation. Immutable
+/// releases are distinct by commit even when their repository path is reused;
+/// mutable/legacy releases continue to resolve through the checkout path.
+pub fn catalog_source_key(tarball: &str, subdir: &str) -> String {
+    if let Some((commit, relative)) = github_commit_archive_source(tarball, subdir) {
+        format!("git:{commit}:{}", relative.to_ascii_lowercase())
+    } else {
+        format!("checkout:{}", portable_subdir_key(subdir))
+    }
+}
+
 /// Verify that an immutable GitHub commit archive and its declared subdir agree
 /// on the archive's generated root. This prevents a commit-looking root from
 /// being stripped during local catalog generation unless the tarball pins the
@@ -546,6 +568,17 @@ mod tests {
             Some(format!("aware-{sha}/").as_str())
         );
         assert!(check_immutable_archive_root(&tarball, &subdir).is_ok());
+        assert_eq!(
+            github_commit_archive_source(&tarball, &subdir),
+            Some((
+                sha.to_string(),
+                "20-agents/aeco/cross-cutting/google-workspace".to_string()
+            ))
+        );
+        assert_eq!(
+            catalog_source_key(&tarball, &subdir),
+            format!("git:{sha}:20-agents/aeco/cross-cutting/google-workspace")
+        );
         assert_eq!(
             checkout_relative_subdir(&subdir),
             "20-agents/aeco/cross-cutting/google-workspace"
