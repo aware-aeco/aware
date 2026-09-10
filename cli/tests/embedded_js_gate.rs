@@ -162,15 +162,23 @@ fn ci_still_parse_checks_the_javascript_this_crate_emits() {
 /// Deliberately not a re-implementation of the scan: duplicating the tokenizer
 /// in Rust would give two classifiers to keep in agreement. It anchors the
 /// templates the scan is known to reach, which is what a refactor would move.
+///
+/// All FOUR files, not the two obvious ones. An earlier draft anchored only the
+/// viewer and the report, so losing an OAuth page's script was invisible here
+/// (Codex review, #518) — and that is the half of the inventory easiest to drop
+/// by accident, being one line each rather than a named `const`.
 #[test]
 fn the_crate_still_carries_inline_scripts_for_the_gate_to_reach() {
     for (file, marker) in [
         ("cli/src/render/viewer_3d.rs", "<script type=\"module\">"),
+        ("cli/src/render/viewer_3d.rs", "<script type=\"importmap\">"),
         ("cli/src/render/viewer_3d.rs", "<script>"),
         (
             "cli/src/commands/report.rs",
             "const SCRIPT: &str = r#\"<script>",
         ),
+        ("cli/src/auth/pkce.rs", "<script>"),
+        ("cli/src/auth/paste.rs", "<script>"),
     ] {
         assert!(
             read(file).contains(marker),
@@ -178,6 +186,32 @@ fn the_crate_still_carries_inline_scripts_for_the_gate_to_reach() {
              cli/{SCRIPT} at its new home — a scan that reaches no JavaScript \
              reports a clean crate over nothing, which is the failure this gate \
              exists to prevent."
+        );
+    }
+}
+
+/// The scan's own floor must name every file that carries a script.
+///
+/// The floor started as a bare count — "at least 5 blocks in at least 3 files"
+/// against a real inventory of 6 in 4 — so losing one script still cleared it and
+/// went unchecked with every gate green (Codex review, #518). A count below what
+/// is actually there is not a floor, and only the script can say what it expects,
+/// so this checks that its table still names each file rather than restating the
+/// numbers and giving two tables to keep in agreement.
+#[test]
+fn the_scan_floor_still_names_every_file_that_carries_a_script() {
+    let script = read(&format!("cli/{SCRIPT}"));
+    for file in [
+        "src/render/viewer_3d.rs",
+        "src/commands/report.rs",
+        "src/auth/pkce.rs",
+        "src/auth/paste.rs",
+    ] {
+        assert!(
+            script.contains(&format!("'{file}'")),
+            "cli/{SCRIPT}'s EXPECTED table no longer names {file:?}, so a refactor \
+             that stops the scan reaching that file's script would leave its \
+             syntax checked by nothing while the gate reports green."
         );
     }
 }

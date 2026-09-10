@@ -83,32 +83,65 @@ import { join, relative } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import vm from 'node:vm';
 
-// The crate ships five inline scripts today. The floor is what keeps this from
-// reporting a clean crate after a refactor moves the templates somewhere the
-// walk no longer reaches — the same role `--self-test` plays for the classifier
-// and `js.length < 5000` plays in `tests/browser/run.mjs`.
-const MIN_BLOCKS = 5;
-const MIN_FILES = 3;
+// The inventory the crate ships today, PER FILE. This is what keeps the scan
+// from reporting a clean crate after a refactor moves a template somewhere the
+// walk no longer reaches — the same role `--self-test` plays for the classifier.
+//
+// Per file, and exact, because a total was not enough: at "at least 5 blocks in
+// at least 3 files" against a real inventory of 6 in 4, losing an OAuth page's
+// script — or the viewer module itself — still cleared the floor, and the
+// omitted script's syntax then went unchecked with both this gate and the
+// browser gate green (Codex review, PR #518). A count that sits below what is
+// actually there is not a floor.
+//
+// Adding a script means adding it here, deliberately and in review. That is the
+// point: a new inline script should not be able to arrive unchecked, and a line
+// in this table is the cheapest possible way to say "I meant to add one".
+const EXPECTED = {
+  'src/auth/paste.rs': 1,
+  'src/auth/pkce.rs': 1,
+  'src/commands/report.rs': 1,
+  'src/render/viewer_3d.rs': 3,
+};
 
 // ---------------------------------------------------------------------------
 // Rust source → string literals
 // ---------------------------------------------------------------------------
 
 /**
- * Every string literal in `src`, with the 1-based line each starts on.
+ * One pass over Rust source, returning both things the rest of this file needs:
  *
- * Walks tokens rather than pattern-matching so that `"` inside a comment or a
- * char literal cannot open a literal. Handles raw strings (`r"…"`, `r#"…"#`, any
- * hash count), byte strings (`b"…"`, `br#"…"#`), plain strings with escapes,
- * nested block comments, and the `'a` lifetime / `'x'` char-literal ambiguity.
+ *   `literals` — every string literal, with the 1-based line each starts on.
+ *   `code`     — the same source with every comment and every literal (delimiters
+ *                included) replaced by spaces, newlines kept so offsets and line
+ *                numbers still agree with the original.
+ *
+ * `code` exists because searching raw source for a Rust *token* is unsound, and
+ * that was a real bug rather than a hypothetical one (Codex review, PR #518).
+ * [`stripTestItems`] located `#[cfg(test)]` with a plain `indexOf`, so the prose
+ * `// behavior under #[cfg(test)] differs` sitting above a production constant
+ * made the scanner blank through that constant's semicolon and drop its
+ * `<script>` from the inventory entirely — a gate reporting clean over code it
+ * could no longer see. Against `code` the same search cannot match inside a
+ * comment or a string, because there is nothing there to match.
+ *
+ * Walking tokens is likewise what stops a `"` inside a comment or a char literal
+ * from opening a literal. Handles raw strings (`r"…"`, `r#"…"#`, any hash count),
+ * byte strings (`b"…"`, `br#"…"#`), plain strings with escapes, nested block
+ * comments, and the `'a` lifetime / `'x'` char-literal ambiguity.
  */
-export function rustStringLiterals(src) {
-  const out = [];
+export function walkRust(src) {
+  const literals = [];
+  const code = [...src];
   let i = 0;
   let line = 1;
   const isIdent = (c) => c !== undefined && /[A-Za-z0-9_]/.test(c);
-  const advance = (to) => {
-    for (let k = i; k < to; k++) if (src[k] === '\n') line++;
+  /** Consume `src[i..to)`, tracking lines and blanking it out of `code`. */
+  const consume = (to) => {
+    for (let k = i; k < to; k++) {
+      if (src[k] === '\n') line++;
+      else code[k] = ' ';
+    }
     i = to;
   };
   while (i < src.length) {
@@ -117,7 +150,7 @@ export function rustStringLiterals(src) {
     // line comment
     if (c === '/' && src[i + 1] === '/') {
       const nl = src.indexOf('\n', i);
-      advance(nl === -1 ? src.length : nl);
+      consume(nl === -1 ? src.length : nl);
       continue;
     }
     // block comment (Rust nests them)
@@ -129,7 +162,7 @@ export function rustStringLiterals(src) {
         else if (src[k] === '*' && src[k + 1] === '/') { depth--; k += 2; }
         else k++;
       }
-      advance(k);
+      consume(k);
       continue;
     }
     // char literal vs lifetime: `'x'` / `'\n'` are literals, `'static` is not.
@@ -141,7 +174,7 @@ export function rustStringLiterals(src) {
       } else {
         k++;
       }
-      if (src[k] === "'") { advance(k + 1); continue; }
+      if (src[k] === "'") { consume(k + 1); continue; }
       i++;                                   // a lifetime — consume just the tick
       continue;
     }
@@ -156,8 +189,8 @@ export function rustStringLiterals(src) {
         const startLine = line;
         const close = src.indexOf(`"${hashes}`, h + 1);
         const end = close === -1 ? src.length : close;
-        out.push({ text: src.slice(h + 1, end), line: startLine, raw: true });
-        advance(close === -1 ? src.length : close + 1 + hashes.length);
+        literals.push({ text: src.slice(h + 1, end), line: startLine, raw: true });
+        consume(close === -1 ? src.length : close + 1 + hashes.length);
         continue;
       }
     }
@@ -170,13 +203,18 @@ export function rustStringLiterals(src) {
         if (src[k] === '\\') { buf += src[k] + src[k + 1]; k += 2; }
         else { buf += src[k]; k++; }
       }
-      out.push({ text: unescapeRust(buf), line: startLine, raw: false });
-      advance(k + 1);
+      literals.push({ text: unescapeRust(buf), line: startLine, raw: false });
+      consume(k + 1);
       continue;
     }
     i++;
   }
-  return out;
+  return { literals, code: code.join('') };
+}
+
+/** Every string literal in `src`, with the 1-based line each starts on. */
+export function rustStringLiterals(src) {
+  return walkRust(src).literals;
 }
 
 /** Rust string escapes, including the `\<newline>` continuation that eats indent. */
@@ -206,77 +244,45 @@ export function unescapeRust(s) {
  * `src` with every `#[cfg(test)]` item blanked out, newlines preserved so line
  * numbers still line up.
  *
- * Brace matching runs through the same tokenizer as above, so a `{` inside a
- * string or comment in the test module cannot end the item early.
+ * Both the search and the brace matching run against [`walkRust`]'s `code` mask
+ * rather than raw source, which is what makes them token-aware for free: in the
+ * mask a comment or a string is spaces, so `#[cfg(test)]` written in prose
+ * cannot be mistaken for the attribute and a `{`, `}` or `;` inside a string
+ * cannot end an item early. The first of those was a live false negative before
+ * this (Codex review, PR #518) — see [`walkRust`].
  */
 export function stripTestItems(src) {
+  const { code } = walkRust(src);
   const chars = [...src];
   let at = 0;
   for (;;) {
-    const start = src.indexOf('#[cfg(test)]', at);
+    const start = code.indexOf('#[cfg(test)]', at);
     if (start === -1) break;
-    const end = itemEnd(src, start + '#[cfg(test)]'.length);
+    const end = itemEnd(code, start + '#[cfg(test)]'.length);
     for (let k = start; k < end; k++) if (chars[k] !== '\n') chars[k] = ' ';
     at = end;
   }
   return chars.join('');
 }
 
-/** End offset of the item beginning at `from`: its `{…}` body, or its `;`. */
-function itemEnd(src, from) {
+/**
+ * End offset of the item beginning at `from`: its `{…}` body, or its `;`.
+ *
+ * `code` must be a [`walkRust`] mask, so every brace and semicolon it still
+ * contains is real syntax.
+ */
+function itemEnd(code, from) {
   let i = from;
   let depth = 0;
   let seenBrace = false;
-  while (i < src.length) {
-    const c = src[i];
-    if (c === '/' && src[i + 1] === '/') { const nl = src.indexOf('\n', i); i = nl === -1 ? src.length : nl; continue; }
-    if (c === '/' && src[i + 1] === '*') {
-      let d = 1; let k = i + 2;
-      while (k < src.length && d > 0) {
-        if (src[k] === '/' && src[k + 1] === '*') { d++; k += 2; }
-        else if (src[k] === '*' && src[k + 1] === '/') { d--; k += 2; }
-        else k++;
-      }
-      i = k; continue;
-    }
-    if (c === 'r' || c === 'b' || c === '"' || c === "'") {
-      const span = firstLiteralSpan(src, i);
-      if (span !== null) { i = span; continue; }
-    }
+  while (i < code.length) {
+    const c = code[i];
     if (c === '{') { depth++; seenBrace = true; i++; continue; }
     if (c === '}') { depth--; i++; if (seenBrace && depth === 0) return i; continue; }
     if (c === ';' && !seenBrace && depth === 0) return i + 1;
     i++;
   }
-  return src.length;
-}
-
-/** End offset of a string/char literal starting exactly at `i`, else null. */
-function firstLiteralSpan(src, i) {
-  const isIdent = (c) => c !== undefined && /[A-Za-z0-9_]/.test(c);
-  let p = i;
-  if (src[p] === 'b' && (src[p + 1] === 'r' || src[p + 1] === '"')) p++;
-  if (src[p] === 'r' && !isIdent(src[i - 1])) {
-    let h = p + 1;
-    while (src[h] === '#') h++;
-    if (src[h] === '"') {
-      const hashes = '#'.repeat(h - p - 1);
-      const close = src.indexOf(`"${hashes}`, h + 1);
-      return close === -1 ? src.length : close + 1 + hashes.length;
-    }
-  }
-  if (src[p] === '"' && !isIdent(src[i - 1])) {
-    let k = p + 1;
-    while (k < src.length && src[k] !== '"') k += src[k] === '\\' ? 2 : 1;
-    return k + 1;
-  }
-  if (src[i] === "'") {
-    let k = i + 1;
-    if (src[k] === '\\') { k++; while (k < src.length && src[k] !== "'" && src[k] !== '\n') k++; }
-    else k++;
-    if (src[k] === "'") return k + 1;
-  }
-  return null;
+  return code.length;
 }
 
 // ---------------------------------------------------------------------------
@@ -386,6 +392,22 @@ export function collect(root) {
   return found;
 }
 
+/**
+ * One message per file whose block count fell below [`EXPECTED`], empty when the
+ * inventory is intact. A file with MORE blocks than expected is not a shortfall
+ * — the new one is checked like every other, and the count here is a floor.
+ */
+export function shortfall(blocks) {
+  const seen = new Map();
+  for (const b of blocks) seen.set(b.file, (seen.get(b.file) || 0) + 1);
+  const out = [];
+  for (const [file, want] of Object.entries(EXPECTED)) {
+    const got = seen.get(file) || 0;
+    if (got < want) out.push(`${file}: found ${got} inline script(s), expected at least ${want}`);
+  }
+  return out;
+}
+
 // ---------------------------------------------------------------------------
 // Self-test
 // ---------------------------------------------------------------------------
@@ -466,6 +488,78 @@ const FIXTURES = [
     rust: "fn f<'a>(s: &'a str) -> &'a str { s }\nlet h = r#\"<script>var a = 1;</script>\"#;",
     expect: [{ goal: 'classic', ok: true }],
   },
+  // The next three are the Codex #518 finding: `#[cfg(test)]` was located with a
+  // raw `indexOf`, so the attribute written in prose or in a string swallowed the
+  // production item that followed and its script vanished from the inventory.
+  {
+    name: 'a line comment naming #[cfg(test)] does not hide the constant below it',
+    rust: '// behavior under #[cfg(test)] differs\nconst P: &str = r#"<script>var a = 1;</script>"#;',
+    expect: [{ goal: 'classic', ok: true }],
+  },
+  {
+    name: 'a block comment naming #[cfg(test)] does not hide the constant below it',
+    rust: '/* see #[cfg(test)] below */\nconst P: &str = r#"<script>var a = 1;</script>"#;',
+    expect: [{ goal: 'classic', ok: true }],
+  },
+  {
+    name: 'a string containing #[cfg(test)] does not hide the constant below it',
+    rust: 'const N: &str = "#[cfg(test)]";\nconst P: &str = r#"<script>var a = 1;</script>"#;',
+    expect: [{ goal: 'classic', ok: true }],
+  },
+  {
+    name: 'a real #[cfg(test)] fn is still stripped, not only a mod',
+    rust: '#[cfg(test)]\nfn probe() {\n  let p = r#"<script>var a = = 1;</script>"#;\n}\n',
+    expect: [],
+  },
+  {
+    name: 'a #[cfg(test)] use statement ends at its semicolon, not at the next item',
+    rust: '#[cfg(test)]\nuse std::fmt;\nconst P: &str = r#"<script>var a = 1;</script>"#;',
+    expect: [{ goal: 'classic', ok: true }],
+  },
+];
+
+/** Inventory-floor cases: what [`shortfall`] must and must not report. */
+const FLOOR_FIXTURES = [
+  {
+    name: 'a full inventory is not a shortfall',
+    blocks: Object.entries(EXPECTED).flatMap(([file, n]) =>
+      Array.from({ length: n }, () => ({ file })),
+    ),
+    expectFiles: [],
+  },
+  {
+    name: 'losing one OAuth page is a shortfall even though the total stays high',
+    blocks: [
+      { file: 'src/auth/paste.rs' },
+      { file: 'src/commands/report.rs' },
+      { file: 'src/render/viewer_3d.rs' },
+      { file: 'src/render/viewer_3d.rs' },
+      { file: 'src/render/viewer_3d.rs' },
+      { file: 'src/render/viewer_3d.rs' },
+    ],
+    expectFiles: ['src/auth/pkce.rs'],
+  },
+  {
+    name: 'losing the viewer module alone is a shortfall',
+    blocks: [
+      { file: 'src/auth/paste.rs' },
+      { file: 'src/auth/pkce.rs' },
+      { file: 'src/commands/report.rs' },
+      { file: 'src/render/viewer_3d.rs' },
+      { file: 'src/render/viewer_3d.rs' },
+    ],
+    expectFiles: ['src/render/viewer_3d.rs'],
+  },
+  {
+    name: 'an extra script beyond the inventory is not a shortfall',
+    blocks: [
+      ...Object.entries(EXPECTED).flatMap(([file, n]) =>
+        Array.from({ length: n }, () => ({ file })),
+      ),
+      { file: 'src/render/ui.rs' },
+    ],
+    expectFiles: [],
+  },
 ];
 
 function selfTest(scratch) {
@@ -491,11 +585,24 @@ function selfTest(scratch) {
       console.log(`        got      ${JSON.stringify(got)}`);
     }
   }
+  for (const fx of FLOOR_FIXTURES) {
+    const got = shortfall(fx.blocks)
+      .map((line) => line.split(':')[0])
+      .sort();
+    const want = [...fx.expectFiles].sort();
+    if (got.join('|') !== want.join('|')) {
+      bad++;
+      console.log(`  FAIL  ${fx.name}`);
+      console.log(`        expected shortfall in ${JSON.stringify(want)}`);
+      console.log(`        got               ${JSON.stringify(got)}`);
+    }
+  }
+  const total = FIXTURES.length + FLOOR_FIXTURES.length;
   if (bad > 0) {
-    console.error(`self-test: ${bad} of ${FIXTURES.length} cases failed`);
+    console.error(`self-test: ${bad} of ${total} cases failed`);
     return 1;
   }
-  console.log(`self-test ok (${FIXTURES.length} cases)`);
+  console.log(`self-test ok (${total} cases)`);
   return 0;
 }
 
@@ -510,12 +617,14 @@ function main() {
     if (process.argv.includes('--list')) {
       for (const b of blocks) console.log(`${b.file}:${b.line}  ${b.goal}  ${b.body.length} chars`);
     }
-    if (blocks.length < MIN_BLOCKS || new Set(blocks.map((b) => b.file)).size < MIN_FILES) {
+    const short = shortfall(blocks);
+    if (short.length > 0) {
+      for (const line of short) console.error(`error: ${line}`);
       console.error(
-        `error: found only ${blocks.length} inline script(s) in ` +
-          `${new Set(blocks.map((b) => b.file)).size} file(s) — expected at least ` +
-          `${MIN_BLOCKS} in ${MIN_FILES}. The templates moved somewhere this scan ` +
-          `no longer reaches; fix the walk rather than lowering the floor.`,
+        '\nA script this crate emits is no longer reachable by the scan, so its ' +
+          'syntax is checked by nothing. Fix the walk, or — if the template really ' +
+          'moved or went away — update EXPECTED in this file to say so deliberately. ' +
+          'Do not lower it to whatever the scan happens to find.',
       );
       return 1;
     }
