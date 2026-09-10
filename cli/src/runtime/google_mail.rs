@@ -38,6 +38,7 @@ const MAX_ENCODED_MESSAGE_BYTES: usize = 1024 * 1024;
 const MAX_RESPONSE_BYTES: usize = 64 * 1024;
 const MAX_JOURNAL_BYTES: usize = 64 * 1024;
 const REQUEST_DEADLINE: Duration = Duration::from_secs(30);
+const DNS_DEADLINE: Duration = Duration::from_secs(10);
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "kebab-case", deny_unknown_fields)]
@@ -96,6 +97,7 @@ impl PinnedGoogleHttp {
         Self {
             agent: ureq::AgentBuilder::new()
                 .redirects(0)
+                .resolver(crate::http_body::BoundedDnsResolver::new(DNS_DEADLINE))
                 .timeout_connect(Duration::from_secs(10))
                 .timeout_write(Duration::from_secs(10))
                 .timeout_read(Duration::from_secs(10))

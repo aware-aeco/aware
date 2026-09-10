@@ -11,6 +11,7 @@ use crate::error::AwareError;
 
 const REFRESH_BUFFER_SECS: i64 = 60;
 const REFRESH_DEADLINE: Duration = Duration::from_secs(30);
+const DNS_DEADLINE: Duration = Duration::from_secs(10);
 const MAX_REFRESH_RESPONSE_BYTES: usize = 64 * 1024;
 
 pub fn ensure_fresh(
@@ -90,6 +91,7 @@ fn refresh_loaded(
     // total request so a send preflight cannot hang indefinitely (#495).
     let agent = ureq::AgentBuilder::new()
         .redirects(0)
+        .resolver(crate::http_body::BoundedDnsResolver::new(DNS_DEADLINE))
         .timeout_connect(Duration::from_secs(10))
         .timeout_write(Duration::from_secs(10))
         .timeout_read(Duration::from_secs(10))

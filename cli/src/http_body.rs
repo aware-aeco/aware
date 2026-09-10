@@ -1,7 +1,58 @@
-//! Bounded response-body reads for synchronous HTTP clients.
+//! Deadline helpers for synchronous HTTP clients.
 
 use std::io::Read;
+use std::net::{SocketAddr, ToSocketAddrs};
 use std::time::{Duration, Instant};
+
+/// A DNS resolver that puts a wall-clock bound around the standard library's
+/// otherwise-unbounded synchronous lookup. The detached worker performs only
+/// name resolution: if it outlives the caller it cannot transmit credentials
+/// or a request body.
+#[derive(Debug, Clone, Copy)]
+pub(crate) struct BoundedDnsResolver {
+    timeout: Duration,
+}
+
+impl BoundedDnsResolver {
+    pub(crate) fn new(timeout: Duration) -> Self {
+        Self { timeout }
+    }
+}
+
+impl ureq::Resolver for BoundedDnsResolver {
+    fn resolve(&self, netloc: &str) -> std::io::Result<Vec<SocketAddr>> {
+        let netloc = netloc.to_owned();
+        resolve_with_timeout(self.timeout, move || {
+            netloc
+                .to_socket_addrs()
+                .map(|addresses| addresses.collect())
+        })
+    }
+}
+
+fn resolve_with_timeout(
+    timeout: Duration,
+    resolve: impl FnOnce() -> std::io::Result<Vec<SocketAddr>> + Send + 'static,
+) -> std::io::Result<Vec<SocketAddr>> {
+    let (tx, rx) = std::sync::mpsc::sync_channel(1);
+    std::thread::Builder::new()
+        .name("aware-bounded-dns".into())
+        .spawn(move || {
+            let _ = tx.send(resolve());
+        })
+        .map_err(|error| std::io::Error::other(format!("start DNS resolver: {error}")))?;
+
+    match rx.recv_timeout(timeout) {
+        Ok(result) => result,
+        Err(std::sync::mpsc::RecvTimeoutError::Timeout) => Err(std::io::Error::new(
+            std::io::ErrorKind::TimedOut,
+            "DNS lookup deadline exceeded",
+        )),
+        Err(std::sync::mpsc::RecvTimeoutError::Disconnected) => Err(std::io::Error::other(
+            "DNS resolver stopped before returning a result",
+        )),
+    }
+}
 
 /// Read a detached HTTP response body without letting a slow-dribbling peer
 /// defeat the caller's wall-clock deadline or an oversized body grow memory
@@ -73,6 +124,30 @@ impl<R: Read> Read for DeadlineReader<R> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn dns_lookup_is_bounded_even_when_the_system_resolver_stalls() {
+        let started = Instant::now();
+        let error = resolve_with_timeout(Duration::from_millis(20), || {
+            std::thread::sleep(Duration::from_millis(200));
+            Ok(Vec::new())
+        })
+        .unwrap_err();
+        assert_eq!(error.kind(), std::io::ErrorKind::TimedOut);
+        assert!(
+            started.elapsed() < Duration::from_millis(150),
+            "the caller waited for the unbounded resolver"
+        );
+    }
+
+    #[test]
+    fn dns_lookup_returns_the_resolvers_result() {
+        let expected = "127.0.0.1:443".parse().unwrap();
+        assert_eq!(
+            resolve_with_timeout(Duration::from_secs(1), move || Ok(vec![expected])).unwrap(),
+            vec![expected]
+        );
+    }
 
     struct SlowDribble {
         remaining: usize,
