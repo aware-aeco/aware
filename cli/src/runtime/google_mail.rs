@@ -8,7 +8,7 @@ use std::collections::BTreeMap;
 use std::fs::{File, OpenOptions};
 use std::io::{BufRead, BufReader, Read, Seek, SeekFrom, Write};
 use std::path::{Path, PathBuf};
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
 use base64::Engine;
 use fs2::FileExt;
@@ -104,18 +104,19 @@ impl PinnedGoogleHttp {
         }
     }
 
-    fn collect(result: Result<ureq::Response, ureq::Error>) -> Result<HttpResponse, String> {
+    fn collect(
+        result: Result<ureq::Response, ureq::Error>,
+        started: Instant,
+    ) -> Result<HttpResponse, String> {
         let response = match result {
             Ok(response) | Err(ureq::Error::Status(_, response)) => response,
             Err(ureq::Error::Transport(error)) => return Err(error.to_string()),
         };
         let status = response.status();
-        let mut body = Vec::new();
-        response
-            .into_reader()
-            .take((MAX_RESPONSE_BYTES + 1) as u64)
-            .read_to_end(&mut body)
-            .map_err(|error| format!("read response: {error}"))?;
+        let remaining = REQUEST_DEADLINE
+            .checked_sub(started.elapsed())
+            .ok_or_else(|| "request deadline exceeded before reading response body".to_string())?;
+        let body = read_body_with_deadline(response.into_reader(), remaining)?;
         if body.len() > MAX_RESPONSE_BYTES {
             return Err(format!(
                 "response exceeds the {MAX_RESPONSE_BYTES}-byte limit"
@@ -127,24 +128,89 @@ impl PinnedGoogleHttp {
 
 impl GoogleHttp for PinnedGoogleHttp {
     fn identity(&self, bearer: &str) -> Result<HttpResponse, String> {
-        Self::collect(
-            self.agent
-                .get(IDENTITY_URL)
-                .set("Authorization", &format!("Bearer {bearer}"))
-                .set("Accept", "application/json")
-                .call(),
-        )
+        let started = Instant::now();
+        let result = self
+            .agent
+            .get(IDENTITY_URL)
+            .set("Authorization", &format!("Bearer {bearer}"))
+            .set("Accept", "application/json")
+            .call();
+        Self::collect(result, started)
     }
 
     fn send(&self, bearer: &str, request_body: &[u8]) -> Result<HttpResponse, String> {
-        Self::collect(
-            self.agent
-                .post(GMAIL_SEND_URL)
-                .set("Authorization", &format!("Bearer {bearer}"))
-                .set("Accept", "application/json")
-                .set("Content-Type", "application/json")
-                .send_bytes(request_body),
-        )
+        let started = Instant::now();
+        let result = self
+            .agent
+            .post(GMAIL_SEND_URL)
+            .set("Authorization", &format!("Bearer {bearer}"))
+            .set("Accept", "application/json")
+            .set("Content-Type", "application/json")
+            .send_bytes(request_body);
+        Self::collect(result, started)
+    }
+}
+
+/// `ureq`'s overall request deadline ends when response headers are returned;
+/// its detached body reader retains only the per-read socket timeout. Read on a
+/// bounded worker so a peer that sends one byte before every socket timeout
+/// cannot keep the Gmail send path alive indefinitely. The worker owns no
+/// credential and checks the same absolute deadline after every read. A single
+/// read already in progress can outlive the caller only until ureq's ten-second
+/// per-read timeout fires.
+fn read_body_with_deadline(
+    reader: Box<dyn Read + Send + Sync + 'static>,
+    remaining: Duration,
+) -> Result<Vec<u8>, String> {
+    let deadline = Instant::now()
+        .checked_add(remaining)
+        .ok_or_else(|| "response body deadline overflowed".to_string())?;
+    let (tx, rx) = std::sync::mpsc::sync_channel(1);
+    std::thread::Builder::new()
+        .name("aware-gmail-response-reader".into())
+        .spawn(move || {
+            let mut body = Vec::new();
+            let result = DeadlineReader { reader, deadline }
+                .take((MAX_RESPONSE_BYTES + 1) as u64)
+                .read_to_end(&mut body)
+                .map(|_| body)
+                .map_err(|error| format!("read response: {error}"));
+            let _ = tx.send(result);
+        })
+        .map_err(|error| format!("start bounded response reader: {error}"))?;
+
+    match rx.recv_timeout(deadline.saturating_duration_since(Instant::now())) {
+        Ok(result) => result,
+        Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {
+            Err("request deadline exceeded while reading response body".into())
+        }
+        Err(std::sync::mpsc::RecvTimeoutError::Disconnected) => {
+            Err("response reader stopped before returning a result".into())
+        }
+    }
+}
+
+struct DeadlineReader<R> {
+    reader: R,
+    deadline: Instant,
+}
+
+impl<R: Read> Read for DeadlineReader<R> {
+    fn read(&mut self, buffer: &mut [u8]) -> std::io::Result<usize> {
+        if Instant::now() >= self.deadline {
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::TimedOut,
+                "request deadline exceeded while reading response body",
+            ));
+        }
+        let read = self.reader.read(buffer)?;
+        if Instant::now() >= self.deadline {
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::TimedOut,
+                "request deadline exceeded while reading response body",
+            ));
+        }
+        Ok(read)
     }
 }
 
@@ -1862,6 +1928,37 @@ mod tests {
         assert_eq!(code(&replay), "gmail.send.outcome-unknown");
         assert_eq!(mock.send_count(), 1);
         assert_eq!(mock.identity_count(), 1);
+    }
+
+    #[test]
+    fn response_body_deadline_stops_a_slow_dribble() {
+        struct SlowDribble {
+            remaining: usize,
+        }
+
+        impl Read for SlowDribble {
+            fn read(&mut self, buffer: &mut [u8]) -> std::io::Result<usize> {
+                if self.remaining == 0 || buffer.is_empty() {
+                    return Ok(0);
+                }
+                std::thread::sleep(Duration::from_millis(10));
+                buffer[0] = b'x';
+                self.remaining -= 1;
+                Ok(1)
+            }
+        }
+
+        let started = Instant::now();
+        let error = read_body_with_deadline(
+            Box::new(SlowDribble { remaining: 20 }),
+            Duration::from_millis(35),
+        )
+        .unwrap_err();
+        assert!(error.contains("deadline exceeded"), "{error}");
+        assert!(
+            started.elapsed() < Duration::from_millis(150),
+            "the caller followed the dribbling body instead of its wall-clock deadline"
+        );
     }
 
     #[test]
