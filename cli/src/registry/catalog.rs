@@ -46,7 +46,16 @@ pub struct CatalogAgent {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CatalogVersion {
     pub description: String,
-    pub status: String, // "available" | "planned"
+    pub status: String, // "available" | "planned" | "requires-runtime"
+    /// Present when `status` depends on functionality shipped by the AWARE CLI.
+    /// Older catalog readers ignore this additive field; older manifest readers
+    /// still fail closed on the unknown status value.
+    #[serde(
+        rename = "minimum-cli-version",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub minimum_cli_version: Option<String>,
     /// The agent's own `manifest.version` for this entry. DISTINCT from the entry's
     /// map KEY, which is the registry *index* version (the install spec). A consumer
     /// can compare this against an installed agent's `manifest.version` (what
@@ -190,10 +199,7 @@ fn category_str(c: Category) -> &'static str {
 }
 
 fn status_str(s: AgentStatus) -> &'static str {
-    match s {
-        AgentStatus::Available => "available",
-        AgentStatus::Planned => "planned",
-    }
+    s.as_str()
 }
 
 /// The transport `aware agent catalog` publishes for an agent: **the one it would
@@ -240,6 +246,7 @@ fn version_from_agent(a: &Agent) -> CatalogVersion {
     CatalogVersion {
         description: first_line(&a.description),
         status: status_str(a.status).to_string(),
+        minimum_cli_version: a.minimum_cli_version.clone(),
         manifest_version: a.version.clone(),
         stateful: a.stateful,
         sdk_target: a.sdk_target.clone(),
@@ -313,6 +320,12 @@ where
         // subdir is the defect, never a differing version.
         let mut seen_subdirs: BTreeMap<String, (&String, &str, String)> = BTreeMap::new();
         for (ver, ve) in &entry.versions {
+            if let Err(reason) =
+                crate::registry::index::check_immutable_archive_root(&ve.tarball, &ve.subdir)
+            {
+                errors.push((format!("{id}@{ver}"), reason));
+                continue;
+            }
             // A subdir that is not portably written resolves to different manifests on
             // different platforms, so no key computed from it means anything. Report it
             // and move on rather than guessing which reading was intended.
@@ -534,6 +547,22 @@ mod tests {
              skills:\n  - some-skill\n"
         );
         serde_yaml::from_str(&y).unwrap()
+    }
+
+    #[test]
+    fn catalog_preserves_runtime_gate_metadata() {
+        let yaml = "agent: google-workspace\nversion: 0.3.0\ndescription: Gmail send.\n\
+                    stateful: false\nstatus: requires-runtime\nminimum-cli-version: 0.136.0\n\
+                    license: Apache-2.0\ntransport: { rest: { base: https://gmail.googleapis.com/gmail/v1/ } }\n\
+                    commands: { gmail.send: { lifecycle: single, description: Send mail. } }\n";
+        let agent: Agent = serde_yaml::from_str(yaml).unwrap();
+        let version = version_from_agent(&agent);
+        assert_eq!(version.status, "requires-runtime");
+        assert_eq!(version.minimum_cli_version.as_deref(), Some("0.136.0"));
+
+        let json = serde_json::to_value(version).unwrap();
+        assert_eq!(json["status"], "requires-runtime");
+        assert_eq!(json["minimum-cli-version"], "0.136.0");
     }
 
     fn index_with(entries: &[(&str, &str, &str)]) -> Index {

@@ -367,6 +367,7 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
         retryable: parsed.retryable,
         message: parsed.message,
         diagnostic_id: parsed.diagnostic_id,
+        details: None,
     })
 }
 
@@ -1047,6 +1048,12 @@ impl AgentInvoker for RestInvoker {
         command: &str,
         args: Value,
     ) -> Result<Value, AwareError> {
+        // Gmail send is a pinned, at-most-once flow whose identity preflight,
+        // MIME construction and durable outbox cannot be expressed by the
+        // generic one-request REST renderer (#495).
+        if agent == "google-workspace" && command == "gmail.send" {
+            return crate::runtime::google_mail::send(self.agents_dir.clone(), args).await;
+        }
         // Trimble Connect file ops are multi-step, binary, cross-domain flows the
         // single-call REST path can't express, so they're handled out-of-line (#200).
         if agent == "trimble-connect" {
@@ -5433,12 +5440,14 @@ mod builtin_invoker_tests {
                 retryable,
                 message,
                 diagnostic_id,
+                details,
             } => {
                 assert_eq!(code, "reference-provider-pin-mismatch");
                 assert_eq!(phase, "preflight");
                 assert!(!retryable);
                 assert!(message.contains("expected fingerprint"));
                 assert_eq!(diagnostic_id, "123e4567-e89b-12d3-a456-426614174000");
+                assert!(details.is_none());
             }
             other => panic!("typed envelope was flattened: {other:?}"),
         }

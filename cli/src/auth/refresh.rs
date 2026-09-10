@@ -1,6 +1,7 @@
 //! Lazy token refresh — call before any access_token read; refreshes when within 60s of expiry.
 
 use std::io::Read;
+use std::time::Duration;
 
 use crate::auth::config;
 use crate::auth::keychain::{self, StoredToken};
@@ -9,6 +10,7 @@ use crate::auth::urlencode;
 use crate::error::AwareError;
 
 const REFRESH_BUFFER_SECS: i64 = 60;
+const REFRESH_DEADLINE: Duration = Duration::from_secs(30);
 
 pub fn ensure_fresh(
     integration: &str,
@@ -46,7 +48,18 @@ pub fn ensure_fresh(
         .collect::<Vec<_>>()
         .join("&");
 
-    let resp = ureq::post(cfg.token_url())
+    // OAuth refresh carries the long-lived refresh token and must not follow a
+    // provider redirect to a different origin. Bound every phase as well as the
+    // total request so a send preflight cannot hang indefinitely (#495).
+    let agent = ureq::AgentBuilder::new()
+        .redirects(0)
+        .timeout_connect(Duration::from_secs(10))
+        .timeout_write(Duration::from_secs(10))
+        .timeout_read(Duration::from_secs(10))
+        .timeout(REFRESH_DEADLINE)
+        .build();
+    let resp = agent
+        .post(cfg.token_url())
         .set("Content-Type", "application/x-www-form-urlencoded")
         .send_string(&body)
         .map_err(|e| AwareError::Network(format!("refresh: {e}")))?;

@@ -223,6 +223,16 @@ async fn invoke_cmd(
         return Err(not_installed());
     }
     let m = crate::manifest::loader::load_agent(&manifest_path)?;
+    if m.status == crate::manifest::agent::AgentStatus::Planned {
+        return Err(AwareError::Validation(format!(
+            "agent '{agent_id}' is planned and not runnable"
+        )));
+    }
+    if let Some((code, message)) =
+        crate::validate::runtime_requirement_error(&m, crate::validate::CURRENT_CLI_VERSION)
+    {
+        return Err(AwareError::Validation(format!("[{code}] {message}")));
+    }
     // Resolve the EFFECTIVE transport through the same priority order workflow
     // dispatch uses (cli > rest > app > builtin) — NOT a bare `builtin` probe.
     // A crafted MIXED-transport manifest (builtin + cli/rest/app) dispatches as
@@ -237,11 +247,16 @@ async fn invoke_cmd(
              to drive a `{kind}` agent, compose it in a .flo app and `aware app run` it."
         )));
     }
-    if !m.commands.contains_key(command) {
+    let Some(command_manifest) = m.commands.get(command) else {
         let available: Vec<&str> = m.commands.keys().map(String::as_str).collect();
         return Err(AwareError::Validation(format!(
             "agent '{agent_id}' has no command '{command}' (available: {})",
             available.join(", ")
+        )));
+    };
+    if command_manifest.status == crate::manifest::agent::AgentStatus::Planned {
+        return Err(AwareError::Validation(format!(
+            "command '{command}' of agent '{agent_id}' is planned and not runnable"
         )));
     }
 
@@ -960,6 +975,11 @@ fn describe_installed(
             description: &'a str,
             stateful: bool,
             status: &'static str,
+            #[serde(
+                rename = "minimum-cli-version",
+                skip_serializing_if = "Option::is_none"
+            )]
+            minimum_cli_version: Option<&'a str>,
             license: &'a str,
             vendor: Option<&'a str>,
             commands: Vec<CommandRow>,
@@ -979,11 +999,7 @@ fn describe_installed(
                 name: n.clone(),
                 lifecycle: format!("{:?}", c.lifecycle).to_lowercase(),
                 category: format!("{:?}", m.category_of(c)).to_lowercase(),
-                status: match c.status {
-                    crate::manifest::agent::AgentStatus::Available => "available",
-                    crate::manifest::agent::AgentStatus::Planned => "planned",
-                }
-                .to_string(),
+                status: c.status.as_str().to_string(),
                 description: c.description.clone(),
             })
             .collect();
@@ -995,10 +1011,8 @@ fn describe_installed(
             display_name: m.display_name.as_deref(),
             description: &m.description,
             stateful: m.stateful,
-            status: match m.status {
-                crate::manifest::agent::AgentStatus::Available => "available",
-                crate::manifest::agent::AgentStatus::Planned => "planned",
-            },
+            status: m.status.as_str(),
+            minimum_cli_version: m.minimum_cli_version.as_deref(),
             license: &m.license,
             vendor: m.vendor.as_deref(),
             command_count: m.command_count(),
@@ -1046,11 +1060,17 @@ fn describe_installed(
         "executable:   unverified — bundle integrity does not attest PATH/managed executables or REST services"
     );
     print_transport(&m.transport);
-    if m.status == crate::manifest::agent::AgentStatus::Planned {
-        println!(
+    match m.status {
+        crate::manifest::agent::AgentStatus::Available => {}
+        crate::manifest::agent::AgentStatus::Planned => println!(
             "status:       \u{26a0} planned — not yet runnable (no shipped transport binary); \
              apps referencing it are rejected at validate/compile (#161)"
-        );
+        ),
+        crate::manifest::agent::AgentStatus::RequiresRuntime => println!(
+            "status:       requires-runtime — needs AWARE CLI {} or newer (running {})",
+            m.minimum_cli_version.as_deref().unwrap_or("<missing>"),
+            crate::validate::CURRENT_CLI_VERSION
+        ),
     }
     println!();
     let curated = m.curated_count();
@@ -1627,6 +1647,11 @@ fn describe_from_catalog(
             display_name: Option<&'a str>,
             description: &'a str,
             status: &'a str,
+            #[serde(
+                rename = "minimum-cli-version",
+                skip_serializing_if = "Option::is_none"
+            )]
+            minimum_cli_version: Option<&'a str>,
             stateful: bool,
             #[serde(skip_serializing_if = "Option::is_none")]
             vendor: Option<&'a str>,
@@ -1650,6 +1675,7 @@ fn describe_from_catalog(
             display_name: agent.display_name.as_deref(),
             description: &v.description,
             status: &v.status,
+            minimum_cli_version: v.minimum_cli_version.as_deref(),
             stateful: v.stateful,
             vendor: agent.vendor.as_deref(),
             transport: &v.transport,
@@ -1680,6 +1706,9 @@ fn describe_from_catalog(
     }
     println!("description:  {}", v.description);
     println!("status:       {}", v.status);
+    if let Some(minimum) = &v.minimum_cli_version {
+        println!("minimum-cli:  {minimum}");
+    }
     println!("stateful:     {}", v.stateful);
     if let Some(vd) = &agent.vendor {
         println!("vendor:       {vd}");

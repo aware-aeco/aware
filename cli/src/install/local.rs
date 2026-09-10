@@ -279,6 +279,34 @@ mod tests {
     }
 
     #[test]
+    fn local_install_rejects_agent_requiring_a_newer_cli_before_copy() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let src = tmp.path().join("future-agent");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(
+            src.join("manifest.yaml"),
+            "agent: future-agent\nversion: 1.0.0\ndescription: future\nstateful: false\n\
+             status: requires-runtime\nminimum-cli-version: 999.0.0\nlicense: MIT\n\
+             transport: { builtin: {} }\ncommands: { run: { lifecycle: single, description: x } }\n",
+        )
+        .unwrap();
+
+        let err = install_agent_from_path(
+            &src,
+            &paths,
+            &crate::install::provenance::InstallSource::Local {
+                path: "fixture".into(),
+            },
+        )
+        .unwrap_err();
+        assert!(err.to_string().contains("E_AGENT_RUNTIME_TOO_OLD"), "{err}");
+        assert!(!paths.agents_dir().join("future-agent").exists());
+    }
+
+    #[test]
     fn installs_app_from_path() {
         let tmp = tempfile::tempdir().unwrap();
         let paths = Paths {

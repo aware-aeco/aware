@@ -12,6 +12,9 @@ pub struct StructuredAgentError {
     pub retryable: bool,
     pub message: String,
     pub diagnostic_id: String,
+    /// Optional bounded, non-secret correlation data for a failed operation.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub details: Option<std::collections::BTreeMap<String, String>>,
 }
 
 #[derive(Debug, Error)]
@@ -34,6 +37,7 @@ pub enum AwareError {
         retryable: bool,
         message: String,
         diagnostic_id: String,
+        details: Option<std::collections::BTreeMap<String, String>>,
     },
 
     #[error("permission denied: {0}")]
@@ -71,12 +75,14 @@ impl AwareError {
                 retryable,
                 message,
                 diagnostic_id,
+                details,
             } => Some(StructuredAgentError {
                 code: code.clone(),
                 phase: phase.clone(),
                 retryable: *retryable,
                 message: message.clone(),
                 diagnostic_id: diagnostic_id.clone(),
+                details: details.clone(),
             }),
             _ => None,
         }
@@ -94,5 +100,36 @@ impl AwareError {
             Self::Conflict(_) => 8,
             Self::Io(_) | Self::Yaml(_) | Self::Json(_) | Self::Internal(_) => 1,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn structured_error_details_are_optional_and_backward_compatible() {
+        let legacy =
+            r#"{"code":"x","phase":"dispatch","retryable":false,"message":"m","diagnosticId":"d"}"#;
+        let parsed: StructuredAgentError = serde_json::from_str(legacy).unwrap();
+        assert!(parsed.details.is_none());
+
+        let mut details = std::collections::BTreeMap::new();
+        details.insert("attemptId".into(), "rfi-001-mail-v1".into());
+        details.insert("rfcMessageId".into(), "<rfi-001@example.invalid>".into());
+        let value = serde_json::to_value(StructuredAgentError {
+            code: "gmail.send.outcome-unknown".into(),
+            phase: "dispatch".into(),
+            retryable: false,
+            message: "Send outcome is unknown; reconcile before retrying.".into(),
+            diagnostic_id: "rfi-001-mail-v1".into(),
+            details: Some(details),
+        })
+        .unwrap();
+        assert_eq!(value["details"]["attemptId"], "rfi-001-mail-v1");
+        assert_eq!(
+            value["details"]["rfcMessageId"],
+            "<rfi-001@example.invalid>"
+        );
     }
 }
