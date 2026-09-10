@@ -218,6 +218,7 @@ fn docs_and_canary_preserve_acceptance_retry_and_live_verification_boundaries() 
     for required in [
         "gmail.send` is a google sensitive scope",
         "gmail.readonly` is restricted",
+        "aware connect google-workspace --oauth",
         "fails closed",
         "aware disconnect google-workspace",
         "openidconnect.googleapis.com",
@@ -261,6 +262,7 @@ fn docs_and_canary_preserve_acceptance_retry_and_live_verification_boundaries() 
         "do not contain a `bcc` header",
         "decoded headers and body",
         "profile request, process exit code, or aware node output alone",
+        "refresh token",
         "do not mark issue #495 `qa-ready`",
     ] {
         assert!(
