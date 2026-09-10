@@ -16,7 +16,7 @@
 // and two things were wrong with it. It never ran — the file is a manual pre-PR
 // gate, and its header explains that CI cannot host it because "this repo has no
 // Rust CI job at all", which stopped being true when `ci.yml` landed (#298). And
-// it reaches exactly ONE of the five blocks below: it slices `const TEMPLATE`
+// it reaches exactly ONE of the six blocks below: it slices `const TEMPLATE`
 // out of `viewer_3d.rs` and parse-checks the `type="module"` script inside it,
 // so the viewer's classic bootstrap script — the handshake that decides whether
 // an embedding client is told the render failed — and `report.rs`'s search
@@ -24,7 +24,7 @@
 //
 // Parsing needs no browser, no Playwright and no network, so it belongs in CI
 // whatever happens to the Playwright half. This is that half, widened from one
-// block to every block, and discovering them rather than naming them: a sixth
+// block to every block, and discovering them rather than naming them: a seventh
 // script added later would otherwise arrive unchecked with nothing saying so —
 // the lesson `tests/dotnet_suites_gate.rs` records from #433.
 //
@@ -50,12 +50,13 @@
 //     by brace matching inside the same tokenizer, so it does not depend on unit
 //     tests being last in the file.
 //
-// Parsing is `node --check` on a temp file — `.mjs` for `type="module"`,
-// `.js` otherwise — which is the real parser under the real goal symbol, rather
-// than `new Function` (sloppy-mode script semantics, which accept constructs a
-// module rejects). `type="importmap"` and any `application/json` block is
-// checked as JSON, since that is what a browser does with it. A `<script src=…>`
-// with an empty body loads its code elsewhere and is skipped.
+// Each block is parsed under the goal symbol a browser would use — `vm.Script`
+// for a classic script, `node --check` on a `.mjs` for a module, `JSON.parse`
+// for an importmap or any `application/json` block — rather than `new Function`
+// for everything, which is sloppy-mode Script semantics and accepts constructs a
+// module rejects. See [`parseError`] for why a temp `.js` file is not the
+// substitute for `vm.Script` it looks like. A `<script src=…>` with an empty body
+// loads its code elsewhere and is skipped.
 //
 // Two known limits, stated rather than hidden. A script assembled by `format!`
 // from several literals would be checked per-literal and would not parse; nothing
@@ -132,7 +133,16 @@ const EXPECTED = {
  */
 export function walkRust(src) {
   const literals = [];
-  const code = [...src];
+  // `split('')`, NOT `[...src]`. Spread iterates CODE POINTS, while every index
+  // here — `i`, `k`, `indexOf`, `src.length` — is a UTF-16 code UNIT offset. One
+  // astral character makes the array shorter than the string it is supposed to
+  // mirror, and from there every write lands on the wrong element: a
+  // `#[cfg(test)] mod` whose body holds three emoji lost its closing brace in the
+  // mask, so `itemEnd` ran to EOF and the next production script was blanked out
+  // of the inventory (Codex review, PR #518 — the same silent false negative as
+  // the raw `indexOf`, arriving by a different road). `split('')` yields code
+  // units, so offsets stay aligned and `join('')` reconstructs the string.
+  const code = src.split('');
   let i = 0;
   let line = 1;
   const isIdent = (c) => c !== undefined && /[A-Za-z0-9_]/.test(c);
@@ -253,7 +263,7 @@ export function unescapeRust(s) {
  */
 export function stripTestItems(src) {
   const { code } = walkRust(src);
-  const chars = [...src];
+  const chars = src.split(''); // code units, for the reason [`walkRust`] records
   let at = 0;
   for (;;) {
     const start = code.indexOf('#[cfg(test)]', at);
@@ -514,6 +524,24 @@ const FIXTURES = [
   {
     name: 'a #[cfg(test)] use statement ends at its semicolon, not at the next item',
     rust: '#[cfg(test)]\nuse std::fmt;\nconst P: &str = r#"<script>var a = 1;</script>"#;',
+    expect: [{ goal: 'classic', ok: true }],
+  },
+  // Astral characters: the mask must be indexed in UTF-16 code units, or a
+  // surrogate pair shifts every later offset and the mask stops describing the
+  // source it mirrors (Codex review, PR #518).
+  {
+    name: 'astral characters in a test module do not shift the mask',
+    rust: '#[cfg(test)]\nmod tests {\n  const E: &str = "🏗🏗🏗";\n}\nconst P: &str = r#"<script>var a = 1;</script>"#;',
+    expect: [{ goal: 'classic', ok: true }],
+  },
+  {
+    name: 'astral characters in a comment do not shift the mask',
+    rust: '// 🏗🏗🏗 under construction\nconst P: &str = r#"<script>var a = 1;</script>"#;',
+    expect: [{ goal: 'classic', ok: true }],
+  },
+  {
+    name: 'a script containing an astral character is still extracted whole',
+    rust: 'const P: &str = r#"<script>var s = "🏗"; var t = 1;</script>"#;',
     expect: [{ goal: 'classic', ok: true }],
   },
 ];

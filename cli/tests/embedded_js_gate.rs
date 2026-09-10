@@ -201,6 +201,14 @@ fn the_crate_still_carries_inline_scripts_for_the_gate_to_reach() {
 #[test]
 fn the_scan_floor_still_names_every_file_that_carries_a_script() {
     let script = read(&format!("cli/{SCRIPT}"));
+
+    // Scoped to the table's own braces, not to the file. The first draft searched
+    // the whole script for `'<path>'` and passed for the wrong reason: the same
+    // quoted paths appear again in `FLOOR_FIXTURES` further down, so deleting a
+    // real `EXPECTED` entry left this green and the JavaScript self-test green
+    // too, and that file's floor vanished unnoticed (Codex review, #518).
+    let table = expected_table(&script);
+
     for file in [
         "src/render/viewer_3d.rs",
         "src/commands/report.rs",
@@ -208,12 +216,30 @@ fn the_scan_floor_still_names_every_file_that_carries_a_script() {
         "src/auth/paste.rs",
     ] {
         assert!(
-            script.contains(&format!("'{file}'")),
+            table.contains(&format!("'{file}'")),
             "cli/{SCRIPT}'s EXPECTED table no longer names {file:?}, so a refactor \
              that stops the scan reaching that file's script would leave its \
-             syntax checked by nothing while the gate reports green."
+             syntax checked by nothing while the gate reports green. Table \
+             read:\n{table}"
         );
     }
+}
+
+/// The body of `const EXPECTED = { … }` in the scan script, braces excluded.
+///
+/// Fails loudly rather than returning an empty string: a table this cannot find
+/// is a table nothing is checking, and a silent empty result would turn the
+/// assertions above into a test that always fails for the wrong reason — or,
+/// worse under a `contains`, always passes.
+fn expected_table(script: &str) -> String {
+    let start = script
+        .find("const EXPECTED = {")
+        .unwrap_or_else(|| panic!("cli/{SCRIPT} no longer declares `const EXPECTED = {{`"));
+    let rest = &script[start..];
+    let end = rest
+        .find("};")
+        .unwrap_or_else(|| panic!("cli/{SCRIPT}'s EXPECTED table is not closed by `}};`"));
+    rest[..end].to_string()
 }
 
 /// One parse check, not two.
@@ -224,12 +250,32 @@ fn the_scan_floor_still_names_every_file_that_carries_a_script() {
 #[test]
 fn the_browser_gate_delegates_its_parse_check_rather_than_repeating_it() {
     let run = read("cli/tests/browser/run.mjs");
-    assert!(
-        run.contains("parse-check-embedded-js.mjs"),
-        "tests/browser/run.mjs no longer imports the shared parse check. Two \
-         implementations drift, and the block one of them misses is covered by \
-         nobody."
-    );
+
+    // The IMPORT STATEMENT, not the filename. The first draft searched the whole
+    // file for `parse-check-embedded-js.mjs`, which also appears in the header
+    // comment explaining the delegation — so deleting the import left this green
+    // while `run.mjs` reached `collect(CLI)` with `collect` undefined and aborted
+    // instead of parse-checking anything (Codex review, #518).
+    let import = run
+        .lines()
+        .find(|line| {
+            let line = line.trim_start();
+            line.starts_with("import") && line.contains("parse-check-embedded-js.mjs")
+        })
+        .unwrap_or_else(|| {
+            panic!(
+                "tests/browser/run.mjs has no `import … from '…/parse-check-embedded-js.mjs'` \
+                 statement, so its step 0 calls functions nothing brought into scope. Two \
+                 parse checks drift; none at all aborts."
+            )
+        });
+    for name in ["collect", "parseError"] {
+        assert!(
+            import.contains(name),
+            "tests/browser/run.mjs imports from cli/{SCRIPT} but no longer binds \
+             {name:?}, which its step 0 calls. Import line read: {import}"
+        );
+    }
     assert!(
         !run.contains("new Function("),
         "tests/browser/run.mjs has reintroduced its own `new Function` parse \
