@@ -4,6 +4,11 @@
 
 use thiserror::Error;
 
+/// Heap-owned correlation fields keep the global error enum compact without
+/// changing the structured JSON representation.
+#[derive(Debug, Clone)]
+pub(crate) struct AgentErrorDetails(pub std::collections::BTreeMap<String, String>);
+
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct StructuredAgentError {
@@ -37,7 +42,7 @@ pub enum AwareError {
         retryable: bool,
         message: String,
         diagnostic_id: String,
-        details: Option<std::collections::BTreeMap<String, String>>,
+        details: Option<Box<AgentErrorDetails>>,
     },
 
     #[error("permission denied: {0}")]
@@ -82,7 +87,7 @@ impl AwareError {
                 retryable: *retryable,
                 message: message.clone(),
                 diagnostic_id: diagnostic_id.clone(),
-                details: details.clone(),
+                details: details.as_deref().map(|value| value.0.clone()),
             }),
             _ => None,
         }

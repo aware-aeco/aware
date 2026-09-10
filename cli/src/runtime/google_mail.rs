@@ -19,7 +19,7 @@ use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 
 use crate::auth::keychain::{StoredToken, TokenSource};
-use crate::error::AwareError;
+use crate::error::{AgentErrorDetails, AwareError};
 
 const INTEGRATION: &str = "google-workspace";
 const IDENTITY_URL: &str = "https://openidconnect.googleapis.com/v1/userinfo";
@@ -337,7 +337,10 @@ fn execute_authenticated(
             },
         )?;
         if is_new {
-            sync_parent(path.parent().expect("journal has account directory"))?;
+            let parent = path
+                .parent()
+                .ok_or_else(|| outbox_error("outbox journal path has no account directory"))?;
+            sync_parent(parent)?;
         }
     }
 
@@ -523,12 +526,12 @@ fn replay_for_credential_generation(
             }
             JournalState::Prepared => None,
         };
-        if let Some(replay) = replay {
-            if found.replace(replay).is_some() {
-                return Err(outbox_error(
-                    "credential generation matched multiple outbox namespaces",
-                ));
-            }
+        if let Some(replay) = replay
+            && found.replace(replay).is_some()
+        {
+            return Err(outbox_error(
+                "credential generation matched multiple outbox namespaces",
+            ));
         }
     }
     Ok(found)
@@ -547,7 +550,7 @@ fn validate_input(input: &GmailSendInput) -> Result<(), AwareError> {
     for address in input.to.iter().chain(&input.cc).chain(&input.bcc) {
         validate_address(address)?;
     }
-    if input.subject.as_bytes().len() > MAX_SUBJECT_BYTES {
+    if input.subject.len() > MAX_SUBJECT_BYTES {
         return Err(validation_error(format!(
             "subject exceeds the {MAX_SUBJECT_BYTES}-byte limit"
         )));
@@ -555,13 +558,13 @@ fn validate_input(input: &GmailSendInput) -> Result<(), AwareError> {
     if input.subject.chars().any(char::is_control) {
         return Err(validation_error("subject contains a control character"));
     }
-    if input.body.as_bytes().len() > MAX_BODY_BYTES {
+    if input.body.len() > MAX_BODY_BYTES {
         return Err(validation_error(format!(
             "body exceeds the {MAX_BODY_BYTES}-byte limit"
         )));
     }
     let attempt = input.attempt_id.as_str();
-    if attempt.is_empty() || attempt.as_bytes().len() > MAX_ATTEMPT_ID_BYTES {
+    if attempt.is_empty() || attempt.len() > MAX_ATTEMPT_ID_BYTES {
         return Err(validation_error(format!(
             "`attempt-id` must be 1..={MAX_ATTEMPT_ID_BYTES} bytes"
         )));
@@ -580,7 +583,7 @@ fn validate_input(input: &GmailSendInput) -> Result<(), AwareError> {
 
 fn validate_address(address: &str) -> Result<(), AwareError> {
     if address.is_empty()
-        || address.as_bytes().len() > MAX_ADDRESS_BYTES
+        || address.len() > MAX_ADDRESS_BYTES
         || !address.is_ascii()
         || address.bytes().any(|byte| byte.is_ascii_control())
         || address.contains([' ', ',', ';', '<', '>'])
@@ -645,7 +648,7 @@ fn validate_token(token: &StoredToken, alias: Option<&str>) -> Result<(), AwareE
 
 fn validate_identity(identity: &GoogleIdentity) -> Result<(), AwareError> {
     if identity.sub.is_empty()
-        || identity.sub.as_bytes().len() > 255
+        || identity.sub.len() > 255
         || identity.sub.chars().any(char::is_control)
         || identity.email_verified != Some(true)
     {
@@ -970,7 +973,7 @@ fn validate_existing_record(
     if record.version != 1
         || record.account_hash != account_hash
         || record.attempt_hash != attempt_hash
-        || record.rfc_message_id.as_bytes().len() > 512
+        || record.rfc_message_id.len() > 512
     {
         return Err(outbox_error(
             "outbox journal identity is invalid; refusing dispatch",
@@ -1133,7 +1136,7 @@ fn structured(
         retryable: false,
         message,
         diagnostic_id: diagnostic_id.chars().take(128).collect(),
-        details,
+        details: details.map(|value| Box::new(AgentErrorDetails(value))),
     }
 }
 
