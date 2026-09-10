@@ -96,11 +96,6 @@ pub struct BundleProvenance {
     pub executable_attested: bool,
 }
 
-#[allow(dead_code)]
-pub fn assess(agent_dir: &Path, manifest_agent: &str, manifest_version: &str) -> BundleProvenance {
-    assess_against_index(agent_dir, manifest_agent, manifest_version, None)
-}
-
 pub fn assess_against_index(
     agent_dir: &Path,
     manifest_agent: &str,
@@ -336,7 +331,7 @@ mod tests {
             trust: crate::registry::RegistryTrust::FreshOfficial,
         };
         assert!(
-            !assess(tmp.path(), "probe", "1.0.0").verified,
+            !assess_against_index(tmp.path(), "probe", "1.0.0", None).verified,
             "receipt alone is not trust"
         );
         assert!(assess_against_index(tmp.path(), "probe", "1.0.0", Some(&index)).verified);
