@@ -1,5 +1,5 @@
 agent: model-reference-reader
-version: 0.6.0
+version: 0.7.0
 display-name: Authenticated RVT Reference Reader
 description: |
   Convert a local Revit project into deterministic, authenticated reference-model artifacts without

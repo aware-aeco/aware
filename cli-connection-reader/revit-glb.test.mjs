@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { makeGlbFixture } from './model-fixtures.mjs';
-import { normalizeRevitGlb, parseGlb } from './revit-glb.mjs';
+import { MAX_CANONICAL_WORK_BYTES, checkedCanonicalWorkBytes, normalizeRevitGlb, parseGlb } from './revit-glb.mjs';
 
 function replaceGlbJson(input, jsonText) {
   const parsed = parseGlb(input);
@@ -250,6 +250,28 @@ test('observed xeoRVT JSON chunk fits the default while a caller-lowered cap rem
   );
 });
 
+test('the 64 MiB GLB JSON boundary is accepted exactly and refused above the cap', () => {
+  const valid = makeGlbFixture();
+  const parsed = parseGlb(valid);
+  const target = 64 * 1024 * 1024;
+  const document = { ...parsed.json, asset: { ...parsed.json.asset, generator: '' } };
+  const fixed = Buffer.byteLength(JSON.stringify(document));
+  document.asset.generator = 'x'.repeat(target - fixed);
+  const atLimit = replaceGlbJson(valid, JSON.stringify(document));
+  assert.equal(atLimit.readUInt32LE(12), target);
+  assert.doesNotThrow(() => parseGlb(atLimit));
+  document.asset.generator += 'xxxx';
+  const aboveLimit = replaceGlbJson(valid, JSON.stringify(document));
+  assert.equal(aboveLimit.readUInt32LE(12), target + 4);
+  assert.throws(() => parseGlb(aboveLimit), /GLB JSON exceeds its byte limit/);
+});
+
+test('canonical work accounting accepts 4 GiB exactly and refuses one more byte before allocation', () => {
+  assert.equal(checkedCanonicalWorkBytes(MAX_CANONICAL_WORK_BYTES - 4, 1, 4), MAX_CANONICAL_WORK_BYTES);
+  assert.throws(() => checkedCanonicalWorkBytes(MAX_CANONICAL_WORK_BYTES, 1, 1),
+    (error) => error.code === 'reference-output-too-large' && /4 GiB/.test(error.message));
+});
+
 test('large valid vertex sets compute bounds without variadic stack overflow', () => {
   const positions = Array.from({ length: 130_000 }, (_, index) => [index, index % 3, 0]);
   const result = normalizeRevitGlb(makeGlbFixture({ positions, indices: [0, 1, 3] }), {
@@ -291,27 +313,17 @@ test('multiple primitives remain grouped under one canonical node and can be nor
   assert.equal(roundTripDocument.meshes[0].primitives.length, 2);
 });
 
-test('canonical output must remain inside its own JSON profile', () => {
+test('canonical output must remain inside a caller-lowered JSON profile', () => {
   assert.throws(
-    () => normalizeRevitGlb(makeGlbFixture({ primitiveCopies: 32_000 })),
+    () => normalizeRevitGlb(makeGlbFixture({ primitiveCopies: 32_000 }), { limits: { maxGlbJsonBytes: 16 * 1024 * 1024 } }),
     (error) => error.code === 'reference-output-too-large' && /canonical GLB JSON/.test(error.message),
   );
 });
 
-test('canonical object expansion is refused by the 1 GiB working-set gate before allocation', () => {
-  const parsed = parseGlb(makeGlbFixture());
-  const document = structuredClone(parsed.json);
-  const count = 1_048_573;
-  const indexOffset = count * 12;
-  const binary = Buffer.alloc(indexOffset + 12);
-  binary.writeUInt32LE(0, indexOffset); binary.writeUInt32LE(1, indexOffset + 4); binary.writeUInt32LE(2, indexOffset + 8);
-  document.buffers[0].byteLength = binary.length;
-  document.bufferViews[0].byteLength = indexOffset;
-  document.bufferViews[1].byteOffset = indexOffset;
-  document.accessors[0].count = count;
+test('canonical object expansion is refused by the 4 GiB accounting gate before allocation', () => {
   assert.throws(
-    () => normalizeRevitGlb(makeGlb(document, binary)),
-    (error) => error.code === 'reference-output-too-large' && /1 GiB/.test(error.message),
+    () => checkedCanonicalWorkBytes(MAX_CANONICAL_WORK_BYTES - 3, 1, 4),
+    (error) => error.code === 'reference-output-too-large' && /4 GiB/.test(error.message),
   );
 });
 

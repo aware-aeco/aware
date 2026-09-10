@@ -55,6 +55,10 @@ test('every canonical request leaf affects the cache/request preimage', () => {
   ];
   for (const mutation of mutations) assert.notEqual(requestSha256(mutation), baseline);
   assert.equal(request.limits.maxInputGlbBytes, MODEL_LIMITS.maxInputGlbBytes.default);
+  assert.equal(request.limits.maxGlbJsonBytes, 64 * 1024 * 1024);
+  assert.equal(MODEL_LIMITS.maxGlbJsonBytes.hard, 64 * 1024 * 1024);
+  assert.equal(MODEL_LIMITS.maxInputGlbBytes.default, 128 * 1024 * 1024);
+  assert.equal(MODEL_LIMITS.maxInputGlbBytes.hard, 512 * 1024 * 1024);
   assert.equal(buildCanonicalRequest({ protocolVersion: '2' }).protocolVersion, '2');
   assert.throws(() => buildCanonicalRequest({ protocolVersion: '3' }), /protocolVersion/);
 });
