@@ -21,8 +21,15 @@ that external evidence.
    for this logical canary and must remain unchanged for any replay check.
 6. Confirm the connected credential has exactly `openid`, `userinfo.email`, and
    `gmail.send`. A legacy broad grant must fail closed; disconnect and reconnect
-   it with `aware connect google-workspace --oauth` before proceeding. Google
-   consent must issue a refresh token for the offline connection.
+   it with `aware connect google-workspace --oauth` before proceeding. First
+   remove or narrow any `scopes` entry in the active AWARE home's
+   `oauth/google-workspace.yaml` (`AWARE_HOME` when set, `~/.aware` otherwise);
+   profiles replace the bundled scope set. Use the default connection, not an `--as` alias, because published app
+   dispatch does not expose alias selection. Explicitly disconnect any old
+   broad-scope alias with
+   `aware disconnect google-workspace --as=<old-alias>`; do not reconnect it for
+   this agent. Google consent must issue a refresh token for the offline
+   connection.
 
 ## Execute
 

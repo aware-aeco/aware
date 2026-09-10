@@ -253,7 +253,7 @@ fn send_blocking(
     let token =
         crate::auth::refresh::ensure_fresh_with_config(INTEGRATION, alias, aware_home, &oauth)
             .map_err(|error| auth_error(format!("Google OAuth refresh failed: {error}")))?;
-    validate_token(&token, alias)?;
+    validate_token(&token, alias, aware_home)?;
     execute_authenticated(aware_home, &input, &token, http)
 }
 
@@ -267,7 +267,7 @@ fn replay_before_refresh(
     else {
         return Ok(None);
     };
-    validate_token(&token, alias)?;
+    validate_token(&token, alias, aware_home)?;
     replay_for_credential_generation(aware_home, input, &token)
 }
 
@@ -640,7 +640,11 @@ fn validate_token_endpoint(url: &str) -> Result<(), AwareError> {
     Ok(())
 }
 
-fn validate_token(token: &StoredToken, alias: Option<&str>) -> Result<(), AwareError> {
+fn validate_token(
+    token: &StoredToken,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<(), AwareError> {
     if token.integration != INTEGRATION
         || token.source != TokenSource::Oauth
         || !token.token_type.eq_ignore_ascii_case("bearer")
@@ -659,11 +663,28 @@ fn validate_token(token: &StoredToken, alias: Option<&str>) -> Result<(), AwareE
     ];
     required.sort();
     if actual != required {
-        let alias_hint = alias
-            .map(|value| format!(" --as={value}"))
-            .unwrap_or_default();
+        let profile_alias = alias
+            .filter(|_| crate::auth::profile::alias_profile_exists(aware_home, INTEGRATION, alias));
+        let profile_name = profile_alias
+            .map(|value| format!("{INTEGRATION}.{value}.yaml"))
+            .unwrap_or_else(|| format!("{INTEGRATION}.yaml"));
+        let profile_path = aware_home.join("oauth").join(&profile_name);
+        let reconnect = match alias {
+            Some(value)
+                if value.chars().count() <= 16 && crate::text::is_bare_shell_token(value) =>
+            {
+                format!(
+                    "run `aware disconnect {INTEGRATION} --as={value}` and reconnect with `aware connect {INTEGRATION} --as={value} --oauth`"
+                )
+            }
+            Some(_) => "disconnect and reconnect this credential using the exact alias from the agent manifest; quote the alias for your shell".to_string(),
+            None => format!(
+                "run `aware disconnect {INTEGRATION}` and reconnect with `aware connect {INTEGRATION} --oauth`"
+            ),
+        };
         return Err(auth_error(format!(
-            "Google grant is missing required scopes or retains legacy broad scopes; run `aware disconnect {INTEGRATION}{alias_hint}` and reconnect with `aware connect {INTEGRATION}{alias_hint} --oauth`"
+            "Google grant scopes are not exactly least privilege; in the active AWARE home, remove `scopes` from `oauth/{profile_name}` or set it to exactly `openid`, `https://www.googleapis.com/auth/userinfo.email`, and `https://www.googleapis.com/auth/gmail.send`; then {reconnect}. Resolved profile: `{}`",
+            profile_path.display()
         )));
     }
     Ok(())
@@ -1730,21 +1751,66 @@ mod tests {
 
     #[test]
     fn oauth_preflight_requires_exact_narrowed_scope_set() {
-        validate_token(&token("one"), None).unwrap();
+        let temp = tempfile::tempdir().unwrap();
+        let aware_home = temp.path();
+        validate_token(&token("one"), None, aware_home).unwrap();
         let mut broad = token("two");
         broad
             .scope
             .push_str(" https://www.googleapis.com/auth/drive");
-        let error = validate_token(&broad, Some("work")).unwrap_err();
+        let error = validate_token(&broad, Some("work"), aware_home).unwrap_err();
         assert_eq!(code(&error), "gmail.send.auth");
         assert!(
             error
                 .to_string()
                 .contains("aware disconnect google-workspace --as=work")
         );
+        let default_profile = aware_home.join("oauth").join("google-workspace.yaml");
+        assert!(
+            error
+                .to_string()
+                .contains(&default_profile.display().to_string())
+        );
+        assert!(error.to_string().contains("or set it"));
+        assert!(error.to_string().contains(EMAIL_SCOPE));
+        assert!(error.to_string().contains(SEND_SCOPE));
+
+        std::fs::create_dir_all(aware_home.join("oauth")).unwrap();
+        let alias_profile = aware_home.join("oauth").join("google-workspace.work.yaml");
+        std::fs::write(&alias_profile, "scopes: []\n").unwrap();
+        let alias_error = validate_token(&broad, Some("work"), aware_home).unwrap_err();
+        assert!(
+            alias_error
+                .to_string()
+                .contains(&alias_profile.display().to_string())
+        );
+
+        let long_home = PathBuf::from("x".repeat(600));
+        let bounded = validate_token(&broad, None, &long_home)
+            .unwrap_err()
+            .to_string();
+        assert!(bounded.contains("aware disconnect google-workspace"));
+        assert!(bounded.contains("aware connect google-workspace --oauth"));
+        assert!(bounded.contains(EMAIL_SCOPE));
+        assert!(bounded.contains(SEND_SCOPE));
+
+        let hostile = validate_token(&broad, Some("work;echo-pwned"), aware_home)
+            .unwrap_err()
+            .to_string();
+        assert!(!hostile.contains("--as=work;echo-pwned"));
+        assert!(hostile.contains("exact alias from the agent manifest"));
+
+        let long_alias = "a".repeat(64);
+        let long_alias_error = validate_token(&broad, Some(&long_alias), aware_home)
+            .unwrap_err()
+            .to_string();
+        assert!(!long_alias_error.contains(&format!("--as={long_alias}")));
+        assert!(long_alias_error.contains("exact alias from the agent manifest"));
+        assert!(long_alias_error.contains(EMAIL_SCOPE));
+        assert!(long_alias_error.contains(SEND_SCOPE));
         let mut pasted = token("three");
         pasted.source = TokenSource::Paste;
-        assert!(validate_token(&pasted, None).is_err());
+        assert!(validate_token(&pasted, None, aware_home).is_err());
         validate_token_endpoint(TOKEN_URL).unwrap();
         assert_eq!(
             code(&validate_token_endpoint("https://example.invalid/token").unwrap_err()),

@@ -30,17 +30,27 @@ Older credentials may still carry Drive, Gmail read, Calendar, Sheets, Slides,
 Forms, Tasks, or other broad scopes. The Gmail send runtime fails closed before
 dispatch when it detects one of these legacy broad grants. Migrate deliberately:
 
+First remove the `scopes` entry from the active AWARE home's
+`oauth/google-workspace.yaml`, or narrow it to exactly the three scopes above.
+The active home is the `AWARE_HOME` override when set and `~/.aware` otherwise.
+Profiles replace the bundled scope set, so reconnecting without this step would
+request the same broad grant again.
+
 ```text
 aware disconnect google-workspace
 aware connect google-workspace --oauth
 ```
 
-For an aliased connection, use the same alias for both operations:
+The published agent uses the default `google-workspace` credential. Do not use
+an `--as` alias for this agent: app dispatch does not expose alias selection. If
+you previously connected a broad grant under an alias, remove that stored
+credential explicitly before connecting the default account:
 
 ```text
-aware disconnect google-workspace --as=<alias>
-aware connect google-workspace --as=<alias> --oauth
+aware disconnect google-workspace --as=<old-alias>
 ```
+
+Do not reconnect the alias for this published agent.
 
 Do not bypass this check merely because the old token also includes
 `gmail.send`; the extra scopes increase the impact of credential theft.
