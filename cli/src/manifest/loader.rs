@@ -178,22 +178,129 @@ pub(crate) fn is_safe_segment(id: &str) -> bool {
     components.next().is_none() && first == id
 }
 
+/// The extensions that name an app manifest for `app install` and for every
+/// installed-app verb. `compile`/`inspect` additionally accept `.flow`/`.aware`
+/// on a loose source file — see [`crate::app_lock::find_app_source`].
+pub(crate) const APP_MANIFEST_EXTENSIONS: [&str; 2] = ["flo", "app"];
+
+/// Every entry DIRECTLY in `dir` whose extension is one of `exts`, sorted by path.
+///
+/// Sorted because `read_dir` yields in filesystem order, which differs between
+/// filesystems and between two runs on the same one. Every selector in the CLI
+/// used to take "the first one `read_dir` happened to yield", so a directory
+/// holding more than one manifest could resolve to a different app at install
+/// time than at run time — #502, where the install wrote a lock for `alpha`
+/// and `app list`/`app show` then loaded `decoy` from the same directory.
+///
+/// Selection is by extension alone; entry TYPE is deliberately not filtered. A
+/// *directory* named `inner.flo` is not a manifest, but skipping it would report
+/// "this app has no manifest", and callers on the run path treat that as benign
+/// where they surface a failed read as the IO error it is (`app_requires_pin`
+/// pins that exit code). Something standing where the manifest belongs should
+/// fail loudly at the read, not quietly here.
+pub(crate) fn sorted_manifest_candidates(
+    dir: &Path,
+    exts: &[&str],
+) -> Result<Vec<PathBuf>, std::io::Error> {
+    let mut out: Vec<PathBuf> = std::fs::read_dir(dir)?
+        .flatten()
+        .map(|e| e.path())
+        .filter(|p| {
+            p.extension()
+                .and_then(|e| e.to_str())
+                .is_some_and(|e| exts.contains(&e))
+        })
+        .collect();
+    out.sort();
+    Ok(out)
+}
+
+/// The app manifests in `dir`, sorted. Enumeration failure reads as "none",
+/// because most callers reach here with a path they have not checked (`app show`
+/// on an id resolved from a stale lockfile) and want a `NotFound`, not an IO
+/// error. [`require_single_app_manifest`] is the variant that propagates it.
+fn app_manifest_candidates(dir: &Path) -> Vec<PathBuf> {
+    sorted_manifest_candidates(dir, &APP_MANIFEST_EXTENSIONS).unwrap_or_default()
+}
+
+/// The authoritative manifest of an app directory: `<dir-name>.flo`, else the
+/// first `.flo`, else the first `.app` — each tier resolved over the sorted
+/// candidate list, so the answer never depends on `read_dir` order.
+///
+/// `aware app install` refuses a source folder holding more than one manifest
+/// ([`require_single_app_manifest`]), so for anything installed since that gate
+/// the tiers below never have to choose. They still can for a directory placed
+/// under `apps/` by hand or installed before the gate existed, and a directory
+/// whose authoritative manifest is a matter of tie-break is a defect worth
+/// naming — hence the warning, to stderr so `--json` stdout stays clean.
 pub(crate) fn find_app_manifest(root: &Path) -> Option<PathBuf> {
-    // Preferred: <root>/<dir-name>.flo, then any *.flo, then any *.app.
-    let dir_name = root.file_name()?.to_string_lossy().to_string();
-    let canonical = root.join(format!("{dir_name}.flo"));
-    if canonical.is_file() {
+    let candidates = app_manifest_candidates(root);
+    if candidates.len() > 1 {
+        eprintln!(
+            "warning: {} holds {} app manifests ({}) — an app directory must hold exactly one; \
+             leave the authoritative one and remove the rest",
+            root.display(),
+            candidates.len(),
+            file_names(&candidates)
+        );
+    }
+    let canonical = root
+        .file_name()
+        .map(|n| root.join(format!("{}.flo", n.to_string_lossy())));
+    if let Some(canonical) = canonical
+        && candidates.contains(&canonical)
+    {
         return Some(canonical);
     }
-    for ext in ["flo", "app"] {
-        for entry in std::fs::read_dir(root).ok()?.flatten() {
-            let p = entry.path();
-            if p.extension().is_some_and(|e| e == ext) {
-                return Some(p);
-            }
-        }
+    candidates
+        .iter()
+        .find(|p| p.extension().is_some_and(|e| e == "flo"))
+        .or_else(|| candidates.first())
+        .cloned()
+}
+
+/// The manifest of a source folder being installed, refusing anything but
+/// exactly one — the invariant that makes an installed app's identity durable.
+///
+/// #502 asked for one of two contracts: persist which manifest install chose, or
+/// refuse to choose. This is the second, because the first leaves the question
+/// open rather than closing it. A persisted pointer is a second source of truth
+/// that goes stale the moment someone edits the directory, it needs a fallback
+/// for every app installed before it and every directory placed under `apps/` by
+/// hand, and it records an arbitrary pick as though it were a decision — the
+/// pick itself being `read_dir` order, so the same folder could install as a
+/// different app on a different machine. Demanding one manifest means install
+/// and every later verb load the same file because there is no other file.
+///
+/// Enumeration failure propagates as itself: "cannot read this directory" and
+/// "this directory holds no app" are different answers and install must not
+/// conflate them.
+pub(crate) fn require_single_app_manifest(dir: &Path) -> Result<PathBuf, AwareError> {
+    let mut candidates = sorted_manifest_candidates(dir, &APP_MANIFEST_EXTENSIONS)?;
+    match candidates.len() {
+        0 => Err(AwareError::Validation(format!(
+            "no .flo or .app file in {}",
+            dir.display()
+        ))),
+        1 => Ok(candidates.remove(0)),
+        n => Err(AwareError::Validation(format!(
+            "{} holds {n} app manifests ({}) — `aware app install` takes a directory \
+             containing exactly one, so the installed app has a single authoritative \
+             manifest; put each app in its own directory and install that",
+            dir.display(),
+            file_names(&candidates)
+        ))),
     }
-    None
+}
+
+/// The file names of `paths`, comma-joined, for an error or warning that has to
+/// name what it found without printing the directory once per entry.
+fn file_names(paths: &[PathBuf]) -> String {
+    paths
+        .iter()
+        .map(|p| p.file_name().unwrap_or(p.as_os_str()).to_string_lossy())
+        .collect::<Vec<_>>()
+        .join(", ")
 }
 
 /// Read the manifest text, naming the file in BOTH failure modes.
@@ -467,15 +574,10 @@ mod tests {
         assert_eq!(ids, ["real-agent"]);
     }
 
-    /// `.flo` outranks `.app` when a directory holds both — the outer loop over
-    /// extensions is what decides it, so the result does not depend on
-    /// `read_dir` order. Names are chosen so an alphabetical tie-break would
-    /// pick the `.app`, and so would swapping the two extensions.
-    ///
-    /// Not asserted here: which of two `.flo` files wins when neither is named
-    /// after the directory. `find_app_manifest` returns the first `read_dir`
-    /// yields, and that order is filesystem-defined, so there is no answer a
-    /// test could pin without asserting on the filesystem instead of on us.
+    /// `.flo` outranks `.app` when a directory holds both — the extension tier
+    /// is what decides it, so the result does not depend on `read_dir` order.
+    /// Names are chosen so an alphabetical tie-break would pick the `.app`, and
+    /// so would swapping the two extensions.
     #[test]
     fn app_source_lookup_prefers_flo_over_app() {
         let tmp = tempfile::tempdir().unwrap();
@@ -511,6 +613,108 @@ mod tests {
         std::fs::write(empty.join("notes.txt"), "not an app").unwrap();
         assert!(find_app_manifest(&empty).is_none());
         assert!(find_app_manifest(&tmp.path().join("does-not-exist")).is_none());
+    }
+
+    /// The #502 shape, from the discovery side: the installed directory carries
+    /// the app id, and a sibling manifest happens to be named after it. The
+    /// directory-named manifest is the one that wins, and it is a *tie-break*
+    /// rather than an answer — which is why install refuses this directory
+    /// shape outright ([`require_single_app_manifest`]) instead of relying on it.
+    #[test]
+    fn app_source_lookup_prefers_the_manifest_named_after_the_directory() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path().join("alpha");
+        write_app(&root.join("bundle.flo"), "alpha");
+        write_app(&root.join("alpha.flo"), "decoy");
+
+        let found = find_app_manifest(&root).unwrap();
+        assert_eq!(found.file_name().unwrap(), "alpha.flo");
+    }
+
+    /// Two `.flo` siblings, neither named after the directory: the answer must
+    /// not depend on the order the filesystem enumerates them. Built twice in
+    /// OPPOSITE creation order — the main driver of `read_dir` order on the
+    /// filesystems this runs on — and the two must agree. Before #502 this
+    /// returned whatever `read_dir` yielded first, so an installed app could
+    /// resolve to a different manifest on a different machine.
+    #[test]
+    fn app_source_lookup_does_not_depend_on_enumeration_order() {
+        let tmp = tempfile::tempdir().unwrap();
+
+        let forward = tmp.path().join("forward");
+        write_app(&forward.join("aaa.flo"), "one");
+        write_app(&forward.join("zzz.flo"), "two");
+
+        let backward = tmp.path().join("backward");
+        write_app(&backward.join("zzz.flo"), "two");
+        write_app(&backward.join("aaa.flo"), "one");
+
+        assert_eq!(
+            find_app_manifest(&forward).unwrap().file_name().unwrap(),
+            find_app_manifest(&backward).unwrap().file_name().unwrap(),
+        );
+        assert_eq!(
+            find_app_manifest(&forward).unwrap().file_name().unwrap(),
+            "aaa.flo"
+        );
+    }
+
+    /// A DIRECTORY standing where the manifest belongs is still selected, so the
+    /// failure lands at the read as an IO error naming the path. Skipping it
+    /// would answer "this app has no manifest", which callers on the run path
+    /// tolerate — `an_unreadable_backing_app_keeps_the_io_exit_code` in
+    /// `tests/app_requires_pin.rs` is the other end of this.
+    #[test]
+    fn a_directory_standing_in_for_a_manifest_is_still_selected() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path().join("demo");
+        std::fs::create_dir_all(root.join("demo.flo")).unwrap();
+
+        let found = find_app_manifest(&root).expect("must select, so the read is what fails");
+        assert_eq!(found.file_name().unwrap(), "demo.flo");
+        assert!(load_app(&found).is_err());
+    }
+
+    /// The install gate: exactly one manifest resolves, and two are refused
+    /// naming both, rather than one being picked and the other silently
+    /// becoming what later verbs load (#502).
+    #[test]
+    fn require_single_app_manifest_refuses_an_ambiguous_folder() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path().join("bundle");
+        write_app(&root.join("bundle.flo"), "alpha");
+
+        let only = require_single_app_manifest(&root).unwrap();
+        assert_eq!(only.file_name().unwrap(), "bundle.flo");
+
+        write_app(&root.join("alpha.flo"), "decoy");
+        let err = require_single_app_manifest(&root).unwrap_err();
+        let AwareError::Validation(msg) = &err else {
+            panic!("expected a validation error, got: {err:?}");
+        };
+        assert!(msg.contains("alpha.flo"), "message must name both: {msg}");
+        assert!(msg.contains("bundle.flo"), "message must name both: {msg}");
+    }
+
+    /// "I could not read this directory" and "this directory holds no app" are
+    /// different answers. `find_app_manifest` flattens the first into the second
+    /// on purpose, for callers holding an unchecked path; the install gate must
+    /// not, or a permissions fault installs as a missing-manifest complaint.
+    #[test]
+    fn require_single_app_manifest_does_not_flatten_an_unreadable_directory() {
+        let tmp = tempfile::tempdir().unwrap();
+        let missing = tmp.path().join("does-not-exist");
+        assert!(matches!(
+            require_single_app_manifest(&missing),
+            Err(AwareError::Io(_))
+        ));
+
+        let empty = tmp.path().join("empty");
+        std::fs::create_dir_all(&empty).unwrap();
+        assert!(matches!(
+            require_single_app_manifest(&empty),
+            Err(AwareError::Validation(_))
+        ));
     }
 
     /// Resolution order 1 before 2: the DIRECTORY name wins over an `app:` field

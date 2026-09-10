@@ -1289,18 +1289,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     // (app-spec § Safety contract: "aware app validate refuses to install an
     // app missing `safety:` on a write-mode node"; install must enforce the
     // same contract as the standalone `validate` command, #134).
-    let src_manifest = std::fs::read_dir(&path)?
-        .flatten()
-        .map(|e| e.path())
-        .find(|p| {
-            matches!(
-                p.extension().and_then(|e| e.to_str()),
-                Some("flo") | Some("app")
-            )
-        })
-        .ok_or_else(|| {
-            AwareError::Validation(format!("no .flo or .app file in {}", path.display()))
-        })?;
+    let src_manifest = crate::manifest::loader::require_single_app_manifest(&path)?;
     let src_app = crate::manifest::loader::load_app(&src_manifest)?;
     let mut issues = crate::validate::validate_app(&src_app);
     // Missing agents are reported separately from `issues` so they surface even
@@ -1345,29 +1334,19 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
         eprintln!("\u{26a0} [{}] {}", m.code, m.message);
     }
 
-    let app_id = crate::install::install_app_from_path(&path, &ctx.paths)?;
-
-    // Locate the installed .flo / .app file
-    let app_dir = ctx.paths.apps_dir().join(&app_id);
-    let manifest_path = std::fs::read_dir(&app_dir)?
-        .flatten()
-        .map(|e| e.path())
-        .find(|p| {
-            matches!(
-                p.extension().and_then(|e| e.to_str()),
-                Some("flo") | Some("app")
-            )
-        })
-        .ok_or_else(|| {
-            AwareError::Internal(format!("installed app {app_id} missing .flo/.app file"))
-        })?;
-
-    let app = crate::manifest::loader::load_app(&manifest_path)?;
+    let installed = crate::install::install_app_from_path(&path, &ctx.paths)?;
+    let app_id = &installed.app;
+    let app_dir = ctx.paths.apps_dir().join(app_id);
 
     // Resolve `requires` → installed agent versions and write `lockfile.yaml`.
     // Shared with rename/duplicate so a moved app's on-disk shape matches a
     // freshly-installed one.
-    crate::install::local::write_app_lockfile(&app, &app_dir, &ctx.paths)?;
+    //
+    // Written from the manifest install VALIDATED, not from a fresh scan of the
+    // installed directory. Re-scanning was a second, differently-ordered
+    // selector, and the lock it produced could name a different app than the one
+    // install checked and reported (#502).
+    crate::install::local::write_app_lockfile(&installed, &app_dir, &ctx.paths)?;
 
     println!("\u{2713} installed {app_id} (lockfile written)");
     Ok(())

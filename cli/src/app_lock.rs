@@ -955,19 +955,20 @@ pub fn write_lockfile(
 }
 
 /// Find the source app file (`.flo` / `.app` / `.flow` / `.aware`) at a path.
-/// If `path` is a file, returned directly. If a directory, searched for the
-/// first matching extension.
+/// If `path` is a file, returned directly. If a directory, the first source in
+/// sorted order — sorted rather than `read_dir` order so `aware app compile
+/// <dir>` locks the same file on every run and on every machine (#502).
+///
+/// Extension-agnostic where an installed app is not: `.flow`/`.aware` compile
+/// and inspect from a loose source directory, but only `.flo`/`.app` install.
 pub fn find_app_source(path: &Path) -> Option<std::path::PathBuf> {
     if path.is_file() {
         return Some(path.to_path_buf());
     }
-    std::fs::read_dir(path).ok()?.flatten().find_map(|entry| {
-        let p = entry.path();
-        match p.extension().and_then(|e| e.to_str()) {
-            Some("flo") | Some("app") | Some("flow") | Some("aware") => Some(p),
-            _ => None,
-        }
-    })
+    crate::manifest::loader::sorted_manifest_candidates(path, &["flo", "app", "flow", "aware"])
+        .ok()?
+        .into_iter()
+        .next()
 }
 
 /// End-to-end: load + compile + write. Called by `aware app compile`.
