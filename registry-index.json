@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-10T06:55:11.743507400+00:00",
+  "updated-at": "2026-09-10T19:16:34.812129100+00:00",
   "agents": {
     "tekla": {
       "versions": {
@@ -323,6 +323,11 @@
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
           "subdir": "aware-main/registry-history/agents/google-workspace/1.0.0",
           "bundle-digest": "sha256:56753c0bafbbe41b7bf29dbac8302e639cef7d74a24022f771df50b71277fbcb"
+        },
+        "2.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/95ec45b1c8b4c7f675af86003e038e62e245145f.tar.gz",
+          "subdir": "aware-95ec45b1c8b4c7f675af86003e038e62e245145f/20-agents/aeco/cross-cutting/google-workspace",
+          "bundle-digest": "sha256:7f18040c2bbdd24567bea5a5a0a120a6bf65fa8faf9d03adb73106236890d608"
         }
       }
     },
@@ -753,7 +758,7 @@
         "dynamo-4-1-1@4.1.1.4941",
         "trimble-connect@2.4.0",
         "microsoft-365@1.0.0",
-        "google-workspace@1.0.0",
+        "google-workspace@2.0.0",
         "html-report@1.0.0",
         "file@1.0.0",
         "shell@0.1.0",
