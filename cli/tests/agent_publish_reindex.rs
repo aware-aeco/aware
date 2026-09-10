@@ -918,6 +918,59 @@ fn reindex_uses_the_pushed_branch_when_actions_checkout_has_no_origin_head() {
 }
 
 #[test]
+fn reindex_hashes_pinned_archives_independently_of_autocrlf() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    git(root, &["init", "--quiet", "-b", "main"]);
+    git(root, &["config", "user.email", "test@example.invalid"]);
+    git(root, &["config", "user.name", "AWARE test"]);
+    git(root, &["config", "core.autocrlf", "true"]);
+    let agent_dir = root.join("20-agents/aeco/demo");
+    write_agent(
+        &agent_dir,
+        "demo",
+        "1.0.0",
+        "The canonical line-ending release.",
+    );
+    std::fs::write(
+        root.join("registry-index.json"),
+        r#"{"version":"1.0","updated-at":"2026-01-01T00:00:00Z","agents":{},"bundles":{}}"#,
+    )
+    .unwrap();
+    git(root, &["add", "--all"]);
+    git(root, &["commit", "--quiet", "-m", "release"]);
+    let release = git(root, &["rev-parse", "HEAD"]);
+
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .args(["agent", "publish"])
+        .arg(&agent_dir)
+        .assert()
+        .success();
+    let mut index = index_of(root);
+    let published = &mut index["agents"]["demo"]["versions"]["1.0.0"];
+    published["tarball"] = serde_json::Value::String(format!(
+        "https://github.com/aware-aeco/aware/archive/{release}.tar.gz"
+    ));
+    published["subdir"] = serde_json::Value::String(format!("aware-{release}/20-agents/aeco/demo"));
+    std::fs::write(
+        root.join("registry-index.json"),
+        serde_json::to_string_pretty(&index).unwrap(),
+    )
+    .unwrap();
+
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .env("AWARE_REGISTRY_BASE_REF", "main")
+        .args(["agent", "reindex"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("1 agents"));
+}
+
+#[test]
 fn registry_ci_checkout_keeps_history_for_immutable_release_reindex() {
     let repo_root = Path::new(env!("CARGO_MANIFEST_DIR"))
         .parent()
