@@ -204,7 +204,7 @@ async fn main() {
     let paths = match crate::paths::Paths::from_env() {
         Ok(p) => p,
         Err(err) => {
-            eprintln!("error: {err}");
+            eprintln!("error: {}", err.cli_message());
             std::process::exit(err.exit_code());
         }
     };
@@ -236,7 +236,7 @@ async fn main() {
     };
 
     if let Err(err) = result {
-        eprintln!("error: {err}");
+        eprintln!("error: {}", err.cli_message());
         std::process::exit(err.exit_code());
     }
 }

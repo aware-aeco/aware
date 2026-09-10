@@ -245,8 +245,9 @@ fn send_blocking(
     validate_token_endpoint(oauth.token_url())?;
 
     // Unlike the generic REST credential path, refresh failure is fatal here.
-    let token = crate::auth::refresh::ensure_fresh(INTEGRATION, alias, aware_home)
-        .map_err(|error| auth_error(format!("Google OAuth refresh failed: {error}")))?;
+    let token =
+        crate::auth::refresh::ensure_fresh_with_config(INTEGRATION, alias, aware_home, &oauth)
+            .map_err(|error| auth_error(format!("Google OAuth refresh failed: {error}")))?;
     validate_token(&token, alias)?;
     execute_authenticated(aware_home, &input, &token, http)
 }

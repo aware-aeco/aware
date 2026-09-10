@@ -117,7 +117,7 @@ pub fn for_integration(id: &str) -> Result<IntegrationConfig, AwareError> {
             auth_url: "https://accounts.google.com/o/oauth2/v2/auth".to_string(),
             token_url: "https://oauth2.googleapis.com/token".to_string(),
             // Keep consent aligned with the commands that are actually runnable.
-            // google-workspace@0.3.0 exposes only gmail.send; the runtime rejects
+            // google-workspace@1.0.0 exposes only gmail.send; the runtime rejects
             // legacy broad grants before dispatch so reconnecting must produce this
             // exact least-privilege set (#495).
             default_scopes: scopes(&[

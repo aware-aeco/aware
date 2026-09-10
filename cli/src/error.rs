@@ -93,6 +93,22 @@ impl AwareError {
         }
     }
 
+    /// Render a command-line failure without dropping safe structured
+    /// reconciliation fields. Ordinary error text remains unchanged; only an
+    /// error carrying details gains a compact JSON suffix.
+    pub fn cli_message(&self) -> String {
+        let Some(structured) = self.structured_agent_error() else {
+            return self.to_string();
+        };
+        let Some(details) = structured.details else {
+            return self.to_string();
+        };
+        match serde_json::to_string(&details) {
+            Ok(details) => format!("{self}; details={details}"),
+            Err(_) => self.to_string(),
+        }
+    }
+
     /// Exit code per `cli-spec.md` § Exit codes.
     pub fn exit_code(&self) -> i32 {
         match self {
@@ -136,5 +152,25 @@ mod tests {
             value["details"]["rfcMessageId"],
             "<rfi-001@example.invalid>"
         );
+    }
+
+    #[test]
+    fn cli_message_includes_reconciliation_identifiers() {
+        let details = std::collections::BTreeMap::from([
+            ("attemptId".into(), "rfi-001-mail-v1".into()),
+            ("rfcMessageId".into(), "<rfi-001@example.invalid>".into()),
+        ]);
+        let error = AwareError::AgentStructured {
+            code: "gmail.send.outcome-unknown".into(),
+            phase: "dispatch".into(),
+            retryable: false,
+            message: "reconcile before retrying".into(),
+            diagnostic_id: "gmail-attempt".into(),
+            details: Some(Box::new(AgentErrorDetails(details))),
+        };
+
+        let rendered = error.cli_message();
+        assert!(rendered.contains("\"attemptId\":\"rfi-001-mail-v1\""));
+        assert!(rendered.contains("\"rfcMessageId\":\"<rfi-001@example.invalid>\""));
     }
 }

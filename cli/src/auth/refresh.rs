@@ -19,20 +19,56 @@ pub fn ensure_fresh(
 ) -> Result<StoredToken, AwareError> {
     let loaded = keychain::load_token_for_refresh(integration, alias, aware_home)?
         .ok_or_else(|| AwareError::AuthExpired(integration.to_string()))?;
-    let token = loaded.token;
-
-    let now = super::unix_now_secs()?;
-    if token.expires_at > now + REFRESH_BUFFER_SECS {
-        return Ok(token);
+    if token_is_fresh(&loaded.token)? {
+        return Ok(loaded.token);
     }
+    let cfg = config::for_integration(integration)?.with_profile(aware_home, alias)?;
+    refresh_loaded(integration, aware_home, loaded, &cfg)
+}
 
+/// Refresh using one already-resolved OAuth configuration snapshot.
+///
+/// Security-sensitive callers can validate a provider endpoint and then pass the
+/// same value here, so a profile rewrite cannot swap the destination between the
+/// validation and the request.
+pub(crate) fn ensure_fresh_with_config(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    cfg: &config::IntegrationConfig,
+) -> Result<StoredToken, AwareError> {
+    if cfg.id != integration {
+        return Err(AwareError::Validation(format!(
+            "OAuth config for {} cannot refresh {integration}",
+            cfg.id
+        )));
+    }
+    let loaded = keychain::load_token_for_refresh(integration, alias, aware_home)?
+        .ok_or_else(|| AwareError::AuthExpired(integration.to_string()))?;
+    if token_is_fresh(&loaded.token)? {
+        return Ok(loaded.token);
+    }
+    refresh_loaded(integration, aware_home, loaded, cfg)
+}
+
+fn token_is_fresh(token: &StoredToken) -> Result<bool, AwareError> {
+    let now = super::unix_now_secs()?;
+    Ok(token.expires_at > now + REFRESH_BUFFER_SECS)
+}
+
+fn refresh_loaded(
+    integration: &str,
+    aware_home: &std::path::Path,
+    loaded: keychain::RefreshTokenLoad,
+    cfg: &config::IntegrationConfig,
+) -> Result<StoredToken, AwareError> {
+    let token = loaded.token;
+    let now = super::unix_now_secs()?;
     let refresh_token = token.refresh_token.as_deref().ok_or_else(|| {
         AwareError::AuthExpired(format!(
             "{integration}: no refresh_token; re-run aware connect"
         ))
     })?;
-    let cfg = config::for_integration(integration)?.with_profile(aware_home, alias)?;
-
     let mut body_params = vec![
         ("grant_type", "refresh_token".to_string()),
         ("refresh_token", refresh_token.to_string()),
@@ -341,6 +377,28 @@ mod tests {
 
         let token = ensure_fresh(INTEGRATION, Some("awaretest-inside-buffer"), tmp.path()).unwrap();
         assert_eq!(token.access_token, "refreshed-access");
+    }
+
+    #[test]
+    fn an_already_validated_config_cannot_be_replaced_before_refresh() {
+        let tmp = tempfile::tempdir().unwrap();
+        let validated_endpoint = spawn_token_endpoint(r#"{"access_token":"validated-endpoint"}"#);
+        let replacement_endpoint =
+            spawn_token_endpoint(r#"{"access_token":"replacement-endpoint"}"#);
+        write_profile(tmp.path(), &validated_endpoint.url);
+        let cfg = config::for_integration(INTEGRATION)
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap();
+        write_profile(tmp.path(), &replacement_endpoint.url);
+        let alias = "awaretest-config-snapshot";
+        let _seeded = seed_token(tmp.path(), alias, -10, Some("rt-stored"));
+
+        let token = ensure_fresh_with_config(INTEGRATION, Some(alias), tmp.path(), &cfg).unwrap();
+
+        assert_eq!(token.access_token, "validated-endpoint");
+        validated_endpoint.requests.recv().unwrap();
+        assert!(replacement_endpoint.requests.try_recv().is_err());
     }
 
     #[test]

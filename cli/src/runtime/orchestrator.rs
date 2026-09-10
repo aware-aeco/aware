@@ -1695,28 +1695,49 @@ fn render_for_record(params: &Value, ctx: &RuntimeContext) -> Value {
 /// Remove message content from the persisted preview of the built-in Gmail send
 /// primitive. Credentials are already blinded by `record_render_context`; these
 /// fields are sensitive business data even when they contain no credential.
-fn trace_safe_agent_inputs(
-    agents_dir: &Path,
-    agent: &str,
-    command: &str,
-    mut inputs: Value,
-) -> Value {
-    if agent == "google-workspace"
-        && command == "gmail.send"
-        && let Value::Object(fields) = &mut inputs
-    {
-        for key in ["to", "cc", "bcc", "subject", "body"] {
-            if fields.contains_key(key) {
-                fields.insert(
-                    key.to_string(),
-                    Value::String(crate::runtime::template::REDACTED.to_string()),
-                );
-            }
-        }
+fn trace_safe_agent_inputs(agents_dir: &Path, agent: &str, command: &str, inputs: Value) -> Value {
+    if agent == "google-workspace" && command == "gmail.send" {
+        redact_gmail_inputs(inputs)
     } else if installed_app_routes_to_gmail(agents_dir, agent) {
-        inputs = redact_scalar_values(inputs);
+        redact_scalar_values(inputs)
+    } else {
+        inputs
     }
-    inputs
+}
+
+/// Preview runs bypass transport schema validation, so unknown fields are
+/// sensitive by default. Preserve only the two bounded, non-message correlation
+/// values whose shape is safe even before validation.
+fn redact_gmail_inputs(inputs: Value) -> Value {
+    let Value::Object(fields) = inputs else {
+        return redact_scalar_values(inputs);
+    };
+    Value::Object(
+        fields
+            .into_iter()
+            .map(|(key, value)| {
+                let preserve = match (key.as_str(), &value) {
+                    ("content-type", Value::String(value)) => {
+                        matches!(value.as_str(), "text" | "html")
+                    }
+                    ("attempt-id", Value::String(value)) => {
+                        !value.is_empty()
+                            && value.len() <= 128
+                            && value.is_ascii()
+                            && !value
+                                .bytes()
+                                .any(|byte| byte.is_ascii_control() || byte == b' ')
+                    }
+                    _ => false,
+                };
+                if preserve {
+                    (key, value)
+                } else {
+                    (key, redact_scalar_values(value))
+                }
+            })
+            .collect(),
+    )
 }
 
 /// An exposed app runs one graph for each exposed command. If any leaf is the
@@ -2139,11 +2160,30 @@ requires: []
                 "attempt-id": "stable-attempt"
             }),
         );
-        for key in ["to", "cc", "bcc", "subject", "body"] {
+        for key in ["subject", "body"] {
             assert_eq!(safe[key], crate::runtime::template::REDACTED, "{key}");
+        }
+        for key in ["to", "cc", "bcc"] {
+            assert_eq!(safe[key][0], crate::runtime::template::REDACTED, "{key}");
         }
         assert_eq!(safe["content-type"], "text");
         assert_eq!(safe["attempt-id"], "stable-attempt");
+
+        let unknown = trace_safe_agent_inputs(
+            Path::new("agents"),
+            "google-workspace",
+            "gmail.send",
+            serde_json::json!({
+                "attempt-id": "stable-attempt",
+                "content-type": "text",
+                "private-note": "must not reach the trace",
+                "nested": {"private": "also hidden"}
+            }),
+        );
+        assert_eq!(unknown["private-note"], template::REDACTED);
+        assert_eq!(unknown["nested"]["private"], template::REDACTED);
+        assert_eq!(unknown["attempt-id"], "stable-attempt");
+        assert_eq!(unknown["content-type"], "text");
 
         let untouched = trace_safe_agent_inputs(
             Path::new("agents"),
