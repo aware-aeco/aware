@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-10T06:55:11.743507400+00:00",
+  "updated-at": "2026-09-10T19:16:34.812129100+00:00",
   "agents": {
     "tekla": {
       "versions": {
@@ -327,7 +327,7 @@
         "2.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/95ec45b1c8b4c7f675af86003e038e62e245145f.tar.gz",
           "subdir": "aware-95ec45b1c8b4c7f675af86003e038e62e245145f/20-agents/aeco/cross-cutting/google-workspace",
-          "bundle-digest": "sha256:67a9f94d80baf93a713a462f8d3a3e3a8b2409e61de0ed1bcf2d0d215d311abc"
+          "bundle-digest": "sha256:7f18040c2bbdd24567bea5a5a0a120a6bf65fa8faf9d03adb73106236890d608"
         }
       }
     },
