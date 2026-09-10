@@ -41,6 +41,14 @@ fn first_party_bundle_stays_on_the_existing_release_until_the_code_commit_is_on_
 
     assert!(agents.iter().any(|entry| entry == "google-workspace@1.0.0"));
     assert!(!agents.iter().any(|entry| entry == "google-workspace@2.0.0"));
+    let versions = index["agents"]["google-workspace"]["versions"]
+        .as_object()
+        .expect("Google Workspace versions must be an object");
+    assert_eq!(
+        versions.keys().map(String::as_str).collect::<Vec<_>>(),
+        vec!["1.0.0"],
+        "a corrected release must not be published until its immutable source commit is on main"
+    );
 }
 
 fn mapping_keys(value: &Value) -> BTreeSet<String> {

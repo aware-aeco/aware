@@ -228,6 +228,15 @@ fn send_blocking(
         ));
     }
 
+    // A terminal outbox record is authoritative for the caller's attempt. Read
+    // it with the stored credential generation before doing any network I/O so
+    // a harmless replay cannot be turned into an auth failure by a temporarily
+    // unavailable token endpoint (or by a refresh token revoked after Gmail
+    // already accepted the message).
+    if let Some(replayed) = replay_before_refresh(aware_home, &input, alias)? {
+        return Ok(replayed);
+    }
+
     // A BYO OAuth app may replace client credentials and scopes, but this send
     // path never permits an endpoint overlay to receive the refresh token.
     let oauth = crate::auth::config::for_integration(INTEGRATION)?
@@ -240,6 +249,20 @@ fn send_blocking(
         .map_err(|error| auth_error(format!("Google OAuth refresh failed: {error}")))?;
     validate_token(&token, alias)?;
     execute_authenticated(aware_home, &input, &token, http)
+}
+
+fn replay_before_refresh(
+    aware_home: &Path,
+    input: &GmailSendInput,
+    alias: Option<&str>,
+) -> Result<Option<Value>, AwareError> {
+    let Some(token) = crate::auth::keychain::load_token(INTEGRATION, alias, aware_home)
+        .map_err(|error| auth_error(format!("load Google OAuth credential: {error}")))?
+    else {
+        return Ok(None);
+    };
+    validate_token(&token, alias)?;
+    replay_for_credential_generation(aware_home, input, &token)
 }
 
 fn execute_authenticated(
@@ -1756,6 +1779,25 @@ mod tests {
         assert_eq!(rotated, first);
         assert_eq!(mock.send_count(), 1);
         assert_eq!(mock.identity_count(), 2);
+    }
+
+    #[test]
+    fn accepted_attempt_replays_before_an_expired_credential_needs_refresh() {
+        let home = tempfile::tempdir().unwrap();
+        let mock = MockHttp::responding(accepted());
+        let request = input("attempt-expired-replay");
+        let mut credential = token("g-expired");
+
+        let accepted = execute_authenticated(home.path(), &request, &credential, &mock).unwrap();
+        credential.expires_at = 0;
+        crate::auth::keychain::store_token(&credential, None, home.path()).unwrap();
+
+        let replayed = replay_before_refresh(home.path(), &request, None)
+            .unwrap()
+            .expect("accepted journal record should bypass refresh");
+        assert_eq!(replayed, accepted);
+        assert_eq!(mock.send_count(), 1);
+        assert_eq!(mock.identity_count(), 1);
     }
 
     #[test]

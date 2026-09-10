@@ -323,11 +323,6 @@
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
           "subdir": "aware-main/registry-history/agents/google-workspace/1.0.0",
           "bundle-digest": "sha256:56753c0bafbbe41b7bf29dbac8302e639cef7d74a24022f771df50b71277fbcb"
-        },
-        "1.1.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/registry-history/agents/google-workspace/1.1.0",
-          "bundle-digest": "sha256:9af11a819b7350f78e6fcc2460b032545f9cdce31aeee9b4065c38cf79b34c97"
         }
       }
     },

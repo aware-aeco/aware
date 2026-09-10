@@ -9,7 +9,7 @@ Authentication is handled by the AWARE runtime, not by composition code. Run
 `aware connect google-workspace --oauth` once; do not put access tokens, refresh tokens,
 client secrets, or hand-built `Authorization` headers in an app.
 
-Agent version `0.3.0` exposes only `gmail.send`. Drive, Sheets, Calendar, Gmail
+Agent version `1.0.0` exposes only `gmail.send`. Drive, Sheets, Calendar, Gmail
 search, Chat, Forms, Slides, Meet, and Tasks remain planned and their scopes are
 not requested.
 
