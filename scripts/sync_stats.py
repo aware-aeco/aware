@@ -55,7 +55,14 @@ MARKER_RE = re.compile(r"<!--stat:([a-z_]+)-->(.*?)<!--/stat-->", re.DOTALL)
 
 # --bump guard: refuse anything that isn't a plain semver, so a fat-fingered
 # arg can never be written into Cargo.toml.
-SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+([-+.][0-9A-Za-z.-]+)?$")
+#
+# ASCII classes and fullmatch(), not `\d` between `^` and `$`, which is what
+# this was and which let two values through that Cargo.toml should never see:
+# `\d` matches any Unicode decimal digit, so `١.٢.٣` passed, and `$` also
+# matches just before a TRAILING NEWLINE, so `1.2.3\n` passed and would have
+# been written into the version line as-is. fullmatch() has no such trailing
+# allowance, and [0-9] is the same alphabet tag.yml enforces.
+SEMVER_RE = re.compile(r"[0-9]+\.[0-9]+\.[0-9]+(?:[-+.][0-9A-Za-z.-]+)?")
 
 # What .github/workflows/tag.yml will actually accept, which is NARROWER: its
 # `case "$VERSION" in "" | *[!0-9.]*)` alphabet guard and the
@@ -68,7 +75,13 @@ SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+([-+.][0-9A-Za-z.-]+)?$")
 # finish-the-release text has to say which route a given version actually has.
 # test_tag_workflow_still_refuses_prerelease_versions fails if tag.yml's shape
 # check moves, so this constant cannot quietly go stale.
-TAG_WORKFLOW_VERSION_RE = re.compile(r"^\d+\.\d+\.\d+$")
+#
+# Matched with fullmatch() over ASCII classes for the same reason as SEMVER_RE,
+# and here the reason is the mirroring itself: tag.yml's `*[!0-9.]*` rejects a
+# Unicode digit and its `case` patterns match the whole value, newline included.
+# A mirror that accepted `١.٢.٣` or `1.2.3\n` would advertise a dispatch the
+# workflow refuses — the exact failure this branch exists to prevent.
+TAG_WORKFLOW_VERSION_RE = re.compile(r"[0-9]+\.[0-9]+\.[0-9]+")
 
 # Files where invisible HTML markers aren't possible (Mermaid renders them
 # literally). Each rule replaces the single capture group with the stat value.
@@ -367,7 +380,7 @@ def finish_release_instructions(version: str) -> str:
     route and must be told that rather than sent at a workflow that will refuse
     it. Advertising a route that cannot run is worse than naming none.
     """
-    if TAG_WORKFLOW_VERSION_RE.match(version):
+    if TAG_WORKFLOW_VERSION_RE.fullmatch(version):
         fallback = f"""\
 it is already solved. Do NOT re-bump and do NOT conclude there is no route.
 Dispatch .github/workflows/tag.yml, which creates the ref from inside Actions
@@ -419,7 +432,7 @@ def run_bump(version: str) -> int:
     """Set the authoritative Cargo version, then --write so the npm wrapper
     and cli_version doc stat land in the same breath. Cargo.lock is refreshed
     by the caller's `cargo build`."""
-    if not SEMVER_RE.match(version):
+    if not SEMVER_RE.fullmatch(version):
         print(f"sync_stats: --bump needs a semver version like 0.89.0 (got '{version}')")
         return 2
     path = REPO / "cli" / "Cargo.toml"
@@ -557,10 +570,10 @@ def run_selftest() -> int:
                 bump_npm_package_version('{"version":129}', "0.89.0")
 
         def test_semver_guard(self):
-            self.assertTrue(SEMVER_RE.match("0.89.0"))
-            self.assertTrue(SEMVER_RE.match("1.0.0-rc.1"))
-            self.assertFalse(SEMVER_RE.match("v0.89"))
-            self.assertFalse(SEMVER_RE.match(""))
+            self.assertTrue(SEMVER_RE.fullmatch("0.89.0"))
+            self.assertTrue(SEMVER_RE.fullmatch("1.0.0-rc.1"))
+            self.assertFalse(SEMVER_RE.fullmatch("v0.89"))
+            self.assertFalse(SEMVER_RE.fullmatch(""))
 
         def test_bump_names_both_tag_routes_and_the_version(self):
             text = finish_release_instructions("0.89.0")
@@ -612,8 +625,58 @@ def run_selftest() -> int:
                 "tag.yml's version shape check moved — recheck TAG_WORKFLOW_VERSION_RE "
                 "and the prerelease branch of finish_release_instructions",
             )
-            self.assertFalse(TAG_WORKFLOW_VERSION_RE.match("1.0.0-rc.1"))
-            self.assertTrue(TAG_WORKFLOW_VERSION_RE.match("0.89.0"))
+            self.assertFalse(TAG_WORKFLOW_VERSION_RE.fullmatch("1.0.0-rc.1"))
+            self.assertTrue(TAG_WORKFLOW_VERSION_RE.fullmatch("0.89.0"))
+
+        def test_version_guards_are_ascii_and_whole_string(self):
+            # Both guards used `\d` between `^` and `$`, which is looser than it
+            # looks in Python: `\d` matches any Unicode decimal digit, and `$`
+            # also matches just before a trailing newline. So `١.٢.٣` and
+            # `1.2.3\n` passed both — the first would have been written into
+            # Cargo.toml's version line, and either would have been sent at a
+            # tag.yml whose `*[!0-9.]*` guard matches the whole value and
+            # refuses them. The newline case is the one that matters most: it is
+            # the shape tag.yml's own header calls out, because a value carrying
+            # one lands in GITHUB_ENV as a second assignment.
+            for bad in (
+                "١.٢.٣",  # Arabic-Indic digits
+                "1.2.3\n",
+                "\n1.2.3",
+                " 1.2.3",
+                "1.2.3 ",
+                "1.2.3\nBASH_ENV=/tmp/x",
+            ):
+                self.assertFalse(SEMVER_RE.fullmatch(bad), f"SEMVER_RE accepted {bad!r}")
+                self.assertFalse(
+                    TAG_WORKFLOW_VERSION_RE.fullmatch(bad),
+                    f"TAG_WORKFLOW_VERSION_RE accepted {bad!r}",
+                )
+            # ...and the ordinary case still passes both, so this is a narrowing
+            # rather than a guard that now refuses everything.
+            self.assertTrue(SEMVER_RE.fullmatch("0.89.0"))
+            self.assertTrue(TAG_WORKFLOW_VERSION_RE.fullmatch("0.89.0"))
+
+        def test_bump_refuses_a_version_before_it_writes_anything(self):
+            # The guard is only worth what run_bump does with it, so drive
+            # run_bump — but stub _write first. Asserting "the file is unchanged
+            # afterwards" would be the obvious shape and the wrong one: it lets
+            # the write HAPPEN and then checks, so the moment the guard
+            # regresses the selftest rewrites Cargo.toml, package.json and the
+            # doc stats in the real tree. (Observed, not theorised — the
+            # mutation run that proved these cases go red did exactly that.)
+            # A _write that raises proves the stronger thing anyway: not that
+            # the damage was repaired, but that it was never reached.
+            def refuse(*_args, **_kwargs):
+                raise AssertionError("run_bump wrote despite rejecting the version")
+
+            saved = globals()["_write"]
+            globals()["_write"] = refuse
+            try:
+                self.assertEqual(run_bump("1.2.3\n"), 2)
+                self.assertEqual(run_bump("١.٢.٣"), 2)
+                self.assertEqual(run_bump("v0.89.0"), 2)
+            finally:
+                globals()["_write"] = saved
 
         def test_tag_workflow_still_takes_the_inputs_the_bump_prints(self):
             # The printed dispatch passes `version` and `sha`. If tag.yml stops
