@@ -837,4 +837,168 @@ mod tests {
         );
         assert!(Index::parse(invalid.as_bytes()).is_err());
     }
+
+    #[test]
+    fn a_bundle_digest_is_sha256_and_exactly_64_lowercase_hex() {
+        // The only thing standing between `claims_official` (install::provenance) and a
+        // hand-written receipt is this predicate, and `Index::parse` rejects a malformed
+        // published digest on the strength of it too. "sha256:ABC" — the one case the parse
+        // test above uses — is caught by LENGTH alone, so every rule but the length rule was
+        // going unexercised.
+        let hex = "a".repeat(64);
+        assert!(is_bundle_digest(&format!("sha256:{hex}")));
+        // Every hex digit, not just `a`.
+        assert!(is_bundle_digest(&format!(
+            "sha256:{}",
+            "0123456789abcdef".repeat(4)
+        )));
+
+        // Uppercase hex is the near-miss that matters: it is the same VALUE written
+        // differently, so accepting it would make two spellings of one digest compare
+        // unequal against a published index entry that only ever uses lowercase.
+        assert!(!is_bundle_digest(&format!(
+            "sha256:{}",
+            "0123456789ABCDEF".repeat(4)
+        )));
+        assert!(!is_bundle_digest(&format!("sha256:{}A", "a".repeat(63))));
+
+        // Non-hex characters, at the front and at the very end (an off-by-one in the
+        // iteration bound would miss one of the two).
+        assert!(!is_bundle_digest(&format!("sha256:g{}", "a".repeat(63))));
+        assert!(!is_bundle_digest(&format!("sha256:{}g", "a".repeat(63))));
+        assert!(!is_bundle_digest(&format!("sha256:{}:", "a".repeat(63))));
+
+        // Wrong length either side of 64 — including a 71-character string that is the right
+        // LENGTH overall but splits differently.
+        assert!(!is_bundle_digest(&format!("sha256:{}", "a".repeat(63))));
+        assert!(!is_bundle_digest(&format!("sha256:{}", "a".repeat(65))));
+
+        // A different (or absent, or wrongly-cased) algorithm prefix, each padded so the
+        // total length is the accepted 71 — so only the prefix check can reject them.
+        assert!(!is_bundle_digest(&format!("sha512:{hex}")));
+        assert!(!is_bundle_digest(&format!("SHA256:{hex}")));
+        assert!(!is_bundle_digest(&format!("sha256-{hex}")));
+        assert!(!is_bundle_digest(&format!("{hex}aaaaaaa")));
+        assert!(!is_bundle_digest(""));
+
+        // And the published-index path agrees with the predicate: a 64-hex-but-uppercase
+        // digest reaches `Index::parse`'s check past the length rule, and is still refused.
+        let uppercase = SAMPLE.replace(
+            "\"subdir\": \"tekla\"",
+            &format!(
+                "\"subdir\": \"tekla\", \"bundle-digest\": \"sha256:{}\"",
+                "0123456789ABCDEF".repeat(4)
+            ),
+        );
+        let err = Index::parse(uppercase.as_bytes()).unwrap_err().to_string();
+        assert!(err.contains("invalid bundle-digest"), "{err}");
+        let good = SAMPLE.replace(
+            "\"subdir\": \"tekla\"",
+            &format!("\"subdir\": \"tekla\", \"bundle-digest\": \"sha256:{hex}\""),
+        );
+        assert!(Index::parse(good.as_bytes()).is_ok());
+    }
+
+    #[test]
+    fn latest_is_the_semver_greatest_not_the_lexicographic_one() {
+        // #371. The keys live in a `BTreeMap<String, _>`, so the obvious `next_back()` is a
+        // STRING comparison and `"1.10.1" < "1.9.0"` — `install <id>` fetched 1.9.0 while
+        // 1.10.1 was published. This registry ships calendar-shaped versions where a `.10`
+        // follows a `.9` routinely, so the wrong answer is the common case, not a corner.
+        let index = Index::parse(
+            br#"{
+                "version": "1.0",
+                "updated-at": "2026-05-16T00:00:00Z",
+                "agents": {
+                    "probe": { "versions": {
+                        "1.9.0":  { "tarball": "t", "subdir": "nine" },
+                        "1.10.1": { "tarball": "t", "subdir": "ten" },
+                        "1.2.0":  { "tarball": "t", "subdir": "two" }
+                    } }
+                },
+                "bundles": {}
+            }"#
+            .as_ref(),
+        )
+        .unwrap();
+        let (version, entry) = index.resolve("probe", None).unwrap();
+        assert_eq!(version, "1.10.1");
+        assert_eq!(
+            entry.subdir, "ten",
+            "the resolved entry must be the one belonging to that version"
+        );
+        // Naming any version still reaches it, latest or not.
+        assert_eq!(
+            index.resolve("probe", Some("1.9.0")).unwrap().1.subdir,
+            "nine"
+        );
+        assert!(index.resolve("probe", Some("1.11.0")).is_err());
+    }
+
+    #[test]
+    fn a_non_semver_key_is_reachable_by_name_but_never_resolves_as_latest() {
+        // A key that is not strict SemVer sorts ABOVE every real version lexicographically
+        // (`"nightly" > "1.10.1"`), so it would become the default install for everyone the
+        // moment someone published one. It must stay opt-in.
+        let index = Index::parse(
+            br#"{
+                "version": "1.0",
+                "updated-at": "2026-05-16T00:00:00Z",
+                "agents": {
+                    "probe": { "versions": {
+                        "nightly": { "tarball": "t", "subdir": "nightly" },
+                        "1.10.1":  { "tarball": "t", "subdir": "ten" }
+                    } }
+                },
+                "bundles": {}
+            }"#
+            .as_ref(),
+        )
+        .unwrap();
+        assert_eq!(index.resolve("probe", None).unwrap().0, "1.10.1");
+        assert_eq!(
+            index.resolve("probe", Some("nightly")).unwrap().1.subdir,
+            "nightly",
+            "asking for it by name still works"
+        );
+
+        // With nothing but non-SemVer keys there is no ranking to appeal to, so `latest` must
+        // still answer rather than error.
+        let only_odd = Index::parse(
+            br#"{
+                "version": "1.0",
+                "updated-at": "2026-05-16T00:00:00Z",
+                "agents": { "probe": { "versions": {
+                    "nightly": { "tarball": "t", "subdir": "n" }
+                } } },
+                "bundles": {}
+            }"#
+            .as_ref(),
+        )
+        .unwrap();
+        assert_eq!(only_odd.resolve("probe", None).unwrap().0, "nightly");
+    }
+
+    #[test]
+    fn resolve_key_takes_the_longest_matching_base_name() {
+        // Two keys can both be a dotted prefix of one installed id. Taking the SHORTEST would
+        // make `update allplan-2024.0` fetch `allplan`'s payload and then delete the install
+        // it was pointed at — the #174 hijack, arrived at from the other direction.
+        let index = Index::parse(
+            br#"{
+                "version": "1.0",
+                "updated-at": "2026-05-16T00:00:00Z",
+                "agents": {
+                    "allplan": { "versions": { "1": { "tarball": "t", "subdir": "short" } } },
+                    "allplan.2024": { "versions": { "1": { "tarball": "t", "subdir": "long" } } }
+                },
+                "bundles": {}
+            }"#
+            .as_ref(),
+        )
+        .unwrap();
+        assert_eq!(index.resolve_key("allplan.2024.0"), Some("allplan.2024"));
+        // The shorter key still wins where it is the only dotted prefix.
+        assert_eq!(index.resolve_key("allplan.2025"), Some("allplan"));
+    }
 }
