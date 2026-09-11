@@ -229,11 +229,17 @@ fn the_scan_floor_still_names_every_file_that_carries_a_script() {
 
 /// The active keys of `const EXPECTED = { … }` in the scan script.
 ///
-/// A commented-out entry is not a key: lines whose first non-space characters are
-/// `//` are dropped before the `'key':` on each surviving line is read. Fails
-/// loudly rather than returning an empty list — a table this cannot find is a
-/// table nothing is checking, and a silent empty result would turn the assertions
-/// above into a test that passes for want of anything to disagree with.
+/// A commented-out entry is not a key, in EITHER JavaScript comment form. The
+/// first version dropped only `//` lines, so `/* 'src/auth/paste.rs': 1, */` left
+/// the path in the text while `Object.entries(EXPECTED)` no longer returned it —
+/// the per-file floor gone with this test still green, which is the same hole one
+/// comment syntax further along (Codex review, #518). [`strip_js_comments`]
+/// removes both before any key is read.
+///
+/// Fails loudly rather than returning an empty list — a table this cannot find is
+/// a table nothing is checking, and a silent empty result would turn the
+/// assertions above into a test that passes for want of anything to disagree
+/// with.
 fn expected_keys(script: &str) -> Vec<String> {
     let start = script
         .find("const EXPECTED = {")
@@ -242,13 +248,13 @@ fn expected_keys(script: &str) -> Vec<String> {
     let end = rest
         .find("};")
         .unwrap_or_else(|| panic!("cli/{SCRIPT}'s EXPECTED table is not closed by `}};`"));
-    let body = &rest[..end];
+    let body = strip_js_comments(&rest[..end]);
 
     let mut keys = Vec::new();
     for line in body.lines() {
         let line = line.trim();
-        if line.is_empty() || line.starts_with("//") {
-            continue; // blank or a commented-out entry — not an active key
+        if line.is_empty() {
+            continue;
         }
         // `'path': n,` — the key is the first single-quoted span, and the colon
         // after it is what distinguishes a key from any other quoted text.
@@ -321,6 +327,59 @@ fn the_browser_gate_delegates_its_parse_check_rather_than_repeating_it() {
          module rejects; cli/{SCRIPT} parses each block under the goal symbol a \
          browser would use."
     );
+}
+
+/// `src` with both JavaScript comment forms blanked to spaces, newlines kept so
+/// line structure survives for the caller's per-line parse.
+///
+/// String-aware, because the keys it is clearing the way for are paths: a naive
+/// scan could mistake a `/` inside `'src/auth/paste.rs'` for the start of a
+/// comment. Only single quotes are tracked, which is all the table uses.
+fn strip_js_comments(src: &str) -> String {
+    let bytes: Vec<char> = src.chars().collect();
+    let mut out = String::with_capacity(src.len());
+    let mut i = 0;
+    let mut in_string = false;
+    while i < bytes.len() {
+        let c = bytes[i];
+        if in_string {
+            out.push(c);
+            if c == '\'' {
+                in_string = false;
+            }
+            i += 1;
+            continue;
+        }
+        if c == '\'' {
+            in_string = true;
+            out.push(c);
+            i += 1;
+            continue;
+        }
+        if c == '/' && bytes.get(i + 1) == Some(&'/') {
+            while i < bytes.len() && bytes[i] != '\n' {
+                out.push(' ');
+                i += 1;
+            }
+            continue;
+        }
+        if c == '/' && bytes.get(i + 1) == Some(&'*') {
+            out.push_str("  ");
+            i += 2;
+            while i < bytes.len() && !(bytes[i] == '*' && bytes.get(i + 1) == Some(&'/')) {
+                out.push(if bytes[i] == '\n' { '\n' } else { ' ' });
+                i += 1;
+            }
+            if i < bytes.len() {
+                out.push_str("  ");
+                i += 2;
+            }
+            continue;
+        }
+        out.push(c);
+        i += 1;
+    }
+    out
 }
 
 /// The local names bound by an `import { … } from '…'` line.
