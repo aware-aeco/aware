@@ -373,10 +373,15 @@ it is already solved. Do NOT re-bump and do NOT conclude there is no route.
 Dispatch .github/workflows/tag.yml, which creates the ref from inside Actions
 with the runner's own token and then dispatches release.yml at it:
 
-     gh workflow run tag.yml -f version={version} -f sha=<sha>
+     gh workflow run tag.yml -f version={version} -f sha=<sha> -f release=true
 
   ...or, where the GitHub MCP server is the only transport that works, its
-  run_workflow method on tag.yml with those same inputs.
+  run_workflow method on tag.yml with those same three inputs.
+
+release=true is passed rather than left to tag.yml's default because the tag
+alone is not a release: a ref written by GITHUB_TOKEN raises no push event, so
+release.yml only runs if tag.yml dispatches it, and that step is gated on this
+input. A tag with no dispatch looks like success and ships nothing.
 
 tag.yml re-checks every release guard before it writes anything (plain semver,
 a commit on the default branch, the manifests at that commit already carrying
@@ -562,7 +567,10 @@ def run_selftest() -> int:
             # The plain route, and the one every sandboxed release actually
             # needs. Both carry the version, so neither can be pasted blank.
             self.assertIn("git push origin v0.89.0", text)
-            self.assertIn("gh workflow run tag.yml -f version=0.89.0", text)
+            self.assertIn(
+                "gh workflow run tag.yml -f version=0.89.0 -f sha=<sha> -f release=true",
+                text,
+            )
 
         def test_bump_points_only_at_workflows_that_exist(self):
             # The instruction is worth no more than the workflow it names. Read
@@ -621,8 +629,29 @@ def run_selftest() -> int:
             indents = {m.group(1) for m in re.finditer(r"^( +)\w+:", body, re.M)}
             top = min(indents, key=len)
             declared = set(re.findall(rf"^{top}(\w+):", body, re.M))
-            for name in ("version", "sha"):
+            for name in ("version", "sha", "release"):
                 self.assertIn(name, declared, f"tag.yml no longer declares a '{name}' input")
+
+        def test_tag_workflow_still_dispatches_the_release_it_is_asked_for(self):
+            # The printed command passes release=true, and the whole point of
+            # the route is that release.yml runs afterwards: a ref written by
+            # GITHUB_TOKEN raises no push event, so the dispatch is the only
+            # thing that ships it. If tag.yml stops dispatching release.yml, or
+            # stops gating that on the `release` input, the advertised command
+            # would leave a tag and no release — a half-finished release that
+            # reads as success. Neither the text nor the input check above can
+            # see that, so assert the behaviour itself.
+            workflow = _read(REPO / ".github" / "workflows" / "tag.yml")
+            self.assertTrue(
+                re.search(r"gh workflow run\s+release\.yml", workflow),
+                "tag.yml no longer dispatches release.yml — the printed route would "
+                "create a tag and ship nothing",
+            )
+            self.assertTrue(
+                re.search(r"if:\s*\$\{\{\s*inputs\.release\s*\}\}", workflow),
+                "tag.yml's release dispatch is no longer gated on the `release` input — "
+                "recheck the -f release=true the bump text prints",
+            )
 
         def test_compute_stats_shape(self):
             s = compute_stats()
