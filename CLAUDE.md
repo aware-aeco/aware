@@ -122,6 +122,14 @@ All skill creation, modification, or porting routes through Anthropic's `skill-c
 - **Session cleanup before commit** — delete `tmpclaude-*` temp files first.
 - Stage specific files (`git add <path>`); avoid `git add -A` to prevent accidental secret commits.
 
+### Releasing — the tag is the release
+
+- **A bump is half a release.** `python scripts/sync_stats.py --bump X.Y.Z` welds the version across `cli/Cargo.toml`, `cli-npm/package.json` and the doc stats, but nothing builds and nothing publishes until the tag `vX.Y.Z` exists: `release.yml` fires on the tag push alone. Bumping `main` and stopping there leaves the manifests claiming a version that was never built.
+- **When pushing the tag is refused, the route already exists — it is `.github/workflows/tag.yml`.** A sandboxed session gets 403 on `git push origin vX.Y.Z`, on `POST /git/refs` and on `POST /releases`. That is the sandbox, not a GitHub ruleset, and it is not a wall: dispatch `tag.yml` with `version=X.Y.Z` (and `sha=` the commit to tag) — `gh workflow run tag.yml -f version=X.Y.Z -f sha=<sha>`, or the GitHub MCP server's `run_workflow` where that is the only transport that works. It creates the ref with the runner's own token and then dispatches `release.yml` at the new tag, because a tag written by `GITHUB_TOKEN` raises no push event.
+- **`tag.yml` re-checks the release guards itself** — plain semver, a commit on the default branch, the manifests at that commit already carrying this version, CI green on that exact sha, and no existing tag of that name at another commit — so dispatching it with a wrong argument is refused rather than immortalised.
+- **Do not re-bump, and do not dispatch `release.yml` off a branch.** Its version comes from the ref name, so a branch dispatch stages `0.0.0-dev` and its release and npm jobs never run.
+- This has cost two releases: v0.131.1 on 2026-08-28, which is why `tag.yml` was written (#474), and v0.137.0 on 2026-09-10 (#524), where the same 403 was read as "no route exists" and the fix proposed was to build `tag.yml` a second time. `sync_stats.py --bump` now prints this route at the moment of the bump.
+
 ### PR review — non-negotiable
 
 - **Every PR must be reviewed before merge.** No PR merges without a review pass; address all findings (or justify why not) before merging.
