@@ -840,14 +840,14 @@ mod tests {
 
     #[test]
     fn a_bundle_digest_is_sha256_and_exactly_64_lowercase_hex() {
-        // The only thing standing between `claims_official` (install::provenance) and a
-        // hand-written receipt is this predicate, and `Index::parse` rejects a malformed
-        // published digest on the strength of it too. "sha256:ABC" — the one case the parse
-        // test above uses — is caught by LENGTH alone, so every rule but the length rule was
-        // going unexercised.
+        // This predicate is the whole of `claims_official`'s digest well-formedness check
+        // (install::provenance) — not a boundary against forgery, since a hand-written receipt
+        // with well-formed digests passes that gate and dies later at the registry
+        // cross-check — and `Index::parse` rejects a malformed published digest on the strength
+        // of it too. "sha256:ABC", the one case the parse test above uses, is caught by LENGTH
+        // alone, so every rule but the length rule was going unexercised.
         let hex = "a".repeat(64);
         assert!(is_bundle_digest(&format!("sha256:{hex}")));
-        // Every hex digit, not just `a`.
         assert!(is_bundle_digest(&format!(
             "sha256:{}",
             "0123456789abcdef".repeat(4)
@@ -868,18 +868,19 @@ mod tests {
         assert!(!is_bundle_digest(&format!("sha256:{}g", "a".repeat(63))));
         assert!(!is_bundle_digest(&format!("sha256:{}:", "a".repeat(63))));
 
-        // Wrong length either side of 64 — including a 71-character string that is the right
-        // LENGTH overall but splits differently.
+        // Wrong length either side of 64, and the empty string. These are the cases the length
+        // rule takes, and the only ones in this test that it does.
         assert!(!is_bundle_digest(&format!("sha256:{}", "a".repeat(63))));
         assert!(!is_bundle_digest(&format!("sha256:{}", "a".repeat(65))));
+        assert!(!is_bundle_digest(""));
 
-        // A different (or absent, or wrongly-cased) algorithm prefix, each padded so the
-        // total length is the accepted 71 — so only the prefix check can reject them.
+        // A different (or absent, or wrongly-cased) algorithm prefix. Every one of these is
+        // exactly 71 characters and hex-clean, so only the prefix check can reject them —
+        // including the last, which is the right total LENGTH but splits in the wrong place.
         assert!(!is_bundle_digest(&format!("sha512:{hex}")));
         assert!(!is_bundle_digest(&format!("SHA256:{hex}")));
         assert!(!is_bundle_digest(&format!("sha256-{hex}")));
         assert!(!is_bundle_digest(&format!("{hex}aaaaaaa")));
-        assert!(!is_bundle_digest(""));
 
         // And the published-index path agrees with the predicate: a 64-hex-but-uppercase
         // digest reaches `Index::parse`'s check past the length rule, and is still refused.
@@ -903,14 +904,19 @@ mod tests {
     fn latest_is_the_semver_greatest_not_the_lexicographic_one() {
         // #371. The keys live in a `BTreeMap<String, _>`, so the obvious `next_back()` is a
         // STRING comparison and `"1.10.1" < "1.9.0"` — `install <id>` fetched 1.9.0 while
-        // 1.10.1 was published. This registry ships calendar-shaped versions where a `.10`
-        // follows a `.9` routinely, so the wrong answer is the common case, not a corner.
+        // 1.10.1 was published. It is dormant only because nearly every entry ships a single
+        // version today; it bites silently on the install path the first time one doesn't.
+        //
+        // `0.9.0` is in the fixture so the right answer is neither the lexicographic LAST key
+        // nor the lexicographic FIRST one. Without it, `1.10.1` is the smallest string here and
+        // `.next()` would look just as correct as the comparator.
         let index = Index::parse(
             br#"{
                 "version": "1.0",
                 "updated-at": "2026-05-16T00:00:00Z",
                 "agents": {
                     "probe": { "versions": {
+                        "0.9.0":  { "tarball": "t", "subdir": "old" },
                         "1.9.0":  { "tarball": "t", "subdir": "nine" },
                         "1.10.1": { "tarball": "t", "subdir": "ten" },
                         "1.2.0":  { "tarball": "t", "subdir": "two" }
@@ -936,10 +942,11 @@ mod tests {
     }
 
     #[test]
-    fn a_non_semver_key_is_reachable_by_name_but_never_resolves_as_latest() {
-        // A key that is not strict SemVer sorts ABOVE every real version lexicographically
-        // (`"nightly" > "1.10.1"`), so it would become the default install for everyone the
-        // moment someone published one. It must stay opt-in.
+    fn a_non_semver_key_never_outranks_a_semver_one_but_stays_reachable_by_name() {
+        // Under the old string compare a key that is not strict SemVer would have sorted ABOVE
+        // every real version (`"nightly" > "1.10.1"`), making it the default install for
+        // everyone the moment someone published one. The comparator ranks it below instead, and
+        // `0.9.0` is present so the answer is not the lexicographic first key either.
         let index = Index::parse(
             br#"{
                 "version": "1.0",
@@ -947,6 +954,7 @@ mod tests {
                 "agents": {
                     "probe": { "versions": {
                         "nightly": { "tarball": "t", "subdir": "nightly" },
+                        "0.9.0":   { "tarball": "t", "subdir": "old" },
                         "1.10.1":  { "tarball": "t", "subdir": "ten" }
                     } }
                 },
@@ -981,9 +989,12 @@ mod tests {
 
     #[test]
     fn resolve_key_takes_the_longest_matching_base_name() {
-        // Two keys can both be a dotted prefix of one installed id. Taking the SHORTEST would
-        // make `update allplan-2024.0` fetch `allplan`'s payload and then delete the install
-        // it was pointed at — the #174 hijack, arrived at from the other direction.
+        // Two DOTTED keys can both be a prefix of one installed id (`allplan` and
+        // `allplan.2024` for `allplan.2024.0`). Taking the shortest would resolve to a
+        // different agent's payload; `update` then refuses with "not in registry" on the #174
+        // suffix guard in install/registry.rs, having fetched and discarded a tarball. A
+        // confusing failure for an id the registry does publish, not a deletion — the guard is
+        // what keeps it non-destructive.
         let index = Index::parse(
             br#"{
                 "version": "1.0",
@@ -998,7 +1009,7 @@ mod tests {
         )
         .unwrap();
         assert_eq!(index.resolve_key("allplan.2024.0"), Some("allplan.2024"));
-        // The shorter key still wins where it is the only dotted prefix.
+        // A single match is still a match — longest-wins must not become longest-required.
         assert_eq!(index.resolve_key("allplan.2025"), Some("allplan"));
     }
 }
