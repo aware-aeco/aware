@@ -55,7 +55,33 @@ MARKER_RE = re.compile(r"<!--stat:([a-z_]+)-->(.*?)<!--/stat-->", re.DOTALL)
 
 # --bump guard: refuse anything that isn't a plain semver, so a fat-fingered
 # arg can never be written into Cargo.toml.
-SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+([-+.][0-9A-Za-z.-]+)?$")
+#
+# ASCII classes and fullmatch(), not `\d` between `^` and `$`, which is what
+# this was and which let two values through that Cargo.toml should never see:
+# `\d` matches any Unicode decimal digit, so `١.٢.٣` passed, and `$` also
+# matches just before a TRAILING NEWLINE, so `1.2.3\n` passed and would have
+# been written into the version line as-is. fullmatch() has no such trailing
+# allowance, and [0-9] is the same alphabet tag.yml enforces.
+SEMVER_RE = re.compile(r"[0-9]+\.[0-9]+\.[0-9]+(?:[-+.][0-9A-Za-z.-]+)?")
+
+# What .github/workflows/tag.yml will actually accept, which is NARROWER: its
+# `case "$VERSION" in "" | *[!0-9.]*)` alphabet guard and the
+# `^[0-9]+\.[0-9]+\.[0-9]+$` shape check below it both reject a prerelease or
+# build suffix. That is deliberate — the value reaches GITHUB_ENV in a job
+# holding a write-capable token, and the narrow alphabet is the wall that stops
+# a newline smuggling a second assignment in — so it is mirrored here rather
+# than widened from this side. --bump accepts the wider grammar and release.yml
+# ships hyphenated tags as prereleases, so the two genuinely differ, and the
+# finish-the-release text has to say which route a given version actually has.
+# test_tag_workflow_still_refuses_prerelease_versions fails if tag.yml's shape
+# check moves, so this constant cannot quietly go stale.
+#
+# Matched with fullmatch() over ASCII classes for the same reason as SEMVER_RE,
+# and here the reason is the mirroring itself: tag.yml's `*[!0-9.]*` rejects a
+# Unicode digit and its `case` patterns match the whole value, newline included.
+# A mirror that accepted `١.٢.٣` or `1.2.3\n` would advertise a dispatch the
+# workflow refuses — the exact failure this branch exists to prevent.
+TAG_WORKFLOW_VERSION_RE = re.compile(r"[0-9]+\.[0-9]+\.[0-9]+")
 
 # Files where invisible HTML markers aren't possible (Mermaid renders them
 # literally). Each rule replaces the single capture group with the stat value.
@@ -333,17 +359,91 @@ def bump_npm_package_version(package_text: str, new_version: str) -> str:
     return json.dumps(package, indent=2, ensure_ascii=False) + "\n"
 
 
+def finish_release_instructions(version: str) -> str:
+    """What to do NEXT, printed where the bump happens.
+
+    A bump is half a release: nothing builds or publishes until the tag exists,
+    because release.yml fires on the tag push alone. The half that goes missing
+    is always the tag, and always for the same reason — a sandboxed session is
+    refused 403 on `git push origin vX.Y.Z`, on POST /git/refs and on POST
+    /releases, reads that as "no route exists", and stops with main claiming a
+    version that was never built. That is v0.131.1 on 2026-08-28, which is why
+    .github/workflows/tag.yml was written (#474), and v0.137.0 on 2026-09-10
+    (#524), where the same wall was hit again and the fix proposed was to build
+    tag.yml a second time — nothing in the repo named it, so it was never found.
+
+    Naming it here puts the route at the one moment every release passes
+    through. Pure, so the selftest can read the text without bumping anything.
+
+    The fallback is version-dependent, and saying so is the point: --bump takes
+    a wider grammar than tag.yml does, so a prerelease bump has no dispatch
+    route and must be told that rather than sent at a workflow that will refuse
+    it. Advertising a route that cannot run is worse than naming none.
+    """
+    if TAG_WORKFLOW_VERSION_RE.fullmatch(version):
+        fallback = f"""\
+it is already solved. Do NOT re-bump and do NOT conclude there is no route.
+Dispatch .github/workflows/tag.yml, which creates the ref from inside Actions
+with the runner's own token and then dispatches release.yml at it:
+
+     gh workflow run tag.yml -f version={version} -f sha=<sha> -f release=true
+
+  ...or, where the GitHub MCP server is the only transport that works, its
+  run_workflow method on tag.yml with those same three inputs.
+
+release=true is passed rather than left to tag.yml's default because the tag
+alone is not a release: a ref written by GITHUB_TOKEN raises no push event, so
+release.yml only runs if tag.yml dispatches it, and that step is gated on this
+input. A tag with no dispatch looks like success and ships nothing.
+
+tag.yml re-checks every release guard before it writes anything (plain semver,
+a commit on the default branch, the manifests at that commit already carrying
+this version, CI green on that exact sha, no existing tag of that name
+elsewhere), so a wrong argument is refused rather than immortalised in a tag."""
+    else:
+        fallback = f"""\
+the usual fallback does NOT cover this version. .github/workflows/tag.yml takes
+plain X.Y.Z only — its input guard rejects '{version}' outright — so there is no
+dispatch route for a prerelease or build-metadata bump, and it is honest to say
+so rather than send you at a workflow that will refuse the argument.
+
+v{version} has to be pushed from a checkout that holds tag-push rights. (The
+tag itself is fine downstream: release.yml marks a hyphenated tag as a
+prerelease.) Widening tag.yml's guard to match would work, but that guard is
+what keeps a crafted input out of GITHUB_ENV in a job holding a write-capable
+token, so it is a change to make deliberately and review on its own."""
+
+    return f"""
+sync_stats: the bump is half a release — nothing builds or publishes until the
+tag exists. Next:
+
+  1. Land this commit on the default branch and wait for CI to go green ON IT.
+  2. Tag it:  git tag v{version} <sha> && git push origin v{version}
+
+If that push comes back 403 — every sandboxed session does, and POST /git/refs
+and POST /releases are refused there too — that is the sandbox, not GitHub, and
+{fallback}
+
+Do not dispatch release.yml from a branch: its version comes from the ref name,
+so it stages 0.0.0-dev, and its release and npm jobs never run off a tag."""
+
+
 def run_bump(version: str) -> int:
     """Set the authoritative Cargo version, then --write so the npm wrapper
     and cli_version doc stat land in the same breath. Cargo.lock is refreshed
     by the caller's `cargo build`."""
-    if not SEMVER_RE.match(version):
+    if not SEMVER_RE.fullmatch(version):
         print(f"sync_stats: --bump needs a semver version like 0.89.0 (got '{version}')")
         return 2
     path = REPO / "cli" / "Cargo.toml"
     _write(path, bump_package_version(_read(path), version))
     print(f"sync_stats: bumped cli/Cargo.toml → {version}")
-    return run(write=True)
+    rc = run(write=True)
+    # Only on success: a bump whose doc sync failed is not ready to be tagged,
+    # and telling it to go tag anyway is how a half-synced tree gets released.
+    if rc == 0:
+        print(finish_release_instructions(version))
+    return rc
 
 
 def _report(mismatches: list[tuple]) -> None:
@@ -470,10 +570,151 @@ def run_selftest() -> int:
                 bump_npm_package_version('{"version":129}', "0.89.0")
 
         def test_semver_guard(self):
-            self.assertTrue(SEMVER_RE.match("0.89.0"))
-            self.assertTrue(SEMVER_RE.match("1.0.0-rc.1"))
-            self.assertFalse(SEMVER_RE.match("v0.89"))
-            self.assertFalse(SEMVER_RE.match(""))
+            self.assertTrue(SEMVER_RE.fullmatch("0.89.0"))
+            self.assertTrue(SEMVER_RE.fullmatch("1.0.0-rc.1"))
+            self.assertFalse(SEMVER_RE.fullmatch("v0.89"))
+            self.assertFalse(SEMVER_RE.fullmatch(""))
+
+        def test_bump_names_both_tag_routes_and_the_version(self):
+            text = finish_release_instructions("0.89.0")
+            # The plain route, and the one every sandboxed release actually
+            # needs. Both carry the version, so neither can be pasted blank.
+            self.assertIn("git push origin v0.89.0", text)
+            self.assertIn(
+                "gh workflow run tag.yml -f version=0.89.0 -f sha=<sha> -f release=true",
+                text,
+            )
+
+        def test_bump_points_only_at_workflows_that_exist(self):
+            # The instruction is worth no more than the workflow it names. Read
+            # the names back OUT of the text rather than restating them here, so
+            # renaming or deleting tag.yml turns this red instead of leaving the
+            # next release pointed at a file that is not there. Both grammars
+            # --bump accepts, since each prints a different fallback.
+            for version in ("0.89.0", "1.0.0-rc.1"):
+                text = finish_release_instructions(version)
+                named = set(re.findall(r"[\w.-]+\.yml", text))
+                self.assertIn("tag.yml", named)
+                for name in named:
+                    self.assertTrue(
+                        (REPO / ".github" / "workflows" / name).is_file(),
+                        f"--bump points at .github/workflows/{name}, which does not exist",
+                    )
+
+        def test_bump_does_not_advertise_a_dispatch_tag_yml_would_refuse(self):
+            # --bump accepts 1.0.0-rc.1; tag.yml does not. Sending a prerelease
+            # release at a dispatch that rejects the argument would stall it in
+            # exactly the way this whole change exists to prevent, so the text
+            # must name the limit and drop the command.
+            text = finish_release_instructions("1.0.0-rc.1")
+            self.assertNotIn("gh workflow run tag.yml", text)
+            self.assertIn("plain X.Y.Z only", text)
+            # The direct route still has to be there, and still carry the version.
+            self.assertIn("git push origin v1.0.0-rc.1", text)
+
+        def test_tag_workflow_still_refuses_prerelease_versions(self):
+            # TAG_WORKFLOW_VERSION_RE is a copy of a guard that lives in another
+            # file, and a copy is a lie waiting to happen. If tag.yml's shape
+            # check moves, this goes red and the constant — and the fallback
+            # text that branches on it — get revisited rather than going stale.
+            workflow = _read(REPO / ".github" / "workflows" / "tag.yml")
+            # assertTrue, not assertIn: the haystack is the whole workflow, and
+            # assertIn would print all 229 lines of it on failure.
+            self.assertTrue(
+                r"^[0-9]+\.[0-9]+\.[0-9]+$" in workflow,
+                "tag.yml's version shape check moved — recheck TAG_WORKFLOW_VERSION_RE "
+                "and the prerelease branch of finish_release_instructions",
+            )
+            self.assertFalse(TAG_WORKFLOW_VERSION_RE.fullmatch("1.0.0-rc.1"))
+            self.assertTrue(TAG_WORKFLOW_VERSION_RE.fullmatch("0.89.0"))
+
+        def test_version_guards_are_ascii_and_whole_string(self):
+            # Both guards used `\d` between `^` and `$`, which is looser than it
+            # looks in Python: `\d` matches any Unicode decimal digit, and `$`
+            # also matches just before a trailing newline. So `١.٢.٣` and
+            # `1.2.3\n` passed both — the first would have been written into
+            # Cargo.toml's version line, and either would have been sent at a
+            # tag.yml whose `*[!0-9.]*` guard matches the whole value and
+            # refuses them. The newline case is the one that matters most: it is
+            # the shape tag.yml's own header calls out, because a value carrying
+            # one lands in GITHUB_ENV as a second assignment.
+            for bad in (
+                "١.٢.٣",  # Arabic-Indic digits
+                "1.2.3\n",
+                "\n1.2.3",
+                " 1.2.3",
+                "1.2.3 ",
+                "1.2.3\nBASH_ENV=/tmp/x",
+            ):
+                self.assertFalse(SEMVER_RE.fullmatch(bad), f"SEMVER_RE accepted {bad!r}")
+                self.assertFalse(
+                    TAG_WORKFLOW_VERSION_RE.fullmatch(bad),
+                    f"TAG_WORKFLOW_VERSION_RE accepted {bad!r}",
+                )
+            # ...and the ordinary case still passes both, so this is a narrowing
+            # rather than a guard that now refuses everything.
+            self.assertTrue(SEMVER_RE.fullmatch("0.89.0"))
+            self.assertTrue(TAG_WORKFLOW_VERSION_RE.fullmatch("0.89.0"))
+
+        def test_bump_refuses_a_version_before_it_writes_anything(self):
+            # The guard is only worth what run_bump does with it, so drive
+            # run_bump — but stub _write first. Asserting "the file is unchanged
+            # afterwards" would be the obvious shape and the wrong one: it lets
+            # the write HAPPEN and then checks, so the moment the guard
+            # regresses the selftest rewrites Cargo.toml, package.json and the
+            # doc stats in the real tree. (Observed, not theorised — the
+            # mutation run that proved these cases go red did exactly that.)
+            # A _write that raises proves the stronger thing anyway: not that
+            # the damage was repaired, but that it was never reached.
+            def refuse(*_args, **_kwargs):
+                raise AssertionError("run_bump wrote despite rejecting the version")
+
+            saved = globals()["_write"]
+            globals()["_write"] = refuse
+            try:
+                self.assertEqual(run_bump("1.2.3\n"), 2)
+                self.assertEqual(run_bump("١.٢.٣"), 2)
+                self.assertEqual(run_bump("v0.89.0"), 2)
+            finally:
+                globals()["_write"] = saved
+
+        def test_tag_workflow_still_takes_the_inputs_the_bump_prints(self):
+            # The printed dispatch passes `version` and `sha`. If tag.yml stops
+            # declaring either input, that command is one GitHub rejects — so
+            # read tag.yml's own inputs block rather than trusting the text.
+            workflow = _read(REPO / ".github" / "workflows" / "tag.yml")
+            block = re.search(r"^\s+inputs:\n(.*?)(?=^\S)", workflow, re.DOTALL | re.M)
+            self.assertIsNotNone(block, "tag.yml declares no workflow_dispatch inputs")
+            body = block.group(1)
+            # Only the shallowest keys are the input NAMES; anything deeper is
+            # their description/type/default. Read the indent off the file so a
+            # reformat does not turn this red on its own.
+            indents = {m.group(1) for m in re.finditer(r"^( +)\w+:", body, re.M)}
+            top = min(indents, key=len)
+            declared = set(re.findall(rf"^{top}(\w+):", body, re.M))
+            for name in ("version", "sha", "release"):
+                self.assertIn(name, declared, f"tag.yml no longer declares a '{name}' input")
+
+        def test_tag_workflow_still_dispatches_the_release_it_is_asked_for(self):
+            # The printed command passes release=true, and the whole point of
+            # the route is that release.yml runs afterwards: a ref written by
+            # GITHUB_TOKEN raises no push event, so the dispatch is the only
+            # thing that ships it. If tag.yml stops dispatching release.yml, or
+            # stops gating that on the `release` input, the advertised command
+            # would leave a tag and no release — a half-finished release that
+            # reads as success. Neither the text nor the input check above can
+            # see that, so assert the behaviour itself.
+            workflow = _read(REPO / ".github" / "workflows" / "tag.yml")
+            self.assertTrue(
+                re.search(r"gh workflow run\s+release\.yml", workflow),
+                "tag.yml no longer dispatches release.yml — the printed route would "
+                "create a tag and ship nothing",
+            )
+            self.assertTrue(
+                re.search(r"if:\s*\$\{\{\s*inputs\.release\s*\}\}", workflow),
+                "tag.yml's release dispatch is no longer gated on the `release` input — "
+                "recheck the -f release=true the bump text prints",
+            )
 
         def test_compute_stats_shape(self):
             s = compute_stats()
