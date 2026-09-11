@@ -46,7 +46,16 @@ pub struct CatalogAgent {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CatalogVersion {
     pub description: String,
-    pub status: String, // "available" | "planned"
+    pub status: String, // "available" | "planned" | "requires-runtime"
+    /// Present when `status` depends on functionality shipped by the AWARE CLI.
+    /// Older catalog readers ignore this additive field; older manifest readers
+    /// still fail closed on the unknown status value.
+    #[serde(
+        rename = "minimum-cli-version",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
+    pub minimum_cli_version: Option<String>,
     /// The agent's own `manifest.version` for this entry. DISTINCT from the entry's
     /// map KEY, which is the registry *index* version (the install spec). A consumer
     /// can compare this against an installed agent's `manifest.version` (what
@@ -83,12 +92,27 @@ pub struct CatalogCommand {
     pub description: String,
     pub lifecycle: String, // "start" | "stop" | "single"
     pub category: String,  // "curated" | "reflected"
+    /// Per-command runnability. Omitted for the historical `available` default
+    /// so existing catalog snapshots remain compact; `planned` is explicit.
+    #[serde(
+        default = "available_command_status",
+        skip_serializing_if = "command_status_is_available"
+    )]
+    pub status: String,
     #[serde(skip_serializing_if = "Option::is_none", default)]
     pub mode: Option<String>, // "read" | "write"
     #[serde(skip_serializing_if = "Option::is_none", default)]
     pub method: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none", default)]
     pub path: Option<String>,
+}
+
+fn available_command_status() -> String {
+    "available".to_string()
+}
+
+fn command_status_is_available(status: &String) -> bool {
+    status == "available"
 }
 
 /// One capability/search match within an agent (a command, a method, or a skill).
@@ -190,10 +214,7 @@ fn category_str(c: Category) -> &'static str {
 }
 
 fn status_str(s: AgentStatus) -> &'static str {
-    match s {
-        AgentStatus::Available => "available",
-        AgentStatus::Planned => "planned",
-    }
+    s.as_str()
 }
 
 /// The transport `aware agent catalog` publishes for an agent: **the one it would
@@ -232,6 +253,7 @@ fn version_from_agent(a: &Agent) -> CatalogVersion {
             description: first_line(&c.description),
             lifecycle: c.lifecycle.as_str().to_string(),
             category: category_str(a.category_of(c)).to_string(),
+            status: status_str(c.status).to_string(),
             mode: c.mode.map(|m| m.as_str().to_string()),
             method: c.method.clone(),
             path: c.path.clone(),
@@ -240,6 +262,7 @@ fn version_from_agent(a: &Agent) -> CatalogVersion {
     CatalogVersion {
         description: first_line(&a.description),
         status: status_str(a.status).to_string(),
+        minimum_cli_version: a.minimum_cli_version.clone(),
         manifest_version: a.version.clone(),
         stateful: a.stateful,
         sdk_target: a.sdk_target.clone(),
@@ -277,30 +300,10 @@ where
         // built into a faithful catalog entry (#454), so refuse rather than emit the
         // fiction.
         //
-        // The key is the subdir alone, and deliberately so: it is exactly what decides
-        // which manifest this build reads. `load` is handed a subdir and nothing else —
-        // `agent reindex` resolves it against the local checkout
-        // (`repo_root/<subdir>/manifest.yaml`) and never opens `tarball` at all. So two
-        // versions sharing a subdir get the SAME manifest whatever their tarballs say,
-        // and the older key's entry is stamped with the current build's description,
-        // commands and `manifest-version` — a historical version described by files that
-        // path no longer holds.
-        //
-        // Keying this on the installer's payload identity (a `(tarball, subdir)` pair)
-        // was wrong in a way worth recording, because it is the natural mistake: it
-        // describes when two keys INSTALL alike, which is a different question from when
-        // this generator can TELL THEM APART. Under that key, versions in distinct
-        // immutable tarballs sharing one subdir passed the guard and were then both
-        // described from the one checkout manifest — reindex reporting success while
-        // reproducing the exact defect #454 is about. (Codex review, PR #457, rounds 1
-        // and 5: round 1 caught the pair being ignored, round 5 caught that honouring it
-        // here reopened the hole.)
-        //
-        // Refusing that shape is the honest answer while this reads one checkout: a
-        // remote archive's bytes are not present to describe. Teaching `reindex` to fetch
-        // each version's tarball would lift the restriction and is a real option — it is
-        // also a new mechanism (network access inside a CI gate, caching, offline
-        // behaviour), so it belongs to a maintainer, not to this fix.
+        // Mutable releases are keyed by the checkout path from which reindex reads them.
+        // Immutable commit archives are keyed by commit plus repository-relative path:
+        // reindex reads those exact local Git objects, so two commits may safely publish
+        // different historical payloads from the same path without consulting the network.
         //
         // `agent publish` enforces the SAME rule before it writes, so the registry's
         // producer cannot emit an index its generator refuses.
@@ -313,6 +316,12 @@ where
         // subdir is the defect, never a differing version.
         let mut seen_subdirs: BTreeMap<String, (&String, &str, String)> = BTreeMap::new();
         for (ver, ve) in &entry.versions {
+            if let Err(reason) =
+                crate::registry::index::check_immutable_archive_root(&ve.tarball, &ve.subdir)
+            {
+                errors.push((format!("{id}@{ver}"), reason));
+                continue;
+            }
             // A subdir that is not portably written resolves to different manifests on
             // different platforms, so no key computed from it means anything. Report it
             // and move on rather than guessing which reading was intended.
@@ -325,7 +334,7 @@ where
             // then case-folded, because the index is one artifact and a case-insensitive
             // checkout (Windows, macOS) resolves `foo` and `Foo` to a single folder.
             let subdir = crate::registry::checkout_relative_subdir(&ve.subdir);
-            let key = crate::registry::portable_subdir_key(&ve.subdir);
+            let key = crate::registry::catalog_source_key(&ve.tarball, &ve.subdir);
             if let Some((other, other_tarball, other_subdir)) =
                 seen_subdirs.insert(key, (ver, ve.tarball.as_str(), subdir.clone()))
             {
@@ -534,6 +543,44 @@ mod tests {
              skills:\n  - some-skill\n"
         );
         serde_yaml::from_str(&y).unwrap()
+    }
+
+    #[test]
+    fn catalog_preserves_runtime_gate_metadata() {
+        let yaml = "agent: google-workspace\nversion: 0.3.0\ndescription: Gmail send.\n\
+                    stateful: false\nstatus: requires-runtime\nminimum-cli-version: 0.136.0\n\
+                    license: Apache-2.0\ntransport: { rest: { base: https://gmail.googleapis.com/gmail/v1/ } }\n\
+                    commands: { gmail.send: { lifecycle: single, description: Send mail. } }\n";
+        let agent: Agent = serde_yaml::from_str(yaml).unwrap();
+        let version = version_from_agent(&agent);
+        assert_eq!(version.status, "requires-runtime");
+        assert_eq!(version.minimum_cli_version.as_deref(), Some("0.136.0"));
+
+        let json = serde_json::to_value(version).unwrap();
+        assert_eq!(json["status"], "requires-runtime");
+        assert_eq!(json["minimum-cli-version"], "0.136.0");
+    }
+
+    #[test]
+    fn catalog_preserves_planned_command_status() {
+        let yaml = r#"agent: partial
+version: 1.0.0
+description: partial
+stateful: false
+license: MIT
+transport: { cli: { binary: partial } }
+commands:
+  ready: { lifecycle: single, description: Ready. }
+  later: { lifecycle: single, description: Later., status: planned }
+"#;
+        let agent: Agent = serde_yaml::from_str(yaml).unwrap();
+        let version = version_from_agent(&agent);
+        let ready = version.commands.iter().find(|c| c.name == "ready").unwrap();
+        let later = version.commands.iter().find(|c| c.name == "later").unwrap();
+        assert_eq!(ready.status, "available");
+        assert_eq!(later.status, "planned");
+        assert!(serde_json::to_value(ready).unwrap().get("status").is_none());
+        assert_eq!(serde_json::to_value(later).unwrap()["status"], "planned");
     }
 
     fn index_with(entries: &[(&str, &str, &str)]) -> Index {
@@ -808,6 +855,44 @@ mod tests {
             "the message names the distinct-tarball case specifically, since its remedy \
              differs from the one-archive case: {}",
             errs[0].1
+        );
+    }
+
+    #[test]
+    fn build_catalog_distinguishes_the_same_path_in_two_immutable_commits() {
+        let first = "0123456789abcdef0123456789abcdef01234567";
+        let second = "89abcdef0123456789abcdef0123456789abcdef";
+        let index = index_multi(
+            "probe-agent",
+            &[
+                (
+                    "1.2.0",
+                    &format!("https://github.com/aware-aeco/aware/archive/{first}.tar.gz"),
+                    &format!("aware-{first}/20-agents/probe-agent"),
+                ),
+                (
+                    "1.3.0",
+                    &format!("https://github.com/aware-aeco/aware/archive/{second}.tar.gz"),
+                    &format!("aware-{second}/20-agents/probe-agent"),
+                ),
+            ],
+        );
+        let (cat, errs) = build_catalog(&index, "now".to_string(), |subdir| {
+            let description = if subdir.contains(first) {
+                "first pinned build"
+            } else {
+                "second pinned build"
+            };
+            Ok(agent_from_yaml("probe-agent", description))
+        });
+        assert!(errs.is_empty(), "{errs:?}");
+        assert_eq!(
+            cat.agents["probe-agent"].versions["1.2.0"].description,
+            "first pinned build"
+        );
+        assert_eq!(
+            cat.agents["probe-agent"].versions["1.3.0"].description,
+            "second pinned build"
         );
     }
 

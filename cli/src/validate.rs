@@ -14,6 +14,11 @@ use std::path::Path;
 use crate::manifest::{Agent, App};
 use crate::runtime::invoker::{TransportKind, dispatch_transport};
 
+/// The CLI version whose runtime is performing validation. Kept in one place so
+/// local install, registry install, compile, and run cannot accidentally compare
+/// against different versions.
+pub(crate) const CURRENT_CLI_VERSION: &str = env!("CARGO_PKG_VERSION");
+
 #[derive(Debug, PartialEq, Eq)]
 pub enum Severity {
     Error,
@@ -100,6 +105,9 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
             "agent declares zero commands",
         ));
     }
+    if let Some((code, message)) = runtime_requirement_error(agent, CURRENT_CLI_VERSION) {
+        out.push(ValidationIssue::error(code, message));
+    }
     // Two questions, not one: does it declare a transport at all, and can the
     // runtime RUN what it declares? `mcp` answers the first and not the second —
     // `TransportKind` has no `Mcp` variant, so an mcp-only agent validated clean
@@ -136,6 +144,80 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
         }
     }
     out
+}
+
+/// Validate and evaluate the `status: requires-runtime` contract for one agent.
+///
+/// The field is agent-level even when a command uses the shared status enum: a
+/// command implementation shipped inside AWARE has the same minimum runtime as
+/// its containing agent. This function is deliberately parameterized by
+/// `current` so boundary behavior is testable without pretending the test binary
+/// is an older release.
+pub(crate) fn runtime_requirement_error(
+    agent: &Agent,
+    current: &str,
+) -> Option<(&'static str, String)> {
+    use crate::manifest::agent::AgentStatus;
+
+    let gated = agent.status == AgentStatus::RequiresRuntime
+        || agent
+            .commands
+            .values()
+            .any(|command| command.status == AgentStatus::RequiresRuntime);
+
+    if !gated {
+        return agent.minimum_cli_version.as_ref().map(|minimum| {
+            (
+                "E_AGENT_MINIMUM_CLI_VERSION_UNUSED",
+                format!(
+                    "agent {:?} declares minimum-cli-version {minimum:?}, but neither the agent nor any command has status: requires-runtime; remove the unused field or declare the runtime gate explicitly",
+                    agent.agent
+                ),
+            )
+        });
+    }
+
+    let Some(minimum) = agent
+        .minimum_cli_version
+        .as_deref()
+        .filter(|version| !version.trim().is_empty())
+    else {
+        return Some((
+            "E_AGENT_MINIMUM_CLI_VERSION_REQUIRED",
+            format!(
+                "agent {:?} declares status: requires-runtime but has no minimum-cli-version",
+                agent.agent
+            ),
+        ));
+    };
+    if parse_semver(minimum).is_none() {
+        return Some((
+            "E_AGENT_MINIMUM_CLI_VERSION_INVALID",
+            format!(
+                "agent {:?} has invalid minimum-cli-version {minimum:?}; expected strict SemVer (major.minor.patch)",
+                agent.agent
+            ),
+        ));
+    }
+    if parse_semver(current).is_none() {
+        return Some((
+            "E_AGENT_RUNTIME_VERSION_INVALID",
+            format!(
+                "the running AWARE CLI reports invalid version {current:?}; refusing to evaluate agent {:?}'s minimum runtime {minimum:?}",
+                agent.agent
+            ),
+        ));
+    }
+    if compare_version_keys(current, minimum).is_lt() {
+        return Some((
+            "E_AGENT_RUNTIME_TOO_OLD",
+            format!(
+                "agent {:?} requires AWARE CLI {minimum} or newer, but the running CLI is {current}; upgrade AWARE before installing or running this agent",
+                agent.agent
+            ),
+        ));
+    }
+    None
 }
 
 /// Disk-aware: confirms every manifest-listed skill file exists and warns on orphaned
@@ -908,10 +990,11 @@ pub fn validate_app_safety(
     out
 }
 
-/// Reject nodes that reference an agent the runtime can't dispatch to — one
-/// declared `status: planned` (no shipped/installable transport binary). Fails at
-/// validate/compile rather than at run with "program not found" (#161). Recurses
-/// into `for-each` `do:` bodies. Agents not in the catalogue are skipped here
+/// Reject nodes that reference an agent the runtime can't dispatch to: one
+/// declared `status: planned`, or one whose `status: requires-runtime` minimum
+/// exceeds this CLI. Fails at validate/compile/run rather than falling through to
+/// a transport the current runtime cannot execute (#161, #495). Recurses into
+/// `for-each` `do:` bodies. Agents not in the catalogue are skipped here
 /// (lockfile resolution / run handle the missing-agent case).
 pub fn validate_app_agents(
     app: &App,
@@ -1067,24 +1150,33 @@ fn check_node_agents(
                         n.id, agent_id
                     ),
                 ));
-            } else if let Some(cmd_name) = &n.command
-                && d.manifest
-                    .commands
-                    .get(cmd_name)
-                    .is_some_and(|c| c.status == AgentStatus::Planned)
+            } else if let Some((_, reason)) =
+                runtime_requirement_error(&d.manifest, CURRENT_CLI_VERSION)
             {
-                // Per-command availability (#199): the agent is runnable but this
-                // specific command is declared `status: planned` (not yet wired —
-                // e.g. a multi-step/binary REST op). Fail fast at validate/compile
-                // rather than at run.
                 out.push(ValidationIssue::error(
-                    "E_APP_COMMAND_UNAVAILABLE",
+                    "E_APP_AGENT_UNAVAILABLE",
                     format!(
-                        "node {:?} references command {:?} of agent {:?}, which is declared but \
-                         not yet runnable (planned)",
-                        n.id, cmd_name, agent_id
+                        "node {:?} references agent {:?}, which is not runnable on this CLI: {reason}",
+                        n.id, agent_id
                     ),
                 ));
+            } else if let Some(cmd_name) = &n.command
+                && let Some(command) = d.manifest.commands.get(cmd_name)
+            {
+                match command.status {
+                    // Per-command availability (#199): the agent is runnable but this
+                    // specific command is declared `status: planned` (not yet wired).
+                    AgentStatus::Planned => out.push(ValidationIssue::error(
+                        "E_APP_COMMAND_UNAVAILABLE",
+                        format!(
+                            "node {:?} references command {:?} of agent {:?}, which is declared but not yet runnable (planned)",
+                            n.id, cmd_name, agent_id
+                        ),
+                    )),
+                    // The agent-level check above has already validated and satisfied
+                    // its shared minimum, so a gated command is runnable here.
+                    AgentStatus::Available | AgentStatus::RequiresRuntime => {}
+                }
             }
 
             // v0 no-recursion rule: an `exposes-as-agent` app cannot itself
@@ -2666,6 +2758,78 @@ app: after-everything
             !issues.iter().any(|i| i.code == "E_APP_AGENT_UNAVAILABLE"),
             "issues: {issues:?}"
         );
+    }
+
+    #[test]
+    fn requires_runtime_is_runnable_at_or_above_its_minimum() {
+        let agent = agent_with_status("status: requires-runtime\nminimum-cli-version: 0.136.0\n");
+        assert!(
+            runtime_requirement_error(&agent.manifest, "0.136.0").is_none(),
+            "the boundary version is supported"
+        );
+        assert!(
+            runtime_requirement_error(&agent.manifest, "0.136.1").is_none(),
+            "a newer patch is supported"
+        );
+        let (code, message) = runtime_requirement_error(&agent.manifest, "0.135.0")
+            .expect("an older CLI must fail closed");
+        assert_eq!(code, "E_AGENT_RUNTIME_TOO_OLD");
+        assert!(message.contains("0.136.0"), "{message}");
+        assert!(message.contains("0.135.0"), "{message}");
+    }
+
+    #[test]
+    fn requires_runtime_contract_rejects_missing_invalid_and_unused_minimum() {
+        let missing = agent_with_status("status: requires-runtime\n");
+        assert_eq!(
+            runtime_requirement_error(&missing.manifest, "0.136.0")
+                .expect("minimum is mandatory")
+                .0,
+            "E_AGENT_MINIMUM_CLI_VERSION_REQUIRED"
+        );
+
+        let invalid = agent_with_status("status: requires-runtime\nminimum-cli-version: latest\n");
+        assert_eq!(
+            runtime_requirement_error(&invalid.manifest, "0.136.0")
+                .expect("minimum must be strict semver")
+                .0,
+            "E_AGENT_MINIMUM_CLI_VERSION_INVALID"
+        );
+
+        let unused = agent_with_status("minimum-cli-version: 0.136.0\n");
+        assert_eq!(
+            runtime_requirement_error(&unused.manifest, "0.136.0")
+                .expect("an ignored compatibility field is unsafe")
+                .0,
+            "E_AGENT_MINIMUM_CLI_VERSION_UNUSED"
+        );
+    }
+
+    #[test]
+    fn app_validation_accepts_satisfied_runtime_and_rejects_newer_minimum() {
+        let app: App = serde_yaml::from_str(
+            "app: uses-runtime-gated\nversion: 0.0.1\ndescription: |\n  gated agent\n\
+             requires: []\nnodes:\n  - id: report\n    agent: html-report\n    command: render\n",
+        )
+        .unwrap();
+        let supported = agent_with_status(&format!(
+            "status: requires-runtime\nminimum-cli-version: {}\n",
+            CURRENT_CLI_VERSION
+        ));
+        assert!(
+            !validate_app_agents(&app, &[supported])
+                .iter()
+                .any(|issue| issue.code == "E_APP_AGENT_UNAVAILABLE")
+        );
+
+        let future = agent_with_status("status: requires-runtime\nminimum-cli-version: 999.0.0\n");
+        let issues = validate_app_agents(&app, &[future]);
+        let issue = issues
+            .iter()
+            .find(|issue| issue.code == "E_APP_AGENT_UNAVAILABLE")
+            .expect("compile/run validation must reject a future runtime");
+        assert!(issue.message.contains("999.0.0"), "{issue:?}");
+        assert!(issue.message.contains(CURRENT_CLI_VERSION), "{issue:?}");
     }
 
     #[test]

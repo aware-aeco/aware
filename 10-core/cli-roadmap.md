@@ -35,6 +35,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 | v0.25 voice packs | ✅ shipped | `voice` command group |
 | v0.26/v0.27 signed receipts | ✅ shipped | `key` + `receipt` command groups (ed25519) |
 | vendor `*.exec` | 🟡 4 of N | tekla, rhino, revit, sketchup live; allplan/archicad/navisworks catalog-only |
+| v0.136 runtime compatibility | ✅ shipped in source | agent `status: requires-runtime` + strict `minimum-cli-version`; enforced before local/registry promotion and again at app validate/compile/run; immutable full-commit GitHub archive roots validated for registry releases |
 
 ### Actually remaining (the real backlog)
 

@@ -9,6 +9,15 @@ on:
       # patterns are forward-compatible.
       - 'v0.[0-9]*.*'
       - 'v[1-9]*.*.*'
+  # Kept for tag.yml, which creates the release tag from inside Actions and then
+  # dispatches THIS workflow at that tag — a tag written by GITHUB_TOKEN raises
+  # no `push` event, and workflow_dispatch is the documented exception to that
+  # suppression. Removing it would strand every release that cannot push a tag.
+  #
+  # It is not a way to release off a branch, and reaching for it as one is the
+  # trap worth naming: the version comes from GITHUB_REF_NAME, so the staging
+  # step below falls back to 0.0.0-dev, and the release and publish-npm jobs
+  # both gate on refs/tags/v and never run. Dispatch tag.yml instead.
   workflow_dispatch: {}
 
 jobs:

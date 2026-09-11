@@ -637,9 +637,11 @@ impl Orchestrator {
                     // Re-rendered with the vault blinded rather than reusing
                     // `args`: this record is persisted, and `args` is what the
                     // live run would put on the wire, credential included (#448).
-                    proposed_inputs: render_for_record(
-                        &params,
-                        &self.record_render_context(&params),
+                    proposed_inputs: trace_safe_agent_inputs(
+                        &self.agents_dir,
+                        agent_id,
+                        command,
+                        render_for_record(&params, &self.record_render_context(&params)),
                     ),
                     safety: safety_block,
                 })
@@ -937,9 +939,14 @@ impl Orchestrator {
                         // `args`: this record is persisted, and `args` is what
                         // the live run would put on the wire, credential
                         // included (#448).
-                        proposed_inputs: render_for_record(
-                            &config_json,
-                            &self.record_render_context(&config_json),
+                        proposed_inputs: trace_safe_agent_inputs(
+                            &self.agents_dir,
+                            agent_id,
+                            command,
+                            render_for_record(
+                                &config_json,
+                                &self.record_render_context(&config_json),
+                            ),
                         ),
                         safety: safety_block,
                     })
@@ -1685,6 +1692,126 @@ fn render_for_record(params: &Value, ctx: &RuntimeContext) -> Value {
     }
 }
 
+/// Remove message content from the persisted preview of the built-in Gmail send
+/// primitive. Credentials are already blinded by `record_render_context`; these
+/// fields are sensitive business data even when they contain no credential.
+fn trace_safe_agent_inputs(agents_dir: &Path, agent: &str, command: &str, inputs: Value) -> Value {
+    if agent == "google-workspace" && command == "gmail.send" {
+        redact_gmail_inputs(inputs)
+    } else if installed_app_routes_to_gmail(agents_dir, agent) {
+        redact_scalar_values(inputs)
+    } else {
+        inputs
+    }
+}
+
+/// Preview runs bypass transport schema validation, so unknown fields are
+/// sensitive by default. Preserve only the two bounded, non-message correlation
+/// values whose shape is safe even before validation.
+fn redact_gmail_inputs(inputs: Value) -> Value {
+    let Value::Object(fields) = inputs else {
+        return redact_scalar_values(inputs);
+    };
+    Value::Object(
+        fields
+            .into_iter()
+            .map(|(key, value)| {
+                let preserve = match (key.as_str(), &value) {
+                    ("content-type", Value::String(value)) => {
+                        matches!(value.as_str(), "text" | "html")
+                    }
+                    ("attempt-id", Value::String(value)) => {
+                        !value.is_empty()
+                            && value.len() <= 128
+                            && value.is_ascii()
+                            && !value
+                                .bytes()
+                                .any(|byte| byte.is_ascii_control() || byte == b' ')
+                    }
+                    _ => false,
+                };
+                if preserve {
+                    (key, value)
+                } else {
+                    (key, redact_scalar_values(value))
+                }
+            })
+            .collect(),
+    )
+}
+
+/// An exposed app runs one graph for each exposed command. If any leaf is the
+/// Gmail send primitive, caller inputs can be renamed before reaching that leaf,
+/// so field-name redaction at the outer boundary is insufficient.
+pub(crate) fn app_routes_to_gmail(app: &App) -> bool {
+    nodes_route_to_gmail(&app.nodes)
+}
+
+fn nodes_route_to_gmail(nodes: &[crate::manifest::app::Node]) -> bool {
+    nodes.iter().any(|node| {
+        node.agent.as_deref() == Some("google-workspace")
+            && node.command.as_deref() == Some("gmail.send")
+            || node.do_.as_deref().is_some_and(nodes_route_to_gmail)
+    })
+}
+
+/// Keep the record's useful shape while removing every scalar value. This is
+/// used for app-backed Gmail wrappers because arbitrary exposed-input names can
+/// be routed into `to`, `subject`, or `body` inside the backing graph.
+pub(crate) fn trace_safe_app_inputs(app: &App, inputs: Value) -> Value {
+    if app_routes_to_gmail(app) {
+        redact_scalar_values(inputs)
+    } else {
+        inputs
+    }
+}
+
+fn redact_scalar_values(value: Value) -> Value {
+    match value {
+        Value::Null => Value::Null,
+        Value::Array(items) => Value::Array(items.into_iter().map(redact_scalar_values).collect()),
+        Value::Object(fields) => Value::Object(
+            fields
+                .into_iter()
+                .map(|(key, value)| (key, redact_scalar_values(value)))
+                .collect(),
+        ),
+        _ => Value::String(template::REDACTED.to_string()),
+    }
+}
+
+/// Resolve an installed synthesized agent far enough to protect a dry-run
+/// `would-write` record, which is emitted before dispatch. Once an app transport
+/// is known, inspection failures redact in the safe direction: the later
+/// dispatch will report the malformed/missing backing app without first writing
+/// its caller inputs to provenance.
+fn installed_app_routes_to_gmail(agents_dir: &Path, agent: &str) -> bool {
+    let Ok(manifest) = crate::manifest::loader::load_agent_by_id(agents_dir, agent) else {
+        return false;
+    };
+    if crate::runtime::invoker::dispatch_transport(&manifest.transport)
+        != Some(crate::runtime::invoker::TransportKind::App)
+    {
+        return false;
+    }
+    let Some(app_transport) = manifest.transport.app.as_ref() else {
+        return true;
+    };
+    if !crate::manifest::loader::is_safe_segment(&app_transport.backed_by) {
+        return true;
+    }
+    let Some(aware_home) = agents_dir.parent() else {
+        return true;
+    };
+    let app_dir = aware_home.join("apps").join(&app_transport.backed_by);
+    let Some(app_manifest) = crate::manifest::loader::find_app_manifest(&app_dir) else {
+        return true;
+    };
+    crate::manifest::loader::load_app(&app_manifest)
+        .map(|app| app_routes_to_gmail(&app))
+        .unwrap_or(true)
+}
+
 fn render_config(config: &Value, ctx: &RuntimeContext) -> Result<Value, AwareError> {
     // Streaming fan-in overlays per-event fields at `upstream["inputs"]` (merged over
     // base inputs). Config rendering must see that overlay for whole-value
@@ -2015,6 +2142,120 @@ requires: []
             exposed_tx: None,
         };
         (orch, tmp, log_path)
+    }
+
+    #[test]
+    fn gmail_write_preview_redacts_message_content_but_keeps_correlation() {
+        let safe = trace_safe_agent_inputs(
+            Path::new("agents"),
+            "google-workspace",
+            "gmail.send",
+            serde_json::json!({
+                "to": ["recipient@example.com"],
+                "cc": ["copy@example.com"],
+                "bcc": ["blind@example.com"],
+                "subject": "private subject",
+                "body": "private body",
+                "content-type": "text",
+                "attempt-id": "stable-attempt"
+            }),
+        );
+        for key in ["subject", "body"] {
+            assert_eq!(safe[key], crate::runtime::template::REDACTED, "{key}");
+        }
+        for key in ["to", "cc", "bcc"] {
+            assert_eq!(safe[key][0], crate::runtime::template::REDACTED, "{key}");
+        }
+        assert_eq!(safe["content-type"], "text");
+        assert_eq!(safe["attempt-id"], "stable-attempt");
+
+        let unknown = trace_safe_agent_inputs(
+            Path::new("agents"),
+            "google-workspace",
+            "gmail.send",
+            serde_json::json!({
+                "attempt-id": "stable-attempt",
+                "content-type": "text",
+                "private-note": "must not reach the trace",
+                "nested": {"private": "also hidden"}
+            }),
+        );
+        assert_eq!(unknown["private-note"], template::REDACTED);
+        assert_eq!(unknown["nested"]["private"], template::REDACTED);
+        assert_eq!(unknown["attempt-id"], "stable-attempt");
+        assert_eq!(unknown["content-type"], "text");
+
+        let untouched = trace_safe_agent_inputs(
+            Path::new("agents"),
+            "microsoft-365",
+            "mail.send",
+            serde_json::json!({ "subject": "ordinary preview" }),
+        );
+        assert_eq!(untouched["subject"], "ordinary preview");
+    }
+
+    #[test]
+    fn gmail_app_wrapper_redacts_every_caller_value_without_losing_shape() {
+        let source = r#"
+app: mail-wrapper
+version: 1.0.0
+description: wraps gmail
+exposes-as-agent: true
+exposed-commands:
+  send:
+    lifecycle: single
+    mode: write
+    inputs: {}
+requires: []
+nodes:
+  - id: messages
+    for-each: '{{ inputs.messages }}'
+    do:
+      - id: send
+        agent: google-workspace
+        command: gmail.send
+connections: []
+"#;
+        let app: App = serde_yaml::from_str(source).unwrap();
+        let inputs = serde_json::json!({
+            "recipient_alias": ["person@example.com"],
+            "message": {"title": "private", "body": "secret"},
+            "attempt": 42,
+            "optional": null
+        });
+        let safe = trace_safe_app_inputs(&app, inputs.clone());
+        assert_eq!(safe["recipient_alias"][0], template::REDACTED);
+        assert_eq!(safe["message"]["title"], template::REDACTED);
+        assert_eq!(safe["message"]["body"], template::REDACTED);
+        assert_eq!(safe["attempt"], template::REDACTED);
+        assert!(safe["optional"].is_null());
+
+        // The outer dry-run path sees only the synthesized wrapper agent, before
+        // dispatch has resolved the backing graph. Pin that lookup too so its
+        // WouldWrite record cannot regress to the caller's raw values.
+        let tmp = tempfile::tempdir().unwrap();
+        let agents_dir = tmp.path().join("agents");
+        let app_dir = tmp.path().join("apps/mail-wrapper");
+        std::fs::create_dir_all(agents_dir.join("mail-wrapper")).unwrap();
+        std::fs::create_dir_all(&app_dir).unwrap();
+        std::fs::write(app_dir.join("mail-wrapper.app"), source).unwrap();
+        std::fs::write(
+            agents_dir.join("mail-wrapper/manifest.yaml"),
+            crate::manifest::expose::synthesize_agent_manifest(&app).unwrap(),
+        )
+        .unwrap();
+        let outer = trace_safe_agent_inputs(&agents_dir, "mail-wrapper", "send", inputs);
+        assert_eq!(outer["recipient_alias"][0], template::REDACTED);
+        assert_eq!(outer["message"]["body"], template::REDACTED);
+
+        let ordinary: App = serde_yaml::from_str(
+            "app: report\nversion: 1.0.0\ndescription: x\nrequires: []\nnodes:\n  - id: render\n    agent: html-report\n    command: render\nconnections: []\n",
+        )
+        .unwrap();
+        assert_eq!(
+            trace_safe_app_inputs(&ordinary, serde_json::json!({"title": "visible"})),
+            serde_json::json!({"title": "visible"})
+        );
     }
 
     #[tokio::test]

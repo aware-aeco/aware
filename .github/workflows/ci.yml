@@ -32,7 +32,13 @@ jobs:
     steps:
       # v6, matching release.yml — v4 still targets Node 20 and makes every run
       # carry a deprecation annotation.
+      # Registry reindex resolves immutable release payloads from their exact Git
+      # commits. A shallow PR checkout contains only the release-only HEAD, not the
+      # earlier implementation commit it pins, so `git archive <sha>` cannot verify
+      # the catalog. Keep history available to the authoritative Rust test job.
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       # `cli/rust-toolchain.toml` is the single source of truth for the compiler
       # version — read it here rather than restating it, so the pin can't drift
@@ -202,6 +208,13 @@ jobs:
       - name: cargo test
         working-directory: cli
         run: cargo test --locked
+
+      # Exercise registry authoring against this exact checkout, not only the
+      # temporary registries used by integration tests. This is what enforces
+      # that an immutable release pin already exists on the fetched base branch.
+      - name: registry catalog is current
+        working-directory: cli
+        run: cargo run --locked -- agent reindex --check
 
       # `20-agents/aeco/engineering/steel-detailer-lookup` is the repo's *other*
       # Rust crate — the deterministic clause/section lookup that ships inside

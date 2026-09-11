@@ -55,6 +55,8 @@ description: |                     # required · one paragraph
 
 # Operational shape
 stateful: true                     # required · true|false (see "Stateful vs Stateless")
+status: available                  # optional · available (default) | planned | requires-runtime
+# minimum-cli-version: 0.136.0     # required only with status: requires-runtime
 
 # Cataloguing
 vendor: trimble                    # optional · for grouping/filtering
@@ -209,7 +211,9 @@ A stateful agent's `start` command may emit a `stream` output (events flow until
 
 ## Runnability (`status`)
 
-Both an agent and an individual command can declare `status: available` (the default) or `status: planned`. `planned` means *declared but not yet runnable* — the contract is published so apps can be authored against it, but the implementation isn't shipped yet. Apps that reference a `planned` agent or command are rejected at **validate / compile** (`E_APP_AGENT_UNAVAILABLE` / `E_APP_COMMAND_UNAVAILABLE`) rather than failing at run with a confusing dispatch error.
+Both an agent and an individual command can declare `status: available` (the default), `status: planned`, or `status: requires-runtime`. `planned` means *declared but not yet runnable* — the contract is published so apps can be authored against it, but the implementation isn't shipped yet. Apps that reference a `planned` agent or command are rejected at **validate / compile** (`E_APP_AGENT_UNAVAILABLE` / `E_APP_COMMAND_UNAVAILABLE`) rather than failing at run with a confusing dispatch error.
+
+`requires-runtime` means the implementation ships inside AWARE itself and is runnable only when the current CLI satisfies the agent-level, strict-SemVer `minimum-cli-version`. That field is required when either the agent or one of its commands uses `requires-runtime`, and is rejected as unused otherwise. Local install, registry install, app validation/compile, and app run all fail closed below the minimum (`E_AGENT_RUNTIME_TOO_OLD` at install and `E_APP_AGENT_UNAVAILABLE` through an app). At or above the minimum, the status is runnable. A CLI predating the enum value, including v0.135.0, rejects `requires-runtime` while deserializing the manifest; it cannot ignore the version field and route through an older generic transport.
 
 - **Agent-level** (`status:` at the top of the manifest) — the whole agent isn't runnable (e.g. no shipped/installable transport binary).
 - **Command-level** (`status:` on a command) — the agent is runnable but a *specific* command isn't wired yet (e.g. a REST agent whose read commands work but whose multi-step / binary upload awaits an implementation). An agent can be partially runnable.
@@ -462,6 +466,8 @@ Installation drops the agent folder under `~/.aware/agents/<name>/` and auto-gen
 Installation also writes `~/.aware/agents/<name>/.aware-install.yaml`, saying whether the agent came from the **registry** (with the separately bound registry key/version, manifest agent/version, expected digest, installed digest, and official-source verdict) or from a **local folder** (with the path). It is metadata about the install, not about the agent — distinct from the manifest's own `provenance:` block, which records how the agent was *authored*. The deterministic `sha256:` digest covers a domain-separated, path-sorted tree of UTF-8 relative paths, lengths, and raw file bytes; the receipt itself is excluded and symlink/reparse indirection is rejected.
 
 Registry authoring hashes the canonical stage-0 Git blob bytes, not checkout-translated bytes (for example CRLF produced by `core.autocrlf`). Staged additions and changes are included; unstaged, untracked, renamed, conflicted, symlink, and gitlink content is refused with an actionable staging error. This binds the release digest to the bytes the official repository archive contains while installed verification independently hashes the raw extracted tree.
+
+A release that depends on code in the AWARE binary uses an immutable GitHub commit archive URL of the exact form `https://github.com/<owner>/<repo>/archive/<40-lowercase-hex-commit>.tar.gz`. Its `subdir` must begin with GitHub's matching `<repo>-<commit>/` archive root. The registry parser rejects mismatched repositories, abbreviated or uppercase object names, branch archives paired with a commit-shaped root, and a pinned URL paired with any other root. Local reindexing reads and hashes that subtree from the named local Git commit, so a later checkout edit cannot rewrite historical catalog metadata. The pinned commit must already be an ancestor of the fetched base/default branch, selected from `GITHUB_BASE_REF`, the pushed `GITHUB_REF_NAME`, `origin/HEAD`, or the explicit `AWARE_REGISTRY_BASE_REF` override. Comparing only with the authoring `HEAD` is forbidden because a pull request's own commits satisfy that check before a squash-and-delete merge makes them unreachable. CI fetches full history before checking these pins.
 
 Only an index fetched fresh from AWARE's exact built-in HTTPS registry endpoint can produce `verified: true`. Overrides (`AWARE_REGISTRY`), file registries, offline/stale caches, local installs, legacy receipts, missing digests, and modified trees report an explicit unverified reason. For a digest-bearing official release, the staged tree and mandatory receipt are verified before atomic promotion; `--force` never bypasses integrity. `aware agent describe` reports this bundle provenance. It deliberately does **not** attest an external PATH/managed executable or remote REST service: those execution surfaces require their own attestation.
 

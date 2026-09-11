@@ -1,6 +1,7 @@
 //! Lazy token refresh — call before any access_token read; refreshes when within 60s of expiry.
 
 use std::io::Read;
+use std::time::{Duration, Instant};
 
 use crate::auth::config;
 use crate::auth::keychain::{self, StoredToken};
@@ -9,6 +10,9 @@ use crate::auth::urlencode;
 use crate::error::AwareError;
 
 const REFRESH_BUFFER_SECS: i64 = 60;
+const REFRESH_DEADLINE: Duration = Duration::from_secs(30);
+const DNS_DEADLINE: Duration = Duration::from_secs(10);
+const MAX_REFRESH_RESPONSE_BYTES: usize = 64 * 1024;
 
 pub fn ensure_fresh(
     integration: &str,
@@ -17,20 +21,56 @@ pub fn ensure_fresh(
 ) -> Result<StoredToken, AwareError> {
     let loaded = keychain::load_token_for_refresh(integration, alias, aware_home)?
         .ok_or_else(|| AwareError::AuthExpired(integration.to_string()))?;
-    let token = loaded.token;
-
-    let now = super::unix_now_secs()?;
-    if token.expires_at > now + REFRESH_BUFFER_SECS {
-        return Ok(token);
+    if token_is_fresh(&loaded.token)? {
+        return Ok(loaded.token);
     }
+    let cfg = config::for_integration(integration)?.with_profile(aware_home, alias)?;
+    refresh_loaded(integration, aware_home, loaded, &cfg)
+}
 
+/// Refresh using one already-resolved OAuth configuration snapshot.
+///
+/// Security-sensitive callers can validate a provider endpoint and then pass the
+/// same value here, so a profile rewrite cannot swap the destination between the
+/// validation and the request.
+pub(crate) fn ensure_fresh_with_config(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    cfg: &config::IntegrationConfig,
+) -> Result<StoredToken, AwareError> {
+    if cfg.id != integration {
+        return Err(AwareError::Validation(format!(
+            "OAuth config for {} cannot refresh {integration}",
+            cfg.id
+        )));
+    }
+    let loaded = keychain::load_token_for_refresh(integration, alias, aware_home)?
+        .ok_or_else(|| AwareError::AuthExpired(integration.to_string()))?;
+    if token_is_fresh(&loaded.token)? {
+        return Ok(loaded.token);
+    }
+    refresh_loaded(integration, aware_home, loaded, cfg)
+}
+
+fn token_is_fresh(token: &StoredToken) -> Result<bool, AwareError> {
+    let now = super::unix_now_secs()?;
+    Ok(token.expires_at > now + REFRESH_BUFFER_SECS)
+}
+
+fn refresh_loaded(
+    integration: &str,
+    aware_home: &std::path::Path,
+    loaded: keychain::RefreshTokenLoad,
+    cfg: &config::IntegrationConfig,
+) -> Result<StoredToken, AwareError> {
+    let token = loaded.token;
+    let now = super::unix_now_secs()?;
     let refresh_token = token.refresh_token.as_deref().ok_or_else(|| {
         AwareError::AuthExpired(format!(
             "{integration}: no refresh_token; re-run aware connect"
         ))
     })?;
-    let cfg = config::for_integration(integration)?.with_profile(aware_home, alias)?;
-
     let mut body_params = vec![
         ("grant_type", "refresh_token".to_string()),
         ("refresh_token", refresh_token.to_string()),
@@ -46,17 +86,27 @@ pub fn ensure_fresh(
         .collect::<Vec<_>>()
         .join("&");
 
-    let resp = ureq::post(cfg.token_url())
+    // OAuth refresh carries the long-lived refresh token and must not follow a
+    // provider redirect to a different origin. Bound every phase as well as the
+    // total request so a send preflight cannot hang indefinitely (#495).
+    let agent = ureq::AgentBuilder::new()
+        .redirects(0)
+        .resolver(crate::http_body::BoundedDnsResolver::new(DNS_DEADLINE))
+        .timeout_connect(Duration::from_secs(10))
+        .timeout_write(Duration::from_secs(10))
+        .timeout_read(Duration::from_secs(10))
+        .timeout(REFRESH_DEADLINE)
+        .build();
+    let started = Instant::now();
+    let resp = agent
+        .post(cfg.token_url())
         .set("Content-Type", "application/x-www-form-urlencoded")
         .send_string(&body)
         .map_err(|e| AwareError::Network(format!("refresh: {e}")))?;
 
-    let mut body_str = String::new();
-    resp.into_reader()
-        .read_to_string(&mut body_str)
-        .map_err(|e| AwareError::Network(format!("refresh body: {e}")))?;
+    let body = read_refresh_body(resp.into_reader(), started, REFRESH_DEADLINE)?;
     let refreshed = TokenResponse::new(
-        serde_json::from_str(&body_str)
+        serde_json::from_slice(&body)
             .map_err(|e| AwareError::Validation(format!("refresh response: {e}")))?,
     );
 
@@ -92,6 +142,23 @@ pub fn ensure_fresh(
     Ok(new_token)
 }
 
+fn read_refresh_body(
+    reader: Box<dyn Read + Send + Sync + 'static>,
+    started: Instant,
+    deadline: Duration,
+) -> Result<Vec<u8>, AwareError> {
+    let remaining = deadline.checked_sub(started.elapsed()).ok_or_else(|| {
+        AwareError::Network("refresh deadline exceeded before reading response body".into())
+    })?;
+    crate::http_body::read_with_deadline(
+        reader,
+        remaining,
+        MAX_REFRESH_RESPONSE_BYTES,
+        "aware-oauth-refresh-response-reader",
+    )
+    .map_err(|error| AwareError::Network(format!("refresh body: {error}")))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -105,6 +172,22 @@ mod tests {
     /// Public client (no `client_secret_env`), so nothing in these tests depends on
     /// process env — the resolved `client_secret` is always `None`.
     const INTEGRATION: &str = "trimble-connect";
+
+    struct SlowDribble {
+        remaining: usize,
+    }
+
+    impl Read for SlowDribble {
+        fn read(&mut self, buffer: &mut [u8]) -> std::io::Result<usize> {
+            if self.remaining == 0 || buffer.is_empty() {
+                return Ok(0);
+            }
+            std::thread::sleep(Duration::from_millis(10));
+            buffer[0] = b'x';
+            self.remaining -= 1;
+            Ok(1)
+        }
+    }
 
     fn unix_now() -> i64 {
         SystemTime::now()
@@ -147,6 +230,36 @@ mod tests {
 
     fn spawn_token_endpoint(response_body: &str) -> TokenEndpoint {
         spawn_token_endpoint_with_release(response_body, None)
+    }
+
+    #[test]
+    fn refresh_body_honors_the_total_deadline_after_headers() {
+        let started = Instant::now();
+        let error = read_refresh_body(
+            Box::new(SlowDribble { remaining: 20 }),
+            started,
+            Duration::from_millis(35),
+        )
+        .unwrap_err();
+        assert!(error.to_string().contains("deadline exceeded"), "{error}");
+        assert!(
+            started.elapsed() < Duration::from_millis(150),
+            "refresh followed the dribbling body instead of its total deadline"
+        );
+    }
+
+    #[test]
+    fn refresh_body_is_size_bounded() {
+        let error = read_refresh_body(
+            Box::new(std::io::Cursor::new(vec![
+                b'x';
+                MAX_REFRESH_RESPONSE_BYTES + 1
+            ])),
+            Instant::now(),
+            Duration::from_secs(1),
+        )
+        .unwrap_err();
+        assert!(error.to_string().contains("byte limit"), "{error}");
     }
 
     fn spawn_token_endpoint_with_release(
@@ -328,6 +441,28 @@ mod tests {
 
         let token = ensure_fresh(INTEGRATION, Some("awaretest-inside-buffer"), tmp.path()).unwrap();
         assert_eq!(token.access_token, "refreshed-access");
+    }
+
+    #[test]
+    fn an_already_validated_config_cannot_be_replaced_before_refresh() {
+        let tmp = tempfile::tempdir().unwrap();
+        let validated_endpoint = spawn_token_endpoint(r#"{"access_token":"validated-endpoint"}"#);
+        let replacement_endpoint =
+            spawn_token_endpoint(r#"{"access_token":"replacement-endpoint"}"#);
+        write_profile(tmp.path(), &validated_endpoint.url);
+        let cfg = config::for_integration(INTEGRATION)
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap();
+        write_profile(tmp.path(), &replacement_endpoint.url);
+        let alias = "awaretest-config-snapshot";
+        let _seeded = seed_token(tmp.path(), alias, -10, Some("rt-stored"));
+
+        let token = ensure_fresh_with_config(INTEGRATION, Some(alias), tmp.path(), &cfg).unwrap();
+
+        assert_eq!(token.access_token, "validated-endpoint");
+        validated_endpoint.requests.recv().unwrap();
+        assert!(replacement_endpoint.requests.try_recv().is_err());
     }
 
     #[test]

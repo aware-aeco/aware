@@ -226,6 +226,8 @@ All commands that produce structured output use the same JSON envelope when `--j
 
 Without `--json`, output is human-readable text. The envelope shape is stable across versions; `data` payload may evolve per command (semver applies).
 
+An agent may return a bounded structured failure with `code`, `phase`, `retryable`, `message`, and `diagnosticId`. A `node-error` JSONL event preserves that object under `structured`. It may also carry an optional `details` string map for non-secret correlation values needed to reconcile an ambiguous side effect (for example `attemptId` and `rfcMessageId`). The field is omitted when absent, so pre-details payloads remain deserializable; it is correlation metadata, not a general debug-payload or secret channel.
+
 ## Exit codes
 
 | Code | Meaning |
@@ -292,6 +294,8 @@ skills (31):
 ### `aware app run <app>`
 
 The heaviest command. It first verifies the installed source against the engineer-approved `<app>.lock`: the lock must be present, parseable, and carry the SHA-256 of the exact raw source bytes. Compilation and runtime each parse and hash one source snapshot, so the compiled plan, approved bytes, and executed app cannot drift between reads. An unsafe `app:` id is rejected before it can become a lock path. A missing (`E_APP_LOCK_MISSING`), unreadable/malformed (`E_APP_LOCK_INVALID`), or mismatched (`E_APP_LOCK_STALE`) lock exits 3 before trace creation or node dispatch and tells the operator to run `aware app compile` again. Before real dispatch, every reachable agent must also match the exact compiled `agent-pins` version (`E_APP_LOCK_AGENT_PIN_MISMATCH`); simulation remains independent of ambient agent versions because it contacts no binary. Source approval applies independently to the top-level app and every app-backed agent it invokes, including `--dry-run` and `--simulate`.
+
+Agent runtime compatibility is checked at both compile and run. An installed manifest with `status: requires-runtime` is dispatchable only when the running CLI is at least its strict-SemVer `minimum-cli-version`; otherwise validation refuses it before trace creation with `E_APP_AGENT_UNAVAILABLE` and names both versions. The same contract gates local and registry install, so an incompatible agent is never promoted into `~/.aware/agents/` by a current CLI.
 
 Verified bundles additionally carry `agent-bundle-pins`, so changed bytes require recompilation. `app run --require-verified-agents` resolves the reachable set before any network or trace creation, snapshots every dispatchable executable bundle once, and refuses with `E_APP_AGENT_BUNDLE_UNVERIFIED` unless its official registry receipt still matches its tree. Frozen subtrees, inline-only graphs, and `--simulate` dispatch nothing and require no registry fetch; dry-run remains gated because read nodes still execute. For the single app-backed hop v0 permits, the approved backing app is traversed and its dispatchable leaf agents are assessed—the synthesized wrapper is routing metadata, not executable provenance. A second app-backed hop is refused. The snapshot is recorded as `verified-at-start` in run-start provenance.
 

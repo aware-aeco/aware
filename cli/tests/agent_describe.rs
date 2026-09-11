@@ -180,6 +180,31 @@ fn a_single_version_agent_prints_no_versions_line() {
 }
 
 #[test]
+fn describe_available_distinguishes_runtime_gated_commands_from_planned_ones() {
+    let (_tmp, out) = describe_available(
+        r#"{"version":"1","updated-at":"2026-06-16T00:00:00Z","agents":{"probe-agent":{"versions":{
+             "1.3.0": { "description": "runtime support", "status": "available", "stateful": false,
+                        "manifest_version": "1.3.0", "transport": "rest", "command_count": 2, "skills": [],
+                        "commands": [
+                          {"name":"send","description":"Send mail.","lifecycle":"single","category":"curated","status":"requires-runtime"},
+                          {"name":"later","description":"Not implemented.","lifecycle":"single","category":"curated","status":"planned"}
+                        ] }}}}}"#,
+        false,
+    );
+    let text = String::from_utf8_lossy(&out);
+    assert!(
+        text.lines()
+            .any(|line| line.contains("send") && line.contains("[requires-runtime]")),
+        "{text}"
+    );
+    assert!(
+        text.lines()
+            .any(|line| line.contains("later") && line.contains("[planned]")),
+        "{text}"
+    );
+}
+
+#[test]
 fn describe_names_the_transport_that_dispatches_and_flags_the_rest() {
     // #366: this printed a line per DECLARED transport, and only for `cli` and `app` — so
     // a `rest:`+`app:` agent was described as `app` though it runs on `rest` (the issue's

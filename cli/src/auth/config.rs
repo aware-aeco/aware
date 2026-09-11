@@ -116,24 +116,14 @@ pub fn for_integration(id: &str) -> Result<IntegrationConfig, AwareError> {
             id: "google-workspace".to_string(),
             auth_url: "https://accounts.google.com/o/oauth2/v2/auth".to_string(),
             token_url: "https://oauth2.googleapis.com/token".to_string(),
-            // Scopes covering the curated command surface (Drive read/write/share,
-            // Sheets, Calendar/Meet, Gmail send+search, Slides, Forms, Tasks).
-            // `drive` and `gmail.*` are Google "restricted" scopes — publishing the
-            // consent screen to external users requires a CASA security assessment;
-            // until then the app stays in Testing mode (≤100 test users). Documented
-            // in the registration runbook.
+            // Keep consent aligned with the commands that are actually runnable.
+            // google-workspace@2.0.0 exposes only gmail.send; the runtime rejects
+            // legacy broad grants before dispatch so reconnecting must produce this
+            // exact least-privilege set (#495).
             default_scopes: scopes(&[
                 "openid",
                 "https://www.googleapis.com/auth/userinfo.email",
-                "https://www.googleapis.com/auth/drive",
-                "https://www.googleapis.com/auth/spreadsheets",
-                "https://www.googleapis.com/auth/calendar",
                 "https://www.googleapis.com/auth/gmail.send",
-                "https://www.googleapis.com/auth/gmail.readonly",
-                "https://www.googleapis.com/auth/presentations",
-                "https://www.googleapis.com/auth/forms.body.readonly",
-                "https://www.googleapis.com/auth/forms.responses.readonly",
-                "https://www.googleapis.com/auth/tasks",
             ]),
             client_id_env: "AWARE_OAUTH_GOOGLE_CLIENT_ID",
             // AWARE-AECO Google Cloud OAuth client (Desktop app), registered 2026-05.
@@ -457,6 +447,19 @@ mod tests {
         let m = for_integration("microsoft-365").unwrap();
         assert!(m.client_secret_env.is_none());
         assert!(m.client_secret().is_none());
+    }
+
+    #[test]
+    fn google_default_grant_matches_the_runnable_gmail_send_surface() {
+        let g = for_integration("google-workspace").unwrap();
+        assert_eq!(
+            g.default_scopes,
+            vec![
+                "openid",
+                "https://www.googleapis.com/auth/userinfo.email",
+                "https://www.googleapis.com/auth/gmail.send",
+            ]
+        );
     }
 
     #[test]
