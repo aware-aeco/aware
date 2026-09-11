@@ -311,8 +311,14 @@ fn the_browser_gate_delegates_its_parse_check_rather_than_repeating_it() {
     // `collect(CLI)` call unbound — and by any longer name containing the
     // substring (Codex review, #518). So parse the `{ … }` and compare each
     // binding's local name (the part after `as`, or the whole spec) exactly.
+    // `shortfall` is in this list for a reason found in review (#518): `run.mjs`
+    // imported the parse check but kept a `blocks.length < 5` floor of its own
+    // after the CI entry point moved to the per-file table, so losing any one of
+    // the six blocks still left five and the manual gate reported GATE PASSED
+    // over an inventory missing the script it was meant to cover. Delegating the
+    // check and then re-deciding what counts as enough of it is not delegation.
     let bindings = import_local_names(import);
-    for name in ["collect", "parseError"] {
+    for name in ["collect", "parseError", "shortfall"] {
         assert!(
             bindings.iter().any(|b| b == name),
             "tests/browser/run.mjs imports from cli/{SCRIPT} but does not bind the \
@@ -320,6 +326,21 @@ fn the_browser_gate_delegates_its_parse_check_rather_than_repeating_it() {
              Local names bound: {bindings:?}"
         );
     }
+    // Code lines only. The first draft searched the whole file and tripped on this
+    // very rule's own explanatory comment, which quotes the expression it forbids —
+    // the same "assert the prose, not the code" mistake this test exists to catch,
+    // made while writing the test. Comments describe; only code decides.
+    let floor = run.lines().find(|line| {
+        let line = line.trim_start();
+        !line.starts_with("//") && line.contains("blocks.length <")
+    });
+    assert!(
+        floor.is_none(),
+        "tests/browser/run.mjs has reintroduced a block-count floor of its own: \
+         {floor:?}. The inventory floor is the per-file EXPECTED table in \
+         cli/{SCRIPT}, reached through `shortfall`; a local count drifts below it \
+         the moment a script is added or moved, and then passes over a missing one."
+    );
     assert!(
         !run.contains("new Function("),
         "tests/browser/run.mjs has reintroduced its own `new Function` parse \

@@ -22,7 +22,7 @@ import { mkdtempSync, rmSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { collect, parseError } from '../../scripts/parse-check-embedded-js.mjs';
+import { collect, parseError, shortfall } from '../../scripts/parse-check-embedded-js.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CLI = resolve(HERE, '../..');           // cli/
@@ -44,12 +44,17 @@ const near = (a, b, tol = 0.5) => Math.abs(a - b) <= tol;
 // module and nothing else, and ran only when somebody remembered to. Keeping one implementation is
 // what stops a script from being covered here, there, or — as the classic bootstrap script was —
 // neither.
+//
+// The floor is the SHARED per-file one, not a count of its own. This file kept
+// `blocks.length < 5` after the CI entry point moved to `shortfall()`, so losing any single block —
+// an OAuth script, or the viewer module itself — still left five and this gate reported GATE PASSED
+// over an inventory missing the very script it was meant to cover (Codex review, #518). Delegating
+// the parse check and then re-deciding what counts as enough of it is not delegation.
 function parseCheckTemplate() {
   const blocks = collect(CLI);
-  if (blocks.length < 5) {
-    ok('inline scripts discovered', false, `found only ${blocks.length} — the templates moved`);
-    return;
-  }
+  const short = shortfall(blocks);
+  for (const line of short) ok(`inventory: ${line}`, false);
+  if (short.length > 0) return;
   const scratch = mkdtempSync(join(tmpdir(), 'aware-browser-parse-'));
   try {
     for (const b of blocks) {
