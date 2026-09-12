@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.5 — 2026-09-12
+
+- Mark the 19 commands the `aware-tekla` bridge does not dispatch as `status: planned`, so an app using `insert`, `part-list`, `report-create`, `uda-get` or any of the others is refused at validate / install with `E_APP_COMMAND_UNAVAILABLE` instead of compiling and then failing at run with `aware-tekla: unknown verb`. No command changed behaviour; the contract now says which ones exist.
+- Declare `list-instances` and `close`, which the bridge has always dispatched and this manifest never published. `close` carries an explicit `mode: write` — it terminates the host and `force` discards unsaved model bytes, and the name matches no write-by-convention suffix — so a node calling it must supply a `safety:` block.
+
 ## 0.1.4 — 2026-08-19
 
 - Select the member-roll zero frame from the raw axis as `|q|² <= 1e-6·|d|²`, rather than a cancelling `1 - (n·u)²` on the normalized axis, so the bridge and AWARE's canonical `member_frame` never seed the same near-vertical member differently — including at the boundary, where this mirror's reciprocal-multiply normalization and Rust's divide disagreed by an ulp.
