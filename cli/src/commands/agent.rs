@@ -187,6 +187,43 @@ fn versions_oldest_first(agent: &catalog::CatalogAgent) -> Vec<&str> {
     keys
 }
 
+#[cfg(test)]
+mod version_listing_tests {
+    use super::{catalog, versions_oldest_first};
+
+    #[test]
+    fn versions_are_listed_oldest_first_not_in_the_catalog_key_order() {
+        // The catalog stores versions in a `BTreeMap`, so the keys arrive sorted
+        // as STRINGS — which puts `1.0.0` before its own release candidates and
+        // `rc.10` before `rc.2`. `describe --available` prints this list so an
+        // operator can name an older release to `agent update <id>@<version>`;
+        // printed in key order it tells them the wrong newest.
+        let version = serde_json::json!({
+            "description": "d",
+            "status": "available",
+            "stateful": false,
+            "transport": "cli",
+        });
+        let agent: catalog::CatalogAgent = serde_json::from_value(serde_json::json!({
+            "versions": {
+                "1.0.0": version,
+                "1.0.0-rc.2": version,
+                "1.0.0-rc.10": version,
+                "2025.0.1": version,
+                "nightly": version,
+            }
+        }))
+        .expect("catalog agent fixture");
+
+        assert_eq!(
+            versions_oldest_first(&agent),
+            ["nightly", "1.0.0-rc.2", "1.0.0-rc.10", "1.0.0", "2025.0.1"],
+            "oldest first, a key nothing can parse below every key that parses, \
+             and prerelease identifiers compared numerically"
+        );
+    }
+}
+
 /// `aware agent invoke <agent> <command> [--inputs <json|@file>]` — run a
 /// BUILTIN agent command in-process and print its JSON result (#215).
 ///
@@ -299,6 +336,85 @@ fn parse_invoke_inputs(inputs: Option<&str>) -> Result<serde_json::Value, AwareE
         ));
     }
     Ok(v)
+}
+
+#[cfg(test)]
+mod invoke_input_tests {
+    use super::parse_invoke_inputs;
+
+    #[test]
+    fn an_absent_or_blank_flag_means_an_empty_object() {
+        // `ui.catalog` and friends take no inputs, so the flag is optional — and a
+        // shell that expands an empty variable into `--inputs ''` must land in the
+        // same place rather than on a JSON parse error.
+        assert_eq!(parse_invoke_inputs(None).unwrap(), serde_json::json!({}));
+        assert_eq!(
+            parse_invoke_inputs(Some("")).unwrap(),
+            serde_json::json!({})
+        );
+        assert_eq!(
+            parse_invoke_inputs(Some("  \n\t ")).unwrap(),
+            serde_json::json!({})
+        );
+    }
+
+    #[test]
+    fn a_utf8_bom_in_an_inputs_file_is_tolerated() {
+        // `Out-File -Encoding utf8` — the obvious way to author an `@file` on
+        // Windows PowerShell — writes a BOM, and serde_json rejects one.
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("inputs.json");
+        std::fs::write(&path, "\u{feff}{\"descriptor\": {\"id\": \"x\"}}").unwrap();
+
+        let parsed = parse_invoke_inputs(Some(&format!("@{}", path.display()))).unwrap();
+        assert_eq!(parsed["descriptor"]["id"], serde_json::json!("x"));
+    }
+
+    #[test]
+    fn an_at_file_is_read_from_disk_rather_than_parsed_as_json() {
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("inputs.json");
+        std::fs::write(&path, "{\"from\": \"file\"}").unwrap();
+
+        // Surrounding whitespace is the shape a `--inputs " @file "` produces.
+        let spec = format!("  @{}  ", path.display());
+        let parsed = parse_invoke_inputs(Some(&spec)).unwrap();
+        assert_eq!(parsed["from"], serde_json::json!("file"));
+    }
+
+    #[test]
+    fn an_unreadable_inputs_file_names_the_path_it_tried() {
+        let tmp = tempfile::tempdir().unwrap();
+        let missing = tmp.path().join("absent.json");
+
+        let error = parse_invoke_inputs(Some(&format!("@{}", missing.display())))
+            .expect_err("a path that is not there cannot be read");
+        let message = error.to_string();
+        assert!(
+            message.contains(&missing.display().to_string()),
+            "the diagnostic must name the file the operator meant: {message}"
+        );
+        assert!(
+            !message.contains("invalid JSON"),
+            "an I/O failure must not be reported as a syntax error: {message}"
+        );
+    }
+
+    #[test]
+    fn a_json_document_that_is_not_an_object_is_refused() {
+        // A builtin command's inputs are named, so an array or a scalar can never
+        // be bound to one — catching it here beats an opaque failure inside the
+        // command's own deserializer.
+        for raw in ["[1,2]", "\"text\"", "7", "null", "true"] {
+            let Err(error) = parse_invoke_inputs(Some(raw)) else {
+                panic!("--inputs {raw} is valid JSON but not an object, so it must be refused");
+            };
+            assert!(
+                error.to_string().contains("must be a JSON object"),
+                "the diagnostic must say what shape is expected: {error}"
+            );
+        }
+    }
 }
 
 fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
@@ -1760,6 +1876,261 @@ fn pinned_release_base_ref(repo_root: &std::path::Path) -> Result<String, AwareE
         ));
     }
     Ok(reference.to_string())
+}
+
+#[cfg(test)]
+mod pinned_release_tests {
+    use super::{pinned_release_base_ref, read_pinned_release};
+    use crate::test_env::EnvVarGuard;
+    use std::ffi::OsStr;
+    use std::path::Path;
+
+    /// Every variable the resolver consults. A test names all four so it states
+    /// its whole precondition rather than inheriting the machine's: a developer
+    /// with `GITHUB_REF_NAME` exported, or any run on a GitHub runner, would
+    /// otherwise never reach the `origin/HEAD` fallback the test claims to cover.
+    const BASE_REF_VARS: [&str; 4] = [
+        "AWARE_REGISTRY_BASE_REF",
+        "GITHUB_BASE_REF",
+        "GITHUB_REF_TYPE",
+        "GITHUB_REF_NAME",
+    ];
+
+    /// Unset all four, then apply `set`. Returns the guard, which must be held
+    /// for the whole test — dropping it restores the runner's environment.
+    fn base_ref_env(set: &[(&'static str, &str)]) -> EnvVarGuard {
+        let mut vars: Vec<(&'static str, Option<&OsStr>)> =
+            BASE_REF_VARS.iter().map(|key| (*key, None)).collect();
+        for (key, value) in set {
+            let slot = vars
+                .iter_mut()
+                .find(|(name, _)| name == key)
+                .expect("only the variables the resolver reads can be overridden");
+            slot.1 = Some(OsStr::new(*value));
+        }
+        EnvVarGuard::scope(&vars)
+    }
+
+    fn git(root: &Path, args: &[&str]) -> String {
+        let output = std::process::Command::new("git")
+            .current_dir(root)
+            .args(args)
+            .output()
+            .unwrap_or_else(|error| panic!("git {args:?}: {error}"));
+        assert!(
+            output.status.success(),
+            "git {args:?} failed: {}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+        String::from_utf8(output.stdout).unwrap().trim().to_string()
+    }
+
+    /// A checkout with one commit on `trunk`. `git init` here is load-bearing:
+    /// without it Git would walk up out of the temp directory and answer from
+    /// whatever repository `TMPDIR` happens to sit inside.
+    fn checkout(root: &Path) {
+        git(root, &["init", "--quiet", "-b", "trunk"]);
+        git(root, &["config", "user.email", "test@example.invalid"]);
+        git(root, &["config", "user.name", "AWARE test"]);
+    }
+
+    /// Point `refs/remotes/origin/HEAD` at `trunk`, the shape a cloned checkout has.
+    fn set_origin_head(root: &Path) {
+        let head = git(root, &["rev-parse", "HEAD"]);
+        git(root, &["update-ref", "refs/remotes/origin/trunk", &head]);
+        git(
+            root,
+            &[
+                "symbolic-ref",
+                "refs/remotes/origin/HEAD",
+                "refs/remotes/origin/trunk",
+            ],
+        );
+    }
+
+    /// Commit `20-agents/demo/manifest.yaml` declaring `version`, and return the
+    /// commit id. Enough of a manifest for `read_pinned_release` to hash and hand
+    /// back; `reindex` parses it, this does not.
+    fn commit_manifest(root: &Path, version: &str) -> String {
+        let dir = root.join("20-agents/demo");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            format!("agent: demo\nversion: {version}\n"),
+        )
+        .unwrap();
+        git(root, &["add", "--all"]);
+        git(root, &["commit", "--quiet", "-m", version]);
+        git(root, &["rev-parse", "HEAD"])
+    }
+
+    #[test]
+    fn an_explicit_base_ref_outranks_the_pull_request_branch_and_is_used_verbatim() {
+        let tmp = tempfile::tempdir().unwrap();
+        let _env = base_ref_env(&[
+            ("AWARE_REGISTRY_BASE_REF", "refs/heads/release-1.x"),
+            ("GITHUB_BASE_REF", "main"),
+        ]);
+
+        assert_eq!(
+            pinned_release_base_ref(tmp.path()).unwrap(),
+            "refs/heads/release-1.x",
+            "the escape hatch names a ref the caller has already fetched, so it \
+             must be passed to Git exactly as given"
+        );
+    }
+
+    #[test]
+    fn a_blank_explicit_base_ref_falls_through_to_the_pull_request_branch() {
+        // `env: AWARE_REGISTRY_BASE_REF: ${{ inputs.base }}` with nothing bound
+        // exports the name with an empty value; honouring it would resolve every
+        // pinned commit against the empty ref and fail the whole registry.
+        let tmp = tempfile::tempdir().unwrap();
+        let _env = base_ref_env(&[
+            ("AWARE_REGISTRY_BASE_REF", "   "),
+            ("GITHUB_BASE_REF", "main"),
+        ]);
+
+        assert_eq!(
+            pinned_release_base_ref(tmp.path()).unwrap(),
+            "refs/remotes/origin/main"
+        );
+    }
+
+    #[test]
+    fn a_pull_request_base_branch_resolves_to_its_remote_tracking_ref() {
+        // The branch NAME is not a ref a PR checkout has locally — only
+        // `refs/remotes/origin/<branch>` is — and the name may carry slashes.
+        let tmp = tempfile::tempdir().unwrap();
+        let _env = base_ref_env(&[("GITHUB_BASE_REF", " release/1.x \n")]);
+
+        assert_eq!(
+            pinned_release_base_ref(tmp.path()).unwrap(),
+            "refs/remotes/origin/release/1.x"
+        );
+    }
+
+    #[test]
+    fn a_branch_build_outranks_origin_head() {
+        // `actions/checkout` leaves no `origin/HEAD` on a push build, and where
+        // one does exist it may name a different branch than the one being built.
+        let tmp = tempfile::tempdir().unwrap();
+        checkout(tmp.path());
+        commit_manifest(tmp.path(), "1.0.0");
+        set_origin_head(tmp.path());
+        let _env = base_ref_env(&[("GITHUB_REF_TYPE", "branch"), ("GITHUB_REF_NAME", "main")]);
+
+        assert_eq!(
+            pinned_release_base_ref(tmp.path()).unwrap(),
+            "refs/remotes/origin/main"
+        );
+    }
+
+    #[test]
+    fn a_tag_build_does_not_mistake_its_tag_name_for_a_branch() {
+        // `release.yml` runs at a tag, where `GITHUB_REF_NAME` is `v0.137.0`.
+        // `refs/remotes/origin/v0.137.0` does not exist, so reading it as a branch
+        // would fail every pinned release on exactly the runs that ship one.
+        let tmp = tempfile::tempdir().unwrap();
+        checkout(tmp.path());
+        commit_manifest(tmp.path(), "1.0.0");
+        set_origin_head(tmp.path());
+        let _env = base_ref_env(&[("GITHUB_REF_TYPE", "tag"), ("GITHUB_REF_NAME", "v0.137.0")]);
+
+        assert_eq!(
+            pinned_release_base_ref(tmp.path()).unwrap(),
+            "refs/remotes/origin/trunk"
+        );
+    }
+
+    #[test]
+    fn outside_github_the_base_ref_comes_from_origin_head() {
+        let tmp = tempfile::tempdir().unwrap();
+        checkout(tmp.path());
+        commit_manifest(tmp.path(), "1.0.0");
+        set_origin_head(tmp.path());
+        let _env = base_ref_env(&[]);
+
+        assert_eq!(
+            pinned_release_base_ref(tmp.path()).unwrap(),
+            "refs/remotes/origin/trunk"
+        );
+    }
+
+    #[test]
+    fn a_checkout_without_origin_head_names_the_variable_that_unblocks_it() {
+        let tmp = tempfile::tempdir().unwrap();
+        checkout(tmp.path());
+        commit_manifest(tmp.path(), "1.0.0");
+        let _env = base_ref_env(&[]);
+
+        let error = pinned_release_base_ref(tmp.path())
+            .expect_err("a checkout with no origin/HEAD cannot answer this");
+        assert!(
+            error.to_string().contains("AWARE_REGISTRY_BASE_REF"),
+            "the diagnostic must name the override that gets the operator moving: {error}"
+        );
+    }
+
+    #[test]
+    fn the_pinned_payload_is_read_from_the_commit_not_the_working_tree() {
+        // The whole point of pinning: an older release keeps describing and
+        // hashing the bytes it shipped, however the checkout has moved on.
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        checkout(root);
+        let released = commit_manifest(root, "1.0.0");
+        let moved_on = commit_manifest(root, "2.0.0");
+        let _env = base_ref_env(&[("AWARE_REGISTRY_BASE_REF", "trunk")]);
+
+        let (manifest, digest) =
+            read_pinned_release(root, &released, "20-agents/demo").expect("the pin is an ancestor");
+        let text = String::from_utf8(manifest).unwrap();
+        assert!(
+            text.contains("version: 1.0.0"),
+            "read the pinned commit's manifest, got: {text}"
+        );
+        assert!(
+            !text.contains("version: 2.0.0"),
+            "the working tree must not leak into a pinned read: {text}"
+        );
+
+        let (_, later_digest) = read_pinned_release(root, &moved_on, "20-agents/demo").unwrap();
+        assert_ne!(
+            digest, later_digest,
+            "two commits with different payloads must not hash alike"
+        );
+        // The value goes straight into `bundle-digest`, so it has to be in the
+        // form the index's own reader accepts — checked against that reader
+        // rather than a restatement of it.
+        assert!(
+            crate::registry::index::is_bundle_digest(&digest),
+            "a pinned digest must be storable as `bundle-digest`: {digest}"
+        );
+    }
+
+    #[test]
+    fn a_subtree_absent_from_the_pinned_commit_names_the_checkout_remedy() {
+        // The usual cause is a shallow clone, not a wrong path, and the remedy
+        // is a checkout setting the operator has to go and change.
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        checkout(root);
+        let released = commit_manifest(root, "1.0.0");
+        let _env = base_ref_env(&[("AWARE_REGISTRY_BASE_REF", "trunk")]);
+
+        let error = read_pinned_release(root, &released, "20-agents/absent")
+            .expect_err("the commit holds no such subtree");
+        let message = error.to_string();
+        assert!(
+            message.contains("git archive"),
+            "the diagnostic must say which step refused: {message}"
+        );
+        assert!(
+            message.contains("fetch-depth: 0"),
+            "the diagnostic must name the remedy: {message}"
+        );
+    }
 }
 
 /// Two serialized catalogs are "the same" iff they're equal as JSON once the
