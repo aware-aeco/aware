@@ -136,6 +136,8 @@ test('unsafe resources, unsupported extensions, scene cycles, and malformed rang
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ material: [] })), /material must be an object/);
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ material: { pbrMetallicRoughness: [] } })), /PBR material must be an object/);
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ material: { pbrMetallicRoughness: null } })), /PBR material must be an object/);
+  assert.throws(() => normalizeRevitGlb(makeGlbFixture({ material: { pbrMetallicRoughness: { baseColorTexture: { index: 0 } } } })), /PBR property/);
+  assert.throws(() => normalizeRevitGlb(makeGlbFixture({ material: { normalTexture: { index: 0 } } })), /material property/);
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ material: { emissiveFactor: null } })), /emissiveFactor/);
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ extensionsUsed: ['KHR_draco_mesh_compression'] })), /extensions/);
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ nodes: [{ name: 'cycle', mesh: 0, children: [0] }] })), /cycle/);
