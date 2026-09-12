@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-12T04:59:10.504956003+00:00",
+  "updated-at": "2026-09-12T05:45:35.330530128+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -6075,7 +6075,7 @@
             },
             {
               "name": "close",
-              "description": "Shut a running Tekla Structures instance down. Clean by default — the",
+              "description": "Shut a running Tekla Structures instance down. Clean by default — the model is",
               "lifecycle": "single",
               "category": "curated",
               "mode": "write"
@@ -6140,7 +6140,7 @@
             },
             {
               "name": "list-instances",
-              "description": "Enumerate the Tekla Structures processes running on this machine — the",
+              "description": "List the Tekla Structures instances VISIBLE TO THIS SIDECAR — the discovery",
               "lifecycle": "single",
               "category": "curated"
             },
