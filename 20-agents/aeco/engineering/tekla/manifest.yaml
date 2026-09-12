@@ -50,11 +50,18 @@ transport:
 
 # THE BRIDGE IS THE CONTRACT (#520). `aware-tekla` dispatches exactly the verbs in its
 # `switch (verb)` (cli-tekla/Program.cs) — every other key here is a published contract whose
-# implementation has not landed, so it carries the per-command `status: planned` marker (#199)
-# and `aware app validate` / `install` refuse a node that uses it with
-# `E_APP_COMMAND_UNAVAILABLE`. Without the marker such a node compiled and then died at run with
-# `aware-tekla: unknown verb '<x>'` — nineteen commands deep, the same drift #176 was for `watch`
-# alone. When a verb is implemented, delete its `status: planned` in the same PR that wires it.
+# implementation has not landed, so it carries the per-command `status: planned` marker (#199).
+# `aware app validate` and `aware app compile` then refuse a node that uses one with
+# `E_APP_COMMAND_UNAVAILABLE` (`validate_app_agents`, reached from both `cli/src/validate.rs` and
+# `cli/src/app_lock.rs`), and `app run` refuses it again. Without the marker such a node compiled
+# clean and died at run with `aware-tekla: unknown verb '<x>'` — nineteen commands deep, the same
+# drift #176 was for `watch` alone.
+#
+# The refusal needs this agent INSTALLED: the per-command status is read from the installed
+# manifest, so an app composed against a tekla absent from `~/.aware/agents` still passes, with a
+# missing-agent warning instead (#308). The marker is the contract for everyone who has the agent.
+#
+# When a verb is implemented, delete its `status: planned` in the same PR that wires it.
 # `cli/tests/tekla_verb_parity.rs` holds the two halves together in both directions.
 commands:
   send-status:
@@ -138,9 +145,14 @@ commands:
     lifecycle: single
     category: curated
     description: |
-      Enumerate the Tekla Structures processes running on this machine — the
-      discovery step in front of `close`, and the way a composition finds out
-      whether a host is up at all without opening a model. Takes no input.
+      List the Tekla Structures instances VISIBLE TO THIS SIDECAR — the discovery
+      step in front of `close`. Takes no input and needs no open model.
+
+      Visible means: not positively in a different Windows session (so an instance
+      belonging to another RDP / multi-user session is excluded), and with a version
+      readable from its executable path (a process whose MainModule cannot be read is
+      dropped). An empty list therefore means "none this sidecar can act on", which is
+      not the same as "no Tekla is running" — do not read it as proof the machine is idle.
     outputs:
       type: single
       schema:
@@ -149,17 +161,27 @@ commands:
   close:
     lifecycle: single
     category: curated
-    # `close` is NOT write-by-convention (`is_write_by_convention` in cli/src/manifest/agent.rs
-    # keys on a name suffix), yet it terminates the host and `force` discards unsaved model bytes.
-    # Declared explicitly so a node calling it must carry a `safety:` block (app-spec § Safety
-    # contract) rather than inheriting the read-mode default.
+    # `close` is NOT write-by-convention, yet it terminates the host and can lose unsaved model
+    # bytes. `is_write_by_convention` (cli/src/manifest/agent.rs) matches a dotted name suffix plus
+    # two exact legacy names (`insert`, `save-attributes`) added for this agent's pre-dotted verbs;
+    # `close` is neither, so it would inherit the read-mode default. Declared here rather than
+    # appended to that list because the convention should describe a naming scheme, not carry an
+    # exception per host verb — and an explicit `mode:` is the documented way to say so (app-spec
+    # § Safety contract). A node calling it must therefore supply a `safety:` block.
     mode: write
     description: |
-      Shut a running Tekla Structures instance down. Clean by default — the
-      model is saved through the Open API and the ModelSave event is awaited to
-      confirm bytes on disk before the main window is closed. `force` skips that
-      and kills the process, which LOSES unsaved work, so it is an explicit
-      acknowledgement rather than a timeout fallback.
+      Shut a running Tekla Structures instance down. Clean by default — the model is
+      committed and saved through the Open API, the ModelSave event is awaited to
+      confirm bytes on disk (a model already clean on disk fires no event, and the
+      bridge continues), and Tekla is then asked to exit through its own Open API hook
+      (`Operation.ExitTekla`). `Process.CloseMainWindow()` is only the last resort when
+      no such method exists — Tekla ignores an external WM_CLOSE. See
+      skills/headless-startup-and-shutdown.md.
+
+      `force` is NOT "skip the save". It takes effect only where the Open API cannot be
+      attached at all, and there it authorises a force-kill — which LOSES unsaved work —
+      instead of refusing. When the Open API is reachable, the normal case, the clean
+      save happens either way and `force` changes nothing but the receipt's `mode`.
 
       Targets the one running instance, or the instance matching `version`. An
       ambiguous target is REFUSED (exit 4) rather than guessed at, and the
@@ -176,14 +198,18 @@ commands:
       force:
         type: boolean
         required: false
-        description: Kill the process instead of saving first — DISCARDS unsaved model changes
+        description: Authorise a force-kill where the Open API cannot be reached — DISCARDS unsaved work
     outputs:
       type: single
       schema:
+        status:       string      # ok | partial | err, across all targets
         host:         string      # always "tekla"
         verb:         string      # always "close"
         targets:      array       # one record per instance: { status, host_pid, host_version, mode | error }
         delivered_at: string
+    # Non-zero exits a node will surface: 1 when no instance is running, 4 on an ambiguous target,
+    # and 2 with an `err`/`partial` receipt when a target fails — including after the 60s ModelSave
+    # wait times out.
 
   watch:
     lifecycle: start
