@@ -103,16 +103,20 @@ const SCRIPT: &str = "scripts/parse-check-embedded-js.mjs";
 /// in the scan script for why the step is one function rather than three.
 const ENTRY: &str = "checkEmbeddedScripts";
 
-/// The lines of a JavaScript file that are not `//` comments.
+/// A JavaScript file with every comment blanked out, so the assertions below read
+/// code and never prose.
 ///
-/// Every assertion below reads code, never prose. An earlier draft searched whole
-/// files and tripped on a rule's own explanatory comment, which quotes the
-/// expression it forbids — the same "assert the text, not the behaviour" mistake
-/// these tests exist to catch, made while writing one.
-fn code_lines(src: &str) -> impl Iterator<Item = &str> {
-    src.lines()
-        .map(str::trim_start)
-        .filter(|line| !line.starts_with("//"))
+/// Both comment forms, via [`strip_js_comments`] — the same stripper the
+/// `EXPECTED` reader uses. An earlier draft filtered `//` lines only, which was
+/// wrong twice over: it tripped on a rule's own explanatory comment quoting the
+/// expression it forbids, and then, once that was fixed, disabling a line with
+/// `/* … */` still read as code, so the "must call the entry point" assertion
+/// stayed green over a call that had been commented out (Codex reviews, #518).
+///
+/// Line structure is preserved, so `lines()` over the result still aligns with the
+/// original file.
+fn code_only(src: &str) -> String {
+    strip_js_comments(src)
 }
 
 #[test]
@@ -255,7 +259,9 @@ fn the_scan_floor_still_names_every_file_that_carries_a_script() {
 /// a table nothing is checking, and a silent empty result would turn the
 /// assertions above into a test that passes for want of anything to disagree
 /// with.
-fn expected_keys(script: &str) -> Vec<String> {
+/// The raw text between `const EXPECTED = {` and its closing `};` in the scan
+/// script — the only part of that file [`strip_js_comments`] is ever shown.
+fn expected_body(script: &str) -> String {
     let start = script
         .find("const EXPECTED = {")
         .unwrap_or_else(|| panic!("cli/{SCRIPT} no longer declares `const EXPECTED = {{`"));
@@ -263,7 +269,11 @@ fn expected_keys(script: &str) -> Vec<String> {
     let end = rest
         .find("};")
         .unwrap_or_else(|| panic!("cli/{SCRIPT}'s EXPECTED table is not closed by `}};`"));
-    let body = strip_js_comments(&rest[..end]);
+    rest[..end].to_string()
+}
+
+fn expected_keys(script: &str) -> Vec<String> {
+    let body = strip_js_comments(&expected_body(script));
 
     let mut keys = Vec::new();
     for line in body.lines() {
@@ -300,7 +310,11 @@ fn expected_keys(script: &str) -> Vec<String> {
 /// be checked by neither: each looked like the other's coverage.
 #[test]
 fn the_browser_gate_delegates_its_parse_check_rather_than_repeating_it() {
-    let run = read("cli/tests/browser/run.mjs");
+    // Comments blanked FIRST, once, for everything below. Filtering `//` lines was
+    // not enough: a line disabled with `/* … */` still read as code, so the "must
+    // call the entry point" assertion stayed green over a commented-out call (Codex
+    // review, #518).
+    let run = code_only(&read("cli/tests/browser/run.mjs"));
 
     // The IMPORT STATEMENT, not the filename. The first draft searched the whole
     // file for `parse-check-embedded-js.mjs`, which also appears in the header
@@ -338,7 +352,7 @@ fn the_browser_gate_delegates_its_parse_check_rather_than_repeating_it() {
     // assertion exists to prevent, reachable by deleting one line (Codex review,
     // #518). So require the CALL, on a code line.
     assert!(
-        code_lines(&run).any(|line| line.contains(&format!("{ENTRY}("))),
+        run.contains(&format!("{ENTRY}(")),
         "tests/browser/run.mjs imports {ENTRY:?} but never calls it. An import that \
          nothing invokes is not delegation; step 0 would then check nothing, or \
          whatever it reassembled locally."
@@ -356,7 +370,7 @@ fn the_browser_gate_delegates_its_parse_check_rather_than_repeating_it() {
         "blocks.length <",
         "new Function(",
     ] {
-        let line = code_lines(&run).find(|line| line.contains(own));
+        let line = run.lines().find(|line| line.contains(own));
         assert!(
             line.is_none(),
             "tests/browser/run.mjs has reassembled the check locally ({own:?} at \
@@ -365,38 +379,85 @@ fn the_browser_gate_delegates_its_parse_check_rather_than_repeating_it() {
              of its own to get wrong."
         );
     }
-    assert!(
-        !run.contains("new Function("),
-        "tests/browser/run.mjs has reintroduced its own `new Function` parse \
-         check. That is sloppy-mode Script semantics, which accepts constructs a \
-         module rejects; cli/{SCRIPT} parses each block under the goal symbol a \
-         browser would use."
-    );
+}
+
+/// [`strip_js_comments`] reads `//` and `/*` as comment openers wherever they are
+/// not inside a string, which a regular-expression literal would fool.
+///
+/// Neither region has one today. This is what keeps that a fact rather than an
+/// assumption, since the alternative is a full JavaScript lexer in a test helper — and the failure would be silent: a real comment read as code, or a line
+/// of code blanked away and its assertion passing over nothing.
+#[test]
+fn nothing_the_comment_stripper_reads_contains_a_regex_literal() {
+    // Scoped to exactly what the stripper is SHOWN, not to whole files. The scan
+    // script uses regular expressions freely and legitimately — it has to, to find
+    // `<script>` tags — but the stripper only ever sees its `EXPECTED` table body,
+    // where a literal would be absurd. `run.mjs` is scanned whole, so it is checked
+    // whole.
+    let regions = [
+        (
+            "cli/tests/browser/run.mjs (whole file)",
+            read("cli/tests/browser/run.mjs"),
+        ),
+        (
+            "the EXPECTED table body in cli/scripts/parse-check-embedded-js.mjs",
+            expected_body(&read(&format!("cli/{SCRIPT}"))),
+        ),
+    ];
+    for (what, src) in regions {
+        // A regex literal appears where a value can start: after `=`, `(` or `,`.
+        for shape in ["= /", "(/", ", /", "return /"] {
+            assert!(
+                !src.contains(shape),
+                "{what} now contains what looks like a regular-expression literal \
+                 ({shape:?}). strip_js_comments cannot tell one from a comment, so its \
+                 output — which the assertions here read — can no longer be trusted. \
+                 Either drop the literal or give the helper a real lexer; do not leave \
+                 it guessing."
+            );
+        }
+    }
 }
 
 /// `src` with both JavaScript comment forms blanked to spaces, newlines kept so
 /// line structure survives for the caller's per-line parse.
 ///
-/// String-aware, because the keys it is clearing the way for are paths: a naive
-/// scan could mistake a `/` inside `'src/auth/paste.rs'` for the start of a
-/// comment. Only single quotes are tracked, which is all the table uses.
+/// String-aware, because the keys it clears the way for are paths: a naive scan
+/// would mistake the `/` inside `'src/auth/paste.rs'` for the start of a comment
+/// and eat the rest of the table.
+///
+/// All three quote forms, not just `'`. `tests/browser/run.mjs` is full of template
+/// literals, and tracking one quote character while the text contains another
+/// leaves the state machine inside a string it has already left — after which a
+/// real comment reads as code, or code as a comment. Escapes are honoured so that
+/// `'it\'s'` does not end early.
+///
+/// Known limit, stated rather than hidden: a regular-expression literal containing
+/// `//` or `/*` would be read as a comment. Neither file scanned here has one, and
+/// [`nothing_the_comment_stripper_reads_contains_a_regex_literal`] is what keeps that
+/// true rather than assumed.
 fn strip_js_comments(src: &str) -> String {
     let bytes: Vec<char> = src.chars().collect();
     let mut out = String::with_capacity(src.len());
     let mut i = 0;
-    let mut in_string = false;
+    let mut quote: Option<char> = None;
     while i < bytes.len() {
         let c = bytes[i];
-        if in_string {
+        if let Some(q) = quote {
             out.push(c);
-            if c == '\'' {
-                in_string = false;
+            if c == '\\' && i + 1 < bytes.len() {
+                out.push(bytes[i + 1]); // an escaped quote does not close the string
+                i += 2;
+                continue;
+            }
+            if c == q {
+                quote = None;
             }
             i += 1;
             continue;
         }
-        if c == '\'' {
-            in_string = true;
+        if c == '\'' || c == '"' || c == '`' {
+            quote = Some(c);
             out.push(c);
             i += 1;
             continue;
