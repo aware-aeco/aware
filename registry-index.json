@@ -7,7 +7,7 @@
         "2025.0.1": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
           "subdir": "aware-main/20-agents/aeco/engineering/tekla",
-          "bundle-digest": "sha256:3b4f7f8f202cde3565fa38360b64cf6bb04b0036723eeb0ebc4c179aae1c1725"
+          "bundle-digest": "sha256:e9f8a4ea643e610c6995e123fcc526b599bd78e6445d6e962e061423f250bd9d"
         }
       }
     },
