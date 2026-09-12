@@ -51,11 +51,12 @@ fn json_describe_returns_envelope() {
     let v: serde_json::Value = serde_json::from_slice(&output).unwrap();
     assert_eq!(v["ok"], true);
     assert_eq!(v["data"]["agent"], "tekla");
-    // tekla currently declares 33 skills and 24 commands (grew from 23 with the
-    // `bake-scene` verb, #235). The agent.rs unit tests have the same expectation
-    // — see `cli/src/manifest/agent.rs`.
+    // tekla currently declares 33 skills and 26 commands (grew from 23 with the
+    // `bake-scene` verb, #235, and from 24 when #520 declared the dispatched-but
+    // -unpublished `list-instances` and `close`). The agent.rs unit tests have the
+    // same expectation — see `cli/src/manifest/agent.rs`.
     assert_eq!(v["data"]["skill_count"], 33);
-    assert_eq!(v["data"]["command_count"], 24);
+    assert_eq!(v["data"]["command_count"], 26);
 }
 
 // ── #363: which versions does the registry actually have? ─────────────────────
