@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-10T18:15:09.413891100+00:00",
+  "updated-at": "2026-09-12T05:45:35.330530128+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -6004,11 +6004,11 @@
         "2025.0.1": {
           "description": "Watches the active Tekla model, reads its state, and writes back via the",
           "status": "available",
-          "manifest-version": "0.1.4",
+          "manifest-version": "0.1.5",
           "stateful": true,
           "sdk-target": "2025+",
           "transport": "cli",
-          "command_count": 24,
+          "command_count": 26,
           "skills": [
             "runtime-bridge-dotnet-framework",
             "headless-startup-and-shutdown",
@@ -6049,7 +6049,8 @@
               "name": "assembly-list",
               "description": "Per-assembly schedule (mark / type / weight / piece-count). Read-only.",
               "lifecycle": "single",
-              "category": "curated"
+              "category": "curated",
+              "status": "planned"
             },
             {
               "name": "bake-scene",
@@ -6062,19 +6063,29 @@
               "name": "bolt-list",
               "description": "Export bolt schedule grouped by diameter / length / grade.",
               "lifecycle": "single",
-              "category": "curated"
+              "category": "curated",
+              "status": "planned"
             },
             {
               "name": "clash-check",
               "description": "Run Tekla's built-in clash check. Returns clashes grouped by",
               "lifecycle": "single",
-              "category": "curated"
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "close",
+              "description": "Shut a running Tekla Structures instance down. Clean by default — the model is",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
             },
             {
               "name": "drawing-export",
               "description": "Batch-export drawings to PDF + DWG with a naming-template. Replaces",
               "lifecycle": "single",
               "category": "curated",
+              "status": "planned",
               "mode": "write"
             },
             {
@@ -6082,19 +6093,22 @@
               "description": "Set IsReadyForIssue → true, set IssuingDate, stamp revision, mark",
               "lifecycle": "single",
               "category": "curated",
+              "status": "planned",
               "mode": "write"
             },
             {
               "name": "drawing-list",
               "description": "Filter drawings in the active model by status / phase / lot /",
               "lifecycle": "single",
-              "category": "curated"
+              "category": "curated",
+              "status": "planned"
             },
             {
               "name": "drawings-affected-by-revision",
               "description": "Given a model change (delta from previous save / IFC diff), report",
               "lifecycle": "single",
-              "category": "curated"
+              "category": "curated",
+              "status": "planned"
             },
             {
               "name": "exec",
@@ -6108,13 +6122,15 @@
               "description": "Export the model (or a phase) to IFC. Used for MEP-clash federation",
               "lifecycle": "single",
               "category": "curated",
+              "status": "planned",
               "mode": "write"
             },
             {
               "name": "insert",
               "description": "Create a ConnectionPart at a world-space location.",
               "lifecycle": "single",
-              "category": "curated"
+              "category": "curated",
+              "status": "planned"
             },
             {
               "name": "launch",
@@ -6123,10 +6139,17 @@
               "category": "curated"
             },
             {
+              "name": "list-instances",
+              "description": "List the Tekla Structures instances VISIBLE TO THIS SIDECAR — the discovery",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
               "name": "nc-export",
               "description": "Export NC files (DSTV `.nc1`) for selected parts. The detailer",
               "lifecycle": "single",
               "category": "curated",
+              "status": "planned",
               "mode": "write"
             },
             {
@@ -6134,6 +6157,7 @@
               "description": "Convenience wrapper: nc-export scoped to one phase, with the",
               "lifecycle": "single",
               "category": "curated",
+              "status": "planned",
               "mode": "write"
             },
             {
@@ -6141,25 +6165,29 @@
               "description": "Run Tekla's numbering operation. Choose `modified-only` (fast,",
               "lifecycle": "single",
               "category": "curated",
+              "status": "planned",
               "mode": "write"
             },
             {
               "name": "part-list",
               "description": "Per-part schedule (profile / length / grade). Read-only.",
               "lifecycle": "single",
-              "category": "curated"
+              "category": "curated",
+              "status": "planned"
             },
             {
               "name": "report-create",
               "description": "Generate a Tekla report from a `.tpl` template against selected /",
               "lifecycle": "single",
-              "category": "curated"
+              "category": "curated",
+              "status": "planned"
             },
             {
               "name": "save-attributes",
               "description": "Persist the active dialog's values via the Akit save-as pattern.",
               "lifecycle": "single",
-              "category": "curated"
+              "category": "curated",
+              "status": "planned"
             },
             {
               "name": "send-status",
@@ -6172,19 +6200,22 @@
               "description": "Copy a UDA value from one object to another (or from a UDA to a",
               "lifecycle": "single",
               "category": "curated",
+              "status": "planned",
               "mode": "write"
             },
             {
               "name": "uda-get",
               "description": "Read a user-defined attribute from one or more model objects.",
               "lifecycle": "single",
-              "category": "curated"
+              "category": "curated",
+              "status": "planned"
             },
             {
               "name": "uda-set",
               "description": "Write a user-defined attribute on one or more model objects.",
               "lifecycle": "single",
               "category": "curated",
+              "status": "planned",
               "mode": "write"
             },
             {
@@ -6197,7 +6228,8 @@
               "name": "weld-list",
               "description": "Export weld schedule (type, length, throat, AWS code symbol) per",
               "lifecycle": "single",
-              "category": "curated"
+              "category": "curated",
+              "status": "planned"
             }
           ]
         }
