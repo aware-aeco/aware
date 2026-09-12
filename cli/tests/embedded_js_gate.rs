@@ -99,6 +99,21 @@ fn step_index(steps: &[Step], name: &str) -> usize {
 
 const STEP: &str = "shipped inline JavaScript parses";
 const SCRIPT: &str = "scripts/parse-check-embedded-js.mjs";
+/// The single entry point both callers go through — see [`checkEmbeddedScripts`]
+/// in the scan script for why the step is one function rather than three.
+const ENTRY: &str = "checkEmbeddedScripts";
+
+/// The lines of a JavaScript file that are not `//` comments.
+///
+/// Every assertion below reads code, never prose. An earlier draft searched whole
+/// files and tripped on a rule's own explanatory comment, which quotes the
+/// expression it forbids — the same "assert the text, not the behaviour" mistake
+/// these tests exist to catch, made while writing one.
+fn code_lines(src: &str) -> impl Iterator<Item = &str> {
+    src.lines()
+        .map(str::trim_start)
+        .filter(|line| !line.starts_with("//"))
+}
 
 #[test]
 fn ci_still_parse_checks_the_javascript_this_crate_emits() {
@@ -306,41 +321,50 @@ fn the_browser_gate_delegates_its_parse_check_rather_than_repeating_it() {
             )
         });
 
-    // The exact LOCAL bindings, not a substring. `import.contains("collect")` is
-    // satisfied by `collect as scan` — which binds `scan`, leaving step 0's
-    // `collect(CLI)` call unbound — and by any longer name containing the
-    // substring (Codex review, #518). So parse the `{ … }` and compare each
-    // binding's local name (the part after `as`, or the whole spec) exactly.
-    // `shortfall` is in this list for a reason found in review (#518): `run.mjs`
-    // imported the parse check but kept a `blocks.length < 5` floor of its own
-    // after the CI entry point moved to the per-file table, so losing any one of
-    // the six blocks still left five and the manual gate reported GATE PASSED
-    // over an inventory missing the script it was meant to cover. Delegating the
-    // check and then re-deciding what counts as enough of it is not delegation.
+    // The exact LOCAL binding, not a substring. `import.contains("…")` is satisfied
+    // by an alias, which binds a different name and leaves the call unbound, and by
+    // any longer identifier containing the substring (Codex review, #518).
     let bindings = import_local_names(import);
-    for name in ["collect", "parseError", "shortfall"] {
+    assert!(
+        bindings.iter().any(|b| b == ENTRY),
+        "tests/browser/run.mjs imports from cli/{SCRIPT} but does not bind the local \
+         name {ENTRY:?} its step 0 calls (an alias binds a different name). Local \
+         names bound: {bindings:?}"
+    );
+
+    // Bound is not called. Deleting `checkEmbeddedScripts(…)` from the body while
+    // leaving the import in place satisfied every assertion above, and the gate
+    // would then parse whatever collection happened to find — the regression the
+    // assertion exists to prevent, reachable by deleting one line (Codex review,
+    // #518). So require the CALL, on a code line.
+    assert!(
+        code_lines(&run).any(|line| line.contains(&format!("{ENTRY}("))),
+        "tests/browser/run.mjs imports {ENTRY:?} but never calls it. An import that \
+         nothing invokes is not delegation; step 0 would then check nothing, or \
+         whatever it reassembled locally."
+    );
+
+    // And nothing of its own. The step's primitives are deliberately NOT reachable
+    // here: two rounds of findings were this file assembling them and leaving one
+    // out — its own `blocks.length < 5` floor after the shared floor moved on, and
+    // before that its own `new Function` parse. One call has no parts to skip;
+    // these are what stop the parts coming back.
+    for own in [
+        "collect(",
+        "shortfall(",
+        "parseError(",
+        "blocks.length <",
+        "new Function(",
+    ] {
+        let line = code_lines(&run).find(|line| line.contains(own));
         assert!(
-            bindings.iter().any(|b| b == name),
-            "tests/browser/run.mjs imports from cli/{SCRIPT} but does not bind the \
-             local name {name:?} its step 0 calls (an alias binds a different name). \
-             Local names bound: {bindings:?}"
+            line.is_none(),
+            "tests/browser/run.mjs has reassembled the check locally ({own:?} at \
+             {line:?}). The whole step lives in cli/{SCRIPT} behind {ENTRY:?} \
+             precisely so this file has no floor, no parser and no discovery order \
+             of its own to get wrong."
         );
     }
-    // Code lines only. The first draft searched the whole file and tripped on this
-    // very rule's own explanatory comment, which quotes the expression it forbids —
-    // the same "assert the prose, not the code" mistake this test exists to catch,
-    // made while writing the test. Comments describe; only code decides.
-    let floor = run.lines().find(|line| {
-        let line = line.trim_start();
-        !line.starts_with("//") && line.contains("blocks.length <")
-    });
-    assert!(
-        floor.is_none(),
-        "tests/browser/run.mjs has reintroduced a block-count floor of its own: \
-         {floor:?}. The inventory floor is the per-file EXPECTED table in \
-         cli/{SCRIPT}, reached through `shortfall`; a local count drifts below it \
-         the moment a script is added or moved, and then passes over a missing one."
-    );
     assert!(
         !run.contains("new Function("),
         "tests/browser/run.mjs has reintroduced its own `new Function` parse \

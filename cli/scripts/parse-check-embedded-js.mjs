@@ -403,6 +403,37 @@ export function collect(root) {
 }
 
 /**
+ * The whole check, in one call: discover the blocks, apply the inventory floor,
+ * and parse what survives. Returns `{ blocks, short, failures }`; callers format.
+ *
+ * This exists because splitting the step across its callers kept going wrong.
+ * `tests/browser/run.mjs` imported [`collect`] and [`parseError`] but kept its
+ * own `blocks.length < 5` floor after this file moved to [`EXPECTED`], so it
+ * could pass over a missing script; and the Rust gate written to prevent that
+ * checked only that `shortfall` was *imported*, which deleting the call left
+ * true (Codex reviews, PR #518 — twice on the same seam). Two callers reassembling
+ * three primitives is three chances each to leave one out. One function is none:
+ * there is no order to get wrong and no part to skip, and the floor cannot be
+ * reached around because it is inside.
+ */
+export function checkEmbeddedScripts(root) {
+  const blocks = collect(root);
+  const short = shortfall(blocks);
+  if (short.length > 0) return { blocks, short, failures: [] };
+  const scratch = mkdtempSync(join(tmpdir(), 'aware-jsparse-'));
+  try {
+    const failures = [];
+    for (const b of blocks) {
+      const err = parseError(b.body, b.goal, scratch);
+      if (err !== null) failures.push({ ...b, err });
+    }
+    return { blocks, short, failures };
+  } finally {
+    rmSync(scratch, { recursive: true, force: true });
+  }
+}
+
+/**
  * One message per file whose block count fell below [`EXPECTED`], empty when the
  * inventory is intact. A file with MORE blocks than expected is not a shortfall
  * — the new one is checked like every other, and the count here is a floor.
@@ -641,11 +672,12 @@ function main() {
   try {
     if (process.argv.includes('--self-test')) return selfTest(scratch);
 
-    const blocks = collect(process.cwd());
+    // Through [`checkEmbeddedScripts`] like every other caller — this entry point
+    // formats the result, it does not re-decide what the check is.
+    const { blocks, short, failures } = checkEmbeddedScripts(process.cwd());
     if (process.argv.includes('--list')) {
       for (const b of blocks) console.log(`${b.file}:${b.line}  ${b.goal}  ${b.body.length} chars`);
     }
-    const short = shortfall(blocks);
     if (short.length > 0) {
       for (const line of short) console.error(`error: ${line}`);
       console.error(
@@ -656,17 +688,15 @@ function main() {
       );
       return 1;
     }
-    let bad = 0;
-    for (const b of blocks) {
-      const err = parseError(b.body, b.goal, scratch);
-      if (err === null) continue;
-      bad++;
-      console.error(`error: ${b.file}:${b.line}: shipped ${b.goal} script does not parse — ${err}`);
-    }
-    if (bad > 0) {
+    for (const f of failures) {
       console.error(
-        `\n${bad} of ${blocks.length} inline script(s) this crate emits do not parse. ` +
-          `They are handed to a browser as-is, and every Rust assertion on them is ` +
+        `error: ${f.file}:${f.line}: shipped ${f.goal} script does not parse — ${f.err}`,
+      );
+    }
+    if (failures.length > 0) {
+      console.error(
+        `\n${failures.length} of ${blocks.length} inline script(s) this crate emits do not ` +
+          `parse. They are handed to a browser as-is, and every Rust assertion on them is ` +
           `String::contains, which a syntax error passes.`,
       );
       return 1;
@@ -678,8 +708,9 @@ function main() {
   }
 }
 
-// Only when run as a program. `tests/browser/run.mjs` imports [`collect`] and
-// [`parseError`] from here so the two never drift into separate parse checks.
+// Only when run as a program. `tests/browser/run.mjs` imports
+// [`checkEmbeddedScripts`] from here — the WHOLE step, not its pieces — so the two
+// cannot drift into separate checks or into separate ideas of the inventory floor.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   process.exit(main());
 }

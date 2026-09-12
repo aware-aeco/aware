@@ -22,7 +22,7 @@ import { mkdtempSync, rmSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { collect, parseError, shortfall } from '../../scripts/parse-check-embedded-js.mjs';
+import { checkEmbeddedScripts } from '../../scripts/parse-check-embedded-js.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CLI = resolve(HERE, '../..');           // cli/
@@ -45,23 +45,21 @@ const near = (a, b, tol = 0.5) => Math.abs(a - b) <= tol;
 // what stops a script from being covered here, there, or — as the classic bootstrap script was —
 // neither.
 //
-// The floor is the SHARED per-file one, not a count of its own. This file kept
-// `blocks.length < 5` after the CI entry point moved to `shortfall()`, so losing any single block —
-// an OAuth script, or the viewer module itself — still left five and this gate reported GATE PASSED
-// over an inventory missing the very script it was meant to cover (Codex review, #518). Delegating
-// the parse check and then re-deciding what counts as enough of it is not delegation.
+// ONE call, and deliberately nothing else. Twice this file delegated the pieces and got the whole
+// wrong: it imported `collect`/`parseError` but kept its own `blocks.length < 5` floor after the CI
+// entry point moved to the per-file table, so it passed over a missing script; and the Rust gate
+// added to stop that checked only that `shortfall` was imported, which deleting the call left true
+// (Codex reviews, #518). Assembling three primitives here is three chances to leave one out, so the
+// shared script now owns the whole step and this reports what it returns.
 function parseCheckTemplate() {
-  const blocks = collect(CLI);
-  const short = shortfall(blocks);
+  const { blocks, short, failures } = checkEmbeddedScripts(CLI);
   for (const line of short) ok(`inventory: ${line}`, false);
   if (short.length > 0) return;
-  const scratch = mkdtempSync(join(tmpdir(), 'aware-browser-parse-'));
-  try {
-    for (const b of blocks) {
-      const err = parseError(b.body, b.goal, scratch);
-      ok(`${b.file}:${b.line} ${b.goal} script parses`, err === null, err || '');
-    }
-  } finally { rmSync(scratch, { recursive: true, force: true }); }
+  const broken = new Map(failures.map((f) => [`${f.file}:${f.line}`, f.err]));
+  for (const b of blocks) {
+    const at = `${b.file}:${b.line}`;
+    ok(`${at} ${b.goal} script parses`, !broken.has(at), broken.get(at) || '');
+  }
 }
 
 // ---- fixtures: rendered by the WORKTREE build, never a globally installed release --------------
