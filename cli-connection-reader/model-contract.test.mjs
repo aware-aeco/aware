@@ -6,6 +6,7 @@ import {
   buildCanonicalRequest,
   buildProviderFingerprint,
   canonicalJsonBytes,
+  canonicalNumberViolation,
   parseJsonStrict,
   providerFingerprintSha256,
   requestSha256,
@@ -99,4 +100,48 @@ test('structured errors expose bounded safe fields and never paths or provider o
   assert.equal(envelope.code, 'reference-provider-failed');
   assert.match(envelope.diagnosticId, /^[0-9a-f-]{36}$/);
   assert.doesNotMatch(JSON.stringify(envelope), /Residential|secret-provider-output|private/);
+});
+
+// #519: the defect was two definitions of "a number canonical JSON can carry" drifting apart — the
+// admission checks asked Number.isFinite while the canonicalizer additionally required safe-integrality,
+// so a value cleared validation and then threw a bare TypeError mid-signing. canonicalNumberViolation is
+// now the single definition, and this asserts it stays in lockstep with the canonicalizer it speaks for.
+// A reviewer relaxing either one alone has to make this test red to do it.
+test('canonicalNumberViolation agrees with canonicalJsonBytes on every boundary number', () => {
+  const cases = [
+    0, -0, 1, -1, 1.25, 1e-7, 5e-324, 1e300, 0.1 + 0.2,
+    Number.MAX_SAFE_INTEGER, -Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER,
+    Number.MAX_SAFE_INTEGER + 1, Number.MIN_SAFE_INTEGER - 1,
+    9.223372036854776e18, -9.223372036854776e18, Math.fround(1e20), 2 ** 53, 2 ** 64, 1e21,
+    Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, Number.MAX_VALUE,
+  ];
+  let refused = 0;
+  let accepted = 0;
+  for (const value of cases) {
+    const violation = canonicalNumberViolation(value);
+    if (violation === null) {
+      accepted += 1;
+      assert.doesNotThrow(() => canonicalJsonBytes({ value }), `canonicalNumberViolation accepted ${value} but the canonicalizer refused it`);
+    } else {
+      refused += 1;
+      assert.throws(() => canonicalJsonBytes({ value }), new RegExp(violation.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')),
+        `canonicalNumberViolation refused ${value} as "${violation}" but the canonicalizer did not agree`);
+    }
+  }
+  // Both sides of the partition must be populated, or the loop above proves nothing.
+  assert.equal(accepted, 11);
+  assert.equal(refused, cases.length - 11);
+});
+
+test('canonicalNumberViolation names the reason, and refuses non-numbers rather than coercing them', () => {
+  assert.equal(canonicalNumberViolation(1.5), null);
+  assert.equal(canonicalNumberViolation(Number.NaN), 'must be finite');
+  assert.equal(canonicalNumberViolation(Number.POSITIVE_INFINITY), 'must be finite');
+  assert.equal(canonicalNumberViolation(2 ** 53), 'must be a safe integer');
+  // A numeric STRING is exactly what a producer is told to send instead, so it must not be mistaken for
+  // an acceptable number here: callers use the null return as permission to write the value as JSON.
+  assert.equal(canonicalNumberViolation('9223372036854775807'), 'must be a number');
+  assert.equal(canonicalNumberViolation(null), 'must be a number');
+  assert.equal(canonicalNumberViolation(undefined), 'must be a number');
+  assert.equal(canonicalNumberViolation(9007199254740993n), 'must be a number');
 });

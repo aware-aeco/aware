@@ -332,3 +332,24 @@ test('skins and animations are rejected instead of publishing untransformed bind
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ skin: 0, skins: [{ joints: [0] }] })), /skin/);
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ animations: [{ channels: [], samplers: [] }] })), /animation/);
 });
+
+// #519: Math.fround(1e20) is a finite float32 but an unsafe integer, so the old finiteness-only gate let
+// it through into the accessor min/max and the entity bounds, and canonicalJsonBytes then threw a bare
+// TypeError once the artifacts were already being serialized (masked as reference-internal-error).
+test('a coordinate that is finite in float32 but an unsafe integer is refused as invalid geometry', () => {
+  assert.throws(
+    () => normalizeRevitGlb(makeGlbFixture({ positions: [[0, 0, 0], [1e20, 0, 0], [0, 1, 0]] })),
+    (error) => error.name === 'ModelReaderError'
+      && error.code === 'reference-geometry-invalid'
+      && error.phase === 'normalize-geometry'
+      && /transformed coordinate must be a safe integer/.test(error.message),
+  );
+});
+
+test('a large but safe-integral coordinate still normalizes, so the gate is not a magnitude gate', () => {
+  // 2^23 is the largest integer float32 holds exactly; scaled to mm it is 8_388_608_000 — nine digits, far
+  // from the origin, and still a safe integer, so canonical JSON carries it. A guard keyed on magnitude
+  // rather than on safe-integrality would refuse legitimate site coordinates at that distance.
+  const result = normalizeRevitGlb(makeGlbFixture({ positions: [[0, 0, 0], [8388608, 0, 0], [0, 1, 0]] }));
+  assert.deepEqual(result.parts[0].positions, [[0, 0, 0], [0, 0, 1000], [8388608000, 0, 0]]);
+});
