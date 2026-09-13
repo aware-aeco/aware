@@ -1,4 +1,4 @@
-import { canonicalJsonBytes, lowerableLimits, ModelReaderError, parseJsonStrict } from './model-contract.mjs';
+import { canonicalJsonBytes, canonicalNumberViolation, lowerableLimits, ModelReaderError, parseJsonStrict } from './model-contract.mjs';
 
 const GLB_MAGIC = 0x46546c67;
 const JSON_CHUNK = 0x4e4f534a;
@@ -148,9 +148,17 @@ function transformNormal(matrix, normal) {
   return canonicalVector(framed.map((value) => value / length));
 }
 
+// A coordinate is canonical only if the artifacts can carry it, and float32's range is wider than that:
+// `Math.fround(1e20)` is finite but an unsafe integer, so it cleared the old finiteness-only gate, flowed
+// into the accessor bounds and the entity bounds, and threw out of `canonicalJsonBytes` as a bare
+// `TypeError` — masked as `reference-internal-error` — once the artifacts were already being serialized
+// (#519). The float32 overflow check stays ahead of the general one because it names the actual cause of
+// a non-finite rounding; the second catches what float32 range alone cannot see.
 function canonicalFloat(value) {
   const rounded = Math.fround(value);
   if (!Number.isFinite(rounded)) invalid('transformed coordinate overflows float32');
+  const violation = canonicalNumberViolation(rounded);
+  if (violation) invalid(`transformed coordinate ${violation}`);
   return Object.is(rounded, -0) ? 0 : rounded;
 }
 const canonicalVector = (values) => values.map(canonicalFloat);

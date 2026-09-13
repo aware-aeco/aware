@@ -1,5 +1,5 @@
 import {
-  assertClosedObject, canonicalJsonBytes, lowerableLimits, lowerablePropertyExpansionLimits,
+  assertClosedObject, canonicalJsonBytes, canonicalNumberViolation, lowerableLimits, lowerablePropertyExpansionLimits,
   ModelReaderError, parseJsonStrict, sha256,
 } from './model-contract.mjs';
 
@@ -31,6 +31,21 @@ function signedId(value, label) {
     if (parsed < MIN_INT64 || parsed > MAX_INT64) invalid(`${label} exceeds int64`);
   } catch { invalid(`${label} must be a signed int64 decimal string`); }
   return value;
+}
+
+/**
+ * A number the canonical artifacts can actually carry, refused as `reference-metadata-invalid` when not.
+ *
+ * `Number.isFinite` is the check this contract used to make, and it is too weak: an integral double past
+ * the safe-integer range passes it, then throws out of `canonicalJsonBytes` while the artifacts are being
+ * signed, where the dispatch can only report `reference-internal-error` (#519). Refusing it here names the
+ * field and keeps the failure a metadata diagnostic. A producer with only display semantics for such a
+ * value encodes it as a string.
+ */
+function canonicalNumber(value, label) {
+  const violation = canonicalNumberViolation(value);
+  if (violation) invalid(`${label} ${violation}`);
+  return Object.is(value, -0) ? 0 : value;
 }
 
 function text(value, label, nullable = false) {
@@ -82,7 +97,7 @@ function validateSourceStorageParameter(parameter, index, tagged = false) {
     if (!parameter.readable) invalid('integer parameter must be readable');
   } else if (storageType === 'double') {
     if (typeof value !== 'number' || !Number.isFinite(value) || !parameter.readable) invalid('double parameter must be a readable finite number');
-    value = Object.is(value, -0) ? 0 : value;
+    value = canonicalNumber(value, `parameters[${index}].value`);
   } else if (storageType === 'string') {
     value = text(value, `parameters[${index}].value`);
     if (!parameter.readable) invalid('string parameter must be readable');
@@ -198,7 +213,10 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
 
   const types = uniqueTable(metadata.types, 'types', limits.maxEntities);
   const levels = uniqueTable(metadata.levels, 'levels', limits.maxEntities, ['elevation']).map((level, index) => {
-    if (level.elevation !== undefined && (typeof level.elevation !== 'number' || !Number.isFinite(level.elevation))) invalid(`levels[${index}].elevation must be finite`);
+    if (level.elevation !== undefined) {
+      if (typeof level.elevation !== 'number' || !Number.isFinite(level.elevation)) invalid(`levels[${index}].elevation must be finite`);
+      canonicalNumber(level.elevation, `levels[${index}].elevation`);
+    }
     return level;
   });
   const parameters = list(metadata.parameters, 'parameters', limits.maxParameters)

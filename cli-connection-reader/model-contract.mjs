@@ -107,6 +107,26 @@ function defineJsonProperty(target, key, value) {
   Object.defineProperty(target, key, { value, enumerable: true, configurable: true, writable: true });
 }
 
+/**
+ * Why canonical JSON cannot carry `value`, as a message tail, or `null` when it can.
+ *
+ * Finiteness alone is NOT the rule. An integral double outside the safe-integer range — `1e20`, or a
+ * float32 coordinate that rounds to there — serializes to digits that no reader can read back as the
+ * same value, so canonicalization refuses it. Every admission check upstream of `canonicalJsonBytes`
+ * must apply this same predicate: one that asks only `Number.isFinite` admits such a value, and the
+ * refusal then surfaces as a bare `TypeError` out of the canonicalizer, which the dispatch masks as
+ * `reference-internal-error` — with no mention of the field that carried it (#519).
+ *
+ * This is the single definition of that rule. `normalizeJson` is one of its callers, not a second copy;
+ * a validator that reimplements the test is how the two drifted apart in the first place.
+ */
+export function canonicalNumberViolation(value) {
+  if (typeof value !== 'number') return 'must be a number';
+  if (!Number.isFinite(value)) return 'must be finite';
+  if (Number.isInteger(value) && !Number.isSafeInteger(value)) return 'must be a safe integer';
+  return null;
+}
+
 function normalizeJson(value, seen = new Set()) {
   if (value === null || typeof value === 'boolean') return value;
   if (typeof value === 'string') {
@@ -114,8 +134,8 @@ function normalizeJson(value, seen = new Set()) {
     return value;
   }
   if (typeof value === 'number') {
-    if (!Number.isFinite(value)) throw new TypeError('JSON number must be finite');
-    if (Number.isInteger(value) && !Number.isSafeInteger(value)) throw new TypeError('JSON integer must be a safe integer');
+    const violation = canonicalNumberViolation(value);
+    if (violation) throw new TypeError(`JSON number ${violation}`);
     return Object.is(value, -0) ? 0 : value;
   }
   if (!value || typeof value !== 'object') throw new TypeError('value is not JSON data');
