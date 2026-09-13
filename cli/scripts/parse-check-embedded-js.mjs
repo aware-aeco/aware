@@ -58,11 +58,19 @@
 // substitute for `vm.Script` it looks like. A `<script src=…>` with an empty body
 // loads its code elsewhere and is skipped.
 //
-// Two known limits, stated rather than hidden. A script assembled by `format!`
-// from several literals would be checked per-literal and would not parse; nothing
-// in this crate does that today, and the execution floor below is what would
-// notice if one arrived. And the reported line is exact for a raw string but can
-// sit a line or two early for a plain one, because unescaping a `\<newline>`
+// A script split across concatenated literals — `concat!("<script>", body,
+// "</script>")` — is the one shape this cannot read, and it is now an ERROR rather
+// than a stated limit. That change came from being wrong twice in the same
+// sentence (Codex review, PR #518): the old text claimed such a script "would be
+// checked per-literal and would not parse" (it is not checked at all; no literal
+// holds a complete block, so every one is skipped) and that "the execution floor
+// is what would notice" (it would not — adding the construct to an already-listed
+// file still satisfies that file's minimum, and a new file has no entry to fall
+// short of). See [`splitDelimiters`]: unbalanced delimiters now fail the run, so
+// the limit is enforced instead of narrated.
+//
+// One real limit remains: the reported line is exact for a raw string but can sit
+// a line or two early for a plain one, because unescaping a `\<newline>`
 // continuation collapses source lines that the offset was counted against — the
 // file and the parser's own message are what a maintainer navigates by.
 //
@@ -385,21 +393,59 @@ function rustFiles(dir) {
   return out;
 }
 
-/** Every script block this crate emits, discovered from `src/`. */
+/**
+ * A literal whose `<script>` delimiters do not balance within it.
+ *
+ * This is the one shape the scan cannot read, and it must fail LOUDLY rather than
+ * be skipped. `concat!("<script>", "const broken = ;", "</script>")` gives three
+ * literals, none holding a complete block, so every one is passed over and the
+ * broken script reaches a browser with nothing having looked at it (Codex review,
+ * PR #518).
+ *
+ * Two claims this file used to make about that case were both false, which is
+ * worse than the gap: it said such a script "would be checked per-literal and
+ * would not parse" — it is not checked at all — and that the inventory floor
+ * "would notice" — it would not, since adding the construct to an already-listed
+ * file still satisfies that file's minimum and a new file has no entry to fall
+ * short of. Detecting the split is what makes the limit real instead of narrated.
+ */
+export function splitDelimiters(text) {
+  const opens = (text.match(/<script[\s/>]/gi) || []).length;
+  const closes = (text.match(/<\/script\s*>/gi) || []).length;
+  return opens === closes ? null : { opens, closes };
+}
+
+/**
+ * Every script block this crate emits, plus every literal whose delimiters split.
+ *
+ * `{ blocks, splits }` — `splits` is the fail-closed half. A caller that ignores
+ * it is claiming to have checked scripts it never saw.
+ */
 export function collect(root) {
-  const found = [];
+  const blocks = [];
+  const splits = [];
   for (const file of rustFiles(join(root, 'src')).sort()) {
     const shipped = stripTestItems(readFileSync(file, 'utf8'));
     for (const lit of rustStringLiterals(shipped)) {
-      if (!/<script/i.test(lit.text)) continue;
+      if (!/<script/i.test(lit.text) && !/<\/script/i.test(lit.text)) continue;
+      const unbalanced = splitDelimiters(lit.text);
+      if (unbalanced !== null) {
+        splits.push({ file: relative(root, file), line: lit.line, ...unbalanced });
+        continue; // its blocks cannot be trusted; the split is the finding
+      }
       for (const block of scriptBlocks(lit.text)) {
         const goal = classify(block);
         if (goal === 'skip') continue;
-        found.push({ file: relative(root, file), line: lit.line + block.line, goal, body: block.body });
+        blocks.push({
+          file: relative(root, file),
+          line: lit.line + block.line,
+          goal,
+          body: block.body,
+        });
       }
     }
   }
-  return found;
+  return { blocks, splits };
 }
 
 /**
@@ -417,9 +463,12 @@ export function collect(root) {
  * reached around because it is inside.
  */
 export function checkEmbeddedScripts(root) {
-  const blocks = collect(root);
+  const { blocks, splits } = collect(root);
+  // Split delimiters first: while one exists there is a script the scan cannot
+  // see, so neither the floor nor the parse results describe the crate.
+  if (splits.length > 0) return { blocks, splits, short: [], failures: [] };
   const short = shortfall(blocks);
-  if (short.length > 0) return { blocks, short, failures: [] };
+  if (short.length > 0) return { blocks, splits, short, failures: [] };
   const scratch = mkdtempSync(join(tmpdir(), 'aware-jsparse-'));
   try {
     const failures = [];
@@ -427,7 +476,7 @@ export function checkEmbeddedScripts(root) {
       const err = parseError(b.body, b.goal, scratch);
       if (err !== null) failures.push({ ...b, err });
     }
-    return { blocks, short, failures };
+    return { blocks, splits, short, failures };
   } finally {
     rmSync(scratch, { recursive: true, force: true });
   }
@@ -577,6 +626,25 @@ const FIXTURES = [
   },
 ];
 
+/**
+ * Split-delimiter cases: what [`splitDelimiters`] must and must not call a split.
+ *
+ * The three-literal `concat!` shape is the one that mattered — before this it was
+ * skipped silently, and the floor did not notice (Codex review, PR #518).
+ */
+const SPLIT_FIXTURES = [
+  { name: 'a complete block in one literal is not a split', text: '<script>var a=1;</script>', split: false },
+  { name: 'the opener alone is a split', text: '<script>', split: true },
+  { name: 'the body alone is not seen as a script at all', text: 'const broken = ;', split: false },
+  { name: 'the closer alone is a split', text: '</script>', split: true },
+  { name: 'two complete blocks in one literal are not a split', text: '<script>a</script><script>b</script>', split: false },
+  { name: 'two openers and one closer is a split', text: '<script>a</script><script>b', split: true },
+  { name: 'a self-closing-ish opener still counts', text: '<script src="x"/>', split: true },
+  { name: 'an attributed opener with its closer is not a split', text: '<script type="module">x</script>', split: false },
+  { name: 'a closer with trailing space is still a closer', text: '<script>a</script >', split: false },
+  { name: 'the word script in prose is neither', text: 'see the scripts directory', split: false },
+];
+
 /** Inventory-floor cases: what [`shortfall`] must and must not report. */
 const FLOOR_FIXTURES = [
   {
@@ -644,6 +712,14 @@ function selfTest(scratch) {
       console.log(`        got      ${JSON.stringify(got)}`);
     }
   }
+  for (const fx of SPLIT_FIXTURES) {
+    const got = splitDelimiters(fx.text) !== null;
+    if (got !== fx.split) {
+      bad++;
+      console.log(`  FAIL  ${fx.name}`);
+      console.log(`        expected split=${fx.split}, got split=${got}`);
+    }
+  }
   for (const fx of FLOOR_FIXTURES) {
     const got = shortfall(fx.blocks)
       .map((line) => line.split(':')[0])
@@ -656,7 +732,7 @@ function selfTest(scratch) {
       console.log(`        got               ${JSON.stringify(got)}`);
     }
   }
-  const total = FIXTURES.length + FLOOR_FIXTURES.length;
+  const total = FIXTURES.length + SPLIT_FIXTURES.length + FLOOR_FIXTURES.length;
   if (bad > 0) {
     console.error(`self-test: ${bad} of ${total} cases failed`);
     return 1;
@@ -674,9 +750,24 @@ function main() {
 
     // Through [`checkEmbeddedScripts`] like every other caller — this entry point
     // formats the result, it does not re-decide what the check is.
-    const { blocks, short, failures } = checkEmbeddedScripts(process.cwd());
+    const { blocks, splits, short, failures } = checkEmbeddedScripts(process.cwd());
     if (process.argv.includes('--list')) {
       for (const b of blocks) console.log(`${b.file}:${b.line}  ${b.goal}  ${b.body.length} chars`);
+    }
+    for (const s of splits) {
+      console.error(
+        `error: ${s.file}:${s.line}: a string literal has ${s.opens} \`<script>\` opener(s) and ` +
+          `${s.closes} closer(s), so a script is split across literals and this scan cannot read it`,
+      );
+    }
+    if (splits.length > 0) {
+      console.error(
+        '\nKeep each inline script inside ONE string literal. Assembled with `concat!` or ' +
+          '`format!` across several, no literal holds a complete block, every one is passed ' +
+          'over, and the script reaches a browser unchecked — which is the whole failure this ' +
+          'gate exists to prevent, so it is an error rather than a silent skip.',
+      );
+      return 1;
     }
     if (short.length > 0) {
       for (const line of short) console.error(`error: ${line}`);

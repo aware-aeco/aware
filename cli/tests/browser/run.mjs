@@ -59,9 +59,13 @@ const near = (a, b, tol = 0.5) => Math.abs(a - b) <= tol;
 // yourself reaching for `collect`, `shortfall` or `parseError` here, or writing a block count of
 // your own, the thing you want belongs in `checkEmbeddedScripts` where both callers get it.
 function parseCheckTemplate() {
-  const { blocks, short, failures } = checkEmbeddedScripts(CLI);
+  const { blocks, splits, short, failures } = checkEmbeddedScripts(CLI);
+  for (const s of splits) {
+    ok(`${s.file}:${s.line} keeps its script in one string literal`, false,
+       `${s.opens} opener(s) vs ${s.closes} closer(s) — a split script is one the scan cannot read`);
+  }
   for (const line of short) ok(`inventory: ${line}`, false);
-  if (short.length > 0) return;
+  if (splits.length > 0 || short.length > 0) return;
   const broken = new Map(failures.map((f) => [`${f.file}:${f.line}`, f.err]));
   for (const b of blocks) {
     const at = `${b.file}:${b.line}`;
