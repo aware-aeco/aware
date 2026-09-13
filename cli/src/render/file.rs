@@ -468,6 +468,20 @@ mod tests {
         let target = missing.join("out.txt");
         let p = target.to_str().unwrap();
 
+        // `tmp` keys its directory on the process id, which the OS reuses, and
+        // this test ends by creating `missing` for real. A later run that
+        // inherits the same id would therefore find the "missing" parent
+        // already on disk and fail against a correct implementation. Clear what
+        // an earlier run left before asserting the parent is absent — this test
+        // is the only one here that asserts the absence of a path it goes on to
+        // create, so it is the only one that cannot start from a reused fixture.
+        let _ = std::fs::remove_dir_all(&missing);
+        assert!(
+            !missing.exists(),
+            "fixture from an earlier run survived; the refusals below would not \
+             be the flag talking"
+        );
+
         assert!(
             file_write(
                 &json!({ "path": p, "bytes": "x", "create-dirs": false }),
