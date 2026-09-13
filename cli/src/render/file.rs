@@ -398,4 +398,333 @@ mod tests {
         let dry = file_read(&json!({ "path": path }), true).unwrap();
         assert_eq!(dry["bytes"], json!(0));
     }
+
+    // ── the destination ─────────────────────────────────────────────────────
+    //
+    // `req_path` is the first statement of all three verbs and nothing pinned
+    // it, so every property below could have been deleted with the suite green.
+
+    #[test]
+    fn a_path_that_names_no_destination_is_refused_by_every_verb() {
+        // The whitespace-only spelling is the one that earns this test. It is a
+        // *non-empty* string, so without the `trim()` inside the guard it walks
+        // straight through and the bytes land in a file whose name is three
+        // spaces — created, reported as a success, and effectively unfindable.
+        // The other four spellings are here so the guard cannot be narrowed to
+        // the one case a fix happened to be written for.
+        for bad in [
+            json!(null),
+            json!(""),
+            json!("   \t "),
+            json!(7),
+            json!({}),
+            json!([]),
+        ] {
+            assert!(
+                file_write(&json!({ "path": bad, "bytes": "x" }), false).is_err(),
+                "write accepted path {bad}"
+            );
+            assert!(
+                file_write_csv(&json!({ "path": bad, "columns": ["A"] }), false).is_err(),
+                "write-csv accepted path {bad}"
+            );
+            assert!(
+                file_read(&json!({ "path": bad }), true).is_err(),
+                "read accepted path {bad}"
+            );
+        }
+        // …and the key being absent altogether, which is a different match arm.
+        assert!(file_write(&json!({ "bytes": "x" }), false).is_err());
+        assert!(file_write_csv(&json!({ "columns": ["A"] }), false).is_err());
+        assert!(file_read(&json!({}), true).is_err());
+    }
+
+    #[test]
+    fn a_padded_path_is_trimmed_before_it_is_reported_or_written() {
+        // The other half of the same `trim()`: padding that surrounds a real
+        // path must be stripped rather than carried onto disk. Left in, the
+        // leading spaces make the path RELATIVE — `"  /tmp/x"` parses as a
+        // directory named `"  "` under the cwd — so the bytes land in an
+        // entirely different tree from the one the author named.
+        let d = tmp("trim");
+        let clean = d.join("padded.txt");
+        let padded = format!("  {}  ", clean.display());
+        // Reported first, under dry-run, so this half touches no disk at all.
+        let dry = file_write(&json!({ "path": &padded, "bytes": "x" }), true).unwrap();
+        assert_eq!(dry["path"].as_str().unwrap(), clean.to_str().unwrap());
+        // Then for real: the bytes are at the unpadded path.
+        file_write(&json!({ "path": &padded, "bytes": "x" }), false).unwrap();
+        assert_eq!(std::fs::read_to_string(&clean).unwrap(), "x");
+    }
+
+    #[test]
+    fn create_dirs_off_refuses_to_invent_the_parent_directory() {
+        // `create-dirs` defaults ON, so every existing test exercises the same
+        // branch and the flag could have been ignored entirely. Turning it off
+        // is the only way to observe it — and the failure it must produce is a
+        // refusal, not a directory tree the author asked not to have.
+        let d = tmp("cdirs");
+        let missing = d.join("no-such-dir");
+        let target = missing.join("out.txt");
+        let p = target.to_str().unwrap();
+
+        assert!(
+            file_write(
+                &json!({ "path": p, "bytes": "x", "create-dirs": false }),
+                false
+            )
+            .is_err()
+        );
+        assert!(
+            !missing.exists(),
+            "write created the parent behind the flag"
+        );
+        assert!(
+            file_write_csv(
+                &json!({ "path": p, "columns": ["A"], "create-dirs": false }),
+                false
+            )
+            .is_err()
+        );
+        assert!(
+            !missing.exists(),
+            "write-csv created the parent behind the flag"
+        );
+
+        // With the default the very same call succeeds, so the two refusals
+        // above are the flag talking rather than a broken fixture path.
+        file_write(&json!({ "path": p, "bytes": "x" }), false).unwrap();
+        assert!(target.is_file());
+    }
+
+    // ── RFC-4180 quoting ────────────────────────────────────────────────────
+
+    #[test]
+    fn a_cell_carrying_a_line_break_is_quoted_so_the_record_survives() {
+        // `csv_field` quotes on four characters; the suite covered two. An
+        // unquoted embedded CR or LF ends the record early, so one row becomes
+        // two and every column after it shifts — a corruption a reader reports
+        // as valid CSV. Asserted as the whole file, because the bug is in what
+        // lies BETWEEN the cells.
+        let d = tmp("crlf");
+        let path = d.join("multiline.csv");
+        let p = path.to_str().unwrap();
+        file_write_csv(
+            &json!({
+                "path": p,
+                "columns": ["Note", "Qty"],
+                "rows": [
+                    { "Note": "line one\nline two", "Qty": 1 },
+                    { "Note": "carriage\rreturn", "Qty": 2 },
+                ]
+            }),
+            false,
+        )
+        .unwrap();
+        assert_eq!(
+            std::fs::read_to_string(p).unwrap(),
+            "Note,Qty\r\n\"line one\nline two\",1\r\n\"carriage\rreturn\",2\r\n"
+        );
+    }
+
+    #[test]
+    fn a_column_name_needing_quotes_is_quoted_in_the_header_too() {
+        // The header is built by its own `join`, separate from the row loop, so
+        // it can lose the escaping the rows keep. A comma in a column name would
+        // then give the header more fields than the records beneath it, and a
+        // reader would bind every value to the wrong column.
+        let d = tmp("hdr");
+        let path = d.join("head.csv");
+        let p = path.to_str().unwrap();
+        file_write_csv(
+            &json!({
+                "path": p,
+                "columns": ["Profile, mm", "Say \"hi\"", "plain"],
+                "rows": [{ "plain": "v" }]
+            }),
+            false,
+        )
+        .unwrap();
+        let csv = std::fs::read_to_string(p).unwrap();
+        assert_eq!(
+            csv.split("\r\n").next().unwrap(),
+            "\"Profile, mm\",\"Say \"\"hi\"\"\",plain"
+        );
+        // The row is still addressed by the RAW column name, not the quoted one.
+        assert_eq!(csv.split("\r\n").nth(1).unwrap(), ",,v");
+    }
+
+    // ── what a cell may hold ────────────────────────────────────────────────
+
+    #[test]
+    fn every_json_shape_becomes_a_cell_and_an_absent_key_is_blank() {
+        // `cell_text`'s entire contract in one record. The two arms that matter
+        // most are the ends: null / absent must be EMPTY (a literal "null" in a
+        // spreadsheet reads as data), and a nested array or object must survive
+        // as compact JSON rather than being dropped on the floor.
+        let d = tmp("cells");
+        let path = d.join("shapes.csv");
+        let p = path.to_str().unwrap();
+        file_write_csv(
+            &json!({
+                "path": p,
+                "columns": ["s", "n", "b", "nul", "arr", "obj", "absent"],
+                "rows": [{
+                    "s": "x", "n": 2.5, "b": true, "nul": null,
+                    "arr": [1, 2], "obj": { "k": "v" }
+                }]
+            }),
+            false,
+        )
+        .unwrap();
+        let csv = std::fs::read_to_string(p).unwrap();
+        assert_eq!(
+            csv.split("\r\n").nth(1).unwrap(),
+            "x,2.5,true,,\"[1,2]\",\"{\"\"k\"\":\"\"v\"\"}\","
+        );
+    }
+
+    #[test]
+    fn a_positional_row_shorter_than_its_columns_pads_rather_than_shifting() {
+        // The cell loop runs over `columns`, not over the row. Running it over
+        // the row instead emits a SHORT record, and a reader then either rejects
+        // the file or pulls the next row's leading values up into it. The
+        // over-long row is already refused; this is the other side of it.
+        let d = tmp("short");
+        let path = d.join("short.csv");
+        let p = path.to_str().unwrap();
+        let res = file_write_csv(
+            &json!({ "path": p, "columns": ["A", "B", "C"], "rows": [["x"], []] }),
+            false,
+        )
+        .unwrap();
+        assert_eq!(res["row-count"], json!(2));
+        assert_eq!(
+            std::fs::read_to_string(p).unwrap(),
+            "A,B,C\r\nx,,\r\n,,\r\n"
+        );
+    }
+
+    // ── the shapes `write-csv` refuses ──────────────────────────────────────
+
+    #[test]
+    fn rows_that_are_not_records_are_refused_and_no_rows_is_a_header_only_file() {
+        let d = tmp("rows");
+        // Absent and explicit-null `rows` are legal and mean "header only" — a
+        // real result (an empty export) rather than an error.
+        for (salt, args) in [
+            ("absent", json!({ "columns": ["A", "B"] })),
+            ("null", json!({ "columns": ["A", "B"], "rows": null })),
+        ] {
+            let path = d.join(format!("{salt}.csv"));
+            let mut args = args;
+            args["path"] = json!(path.to_str().unwrap());
+            let res = file_write_csv(&args, false).unwrap();
+            assert_eq!(res["row-count"], json!(0), "{salt}");
+            assert_eq!(std::fs::read_to_string(&path).unwrap(), "A,B\r\n", "{salt}");
+        }
+
+        // A `rows` that is not an array at all, named by type.
+        let path = d.join("bad.csv");
+        let p = path.to_str().unwrap();
+        let err = file_write_csv(
+            &json!({ "path": p, "columns": ["A"], "rows": { "A": 1 } }),
+            false,
+        )
+        .unwrap_err();
+        assert!(
+            format!("{err}").contains("`rows` must be an array (got object)"),
+            "{err}"
+        );
+
+        // An array whose ELEMENTS are not records. Each must stop the write —
+        // rendering a scalar as a one-cell row would quietly produce a file
+        // whose shape nobody asked for.
+        for bad in [json!(42), json!("x"), json!(null), json!(true)] {
+            assert!(
+                file_write_csv(
+                    &json!({ "path": p, "columns": ["A"], "rows": [bad] }),
+                    false
+                )
+                .is_err(),
+                "a row of {bad} was accepted"
+            );
+        }
+        assert!(!path.exists(), "a refused write leaves nothing behind");
+    }
+
+    #[test]
+    fn columns_is_required_and_must_be_a_list() {
+        // Without `columns` there is no header and no cell order, so defaulting
+        // it to empty would emit a blank header over blank records and call that
+        // a successful export.
+        let d = tmp("cols");
+        let path = d.join("cols.csv");
+        let p = path.to_str().unwrap();
+        for bad in [json!(null), json!("A,B"), json!({ "A": 1 }), json!(3)] {
+            assert!(
+                file_write_csv(&json!({ "path": p, "columns": bad }), false).is_err(),
+                "columns {bad} was accepted"
+            );
+        }
+        assert!(file_write_csv(&json!({ "path": p }), false).is_err());
+        assert!(!path.exists());
+    }
+
+    // ── previews never touch disk ───────────────────────────────────────────
+
+    #[test]
+    fn write_csv_dry_run_counts_the_rows_without_touching_disk() {
+        // The same gate `file_write` has, on the verb that had no test for it.
+        let d = tmp("csvdry");
+        let path = d.join("never.csv");
+        let p = path.to_str().unwrap();
+        let res = file_write_csv(
+            &json!({ "path": p, "columns": ["A"], "rows": [{ "A": 1 }, { "A": 2 }] }),
+            true,
+        )
+        .unwrap();
+        assert_eq!(res["row-count"], json!(2));
+        assert!(!path.exists(), "dry-run never writes");
+    }
+
+    // ── encodings ───────────────────────────────────────────────────────────
+
+    #[test]
+    fn an_unknown_write_encoding_is_refused_rather_than_written_as_text() {
+        // `read` pins this; `write` did not. Falling through to `text` writes
+        // the base64 SOURCE — the literal characters `UEsDBA==` — into a file
+        // the author expected to hold four bytes of zip header, and reports the
+        // wrong length as a success.
+        let d = tmp("wenc");
+        let path = d.join("enc.bin");
+        let p = path.to_str().unwrap();
+        let err = file_write(
+            &json!({ "path": p, "bytes": "UEsDBA==", "encoding": "utf16" }),
+            false,
+        )
+        .unwrap_err();
+        assert!(format!("{err}").contains("unknown encoding"), "{err}");
+        assert!(!path.exists(), "nothing is written on the refusal");
+    }
+
+    #[test]
+    fn a_binary_file_read_as_text_is_refused_and_says_to_use_base64() {
+        // `read_round_trips_text_and_base64` reads these bytes as base64 only;
+        // its comment claims text "would fail" without ever asking. A lossy
+        // decode would instead hand back a string of U+FFFD and a byte count
+        // that no longer matches it — a corrupt read wearing a success.
+        let d = tmp("renc");
+        let path = d.join("bin.dat");
+        let p = path.to_str().unwrap();
+        std::fs::write(p, [0x50, 0x4b, 0xff]).unwrap();
+        let err = file_read(&json!({ "path": p }), false).unwrap_err();
+        assert!(
+            matches!(err, AwareError::Validation(_)),
+            "the caller chose the wrong encoding, which is their error, not an internal one: {err:?}"
+        );
+        let msg = format!("{err}");
+        assert!(msg.contains("not valid UTF-8"), "{msg}");
+        assert!(msg.contains("base64"), "{msg}");
+    }
 }
