@@ -139,3 +139,56 @@ test('aggregate property expansion is bounded before repeated references allocat
     (error) => error.code === 'reference-output-too-large',
   );
 });
+
+// #519: an integral double past the safe-integer range passed the finiteness gate, then threw a bare
+// TypeError out of canonicalJsonBytes while the artifacts were being signed — which the dispatch can only
+// report as reference-internal-error, naming neither the field nor the value. These pin the typed refusal
+// AND the fact that it happens before any artifact bytes exist.
+test('an integral double past the safe-integer range is refused as invalid metadata, not masked as internal', () => {
+  const metadata = makeMetadataFixture();
+  metadata.parameters.push({ id: '5002', name: 'Volume', unit: 'mm3', readable: true, storageType: 'double', value: 9.223372036854776e18 });
+  metadata.parameterGroups[0].parameters = [0, 1];
+  assert.throws(
+    () => normalizeRevitMetadata(metadata, geometry.slice(0, 1)),
+    (error) => error.name === 'ModelReaderError'
+      && error.code === 'reference-metadata-invalid'
+      && error.phase === 'normalize-metadata'
+      && error.retryable === false
+      && /parameters\[1\]\.value must be a safe integer/.test(error.message),
+  );
+});
+
+test('doubles at the safe-integer edge and tiny subnormals stay acceptable, so the gate is not a magnitude gate', () => {
+  const metadata = makeMetadataFixture();
+  // The gate turns on safe-INTEGRALITY, not size. MAX_SAFE_INTEGER is the largest integral double that
+  // round-trips, and a subnormal is the smallest non-zero one; both canonicalize. (Every double at or above
+  // 2**53 IS integral, so there is deliberately no "huge but fractional" case here — no such double exists,
+  // and asserting one would only encode a misreading of the rule.)
+  metadata.parameters.push(
+    { id: '5002', name: 'Safe', unit: null, readable: true, storageType: 'double', value: Number.MAX_SAFE_INTEGER },
+    { id: '5003', name: 'Negative', unit: null, readable: true, storageType: 'double', value: Number.MIN_SAFE_INTEGER },
+    { id: '5004', name: 'Tiny', unit: null, readable: true, storageType: 'double', value: 5e-324 },
+  );
+  metadata.parameterGroups[0].parameters = [0, 1, 2, 3];
+  const result = normalizeRevitMetadata(metadata, geometry.slice(0, 1));
+  assert.deepEqual(result.properties.map((row) => row.value), ['1FixtureGuid00000000000', 9007199254740991, -9007199254740991, 5e-324]);
+  // and the artifacts really were produced, so the accepted values canonicalize rather than throwing later
+  assert.ok(result.propertiesBytes.includes('9007199254740991'));
+});
+
+test('the string escape hatch the refusal points a producer at actually round-trips', () => {
+  const metadata = makeMetadataFixture();
+  metadata.parameters.push({ id: '5002', name: 'Volume', unit: null, readable: true, storageType: 'string', value: '9223372036854775807' });
+  metadata.parameterGroups[0].parameters = [0, 1];
+  const result = normalizeRevitMetadata(metadata, geometry.slice(0, 1));
+  assert.equal(result.properties[1].value, '9223372036854775807');
+});
+
+test('a level elevation past the safe-integer range is refused at admission too', () => {
+  const metadata = makeMetadataFixture();
+  metadata.levels[0].elevation = 1e20;
+  assert.throws(
+    () => normalizeRevitMetadata(metadata, geometry.slice(0, 1)),
+    (error) => error.code === 'reference-metadata-invalid' && /levels\[0\]\.elevation must be a safe integer/.test(error.message),
+  );
+});
