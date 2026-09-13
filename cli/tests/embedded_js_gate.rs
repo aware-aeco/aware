@@ -33,6 +33,37 @@
 //! find. Without the last one a refactor that moved the templates elsewhere
 //! would leave a gate reporting a clean crate over nothing — the failure mode
 //! `tests/dotnet_suites_gate.rs` records from #433.
+//!
+//! ## What this file deliberately does NOT assert, and why
+//!
+//! It used to police the internal shape of `tests/browser/run.mjs` — that step 0
+//! calls the shared entry point and reimplements none of its parts. Those
+//! assertions are gone. They needed to know which text in a JavaScript file is
+//! code, and doing that from Rust meant hand-rolling a lexer, which was wrong
+//! four separate ways in review (#518): it read `//` only, so a block comment
+//! fooled it; then it read comments but not strings, so the function's name in a
+//! diagnostic message satisfied "must call"; and its regex-literal escape hatch
+//! matched four spellings out of infinitely many, while `const re=/[/*]/` both
+//! slips through and desynchronises the stripper for everything after it.
+//!
+//! The honest reading of that record: a Rust integration test is the wrong place
+//! to decide what a JavaScript expression is, and each fix bought one spelling.
+//! The cost was real and the benefit was not — those assertions guarded a file CI
+//! never executes (`run.mjs` needs Playwright and a CDN; no workflow runs it),
+//! and in eight review rounds they caught no defect in shipped code while
+//! generating four findings of their own.
+//!
+//! What actually protects users is untouched: `scripts/parse-check-embedded-js.mjs`
+//! runs in `ci.yml` on every PR, with its own 27-case negative control and a
+//! per-file inventory floor, and since #518's restructuring that floor lives
+//! *inside* `checkEmbeddedScripts` — so the drift the deleted assertions were
+//! written to catch is now structurally impossible rather than merely policed.
+//! The residual risk is that someone edits `run.mjs` to stop calling it, which
+//! shows up as a missing step-0 section to whoever runs the manual gate.
+//!
+//! `strip_js_comments` therefore survives scoped to where it began and is sound:
+//! the four-line `EXPECTED` table, which contains no strings but paths and no
+//! regular expressions at all.
 
 use std::path::PathBuf;
 
@@ -99,25 +130,6 @@ fn step_index(steps: &[Step], name: &str) -> usize {
 
 const STEP: &str = "shipped inline JavaScript parses";
 const SCRIPT: &str = "scripts/parse-check-embedded-js.mjs";
-/// The single entry point both callers go through — see [`checkEmbeddedScripts`]
-/// in the scan script for why the step is one function rather than three.
-const ENTRY: &str = "checkEmbeddedScripts";
-
-/// A JavaScript file with every comment blanked out, so the assertions below read
-/// code and never prose.
-///
-/// Both comment forms, via [`strip_js_comments`] — the same stripper the
-/// `EXPECTED` reader uses. An earlier draft filtered `//` lines only, which was
-/// wrong twice over: it tripped on a rule's own explanatory comment quoting the
-/// expression it forbids, and then, once that was fixed, disabling a line with
-/// `/* … */` still read as code, so the "must call the entry point" assertion
-/// stayed green over a call that had been commented out (Codex reviews, #518).
-///
-/// Line structure is preserved, so `lines()` over the result still aligns with the
-/// original file.
-fn code_only(src: &str) -> String {
-    strip_js_comments(src)
-}
 
 #[test]
 fn ci_still_parse_checks_the_javascript_this_crate_emits() {
@@ -303,122 +315,6 @@ fn expected_keys(script: &str) -> Vec<String> {
     keys
 }
 
-/// One parse check, not two.
-///
-/// `tests/browser/run.mjs` used to carry its own, covering the module script and
-/// nothing else. Two implementations is how the classic bootstrap script came to
-/// be checked by neither: each looked like the other's coverage.
-#[test]
-fn the_browser_gate_delegates_its_parse_check_rather_than_repeating_it() {
-    // Comments blanked FIRST, once, for everything below. Filtering `//` lines was
-    // not enough: a line disabled with `/* … */` still read as code, so the "must
-    // call the entry point" assertion stayed green over a commented-out call (Codex
-    // review, #518).
-    let run = code_only(&read("cli/tests/browser/run.mjs"));
-
-    // The IMPORT STATEMENT, not the filename. The first draft searched the whole
-    // file for `parse-check-embedded-js.mjs`, which also appears in the header
-    // comment explaining the delegation — so deleting the import left this green
-    // while `run.mjs` reached `collect(CLI)` with `collect` undefined and aborted
-    // instead of parse-checking anything (Codex review, #518).
-    let import = run
-        .lines()
-        .find(|line| {
-            let line = line.trim_start();
-            line.starts_with("import") && line.contains("parse-check-embedded-js.mjs")
-        })
-        .unwrap_or_else(|| {
-            panic!(
-                "tests/browser/run.mjs has no `import … from '…/parse-check-embedded-js.mjs'` \
-                 statement, so its step 0 calls functions nothing brought into scope. Two \
-                 parse checks drift; none at all aborts."
-            )
-        });
-
-    // The exact LOCAL binding, not a substring. `import.contains("…")` is satisfied
-    // by an alias, which binds a different name and leaves the call unbound, and by
-    // any longer identifier containing the substring (Codex review, #518).
-    let bindings = import_local_names(import);
-    assert!(
-        bindings.iter().any(|b| b == ENTRY),
-        "tests/browser/run.mjs imports from cli/{SCRIPT} but does not bind the local \
-         name {ENTRY:?} its step 0 calls (an alias binds a different name). Local \
-         names bound: {bindings:?}"
-    );
-
-    // Bound is not called. Deleting `checkEmbeddedScripts(…)` from the body while
-    // leaving the import in place satisfied every assertion above, and the gate
-    // would then parse whatever collection happened to find — the regression the
-    // assertion exists to prevent, reachable by deleting one line (Codex review,
-    // #518). So require the CALL, on a code line.
-    assert!(
-        run.contains(&format!("{ENTRY}(")),
-        "tests/browser/run.mjs imports {ENTRY:?} but never calls it. An import that \
-         nothing invokes is not delegation; step 0 would then check nothing, or \
-         whatever it reassembled locally."
-    );
-
-    // And nothing of its own. The step's primitives are deliberately NOT reachable
-    // here: two rounds of findings were this file assembling them and leaving one
-    // out — its own `blocks.length < 5` floor after the shared floor moved on, and
-    // before that its own `new Function` parse. One call has no parts to skip;
-    // these are what stop the parts coming back.
-    for own in [
-        "collect(",
-        "shortfall(",
-        "parseError(",
-        "blocks.length <",
-        "new Function(",
-    ] {
-        let line = run.lines().find(|line| line.contains(own));
-        assert!(
-            line.is_none(),
-            "tests/browser/run.mjs has reassembled the check locally ({own:?} at \
-             {line:?}). The whole step lives in cli/{SCRIPT} behind {ENTRY:?} \
-             precisely so this file has no floor, no parser and no discovery order \
-             of its own to get wrong."
-        );
-    }
-}
-
-/// [`strip_js_comments`] reads `//` and `/*` as comment openers wherever they are
-/// not inside a string, which a regular-expression literal would fool.
-///
-/// Neither region has one today. This is what keeps that a fact rather than an
-/// assumption, since the alternative is a full JavaScript lexer in a test helper — and the failure would be silent: a real comment read as code, or a line
-/// of code blanked away and its assertion passing over nothing.
-#[test]
-fn nothing_the_comment_stripper_reads_contains_a_regex_literal() {
-    // Scoped to exactly what the stripper is SHOWN, not to whole files. The scan
-    // script uses regular expressions freely and legitimately — it has to, to find
-    // `<script>` tags — but the stripper only ever sees its `EXPECTED` table body,
-    // where a literal would be absurd. `run.mjs` is scanned whole, so it is checked
-    // whole.
-    let regions = [
-        (
-            "cli/tests/browser/run.mjs (whole file)",
-            read("cli/tests/browser/run.mjs"),
-        ),
-        (
-            "the EXPECTED table body in cli/scripts/parse-check-embedded-js.mjs",
-            expected_body(&read(&format!("cli/{SCRIPT}"))),
-        ),
-    ];
-    for (what, src) in regions {
-        // A regex literal appears where a value can start: after `=`, `(` or `,`.
-        for shape in ["= /", "(/", ", /", "return /"] {
-            assert!(
-                !src.contains(shape),
-                "{what} now contains what looks like a regular-expression literal \
-                 ({shape:?}). strip_js_comments cannot tell one from a comment, so its \
-                 output — which the assertions here read — can no longer be trusted. \
-                 Either drop the literal or give the helper a real lexer; do not leave \
-                 it guessing."
-            );
-        }
-    }
-}
-
 /// `src` with both JavaScript comment forms blanked to spaces, newlines kept so
 /// line structure survives for the caller's per-line parse.
 ///
@@ -426,16 +322,16 @@ fn nothing_the_comment_stripper_reads_contains_a_regex_literal() {
 /// would mistake the `/` inside `'src/auth/paste.rs'` for the start of a comment
 /// and eat the rest of the table.
 ///
-/// All three quote forms, not just `'`. `tests/browser/run.mjs` is full of template
-/// literals, and tracking one quote character while the text contains another
-/// leaves the state machine inside a string it has already left — after which a
-/// real comment reads as code, or code as a comment. Escapes are honoured so that
-/// `'it\'s'` does not end early.
+/// All three quote forms and escapes, so that neither a `"` nor a backtick nor
+/// `'it\'s'` leaves the state machine inside a string it has already left.
 ///
-/// Known limit, stated rather than hidden: a regular-expression literal containing
-/// `//` or `/*` would be read as a comment. Neither file scanned here has one, and
-/// [`nothing_the_comment_stripper_reads_contains_a_regex_literal`] is what keeps that
-/// true rather than assumed.
+/// **Shown the `EXPECTED` table body and nothing else.** That scoping is what
+/// makes it sound rather than approximately right: those four lines hold quoted
+/// paths and integers, no regular expressions, and no construct where `//` or
+/// `/*` means anything but a comment. It is emphatically not a JavaScript lexer —
+/// an earlier draft pointed it at whole files and was wrong four ways in review
+/// (see this module's header). If you need to know what an arbitrary `.mjs` file
+/// means, use `node`, not this.
 fn strip_js_comments(src: &str) -> String {
     let bytes: Vec<char> = src.chars().collect();
     let mut out = String::with_capacity(src.len());
@@ -486,32 +382,4 @@ fn strip_js_comments(src: &str) -> String {
         i += 1;
     }
     out
-}
-
-/// The local names bound by an `import { … } from '…'` line.
-///
-/// For `{ collect, parseError as pe }` this is `["collect", "pe"]` — the name
-/// actually in scope, which is the part after `as` when a spec is aliased and the
-/// whole spec otherwise. Anything outside the braces (a default or namespace
-/// import) is not what step 0 relies on and is ignored.
-fn import_local_names(import: &str) -> Vec<String> {
-    let Some(open) = import.find('{') else {
-        return Vec::new();
-    };
-    let Some(close_rel) = import[open + 1..].find('}') else {
-        return Vec::new();
-    };
-    let inner = &import[open + 1..open + 1 + close_rel];
-    inner
-        .split(',')
-        .filter_map(|spec| {
-            let spec = spec.trim();
-            if spec.is_empty() {
-                return None;
-            }
-            // `orig as local` binds `local`; a bare `orig` binds `orig`.
-            let local = spec.rsplit(" as ").next().unwrap_or(spec);
-            Some(local.trim().to_string())
-        })
-        .collect()
 }

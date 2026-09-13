@@ -51,6 +51,13 @@ const near = (a, b, tol = 0.5) => Math.abs(a - b) <= tol;
 // added to stop that checked only that `shortfall` was imported, which deleting the call left true
 // (Codex reviews, #518). Assembling three primitives here is three chances to leave one out, so the
 // shared script now owns the whole step and this reports what it returns.
+//
+// KEEP IT ONE CALL. Nothing enforces that any more: `cli/tests/embedded_js_gate.rs` used to police
+// the shape of this function and its assertions were deleted, because deciding what is code in a
+// JavaScript file from a Rust test needs a lexer, and the hand-rolled one was wrong four ways in
+// review (that file's header records which). So this is a convention now, not a gate. If you find
+// yourself reaching for `collect`, `shortfall` or `parseError` here, or writing a block count of
+// your own, the thing you want belongs in `checkEmbeddedScripts` where both callers get it.
 function parseCheckTemplate() {
   const { blocks, short, failures } = checkEmbeddedScripts(CLI);
   for (const line of short) ok(`inventory: ${line}`, false);
