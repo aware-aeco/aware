@@ -255,9 +255,24 @@ mod tests {
     use super::*;
     use serde_json::json;
 
-    /// A unique temp dir for one test (no extra dev-dep — std + pid + a per-call salt).
+    /// An EMPTY temp dir for one test (no extra dev-dep — std + pid + a per-call salt).
+    ///
+    /// Cleared on entry, which is the whole point. The name is keyed on the process
+    /// id and the OS reuses those, so without this a directory left by an earlier
+    /// run is handed to a later one — and six tests here assert that some path does
+    /// NOT exist. That is not a theoretical staleness: the mutation discipline this
+    /// module is tested under *creates* those very files. Running the documented
+    /// mutation for `an_unknown_write_encoding_is_refused_rather_than_written_as_text`
+    /// leaves `…-wenc/enc.bin` behind, so once the mutation is reverted the test
+    /// keeps failing against correct code until someone clears the temp dir — a
+    /// false signal that reads as "the fix didn't work".
+    ///
+    /// Each salt is used by exactly one test, so clearing here cannot race another
+    /// test running in parallel.
     fn tmp(salt: &str) -> std::path::PathBuf {
         let d = std::env::temp_dir().join(format!("aware-file-test-{}-{salt}", std::process::id()));
+        // Not `create_dir_all` alone: that is a no-op over a stale directory.
+        let _ = std::fs::remove_dir_all(&d);
         std::fs::create_dir_all(&d).unwrap();
         d
     }
@@ -412,6 +427,15 @@ mod tests {
         // spaces — created, reported as a success, and effectively unfindable.
         // The other four spellings are here so the guard cannot be narrowed to
         // the one case a fix happened to be written for.
+        //
+        // Previewed rather than written, for all three verbs. `req_path` runs
+        // before the `if !dry_run` gate, so the guard is tested exactly the same
+        // either way — but these paths are deliberately malformed and relative, so
+        // if the guard ever regresses a real write lands them in the PROCESS CWD,
+        // which is the crate root. That is not hypothetical: it leaves a file
+        // actually named `   \t ` sitting untracked in `cli/`, which `git add -A`
+        // would commit. A test for a destination guard must not become the thing
+        // that writes to an unintended destination.
         for bad in [
             json!(null),
             json!(""),
@@ -421,11 +445,11 @@ mod tests {
             json!([]),
         ] {
             assert!(
-                file_write(&json!({ "path": bad, "bytes": "x" }), false).is_err(),
+                file_write(&json!({ "path": bad, "bytes": "x" }), true).is_err(),
                 "write accepted path {bad}"
             );
             assert!(
-                file_write_csv(&json!({ "path": bad, "columns": ["A"] }), false).is_err(),
+                file_write_csv(&json!({ "path": bad, "columns": ["A"] }), true).is_err(),
                 "write-csv accepted path {bad}"
             );
             assert!(
@@ -434,8 +458,8 @@ mod tests {
             );
         }
         // …and the key being absent altogether, which is a different match arm.
-        assert!(file_write(&json!({ "bytes": "x" }), false).is_err());
-        assert!(file_write_csv(&json!({ "columns": ["A"] }), false).is_err());
+        assert!(file_write(&json!({ "bytes": "x" }), true).is_err());
+        assert!(file_write_csv(&json!({ "columns": ["A"] }), true).is_err());
         assert!(file_read(&json!({}), true).is_err());
     }
 
