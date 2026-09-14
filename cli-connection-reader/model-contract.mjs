@@ -13,7 +13,9 @@ export const MODEL_LIMITS = Object.freeze({
   providerStdoutBytes: { default: 256 * 1024, hard: 1024 * 1024 },
   providerStderrBytes: { default: 64 * 1024, hard: 256 * 1024 },
   conversionMs: { default: 10 * 60_000, hard: 30 * 60_000 },
-  maxSourceBytes: { default: 150 * 1024 * 1024, hard: 4 * 1024 * 1024 * 1024 },
+  // Keep the ordinary admission profile above twice the 94,531,584-byte Snowdon fixture. The 4 GiB
+  // hard ceiling remains the caller-controlled safety boundary for deliberately larger deployments.
+  maxSourceBytes: { default: 256 * 1024 * 1024, hard: 4 * 1024 * 1024 * 1024 },
   maxInputGlbBytes: { default: 128 * 1024 * 1024, hard: 512 * 1024 * 1024 },
   maxMetadataBytes: { default: 16 * 1024 * 1024, hard: 64 * 1024 * 1024 },
   maxProviderOutputBytes: { default: 144 * 1024 * 1024, hard: 576 * 1024 * 1024 },

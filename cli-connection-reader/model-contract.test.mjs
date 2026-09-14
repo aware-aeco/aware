@@ -61,6 +61,9 @@ test('every canonical request leaf affects the cache/request preimage', () => {
   assert.equal(MODEL_LIMITS.maxGlbJsonBytes.hard, 128 * 1024 * 1024);
   assert.equal(MODEL_LIMITS.maxInputGlbBytes.default, 128 * 1024 * 1024);
   assert.equal(MODEL_LIMITS.maxInputGlbBytes.hard, 512 * 1024 * 1024);
+  assert.equal(MODEL_LIMITS.maxSourceBytes.default, 256 * 1024 * 1024);
+  assert.ok(2 * 94_531_584 <= MODEL_LIMITS.maxSourceBytes.default,
+    'the default source limit must admit at least twice the pinned Snowdon RVT');
   assert.equal(buildCanonicalRequest({ protocolVersion: '2' }).protocolVersion, '2');
   assert.throws(() => buildCanonicalRequest({ protocolVersion: '3' }), /protocolVersion/);
 });

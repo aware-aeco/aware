@@ -379,12 +379,12 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
         return None;
     }
     Some(AwareError::AgentStructured {
-        code: parsed.code,
-        phase: parsed.phase,
+        code: parsed.code.into_boxed_str(),
+        phase: parsed.phase.into_boxed_str(),
         retryable: parsed.retryable,
-        message: parsed.message,
-        diagnostic_id: parsed.diagnostic_id,
-        provider_code: parsed.provider_code,
+        message: parsed.message.into_boxed_str(),
+        diagnostic_id: parsed.diagnostic_id.into_boxed_str(),
+        provider_code: parsed.provider_code.map(String::into_boxed_str),
         details: parsed
             .details
             .map(crate::error::AgentErrorDetails)
@@ -5504,11 +5504,14 @@ mod builtin_invoker_tests {
                 provider_code,
                 details,
             } => {
-                assert_eq!(code, "reference-provider-pin-mismatch");
-                assert_eq!(phase, "preflight");
+                assert_eq!(code.as_ref(), "reference-provider-pin-mismatch");
+                assert_eq!(phase.as_ref(), "preflight");
                 assert!(!retryable);
                 assert!(message.contains("expected fingerprint"));
-                assert_eq!(diagnostic_id, "123e4567-e89b-12d3-a456-426614174000");
+                assert_eq!(
+                    diagnostic_id.as_ref(),
+                    "123e4567-e89b-12d3-a456-426614174000"
+                );
                 assert_eq!(provider_code.as_deref(), Some("xeorvt-auth-unavailable"));
                 assert_eq!(
                     details.unwrap().0.get("expectedPin").map(String::as_str),

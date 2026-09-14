@@ -39,12 +39,12 @@ pub enum AwareError {
         "agent error {code} ({phase}, retryable={retryable}, diagnostic-id={diagnostic_id}): {message}"
     )]
     AgentStructured {
-        code: String,
-        phase: String,
+        code: Box<str>,
+        phase: Box<str>,
         retryable: bool,
-        message: String,
-        diagnostic_id: String,
-        provider_code: Option<String>,
+        message: Box<str>,
+        diagnostic_id: Box<str>,
+        provider_code: Option<Box<str>>,
         details: Option<Box<AgentErrorDetails>>,
     },
 
@@ -86,12 +86,12 @@ impl AwareError {
                 provider_code,
                 details,
             } => Some(StructuredAgentError {
-                code: code.clone(),
-                phase: phase.clone(),
+                code: code.to_string(),
+                phase: phase.to_string(),
                 retryable: *retryable,
-                message: message.clone(),
-                diagnostic_id: diagnostic_id.clone(),
-                provider_code: provider_code.clone(),
+                message: message.to_string(),
+                diagnostic_id: diagnostic_id.to_string(),
+                provider_code: provider_code.as_deref().map(str::to_owned),
                 details: details.as_deref().map(|value| value.0.clone()),
             }),
             _ => None,

@@ -1574,8 +1574,12 @@ fn structured(
         code: code.into(),
         phase: phase.into(),
         retryable: false,
-        message,
-        diagnostic_id: diagnostic_id.chars().take(128).collect(),
+        message: message.into_boxed_str(),
+        diagnostic_id: diagnostic_id
+            .chars()
+            .take(128)
+            .collect::<String>()
+            .into_boxed_str(),
         provider_code: None,
         details: details.map(|value| Box::new(AgentErrorDetails(value))),
     }
