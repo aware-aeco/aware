@@ -78,7 +78,12 @@ fn write_index_multiversion(root: &Path, id: &str, versions: &[(&str, &str, &str
         .map(|(ver, tarball, subdir)| {
             (
                 (*ver).to_string(),
-                serde_json::json!({ "tarball": *tarball, "subdir": *subdir }),
+                serde_json::json!({
+                    "tarball": *tarball,
+                    "subdir": *subdir,
+                    "manifest-agent": id,
+                    "manifest-version": *ver
+                }),
             )
         })
         .collect();
@@ -103,7 +108,12 @@ fn write_index(root: &Path, entries: &[(&str, &str, &str)]) {
             (
                 (*id).to_string(),
                 serde_json::json!({
-                    "versions": { *ver: { "tarball": SUBSTRATE_TARBALL, "subdir": *subdir } }
+                    "versions": { *ver: {
+                        "tarball": SUBSTRATE_TARBALL,
+                        "subdir": *subdir,
+                        "manifest-agent": *id,
+                        "manifest-version": *ver
+                    } }
                 }),
             )
         })
@@ -229,10 +239,52 @@ fn publish_stages_the_agent_under_a_repo_relative_subdir() {
     // would produce an index that installs nothing.
     assert_eq!(entry["subdir"], "aware-main/20-agents/aeco/demo");
     assert_eq!(entry["tarball"], SUBSTRATE_TARBALL);
+    assert_eq!(entry["manifest-agent"], "demo");
+    assert_eq!(entry["manifest-version"], "1.0.0");
     // Publishing is a merge, not a rewrite: the agent already in the index survives.
     assert_eq!(
         doc["agents"]["keeper"]["versions"]["0.1.0"]["subdir"],
         "aware-main/20-agents/aeco/keeper"
+    );
+}
+
+#[test]
+fn publish_refuses_a_legacy_release_without_bindings_and_leaves_the_index_unchanged() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let agent_dir = root.join("20-agents/aeco/demo");
+    write_agent(&agent_dir, "demo", "1.0.0", "A demo agent.");
+    write_index(
+        root,
+        &[("keeper", "0.1.0", "aware-main/20-agents/aeco/keeper")],
+    );
+    let mut index = index_of(root);
+    index["agents"]["keeper"]["versions"]["0.1.0"]
+        .as_object_mut()
+        .unwrap()
+        .remove("manifest-agent");
+    std::fs::write(
+        root.join("registry-index.json"),
+        serde_json::to_string_pretty(&index).unwrap(),
+    )
+    .unwrap();
+    init_and_stage_checkout(root);
+    let before = std::fs::read(root.join("registry-index.json")).unwrap();
+
+    aware()
+        .env("AWARE_HOME", home_in(root))
+        .args(["agent", "publish"])
+        .arg(&agent_dir)
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("keeper@0.1.0"))
+        .stderr(predicate::str::contains("missing manifest-agent"));
+
+    assert_eq!(
+        std::fs::read(root.join("registry-index.json")).unwrap(),
+        before,
+        "a refused publish must not rewrite the malformed source index"
     );
 }
 
@@ -804,6 +856,57 @@ fn reindex_accepts_two_versions_at_distinct_subdirs() {
     assert_eq!(versions["0.1.0"]["manifest-version"], "0.1.0");
     assert_eq!(versions["0.2.0"]["description"], "The current 0.2.0 build.");
     assert_eq!(versions["0.2.0"]["manifest-version"], "0.2.0");
+}
+
+#[test]
+fn reindex_refuses_missing_or_mismatched_manifest_bindings() {
+    for (case, edit, expected) in [
+        (
+            "missing",
+            (|entry: &mut serde_json::Value| {
+                entry.as_object_mut().unwrap().remove("manifest-version");
+            }) as fn(&mut serde_json::Value),
+            "missing manifest-version",
+        ),
+        (
+            "mismatched",
+            |entry: &mut serde_json::Value| {
+                entry["manifest-agent"] = "different-agent".into();
+            },
+            "expects manifest-agent different-agent",
+        ),
+    ] {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        write_agent(
+            &root.join("20-agents/aeco/demo"),
+            "demo",
+            "1.0.0",
+            "A demo agent.",
+        );
+        write_index(root, &[("demo", "1.0.0", "aware-main/20-agents/aeco/demo")]);
+        let mut index = index_of(root);
+        edit(&mut index["agents"]["demo"]["versions"]["1.0.0"]);
+        std::fs::write(
+            root.join("registry-index.json"),
+            serde_json::to_string_pretty(&index).unwrap(),
+        )
+        .unwrap();
+
+        aware()
+            .current_dir(root)
+            .env("AWARE_HOME", home_in(root))
+            .args(["agent", "reindex"])
+            .assert()
+            .failure()
+            .code(3)
+            .stderr(predicate::str::contains("demo@1.0.0"))
+            .stderr(predicate::str::contains(expected));
+        assert!(
+            !root.join("registry-catalog.json").exists(),
+            "{case}: a refused reindex must not publish a catalog"
+        );
+    }
 }
 
 #[test]

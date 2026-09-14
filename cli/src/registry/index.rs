@@ -70,11 +70,100 @@ pub struct VersionEntry {
     pub tarball: String,
     pub subdir: String,
     #[serde(
+        rename = "manifest-agent",
+        default,
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub manifest_agent: Option<String>,
+    #[serde(
+        rename = "manifest-version",
+        default,
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub manifest_version: Option<String>,
+    #[serde(
         rename = "bundle-digest",
         default,
         skip_serializing_if = "Option::is_none"
     )]
     pub bundle_digest: Option<String>,
+}
+
+/// Whether an agent id is one portable directory name on every supported platform.
+pub(crate) fn is_portable_agent_id(id: &str) -> bool {
+    let bytes = id.as_bytes();
+    if bytes.is_empty()
+        || !bytes[0].is_ascii_alphanumeric()
+        || !bytes
+            .iter()
+            .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'.' | b'_' | b'-'))
+        || id.ends_with('.')
+    {
+        return false;
+    }
+    let stem = id.split('.').next().unwrap_or("").to_ascii_uppercase();
+    let numbered_device = ["COM", "LPT"].iter().any(|prefix| {
+        stem.strip_prefix(prefix)
+            .is_some_and(|suffix| matches!(suffix.as_bytes(), [b'1'..=b'9']))
+    });
+    !(matches!(stem.as_str(), "CON" | "PRN" | "AUX" | "NUL") || numbered_device)
+}
+
+pub(crate) fn validate_release_contract<'a>(
+    key: &str,
+    version: &str,
+    entry: &IndexEntry,
+    release: &'a VersionEntry,
+) -> Result<(&'a str, &'a str), String> {
+    let agent = release
+        .manifest_agent
+        .as_deref()
+        .ok_or_else(|| format!("registry entry {key}@{version} is missing manifest-agent"))?;
+    let manifest_version = release
+        .manifest_version
+        .as_deref()
+        .ok_or_else(|| format!("registry entry {key}@{version} is missing manifest-version"))?;
+    if !is_portable_agent_id(agent) {
+        return Err(format!(
+            "registry entry {key}@{version} has invalid manifest-agent {agent:?}; use a portable agent id containing only ASCII letters, digits, '.', '_' or '-'"
+        ));
+    }
+    if crate::validate::parse_semver(manifest_version).is_none() {
+        return Err(format!(
+            "registry entry {key}@{version} has invalid manifest-version {manifest_version:?}; expected strict SemVer such as 1.2.3"
+        ));
+    }
+    if let Some(target) = entry.alias_of.as_deref()
+        && target != agent
+    {
+        return Err(format!(
+            "registry entry {key}@{version} is an alias of {target:?}, but manifest-agent is {agent}; make alias-of and manifest-agent name the same target"
+        ));
+    }
+    Ok((agent, manifest_version))
+}
+
+pub(crate) fn validate_release_payload(
+    key: &str,
+    version: &str,
+    entry: &IndexEntry,
+    release: &VersionEntry,
+    actual_agent: &str,
+    actual_version: &str,
+) -> Result<(), String> {
+    let (expected_agent, expected_version) =
+        validate_release_contract(key, version, entry, release)?;
+    if actual_agent != expected_agent {
+        return Err(format!(
+            "registry entry {key}@{version} expects manifest-agent {expected_agent}, but the downloaded payload declares {actual_agent:?}; fix the entry's tarball, subdir, or manifest-agent and retry"
+        ));
+    }
+    if actual_version != expected_version {
+        return Err(format!(
+            "registry entry {key}@{version} expects manifest-version {expected_version}, but the downloaded payload declares {actual_version:?}; fix the entry's tarball, subdir, or manifest-version and retry"
+        ));
+    }
+    Ok(())
 }
 
 /// The archive's top-level folder, which every substrate-hosted `subdir` is written
@@ -650,6 +739,145 @@ mod tests {
         assert_eq!(idx.version, "1.0");
         assert!(idx.agents.contains_key("tekla"));
         assert!(idx.bundles.contains_key("aware-aeco"));
+    }
+
+    fn bound_release(agent: Option<&str>, version: Option<&str>) -> VersionEntry {
+        VersionEntry {
+            tarball: "https://example.invalid/agent.tar.gz".into(),
+            subdir: "agent".into(),
+            manifest_agent: agent.map(str::to_owned),
+            manifest_version: version.map(str::to_owned),
+            bundle_digest: None,
+        }
+    }
+
+    #[test]
+    fn release_contract_requires_complete_portable_semantic_bindings() {
+        let ordinary = IndexEntry::default();
+        for (release, expected) in [
+            (bound_release(None, Some("1.0.0")), "missing manifest-agent"),
+            (
+                bound_release(Some("probe"), None),
+                "missing manifest-version",
+            ),
+            (
+                bound_release(Some(""), Some("1.0.0")),
+                "invalid manifest-agent",
+            ),
+            (
+                bound_release(Some("../probe"), Some("1.0.0")),
+                "invalid manifest-agent",
+            ),
+            (
+                bound_release(Some("CON.txt"), Some("1.0.0")),
+                "invalid manifest-agent",
+            ),
+            (
+                bound_release(Some("probe"), Some("1.0")),
+                "invalid manifest-version",
+            ),
+        ] {
+            let error =
+                validate_release_contract("probe", "2026.1", &ordinary, &release).unwrap_err();
+            assert!(error.contains("probe@2026.1"), "{error}");
+            assert!(error.contains(expected), "{error}");
+        }
+    }
+
+    #[test]
+    fn release_contract_supports_explicit_suffixes_and_requires_alias_target_identity() {
+        let suffixed = bound_release(Some("allplan-2024.0"), Some("0.30.0"));
+        assert!(
+            validate_release_contract(
+                "allplan-2024",
+                "2024.0.1.35",
+                &IndexEntry::default(),
+                &suffixed
+            )
+            .is_ok()
+        );
+
+        let alias = IndexEntry {
+            alias_of: Some("steel-detailer-us".into()),
+            ..Default::default()
+        };
+        let valid = bound_release(Some("steel-detailer-us"), Some("1.0.0"));
+        assert!(validate_release_contract("old", "1.0.0", &alias, &valid).is_ok());
+        let invalid = bound_release(Some("another-agent"), Some("1.0.0"));
+        let error = validate_release_contract("old", "1.0.0", &alias, &invalid).unwrap_err();
+        assert!(error.contains("alias of \"steel-detailer-us\""), "{error}");
+
+        let injected_alias = IndexEntry {
+            alias_of: Some("target\nagent\u{1b}[31m".into()),
+            ..Default::default()
+        };
+        let error = validate_release_contract("old", "1.0.0", &injected_alias, &valid).unwrap_err();
+        assert!(
+            !error.contains('\n'),
+            "terminal output stays on one line: {error:?}"
+        );
+        assert!(
+            !error.contains('\u{1b}'),
+            "terminal output carries no escape byte: {error:?}"
+        );
+        assert!(error.contains(r#""target\nagent\u{1b}[31m""#), "{error:?}");
+    }
+
+    #[test]
+    fn portable_agent_ids_are_platform_independent() {
+        for id in ["a", "viewer-3d", "allplan-2024.0", "A_B"] {
+            assert!(is_portable_agent_id(id), "{id}");
+        }
+        for id in [
+            "", ".hidden", "a/../b", "a\\b", "a:b", "a ", "a.", "NUL", "com1.log",
+        ] {
+            assert!(!is_portable_agent_id(id), "{id}");
+        }
+    }
+
+    #[test]
+    fn payload_mismatch_escapes_untrusted_manifest_text() {
+        let release = bound_release(Some("probe"), Some("1.0.0"));
+        let error = validate_release_payload(
+            "probe",
+            "1.0.0",
+            &IndexEntry::default(),
+            &release,
+            "other\nagent\u{1b}[31m",
+            "1.0.0",
+        )
+        .unwrap_err();
+        assert!(
+            !error.contains('\n'),
+            "terminal output stays on one line: {error:?}"
+        );
+        assert!(
+            !error.contains('\u{1b}'),
+            "terminal output carries no escape byte: {error:?}"
+        );
+        assert!(error.contains(r#""other\nagent\u{1b}[31m""#), "{error:?}");
+    }
+
+    #[test]
+    fn production_viewer_release_keeps_its_exact_historical_identity() {
+        let index =
+            Index::parse(include_bytes!("../../../registry-index.json").as_slice()).unwrap();
+        let release = &index.agents["viewer-3d"].versions["0.1.0"];
+        let commit = "b6991920e952a0bc293308faa9090dfd2d9b570e";
+        assert_eq!(
+            release.tarball,
+            format!("https://github.com/aware-aeco/aware/archive/{commit}.tar.gz")
+        );
+        assert_eq!(
+            release.subdir,
+            format!("aware-{commit}/20-agents/_core/viewer-3d")
+        );
+        assert_eq!(release.manifest_agent.as_deref(), Some("viewer-3d"));
+        assert_eq!(release.manifest_version.as_deref(), Some("0.1.0"));
+        assert_eq!(
+            release.bundle_digest.as_deref(),
+            Some("sha256:e590bf2fb31cb3ae8d1c4fa6664df1658d20fdfa5e40b14af3cc330d8b3a4296")
+        );
     }
 
     #[test]
