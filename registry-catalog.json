@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-14T10:45:57.677682600+00:00",
+  "updated-at": "2026-09-15T11:35:25.539878600+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -4436,7 +4436,7 @@
       }
     },
     "model-reference-reader": {
-      "display-name": "Authenticated RVT Reference Reader",
+      "display-name": "Authenticated Model Reference Reader",
       "vendor": "aware-aeco",
       "keywords": [
         "aware",
@@ -4449,10 +4449,10 @@
         "local"
       ],
       "versions": {
-        "0.4.0": {
+        "0.5.0": {
           "description": "Convert a local Revit project into deterministic, authenticated reference-model artifacts without",
           "status": "available",
-          "manifest-version": "0.4.0",
+          "manifest-version": "0.5.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 4,

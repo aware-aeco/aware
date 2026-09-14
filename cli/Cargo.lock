@@ -297,6 +297,7 @@ dependencies = [
  "rand",
  "rand_core",
  "scraper",
+ "semver",
  "serde",
  "serde_json",
  "serde_yaml",

@@ -49,6 +49,7 @@ url        = "2"
 rand       = "0.8"
 base64     = "0.22"
 sha2       = "0.10"
+semver     = "1"
 
 # v0.27 — Stamped Receipt (ed25519-signed JSONL receipts).
 ed25519-dalek = { version = "2", features = ["rand_core"] }

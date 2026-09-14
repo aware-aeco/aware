@@ -623,6 +623,10 @@ impl CliInvoker {
             let host = std::env::current_exe()
                 .map_err(|e| AwareError::Internal(format!("resolve model-reader host: {e}")))?;
             process.env("AWARE_MODEL_READER_HOST", host);
+            // Package compatibility is rechecked by the reader at every launch, including after
+            // an AWARE upgrade. Override any ambient value so a caller cannot claim a different
+            // runtime version to an enrolled provider package.
+            process.env("AWARE_RUNTIME_VERSION", env!("CARGO_PKG_VERSION"));
             if let Some(path) = &self.reader_cancellation.state.cleanup_fence {
                 process.env("AWARE_MODEL_READER_HOST_CLEANUP_FENCE", path);
             }

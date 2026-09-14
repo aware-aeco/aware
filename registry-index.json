@@ -869,12 +869,12 @@
     },
     "model-reference-reader": {
       "versions": {
-        "0.4.0": {
+        "0.5.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
           "subdir": "aware-main/20-agents/aeco/engineering/model-reference-reader",
           "manifest-agent": "model-reference-reader",
-          "manifest-version": "0.4.0",
-          "bundle-digest": "sha256:1e94f4d3695641d3f7a10d64becc82743d3851bec35f186a7c7feeb189ddbe47"
+          "manifest-version": "0.5.0",
+          "bundle-digest": "sha256:a58eb2dc9d268f832bfdc1fbdebce5a52c82c532eea635cb9e6e7d5f060bf6cf"
         }
       }
     }

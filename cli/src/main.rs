@@ -53,6 +53,7 @@ mod lockfile;
 mod manifest;
 mod paths;
 mod plugins;
+mod provider_store;
 mod receipt;
 mod registry;
 mod render;
@@ -191,6 +192,12 @@ enum Command {
         #[command(subcommand)]
         action: commands::sidecar::SidecarCommand,
     },
+
+    /// Manage signed, locally enrolled model-provider packages.
+    Provider {
+        #[command(subcommand)]
+        action: commands::provider::ProviderCommand,
+    },
 }
 
 // Returns `()`, not a `Result`: every error path below ends in
@@ -234,6 +241,7 @@ async fn main() {
         Command::Key { action } => commands::key::dispatch(action, &ctx),
         Command::Receipt { action } => commands::receipt_cli::dispatch(action, &ctx),
         Command::Sidecar { action } => commands::sidecar::dispatch(action, &ctx),
+        Command::Provider { action } => commands::provider::dispatch(action, &ctx),
     };
 
     if let Err(err) = result {

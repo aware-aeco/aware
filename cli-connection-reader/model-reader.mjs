@@ -15,6 +15,7 @@ import {
 } from './model-cache.mjs';
 import { createModelHostClient } from './model-host-client.mjs';
 import { buildAndPublishSnapshot } from './model-snapshot.mjs';
+import { preflightEnrolledProviderPackage } from './model-provider-package.mjs';
 
 const STALE_PROVIDER_RUN_MS = 60 * 60_000;
 const ACTIVE_RUN_MARKER = '.active';
@@ -42,6 +43,34 @@ function configuration(args, deps) {
     privateRoot: deps.privateRoot ?? path.join(home, 'cache', 'model-reference-reader', 'provider-runs'),
     artifactDirectory: deps.artifactDirectory ?? environment.AWARE_ARTIFACT_DIR,
   };
+}
+
+function packageMode(args) {
+  return ['provider-format', 'provider-capability', 'provider-package-sha256']
+    .some((field) => Object.hasOwn(args, field));
+}
+
+function packageSigningConfiguration(args, deps) {
+  const environment = deps.environment ?? process.env;
+  const home = awareHome(environment);
+  const secretPath = args['signing-secret-path'] ?? environment.AWARE_MODEL_REFERENCE_SIGNING_KEY ?? path.join(home, 'keys', 'model-reference-reader.sec');
+  const publicPath = args['signing-public-path'] ?? environment.AWARE_MODEL_REFERENCE_PUBLIC_KEY ?? secretPath.replace(/\.sec$/i, '.pub');
+  return { environment, home, secretPath, publicPath };
+}
+
+function validatePackagePreflight(args, deps) {
+  const limits = requestLimits(args, deps);
+  for (const field of ['provider-format', 'provider-capability', 'provider-package-sha256']) {
+    if (typeof args[field] !== 'string' || !args[field]) readerError('reference-provider-package-request-invalid', 'request', `Package preflight requires ${field}.`);
+  }
+  if (args['expected-provider-protocol'] !== undefined && args['expected-provider-protocol'] !== '3') {
+    readerError('reference-provider-package-request-invalid', 'request', 'Enrolled provider packages require protocol v3.');
+  }
+  for (const field of ['provider-path', 'expected-provider-sha256', 'expected-provider-destination', 'authority-store-path']) {
+    if (args[field] !== undefined) readerError('reference-provider-package-request-invalid', 'request', `Package preflight cannot mix ${field} with enrollment selection.`);
+  }
+  if (args['expected-signer-sha256'] !== undefined) assertSha256(args['expected-signer-sha256'], 'expected-signer-sha256');
+  return limits;
 }
 
 async function hasFreshHeartbeat(candidate, now) {
@@ -399,6 +428,29 @@ export async function runModelCommand(command, args = {}, deps = {}) {
   if (!args || typeof args !== 'object' || Array.isArray(args)) readerError('reference-request-invalid', 'request', 'Command input must be a JSON object.');
   if (!['preflight', 'probe', 'read-model', 'read-snapshot'].includes(command)) {
     readerError('reference-command-invalid', 'request', 'Unknown model-reader command.');
+  }
+  if (packageMode(args)) {
+    if (command !== 'preflight') {
+      readerError('reference-provider-package-operation-unavailable', 'request', 'This AWARE version supports enrolled provider packages for preflight only.');
+    }
+    const limits = validatePackagePreflight(args, deps);
+    const config = packageSigningConfiguration(args, deps);
+    const signing = await signingReadiness(args, config);
+    const ownedHost = deps.hostRun ? null : await createModelHostClient(config.environment.AWARE_MODEL_READER_HOST, { environment: config.environment });
+    try {
+      const result = await preflightEnrolledProviderPackage({
+        home: config.home, formatId: args['provider-format'], capabilityId: args['provider-capability'],
+        manifestSha256: args['provider-package-sha256'], limits, environment: config.environment,
+        hostRun: deps.hostRun ?? ownedHost?.run, signal: deps.signal,
+      });
+      return {
+        ...result,
+        signerFingerprintSha256: signing.signerFingerprintSha256,
+        signerPublicKeyBase64: signing.signingKey.publicKeyBytes.toString('base64'),
+      };
+    } finally {
+      if (ownedHost) await ownedHost.close();
+    }
   }
   // Validate the complete request-only contract before resolving credentials, starting a host,
   // or probing a provider. Malformed calls retain stable errors on an unconfigured machine.

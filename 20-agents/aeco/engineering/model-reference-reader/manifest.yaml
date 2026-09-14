@@ -1,6 +1,6 @@
 agent: model-reference-reader
-version: 0.4.0
-display-name: Authenticated RVT Reference Reader
+version: 0.5.0
+display-name: Authenticated Model Reference Reader
 description: |
   Convert a local Revit project into deterministic, authenticated reference-model artifacts without
   importing ownership into AWARE. The reader returns canonical Z-up millimetre GLB geometry plus
@@ -11,6 +11,11 @@ description: |
   when the caller pins both its complete fingerprint and exact HTTPS destination. AWARE contains no
   provider, license, cloud credential or vendor HTTP client. First probe may perform the full conversion;
   later reads use a signed content-addressed cache after revalidating every receipt and byte.
+
+  Protocol v3 preflight can describe one signed, operator-enrolled provider package selected by an
+  opaque format and capability ID. AWARE verifies the package and publisher before and after the
+  provider runs, and exposes only enrolled identity and capability metadata. Source discovery and
+  conversion are not part of this version's v3 surface.
 stateful: false
 vendor: aware-aeco
 license: Apache-2.0
@@ -52,6 +57,18 @@ commands:
         type: string
         required: false
         description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+      provider-format:
+        type: string
+        required: false
+        description: Opaque format ID selecting an enrolled protocol-v3 provider package.
+      provider-capability:
+        type: string
+        required: false
+        description: Opaque capability ID declared by the selected provider package.
+      provider-package-sha256:
+        type: string
+        required: false
+        description: Exact enrolled package-manifest SHA-256 required for protocol-v3 preflight.
     outputs:
       type: single
       schema:
@@ -60,6 +77,9 @@ commands:
         providerFingerprintSha256: string
         signerFingerprintSha256: string
         signerPublicKeyBase64: string
+        providerPackageManifestSha256: string
+        package: object
+        capability: object
   probe:
     lifecycle: single
     category: curated
