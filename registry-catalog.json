@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-14T09:32:25.925147800+00:00",
+  "updated-at": "2026-09-14T13:39:06.727024800+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -7611,7 +7611,7 @@
         "0.1.0": {
           "description": "Utility agent that renders a generic 3D scene into a single-file interactive HTML",
           "status": "available",
-          "manifest-version": "0.1.2",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "builtin",
           "command_count": 1,

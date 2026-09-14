@@ -171,6 +171,14 @@ A version key that is not strict SemVer ranks **below** every key that is: it ca
 
 A version after `@` is an **exact key**, not a range. Ranges are an app-pinning syntax; see [Agent Spec](./agent-spec.md) § Installation.
 
+### Registry release identity
+
+Every installable registry version entry includes `manifest-agent` and `manifest-version`. These bind the registry key to the identity the extracted `manifest.yaml` must declare; the registry version and manifest version are deliberately separate values. Install and update require both bindings under every trust mode, validate the agent id with one portable filename-safe grammar, validate the manifest version as strict SemVer, and compare both values after extraction before any installed directory is created, removed, or replaced. A rename alias additionally requires `alias-of` to equal `manifest-agent`.
+
+Errors before download name the registry key/version and the missing or invalid binding. A payload mismatch names the release, the bound value, and the value the payload actually declared. Bundle install and `agent update --all` inherit the same checks because they call the single-agent install/update paths.
+
+An official bundle is `verified` only when its fresh registry binding, installation receipt, and installed manifest identity agree and its expected, recorded, and installed digests match. Digest equality alone cannot verify a payload under the wrong release name.
+
 ## Filesystem layout (what `aware` reads / writes)
 
 ```
