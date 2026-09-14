@@ -6,7 +6,7 @@ import path from 'node:path';
 import { Readable } from 'node:stream';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { ModelReaderError, sha256 } from './model-contract.mjs';
+import { ModelReaderError, READER_SCHEMA_VERSION_V2, sha256 } from './model-contract.mjs';
 import {
   describeAndConvert, describeProvider, hashRegularFile, minimalProviderEnvironment, stageImmutableSource,
   validateProviderExecutable,
@@ -149,25 +149,40 @@ test('managed-cloud protocol requires an exact canonical HTTPS destination pin',
   const description = {
     protocolVersion: '2', provider: 'fixture-provider', engine: 'xeoRvt', engineVersion: '0.2.0',
     adapterBuildId: 'fixture-v2', formats: ['rvt'], execution: 'managed-cloud',
-    destination: 'https://api.stage.floless.io',
+    destination: 'https://api.stage.floless.io', readerSchemaVersion: READER_SCHEMA_VERSION_V2,
   };
-  const hostRun = async () => ({ exitCode: 0, stdout: Buffer.from(JSON.stringify(description)), stderr: Buffer.alloc(0) });
+  const requests = [];
+  const hostRun = async (request) => {
+    if (request?.stdin) requests.push(JSON.parse(request.stdin.toString('utf8')));
+    return { exitCode: 0, stdout: Buffer.from(JSON.stringify(description)), stderr: Buffer.alloc(0) };
+  };
   const authorityStorePath = path.join(root, 'authority');
   const accepted = await describeProvider({
     executable, privateRoot: path.join(root, 'accepted'), hostRun,
     expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
   });
   assert.equal(accepted.describe.execution, 'managed-cloud');
   assert.equal(accepted.fingerprint.destination, description.destination);
+  assert.equal(accepted.fingerprint.readerSchemaVersion, READER_SCHEMA_VERSION_V2);
+  assert.equal(requests[0].readerSchemaVersion, READER_SCHEMA_VERSION_V2);
   await assert.rejects(() => describeProvider({
     executable, privateRoot: path.join(root, 'wrong'), hostRun,
     expectedProtocolVersion: '2', expectedDestination: 'https://api.floless.io', authorityStorePath,
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
   }), (error) => error.code === 'reference-provider-destination-mismatch');
   await assert.rejects(() => describeProvider({
     executable, privateRoot: path.join(root, 'noncanonical'),
     hostRun: async () => ({ ...await hostRun(), stdout: Buffer.from(JSON.stringify({ ...description, destination: `${description.destination}/` })) }),
     expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
   }), (error) => error.code === 'reference-provider-destination-mismatch');
+  await assert.rejects(() => describeProvider({
+    executable, privateRoot: path.join(root, 'legacy'),
+    hostRun: async () => ({ ...await hostRun({ stdin: Buffer.from('{}') }), stdout: Buffer.from(JSON.stringify({ ...description, readerSchemaVersion: undefined })) }),
+    expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
+  }), (error) => error.code === 'reference-provider-protocol');
 });
 
 test('provider provenance strings use the published schema character limits', async (t) => {
@@ -226,7 +241,7 @@ test('managed-cloud conversion passes only an absolute caller-bound authority st
   const description = {
     protocolVersion: '2', provider: 'fixture-provider', engine: 'xeoRvt', engineVersion: '0.2.0',
     adapterBuildId: 'fixture-v2', formats: ['rvt'], execution: 'managed-cloud',
-    destination: 'https://api.stage.floless.io',
+    destination: 'https://api.stage.floless.io', readerSchemaVersion: READER_SCHEMA_VERSION_V2,
   };
   const calls = [];
   const hostRun = async (request) => {
@@ -244,6 +259,7 @@ test('managed-cloud conversion passes only an absolute caller-bound authority st
     executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
     privateRoot: path.join(root, 'accepted'), hostRun,
     expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
     conversionAttemptId: '123e4567-e89b-42d3-a456-426614174000',
   });
   const convert = JSON.parse(calls[1].stdin.toString('utf8'));
@@ -251,11 +267,14 @@ test('managed-cloud conversion passes only an absolute caller-bound authority st
   assert.equal(convert.protocolVersion, '2');
   assert.equal(convert.conversionAttemptId, '123e4567-e89b-42d3-a456-426614174000');
   assert.equal(convert.canonicalRequest.protocolVersion, '2');
+  assert.equal(JSON.parse(calls[0].stdin.toString('utf8')).readerSchemaVersion, READER_SCHEMA_VERSION_V2);
+  assert.equal(result.fingerprint.readerSchemaVersion, READER_SCHEMA_VERSION_V2);
   assert.equal(result.canonicalRequest.protocolVersion, '2');
   await assert.rejects(() => describeAndConvert({
     executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
     privateRoot: path.join(root, 'relative'), hostRun,
     expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath: 'relative',
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
     conversionAttemptId: '123e4567-e89b-42d3-a456-426614174000',
   }), (error) => error.code === 'reference-provider-protocol');
 });

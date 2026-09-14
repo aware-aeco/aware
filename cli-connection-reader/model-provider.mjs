@@ -4,7 +4,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {
   assertClosedObject, assertSha256, buildCanonicalRequest, buildProviderFingerprint,
-  canonicalJsonBytes, lowerableLimits, ModelReaderError, parseJsonStrict, providerFingerprintSha256, sha256,
+  canonicalJsonBytes, lowerableLimits, ModelReaderError, parseJsonStrict, providerFingerprintSha256,
+  READER_SCHEMA_VERSION_V1, READER_SCHEMA_VERSION_V2, sha256,
 } from './model-contract.mjs';
 
 function providerError(code, message, retryable = false, details = undefined, providerCode = undefined) {
@@ -144,8 +145,20 @@ function managedAuthorityStore(value, expectedProtocolVersion) {
   return path.resolve(value);
 }
 
-function validateDescribe(value, expectedProtocolVersion = '1', expectedDestination = undefined) {
-  try { assertClosedObject(value, ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'formats', 'execution', 'destination'], [], 'provider description'); }
+function requestedReaderSchemaVersion(value) {
+  const selected = value ?? READER_SCHEMA_VERSION_V1;
+  if (![READER_SCHEMA_VERSION_V1, READER_SCHEMA_VERSION_V2].includes(selected)) {
+    providerError('reference-provider-protocol', 'The requested reader schema is unsupported.');
+  }
+  return selected;
+}
+
+function validateDescribe(value, expectedProtocolVersion = '1', expectedDestination = undefined,
+  expectedReaderSchemaVersion = READER_SCHEMA_VERSION_V1) {
+  const schemaAware = expectedReaderSchemaVersion !== READER_SCHEMA_VERSION_V1;
+  const required = ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'formats', 'execution', 'destination'];
+  if (schemaAware) required.push('readerSchemaVersion');
+  try { assertClosedObject(value, required, [], 'provider description'); }
   catch (error) { providerError('reference-provider-protocol', `Provider description does not match protocol v${expectedProtocolVersion}.`, false, error); }
   if (!Array.isArray(value.formats) || value.formats.length !== 1 || value.formats[0] !== 'rvt') {
     providerError('reference-provider-protocol', 'Provider supports an invalid model format set.');
@@ -163,16 +176,26 @@ function validateDescribe(value, expectedProtocolVersion = '1', expectedDestinat
   } else {
     providerError('reference-provider-protocol', 'The requested provider protocol is unsupported.');
   }
+  if (schemaAware && value.readerSchemaVersion !== expectedReaderSchemaVersion) {
+    providerError('reference-provider-protocol', 'Provider does not support the requested reader schema.');
+  }
   for (const key of ['provider', 'engine', 'engineVersion']) boundedString(value[key], key, 128);
   boundedString(value.adapterBuildId, 'adapterBuildId', 256);
   return value;
 }
 
-function validateReceipt(value, describe, sourceSha256, expectedProtocolVersion, expectedDestination) {
-  try { assertClosedObject(value, ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'formats', 'execution', 'destination', 'documentKind', 'sourceSha256', 'geometryPath', 'metadataPath'], [], 'provider receipt'); }
+function validateReceipt(value, describe, sourceSha256, expectedProtocolVersion, expectedDestination,
+  expectedReaderSchemaVersion) {
+  const required = ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'formats', 'execution', 'destination', 'documentKind', 'sourceSha256', 'geometryPath', 'metadataPath'];
+  if (expectedReaderSchemaVersion !== READER_SCHEMA_VERSION_V1) required.push('readerSchemaVersion');
+  try { assertClosedObject(value, required, [], 'provider receipt'); }
   catch (error) { providerError('reference-provider-protocol', `Provider receipt does not match protocol v${expectedProtocolVersion}.`, false, error); }
-  validateDescribe(Object.fromEntries(['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'formats', 'execution', 'destination'].map((key) => [key, value[key]])), expectedProtocolVersion, expectedDestination);
-  for (const key of ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'execution', 'destination']) {
+  const descriptionKeys = ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'formats', 'execution', 'destination'];
+  if (expectedReaderSchemaVersion !== READER_SCHEMA_VERSION_V1) descriptionKeys.push('readerSchemaVersion');
+  validateDescribe(Object.fromEntries(descriptionKeys.map((key) => [key, value[key]])), expectedProtocolVersion,
+    expectedDestination, expectedReaderSchemaVersion);
+  for (const key of ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'execution', 'destination',
+    ...(expectedReaderSchemaVersion !== READER_SCHEMA_VERSION_V1 ? ['readerSchemaVersion'] : [])]) {
     if (value[key] !== describe[key]) providerError('reference-provider-changed', 'Provider provenance changed during conversion.');
   }
   if (JSON.stringify(value.formats) !== JSON.stringify(describe.formats)) providerError('reference-provider-changed', 'Provider formats changed during conversion.');
@@ -230,8 +253,12 @@ export async function describeProvider(options) {
   const cwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
   const environment = minimalProviderEnvironment(options.environment);
   const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
+  const expectedReaderSchemaVersion = requestedReaderSchemaVersion(options.readerSchemaVersion);
   managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
-  const stdin = canonicalJsonBytes({ protocolVersion: expectedProtocolVersion, limits });
+  const stdin = canonicalJsonBytes({
+    protocolVersion: expectedProtocolVersion, limits,
+    ...(expectedReaderSchemaVersion !== READER_SCHEMA_VERSION_V1 ? { readerSchemaVersion: expectedReaderSchemaVersion } : {}),
+  });
   const stdout = await callProvider(options.hostRun, {
     executable: initialExecutable.path, executableSha256: initialExecutable.sha256,
     operation: 'describe', stdin, stdinLength: stdin.length,
@@ -240,12 +267,13 @@ export async function describeProvider(options) {
   }, limits);
   const afterDescribe = await validateProviderExecutable(options.executable);
   if (afterDescribe.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during description.');
-  const describe = validateDescribe(parseProviderJson(stdout, limits, 'description'), expectedProtocolVersion, options.expectedDestination);
+  const describe = validateDescribe(parseProviderJson(stdout, limits, 'description'), expectedProtocolVersion,
+    options.expectedDestination, expectedReaderSchemaVersion);
   const fingerprint = buildProviderFingerprint({
     protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
     engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
     adapterExecutableSha256: initialExecutable.sha256,
-    ...(options.readerSchemaVersion ? { readerSchemaVersion: options.readerSchemaVersion } : {}),
+    ...(describe.readerSchemaVersion ? { readerSchemaVersion: describe.readerSchemaVersion } : {}),
     ...(describe.protocolVersion === '2' ? { execution: describe.execution, destination: describe.destination } : {}),
   });
   if (options.expectedProviderSha256 !== undefined) {
@@ -258,6 +286,7 @@ export async function describeProvider(options) {
 export async function describeAndConvert(options) {
   const limits = lowerableLimits(options.limits);
   const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
+  const expectedReaderSchemaVersion = requestedReaderSchemaVersion(options.readerSchemaVersion);
   if (expectedProtocolVersion === '2' && (typeof options.conversionAttemptId !== 'string'
     || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(options.conversionAttemptId))) {
     providerError('reference-provider-request-invalid', 'The managed Revit conversion attempt identity is invalid.');
@@ -268,7 +297,10 @@ export async function describeAndConvert(options) {
   const describeCwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
   const environment = minimalProviderEnvironment(options.environment);
   const authorityStorePath = managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
-  const describeRequest = canonicalJsonBytes({ protocolVersion: expectedProtocolVersion, limits });
+  const describeRequest = canonicalJsonBytes({
+    protocolVersion: expectedProtocolVersion, limits,
+    ...(expectedReaderSchemaVersion !== READER_SCHEMA_VERSION_V1 ? { readerSchemaVersion: expectedReaderSchemaVersion } : {}),
+  });
   const describeBytes = await callProvider(options.hostRun, {
     executable: initialExecutable.path, executableSha256: initialExecutable.sha256,
     operation: 'describe', stdin: describeRequest,
@@ -277,12 +309,13 @@ export async function describeAndConvert(options) {
   }, limits);
   const afterDescribe = await validateProviderExecutable(options.executable);
   if (afterDescribe.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during description.');
-  const describe = validateDescribe(parseProviderJson(describeBytes, limits, 'description'), expectedProtocolVersion, options.expectedDestination);
+  const describe = validateDescribe(parseProviderJson(describeBytes, limits, 'description'), expectedProtocolVersion,
+    options.expectedDestination, expectedReaderSchemaVersion);
   const describedFingerprint = buildProviderFingerprint({
     protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
     engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
     adapterExecutableSha256: initialExecutable.sha256,
-    ...(options.readerSchemaVersion ? { readerSchemaVersion: options.readerSchemaVersion } : {}),
+    ...(describe.readerSchemaVersion ? { readerSchemaVersion: describe.readerSchemaVersion } : {}),
     ...(describe.protocolVersion === '2' ? { execution: describe.execution, destination: describe.destination } : {}),
   });
   if (options.expectedProviderSha256 !== undefined) {
@@ -313,7 +346,8 @@ export async function describeAndConvert(options) {
   }, limits);
   const afterConvert = await validateProviderExecutable(options.executable);
   if (afterConvert.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during conversion.');
-  const receipt = validateReceipt(parseProviderJson(receiptBytes, limits, 'receipt'), describe, staging.sourceSha256, expectedProtocolVersion, options.expectedDestination);
+  const receipt = validateReceipt(parseProviderJson(receiptBytes, limits, 'receipt'), describe, staging.sourceSha256,
+    expectedProtocolVersion, options.expectedDestination, expectedReaderSchemaVersion);
   const geometryPath = path.join(outputDirectory, 'geometry.glb');
   const metadataPath = path.join(outputDirectory, 'metadata.json');
   const entries = await fs.readdir(outputDirectory);

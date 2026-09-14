@@ -170,6 +170,33 @@ test('v2 schema binds each provider-display valueType to the matching JSON value
     { type: 'integer', minimum: Number.MIN_SAFE_INTEGER, maximum: Number.MAX_SAFE_INTEGER },
     { not: { type: 'integer' } },
   ], 'the public schema must reject the unsafe integral numbers refused by canonical JSON');
+
+  const sourceStorage = schema.properties.parameters.items.oneOf
+    .filter((branch) => branch.properties?.valueEncoding?.const === 'source-storage');
+  assert.deepEqual(sourceStorage.map((branch) => branch.properties.storageType.const).sort(),
+    ['boolean', 'double', 'element-id', 'integer', 'none', 'string']);
+  for (const branch of sourceStorage) {
+    const storageType = branch.properties.storageType.const;
+    assert.equal(branch.properties.readable.const, storageType !== 'none', `${storageType} readability`);
+  }
+  assert.equal(sourceStorage.find((branch) => branch.properties.storageType.const === 'none').properties.value.type, 'null');
+  assert.equal(sourceStorage.find((branch) => branch.properties.storageType.const === 'boolean').properties.value.type, 'boolean');
+  assert.equal(sourceStorage.find((branch) => branch.properties.storageType.const === 'string').properties.value.type, 'string');
+  const signedInt64 = schema.$defs.signedInt64Decimal;
+  assert.equal(signedInt64.type, 'string');
+  const signedInt64Pattern = new RegExp(signedInt64.pattern);
+  for (const accepted of ['0', '1', '-1', '9223372036854775807', '-9223372036854775808']) {
+    assert.equal(signedInt64Pattern.test(accepted), true, `accept signed int64 ${accepted}`);
+  }
+  for (const refused of ['-0', '+1', '01', '9223372036854775808', '-9223372036854775809']) {
+    assert.equal(signedInt64Pattern.test(refused), false, `refuse non-int64 ${refused}`);
+  }
+  for (const storageType of ['integer', 'element-id']) {
+    const value = sourceStorage.find((branch) => branch.properties.storageType.const === storageType).properties.value;
+    assert.deepEqual(value, { $ref: '#/$defs/signedInt64Decimal' });
+  }
+  const doubleValue = sourceStorage.find((branch) => branch.properties.storageType.const === 'double').properties.value;
+  assert.deepEqual(doubleValue.anyOf, numericValue.anyOf, 'double values obey the same signed JSON number constraint');
 });
 
 test('managed-cloud provider fingerprint binds execution and exact destination', () => {

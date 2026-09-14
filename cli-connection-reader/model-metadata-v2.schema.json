@@ -2,6 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://aware-aeco.org/schemas/model-metadata-v2.schema.json",
   "title": "AWARE explicit Revit metadata v2",
+  "$defs": {
+    "signedInt64Decimal": {
+      "type": "string",
+      "pattern": "^(?:0|-9223372036854775808|-?(?:[1-9][0-9]{0,17}|[1-8][0-9]{18}|9[01][0-9]{17}|92[01][0-9]{16}|922[0-2][0-9]{15}|9223[0-2][0-9]{14}|92233[0-6][0-9]{13}|922337[01][0-9]{12}|92233720[0-2][0-9]{10}|922337203[0-5][0-9]{9}|9223372036[0-7][0-9]{8}|92233720368[0-4][0-9]{7}|922337203685[0-3][0-9]{6}|9223372036854[0-6][0-9]{5}|92233720368547[0-6][0-9]{4}|922337203685477[0-4][0-9]{3}|9223372036854775[0-7][0-9]{2}|922337203685477580[0-7]))$"
+    }
+  },
   "type": "object",
   "additionalProperties": false,
   "required": ["schemaVersion", "document", "types", "levels", "parameterGroups", "parameters", "elements", "relations"],
@@ -64,9 +70,85 @@
               "name": { "type": "string" },
               "unit": { "type": ["string", "null"] },
               "valueEncoding": { "const": "source-storage" },
-              "readable": { "type": "boolean" },
-              "storageType": { "enum": ["none", "boolean", "integer", "double", "string", "element-id"] },
-              "value": {}
+              "readable": { "const": false },
+              "storageType": { "const": "none" },
+              "value": { "type": "null" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "unit", "valueEncoding", "readable", "storageType", "value"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[1-9][0-9]*$" },
+              "name": { "type": "string" },
+              "unit": { "type": ["string", "null"] },
+              "valueEncoding": { "const": "source-storage" },
+              "readable": { "const": true },
+              "storageType": { "const": "boolean" },
+              "value": { "type": "boolean" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "unit", "valueEncoding", "readable", "storageType", "value"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[1-9][0-9]*$" },
+              "name": { "type": "string" },
+              "unit": { "type": ["string", "null"] },
+              "valueEncoding": { "const": "source-storage" },
+              "readable": { "const": true },
+              "storageType": { "const": "integer" },
+              "value": { "$ref": "#/$defs/signedInt64Decimal" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "unit", "valueEncoding", "readable", "storageType", "value"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[1-9][0-9]*$" },
+              "name": { "type": "string" },
+              "unit": { "type": ["string", "null"] },
+              "valueEncoding": { "const": "source-storage" },
+              "readable": { "const": true },
+              "storageType": { "const": "double" },
+              "value": {
+                "type": "number",
+                "anyOf": [
+                  { "type": "integer", "minimum": -9007199254740991, "maximum": 9007199254740991 },
+                  { "not": { "type": "integer" } }
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "unit", "valueEncoding", "readable", "storageType", "value"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[1-9][0-9]*$" },
+              "name": { "type": "string" },
+              "unit": { "type": ["string", "null"] },
+              "valueEncoding": { "const": "source-storage" },
+              "readable": { "const": true },
+              "storageType": { "const": "string" },
+              "value": { "type": "string" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "unit", "valueEncoding", "readable", "storageType", "value"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[1-9][0-9]*$" },
+              "name": { "type": "string" },
+              "unit": { "type": ["string", "null"] },
+              "valueEncoding": { "const": "source-storage" },
+              "readable": { "const": true },
+              "storageType": { "const": "element-id" },
+              "value": { "$ref": "#/$defs/signedInt64Decimal" }
             }
           }
         ]
