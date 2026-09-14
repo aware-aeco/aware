@@ -294,6 +294,7 @@ mod tests {
             value["structured"]["diagnosticId"],
             "123e4567-e89b-12d3-a456-426614174000"
         );
+        assert_eq!(value["structured"]["providerCode"], "xeorvt-timeout");
         assert!(
             value["error"]
                 .as_str()

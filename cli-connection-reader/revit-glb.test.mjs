@@ -269,11 +269,11 @@ test('the 64 MiB GLB JSON boundary is accepted exactly and refused above the cap
   assert.throws(() => parseGlb(aboveLimit), /GLB JSON exceeds its byte limit/);
 });
 
-test('canonical work accounting accepts 4 GiB exactly and refuses one more byte before allocation', () => {
+test('canonical work accounting accepts its declared default exactly and refuses one more byte before allocation', () => {
   const limit = MODEL_LIMITS.maxCanonicalWorkBytes.default;
   assert.equal(checkedCanonicalWorkBytes(limit - 4, 1, 4, limit), limit);
   assert.throws(() => checkedCanonicalWorkBytes(limit, 1, 1, limit),
-    (error) => error.code === 'reference-output-too-large' && /4294967296-byte limit/.test(error.message));
+    (error) => error.code === 'reference-output-too-large' && error.message.includes(`${limit}-byte limit`));
 });
 
 test('large valid vertex sets compute bounds without variadic stack overflow', () => {

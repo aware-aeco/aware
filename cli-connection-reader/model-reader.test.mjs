@@ -349,7 +349,7 @@ test('read-snapshot derives public source and package envelopes after private ca
   assert.deepEqual(out.packagePreimage.outputs.map((item) => item.logicalName),
     ['manifest', 'tile-000000', 'entities-000000', 'properties-000000', 'relationships-000000', 'index']);
   verifyEnvelope('AWARE\0model-reference-reader\0package-set\0v1\0', out.packagePreimage, out.packageArtifactEnvelope);
-  assert.equal(out.packageConfiguration.maximumTileTriangles, 15_000_000);
+  assert.equal(out.packageConfiguration.maximumTileTriangles, 20_000_000);
   assert.equal(out.packageConfiguration.maximumShardBytes, 32 * 1024 * 1024);
   assert.equal(out.packageConfiguration.maximumShardRecords, 2_000_000);
   assert.equal(out.packageConfiguration.maximumAggregateBytes, (256 * 1024 * 1024) + (32 * 1024 * 1024 * 5));

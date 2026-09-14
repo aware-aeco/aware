@@ -158,6 +158,16 @@ test('v2 enforces independent pre-append row and canonical property byte ceiling
   'a lowered component budget must stop a v2 property row before the document is materialized');
 });
 
+test('v1 rejects expanded properties before materializing an oversized canonical document', () => {
+  const metadata = makeMetadataFixture();
+  metadata.parameterGroups[0].name = 'G'.repeat(2048);
+  assert.throws(() => normalizeRevitMetadata(metadata, geometry.slice(0, 1), {
+    limits: { maxComponentJsonBytes: 1024 },
+  }), (error) => error.code === 'reference-output-too-large'
+    && /canonical property artifact/.test(error.message),
+  'the default v1 reader must apply its byte ceiling before JSON.stringify builds the full document');
+});
+
 test('explicit relations validate endpoints, provider kinds, acyclic parents, and canonical order', () => {
   const metadata = makeMetadataFixture({ elementId: '2', nodeNames: ['part-b'] });
   const firstElement = { ...metadata.elements[0], id: '1', appearances: ['part-a'] };
@@ -176,7 +186,7 @@ test('explicit relations validate endpoints, provider kinds, acyclic parents, an
   assert.throws(() => normalizeRevitMetadata(metadata, geometry), /providerRelationKind is invalid/);
   metadata.relations[0].providerRelationKind = '中'.repeat(256);
   assert.throws(() => normalizeRevitMetadata(metadata, geometry, {
-    limits: { maxComponentJsonBytes: 512 },
+    limits: { maxComponentJsonBytes: 768 },
   }), (error) => error.code === 'reference-output-too-large'
     && /canonical relationship artifact/.test(error.message));
   metadata.relations[0].providerRelationKind = 'Joins';

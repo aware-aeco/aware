@@ -251,7 +251,7 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
   const reachedParameters = new Set();
   let elementGroupReferences = 0;
   let canonicalPropertyBytes = propertyDocumentBaseBytes;
-  if (metadataV2 && canonicalPropertyBytes > propertyLimits.maxCanonicalPropertyBytes) {
+  if (canonicalPropertyBytes > propertyLimits.maxCanonicalPropertyBytes) {
     invalid('canonical property artifact exceeds its byte limit', 'reference-output-too-large');
   }
   const entities = rawElements.map((element, elementOrdinal) => {
@@ -296,17 +296,13 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
             : { readable: parameter.readable, storageType: parameter.storageType }),
           value: parameter.value,
         };
-        if (metadataV2) {
-          if (propertyRows.length >= propertyLimits.maxExpandedPropertyRows) invalid('expanded property count exceeds its limit', 'reference-output-too-large');
-          const separatorBytes = propertyRows.length > 0 ? 1 : 0;
-          const nextBytes = canonicalPropertyBytes + separatorBytes + canonicalJsonBytes(row).length;
-          if (!Number.isSafeInteger(nextBytes) || nextBytes > propertyLimits.maxCanonicalPropertyBytes) {
-            invalid('canonical property artifact exceeds its byte limit', 'reference-output-too-large');
-          }
-          canonicalPropertyBytes = nextBytes;
-        } else if (propertyRows.length >= limits.maxParameters) {
-          invalid('expanded property count exceeds its limit', 'reference-output-too-large');
+        if (propertyRows.length >= propertyLimits.maxExpandedPropertyRows) invalid('expanded property count exceeds its limit', 'reference-output-too-large');
+        const separatorBytes = propertyRows.length > 0 ? 1 : 0;
+        const nextBytes = canonicalPropertyBytes + separatorBytes + canonicalJsonBytes(row).length;
+        if (!Number.isSafeInteger(nextBytes) || nextBytes > propertyLimits.maxCanonicalPropertyBytes) {
+          invalid('canonical property artifact exceeds its byte limit', 'reference-output-too-large');
         }
+        canonicalPropertyBytes = nextBytes;
         propertyRows.push(row);
         if (parameter.valueEncoding !== 'provider-display' && parameter.name === 'IfcGUID'
           && parameter.storageType === 'string' && parameter.readable && parameter.value) guidValues.push(parameter.value);
@@ -375,7 +371,7 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
   const entitiesBytes = canonicalJsonBytes({ schemaVersion: artifactSchemaVersion, entities });
   const propertiesBytes = canonicalJsonBytes({ schemaVersion: artifactSchemaVersion, properties: propertyRows });
   const relationshipsBytes = canonicalJsonBytes({ schemaVersion: artifactSchemaVersion, relationships });
-  if (metadataV2 && propertiesBytes.length !== canonicalPropertyBytes) invalid('canonical property byte accounting mismatch');
+  if (propertiesBytes.length !== canonicalPropertyBytes) invalid('canonical property byte accounting mismatch');
   if (relationshipsBytes.length !== canonicalRelationshipBytes) invalid('canonical relationship byte accounting mismatch');
   for (const [label, bytes] of [['entities', entitiesBytes], ['properties', propertiesBytes], ['relationships', relationshipsBytes]]) {
     if (bytes.length > limits.maxComponentJsonBytes) invalid(`${label} artifact exceeds its byte limit`, 'reference-output-too-large');

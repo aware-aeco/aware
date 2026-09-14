@@ -149,7 +149,7 @@ mod tests {
             retryable: false,
             message: "Send outcome is unknown; reconcile before retrying.".into(),
             diagnostic_id: "rfi-001-mail-v1".into(),
-            provider_code: None,
+            provider_code: Some("xeorvt-timeout".into()),
             details: Some(details),
         })
         .unwrap();
@@ -158,6 +158,7 @@ mod tests {
             value["details"]["rfcMessageId"],
             "<rfi-001@example.invalid>"
         );
+        assert_eq!(value["providerCode"], "xeorvt-timeout");
     }
 
     #[test]

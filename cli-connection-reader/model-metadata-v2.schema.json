@@ -230,7 +230,10 @@
             "uniqueItems": true,
             "items": { "type": "string", "minLength": 1 }
           },
-          "ifcGuid": { "type": ["string", "null"] }
+          "ifcGuid": {
+            "type": ["string", "null"],
+            "description": "Optional redundant echo of the authoritative readable source-storage IfcGUID parameter. When present it must match that parameter exactly; provider-display values cannot establish IFC identity."
+          }
         }
       }
     },

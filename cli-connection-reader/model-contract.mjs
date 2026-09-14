@@ -37,7 +37,7 @@ export const MODEL_LIMITS = Object.freeze({
   maxAccessors: { default: 250_000, hard: 1_000_000 },
   maxBufferViews: { default: 250_000, hard: 1_000_000 },
   maxVertices: { default: 5_000_000, hard: 10_000_000 },
-  maxIndices: { default: 15_000_000, hard: 30_000_000 },
+  maxIndices: { default: 20_000_000, hard: 40_000_000 },
   maxEntities: { default: 250_000, hard: 1_000_000 },
   maxParameters: { default: 2_000_000, hard: 5_000_000 },
   maxRelationships: { default: 1_000_000, hard: 2_000_000 },
@@ -49,8 +49,8 @@ export const MODEL_LIMITS = Object.freeze({
   // 1024 estimated bytes per vertex a 1 GiB budget admits 1,048,576 vertices, so maxVertices' own
   // 5,000,000 default was unreachable — 21% of it — and no published limit said so (#517).
   // The estimate is a worst case, not a resident-memory reading: measured against real conversions it
-  // overstates RSS by roughly 2-3.4x, so this budget corresponds to ~1.2-2 GiB actually resident.
-  maxCanonicalWorkBytes: { default: 4 * 1024 * 1024 * 1024, hard: 8 * 1024 * 1024 * 1024 },
+  // overstates RSS by roughly 2-3.4x, so this budget corresponds to ~2.4-4 GiB actually resident.
+  maxCanonicalWorkBytes: { default: 8 * 1024 * 1024 * 1024, hard: 16 * 1024 * 1024 * 1024 },
   maxCommandResponseBytes: { default: 1024 * 1024, hard: 1024 * 1024 },
 });
 

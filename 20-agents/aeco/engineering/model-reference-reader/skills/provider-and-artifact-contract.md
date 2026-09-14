@@ -25,6 +25,13 @@ cap, but the property-byte ceiling never exceeds the enclosing component-byte ce
 reader v2 raises the default component JSON ceiling from 32 MiB to 128 MiB so larger property and
 relationship shards can be admitted; this is the hard ceiling and callers may lower it explicitly.
 
+The ordinary source admission ceiling is 256 MiB so the default profile admits at least twice the
+pinned Snowdon Towers sample. This default is part of the signed canonical request: upgrading from the
+earlier 150 MiB default changes the request hash, so the first read after upgrade converts again instead
+of reusing an entry produced under different limits. The bounded cache's normal quota maintenance later
+reclaims unmatched entries by deterministic least-recently-used eviction; it does not treat an old
+request hash as current evidence.
+
 The canonical request, provider fingerprint, source digest and signer trust anchor jointly define a
 cache key. Every cache hit verifies its signature, closed receipt, complete file set and every blob
 digest. A cache result is reusable conversion evidence, not approval authority.

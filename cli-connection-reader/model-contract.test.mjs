@@ -66,6 +66,21 @@ test('every canonical request leaf affects the cache/request preimage', () => {
   assert.equal(MODEL_LIMITS.maxSourceBytes.default, 256 * 1024 * 1024);
   assert.ok(2 * 94_531_584 <= MODEL_LIMITS.maxSourceBytes.default,
     'the default source limit must admit at least twice the pinned Snowdon RVT');
+  const doubledSnowdon = {
+    inputGlbBytes: 2 * 41_926_848,
+    glbJsonBytes: 2 * 23_576_276,
+    vertices: 2 * 1_528_598,
+    indices: 2 * 8_523_729,
+    primitives: 2 * 23_181,
+    canonicalWorkBytes: 2 * 3_842_308_352,
+  };
+  assert.ok(doubledSnowdon.inputGlbBytes <= MODEL_LIMITS.maxInputGlbBytes.default);
+  assert.ok(doubledSnowdon.glbJsonBytes <= MODEL_LIMITS.maxGlbJsonBytes.default);
+  assert.ok(doubledSnowdon.vertices <= MODEL_LIMITS.maxVertices.default);
+  assert.ok(doubledSnowdon.indices <= MODEL_LIMITS.maxIndices.default);
+  assert.ok(doubledSnowdon.primitives <= MODEL_LIMITS.maxPrimitives.default);
+  assert.ok(doubledSnowdon.canonicalWorkBytes <= MODEL_LIMITS.maxCanonicalWorkBytes.default,
+    'every ordinary post-conversion limit must admit at least twice the pinned Snowdon profile');
   assert.equal(buildCanonicalRequest({ protocolVersion: '2' }).protocolVersion, '2');
   assert.throws(() => buildCanonicalRequest({ protocolVersion: '3' }), /protocolVersion/);
 });
@@ -235,6 +250,10 @@ test('v2 schema publishes the closed metadata records the reader accepts', () =>
     ['id', 'revitClass', 'category', 'family', 'type', 'level', 'parameterGroups', 'appearances']);
   assert.equal(schema.properties.elements.items.properties.appearances.uniqueItems, true);
   assert.equal(schema.properties.elements.items.properties.appearances.items.minLength, 1);
+  const ifcGuidDescription = schema.properties.elements.items.properties.ifcGuid.description;
+  assert.match(ifcGuidDescription, /must match/i);
+  assert.match(ifcGuidDescription, /source-storage/i);
+  assert.match(ifcGuidDescription, /provider-display values cannot establish IFC identity/i);
 
   const relationBranches = schema.properties.relations.items.oneOf;
   assert.equal(relationBranches.length, 2);
