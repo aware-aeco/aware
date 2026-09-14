@@ -137,7 +137,7 @@ pub(crate) fn validate_release_contract<'a>(
         && target != agent
     {
         return Err(format!(
-            "registry entry {key}@{version} is an alias of {target}, but manifest-agent is {agent}; make alias-of and manifest-agent name the same target"
+            "registry entry {key}@{version} is an alias of {target:?}, but manifest-agent is {agent}; make alias-of and manifest-agent name the same target"
         ));
     }
     Ok((agent, manifest_version))
@@ -805,7 +805,22 @@ mod tests {
         assert!(validate_release_contract("old", "1.0.0", &alias, &valid).is_ok());
         let invalid = bound_release(Some("another-agent"), Some("1.0.0"));
         let error = validate_release_contract("old", "1.0.0", &alias, &invalid).unwrap_err();
-        assert!(error.contains("alias of steel-detailer-us"), "{error}");
+        assert!(error.contains("alias of \"steel-detailer-us\""), "{error}");
+
+        let injected_alias = IndexEntry {
+            alias_of: Some("target\nagent\u{1b}[31m".into()),
+            ..Default::default()
+        };
+        let error = validate_release_contract("old", "1.0.0", &injected_alias, &valid).unwrap_err();
+        assert!(
+            !error.contains('\n'),
+            "terminal output stays on one line: {error:?}"
+        );
+        assert!(
+            !error.contains('\u{1b}'),
+            "terminal output carries no escape byte: {error:?}"
+        );
+        assert!(error.contains(r#""target\nagent\u{1b}[31m""#), "{error:?}");
     }
 
     #[test]
