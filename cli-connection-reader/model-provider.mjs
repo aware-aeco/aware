@@ -185,9 +185,10 @@ function validateDescribe(value, expectedProtocolVersion = '1', expectedDestinat
 }
 
 function validateReceipt(value, describe, sourceSha256, expectedProtocolVersion, expectedDestination,
-  expectedReaderSchemaVersion) {
+  expectedReaderSchemaVersion, expectedConversionAttemptId) {
   const required = ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'formats', 'execution', 'destination', 'documentKind', 'sourceSha256', 'geometryPath', 'metadataPath'];
   if (expectedReaderSchemaVersion !== READER_SCHEMA_VERSION_V1) required.push('readerSchemaVersion');
+  if (expectedProtocolVersion === '2') required.push('conversionAttemptId');
   try { assertClosedObject(value, required, [], 'provider receipt'); }
   catch (error) { providerError('reference-provider-protocol', `Provider receipt does not match protocol v${expectedProtocolVersion}.`, false, error); }
   const descriptionKeys = ['protocolVersion', 'provider', 'engine', 'engineVersion', 'adapterBuildId', 'formats', 'execution', 'destination'];
@@ -199,6 +200,9 @@ function validateReceipt(value, describe, sourceSha256, expectedProtocolVersion,
     if (value[key] !== describe[key]) providerError('reference-provider-changed', 'Provider provenance changed during conversion.');
   }
   if (JSON.stringify(value.formats) !== JSON.stringify(describe.formats)) providerError('reference-provider-changed', 'Provider formats changed during conversion.');
+  if (expectedProtocolVersion === '2' && value.conversionAttemptId !== expectedConversionAttemptId) {
+    providerError('reference-provider-changed', 'Provider conversion attempt identity changed during conversion.');
+  }
   if (value.documentKind !== 'revit-project') providerError('reference-provider-protocol', 'Provider returned the wrong document kind.');
   if (value.sourceSha256 !== sourceSha256) providerError('reference-source-changed', 'Provider did not convert the staged source.');
   assertSha256(value.sourceSha256, 'sourceSha256');
@@ -347,7 +351,7 @@ export async function describeAndConvert(options) {
   const afterConvert = await validateProviderExecutable(options.executable);
   if (afterConvert.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during conversion.');
   const receipt = validateReceipt(parseProviderJson(receiptBytes, limits, 'receipt'), describe, staging.sourceSha256,
-    expectedProtocolVersion, options.expectedDestination, expectedReaderSchemaVersion);
+    expectedProtocolVersion, options.expectedDestination, expectedReaderSchemaVersion, options.conversionAttemptId);
   const geometryPath = path.join(outputDirectory, 'geometry.glb');
   const metadataPath = path.join(outputDirectory, 'metadata.json');
   const entries = await fs.readdir(outputDirectory);

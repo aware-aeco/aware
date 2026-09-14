@@ -115,12 +115,7 @@ async function removeRunRoot(runRoot) {
 function requestLimits(args, deps) {
   const configured = Object.hasOwn(args, 'limits') ? args.limits : deps.limits;
   try {
-    const limits = lowerableLimits(configured);
-    if (args['reader-schema-version'] === READER_SCHEMA_VERSION_V2
-      && (configured === undefined || !Object.hasOwn(configured, 'maxComponentJsonBytes'))) {
-      limits.maxComponentJsonBytes = 128 * 1024 * 1024;
-    }
-    return limits;
+    return lowerableLimits(configured, args['reader-schema-version'] ?? READER_SCHEMA_VERSION_V1);
   }
   catch (error) { readerError('reference-limits-invalid', 'request', 'Model reader limits are invalid.', false, error); }
 }

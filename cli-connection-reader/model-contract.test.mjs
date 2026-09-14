@@ -4,6 +4,7 @@ import test from 'node:test';
 import {
   MODEL_LIMITS,
   PROPERTY_EXPANSION_LIMITS,
+  READER_SCHEMA_LIMIT_DEFAULTS,
   ModelReaderError,
   buildCanonicalRequest,
   buildProviderFingerprint,
@@ -121,6 +122,10 @@ test('reader v2 binds closed effective expansion limits while v1 canonical bytes
     propertyExpansionLimits: { maxExpandedPropertyRows: 12, maxCanonicalPropertyBytes: 4096 },
   });
   assert.equal(v2.schemaVersion, '2');
+  assert.equal(READER_SCHEMA_LIMIT_DEFAULTS['model-reference-reader/v2'].maxComponentJsonBytes, 128 * 1024 * 1024);
+  assert.equal(v2.limits.maxComponentJsonBytes, 128 * 1024 * 1024,
+    'the reader-v2 shard default is published and reproduced by canonical request construction');
+  assert.equal(lowerableLimits({}, 'model-reference-reader/v2').maxComponentJsonBytes, 128 * 1024 * 1024);
   assert.deepEqual(v2.propertyExpansionLimits, { maxExpandedPropertyRows: 12, maxCanonicalPropertyBytes: 4096 });
   assert.deepEqual(v2.metadata.propertyValues, ['source-storage', 'provider-display']);
   assert.equal(v2.metadata.providerDisplayIdentity, 'excluded');
@@ -224,6 +229,8 @@ test('v2 schema publishes the closed metadata records the reader accepts', () =>
     assert.equal(schema.properties[table].items.type, 'object', `${table} has an item object`);
     assert.equal(schema.properties[table].items.additionalProperties, false, `${table} item is closed`);
   }
+  assert.match(schema.properties.levels.items.properties.elevation.description, /millimetres/i);
+  assert.match(schema.properties.levels.items.properties.elevation.description, /not republished/i);
   assert.deepEqual(schema.properties.elements.items.required,
     ['id', 'revitClass', 'category', 'family', 'type', 'level', 'parameterGroups', 'appearances']);
   assert.equal(schema.properties.elements.items.properties.appearances.uniqueItems, true);

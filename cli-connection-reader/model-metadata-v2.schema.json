@@ -48,6 +48,7 @@
           "id": { "$ref": "#/$defs/positiveInt64Decimal" },
           "name": { "type": "string" },
           "elevation": {
+            "description": "Level elevation in millimetres in the reader target frame. It is admission-validated for provider consistency and is not republished in the normalized entity shard.",
             "type": "number",
             "anyOf": [
               { "type": "integer", "minimum": -9007199254740991, "maximum": 9007199254740991 },

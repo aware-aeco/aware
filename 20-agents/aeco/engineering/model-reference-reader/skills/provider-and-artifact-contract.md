@@ -4,17 +4,21 @@ Treat the provider adapter as a separately installed local trusted dependency. C
 regular executable path with `AWARE_MODEL_REFERENCE_PROVIDER`; never use PATH lookup, a shell command,
 URL or committed binary. Protocol v1 accepts only local execution. Protocol v2 accepts managed-cloud
 execution only when the caller supplies the exact canonical HTTPS origin returned by `preflight`; the
-origin is part of the complete provider fingerprint. A v2 conversion also requires an absolute,
+origin is part of the complete provider fingerprint. A protocol-v2 conversion also requires an absolute,
 installer-enrolled `authority-store-path`; AWARE passes it to the provider only in that conversion
-request and never copies credentials into its environment. Each v2 `describe` and conversion receipt
-must acknowledge `reader-schema-version: model-reference-reader/v2`; every conversion request carries
-a fresh `conversion-attempt-id`, and the receipt must return that exact value. Configure the
+request and never copies credentials into its environment. Every protocol-v2 conversion request carries
+a fresh `conversion-attempt-id`, and the live receipt must return that exact value before AWARE accepts
+the conversion. Configure the
 AWARE-format signing key locally.
 Run `preflight`, pin the returned full provider fingerprint, obtain the signer fingerprint through an
 independent operator trust channel, then call `probe`, `read-model` or `read-snapshot` with both pins,
 the selected protocol/destination, enrolled authority-store path and the source SHA-256.
 
-Reader v2 accepts optional `property-expansion-limits`. Their effective defaults inherit the same
+Reader v2 requires every `describe` response and conversion receipt to acknowledge
+`reader-schema-version: model-reference-reader/v2`, for local protocol-v1 and managed protocol-v2
+providers alike. Because that acknowledgement is part of the provider fingerprint, run `preflight`
+and pin again when selecting a different reader schema. Reader v2 accepts optional
+`property-expansion-limits`. Their effective defaults inherit the same
 request's `limits.maxParameters` and `limits.maxComponentJsonBytes`, and the canonical request signs
 the resulting row and byte ceilings. A caller may explicitly allow more expanded rows up to the hard
 cap, but the property-byte ceiling never exceeds the enclosing component-byte ceiling.

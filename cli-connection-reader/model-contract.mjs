@@ -66,6 +66,14 @@ export const PROPERTY_EXPANSION_LIMITS = Object.freeze({
   },
 });
 
+// Reader-v2 publishes larger property shards by default. Keep that versioned default beside the
+// base limit table so every caller and external verifier derives the same signed request; an
+// explicitly supplied lower value still wins.
+export const READER_SCHEMA_LIMIT_DEFAULTS = Object.freeze({
+  [READER_SCHEMA_VERSION_V1]: Object.freeze({}),
+  [READER_SCHEMA_VERSION_V2]: Object.freeze({ maxComponentJsonBytes: 128 * 1024 * 1024 }),
+});
+
 export class ModelReaderError extends Error {
   constructor(code, phase, retryable, message, unsafeDetails = undefined, providerCode = undefined) {
     super(message);
@@ -285,11 +293,16 @@ export function assertClosedObject(value, required, optional = [], label = 'obje
   return value;
 }
 
-export function lowerableLimits(overrides = {}) {
+export function lowerableLimits(overrides = {}, readerSchemaVersion = READER_SCHEMA_VERSION_V1) {
+  if (!Object.hasOwn(READER_SCHEMA_LIMIT_DEFAULTS, readerSchemaVersion)) {
+    throw new TypeError('readerSchemaVersion is unsupported');
+  }
   assertClosedObject(overrides, [], Object.keys(MODEL_LIMITS), 'limits');
   const result = {};
   for (const [name, range] of Object.entries(MODEL_LIMITS)) {
-    const selected = Object.hasOwn(overrides, name) ? overrides[name] : range.default;
+    const selected = Object.hasOwn(overrides, name)
+      ? overrides[name]
+      : (READER_SCHEMA_LIMIT_DEFAULTS[readerSchemaVersion][name] ?? range.default);
     if (!Number.isSafeInteger(selected) || selected <= 0 || selected > range.hard) throw new TypeError(`${name} exceeds its hard ceiling`);
     result[name] = selected;
   }
@@ -335,13 +348,13 @@ export function canonicalArtifactLimits(limits) {
 }
 
 export function buildCanonicalRequest(options = {}) {
-  const limits = lowerableLimits(options.limits);
   const protocolVersion = options.protocolVersion ?? '1';
   if (!['1', '2'].includes(protocolVersion)) throw new TypeError('protocolVersion must be 1 or 2');
   const readerSchemaVersion = options.readerSchemaVersion ?? READER_SCHEMA_VERSION_V1;
   if (![READER_SCHEMA_VERSION_V1, READER_SCHEMA_VERSION_V2].includes(readerSchemaVersion)) {
     throw new TypeError('readerSchemaVersion is unsupported');
   }
+  const limits = lowerableLimits(options.limits, readerSchemaVersion);
   // Validate this v2-only field even on a v1 request so malformed or out-of-range caller input can
   // never disappear. Non-empty overrides require an explicit v2 request instead of looking
   // successful while the v1 normalizer continues to use maxParameters.

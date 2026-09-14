@@ -252,6 +252,7 @@ test('managed-cloud conversion passes only an absolute caller-bound authority st
     await fs.writeFile(path.join(body.outputDirectory, 'metadata.json'), Buffer.from('{}'));
     return { exitCode: 0, stdout: Buffer.from(JSON.stringify({
       ...description, documentKind: 'revit-project', sourceSha256: body.sourceSha256,
+      conversionAttemptId: body.conversionAttemptId,
       geometryPath: path.join(body.outputDirectory, 'geometry.glb'), metadataPath: path.join(body.outputDirectory, 'metadata.json'),
     })), stderr: Buffer.alloc(0) };
   };
@@ -270,6 +271,22 @@ test('managed-cloud conversion passes only an absolute caller-bound authority st
   assert.equal(JSON.parse(calls[0].stdin.toString('utf8')).readerSchemaVersion, READER_SCHEMA_VERSION_V2);
   assert.equal(result.fingerprint.readerSchemaVersion, READER_SCHEMA_VERSION_V2);
   assert.equal(result.canonicalRequest.protocolVersion, '2');
+  assert.equal(result.receipt.conversionAttemptId, '123e4567-e89b-42d3-a456-426614174000');
+
+  const mismatchedHostRun = async (request) => {
+    const response = await hostRun(request);
+    if (request.operation !== 'convert') return response;
+    const receipt = JSON.parse(response.stdout.toString('utf8'));
+    receipt.conversionAttemptId = '123e4567-e89b-42d3-a456-426614174001';
+    return { ...response, stdout: Buffer.from(JSON.stringify(receipt)) };
+  };
+  await assert.rejects(() => describeAndConvert({
+    executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
+    privateRoot: path.join(root, 'mismatched-attempt'), hostRun: mismatchedHostRun,
+    expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
+    conversionAttemptId: '123e4567-e89b-42d3-a456-426614174000',
+  }), (error) => error.code === 'reference-provider-changed');
   await assert.rejects(() => describeAndConvert({
     executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
     privateRoot: path.join(root, 'relative'), hostRun,
