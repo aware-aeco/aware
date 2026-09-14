@@ -272,8 +272,20 @@ mod tests {
     fn tmp(salt: &str) -> std::path::PathBuf {
         let d = std::env::temp_dir().join(format!("aware-file-test-{}-{salt}", std::process::id()));
         // Not `create_dir_all` alone: that is a no-op over a stale directory.
-        let _ = std::fs::remove_dir_all(&d);
-        std::fs::create_dir_all(&d).unwrap();
+        //
+        // And not a discarded result either. `create_dir_all` succeeds over a
+        // directory that is still there, so swallowing a real removal failure —
+        // a locked or read-only entry on Windows, an external deleter racing us —
+        // hands the test the dirty fixture this helper exists to prevent, and its
+        // absence assertions then fail against correct production code. Only
+        // `NotFound` means "already clear"; anything else fails setup loudly.
+        match std::fs::remove_dir_all(&d) {
+            Ok(()) => {}
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+            Err(e) => panic!("fixture {d:?} could not be cleared: {e}"),
+        }
+        std::fs::create_dir_all(&d)
+            .unwrap_or_else(|e| panic!("fixture {d:?} could not be created: {e}"));
         d
     }
 
