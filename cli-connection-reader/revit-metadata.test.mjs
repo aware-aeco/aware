@@ -122,6 +122,13 @@ test('v2 rejects duplicate references and reports unreachable table rows without
 
 test('v2 enforces independent pre-append row and canonical property byte ceilings', () => {
   const metadata = makeMetadataV2();
+  const emptyMetadata = {
+    schemaVersion: '2', document: { kind: 'revit-project', id: 'empty' },
+    types: [], levels: [], parameterGroups: [], parameters: [], elements: [], relations: [],
+  };
+  assert.throws(() => normalizeRevitMetadata(emptyMetadata, [], {
+    propertyExpansionLimits: { maxCanonicalPropertyBytes: 1 },
+  }), (error) => error.code === 'reference-output-too-large');
   assert.throws(() => normalizeRevitMetadata(metadata, geometry.slice(0, 1), {
     propertyExpansionLimits: { maxExpandedPropertyRows: 1 },
   }), (error) => error.code === 'reference-output-too-large');

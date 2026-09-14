@@ -251,6 +251,9 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
   const reachedParameters = new Set();
   let elementGroupReferences = 0;
   let canonicalPropertyBytes = propertyDocumentBaseBytes;
+  if (metadataV2 && canonicalPropertyBytes > propertyLimits.maxCanonicalPropertyBytes) {
+    invalid('canonical property artifact exceeds its byte limit', 'reference-output-too-large');
+  }
   const entities = rawElements.map((element, elementOrdinal) => {
     closed(element,
       ['id', 'revitClass', 'category', 'family', 'type', 'level', 'parameterGroups', 'appearances'], ['ifcGuid'], `elements[${elementOrdinal}]`);
