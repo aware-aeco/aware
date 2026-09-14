@@ -4010,9 +4010,14 @@ mod tests {
         // it exports. On the axis pinned by `scene_roll`'s
         // `the_branch_test_does_not_cancel_at_the_threshold` the two differ by 78.5°.
         //
-        // A string assertion because nothing else runs this JS in CI: the browser gate
+        // A string assertion because nothing else EXECUTES this JS in CI: the browser gate
         // (`cli/tests/browser/run.mjs`) is a manual pre-PR step needing Playwright and a CDN.
         // It is the same shape the surrounding template tests already use. Issue #432.
+        //
+        // Parsing it is now covered — `cli/scripts/parse-check-embedded-js.mjs` runs in `ci.yml`
+        // and rejects a template whose script does not compile. That closes the hole where a
+        // syntax error anywhere in this module passed all 51 tests in this file, but it proves
+        // syntax only: a contract like the one below still needs an assertion of its own.
         let output =
             viewer_3d_render(&json!({ "scene": rolled_member("z", json!(82.7)) }), true).unwrap();
         let html = output["html"].as_str().unwrap();
