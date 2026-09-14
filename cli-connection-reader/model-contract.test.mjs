@@ -164,6 +164,12 @@ test('v2 schema binds each provider-display valueType to the matching JSON value
     ['number', 'number'],
     ['string', 'string'],
   ]);
+  const numericValue = schema.properties.parameters.items.oneOf
+    .find((branch) => branch.properties?.valueType?.const === 'number').properties.value;
+  assert.deepEqual(numericValue.anyOf, [
+    { type: 'integer', minimum: Number.MIN_SAFE_INTEGER, maximum: Number.MAX_SAFE_INTEGER },
+    { not: { type: 'integer' } },
+  ], 'the public schema must reject the unsafe integral numbers refused by canonical JSON');
 });
 
 test('managed-cloud provider fingerprint binds execution and exact destination', () => {

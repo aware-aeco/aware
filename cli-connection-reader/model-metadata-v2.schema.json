@@ -46,7 +46,13 @@
               "unit": { "type": ["string", "null"] },
               "valueEncoding": { "const": "provider-display" },
               "valueType": { "const": "number" },
-              "value": { "type": "number" }
+              "value": {
+                "type": "number",
+                "anyOf": [
+                  { "type": "integer", "minimum": -9007199254740991, "maximum": 9007199254740991 },
+                  { "not": { "type": "integer" } }
+                ]
+              }
             }
           },
           {
