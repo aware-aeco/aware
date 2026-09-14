@@ -1436,15 +1436,8 @@ fn nested_runtime_context(
         run: crate::runtime::context::run_context(run_id),
         ..Default::default()
     };
-    if let Some(creds) = credentials_dir
-        && creds.is_dir()
-        && let Ok(read) = std::fs::read_dir(creds)
-    {
-        for entry in read.flatten() {
-            if let Some(stem) = entry.path().file_stem().and_then(|s| s.to_str()) {
-                let _ = crate::runtime::context::load_secret(&mut ctx, creds, stem);
-            }
-        }
+    if let Some(creds) = credentials_dir {
+        crate::runtime::context::load_secrets_dir(&mut ctx, creds);
     }
     ctx
 }
