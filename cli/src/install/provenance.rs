@@ -156,17 +156,44 @@ pub fn assess_against_index(
         result.reason = "no freshly fetched official registry index was available".into();
         return result;
     };
-    let registry_expected = result
-        .registry_key
-        .as_deref()
-        .and_then(|key| {
-            result
-                .registry_version
-                .as_deref()
-                .and_then(|version| index.resolve(key, Some(version)).ok())
+    let registry_release = result.registry_key.as_deref().and_then(|key| {
+        let entry = index.agents.get(key)?;
+        result.registry_version.as_deref().and_then(|version| {
+            index
+                .resolve(key, Some(version))
+                .ok()
+                .map(|(_, release)| (key, version, entry, release))
         })
-        .and_then(|(_, release)| release.bundle_digest.as_deref());
-    if registry_expected != Some(expected.as_str()) {
+    });
+    let Some((registry_key, registry_version, registry_entry, registry_release)) = registry_release
+    else {
+        result.reason = "receipt release is absent from the fresh official registry".into();
+        return result;
+    };
+    if crate::registry::index::validate_release_payload(
+        registry_key,
+        registry_version,
+        registry_entry,
+        registry_release,
+        manifest_agent,
+        manifest_version,
+    )
+    .is_err()
+    {
+        result.reason =
+            "fresh official registry release has an invalid manifest identity binding".into();
+        return result;
+    }
+    if registry_release.manifest_agent.as_deref() != bound_agent.as_deref()
+        || registry_release.manifest_version.as_deref() != bound_version.as_deref()
+        || registry_release.manifest_agent.as_deref() != Some(manifest_agent)
+        || registry_release.manifest_version.as_deref() != Some(manifest_version)
+    {
+        result.reason =
+            "receipt manifest identity does not match the fresh official registry release".into();
+        return result;
+    }
+    if registry_release.bundle_digest.as_deref() != Some(expected.as_str()) {
         result.reason = "receipt digest does not match the fresh official registry release".into();
         return result;
     }
@@ -312,6 +339,8 @@ mod tests {
             crate::registry::VersionEntry {
                 tarball: "https://example.invalid/a.tar.gz".into(),
                 subdir: "probe".into(),
+                manifest_agent: Some("probe".into()),
+                manifest_version: Some("1.0.0".into()),
                 bundle_digest: Some(digest),
             },
         );
@@ -341,6 +370,43 @@ mod tests {
         )
         .unwrap();
         assert!(!assess_against_index(tmp.path(), "probe", "1.0.0", Some(&index)).verified);
+    }
+
+    #[test]
+    fn verification_rejects_a_digest_equal_receipt_with_different_registry_identity() {
+        let (installed, digest) = official_install(|_| {});
+        let mut index = index_publishing(&digest, crate::registry::RegistryTrust::FreshOfficial);
+        index
+            .agents
+            .get_mut("probe-release")
+            .unwrap()
+            .versions
+            .get_mut("2026.1.0")
+            .unwrap()
+            .manifest_version = Some("9.9.9".into());
+
+        let verdict = assess_against_index(installed.path(), "probe", "1.0.0", Some(&index));
+        assert!(!verdict.verified, "{}", verdict.reason);
+        assert!(
+            verdict.reason.contains("fresh official registry release"),
+            "{}",
+            verdict.reason
+        );
+    }
+
+    #[test]
+    fn verification_rejects_an_invalid_fresh_registry_alias_contract() {
+        let (installed, digest) = official_install(|_| {});
+        let mut index = index_publishing(&digest, crate::registry::RegistryTrust::FreshOfficial);
+        index.agents.get_mut("probe-release").unwrap().alias_of = Some("different-agent".into());
+
+        let verdict = assess_against_index(installed.path(), "probe", "1.0.0", Some(&index));
+        assert!(!verdict.verified, "{}", verdict.reason);
+        assert!(
+            verdict.reason.contains("invalid manifest identity binding"),
+            "{}",
+            verdict.reason
+        );
     }
 
     /// A well-formed bundle digest that is the digest of nothing here. Used as the value one
@@ -397,6 +463,8 @@ mod tests {
             crate::registry::VersionEntry {
                 tarball: "https://example.invalid/a.tar.gz".into(),
                 subdir: "probe".into(),
+                manifest_agent: Some("probe".into()),
+                manifest_version: Some("1.0.0".into()),
                 bundle_digest: Some(bundle_digest.into()),
             },
         );

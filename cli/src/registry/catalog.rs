@@ -398,8 +398,25 @@ where
         // caller's closure to be idempotent. A running best needs neither.
         let mut newest: Option<String> = None;
         for (ver, ve) in &entry.versions {
+            if let Err(error) =
+                crate::registry::index::validate_release_contract(id, ver, entry, ve)
+            {
+                errors.push((format!("{id}@{ver}"), error));
+                continue;
+            }
             match load(&ve.subdir) {
                 Ok(agent) => {
+                    if let Err(error) = crate::registry::index::validate_release_payload(
+                        id,
+                        ver,
+                        entry,
+                        ve,
+                        &agent.agent,
+                        &agent.version,
+                    ) {
+                        errors.push((format!("{id}@{ver}"), error));
+                        continue;
+                    }
                     let is_newer = newest.as_ref().is_none_or(|best| {
                         crate::validate::compare_version_keys(ver, best).is_gt()
                     });
@@ -593,6 +610,8 @@ commands:
                     bundle_digest: None,
                     tarball: "t".to_string(),
                     subdir: (*subdir).to_string(),
+                    manifest_agent: Some((*id).to_string()),
+                    manifest_version: Some("9.9.9".to_string()),
                 },
             );
             agents.insert(
@@ -653,6 +672,8 @@ commands:
                 bundle_digest: None,
                 tarball: "t".to_string(),
                 subdir: "us".to_string(),
+                manifest_agent: Some("steel-detailer-us".to_string()),
+                manifest_version: Some("9.9.9".to_string()),
             },
         );
         index.agents.insert(
@@ -671,6 +692,8 @@ commands:
                 bundle_digest: None,
                 tarball: "t".to_string(),
                 subdir: "sunset".to_string(),
+                manifest_agent: Some("steel-detailer-us".to_string()),
+                manifest_version: Some("9.9.9".to_string()),
             },
         );
         index.agents.insert(
@@ -719,6 +742,8 @@ commands:
                 bundle_digest: None,
                 tarball: "t".to_string(),
                 subdir: "broken".to_string(),
+                manifest_agent: Some("retired".to_string()),
+                manifest_version: Some("9.9.9".to_string()),
             },
         );
         index.agents.insert(
@@ -762,6 +787,8 @@ commands:
                     bundle_digest: None,
                     tarball: (*tarball).to_string(),
                     subdir: (*subdir).to_string(),
+                    manifest_agent: Some(id.to_string()),
+                    manifest_version: Some("9.9.9".to_string()),
                 },
             );
         }
@@ -1238,7 +1265,7 @@ commands:
         let entries: String = versions
             .iter()
             .map(|v| {
-                format!(r#""{v}": {{ "tarball": "https://x.invalid/x.tar.gz", "subdir": "{v}" }}"#)
+                format!(r#""{v}": {{ "tarball": "https://x.invalid/x.tar.gz", "subdir": "{v}", "manifest-agent": "probe", "manifest-version": "{v}" }}"#)
             })
             .collect::<Vec<_>>()
             .join(",\n            ");
@@ -1304,8 +1331,8 @@ commands:
     "version": "1.0",
     "updated-at": "x",
     "agents": { "probe": { "versions": {
-            "1.9.0":  { "tarball": "https://x.invalid/x.tar.gz", "subdir": "1.9.0" },
-            "1.10.1": { "tarball": "https://x.invalid/x.tar.gz", "subdir": "1.10.1" }
+            "1.9.0":  { "tarball": "https://x.invalid/x.tar.gz", "subdir": "1.9.0", "manifest-agent": "probe", "manifest-version": "1.9.0" },
+            "1.10.1": { "tarball": "https://x.invalid/x.tar.gz", "subdir": "1.10.1", "manifest-agent": "probe", "manifest-version": "1.10.1" }
     } } },
     "bundles": {}
 }"#,
@@ -1385,8 +1412,8 @@ commands:
     "version": "1.0",
     "updated-at": "x",
     "agents": { "probe": { "versions": {
-            "1.9.0":  { "tarball": "https://x.invalid/x.tar.gz", "subdir": "1.9.0" },
-            "1.10.1": { "tarball": "https://x.invalid/x.tar.gz", "subdir": "1.10.1" }
+            "1.9.0":  { "tarball": "https://x.invalid/x.tar.gz", "subdir": "1.9.0", "manifest-agent": "probe", "manifest-version": "1.9.0" },
+            "1.10.1": { "tarball": "https://x.invalid/x.tar.gz", "subdir": "1.10.1", "manifest-agent": "probe", "manifest-version": "1.10.1" }
     } } },
     "bundles": {}
 }"#,

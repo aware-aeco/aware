@@ -26,9 +26,14 @@ pub fn install_agent_from_registry(
     // `id` is used as the key directly, exactly as before — resolving it through
     // `resolve_key` here would quietly make `install <suffixed-id>` succeed where it has
     // always errored, which is a behaviour change that does not belong in a bug fix.
+    let index_entry = index
+        .agents
+        .get(id)
+        .ok_or_else(|| AwareError::NotFound(format!("agent {id} not in registry")))?;
     let (resolved, entry) = index.resolve(id, version_pin)?;
+    crate::registry::index::validate_release_contract(id, resolved, index_entry, entry)
+        .map_err(AwareError::Validation)?;
     let resolved = resolved.clone();
-    let expected = entry.bundle_digest.clone();
     let (_scratch, subdir) = stage_agent_from_registry(id, version_pin, paths, index)?;
     install_staged_registry(
         &subdir,
@@ -36,7 +41,8 @@ pub fn install_agent_from_registry(
         index.trust,
         id,
         &resolved,
-        expected.as_deref(),
+        index_entry,
+        entry,
     )
 }
 
@@ -46,9 +52,20 @@ fn install_staged_registry(
     trust: RegistryTrust,
     key: &str,
     registry_version: &str,
-    expected_digest: Option<&str>,
+    index_entry: &crate::registry::IndexEntry,
+    release: &crate::registry::VersionEntry,
 ) -> Result<String, AwareError> {
+    let expected_digest = release.bundle_digest.as_deref();
     let agent = load_agent(&src.join("manifest.yaml"))?;
+    crate::registry::index::validate_release_payload(
+        key,
+        registry_version,
+        index_entry,
+        release,
+        &agent.agent,
+        &agent.version,
+    )
+    .map_err(AwareError::Validation)?;
     let issues = validate_agent_on_disk(&agent, src);
     if let Some(summary) = error_summary(&issues) {
         return Err(AwareError::Validation(summary));
@@ -302,6 +319,17 @@ pub fn update_agent_from_registry(
     //    atomic resolve-fetch-validate-then-swap already exists here (#174).
     let (resolved_registry_version, release) = index.resolve(&key, version_pin)?;
     let resolved_registry_version = resolved_registry_version.clone();
+    let index_entry = index
+        .agents
+        .get(&key)
+        .ok_or_else(|| AwareError::NotFound(format!("agent {key} not in registry")))?;
+    crate::registry::index::validate_release_contract(
+        &key,
+        &resolved_registry_version,
+        index_entry,
+        release,
+    )
+    .map_err(AwareError::Validation)?;
     let expected_digest = release.bundle_digest.clone();
     let (_scratch, subdir) = stage_agent_from_registry(&key, version_pin, paths, index)?;
 
@@ -313,6 +341,15 @@ pub fn update_agent_from_registry(
         )));
     }
     let agent = load_agent(&manifest_path)?;
+    crate::registry::index::validate_release_payload(
+        &key,
+        &resolved_registry_version,
+        index_entry,
+        release,
+        &agent.agent,
+        &agent.version,
+    )
+    .map_err(AwareError::Validation)?;
     let issues = validate_agent_on_disk(&agent, &subdir);
     if let Some(summary) = error_summary(&issues) {
         return Err(AwareError::Validation(summary));
@@ -441,12 +478,10 @@ fn check_update_is_not_destructive(
     // Fenced like every other agent-id join (#365) — and REFUSING, not abstaining.
     //
     // The direction matters at the second call site. `new_name` comes from the PAYLOAD's
-    // manifest, and `validate_agent` checks an agent id only for emptiness — it has no
-    // segment check, unlike `validate_app`. So a path-shaped `new_name` would reach
-    // `agents_dir.join(&new_name)` and `remove_dir_all`, and this is the first and only
-    // place that can stop it. "No path-shaped id names an installed agent" is precisely
-    // the argument for refusing rather than waving it through; returning Ok here would
-    // have made the guard abstain on the one input it is least able to trust.
+    // manifest. `validate_agent` now applies the same portable id grammar before this
+    // helper is reached, and this guard remains an independent fence at the destructive
+    // path join. Returning Ok for an unsafe id would make the guard abstain on the one
+    // input it is least able to trust.
     if !crate::manifest::loader::is_safe_segment(id) {
         return Err(AwareError::NotFound(format!("agent {id} is not installed")));
     }
@@ -564,6 +599,14 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.path().join("aware"),
         };
+        let entry = IndexEntry::default();
+        let release = VersionEntry {
+            tarball: "unused".into(),
+            subdir: "unused".into(),
+            manifest_agent: Some("probe".into()),
+            manifest_version: Some("1.0.0".into()),
+            bundle_digest: None,
+        };
 
         let error = install_staged_registry(
             &src,
@@ -571,7 +614,8 @@ mod tests {
             RegistryTrust::Unverified,
             "probe",
             "1.0.0",
-            None,
+            &entry,
+            &release,
         )
         .unwrap_err();
 
@@ -595,6 +639,14 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.path().join("aware"),
         };
+        let entry = IndexEntry::default();
+        let release = VersionEntry {
+            tarball: "unused".into(),
+            subdir: "unused".into(),
+            manifest_agent: Some("future-agent".into()),
+            manifest_version: Some("1.0.0".into()),
+            bundle_digest: None,
+        };
 
         let error = install_staged_registry(
             &src,
@@ -602,7 +654,8 @@ mod tests {
             RegistryTrust::Unverified,
             "future-agent",
             "1.0.0",
-            None,
+            &entry,
+            &release,
         )
         .unwrap_err();
 
@@ -740,6 +793,8 @@ mod tests {
                 bundle_digest: None,
                 tarball: format!("file://{}", tarball.display()),
                 subdir: "aware-main/20-agents/tekla".into(),
+                manifest_agent: Some("tekla".into()),
+                manifest_version: Some("0.1.5".into()),
             },
         );
         let mut agents = BTreeMap::new();
@@ -765,6 +820,78 @@ mod tests {
         let installed = install_agent_from_registry("tekla", None, &paths, &index).unwrap();
         assert_eq!(installed, "tekla");
         assert!(aware.join("agents/tekla/manifest.yaml").is_file());
+    }
+
+    fn tekla_index(
+        tarball: &Path,
+        manifest_agent: Option<&str>,
+        manifest_version: Option<&str>,
+    ) -> Index {
+        let mut release = serde_json::json!({
+            "tarball": format!("file://{}", tarball.display()),
+            "subdir": "aware-main/20-agents/tekla"
+        });
+        if let Some(agent) = manifest_agent {
+            release["manifest-agent"] = agent.into();
+        }
+        if let Some(version) = manifest_version {
+            release["manifest-version"] = version.into();
+        }
+        let raw = serde_json::to_vec(&serde_json::json!({
+            "version": "1.0",
+            "updated-at": "x",
+            "agents": { "tekla": { "versions": { "2025.0.1": release } } },
+            "bundles": {}
+        }))
+        .unwrap();
+        Index::parse(raw.as_slice()).unwrap()
+    }
+
+    #[test]
+    fn install_refuses_a_payload_with_the_wrong_declared_manifest_version() {
+        let tmp = tempfile::tempdir().unwrap();
+        let tarball = tmp.path().join("tekla.tar.gz");
+        make_test_tarball(&tarball);
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let index = tekla_index(&tarball, Some("tekla"), Some("999.0.0"));
+
+        let error =
+            install_agent_from_registry("tekla", Some("2025.0.1"), &paths, &index).unwrap_err();
+
+        let message = error.to_string();
+        assert!(message.contains("tekla@2025.0.1"), "{message}");
+        assert!(message.contains("999.0.0"), "{message}");
+        assert!(message.contains("payload declares"), "{message}");
+        assert!(!paths.agents_dir().join("tekla").exists());
+    }
+
+    #[test]
+    fn update_refuses_a_payload_with_the_wrong_declared_manifest_agent_before_replacement() {
+        let tmp = tempfile::tempdir().unwrap();
+        let tarball = tmp.path().join("tekla.tar.gz");
+        make_test_tarball(&tarball);
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let initial = tekla_index(&tarball, Some("tekla"), Some("0.1.5"));
+        install_agent_from_registry("tekla", None, &paths, &initial).unwrap();
+        let sentinel = paths.agents_dir().join("tekla/keep-me.txt");
+        std::fs::write(&sentinel, "original install").unwrap();
+
+        let mismatched = tekla_index(&tarball, Some("different-agent"), Some("0.1.5"));
+        let error =
+            update_agent_from_registry("tekla", None, false, &paths, &mismatched).unwrap_err();
+
+        let message = error.to_string();
+        assert!(message.contains("tekla@2025.0.1"), "{message}");
+        assert!(message.contains("different-agent"), "{message}");
+        assert!(message.contains("payload declares \"tekla\""), "{message}");
+        assert_eq!(
+            std::fs::read_to_string(sentinel).unwrap(),
+            "original install"
+        );
     }
 
     /// Build a `main`-archive-shaped tarball holding the named agents, each a copy of
@@ -843,6 +970,8 @@ mod tests {
                     bundle_digest: None,
                     tarball: url.clone(),
                     subdir: subdir.to_string(),
+                    manifest_agent: subdir.rsplit('/').next().map(str::to_owned),
+                    manifest_version: Some("0.1.5".to_string()),
                 },
             );
             versions
@@ -990,6 +1119,8 @@ mod tests {
                 bundle_digest: None,
                 tarball: url.to_string(),
                 subdir: "aware-main/20-agents/alpha".to_string(),
+                manifest_agent: None,
+                manifest_version: None,
             },
         );
         let mut agents = BTreeMap::new();
@@ -1269,6 +1400,8 @@ mod tests {
                         bundle_digest: None,
                         tarball: url.clone(),
                         subdir: format!("aware-main/20-agents/{n}"),
+                        manifest_agent: Some((*n).to_string()),
+                        manifest_version: Some("0.1.5".to_string()),
                     },
                 );
                 agents.insert(

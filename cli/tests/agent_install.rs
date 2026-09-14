@@ -81,7 +81,7 @@ fn write_registry_fixture(dir: &std::path::Path, tarball: &std::path::Path) -> s
     "agents": {{
         "tekla": {{
             "versions": {{
-                "2025.0.1": {{ "tarball": "{tarball_url}", "subdir": "aware-main/20-agents/tekla" }}
+                "2025.0.1": {{ "tarball": "{tarball_url}", "subdir": "aware-main/20-agents/tekla", "manifest-agent": "tekla", "manifest-version": "0.1.5" }}
             }}
         }}
     }},
@@ -198,6 +198,30 @@ fn installs_one_agent_bundle() {
         .stdout(predicate::str::contains("bundle aware-tiny: 1 installed"));
 
     assert!(aware.join("agents/tekla/manifest.yaml").is_file());
+}
+
+#[test]
+fn bundle_install_refuses_a_manifest_binding_mismatch_without_partial_install() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let tarball = tmp.path().join("tekla.tar.gz");
+    build_tekla_tarball(&tarball);
+    let idx_path = write_registry_fixture(tmp.path(), &tarball);
+    let mut index: serde_json::Value =
+        serde_json::from_str(&std::fs::read_to_string(&idx_path).unwrap()).unwrap();
+    index["agents"]["tekla"]["versions"]["2025.0.1"]["manifest-version"] = "9.9.9".into();
+    std::fs::write(&idx_path, serde_json::to_string_pretty(&index).unwrap()).unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_REGISTRY", to_file_url(&idx_path))
+        .args(["agent", "install", "aware-tiny"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("0 installed, 1 failed"))
+        .stdout(predicate::str::contains("expects manifest-version 9.9.9"));
+    assert!(!aware.join("agents/tekla").exists());
 }
 
 #[test]

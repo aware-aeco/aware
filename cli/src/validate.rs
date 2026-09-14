@@ -98,6 +98,17 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
             "E_AGENT_EMPTY_ID",
             "agent id is empty",
         ));
+    } else if !crate::registry::index::is_portable_agent_id(&agent.agent) {
+        out.push(ValidationIssue::error(
+            "E_AGENT_INVALID_ID",
+            "agent id must be portable: start with an ASCII letter or digit and use only ASCII letters, digits, '.', '_' or '-' (Windows reserved names are not allowed)",
+        ));
+    }
+    if parse_semver(&agent.version).is_none() {
+        out.push(ValidationIssue::error(
+            "E_AGENT_INVALID_VERSION",
+            "agent version must be strict SemVer such as 1.2.3",
+        ));
     }
     if agent.commands.is_empty() {
         out.push(ValidationIssue::error(
@@ -1446,6 +1457,24 @@ mod tests {
     fn real_tekla_passes_validation() {
         let a = load_agent("20-agents/aeco/engineering/tekla/manifest.yaml");
         let issues = validate_agent(&a);
+        assert!(!has_errors(&issues), "issues: {issues:?}");
+    }
+
+    #[test]
+    fn agent_identity_and_version_must_be_portable_and_strict_semver() {
+        let invalid: Agent = serde_yaml::from_str(
+            "agent: ../probe\nversion: 1.0\ndescription: probe\nstateful: false\nlicense: MIT\ntransport: { builtin: {} }\ncommands: { run: { lifecycle: single, description: Run. } }\n",
+        )
+        .unwrap();
+        let issues = validate_agent(&invalid);
+        assert!(issues.iter().any(|i| i.code == "E_AGENT_INVALID_ID"));
+        assert!(issues.iter().any(|i| i.code == "E_AGENT_INVALID_VERSION"));
+
+        let valid: Agent = serde_yaml::from_str(
+            "agent: probe.2026_1\nversion: 1.2.3-rc.1+win64\ndescription: probe\nstateful: false\nlicense: MIT\ntransport: { builtin: {} }\ncommands: { run: { lifecycle: single, description: Run. } }\n",
+        )
+        .unwrap();
+        let issues = validate_agent(&valid);
         assert!(!has_errors(&issues), "issues: {issues:?}");
     }
 

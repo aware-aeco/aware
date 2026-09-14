@@ -778,6 +778,11 @@ fn merge_publish_entry_with_digest(
     let entry = agents
         .entry(id.to_string())
         .or_insert_with(|| serde_json::json!({ "versions": {} }));
+    if let Some(target) = entry.get("alias-of").and_then(|value| value.as_str()) {
+        return Err(AwareError::Validation(format!(
+            "registry key {id} is a rename alias for {target}, so it cannot publish a new {id} payload; publish the agent under {target}, or remove the alias only if the rename is being reversed"
+        )));
+    }
     let versions = entry
         .get_mut("versions")
         .and_then(|v| v.as_object_mut())
@@ -848,12 +853,35 @@ fn merge_publish_entry_with_digest(
     versions.insert(
         version.to_string(),
         if bundle_digest.is_empty() {
-            serde_json::json!({ "tarball": tarball, "subdir": subdir })
+            serde_json::json!({
+                "tarball": tarball,
+                "subdir": subdir,
+                "manifest-agent": id,
+                "manifest-version": version
+            })
         } else {
-            serde_json::json!({ "tarball": tarball, "subdir": subdir, "bundle-digest": bundle_digest })
+            serde_json::json!({
+                "tarball": tarball,
+                "subdir": subdir,
+                "manifest-agent": id,
+                "manifest-version": version,
+                "bundle-digest": bundle_digest
+            })
         },
     );
     doc["updated-at"] = serde_json::Value::String(crate::builder::now_iso());
+    let completed: crate::registry::Index = serde_json::from_value(doc.clone())?;
+    for (existing_key, existing_entry) in &completed.agents {
+        for (existing_version, existing_release) in &existing_entry.versions {
+            crate::registry::index::validate_release_contract(
+                existing_key,
+                existing_version,
+                existing_entry,
+                existing_release,
+            )
+            .map_err(AwareError::Validation)?;
+        }
+    }
     let mut out = serde_json::to_string_pretty(&doc)?;
     out.push('\n');
     Ok(out)
@@ -863,7 +891,7 @@ fn merge_publish_entry_with_digest(
 mod publish_tests {
     use super::*;
 
-    const SAMPLE: &str = r#"{"version":"1.0","updated-at":"old","agents":{"tekla":{"versions":{"2025.0.1":{"tarball":"t","subdir":"s"}}}},"bundles":{}}"#;
+    const SAMPLE: &str = r#"{"version":"1.0","updated-at":"old","agents":{"tekla":{"versions":{"2025.0.1":{"tarball":"t","subdir":"s","manifest-agent":"tekla","manifest-version":"0.1.5"}}}},"bundles":{}}"#;
 
     #[test]
     fn merge_adds_new_agent_and_preserves_existing() {
@@ -881,7 +909,29 @@ mod publish_tests {
         assert_eq!(v, "0.2.0");
         assert_eq!(e.tarball, SUBSTRATE_TARBALL);
         assert_eq!(e.subdir, "aware-main/20-agents/aeco/construction/bcf-file");
+        assert_eq!(e.manifest_agent.as_deref(), Some("bcf-file"));
+        assert_eq!(e.manifest_version.as_deref(), Some("0.2.0"));
         assert_ne!(parsed.updated_at, "old", "updated-at refreshed");
+    }
+
+    #[test]
+    fn merge_refuses_to_preserve_an_existing_release_without_manifest_bindings() {
+        let legacy = r#"{"version":"1.0","updated-at":"old","agents":{"tekla":{"versions":{"2025.0.1":{"tarball":"t","subdir":"s"}}}},"bundles":{}}"#;
+        let error = merge_publish_entry(legacy, "demo", "1.0.0", "t", "demo")
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("tekla@2025.0.1"), "{error}");
+        assert!(error.contains("missing manifest-agent"), "{error}");
+    }
+
+    #[test]
+    fn merge_refuses_to_publish_a_new_payload_through_a_rename_alias() {
+        let alias = r#"{"version":"1.0","updated-at":"old","agents":{"old":{"alias-of":"new","versions":{"1.0.0":{"tarball":"t","subdir":"new","manifest-agent":"new","manifest-version":"1.0.0"}}}},"bundles":{}}"#;
+        let error = merge_publish_entry(alias, "old", "2.0.0", "t2", "old")
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("old is a rename alias for new"), "{error}");
+        assert!(error.contains("publish the agent under new"), "{error}");
     }
 
     #[test]
@@ -1015,7 +1065,7 @@ mod publish_tests {
     #[test]
     fn merge_preserves_existing_agent_order_and_appends() {
         // Deliberately non-alphabetical on-disk order: zebra before alpha.
-        let src = r#"{"version":"1.0","updated-at":"old","agents":{"zebra":{"versions":{"1.0.0":{"tarball":"t","subdir":"z"}}},"alpha":{"versions":{"1.0.0":{"tarball":"t","subdir":"a"}}}},"bundles":{}}"#;
+        let src = r#"{"version":"1.0","updated-at":"old","agents":{"zebra":{"versions":{"1.0.0":{"tarball":"t","subdir":"z","manifest-agent":"zebra","manifest-version":"1.0.0"}}},"alpha":{"versions":{"1.0.0":{"tarball":"t","subdir":"a","manifest-agent":"alpha","manifest-version":"1.0.0"}}}},"bundles":{}}"#;
         let out = merge_publish_entry(src, "middle", "1.0.0", "t", "m").unwrap();
         let zebra = out.find("\"zebra\"").unwrap();
         let alpha = out.find("\"alpha\"").unwrap();
