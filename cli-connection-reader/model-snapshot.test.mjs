@@ -85,6 +85,10 @@ test('reader v2 publishes independently versioned package schemas and authentica
   assert.equal(output.packagePreimage.packager.bridgeBuildId, 'aware-connection-reader@0.5.2');
   const packageManifest = JSON.parse(await fs.readFile(new URL('./package.json', import.meta.url), 'utf8'));
   assert.equal(output.packagePreimage.packager.bridgeBuildId, `${packageManifest.name}@${packageManifest.version}`);
+  const agentManifest = await fs.readFile(new URL('../20-agents/aeco/engineering/model-reference-reader/manifest.yaml', import.meta.url), 'utf8');
+  const agentVersions = [...agentManifest.matchAll(/^version:\s*([^\s#]+)\s*(?:#.*)?$/gm)].map((match) => match[1]);
+  assert.deepEqual(agentVersions, [output.packagePreimage.packager.version],
+    'the signed packager version must match the one unambiguous top-level agent manifest version');
   const manifest = JSON.parse(await fs.readFile(path.join(root, 'artifacts', output.packageArtifacts.manifest.id), 'utf8'));
   assert.equal(manifest.schemaVersion, 'floless.model-snapshot-package/v2');
 });

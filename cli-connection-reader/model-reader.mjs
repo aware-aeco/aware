@@ -310,7 +310,7 @@ async function convertAndCache(args, deps, config, readiness) {
       // The normalizer refuses a mismatch up front, so this is defence in depth
       // against that guard being weakened. Assert on the coverage the normalizer
       // already returned rather than re-parsing propertiesBytes, which can reach
-      // maxCanonicalPropertyBytes (16 MB default, 128 MB hard) on every read.
+      // maxCanonicalPropertyBytes (128 MiB default and hard cap) on every read.
       if ((metadata.coverage.metadataSchemaVersion ?? '1') !== expectedMetadataSchema) {
         readerError('reference-metadata-invalid', 'normalize-metadata', 'Provider metadata does not match the requested reader schema version.');
       }

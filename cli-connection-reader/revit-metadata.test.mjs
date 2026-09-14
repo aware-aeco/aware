@@ -72,7 +72,7 @@ test('v2 preserves provider-display provenance, normalizes negative zero, and ne
     metadataSchemaVersion: '2', nativeParameterGroups: 1, nativeParameters: 2,
     elementGroupReferences: 1, expandedProperties: 2, orphanParameterGroups: 0, orphanParameters: 0,
     canonicalPropertyBytes: result.propertiesBytes.length,
-    effectivePropertyLimits: { maxExpandedPropertyRows: 100_000, maxCanonicalPropertyBytes: 16 * 1024 * 1024 },
+    effectivePropertyLimits: { maxExpandedPropertyRows: 2_000_000, maxCanonicalPropertyBytes: 128 * 1024 * 1024 },
   });
 });
 

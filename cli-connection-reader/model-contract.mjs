@@ -55,8 +55,15 @@ export const MODEL_LIMITS = Object.freeze({
 });
 
 export const PROPERTY_EXPANSION_LIMITS = Object.freeze({
-  maxExpandedPropertyRows: { default: 100_000, hard: 5_000_000 },
-  maxCanonicalPropertyBytes: { default: 16 * 1024 * 1024, hard: 128 * 1024 * 1024 },
+  // v2 is additive: selecting it without an explicit override must not make a model that fits the
+  // v1 parameter budget fail at a lower row ceiling. Production can still opt into the 5M hard cap.
+  maxExpandedPropertyRows: { default: MODEL_LIMITS.maxParameters.default, hard: 5_000_000 },
+  // The v2 reader raises maxComponentJsonBytes to 128 MiB so the canonical property document can
+  // actually use that parser headroom. Callers may lower this per request; 128 MiB stays the hard cap.
+  maxCanonicalPropertyBytes: {
+    default: MODEL_LIMITS.maxComponentJsonBytes.hard,
+    hard: MODEL_LIMITS.maxComponentJsonBytes.hard,
+  },
 });
 
 export class ModelReaderError extends Error {
