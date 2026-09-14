@@ -132,6 +132,6 @@ test('a v2 shard configuration advertises the property expansion ceiling it must
   // exactly the shape where the two disagree.
   const output = await buildAndPublishSnapshot(result, { privateKey, publicKeyBytes }, path.join(root, 'artifacts'),
     { limits: { maxEntities: 2, maxParameters: 2, maxRelationships: 2 } });
-  assert.ok(output.packageConfiguration.maximumShardRecords >= 4096,
-    `signed maximumShardRecords ${output.packageConfiguration.maximumShardRecords} is below the expansion ceiling it must cover`);
+  assert.equal(output.packageConfiguration.maximumShardRecords, 4096,
+    'the signed shard ceiling must bind the effective request instead of a constant hard cap');
 });

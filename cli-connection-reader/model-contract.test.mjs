@@ -137,6 +137,22 @@ test('reader v2 binds closed effective expansion limits while v1 canonical bytes
   assert.throws(() => buildCanonicalRequest({ readerSchemaVersion: 'model-reference-reader/v3' }), /unsupported/);
 });
 
+test('v1 refuses every supplied v2 property-limit override instead of silently discarding it', () => {
+  for (const propertyExpansionLimits of [
+    { maxExpandedPropertyRows: 4096 },
+    { maxExpandedPropertyRows: 999_999_999 },
+    { maxExpandedPropertyRows: -1 },
+    { maxExpandedPropertyRows: 1.5 },
+    { maxExpandedPropertyRow: 4096 },
+    'nonsense',
+  ]) {
+    assert.throws(
+      () => buildCanonicalRequest({ propertyExpansionLimits }),
+      /propertyExpansionLimits|maxExpandedPropertyRows/,
+    );
+  }
+});
+
 test('v2 schema binds each provider-display valueType to the matching JSON value type', () => {
   const schema = JSON.parse(readFileSync(new URL('./model-metadata-v2.schema.json', import.meta.url), 'utf8'));
   const providerDisplayBranches = schema.properties.parameters.items.oneOf

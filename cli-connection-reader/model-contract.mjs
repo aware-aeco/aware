@@ -335,6 +335,10 @@ export function buildCanonicalRequest(options = {}) {
   if (![READER_SCHEMA_VERSION_V1, READER_SCHEMA_VERSION_V2].includes(readerSchemaVersion)) {
     throw new TypeError('readerSchemaVersion is unsupported');
   }
+  // Validate this v2-only field even on a v1 request so malformed or out-of-range caller input can
+  // never disappear. Non-empty overrides require an explicit v2 request instead of looking
+  // successful while the v1 normalizer continues to use maxParameters.
+  const propertyExpansionLimits = lowerablePropertyExpansionLimits(options.propertyExpansionLimits);
   const request = {
     schemaVersion: '1',
     protocolVersion,
@@ -359,7 +363,12 @@ export function buildCanonicalRequest(options = {}) {
     conversionSettings: options.conversionSettings ?? {},
     limits,
   };
-  if (readerSchemaVersion === READER_SCHEMA_VERSION_V1) return request;
+  if (readerSchemaVersion === READER_SCHEMA_VERSION_V1) {
+    if (Object.keys(options.propertyExpansionLimits ?? {}).length > 0) {
+      throw new TypeError('propertyExpansionLimits requires readerSchemaVersion model-reference-reader/v2');
+    }
+    return request;
+  }
   return {
     ...request,
     schemaVersion: '2',
@@ -368,7 +377,7 @@ export function buildCanonicalRequest(options = {}) {
       propertyValues: ['source-storage', 'provider-display'],
       providerDisplayIdentity: 'excluded',
     },
-    propertyExpansionLimits: lowerablePropertyExpansionLimits(options.propertyExpansionLimits),
+    propertyExpansionLimits,
   };
 }
 

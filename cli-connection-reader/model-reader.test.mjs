@@ -97,6 +97,19 @@ test('request-only failures precede provider configuration and managed host setu
       (error) => error.code === 'reference-limits-invalid',
     );
   }
+  for (const propertyExpansionLimits of [
+    { maxExpandedPropertyRows: 4096 },
+    { maxExpandedPropertyRows: 999_999_999 },
+    { maxExpandedPropertyRow: 4096 },
+    'nonsense',
+  ]) {
+    await assert.rejects(
+      () => runModelCommand('preflight', {
+        'property-expansion-limits': propertyExpansionLimits,
+      }, unconfigured),
+      (error) => error.code === 'reference-request-invalid',
+    );
+  }
   await assert.rejects(
     () => runModelCommand('preflight', { 'expected-provider-protocol': '9' }, unconfigured),
     (error) => error.code === 'reference-request-invalid',
@@ -269,7 +282,7 @@ test('reader v2 binds expansion limits and publishes tagged provider-display pro
   assert.deepEqual(out.coverage.effectivePropertyLimits, versionArgs['property-expansion-limits']);
   assert.equal(out.packageConfiguration.schemaVersion, 'model-reference-package-configuration/v2');
   assert.equal(out.packageConfiguration.maximumShardBytes, 128 * 1024 * 1024);
-  assert.equal(out.packageConfiguration.maximumShardRecords, 5_000_000);
+  assert.equal(out.packageConfiguration.maximumShardRecords, 2_000_000);
   assert.equal(out.packageConfiguration.maximumAggregateBytes, (256 * 1024 * 1024) + (128 * 1024 * 1024 * 5));
   const properties = JSON.parse(await fs.readFile(path.join(state.deps.artifactDirectory, out.artifacts.properties.id), 'utf8'));
   assert.equal(properties.schemaVersion, '2');
