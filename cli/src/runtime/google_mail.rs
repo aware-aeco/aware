@@ -20,6 +20,7 @@ use sha2::{Digest, Sha256};
 
 use crate::auth::keychain::{StoredToken, TokenSource};
 use crate::error::{AgentErrorDetails, AwareError};
+use crate::fs::is_reparse_point;
 
 const INTEGRATION: &str = "google-workspace";
 const IDENTITY_URL: &str = "https://openidconnect.googleapis.com/v1/userinfo";
@@ -1234,19 +1235,6 @@ fn verify_private_windows_acl(path: &Path) -> Result<(), AwareError> {
         )));
     }
     Ok(())
-}
-
-#[cfg(windows)]
-fn is_reparse_point(metadata: &std::fs::Metadata) -> bool {
-    use std::os::windows::fs::MetadataExt;
-    metadata.file_attributes()
-        & windows_sys::Win32::Storage::FileSystem::FILE_ATTRIBUTE_REPARSE_POINT
-        != 0
-}
-
-#[cfg(not(windows))]
-fn is_reparse_point(_: &std::fs::Metadata) -> bool {
-    false
 }
 
 fn open_locked_journal(path: &Path) -> Result<File, AwareError> {

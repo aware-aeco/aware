@@ -475,17 +475,7 @@ async fn run(
             run: run_ctx.clone(),
             ..Default::default()
         };
-        let creds_dir = ctx.paths.credentials_dir();
-        if creds_dir.is_dir()
-            && let Ok(read) = std::fs::read_dir(&creds_dir)
-        {
-            for entry in read.flatten() {
-                let p = entry.path();
-                if let Some(stem) = p.file_stem().and_then(|s| s.to_str()) {
-                    let _ = crate::runtime::context::load_secret(&mut rt_ctx, &creds_dir, stem);
-                }
-            }
-        }
+        crate::runtime::context::load_secrets_dir(&mut rt_ctx, &ctx.paths.credentials_dir());
         // Load `<app-dir>/config.yaml` into the `config` namespace so
         // `{{ config.<key> }}` resolves (app-spec § Templating; #230).
         crate::runtime::context::load_app_config(&mut rt_ctx, &app_dir)?;
@@ -586,17 +576,7 @@ async fn run(
     };
 
     // Load any credential files into the secrets map.
-    let creds_dir = ctx.paths.credentials_dir();
-    if creds_dir.is_dir()
-        && let Ok(read) = std::fs::read_dir(&creds_dir)
-    {
-        for entry in read.flatten() {
-            let p = entry.path();
-            if let Some(stem) = p.file_stem().and_then(|s| s.to_str()) {
-                let _ = crate::runtime::context::load_secret(&mut rt_ctx, &creds_dir, stem);
-            }
-        }
-    }
+    crate::runtime::context::load_secrets_dir(&mut rt_ctx, &ctx.paths.credentials_dir());
     // Load `<app-dir>/config.yaml` into the `config` namespace so
     // `{{ config.<key> }}` resolves (app-spec § Templating; #230).
     crate::runtime::context::load_app_config(&mut rt_ctx, &app_dir)?;

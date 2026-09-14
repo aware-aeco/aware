@@ -5,6 +5,7 @@ use std::path::{Path, PathBuf};
 use sha2::{Digest, Sha256};
 
 use crate::error::AwareError;
+use crate::fs::is_reparse_point;
 
 const DOMAIN: &[u8] = b"aware-agent-bundle-tree-v1\0";
 
@@ -321,17 +322,6 @@ fn collect(root: &Path, dir: &Path, out: &mut Vec<(String, PathBuf)>) -> Result<
         }
     }
     Ok(())
-}
-
-#[cfg(windows)]
-fn is_reparse_point(metadata: &std::fs::Metadata) -> bool {
-    use std::os::windows::fs::MetadataExt;
-    metadata.file_attributes() & 0x400 != 0
-}
-
-#[cfg(not(windows))]
-fn is_reparse_point(_: &std::fs::Metadata) -> bool {
-    false
 }
 
 #[cfg(test)]

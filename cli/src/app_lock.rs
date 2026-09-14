@@ -730,25 +730,17 @@ fn output_field_set(output_schema: Option<&serde_yaml::Value>) -> Option<BTreeSe
 /// parsed (the first two segments); function calls / operators terminate it,
 /// so complex expressions like `{{ join(a, b) }}` yield nothing — keeping the
 /// check to direct references, which is the high-signal case.
+///
+/// The scan itself is [`crate::runtime::template::references`], the same
+/// grammar `resolve_value` reads at run time — this check is only worth
+/// anything if it validates the references the renderer will actually resolve.
 fn collect_refs(value: &serde_yaml::Value, out: &mut Vec<(String, String)>) {
     match value {
         serde_yaml::Value::String(s) => {
-            let mut rest = s.as_str();
-            while let Some(start) = rest.find("{{") {
-                let after = &rest[start + 2..];
-                let Some(end) = after.find("}}") else { break };
-                let inner = after[..end].trim();
-                let path_end = inner
-                    .find(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-' || c == '.'))
-                    .unwrap_or(inner.len());
-                let parts: Vec<&str> = inner[..path_end]
-                    .split('.')
-                    .filter(|p| !p.is_empty())
-                    .collect();
-                if parts.len() >= 2 {
-                    out.push((parts[0].to_string(), parts[1].to_string()));
+            for path in crate::runtime::template::references(s) {
+                if path.len() >= 2 {
+                    out.push((path[0].to_string(), path[1].to_string()));
                 }
-                rest = &after[end + 2..];
             }
         }
         serde_yaml::Value::Mapping(m) => {
@@ -773,18 +765,10 @@ fn collect_refs(value: &serde_yaml::Value, out: &mut Vec<(String, String)>) {
 fn collect_ref_heads(value: &serde_yaml::Value, out: &mut Vec<String>) {
     match value {
         serde_yaml::Value::String(s) => {
-            let mut rest = s.as_str();
-            while let Some(start) = rest.find("{{") {
-                let after = &rest[start + 2..];
-                let Some(end) = after.find("}}") else { break };
-                let inner = after[..end].trim();
-                let path_end = inner
-                    .find(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-' || c == '.'))
-                    .unwrap_or(inner.len());
-                if let Some(head) = inner[..path_end].split('.').find(|p| !p.is_empty()) {
-                    out.push(head.to_string());
+            for path in crate::runtime::template::references(s) {
+                if let Some(head) = path.first() {
+                    out.push((*head).to_string());
                 }
-                rest = &after[end + 2..];
             }
         }
         serde_yaml::Value::Mapping(m) => {
