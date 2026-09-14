@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-12T05:45:35.330530128+00:00",
+  "updated-at": "2026-09-14T09:32:25.925147800+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -4452,7 +4452,7 @@
         "0.4.0": {
           "description": "Convert a local Revit project into deterministic, authenticated reference-model artifacts without",
           "status": "available",
-          "manifest-version": "0.4.0",
+          "manifest-version": "0.7.2",
           "stateful": false,
           "transport": "cli",
           "command_count": 4,
