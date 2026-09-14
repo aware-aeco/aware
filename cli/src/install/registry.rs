@@ -212,9 +212,35 @@ fn stage_agent_from_registry(
         Err(err) => return Err(err),
     };
 
+    // A successful extraction is not enough to make a shared cache entry trustworthy.
+    // Bind the downloaded manifest to the exact registry release before committing it;
+    // otherwise one bad mutable/custom archive poisons every retry for this snapshot.
+    if downloaded && entry.manifest_agent.is_some() && entry.manifest_version.is_some() {
+        let index_entry = index
+            .agents
+            .get(key)
+            .ok_or_else(|| AwareError::NotFound(format!("agent {key} not in registry")))?;
+        let manifest_path = subdir.join("manifest.yaml");
+        if !manifest_path.is_file() {
+            return Err(AwareError::Validation(format!(
+                "registry entry {key}@{resolved_version}: no manifest.yaml in payload"
+            )));
+        }
+        let agent = load_agent(&manifest_path)?;
+        crate::registry::index::validate_release_payload(
+            key,
+            resolved_version,
+            index_entry,
+            entry,
+            &agent.agent,
+            &agent.version,
+        )
+        .map_err(AwareError::Validation)?;
+    }
+
     // Commit a freshly-downloaded archive to the shared cache ONLY now that it has served this
-    // agent (re-arming the TTL). Caching post-extraction means a download that was corrupt or
-    // raced past our index can never poison the snapshot's cache file.
+    // agent and matched its declared identity (re-arming the TTL). Caching post-validation means
+    // a corrupt, raced, or semantically mismatched download cannot poison the snapshot cache.
     if downloaded {
         let _ = std::fs::copy(&tarball_path, &cache_file);
     }
@@ -887,7 +913,7 @@ mod tests {
         let message = error.to_string();
         assert!(message.contains("tekla@2025.0.1"), "{message}");
         assert!(message.contains("different-agent"), "{message}");
-        assert!(message.contains("payload declares \"tekla\""), "{message}");
+        assert!(message.contains("unrelated manifest-agent"), "{message}");
         assert_eq!(
             std::fs::read_to_string(sentinel).unwrap(),
             "original install"
@@ -1051,6 +1077,10 @@ mod tests {
     /// carries a caller-chosen marker, so a test can tell one archive *state* from
     /// another while the registry index stays byte-identical (same fingerprint).
     fn write_alpha_archive(path: &Path, display_marker: &str) {
+        write_alpha_archive_as(path, "alpha", display_marker);
+    }
+
+    fn write_alpha_archive_as(path: &Path, manifest_agent: &str, display_marker: &str) {
         let enc = flate2::write::GzEncoder::new(
             std::fs::File::create(path).unwrap(),
             flate2::Compression::default(),
@@ -1080,7 +1110,7 @@ mod tests {
             .lines()
             .map(|l| {
                 if l.starts_with("agent:") {
-                    "agent: alpha".to_string()
+                    format!("agent: {manifest_agent}")
                 } else if l.starts_with("display-name:") {
                     format!("display-name: {display_marker}")
                 } else {
@@ -1138,6 +1168,42 @@ mod tests {
             agents,
             bundles: BTreeMap::new(),
         }
+    }
+
+    #[test]
+    fn identity_mismatch_is_rejected_before_the_download_enters_shared_cache() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        write_alpha_archive_as(&archive, "other-agent", "MISMATCH");
+
+        let mut index = single_alpha_index(&url);
+        let release = index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap();
+        release.manifest_agent = Some("alpha".into());
+        release.manifest_version = Some("0.1.5".into());
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        let error = stage_agent_from_registry("alpha", None, &paths, &index).unwrap_err();
+        assert!(
+            error.to_string().contains("expects manifest-agent alpha"),
+            "{error}"
+        );
+        assert!(
+            !cache_file.exists(),
+            "a semantically mismatched payload must never enter the shared cache"
+        );
     }
 
     #[test]
