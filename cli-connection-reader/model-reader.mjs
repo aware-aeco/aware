@@ -2,8 +2,8 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import {
-  assertSha256, buildCanonicalRequest, ModelReaderError, providerFingerprintSha256,
-  lowerableLimits, requestSha256, sha256,
+  assertSha256, buildCanonicalRequest, canonicalArtifactLimits, ModelReaderError,
+  providerFingerprintSha256, lowerableLimits, requestSha256, sha256,
 } from './model-contract.mjs';
 import { normalizeRevitGlb, parseGlb } from './revit-glb.mjs';
 import { normalizeRevitMetadata } from './revit-metadata.mjs';
@@ -296,7 +296,9 @@ async function convertAndCache(args, deps, config, readiness) {
 }
 
 function canonicalGeometryBounds(bytes, limits) {
-  const document = parseGlb(bytes, { limits }).json;
+  // `bytes` is this reader's own canonical artifact, so it is measured against the canonical
+  // ceilings rather than the input ones it was never bound by.
+  const document = parseGlb(bytes, { limits: canonicalArtifactLimits(limits) }).json;
   const positionAccessors = new Set();
   for (const mesh of document.meshes ?? []) {
     for (const primitive of mesh?.primitives ?? []) {

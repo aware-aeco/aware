@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { MODEL_LIMITS } from './model-contract.mjs';
+import { MODEL_LIMITS, canonicalArtifactLimits, lowerableLimits } from './model-contract.mjs';
 import { makeGlbFixture } from './model-fixtures.mjs';
 import { normalizeRevitGlb, parseGlb } from './revit-glb.mjs';
 
@@ -379,6 +379,41 @@ test('the canonical output JSON bound is its own budget, not the input one', () 
   );
   // ... and raising only the output budget is what lets it through, proving which bound refused it.
   assert.equal(normalizeRevitGlb(wide, { limits: { maxCanonicalGlbJsonBytes: 64 * 1024 * 1024 } }).parts.length, 32_000);
+});
+
+test('a canonical artifact re-reads under the canonical budgets, not the input ones', () => {
+  // The reader parses its own emitted GLB again in canonicalGeometryBounds() to report bounds. Under
+  // the INPUT budgets that reparse can refuse an artifact normalization just legitimately published —
+  // and it happens after the cache entry is written, so the command fails on a model it accepted.
+  // Both pairs are independently configurable and their defaults already differ, so the two budgets
+  // cannot be left to callers keeping them in step.
+  const input = makeGlbFixture({ primitiveCopies: 1000 });
+  // Input 51,508 bytes / 51,432-byte JSON chunk; canonical 630,648 bytes / 534,620-byte JSON chunk.
+  // Each budget below admits the input and would refuse the canonical output.
+  for (const tight of [{ maxGlbJsonBytes: 100_000 }, { maxInputGlbBytes: 100_000 }]) {
+    const limits = lowerableLimits(tight);
+    const canonical = normalizeRevitGlb(input, { limits }).glb;
+    assert.throws(() => parseGlb(canonical, { limits }), /exceeds its byte limit/,
+      'the input budget must still bind an input — this is the condition being guarded against');
+    assert.equal(parseGlb(canonical, { limits: canonicalArtifactLimits(limits) }).json.scene, 0);
+  }
+});
+
+test('the canonical artifact budgets map to the canonical ceilings and change nothing else', () => {
+  const limits = lowerableLimits({});
+  const mapped = canonicalArtifactLimits(limits);
+  assert.equal(mapped.maxGlbJsonBytes, limits.maxCanonicalGlbJsonBytes);
+  assert.equal(mapped.maxInputGlbBytes, limits.maxCanonicalGlbBytes);
+  // Every other bound is carried through untouched, so this is a re-aim and not a second profile.
+  for (const name of Object.keys(MODEL_LIMITS)) {
+    if (name === 'maxGlbJsonBytes' || name === 'maxInputGlbBytes') continue;
+    assert.equal(mapped[name], limits[name], `${name} must not be altered`);
+  }
+  // The mapping can never produce a limits object lowerableLimits would reject, whatever the caller
+  // configured: each canonical ceiling is at or below the hard ceiling of the bound it replaces.
+  assert.ok(MODEL_LIMITS.maxCanonicalGlbJsonBytes.hard <= MODEL_LIMITS.maxGlbJsonBytes.hard);
+  assert.ok(MODEL_LIMITS.maxCanonicalGlbBytes.hard <= MODEL_LIMITS.maxInputGlbBytes.hard);
+  assert.deepEqual(lowerableLimits(mapped), mapped);
 });
 
 test('active nodes are closed objects and refuse extensions with stable geometry errors', () => {

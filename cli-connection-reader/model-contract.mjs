@@ -277,6 +277,24 @@ export function lowerableLimits(overrides = {}) {
   return result;
 }
 
+/**
+ * Budgets for re-reading an artifact this reader EMITTED, rather than one a provider supplied.
+ *
+ * The canonical GLB is a different document from the input GLB and carries its own declared
+ * ceilings, so measuring it against the input's is a category error: normalization publishes an
+ * artifact up to maxCanonicalGlbBytes / maxCanonicalGlbJsonBytes, and re-reading that same artifact
+ * under maxInputGlbBytes / maxGlbJsonBytes can refuse what was just legitimately written — after the
+ * cache entry exists. The two pairs are independently configurable and the defaults already differ
+ * (canonical bytes 256 MiB against input 128 MiB), so this cannot be left to callers agreeing.
+ */
+export function canonicalArtifactLimits(limits) {
+  return {
+    ...limits,
+    maxInputGlbBytes: limits.maxCanonicalGlbBytes,
+    maxGlbJsonBytes: limits.maxCanonicalGlbJsonBytes,
+  };
+}
+
 export function buildCanonicalRequest(options = {}) {
   const limits = lowerableLimits(options.limits);
   const protocolVersion = options.protocolVersion ?? '1';
