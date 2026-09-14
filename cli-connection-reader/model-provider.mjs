@@ -257,16 +257,16 @@ export async function describeProvider(options) {
 
 export async function describeAndConvert(options) {
   const limits = lowerableLimits(options.limits);
-  const initialExecutable = await validateProviderExecutable(options.executable);
-  await privateDirectory(options.privateRoot);
-  const staging = await stageImmutableSource(options.sourcePath, path.join(options.privateRoot, 'source'), options.expectedSourceSha256, { limits });
-  const describeCwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
-  const environment = minimalProviderEnvironment(options.environment);
   const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
   if (expectedProtocolVersion === '2' && (typeof options.conversionAttemptId !== 'string'
     || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(options.conversionAttemptId))) {
     providerError('reference-provider-request-invalid', 'The managed Revit conversion attempt identity is invalid.');
   }
+  const initialExecutable = await validateProviderExecutable(options.executable);
+  await privateDirectory(options.privateRoot);
+  const staging = await stageImmutableSource(options.sourcePath, path.join(options.privateRoot, 'source'), options.expectedSourceSha256, { limits });
+  const describeCwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
+  const environment = minimalProviderEnvironment(options.environment);
   const authorityStorePath = managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
   const describeRequest = canonicalJsonBytes({ protocolVersion: expectedProtocolVersion, limits });
   const describeBytes = await callProvider(options.hostRun, {

@@ -260,6 +260,20 @@ test('managed-cloud conversion passes only an absolute caller-bound authority st
   }), (error) => error.code === 'reference-provider-protocol');
 });
 
+test('managed-cloud rejects a malformed attempt identity before touching provider or source paths', async () => {
+  await assert.rejects(() => describeAndConvert({
+    executable: 'Z:\\definitely-missing\\provider.exe',
+    sourcePath: 'Z:\\definitely-missing\\source.rvt',
+    expectedSourceSha256: 'a'.repeat(64),
+    privateRoot: 'Z:\\definitely-missing\\private',
+    hostRun: async () => { throw new Error('provider must not run'); },
+    expectedProtocolVersion: '2',
+    expectedDestination: 'https://api.floless.io',
+    authorityStorePath: 'Z:\\definitely-missing\\authority',
+    conversionAttemptId: 'not-a-uuid',
+  }), (error) => error.code === 'reference-provider-request-invalid');
+});
+
 test('streaming hash and staging stop at the byte limit even when the source grows after stat', async (t) => {
   const root = await temporaryDirectory(t);
   const source = path.join(root, 'growing.rvt');
