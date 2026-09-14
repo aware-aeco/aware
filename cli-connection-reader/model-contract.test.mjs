@@ -199,6 +199,30 @@ test('v2 schema binds each provider-display valueType to the matching JSON value
   assert.deepEqual(doubleValue.anyOf, numericValue.anyOf, 'double values obey the same signed JSON number constraint');
 });
 
+test('v2 schema publishes the closed metadata records the reader accepts', () => {
+  const schema = JSON.parse(readFileSync(new URL('./model-metadata-v2.schema.json', import.meta.url), 'utf8'));
+  const positiveInt64 = new RegExp(schema.$defs.positiveInt64Decimal.pattern);
+  for (const accepted of ['1', '9223372036854775807']) assert.equal(positiveInt64.test(accepted), true);
+  for (const refused of ['0', '-1', '01', '9223372036854775808']) assert.equal(positiveInt64.test(refused), false);
+
+  for (const table of ['types', 'levels', 'parameterGroups', 'elements']) {
+    assert.equal(schema.properties[table].items.type, 'object', `${table} has an item object`);
+    assert.equal(schema.properties[table].items.additionalProperties, false, `${table} item is closed`);
+  }
+  assert.deepEqual(schema.properties.elements.items.required,
+    ['id', 'revitClass', 'category', 'family', 'type', 'level', 'parameterGroups', 'appearances']);
+  assert.equal(schema.properties.elements.items.properties.appearances.uniqueItems, true);
+  assert.equal(schema.properties.elements.items.properties.appearances.items.minLength, 1);
+
+  const relationBranches = schema.properties.relations.items.oneOf;
+  assert.equal(relationBranches.length, 2);
+  assert.deepEqual(relationBranches.map((branch) => branch.properties.kind.const ?? branch.properties.kind.enum).flat().sort(),
+    ['contains', 'depends-on', 'hosts', 'provider-explicit']);
+  assert.deepEqual(relationBranches.find((branch) => branch.properties.kind.const === 'provider-explicit').required,
+    ['id', 'kind', 'from', 'to', 'providerRelationKind']);
+  assert.ok(relationBranches.every((branch) => branch.additionalProperties === false));
+});
+
 test('managed-cloud provider fingerprint binds execution and exact destination', () => {
   const fingerprint = buildProviderFingerprint({
     protocolVersion: '2', provider: 'fixture', engine: 'fixture-engine', engineVersion: '1.2.3',
