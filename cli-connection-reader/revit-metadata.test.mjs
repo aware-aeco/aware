@@ -174,6 +174,11 @@ test('explicit relations validate endpoints, provider kinds, acyclic parents, an
   assert.equal(normalizeRevitMetadata(metadata, geometry).relationships[1].providerRelationKind.length, 256);
   metadata.relations[0].providerRelationKind += '中';
   assert.throws(() => normalizeRevitMetadata(metadata, geometry), /providerRelationKind is invalid/);
+  metadata.relations[0].providerRelationKind = '中'.repeat(256);
+  assert.throws(() => normalizeRevitMetadata(metadata, geometry, {
+    limits: { maxComponentJsonBytes: 512 },
+  }), (error) => error.code === 'reference-output-too-large'
+    && /canonical relationship artifact/.test(error.message));
   metadata.relations[0].providerRelationKind = 'Joins';
   metadata.relations.push({ id: '12', kind: 'contains', from: '2', to: '1' });
   assert.throws(() => normalizeRevitMetadata(metadata, geometry), /cycle/);

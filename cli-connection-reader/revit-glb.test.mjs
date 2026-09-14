@@ -319,7 +319,7 @@ test('multiple primitives remain grouped under one canonical node and can be nor
 
 test('canonical output must remain inside a caller-lowered JSON profile', () => {
   assert.throws(
-    () => normalizeRevitGlb(makeGlbFixture({ primitiveCopies: 32_000 }), { limits: { maxGlbJsonBytes: 16 * 1024 * 1024 } }),
+    () => normalizeRevitGlb(makeGlbFixture({ primitiveCopies: 32_000 }), { limits: { maxCanonicalGlbJsonBytes: 8 * 1024 * 1024 } }),
     (error) => error.code === 'reference-output-too-large' && /canonical GLB JSON/.test(error.message),
   );
 });

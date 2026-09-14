@@ -185,7 +185,7 @@ fn stage_agent_from_registry(
     // with the cached index, so fall back to it rather than failing the install (#270 / Codex
     // review). A cold cache (nothing to fall back to) propagates the error.
     let extract_root = scratch.path().join("extract");
-    let subdir = match extract_agent_subdir(
+    let mut subdir = match extract_agent_subdir(
         &tarball_path,
         &extract_root,
         &entry.subdir,
@@ -216,26 +216,26 @@ fn stage_agent_from_registry(
     // Bind the downloaded manifest to the exact registry release before committing it;
     // otherwise one bad mutable/custom archive poisons every retry for this snapshot.
     if downloaded && entry.manifest_agent.is_some() && entry.manifest_version.is_some() {
-        let index_entry = index
-            .agents
-            .get(key)
-            .ok_or_else(|| AwareError::NotFound(format!("agent {key} not in registry")))?;
-        let manifest_path = subdir.join("manifest.yaml");
-        if !manifest_path.is_file() {
-            return Err(AwareError::Validation(format!(
-                "registry entry {key}@{resolved_version}: no manifest.yaml in payload"
-            )));
+        match validate_staged_release_identity(&subdir, key, resolved_version, index, entry) {
+            Ok(()) => {}
+            Err(_) if cache_file.is_file() => {
+                eprintln!(
+                    "warning: refreshed archive identity does not match {key}@{resolved_version}; using prior cache"
+                );
+                downloaded = false;
+                std::fs::copy(&cache_file, &tarball_path)?;
+                let retry_root = scratch.path().join("extract-identity-cached");
+                subdir = extract_agent_subdir(
+                    &tarball_path,
+                    &retry_root,
+                    &entry.subdir,
+                    key,
+                    resolved_version,
+                )?;
+                validate_staged_release_identity(&subdir, key, resolved_version, index, entry)?;
+            }
+            Err(error) => return Err(error),
         }
-        let agent = load_agent(&manifest_path)?;
-        crate::registry::index::validate_release_payload(
-            key,
-            resolved_version,
-            index_entry,
-            entry,
-            &agent.agent,
-            &agent.version,
-        )
-        .map_err(AwareError::Validation)?;
     }
 
     // Commit a freshly-downloaded archive to the shared cache ONLY now that it has served this
@@ -245,6 +245,35 @@ fn stage_agent_from_registry(
         let _ = std::fs::copy(&tarball_path, &cache_file);
     }
     Ok((scratch, subdir))
+}
+
+fn validate_staged_release_identity(
+    subdir: &Path,
+    key: &str,
+    resolved_version: &str,
+    index: &Index,
+    entry: &crate::registry::VersionEntry,
+) -> Result<(), AwareError> {
+    let index_entry = index
+        .agents
+        .get(key)
+        .ok_or_else(|| AwareError::NotFound(format!("agent {key} not in registry")))?;
+    let manifest_path = subdir.join("manifest.yaml");
+    if !manifest_path.is_file() {
+        return Err(AwareError::Validation(format!(
+            "registry entry {key}@{resolved_version}: no manifest.yaml in payload"
+        )));
+    }
+    let agent = load_agent(&manifest_path)?;
+    crate::registry::index::validate_release_payload(
+        key,
+        resolved_version,
+        index_entry,
+        entry,
+        &agent.agent,
+        &agent.version,
+    )
+    .map_err(AwareError::Validation)
 }
 
 /// Cache filename for a registry tarball, keyed by its URL + the index's snapshot
@@ -1203,6 +1232,62 @@ mod tests {
         assert!(
             !cache_file.exists(),
             "a semantically mismatched payload must never enter the shared cache"
+        );
+    }
+
+    #[test]
+    fn identity_mismatch_refresh_falls_back_to_the_known_good_cache() {
+        use crate::registry::fetch::CACHE_TTL;
+        use std::time::{Duration, SystemTime};
+
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        let mut index = single_alpha_index(&url);
+        let release = index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap();
+        release.manifest_agent = Some("alpha".into());
+        release.manifest_version = Some("0.1.5".into());
+
+        write_alpha_archive(&archive, "KNOWN-GOOD");
+        let (_first_guard, first) =
+            stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+        assert!(
+            std::fs::read_to_string(first.join("manifest.yaml"))
+                .unwrap()
+                .contains("KNOWN-GOOD")
+        );
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        let stale = SystemTime::now()
+            .checked_sub(CACHE_TTL + Duration::from_secs(60))
+            .unwrap();
+        std::fs::File::options()
+            .write(true)
+            .open(&cache_file)
+            .unwrap()
+            .set_modified(stale)
+            .unwrap();
+        write_alpha_archive_as(&archive, "other-agent", "MISMATCH");
+
+        let (_second_guard, second) =
+            stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+        assert!(
+            std::fs::read_to_string(second.join("manifest.yaml"))
+                .unwrap()
+                .contains("KNOWN-GOOD"),
+            "a semantically raced refresh must fall back to the release-bound cache"
         );
     }
 

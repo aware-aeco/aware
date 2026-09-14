@@ -108,7 +108,6 @@ const CARGO_INERT_ACTIONS: &[&str] = &[
     "actions/setup-node",
     "actions/setup-python",
     "actions/upload-artifact",
-    "ilammy/msvc-dev-cmd",
     "softprops/action-gh-release",
 ];
 

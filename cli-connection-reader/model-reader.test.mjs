@@ -86,6 +86,11 @@ async function setup(t) {
 test('request-only failures precede provider configuration and managed host setup', async () => {
   const unconfigured = { environment: {} };
   await assert.rejects(
+    () => runModelCommand('preflight', { 'reader-schema-version': 'model-reference-reader/v3' }, unconfigured),
+    (error) => error.code === 'reference-request-invalid'
+      && error.message === 'The requested model-reader schema version is unsupported.',
+  );
+  await assert.rejects(
     () => runModelCommand('preflight', { limits: null }, unconfigured),
     (error) => error.code === 'reference-limits-invalid',
   );

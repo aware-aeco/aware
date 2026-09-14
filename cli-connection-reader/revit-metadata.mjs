@@ -342,6 +342,8 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
   }
 
   propertyRows.sort((a, b) => compareDecimal(a.entityId, b.entityId) || a.groupOrdinal - b.groupOrdinal || a.parameterOrdinal - b.parameterOrdinal || compareDecimal(a.parameterId, b.parameterId));
+  const artifactSchemaVersion = metadataV2 ? '2' : '1';
+  let canonicalRelationshipBytes = canonicalJsonBytes({ schemaVersion: artifactSchemaVersion, relationships: [] }).length;
   const relationIds = new Set();
   const relationships = list(metadata.relations, 'relations', limits.maxRelationships).map((relation, index) => {
     closed(relation, ['id', 'kind', 'from', 'to'], ['providerRelationKind'], `relations[${index}]`);
@@ -357,18 +359,24 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
       providerRelationKind = text(relation.providerRelationKind, `relations[${index}].providerRelationKind`);
       if (!providerRelationKind || [...providerRelationKind].length > 256) invalid(`relation ${id} providerRelationKind is invalid`);
     } else if (relation.providerRelationKind !== undefined) invalid(`relation ${id} has an unexpected providerRelationKind`);
-    return { id: `relation:${id}`, kind: relation.kind, from: `element:${from}`, to: `element:${to}`, ...(providerRelationKind ? { providerRelationKind } : {}) };
+    const row = { id: `relation:${id}`, kind: relation.kind, from: `element:${from}`, to: `element:${to}`, ...(providerRelationKind ? { providerRelationKind } : {}) };
+    const nextBytes = canonicalRelationshipBytes + (index > 0 ? 1 : 0) + canonicalJsonBytes(row).length;
+    if (!Number.isSafeInteger(nextBytes) || nextBytes > limits.maxComponentJsonBytes) {
+      invalid('canonical relationship artifact exceeds its byte limit', 'reference-output-too-large');
+    }
+    canonicalRelationshipBytes = nextBytes;
+    return row;
   });
   assertAcyclic(relationships, 'contains');
   assertAcyclic(relationships, 'hosts');
   relationships.sort((a, b) => Buffer.compare(Buffer.from(a.kind), Buffer.from(b.kind)) || compareDecimal(a.from, b.from) || compareDecimal(a.to, b.to) || compareDecimal(a.id, b.id));
 
   const unclaimedGeometryNodes = [...geometryByName.keys()].filter((name) => !owners.has(name)).sort((a, b) => Buffer.compare(Buffer.from(a), Buffer.from(b)));
-  const artifactSchemaVersion = metadataV2 ? '2' : '1';
   const entitiesBytes = canonicalJsonBytes({ schemaVersion: artifactSchemaVersion, entities });
   const propertiesBytes = canonicalJsonBytes({ schemaVersion: artifactSchemaVersion, properties: propertyRows });
   const relationshipsBytes = canonicalJsonBytes({ schemaVersion: artifactSchemaVersion, relationships });
   if (metadataV2 && propertiesBytes.length !== canonicalPropertyBytes) invalid('canonical property byte accounting mismatch');
+  if (relationshipsBytes.length !== canonicalRelationshipBytes) invalid('canonical relationship byte accounting mismatch');
   for (const [label, bytes] of [['entities', entitiesBytes], ['properties', propertiesBytes], ['relationships', relationshipsBytes]]) {
     if (bytes.length > limits.maxComponentJsonBytes) invalid(`${label} artifact exceeds its byte limit`, 'reference-output-too-large');
   }

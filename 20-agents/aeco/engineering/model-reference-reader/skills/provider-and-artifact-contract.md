@@ -21,7 +21,9 @@ and pin again when selecting a different reader schema. Reader v2 accepts option
 `property-expansion-limits`. Their effective defaults inherit the same
 request's `limits.maxParameters` and `limits.maxComponentJsonBytes`, and the canonical request signs
 the resulting row and byte ceilings. A caller may explicitly allow more expanded rows up to the hard
-cap, but the property-byte ceiling never exceeds the enclosing component-byte ceiling.
+cap, but the property-byte ceiling never exceeds the enclosing component-byte ceiling. Selecting
+reader v2 raises the default component JSON ceiling from 32 MiB to 128 MiB so larger property and
+relationship shards can be admitted; this is the hard ceiling and callers may lower it explicitly.
 
 The canonical request, provider fingerprint, source digest and signer trust anchor jointly define a
 cache key. Every cache hit verifies its signature, closed receipt, complete file set and every blob

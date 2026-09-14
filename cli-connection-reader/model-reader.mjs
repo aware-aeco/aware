@@ -112,10 +112,10 @@ async function removeRunRoot(runRoot) {
   catch (error) { readerError('reference-provider-run-cleanup-failed', 'cleanup', 'Provider staging could not be removed.', false, error); }
 }
 
-function requestLimits(args, deps) {
+function requestLimits(args, deps, readerSchemaVersion) {
   const configured = Object.hasOwn(args, 'limits') ? args.limits : deps.limits;
   try {
-    return lowerableLimits(configured, args['reader-schema-version'] ?? READER_SCHEMA_VERSION_V1);
+    return lowerableLimits(configured, readerSchemaVersion);
   }
   catch (error) { readerError('reference-limits-invalid', 'request', 'Model reader limits are invalid.', false, error); }
 }
@@ -129,7 +129,8 @@ function requestedReaderSchemaVersion(args) {
 }
 
 function validateRequest(command, args, deps) {
-  const limits = requestLimits(args, deps);
+  const readerSchemaVersion = requestedReaderSchemaVersion(args);
+  const limits = requestLimits(args, deps, readerSchemaVersion);
   const protocolVersion = args['expected-provider-protocol'] ?? '1';
   // This constructs and canonicalizes the complete request-only contract without touching the
   // provider, signing key, cache, or source filesystem. It validates protocol, conversion
@@ -139,7 +140,7 @@ function validateRequest(command, args, deps) {
       limits,
       protocolVersion,
       conversionSettings: args['conversion-settings'] ?? {},
-      readerSchemaVersion: requestedReaderSchemaVersion(args),
+      readerSchemaVersion,
       propertyExpansionLimits: args['property-expansion-limits'] ?? {},
     }));
   } catch (error) {
