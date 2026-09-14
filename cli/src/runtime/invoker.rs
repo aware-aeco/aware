@@ -354,7 +354,7 @@ struct StructuredBridgeError {
 /// Only the closed model-reader envelope is accepted; arbitrary bridge stderr keeps the historical
 /// reporting path below.
 fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
-    let parsed: StructuredBridgeError = serde_json::from_str(stderr.trim()).ok()?;
+    let mut parsed: StructuredBridgeError = serde_json::from_str(stderr.trim()).ok()?;
     if !parsed.code.starts_with("reference-")
         || parsed.code.len() > 96
         || parsed.phase.is_empty()
@@ -362,14 +362,6 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
         || parsed.message.is_empty()
         || parsed.message.chars().count() > 240
         || parsed.diagnostic_id.len() > 64
-        || parsed.provider_code.as_ref().is_some_and(|code| {
-            let suffix = code.strip_prefix("xeorvt-").unwrap_or_default();
-            suffix.is_empty()
-                || suffix.len() > 90
-                || !suffix
-                    .chars()
-                    .all(|ch| ch.is_ascii_lowercase() || ch.is_ascii_digit() || ch == '-')
-        })
         || parsed.details.as_ref().is_some_and(|details| {
             details.len() > 8
                 || details
@@ -379,6 +371,19 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
     {
         return None;
     }
+    // providerCode is optional vendor detail, not part of the generic AWARE error identity. Keep
+    // the typed reference-* envelope when another provider uses an unknown or malformed namespace;
+    // discard only that optional field so it cannot smuggle an unbounded diagnostic through.
+    parsed.provider_code = parsed.provider_code.filter(|code| {
+        let Some(suffix) = code.strip_prefix("xeorvt-") else {
+            return false;
+        };
+        !suffix.is_empty()
+            && suffix.len() <= 90
+            && suffix
+                .chars()
+                .all(|ch| ch.is_ascii_lowercase() || ch.is_ascii_digit() || ch == '-')
+    });
     Some(AwareError::AgentStructured {
         code: parsed.code.into_boxed_str(),
         phase: parsed.phase.into_boxed_str(),
@@ -5536,14 +5541,18 @@ mod builtin_invoker_tests {
             "xeorvt-".to_string(),
             format!("xeorvt-{}", "x".repeat(91)),
             "xeorvt-UPPERCASE".to_string(),
+            "another-provider-auth".to_string(),
         ] {
             let payload = format!(
                 r#"{{"code":"reference-x","phase":"x","retryable":false,"message":"x","diagnosticId":"x","providerCode":"{invalid_provider_code}"}}"#
             );
-            assert!(
-                structured_bridge_error(&payload).is_none(),
-                "accepted provider code outside the producer contract: {invalid_provider_code}"
-            );
+            match structured_bridge_error(&payload).expect("valid generic envelope") {
+                AwareError::AgentStructured { provider_code, .. } => assert!(
+                    provider_code.is_none(),
+                    "retained provider code outside the producer contract: {invalid_provider_code}"
+                ),
+                other => panic!("typed envelope was flattened: {other:?}"),
+            }
         }
     }
 

@@ -55,13 +55,13 @@ export const MODEL_LIMITS = Object.freeze({
 });
 
 export const PROPERTY_EXPANSION_LIMITS = Object.freeze({
-  // v2 is additive: selecting it without an explicit override must not make a model that fits the
-  // v1 parameter budget fail at a lower row ceiling. Production can still opt into the 5M hard cap.
+  // The effective default inherits maxParameters from the same request. This exported default is
+  // the ordinary profile; production can still opt into the 5M hard cap explicitly.
   maxExpandedPropertyRows: { default: MODEL_LIMITS.maxParameters.default, hard: 5_000_000 },
-  // The v2 reader raises maxComponentJsonBytes to 128 MiB so the canonical property document can
-  // actually use that parser headroom. Callers may lower this per request; 128 MiB stays the hard cap.
+  // The effective default inherits maxComponentJsonBytes from the same request, so a caller-lowered
+  // component budget also stops expansion before the property document is materialized.
   maxCanonicalPropertyBytes: {
-    default: MODEL_LIMITS.maxComponentJsonBytes.hard,
+    default: MODEL_LIMITS.maxComponentJsonBytes.default,
     hard: MODEL_LIMITS.maxComponentJsonBytes.hard,
   },
 });
@@ -296,14 +296,21 @@ export function lowerableLimits(overrides = {}) {
   return result;
 }
 
-export function lowerablePropertyExpansionLimits(overrides = {}) {
+export function lowerablePropertyExpansionLimits(overrides = {}, effectiveModelLimits = undefined) {
   assertClosedObject(overrides, [], Object.keys(PROPERTY_EXPANSION_LIMITS), 'propertyExpansionLimits');
+  const modelLimits = lowerableLimits(effectiveModelLimits);
   const result = {};
   for (const [name, range] of Object.entries(PROPERTY_EXPANSION_LIMITS)) {
-    const selected = Object.hasOwn(overrides, name) ? overrides[name] : range.default;
+    const inherited = name === 'maxExpandedPropertyRows'
+      ? modelLimits.maxParameters
+      : modelLimits.maxComponentJsonBytes;
+    let selected = Object.hasOwn(overrides, name) ? overrides[name] : inherited;
     if (!Number.isSafeInteger(selected) || selected <= 0 || selected > range.hard) {
       throw new TypeError(`${name} exceeds its hard ceiling`);
     }
+    // A property shard can never exceed the enclosing component budget. Record the effective value
+    // in the canonical request instead of allocating to a larger, unusable caller override.
+    if (name === 'maxCanonicalPropertyBytes') selected = Math.min(selected, modelLimits.maxComponentJsonBytes);
     result[name] = selected;
   }
   return result;
@@ -338,7 +345,7 @@ export function buildCanonicalRequest(options = {}) {
   // Validate this v2-only field even on a v1 request so malformed or out-of-range caller input can
   // never disappear. Non-empty overrides require an explicit v2 request instead of looking
   // successful while the v1 normalizer continues to use maxParameters.
-  const propertyExpansionLimits = lowerablePropertyExpansionLimits(options.propertyExpansionLimits);
+  const propertyExpansionLimits = lowerablePropertyExpansionLimits(options.propertyExpansionLimits, limits);
   const request = {
     schemaVersion: '1',
     protocolVersion,

@@ -59,6 +59,7 @@
     },
     "parameterGroups": {
       "type": "array",
+      "description": "One-based table: each item id must equal its one-based position (1, 2, 3, ...). References into this table remain zero-based array indexes.",
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -76,6 +77,7 @@
     },
     "parameters": {
       "type": "array",
+      "description": "One-based table: each item id must equal its one-based position (1, 2, 3, ...). parameterGroups[].parameters references are zero-based array indexes.",
       "items": {
         "oneOf": [
           {
@@ -218,6 +220,7 @@
           "level": { "type": ["integer", "null"], "minimum": 0, "maximum": 9007199254740991 },
           "parameterGroups": {
             "type": "array",
+            "description": "Zero-based indexes into the parameterGroups table.",
             "uniqueItems": true,
             "items": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 }
           },

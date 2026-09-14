@@ -72,7 +72,7 @@ test('v2 preserves provider-display provenance, normalizes negative zero, and ne
     metadataSchemaVersion: '2', nativeParameterGroups: 1, nativeParameters: 2,
     elementGroupReferences: 1, expandedProperties: 2, orphanParameterGroups: 0, orphanParameters: 0,
     canonicalPropertyBytes: result.propertiesBytes.length,
-    effectivePropertyLimits: { maxExpandedPropertyRows: 2_000_000, maxCanonicalPropertyBytes: 128 * 1024 * 1024 },
+    effectivePropertyLimits: { maxExpandedPropertyRows: 2_000_000, maxCanonicalPropertyBytes: 32 * 1024 * 1024 },
   });
 });
 
@@ -138,6 +138,24 @@ test('v2 enforces independent pre-append row and canonical property byte ceiling
   assert.throws(() => normalizeRevitMetadata(metadata, geometry.slice(0, 1), {
     propertyExpansionLimits: { maxExpandedPropertyRows: 5_000_001 },
   }), /hard ceiling/);
+
+  const repeated = makeMetadataV2();
+  repeated.parameters = repeated.parameters.slice(0, 1);
+  repeated.parameterGroups[0].parameters = [0];
+  repeated.elements.push({ ...repeated.elements[0], id: '1002', appearances: ['part-b'] });
+  assert.throws(() => normalizeRevitMetadata(repeated, geometry, {
+    limits: { maxParameters: 1 },
+  }), (error) => error.code === 'reference-output-too-large' && /property count/.test(error.message),
+  'v2 must inherit a caller-lowered parameter ceiling before expanding repeated rows');
+
+  const byteBound = makeMetadataV2();
+  byteBound.parameters = byteBound.parameters.slice(0, 1);
+  byteBound.parameters[0].value = 'x'.repeat(4096);
+  byteBound.parameterGroups[0].parameters = [0];
+  assert.throws(() => normalizeRevitMetadata(byteBound, geometry.slice(0, 1), {
+    limits: { maxComponentJsonBytes: 1024 },
+  }), (error) => error.code === 'reference-output-too-large' && /canonical property artifact/.test(error.message),
+  'a lowered component budget must stop a v2 property row before the document is materialized');
 });
 
 test('explicit relations validate endpoints, provider kinds, acyclic parents, and canonical order', () => {
@@ -152,6 +170,11 @@ test('explicit relations validate endpoints, provider kinds, acyclic parents, an
   const result = normalizeRevitMetadata(metadata, geometry);
   assert.deepEqual(result.relationships.map((edge) => edge.id), ['relation:10', 'relation:11']);
   assert.equal(result.relationships[1].providerRelationKind, 'Joins');
+  metadata.relations[0].providerRelationKind = '中'.repeat(256);
+  assert.equal(normalizeRevitMetadata(metadata, geometry).relationships[1].providerRelationKind.length, 256);
+  metadata.relations[0].providerRelationKind += '中';
+  assert.throws(() => normalizeRevitMetadata(metadata, geometry), /providerRelationKind is invalid/);
+  metadata.relations[0].providerRelationKind = 'Joins';
   metadata.relations.push({ id: '12', kind: 'contains', from: '2', to: '1' });
   assert.throws(() => normalizeRevitMetadata(metadata, geometry), /cycle/);
 });

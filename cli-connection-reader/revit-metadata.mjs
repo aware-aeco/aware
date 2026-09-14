@@ -191,7 +191,7 @@ function assertAcyclic(relations, kind) {
 
 export function normalizeRevitMetadata(input, geometryParts, options = {}) {
   const limits = lowerableLimits(options.limits);
-  const propertyLimits = lowerablePropertyExpansionLimits(options.propertyExpansionLimits);
+  const propertyLimits = lowerablePropertyExpansionLimits(options.propertyExpansionLimits, limits);
   let metadata = input;
   if (typeof input === 'string' || Buffer.isBuffer(input) || input instanceof Uint8Array) {
     try { metadata = parseJsonStrict(input, { maxBytes: limits.maxMetadataBytes, maxDepth: limits.maxJsonDepth }); }
@@ -355,7 +355,7 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
     let providerRelationKind;
     if (relation.kind === 'provider-explicit') {
       providerRelationKind = text(relation.providerRelationKind, `relations[${index}].providerRelationKind`);
-      if (!providerRelationKind || Buffer.byteLength(providerRelationKind) > 256) invalid(`relation ${id} providerRelationKind is invalid`);
+      if (!providerRelationKind || [...providerRelationKind].length > 256) invalid(`relation ${id} providerRelationKind is invalid`);
     } else if (relation.providerRelationKind !== undefined) invalid(`relation ${id} has an unexpected providerRelationKind`);
     return { id: `relation:${id}`, kind: relation.kind, from: `element:${from}`, to: `element:${to}`, ...(providerRelationKind ? { providerRelationKind } : {}) };
   });

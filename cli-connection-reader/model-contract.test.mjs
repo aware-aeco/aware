@@ -128,8 +128,23 @@ test('reader v2 binds closed effective expansion limits while v1 canonical bytes
   assert.equal(PROPERTY_EXPANSION_LIMITS.maxCanonicalPropertyBytes.hard, 128 * 1024 * 1024);
   assert.equal(PROPERTY_EXPANSION_LIMITS.maxExpandedPropertyRows.default, MODEL_LIMITS.maxParameters.default,
     'opting into v2 must not silently narrow the v1 property-row budget');
-  assert.equal(PROPERTY_EXPANSION_LIMITS.maxCanonicalPropertyBytes.default, MODEL_LIMITS.maxComponentJsonBytes.hard,
-    'the v2 property budget must be able to use the component parser headroom');
+  assert.equal(PROPERTY_EXPANSION_LIMITS.maxCanonicalPropertyBytes.default, MODEL_LIMITS.maxComponentJsonBytes.default,
+    'the ordinary property-byte budget inherits the ordinary component budget');
+  const lowered = buildCanonicalRequest({
+    readerSchemaVersion: 'model-reference-reader/v2',
+    limits: { maxParameters: 100, maxComponentJsonBytes: 64 * 1024 },
+  });
+  assert.deepEqual(lowered.propertyExpansionLimits,
+    { maxExpandedPropertyRows: 100, maxCanonicalPropertyBytes: 64 * 1024 },
+    'lowered model limits must become the default pre-allocation expansion limits');
+  const explicitRows = buildCanonicalRequest({
+    readerSchemaVersion: 'model-reference-reader/v2',
+    limits: { maxParameters: 100, maxComponentJsonBytes: 64 * 1024 },
+    propertyExpansionLimits: { maxExpandedPropertyRows: 1000, maxCanonicalPropertyBytes: 128 * 1024 },
+  });
+  assert.deepEqual(explicitRows.propertyExpansionLimits,
+    { maxExpandedPropertyRows: 1000, maxCanonicalPropertyBytes: 64 * 1024 },
+    'an explicit row expansion may exceed the table count, but bytes remain inside the enclosing shard');
   assert.throws(() => buildCanonicalRequest({
     readerSchemaVersion: 'model-reference-reader/v2',
     propertyExpansionLimits: { maxExpandedPropertyRows: 5_000_001 },

@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import packageManifest from './package.json' with { type: 'json' };
 import {
   canonicalJsonBytes, lowerableLimits, lowerablePropertyExpansionLimits, ModelReaderError, parseJsonStrict, sha256,
 } from './model-contract.mjs';
@@ -76,6 +77,8 @@ function packageConfiguration(limits, v2, propertyExpansionLimits) {
     supportedGlb: { version: '2.0', extensions: [], componentTypes: [5121, 5123, 5125, 5126] },
     schemas: {
       manifest: `floless.model-snapshot-package/v${v2 ? '2' : '1'}`,
+      // `properties` names the semantic contract consumed by FloLess. The shard document retains
+      // schemaVersion "2", just as the named manifest/index contracts carry their own wire versions.
       entities: v2 ? '2' : '1', properties: v2 ? 'aware.model-properties/v2' : '1',
       relationships: v2 ? '2' : '1', index: `floless.model-snapshot-index/v${v2 ? '2' : '1'}`,
     },
@@ -186,7 +189,7 @@ export async function buildAndPublishSnapshot(result, signingKey, artifactDirect
   };
   const sourceArtifactEnvelope = signArtifactPreimage(v2 ? SOURCE_ARTIFACT_DOMAIN_V2 : SOURCE_ARTIFACT_DOMAIN, sourceArtifactPreimage, signingKey);
   const configuration = packageConfiguration(limits, v2,
-    lowerablePropertyExpansionLimits(result.cache.manifest.identity?.canonicalRequest?.propertyExpansionLimits ?? {}));
+    lowerablePropertyExpansionLimits(result.cache.manifest.identity?.canonicalRequest?.propertyExpansionLimits ?? {}, limits));
   const configurationSha256 = sha256(canonicalJsonBytes(configuration));
   const packageBytes = packagedBytes(result, parsed, sourceArtifactEnvelope, configuration, v2);
   const aggregateBytes = Object.values(packageBytes).reduce((sum, bytes) => sum + bytes.length, 0);
@@ -210,8 +213,8 @@ export async function buildAndPublishSnapshot(result, signingKey, artifactDirect
       signerFingerprintSha256: identity.signerFingerprintSha256,
     },
     packager: {
-      agent: 'model-reference-reader', version: v2 ? '0.7.2' : '0.4.0',
-      bridgeBuildId: v2 ? 'aware-connection-reader@0.5.2' : 'aware-connection-reader@0.2.0', configurationSha256,
+      agent: 'model-reference-reader', version: packageManifest.modelReferenceReaderVersion,
+      bridgeBuildId: `${packageManifest.name}@${packageManifest.version}`, configurationSha256,
     },
     outputs: packageReceipts,
   };
