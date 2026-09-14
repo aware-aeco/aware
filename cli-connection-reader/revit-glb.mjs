@@ -615,10 +615,14 @@ function buildCanonicalGlb(parts, limits) {
     invalid('canonical GLB exceeds its structural count limits', 'reference-output-too-large');
   }
   const jsonBytes = canonicalJsonBytes(document);
-  if (jsonBytes.length > limits.maxCanonicalGlbJsonBytes) {
+  // Budget the chunk as it is WRITTEN. The chunk is 4-byte aligned and its declared length is the
+  // padded one, which is what parseGlb measures on the way back in, so comparing the unpadded length
+  // admits a document whose emitted chunk is up to three bytes over its own ceiling — and the
+  // canonical re-read in canonicalGeometryBounds() then refuses it, after publication.
+  const jsonLength = align4(jsonBytes.length);
+  if (jsonLength > limits.maxCanonicalGlbJsonBytes) {
     invalid('canonical GLB JSON exceeds its byte limit', 'reference-output-too-large');
   }
-  const jsonLength = align4(jsonBytes.length);
   const binaryLength = align4(binary.length);
   const output = Buffer.alloc(12 + 8 + jsonLength + 8 + binaryLength);
   output.writeUInt32LE(GLB_MAGIC, 0); output.writeUInt32LE(2, 4); output.writeUInt32LE(output.length, 8);

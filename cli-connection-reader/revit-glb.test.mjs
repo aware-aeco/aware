@@ -399,6 +399,33 @@ test('a canonical artifact re-reads under the canonical budgets, not the input o
   }
 });
 
+test('the canonical JSON budget is applied to the padded chunk that is actually written', () => {
+  // The chunk is 4-byte aligned and its DECLARED length is the padded one, which is what parseGlb
+  // reads back. Budgeting the unpadded length admits a document whose emitted chunk is up to three
+  // bytes over its own ceiling, and the canonical re-read then refuses it after publication.
+  const input = makeGlbFixture({ nodeName: 'a' });
+  const emitted = normalizeRevitGlb(input).glb;
+  const padded = emitted.readUInt32LE(12);
+  let end = 20 + padded;
+  while (emitted[end - 1] === 0x20) end -= 1;
+  const unpadded = end - 20;
+  // The fixture is chosen so the two differ — without that this test proves nothing.
+  assert.equal(unpadded, 691);
+  assert.equal(padded, 692);
+  assert.notEqual(unpadded, padded);
+  // At exactly the unpadded length the document must be refused, because it cannot be written.
+  assert.throws(
+    () => normalizeRevitGlb(input, { limits: { maxCanonicalGlbJsonBytes: unpadded } }),
+    (error) => error.code === 'reference-output-too-large' && /canonical GLB JSON/.test(error.message),
+  );
+  // At the padded length it is admitted, and the artifact it publishes re-reads under that same
+  // budget — the round trip the previous behaviour broke.
+  const limits = lowerableLimits({ maxCanonicalGlbJsonBytes: padded });
+  const out = normalizeRevitGlb(input, { limits }).glb;
+  assert.equal(out.readUInt32LE(12), padded);
+  assert.equal(parseGlb(out, { limits: canonicalArtifactLimits(limits) }).json.scene, 0);
+});
+
 test('the canonical artifact budgets map to the canonical ceilings and change nothing else', () => {
   const limits = lowerableLimits({});
   const mapped = canonicalArtifactLimits(limits);
