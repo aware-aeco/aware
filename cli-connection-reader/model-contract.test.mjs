@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import {
   MODEL_LIMITS,
@@ -130,6 +131,19 @@ test('reader v2 binds closed effective expansion limits while v1 canonical bytes
     propertyExpansionLimits: { maxExpandedPropertyRows: 5_000_001 },
   }), /hard ceiling/);
   assert.throws(() => buildCanonicalRequest({ readerSchemaVersion: 'model-reference-reader/v3' }), /unsupported/);
+});
+
+test('v2 schema binds each provider-display valueType to the matching JSON value type', () => {
+  const schema = JSON.parse(readFileSync(new URL('./model-metadata-v2.schema.json', import.meta.url), 'utf8'));
+  const providerDisplayBranches = schema.properties.parameters.items.oneOf
+    .filter((branch) => branch.properties?.valueEncoding?.const === 'provider-display')
+    .map((branch) => [branch.properties.valueType.const, branch.properties.value.type])
+    .sort(([left], [right]) => left.localeCompare(right));
+
+  assert.deepEqual(providerDisplayBranches, [
+    ['number', 'number'],
+    ['string', 'string'],
+  ]);
 });
 
 test('managed-cloud provider fingerprint binds execution and exact destination', () => {

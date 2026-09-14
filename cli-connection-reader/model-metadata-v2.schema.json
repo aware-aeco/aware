@@ -32,8 +32,21 @@
               "name": { "type": "string" },
               "unit": { "type": ["string", "null"] },
               "valueEncoding": { "const": "provider-display" },
-              "valueType": { "enum": ["string", "number"] },
-              "value": { "type": ["string", "number"] }
+              "valueType": { "const": "string" },
+              "value": { "type": "string" }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "unit", "valueEncoding", "valueType", "value"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[1-9][0-9]*$" },
+              "name": { "type": "string" },
+              "unit": { "type": ["string", "null"] },
+              "valueEncoding": { "const": "provider-display" },
+              "valueType": { "const": "number" },
+              "value": { "type": "number" }
             }
           },
           {
