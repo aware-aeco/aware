@@ -6,7 +6,9 @@ import path from 'node:path';
 import { Readable } from 'node:stream';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { ModelReaderError, READER_SCHEMA_VERSION_V2, sha256 } from './model-contract.mjs';
+import {
+  ModelReaderError, READER_SCHEMA_LIMIT_DEFAULTS, READER_SCHEMA_VERSION_V2, sha256,
+} from './model-contract.mjs';
 import {
   describeAndConvert, describeProvider, hashRegularFile, minimalProviderEnvironment, stageImmutableSource,
   validateProviderExecutable,
@@ -166,6 +168,10 @@ test('managed-cloud protocol requires an exact canonical HTTPS destination pin',
   assert.equal(accepted.fingerprint.destination, description.destination);
   assert.equal(accepted.fingerprint.readerSchemaVersion, READER_SCHEMA_VERSION_V2);
   assert.equal(requests[0].readerSchemaVersion, READER_SCHEMA_VERSION_V2);
+  assert.equal(
+    requests[0].limits.maxComponentJsonBytes,
+    READER_SCHEMA_LIMIT_DEFAULTS[READER_SCHEMA_VERSION_V2].maxComponentJsonBytes,
+  );
   await assert.rejects(() => describeProvider({
     executable, privateRoot: path.join(root, 'wrong'), hostRun,
     expectedProtocolVersion: '2', expectedDestination: 'https://api.floless.io', authorityStorePath,
@@ -268,6 +274,10 @@ test('managed-cloud conversion passes only an absolute caller-bound authority st
   assert.equal(convert.protocolVersion, '2');
   assert.equal(convert.conversionAttemptId, '123e4567-e89b-42d3-a456-426614174000');
   assert.equal(convert.canonicalRequest.protocolVersion, '2');
+  assert.equal(
+    convert.canonicalRequest.limits.maxComponentJsonBytes,
+    READER_SCHEMA_LIMIT_DEFAULTS[READER_SCHEMA_VERSION_V2].maxComponentJsonBytes,
+  );
   assert.equal(JSON.parse(calls[0].stdin.toString('utf8')).readerSchemaVersion, READER_SCHEMA_VERSION_V2);
   assert.equal(result.fingerprint.readerSchemaVersion, READER_SCHEMA_VERSION_V2);
   assert.equal(result.canonicalRequest.protocolVersion, '2');

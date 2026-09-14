@@ -23,6 +23,7 @@ async function main() {
   if (operation === 'describe') {
     process.stdout.write(JSON.stringify(describedProvenance));
   } else if (operation === 'convert') {
+    const readerSchemaVersion = request.canonicalRequest?.readerSchemaVersion;
     const geometryPath = path.join(request.outputDirectory, 'geometry.glb');
     const metadataPath = path.join(request.outputDirectory, 'metadata.json');
     const geometryOptions = request.canonicalRequest?.conversionSettings?.fixtureUnclaimedOffset
@@ -36,7 +37,7 @@ async function main() {
       : {};
     await fs.writeFile(geometryPath, makeGlbFixture(geometryOptions));
     const metadata = makeMetadataFixture();
-    if (request.canonicalRequest?.readerSchemaVersion === 'model-reference-reader/v2') {
+    if (readerSchemaVersion === 'model-reference-reader/v2') {
       metadata.schemaVersion = '2';
       metadata.parameterGroups[0].id = '1';
       metadata.parameters = [{
@@ -48,8 +49,8 @@ async function main() {
     await fs.writeFile(metadataPath, JSON.stringify(metadata));
     process.stdout.write(JSON.stringify({
       ...provenance,
-      ...(request.canonicalRequest?.readerSchemaVersion !== 'model-reference-reader/v1'
-        ? { readerSchemaVersion: request.canonicalRequest.readerSchemaVersion }
+      ...(readerSchemaVersion && readerSchemaVersion !== 'model-reference-reader/v1'
+        ? { readerSchemaVersion }
         : {}),
       documentKind: 'revit-project', sourceSha256: request.sourceSha256,
       geometryPath, metadataPath,

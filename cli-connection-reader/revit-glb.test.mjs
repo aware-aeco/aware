@@ -332,6 +332,13 @@ test('canonical work accounting refuses overflow against the declared limit befo
   );
 });
 
+test('the default canonical JSON profile bounds a 32k-primitive expansion', () => {
+  assert.throws(
+    () => normalizeRevitGlb(makeGlbFixture({ primitiveCopies: 32_000 })),
+    (error) => error.code === 'reference-output-too-large' && /canonical GLB JSON/.test(error.message),
+  );
+});
+
 test('canonical object expansion is refused by the working-set gate before allocation', () => {
   const parsed = parseGlb(makeGlbFixture());
   const document = structuredClone(parsed.json);

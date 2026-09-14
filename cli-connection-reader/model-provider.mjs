@@ -251,13 +251,13 @@ async function validatedOutput(outputPath, expectedPath, limit, label) {
 }
 
 export async function describeProvider(options) {
-  const limits = lowerableLimits(options.limits);
+  const expectedReaderSchemaVersion = requestedReaderSchemaVersion(options.readerSchemaVersion);
+  const limits = lowerableLimits(options.limits, expectedReaderSchemaVersion);
   const initialExecutable = await validateProviderExecutable(options.executable);
   await privateDirectory(options.privateRoot);
   const cwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
   const environment = minimalProviderEnvironment(options.environment);
   const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
-  const expectedReaderSchemaVersion = requestedReaderSchemaVersion(options.readerSchemaVersion);
   managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
   const stdin = canonicalJsonBytes({
     protocolVersion: expectedProtocolVersion, limits,
@@ -288,9 +288,9 @@ export async function describeProvider(options) {
 }
 
 export async function describeAndConvert(options) {
-  const limits = lowerableLimits(options.limits);
-  const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
   const expectedReaderSchemaVersion = requestedReaderSchemaVersion(options.readerSchemaVersion);
+  const limits = lowerableLimits(options.limits, expectedReaderSchemaVersion);
+  const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
   if (expectedProtocolVersion === '2' && (typeof options.conversionAttemptId !== 'string'
     || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(options.conversionAttemptId))) {
     providerError('reference-provider-request-invalid', 'The managed Revit conversion attempt identity is invalid.');

@@ -215,7 +215,7 @@ fn stage_agent_from_registry(
     // A successful extraction is not enough to make a shared cache entry trustworthy.
     // Bind the downloaded manifest to the exact registry release before committing it;
     // otherwise one bad mutable/custom archive poisons every retry for this snapshot.
-    if downloaded && entry.manifest_agent.is_some() && entry.manifest_version.is_some() {
+    if downloaded {
         match validate_staged_release_identity(&subdir, key, resolved_version, index, entry) {
             Ok(()) => {}
             Err(_) if cache_file.is_file() => {
@@ -1178,8 +1178,8 @@ mod tests {
                 bundle_digest: None,
                 tarball: url.to_string(),
                 subdir: "aware-main/20-agents/alpha".to_string(),
-                manifest_agent: None,
-                manifest_version: None,
+                manifest_agent: Some("alpha".into()),
+                manifest_version: Some("0.1.5".into()),
             },
         );
         let mut agents = BTreeMap::new();
