@@ -102,10 +102,11 @@ pub(crate) fn is_portable_agent_id(id: &str) -> bool {
         return false;
     }
     let stem = id.split('.').next().unwrap_or("").to_ascii_uppercase();
-    !(matches!(stem.as_str(), "CON" | "PRN" | "AUX" | "NUL")
-        || (stem.len() == 4
-            && matches!(&stem[..3], "COM" | "LPT")
-            && matches!(stem.as_bytes()[3], b'1'..=b'9')))
+    let numbered_device = ["COM", "LPT"].iter().any(|prefix| {
+        stem.strip_prefix(prefix)
+            .is_some_and(|suffix| matches!(suffix.as_bytes(), [b'1'..=b'9']))
+    });
+    !(matches!(stem.as_str(), "CON" | "PRN" | "AUX" | "NUL") || numbered_device)
 }
 
 pub(crate) fn validate_release_contract<'a>(
