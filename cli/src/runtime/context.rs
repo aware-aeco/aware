@@ -40,6 +40,39 @@ pub fn load_secret(ctx: &mut RenderContext, creds_dir: &Path, id: &str) -> Resul
     Ok(())
 }
 
+/// Load every credential sitting in `creds_dir` into the context's `secrets`
+/// namespace, keyed by each file's stem.
+///
+/// Best-effort in exactly the way [`load_secret`] is: a missing or unreadable
+/// directory yields no secrets rather than an error, and one credential that
+/// fails to load does not stop the rest. A run that references a secret it
+/// never got is caught at template-render time, where the message can name the
+/// reference; refusing here would fail runs that never touch the bad file.
+///
+/// The file stem is the secret's id, so `<creds_dir>/trimble-connect.json`
+/// resolves `{{ secrets.trimble-connect }}`. Non-credential clutter in the
+/// directory is harmless: `load_secret` soft-misses on anything the keychain
+/// and the JSON fallback both fail to produce.
+///
+/// Previously open-coded three times — twice in `commands::app` (the `run` and
+/// the resumed-instance paths) and once in `runtime::orchestrator`'s nested
+/// exposed-app context — as the same nine lines of `is_dir` / `read_dir` /
+/// `flatten` / `file_stem` / `let _ =`. Consolidated next to `load_secret` so
+/// the three callers cannot drift on which failures are soft.
+pub fn load_secrets_dir(ctx: &mut RenderContext, creds_dir: &Path) {
+    if !creds_dir.is_dir() {
+        return;
+    }
+    let Ok(entries) = std::fs::read_dir(creds_dir) else {
+        return;
+    };
+    for entry in entries.flatten() {
+        if let Some(stem) = entry.path().file_stem().and_then(|s| s.to_str()) {
+            let _ = load_secret(ctx, creds_dir, stem);
+        }
+    }
+}
+
 /// Load the app's `config.yaml` into the `config` namespace, so documented
 /// `{{ config.<key> }}` references resolve at run time.
 ///
@@ -121,6 +154,55 @@ mod tests {
         let tmp = tempfile::tempdir().unwrap();
         let mut ctx = RuntimeContext::default();
         load_secret(&mut ctx, tmp.path(), "nope").unwrap();
+        assert!(ctx.secrets.is_empty());
+    }
+
+    #[test]
+    fn loads_every_secret_in_the_directory_keyed_by_file_stem() {
+        let tmp = tempfile::tempdir().unwrap();
+        let creds = tmp.path();
+        std::fs::write(creds.join("trimble-connect.json"), r#"{"token":"tk_a"}"#).unwrap();
+        std::fs::write(creds.join("microsoft-365.json"), r#"{"token":"tk_b"}"#).unwrap();
+        let mut ctx = RuntimeContext::default();
+        load_secrets_dir(&mut ctx, creds);
+        assert_eq!(ctx.secrets["trimble-connect"]["token"], "tk_a");
+        assert_eq!(ctx.secrets["microsoft-365"]["token"], "tk_b");
+    }
+
+    /// The three call sites this replaces all swallowed a missing credentials
+    /// directory — an app with no secrets must still run.
+    #[test]
+    fn a_missing_credentials_directory_loads_nothing_and_is_not_fatal() {
+        let tmp = tempfile::tempdir().unwrap();
+        let mut ctx = RuntimeContext::default();
+        load_secrets_dir(&mut ctx, &tmp.path().join("no-such-dir"));
+        assert!(ctx.secrets.is_empty());
+    }
+
+    /// A file `load_secret` cannot parse must not cost the other credentials in
+    /// the same directory: the callers loaded each one with `let _ =`, and the
+    /// run only fails later if a template actually references the bad secret.
+    #[test]
+    fn one_unparseable_credential_does_not_block_the_others() {
+        let tmp = tempfile::tempdir().unwrap();
+        let creds = tmp.path();
+        std::fs::write(creds.join("broken.json"), "{ not json").unwrap();
+        std::fs::write(creds.join("good.json"), r#"{"token":"tk"}"#).unwrap();
+        let mut ctx = RuntimeContext::default();
+        load_secrets_dir(&mut ctx, creds);
+        assert_eq!(ctx.secrets["good"]["token"], "tk");
+        assert!(!ctx.secrets.contains_key("broken"));
+    }
+
+    /// A subdirectory has a stem too. It must not become an empty secret that
+    /// shadows a real one — `load_secret` soft-misses on it, as before.
+    #[test]
+    fn a_subdirectory_is_not_mistaken_for_a_credential() {
+        let tmp = tempfile::tempdir().unwrap();
+        let creds = tmp.path();
+        std::fs::create_dir(creds.join("nested")).unwrap();
+        let mut ctx = RuntimeContext::default();
+        load_secrets_dir(&mut ctx, creds);
         assert!(ctx.secrets.is_empty());
     }
 

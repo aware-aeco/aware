@@ -8,6 +8,7 @@ import {
   buildProviderFingerprint,
   canonicalJsonBytes,
   canonicalNumberViolation,
+  lowerableLimits,
   parseJsonStrict,
   providerFingerprintSha256,
   requestSha256,
@@ -57,11 +58,37 @@ test('every canonical request leaf affects the cache/request preimage', () => {
   for (const mutation of mutations) assert.notEqual(requestSha256(mutation), baseline);
   assert.equal(request.limits.maxInputGlbBytes, MODEL_LIMITS.maxInputGlbBytes.default);
   assert.equal(request.limits.maxGlbJsonBytes, 64 * 1024 * 1024);
-  assert.equal(MODEL_LIMITS.maxGlbJsonBytes.hard, 64 * 1024 * 1024);
+  assert.equal(MODEL_LIMITS.maxGlbJsonBytes.hard, 128 * 1024 * 1024);
   assert.equal(MODEL_LIMITS.maxInputGlbBytes.default, 128 * 1024 * 1024);
   assert.equal(MODEL_LIMITS.maxInputGlbBytes.hard, 512 * 1024 * 1024);
   assert.equal(buildCanonicalRequest({ protocolVersion: '2' }).protocolVersion, '2');
   assert.throws(() => buildCanonicalRequest({ protocolVersion: '3' }), /protocolVersion/);
+});
+
+test('every resource bound the reader enforces is declared here, lowerable and fail-closed', () => {
+  // The canonical working-set budget was a module constant inside revit-glb.mjs, so it was invisible
+  // to callers, could not be overridden, and silently overrode the count limits declared here: at
+  // 1024 estimated bytes per vertex its fixed 1 GiB admitted 1,048,576 vertices, making maxVertices'
+  // own 5,000,000 default unreachable. A bound the reader enforces but does not declare is the bug.
+  for (const name of ['maxCanonicalWorkBytes', 'maxGlbJsonBytes', 'maxCanonicalGlbJsonBytes']) {
+    const range = MODEL_LIMITS[name];
+    assert.ok(range, `${name} must be declared in MODEL_LIMITS`);
+    assert.ok(Number.isSafeInteger(range.default) && Number.isSafeInteger(range.hard));
+    // hard > default, or the knob is decorative: lowerableLimits refuses anything above hard, so a
+    // limit whose default already sits at its ceiling can never be raised to admit a valid model.
+    assert.ok(range.hard > range.default, `${name} cannot be raised: default already equals its hard ceiling`);
+    assert.equal(lowerableLimits({ [name]: range.default - 1 })[name], range.default - 1);
+    assert.equal(lowerableLimits({})[name], range.default);
+    assert.throws(() => lowerableLimits({ [name]: range.hard + 1 }), /exceeds its hard ceiling/);
+    assert.throws(() => lowerableLimits({ [name]: 0 }), /exceeds its hard ceiling/);
+  }
+  // The pinned Snowdon Towers profile from #517 — 1,528,598 vertices, 8,523,729 indices (counted once
+  // as read and once as expanded) and 23,181 primitives — is the model class this reader advertises.
+  // Its estimate is what the superseded 1 GiB gate refused; the declared budget must admit it.
+  const snowdonWork = 1_528_598 * 1024 + 8_523_729 * 128 * 2 + 23_181 * 4096;
+  assert.equal(snowdonWork, 3_842_308_352);
+  assert.ok(snowdonWork <= MODEL_LIMITS.maxCanonicalWorkBytes.default,
+    'the declared budget must admit the pinned sample, or the supported model class excludes it');
 });
 
 test('provider fingerprint is the exact seven-field JCS tuple', () => {

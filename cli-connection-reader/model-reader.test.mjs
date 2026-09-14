@@ -258,6 +258,35 @@ test('reader v2 binds expansion limits and publishes tagged provider-display pro
   assert.equal(JSON.stringify(out).includes('A-1'), false, 'summary and receipts must not leak property values');
 });
 
+test('read-model re-reads its own published geometry under the canonical budgets', async (t) => {
+  // summary() reparses the canonical artifact it just published to report bounds. Measuring that
+  // artifact against the INPUT budgets fails the command on a model it had already accepted, and it
+  // fails AFTER the cache entry is written — so the next run hits a poisoned cache rather than a
+  // clean refusal. The fixture's input JSON chunk is 484 bytes and its canonical chunk is 696, so
+  // this budget admits the input the provider supplied and would refuse the output it produced.
+  const state = await setup(t);
+  const limits = { maxGlbJsonBytes: 600 };
+  const preflight = await runModelCommand('preflight', {
+    'provider-path': state.executable, 'signing-secret-path': state.secretPath,
+    'signing-public-path': state.publicPath, limits,
+  }, state.deps);
+  const out = await runModelCommand('read-model', {
+    ...state.args, limits,
+    'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  }, state.deps);
+  assert.equal(out.schemaVersion, 'model-reference-reader/v1');
+  // The bounds are what canonicalGeometryBounds() derives from that reparse, so a present, finite
+  // box is the proof the reparse happened rather than being skipped.
+  assert.equal(out.frame.units, 'mm');
+  assert.equal(out.bounds.min.length, 3);
+  assert.equal(out.bounds.max.length, 3);
+  for (const value of [...out.bounds.min, ...out.bounds.max]) assert.equal(Number.isFinite(value), true);
+  const geometry = await fs.readFile(path.join(state.deps.artifactDirectory, out.artifacts.geometry.id));
+  assert.ok(geometry.readUInt32LE(12) > limits.maxGlbJsonBytes,
+    'the published canonical JSON chunk must exceed the input budget, or this test proves nothing');
+});
+
 test('read-snapshot derives public source and package envelopes after private cache verification', async (t) => {
   const state = await setup(t);
   const preflight = await runModelCommand('preflight', {

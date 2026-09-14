@@ -679,14 +679,72 @@ pub fn render(template: &str, ctx: &RenderContext) -> Result<String, AwareError>
     Ok(rendered)
 }
 
+/// Every `{{ … }}` reference in `text`, in source order, as its leading dotted
+/// path split into non-empty segments.
+///
+/// **This is AWARE's reference grammar, and it has exactly one definition.**
+/// A reference body is trimmed, then its leading run of identifier / `_` / `-` /
+/// `.` characters is taken and split on `.`; anything else terminates the path.
+/// So `{{ join(a, b) }}` and `{{ src['items'] }}` yield `["join"]` and `["src"]`
+/// — function calls, operators and bracket syntax stop the scan rather than
+/// contributing segments. An unclosed `{{` ends the iteration.
+///
+/// Three copies of this scanner existed: here (inside [`resolve_value`]) and
+/// twice in `app_lock` (`collect_refs`, `collect_ref_heads`). They are not three
+/// similar loops that happen to agree — they are required to agree, and this
+/// module's own doc comment used to say so ("Mirrors the lockfile compiler's
+/// reference grammar"). The compiler validates the references this resolver
+/// will later read, so any drift between them is silent by construction: the
+/// compiler either blesses a reference the renderer resolves to `Null`, or
+/// rejects one the renderer would have resolved. Nothing fails loudly at the
+/// seam, which is precisely why the grammar cannot live in three places.
+///
+/// Deliberately NOT merged with [`path_segments`], which looks like the same
+/// scan and is not: it splits on *every* non-path character so bracket syntax
+/// collapses into segments (`upstream['item'].x` → `upstream`, `item`, `x`).
+/// That over-tainting is the point — it feeds the secret-provenance check,
+/// where reading too many segments is the safe direction and reading too few
+/// would let a credential reach the trace. Same shape, opposite bias.
+pub(crate) fn references(text: &str) -> References<'_> {
+    References { rest: text }
+}
+
+/// Iterator returned by [`references`].
+pub(crate) struct References<'a> {
+    rest: &'a str,
+}
+
+impl<'a> Iterator for References<'a> {
+    type Item = Vec<&'a str>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let start = self.rest.find("{{")?;
+        let after = &self.rest[start + 2..];
+        let end = after.find("}}")?;
+        let inner = after[..end].trim();
+        self.rest = &after[end + 2..];
+        let path_end = inner
+            .find(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-' || c == '.'))
+            .unwrap_or(inner.len());
+        // An expression with no leading path (`{{ 1 + 2 }}`) yields an empty
+        // segment list rather than ending the scan: it is a reference that
+        // names nothing, and every caller already skips it on its own terms.
+        Some(
+            inner[..path_end]
+                .split('.')
+                .filter(|p| !p.is_empty())
+                .collect(),
+        )
+    }
+}
+
 /// Resolve a `{{ <head>.<seg>… }}` reference to its structured value (array,
 /// object, scalar) rather than a rendered string. The `for-each` runtime needs
 /// the underlying [`serde_json::Value`] to iterate — [`render`] would stringify
 /// an array into `"[…]"`, which can't be iterated.
 ///
-/// Mirrors the lockfile compiler's reference grammar
-/// (`app_lock::collect_refs`): the leading run of identifier / `_` / `-` / `.`
-/// characters inside the first `{{ … }}` is taken, split on `.`, and walked.
+/// Reads the first reference [`references`] finds, so the grammar is shared
+/// verbatim with the lockfile compiler that validates these references.
 /// `inputs` / `config` / `secrets` resolve to those namespaces; any other head
 /// is an upstream node id (raw kebab or underscore form, matching
 /// [`RenderContext::record_output`]). Nested segments are matched verbatim —
@@ -699,21 +757,9 @@ pub fn render(template: &str, ctx: &RenderContext) -> Result<String, AwareError>
 /// `for-each` collections in dot form (`{{ src.items }}`), AWARE's convention.
 pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
     let null = serde_json::Value::Null;
-    let Some(start) = expr.find("{{") else {
+    let Some(parts) = references(expr).next() else {
         return null;
     };
-    let after = &expr[start + 2..];
-    let Some(end) = after.find("}}") else {
-        return null;
-    };
-    let inner = after[..end].trim();
-    let path_end = inner
-        .find(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-' || c == '.'))
-        .unwrap_or(inner.len());
-    let parts: Vec<&str> = inner[..path_end]
-        .split('.')
-        .filter(|p| !p.is_empty())
-        .collect();
     let Some((head, rest)) = parts.split_first() else {
         return null;
     };
@@ -831,6 +877,72 @@ mod tests {
         let mut ctx = RenderContext::default();
         ctx.record_output(node_id, output);
         ctx
+    }
+
+    /// The grammar the renderer and the lockfile compiler now share. Each case
+    /// is one the three former copies agreed on; they are pinned here so the
+    /// single definition cannot quietly change out from under either caller.
+    #[test]
+    fn references_reads_every_reference_as_its_leading_dotted_path() {
+        let paths: Vec<Vec<&str>> = references("{{ a.b }} and {{ c.d.e }}").collect();
+        assert_eq!(paths, vec![vec!["a", "b"], vec!["c", "d", "e"]]);
+
+        // A whole-node reference is a single segment, not a miss.
+        assert_eq!(
+            references("{{ projects }}").collect::<Vec<_>>(),
+            vec![vec!["projects"]]
+        );
+
+        // Kebab and underscore are path characters; text around a reference is not.
+        assert_eq!(
+            references("prefix {{ my-node.some_field }} suffix").collect::<Vec<_>>(),
+            vec![vec!["my-node", "some_field"]]
+        );
+    }
+
+    /// Everything that terminates the path. These are the cases the compiler
+    /// must skip *because* the resolver cannot read them — a reference the two
+    /// disagree about fails silently, never loudly.
+    #[test]
+    fn references_stops_the_path_at_calls_brackets_and_operators() {
+        // A call yields its bare head, which is one segment — not a node/field pair.
+        assert_eq!(
+            references("{{ join(a, b) }}").collect::<Vec<_>>(),
+            vec![vec!["join"]]
+        );
+        // Bracket syntax stops at `[`: `items` is not a segment here (contrast
+        // `path_segments`, which deliberately does collapse it).
+        assert_eq!(
+            references("{{ src['items'] }}").collect::<Vec<_>>(),
+            vec![vec!["src"]]
+        );
+        // Digits are path characters, so an arithmetic expression still yields
+        // its leading literal as a segment — pinned because it is what all
+        // three former copies did, not because it is desirable.
+        assert_eq!(
+            references("{{ 1 + 2 }}").collect::<Vec<_>>(),
+            vec![vec!["1"]]
+        );
+        // A reference whose first character terminates the path yields an empty
+        // segment list rather than ending the scan.
+        assert_eq!(
+            references("{{ !x }} {{ a.b }}").collect::<Vec<_>>(),
+            vec![Vec::new(), vec!["a", "b"]]
+        );
+    }
+
+    #[test]
+    fn references_yields_nothing_for_plain_text_or_an_unclosed_reference() {
+        assert_eq!(references("no refs here").count(), 0);
+        assert_eq!(references("{{ a.b").count(), 0);
+        // A stray opener inside a reference is closed by the next `}}`, and the
+        // space that follows the path terminates it — the behaviour all three
+        // former copies had, kept because the compiler and the resolver must
+        // read a malformed template the same way.
+        assert_eq!(
+            references("{{ a.b {{ c.d }}").collect::<Vec<_>>(),
+            vec![vec!["a", "b"]]
+        );
     }
 
     #[test]

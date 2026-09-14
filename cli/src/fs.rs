@@ -2,6 +2,37 @@
 
 use std::path::{Path, PathBuf};
 
+/// Whether `metadata` describes a Windows reparse point — the NTFS indirection
+/// that backs junctions, mount points and symlink surrogates.
+///
+/// `FileType::is_symlink()` alone does not answer this: it reports the *name*
+/// symlinks Rust models, while a junction (`FILE_ATTRIBUTE_REPARSE_POINT` with
+/// no symlink file type) crosses a directory boundary just as effectively and
+/// would otherwise pass a `!is_symlink()` guard. Every caller that refuses to
+/// follow an indirection therefore needs both checks, and `false` on non-Windows
+/// keeps that pair spelled the same way on every platform rather than making
+/// callers `cfg` around it.
+///
+/// Previously typed out once in `install::integrity` and once in
+/// `runtime::google_mail`, already drifted: the copies tested the same bit but
+/// one spelled it `windows_sys::…::FILE_ATTRIBUTE_REPARSE_POINT` and the other
+/// the bare literal `0x400`, so the two guards read as unrelated rules that a
+/// grep for the constant found only half of.
+#[cfg(windows)]
+pub(crate) fn is_reparse_point(metadata: &std::fs::Metadata) -> bool {
+    use std::os::windows::fs::MetadataExt;
+    metadata.file_attributes()
+        & windows_sys::Win32::Storage::FileSystem::FILE_ATTRIBUTE_REPARSE_POINT
+        != 0
+}
+
+/// Non-Windows filesystems have no reparse points; `is_symlink()` is the whole
+/// story there, and the callers' paired check collapses to it.
+#[cfg(not(windows))]
+pub(crate) fn is_reparse_point(_metadata: &std::fs::Metadata) -> bool {
+    false
+}
+
 /// Recursively copy every file under `src` into `dst`, creating `dst` and any
 /// missing subdirectories along the way. Delegates to [`std::fs::copy`] for
 /// each regular file, and skips entries whose `read_dir` metadata fails via
