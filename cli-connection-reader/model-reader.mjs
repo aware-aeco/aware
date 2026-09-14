@@ -21,6 +21,7 @@ const STALE_PROVIDER_RUN_MS = 60 * 60_000;
 const ACTIVE_RUN_MARKER = '.active';
 const PROVIDER_RUN_HEARTBEAT_MS = 60_000;
 const providerRunHeartbeats = new Map();
+const CONVERSION_ATTEMPT_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function readerError(code, phase, message, retryable = false, details = undefined) {
   throw new ModelReaderError(code, phase, retryable, message, details);
@@ -131,13 +132,14 @@ function requestedReaderSchemaVersion(args) {
 
 function validateRequest(command, args, deps) {
   const limits = requestLimits(args, deps);
+  const protocolVersion = args['expected-provider-protocol'] ?? '1';
   // This constructs and canonicalizes the complete request-only contract without touching the
   // provider, signing key, cache, or source filesystem. It validates protocol, conversion
   // settings, and all lowerable limits before an environment-dependent error can mask them.
   try {
     requestSha256(buildCanonicalRequest({
       limits,
-      protocolVersion: args['expected-provider-protocol'] ?? '1',
+      protocolVersion,
       conversionSettings: args['conversion-settings'] ?? {},
       readerSchemaVersion: requestedReaderSchemaVersion(args),
       propertyExpansionLimits: args['property-expansion-limits'] ?? {},
@@ -145,6 +147,11 @@ function validateRequest(command, args, deps) {
   } catch (error) {
     if (error instanceof ModelReaderError) throw error;
     readerError('reference-request-invalid', 'request', 'The model reader request is invalid.', false, error);
+  }
+  if (command !== 'preflight' && protocolVersion === '2'
+    && (typeof args['conversion-attempt-id'] !== 'string'
+      || !CONVERSION_ATTEMPT_ID.test(args['conversion-attempt-id']))) {
+    readerError('reference-provider-request-invalid', 'request', 'The managed Revit conversion attempt identity is invalid.');
   }
   if (command !== 'preflight') {
     sourcePathFrom(args);

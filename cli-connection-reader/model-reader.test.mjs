@@ -100,6 +100,21 @@ test('request-only failures precede provider configuration and managed host setu
     }, unconfigured),
     (error) => error.code === 'reference-provider-pin-required',
   );
+  for (const conversionAttemptId of [undefined, 'not-a-uuid']) {
+    await assert.rejects(
+      () => runModelCommand('read-model', {
+        'expected-provider-protocol': '2',
+        'expected-provider-destination': 'https://api.example.test',
+        'conversion-attempt-id': conversionAttemptId,
+        'rvt-path': path.resolve('missing-managed-source.rvt'),
+        'source-sha256': '0'.repeat(64),
+        'expected-provider-sha256': '1'.repeat(64),
+        'expected-signer-sha256': '2'.repeat(64),
+      }, unconfigured),
+      (error) => error.code === 'reference-provider-request-invalid'
+        && error.message === 'The managed Revit conversion attempt identity is invalid.',
+    );
+  }
 });
 
 test('preflight describes provider and key readiness without conversion or source access', async (t) => {

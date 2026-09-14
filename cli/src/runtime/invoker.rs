@@ -363,9 +363,10 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
         || parsed.message.chars().count() > 240
         || parsed.diagnostic_id.len() > 64
         || parsed.provider_code.as_ref().is_some_and(|code| {
-            code.len() > 98
-                || !code.starts_with("xeorvt-")
-                || !code
+            let suffix = code.strip_prefix("xeorvt-").unwrap_or_default();
+            suffix.is_empty()
+                || suffix.len() > 90
+                || !suffix
                     .chars()
                     .all(|ch| ch.is_ascii_lowercase() || ch.is_ascii_digit() || ch == '-')
         })
@@ -5531,6 +5532,19 @@ mod builtin_invoker_tests {
             r#"{{"code":"reference-x","phase":"x","retryable":false,"message":"x","diagnosticId":"x","details":{{"key":"{oversized}"}}}}"#
         );
         assert!(structured_bridge_error(&payload).is_none());
+        for invalid_provider_code in [
+            "xeorvt-".to_string(),
+            format!("xeorvt-{}", "x".repeat(91)),
+            "xeorvt-UPPERCASE".to_string(),
+        ] {
+            let payload = format!(
+                r#"{{"code":"reference-x","phase":"x","retryable":false,"message":"x","diagnosticId":"x","providerCode":"{invalid_provider_code}"}}"#
+            );
+            assert!(
+                structured_bridge_error(&payload).is_none(),
+                "accepted provider code outside the producer contract: {invalid_provider_code}"
+            );
+        }
     }
 
     #[test]
