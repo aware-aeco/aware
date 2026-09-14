@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { MODEL_LIMITS } from './model-contract.mjs';
 import { makeGlbFixture } from './model-fixtures.mjs';
 import { normalizeRevitGlb, parseGlb } from './revit-glb.mjs';
 
@@ -298,7 +299,7 @@ test('canonical output must remain inside its own JSON profile', () => {
   );
 });
 
-test('canonical object expansion is refused by the 1 GiB working-set gate before allocation', () => {
+test('canonical object expansion is refused by the working-set gate before allocation', () => {
   const parsed = parseGlb(makeGlbFixture());
   const document = structuredClone(parsed.json);
   const count = 1_048_573;
@@ -309,10 +310,75 @@ test('canonical object expansion is refused by the 1 GiB working-set gate before
   document.bufferViews[0].byteLength = indexOffset;
   document.bufferViews[1].byteOffset = indexOffset;
   document.accessors[0].count = count;
+  // The declared budget is what refuses it, so the refusal must survive being pinned to that budget
+  // rather than to the 1 GiB constant this gate used to carry.
   assert.throws(
-    () => normalizeRevitGlb(makeGlb(document, binary)),
-    (error) => error.code === 'reference-output-too-large' && /1 GiB/.test(error.message),
+    () => normalizeRevitGlb(makeGlb(document, binary), { limits: { maxCanonicalWorkBytes: 1024 * 1024 * 1024 } }),
+    (error) => error.code === 'reference-output-too-large' && /working set exceeds/.test(error.message),
   );
+});
+
+test('the working-set gate is driven by its declared limit and names the ceiling it enforced', () => {
+  // The default fixture reserves exactly 4096 (one primitive) + 3*1024 (vertices) + 3*128 (indices)
+  // + 3*128 (expanded indices) = 7,936 estimated bytes, so the gate's boundary is exact and testable
+  // without allocating anything near it.
+  const input = makeGlbFixture();
+  assert.equal(normalizeRevitGlb(input, { limits: { maxCanonicalWorkBytes: 7_936 } }).parts.length, 1);
+  assert.throws(
+    () => normalizeRevitGlb(input, { limits: { maxCanonicalWorkBytes: 7_935 } }),
+    (error) => error.code === 'reference-output-too-large'
+      // Pinned verbatim: a message naming a ceiling other than the one actually enforced is how the
+      // fixed "1 GiB" wording lied under every override.
+      && error.message === 'canonical geometry working set exceeds its 7935-byte limit',
+  );
+});
+
+test('a model inside the declared vertex limit is not refused by an undeclared working-set ceiling', () => {
+  // 4,194,303 indices over 999 vertices: inside maxVertices (5,000,000) and maxIndices (15,000,000),
+  // and inside maxInputGlbBytes at ~16 MB. Its estimate is 1.001 GiB, which the superseded fixed
+  // 1 GiB gate refused — so a model within every PUBLISHED limit was refused by an unpublished one.
+  // Measured resident cost of this normalization is ~474 MiB, against the 1.001 GiB it reserves.
+  const vertices = 999;
+  const indexCount = 4_194_303;
+  const positions = Array.from({ length: vertices }, (_, index) => [index % 97, (index * 7) % 89, (index * 13) % 83]);
+  const indices = Array.from({ length: indexCount }, (_, index) => index % vertices);
+  const estimate = vertices * 1024 + indexCount * 128 * 2 + 4096;
+  assert.ok(estimate > 1024 * 1024 * 1024, 'fixture must exceed the superseded 1 GiB gate to prove anything');
+  assert.ok(estimate <= MODEL_LIMITS.maxCanonicalWorkBytes.default);
+  assert.ok(vertices <= MODEL_LIMITS.maxVertices.default && indexCount <= MODEL_LIMITS.maxIndices.default);
+  const result = normalizeRevitGlb(makeGlbFixture({ positions, indices }));
+  assert.equal(result.parts.length, 1);
+  assert.equal(result.parts[0].triangles.length + result.coverage.droppedDegenerateTriangles, indexCount / 3);
+});
+
+test('the input GLB JSON bound admits a chunk that the total-GLB bound already admits', () => {
+  // The figures are the authenticated Snowdon Towers provider artifact from #517: a 41,926,848-byte
+  // GLB — inside maxInputGlbBytes' 128 MiB default — whose 23,576,276-byte JSON chunk the former
+  // 16 MiB sub-limit refused. A sub-limit below what the enclosing limit admits is the defect.
+  assert.ok(23_576_276 <= MODEL_LIMITS.maxGlbJsonBytes.default);
+  assert.ok(41_926_848 <= MODEL_LIMITS.maxInputGlbBytes.default);
+  assert.ok(MODEL_LIMITS.maxGlbJsonBytes.default <= MODEL_LIMITS.maxInputGlbBytes.default,
+    'the JSON chunk is part of the GLB, so its bound may never exceed the GLB bound');
+  // Still fails closed: the bound is enforced, not merely declared.
+  const valid = makeGlbFixture();
+  assert.throws(
+    () => normalizeRevitGlb(valid, { limits: { maxGlbJsonBytes: 8 } }),
+    (error) => error.code === 'reference-output-too-large' && /GLB JSON exceeds its byte limit/.test(error.message),
+  );
+});
+
+test('the canonical output JSON bound is its own budget, not the input one', () => {
+  // Folding both into one knob meant raising the input bound to admit a real provider GLB silently
+  // raised the output bound too. These must move independently.
+  assert.notEqual(MODEL_LIMITS.maxCanonicalGlbJsonBytes.default, MODEL_LIMITS.maxGlbJsonBytes.default);
+  const wide = makeGlbFixture({ primitiveCopies: 32_000 });
+  // Refused on the OUTPUT budget while the INPUT budget is at its (larger) default.
+  assert.throws(
+    () => normalizeRevitGlb(wide),
+    (error) => error.code === 'reference-output-too-large' && /canonical GLB JSON/.test(error.message),
+  );
+  // ... and raising only the output budget is what lets it through, proving which bound refused it.
+  assert.equal(normalizeRevitGlb(wide, { limits: { maxCanonicalGlbJsonBytes: 64 * 1024 * 1024 } }).parts.length, 32_000);
 });
 
 test('active nodes are closed objects and refuse extensions with stable geometry errors', () => {

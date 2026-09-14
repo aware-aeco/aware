@@ -14,7 +14,15 @@ export const MODEL_LIMITS = Object.freeze({
   maxInputGlbBytes: { default: 128 * 1024 * 1024, hard: 512 * 1024 * 1024 },
   maxMetadataBytes: { default: 16 * 1024 * 1024, hard: 64 * 1024 * 1024 },
   maxProviderOutputBytes: { default: 144 * 1024 * 1024, hard: 576 * 1024 * 1024 },
-  maxGlbJsonBytes: { default: 16 * 1024 * 1024, hard: 16 * 1024 * 1024 },
+  // Bounds the JSON chunk of the PROVIDER's GLB. It has to admit what maxInputGlbBytes admits: a
+  // 42 MB authenticated GLB carrying a 23.5 MB JSON chunk is inside every other declared limit, and
+  // a 16 MiB sub-limit refused it (#517). Kept below maxInputGlbBytes, which the chunk is part of.
+  maxGlbJsonBytes: { default: 64 * 1024 * 1024, hard: 128 * 1024 * 1024 },
+  // Bounds the JSON chunk this reader EMITS. A separate budget from the input's on purpose: the two
+  // measure different documents, and folding them into one knob means raising the input bound to
+  // admit a real model silently raises the output bound past what the structural count limits can
+  // still police, retiring the canonical-output guard.
+  maxCanonicalGlbJsonBytes: { default: 16 * 1024 * 1024, hard: 64 * 1024 * 1024 },
   maxJsonDepth: { default: 64, hard: 128 },
   maxScenes: { default: 8, hard: 32 },
   maxNodes: { default: 100_000, hard: 250_000 },
@@ -30,6 +38,14 @@ export const MODEL_LIMITS = Object.freeze({
   maxRelationships: { default: 1_000_000, hard: 2_000_000 },
   maxComponentJsonBytes: { default: 32 * 1024 * 1024, hard: 128 * 1024 * 1024 },
   maxCanonicalGlbBytes: { default: 256 * 1024 * 1024, hard: 512 * 1024 * 1024 },
+  // Budget for the conservative worst-case working-set estimate the v1 normalizer reserves before it
+  // builds canonical object graphs. This was a bare module constant pinned at 1 GiB, which made it
+  // invisible here, unoverridable, and a silent override of the declared count limits above: at
+  // 1024 estimated bytes per vertex a 1 GiB budget admits 1,048,576 vertices, so maxVertices' own
+  // 5,000,000 default was unreachable — 21% of it — and no published limit said so (#517).
+  // The estimate is a worst case, not a resident-memory reading: measured against real conversions it
+  // overstates RSS by roughly 2-3.4x, so this budget corresponds to ~1.2-2 GiB actually resident.
+  maxCanonicalWorkBytes: { default: 4 * 1024 * 1024 * 1024, hard: 8 * 1024 * 1024 * 1024 },
   maxCommandResponseBytes: { default: 1024 * 1024, hard: 1024 * 1024 },
 });
 

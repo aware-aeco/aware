@@ -9,8 +9,9 @@ const MAX_GLTF_BUFFERS = 16;
 const DATA_BUFFER_PREFIX = 'data:application/octet-stream;base64,';
 // The v1 normalizer deliberately uses object graphs for canonical sorting. Reserve a checked,
 // conservative worst-case working-set estimate before creating those graphs so a GLB that fits the
-// wire limits cannot exhaust V8's heap. The committed profile specifies a 1 GiB resident hard gate.
-const MAX_CANONICAL_WORK_BYTES = 1024 * 1024 * 1024;
+// wire limits cannot exhaust V8's heap. The budget itself is limits.maxCanonicalWorkBytes, declared
+// alongside every other resource bound in MODEL_LIMITS rather than fixed here, so that it is visible
+// to callers, overridable, and cannot silently contradict the declared count limits (#517).
 const CANONICAL_VERTEX_WORK_BYTES = 1024;
 const CANONICAL_INDEX_WORK_BYTES = 128;
 const CANONICAL_PRIMITIVE_WORK_BYTES = 4096;
@@ -446,8 +447,8 @@ export function normalizeRevitGlb(input, options = {}) {
   let totalPrimitives = 0;
   let canonicalWorkBytes = 0;
   const reserveWork = (count, bytesPerItem) => {
-    if (!Number.isSafeInteger(count) || count < 0 || count > Math.floor((MAX_CANONICAL_WORK_BYTES - canonicalWorkBytes) / bytesPerItem)) {
-      invalid('canonical geometry working set exceeds its 1 GiB limit', 'reference-output-too-large');
+    if (!Number.isSafeInteger(count) || count < 0 || count > Math.floor((limits.maxCanonicalWorkBytes - canonicalWorkBytes) / bytesPerItem)) {
+      invalid(`canonical geometry working set exceeds its ${limits.maxCanonicalWorkBytes}-byte limit`, 'reference-output-too-large');
     }
     canonicalWorkBytes += count * bytesPerItem;
   };
@@ -614,7 +615,7 @@ function buildCanonicalGlb(parts, limits) {
     invalid('canonical GLB exceeds its structural count limits', 'reference-output-too-large');
   }
   const jsonBytes = canonicalJsonBytes(document);
-  if (jsonBytes.length > limits.maxGlbJsonBytes) {
+  if (jsonBytes.length > limits.maxCanonicalGlbJsonBytes) {
     invalid('canonical GLB JSON exceeds its byte limit', 'reference-output-too-large');
   }
   const jsonLength = align4(jsonBytes.length);
