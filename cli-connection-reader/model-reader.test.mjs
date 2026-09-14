@@ -89,6 +89,14 @@ test('request-only failures precede provider configuration and managed host setu
     () => runModelCommand('preflight', { limits: null }, unconfigured),
     (error) => error.code === 'reference-limits-invalid',
   );
+  for (const limits of [123, true, []]) {
+    await assert.rejects(
+      () => runModelCommand('preflight', {
+        'reader-schema-version': 'model-reference-reader/v2', limits,
+      }, unconfigured),
+      (error) => error.code === 'reference-limits-invalid',
+    );
+  }
   await assert.rejects(
     () => runModelCommand('preflight', { 'expected-provider-protocol': '9' }, unconfigured),
     (error) => error.code === 'reference-request-invalid',
