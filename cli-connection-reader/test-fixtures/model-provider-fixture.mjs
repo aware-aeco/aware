@@ -16,8 +16,12 @@ async function main() {
     process.stdin.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
     process.stdin.on('error', reject);
   }));
+  const describedProvenance = {
+    ...provenance,
+    ...(request.readerSchemaVersion ? { readerSchemaVersion: request.readerSchemaVersion } : {}),
+  };
   if (operation === 'describe') {
-    process.stdout.write(JSON.stringify(provenance));
+    process.stdout.write(JSON.stringify(describedProvenance));
   } else if (operation === 'convert') {
     const geometryPath = path.join(request.outputDirectory, 'geometry.glb');
     const metadataPath = path.join(request.outputDirectory, 'metadata.json');
@@ -43,7 +47,11 @@ async function main() {
     }
     await fs.writeFile(metadataPath, JSON.stringify(metadata));
     process.stdout.write(JSON.stringify({
-      ...provenance, documentKind: 'revit-project', sourceSha256: request.sourceSha256,
+      ...provenance,
+      ...(request.canonicalRequest?.readerSchemaVersion !== 'model-reference-reader/v1'
+        ? { readerSchemaVersion: request.canonicalRequest.readerSchemaVersion }
+        : {}),
+      documentKind: 'revit-project', sourceSha256: request.sourceSha256,
       geometryPath, metadataPath,
     }));
   } else {
