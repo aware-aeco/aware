@@ -20,6 +20,7 @@ const PUBLISHER_SCHEMA: &str = "aware.model-provider-publisher/v1";
 const PACKAGE_SCHEMA: &str = "aware.model-provider-enrollment/v1";
 const SELECTION_SCHEMA: &str = "aware.model-provider-selection/v1";
 const MAX_CONTROL_BYTES: u64 = 1024 * 1024;
+const MAX_VERSION_LENGTH: usize = 128;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -502,13 +503,10 @@ fn validate_manifest(manifest: &PackageManifest) -> Result<(), AwareError> {
     ] {
         validate_id(value, label)?;
     }
-    Version::parse(&manifest.package_version)
-        .map_err(|_| AwareError::Validation("provider package version must be semver".into()))?;
-    Version::parse(&manifest.minimum_aware_version)
-        .map_err(|_| AwareError::Validation("minimum AWARE version must be semver".into()))?;
+    validate_version(&manifest.package_version, "provider package version")?;
+    validate_version(&manifest.minimum_aware_version, "minimum AWARE version")?;
     if let Some(maximum) = &manifest.maximum_aware_version {
-        Version::parse(maximum)
-            .map_err(|_| AwareError::Validation("maximum AWARE version must be semver".into()))?;
+        validate_version(maximum, "maximum AWARE version")?;
     }
     validate_sha256(
         &manifest.publisher_fingerprint_sha256,
@@ -554,6 +552,17 @@ fn validate_manifest(manifest: &PackageManifest) -> Result<(), AwareError> {
         ));
     }
     Ok(())
+}
+
+fn validate_version(value: &str, label: &str) -> Result<(), AwareError> {
+    if value.len() > MAX_VERSION_LENGTH {
+        return Err(AwareError::Validation(format!(
+            "{label} must be at most {MAX_VERSION_LENGTH} characters"
+        )));
+    }
+    Version::parse(value)
+        .map(|_| ())
+        .map_err(|_| AwareError::Validation(format!("{label} must be semver")))
 }
 
 fn verify_compatible(manifest: &PackageManifest) -> Result<(), AwareError> {
@@ -974,5 +983,58 @@ fn atomic_rename(source: &Path, destination: &Path, replace: bool) -> std::io::R
         Err(std::io::Error::last_os_error())
     } else {
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn valid_manifest() -> PackageManifest {
+        PackageManifest {
+            schema_version: MANIFEST_SCHEMA.into(),
+            package_id: "package.synthetic".into(),
+            package_version: "1.2.3".into(),
+            format_id: "format.synthetic".into(),
+            launcher: "provider.bin".into(),
+            minimum_aware_version: "0.137.0".into(),
+            maximum_aware_version: None,
+            publisher_fingerprint_sha256: "a".repeat(64),
+            capabilities: vec![ProviderCapability {
+                capability_id: "capability.synthetic".into(),
+                protocol_version: "3".into(),
+                source_capture_mode: "capture.synthetic".into(),
+                request_schema: "request.synthetic.v1".into(),
+                result_schema: "result.synthetic.v1".into(),
+                artifact_root_version: "artifact.synthetic.v1".into(),
+                cache_namespace_version: "cache.synthetic.v1".into(),
+            }],
+            files: vec![PackageFile {
+                path: "provider.bin".into(),
+                bytes: 1,
+                sha256: "b".repeat(64),
+            }],
+        }
+    }
+
+    #[test]
+    fn manifest_versions_obey_the_schema_length_bound() {
+        let boundary = format!("1.0.0+{}", "a".repeat(122));
+        assert_eq!(boundary.len(), MAX_VERSION_LENGTH);
+        let mut manifest = valid_manifest();
+        manifest.package_version = boundary;
+        validate_manifest(&manifest).unwrap();
+
+        let too_long = format!("1.0.0+{}", "a".repeat(123));
+        for field in ["package", "minimum", "maximum"] {
+            let mut manifest = valid_manifest();
+            match field {
+                "package" => manifest.package_version = too_long.clone(),
+                "minimum" => manifest.minimum_aware_version = too_long.clone(),
+                "maximum" => manifest.maximum_aware_version = Some(too_long.clone()),
+                _ => unreachable!(),
+            }
+            assert!(validate_manifest(&manifest).is_err(), "{field} version");
+        }
     }
 }
