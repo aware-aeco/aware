@@ -92,6 +92,16 @@ test('fan-in must make progress', async (t) => {
   );
 });
 
+test('aggregate input bytes are bounded before further run writes', async (t) => {
+  const tempParent = await temporary(t);
+  const before = new Set(await fs.readdir(tempParent));
+  await assert.rejects(
+    () => externalSortMetadataRecords(values.slice(0, 2), { tempParent, limits: { totalBytes: 100 } }),
+    (error) => error.code === 'reference-artifact-v2-limit',
+  );
+  assert.deepEqual(new Set(await fs.readdir(tempParent)), before);
+});
+
 test('throwing option and iterable accessors become stable reader errors', async (t) => {
   const tempParent = await temporary(t);
   const options = Object.defineProperty({}, 'tempParent', { get() { throw new Error('unreadable'); } });

@@ -6,8 +6,18 @@ import { createInterface } from 'node:readline';
 import { canonicalJsonBytes, ModelReaderError, parseJsonStrict } from './model-contract.mjs';
 import { canonicalMetadataRecord, MAX_METADATA_RECORD_DEPTH } from './model-metadata-shards.mjs';
 
-const DEFAULT_LIMITS = Object.freeze({ runBytes: 64 * 1024 * 1024, fanIn: 32, records: 10_000_000 });
-const HARD_LIMITS = Object.freeze({ runBytes: 64 * 1024 * 1024, fanIn: 32, records: 10_000_000 });
+const DEFAULT_LIMITS = Object.freeze({
+  runBytes: 64 * 1024 * 1024,
+  totalBytes: 1.5 * 1024 * 1024 * 1024,
+  fanIn: 32,
+  records: 10_000_000,
+});
+const HARD_LIMITS = Object.freeze({
+  runBytes: 64 * 1024 * 1024,
+  totalBytes: 2 * 1024 * 1024 * 1024,
+  fanIn: 32,
+  records: 10_000_000,
+});
 
 function sortError(code, message, details = undefined) {
   throw new ModelReaderError(code, 'canonical-artifact', false, message, details);
@@ -214,19 +224,22 @@ export async function externalSortMetadataRecords(records, options = {}) {
   try {
     const realTempParent = await fs.realpath(tempParent);
     root = await fs.mkdtemp(path.join(realTempParent, 'aware-model-sort-'));
-    let buffered = []; let bufferedBytes = 0; let count = 0; let ordinal = 0;
+    let buffered = []; let bufferedBytes = 0; let totalBytes = 0; let count = 0; let ordinal = 0;
     const runs = [];
     for await (const input of metadataInputs(records, syncIterator, asyncIterator)) {
       checkCancellation(signal);
       const record = canonicalMetadataRecord(input);
       const bytes = lineFor(record).length;
       if (bytes > limits.runBytes) sortError('reference-artifact-v2-limit', 'One metadata record exceeds the sort run limit.');
+      if (bytes > limits.totalBytes - totalBytes) {
+        sortError('reference-artifact-v2-limit', 'The metadata family exceeds its aggregate byte limit.');
+      }
       if (buffered.length && bufferedBytes + bytes > limits.runBytes) {
         const pathname = path.join(root, `run-${String(ordinal).padStart(6, '0')}.jsonl`);
         await writeRun(buffered, pathname, signal); runs.push(pathname); ordinal += 1;
         buffered = []; bufferedBytes = 0;
       }
-      buffered.push(record); bufferedBytes += bytes; count += 1;
+      buffered.push(record); bufferedBytes += bytes; totalBytes += bytes; count += 1;
       if (count > limits.records) sortError('reference-artifact-v2-limit', 'The metadata family exceeds its record limit.');
     }
     if (buffered.length) {
