@@ -142,7 +142,11 @@ export function buildArtifactV2Index(family, payloadReceipts) {
 function validateIndex(value, family) {
   closed(value, ['index', 'bytes', 'receipt'], [], `${family} index package`);
   closed(value.index, ['schemaVersion', 'family', 'itemCount', 'objects'], [], `${family} index`);
-  if (!Buffer.isBuffer(value.bytes) || !value.bytes.equals(canonicalJsonBytes(value.index))
+  validateReceipt(value.receipt, `${family} index receipt`);
+  let suppliedIndexBytes;
+  try { suppliedIndexBytes = canonicalJsonBytes(value.index); }
+  catch (error) { artifactError('reference-artifact-v2-invalid', `The ${family} index is not canonical JSON data.`, error); }
+  if (!Buffer.isBuffer(value.bytes) || !value.bytes.equals(suppliedIndexBytes)
       || value.index.schemaVersion !== INDEX_SCHEMA || value.index.family !== family
       || value.receipt.sha256 !== sha256(value.bytes) || value.receipt.bytes !== value.bytes.length
       || value.receipt.logicalPath !== `${family}.index.json`
@@ -150,7 +154,6 @@ function validateIndex(value, family) {
       || value.receipt.itemCount !== value.index.itemCount) {
     artifactError('reference-artifact-v2-invalid', `The ${family} index package is invalid.`);
   }
-  validateReceipt(value.receipt, `${family} index receipt`);
   const rebuilt = buildArtifactV2Index(family, value.index.objects);
   if (!rebuilt.bytes.equals(value.bytes)
       || !canonicalJsonBytes(rebuilt.receipt).equals(canonicalJsonBytes(value.receipt))) {

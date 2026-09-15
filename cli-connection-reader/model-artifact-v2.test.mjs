@@ -109,6 +109,12 @@ test('root refuses tampered index bytes and a mismatched effective-source identi
     () => buildArtifactV2Root(tampered.options),
     (error) => error.code === 'reference-artifact-v2-invalid',
   );
+  const missingReceipt = artifact();
+  missingReceipt.options.indexes.entities.receipt = null;
+  assert.throws(
+    () => buildArtifactV2Root(missingReceipt.options),
+    (error) => error.code === 'reference-artifact-v2-invalid',
+  );
   const mismatched = artifact();
   mismatched.options.effectiveSourceSha256 = sha256(Buffer.from('other source'));
   assert.throws(
