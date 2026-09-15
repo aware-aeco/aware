@@ -198,7 +198,7 @@ function validateEffectiveSource(value, expected) {
       role: entry.role, classification: entry.classification,
       affectedDomains: [...entry.affectedDomains].sort(),
     };
-  }).sort((left, right) => Buffer.compare(Buffer.from(left.role), Buffer.from(right.role)));
+  }).sort((left, right) => left.role.localeCompare(right.role, 'en'));
   if (new Set(absent.map((entry) => entry.role)).size !== absent.length
       || absent.some((entry, index) => !canonicalJsonBytes(entry).equals(canonicalJsonBytes(value.manifest.absent[index])))
       || (absent.some((entry) => entry.classification === 'degraded') ? 'degraded' : 'complete')

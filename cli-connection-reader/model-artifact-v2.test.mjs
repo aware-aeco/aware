@@ -116,6 +116,21 @@ test('root derives degraded coverage from authenticated effective-source bytes',
   );
 });
 
+test('root accepts the effective-source producer role ordering', () => {
+  const value = artifact();
+  value.options.effectiveSource.manifest.absent = [
+    { role: 'a', classification: 'optional', affectedDomains: [] },
+    { role: 'A', classification: 'optional', affectedDomains: [] },
+  ].sort((left, right) => left.role.localeCompare(right.role, 'en'));
+  value.options.effectiveSource.bytes = canonicalJsonBytes(value.options.effectiveSource.manifest);
+  value.options.effectiveSourceSha256 = sha256(value.options.effectiveSource.bytes);
+  value.options.effectiveSource.receipt = artifactV2Receipt({
+    logicalPath: 'effective-source.json', logicalKind: 'effective-source', ordinal: 0,
+    mediaType: 'application/json', content: value.options.effectiveSource.bytes, itemCount: 1,
+  });
+  assert.doesNotThrow(() => buildArtifactV2Root(value.options));
+});
+
 test('root binds the effective source to its format, capability and provider package', () => {
   for (const [field, value] of [
     ['formatId', 'format.other'],
