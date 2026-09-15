@@ -19,7 +19,11 @@ struct PackageFixture {
 }
 
 fn package_fixture(root: &std::path::Path) -> PackageFixture {
-    let directory = root.join("package");
+    package_fixture_named(root, "package")
+}
+
+fn package_fixture_named(root: &std::path::Path, name: &str) -> PackageFixture {
+    let directory = root.join(name);
     std::fs::create_dir_all(&directory).unwrap();
     let launcher = b"synthetic provider image";
     std::fs::write(directory.join("provider.bin"), launcher).unwrap();
@@ -44,7 +48,7 @@ fn package_fixture(root: &std::path::Path) -> PackageFixture {
         ),
     )
     .unwrap();
-    let public_key = root.join("publisher.pub");
+    let public_key = root.join(format!("{name}.pub"));
     std::fs::write(
         &public_key,
         format!("ed25519-public-key-v1 {public_base64}\n"),
@@ -55,6 +59,82 @@ fn package_fixture(root: &std::path::Path) -> PackageFixture {
         public_key,
         manifest_sha256,
     }
+}
+
+#[test]
+fn concurrent_selections_serialize_generation_and_history_updates() {
+    use fs2::FileExt;
+
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp.path().join("home");
+    let first = package_fixture_named(temp.path(), "package-first");
+    let second = package_fixture_named(temp.path(), "package-second");
+    for fixture in [&first, &second] {
+        aware(&home)
+            .args(["provider", "trust-publisher"])
+            .arg(&fixture.public_key)
+            .args(["--publisher-id", "publisher.synthetic"])
+            .assert()
+            .success();
+        aware(&home)
+            .args(["provider", "enroll"])
+            .arg(&fixture.directory)
+            .assert()
+            .success();
+    }
+
+    let lock_directory = home.join("providers/locks");
+    std::fs::create_dir_all(&lock_directory).unwrap();
+    let lock = std::fs::OpenOptions::new()
+        .read(true)
+        .write(true)
+        .create(true)
+        .truncate(false)
+        .open(lock_directory.join("selection-format.synthetic.lock"))
+        .unwrap();
+    lock.lock_exclusive().unwrap();
+
+    let executable = assert_cmd::cargo::cargo_bin("aware");
+    let mut first_child = std::process::Command::new(&executable)
+        .env("AWARE_HOME", &home)
+        .args([
+            "provider",
+            "select",
+            "format.synthetic",
+            &first.manifest_sha256,
+        ])
+        .spawn()
+        .unwrap();
+    let mut second_child = std::process::Command::new(executable)
+        .env("AWARE_HOME", &home)
+        .args([
+            "provider",
+            "select",
+            "format.synthetic",
+            &second.manifest_sha256,
+        ])
+        .spawn()
+        .unwrap();
+
+    std::thread::sleep(std::time::Duration::from_millis(100));
+    assert!(first_child.try_wait().unwrap().is_none());
+    assert!(second_child.try_wait().unwrap().is_none());
+    fs2::FileExt::unlock(&lock).unwrap();
+    assert!(first_child.wait().unwrap().success());
+    assert!(second_child.wait().unwrap().success());
+
+    let selection: serde_json::Value = serde_json::from_slice(
+        &std::fs::read(home.join("providers/selections/format.synthetic.json")).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(selection["generation"], 2);
+    let active = selection["activeManifestSha256"].as_str().unwrap();
+    let previous = selection["previousManifestSha256"].as_array().unwrap();
+    assert_eq!(previous.len(), 1);
+    assert!(
+        (active == first.manifest_sha256 && previous[0] == second.manifest_sha256)
+            || (active == second.manifest_sha256 && previous[0] == first.manifest_sha256)
+    );
 }
 
 #[test]

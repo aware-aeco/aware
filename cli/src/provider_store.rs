@@ -6,6 +6,7 @@ use std::path::{Component, Path, PathBuf};
 
 use base64::Engine;
 use ed25519_dalek::{Signature, Verifier, VerifyingKey};
+use fs2::FileExt;
 use semver::Version;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -226,6 +227,7 @@ impl ProviderStore {
             ));
         }
         verify_compatible(&package.manifest)?;
+        let _selection_lock = self.acquire_selection_lock(format_id)?;
         let path = self.selection_path(format_id);
         let prior = read_optional_json::<SelectionRecord>(&path)?;
         if let Some(selection) = &prior {
@@ -426,6 +428,34 @@ impl ProviderStore {
         self.root
             .join("selections")
             .join(format!("{format_id}.json"))
+    }
+
+    fn acquire_selection_lock(&self, format_id: &str) -> Result<std::fs::File, AwareError> {
+        let directory = self.root.join("locks");
+        std::fs::create_dir_all(&directory)?;
+        let path = directory.join(format!("selection-{format_id}.lock"));
+        match std::fs::symlink_metadata(&path) {
+            Ok(metadata)
+                if metadata.file_type().is_symlink()
+                    || crate::fs::is_reparse_point(&metadata)
+                    || !metadata.is_file() =>
+            {
+                return Err(AwareError::Validation(
+                    "provider selection lock must be a regular file".into(),
+                ));
+            }
+            Ok(_) => {}
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+            Err(error) => return Err(error.into()),
+        }
+        let file = std::fs::OpenOptions::new()
+            .read(true)
+            .write(true)
+            .create(true)
+            .truncate(false)
+            .open(path)?;
+        file.lock_exclusive()?;
+        Ok(file)
     }
 }
 
