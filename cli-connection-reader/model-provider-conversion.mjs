@@ -42,6 +42,23 @@ function checkCancellation(signal) {
   if (signal?.aborted) conversionError('reference-cancelled', 'Provider conversion was cancelled.');
 }
 
+async function removeOwnedPaths(paths, remove = fs.rm) {
+  let firstError;
+  for (const entry of paths) {
+    if (!entry.owned) continue;
+    try { await remove(entry.path, entry.options); }
+    catch (error) { firstError ??= error; }
+  }
+  if (firstError) {
+    conversionError(
+      'reference-staging-cleanup-failed',
+      'Provider conversion could not remove all private staging data.',
+      true,
+      firstError,
+    );
+  }
+}
+
 async function stageConsumedClosure(capture, discovered, closureRoot, signal) {
   let ownsRoot = false;
   try {
@@ -81,7 +98,17 @@ async function stageConsumedClosure(capture, discovered, closureRoot, signal) {
     await fs.writeFile(path.join(closureRoot, 'capture.json'), manifestBytes, { flag: 'wx', mode: 0o400 });
     return { stagingRoot: closureRoot, manifest, manifestSha256: sha256(manifestBytes) };
   } catch (error) {
-    if (ownsRoot) await fs.rm(closureRoot, { recursive: true, force: true }).catch(() => {});
+    if (ownsRoot) {
+      try { await fs.rm(closureRoot, { recursive: true, force: true }); }
+      catch (cleanupError) {
+        conversionError(
+          'reference-staging-cleanup-failed',
+          'Provider conversion could not remove its partial source closure.',
+          true,
+          { conversionError: error, cleanupError },
+        );
+      }
+    }
     throw error;
   }
 }
@@ -277,9 +304,19 @@ export async function convertProviderSource(options, deps = {}) {
     );
     return { output, conversionRequest: identity.request, conversionRequestSha256: identity.sha256 };
   } finally {
-    if (ownership.source) await fs.rm(capture.stagingRoot, { recursive: true, force: true }).catch(() => {});
-    if (ownership.closure) await fs.rm(closure.stagingRoot, { recursive: true, force: true }).catch(() => {});
-    if (ownership.providerOutput) await fs.rm(path.join(options.stagingRoot, 'provider-output'), { recursive: true, force: true }).catch(() => {});
-    if (ownership.effectiveSource) await fs.rm(path.join(options.stagingRoot, 'effective-source.json'), { force: true }).catch(() => {});
+    await removeOwnedPaths([
+      { owned: ownership.source, path: capture?.stagingRoot, options: { recursive: true, force: true } },
+      { owned: ownership.closure, path: closure?.stagingRoot, options: { recursive: true, force: true } },
+      {
+        owned: ownership.providerOutput,
+        path: path.join(options.stagingRoot, 'provider-output'),
+        options: { recursive: true, force: true },
+      },
+      {
+        owned: ownership.effectiveSource,
+        path: path.join(options.stagingRoot, 'effective-source.json'),
+        options: { force: true },
+      },
+    ], deps.remove);
   }
 }

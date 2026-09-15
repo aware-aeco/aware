@@ -242,3 +242,27 @@ test('failed closure staging removes the partial run-owned directory', async (t)
     (error) => error.code === 'ENOENT',
   );
 });
+
+test('reports cleanup failure and still attempts every owned path', async (t) => {
+  const value = await scenario(t);
+  const removed = [];
+  value.deps.remove = async (target, options) => {
+    removed.push(target);
+    if (target === path.join(value.options.stagingRoot, 'provider-output')) {
+      const error = new Error('provider kept an output file locked');
+      error.code = 'EBUSY';
+      throw error;
+    }
+    await fs.rm(target, options);
+  };
+  await assert.rejects(
+    () => convertProviderSource(value.options, value.deps),
+    (error) => error.code === 'reference-staging-cleanup-failed' && error.retryable === true,
+  );
+  assert.deepEqual(removed, [
+    value.capture.stagingRoot,
+    path.join(value.options.stagingRoot, 'closure'),
+    path.join(value.options.stagingRoot, 'provider-output'),
+    path.join(value.options.stagingRoot, 'effective-source.json'),
+  ]);
+});
