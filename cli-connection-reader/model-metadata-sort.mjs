@@ -8,16 +8,19 @@ import { canonicalMetadataRecord, MAX_METADATA_RECORD_DEPTH } from './model-meta
 
 const DEFAULT_LIMITS = Object.freeze({
   runBytes: 64 * 1024 * 1024,
+  recordBytes: 1024 * 1024,
   totalBytes: 1.5 * 1024 * 1024 * 1024,
   fanIn: 32,
   records: 10_000_000,
 });
 const HARD_LIMITS = Object.freeze({
   runBytes: 64 * 1024 * 1024,
+  recordBytes: 4 * 1024 * 1024,
   totalBytes: 2 * 1024 * 1024 * 1024,
   fanIn: 32,
   records: 10_000_000,
 });
+const NEWLINE = Buffer.from('\n');
 
 function sortError(code, message, details = undefined) {
   throw new ModelReaderError(code, 'canonical-artifact', false, message, details);
@@ -54,8 +57,11 @@ function enforcedLimits(overrides = {}) {
   return result;
 }
 
-function lineFor(record) {
-  return Buffer.concat([canonicalJsonBytes({ key: record.key, record: record.record }), Buffer.from('\n')]);
+function encodedRecord(record) {
+  return {
+    keyBytes: record.keyBytes,
+    bytes: canonicalJsonBytes({ key: record.key, record: record.record }),
+  };
 }
 
 async function writeAll(handle, bytes, signal) {
@@ -82,7 +88,10 @@ async function writeRun(records, pathname, signal) {
   }
   const handle = await fs.open(pathname, 'wx', 0o600);
   try {
-    for (const record of records) await writeAll(handle, lineFor(record), signal);
+    for (const record of records) {
+      await writeAll(handle, record.bytes, signal);
+      await writeAll(handle, NEWLINE, signal);
+    }
     await handle.sync();
     checkCancellation(signal);
   } finally {
@@ -101,7 +110,7 @@ async function closeRun(state) {
   state.stream.destroy();
 }
 
-async function openRun(pathname, recordBytes) {
+async function openRun(pathname, limits) {
   const stream = createReadStream(pathname, { highWaterMark: 1024 * 1024 });
   const lines = createInterface({ input: stream, crlfDelay: Infinity });
   const iterator = lines[Symbol.asyncIterator]();
@@ -110,11 +119,11 @@ async function openRun(pathname, recordBytes) {
     const next = await iterator.next();
     if (next.done) { state.head = undefined; return; }
     const bytes = Buffer.from(next.value);
-    if (bytes.length === 0 || bytes.length > recordBytes) {
+    if (bytes.length === 0 || bytes.length + NEWLINE.length > limits.recordBytes) {
       sortError('reference-artifact-v2-invalid', 'A metadata sort run contains an invalid record.');
     }
     let value;
-    try { value = parseJsonStrict(bytes, { maxBytes: recordBytes, maxDepth: MAX_METADATA_RECORD_DEPTH + 1 }); }
+    try { value = parseJsonStrict(bytes, { maxBytes: limits.recordBytes, maxDepth: MAX_METADATA_RECORD_DEPTH + 1 }); }
     catch (error) { sortError('reference-artifact-v2-invalid', 'A metadata sort run contains invalid JSON.', error); }
     const record = canonicalMetadataRecord(value);
     if (!canonicalJsonBytes({ key: record.key, record: record.record }).equals(bytes)) {
@@ -124,7 +133,7 @@ async function openRun(pathname, recordBytes) {
       sortError('reference-artifact-v2-invalid', 'A metadata sort run is not strictly ordered.');
     }
     state.previous = record.keyBytes;
-    state.head = record;
+    state.head = { bytes, keyBytes: record.keyBytes };
   };
   try {
     await state.advance();
@@ -139,7 +148,7 @@ async function mergeRuns(inputs, output, limits, signal) {
   const states = [];
   let handle;
   try {
-    for (const pathname of inputs) states.push(await openRun(pathname, limits.runBytes));
+    for (const pathname of inputs) states.push(await openRun(pathname, limits));
     handle = await fs.open(output, 'wx', 0o600);
     let previous;
     for (;;) {
@@ -153,7 +162,8 @@ async function mergeRuns(inputs, output, limits, signal) {
       if (previous && Buffer.compare(previous, selected.head.keyBytes) === 0) {
         sortError('reference-artifact-v2-duplicate', 'Metadata record identities must be unique.');
       }
-      await writeAll(handle, lineFor(selected.head), signal);
+      await writeAll(handle, selected.head.bytes, signal);
+      await writeAll(handle, NEWLINE, signal);
       previous = selected.head.keyBytes;
       await selected.advance();
     }
@@ -228,8 +238,9 @@ export async function externalSortMetadataRecords(records, options = {}) {
     const runs = [];
     for await (const input of metadataInputs(records, syncIterator, asyncIterator)) {
       checkCancellation(signal);
-      const record = canonicalMetadataRecord(input);
-      const bytes = lineFor(record).length;
+      const record = encodedRecord(canonicalMetadataRecord(input));
+      const bytes = record.bytes.length + NEWLINE.length;
+      if (bytes > limits.recordBytes) sortError('reference-artifact-v2-limit', 'One metadata record exceeds its byte limit.');
       if (bytes > limits.runBytes) sortError('reference-artifact-v2-limit', 'One metadata record exceeds the sort run limit.');
       if (bytes > limits.totalBytes - totalBytes) {
         sortError('reference-artifact-v2-limit', 'The metadata family exceeds its aggregate byte limit.');

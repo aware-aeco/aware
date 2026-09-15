@@ -102,6 +102,18 @@ test('aggregate input bytes are bounded before further run writes', async (t) =>
   assert.deepEqual(new Set(await fs.readdir(tempParent)), before);
 });
 
+test('record bytes have a separate ceiling from run bytes', async (t) => {
+  const tempParent = await temporary(t);
+  await assert.rejects(
+    () => externalSortMetadataRecords([values[0]], {
+      tempParent,
+      limits: { recordBytes: 32, runBytes: 1024 },
+    }),
+    (error) => error.code === 'reference-artifact-v2-limit',
+  );
+  assert.deepEqual(await fs.readdir(tempParent), []);
+});
+
 test('throwing option and iterable accessors become stable reader errors', async (t) => {
   const tempParent = await temporary(t);
   const options = Object.defineProperty({}, 'tempParent', { get() { throw new Error('unreadable'); } });
