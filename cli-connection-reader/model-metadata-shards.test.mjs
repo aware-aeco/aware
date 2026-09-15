@@ -60,6 +60,13 @@ test('rejects duplicate, reversed, sparse and oversized records', () => {
     () => partitionMetadataRecords('entities', [unreadLater]),
     (error) => error.code === 'reference-artifact-v2-invalid',
   );
+  const throwingLimits = Object.defineProperty({}, 'shardBytes', {
+    enumerable: true, get() { throw new Error('unreadable limit'); },
+  });
+  assert.throws(
+    () => partitionMetadataRecords('entities', records, { limits: throwingLimits }),
+    (error) => error.code === 'reference-artifact-v2-limit-invalid',
+  );
   assert.throws(
     () => partitionMetadataRecords('entities', [records[1], records[0]]),
     (error) => error.code === 'reference-artifact-v2-order-invalid',

@@ -12,11 +12,19 @@ function shardError(code, message, details = undefined) {
 }
 
 function limits(overrides = {}) {
-  if (!overrides || typeof overrides !== 'object' || Array.isArray(overrides)) {
+  let entries; let prototype;
+  try {
+    prototype = overrides && typeof overrides === 'object' && !Array.isArray(overrides)
+      ? Object.getPrototypeOf(overrides) : undefined;
+    entries = prototype === Object.prototype || prototype === null ? Object.entries(overrides) : [];
+  } catch (error) {
+    shardError('reference-artifact-v2-limit-invalid', 'Metadata shard limits are invalid.', error);
+  }
+  if (prototype !== Object.prototype && prototype !== null) {
     shardError('reference-artifact-v2-limit-invalid', 'Metadata shard limits are invalid.');
   }
   const result = { ...DEFAULT_LIMITS };
-  for (const [name, value] of Object.entries(overrides)) {
+  for (const [name, value] of entries) {
     if (!Object.hasOwn(result, name) || !Number.isSafeInteger(value) || value <= 0
         || value > HARD_LIMITS[name]) {
       shardError('reference-artifact-v2-limit-invalid', 'Metadata shard limits are invalid.');
@@ -71,19 +79,32 @@ function logicalName(family, ordinal) {
 }
 
 export function partitionMetadataRecords(family, orderedRecords, options = {}) {
-  if (!FAMILIES.has(family) || !Array.isArray(orderedRecords)
-      || !options || typeof options !== 'object' || Array.isArray(options)
-      || Object.keys(options).some((key) => key !== 'limits')
-      || orderedRecords.length > MAX_FAMILY_RECORDS) {
+  let optionKeys; let recordCount;
+  try {
+    optionKeys = options && typeof options === 'object' && !Array.isArray(options)
+      ? Object.keys(options) : [];
+    recordCount = Array.isArray(orderedRecords) ? orderedRecords.length : -1;
+  } catch (error) {
+    shardError('reference-artifact-v2-invalid', 'Metadata shard input is invalid.', error);
+  }
+  if (!FAMILIES.has(family) || recordCount < 0 || optionKeys.some((key) => key !== 'limits')
+      || (!options || typeof options !== 'object' || Array.isArray(options))
+      || recordCount > MAX_FAMILY_RECORDS) {
     shardError('reference-artifact-v2-invalid', 'Metadata shard input is invalid.');
   }
-  for (let index = 0; index < orderedRecords.length; index += 1) {
-    if (!Object.hasOwn(orderedRecords, index)) {
+  for (let index = 0; index < recordCount; index += 1) {
+    let present;
+    try { present = Object.hasOwn(orderedRecords, index); }
+    catch (error) { shardError('reference-artifact-v2-invalid', 'Metadata shard input is invalid.', error); }
+    if (!present) {
       shardError('reference-artifact-v2-invalid', 'Metadata shard input is invalid.');
     }
   }
-  const enforced = limits(options.limits);
-  if (orderedRecords.length === 0) {
+  let limitInput;
+  try { limitInput = options.limits; }
+  catch (error) { shardError('reference-artifact-v2-limit-invalid', 'Metadata shard limits are invalid.', error); }
+  const enforced = limits(limitInput);
+  if (recordCount === 0) {
     if (family === 'entities') {
       shardError('reference-artifact-v2-invalid', 'A canonical model requires at least one entity.');
     }
@@ -95,7 +116,10 @@ export function partitionMetadataRecords(family, orderedRecords, options = {}) {
   }
   const records = [];
   let previous;
-  for (const input of orderedRecords) {
+  for (let index = 0; index < recordCount; index += 1) {
+    let input;
+    try { input = orderedRecords[index]; }
+    catch (error) { shardError('reference-artifact-v2-invalid', 'A metadata record is invalid.', error); }
     const record = canonicalRecord(input);
     const comparison = previous ? Buffer.compare(previous.keyBytes, record.keyBytes) : -1;
     if (comparison >= 0) {
