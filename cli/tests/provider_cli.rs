@@ -113,6 +113,52 @@ fn trust_enroll_select_and_list_are_closed_and_format_neutral() {
 }
 
 #[test]
+fn listing_ignores_interrupted_atomic_write_scratch_files() {
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp.path().join("home");
+    let fixture = package_fixture(temp.path());
+    aware(&home)
+        .args(["provider", "trust-publisher"])
+        .arg(&fixture.public_key)
+        .args(["--publisher-id", "publisher.synthetic"])
+        .assert()
+        .success();
+    aware(&home)
+        .args(["provider", "enroll"])
+        .arg(&fixture.directory)
+        .assert()
+        .success();
+    aware(&home)
+        .args([
+            "provider",
+            "select",
+            "format.synthetic",
+            &fixture.manifest_sha256,
+        ])
+        .assert()
+        .success();
+
+    std::fs::write(
+        home.join("providers/selections/.tmp-interrupted-selection"),
+        b"partial",
+    )
+    .unwrap();
+    std::fs::write(
+        home.join("providers/packages/.tmp-interrupted-package"),
+        b"partial",
+    )
+    .unwrap();
+
+    let listed = aware(&home)
+        .args(["--json", "provider", "list", "--format", "format.synthetic"])
+        .assert()
+        .success();
+    let listed_json: serde_json::Value =
+        serde_json::from_slice(&listed.get_output().stdout).unwrap();
+    assert_eq!(listed_json["data"]["packages"][0]["selected"], true);
+}
+
+#[test]
 fn enrollment_refuses_an_extra_unreceipted_file() {
     let temp = tempfile::tempdir().unwrap();
     let home = temp.path().join("home");

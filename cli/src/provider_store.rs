@@ -273,6 +273,13 @@ impl ProviderStore {
         if selections_dir.is_dir() {
             for entry in std::fs::read_dir(&selections_dir)? {
                 let entry = entry?;
+                if entry
+                    .file_name()
+                    .to_str()
+                    .is_some_and(|name| name.starts_with(".tmp-"))
+                {
+                    continue;
+                }
                 let selection: SelectionRecord = read_json(&entry.path())?;
                 selections.insert(selection.format_id, selection.active_manifest_sha256);
             }
@@ -282,6 +289,13 @@ impl ProviderStore {
         if packages_dir.is_dir() {
             for entry in std::fs::read_dir(packages_dir)? {
                 let entry = entry?;
+                if entry
+                    .file_name()
+                    .to_str()
+                    .is_some_and(|name| name.starts_with(".tmp-"))
+                {
+                    continue;
+                }
                 let package: PackageRecord = read_json(&entry.path())?;
                 if package.revoked
                     || !package.enrolled
