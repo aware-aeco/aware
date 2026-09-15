@@ -258,12 +258,6 @@ test('root rejects sparse effective-source coverage arrays', () => {
     const value = artifact();
     value.options.effectiveSource.manifest.absent = absent;
     value.options.effectiveSource.manifest.completeness = 'degraded';
-    value.options.effectiveSource.bytes = canonicalJsonBytes(value.options.effectiveSource.manifest);
-    value.options.effectiveSourceSha256 = sha256(value.options.effectiveSource.bytes);
-    value.options.effectiveSource.receipt = artifactV2Receipt({
-      logicalPath: 'effective-source.json', logicalKind: 'effective-source', ordinal: 0,
-      mediaType: 'application/json', content: value.options.effectiveSource.bytes, itemCount: 1,
-    });
     assert.throws(
       () => buildArtifactV2Root(value.options),
       (error) => error.code === 'reference-artifact-v2-invalid',

@@ -47,6 +47,12 @@ test('JCS bytes are stable across key order and pin number/string edge cases', (
   assert.throws(() => canonicalJsonBytes({ bad: '\ud800' }), /Unicode scalar/);
 });
 
+test('canonical JSON refuses sparse arrays instead of changing holes to null', () => {
+  assert.throws(() => canonicalJsonBytes(new Array(1)), /sparse array/);
+  assert.throws(() => canonicalJsonBytes({ nested: [1, , 3] }), /sparse array/);
+  assert.equal(canonicalJsonBytes([1, null, 3]).toString('utf8'), '[1,null,3]');
+});
+
 test('strict JSON parsing rejects duplicate keys, trailing bytes, and unsafe integers', () => {
   assert.deepEqual(parseJsonStrict('{"a":1,"nested":{"b":2}}'), { a: 1, nested: { b: 2 } });
   assert.throws(() => parseJsonStrict('{"a":1,"a":2}'), /duplicate JSON key/);
