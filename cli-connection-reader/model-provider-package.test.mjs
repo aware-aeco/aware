@@ -117,6 +117,29 @@ test('package preflight refuses stale selection and undeclared capability withou
   assert.equal(launches, 0);
 });
 
+test('package preflight refuses malformed or unbounded selection history without launching', async (t) => {
+  const value = await fixture(t); let launches = 0;
+  const selectionPath = path.join(value.home, 'providers', 'selections', `${value.manifest.formatId}.json`);
+  const base = {
+    schemaVersion: 'aware.model-provider-selection/v1', formatId: value.manifest.formatId,
+    generation: 2, activeManifestSha256: value.manifestSha256,
+  };
+  for (const previousManifestSha256 of [
+    ['invalid'],
+    ['1'.repeat(64), '1'.repeat(64)],
+    Array.from({ length: 9 }, (_, index) => index.toString(16).padStart(64, '0')),
+    [value.manifestSha256],
+  ]) {
+    await fs.writeFile(selectionPath, canonicalJsonBytes({ ...base, previousManifestSha256 }));
+    await assert.rejects(() => preflightEnrolledProviderPackage({
+      home: value.home, formatId: value.manifest.formatId, capabilityId: value.capability.capabilityId,
+      manifestSha256: value.manifestSha256, environment: { AWARE_RUNTIME_VERSION: '0.137.2' },
+      hostRun: async () => { launches += 1; return null; },
+    }), (error) => error.code === 'reference-provider-package-pin-mismatch');
+  }
+  assert.equal(launches, 0);
+});
+
 test('package preflight rechecks its AWARE compatibility range before launch', async (t) => {
   const value = await fixture(t); let launches = 0;
   await assert.rejects(() => preflightEnrolledProviderPackage({

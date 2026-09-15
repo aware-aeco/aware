@@ -463,11 +463,18 @@ fn validate_selection_record(
     selection: &SelectionRecord,
     expected_format_id: &str,
 ) -> Result<(), AwareError> {
+    let previous = selection
+        .previous_manifest_sha256
+        .iter()
+        .collect::<BTreeSet<_>>();
     if selection.schema_version != SELECTION_SCHEMA
         || selection.format_id != expected_format_id
         || selection.generation == 0
         || validate_id(&selection.format_id, "format id").is_err()
         || validate_sha256(&selection.active_manifest_sha256, "active manifest sha256").is_err()
+        || selection.previous_manifest_sha256.len() > 8
+        || previous.len() != selection.previous_manifest_sha256.len()
+        || previous.contains(&selection.active_manifest_sha256)
         || selection
             .previous_manifest_sha256
             .iter()

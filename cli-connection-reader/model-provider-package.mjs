@@ -206,9 +206,13 @@ async function loadEnrolledProviderPackageInternal({ home, formatId, capabilityI
   assertSha256(manifestSha256, 'provider-package-sha256');
   const selection = (await readJson(path.join(home, 'providers', 'selections', `${formatId}.json`), 'Provider selection')).value;
   assertClosedObject(selection, ['schemaVersion', 'formatId', 'generation', 'activeManifestSha256', 'previousManifestSha256'], [], 'provider selection');
+  const history = selection.previousManifestSha256;
+  const validHistory = Array.isArray(history) && history.length <= 8
+    && history.every((digest) => typeof digest === 'string' && /^[a-f0-9]{64}$/.test(digest))
+    && new Set(history).size === history.length && !history.includes(selection.activeManifestSha256);
   if (selection.schemaVersion !== SELECTION_SCHEMA || selection.formatId !== formatId
       || selection.activeManifestSha256 !== manifestSha256 || !Number.isSafeInteger(selection.generation)
-      || selection.generation < 1 || !Array.isArray(selection.previousManifestSha256)) {
+      || selection.generation < 1 || !validHistory) {
     packageError('reference-provider-package-pin-mismatch', 'preflight', 'Selected provider package does not match the expected manifest.');
   }
   const packagePath = path.join(home, 'providers', 'packages', `${manifestSha256}.json`);

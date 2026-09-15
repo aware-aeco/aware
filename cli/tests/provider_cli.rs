@@ -395,3 +395,51 @@ fn selection_reverifies_the_enrolled_package_before_publishing_it() {
             .exists()
     );
 }
+
+#[test]
+fn selection_refuses_an_unbounded_existing_history() {
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp.path().join("home");
+    let fixture = package_fixture(temp.path());
+    aware(&home)
+        .args(["provider", "trust-publisher"])
+        .arg(&fixture.public_key)
+        .args(["--publisher-id", "publisher.synthetic"])
+        .assert()
+        .success();
+    aware(&home)
+        .args(["provider", "enroll"])
+        .arg(&fixture.directory)
+        .assert()
+        .success();
+    aware(&home)
+        .args([
+            "provider",
+            "select",
+            "format.synthetic",
+            &fixture.manifest_sha256,
+        ])
+        .assert()
+        .success();
+
+    let selection_path = home.join("providers/selections/format.synthetic.json");
+    let mut selection: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(&selection_path).unwrap()).unwrap();
+    selection["previousManifestSha256"] = serde_json::Value::Array(
+        (0..9)
+            .map(|index| serde_json::Value::String(format!("{index:064x}")))
+            .collect(),
+    );
+    std::fs::write(&selection_path, serde_json::to_vec(&selection).unwrap()).unwrap();
+
+    aware(&home)
+        .args([
+            "provider",
+            "select",
+            "format.synthetic",
+            &fixture.manifest_sha256,
+        ])
+        .assert()
+        .failure()
+        .code(3);
+}
