@@ -84,6 +84,8 @@ function validateReceipt(value, label = 'artifact receipt') {
   digest(value.sha256, `${label} sha256`);
   if (value.bounds !== undefined) bounds(value.bounds);
   if (value.idRange !== undefined) idRange(value.idRange);
+  try { canonicalJsonBytes(value); }
+  catch (error) { artifactError('reference-artifact-v2-invalid', `${label} is not canonical JSON data.`, error); }
   return value;
 }
 

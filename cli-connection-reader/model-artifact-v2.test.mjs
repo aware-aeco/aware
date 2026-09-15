@@ -145,4 +145,15 @@ test('receipts reject unsafe numbers, inverted bounds and invalid ID ranges', ()
     () => payload('entities', 0, '{}', 1, { idRange: { first: 'z', last: 'a' } }),
     (error) => error.code === 'reference-artifact-v2-invalid',
   );
+  assert.throws(
+    () => artifactV2Receipt({
+      logicalPath: 'metadata/entities-000000.json', logicalKind: '\ud800', ordinal: 0,
+      mediaType: 'application/json', content: Buffer.from('{}'), itemCount: 1,
+    }),
+    (error) => error.code === 'reference-artifact-v2-invalid',
+  );
+  assert.throws(
+    () => payload('entities', 0, '{}', 1, { idRange: { first: '\ud800', last: '\ud800' } }),
+    (error) => error.code === 'reference-artifact-v2-invalid',
+  );
 });
