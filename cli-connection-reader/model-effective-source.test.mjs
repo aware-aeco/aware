@@ -122,6 +122,24 @@ test('dependency policy affected domains must be string identifiers', () => {
   );
 });
 
+test('dependency policy repeats the operator admission bounds', () => {
+  for (const mutate of [
+    (input) => { input.policy.roles = []; },
+    (input) => {
+      input.policy.roles.push({
+        role: 'detail', classification: 'degraded',
+        affectedDomains: Array.from({ length: 65 }, (_, index) => `domain-${index}`),
+      });
+    },
+  ]) {
+    const input = fixture(); mutate(input);
+    assert.throws(
+      () => buildEffectiveSource(input),
+      (error) => error.code === 'reference-dependency-policy-invalid',
+    );
+  }
+});
+
 test('malformed dependency policy structures use the policy error path', () => {
   for (const mutate of [
     (input) => { input.policy.unexpected = true; },

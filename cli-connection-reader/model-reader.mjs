@@ -16,6 +16,8 @@ import {
 import { createModelHostClient } from './model-host-client.mjs';
 import { buildAndPublishSnapshot } from './model-snapshot.mjs';
 import { preflightEnrolledProviderPackage } from './model-provider-package.mjs';
+import { fingerprintSource } from './model-provider-discovery.mjs';
+import { sourceCaptureLimits } from './model-source-capture.mjs';
 
 const STALE_PROVIDER_RUN_MS = 60 * 60_000;
 const ACTIVE_RUN_MARKER = '.active';
@@ -55,11 +57,17 @@ function packageSigningConfiguration(args, deps) {
   const home = awareHome(environment);
   const secretPath = args['signing-secret-path'] ?? environment.AWARE_MODEL_REFERENCE_SIGNING_KEY ?? path.join(home, 'keys', 'model-reference-reader.sec');
   const publicPath = args['signing-public-path'] ?? environment.AWARE_MODEL_REFERENCE_PUBLIC_KEY ?? secretPath.replace(/\.sec$/i, '.pub');
-  return { environment, home, secretPath, publicPath };
+  return {
+    environment, home, secretPath, publicPath,
+    privateRoot: deps.privateRoot ?? path.join(home, 'cache', 'model-reference-reader', 'provider-runs'),
+  };
 }
 
-function validatePackagePreflight(args, deps) {
+function validatePackageRequest(command, args, deps) {
   const limits = requestLimits(args, deps);
+  let captureLimits;
+  try { captureLimits = sourceCaptureLimits(args['source-capture-limits']); }
+  catch (error) { readerError('reference-limits-invalid', 'request', 'Source capture limits are invalid.', false, error); }
   for (const field of ['provider-format', 'provider-capability', 'provider-package-sha256']) {
     if (typeof args[field] !== 'string' || !args[field]) readerError('reference-provider-package-request-invalid', 'request', `Package preflight requires ${field}.`);
   }
@@ -69,8 +77,19 @@ function validatePackagePreflight(args, deps) {
   for (const field of ['provider-path', 'expected-provider-sha256', 'expected-provider-destination', 'authority-store-path']) {
     if (args[field] !== undefined) readerError('reference-provider-package-request-invalid', 'request', `Package preflight cannot mix ${field} with enrollment selection.`);
   }
+  if (command === 'fingerprint-source') {
+    if (!Array.isArray(args['source-namespaces']) || args['source-namespaces'].length === 0) {
+      readerError('reference-source-namespaces-invalid', 'request', 'Source fingerprinting requires captured namespace roots.');
+    }
+    if (typeof args['provider-authorization'] !== 'string' || !args['provider-authorization']) {
+      readerError('reference-provider-authorization-invalid', 'request', 'Source fingerprinting requires provider authorization.');
+    }
+    if (args['degraded-mode'] !== undefined && !['refuse', 'allow'].includes(args['degraded-mode'])) {
+      readerError('reference-request-invalid', 'request', 'degraded-mode must be refuse or allow.');
+    }
+  }
   if (args['expected-signer-sha256'] !== undefined) assertSha256(args['expected-signer-sha256'], 'expected-signer-sha256');
-  return limits;
+  return { limits, captureLimits };
 }
 
 async function hasFreshHeartbeat(candidate, now) {
@@ -426,28 +445,51 @@ async function publishRunArtifacts(result, directory) {
 
 export async function runModelCommand(command, args = {}, deps = {}) {
   if (!args || typeof args !== 'object' || Array.isArray(args)) readerError('reference-request-invalid', 'request', 'Command input must be a JSON object.');
-  if (!['preflight', 'probe', 'read-model', 'read-snapshot'].includes(command)) {
+  if (!['preflight', 'fingerprint-source', 'probe', 'read-model', 'read-snapshot'].includes(command)) {
     readerError('reference-command-invalid', 'request', 'Unknown model-reader command.');
   }
-  if (packageMode(args)) {
-    if (command !== 'preflight') {
-      readerError('reference-provider-package-operation-unavailable', 'request', 'This AWARE version supports enrolled provider packages for preflight only.');
+  if (packageMode(args) || command === 'fingerprint-source') {
+    if (!['preflight', 'fingerprint-source'].includes(command)) {
+      readerError('reference-provider-package-operation-unavailable', 'request', 'This AWARE version does not support that enrolled provider package operation.');
     }
-    const limits = validatePackagePreflight(args, deps);
+    const { limits, captureLimits } = validatePackageRequest(command, args, deps);
     const config = packageSigningConfiguration(args, deps);
     const signing = await signingReadiness(args, config);
     const ownedHost = deps.hostRun ? null : await createModelHostClient(config.environment.AWARE_MODEL_READER_HOST, { environment: config.environment });
     try {
-      const result = await preflightEnrolledProviderPackage({
-        home: config.home, formatId: args['provider-format'], capabilityId: args['provider-capability'],
-        manifestSha256: args['provider-package-sha256'], limits, environment: config.environment,
-        hostRun: deps.hostRun ?? ownedHost?.run, signal: deps.signal,
-      });
-      return {
-        ...result,
-        signerFingerprintSha256: signing.signerFingerprintSha256,
-        signerPublicKeyBase64: signing.signingKey.publicKeyBytes.toString('base64'),
-      };
+      if (command === 'preflight') {
+        const result = await preflightEnrolledProviderPackage({
+          home: config.home, formatId: args['provider-format'], capabilityId: args['provider-capability'],
+          manifestSha256: args['provider-package-sha256'], limits, environment: config.environment,
+          hostRun: deps.hostRun ?? ownedHost?.run, signal: deps.signal,
+        });
+        return {
+          ...result,
+          signerFingerprintSha256: signing.signerFingerprintSha256,
+          signerPublicKeyBase64: signing.signingKey.publicKeyBytes.toString('base64'),
+        };
+      }
+      const runRoot = await newRunRoot(config.privateRoot);
+      try {
+        const fingerprint = await (deps.fingerprintSource ?? fingerprintSource)({
+          home: config.home, formatId: args['provider-format'], capabilityId: args['provider-capability'],
+          manifestSha256: args['provider-package-sha256'], limits, environment: config.environment,
+          hostRun: deps.hostRun ?? ownedHost?.run, signal: deps.signal,
+          authorization: args['provider-authorization'], namespaces: args['source-namespaces'],
+          stagingRoot: path.join(runRoot, 'source'), degradedMode: args['degraded-mode'] ?? 'refuse',
+          captureLimits,
+        });
+        return {
+          schemaVersion: 'model-reference-reader-source-fingerprint/v1',
+          effectiveSource: fingerprint.effectiveSource,
+          effectiveSourceSha256: fingerprint.sha256,
+          dependencyPolicySha256: fingerprint.dependencyPolicySha256,
+          providerIdentity: fingerprint.providerIdentity,
+          signerFingerprintSha256: signing.signerFingerprintSha256,
+        };
+      } finally {
+        await removeRunRoot(runRoot);
+      }
     } finally {
       if (ownedHost) await ownedHost.close();
     }

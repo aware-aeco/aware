@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-14T10:30:00+00:00",
+  "updated-at": "2026-09-15T14:22:11.061753800+00:00",
   "agents": {
     "tekla": {
       "versions": {
@@ -869,12 +869,12 @@
     },
     "model-reference-reader": {
       "versions": {
-        "0.5.0": {
+        "0.6.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
           "subdir": "aware-main/20-agents/aeco/engineering/model-reference-reader",
           "manifest-agent": "model-reference-reader",
-          "manifest-version": "0.5.0",
-          "bundle-digest": "sha256:a58eb2dc9d268f832bfdc1fbdebce5a52c82c532eea635cb9e6e7d5f060bf6cf"
+          "manifest-version": "0.6.0",
+          "bundle-digest": "sha256:5c925353b162799078f27682518e71b2ae088cac7f1fbaec792419e9cb173b87"
         }
       }
     }

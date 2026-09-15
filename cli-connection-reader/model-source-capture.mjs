@@ -50,6 +50,16 @@ function selectedLimits(overrides = {}) {
   return result;
 }
 
+export function sourceCaptureLimits(overrides = {}) {
+  const limits = selectedLimits(overrides);
+  for (const [name, value] of Object.entries(limits)) {
+    if (value > SOURCE_CAPTURE_LIMITS[name]) {
+      throw new TypeError(`${name} cannot exceed the public default ceiling`);
+    }
+  }
+  return limits;
+}
+
 function namespaceId(value) {
   if (typeof value !== 'string' || !/^[A-Za-z0-9._-]{1,128}$/.test(value)
       || value === '.' || value === '..' || /[. ]$/.test(value)

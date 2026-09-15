@@ -123,12 +123,12 @@ function validateCapture(manifest, expectedSha256) {
   return files;
 }
 
-function validatePolicy(policy, capabilityId, providerFingerprintSha256) {
+export function validateDependencyPolicy(policy, capabilityId, providerFingerprintSha256) {
   closed(policy, ['schemaVersion', 'policyId', 'capabilityId', 'providerFingerprintSha256', 'roles'], [],
     'dependency policy', 'reference-dependency-policy-invalid');
   if (policy.schemaVersion !== POLICY_SCHEMA || policy.capabilityId !== capabilityId
       || policy.providerFingerprintSha256 !== providerFingerprintSha256 || !Array.isArray(policy.roles)
-      || policy.roles.length > 10_000) {
+      || policy.roles.length < 1 || policy.roles.length > 10_000) {
     sourceError('reference-dependency-policy-invalid', 'The dependency policy does not match the selected provider.');
   }
   opaque(policy.policyId, 'policyId', 'reference-dependency-policy-invalid');
@@ -141,6 +141,7 @@ function validatePolicy(policy, capabilityId, providerFingerprintSha256) {
     opaque(entry.role, 'role', 'reference-dependency-policy-invalid');
     if (!['mandatory', 'optional', 'degraded'].includes(entry.classification)
         || !Array.isArray(entry.affectedDomains)
+        || entry.affectedDomains.length > 64
         || entry.affectedDomains.some((domain) => typeof domain !== 'string' || !OPAQUE_ID.test(domain))
         || (entry.classification === 'degraded') !== (entry.affectedDomains.length > 0)
         || roles.has(entry.role)) {
@@ -168,7 +169,7 @@ export function buildEffectiveSource(options) {
   digest(providerFingerprintSha256, 'providerFingerprintSha256');
   digest(providerPackageManifestSha256, 'providerPackageManifestSha256');
   const captured = validateCapture(captureManifest, captureManifestSha256);
-  const admittedPolicy = validatePolicy(policy, capabilityId, providerFingerprintSha256);
+  const admittedPolicy = validateDependencyPolicy(policy, capabilityId, providerFingerprintSha256);
 
   closed(dependencyReport, [
     'schemaVersion', 'protocolVersion', 'capabilityId', 'captureManifestSha256', 'primary',

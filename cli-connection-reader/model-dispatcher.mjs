@@ -9,8 +9,10 @@ import { runModelCommand } from './model-reader.mjs';
 function route(command, args, environment = process.env) {
   const hasIfc = ['ifc-path', 'ifcPath', 'base-ifc-path', 'revised-ifc-path'].some((key) => args[key] !== undefined);
   const hasRvt = ['rvt-path', 'rvtPath', 'model-path'].some((key) => args[key] !== undefined);
+  const hasPackage = ['provider-format', 'provider-capability', 'provider-package-sha256']
+    .some((key) => args[key] !== undefined);
   if (hasIfc && hasRvt) throw new ModelReaderError('reference-mixed-model-paths', 'request', false, 'IFC and RVT paths cannot be mixed in one command.');
-  if (command === 'preflight') return 'rvt';
+  if (command === 'preflight' || command === 'fingerprint-source' || hasPackage) return 'rvt';
   if ((command === 'probe' || command === 'read-model' || command === 'read-snapshot')
       && (hasRvt || (!hasIfc && environment.AWARE_MODEL_READER_HOST))) return 'rvt';
   return 'ifc';
