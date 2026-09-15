@@ -366,3 +366,64 @@ export async function captureSourceNamespaces(namespaces, stagingRoot, options =
     throw error;
   }
 }
+
+export async function verifyCapturedSource(capture, options = {}) {
+  const limits = selectedLimits(options.limits);
+  if (!capture || typeof capture !== 'object' || Array.isArray(capture)
+      || typeof capture.stagingRoot !== 'string' || !path.isAbsolute(capture.stagingRoot)
+      || !capture.manifest || typeof capture.manifest !== 'object'
+      || !Array.isArray(capture.manifest.namespaces)) {
+    captureError('reference-source-changed', 'The staged source capture is invalid.', true);
+  }
+  ensureNotAborted(options.signal);
+  const expectedManifestBytes = canonicalJsonBytes(capture.manifest);
+  if (sha256(expectedManifestBytes) !== capture.manifestSha256) {
+    captureError('reference-source-changed', 'The staged source capture manifest identity changed.', true);
+  }
+  const root = await safeDirectoryRoot(capture.stagingRoot, 'Source capture staging');
+  let rootEntries;
+  try { rootEntries = await fs.readdir(root.root, { withFileTypes: true }); }
+  catch (error) { captureError('reference-source-changed', 'The staged source capture changed.', true, error); }
+  const rootNames = rootEntries.map((entry) => entry.name).sort();
+  if (JSON.stringify(rootNames) !== JSON.stringify(['capture.json', 'namespaces'])) {
+    captureError('reference-source-changed', 'The staged source capture contains unexpected entries.', true);
+  }
+  const manifestPath = path.join(root.root, 'capture.json');
+  let manifestStat; let manifestBytes;
+  try { manifestStat = await fs.lstat(manifestPath); manifestBytes = await fs.readFile(manifestPath); }
+  catch (error) { captureError('reference-source-changed', 'The staged source capture manifest changed.', true, error); }
+  if (!manifestStat.isFile() || manifestStat.isSymbolicLink() || manifestBytes.length !== manifestStat.size
+      || !manifestBytes.equals(expectedManifestBytes)) {
+    captureError('reference-source-changed', 'The staged source capture manifest changed.', true);
+  }
+  const namespaceContainer = await safeDirectoryRoot(path.join(root.root, 'namespaces'), 'Source capture namespaces');
+  let namespaceEntries;
+  try { namespaceEntries = await fs.readdir(namespaceContainer.root, { withFileTypes: true }); }
+  catch (error) { captureError('reference-source-changed', 'The staged source namespaces changed.', true, error); }
+  const expectedIds = capture.manifest.namespaces.map((entry) => entry.namespaceId).sort();
+  const actualIds = namespaceEntries.map((entry) => entry.name).sort();
+  if (JSON.stringify(actualIds) !== JSON.stringify(expectedIds)
+      || namespaceEntries.some((entry) => !entry.isDirectory() || entry.isSymbolicLink())) {
+    captureError('reference-source-changed', 'The staged source namespaces changed.', true);
+  }
+  const totals = { files: 0, directories: 0, bytes: 0 };
+  for (const expected of capture.manifest.namespaces) {
+    ensureNotAborted(options.signal);
+    const namespace = await safeDirectoryRoot(
+      path.join(namespaceContainer.root, expected.namespaceId),
+      `Source capture namespace '${expected.namespaceId}'`,
+    );
+    const files = await inventoryNamespace(namespace, limits, totals, options.signal, fs.readdir);
+    if (files.length !== expected.files.length) {
+      captureError('reference-source-changed', 'The staged source capture membership changed.', true);
+    }
+    for (let index = 0; index < files.length; index += 1) {
+      const actual = files[index]; const receipt = expected.files[index];
+      if (actual.relativePath !== receipt.path || actual.size !== receipt.bytes
+          || await hashOriginal(actual, limits, options.signal, fs.open) !== receipt.sha256) {
+        captureError('reference-source-changed', 'The staged source capture bytes changed.', true);
+      }
+    }
+  }
+  return true;
+}
