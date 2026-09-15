@@ -216,27 +216,25 @@ fn stage_agent_from_registry(
     // cache entry trustworthy. Validate the complete agent bundle, including every referenced
     // file and (for the official registry) its signed tree digest, before committing it;
     // otherwise an identity-preserving but modified archive poisons every retry for this snapshot.
-    if downloaded {
-        match validate_staged_release_for_cache(&subdir, key, resolved_version, index, entry) {
-            Ok(()) => {}
-            Err(_) if cache_file.is_file() => {
-                eprintln!(
-                    "warning: refreshed archive fails release validation for {key}@{resolved_version}; using prior cache"
-                );
-                downloaded = false;
-                std::fs::copy(&cache_file, &tarball_path)?;
-                let retry_root = scratch.path().join("extract-identity-cached");
-                subdir = extract_agent_subdir(
-                    &tarball_path,
-                    &retry_root,
-                    &entry.subdir,
-                    key,
-                    resolved_version,
-                )?;
-                validate_staged_release_for_cache(&subdir, key, resolved_version, index, entry)?;
-            }
-            Err(error) => return Err(error),
+    match validate_staged_release_for_cache(&subdir, key, resolved_version, index, entry) {
+        Ok(()) => {}
+        Err(_) if downloaded && cache_file.is_file() => {
+            eprintln!(
+                "warning: refreshed archive fails release validation for {key}@{resolved_version}; using prior cache"
+            );
+            downloaded = false;
+            std::fs::copy(&cache_file, &tarball_path)?;
+            let retry_root = scratch.path().join("extract-identity-cached");
+            subdir = extract_agent_subdir(
+                &tarball_path,
+                &retry_root,
+                &entry.subdir,
+                key,
+                resolved_version,
+            )?;
+            validate_staged_release_for_cache(&subdir, key, resolved_version, index, entry)?;
         }
+        Err(error) => return Err(error),
     }
 
     // Commit a freshly-downloaded archive to the shared cache ONLY now that it has served this
@@ -1287,6 +1285,88 @@ mod tests {
         assert!(
             !cache_file.exists(),
             "an identity-matching payload with the wrong official digest must never enter the shared cache"
+        );
+    }
+
+    #[test]
+    fn official_digest_mismatch_in_fresh_shared_cache_is_rejected() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        write_alpha_archive(&archive, "SOURCE-WOULD-BE-VALIDATED-IF-FETCHED");
+
+        let mut index = single_alpha_index(&url);
+        index.trust = RegistryTrust::FreshOfficial;
+        index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap()
+            .bundle_digest = Some(format!("sha256:{}", "a".repeat(64)));
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        std::fs::create_dir_all(cache_file.parent().unwrap()).unwrap();
+        write_alpha_archive(&cache_file, "IDENTITY-MATCHES-BUT-CACHE-WAS-MODIFIED");
+
+        let error = stage_agent_from_registry("alpha", None, &paths, &index).unwrap_err();
+        assert!(
+            error.to_string().contains("bundle digest mismatch"),
+            "a fresh shared cache must receive the same full release validation as a download: {error}"
+        );
+    }
+
+    #[test]
+    fn invalid_fallback_cache_is_rejected_after_refresh_extraction_fails() {
+        use crate::registry::fetch::CACHE_TTL;
+        use std::time::{Duration, SystemTime};
+
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+
+        let mut index = single_alpha_index(&url);
+        index.trust = RegistryTrust::FreshOfficial;
+        index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap()
+            .bundle_digest = Some(format!("sha256:{}", "a".repeat(64)));
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        std::fs::create_dir_all(cache_file.parent().unwrap()).unwrap();
+        write_alpha_archive(&cache_file, "IDENTITY-MATCHES-BUT-FALLBACK-WAS-MODIFIED");
+        let stale = SystemTime::now()
+            .checked_sub(CACHE_TTL + Duration::from_secs(60))
+            .unwrap();
+        std::fs::File::options()
+            .write(true)
+            .open(&cache_file)
+            .unwrap()
+            .set_modified(stale)
+            .unwrap();
+
+        std::fs::write(&archive, b"not a gzip stream").unwrap();
+        let error = stage_agent_from_registry("alpha", None, &paths, &index).unwrap_err();
+        assert!(
+            error.to_string().contains("bundle digest mismatch"),
+            "a cache selected after a failed refresh must still receive full release validation: {error}"
         );
     }
 
