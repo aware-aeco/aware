@@ -1,9 +1,10 @@
 {
   "name": "aware-connection-reader",
-  "version": "0.2.0",
+  "version": "0.5.3",
+  "modelReferenceReaderVersion": "0.7.3",
   "private": true,
   "type": "module",
-  "description": "AWARE cli-transport bridge: extract steel connections from an IFC as tessellated mesh scene primitives (drives web-ifc WASM).",
+  "description": "AWARE CLI transport for authenticated IFC and Revit reference-model reads.",
   "bin": {
     "aware-connection-reader": "./model-dispatcher.mjs"
   },

@@ -16,9 +16,14 @@ async function main() {
     process.stdin.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
     process.stdin.on('error', reject);
   }));
+  const describedProvenance = {
+    ...provenance,
+    ...(request.readerSchemaVersion ? { readerSchemaVersion: request.readerSchemaVersion } : {}),
+  };
   if (operation === 'describe') {
-    process.stdout.write(JSON.stringify(provenance));
+    process.stdout.write(JSON.stringify(describedProvenance));
   } else if (operation === 'convert') {
+    const readerSchemaVersion = request.canonicalRequest?.readerSchemaVersion;
     const geometryPath = path.join(request.outputDirectory, 'geometry.glb');
     const metadataPath = path.join(request.outputDirectory, 'metadata.json');
     const geometryOptions = request.canonicalRequest?.conversionSettings?.fixtureUnclaimedOffset
@@ -31,9 +36,23 @@ async function main() {
         }
       : {};
     await fs.writeFile(geometryPath, makeGlbFixture(geometryOptions));
-    await fs.writeFile(metadataPath, JSON.stringify(makeMetadataFixture()));
+    const metadata = makeMetadataFixture();
+    if (readerSchemaVersion === 'model-reference-reader/v2') {
+      metadata.schemaVersion = '2';
+      metadata.parameterGroups[0].id = '1';
+      metadata.parameters = [{
+        id: '1', name: 'Display Mark', unit: null,
+        valueEncoding: 'provider-display', valueType: 'string', value: 'A-1',
+      }];
+      delete metadata.elements[0].ifcGuid;
+    }
+    await fs.writeFile(metadataPath, JSON.stringify(metadata));
     process.stdout.write(JSON.stringify({
-      ...provenance, documentKind: 'revit-project', sourceSha256: request.sourceSha256,
+      ...provenance,
+      ...(readerSchemaVersion && readerSchemaVersion !== 'model-reference-reader/v1'
+        ? { readerSchemaVersion }
+        : {}),
+      documentKind: 'revit-project', sourceSha256: request.sourceSha256,
       geometryPath, metadataPath,
     }));
   } else {

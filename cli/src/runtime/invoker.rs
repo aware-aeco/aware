@@ -345,6 +345,8 @@ struct StructuredBridgeError {
     message: String,
     diagnostic_id: String,
     #[serde(default)]
+    provider_code: Option<String>,
+    #[serde(default)]
     details: Option<std::collections::BTreeMap<String, String>>,
 }
 
@@ -352,7 +354,7 @@ struct StructuredBridgeError {
 /// Only the closed model-reader envelope is accepted; arbitrary bridge stderr keeps the historical
 /// reporting path below.
 fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
-    let parsed: StructuredBridgeError = serde_json::from_str(stderr.trim()).ok()?;
+    let mut parsed: StructuredBridgeError = serde_json::from_str(stderr.trim()).ok()?;
     if !parsed.code.starts_with("reference-")
         || parsed.code.len() > 96
         || parsed.phase.is_empty()
@@ -369,12 +371,26 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
     {
         return None;
     }
+    // providerCode is optional vendor detail, not part of the generic AWARE error identity. Keep
+    // the typed reference-* envelope when another provider uses an unknown or malformed namespace;
+    // discard only that optional field so it cannot smuggle an unbounded diagnostic through.
+    parsed.provider_code = parsed.provider_code.filter(|code| {
+        let Some(suffix) = code.strip_prefix("xeorvt-") else {
+            return false;
+        };
+        !suffix.is_empty()
+            && suffix.len() <= 90
+            && suffix
+                .chars()
+                .all(|ch| ch.is_ascii_lowercase() || ch.is_ascii_digit() || ch == '-')
+    });
     Some(AwareError::AgentStructured {
-        code: parsed.code,
-        phase: parsed.phase,
+        code: parsed.code.into_boxed_str(),
+        phase: parsed.phase.into_boxed_str(),
         retryable: parsed.retryable,
-        message: parsed.message,
-        diagnostic_id: parsed.diagnostic_id,
+        message: parsed.message.into_boxed_str(),
+        diagnostic_id: parsed.diagnostic_id.into_boxed_str(),
+        provider_code: parsed.provider_code.map(String::into_boxed_str),
         details: parsed
             .details
             .map(crate::error::AgentErrorDetails)
@@ -5482,7 +5498,7 @@ mod builtin_invoker_tests {
 
     #[test]
     fn model_reader_structured_errors_keep_their_typed_fields() {
-        let stderr = r#"{"code":"reference-provider-pin-mismatch","phase":"preflight","retryable":false,"message":"The local provider does not match the expected fingerprint.","diagnosticId":"123e4567-e89b-12d3-a456-426614174000","details":{"expectedPin":"sha256:abc"}}"#;
+        let stderr = r#"{"code":"reference-provider-pin-mismatch","phase":"preflight","retryable":false,"message":"The local provider does not match the expected fingerprint.","diagnosticId":"123e4567-e89b-12d3-a456-426614174000","providerCode":"xeorvt-auth-unavailable","details":{"expectedPin":"sha256:abc"}}"#;
         let error = structured_bridge_error(stderr).expect("closed model-reader envelope");
         match error {
             AwareError::AgentStructured {
@@ -5491,13 +5507,18 @@ mod builtin_invoker_tests {
                 retryable,
                 message,
                 diagnostic_id,
+                provider_code,
                 details,
             } => {
-                assert_eq!(code, "reference-provider-pin-mismatch");
-                assert_eq!(phase, "preflight");
+                assert_eq!(code.as_ref(), "reference-provider-pin-mismatch");
+                assert_eq!(phase.as_ref(), "preflight");
                 assert!(!retryable);
                 assert!(message.contains("expected fingerprint"));
-                assert_eq!(diagnostic_id, "123e4567-e89b-12d3-a456-426614174000");
+                assert_eq!(
+                    diagnostic_id.as_ref(),
+                    "123e4567-e89b-12d3-a456-426614174000"
+                );
+                assert_eq!(provider_code.as_deref(), Some("xeorvt-auth-unavailable"));
                 assert_eq!(
                     details.unwrap().0.get("expectedPin").map(String::as_str),
                     Some("sha256:abc")
@@ -5516,6 +5537,23 @@ mod builtin_invoker_tests {
             r#"{{"code":"reference-x","phase":"x","retryable":false,"message":"x","diagnosticId":"x","details":{{"key":"{oversized}"}}}}"#
         );
         assert!(structured_bridge_error(&payload).is_none());
+        for invalid_provider_code in [
+            "xeorvt-".to_string(),
+            format!("xeorvt-{}", "x".repeat(91)),
+            "xeorvt-UPPERCASE".to_string(),
+            "another-provider-auth".to_string(),
+        ] {
+            let payload = format!(
+                r#"{{"code":"reference-x","phase":"x","retryable":false,"message":"x","diagnosticId":"x","providerCode":"{invalid_provider_code}"}}"#
+            );
+            match structured_bridge_error(&payload).expect("valid generic envelope") {
+                AwareError::AgentStructured { provider_code, .. } => assert!(
+                    provider_code.is_none(),
+                    "retained provider code outside the producer contract: {invalid_provider_code}"
+                ),
+                other => panic!("typed envelope was flattened: {other:?}"),
+            }
+        }
     }
 
     #[test]

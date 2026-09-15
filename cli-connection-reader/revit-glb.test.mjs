@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { MODEL_LIMITS, canonicalArtifactLimits, lowerableLimits } from './model-contract.mjs';
 import { makeGlbFixture } from './model-fixtures.mjs';
-import { normalizeRevitGlb, parseGlb } from './revit-glb.mjs';
+import { checkedCanonicalWorkBytes, normalizeRevitGlb, parseGlb } from './revit-glb.mjs';
 
 function replaceGlbJson(input, jsonText) {
   const parsed = parseGlb(input);
@@ -137,6 +137,8 @@ test('unsafe resources, unsupported extensions, scene cycles, and malformed rang
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ material: [] })), /material must be an object/);
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ material: { pbrMetallicRoughness: [] } })), /PBR material must be an object/);
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ material: { pbrMetallicRoughness: null } })), /PBR material must be an object/);
+  assert.throws(() => normalizeRevitGlb(makeGlbFixture({ material: { pbrMetallicRoughness: { baseColorTexture: { index: 0 } } } })), /PBR property/);
+  assert.throws(() => normalizeRevitGlb(makeGlbFixture({ material: { normalTexture: { index: 0 } } })), /material property/);
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ material: { emissiveFactor: null } })), /emissiveFactor/);
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ extensionsUsed: ['KHR_draco_mesh_compression'] })), /extensions/);
   assert.throws(() => normalizeRevitGlb(makeGlbFixture({ nodes: [{ name: 'cycle', mesh: 0, children: [0] }] })), /cycle/);
@@ -251,6 +253,29 @@ test('observed xeoRVT JSON chunk fits the default while a caller-lowered cap rem
   );
 });
 
+test('the 64 MiB GLB JSON boundary is accepted exactly and refused above the cap', () => {
+  const valid = makeGlbFixture();
+  const parsed = parseGlb(valid);
+  const target = 64 * 1024 * 1024;
+  const document = { ...parsed.json, asset: { ...parsed.json.asset, generator: '' } };
+  const fixed = Buffer.byteLength(JSON.stringify(document));
+  document.asset.generator = 'x'.repeat(target - fixed);
+  const atLimit = replaceGlbJson(valid, JSON.stringify(document));
+  assert.equal(atLimit.readUInt32LE(12), target);
+  assert.doesNotThrow(() => parseGlb(atLimit));
+  document.asset.generator += 'xxxx';
+  const aboveLimit = replaceGlbJson(valid, JSON.stringify(document));
+  assert.equal(aboveLimit.readUInt32LE(12), target + 4);
+  assert.throws(() => parseGlb(aboveLimit), /GLB JSON exceeds its byte limit/);
+});
+
+test('canonical work accounting accepts its declared default exactly and refuses one more byte before allocation', () => {
+  const limit = MODEL_LIMITS.maxCanonicalWorkBytes.default;
+  assert.equal(checkedCanonicalWorkBytes(limit - 4, 1, 4, limit), limit);
+  assert.throws(() => checkedCanonicalWorkBytes(limit, 1, 1, limit),
+    (error) => error.code === 'reference-output-too-large' && error.message.includes(`${limit}-byte limit`));
+});
+
 test('large valid vertex sets compute bounds without variadic stack overflow', () => {
   const positions = Array.from({ length: 130_000 }, (_, index) => [index, index % 3, 0]);
   const result = normalizeRevitGlb(makeGlbFixture({ positions, indices: [0, 1, 3] }), {
@@ -292,9 +317,24 @@ test('multiple primitives remain grouped under one canonical node and can be nor
   assert.equal(roundTripDocument.meshes[0].primitives.length, 2);
 });
 
-test('canonical output must remain inside its own JSON profile', () => {
+test('canonical output must remain inside a caller-lowered JSON profile', () => {
   assert.throws(
-    () => normalizeRevitGlb(makeGlbFixture({ primitiveCopies: 32_000 })),
+    () => normalizeRevitGlb(makeGlbFixture({ primitiveCopies: 32_000 }), { limits: { maxCanonicalGlbJsonBytes: 8 * 1024 * 1024 } }),
+    (error) => error.code === 'reference-output-too-large' && /canonical GLB JSON/.test(error.message),
+  );
+});
+
+test('canonical work accounting refuses overflow against the declared limit before allocation', () => {
+  assert.throws(
+    () => checkedCanonicalWorkBytes(7_933, 1, 4, 7_936),
+    (error) => error.code === 'reference-output-too-large'
+      && error.message === 'canonical geometry working set exceeds its 7936-byte limit',
+  );
+});
+
+test('the default canonical JSON profile bounds a 64k-primitive expansion', () => {
+  assert.throws(
+    () => normalizeRevitGlb(makeGlbFixture({ primitiveCopies: 64_000 })),
     (error) => error.code === 'reference-output-too-large' && /canonical GLB JSON/.test(error.message),
   );
 });
@@ -371,14 +411,14 @@ test('the canonical output JSON bound is its own budget, not the input one', () 
   // Folding both into one knob meant raising the input bound to admit a real provider GLB silently
   // raised the output bound too. These must move independently.
   assert.notEqual(MODEL_LIMITS.maxCanonicalGlbJsonBytes.default, MODEL_LIMITS.maxGlbJsonBytes.default);
-  const wide = makeGlbFixture({ primitiveCopies: 32_000 });
+  const wide = makeGlbFixture({ primitiveCopies: 64_000 });
   // Refused on the OUTPUT budget while the INPUT budget is at its (larger) default.
   assert.throws(
     () => normalizeRevitGlb(wide),
     (error) => error.code === 'reference-output-too-large' && /canonical GLB JSON/.test(error.message),
   );
   // ... and raising only the output budget is what lets it through, proving which bound refused it.
-  assert.equal(normalizeRevitGlb(wide, { limits: { maxCanonicalGlbJsonBytes: 64 * 1024 * 1024 } }).parts.length, 32_000);
+  assert.equal(normalizeRevitGlb(wide, { limits: { maxCanonicalGlbJsonBytes: 64 * 1024 * 1024 } }).parts.length, 64_000);
 });
 
 test('a canonical artifact re-reads under the canonical budgets, not the input ones', () => {

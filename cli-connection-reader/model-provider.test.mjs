@@ -6,7 +6,9 @@ import path from 'node:path';
 import { Readable } from 'node:stream';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { ModelReaderError, sha256 } from './model-contract.mjs';
+import {
+  ModelReaderError, READER_SCHEMA_LIMIT_DEFAULTS, READER_SCHEMA_VERSION_V2, sha256,
+} from './model-contract.mjs';
 import {
   describeAndConvert, describeProvider, hashRegularFile, minimalProviderEnvironment, stageImmutableSource,
   validateProviderExecutable,
@@ -149,25 +151,44 @@ test('managed-cloud protocol requires an exact canonical HTTPS destination pin',
   const description = {
     protocolVersion: '2', provider: 'fixture-provider', engine: 'xeoRvt', engineVersion: '0.2.0',
     adapterBuildId: 'fixture-v2', formats: ['rvt'], execution: 'managed-cloud',
-    destination: 'https://api.stage.floless.io',
+    destination: 'https://api.stage.floless.io', readerSchemaVersion: READER_SCHEMA_VERSION_V2,
   };
-  const hostRun = async () => ({ exitCode: 0, stdout: Buffer.from(JSON.stringify(description)), stderr: Buffer.alloc(0) });
+  const requests = [];
+  const hostRun = async (request) => {
+    if (request?.stdin) requests.push(JSON.parse(request.stdin.toString('utf8')));
+    return { exitCode: 0, stdout: Buffer.from(JSON.stringify(description)), stderr: Buffer.alloc(0) };
+  };
   const authorityStorePath = path.join(root, 'authority');
   const accepted = await describeProvider({
     executable, privateRoot: path.join(root, 'accepted'), hostRun,
     expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
   });
   assert.equal(accepted.describe.execution, 'managed-cloud');
   assert.equal(accepted.fingerprint.destination, description.destination);
+  assert.equal(accepted.fingerprint.readerSchemaVersion, READER_SCHEMA_VERSION_V2);
+  assert.equal(requests[0].readerSchemaVersion, READER_SCHEMA_VERSION_V2);
+  assert.equal(
+    requests[0].limits.maxComponentJsonBytes,
+    READER_SCHEMA_LIMIT_DEFAULTS[READER_SCHEMA_VERSION_V2].maxComponentJsonBytes,
+  );
   await assert.rejects(() => describeProvider({
     executable, privateRoot: path.join(root, 'wrong'), hostRun,
     expectedProtocolVersion: '2', expectedDestination: 'https://api.floless.io', authorityStorePath,
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
   }), (error) => error.code === 'reference-provider-destination-mismatch');
   await assert.rejects(() => describeProvider({
     executable, privateRoot: path.join(root, 'noncanonical'),
     hostRun: async () => ({ ...await hostRun(), stdout: Buffer.from(JSON.stringify({ ...description, destination: `${description.destination}/` })) }),
     expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
   }), (error) => error.code === 'reference-provider-destination-mismatch');
+  await assert.rejects(() => describeProvider({
+    executable, privateRoot: path.join(root, 'legacy'),
+    hostRun: async () => ({ ...await hostRun({ stdin: Buffer.from('{}') }), stdout: Buffer.from(JSON.stringify({ ...description, readerSchemaVersion: undefined })) }),
+    expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
+  }), (error) => error.code === 'reference-provider-protocol');
 });
 
 test('provider provenance strings use the published schema character limits', async (t) => {
@@ -226,7 +247,7 @@ test('managed-cloud conversion passes only an absolute caller-bound authority st
   const description = {
     protocolVersion: '2', provider: 'fixture-provider', engine: 'xeoRvt', engineVersion: '0.2.0',
     adapterBuildId: 'fixture-v2', formats: ['rvt'], execution: 'managed-cloud',
-    destination: 'https://api.stage.floless.io',
+    destination: 'https://api.stage.floless.io', readerSchemaVersion: READER_SCHEMA_VERSION_V2,
   };
   const calls = [];
   const hostRun = async (request) => {
@@ -237,6 +258,7 @@ test('managed-cloud conversion passes only an absolute caller-bound authority st
     await fs.writeFile(path.join(body.outputDirectory, 'metadata.json'), Buffer.from('{}'));
     return { exitCode: 0, stdout: Buffer.from(JSON.stringify({
       ...description, documentKind: 'revit-project', sourceSha256: body.sourceSha256,
+      conversionAttemptId: body.conversionAttemptId,
       geometryPath: path.join(body.outputDirectory, 'geometry.glb'), metadataPath: path.join(body.outputDirectory, 'metadata.json'),
     })), stderr: Buffer.alloc(0) };
   };
@@ -244,17 +266,58 @@ test('managed-cloud conversion passes only an absolute caller-bound authority st
     executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
     privateRoot: path.join(root, 'accepted'), hostRun,
     expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
+    conversionAttemptId: '123e4567-e89b-42d3-a456-426614174000',
   });
   const convert = JSON.parse(calls[1].stdin.toString('utf8'));
   assert.equal(convert.authorityStorePath, path.resolve(authorityStorePath));
   assert.equal(convert.protocolVersion, '2');
+  assert.equal(convert.conversionAttemptId, '123e4567-e89b-42d3-a456-426614174000');
   assert.equal(convert.canonicalRequest.protocolVersion, '2');
+  assert.equal(
+    convert.canonicalRequest.limits.maxComponentJsonBytes,
+    READER_SCHEMA_LIMIT_DEFAULTS[READER_SCHEMA_VERSION_V2].maxComponentJsonBytes,
+  );
+  assert.equal(JSON.parse(calls[0].stdin.toString('utf8')).readerSchemaVersion, READER_SCHEMA_VERSION_V2);
+  assert.equal(result.fingerprint.readerSchemaVersion, READER_SCHEMA_VERSION_V2);
   assert.equal(result.canonicalRequest.protocolVersion, '2');
+  assert.equal(result.receipt.conversionAttemptId, '123e4567-e89b-42d3-a456-426614174000');
+
+  const mismatchedHostRun = async (request) => {
+    const response = await hostRun(request);
+    if (request.operation !== 'convert') return response;
+    const receipt = JSON.parse(response.stdout.toString('utf8'));
+    receipt.conversionAttemptId = '123e4567-e89b-42d3-a456-426614174001';
+    return { ...response, stdout: Buffer.from(JSON.stringify(receipt)) };
+  };
+  await assert.rejects(() => describeAndConvert({
+    executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
+    privateRoot: path.join(root, 'mismatched-attempt'), hostRun: mismatchedHostRun,
+    expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath,
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
+    conversionAttemptId: '123e4567-e89b-42d3-a456-426614174000',
+  }), (error) => error.code === 'reference-provider-changed');
   await assert.rejects(() => describeAndConvert({
     executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
     privateRoot: path.join(root, 'relative'), hostRun,
     expectedProtocolVersion: '2', expectedDestination: description.destination, authorityStorePath: 'relative',
+    readerSchemaVersion: READER_SCHEMA_VERSION_V2,
+    conversionAttemptId: '123e4567-e89b-42d3-a456-426614174000',
   }), (error) => error.code === 'reference-provider-protocol');
+});
+
+test('managed-cloud rejects a malformed attempt identity before touching provider or source paths', async () => {
+  await assert.rejects(() => describeAndConvert({
+    executable: 'Z:\\definitely-missing\\provider.exe',
+    sourcePath: 'Z:\\definitely-missing\\source.rvt',
+    expectedSourceSha256: 'a'.repeat(64),
+    privateRoot: 'Z:\\definitely-missing\\private',
+    hostRun: async () => { throw new Error('provider must not run'); },
+    expectedProtocolVersion: '2',
+    expectedDestination: 'https://api.floless.io',
+    authorityStorePath: 'Z:\\definitely-missing\\authority',
+    conversionAttemptId: 'not-a-uuid',
+  }), (error) => error.code === 'reference-provider-request-invalid');
 });
 
 test('streaming hash and staging stop at the byte limit even when the source grows after stat', async (t) => {

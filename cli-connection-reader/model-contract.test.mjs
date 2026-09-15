@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import {
   MODEL_LIMITS,
+  PROPERTY_EXPANSION_LIMITS,
+  READER_SCHEMA_LIMIT_DEFAULTS,
   ModelReaderError,
   buildCanonicalRequest,
   buildProviderFingerprint,
@@ -56,8 +59,83 @@ test('every canonical request leaf affects the cache/request preimage', () => {
   ];
   for (const mutation of mutations) assert.notEqual(requestSha256(mutation), baseline);
   assert.equal(request.limits.maxInputGlbBytes, MODEL_LIMITS.maxInputGlbBytes.default);
+  assert.equal(request.limits.maxGlbJsonBytes, 64 * 1024 * 1024);
+  assert.equal(MODEL_LIMITS.maxGlbJsonBytes.hard, 128 * 1024 * 1024);
+  assert.equal(MODEL_LIMITS.maxInputGlbBytes.default, 128 * 1024 * 1024);
+  assert.equal(MODEL_LIMITS.maxInputGlbBytes.hard, 512 * 1024 * 1024);
+  assert.equal(MODEL_LIMITS.maxSourceBytes.default, 256 * 1024 * 1024);
   assert.equal(buildCanonicalRequest({ protocolVersion: '2' }).protocolVersion, '2');
   assert.throws(() => buildCanonicalRequest({ protocolVersion: '3' }), /protocolVersion/);
+});
+
+test('every size and count limit admits at least twice the complete authenticated Snowdon profile', () => {
+  // Captured from the successful authenticated Snowdon Towers conversion and its signed canonical
+  // manifest/cache receipt (source sha256 690a69b7…00e5). Provider temporaries are deliberately
+  // deleted after normalization, so metadataBytes pins the conservative upper bound proven by that
+  // run: it passed under the then-signed 16 MiB limit. providerOutputBytes is consequently bounded by
+  // the exact provider GLB plus that whole metadata envelope. All retained canonical values are exact.
+  const snowdon = Object.freeze({
+    sourceBytes: 94_531_584,
+    inputGlbBytes: 41_926_848,
+    metadataBytes: 16 * 1024 * 1024,
+    providerOutputBytes: 41_926_848 + (16 * 1024 * 1024),
+    inputGlbJsonBytes: 23_576_276,
+    canonicalGlbBytes: 91_236_816,
+    canonicalGlbJsonBytes: 15_246_024,
+    scenes: 1,
+    nodes: 5_262,
+    meshes: 5_262,
+    primitives: 23_181,
+    accessors: 69_544,
+    bufferViews: 69_544,
+    vertices: 1_528_598,
+    indices: 8_523_729,
+    entities: 6_544,
+    parameters: 17_225,
+    relationships: 0,
+    largestComponentJsonBytes: 48_248_289,
+    expandedPropertyRows: 180_004,
+    canonicalPropertyBytes: 48_248_289,
+    canonicalWorkBytes: 3_842_308_352,
+  });
+  const modelLimitProfile = {
+    maxSourceBytes: snowdon.sourceBytes,
+    maxInputGlbBytes: snowdon.inputGlbBytes,
+    maxMetadataBytes: snowdon.metadataBytes,
+    maxProviderOutputBytes: snowdon.providerOutputBytes,
+    maxGlbJsonBytes: snowdon.inputGlbJsonBytes,
+    maxCanonicalGlbBytes: snowdon.canonicalGlbBytes,
+    maxCanonicalGlbJsonBytes: snowdon.canonicalGlbJsonBytes,
+    maxScenes: snowdon.scenes,
+    maxNodes: snowdon.nodes,
+    maxMeshes: snowdon.meshes,
+    maxPrimitives: snowdon.primitives,
+    maxAccessors: snowdon.accessors,
+    maxBufferViews: snowdon.bufferViews,
+    maxVertices: snowdon.vertices,
+    maxIndices: snowdon.indices,
+    maxEntities: snowdon.entities,
+    maxParameters: snowdon.parameters,
+    maxRelationships: snowdon.relationships,
+    maxCanonicalWorkBytes: snowdon.canonicalWorkBytes,
+  };
+  for (const [limit, measured] of Object.entries(modelLimitProfile)) {
+    assert.ok(measured * 2 <= MODEL_LIMITS[limit].default,
+      `${limit} must admit at least twice the pinned Snowdon requirement (${measured})`);
+  }
+
+  const v2ComponentDefault = READER_SCHEMA_LIMIT_DEFAULTS['model-reference-reader/v2'].maxComponentJsonBytes;
+  assert.ok(snowdon.largestComponentJsonBytes * 2 <= v2ComponentDefault,
+    'the v2 component/shard limit must admit twice Snowdon properties.json');
+  assert.ok(snowdon.expandedPropertyRows * 2 <= PROPERTY_EXPANSION_LIMITS.maxExpandedPropertyRows.default,
+    'the property row limit must admit twice Snowdon expanded properties');
+  assert.ok(snowdon.canonicalPropertyBytes * 2 <= v2ComponentDefault,
+    'the v2 canonical-property limit must admit twice Snowdon property bytes');
+
+  const canonicalAggregateBytes = 91_236_816 + 2_565_876 + 48_248_289 + 40 + 3_695;
+  const v2PackageAggregateLimit = MODEL_LIMITS.maxCanonicalGlbBytes.default + (v2ComponentDefault * 5);
+  assert.ok(canonicalAggregateBytes * 2 <= v2PackageAggregateLimit,
+    'the signed package aggregate limit must admit twice all Snowdon canonical artifacts');
 });
 
 test('every resource bound the reader enforces is declared here, lowerable and fail-closed', () => {
@@ -101,6 +179,142 @@ test('provider fingerprint is the exact seven-field JCS tuple', () => {
     const mutation = { ...fingerprint, [key]: key === 'adapterExecutableSha256' ? 'b'.repeat(64) : `${value}-changed` };
     assert.notEqual(providerFingerprintSha256(mutation), baseline, key);
   }
+});
+
+test('reader v2 binds closed effective expansion limits while v1 canonical bytes remain unchanged', () => {
+  const v1 = buildCanonicalRequest();
+  assert.equal(v1.schemaVersion, '1');
+  assert.equal('propertyExpansionLimits' in v1, false);
+  const v2 = buildCanonicalRequest({
+    readerSchemaVersion: 'model-reference-reader/v2',
+    propertyExpansionLimits: { maxExpandedPropertyRows: 12, maxCanonicalPropertyBytes: 4096 },
+  });
+  assert.equal(v2.schemaVersion, '2');
+  assert.equal(READER_SCHEMA_LIMIT_DEFAULTS['model-reference-reader/v2'].maxComponentJsonBytes, 128 * 1024 * 1024);
+  assert.equal(v2.limits.maxComponentJsonBytes, 128 * 1024 * 1024,
+    'the reader-v2 shard default is published and reproduced by canonical request construction');
+  assert.equal(lowerableLimits({}, 'model-reference-reader/v2').maxComponentJsonBytes, 128 * 1024 * 1024);
+  assert.deepEqual(v2.propertyExpansionLimits, { maxExpandedPropertyRows: 12, maxCanonicalPropertyBytes: 4096 });
+  assert.deepEqual(v2.metadata.propertyValues, ['source-storage', 'provider-display']);
+  assert.equal(v2.metadata.providerDisplayIdentity, 'excluded');
+  assert.equal(PROPERTY_EXPANSION_LIMITS.maxExpandedPropertyRows.hard, 5_000_000);
+  assert.equal(PROPERTY_EXPANSION_LIMITS.maxCanonicalPropertyBytes.hard, 128 * 1024 * 1024);
+  assert.equal(PROPERTY_EXPANSION_LIMITS.maxExpandedPropertyRows.default, MODEL_LIMITS.maxParameters.default,
+    'opting into v2 must not silently narrow the v1 property-row budget');
+  assert.equal(PROPERTY_EXPANSION_LIMITS.maxCanonicalPropertyBytes.default, MODEL_LIMITS.maxComponentJsonBytes.default,
+    'the ordinary property-byte budget inherits the ordinary component budget');
+  const lowered = buildCanonicalRequest({
+    readerSchemaVersion: 'model-reference-reader/v2',
+    limits: { maxParameters: 100, maxComponentJsonBytes: 64 * 1024 },
+  });
+  assert.deepEqual(lowered.propertyExpansionLimits,
+    { maxExpandedPropertyRows: 100, maxCanonicalPropertyBytes: 64 * 1024 },
+    'lowered model limits must become the default pre-allocation expansion limits');
+  const explicitRows = buildCanonicalRequest({
+    readerSchemaVersion: 'model-reference-reader/v2',
+    limits: { maxParameters: 100, maxComponentJsonBytes: 64 * 1024 },
+    propertyExpansionLimits: { maxExpandedPropertyRows: 1000, maxCanonicalPropertyBytes: 128 * 1024 },
+  });
+  assert.deepEqual(explicitRows.propertyExpansionLimits,
+    { maxExpandedPropertyRows: 1000, maxCanonicalPropertyBytes: 64 * 1024 },
+    'an explicit row expansion may exceed the table count, but bytes remain inside the enclosing shard');
+  assert.throws(() => buildCanonicalRequest({
+    readerSchemaVersion: 'model-reference-reader/v2',
+    propertyExpansionLimits: { maxExpandedPropertyRows: 5_000_001 },
+  }), /hard ceiling/);
+  assert.throws(() => buildCanonicalRequest({ readerSchemaVersion: 'model-reference-reader/v3' }), /unsupported/);
+});
+
+test('v1 refuses every supplied v2 property-limit override instead of silently discarding it', () => {
+  for (const propertyExpansionLimits of [
+    { maxExpandedPropertyRows: 4096 },
+    { maxExpandedPropertyRows: 999_999_999 },
+    { maxExpandedPropertyRows: -1 },
+    { maxExpandedPropertyRows: 1.5 },
+    { maxExpandedPropertyRow: 4096 },
+    'nonsense',
+  ]) {
+    assert.throws(
+      () => buildCanonicalRequest({ propertyExpansionLimits }),
+      /propertyExpansionLimits|maxExpandedPropertyRows/,
+    );
+  }
+});
+
+test('v2 schema binds each provider-display valueType to the matching JSON value type', () => {
+  const schema = JSON.parse(readFileSync(new URL('./model-metadata-v2.schema.json', import.meta.url), 'utf8'));
+  const providerDisplayBranches = schema.properties.parameters.items.oneOf
+    .filter((branch) => branch.properties?.valueEncoding?.const === 'provider-display')
+    .map((branch) => [branch.properties.valueType.const, branch.properties.value.type])
+    .sort(([left], [right]) => left.localeCompare(right));
+
+  assert.deepEqual(providerDisplayBranches, [
+    ['number', 'number'],
+    ['string', 'string'],
+  ]);
+  const numericValue = schema.properties.parameters.items.oneOf
+    .find((branch) => branch.properties?.valueType?.const === 'number').properties.value;
+  assert.deepEqual(numericValue.anyOf, [
+    { type: 'integer', minimum: Number.MIN_SAFE_INTEGER, maximum: Number.MAX_SAFE_INTEGER },
+    { not: { type: 'integer' } },
+  ], 'the public schema must reject the unsafe integral numbers refused by canonical JSON');
+
+  const sourceStorage = schema.properties.parameters.items.oneOf
+    .filter((branch) => branch.properties?.valueEncoding?.const === 'source-storage');
+  assert.deepEqual(sourceStorage.map((branch) => branch.properties.storageType.const).sort(),
+    ['boolean', 'double', 'element-id', 'integer', 'none', 'string']);
+  for (const branch of sourceStorage) {
+    const storageType = branch.properties.storageType.const;
+    assert.equal(branch.properties.readable.const, storageType !== 'none', `${storageType} readability`);
+  }
+  assert.equal(sourceStorage.find((branch) => branch.properties.storageType.const === 'none').properties.value.type, 'null');
+  assert.equal(sourceStorage.find((branch) => branch.properties.storageType.const === 'boolean').properties.value.type, 'boolean');
+  assert.equal(sourceStorage.find((branch) => branch.properties.storageType.const === 'string').properties.value.type, 'string');
+  const signedInt64 = schema.$defs.signedInt64Decimal;
+  assert.equal(signedInt64.type, 'string');
+  const signedInt64Pattern = new RegExp(signedInt64.pattern);
+  for (const accepted of ['0', '1', '-1', '9223372036854775807', '-9223372036854775808']) {
+    assert.equal(signedInt64Pattern.test(accepted), true, `accept signed int64 ${accepted}`);
+  }
+  for (const refused of ['-0', '+1', '01', '9223372036854775808', '-9223372036854775809']) {
+    assert.equal(signedInt64Pattern.test(refused), false, `refuse non-int64 ${refused}`);
+  }
+  for (const storageType of ['integer', 'element-id']) {
+    const value = sourceStorage.find((branch) => branch.properties.storageType.const === storageType).properties.value;
+    assert.deepEqual(value, { $ref: '#/$defs/signedInt64Decimal' });
+  }
+  const doubleValue = sourceStorage.find((branch) => branch.properties.storageType.const === 'double').properties.value;
+  assert.deepEqual(doubleValue.anyOf, numericValue.anyOf, 'double values obey the same signed JSON number constraint');
+});
+
+test('v2 schema publishes the closed metadata records the reader accepts', () => {
+  const schema = JSON.parse(readFileSync(new URL('./model-metadata-v2.schema.json', import.meta.url), 'utf8'));
+  const positiveInt64 = new RegExp(schema.$defs.positiveInt64Decimal.pattern);
+  for (const accepted of ['1', '9223372036854775807']) assert.equal(positiveInt64.test(accepted), true);
+  for (const refused of ['0', '-1', '01', '9223372036854775808']) assert.equal(positiveInt64.test(refused), false);
+
+  for (const table of ['types', 'levels', 'parameterGroups', 'elements']) {
+    assert.equal(schema.properties[table].items.type, 'object', `${table} has an item object`);
+    assert.equal(schema.properties[table].items.additionalProperties, false, `${table} item is closed`);
+  }
+  assert.match(schema.properties.levels.items.properties.elevation.description, /millimetres/i);
+  assert.match(schema.properties.levels.items.properties.elevation.description, /not republished/i);
+  assert.deepEqual(schema.properties.elements.items.required,
+    ['id', 'revitClass', 'category', 'family', 'type', 'level', 'parameterGroups', 'appearances']);
+  assert.equal(schema.properties.elements.items.properties.appearances.uniqueItems, true);
+  assert.equal(schema.properties.elements.items.properties.appearances.items.minLength, 1);
+  const ifcGuidDescription = schema.properties.elements.items.properties.ifcGuid.description;
+  assert.match(ifcGuidDescription, /must match/i);
+  assert.match(ifcGuidDescription, /source-storage/i);
+  assert.match(ifcGuidDescription, /provider-display values cannot establish IFC identity/i);
+
+  const relationBranches = schema.properties.relations.items.oneOf;
+  assert.equal(relationBranches.length, 2);
+  assert.deepEqual(relationBranches.map((branch) => branch.properties.kind.const ?? branch.properties.kind.enum).flat().sort(),
+    ['contains', 'depends-on', 'hosts', 'provider-explicit']);
+  assert.deepEqual(relationBranches.find((branch) => branch.properties.kind.const === 'provider-explicit').required,
+    ['id', 'kind', 'from', 'to', 'providerRelationKind']);
+  assert.ok(relationBranches.every((branch) => branch.additionalProperties === false));
 });
 
 test('managed-cloud provider fingerprint binds execution and exact destination', () => {

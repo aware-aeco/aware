@@ -17,6 +17,8 @@ pub struct StructuredAgentError {
     pub retryable: bool,
     pub message: String,
     pub diagnostic_id: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub provider_code: Option<String>,
     /// Optional bounded, non-secret correlation data for a failed operation.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub details: Option<std::collections::BTreeMap<String, String>>,
@@ -37,11 +39,12 @@ pub enum AwareError {
         "agent error {code} ({phase}, retryable={retryable}, diagnostic-id={diagnostic_id}): {message}"
     )]
     AgentStructured {
-        code: String,
-        phase: String,
+        code: Box<str>,
+        phase: Box<str>,
         retryable: bool,
-        message: String,
-        diagnostic_id: String,
+        message: Box<str>,
+        diagnostic_id: Box<str>,
+        provider_code: Option<Box<str>>,
         details: Option<Box<AgentErrorDetails>>,
     },
 
@@ -80,13 +83,15 @@ impl AwareError {
                 retryable,
                 message,
                 diagnostic_id,
+                provider_code,
                 details,
             } => Some(StructuredAgentError {
-                code: code.clone(),
-                phase: phase.clone(),
+                code: code.to_string(),
+                phase: phase.to_string(),
                 retryable: *retryable,
-                message: message.clone(),
-                diagnostic_id: diagnostic_id.clone(),
+                message: message.to_string(),
+                diagnostic_id: diagnostic_id.to_string(),
+                provider_code: provider_code.as_deref().map(str::to_owned),
                 details: details.as_deref().map(|value| value.0.clone()),
             }),
             _ => None,
@@ -144,6 +149,7 @@ mod tests {
             retryable: false,
             message: "Send outcome is unknown; reconcile before retrying.".into(),
             diagnostic_id: "rfi-001-mail-v1".into(),
+            provider_code: Some("xeorvt-timeout".into()),
             details: Some(details),
         })
         .unwrap();
@@ -152,6 +158,7 @@ mod tests {
             value["details"]["rfcMessageId"],
             "<rfi-001@example.invalid>"
         );
+        assert_eq!(value["providerCode"], "xeorvt-timeout");
     }
 
     #[test]
@@ -166,6 +173,7 @@ mod tests {
             retryable: false,
             message: "reconcile before retrying".into(),
             diagnostic_id: "gmail-attempt".into(),
+            provider_code: None,
             details: Some(Box::new(AgentErrorDetails(details))),
         };
 
