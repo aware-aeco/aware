@@ -23,6 +23,14 @@ fn package_fixture(root: &std::path::Path) -> PackageFixture {
 }
 
 fn package_fixture_named(root: &std::path::Path, name: &str) -> PackageFixture {
+    package_fixture_named_format(root, name, "format.synthetic")
+}
+
+fn package_fixture_named_format(
+    root: &std::path::Path,
+    name: &str,
+    format_id: &str,
+) -> PackageFixture {
     let directory = root.join(name);
     std::fs::create_dir_all(&directory).unwrap();
     let launcher = b"synthetic provider image";
@@ -34,7 +42,7 @@ fn package_fixture_named(root: &std::path::Path, name: &str) -> PackageFixture {
     let publisher_fingerprint = format!("{:x}", Sha256::digest(public_bytes));
     let launcher_sha256 = format!("{:x}", Sha256::digest(launcher));
     let manifest = format!(
-        "{{\"capabilities\":[{{\"artifactRootVersion\":\"artifact.synthetic.v1\",\"cacheNamespaceVersion\":\"cache.synthetic.v1\",\"capabilityId\":\"capability.synthetic\",\"protocolVersion\":\"3\",\"requestSchema\":\"request.synthetic.v1\",\"resultSchema\":\"result.synthetic.v1\",\"sourceCaptureMode\":\"capture.synthetic\"}}],\"files\":[{{\"bytes\":{},\"path\":\"provider.bin\",\"sha256\":\"{launcher_sha256}\"}}],\"formatId\":\"format.synthetic\",\"launcher\":\"provider.bin\",\"maximumAwareVersion\":null,\"minimumAwareVersion\":\"0.137.0\",\"packageId\":\"package.synthetic\",\"packageVersion\":\"1.2.3\",\"publisherFingerprintSha256\":\"{publisher_fingerprint}\",\"schemaVersion\":\"aware.model-provider-package/v1\"}}",
+        "{{\"capabilities\":[{{\"artifactRootVersion\":\"artifact.synthetic.v1\",\"cacheNamespaceVersion\":\"cache.synthetic.v1\",\"capabilityId\":\"capability.synthetic\",\"protocolVersion\":\"3\",\"requestSchema\":\"request.synthetic.v1\",\"resultSchema\":\"result.synthetic.v1\",\"sourceCaptureMode\":\"capture.synthetic\"}}],\"files\":[{{\"bytes\":{},\"path\":\"provider.bin\",\"sha256\":\"{launcher_sha256}\"}}],\"formatId\":\"{format_id}\",\"launcher\":\"provider.bin\",\"maximumAwareVersion\":null,\"minimumAwareVersion\":\"0.137.0\",\"packageId\":\"package.synthetic\",\"packageVersion\":\"1.2.3\",\"publisherFingerprintSha256\":\"{publisher_fingerprint}\",\"schemaVersion\":\"aware.model-provider-package/v1\"}}",
         launcher.len()
     );
     let manifest_sha256 = format!("{:x}", Sha256::digest(manifest.as_bytes()));
@@ -271,6 +279,55 @@ fn listing_reverifies_enrolled_package_contents() {
         .assert()
         .failure()
         .code(3);
+}
+
+#[test]
+fn filtered_listing_ignores_drift_in_an_unrelated_format() {
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp.path().join("home");
+    let requested = package_fixture_named_format(temp.path(), "requested", "format.requested");
+    let unrelated = package_fixture_named_format(temp.path(), "unrelated", "format.unrelated");
+    for fixture in [&requested, &unrelated] {
+        aware(&home)
+            .args(["provider", "trust-publisher"])
+            .arg(&fixture.public_key)
+            .args(["--publisher-id", "publisher.synthetic"])
+            .assert()
+            .success();
+        aware(&home)
+            .args(["provider", "enroll"])
+            .arg(&fixture.directory)
+            .assert()
+            .success();
+    }
+    aware(&home)
+        .args([
+            "provider",
+            "select",
+            "format.requested",
+            &requested.manifest_sha256,
+        ])
+        .assert()
+        .success();
+    std::fs::write(
+        home.join("providers/selections/format.unrelated.json"),
+        b"malformed unrelated selection",
+    )
+    .unwrap();
+    std::fs::write(unrelated.directory.join("provider.bin"), b"changed").unwrap();
+
+    let listed = aware(&home)
+        .args(["--json", "provider", "list", "--format", "format.requested"])
+        .assert()
+        .success();
+    let listed_json: serde_json::Value =
+        serde_json::from_slice(&listed.get_output().stdout).unwrap();
+    assert_eq!(listed_json["data"]["packages"].as_array().unwrap().len(), 1);
+    assert_eq!(
+        listed_json["data"]["packages"][0]["formatId"],
+        "format.requested"
+    );
+    assert_eq!(listed_json["data"]["packages"][0]["selected"], true);
 }
 
 #[test]

@@ -265,17 +265,19 @@ impl ProviderStore {
         if selections_dir.is_dir() {
             for entry in std::fs::read_dir(&selections_dir)? {
                 let entry = entry?;
-                if entry
-                    .file_name()
-                    .to_str()
-                    .is_some_and(|name| name.starts_with(".tmp-"))
+                let file_name = entry.file_name();
+                let file_name = file_name.to_str();
+                if file_name.is_some_and(|name| name.starts_with(".tmp-")) {
+                    continue;
+                }
+                if let Some(format_id) = format
+                    && file_name != Some(format!("{format_id}.json").as_str())
                 {
                     continue;
                 }
                 let selection: SelectionRecord = read_json(&entry.path())?;
-                let file_name = entry.file_name();
                 let expected_name = format!("{}.json", selection.format_id);
-                if file_name.to_str() != Some(expected_name.as_str()) {
+                if file_name != Some(expected_name.as_str()) {
                     return Err(AwareError::Validation(
                         "provider selection record filename does not match its format".into(),
                     ));
@@ -314,11 +316,12 @@ impl ProviderStore {
                     )
                 })?;
                 validate_sha256(digest, "provider enrollment filename digest")?;
+                let package_record = self.read_package(digest)?;
+                if format.is_some_and(|id| id != package_record.manifest.format_id) {
+                    continue;
+                }
                 let package = self.verify_enrollment(digest)?;
-                if package.revoked
-                    || !package.enrolled
-                    || format.is_some_and(|id| id != package.manifest.format_id)
-                {
+                if package.revoked || !package.enrolled {
                     continue;
                 }
                 packages.push(ListedPackage {
