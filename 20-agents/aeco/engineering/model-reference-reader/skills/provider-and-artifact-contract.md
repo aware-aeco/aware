@@ -15,6 +15,14 @@ The canonical request, provider fingerprint, source digest and signer trust anch
 cache key. Every cache hit verifies its signature, closed receipt, complete file set and every blob
 digest. A cache result is reusable conversion evidence, not approval authority.
 
+Protocol v3 package preflight is a separate, format-neutral route. An operator first trusts a
+publisher key, enrolls a signed closed package, and selects its manifest digest for an opaque format
+with `aware provider`. The caller supplies that format, one declared capability and the exact selected
+manifest digest. AWARE verifies the publisher, manifest signature, closed file inventory and every file
+receipt before and after invoking `describe`. The response carries only enrolled package identity and
+capability metadata; it never reveals the package path, launcher or file allowlist. This version does
+not dispatch v3 `discover` or `convert`.
+
 `read-model` preserves the original five-descriptor compatibility response and does not expose the
 private cache receipt. Use `read-snapshot` when a downstream consumer needs public authenticated source
 and bounded display-package envelopes. Verify the enrolled signer and source envelope before the

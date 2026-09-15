@@ -47,6 +47,10 @@ impl Paths {
         self.aware_home.join("logs")
     }
 
+    pub fn providers_dir(&self) -> PathBuf {
+        self.aware_home.join("providers")
+    }
+
     pub fn app_instance_dir(&self, app: &str, instance: &str) -> PathBuf {
         self.apps_dir().join(app).join("instances").join(instance)
     }
@@ -94,6 +98,11 @@ mod tests {
     #[test]
     fn logs_dir_appends_logs() {
         assert_eq!(p("/x").logs_dir(), PathBuf::from("/x/logs"));
+    }
+
+    #[test]
+    fn providers_dir_appends_providers() {
+        assert_eq!(p("/x").providers_dir(), PathBuf::from("/x/providers"));
     }
 
     #[test]
