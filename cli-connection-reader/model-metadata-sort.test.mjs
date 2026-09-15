@@ -62,6 +62,17 @@ test('cancellation fails cleanly without leaving a sort root', async (t) => {
   assert.deepEqual(await fs.readdir(tempParent), []);
 });
 
+test('cancellation during final run publication removes the owned root', async (t) => {
+  const tempParent = await temporary(t);
+  let reads = 0;
+  const signal = { get aborted() { reads += 1; return reads >= 4; } };
+  await assert.rejects(
+    () => externalSortMetadataRecords([values[0]], { tempParent, signal }),
+    (error) => error.code === 'reference-cancelled',
+  );
+  assert.deepEqual(await fs.readdir(tempParent), []);
+});
+
 test('fan-in must make progress', async (t) => {
   const tempParent = await temporary(t);
   await assert.rejects(

@@ -48,26 +48,33 @@ function lineFor(record) {
   return Buffer.concat([canonicalJsonBytes({ key: record.key, record: record.record }), Buffer.from('\n')]);
 }
 
-async function writeAll(handle, bytes) {
+async function writeAll(handle, bytes, signal) {
   let offset = 0;
   while (offset < bytes.length) {
-    const result = await handle.write(bytes, offset, bytes.length - offset, null);
+    checkCancellation(signal);
+    const length = Math.min(bytes.length - offset, 1024 * 1024);
+    const result = await handle.write(bytes, offset, length, null);
     if (result.bytesWritten <= 0) sortError('reference-artifact-v2-io', 'A metadata sort run could not be written.');
     offset += result.bytesWritten;
   }
+  checkCancellation(signal);
 }
 
-async function writeRun(records, pathname) {
+async function writeRun(records, pathname, signal) {
+  checkCancellation(signal);
   records.sort((left, right) => Buffer.compare(left.keyBytes, right.keyBytes));
+  checkCancellation(signal);
   for (let index = 1; index < records.length; index += 1) {
+    checkCancellation(signal);
     if (Buffer.compare(records[index - 1].keyBytes, records[index].keyBytes) === 0) {
       sortError('reference-artifact-v2-duplicate', 'Metadata record identities must be unique.');
     }
   }
   const handle = await fs.open(pathname, 'wx', 0o600);
   try {
-    for (const record of records) await writeAll(handle, lineFor(record));
+    for (const record of records) await writeAll(handle, lineFor(record), signal);
     await handle.sync();
+    checkCancellation(signal);
   } finally {
     await handle.close();
   }
@@ -136,7 +143,7 @@ async function mergeRuns(inputs, output, limits, signal) {
       if (previous && Buffer.compare(previous, selected.head.keyBytes) === 0) {
         sortError('reference-artifact-v2-duplicate', 'Metadata record identities must be unique.');
       }
-      await writeAll(handle, lineFor(selected.head));
+      await writeAll(handle, lineFor(selected.head), signal);
       previous = selected.head.keyBytes;
       await selected.advance();
     }
@@ -216,7 +223,7 @@ export async function externalSortMetadataRecords(records, options = {}) {
       if (bytes > limits.runBytes) sortError('reference-artifact-v2-limit', 'One metadata record exceeds the sort run limit.');
       if (buffered.length && bufferedBytes + bytes > limits.runBytes) {
         const pathname = path.join(root, `run-${String(ordinal).padStart(6, '0')}.jsonl`);
-        await writeRun(buffered, pathname); runs.push(pathname); ordinal += 1;
+        await writeRun(buffered, pathname, signal); runs.push(pathname); ordinal += 1;
         buffered = []; bufferedBytes = 0;
       }
       buffered.push(record); bufferedBytes += bytes; count += 1;
@@ -224,7 +231,7 @@ export async function externalSortMetadataRecords(records, options = {}) {
     }
     if (buffered.length) {
       const pathname = path.join(root, `run-${String(ordinal).padStart(6, '0')}.jsonl`);
-      await writeRun(buffered, pathname); runs.push(pathname);
+      await writeRun(buffered, pathname, signal); runs.push(pathname);
     }
     let pass = 0; let active = runs;
     while (active.length > 1) {
