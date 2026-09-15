@@ -35,6 +35,7 @@ function enforcedLimits(overrides = {}) {
   const result = { ...DEFAULT_LIMITS };
   for (const [name, value] of entries) {
     if (!Object.hasOwn(result, name) || !Number.isSafeInteger(value) || value <= 0
+        || (name === 'fanIn' && value < 2)
         || value > HARD_LIMITS[name]) {
       sortError('reference-artifact-v2-limit-invalid', 'Metadata sort limits are invalid.');
     }

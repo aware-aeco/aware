@@ -62,6 +62,14 @@ test('cancellation fails cleanly without leaving a sort root', async (t) => {
   assert.deepEqual(await fs.readdir(tempParent), []);
 });
 
+test('fan-in must make progress', async (t) => {
+  const tempParent = await temporary(t);
+  await assert.rejects(
+    () => externalSortMetadataRecords(values, { tempParent, limits: { fanIn: 1 } }),
+    (error) => error.code === 'reference-artifact-v2-limit-invalid',
+  );
+});
+
 test('throwing option and iterable accessors become stable reader errors', async (t) => {
   const tempParent = await temporary(t);
   const options = Object.defineProperty({}, 'tempParent', { get() { throw new Error('unreadable'); } });
