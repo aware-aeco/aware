@@ -212,15 +212,16 @@ fn stage_agent_from_registry(
         Err(err) => return Err(err),
     };
 
-    // A successful extraction is not enough to make a shared cache entry trustworthy.
-    // Bind the downloaded manifest to the exact registry release before committing it;
-    // otherwise one bad mutable/custom archive poisons every retry for this snapshot.
+    // A successful extraction and matching manifest identity are not enough to make a shared
+    // cache entry trustworthy. Validate the complete agent bundle, including every referenced
+    // file and (for the official registry) its signed tree digest, before committing it;
+    // otherwise an identity-preserving but modified archive poisons every retry for this snapshot.
     if downloaded {
-        match validate_staged_release_identity(&subdir, key, resolved_version, index, entry) {
+        match validate_staged_release_for_cache(&subdir, key, resolved_version, index, entry) {
             Ok(()) => {}
             Err(_) if cache_file.is_file() => {
                 eprintln!(
-                    "warning: refreshed archive identity does not match {key}@{resolved_version}; using prior cache"
+                    "warning: refreshed archive fails release validation for {key}@{resolved_version}; using prior cache"
                 );
                 downloaded = false;
                 std::fs::copy(&cache_file, &tarball_path)?;
@@ -232,22 +233,22 @@ fn stage_agent_from_registry(
                     key,
                     resolved_version,
                 )?;
-                validate_staged_release_identity(&subdir, key, resolved_version, index, entry)?;
+                validate_staged_release_for_cache(&subdir, key, resolved_version, index, entry)?;
             }
             Err(error) => return Err(error),
         }
     }
 
     // Commit a freshly-downloaded archive to the shared cache ONLY now that it has served this
-    // agent and matched its declared identity (re-arming the TTL). Caching post-validation means
-    // a corrupt, raced, or semantically mismatched download cannot poison the snapshot cache.
+    // agent and passed its full release validation (re-arming the TTL). Caching post-validation
+    // means a corrupt, raced, incomplete, or digest-mismatched download cannot poison the cache.
     if downloaded {
         let _ = std::fs::copy(&tarball_path, &cache_file);
     }
     Ok((scratch, subdir))
 }
 
-fn validate_staged_release_identity(
+fn validate_staged_release_for_cache(
     subdir: &Path,
     key: &str,
     resolved_version: &str,
@@ -273,7 +274,25 @@ fn validate_staged_release_identity(
         &agent.agent,
         &agent.version,
     )
-    .map_err(AwareError::Validation)
+    .map_err(AwareError::Validation)?;
+    let issues = validate_agent_on_disk(&agent, subdir);
+    if let Some(summary) = error_summary(&issues) {
+        return Err(AwareError::Validation(summary));
+    }
+    if index.trust == RegistryTrust::FreshOfficial {
+        let expected = entry.bundle_digest.as_deref().ok_or_else(|| {
+            AwareError::Validation(format!(
+                "official registry entry {key}@{resolved_version} has no bundle-digest"
+            ))
+        })?;
+        let digest = crate::install::integrity::tree_digest(subdir)?;
+        if digest != expected {
+            return Err(AwareError::Validation(format!(
+                "official registry bundle digest mismatch for {key}@{resolved_version}: expected {expected}, got {digest}"
+            )));
+        }
+    }
+    Ok(())
 }
 
 /// Cache filename for a registry tarball, keyed by its URL + the index's snapshot
@@ -1232,6 +1251,42 @@ mod tests {
         assert!(
             !cache_file.exists(),
             "a semantically mismatched payload must never enter the shared cache"
+        );
+    }
+
+    #[test]
+    fn official_digest_mismatch_is_rejected_before_the_download_enters_shared_cache() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        write_alpha_archive(&archive, "IDENTITY-MATCHES-BUT-CONTENT-DOES-NOT");
+
+        let mut index = single_alpha_index(&url);
+        index.trust = RegistryTrust::FreshOfficial;
+        index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap()
+            .bundle_digest = Some(format!("sha256:{}", "a".repeat(64)));
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        let error = stage_agent_from_registry("alpha", None, &paths, &index).unwrap_err();
+        assert!(
+            error.to_string().contains("bundle digest mismatch"),
+            "{error}"
+        );
+        assert!(
+            !cache_file.exists(),
+            "an identity-matching payload with the wrong official digest must never enter the shared cache"
         );
     }
 

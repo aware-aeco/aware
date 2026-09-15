@@ -17,7 +17,10 @@ export const MODEL_LIMITS = Object.freeze({
   // hard ceiling remains the caller-controlled safety boundary for deliberately larger deployments.
   maxSourceBytes: { default: 256 * 1024 * 1024, hard: 4 * 1024 * 1024 * 1024 },
   maxInputGlbBytes: { default: 128 * 1024 * 1024, hard: 512 * 1024 * 1024 },
-  maxMetadataBytes: { default: 16 * 1024 * 1024, hard: 64 * 1024 * 1024 },
+  // The authenticated Snowdon conversion completed under the former 16 MiB ceiling. Retain twice
+  // that entire admitted envelope so metadata growth tracks the same 2x production margin as the
+  // source, provider GLB, canonical GLB, and component shards.
+  maxMetadataBytes: { default: 32 * 1024 * 1024, hard: 128 * 1024 * 1024 },
   maxProviderOutputBytes: { default: 144 * 1024 * 1024, hard: 576 * 1024 * 1024 },
   // Bounds the JSON chunk of the PROVIDER's GLB. It has to admit what maxInputGlbBytes admits: a
   // 42 MB authenticated GLB carrying a 23.5 MB JSON chunk is inside every other declared limit, and
@@ -27,7 +30,7 @@ export const MODEL_LIMITS = Object.freeze({
   // measure different documents, and folding them into one knob means raising the input bound to
   // admit a real model silently raises the output bound past what the structural count limits can
   // still police, retiring the canonical-output guard.
-  maxCanonicalGlbJsonBytes: { default: 16 * 1024 * 1024, hard: 64 * 1024 * 1024 },
+  maxCanonicalGlbJsonBytes: { default: 32 * 1024 * 1024, hard: 128 * 1024 * 1024 },
   maxJsonDepth: { default: 64, hard: 128 },
   maxScenes: { default: 8, hard: 32 },
   maxNodes: { default: 100_000, hard: 250_000 },

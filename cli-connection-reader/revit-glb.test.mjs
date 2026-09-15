@@ -332,9 +332,9 @@ test('canonical work accounting refuses overflow against the declared limit befo
   );
 });
 
-test('the default canonical JSON profile bounds a 32k-primitive expansion', () => {
+test('the default canonical JSON profile bounds a 64k-primitive expansion', () => {
   assert.throws(
-    () => normalizeRevitGlb(makeGlbFixture({ primitiveCopies: 32_000 })),
+    () => normalizeRevitGlb(makeGlbFixture({ primitiveCopies: 64_000 })),
     (error) => error.code === 'reference-output-too-large' && /canonical GLB JSON/.test(error.message),
   );
 });
@@ -411,14 +411,14 @@ test('the canonical output JSON bound is its own budget, not the input one', () 
   // Folding both into one knob meant raising the input bound to admit a real provider GLB silently
   // raised the output bound too. These must move independently.
   assert.notEqual(MODEL_LIMITS.maxCanonicalGlbJsonBytes.default, MODEL_LIMITS.maxGlbJsonBytes.default);
-  const wide = makeGlbFixture({ primitiveCopies: 32_000 });
+  const wide = makeGlbFixture({ primitiveCopies: 64_000 });
   // Refused on the OUTPUT budget while the INPUT budget is at its (larger) default.
   assert.throws(
     () => normalizeRevitGlb(wide),
     (error) => error.code === 'reference-output-too-large' && /canonical GLB JSON/.test(error.message),
   );
   // ... and raising only the output budget is what lets it through, proving which bound refused it.
-  assert.equal(normalizeRevitGlb(wide, { limits: { maxCanonicalGlbJsonBytes: 64 * 1024 * 1024 } }).parts.length, 32_000);
+  assert.equal(normalizeRevitGlb(wide, { limits: { maxCanonicalGlbJsonBytes: 64 * 1024 * 1024 } }).parts.length, 64_000);
 });
 
 test('a canonical artifact re-reads under the canonical budgets, not the input ones', () => {

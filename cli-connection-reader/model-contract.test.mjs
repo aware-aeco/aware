@@ -64,25 +64,78 @@ test('every canonical request leaf affects the cache/request preimage', () => {
   assert.equal(MODEL_LIMITS.maxInputGlbBytes.default, 128 * 1024 * 1024);
   assert.equal(MODEL_LIMITS.maxInputGlbBytes.hard, 512 * 1024 * 1024);
   assert.equal(MODEL_LIMITS.maxSourceBytes.default, 256 * 1024 * 1024);
-  assert.ok(2 * 94_531_584 <= MODEL_LIMITS.maxSourceBytes.default,
-    'the default source limit must admit at least twice the pinned Snowdon RVT');
-  const doubledSnowdon = {
-    inputGlbBytes: 2 * 41_926_848,
-    glbJsonBytes: 2 * 23_576_276,
-    vertices: 2 * 1_528_598,
-    indices: 2 * 8_523_729,
-    primitives: 2 * 23_181,
-    canonicalWorkBytes: 2 * 3_842_308_352,
-  };
-  assert.ok(doubledSnowdon.inputGlbBytes <= MODEL_LIMITS.maxInputGlbBytes.default);
-  assert.ok(doubledSnowdon.glbJsonBytes <= MODEL_LIMITS.maxGlbJsonBytes.default);
-  assert.ok(doubledSnowdon.vertices <= MODEL_LIMITS.maxVertices.default);
-  assert.ok(doubledSnowdon.indices <= MODEL_LIMITS.maxIndices.default);
-  assert.ok(doubledSnowdon.primitives <= MODEL_LIMITS.maxPrimitives.default);
-  assert.ok(doubledSnowdon.canonicalWorkBytes <= MODEL_LIMITS.maxCanonicalWorkBytes.default,
-    'every ordinary post-conversion limit must admit at least twice the pinned Snowdon profile');
   assert.equal(buildCanonicalRequest({ protocolVersion: '2' }).protocolVersion, '2');
   assert.throws(() => buildCanonicalRequest({ protocolVersion: '3' }), /protocolVersion/);
+});
+
+test('every size and count limit admits at least twice the complete authenticated Snowdon profile', () => {
+  // Captured from the successful authenticated Snowdon Towers conversion and its signed canonical
+  // manifest/cache receipt (source sha256 690a69b7…00e5). Provider temporaries are deliberately
+  // deleted after normalization, so metadataBytes pins the conservative upper bound proven by that
+  // run: it passed under the then-signed 16 MiB limit. providerOutputBytes is consequently bounded by
+  // the exact provider GLB plus that whole metadata envelope. All retained canonical values are exact.
+  const snowdon = Object.freeze({
+    sourceBytes: 94_531_584,
+    inputGlbBytes: 41_926_848,
+    metadataBytes: 16 * 1024 * 1024,
+    providerOutputBytes: 41_926_848 + (16 * 1024 * 1024),
+    inputGlbJsonBytes: 23_576_276,
+    canonicalGlbBytes: 91_236_816,
+    canonicalGlbJsonBytes: 15_246_024,
+    scenes: 1,
+    nodes: 5_262,
+    meshes: 5_262,
+    primitives: 23_181,
+    accessors: 69_544,
+    bufferViews: 69_544,
+    vertices: 1_528_598,
+    indices: 8_523_729,
+    entities: 6_544,
+    parameters: 17_225,
+    relationships: 0,
+    largestComponentJsonBytes: 48_248_289,
+    expandedPropertyRows: 180_004,
+    canonicalPropertyBytes: 48_248_289,
+    canonicalWorkBytes: 3_842_308_352,
+  });
+  const modelLimitProfile = {
+    maxSourceBytes: snowdon.sourceBytes,
+    maxInputGlbBytes: snowdon.inputGlbBytes,
+    maxMetadataBytes: snowdon.metadataBytes,
+    maxProviderOutputBytes: snowdon.providerOutputBytes,
+    maxGlbJsonBytes: snowdon.inputGlbJsonBytes,
+    maxCanonicalGlbBytes: snowdon.canonicalGlbBytes,
+    maxCanonicalGlbJsonBytes: snowdon.canonicalGlbJsonBytes,
+    maxScenes: snowdon.scenes,
+    maxNodes: snowdon.nodes,
+    maxMeshes: snowdon.meshes,
+    maxPrimitives: snowdon.primitives,
+    maxAccessors: snowdon.accessors,
+    maxBufferViews: snowdon.bufferViews,
+    maxVertices: snowdon.vertices,
+    maxIndices: snowdon.indices,
+    maxEntities: snowdon.entities,
+    maxParameters: snowdon.parameters,
+    maxRelationships: snowdon.relationships,
+    maxCanonicalWorkBytes: snowdon.canonicalWorkBytes,
+  };
+  for (const [limit, measured] of Object.entries(modelLimitProfile)) {
+    assert.ok(measured * 2 <= MODEL_LIMITS[limit].default,
+      `${limit} must admit at least twice the pinned Snowdon requirement (${measured})`);
+  }
+
+  const v2ComponentDefault = READER_SCHEMA_LIMIT_DEFAULTS['model-reference-reader/v2'].maxComponentJsonBytes;
+  assert.ok(snowdon.largestComponentJsonBytes * 2 <= v2ComponentDefault,
+    'the v2 component/shard limit must admit twice Snowdon properties.json');
+  assert.ok(snowdon.expandedPropertyRows * 2 <= PROPERTY_EXPANSION_LIMITS.maxExpandedPropertyRows.default,
+    'the property row limit must admit twice Snowdon expanded properties');
+  assert.ok(snowdon.canonicalPropertyBytes * 2 <= v2ComponentDefault,
+    'the v2 canonical-property limit must admit twice Snowdon property bytes');
+
+  const canonicalAggregateBytes = 91_236_816 + 2_565_876 + 48_248_289 + 40 + 3_695;
+  const v2PackageAggregateLimit = MODEL_LIMITS.maxCanonicalGlbBytes.default + (v2ComponentDefault * 5);
+  assert.ok(canonicalAggregateBytes * 2 <= v2PackageAggregateLimit,
+    'the signed package aggregate limit must admit twice all Snowdon canonical artifacts');
 });
 
 test('every resource bound the reader enforces is declared here, lowerable and fail-closed', () => {
