@@ -34,7 +34,7 @@ function limits(overrides = {}) {
   return result;
 }
 
-function canonicalRecord(entry) {
+export function canonicalMetadataRecord(entry) {
   let entryKeys; let hasKey; let hasRecord; let key; let record; let recordPrototype;
   try {
     entryKeys = entry && typeof entry === 'object' && !Array.isArray(entry) ? Object.keys(entry) : [];
@@ -120,7 +120,7 @@ export function partitionMetadataRecords(family, orderedRecords, options = {}) {
     let input;
     try { input = orderedRecords[index]; }
     catch (error) { shardError('reference-artifact-v2-invalid', 'A metadata record is invalid.', error); }
-    const record = canonicalRecord(input);
+    const record = canonicalMetadataRecord(input);
     const comparison = previous ? Buffer.compare(previous.keyBytes, record.keyBytes) : -1;
     if (comparison >= 0) {
       shardError(
