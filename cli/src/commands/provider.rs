@@ -24,6 +24,12 @@ pub enum ProviderCommand {
         format_id: String,
         manifest_sha256: String,
     },
+    /// Admit an operator-controlled dependency policy for one enrolled capability.
+    AdmitPolicy {
+        manifest_sha256: String,
+        capability_id: String,
+        policy_file: PathBuf,
+    },
     /// List enrolled packages, optionally restricted to an opaque format.
     List {
         #[arg(long)]
@@ -73,6 +79,22 @@ pub fn dispatch(command: ProviderCommand, context: &Context) -> Result<(), Aware
                 println!(
                     "selected provider package {} for {} (generation {})",
                     selection.active_manifest_sha256, selection.format_id, selection.generation
+                );
+            }
+        }
+        ProviderCommand::AdmitPolicy {
+            manifest_sha256,
+            capability_id,
+            policy_file,
+        } => {
+            let admitted =
+                store.admit_dependency_policy(&manifest_sha256, &capability_id, &policy_file)?;
+            if context.json {
+                envelope::print_ok("provider admit-policy", admitted, started)?;
+            } else {
+                println!(
+                    "admitted dependency policy {} ({})",
+                    admitted.policy.policy_id, admitted.sha256
                 );
             }
         }
