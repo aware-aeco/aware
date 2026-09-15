@@ -57,6 +57,10 @@ test('rejects duplicate, reversed, sparse and oversized records', () => {
   );
   assert.equal(laterRecordRead, false);
   assert.throws(
+    () => partitionMetadataRecords('entities', [unreadLater]),
+    (error) => error.code === 'reference-artifact-v2-invalid',
+  );
+  assert.throws(
     () => partitionMetadataRecords('entities', [records[1], records[0]]),
     (error) => error.code === 'reference-artifact-v2-order-invalid',
   );

@@ -27,28 +27,31 @@ function limits(overrides = {}) {
 }
 
 function canonicalRecord(entry) {
-  let entryKeys; let recordPrototype;
+  let entryKeys; let hasKey; let hasRecord; let key; let record; let recordPrototype;
   try {
     entryKeys = entry && typeof entry === 'object' && !Array.isArray(entry) ? Object.keys(entry) : [];
-    recordPrototype = entry?.record && typeof entry.record === 'object' && !Array.isArray(entry.record)
-      ? Object.getPrototypeOf(entry.record) : undefined;
+    hasKey = entryKeys.length > 0 && Object.hasOwn(entry, 'key');
+    hasRecord = entryKeys.length > 0 && Object.hasOwn(entry, 'record');
+    key = hasKey ? entry.key : undefined;
+    record = hasRecord ? entry.record : undefined;
+    recordPrototype = record && typeof record === 'object' && !Array.isArray(record)
+      ? Object.getPrototypeOf(record) : undefined;
   } catch (error) {
     shardError('reference-artifact-v2-invalid', 'A metadata record is invalid.', error);
   }
-  if (entryKeys.length !== 2 || !Object.hasOwn(entry, 'key') || !Object.hasOwn(entry, 'record')
-      || typeof entry.key !== 'string' || !entry.key
+  if (entryKeys.length !== 2 || !hasKey || !hasRecord || typeof key !== 'string' || !key
       || (recordPrototype !== Object.prototype && recordPrototype !== null)) {
     shardError('reference-artifact-v2-invalid', 'A metadata record is invalid.');
   }
   let keyBytes; let recordBytes;
   try {
-    canonicalJsonBytes(entry.key);
-    keyBytes = Buffer.from(entry.key);
-    recordBytes = canonicalJsonBytes(entry.record);
+    canonicalJsonBytes(key);
+    keyBytes = Buffer.from(key);
+    recordBytes = canonicalJsonBytes(record);
   } catch (error) {
     shardError('reference-artifact-v2-invalid', 'A metadata record is not canonical JSON data.', error);
   }
-  return { key: entry.key, keyBytes, record: JSON.parse(recordBytes.toString('utf8')), recordBytes };
+  return { key, keyBytes, record: JSON.parse(recordBytes.toString('utf8')), recordBytes };
 }
 
 function frame(family, recordBytes) {
