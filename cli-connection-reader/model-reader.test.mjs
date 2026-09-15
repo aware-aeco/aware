@@ -162,6 +162,7 @@ test('managed conversion requires a valid attempt identity only after an authent
     'expected-provider-sha256': preflight.providerFingerprintSha256,
     'expected-signer-sha256': preflight.signerFingerprintSha256,
   };
+  const callsAfterPreflight = state.calls.length;
   for (const conversionAttemptId of [undefined, 'not-a-uuid']) {
     await assert.rejects(
       () => runModelCommand('read-model', {
@@ -171,8 +172,8 @@ test('managed conversion requires a valid attempt identity only after an authent
       (error) => error.code === 'reference-provider-request-invalid'
         && error.message === 'The managed Revit conversion attempt identity is invalid.',
     );
-    assert.equal(state.calls.filter((operation) => operation === 'convert').length, 0,
-      'an invalid attempt identity must stop before conversion');
+    assert.equal(state.calls.length, callsAfterPreflight,
+      'an invalid attempt identity must stop before any cold-request provider I/O');
   }
 
   const cold = await runModelCommand('read-model', {

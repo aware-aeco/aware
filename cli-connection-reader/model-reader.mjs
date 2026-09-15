@@ -239,7 +239,7 @@ function manifestDetails(geometry, metadata, canonicalRequestSha256, fingerprint
   };
 }
 
-async function convertAndCache(args, deps, config, readiness) {
+async function convertAndCache(args, deps, config, readiness, attemptId) {
   const sourcePath = sourcePathFrom(args);
   const initial = await hashSource(sourcePath, deps.limits);
   const sourceSha256 = exactExpectedSource(args, initial.sha256);
@@ -281,9 +281,6 @@ async function convertAndCache(args, deps, config, readiness) {
     owner = await acquireCacheOwner({ root: config.cacheRoot, key, fenced: fence !== null });
     try { return { hit: true, key, cache: await read() }; }
     catch (error) { if (error?.code !== 'reference-cache-miss') throw error; }
-    // A durable attempt identity binds a managed conversion request to its receipt. A fully
-    // authenticated cache hit starts no conversion, so it must remain readable without one.
-    const attemptId = conversionAttemptId(args, expectedProtocolVersion);
     emit(deps, 'convert');
     const runRoot = await newRunRoot(config.privateRoot);
     let conversion;
@@ -476,8 +473,11 @@ export async function runModelCommand(command, args = {}, deps = {}) {
     let result = await findCachedConversion(args, executionDeps, config, signing, pin);
     let readiness = signing;
     if (!result) {
+      // A durable attempt identity binds a managed conversion request to its receipt. Validate it
+      // after the authenticated warm-cache path, but before any provider I/O for a cold request.
+      const attemptId = conversionAttemptId(args, args['expected-provider-protocol'] ?? '1');
       readiness = await providerReadiness(args, executionDeps, config, pin, signing);
-      result = await convertAndCache(args, executionDeps, config, readiness);
+      result = await convertAndCache(args, executionDeps, config, readiness, attemptId);
     }
     const out = summary(result, limits);
     if (command === 'probe') return out;
