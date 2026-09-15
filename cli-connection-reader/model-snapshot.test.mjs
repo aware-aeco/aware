@@ -43,7 +43,7 @@ test('snapshot parsing honors the configured component limit above the strict pa
   assert.equal(output.sourceArtifactPreimage.outputs.find((item) => item.logicalName === 'properties').bytes, largeProperties.length);
   assert.equal(output.packageArtifacts['properties-000000'].bytes, largeProperties.length);
   assert.deepEqual(output.packagePreimage.packager, {
-    agent: 'model-reference-reader', version: '0.7.2', bridgeBuildId: 'aware-connection-reader@0.5.2',
+    agent: 'model-reference-reader', version: '0.7.3', bridgeBuildId: 'aware-connection-reader@0.5.3',
     configurationSha256: output.packagePreimage.packager.configurationSha256,
   });
   const packageManifest = JSON.parse(await fs.readFile(new URL('./package.json', import.meta.url), 'utf8'));
@@ -78,14 +78,18 @@ test('reader v2 publishes independently versioned package schemas and authentica
       },
     },
   };
-  const output = await buildAndPublishSnapshot(result, { privateKey, publicKeyBytes }, path.join(root, 'artifacts'));
+  const conversionAttemptId = '123e4567-e89b-42d3-a456-426614174000';
+  const output = await buildAndPublishSnapshot(result, { privateKey, publicKeyBytes }, path.join(root, 'artifacts'), {
+    conversionAttemptId,
+  });
   assert.equal(output.sourceArtifactPreimage.schemaVersion, '2');
   assert.equal(output.packagePreimage.schemaVersion, '2');
   assert.equal(output.packageConfiguration.schemaVersion, 'model-reference-package-configuration/v2');
   assert.equal(output.packageConfiguration.schemas.manifest, 'floless.model-snapshot-package/v2');
   assert.equal(output.packageConfiguration.schemas.properties, 'aware.model-properties/v2');
-  assert.equal(output.packagePreimage.packager.version, '0.7.2');
-  assert.equal(output.packagePreimage.packager.bridgeBuildId, 'aware-connection-reader@0.5.2');
+  assert.equal(output.packagePreimage.source.conversionAttemptId, conversionAttemptId);
+  assert.equal(output.packagePreimage.packager.version, '0.7.3');
+  assert.equal(output.packagePreimage.packager.bridgeBuildId, 'aware-connection-reader@0.5.3');
   const packageManifest = JSON.parse(await fs.readFile(new URL('./package.json', import.meta.url), 'utf8'));
   assert.equal(output.packagePreimage.packager.bridgeBuildId, `${packageManifest.name}@${packageManifest.version}`);
   assert.equal(output.packagePreimage.packager.version, packageManifest.modelReferenceReaderVersion);
@@ -135,7 +139,8 @@ test('a v2 shard configuration advertises the property expansion ceiling it must
   // Lowered model ceilings, a deliberately higher property expansion ceiling:
   // exactly the shape where the two disagree.
   const output = await buildAndPublishSnapshot(result, { privateKey, publicKeyBytes }, path.join(root, 'artifacts'),
-    { limits: { maxEntities: 2, maxParameters: 2, maxRelationships: 2 } });
+    { limits: { maxEntities: 2, maxParameters: 2, maxRelationships: 2 },
+      conversionAttemptId: '123e4567-e89b-42d3-a456-426614174000' });
   assert.equal(output.packageConfiguration.maximumShardRecords, 4096,
     'the signed shard ceiling must bind the effective request instead of a constant hard cap');
 });

@@ -165,6 +165,11 @@ export async function buildAndPublishSnapshot(result, signingKey, artifactDirect
   if (!v2 && readerSchemaVersion !== 'model-reference-reader/v1') {
     snapshotError('reference-snapshot-source-invalid', 'The reader schema version is unsupported.');
   }
+  if (options.conversionAttemptId !== null && options.conversionAttemptId !== undefined
+    && (typeof options.conversionAttemptId !== 'string'
+    || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(options.conversionAttemptId))) {
+    snapshotError('reference-provider-request-invalid', 'The managed Revit conversion attempt identity is invalid.');
+  }
   const artifactSchemaVersion = v2 ? '2' : '1';
   const parsed = {
     entities: document(result.cache.artifacts['entities.json'], 'entities', limits, artifactSchemaVersion),
@@ -211,6 +216,7 @@ export async function buildAndPublishSnapshot(result, signingKey, artifactDirect
       canonicalRequestSha256: result.cache.manifest.canonicalRequestSha256,
       providerFingerprintSha256: result.cache.manifest.providerFingerprintSha256,
       signerFingerprintSha256: identity.signerFingerprintSha256,
+      ...(v2 && typeof options.conversionAttemptId === 'string' ? { conversionAttemptId: options.conversionAttemptId } : {}),
     },
     packager: {
       agent: 'model-reference-reader', version: packageManifest.modelReferenceReaderVersion,

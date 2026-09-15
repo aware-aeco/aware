@@ -188,6 +188,39 @@ test('managed conversion requires a valid attempt identity only after an authent
   assert.equal(state.calls.length, callsAfterColdRead, 'a warm read must not touch the provider');
 });
 
+test('managed snapshot signs the current delivery attempt even when reusing authenticated cache bytes', async (t) => {
+  const state = await managedState(t);
+  const preflight = await runModelCommand('preflight', state.args, state.deps);
+  const pinned = {
+    ...state.args,
+    'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  };
+  const firstAttempt = '123e4567-e89b-42d3-a456-426614174000';
+  const secondAttempt = '123e4567-e89b-42d3-a456-426614174001';
+  const cold = await runModelCommand('read-snapshot', {
+    ...pinned, 'conversion-attempt-id': firstAttempt,
+  }, state.deps);
+  assert.equal(cold.cache, 'miss');
+  assert.equal(cold.packagePreimage.source.conversionAttemptId, firstAttempt);
+  const providerCalls = [...state.calls];
+
+  const warm = await runModelCommand('read-snapshot', {
+    ...pinned, 'conversion-attempt-id': secondAttempt,
+  }, state.deps);
+  assert.equal(warm.cache, 'hit');
+  assert.deepEqual(state.calls, providerCalls, 'signing a fresh delivery binding must not call the provider');
+  assert.equal(warm.packagePreimage.source.conversionAttemptId, secondAttempt);
+  assert.notEqual(warm.packageArtifactEnvelope.signatureBase64, cold.packageArtifactEnvelope.signatureBase64,
+    'different attempt identities must produce different authenticated package envelopes');
+
+  await assert.rejects(
+    () => runModelCommand('read-snapshot', pinned, state.deps),
+    (error) => error.code === 'reference-provider-request-invalid',
+  );
+  assert.deepEqual(state.calls, providerCalls, 'a missing delivery attempt must fail before provider I/O');
+});
+
 test('preflight describes provider and key readiness without conversion or source access', async (t) => {
   const state = await setup(t);
   const out = await runModelCommand('preflight', {

@@ -1,7 +1,7 @@
 {
   "name": "aware-connection-reader",
-  "version": "0.5.2",
-  "modelReferenceReaderVersion": "0.7.2",
+  "version": "0.5.3",
+  "modelReferenceReaderVersion": "0.7.3",
   "private": true,
   "type": "module",
   "description": "AWARE CLI transport for authenticated IFC and Revit reference-model reads.",

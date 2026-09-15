@@ -471,13 +471,18 @@ export async function runModelCommand(command, args = {}, deps = {}) {
       };
     }
     let result = await findCachedConversion(args, executionDeps, config, signing, pin);
+    let attemptId = null;
     let readiness = signing;
     if (!result) {
       // A durable attempt identity binds a managed conversion request to its receipt. Validate it
       // after the authenticated warm-cache path, but before any provider I/O for a cold request.
-      const attemptId = conversionAttemptId(args, args['expected-provider-protocol'] ?? '1');
+      attemptId = conversionAttemptId(args, args['expected-provider-protocol'] ?? '1');
       readiness = await providerReadiness(args, executionDeps, config, pin, signing);
       result = await convertAndCache(args, executionDeps, config, readiness, attemptId);
+    } else if (command === 'read-snapshot' && (args['expected-provider-protocol'] ?? '1') === '2') {
+      // A warm cache avoids provider I/O, but the package is freshly signed for this delivery.
+      // Bind that signature to the caller's current attempt so an older package cannot be replayed.
+      attemptId = conversionAttemptId(args, '2');
     }
     const out = summary(result, limits);
     if (command === 'probe') return out;
@@ -485,7 +490,9 @@ export async function runModelCommand(command, args = {}, deps = {}) {
     if (command === 'read-snapshot') {
       return {
         ...out,
-        ...await buildAndPublishSnapshot(result, readiness.signingKey, config.artifactDirectory, { limits }),
+        ...await buildAndPublishSnapshot(result, readiness.signingKey, config.artifactDirectory, {
+          limits, conversionAttemptId: attemptId,
+        }),
       };
     }
     return { ...out, artifacts: await publishRunArtifacts(result, config.artifactDirectory) };
