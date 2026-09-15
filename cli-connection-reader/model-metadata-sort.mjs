@@ -247,6 +247,7 @@ export async function externalSortMetadataRecords(records, options = {}) {
     }
     const pathname = active[0] ?? path.join(root, 'empty.jsonl');
     if (!active.length) await fs.writeFile(pathname, Buffer.alloc(0), { flag: 'wx', mode: 0o600 });
+    checkCancellation(signal);
     return { root, pathname, count };
   } catch (error) {
     if (root) await fs.rm(root, { recursive: true, force: true }).catch(() => {});
