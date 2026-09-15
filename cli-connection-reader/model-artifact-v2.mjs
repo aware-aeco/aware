@@ -162,10 +162,72 @@ function validateIndex(value, family) {
   return rebuilt;
 }
 
+function validateEffectiveSource(value, expected) {
+  closed(value, ['manifest', 'bytes', 'receipt'], [], 'effective-source package');
+  closed(value.manifest, [
+    'schemaVersion', 'formatId', 'protocolVersion', 'capabilityId', 'providerFingerprintSha256',
+    'providerPackageManifestSha256', 'discoveryPolicy', 'completeness', 'primary', 'consumed',
+    'absent', 'unsupportedExternal', 'authentication', 'crossFileEvidence',
+  ], [], 'effective-source manifest');
+  closed(value.manifest.discoveryPolicy, ['policyId', 'sha256'], [], 'effective-source discovery policy');
+  opaque(value.manifest.discoveryPolicy.policyId, 'effective-source policyId');
+  digest(value.manifest.discoveryPolicy.sha256, 'effective-source policy sha256');
+  let canonicalBytes;
+  try { canonicalBytes = canonicalJsonBytes(value.manifest); }
+  catch (error) { artifactError('reference-artifact-v2-invalid', 'The effective-source manifest is not canonical JSON data.', error); }
+  if (!Buffer.isBuffer(value.bytes) || !value.bytes.equals(canonicalBytes)
+      || sha256(value.bytes) !== expected.sha256
+      || value.manifest.schemaVersion !== 'model-effective-source/v2'
+      || value.manifest.formatId !== expected.formatId
+      || value.manifest.capabilityId !== expected.capabilityId
+      || value.manifest.providerPackageManifestSha256 !== expected.providerPackageManifestSha256
+      || !['complete', 'degraded'].includes(value.manifest.completeness)
+      || !Array.isArray(value.manifest.absent) || value.manifest.absent.length > 10_000) {
+    artifactError('reference-artifact-v2-invalid', 'The effective-source package is invalid.');
+  }
+  const absent = value.manifest.absent.map((entry) => {
+    closed(entry, ['role', 'classification', 'affectedDomains'], [], 'effective-source absence');
+    opaque(entry.role, 'effective-source absent role');
+    if (!['optional', 'degraded'].includes(entry.classification)
+        || !Array.isArray(entry.affectedDomains) || entry.affectedDomains.length > 64
+        || entry.affectedDomains.some((domain) => typeof domain !== 'string' || !OPAQUE_ID.test(domain))
+        || (entry.classification === 'degraded') !== (entry.affectedDomains.length > 0)) {
+      artifactError('reference-artifact-v2-invalid', 'The effective-source absence is invalid.');
+    }
+    return {
+      role: entry.role, classification: entry.classification,
+      affectedDomains: [...entry.affectedDomains].sort(),
+    };
+  }).sort((left, right) => Buffer.compare(Buffer.from(left.role), Buffer.from(right.role)));
+  if (new Set(absent.map((entry) => entry.role)).size !== absent.length
+      || absent.some((entry, index) => !canonicalJsonBytes(entry).equals(canonicalJsonBytes(value.manifest.absent[index])))
+      || (absent.some((entry) => entry.classification === 'degraded') ? 'degraded' : 'complete')
+        !== value.manifest.completeness) {
+    artifactError('reference-artifact-v2-invalid', 'The effective-source coverage is invalid.');
+  }
+  const receipt = validateReceipt(value.receipt, 'effective-source receipt');
+  if (receipt.logicalPath !== 'effective-source.json'
+      || receipt.logicalKind !== 'effective-source' || receipt.ordinal !== 0
+      || receipt.mediaType !== 'application/json' || receipt.itemCount !== 1
+      || receipt.sha256 !== expected.sha256 || receipt.bytes !== value.bytes.length) {
+    artifactError('reference-artifact-v2-invalid', 'The effective-source receipt is invalid.');
+  }
+  return {
+    receipt,
+    completeness: value.manifest.completeness,
+    discoveryPolicy: { ...value.manifest.discoveryPolicy },
+    absent,
+  };
+}
+
 export function buildArtifactV2Root(options) {
   if (!options || typeof options !== 'object' || Array.isArray(options)) {
     artifactError('reference-artifact-v2-invalid', 'Artifact root input is invalid.');
   }
+  closed(options, [
+    'formatId', 'capabilityId', 'providerPackageManifestSha256', 'effectiveSourceSha256',
+    'conversionRequestSha256', 'effectiveSource', 'indexes',
+  ], [], 'artifact root input');
   const formatId = opaque(options.formatId, 'formatId');
   const capabilityId = opaque(options.capabilityId, 'capabilityId');
   const providerPackageManifestSha256 = digest(
@@ -173,16 +235,10 @@ export function buildArtifactV2Root(options) {
   );
   const effectiveSourceSha256 = digest(options.effectiveSourceSha256, 'effectiveSourceSha256');
   const conversionRequestSha256 = digest(options.conversionRequestSha256, 'conversionRequestSha256');
-  if (!['complete', 'degraded'].includes(options.completeness)) {
-    artifactError('reference-artifact-v2-invalid', 'Artifact completeness is invalid.');
-  }
-  const effectiveSource = validateReceipt(options.effectiveSource, 'effective-source receipt');
-  if (effectiveSource.logicalPath !== 'effective-source.json'
-      || effectiveSource.logicalKind !== 'effective-source' || effectiveSource.ordinal !== 0
-      || effectiveSource.mediaType !== 'application/json' || effectiveSource.itemCount !== 1
-      || effectiveSource.sha256 !== effectiveSourceSha256) {
-    artifactError('reference-artifact-v2-invalid', 'The effective-source receipt is invalid.');
-  }
+  const source = validateEffectiveSource(options.effectiveSource, {
+    sha256: effectiveSourceSha256, formatId, capabilityId, providerPackageManifestSha256,
+  });
+  const effectiveSource = source.receipt;
   const indexes = {};
   const objects = [effectiveSource];
   for (const family of Object.keys(FAMILIES)) {
@@ -202,7 +258,8 @@ export function buildArtifactV2Root(options) {
   const manifest = {
     schemaVersion: ROOT_SCHEMA, artifactVersion: '2', formatId, capabilityId,
     providerPackageManifestSha256, effectiveSourceSha256, conversionRequestSha256,
-    completeness: options.completeness, indexes, objects,
+    discoveryPolicy: source.discoveryPolicy, completeness: source.completeness,
+    absent: source.absent, indexes, objects,
   };
   const bytes = canonicalJsonBytes(manifest);
   return { manifest, bytes, sha256: sha256(bytes) };

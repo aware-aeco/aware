@@ -25,11 +25,20 @@ function payload(family, ordinal, content, itemCount, extra = {}) {
 }
 
 function artifact() {
-  const sourceBytes = canonicalJsonBytes({ schemaVersion: 'model-effective-source/v2', consumed: [] });
-  const effectiveSource = artifactV2Receipt({
+  const sourceManifest = {
+    schemaVersion: 'model-effective-source/v2', formatId: 'format.synthetic', protocolVersion: '3',
+    capabilityId: 'capability.synthetic', providerFingerprintSha256: sha256(Buffer.from('provider')),
+    providerPackageManifestSha256: DIGESTS.provider,
+    discoveryPolicy: { policyId: 'policy.synthetic', sha256: sha256(Buffer.from('policy')) },
+    completeness: 'complete', primary: { namespaceId: 'model', path: 'model.db1', role: 'primary' },
+    consumed: [], absent: [], unsupportedExternal: [], authentication: [], crossFileEvidence: [],
+  };
+  const sourceBytes = canonicalJsonBytes(sourceManifest);
+  const sourceReceipt = artifactV2Receipt({
     logicalPath: 'effective-source.json', logicalKind: 'effective-source', ordinal: 0,
     mediaType: 'application/json', content: sourceBytes, itemCount: 1,
   });
+  const effectiveSource = { manifest: sourceManifest, bytes: sourceBytes, receipt: sourceReceipt };
   const indexes = {
     geometry: buildArtifactV2Index('geometry', [
       payload('geometry', 1, 'glb-one', 4, { bounds: [10, 0, 0, 20, 10, 10] }),
@@ -45,9 +54,9 @@ function artifact() {
     options: {
       formatId: 'format.synthetic', capabilityId: 'capability.synthetic',
       providerPackageManifestSha256: DIGESTS.provider,
-      effectiveSourceSha256: effectiveSource.sha256,
+      effectiveSourceSha256: sourceReceipt.sha256,
       conversionRequestSha256: DIGESTS.conversion,
-      completeness: 'complete', effectiveSource, indexes,
+      effectiveSource, indexes,
     },
     sourceBytes,
   };
@@ -67,6 +76,8 @@ test('canonical root enumerates exactly the source, indexes and payload objects'
   const result = buildArtifactV2Root(value.options);
   assert.equal(result.sha256, sha256(result.bytes));
   assert.equal(result.manifest.schemaVersion, 'model-reference-manifest/v2');
+  assert.deepEqual(result.manifest.discoveryPolicy, value.options.effectiveSource.manifest.discoveryPolicy);
+  assert.deepEqual(result.manifest.absent, []);
   assert.deepEqual(result.manifest.objects.map((entry) => entry.logicalPath), [
     'effective-source.json', 'entities.index.json', 'geometry.index.json', 'geometry/000000.glb',
     'geometry/000001.glb', 'metadata/entities-000000.json', 'properties.index.json',
@@ -74,6 +85,56 @@ test('canonical root enumerates exactly the source, indexes and payload objects'
   ]);
   assert.equal(result.bytes.includes(Buffer.from('runId')), false);
   assert.equal(result.bytes.includes(Buffer.from('artifactId')), false);
+});
+
+test('root derives degraded coverage from authenticated effective-source bytes', () => {
+  const value = artifact();
+  value.options.effectiveSource.manifest.absent = [{
+    role: 'catalogue.profile', classification: 'degraded', affectedDomains: ['geometry.profile'],
+  }];
+  value.options.effectiveSource.manifest.completeness = 'degraded';
+  value.options.effectiveSource.bytes = canonicalJsonBytes(value.options.effectiveSource.manifest);
+  value.options.effectiveSourceSha256 = sha256(value.options.effectiveSource.bytes);
+  value.options.effectiveSource.receipt = artifactV2Receipt({
+    logicalPath: 'effective-source.json', logicalKind: 'effective-source', ordinal: 0,
+    mediaType: 'application/json', content: value.options.effectiveSource.bytes, itemCount: 1,
+  });
+  const result = buildArtifactV2Root(value.options);
+  assert.equal(result.manifest.completeness, 'degraded');
+  assert.deepEqual(result.manifest.absent, value.options.effectiveSource.manifest.absent);
+
+  value.options.effectiveSource.manifest.absent[0].affectedDomains = [];
+  value.options.effectiveSource.bytes = canonicalJsonBytes(value.options.effectiveSource.manifest);
+  value.options.effectiveSourceSha256 = sha256(value.options.effectiveSource.bytes);
+  value.options.effectiveSource.receipt = artifactV2Receipt({
+    logicalPath: 'effective-source.json', logicalKind: 'effective-source', ordinal: 0,
+    mediaType: 'application/json', content: value.options.effectiveSource.bytes, itemCount: 1,
+  });
+  assert.throws(
+    () => buildArtifactV2Root(value.options),
+    (error) => error.code === 'reference-artifact-v2-invalid',
+  );
+});
+
+test('root binds the effective source to its format, capability and provider package', () => {
+  for (const [field, value] of [
+    ['formatId', 'format.other'],
+    ['capabilityId', 'capability.other'],
+    ['providerPackageManifestSha256', sha256(Buffer.from('other package'))],
+  ]) {
+    const artifactValue = artifact();
+    artifactValue.options.effectiveSource.manifest[field] = value;
+    artifactValue.options.effectiveSource.bytes = canonicalJsonBytes(artifactValue.options.effectiveSource.manifest);
+    artifactValue.options.effectiveSourceSha256 = sha256(artifactValue.options.effectiveSource.bytes);
+    artifactValue.options.effectiveSource.receipt = artifactV2Receipt({
+      logicalPath: 'effective-source.json', logicalKind: 'effective-source', ordinal: 0,
+      mediaType: 'application/json', content: artifactValue.options.effectiveSource.bytes, itemCount: 1,
+    });
+    assert.throws(
+      () => buildArtifactV2Root(artifactValue.options),
+      (error) => error.code === 'reference-artifact-v2-invalid',
+    );
+  }
 });
 
 test('root bytes are independent of caller receipt and object order', () => {

@@ -7,7 +7,7 @@
   "required": [
     "schemaVersion", "artifactVersion", "formatId", "capabilityId",
     "providerPackageManifestSha256", "effectiveSourceSha256", "conversionRequestSha256",
-    "completeness", "indexes", "objects"
+    "discoveryPolicy", "completeness", "absent", "indexes", "objects"
   ],
   "properties": {
     "schemaVersion": { "const": "model-reference-manifest/v2" },
@@ -17,7 +17,34 @@
     "providerPackageManifestSha256": { "$ref": "#/$defs/sha256" },
     "effectiveSourceSha256": { "$ref": "#/$defs/sha256" },
     "conversionRequestSha256": { "$ref": "#/$defs/sha256" },
+    "discoveryPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policyId", "sha256"],
+      "properties": {
+        "policyId": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,128}$" },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
     "completeness": { "enum": ["complete", "degraded"] },
+    "absent": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role", "classification", "affectedDomains"],
+        "properties": {
+          "role": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,128}$" },
+          "classification": { "enum": ["optional", "degraded"] },
+          "affectedDomains": {
+            "type": "array",
+            "maxItems": 64,
+            "items": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,128}$" }
+          }
+        }
+      }
+    },
     "indexes": {
       "type": "object",
       "additionalProperties": false,
