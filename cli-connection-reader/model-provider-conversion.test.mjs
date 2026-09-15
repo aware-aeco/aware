@@ -70,6 +70,10 @@ async function scenario(t) {
   const deps = {
     capture: async () => { await fs.mkdir(capture.stagingRoot); return capture; },
     discover: async () => ({ effectiveSource, bytes, sha256: sha256(bytes) }),
+    stageClosure: async (_capture, _discovered, root) => {
+      await fs.mkdir(root);
+      return { ...capture, stagingRoot: root };
+    },
     loadPackage: async () => loaded,
     loadPolicy: async () => ({ policy, sha256: policySha256 }),
     verifyCapture: async () => true,
@@ -97,6 +101,7 @@ test('recaptures, rediscovers and invokes the exact enrolled provider before adm
   const control = JSON.parse(value.calls[0].stdin.toString('utf8'));
   assert.equal(control.operation, 'convert');
   assert.equal(control.effectiveSource.sha256, value.options.effectiveSourceSha256);
+  assert.equal(control.capture.root, path.join(value.options.stagingRoot, 'closure'));
   assert.equal(control.conversionRequest.effectiveSourceSha256, value.options.effectiveSourceSha256);
   assert.equal(control.authorization, 'short-lived-token');
   assert.equal(value.calls[0].stdin.includes(Buffer.from('D:\\model')), false);
@@ -165,4 +170,14 @@ test('rejects a dependency policy changed during conversion', async (t) => {
     (error) => error.code === 'reference-dependency-policy-changed',
   );
   assert.equal(value.calls.length, 1);
+});
+
+test('never removes a pre-existing provider output directory', async (t) => {
+  const value = await scenario(t);
+  const outputRoot = path.join(value.options.stagingRoot, 'provider-output');
+  await fs.mkdir(outputRoot);
+  const sentinel = path.join(outputRoot, 'sentinel.txt');
+  await fs.writeFile(sentinel, 'keep');
+  await assert.rejects(() => convertProviderSource(value.options, value.deps), (error) => error.code === 'EEXIST');
+  assert.equal(await fs.readFile(sentinel, 'utf8'), 'keep');
 });

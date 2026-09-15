@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import { constants as fsConstants } from 'node:fs';
 import path from 'node:path';
 
 import {
@@ -11,7 +12,7 @@ import {
 import { validateDependencyPolicy } from './model-effective-source.mjs';
 import { providerOutputLimits, verifyProviderOutput } from './model-provider-output.mjs';
 import { loadEnrolledProviderPackage } from './model-provider-package.mjs';
-import { minimalProviderEnvironment } from './model-provider.mjs';
+import { hashRegularFile, minimalProviderEnvironment } from './model-provider.mjs';
 import { captureSourceNamespaces, verifyCapturedSource } from './model-source-capture.mjs';
 
 const REQUEST_SCHEMA = 'model-reference-conversion-request/v3';
@@ -39,6 +40,37 @@ function opaque(value, label) {
 
 function checkCancellation(signal) {
   if (signal?.aborted) conversionError('reference-cancelled', 'Provider conversion was cancelled.');
+}
+
+async function stageConsumedClosure(capture, discovered, closureRoot, signal) {
+  await fs.mkdir(closureRoot, { mode: 0o700 });
+  await fs.mkdir(path.join(closureRoot, 'namespaces'), { mode: 0o700 });
+  const grouped = new Map();
+  for (const receipt of discovered.effectiveSource.consumed) {
+    checkCancellation(signal);
+    const files = grouped.get(receipt.namespaceId) ?? [];
+    files.push({ path: receipt.path, bytes: receipt.bytes, sha256: receipt.sha256 });
+    grouped.set(receipt.namespaceId, files);
+    const source = path.join(capture.stagingRoot, 'namespaces', receipt.namespaceId, ...receipt.path.split('/'));
+    const target = path.join(closureRoot, 'namespaces', receipt.namespaceId, ...receipt.path.split('/'));
+    await fs.mkdir(path.dirname(target), { recursive: true, mode: 0o700 });
+    await fs.copyFile(source, target, fsConstants.COPYFILE_EXCL);
+    await fs.chmod(target, 0o400);
+    const copied = await hashRegularFile(target, receipt.bytes, 'consumed source closure');
+    if (Number(copied.stat.size) !== receipt.bytes || copied.sha256 !== receipt.sha256) {
+      conversionError('reference-source-changed', 'A consumed source file changed while staging conversion.', true);
+    }
+  }
+  const namespaces = [...grouped.entries()]
+    .sort(([left], [right]) => left.localeCompare(right, 'en'))
+    .map(([namespaceId, files]) => ({
+      namespaceId,
+      files: files.sort((left, right) => left.path.localeCompare(right.path, 'en')),
+    }));
+  const manifest = { schemaVersion: 'aware.model-source-capture/v1', namespaces };
+  const manifestBytes = canonicalJsonBytes(manifest);
+  await fs.writeFile(path.join(closureRoot, 'capture.json'), manifestBytes, { flag: 'wx', mode: 0o400 });
+  return { stagingRoot: closureRoot, manifest, manifestSha256: sha256(manifestBytes) };
 }
 
 export function buildProviderConversionRequest(options) {
@@ -90,7 +122,7 @@ function validateExpectedSource(options) {
   return { bytes, sha256: expectedSha256 };
 }
 
-async function invokeConvert(options, capture, discovered, identity, runRoot, deps) {
+async function invokeConvert(options, capture, closure, discovered, identity, runRoot, ownership, deps) {
   const loadOptions = {
     home: options.home, formatId: options.formatId, capabilityId: options.capabilityId,
     manifestSha256: options.manifestSha256, environment: options.environment,
@@ -110,14 +142,16 @@ async function invokeConvert(options, capture, discovered, identity, runRoot, de
   const admittedRoot = path.join(runRoot, 'admitted-output');
   const sourceManifestPath = path.join(runRoot, 'effective-source.json');
   await fs.writeFile(sourceManifestPath, discovered.bytes, { flag: 'wx', mode: 0o400 });
+  ownership.effectiveSource = true;
   await fs.mkdir(outputRoot, { mode: 0o700 });
+  ownership.providerOutput = true;
   const control = canonicalJsonBytes({
     operation: 'convert', protocolVersion: '3', formatId: options.formatId,
     capabilityId: options.capabilityId, packageManifestSha256: options.manifestSha256,
     authorization: authorization(options.authorization),
     capture: {
-      schemaVersion: capture.manifest.schemaVersion, manifestSha256: capture.manifestSha256,
-      root: capture.stagingRoot, manifestPath: 'capture.json', namespaceRoot: 'namespaces',
+      schemaVersion: closure.manifest.schemaVersion, manifestSha256: closure.manifestSha256,
+      root: closure.stagingRoot, manifestPath: 'capture.json', namespaceRoot: 'namespaces',
     },
     effectiveSource: {
       schemaVersion: discovered.effectiveSource.schemaVersion, sha256: discovered.sha256,
@@ -170,6 +204,9 @@ async function invokeConvert(options, capture, discovered, identity, runRoot, de
   await (deps.verifyCapture ?? verifyCapturedSource)(capture, {
     limits: options.captureLimits, signal: options.signal,
   });
+  await (deps.verifyCapture ?? verifyCapturedSource)(closure, {
+    limits: options.captureLimits, signal: options.signal,
+  });
   const after = await (deps.loadPackage ?? loadEnrolledProviderPackage)(loadOptions);
   if (packageProviderIdentity(after, options.manifestSha256).sha256 !== provider.sha256) {
     conversionError('reference-provider-package-changed', 'Provider identity changed during conversion.');
@@ -200,21 +237,36 @@ export async function convertProviderSource(options, deps = {}) {
     conversionSettings: options.conversionSettings, limits: options.limits,
     outputLimits: options.outputLimits,
   });
-  let capture;
+  let capture; let closure;
+  const ownership = { source: false, closure: false, providerOutput: false, effectiveSource: false };
   try {
     checkCancellation(options.signal);
     capture = await (deps.capture ?? captureSourceNamespaces)(options.namespaces, path.join(options.stagingRoot, 'source'), {
       limits: options.captureLimits, signal: options.signal,
     });
+    ownership.source = true;
     const discovered = await (deps.discover ?? discoverCapturedSource)(options, capture);
     if (discovered.sha256 !== expected.sha256 || !discovered.bytes.equals(expected.bytes)) {
       conversionError('reference-effective-source-changed', 'The effective model source changed before conversion.', true);
     }
-    const output = await invokeConvert(options, capture, discovered, identity, options.stagingRoot, deps);
+    await (deps.verifyCapture ?? verifyCapturedSource)(capture, {
+      limits: options.captureLimits, signal: options.signal,
+    });
+    closure = await (deps.stageClosure ?? stageConsumedClosure)(
+      capture, discovered, path.join(options.stagingRoot, 'closure'), options.signal,
+    );
+    ownership.closure = true;
+    await (deps.verifyCapture ?? verifyCapturedSource)(capture, {
+      limits: options.captureLimits, signal: options.signal,
+    });
+    const output = await invokeConvert(
+      options, capture, closure, discovered, identity, options.stagingRoot, ownership, deps,
+    );
     return { output, conversionRequest: identity.request, conversionRequestSha256: identity.sha256 };
   } finally {
-    if (capture) await fs.rm(capture.stagingRoot, { recursive: true, force: true }).catch(() => {});
-    await fs.rm(path.join(options.stagingRoot, 'provider-output'), { recursive: true, force: true }).catch(() => {});
-    await fs.rm(path.join(options.stagingRoot, 'effective-source.json'), { force: true }).catch(() => {});
+    if (ownership.source) await fs.rm(capture.stagingRoot, { recursive: true, force: true }).catch(() => {});
+    if (ownership.closure) await fs.rm(closure.stagingRoot, { recursive: true, force: true }).catch(() => {});
+    if (ownership.providerOutput) await fs.rm(path.join(options.stagingRoot, 'provider-output'), { recursive: true, force: true }).catch(() => {});
+    if (ownership.effectiveSource) await fs.rm(path.join(options.stagingRoot, 'effective-source.json'), { force: true }).catch(() => {});
   }
 }
