@@ -21,6 +21,11 @@ const FAMILIES = Object.freeze({
 const OPAQUE_ID = /^[A-Za-z0-9._-]{1,128}$/;
 const LOGICAL_PATH = /^(?:[A-Za-z0-9._-]+\/)*[A-Za-z0-9._-]+$/;
 
+function denseArray(value) {
+  return Array.isArray(value)
+    && Array.from({ length: value.length }, (_, index) => Object.hasOwn(value, index)).every(Boolean);
+}
+
 function artifactError(code, message, details = undefined) {
   throw new ModelReaderError(code, 'canonical-artifact', false, message, details);
 }
@@ -50,7 +55,7 @@ function integer(value, label, maximum = Number.MAX_SAFE_INTEGER) {
 }
 
 function bounds(value) {
-  if (!Array.isArray(value) || value.length !== 6
+  if (!denseArray(value) || value.length !== 6
       || value.some((entry) => typeof entry !== 'number' || !Number.isFinite(entry))
       || value[0] > value[3] || value[1] > value[4] || value[2] > value[5]) {
     artifactError('reference-artifact-v2-invalid', 'artifact bounds are invalid.');
@@ -111,7 +116,7 @@ export function artifactV2Receipt(options) {
 export function buildArtifactV2Index(family, payloadReceipts) {
   const contract = typeof family === 'string' && Object.hasOwn(FAMILIES, family)
     ? FAMILIES[family] : undefined;
-  if (!contract || !Array.isArray(payloadReceipts) || payloadReceipts.length > 256
+  if (!contract || !denseArray(payloadReceipts) || payloadReceipts.length > 256
       || ((family === 'geometry' || family === 'entities') && payloadReceipts.length === 0)) {
     artifactError('reference-artifact-v2-invalid', 'Artifact index input is invalid.');
   }
@@ -182,14 +187,14 @@ function validateEffectiveSource(value, expected) {
       || value.manifest.capabilityId !== expected.capabilityId
       || value.manifest.providerPackageManifestSha256 !== expected.providerPackageManifestSha256
       || !['complete', 'degraded'].includes(value.manifest.completeness)
-      || !Array.isArray(value.manifest.absent) || value.manifest.absent.length > 10_000) {
+      || !denseArray(value.manifest.absent) || value.manifest.absent.length > 10_000) {
     artifactError('reference-artifact-v2-invalid', 'The effective-source package is invalid.');
   }
   const absent = value.manifest.absent.map((entry) => {
     closed(entry, ['role', 'classification', 'affectedDomains'], [], 'effective-source absence');
     opaque(entry.role, 'effective-source absent role');
     if (!['optional', 'degraded'].includes(entry.classification)
-        || !Array.isArray(entry.affectedDomains) || entry.affectedDomains.length > 64
+        || !denseArray(entry.affectedDomains) || entry.affectedDomains.length > 64
         || entry.affectedDomains.some((domain) => typeof domain !== 'string' || !OPAQUE_ID.test(domain))
         || (entry.classification === 'degraded') !== (entry.affectedDomains.length > 0)) {
       artifactError('reference-artifact-v2-invalid', 'The effective-source absence is invalid.');

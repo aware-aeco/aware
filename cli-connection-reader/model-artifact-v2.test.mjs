@@ -163,6 +163,10 @@ test('root bytes are independent of caller receipt and object order', () => {
 
 test('indexes refuse gaps, wrong names and missing required families', () => {
   assert.throws(
+    () => buildArtifactV2Index('entities', new Array(1)),
+    (error) => error.code === 'reference-artifact-v2-invalid',
+  );
+  assert.throws(
     () => buildArtifactV2Index('geometry', [payload('geometry', 1, 'glb', 1)]),
     (error) => error.code === 'reference-artifact-v2-invalid',
   );
@@ -215,6 +219,12 @@ test('root refuses a self-consistent index package whose bytes are not canonical
 });
 
 test('receipts reject unsafe numbers, inverted bounds and invalid ID ranges', () => {
+  const sparseBounds = new Array(6);
+  sparseBounds[0] = 0; sparseBounds[3] = 1;
+  assert.throws(
+    () => payload('geometry', 0, 'glb', 1, { bounds: sparseBounds }),
+    (error) => error.code === 'reference-artifact-v2-invalid',
+  );
   assert.throws(
     () => payload('geometry', 0, 'glb', 1, { bounds: [1, 0, 0, 0, 1, 1] }),
     (error) => error.code === 'reference-artifact-v2-invalid',
@@ -238,4 +248,25 @@ test('receipts reject unsafe numbers, inverted bounds and invalid ID ranges', ()
     () => payload('entities', 0, '{}', 1, { idRange: { first: '\ud800', last: '\ud800' } }),
     (error) => error.code === 'reference-artifact-v2-invalid',
   );
+});
+
+test('root rejects sparse effective-source coverage arrays', () => {
+  for (const absent of [
+    new Array(1),
+    [{ role: 'catalogue', classification: 'degraded', affectedDomains: new Array(1) }],
+  ]) {
+    const value = artifact();
+    value.options.effectiveSource.manifest.absent = absent;
+    value.options.effectiveSource.manifest.completeness = 'degraded';
+    value.options.effectiveSource.bytes = canonicalJsonBytes(value.options.effectiveSource.manifest);
+    value.options.effectiveSourceSha256 = sha256(value.options.effectiveSource.bytes);
+    value.options.effectiveSource.receipt = artifactV2Receipt({
+      logicalPath: 'effective-source.json', logicalKind: 'effective-source', ordinal: 0,
+      mediaType: 'application/json', content: value.options.effectiveSource.bytes, itemCount: 1,
+    });
+    assert.throws(
+      () => buildArtifactV2Root(value.options),
+      (error) => error.code === 'reference-artifact-v2-invalid',
+    );
+  }
 });
