@@ -46,10 +46,16 @@ test('partition bytes do not depend on caller object-key order', () => {
 });
 
 test('rejects duplicate, reversed, sparse and oversized records', () => {
+  let laterRecordRead = false;
+  const unreadLater = {
+    get key() { laterRecordRead = true; throw new Error('must not read later records'); },
+    record: { id: 'unreachable' },
+  };
   assert.throws(
-    () => partitionMetadataRecords('entities', [records[0], records[0]]),
+    () => partitionMetadataRecords('entities', [records[0], records[0], unreadLater]),
     (error) => error.code === 'reference-artifact-v2-duplicate',
   );
+  assert.equal(laterRecordRead, false);
   assert.throws(
     () => partitionMetadataRecords('entities', [records[1], records[0]]),
     (error) => error.code === 'reference-artifact-v2-order-invalid',

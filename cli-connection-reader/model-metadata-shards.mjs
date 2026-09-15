@@ -90,15 +90,19 @@ export function partitionMetadataRecords(family, orderedRecords, options = {}) {
   if (emptyBytes.length > enforced.shardBytes) {
     shardError('reference-artifact-v2-limit', 'The metadata shard envelope exceeds its byte limit.');
   }
-  const records = orderedRecords.map(canonicalRecord);
-  for (let index = 1; index < records.length; index += 1) {
-    const comparison = Buffer.compare(records[index - 1].keyBytes, records[index].keyBytes);
+  const records = [];
+  let previous;
+  for (const input of orderedRecords) {
+    const record = canonicalRecord(input);
+    const comparison = previous ? Buffer.compare(previous.keyBytes, record.keyBytes) : -1;
     if (comparison >= 0) {
       shardError(
         comparison === 0 ? 'reference-artifact-v2-duplicate' : 'reference-artifact-v2-order-invalid',
         comparison === 0 ? 'Metadata record identities must be unique.' : 'Metadata records are not globally ordered.',
       );
     }
+    records.push(record);
+    previous = record;
   }
 
   const groups = [];
