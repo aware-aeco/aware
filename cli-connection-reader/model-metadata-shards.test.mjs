@@ -59,6 +59,10 @@ test('rejects duplicate, reversed, sparse and oversized records', () => {
     (error) => error.code === 'reference-artifact-v2-invalid',
   );
   assert.throws(
+    () => partitionMetadataRecords('entities', new Array(100_000_000)),
+    (error) => error.code === 'reference-artifact-v2-invalid',
+  );
+  assert.throws(
     () => partitionMetadataRecords('entities', [records[0]], { limits: { shardBytes: 64 } }),
     (error) => error.code === 'reference-artifact-v2-limit',
   );
@@ -66,12 +70,12 @@ test('rejects duplicate, reversed, sparse and oversized records', () => {
 
 test('empty optional families produce empty canonical indexes', () => {
   for (const family of ['properties', 'relationships']) {
-    const result = partitionMetadataRecords(family, []);
+    const result = partitionMetadataRecords(family, [], { limits: { shardBytes: 64 } });
     assert.deepEqual(result.shards, []);
     assert.equal(result.index.index.itemCount, 0);
   }
   assert.throws(
     () => partitionMetadataRecords('entities', []),
-    (error) => error.code === 'reference-artifact-v2-limit',
+    (error) => error.code === 'reference-artifact-v2-invalid',
   );
 });

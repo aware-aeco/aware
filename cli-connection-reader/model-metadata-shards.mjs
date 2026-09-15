@@ -5,6 +5,7 @@ const SCHEMA = 'aware.model-metadata-shard/v2';
 const FAMILIES = new Set(['entities', 'properties', 'relationships']);
 const DEFAULT_LIMITS = Object.freeze({ shardBytes: 16 * 1024 * 1024, shardRecords: 5_000_000 });
 const HARD_LIMITS = Object.freeze({ shardBytes: 32 * 1024 * 1024, shardRecords: 10_000_000 });
+const MAX_FAMILY_RECORDS = 10_000_000;
 
 function shardError(code, message, details = undefined) {
   throw new ModelReaderError(code, 'canonical-artifact', false, message, details);
@@ -70,11 +71,21 @@ export function partitionMetadataRecords(family, orderedRecords, options = {}) {
   if (!FAMILIES.has(family) || !Array.isArray(orderedRecords)
       || !options || typeof options !== 'object' || Array.isArray(options)
       || Object.keys(options).some((key) => key !== 'limits')
-      || Array.from({ length: orderedRecords.length }, (_, index) => Object.hasOwn(orderedRecords, index))
-        .some((present) => !present)) {
+      || orderedRecords.length > MAX_FAMILY_RECORDS) {
     shardError('reference-artifact-v2-invalid', 'Metadata shard input is invalid.');
   }
+  for (let index = 0; index < orderedRecords.length; index += 1) {
+    if (!Object.hasOwn(orderedRecords, index)) {
+      shardError('reference-artifact-v2-invalid', 'Metadata shard input is invalid.');
+    }
+  }
   const enforced = limits(options.limits);
+  if (orderedRecords.length === 0) {
+    if (family === 'entities') {
+      shardError('reference-artifact-v2-invalid', 'A canonical model requires at least one entity.');
+    }
+    return { shards: [], index: buildArtifactV2Index(family, []) };
+  }
   const emptyBytes = frame(family, []);
   if (emptyBytes.length > enforced.shardBytes) {
     shardError('reference-artifact-v2-limit', 'The metadata shard envelope exceeds its byte limit.');
@@ -104,7 +115,7 @@ export function partitionMetadataRecords(family, orderedRecords, options = {}) {
     current.push(record); currentBytes += record.recordBytes.length + (current.length > 1 ? 1 : 0);
   }
   if (current.length) groups.push(current);
-  if (groups.length > 256 || (family === 'entities' && groups.length === 0)) {
+  if (groups.length > 256) {
     shardError('reference-artifact-v2-limit', 'The metadata family exceeds its shard count limit.');
   }
 
