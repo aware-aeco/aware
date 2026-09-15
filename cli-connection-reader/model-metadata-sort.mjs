@@ -73,6 +73,17 @@ async function writeRun(records, pathname) {
   }
 }
 
+async function closeRun(state) {
+  try {
+    const returned = state.iterator.return?.();
+    if (returned) await returned;
+  } catch {
+    // Cleanup is best-effort and must not replace the primary failure.
+  }
+  state.lines.close();
+  state.stream.destroy();
+}
+
 async function openRun(pathname, recordBytes) {
   const stream = createReadStream(pathname, { highWaterMark: 1024 * 1024 });
   const lines = createInterface({ input: stream, crlfDelay: Infinity });
@@ -98,8 +109,13 @@ async function openRun(pathname, recordBytes) {
     state.previous = record.keyBytes;
     state.head = record;
   };
-  await state.advance();
-  return state;
+  try {
+    await state.advance();
+    return state;
+  } catch (error) {
+    await closeRun(state);
+    throw error;
+  }
 }
 
 async function mergeRuns(inputs, output, limits, signal) {
@@ -127,11 +143,7 @@ async function mergeRuns(inputs, output, limits, signal) {
     await handle.sync();
   } finally {
     await handle?.close().catch(() => {});
-    await Promise.all(states.map(async (state) => {
-      const returned = state.iterator.return?.();
-      if (returned) await returned.catch(() => {});
-      state.lines.close(); state.stream.destroy();
-    }));
+    await Promise.all(states.map(closeRun));
   }
 }
 
