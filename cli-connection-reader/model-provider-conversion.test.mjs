@@ -79,7 +79,7 @@ async function scenario(t) {
     verifyCapture: async () => true,
     verifyOutput: async (root, verifyOptions) => ({ root: verifyOptions.admittedRoot, sourceRoot: root, verifyOptions }),
   };
-  return { options, deps, calls, bytes };
+  return { options, deps, calls, bytes, capture, effectiveSource };
 }
 
 test('conversion identity binds source, package, settings and enforced limits', () => {
@@ -180,4 +180,65 @@ test('never removes a pre-existing provider output directory', async (t) => {
   await fs.writeFile(sentinel, 'keep');
   await assert.rejects(() => convertProviderSource(value.options, value.deps), (error) => error.code === 'EEXIST');
   assert.equal(await fs.readFile(sentinel, 'utf8'), 'keep');
+});
+
+test('filtered closure preserves verified capture order instead of locale order', async (t) => {
+  const value = await scenario(t);
+  const sourceFiles = [
+    { path: 'B', content: Buffer.from('upper') },
+    { path: 'a', content: Buffer.from('lower') },
+  ].map((file) => ({ ...file, bytes: file.content.length, sha256: sha256(file.content) }));
+  value.capture.manifest.namespaces = [{
+    namespaceId: 'model',
+    files: sourceFiles.map(({ path: filePath, bytes, sha256: digest }) => ({ path: filePath, bytes, sha256: digest })),
+  }];
+  value.effectiveSource.consumed = [...sourceFiles].reverse().map(({ path: filePath, bytes, sha256: digest }) => ({
+    namespaceId: 'model', path: filePath, role: 'primary', bytes, sha256: digest,
+  }));
+  const effectiveBytes = canonicalJsonBytes(value.effectiveSource);
+  value.options.effectiveSourceSha256 = sha256(effectiveBytes);
+  value.deps.discover = async () => ({
+    effectiveSource: value.effectiveSource, bytes: effectiveBytes, sha256: sha256(effectiveBytes),
+  });
+  value.deps.capture = async () => {
+    const root = path.join(value.capture.stagingRoot, 'namespaces', 'model');
+    await fs.mkdir(root, { recursive: true });
+    await Promise.all(sourceFiles.map((file) => fs.writeFile(path.join(root, file.path), file.content)));
+    return value.capture;
+  };
+  delete value.deps.stageClosure;
+  let closureManifest;
+  value.options.hostRun = async (request) => {
+    closureManifest = JSON.parse(await fs.readFile(path.join(JSON.parse(request.stdin).capture.root, 'capture.json'), 'utf8'));
+    return {
+      exitCode: 0, stderr: Buffer.alloc(0), stdout: canonicalJsonBytes({
+        schemaVersion: 'aware.model-provider-conversion-response/v1', protocolVersion: '3',
+        capabilityId: 'capability.synthetic', complete: true,
+      }),
+    };
+  };
+  await convertProviderSource(value.options, value.deps);
+  assert.deepEqual(closureManifest.namespaces[0].files.map((file) => file.path), ['B', 'a']);
+});
+
+test('failed closure staging removes the partial run-owned directory', async (t) => {
+  const value = await scenario(t);
+  const missing = Buffer.from('missing');
+  value.capture.manifest.namespaces = [{
+    namespaceId: 'model', files: [{ path: 'missing.db', bytes: missing.length, sha256: sha256(missing) }],
+  }];
+  value.effectiveSource.consumed = [{
+    namespaceId: 'model', path: 'missing.db', role: 'primary', bytes: missing.length, sha256: sha256(missing),
+  }];
+  const effectiveBytes = canonicalJsonBytes(value.effectiveSource);
+  value.options.effectiveSourceSha256 = sha256(effectiveBytes);
+  value.deps.discover = async () => ({
+    effectiveSource: value.effectiveSource, bytes: effectiveBytes, sha256: sha256(effectiveBytes),
+  });
+  delete value.deps.stageClosure;
+  await assert.rejects(() => convertProviderSource(value.options, value.deps), (error) => error.code === 'ENOENT');
+  await assert.rejects(
+    fs.stat(path.join(value.options.stagingRoot, 'closure')),
+    (error) => error.code === 'ENOENT',
+  );
 });

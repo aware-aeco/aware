@@ -43,34 +43,47 @@ function checkCancellation(signal) {
 }
 
 async function stageConsumedClosure(capture, discovered, closureRoot, signal) {
-  await fs.mkdir(closureRoot, { mode: 0o700 });
-  await fs.mkdir(path.join(closureRoot, 'namespaces'), { mode: 0o700 });
-  const grouped = new Map();
-  for (const receipt of discovered.effectiveSource.consumed) {
-    checkCancellation(signal);
-    const files = grouped.get(receipt.namespaceId) ?? [];
-    files.push({ path: receipt.path, bytes: receipt.bytes, sha256: receipt.sha256 });
-    grouped.set(receipt.namespaceId, files);
-    const source = path.join(capture.stagingRoot, 'namespaces', receipt.namespaceId, ...receipt.path.split('/'));
-    const target = path.join(closureRoot, 'namespaces', receipt.namespaceId, ...receipt.path.split('/'));
-    await fs.mkdir(path.dirname(target), { recursive: true, mode: 0o700 });
-    await fs.copyFile(source, target, fsConstants.COPYFILE_EXCL);
-    await fs.chmod(target, 0o400);
-    const copied = await hashRegularFile(target, receipt.bytes, 'consumed source closure');
-    if (Number(copied.stat.size) !== receipt.bytes || copied.sha256 !== receipt.sha256) {
-      conversionError('reference-source-changed', 'A consumed source file changed while staging conversion.', true);
+  let ownsRoot = false;
+  try {
+    await fs.mkdir(closureRoot, { mode: 0o700 });
+    ownsRoot = true;
+    await fs.mkdir(path.join(closureRoot, 'namespaces'), { mode: 0o700 });
+    const consumed = new Map(discovered.effectiveSource.consumed.map((receipt) => [
+      `${receipt.namespaceId}\0${receipt.path}`, receipt,
+    ]));
+    const namespaces = [];
+    for (const namespace of capture.manifest.namespaces) {
+      const files = [];
+      for (const captured of namespace.files) {
+        const key = `${namespace.namespaceId}\0${captured.path}`;
+        const receipt = consumed.get(key);
+        if (!receipt) continue;
+        checkCancellation(signal);
+        files.push({ path: receipt.path, bytes: receipt.bytes, sha256: receipt.sha256 });
+        consumed.delete(key);
+        const source = path.join(capture.stagingRoot, 'namespaces', receipt.namespaceId, ...receipt.path.split('/'));
+        const target = path.join(closureRoot, 'namespaces', receipt.namespaceId, ...receipt.path.split('/'));
+        await fs.mkdir(path.dirname(target), { recursive: true, mode: 0o700 });
+        await fs.copyFile(source, target, fsConstants.COPYFILE_EXCL);
+        await fs.chmod(target, 0o400);
+        const copied = await hashRegularFile(target, receipt.bytes, 'consumed source closure');
+        if (Number(copied.stat.size) !== receipt.bytes || copied.sha256 !== receipt.sha256) {
+          conversionError('reference-source-changed', 'A consumed source file changed while staging conversion.', true);
+        }
+      }
+      if (files.length > 0) namespaces.push({ namespaceId: namespace.namespaceId, files });
     }
+    if (consumed.size !== 0) {
+      conversionError('reference-source-changed', 'A consumed source file is absent from the verified capture.', true);
+    }
+    const manifest = { schemaVersion: 'aware.model-source-capture/v1', namespaces };
+    const manifestBytes = canonicalJsonBytes(manifest);
+    await fs.writeFile(path.join(closureRoot, 'capture.json'), manifestBytes, { flag: 'wx', mode: 0o400 });
+    return { stagingRoot: closureRoot, manifest, manifestSha256: sha256(manifestBytes) };
+  } catch (error) {
+    if (ownsRoot) await fs.rm(closureRoot, { recursive: true, force: true }).catch(() => {});
+    throw error;
   }
-  const namespaces = [...grouped.entries()]
-    .sort(([left], [right]) => left.localeCompare(right, 'en'))
-    .map(([namespaceId, files]) => ({
-      namespaceId,
-      files: files.sort((left, right) => left.path.localeCompare(right.path, 'en')),
-    }));
-  const manifest = { schemaVersion: 'aware.model-source-capture/v1', namespaces };
-  const manifestBytes = canonicalJsonBytes(manifest);
-  await fs.writeFile(path.join(closureRoot, 'capture.json'), manifestBytes, { flag: 'wx', mode: 0o400 });
-  return { stagingRoot: closureRoot, manifest, manifestSha256: sha256(manifestBytes) };
 }
 
 export function buildProviderConversionRequest(options) {
