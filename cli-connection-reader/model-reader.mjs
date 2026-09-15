@@ -147,11 +147,6 @@ function validateRequest(command, args, deps) {
     if (error instanceof ModelReaderError) throw error;
     readerError('reference-request-invalid', 'request', 'The model reader request is invalid.', false, error);
   }
-  if (command !== 'preflight' && protocolVersion === '2'
-    && (typeof args['conversion-attempt-id'] !== 'string'
-      || !CONVERSION_ATTEMPT_ID.test(args['conversion-attempt-id']))) {
-    readerError('reference-provider-request-invalid', 'request', 'The managed Revit conversion attempt identity is invalid.');
-  }
   if (command !== 'preflight') {
     sourcePathFrom(args);
     assertSha256(args['source-sha256'], 'source-sha256');
@@ -165,6 +160,15 @@ function validateRequest(command, args, deps) {
     if (args[field] !== undefined) assertSha256(args[field], label);
   }
   return { limits, pin: args['expected-provider-sha256'] };
+}
+
+function conversionAttemptId(args, protocolVersion) {
+  if (protocolVersion !== '2') return undefined;
+  const attemptId = args['conversion-attempt-id'];
+  if (typeof attemptId !== 'string' || !CONVERSION_ATTEMPT_ID.test(attemptId)) {
+    readerError('reference-provider-request-invalid', 'request', 'The managed Revit conversion attempt identity is invalid.');
+  }
+  return attemptId;
 }
 
 function emit(deps, phase, extra = {}) {
@@ -277,6 +281,9 @@ async function convertAndCache(args, deps, config, readiness) {
     owner = await acquireCacheOwner({ root: config.cacheRoot, key, fenced: fence !== null });
     try { return { hit: true, key, cache: await read() }; }
     catch (error) { if (error?.code !== 'reference-cache-miss') throw error; }
+    // A durable attempt identity binds a managed conversion request to its receipt. A fully
+    // authenticated cache hit starts no conversion, so it must remain readable without one.
+    const attemptId = conversionAttemptId(args, expectedProtocolVersion);
     emit(deps, 'convert');
     const runRoot = await newRunRoot(config.privateRoot);
     let conversion;
@@ -291,7 +298,7 @@ async function convertAndCache(args, deps, config, readiness) {
         expectedProtocolVersion,
         expectedDestination: args['expected-provider-destination'],
         authorityStorePath: args['authority-store-path'],
-        conversionAttemptId: args['conversion-attempt-id'],
+        conversionAttemptId: attemptId,
         readerSchemaVersion,
         propertyExpansionLimits,
       });

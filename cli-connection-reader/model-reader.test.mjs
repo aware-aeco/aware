@@ -126,21 +126,65 @@ test('request-only failures precede provider configuration and managed host setu
     }, unconfigured),
     (error) => error.code === 'reference-provider-pin-required',
   );
+});
+
+async function managedState(t) {
+  const state = await setup(t);
+  const destination = 'https://api.example.test';
+  const localHostRun = state.deps.hostRun;
+  state.deps.hostRun = async (request) => {
+    const response = await localHostRun(request);
+    const body = JSON.parse(response.stdout.toString('utf8'));
+    body.protocolVersion = '2';
+    body.execution = 'managed-cloud';
+    body.destination = destination;
+    body.readerSchemaVersion = 'model-reference-reader/v2';
+    if (request.operation === 'convert') {
+      body.conversionAttemptId = JSON.parse(request.stdin.toString('utf8')).conversionAttemptId;
+    }
+    return { ...response, stdout: Buffer.from(JSON.stringify(body)) };
+  };
+  state.args = {
+    ...state.args,
+    'expected-provider-protocol': '2',
+    'expected-provider-destination': destination,
+    'authority-store-path': path.join(state.root, 'authority'),
+    'reader-schema-version': 'model-reference-reader/v2',
+  };
+  return state;
+}
+
+test('managed conversion requires a valid attempt identity only after an authenticated cache miss', async (t) => {
+  const state = await managedState(t);
+  const preflight = await runModelCommand('preflight', state.args, state.deps);
+  const pinned = {
+    ...state.args,
+    'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  };
   for (const conversionAttemptId of [undefined, 'not-a-uuid']) {
     await assert.rejects(
       () => runModelCommand('read-model', {
-        'expected-provider-protocol': '2',
-        'expected-provider-destination': 'https://api.example.test',
+        ...pinned,
         'conversion-attempt-id': conversionAttemptId,
-        'rvt-path': path.resolve('missing-managed-source.rvt'),
-        'source-sha256': '0'.repeat(64),
-        'expected-provider-sha256': '1'.repeat(64),
-        'expected-signer-sha256': '2'.repeat(64),
-      }, unconfigured),
+      }, state.deps),
       (error) => error.code === 'reference-provider-request-invalid'
         && error.message === 'The managed Revit conversion attempt identity is invalid.',
     );
+    assert.equal(state.calls.filter((operation) => operation === 'convert').length, 0,
+      'an invalid attempt identity must stop before conversion');
   }
+
+  const cold = await runModelCommand('read-model', {
+    ...pinned,
+    'conversion-attempt-id': '123e4567-e89b-42d3-a456-426614174000',
+  }, state.deps);
+  assert.equal(cold.cache, 'miss');
+  const callsAfterColdRead = state.calls.length;
+
+  const warm = await runModelCommand('read-model', pinned, state.deps);
+  assert.equal(warm.cache, 'hit');
+  assert.equal(state.calls.length, callsAfterColdRead, 'a warm read must not touch the provider');
 });
 
 test('preflight describes provider and key readiness without conversion or source access', async (t) => {
