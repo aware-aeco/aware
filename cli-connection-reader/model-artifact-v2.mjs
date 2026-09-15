@@ -139,6 +139,7 @@ export function buildArtifactV2Index(family, payloadReceipts) {
 
 function validateIndex(value, family) {
   closed(value, ['index', 'bytes', 'receipt'], [], `${family} index package`);
+  closed(value.index, ['schemaVersion', 'family', 'itemCount', 'objects'], [], `${family} index`);
   if (!Buffer.isBuffer(value.bytes) || !value.bytes.equals(canonicalJsonBytes(value.index))
       || value.index.schemaVersion !== INDEX_SCHEMA || value.index.family !== family
       || value.receipt.sha256 !== sha256(value.bytes) || value.receipt.bytes !== value.bytes.length
@@ -148,7 +149,12 @@ function validateIndex(value, family) {
     artifactError('reference-artifact-v2-invalid', `The ${family} index package is invalid.`);
   }
   validateReceipt(value.receipt, `${family} index receipt`);
-  return buildArtifactV2Index(family, value.index.objects);
+  const rebuilt = buildArtifactV2Index(family, value.index.objects);
+  if (!rebuilt.bytes.equals(value.bytes)
+      || !canonicalJsonBytes(rebuilt.receipt).equals(canonicalJsonBytes(value.receipt))) {
+    artifactError('reference-artifact-v2-invalid', `The ${family} index package is not canonical.`);
+  }
+  return rebuilt;
 }
 
 export function buildArtifactV2Root(options) {

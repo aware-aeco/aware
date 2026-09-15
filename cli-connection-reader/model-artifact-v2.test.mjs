@@ -117,6 +117,21 @@ test('root refuses tampered index bytes and a mismatched effective-source identi
   );
 });
 
+test('root refuses a self-consistent index package whose bytes are not canonical', () => {
+  const value = artifact();
+  const geometry = value.options.indexes.geometry;
+  geometry.index.objects.reverse();
+  geometry.bytes = canonicalJsonBytes(geometry.index);
+  geometry.receipt = artifactV2Receipt({
+    logicalPath: 'geometry.index.json', logicalKind: 'geometry-index', ordinal: 0,
+    mediaType: 'application/json', content: geometry.bytes, itemCount: geometry.index.itemCount,
+  });
+  assert.throws(
+    () => buildArtifactV2Root(value.options),
+    (error) => error.code === 'reference-artifact-v2-invalid' && /not canonical/.test(error.message),
+  );
+});
+
 test('receipts reject unsafe numbers, inverted bounds and invalid ID ranges', () => {
   assert.throws(
     () => payload('geometry', 0, 'glb', 1, { bounds: [1, 0, 0, 0, 1, 1] }),
