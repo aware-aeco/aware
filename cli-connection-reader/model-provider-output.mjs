@@ -40,6 +40,10 @@ function outputError(code, message, retryable = false, details = undefined) {
   throw new ModelReaderError(code, 'provider-output', retryable, message, details);
 }
 
+function checkCancellation(signal) {
+  if (signal?.aborted) outputError('reference-cancelled', 'Provider output verification was cancelled.');
+}
+
 function samePath(left, right) {
   const normalize = (value) => process.platform === 'win32' ? path.resolve(value).toLowerCase() : path.resolve(value);
   return normalize(left) === normalize(right);
@@ -124,6 +128,7 @@ async function readStableFile(root, relative, maximumBytes, options = {}, direct
   const parent = directories?.get(parentKey);
   let before; let opened; let after; let handle; let output;
   try {
+    checkCancellation(options.signal);
     if (parent) await validateDirectory(parent);
     before = await fs.lstat(pathname, { bigint: true });
     const real = await fs.realpath(pathname);
@@ -140,6 +145,7 @@ async function readStableFile(root, relative, maximumBytes, options = {}, direct
     let records = 0; let lineBytes = 0; let lineChunks = [];
     const buffer = Buffer.allocUnsafe(1024 * 1024);
     for (;;) {
+      checkCancellation(options.signal);
       const result = await handle.read(buffer, 0, buffer.length, null);
       if (result.bytesRead === 0) break;
       bytes += result.bytesRead;
@@ -150,6 +156,7 @@ async function readStableFile(root, relative, maximumBytes, options = {}, direct
       hash.update(chunk);
       if (collect) chunks.push(Buffer.from(chunk));
       if (output) await output.writeFile(chunk);
+      checkCancellation(options.signal);
       if (recordLimit !== undefined) {
         let segmentStart = 0;
         for (let index = 0; index < chunk.length; index += 1) {
@@ -330,10 +337,12 @@ export async function verifyProviderOutput(root, options = {}) {
   await createAdmittedRoot(root, admittedRoot);
   let succeeded = false;
   try {
+  checkCancellation(options.signal);
   const limits = selectedLimits(options.limits);
   const directories = await outputDirectories(root);
   const completionFile = await readStableFile(root, COMPLETION_NAME, limits.completionBytes, {
     copyTo: path.join(admittedRoot, COMPLETION_NAME),
+    signal: options.signal,
   }, directories);
   let completion;
   try { completion = parseJsonStrict(completionFile.bytes, { maxBytes: limits.completionBytes, maxDepth: 8 }); }
@@ -349,6 +358,7 @@ export async function verifyProviderOutput(root, options = {}) {
   }
   const manifestFile = await readStableFile(root, MANIFEST_NAME, limits.manifestBytes, {
     copyTo: path.join(admittedRoot, MANIFEST_NAME),
+    signal: options.signal,
   }, directories);
   if (manifestFile.bytes.length !== completion.manifestBytes || manifestFile.sha256 !== completion.manifestSha256) {
     outputError('reference-provider-output-invalid', 'The provider output manifest does not match its completion marker.');
@@ -367,6 +377,7 @@ export async function verifyProviderOutput(root, options = {}) {
   }
   let aggregateBytes = 0; const verified = [];
   for (const entry of manifest.files) {
+    checkCancellation(options.signal);
     if (entry.bytes > limits.payloadBytes || entry.count > limits.recordsPerShard) {
       outputError('reference-provider-output-limit', 'A provider output shard exceeds its admitted limits.');
     }
@@ -379,6 +390,7 @@ export async function verifyProviderOutput(root, options = {}) {
       collect: false, recordLimit: isJsonl ? limits.recordsPerShard : undefined,
       recordBytes: limits.recordBytes,
       copyTo: path.join(admittedRoot, ...entry.path.split('/')),
+      signal: options.signal,
     }, directories);
     if (file.length !== entry.bytes || file.sha256 !== entry.sha256
         || (isJsonl && file.records !== entry.count)) {
@@ -390,8 +402,12 @@ export async function verifyProviderOutput(root, options = {}) {
   if (afterActual.length !== expectedFiles.length || afterActual.some((value, index) => value !== expectedFiles[index])) {
     outputError('reference-provider-output-changed', 'Provider output closure changed while it was verified.', true);
   }
-  const afterManifest = await readStableFile(root, MANIFEST_NAME, limits.manifestBytes, {}, directories);
-  const afterCompletion = await readStableFile(root, COMPLETION_NAME, limits.completionBytes, {}, directories);
+  const afterManifest = await readStableFile(
+    root, MANIFEST_NAME, limits.manifestBytes, { signal: options.signal }, directories,
+  );
+  const afterCompletion = await readStableFile(
+    root, COMPLETION_NAME, limits.completionBytes, { signal: options.signal }, directories,
+  );
   if (afterManifest.sha256 !== manifestFile.sha256 || afterCompletion.sha256 !== completionFile.sha256) {
     outputError('reference-provider-output-changed', 'Provider output controls changed while they were verified.', true);
   }
@@ -402,18 +418,19 @@ export async function verifyProviderOutput(root, options = {}) {
     outputError('reference-provider-output-invalid', 'The admitted provider output snapshot is incomplete.');
   }
   const admittedManifest = await readStableFile(
-    admittedRoot, MANIFEST_NAME, limits.manifestBytes, {}, admittedDirectories,
+    admittedRoot, MANIFEST_NAME, limits.manifestBytes, { signal: options.signal }, admittedDirectories,
   );
   const admittedCompletion = await readStableFile(
-    admittedRoot, COMPLETION_NAME, limits.completionBytes, {}, admittedDirectories,
+    admittedRoot, COMPLETION_NAME, limits.completionBytes, { signal: options.signal }, admittedDirectories,
   );
   if (admittedManifest.sha256 !== manifestFile.sha256 || admittedCompletion.sha256 !== completionFile.sha256) {
     outputError('reference-provider-output-invalid', 'The admitted provider output controls failed verification.');
   }
   for (const entry of manifest.files) {
+    checkCancellation(options.signal);
     const file = await readStableFile(admittedRoot, entry.path, limits.payloadBytes, {
       collect: false, recordLimit: entry.mediaType === 'application/x-ndjson' ? limits.recordsPerShard : undefined,
-      recordBytes: limits.recordBytes,
+      recordBytes: limits.recordBytes, signal: options.signal,
     }, admittedDirectories);
     if (file.length !== entry.bytes || file.sha256 !== entry.sha256
         || (entry.mediaType === 'application/x-ndjson' && file.records !== entry.count)) {

@@ -191,3 +191,14 @@ test('rejects malformed JSONL before copying it into the admitted snapshot', asy
   );
   await assert.rejects(fs.stat(value.options.admittedRoot), (error) => error.code === 'ENOENT');
 });
+
+test('honors cancellation and removes its partial admitted snapshot', async (t) => {
+  const value = await fixture(t);
+  const controller = new AbortController();
+  controller.abort();
+  await assert.rejects(
+    () => verifyProviderOutput(value.root, { ...value.options, signal: controller.signal }),
+    (error) => error.code === 'reference-cancelled' && error.retryable === false,
+  );
+  await assert.rejects(fs.stat(value.options.admittedRoot), (error) => error.code === 'ENOENT');
+});
