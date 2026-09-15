@@ -35,7 +35,7 @@ function authorization(value) {
   return value;
 }
 
-async function loadDependencyPolicy(home, providerFingerprintSha256) {
+export async function loadAdmittedDependencyPolicy(home, providerFingerprintSha256) {
   const pathname = path.join(home, 'providers', 'policies', `${providerFingerprintSha256}.json`);
   let stat; let bytes; let handle;
   try {
@@ -74,7 +74,7 @@ async function invokeDiscover(options, capture) {
   };
   const before = await loadEnrolledProviderPackage(loadOptions);
   const provider = packageProviderIdentity(before, options.manifestSha256);
-  const admittedPolicy = await loadDependencyPolicy(options.home, provider.sha256);
+  const admittedPolicy = await loadAdmittedDependencyPolicy(options.home, provider.sha256);
   validateDependencyPolicy(admittedPolicy.policy, options.capabilityId, provider.sha256);
   const request = canonicalJsonBytes({
     operation: 'discover', protocolVersion: '3', formatId: options.formatId,
@@ -130,7 +130,7 @@ async function invokeDiscover(options, capture) {
   if (provider.sha256 !== afterProvider.sha256) {
     discoveryError('reference-provider-package-changed', 'Provider package identity changed during dependency discovery.');
   }
-  const afterPolicy = await loadDependencyPolicy(options.home, provider.sha256);
+  const afterPolicy = await loadAdmittedDependencyPolicy(options.home, provider.sha256);
   if (admittedPolicy.sha256 !== afterPolicy.sha256) {
     discoveryError('reference-dependency-policy-changed', 'The admitted dependency policy changed during discovery.');
   }

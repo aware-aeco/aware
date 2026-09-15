@@ -58,7 +58,7 @@ function sameDirectoryIdentity(left, right) {
   return sameDevice && left.ino === right.ino && left.mtimeNs === right.mtimeNs;
 }
 
-function selectedLimits(overrides = {}) {
+export function providerOutputLimits(overrides = {}) {
   if (!overrides || typeof overrides !== 'object' || Array.isArray(overrides)) {
     outputError('reference-provider-output-limits-invalid', 'Provider output limits are invalid.');
   }
@@ -338,7 +338,7 @@ export async function verifyProviderOutput(root, options = {}) {
   let succeeded = false;
   try {
   checkCancellation(options.signal);
-  const limits = selectedLimits(options.limits);
+  const limits = providerOutputLimits(options.limits);
   const directories = await outputDirectories(root);
   const completionFile = await readStableFile(root, COMPLETION_NAME, limits.completionBytes, {
     copyTo: path.join(admittedRoot, COMPLETION_NAME),
