@@ -2147,26 +2147,36 @@ mod tests {
     #[test]
     fn accepted_output_refuses_a_record_missing_either_provider_id() {
         let input = input("attempt-projection");
-        let mut record = base_record(
-            "account-hash",
-            "attempt-hash",
-            "request-hash",
-            &token("g"),
-            "<aware.generated@aware.local>",
-            JournalState::Accepted,
-        );
-        assert_eq!(
-            code(&accepted_output(&input, &record).unwrap_err()),
-            "gmail.send.outbox"
-        );
-        record.gmail_message_id = Some("gmail-message".into());
-        assert_eq!(
-            code(&accepted_output(&input, &record).unwrap_err()),
-            "gmail.send.outbox"
-        );
-        record.thread_id = Some("gmail-thread".into());
+        // One record per case, each withholding EXACTLY ONE id. A single record
+        // walked from both-absent to both-present would let either check be
+        // deleted without the test noticing, because the other one still fires.
+        let record = |gmail: Option<&str>, thread: Option<&str>| {
+            let mut record = base_record(
+                "account-hash",
+                "attempt-hash",
+                "request-hash",
+                &token("g"),
+                "<aware.generated@aware.local>",
+                JournalState::Accepted,
+            );
+            record.gmail_message_id = gmail.map(str::to_string);
+            record.thread_id = thread.map(str::to_string);
+            record
+        };
 
-        let output = accepted_output(&input, &record).unwrap();
+        let no_message_id = record(None, Some("gmail-thread"));
+        assert_eq!(
+            code(&accepted_output(&input, &no_message_id).unwrap_err()),
+            "gmail.send.outbox"
+        );
+        let no_thread_id = record(Some("gmail-message"), None);
+        assert_eq!(
+            code(&accepted_output(&input, &no_thread_id).unwrap_err()),
+            "gmail.send.outbox"
+        );
+
+        let complete = record(Some("gmail-message"), Some("gmail-thread"));
+        let output = accepted_output(&input, &complete).unwrap();
         assert_eq!(output["status"], "accepted");
         // `message-id` is the Gmail id, deliberately mirrored rather than being
         // the RFC id or the thread id.
