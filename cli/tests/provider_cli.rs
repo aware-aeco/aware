@@ -201,6 +201,87 @@ fn trust_enroll_select_and_list_are_closed_and_format_neutral() {
 }
 
 #[test]
+fn operator_admits_a_closed_dependency_policy_for_the_exact_enrolled_capability() {
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp.path().join("home");
+    let fixture = package_fixture(temp.path());
+    aware(&home)
+        .args(["provider", "trust-publisher"])
+        .arg(&fixture.public_key)
+        .args(["--publisher-id", "publisher.synthetic"])
+        .assert()
+        .success();
+    aware(&home)
+        .args(["provider", "enroll"])
+        .arg(&fixture.directory)
+        .assert()
+        .success();
+
+    let policy_file = temp.path().join("dependency-policy.json");
+    std::fs::write(
+        &policy_file,
+        r#"{"policyId":"synthetic-policy-v1","roles":[{"affectedDomains":[],"classification":"mandatory","role":"primary"},{"affectedDomains":["geometry","properties"],"classification":"degraded","role":"catalogue"}],"schemaVersion":"aware.model-dependency-policy-admission/v1"}"#,
+    )
+    .unwrap();
+    let admitted = aware(&home)
+        .args(["--json", "provider", "admit-policy"])
+        .arg(&fixture.manifest_sha256)
+        .args(["capability.synthetic"])
+        .arg(&policy_file)
+        .assert()
+        .success();
+    let output: serde_json::Value = serde_json::from_slice(&admitted.get_output().stdout).unwrap();
+    let fingerprint = output["data"]["policy"]["providerFingerprintSha256"]
+        .as_str()
+        .unwrap();
+    assert_eq!(fingerprint.len(), 64);
+    assert_eq!(
+        output["data"]["policy"]["capabilityId"],
+        "capability.synthetic"
+    );
+    assert_eq!(output["data"]["sha256"].as_str().unwrap().len(), 64);
+    let stored: serde_json::Value = serde_json::from_slice(
+        &std::fs::read(home.join(format!("providers/policies/{fingerprint}.json"))).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(stored, output["data"]["policy"]);
+
+    std::fs::write(
+        &policy_file,
+        r#"{"policyId":"synthetic-policy-v2","roles":[{"affectedDomains":[],"classification":"mandatory","role":"primary"},{"affectedDomains":[],"classification":"optional","role":"catalogue"}],"schemaVersion":"aware.model-dependency-policy-admission/v1"}"#,
+    )
+    .unwrap();
+    let updated = aware(&home)
+        .args(["--json", "provider", "admit-policy"])
+        .arg(&fixture.manifest_sha256)
+        .args(["capability.synthetic"])
+        .arg(&policy_file)
+        .assert()
+        .success();
+    let updated_output: serde_json::Value =
+        serde_json::from_slice(&updated.get_output().stdout).unwrap();
+    assert_eq!(
+        updated_output["data"]["policy"]["policyId"],
+        "synthetic-policy-v2"
+    );
+    assert_ne!(updated_output["data"]["sha256"], output["data"]["sha256"]);
+
+    let invalid = temp.path().join("invalid-policy.json");
+    std::fs::write(
+        &invalid,
+        r#"{"policyId":"bad-policy","roles":[{"affectedDomains":[],"classification":"degraded","role":"catalogue"}],"schemaVersion":"aware.model-dependency-policy-admission/v1"}"#,
+    )
+    .unwrap();
+    aware(&home)
+        .args(["provider", "admit-policy"])
+        .arg(&fixture.manifest_sha256)
+        .args(["capability.synthetic"])
+        .arg(&invalid)
+        .assert()
+        .failure();
+}
+
+#[test]
 fn listing_ignores_interrupted_atomic_write_scratch_files() {
     let temp = tempfile::tempdir().unwrap();
     let home = temp.path().join("home");

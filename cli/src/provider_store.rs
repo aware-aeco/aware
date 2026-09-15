@@ -19,6 +19,8 @@ const MANIFEST_SCHEMA: &str = "aware.model-provider-package/v1";
 const PUBLISHER_SCHEMA: &str = "aware.model-provider-publisher/v1";
 const PACKAGE_SCHEMA: &str = "aware.model-provider-enrollment/v1";
 const SELECTION_SCHEMA: &str = "aware.model-provider-selection/v1";
+const POLICY_ADMISSION_SCHEMA: &str = "aware.model-dependency-policy-admission/v1";
+const POLICY_SCHEMA: &str = "aware.model-dependency-policy/v1";
 const MAX_CONTROL_BYTES: u64 = 1024 * 1024;
 const MAX_VERSION_LENGTH: usize = 128;
 
@@ -47,6 +49,51 @@ pub(crate) struct ProviderCapability {
     pub result_schema: String,
     pub artifact_root_version: String,
     pub cache_namespace_version: String,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct DependencyPolicyAdmission {
+    schema_version: String,
+    policy_id: String,
+    roles: Vec<DependencyPolicyRole>,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub(crate) struct DependencyPolicyRole {
+    role: String,
+    classification: String,
+    affected_domains: Vec<String>,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub(crate) struct DependencyPolicy {
+    schema_version: String,
+    pub(crate) policy_id: String,
+    capability_id: String,
+    provider_fingerprint_sha256: String,
+    roles: Vec<DependencyPolicyRole>,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub(crate) struct AdmittedDependencyPolicy {
+    pub(crate) policy: DependencyPolicy,
+    pub(crate) sha256: String,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct EnrolledProviderFingerprint<'a> {
+    schema_version: &'static str,
+    execution: &'static str,
+    package_manifest_sha256: &'a str,
+    launcher_sha256: &'a str,
+    publisher_fingerprint_sha256: &'a str,
+    format_id: &'a str,
+    capability: &'a ProviderCapability,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -212,6 +259,66 @@ impl ProviderStore {
             &record,
         )?;
         Ok(record)
+    }
+
+    pub(crate) fn admit_dependency_policy(
+        &self,
+        manifest_sha256: &str,
+        capability_id: &str,
+        policy_file: &Path,
+    ) -> Result<AdmittedDependencyPolicy, AwareError> {
+        validate_sha256(manifest_sha256, "provider manifest sha256")?;
+        validate_id(capability_id, "capability id")?;
+        let package = self.verify_enrollment(manifest_sha256)?;
+        let capability = package
+            .manifest
+            .capabilities
+            .iter()
+            .find(|entry| entry.capability_id == capability_id)
+            .ok_or_else(|| AwareError::NotFound("provider capability is not enrolled".into()))?;
+        let launcher_sha256 = package
+            .manifest
+            .files
+            .iter()
+            .find(|entry| entry.path == package.manifest.launcher)
+            .map(|entry| entry.sha256.as_str())
+            .ok_or_else(|| AwareError::Validation("provider launcher receipt is missing".into()))?;
+        let fingerprint = EnrolledProviderFingerprint {
+            schema_version: "aware.enrolled-model-provider-fingerprint/v1",
+            execution: "enrolled-local",
+            package_manifest_sha256: manifest_sha256,
+            launcher_sha256,
+            publisher_fingerprint_sha256: &package.publisher_fingerprint_sha256,
+            format_id: &package.manifest.format_id,
+            capability,
+        };
+        let provider_fingerprint_sha256 = sha256_hex(&canonical_json_bytes(&fingerprint)?);
+        let admission_bytes = read_bounded(policy_file, MAX_CONTROL_BYTES)?;
+        let admission: DependencyPolicyAdmission = serde_json::from_slice(&admission_bytes)
+            .map_err(|error| {
+                AwareError::Validation(format!("invalid dependency policy admission: {error}"))
+            })?;
+        validate_policy_admission(&admission)?;
+        let policy = DependencyPolicy {
+            schema_version: POLICY_SCHEMA.into(),
+            policy_id: admission.policy_id,
+            capability_id: capability_id.into(),
+            provider_fingerprint_sha256: provider_fingerprint_sha256.clone(),
+            roles: admission.roles,
+        };
+        let bytes = canonical_json_bytes(&policy)?;
+        let digest = sha256_hex(&bytes);
+        write_replace_json(
+            &self
+                .root
+                .join("policies")
+                .join(format!("{provider_fingerprint_sha256}.json")),
+            &policy,
+        )?;
+        Ok(AdmittedDependencyPolicy {
+            policy,
+            sha256: digest,
+        })
     }
 
     pub(crate) fn select(
@@ -550,6 +657,41 @@ fn validate_manifest(manifest: &PackageManifest) -> Result<(), AwareError> {
         return Err(AwareError::Validation(
             "provider launcher must be receipted in package files".into(),
         ));
+    }
+    Ok(())
+}
+
+fn validate_policy_admission(policy: &DependencyPolicyAdmission) -> Result<(), AwareError> {
+    if policy.schema_version != POLICY_ADMISSION_SCHEMA
+        || policy.roles.is_empty()
+        || policy.roles.len() > 10_000
+    {
+        return Err(AwareError::Validation(
+            "dependency policy admission is unsupported or empty".into(),
+        ));
+    }
+    validate_id(&policy.policy_id, "dependency policy id")?;
+    let mut roles = BTreeSet::new();
+    for entry in &policy.roles {
+        validate_id(&entry.role, "dependency role")?;
+        if !roles.insert(&entry.role) || entry.affected_domains.len() > 64 {
+            return Err(AwareError::Validation(
+                "dependency policy roles must be unique and bounded".into(),
+            ));
+        }
+        for domain in &entry.affected_domains {
+            validate_id(domain, "affected domain")?;
+        }
+        let valid = match entry.classification.as_str() {
+            "mandatory" | "optional" => entry.affected_domains.is_empty(),
+            "degraded" => !entry.affected_domains.is_empty(),
+            _ => false,
+        };
+        if !valid {
+            return Err(AwareError::Validation(
+                "dependency policy role classification is invalid".into(),
+            ));
+        }
     }
     Ok(())
 }
