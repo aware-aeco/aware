@@ -159,6 +159,80 @@ fn listing_ignores_interrupted_atomic_write_scratch_files() {
 }
 
 #[test]
+fn listing_reverifies_enrolled_package_contents() {
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp.path().join("home");
+    let fixture = package_fixture(temp.path());
+    aware(&home)
+        .args(["provider", "trust-publisher"])
+        .arg(&fixture.public_key)
+        .args(["--publisher-id", "publisher.synthetic"])
+        .assert()
+        .success();
+    aware(&home)
+        .args(["provider", "enroll"])
+        .arg(&fixture.directory)
+        .assert()
+        .success();
+    aware(&home)
+        .args([
+            "provider",
+            "select",
+            "format.synthetic",
+            &fixture.manifest_sha256,
+        ])
+        .assert()
+        .success();
+
+    std::fs::write(fixture.directory.join("provider.bin"), b"changed").unwrap();
+
+    aware(&home)
+        .args(["provider", "list", "--format", "format.synthetic"])
+        .assert()
+        .failure()
+        .code(3);
+}
+
+#[test]
+fn listing_refuses_a_selection_stored_under_the_wrong_format_filename() {
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp.path().join("home");
+    let fixture = package_fixture(temp.path());
+    aware(&home)
+        .args(["provider", "trust-publisher"])
+        .arg(&fixture.public_key)
+        .args(["--publisher-id", "publisher.synthetic"])
+        .assert()
+        .success();
+    aware(&home)
+        .args(["provider", "enroll"])
+        .arg(&fixture.directory)
+        .assert()
+        .success();
+    aware(&home)
+        .args([
+            "provider",
+            "select",
+            "format.synthetic",
+            &fixture.manifest_sha256,
+        ])
+        .assert()
+        .success();
+
+    std::fs::rename(
+        home.join("providers/selections/format.synthetic.json"),
+        home.join("providers/selections/format.other.json"),
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["provider", "list"])
+        .assert()
+        .failure()
+        .code(3);
+}
+
+#[test]
 fn enrollment_refuses_an_extra_unreceipted_file() {
     let temp = tempfile::tempdir().unwrap();
     let home = temp.path().join("home");

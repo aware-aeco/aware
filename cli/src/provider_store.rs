@@ -228,18 +228,8 @@ impl ProviderStore {
         verify_compatible(&package.manifest)?;
         let path = self.selection_path(format_id);
         let prior = read_optional_json::<SelectionRecord>(&path)?;
-        if let Some(selection) = &prior
-            && (selection.schema_version != SELECTION_SCHEMA
-                || selection.format_id != format_id
-                || selection.generation == 0
-                || selection
-                    .previous_manifest_sha256
-                    .iter()
-                    .any(|digest| validate_sha256(digest, "previous manifest sha256").is_err()))
-        {
-            return Err(AwareError::Validation(
-                "existing provider selection record is invalid".into(),
-            ));
+        if let Some(selection) = &prior {
+            validate_selection_record(selection, format_id)?;
         }
         let generation = prior.as_ref().map_or(Ok(1), |selection| {
             selection.generation.checked_add(1).ok_or_else(|| {
@@ -281,6 +271,20 @@ impl ProviderStore {
                     continue;
                 }
                 let selection: SelectionRecord = read_json(&entry.path())?;
+                let file_name = entry.file_name();
+                let expected_name = format!("{}.json", selection.format_id);
+                if file_name.to_str() != Some(expected_name.as_str()) {
+                    return Err(AwareError::Validation(
+                        "provider selection record filename does not match its format".into(),
+                    ));
+                }
+                validate_selection_record(&selection, &selection.format_id)?;
+                let selected = self.verify_enrollment(&selection.active_manifest_sha256)?;
+                if selected.manifest.format_id != selection.format_id {
+                    return Err(AwareError::Validation(
+                        "provider selection does not reference a package for its format".into(),
+                    ));
+                }
                 selections.insert(selection.format_id, selection.active_manifest_sha256);
             }
         }
@@ -296,7 +300,19 @@ impl ProviderStore {
                 {
                     continue;
                 }
-                let package: PackageRecord = read_json(&entry.path())?;
+                let file_name = entry.file_name();
+                let file_name = file_name.to_str().ok_or_else(|| {
+                    AwareError::Validation(
+                        "provider enrollment filename must be valid Unicode".into(),
+                    )
+                })?;
+                let digest = file_name.strip_suffix(".json").ok_or_else(|| {
+                    AwareError::Validation(
+                        "provider enrollment record filename must end in .json".into(),
+                    )
+                })?;
+                validate_sha256(digest, "provider enrollment filename digest")?;
+                let package = self.verify_enrollment(digest)?;
                 if package.revoked
                     || !package.enrolled
                     || format.is_some_and(|id| id != package.manifest.format_id)
@@ -411,6 +427,27 @@ impl ProviderStore {
             .join("selections")
             .join(format!("{format_id}.json"))
     }
+}
+
+fn validate_selection_record(
+    selection: &SelectionRecord,
+    expected_format_id: &str,
+) -> Result<(), AwareError> {
+    if selection.schema_version != SELECTION_SCHEMA
+        || selection.format_id != expected_format_id
+        || selection.generation == 0
+        || validate_id(&selection.format_id, "format id").is_err()
+        || validate_sha256(&selection.active_manifest_sha256, "active manifest sha256").is_err()
+        || selection
+            .previous_manifest_sha256
+            .iter()
+            .any(|digest| validate_sha256(digest, "previous manifest sha256").is_err())
+    {
+        return Err(AwareError::Validation(
+            "provider selection record is invalid".into(),
+        ));
+    }
+    Ok(())
 }
 
 fn validate_manifest(manifest: &PackageManifest) -> Result<(), AwareError> {
