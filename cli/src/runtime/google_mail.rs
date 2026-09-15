@@ -1597,10 +1597,21 @@ mod tests {
 
     impl MockHttp {
         fn responding(result: Result<HttpResponse, String>) -> Self {
+            Self::responding_as("stable-google-sub", result)
+        }
+
+        /// Same as [`MockHttp::responding`], but with the OIDC subject the
+        /// identity endpoint returns under the caller's control — which is what
+        /// the outbox namespace is derived from, so two accounts are only
+        /// distinguishable through this.
+        fn responding_as(sub: &str, result: Result<HttpResponse, String>) -> Self {
             Self {
                 identity: HttpResponse {
                     status: 200,
-                    body: br#"{"sub":"stable-google-sub","email":"sender@example.com","email_verified":true}"#.to_vec(),
+                    body: format!(
+                        r#"{{"sub":"{sub}","email":"sender@example.com","email_verified":true}}"#
+                    )
+                    .into_bytes(),
                 },
                 identity_calls: Mutex::new(0),
                 sends: Mutex::new(Vec::new()),
@@ -1691,6 +1702,216 @@ mod tests {
         invalid.attempt_id = "ok".into();
         invalid.to[0] = "victim@example.com\r\nBcc:x@example.com".into();
         assert!(validate_input(&invalid).is_err());
+    }
+
+    /// The test above pins header injection through `to` only. `cc` and `bcc`
+    /// reach the same RFC 5322 headers, and the envelope cap is on all three
+    /// lists together — an attacker who can only fill `cc` must not get either
+    /// guard for free.
+    #[test]
+    fn cc_and_bcc_are_validated_and_counted_exactly_like_to() {
+        let smuggled = "victim@example.com\r\nBcc:attacker@example.com";
+
+        let mut via_cc = input("attempt-cc-injection");
+        via_cc.cc[0] = smuggled.into();
+        assert_eq!(
+            code(&validate_input(&via_cc).unwrap_err()),
+            "gmail.send.validation"
+        );
+
+        let mut via_bcc = input("attempt-bcc-injection");
+        via_bcc.bcc[0] = smuggled.into();
+        assert_eq!(
+            code(&validate_input(&via_bcc).unwrap_err()),
+            "gmail.send.validation"
+        );
+
+        // 50 + 25 + 25 is exactly MAX_RECIPIENTS, so the cap is inclusive here
+        // and one more address anywhere in the envelope crosses it.
+        let mut at_cap = input("attempt-recipient-cap");
+        at_cap.to = (0..50).map(|n| format!("to{n}@example.com")).collect();
+        at_cap.cc = (0..25).map(|n| format!("cc{n}@example.com")).collect();
+        at_cap.bcc = (0..25).map(|n| format!("bcc{n}@example.com")).collect();
+        validate_input(&at_cap).unwrap();
+        let mut over_cap = at_cap.clone();
+        over_cap.bcc.push("one-too-many@example.com".into());
+        assert_eq!(
+            code(&validate_input(&over_cap).unwrap_err()),
+            "gmail.send.validation"
+        );
+
+        let mut no_recipient = input("attempt-no-recipient");
+        no_recipient.to.clear();
+        assert_eq!(
+            code(&validate_input(&no_recipient).unwrap_err()),
+            "gmail.send.validation"
+        );
+    }
+
+    #[test]
+    fn address_syntax_refusals_and_an_inclusive_length_cap() {
+        for (case, address) in [
+            ("empty", ""),
+            ("no at sign", "no-at-sign"),
+            ("empty local part", "@example.com"),
+            ("empty domain", "user@"),
+            ("leading dot in domain", "user@.example.com"),
+            ("trailing dot in domain", "user@example.com."),
+            ("embedded space", "user name@example.com"),
+            ("comma smuggles a recipient", "a@example.com,b@example.com"),
+            (
+                "semicolon smuggles a recipient",
+                "a@example.com;b@example.com",
+            ),
+            // One bracket each, never both: a fixture carrying `<a@example.com>`
+            // stays refused when either character is dropped from the forbidden
+            // set, because the other one still catches it — and an unmatched
+            // bracket is exactly what would then reach a header.
+            ("unmatched opening bracket", "<a@example.com"),
+            ("unmatched closing bracket", "a@example.com>"),
+            ("non-ascii domain", "user@ex\u{e1}mple.com"),
+            ("trailing DEL", "user@example.com\u{7f}"),
+            ("bare newline", "user@example.com\nBcc:x@example.com"),
+        ] {
+            assert_eq!(
+                code(&validate_address(address).unwrap_err()),
+                "gmail.send.validation",
+                "expected a refusal for {case}"
+            );
+        }
+
+        validate_address("user+tag@sub.example.co.uk").unwrap();
+        // The domain is what follows the LAST `@`, so a second `@` cannot hide a
+        // malformed domain behind a well-formed prefix: split from the left,
+        // `b@.com` would read as an acceptable domain.
+        assert!(validate_address("a@b@.com").is_err());
+
+        let local = "a".repeat(MAX_ADDRESS_BYTES - "@example.com".len());
+        validate_address(&format!("{local}@example.com")).unwrap();
+        assert!(validate_address(&format!("{local}a@example.com")).is_err());
+    }
+
+    #[test]
+    fn subject_and_attempt_id_caps_are_inclusive_and_measured_in_bytes() {
+        let mut at_cap = input("attempt-subject-cap");
+        at_cap.subject = "s".repeat(MAX_SUBJECT_BYTES);
+        validate_input(&at_cap).unwrap();
+        let mut over_cap = at_cap.clone();
+        over_cap.subject.push('s');
+        assert_eq!(
+            code(&validate_input(&over_cap).unwrap_err()),
+            "gmail.send.validation"
+        );
+
+        // Bytes, not chars: MAX_SUBJECT_BYTES / 2 two-byte characters fit and
+        // one more does not, even though the char count is half the cap.
+        let mut multibyte = input("attempt-subject-utf8");
+        multibyte.subject = "\u{e9}".repeat(MAX_SUBJECT_BYTES / 2);
+        validate_input(&multibyte).unwrap();
+        multibyte.subject.push('\u{e9}');
+        assert!(validate_input(&multibyte).is_err());
+
+        // A tab folds a header just as a CRLF does, so it is a control
+        // character for this purpose even though it prints as whitespace.
+        let mut tabbed = input("attempt-subject-tab");
+        tabbed.subject = "folded\tsubject".into();
+        assert!(validate_input(&tabbed).is_err());
+
+        let mut attempt_at_cap = input(&"a".repeat(MAX_ATTEMPT_ID_BYTES));
+        validate_input(&attempt_at_cap).unwrap();
+        attempt_at_cap.attempt_id.push('a');
+        assert!(validate_input(&attempt_at_cap).is_err());
+
+        for (case, attempt) in [
+            ("empty", ""),
+            ("embedded space", "has space"),
+            ("embedded tab", "tab\there"),
+            ("non-ascii", "caf\u{e9}-attempt"),
+        ] {
+            assert_eq!(
+                code(&validate_input(&input(attempt)).unwrap_err()),
+                "gmail.send.validation",
+                "expected a refusal for an {case} attempt id"
+            );
+        }
+    }
+
+    #[test]
+    fn identity_needs_a_bounded_subject_a_verified_flag_and_a_parsable_mailbox() {
+        let identity = |sub: &str, email: &str, verified: Option<bool>| GoogleIdentity {
+            sub: sub.into(),
+            email: email.into(),
+            email_verified: verified,
+        };
+        validate_identity(&identity("sub-1", "sender@example.com", Some(true))).unwrap();
+        validate_identity(&identity(
+            &"s".repeat(255),
+            "sender@example.com",
+            Some(true),
+        ))
+        .unwrap();
+
+        for (case, malformed) in [
+            (
+                "empty subject",
+                identity("", "sender@example.com", Some(true)),
+            ),
+            (
+                "overlong subject",
+                identity(&"s".repeat(256), "sender@example.com", Some(true)),
+            ),
+            (
+                "control character in subject",
+                identity("sub\u{0}1", "sender@example.com", Some(true)),
+            ),
+            (
+                "explicitly unverified email",
+                identity("sub-1", "sender@example.com", Some(false)),
+            ),
+            (
+                "absent verification flag",
+                identity("sub-1", "sender@example.com", None),
+            ),
+        ] {
+            assert_eq!(
+                code(&validate_identity(&malformed).unwrap_err()),
+                "gmail.send.identity",
+                "expected a refusal for {case}"
+            );
+        }
+
+        // A malformed sender mailbox is refused without echoing the value back,
+        // matching the no-echo discipline the recipient path already keeps.
+        let error = validate_identity(&identity(
+            "sub-1",
+            "operations manager@example.com",
+            Some(true),
+        ))
+        .unwrap_err();
+        assert_eq!(code(&error), "gmail.send.identity");
+        assert!(!error.to_string().contains("operations"));
+    }
+
+    #[test]
+    fn credential_handle_splits_on_the_first_dot_and_refuses_an_empty_alias() {
+        assert_eq!(
+            split_credential_handle(INTEGRATION).unwrap(),
+            (INTEGRATION, None)
+        );
+        assert_eq!(
+            split_credential_handle("google-workspace.work").unwrap(),
+            ("google-workspace", Some("work"))
+        );
+        // The FIRST dot is the separator, so a dotted alias reaches the keychain
+        // whole instead of being truncated at its last segment.
+        assert_eq!(
+            split_credential_handle("google-workspace.eu.west").unwrap(),
+            ("google-workspace", Some("eu.west"))
+        );
+        assert_eq!(
+            code(&split_credential_handle("google-workspace.").unwrap_err()),
+            "gmail.send.auth"
+        );
     }
 
     #[test]
@@ -1806,12 +2027,37 @@ mod tests {
         );
     }
 
+    /// The outbox is namespaced by the account's OIDC subject, so the SAME
+    /// attempt id under two different Google accounts is two attempts, not a
+    /// replay. Nothing else in this module distinguishes the accounts: collapse
+    /// the namespace and the second account silently inherits the first's
+    /// accepted record and never sends.
     #[test]
-    fn stable_subject_not_credential_generation_namespaces_the_outbox() {
-        let account = sha256_hex(b"stable-google-sub");
-        assert_eq!(account, sha256_hex(b"stable-google-sub"));
-        assert_ne!(account, sha256_hex(b"credential-generation-one"));
-        assert_ne!(account, sha256_hex(b"credential-generation-two"));
+    fn the_outbox_namespace_separates_two_accounts_sharing_an_attempt_id() {
+        let home = tempfile::tempdir().unwrap();
+        let shared = input("shared-attempt-id");
+
+        let alice = MockHttp::responding_as("sub-alice", accepted());
+        execute_authenticated(home.path(), &shared, &token("alice-generation"), &alice).unwrap();
+        assert_eq!(alice.send_count(), 1);
+
+        let bob = MockHttp::responding_as("sub-bob", accepted());
+        execute_authenticated(home.path(), &shared, &token("bob-generation"), &bob).unwrap();
+        assert_eq!(bob.identity_count(), 1);
+        assert_eq!(
+            bob.send_count(),
+            1,
+            "a second account's send was replayed from the first account's journal"
+        );
+
+        let attempt = sha256_hex(b"shared-attempt-id");
+        let accounts = home.path().join("outbox").join(INTEGRATION);
+        for sub in [&b"sub-alice"[..], &b"sub-bob"[..]] {
+            let journal = accounts
+                .join(sha256_hex(sub))
+                .join(format!("{attempt}.jsonl"));
+            assert!(journal.exists(), "missing journal for {sub:?}: {journal:?}");
+        }
     }
 
     #[test]
@@ -1829,6 +2075,226 @@ mod tests {
         );
         assert!(parsed.header("Bcc").is_some());
         assert_eq!(parsed.body_text(0).as_deref(), Some("Hello, 世界"));
+    }
+
+    /// The test above asserts only that a `Bcc` header exists. Which recipients
+    /// land in which header is the part that matters: a `bcc` address copied
+    /// into `Cc` discloses it to every other recipient.
+    #[test]
+    fn each_recipient_list_lands_in_its_own_header_and_none_appears_twice() {
+        let mut full = input("attempt-header-routing");
+        full.to = vec!["primary@example.com".into()];
+        full.cc = vec!["copied@example.com".into()];
+        full.bcc = vec!["blind@example.com".into()];
+        let raw = build_message(&full, "sender@example.com", "<m@aware.local>").unwrap();
+        let parsed = MessageParser::new().parse(&raw).expect("valid RFC message");
+        for (header, expected) in [
+            ("To", "primary@example.com"),
+            ("Cc", "copied@example.com"),
+            ("Bcc", "blind@example.com"),
+        ] {
+            let addresses = parsed
+                .header(header)
+                .and_then(|value| value.as_address())
+                .and_then(|address| address.as_list())
+                .map(|list| {
+                    list.iter()
+                        .filter_map(|addr| addr.address.as_deref())
+                        .collect::<Vec<_>>()
+                })
+                .unwrap_or_else(|| panic!("no address list on {header}"));
+            // Exact equality, not containment: it is the ABSENCE of the other
+            // two lists from this header that the assertion is for.
+            assert_eq!(addresses, vec![expected], "{header}");
+        }
+    }
+
+    /// The two tests around this one populate `cc` and `bcc` together and clear
+    /// them together, so a guard that consults the OTHER list satisfies both:
+    /// with both lists full every header exists, and with both empty none does.
+    /// Only one optional list at a time separates them, which is also the shape
+    /// of a real request that copies someone but blind-copies nobody.
+    #[test]
+    fn one_optional_recipient_list_at_a_time_still_emits_its_own_header() {
+        let header_addresses = |raw: &[u8], header: &str| -> Option<Vec<String>> {
+            let parsed = MessageParser::new().parse(raw).expect("valid RFC message");
+            parsed
+                .header(header)
+                .and_then(|value| value.as_address())
+                .and_then(|address| address.as_list())
+                .map(|list| {
+                    list.iter()
+                        .filter_map(|addr| addr.address.as_deref().map(str::to_string))
+                        .collect()
+                })
+        };
+
+        let mut cc_only = input("attempt-cc-only");
+        cc_only.cc = vec!["copied@example.com".into()];
+        cc_only.bcc.clear();
+        let raw = build_message(&cc_only, "sender@example.com", "<m@aware.local>").unwrap();
+        assert_eq!(
+            header_addresses(&raw, "Cc").as_deref(),
+            Some(&["copied@example.com".to_string()][..])
+        );
+        assert!(header_addresses(&raw, "Bcc").is_none());
+
+        let mut bcc_only = input("attempt-bcc-only");
+        bcc_only.cc.clear();
+        bcc_only.bcc = vec!["blind@example.com".into()];
+        let raw = build_message(&bcc_only, "sender@example.com", "<m@aware.local>").unwrap();
+        assert_eq!(
+            header_addresses(&raw, "Bcc").as_deref(),
+            Some(&["blind@example.com".to_string()][..])
+        );
+        assert!(header_addresses(&raw, "Cc").is_none());
+    }
+
+    /// An empty list must produce no header at all — an empty `Bcc:` announces
+    /// that a blind copy exists — and the declared body type must follow
+    /// `content-type` rather than defaulting to one of them.
+    #[test]
+    fn empty_recipient_lists_emit_no_header_and_the_body_type_is_honored() {
+        let mut plain = input("attempt-text-only");
+        plain.cc.clear();
+        plain.bcc.clear();
+        let raw = String::from_utf8(
+            build_message(&plain, "sender@example.com", "<m@aware.local>").unwrap(),
+        )
+        .unwrap();
+        assert!(!raw.contains("Cc:"), "{raw}");
+        assert!(!raw.contains("Bcc:"), "{raw}");
+        assert!(raw.contains("text/plain"), "{raw}");
+        assert!(!raw.contains("text/html"), "{raw}");
+
+        let mut html = plain.clone();
+        html.content_type = ContentType::Html;
+        html.body = "<p>hello</p>".into();
+        let raw = String::from_utf8(
+            build_message(&html, "sender@example.com", "<m@aware.local>").unwrap(),
+        )
+        .unwrap();
+        assert!(raw.contains("text/html"), "{raw}");
+        assert!(!raw.contains("text/plain"), "{raw}");
+
+        // The generated RFC id arrives bracketed and the brackets are stripped
+        // before the header is written; an unbracketed one is a caller bug, not
+        // something to pass through into `Message-ID`.
+        assert!(matches!(
+            build_message(&plain, "sender@example.com", "m@aware.local"),
+            Err(AwareError::Internal(_))
+        ));
+        assert!(matches!(
+            build_message(&plain, "sender@example.com", "<m@aware.local"),
+            Err(AwareError::Internal(_))
+        ));
+    }
+
+    #[test]
+    fn accepted_output_refuses_a_record_missing_either_provider_id() {
+        let input = input("attempt-projection");
+        // One record per case, each withholding EXACTLY ONE id. A single record
+        // walked from both-absent to both-present would let either check be
+        // deleted without the test noticing, because the other one still fires.
+        let record = |gmail: Option<&str>, thread: Option<&str>| {
+            let mut record = base_record(
+                "account-hash",
+                "attempt-hash",
+                "request-hash",
+                &token("g"),
+                "<aware.generated@aware.local>",
+                JournalState::Accepted,
+            );
+            record.gmail_message_id = gmail.map(str::to_string);
+            record.thread_id = thread.map(str::to_string);
+            record
+        };
+
+        let no_message_id = record(None, Some("gmail-thread"));
+        assert_eq!(
+            code(&accepted_output(&input, &no_message_id).unwrap_err()),
+            "gmail.send.outbox"
+        );
+        let no_thread_id = record(Some("gmail-message"), None);
+        assert_eq!(
+            code(&accepted_output(&input, &no_thread_id).unwrap_err()),
+            "gmail.send.outbox"
+        );
+
+        let complete = record(Some("gmail-message"), Some("gmail-thread"));
+        let output = accepted_output(&input, &complete).unwrap();
+        assert_eq!(output["status"], "accepted");
+        // `message-id` is the Gmail id, deliberately mirrored rather than being
+        // the RFC id or the thread id.
+        assert_eq!(output["message-id"], "gmail-message");
+        assert_eq!(output["gmail-message-id"], "gmail-message");
+        assert_eq!(output["thread-id"], "gmail-thread");
+        assert_eq!(output["rfc-message-id"], "<aware.generated@aware.local>");
+        assert_eq!(output["attempt-id"], "attempt-projection");
+    }
+
+    /// One clause of `bounded_provider_id` per case, because the end-to-end test
+    /// below can only show that the guard is wired, not which of its four
+    /// conjuncts did the refusing. An empty id is the sharpest of them: it parses
+    /// as valid JSON, so without the nonempty clause it would be recorded as an
+    /// acceptance and handed back as a message handle addressing nothing.
+    #[test]
+    fn a_provider_id_is_bounded_nonempty_printable_ascii() {
+        assert!(bounded_provider_id("gmail-message"));
+        // Inclusive at 256, exclusive past it.
+        assert!(bounded_provider_id(&"a".repeat(256)));
+        assert!(!bounded_provider_id(&"a".repeat(257)));
+        assert!(!bounded_provider_id(""));
+        // Built from code points rather than written as escapes, so no raw
+        // control byte can end up in this source file.
+        let bell = char::from(0x07);
+        let delete = char::from(0x7f);
+        let e_acute = char::from_u32(0xe9).expect("valid code point");
+        assert!(!bounded_provider_id(&format!("gmail{bell}message")));
+        assert!(!bounded_provider_id(&format!("gmail-message{delete}")));
+        assert!(!bounded_provider_id(&format!("gmail-message-{e_acute}")));
+    }
+
+    /// Gmail returning an id it cannot be addressed with is not an acceptance:
+    /// recording it would hand callers an unusable handle for a message that may
+    /// well have been sent. The attempt has to end unknown and stay unknown.
+    #[test]
+    fn an_unaddressable_provider_id_is_outcome_unknown_and_blocks_a_resend() {
+        // Every id here is a well-formed JSON string, so this is the bound being
+        // enforced and not the response failing to parse. Both operands of the
+        // guard are exercised: a bad `id`, then a bad `threadId`.
+        let unusable = [
+            format!(
+                r#"{{"id":"{}","threadId":"gmail-thread"}}"#,
+                "a".repeat(257)
+            ),
+            r#"{"id":"","threadId":"gmail-thread"}"#.to_string(),
+            r#"{"id":"gmail-message","threadId":"thread-é"}"#.to_string(),
+        ];
+        for (index, body) in unusable.iter().enumerate() {
+            let home = tempfile::tempdir().unwrap();
+            let attempt = format!("attempt-unaddressable-{index}");
+            let mock = MockHttp::responding(Ok(HttpResponse {
+                status: 200,
+                body: body.clone().into_bytes(),
+            }));
+            let error = execute_authenticated(home.path(), &input(&attempt), &token("g"), &mock)
+                .unwrap_err();
+            assert_eq!(code(&error), "gmail.send.outcome-unknown", "{body}");
+            assert!(
+                !error.to_string().contains("invalid response"),
+                "the response parsed, so this must be the id bound: {error}"
+            );
+            assert_eq!(mock.send_count(), 1);
+
+            // The attempt is now poisoned: the message may well have been sent,
+            // so a retry has to reconcile rather than hand Gmail a second copy.
+            let retry = MockHttp::responding(accepted());
+            let again = execute_authenticated(home.path(), &input(&attempt), &token("g"), &retry)
+                .unwrap_err();
+            assert_eq!(code(&again), "gmail.send.outcome-unknown");
+            assert_eq!(retry.send_count(), 0);
+        }
     }
 
     #[test]
