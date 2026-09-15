@@ -1,4 +1,4 @@
-import { canonicalJsonBytes, ModelReaderError } from './model-contract.mjs';
+import { canonicalJsonBytes, ModelReaderError, parseJsonStrict } from './model-contract.mjs';
 import { artifactV2Receipt, buildArtifactV2Index } from './model-artifact-v2.mjs';
 
 const SCHEMA = 'aware.model-metadata-shard/v2';
@@ -6,6 +6,7 @@ const FAMILIES = new Set(['entities', 'properties', 'relationships']);
 const DEFAULT_LIMITS = Object.freeze({ shardBytes: 16 * 1024 * 1024, shardRecords: 5_000_000 });
 const HARD_LIMITS = Object.freeze({ shardBytes: 32 * 1024 * 1024, shardRecords: 10_000_000 });
 const MAX_FAMILY_RECORDS = 10_000_000;
+export const MAX_METADATA_RECORD_DEPTH = 128;
 
 function shardError(code, message, details = undefined) {
   throw new ModelReaderError(code, 'canonical-artifact', false, message, details);
@@ -51,15 +52,19 @@ export function canonicalMetadataRecord(entry) {
       || (recordPrototype !== Object.prototype && recordPrototype !== null)) {
     shardError('reference-artifact-v2-invalid', 'A metadata record is invalid.');
   }
-  let keyBytes; let recordBytes;
+  let keyBytes; let recordBytes; let canonicalRecord;
   try {
     canonicalJsonBytes(key);
     keyBytes = Buffer.from(key);
     recordBytes = canonicalJsonBytes(record);
+    canonicalRecord = parseJsonStrict(recordBytes, {
+      maxBytes: recordBytes.length,
+      maxDepth: MAX_METADATA_RECORD_DEPTH,
+    });
   } catch (error) {
     shardError('reference-artifact-v2-invalid', 'A metadata record is not canonical JSON data.', error);
   }
-  return { key, keyBytes, record: JSON.parse(recordBytes.toString('utf8')), recordBytes };
+  return { key, keyBytes, record: canonicalRecord, recordBytes };
 }
 
 function frame(family, recordBytes) {

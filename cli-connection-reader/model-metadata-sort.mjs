@@ -4,7 +4,7 @@ import path from 'node:path';
 import { createInterface } from 'node:readline';
 
 import { canonicalJsonBytes, ModelReaderError, parseJsonStrict } from './model-contract.mjs';
-import { canonicalMetadataRecord } from './model-metadata-shards.mjs';
+import { canonicalMetadataRecord, MAX_METADATA_RECORD_DEPTH } from './model-metadata-shards.mjs';
 
 const DEFAULT_LIMITS = Object.freeze({ runBytes: 64 * 1024 * 1024, fanIn: 32, records: 10_000_000 });
 const HARD_LIMITS = Object.freeze({ runBytes: 64 * 1024 * 1024, fanIn: 32, records: 10_000_000 });
@@ -104,7 +104,7 @@ async function openRun(pathname, recordBytes) {
       sortError('reference-artifact-v2-invalid', 'A metadata sort run contains an invalid record.');
     }
     let value;
-    try { value = parseJsonStrict(bytes, { maxBytes: recordBytes, maxDepth: 128 }); }
+    try { value = parseJsonStrict(bytes, { maxBytes: recordBytes, maxDepth: MAX_METADATA_RECORD_DEPTH + 1 }); }
     catch (error) { sortError('reference-artifact-v2-invalid', 'A metadata sort run contains invalid JSON.', error); }
     const record = canonicalMetadataRecord(value);
     if (!canonicalJsonBytes({ key: record.key, record: record.record }).equals(bytes)) {
