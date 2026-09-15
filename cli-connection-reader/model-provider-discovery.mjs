@@ -1,9 +1,11 @@
 import fs from 'node:fs/promises';
+import { constants as fsConstants } from 'node:fs';
+import path from 'node:path';
 
 import {
   canonicalJsonBytes, lowerableLimits, ModelReaderError, parseJsonStrict, sha256,
 } from './model-contract.mjs';
-import { buildEffectiveSource } from './model-effective-source.mjs';
+import { buildEffectiveSource, validateDependencyPolicy } from './model-effective-source.mjs';
 import { loadEnrolledProviderPackage } from './model-provider-package.mjs';
 import { minimalProviderEnvironment } from './model-provider.mjs';
 import { captureSourceNamespaces, verifyCapturedSource } from './model-source-capture.mjs';
@@ -33,6 +35,37 @@ function authorization(value) {
   return value;
 }
 
+async function loadDependencyPolicy(home, providerFingerprintSha256) {
+  const pathname = path.join(home, 'providers', 'policies', `${providerFingerprintSha256}.json`);
+  let stat; let bytes; let handle;
+  try {
+    stat = await fs.lstat(pathname, { bigint: true });
+    if (!stat.isFile() || stat.isSymbolicLink() || stat.size > BigInt(1024 * 1024)) throw new Error('policy is unsafe or too large');
+    handle = await fs.open(pathname, fsConstants.O_RDONLY | (fsConstants.O_NOFOLLOW ?? 0));
+    const opened = await handle.stat({ bigint: true });
+    const sameDevice = process.platform === 'win32' || stat.dev === opened.dev;
+    if (!opened.isFile() || !sameDevice || stat.ino !== opened.ino || stat.size !== opened.size
+        || stat.mtimeNs !== opened.mtimeNs) throw new Error('policy changed before open');
+    bytes = await handle.readFile();
+    const after = await handle.stat({ bigint: true });
+    if (after.size !== opened.size || after.mtimeNs !== opened.mtimeNs
+        || bytes.length !== Number(opened.size) || bytes.length > 1024 * 1024) {
+      throw new Error('policy changed while read');
+    }
+  } catch (error) {
+    discoveryError('reference-dependency-policy-unavailable', 'The admitted dependency policy is unavailable.', false, error);
+  } finally {
+    await handle?.close().catch(() => {});
+  }
+  let policy;
+  try { policy = parseJsonStrict(bytes, { maxBytes: 1024 * 1024, maxDepth: 32 }); }
+  catch (error) { discoveryError('reference-dependency-policy-invalid', 'The admitted dependency policy is invalid.', false, error); }
+  let canonical;
+  try { canonical = canonicalJsonBytes(policy); }
+  catch (error) { discoveryError('reference-dependency-policy-invalid', 'The admitted dependency policy is invalid.', false, error); }
+  return { policy, sha256: sha256(canonical) };
+}
+
 async function invokeDiscover(options, capture) {
   const limits = lowerableLimits(options.limits);
   const loadOptions = {
@@ -41,6 +74,8 @@ async function invokeDiscover(options, capture) {
   };
   const before = await loadEnrolledProviderPackage(loadOptions);
   const provider = packageProviderIdentity(before, options.manifestSha256);
+  const admittedPolicy = await loadDependencyPolicy(options.home, provider.sha256);
+  validateDependencyPolicy(admittedPolicy.policy, options.capabilityId, provider.sha256);
   const request = canonicalJsonBytes({
     operation: 'discover', protocolVersion: '3', formatId: options.formatId,
     capabilityId: options.capabilityId, packageManifestSha256: options.manifestSha256,
@@ -95,9 +130,13 @@ async function invokeDiscover(options, capture) {
   if (provider.sha256 !== afterProvider.sha256) {
     discoveryError('reference-provider-package-changed', 'Provider package identity changed during dependency discovery.');
   }
+  const afterPolicy = await loadDependencyPolicy(options.home, provider.sha256);
+  if (admittedPolicy.sha256 !== afterPolicy.sha256) {
+    discoveryError('reference-dependency-policy-changed', 'The admitted dependency policy changed during discovery.');
+  }
   const effective = buildEffectiveSource({
     captureManifest: capture.manifest, captureManifestSha256: capture.manifestSha256,
-    dependencyReport, policy: options.policy, formatId: options.formatId,
+    dependencyReport, policy: admittedPolicy.policy, formatId: options.formatId,
     capabilityId: options.capabilityId, providerFingerprintSha256: provider.sha256,
     providerPackageManifestSha256: options.manifestSha256,
     degradedMode: options.degradedMode,

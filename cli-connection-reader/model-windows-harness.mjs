@@ -155,7 +155,7 @@ display-name: RVT Reader E2E
 description: Exercise the authenticated local RVT reader through a real one-shot AWARE app.
 exposes-as-agent: false
 requires:
-  - model-reference-reader@0.5.0
+  - model-reference-reader@0.6.0
 requires-permissions:
   filesystem:
     - read: '*.rvt'

@@ -69,12 +69,17 @@ async function fixture(t) {
       { role: 'support', classification: 'optional', affectedDomains: [] },
     ],
   };
+  await fs.mkdir(path.join(home, 'providers', 'policies'), { recursive: true });
+  await fs.writeFile(
+    path.join(home, 'providers', 'policies', `${policy.providerFingerprintSha256}.json`),
+    canonicalJsonBytes(policy),
+  );
   return {
     root, home, packageRoot, source, stagingRoot, manifestSha256, capability, policy,
     base: {
       home, formatId: manifest.formatId, capabilityId: capability.capabilityId, manifestSha256,
       environment: { AWARE_RUNTIME_VERSION: '0.138.0' }, authorization: 'synthetic-capability',
-      namespaces: [{ id: 'model', root: source }], stagingRoot, policy,
+      namespaces: [{ id: 'model', root: source }], stagingRoot,
     },
   };
 }
@@ -166,4 +171,32 @@ test('fingerprint preserves managed-host timeout and cancellation semantics', as
     ...cancelledValue.base, signal: controller.signal,
     hostRun: async () => { controller.abort(); throw new Error('terminated'); },
   }), (error) => error.code === 'reference-cancelled' && error.retryable === false);
+});
+
+test('fingerprint refuses an admitted policy changed during discovery', async (t) => {
+  const value = await fixture(t);
+  await assert.rejects(() => fingerprintSource({
+    ...value.base,
+    hostRun: async (call) => {
+      const request = JSON.parse(call.stdin);
+      const capture = JSON.parse(await fs.readFile(path.join(request.capture.root, 'capture.json')));
+      const policyPath = path.join(
+        value.home, 'providers', 'policies', `${value.policy.providerFingerprintSha256}.json`,
+      );
+      await fs.writeFile(policyPath, canonicalJsonBytes({ ...value.policy, policyId: 'synthetic-policy-v2' }));
+      return { exitCode: 0, stdout: canonicalJsonBytes(discoveryReport(request, capture)), stderr: Buffer.alloc(0) };
+    },
+  }), (error) => error.code === 'reference-dependency-policy-changed');
+});
+
+test('fingerprint refuses a malformed admitted policy before provider launch', async (t) => {
+  const value = await fixture(t); let launches = 0;
+  const policyPath = path.join(
+    value.home, 'providers', 'policies', `${value.policy.providerFingerprintSha256}.json`,
+  );
+  await fs.writeFile(policyPath, canonicalJsonBytes({ ...value.policy, capabilityId: 'capability.other' }));
+  await assert.rejects(() => fingerprintSource({
+    ...value.base, hostRun: async () => { launches += 1; return null; },
+  }), (error) => error.code === 'reference-dependency-policy-invalid');
+  assert.equal(launches, 0);
 });
