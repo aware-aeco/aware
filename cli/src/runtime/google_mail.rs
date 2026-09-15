@@ -1763,7 +1763,12 @@ mod tests {
                 "semicolon smuggles a recipient",
                 "a@example.com;b@example.com",
             ),
-            ("angle brackets", "<a@example.com>"),
+            // One bracket each, never both: a fixture carrying `<a@example.com>`
+            // stays refused when either character is dropped from the forbidden
+            // set, because the other one still catches it — and an unmatched
+            // bracket is exactly what would then reach a header.
+            ("unmatched opening bracket", "<a@example.com"),
+            ("unmatched closing bracket", "a@example.com>"),
             ("non-ascii domain", "user@ex\u{e1}mple.com"),
             ("trailing DEL", "user@example.com\u{7f}"),
             ("bare newline", "user@example.com\nBcc:x@example.com"),
@@ -2104,6 +2109,47 @@ mod tests {
         }
     }
 
+    /// The two tests around this one populate `cc` and `bcc` together and clear
+    /// them together, so a guard that consults the OTHER list satisfies both:
+    /// with both lists full every header exists, and with both empty none does.
+    /// Only one optional list at a time separates them, which is also the shape
+    /// of a real request that copies someone but blind-copies nobody.
+    #[test]
+    fn one_optional_recipient_list_at_a_time_still_emits_its_own_header() {
+        let header_addresses = |raw: &[u8], header: &str| -> Option<Vec<String>> {
+            let parsed = MessageParser::new().parse(raw).expect("valid RFC message");
+            parsed
+                .header(header)
+                .and_then(|value| value.as_address())
+                .and_then(|address| address.as_list())
+                .map(|list| {
+                    list.iter()
+                        .filter_map(|addr| addr.address.as_deref().map(str::to_string))
+                        .collect()
+                })
+        };
+
+        let mut cc_only = input("attempt-cc-only");
+        cc_only.cc = vec!["copied@example.com".into()];
+        cc_only.bcc.clear();
+        let raw = build_message(&cc_only, "sender@example.com", "<m@aware.local>").unwrap();
+        assert_eq!(
+            header_addresses(&raw, "Cc").as_deref(),
+            Some(&["copied@example.com".to_string()][..])
+        );
+        assert!(header_addresses(&raw, "Bcc").is_none());
+
+        let mut bcc_only = input("attempt-bcc-only");
+        bcc_only.cc.clear();
+        bcc_only.bcc = vec!["blind@example.com".into()];
+        let raw = build_message(&bcc_only, "sender@example.com", "<m@aware.local>").unwrap();
+        assert_eq!(
+            header_addresses(&raw, "Bcc").as_deref(),
+            Some(&["blind@example.com".to_string()][..])
+        );
+        assert!(header_addresses(&raw, "Cc").is_none());
+    }
+
     /// An empty list must produce no header at all — an empty `Bcc:` announces
     /// that a blind copy exists — and the declared body type must follow
     /// `content-type` rather than defaulting to one of them.
@@ -2187,19 +2233,42 @@ mod tests {
         assert_eq!(output["attempt-id"], "attempt-projection");
     }
 
+    /// One clause of `bounded_provider_id` per case, because the end-to-end test
+    /// below can only show that the guard is wired, not which of its four
+    /// conjuncts did the refusing. An empty id is the sharpest of them: it parses
+    /// as valid JSON, so without the nonempty clause it would be recorded as an
+    /// acceptance and handed back as a message handle addressing nothing.
+    #[test]
+    fn a_provider_id_is_bounded_nonempty_printable_ascii() {
+        assert!(bounded_provider_id("gmail-message"));
+        // Inclusive at 256, exclusive past it.
+        assert!(bounded_provider_id(&"a".repeat(256)));
+        assert!(!bounded_provider_id(&"a".repeat(257)));
+        assert!(!bounded_provider_id(""));
+        // Built from code points rather than written as escapes, so no raw
+        // control byte can end up in this source file.
+        let bell = char::from(0x07);
+        let delete = char::from(0x7f);
+        let e_acute = char::from_u32(0xe9).expect("valid code point");
+        assert!(!bounded_provider_id(&format!("gmail{bell}message")));
+        assert!(!bounded_provider_id(&format!("gmail-message{delete}")));
+        assert!(!bounded_provider_id(&format!("gmail-message-{e_acute}")));
+    }
+
     /// Gmail returning an id it cannot be addressed with is not an acceptance:
     /// recording it would hand callers an unusable handle for a message that may
     /// well have been sent. The attempt has to end unknown and stay unknown.
     #[test]
     fn an_unaddressable_provider_id_is_outcome_unknown_and_blocks_a_resend() {
-        // Both ids are well-formed JSON strings, so this is the bound being
-        // enforced and not the response failing to parse: an overlong id, then a
-        // non-ASCII thread id, so each operand of the guard is exercised.
+        // Every id here is a well-formed JSON string, so this is the bound being
+        // enforced and not the response failing to parse. Both operands of the
+        // guard are exercised: a bad `id`, then a bad `threadId`.
         let unusable = [
             format!(
                 r#"{{"id":"{}","threadId":"gmail-thread"}}"#,
                 "a".repeat(257)
             ),
+            r#"{"id":"","threadId":"gmail-thread"}"#.to_string(),
             r#"{"id":"gmail-message","threadId":"thread-é"}"#.to_string(),
         ];
         for (index, body) in unusable.iter().enumerate() {
