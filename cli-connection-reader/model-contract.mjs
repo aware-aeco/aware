@@ -13,14 +13,9 @@ export const MODEL_LIMITS = Object.freeze({
   providerStdoutBytes: { default: 256 * 1024, hard: 1024 * 1024 },
   providerStderrBytes: { default: 64 * 1024, hard: 256 * 1024 },
   conversionMs: { default: 10 * 60_000, hard: 30 * 60_000 },
-  // Keep the ordinary admission profile above twice the 94,531,584-byte Snowdon fixture. The 4 GiB
-  // hard ceiling remains the caller-controlled safety boundary for deliberately larger deployments.
-  maxSourceBytes: { default: 256 * 1024 * 1024, hard: 4 * 1024 * 1024 * 1024 },
+  maxSourceBytes: { default: 150 * 1024 * 1024, hard: 4 * 1024 * 1024 * 1024 },
   maxInputGlbBytes: { default: 128 * 1024 * 1024, hard: 512 * 1024 * 1024 },
-  // The authenticated Snowdon conversion completed under the former 16 MiB ceiling. Retain twice
-  // that entire admitted envelope so metadata growth tracks the same 2x production margin as the
-  // source, provider GLB, canonical GLB, and component shards.
-  maxMetadataBytes: { default: 32 * 1024 * 1024, hard: 128 * 1024 * 1024 },
+  maxMetadataBytes: { default: 16 * 1024 * 1024, hard: 128 * 1024 * 1024 },
   maxProviderOutputBytes: { default: 144 * 1024 * 1024, hard: 576 * 1024 * 1024 },
   // Bounds the JSON chunk of the PROVIDER's GLB. It has to admit what maxInputGlbBytes admits: a
   // 42 MB authenticated GLB carrying a 23.5 MB JSON chunk is inside every other declared limit, and
@@ -30,7 +25,7 @@ export const MODEL_LIMITS = Object.freeze({
   // measure different documents, and folding them into one knob means raising the input bound to
   // admit a real model silently raises the output bound past what the structural count limits can
   // still police, retiring the canonical-output guard.
-  maxCanonicalGlbJsonBytes: { default: 32 * 1024 * 1024, hard: 128 * 1024 * 1024 },
+  maxCanonicalGlbJsonBytes: { default: 16 * 1024 * 1024, hard: 128 * 1024 * 1024 },
   maxJsonDepth: { default: 64, hard: 128 },
   maxScenes: { default: 8, hard: 32 },
   maxNodes: { default: 100_000, hard: 250_000 },
@@ -40,7 +35,7 @@ export const MODEL_LIMITS = Object.freeze({
   maxAccessors: { default: 250_000, hard: 1_000_000 },
   maxBufferViews: { default: 250_000, hard: 1_000_000 },
   maxVertices: { default: 5_000_000, hard: 10_000_000 },
-  maxIndices: { default: 20_000_000, hard: 40_000_000 },
+  maxIndices: { default: 15_000_000, hard: 40_000_000 },
   maxEntities: { default: 250_000, hard: 1_000_000 },
   maxParameters: { default: 2_000_000, hard: 5_000_000 },
   maxRelationships: { default: 1_000_000, hard: 2_000_000 },
@@ -52,8 +47,8 @@ export const MODEL_LIMITS = Object.freeze({
   // 1024 estimated bytes per vertex a 1 GiB budget admits 1,048,576 vertices, so maxVertices' own
   // 5,000,000 default was unreachable — 21% of it — and no published limit said so (#517).
   // The estimate is a worst case, not a resident-memory reading: measured against real conversions it
-  // overstates RSS by roughly 2-3.4x, so this budget corresponds to ~2.4-4 GiB actually resident.
-  maxCanonicalWorkBytes: { default: 8 * 1024 * 1024 * 1024, hard: 16 * 1024 * 1024 * 1024 },
+  // overstates RSS by roughly 2-3.4x, so this budget corresponds to ~1.2-2 GiB actually resident.
+  maxCanonicalWorkBytes: { default: 4 * 1024 * 1024 * 1024, hard: 16 * 1024 * 1024 * 1024 },
   maxCommandResponseBytes: { default: 1024 * 1024, hard: 1024 * 1024 },
 });
 
@@ -74,7 +69,14 @@ export const PROPERTY_EXPANSION_LIMITS = Object.freeze({
 // explicitly supplied lower value still wins.
 export const READER_SCHEMA_LIMIT_DEFAULTS = Object.freeze({
   [READER_SCHEMA_VERSION_V1]: Object.freeze({}),
-  [READER_SCHEMA_VERSION_V2]: Object.freeze({ maxComponentJsonBytes: 128 * 1024 * 1024 }),
+  [READER_SCHEMA_VERSION_V2]: Object.freeze({
+    maxSourceBytes: 256 * 1024 * 1024,
+    maxMetadataBytes: 32 * 1024 * 1024,
+    maxCanonicalGlbJsonBytes: 32 * 1024 * 1024,
+    maxIndices: 20_000_000,
+    maxComponentJsonBytes: 128 * 1024 * 1024,
+    maxCanonicalWorkBytes: 8 * 1024 * 1024 * 1024,
+  }),
 });
 
 export class ModelReaderError extends Error {

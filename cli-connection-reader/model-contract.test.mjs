@@ -92,7 +92,7 @@ test('every canonical request leaf affects the cache/request preimage', () => {
   assert.equal(MODEL_LIMITS.maxGlbJsonBytes.hard, 128 * 1024 * 1024);
   assert.equal(MODEL_LIMITS.maxInputGlbBytes.default, 128 * 1024 * 1024);
   assert.equal(MODEL_LIMITS.maxInputGlbBytes.hard, 512 * 1024 * 1024);
-  assert.equal(MODEL_LIMITS.maxSourceBytes.default, 256 * 1024 * 1024);
+  assert.equal(buildCanonicalRequest({ readerSchemaVersion: 'model-reference-reader/v2' }).limits.maxSourceBytes, 256 * 1024 * 1024);
   assert.equal(buildCanonicalRequest({ protocolVersion: '2' }).protocolVersion, '2');
   assert.throws(() => buildCanonicalRequest({ protocolVersion: '3' }), /protocolVersion/);
 });
@@ -148,8 +148,9 @@ test('every size and count limit admits at least twice the complete authenticate
     maxRelationships: snowdon.relationships,
     maxCanonicalWorkBytes: snowdon.canonicalWorkBytes,
   };
+  const v2Limits = buildCanonicalRequest({ readerSchemaVersion: 'model-reference-reader/v2' }).limits;
   for (const [limit, measured] of Object.entries(modelLimitProfile)) {
-    assert.ok(measured * 2 <= MODEL_LIMITS[limit].default,
+    assert.ok(measured * 2 <= v2Limits[limit],
       `${limit} must admit at least twice the pinned Snowdon requirement (${measured})`);
   }
 
