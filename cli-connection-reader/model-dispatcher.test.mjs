@@ -44,6 +44,17 @@ test('mixed IFC and RVT paths are refused instead of guessed', async () => {
   assert.match(result.stderr.toString('utf8'), /mixed-model-paths/);
 });
 
+test('provider package commands route to the model reader without IFC loading', async () => {
+  const result = await run(dispatcher, 'fingerprint-source', {
+    'provider-format': 'format.synthetic',
+    'provider-capability': 'capability.synthetic',
+    'provider-package-sha256': 'a'.repeat(64),
+  });
+  assert.notEqual(result.exitCode, 0);
+  const error = JSON.parse(result.stderr.toString('utf8'));
+  assert.equal(error.code, 'reference-source-namespaces-invalid');
+});
+
 test('documented IFC probe bytes remain identical through the lazy dispatcher', async () => {
   const input = { 'ifc-path': path.join(here, 'test-fixtures', 'baseplate-bp1.ifc') };
   const before = await run(ifcEntry, 'probe', input);

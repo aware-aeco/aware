@@ -126,6 +126,49 @@ test('request-only failures precede provider configuration and managed host setu
     }, unconfigured),
     (error) => error.code === 'reference-provider-pin-required',
   );
+  await assert.rejects(
+    () => runModelCommand('fingerprint-source', {}, unconfigured),
+    (error) => error.code === 'reference-provider-package-request-invalid',
+  );
+  await assert.rejects(
+    () => runModelCommand('fingerprint-source', {
+      'source-capture-limits': { maxFiles: 25_001 },
+    }, unconfigured),
+    (error) => error.code === 'reference-limits-invalid',
+  );
+});
+
+test('package fingerprint-source returns the portable effective source and cleans its run root', async (t) => {
+  const state = await setup(t); let stagingRoot;
+  const effectiveSource = { schemaVersion: 'model-effective-source/v2', formatId: 'format.synthetic' };
+  const out = await runModelCommand('fingerprint-source', {
+    'provider-format': 'format.synthetic',
+    'provider-capability': 'capability.synthetic',
+    'provider-package-sha256': 'a'.repeat(64),
+    'provider-authorization': 'synthetic-capability',
+    'source-namespaces': [{ id: 'model', root: state.root }],
+    'source-capture-limits': { maxFiles: 7, maxAggregateBytes: 4096 },
+    'signing-secret-path': state.secretPath,
+    'signing-public-path': state.publicPath,
+  }, {
+    ...state.deps,
+    fingerprintSource: async (options) => {
+      stagingRoot = options.stagingRoot;
+      assert.equal(options.degradedMode, 'refuse');
+      assert.equal(options.authorization, 'synthetic-capability');
+      assert.equal(options.captureLimits.maxFiles, 7);
+      assert.equal(options.captureLimits.maxAggregateBytes, 4096);
+      await fs.stat(path.dirname(stagingRoot));
+      return {
+        effectiveSource, sha256: 'b'.repeat(64), dependencyPolicySha256: 'c'.repeat(64),
+        providerIdentity: { schemaVersion: 'aware.enrolled-model-provider-fingerprint/v1' },
+      };
+    },
+  });
+  assert.equal(out.schemaVersion, 'model-reference-reader-source-fingerprint/v1');
+  assert.deepEqual(out.effectiveSource, effectiveSource);
+  assert.equal(out.effectiveSourceSha256, 'b'.repeat(64));
+  await assert.rejects(fs.stat(path.dirname(stagingRoot)), (error) => error.code === 'ENOENT');
 });
 
 async function managedState(t) {

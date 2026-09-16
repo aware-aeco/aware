@@ -178,7 +178,12 @@ function normalizeJson(value, seen = new Set()) {
   if (seen.has(value)) throw new TypeError('JSON value must be acyclic');
   seen.add(value);
   try {
-    if (Array.isArray(value)) return value.map((entry) => normalizeJson(entry, seen));
+    if (Array.isArray(value)) {
+      for (let index = 0; index < value.length; index += 1) {
+        if (!Object.hasOwn(value, index)) throw new TypeError('sparse array is not JSON data');
+      }
+      return value.map((entry) => normalizeJson(entry, seen));
+    }
     if (Object.getPrototypeOf(value) !== PLAIN && Object.getPrototypeOf(value) !== null) throw new TypeError('JSON object must be plain');
     const out = {};
     for (const key of Object.keys(value).sort()) {

@@ -15,7 +15,30 @@ import {
   providerFingerprintSha256,
   requestSha256,
   safeErrorEnvelope,
+  sha256,
 } from './model-contract.mjs';
+import { cacheKeySha256 } from './model-cache.mjs';
+
+test('legacy local model-reader identity bytes remain frozen across package-mode additions', () => {
+  const canonicalRequest = buildCanonicalRequest();
+  assert.equal(
+    sha256(canonicalJsonBytes(canonicalRequest)),
+    'd762a0e27b6b97f34d75a59945a537fe8a4c286757aaecc46547f75a72a0d60e',
+  );
+  const providerFingerprint = buildProviderFingerprint({
+    protocolVersion: '1', provider: 'provider.synthetic', engine: 'engine.synthetic',
+    engineVersion: '1.2.3', adapterBuildId: 'build.synthetic',
+    adapterExecutableSha256: 'a'.repeat(64),
+  });
+  assert.equal(
+    providerFingerprintSha256(providerFingerprint),
+    '41b01ab9166307a60e761b4119079ab4e7c40064b73a8605ce05eea00455fe5f',
+  );
+  assert.equal(cacheKeySha256({
+    sourceSha256: 'b'.repeat(64), canonicalRequest, providerFingerprint,
+    signerFingerprintSha256: 'c'.repeat(64),
+  }), '7d8513537afa897436bcbe535e1ed5387dc132b5fe5580fbeb4ce17d2ad620be');
+});
 
 test('JCS bytes are stable across key order and pin number/string edge cases', () => {
   const a = canonicalJsonBytes({ z: '\u20ac', a: [3, -0, 1e-7], nested: { b: true, a: null } });
@@ -25,6 +48,12 @@ test('JCS bytes are stable across key order and pin number/string edge cases', (
   assert.throws(() => canonicalJsonBytes({ unsafe: Number.MAX_SAFE_INTEGER + 1 }), /safe integer/);
   assert.throws(() => canonicalJsonBytes({ bad: Number.NaN }), /finite/);
   assert.throws(() => canonicalJsonBytes({ bad: '\ud800' }), /Unicode scalar/);
+});
+
+test('canonical JSON refuses sparse arrays instead of changing holes to null', () => {
+  assert.throws(() => canonicalJsonBytes(new Array(1)), /sparse array/);
+  assert.throws(() => canonicalJsonBytes({ nested: [1, , 3] }), /sparse array/);
+  assert.equal(canonicalJsonBytes([1, null, 3]).toString('utf8'), '[1,null,3]');
 });
 
 test('strict JSON parsing rejects duplicate keys, trailing bytes, and unsafe integers', () => {

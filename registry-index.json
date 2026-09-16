@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-14T10:30:00+00:00",
+  "updated-at": "2026-09-16T16:33:26.802657100+00:00",
   "agents": {
     "tekla": {
       "versions": {
@@ -874,7 +874,7 @@
           "subdir": "aware-main/20-agents/aeco/engineering/model-reference-reader",
           "manifest-agent": "model-reference-reader",
           "manifest-version": "0.7.3",
-          "bundle-digest": "sha256:25c24227a9acec5b0ac40b531e8120e46cb966ed64be2dec89a135e48d580d44"
+          "bundle-digest": "sha256:3902544d37b99a31e926b943a42e9f33451fd8aee2bf5e8da5704baac1520b7e"
         }
       }
     }

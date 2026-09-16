@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aware.aeco.dev/schemas/model-artifact-index-v2.schema.json",
+  "title": "AWARE canonical model artifact index v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "family", "itemCount", "objects"],
+  "properties": {
+    "schemaVersion": { "const": "aware.model-artifact-index/v2" },
+    "family": { "enum": ["geometry", "entities", "properties", "relationships"] },
+    "itemCount": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+    "objects": {
+      "type": "array",
+      "maxItems": 256,
+      "items": { "$ref": "#/$defs/receipt" }
+    }
+  },
+  "$defs": {
+    "receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["logicalPath", "logicalKind", "ordinal", "mediaType", "bytes", "sha256", "itemCount"],
+      "properties": {
+        "logicalPath": { "type": "string", "pattern": "^(?:[A-Za-z0-9._-]+/)*[A-Za-z0-9._-]+$" },
+        "logicalKind": { "type": "string", "minLength": 1 },
+        "ordinal": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "mediaType": { "type": "string", "minLength": 1 },
+        "bytes": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "itemCount": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "bounds": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": { "type": "number" }
+        },
+        "idRange": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["first", "last"],
+          "properties": {
+            "first": { "type": "string", "minLength": 1 },
+            "last": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    }
+  }
+}
