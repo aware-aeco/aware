@@ -285,12 +285,12 @@ fn current_bridge_is_required(agent: &str, binary: &str, command: &str, current:
             || (agent == "model-reference-reader" && binary == "aware-connection-reader"))
 }
 
-// The reader's signed v2 envelope permits up to 8 GiB of conservative canonicalization work. The
+// The reader's signed v2 envelope permits up to 16 GiB of conservative canonicalization work. The
 // packaged bridge is a Node SEA, whose unconfigured V8 old-space limit is materially smaller on
 // 64-bit Windows. Set the heap ceiling on the exact reader process so an admitted model reaches the
 // reader's checked `reference-output-too-large` guard instead of dying in V8 first. This is scoped to
 // the audited reader bridge; other Node transports retain their inherited environment.
-const MODEL_READER_NODE_OPTIONS: &str = "--max-old-space-size=8192";
+const MODEL_READER_NODE_OPTIONS: &str = "--max-old-space-size=16384";
 
 fn node_options_for_reader(agent: &str, binary: &str) -> Option<&'static str> {
     let binary = binary.strip_suffix(".exe").unwrap_or(binary);
@@ -3538,14 +3538,14 @@ mod cli_invoker_tests {
     }
 
     #[test]
-    fn model_reader_always_gets_the_heap_required_by_its_admitted_v2_envelope() {
+    fn model_reader_always_gets_the_heap_required_by_its_admitted_hard_envelope() {
         assert_eq!(
             node_options_for_reader("model-reference-reader", "aware-connection-reader"),
-            Some("--max-old-space-size=8192")
+            Some("--max-old-space-size=16384")
         );
         assert_eq!(
             node_options_for_reader("model-reference-reader", "aware-connection-reader.exe"),
-            Some("--max-old-space-size=8192")
+            Some("--max-old-space-size=16384")
         );
         assert_eq!(node_options_for_reader("tekla", "aware-tekla"), None);
     }
