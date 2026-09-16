@@ -1001,6 +1001,7 @@ fn renaming_registry(dir: &std::path::Path) -> String {
     "updated-at": "2026-05-16T00:00:00Z",
     "agents": {{
         "probe": {{
+            "alias-of": "probe-agent",
             "versions": {{
                 "2.0.0": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent", "manifest-agent": "probe-agent", "manifest-version": "2.0.0" }}
             }}

@@ -282,6 +282,7 @@ mod tests {
             retryable: true,
             message: "The model provider timed out.".into(),
             diagnostic_id: "123e4567-e89b-12d3-a456-426614174000".into(),
+            provider_code: Some("xeorvt-timeout".into()),
             details: None,
         };
         let event = RunEvent::node_error("now".into(), "run".into(), "reader".into(), &error);
@@ -293,6 +294,7 @@ mod tests {
             value["structured"]["diagnosticId"],
             "123e4567-e89b-12d3-a456-426614174000"
         );
+        assert_eq!(value["structured"]["providerCode"], "xeorvt-timeout");
         assert!(
             value["error"]
                 .as_str()

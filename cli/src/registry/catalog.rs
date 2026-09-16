@@ -638,7 +638,7 @@ commands:
             assert!(subdir.contains("tekla"));
             Ok(agent_from_yaml("tekla", "steel detailing"))
         });
-        assert!(errs.is_empty());
+        assert!(errs.is_empty(), "{errs:?}");
         let a = cat.agents.get("tekla").unwrap();
         assert!(
             a.versions.contains_key("2025.0.1"),
@@ -692,7 +692,7 @@ commands:
                 bundle_digest: None,
                 tarball: "t".to_string(),
                 subdir: "sunset".to_string(),
-                manifest_agent: Some("steel-detailer-us".to_string()),
+                manifest_agent: Some("old-sunset".to_string()),
                 manifest_version: Some("9.9.9".to_string()),
             },
         );
@@ -705,14 +705,18 @@ commands:
             },
         );
 
-        let (cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+        let (cat, errs) = build_catalog(&index, "now".to_string(), |subdir| {
             // The alias resolves to the new agent's manifest; if `load` were called for
             // a hidden entry this would still succeed, so the assertion below is what
             // proves the entry was skipped (not merely that its manifest loaded).
-            Ok(agent_from_yaml("steel-detailer-us", "us steel detailing"))
+            if subdir == "sunset" {
+                Ok(agent_from_yaml("old-sunset", "retired steel detailing"))
+            } else {
+                Ok(agent_from_yaml("steel-detailer-us", "us steel detailing"))
+            }
         });
 
-        assert!(errs.is_empty());
+        assert!(errs.is_empty(), "{errs:?}");
         assert!(
             cat.agents.contains_key("steel-detailer-us"),
             "the rename target is listed"

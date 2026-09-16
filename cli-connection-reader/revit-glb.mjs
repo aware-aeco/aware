@@ -16,6 +16,17 @@ const CANONICAL_VERTEX_WORK_BYTES = 1024;
 const CANONICAL_INDEX_WORK_BYTES = 128;
 const CANONICAL_PRIMITIVE_WORK_BYTES = 4096;
 
+export function checkedCanonicalWorkBytes(current, count, bytesPerItem, maxCanonicalWorkBytes) {
+  if (!Number.isSafeInteger(current) || current < 0 || !Number.isSafeInteger(count) || count < 0
+    || !Number.isSafeInteger(bytesPerItem) || bytesPerItem <= 0
+    || !Number.isSafeInteger(maxCanonicalWorkBytes) || maxCanonicalWorkBytes <= 0
+    || current > maxCanonicalWorkBytes
+    || count > Math.floor((maxCanonicalWorkBytes - current) / bytesPerItem)) {
+    invalid(`canonical geometry working set exceeds its ${maxCanonicalWorkBytes}-byte limit`, 'reference-output-too-large');
+  }
+  return current + count * bytesPerItem;
+}
+
 function invalid(message, code = 'reference-geometry-invalid') {
   throw new ModelReaderError(code, 'normalize-geometry', false, message);
 }
@@ -447,10 +458,7 @@ export function normalizeRevitGlb(input, options = {}) {
   let totalPrimitives = 0;
   let canonicalWorkBytes = 0;
   const reserveWork = (count, bytesPerItem) => {
-    if (!Number.isSafeInteger(count) || count < 0 || count > Math.floor((limits.maxCanonicalWorkBytes - canonicalWorkBytes) / bytesPerItem)) {
-      invalid(`canonical geometry working set exceeds its ${limits.maxCanonicalWorkBytes}-byte limit`, 'reference-output-too-large');
-    }
-    canonicalWorkBytes += count * bytesPerItem;
+    canonicalWorkBytes = checkedCanonicalWorkBytes(canonicalWorkBytes, count, bytesPerItem, limits.maxCanonicalWorkBytes);
   };
   for (const { node, world, mesh } of nodes) {
     const determinant = determinant3(world);

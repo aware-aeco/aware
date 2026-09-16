@@ -873,7 +873,7 @@ fn reindex_refuses_missing_or_mismatched_manifest_bindings() {
             |entry: &mut serde_json::Value| {
                 entry["manifest-agent"] = "different-agent".into();
             },
-            "expects manifest-agent different-agent",
+            "declares unrelated manifest-agent \"different-agent\"",
         ),
     ] {
         let tmp = tempfile::tempdir().unwrap();

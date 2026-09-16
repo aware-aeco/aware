@@ -185,7 +185,7 @@ fn stage_agent_from_registry(
     // with the cached index, so fall back to it rather than failing the install (#270 / Codex
     // review). A cold cache (nothing to fall back to) propagates the error.
     let extract_root = scratch.path().join("extract");
-    let subdir = match extract_agent_subdir(
+    let mut subdir = match extract_agent_subdir(
         &tarball_path,
         &extract_root,
         &entry.subdir,
@@ -212,13 +212,85 @@ fn stage_agent_from_registry(
         Err(err) => return Err(err),
     };
 
+    // A successful extraction and matching manifest identity are not enough to make a shared
+    // cache entry trustworthy. Validate the complete agent bundle, including every referenced
+    // file and (for the official registry) its signed tree digest, before committing it;
+    // otherwise an identity-preserving but modified archive poisons every retry for this snapshot.
+    match validate_staged_release_for_cache(&subdir, key, resolved_version, index, entry) {
+        Ok(()) => {}
+        Err(_) if downloaded && cache_file.is_file() => {
+            eprintln!(
+                "warning: refreshed archive fails release validation for {key}@{resolved_version}; using prior cache"
+            );
+            downloaded = false;
+            std::fs::copy(&cache_file, &tarball_path)?;
+            let retry_root = scratch.path().join("extract-identity-cached");
+            subdir = extract_agent_subdir(
+                &tarball_path,
+                &retry_root,
+                &entry.subdir,
+                key,
+                resolved_version,
+            )?;
+            validate_staged_release_for_cache(&subdir, key, resolved_version, index, entry)?;
+        }
+        Err(error) => return Err(error),
+    }
+
     // Commit a freshly-downloaded archive to the shared cache ONLY now that it has served this
-    // agent (re-arming the TTL). Caching post-extraction means a download that was corrupt or
-    // raced past our index can never poison the snapshot's cache file.
+    // agent and passed its full release validation (re-arming the TTL). Caching post-validation
+    // means a corrupt, raced, incomplete, or digest-mismatched download cannot poison the cache.
     if downloaded {
         let _ = std::fs::copy(&tarball_path, &cache_file);
     }
     Ok((scratch, subdir))
+}
+
+fn validate_staged_release_for_cache(
+    subdir: &Path,
+    key: &str,
+    resolved_version: &str,
+    index: &Index,
+    entry: &crate::registry::VersionEntry,
+) -> Result<(), AwareError> {
+    let index_entry = index
+        .agents
+        .get(key)
+        .ok_or_else(|| AwareError::NotFound(format!("agent {key} not in registry")))?;
+    let manifest_path = subdir.join("manifest.yaml");
+    if !manifest_path.is_file() {
+        return Err(AwareError::Validation(format!(
+            "registry entry {key}@{resolved_version}: no manifest.yaml in payload"
+        )));
+    }
+    let agent = load_agent(&manifest_path)?;
+    crate::registry::index::validate_release_payload(
+        key,
+        resolved_version,
+        index_entry,
+        entry,
+        &agent.agent,
+        &agent.version,
+    )
+    .map_err(AwareError::Validation)?;
+    let issues = validate_agent_on_disk(&agent, subdir);
+    if let Some(summary) = error_summary(&issues) {
+        return Err(AwareError::Validation(summary));
+    }
+    if index.trust == RegistryTrust::FreshOfficial {
+        let expected = entry.bundle_digest.as_deref().ok_or_else(|| {
+            AwareError::Validation(format!(
+                "official registry entry {key}@{resolved_version} has no bundle-digest"
+            ))
+        })?;
+        let digest = crate::install::integrity::tree_digest(subdir)?;
+        if digest != expected {
+            return Err(AwareError::Validation(format!(
+                "official registry bundle digest mismatch for {key}@{resolved_version}: expected {expected}, got {digest}"
+            )));
+        }
+    }
+    Ok(())
 }
 
 /// Cache filename for a registry tarball, keyed by its URL + the index's snapshot
@@ -887,7 +959,7 @@ mod tests {
         let message = error.to_string();
         assert!(message.contains("tekla@2025.0.1"), "{message}");
         assert!(message.contains("different-agent"), "{message}");
-        assert!(message.contains("payload declares \"tekla\""), "{message}");
+        assert!(message.contains("unrelated manifest-agent"), "{message}");
         assert_eq!(
             std::fs::read_to_string(sentinel).unwrap(),
             "original install"
@@ -1051,6 +1123,10 @@ mod tests {
     /// carries a caller-chosen marker, so a test can tell one archive *state* from
     /// another while the registry index stays byte-identical (same fingerprint).
     fn write_alpha_archive(path: &Path, display_marker: &str) {
+        write_alpha_archive_as(path, "alpha", display_marker);
+    }
+
+    fn write_alpha_archive_as(path: &Path, manifest_agent: &str, display_marker: &str) {
         let enc = flate2::write::GzEncoder::new(
             std::fs::File::create(path).unwrap(),
             flate2::Compression::default(),
@@ -1080,7 +1156,7 @@ mod tests {
             .lines()
             .map(|l| {
                 if l.starts_with("agent:") {
-                    "agent: alpha".to_string()
+                    format!("agent: {manifest_agent}")
                 } else if l.starts_with("display-name:") {
                     format!("display-name: {display_marker}")
                 } else {
@@ -1119,8 +1195,8 @@ mod tests {
                 bundle_digest: None,
                 tarball: url.to_string(),
                 subdir: "aware-main/20-agents/alpha".to_string(),
-                manifest_agent: None,
-                manifest_version: None,
+                manifest_agent: Some("alpha".into()),
+                manifest_version: Some("0.1.5".into()),
             },
         );
         let mut agents = BTreeMap::new();
@@ -1138,6 +1214,216 @@ mod tests {
             agents,
             bundles: BTreeMap::new(),
         }
+    }
+
+    #[test]
+    fn identity_mismatch_is_rejected_before_the_download_enters_shared_cache() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        write_alpha_archive_as(&archive, "other-agent", "MISMATCH");
+
+        let mut index = single_alpha_index(&url);
+        let release = index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap();
+        release.manifest_agent = Some("alpha".into());
+        release.manifest_version = Some("0.1.5".into());
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        let error = stage_agent_from_registry("alpha", None, &paths, &index).unwrap_err();
+        assert!(
+            error.to_string().contains("expects manifest-agent alpha"),
+            "{error}"
+        );
+        assert!(
+            !cache_file.exists(),
+            "a semantically mismatched payload must never enter the shared cache"
+        );
+    }
+
+    #[test]
+    fn official_digest_mismatch_is_rejected_before_the_download_enters_shared_cache() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        write_alpha_archive(&archive, "IDENTITY-MATCHES-BUT-CONTENT-DOES-NOT");
+
+        let mut index = single_alpha_index(&url);
+        index.trust = RegistryTrust::FreshOfficial;
+        index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap()
+            .bundle_digest = Some(format!("sha256:{}", "a".repeat(64)));
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        let error = stage_agent_from_registry("alpha", None, &paths, &index).unwrap_err();
+        assert!(
+            error.to_string().contains("bundle digest mismatch"),
+            "{error}"
+        );
+        assert!(
+            !cache_file.exists(),
+            "an identity-matching payload with the wrong official digest must never enter the shared cache"
+        );
+    }
+
+    #[test]
+    fn official_digest_mismatch_in_fresh_shared_cache_is_rejected() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        write_alpha_archive(&archive, "SOURCE-WOULD-BE-VALIDATED-IF-FETCHED");
+
+        let mut index = single_alpha_index(&url);
+        index.trust = RegistryTrust::FreshOfficial;
+        index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap()
+            .bundle_digest = Some(format!("sha256:{}", "a".repeat(64)));
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        std::fs::create_dir_all(cache_file.parent().unwrap()).unwrap();
+        write_alpha_archive(&cache_file, "IDENTITY-MATCHES-BUT-CACHE-WAS-MODIFIED");
+
+        let error = stage_agent_from_registry("alpha", None, &paths, &index).unwrap_err();
+        assert!(
+            error.to_string().contains("bundle digest mismatch"),
+            "a fresh shared cache must receive the same full release validation as a download: {error}"
+        );
+    }
+
+    #[test]
+    fn invalid_fallback_cache_is_rejected_after_refresh_extraction_fails() {
+        use crate::registry::fetch::CACHE_TTL;
+        use std::time::{Duration, SystemTime};
+
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+
+        let mut index = single_alpha_index(&url);
+        index.trust = RegistryTrust::FreshOfficial;
+        index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap()
+            .bundle_digest = Some(format!("sha256:{}", "a".repeat(64)));
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        std::fs::create_dir_all(cache_file.parent().unwrap()).unwrap();
+        write_alpha_archive(&cache_file, "IDENTITY-MATCHES-BUT-FALLBACK-WAS-MODIFIED");
+        let stale = SystemTime::now()
+            .checked_sub(CACHE_TTL + Duration::from_secs(60))
+            .unwrap();
+        std::fs::File::options()
+            .write(true)
+            .open(&cache_file)
+            .unwrap()
+            .set_modified(stale)
+            .unwrap();
+
+        std::fs::write(&archive, b"not a gzip stream").unwrap();
+        let error = stage_agent_from_registry("alpha", None, &paths, &index).unwrap_err();
+        assert!(
+            error.to_string().contains("bundle digest mismatch"),
+            "a cache selected after a failed refresh must still receive full release validation: {error}"
+        );
+    }
+
+    #[test]
+    fn identity_mismatch_refresh_falls_back_to_the_known_good_cache() {
+        use crate::registry::fetch::CACHE_TTL;
+        use std::time::{Duration, SystemTime};
+
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        let mut index = single_alpha_index(&url);
+        let release = index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap();
+        release.manifest_agent = Some("alpha".into());
+        release.manifest_version = Some("0.1.5".into());
+
+        write_alpha_archive(&archive, "KNOWN-GOOD");
+        let (_first_guard, first) =
+            stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+        assert!(
+            std::fs::read_to_string(first.join("manifest.yaml"))
+                .unwrap()
+                .contains("KNOWN-GOOD")
+        );
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        let stale = SystemTime::now()
+            .checked_sub(CACHE_TTL + Duration::from_secs(60))
+            .unwrap();
+        std::fs::File::options()
+            .write(true)
+            .open(&cache_file)
+            .unwrap()
+            .set_modified(stale)
+            .unwrap();
+        write_alpha_archive_as(&archive, "other-agent", "MISMATCH");
+
+        let (_second_guard, second) =
+            stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+        assert!(
+            std::fs::read_to_string(second.join("manifest.yaml"))
+                .unwrap()
+                .contains("KNOWN-GOOD"),
+            "a semantically raced refresh must fall back to the release-bound cache"
+        );
     }
 
     #[test]

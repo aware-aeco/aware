@@ -1,7 +1,10 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { isUtf8 } from 'node:buffer';
 
-export const READER_SCHEMA_VERSION = 'model-reference-reader/v1';
+export const READER_SCHEMA_VERSION_V1 = 'model-reference-reader/v1';
+export const READER_SCHEMA_VERSION_V2 = 'model-reference-reader/v2';
+// Kept as v1 for callers that have not opted into the additive v2 contract.
+export const READER_SCHEMA_VERSION = READER_SCHEMA_VERSION_V1;
 const SHA256 = /^[0-9a-f]{64}$/;
 const PLAIN = Object.getPrototypeOf({});
 
@@ -12,7 +15,7 @@ export const MODEL_LIMITS = Object.freeze({
   conversionMs: { default: 10 * 60_000, hard: 30 * 60_000 },
   maxSourceBytes: { default: 150 * 1024 * 1024, hard: 4 * 1024 * 1024 * 1024 },
   maxInputGlbBytes: { default: 128 * 1024 * 1024, hard: 512 * 1024 * 1024 },
-  maxMetadataBytes: { default: 16 * 1024 * 1024, hard: 64 * 1024 * 1024 },
+  maxMetadataBytes: { default: 16 * 1024 * 1024, hard: 128 * 1024 * 1024 },
   maxProviderOutputBytes: { default: 144 * 1024 * 1024, hard: 576 * 1024 * 1024 },
   // Bounds the JSON chunk of the PROVIDER's GLB. It has to admit what maxInputGlbBytes admits: a
   // 42 MB authenticated GLB carrying a 23.5 MB JSON chunk is inside every other declared limit, and
@@ -22,7 +25,7 @@ export const MODEL_LIMITS = Object.freeze({
   // measure different documents, and folding them into one knob means raising the input bound to
   // admit a real model silently raises the output bound past what the structural count limits can
   // still police, retiring the canonical-output guard.
-  maxCanonicalGlbJsonBytes: { default: 16 * 1024 * 1024, hard: 64 * 1024 * 1024 },
+  maxCanonicalGlbJsonBytes: { default: 16 * 1024 * 1024, hard: 128 * 1024 * 1024 },
   maxJsonDepth: { default: 64, hard: 128 },
   maxScenes: { default: 8, hard: 32 },
   maxNodes: { default: 100_000, hard: 250_000 },
@@ -32,7 +35,7 @@ export const MODEL_LIMITS = Object.freeze({
   maxAccessors: { default: 250_000, hard: 1_000_000 },
   maxBufferViews: { default: 250_000, hard: 1_000_000 },
   maxVertices: { default: 5_000_000, hard: 10_000_000 },
-  maxIndices: { default: 15_000_000, hard: 30_000_000 },
+  maxIndices: { default: 15_000_000, hard: 40_000_000 },
   maxEntities: { default: 250_000, hard: 1_000_000 },
   maxParameters: { default: 2_000_000, hard: 5_000_000 },
   maxRelationships: { default: 1_000_000, hard: 2_000_000 },
@@ -45,18 +48,46 @@ export const MODEL_LIMITS = Object.freeze({
   // 5,000,000 default was unreachable — 21% of it — and no published limit said so (#517).
   // The estimate is a worst case, not a resident-memory reading: measured against real conversions it
   // overstates RSS by roughly 2-3.4x, so this budget corresponds to ~1.2-2 GiB actually resident.
-  maxCanonicalWorkBytes: { default: 4 * 1024 * 1024 * 1024, hard: 8 * 1024 * 1024 * 1024 },
+  maxCanonicalWorkBytes: { default: 4 * 1024 * 1024 * 1024, hard: 16 * 1024 * 1024 * 1024 },
   maxCommandResponseBytes: { default: 1024 * 1024, hard: 1024 * 1024 },
 });
 
+export const PROPERTY_EXPANSION_LIMITS = Object.freeze({
+  // The effective default inherits maxParameters from the same request. This exported default is
+  // the ordinary profile; production can still opt into the 5M hard cap explicitly.
+  maxExpandedPropertyRows: { default: MODEL_LIMITS.maxParameters.default, hard: 5_000_000 },
+  // The effective default inherits maxComponentJsonBytes from the same request, so a caller-lowered
+  // component budget also stops expansion before the property document is materialized.
+  maxCanonicalPropertyBytes: {
+    default: MODEL_LIMITS.maxComponentJsonBytes.default,
+    hard: MODEL_LIMITS.maxComponentJsonBytes.hard,
+  },
+});
+
+// Reader-v2 publishes larger property shards by default. Keep that versioned default beside the
+// base limit table so every caller and external verifier derives the same signed request; an
+// explicitly supplied lower value still wins.
+export const READER_SCHEMA_LIMIT_DEFAULTS = Object.freeze({
+  [READER_SCHEMA_VERSION_V1]: Object.freeze({}),
+  [READER_SCHEMA_VERSION_V2]: Object.freeze({
+    maxSourceBytes: 256 * 1024 * 1024,
+    maxMetadataBytes: 32 * 1024 * 1024,
+    maxCanonicalGlbJsonBytes: 32 * 1024 * 1024,
+    maxIndices: 20_000_000,
+    maxComponentJsonBytes: 128 * 1024 * 1024,
+    maxCanonicalWorkBytes: 8 * 1024 * 1024 * 1024,
+  }),
+});
+
 export class ModelReaderError extends Error {
-  constructor(code, phase, retryable, message, unsafeDetails = undefined) {
+  constructor(code, phase, retryable, message, unsafeDetails = undefined, providerCode = undefined) {
     super(message);
     this.name = 'ModelReaderError';
     this.code = code;
     this.phase = phase;
     this.retryable = retryable;
     this.diagnosticId = randomUUID();
+    if (typeof providerCode === 'string' && /^xeorvt-[a-z0-9-]{1,90}$/.test(providerCode)) this.providerCode = providerCode;
     Object.defineProperty(this, 'unsafeDetails', { value: unsafeDetails, enumerable: false });
   }
 }
@@ -69,6 +100,7 @@ export function safeErrorEnvelope(error) {
       retryable: error.retryable,
       message: boundedMessage(error.message),
       diagnosticId: error.diagnosticId,
+      ...(error.providerCode ? { providerCode: error.providerCode } : {}),
     };
   }
   return {
@@ -271,12 +303,37 @@ export function assertClosedObject(value, required, optional = [], label = 'obje
   return value;
 }
 
-export function lowerableLimits(overrides = {}) {
+export function lowerableLimits(overrides = {}, readerSchemaVersion = READER_SCHEMA_VERSION_V1) {
+  if (!Object.hasOwn(READER_SCHEMA_LIMIT_DEFAULTS, readerSchemaVersion)) {
+    throw new TypeError('readerSchemaVersion is unsupported');
+  }
   assertClosedObject(overrides, [], Object.keys(MODEL_LIMITS), 'limits');
   const result = {};
   for (const [name, range] of Object.entries(MODEL_LIMITS)) {
-    const selected = Object.hasOwn(overrides, name) ? overrides[name] : range.default;
+    const selected = Object.hasOwn(overrides, name)
+      ? overrides[name]
+      : (READER_SCHEMA_LIMIT_DEFAULTS[readerSchemaVersion][name] ?? range.default);
     if (!Number.isSafeInteger(selected) || selected <= 0 || selected > range.hard) throw new TypeError(`${name} exceeds its hard ceiling`);
+    result[name] = selected;
+  }
+  return result;
+}
+
+export function lowerablePropertyExpansionLimits(overrides = {}, effectiveModelLimits = undefined) {
+  assertClosedObject(overrides, [], Object.keys(PROPERTY_EXPANSION_LIMITS), 'propertyExpansionLimits');
+  const modelLimits = lowerableLimits(effectiveModelLimits);
+  const result = {};
+  for (const [name, range] of Object.entries(PROPERTY_EXPANSION_LIMITS)) {
+    const inherited = name === 'maxExpandedPropertyRows'
+      ? modelLimits.maxParameters
+      : modelLimits.maxComponentJsonBytes;
+    let selected = Object.hasOwn(overrides, name) ? overrides[name] : inherited;
+    if (!Number.isSafeInteger(selected) || selected <= 0 || selected > range.hard) {
+      throw new TypeError(`${name} exceeds its hard ceiling`);
+    }
+    // A property shard can never exceed the enclosing component budget. Record the effective value
+    // in the canonical request instead of allocating to a larger, unusable caller override.
+    if (name === 'maxCanonicalPropertyBytes') selected = Math.min(selected, modelLimits.maxComponentJsonBytes);
     result[name] = selected;
   }
   return result;
@@ -301,13 +358,21 @@ export function canonicalArtifactLimits(limits) {
 }
 
 export function buildCanonicalRequest(options = {}) {
-  const limits = lowerableLimits(options.limits);
   const protocolVersion = options.protocolVersion ?? '1';
   if (!['1', '2'].includes(protocolVersion)) throw new TypeError('protocolVersion must be 1 or 2');
-  return {
+  const readerSchemaVersion = options.readerSchemaVersion ?? READER_SCHEMA_VERSION_V1;
+  if (![READER_SCHEMA_VERSION_V1, READER_SCHEMA_VERSION_V2].includes(readerSchemaVersion)) {
+    throw new TypeError('readerSchemaVersion is unsupported');
+  }
+  const limits = lowerableLimits(options.limits, readerSchemaVersion);
+  // Validate this v2-only field even on a v1 request so malformed or out-of-range caller input can
+  // never disappear. Non-empty overrides require an explicit v2 request instead of looking
+  // successful while the v1 normalizer continues to use maxParameters.
+  const propertyExpansionLimits = lowerablePropertyExpansionLimits(options.propertyExpansionLimits, limits);
+  const request = {
     schemaVersion: '1',
     protocolVersion,
-    readerSchemaVersion: READER_SCHEMA_VERSION,
+    readerSchemaVersion,
     format: 'rvt',
     documentKind: 'revit-project',
     activeScenePolicy: 'declared-active-scene-only',
@@ -327,6 +392,22 @@ export function buildCanonicalRequest(options = {}) {
     canonicalGlb: 'model-reference-reader-glb/v1',
     conversionSettings: options.conversionSettings ?? {},
     limits,
+  };
+  if (readerSchemaVersion === READER_SCHEMA_VERSION_V1) {
+    if (Object.keys(options.propertyExpansionLimits ?? {}).length > 0) {
+      throw new TypeError('propertyExpansionLimits requires readerSchemaVersion model-reference-reader/v2');
+    }
+    return request;
+  }
+  return {
+    ...request,
+    schemaVersion: '2',
+    metadata: {
+      ...request.metadata,
+      propertyValues: ['source-storage', 'provider-display'],
+      providerDisplayIdentity: 'excluded',
+    },
+    propertyExpansionLimits,
   };
 }
 

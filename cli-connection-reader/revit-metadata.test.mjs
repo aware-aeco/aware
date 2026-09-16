@@ -8,6 +8,19 @@ const geometry = [
   { nodeName: 'part-b', primitiveOrdinal: 0, positions: [[20, 0, 0], [30, 0, 0], [20, 10, 0]], triangles: [[0, 1, 2]] },
 ];
 
+function makeMetadataV2() {
+  const metadata = makeMetadataFixture();
+  metadata.schemaVersion = '2';
+  metadata.parameterGroups[0].id = '1';
+  metadata.parameters = [
+    { id: '1', name: 'IfcGUID', unit: null, valueEncoding: 'provider-display', valueType: 'string', value: 'display-only-guid' },
+    { id: '2', name: 'Length', unit: 'mm', valueEncoding: 'provider-display', valueType: 'number', value: -0 },
+  ];
+  metadata.parameterGroups[0].parameters = [0, 1];
+  delete metadata.elements[0].ifcGuid;
+  return metadata;
+}
+
 test('explicit indexed metadata resolves to stable namespaced identity and multipart geometry', () => {
   const result = normalizeRevitMetadata(makeMetadataFixture({ elementId: '9223372036854775806', nodeNames: ['part-a', 'part-b'] }), geometry);
   assert.equal(result.entities[0].id, 'element:9223372036854775806');
@@ -35,6 +48,126 @@ test('parameter storage types preserve signed element ids, null, empty, boolean 
   assert.deepEqual(result.properties.map((row) => row.value), [null, true, '-12', 1.25, '', '-2000011']);
 });
 
+test('v2 preserves provider-display provenance, normalizes negative zero, and never derives IfcGUID identity', () => {
+  const result = normalizeRevitMetadata(makeMetadataV2(), geometry.slice(0, 1));
+  assert.equal(JSON.parse(result.propertiesBytes).schemaVersion, '2');
+  assert.deepEqual(result.properties.map((row) => ({
+    valueEncoding: row.valueEncoding, valueType: row.valueType, value: row.value, unit: row.unit,
+  })), [
+    { valueEncoding: 'provider-display', valueType: 'string', value: 'display-only-guid', unit: null },
+    { valueEncoding: 'provider-display', valueType: 'number', value: 0, unit: 'mm' },
+  ]);
+  assert.equal(result.entities[0].ifcGuid, null);
+  assert.deepEqual({
+    metadataSchemaVersion: result.coverage.metadataSchemaVersion,
+    nativeParameterGroups: result.coverage.nativeParameterGroups,
+    nativeParameters: result.coverage.nativeParameters,
+    elementGroupReferences: result.coverage.elementGroupReferences,
+    expandedProperties: result.coverage.expandedProperties,
+    orphanParameterGroups: result.coverage.orphanParameterGroups,
+    orphanParameters: result.coverage.orphanParameters,
+    canonicalPropertyBytes: result.coverage.canonicalPropertyBytes,
+    effectivePropertyLimits: result.coverage.effectivePropertyLimits,
+  }, {
+    metadataSchemaVersion: '2', nativeParameterGroups: 1, nativeParameters: 2,
+    elementGroupReferences: 1, expandedProperties: 2, orphanParameterGroups: 0, orphanParameters: 0,
+    canonicalPropertyBytes: result.propertiesBytes.length,
+    effectivePropertyLimits: { maxExpandedPropertyRows: 2_000_000, maxCanonicalPropertyBytes: 32 * 1024 * 1024 },
+  });
+});
+
+test('v2 rejects unsafe integral provider-display numbers before canonicalization', () => {
+  const metadata = makeMetadataV2();
+  metadata.parameters[1].value = 9.223372036854776e18;
+  assert.throws(
+    () => normalizeRevitMetadata(metadata, geometry.slice(0, 1)),
+    (error) => error.code === 'reference-metadata-invalid'
+      && error.phase === 'normalize-metadata'
+      && /safe integer or a provider-display string/.test(error.message),
+  );
+});
+
+test('v2 source-storage rows retain authoritative semantics and alone may supply IfcGUID identity', () => {
+  const metadata = makeMetadataV2();
+  metadata.parameters[0] = {
+    id: '1', name: 'IfcGUID', unit: null, valueEncoding: 'source-storage',
+    readable: true, storageType: 'string', value: 'authoritative-guid',
+  };
+  const result = normalizeRevitMetadata(metadata, geometry.slice(0, 1));
+  assert.equal(result.entities[0].ifcGuid, 'authoritative-guid');
+  assert.deepEqual(result.properties[0], {
+    entityId: 'element:1001', groupId: 'parameter-group:1', groupName: 'Identity Data', groupOrdinal: 0,
+    parameterId: 'parameter:1', parameterOrdinal: 0, name: 'IfcGUID', unit: null,
+    valueEncoding: 'source-storage', readable: true, storageType: 'string', value: 'authoritative-guid',
+  });
+});
+
+test('v2 rejects duplicate references and reports unreachable table rows without expanding them', () => {
+  const duplicateGroup = makeMetadataV2();
+  duplicateGroup.elements[0].parameterGroups = [0, 0];
+  assert.throws(() => normalizeRevitMetadata(duplicateGroup, geometry.slice(0, 1)), /duplicate references/);
+
+  const duplicateParameter = makeMetadataV2();
+  duplicateParameter.parameterGroups[0].parameters = [0, 0];
+  assert.throws(() => normalizeRevitMetadata(duplicateParameter, geometry.slice(0, 1)), /duplicate references/);
+
+  const orphaned = makeMetadataV2();
+  orphaned.parameterGroups.push({ id: '2', name: 'Unused group', parameters: [] });
+  orphaned.parameters.push({ id: '3', name: 'Unused', unit: null, valueEncoding: 'provider-display', valueType: 'string', value: 'unused' });
+  const result = normalizeRevitMetadata(orphaned, geometry.slice(0, 1));
+  assert.equal(result.coverage.orphanParameterGroups, 1);
+  assert.equal(result.coverage.orphanParameters, 1);
+  assert.equal(result.properties.length, 2);
+});
+
+test('v2 enforces independent pre-append row and canonical property byte ceilings', () => {
+  const metadata = makeMetadataV2();
+  const emptyMetadata = {
+    schemaVersion: '2', document: { kind: 'revit-project', id: 'empty' },
+    types: [], levels: [], parameterGroups: [], parameters: [], elements: [], relations: [],
+  };
+  assert.throws(() => normalizeRevitMetadata(emptyMetadata, [], {
+    propertyExpansionLimits: { maxCanonicalPropertyBytes: 1 },
+  }), (error) => error.code === 'reference-output-too-large');
+  assert.throws(() => normalizeRevitMetadata(metadata, geometry.slice(0, 1), {
+    propertyExpansionLimits: { maxExpandedPropertyRows: 1 },
+  }), (error) => error.code === 'reference-output-too-large');
+  assert.throws(() => normalizeRevitMetadata(metadata, geometry.slice(0, 1), {
+    propertyExpansionLimits: { maxCanonicalPropertyBytes: 64 },
+  }), (error) => error.code === 'reference-output-too-large');
+  assert.throws(() => normalizeRevitMetadata(metadata, geometry.slice(0, 1), {
+    propertyExpansionLimits: { maxExpandedPropertyRows: 5_000_001 },
+  }), /hard ceiling/);
+
+  const repeated = makeMetadataV2();
+  repeated.parameters = repeated.parameters.slice(0, 1);
+  repeated.parameterGroups[0].parameters = [0];
+  repeated.elements.push({ ...repeated.elements[0], id: '1002', appearances: ['part-b'] });
+  assert.throws(() => normalizeRevitMetadata(repeated, geometry, {
+    limits: { maxParameters: 1 },
+  }), (error) => error.code === 'reference-output-too-large' && /property count/.test(error.message),
+  'v2 must inherit a caller-lowered parameter ceiling before expanding repeated rows');
+
+  const byteBound = makeMetadataV2();
+  byteBound.parameters = byteBound.parameters.slice(0, 1);
+  byteBound.parameters[0].value = 'x'.repeat(4096);
+  byteBound.parameterGroups[0].parameters = [0];
+  assert.throws(() => normalizeRevitMetadata(byteBound, geometry.slice(0, 1), {
+    limits: { maxComponentJsonBytes: 1024 },
+  }), (error) => error.code === 'reference-output-too-large' && /canonical property artifact/.test(error.message),
+  'a lowered component budget must stop a v2 property row before the document is materialized');
+});
+
+test('v1 rejects expanded properties before materializing an oversized canonical document', () => {
+  const metadata = makeMetadataFixture();
+  metadata.parameterGroups[0].name = 'G'.repeat(2048);
+  assert.throws(() => normalizeRevitMetadata(metadata, geometry.slice(0, 1), {
+    limits: { maxComponentJsonBytes: 1024 },
+  }), (error) => error.code === 'reference-output-too-large'
+    && /canonical property artifact/.test(error.message),
+  'the default v1 reader must apply its byte ceiling before JSON.stringify builds the full document');
+});
+
 test('explicit relations validate endpoints, provider kinds, acyclic parents, and canonical order', () => {
   const metadata = makeMetadataFixture({ elementId: '2', nodeNames: ['part-b'] });
   const firstElement = { ...metadata.elements[0], id: '1', appearances: ['part-a'] };
@@ -47,6 +180,16 @@ test('explicit relations validate endpoints, provider kinds, acyclic parents, an
   const result = normalizeRevitMetadata(metadata, geometry);
   assert.deepEqual(result.relationships.map((edge) => edge.id), ['relation:10', 'relation:11']);
   assert.equal(result.relationships[1].providerRelationKind, 'Joins');
+  metadata.relations[0].providerRelationKind = '中'.repeat(256);
+  assert.equal(normalizeRevitMetadata(metadata, geometry).relationships[1].providerRelationKind.length, 256);
+  metadata.relations[0].providerRelationKind += '中';
+  assert.throws(() => normalizeRevitMetadata(metadata, geometry), /providerRelationKind is invalid/);
+  metadata.relations[0].providerRelationKind = '中'.repeat(256);
+  assert.throws(() => normalizeRevitMetadata(metadata, geometry, {
+    limits: { maxComponentJsonBytes: 768 },
+  }), (error) => error.code === 'reference-output-too-large'
+    && /canonical relationship artifact/.test(error.message));
+  metadata.relations[0].providerRelationKind = 'Joins';
   metadata.relations.push({ id: '12', kind: 'contains', from: '2', to: '1' });
   assert.throws(() => normalizeRevitMetadata(metadata, geometry), /cycle/);
 });
@@ -138,6 +281,23 @@ test('aggregate property expansion is bounded before repeated references allocat
     () => normalizeRevitMetadata(metadata, geometry.slice(0, 1), { limits: { maxParameters: 3 } }),
     (error) => error.code === 'reference-output-too-large',
   );
+});
+
+test('a schema mismatch is refused before the requested limits can be bypassed', () => {
+  // A v1 response to a v2 request used to be normalized first and compared
+  // after, so it expanded under v1's far larger allowance. The mismatch must be
+  // refused up front: the error is the schema mismatch, NOT an expansion
+  // ceiling, which is what proves nothing was expanded first.
+  const v1 = makeMetadataFixture();
+  const tight = { maxExpandedPropertyRows: 1, maxCanonicalPropertyBytes: 1 };
+  assert.throws(
+    () => normalizeRevitMetadata(v1, geometry, { propertyExpansionLimits: tight, expectedSchemaVersion: '2' }),
+    (error) => error.code === 'reference-metadata-invalid'
+      && /does not match the requested reader schema version/.test(error.message));
+  // The matching request still normalizes, so the guard is not simply refusing everything.
+  assert.ok(normalizeRevitMetadata(v1, geometry, { expectedSchemaVersion: '1' }));
+  // Absent an expectation the normalizer keeps its existing both-schemas contract.
+  assert.ok(normalizeRevitMetadata(v1, geometry, {}));
 });
 
 // #519: an integral double past the safe-integer range passed the finiteness gate, then threw a bare

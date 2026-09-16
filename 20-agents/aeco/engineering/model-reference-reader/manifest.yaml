@@ -1,6 +1,6 @@
 agent: model-reference-reader
-version: 0.6.0
-display-name: Authenticated Model Reference Reader
+version: 0.7.3
+display-name: Authenticated RVT Reference Reader
 description: |
   Convert a local Revit project into deterministic, authenticated reference-model artifacts without
   importing ownership into AWARE. The reader returns canonical Z-up millimetre GLB geometry plus
@@ -56,7 +56,15 @@ commands:
       authority-store-path:
         type: string
         required: false
-        description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+        description: Absolute authority-store path for a managed-cloud v2 provider. The provider must independently require its exact installer-enrolled store before reading credentials.
+      reader-schema-version:
+        type: string
+        required: false
+        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; v2 raises the signed default source, metadata, canonical GLB JSON, index, component JSON and canonical-work ceilings while remaining caller-lowerable.
+      property-expansion-limits:
+        type: object
+        required: false
+        description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
       provider-format:
         type: string
         required: false
@@ -158,7 +166,19 @@ commands:
       authority-store-path:
         type: string
         required: false
-        description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+        description: Absolute authority-store path for a managed-cloud v2 provider. The provider must independently require its exact installer-enrolled store before reading credentials.
+      conversion-attempt-id:
+        type: string
+        required: false
+        description: Installer-owned durable UUID attempt identity required for a managed-cloud v2 conversion; callers written for reader 0.6.0 must supply it before upgrading to protocol v2.
+      reader-schema-version:
+        type: string
+        required: false
+        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; callers written for reader 0.6.0 must supply this value and a durable conversion attempt ID. Local protocol v1 defaults to model-reference-reader/v1.
+      property-expansion-limits:
+        type: object
+        required: false
+        description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
       expected-signer-sha256:
         type: string
         required: true
@@ -203,7 +223,19 @@ commands:
       authority-store-path:
         type: string
         required: false
-        description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+        description: Absolute authority-store path for a managed-cloud v2 provider. The provider must independently require its exact installer-enrolled store before reading credentials.
+      conversion-attempt-id:
+        type: string
+        required: false
+        description: Installer-owned durable UUID attempt identity required for a managed-cloud v2 conversion; callers written for reader 0.6.0 must supply it before upgrading to protocol v2.
+      reader-schema-version:
+        type: string
+        required: false
+        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; callers written for reader 0.6.0 must supply this value and a durable conversion attempt ID. Local protocol v1 defaults to model-reference-reader/v1.
+      property-expansion-limits:
+        type: object
+        required: false
+        description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
       expected-signer-sha256:
         type: string
         required: true
@@ -249,7 +281,19 @@ commands:
       authority-store-path:
         type: string
         required: false
-        description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+        description: Absolute authority-store path for a managed-cloud v2 provider. The provider must independently require its exact installer-enrolled store before reading credentials.
+      conversion-attempt-id:
+        type: string
+        required: false
+        description: Installer-owned durable UUID attempt identity required for a managed-cloud v2 conversion; callers written for reader 0.6.0 must supply it before upgrading to protocol v2.
+      reader-schema-version:
+        type: string
+        required: false
+        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; callers written for reader 0.6.0 must supply this value and a durable conversion attempt ID. Local protocol v1 defaults to model-reference-reader/v1.
+      property-expansion-limits:
+        type: object
+        required: false
+        description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
       expected-signer-sha256:
         type: string
         required: true
