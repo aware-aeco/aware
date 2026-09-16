@@ -11,6 +11,11 @@ description: |
   when the caller pins both its complete fingerprint and exact HTTPS destination. AWARE contains no
   provider, license, cloud credential or vendor HTTP client. First probe may perform the full conversion;
   later reads use a signed content-addressed cache after revalidating every receipt and byte.
+
+  Protocol v3 can describe one signed, operator-enrolled provider package and fingerprint an immutable
+  captured source set. AWARE verifies the package, staged bytes and operator-admitted dependency policy
+  around discovery, then returns a portable effective-source identity. Conversion remains outside this
+  version's v3 surface.
 stateful: false
 vendor: aware-aeco
 license: Apache-2.0
@@ -22,7 +27,7 @@ provenance:
   refined-by: [pawellisowski]
 requires:
   filesystem:
-    - read: '*.rvt'
+    - read: '*'
 skills:
   - provider-and-artifact-contract.md
 transport:
@@ -55,7 +60,7 @@ commands:
       reader-schema-version:
         type: string
         required: false
-        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; v2 raises the default component JSON ceiling from 32 MiB to 128 MiB and remains caller-lowerable.
+        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; v2 raises the signed default source, metadata, canonical GLB JSON, index, component JSON and canonical-work ceilings while remaining caller-lowerable.
       property-expansion-limits:
         type: object
         required: false
@@ -80,6 +85,9 @@ commands:
         providerFingerprintSha256: string
         signerFingerprintSha256: string
         signerPublicKeyBase64: string
+        providerPackageManifestSha256: string
+        package: object
+        capability: object
   fingerprint-source:
     lifecycle: single
     category: curated
@@ -162,11 +170,11 @@ commands:
       conversion-attempt-id:
         type: string
         required: false
-        description: Installer-owned durable attempt identity required for a managed-cloud v2 conversion.
+        description: Installer-owned durable UUID attempt identity required for a managed-cloud v2 conversion; callers written for reader 0.6.0 must supply it before upgrading to protocol v2.
       reader-schema-version:
         type: string
         required: false
-        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; local protocol v1 defaults to model-reference-reader/v1.
+        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; callers written for reader 0.6.0 must supply this value and a durable conversion attempt ID. Local protocol v1 defaults to model-reference-reader/v1.
       property-expansion-limits:
         type: object
         required: false
@@ -219,11 +227,11 @@ commands:
       conversion-attempt-id:
         type: string
         required: false
-        description: Installer-owned durable attempt identity required for a managed-cloud v2 conversion.
+        description: Installer-owned durable UUID attempt identity required for a managed-cloud v2 conversion; callers written for reader 0.6.0 must supply it before upgrading to protocol v2.
       reader-schema-version:
         type: string
         required: false
-        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; local protocol v1 defaults to model-reference-reader/v1.
+        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; callers written for reader 0.6.0 must supply this value and a durable conversion attempt ID. Local protocol v1 defaults to model-reference-reader/v1.
       property-expansion-limits:
         type: object
         required: false
@@ -277,11 +285,11 @@ commands:
       conversion-attempt-id:
         type: string
         required: false
-        description: Installer-owned durable attempt identity required for a managed-cloud v2 conversion.
+        description: Installer-owned durable UUID attempt identity required for a managed-cloud v2 conversion; callers written for reader 0.6.0 must supply it before upgrading to protocol v2.
       reader-schema-version:
         type: string
         required: false
-        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; local protocol v1 defaults to model-reference-reader/v1.
+        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; callers written for reader 0.6.0 must supply this value and a durable conversion attempt ID. Local protocol v1 defaults to model-reference-reader/v1.
       property-expansion-limits:
         type: object
         required: false
