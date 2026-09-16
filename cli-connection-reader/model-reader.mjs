@@ -132,6 +132,13 @@ function validateRequest(command, args, deps) {
   const readerSchemaVersion = requestedReaderSchemaVersion(args);
   const limits = requestLimits(args, deps, readerSchemaVersion);
   const protocolVersion = args['expected-provider-protocol'] ?? '1';
+  // A managed conversion has a delivery-attempt identity which must be part of
+  // the independently versioned package signature. That binding was introduced
+  // with reader schema v2, so accepting protocol 2 with the v1 package schema
+  // would validate an attempt that the delivered artifact cannot authenticate.
+  if (protocolVersion === '2' && readerSchemaVersion !== READER_SCHEMA_VERSION_V2) {
+    readerError('reference-request-invalid', 'request', 'Managed Revit conversion requires model-reader schema version v2.');
+  }
   // This constructs and canonicalizes the complete request-only contract without touching the
   // provider, signing key, cache, or source filesystem. It validates protocol, conversion
   // settings, and all lowerable limits before an environment-dependent error can mask them.

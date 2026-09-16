@@ -188,6 +188,21 @@ test('managed conversion requires a valid attempt identity only after an authent
   assert.equal(state.calls.length, callsAfterColdRead, 'a warm read must not touch the provider');
 });
 
+test('managed conversion refuses reader schema v1 before provider or cache access', async (t) => {
+  const state = await setup(t);
+  await assert.rejects(
+    () => runModelCommand('preflight', {
+      ...state.args,
+      'expected-provider-protocol': '2',
+      'expected-provider-destination': 'https://api.example.test',
+      'authority-store-path': path.join(state.root, 'authority'),
+    }, state.deps),
+    (error) => error.code === 'reference-request-invalid'
+      && error.message === 'Managed Revit conversion requires model-reader schema version v2.',
+  );
+  assert.deepEqual(state.calls, [], 'the incompatible request must fail before provider I/O');
+});
+
 test('managed snapshot signs the current delivery attempt even when reusing authenticated cache bytes', async (t) => {
   const state = await managedState(t);
   const preflight = await runModelCommand('preflight', state.args, state.deps);
@@ -243,6 +258,7 @@ test('preflight enforces the managed authority-store contract before provider la
   await assert.rejects(() => runModelCommand('preflight', {
     ...base,
     'expected-provider-protocol': '2',
+    'reader-schema-version': 'model-reference-reader/v2',
     'expected-provider-destination': 'https://api.example.test',
   }, state.deps), (error) => error.code === 'reference-provider-protocol');
   await assert.rejects(() => runModelCommand('preflight', {
