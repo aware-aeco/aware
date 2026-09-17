@@ -2547,10 +2547,15 @@ mod tests {
 
     #[test]
     fn only_definitive_4xx_is_rejected() {
-        // A body the parser CAN use, so that for the statuses carrying it the
-        // classification is the status alone. With an empty body a
-        // misclassified 300 still ends outcome-unknown — because the parse
-        // fails — and the test could not tell the two reasons apart.
+        // A body the parser CAN use, so that the classification is the status
+        // alone. EVERY outcome-unknown row needs it: with an empty body a
+        // status wrongly admitted to the success range still ends
+        // outcome-unknown — because the parse then fails — and the assertion
+        // could not tell the two reasons apart. Verified: with empty bodies,
+        // excusing 302, 500 or 408 from the success-range check individually
+        // left this test green, so the check was deletable unseen for all
+        // three. A rejection row needs no body, because the 4xx branch returns
+        // before the response is ever read.
         const USABLE: &[u8] = br#"{"id":"gmail-123","threadId":"thread-456"}"#;
 
         for (status, body, expected) in [
@@ -2560,9 +2565,12 @@ mod tests {
             // outcome — poisoning the attempt id for reconciliation instead of
             // telling the caller the message was never sent.
             (499, &b""[..], "gmail.send.rejected"),
-            (408, &b""[..], "gmail.send.outcome-unknown"),
-            (500, &b""[..], "gmail.send.outcome-unknown"),
-            (302, &b""[..], "gmail.send.outcome-unknown"),
+            (408, USABLE, "gmail.send.outcome-unknown"),
+            (500, USABLE, "gmail.send.outcome-unknown"),
+            // A redirect is the sharpest of these: admitted to the success
+            // path it would be recorded as an acceptance of a message Gmail
+            // never took.
+            (302, USABLE, "gmail.send.outcome-unknown"),
             // Just outside the success range, with a usable body: if 300 were
             // admitted as success this would be recorded as an acceptance.
             (300, USABLE, "gmail.send.outcome-unknown"),
