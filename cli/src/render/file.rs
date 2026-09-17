@@ -767,8 +767,14 @@ mod tests {
         // not tidiness: `Validation` exits 3 and `Internal` exits 1. So pin both
         // the variant and the message, as the sibling tests in this module do.
         for bad in [json!(null), json!("A,B"), json!({ "A": 1 }), json!(3)] {
-            let err = file_write_csv(&json!({ "path": p, "columns": bad.clone() }), false)
-                .expect_err("columns {bad} was accepted");
+            // `let-else` rather than `expect_err`, which takes a plain `&str`: a
+            // message written as `"columns {bad} …"` there prints the braces
+            // literally, so the one value that identifies WHICH case failed is
+            // exactly what a reader of the panic would not get.
+            let Err(err) = file_write_csv(&json!({ "path": p, "columns": bad.clone() }), false)
+            else {
+                panic!("columns {bad} was accepted");
+            };
             assert!(
                 matches!(err, AwareError::Validation(_)),
                 "columns {bad}: the caller named a bad value, which is their error: {err:?}"
@@ -825,7 +831,9 @@ mod tests {
                     ),
                 ),
             ] {
-                let err = res.expect_err("{verb} accepted create-dirs {bad}");
+                let Err(err) = res else {
+                    panic!("{verb} accepted create-dirs {bad}");
+                };
                 assert!(
                     matches!(err, AwareError::Validation(_)),
                     "{verb} create-dirs {bad}: a bad argument is the caller's error: {err:?}"
@@ -875,11 +883,12 @@ mod tests {
         let path = d.join("archive.zip");
         let p = path.to_str().unwrap();
         for bad in [json!(64), json!(true), json!(["base64"]), json!({})] {
-            let err = file_write(
+            let Err(err) = file_write(
                 &json!({ "path": p, "bytes": "UEsDBA==", "encoding": bad.clone() }),
                 false,
-            )
-            .expect_err("write accepted encoding {bad}");
+            ) else {
+                panic!("write accepted encoding {bad}");
+            };
             assert!(
                 matches!(err, AwareError::Validation(_)),
                 "write encoding {bad}: {err:?}"
@@ -892,8 +901,10 @@ mod tests {
             // on a real run AND on a preview — the dry-run stub would otherwise
             // hand back an empty success and hide the typo until production.
             for dry in [true, false] {
-                let err = file_read(&json!({ "path": p, "encoding": bad.clone() }), dry)
-                    .expect_err("read accepted encoding {bad} (dry_run={dry})");
+                let Err(err) = file_read(&json!({ "path": p, "encoding": bad.clone() }), dry)
+                else {
+                    panic!("read accepted encoding {bad} (dry_run={dry})");
+                };
                 assert!(
                     matches!(err, AwareError::Validation(_)),
                     "read encoding {bad} (dry_run={dry}): {err:?}"
