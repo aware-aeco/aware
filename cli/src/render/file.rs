@@ -70,8 +70,60 @@ fn csv_field(s: &str) -> String {
     }
 }
 
-fn bool_arg(args: &Value, key: &str, default: bool) -> bool {
-    args.get(key).and_then(Value::as_bool).unwrap_or(default)
+/// An optional boolean flag. Absent (or explicitly null, which YAML spells as an empty value) takes
+/// the default; anything present but not a boolean is REFUSED rather than quietly defaulted.
+///
+/// The refusal is the point. `as_bool().unwrap_or(default)` reads a wrong-typed value as the
+/// default, so `create-dirs: "false"` — a YAML quote, or any `{{ }}` substitution, which always
+/// yields a string — meant `true`: the author disabled the flag and the tree was created anyway,
+/// reported as a success. A flag whose stated value is inverted in silence is worse than no flag.
+fn bool_arg(args: &Value, key: &str, verb: &str, default: bool) -> Result<bool, AwareError> {
+    match args.get(key) {
+        None | Some(Value::Null) => Ok(default),
+        Some(Value::Bool(b)) => Ok(*b),
+        Some(other) => Err(AwareError::Validation(format!(
+            "file {verb}: `{key}` must be true or false (got {})",
+            json_type(other)
+        ))),
+    }
+}
+
+/// Which encoding a `bytes` / `content` string carries. A closed set rather than a `&str`, so the
+/// call sites match exhaustively and no "everything else falls back to text" arm can exist.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum Encoding {
+    Text,
+    Base64,
+}
+
+/// The optional `encoding`, defaulting to `text`, validated up front.
+///
+/// Resolving this as `.and_then(Value::as_str).unwrap_or("text")` sent a NON-STRING value to `text`
+/// without ever reaching the unknown-encoding guard, so `encoding: 64` (unquoted in YAML, hence an
+/// integer) wrote the literal characters `UEsDBA==` where the author meant four bytes of zip header
+/// — a silent corruption reported as a success. A wrong-typed value is refused for the same reason
+/// an unknown one is, and in the same class (`Validation`, exit 3: the caller's mistake).
+///
+/// Checked before the payload is even looked at, so a bad value fails identically whether previewing
+/// or running, and whether `bytes` is a string or not — never a stub that masks the typo on dry-run.
+fn encoding_arg(args: &Value, verb: &str) -> Result<Encoding, AwareError> {
+    let name = match args.get("encoding") {
+        None | Some(Value::Null) => return Ok(Encoding::Text),
+        Some(Value::String(s)) => s.as_str(),
+        Some(other) => {
+            return Err(AwareError::Validation(format!(
+                "file {verb}: `encoding` must be a string (got {})",
+                json_type(other)
+            )));
+        }
+    };
+    match name {
+        "text" => Ok(Encoding::Text),
+        "base64" => Ok(Encoding::Base64),
+        other => Err(AwareError::Validation(format!(
+            "file {verb}: unknown encoding {other:?} (use `text` or `base64`)"
+        ))),
+    }
 }
 
 /// `file.write` — land `bytes` at `path`. A string is written as UTF-8 (or, with
@@ -81,11 +133,8 @@ fn bool_arg(args: &Value, key: &str, default: bool) -> bool {
 /// run (a preview reports the would-be size without touching disk).
 pub fn file_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     let path = req_path(args, "write")?;
-    let create_dirs = bool_arg(args, "create-dirs", true);
-    let encoding = args
-        .get("encoding")
-        .and_then(Value::as_str)
-        .unwrap_or("text");
+    let create_dirs = bool_arg(args, "create-dirs", "write", true)?;
+    let encoding = encoding_arg(args, "write")?;
 
     let bytes: Vec<u8> = match args.get("bytes") {
         None | Some(Value::Null) => {
@@ -94,17 +143,12 @@ pub fn file_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
             ));
         }
         Some(Value::String(s)) => match encoding {
-            "text" => s.clone().into_bytes(),
-            "base64" => base64::engine::general_purpose::STANDARD
+            Encoding::Text => s.clone().into_bytes(),
+            Encoding::Base64 => base64::engine::general_purpose::STANDARD
                 .decode(s.as_bytes())
                 .map_err(|e| {
                     AwareError::Validation(format!("file write: `bytes` is not valid base64: {e}"))
                 })?,
-            other => {
-                return Err(AwareError::Validation(format!(
-                    "file write: unknown encoding {other:?} (use `text` or `base64`)"
-                )));
-            }
         },
         // A non-string JSON value is serialized to compact JSON text (documented behavior).
         Some(other) => serde_json::to_vec(other)
@@ -129,7 +173,7 @@ pub fn file_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
 /// rows, excluding the header); the write is gated to a real run.
 pub fn file_write_csv(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     let path = req_path(args, "write-csv")?;
-    let create_dirs = bool_arg(args, "create-dirs", true);
+    let create_dirs = bool_arg(args, "create-dirs", "write-csv", true)?;
 
     let columns: Vec<String> = match args.get("columns") {
         Some(Value::Array(a)) => a.iter().map(|v| cell_text(Some(v))).collect(),
@@ -210,17 +254,9 @@ pub fn file_write_csv(args: &Value, dry_run: bool) -> Result<Value, AwareError> 
 /// still must not require the file to exist, so it returns an empty stub without touching disk.
 pub fn file_read(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     let path = req_path(args, "read")?;
-    let encoding = args
-        .get("encoding")
-        .and_then(Value::as_str)
-        .unwrap_or("text");
-    // Validate the encoding up front so a bad value fails the SAME way (Validation, exit 3) whether
-    // previewing or running — never a confusing IO error or a stub that masks the typo on dry-run.
-    if encoding != "text" && encoding != "base64" {
-        return Err(AwareError::Validation(format!(
-            "file read: unknown encoding {encoding:?} (use `text` or `base64`)"
-        )));
-    }
+    // Resolved before the dry-run gate so a bad value fails the SAME way (Validation, exit 3)
+    // whether previewing or running — never a confusing IO error or a stub that masks the typo.
+    let encoding = encoding_arg(args, "read")?;
 
     if dry_run {
         let mut out = serde_json::Map::new();
@@ -233,7 +269,7 @@ pub fn file_read(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     let raw = std::fs::read(&path)
         .map_err(|e| AwareError::Internal(format!("file read: {path}: {e}")))?;
     let bytes = raw.len() as u64;
-    let content = if encoding == "base64" {
+    let content = if encoding == Encoding::Base64 {
         base64::engine::general_purpose::STANDARD.encode(&raw)
     } else {
         String::from_utf8(raw).map_err(|e| {
@@ -435,10 +471,11 @@ mod tests {
     fn a_path_that_names_no_destination_is_refused_by_every_verb() {
         // The whitespace-only spelling is the one that earns this test. It is a
         // *non-empty* string, so without the `trim()` inside the guard it walks
-        // straight through and the bytes land in a file whose name is three
-        // spaces — created, reported as a success, and effectively unfindable.
-        // The other four spellings are here so the guard cannot be narrowed to
-        // the one case a fix happened to be written for.
+        // straight through and the bytes land in a file named by that whitespace
+        // — for this fixture, `   \t ` (three spaces, a tab, a space) — created,
+        // reported as a success, and effectively unfindable. The other five
+        // spellings are here so the guard cannot be narrowed to the one case a
+        // fix happened to be written for.
         //
         // Previewed rather than written, for all three verbs. `req_path` runs
         // before the `if !dry_run` gate, so the guard is tested exactly the same
@@ -497,8 +534,18 @@ mod tests {
     fn create_dirs_off_refuses_to_invent_the_parent_directory() {
         // `create-dirs` defaults ON, so every existing test exercises the same
         // branch and the flag could have been ignored entirely. Turning it off
-        // is the only way to observe it — and the failure it must produce is a
-        // refusal, not a directory tree the author asked not to have.
+        // is the only way to observe it — and what it must NOT produce is a
+        // directory tree the author asked not to have.
+        //
+        // Note what the failure actually is, because an earlier wording of this
+        // comment called it "a refusal" and it is not one. With the flag off,
+        // `ensure_parent` returns `Ok(())` silently and the error comes from
+        // `std::fs::write` hitting ENOENT — an `AwareError::Internal` (exit 1),
+        // reported by the OS, not a deliberate `Validation` (exit 3) of ours.
+        // The variant is pinned below so the comment and the assertion cannot
+        // drift apart again. (Refusing a wrong-TYPED `create-dirs` — see
+        // `a_non_boolean_create_dirs_is_refused_rather_than_read_as_the_default`
+        // — does not change this: a genuine `false` still reaches the OS here.)
         let d = tmp("cdirs");
         let missing = d.join("no-such-dir");
         let target = missing.join("out.txt");
@@ -518,24 +565,25 @@ mod tests {
              be the flag talking"
         );
 
+        let err = file_write(
+            &json!({ "path": p, "bytes": "x", "create-dirs": false }),
+            false,
+        )
+        .unwrap_err();
         assert!(
-            file_write(
-                &json!({ "path": p, "bytes": "x", "create-dirs": false }),
-                false
-            )
-            .is_err()
+            matches!(err, AwareError::Internal(_)),
+            "the OS reports the missing parent; we do not refuse it ourselves: {err:?}"
         );
         assert!(
             !missing.exists(),
             "write created the parent behind the flag"
         );
-        assert!(
-            file_write_csv(
-                &json!({ "path": p, "columns": ["A"], "create-dirs": false }),
-                false
-            )
-            .is_err()
-        );
+        let err = file_write_csv(
+            &json!({ "path": p, "columns": ["A"], "create-dirs": false }),
+            false,
+        )
+        .unwrap_err();
+        assert!(matches!(err, AwareError::Internal(_)), "{err:?}");
         assert!(
             !missing.exists(),
             "write-csv created the parent behind the flag"
@@ -711,14 +759,161 @@ mod tests {
         let d = tmp("cols");
         let path = d.join("cols.csv");
         let p = path.to_str().unwrap();
+        // `is_err()` alone is not enough here: `req_path` runs one line before the
+        // `columns` match and `rows` one line after, so a bare `is_err()` passes
+        // just as happily on an error about a DIFFERENT key. Two mutations
+        // survived it — the message degraded to "file write-csv: bad args", and
+        // the arm's `Validation` swapped for `Internal`. The second is contract,
+        // not tidiness: `Validation` exits 3 and `Internal` exits 1. So pin both
+        // the variant and the message, as the sibling tests in this module do.
         for bad in [json!(null), json!("A,B"), json!({ "A": 1 }), json!(3)] {
+            let err = file_write_csv(&json!({ "path": p, "columns": bad.clone() }), false)
+                .expect_err("columns {bad} was accepted");
             assert!(
-                file_write_csv(&json!({ "path": p, "columns": bad }), false).is_err(),
-                "columns {bad} was accepted"
+                matches!(err, AwareError::Validation(_)),
+                "columns {bad}: the caller named a bad value, which is their error: {err:?}"
+            );
+            assert!(
+                format!("{err}").contains("`columns` is required"),
+                "columns {bad}: {err}"
             );
         }
-        assert!(file_write_csv(&json!({ "path": p }), false).is_err());
+        // …and the key being absent altogether, which is a different match arm.
+        let err = file_write_csv(&json!({ "path": p }), false).unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "{err:?}");
+        assert!(format!("{err}").contains("`columns` is required"), "{err}");
         assert!(!path.exists());
+    }
+
+    // ── wrong-typed arguments are refused, not defaulted ────────────────────
+    //
+    // Both verbs below resolved an optional argument with a `unwrap_or(default)`
+    // that could not tell "absent" from "present but the wrong type", so a
+    // malformed value became the default in silence. `{{ }}` substitution always
+    // yields a string, so neither case is hypothetical for a templated app.
+
+    #[test]
+    fn a_non_boolean_create_dirs_is_refused_rather_than_read_as_the_default() {
+        // The default for `create-dirs` is ON, so a value that fails to parse
+        // means the author who wrote `create-dirs: "false"` got `true` — the
+        // exact opposite of what they wrote, with the tree created and the run
+        // reported as a success. That is what
+        // `create_dirs_off_refuses_to_invent_the_parent_directory` exists to
+        // forbid; it only ever passes the JSON boolean, so it cannot see this.
+        let d = tmp("cdirstype");
+        let missing = d.join("no-such-dir");
+        let target = missing.join("out.txt");
+        let p = target.to_str().unwrap();
+        let _ = std::fs::remove_dir_all(&missing);
+
+        // A string is the spelling a template produces; the others are here so
+        // the guard cannot be narrowed to the one case it was written for.
+        for bad in [json!("false"), json!("true"), json!(0), json!(1), json!([])] {
+            for (verb, res) in [
+                (
+                    "write",
+                    file_write(
+                        &json!({ "path": p, "bytes": "x", "create-dirs": bad.clone() }),
+                        false,
+                    ),
+                ),
+                (
+                    "write-csv",
+                    file_write_csv(
+                        &json!({ "path": p, "columns": ["A"], "create-dirs": bad.clone() }),
+                        false,
+                    ),
+                ),
+            ] {
+                let err = res.expect_err("{verb} accepted create-dirs {bad}");
+                assert!(
+                    matches!(err, AwareError::Validation(_)),
+                    "{verb} create-dirs {bad}: a bad argument is the caller's error: {err:?}"
+                );
+                let msg = format!("{err}");
+                assert!(msg.contains("`create-dirs`"), "{verb} {bad}: {msg}");
+                assert!(msg.contains("true or false"), "{verb} {bad}: {msg}");
+            }
+        }
+        assert!(
+            !missing.exists(),
+            "a refused write must not have created the tree it was arguing about"
+        );
+
+        // The positive control: absent and explicitly-null still take the
+        // default, so the refusals above are the TYPE talking rather than the
+        // key being rejected outright.
+        file_write(&json!({ "path": p, "bytes": "x" }), false).unwrap();
+        assert!(target.is_file());
+        file_write(
+            &json!({ "path": p, "bytes": "x", "create-dirs": null }),
+            false,
+        )
+        .unwrap();
+        // …and the real boolean still turns it off.
+        let off = d.join("still-missing").join("out.txt");
+        assert!(
+            file_write(
+                &json!({ "path": off.to_str().unwrap(), "bytes": "x", "create-dirs": false }),
+                false
+            )
+            .is_err()
+        );
+    }
+
+    #[test]
+    fn a_non_string_encoding_is_refused_rather_than_written_as_text() {
+        // `encoding: 64` is what YAML hands us for an unquoted `64`. Resolved
+        // with `.and_then(Value::as_str)`, it never reached the unknown-encoding
+        // guard at all: it fell to `text` and wrote the eight literal characters
+        // `UEsDBA==` into a file the author expected to hold four bytes of zip
+        // header — the corruption
+        // `an_unknown_write_encoding_is_refused_rather_than_written_as_text`
+        // describes, reached by the one route that test cannot take (it passes
+        // an unknown STRING, which was always refused correctly).
+        let d = tmp("enctype");
+        let path = d.join("archive.zip");
+        let p = path.to_str().unwrap();
+        for bad in [json!(64), json!(true), json!(["base64"]), json!({})] {
+            let err = file_write(
+                &json!({ "path": p, "bytes": "UEsDBA==", "encoding": bad.clone() }),
+                false,
+            )
+            .expect_err("write accepted encoding {bad}");
+            assert!(
+                matches!(err, AwareError::Validation(_)),
+                "write encoding {bad}: {err:?}"
+            );
+            assert!(
+                format!("{err}").contains("`encoding` must be a string"),
+                "write encoding {bad}: {err}"
+            );
+            // `read` resolves it the same way and must refuse it the same way,
+            // on a real run AND on a preview — the dry-run stub would otherwise
+            // hand back an empty success and hide the typo until production.
+            for dry in [true, false] {
+                let err = file_read(&json!({ "path": p, "encoding": bad.clone() }), dry)
+                    .expect_err("read accepted encoding {bad} (dry_run={dry})");
+                assert!(
+                    matches!(err, AwareError::Validation(_)),
+                    "read encoding {bad} (dry_run={dry}): {err:?}"
+                );
+            }
+        }
+        assert!(
+            !path.exists(),
+            "nothing is written on the refusal — the point is that the old code wrote the \
+             base64 SOURCE here and called it a success"
+        );
+
+        // The positive control: the same call with the encoding spelled as a
+        // string does decode, so the refusals above are the TYPE talking.
+        file_write(
+            &json!({ "path": p, "bytes": "UEsDBA==", "encoding": "base64" }),
+            false,
+        )
+        .unwrap();
+        assert_eq!(std::fs::read(p).unwrap(), vec![0x50, 0x4b, 0x03, 0x04]);
     }
 
     // ── previews never touch disk ───────────────────────────────────────────
