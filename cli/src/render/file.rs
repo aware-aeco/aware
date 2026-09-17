@@ -70,17 +70,46 @@ fn csv_field(s: &str) -> String {
     }
 }
 
-/// An optional boolean flag. Absent (or explicitly null, which YAML spells as an empty value) takes
-/// the default; anything present but not a boolean is REFUSED rather than quietly defaulted.
+/// An optional boolean flag, resolved without ever reading a stated value as its opposite.
 ///
-/// The refusal is the point. `as_bool().unwrap_or(default)` reads a wrong-typed value as the
-/// default, so `create-dirs: "false"` — a YAML quote, or any `{{ }}` substitution, which always
-/// yields a string — meant `true`: the author disabled the flag and the tree was created anyway,
-/// reported as a success. A flag whose stated value is inverted in silence is worse than no flag.
+/// `as_bool().unwrap_or(default)` could not tell "absent" from "present but not a boolean", so
+/// `create-dirs: "false"` meant `true`: the author disabled the flag, the tree was created anyway,
+/// and the run reported success. A flag whose stated value is inverted in silence is worse than no
+/// flag, so a value that cannot be read as a boolean is refused (`Validation`, exit 3).
+///
+/// Two spellings are accepted BESIDES a JSON boolean, and both are load-bearing rather than
+/// leniency for its own sake — a strict boolean-only rule would refuse app configs that work today
+/// and offer no spelling that fixes them:
+///
+/// - **`"true"` / `"false"`** (any case). A `--input` override is ALWAYS a `Value::String`
+///   (`commands/app.rs`, which inserts every `k=v` verbatim), so `--input mk=false` behind
+///   `create-dirs: "{{ inputs.mk }}"` cannot produce a JSON boolean by any spelling the user could
+///   type. Refusing it would leave the flag unreachable from the command line; reading it as the
+///   boolean it plainly names is also what the author meant, which is the whole point of the fix.
+/// - **`""`** (or whitespace), which takes the default. This is not a typo — it is what an
+///   UNRESOLVED optional template renders to: `render_config` deliberately falls back to `""`
+///   rather than null for a whole-value ref that does not resolve (`runtime/orchestrator.rs`,
+///   pinned by `render_config_unresolved_whole_value_falls_back_to_empty_string`, per #205). So
+///   `create-dirs: "{{ inputs.optional }}"` with the input unset must keep meaning "unset".
+///
+/// Anything else — a number, an array, an object, or a string naming no boolean — is the caller's
+/// mistake and is refused rather than guessed at.
+///
+/// (A resolved whole-value `{{ }}` ref passes its JSON type through structurally, so a boolean
+/// input arrives here as a real `Value::Bool`; it is only the unresolved and `--input` routes that
+/// arrive as strings.)
 fn bool_arg(args: &Value, key: &str, verb: &str, default: bool) -> Result<bool, AwareError> {
     match args.get(key) {
         None | Some(Value::Null) => Ok(default),
         Some(Value::Bool(b)) => Ok(*b),
+        Some(Value::String(s)) => match s.trim().to_ascii_lowercase().as_str() {
+            "" => Ok(default),
+            "true" => Ok(true),
+            "false" => Ok(false),
+            _ => Err(AwareError::Validation(format!(
+                "file {verb}: `{key}` must be true or false (got {s:?})"
+            ))),
+        },
         Some(other) => Err(AwareError::Validation(format!(
             "file {verb}: `{key}` must be true or false (got {})",
             json_type(other)
@@ -90,7 +119,7 @@ fn bool_arg(args: &Value, key: &str, verb: &str, default: bool) -> Result<bool, 
 
 /// Which encoding a `bytes` / `content` string carries. A closed set rather than a `&str`, so the
 /// call sites match exhaustively and no "everything else falls back to text" arm can exist.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy)]
 enum Encoding {
     Text,
     Base64,
@@ -104,8 +133,14 @@ enum Encoding {
 /// — a silent corruption reported as a success. A wrong-typed value is refused for the same reason
 /// an unknown one is, and in the same class (`Validation`, exit 3: the caller's mistake).
 ///
-/// Checked before the payload is even looked at, so a bad value fails identically whether previewing
-/// or running, and whether `bytes` is a string or not — never a stub that masks the typo on dry-run.
+/// Both call sites resolve this before their payload and before their dry-run gate, so a bad value
+/// fails identically whether previewing or running — never a stub that masks the typo on a dry-run.
+///
+/// Note the limit of that: this refuses a bad encoding NAME whatever `bytes` holds, but `file_write`
+/// only APPLIES the encoding to a string `bytes` (a non-string is serialized to JSON, with the
+/// encoding ignored — the behavior `_core/file`'s manifest documents). So `encoding: base64` over a
+/// non-string `bytes` still writes JSON text rather than decoding; that discard is pre-existing and
+/// documented, and narrowing it is an agent-contract change rather than part of this fix.
 fn encoding_arg(args: &Value, verb: &str) -> Result<Encoding, AwareError> {
     let name = match args.get("encoding") {
         None | Some(Value::Null) => return Ok(Encoding::Text),
@@ -269,14 +304,18 @@ pub fn file_read(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     let raw = std::fs::read(&path)
         .map_err(|e| AwareError::Internal(format!("file read: {path}: {e}")))?;
     let bytes = raw.len() as u64;
-    let content = if encoding == Encoding::Base64 {
-        base64::engine::general_purpose::STANDARD.encode(&raw)
-    } else {
-        String::from_utf8(raw).map_err(|e| {
+    // An exhaustive `match`, not `if … == Base64 { } else { }`. That `else` would BE the
+    // "everything else falls back to text" arm this enum exists to make impossible: add a
+    // third encoding and `file_write` would stop compiling, as it should, while an `else`
+    // here would quietly hand the caller raw bytes as text — the same silent corruption the
+    // `.unwrap_or("text")` bug caused, reintroduced one function below its own fix.
+    let content = match encoding {
+        Encoding::Base64 => base64::engine::general_purpose::STANDARD.encode(&raw),
+        Encoding::Text => String::from_utf8(raw).map_err(|e| {
             AwareError::Validation(format!(
                 "file read: {path} is not valid UTF-8 (use `encoding: base64`): {e}"
             ))
-        })?
+        })?,
     };
 
     let mut out = serde_json::Map::new();
@@ -531,7 +570,7 @@ mod tests {
     }
 
     #[test]
-    fn create_dirs_off_refuses_to_invent_the_parent_directory() {
+    fn create_dirs_off_never_invents_the_parent_directory() {
         // `create-dirs` defaults ON, so every existing test exercises the same
         // branch and the flag could have been ignored entirely. Turning it off
         // is the only way to observe it — and what it must NOT produce is a
@@ -759,13 +798,17 @@ mod tests {
         let d = tmp("cols");
         let path = d.join("cols.csv");
         let p = path.to_str().unwrap();
-        // `is_err()` alone is not enough here: `req_path` runs one line before the
-        // `columns` match and `rows` one line after, so a bare `is_err()` passes
-        // just as happily on an error about a DIFFERENT key. Two mutations
-        // survived it — the message degraded to "file write-csv: bad args", and
-        // the arm's `Validation` swapped for `Internal`. The second is contract,
-        // not tidiness: `Validation` exits 3 and `Internal` exits 1. So pin both
-        // the variant and the message, as the sibling tests in this module do.
+        // `is_err()` alone is not enough here: THREE other refusals can fire in the
+        // same call — `req_path` and `bool_arg` above the `columns` match, `rows`
+        // below it — so a bare `is_err()` passes just as happily on an error about
+        // a different key. (`bool_arg` is the newest of them, which is the point:
+        // the set of ways this call can fail for an unrelated reason grows, and a
+        // bare `is_err()` silently absorbs each new one.) Two mutations survived
+        // it when this was measured on 15e62817 — the message degraded to
+        // "file write-csv: bad args", and the arm's `Validation` swapped for
+        // `Internal`. The second is contract, not tidiness: `Validation` exits 3
+        // and `Internal` exits 1. So pin both the variant and the message, as the
+        // sibling tests in this module do.
         for bad in [json!(null), json!("A,B"), json!({ "A": 1 }), json!(3)] {
             // `let-else` rather than `expect_err`, which takes a plain `&str`: a
             // message written as `"columns {bad} …"` there prints the braces
@@ -793,10 +836,17 @@ mod tests {
 
     // ── wrong-typed arguments are refused, not defaulted ────────────────────
     //
-    // Both verbs below resolved an optional argument with a `unwrap_or(default)`
-    // that could not tell "absent" from "present but the wrong type", so a
-    // malformed value became the default in silence. `{{ }}` substitution always
-    // yields a string, so neither case is hypothetical for a templated app.
+    // Both arguments below were resolved with a `unwrap_or(default)` that could
+    // not tell "absent" from "present but the wrong type", so a malformed value
+    // became the default in silence.
+    //
+    // Neither case is hypothetical for a templated app, though NOT because
+    // `{{ }}` always yields a string — an earlier wording of this comment claimed
+    // that and it is false. A resolved whole-value ref passes its JSON type
+    // through structurally (#205), so a boolean input arrives as a real
+    // `Value::Bool`. The routes that DO produce a string are an embedded or
+    // multi-expression template, a `--input` override (always a `Value::String`),
+    // an unresolved optional ref (which renders to `""`), and a plain YAML quote.
 
     #[test]
     fn a_non_boolean_create_dirs_is_refused_rather_than_read_as_the_default() {
@@ -804,7 +854,7 @@ mod tests {
         // means the author who wrote `create-dirs: "false"` got `true` — the
         // exact opposite of what they wrote, with the tree created and the run
         // reported as a success. That is what
-        // `create_dirs_off_refuses_to_invent_the_parent_directory` exists to
+        // `create_dirs_off_never_invents_the_parent_directory` exists to
         // forbid; it only ever passes the JSON boolean, so it cannot see this.
         let d = tmp("cdirstype");
         let missing = d.join("no-such-dir");
@@ -812,9 +862,20 @@ mod tests {
         let p = target.to_str().unwrap();
         let _ = std::fs::remove_dir_all(&missing);
 
-        // A string is the spelling a template produces; the others are here so
-        // the guard cannot be narrowed to the one case it was written for.
-        for bad in [json!("false"), json!("true"), json!(0), json!(1), json!([])] {
+        // `0` / `1` earn their place: they are the spellings most likely to be
+        // "obviously" boolean to a guesser, and reading either would put us back
+        // to inventing a value the author did not write. `"yes"` is the same trap
+        // one step along. (`"true"`/`"false"` are NOT here — they name a boolean
+        // unambiguously and are accepted, which is what makes the flag reachable
+        // from `--input`; that is asserted as a positive control below.)
+        for bad in [
+            json!(0),
+            json!(1),
+            json!([]),
+            json!({}),
+            json!("yes"),
+            json!("0"),
+        ] {
             for (verb, res) in [
                 (
                     "write",
@@ -848,25 +909,66 @@ mod tests {
             "a refused write must not have created the tree it was arguing about"
         );
 
-        // The positive control: absent and explicitly-null still take the
-        // default, so the refusals above are the TYPE talking rather than the
-        // key being rejected outright.
-        file_write(&json!({ "path": p, "bytes": "x" }), false).unwrap();
-        assert!(target.is_file());
-        file_write(
-            &json!({ "path": p, "bytes": "x", "create-dirs": null }),
-            false,
-        )
-        .unwrap();
-        // …and the real boolean still turns it off.
-        let off = d.join("still-missing").join("out.txt");
-        assert!(
-            file_write(
-                &json!({ "path": off.to_str().unwrap(), "bytes": "x", "create-dirs": false }),
-                false
+        // The positive controls, so the refusals above are the VALUE talking
+        // rather than the key being rejected outright.
+        //
+        // Each "takes the default" case gets its OWN missing parent and asserts
+        // the parent was CREATED. Reusing one target would make these vacuous:
+        // after the first call the file already exists, so a later spelling read
+        // as `false` would still return Ok and still leave `target` in place —
+        // the assertion would pass against the very bug it is meant to catch.
+        for (label, spelling) in [
+            ("absent", None),
+            ("null", Some(json!(null))),
+            (
+                "empty string (an unresolved optional template)",
+                Some(json!("")),
+            ),
+            ("whitespace", Some(json!("  "))),
+            ("\"true\"", Some(json!("true"))),
+            ("\"TRUE\" (case-insensitive)", Some(json!("TRUE"))),
+            ("real boolean true", Some(json!(true))),
+        ] {
+            let parent = d.join(format!("default-{}", label.len()));
+            let dest = parent.join("out.txt");
+            let _ = std::fs::remove_dir_all(&parent);
+            let mut args = json!({ "path": dest.to_str().unwrap(), "bytes": "x" });
+            if let Some(v) = spelling {
+                args["create-dirs"] = v;
+            }
+            file_write(&args, false)
+                .unwrap_or_else(|e| panic!("create-dirs {label} was refused: {e}"));
+            assert!(
+                dest.is_file(),
+                "create-dirs {label} should have created the parent and written"
+            );
+        }
+
+        // …and every spelling of OFF still turns it off. `"false"` is the one
+        // that matters most: it is the only thing `--input mk=false` can produce,
+        // and reading it as `true` is the original bug this test is named for.
+        for off_spelling in [
+            json!(false),
+            json!("false"),
+            json!("False"),
+            json!(" false "),
+        ] {
+            let off = d.join("still-missing").join("out.txt");
+            let _ = std::fs::remove_dir_all(d.join("still-missing"));
+            let err = file_write(
+                &json!({ "path": off.to_str().unwrap(), "bytes": "x", "create-dirs": off_spelling.clone() }),
+                false,
             )
-            .is_err()
-        );
+            .unwrap_err();
+            assert!(
+                matches!(err, AwareError::Internal(_)),
+                "create-dirs {off_spelling} should reach the OS, not be refused: {err:?}"
+            );
+            assert!(
+                !d.join("still-missing").exists(),
+                "create-dirs {off_spelling} created the tree it was told not to"
+            );
+        }
     }
 
     #[test]
