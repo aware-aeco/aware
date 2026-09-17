@@ -2180,12 +2180,21 @@ mod tests {
         // The generated RFC id arrives bracketed and the brackets are stripped
         // before the header is written; an unbracketed one is a caller bug, not
         // something to pass through into `Message-ID`.
+        //
+        // One fixture per delimiter, isolated. A pair that both lack the closing
+        // `>` cannot see the opening check being dropped, because the suffix
+        // check still refuses them both — and the resulting builder would accept
+        // `m@aware.local>` into `Message-ID`.
         assert!(matches!(
             build_message(&plain, "sender@example.com", "m@aware.local"),
             Err(AwareError::Internal(_))
         ));
         assert!(matches!(
             build_message(&plain, "sender@example.com", "<m@aware.local"),
+            Err(AwareError::Internal(_))
+        ));
+        assert!(matches!(
+            build_message(&plain, "sender@example.com", "m@aware.local>"),
             Err(AwareError::Internal(_))
         ));
     }
@@ -2535,16 +2544,28 @@ mod tests {
 
     #[test]
     fn only_definitive_4xx_is_rejected() {
-        for (status, expected) in [
-            (400, "gmail.send.rejected"),
-            (408, "gmail.send.outcome-unknown"),
-            (500, "gmail.send.outcome-unknown"),
-            (302, "gmail.send.outcome-unknown"),
+        // A body the parser CAN use, so that for the statuses carrying it the
+        // classification is the status alone. With an empty body a
+        // misclassified 300 still ends outcome-unknown — because the parse
+        // fails — and the test could not tell the two reasons apart.
+        const USABLE: &[u8] = br#"{"id":"gmail-123","threadId":"thread-456"}"#;
+
+        for (status, body, expected) in [
+            (400, &b""[..], "gmail.send.rejected"),
+            // The inclusive top of the definitive-rejection range: 499 is a
+            // rejection, and excluding it would silently make it retryable.
+            (499, &b""[..], "gmail.send.rejected"),
+            (408, &b""[..], "gmail.send.outcome-unknown"),
+            (500, &b""[..], "gmail.send.outcome-unknown"),
+            (302, &b""[..], "gmail.send.outcome-unknown"),
+            // Just outside the success range, with a usable body: if 300 were
+            // admitted as success this would be recorded as an acceptance.
+            (300, USABLE, "gmail.send.outcome-unknown"),
         ] {
             let home = tempfile::tempdir().unwrap();
             let mock = MockHttp::responding(Ok(HttpResponse {
                 status,
-                body: vec![],
+                body: body.to_vec(),
             }));
             let error = execute_authenticated(
                 home.path(),
@@ -2556,6 +2577,21 @@ mod tests {
             assert_eq!(code(&error), expected, "HTTP {status}");
             assert_eq!(mock.send_count(), 1);
         }
+
+        // The inclusive top of the success range. Every other accepted fixture
+        // in this module is a 200, so narrowing the range to exclude 299 would
+        // turn a real acceptance into outcome-unknown with nothing to see it.
+        let home = tempfile::tempdir().unwrap();
+        let mock = MockHttp::responding(Ok(HttpResponse {
+            status: 299,
+            body: USABLE.to_vec(),
+        }));
+        let accepted =
+            execute_authenticated(home.path(), &input("attempt-299"), &token("g"), &mock).unwrap();
+        assert_eq!(accepted["status"], "accepted");
+        assert_eq!(accepted["message-id"], "gmail-123");
+        assert_eq!(accepted["thread-id"], "thread-456");
+        assert_eq!(mock.send_count(), 1);
     }
 
     #[test]
@@ -2579,6 +2615,13 @@ mod tests {
     fn encoded_message_limit_fails_before_handoff() {
         let home = tempfile::tempdir().unwrap();
         let mock = MockHttp::responding(accepted());
+        // Inclusive at the cap. Without this half, `> MAX_BODY_BYTES` could
+        // become `>=` and the suite would stay green while refusing a body of
+        // exactly the documented limit.
+        let mut at_cap = input("attempt-body-cap");
+        at_cap.body = "x".repeat(MAX_BODY_BYTES);
+        validate_input(&at_cap).unwrap();
+
         let mut oversized = input("attempt-oversized");
         oversized.body = "x".repeat(MAX_BODY_BYTES + 1);
         let error = validate_input(&oversized).unwrap_err();
