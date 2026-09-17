@@ -2183,8 +2183,11 @@ mod tests {
         //
         // One fixture per delimiter, isolated. A pair that both lack the closing
         // `>` cannot see the opening check being dropped, because the suffix
-        // check still refuses them both — and the resulting builder would accept
-        // `m@aware.local>` into `Message-ID`.
+        // check still refuses them both; the guard would then silently normalise
+        // a caller bug rather than refuse it, since the builder re-brackets
+        // whatever it is handed. The mirror case is the closing check: drop it
+        // and the real `<id>` input is stripped to `id>`, which the builder
+        // writes as `<id>>` — that is what `<m@aware.local` pins.
         assert!(matches!(
             build_message(&plain, "sender@example.com", "m@aware.local"),
             Err(AwareError::Internal(_))
@@ -2552,8 +2555,10 @@ mod tests {
 
         for (status, body, expected) in [
             (400, &b""[..], "gmail.send.rejected"),
-            // The inclusive top of the definitive-rejection range: 499 is a
-            // rejection, and excluding it would silently make it retryable.
+            // The highest status still inside the half-open `400..500`.
+            // Excluding it would report a definitive refusal as an unknown
+            // outcome — poisoning the attempt id for reconciliation instead of
+            // telling the caller the message was never sent.
             (499, &b""[..], "gmail.send.rejected"),
             (408, &b""[..], "gmail.send.outcome-unknown"),
             (500, &b""[..], "gmail.send.outcome-unknown"),
@@ -2578,9 +2583,10 @@ mod tests {
             assert_eq!(mock.send_count(), 1);
         }
 
-        // The inclusive top of the success range. Every other accepted fixture
-        // in this module is a 200, so narrowing the range to exclude 299 would
-        // turn a real acceptance into outcome-unknown with nothing to see it.
+        // The highest status still inside the half-open `200..300`. No other
+        // fixture here exercises a non-200 success, so narrowing the range to
+        // exclude 299 would turn a real acceptance into outcome-unknown with
+        // nothing to see it.
         let home = tempfile::tempdir().unwrap();
         let mock = MockHttp::responding(Ok(HttpResponse {
             status: 299,
@@ -2615,9 +2621,11 @@ mod tests {
     fn encoded_message_limit_fails_before_handoff() {
         let home = tempfile::tempdir().unwrap();
         let mock = MockHttp::responding(accepted());
-        // Inclusive at the cap. Without this half, `> MAX_BODY_BYTES` could
-        // become `>=` and the suite would stay green while refusing a body of
-        // exactly the documented limit.
+        // Inclusive at the cap: `> MAX_BODY_BYTES` must not drift to `>=`, and
+        // nothing else in the suite sits exactly on the boundary. This is the
+        // validation gate only — `MAX_ENCODED_MESSAGE_BYTES` is a separate,
+        // later refusal, and a multibyte body of this same length, being
+        // base64-encoded rather than quoted-printable, does not clear it.
         let mut at_cap = input("attempt-body-cap");
         at_cap.body = "x".repeat(MAX_BODY_BYTES);
         validate_input(&at_cap).unwrap();
