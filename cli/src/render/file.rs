@@ -70,8 +70,95 @@ fn csv_field(s: &str) -> String {
     }
 }
 
-fn bool_arg(args: &Value, key: &str, default: bool) -> bool {
-    args.get(key).and_then(Value::as_bool).unwrap_or(default)
+/// An optional boolean flag, resolved without ever reading a stated value as its opposite.
+///
+/// `as_bool().unwrap_or(default)` could not tell "absent" from "present but not a boolean", so
+/// `create-dirs: "false"` meant `true`: the author disabled the flag, the tree was created anyway,
+/// and the run reported success. A flag whose stated value is inverted in silence is worse than no
+/// flag, so a value that cannot be read as a boolean is refused (`Validation`, exit 3).
+///
+/// Two spellings are accepted BESIDES a JSON boolean, and both are load-bearing rather than
+/// leniency for its own sake — a strict boolean-only rule would refuse app configs that work today
+/// and offer no spelling that fixes them:
+///
+/// - **`"true"` / `"false"`** (any case). A `--input` override is ALWAYS a `Value::String`
+///   (`commands/app.rs`, which inserts every `k=v` verbatim), so `--input mk=false` behind
+///   `create-dirs: "{{ inputs.mk }}"` cannot produce a JSON boolean by any spelling the user could
+///   type. Refusing it would leave the flag unreachable from the command line; reading it as the
+///   boolean it plainly names is also what the author meant, which is the whole point of the fix.
+/// - **`""`** (or whitespace), which takes the default. This is not a typo — it is what an
+///   UNRESOLVED optional template renders to: `render_config` deliberately falls back to `""`
+///   rather than null for a whole-value ref that does not resolve (`runtime/orchestrator.rs`,
+///   pinned by `render_config_unresolved_whole_value_falls_back_to_empty_string`, per #205). So
+///   `create-dirs: "{{ inputs.optional }}"` with the input unset must keep meaning "unset".
+///
+/// Anything else — a number, an array, an object, or a string naming no boolean — is the caller's
+/// mistake and is refused rather than guessed at.
+///
+/// (A resolved whole-value `{{ }}` ref passes its JSON type through structurally, so a boolean
+/// input arrives here as a real `Value::Bool`; it is only the unresolved and `--input` routes that
+/// arrive as strings.)
+fn bool_arg(args: &Value, key: &str, verb: &str, default: bool) -> Result<bool, AwareError> {
+    match args.get(key) {
+        None | Some(Value::Null) => Ok(default),
+        Some(Value::Bool(b)) => Ok(*b),
+        Some(Value::String(s)) => match s.trim().to_ascii_lowercase().as_str() {
+            "" => Ok(default),
+            "true" => Ok(true),
+            "false" => Ok(false),
+            _ => Err(AwareError::Validation(format!(
+                "file {verb}: `{key}` must be true or false (got {s:?})"
+            ))),
+        },
+        Some(other) => Err(AwareError::Validation(format!(
+            "file {verb}: `{key}` must be true or false (got {})",
+            json_type(other)
+        ))),
+    }
+}
+
+/// Which encoding a `bytes` / `content` string carries. A closed set rather than a `&str`, so the
+/// call sites match exhaustively and no "everything else falls back to text" arm can exist.
+#[derive(Debug, Clone, Copy)]
+enum Encoding {
+    Text,
+    Base64,
+}
+
+/// The optional `encoding`, defaulting to `text`, validated up front.
+///
+/// Resolving this as `.and_then(Value::as_str).unwrap_or("text")` sent a NON-STRING value to `text`
+/// without ever reaching the unknown-encoding guard, so `encoding: 64` (unquoted in YAML, hence an
+/// integer) wrote the literal characters `UEsDBA==` where the author meant four bytes of zip header
+/// — a silent corruption reported as a success. A wrong-typed value is refused for the same reason
+/// an unknown one is, and in the same class (`Validation`, exit 3: the caller's mistake).
+///
+/// Both call sites resolve this before their payload and before their dry-run gate, so a bad value
+/// fails identically whether previewing or running — never a stub that masks the typo on a dry-run.
+///
+/// Note the limit of that: this refuses a bad encoding NAME whatever `bytes` holds, but `file_write`
+/// only APPLIES the encoding to a string `bytes` (a non-string is serialized to JSON, with the
+/// encoding ignored — the behavior `_core/file`'s manifest documents). So `encoding: base64` over a
+/// non-string `bytes` still writes JSON text rather than decoding; that discard is pre-existing and
+/// documented, and narrowing it is an agent-contract change rather than part of this fix.
+fn encoding_arg(args: &Value, verb: &str) -> Result<Encoding, AwareError> {
+    let name = match args.get("encoding") {
+        None | Some(Value::Null) => return Ok(Encoding::Text),
+        Some(Value::String(s)) => s.as_str(),
+        Some(other) => {
+            return Err(AwareError::Validation(format!(
+                "file {verb}: `encoding` must be a string (got {})",
+                json_type(other)
+            )));
+        }
+    };
+    match name {
+        "text" => Ok(Encoding::Text),
+        "base64" => Ok(Encoding::Base64),
+        other => Err(AwareError::Validation(format!(
+            "file {verb}: unknown encoding {other:?} (use `text` or `base64`)"
+        ))),
+    }
 }
 
 /// `file.write` — land `bytes` at `path`. A string is written as UTF-8 (or, with
@@ -81,11 +168,8 @@ fn bool_arg(args: &Value, key: &str, default: bool) -> bool {
 /// run (a preview reports the would-be size without touching disk).
 pub fn file_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     let path = req_path(args, "write")?;
-    let create_dirs = bool_arg(args, "create-dirs", true);
-    let encoding = args
-        .get("encoding")
-        .and_then(Value::as_str)
-        .unwrap_or("text");
+    let create_dirs = bool_arg(args, "create-dirs", "write", true)?;
+    let encoding = encoding_arg(args, "write")?;
 
     let bytes: Vec<u8> = match args.get("bytes") {
         None | Some(Value::Null) => {
@@ -94,17 +178,12 @@ pub fn file_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
             ));
         }
         Some(Value::String(s)) => match encoding {
-            "text" => s.clone().into_bytes(),
-            "base64" => base64::engine::general_purpose::STANDARD
+            Encoding::Text => s.clone().into_bytes(),
+            Encoding::Base64 => base64::engine::general_purpose::STANDARD
                 .decode(s.as_bytes())
                 .map_err(|e| {
                     AwareError::Validation(format!("file write: `bytes` is not valid base64: {e}"))
                 })?,
-            other => {
-                return Err(AwareError::Validation(format!(
-                    "file write: unknown encoding {other:?} (use `text` or `base64`)"
-                )));
-            }
         },
         // A non-string JSON value is serialized to compact JSON text (documented behavior).
         Some(other) => serde_json::to_vec(other)
@@ -129,7 +208,7 @@ pub fn file_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
 /// rows, excluding the header); the write is gated to a real run.
 pub fn file_write_csv(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     let path = req_path(args, "write-csv")?;
-    let create_dirs = bool_arg(args, "create-dirs", true);
+    let create_dirs = bool_arg(args, "create-dirs", "write-csv", true)?;
 
     let columns: Vec<String> = match args.get("columns") {
         Some(Value::Array(a)) => a.iter().map(|v| cell_text(Some(v))).collect(),
@@ -210,17 +289,9 @@ pub fn file_write_csv(args: &Value, dry_run: bool) -> Result<Value, AwareError> 
 /// still must not require the file to exist, so it returns an empty stub without touching disk.
 pub fn file_read(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     let path = req_path(args, "read")?;
-    let encoding = args
-        .get("encoding")
-        .and_then(Value::as_str)
-        .unwrap_or("text");
-    // Validate the encoding up front so a bad value fails the SAME way (Validation, exit 3) whether
-    // previewing or running — never a confusing IO error or a stub that masks the typo on dry-run.
-    if encoding != "text" && encoding != "base64" {
-        return Err(AwareError::Validation(format!(
-            "file read: unknown encoding {encoding:?} (use `text` or `base64`)"
-        )));
-    }
+    // Resolved before the dry-run gate so a bad value fails the SAME way (Validation, exit 3)
+    // whether previewing or running — never a confusing IO error or a stub that masks the typo.
+    let encoding = encoding_arg(args, "read")?;
 
     if dry_run {
         let mut out = serde_json::Map::new();
@@ -233,14 +304,18 @@ pub fn file_read(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     let raw = std::fs::read(&path)
         .map_err(|e| AwareError::Internal(format!("file read: {path}: {e}")))?;
     let bytes = raw.len() as u64;
-    let content = if encoding == "base64" {
-        base64::engine::general_purpose::STANDARD.encode(&raw)
-    } else {
-        String::from_utf8(raw).map_err(|e| {
+    // An exhaustive `match`, not `if … == Base64 { } else { }`. That `else` would BE the
+    // "everything else falls back to text" arm this enum exists to make impossible: add a
+    // third encoding and `file_write` would stop compiling, as it should, while an `else`
+    // here would quietly hand the caller raw bytes as text — the same silent corruption the
+    // `.unwrap_or("text")` bug caused, reintroduced one function below its own fix.
+    let content = match encoding {
+        Encoding::Base64 => base64::engine::general_purpose::STANDARD.encode(&raw),
+        Encoding::Text => String::from_utf8(raw).map_err(|e| {
             AwareError::Validation(format!(
                 "file read: {path} is not valid UTF-8 (use `encoding: base64`): {e}"
             ))
-        })?
+        })?,
     };
 
     let mut out = serde_json::Map::new();
@@ -255,10 +330,37 @@ mod tests {
     use super::*;
     use serde_json::json;
 
-    /// A unique temp dir for one test (no extra dev-dep — std + pid + a per-call salt).
+    /// An EMPTY temp dir for one test (no extra dev-dep — std + pid + a per-call salt).
+    ///
+    /// Cleared on entry, which is the whole point. The name is keyed on the process
+    /// id and the OS reuses those, so without this a directory left by an earlier
+    /// run is handed to a later one — and six tests here assert that some path does
+    /// NOT exist. That is not a theoretical staleness: the mutation discipline this
+    /// module is tested under *creates* those very files. Running the documented
+    /// mutation for `an_unknown_write_encoding_is_refused_rather_than_written_as_text`
+    /// leaves `…-wenc/enc.bin` behind, so once the mutation is reverted the test
+    /// keeps failing against correct code until someone clears the temp dir — a
+    /// false signal that reads as "the fix didn't work".
+    ///
+    /// Each salt is used by exactly one test, so clearing here cannot race another
+    /// test running in parallel.
     fn tmp(salt: &str) -> std::path::PathBuf {
         let d = std::env::temp_dir().join(format!("aware-file-test-{}-{salt}", std::process::id()));
-        std::fs::create_dir_all(&d).unwrap();
+        // Not `create_dir_all` alone: that is a no-op over a stale directory.
+        //
+        // And not a discarded result either. `create_dir_all` succeeds over a
+        // directory that is still there, so swallowing a real removal failure —
+        // a locked or read-only entry on Windows, an external deleter racing us —
+        // hands the test the dirty fixture this helper exists to prevent, and its
+        // absence assertions then fail against correct production code. Only
+        // `NotFound` means "already clear"; anything else fails setup loudly.
+        match std::fs::remove_dir_all(&d) {
+            Ok(()) => {}
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+            Err(e) => panic!("fixture {d:?} could not be cleared: {e}"),
+        }
+        std::fs::create_dir_all(&d)
+            .unwrap_or_else(|e| panic!("fixture {d:?} could not be created: {e}"));
         d
     }
 
@@ -397,5 +499,590 @@ mod tests {
         // dry-run returns an empty stub even if the file exists.
         let dry = file_read(&json!({ "path": path }), true).unwrap();
         assert_eq!(dry["bytes"], json!(0));
+    }
+
+    // ── the destination ─────────────────────────────────────────────────────
+    //
+    // `req_path` is the first statement of all three verbs and nothing pinned
+    // it, so every property below could have been deleted with the suite green.
+
+    #[test]
+    fn a_path_that_names_no_destination_is_refused_by_every_verb() {
+        // The whitespace-only spelling is the one that earns this test. It is a
+        // *non-empty* string, so without the `trim()` inside the guard it walks
+        // straight through and the bytes land in a file named by that whitespace
+        // — for this fixture, `   \t ` (three spaces, a tab, a space) — created,
+        // reported as a success, and effectively unfindable. The other five
+        // spellings are here so the guard cannot be narrowed to the one case a
+        // fix happened to be written for.
+        //
+        // Previewed rather than written, for all three verbs. `req_path` runs
+        // before the `if !dry_run` gate, so the guard is tested exactly the same
+        // either way — but these paths are deliberately malformed and relative, so
+        // if the guard ever regresses a real write lands them in the PROCESS CWD,
+        // which is the crate root. That is not hypothetical: it leaves a file
+        // actually named `   \t ` sitting untracked in `cli/`, which `git add -A`
+        // would commit. A test for a destination guard must not become the thing
+        // that writes to an unintended destination.
+        for bad in [
+            json!(null),
+            json!(""),
+            json!("   \t "),
+            json!(7),
+            json!({}),
+            json!([]),
+        ] {
+            assert!(
+                file_write(&json!({ "path": bad, "bytes": "x" }), true).is_err(),
+                "write accepted path {bad}"
+            );
+            assert!(
+                file_write_csv(&json!({ "path": bad, "columns": ["A"] }), true).is_err(),
+                "write-csv accepted path {bad}"
+            );
+            assert!(
+                file_read(&json!({ "path": bad }), true).is_err(),
+                "read accepted path {bad}"
+            );
+        }
+        // …and the key being absent altogether, which is a different match arm.
+        assert!(file_write(&json!({ "bytes": "x" }), true).is_err());
+        assert!(file_write_csv(&json!({ "columns": ["A"] }), true).is_err());
+        assert!(file_read(&json!({}), true).is_err());
+    }
+
+    #[test]
+    fn a_padded_path_is_trimmed_before_it_is_reported_or_written() {
+        // The other half of the same `trim()`: padding that surrounds a real
+        // path must be stripped rather than carried onto disk. Left in, the
+        // leading spaces make the path RELATIVE — `"  /tmp/x"` parses as a
+        // directory named `"  "` under the cwd — so the bytes land in an
+        // entirely different tree from the one the author named.
+        let d = tmp("trim");
+        let clean = d.join("padded.txt");
+        let padded = format!("  {}  ", clean.display());
+        // Reported first, under dry-run, so this half touches no disk at all.
+        let dry = file_write(&json!({ "path": &padded, "bytes": "x" }), true).unwrap();
+        assert_eq!(dry["path"].as_str().unwrap(), clean.to_str().unwrap());
+        // Then for real: the bytes are at the unpadded path.
+        file_write(&json!({ "path": &padded, "bytes": "x" }), false).unwrap();
+        assert_eq!(std::fs::read_to_string(&clean).unwrap(), "x");
+    }
+
+    #[test]
+    fn create_dirs_off_never_invents_the_parent_directory() {
+        // `create-dirs` defaults ON, so every existing test exercises the same
+        // branch and the flag could have been ignored entirely. Turning it off
+        // is the only way to observe it — and what it must NOT produce is a
+        // directory tree the author asked not to have.
+        //
+        // Note what the failure actually is, because an earlier wording of this
+        // comment called it "a refusal" and it is not one. With the flag off,
+        // `ensure_parent` returns `Ok(())` silently and the error comes from
+        // `std::fs::write` hitting ENOENT — an `AwareError::Internal` (exit 1),
+        // reported by the OS, not a deliberate `Validation` (exit 3) of ours.
+        // The variant is pinned below so the comment and the assertion cannot
+        // drift apart again. (Refusing a wrong-TYPED `create-dirs` — see
+        // `a_non_boolean_create_dirs_is_refused_rather_than_read_as_the_default`
+        // — does not change this: a genuine `false` still reaches the OS here.)
+        let d = tmp("cdirs");
+        let missing = d.join("no-such-dir");
+        let target = missing.join("out.txt");
+        let p = target.to_str().unwrap();
+
+        // `tmp` keys its directory on the process id, which the OS reuses, and
+        // this test ends by creating `missing` for real. A later run that
+        // inherits the same id would therefore find the "missing" parent
+        // already on disk and fail against a correct implementation. Clear what
+        // an earlier run left before asserting the parent is absent — this test
+        // is the only one here that asserts the absence of a path it goes on to
+        // create, so it is the only one that cannot start from a reused fixture.
+        let _ = std::fs::remove_dir_all(&missing);
+        assert!(
+            !missing.exists(),
+            "fixture from an earlier run survived; the refusals below would not \
+             be the flag talking"
+        );
+
+        let err = file_write(
+            &json!({ "path": p, "bytes": "x", "create-dirs": false }),
+            false,
+        )
+        .unwrap_err();
+        assert!(
+            matches!(err, AwareError::Internal(_)),
+            "the OS reports the missing parent; we do not refuse it ourselves: {err:?}"
+        );
+        assert!(
+            !missing.exists(),
+            "write created the parent behind the flag"
+        );
+        let err = file_write_csv(
+            &json!({ "path": p, "columns": ["A"], "create-dirs": false }),
+            false,
+        )
+        .unwrap_err();
+        assert!(matches!(err, AwareError::Internal(_)), "{err:?}");
+        assert!(
+            !missing.exists(),
+            "write-csv created the parent behind the flag"
+        );
+
+        // With the default the very same call succeeds, so the two refusals
+        // above are the flag talking rather than a broken fixture path.
+        file_write(&json!({ "path": p, "bytes": "x" }), false).unwrap();
+        assert!(target.is_file());
+    }
+
+    // ── RFC-4180 quoting ────────────────────────────────────────────────────
+
+    #[test]
+    fn a_cell_carrying_a_line_break_is_quoted_so_the_record_survives() {
+        // `csv_field` quotes on four characters; the suite covered two. An
+        // unquoted embedded CR or LF ends the record early, so one row becomes
+        // two and every column after it shifts — a corruption a reader reports
+        // as valid CSV. Asserted as the whole file, because the bug is in what
+        // lies BETWEEN the cells.
+        let d = tmp("crlf");
+        let path = d.join("multiline.csv");
+        let p = path.to_str().unwrap();
+        file_write_csv(
+            &json!({
+                "path": p,
+                "columns": ["Note", "Qty"],
+                "rows": [
+                    { "Note": "line one\nline two", "Qty": 1 },
+                    { "Note": "carriage\rreturn", "Qty": 2 },
+                ]
+            }),
+            false,
+        )
+        .unwrap();
+        assert_eq!(
+            std::fs::read_to_string(p).unwrap(),
+            "Note,Qty\r\n\"line one\nline two\",1\r\n\"carriage\rreturn\",2\r\n"
+        );
+    }
+
+    #[test]
+    fn a_column_name_needing_quotes_is_quoted_in_the_header_too() {
+        // The header is built by its own `join`, separate from the row loop, so
+        // it can lose the escaping the rows keep. A comma in a column name would
+        // then give the header more fields than the records beneath it, and a
+        // reader would bind every value to the wrong column.
+        let d = tmp("hdr");
+        let path = d.join("head.csv");
+        let p = path.to_str().unwrap();
+        file_write_csv(
+            &json!({
+                "path": p,
+                "columns": ["Profile, mm", "Say \"hi\"", "plain"],
+                "rows": [{ "plain": "v" }]
+            }),
+            false,
+        )
+        .unwrap();
+        let csv = std::fs::read_to_string(p).unwrap();
+        assert_eq!(
+            csv.split("\r\n").next().unwrap(),
+            "\"Profile, mm\",\"Say \"\"hi\"\"\",plain"
+        );
+        // The row is still addressed by the RAW column name, not the quoted one.
+        assert_eq!(csv.split("\r\n").nth(1).unwrap(), ",,v");
+    }
+
+    // ── what a cell may hold ────────────────────────────────────────────────
+
+    #[test]
+    fn every_json_shape_becomes_a_cell_and_an_absent_key_is_blank() {
+        // `cell_text`'s entire contract in one record. The two arms that matter
+        // most are the ends: null / absent must be EMPTY (a literal "null" in a
+        // spreadsheet reads as data), and a nested array or object must survive
+        // as compact JSON rather than being dropped on the floor.
+        let d = tmp("cells");
+        let path = d.join("shapes.csv");
+        let p = path.to_str().unwrap();
+        file_write_csv(
+            &json!({
+                "path": p,
+                "columns": ["s", "n", "b", "nul", "arr", "obj", "absent"],
+                "rows": [{
+                    "s": "x", "n": 2.5, "b": true, "nul": null,
+                    "arr": [1, 2], "obj": { "k": "v" }
+                }]
+            }),
+            false,
+        )
+        .unwrap();
+        let csv = std::fs::read_to_string(p).unwrap();
+        assert_eq!(
+            csv.split("\r\n").nth(1).unwrap(),
+            "x,2.5,true,,\"[1,2]\",\"{\"\"k\"\":\"\"v\"\"}\","
+        );
+    }
+
+    #[test]
+    fn a_positional_row_shorter_than_its_columns_pads_rather_than_shifting() {
+        // The cell loop runs over `columns`, not over the row. Running it over
+        // the row instead emits a SHORT record, and a reader then either rejects
+        // the file or pulls the next row's leading values up into it. The
+        // over-long row is already refused; this is the other side of it.
+        let d = tmp("short");
+        let path = d.join("short.csv");
+        let p = path.to_str().unwrap();
+        let res = file_write_csv(
+            &json!({ "path": p, "columns": ["A", "B", "C"], "rows": [["x"], []] }),
+            false,
+        )
+        .unwrap();
+        assert_eq!(res["row-count"], json!(2));
+        assert_eq!(
+            std::fs::read_to_string(p).unwrap(),
+            "A,B,C\r\nx,,\r\n,,\r\n"
+        );
+    }
+
+    // ── the shapes `write-csv` refuses ──────────────────────────────────────
+
+    #[test]
+    fn rows_that_are_not_records_are_refused_and_no_rows_is_a_header_only_file() {
+        let d = tmp("rows");
+        // Absent and explicit-null `rows` are legal and mean "header only" — a
+        // real result (an empty export) rather than an error.
+        for (salt, args) in [
+            ("absent", json!({ "columns": ["A", "B"] })),
+            ("null", json!({ "columns": ["A", "B"], "rows": null })),
+        ] {
+            let path = d.join(format!("{salt}.csv"));
+            let mut args = args;
+            args["path"] = json!(path.to_str().unwrap());
+            let res = file_write_csv(&args, false).unwrap();
+            assert_eq!(res["row-count"], json!(0), "{salt}");
+            assert_eq!(std::fs::read_to_string(&path).unwrap(), "A,B\r\n", "{salt}");
+        }
+
+        // A `rows` that is not an array at all, named by type.
+        let path = d.join("bad.csv");
+        let p = path.to_str().unwrap();
+        let err = file_write_csv(
+            &json!({ "path": p, "columns": ["A"], "rows": { "A": 1 } }),
+            false,
+        )
+        .unwrap_err();
+        assert!(
+            format!("{err}").contains("`rows` must be an array (got object)"),
+            "{err}"
+        );
+
+        // An array whose ELEMENTS are not records. Each must stop the write —
+        // rendering a scalar as a one-cell row would quietly produce a file
+        // whose shape nobody asked for.
+        for bad in [json!(42), json!("x"), json!(null), json!(true)] {
+            assert!(
+                file_write_csv(
+                    &json!({ "path": p, "columns": ["A"], "rows": [bad] }),
+                    false
+                )
+                .is_err(),
+                "a row of {bad} was accepted"
+            );
+        }
+        assert!(!path.exists(), "a refused write leaves nothing behind");
+    }
+
+    #[test]
+    fn columns_is_required_and_must_be_a_list() {
+        // Without `columns` there is no header and no cell order, so defaulting
+        // it to empty would emit a blank header over blank records and call that
+        // a successful export.
+        let d = tmp("cols");
+        let path = d.join("cols.csv");
+        let p = path.to_str().unwrap();
+        // `is_err()` alone is not enough here: THREE other refusals can fire in the
+        // same call — `req_path` and `bool_arg` above the `columns` match, `rows`
+        // below it — so a bare `is_err()` passes just as happily on an error about
+        // a different key. (`bool_arg` is the newest of them, which is the point:
+        // the set of ways this call can fail for an unrelated reason grows, and a
+        // bare `is_err()` silently absorbs each new one.) Two mutations survived
+        // it when this was measured on 15e62817 — the message degraded to
+        // "file write-csv: bad args", and the arm's `Validation` swapped for
+        // `Internal`. The second is contract, not tidiness: `Validation` exits 3
+        // and `Internal` exits 1. So pin both the variant and the message, as the
+        // sibling tests in this module do.
+        for bad in [json!(null), json!("A,B"), json!({ "A": 1 }), json!(3)] {
+            // `let-else` rather than `expect_err`, which takes a plain `&str`: a
+            // message written as `"columns {bad} …"` there prints the braces
+            // literally, so the one value that identifies WHICH case failed is
+            // exactly what a reader of the panic would not get.
+            let Err(err) = file_write_csv(&json!({ "path": p, "columns": bad.clone() }), false)
+            else {
+                panic!("columns {bad} was accepted");
+            };
+            assert!(
+                matches!(err, AwareError::Validation(_)),
+                "columns {bad}: the caller named a bad value, which is their error: {err:?}"
+            );
+            assert!(
+                format!("{err}").contains("`columns` is required"),
+                "columns {bad}: {err}"
+            );
+        }
+        // …and the key being absent altogether, which is a different match arm.
+        let err = file_write_csv(&json!({ "path": p }), false).unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "{err:?}");
+        assert!(format!("{err}").contains("`columns` is required"), "{err}");
+        assert!(!path.exists());
+    }
+
+    // ── wrong-typed arguments are refused, not defaulted ────────────────────
+    //
+    // Both arguments below were resolved with a `unwrap_or(default)` that could
+    // not tell "absent" from "present but the wrong type", so a malformed value
+    // became the default in silence.
+    //
+    // Neither case is hypothetical for a templated app, though NOT because
+    // `{{ }}` always yields a string — an earlier wording of this comment claimed
+    // that and it is false. A resolved whole-value ref passes its JSON type
+    // through structurally (#205), so a boolean input arrives as a real
+    // `Value::Bool`. The routes that DO produce a string are an embedded or
+    // multi-expression template, a `--input` override (always a `Value::String`),
+    // an unresolved optional ref (which renders to `""`), and a plain YAML quote.
+
+    #[test]
+    fn a_non_boolean_create_dirs_is_refused_rather_than_read_as_the_default() {
+        // The default for `create-dirs` is ON, so a value that fails to parse
+        // means the author who wrote `create-dirs: "false"` got `true` — the
+        // exact opposite of what they wrote, with the tree created and the run
+        // reported as a success. That is what
+        // `create_dirs_off_never_invents_the_parent_directory` exists to
+        // forbid; it only ever passes the JSON boolean, so it cannot see this.
+        let d = tmp("cdirstype");
+        let missing = d.join("no-such-dir");
+        let target = missing.join("out.txt");
+        let p = target.to_str().unwrap();
+        let _ = std::fs::remove_dir_all(&missing);
+
+        // `0` / `1` earn their place: they are the spellings most likely to be
+        // "obviously" boolean to a guesser, and reading either would put us back
+        // to inventing a value the author did not write. `"yes"` is the same trap
+        // one step along. (`"true"`/`"false"` are NOT here — they name a boolean
+        // unambiguously and are accepted, which is what makes the flag reachable
+        // from `--input`; that is asserted as a positive control below.)
+        for bad in [
+            json!(0),
+            json!(1),
+            json!([]),
+            json!({}),
+            json!("yes"),
+            json!("0"),
+        ] {
+            for (verb, res) in [
+                (
+                    "write",
+                    file_write(
+                        &json!({ "path": p, "bytes": "x", "create-dirs": bad.clone() }),
+                        false,
+                    ),
+                ),
+                (
+                    "write-csv",
+                    file_write_csv(
+                        &json!({ "path": p, "columns": ["A"], "create-dirs": bad.clone() }),
+                        false,
+                    ),
+                ),
+            ] {
+                let Err(err) = res else {
+                    panic!("{verb} accepted create-dirs {bad}");
+                };
+                assert!(
+                    matches!(err, AwareError::Validation(_)),
+                    "{verb} create-dirs {bad}: a bad argument is the caller's error: {err:?}"
+                );
+                let msg = format!("{err}");
+                assert!(msg.contains("`create-dirs`"), "{verb} {bad}: {msg}");
+                assert!(msg.contains("true or false"), "{verb} {bad}: {msg}");
+            }
+        }
+        assert!(
+            !missing.exists(),
+            "a refused write must not have created the tree it was arguing about"
+        );
+
+        // The positive controls, so the refusals above are the VALUE talking
+        // rather than the key being rejected outright.
+        //
+        // Each "takes the default" case gets its OWN missing parent and asserts
+        // the parent was CREATED. Reusing one target would make these vacuous:
+        // after the first call the file already exists, so a later spelling read
+        // as `false` would still return Ok and still leave `target` in place —
+        // the assertion would pass against the very bug it is meant to catch.
+        for (label, spelling) in [
+            ("absent", None),
+            ("null", Some(json!(null))),
+            (
+                "empty string (an unresolved optional template)",
+                Some(json!("")),
+            ),
+            ("whitespace", Some(json!("  "))),
+            ("\"true\"", Some(json!("true"))),
+            ("\"TRUE\" (case-insensitive)", Some(json!("TRUE"))),
+            ("real boolean true", Some(json!(true))),
+        ] {
+            let parent = d.join(format!("default-{}", label.len()));
+            let dest = parent.join("out.txt");
+            let _ = std::fs::remove_dir_all(&parent);
+            let mut args = json!({ "path": dest.to_str().unwrap(), "bytes": "x" });
+            if let Some(v) = spelling {
+                args["create-dirs"] = v;
+            }
+            file_write(&args, false)
+                .unwrap_or_else(|e| panic!("create-dirs {label} was refused: {e}"));
+            assert!(
+                dest.is_file(),
+                "create-dirs {label} should have created the parent and written"
+            );
+        }
+
+        // …and every spelling of OFF still turns it off. `"false"` is the one
+        // that matters most: it is the only thing `--input mk=false` can produce,
+        // and reading it as `true` is the original bug this test is named for.
+        for off_spelling in [
+            json!(false),
+            json!("false"),
+            json!("False"),
+            json!(" false "),
+        ] {
+            let off = d.join("still-missing").join("out.txt");
+            let _ = std::fs::remove_dir_all(d.join("still-missing"));
+            let err = file_write(
+                &json!({ "path": off.to_str().unwrap(), "bytes": "x", "create-dirs": off_spelling.clone() }),
+                false,
+            )
+            .unwrap_err();
+            assert!(
+                matches!(err, AwareError::Internal(_)),
+                "create-dirs {off_spelling} should reach the OS, not be refused: {err:?}"
+            );
+            assert!(
+                !d.join("still-missing").exists(),
+                "create-dirs {off_spelling} created the tree it was told not to"
+            );
+        }
+    }
+
+    #[test]
+    fn a_non_string_encoding_is_refused_rather_than_written_as_text() {
+        // `encoding: 64` is what YAML hands us for an unquoted `64`. Resolved
+        // with `.and_then(Value::as_str)`, it never reached the unknown-encoding
+        // guard at all: it fell to `text` and wrote the eight literal characters
+        // `UEsDBA==` into a file the author expected to hold four bytes of zip
+        // header — the corruption
+        // `an_unknown_write_encoding_is_refused_rather_than_written_as_text`
+        // describes, reached by the one route that test cannot take (it passes
+        // an unknown STRING, which was always refused correctly).
+        let d = tmp("enctype");
+        let path = d.join("archive.zip");
+        let p = path.to_str().unwrap();
+        for bad in [json!(64), json!(true), json!(["base64"]), json!({})] {
+            let Err(err) = file_write(
+                &json!({ "path": p, "bytes": "UEsDBA==", "encoding": bad.clone() }),
+                false,
+            ) else {
+                panic!("write accepted encoding {bad}");
+            };
+            assert!(
+                matches!(err, AwareError::Validation(_)),
+                "write encoding {bad}: {err:?}"
+            );
+            assert!(
+                format!("{err}").contains("`encoding` must be a string"),
+                "write encoding {bad}: {err}"
+            );
+            // `read` resolves it the same way and must refuse it the same way,
+            // on a real run AND on a preview — the dry-run stub would otherwise
+            // hand back an empty success and hide the typo until production.
+            for dry in [true, false] {
+                let Err(err) = file_read(&json!({ "path": p, "encoding": bad.clone() }), dry)
+                else {
+                    panic!("read accepted encoding {bad} (dry_run={dry})");
+                };
+                assert!(
+                    matches!(err, AwareError::Validation(_)),
+                    "read encoding {bad} (dry_run={dry}): {err:?}"
+                );
+            }
+        }
+        assert!(
+            !path.exists(),
+            "nothing is written on the refusal — the point is that the old code wrote the \
+             base64 SOURCE here and called it a success"
+        );
+
+        // The positive control: the same call with the encoding spelled as a
+        // string does decode, so the refusals above are the TYPE talking.
+        file_write(
+            &json!({ "path": p, "bytes": "UEsDBA==", "encoding": "base64" }),
+            false,
+        )
+        .unwrap();
+        assert_eq!(std::fs::read(p).unwrap(), vec![0x50, 0x4b, 0x03, 0x04]);
+    }
+
+    // ── previews never touch disk ───────────────────────────────────────────
+
+    #[test]
+    fn write_csv_dry_run_counts_the_rows_without_touching_disk() {
+        // The same gate `file_write` has, on the verb that had no test for it.
+        let d = tmp("csvdry");
+        let path = d.join("never.csv");
+        let p = path.to_str().unwrap();
+        let res = file_write_csv(
+            &json!({ "path": p, "columns": ["A"], "rows": [{ "A": 1 }, { "A": 2 }] }),
+            true,
+        )
+        .unwrap();
+        assert_eq!(res["row-count"], json!(2));
+        assert!(!path.exists(), "dry-run never writes");
+    }
+
+    // ── encodings ───────────────────────────────────────────────────────────
+
+    #[test]
+    fn an_unknown_write_encoding_is_refused_rather_than_written_as_text() {
+        // `read` pins this; `write` did not. Falling through to `text` writes
+        // the base64 SOURCE — the literal characters `UEsDBA==` — into a file
+        // the author expected to hold four bytes of zip header, and reports the
+        // wrong length as a success.
+        let d = tmp("wenc");
+        let path = d.join("enc.bin");
+        let p = path.to_str().unwrap();
+        let err = file_write(
+            &json!({ "path": p, "bytes": "UEsDBA==", "encoding": "utf16" }),
+            false,
+        )
+        .unwrap_err();
+        assert!(format!("{err}").contains("unknown encoding"), "{err}");
+        assert!(!path.exists(), "nothing is written on the refusal");
+    }
+
+    #[test]
+    fn a_binary_file_read_as_text_is_refused_and_says_to_use_base64() {
+        // `read_round_trips_text_and_base64` reads these bytes as base64 only;
+        // its comment claims text "would fail" without ever asking. A lossy
+        // decode would instead hand back a string of U+FFFD and a byte count
+        // that no longer matches it — a corrupt read wearing a success.
+        let d = tmp("renc");
+        let path = d.join("bin.dat");
+        let p = path.to_str().unwrap();
+        std::fs::write(p, [0x50, 0x4b, 0xff]).unwrap();
+        let err = file_read(&json!({ "path": p }), false).unwrap_err();
+        assert!(
+            matches!(err, AwareError::Validation(_)),
+            "the caller chose the wrong encoding, which is their error, not an internal one: {err:?}"
+        );
+        let msg = format!("{err}");
+        assert!(msg.contains("not valid UTF-8"), "{msg}");
+        assert!(msg.contains("base64"), "{msg}");
     }
 }

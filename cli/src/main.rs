@@ -46,12 +46,14 @@ mod context;
 mod envelope;
 mod error;
 mod fs;
+mod http_body;
 mod install;
 mod json;
 mod lockfile;
 mod manifest;
 mod paths;
 mod plugins;
+mod provider_store;
 mod receipt;
 mod registry;
 mod render;
@@ -190,6 +192,12 @@ enum Command {
         #[command(subcommand)]
         action: commands::sidecar::SidecarCommand,
     },
+
+    /// Manage signed, locally enrolled model-provider packages.
+    Provider {
+        #[command(subcommand)]
+        action: commands::provider::ProviderCommand,
+    },
 }
 
 // Returns `()`, not a `Result`: every error path below ends in
@@ -204,7 +212,7 @@ async fn main() {
     let paths = match crate::paths::Paths::from_env() {
         Ok(p) => p,
         Err(err) => {
-            eprintln!("error: {err}");
+            eprintln!("error: {}", err.cli_message());
             std::process::exit(err.exit_code());
         }
     };
@@ -233,10 +241,11 @@ async fn main() {
         Command::Key { action } => commands::key::dispatch(action, &ctx),
         Command::Receipt { action } => commands::receipt_cli::dispatch(action, &ctx),
         Command::Sidecar { action } => commands::sidecar::dispatch(action, &ctx),
+        Command::Provider { action } => commands::provider::dispatch(action, &ctx),
     };
 
     if let Err(err) = result {
-        eprintln!("error: {err}");
+        eprintln!("error: {}", err.cli_message());
         std::process::exit(err.exit_code());
     }
 }

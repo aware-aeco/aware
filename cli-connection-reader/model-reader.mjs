@@ -2,8 +2,9 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import {
-  assertSha256, buildCanonicalRequest, ModelReaderError, providerFingerprintSha256,
-  lowerableLimits, requestSha256, sha256,
+  assertSha256, buildCanonicalRequest, canonicalArtifactLimits, ModelReaderError,
+  providerFingerprintSha256, lowerableLimits, READER_SCHEMA_VERSION_V1, READER_SCHEMA_VERSION_V2,
+  requestSha256, sha256,
 } from './model-contract.mjs';
 import { normalizeRevitGlb, parseGlb } from './revit-glb.mjs';
 import { normalizeRevitMetadata } from './revit-metadata.mjs';
@@ -15,11 +16,15 @@ import {
 } from './model-cache.mjs';
 import { createModelHostClient } from './model-host-client.mjs';
 import { buildAndPublishSnapshot } from './model-snapshot.mjs';
+import { preflightEnrolledProviderPackage } from './model-provider-package.mjs';
+import { fingerprintSource } from './model-provider-discovery.mjs';
+import { sourceCaptureLimits } from './model-source-capture.mjs';
 
 const STALE_PROVIDER_RUN_MS = 60 * 60_000;
 const ACTIVE_RUN_MARKER = '.active';
 const PROVIDER_RUN_HEARTBEAT_MS = 60_000;
 const providerRunHeartbeats = new Map();
+const CONVERSION_ATTEMPT_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function readerError(code, phase, message, retryable = false, details = undefined) {
   throw new ModelReaderError(code, phase, retryable, message, details);
@@ -42,6 +47,51 @@ function configuration(args, deps) {
     privateRoot: deps.privateRoot ?? path.join(home, 'cache', 'model-reference-reader', 'provider-runs'),
     artifactDirectory: deps.artifactDirectory ?? environment.AWARE_ARTIFACT_DIR,
   };
+}
+
+function packageMode(args) {
+  return ['provider-format', 'provider-capability', 'provider-package-sha256']
+    .some((field) => Object.hasOwn(args, field));
+}
+
+function packageSigningConfiguration(args, deps) {
+  const environment = deps.environment ?? process.env;
+  const home = awareHome(environment);
+  const secretPath = args['signing-secret-path'] ?? environment.AWARE_MODEL_REFERENCE_SIGNING_KEY ?? path.join(home, 'keys', 'model-reference-reader.sec');
+  const publicPath = args['signing-public-path'] ?? environment.AWARE_MODEL_REFERENCE_PUBLIC_KEY ?? secretPath.replace(/\.sec$/i, '.pub');
+  return {
+    environment, home, secretPath, publicPath,
+    privateRoot: deps.privateRoot ?? path.join(home, 'cache', 'model-reference-reader', 'provider-runs'),
+  };
+}
+
+function validatePackageRequest(command, args, deps) {
+  const limits = requestLimits(args, deps);
+  let captureLimits;
+  try { captureLimits = sourceCaptureLimits(args['source-capture-limits']); }
+  catch (error) { readerError('reference-limits-invalid', 'request', 'Source capture limits are invalid.', false, error); }
+  for (const field of ['provider-format', 'provider-capability', 'provider-package-sha256']) {
+    if (typeof args[field] !== 'string' || !args[field]) readerError('reference-provider-package-request-invalid', 'request', `Package preflight requires ${field}.`);
+  }
+  if (args['expected-provider-protocol'] !== undefined && args['expected-provider-protocol'] !== '3') {
+    readerError('reference-provider-package-request-invalid', 'request', 'Enrolled provider packages require protocol v3.');
+  }
+  for (const field of ['provider-path', 'expected-provider-sha256', 'expected-provider-destination', 'authority-store-path']) {
+    if (args[field] !== undefined) readerError('reference-provider-package-request-invalid', 'request', `Package preflight cannot mix ${field} with enrollment selection.`);
+  }
+  if (command === 'fingerprint-source') {
+    if (!Array.isArray(args['source-namespaces']) || args['source-namespaces'].length === 0) {
+      readerError('reference-source-namespaces-invalid', 'request', 'Source fingerprinting requires captured namespace roots.');
+    }
+    if (typeof args['provider-authorization'] !== 'string' || !args['provider-authorization']) {
+      readerError('reference-provider-authorization-invalid', 'request', 'Source fingerprinting requires provider authorization.');
+    }
+    if (args['degraded-mode'] !== undefined && !['refuse', 'allow'].includes(args['degraded-mode'])) {
+      readerError('reference-request-invalid', 'request', 'degraded-mode must be refuse or allow.');
+    }
+  }
+  if (args['expected-signer-sha256'] !== undefined) assertSha256(args['expected-signer-sha256'], 'expected-signer-sha256');
+  return { limits, captureLimits };
 }
 
 async function hasFreshHeartbeat(candidate, now) {
@@ -110,22 +160,43 @@ async function removeRunRoot(runRoot) {
   catch (error) { readerError('reference-provider-run-cleanup-failed', 'cleanup', 'Provider staging could not be removed.', false, error); }
 }
 
-function requestLimits(args, deps) {
+function requestLimits(args, deps, readerSchemaVersion) {
   const configured = Object.hasOwn(args, 'limits') ? args.limits : deps.limits;
-  try { return lowerableLimits(configured); }
+  try {
+    return lowerableLimits(configured, readerSchemaVersion);
+  }
   catch (error) { readerError('reference-limits-invalid', 'request', 'Model reader limits are invalid.', false, error); }
 }
 
+function requestedReaderSchemaVersion(args) {
+  const version = args['reader-schema-version'] ?? READER_SCHEMA_VERSION_V1;
+  if (![READER_SCHEMA_VERSION_V1, READER_SCHEMA_VERSION_V2].includes(version)) {
+    readerError('reference-request-invalid', 'request', 'The requested model-reader schema version is unsupported.');
+  }
+  return version;
+}
+
 function validateRequest(command, args, deps) {
-  const limits = requestLimits(args, deps);
+  const readerSchemaVersion = requestedReaderSchemaVersion(args);
+  const limits = requestLimits(args, deps, readerSchemaVersion);
+  const protocolVersion = args['expected-provider-protocol'] ?? '1';
+  // A managed conversion has a delivery-attempt identity which must be part of
+  // the independently versioned package signature. That binding was introduced
+  // with reader schema v2, so accepting protocol 2 with the v1 package schema
+  // would validate an attempt that the delivered artifact cannot authenticate.
+  if (protocolVersion === '2' && readerSchemaVersion !== READER_SCHEMA_VERSION_V2) {
+    readerError('reference-request-invalid', 'request', 'Managed Revit conversion requires model-reader schema version v2.');
+  }
   // This constructs and canonicalizes the complete request-only contract without touching the
   // provider, signing key, cache, or source filesystem. It validates protocol, conversion
   // settings, and all lowerable limits before an environment-dependent error can mask them.
   try {
     requestSha256(buildCanonicalRequest({
       limits,
-      protocolVersion: args['expected-provider-protocol'] ?? '1',
+      protocolVersion,
       conversionSettings: args['conversion-settings'] ?? {},
+      readerSchemaVersion,
+      propertyExpansionLimits: args['property-expansion-limits'] ?? {},
     }));
   } catch (error) {
     if (error instanceof ModelReaderError) throw error;
@@ -144,6 +215,15 @@ function validateRequest(command, args, deps) {
     if (args[field] !== undefined) assertSha256(args[field], label);
   }
   return { limits, pin: args['expected-provider-sha256'] };
+}
+
+function conversionAttemptId(args, protocolVersion) {
+  if (protocolVersion !== '2') return undefined;
+  const attemptId = args['conversion-attempt-id'];
+  if (typeof attemptId !== 'string' || !CONVERSION_ATTEMPT_ID.test(attemptId)) {
+    readerError('reference-provider-request-invalid', 'request', 'The managed Revit conversion attempt identity is invalid.');
+  }
+  return attemptId;
 }
 
 function emit(deps, phase, extra = {}) {
@@ -172,6 +252,7 @@ async function providerReadiness(args, deps, config, expectedProviderSha256, sig
       expectedProtocolVersion: args['expected-provider-protocol'] ?? '1',
       expectedDestination: args['expected-provider-destination'],
       authorityStorePath: args['authority-store-path'],
+      readerSchemaVersion: requestedReaderSchemaVersion(args),
     });
     return {
       ...signing, provider,
@@ -213,15 +294,19 @@ function manifestDetails(geometry, metadata, canonicalRequestSha256, fingerprint
   };
 }
 
-async function convertAndCache(args, deps, config, readiness) {
+async function convertAndCache(args, deps, config, readiness, attemptId) {
   const sourcePath = sourcePathFrom(args);
   const initial = await hashSource(sourcePath, deps.limits);
   const sourceSha256 = exactExpectedSource(args, initial.sha256);
   const expectedProtocolVersion = args['expected-provider-protocol'] ?? '1';
+  const readerSchemaVersion = requestedReaderSchemaVersion(args);
+  const propertyExpansionLimits = args['property-expansion-limits'] ?? {};
   const canonicalRequest = buildCanonicalRequest({
     limits: deps.limits,
     protocolVersion: expectedProtocolVersion,
     conversionSettings: args['conversion-settings'] ?? {},
+    readerSchemaVersion,
+    propertyExpansionLimits,
   });
   const identity = {
     sourceSha256, canonicalRequest, providerFingerprint: readiness.provider.fingerprint,
@@ -265,10 +350,25 @@ async function convertAndCache(args, deps, config, readiness) {
         expectedProtocolVersion,
         expectedDestination: args['expected-provider-destination'],
         authorityStorePath: args['authority-store-path'],
+        conversionAttemptId: attemptId,
+        readerSchemaVersion,
+        propertyExpansionLimits,
       });
       emit(deps, 'normalize');
       const geometry = normalizeRevitGlb(conversion.outputs.geometry.bytes, { limits: deps.limits });
-      const metadata = normalizeRevitMetadata(conversion.outputs.metadata.bytes, geometry.parts, { limits: deps.limits });
+      const expectedMetadataSchema = readerSchemaVersion === READER_SCHEMA_VERSION_V2 ? '2' : '1';
+      const metadata = normalizeRevitMetadata(conversion.outputs.metadata.bytes, geometry.parts, {
+        limits: deps.limits,
+        propertyExpansionLimits: canonicalRequest.propertyExpansionLimits,
+        expectedSchemaVersion: expectedMetadataSchema,
+      });
+      // The normalizer refuses a mismatch up front, so this is defence in depth
+      // against that guard being weakened. Assert on the coverage the normalizer
+      // already returned rather than re-parsing propertiesBytes, which can reach
+      // maxCanonicalPropertyBytes (128 MiB default and hard cap) on every read.
+      if ((metadata.coverage.metadataSchemaVersion ?? '1') !== expectedMetadataSchema) {
+        readerError('reference-metadata-invalid', 'normalize-metadata', 'Provider metadata does not match the requested reader schema version.');
+      }
       const finalSource = await hashSource(sourcePath, deps.limits);
       if (finalSource.sha256 !== sourceSha256) readerError('reference-source-changed', 'source', 'The RVT source changed during conversion.');
       const artifacts = {
@@ -296,7 +396,9 @@ async function convertAndCache(args, deps, config, readiness) {
 }
 
 function canonicalGeometryBounds(bytes, limits) {
-  const document = parseGlb(bytes, { limits }).json;
+  // `bytes` is this reader's own canonical artifact, so it is measured against the canonical
+  // ceilings rather than the input ones it was never bound by.
+  const document = parseGlb(bytes, { limits: canonicalArtifactLimits(limits) }).json;
   const positionAccessors = new Set();
   for (const mesh of document.meshes ?? []) {
     for (const primitive of mesh?.primitives ?? []) {
@@ -329,6 +431,8 @@ async function findCachedConversion(args, deps, config, signing, expectedProvide
     limits: deps.limits,
     protocolVersion: args['expected-provider-protocol'] ?? '1',
     conversionSettings: args['conversion-settings'] ?? {},
+    readerSchemaVersion: requestedReaderSchemaVersion(args),
+    propertyExpansionLimits: args['property-expansion-limits'] ?? {},
   });
   if (!deps.hostAcquireLock || !deps.hostReleaseLock) readerError('reference-provider-host-unavailable', 'cache', 'The managed cache fence is unavailable.');
   const withMaintenanceFence = async (work) => {
@@ -362,7 +466,7 @@ function summary(result, limits) {
   const coverage = result.cache.manifest.coverage;
   const bounds = canonicalGeometryBounds(result.cache.artifacts['geometry.glb'], limits);
   return {
-    schemaVersion: 'model-reference-reader/v1', cache: result.hit ? 'hit' : 'miss',
+    schemaVersion: result.cache.manifest.identity.canonicalRequest.readerSchemaVersion, cache: result.hit ? 'hit' : 'miss',
     sourceSha256: result.cache.manifest.identity.sourceSha256,
     canonicalRequestSha256: result.cache.manifest.canonicalRequestSha256,
     providerFingerprint: result.cache.manifest.identity.providerFingerprint,
@@ -395,8 +499,54 @@ async function publishRunArtifacts(result, directory) {
 
 export async function runModelCommand(command, args = {}, deps = {}) {
   if (!args || typeof args !== 'object' || Array.isArray(args)) readerError('reference-request-invalid', 'request', 'Command input must be a JSON object.');
-  if (!['preflight', 'probe', 'read-model', 'read-snapshot'].includes(command)) {
+  if (!['preflight', 'fingerprint-source', 'probe', 'read-model', 'read-snapshot'].includes(command)) {
     readerError('reference-command-invalid', 'request', 'Unknown model-reader command.');
+  }
+  if (packageMode(args) || command === 'fingerprint-source') {
+    if (!['preflight', 'fingerprint-source'].includes(command)) {
+      readerError('reference-provider-package-operation-unavailable', 'request', 'This AWARE version does not support that enrolled provider package operation.');
+    }
+    const { limits, captureLimits } = validatePackageRequest(command, args, deps);
+    const config = packageSigningConfiguration(args, deps);
+    const signing = await signingReadiness(args, config);
+    const ownedHost = deps.hostRun ? null : await createModelHostClient(config.environment.AWARE_MODEL_READER_HOST, { environment: config.environment });
+    try {
+      if (command === 'preflight') {
+        const result = await preflightEnrolledProviderPackage({
+          home: config.home, formatId: args['provider-format'], capabilityId: args['provider-capability'],
+          manifestSha256: args['provider-package-sha256'], limits, environment: config.environment,
+          hostRun: deps.hostRun ?? ownedHost?.run, signal: deps.signal,
+        });
+        return {
+          ...result,
+          signerFingerprintSha256: signing.signerFingerprintSha256,
+          signerPublicKeyBase64: signing.signingKey.publicKeyBytes.toString('base64'),
+        };
+      }
+      const runRoot = await newRunRoot(config.privateRoot);
+      try {
+        const fingerprint = await (deps.fingerprintSource ?? fingerprintSource)({
+          home: config.home, formatId: args['provider-format'], capabilityId: args['provider-capability'],
+          manifestSha256: args['provider-package-sha256'], limits, environment: config.environment,
+          hostRun: deps.hostRun ?? ownedHost?.run, signal: deps.signal,
+          authorization: args['provider-authorization'], namespaces: args['source-namespaces'],
+          stagingRoot: path.join(runRoot, 'source'), degradedMode: args['degraded-mode'] ?? 'refuse',
+          captureLimits,
+        });
+        return {
+          schemaVersion: 'model-reference-reader-source-fingerprint/v1',
+          effectiveSource: fingerprint.effectiveSource,
+          effectiveSourceSha256: fingerprint.sha256,
+          dependencyPolicySha256: fingerprint.dependencyPolicySha256,
+          providerIdentity: fingerprint.providerIdentity,
+          signerFingerprintSha256: signing.signerFingerprintSha256,
+        };
+      } finally {
+        await removeRunRoot(runRoot);
+      }
+    } finally {
+      if (ownedHost) await ownedHost.close();
+    }
   }
   // Validate the complete request-only contract before resolving credentials, starting a host,
   // or probing a provider. Malformed calls retain stable errors on an unconfigured machine.
@@ -413,7 +563,7 @@ export async function runModelCommand(command, args = {}, deps = {}) {
     if (command === 'preflight') {
       const readiness = await providerReadiness(args, executionDeps, config, pin, signing);
       return {
-        schemaVersion: 'model-reference-reader/v1', ready: true, execution: readiness.provider.describe.execution,
+        schemaVersion: requestedReaderSchemaVersion(args), ready: true, execution: readiness.provider.describe.execution,
         provider: readiness.provider.describe, providerFingerprint: readiness.provider.fingerprint,
         providerFingerprintSha256: readiness.providerFingerprintSha256,
         signerFingerprintSha256: readiness.signerFingerprintSha256,
@@ -422,10 +572,18 @@ export async function runModelCommand(command, args = {}, deps = {}) {
       };
     }
     let result = await findCachedConversion(args, executionDeps, config, signing, pin);
+    let attemptId = null;
     let readiness = signing;
     if (!result) {
+      // A durable attempt identity binds a managed conversion request to its receipt. Validate it
+      // after the authenticated warm-cache path, but before any provider I/O for a cold request.
+      attemptId = conversionAttemptId(args, args['expected-provider-protocol'] ?? '1');
       readiness = await providerReadiness(args, executionDeps, config, pin, signing);
-      result = await convertAndCache(args, executionDeps, config, readiness);
+      result = await convertAndCache(args, executionDeps, config, readiness, attemptId);
+    } else if (command === 'read-snapshot' && (args['expected-provider-protocol'] ?? '1') === '2') {
+      // A warm cache avoids provider I/O, but the package is freshly signed for this delivery.
+      // Bind that signature to the caller's current attempt so an older package cannot be replayed.
+      attemptId = conversionAttemptId(args, '2');
     }
     const out = summary(result, limits);
     if (command === 'probe') return out;
@@ -433,7 +591,9 @@ export async function runModelCommand(command, args = {}, deps = {}) {
     if (command === 'read-snapshot') {
       return {
         ...out,
-        ...await buildAndPublishSnapshot(result, readiness.signingKey, config.artifactDirectory, { limits }),
+        ...await buildAndPublishSnapshot(result, readiness.signingKey, config.artifactDirectory, {
+          limits, conversionAttemptId: attemptId,
+        }),
       };
     }
     return { ...out, artifacts: await publishRunArtifacts(result, config.artifactDirectory) };

@@ -89,6 +89,12 @@ aware
 │   ├── repair --installed              refresh all installed stale managed sidecars
 │   └── uninstall <id>                  remove one managed sidecar
 │
+├── provider ...                        manage signed model-provider packages
+│   ├── trust-publisher <key> --publisher-id <id>  enroll an Ed25519 trust root
+│   ├── enroll <absolute-directory>     verify a signed closed package
+│   ├── select <format-id> <manifest-sha256>       select one enrolled package
+│   └── list [--format <format-id>]     list public package/capability metadata
+│
 └── doctor                              health check — config, creds, hosts, registry
 ```
 
@@ -171,6 +177,14 @@ A version key that is not strict SemVer ranks **below** every key that is: it ca
 
 A version after `@` is an **exact key**, not a range. Ranges are an app-pinning syntax; see [Agent Spec](./agent-spec.md) § Installation.
 
+### Registry release identity
+
+Every installable registry version entry includes `manifest-agent` and `manifest-version`. These bind the registry key to the identity the extracted `manifest.yaml` must declare; the registry version and manifest version are deliberately separate values. Install and update require both bindings under every trust mode, validate the agent id with one portable filename-safe grammar, validate the manifest version as strict SemVer, and compare both values after extraction before any installed directory is created, removed, or replaced. `manifest-agent` must be the registry key, the key plus a non-empty dotted suffix, or an explicit `alias-of` target; this preserves versioned implementations without permitting an unrelated payload identity. A rename alias additionally requires `alias-of` to equal `manifest-agent`.
+
+Errors before download name the registry key/version and the missing or invalid binding. A payload mismatch names the release, the bound value, and the value the payload actually declared. Bundle install and `agent update --all` inherit the same checks because they call the single-agent install/update paths.
+
+An official bundle is `verified` only when its fresh registry binding, installation receipt, and installed manifest identity agree and its expected, recorded, and installed digests match. Digest equality alone cannot verify a payload under the wrong release name.
+
 ## Filesystem layout (what `aware` reads / writes)
 
 ```
@@ -197,6 +211,10 @@ A version after `@` is an **exact key**, not a range. Ranges are an app-pinning 
 │                                                    # progress channel. Removed with the run's logs
 ├── cache/
 │   └── registry-index.json             # last-known agent registry index
+├── providers/
+│   ├── publishers/<key-sha256>.json    # locally trusted Ed25519 public keys
+│   ├── packages/<manifest-sha256>.json # verified immutable enrollment records
+│   └── selections/<format-id>.json     # active package plus bounded history
 └── plugins/                            # generated for each agentic CLI host
     ├── claude-code/aware-aeco/
     ├── codex/aware-aeco/
@@ -225,6 +243,8 @@ All commands that produce structured output use the same JSON envelope when `--j
 ```
 
 Without `--json`, output is human-readable text. The envelope shape is stable across versions; `data` payload may evolve per command (semver applies).
+
+An agent may return a bounded structured failure with `code`, `phase`, `retryable`, `message`, and `diagnosticId`. A `node-error` JSONL event preserves that object under `structured`. It may also carry an optional `details` string map for non-secret correlation values needed to reconcile an ambiguous side effect (for example `attemptId` and `rfcMessageId`). The field is omitted when absent, so pre-details payloads remain deserializable; it is correlation metadata, not a general debug-payload or secret channel.
 
 ## Exit codes
 
@@ -292,6 +312,8 @@ skills (31):
 ### `aware app run <app>`
 
 The heaviest command. It first verifies the installed source against the engineer-approved `<app>.lock`: the lock must be present, parseable, and carry the SHA-256 of the exact raw source bytes. Compilation and runtime each parse and hash one source snapshot, so the compiled plan, approved bytes, and executed app cannot drift between reads. An unsafe `app:` id is rejected before it can become a lock path. A missing (`E_APP_LOCK_MISSING`), unreadable/malformed (`E_APP_LOCK_INVALID`), or mismatched (`E_APP_LOCK_STALE`) lock exits 3 before trace creation or node dispatch and tells the operator to run `aware app compile` again. Before real dispatch, every reachable agent must also match the exact compiled `agent-pins` version (`E_APP_LOCK_AGENT_PIN_MISMATCH`); simulation remains independent of ambient agent versions because it contacts no binary. Source approval applies independently to the top-level app and every app-backed agent it invokes, including `--dry-run` and `--simulate`.
+
+Agent runtime compatibility is checked at both compile and run. An installed manifest with `status: requires-runtime` is dispatchable only when the running CLI is at least its strict-SemVer `minimum-cli-version`; otherwise validation refuses it before trace creation with `E_APP_AGENT_UNAVAILABLE` and names both versions. The same contract gates local and registry install, so an incompatible agent is never promoted into `~/.aware/agents/` by a current CLI.
 
 Verified bundles additionally carry `agent-bundle-pins`, so changed bytes require recompilation. `app run --require-verified-agents` resolves the reachable set before any network or trace creation, snapshots every dispatchable executable bundle once, and refuses with `E_APP_AGENT_BUNDLE_UNVERIFIED` unless its official registry receipt still matches its tree. Frozen subtrees, inline-only graphs, and `--simulate` dispatch nothing and require no registry fetch; dry-run remains gated because read nodes still execute. For the single app-backed hop v0 permits, the approved backing app is traversed and its dispatchable leaf agents are assessed—the synthesized wrapper is routing metadata, not executable provenance. A second app-backed hop is refused. The snapshot is recorded as `verified-at-start` in run-start provenance.
 
@@ -543,6 +565,26 @@ catalogue and refreshes each with the currently running CLI's release asset. It
 does not accept a consumer-supplied tool list, install absent sidecars, or alter
 legacy PATH copies. A caller queries `sidecar list --json` again after repair to
 observe the authoritative result.
+
+### `aware provider trust-publisher|enroll|select|list`
+
+These operator commands establish a local, format-neutral trust boundary for model-provider
+packages. Package manifests use `aware.model-provider-package/v1`, closed canonical JSON and an
+Ed25519 signature over the manifest SHA-256. They declare opaque package, format and capability IDs,
+protocol version, source-capture/request/result/artifact/cache contract IDs, one relative launcher,
+an AWARE compatibility range and a complete file allowlist with byte counts and SHA-256 receipts.
+
+Enrollment requires an absolute regular directory, a previously trusted publisher and an exact
+inventory containing only the manifest, signature and receipted files. Links, reparse points, extra
+files, unsafe relative paths, duplicate capabilities/files, incompatible versions, signature failure
+and receipt drift are refused. Selection binds an opaque format to an exact enrolled manifest digest
+and increments a local generation while retaining at most eight prior digests.
+
+`list --json` exposes package ID/version, format ID, manifest/publisher digests, declared capabilities
+and selection status. It never exposes the package root, launcher, file allowlist or provider output.
+The `model-reference-reader` protocol-v3 preflight consumes the same selected record and brackets its
+`describe` invocation with complete package re-verification. Protocol-v3 source discovery and
+conversion are outside this first contract slice.
 
 ## Out of scope for the CLI itself
 

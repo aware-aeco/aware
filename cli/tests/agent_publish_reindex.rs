@@ -78,7 +78,12 @@ fn write_index_multiversion(root: &Path, id: &str, versions: &[(&str, &str, &str
         .map(|(ver, tarball, subdir)| {
             (
                 (*ver).to_string(),
-                serde_json::json!({ "tarball": *tarball, "subdir": *subdir }),
+                serde_json::json!({
+                    "tarball": *tarball,
+                    "subdir": *subdir,
+                    "manifest-agent": id,
+                    "manifest-version": *ver
+                }),
             )
         })
         .collect();
@@ -103,7 +108,12 @@ fn write_index(root: &Path, entries: &[(&str, &str, &str)]) {
             (
                 (*id).to_string(),
                 serde_json::json!({
-                    "versions": { *ver: { "tarball": SUBSTRATE_TARBALL, "subdir": *subdir } }
+                    "versions": { *ver: {
+                        "tarball": SUBSTRATE_TARBALL,
+                        "subdir": *subdir,
+                        "manifest-agent": *id,
+                        "manifest-version": *ver
+                    } }
                 }),
             )
         })
@@ -151,6 +161,21 @@ fn init_and_stage_checkout(root: &Path) {
         .status()
         .unwrap();
     assert!(status.success());
+}
+
+fn git(root: &Path, args: &[&str]) -> String {
+    let output = std::process::Command::new("git")
+        .current_dir(root)
+        .args(args)
+        .output()
+        .unwrap();
+    assert!(
+        output.status.success(),
+        "git {} failed: {}",
+        args.join(" "),
+        String::from_utf8_lossy(&output.stderr)
+    );
+    String::from_utf8(output.stdout).unwrap().trim().to_string()
 }
 
 /// Guard the two "there is no checkout here" tests before they spawn a command
@@ -214,10 +239,52 @@ fn publish_stages_the_agent_under_a_repo_relative_subdir() {
     // would produce an index that installs nothing.
     assert_eq!(entry["subdir"], "aware-main/20-agents/aeco/demo");
     assert_eq!(entry["tarball"], SUBSTRATE_TARBALL);
+    assert_eq!(entry["manifest-agent"], "demo");
+    assert_eq!(entry["manifest-version"], "1.0.0");
     // Publishing is a merge, not a rewrite: the agent already in the index survives.
     assert_eq!(
         doc["agents"]["keeper"]["versions"]["0.1.0"]["subdir"],
         "aware-main/20-agents/aeco/keeper"
+    );
+}
+
+#[test]
+fn publish_refuses_a_legacy_release_without_bindings_and_leaves_the_index_unchanged() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let agent_dir = root.join("20-agents/aeco/demo");
+    write_agent(&agent_dir, "demo", "1.0.0", "A demo agent.");
+    write_index(
+        root,
+        &[("keeper", "0.1.0", "aware-main/20-agents/aeco/keeper")],
+    );
+    let mut index = index_of(root);
+    index["agents"]["keeper"]["versions"]["0.1.0"]
+        .as_object_mut()
+        .unwrap()
+        .remove("manifest-agent");
+    std::fs::write(
+        root.join("registry-index.json"),
+        serde_json::to_string_pretty(&index).unwrap(),
+    )
+    .unwrap();
+    init_and_stage_checkout(root);
+    let before = std::fs::read(root.join("registry-index.json")).unwrap();
+
+    aware()
+        .env("AWARE_HOME", home_in(root))
+        .args(["agent", "publish"])
+        .arg(&agent_dir)
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("keeper@0.1.0"))
+        .stderr(predicate::str::contains("missing manifest-agent"));
+
+    assert_eq!(
+        std::fs::read(root.join("registry-index.json")).unwrap(),
+        before,
+        "a refused publish must not rewrite the malformed source index"
     );
 }
 
@@ -284,6 +351,40 @@ fn publish_refuses_a_failing_agent_and_leaves_the_index_byte_identical() {
         std::fs::read(root.join("registry-index.json")).unwrap(),
         before,
         "a rejected agent must not reach the index — not even its `updated-at`"
+    );
+}
+
+#[test]
+fn publish_refuses_runtime_gated_agents_until_it_can_pin_a_commit_archive() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let agent_dir = root.join("20-agents/aeco/future");
+    write_agent(&agent_dir, "future", "1.0.0", "A runtime-gated agent.");
+    let manifest_path = agent_dir.join("manifest.yaml");
+    let manifest = std::fs::read_to_string(&manifest_path).unwrap().replace(
+        "stateful: false\n",
+        "stateful: false\nstatus: requires-runtime\nminimum-cli-version: 0.136.0\n",
+    );
+    std::fs::write(&manifest_path, manifest).unwrap();
+    write_index(
+        root,
+        &[("keeper", "0.1.0", "aware-main/20-agents/aeco/keeper")],
+    );
+    let before = std::fs::read(root.join("registry-index.json")).unwrap();
+
+    aware()
+        .env("AWARE_HOME", home_in(root))
+        .args(["agent", "publish"])
+        .arg(&agent_dir)
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("immutable full-commit archive"));
+
+    assert_eq!(
+        std::fs::read(root.join("registry-index.json")).unwrap(),
+        before,
+        "a runtime-gated release must not be staged against mutable main"
     );
 }
 
@@ -758,6 +859,57 @@ fn reindex_accepts_two_versions_at_distinct_subdirs() {
 }
 
 #[test]
+fn reindex_refuses_missing_or_mismatched_manifest_bindings() {
+    for (case, edit, expected) in [
+        (
+            "missing",
+            (|entry: &mut serde_json::Value| {
+                entry.as_object_mut().unwrap().remove("manifest-version");
+            }) as fn(&mut serde_json::Value),
+            "missing manifest-version",
+        ),
+        (
+            "mismatched",
+            |entry: &mut serde_json::Value| {
+                entry["manifest-agent"] = "different-agent".into();
+            },
+            "declares unrelated manifest-agent \"different-agent\"",
+        ),
+    ] {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        write_agent(
+            &root.join("20-agents/aeco/demo"),
+            "demo",
+            "1.0.0",
+            "A demo agent.",
+        );
+        write_index(root, &[("demo", "1.0.0", "aware-main/20-agents/aeco/demo")]);
+        let mut index = index_of(root);
+        edit(&mut index["agents"]["demo"]["versions"]["1.0.0"]);
+        std::fs::write(
+            root.join("registry-index.json"),
+            serde_json::to_string_pretty(&index).unwrap(),
+        )
+        .unwrap();
+
+        aware()
+            .current_dir(root)
+            .env("AWARE_HOME", home_in(root))
+            .args(["agent", "reindex"])
+            .assert()
+            .failure()
+            .code(3)
+            .stderr(predicate::str::contains("demo@1.0.0"))
+            .stderr(predicate::str::contains(expected));
+        assert!(
+            !root.join("registry-catalog.json").exists(),
+            "{case}: a refused reindex must not publish a catalog"
+        );
+    }
+}
+
+#[test]
 fn reindex_outside_a_checkout_names_the_remedy_and_writes_nothing() {
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path();
@@ -775,4 +927,182 @@ fn reindex_outside_a_checkout_names_the_remedy_and_writes_nothing() {
         .stderr(predicate::str::contains("no registry-index.json found"));
 
     assert!(!bare.join("registry-catalog.json").exists());
+}
+
+#[test]
+fn reindex_rejects_a_pr_commit_that_squash_merge_will_discard() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    git(root, &["init", "--quiet"]);
+    git(root, &["config", "user.email", "test@example.invalid"]);
+    git(root, &["config", "user.name", "AWARE test"]);
+    write_agent(
+        &root.join("20-agents/aeco/demo"),
+        "demo",
+        "1.0.0",
+        "The merged baseline.",
+    );
+    std::fs::write(
+        root.join("registry-index.json"),
+        r#"{"version":"1.0","updated-at":"2026-01-01T00:00:00Z","agents":{},"bundles":{}}"#,
+    )
+    .unwrap();
+    git(root, &["add", "--all"]);
+    git(root, &["commit", "--quiet", "-m", "baseline"]);
+    let trunk = git(root, &["branch", "--show-current"]);
+
+    git(root, &["checkout", "--quiet", "-b", "pr-head"]);
+    std::fs::write(root.join("pr-only.txt"), "will be squashed\n").unwrap();
+    git(root, &["add", "pr-only.txt"]);
+    git(root, &["commit", "--quiet", "-m", "pr implementation"]);
+    let discarded = git(root, &["rev-parse", "HEAD"]);
+
+    let tarball = format!("https://github.com/aware-aeco/aware/archive/{discarded}.tar.gz");
+    let subdir = format!("aware-{discarded}/20-agents/aeco/demo");
+    write_index_multiversion(
+        root,
+        "demo",
+        &[("2.0.0", tarball.as_str(), subdir.as_str())],
+    );
+
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .env("AWARE_REGISTRY_BASE_REF", &trunk)
+        .args(["agent", "reindex"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("is not an ancestor of base ref"))
+        .stderr(predicate::str::contains("pin the squash commit"));
+
+    assert!(!root.join("registry-catalog.json").exists());
+}
+
+#[test]
+fn reindex_uses_the_pushed_branch_when_actions_checkout_has_no_origin_head() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    git(root, &["init", "--quiet", "-b", "main"]);
+    git(root, &["config", "user.email", "test@example.invalid"]);
+    git(root, &["config", "user.name", "AWARE test"]);
+    write_agent(
+        &root.join("20-agents/aeco/demo"),
+        "demo",
+        "1.0.0",
+        "The merged release.",
+    );
+    git(root, &["add", "--all"]);
+    git(root, &["commit", "--quiet", "-m", "release"]);
+    let release = git(root, &["rev-parse", "HEAD"]);
+    git(root, &["update-ref", "refs/remotes/origin/main", &release]);
+
+    let tarball = format!("https://github.com/aware-aeco/aware/archive/{release}.tar.gz");
+    let subdir = format!("aware-{release}/20-agents/aeco/demo");
+    write_index_multiversion(
+        root,
+        "demo",
+        &[("1.0.0", tarball.as_str(), subdir.as_str())],
+    );
+
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .env_remove("AWARE_REGISTRY_BASE_REF")
+        .env_remove("GITHUB_BASE_REF")
+        .env("GITHUB_REF_TYPE", "branch")
+        .env("GITHUB_REF_NAME", "main")
+        .args(["agent", "reindex"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("1 agents"));
+
+    assert!(root.join("registry-catalog.json").is_file());
+}
+
+#[test]
+fn reindex_hashes_pinned_archives_independently_of_autocrlf() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    git(root, &["init", "--quiet", "-b", "main"]);
+    git(root, &["config", "user.email", "test@example.invalid"]);
+    git(root, &["config", "user.name", "AWARE test"]);
+    git(root, &["config", "core.autocrlf", "true"]);
+    let agent_dir = root.join("20-agents/aeco/demo");
+    write_agent(
+        &agent_dir,
+        "demo",
+        "1.0.0",
+        "The canonical line-ending release.",
+    );
+    std::fs::write(
+        root.join("registry-index.json"),
+        r#"{"version":"1.0","updated-at":"2026-01-01T00:00:00Z","agents":{},"bundles":{}}"#,
+    )
+    .unwrap();
+    git(root, &["add", "--all"]);
+    git(root, &["commit", "--quiet", "-m", "release"]);
+    let release = git(root, &["rev-parse", "HEAD"]);
+
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .args(["agent", "publish"])
+        .arg(&agent_dir)
+        .assert()
+        .success();
+    let mut index = index_of(root);
+    let published = &mut index["agents"]["demo"]["versions"]["1.0.0"];
+    published["tarball"] = serde_json::Value::String(format!(
+        "https://github.com/aware-aeco/aware/archive/{release}.tar.gz"
+    ));
+    published["subdir"] = serde_json::Value::String(format!("aware-{release}/20-agents/aeco/demo"));
+    std::fs::write(
+        root.join("registry-index.json"),
+        serde_json::to_string_pretty(&index).unwrap(),
+    )
+    .unwrap();
+
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .env("AWARE_REGISTRY_BASE_REF", "main")
+        .args(["agent", "reindex"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("1 agents"));
+}
+
+#[test]
+fn registry_ci_checkout_keeps_history_for_immutable_release_reindex() {
+    let repo_root = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .expect("cli crate lives below the repository root");
+    let workflow: serde_yaml::Value = serde_yaml::from_str(
+        &std::fs::read_to_string(repo_root.join(".github/workflows/ci.yml"))
+            .expect("read CI workflow"),
+    )
+    .expect("CI workflow is valid YAML");
+    let checkout = &workflow["jobs"]["gates"]["steps"][0];
+
+    assert_eq!(checkout["uses"].as_str(), Some("actions/checkout@v6"));
+    assert_eq!(
+        checkout["with"]["fetch-depth"].as_u64(),
+        Some(0),
+        "the Rust test job needs full Git history so reindex can archive an older \
+         immutable implementation commit from a release-only PR"
+    );
+
+    let steps = workflow["jobs"]["gates"]["steps"]
+        .as_sequence()
+        .expect("gates steps must be a sequence");
+    let reindex = steps
+        .iter()
+        .find(|step| step["name"].as_str() == Some("registry catalog is current"))
+        .expect("CI must validate the checked-out registry, not only temporary test fixtures");
+    assert_eq!(reindex["working-directory"].as_str(), Some("cli"));
+    assert_eq!(
+        reindex["run"].as_str(),
+        Some("cargo run --locked -- agent reindex --check")
+    );
 }

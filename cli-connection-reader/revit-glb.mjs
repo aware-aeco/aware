@@ -1,4 +1,4 @@
-import { canonicalJsonBytes, lowerableLimits, ModelReaderError, parseJsonStrict } from './model-contract.mjs';
+import { canonicalJsonBytes, canonicalNumberViolation, lowerableLimits, ModelReaderError, parseJsonStrict } from './model-contract.mjs';
 
 const GLB_MAGIC = 0x46546c67;
 const JSON_CHUNK = 0x4e4f534a;
@@ -9,11 +9,23 @@ const MAX_GLTF_BUFFERS = 16;
 const DATA_BUFFER_PREFIX = 'data:application/octet-stream;base64,';
 // The v1 normalizer deliberately uses object graphs for canonical sorting. Reserve a checked,
 // conservative worst-case working-set estimate before creating those graphs so a GLB that fits the
-// wire limits cannot exhaust V8's heap. The committed profile specifies a 1 GiB resident hard gate.
-const MAX_CANONICAL_WORK_BYTES = 1024 * 1024 * 1024;
+// wire limits cannot exhaust V8's heap. The budget itself is limits.maxCanonicalWorkBytes, declared
+// alongside every other resource bound in MODEL_LIMITS rather than fixed here, so that it is visible
+// to callers, overridable, and cannot silently contradict the declared count limits (#517).
 const CANONICAL_VERTEX_WORK_BYTES = 1024;
 const CANONICAL_INDEX_WORK_BYTES = 128;
 const CANONICAL_PRIMITIVE_WORK_BYTES = 4096;
+
+export function checkedCanonicalWorkBytes(current, count, bytesPerItem, maxCanonicalWorkBytes) {
+  if (!Number.isSafeInteger(current) || current < 0 || !Number.isSafeInteger(count) || count < 0
+    || !Number.isSafeInteger(bytesPerItem) || bytesPerItem <= 0
+    || !Number.isSafeInteger(maxCanonicalWorkBytes) || maxCanonicalWorkBytes <= 0
+    || current > maxCanonicalWorkBytes
+    || count > Math.floor((maxCanonicalWorkBytes - current) / bytesPerItem)) {
+    invalid(`canonical geometry working set exceeds its ${maxCanonicalWorkBytes}-byte limit`, 'reference-output-too-large');
+  }
+  return current + count * bytesPerItem;
+}
 
 function invalid(message, code = 'reference-geometry-invalid') {
   throw new ModelReaderError(code, 'normalize-geometry', false, message);
@@ -138,9 +150,17 @@ function transformNormal(matrix, normal) {
   return canonicalVector(framed.map((value) => value / length));
 }
 
+// A coordinate is canonical only if the artifacts can carry it, and float32's range is wider than that:
+// `Math.fround(1e20)` is finite but an unsafe integer, so it cleared the old finiteness-only gate, flowed
+// into the accessor bounds and the entity bounds, and threw out of `canonicalJsonBytes` as a bare
+// `TypeError` — masked as `reference-internal-error` — once the artifacts were already being serialized
+// (#519). The float32 overflow check stays ahead of the general one because it names the actual cause of
+// a non-finite rounding; the second catches what float32 range alone cannot see.
 function canonicalFloat(value) {
   const rounded = Math.fround(value);
   if (!Number.isFinite(rounded)) invalid('transformed coordinate overflows float32');
+  const violation = canonicalNumberViolation(rounded);
+  if (violation) invalid(`transformed coordinate ${violation}`);
   return Object.is(rounded, -0) ? 0 : rounded;
 }
 const canonicalVector = (values) => values.map(canonicalFloat);
@@ -438,10 +458,7 @@ export function normalizeRevitGlb(input, options = {}) {
   let totalPrimitives = 0;
   let canonicalWorkBytes = 0;
   const reserveWork = (count, bytesPerItem) => {
-    if (!Number.isSafeInteger(count) || count < 0 || count > Math.floor((MAX_CANONICAL_WORK_BYTES - canonicalWorkBytes) / bytesPerItem)) {
-      invalid('canonical geometry working set exceeds its 1 GiB limit', 'reference-output-too-large');
-    }
-    canonicalWorkBytes += count * bytesPerItem;
+    canonicalWorkBytes = checkedCanonicalWorkBytes(canonicalWorkBytes, count, bytesPerItem, limits.maxCanonicalWorkBytes);
   };
   for (const { node, world, mesh } of nodes) {
     const determinant = determinant3(world);
@@ -606,10 +623,14 @@ function buildCanonicalGlb(parts, limits) {
     invalid('canonical GLB exceeds its structural count limits', 'reference-output-too-large');
   }
   const jsonBytes = canonicalJsonBytes(document);
-  if (jsonBytes.length > limits.maxGlbJsonBytes) {
+  // Budget the chunk as it is WRITTEN. The chunk is 4-byte aligned and its declared length is the
+  // padded one, which is what parseGlb measures on the way back in, so comparing the unpadded length
+  // admits a document whose emitted chunk is up to three bytes over its own ceiling — and the
+  // canonical re-read in canonicalGeometryBounds() then refuses it, after publication.
+  const jsonLength = align4(jsonBytes.length);
+  if (jsonLength > limits.maxCanonicalGlbJsonBytes) {
     invalid('canonical GLB JSON exceeds its byte limit', 'reference-output-too-large');
   }
-  const jsonLength = align4(jsonBytes.length);
   const binaryLength = align4(binary.length);
   const output = Buffer.alloc(12 + 8 + jsonLength + 8 + binaryLength);
   output.writeUInt32LE(GLB_MAGIC, 0); output.writeUInt32LE(2, 4); output.writeUInt32LE(output.length, 8);

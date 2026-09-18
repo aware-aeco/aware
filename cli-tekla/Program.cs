@@ -253,6 +253,14 @@ internal static class Program
             case "send-status":
                 return SendStatus(parsed);
             case "list-instances":
+                // Drain stdin first. `list-instances` takes no input, but the AWARE runtime writes
+                // every node's rendered params to the bridge's stdin unconditionally and then closes
+                // it — and this is the one dispatched verb that never reads. A node whose `config:`
+                // renders larger than the pipe buffer would block that writer until we exit, which
+                // surfaces to the user as a broken-pipe node failure on a verb that printed a
+                // correct receipt and exited 0. Reading and discarding costs nothing and makes the
+                // manifest's "takes no input" true of the wire, not just the schema (#520).
+                if (parsed.JsonStdin) { Console.In.ReadToEnd(); }
                 return ListInstances();
             case "launch":
                 return Launch(parsed);

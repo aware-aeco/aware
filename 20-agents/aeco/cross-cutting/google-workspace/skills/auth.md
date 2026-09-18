@@ -1,138 +1,117 @@
 ---
 name: google-workspace-auth
-description: This skill should be used when authoring AWARE compositions or generated code that calls Google Workspace APIs — Drive, Sheets, Calendar, Gmail. Encodes that authentication is handled by the AWARE runtime (the agent reads `~/.aware/credentials/google-workspace.json` provisioned by `aware connect google-workspace`), the bearer-header injection pattern, scope-driven errors (403 means missing Cloud Console scope, not a token problem), and the standard error-code table (401/403/404/429/500/503). Apply when wiring Drive/Sheets/Calendar/Gmail calls, troubleshooting auth or scope errors, or composing AWARE apps that touch user Google data.
+description: Use when connecting or troubleshooting the Gmail-only Google Workspace runtime. Covers the exact OAuth scopes, authenticated sender identity, pinned endpoints, legacy-grant migration, refresh behavior, and non-retryable send outcomes.
 ---
 
-# Google Workspace — auth and HTTP patterns
+# Google Workspace Gmail authentication
 
-**Authentication is handled by the AWARE runtime, not by composition code. The agent reads `~/.aware/credentials/google-workspace.json`. Users provision it once with `aware connect google-workspace`.**
+Authentication is handled by the AWARE runtime, not by composition code. Run
+`aware connect google-workspace --oauth` once; do not put access tokens, refresh tokens,
+client secrets, or hand-built `Authorization` headers in an app.
 
-## What `aware connect google-workspace` does
+Agent version `2.0.0` exposes only `gmail.send`. Drive, Sheets, Calendar, Gmail
+search, Chat, Forms, Slides, Meet, and Tasks remain planned and their scopes are
+not requested.
 
-1. Opens Google's OAuth flow in the user's default browser (auth-code + PKCE; loopback redirect).
-2. The user signs in with their Google account and grants the requested scopes.
-3. Google redirects back to `localhost:<port>/callback`; the aware CLI listens briefly.
-4. The CLI exchanges the code for an access + refresh token, encrypts both, writes to `~/.aware/credentials/google-workspace.json`.
+## Exact grant
 
-The granted scopes are the agent's declared scopes (Drive, Sheets, etc.). To add scopes later, run `aware connect google-workspace --scopes drive,sheets,calendar`.
+New Google connections request only:
 
-## API base URLs
-
-| Surface | Base |
-|---|---|
-| Drive | `https://www.googleapis.com/drive/v3/` |
-| Sheets | `https://sheets.googleapis.com/v4/spreadsheets/` |
-| Calendar | `https://www.googleapis.com/calendar/v3/` |
-| Gmail | `https://gmail.googleapis.com/gmail/v1/` |
-
-## Critical conventions
-
-- Use `client` as provided by the agent runtime — it carries `Authorization: Bearer …`. Do not construct a separate authenticated client.
-- Calls outside `googleapis.com` are blocked by the agent's network policy. The agent will reject them before they hit the wire.
-- For .NET implementations: apply `.ConfigureAwait(false)` on every `await` and prefer `System.Text.Json` over `Newtonsoft.Json`. For non-.NET runtimes, use the language's idiomatic patterns.
-
-## Refresh
-
-Access tokens expire (typically 1 hour). The agent runtime handles refresh **transparently**:
-
-- Before each request, check if the access token has < 5 minutes left.
-- If yes, exchange the refresh token for a new access token.
-- Update the encrypted credential file.
-- Proceed with the original request.
-
-Refresh tokens are long-lived (no fixed expiry for Workspace accounts, but revocable). If the refresh token has been revoked or the granted scopes were removed, the agent emits `error.auth-expired` and the user runs `aware connect google-workspace --refresh`.
-
-## What never goes in composition code
-
-- **No tokens in app files.** The composition format is plain text; secrets do not belong there.
-- **No hardcoded `Bearer ******`** in command headers. The agent injects this at invocation time.
-- **No token logging.** Agent logs redact the `Authorization` header automatically.
-
-## JSON parsing pattern
-
-Google's collection shapes vary by API (Drive uses `files`, Sheets uses `values`, Gmail uses `messages`). The pattern is the same: a top-level object with a named array.
-
-```csharp
-// For .NET callers (System.Text.Json):
-var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-using var doc = JsonDocument.Parse(json);
-
-// Drive — files array
-var files = doc.RootElement.GetProperty("files");
-foreach (var file in files.EnumerateArray())
-{
-    var id   = file.GetProperty("id").GetString();
-    var name = file.GetProperty("name").GetString();
-}
-
-// Single resource
-var kind = doc.RootElement.GetProperty("kind").GetString();
-
-// Safe property access
-if (item.TryGetProperty("description", out var descEl))
-{
-    var desc = descEl.GetString();
-}
+```text
+openid
+https://www.googleapis.com/auth/userinfo.email
+https://www.googleapis.com/auth/gmail.send
 ```
 
-Python equivalent:
+`gmail.send` is a Google sensitive scope. It is not a restricted scope.
+`gmail.readonly` is restricted and is no longer part of the default grant.
 
-```python
-data = response.json()
-for file in data["files"]:
-    file_id = file["id"]
-    name    = file["name"]
-    desc    = file.get("description")
+Older credentials may still carry Drive, Gmail read, Calendar, Sheets, Slides,
+Forms, Tasks, or other broad scopes. The Gmail send runtime fails closed before
+dispatch when it detects one of these legacy broad grants. Migrate deliberately:
+
+First remove the `scopes` entry from the active AWARE home's
+`oauth/google-workspace.yaml`, or narrow it to exactly the three scopes above.
+The active home is the `AWARE_HOME` override when set and `~/.aware` otherwise.
+Profiles replace the bundled scope set, so reconnecting without this step would
+request the same broad grant again.
+
+```text
+aware disconnect google-workspace
+aware connect google-workspace --oauth
 ```
 
-TypeScript:
+The published agent uses the default `google-workspace` credential. Do not use
+an `--as` alias for this agent: app dispatch does not expose alias selection. If
+you previously connected a broad grant under an alias, remove that stored
+credential explicitly before connecting the default account:
 
-```ts
-const data = await response.json();
-for (const file of data.files ?? []) {
-  const { id, name, description } = file;
-}
+```text
+aware disconnect google-workspace --as=<old-alias>
 ```
 
-## Error handling
+Do not reconnect the alias for this published agent.
 
-```csharp
-var response = await client.GetAsync(url).ConfigureAwait(false);
+Do not bypass this check merely because the old token also includes
+`gmail.send`; the extra scopes increase the impact of credential theft.
 
-if (response.IsSuccessStatusCode is false)
-{
-    var errorBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-    return Error("google.api-error", $"Google returned {(int)response.StatusCode}: {errorBody}");
-}
-```
+## Identity and sender
 
-## Common error codes
+The runtime resolves the stable OIDC `sub` and mailbox email for the
+authenticated account before constructing the message. A hash of `sub`
+namespaces the durable outbox, so disconnecting and reconnecting the same Google
+account does not reset replay protection. The resolved mailbox is the RFC 5322
+`From` identity. Apps cannot supply an arbitrary sender.
 
-| HTTP | Meaning | Action |
-|------|---------|--------|
-| 401 | Token expired or invalid | Refresh handled automatically by the agent. If user-visible, the refresh token was revoked — user runs `aware connect google-workspace --refresh`. |
-| 403 | **Either** insufficient scope **or** the API not enabled in the project | Two different fixes. Scope issue → `aware connect google-workspace --scopes <missing>`. API-disabled → enable it in the Google Cloud Console project backing the OAuth credentials. |
-| 404 | Resource not found | Verify file / spreadsheet / message IDs. Drive trashed items return 404 by default unless `trashed=true` query is set. |
-| 429 | Rate-limited (quota exhausted) | Agent retries with `Retry-After` header value. Surfaces after 3 attempts. |
-| 500 | Internal server error | Agent retries with exponential backoff. Surfaces after 3 attempts. |
-| 503 | Service unavailable | Same as 500. |
+## Pinned network surface
 
-### Specific to Google: the dual 403
+The agent declares only these HTTPS hosts:
 
-Google's 403 is ambiguous in a way Microsoft's isn't. A 403 can mean:
+- `oauth2.googleapis.com` for token refresh
+- `openidconnect.googleapis.com` for authenticated OIDC identity
+- `gmail.googleapis.com` for Gmail submission
 
-1. **The user didn't grant a scope** the call needs (most common; fix: re-consent with the right scopes).
-2. **The Cloud Console project hasn't enabled the underlying API** (e.g., Sheets API disabled even though Drive works).
+The runtime pins the identity call and Gmail's exact
+`/gmail/v1/users/me/messages/send` path in code, rejects redirects, and does not
+accept a production endpoint override. The manifest's REST base describes the
+transport; it is not an authorization to send a bearer token to an arbitrary
+URL.
 
-The agent surfaces both as `error.permission-denied` but logs the response body — checking the body reveals which case.
+## Refresh and pre-dispatch checks
 
-## Security notes (substrate-level)
+Access-token refresh must succeed before a send. A refresh error, blank token,
+missing required scope, legacy broad grant, or unresolved account identity is a
+pre-dispatch authentication error: the runtime does not construct or transmit
+the message. Run the disconnect/connect sequence above if consent is stale or
+over-broad.
 
-- Outbound calls are restricted to `googleapis.com` and `accounts.google.com`. Other domains are blocked.
-- Tokens are encrypted at rest via OS keychain (Mac) / DPAPI (Windows) / libsecret (Linux).
-- Logs redact `Authorization` and `Set-Cookie` automatically.
-- The credential file is never copied between machines — `aware connect` provisions per-host.
+## Send errors are not generic REST errors
 
-## Source
+`gmail.send` does not use generic REST retries or response shaping:
 
-Google APIs documented at `developers.google.com/<api>`. OAuth flow per `developers.google.com/identity/protocols/oauth2`. Refresh-token semantics verified against `developers.google.com/identity/protocols/oauth2/native-app#offline`.
+- Validation, auth, and identity failures occur before dispatch.
+- A definitive provider 4xx rejection is `gmail.send.rejected`.
+- HTTP 408/5xx, redirects, transport/read/parse failures, cancellation or
+  timeout after handoff, and a success body without a usable Gmail ID are
+  `gmail.send.outcome-unknown` with `retryable: false`.
+- An accepted response is cached against the caller's `attempt-id`; replaying
+  identical inputs returns that result without another provider call.
+
+An unknown outcome may already have sent mail. Reconcile using the bounded
+`attemptId` and `rfcMessageId` error details. Never retry by inventing a fresh
+attempt ID.
+
+## Secret hygiene
+
+- Never log bearer tokens, recipients, Bcc addresses, subjects, or bodies.
+- AWARE redacts authorization material. Direct `gmail.send` dry-run previews also
+  redact `to`, `cc`, `bcc`, `subject`, and `body`.
+- App-level run configuration and arbitrary intermediate values can be persisted in
+  traces. Do not pass mail content through exposed-app configuration or unrelated
+  nodes unless that trace is protected as sensitive data.
+- Only bounded status and correlation metadata belong in errors and QA records.
+- Credentials remain per-host and are protected by the operating-system
+  credential store.
+
+See [`../commands/gmail.send.md`](../commands/gmail.send.md) for the command and
+attempt contract.

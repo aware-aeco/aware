@@ -730,25 +730,17 @@ fn output_field_set(output_schema: Option<&serde_yaml::Value>) -> Option<BTreeSe
 /// parsed (the first two segments); function calls / operators terminate it,
 /// so complex expressions like `{{ join(a, b) }}` yield nothing — keeping the
 /// check to direct references, which is the high-signal case.
+///
+/// The scan itself is [`crate::runtime::template::references`], the same
+/// grammar `resolve_value` reads at run time — this check is only worth
+/// anything if it validates the references the renderer will actually resolve.
 fn collect_refs(value: &serde_yaml::Value, out: &mut Vec<(String, String)>) {
     match value {
         serde_yaml::Value::String(s) => {
-            let mut rest = s.as_str();
-            while let Some(start) = rest.find("{{") {
-                let after = &rest[start + 2..];
-                let Some(end) = after.find("}}") else { break };
-                let inner = after[..end].trim();
-                let path_end = inner
-                    .find(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-' || c == '.'))
-                    .unwrap_or(inner.len());
-                let parts: Vec<&str> = inner[..path_end]
-                    .split('.')
-                    .filter(|p| !p.is_empty())
-                    .collect();
-                if parts.len() >= 2 {
-                    out.push((parts[0].to_string(), parts[1].to_string()));
+            for path in crate::runtime::template::references(s) {
+                if path.len() >= 2 {
+                    out.push((path[0].to_string(), path[1].to_string()));
                 }
-                rest = &after[end + 2..];
             }
         }
         serde_yaml::Value::Mapping(m) => {
@@ -773,18 +765,10 @@ fn collect_refs(value: &serde_yaml::Value, out: &mut Vec<(String, String)>) {
 fn collect_ref_heads(value: &serde_yaml::Value, out: &mut Vec<String>) {
     match value {
         serde_yaml::Value::String(s) => {
-            let mut rest = s.as_str();
-            while let Some(start) = rest.find("{{") {
-                let after = &rest[start + 2..];
-                let Some(end) = after.find("}}") else { break };
-                let inner = after[..end].trim();
-                let path_end = inner
-                    .find(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-' || c == '.'))
-                    .unwrap_or(inner.len());
-                if let Some(head) = inner[..path_end].split('.').find(|p| !p.is_empty()) {
-                    out.push(head.to_string());
+            for path in crate::runtime::template::references(s) {
+                if let Some(head) = path.first() {
+                    out.push((*head).to_string());
                 }
-                rest = &after[end + 2..];
             }
         }
         serde_yaml::Value::Mapping(m) => {
@@ -955,19 +939,20 @@ pub fn write_lockfile(
 }
 
 /// Find the source app file (`.flo` / `.app` / `.flow` / `.aware`) at a path.
-/// If `path` is a file, returned directly. If a directory, searched for the
-/// first matching extension.
+/// If `path` is a file, returned directly. If a directory, the same tiered
+/// selector every other verb uses — `<dir-name>.flo`, then `.flo`, `.app`,
+/// `.flow`, `.aware` in that order, each resolved over a sorted candidate list.
+///
+/// Extension-agnostic where an installed app is not: `.flow`/`.aware` compile
+/// and inspect from a loose source directory, but only `.flo`/`.app` install.
+/// The two lists must nevertheless AGREE on any directory both can read, or
+/// `app compile <dir>` locks a different manifest than `app run` executes —
+/// which is #502 again, moved into the compile path.
 pub fn find_app_source(path: &Path) -> Option<std::path::PathBuf> {
     if path.is_file() {
         return Some(path.to_path_buf());
     }
-    std::fs::read_dir(path).ok()?.flatten().find_map(|entry| {
-        let p = entry.path();
-        match p.extension().and_then(|e| e.to_str()) {
-            Some("flo") | Some("app") | Some("flow") | Some("aware") => Some(p),
-            _ => None,
-        }
-    })
+    crate::manifest::loader::select_manifest(path, &crate::manifest::loader::APP_SOURCE_EXTENSIONS)
 }
 
 /// End-to-end: load + compile + write. Called by `aware app compile`.
@@ -1130,12 +1115,52 @@ mod tests {
     }
 
     #[test]
-    fn find_app_source_picks_first_matching_extension() {
+    fn find_app_source_ignores_files_that_are_not_app_sources() {
         let tmp = tempfile::tempdir().unwrap();
         std::fs::write(tmp.path().join("README.md"), "x").unwrap();
         std::fs::write(tmp.path().join("my.app"), "x").unwrap();
         let found = find_app_source(tmp.path()).unwrap();
         assert_eq!(found.extension().unwrap(), "app");
+    }
+
+    /// `compile`/`inspect` read a wider extension set than the installed-app
+    /// verbs, and a flat lexical pick over that wider set answered `a.app` where
+    /// `find_app_manifest` answered `b.flo` — `app compile <dir>` would then lock
+    /// a different manifest than `app run` executes, which is #502 relocated into
+    /// the compile path. The two selectors are asserted to AGREE, not merely to
+    /// be individually deterministic.
+    #[test]
+    fn find_app_source_agrees_with_installed_app_discovery() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("bundle");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("a.app"), "x").unwrap();
+        std::fs::write(dir.join("b.flo"), "x").unwrap();
+
+        let source = find_app_source(&dir).unwrap();
+        assert_eq!(source.file_name().unwrap(), "b.flo");
+        assert_eq!(
+            source,
+            crate::manifest::loader::find_app_manifest(&dir).unwrap()
+        );
+    }
+
+    /// The `<dir-name>` tier reaches the wider set too: `compile` must not fall
+    /// back to lexical order and pick `aaa.flo` over the directory's own file.
+    #[test]
+    fn find_app_source_honors_the_directory_named_source() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("bundle");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("aaa.flo"), "x").unwrap();
+        std::fs::write(dir.join("bundle.flo"), "x").unwrap();
+
+        let source = find_app_source(&dir).unwrap();
+        assert_eq!(source.file_name().unwrap(), "bundle.flo");
+        assert_eq!(
+            source,
+            crate::manifest::loader::find_app_manifest(&dir).unwrap()
+        );
     }
 
     #[test]

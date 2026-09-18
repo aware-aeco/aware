@@ -26,9 +26,14 @@ pub fn install_agent_from_registry(
     // `id` is used as the key directly, exactly as before — resolving it through
     // `resolve_key` here would quietly make `install <suffixed-id>` succeed where it has
     // always errored, which is a behaviour change that does not belong in a bug fix.
+    let index_entry = index
+        .agents
+        .get(id)
+        .ok_or_else(|| AwareError::NotFound(format!("agent {id} not in registry")))?;
     let (resolved, entry) = index.resolve(id, version_pin)?;
+    crate::registry::index::validate_release_contract(id, resolved, index_entry, entry)
+        .map_err(AwareError::Validation)?;
     let resolved = resolved.clone();
-    let expected = entry.bundle_digest.clone();
     let (_scratch, subdir) = stage_agent_from_registry(id, version_pin, paths, index)?;
     install_staged_registry(
         &subdir,
@@ -36,7 +41,8 @@ pub fn install_agent_from_registry(
         index.trust,
         id,
         &resolved,
-        expected.as_deref(),
+        index_entry,
+        entry,
     )
 }
 
@@ -46,9 +52,20 @@ fn install_staged_registry(
     trust: RegistryTrust,
     key: &str,
     registry_version: &str,
-    expected_digest: Option<&str>,
+    index_entry: &crate::registry::IndexEntry,
+    release: &crate::registry::VersionEntry,
 ) -> Result<String, AwareError> {
+    let expected_digest = release.bundle_digest.as_deref();
     let agent = load_agent(&src.join("manifest.yaml"))?;
+    crate::registry::index::validate_release_payload(
+        key,
+        registry_version,
+        index_entry,
+        release,
+        &agent.agent,
+        &agent.version,
+    )
+    .map_err(AwareError::Validation)?;
     let issues = validate_agent_on_disk(&agent, src);
     if let Some(summary) = error_summary(&issues) {
         return Err(AwareError::Validation(summary));
@@ -168,7 +185,7 @@ fn stage_agent_from_registry(
     // with the cached index, so fall back to it rather than failing the install (#270 / Codex
     // review). A cold cache (nothing to fall back to) propagates the error.
     let extract_root = scratch.path().join("extract");
-    let subdir = match extract_agent_subdir(
+    let mut subdir = match extract_agent_subdir(
         &tarball_path,
         &extract_root,
         &entry.subdir,
@@ -195,13 +212,85 @@ fn stage_agent_from_registry(
         Err(err) => return Err(err),
     };
 
+    // A successful extraction and matching manifest identity are not enough to make a shared
+    // cache entry trustworthy. Validate the complete agent bundle, including every referenced
+    // file and (for the official registry) its signed tree digest, before committing it;
+    // otherwise an identity-preserving but modified archive poisons every retry for this snapshot.
+    match validate_staged_release_for_cache(&subdir, key, resolved_version, index, entry) {
+        Ok(()) => {}
+        Err(_) if downloaded && cache_file.is_file() => {
+            eprintln!(
+                "warning: refreshed archive fails release validation for {key}@{resolved_version}; using prior cache"
+            );
+            downloaded = false;
+            std::fs::copy(&cache_file, &tarball_path)?;
+            let retry_root = scratch.path().join("extract-identity-cached");
+            subdir = extract_agent_subdir(
+                &tarball_path,
+                &retry_root,
+                &entry.subdir,
+                key,
+                resolved_version,
+            )?;
+            validate_staged_release_for_cache(&subdir, key, resolved_version, index, entry)?;
+        }
+        Err(error) => return Err(error),
+    }
+
     // Commit a freshly-downloaded archive to the shared cache ONLY now that it has served this
-    // agent (re-arming the TTL). Caching post-extraction means a download that was corrupt or
-    // raced past our index can never poison the snapshot's cache file.
+    // agent and passed its full release validation (re-arming the TTL). Caching post-validation
+    // means a corrupt, raced, incomplete, or digest-mismatched download cannot poison the cache.
     if downloaded {
         let _ = std::fs::copy(&tarball_path, &cache_file);
     }
     Ok((scratch, subdir))
+}
+
+fn validate_staged_release_for_cache(
+    subdir: &Path,
+    key: &str,
+    resolved_version: &str,
+    index: &Index,
+    entry: &crate::registry::VersionEntry,
+) -> Result<(), AwareError> {
+    let index_entry = index
+        .agents
+        .get(key)
+        .ok_or_else(|| AwareError::NotFound(format!("agent {key} not in registry")))?;
+    let manifest_path = subdir.join("manifest.yaml");
+    if !manifest_path.is_file() {
+        return Err(AwareError::Validation(format!(
+            "registry entry {key}@{resolved_version}: no manifest.yaml in payload"
+        )));
+    }
+    let agent = load_agent(&manifest_path)?;
+    crate::registry::index::validate_release_payload(
+        key,
+        resolved_version,
+        index_entry,
+        entry,
+        &agent.agent,
+        &agent.version,
+    )
+    .map_err(AwareError::Validation)?;
+    let issues = validate_agent_on_disk(&agent, subdir);
+    if let Some(summary) = error_summary(&issues) {
+        return Err(AwareError::Validation(summary));
+    }
+    if index.trust == RegistryTrust::FreshOfficial {
+        let expected = entry.bundle_digest.as_deref().ok_or_else(|| {
+            AwareError::Validation(format!(
+                "official registry entry {key}@{resolved_version} has no bundle-digest"
+            ))
+        })?;
+        let digest = crate::install::integrity::tree_digest(subdir)?;
+        if digest != expected {
+            return Err(AwareError::Validation(format!(
+                "official registry bundle digest mismatch for {key}@{resolved_version}: expected {expected}, got {digest}"
+            )));
+        }
+    }
+    Ok(())
 }
 
 /// Cache filename for a registry tarball, keyed by its URL + the index's snapshot
@@ -302,6 +391,17 @@ pub fn update_agent_from_registry(
     //    atomic resolve-fetch-validate-then-swap already exists here (#174).
     let (resolved_registry_version, release) = index.resolve(&key, version_pin)?;
     let resolved_registry_version = resolved_registry_version.clone();
+    let index_entry = index
+        .agents
+        .get(&key)
+        .ok_or_else(|| AwareError::NotFound(format!("agent {key} not in registry")))?;
+    crate::registry::index::validate_release_contract(
+        &key,
+        &resolved_registry_version,
+        index_entry,
+        release,
+    )
+    .map_err(AwareError::Validation)?;
     let expected_digest = release.bundle_digest.clone();
     let (_scratch, subdir) = stage_agent_from_registry(&key, version_pin, paths, index)?;
 
@@ -313,6 +413,15 @@ pub fn update_agent_from_registry(
         )));
     }
     let agent = load_agent(&manifest_path)?;
+    crate::registry::index::validate_release_payload(
+        &key,
+        &resolved_registry_version,
+        index_entry,
+        release,
+        &agent.agent,
+        &agent.version,
+    )
+    .map_err(AwareError::Validation)?;
     let issues = validate_agent_on_disk(&agent, &subdir);
     if let Some(summary) = error_summary(&issues) {
         return Err(AwareError::Validation(summary));
@@ -441,12 +550,10 @@ fn check_update_is_not_destructive(
     // Fenced like every other agent-id join (#365) — and REFUSING, not abstaining.
     //
     // The direction matters at the second call site. `new_name` comes from the PAYLOAD's
-    // manifest, and `validate_agent` checks an agent id only for emptiness — it has no
-    // segment check, unlike `validate_app`. So a path-shaped `new_name` would reach
-    // `agents_dir.join(&new_name)` and `remove_dir_all`, and this is the first and only
-    // place that can stop it. "No path-shaped id names an installed agent" is precisely
-    // the argument for refusing rather than waving it through; returning Ok here would
-    // have made the guard abstain on the one input it is least able to trust.
+    // manifest. `validate_agent` now applies the same portable id grammar before this
+    // helper is reached, and this guard remains an independent fence at the destructive
+    // path join. Returning Ok for an unsafe id would make the guard abstain on the one
+    // input it is least able to trust.
     if !crate::manifest::loader::is_safe_segment(id) {
         return Err(AwareError::NotFound(format!("agent {id} is not installed")));
     }
@@ -564,6 +671,14 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.path().join("aware"),
         };
+        let entry = IndexEntry::default();
+        let release = VersionEntry {
+            tarball: "unused".into(),
+            subdir: "unused".into(),
+            manifest_agent: Some("probe".into()),
+            manifest_version: Some("1.0.0".into()),
+            bundle_digest: None,
+        };
 
         let error = install_staged_registry(
             &src,
@@ -571,13 +686,62 @@ mod tests {
             RegistryTrust::Unverified,
             "probe",
             "1.0.0",
-            None,
+            &entry,
+            &release,
         )
         .unwrap_err();
 
         assert!(error.to_string().contains("absent.md"), "{error}");
         assert!(!paths.agents_dir().join("probe").exists());
         assert!(!paths.cache_dir().join("install-staging/probe").exists());
+    }
+
+    #[test]
+    fn registry_install_rejects_agent_requiring_a_newer_cli_before_promotion() {
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("extracted/future-agent");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(
+            src.join("manifest.yaml"),
+            "agent: future-agent\nversion: 1.0.0\ndescription: future\nstateful: false\n\
+             status: requires-runtime\nminimum-cli-version: 999.0.0\nlicense: MIT\n\
+             transport: { builtin: {} }\ncommands: { run: { lifecycle: single, description: x } }\n",
+        )
+        .unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let entry = IndexEntry::default();
+        let release = VersionEntry {
+            tarball: "unused".into(),
+            subdir: "unused".into(),
+            manifest_agent: Some("future-agent".into()),
+            manifest_version: Some("1.0.0".into()),
+            bundle_digest: None,
+        };
+
+        let error = install_staged_registry(
+            &src,
+            &paths,
+            RegistryTrust::Unverified,
+            "future-agent",
+            "1.0.0",
+            &entry,
+            &release,
+        )
+        .unwrap_err();
+
+        assert!(
+            error.to_string().contains("E_AGENT_RUNTIME_TOO_OLD"),
+            "{error}"
+        );
+        assert!(!paths.agents_dir().join("future-agent").exists());
+        assert!(
+            !paths
+                .cache_dir()
+                .join("install-staging/future-agent")
+                .exists()
+        );
     }
 
     #[test]
@@ -701,6 +865,8 @@ mod tests {
                 bundle_digest: None,
                 tarball: format!("file://{}", tarball.display()),
                 subdir: "aware-main/20-agents/tekla".into(),
+                manifest_agent: Some("tekla".into()),
+                manifest_version: Some("0.1.5".into()),
             },
         );
         let mut agents = BTreeMap::new();
@@ -726,6 +892,78 @@ mod tests {
         let installed = install_agent_from_registry("tekla", None, &paths, &index).unwrap();
         assert_eq!(installed, "tekla");
         assert!(aware.join("agents/tekla/manifest.yaml").is_file());
+    }
+
+    fn tekla_index(
+        tarball: &Path,
+        manifest_agent: Option<&str>,
+        manifest_version: Option<&str>,
+    ) -> Index {
+        let mut release = serde_json::json!({
+            "tarball": format!("file://{}", tarball.display()),
+            "subdir": "aware-main/20-agents/tekla"
+        });
+        if let Some(agent) = manifest_agent {
+            release["manifest-agent"] = agent.into();
+        }
+        if let Some(version) = manifest_version {
+            release["manifest-version"] = version.into();
+        }
+        let raw = serde_json::to_vec(&serde_json::json!({
+            "version": "1.0",
+            "updated-at": "x",
+            "agents": { "tekla": { "versions": { "2025.0.1": release } } },
+            "bundles": {}
+        }))
+        .unwrap();
+        Index::parse(raw.as_slice()).unwrap()
+    }
+
+    #[test]
+    fn install_refuses_a_payload_with_the_wrong_declared_manifest_version() {
+        let tmp = tempfile::tempdir().unwrap();
+        let tarball = tmp.path().join("tekla.tar.gz");
+        make_test_tarball(&tarball);
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let index = tekla_index(&tarball, Some("tekla"), Some("999.0.0"));
+
+        let error =
+            install_agent_from_registry("tekla", Some("2025.0.1"), &paths, &index).unwrap_err();
+
+        let message = error.to_string();
+        assert!(message.contains("tekla@2025.0.1"), "{message}");
+        assert!(message.contains("999.0.0"), "{message}");
+        assert!(message.contains("payload declares"), "{message}");
+        assert!(!paths.agents_dir().join("tekla").exists());
+    }
+
+    #[test]
+    fn update_refuses_a_payload_with_the_wrong_declared_manifest_agent_before_replacement() {
+        let tmp = tempfile::tempdir().unwrap();
+        let tarball = tmp.path().join("tekla.tar.gz");
+        make_test_tarball(&tarball);
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let initial = tekla_index(&tarball, Some("tekla"), Some("0.1.5"));
+        install_agent_from_registry("tekla", None, &paths, &initial).unwrap();
+        let sentinel = paths.agents_dir().join("tekla/keep-me.txt");
+        std::fs::write(&sentinel, "original install").unwrap();
+
+        let mismatched = tekla_index(&tarball, Some("different-agent"), Some("0.1.5"));
+        let error =
+            update_agent_from_registry("tekla", None, false, &paths, &mismatched).unwrap_err();
+
+        let message = error.to_string();
+        assert!(message.contains("tekla@2025.0.1"), "{message}");
+        assert!(message.contains("different-agent"), "{message}");
+        assert!(message.contains("unrelated manifest-agent"), "{message}");
+        assert_eq!(
+            std::fs::read_to_string(sentinel).unwrap(),
+            "original install"
+        );
     }
 
     /// Build a `main`-archive-shaped tarball holding the named agents, each a copy of
@@ -804,6 +1042,8 @@ mod tests {
                     bundle_digest: None,
                     tarball: url.clone(),
                     subdir: subdir.to_string(),
+                    manifest_agent: subdir.rsplit('/').next().map(str::to_owned),
+                    manifest_version: Some("0.1.5".to_string()),
                 },
             );
             versions
@@ -883,6 +1123,10 @@ mod tests {
     /// carries a caller-chosen marker, so a test can tell one archive *state* from
     /// another while the registry index stays byte-identical (same fingerprint).
     fn write_alpha_archive(path: &Path, display_marker: &str) {
+        write_alpha_archive_as(path, "alpha", display_marker);
+    }
+
+    fn write_alpha_archive_as(path: &Path, manifest_agent: &str, display_marker: &str) {
         let enc = flate2::write::GzEncoder::new(
             std::fs::File::create(path).unwrap(),
             flate2::Compression::default(),
@@ -912,7 +1156,7 @@ mod tests {
             .lines()
             .map(|l| {
                 if l.starts_with("agent:") {
-                    "agent: alpha".to_string()
+                    format!("agent: {manifest_agent}")
                 } else if l.starts_with("display-name:") {
                     format!("display-name: {display_marker}")
                 } else {
@@ -951,6 +1195,8 @@ mod tests {
                 bundle_digest: None,
                 tarball: url.to_string(),
                 subdir: "aware-main/20-agents/alpha".to_string(),
+                manifest_agent: Some("alpha".into()),
+                manifest_version: Some("0.1.5".into()),
             },
         );
         let mut agents = BTreeMap::new();
@@ -968,6 +1214,216 @@ mod tests {
             agents,
             bundles: BTreeMap::new(),
         }
+    }
+
+    #[test]
+    fn identity_mismatch_is_rejected_before_the_download_enters_shared_cache() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        write_alpha_archive_as(&archive, "other-agent", "MISMATCH");
+
+        let mut index = single_alpha_index(&url);
+        let release = index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap();
+        release.manifest_agent = Some("alpha".into());
+        release.manifest_version = Some("0.1.5".into());
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        let error = stage_agent_from_registry("alpha", None, &paths, &index).unwrap_err();
+        assert!(
+            error.to_string().contains("expects manifest-agent alpha"),
+            "{error}"
+        );
+        assert!(
+            !cache_file.exists(),
+            "a semantically mismatched payload must never enter the shared cache"
+        );
+    }
+
+    #[test]
+    fn official_digest_mismatch_is_rejected_before_the_download_enters_shared_cache() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        write_alpha_archive(&archive, "IDENTITY-MATCHES-BUT-CONTENT-DOES-NOT");
+
+        let mut index = single_alpha_index(&url);
+        index.trust = RegistryTrust::FreshOfficial;
+        index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap()
+            .bundle_digest = Some(format!("sha256:{}", "a".repeat(64)));
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        let error = stage_agent_from_registry("alpha", None, &paths, &index).unwrap_err();
+        assert!(
+            error.to_string().contains("bundle digest mismatch"),
+            "{error}"
+        );
+        assert!(
+            !cache_file.exists(),
+            "an identity-matching payload with the wrong official digest must never enter the shared cache"
+        );
+    }
+
+    #[test]
+    fn official_digest_mismatch_in_fresh_shared_cache_is_rejected() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        write_alpha_archive(&archive, "SOURCE-WOULD-BE-VALIDATED-IF-FETCHED");
+
+        let mut index = single_alpha_index(&url);
+        index.trust = RegistryTrust::FreshOfficial;
+        index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap()
+            .bundle_digest = Some(format!("sha256:{}", "a".repeat(64)));
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        std::fs::create_dir_all(cache_file.parent().unwrap()).unwrap();
+        write_alpha_archive(&cache_file, "IDENTITY-MATCHES-BUT-CACHE-WAS-MODIFIED");
+
+        let error = stage_agent_from_registry("alpha", None, &paths, &index).unwrap_err();
+        assert!(
+            error.to_string().contains("bundle digest mismatch"),
+            "a fresh shared cache must receive the same full release validation as a download: {error}"
+        );
+    }
+
+    #[test]
+    fn invalid_fallback_cache_is_rejected_after_refresh_extraction_fails() {
+        use crate::registry::fetch::CACHE_TTL;
+        use std::time::{Duration, SystemTime};
+
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+
+        let mut index = single_alpha_index(&url);
+        index.trust = RegistryTrust::FreshOfficial;
+        index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap()
+            .bundle_digest = Some(format!("sha256:{}", "a".repeat(64)));
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        std::fs::create_dir_all(cache_file.parent().unwrap()).unwrap();
+        write_alpha_archive(&cache_file, "IDENTITY-MATCHES-BUT-FALLBACK-WAS-MODIFIED");
+        let stale = SystemTime::now()
+            .checked_sub(CACHE_TTL + Duration::from_secs(60))
+            .unwrap();
+        std::fs::File::options()
+            .write(true)
+            .open(&cache_file)
+            .unwrap()
+            .set_modified(stale)
+            .unwrap();
+
+        std::fs::write(&archive, b"not a gzip stream").unwrap();
+        let error = stage_agent_from_registry("alpha", None, &paths, &index).unwrap_err();
+        assert!(
+            error.to_string().contains("bundle digest mismatch"),
+            "a cache selected after a failed refresh must still receive full release validation: {error}"
+        );
+    }
+
+    #[test]
+    fn identity_mismatch_refresh_falls_back_to_the_known_good_cache() {
+        use crate::registry::fetch::CACHE_TTL;
+        use std::time::{Duration, SystemTime};
+
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        let mut index = single_alpha_index(&url);
+        let release = index
+            .agents
+            .get_mut("alpha")
+            .unwrap()
+            .versions
+            .get_mut("1")
+            .unwrap();
+        release.manifest_agent = Some("alpha".into());
+        release.manifest_version = Some("0.1.5".into());
+
+        write_alpha_archive(&archive, "KNOWN-GOOD");
+        let (_first_guard, first) =
+            stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+        assert!(
+            std::fs::read_to_string(first.join("manifest.yaml"))
+                .unwrap()
+                .contains("KNOWN-GOOD")
+        );
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+        let stale = SystemTime::now()
+            .checked_sub(CACHE_TTL + Duration::from_secs(60))
+            .unwrap();
+        std::fs::File::options()
+            .write(true)
+            .open(&cache_file)
+            .unwrap()
+            .set_modified(stale)
+            .unwrap();
+        write_alpha_archive_as(&archive, "other-agent", "MISMATCH");
+
+        let (_second_guard, second) =
+            stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+        assert!(
+            std::fs::read_to_string(second.join("manifest.yaml"))
+                .unwrap()
+                .contains("KNOWN-GOOD"),
+            "a semantically raced refresh must fall back to the release-bound cache"
+        );
     }
 
     #[test]
@@ -1230,6 +1686,8 @@ mod tests {
                         bundle_digest: None,
                         tarball: url.clone(),
                         subdir: format!("aware-main/20-agents/{n}"),
+                        manifest_agent: Some((*n).to_string()),
+                        manifest_version: Some("0.1.5".to_string()),
                     },
                 );
                 agents.insert(

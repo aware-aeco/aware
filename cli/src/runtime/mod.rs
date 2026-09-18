@@ -4,6 +4,7 @@
 //! wiring come in Tasks 10-18.
 
 pub mod context;
+pub mod google_mail;
 pub mod inline;
 pub mod invoker;
 pub mod lifecycle;

@@ -69,6 +69,14 @@ fn to_file_url(p: &std::path::Path) -> String {
 /// Write a `registry-index.json` to `dir` that references the given tarball
 /// via a `file://` URL. Returns the path to the written index file.
 fn write_registry_fixture(dir: &std::path::Path, tarball: &std::path::Path) -> std::path::PathBuf {
+    write_registry_fixture_for(dir, tarball, "tekla")
+}
+
+fn write_registry_fixture_for(
+    dir: &std::path::Path,
+    tarball: &std::path::Path,
+    manifest_agent: &str,
+) -> std::path::PathBuf {
     let idx_path = dir.join("registry-index.json");
     let tarball_url = to_file_url(tarball);
     let body = format!(
@@ -78,7 +86,7 @@ fn write_registry_fixture(dir: &std::path::Path, tarball: &std::path::Path) -> s
     "agents": {{
         "tekla": {{
             "versions": {{
-                "2025.0.1": {{ "tarball": "{tarball_url}", "subdir": "aware-main/20-agents/tekla" }}
+                "2025.0.1": {{ "tarball": "{tarball_url}", "subdir": "aware-main/20-agents/tekla", "manifest-agent": "{manifest_agent}", "manifest-version": "0.1.5" }}
             }}
         }}
     }},
@@ -221,6 +229,46 @@ fn update_all_reinstalls_every_installed_agent() {
     assert!(aware.join("agents/tekla/manifest.yaml").is_file());
 }
 
+#[test]
+fn update_all_refuses_a_manifest_binding_mismatch_without_replacing_the_agent() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let tarball = tmp.path().join("tekla.tar.gz");
+    build_tekla_tarball(&tarball);
+    let idx_path = write_registry_fixture(tmp.path(), &tarball);
+    let idx_url = to_file_url(&idx_path);
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_REGISTRY", &idx_url)
+        .args(["agent", "install", "tekla"])
+        .assert()
+        .success();
+    let sentinel = aware.join("agents/tekla/keep-me.txt");
+    std::fs::write(&sentinel, "original install").unwrap();
+
+    let mut index: serde_json::Value =
+        serde_json::from_str(&std::fs::read_to_string(&idx_path).unwrap()).unwrap();
+    index["agents"]["tekla"]["versions"]["2025.0.1"]["manifest-version"] = "9.9.9".into();
+    std::fs::write(&idx_path, serde_json::to_string_pretty(&index).unwrap()).unwrap();
+    let _ = std::fs::remove_file(aware.join("cache/registry-index.json"));
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_REGISTRY", &idx_url)
+        .args(["agent", "update", "--all"])
+        .assert()
+        .failure()
+        .code(3)
+        .stdout(predicate::str::contains("0 updated"))
+        .stdout(predicate::str::contains("expects manifest-version 9.9.9"));
+    assert_eq!(
+        std::fs::read_to_string(sentinel).unwrap(),
+        "original install"
+    );
+}
+
 // ── #174 regression coverage ──────────────────────────────────────────────────
 
 /// Like `build_tekla_tarball`, but rewrites the manifest's `agent:` id so the
@@ -339,7 +387,7 @@ fn write_registry_index(
     "agents": {{
         "{key}": {{
             "versions": {{
-                "{version}": {{ "tarball": "{tarball_url}", "subdir": "{subdir}" }}
+                "{version}": {{ "tarball": "{tarball_url}", "subdir": "{subdir}", "manifest-agent": "{key}", "manifest-version": "0.1.5" }}
             }}
         }}
     }},
@@ -358,7 +406,7 @@ fn update_resolves_base_name_and_replaces_in_place() {
     let aware = tmp.path().join("aware");
     let tarball = tmp.path().join("tekla.tar.gz");
     build_tekla_tarball_with_agent_id(&tarball, "tekla.0");
-    let idx_path = write_registry_fixture(tmp.path(), &tarball); // registry key = `tekla`
+    let idx_path = write_registry_fixture_for(tmp.path(), &tarball, "tekla.0"); // registry key = `tekla`
     let idx_url = to_file_url(&idx_path);
 
     // Install via base-name `tekla` → lands under the manifest id `tekla.0`.
@@ -606,8 +654,8 @@ fn two_version_registry(dir: &std::path::Path) -> String {
     "agents": {{
         "probe-agent": {{
             "versions": {{
-                "1.2.0": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent" }},
-                "1.3.0": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent" }}
+                "1.2.0": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent", "manifest-agent": "probe-agent", "manifest-version": "1.2.0" }},
+                "1.3.0": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent", "manifest-agent": "probe-agent", "manifest-version": "1.3.0" }}
             }}
         }}
     }},
@@ -953,8 +1001,9 @@ fn renaming_registry(dir: &std::path::Path) -> String {
     "updated-at": "2026-05-16T00:00:00Z",
     "agents": {{
         "probe": {{
+            "alias-of": "probe-agent",
             "versions": {{
-                "2.0.0": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent" }}
+                "2.0.0": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent", "manifest-agent": "probe-agent", "manifest-version": "2.0.0" }}
             }}
         }}
     }},
@@ -1117,8 +1166,8 @@ fn double_digit_registry(dir: &std::path::Path) -> String {
     "agents": {{
         "probe-agent": {{
             "versions": {{
-                "1.9.0":  {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent" }},
-                "1.10.1": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent" }}
+                "1.9.0":  {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent", "manifest-agent": "probe-agent", "manifest-version": "1.9.0" }},
+                "1.10.1": {{ "tarball": "{}", "subdir": "aware-main/20-agents/probe-agent", "manifest-agent": "probe-agent", "manifest-version": "1.10.1" }}
             }}
         }}
     }},

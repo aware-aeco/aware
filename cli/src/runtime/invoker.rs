@@ -285,6 +285,19 @@ fn current_bridge_is_required(agent: &str, binary: &str, command: &str, current:
             || (agent == "model-reference-reader" && binary == "aware-connection-reader"))
 }
 
+// The reader's signed v2 envelope permits up to 16 GiB of conservative canonicalization work. The
+// packaged bridge is a Node SEA, whose unconfigured V8 old-space limit is materially smaller on
+// 64-bit Windows. Set the heap ceiling on the exact reader process so an admitted model reaches the
+// reader's checked `reference-output-too-large` guard instead of dying in V8 first. This is scoped to
+// the audited reader bridge; other Node transports retain their inherited environment.
+const MODEL_READER_NODE_OPTIONS: &str = "--max-old-space-size=16384";
+
+fn node_options_for_reader(agent: &str, binary: &str) -> Option<&'static str> {
+    let binary = binary.strip_suffix(".exe").unwrap_or(binary);
+    (agent == "model-reference-reader" && binary == "aware-connection-reader")
+        .then_some(MODEL_READER_NODE_OPTIONS)
+}
+
 /// How much of a failed bridge's output may appear in the error message.
 ///
 /// Generous enough for any real diagnostic (a bridge's error is one or two sentences) and small
@@ -344,13 +357,17 @@ struct StructuredBridgeError {
     retryable: bool,
     message: String,
     diagnostic_id: String,
+    #[serde(default)]
+    provider_code: Option<String>,
+    #[serde(default)]
+    details: Option<std::collections::BTreeMap<String, String>>,
 }
 
 /// Preserve a bridge's bounded typed error instead of flattening it into an opaque network string.
 /// Only the closed model-reader envelope is accepted; arbitrary bridge stderr keeps the historical
 /// reporting path below.
 fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
-    let parsed: StructuredBridgeError = serde_json::from_str(stderr.trim()).ok()?;
+    let mut parsed: StructuredBridgeError = serde_json::from_str(stderr.trim()).ok()?;
     if !parsed.code.starts_with("reference-")
         || parsed.code.len() > 96
         || parsed.phase.is_empty()
@@ -358,15 +375,39 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
         || parsed.message.is_empty()
         || parsed.message.chars().count() > 240
         || parsed.diagnostic_id.len() > 64
+        || parsed.details.as_ref().is_some_and(|details| {
+            details.len() > 8
+                || details
+                    .iter()
+                    .any(|(key, value)| key.is_empty() || key.len() > 64 || value.len() > 256)
+        })
     {
         return None;
     }
+    // providerCode is optional vendor detail, not part of the generic AWARE error identity. Keep
+    // the typed reference-* envelope when another provider uses an unknown or malformed namespace;
+    // discard only that optional field so it cannot smuggle an unbounded diagnostic through.
+    parsed.provider_code = parsed.provider_code.filter(|code| {
+        let Some(suffix) = code.strip_prefix("xeorvt-") else {
+            return false;
+        };
+        !suffix.is_empty()
+            && suffix.len() <= 90
+            && suffix
+                .chars()
+                .all(|ch| ch.is_ascii_lowercase() || ch.is_ascii_digit() || ch == '-')
+    });
     Some(AwareError::AgentStructured {
-        code: parsed.code,
-        phase: parsed.phase,
+        code: parsed.code.into_boxed_str(),
+        phase: parsed.phase.into_boxed_str(),
         retryable: parsed.retryable,
-        message: parsed.message,
-        diagnostic_id: parsed.diagnostic_id,
+        message: parsed.message.into_boxed_str(),
+        diagnostic_id: parsed.diagnostic_id.into_boxed_str(),
+        provider_code: parsed.provider_code.map(String::into_boxed_str),
+        details: parsed
+            .details
+            .map(crate::error::AgentErrorDetails)
+            .map(Box::new),
     })
 }
 
@@ -591,6 +632,9 @@ impl CliInvoker {
             .stdin(std::process::Stdio::piped())
             .stdout(std::process::Stdio::piped())
             .stderr(std::process::Stdio::piped());
+        if let Some(node_options) = node_options_for_reader(agent, &binary) {
+            process.env("NODE_OPTIONS", node_options);
+        }
         if let Some(dir) = &self.artifact_dir {
             process.env("AWARE_ARTIFACT_DIR", dir);
         }
@@ -611,6 +655,10 @@ impl CliInvoker {
             let host = std::env::current_exe()
                 .map_err(|e| AwareError::Internal(format!("resolve model-reader host: {e}")))?;
             process.env("AWARE_MODEL_READER_HOST", host);
+            // Package compatibility is rechecked by the reader at every launch, including after
+            // an AWARE upgrade. Override any ambient value so a caller cannot claim a different
+            // runtime version to an enrolled provider package.
+            process.env("AWARE_RUNTIME_VERSION", env!("CARGO_PKG_VERSION"));
             if let Some(path) = &self.reader_cancellation.state.cleanup_fence {
                 process.env("AWARE_MODEL_READER_HOST_CLEANUP_FENCE", path);
             }
@@ -1047,6 +1095,12 @@ impl AgentInvoker for RestInvoker {
         command: &str,
         args: Value,
     ) -> Result<Value, AwareError> {
+        // Gmail send is a pinned, at-most-once flow whose identity preflight,
+        // MIME construction and durable outbox cannot be expressed by the
+        // generic one-request REST renderer (#495).
+        if agent == "google-workspace" && command == "gmail.send" {
+            return crate::runtime::google_mail::send(self.agents_dir.clone(), args).await;
+        }
         // Trimble Connect file ops are multi-step, binary, cross-domain flows the
         // single-call REST path can't express, so they're handled out-of-line (#200).
         if agent == "trimble-connect" {
@@ -2857,6 +2911,11 @@ impl DispatchInvoker {
         // the same id onto `agents_dir` again, and a traversal manifest declaring
         // `cli:` or `rest:` never touches the app-transport path (#349, #365).
         let m = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent)?;
+        if let Some((code, reason)) =
+            crate::validate::runtime_requirement_error(&m, crate::validate::CURRENT_CLI_VERSION)
+        {
+            return Err(AwareError::Validation(format!("[{code}] {reason}")));
+        }
         effective_transport(&m, agent)
     }
 
@@ -2967,6 +3026,7 @@ impl DispatchInvoker {
         let original_args = args.clone();
         let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
         Self::align_record_args_after_coercion(&original_args, &args, &mut record_args);
+        record_args = crate::runtime::orchestrator::trace_safe_app_inputs(&app, record_args);
         let backed_by = app.app.clone();
         let run_id = crate::runtime::provenance::run_id_now();
         let log_path = crate::runtime::provenance::log_path_for(
@@ -3003,6 +3063,7 @@ impl DispatchInvoker {
         let original_args = args.clone();
         let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
         Self::align_record_args_after_coercion(&original_args, &args, &mut record_args);
+        record_args = crate::runtime::orchestrator::trace_safe_app_inputs(&app, record_args);
         let backed_by = app.app.clone();
         let run_id = crate::runtime::provenance::run_id_now();
         let log_path = crate::runtime::provenance::log_path_for(
@@ -3476,6 +3537,19 @@ mod cli_invoker_tests {
         ));
     }
 
+    #[test]
+    fn model_reader_always_gets_the_heap_required_by_its_admitted_hard_envelope() {
+        assert_eq!(
+            node_options_for_reader("model-reference-reader", "aware-connection-reader"),
+            Some("--max-old-space-size=16384")
+        );
+        assert_eq!(
+            node_options_for_reader("model-reference-reader", "aware-connection-reader.exe"),
+            Some("--max-old-space-size=16384")
+        );
+        assert_eq!(node_options_for_reader("tekla", "aware-tekla"), None);
+    }
+
     #[tokio::test]
     async fn missing_binary_returns_clear_network_error() {
         let tmp = tempfile::tempdir().unwrap();
@@ -3699,6 +3773,39 @@ mod stream_pump_tests {
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn common_dispatch_funnel_rejects_a_newer_runtime_requirement() {
+        let tmp = tempfile::tempdir().unwrap();
+        let agents_dir = tmp.path().join("agents");
+        let agent_dir = agents_dir.join("future");
+        std::fs::create_dir_all(&agent_dir).unwrap();
+        std::fs::write(
+            agent_dir.join("manifest.yaml"),
+            "agent: future\n\
+             version: 1.0.0\n\
+             description: Needs a future runtime.\n\
+             stateful: false\n\
+             status: requires-runtime\n\
+             minimum-cli-version: 999.0.0\n\
+             license: MIT\n\
+             transport:\n  cli:\n    binary: future\n\
+             commands:\n  ping:\n    lifecycle: single\n    description: Ping.\n",
+        )
+        .unwrap();
+
+        let invoker = DispatchInvoker {
+            agents_dir,
+            artifact_dir: None,
+            app_ctx: None,
+            preview: false,
+            reader_cancellation: ReaderCancellation::default(),
+        };
+        let error = invoker.transport_kind("future").unwrap_err().to_string();
+
+        assert!(error.contains("E_AGENT_RUNTIME_TOO_OLD"), "{error}");
+        assert!(error.contains("999.0.0"), "{error}");
+    }
 
     #[test]
     fn record_safe_args_follow_coercion_without_restoring_redacted_values() {
@@ -5424,7 +5531,7 @@ mod builtin_invoker_tests {
 
     #[test]
     fn model_reader_structured_errors_keep_their_typed_fields() {
-        let stderr = r#"{"code":"reference-provider-pin-mismatch","phase":"preflight","retryable":false,"message":"The local provider does not match the expected fingerprint.","diagnosticId":"123e4567-e89b-12d3-a456-426614174000"}"#;
+        let stderr = r#"{"code":"reference-provider-pin-mismatch","phase":"preflight","retryable":false,"message":"The local provider does not match the expected fingerprint.","diagnosticId":"123e4567-e89b-12d3-a456-426614174000","providerCode":"xeorvt-auth-unavailable","details":{"expectedPin":"sha256:abc"}}"#;
         let error = structured_bridge_error(stderr).expect("closed model-reader envelope");
         match error {
             AwareError::AgentStructured {
@@ -5433,12 +5540,22 @@ mod builtin_invoker_tests {
                 retryable,
                 message,
                 diagnostic_id,
+                provider_code,
+                details,
             } => {
-                assert_eq!(code, "reference-provider-pin-mismatch");
-                assert_eq!(phase, "preflight");
+                assert_eq!(code.as_ref(), "reference-provider-pin-mismatch");
+                assert_eq!(phase.as_ref(), "preflight");
                 assert!(!retryable);
                 assert!(message.contains("expected fingerprint"));
-                assert_eq!(diagnostic_id, "123e4567-e89b-12d3-a456-426614174000");
+                assert_eq!(
+                    diagnostic_id.as_ref(),
+                    "123e4567-e89b-12d3-a456-426614174000"
+                );
+                assert_eq!(provider_code.as_deref(), Some("xeorvt-auth-unavailable"));
+                assert_eq!(
+                    details.unwrap().0.get("expectedPin").map(String::as_str),
+                    Some("sha256:abc")
+                );
             }
             other => panic!("typed envelope was flattened: {other:?}"),
         }
@@ -5448,6 +5565,28 @@ mod builtin_invoker_tests {
             )
             .is_none()
         );
+        let oversized = "x".repeat(257);
+        let payload = format!(
+            r#"{{"code":"reference-x","phase":"x","retryable":false,"message":"x","diagnosticId":"x","details":{{"key":"{oversized}"}}}}"#
+        );
+        assert!(structured_bridge_error(&payload).is_none());
+        for invalid_provider_code in [
+            "xeorvt-".to_string(),
+            format!("xeorvt-{}", "x".repeat(91)),
+            "xeorvt-UPPERCASE".to_string(),
+            "another-provider-auth".to_string(),
+        ] {
+            let payload = format!(
+                r#"{{"code":"reference-x","phase":"x","retryable":false,"message":"x","diagnosticId":"x","providerCode":"{invalid_provider_code}"}}"#
+            );
+            match structured_bridge_error(&payload).expect("valid generic envelope") {
+                AwareError::AgentStructured { provider_code, .. } => assert!(
+                    provider_code.is_none(),
+                    "retained provider code outside the producer contract: {invalid_provider_code}"
+                ),
+                other => panic!("typed envelope was flattened: {other:?}"),
+            }
+        }
     }
 
     #[test]

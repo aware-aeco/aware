@@ -1019,6 +1019,10 @@ aware app uninstall welded-to-tc
 
 Installation drops the app folder under `~/.aware/apps/<name>/`. Each instance gets its own state under `instances/<instance-id>/`.
 
+**One folder, one manifest.** A source folder must hold **exactly one** top-level `.flo`/`.app` file, and `aware app install` refuses one holding more, naming every candidate it found. The installed app then has a single authoritative manifest, which is what makes `list`, `show`, `run`, `explain`, `export` and the compile paths agree with the install that validated it — they all load the only file there is. A folder holding two manifests has no answer to "which app is this", and install picking one and reporting it while later verbs load the other is silent wrong-app execution, not a naming quibble. (The loose `.app` files under `30-apps/_examples/` are therefore installed by copying one into its own directory; the directory is the app, and its name is not what identifies it — the `app:` field is.)
+
+Which file the manifest *is* named after does not matter: the installed directory takes its name from the `app:` field, so `bundle.flo` declaring `app: alpha` installs to `apps/alpha/bundle.flo` and stays addressable as `alpha`. Where a directory does hold several — placed there by hand, or installed before this rule — the tie-break is `<dir-name>.flo`, then the first `.flo`, then the first `.app`, resolved in sorted order so it never depends on filesystem enumeration, and the CLI warns that the directory is ambiguous.
+
 ---
 
 ## When an app file is wrong

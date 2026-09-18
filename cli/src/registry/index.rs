@@ -70,6 +70,18 @@ pub struct VersionEntry {
     pub tarball: String,
     pub subdir: String,
     #[serde(
+        rename = "manifest-agent",
+        default,
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub manifest_agent: Option<String>,
+    #[serde(
+        rename = "manifest-version",
+        default,
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub manifest_version: Option<String>,
+    #[serde(
         rename = "bundle-digest",
         default,
         skip_serializing_if = "Option::is_none"
@@ -77,10 +89,204 @@ pub struct VersionEntry {
     pub bundle_digest: Option<String>,
 }
 
+/// Whether an agent id is one portable directory name on every supported platform.
+pub(crate) fn is_portable_agent_id(id: &str) -> bool {
+    let bytes = id.as_bytes();
+    if bytes.is_empty()
+        || !bytes[0].is_ascii_alphanumeric()
+        || !bytes
+            .iter()
+            .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'.' | b'_' | b'-'))
+        || id.ends_with('.')
+    {
+        return false;
+    }
+    let stem = id.split('.').next().unwrap_or("").to_ascii_uppercase();
+    let numbered_device = ["COM", "LPT"].iter().any(|prefix| {
+        stem.strip_prefix(prefix)
+            .is_some_and(|suffix| matches!(suffix.as_bytes(), [b'1'..=b'9']))
+    });
+    !(matches!(stem.as_str(), "CON" | "PRN" | "AUX" | "NUL") || numbered_device)
+}
+
+pub(crate) fn validate_release_contract<'a>(
+    key: &str,
+    version: &str,
+    entry: &IndexEntry,
+    release: &'a VersionEntry,
+) -> Result<(&'a str, &'a str), String> {
+    let agent = release
+        .manifest_agent
+        .as_deref()
+        .ok_or_else(|| format!("registry entry {key}@{version} is missing manifest-agent"))?;
+    let manifest_version = release
+        .manifest_version
+        .as_deref()
+        .ok_or_else(|| format!("registry entry {key}@{version} is missing manifest-version"))?;
+    if !is_portable_agent_id(agent) {
+        return Err(format!(
+            "registry entry {key}@{version} has invalid manifest-agent {agent:?}; use a portable agent id containing only ASCII letters, digits, '.', '_' or '-'"
+        ));
+    }
+    if crate::validate::parse_semver(manifest_version).is_none() {
+        return Err(format!(
+            "registry entry {key}@{version} has invalid manifest-version {manifest_version:?}; expected strict SemVer such as 1.2.3"
+        ));
+    }
+    if let Some(target) = entry.alias_of.as_deref() {
+        if target != agent {
+            return Err(format!(
+                "registry entry {key}@{version} is an alias of {target:?}, but manifest-agent is {agent}; make alias-of and manifest-agent name the same target"
+            ));
+        }
+    } else {
+        let supported_suffix = agent
+            .strip_prefix(key)
+            .is_some_and(|suffix| suffix.starts_with('.') && suffix.len() > 1);
+        if agent != key && !supported_suffix {
+            return Err(format!(
+                "registry entry {key}@{version} declares unrelated manifest-agent {agent:?}; use the registry key itself, its supported dotted suffix, or an explicit alias-of target"
+            ));
+        }
+    }
+    Ok((agent, manifest_version))
+}
+
+pub(crate) fn validate_release_payload(
+    key: &str,
+    version: &str,
+    entry: &IndexEntry,
+    release: &VersionEntry,
+    actual_agent: &str,
+    actual_version: &str,
+) -> Result<(), String> {
+    let (expected_agent, expected_version) =
+        validate_release_contract(key, version, entry, release)?;
+    if actual_agent != expected_agent {
+        return Err(format!(
+            "registry entry {key}@{version} expects manifest-agent {expected_agent}, but the downloaded payload declares {actual_agent:?}; fix the entry's tarball, subdir, or manifest-agent and retry"
+        ));
+    }
+    if actual_version != expected_version {
+        return Err(format!(
+            "registry entry {key}@{version} expects manifest-version {expected_version}, but the downloaded payload declares {actual_version:?}; fix the entry's tarball, subdir, or manifest-version and retry"
+        ));
+    }
+    Ok(())
+}
+
 /// The archive's top-level folder, which every substrate-hosted `subdir` is written
 /// under (`aware-main/20-agents/...`) because that is the prefix the entry must carry to
 /// resolve inside `main.tar.gz`.
 pub const SUBSTRATE_ARCHIVE_ROOT: &str = "aware-main/";
+
+/// Return GitHub's deterministic top-level directory for a tarball pinned to a
+/// full commit SHA (`https://github.com/<owner>/<repo>/archive/<sha>.tar.gz`).
+/// Branch/tag archive URLs deliberately return `None`: only a full, lowercase
+/// 40-hex object name is immutable enough for a registry release pin.
+pub fn github_commit_archive_root(tarball: &str) -> Option<String> {
+    let path = tarball.strip_prefix("https://github.com/")?;
+    let mut parts = path.split('/');
+    let owner = parts.next()?;
+    let repo_part = parts.next()?;
+    let repo = repo_part.strip_suffix(".git").unwrap_or(repo_part);
+    if owner.is_empty() || repo.is_empty() || parts.next()? != "archive" {
+        return None;
+    }
+    let file = parts.next()?;
+    if parts.next().is_some() {
+        return None;
+    }
+    let commit = file.strip_suffix(".tar.gz")?;
+    if commit.len() != 40
+        || !commit
+            .bytes()
+            .all(|byte| byte.is_ascii_hexdigit() && !byte.is_ascii_uppercase())
+    {
+        return None;
+    }
+    Some(format!("{repo}-{commit}/"))
+}
+
+/// Resolve a validated immutable GitHub archive entry to the Git commit and
+/// repository-relative subtree that produced its install payload.
+pub fn github_commit_archive_source(tarball: &str, subdir: &str) -> Option<(String, String)> {
+    let root = github_commit_archive_root(tarball)?;
+    check_immutable_archive_root(tarball, subdir).ok()?;
+    let commit = root.trim_end_matches('/').rsplit_once('-')?.1.to_string();
+    let normalized = normalize_subdir(subdir);
+    let relative = normalized.strip_prefix(&root)?.to_string();
+    (!relative.is_empty()).then_some((commit, relative))
+}
+
+/// Identity of the source bytes used by local catalog generation. Immutable
+/// releases are distinct by commit even when their repository path is reused;
+/// mutable/legacy releases continue to resolve through the checkout path.
+pub fn catalog_source_key(tarball: &str, subdir: &str) -> String {
+    if let Some((commit, relative)) = github_commit_archive_source(tarball, subdir) {
+        format!("git:{commit}:{}", relative.to_ascii_lowercase())
+    } else {
+        format!("checkout:{}", portable_subdir_key(subdir))
+    }
+}
+
+/// Verify that an immutable GitHub commit archive and its declared subdir agree
+/// on the archive's generated root. This prevents a commit-looking root from
+/// being stripped during local catalog generation unless the tarball pins the
+/// same repository and commit, and catches a correctly pinned URL whose subdir
+/// would never exist in the downloaded archive.
+pub fn check_immutable_archive_root(tarball: &str, subdir: &str) -> Result<(), String> {
+    let expected = github_commit_archive_root(tarball);
+    if expected.is_none()
+        && let Some(object) = github_direct_archive_object(tarball)
+        && object.bytes().all(|byte| byte.is_ascii_hexdigit())
+    {
+        return Err(format!(
+            "tarball {tarball:?} looks commit-pinned but uses an abbreviated or uppercase object name; immutable registry archives require exactly 40 lowercase hex characters"
+        ));
+    }
+    let normalized = normalize_subdir(subdir);
+    let first = normalized.split('/').next().unwrap_or("");
+    let actual_commit_root = commit_archive_root_component(first).map(|root| format!("{root}/"));
+
+    match (expected, actual_commit_root) {
+        (Some(expected), Some(actual)) if expected == actual => Ok(()),
+        (Some(expected), Some(actual)) => Err(format!(
+            "subdir {subdir:?} starts with immutable archive root {actual:?}, but tarball {tarball:?} requires {expected:?}"
+        )),
+        (Some(expected), None) => Err(format!(
+            "subdir {subdir:?} does not start with {expected:?}, the root produced by immutable tarball {tarball:?}"
+        )),
+        (None, Some(actual)) => Err(format!(
+            "subdir {subdir:?} uses commit archive root {actual:?}, but tarball {tarball:?} is not the matching immutable GitHub commit archive"
+        )),
+        (None, None) => Ok(()),
+    }
+}
+
+fn github_direct_archive_object(tarball: &str) -> Option<&str> {
+    let path = tarball.strip_prefix("https://github.com/")?;
+    let mut parts = path.split('/');
+    let _owner = parts.next()?;
+    let _repo = parts.next()?;
+    if parts.next()? != "archive" {
+        return None;
+    }
+    let file = parts.next()?;
+    if parts.next().is_some() {
+        return None;
+    }
+    file.strip_suffix(".tar.gz")
+}
+
+fn commit_archive_root_component(component: &str) -> Option<&str> {
+    let (_, commit) = component.rsplit_once('-')?;
+    (commit.len() == 40
+        && commit
+            .bytes()
+            .all(|byte| byte.is_ascii_hexdigit() && !byte.is_ascii_uppercase()))
+    .then_some(component)
+}
 
 /// `Err(reason)` when a `subdir` is not written in the one portable form the registry
 /// accepts: a RELATIVE, `/`-separated path that stays inside the archive — no backslash,
@@ -201,10 +407,18 @@ fn check_one_form(value: &str, shown: &str) -> Result<(), String> {
 /// [`normalize_subdir`], which both readers share.
 pub fn checkout_relative_subdir(subdir: &str) -> String {
     let normalized = normalize_subdir(subdir);
+    if let Some(relative) = normalized.strip_prefix(SUBSTRATE_ARCHIVE_ROOT) {
+        return relative.to_string();
+    }
+    let first = normalized.split('/').next().unwrap_or("");
+    if commit_archive_root_component(first).is_some() {
+        return normalized
+            .strip_prefix(first)
+            .and_then(|rest| rest.strip_prefix('/'))
+            .unwrap_or("")
+            .to_string();
+    }
     normalized
-        .strip_prefix(SUBSTRATE_ARCHIVE_ROOT)
-        .unwrap_or(&normalized)
-        .to_string()
 }
 
 /// The key two subdirs must differ on to be *portably* different directories:
@@ -282,6 +496,12 @@ impl Index {
             .map_err(|e| AwareError::Validation(format!("registry index: {e}")))?;
         for (agent, entry) in &index.agents {
             for (version, release) in &entry.versions {
+                if let Err(reason) = check_immutable_archive_root(&release.tarball, &release.subdir)
+                {
+                    return Err(AwareError::Validation(format!(
+                        "registry index: {agent}@{version}: {reason}"
+                    )));
+                }
                 if let Some(digest) = &release.bundle_digest
                     && !is_bundle_digest(digest)
                 {
@@ -435,6 +655,78 @@ mod tests {
         assert!(check_subdir_portable("aware-main/../../etc/foo").is_err());
     }
 
+    #[test]
+    fn immutable_github_commit_archive_root_is_derived_and_stripped() {
+        let sha = "0123456789abcdef0123456789abcdef01234567";
+        let tarball = format!("https://github.com/aware-aeco/aware/archive/{sha}.tar.gz");
+        let subdir = format!("aware-{sha}/20-agents/aeco/cross-cutting/google-workspace");
+
+        assert_eq!(
+            github_commit_archive_root(&tarball).as_deref(),
+            Some(format!("aware-{sha}/").as_str())
+        );
+        assert!(check_immutable_archive_root(&tarball, &subdir).is_ok());
+        assert_eq!(
+            github_commit_archive_source(&tarball, &subdir),
+            Some((
+                sha.to_string(),
+                "20-agents/aeco/cross-cutting/google-workspace".to_string()
+            ))
+        );
+        assert_eq!(
+            catalog_source_key(&tarball, &subdir),
+            format!("git:{sha}:20-agents/aeco/cross-cutting/google-workspace")
+        );
+        assert_eq!(
+            checkout_relative_subdir(&subdir),
+            "20-agents/aeco/cross-cutting/google-workspace"
+        );
+    }
+
+    #[test]
+    fn immutable_archive_root_must_match_tarball_repository_and_commit() {
+        let sha = "0123456789abcdef0123456789abcdef01234567";
+        let other = "89abcdef0123456789abcdef0123456789abcdef";
+        let tarball = format!("https://github.com/aware-aeco/aware/archive/{sha}.tar.gz");
+
+        assert!(
+            check_immutable_archive_root(
+                &tarball,
+                &format!("aware-{other}/20-agents/google-workspace")
+            )
+            .is_err()
+        );
+        assert!(
+            check_immutable_archive_root(
+                "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+                &format!("aware-{sha}/20-agents/google-workspace")
+            )
+            .is_err()
+        );
+        assert!(
+            github_commit_archive_root(
+                "https://github.com/aware-aeco/aware/archive/01234567.tar.gz"
+            )
+            .is_none()
+        );
+        assert!(
+            check_immutable_archive_root(
+                "https://github.com/aware-aeco/aware/archive/01234567.tar.gz",
+                "aware-01234567/20-agents/google-workspace"
+            )
+            .is_err()
+        );
+        assert!(github_commit_archive_root(
+            "https://github.com/aware-aeco/aware/archive/0123456789ABCDEF0123456789ABCDEF01234567.tar.gz"
+        )
+        .is_none());
+        assert!(check_immutable_archive_root(
+            "https://github.com/aware-aeco/aware/archive/0123456789ABCDEF0123456789ABCDEF01234567.tar.gz",
+            "aware-0123456789ABCDEF0123456789ABCDEF01234567/20-agents/google-workspace"
+        )
+        .is_err());
+    }
+
     const SAMPLE: &str = r#"{
         "version": "1.0",
         "updated-at": "2026-05-16T00:00:00Z",
@@ -456,6 +748,150 @@ mod tests {
         assert_eq!(idx.version, "1.0");
         assert!(idx.agents.contains_key("tekla"));
         assert!(idx.bundles.contains_key("aware-aeco"));
+    }
+
+    fn bound_release(agent: Option<&str>, version: Option<&str>) -> VersionEntry {
+        VersionEntry {
+            tarball: "https://example.invalid/agent.tar.gz".into(),
+            subdir: "agent".into(),
+            manifest_agent: agent.map(str::to_owned),
+            manifest_version: version.map(str::to_owned),
+            bundle_digest: None,
+        }
+    }
+
+    #[test]
+    fn release_contract_requires_complete_portable_semantic_bindings() {
+        let ordinary = IndexEntry::default();
+        for (release, expected) in [
+            (bound_release(None, Some("1.0.0")), "missing manifest-agent"),
+            (
+                bound_release(Some("probe"), None),
+                "missing manifest-version",
+            ),
+            (
+                bound_release(Some(""), Some("1.0.0")),
+                "invalid manifest-agent",
+            ),
+            (
+                bound_release(Some("../probe"), Some("1.0.0")),
+                "invalid manifest-agent",
+            ),
+            (
+                bound_release(Some("CON.txt"), Some("1.0.0")),
+                "invalid manifest-agent",
+            ),
+            (
+                bound_release(Some("probe"), Some("1.0")),
+                "invalid manifest-version",
+            ),
+        ] {
+            let error =
+                validate_release_contract("probe", "2026.1", &ordinary, &release).unwrap_err();
+            assert!(error.contains("probe@2026.1"), "{error}");
+            assert!(error.contains(expected), "{error}");
+        }
+    }
+
+    #[test]
+    fn release_contract_supports_explicit_suffixes_and_requires_alias_target_identity() {
+        let suffixed = bound_release(Some("allplan-2024.0"), Some("0.30.0"));
+        assert!(
+            validate_release_contract(
+                "allplan-2024",
+                "2024.0.1.35",
+                &IndexEntry::default(),
+                &suffixed
+            )
+            .is_ok()
+        );
+
+        let alias = IndexEntry {
+            alias_of: Some("steel-detailer-us".into()),
+            ..Default::default()
+        };
+        let valid = bound_release(Some("steel-detailer-us"), Some("1.0.0"));
+        assert!(validate_release_contract("old", "1.0.0", &alias, &valid).is_ok());
+        let invalid = bound_release(Some("another-agent"), Some("1.0.0"));
+        let error = validate_release_contract("old", "1.0.0", &alias, &invalid).unwrap_err();
+        assert!(error.contains("alias of \"steel-detailer-us\""), "{error}");
+
+        let injected_alias = IndexEntry {
+            alias_of: Some("target\nagent\u{1b}[31m".into()),
+            ..Default::default()
+        };
+        let error = validate_release_contract("old", "1.0.0", &injected_alias, &valid).unwrap_err();
+        assert!(
+            !error.contains('\n'),
+            "terminal output stays on one line: {error:?}"
+        );
+        assert!(
+            !error.contains('\u{1b}'),
+            "terminal output carries no escape byte: {error:?}"
+        );
+        assert!(error.contains(r#""target\nagent\u{1b}[31m""#), "{error:?}");
+
+        let unrelated = bound_release(Some("other-agent"), Some("1.0.0"));
+        let error = validate_release_contract("probe", "1.0.0", &IndexEntry::default(), &unrelated)
+            .unwrap_err();
+        assert!(error.contains("unrelated manifest-agent"), "{error}");
+    }
+
+    #[test]
+    fn portable_agent_ids_are_platform_independent() {
+        for id in ["a", "viewer-3d", "allplan-2024.0", "A_B"] {
+            assert!(is_portable_agent_id(id), "{id}");
+        }
+        for id in [
+            "", ".hidden", "a/../b", "a\\b", "a:b", "a ", "a.", "NUL", "com1.log",
+        ] {
+            assert!(!is_portable_agent_id(id), "{id}");
+        }
+    }
+
+    #[test]
+    fn payload_mismatch_escapes_untrusted_manifest_text() {
+        let release = bound_release(Some("probe"), Some("1.0.0"));
+        let error = validate_release_payload(
+            "probe",
+            "1.0.0",
+            &IndexEntry::default(),
+            &release,
+            "other\nagent\u{1b}[31m",
+            "1.0.0",
+        )
+        .unwrap_err();
+        assert!(
+            !error.contains('\n'),
+            "terminal output stays on one line: {error:?}"
+        );
+        assert!(
+            !error.contains('\u{1b}'),
+            "terminal output carries no escape byte: {error:?}"
+        );
+        assert!(error.contains(r#""other\nagent\u{1b}[31m""#), "{error:?}");
+    }
+
+    #[test]
+    fn production_viewer_release_keeps_its_exact_historical_identity() {
+        let index =
+            Index::parse(include_bytes!("../../../registry-index.json").as_slice()).unwrap();
+        let release = &index.agents["viewer-3d"].versions["0.1.0"];
+        let commit = "b6991920e952a0bc293308faa9090dfd2d9b570e";
+        assert_eq!(
+            release.tarball,
+            format!("https://github.com/aware-aeco/aware/archive/{commit}.tar.gz")
+        );
+        assert_eq!(
+            release.subdir,
+            format!("aware-{commit}/20-agents/_core/viewer-3d")
+        );
+        assert_eq!(release.manifest_agent.as_deref(), Some("viewer-3d"));
+        assert_eq!(release.manifest_version.as_deref(), Some("0.1.0"));
+        assert_eq!(
+            release.bundle_digest.as_deref(),
+            Some("sha256:e590bf2fb31cb3ae8d1c4fa6664df1658d20fdfa5e40b14af3cc330d8b3a4296")
+        );
     }
 
     #[test]
@@ -642,5 +1078,180 @@ mod tests {
             "\"subdir\": \"tekla\", \"bundle-digest\": \"sha256:ABC\"",
         );
         assert!(Index::parse(invalid.as_bytes()).is_err());
+    }
+
+    #[test]
+    fn a_bundle_digest_is_sha256_and_exactly_64_lowercase_hex() {
+        // This predicate is the whole of `claims_official`'s digest well-formedness check
+        // (install::provenance) — not a boundary against forgery, since a hand-written receipt
+        // with well-formed digests passes that gate and dies later at the registry
+        // cross-check — and `Index::parse` rejects a malformed published digest on the strength
+        // of it too. "sha256:ABC", the one case the parse test above uses, is caught by LENGTH
+        // alone, so every rule but the length rule was going unexercised.
+        let hex = "a".repeat(64);
+        assert!(is_bundle_digest(&format!("sha256:{hex}")));
+        assert!(is_bundle_digest(&format!(
+            "sha256:{}",
+            "0123456789abcdef".repeat(4)
+        )));
+
+        // Uppercase hex is the near-miss that matters: it is the same VALUE written
+        // differently, so accepting it would make two spellings of one digest compare
+        // unequal against a published index entry that only ever uses lowercase.
+        assert!(!is_bundle_digest(&format!(
+            "sha256:{}",
+            "0123456789ABCDEF".repeat(4)
+        )));
+        assert!(!is_bundle_digest(&format!("sha256:{}A", "a".repeat(63))));
+
+        // Non-hex characters, at the front and at the very end (an off-by-one in the
+        // iteration bound would miss one of the two).
+        assert!(!is_bundle_digest(&format!("sha256:g{}", "a".repeat(63))));
+        assert!(!is_bundle_digest(&format!("sha256:{}g", "a".repeat(63))));
+        assert!(!is_bundle_digest(&format!("sha256:{}:", "a".repeat(63))));
+
+        // Wrong length either side of 64, and the empty string. These are the cases the length
+        // rule takes, and the only ones in this test that it does.
+        assert!(!is_bundle_digest(&format!("sha256:{}", "a".repeat(63))));
+        assert!(!is_bundle_digest(&format!("sha256:{}", "a".repeat(65))));
+        assert!(!is_bundle_digest(""));
+
+        // A different (or absent, or wrongly-cased) algorithm prefix. Every one of these is
+        // exactly 71 characters and hex-clean, so only the prefix check can reject them —
+        // including the last, which is the right total LENGTH but splits in the wrong place.
+        assert!(!is_bundle_digest(&format!("sha512:{hex}")));
+        assert!(!is_bundle_digest(&format!("SHA256:{hex}")));
+        assert!(!is_bundle_digest(&format!("sha256-{hex}")));
+        assert!(!is_bundle_digest(&format!("{hex}aaaaaaa")));
+
+        // And the published-index path agrees with the predicate: a 64-hex-but-uppercase
+        // digest reaches `Index::parse`'s check past the length rule, and is still refused.
+        let uppercase = SAMPLE.replace(
+            "\"subdir\": \"tekla\"",
+            &format!(
+                "\"subdir\": \"tekla\", \"bundle-digest\": \"sha256:{}\"",
+                "0123456789ABCDEF".repeat(4)
+            ),
+        );
+        let err = Index::parse(uppercase.as_bytes()).unwrap_err().to_string();
+        assert!(err.contains("invalid bundle-digest"), "{err}");
+        let good = SAMPLE.replace(
+            "\"subdir\": \"tekla\"",
+            &format!("\"subdir\": \"tekla\", \"bundle-digest\": \"sha256:{hex}\""),
+        );
+        assert!(Index::parse(good.as_bytes()).is_ok());
+    }
+
+    #[test]
+    fn latest_is_the_semver_greatest_not_the_lexicographic_one() {
+        // #371. The keys live in a `BTreeMap<String, _>`, so the obvious `next_back()` is a
+        // STRING comparison and `"1.10.1" < "1.9.0"` — `install <id>` fetched 1.9.0 while
+        // 1.10.1 was published. It is dormant only because nearly every entry ships a single
+        // version today; it bites silently on the install path the first time one doesn't.
+        //
+        // `0.9.0` is in the fixture so the right answer is neither the lexicographic LAST key
+        // nor the lexicographic FIRST one. Without it, `1.10.1` is the smallest string here and
+        // `.next()` would look just as correct as the comparator.
+        let index = Index::parse(
+            br#"{
+                "version": "1.0",
+                "updated-at": "2026-05-16T00:00:00Z",
+                "agents": {
+                    "probe": { "versions": {
+                        "0.9.0":  { "tarball": "t", "subdir": "old" },
+                        "1.9.0":  { "tarball": "t", "subdir": "nine" },
+                        "1.10.1": { "tarball": "t", "subdir": "ten" },
+                        "1.2.0":  { "tarball": "t", "subdir": "two" }
+                    } }
+                },
+                "bundles": {}
+            }"#
+            .as_ref(),
+        )
+        .unwrap();
+        let (version, entry) = index.resolve("probe", None).unwrap();
+        assert_eq!(version, "1.10.1");
+        assert_eq!(
+            entry.subdir, "ten",
+            "the resolved entry must be the one belonging to that version"
+        );
+        // Naming any version still reaches it, latest or not.
+        assert_eq!(
+            index.resolve("probe", Some("1.9.0")).unwrap().1.subdir,
+            "nine"
+        );
+        assert!(index.resolve("probe", Some("1.11.0")).is_err());
+    }
+
+    #[test]
+    fn a_non_semver_key_never_outranks_a_semver_one_but_stays_reachable_by_name() {
+        // Under the old string compare a key that is not strict SemVer would have sorted ABOVE
+        // every real version (`"nightly" > "1.10.1"`), making it the default install for
+        // everyone the moment someone published one. The comparator ranks it below instead, and
+        // `0.9.0` is present so the answer is not the lexicographic first key either.
+        let index = Index::parse(
+            br#"{
+                "version": "1.0",
+                "updated-at": "2026-05-16T00:00:00Z",
+                "agents": {
+                    "probe": { "versions": {
+                        "nightly": { "tarball": "t", "subdir": "nightly" },
+                        "0.9.0":   { "tarball": "t", "subdir": "old" },
+                        "1.10.1":  { "tarball": "t", "subdir": "ten" }
+                    } }
+                },
+                "bundles": {}
+            }"#
+            .as_ref(),
+        )
+        .unwrap();
+        assert_eq!(index.resolve("probe", None).unwrap().0, "1.10.1");
+        assert_eq!(
+            index.resolve("probe", Some("nightly")).unwrap().1.subdir,
+            "nightly",
+            "asking for it by name still works"
+        );
+
+        // With nothing but non-SemVer keys there is no ranking to appeal to, so `latest` must
+        // still answer rather than error.
+        let only_odd = Index::parse(
+            br#"{
+                "version": "1.0",
+                "updated-at": "2026-05-16T00:00:00Z",
+                "agents": { "probe": { "versions": {
+                    "nightly": { "tarball": "t", "subdir": "n" }
+                } } },
+                "bundles": {}
+            }"#
+            .as_ref(),
+        )
+        .unwrap();
+        assert_eq!(only_odd.resolve("probe", None).unwrap().0, "nightly");
+    }
+
+    #[test]
+    fn resolve_key_takes_the_longest_matching_base_name() {
+        // Two DOTTED keys can both be a prefix of one installed id (`allplan` and
+        // `allplan.2024` for `allplan.2024.0`). Taking the shortest would resolve to a
+        // different agent's payload; `update` then refuses with "not in registry" on the #174
+        // suffix guard in install/registry.rs, having fetched and discarded a tarball. A
+        // confusing failure for an id the registry does publish, not a deletion — the guard is
+        // what keeps it non-destructive.
+        let index = Index::parse(
+            br#"{
+                "version": "1.0",
+                "updated-at": "2026-05-16T00:00:00Z",
+                "agents": {
+                    "allplan": { "versions": { "1": { "tarball": "t", "subdir": "short" } } },
+                    "allplan.2024": { "versions": { "1": { "tarball": "t", "subdir": "long" } } }
+                },
+                "bundles": {}
+            }"#
+            .as_ref(),
+        )
+        .unwrap();
+        assert_eq!(index.resolve_key("allplan.2024.0"), Some("allplan.2024"));
+        // A single match is still a match — longest-wins must not become longest-required.
+        assert_eq!(index.resolve_key("allplan.2025"), Some("allplan"));
     }
 }

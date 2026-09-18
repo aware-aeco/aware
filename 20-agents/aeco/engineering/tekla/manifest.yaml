@@ -1,5 +1,5 @@
 agent:        tekla
-version:      0.1.4
+version:      0.1.5
 sdk-target:   2025+         # version-agnostic shorthand; structured form lands in hardening pass
 display-name: Tekla Structures
 
@@ -48,6 +48,21 @@ transport:
   cli:
     binary: aware-tekla
 
+# THE BRIDGE IS THE CONTRACT (#520). `aware-tekla` dispatches exactly the verbs in its
+# `switch (verb)` (cli-tekla/Program.cs) — every other key here is a published contract whose
+# implementation has not landed, so it carries the per-command `status: planned` marker (#199).
+# `aware app validate` and `aware app compile` then refuse a node that uses one with
+# `E_APP_COMMAND_UNAVAILABLE` (`validate_app_agents`, reached from both `cli/src/validate.rs` and
+# `cli/src/app_lock.rs`), and `app run` refuses it again. Without the marker such a node compiled
+# clean and died at run with `aware-tekla: unknown verb '<x>'` — nineteen commands deep, the same
+# drift #176 was for `watch` alone.
+#
+# The refusal needs this agent INSTALLED: the per-command status is read from the installed
+# manifest, so an app composed against a tekla absent from `~/.aware/agents` still passes, with a
+# missing-agent warning instead (#308). The marker is the contract for everyone who has the agent.
+#
+# When a verb is implemented, delete its `status: planned` in the same PR that wires it.
+# `cli/tests/tekla_verb_parity.rs` holds the two halves together in both directions.
 commands:
   send-status:
     lifecycle: single
@@ -122,6 +137,80 @@ commands:
         maximized:    boolean
         note:         string
 
+  # The inverse of the drift above (#520): `list-instances` and `close` are dispatched by the
+  # bridge but were declared nowhere, so an app author reading this manifest could not reach the
+  # only supported way to enumerate running hosts or shut one down — and `aware agent describe`
+  # did not list them.
+  list-instances:
+    lifecycle: single
+    category: curated
+    description: |
+      List the Tekla Structures instances VISIBLE TO THIS SIDECAR — the discovery
+      step in front of `close`. Takes no input and needs no open model.
+
+      Visible means: not positively in a different Windows session (so an instance
+      belonging to another RDP / multi-user session is excluded), and with a version
+      readable from its executable path (a process whose MainModule cannot be read is
+      dropped). An empty list therefore means "none this sidecar can act on", which is
+      not the same as "no Tekla is running" — do not read it as proof the machine is idle.
+    outputs:
+      type: single
+      schema:
+        instances: array          # [{ pid: integer, version: string, exe_path: string }]
+
+  close:
+    lifecycle: single
+    category: curated
+    # `close` is NOT write-by-convention, yet it terminates the host and can lose unsaved model
+    # bytes. `is_write_by_convention` (cli/src/manifest/agent.rs) matches a dotted name suffix plus
+    # two exact legacy names (`insert`, `save-attributes`) added for this agent's pre-dotted verbs;
+    # `close` is neither, so it would inherit the read-mode default. Declared here rather than
+    # appended to that list because the convention should describe a naming scheme, not carry an
+    # exception per host verb — and an explicit `mode:` is the documented way to say so (app-spec
+    # § Safety contract). A node calling it must therefore supply a `safety:` block.
+    mode: write
+    description: |
+      Shut a running Tekla Structures instance down. Clean by default — the model is
+      committed and saved through the Open API, the ModelSave event is awaited to
+      confirm bytes on disk (a model already clean on disk fires no event, and the
+      bridge continues), and Tekla is then asked to exit through its own Open API hook
+      (`Operation.ExitTekla`). `Process.CloseMainWindow()` is only the last resort when
+      no such method exists — Tekla ignores an external WM_CLOSE. See
+      skills/headless-startup-and-shutdown.md.
+
+      `force` is NOT "skip the save". It takes effect only where the Open API cannot be
+      attached at all, and there it authorises a force-kill — which LOSES unsaved work —
+      instead of refusing. When the Open API is reachable, the normal case, the clean
+      save happens either way and `force` changes nothing but the receipt's `mode`.
+
+      Targets the one running instance, or the instance matching `version`. An
+      ambiguous target is REFUSED (exit 4) rather than guessed at, and the
+      bridge's `--pid` / `--all` selectors are reachable only when a human runs
+      `aware-tekla` directly: the runtime invokes every verb as
+      `aware-tekla <verb> --json-stdin` and passes no flags, so from an app node
+      `version` is the only way to disambiguate. Pair it with `list-instances`
+      to learn which versions are up. See skills/headless-startup-and-shutdown.md.
+    inputs:
+      version:
+        type: string
+        required: false
+        description: Close the instance of this Tekla version (e.g. "2026.0")
+      force:
+        type: boolean
+        required: false
+        description: Authorise a force-kill where the Open API cannot be reached — DISCARDS unsaved work
+    outputs:
+      type: single
+      schema:
+        status:       string      # ok | partial | err, across all targets
+        host:         string      # always "tekla"
+        verb:         string      # always "close"
+        targets:      array       # one record per instance: { status, host_pid, host_version, mode | error }
+        delivered_at: string
+    # Non-zero exits a node will surface: 1 when no instance is running, 4 on an ambiguous target,
+    # and 2 with an `err`/`partial` receipt when a target fails — including after the 60s ModelSave
+    # wait times out.
+
   watch:
     lifecycle: start
     category: curated
@@ -178,6 +267,7 @@ commands:
   insert:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     description: Create a ConnectionPart at a world-space location.
     inputs:
       type:
@@ -338,6 +428,7 @@ commands:
   save-attributes:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     description: Persist the active dialog's values via the Akit save-as pattern.
     inputs:
       joint-id: string               # e.g. "144" for End plate 144
@@ -352,6 +443,7 @@ commands:
   drawing-list:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     description: |
       Filter drawings in the active model by status / phase / lot /
       IsReadyForIssue. Read-only. The foundation for every other
@@ -384,6 +476,7 @@ commands:
   drawing-export:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     mode: write
     description: |
       Batch-export drawings to PDF + DWG with a naming-template. Replaces
@@ -415,6 +508,7 @@ commands:
   drawing-issue:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     mode: write
     description: |
       Set IsReadyForIssue → true, set IssuingDate, stamp revision, mark
@@ -443,6 +537,7 @@ commands:
   drawings-affected-by-revision:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     description: |
       Given a model change (delta from previous save / IFC diff), report
       which drawings reference the affected GUIDs. The revision-cloud
@@ -463,6 +558,7 @@ commands:
   nc-export:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     mode: write
     description: |
       Export NC files (DSTV `.nc1`) for selected parts. The detailer
@@ -492,6 +588,7 @@ commands:
   nc-export-phase:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     mode: write
     description: |
       Convenience wrapper: nc-export scoped to one phase, with the
@@ -513,6 +610,7 @@ commands:
   report-create:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     description: |
       Generate a Tekla report from a `.tpl` template against selected /
       all model objects. Wraps `Operation.CreateReportFromAll` /
@@ -545,6 +643,7 @@ commands:
   bolt-list:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     description: |
       Export bolt schedule grouped by diameter / length / grade.
       Specialised wrapper around report-create with the standard
@@ -567,6 +666,7 @@ commands:
   weld-list:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     description: |
       Export weld schedule (type, length, throat, AWS code symbol) per
       assembly. Specialised wrapper around report-create with the
@@ -588,6 +688,7 @@ commands:
   part-list:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     description: Per-part schedule (profile / length / grade). Read-only.
     inputs:
       scope:
@@ -606,6 +707,7 @@ commands:
   assembly-list:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     description: Per-assembly schedule (mark / type / weight / piece-count). Read-only.
     inputs:
       scope:
@@ -624,6 +726,7 @@ commands:
   ifc-export:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     mode: write
     description: |
       Export the model (or a phase) to IFC. Used for MEP-clash federation
@@ -653,6 +756,7 @@ commands:
   numbering-run:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     mode: write
     description: |
       Run Tekla's numbering operation. Choose `modified-only` (fast,
@@ -674,6 +778,7 @@ commands:
   uda-get:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     description: |
       Read a user-defined attribute from one or more model objects.
       Read-only.
@@ -695,6 +800,7 @@ commands:
   uda-set:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     mode: write
     description: |
       Write a user-defined attribute on one or more model objects.
@@ -713,6 +819,7 @@ commands:
   uda-copy:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     mode: write
     description: |
       Copy a UDA value from one object to another (or from a UDA to a
@@ -735,6 +842,7 @@ commands:
   clash-check:
     lifecycle: single
     category: curated
+    status: planned          # declared, not dispatched — see the note above `commands:` (#520)
     description: |
       Run Tekla's built-in clash check. Returns clashes grouped by
       severity. For external federation clash, use the

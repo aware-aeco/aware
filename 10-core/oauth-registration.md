@@ -100,35 +100,38 @@ that tenant can then `aware connect microsoft-365 --device-code` without prompts
 [console.cloud.google.com](https://console.cloud.google.com) → new project
 `aware-aeco`.
 
-1. **APIs & Services → Enabled APIs → Enable:** Drive, Sheets, Calendar, Gmail,
-   Slides, Forms, Tasks. (A `403` at runtime that isn't a scope error usually means
-   one of these APIs is disabled — see the dual-403 note in the agent's `auth.md`.)
-2. **OAuth consent screen → External.** Add the scopes the curated agents need:
+1. **APIs & Services → Enabled APIs → Enable:** Gmail API. The currently runnable
+   Google Workspace agent exposes only `gmail.send`; Drive, Sheets, Calendar,
+   Gmail read/search, Chat, Forms, Slides, Meet, and Tasks remain planned.
+2. **OAuth consent screen → Data Access.** Add exactly the scopes the runnable
+   agent needs:
 
-   ```
-   openid  .../auth/userinfo.email  .../auth/drive  .../auth/spreadsheets
-   .../auth/calendar  .../auth/gmail.send  .../auth/gmail.readonly
-   .../auth/presentations  .../auth/forms.body.readonly
-   .../auth/forms.responses.readonly  .../auth/tasks
+   ```text
+   openid
+   https://www.googleapis.com/auth/userinfo.email
+   https://www.googleapis.com/auth/gmail.send
    ```
 
 3. **Credentials → Create credentials → OAuth client ID → Desktop app.** Copy the
    **client ID and client secret**.
 
-### Restricted scopes — the real gate
+### Verification and test users
 
-`.../auth/drive` and `.../auth/gmail.*` are Google **restricted scopes**.
-Publishing the consent screen to *external* users requires a CASA Tier-2 security
-assessment (third-party, recurring cost, weeks of lead time). Until that's done:
+`gmail.send` is a Google **sensitive** scope, not a restricted scope.
+`gmail.readonly` is restricted, but AWARE does not request it. This least-privilege
+grant therefore does not itself trigger the restricted-scope security assessment.
+Google still requires OAuth verification for a production external app that uses
+a sensitive scope.
 
-- Keep the app in **Testing** publishing status. Works immediately, but only for
-  explicitly added **test users** (cap 100). Refresh tokens issued in Testing mode
-  expire after 7 days.
-- Alternatively, narrow to non-restricted scopes (`drive.file` instead of `drive`)
-  to skip assessment — at the cost of the broad Drive commands.
+- During development, keep an external app in **Testing** and add explicit test
+  users (up to 100). Their authorizations expire seven days after consent.
+- Before publishing to external users, complete the sensitive-scope OAuth
+  verification flow shown in Google Cloud Console.
 
-This is the one item that blocks "any Google user signs in" until verification
-lands. Track it separately from shipping the client ID.
+Google's current scope classification is documented in
+[Choose Gmail API scopes](https://developers.google.com/workspace/gmail/api/auth/scopes),
+and its least-privilege requirement is in the
+[OAuth 2.0 policies](https://developers.google.com/identity/protocols/oauth2/policies).
 
 ## After registration
 

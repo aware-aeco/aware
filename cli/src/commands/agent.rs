@@ -187,6 +187,43 @@ fn versions_oldest_first(agent: &catalog::CatalogAgent) -> Vec<&str> {
     keys
 }
 
+#[cfg(test)]
+mod version_listing_tests {
+    use super::{catalog, versions_oldest_first};
+
+    #[test]
+    fn versions_are_listed_oldest_first_not_in_the_catalog_key_order() {
+        // The catalog stores versions in a `BTreeMap`, so the keys arrive sorted
+        // as STRINGS — which puts `1.0.0` before its own release candidates and
+        // `rc.10` before `rc.2`. `describe --available` prints this list so an
+        // operator can name an older release to `agent update <id>@<version>`;
+        // printed in key order it tells them the wrong newest.
+        let version = serde_json::json!({
+            "description": "d",
+            "status": "available",
+            "stateful": false,
+            "transport": "cli",
+        });
+        let agent: catalog::CatalogAgent = serde_json::from_value(serde_json::json!({
+            "versions": {
+                "1.0.0": version,
+                "1.0.0-rc.2": version,
+                "1.0.0-rc.10": version,
+                "2025.0.1": version,
+                "nightly": version,
+            }
+        }))
+        .expect("catalog agent fixture");
+
+        assert_eq!(
+            versions_oldest_first(&agent),
+            ["nightly", "1.0.0-rc.2", "1.0.0-rc.10", "1.0.0", "2025.0.1"],
+            "oldest first, a key nothing can parse below every key that parses, \
+             and prerelease identifiers compared numerically"
+        );
+    }
+}
+
 /// `aware agent invoke <agent> <command> [--inputs <json|@file>]` — run a
 /// BUILTIN agent command in-process and print its JSON result (#215).
 ///
@@ -223,6 +260,16 @@ async fn invoke_cmd(
         return Err(not_installed());
     }
     let m = crate::manifest::loader::load_agent(&manifest_path)?;
+    if m.status == crate::manifest::agent::AgentStatus::Planned {
+        return Err(AwareError::Validation(format!(
+            "agent '{agent_id}' is planned and not runnable"
+        )));
+    }
+    if let Some((code, message)) =
+        crate::validate::runtime_requirement_error(&m, crate::validate::CURRENT_CLI_VERSION)
+    {
+        return Err(AwareError::Validation(format!("[{code}] {message}")));
+    }
     // Resolve the EFFECTIVE transport through the same priority order workflow
     // dispatch uses (cli > rest > app > builtin) — NOT a bare `builtin` probe.
     // A crafted MIXED-transport manifest (builtin + cli/rest/app) dispatches as
@@ -237,11 +284,16 @@ async fn invoke_cmd(
              to drive a `{kind}` agent, compose it in a .flo app and `aware app run` it."
         )));
     }
-    if !m.commands.contains_key(command) {
+    let Some(command_manifest) = m.commands.get(command) else {
         let available: Vec<&str> = m.commands.keys().map(String::as_str).collect();
         return Err(AwareError::Validation(format!(
             "agent '{agent_id}' has no command '{command}' (available: {})",
             available.join(", ")
+        )));
+    };
+    if command_manifest.status == crate::manifest::agent::AgentStatus::Planned {
+        return Err(AwareError::Validation(format!(
+            "command '{command}' of agent '{agent_id}' is planned and not runnable"
         )));
     }
 
@@ -284,6 +336,85 @@ fn parse_invoke_inputs(inputs: Option<&str>) -> Result<serde_json::Value, AwareE
         ));
     }
     Ok(v)
+}
+
+#[cfg(test)]
+mod invoke_input_tests {
+    use super::parse_invoke_inputs;
+
+    #[test]
+    fn an_absent_or_blank_flag_means_an_empty_object() {
+        // `ui.catalog` and friends take no inputs, so the flag is optional — and a
+        // shell that expands an empty variable into `--inputs ''` must land in the
+        // same place rather than on a JSON parse error.
+        assert_eq!(parse_invoke_inputs(None).unwrap(), serde_json::json!({}));
+        assert_eq!(
+            parse_invoke_inputs(Some("")).unwrap(),
+            serde_json::json!({})
+        );
+        assert_eq!(
+            parse_invoke_inputs(Some("  \n\t ")).unwrap(),
+            serde_json::json!({})
+        );
+    }
+
+    #[test]
+    fn a_utf8_bom_in_an_inputs_file_is_tolerated() {
+        // `Out-File -Encoding utf8` — the obvious way to author an `@file` on
+        // Windows PowerShell — writes a BOM, and serde_json rejects one.
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("inputs.json");
+        std::fs::write(&path, "\u{feff}{\"descriptor\": {\"id\": \"x\"}}").unwrap();
+
+        let parsed = parse_invoke_inputs(Some(&format!("@{}", path.display()))).unwrap();
+        assert_eq!(parsed["descriptor"]["id"], serde_json::json!("x"));
+    }
+
+    #[test]
+    fn an_at_file_is_read_from_disk_rather_than_parsed_as_json() {
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("inputs.json");
+        std::fs::write(&path, "{\"from\": \"file\"}").unwrap();
+
+        // Surrounding whitespace is the shape a `--inputs " @file "` produces.
+        let spec = format!("  @{}  ", path.display());
+        let parsed = parse_invoke_inputs(Some(&spec)).unwrap();
+        assert_eq!(parsed["from"], serde_json::json!("file"));
+    }
+
+    #[test]
+    fn an_unreadable_inputs_file_names_the_path_it_tried() {
+        let tmp = tempfile::tempdir().unwrap();
+        let missing = tmp.path().join("absent.json");
+
+        let error = parse_invoke_inputs(Some(&format!("@{}", missing.display())))
+            .expect_err("a path that is not there cannot be read");
+        let message = error.to_string();
+        assert!(
+            message.contains(&missing.display().to_string()),
+            "the diagnostic must name the file the operator meant: {message}"
+        );
+        assert!(
+            !message.contains("invalid JSON"),
+            "an I/O failure must not be reported as a syntax error: {message}"
+        );
+    }
+
+    #[test]
+    fn a_json_document_that_is_not_an_object_is_refused() {
+        // A builtin command's inputs are named, so an array or a scalar can never
+        // be bound to one — catching it here beats an opaque failure inside the
+        // command's own deserializer.
+        for raw in ["[1,2]", "\"text\"", "7", "null", "true"] {
+            let Err(error) = parse_invoke_inputs(Some(raw)) else {
+                panic!("--inputs {raw} is valid JSON but not an object, so it must be refused");
+            };
+            assert!(
+                error.to_string().contains("must be a JSON object"),
+                "the diagnostic must say what shape is expected: {error}"
+            );
+        }
+    }
 }
 
 fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
@@ -494,9 +625,9 @@ fn validate_cmd(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError
     Ok(())
 }
 
-/// Standard tarball for substrate-hosted agents: every entry in the
-/// aware-aeco/aware registry points at the repo's `main` archive and is
-/// distinguished only by `subdir` (see `registry-index.json`).
+/// Standard tarball for ordinary substrate-hosted agents. Runtime-gated agents
+/// must instead use an immutable full-commit archive and are rejected below
+/// until this command can derive and stage that shape safely.
 const SUBSTRATE_TARBALL: &str =
     "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz";
 
@@ -528,6 +659,19 @@ fn publish(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
 
     let id = agent.agent.clone();
     let version = agent.version.clone();
+
+    let runtime_gated = agent.status == crate::manifest::agent::AgentStatus::RequiresRuntime
+        || agent
+            .commands
+            .values()
+            .any(|command| command.status == crate::manifest::agent::AgentStatus::RequiresRuntime);
+    if runtime_gated {
+        return Err(AwareError::Validation(format!(
+            "agent {id}@{version} is runtime-gated and must be published from an immutable \
+             full-commit archive; `aware agent publish` currently emits the mutable main-branch \
+             archive, so create the commit-pinned registry entry explicitly"
+        )));
+    }
 
     let abs = path.canonicalize()?;
     let Some((index_path, rel)) = find_registry_root(&abs) else {
@@ -634,6 +778,11 @@ fn merge_publish_entry_with_digest(
     let entry = agents
         .entry(id.to_string())
         .or_insert_with(|| serde_json::json!({ "versions": {} }));
+    if let Some(target) = entry.get("alias-of").and_then(|value| value.as_str()) {
+        return Err(AwareError::Validation(format!(
+            "registry key {id} is a rename alias for {target}, so it cannot publish a new {id} payload; publish the agent under {target}, or remove the alias only if the rename is being reversed"
+        )));
+    }
     let versions = entry
         .get_mut("versions")
         .and_then(|v| v.as_object_mut())
@@ -704,12 +853,35 @@ fn merge_publish_entry_with_digest(
     versions.insert(
         version.to_string(),
         if bundle_digest.is_empty() {
-            serde_json::json!({ "tarball": tarball, "subdir": subdir })
+            serde_json::json!({
+                "tarball": tarball,
+                "subdir": subdir,
+                "manifest-agent": id,
+                "manifest-version": version
+            })
         } else {
-            serde_json::json!({ "tarball": tarball, "subdir": subdir, "bundle-digest": bundle_digest })
+            serde_json::json!({
+                "tarball": tarball,
+                "subdir": subdir,
+                "manifest-agent": id,
+                "manifest-version": version,
+                "bundle-digest": bundle_digest
+            })
         },
     );
     doc["updated-at"] = serde_json::Value::String(crate::builder::now_iso());
+    let completed: crate::registry::Index = serde_json::from_value(doc.clone())?;
+    for (existing_key, existing_entry) in &completed.agents {
+        for (existing_version, existing_release) in &existing_entry.versions {
+            crate::registry::index::validate_release_contract(
+                existing_key,
+                existing_version,
+                existing_entry,
+                existing_release,
+            )
+            .map_err(AwareError::Validation)?;
+        }
+    }
     let mut out = serde_json::to_string_pretty(&doc)?;
     out.push('\n');
     Ok(out)
@@ -719,7 +891,7 @@ fn merge_publish_entry_with_digest(
 mod publish_tests {
     use super::*;
 
-    const SAMPLE: &str = r#"{"version":"1.0","updated-at":"old","agents":{"tekla":{"versions":{"2025.0.1":{"tarball":"t","subdir":"s"}}}},"bundles":{}}"#;
+    const SAMPLE: &str = r#"{"version":"1.0","updated-at":"old","agents":{"tekla":{"versions":{"2025.0.1":{"tarball":"t","subdir":"s","manifest-agent":"tekla","manifest-version":"0.1.5"}}}},"bundles":{}}"#;
 
     #[test]
     fn merge_adds_new_agent_and_preserves_existing() {
@@ -737,7 +909,29 @@ mod publish_tests {
         assert_eq!(v, "0.2.0");
         assert_eq!(e.tarball, SUBSTRATE_TARBALL);
         assert_eq!(e.subdir, "aware-main/20-agents/aeco/construction/bcf-file");
+        assert_eq!(e.manifest_agent.as_deref(), Some("bcf-file"));
+        assert_eq!(e.manifest_version.as_deref(), Some("0.2.0"));
         assert_ne!(parsed.updated_at, "old", "updated-at refreshed");
+    }
+
+    #[test]
+    fn merge_refuses_to_preserve_an_existing_release_without_manifest_bindings() {
+        let legacy = r#"{"version":"1.0","updated-at":"old","agents":{"tekla":{"versions":{"2025.0.1":{"tarball":"t","subdir":"s"}}}},"bundles":{}}"#;
+        let error = merge_publish_entry(legacy, "demo", "1.0.0", "t", "demo")
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("tekla@2025.0.1"), "{error}");
+        assert!(error.contains("missing manifest-agent"), "{error}");
+    }
+
+    #[test]
+    fn merge_refuses_to_publish_a_new_payload_through_a_rename_alias() {
+        let alias = r#"{"version":"1.0","updated-at":"old","agents":{"old":{"alias-of":"new","versions":{"1.0.0":{"tarball":"t","subdir":"new","manifest-agent":"new","manifest-version":"1.0.0"}}}},"bundles":{}}"#;
+        let error = merge_publish_entry(alias, "old", "2.0.0", "t2", "old")
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("old is a rename alias for new"), "{error}");
+        assert!(error.contains("publish the agent under new"), "{error}");
     }
 
     #[test]
@@ -871,7 +1065,7 @@ mod publish_tests {
     #[test]
     fn merge_preserves_existing_agent_order_and_appends() {
         // Deliberately non-alphabetical on-disk order: zebra before alpha.
-        let src = r#"{"version":"1.0","updated-at":"old","agents":{"zebra":{"versions":{"1.0.0":{"tarball":"t","subdir":"z"}}},"alpha":{"versions":{"1.0.0":{"tarball":"t","subdir":"a"}}}},"bundles":{}}"#;
+        let src = r#"{"version":"1.0","updated-at":"old","agents":{"zebra":{"versions":{"1.0.0":{"tarball":"t","subdir":"z","manifest-agent":"zebra","manifest-version":"1.0.0"}}},"alpha":{"versions":{"1.0.0":{"tarball":"t","subdir":"a","manifest-agent":"alpha","manifest-version":"1.0.0"}}}},"bundles":{}}"#;
         let out = merge_publish_entry(src, "middle", "1.0.0", "t", "m").unwrap();
         let zebra = out.find("\"zebra\"").unwrap();
         let alpha = out.find("\"alpha\"").unwrap();
@@ -960,6 +1154,11 @@ fn describe_installed(
             description: &'a str,
             stateful: bool,
             status: &'static str,
+            #[serde(
+                rename = "minimum-cli-version",
+                skip_serializing_if = "Option::is_none"
+            )]
+            minimum_cli_version: Option<&'a str>,
             license: &'a str,
             vendor: Option<&'a str>,
             commands: Vec<CommandRow>,
@@ -979,11 +1178,7 @@ fn describe_installed(
                 name: n.clone(),
                 lifecycle: format!("{:?}", c.lifecycle).to_lowercase(),
                 category: format!("{:?}", m.category_of(c)).to_lowercase(),
-                status: match c.status {
-                    crate::manifest::agent::AgentStatus::Available => "available",
-                    crate::manifest::agent::AgentStatus::Planned => "planned",
-                }
-                .to_string(),
+                status: c.status.as_str().to_string(),
                 description: c.description.clone(),
             })
             .collect();
@@ -995,10 +1190,8 @@ fn describe_installed(
             display_name: m.display_name.as_deref(),
             description: &m.description,
             stateful: m.stateful,
-            status: match m.status {
-                crate::manifest::agent::AgentStatus::Available => "available",
-                crate::manifest::agent::AgentStatus::Planned => "planned",
-            },
+            status: m.status.as_str(),
+            minimum_cli_version: m.minimum_cli_version.as_deref(),
             license: &m.license,
             vendor: m.vendor.as_deref(),
             command_count: m.command_count(),
@@ -1046,11 +1239,17 @@ fn describe_installed(
         "executable:   unverified — bundle integrity does not attest PATH/managed executables or REST services"
     );
     print_transport(&m.transport);
-    if m.status == crate::manifest::agent::AgentStatus::Planned {
-        println!(
+    match m.status {
+        crate::manifest::agent::AgentStatus::Available => {}
+        crate::manifest::agent::AgentStatus::Planned => println!(
             "status:       \u{26a0} planned — not yet runnable (no shipped transport binary); \
              apps referencing it are rejected at validate/compile (#161)"
-        );
+        ),
+        crate::manifest::agent::AgentStatus::RequiresRuntime => println!(
+            "status:       requires-runtime — needs AWARE CLI {} or newer (running {})",
+            m.minimum_cli_version.as_deref().unwrap_or("<missing>"),
+            crate::validate::CURRENT_CLI_VERSION
+        ),
     }
     println!();
     let curated = m.curated_count();
@@ -1484,9 +1683,35 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     let index = crate::registry::Index::parse(std::fs::File::open(&index_path)?)?;
 
     let mut digest_errors = Vec::new();
+    let mut pinned_sources: std::collections::BTreeMap<String, (Vec<u8>, String)> =
+        std::collections::BTreeMap::new();
     let mut digest_targets = Vec::new();
     for (id, entry) in &index.agents {
         for (version, release) in &entry.versions {
+            if let Some((commit, relative)) =
+                crate::registry::github_commit_archive_source(&release.tarball, &release.subdir)
+            {
+                match read_pinned_release(&repo_root, &commit, &relative) {
+                    Ok((manifest, digest)) => {
+                        if let Some(expected) = release.bundle_digest.as_deref()
+                            && digest != expected
+                        {
+                            digest_errors.push((
+                                format!("{id}@{version}"),
+                                format!(
+                                    "bundle-digest drift: index has {expected}, pinned Git tree has {digest}"
+                                ),
+                            ));
+                        }
+                        pinned_sources.insert(release.subdir.clone(), (manifest, digest));
+                    }
+                    Err(error) => digest_errors.push((
+                        format!("{id}@{version}"),
+                        format!("cannot read pinned release source: {error}"),
+                    )),
+                }
+                continue;
+            }
             let Some(expected_digest) = release.bundle_digest.as_deref() else {
                 continue; // backward-compatible custom/legacy index entry
             };
@@ -1523,6 +1748,9 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     }
 
     let (cat, errors) = catalog::build_catalog(&index, crate::builder::now_iso(), |subdir| {
+        if let Some((manifest, _digest)) = pinned_sources.get(subdir) {
+            return serde_yaml::from_slice(manifest).map_err(AwareError::from);
+        }
         // The SAME mapping the collision guard keys on, so the two cannot disagree about
         // which entries land on one manifest (Codex review, PR #457 round 7).
         let rel = crate::registry::checkout_relative_subdir(subdir);
@@ -1577,6 +1805,384 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     Ok(())
 }
 
+/// Read the exact agent payload from a commit-pinned GitHub archive using the
+/// equivalent local Git object. This keeps `reindex` offline while ensuring an
+/// old release is never described or hashed from today's mutable checkout tree.
+fn read_pinned_release(
+    repo_root: &std::path::Path,
+    commit: &str,
+    relative: &str,
+) -> Result<(Vec<u8>, String), AwareError> {
+    let base_ref = pinned_release_base_ref(repo_root)?;
+    let ancestry = std::process::Command::new("git")
+        .current_dir(repo_root)
+        .args(["merge-base", "--is-ancestor", commit, &base_ref])
+        .status()
+        .map_err(|error| {
+            AwareError::Validation(format!(
+                "cannot verify pinned commit {commit} against base ref {base_ref}: {error}"
+            ))
+        })?;
+    if !ancestry.success() {
+        return Err(AwareError::Validation(format!(
+            "pinned commit {commit} is not an ancestor of base ref {base_ref}; pin a commit \
+             already merged into the base branch (after a squash merge, pin the squash commit) and ensure \
+             the checkout has full history (for actions/checkout use `fetch-depth: 0`)"
+        )));
+    }
+    let output = std::process::Command::new("git")
+        .current_dir(repo_root)
+        // `git archive` otherwise honors `core.autocrlf` on Git for Windows,
+        // making the same immutable Git tree hash differently from Linux and
+        // from GitHub's commit archive. Hash canonical blob line endings on
+        // every platform.
+        .args([
+            "-c",
+            "core.autocrlf=false",
+            "archive",
+            "--format=tar",
+            commit,
+            "--",
+            relative,
+        ])
+        .output()
+        .map_err(|error| {
+            AwareError::Validation(format!("cannot run git archive for {commit}: {error}"))
+        })?;
+    if !output.status.success() {
+        let detail = String::from_utf8_lossy(&output.stderr);
+        return Err(AwareError::Validation(format!(
+            "git archive {commit}:{relative} failed: {}; ensure the checkout contains the pinned \
+             commit (for actions/checkout use `fetch-depth: 0`)",
+            detail.trim()
+        )));
+    }
+    let temp = tempfile::tempdir()?;
+    tar::Archive::new(std::io::Cursor::new(output.stdout))
+        .unpack(temp.path())
+        .map_err(|error| {
+            AwareError::Validation(format!(
+                "extract pinned Git tree {commit}:{relative}: {error}"
+            ))
+        })?;
+    let root = temp.path().join(relative);
+    let digest = crate::install::integrity::tree_digest(&root)?;
+    let manifest_path = root.join("manifest.yaml");
+    let manifest = std::fs::read(&manifest_path).map_err(|error| {
+        AwareError::Validation(format!(
+            "read pinned manifest {}: {error}",
+            manifest_path.display()
+        ))
+    })?;
+    Ok((manifest, digest))
+}
+
+/// Resolve the branch that a registry change will ultimately land on. Checking
+/// against `HEAD` is insufficient in pull requests: the PR's own commits (and
+/// GitHub's synthetic merge commit) are ancestors of `HEAD`, even though a
+/// required squash merge will discard those object IDs.
+fn pinned_release_base_ref(repo_root: &std::path::Path) -> Result<String, AwareError> {
+    if let Ok(explicit) = std::env::var("AWARE_REGISTRY_BASE_REF")
+        && !explicit.trim().is_empty()
+    {
+        return Ok(explicit);
+    }
+    if let Ok(branch) = std::env::var("GITHUB_BASE_REF")
+        && !branch.trim().is_empty()
+    {
+        return Ok(format!("refs/remotes/origin/{}", branch.trim()));
+    }
+    if std::env::var("GITHUB_REF_TYPE").as_deref() == Ok("branch")
+        && let Ok(branch) = std::env::var("GITHUB_REF_NAME")
+        && !branch.trim().is_empty()
+    {
+        return Ok(format!("refs/remotes/origin/{}", branch.trim()));
+    }
+
+    let output = std::process::Command::new("git")
+        .current_dir(repo_root)
+        .args(["symbolic-ref", "--quiet", "refs/remotes/origin/HEAD"])
+        .output()
+        .map_err(|error| {
+            AwareError::Validation(format!(
+                "cannot resolve the registry base branch from origin/HEAD: {error}"
+            ))
+        })?;
+    if !output.status.success() {
+        return Err(AwareError::Validation(
+            "cannot resolve the registry base branch from origin/HEAD; set \
+             AWARE_REGISTRY_BASE_REF to the fetched base/default branch"
+                .into(),
+        ));
+    }
+    let reference = String::from_utf8(output.stdout)
+        .map_err(|error| AwareError::Validation(format!("origin/HEAD is not UTF-8: {error}")))?;
+    let reference = reference.trim();
+    if reference.is_empty() {
+        return Err(AwareError::Validation(
+            "origin/HEAD resolved to an empty ref; set AWARE_REGISTRY_BASE_REF to the fetched \
+             base/default branch"
+                .into(),
+        ));
+    }
+    Ok(reference.to_string())
+}
+
+#[cfg(test)]
+mod pinned_release_tests {
+    use super::{pinned_release_base_ref, read_pinned_release};
+    use crate::test_env::EnvVarGuard;
+    use std::ffi::OsStr;
+    use std::path::Path;
+
+    /// Every variable the resolver consults. A test names all four so it states
+    /// its whole precondition rather than inheriting the machine's: a developer
+    /// with `GITHUB_REF_NAME` exported, or any run on a GitHub runner, would
+    /// otherwise never reach the `origin/HEAD` fallback the test claims to cover.
+    const BASE_REF_VARS: [&str; 4] = [
+        "AWARE_REGISTRY_BASE_REF",
+        "GITHUB_BASE_REF",
+        "GITHUB_REF_TYPE",
+        "GITHUB_REF_NAME",
+    ];
+
+    /// Unset all four, then apply `set`. Returns the guard, which must be held
+    /// for the whole test — dropping it restores the runner's environment.
+    fn base_ref_env(set: &[(&'static str, &str)]) -> EnvVarGuard {
+        let mut vars: Vec<(&'static str, Option<&OsStr>)> =
+            BASE_REF_VARS.iter().map(|key| (*key, None)).collect();
+        for (key, value) in set {
+            let slot = vars
+                .iter_mut()
+                .find(|(name, _)| name == key)
+                .expect("only the variables the resolver reads can be overridden");
+            slot.1 = Some(OsStr::new(*value));
+        }
+        EnvVarGuard::scope(&vars)
+    }
+
+    fn git(root: &Path, args: &[&str]) -> String {
+        let output = std::process::Command::new("git")
+            .current_dir(root)
+            .args(args)
+            .output()
+            .unwrap_or_else(|error| panic!("git {args:?}: {error}"));
+        assert!(
+            output.status.success(),
+            "git {args:?} failed: {}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+        String::from_utf8(output.stdout).unwrap().trim().to_string()
+    }
+
+    /// A checkout with one commit on `trunk`. `git init` here is load-bearing:
+    /// without it Git would walk up out of the temp directory and answer from
+    /// whatever repository `TMPDIR` happens to sit inside.
+    fn checkout(root: &Path) {
+        git(root, &["init", "--quiet", "-b", "trunk"]);
+        git(root, &["config", "user.email", "test@example.invalid"]);
+        git(root, &["config", "user.name", "AWARE test"]);
+    }
+
+    /// Point `refs/remotes/origin/HEAD` at `trunk`, the shape a cloned checkout has.
+    fn set_origin_head(root: &Path) {
+        let head = git(root, &["rev-parse", "HEAD"]);
+        git(root, &["update-ref", "refs/remotes/origin/trunk", &head]);
+        git(
+            root,
+            &[
+                "symbolic-ref",
+                "refs/remotes/origin/HEAD",
+                "refs/remotes/origin/trunk",
+            ],
+        );
+    }
+
+    /// Commit `20-agents/demo/manifest.yaml` declaring `version`, and return the
+    /// commit id. Enough of a manifest for `read_pinned_release` to hash and hand
+    /// back; `reindex` parses it, this does not.
+    fn commit_manifest(root: &Path, version: &str) -> String {
+        let dir = root.join("20-agents/demo");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            format!("agent: demo\nversion: {version}\n"),
+        )
+        .unwrap();
+        git(root, &["add", "--all"]);
+        git(root, &["commit", "--quiet", "-m", version]);
+        git(root, &["rev-parse", "HEAD"])
+    }
+
+    #[test]
+    fn an_explicit_base_ref_outranks_the_pull_request_branch_and_is_used_verbatim() {
+        let tmp = tempfile::tempdir().unwrap();
+        let _env = base_ref_env(&[
+            ("AWARE_REGISTRY_BASE_REF", "refs/heads/release-1.x"),
+            ("GITHUB_BASE_REF", "main"),
+        ]);
+
+        assert_eq!(
+            pinned_release_base_ref(tmp.path()).unwrap(),
+            "refs/heads/release-1.x",
+            "the escape hatch names a ref the caller has already fetched, so it \
+             must be passed to Git exactly as given"
+        );
+    }
+
+    #[test]
+    fn a_blank_explicit_base_ref_falls_through_to_the_pull_request_branch() {
+        // `env: AWARE_REGISTRY_BASE_REF: ${{ inputs.base }}` with nothing bound
+        // exports the name with an empty value; honouring it would resolve every
+        // pinned commit against the empty ref and fail the whole registry.
+        let tmp = tempfile::tempdir().unwrap();
+        let _env = base_ref_env(&[
+            ("AWARE_REGISTRY_BASE_REF", "   "),
+            ("GITHUB_BASE_REF", "main"),
+        ]);
+
+        assert_eq!(
+            pinned_release_base_ref(tmp.path()).unwrap(),
+            "refs/remotes/origin/main"
+        );
+    }
+
+    #[test]
+    fn a_pull_request_base_branch_resolves_to_its_remote_tracking_ref() {
+        // The branch NAME is not a ref a PR checkout has locally — only
+        // `refs/remotes/origin/<branch>` is — and the name may carry slashes.
+        let tmp = tempfile::tempdir().unwrap();
+        let _env = base_ref_env(&[("GITHUB_BASE_REF", " release/1.x \n")]);
+
+        assert_eq!(
+            pinned_release_base_ref(tmp.path()).unwrap(),
+            "refs/remotes/origin/release/1.x"
+        );
+    }
+
+    #[test]
+    fn a_branch_build_outranks_origin_head() {
+        // `actions/checkout` leaves no `origin/HEAD` on a push build, and where
+        // one does exist it may name a different branch than the one being built.
+        let tmp = tempfile::tempdir().unwrap();
+        checkout(tmp.path());
+        commit_manifest(tmp.path(), "1.0.0");
+        set_origin_head(tmp.path());
+        let _env = base_ref_env(&[("GITHUB_REF_TYPE", "branch"), ("GITHUB_REF_NAME", "main")]);
+
+        assert_eq!(
+            pinned_release_base_ref(tmp.path()).unwrap(),
+            "refs/remotes/origin/main"
+        );
+    }
+
+    #[test]
+    fn a_tag_build_does_not_mistake_its_tag_name_for_a_branch() {
+        // `release.yml` runs at a tag, where `GITHUB_REF_NAME` is `v0.137.0`.
+        // `refs/remotes/origin/v0.137.0` does not exist, so reading it as a branch
+        // would fail every pinned release on exactly the runs that ship one.
+        let tmp = tempfile::tempdir().unwrap();
+        checkout(tmp.path());
+        commit_manifest(tmp.path(), "1.0.0");
+        set_origin_head(tmp.path());
+        let _env = base_ref_env(&[("GITHUB_REF_TYPE", "tag"), ("GITHUB_REF_NAME", "v0.137.0")]);
+
+        assert_eq!(
+            pinned_release_base_ref(tmp.path()).unwrap(),
+            "refs/remotes/origin/trunk"
+        );
+    }
+
+    #[test]
+    fn outside_github_the_base_ref_comes_from_origin_head() {
+        let tmp = tempfile::tempdir().unwrap();
+        checkout(tmp.path());
+        commit_manifest(tmp.path(), "1.0.0");
+        set_origin_head(tmp.path());
+        let _env = base_ref_env(&[]);
+
+        assert_eq!(
+            pinned_release_base_ref(tmp.path()).unwrap(),
+            "refs/remotes/origin/trunk"
+        );
+    }
+
+    #[test]
+    fn a_checkout_without_origin_head_names_the_variable_that_unblocks_it() {
+        let tmp = tempfile::tempdir().unwrap();
+        checkout(tmp.path());
+        commit_manifest(tmp.path(), "1.0.0");
+        let _env = base_ref_env(&[]);
+
+        let error = pinned_release_base_ref(tmp.path())
+            .expect_err("a checkout with no origin/HEAD cannot answer this");
+        assert!(
+            error.to_string().contains("AWARE_REGISTRY_BASE_REF"),
+            "the diagnostic must name the override that gets the operator moving: {error}"
+        );
+    }
+
+    #[test]
+    fn the_pinned_payload_is_read_from_the_commit_not_the_working_tree() {
+        // The whole point of pinning: an older release keeps describing and
+        // hashing the bytes it shipped, however the checkout has moved on.
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        checkout(root);
+        let released = commit_manifest(root, "1.0.0");
+        let moved_on = commit_manifest(root, "2.0.0");
+        let _env = base_ref_env(&[("AWARE_REGISTRY_BASE_REF", "trunk")]);
+
+        let (manifest, digest) =
+            read_pinned_release(root, &released, "20-agents/demo").expect("the pin is an ancestor");
+        let text = String::from_utf8(manifest).unwrap();
+        assert!(
+            text.contains("version: 1.0.0"),
+            "read the pinned commit's manifest, got: {text}"
+        );
+        assert!(
+            !text.contains("version: 2.0.0"),
+            "the working tree must not leak into a pinned read: {text}"
+        );
+
+        let (_, later_digest) = read_pinned_release(root, &moved_on, "20-agents/demo").unwrap();
+        assert_ne!(
+            digest, later_digest,
+            "two commits with different payloads must not hash alike"
+        );
+        // The value goes straight into `bundle-digest`, so it has to be in the
+        // form the index's own reader accepts — checked against that reader
+        // rather than a restatement of it.
+        assert!(
+            crate::registry::index::is_bundle_digest(&digest),
+            "a pinned digest must be storable as `bundle-digest`: {digest}"
+        );
+    }
+
+    #[test]
+    fn a_subtree_absent_from_the_pinned_commit_names_the_checkout_remedy() {
+        // The usual cause is a shallow clone, not a wrong path, and the remedy
+        // is a checkout setting the operator has to go and change.
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        checkout(root);
+        let released = commit_manifest(root, "1.0.0");
+        let _env = base_ref_env(&[("AWARE_REGISTRY_BASE_REF", "trunk")]);
+
+        let error = read_pinned_release(root, &released, "20-agents/absent")
+            .expect_err("the commit holds no such subtree");
+        let message = error.to_string();
+        assert!(
+            message.contains("git archive"),
+            "the diagnostic must say which step refused: {message}"
+        );
+        assert!(
+            message.contains("fetch-depth: 0"),
+            "the diagnostic must name the remedy: {message}"
+        );
+    }
+}
+
 /// Two serialized catalogs are "the same" iff they're equal as JSON once the
 /// volatile `updated-at` timestamp is dropped — so `reindex --check` ignores the
 /// per-run timestamp and JSON-insignificant whitespace / line-ending churn.
@@ -1627,6 +2233,11 @@ fn describe_from_catalog(
             display_name: Option<&'a str>,
             description: &'a str,
             status: &'a str,
+            #[serde(
+                rename = "minimum-cli-version",
+                skip_serializing_if = "Option::is_none"
+            )]
+            minimum_cli_version: Option<&'a str>,
             stateful: bool,
             #[serde(skip_serializing_if = "Option::is_none")]
             vendor: Option<&'a str>,
@@ -1650,6 +2261,7 @@ fn describe_from_catalog(
             display_name: agent.display_name.as_deref(),
             description: &v.description,
             status: &v.status,
+            minimum_cli_version: v.minimum_cli_version.as_deref(),
             stateful: v.stateful,
             vendor: agent.vendor.as_deref(),
             transport: &v.transport,
@@ -1680,6 +2292,9 @@ fn describe_from_catalog(
     }
     println!("description:  {}", v.description);
     println!("status:       {}", v.status);
+    if let Some(minimum) = &v.minimum_cli_version {
+        println!("minimum-cli:  {minimum}");
+    }
     println!("stateful:     {}", v.stateful);
     if let Some(vd) = &agent.vendor {
         println!("vendor:       {vd}");
@@ -1699,9 +2314,14 @@ fn describe_from_catalog(
     }
     for c in &v.commands {
         let star = if c.category == "curated" { "★" } else { " " };
+        let status = match c.status.as_str() {
+            "available" => "",
+            "requires-runtime" => " [requires-runtime]",
+            _ => " [planned]",
+        };
         println!(
-            "  {star} {:<20} {:<8} {}",
-            c.name, c.lifecycle, c.description
+            "  {star} {:<20} {:<8} {}{}",
+            c.name, c.lifecycle, c.description, status
         );
     }
     println!();
