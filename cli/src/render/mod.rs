@@ -24,6 +24,56 @@ pub(super) fn abs_path(path: &str) -> String {
         .unwrap_or_else(|_| path.to_string())
 }
 
+/// Resolve the optional `output-path` argument: `Some(destination)` when an
+/// artifact was asked for, `None` when one was not, and a refusal when the value
+/// is not a string at all.
+///
+/// Absent, `null` and a blank string all mean "no artifact", and each for its
+/// own reason. `null` is JSON's spelling of nothing — a YAML `output-path:` with
+/// no value parses to exactly that. A blank string is what an *unresolved*
+/// optional whole-value `{{ }}` ref renders to, deliberately and not as null
+/// (#205, pinned by `render_config_unresolved_whole_value_falls_back_to_empty_string`).
+/// Refusing either would turn "the author left it out" into a failed run.
+///
+/// The `null` arm is reachable only from a hand-written literal — NOT from a
+/// template. `render_config` intercepts a whole-value ref that resolves to null
+/// and re-renders it leniently, and minijinja prints a null as the literal text
+/// `none`, so `output-path: "{{ reader.out_path }}"` over a null arrives here as
+/// the string `"none"` and writes a file called `none`. That is a separate
+/// silent-wrong-output bug at #205's layer (it hits every string param, not just
+/// this one) and this guard cannot see it — recorded so the next reader does not
+/// take the null case as covered.
+///
+/// A number, boolean, array or object is none of those things. Every manifest
+/// that reaches here declares `output-path: {type: string}` — the four callers
+/// today are `20-agents/_core/{html-report,ui,viewer-3d,ifc}/manifest.yaml`. That
+/// declaration is contract documentation, not a runtime check: nothing
+/// type-checks a builtin node's config against a manifest `inputs:` schema
+/// (`validate.rs` has no param-type pass), so this guard is the only place the
+/// declared type is enforced — do not mistake it for dead code. Reading a
+/// non-string as an opt-out loses the artifact in silence: the node returns no
+/// `path` key, no file is written, and the run exits 0. Refusing it enforces the
+/// published contract rather than changing it, and closes the non-string half of
+/// a direct asymmetry with `render::file`, whose required `path` refuses a
+/// non-string outright (#549 item 5). The blank-string half stays: `path` is
+/// required there and `output-path` is optional here, so `""` is an opt-out.
+fn output_path_arg<'a>(
+    args: &'a serde_json::Value,
+    label: &str,
+) -> Result<Option<&'a str>, crate::error::AwareError> {
+    use crate::error::AwareError;
+    use serde_json::Value;
+
+    match args.get("output-path") {
+        None | Some(Value::Null) => Ok(None),
+        Some(Value::String(s)) => Ok(Some(s.trim()).filter(|s| !s.is_empty())),
+        Some(other) => Err(AwareError::Validation(format!(
+            "{label}: `output-path` must be a string (got {})",
+            crate::json::type_name(other)
+        ))),
+    }
+}
+
 /// The optional `output-path` half of a render primitive's output contract:
 /// write the rendered artifact when one was asked for, and stamp the location
 /// and size onto the response.
@@ -61,17 +111,20 @@ pub(super) fn write_artifact(
     use crate::error::AwareError;
     use serde_json::Value;
 
-    let Some(path) = args
-        .get("output-path")
-        .and_then(|v| v.as_str())
-        .map(str::trim)
-        .filter(|s| !s.is_empty())
-    else {
+    // Resolved before `dry_run` is consulted: a bad value fails the same way
+    // whether previewing or running, so a `--dry-run` never green-lights a
+    // config the real run would refuse.
+    let Some(path) = output_path_arg(args, label)? else {
         return Ok(());
     };
 
     // Real run only: a preview returns the would-be path and size but never
     // touches disk.
+    //
+    // The two I/O arms below stay `Internal` (exit 1) beside the `Validation`
+    // (exit 3) above, so a permission-denied write is indistinguishable from a
+    // missing parent. That is knowingly wrong and is #549 item 6's to fix,
+    // across this module and `render::file` together — not settled here.
     if !dry_run {
         if let Some(parent) = std::path::Path::new(path).parent()
             && !parent.as_os_str().is_empty()
@@ -106,18 +159,102 @@ mod tests {
         out
     }
 
+    /// The spellings of "no artifact", each deliberate: the key absent, an
+    /// explicit `null` (what a valueless YAML `output-path:` parses to), and a
+    /// blank string — whether empty (what an unresolved optional `{{ }}` ref
+    /// renders to, #205) or whitespace-only (a padded literal). None may become
+    /// a refusal: that would fail runs the author wrote correctly.
+    ///
+    /// The whitespace cases are spelled out rather than represented by spaces
+    /// alone, so narrowing the trim to `trim_matches(' ')` cannot pass this.
     #[test]
     fn no_output_path_leaves_the_response_untouched() {
         for args in [
             json!({}),
+            json!({ "output-path": null }),
             json!({ "output-path": "" }),
             json!({"output-path": "   "}),
+            json!({ "output-path": "\t" }),
+            json!({ "output-path": "\n" }),
+            json!({ "output-path": " \t\n " }),
         ] {
             let out = call(args.clone(), false, b"x");
             assert!(
                 out.is_empty(),
                 "{args} asks for no artifact, so no path/bytes keys: {out:?}"
             );
+        }
+    }
+
+    /// #549 item 5: a non-string `output-path` was read as "the author asked for
+    /// no artifact", so the write was skipped, the response carried no `path`
+    /// key, and the run exited 0 — 100% artifact loss reported as success. Every
+    /// manifest reaching here declares `output-path: {type: string}`, so these
+    /// are typed mistakes, not opt-outs.
+    ///
+    /// Asserted per shape AND per value within a shape: a guard that refuses only
+    /// *some* non-strings would pass a test that checked a single fixture. The
+    /// falsy and empty instances (`false`, `0`, `[]`, `{}`) are the ones a
+    /// permissive carve-out would reach for — `output-path: false` is the
+    /// obvious spelling of "turn the artifact off", and `[]` / `{}` are what a
+    /// `{{ }}` ref to an empty collection renders to. Each would reintroduce a
+    /// scoped version of the bug this test exists for.
+    ///
+    /// The `label` is driven from the table, not from a constant: with one
+    /// fixture the assertion could not tell an interpolated label from a
+    /// hardcoded one, and three of the four callers pass a different label
+    /// (`ui render`, `viewer-3d`, `ifc`), so a hardcoded one would blame the
+    /// wrong node in a multi-node app.
+    #[test]
+    fn a_non_string_output_path_is_refused_rather_than_read_as_no_artifact() {
+        for (value, want_type, label) in [
+            (json!(123), "number", "html-report"),
+            (json!(0), "number", "ifc"),
+            (json!(1.5), "number", "ui render"),
+            (json!(true), "boolean", "viewer-3d"),
+            (json!(false), "boolean", "html-report"),
+            (json!(["x"]), "array", "ifc"),
+            (json!([]), "array", "ui render"),
+            (json!({ "p": "x" }), "object", "viewer-3d"),
+            (json!({}), "object", "html-report"),
+        ] {
+            // Both values of the `dry_run` flag: a `--dry-run` must not
+            // green-light a config the real run would reject. (`--simulate`
+            // stubs a read node upstream, so it never reaches here at all.)
+            for dry_run in [true, false] {
+                let mut out = serde_json::Map::new();
+                let Err(err) = write_artifact(
+                    &mut out,
+                    &json!({ "output-path": value.clone() }),
+                    dry_run,
+                    b"REPORT",
+                    label,
+                ) else {
+                    panic!(
+                        "{value} is not a path; skipping the write loses the artifact \
+                         (dry_run={dry_run})"
+                    )
+                };
+
+                assert_eq!(
+                    err.exit_code(),
+                    3,
+                    "a caller mistake is Validation (exit 3), not Internal: {err}"
+                );
+                let msg = err.to_string();
+                assert!(
+                    msg.contains(&format!("(got {want_type})")),
+                    "the message must name the shape that arrived: {msg}"
+                );
+                assert!(
+                    msg.starts_with(&format!("validation failed: {label}: `output-path`")),
+                    "the message must name the CALLING primitive and the argument: {msg}"
+                );
+                assert!(
+                    out.is_empty(),
+                    "a refused write reports nothing it did not do: {out:?}"
+                );
+            }
         }
     }
 
