@@ -133,12 +133,21 @@ pub(crate) fn validate_release_contract<'a>(
             "registry entry {key}@{version} has invalid manifest-version {manifest_version:?}; expected strict SemVer such as 1.2.3"
         ));
     }
-    if let Some(target) = entry.alias_of.as_deref()
-        && target != agent
-    {
-        return Err(format!(
-            "registry entry {key}@{version} is an alias of {target:?}, but manifest-agent is {agent}; make alias-of and manifest-agent name the same target"
-        ));
+    if let Some(target) = entry.alias_of.as_deref() {
+        if target != agent {
+            return Err(format!(
+                "registry entry {key}@{version} is an alias of {target:?}, but manifest-agent is {agent}; make alias-of and manifest-agent name the same target"
+            ));
+        }
+    } else {
+        let supported_suffix = agent
+            .strip_prefix(key)
+            .is_some_and(|suffix| suffix.starts_with('.') && suffix.len() > 1);
+        if agent != key && !supported_suffix {
+            return Err(format!(
+                "registry entry {key}@{version} declares unrelated manifest-agent {agent:?}; use the registry key itself, its supported dotted suffix, or an explicit alias-of target"
+            ));
+        }
     }
     Ok((agent, manifest_version))
 }
@@ -821,6 +830,11 @@ mod tests {
             "terminal output carries no escape byte: {error:?}"
         );
         assert!(error.contains(r#""target\nagent\u{1b}[31m""#), "{error:?}");
+
+        let unrelated = bound_release(Some("other-agent"), Some("1.0.0"));
+        let error = validate_release_contract("probe", "1.0.0", &IndexEntry::default(), &unrelated)
+            .unwrap_err();
+        assert!(error.contains("unrelated manifest-agent"), "{error}");
     }
 
     #[test]

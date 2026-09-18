@@ -349,6 +349,7 @@ mod tests {
             "probe-release".into(),
             crate::registry::IndexEntry {
                 versions,
+                alias_of: Some("probe".into()),
                 ..Default::default()
             },
         );
@@ -473,6 +474,7 @@ mod tests {
             "probe-release".into(),
             crate::registry::IndexEntry {
                 versions,
+                alias_of: Some("probe".into()),
                 ..Default::default()
             },
         );

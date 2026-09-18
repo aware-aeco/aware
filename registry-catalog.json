@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-14T10:45:57.677682600+00:00",
+  "updated-at": "2026-09-16T16:52:12.183237800+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -4449,17 +4449,23 @@
         "local"
       ],
       "versions": {
-        "0.4.0": {
+        "0.7.3": {
           "description": "Convert a local Revit project into deterministic, authenticated reference-model artifacts without",
           "status": "available",
-          "manifest-version": "0.4.0",
+          "manifest-version": "0.7.3",
           "stateful": false,
           "transport": "cli",
-          "command_count": 4,
+          "command_count": 5,
           "skills": [
             "provider-and-artifact-contract"
           ],
           "commands": [
+            {
+              "name": "fingerprint-source",
+              "description": "Capture selected source namespaces and ask the exact enrolled protocol-v3 provider which files",
+              "lifecycle": "single",
+              "category": "curated"
+            },
             {
               "name": "preflight",
               "description": "Check that the exact provider, managed AWARE host and model-reader signing key are ready.",

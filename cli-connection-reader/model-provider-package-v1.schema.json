@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aware-aeco.github.io/schemas/model-provider-package-v1.schema.json",
+  "title": "AWARE model provider package manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "packageId", "packageVersion", "formatId", "launcher",
+    "minimumAwareVersion", "maximumAwareVersion", "publisherFingerprintSha256",
+    "capabilities", "files"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "aware.model-provider-package/v1" },
+    "packageId": { "$ref": "#/$defs/id" },
+    "packageVersion": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "formatId": { "$ref": "#/$defs/id" },
+    "launcher": { "$ref": "#/$defs/path" },
+    "minimumAwareVersion": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "maximumAwareVersion": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "publisherFingerprintSha256": { "$ref": "#/$defs/sha256" },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "capabilityId", "protocolVersion", "sourceCaptureMode", "requestSchema",
+          "resultSchema", "artifactRootVersion", "cacheNamespaceVersion"
+        ],
+        "properties": {
+          "capabilityId": { "$ref": "#/$defs/id" },
+          "protocolVersion": { "const": "3" },
+          "sourceCaptureMode": { "$ref": "#/$defs/id" },
+          "requestSchema": { "$ref": "#/$defs/id" },
+          "resultSchema": { "$ref": "#/$defs/id" },
+          "artifactRootVersion": { "$ref": "#/$defs/id" },
+          "cacheNamespaceVersion": { "$ref": "#/$defs/id" }
+        }
+      }
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "bytes", "sha256"],
+        "properties": {
+          "path": { "$ref": "#/$defs/path" },
+          "bytes": { "type": "integer", "minimum": 0 },
+          "sha256": { "$ref": "#/$defs/sha256" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,128}$" },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:)(?!/)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*[\\\\:])[^\\r\\n]+$"
+    },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

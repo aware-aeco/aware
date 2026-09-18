@@ -86,9 +86,35 @@ async function setup(t) {
 test('request-only failures precede provider configuration and managed host setup', async () => {
   const unconfigured = { environment: {} };
   await assert.rejects(
+    () => runModelCommand('preflight', { 'reader-schema-version': 'model-reference-reader/v3' }, unconfigured),
+    (error) => error.code === 'reference-request-invalid'
+      && error.message === 'The requested model-reader schema version is unsupported.',
+  );
+  await assert.rejects(
     () => runModelCommand('preflight', { limits: null }, unconfigured),
     (error) => error.code === 'reference-limits-invalid',
   );
+  for (const limits of [123, true, []]) {
+    await assert.rejects(
+      () => runModelCommand('preflight', {
+        'reader-schema-version': 'model-reference-reader/v2', limits,
+      }, unconfigured),
+      (error) => error.code === 'reference-limits-invalid',
+    );
+  }
+  for (const propertyExpansionLimits of [
+    { maxExpandedPropertyRows: 4096 },
+    { maxExpandedPropertyRows: 999_999_999 },
+    { maxExpandedPropertyRow: 4096 },
+    'nonsense',
+  ]) {
+    await assert.rejects(
+      () => runModelCommand('preflight', {
+        'property-expansion-limits': propertyExpansionLimits,
+      }, unconfigured),
+      (error) => error.code === 'reference-request-invalid',
+    );
+  }
   await assert.rejects(
     () => runModelCommand('preflight', { 'expected-provider-protocol': '9' }, unconfigured),
     (error) => error.code === 'reference-request-invalid',
@@ -100,6 +126,157 @@ test('request-only failures precede provider configuration and managed host setu
     }, unconfigured),
     (error) => error.code === 'reference-provider-pin-required',
   );
+  await assert.rejects(
+    () => runModelCommand('fingerprint-source', {}, unconfigured),
+    (error) => error.code === 'reference-provider-package-request-invalid',
+  );
+  await assert.rejects(
+    () => runModelCommand('fingerprint-source', {
+      'source-capture-limits': { maxFiles: 25_001 },
+    }, unconfigured),
+    (error) => error.code === 'reference-limits-invalid',
+  );
+});
+
+test('package fingerprint-source returns the portable effective source and cleans its run root', async (t) => {
+  const state = await setup(t); let stagingRoot;
+  const effectiveSource = { schemaVersion: 'model-effective-source/v2', formatId: 'format.synthetic' };
+  const out = await runModelCommand('fingerprint-source', {
+    'provider-format': 'format.synthetic',
+    'provider-capability': 'capability.synthetic',
+    'provider-package-sha256': 'a'.repeat(64),
+    'provider-authorization': 'synthetic-capability',
+    'source-namespaces': [{ id: 'model', root: state.root }],
+    'source-capture-limits': { maxFiles: 7, maxAggregateBytes: 4096 },
+    'signing-secret-path': state.secretPath,
+    'signing-public-path': state.publicPath,
+  }, {
+    ...state.deps,
+    fingerprintSource: async (options) => {
+      stagingRoot = options.stagingRoot;
+      assert.equal(options.degradedMode, 'refuse');
+      assert.equal(options.authorization, 'synthetic-capability');
+      assert.equal(options.captureLimits.maxFiles, 7);
+      assert.equal(options.captureLimits.maxAggregateBytes, 4096);
+      await fs.stat(path.dirname(stagingRoot));
+      return {
+        effectiveSource, sha256: 'b'.repeat(64), dependencyPolicySha256: 'c'.repeat(64),
+        providerIdentity: { schemaVersion: 'aware.enrolled-model-provider-fingerprint/v1' },
+      };
+    },
+  });
+  assert.equal(out.schemaVersion, 'model-reference-reader-source-fingerprint/v1');
+  assert.deepEqual(out.effectiveSource, effectiveSource);
+  assert.equal(out.effectiveSourceSha256, 'b'.repeat(64));
+  await assert.rejects(fs.stat(path.dirname(stagingRoot)), (error) => error.code === 'ENOENT');
+});
+
+async function managedState(t) {
+  const state = await setup(t);
+  const destination = 'https://api.example.test';
+  const localHostRun = state.deps.hostRun;
+  state.deps.hostRun = async (request) => {
+    const response = await localHostRun(request);
+    const body = JSON.parse(response.stdout.toString('utf8'));
+    body.protocolVersion = '2';
+    body.execution = 'managed-cloud';
+    body.destination = destination;
+    body.readerSchemaVersion = 'model-reference-reader/v2';
+    if (request.operation === 'convert') {
+      body.conversionAttemptId = JSON.parse(request.stdin.toString('utf8')).conversionAttemptId;
+    }
+    return { ...response, stdout: Buffer.from(JSON.stringify(body)) };
+  };
+  state.args = {
+    ...state.args,
+    'expected-provider-protocol': '2',
+    'expected-provider-destination': destination,
+    'authority-store-path': path.join(state.root, 'authority'),
+    'reader-schema-version': 'model-reference-reader/v2',
+  };
+  return state;
+}
+
+test('managed conversion requires a valid attempt identity only after an authenticated cache miss', async (t) => {
+  const state = await managedState(t);
+  const preflight = await runModelCommand('preflight', state.args, state.deps);
+  const pinned = {
+    ...state.args,
+    'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  };
+  const callsAfterPreflight = state.calls.length;
+  for (const conversionAttemptId of [undefined, 'not-a-uuid']) {
+    await assert.rejects(
+      () => runModelCommand('read-model', {
+        ...pinned,
+        'conversion-attempt-id': conversionAttemptId,
+      }, state.deps),
+      (error) => error.code === 'reference-provider-request-invalid'
+        && error.message === 'The managed Revit conversion attempt identity is invalid.',
+    );
+    assert.equal(state.calls.length, callsAfterPreflight,
+      'an invalid attempt identity must stop before any cold-request provider I/O');
+  }
+
+  const cold = await runModelCommand('read-model', {
+    ...pinned,
+    'conversion-attempt-id': '123e4567-e89b-42d3-a456-426614174000',
+  }, state.deps);
+  assert.equal(cold.cache, 'miss');
+  const callsAfterColdRead = state.calls.length;
+
+  const warm = await runModelCommand('read-model', pinned, state.deps);
+  assert.equal(warm.cache, 'hit');
+  assert.equal(state.calls.length, callsAfterColdRead, 'a warm read must not touch the provider');
+});
+
+test('managed conversion refuses reader schema v1 before provider or cache access', async (t) => {
+  const state = await setup(t);
+  await assert.rejects(
+    () => runModelCommand('preflight', {
+      ...state.args,
+      'expected-provider-protocol': '2',
+      'expected-provider-destination': 'https://api.example.test',
+      'authority-store-path': path.join(state.root, 'authority'),
+    }, state.deps),
+    (error) => error.code === 'reference-request-invalid'
+      && error.message === 'Managed Revit conversion requires model-reader schema version v2.',
+  );
+  assert.deepEqual(state.calls, [], 'the incompatible request must fail before provider I/O');
+});
+
+test('managed snapshot signs the current delivery attempt even when reusing authenticated cache bytes', async (t) => {
+  const state = await managedState(t);
+  const preflight = await runModelCommand('preflight', state.args, state.deps);
+  const pinned = {
+    ...state.args,
+    'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  };
+  const firstAttempt = '123e4567-e89b-42d3-a456-426614174000';
+  const secondAttempt = '123e4567-e89b-42d3-a456-426614174001';
+  const cold = await runModelCommand('read-snapshot', {
+    ...pinned, 'conversion-attempt-id': firstAttempt,
+  }, state.deps);
+  assert.equal(cold.cache, 'miss');
+  assert.equal(cold.packagePreimage.source.conversionAttemptId, firstAttempt);
+  const providerCalls = [...state.calls];
+
+  const warm = await runModelCommand('read-snapshot', {
+    ...pinned, 'conversion-attempt-id': secondAttempt,
+  }, state.deps);
+  assert.equal(warm.cache, 'hit');
+  assert.deepEqual(state.calls, providerCalls, 'signing a fresh delivery binding must not call the provider');
+  assert.equal(warm.packagePreimage.source.conversionAttemptId, secondAttempt);
+  assert.notEqual(warm.packageArtifactEnvelope.signatureBase64, cold.packageArtifactEnvelope.signatureBase64,
+    'different attempt identities must produce different authenticated package envelopes');
+
+  await assert.rejects(
+    () => runModelCommand('read-snapshot', pinned, state.deps),
+    (error) => error.code === 'reference-provider-request-invalid',
+  );
+  assert.deepEqual(state.calls, providerCalls, 'a missing delivery attempt must fail before provider I/O');
 });
 
 test('preflight describes provider and key readiness without conversion or source access', async (t) => {
@@ -114,7 +291,6 @@ test('preflight describes provider and key readiness without conversion or sourc
   assert.equal(sha256(Buffer.from(out.signerPublicKeyBase64, 'base64')), out.signerFingerprintSha256);
   assert.deepEqual(state.calls, ['describe']);
 });
-
 test('preflight enforces the managed authority-store contract before provider launch', async (t) => {
   const state = await setup(t);
   const base = {
@@ -125,6 +301,7 @@ test('preflight enforces the managed authority-store contract before provider la
   await assert.rejects(() => runModelCommand('preflight', {
     ...base,
     'expected-provider-protocol': '2',
+    'reader-schema-version': 'model-reference-reader/v2',
     'expected-provider-destination': 'https://api.example.test',
   }, state.deps), (error) => error.code === 'reference-provider-protocol');
   await assert.rejects(() => runModelCommand('preflight', {
@@ -226,6 +403,39 @@ test('read-model publishes five binary-safe artifacts with reconciled coverage a
   assert.equal('sourceArtifactPreimage' in out, false);
 });
 
+test('reader v2 binds expansion limits and publishes tagged provider-display property artifacts', async (t) => {
+  const state = await setup(t);
+  const versionArgs = {
+    'reader-schema-version': 'model-reference-reader/v2',
+    'property-expansion-limits': { maxExpandedPropertyRows: 100, maxCanonicalPropertyBytes: 4096 },
+  };
+  const preflight = await runModelCommand('preflight', {
+    'provider-path': state.executable, 'signing-secret-path': state.secretPath,
+    'signing-public-path': state.publicPath, ...versionArgs,
+  }, state.deps);
+  assert.equal(preflight.schemaVersion, 'model-reference-reader/v2');
+  const out = await runModelCommand('read-snapshot', {
+    ...state.args, ...versionArgs,
+    'expected-provider-sha256': preflight.providerFingerprintSha256,
+    'expected-signer-sha256': preflight.signerFingerprintSha256,
+  }, state.deps);
+  assert.equal(out.schemaVersion, 'model-reference-reader/v2');
+  assert.equal(out.coverage.expandedProperties, 1);
+  assert.deepEqual(out.coverage.effectivePropertyLimits, versionArgs['property-expansion-limits']);
+  assert.equal(out.packageConfiguration.schemaVersion, 'model-reference-package-configuration/v2');
+  assert.equal(out.packageConfiguration.maximumShardBytes, 128 * 1024 * 1024);
+  assert.equal(out.packageConfiguration.maximumShardRecords, 2_000_000);
+  assert.equal(out.packageConfiguration.maximumAggregateBytes, (256 * 1024 * 1024) + (128 * 1024 * 1024 * 5));
+  const properties = JSON.parse(await fs.readFile(path.join(state.deps.artifactDirectory, out.artifacts.properties.id), 'utf8'));
+  assert.equal(properties.schemaVersion, '2');
+  assert.deepEqual(properties.properties[0], {
+    entityId: 'element:1001', groupId: 'parameter-group:1', groupName: 'Identity Data', groupOrdinal: 0,
+    parameterId: 'parameter:1', parameterOrdinal: 0, name: 'Display Mark', unit: null,
+    valueEncoding: 'provider-display', valueType: 'string', value: 'A-1',
+  });
+  assert.equal(JSON.stringify(out).includes('A-1'), false, 'summary and receipts must not leak property values');
+});
+
 test('read-model re-reads its own published geometry under the canonical budgets', async (t) => {
   // summary() reparses the canonical artifact it just published to report bounds. Measuring that
   // artifact against the INPUT budgets fails the command on a model it had already accepted, and it
@@ -277,6 +487,8 @@ test('read-snapshot derives public source and package envelopes after private ca
     ['manifest', 'tile-000000', 'entities-000000', 'properties-000000', 'relationships-000000', 'index']);
   verifyEnvelope('AWARE\0model-reference-reader\0package-set\0v1\0', out.packagePreimage, out.packageArtifactEnvelope);
   assert.equal(out.packageConfiguration.maximumTileTriangles, 15_000_000);
+  assert.equal(out.packageConfiguration.maximumShardBytes, 32 * 1024 * 1024);
+  assert.equal(out.packageConfiguration.maximumShardRecords, 2_000_000);
   assert.equal(out.packageConfiguration.maximumAggregateBytes, (256 * 1024 * 1024) + (32 * 1024 * 1024 * 5));
   assert.equal(out.packagePreimage.source.sourceArtifactPreimageSha256, out.sourceArtifactEnvelope.preimageSha256);
 

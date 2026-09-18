@@ -1,4 +1,7 @@
-import { assertClosedObject, canonicalJsonBytes, canonicalNumberViolation, lowerableLimits, ModelReaderError, parseJsonStrict, sha256 } from './model-contract.mjs';
+import {
+  assertClosedObject, canonicalJsonBytes, canonicalNumberViolation, lowerableLimits, lowerablePropertyExpansionLimits,
+  ModelReaderError, parseJsonStrict, sha256,
+} from './model-contract.mjs';
 
 const POSITIVE_INT64 = /^(?:[1-9]\d*)$/;
 const SIGNED_INT64 = /^(?:0|-?[1-9]\d*)$/;
@@ -73,8 +76,12 @@ function tableIndex(value, table, label, nullable = false) {
   return table[value];
 }
 
-function validateParameter(parameter, index) {
-  closed(parameter, ['id', 'name', 'unit', 'readable', 'storageType', 'value'], [], `parameters[${index}]`);
+function validateSourceStorageParameter(parameter, index, tagged = false) {
+  const required = tagged
+    ? ['id', 'name', 'unit', 'valueEncoding', 'readable', 'storageType', 'value']
+    : ['id', 'name', 'unit', 'readable', 'storageType', 'value'];
+  closed(parameter, required, [], `parameters[${index}]`);
+  if (tagged && parameter.valueEncoding !== 'source-storage') invalid(`parameters[${index}].valueEncoding must be source-storage`);
   const id = positiveId(parameter.id, `parameters[${index}].id`);
   const name = text(parameter.name, `parameters[${index}].name`);
   const unit = text(parameter.unit, `parameters[${index}].unit`, true);
@@ -98,8 +105,34 @@ function validateParameter(parameter, index) {
     value = signedId(value, `parameters[${index}].value`);
     if (!parameter.readable) invalid('element-id parameter must be readable');
   } else invalid(`parameters[${index}] has unsupported storageType`);
-  return { id, name, unit, readable: parameter.readable, storageType, value };
+  return { id, name, unit, ...(tagged ? { valueEncoding: 'source-storage' } : {}), readable: parameter.readable, storageType, value };
 }
+
+function validateV2Parameter(parameter, index) {
+  if (parameter?.valueEncoding === 'source-storage') return validateSourceStorageParameter(parameter, index, true);
+  closed(parameter, ['id', 'name', 'unit', 'valueEncoding', 'valueType', 'value'], [], `parameters[${index}]`);
+  if (parameter.valueEncoding !== 'provider-display') invalid(`parameters[${index}].valueEncoding is unsupported`);
+  const id = positiveId(parameter.id, `parameters[${index}].id`);
+  const name = text(parameter.name, `parameters[${index}].name`);
+  const unit = text(parameter.unit, `parameters[${index}].unit`, true);
+  if (!['string', 'number'].includes(parameter.valueType)) invalid(`parameters[${index}].valueType is unsupported`);
+  let value = parameter.value;
+  if (parameter.valueType === 'string') value = text(value, `parameters[${index}].value`);
+  else {
+    if (typeof value !== 'number' || !Number.isFinite(value)) invalid(`parameters[${index}].value must be a finite number`);
+    if (Number.isInteger(value) && !Number.isSafeInteger(value)) {
+      invalid(`parameters[${index}].value must be a safe integer or a provider-display string`);
+    }
+    value = Object.is(value, -0) ? 0 : value;
+  }
+  return { id, name, unit, valueEncoding: 'provider-display', valueType: parameter.valueType, value };
+}
+
+function assertUniqueReferences(refs, label) {
+  if (new Set(refs).size !== refs.length) invalid(`${label} contains duplicate references`);
+}
+
+const propertyDocumentBaseBytes = Buffer.byteLength('{"properties":[],"schemaVersion":"2"}', 'utf8');
 
 function bounds(parts) {
   const positions = parts.flatMap((part) => part.positions ?? []);
@@ -158,6 +191,7 @@ function assertAcyclic(relations, kind) {
 
 export function normalizeRevitMetadata(input, geometryParts, options = {}) {
   const limits = lowerableLimits(options.limits);
+  const propertyLimits = lowerablePropertyExpansionLimits(options.propertyExpansionLimits, limits);
   let metadata = input;
   if (typeof input === 'string' || Buffer.isBuffer(input) || input instanceof Uint8Array) {
     try { metadata = parseJsonStrict(input, { maxBytes: limits.maxMetadataBytes, maxDepth: limits.maxJsonDepth }); }
@@ -165,7 +199,15 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
   }
   closed(metadata,
     ['schemaVersion', 'document', 'types', 'levels', 'parameterGroups', 'parameters', 'elements', 'relations'], [], 'metadata');
-  if (metadata.schemaVersion !== '1') invalid('unsupported metadata schemaVersion');
+  if (!['1', '2'].includes(metadata.schemaVersion)) invalid('unsupported metadata schemaVersion');
+  const metadataV2 = metadata.schemaVersion === '2';
+  // Enforce the REQUESTED schema before anything is expanded. Checked after the
+  // fact, a v1 response to a v2 request normalizes under v1's far larger
+  // expansion allowance, so a compact document can allocate millions of
+  // property rows before the mismatch is noticed.
+  if (options.expectedSchemaVersion !== undefined && metadata.schemaVersion !== options.expectedSchemaVersion) {
+    invalid('Provider metadata does not match the requested reader schema version.');
+  }
   closed(metadata.document, ['kind', 'id'], [], 'document');
   if (metadata.document.kind !== 'revit-project' || typeof metadata.document.id !== 'string' || !metadata.document.id) invalid('document must be an identified Revit project');
 
@@ -177,10 +219,18 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
     }
     return level;
   });
-  const parameters = list(metadata.parameters, 'parameters', limits.maxParameters).map(validateParameter);
+  const parameters = list(metadata.parameters, 'parameters', limits.maxParameters)
+    .map(metadataV2 ? validateV2Parameter : (parameter, index) => validateSourceStorageParameter(parameter, index, false));
   if (new Set(parameters.map((entry) => entry.id)).size !== parameters.length) invalid('parameters contains duplicate ids');
+  if (metadataV2) parameters.forEach((parameter, index) => {
+    if (parameter.id !== String(index + 1)) invalid(`parameters[${index}].id must equal its one-based table index`);
+  });
   const parameterGroups = uniqueTable(metadata.parameterGroups, 'parameterGroups', limits.maxParameters, ['parameters']).map((group, index) => {
     const refs = list(group.parameters, `parameterGroups[${index}].parameters`, limits.maxParameters);
+    if (metadataV2) {
+      if (group.id !== String(index + 1)) invalid(`parameterGroups[${index}].id must equal its one-based table index`);
+      assertUniqueReferences(refs, `parameterGroups[${index}].parameters`);
+    }
     return { ...group, parameters: refs.map((value, ordinal) => tableIndex(value, parameters, `parameterGroups[${index}].parameters[${ordinal}]`)) };
   });
 
@@ -197,6 +247,13 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
   const elementIds = new Set();
   const owners = new Map();
   const propertyRows = [];
+  const reachedGroups = new Set();
+  const reachedParameters = new Set();
+  let elementGroupReferences = 0;
+  let canonicalPropertyBytes = propertyDocumentBaseBytes;
+  if (canonicalPropertyBytes > propertyLimits.maxCanonicalPropertyBytes) {
+    invalid('canonical property artifact exceeds its byte limit', 'reference-output-too-large');
+  }
   const entities = rawElements.map((element, elementOrdinal) => {
     closed(element,
       ['id', 'revitClass', 'category', 'family', 'type', 'level', 'parameterGroups', 'appearances'], ['ifcGuid'], `elements[${elementOrdinal}]`);
@@ -213,26 +270,44 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
       owners.set(name, id);
       joined.push({ nodeName: name, parts: parts.map((part) => part.primitiveOrdinal ?? 0) });
     }
-    const groups = list(element.parameterGroups, `elements[${elementOrdinal}].parameterGroups`, limits.maxParameters)
+    const groupRefs = list(element.parameterGroups, `elements[${elementOrdinal}].parameterGroups`, limits.maxParameters);
+    if (metadataV2) assertUniqueReferences(groupRefs, `elements[${elementOrdinal}].parameterGroups`);
+    elementGroupReferences += groupRefs.length;
+    const groups = groupRefs
       .map((value, ordinal) => tableIndex(value, parameterGroups, `elements[${elementOrdinal}].parameterGroups[${ordinal}]`));
     const guidValues = [];
-    groups.forEach((group, groupOrdinal) => group.parameters.forEach((parameter, parameterOrdinal) => {
-      if (propertyRows.length >= limits.maxParameters) invalid('expanded property count exceeds its limit', 'reference-output-too-large');
-      propertyRows.push({
-        entityId: `element:${id}`,
-        groupId: `parameter-group:${group.id}`,
-        groupName: group.name,
-        groupOrdinal,
-        parameterId: `parameter:${parameter.id}`,
-        parameterOrdinal,
-        name: parameter.name,
-        unit: parameter.unit,
-        readable: parameter.readable,
-        storageType: parameter.storageType,
-        value: parameter.value,
+    groups.forEach((group, groupOrdinal) => {
+      reachedGroups.add(group.id);
+      group.parameters.forEach((parameter, parameterOrdinal) => {
+        reachedParameters.add(parameter.id);
+        const row = {
+          entityId: `element:${id}`,
+          groupId: `parameter-group:${group.id}`,
+          groupName: group.name,
+          groupOrdinal,
+          parameterId: `parameter:${parameter.id}`,
+          parameterOrdinal,
+          name: parameter.name,
+          unit: parameter.unit,
+          ...(metadataV2
+            ? (parameter.valueEncoding === 'provider-display'
+              ? { valueEncoding: 'provider-display', valueType: parameter.valueType }
+              : { valueEncoding: 'source-storage', readable: parameter.readable, storageType: parameter.storageType })
+            : { readable: parameter.readable, storageType: parameter.storageType }),
+          value: parameter.value,
+        };
+        if (propertyRows.length >= propertyLimits.maxExpandedPropertyRows) invalid('expanded property count exceeds its limit', 'reference-output-too-large');
+        const separatorBytes = propertyRows.length > 0 ? 1 : 0;
+        const nextBytes = canonicalPropertyBytes + separatorBytes + canonicalJsonBytes(row).length;
+        if (!Number.isSafeInteger(nextBytes) || nextBytes > propertyLimits.maxCanonicalPropertyBytes) {
+          invalid('canonical property artifact exceeds its byte limit', 'reference-output-too-large');
+        }
+        canonicalPropertyBytes = nextBytes;
+        propertyRows.push(row);
+        if (parameter.valueEncoding !== 'provider-display' && parameter.name === 'IfcGUID'
+          && parameter.storageType === 'string' && parameter.readable && parameter.value) guidValues.push(parameter.value);
       });
-      if (parameter.name === 'IfcGUID' && parameter.storageType === 'string' && parameter.readable && parameter.value) guidValues.push(parameter.value);
-    }));
+    });
     if (new Set(guidValues).size > 1) invalid(`element ${id} has conflicting IfcGUID parameters`);
     const ifcGuid = guidValues[0] ?? null;
     if (element.ifcGuid !== undefined && element.ifcGuid !== ifcGuid) invalid(`element ${id} redundant ifcGuid does not match its authoritative parameter`);
@@ -263,6 +338,8 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
   }
 
   propertyRows.sort((a, b) => compareDecimal(a.entityId, b.entityId) || a.groupOrdinal - b.groupOrdinal || a.parameterOrdinal - b.parameterOrdinal || compareDecimal(a.parameterId, b.parameterId));
+  const artifactSchemaVersion = metadataV2 ? '2' : '1';
+  let canonicalRelationshipBytes = canonicalJsonBytes({ schemaVersion: artifactSchemaVersion, relationships: [] }).length;
   const relationIds = new Set();
   const relationships = list(metadata.relations, 'relations', limits.maxRelationships).map((relation, index) => {
     closed(relation, ['id', 'kind', 'from', 'to'], ['providerRelationKind'], `relations[${index}]`);
@@ -276,18 +353,26 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
     let providerRelationKind;
     if (relation.kind === 'provider-explicit') {
       providerRelationKind = text(relation.providerRelationKind, `relations[${index}].providerRelationKind`);
-      if (!providerRelationKind || Buffer.byteLength(providerRelationKind) > 256) invalid(`relation ${id} providerRelationKind is invalid`);
+      if (!providerRelationKind || [...providerRelationKind].length > 256) invalid(`relation ${id} providerRelationKind is invalid`);
     } else if (relation.providerRelationKind !== undefined) invalid(`relation ${id} has an unexpected providerRelationKind`);
-    return { id: `relation:${id}`, kind: relation.kind, from: `element:${from}`, to: `element:${to}`, ...(providerRelationKind ? { providerRelationKind } : {}) };
+    const row = { id: `relation:${id}`, kind: relation.kind, from: `element:${from}`, to: `element:${to}`, ...(providerRelationKind ? { providerRelationKind } : {}) };
+    const nextBytes = canonicalRelationshipBytes + (index > 0 ? 1 : 0) + canonicalJsonBytes(row).length;
+    if (!Number.isSafeInteger(nextBytes) || nextBytes > limits.maxComponentJsonBytes) {
+      invalid('canonical relationship artifact exceeds its byte limit', 'reference-output-too-large');
+    }
+    canonicalRelationshipBytes = nextBytes;
+    return row;
   });
   assertAcyclic(relationships, 'contains');
   assertAcyclic(relationships, 'hosts');
   relationships.sort((a, b) => Buffer.compare(Buffer.from(a.kind), Buffer.from(b.kind)) || compareDecimal(a.from, b.from) || compareDecimal(a.to, b.to) || compareDecimal(a.id, b.id));
 
   const unclaimedGeometryNodes = [...geometryByName.keys()].filter((name) => !owners.has(name)).sort((a, b) => Buffer.compare(Buffer.from(a), Buffer.from(b)));
-  const entitiesBytes = canonicalJsonBytes({ schemaVersion: '1', entities });
-  const propertiesBytes = canonicalJsonBytes({ schemaVersion: '1', properties: propertyRows });
-  const relationshipsBytes = canonicalJsonBytes({ schemaVersion: '1', relationships });
+  const entitiesBytes = canonicalJsonBytes({ schemaVersion: artifactSchemaVersion, entities });
+  const propertiesBytes = canonicalJsonBytes({ schemaVersion: artifactSchemaVersion, properties: propertyRows });
+  const relationshipsBytes = canonicalJsonBytes({ schemaVersion: artifactSchemaVersion, relationships });
+  if (propertiesBytes.length !== canonicalPropertyBytes) invalid('canonical property byte accounting mismatch');
+  if (relationshipsBytes.length !== canonicalRelationshipBytes) invalid('canonical relationship byte accounting mismatch');
   for (const [label, bytes] of [['entities', entitiesBytes], ['properties', propertiesBytes], ['relationships', relationshipsBytes]]) {
     if (bytes.length > limits.maxComponentJsonBytes) invalid(`${label} artifact exceeds its byte limit`, 'reference-output-too-large');
   }
@@ -301,6 +386,17 @@ export function normalizeRevitMetadata(input, geometryParts, options = {}) {
     unclaimedGeometryNodes,
     entitySetSha256: digestIds(entities.map((entity) => entity.id)),
     geometryNodeSetSha256: digestIds(geometryByName.keys()),
+    ...(metadataV2 ? {
+      metadataSchemaVersion: '2',
+      nativeParameterGroups: parameterGroups.length,
+      nativeParameters: parameters.length,
+      elementGroupReferences,
+      expandedProperties: propertyRows.length,
+      orphanParameterGroups: parameterGroups.length - reachedGroups.size,
+      orphanParameters: parameters.length - reachedParameters.size,
+      canonicalPropertyBytes: propertiesBytes.length,
+      effectivePropertyLimits: propertyLimits,
+    } : {}),
   };
   return { entities, properties: propertyRows, relationships, entitiesBytes, propertiesBytes, relationshipsBytes, coverage };
 }

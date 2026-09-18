@@ -1,5 +1,5 @@
 agent: model-reference-reader
-version: 0.4.0
+version: 0.7.3
 display-name: Authenticated RVT Reference Reader
 description: |
   Convert a local Revit project into deterministic, authenticated reference-model artifacts without
@@ -11,6 +11,11 @@ description: |
   when the caller pins both its complete fingerprint and exact HTTPS destination. AWARE contains no
   provider, license, cloud credential or vendor HTTP client. First probe may perform the full conversion;
   later reads use a signed content-addressed cache after revalidating every receipt and byte.
+
+  Protocol v3 can describe one signed, operator-enrolled provider package and fingerprint an immutable
+  captured source set. AWARE verifies the package, staged bytes and operator-admitted dependency policy
+  around discovery, then returns a portable effective-source identity. Conversion remains outside this
+  version's v3 surface.
 stateful: false
 vendor: aware-aeco
 license: Apache-2.0
@@ -22,7 +27,7 @@ provenance:
   refined-by: [pawellisowski]
 requires:
   filesystem:
-    - read: '*.rvt'
+    - read: '*'
 skills:
   - provider-and-artifact-contract.md
 transport:
@@ -51,7 +56,27 @@ commands:
       authority-store-path:
         type: string
         required: false
-        description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+        description: Absolute authority-store path for a managed-cloud v2 provider. The provider must independently require its exact installer-enrolled store before reading credentials.
+      reader-schema-version:
+        type: string
+        required: false
+        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; v2 raises the signed default source, metadata, canonical GLB JSON, index, component JSON and canonical-work ceilings while remaining caller-lowerable.
+      property-expansion-limits:
+        type: object
+        required: false
+        description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
+      provider-format:
+        type: string
+        required: false
+        description: Opaque format ID selecting an enrolled protocol-v3 provider package.
+      provider-capability:
+        type: string
+        required: false
+        description: Opaque capability ID declared by the selected provider package.
+      provider-package-sha256:
+        type: string
+        required: false
+        description: Exact enrolled package-manifest SHA-256 required for protocol-v3 preflight.
     outputs:
       type: single
       schema:
@@ -60,6 +85,57 @@ commands:
         providerFingerprintSha256: string
         signerFingerprintSha256: string
         signerPublicKeyBase64: string
+        providerPackageManifestSha256: string
+        package: object
+        capability: object
+  fingerprint-source:
+    lifecycle: single
+    category: curated
+    description: |
+      Capture selected source namespaces and ask the exact enrolled protocol-v3 provider which files
+      it consumes. Return AWARE's portable effective-source object only after the package, capture and
+      operator-admitted dependency policy all verify.
+    inputs:
+      provider-format:
+        type: string
+        required: true
+        description: Opaque format ID selecting an enrolled protocol-v3 provider package.
+      provider-capability:
+        type: string
+        required: true
+        description: Exact capability ID declared by the selected provider package.
+      provider-package-sha256:
+        type: string
+        required: true
+        description: Exact enrolled and selected package-manifest SHA-256.
+      provider-authorization:
+        type: string
+        required: true
+        description: Short-lived opaque authorization transported to the private provider.
+      source-namespaces:
+        type: array
+        required: true
+        description: Ordered logical namespace IDs and absolute local roots selected by the caller.
+      source-capture-limits:
+        type: object
+        required: false
+        description: Optional lower source-capture ceilings; omitted fields use bounded v3 defaults.
+      degraded-mode:
+        type: string
+        required: false
+        description: Refuse degraded discovery by default; use allow only after explicit user choice.
+      expected-signer-sha256:
+        type: string
+        required: false
+        description: Optional out-of-band pin for the AWARE artifact signing key.
+    outputs:
+      type: single
+      schema:
+        effectiveSource: object
+        effectiveSourceSha256: string
+        dependencyPolicySha256: string
+        providerIdentity: object
+        signerFingerprintSha256: string
   probe:
     lifecycle: single
     category: curated
@@ -90,7 +166,19 @@ commands:
       authority-store-path:
         type: string
         required: false
-        description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+        description: Absolute authority-store path for a managed-cloud v2 provider. The provider must independently require its exact installer-enrolled store before reading credentials.
+      conversion-attempt-id:
+        type: string
+        required: false
+        description: Installer-owned durable UUID attempt identity required for a managed-cloud v2 conversion; callers written for reader 0.6.0 must supply it before upgrading to protocol v2.
+      reader-schema-version:
+        type: string
+        required: false
+        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; callers written for reader 0.6.0 must supply this value and a durable conversion attempt ID. Local protocol v1 defaults to model-reference-reader/v1.
+      property-expansion-limits:
+        type: object
+        required: false
+        description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
       expected-signer-sha256:
         type: string
         required: true
@@ -135,7 +223,19 @@ commands:
       authority-store-path:
         type: string
         required: false
-        description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+        description: Absolute authority-store path for a managed-cloud v2 provider. The provider must independently require its exact installer-enrolled store before reading credentials.
+      conversion-attempt-id:
+        type: string
+        required: false
+        description: Installer-owned durable UUID attempt identity required for a managed-cloud v2 conversion; callers written for reader 0.6.0 must supply it before upgrading to protocol v2.
+      reader-schema-version:
+        type: string
+        required: false
+        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; callers written for reader 0.6.0 must supply this value and a durable conversion attempt ID. Local protocol v1 defaults to model-reference-reader/v1.
+      property-expansion-limits:
+        type: object
+        required: false
+        description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
       expected-signer-sha256:
         type: string
         required: true
@@ -181,7 +281,19 @@ commands:
       authority-store-path:
         type: string
         required: false
-        description: Installer-enrolled absolute authority-store path passed only to a managed-cloud v2 provider.
+        description: Absolute authority-store path for a managed-cloud v2 provider. The provider must independently require its exact installer-enrolled store before reading credentials.
+      conversion-attempt-id:
+        type: string
+        required: false
+        description: Installer-owned durable UUID attempt identity required for a managed-cloud v2 conversion; callers written for reader 0.6.0 must supply it before upgrading to protocol v2.
+      reader-schema-version:
+        type: string
+        required: false
+        description: Exact AWARE reader contract. Managed-cloud protocol v2 requires model-reference-reader/v2; callers written for reader 0.6.0 must supply this value and a durable conversion attempt ID. Local protocol v1 defaults to model-reference-reader/v1.
+      property-expansion-limits:
+        type: object
+        required: false
+        description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
       expected-signer-sha256:
         type: string
         required: true

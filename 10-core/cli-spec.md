@@ -89,6 +89,12 @@ aware
 │   ├── repair --installed              refresh all installed stale managed sidecars
 │   └── uninstall <id>                  remove one managed sidecar
 │
+├── provider ...                        manage signed model-provider packages
+│   ├── trust-publisher <key> --publisher-id <id>  enroll an Ed25519 trust root
+│   ├── enroll <absolute-directory>     verify a signed closed package
+│   ├── select <format-id> <manifest-sha256>       select one enrolled package
+│   └── list [--format <format-id>]     list public package/capability metadata
+│
 └── doctor                              health check — config, creds, hosts, registry
 ```
 
@@ -173,7 +179,7 @@ A version after `@` is an **exact key**, not a range. Ranges are an app-pinning 
 
 ### Registry release identity
 
-Every installable registry version entry includes `manifest-agent` and `manifest-version`. These bind the registry key to the identity the extracted `manifest.yaml` must declare; the registry version and manifest version are deliberately separate values. Install and update require both bindings under every trust mode, validate the agent id with one portable filename-safe grammar, validate the manifest version as strict SemVer, and compare both values after extraction before any installed directory is created, removed, or replaced. A rename alias additionally requires `alias-of` to equal `manifest-agent`.
+Every installable registry version entry includes `manifest-agent` and `manifest-version`. These bind the registry key to the identity the extracted `manifest.yaml` must declare; the registry version and manifest version are deliberately separate values. Install and update require both bindings under every trust mode, validate the agent id with one portable filename-safe grammar, validate the manifest version as strict SemVer, and compare both values after extraction before any installed directory is created, removed, or replaced. `manifest-agent` must be the registry key, the key plus a non-empty dotted suffix, or an explicit `alias-of` target; this preserves versioned implementations without permitting an unrelated payload identity. A rename alias additionally requires `alias-of` to equal `manifest-agent`.
 
 Errors before download name the registry key/version and the missing or invalid binding. A payload mismatch names the release, the bound value, and the value the payload actually declared. Bundle install and `agent update --all` inherit the same checks because they call the single-agent install/update paths.
 
@@ -205,6 +211,10 @@ An official bundle is `verified` only when its fresh registry binding, installat
 │                                                    # progress channel. Removed with the run's logs
 ├── cache/
 │   └── registry-index.json             # last-known agent registry index
+├── providers/
+│   ├── publishers/<key-sha256>.json    # locally trusted Ed25519 public keys
+│   ├── packages/<manifest-sha256>.json # verified immutable enrollment records
+│   └── selections/<format-id>.json     # active package plus bounded history
 └── plugins/                            # generated for each agentic CLI host
     ├── claude-code/aware-aeco/
     ├── codex/aware-aeco/
@@ -555,6 +565,26 @@ catalogue and refreshes each with the currently running CLI's release asset. It
 does not accept a consumer-supplied tool list, install absent sidecars, or alter
 legacy PATH copies. A caller queries `sidecar list --json` again after repair to
 observe the authoritative result.
+
+### `aware provider trust-publisher|enroll|select|list`
+
+These operator commands establish a local, format-neutral trust boundary for model-provider
+packages. Package manifests use `aware.model-provider-package/v1`, closed canonical JSON and an
+Ed25519 signature over the manifest SHA-256. They declare opaque package, format and capability IDs,
+protocol version, source-capture/request/result/artifact/cache contract IDs, one relative launcher,
+an AWARE compatibility range and a complete file allowlist with byte counts and SHA-256 receipts.
+
+Enrollment requires an absolute regular directory, a previously trusted publisher and an exact
+inventory containing only the manifest, signature and receipted files. Links, reparse points, extra
+files, unsafe relative paths, duplicate capabilities/files, incompatible versions, signature failure
+and receipt drift are refused. Selection binds an opaque format to an exact enrolled manifest digest
+and increments a local generation while retaining at most eight prior digests.
+
+`list --json` exposes package ID/version, format ID, manifest/publisher digests, declared capabilities
+and selection status. It never exposes the package root, launcher, file allowlist or provider output.
+The `model-reference-reader` protocol-v3 preflight consumes the same selected record and brackets its
+`describe` invocation with complete package re-verification. Protocol-v3 source discovery and
+conversion are outside this first contract slice.
 
 ## Out of scope for the CLI itself
 
