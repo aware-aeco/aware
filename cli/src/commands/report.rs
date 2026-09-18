@@ -60,7 +60,7 @@ fn substrate(ctx: &Context, args: &SubstrateArgs) -> Result<(), AwareError> {
     Ok(())
 }
 
-fn render_substrate_html(agents: &[DiscoveredAgent]) -> String {
+pub(crate) fn render_substrate_html(agents: &[DiscoveredAgent]) -> String {
     let total_agents = agents.len();
     let total_skills: usize = agents.iter().map(|a| a.manifest.skill_count()).sum();
     let total_commands: usize = agents.iter().map(|a| a.manifest.command_count()).sum();

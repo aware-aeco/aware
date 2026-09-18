@@ -43,6 +43,8 @@ mod auth;
 mod builder;
 mod commands;
 mod context;
+#[cfg(test)]
+mod emitted_js_gate;
 mod envelope;
 mod error;
 mod fs;

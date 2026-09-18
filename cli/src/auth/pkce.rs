@@ -10,6 +10,16 @@ use crate::auth::token_response::TokenResponse;
 use crate::auth::urlencode;
 use crate::error::AwareError;
 
+/// The page the browser lands on after the provider redirects back.
+///
+/// Must declare UTF-8 — it contains a non-ASCII glyph (✓); without
+/// `charset=utf-8` the browser falls back to Windows-1252 and renders mojibake
+/// (#157). A named item rather than a literal inside [`run_pkce_flow`] so that
+/// `emitted_js_gate` can parse-check the script it carries.
+pub(crate) const CALLBACK_PAGE: &str = "<html><head><meta charset=\"utf-8\"></head>\
+    <body><h1>\u{2713} Authenticated</h1><p>You can close this tab.</p>\
+    <script>setTimeout(()=>window.close(),500)</script></body></html>";
+
 pub fn run_pkce_flow(
     config: &IntegrationConfig,
     extra_scopes: &[String],
@@ -73,13 +83,8 @@ pub fn run_pkce_flow(
         ));
     }
 
-    // 7. Respond to browser. Must declare UTF-8 — the page contains a non-ASCII
-    // glyph (✓); without `charset=utf-8` the browser falls back to Windows-1252
-    // and renders mojibake (#157).
-    let html = "<html><head><meta charset=\"utf-8\"></head>\
-                <body><h1>\u{2713} Authenticated</h1><p>You can close this tab.</p>\
-                <script>setTimeout(()=>window.close(),500)</script></body></html>";
-    let response = super::html_response(html);
+    // 7. Respond to browser.
+    let response = super::html_response(CALLBACK_PAGE);
     let _ = request.respond(response);
 
     // 8. Exchange code for token

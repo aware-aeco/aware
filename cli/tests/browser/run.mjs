@@ -1,10 +1,16 @@
 #!/usr/bin/env node
-// Browser gate for viewer-3d's clip editing. ONE entry point: it parse-checks the template, renders
-// fixtures through the WORKTREE build, serves them, drives Playwright, cleans up, and exits nonzero
-// on any failed assertion — so "the gate passed" is distinguishable from clicking around by hand.
+// Browser gate for viewer-3d's clip editing. ONE entry point: it renders fixtures through the
+// WORKTREE build, serves them, drives Playwright, cleans up, and exits nonzero on any failed
+// assertion — so "the gate passed" is distinguishable from clicking around by hand.
 //
-// This is a pre-PR gate run on demand, NOT CI: this repo has no Rust CI job at all, declares no
-// Playwright dependency, and the template loads Three.js from a CDN (so the run needs network).
+// This is a pre-PR gate run on demand, NOT CI: it declares a Playwright dependency the workflows do
+// not install, and the template loads Three.js from a CDN (so the run needs network).
+//
+// It no longer parse-checks the template. That step sliced the module script out of
+// `viewer_3d.rs`'s source text, so it saw neither the classic bootstrap script nor anything the
+// renderer substitutes in, and it ran only when somebody remembered to. `cargo test` owns it now:
+// `cli/src/emitted_js_gate.rs` renders every HTML surface the crate emits and parses each inline
+// script under the goal a browser would use, on every PR (#518).
 //
 // Usage:  node cli/tests/browser/run.mjs
 
@@ -26,26 +32,6 @@ const ok = (name, cond, detail = '') => {
   failures++; console.log(`  FAIL  ${name}${detail ? ` — ${detail}` : ''}`);
 };
 const near = (a, b, tol = 0.5) => Math.abs(a - b) <= tol;
-
-// ---- step 0: the template must be syntactically valid JS -------------------------------------
-// The Rust tests are all string-contains, so a syntax error in the embedded module would still
-// "render" and pass every one of them. This catches it in milliseconds, with no browser.
-function parseCheckTemplate() {
-  const src = readFileSync(join(CLI, 'src/render/viewer_3d.rs'), 'utf8');
-  const t0 = src.indexOf('const TEMPLATE'), t1 = src.indexOf('"##;', t0);
-  const tpl = src.slice(t0, t1);
-  const a = tpl.indexOf('<script type="module">'), b = tpl.indexOf('</script>', a);
-  const js = tpl.slice(a + '<script type="module">'.length, b)
-    .replace(/^\s*import[^;]+;\s*$/gm, '')
-    .replace('__SCENE_JSON__', '{}');
-  // `new Function` here COMPILES but never runs the body, and the input is this repo's own source
-  // file — anyone able to change it already has code execution. It is a parse check, not an eval of
-  // anything external; the alternative is adding a JS parser dependency to a Rust repo.
-  // An empty slice would compile happily and report PASS, so prove the extraction found something.
-  if (js.length < 5000) { ok('template module script parses', false, `extraction produced only ${js.length} chars — the script markers moved`); return; }
-  try { new Function(js); ok('template module script parses', true); }
-  catch (e) { ok('template module script parses', false, e.message); }
-}
 
 // ---- fixtures: rendered by the WORKTREE build, never a globally installed release --------------
 // `aware agent invoke …` off PATH resolves whatever CLI and agent happen to be installed, which
@@ -156,10 +142,7 @@ async function loadPlaywright() {
 
 (async () => {
   console.log('viewer-3d clip browser gate\n');
-  console.log('template:');
-  parseCheckTemplate();
-
-  console.log('\nfixtures (rendered by the worktree build in a temp AWARE_HOME):');
+  console.log('fixtures (rendered by the worktree build in a temp AWARE_HOME):');
   const pages = {
     '/zup.html': renderFixture(frameScene('z')), '/yup.html': renderFixture(frameScene('y')),
     '/roll-z.html': renderFixture(rollScene('z')), '/roll-y.html': renderFixture(rollScene('y')),

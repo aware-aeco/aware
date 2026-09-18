@@ -745,7 +745,7 @@ data-action-id=\"{}\"{inputs_attr}>{}</button></div>",
 // ── tests ────────────────────────────────────────────────────────────────────
 
 #[cfg(test)]
-mod tests {
+pub(crate) mod tests {
     use super::*;
     use serde_json::json;
 
@@ -965,7 +965,7 @@ mod tests {
 
     // ── render ──────────────────────────────────────────────────────────────
 
-    fn render_args() -> Value {
+    pub(crate) fn render_args() -> Value {
         json!({
             "descriptor": full_descriptor(),
             "data": {
