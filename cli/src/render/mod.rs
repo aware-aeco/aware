@@ -35,14 +35,28 @@ pub(super) fn abs_path(path: &str) -> String {
 /// (#205, pinned by `render_config_unresolved_whole_value_falls_back_to_empty_string`).
 /// Refusing either would turn "the author left it out" into a failed run.
 ///
+/// The `null` arm is reachable only from a hand-written literal — NOT from a
+/// template. `render_config` intercepts a whole-value ref that resolves to null
+/// and re-renders it leniently, and minijinja prints a null as the literal text
+/// `none`, so `output-path: "{{ reader.out_path }}"` over a null arrives here as
+/// the string `"none"` and writes a file called `none`. That is a separate
+/// silent-wrong-output bug at #205's layer (it hits every string param, not just
+/// this one) and this guard cannot see it — recorded so the next reader does not
+/// take the null case as covered.
+///
 /// A number, boolean, array or object is none of those things. Every manifest
-/// that reaches here declares `output-path: {type: string}` —
-/// `20-agents/_core/{html-report,ui,viewer-3d,ifc}/manifest.yaml` — so a
-/// non-string is a typed mistake, and reading it as an opt-out loses the
-/// artifact in silence: the node returns no `path` key, no file is written, and
-/// the run exits 0. Refusing it enforces the published contract rather than
-/// changing it, and closes a direct asymmetry with `render::file`, whose
-/// `req_path` already refuses a non-string `path` (#549 item 5).
+/// that reaches here declares `output-path: {type: string}` — the four callers
+/// today are `20-agents/_core/{html-report,ui,viewer-3d,ifc}/manifest.yaml`. That
+/// declaration is contract documentation, not a runtime check: nothing
+/// type-checks a builtin node's config against a manifest `inputs:` schema
+/// (`validate.rs` has no param-type pass), so this guard is the only place the
+/// declared type is enforced — do not mistake it for dead code. Reading a
+/// non-string as an opt-out loses the artifact in silence: the node returns no
+/// `path` key, no file is written, and the run exits 0. Refusing it enforces the
+/// published contract rather than changing it, and closes the non-string half of
+/// a direct asymmetry with `render::file`, whose required `path` refuses a
+/// non-string outright (#549 item 5). The blank-string half stays: `path` is
+/// required there and `output-path` is optional here, so `""` is an opt-out.
 fn output_path_arg<'a>(
     args: &'a serde_json::Value,
     label: &str,
@@ -106,6 +120,11 @@ pub(super) fn write_artifact(
 
     // Real run only: a preview returns the would-be path and size but never
     // touches disk.
+    //
+    // The two I/O arms below stay `Internal` (exit 1) beside the `Validation`
+    // (exit 3) above, so a permission-denied write is indistinguishable from a
+    // missing parent. That is knowingly wrong and is #549 item 6's to fix,
+    // across this module and `render::file` together — not settled here.
     if !dry_run {
         if let Some(parent) = std::path::Path::new(path).parent()
             && !parent.as_os_str().is_empty()
@@ -140,11 +159,14 @@ mod tests {
         out
     }
 
-    /// The three spellings of "no artifact", each deliberate: the key absent, an
+    /// The spellings of "no artifact", each deliberate: the key absent, an
     /// explicit `null` (what a valueless YAML `output-path:` parses to), and a
-    /// blank string (what an unresolved optional `{{ }}` ref renders to, #205).
-    /// None may become a refusal — that would fail runs the author wrote
-    /// correctly.
+    /// blank string — whether empty (what an unresolved optional `{{ }}` ref
+    /// renders to, #205) or whitespace-only (a padded literal). None may become
+    /// a refusal: that would fail runs the author wrote correctly.
+    ///
+    /// The whitespace cases are spelled out rather than represented by spaces
+    /// alone, so narrowing the trim to `trim_matches(' ')` cannot pass this.
     #[test]
     fn no_output_path_leaves_the_response_untouched() {
         for args in [
@@ -152,6 +174,9 @@ mod tests {
             json!({ "output-path": null }),
             json!({ "output-path": "" }),
             json!({"output-path": "   "}),
+            json!({ "output-path": "\t" }),
+            json!({ "output-path": "\n" }),
+            json!({ "output-path": " \t\n " }),
         ] {
             let out = call(args.clone(), false, b"x");
             assert!(
@@ -167,29 +192,49 @@ mod tests {
     /// manifest reaching here declares `output-path: {type: string}`, so these
     /// are typed mistakes, not opt-outs.
     ///
-    /// Asserted per shape rather than in one lump: a guard that refuses only
-    /// *some* non-strings would pass a test that checked a single fixture.
+    /// Asserted per shape AND per value within a shape: a guard that refuses only
+    /// *some* non-strings would pass a test that checked a single fixture. The
+    /// falsy and empty instances (`false`, `0`, `[]`, `{}`) are the ones a
+    /// permissive carve-out would reach for — `output-path: false` is the
+    /// obvious spelling of "turn the artifact off", and `[]` / `{}` are what a
+    /// `{{ }}` ref to an empty collection renders to. Each would reintroduce a
+    /// scoped version of the bug this test exists for.
+    ///
+    /// The `label` is driven from the table, not from a constant: with one
+    /// fixture the assertion could not tell an interpolated label from a
+    /// hardcoded one, and three of the four callers pass a different label
+    /// (`ui render`, `viewer-3d`, `ifc`), so a hardcoded one would blame the
+    /// wrong node in a multi-node app.
     #[test]
     fn a_non_string_output_path_is_refused_rather_than_read_as_no_artifact() {
-        for (value, want_type) in [
-            (json!(123), "number"),
-            (json!(1.5), "number"),
-            (json!(true), "boolean"),
-            (json!(["x"]), "array"),
-            (json!({ "p": "x" }), "object"),
+        for (value, want_type, label) in [
+            (json!(123), "number", "html-report"),
+            (json!(0), "number", "ifc"),
+            (json!(1.5), "number", "ui render"),
+            (json!(true), "boolean", "viewer-3d"),
+            (json!(false), "boolean", "html-report"),
+            (json!(["x"]), "array", "ifc"),
+            (json!([]), "array", "ui render"),
+            (json!({ "p": "x" }), "object", "viewer-3d"),
+            (json!({}), "object", "html-report"),
         ] {
-            // The refusal does not depend on the mode: a preview must not
-            // green-light a config the real run would reject.
+            // Both values of the `dry_run` flag: a `--dry-run` must not
+            // green-light a config the real run would reject. (`--simulate`
+            // stubs a read node upstream, so it never reaches here at all.)
             for dry_run in [true, false] {
                 let mut out = serde_json::Map::new();
-                let err = write_artifact(
+                let Err(err) = write_artifact(
                     &mut out,
                     &json!({ "output-path": value.clone() }),
                     dry_run,
                     b"REPORT",
-                    "html-report",
-                )
-                .expect_err("{value} is not a path, and skipping the write loses the artifact");
+                    label,
+                ) else {
+                    panic!(
+                        "{value} is not a path; skipping the write loses the artifact \
+                         (dry_run={dry_run})"
+                    )
+                };
 
                 assert_eq!(
                     err.exit_code(),
@@ -202,8 +247,8 @@ mod tests {
                     "the message must name the shape that arrived: {msg}"
                 );
                 assert!(
-                    msg.contains("html-report: `output-path`"),
-                    "the message must name the primitive and the argument: {msg}"
+                    msg.starts_with(&format!("validation failed: {label}: `output-path`")),
+                    "the message must name the CALLING primitive and the argument: {msg}"
                 );
                 assert!(
                     out.is_empty(),
@@ -211,21 +256,6 @@ mod tests {
                 );
             }
         }
-    }
-
-    /// The refusal is about the *type*, not about the key being unwelcome: a
-    /// well-formed string at the same key still writes. Without this, a guard
-    /// that rejected `output-path` outright would pass the test above.
-    #[test]
-    fn a_string_output_path_still_writes_after_the_type_guard() {
-        let tmp = tempfile::tempdir().unwrap();
-        let path = tmp.path().join("report.html");
-        let ps = path.to_string_lossy().to_string();
-
-        let out = call(json!({ "output-path": ps.clone() }), false, b"REPORT");
-
-        assert_eq!(std::fs::read(&path).unwrap(), b"REPORT");
-        assert_eq!(out["output-path"], json!(ps));
     }
 
     #[test]

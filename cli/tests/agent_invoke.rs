@@ -294,3 +294,58 @@ fn invoke_rejects_non_object_inputs() {
         .code(3)
         .stderr(predicate::str::contains("must be a JSON object"));
 }
+
+/// #549 item 5: a non-string `output-path` used to be read as "no artifact was
+/// asked for" — the write was skipped, the response carried no `path` key, and
+/// the run exited 0. The unit tests in `render::mod` pin the refusal itself;
+/// this pins the two things only the real binary can show.
+///
+/// 1. The refusal survives the whole dispatch path and becomes **process exit
+///    3**. Every unit assertion is on an in-process `AwareError`, so nothing
+///    there proves the invoker propagates it rather than swallowing it — which
+///    is the exact "exits 0 anyway" failure this change exists to end.
+/// 2. The message names the **calling** primitive. `write_artifact` takes the
+///    label as a parameter and three of the four callers pass something other
+///    than `html-report`, so a hardcoded label would blame the wrong node in a
+///    multi-node app. Driving it through `ui render` is what catches that.
+#[test]
+fn a_non_string_output_path_is_refused_with_exit_3_and_names_the_calling_agent() {
+    let home = home_with_ui();
+    let tmp = tempfile::tempdir().unwrap();
+    // A path that would be written if the guard let a non-string through by
+    // some other route: its absence at the end is part of the assertion.
+    let never = tmp.path().join("never-written.html");
+    assert!(!never.exists());
+
+    for bad in ["123", "false", "[]", "{}"] {
+        let args = format!(
+            r#"{{
+              "descriptor": {{
+                "version": 1,
+                "panels": [{{
+                  "id": "p", "slot": "dashboard", "title": "T",
+                  "blocks": [{{ "type": "stat", "label": "N", "value": 7 }}]
+                }}]
+              }},
+              "output-path": {bad}
+            }}"#
+        );
+        Command::cargo_bin("aware")
+            .unwrap()
+            .env("AWARE_HOME", home.path())
+            .args(["agent", "invoke", "ui", "render", "--inputs", &args])
+            .assert()
+            .failure()
+            .code(3) // Validation — a caller mistake, not an internal error
+            // `ui render`, NOT the `html-report` the unit test uses: the label
+            // has to come from the caller.
+            .stderr(predicate::str::contains(
+                "ui render: `output-path` must be a string",
+            ));
+    }
+
+    assert!(
+        !never.exists(),
+        "a refused render must not have written anything"
+    );
+}
