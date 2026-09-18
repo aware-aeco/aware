@@ -2098,9 +2098,14 @@ mod tests {
             ("Cc", "copied@example.com"),
             ("Bcc", "blind@example.com"),
         ] {
-            let addresses = parsed
-                .header(header)
-                .and_then(|value| value.as_address())
+            // Every field of this name, not `header()`: that returns ONE match,
+            // so a duplicate field emitted alongside the real one — say a second
+            // `Cc` carrying the blind address — would be invisible to it and the
+            // "none appears twice" in this test's name would go unchecked.
+            let fields = parsed.header_values(header).collect::<Vec<_>>();
+            assert_eq!(fields.len(), 1, "{header} must be emitted exactly once");
+            let addresses = fields[0]
+                .as_address()
                 .and_then(|address| address.as_list())
                 .map(|list| {
                     list.iter()
