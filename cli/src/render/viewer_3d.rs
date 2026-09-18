@@ -4014,8 +4014,8 @@ mod tests {
         // (`cli/tests/browser/run.mjs`) is a manual pre-PR step needing Playwright and a CDN.
         // It is the same shape the surrounding template tests already use. Issue #432.
         //
-        // Parsing it is now covered — `cli/scripts/parse-check-embedded-js.mjs` runs in `ci.yml`
-        // and rejects a template whose script does not compile. That closes the hole where a
+        // Parsing it is now covered — `emitted_js_gate` (under `cargo test`) renders this template
+        // and rejects it if any of its scripts does not compile. That closes the hole where a
         // syntax error anywhere in this module passed all 51 tests in this file, but it proves
         // syntax only: a contract like the one below still needs an assertion of its own.
         let output =

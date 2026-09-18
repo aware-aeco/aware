@@ -1,18 +1,16 @@
 #!/usr/bin/env node
-// Browser gate for viewer-3d's clip editing. ONE entry point: it parse-checks the template, renders
-// fixtures through the WORKTREE build, serves them, drives Playwright, cleans up, and exits nonzero
-// on any failed assertion — so "the gate passed" is distinguishable from clicking around by hand.
+// Browser gate for viewer-3d's clip editing. ONE entry point: it renders fixtures through the
+// WORKTREE build, serves them, drives Playwright, cleans up, and exits nonzero on any failed
+// assertion — so "the gate passed" is distinguishable from clicking around by hand.
 //
 // This is a pre-PR gate run on demand, NOT CI: it declares a Playwright dependency the workflows do
-// not install, and the template loads Three.js from a CDN (so the run needs network). It used to say
-// "this repo has no Rust CI job at all" as well; `ci.yml` (#298) ended that, and the parse check
-// below was left stranded outside CI on a reason that had stopped being true.
+// not install, and the template loads Three.js from a CDN (so the run needs network).
 //
-// The parse check is therefore no longer implemented here. `cli/scripts/parse-check-embedded-js.mjs`
-// owns it, runs in `ci.yml` on every PR, and covers every inline script the crate emits rather than
-// only this template's module — the viewer's classic bootstrap script and `aware report`'s search
-// script were checked by nothing at all while this file looked like their gate. Step 0 delegates to
-// it so the two can never drift into disagreeing parse checks.
+// It no longer parse-checks the template. That step sliced the module script out of
+// `viewer_3d.rs`'s source text, so it saw neither the classic bootstrap script nor anything the
+// renderer substitutes in, and it ran only when somebody remembered to. `cargo test` owns it now:
+// `cli/src/emitted_js_gate.rs` renders every HTML surface the crate emits and parses each inline
+// script under the goal a browser would use, on every PR (#518).
 //
 // Usage:  node cli/tests/browser/run.mjs
 
@@ -22,7 +20,6 @@ import { mkdtempSync, rmSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { checkEmbeddedScripts } from '../../scripts/parse-check-embedded-js.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CLI = resolve(HERE, '../..');           // cli/
@@ -35,43 +32,6 @@ const ok = (name, cond, detail = '') => {
   failures++; console.log(`  FAIL  ${name}${detail ? ` — ${detail}` : ''}`);
 };
 const near = (a, b, tol = 0.5) => Math.abs(a - b) <= tol;
-
-// ---- step 0: every script the crate emits must be syntactically valid JS ----------------------
-// The Rust tests are all string-contains, so a syntax error in an embedded script would still
-// "render" and pass every one of them. This catches it in milliseconds, with no browser.
-//
-// Delegated to the CI gate rather than reimplemented: this file's own version parsed the template's
-// module and nothing else, and ran only when somebody remembered to. Keeping one implementation is
-// what stops a script from being covered here, there, or — as the classic bootstrap script was —
-// neither.
-//
-// ONE call, and deliberately nothing else. Twice this file delegated the pieces and got the whole
-// wrong: it imported `collect`/`parseError` but kept its own `blocks.length < 5` floor after the CI
-// entry point moved to the per-file table, so it passed over a missing script; and the Rust gate
-// added to stop that checked only that `shortfall` was imported, which deleting the call left true
-// (Codex reviews, #518). Assembling three primitives here is three chances to leave one out, so the
-// shared script now owns the whole step and this reports what it returns.
-//
-// KEEP IT ONE CALL. Nothing enforces that any more: `cli/tests/embedded_js_gate.rs` used to police
-// the shape of this function and its assertions were deleted, because deciding what is code in a
-// JavaScript file from a Rust test needs a lexer, and the hand-rolled one was wrong four ways in
-// review (that file's header records which). So this is a convention now, not a gate. If you find
-// yourself reaching for `collect`, `shortfall` or `parseError` here, or writing a block count of
-// your own, the thing you want belongs in `checkEmbeddedScripts` where both callers get it.
-function parseCheckTemplate() {
-  const { blocks, splits, short, failures } = checkEmbeddedScripts(CLI);
-  for (const s of splits) {
-    ok(`${s.file}:${s.line} keeps its script in one string literal`, false,
-       `${s.opens} opener(s) vs ${s.closes} closer(s) — a split script is one the scan cannot read`);
-  }
-  for (const line of short) ok(`inventory: ${line}`, false);
-  if (splits.length > 0 || short.length > 0) return;
-  const broken = new Map(failures.map((f) => [`${f.file}:${f.line}`, f.err]));
-  for (const b of blocks) {
-    const at = `${b.file}:${b.line}`;
-    ok(`${at} ${b.goal} script parses`, !broken.has(at), broken.get(at) || '');
-  }
-}
 
 // ---- fixtures: rendered by the WORKTREE build, never a globally installed release --------------
 // `aware agent invoke …` off PATH resolves whatever CLI and agent happen to be installed, which
@@ -182,10 +142,7 @@ async function loadPlaywright() {
 
 (async () => {
   console.log('viewer-3d clip browser gate\n');
-  console.log('template:');
-  parseCheckTemplate();
-
-  console.log('\nfixtures (rendered by the worktree build in a temp AWARE_HOME):');
+  console.log('fixtures (rendered by the worktree build in a temp AWARE_HOME):');
   const pages = {
     '/zup.html': renderFixture(frameScene('z')), '/yup.html': renderFixture(frameScene('y')),
     '/roll-z.html': renderFixture(rollScene('z')), '/roll-y.html': renderFixture(rollScene('y')),

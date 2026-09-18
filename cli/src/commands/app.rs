@@ -1861,7 +1861,7 @@ fn open_in_browser(path: &std::path::Path) -> Result<(), std::io::Error> {
 
 /// Render the Glass Box single-file HTML viewer for a compiled lockfile.
 /// Pure-string concatenation; no external deps.
-fn render_glass_box_html(lock: &crate::app_lock::LockFile) -> String {
+pub(crate) fn render_glass_box_html(lock: &crate::app_lock::LockFile) -> String {
     let mut nodes_html = String::new();
     for node in &lock.nodes {
         let mode_class = if node.mode == "write" {

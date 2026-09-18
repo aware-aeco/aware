@@ -82,7 +82,7 @@ fn progress(json: bool, message: &str) {
     }
 }
 
-fn render_paste_form(integration: &str) -> String {
+pub(crate) fn render_paste_form(integration: &str) -> String {
     format!(
         r##"<!DOCTYPE html>
 <html lang="en">
@@ -114,7 +114,7 @@ button:hover {{ background: #1d4ed8; }}
     )
 }
 
-fn render_success_page() -> String {
+pub(crate) fn render_success_page() -> String {
     String::from(
         r##"<!DOCTYPE html>
 <html lang="en">
