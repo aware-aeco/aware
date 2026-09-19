@@ -1132,6 +1132,8 @@ fn atomic_rename(source: &Path, destination: &Path, replace: bool) -> std::io::R
 mod tests {
     use super::*;
 
+    use serde_json::json;
+
     fn valid_manifest() -> PackageManifest {
         PackageManifest {
             schema_version: MANIFEST_SCHEMA.into(),
@@ -1178,5 +1180,992 @@ mod tests {
             }
             assert!(validate_manifest(&manifest).is_err(), "{field} version");
         }
+    }
+
+    /// SHA-256 of the empty input and of `abc` — the two most widely published
+    /// SHA-256 vectors (`abc` is NIST's worked example; the empty-input digest
+    /// is the CAVP `SHA256ShortMsg` Len=0 value). Hard-coding them keeps
+    /// [`sha256_hex`] and [`hex_digest_bytes`] honest against an answer from
+    /// outside this crate rather than against each other.
+    const EMPTY_SHA256: &str = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
+    const ABC_SHA256: &str = "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad";
+
+    fn valid_selection() -> SelectionRecord {
+        SelectionRecord {
+            schema_version: SELECTION_SCHEMA.into(),
+            format_id: "format.synthetic".into(),
+            generation: 4,
+            active_manifest_sha256: "a".repeat(64),
+            previous_manifest_sha256: vec!["b".repeat(64), "c".repeat(64)],
+        }
+    }
+
+    fn valid_admission() -> DependencyPolicyAdmission {
+        DependencyPolicyAdmission {
+            schema_version: POLICY_ADMISSION_SCHEMA.into(),
+            policy_id: "policy.synthetic".into(),
+            roles: vec![
+                DependencyPolicyRole {
+                    role: "role.required".into(),
+                    classification: "mandatory".into(),
+                    affected_domains: vec![],
+                },
+                DependencyPolicyRole {
+                    role: "role.partial".into(),
+                    classification: "degraded".into(),
+                    affected_domains: vec!["domain.geometry".into()],
+                },
+            ],
+        }
+    }
+
+    // ---------------------------------------------------------------------
+    // validate_relative_path — the guard standing between a package manifest
+    // and an arbitrary write target on the host.
+    // ---------------------------------------------------------------------
+
+    #[test]
+    fn package_paths_refuse_the_known_escape_spellings() {
+        // Not "every way out": `validate_relative_path` tests `ends_with(['.',
+        // ' '])` against the whole string rather than each component, so
+        // `bin./provider` is accepted today and aliases `bin/provider` on
+        // Win32 by the same stripping rule the two cases below rely on. That
+        // gap is in production code and is reported rather than changed here.
+        for escape in [
+            "../outside",        // ParentDir component
+            "bin/../../outside", // ParentDir after a Normal component
+            "./bin/provider",    // CurDir component
+            "/etc/passwd",       // RootDir component
+            "bin\\provider", // on Windows two Normal components, so the backslash check is the only guard
+            "C:bin",         // drive-relative; on Unix the colon check is the only guard
+            "provider.bin.", // trailing dot — Win32 strips it, so it aliases another file
+            "provider.bin ", // trailing space — same aliasing
+            "",              // empty
+        ] {
+            assert!(
+                validate_relative_path(escape).is_err(),
+                "{escape:?} must not be accepted as a package-relative path"
+            );
+        }
+    }
+
+    #[test]
+    fn package_paths_accept_plain_relative_spellings_up_to_the_length_bound() {
+        for ok in ["provider.bin", "bin/provider", "a/b/c/d.so", "lib/.keep"] {
+            validate_relative_path(ok)
+                .unwrap_or_else(|error| panic!("{ok:?} is a normalized relative path: {error:?}"));
+        }
+        let boundary = "a".repeat(512);
+        validate_relative_path(&boundary).unwrap();
+        assert!(validate_relative_path(&"a".repeat(513)).is_err());
+    }
+
+    // ---------------------------------------------------------------------
+    // validate_sha256 / validate_id — the shapes every record key is built from.
+    // ---------------------------------------------------------------------
+
+    #[test]
+    fn digests_must_be_exactly_sixty_four_lowercase_hex_characters() {
+        validate_sha256(&"0".repeat(64), "digest").unwrap();
+        validate_sha256(ABC_SHA256, "digest").unwrap();
+        for bad in [
+            "a".repeat(63),                 // one short
+            "a".repeat(65),                 // one long
+            ABC_SHA256.to_uppercase(),      // uppercase hex is a different filename on Unix
+            format!("{}g", "a".repeat(63)), // out-of-alphabet
+            format!("{} ", "a".repeat(63)), // trailing space
+            String::new(),
+        ] {
+            assert!(
+                validate_sha256(&bad, "digest").is_err(),
+                "{bad:?} must not pass as a digest"
+            );
+        }
+    }
+
+    #[test]
+    fn identifiers_are_bounded_and_rejected_outside_their_alphabet() {
+        validate_id("format.synthetic-1_0", "id").unwrap();
+        validate_id(&"a".repeat(128), "id").unwrap();
+        for bad in [
+            "a".repeat(129), // one past the bound
+            String::new(),   // empty — would collapse a record filename
+            "a/b".into(),    // separator
+            "a\\b".into(),   // Windows separator
+            "a b".into(),    // whitespace
+            "a+b".into(),    // outside the alphabet
+            "café".into(),   // non-ASCII
+        ] {
+            assert!(
+                validate_id(&bad, "id").is_err(),
+                "{bad:?} must not pass as an id"
+            );
+        }
+    }
+
+    #[test]
+    fn the_identifier_alphabet_is_exactly_ascii_alphanumerics_dot_underscore_and_dash() {
+        // Pinned exhaustively rather than by sample: every record filename in
+        // the store is an id with a suffix pasted on, so widening this alphabet
+        // by one byte is how an id would start naming something else.
+        let accepted = (0_u8..=127)
+            .filter(|byte| validate_id(&(*byte as char).to_string(), "id").is_ok())
+            .collect::<BTreeSet<_>>();
+        let expected = (b'0'..=b'9')
+            .chain(b'A'..=b'Z')
+            .chain(b'a'..=b'z')
+            .chain([b'.', b'_', b'-'])
+            .collect::<BTreeSet<_>>();
+        assert_eq!(accepted, expected);
+    }
+
+    #[test]
+    fn a_validated_identifier_always_stays_one_child_of_its_directory() {
+        // `.` is in the alphabet, so `.` and `..` are both accepted ids. That is
+        // harmless only because the two paths built from an id paste a suffix
+        // on — `selections/{id}.json` and `locks/selection-{id}.lock`, so `..`
+        // becomes the filename `...json` — and because no separator can get
+        // through. (The publisher, package and policy records are named from a
+        // digest instead, and are guarded by `validate_sha256`, not this.)
+        // Assert the consequence over the whole accepted alphabet, not the rule.
+        //
+        // `starts_with` is load-bearing and a component count alone is not:
+        // `Path::join` REPLACES the base when handed an absolute path, so an id
+        // of `/` yields `/.json` — which has two components just like
+        // `root/a.json` does, and would satisfy a count-only assertion while
+        // naming a file at the filesystem root. Multi-character ids are checked
+        // too, so `..` is run through `validate_id` rather than asserted on a
+        // hard-coded literal that never reaches production code.
+        let mut candidates = (0_u8..=127)
+            .map(|byte| (byte as char).to_string())
+            .collect::<Vec<_>>();
+        candidates.extend([".".into(), "..".into(), "a.b".into(), "a..b".into()]);
+        let mut accepted = 0_usize;
+        for id in candidates {
+            if validate_id(&id, "id").is_err() {
+                continue;
+            }
+            accepted += 1;
+            for joined in [
+                Path::new("root").join(format!("{id}.json")),
+                Path::new("root").join(format!("selection-{id}.lock")),
+            ] {
+                assert!(
+                    joined.starts_with("root") && joined.components().count() == 2,
+                    "id {id:?} did not stay a single child of its directory: {joined:?}"
+                );
+            }
+        }
+        // `..` and `.` are among them; a scan that silently matched nothing
+        // would otherwise assert the invariant over the empty set.
+        assert_eq!(accepted, 69, "the accepted alphabet changed size");
+    }
+
+    // ---------------------------------------------------------------------
+    // Digest helpers, against published vectors.
+    // ---------------------------------------------------------------------
+
+    #[test]
+    fn digest_helpers_agree_with_the_published_sha256_vectors() {
+        assert_eq!(sha256_hex(b""), EMPTY_SHA256);
+        assert_eq!(sha256_hex(b"abc"), ABC_SHA256);
+
+        // The raw bytes the signature is verified over: a transposition or a
+        // wrong radix here would verify a signature against the wrong message.
+        assert_eq!(
+            hex_digest_bytes(EMPTY_SHA256).unwrap(),
+            [
+                0xe3, 0xb0, 0xc4, 0x42, 0x98, 0xfc, 0x1c, 0x14, 0x9a, 0xfb, 0xf4, 0xc8, 0x99, 0x6f,
+                0xb9, 0x24, 0x27, 0xae, 0x41, 0xe4, 0x64, 0x9b, 0x93, 0x4c, 0xa4, 0x95, 0x99, 0x1b,
+                0x78, 0x52, 0xb8, 0x55,
+            ]
+        );
+        assert!(hex_digest_bytes(&ABC_SHA256.to_uppercase()).is_err());
+        assert!(hex_digest_bytes("abc").is_err());
+    }
+
+    #[test]
+    fn hashing_a_file_reports_its_length_and_digest_and_refuses_indirection() {
+        let tmp = tempfile::tempdir().unwrap();
+        let file = tmp.path().join("payload");
+        std::fs::write(&file, b"abc").unwrap();
+        assert_eq!(
+            hash_regular_file(&file).unwrap(),
+            (3, ABC_SHA256.to_string())
+        );
+
+        let empty = tmp.path().join("empty");
+        std::fs::write(&empty, b"").unwrap();
+        assert_eq!(
+            hash_regular_file(&empty).unwrap(),
+            (0, EMPTY_SHA256.to_string())
+        );
+
+        match hash_regular_file(tmp.path()) {
+            Err(AwareError::Validation(_)) => {}
+            other => {
+                panic!("a directory must be refused as a non-file, not by a read error: {other:?}")
+            }
+        }
+        assert!(matches!(
+            hash_regular_file(&tmp.path().join("absent")),
+            Err(AwareError::Io(error)) if error.kind() == std::io::ErrorKind::NotFound
+        ));
+
+        #[cfg(unix)]
+        {
+            // Note this does NOT isolate the explicit `is_symlink()` clause:
+            // `symlink_metadata` already reports a link as `!is_file()`, so on
+            // Unix that clause is redundant and deleting it leaves this green.
+            // It is load-bearing only on Windows, via `is_reparse_point`, where
+            // `cargo test` never runs — recorded in the pull request.
+            let link = tmp.path().join("link");
+            std::os::unix::fs::symlink(&file, &link).unwrap();
+            assert!(
+                hash_regular_file(&link).is_err(),
+                "a receipt must not be satisfied through a symlink"
+            );
+        }
+    }
+
+    // ---------------------------------------------------------------------
+    // canonical_json_bytes — the encoding a manifest's on-disk bytes must
+    // already equal before enrollment will digest them. The digest itself is
+    // taken over the raw file bytes (`sha256_hex(&manifest_bytes)`); this
+    // function is the equality gate in front of it, so if the sort were wrong
+    // the gate would reject canonical manifests and admit the spelling the
+    // sort happens to produce. `serde_json` is built here with
+    // `preserve_order`, so without the recursive sort the bytes would follow
+    // insertion order rather than being sorted.
+    // ---------------------------------------------------------------------
+
+    #[test]
+    fn canonical_json_sorts_keys_at_every_depth_including_inside_arrays() {
+        let value = json!({
+            "b": 1,
+            "a": {
+                "d": 2,
+                "c": [{"f": 3, "e": 4}]
+            }
+        });
+        assert_eq!(
+            String::from_utf8(canonical_json_bytes(&value).unwrap()).unwrap(),
+            r#"{"a":{"c":[{"e":4,"f":3}],"d":2},"b":1}"#
+        );
+    }
+
+    #[test]
+    fn canonical_json_is_stable_under_the_input_key_order() {
+        let forward = json!({"alpha": {"x": 1, "y": 2}, "beta": [3, 4]});
+        let reversed = json!({"beta": [3, 4], "alpha": {"y": 2, "x": 1}});
+        assert_eq!(
+            canonical_json_bytes(&forward).unwrap(),
+            canonical_json_bytes(&reversed).unwrap()
+        );
+        // Array order is data, not key order, and must survive untouched.
+        assert_ne!(
+            canonical_json_bytes(&json!({"a": [1, 2]})).unwrap(),
+            canonical_json_bytes(&json!({"a": [2, 1]})).unwrap()
+        );
+    }
+
+    // ---------------------------------------------------------------------
+    // verify_compatible — the version window, read against this build.
+    // ---------------------------------------------------------------------
+
+    #[test]
+    fn the_version_window_is_inclusive_at_both_ends_and_closed_outside_them() {
+        let current = env!("CARGO_PKG_VERSION");
+        // Both bounds are built structurally rather than by pasting a suffix
+        // onto `current`: `{current}-alpha` is below `current` only while the
+        // crate is on a plain X.Y.Z, and sorts ABOVE it once the crate is
+        // itself on a prerelease — which `sync_stats.py --bump` accepts and
+        // `release.yml` ships. That would have failed this test on the first
+        // `--bump X.Y.Z-rc.1`, for a reason unrelated to the window.
+        let below = Version::new(0, 0, 0).to_string();
+        let above = Version::parse(current).unwrap();
+        let above = Version::new(above.major + 1, 0, 0).to_string();
+
+        let mut manifest = valid_manifest();
+        manifest.minimum_aware_version = current.into();
+        manifest.maximum_aware_version = Some(current.into());
+        verify_compatible(&manifest).unwrap();
+
+        let mut manifest = valid_manifest();
+        manifest.minimum_aware_version = below.clone();
+        manifest.maximum_aware_version = None;
+        verify_compatible(&manifest).unwrap();
+
+        let mut manifest = valid_manifest();
+        manifest.minimum_aware_version = above.clone();
+        assert!(
+            verify_compatible(&manifest).is_err(),
+            "a package needing {above} must not load on {current}"
+        );
+
+        let mut manifest = valid_manifest();
+        manifest.minimum_aware_version = below;
+        manifest.maximum_aware_version = Some("0.0.1".into());
+        assert!(
+            verify_compatible(&manifest).is_err(),
+            "a package capped at 0.0.1 must not load on {current}"
+        );
+    }
+
+    // ---------------------------------------------------------------------
+    // validate_manifest — the closed shape of a package manifest.
+    // ---------------------------------------------------------------------
+
+    #[test]
+    fn a_manifest_version_must_parse_as_semver_not_merely_fit_the_length_bound() {
+        // `validate_version` bounds the length AND requires semver. The
+        // pre-existing test covers only the ceiling, so replacing the whole
+        // `Version::parse` with `Ok(())` used to leave the suite green — a
+        // `packageVersion` of "latest" would have enrolled.
+        for bad in [
+            "1", "1.2", "1.2.3.4", "v1.2.3", "latest", "1.2.x", "", " 1.2.3",
+        ] {
+            let mut manifest = valid_manifest();
+            manifest.package_version = bad.into();
+            assert!(
+                validate_manifest(&manifest).is_err(),
+                "{bad:?} is not semver and must not pass as a package version"
+            );
+        }
+        // The minimum/maximum fields go through the same helper.
+        let mut manifest = valid_manifest();
+        manifest.minimum_aware_version = "latest".into();
+        assert!(
+            validate_manifest(&manifest).is_err(),
+            "minimum must be semver"
+        );
+        let mut manifest = valid_manifest();
+        manifest.maximum_aware_version = Some("latest".into());
+        assert!(
+            validate_manifest(&manifest).is_err(),
+            "maximum must be semver"
+        );
+
+        let mut manifest = valid_manifest();
+        manifest.package_version = "1.2.3-rc.1+build.5".into();
+        validate_manifest(&manifest).unwrap();
+    }
+
+    #[test]
+    fn a_manifest_must_receipt_its_own_launcher() {
+        validate_manifest(&valid_manifest()).unwrap();
+        let mut manifest = valid_manifest();
+        manifest.launcher = "other.bin".into();
+        assert!(
+            validate_manifest(&manifest).is_err(),
+            "an unreceipted launcher would run bytes no digest covers"
+        );
+    }
+
+    #[test]
+    fn a_manifest_refuses_duplicate_files_and_duplicate_capabilities() {
+        let mut manifest = valid_manifest();
+        manifest.files.push(manifest.files[0].clone());
+        assert!(
+            validate_manifest(&manifest).is_err(),
+            "duplicate file receipts"
+        );
+
+        let mut manifest = valid_manifest();
+        manifest.capabilities.push(manifest.capabilities[0].clone());
+        assert!(
+            validate_manifest(&manifest).is_err(),
+            "duplicate capability ids"
+        );
+    }
+
+    #[test]
+    fn a_manifest_pins_protocol_v3_and_refuses_empty_inventories() {
+        let mut manifest = valid_manifest();
+        manifest.capabilities[0].protocol_version = "2".into();
+        assert!(validate_manifest(&manifest).is_err(), "protocol v2");
+
+        let mut manifest = valid_manifest();
+        manifest.capabilities.clear();
+        assert!(validate_manifest(&manifest).is_err(), "no capabilities");
+
+        // Note this does NOT isolate the `files.is_empty()` disjunct: an empty
+        // file list can never contain the launcher, so the launcher-receipted
+        // guard rejects it first and deleting the disjunct leaves this green.
+        // The disjunct is redundant for `files`; it is load-bearing only for
+        // `capabilities`, which the case above does isolate.
+        let mut manifest = valid_manifest();
+        manifest.files.clear();
+        assert!(validate_manifest(&manifest).is_err(), "no files");
+
+        let mut manifest = valid_manifest();
+        manifest.schema_version = "aware.model-provider-package/v2".into();
+        assert!(validate_manifest(&manifest).is_err(), "unknown schema");
+    }
+
+    #[test]
+    fn a_manifest_validates_every_capability_contract_id_not_just_the_first() {
+        // `source_capture_mode` through `cache_namespace_version` are checked in
+        // a loop; a loop that stopped early would let the later ones through.
+        for index in 0..5 {
+            let mut manifest = valid_manifest();
+            let capability = &mut manifest.capabilities[0];
+            let field = match index {
+                0 => &mut capability.source_capture_mode,
+                1 => &mut capability.request_schema,
+                2 => &mut capability.result_schema,
+                3 => &mut capability.artifact_root_version,
+                _ => &mut capability.cache_namespace_version,
+            };
+            *field = "not an id".into();
+            assert!(
+                validate_manifest(&manifest).is_err(),
+                "capability contract field {index} must be an opaque id"
+            );
+        }
+    }
+
+    #[test]
+    fn a_manifest_refuses_a_launcher_or_receipt_that_escapes_the_package_root() {
+        let mut manifest = valid_manifest();
+        manifest.launcher = "../provider.bin".into();
+        manifest.files[0].path = "../provider.bin".into();
+        assert!(validate_manifest(&manifest).is_err(), "traversing launcher");
+
+        let mut manifest = valid_manifest();
+        manifest.files.push(PackageFile {
+            path: "../sibling.so".into(),
+            bytes: 1,
+            sha256: "c".repeat(64),
+        });
+        assert!(validate_manifest(&manifest).is_err(), "traversing receipt");
+
+        let mut manifest = valid_manifest();
+        manifest.files[0].sha256 = "not-a-digest".into();
+        assert!(
+            validate_manifest(&manifest).is_err(),
+            "malformed receipt digest"
+        );
+    }
+
+    // ---------------------------------------------------------------------
+    // validate_selection_record — what `list` and `select` will trust on disk.
+    // ---------------------------------------------------------------------
+
+    #[test]
+    fn a_selection_must_name_the_format_it_is_filed_under() {
+        validate_selection_record(&valid_selection(), "format.synthetic").unwrap();
+        assert!(
+            validate_selection_record(&valid_selection(), "format.other").is_err(),
+            "a selection read for one format must not answer for another"
+        );
+
+        let mut selection = valid_selection();
+        selection.format_id = "not an id".into();
+        assert!(validate_selection_record(&selection, "not an id").is_err());
+    }
+
+    #[test]
+    fn a_selection_generation_is_one_based_so_zero_is_a_forged_record() {
+        let mut selection = valid_selection();
+        selection.generation = 0;
+        assert!(validate_selection_record(&selection, "format.synthetic").is_err());
+
+        selection.generation = 1;
+        validate_selection_record(&selection, "format.synthetic").unwrap();
+    }
+
+    #[test]
+    fn a_selection_history_is_a_bounded_set_that_excludes_the_active_digest() {
+        let mut selection = valid_selection();
+        selection.previous_manifest_sha256 = (0..8).map(|i| i.to_string().repeat(64)).collect();
+        validate_selection_record(&selection, "format.synthetic").unwrap();
+
+        selection.previous_manifest_sha256 = (0..9).map(|i| i.to_string().repeat(64)).collect();
+        assert!(
+            validate_selection_record(&selection, "format.synthetic").is_err(),
+            "history must stay bounded at eight"
+        );
+
+        let mut selection = valid_selection();
+        let repeated = selection.previous_manifest_sha256[0].clone();
+        selection.previous_manifest_sha256.push(repeated);
+        assert!(
+            validate_selection_record(&selection, "format.synthetic").is_err(),
+            "history must not repeat a digest"
+        );
+
+        let mut selection = valid_selection();
+        selection
+            .previous_manifest_sha256
+            .push(selection.active_manifest_sha256.clone());
+        assert!(
+            validate_selection_record(&selection, "format.synthetic").is_err(),
+            "the active digest must not also be history"
+        );
+    }
+
+    #[test]
+    fn a_selection_validates_every_digest_it_carries() {
+        let mut selection = valid_selection();
+        selection.active_manifest_sha256 = "not-a-digest".into();
+        assert!(validate_selection_record(&selection, "format.synthetic").is_err());
+
+        // The last history entry, not the first: an `any` that had become a
+        // check of `first()` would pass this.
+        let mut selection = valid_selection();
+        *selection.previous_manifest_sha256.last_mut().unwrap() = "not-a-digest".into();
+        assert!(validate_selection_record(&selection, "format.synthetic").is_err());
+
+        let mut selection = valid_selection();
+        selection.schema_version = "aware.model-provider-selection/v2".into();
+        assert!(validate_selection_record(&selection, "format.synthetic").is_err());
+    }
+
+    // ---------------------------------------------------------------------
+    // validate_policy_admission — the operator-supplied half of a policy.
+    // ---------------------------------------------------------------------
+
+    #[test]
+    fn a_policy_role_classification_decides_whether_domains_are_required() {
+        validate_policy_admission(&valid_admission()).unwrap();
+
+        for classification in ["mandatory", "optional"] {
+            let mut admission = valid_admission();
+            admission.roles[0].classification = classification.into();
+            admission.roles[0].affected_domains = vec![];
+            validate_policy_admission(&admission).unwrap_or_else(|error| {
+                panic!("a {classification} role with no affected domain is valid: {error:?}")
+            });
+
+            admission.roles[0].affected_domains = vec!["domain.geometry".into()];
+            assert!(
+                validate_policy_admission(&admission).is_err(),
+                "{classification} roles name no affected domain"
+            );
+        }
+
+        let mut admission = valid_admission();
+        admission.roles[1].affected_domains = vec![];
+        assert!(
+            validate_policy_admission(&admission).is_err(),
+            "a degraded role must name what it degrades"
+        );
+
+        let mut admission = valid_admission();
+        admission.roles[0].classification = "advisory".into();
+        assert!(
+            validate_policy_admission(&admission).is_err(),
+            "the classification vocabulary is closed"
+        );
+    }
+
+    #[test]
+    fn a_policy_admission_is_non_empty_with_unique_bounded_roles() {
+        let mut admission = valid_admission();
+        admission.roles.clear();
+        assert!(validate_policy_admission(&admission).is_err(), "no roles");
+
+        let mut admission = valid_admission();
+        admission.roles.push(admission.roles[0].clone());
+        assert!(
+            validate_policy_admission(&admission).is_err(),
+            "repeated role"
+        );
+
+        let mut admission = valid_admission();
+        admission.roles[1].affected_domains = (0..64).map(|i| format!("domain.d{i}")).collect();
+        validate_policy_admission(&admission).unwrap();
+        admission.roles[1].affected_domains = (0..65).map(|i| format!("domain.d{i}")).collect();
+        assert!(validate_policy_admission(&admission).is_err(), "65 domains");
+
+        let mut admission = valid_admission();
+        admission.roles[1].affected_domains = vec!["not a domain".into()];
+        assert!(
+            validate_policy_admission(&admission).is_err(),
+            "domain is not an id"
+        );
+
+        let mut admission = valid_admission();
+        admission.schema_version = "aware.model-dependency-policy-admission/v2".into();
+        assert!(
+            validate_policy_admission(&admission).is_err(),
+            "unknown schema"
+        );
+
+        let mut admission = valid_admission();
+        admission.policy_id = "not an id".into();
+        assert!(
+            validate_policy_admission(&admission).is_err(),
+            "policy id is not an id"
+        );
+    }
+
+    // ---------------------------------------------------------------------
+    // read_bounded / walk_regular_files / canonical_regular_directory —
+    // everything the store reads before it has verified anything.
+    // ---------------------------------------------------------------------
+
+    #[test]
+    fn a_control_file_is_read_up_to_its_limit_inclusive_and_no_further() {
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("control.json");
+
+        std::fs::write(&path, vec![b'x'; 16]).unwrap();
+        assert_eq!(read_bounded(&path, 16).unwrap(), vec![b'x'; 16]);
+
+        std::fs::write(&path, vec![b'x'; 17]).unwrap();
+        assert!(
+            read_bounded(&path, 16).is_err(),
+            "one byte past the limit must be refused, not truncated"
+        );
+
+        // A directory must be refused by the guard, not by the `EISDIR` that
+        // `read_to_end` raises later — `is_err()` alone cannot tell those apart.
+        // The limit here is deliberately far above a directory's own reported
+        // size: with the small limit a directory trips the byte ceiling instead
+        // (4096 > 1024), which hides whether the `!is_file()` clause exists.
+        match read_bounded(tmp.path(), 16 * 1024 * 1024) {
+            Err(AwareError::Validation(_)) => {}
+            other => {
+                panic!("a directory must be refused as unsafe, not by a read error: {other:?}")
+            }
+        }
+        assert!(matches!(
+            read_bounded(&tmp.path().join("absent"), 1024),
+            Err(AwareError::Io(error)) if error.kind() == std::io::ErrorKind::NotFound
+        ));
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn a_control_file_is_never_read_through_a_symlink() {
+        let tmp = tempfile::tempdir().unwrap();
+        let target = tmp.path().join("real.json");
+        std::fs::write(&target, b"{}").unwrap();
+        let link = tmp.path().join("link.json");
+        std::os::unix::fs::symlink(&target, &link).unwrap();
+        assert!(
+            read_bounded(&link, 1024).is_err(),
+            "a symlinked control file could point outside the package"
+        );
+    }
+
+    #[test]
+    fn the_inventory_walk_descends_and_reports_slash_separated_relative_paths() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::write(root.join(MANIFEST_NAME), b"{}").unwrap();
+        std::fs::create_dir_all(root.join("bin").join("deep")).unwrap();
+        std::fs::write(root.join("bin").join("provider"), b"").unwrap();
+        std::fs::write(root.join("bin").join("deep").join("lib.so"), b"").unwrap();
+
+        assert_eq!(
+            walk_regular_files(root, root).unwrap(),
+            BTreeSet::from([
+                "bin/deep/lib.so".to_string(),
+                "bin/provider".to_string(),
+                "provider-package.json".to_string(),
+            ])
+        );
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn the_inventory_walk_refuses_a_link_anywhere_beneath_the_root() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::create_dir(root.join("bin")).unwrap();
+        std::fs::write(root.join("bin").join("provider"), b"").unwrap();
+        // Nested, not at the top: a walk that stopped descending would hand
+        // back a clean inventory that never saw this entry at all. Note this
+        // does NOT isolate the explicit `is_symlink()` guard — with that guard
+        // deleted a symlink still reports neither dir nor file on Unix, so the
+        // `else` arm ("only regular files") rejects it and this stays green.
+        // The guard is load-bearing on Windows, where a junction reports
+        // `is_dir()` AND the reparse bit; nothing here covers that.
+        std::os::unix::fs::symlink("/etc/passwd", root.join("bin").join("secrets")).unwrap();
+        // Matched on the message, not `is_err()`: with the link guard deleted
+        // the `else` arm still rejects the entry, but with a different string
+        // ("can contain only regular files"), so only this tells the guard
+        // being gone apart from the guard doing its job.
+        match walk_regular_files(root, root) {
+            Err(AwareError::Validation(message)) => assert!(
+                message.contains("links or reparse points"),
+                "the link guard, not the regular-file fallback, must reject this: {message}"
+            ),
+            other => panic!("expected the link guard to reject the entry, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn a_package_root_must_be_an_absolute_real_directory() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        assert_eq!(
+            canonical_regular_directory(root).unwrap(),
+            std::fs::canonicalize(root).unwrap()
+        );
+
+        // Asserted on the variant, not just `is_err`: a relative path that does
+        // not exist also fails at `symlink_metadata`, so `is_err()` alone would
+        // stay green with the absolute-path guard deleted.
+        match canonical_regular_directory(Path::new("relative/dir")) {
+            Err(AwareError::Validation(message)) => assert!(
+                message.contains("must be absolute"),
+                "a relative root must be refused as relative, not as missing: {message}"
+            ),
+            other => panic!("expected a validation error for a relative root, got {other:?}"),
+        }
+
+        let file = root.join("not-a-dir");
+        std::fs::write(&file, b"").unwrap();
+        assert!(canonical_regular_directory(&file).is_err());
+        assert!(matches!(
+            canonical_regular_directory(&root.join("absent")),
+            Err(AwareError::Io(error)) if error.kind() == std::io::ErrorKind::NotFound
+        ));
+
+        #[cfg(unix)]
+        {
+            let target = root.join("target");
+            std::fs::create_dir(&target).unwrap();
+            let link = root.join("link");
+            std::os::unix::fs::symlink(&target, &link).unwrap();
+            assert!(
+                canonical_regular_directory(&link).is_err(),
+                "a symlinked root lets the tree be swapped after enrollment"
+            );
+        }
+    }
+
+    // ---------------------------------------------------------------------
+    // verify_package_signature — the sidecar that binds a manifest digest to a
+    // trusted publisher key.
+    // ---------------------------------------------------------------------
+
+    /// A deterministic publisher and a `.sig` sidecar that verifies over
+    /// `manifest_sha256`. Returns the temp root, the publisher record and the
+    /// signature lines, so a test can corrupt exactly one thing.
+    fn signature_fixture(
+        manifest_sha256: &str,
+    ) -> (tempfile::TempDir, PublisherRecord, Vec<String>) {
+        use ed25519_dalek::{Signer as _, SigningKey};
+        let signing = SigningKey::from_bytes(&[7_u8; 32]);
+        let public_bytes = signing.verifying_key().to_bytes();
+        let public_key_base64 = base64::engine::general_purpose::STANDARD.encode(public_bytes);
+        let signature = signing.sign(&hex_digest_bytes(manifest_sha256).unwrap());
+        let lines = vec![
+            "ed25519-signature-v1".to_string(),
+            format!("over-sha256-of: {MANIFEST_NAME}"),
+            format!("sha256: {manifest_sha256}"),
+            format!("public-key: {public_key_base64}"),
+            format!(
+                "signature: {}",
+                base64::engine::general_purpose::STANDARD.encode(signature.to_bytes())
+            ),
+        ];
+        let publisher = PublisherRecord {
+            schema_version: PUBLISHER_SCHEMA.into(),
+            publisher_id: "publisher.synthetic".into(),
+            key_fingerprint_sha256: sha256_hex(&public_bytes),
+            public_key_base64,
+            trusted: true,
+        };
+        (tempfile::tempdir().unwrap(), publisher, lines)
+    }
+
+    fn write_signature(root: &Path, lines: &[String]) {
+        std::fs::write(root.join(SIGNATURE_NAME), format!("{}\n", lines.join("\n"))).unwrap();
+    }
+
+    #[test]
+    fn a_well_formed_signature_over_the_manifest_digest_verifies() {
+        let (tmp, publisher, lines) = signature_fixture(ABC_SHA256);
+        write_signature(tmp.path(), &lines);
+        verify_package_signature(tmp.path(), ABC_SHA256, &publisher).unwrap();
+    }
+
+    #[test]
+    fn a_signature_only_verifies_for_the_manifest_digest_it_was_made_over() {
+        // The whole point of the sidecar: a valid signature lifted from one
+        // package must not enroll another.
+        let (tmp, publisher, lines) = signature_fixture(ABC_SHA256);
+        write_signature(tmp.path(), &lines);
+        assert!(
+            verify_package_signature(tmp.path(), EMPTY_SHA256, &publisher).is_err(),
+            "a signature over {ABC_SHA256} must not pass for {EMPTY_SHA256}"
+        );
+    }
+
+    #[test]
+    fn a_signature_must_carry_the_trusted_publishers_own_key() {
+        let (tmp, publisher, lines) = signature_fixture(ABC_SHA256);
+        use ed25519_dalek::{Signer as _, SigningKey};
+        let other = SigningKey::from_bytes(&[9_u8; 32]);
+        let mut forged = lines.clone();
+        forged[3] = format!(
+            "public-key: {}",
+            base64::engine::general_purpose::STANDARD.encode(other.verifying_key().to_bytes())
+        );
+        forged[4] = format!(
+            "signature: {}",
+            base64::engine::general_purpose::STANDARD.encode(
+                other
+                    .sign(&hex_digest_bytes(ABC_SHA256).unwrap())
+                    .to_bytes()
+            )
+        );
+        write_signature(tmp.path(), &forged);
+        assert!(
+            verify_package_signature(tmp.path(), ABC_SHA256, &publisher).is_err(),
+            "a self-consistent signature from an untrusted key must be refused"
+        );
+    }
+
+    #[test]
+    fn a_tampered_signature_value_does_not_verify() {
+        let (tmp, publisher, lines) = signature_fixture(ABC_SHA256);
+        let mut broken = lines.clone();
+        broken[4] = format!(
+            "signature: {}",
+            base64::engine::general_purpose::STANDARD.encode([0_u8; 64])
+        );
+        write_signature(tmp.path(), &broken);
+        assert!(verify_package_signature(tmp.path(), ABC_SHA256, &publisher).is_err());
+    }
+
+    #[test]
+    fn a_signature_sidecar_must_be_exactly_the_four_expected_fields() {
+        let (tmp, publisher, lines) = signature_fixture(ABC_SHA256);
+
+        let mut wrong_schema = lines.clone();
+        wrong_schema[0] = "ed25519-signature-v2".into();
+        write_signature(tmp.path(), &wrong_schema);
+        assert!(
+            verify_package_signature(tmp.path(), ABC_SHA256, &publisher).is_err(),
+            "schema"
+        );
+
+        let mut malformed = lines.clone();
+        malformed.push("a line with no separator".into());
+        write_signature(tmp.path(), &malformed);
+        assert!(
+            verify_package_signature(tmp.path(), ABC_SHA256, &publisher).is_err(),
+            "no colon"
+        );
+
+        let mut repeated = lines.clone();
+        repeated.push(lines[2].clone());
+        write_signature(tmp.path(), &repeated);
+        assert!(
+            verify_package_signature(tmp.path(), ABC_SHA256, &publisher).is_err(),
+            "a repeated field lets a reader pick either value"
+        );
+
+        let mut extra = lines.clone();
+        extra.push("note: harmless".into());
+        write_signature(tmp.path(), &extra);
+        assert!(
+            verify_package_signature(tmp.path(), ABC_SHA256, &publisher).is_err(),
+            "the field set is closed"
+        );
+
+        for index in 1..lines.len() {
+            let mut missing = lines.clone();
+            missing.remove(index);
+            write_signature(tmp.path(), &missing);
+            assert!(
+                verify_package_signature(tmp.path(), ABC_SHA256, &publisher).is_err(),
+                "field at line {index} is required"
+            );
+        }
+
+        let mut wrong_subject = lines.clone();
+        wrong_subject[1] = "over-sha256-of: provider-package.sig".into();
+        write_signature(tmp.path(), &wrong_subject);
+        assert!(
+            verify_package_signature(tmp.path(), ABC_SHA256, &publisher).is_err(),
+            "the signature must name the manifest as its subject"
+        );
+    }
+
+    #[test]
+    fn a_missing_or_oversized_signature_sidecar_is_refused_not_ignored() {
+        // Both halves assert the specific outcome rather than `is_err()`: a
+        // sidecar of random bytes fails its schema line anyway, and a missing
+        // one fails at any read, so a bare `is_err()` here would stay green
+        // with the byte ceiling deleted.
+        let (tmp, publisher, lines) = signature_fixture(ABC_SHA256);
+        match verify_package_signature(tmp.path(), ABC_SHA256, &publisher) {
+            Err(AwareError::Io(error)) => {
+                assert_eq!(error.kind(), std::io::ErrorKind::NotFound, "{error}")
+            }
+            other => panic!("a missing sidecar must fail closed as not-found, got {other:?}"),
+        }
+
+        // Well formed in every other respect, and padded past the 64 KiB
+        // ceiling, so only the ceiling can be what rejects it.
+        let mut padded = lines.clone();
+        padded[4] = format!("{}{}", lines[4], "A".repeat(64 * 1024));
+        write_signature(tmp.path(), &padded);
+        match verify_package_signature(tmp.path(), ABC_SHA256, &publisher) {
+            Err(AwareError::Validation(message)) => assert!(
+                message.contains("too large"),
+                "the sidecar must be refused by its byte ceiling, not later: {message}"
+            ),
+            other => panic!("expected the byte ceiling to reject the sidecar, got {other:?}"),
+        }
+    }
+
+    // ---------------------------------------------------------------------
+    // verify_package_inventory — the closed allowlist over the package tree.
+    // ---------------------------------------------------------------------
+
+    #[test]
+    fn the_inventory_is_a_closed_allowlist_matched_byte_for_byte() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        let mut manifest = valid_manifest();
+        manifest.files[0] = PackageFile {
+            path: "provider.bin".into(),
+            bytes: 3,
+            sha256: ABC_SHA256.into(),
+        };
+        std::fs::write(root.join("provider.bin"), b"abc").unwrap();
+        std::fs::write(root.join(MANIFEST_NAME), b"{}").unwrap();
+        std::fs::write(root.join(SIGNATURE_NAME), b"").unwrap();
+        verify_package_inventory(root, &manifest).unwrap();
+
+        // A file nobody receipted.
+        std::fs::write(root.join("extra.so"), b"").unwrap();
+        assert!(
+            verify_package_inventory(root, &manifest).is_err(),
+            "unreceipted file"
+        );
+        std::fs::remove_file(root.join("extra.so")).unwrap();
+
+        // Right length, different bytes — only the digest catches this.
+        std::fs::write(root.join("provider.bin"), b"abd").unwrap();
+        assert!(
+            verify_package_inventory(root, &manifest).is_err(),
+            "content drift"
+        );
+
+        // Right digest recorded, wrong length recorded.
+        std::fs::write(root.join("provider.bin"), b"abc").unwrap();
+        manifest.files[0].bytes = 4;
+        assert!(
+            verify_package_inventory(root, &manifest).is_err(),
+            "length drift"
+        );
+
+        // A receipted file that is simply not there.
+        manifest.files[0].bytes = 3;
+        std::fs::remove_file(root.join("provider.bin")).unwrap();
+        assert!(
+            verify_package_inventory(root, &manifest).is_err(),
+            "missing file"
+        );
     }
 }
