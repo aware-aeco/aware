@@ -1328,27 +1328,37 @@ mod tests {
         // through. (The publisher, package and policy records are named from a
         // digest instead, and are guarded by `validate_sha256`, not this.)
         // Assert the consequence over the whole accepted alphabet, not the rule.
-        for byte in 0_u8..=127 {
-            let id = (byte as char).to_string();
+        //
+        // `starts_with` is load-bearing and a component count alone is not:
+        // `Path::join` REPLACES the base when handed an absolute path, so an id
+        // of `/` yields `/.json` — which has two components just like
+        // `root/a.json` does, and would satisfy a count-only assertion while
+        // naming a file at the filesystem root. Multi-character ids are checked
+        // too, so `..` is run through `validate_id` rather than asserted on a
+        // hard-coded literal that never reaches production code.
+        let mut candidates = (0_u8..=127)
+            .map(|byte| (byte as char).to_string())
+            .collect::<Vec<_>>();
+        candidates.extend([".".into(), "..".into(), "a.b".into(), "a..b".into()]);
+        let mut accepted = 0_usize;
+        for id in candidates {
             if validate_id(&id, "id").is_err() {
                 continue;
             }
+            accepted += 1;
             for joined in [
                 Path::new("root").join(format!("{id}.json")),
                 Path::new("root").join(format!("selection-{id}.lock")),
             ] {
-                assert_eq!(
-                    joined.components().count(),
-                    2,
-                    "id {id:?} did not stay a single child of its directory"
+                assert!(
+                    joined.starts_with("root") && joined.components().count() == 2,
+                    "id {id:?} did not stay a single child of its directory: {joined:?}"
                 );
             }
         }
-        assert_eq!(
-            Path::new("root").join("...json").components().count(),
-            2,
-            "`..` as a format id must land as the filename `...json`"
-        );
+        // `..` and `.` are among them; a scan that silently matched nothing
+        // would otherwise assert the invariant over the empty set.
+        assert_eq!(accepted, 69, "the accepted alphabet changed size");
     }
 
     // ---------------------------------------------------------------------
@@ -1507,6 +1517,41 @@ mod tests {
     // ---------------------------------------------------------------------
 
     #[test]
+    fn a_manifest_version_must_parse_as_semver_not_merely_fit_the_length_bound() {
+        // `validate_version` bounds the length AND requires semver. The
+        // pre-existing test covers only the ceiling, so replacing the whole
+        // `Version::parse` with `Ok(())` used to leave the suite green — a
+        // `packageVersion` of "latest" would have enrolled.
+        for bad in [
+            "1", "1.2", "1.2.3.4", "v1.2.3", "latest", "1.2.x", "", " 1.2.3",
+        ] {
+            let mut manifest = valid_manifest();
+            manifest.package_version = bad.into();
+            assert!(
+                validate_manifest(&manifest).is_err(),
+                "{bad:?} is not semver and must not pass as a package version"
+            );
+        }
+        // The minimum/maximum fields go through the same helper.
+        let mut manifest = valid_manifest();
+        manifest.minimum_aware_version = "latest".into();
+        assert!(
+            validate_manifest(&manifest).is_err(),
+            "minimum must be semver"
+        );
+        let mut manifest = valid_manifest();
+        manifest.maximum_aware_version = Some("latest".into());
+        assert!(
+            validate_manifest(&manifest).is_err(),
+            "maximum must be semver"
+        );
+
+        let mut manifest = valid_manifest();
+        manifest.package_version = "1.2.3-rc.1+build.5".into();
+        validate_manifest(&manifest).unwrap();
+    }
+
+    #[test]
     fn a_manifest_must_receipt_its_own_launcher() {
         validate_manifest(&valid_manifest()).unwrap();
         let mut manifest = valid_manifest();
@@ -1544,6 +1589,11 @@ mod tests {
         manifest.capabilities.clear();
         assert!(validate_manifest(&manifest).is_err(), "no capabilities");
 
+        // Note this does NOT isolate the `files.is_empty()` disjunct: an empty
+        // file list can never contain the launcher, so the launcher-receipted
+        // guard rejects it first and deleting the disjunct leaves this green.
+        // The disjunct is redundant for `files`; it is load-bearing only for
+        // `capabilities`, which the case above does isolate.
         let mut manifest = valid_manifest();
         manifest.files.clear();
         assert!(validate_manifest(&manifest).is_err(), "no files");
