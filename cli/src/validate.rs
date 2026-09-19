@@ -941,8 +941,9 @@ fn check_inline_nodes(nodes: &[crate::manifest::app::Node], out: &mut Vec<Valida
                         n.id, inline.kind
                     ),
                 ));
-            } else if inline.code.is_none() {
-                // A predicate with no `code:` has no executable body. `atom://`
+            } else if inline.code.as_deref().is_none_or(|c| c.trim().is_empty()) {
+                // A predicate with no `code:` — or a blank one — has no executable
+                // body. `atom://`
                 // resolution is published in app-spec § Atom references but is
                 // not implemented — `Inline::atom` is parsed and discarded — so
                 // the runtime reached such a node with nothing to evaluate and
@@ -3321,6 +3322,32 @@ nodes:
             issue.message.contains("atom://generic/is-newer-than"),
             "{}",
             issue.message
+        );
+    }
+
+    #[test]
+    fn rejects_a_blank_code_body_at_validate() {
+        // `code: ""` is Some(""), so an is_none() check would have admitted it —
+        // the app would validate and lock, then fail only once a run reached the
+        // tokenizer. Validate is where the author is standing.
+        let yaml = r#"
+app: inline-blank
+version: 0.0.1
+description: |
+  Inline predicate with a blank code body.
+requires: []
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: gate on nothing
+      code: "   "
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let issues = validate_app(&app);
+        assert!(
+            issues.iter().any(|i| i.code == "E_APP_INLINE_NO_BODY"),
+            "issues: {issues:?}"
         );
     }
 

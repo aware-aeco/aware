@@ -316,7 +316,8 @@ fn value_truthy(v: &Value) -> bool {
 
 /// The executable body of an inline `predicate` node.
 ///
-/// A predicate with no `code:` is not a gate. `atom://` resolution is specified
+/// A predicate with no `code:` — or a blank one — is not a gate. `atom://`
+/// resolution is specified
 /// in `10-core/app-spec.md § Atom references` but is not implemented in this
 /// build — `Inline::atom` is parsed and discarded — so a node carrying `atom:`
 /// instead of `code:` has nothing to evaluate.
@@ -327,7 +328,7 @@ fn value_truthy(v: &Value) -> bool {
 /// from a predicate that had genuinely evaluated true (#554). Refuse the run
 /// instead — an unevaluatable predicate is an error, never a pass.
 pub fn predicate_body<'a>(inline: &'a Inline, node_id: &str) -> Result<&'a str, AwareError> {
-    match inline.code.as_deref() {
+    match inline.code.as_deref().filter(|c| !c.trim().is_empty()) {
         Some(code) => Ok(code),
         None => Err(AwareError::Validation(match &inline.atom {
             Some(uri) => format!(
@@ -372,6 +373,21 @@ mod tests {
 
     fn inline_from(yaml: &str) -> Inline {
         serde_yaml::from_str(yaml).unwrap()
+    }
+
+    #[test]
+    fn predicate_body_treats_a_blank_code_body_as_no_body() {
+        // `code: ""` parses to Some(""), so a null check alone would admit it and
+        // leave the refusal to the tokenizer. Same absent gate, so same answer
+        // here — and the message must not claim an atom that is not there.
+        for body in ["\"\"", "\"   \"", "\"\\n\\t \""] {
+            let inline = inline_from(&format!(
+                "kind: predicate\ndescription: gate\ncode: {body}\n"
+            ));
+            let err =
+                predicate_body(&inline, "gate").expect_err("blank code must not count as a body");
+            assert!(err.to_string().contains("gate"), "{err}");
+        }
     }
 
     #[test]
