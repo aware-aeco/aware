@@ -186,6 +186,15 @@ Inline glue lives in the app file. It is visible in the topology and inspectable
 
 ### Atom references (v0.20)
 
+> **Not implemented today.** No `atom://` resolver ships in the CLI: `atom:` is
+> parsed and never resolved. An inline node carrying `atom:` instead of `code:`
+> therefore has no executable body, and `aware app validate` / `compile` / `run`
+> refuse it with **`E_APP_INLINE_NO_BODY`**. Until a resolver ships, write
+> `code:`. (Before that guard landed, such a node defaulted to the literal
+> `true` at run time — the gate forwarded its input unfiltered while reporting
+> `{"pass": true}`. See #554.) The `inputs:`-binding check described below is
+> likewise not implemented.
+
 The persona audit unanimously flagged inline JavaScript lambdas (`code: | e => e.type == "Welded"`) as "not no-code." v0.20 ships a **named atom library** — typed, versioned, reusable predicates / maps / reduces that an inline-glue block can reference instead of inlining code.
 
 ```yaml

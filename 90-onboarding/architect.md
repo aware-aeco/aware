@@ -56,11 +56,20 @@ This is the source-of-truth for "which projects am I PM on." The reference app w
 aware app install https://github.com/aware-aeco/aware/raw/main/30-apps/_examples/architect-sheet-status.app
 ```
 
-> **Heads-up:** this install currently fails with `E_APP_INLINE_NO_BODY`. The app
-> filters with an `atom://` predicate, and no `atom://` resolver ships in the CLI
-> yet, so that node has no executable body. The CLI refuses it rather than run it
-> — which it used to do by treating the filter as "pass everything" (#554). Use
-> the app as a reference topology until the resolver lands.
+> **Heads-up: this app does not run today, and the command above does not work.**
+> Two separate things:
+>
+> 1. `aware app install` takes the **directory** holding one app manifest — a URL
+>    or a `.app` file path is refused with *"registry-hosted apps are not yet
+>    supported"*. That is a pre-existing gap in this guide, unrelated to (2).
+> 2. `architect-sheet-status` filters with an inline predicate written as an `atom://`
+>    reference, and no `atom://` resolver ships in the CLI, so that node has no
+>    executable body. `aware app validate` / `compile` / `run` refuse it with
+>    `E_APP_INLINE_NO_BODY` rather than run it — which they used to do by
+>    treating the filter as "pass everything" (#554).
+>
+> **So the rest of this guide is a walkthrough, not a working procedure, until
+> `atom://` resolution ships.** Read it for the shape of the workflow.
 
 Edit inputs at top:
 

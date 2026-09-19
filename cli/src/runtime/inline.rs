@@ -319,16 +319,30 @@ fn value_truthy(v: &Value) -> bool {
 /// A predicate with no `code:` — or a blank one — is not a gate. `atom://`
 /// resolution is specified
 /// in `10-core/app-spec.md § Atom references` but is not implemented in this
-/// build — `Inline::atom` is parsed and discarded — so a node carrying `atom:`
-/// instead of `code:` has nothing to evaluate.
+/// build — `Inline::atom` is parsed but never resolved, and is read below only to
+/// name the URI in the refusal — so a node carrying `atom:` instead of `code:`
+/// has nothing to evaluate.
 ///
 /// Both execution sites used to spell that case `unwrap_or("true")`, which
 /// parsed to `Value::Bool(true)` and turned the gate into a pass-through: every
 /// item went downstream and the node reported `{"pass": true}`, indistinguishable
 /// from a predicate that had genuinely evaluated true (#554). Refuse the run
 /// instead — an unevaluatable predicate is an error, never a pass.
+/// The single definition of "this predicate has an executable body".
+///
+/// Validate and the runtime both answer through this, deliberately. They used to
+/// hand-roll the same emptiness test in two files, which agreed only by
+/// authorship coincidence: relax one (accept a comment-only body, normalize
+/// differently, resolve some `atom://` URIs but not others) and the other drifts
+/// silently — producing an app that validates clean and dies at run, or one
+/// validate refuses that the runtime would have executed fine. Either is the
+/// failure mode #554 exists to prevent.
+pub fn executable_body(inline: &Inline) -> Option<&str> {
+    inline.code.as_deref().filter(|c| !c.trim().is_empty())
+}
+
 pub fn predicate_body<'a>(inline: &'a Inline, node_id: &str) -> Result<&'a str, AwareError> {
-    match inline.code.as_deref().filter(|c| !c.trim().is_empty()) {
+    match executable_body(inline) {
         Some(code) => Ok(code),
         None => Err(AwareError::Validation(match &inline.atom {
             Some(uri) => format!(
@@ -386,7 +400,11 @@ mod tests {
             ));
             let err =
                 predicate_body(&inline, "gate").expect_err("blank code must not count as a body");
-            assert!(err.to_string().contains("gate"), "{err}");
+            let msg = err.to_string();
+            assert!(msg.contains("gate"), "{msg}");
+            // The stated intent, actually asserted: with no `atom:` on the node,
+            // the message must not blame one.
+            assert!(!msg.contains("atom"), "{msg}");
         }
     }
 
@@ -450,14 +468,19 @@ description: RFIs open more than 5 days
 atom: 'atom://generic/at-least'
 "#,
         );
-        let body = predicate_body(&inline, "aging");
-        assert!(body.is_err(), "body-less predicate must not yield a body");
-        // And the old fallback specifically must be gone: "true" is what the two
-        // execution sites used to substitute.
+        let msg = predicate_body(&inline, "aging")
+            .map(|body| format!("returned a body {body:?} instead of refusing"))
+            .expect_err("body-less predicate must not yield a body")
+            .to_string();
+        // Assert the REASON, not just the discriminant. The previous form paired
+        // `is_err()` with `!matches!(body, Ok("true"))`, which cannot fail: the
+        // assert above it already proved `body` was `Err`, so the second check was
+        // a tautology dressed as a guard.
         assert!(
-            !matches!(body, Ok("true")),
-            "the literal `true` fallback is back"
+            msg.contains("no executable body"),
+            "refusal must say why: {msg}"
         );
+        assert!(msg.contains("atom://generic/at-least"), "{msg}");
     }
 
     #[test]

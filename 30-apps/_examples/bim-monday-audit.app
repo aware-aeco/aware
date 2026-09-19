@@ -75,9 +75,13 @@ nodes:
       # until `atom://` resolution ships. The URI is published in app-spec
       # § Atom references but no resolver exists, so the predicate has no
       # executable body. It is left as `atom:` rather than rewritten to `code:`
-      # because the inline evaluator has no ordering comparison (`>`), which
-      # "newer than" needs — and `{{ last-week.iso }}` below names no node in
+      # because the inline evaluator has only paths, literals, `==`, `!=`, `&&`
+      # and `||` — no ordering comparison and no function calls — so neither this
+      # atom's date arithmetic nor a hand-written equivalent can be expressed as
+      # `code:` today. Separately, `{{ last-week.iso }}` below names no node in
       # this app. Both are tracked in #554; neither is fixed by that guard.
+      # Delete this comment and drop `atom:` for a `code:` body when `atom://`
+      # resolution ships.
       - id: stale-sheets
         inline:
           kind: predicate

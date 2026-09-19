@@ -428,11 +428,13 @@ connections:
     /// `for-each`, `approve`, `assert` and friends all render through this last
     /// branch, and the fixture test above exercises only the first.
     ///
-    /// `kind: predicate` rather than any other word: `validate_app` rejects every
-    /// inline kind but that one (`E_APP_INLINE_KIND`), so any other value would
-    /// make this fixture an app the substrate refuses to install or run, reachable
-    /// only because `app show` does not validate. The renderer is kind-agnostic —
-    /// it prints whatever string is there — so the valid value costs no coverage.
+    /// `kind: predicate` rather than any other word, and with a `code:` body:
+    /// `validate_app` rejects every other inline kind (`E_APP_INLINE_KIND`) and,
+    /// since #554, a `predicate` carrying no executable body
+    /// (`E_APP_INLINE_NO_BODY`). Either would make this fixture an app the
+    /// substrate refuses to install or run, reachable only because `app show`
+    /// does not validate. The renderer is kind-agnostic — it prints whatever
+    /// string is there — so the valid value costs no coverage.
     #[test]
     fn a_node_label_names_its_agent_command_its_inline_kind_or_neither() {
         let app = app_from(
@@ -447,6 +449,7 @@ nodes:
     inline:
       kind: predicate
       description: filter the rows
+      code: 'e.keep == true'
   - id: bare
 ",
         );
