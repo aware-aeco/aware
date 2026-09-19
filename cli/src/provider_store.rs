@@ -1182,9 +1182,11 @@ mod tests {
         }
     }
 
-    /// SHA-256 of the empty input and of `abc`, from FIPS 180-4's published
-    /// vectors. Hard-coding them keeps [`sha256_hex`] and [`hex_digest_bytes`]
-    /// honest against an external answer rather than against each other.
+    /// SHA-256 of the empty input and of `abc` — the two most widely published
+    /// SHA-256 vectors (`abc` is NIST's worked example; the empty-input digest
+    /// is the CAVP `SHA256ShortMsg` Len=0 value). Hard-coding them keeps
+    /// [`sha256_hex`] and [`hex_digest_bytes`] honest against an answer from
+    /// outside this crate rather than against each other.
     const EMPTY_SHA256: &str = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
     const ABC_SHA256: &str = "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad";
 
@@ -1223,17 +1225,22 @@ mod tests {
     // ---------------------------------------------------------------------
 
     #[test]
-    fn package_paths_refuse_every_way_out_of_the_package_root() {
+    fn package_paths_refuse_the_known_escape_spellings() {
+        // Not "every way out": `validate_relative_path` tests `ends_with(['.',
+        // ' '])` against the whole string rather than each component, so
+        // `bin./provider` is accepted today and aliases `bin/provider` on
+        // Win32 by the same stripping rule the two cases below rely on. That
+        // gap is in production code and is reported rather than changed here.
         for escape in [
             "../outside",        // ParentDir component
             "bin/../../outside", // ParentDir after a Normal component
             "./bin/provider",    // CurDir component
             "/etc/passwd",       // RootDir component
-            "bin\\provider",     // Windows separator, one Normal component on Unix
-            "C:bin",             // drive-relative; the only rejecting guard is the colon
-            "provider.bin.",     // trailing dot — Win32 strips it, so it aliases another file
-            "provider.bin ",     // trailing space — same aliasing
-            "",                  // empty
+            "bin\\provider", // on Windows two Normal components, so the backslash check is the only guard
+            "C:bin",         // drive-relative; on Unix the colon check is the only guard
+            "provider.bin.", // trailing dot — Win32 strips it, so it aliases another file
+            "provider.bin ", // trailing space — same aliasing
+            "",              // empty
         ] {
             assert!(
                 validate_relative_path(escape).is_err(),
@@ -1315,8 +1322,11 @@ mod tests {
     #[test]
     fn a_validated_identifier_always_stays_one_child_of_its_directory() {
         // `.` is in the alphabet, so `.` and `..` are both accepted ids. That is
-        // harmless only because every join pastes a suffix on — `..` becomes
-        // `...json`, a filename — and because no separator can get through.
+        // harmless only because the two paths built from an id paste a suffix
+        // on — `selections/{id}.json` and `locks/selection-{id}.lock`, so `..`
+        // becomes the filename `...json` — and because no separator can get
+        // through. (The publisher, package and policy records are named from a
+        // digest instead, and are guarded by `validate_sha256`, not this.)
         // Assert the consequence over the whole accepted alphabet, not the rule.
         for byte in 0_u8..=127 {
             let id = (byte as char).to_string();
@@ -1381,14 +1391,24 @@ mod tests {
             (0, EMPTY_SHA256.to_string())
         );
 
-        assert!(
-            hash_regular_file(tmp.path()).is_err(),
-            "a directory is not a receipted file"
-        );
-        assert!(hash_regular_file(&tmp.path().join("absent")).is_err());
+        match hash_regular_file(tmp.path()) {
+            Err(AwareError::Validation(_)) => {}
+            other => {
+                panic!("a directory must be refused as a non-file, not by a read error: {other:?}")
+            }
+        }
+        assert!(matches!(
+            hash_regular_file(&tmp.path().join("absent")),
+            Err(AwareError::Io(error)) if error.kind() == std::io::ErrorKind::NotFound
+        ));
 
         #[cfg(unix)]
         {
+            // Note this does NOT isolate the explicit `is_symlink()` clause:
+            // `symlink_metadata` already reports a link as `!is_file()`, so on
+            // Unix that clause is redundant and deleting it leaves this green.
+            // It is load-bearing only on Windows, via `is_reparse_point`, where
+            // `cargo test` never runs — recorded in the pull request.
             let link = tmp.path().join("link");
             std::os::unix::fs::symlink(&file, &link).unwrap();
             assert!(
@@ -1399,9 +1419,14 @@ mod tests {
     }
 
     // ---------------------------------------------------------------------
-    // canonical_json_bytes — the encoding the manifest digest is taken over.
-    // `serde_json` is built here with `preserve_order`, so without the
-    // recursive sort the bytes would follow insertion order.
+    // canonical_json_bytes — the encoding a manifest's on-disk bytes must
+    // already equal before enrollment will digest them. The digest itself is
+    // taken over the raw file bytes (`sha256_hex(&manifest_bytes)`); this
+    // function is the equality gate in front of it, so if the sort were wrong
+    // the gate would reject canonical manifests and admit the spelling the
+    // sort happens to produce. `serde_json` is built here with
+    // `preserve_order`, so without the recursive sort the bytes would follow
+    // insertion order rather than being sorted.
     // ---------------------------------------------------------------------
 
     #[test]
@@ -1441,7 +1466,13 @@ mod tests {
     #[test]
     fn the_version_window_is_inclusive_at_both_ends_and_closed_outside_them() {
         let current = env!("CARGO_PKG_VERSION");
-        let below = format!("{current}-alpha"); // a prerelease sorts before its release
+        // Both bounds are built structurally rather than by pasting a suffix
+        // onto `current`: `{current}-alpha` is below `current` only while the
+        // crate is on a plain X.Y.Z, and sorts ABOVE it once the crate is
+        // itself on a prerelease — which `sync_stats.py --bump` accepts and
+        // `release.yml` ships. That would have failed this test on the first
+        // `--bump X.Y.Z-rc.1`, for a reason unrelated to the window.
+        let below = Version::new(0, 0, 0).to_string();
         let above = Version::parse(current).unwrap();
         let above = Version::new(above.major + 1, 0, 0).to_string();
 
@@ -1653,7 +1684,9 @@ mod tests {
             let mut admission = valid_admission();
             admission.roles[0].classification = classification.into();
             admission.roles[0].affected_domains = vec![];
-            validate_policy_admission(&admission).unwrap();
+            validate_policy_admission(&admission).unwrap_or_else(|error| {
+                panic!("a {classification} role with no affected domain is valid: {error:?}")
+            });
 
             admission.roles[0].affected_domains = vec!["domain.geometry".into()];
             assert!(
@@ -1737,11 +1770,21 @@ mod tests {
             "one byte past the limit must be refused, not truncated"
         );
 
-        assert!(
-            read_bounded(tmp.path(), 1024).is_err(),
-            "a directory is not a control file"
-        );
-        assert!(read_bounded(&tmp.path().join("absent"), 1024).is_err());
+        // A directory must be refused by the guard, not by the `EISDIR` that
+        // `read_to_end` raises later — `is_err()` alone cannot tell those apart.
+        // The limit here is deliberately far above a directory's own reported
+        // size: with the small limit a directory trips the byte ceiling instead
+        // (4096 > 1024), which hides whether the `!is_file()` clause exists.
+        match read_bounded(tmp.path(), 16 * 1024 * 1024) {
+            Err(AwareError::Validation(_)) => {}
+            other => {
+                panic!("a directory must be refused as unsafe, not by a read error: {other:?}")
+            }
+        }
+        assert!(matches!(
+            read_bounded(&tmp.path().join("absent"), 1024),
+            Err(AwareError::Io(error)) if error.kind() == std::io::ErrorKind::NotFound
+        ));
     }
 
     #[cfg(unix)]
@@ -1762,7 +1805,7 @@ mod tests {
     fn the_inventory_walk_descends_and_reports_slash_separated_relative_paths() {
         let tmp = tempfile::tempdir().unwrap();
         let root = tmp.path();
-        std::fs::write(root.join("provider-package.json"), b"{}").unwrap();
+        std::fs::write(root.join(MANIFEST_NAME), b"{}").unwrap();
         std::fs::create_dir_all(root.join("bin").join("deep")).unwrap();
         std::fs::write(root.join("bin").join("provider"), b"").unwrap();
         std::fs::write(root.join("bin").join("deep").join("lib.so"), b"").unwrap();
@@ -1784,10 +1827,25 @@ mod tests {
         let root = tmp.path();
         std::fs::create_dir(root.join("bin")).unwrap();
         std::fs::write(root.join("bin").join("provider"), b"").unwrap();
-        // Nested, not at the top: a walk that only checked its first level
-        // would hand back a clean inventory containing an escape hatch.
+        // Nested, not at the top: a walk that stopped descending would hand
+        // back a clean inventory that never saw this entry at all. Note this
+        // does NOT isolate the explicit `is_symlink()` guard — with that guard
+        // deleted a symlink still reports neither dir nor file on Unix, so the
+        // `else` arm ("only regular files") rejects it and this stays green.
+        // The guard is load-bearing on Windows, where a junction reports
+        // `is_dir()` AND the reparse bit; nothing here covers that.
         std::os::unix::fs::symlink("/etc/passwd", root.join("bin").join("secrets")).unwrap();
-        assert!(walk_regular_files(root, root).is_err());
+        // Matched on the message, not `is_err()`: with the link guard deleted
+        // the `else` arm still rejects the entry, but with a different string
+        // ("can contain only regular files"), so only this tells the guard
+        // being gone apart from the guard doing its job.
+        match walk_regular_files(root, root) {
+            Err(AwareError::Validation(message)) => assert!(
+                message.contains("links or reparse points"),
+                "the link guard, not the regular-file fallback, must reject this: {message}"
+            ),
+            other => panic!("expected the link guard to reject the entry, got {other:?}"),
+        }
     }
 
     #[test]
@@ -1813,7 +1871,10 @@ mod tests {
         let file = root.join("not-a-dir");
         std::fs::write(&file, b"").unwrap();
         assert!(canonical_regular_directory(&file).is_err());
-        assert!(canonical_regular_directory(&root.join("absent")).is_err());
+        assert!(matches!(
+            canonical_regular_directory(&root.join("absent")),
+            Err(AwareError::Io(error)) if error.kind() == std::io::ErrorKind::NotFound
+        ));
 
         #[cfg(unix)]
         {
