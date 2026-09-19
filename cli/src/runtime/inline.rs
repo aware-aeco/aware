@@ -14,6 +14,7 @@
 use serde_json::Value;
 
 use crate::error::AwareError;
+use crate::manifest::app::Inline;
 
 #[derive(Debug, Clone, PartialEq)]
 enum Token {
@@ -313,6 +314,35 @@ fn value_truthy(v: &Value) -> bool {
     }
 }
 
+/// The executable body of an inline `predicate` node.
+///
+/// A predicate with no `code:` is not a gate. `atom://` resolution is specified
+/// in `10-core/app-spec.md § Atom references` but is not implemented in this
+/// build — `Inline::atom` is parsed and discarded — so a node carrying `atom:`
+/// instead of `code:` has nothing to evaluate.
+///
+/// Both execution sites used to spell that case `unwrap_or("true")`, which
+/// parsed to `Value::Bool(true)` and turned the gate into a pass-through: every
+/// item went downstream and the node reported `{"pass": true}`, indistinguishable
+/// from a predicate that had genuinely evaluated true (#554). Refuse the run
+/// instead — an unevaluatable predicate is an error, never a pass.
+pub fn predicate_body<'a>(inline: &'a Inline, node_id: &str) -> Result<&'a str, AwareError> {
+    match inline.code.as_deref() {
+        Some(code) => Ok(code),
+        None => Err(AwareError::Validation(match &inline.atom {
+            Some(uri) => format!(
+                "inline node {node_id:?}: predicate references atom {uri:?}, but `atom://` \
+                 resolution is specified in 10-core/app-spec.md and not implemented in this \
+                 build — the node has no executable body, and a predicate that cannot be \
+                 evaluated is not a predicate that passes"
+            ),
+            None => format!(
+                "inline node {node_id:?}: predicate has no `code:` body — nothing to evaluate"
+            ),
+        })),
+    }
+}
+
 pub fn eval_predicate(code: &str, event: &Value) -> Result<bool, AwareError> {
     let expr_src = code
         .trim()
@@ -339,6 +369,80 @@ pub fn eval_predicate(code: &str, event: &Value) -> Result<bool, AwareError> {
 mod tests {
     use super::*;
     use serde_json::json;
+
+    fn inline_from(yaml: &str) -> Inline {
+        serde_yaml::from_str(yaml).unwrap()
+    }
+
+    #[test]
+    fn predicate_body_returns_the_code_when_present() {
+        let inline = inline_from(
+            r#"
+kind: predicate
+description: gate on type
+code: 'e.type == "Welded"'
+"#,
+        );
+        assert_eq!(
+            predicate_body(&inline, "gate").unwrap(),
+            r#"e.type == "Welded""#
+        );
+    }
+
+    #[test]
+    fn predicate_body_refuses_an_unresolved_atom_instead_of_passing() {
+        // The regression this guards: `unwrap_or("true")` made this case parse to
+        // Bool(true), so the gate forwarded every item and emitted {"pass": true}
+        // — indistinguishable in a run log from a predicate that evaluated true
+        // (#554). A lock compiled before the validate guard landed can still
+        // carry this node, so the runtime has to refuse it on its own.
+        let inline = inline_from(
+            r#"
+kind: predicate
+description: Issues newer than last Friday
+atom: 'atom://generic/is-newer-than'
+"#,
+        );
+        let err = predicate_body(&inline, "recent").unwrap_err();
+        let msg = err.to_string();
+        assert!(msg.contains("recent"), "{msg}");
+        assert!(msg.contains("atom://generic/is-newer-than"), "{msg}");
+    }
+
+    #[test]
+    fn predicate_body_refuses_a_body_less_predicate_with_no_atom() {
+        let inline = inline_from(
+            r#"
+kind: predicate
+description: gate on nothing
+"#,
+        );
+        let err = predicate_body(&inline, "gate").unwrap_err();
+        assert!(err.to_string().contains("gate"), "{err}");
+    }
+
+    #[test]
+    fn a_refused_predicate_is_never_reported_as_a_pass() {
+        // The property that matters, stated directly: for a body-less predicate
+        // there must be NO boolean answer at all. Asserting only "is_err" would
+        // still hold if some future refactor returned Ok(false) here, which would
+        // silently invert every affected gate rather than stop the run.
+        let inline = inline_from(
+            r#"
+kind: predicate
+description: RFIs open more than 5 days
+atom: 'atom://generic/at-least'
+"#,
+        );
+        let body = predicate_body(&inline, "aging");
+        assert!(body.is_err(), "body-less predicate must not yield a body");
+        // And the old fallback specifically must be gone: "true" is what the two
+        // execution sites used to substitute.
+        assert!(
+            !matches!(body, Ok("true")),
+            "the literal `true` fallback is back"
+        );
+    }
 
     #[test]
     fn simple_eq() {

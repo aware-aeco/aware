@@ -16,7 +16,7 @@ use crate::manifest::App;
 use crate::manifest::agent::Lifecycle;
 use crate::manifest::app::{CompareBlock, Node};
 use crate::runtime::context::RuntimeContext;
-use crate::runtime::inline::eval_predicate;
+use crate::runtime::inline::{eval_predicate, predicate_body};
 use crate::runtime::invoker::AgentInvoker;
 use crate::runtime::lifecycle::StopReceiver;
 use crate::runtime::provenance::{ProvenanceWriter, RunEvent, now_iso};
@@ -511,7 +511,7 @@ impl Orchestrator {
         // ── Inline predicate ─────────────────────────────────────────────────
         if let Some(inline) = &node.inline {
             if inline.kind == "predicate" {
-                let code = inline.code.as_deref().unwrap_or("true");
+                let code = predicate_body(inline, &node.id)?;
                 let pass = eval_predicate(code, current_event)?;
                 self.emit(RunEvent::NodeOutput {
                     ts: now_iso(),
@@ -992,7 +992,7 @@ impl Orchestrator {
         } else if let Some(inline) = &node.inline {
             match inline.kind.as_str() {
                 "predicate" => {
-                    let code = inline.code.as_deref().unwrap_or("true");
+                    let code = predicate_body(inline, &node.id)?;
                     // Predicate gates against the most recent upstream output.
                     // For a linear topology, the immediate predecessor's output is in ctx.upstream.
                     // Inside a `for-each` `do:` body the predicate has no graph

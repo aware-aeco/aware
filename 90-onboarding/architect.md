@@ -56,6 +56,12 @@ This is the source-of-truth for "which projects am I PM on." The reference app w
 aware app install https://github.com/aware-aeco/aware/raw/main/30-apps/_examples/architect-sheet-status.app
 ```
 
+> **Heads-up:** this install currently fails with `E_APP_INLINE_NO_BODY`. The app
+> filters with an `atom://` predicate, and no `atom://` resolver ships in the CLI
+> yet, so that node has no executable body. The CLI refuses it rather than run it
+> — which it used to do by treating the filter as "pass everything" (#554). Use
+> the app as a reference topology until the resolver lands.
+
 Edit inputs at top:
 
 ```yaml

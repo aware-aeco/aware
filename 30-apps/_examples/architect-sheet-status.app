@@ -61,6 +61,12 @@ nodes:
         inputs:
           status: active
 
+      # Planned: validation intentionally rejects this node (E_APP_INLINE_NO_BODY)
+      # until `atom://` resolution ships. The URI is published in app-spec
+      # § Atom references but no resolver exists, so the predicate has no
+      # executable body. It is left as `atom:` rather than rewritten to `code:`
+      # because the inline evaluator has no ordering comparison (`>=`), which
+      # "at least" needs. Tracked in #554.
       - id: aging-rfis
         inline:
           kind: predicate

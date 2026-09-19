@@ -46,6 +46,12 @@ For the Revit agent, no `aware connect` needed — the transport binary talks to
 aware app install https://github.com/aware-aeco/aware/raw/main/30-apps/_examples/bim-monday-audit.app
 ```
 
+> **Heads-up:** this install currently fails with `E_APP_INLINE_NO_BODY`. The app
+> filters with an `atom://` predicate, and no `atom://` resolver ships in the CLI
+> yet, so that node has no executable body. The CLI refuses it rather than run it
+> — which it used to do by treating the filter as "pass everything" (#554). Use
+> the app as a reference topology until the resolver lands.
+
 Inspect what it'll do:
 
 ```powershell
