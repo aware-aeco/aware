@@ -130,3 +130,57 @@ nodes:
         .failure()
         .stderr(predicate::str::contains("E_APP_INLINE_KIND"));
 }
+
+const ATOM_PREDICATE_APP: &str = r#"app: inline-atom
+version: 0.1.0
+description: body-less atom predicate repro
+requires: []
+nodes:
+  - id: recent
+    inline:
+      kind: predicate
+      description: Issues newer than last Friday
+      atom: 'atom://generic/is-newer-than'
+      inputs:
+        threshold: '2026-09-12T00:00:00Z'
+"#;
+
+#[test]
+fn body_less_atom_predicate_rejected_by_validate() {
+    // The shape app-spec § Atom references publishes. No `atom://` resolver
+    // exists, so the predicate has no executable body and the runtime used to
+    // treat it as a literal `true` — a gate that passed everything while
+    // reporting an honest-looking {"pass": true} (#554).
+    let tmp = tempfile::tempdir().unwrap();
+    std::fs::write(tmp.path().join("inline-atom.flo"), ATOM_PREDICATE_APP).unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .args(["app", "validate"])
+        .arg(tmp.path())
+        .assert()
+        .failure()
+        .stdout(predicate::str::contains("E_APP_INLINE_NO_BODY"))
+        .stdout(predicate::str::contains("atom://generic/is-newer-than"));
+}
+
+#[test]
+fn body_less_atom_predicate_rejected_by_compile() {
+    // compile must not mint a lock the runtime would refuse to execute — the
+    // lock is the approved artifact, so a body-less gate must never reach one.
+    let tmp = tempfile::tempdir().unwrap();
+    std::fs::write(tmp.path().join("inline-atom.flo"), ATOM_PREDICATE_APP).unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .args(["app", "compile"])
+        .arg(tmp.path())
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains("E_APP_INLINE_NO_BODY"));
+
+    assert!(
+        !tmp.path().join("inline-atom.lock").exists(),
+        "compile refused the app but still wrote a lock"
+    );
+}

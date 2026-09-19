@@ -16,7 +16,7 @@ use crate::manifest::App;
 use crate::manifest::agent::Lifecycle;
 use crate::manifest::app::{CompareBlock, Node};
 use crate::runtime::context::RuntimeContext;
-use crate::runtime::inline::eval_predicate;
+use crate::runtime::inline::{eval_predicate, predicate_body};
 use crate::runtime::invoker::AgentInvoker;
 use crate::runtime::lifecycle::StopReceiver;
 use crate::runtime::provenance::{ProvenanceWriter, RunEvent, now_iso};
@@ -74,6 +74,34 @@ pub struct Orchestrator {
 }
 
 impl Orchestrator {
+    /// Refuse an app carrying an inline `predicate` with no executable body,
+    /// before a single node runs.
+    ///
+    /// The per-node guard in `execute_node` / `execute_and_chain` cannot carry
+    /// this alone. On the streaming path `run_long_running` deliberately keeps
+    /// the watcher alive across a downstream error (a transient failure on one
+    /// event should not tear down a long-lived trigger), and it attributes that
+    /// error to the SOURCE node. A body-less gate is not transient — it fails
+    /// identically on every event forever — so without this check the run would
+    /// drop every event, blame the watcher, and still end `ok` with exit 0:
+    /// #554's "passes everything" traded for "drops everything, reports
+    /// success". Via `run_exposed_app_stream` that `Ok` reaches a nested caller
+    /// as a cleanly drained stream, so the defect would not surface there at all.
+    ///
+    /// Whether a predicate has a body is a fact about the file, settled before
+    /// the first event arrives, so it is answered once here rather than once per
+    /// event. `run` never calls `validate_app`, so an app installed before the
+    /// validate guard shipped — or edited in place under `~/.aware/apps/` —
+    /// reaches this point without having been checked.
+    fn refuse_body_less_predicates(&self) -> Result<(), AwareError> {
+        match crate::validate::body_less_inline_predicates(&self.app).first() {
+            Some(issue) => Err(AwareError::Validation(issue.message.clone())),
+            None => Ok(()),
+        }
+    }
+}
+
+impl Orchestrator {
     /// Run an all-stateless app in topo order. Returns on the last node's completion
     /// or on first error. Writes provenance throughout.
     pub async fn run_one_shot(self) -> Result<(), AwareError> {
@@ -86,6 +114,7 @@ impl Orchestrator {
     /// `{ <node-id>: <output> }` object. This is what an `exposes-as-agent` app
     /// hands back to a caller when invoked as an agent on the one-shot path.
     pub async fn run_one_shot_collect(mut self) -> Result<Value, AwareError> {
+        self.refuse_body_less_predicates()?;
         self.emit(RunEvent::RunStart {
             ts: now_iso(),
             run_id: self.run_id.clone(),
@@ -163,6 +192,7 @@ impl Orchestrator {
     /// downstream nodes per-event. Returns when `stop_rx` flips to `true` or all source
     /// streams have naturally closed.
     pub async fn run_long_running(mut self, mut stop_rx: StopReceiver) -> Result<(), AwareError> {
+        self.refuse_body_less_predicates()?;
         self.emit(RunEvent::RunStart {
             ts: now_iso(),
             run_id: self.run_id.clone(),
@@ -511,7 +541,7 @@ impl Orchestrator {
         // ── Inline predicate ─────────────────────────────────────────────────
         if let Some(inline) = &node.inline {
             if inline.kind == "predicate" {
-                let code = inline.code.as_deref().unwrap_or("true");
+                let code = predicate_body(inline, &node.id)?;
                 let pass = eval_predicate(code, current_event)?;
                 self.emit(RunEvent::NodeOutput {
                     ts: now_iso(),
@@ -992,7 +1022,7 @@ impl Orchestrator {
         } else if let Some(inline) = &node.inline {
             match inline.kind.as_str() {
                 "predicate" => {
-                    let code = inline.code.as_deref().unwrap_or("true");
+                    let code = predicate_body(inline, &node.id)?;
                     // Predicate gates against the most recent upstream output.
                     // For a linear topology, the immediate predecessor's output is in ctx.upstream.
                     // Inside a `for-each` `do:` body the predicate has no graph
@@ -2892,6 +2922,202 @@ commands:
         } else {
             panic!("run did not end cleanly");
         }
+    }
+
+    #[tokio::test]
+    async fn one_shot_refuses_a_body_less_predicate_instead_of_passing_everything() {
+        // #554. `gate` carries `atom:` and no `code:`, so it has no executable
+        // body. This test exists because the `predicate_body` unit tests prove
+        // only that the HELPER refuses — reverting both orchestrator call sites
+        // to `unwrap_or("true")` left all of them green. This one goes red for
+        // the wiring.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: atomgate
+version: 0.1.0
+description: x
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: gate
+    inline:
+      kind: predicate
+      description: Issues newer than last Friday
+      atom: 'atom://generic/is-newer-than'
+  - id: sink
+    agent: ag-sink
+    command: upload
+connections:
+  - from: src
+    to: gate
+  - from: gate
+    to: sink
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_single("ag-src", "list", serde_json::json!({ "id": 1 }))
+                .with_single("ag-sink", "upload", serde_json::json!({ "ok": true })),
+        );
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        let err = orch
+            .run_one_shot()
+            .await
+            .expect_err("a predicate with no body must not run to completion");
+        assert!(err.to_string().contains("gate"), "{err}");
+
+        let events = read_run_events(&log_path).await.unwrap();
+        // The bug's whole signature was an honest-looking pass record. Asserting
+        // only `is_err` would still hold if some path emitted the pass AND THEN
+        // errored, which is the case that would keep #554 alive downstream.
+        assert!(
+            !events
+                .iter()
+                .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "gate")),
+            "a refused predicate must leave no output event: {events:?}"
+        );
+        assert!(
+            !events
+                .iter()
+                .any(|e| matches!(e, RunEvent::NodeStart { node, .. } if node == "sink")),
+            "nothing downstream of a refused gate may run: {events:?}"
+        );
+    }
+
+    #[tokio::test]
+    async fn body_less_predicate_in_a_for_each_body_fails_the_run_rather_than_keeping_the_item() {
+        // The shape BOTH shipped apps use (#554): the defective predicate sits
+        // inside a `for-each` `do:` body. `for_each_body_predicate_filters_items`
+        // below is the positive control — same fixture with a real `code:` body.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: feachatom
+version: 0.1.0
+description: x
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: loop
+    for-each: '{{ src.items }}'
+    do:
+      - id: gate
+        inline:
+          kind: predicate
+          description: RFIs open more than 5 days
+          atom: 'atom://generic/at-least'
+      - id: body
+        agent: ag-body
+        command: process
+connections:
+  - from: src
+    to: loop
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_single(
+                    "ag-src",
+                    "list",
+                    serde_json::json!({ "items": [{ "keep": true }, { "keep": false }] }),
+                )
+                .with_single("ag-body", "process", serde_json::json!({ "ok": true })),
+        );
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        let err = orch
+            .run_one_shot()
+            .await
+            .expect_err("a body-less gate in a for-each body must fail the run");
+        assert!(err.to_string().contains("gate"), "{err}");
+
+        let events = read_run_events(&log_path).await.unwrap();
+        assert!(
+            !events
+                .iter()
+                .any(|e| matches!(e, RunEvent::NodeStart { node, .. } if node == "body")),
+            "the write node must never run behind a refused gate: {events:?}"
+        );
+    }
+
+    #[tokio::test]
+    async fn streaming_refuses_a_body_less_predicate_rather_than_reporting_ok() {
+        // The streaming call site (`execute_and_chain`, :514) had no test of any
+        // kind, and it is the one where the per-node `?` is NOT enough:
+        // `run_long_running` catches a downstream error, blames the SOURCE node
+        // and keeps the watcher alive, so before `refuse_body_less_predicates`
+        // this app dropped every event, emitted `node-error{node:"watch"}` per
+        // event, and still ended `ok` with exit 0 — #554's "passes everything"
+        // traded for "drops everything, reports success" (#554 review).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: streamatom
+version: 0.1.0
+description: x
+nodes:
+  - id: watch
+    agent: ag-watch
+    command: watch
+  - id: gate
+    inline:
+      kind: predicate
+      description: keep welded
+      atom: 'atom://generic/is-newer-than'
+  - id: sink
+    agent: ag-sink
+    command: upload
+connections:
+  - from: watch
+    to: gate
+  - from: gate
+    to: sink
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_stream(
+                    "ag-watch",
+                    "watch",
+                    vec![
+                        serde_json::json!({ "mark": "A" }),
+                        serde_json::json!({ "mark": "B" }),
+                    ],
+                )
+                .with_single("ag-sink", "upload", serde_json::json!({ "ok": true })),
+        );
+
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        let (_stop_tx, stop_rx) = stop_channel();
+        let err = orch
+            .run_long_running(stop_rx)
+            .await
+            .expect_err("a body-less gate must fail the run, not report ok");
+        assert!(err.to_string().contains("gate"), "{err}");
+
+        // Refused before the first event, so the run never starts: no RunEnd
+        // claiming `ok`, and the watcher is never even spawned.
+        let events = read_run_events(&log_path).await.unwrap();
+        assert!(
+            !events
+                .iter()
+                .any(|e| matches!(e, RunEvent::RunEnd { status, .. } if status == "ok")),
+            "a refused run must never end `ok`: {events:?}"
+        );
+        assert!(
+            !events
+                .iter()
+                .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "sink")),
+            "nothing downstream of a refused gate may run: {events:?}"
+        );
     }
 
     #[tokio::test]
