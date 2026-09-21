@@ -12,6 +12,7 @@ function glb(points) {
   points.flat().forEach((value, position) => binary.writeFloatLE(value, position * 4));
   const json = Buffer.from(JSON.stringify({
     asset: { version: '2.0' }, buffers: [{ byteLength: binary.length }],
+    scene: 0, scenes: [{ nodes: [0] }],
     bufferViews: [{ buffer: 0, byteLength: binary.length }],
     accessors: [{ bufferView: 0, componentType: 5126, count: points.length, type: 'VEC3' }],
     meshes: [{ primitives: [{ attributes: { POSITION: 0 } }] }], nodes: [{ mesh: 0 }],

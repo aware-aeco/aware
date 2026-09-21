@@ -71,3 +71,20 @@ test('GLB tiles refuse morph, skin, and animation deformation outside authentica
     assert.throws(() => validateGlbTile(output), /flattened|primitive/);
   }
 });
+
+test('GLB tiles refuse geometry outside the rendered scene', () => {
+  const tile = paddedTile();
+  const jsonLength = tile.readUInt32LE(12);
+  const document = JSON.parse(tile.subarray(20, 20 + jsonLength).toString('utf8'));
+  document.scenes[0].nodes = [];
+  let json = canonicalJsonBytes(document);
+  json = Buffer.concat([json, Buffer.alloc((4 - (json.length % 4)) % 4, 0x20)]);
+  const binary = tile.subarray(28 + jsonLength);
+  const output = Buffer.alloc(28 + json.length + binary.length);
+  output.writeUInt32LE(0x46546c67, 0); output.writeUInt32LE(2, 4);
+  output.writeUInt32LE(output.length, 8); output.writeUInt32LE(json.length, 12);
+  output.writeUInt32LE(0x4e4f534a, 16); json.copy(output, 20);
+  output.writeUInt32LE(binary.length, 20 + json.length);
+  output.writeUInt32LE(0x004e4942, 24 + json.length); binary.copy(output, 28 + json.length);
+  assert.throws(() => validateGlbTile(output), /rendered scene/);
+});

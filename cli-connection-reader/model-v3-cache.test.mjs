@@ -37,6 +37,11 @@ test('protocol-v3 cache revalidates every object before a warm reuse', async (t)
     objects: [{ pathname: source, receipt: payloadReceipt }],
   }, signingKey);
   assert.equal(cached.root.sha256, sha256(rootBytes));
+  const cachedBytes = await fs.readFile(cached.objects[0].pathname);
+  await fs.rm(cached.objects[0].pathname);
+  await assert.rejects(() => readV3Cache(root, key, identity, signingKey.publicKeyBytes),
+    (error) => error.code === 'reference-cache-invalid');
+  await fs.writeFile(cached.objects[0].pathname, cachedBytes, { mode: 0o400 });
   await fs.chmod(cached.objects[0].pathname, 0o600);
   await fs.writeFile(cached.objects[0].pathname, 'changed');
   await assert.rejects(() => readV3Cache(root, key, identity, signingKey.publicKeyBytes),

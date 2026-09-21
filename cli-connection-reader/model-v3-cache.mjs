@@ -105,7 +105,11 @@ export async function readV3Cache(root, key, identity, expectedPublicKey) {
   const objects = []; const indexes = {};
   for (const receipt of record.objects) {
     const pathname = path.join(directory, ...receipt.logicalPath.split('/'));
-    const bytes = await fs.readFile(pathname);
+    let bytes;
+    try { bytes = await fs.readFile(pathname); }
+    catch (error) {
+      cacheError('reference-cache-invalid', 'Protocol-v3 cached object is missing or unreadable.', error);
+    }
     if (bytes.length !== receipt.bytes || sha256(bytes) !== receipt.sha256) {
       cacheError('reference-cache-invalid', 'Protocol-v3 cached object failed digest verification.');
     }

@@ -24,6 +24,37 @@ function identityTransform(node) {
     && same(node.scale, [1, 1, 1]);
 }
 
+function renderedMeshes(document) {
+  if (document.scene !== 0 || !Array.isArray(document.scenes) || document.scenes.length !== 1
+      || !document.scenes[0] || !Array.isArray(document.scenes[0].nodes)
+      || document.scenes[0].nodes.length === 0) {
+    invalid('Geometry tile must contain one explicit rendered scene.');
+  }
+  const visitedNodes = new Set(); const meshes = new Set();
+  const pending = [...document.scenes[0].nodes];
+  while (pending.length) {
+    const nodeIndex = pending.pop();
+    index(nodeIndex, document.nodes.length, 'Scene node');
+    if (visitedNodes.has(nodeIndex)) invalid('Geometry tile scene graph must be a tree.');
+    visitedNodes.add(nodeIndex);
+    const node = document.nodes[nodeIndex];
+    if (node.extensions !== undefined) invalid('Geometry tile node extensions are unsupported.');
+    if (node.mesh !== undefined) {
+      index(node.mesh, document.meshes.length, 'Scene mesh');
+      if (meshes.has(node.mesh)) invalid('Geometry tile meshes must be rendered exactly once.');
+      meshes.add(node.mesh);
+    }
+    if (node.children !== undefined) {
+      if (!Array.isArray(node.children)) invalid('Geometry tile node children are invalid.');
+      pending.push(...node.children);
+    }
+  }
+  if (visitedNodes.size !== document.nodes.length || meshes.size !== document.meshes.length) {
+    invalid('Every geometry tile node and mesh must belong to the rendered scene.');
+  }
+  return meshes;
+}
+
 /** Validate a flattened, self-contained GLB tile and derive bounds from its POSITION bytes. */
 export function validateGlbTile(input, options = {}) {
   let parsed;
@@ -46,6 +77,7 @@ export function validateGlbTile(input, options = {}) {
       || (Array.isArray(document.animations) && document.animations.length > 0)) {
     invalid('Geometry tile nodes must be flattened to identity transforms.');
   }
+  renderedMeshes(document);
   const positions = new Set(); let primitiveCount = 0;
   for (const mesh of document.meshes) {
     if (!mesh || !Array.isArray(mesh.primitives) || mesh.weights !== undefined) {
@@ -54,7 +86,7 @@ export function validateGlbTile(input, options = {}) {
     for (const primitive of mesh.primitives) {
       if (!primitive || typeof primitive !== 'object' || Array.isArray(primitive)
           || !Number.isSafeInteger(primitive.attributes?.POSITION)
-          || primitive.targets !== undefined) {
+          || primitive.targets !== undefined || primitive.extensions !== undefined) {
         invalid('Every geometry primitive requires a POSITION accessor.');
       }
       positions.add(primitive.attributes.POSITION);
