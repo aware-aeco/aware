@@ -565,7 +565,9 @@ export async function runModelCommand(command, args = {}, deps = {}) {
         const cacheKey = v3CacheKey(cacheIdentity);
         let canonical; let cache = 'hit';
         try {
-          canonical = await (deps.readV3Cache ?? readV3Cache)(config.cacheRoot, cacheKey, cacheIdentity);
+          canonical = await (deps.readV3Cache ?? readV3Cache)(
+            config.cacheRoot, cacheKey, cacheIdentity, signing.signingKey.publicKeyBytes,
+          );
         } catch (error) {
           if (error?.code !== 'reference-cache-miss') throw error;
           cache = 'miss';
@@ -593,7 +595,7 @@ export async function runModelCommand(command, args = {}, deps = {}) {
             workRoot: runRoot, signal: deps.signal,
           });
           canonical = await (deps.publishV3Cache ?? publishV3Cache)(
-            config.cacheRoot, cacheKey, cacheIdentity, canonical,
+            config.cacheRoot, cacheKey, cacheIdentity, canonical, signing.signingKey,
           );
         }
         const result = {

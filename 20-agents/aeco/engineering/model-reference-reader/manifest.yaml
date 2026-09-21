@@ -116,6 +116,14 @@ commands:
         type: string
         required: true
         description: Short-lived opaque authorization transported to the private provider.
+      expected-provider-protocol:
+        type: string
+        required: true
+        description: Exact enrolled-provider protocol; protocol-v3 source fingerprinting requires 3.
+      reader-schema-version:
+        type: string
+        required: true
+        description: Exact reader contract; protocol-v3 source fingerprinting requires model-reference-reader/v3.
       source-namespaces:
         type: array
         required: true
