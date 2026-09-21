@@ -1,26 +1,26 @@
 agent: model-reference-reader
-version: 0.7.3
-display-name: Authenticated RVT Reference Reader
+version: 0.8.0
+display-name: Authenticated Model Reference Reader
 description: |
-  Convert a local Revit project into deterministic, authenticated reference-model artifacts without
-  importing ownership into AWARE. The reader returns canonical Z-up millimetre GLB geometry plus
-  separate entity, property and relationship JSON. Revit meaning comes only from explicit provider
-  metadata and appearance joins; names and geometry are never used to infer it.
+  Convert user-owned model data into deterministic, authenticated reference-model artifacts without
+  importing ownership into AWARE. The reader returns canonical geometry plus separate entity,
+  property and relationship metadata. Format meaning remains inside an enrolled read-only provider;
+  AWARE validates only the closed, generic interoperability contract.
 
   Protocol v1 remains local-only. Protocol v2 permits an operator-installed managed-cloud adapter only
   when the caller pins both its complete fingerprint and exact HTTPS destination. AWARE contains no
   provider, license, cloud credential or vendor HTTP client. First probe may perform the full conversion;
   later reads use a signed content-addressed cache after revalidating every receipt and byte.
 
-  Protocol v3 can describe one signed, operator-enrolled provider package and fingerprint an immutable
-  captured source set. AWARE verifies the package, staged bytes and operator-admitted dependency policy
-  around discovery, then returns a portable effective-source identity. Conversion remains outside this
-  version's v3 surface.
+  Protocol v3 describes and executes a signed, operator-enrolled provider package against an immutable
+  captured source set. Every invocation requires an opaque host-issued authorization envelope that
+  AWARE transports but cannot mint or interpret. The result is a signed model-reference-manifest/v2
+  root over bounded multi-tile geometry and semantically validated metadata shards.
 stateful: false
 vendor: aware-aeco
 license: Apache-2.0
 homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/model-reference-reader
-keywords: [aware, revit, rvt, reference, model, glb, deterministic, local]
+keywords: [aware, reference, model, glb, deterministic, local, interoperability]
 provenance:
   generated-by: hand-curated
   generator-version: 0.126.0
@@ -77,6 +77,10 @@ commands:
         type: string
         required: false
         description: Exact enrolled package-manifest SHA-256 required for protocol-v3 preflight.
+      provider-authorization:
+        type: string
+        required: false
+        description: Host-issued opaque authorization required whenever an enrolled provider package is selected; AWARE cannot mint or interpret it.
     outputs:
       type: single
       schema:
@@ -140,8 +144,8 @@ commands:
     lifecycle: single
     category: curated
     description: |
-      Return bounded counts, exact reconciled coverage and canonical geometry bounds for an RVT.
-      A cold probe performs the full deterministic conversion; a warm probe validates the signed cache.
+      Return bounded counts and authenticated coverage for a legacy RVT read or an explicitly selected
+      protocol-v3 package. Package mode never runs without opaque host authorization.
     inputs:
       rvt-path:
         type: string
@@ -183,6 +187,30 @@ commands:
         type: string
         required: true
         description: Out-of-band pinned SHA-256 of the trusted AWARE-format public key.
+      provider-format:
+        type: string
+        required: false
+        description: Opaque format ID selecting the enrolled protocol-v3 path instead of the legacy RVT path.
+      provider-capability:
+        type: string
+        required: false
+        description: Exact read-only capability ID declared by the selected package.
+      provider-package-sha256:
+        type: string
+        required: false
+        description: Exact selected package-manifest SHA-256.
+      provider-authorization:
+        type: string
+        required: false
+        description: Host-issued opaque authorization; conditionally required for v3 and never minted by AWARE.
+      source-namespaces:
+        type: array
+        required: false
+        description: Ordered user-authorized logical namespace roots for immutable capture.
+      source-capture-limits:
+        type: object
+        required: false
+        description: Optional lower source-capture ceilings for v3.
     outputs:
       type: single
       schema:
@@ -197,8 +225,8 @@ commands:
     lifecycle: single
     category: curated
     description: |
-      Publish five deterministic run-owned artifacts: binary GLB geometry, entities, properties,
-      relationships and the manifest that records their provenance and exact coverage.
+      Publish the frozen five-artifact legacy response for protocols v1/v2, or an authenticated
+      model-reference-manifest/v2 CAS root with multi-tile indexes for explicit protocol v3.
     inputs:
       rvt-path:
         type: string
@@ -240,6 +268,30 @@ commands:
         type: string
         required: true
         description: Out-of-band pinned SHA-256 of the trusted AWARE-format public key.
+      provider-format:
+        type: string
+        required: false
+        description: Opaque format ID selecting the enrolled protocol-v3 path instead of the legacy RVT path.
+      provider-capability:
+        type: string
+        required: false
+        description: Exact read-only capability ID declared by the selected package.
+      provider-package-sha256:
+        type: string
+        required: false
+        description: Exact selected package-manifest SHA-256.
+      provider-authorization:
+        type: string
+        required: false
+        description: Host-issued opaque authorization; conditionally required for v3 and never minted by AWARE.
+      source-namespaces:
+        type: array
+        required: false
+        description: Ordered user-authorized logical namespace roots for immutable capture.
+      source-capture-limits:
+        type: object
+        required: false
+        description: Optional lower source-capture ceilings for v3.
     outputs:
       type: single
       schema:
@@ -255,8 +307,8 @@ commands:
     lifecycle: single
     category: curated
     description: |
-      Publish the unchanged five model artifacts plus a bounded display package, with separate signed
-      source and package envelopes derived only after the private cache receipt verifies.
+      Publish the unchanged legacy display package for protocols v1/v2, or the same authenticated
+      indexed CAS root used by read-model for explicit protocol v3.
     inputs:
       rvt-path:
         type: string
@@ -298,6 +350,30 @@ commands:
         type: string
         required: true
         description: Out-of-band pinned SHA-256 of the trusted AWARE-format public key.
+      provider-format:
+        type: string
+        required: false
+        description: Opaque format ID selecting the enrolled protocol-v3 path instead of the legacy RVT path.
+      provider-capability:
+        type: string
+        required: false
+        description: Exact read-only capability ID declared by the selected package.
+      provider-package-sha256:
+        type: string
+        required: false
+        description: Exact selected package-manifest SHA-256.
+      provider-authorization:
+        type: string
+        required: false
+        description: Host-issued opaque authorization; conditionally required for v3 and never minted by AWARE.
+      source-namespaces:
+        type: array
+        required: false
+        description: Ordered user-authorized logical namespace roots for immutable capture.
+      source-capture-limits:
+        type: object
+        required: false
+        description: Optional lower source-capture ceilings for v3.
     outputs:
       type: single
       schema:

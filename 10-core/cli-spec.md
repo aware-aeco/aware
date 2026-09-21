@@ -582,9 +582,32 @@ and increments a local generation while retaining at most eight prior digests.
 
 `list --json` exposes package ID/version, format ID, manifest/publisher digests, declared capabilities
 and selection status. It never exposes the package root, launcher, file allowlist or provider output.
-The `model-reference-reader` protocol-v3 preflight consumes the same selected record and brackets its
-`describe` invocation with complete package re-verification. Protocol-v3 source discovery and
-conversion are outside this first contract slice.
+The `model-reference-reader` protocol-v3 path consumes the same selected record and brackets every
+provider invocation with complete package re-verification. A caller must supply a non-empty,
+bounded opaque `provider-authorization` value for `preflight`, `fingerprint-source`, `probe`,
+`read-model` and `read-snapshot`. AWARE passes that value to the provider unchanged. It has no key,
+endpoint or rule that can mint, refresh or interpret the authorization, and it fails before launch
+when the value is absent. This is a host authorization boundary, not an AWARE entitlement system.
+
+Protocol v3 captures ordered source namespaces into an immutable private closure, invokes
+`discover`, applies the admitted dependency policy, invokes the package's read-only `convert`
+operation, and admits only its closed output inventory. Entity, property and relationship JSONL
+records are schema-checked, canonicalized, externally sorted and sharded with unique identities and
+referential integrity. Geometry is admitted as one or more contiguous GLB tiles; entity ownership and
+bounds must name an admitted tile. AWARE signs and publishes a `model-reference-manifest/v2` root,
+four family indexes and content-addressed objects. Cancellation or failure before root publication
+leaves no visible root.
+
+The compatibility branches are explicit and non-negotiated:
+
+| Provider protocol | Commands | Reader request | Artifact contract |
+|---|---|---|---|
+| `1` local file | `preflight`, `probe`, `read-model`, `read-snapshot` | existing v1/v2 bytes | frozen five-object legacy package |
+| `2` managed cloud | same | existing v2 bytes plus conversion attempt | frozen five-object legacy package |
+| `3` enrolled source set | all of the above plus `fingerprint-source` | explicit `model-reference-reader/v3`, package identity, namespaces and opaque authorization | indexed `model-reference-manifest/v2` CAS root |
+
+There is no fallback between protocol 3 and either legacy protocol. Missing v3 fields refuse before
+provider I/O; legacy request serialization, cache identity, errors and artifacts remain unchanged.
 
 ## Out of scope for the CLI itself
 

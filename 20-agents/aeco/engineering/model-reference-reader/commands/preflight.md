@@ -13,6 +13,11 @@ changed executable, engine, version, build, or
 signing key then refuses before conversion. A missing provider and a missing signing key are setup failures.
 They are distinct from a conversion failure after readiness.
 
+For an enrolled protocol-v3 package, preflight requires `provider-format`, `provider-capability`, the
+exact selected `provider-package-sha256`, and a host-issued opaque `provider-authorization`. AWARE
+passes the authorization to `describe` unchanged and cannot mint or interpret it. Missing authorization
+refuses before the package launcher starts.
+
 AWARE 0.126.0 has no generic secret-provisioning facility (issue #448). Provider licensing and
 credentials remain a concern of the separately installed provider adapter. The agent contains no cloud
 credential, provider binary or implicit destination discovery; a v2 caller must pin the destination.

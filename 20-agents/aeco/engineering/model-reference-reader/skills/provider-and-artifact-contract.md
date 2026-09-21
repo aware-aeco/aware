@@ -40,15 +40,24 @@ The canonical request, provider fingerprint, source digest and signer trust anch
 cache key. Every cache hit verifies its signature, closed receipt, complete file set and every blob
 digest. A cache result is reusable conversion evidence, not approval authority.
 
-Protocol v3 package preflight and source fingerprinting form a separate, format-neutral route. An operator first trusts a
+Protocol v3 package execution forms a separate, format-neutral, read-only route. An operator first trusts a
 publisher key, enrolls a signed closed package, and selects its manifest digest for an opaque format
 with `aware provider`. The caller supplies that format, one declared capability and the exact selected
 manifest digest. AWARE verifies the publisher, manifest signature, closed file inventory and every file
 receipt before and after invoking `describe`. The caller then uses `fingerprint-source` with ordered,
 user-authorized logical namespace roots. AWARE captures those roots privately, invokes `discover`,
 rechecks the staged bytes and applies an operator-admitted dependency policy. The portable effective
-source carries consumed receipts and explicit absences without original paths. This version does not
-dispatch v3 `convert`.
+source carries consumed receipts and explicit absences without original paths. Every v3 command,
+including preflight, requires a bounded opaque host-issued authorization envelope. AWARE transports
+that value unchanged and cannot mint, refresh or interpret it. The provider must independently verify
+that envelope before reading user-owned model data.
+
+`probe`, `read-model` and `read-snapshot` use an explicit `model-reference-reader/v3` request and never
+fall back to v1/v2. The enrolled provider writes a closed read-only intermediate package. AWARE admits
+its contiguous geometry tiles and JSONL metadata, validates unique entity/relationship identities,
+property and relationship references, ownership bounds and canonical values, then runs a bounded
+external sort before deterministic sharding. Publication is one signed
+`model-reference-manifest/v2` content-addressed root; no partially converted model becomes visible.
 
 `read-model` preserves the original five-descriptor compatibility response and does not expose the
 private cache receipt. Use `read-snapshot` when a downstream consumer needs public authenticated source

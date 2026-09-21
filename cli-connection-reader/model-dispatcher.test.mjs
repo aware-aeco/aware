@@ -49,10 +49,12 @@ test('provider package commands route to the model reader without IFC loading', 
     'provider-format': 'format.synthetic',
     'provider-capability': 'capability.synthetic',
     'provider-package-sha256': 'a'.repeat(64),
+    'expected-provider-protocol': '3',
+    'reader-schema-version': 'model-reference-reader/v3',
   });
   assert.notEqual(result.exitCode, 0);
   const error = JSON.parse(result.stderr.toString('utf8'));
-  assert.equal(error.code, 'reference-source-namespaces-invalid');
+  assert.equal(error.code, 'reference-provider-authorization-invalid');
 });
 
 test('documented IFC probe bytes remain identical through the lazy dispatcher', async () => {

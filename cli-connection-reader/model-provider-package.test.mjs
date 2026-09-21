@@ -61,7 +61,7 @@ test('package preflight exposes only enrolled manifest identity and capability',
   const value = await fixture(t); const calls = [];
   const result = await preflightEnrolledProviderPackage({
     home: value.home, formatId: value.manifest.formatId, capabilityId: value.capability.capabilityId,
-    manifestSha256: value.manifestSha256, environment: { AWARE_RUNTIME_VERSION: '0.137.2' },
+    manifestSha256: value.manifestSha256, authorization: 'host-issued-envelope', environment: { AWARE_RUNTIME_VERSION: '0.137.2' },
     hostRun: async (request) => {
       calls.push(request);
       return { exitCode: 0, stdout: canonicalJsonBytes({ protocolVersion: '3', capabilityId: value.capability.capabilityId, ready: true }), stderr: Buffer.alloc(0) };
@@ -70,7 +70,7 @@ test('package preflight exposes only enrolled manifest identity and capability',
   assert.equal(calls.length, 1);
   assert.deepEqual(JSON.parse(calls[0].stdin), {
     capabilityId: 'capability.synthetic', formatId: 'format.synthetic', operation: 'describe',
-    packageManifestSha256: value.manifestSha256, protocolVersion: '3',
+    packageManifestSha256: value.manifestSha256, protocolVersion: '3', authorization: 'host-issued-envelope',
   });
   assert.equal(result.providerPackageManifestSha256, value.manifestSha256);
   assert.equal(result.capability.capabilityId, 'capability.synthetic');
@@ -79,12 +79,22 @@ test('package preflight exposes only enrolled manifest identity and capability',
   assert.equal(JSON.stringify(result).includes('provider.bin'), false);
 });
 
+test('package preflight cannot launch or mint authorization without a host envelope', async (t) => {
+  const value = await fixture(t); let launches = 0;
+  await assert.rejects(() => preflightEnrolledProviderPackage({
+    home: value.home, formatId: value.manifest.formatId, capabilityId: value.capability.capabilityId,
+    manifestSha256: value.manifestSha256, environment: { AWARE_RUNTIME_VERSION: '0.137.2' },
+    hostRun: async () => { launches += 1; return null; },
+  }), (error) => error.code === 'reference-provider-authorization-invalid');
+  assert.equal(launches, 0);
+});
+
 test('package preflight refuses mutation before provider launch', async (t) => {
   const value = await fixture(t); let launches = 0;
   await fs.writeFile(path.join(value.packageRoot, 'provider.bin'), 'changed');
   await assert.rejects(() => preflightEnrolledProviderPackage({
     home: value.home, formatId: value.manifest.formatId, capabilityId: value.capability.capabilityId,
-    manifestSha256: value.manifestSha256, environment: { AWARE_RUNTIME_VERSION: '0.137.2' },
+    manifestSha256: value.manifestSha256, authorization: 'host-issued-envelope', environment: { AWARE_RUNTIME_VERSION: '0.137.2' },
     hostRun: async () => { launches += 1; return null; },
   }), (error) => error.code === 'reference-provider-package-changed');
   assert.equal(launches, 0);
@@ -94,7 +104,7 @@ test('package preflight brackets provider execution with a second full verificat
   const value = await fixture(t);
   await assert.rejects(() => preflightEnrolledProviderPackage({
     home: value.home, formatId: value.manifest.formatId, capabilityId: value.capability.capabilityId,
-    manifestSha256: value.manifestSha256, environment: { AWARE_RUNTIME_VERSION: '0.137.2' },
+    manifestSha256: value.manifestSha256, authorization: 'host-issued-envelope', environment: { AWARE_RUNTIME_VERSION: '0.137.2' },
     hostRun: async () => {
       await fs.writeFile(path.join(value.packageRoot, 'provider.bin'), 'changed after launch');
       return { exitCode: 0, stdout: canonicalJsonBytes({ protocolVersion: '3', capabilityId: value.capability.capabilityId, ready: true }), stderr: Buffer.alloc(0) };
@@ -110,7 +120,7 @@ test('package preflight refuses stale selection and undeclared capability withou
   ]) {
     await assert.rejects(() => preflightEnrolledProviderPackage({
       home: value.home, formatId: value.manifest.formatId, capabilityId, manifestSha256,
-      environment: { AWARE_RUNTIME_VERSION: '0.137.2' },
+      authorization: 'host-issued-envelope', environment: { AWARE_RUNTIME_VERSION: '0.137.2' },
       hostRun: async () => { launches += 1; return null; },
     }), (error) => error.code === code);
   }
@@ -133,7 +143,7 @@ test('package preflight refuses malformed or unbounded selection history without
     await fs.writeFile(selectionPath, canonicalJsonBytes({ ...base, previousManifestSha256 }));
     await assert.rejects(() => preflightEnrolledProviderPackage({
       home: value.home, formatId: value.manifest.formatId, capabilityId: value.capability.capabilityId,
-      manifestSha256: value.manifestSha256, environment: { AWARE_RUNTIME_VERSION: '0.137.2' },
+      manifestSha256: value.manifestSha256, authorization: 'host-issued-envelope', environment: { AWARE_RUNTIME_VERSION: '0.137.2' },
       hostRun: async () => { launches += 1; return null; },
     }), (error) => error.code === 'reference-provider-package-pin-mismatch');
   }
@@ -144,7 +154,7 @@ test('package preflight rechecks its AWARE compatibility range before launch', a
   const value = await fixture(t); let launches = 0;
   await assert.rejects(() => preflightEnrolledProviderPackage({
     home: value.home, formatId: value.manifest.formatId, capabilityId: value.capability.capabilityId,
-    manifestSha256: value.manifestSha256, environment: { AWARE_RUNTIME_VERSION: '0.136.9' },
+    manifestSha256: value.manifestSha256, authorization: 'host-issued-envelope', environment: { AWARE_RUNTIME_VERSION: '0.136.9' },
     hostRun: async () => { launches += 1; return null; },
   }), (error) => error.code === 'reference-provider-package-incompatible');
   assert.equal(launches, 0);

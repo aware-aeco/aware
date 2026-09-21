@@ -19,7 +19,8 @@ async function fixture(t) {
   const files = [];
   for (const [relative, kind, mediaType, bytes, count] of payloads) {
     await fs.writeFile(path.join(root, ...relative.split('/')), bytes);
-    files.push({ path: relative, kind, ordinal: 0, mediaType, bytes: bytes.length, sha256: sha256(bytes), count });
+    files.push({ path: relative, kind, ordinal: 0, mediaType, bytes: bytes.length, sha256: sha256(bytes), count,
+      ...(kind === 'geometry' ? { bounds: [0, 0, 0, 1, 1, 1] } : {}) });
   }
   const manifest = {
     schemaVersion: 'aware.model-provider-output-manifest/v1', protocolVersion: '3',

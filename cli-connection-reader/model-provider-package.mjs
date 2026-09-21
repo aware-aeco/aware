@@ -26,6 +26,14 @@ function opaqueId(value, label) {
   return value;
 }
 
+function authorization(value) {
+  if (typeof value !== 'string' || !value || Buffer.byteLength(value, 'utf8') > 64 * 1024
+      || /[\u0000-\u001f\u007f]/.test(value)) {
+    packageError('reference-provider-authorization-invalid', 'preflight', 'Provider authorization is required and must be opaque.');
+  }
+  return value;
+}
+
 function normalizedRelativePath(value) {
   if (typeof value !== 'string' || value.length === 0 || value.length > 512 || value.includes('\\')
       || value.includes(':') || value.endsWith('.') || value.endsWith(' ')
@@ -277,6 +285,7 @@ export async function preflightEnrolledProviderPackage(options) {
   const request = canonicalJsonBytes({
     operation: 'describe', protocolVersion: '3', formatId: options.formatId,
     capabilityId: options.capabilityId, packageManifestSha256: options.manifestSha256,
+    authorization: authorization(options.authorization),
   });
   let result;
   try {
