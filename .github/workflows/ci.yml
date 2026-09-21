@@ -422,6 +422,10 @@ jobs:
         working-directory: cli-connection-reader
         run: npm ci
 
+      - name: Bounded metadata sorter tests
+        working-directory: cli-connection-reader
+        run: node --test model-metadata-sort.test.mjs model-metadata-shards.test.mjs
+
       - name: Clean-stage SEA/provider harness
         working-directory: cli-connection-reader
         run: npm run test:windows-harness

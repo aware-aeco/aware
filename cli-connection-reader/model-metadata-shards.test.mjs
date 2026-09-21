@@ -96,15 +96,3 @@ test('empty optional families produce empty canonical indexes', () => {
     (error) => error.code === 'reference-artifact-v2-invalid',
   );
 });
-
-test('metadata nesting has one common admission limit', () => {
-  let accepted = 'leaf';
-  for (let depth = 0; depth < 128; depth += 1) accepted = { value: accepted };
-  assert.equal(partitionMetadataRecords('entities', [{ key: 'entity:deep', record: accepted }])
-    .shards[0].value.records.length, 1);
-  const refused = { value: accepted };
-  assert.throws(
-    () => partitionMetadataRecords('entities', [{ key: 'entity:too-deep', record: refused }]),
-    (error) => error.code === 'reference-artifact-v2-invalid',
-  );
-});

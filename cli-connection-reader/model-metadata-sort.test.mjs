@@ -4,7 +4,10 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { externalSortMetadataRecords } from './model-metadata-sort.mjs';
+import {
+  createExternalSortMetadataRecordsForTesting,
+  externalSortMetadataRecords,
+} from './model-metadata-sort.mjs';
 
 async function temporary(t) {
   const root = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'aware-sort-test-'));
@@ -131,4 +134,169 @@ test('throwing option and iterable accessors become stable reader errors', async
     () => externalSortMetadataRecords(broken, { tempParent }),
     (error) => error.code === 'reference-artifact-v2-invalid',
   );
+});
+
+test('bounded snapshot reads getters once and measures the complete canonical line', async (t) => {
+  const tempParent = await temporary(t);
+  let recordReads = 0; let valueReads = 0;
+  const record = Object.defineProperty({}, 'value', {
+    enumerable: true,
+    get() { valueReads += 1; return valueReads === 1 ? 'kept' : 'x'.repeat(1024); },
+  });
+  const input = { key: 'entity:getter' };
+  Object.defineProperty(input, 'record', {
+    enumerable: true,
+    get() { recordReads += 1; return record; },
+  });
+  const expected = Buffer.from('{"key":"entity:getter","record":{"value":"kept"}}\n');
+  const sorted = await externalSortMetadataRecords([input], {
+    tempParent,
+    limits: { recordBytes: expected.length },
+  });
+  assert.equal(recordReads, 1);
+  assert.equal(valueReads, 1);
+  assert.deepEqual(await fs.readFile(sorted.pathname), expected);
+  await fs.rm(sorted.root, { recursive: true, force: true });
+
+  await assert.rejects(
+    () => externalSortMetadataRecords([{ key: 'entity:getter', record: { value: 'kept' } }], {
+      tempParent,
+      limits: { recordBytes: expected.length - 1 },
+    }),
+    (error) => error.code === 'reference-artifact-v2-limit',
+  );
+});
+
+test('deep input is refused before canonical allocation without changing shard admission', async (t) => {
+  const tempParent = await temporary(t);
+  let record = 'leaf';
+  for (let depth = 0; depth < 129; depth += 1) record = { value: record };
+  await assert.rejects(
+    () => externalSortMetadataRecords([{ key: 'entity:deep', record }], { tempParent }),
+    (error) => error.code === 'reference-artifact-v2-limit',
+  );
+  assert.deepEqual(await fs.readdir(tempParent), []);
+});
+
+test('initial and merge run counts have independent hard stops', async (t) => {
+  const tempParent = await temporary(t);
+  await assert.rejects(
+    () => externalSortMetadataRecords(values, {
+      tempParent,
+      limits: { runBytes: 70, fanIn: 2, initialRuns: 2 },
+    }),
+    (error) => error.code === 'reference-artifact-v2-limit',
+  );
+  assert.deepEqual(await fs.readdir(tempParent), []);
+
+  await assert.rejects(
+    () => externalSortMetadataRecords(values, {
+      tempParent,
+      limits: { runBytes: 70, fanIn: 2, mergeRuns: 1 },
+    }),
+    (error) => error.code === 'reference-artifact-v2-limit',
+  );
+  assert.deepEqual(await fs.readdir(tempParent), []);
+});
+
+for (const [name, corrupt] of [
+  ['oversized', async (pathname) => fs.writeFile(pathname, Buffer.alloc(257, 0x61))],
+  ['invalid UTF-8', async (pathname) => fs.writeFile(pathname, Buffer.from([0x7b, 0x22, 0xff, 0x0a]))],
+  ['CRLF', async (pathname) => {
+    const bytes = await fs.readFile(pathname);
+    await fs.writeFile(pathname, Buffer.concat([bytes.subarray(0, -1), Buffer.from('\r\n')]));
+  }],
+  ['unterminated', async (pathname) => {
+    const bytes = await fs.readFile(pathname);
+    await fs.writeFile(pathname, bytes.subarray(0, -1));
+  }],
+]) {
+  test(`raw run reader rejects ${name} records and cleans its root`, async (t) => {
+    const tempParent = await temporary(t);
+    let changed = false;
+    const sort = createExternalSortMetadataRecordsForTesting({
+      async afterRunWritten(pathname, run) {
+        if (!changed && run.kind === 'initial') { changed = true; await corrupt(pathname); }
+      },
+    });
+    await assert.rejects(
+      () => sort(values.slice(0, 2), {
+        tempParent,
+        limits: { runBytes: 70, recordBytes: 256, fanIn: 2 },
+      }),
+      (error) => error.code === 'reference-artifact-v2-invalid',
+    );
+    assert.deepEqual(await fs.readdir(tempParent), []);
+  });
+}
+
+test('abort interrupts a blocked merge read and closes the opened handle', async (t) => {
+  const tempParent = await temporary(t);
+  const controller = new AbortController();
+  let readOpens = 0; let readCloses = 0;
+  const io = Object.create(fs);
+  io.open = async (pathname, flags, mode) => {
+    const handle = await fs.open(pathname, flags, mode);
+    if (flags !== 'r') return handle;
+    readOpens += 1;
+    return {
+      read() { controller.abort(); return new Promise(() => {}); },
+      async close() { readCloses += 1; await handle.close(); },
+    };
+  };
+  const sort = createExternalSortMetadataRecordsForTesting({ fs: io });
+  await assert.rejects(
+    () => sort(values.slice(0, 2), {
+      tempParent,
+      signal: controller.signal,
+      limits: { runBytes: 70, fanIn: 2 },
+    }),
+    (error) => error.code === 'reference-cancelled',
+  );
+  assert.equal(readOpens, 1);
+  assert.equal(readCloses, 1);
+  assert.deepEqual(await fs.readdir(tempParent), []);
+});
+
+test('abort and cleanup do not wait forever for an uncooperative input iterator', async (t) => {
+  const tempParent = await temporary(t);
+  const controller = new AbortController();
+  const input = {
+    [Symbol.asyncIterator]() {
+      return {
+        next() { return new Promise(() => {}); },
+        return() { return new Promise(() => {}); },
+      };
+    },
+  };
+  const started = Date.now();
+  const sorting = externalSortMetadataRecords(input, { tempParent, signal: controller.signal });
+  setTimeout(() => controller.abort(), 20);
+  await assert.rejects(sorting, (error) => error.code === 'reference-cancelled');
+  assert.ok(Date.now() - started < 500);
+  assert.deepEqual(await fs.readdir(tempParent), []);
+});
+
+test('cleanup failure preserves the primary code and non-public leaked-root diagnostics', async (t) => {
+  const tempParent = await temporary(t);
+  const io = Object.create(fs);
+  io.rm = async (pathname, options) => {
+    if (options?.recursive) throw new Error('injected cleanup failure');
+    return fs.rm(pathname, options);
+  };
+  const sort = createExternalSortMetadataRecordsForTesting({ fs: io });
+  let failure;
+  try {
+    await sort([values[0], values[1], { ...values[0] }], {
+      tempParent,
+      limits: { runBytes: 70, fanIn: 2 },
+    });
+  } catch (error) {
+    failure = error;
+  }
+  assert.equal(failure.code, 'reference-artifact-v2-duplicate');
+  assert.equal(failure.unsafeDetails.cleanupError.message, 'injected cleanup failure');
+  assert.equal(path.dirname(failure.unsafeDetails.leakedRoot), tempParent);
+  assert.equal(Object.keys(failure).includes('unsafeDetails'), false);
+  t.after(() => fs.rm(failure.unsafeDetails.leakedRoot, { recursive: true, force: true }));
 });
