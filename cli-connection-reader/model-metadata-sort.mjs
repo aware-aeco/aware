@@ -430,7 +430,7 @@ async function* metadataInputs(records, syncIterator, asyncIterator, signal) {
         sortError('reference-artifact-v2-invalid', 'Metadata sort input is invalid.');
       }
       if (done) { completed = true; return; }
-      yield value;
+      yield await awaitAbortable(value, signal);
     }
   } finally {
     if (!completed) {

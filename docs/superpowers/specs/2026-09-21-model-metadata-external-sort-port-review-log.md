@@ -98,3 +98,16 @@ VERDICT: REVISE
 
 Accepted the finding. Added separate regressions proving that cancellation remains authoritative when
 an initial-run close also fails and that a first-read failure remains primary when its close fails.
+
+## Implementation review 3 — Codex
+
+1. The async generator implicitly awaited a promise-valued record outside the abort race, so a hostile
+   iterator item could indefinitely block cancellation and owned-root cleanup. Fix: resolve yielded
+   values through `awaitAbortable` and test a never-settling item with a real abort signal.
+
+VERDICT: REVISE
+
+### Builder response
+
+Accepted the finding. Promise-valued records now use the same cancellation boundary as iterator
+`next()`, and the regression asserts bounded cancellation plus complete temporary-root cleanup.

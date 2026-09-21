@@ -327,6 +327,20 @@ test('synchronous abort still observes the rejected iterator result', async (t) 
   assert.deepEqual(await fs.readdir(tempParent), []);
 });
 
+test('abort interrupts a promise-valued iterator item and cleans the owned root', async (t) => {
+  const tempParent = await temporary(t);
+  const controller = new AbortController();
+  const started = Date.now();
+  const sorting = externalSortMetadataRecords([new Promise(() => {})], {
+    tempParent,
+    signal: controller.signal,
+  });
+  setTimeout(() => controller.abort(), 20);
+  await assert.rejects(sorting, (error) => error.code === 'reference-cancelled');
+  assert.ok(Date.now() - started < 500);
+  assert.deepEqual(await fs.readdir(tempParent), []);
+});
+
 test('merge output close failures become I/O errors and clean the owned root', async (t) => {
   const tempParent = await temporary(t);
   const io = Object.create(fs);
