@@ -355,6 +355,59 @@ test('merge output close failures become I/O errors and clean the owned root', a
   assert.deepEqual(await fs.readdir(tempParent), []);
 });
 
+test('run close failures cannot overwrite cancellation', async (t) => {
+  const tempParent = await temporary(t);
+  const controller = new AbortController();
+  const io = Object.create(fs);
+  io.open = async (pathname, flags, mode) => {
+    const handle = await fs.open(pathname, flags, mode);
+    if (flags !== 'wx') return handle;
+    return {
+      write: handle.write.bind(handle),
+      async sync() { await handle.sync(); controller.abort(); },
+      async close() {
+        await handle.close();
+        throw new Error('injected run close failure');
+      },
+    };
+  };
+  const sort = createExternalSortMetadataRecordsForTesting({ fs: io });
+  await assert.rejects(
+    () => sort([values[0]], { tempParent, signal: controller.signal }),
+    (error) => error.code === 'reference-cancelled'
+      && error.unsafeDetails.closeError.message === 'injected run close failure',
+  );
+  assert.deepEqual(await fs.readdir(tempParent), []);
+});
+
+test('first-read close failures retain the read failure as primary', async (t) => {
+  const tempParent = await temporary(t);
+  const io = Object.create(fs);
+  let readOpens = 0;
+  io.open = async (pathname, flags, mode) => {
+    const handle = await fs.open(pathname, flags, mode);
+    if (flags !== 'r' || ++readOpens !== 1) return handle;
+    return {
+      async read() { throw new Error('injected read failure'); },
+      async close() {
+        await handle.close();
+        throw new Error('injected read close failure');
+      },
+    };
+  };
+  const sort = createExternalSortMetadataRecordsForTesting({ fs: io });
+  await assert.rejects(
+    () => sort(values.slice(0, 2), {
+      tempParent,
+      limits: { runBytes: 70, fanIn: 2 },
+    }),
+    (error) => error.code === 'reference-artifact-v2-io'
+      && error.unsafeDetails.primary.message === 'injected read failure'
+      && error.unsafeDetails.closeError.message === 'injected read close failure',
+  );
+  assert.deepEqual(await fs.readdir(tempParent), []);
+});
+
 test('cleanup failure preserves the primary code and non-public leaked-root diagnostics', async (t) => {
   const tempParent = await temporary(t);
   const io = Object.create(fs);

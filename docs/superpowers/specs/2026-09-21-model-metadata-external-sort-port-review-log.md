@@ -85,3 +85,16 @@ VERDICT: REVISE
 Accepted all three findings. Added focused regressions for synchronous abort plus rejected `next()`,
 wide-object early refusal, and merge-output close failure with owned-root cleanup. The 27 focused tests
 and the 424-test CI-mode connection-reader suite pass after the changes.
+
+## Implementation review 2 — Codex
+
+1. Initial-run and first-read close failures could still overwrite a cancellation, write, or read
+   failure. Fix: preserve the primary failure and attach close failure diagnostics in `writeRun` and
+   `openRun`, matching the merge path.
+
+VERDICT: REVISE
+
+### Builder response
+
+Accepted the finding. Added separate regressions proving that cancellation remains authoritative when
+an initial-run close also fails and that a first-read failure remains primary when its close fails.

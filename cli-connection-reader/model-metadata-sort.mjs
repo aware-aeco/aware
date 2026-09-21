@@ -243,6 +243,7 @@ async function writeRun(records, pathname, signal, io) {
     }
   }
   const handle = await io.open(pathname, 'wx', 0o600);
+  let primary;
   try {
     for (const record of records) {
       await writeAll(handle, record.bytes, signal);
@@ -250,8 +251,18 @@ async function writeRun(records, pathname, signal, io) {
     }
     await handle.sync();
     checkCancellation(signal);
-  } finally {
-    await handle.close();
+  } catch (error) {
+    primary = error;
+  }
+  let closeFailure;
+  try { await handle.close(); }
+  catch (error) { closeFailure = error; }
+  if (primary) {
+    if (closeFailure) throw primaryWithSecondary(primary, 'closeError', closeFailure);
+    throw primary;
+  }
+  if (closeFailure) {
+    sortError('reference-artifact-v2-io', 'A metadata sort run could not be closed.', closeFailure);
   }
 }
 
@@ -332,7 +343,10 @@ async function openRun(pathname, limits, signal, io) {
     await state.advance();
     return state;
   } catch (error) {
-    await closeRun(state);
+    let closeFailure;
+    try { await closeRun(state); }
+    catch (failure) { closeFailure = failure; }
+    if (closeFailure) throw primaryWithSecondary(error, 'closeError', closeFailure);
     throw error;
   }
 }
