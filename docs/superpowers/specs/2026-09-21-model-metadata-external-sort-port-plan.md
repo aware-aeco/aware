@@ -55,9 +55,9 @@ and finish with a focused/full test pass plus an independently reviewed pull req
 ## Key decisions & tradeoffs
 
 - Preserve the eight commits instead of squashing locally: each later commit documents a distinct
-  correction and the user requested the series in order. Current-main reconciliation and review-driven
-  hardening land as a ninth commit; the final branch therefore preserves, but is not identical to, the
-  old history.
+  correction and the user requested the series in order. Current-main reconciliation lands after that
+  series, and adversarial-review fixes remain visible as follow-up commits; the final branch therefore
+  preserves, but is not identical to, the old history.
 - Export the current canonical metadata-record validator so record shape and canonical bytes remain
   shared, but keep the new depth/size preflight sorter-local until a published canonical-v2 contract
   explicitly adopts those limits.
