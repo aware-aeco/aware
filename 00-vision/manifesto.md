@@ -43,13 +43,15 @@ The fabricator pitch above is the canonical 60 seconds. The 2026-05-17 persona a
 
 | Persona | Sentence to Claude / codex | Reference app |
 |---|---|---|
-| **BIM manager** | *"Every Monday 7am, walk our 4 active Revit projects and post a model-health rollup to Teams. File size, warnings, unplaced rooms, sheets changed this week. Email the PM the same as a PDF."* | [`bim-monday-audit.app`](../30-apps/_examples/bim-monday-audit.app) |
+| **BIM manager** | *"Every Monday 7am, walk our 4 active Revit projects and post a model-health rollup to Teams. File size, warnings, unplaced rooms, sheets changed this week. Email the PM the same as a PDF."* | [`bim-monday-audit.app`](../30-apps/_examples/bim-monday-audit.app) †|
 | **Designer** | *"Every Monday, open the active Rhino model, capture the SE / NW / aerial named views at 4K, post them to the design-review Teams channel."* | [`designer-monday-shots.app`](../30-apps/_examples/designer-monday-shots.app) |
-| **Architect** | *"Every Monday 7am, walk all my active Revit projects + their ACC Issues + their Bluebeam Studio Sessions, post a single ball-in-court card to the principals-rollup channel."* | [`architect-sheet-status.app`](../30-apps/_examples/architect-sheet-status.app) |
+| **Architect** | *"Every Monday 7am, walk all my active Revit projects + their ACC Issues + their Bluebeam Studio Sessions, post a single ball-in-court card to the principals-rollup channel."* | [`architect-sheet-status.app`](../30-apps/_examples/architect-sheet-status.app) †|
 | **Structural engineer** | *"At each peer-review checkpoint, compare the current TSD model against the prior snapshot and produce a delta report with full reproducibility receipt. Pin EC3:2022 + UK NA + EN 10365."* | [`engineer-peer-review-delta.app`](../30-apps/_examples/engineer-peer-review-delta.app) |
 | **Detailer** | *"Given a list of drawing marks + a revision letter, issue the pack: stamp + export PDF + DWG + NC files (Peddinghaus routed) + bolt list + upload to Trimble Connect. Notify the shop floor Teams channel."* | [`detailer-issue-pack.app`](../30-apps/_examples/detailer-issue-pack.app) |
 
-Each runs in production via `aware app run <name>`. First-hour walk-throughs live in [`90-onboarding/`](../90-onboarding/) — one per persona.
+These run via `aware app run <name>`. First-hour walk-throughs live in [`90-onboarding/`](../90-onboarding/) — one per persona.
+
+† **Does not run today.** Both filter with an inline predicate written as an `atom://` reference, and no `atom://` resolver ships in the CLI — so the predicate has no executable body and `aware app validate` / `compile` / `run` refuse it with `E_APP_INLINE_NO_BODY`. Until that guard landed they ran, but the gate forwarded its input unfiltered while reporting a pass (#554). Read them as reference topology; see [`30-apps/_examples/README.md`](../30-apps/_examples/README.md).
 
 ---
 

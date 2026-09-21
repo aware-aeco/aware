@@ -918,9 +918,76 @@ pub fn unsatisfied_pins(
     out
 }
 
+/// The `E_APP_INLINE_NO_BODY` issue for one inline node, if it has that defect.
+///
+/// A `predicate` with no `code:` — or a blank one — has no executable body.
+/// `atom://` resolution is published in app-spec § Atom references but is not
+/// implemented: `Inline::atom` is parsed but never resolved, and is read here
+/// only to name the URI. The runtime reached such a node with nothing to
+/// evaluate and used to default it to a literal `true`, forwarding its input
+/// unfiltered while reporting an honest-looking `{"pass": true}` (#554).
+///
+/// Scoped to `predicate` deliberately: every other kind is already refused by
+/// `E_APP_INLINE_KIND`, and the silent-pass hazard this guards is specific to
+/// the gate that forwards its input.
+///
+/// Frozen nodes are NOT exempt, although the orchestrator short-circuits them
+/// before the inline branch and so never evaluates their predicate. Exempting
+/// them would let an app carry a gate that starts passing everything the moment
+/// someone runs `aware app unfreeze` — the defect would be latent rather than
+/// absent, which is the shape #554 was.
+fn inline_no_body_issue(
+    node_id: &str,
+    inline: &crate::manifest::app::Inline,
+) -> Option<ValidationIssue> {
+    if inline.kind != "predicate" || crate::runtime::inline::executable_body(inline).is_some() {
+        return None;
+    }
+    Some(ValidationIssue::error(
+        "E_APP_INLINE_NO_BODY",
+        match &inline.atom {
+            Some(uri) => format!(
+                "inline node {node_id:?}: predicate references atom {uri:?} and has no `code:` \
+                 body, but `atom://` resolution is not implemented in this build — give the node \
+                 a `code:` predicate"
+            ),
+            None => format!("inline node {node_id:?}: predicate has no `code:` body"),
+        },
+    ))
+}
+
+/// Every inline `predicate` with no executable body, wherever it appears.
+///
+/// Public because `run` needs it as a pre-flight. `run` never calls
+/// `validate_app` (see `commands::app::run`), so an app installed before this
+/// guard shipped — or edited in place under `~/.aware/apps/` — reaches the
+/// orchestrator without it. The orchestrator refuses the node on its own, but
+/// on the streaming path `run_long_running` records a downstream error against
+/// the SOURCE node and deliberately keeps the watcher alive, so a body-less
+/// gate would drop every event while the run still ended `ok`. That is a
+/// file-level fact, knowable before the first event, so it is refused once up
+/// front instead — the same reasoning as the `malformed_requires` pre-flight.
+pub fn body_less_inline_predicates(app: &App) -> Vec<ValidationIssue> {
+    fn walk(nodes: &[crate::manifest::app::Node], out: &mut Vec<ValidationIssue>) {
+        for n in nodes {
+            if let Some(inline) = &n.inline
+                && let Some(issue) = inline_no_body_issue(&n.id, inline)
+            {
+                out.push(issue);
+            }
+            if let Some(body) = &n.do_ {
+                walk(body, out);
+            }
+        }
+    }
+    let mut out = Vec::new();
+    walk(&app.nodes, &mut out);
+    out
+}
+
 /// Recursively validate inline-glue nodes, descending into `for-each` `do:` bodies
-/// (which the compiler flattens and the runtime executes), so unsupported inline
-/// kinds are caught wherever they appear, not just at the top level (#160).
+/// (which the compiler flattens and the runtime executes), so unrunnable inline
+/// nodes are caught wherever they appear, not just at the top level (#160, #554).
 fn check_inline_nodes(nodes: &[crate::manifest::app::Node], out: &mut Vec<ValidationIssue>) {
     for n in nodes {
         if let Some(inline) = &n.inline {
@@ -941,6 +1008,10 @@ fn check_inline_nodes(nodes: &[crate::manifest::app::Node], out: &mut Vec<Valida
                         n.id, inline.kind
                     ),
                 ));
+            } else if let Some(issue) = inline_no_body_issue(&n.id, inline) {
+                // Refuse it here so the author finds out at validate, not from a
+                // run log full of silent passes. See `inline_no_body_issue`.
+                out.push(issue);
             }
         }
         if let Some(body) = &n.do_ {
@@ -3256,6 +3327,257 @@ nodes:
         let issues = validate_app(&app);
         assert!(
             !issues.iter().any(|i| i.code == "E_APP_INLINE_KIND"),
+            "issues: {issues:?}"
+        );
+    }
+
+    /// Exactly which published examples carry a body-less inline predicate.
+    ///
+    /// Written as a SET EQUALITY over the whole example corpus, not as two
+    /// "this one is broken" assertions, so it documents the state rather than
+    /// blessing it — the same shape as
+    /// `tekla_verb_parity::published_examples_still_blocked_by_the_planned_markers`,
+    /// per CLAUDE.md's rule for a known defect that is not yet fixed: pin it so
+    /// it TRIPS when the fix lands.
+    ///
+    /// It goes red in both directions, which is the point: when `atom://`
+    /// resolution ships and one of these gains a body, and equally when a tenth
+    /// example acquires the defect — a regression the README prose cannot catch.
+    #[test]
+    fn body_less_predicates_in_published_examples() {
+        let root = repo_root();
+        let examples = root.join("30-apps/_examples");
+        let mut app_files = Vec::new();
+        collect_files(
+            &examples,
+            &mut |p| {
+                matches!(
+                    p.extension().and_then(|e| e.to_str()),
+                    Some("app" | "flo" | "flow" | "aware")
+                )
+            },
+            &mut app_files,
+        );
+        app_files.sort();
+        assert!(
+            app_files.len() >= 9,
+            "expected at least the 9 app files under 30-apps/_examples/, walked {} — \
+             a walk that finds nothing passes every assertion below vacuously",
+            app_files.len()
+        );
+
+        let mut found: Vec<String> = Vec::new();
+        for path in &app_files {
+            let rel = rel_to(&root, path);
+            let text = std::fs::read_to_string(path).unwrap();
+            let app: App = serde_yaml::from_str(&text)
+                .unwrap_or_else(|e| panic!("{rel} does not deserialize as an app: {e}"));
+            for issue in body_less_inline_predicates(&app) {
+                // The node id is quoted inside the message; keep the pin keyed on
+                // (file, message) so a changed message is a deliberate update too.
+                found.push(format!("{rel} :: {}", issue.message));
+            }
+        }
+        found.sort();
+
+        let node_ids: Vec<&str> = found
+            .iter()
+            .map(|f| f.as_str())
+            .filter(|f| f.contains("stale-sheets") || f.contains("aging-rfis"))
+            .collect();
+        assert_eq!(
+            node_ids.len(),
+            2,
+            "expected exactly the two known body-less predicates; found: {found:#?}"
+        );
+        assert_eq!(
+            found.len(),
+            2,
+            "a published example acquired a body-less inline predicate, or one was fixed. \
+             If one was FIXED, update this test — and re-check 30-apps/_examples/README.md, \
+             00-vision/manifesto.md, 90-onboarding/bim-manager.md and 90-onboarding/architect.md, \
+             which currently tell a reader these two do not run. Found: {found:#?}"
+        );
+        assert!(
+            found[0].contains("architect-sheet-status") && found[0].contains("aging-rfis"),
+            "found: {found:#?}"
+        );
+        assert!(
+            found[1].contains("bim-monday-audit") && found[1].contains("stale-sheets"),
+            "found: {found:#?}"
+        );
+    }
+
+    #[test]
+    fn rejects_body_less_atom_predicate_at_validate() {
+        // The exact shape app-spec § Atom references tells authors to write. No
+        // `atom://` resolver exists, so the predicate has no executable body; the
+        // runtime used to read that as a literal `true` and pass everything
+        // through (#554). Validate must refuse it, and name the URI so the author
+        // knows which node to fix.
+        let yaml = r#"
+app: inline-atom
+version: 0.0.1
+description: |
+  Inline predicate referencing an unresolvable atom.
+requires: []
+nodes:
+  - id: recent
+    inline:
+      kind: predicate
+      description: Issues newer than last Friday
+      atom: 'atom://generic/is-newer-than'
+      inputs:
+        threshold: '2026-09-12T00:00:00Z'
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let issues = validate_app(&app);
+        assert!(has_errors(&issues), "issues: {issues:?}");
+        let issue = issues
+            .iter()
+            .find(|i| i.code == "E_APP_INLINE_NO_BODY")
+            .unwrap_or_else(|| panic!("no E_APP_INLINE_NO_BODY: {issues:?}"));
+        // Naming the node and the URI is the point of the message — a bare code
+        // leaves the author grepping for which of several predicates is at fault.
+        assert!(issue.message.contains("recent"), "{}", issue.message);
+        assert!(
+            issue.message.contains("atom://generic/is-newer-than"),
+            "{}",
+            issue.message
+        );
+    }
+
+    #[test]
+    fn rejects_a_blank_code_body_at_validate() {
+        // `code: ""` is Some(""), so an is_none() check would have admitted it —
+        // the app would validate and lock, then fail only once a run reached the
+        // tokenizer. Validate is where the author is standing.
+        let yaml = r#"
+app: inline-blank
+version: 0.0.1
+description: |
+  Inline predicate with a blank code body.
+requires: []
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: gate on nothing
+      code: "   "
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let issues = validate_app(&app);
+        assert!(
+            issues.iter().any(|i| i.code == "E_APP_INLINE_NO_BODY"),
+            "issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn rejects_body_less_predicate_with_no_atom_either() {
+        // `atom:` absent as well — still no body, still must not reach a run.
+        let yaml = r#"
+app: inline-empty
+version: 0.0.1
+description: |
+  Inline predicate with neither code nor atom.
+requires: []
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: gate on nothing
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let issues = validate_app(&app);
+        let issue = issues
+            .iter()
+            .find(|i| i.code == "E_APP_INLINE_NO_BODY")
+            .unwrap_or_else(|| panic!("no E_APP_INLINE_NO_BODY: {issues:?}"));
+        assert!(issue.message.contains("gate"), "{}", issue.message);
+    }
+
+    #[test]
+    fn body_less_atom_predicate_nested_in_for_each_body_is_rejected() {
+        // Both shipped apps that carry this defect put the node inside a
+        // `for-each` `do:` body, which the compiler flattens and the runtime
+        // executes — so a guard that only walked top-level nodes would have
+        // missed the two real cases entirely (#554).
+        let yaml = r#"
+app: inline-atom-body
+version: 0.0.1
+description: |
+  for-each with a body-less atom predicate in its body.
+requires: []
+nodes:
+  - id: loop
+    for-each: '{{ items }}'
+    do:
+      - id: aging
+        inline:
+          kind: predicate
+          description: RFIs open more than 5 days
+          atom: 'atom://generic/at-least'
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let issues = validate_app(&app);
+        assert!(
+            issues.iter().any(|i| i.code == "E_APP_INLINE_NO_BODY"),
+            "issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn predicate_with_code_body_is_not_flagged_no_body() {
+        // The guard must not fire on the honest shape — `welded-to-tc.app` ships
+        // exactly this and has to keep validating clean.
+        let yaml = r#"
+app: inline-pred-ok
+version: 0.0.1
+description: |
+  Inline predicate with a real body.
+requires: []
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: gate on type
+      code: 'e.type == "Welded"'
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let issues = validate_app(&app);
+        assert!(
+            !issues.iter().any(|i| i.code == "E_APP_INLINE_NO_BODY"),
+            "issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn body_less_non_predicate_kind_reports_kind_not_no_body() {
+        // A body-less `shape` node is already refused by E_APP_INLINE_KIND. The
+        // no-body guard is deliberately scoped to `predicate` — the silent-pass
+        // hazard belongs to the gate that forwards its input — so this must not
+        // double-report.
+        let yaml = r#"
+app: inline-shape-nobody
+version: 0.0.1
+description: |
+  Inline shape node with no body.
+requires: []
+nodes:
+  - id: reshape
+    inline:
+      kind: shape
+      description: reshape a value
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let issues = validate_app(&app);
+        assert!(
+            issues.iter().any(|i| i.code == "E_APP_INLINE_KIND"),
+            "issues: {issues:?}"
+        );
+        assert!(
+            !issues.iter().any(|i| i.code == "E_APP_INLINE_NO_BODY"),
             "issues: {issues:?}"
         );
     }

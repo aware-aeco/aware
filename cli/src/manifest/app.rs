@@ -456,7 +456,11 @@ pub struct Inline {
     /// `atom://` URI referencing a reusable atom in `atoms/`,
     /// `20-agents/<agent>/atoms/`, or app-local atoms (v0.20).
     /// Mutually exclusive with `code:`.
-    #[allow(dead_code)]
+    ///
+    /// Parsed but NOT resolved: no `atom://` resolver exists in this build. It is
+    /// read only to name the offending URI when validate and the runtime refuse a
+    /// body-less predicate (#554) — until a resolver ships, a node carrying `atom:`
+    /// instead of `code:` is an error, not a gate that passes.
     #[serde(default)]
     pub atom: Option<String>,
     /// When `atom:` is set, this map binds the atom's named inputs to
