@@ -64,6 +64,7 @@ function packageSigningConfiguration(args, deps) {
   const publicPath = args['signing-public-path'] ?? environment.AWARE_MODEL_REFERENCE_PUBLIC_KEY ?? secretPath.replace(/\.sec$/i, '.pub');
   return {
     environment, home, secretPath, publicPath,
+    cacheRoot: deps.cacheRoot ?? path.join(home, 'cache', 'model-reference-reader'),
     privateRoot: deps.privateRoot ?? path.join(home, 'cache', 'model-reference-reader', 'provider-runs'),
   };
 }

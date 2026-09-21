@@ -230,6 +230,33 @@ test('package read-model requires opaque host authorization and reaches the cano
   assert.equal(result.artifactRoot.id, 'root.json');
 });
 
+test('package read-model uses the configured production cache root', async (t) => {
+  const state = await setup(t);
+  let observedRoot;
+  await runModelCommand('probe', {
+    'provider-format': 'format.synthetic', 'provider-capability': 'capability.synthetic',
+    'provider-package-sha256': 'a'.repeat(64), 'provider-authorization': 'host-authority',
+    'reader-schema-version': 'model-reference-reader/v3', 'expected-provider-protocol': '3',
+    'source-namespaces': [{ id: 'model', root: state.root }],
+    'signing-secret-path': state.secretPath, 'signing-public-path': state.publicPath,
+  }, {
+    ...state.deps,
+    fingerprintSource: async () => ({
+      effectiveSource: { schemaVersion: 'model-effective-source/v2', providerFingerprintSha256: 'b'.repeat(64) },
+      sha256: 'c'.repeat(64), dependencyPolicySha256: 'd'.repeat(64), providerIdentity: {},
+    }),
+    readV3Cache: async (root) => {
+      observedRoot = root;
+      return {
+        root: { sha256: 'f'.repeat(64), manifest: { completeness: 'complete' } },
+        indexes: { geometry: { index: { itemCount: 1 } }, entities: { index: { itemCount: 1 } },
+          properties: { index: { itemCount: 0 } }, relationships: { index: { itemCount: 0 } } },
+      };
+    },
+  });
+  assert.equal(observedRoot, state.deps.cacheRoot);
+});
+
 async function managedState(t) {
   const state = await setup(t);
   const destination = 'https://api.example.test';

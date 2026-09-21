@@ -22,6 +22,11 @@
     "file": {
       "type": "object", "additionalProperties": false,
       "required": ["path", "kind", "ordinal", "mediaType", "bytes", "sha256", "count"],
+      "allOf": [{
+        "if": { "properties": { "kind": { "const": "geometry" } }, "required": ["kind"] },
+        "then": { "required": ["bounds"] },
+        "else": { "not": { "required": ["bounds"] } }
+      }],
       "properties": {
         "path": { "type": "string", "pattern": "^(?:geometry/[0-9]{6}\\.glb|metadata/(?:entities|properties|relationships|diagnostics)-[0-9]{6}\\.jsonl)$" },
         "kind": { "enum": ["geometry", "entities", "properties", "relationships", "diagnostics"] },
