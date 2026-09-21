@@ -43,7 +43,7 @@ test('snapshot parsing honors the configured component limit above the strict pa
   assert.equal(output.sourceArtifactPreimage.outputs.find((item) => item.logicalName === 'properties').bytes, largeProperties.length);
   assert.equal(output.packageArtifacts['properties-000000'].bytes, largeProperties.length);
   assert.deepEqual(output.packagePreimage.packager, {
-    agent: 'model-reference-reader', version: '0.7.3', bridgeBuildId: 'aware-connection-reader@0.5.3',
+    agent: 'model-reference-reader', version: '0.8.0', bridgeBuildId: 'aware-connection-reader@0.5.3',
     configurationSha256: output.packagePreimage.packager.configurationSha256,
   });
   const packageManifest = JSON.parse(await fs.readFile(new URL('./package.json', import.meta.url), 'utf8'));
@@ -88,7 +88,7 @@ test('reader v2 publishes independently versioned package schemas and authentica
   assert.equal(output.packageConfiguration.schemas.manifest, 'floless.model-snapshot-package/v2');
   assert.equal(output.packageConfiguration.schemas.properties, 'aware.model-properties/v2');
   assert.equal(output.packagePreimage.source.conversionAttemptId, conversionAttemptId);
-  assert.equal(output.packagePreimage.packager.version, '0.7.3');
+  assert.equal(output.packagePreimage.packager.version, '0.8.0');
   assert.equal(output.packagePreimage.packager.bridgeBuildId, 'aware-connection-reader@0.5.3');
   const packageManifest = JSON.parse(await fs.readFile(new URL('./package.json', import.meta.url), 'utf8'));
   assert.equal(output.packagePreimage.packager.bridgeBuildId, `${packageManifest.name}@${packageManifest.version}`);

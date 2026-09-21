@@ -19,6 +19,9 @@ import { buildAndPublishSnapshot } from './model-snapshot.mjs';
 import { preflightEnrolledProviderPackage } from './model-provider-package.mjs';
 import { fingerprintSource } from './model-provider-discovery.mjs';
 import { sourceCaptureLimits } from './model-source-capture.mjs';
+import { buildProviderConversionRequest, convertProviderSource } from './model-provider-conversion.mjs';
+import { canonicalizeProviderOutput, publishCanonicalArtifact } from './model-canonical-v2.mjs';
+import { publishV3Cache, readV3Cache, v3CacheKey } from './model-v3-cache.mjs';
 
 const STALE_PROVIDER_RUN_MS = 60 * 60_000;
 const ACTIVE_RUN_MARKER = '.active';
@@ -61,6 +64,7 @@ function packageSigningConfiguration(args, deps) {
   const publicPath = args['signing-public-path'] ?? environment.AWARE_MODEL_REFERENCE_PUBLIC_KEY ?? secretPath.replace(/\.sec$/i, '.pub');
   return {
     environment, home, secretPath, publicPath,
+    cacheRoot: deps.cacheRoot ?? path.join(home, 'cache', 'model-reference-reader'),
     privateRoot: deps.privateRoot ?? path.join(home, 'cache', 'model-reference-reader', 'provider-runs'),
   };
 }
@@ -73,18 +77,23 @@ function validatePackageRequest(command, args, deps) {
   for (const field of ['provider-format', 'provider-capability', 'provider-package-sha256']) {
     if (typeof args[field] !== 'string' || !args[field]) readerError('reference-provider-package-request-invalid', 'request', `Package preflight requires ${field}.`);
   }
-  if (args['expected-provider-protocol'] !== undefined && args['expected-provider-protocol'] !== '3') {
+  if (args['expected-provider-protocol'] !== '3') {
     readerError('reference-provider-package-request-invalid', 'request', 'Enrolled provider packages require protocol v3.');
   }
   for (const field of ['provider-path', 'expected-provider-sha256', 'expected-provider-destination', 'authority-store-path']) {
     if (args[field] !== undefined) readerError('reference-provider-package-request-invalid', 'request', `Package preflight cannot mix ${field} with enrollment selection.`);
   }
-  if (command === 'fingerprint-source') {
+  if (typeof args['provider-authorization'] !== 'string' || !args['provider-authorization']
+      || Buffer.byteLength(args['provider-authorization']) > 64 * 1024
+      || /[\u0000-\u001f\u007f]/.test(args['provider-authorization'])) {
+    readerError('reference-provider-authorization-invalid', 'request', 'Enrolled provider execution requires host authorization.');
+  }
+  if (args['reader-schema-version'] !== 'model-reference-reader/v3') {
+    readerError('reference-provider-package-request-invalid', 'request', 'Enrolled provider reads require reader schema v3.');
+  }
+  if (command !== 'preflight') {
     if (!Array.isArray(args['source-namespaces']) || args['source-namespaces'].length === 0) {
-      readerError('reference-source-namespaces-invalid', 'request', 'Source fingerprinting requires captured namespace roots.');
-    }
-    if (typeof args['provider-authorization'] !== 'string' || !args['provider-authorization']) {
-      readerError('reference-provider-authorization-invalid', 'request', 'Source fingerprinting requires provider authorization.');
+      readerError('reference-source-namespaces-invalid', 'request', 'Enrolled provider execution requires captured namespace roots.');
     }
     if (args['degraded-mode'] !== undefined && !['refuse', 'allow'].includes(args['degraded-mode'])) {
       readerError('reference-request-invalid', 'request', 'degraded-mode must be refuse or allow.');
@@ -503,9 +512,6 @@ export async function runModelCommand(command, args = {}, deps = {}) {
     readerError('reference-command-invalid', 'request', 'Unknown model-reader command.');
   }
   if (packageMode(args) || command === 'fingerprint-source') {
-    if (!['preflight', 'fingerprint-source'].includes(command)) {
-      readerError('reference-provider-package-operation-unavailable', 'request', 'This AWARE version does not support that enrolled provider package operation.');
-    }
     const { limits, captureLimits } = validatePackageRequest(command, args, deps);
     const config = packageSigningConfiguration(args, deps);
     const signing = await signingReadiness(args, config);
@@ -516,6 +522,7 @@ export async function runModelCommand(command, args = {}, deps = {}) {
           home: config.home, formatId: args['provider-format'], capabilityId: args['provider-capability'],
           manifestSha256: args['provider-package-sha256'], limits, environment: config.environment,
           hostRun: deps.hostRun ?? ownedHost?.run, signal: deps.signal,
+          authorization: args['provider-authorization'],
         });
         return {
           ...result,
@@ -533,13 +540,82 @@ export async function runModelCommand(command, args = {}, deps = {}) {
           stagingRoot: path.join(runRoot, 'source'), degradedMode: args['degraded-mode'] ?? 'refuse',
           captureLimits,
         });
-        return {
-          schemaVersion: 'model-reference-reader-source-fingerprint/v1',
-          effectiveSource: fingerprint.effectiveSource,
+        if (command === 'fingerprint-source') {
+          return {
+            schemaVersion: 'model-reference-reader-source-fingerprint/v1',
+            effectiveSource: fingerprint.effectiveSource,
+            effectiveSourceSha256: fingerprint.sha256,
+            dependencyPolicySha256: fingerprint.dependencyPolicySha256,
+            providerIdentity: fingerprint.providerIdentity,
+            signerFingerprintSha256: signing.signerFingerprintSha256,
+          };
+        }
+        const conversionIdentity = buildProviderConversionRequest({
+          formatId: args['provider-format'], capabilityId: args['provider-capability'],
+          providerPackageManifestSha256: args['provider-package-sha256'],
+          effectiveSourceSha256: fingerprint.sha256, degradedMode: args['degraded-mode'] ?? 'refuse',
+          conversionSettings: args['conversion-settings'] ?? {}, limits,
+          outputLimits: args['provider-output-limits'],
+        });
+        const cacheIdentity = {
           effectiveSourceSha256: fingerprint.sha256,
-          dependencyPolicySha256: fingerprint.dependencyPolicySha256,
-          providerIdentity: fingerprint.providerIdentity,
+          conversionRequestSha256: conversionIdentity.sha256,
+          providerPackageManifestSha256: args['provider-package-sha256'],
           signerFingerprintSha256: signing.signerFingerprintSha256,
+        };
+        const cacheKey = v3CacheKey(cacheIdentity);
+        let canonical; let cache = 'hit';
+        try {
+          canonical = await (deps.readV3Cache ?? readV3Cache)(
+            config.cacheRoot, cacheKey, cacheIdentity, signing.signingKey.publicKeyBytes,
+          );
+        } catch (error) {
+          if (error?.code !== 'reference-cache-miss') throw error;
+          cache = 'miss';
+        }
+        if (!canonical) {
+          const conversion = await (deps.convertProviderSource ?? convertProviderSource)({
+            home: config.home, formatId: args['provider-format'], capabilityId: args['provider-capability'],
+            manifestSha256: args['provider-package-sha256'], authorization: args['provider-authorization'],
+            namespaces: args['source-namespaces'], effectiveSource: fingerprint.effectiveSource,
+            effectiveSourceSha256: fingerprint.sha256, degradedMode: args['degraded-mode'] ?? 'refuse',
+            conversionSettings: args['conversion-settings'] ?? {}, limits,
+            outputLimits: args['provider-output-limits'], captureLimits, environment: config.environment,
+            hostRun: deps.hostRun ?? ownedHost?.run, signal: deps.signal,
+            stagingRoot: path.join(runRoot, 'conversion'),
+          });
+          if (conversion.conversionRequestSha256 !== conversionIdentity.sha256) {
+            readerError('reference-provider-output-invalid', 'provider-output',
+              'Provider conversion identity changed during execution.');
+          }
+          canonical = await (deps.canonicalizeProviderOutput ?? canonicalizeProviderOutput)({
+            output: conversion.output, effectiveSource: fingerprint.effectiveSource,
+            formatId: args['provider-format'], capabilityId: args['provider-capability'],
+            providerPackageManifestSha256: args['provider-package-sha256'],
+            conversionRequestSha256: conversion.conversionRequestSha256,
+            workRoot: runRoot, limits, signal: deps.signal,
+          });
+          canonical = await (deps.publishV3Cache ?? publishV3Cache)(
+            config.cacheRoot, cacheKey, cacheIdentity, canonical, signing.signingKey,
+          );
+        }
+        const result = {
+          schemaVersion: 'model-reference-reader/v3', cache,
+          effectiveSourceSha256: fingerprint.sha256,
+          providerPackageManifestSha256: args['provider-package-sha256'],
+          providerFingerprintSha256: fingerprint.effectiveSource.providerFingerprintSha256,
+          signerFingerprintSha256: signing.signerFingerprintSha256,
+          artifactRootSha256: canonical.root.sha256,
+          completeness: canonical.root.manifest.completeness,
+          counts: Object.fromEntries(Object.entries(canonical.indexes)
+            .map(([family, index]) => [family, index.index.itemCount])),
+        };
+        if (command === 'probe') return result;
+        return {
+          ...result,
+          ...await (deps.publishCanonicalArtifact ?? publishCanonicalArtifact)(
+            canonical, signing.signingKey, deps.artifactDirectory ?? config.environment.AWARE_ARTIFACT_DIR,
+          ),
         };
       } finally {
         await removeRunRoot(runRoot);

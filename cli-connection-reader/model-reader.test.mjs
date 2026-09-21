@@ -7,6 +7,7 @@ import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { sha256 } from './model-contract.mjs';
+import { buildProviderConversionRequest } from './model-provider-conversion.mjs';
 import { runModelCommand } from './model-reader.mjs';
 
 const fixture = fileURLToPath(new URL('./test-fixtures/model-provider-fixture.mjs', import.meta.url));
@@ -145,6 +146,8 @@ test('package fingerprint-source returns the portable effective source and clean
     'provider-format': 'format.synthetic',
     'provider-capability': 'capability.synthetic',
     'provider-package-sha256': 'a'.repeat(64),
+    'expected-provider-protocol': '3',
+    'reader-schema-version': 'model-reference-reader/v3',
     'provider-authorization': 'synthetic-capability',
     'source-namespaces': [{ id: 'model', root: state.root }],
     'source-capture-limits': { maxFiles: 7, maxAggregateBytes: 4096 },
@@ -169,6 +172,90 @@ test('package fingerprint-source returns the portable effective source and clean
   assert.deepEqual(out.effectiveSource, effectiveSource);
   assert.equal(out.effectiveSourceSha256, 'b'.repeat(64));
   await assert.rejects(fs.stat(path.dirname(stagingRoot)), (error) => error.code === 'ENOENT');
+});
+
+test('package read-model requires opaque host authorization and reaches the canonical v2 publisher', async (t) => {
+  const state = await setup(t);
+  const base = {
+    'provider-format': 'format.synthetic', 'provider-capability': 'capability.synthetic',
+    'provider-package-sha256': 'a'.repeat(64), 'reader-schema-version': 'model-reference-reader/v3',
+    'expected-provider-protocol': '3',
+    'source-namespaces': [{ id: 'model', root: state.root }],
+    'signing-secret-path': state.secretPath, 'signing-public-path': state.publicPath,
+  };
+  for (const command of ['preflight', 'fingerprint-source', 'probe', 'read-model', 'read-snapshot']) {
+    await assert.rejects(
+      () => runModelCommand(command, base, state.deps),
+      (error) => error.code === 'reference-provider-authorization-invalid',
+    );
+  }
+  const effectiveSource = {
+    schemaVersion: 'model-effective-source/v2', providerFingerprintSha256: 'b'.repeat(64),
+  };
+  let converted = 0; let canonicalized = 0; let published = 0;
+  const result = await runModelCommand('read-model', {
+    ...base, 'provider-authorization': 'host-issued-candidate-envelope',
+  }, {
+    ...state.deps,
+    fingerprintSource: async (options) => {
+      assert.equal(options.authorization, 'host-issued-candidate-envelope');
+      return { effectiveSource, sha256: 'c'.repeat(64), dependencyPolicySha256: 'd'.repeat(64), providerIdentity: {} };
+    },
+    readV3Cache: async () => { const error = new Error('miss'); error.code = 'reference-cache-miss'; throw error; },
+    convertProviderSource: async (options) => {
+      converted += 1; assert.equal(options.authorization, 'host-issued-candidate-envelope');
+      return {
+        output: { root: 'admitted', files: [] },
+        conversionRequestSha256: buildProviderConversionRequest({
+          ...options, providerPackageManifestSha256: options.manifestSha256,
+        }).sha256,
+      };
+    },
+    canonicalizeProviderOutput: async (options) => {
+      canonicalized += 1; assert.equal(options.effectiveSource, effectiveSource);
+      assert.ok(options.limits.maxInputGlbBytes > 0);
+      return {
+        root: { sha256: 'f'.repeat(64), manifest: { completeness: 'complete' } },
+        indexes: { geometry: { index: { itemCount: 2 } }, entities: { index: { itemCount: 3 } },
+          properties: { index: { itemCount: 4 } }, relationships: { index: { itemCount: 5 } } },
+      };
+    },
+    publishV3Cache: async (_root, _key, _identity, canonical) => canonical,
+    publishCanonicalArtifact: async (_canonical, _key, directory) => {
+      published += 1; assert.equal(directory, state.deps.artifactDirectory);
+      return { artifactRoot: { id: 'root.json' }, artifactRootSha256: 'f'.repeat(64) };
+    },
+  });
+  assert.deepEqual([converted, canonicalized, published], [1, 1, 1]);
+  assert.deepEqual(result.counts, { geometry: 2, entities: 3, properties: 4, relationships: 5 });
+  assert.equal(result.artifactRoot.id, 'root.json');
+});
+
+test('package read-model uses the configured production cache root', async (t) => {
+  const state = await setup(t);
+  let observedRoot;
+  await runModelCommand('probe', {
+    'provider-format': 'format.synthetic', 'provider-capability': 'capability.synthetic',
+    'provider-package-sha256': 'a'.repeat(64), 'provider-authorization': 'host-authority',
+    'reader-schema-version': 'model-reference-reader/v3', 'expected-provider-protocol': '3',
+    'source-namespaces': [{ id: 'model', root: state.root }],
+    'signing-secret-path': state.secretPath, 'signing-public-path': state.publicPath,
+  }, {
+    ...state.deps,
+    fingerprintSource: async () => ({
+      effectiveSource: { schemaVersion: 'model-effective-source/v2', providerFingerprintSha256: 'b'.repeat(64) },
+      sha256: 'c'.repeat(64), dependencyPolicySha256: 'd'.repeat(64), providerIdentity: {},
+    }),
+    readV3Cache: async (root) => {
+      observedRoot = root;
+      return {
+        root: { sha256: 'f'.repeat(64), manifest: { completeness: 'complete' } },
+        indexes: { geometry: { index: { itemCount: 1 } }, entities: { index: { itemCount: 1 } },
+          properties: { index: { itemCount: 0 } }, relationships: { index: { itemCount: 0 } } },
+      };
+    },
+  });
+  assert.equal(observedRoot, state.deps.cacheRoot);
 });
 
 async function managedState(t) {

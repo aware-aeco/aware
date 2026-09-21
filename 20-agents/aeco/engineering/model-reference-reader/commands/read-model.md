@@ -23,3 +23,8 @@ and unique; duplicated values make every duplicate uncomparable.
 The approved artifact is still FloLess/AWARE consumer state, not this cache entry. This reader produces
 deterministic authenticated bytes; it does not assign a project UUID, generation, approval or mutable
 "latest" handle.
+
+Explicit protocol v3 is a separate response contract. It requires an enrolled package identity,
+`model-reference-reader/v3`, captured source namespaces and opaque host authorization. It publishes a
+signed `model-reference-manifest/v2` root plus content-addressed geometry, metadata and family-index
+objects. It never falls back to the legacy RVT branch.

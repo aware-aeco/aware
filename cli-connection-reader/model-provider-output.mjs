@@ -83,6 +83,17 @@ function digest(value, label) {
   catch (error) { outputError('reference-provider-output-invalid', `${label} is invalid.`, false, error); }
 }
 
+function admittedBounds(value) {
+  if (!Array.isArray(value) || value.length !== 6
+      || value.some((entry) => typeof entry !== 'number' || !Number.isFinite(entry))
+      || value[0] > value[3] || value[1] > value[4] || value[2] > value[5]) {
+    outputError('reference-provider-output-invalid', 'A geometry tile receipt has invalid bounds.');
+  }
+  try { canonicalJsonBytes(value); }
+  catch (error) { outputError('reference-provider-output-invalid', 'A geometry tile receipt has invalid bounds.', false, error); }
+  return value;
+}
+
 function canonicalOutputJson(value, label) {
   try { return canonicalJsonBytes(value); }
   catch (error) { outputError('reference-provider-output-invalid', `The ${label} is invalid.`, false, error); }
@@ -288,7 +299,7 @@ function validateManifest(manifest, expected) {
   digest(manifest.conversionRequestSha256, 'conversionRequestSha256');
   const paths = new Set(); const ordinals = new Map();
   for (const entry of manifest.files) {
-    closed(entry, ['path', 'kind', 'ordinal', 'mediaType', 'bytes', 'sha256', 'count'], [], 'provider output file receipt');
+    closed(entry, ['path', 'kind', 'ordinal', 'mediaType', 'bytes', 'sha256', 'count'], ['bounds'], 'provider output file receipt');
     const contract = typeof entry.kind === 'string' && Object.hasOwn(KINDS, entry.kind)
       ? KINDS[entry.kind] : undefined;
     const match = typeof entry.path === 'string' && contract?.pattern.exec(entry.path);
@@ -299,6 +310,10 @@ function validateManifest(manifest, expected) {
       outputError('reference-provider-output-invalid', 'The provider output contains an invalid file receipt.');
     }
     digest(entry.sha256, 'provider output file sha256');
+    if (entry.kind === 'geometry') admittedBounds(entry.bounds);
+    else if (entry.bounds !== undefined) {
+      outputError('reference-provider-output-invalid', 'Only geometry tile receipts may carry bounds.');
+    }
     paths.add(entry.path);
     const values = ordinals.get(entry.kind) ?? [];
     values.push(entry.ordinal); ordinals.set(entry.kind, values);

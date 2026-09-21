@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-16T16:52:12.183237800+00:00",
+  "updated-at": "2026-09-21T17:53:28.328374500+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -4436,23 +4436,22 @@
       }
     },
     "model-reference-reader": {
-      "display-name": "Authenticated RVT Reference Reader",
+      "display-name": "Authenticated Model Reference Reader",
       "vendor": "aware-aeco",
       "keywords": [
         "aware",
-        "revit",
-        "rvt",
         "reference",
         "model",
         "glb",
         "deterministic",
-        "local"
+        "local",
+        "interoperability"
       ],
       "versions": {
-        "0.7.3": {
-          "description": "Convert a local Revit project into deterministic, authenticated reference-model artifacts without",
+        "0.8.0": {
+          "description": "Convert user-owned model data into deterministic, authenticated reference-model artifacts without",
           "status": "available",
-          "manifest-version": "0.7.3",
+          "manifest-version": "0.8.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 5,
@@ -4474,19 +4473,19 @@
             },
             {
               "name": "probe",
-              "description": "Return bounded counts, exact reconciled coverage and canonical geometry bounds for an RVT.",
+              "description": "Return bounded counts and authenticated coverage for a legacy RVT read or an explicitly selected",
               "lifecycle": "single",
               "category": "curated"
             },
             {
               "name": "read-model",
-              "description": "Publish five deterministic run-owned artifacts: binary GLB geometry, entities, properties,",
+              "description": "Publish the frozen five-artifact legacy response for protocols v1/v2, or an authenticated",
               "lifecycle": "single",
               "category": "curated"
             },
             {
               "name": "read-snapshot",
-              "description": "Publish the unchanged five model artifacts plus a bounded display package, with separate signed",
+              "description": "Publish the unchanged legacy display package for protocols v1/v2, or the same authenticated",
               "lifecycle": "single",
               "category": "curated"
             }

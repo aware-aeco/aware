@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "aware.model-provider-production-inventory/v1",
+  "entrypoints": ["model-dispatcher.mjs"],
+  "runtimeModules": [
+    "model-artifact-auth.mjs",
+    "model-artifact-v2.mjs",
+    "model-cache.mjs",
+    "model-canonical-v2.mjs",
+    "model-contract.mjs",
+    "model-effective-source.mjs",
+    "model-host-client.mjs",
+    "model-glb-tile.mjs",
+    "model-metadata-shards.mjs",
+    "model-metadata-sort.mjs",
+    "model-provider-conversion.mjs",
+    "model-provider-discovery.mjs",
+    "model-provider-output.mjs",
+    "model-provider-package.mjs",
+    "model-provider.mjs",
+    "model-reader.mjs",
+    "model-snapshot.mjs",
+    "model-source-capture.mjs",
+    "model-v3-cache.mjs"
+  ],
+  "requiredCommands": ["preflight", "fingerprint-source", "probe", "read-model", "read-snapshot"],
+  "requiredSchemas": [
+    "model-artifact-index-v2.schema.json",
+    "model-metadata-shard-v2.schema.json",
+    "model-provider-package-v1.schema.json",
+    "model-provider-output-v1.schema.json",
+    "model-reference-manifest-v2.schema.json",
+    "model-source-capture-v1.schema.json"
+  ],
+  "forbiddenRuntimeIdentifiers": ["reference-provider-package-operation-unavailable"]
+}

@@ -1,7 +1,7 @@
 {
   "name": "aware-connection-reader",
   "version": "0.5.3",
-  "modelReferenceReaderVersion": "0.7.3",
+  "modelReferenceReaderVersion": "0.8.0",
   "private": true,
   "type": "module",
   "description": "AWARE CLI transport for authenticated IFC and Revit reference-model reads.",
@@ -11,7 +11,8 @@
   "scripts": {
     "build": "node build.mjs",
     "test": "node --test",
-    "test:windows-harness": "node model-windows-harness.mjs"
+    "test:windows-harness": "node model-windows-harness.mjs",
+    "verify:model-provider-production-reachability": "node verify-model-provider-production-reachability.mjs"
   },
   "dependencies": {
     "fflate": "^0.8.3",

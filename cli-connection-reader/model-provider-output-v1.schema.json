@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aware.aeco.dev/schemas/model-provider-output-v1.schema.json",
+  "title": "AWARE enrolled model provider output manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "protocolVersion", "formatId", "capabilityId", "providerPackageManifestSha256", "effectiveSourceSha256", "conversionRequestSha256", "files"],
+  "properties": {
+    "schemaVersion": { "const": "aware.model-provider-output-manifest/v1" },
+    "protocolVersion": { "const": "3" },
+    "formatId": { "$ref": "#/$defs/id" },
+    "capabilityId": { "$ref": "#/$defs/id" },
+    "providerPackageManifestSha256": { "$ref": "#/$defs/sha256" },
+    "effectiveSourceSha256": { "$ref": "#/$defs/sha256" },
+    "conversionRequestSha256": { "$ref": "#/$defs/sha256" },
+    "files": { "type": "array", "minItems": 2, "maxItems": 1024, "items": { "$ref": "#/$defs/file" } }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,128}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "bounds": { "type": "array", "minItems": 6, "maxItems": 6, "items": { "type": "number" } },
+    "file": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "kind", "ordinal", "mediaType", "bytes", "sha256", "count"],
+      "allOf": [{
+        "if": { "properties": { "kind": { "const": "geometry" } }, "required": ["kind"] },
+        "then": { "required": ["bounds"] },
+        "else": { "not": { "required": ["bounds"] } }
+      }],
+      "properties": {
+        "path": { "type": "string", "pattern": "^(?:geometry/[0-9]{6}\\.glb|metadata/(?:entities|properties|relationships|diagnostics)-[0-9]{6}\\.jsonl)$" },
+        "kind": { "enum": ["geometry", "entities", "properties", "relationships", "diagnostics"] },
+        "ordinal": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "mediaType": { "enum": ["model/gltf-binary", "application/x-ndjson"] },
+        "bytes": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "count": { "type": "integer", "minimum": 0, "maximum": 10000000 },
+        "bounds": { "$ref": "#/$defs/bounds" }
+      }
+    }
+  }
+}

@@ -14,5 +14,66 @@
       "maxItems": 10000000,
       "items": { "type": "object" }
     }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "family": { "const": "entities" } }, "required": ["family"] },
+      "then": { "properties": { "records": { "items": { "$ref": "#/$defs/entity" } } } }
+    },
+    {
+      "if": { "properties": { "family": { "const": "properties" } }, "required": ["family"] },
+      "then": { "properties": { "records": { "items": { "$ref": "#/$defs/property" } } } }
+    },
+    {
+      "if": { "properties": { "family": { "const": "relationships" } }, "required": ["family"] },
+      "then": { "properties": { "records": { "items": { "$ref": "#/$defs/relationship" } } } }
+    }
+  ],
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 4096 },
+    "bounds": {
+      "type": "array", "minItems": 6, "maxItems": 6,
+      "items": { "type": "number" }
+    },
+    "entity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "type", "name", "geometry"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "type": { "$ref": "#/$defs/id" },
+        "name": { "oneOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+        "geometry": {
+          "type": "array", "maxItems": 256,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["tileOrdinal", "bounds"],
+            "properties": {
+              "tileOrdinal": { "type": "integer", "minimum": 0, "maximum": 255 },
+              "bounds": { "$ref": "#/$defs/bounds" }
+            }
+          }
+        }
+      }
+    },
+    "property": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "entityId", "name", "normalizedName", "value", "valueType", "unit", "source", "status", "provenance"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "entityId": { "$ref": "#/$defs/id" },
+        "name": { "$ref": "#/$defs/id" }, "normalizedName": { "$ref": "#/$defs/id" },
+        "value": { "type": ["string", "number", "boolean", "null"] },
+        "valueType": { "enum": ["string", "number", "boolean", "null"] },
+        "unit": { "oneOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+        "source": { "$ref": "#/$defs/id" }, "status": { "$ref": "#/$defs/id" },
+        "provenance": { "$ref": "#/$defs/id" }
+      }
+    },
+    "relationship": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "from", "to"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "kind": { "$ref": "#/$defs/id" },
+        "from": { "$ref": "#/$defs/id" }, "to": { "$ref": "#/$defs/id" }
+      }
+    }
   }
 }

@@ -16,3 +16,6 @@ Verify the independently enrolled signer first, then the source envelope and all
 then the package envelope and every package artifact. The package binds the exact source preimage and
 envelope digests, so a valid package cannot be attached to another conversion or run. Neither envelope
 assigns FloLess project identity, generation or approval.
+
+For explicit protocol v3, `read-snapshot` returns the same signed indexed CAS root as `read-model`.
+The legacy five-object/package bytes above remain frozen for protocols v1 and v2.

@@ -1,0 +1,96 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+
+import { canonicalJsonBytes } from './model-contract.mjs';
+import { validateGlbTile } from './model-glb-tile.mjs';
+
+function paddedTile() {
+  const binary = Buffer.alloc(16);
+  binary.writeFloatLE(1, 0); binary.writeFloatLE(2, 4); binary.writeFloatLE(3, 8);
+  binary[12] = 7;
+  const document = {
+    asset: { version: '2.0' }, scene: 0, scenes: [{ nodes: [0] }],
+    nodes: [{ mesh: 0 }], meshes: [{ primitives: [{ attributes: { POSITION: 0 } }] }],
+    buffers: [{ byteLength: 13 }],
+    bufferViews: [{ buffer: 0, byteOffset: 0, byteLength: 12 }],
+    accessors: [{ bufferView: 0, componentType: 5126, count: 1, type: 'VEC3' }],
+  };
+  let json = canonicalJsonBytes(document);
+  json = Buffer.concat([json, Buffer.alloc((4 - (json.length % 4)) % 4, 0x20)]);
+  const output = Buffer.alloc(28 + json.length + binary.length);
+  output.writeUInt32LE(0x46546c67, 0); output.writeUInt32LE(2, 4);
+  output.writeUInt32LE(output.length, 8); output.writeUInt32LE(json.length, 12);
+  output.writeUInt32LE(0x4e4f534a, 16); json.copy(output, 20);
+  output.writeUInt32LE(binary.length, 20 + json.length);
+  output.writeUInt32LE(0x004e4942, 24 + json.length); binary.copy(output, 28 + json.length);
+  return output;
+}
+
+test('GLB tiles admit up to three legal BIN padding bytes beyond buffers[0].byteLength', () => {
+  assert.deepEqual(validateGlbTile(paddedTile()), {
+    bounds: [1, 2, 3, 1, 2, 3], primitiveCount: 1,
+  });
+});
+
+test('GLB tiles refuse a BIN chunk with more than three undeclared bytes', () => {
+  const tile = paddedTile();
+  const jsonLength = tile.readUInt32LE(12);
+  const document = JSON.parse(tile.subarray(20, 20 + jsonLength).toString('utf8'));
+  document.buffers[0].byteLength = 12;
+  let json = canonicalJsonBytes(document);
+  json = Buffer.concat([json, Buffer.alloc((4 - (json.length % 4)) % 4, 0x20)]);
+  const binary = tile.subarray(28 + jsonLength);
+  const output = Buffer.alloc(28 + json.length + binary.length);
+  output.writeUInt32LE(0x46546c67, 0); output.writeUInt32LE(2, 4);
+  output.writeUInt32LE(output.length, 8); output.writeUInt32LE(json.length, 12);
+  output.writeUInt32LE(0x4e4f534a, 16); json.copy(output, 20);
+  output.writeUInt32LE(binary.length, 20 + json.length);
+  output.writeUInt32LE(0x004e4942, 24 + json.length); binary.copy(output, 28 + json.length);
+  assert.throws(() => validateGlbTile(output), /self-contained GLB/);
+});
+
+test('GLB tiles refuse deformation and malformed primitive accessors', () => {
+  const tile = paddedTile();
+  const jsonLength = tile.readUInt32LE(12);
+  const original = JSON.parse(tile.subarray(20, 20 + jsonLength).toString('utf8'));
+  const binary = tile.subarray(28 + jsonLength);
+  for (const mutate of [
+    (document) => { document.meshes[0].primitives[0].targets = [{ POSITION: 0 }]; },
+    (document) => { document.nodes[0].skin = 0; document.skins = [{ joints: [0] }]; },
+    (document) => { document.animations = [{ channels: [], samplers: [] }]; },
+    (document) => { document.meshes[0].primitives[0].attributes.NORMAL = 99; },
+    (document) => {
+      document.bufferViews.push({ buffer: 0, byteOffset: 12, byteLength: 1 });
+      document.accessors.push({ bufferView: 1, componentType: 5121, count: 1, type: 'SCALAR' });
+      document.meshes[0].primitives[0].indices = 1;
+    },
+  ]) {
+    const document = structuredClone(original); mutate(document);
+    let json = canonicalJsonBytes(document);
+    json = Buffer.concat([json, Buffer.alloc((4 - (json.length % 4)) % 4, 0x20)]);
+    const output = Buffer.alloc(28 + json.length + binary.length);
+    output.writeUInt32LE(0x46546c67, 0); output.writeUInt32LE(2, 4);
+    output.writeUInt32LE(output.length, 8); output.writeUInt32LE(json.length, 12);
+    output.writeUInt32LE(0x4e4f534a, 16); json.copy(output, 20);
+    output.writeUInt32LE(binary.length, 20 + json.length);
+    output.writeUInt32LE(0x004e4942, 24 + json.length); binary.copy(output, 28 + json.length);
+    assert.throws(() => validateGlbTile(output), /flattened|primitive|accessor/);
+  }
+});
+
+test('GLB tiles refuse geometry outside the rendered scene', () => {
+  const tile = paddedTile();
+  const jsonLength = tile.readUInt32LE(12);
+  const document = JSON.parse(tile.subarray(20, 20 + jsonLength).toString('utf8'));
+  document.scenes[0].nodes = [];
+  let json = canonicalJsonBytes(document);
+  json = Buffer.concat([json, Buffer.alloc((4 - (json.length % 4)) % 4, 0x20)]);
+  const binary = tile.subarray(28 + jsonLength);
+  const output = Buffer.alloc(28 + json.length + binary.length);
+  output.writeUInt32LE(0x46546c67, 0); output.writeUInt32LE(2, 4);
+  output.writeUInt32LE(output.length, 8); output.writeUInt32LE(json.length, 12);
+  output.writeUInt32LE(0x4e4f534a, 16); json.copy(output, 20);
+  output.writeUInt32LE(binary.length, 20 + json.length);
+  output.writeUInt32LE(0x004e4942, 24 + json.length); binary.copy(output, 28 + json.length);
+  assert.throws(() => validateGlbTile(output), /rendered scene/);
+});

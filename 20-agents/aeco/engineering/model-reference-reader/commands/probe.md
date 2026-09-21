@@ -16,3 +16,6 @@ The call must carry both `expected-provider-sha256` and the independently truste
 
 Bounds come from normalized active-scene geometry, not from names or metadata. Unclaimed geometry is
 reported in coverage rather than assigned by guesswork.
+
+Protocol v3 instead reports counts and completeness from the semantically admitted indexed root. It
+requires explicit reader v3 fields and opaque host authorization, and may admit multiple geometry tiles.

@@ -324,6 +324,10 @@ jobs:
         working-directory: cli-connection-reader
         run: node --test
 
+      - name: verify model provider production reachability
+        working-directory: cli-connection-reader
+        run: npm run verify:model-provider-production-reachability
+
   # The repo's Python tests. Same hole as `cli-connection-reader` above, as
   # `steel-detailer-lookup`, and as the six .NET suites below — a real regression
   # suite that NO workflow ran. `20-agents/aeco/visualization/blender/tests/`
