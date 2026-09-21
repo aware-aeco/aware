@@ -157,16 +157,16 @@ commands:
     inputs:
       rvt-path:
         type: string
-        required: true
-        description: Absolute path to the local .rvt source.
+        required: false
+        description: Absolute path to the local .rvt source; required only for legacy protocols v1/v2.
       source-sha256:
         type: string
-        required: true
-        description: Expected SHA-256 of the source bytes, measured before the run.
+        required: false
+        description: Expected SHA-256 of the source bytes; required only for legacy protocols v1/v2.
       expected-provider-sha256:
         type: string
-        required: true
-        description: Pinned SHA-256 of the complete versioned provider fingerprint.
+        required: false
+        description: Pinned provider fingerprint; required only for legacy protocols v1/v2 and forbidden for v3.
       expected-provider-protocol:
         type: string
         required: false
@@ -193,8 +193,8 @@ commands:
         description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
       expected-signer-sha256:
         type: string
-        required: true
-        description: Out-of-band pinned SHA-256 of the trusted AWARE-format public key.
+        required: false
+        description: Out-of-band signing-key pin; required by legacy reads and optional for v3.
       provider-format:
         type: string
         required: false
@@ -238,16 +238,16 @@ commands:
     inputs:
       rvt-path:
         type: string
-        required: true
-        description: Absolute path to the local .rvt source.
+        required: false
+        description: Absolute path to the local .rvt source; required only for legacy protocols v1/v2.
       source-sha256:
         type: string
-        required: true
-        description: Expected SHA-256 of the source bytes, measured before the run.
+        required: false
+        description: Expected SHA-256 of the source bytes; required only for legacy protocols v1/v2.
       expected-provider-sha256:
         type: string
-        required: true
-        description: Pinned SHA-256 of the complete versioned provider fingerprint.
+        required: false
+        description: Pinned provider fingerprint; required only for legacy protocols v1/v2 and forbidden for v3.
       expected-provider-protocol:
         type: string
         required: false
@@ -274,8 +274,8 @@ commands:
         description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
       expected-signer-sha256:
         type: string
-        required: true
-        description: Out-of-band pinned SHA-256 of the trusted AWARE-format public key.
+        required: false
+        description: Out-of-band signing-key pin; required by legacy reads and optional for v3.
       provider-format:
         type: string
         required: false
@@ -320,16 +320,16 @@ commands:
     inputs:
       rvt-path:
         type: string
-        required: true
-        description: Absolute path to the local .rvt source.
+        required: false
+        description: Absolute path to the local .rvt source; required only for legacy protocols v1/v2.
       source-sha256:
         type: string
-        required: true
-        description: Expected SHA-256 of the source bytes, measured before the run.
+        required: false
+        description: Expected SHA-256 of the source bytes; required only for legacy protocols v1/v2.
       expected-provider-sha256:
         type: string
-        required: true
-        description: Pinned SHA-256 of the complete versioned provider fingerprint.
+        required: false
+        description: Pinned provider fingerprint; required only for legacy protocols v1/v2 and forbidden for v3.
       expected-provider-protocol:
         type: string
         required: false
@@ -356,8 +356,8 @@ commands:
         description: Optional lower ceilings for expanded property rows and canonical property bytes under reader v2.
       expected-signer-sha256:
         type: string
-        required: true
-        description: Out-of-band pinned SHA-256 of the trusted AWARE-format public key.
+        required: false
+        description: Out-of-band signing-key pin; required by legacy reads and optional for v3.
       provider-format:
         type: string
         required: false
