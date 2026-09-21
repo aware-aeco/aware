@@ -874,7 +874,7 @@
           "subdir": "aware-main/20-agents/aeco/engineering/model-reference-reader",
           "manifest-agent": "model-reference-reader",
           "manifest-version": "0.8.0",
-          "bundle-digest": "sha256:4e05c10fbc0f1834a2b28bb3ca6bd4884b4c6b19cc98d48e1dd733f89c634916"
+          "bundle-digest": "sha256:536e2c40809cd6229c4995b8f4dfd2267b8350f3ad4143fa068e5d592bc99ad3"
         }
       }
     }

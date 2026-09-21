@@ -219,16 +219,21 @@ commands:
         type: object
         required: false
         description: Optional lower source-capture ceilings for v3.
+      degraded-mode:
+        type: string
+        required: false
+        description: Protocol-v3 discovery policy; defaults to refuse and accepts allow only after explicit user choice.
+      conversion-settings:
+        type: object
+        required: false
+        description: Protocol-v3 provider settings bound into the deterministic conversion identity.
+      provider-output-limits:
+        type: object
+        required: false
+        description: Optional lower protocol-v3 provider-output ceilings.
     outputs:
       type: single
-      schema:
-        cache: string
-        sourceSha256: string
-        canonicalRequestSha256: string
-        providerFingerprintSha256: string
-        frame: object
-        coverage: object
-        bounds: object
+      schema: object
   read-model:
     lifecycle: single
     category: curated
@@ -300,17 +305,21 @@ commands:
         type: object
         required: false
         description: Optional lower source-capture ceilings for v3.
+      degraded-mode:
+        type: string
+        required: false
+        description: Protocol-v3 discovery policy; defaults to refuse and accepts allow only after explicit user choice.
+      conversion-settings:
+        type: object
+        required: false
+        description: Protocol-v3 provider settings bound into the deterministic conversion identity.
+      provider-output-limits:
+        type: object
+        required: false
+        description: Optional lower protocol-v3 provider-output ceilings.
     outputs:
       type: single
-      schema:
-        sourceSha256: string
-        canonicalRequestSha256: string
-        providerFingerprint: object
-        providerFingerprintSha256: string
-        signerFingerprintSha256: string
-        frame: object
-        coverage: object
-        artifacts: object
+      schema: object
   read-snapshot:
     lifecycle: single
     category: curated
@@ -382,20 +391,18 @@ commands:
         type: object
         required: false
         description: Optional lower source-capture ceilings for v3.
+      degraded-mode:
+        type: string
+        required: false
+        description: Protocol-v3 discovery policy; defaults to refuse and accepts allow only after explicit user choice.
+      conversion-settings:
+        type: object
+        required: false
+        description: Protocol-v3 provider settings bound into the deterministic conversion identity.
+      provider-output-limits:
+        type: object
+        required: false
+        description: Optional lower protocol-v3 provider-output ceilings.
     outputs:
       type: single
-      schema:
-        sourceSha256: string
-        canonicalRequestSha256: string
-        providerFingerprint: object
-        providerFingerprintSha256: string
-        signerFingerprintSha256: string
-        frame: object
-        coverage: object
-        artifacts: object
-        sourceArtifactPreimage: object
-        sourceArtifactEnvelope: object
-        packageArtifacts: object
-        packageConfiguration: object
-        packagePreimage: object
-        packageArtifactEnvelope: object
+      schema: object
