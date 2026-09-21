@@ -27,7 +27,9 @@ function paddedTile() {
 }
 
 test('GLB tiles admit up to three legal BIN padding bytes beyond buffers[0].byteLength', () => {
-  assert.deepEqual(validateGlbTile(paddedTile()), [1, 2, 3, 1, 2, 3]);
+  assert.deepEqual(validateGlbTile(paddedTile()), {
+    bounds: [1, 2, 3, 1, 2, 3], primitiveCount: 1,
+  });
 });
 
 test('GLB tiles refuse a BIN chunk with more than three undeclared bytes', () => {
@@ -45,4 +47,27 @@ test('GLB tiles refuse a BIN chunk with more than three undeclared bytes', () =>
   output.writeUInt32LE(binary.length, 20 + json.length);
   output.writeUInt32LE(0x004e4942, 24 + json.length); binary.copy(output, 28 + json.length);
   assert.throws(() => validateGlbTile(output), /self-contained GLB/);
+});
+
+test('GLB tiles refuse morph, skin, and animation deformation outside authenticated bounds', () => {
+  const tile = paddedTile();
+  const jsonLength = tile.readUInt32LE(12);
+  const original = JSON.parse(tile.subarray(20, 20 + jsonLength).toString('utf8'));
+  const binary = tile.subarray(28 + jsonLength);
+  for (const mutate of [
+    (document) => { document.meshes[0].primitives[0].targets = [{ POSITION: 0 }]; },
+    (document) => { document.nodes[0].skin = 0; document.skins = [{ joints: [0] }]; },
+    (document) => { document.animations = [{ channels: [], samplers: [] }]; },
+  ]) {
+    const document = structuredClone(original); mutate(document);
+    let json = canonicalJsonBytes(document);
+    json = Buffer.concat([json, Buffer.alloc((4 - (json.length % 4)) % 4, 0x20)]);
+    const output = Buffer.alloc(28 + json.length + binary.length);
+    output.writeUInt32LE(0x46546c67, 0); output.writeUInt32LE(2, 4);
+    output.writeUInt32LE(output.length, 8); output.writeUInt32LE(json.length, 12);
+    output.writeUInt32LE(0x4e4f534a, 16); json.copy(output, 20);
+    output.writeUInt32LE(binary.length, 20 + json.length);
+    output.writeUInt32LE(0x004e4942, 24 + json.length); binary.copy(output, 28 + json.length);
+    assert.throws(() => validateGlbTile(output), /flattened|primitive/);
+  }
 });

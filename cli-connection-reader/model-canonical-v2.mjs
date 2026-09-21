@@ -229,9 +229,13 @@ export async function canonicalizeProviderOutput(options) {
     if (!Array.isArray(entry.bounds)) canonicalError('reference-metadata-semantic-invalid', 'Geometry tile receipt requires bounds.');
     const content = await fs.readFile(path.join(options.output.root, ...entry.path.split('/')));
     const admittedBounds = bounds(entry.bounds, 'tile bounds');
-    const derivedBounds = validateGlbTile(content, { limits: options.limits });
+    const geometryFacts = validateGlbTile(content, { limits: options.limits });
+    const derivedBounds = geometryFacts.bounds;
     if (derivedBounds.some((coordinate, index) => coordinate !== admittedBounds[index])) {
       canonicalError('reference-geometry-invalid', 'Geometry tile bounds do not match its POSITION data.');
+    }
+    if (entry.count !== geometryFacts.primitiveCount) {
+      canonicalError('reference-geometry-invalid', 'Geometry tile count does not match its primitives.');
     }
     const receipt = artifactV2Receipt({
       logicalPath: entry.path, logicalKind: 'geometry-tile', ordinal: entry.ordinal,

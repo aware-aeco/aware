@@ -115,6 +115,13 @@ test('refuses dangling metadata and geometry ownership outside its tile', async 
     ...falseBounds, formatId: 'format.synthetic', capabilityId: 'capability.synthetic',
     conversionRequestSha256: sha256(Buffer.from('request')),
   }), (error) => error.code === 'reference-geometry-invalid');
+
+  const falseCount = await fixture(t);
+  falseCount.output.files.find((entry) => entry.kind === 'geometry').count = 2;
+  await assert.rejects(() => canonicalizeProviderOutput({
+    ...falseCount, formatId: 'format.synthetic', capabilityId: 'capability.synthetic',
+    conversionRequestSha256: sha256(Buffer.from('request')),
+  }), (error) => error.code === 'reference-geometry-invalid');
 });
 
 test('refuses duplicate entity and relationship identities', async (t) => {

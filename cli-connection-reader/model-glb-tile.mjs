@@ -41,18 +41,24 @@ export function validateGlbTile(input, options = {}) {
     invalid('Geometry tile must be a self-contained GLB 2.0 document.');
   }
   if (document.nodes.some((node) => !node || typeof node !== 'object' || Array.isArray(node)
-      || !identityTransform(node))) {
+      || !identityTransform(node) || node.skin !== undefined || node.weights !== undefined)
+      || (Array.isArray(document.skins) && document.skins.length > 0)
+      || (Array.isArray(document.animations) && document.animations.length > 0)) {
     invalid('Geometry tile nodes must be flattened to identity transforms.');
   }
-  const positions = new Set();
+  const positions = new Set(); let primitiveCount = 0;
   for (const mesh of document.meshes) {
-    if (!mesh || !Array.isArray(mesh.primitives)) invalid('Geometry tile mesh primitives are invalid.');
+    if (!mesh || !Array.isArray(mesh.primitives) || mesh.weights !== undefined) {
+      invalid('Geometry tile mesh primitives are invalid.');
+    }
     for (const primitive of mesh.primitives) {
       if (!primitive || typeof primitive !== 'object' || Array.isArray(primitive)
-          || !Number.isSafeInteger(primitive.attributes?.POSITION)) {
+          || !Number.isSafeInteger(primitive.attributes?.POSITION)
+          || primitive.targets !== undefined) {
         invalid('Every geometry primitive requires a POSITION accessor.');
       }
       positions.add(primitive.attributes.POSITION);
+      primitiveCount += 1;
     }
   }
   if (positions.size === 0) invalid('Geometry tile contains no primitives.');
@@ -83,5 +89,5 @@ export function validateGlbTile(input, options = {}) {
       }
     }
   }
-  return derived;
+  return { bounds: derived, primitiveCount };
 }
