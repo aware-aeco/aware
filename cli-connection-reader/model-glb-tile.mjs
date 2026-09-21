@@ -55,6 +55,40 @@ function renderedMeshes(document) {
   return meshes;
 }
 
+const COMPONENT_BYTES = Object.freeze({ 5120: 1, 5121: 1, 5122: 2, 5123: 2, 5125: 4, 5126: 4 });
+const TYPE_COMPONENTS = Object.freeze({ SCALAR: 1, VEC2: 2, VEC3: 3, VEC4: 4, MAT2: 4, MAT3: 9, MAT4: 16 });
+
+function accessorLayout(document, parsed, accessorIndex, declaredBinaryLength, label) {
+  const accessor = document.accessors[index(accessorIndex, document.accessors.length, `${label} accessor`)];
+  const componentBytes = COMPONENT_BYTES[accessor?.componentType];
+  const components = TYPE_COMPONENTS[accessor?.type];
+  if (!accessor || !componentBytes || !components || accessor.sparse !== undefined
+      || !Number.isSafeInteger(accessor.count) || accessor.count < 1
+      || (accessor.normalized !== undefined && typeof accessor.normalized !== 'boolean')) {
+    invalid(`${label} accessor layout is unsupported.`);
+  }
+  const view = document.bufferViews[index(accessor.bufferView, document.bufferViews.length, `${label} bufferView`)];
+  const viewOffset = view?.byteOffset ?? 0; const accessorOffset = accessor.byteOffset ?? 0;
+  const elementBytes = componentBytes * components;
+  const stride = view?.byteStride ?? elementBytes;
+  if (!view || view.buffer !== 0 || !Number.isSafeInteger(stride) || stride < elementBytes
+      || stride > 252 || stride % componentBytes !== 0
+      || !Number.isSafeInteger(viewOffset) || viewOffset < 0
+      || !Number.isSafeInteger(accessorOffset) || accessorOffset < 0
+      || viewOffset % componentBytes !== 0 || accessorOffset % componentBytes !== 0) {
+    invalid(`${label} accessor layout is unsupported.`);
+  }
+  range(viewOffset, view.byteLength, declaredBinaryLength, `${label} bufferView`);
+  range(accessorOffset, (accessor.count - 1) * stride + elementBytes, view.byteLength, `${label} accessor`);
+  return { accessor, offset: viewOffset + accessorOffset, stride, elementBytes };
+}
+
+function unsignedIndex(binary, componentType, offset) {
+  if (componentType === 5121) return binary.readUInt8(offset);
+  if (componentType === 5123) return binary.readUInt16LE(offset);
+  return binary.readUInt32LE(offset);
+}
+
 /** Validate a flattened, self-contained GLB tile and derive bounds from its POSITION bytes. */
 export function validateGlbTile(input, options = {}) {
   let parsed;
@@ -78,38 +112,61 @@ export function validateGlbTile(input, options = {}) {
     invalid('Geometry tile nodes must be flattened to identity transforms.');
   }
   renderedMeshes(document);
-  const positions = new Set(); let primitiveCount = 0;
+  const positions = new Map(); let primitiveCount = 0;
   for (const mesh of document.meshes) {
     if (!mesh || !Array.isArray(mesh.primitives) || mesh.weights !== undefined) {
       invalid('Geometry tile mesh primitives are invalid.');
     }
     for (const primitive of mesh.primitives) {
       if (!primitive || typeof primitive !== 'object' || Array.isArray(primitive)
-          || !Number.isSafeInteger(primitive.attributes?.POSITION)
+          || !primitive.attributes || typeof primitive.attributes !== 'object'
+          || Array.isArray(primitive.attributes) || !Number.isSafeInteger(primitive.attributes.POSITION)
           || primitive.targets !== undefined || primitive.extensions !== undefined) {
         invalid('Every geometry primitive requires a POSITION accessor.');
       }
-      positions.add(primitive.attributes.POSITION);
+      const position = accessorLayout(
+        document, parsed, primitive.attributes.POSITION, declaredBinaryLength, 'POSITION',
+      );
+      if (position.accessor.type !== 'VEC3' || position.accessor.componentType !== 5126
+          || position.accessor.normalized === true) {
+        invalid('POSITION accessor layout is unsupported.');
+      }
+      positions.set(primitive.attributes.POSITION, position);
+      for (const [semantic, accessorIndex] of Object.entries(primitive.attributes)) {
+        if (!semantic || !Number.isSafeInteger(accessorIndex)) {
+          invalid('Geometry primitive attributes are invalid.');
+        }
+        const layout = semantic === 'POSITION' ? position : accessorLayout(
+          document, parsed, accessorIndex, declaredBinaryLength, semantic,
+        );
+        if (layout.accessor.count !== position.accessor.count) {
+          invalid('Geometry primitive attribute counts do not match POSITION.');
+        }
+      }
+      if (primitive.indices !== undefined) {
+        const indices = accessorLayout(document, parsed, primitive.indices, declaredBinaryLength, 'Index');
+        if (indices.accessor.type !== 'SCALAR' || ![5121, 5123, 5125].includes(indices.accessor.componentType)) {
+          invalid('Geometry primitive index accessor is unsupported.');
+        }
+        for (let item = 0; item < indices.accessor.count; item += 1) {
+          if (unsignedIndex(parsed.binary, indices.accessor.componentType,
+            indices.offset + item * indices.stride) >= position.accessor.count) {
+            invalid('Geometry primitive index exceeds the POSITION vertex count.');
+          }
+        }
+      }
+      if (primitive.mode !== undefined
+          && (!Number.isSafeInteger(primitive.mode) || primitive.mode < 0 || primitive.mode > 6)) {
+        invalid('Geometry primitive mode is invalid.');
+      }
       primitiveCount += 1;
     }
   }
   if (positions.size === 0) invalid('Geometry tile contains no primitives.');
   const derived = [Infinity, Infinity, Infinity, -Infinity, -Infinity, -Infinity];
-  for (const accessorIndex of positions) {
-    const accessor = document.accessors[index(accessorIndex, document.accessors.length, 'POSITION accessor')];
-    if (!accessor || accessor.type !== 'VEC3' || accessor.componentType !== 5126
-        || accessor.sparse !== undefined || !Number.isSafeInteger(accessor.count) || accessor.count < 1) {
-      invalid('POSITION accessor layout is unsupported.');
-    }
-    const view = document.bufferViews[index(accessor.bufferView, document.bufferViews.length, 'POSITION bufferView')];
-    if (!view || view.buffer !== 0) invalid('POSITION bufferView is invalid.');
-    const viewOffset = view.byteOffset ?? 0; const accessorOffset = accessor.byteOffset ?? 0;
-    const stride = view.byteStride ?? 12;
-    if (!Number.isSafeInteger(stride) || stride < 12 || stride % 4 !== 0) invalid('POSITION byte stride is invalid.');
-    range(viewOffset, view.byteLength, declaredBinaryLength, 'POSITION bufferView');
-    range(accessorOffset, (accessor.count - 1) * stride + 12, view.byteLength, 'POSITION accessor');
-    for (let item = 0; item < accessor.count; item += 1) {
-      const offset = viewOffset + accessorOffset + item * stride;
+  for (const position of positions.values()) {
+    for (let item = 0; item < position.accessor.count; item += 1) {
+      const offset = position.offset + item * position.stride;
       for (let axis = 0; axis < 3; axis += 1) {
         const value = parsed.binary.readFloatLE(offset + axis * 4);
         if (!Number.isFinite(value) || !Number.isSafeInteger(value) && Math.abs(value) > Number.MAX_SAFE_INTEGER) {

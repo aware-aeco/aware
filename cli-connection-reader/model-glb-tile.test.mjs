@@ -49,7 +49,7 @@ test('GLB tiles refuse a BIN chunk with more than three undeclared bytes', () =>
   assert.throws(() => validateGlbTile(output), /self-contained GLB/);
 });
 
-test('GLB tiles refuse morph, skin, and animation deformation outside authenticated bounds', () => {
+test('GLB tiles refuse deformation and malformed primitive accessors', () => {
   const tile = paddedTile();
   const jsonLength = tile.readUInt32LE(12);
   const original = JSON.parse(tile.subarray(20, 20 + jsonLength).toString('utf8'));
@@ -58,6 +58,12 @@ test('GLB tiles refuse morph, skin, and animation deformation outside authentica
     (document) => { document.meshes[0].primitives[0].targets = [{ POSITION: 0 }]; },
     (document) => { document.nodes[0].skin = 0; document.skins = [{ joints: [0] }]; },
     (document) => { document.animations = [{ channels: [], samplers: [] }]; },
+    (document) => { document.meshes[0].primitives[0].attributes.NORMAL = 99; },
+    (document) => {
+      document.bufferViews.push({ buffer: 0, byteOffset: 12, byteLength: 1 });
+      document.accessors.push({ bufferView: 1, componentType: 5121, count: 1, type: 'SCALAR' });
+      document.meshes[0].primitives[0].indices = 1;
+    },
   ]) {
     const document = structuredClone(original); mutate(document);
     let json = canonicalJsonBytes(document);
@@ -68,7 +74,7 @@ test('GLB tiles refuse morph, skin, and animation deformation outside authentica
     output.writeUInt32LE(0x4e4f534a, 16); json.copy(output, 20);
     output.writeUInt32LE(binary.length, 20 + json.length);
     output.writeUInt32LE(0x004e4942, 24 + json.length); binary.copy(output, 28 + json.length);
-    assert.throws(() => validateGlbTile(output), /flattened|primitive/);
+    assert.throws(() => validateGlbTile(output), /flattened|primitive|accessor/);
   }
 });
 
