@@ -124,15 +124,16 @@ function boundedSnapshot(value, tracker, depth = 0, seen = new Set()) {
     }
     const prototype = Object.getPrototypeOf(value);
     if (prototype !== Object.prototype && prototype !== null) throw new TypeError('JSON object must be plain');
-    const keys = Object.keys(value).sort();
     const copy = {};
+    let propertyCount = 0;
     tracker.add(2);
-    for (let index = 0; index < keys.length; index += 1) {
-      const key = keys[index];
-      if (index) tracker.add(1);
+    for (const key in value) {
+      if (!Object.hasOwn(value, key)) continue;
+      if (propertyCount) tracker.add(1);
       tracker.add(jsonStringBytes(key) + 1);
       const child = boundedSnapshot(value[key], tracker, depth + 1, seen);
       Object.defineProperty(copy, key, { value: child, enumerable: true, configurable: true, writable: true });
+      propertyCount += 1;
     }
     return copy;
   } finally {
@@ -176,6 +177,8 @@ function encodedRecord(input, recordByteLimit) {
 }
 
 async function awaitAbortable(value, signal) {
+  const pending = Promise.resolve(value);
+  pending.catch(() => undefined);
   checkCancellation(signal);
   let add; let remove;
   try {
@@ -185,7 +188,7 @@ async function awaitAbortable(value, signal) {
     sortError('reference-artifact-v2-invalid', 'Metadata sort input is invalid.', error);
   }
   if (typeof add !== 'function' || typeof remove !== 'function') {
-    const result = await value;
+    const result = await pending;
     checkCancellation(signal);
     return result;
   }
@@ -204,7 +207,7 @@ async function awaitAbortable(value, signal) {
       reject(readerError('reference-artifact-v2-invalid', 'Metadata sort input is invalid.', error));
       return;
     }
-    Promise.resolve(value).then(
+    pending.then(
       (result) => {
         if (settled) return;
         settled = true; remove.call(signal, 'abort', aborted); resolve(result);
@@ -337,6 +340,7 @@ async function openRun(pathname, limits, signal, io) {
 async function mergeRuns(inputs, output, limits, signal, io) {
   const states = [];
   let handle;
+  let primary;
   try {
     for (const pathname of inputs) states.push(await openRun(pathname, limits, signal, io));
     handle = await io.open(output, 'wx', 0o600);
@@ -358,9 +362,25 @@ async function mergeRuns(inputs, output, limits, signal, io) {
       await selected.advance();
     }
     await handle.sync();
-  } finally {
-    await handle?.close().catch(() => {});
-    await Promise.all(states.map(closeRun));
+  } catch (error) {
+    primary = error;
+  }
+  const closeResults = await Promise.allSettled([
+    ...(handle ? [handle.close()] : []),
+    ...states.map(closeRun),
+  ]);
+  const closeFailures = closeResults
+    .filter((result) => result.status === 'rejected')
+    .map((result) => result.reason);
+  const closeFailure = closeFailures.length > 1
+    ? new AggregateError(closeFailures, 'Metadata sort handles could not be closed.')
+    : closeFailures[0];
+  if (primary) {
+    if (closeFailure) throw primaryWithSecondary(primary, 'closeError', closeFailure);
+    throw primary;
+  }
+  if (closeFailure) {
+    sortError('reference-artifact-v2-io', 'A metadata sort run could not be closed.', closeFailure);
   }
 }
 
@@ -419,6 +439,16 @@ function primaryWithCleanup(error, cleanupError, root) {
     primary: primary.unsafeDetails ?? primary,
     cleanupError,
     leakedRoot: root,
+  }, primary.providerCode);
+}
+
+function primaryWithSecondary(error, name, secondary) {
+  const primary = error instanceof ModelReaderError
+    ? error
+    : readerError('reference-artifact-v2-io', 'Metadata sorting failed.', error);
+  return new ModelReaderError(primary.code, primary.phase, primary.retryable, primary.message, {
+    primary: primary.unsafeDetails ?? primary,
+    [name]: secondary,
   }, primary.providerCode);
 }
 

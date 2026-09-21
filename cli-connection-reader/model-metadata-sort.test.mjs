@@ -167,6 +167,30 @@ test('bounded snapshot reads getters once and measures the complete canonical li
   );
 });
 
+test('bounded snapshot applies its byte gate before sorting a wide object', async (t) => {
+  const tempParent = await temporary(t);
+  const reads = [];
+  const record = {};
+  Object.defineProperty(record, 'z-first', {
+    enumerable: true,
+    get() { reads.push('z-first'); return 'x'.repeat(128); },
+  });
+  for (let index = 0; index < 10_000; index += 1) {
+    Object.defineProperty(record, `a-${String(index).padStart(5, '0')}`, {
+      enumerable: true,
+      get() { reads.push('later'); return index; },
+    });
+  }
+  await assert.rejects(
+    () => externalSortMetadataRecords([{ key: 'entity:wide', record }], {
+      tempParent,
+      limits: { recordBytes: 64 },
+    }),
+    (error) => error.code === 'reference-artifact-v2-limit',
+  );
+  assert.deepEqual(reads, ['z-first']);
+});
+
 test('deep input is refused before canonical allocation without changing shard admission', async (t) => {
   const tempParent = await temporary(t);
   let record = 'leaf';
@@ -274,6 +298,60 @@ test('abort and cleanup do not wait forever for an uncooperative input iterator'
   setTimeout(() => controller.abort(), 20);
   await assert.rejects(sorting, (error) => error.code === 'reference-cancelled');
   assert.ok(Date.now() - started < 500);
+  assert.deepEqual(await fs.readdir(tempParent), []);
+});
+
+test('synchronous abort still observes the rejected iterator result', async (t) => {
+  const tempParent = await temporary(t);
+  const controller = new AbortController();
+  const unhandled = [];
+  const onUnhandled = (error) => unhandled.push(error);
+  process.on('unhandledRejection', onUnhandled);
+  t.after(() => process.off('unhandledRejection', onUnhandled));
+  const input = {
+    [Symbol.asyncIterator]() {
+      return {
+        next() {
+          controller.abort();
+          return Promise.reject(new Error('producer aborted'));
+        },
+      };
+    },
+  };
+  await assert.rejects(
+    () => externalSortMetadataRecords(input, { tempParent, signal: controller.signal }),
+    (error) => error.code === 'reference-cancelled',
+  );
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(unhandled, []);
+  assert.deepEqual(await fs.readdir(tempParent), []);
+});
+
+test('merge output close failures become I/O errors and clean the owned root', async (t) => {
+  const tempParent = await temporary(t);
+  const io = Object.create(fs);
+  let writeOpens = 0;
+  io.open = async (pathname, flags, mode) => {
+    const handle = await fs.open(pathname, flags, mode);
+    if (flags !== 'wx' || ++writeOpens !== 3) return handle;
+    return {
+      write: handle.write.bind(handle),
+      sync: handle.sync.bind(handle),
+      async close() {
+        await handle.close();
+        throw new Error('injected merge close failure');
+      },
+    };
+  };
+  const sort = createExternalSortMetadataRecordsForTesting({ fs: io });
+  await assert.rejects(
+    () => sort(values.slice(0, 2), {
+      tempParent,
+      limits: { runBytes: 70, fanIn: 2 },
+    }),
+    (error) => error.code === 'reference-artifact-v2-io'
+      && error.unsafeDetails.message === 'injected merge close failure',
+  );
   assert.deepEqual(await fs.readdir(tempParent), []);
 });
 

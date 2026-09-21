@@ -65,3 +65,23 @@ regression tests. No further material plan-level blockers remain. Implementation
 the allocation bounds, abort races, and handle-closure guarantees.
 
 VERDICT: APPROVED
+
+## Implementation review 1 — Codex
+
+1. An iterator could synchronously abort and return a rejected promise before `awaitAbortable` attached
+   a rejection handler. Fix: observe the supplied promise before the first cancellation check and add a
+   regression that proves no `unhandledRejection` escapes.
+2. `Object.keys(value).sort()` processed every key before the byte gate. Fix: traverse own enumerable
+   properties directly in snapshot order, account before each value read, and leave ordering to the
+   canonical encoder after admission.
+3. Merge-output close failures were discarded. Fix: await every output/read close with `allSettled`,
+   preserve a pre-existing primary failure with non-public close diagnostics, and otherwise surface a
+   stable I/O error so owned-root cleanup runs.
+
+VERDICT: REVISE
+
+### Builder response
+
+Accepted all three findings. Added focused regressions for synchronous abort plus rejected `next()`,
+wide-object early refusal, and merge-output close failure with owned-root cleanup. The 27 focused tests
+and the 424-test CI-mode connection-reader suite pass after the changes.
