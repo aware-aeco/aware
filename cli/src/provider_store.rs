@@ -1902,10 +1902,11 @@ mod tests {
     fn a_package_root_must_be_an_absolute_real_directory() {
         let tmp = tempfile::tempdir().unwrap();
         let root = tmp.path();
-        assert_eq!(
-            canonical_regular_directory(root).unwrap(),
-            std::fs::canonicalize(root).unwrap()
-        );
+        let canonical = canonical_regular_directory(root).unwrap();
+        #[cfg(windows)]
+        assert_eq!(canonical, root);
+        #[cfg(not(windows))]
+        assert_eq!(canonical, std::fs::canonicalize(root).unwrap());
 
         // Asserted on the variant, not just `is_err`: a relative path that does
         // not exist also fails at `symlink_metadata`, so `is_err()` alone would
