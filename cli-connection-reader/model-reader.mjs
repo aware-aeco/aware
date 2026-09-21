@@ -593,7 +593,7 @@ export async function runModelCommand(command, args = {}, deps = {}) {
             formatId: args['provider-format'], capabilityId: args['provider-capability'],
             providerPackageManifestSha256: args['provider-package-sha256'],
             conversionRequestSha256: conversion.conversionRequestSha256,
-            workRoot: runRoot, signal: deps.signal,
+            workRoot: runRoot, limits, signal: deps.signal,
           });
           canonical = await (deps.publishV3Cache ?? publishV3Cache)(
             config.cacheRoot, cacheKey, cacheIdentity, canonical, signing.signingKey,

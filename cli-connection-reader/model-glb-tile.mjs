@@ -30,10 +30,12 @@ export function validateGlbTile(input, options = {}) {
   try { parsed = parseGlb(input, { limits: options.limits }); }
   catch (error) { invalid('Geometry tile is not a valid GLB.', error); }
   const document = parsed.json;
+  const declaredBinaryLength = document?.buffers?.[0]?.byteLength;
   if (!document || typeof document !== 'object' || Array.isArray(document)
       || document.asset?.version !== '2.0' || !Array.isArray(document.buffers)
       || document.buffers.length !== 1 || document.buffers[0]?.uri !== undefined
-      || document.buffers[0]?.byteLength !== parsed.binary.length
+      || !Number.isSafeInteger(declaredBinaryLength) || declaredBinaryLength < 0
+      || parsed.binary.length < declaredBinaryLength || parsed.binary.length - declaredBinaryLength > 3
       || !Array.isArray(document.bufferViews) || !Array.isArray(document.accessors)
       || !Array.isArray(document.meshes) || !Array.isArray(document.nodes)) {
     invalid('Geometry tile must be a self-contained GLB 2.0 document.');
@@ -66,7 +68,7 @@ export function validateGlbTile(input, options = {}) {
     const viewOffset = view.byteOffset ?? 0; const accessorOffset = accessor.byteOffset ?? 0;
     const stride = view.byteStride ?? 12;
     if (!Number.isSafeInteger(stride) || stride < 12 || stride % 4 !== 0) invalid('POSITION byte stride is invalid.');
-    range(viewOffset, view.byteLength, parsed.binary.length, 'POSITION bufferView');
+    range(viewOffset, view.byteLength, declaredBinaryLength, 'POSITION bufferView');
     range(accessorOffset, (accessor.count - 1) * stride + 12, view.byteLength, 'POSITION accessor');
     for (let item = 0; item < accessor.count; item += 1) {
       const offset = viewOffset + accessorOffset + item * stride;

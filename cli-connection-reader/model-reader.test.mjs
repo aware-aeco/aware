@@ -213,6 +213,7 @@ test('package read-model requires opaque host authorization and reaches the cano
     },
     canonicalizeProviderOutput: async (options) => {
       canonicalized += 1; assert.equal(options.effectiveSource, effectiveSource);
+      assert.ok(options.limits.maxInputGlbBytes > 0);
       return {
         root: { sha256: 'f'.repeat(64), manifest: { completeness: 'complete' } },
         indexes: { geometry: { index: { itemCount: 2 } }, entities: { index: { itemCount: 3 } },
