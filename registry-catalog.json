@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-21T17:53:28.328374500+00:00",
+  "updated-at": "2026-09-22T10:47:51.434309400+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -4448,6 +4448,49 @@
         "interoperability"
       ],
       "versions": {
+        "0.7.3": {
+          "description": "Convert a local Revit project into deterministic, authenticated reference-model artifacts without",
+          "status": "available",
+          "manifest-version": "0.7.3",
+          "stateful": false,
+          "transport": "cli",
+          "command_count": 5,
+          "skills": [
+            "provider-and-artifact-contract"
+          ],
+          "commands": [
+            {
+              "name": "fingerprint-source",
+              "description": "Capture selected source namespaces and ask the exact enrolled protocol-v3 provider which files",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "preflight",
+              "description": "Check that the exact provider, managed AWARE host and model-reader signing key are ready.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "probe",
+              "description": "Return bounded counts, exact reconciled coverage and canonical geometry bounds for an RVT.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "read-model",
+              "description": "Publish five deterministic run-owned artifacts: binary GLB geometry, entities, properties,",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "read-snapshot",
+              "description": "Publish the unchanged five model artifacts plus a bounded display package, with separate signed",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        },
         "0.8.0": {
           "description": "Convert user-owned model data into deterministic, authenticated reference-model artifacts without",
           "status": "available",

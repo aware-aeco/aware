@@ -209,6 +209,16 @@ jobs:
         working-directory: cli
         run: cargo test --locked
 
+      # Compare against the actual PR base (or the preceding main tip on push).
+      # Reindex validates the candidate index, but cannot notice that a valid
+      # exact version was removed between revisions (#560).
+      - name: published registry versions are append-only
+        env:
+          REGISTRY_BASE_REF: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          python3 -m unittest discover -s scripts -p 'test_check_registry_append_only.py'
+          python3 scripts/check_registry_append_only.py --base-ref "$REGISTRY_BASE_REF"
+
       # Exercise registry authoring against this exact checkout, not only the
       # temporary registries used by integration tests. This is what enforces
       # that an immutable release pin already exists on the fetched base branch.
