@@ -574,6 +574,8 @@ export async function runModelCommand(command, args = {}, deps = {}) {
           cache = 'miss';
         }
         if (!canonical) {
+          const conversionRoot = path.join(runRoot, 'conversion');
+          await fs.mkdir(conversionRoot, { mode: 0o700 });
           const conversion = await (deps.convertProviderSource ?? convertProviderSource)({
             home: config.home, formatId: args['provider-format'], capabilityId: args['provider-capability'],
             manifestSha256: args['provider-package-sha256'], authorization: args['provider-authorization'],
@@ -582,7 +584,7 @@ export async function runModelCommand(command, args = {}, deps = {}) {
             conversionSettings: args['conversion-settings'] ?? {}, limits,
             outputLimits: args['provider-output-limits'], captureLimits, environment: config.environment,
             hostRun: deps.hostRun ?? ownedHost?.run, signal: deps.signal,
-            stagingRoot: path.join(runRoot, 'conversion'),
+            stagingRoot: conversionRoot,
           });
           if (conversion.conversionRequestSha256 !== conversionIdentity.sha256) {
             readerError('reference-provider-output-invalid', 'provider-output',

@@ -174,7 +174,7 @@ test('package fingerprint-source returns the portable effective source and clean
   await assert.rejects(fs.stat(path.dirname(stagingRoot)), (error) => error.code === 'ENOENT');
 });
 
-test('package read-model requires opaque host authorization and reaches the canonical v2 publisher', async (t) => {
+test('package read-model allocates conversion staging before reaching the canonical v2 publisher', async (t) => {
   const state = await setup(t);
   const base = {
     'provider-format': 'format.synthetic', 'provider-capability': 'capability.synthetic',
@@ -204,6 +204,8 @@ test('package read-model requires opaque host authorization and reaches the cano
     readV3Cache: async () => { const error = new Error('miss'); error.code = 'reference-cache-miss'; throw error; },
     convertProviderSource: async (options) => {
       converted += 1; assert.equal(options.authorization, 'host-issued-candidate-envelope');
+      const staging = await fs.stat(options.stagingRoot);
+      assert.equal(staging.isDirectory(), true, 'the reader must allocate conversion staging before handing it off');
       return {
         output: { root: 'admitted', files: [] },
         conversionRequestSha256: buildProviderConversionRequest({
