@@ -236,7 +236,10 @@ struct PreparedProvider {
 fn provider_command(request: &ProviderRun) -> Result<PreparedProvider, AwareError> {
     if !request.executable.is_absolute()
         || !request.cwd.is_absolute()
-        || !matches!(request.operation.as_str(), "describe" | "convert")
+        || !matches!(
+            request.operation.as_str(),
+            "describe" | "discover" | "convert"
+        )
         || request.executable_sha256.len() != 64
         || !request
             .executable_sha256
@@ -871,7 +874,7 @@ mod tests {
     #[test]
     fn provider_command_has_only_protocol_argv_and_clears_ambient_environment() {
         let executable = std::env::current_exe().unwrap();
-        let request = ProviderRun {
+        let mut request = ProviderRun {
             op: "provider-run".into(),
             executable_sha256: file_sha256(&executable),
             executable,
@@ -883,24 +886,27 @@ mod tests {
             stdout_limit: 10,
             stderr_limit: 10,
         };
-        let prepared = provider_command(&request).unwrap();
-        let debug = format!("{:?}", prepared.command);
-        assert!(debug.contains("convert"));
-        assert!(debug.contains("--json-stdin"));
-        // The two halves the name claims, asserted rather than gestured at. `Command`'s Debug
-        // renders an env-cleared command with a leading `env -i` and lists only the argv it will
-        // pass, so both are observable — on unix, where that rendering is defined.
-        #[cfg(unix)]
-        {
-            assert!(
-                debug.contains("env -i TZ=\"UTC\""),
-                "the provider gets the requested environment and nothing it inherited: {debug}"
-            );
-            let after_argv = debug.split_once("\"--json-stdin\"").unwrap().1;
-            assert!(
-                !after_argv.contains('"'),
-                "no argument may follow the protocol's own two: {debug}"
-            );
+        for operation in ["describe", "discover", "convert"] {
+            request.operation = operation.into();
+            let prepared = provider_command(&request).unwrap();
+            let debug = format!("{:?}", prepared.command);
+            assert!(debug.contains(operation));
+            assert!(debug.contains("--json-stdin"));
+            // The two halves the name claims, asserted rather than gestured at. `Command`'s Debug
+            // renders an env-cleared command with a leading `env -i` and lists only the argv it will
+            // pass, so both are observable — on unix, where that rendering is defined.
+            #[cfg(unix)]
+            {
+                assert!(
+                    debug.contains("env -i TZ=\"UTC\""),
+                    "the provider gets the requested environment and nothing it inherited: {debug}"
+                );
+                let after_argv = debug.split_once("\"--json-stdin\"").unwrap().1;
+                assert!(
+                    !after_argv.contains('"'),
+                    "no argument may follow the protocol's own two: {debug}"
+                );
+            }
         }
     }
 
