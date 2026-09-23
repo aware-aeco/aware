@@ -128,6 +128,12 @@ test('preserves only the allowlisted canonical conversion refusal without leakin
     assert.doesNotMatch(JSON.stringify(safe), /customer-model|db\.1|Unsupported geometry/);
     return true;
   });
+  for (const version of ['6', '7', '8']) {
+    const modern = { ...refusal, diagnosticId: `123e4567-e89b-${version}2d3-a456-426614174000` };
+    value.options.hostRun = async () => ({ exitCode: 2, stdout: Buffer.alloc(0), stderr: canonicalJsonBytes(modern) });
+    await assert.rejects(() => convertProviderSource(value.options, value.deps),
+      (error) => error.code === modern.code && error.retryable === false);
+  }
 });
 
 test('forged, malformed and oversized provider stderr remains a generic failure', async (t) => {

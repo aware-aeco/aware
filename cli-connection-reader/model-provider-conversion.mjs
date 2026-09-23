@@ -19,7 +19,7 @@ const REQUEST_SCHEMA = 'model-reference-conversion-request/v3';
 const RESPONSE_SCHEMA = 'aware.model-provider-conversion-response/v1';
 const OPAQUE_ID = /^[A-Za-z0-9._-]{1,128}$/;
 const PROVIDER_REFUSAL_BYTES = 4096;
-const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const ALLOWED_PROVIDER_REFUSALS = Object.freeze({
   'reference-model-coverage-incomplete': 'The model contains geometry this reader cannot safely place. No partial model was imported.',
 });
