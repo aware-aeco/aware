@@ -18,9 +18,35 @@ import { captureSourceNamespaces, verifyCapturedSource } from './model-source-ca
 const REQUEST_SCHEMA = 'model-reference-conversion-request/v3';
 const RESPONSE_SCHEMA = 'aware.model-provider-conversion-response/v1';
 const OPAQUE_ID = /^[A-Za-z0-9._-]{1,128}$/;
+const PROVIDER_REFUSAL_BYTES = 4096;
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const ALLOWED_PROVIDER_REFUSALS = Object.freeze({
+  'reference-model-coverage-incomplete': 'The model contains geometry this reader cannot safely place. No partial model was imported.',
+});
 
 function conversionError(code, message, retryable = false, details = undefined) {
   throw new ModelReaderError(code, 'conversion', retryable, message, details);
+}
+
+function safeProviderRefusal(result, stderrLimit) {
+  if (!result || !Number.isInteger(result.exitCode) || result.exitCode === 0
+      || !Buffer.isBuffer(result.stdout)
+      || result.stdout.length !== 0 || !Buffer.isBuffer(result.stderr)
+      || result.stderr.length === 0
+      || result.stderr.length > Math.min(PROVIDER_REFUSAL_BYTES, stderrLimit)) return null;
+  try {
+    const refusal = parseJsonStrict(result.stderr, { maxBytes: PROVIDER_REFUSAL_BYTES, maxDepth: 2 });
+    assertClosedObject(refusal, ['code', 'phase', 'retryable', 'message', 'diagnosticId'], [], 'provider refusal');
+    if (typeof refusal.code !== 'string' || !Object.hasOwn(ALLOWED_PROVIDER_REFUSALS, refusal.code)
+        || refusal.phase !== 'conversion' || refusal.retryable !== false
+        || typeof refusal.message !== 'string' || !refusal.message.trim()
+        || refusal.message.length > 240 || /[\u0000-\u001f\u007f]/.test(refusal.message)
+        || typeof refusal.diagnosticId !== 'string' || !UUID.test(refusal.diagnosticId)
+        || !result.stderr.equals(canonicalJsonBytes(refusal))) return null;
+    return { code: refusal.code, message: ALLOWED_PROVIDER_REFUSALS[refusal.code] };
+  } catch {
+    return null;
+  }
 }
 
 function authorization(value) {
@@ -221,6 +247,22 @@ async function invokeConvert(options, capture, closure, discovered, identity, ru
     conversionError('reference-provider-failed', 'The enrolled provider failed during conversion.', true, error);
   }
   checkCancellation(options.signal);
+  await (deps.verifyCapture ?? verifyCapturedSource)(capture, {
+    limits: options.captureLimits, signal: options.signal,
+  });
+  await (deps.verifyCapture ?? verifyCapturedSource)(closure, {
+    limits: options.captureLimits, signal: options.signal,
+  });
+  const after = await (deps.loadPackage ?? loadEnrolledProviderPackage)(loadOptions);
+  if (packageProviderIdentity(after, options.manifestSha256).sha256 !== provider.sha256) {
+    conversionError('reference-provider-package-changed', 'Provider identity changed during conversion.');
+  }
+  const afterPolicy = await (deps.loadPolicy ?? loadAdmittedDependencyPolicy)(options.home, provider.sha256);
+  if (afterPolicy.sha256 !== admittedPolicy.sha256) {
+    conversionError('reference-dependency-policy-changed', 'The admitted dependency policy changed during conversion.');
+  }
+  const refusal = safeProviderRefusal(result, identity.limits.providerStderrBytes);
+  if (refusal) conversionError(refusal.code, refusal.message);
   if (!result || result.exitCode !== 0 || !Buffer.isBuffer(result.stdout) || !Buffer.isBuffer(result.stderr)
       || result.stdout.length > identity.limits.providerStdoutBytes
       || result.stderr.length > identity.limits.providerStderrBytes) {
@@ -240,20 +282,6 @@ async function invokeConvert(options, capture, closure, discovered, identity, ru
       || response.capabilityId !== options.capabilityId || response.complete !== true
       || !result.stdout.equals(canonicalJsonBytes(response))) {
     conversionError('reference-provider-protocol', 'Provider conversion response does not match the request.');
-  }
-  await (deps.verifyCapture ?? verifyCapturedSource)(capture, {
-    limits: options.captureLimits, signal: options.signal,
-  });
-  await (deps.verifyCapture ?? verifyCapturedSource)(closure, {
-    limits: options.captureLimits, signal: options.signal,
-  });
-  const after = await (deps.loadPackage ?? loadEnrolledProviderPackage)(loadOptions);
-  if (packageProviderIdentity(after, options.manifestSha256).sha256 !== provider.sha256) {
-    conversionError('reference-provider-package-changed', 'Provider identity changed during conversion.');
-  }
-  const afterPolicy = await (deps.loadPolicy ?? loadAdmittedDependencyPolicy)(options.home, provider.sha256);
-  if (afterPolicy.sha256 !== admittedPolicy.sha256) {
-    conversionError('reference-dependency-policy-changed', 'The admitted dependency policy changed during conversion.');
   }
   return await (deps.verifyOutput ?? verifyProviderOutput)(outputRoot, {
     admittedRoot, formatId: options.formatId, capabilityId: options.capabilityId,

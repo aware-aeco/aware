@@ -6,7 +6,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { sha256 } from './model-contract.mjs';
+import { ModelReaderError, safeErrorEnvelope, sha256 } from './model-contract.mjs';
 import { buildProviderConversionRequest } from './model-provider-conversion.mjs';
 import { runModelCommand } from './model-reader.mjs';
 
@@ -231,6 +231,37 @@ test('package read-model allocates conversion staging before reaching the canoni
   assert.deepEqual([converted, canonicalized, published], [1, 1, 1]);
   assert.deepEqual(result.counts, { geometry: 2, entities: 3, properties: 4, relationships: 5 });
   assert.equal(result.artifactRoot.id, 'root.json');
+});
+
+test('package read-model preserves a typed conversion refusal and never publishes a partial model', async (t) => {
+  const state = await setup(t);
+  let published = false;
+  const refusal = new ModelReaderError(
+    'reference-model-coverage-incomplete', 'conversion', false,
+    'The model contains geometry this reader cannot safely place. No partial model was imported.',
+  );
+  await assert.rejects(() => runModelCommand('read-model', {
+    'provider-format': 'format.synthetic', 'provider-capability': 'capability.synthetic',
+    'provider-package-sha256': 'a'.repeat(64), 'provider-authorization': 'host-issued-candidate-envelope',
+    'reader-schema-version': 'model-reference-reader/v3', 'expected-provider-protocol': '3',
+    'source-namespaces': [{ id: 'model', root: state.root }],
+    'signing-secret-path': state.secretPath, 'signing-public-path': state.publicPath,
+  }, {
+    ...state.deps,
+    fingerprintSource: async () => ({
+      effectiveSource: { schemaVersion: 'model-effective-source/v2', providerFingerprintSha256: 'b'.repeat(64) },
+      sha256: 'c'.repeat(64), dependencyPolicySha256: 'd'.repeat(64), providerIdentity: {},
+    }),
+    readV3Cache: async () => { const error = new Error('miss'); error.code = 'reference-cache-miss'; throw error; },
+    convertProviderSource: async () => { throw refusal; },
+    publishV3Cache: async () => { published = true; },
+    publishCanonicalArtifact: async () => { published = true; },
+  }), (error) => {
+    assert.equal(error, refusal);
+    assert.equal(safeErrorEnvelope(error).code, 'reference-model-coverage-incomplete');
+    return true;
+  });
+  assert.equal(published, false);
 });
 
 test('package read-model uses the configured production cache root', async (t) => {

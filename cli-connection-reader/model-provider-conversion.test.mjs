@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { canonicalJsonBytes, sha256 } from './model-contract.mjs';
+import { canonicalJsonBytes, safeErrorEnvelope, sha256 } from './model-contract.mjs';
 import { buildProviderConversionRequest, convertProviderSource } from './model-provider-conversion.mjs';
 import { packageProviderIdentity } from './model-provider-discovery.mjs';
 
@@ -108,6 +108,100 @@ test('recaptures, rediscovers and invokes the exact enrolled provider before adm
   assert.equal(result.output.verifyOptions.conversionRequestSha256, result.conversionRequestSha256);
   await assert.rejects(fs.stat(path.join(value.options.stagingRoot, 'provider-output')), (error) => error.code === 'ENOENT');
   assert.equal(result.output.root, path.join(value.options.stagingRoot, 'admitted-output'));
+});
+
+test('preserves only the allowlisted canonical conversion refusal without leaking provider detail', async (t) => {
+  const value = await scenario(t);
+  const privatePath = 'D:\\private\\customer-model\\db.1';
+  const refusal = {
+    code: 'reference-model-coverage-incomplete', phase: 'conversion', retryable: false,
+    message: `Unsupported geometry in ${privatePath}`,
+    diagnosticId: '123e4567-e89b-42d3-a456-426614174000',
+  };
+  value.options.hostRun = async () => ({ exitCode: 2, stdout: Buffer.alloc(0), stderr: canonicalJsonBytes(refusal) });
+  await assert.rejects(() => convertProviderSource(value.options, value.deps), (error) => {
+    const safe = safeErrorEnvelope(error);
+    assert.equal(safe.code, refusal.code);
+    assert.equal(safe.phase, 'conversion');
+    assert.equal(safe.retryable, false);
+    assert.notEqual(safe.diagnosticId, refusal.diagnosticId);
+    assert.doesNotMatch(JSON.stringify(safe), /customer-model|db\.1|Unsupported geometry/);
+    return true;
+  });
+  for (const version of ['6', '7', '8']) {
+    const modern = { ...refusal, diagnosticId: `123e4567-e89b-${version}2d3-a456-426614174000` };
+    value.options.hostRun = async () => ({ exitCode: 2, stdout: Buffer.alloc(0), stderr: canonicalJsonBytes(modern) });
+    await assert.rejects(() => convertProviderSource(value.options, value.deps),
+      (error) => error.code === modern.code && error.retryable === false);
+  }
+});
+
+test('package and dependency integrity changes supersede a provider coverage refusal', async (t) => {
+  const refusal = canonicalJsonBytes({
+    code: 'reference-model-coverage-incomplete', phase: 'conversion', retryable: false,
+    message: 'The model cannot be imported completely.',
+    diagnosticId: '123e4567-e89b-42d3-a456-426614174000',
+  });
+  for (const changed of ['package', 'policy']) {
+    const value = await scenario(t);
+    value.options.hostRun = async () => ({ exitCode: 2, stdout: Buffer.alloc(0), stderr: refusal });
+    let postChecks = 0;
+    if (changed === 'package') {
+      value.deps.loadPackage = async () => {
+        postChecks += 1;
+        const loaded = loadedPackage();
+        if (postChecks > 1) loaded.executable.sha256 = sha256(Buffer.from('changed-launcher'));
+        return loaded;
+      };
+    } else {
+      const original = value.deps.loadPolicy;
+      value.deps.loadPolicy = async () => {
+        postChecks += 1;
+        const admitted = await original();
+        return postChecks === 1 ? admitted : { ...admitted, sha256: sha256(Buffer.from('changed-policy')) };
+      };
+    }
+    await assert.rejects(() => convertProviderSource(value.options, value.deps), (error) =>
+      error.code === (changed === 'package' ? 'reference-provider-package-changed' : 'reference-dependency-policy-changed'));
+    assert.equal(postChecks, 2, `the ${changed} was not re-verified after provider execution`);
+  }
+});
+
+test('forged, malformed and oversized provider stderr remains a generic failure', async (t) => {
+  const value = await scenario(t);
+  const base = {
+    code: 'reference-model-coverage-incomplete', phase: 'conversion', retryable: false,
+    message: 'The model contains geometry this reader cannot safely place.',
+    diagnosticId: '123e4567-e89b-42d3-a456-426614174000',
+  };
+  const bad = [
+    { ...base, code: 'reference-provider-pin-mismatch' },
+    { ...base, phase: 'preflight' },
+    { ...base, retryable: true },
+    { ...base, details: { path: 'D:\\private' } },
+    { ...base, diagnosticId: 'not-a-uuid' },
+    { ...base, message: 'a'.repeat(241) },
+    { ...base, message: 'A path:\nD:\\private' },
+    Buffer.from('{"code":'),
+    Buffer.from('not json'),
+    Buffer.from([0xff, 0xfe]),
+    Buffer.alloc(4097, 0x61),
+    Buffer.from(`${canonicalJsonBytes(base).toString('utf8')}\n`),
+  ];
+  for (const candidate of bad) {
+    const stderr = Buffer.isBuffer(candidate) ? candidate : canonicalJsonBytes(candidate);
+    value.options.hostRun = async () => ({ exitCode: 2, stdout: Buffer.alloc(0), stderr });
+    await assert.rejects(() => convertProviderSource(value.options, value.deps), (error) => {
+      const safe = safeErrorEnvelope(error);
+      assert.equal(safe.code, 'reference-provider-failed');
+      assert.equal(safe.retryable, true);
+      assert.doesNotMatch(JSON.stringify(safe), /private|not json/);
+      return true;
+    });
+  }
+  value.options.hostRun = async () => ({ exitCode: 2, stdout: Buffer.from('partial'), stderr: canonicalJsonBytes(base) });
+  await assert.rejects(() => convertProviderSource(value.options, value.deps),
+    (error) => error.code === 'reference-provider-failed');
 });
 
 test('refuses conversion when the second discovery sees a different effective source', async (t) => {
