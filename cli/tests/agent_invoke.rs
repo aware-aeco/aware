@@ -209,6 +209,28 @@ fn invoke_html_report_render_is_host_callable_too() {
 }
 
 #[test]
+fn invoke_streamed_report_explains_it_needs_an_app_run() {
+    let tmp = tempfile::tempdir().unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .args(["agent", "install"])
+        .arg(agent_src("20-agents/_core/html-report-stream"))
+        .assert()
+        .success();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .args(["agent", "invoke", "html-report-stream", "render-stream"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains(
+            "source artifact owned by the current app run",
+        ))
+        .stderr(predicate::str::contains("aware app run"));
+}
+
+#[test]
 fn invoke_non_builtin_agent_is_refused_clearly() {
     let tmp = tempfile::tempdir().unwrap();
     Command::cargo_bin("aware")

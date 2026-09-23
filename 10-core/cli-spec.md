@@ -132,6 +132,8 @@ size and SHA-256, checks complete NDJSON counts/ordinals/terminal hash, and emit
 small `bundle` descriptor, exact object/property counts and `complete:true`.
 Its candidate is atomically published only after a complete render within the trusted
 `AWARE_REPORT_RENDER_BYTES` ceiling; `html-report.render` remains unchanged.
+Direct `aware agent invoke html-report-stream render-stream` refuses with an app-run
+explanation because it has no current-run artifact scope.
 One completed source spool and one completed bundle may consume a given run reservation;
 durable run-scoped claim files prevent a second streaming node from reusing its byte
 partition. Ordinary failures release their claim; crashes retain it and fail closed.
