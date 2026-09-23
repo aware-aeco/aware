@@ -41,7 +41,8 @@ aware
 │   ├── validate <path>                 schema + cycle + cap checks
 │   ├── export <app> <output-path>      copy the app file out
 │   ├── logs <app> [--instance <id>] [--tail]   read execution traces
-│   └── artifact <app> <id> --output <path>     copy a run-owned large artifact
+│   └── artifact <app> <id> --output <path> [--max-bytes <n>] copy a run-owned large artifact
+│   └── artifact <app> --run-id <id> --usage   measure retained bytes for one run
 │
 ├── connect <integration>               provision OAuth credentials (default: browser-paste)
 │   ├── --as <alias>                    named credential for multi-account
@@ -111,6 +112,31 @@ An agent command may materialize a large result as a run-owned artifact rather t
 `aware app artifact <app> <id> --run-id <run> --output <path>`; it must never treat an artifact id
 as a filesystem path. This keeps JSONL replay bounded while a producer writes data incrementally and
 lets a renderer load or batch-read the resulting file without duplicating the payload in the trace.
+When a consumer reserves a sealed-copy budget, `--max-bytes <n>` refuses a source larger than
+that positive limit, checks the limit before every bounded write, creates the destination
+exclusively and removes it on a failed copy. Omitting the option preserves the legacy copy behavior.
+`aware app artifact <app> --instance <instance> --run-id <id> --usage` returns
+`{app,instance,runId,bytes,files}` for all immediate regular files in that run's
+artifact directory (including a failed-run spool or interrupted candidate), without
+exposing any path. It refuses linked/reparse entries. A missing directory measures zero.
+
+An opt-in REST command may instead declare `response: artifact-stream` in its agent manifest.
+Its HTTP 200 NDJSON body is spooled in chunks under the current run's artifact directory,
+with a hard `AWARE_REPORT_SOURCE_BYTES` ceiling and a required opaque
+`AWARE_REPORT_RESERVATION_ID` supplied by the trusted caller. Its small output is
+`{status:200,headers:{"content-type":"application/x-ndjson"},body:{artifact:{schemaVersion:
+"aware.artifact-ref/v1",app,instance,runId,id,bytes,sha256,contentType}}}`.
+Non-200 error bodies are bounded; no successful response body is parsed as one JSON value.
+`html-report-stream.render-stream` resolves only a matching current-run descriptor, verifies
+size and SHA-256, checks complete NDJSON counts/ordinals/terminal hash, and emits a
+small `bundle` descriptor, exact object/property counts and `complete:true`.
+Its candidate is atomically published only after a complete render within the trusted
+`AWARE_REPORT_RENDER_BYTES` ceiling; `html-report.render` remains unchanged.
+Direct `aware agent invoke html-report-stream render-stream` refuses with an app-run
+explanation because it has no current-run artifact scope.
+One completed source spool and one completed bundle may consume a given run reservation;
+durable run-scoped claim files prevent a second streaming node from reusing its byte
+partition. Ordinary failures release their claim; crashes retain it and fail closed.
 
 ### Progressive large outputs
 

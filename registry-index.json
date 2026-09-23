@@ -416,6 +416,17 @@
         }
       }
     },
+    "html-report-stream": {
+      "versions": {
+        "1.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/_core/html-report-stream",
+          "manifest-agent": "html-report-stream",
+          "manifest-version": "0.1.0",
+          "bundle-digest": "sha256:602a9d81774a3301a67517bb73cdd6920f776f1484ef11e1e93b5b33d4e4ba76"
+        }
+      }
+    },
     "file": {
       "versions": {
         "1.0.0": {

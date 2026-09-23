@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-22T10:47:51.434309400+00:00",
+  "updated-at": "2026-09-23T15:05:16.618310700+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -2668,6 +2668,37 @@
               "description": "Render an HTML report from an arbitrary data payload. Generic auto-render: an",
               "lifecycle": "single",
               "category": "curated"
+            }
+          ]
+        }
+      }
+    },
+    "html-report-stream": {
+      "display-name": "HTML Report Stream",
+      "vendor": "aware",
+      "keywords": [
+        "aware",
+        "html",
+        "report",
+        "stream",
+        "model"
+      ],
+      "versions": {
+        "1.0.0": {
+          "description": "Read a run-owned complete model record stream and render every object and",
+          "status": "requires-runtime",
+          "minimum-cli-version": "0.142.0",
+          "manifest-version": "0.1.0",
+          "stateful": false,
+          "transport": "builtin",
+          "command_count": 1,
+          "commands": [
+            {
+              "name": "render-stream",
+              "description": "Render every authenticated object and property from a run-owned record",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
             }
           ]
         }

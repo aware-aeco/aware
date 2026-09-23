@@ -74,8 +74,9 @@ fn json_output_returns_envelope() {
     //                    Shares connection-reader's bridge binary, so it adds no sidecar asset).
     //              → 79 (the `model-reference-reader` local RVT normalizer — deterministic GLB plus
     //                    separate metadata artifacts, sharing the connection-reader SEA asset).
+    //              → 80 (the `html-report-stream` complete-model bundle renderer).
     // A strict equality keeps this honest — adjust it whenever an agent lands or retires.
-    assert_eq!(agents.len(), 79);
+    assert_eq!(agents.len(), 80);
     assert!(agents.iter().any(|a| a["id"] == "tekla"));
     assert!(agents.iter().any(|a| a["id"] == "vision"));
     assert!(agents.iter().any(|a| a["id"] == "viewer-3d"));

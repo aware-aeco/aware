@@ -1,0 +1,48 @@
+agent:        html-report-stream
+version:      0.1.0
+display-name: HTML Report Stream
+description: |
+  Read a run-owned complete model record stream and render every object and
+  property into one indexed, read-only HTML report bundle. This separate core
+  agent preserves the published html-report agent and its generic renderer.
+
+stateful: false
+status: requires-runtime
+minimum-cli-version: 0.142.0
+vendor: aware
+license: Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/html-report-stream
+keywords: [aware, html, report, stream, model]
+
+requires:
+  filesystem:
+    - write: any
+
+transport:
+  builtin: {}
+
+commands:
+  render-stream:
+    lifecycle: single
+    mode: read
+    description: |
+      Render every authenticated object and property from a run-owned record
+      stream into one complete, indexed, read-only HTML report bundle. The
+      response is a small artifact reference, not inline HTML.
+    inputs:
+      data:
+        type: object
+        description: Wrapper containing the current run's record stream artifact.
+      title:
+        type: string
+        description: Optional report title; defaults to "Model properties".
+      columns:
+        type: array
+        description: Closed grouped columns — Group, Property, Value, Unit, Provenance.
+    outputs:
+      type: single
+      schema:
+        bundle: object
+        objectCount: int
+        propertyCount: int
+        complete: boolean

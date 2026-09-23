@@ -113,14 +113,20 @@ pub enum AppCommand {
     Artifact {
         app: String,
         /// Opaque artifact id from a `$aware-artifact` node output.
-        id: String,
+        id: Option<String>,
         #[arg(long)]
         instance: Option<String>,
         #[arg(long)]
         run_id: Option<String>,
         /// Destination file. Required so large payloads never accidentally enter a terminal.
         #[arg(long)]
-        output: std::path::PathBuf,
+        output: Option<std::path::PathBuf>,
+        /// Optional hard byte ceiling for copying a large artifact.
+        #[arg(long)]
+        max_bytes: Option<u64>,
+        /// Return bounded JSON disk usage for the run instead of copying.
+        #[arg(long)]
+        usage: bool,
     },
     /// Freeze a node: pin its last run output into the source as a `frozen:` block, so Run skips
     /// it (emits the pinned value, never re-runs the agent) until unfrozen. Recompiles the lock.
@@ -161,7 +167,7 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
             simulate,
             require_verified_agents,
         } => {
-            run(
+            Box::pin(run(
                 ctx,
                 &app,
                 instance.as_deref(),
@@ -169,7 +175,7 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
                 dry_run,
                 simulate,
                 require_verified_agents,
-            )
+            ))
             .await
         }
         AppCommand::Explain { app } => explain(ctx, &app),
@@ -199,16 +205,36 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
             instance,
             run_id,
             output,
+            max_bytes,
+            usage,
         } => {
-            artifact(
-                ctx,
-                &app,
-                &id,
-                instance.as_deref(),
-                run_id.as_deref(),
-                &output,
-            )
-            .await
+            if usage {
+                if id.is_some() || output.is_some() || max_bytes.is_some() {
+                    return Err(AwareError::Validation(
+                        "artifact --usage accepts no artifact id, output or byte limit".into(),
+                    ));
+                }
+                let run_id = run_id.ok_or_else(|| {
+                    AwareError::Validation("artifact --usage requires --run-id".into())
+                })?;
+                artifact_usage(ctx, &app, instance.as_deref(), &run_id)
+            } else {
+                let id = id
+                    .ok_or_else(|| AwareError::Validation("artifact copy requires an id".into()))?;
+                let output = output.ok_or_else(|| {
+                    AwareError::Validation("artifact copy requires --output".into())
+                })?;
+                artifact(
+                    ctx,
+                    &app,
+                    &id,
+                    instance.as_deref(),
+                    run_id.as_deref(),
+                    &output,
+                    max_bytes,
+                )
+                .await
+            }
         }
         AppCommand::Freeze { app, node } => freeze_cmd(ctx, &app, &node).await,
         AppCommand::Unfreeze { app, node } => unfreeze_cmd(ctx, &app, &node),
@@ -1177,6 +1203,7 @@ async fn artifact(
     instance: Option<&str>,
     run_id_override: Option<&str>,
     output: &std::path::Path,
+    max_bytes: Option<u64>,
 ) -> Result<(), AwareError> {
     let instance = instance.unwrap_or("default");
     crate::runtime::provenance::validate_artifact_component(app_id, "app")?;
@@ -1200,8 +1227,113 @@ async fn artifact(
             "artifact {id:?} for run {run_id} not found"
         )));
     }
-    tokio::fs::copy(&source, output).await?;
+    if let Some(limit) = max_bytes {
+        if limit == 0 {
+            return Err(AwareError::Validation(
+                "artifact --max-bytes must be positive".into(),
+            ));
+        }
+        if tokio::fs::metadata(&source).await?.len() > limit {
+            return Err(AwareError::Validation(
+                "artifact exceeds the reserved copy size".into(),
+            ));
+        }
+        let mut input = tokio::fs::File::open(&source).await?;
+        let mut target = tokio::fs::OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .open(output)
+            .await?;
+        let result = async {
+            use tokio::io::{AsyncReadExt, AsyncWriteExt};
+            let mut copied = 0u64;
+            let mut block = [0u8; 64 * 1024];
+            loop {
+                let n = input.read(&mut block).await?;
+                if n == 0 {
+                    break;
+                }
+                copied = copied
+                    .checked_add(n as u64)
+                    .ok_or_else(|| AwareError::Validation("artifact size overflow".into()))?;
+                if copied > limit {
+                    return Err(AwareError::Validation(
+                        "artifact exceeds the reserved copy size".into(),
+                    ));
+                }
+                target.write_all(&block[..n]).await?;
+            }
+            target.sync_all().await?;
+            Ok::<(), AwareError>(())
+        }
+        .await;
+        if let Err(error) = result {
+            drop(target);
+            let _ = tokio::fs::remove_file(output).await;
+            return Err(error);
+        }
+    } else {
+        tokio::fs::copy(&source, output).await?;
+    }
     println!("✓ copied artifact {id} → {}", output.display());
+    Ok(())
+}
+
+fn artifact_usage(
+    ctx: &Context,
+    app: &str,
+    instance: Option<&str>,
+    run_id: &str,
+) -> Result<(), AwareError> {
+    let instance = instance.unwrap_or("default");
+    for (label, value) in [("app", app), ("instance", instance), ("run id", run_id)] {
+        crate::runtime::provenance::validate_artifact_component(value, label)?;
+    }
+    let dir =
+        crate::runtime::provenance::artifact_dir_for(&ctx.paths.logs_dir(), app, instance, run_id);
+    let mut bytes = 0u64;
+    let mut files = 0u64;
+    match std::fs::symlink_metadata(&dir) {
+        Ok(metadata) => {
+            if metadata.file_type().is_symlink() || !metadata.is_dir() {
+                return Err(AwareError::Validation(
+                    "run artifact directory is not a regular directory".into(),
+                ));
+            }
+            let _scope = crate::runtime::artifact_stream::RunArtifactScope::from_dir(&dir)?;
+            #[cfg(windows)]
+            if std::os::windows::fs::MetadataExt::file_attributes(&metadata) & 0x400 != 0 {
+                return Err(AwareError::Validation(
+                    "run artifact directory is a reparse point".into(),
+                ));
+            }
+            for entry in std::fs::read_dir(&dir)? {
+                let entry = entry?;
+                let metadata = std::fs::symlink_metadata(entry.path())?;
+                if metadata.file_type().is_symlink() || !metadata.is_file() {
+                    return Err(AwareError::Validation(
+                        "run artifact directory contains a linked or non-file entry".into(),
+                    ));
+                }
+                #[cfg(windows)]
+                if std::os::windows::fs::MetadataExt::file_attributes(&metadata) & 0x400 != 0 {
+                    return Err(AwareError::Validation(
+                        "run artifact directory contains a reparse point".into(),
+                    ));
+                }
+                bytes = bytes
+                    .checked_add(metadata.len())
+                    .ok_or_else(|| AwareError::Validation("run artifact usage overflow".into()))?;
+                files += 1;
+            }
+        }
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+        Err(error) => return Err(AwareError::Io(error)),
+    }
+    println!(
+        "{}",
+        serde_json::json!({"app":app,"instance":instance,"runId":run_id,"bytes":bytes,"files":files})
+    );
     Ok(())
 }
 

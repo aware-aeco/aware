@@ -296,6 +296,11 @@ async fn invoke_cmd(
             "command '{command}' of agent '{agent_id}' is planned and not runnable"
         )));
     }
+    if agent_id == "html-report-stream" && command == "render-stream" {
+        return Err(AwareError::Validation(
+            "html-report-stream/render-stream needs a source artifact owned by the current app run; add it as a node in an app and use `aware app run`".into(),
+        ));
+    }
 
     let args = parse_invoke_inputs(inputs)?;
     // Direct invocation is always a REAL run (dry_run: false): there is no
