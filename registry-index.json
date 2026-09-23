@@ -411,7 +411,7 @@
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
           "subdir": "aware-main/20-agents/_core/html-report",
           "manifest-agent": "html-report",
-          "manifest-version": "0.2.0",
+          "manifest-version": "0.2.1",
           "bundle-digest": "sha256:5a8fa32a632cec96841bffb7c31704a650627956915bf11d19607896dc85c34e"
         }
       }

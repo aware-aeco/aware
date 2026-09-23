@@ -234,6 +234,15 @@ Required: at least one transport **the runtime can dispatch** — `cli`, `rest`,
 
 The contract every transport satisfies: **structured input → structured output, with errors as data, not exceptions.** The CLI envelope is documented in [`response-envelope.md`](./response-envelope.md) (forthcoming).
 
+For a REST command whose successful body is too large for a node output, declare
+`response: artifact-stream` on that command. Only HTTP 200 with
+`application/x-ndjson` is spooled; the output keeps the ordinary REST
+`{status:200,headers,body}` envelope, but `body.artifact` is a run-scoped
+`aware.artifact-ref/v1` descriptor (app, instance, runId, opaque id, byte count,
+SHA-256 and content type). No response path or raw body enters the trace.
+The caller must supply an owner-reserved positive source-byte budget through
+trusted process context; ordinary REST commands keep their existing behavior.
+
 ### Which one runs (priority order)
 
 An agent may declare several transports; exactly one of them dispatches. The order is:

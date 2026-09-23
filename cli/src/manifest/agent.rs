@@ -256,6 +256,10 @@ pub struct Command {
     /// bare HTTP method. `None` for the generic `http` agent + non-REST agents.
     #[serde(default)]
     pub method: Option<String>,
+    /// Opt-in REST response handling. `artifact-stream` spools the successful
+    /// response into a run-owned artifact rather than materializing JSON.
+    #[serde(default)]
+    pub response: Option<String>,
     /// REST operation path template (e.g. `/pets/{petId}`). `{name}` segments
     /// are filled from inputs whose schema declares `in: path`.
     #[serde(default)]

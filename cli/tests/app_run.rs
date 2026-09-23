@@ -695,6 +695,64 @@ requires: []
     let copied = std::fs::read_to_string(&output).unwrap();
     assert!(copied.len() > 512 * 1024, "artifact was not copied in full");
     assert!(serde_json::from_str::<serde_json::Value>(&copied).is_ok());
+
+    let too_small = tmp.path().join("bounded-too-small.json");
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args([
+            "app",
+            "artifact",
+            "artifactapp",
+            "read-model.json",
+            "--output",
+        ])
+        .arg(&too_small)
+        .args(["--max-bytes", "1024"])
+        .assert()
+        .failure();
+    assert!(
+        !too_small.exists(),
+        "bounded copy must not leave a partial file"
+    );
+
+    let bounded = tmp.path().join("bounded.json");
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args([
+            "app",
+            "artifact",
+            "artifactapp",
+            "read-model.json",
+            "--output",
+        ])
+        .arg(&bounded)
+        .args(["--max-bytes", &copied.len().to_string()])
+        .assert()
+        .success();
+    assert_eq!(
+        std::fs::metadata(&bounded).unwrap().len(),
+        copied.len() as u64
+    );
+    let run_id = trace.file_stem().and_then(|stem| stem.to_str()).unwrap();
+    let usage = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args([
+            "app",
+            "artifact",
+            "artifactapp",
+            "--run-id",
+            run_id,
+            "--usage",
+        ])
+        .output()
+        .unwrap();
+    assert!(usage.status.success());
+    let measured: serde_json::Value = serde_json::from_slice(&usage.stdout).unwrap();
+    assert_eq!(measured["bytes"], copied.len() as u64);
+    assert_eq!(measured["files"], 1);
 }
 
 /// #405: a long one-shot command must be able to hand a consumer usable geometry BEFORE it

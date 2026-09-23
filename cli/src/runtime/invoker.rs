@@ -1087,13 +1087,13 @@ pub struct RestInvoker {
     pub agents_dir: std::path::PathBuf,
 }
 
-#[async_trait]
-impl AgentInvoker for RestInvoker {
-    async fn invoke_single(
+impl RestInvoker {
+    async fn invoke_with_artifacts(
         &self,
         agent: &str,
         command: &str,
         args: Value,
+        artifact_dir: Option<&std::path::Path>,
     ) -> Result<Value, AwareError> {
         // Gmail send is a pinned, at-most-once flow whose identity preflight,
         // MIME construction and durable outbox cannot be expressed by the
@@ -1162,6 +1162,19 @@ impl AgentInvoker for RestInvoker {
         // credential is a fail-fast error (not a silent unauthenticated call).
         // Load the manifest once for the auth block + this command's `no-auth`
         // (public-endpoint) flag, which opts a command out of agent auth.
+        let stream_response =
+            match crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent)
+                .ok()
+                .and_then(|m| m.commands.get(command).and_then(|c| c.response.clone()))
+            {
+                None => false,
+                Some(mode) if mode == "artifact-stream" => true,
+                Some(mode) => {
+                    return Err(AwareError::Validation(format!(
+                        "unsupported REST response mode {mode:?}"
+                    )));
+                }
+            };
         if let Ok(m) = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent) {
             let is_public = m.commands.get(command).is_some_and(|c| c.no_auth);
             if let Some(auth) = &m.auth
@@ -1219,6 +1232,26 @@ impl AgentInvoker for RestInvoker {
         // Owned label for the error path — `agent`/`command` are borrows that
         // can't escape into the `'static` blocking closure.
         let label = format!("{agent}/{command}");
+        let scope = if stream_response {
+            crate::runtime::artifact_stream::require_reservation()?;
+            let dir = artifact_dir.ok_or_else(|| {
+                AwareError::Validation(
+                    "streamed REST response requires a live run artifact directory".into(),
+                )
+            })?;
+            Some(crate::runtime::artifact_stream::RunArtifactScope::from_dir(
+                dir,
+            )?)
+        } else {
+            None
+        };
+        let source_budget = if stream_response {
+            Some(crate::runtime::artifact_stream::budget_from_env(
+                "AWARE_REPORT_SOURCE_BYTES",
+            )?)
+        } else {
+            None
+        };
 
         // `ureq` is blocking; run it off the async runtime so we don't stall
         // the orchestrator's reactor.
@@ -1260,10 +1293,34 @@ impl AgentInvoker for RestInvoker {
                     return Err(AwareError::Network(format!("{label}: {t}")));
                 }
             };
-            Ok(shape_response(response))
+            if let Some(scope) = scope {
+                let status = response.status();
+                if status != 200 {
+                    return Ok(shape_response_bounded(response, 64 * 1024));
+                }
+                crate::runtime::artifact_stream::spool_rest_response(
+                    response,
+                    &scope,
+                    source_budget.unwrap_or(0),
+                )
+            } else {
+                Ok(shape_response(response))
+            }
         })
         .await
         .map_err(|e| AwareError::Internal(format!("rest task join: {e}")))?
+    }
+}
+
+#[async_trait]
+impl AgentInvoker for RestInvoker {
+    async fn invoke_single(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+    ) -> Result<Value, AwareError> {
+        self.invoke_with_artifacts(agent, command, args, None).await
     }
 
     async fn invoke_stream(
@@ -1772,6 +1829,28 @@ fn shape_response(resp: ureq::Response) -> Value {
         "headers": Value::Object(headers),
         "body": body,
     })
+}
+
+/// Stream-mode errors are deliberately bounded; a server error must not turn
+/// the otherwise streaming path into an unbounded allocation or trace record.
+fn shape_response_bounded(resp: ureq::Response, max_bytes: usize) -> Value {
+    use std::io::Read;
+    let status = resp.status();
+    let mut headers = serde_json::Map::new();
+    for name in resp.headers_names() {
+        if let Some(value) = resp.header(&name) {
+            headers.insert(name, Value::String(value.to_string()));
+        }
+    }
+    let mut bytes = Vec::new();
+    let _ = resp
+        .into_reader()
+        .take((max_bytes + 1) as u64)
+        .read_to_end(&mut bytes);
+    let truncated = bytes.len() > max_bytes;
+    bytes.truncate(max_bytes);
+    let message = String::from_utf8_lossy(&bytes).into_owned();
+    serde_json::json!({"status": status, "headers": headers, "body": {"error": message, "truncated": truncated}})
 }
 
 /// In-process handler for `builtin`-transport `_core` utilities (#201) — runtime
@@ -3230,18 +3309,29 @@ impl AgentInvoker for DispatchInvoker {
                 .await
             }
             TransportKind::Rest => {
-                RestInvoker { agents_dir: dir }
-                    .invoke_single(agent, command, args)
-                    .await
+                Box::pin(RestInvoker { agents_dir: dir }.invoke_with_artifacts(
+                    agent,
+                    command,
+                    args,
+                    self.artifact_dir.as_deref(),
+                ))
+                .await
             }
             TransportKind::App => match &self.app_ctx {
                 Some(app_ctx) => {
-                    self.dispatch_app_single(app_ctx, agent, command, args, record_args)
+                    Box::pin(self.dispatch_app_single(app_ctx, agent, command, args, record_args))
                         .await
                 }
                 None => Err(Self::nested_recursion_error(agent)),
             },
             TransportKind::Builtin => {
+                if agent == "html-report" && command == "render-stream" {
+                    return crate::render::html_report_stream::render_stream(
+                        &args,
+                        self.artifact_dir.as_deref(),
+                        self.preview,
+                    );
+                }
                 BuiltinInvoker {
                     dry_run: self.preview,
                 }
