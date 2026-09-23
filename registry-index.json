@@ -412,7 +412,7 @@
           "subdir": "aware-main/20-agents/_core/html-report",
           "manifest-agent": "html-report",
           "manifest-version": "0.2.1",
-          "bundle-digest": "sha256:5a8fa32a632cec96841bffb7c31704a650627956915bf11d19607896dc85c34e"
+          "bundle-digest": "sha256:aeff2a53af217b59be7709326b3d3378df1b0db5c3f5c28c1180cda5967f3090"
         }
       }
     },
