@@ -423,7 +423,7 @@
           "subdir": "aware-main/20-agents/_core/html-report-stream",
           "manifest-agent": "html-report-stream",
           "manifest-version": "0.1.0",
-          "bundle-digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+          "bundle-digest": "sha256:373002a4c6eae3029cefcbcdad8b3bda729c57dca2265aa0c4da539fc09c0440"
         }
       }
     },

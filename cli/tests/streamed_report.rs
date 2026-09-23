@@ -78,9 +78,7 @@ commands:
     .unwrap();
     let app = home.join("apps/tekla-model-report");
     std::fs::create_dir_all(&app).unwrap();
-    std::fs::write(
-        app.join("tekla-model-report.flo"),
-        r#"app: tekla-model-report
+    let embedded_workflow = r#"app: tekla-model-report
 version: 0.1.0
 description: Complete approved Tekla model report
 inputs:
@@ -116,9 +114,12 @@ nodes:
 connections:
   - { from: model, to: gate }
   - { from: gate, to: report }
-"#,
-    )
-    .unwrap();
+"#;
+    let workflow = match std::env::var("AWARE_TEST_EXACT_FLO_PATH") {
+        Ok(path) => std::fs::read_to_string(path).unwrap(),
+        Err(_) => embedded_workflow.to_string(),
+    };
+    std::fs::write(app.join("tekla-model-report.flo"), workflow).unwrap();
     common::approve_installed_apps(&home);
     Command::cargo_bin("aware")
         .unwrap()
@@ -168,6 +169,11 @@ connections:
         report["data"]["bundle"]["contentType"],
         "application/vnd.aware.html-report.bundle.v1"
     );
+    assert_eq!(report["data"]["bundle"]["app"], "tekla-model-report");
+    assert!(report["data"]["bundle"]["runId"].as_str().is_some());
+    if std::env::var_os("AWARE_TEST_EXACT_FLO_PATH").is_some() {
+        println!("REPORT_OUTPUT {}", report["data"]);
+    }
     if let Ok(target) = std::env::var("AWARE_TEST_BUNDLE_OUTPUT") {
         let run_id = report["data"]["bundle"]["runId"].as_str().unwrap();
         let id = report["data"]["bundle"]["id"].as_str().unwrap();
