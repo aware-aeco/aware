@@ -136,6 +136,37 @@ test('preserves only the allowlisted canonical conversion refusal without leakin
   }
 });
 
+test('package and dependency integrity changes supersede a provider coverage refusal', async (t) => {
+  const refusal = canonicalJsonBytes({
+    code: 'reference-model-coverage-incomplete', phase: 'conversion', retryable: false,
+    message: 'The model cannot be imported completely.',
+    diagnosticId: '123e4567-e89b-42d3-a456-426614174000',
+  });
+  for (const changed of ['package', 'policy']) {
+    const value = await scenario(t);
+    value.options.hostRun = async () => ({ exitCode: 2, stdout: Buffer.alloc(0), stderr: refusal });
+    let postChecks = 0;
+    if (changed === 'package') {
+      value.deps.loadPackage = async () => {
+        postChecks += 1;
+        const loaded = loadedPackage();
+        if (postChecks > 1) loaded.executable.sha256 = sha256(Buffer.from('changed-launcher'));
+        return loaded;
+      };
+    } else {
+      const original = value.deps.loadPolicy;
+      value.deps.loadPolicy = async () => {
+        postChecks += 1;
+        const admitted = await original();
+        return postChecks === 1 ? admitted : { ...admitted, sha256: sha256(Buffer.from('changed-policy')) };
+      };
+    }
+    await assert.rejects(() => convertProviderSource(value.options, value.deps), (error) =>
+      error.code === (changed === 'package' ? 'reference-provider-package-changed' : 'reference-dependency-policy-changed'));
+    assert.equal(postChecks, 2, `the ${changed} was not re-verified after provider execution`);
+  }
+});
+
 test('forged, malformed and oversized provider stderr remains a generic failure', async (t) => {
   const value = await scenario(t);
   const base = {

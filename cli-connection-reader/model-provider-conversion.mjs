@@ -247,6 +247,20 @@ async function invokeConvert(options, capture, closure, discovered, identity, ru
     conversionError('reference-provider-failed', 'The enrolled provider failed during conversion.', true, error);
   }
   checkCancellation(options.signal);
+  await (deps.verifyCapture ?? verifyCapturedSource)(capture, {
+    limits: options.captureLimits, signal: options.signal,
+  });
+  await (deps.verifyCapture ?? verifyCapturedSource)(closure, {
+    limits: options.captureLimits, signal: options.signal,
+  });
+  const after = await (deps.loadPackage ?? loadEnrolledProviderPackage)(loadOptions);
+  if (packageProviderIdentity(after, options.manifestSha256).sha256 !== provider.sha256) {
+    conversionError('reference-provider-package-changed', 'Provider identity changed during conversion.');
+  }
+  const afterPolicy = await (deps.loadPolicy ?? loadAdmittedDependencyPolicy)(options.home, provider.sha256);
+  if (afterPolicy.sha256 !== admittedPolicy.sha256) {
+    conversionError('reference-dependency-policy-changed', 'The admitted dependency policy changed during conversion.');
+  }
   const refusal = safeProviderRefusal(result, identity.limits.providerStderrBytes);
   if (refusal) conversionError(refusal.code, refusal.message);
   if (!result || result.exitCode !== 0 || !Buffer.isBuffer(result.stdout) || !Buffer.isBuffer(result.stderr)
@@ -268,20 +282,6 @@ async function invokeConvert(options, capture, closure, discovered, identity, ru
       || response.capabilityId !== options.capabilityId || response.complete !== true
       || !result.stdout.equals(canonicalJsonBytes(response))) {
     conversionError('reference-provider-protocol', 'Provider conversion response does not match the request.');
-  }
-  await (deps.verifyCapture ?? verifyCapturedSource)(capture, {
-    limits: options.captureLimits, signal: options.signal,
-  });
-  await (deps.verifyCapture ?? verifyCapturedSource)(closure, {
-    limits: options.captureLimits, signal: options.signal,
-  });
-  const after = await (deps.loadPackage ?? loadEnrolledProviderPackage)(loadOptions);
-  if (packageProviderIdentity(after, options.manifestSha256).sha256 !== provider.sha256) {
-    conversionError('reference-provider-package-changed', 'Provider identity changed during conversion.');
-  }
-  const afterPolicy = await (deps.loadPolicy ?? loadAdmittedDependencyPolicy)(options.home, provider.sha256);
-  if (afterPolicy.sha256 !== admittedPolicy.sha256) {
-    conversionError('reference-dependency-policy-changed', 'The admitted dependency policy changed during conversion.');
   }
   return await (deps.verifyOutput ?? verifyProviderOutput)(outputRoot, {
     admittedRoot, formatId: options.formatId, capabilityId: options.capabilityId,
