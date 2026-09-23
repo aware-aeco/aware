@@ -5590,6 +5590,26 @@ mod builtin_invoker_tests {
     }
 
     #[test]
+    fn model_reader_coverage_refusal_reaches_the_cli_as_a_typed_non_retryable_error() {
+        let stderr = r#"{"code":"reference-model-coverage-incomplete","phase":"conversion","retryable":false,"message":"The model contains geometry this reader cannot safely place. No partial model was imported.","diagnosticId":"123e4567-e89b-42d3-a456-426614174000"}"#;
+        match structured_bridge_error(stderr).expect("safe reader envelope") {
+            AwareError::AgentStructured {
+                code,
+                phase,
+                retryable,
+                message,
+                ..
+            } => {
+                assert_eq!(code.as_ref(), "reference-model-coverage-incomplete");
+                assert_eq!(phase.as_ref(), "conversion");
+                assert!(!retryable);
+                assert!(message.contains("No partial model was imported"));
+            }
+            other => panic!("coverage refusal was flattened: {other:?}"),
+        }
+    }
+
+    #[test]
     fn a_bridge_that_reports_only_on_stdout_still_surfaces() {
         // stderr-first must FALL BACK, not replace: a bridge whose only output is on stdout would
         // otherwise report nothing at all.

@@ -598,6 +598,15 @@ bounds must name an admitted tile. AWARE signs and publishes a `model-reference-
 four family indexes and content-addressed objects. Cancellation or failure before root publication
 leaves no visible root.
 
+For protocol-v3 conversion, a provider may refuse incomplete geometry coverage by exiting nonzero
+with empty stdout and an exact canonical JSON stderr object containing only `code`, `phase`,
+`retryable`, `message` and `diagnosticId`. The reader recognizes only
+`reference-model-coverage-incomplete` with `phase: "conversion"`, `retryable: false`, bounded text
+and a UUID diagnostic ID. It forwards the code through its own safe error envelope, but replaces
+provider-controlled text and diagnostic ID with reader-owned values. Malformed, oversized or
+unrecognized stderr remains the generic `reference-provider-failed` error. No partial model is
+published in either case.
+
 The compatibility branches are explicit and non-negotiated:
 
 | Provider protocol | Commands | Reader request | Artifact contract |
