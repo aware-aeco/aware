@@ -7,6 +7,8 @@ description: |
   agent preserves the published html-report agent and its generic renderer.
 
 stateful: false
+status: requires-runtime
+minimum-cli-version: 0.142.0
 vendor: aware
 license: Apache-2.0
 homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/html-report-stream

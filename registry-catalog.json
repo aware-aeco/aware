@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-23T14:48:01.097311800+00:00",
+  "updated-at": "2026-09-23T15:05:16.618310700+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -2686,7 +2686,8 @@
       "versions": {
         "1.0.0": {
           "description": "Read a run-owned complete model record stream and render every object and",
-          "status": "available",
+          "status": "requires-runtime",
+          "minimum-cli-version": "0.142.0",
           "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "builtin",
