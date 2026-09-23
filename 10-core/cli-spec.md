@@ -127,7 +127,7 @@ with a hard `AWARE_REPORT_SOURCE_BYTES` ceiling and a required opaque
 `{status:200,headers:{"content-type":"application/x-ndjson"},body:{artifact:{schemaVersion:
 "aware.artifact-ref/v1",app,instance,runId,id,bytes,sha256,contentType}}}`.
 Non-200 error bodies are bounded; no successful response body is parsed as one JSON value.
-`html-report.render-stream` resolves only a matching current-run descriptor, verifies
+`html-report-stream.render-stream` resolves only a matching current-run descriptor, verifies
 size and SHA-256, checks complete NDJSON counts/ordinals/terminal hash, and emits a
 small `bundle` descriptor, exact object/property counts and `complete:true`.
 Its candidate is atomically published only after a complete render within the trusted

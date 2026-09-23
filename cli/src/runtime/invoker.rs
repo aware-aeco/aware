@@ -3325,7 +3325,7 @@ impl AgentInvoker for DispatchInvoker {
                 None => Err(Self::nested_recursion_error(agent)),
             },
             TransportKind::Builtin => {
-                if agent == "html-report" && command == "render-stream" {
+                if agent == "html-report-stream" && command == "render-stream" {
                     return crate::render::html_report_stream::render_stream(
                         &args,
                         self.artifact_dir.as_deref(),

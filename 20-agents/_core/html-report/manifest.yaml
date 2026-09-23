@@ -1,5 +1,5 @@
 agent:        html-report
-version:      0.2.1
+version:      0.2.0
 display-name: HTML Report
 description: |
   Utility agent for generating self-contained HTML reports — single-file
@@ -29,32 +29,6 @@ transport:
   builtin: {}
 
 commands:
-  render-stream:
-    lifecycle: single
-    description: |
-      Render every authenticated object and property from a run-owned record
-      stream into one complete, indexed, read-only HTML report bundle. The
-      response is a small artifact reference, not inline HTML.
-    inputs:
-      artifact:
-        type: object
-        description: Run-scoped artifact reference from a streamed REST response.
-      data:
-        type: object
-        description: Alternative wrapper containing artifact.
-      title:
-        type: string
-        description: Optional report title; defaults to "Model properties".
-      columns:
-        type: array
-        description: Closed grouped columns — Group, Property, Value, Unit, Provenance.
-    outputs:
-      type: single
-      schema:
-        bundle: object
-        objectCount: int
-        propertyCount: int
-        complete: boolean
   render:
     lifecycle: single
     # Read-mode: rendering mutates no system of record, so a report node needs no

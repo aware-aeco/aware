@@ -69,16 +69,11 @@ commands:
         .parent()
         .unwrap()
         .to_path_buf();
-    let report_agent = home.join("agents/html-report");
-    std::fs::create_dir_all(report_agent.join("skills")).unwrap();
+    let report_agent = home.join("agents/html-report-stream");
+    std::fs::create_dir_all(&report_agent).unwrap();
     std::fs::copy(
-        repo.join("20-agents/_core/html-report/manifest.yaml"),
+        repo.join("20-agents/_core/html-report-stream/manifest.yaml"),
         report_agent.join("manifest.yaml"),
-    )
-    .unwrap();
-    std::fs::copy(
-        repo.join("20-agents/_core/html-report/skills/styling.md"),
-        report_agent.join("skills/styling.md"),
     )
     .unwrap();
     let app = home.join("apps/tekla-model-report");
@@ -94,7 +89,7 @@ inputs:
     default: ""
 requires:
   - floless-workspace@0.2.4
-  - html-report@0.2.x
+  - html-report-stream@0.1.x
 layout: linear
 nodes:
   - id: model
@@ -111,7 +106,7 @@ nodes:
       description: Continue only when the complete approved Tekla model read succeeded.
       code: "e.status == 200"
   - id: report
-    agent: html-report
+    agent: html-report-stream
     command: render-stream
     mode: read
     config:
