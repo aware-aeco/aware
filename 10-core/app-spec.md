@@ -184,6 +184,22 @@ Inline glue lives in the app file. It is visible in the topology and inspectable
 > front (rather than failing at `run`) so an app never locks against an unrunnable
 > inline kind (#160).
 
+> **A predicate must be fed.** A `predicate` gates on the output of a declared
+> predecessor, or — inside a `for-each` `do:` body, where the topology is implicit —
+> on the bound `{{ item }}` (#124). A top-level predicate whose body reads a field
+> and which no `connections:` entry targets can never be given either, so
+> `aware app validate` / `compile` / `run` refuse it with
+> **`E_APP_PREDICATE_NO_INPUT`**; add a connection from the node whose output it
+> should gate, or move it into the `do:` body it filters. A body that reads no field
+> (`code: 'true'`) answers the same whatever it is handed and needs no upstream, so
+> it is exempt. Only the declared `connections:` count: an `inline:` block's
+> `inputs:` are never rendered into the predicate body, so a `{{ }}` reference alone
+> orders the node (#208) without feeding it. (Before that guard landed, such a node
+> was evaluated against an empty object at run time — every path read `null`, the
+> gate blocked everything, and the trace carried a `{"pass": false}`
+> indistinguishable from a real verdict. That is #554 with the sign flipped; see
+> #557.)
+
 ### Atom references (v0.20)
 
 > **Not implemented today.** No `atom://` resolver ships in the CLI: `atom:` is

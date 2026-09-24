@@ -363,7 +363,7 @@ engineering:
 implements it, and the example below cannot run for a second, independent reason: the
 inline expression engine (`cli/src/runtime/inline.rs`) is a *predicate* evaluator — paths,
 literals, `==`, `!=`, `&&`, `||` — with no function-call or arithmetic syntax at all, and
-`validate` rejects any inline node whose `kind` is not `predicate` with `E_APP_INLINE_KIND`, and a `predicate` carrying no executable `code:` body with `E_APP_INLINE_NO_BODY` (#554) — including one written as an `atom://` reference, since no resolver ships yet.
+`validate` rejects any inline node whose `kind` is not `predicate` with `E_APP_INLINE_KIND`, a `predicate` carrying no executable `code:` body with `E_APP_INLINE_NO_BODY` (#554) — including one written as an `atom://` reference, since no resolver ships yet — and a top-level `predicate` that reads a field while no `connections:` entry feeds it with `E_APP_PREDICATE_NO_INPUT` (#557).
 So an app carrying the `map` node below fails at validate/compile, before any missing
 helper could be reached. Shipping this means giving the expression engine calls and
 arithmetic first; it is tracked under [v0.21 in the roadmap](./cli-roadmap.md).

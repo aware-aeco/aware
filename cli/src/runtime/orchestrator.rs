@@ -99,6 +99,25 @@ impl Orchestrator {
             None => Ok(()),
         }
     }
+
+    /// Refuse a top-level predicate that reads an input nothing can give it, before
+    /// the first node runs (#557).
+    ///
+    /// A pre-flight for the same reason `refuse_body_less_predicates` is one: `run`
+    /// never calls `validate_app` (see `commands::app::run`), so an app installed
+    /// before this guard shipped — or edited in place under `~/.aware/apps/` —
+    /// reaches the orchestrator without it. Whether a predicate has a declared
+    /// predecessor is a file-level fact, knowable before any event, and refusing it
+    /// up front means the run emits no `{"pass": false}` at all rather than one the
+    /// reader has to distinguish from a real verdict. On the streaming path that is
+    /// the difference between a refusal and a watcher that stays alive dropping every
+    /// event while the run still ends `ok`.
+    fn refuse_input_less_predicates(&self) -> Result<(), AwareError> {
+        match crate::validate::input_less_inline_predicates(&self.app).first() {
+            Some(issue) => Err(AwareError::Validation(issue.message.clone())),
+            None => Ok(()),
+        }
+    }
 }
 
 impl Orchestrator {
@@ -115,6 +134,7 @@ impl Orchestrator {
     /// hands back to a caller when invoked as an agent on the one-shot path.
     pub async fn run_one_shot_collect(mut self) -> Result<Value, AwareError> {
         self.refuse_body_less_predicates()?;
+        self.refuse_input_less_predicates()?;
         self.emit(RunEvent::RunStart {
             ts: now_iso(),
             run_id: self.run_id.clone(),
@@ -193,6 +213,7 @@ impl Orchestrator {
     /// streams have naturally closed.
     pub async fn run_long_running(mut self, mut stop_rx: StopReceiver) -> Result<(), AwareError> {
         self.refuse_body_less_predicates()?;
+        self.refuse_input_less_predicates()?;
         self.emit(RunEvent::RunStart {
             ts: now_iso(),
             run_id: self.run_id.clone(),
@@ -1028,9 +1049,41 @@ impl Orchestrator {
                     // Inside a `for-each` `do:` body the predicate has no graph
                     // predecessor (the body topology is implicit), so it gates on
                     // the bound `{{ item }}` — a per-item filter (#124).
-                    let event_to_test = most_recent_upstream(&self.ctx, &self.app, &node.id)
+                    let event_to_test = match most_recent_upstream(&self.ctx, &self.app, &node.id)
                         .or_else(|| self.ctx.upstream.get("item").cloned())
-                        .unwrap_or(serde_json::json!({}));
+                    {
+                        Some(event) => event,
+                        // Neither lookup resolved. This used to substitute an empty
+                        // object, so every field path in the body read `null`, the gate
+                        // returned false, and the trace carried a `{"pass": false}`
+                        // indistinguishable from a gate that genuinely evaluated false
+                        // against real data (#557). A predicate with no input to test is
+                        // not a predicate that fails, any more than one with no body is
+                        // one that passes (#554).
+                        //
+                        // A body that reads nothing (`code: 'true'`) is unaffected: it
+                        // answers the same whatever it is handed, so it still runs
+                        // against an empty object — see `inline::reads_input`.
+                        //
+                        // `refuse_input_less_predicates` catches the static shape of this
+                        // before the run starts, so reaching here means a DECLARED
+                        // predecessor recorded no output. Topo order plus gated-out
+                        // propagation should make that unreachable; it is kept as a
+                        // fail-closed guard rather than a fallback, because the whole
+                        // defect was a fallback standing in for an answer.
+                        None => {
+                            if crate::runtime::inline::reads_input(code)? {
+                                return Err(AwareError::Validation(format!(
+                                    "inline node {:?}: predicate reads its input but none \
+                                     resolved — no upstream node produced output and no \
+                                     `{{{{ item }}}}` is bound. A predicate with no input \
+                                     to test is not a predicate that fails",
+                                    node.id
+                                )));
+                            }
+                            serde_json::json!({})
+                        }
+                    };
                     let pass = eval_predicate(code, &event_to_test)?;
                     self.emit(RunEvent::NodeOutput {
                         ts: now_iso(),
@@ -1337,6 +1390,9 @@ impl Orchestrator {
     }
 }
 
+/// `Debug` so a test that expects a node to be REFUSED names the value it got
+/// instead of `expect_err` failing to compile (#557).
+#[derive(Debug)]
 enum NodeResult {
     Output(Value),
     Gated,
@@ -2925,6 +2981,151 @@ commands:
     }
 
     #[tokio::test]
+    async fn one_shot_refuses_a_predicate_whose_input_cannot_resolve() {
+        // #557, the repro verbatim: one predicate, no connections, a body that reads
+        // `e.status`. It used to validate, compile, lock and run clean, exit 0, and
+        // leave a `{"pass": false}` in the trace indistinguishable from a gate that
+        // genuinely evaluated false against real data.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: predno
+version: 0.1.0
+description: A predicate with no resolvable upstream.
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: keep open issues
+      code: 'e.status == "open"'
+requires: []
+"#,
+        )
+        .unwrap();
+        let (orch, _tmp, log_path) = make_orchestrator(app, Arc::new(MockInvoker::new())).await;
+        let err = orch
+            .run_one_shot()
+            .await
+            .expect_err("a predicate with no input to test must not run to completion");
+        assert!(err.to_string().contains("gate"), "{err}");
+
+        let events = read_run_events(&log_path).await.unwrap();
+        // The defect's whole signature was an honest-looking verdict, so `is_err`
+        // alone is not the assertion: a path that emitted the pass record and THEN
+        // errored would keep #557 alive for every reader of the trace.
+        assert!(
+            !events
+                .iter()
+                .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "gate")),
+            "a refused predicate must leave no verdict in the trace: {events:?}"
+        );
+        assert!(
+            !events
+                .iter()
+                .any(|e| matches!(e, RunEvent::RunEnd { status, .. } if status == "ok")),
+            "the run must not end ok: {events:?}"
+        );
+    }
+
+    #[tokio::test]
+    async fn one_shot_runs_a_constant_predicate_with_no_upstream() {
+        // The positive control for the test above, and the line the #557 guard must
+        // not cross: `code: 'true'` reads nothing, so it answers the same whatever it
+        // is handed and legitimately has no upstream. This is the minimal valid app
+        // `app_install`'s `write_gate_app` uses throughout, so refusing it would break
+        // a shape that never had the defect.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: constgate
+version: 0.1.0
+description: minimal valid app
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: always pass
+      code: 'true'
+requires: []
+"#,
+        )
+        .unwrap();
+        let (orch, _tmp, log_path) = make_orchestrator(app, Arc::new(MockInvoker::new())).await;
+        orch.run_one_shot()
+            .await
+            .expect("a constant gate needs no input and must still run");
+
+        let events = read_run_events(&log_path).await.unwrap();
+        assert!(
+            events.iter().any(|e| matches!(
+                e,
+                RunEvent::NodeOutput { node, data, .. }
+                    if node == "gate" && data == &serde_json::json!({ "pass": true })
+            )),
+            "the constant gate must still record its verdict: {events:?}"
+        );
+        assert!(
+            events
+                .iter()
+                .any(|e| matches!(e, RunEvent::RunEnd { status, .. } if status == "ok")),
+            "the run must still end ok: {events:?}"
+        );
+    }
+
+    #[tokio::test]
+    async fn execute_node_refuses_a_predicate_whose_declared_predecessor_produced_nothing() {
+        // The in-node backstop, driven directly because nothing else can reach it:
+        // `refuse_input_less_predicates` rejects the STATIC shape before the first
+        // node runs, and topo order plus gated-out propagation should mean a declared
+        // predecessor has always recorded output by the time the gate executes. So
+        // this calls `execute_node` on a gate whose predecessor never ran.
+        //
+        // Without it, reverting the `unwrap_or(json!({}))` line alone would leave
+        // every other test in this file green — which is exactly how #554's own fix
+        // could have been reverted unnoticed, and why that test carries the same note.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: piped
+version: 0.1.0
+description: x
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: gate
+    inline:
+      kind: predicate
+      description: open only
+      code: 'e.status == "open"'
+connections:
+  - from: src
+    to: gate
+requires: []
+"#,
+        )
+        .unwrap();
+        let gate = app.nodes.iter().find(|n| n.id == "gate").unwrap().clone();
+        let (mut orch, _tmp, _log) = make_orchestrator(app, Arc::new(MockInvoker::new())).await;
+        // `src` deliberately never runs, so nothing is recorded under it and no
+        // `{{ item }}` is bound — the state the fallback used to paper over.
+        let err = orch
+            .execute_node(&gate)
+            .await
+            .expect_err("a gate with no resolvable input must be refused, not answered");
+        assert!(err.to_string().contains("gate"), "{err}");
+
+        // And the constant body is still answered from the same state, so the
+        // backstop refuses for want of an INPUT, never merely for want of an upstream.
+        let mut constant = gate.clone();
+        constant.inline.as_mut().unwrap().code = Some("true".into());
+        assert!(
+            matches!(
+                orch.execute_node(&constant).await.unwrap(),
+                NodeResult::Output(_)
+            ),
+            "a constant gate must still be answered with no upstream recorded"
+        );
+    }
+
+    #[tokio::test]
     async fn one_shot_refuses_a_body_less_predicate_instead_of_passing_everything() {
         // #554. `gate` carries `atom:` and no `code:`, so it has no executable
         // body. This test exists because the `predicate_body` unit tests prove
@@ -3117,6 +3318,78 @@ requires: []
                 .iter()
                 .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "sink")),
             "nothing downstream of a refused gate may run: {events:?}"
+        );
+    }
+
+    #[tokio::test]
+    async fn streaming_refuses_an_input_less_predicate_rather_than_ignoring_the_gate() {
+        // The test that pins the PRE-FLIGHT specifically (#557). On the one-shot path
+        // the in-node backstop would refuse this too, so deleting
+        // `refuse_input_less_predicates` leaves that test green. Here it cannot:
+        // `propagate_from` walks the connection graph out from the source, so a
+        // connection-less `gate` is never reached and the in-node guard never runs.
+        // Without the pre-flight this app streams both events straight past a gate
+        // that was written to filter them and ends `ok` with exit 0 — the gate silently
+        // absent rather than wrong, which is the same diagnostic harm one step further
+        // out. Validate already refuses this shape, and `run` must agree with validate.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: streamnogate
+version: 0.1.0
+description: x
+nodes:
+  - id: watch
+    agent: ag-watch
+    command: watch
+  - id: gate
+    inline:
+      kind: predicate
+      description: keep welded
+      code: 'e.type == "Welded"'
+  - id: sink
+    agent: ag-sink
+    command: upload
+connections:
+  - from: watch
+    to: sink
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_stream(
+                    "ag-watch",
+                    "watch",
+                    vec![
+                        serde_json::json!({ "type": "Welded" }),
+                        serde_json::json!({ "type": "Bolted" }),
+                    ],
+                )
+                .with_single("ag-sink", "upload", serde_json::json!({ "ok": true })),
+        );
+
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        let (_stop_tx, stop_rx) = stop_channel();
+        let err = orch
+            .run_long_running(stop_rx)
+            .await
+            .expect_err("a gate that can never be fed must fail the run, not be skipped");
+        assert!(err.to_string().contains("gate"), "{err}");
+
+        let events = read_run_events(&log_path).await.unwrap();
+        assert!(
+            !events
+                .iter()
+                .any(|e| matches!(e, RunEvent::RunEnd { status, .. } if status == "ok")),
+            "a refused run must never end `ok`: {events:?}"
+        );
+        assert!(
+            !events
+                .iter()
+                .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "sink")),
+            "the refusal must land before any event is forwarded: {events:?}"
         );
     }
 
