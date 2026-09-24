@@ -306,6 +306,7 @@ pub fn spool_rest_response(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::test_env::EnvVarGuard;
 
     struct Repeating {
         remaining: usize,
@@ -317,6 +318,37 @@ mod tests {
             self.remaining -= n;
             Ok(n)
         }
+    }
+
+    const NDJSON: &str = "application/x-ndjson";
+
+    /// One named way to tamper with an otherwise-valid descriptor.
+    type Tamper = (&'static str, fn(&mut ArtifactRef));
+
+    /// Build `<root>/<app>/<instance>/<run>.artifacts` and scope it.
+    ///
+    /// The three-deep layout is not decoration: `from_dir` reads the app and
+    /// the instance out of the two parent directory names, so a flatter
+    /// fixture would exercise a different function than production does.
+    fn scope_at(root: &Path, app: &str, instance: &str, run: &str) -> RunArtifactScope {
+        let dir = root
+            .join(app)
+            .join(instance)
+            .join(format!("{run}.artifacts"));
+        fs::create_dir_all(&dir).expect("fixture directory");
+        RunArtifactScope::from_dir(&dir).expect("scope")
+    }
+
+    fn publish_payload(scope: &RunArtifactScope, payload: &[u8]) -> ArtifactRef {
+        scope
+            .write(&mut std::io::Cursor::new(payload.to_vec()), 1 << 20, NDJSON)
+            .expect("write")
+    }
+
+    fn sha256_hex(payload: &[u8]) -> String {
+        let mut hasher = Sha256::new();
+        hasher.update(payload);
+        format!("{:x}", hasher.finalize())
     }
 
     #[test]
@@ -382,6 +414,549 @@ mod tests {
         assert!(
             scope.claim("render").is_ok(),
             "failed render releases its claim"
+        );
+    }
+
+    /// The module's headline invariant — "no descriptor may escape its run".
+    ///
+    /// The bytes are made to line up on purpose: same content, same digest,
+    /// same id, present in *both* runs' directories. That is what leaves the
+    /// identity carried in the descriptor as the only thing able to refuse the
+    /// open. Without the copy the test would pass on `File::open` returning
+    /// NotFound and would stay green with every identity comparison deleted.
+    #[test]
+    fn a_descriptor_cannot_be_replayed_against_another_run() {
+        let temp = tempfile::tempdir().expect("temp");
+        let issuing = scope_at(temp.path(), "app", "instance", "run-a");
+        let other = scope_at(temp.path(), "app", "instance", "run-b");
+        let reference = publish_payload(&issuing, b"{\"row\":1}\n");
+
+        fs::copy(
+            issuing.dir().join(&reference.id),
+            other.dir().join(&reference.id),
+        )
+        .expect("the same bytes under the same id in the other run");
+
+        assert!(
+            issuing.open_verified(&reference, NDJSON).is_ok(),
+            "control: the descriptor opens in the run that issued it"
+        );
+        assert!(
+            other.open_verified(&reference, NDJSON).is_err(),
+            "a descriptor stamped run-a must not open against run-b even when \
+             the bytes it names are sitting right there"
+        );
+    }
+
+    /// Each clause of `open_verified`'s guard, one at a time, against a
+    /// descriptor that is otherwise valid and whose file is really on disk.
+    ///
+    /// The control assertion is load-bearing: without it, a guard that refused
+    /// *everything* would satisfy every case below.
+    ///
+    /// So is asserting on which refusal came back rather than merely that one
+    /// did. The two digest-shape clauses are a syntactic pre-filter in front of
+    /// a hash comparison that would reject the same descriptors anyway, so
+    /// `is_err()` alone stays green with either of them deleted — it passes on
+    /// "digest changed" instead, having read the whole file to find out. Naming
+    /// the expected refusal is what distinguishes the guard from the fallback.
+    #[test]
+    fn every_identity_field_of_a_descriptor_is_checked() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope_at(temp.path(), "app", "instance", "run-1");
+        let valid = publish_payload(&scope, b"{\"row\":1}\n");
+
+        assert!(
+            scope.open_verified(&valid, NDJSON).is_ok(),
+            "control: an untouched descriptor must open, or every case below \
+             passes for the wrong reason"
+        );
+
+        let mutations: [Tamper; 7] = [
+            ("schema version", |r| {
+                r.schema_version = "aware.artifact-ref/v2".into()
+            }),
+            ("app", |r| r.app = "other-app".into()),
+            ("instance", |r| r.instance = "other-instance".into()),
+            ("run id", |r| r.run_id = "other-run".into()),
+            ("content type", |r| {
+                r.content_type = "application/json".into()
+            }),
+            ("digest length", |r| r.sha256.truncate(63)),
+            // Still 64 characters, so only the alphabet sweep refuses it.
+            ("digest alphabet", |r| r.sha256.replace_range(63.., "z")),
+        ];
+
+        for (label, mutate) in mutations {
+            let mut tampered = valid.clone();
+            mutate(&mut tampered);
+            let refusal = scope
+                .open_verified(&tampered, NDJSON)
+                .expect_err(&format!("a changed {label} must be refused"))
+                .to_string();
+            assert!(
+                refusal.contains("report artifact does not belong to this run"),
+                "a descriptor with a changed {label} must be refused by the \
+                 identity guard, not by a later check: {refusal}"
+            );
+        }
+
+        let mut resized = valid.clone();
+        resized.bytes += 1;
+        let refusal = scope
+            .open_verified(&resized, NDJSON)
+            .expect_err("a byte count that disagrees with the file must be refused")
+            .to_string();
+        assert!(
+            refusal.contains("report artifact size changed"),
+            "a descriptor whose byte count disagrees with the file must be \
+             refused before its contents are hashed: {refusal}"
+        );
+    }
+
+    /// The digest comparison lowercases the descriptor's side, so an uppercase
+    /// hex digest is a valid spelling of the same hash. Dropping that
+    /// normalisation turns every uppercase descriptor into a false tamper
+    /// alarm; dropping the comparison lets a well-formed wrong hash through.
+    #[test]
+    fn the_digest_is_compared_case_insensitively_but_not_loosely() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope_at(temp.path(), "app", "instance", "run-1");
+        let valid = publish_payload(&scope, b"{\"row\":1}\n");
+
+        let mut upper = valid.clone();
+        upper.sha256 = valid.sha256.to_ascii_uppercase();
+        assert_ne!(
+            upper.sha256, valid.sha256,
+            "the fixture must differ in case"
+        );
+        assert!(
+            scope.open_verified(&upper, NDJSON).is_ok(),
+            "an uppercase hex digest names the same hash"
+        );
+
+        let mut wrong = valid.clone();
+        let swap = if valid.sha256.starts_with('a') {
+            "b"
+        } else {
+            "a"
+        };
+        wrong.sha256.replace_range(..1, swap);
+        assert_ne!(wrong.sha256, valid.sha256);
+        assert!(
+            scope.open_verified(&wrong, NDJSON).is_err(),
+            "a well-formed digest that is not this file's must be refused"
+        );
+    }
+
+    /// `open_verified` joins the descriptor's id onto the run directory, so the
+    /// id has to be a leaf name rather than a path.
+    ///
+    /// The escape target is planted with matching size *and* matching digest,
+    /// which is what makes this go red if the `validate_artifact_component`
+    /// call is removed: the join would then resolve, the file would open, and
+    /// both integrity checks would agree with the descriptor.
+    #[test]
+    fn an_artifact_id_cannot_climb_out_of_the_run_directory() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope_at(temp.path(), "app", "instance", "run-1");
+        let payload = b"another run's rows\n";
+        let outside = scope
+            .dir()
+            .parent()
+            .expect("instance directory")
+            .join("planted");
+        fs::write(&outside, payload).expect("plant");
+
+        let escaping = ArtifactRef {
+            schema_version: "aware.artifact-ref/v1".into(),
+            app: "app".into(),
+            instance: "instance".into(),
+            run_id: "run-1".into(),
+            id: "../planted".into(),
+            bytes: payload.len() as u64,
+            sha256: sha256_hex(payload),
+            content_type: NDJSON.into(),
+        };
+
+        assert!(
+            File::open(scope.dir().join(&escaping.id)).is_ok(),
+            "control: the escape target is reachable by a plain join, so the \
+             refusal below is the id check rather than a missing file"
+        );
+        assert!(
+            scope.open_verified(&escaping, NDJSON).is_err(),
+            "an artifact id holding a path separator must be refused"
+        );
+    }
+
+    /// Publication is not the end of the trust chain: the file sits on a
+    /// filesystem the rest of the machine can reach, so `open_verified`
+    /// re-reads it every time. Both halves matter — a swap that keeps the
+    /// length is invisible to the size check, and a truncation is caught
+    /// before the hash is ever computed.
+    #[test]
+    fn content_edited_after_publication_is_detected() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope_at(temp.path(), "app", "instance", "run-1");
+        let reference = publish_payload(&scope, b"{\"row\":1}\n");
+        let path = scope.dir().join(&reference.id);
+
+        fs::write(&path, b"{\"row\":2}\n").expect("same-length edit");
+        assert_eq!(
+            fs::metadata(&path).expect("meta").len(),
+            reference.bytes,
+            "the edit must keep the size, or this tests the size check instead"
+        );
+        assert!(
+            scope.open_verified(&reference, NDJSON).is_err(),
+            "a same-length content swap must be caught by the digest"
+        );
+
+        fs::write(&path, b"{\"row\":1}").expect("truncating edit");
+        assert!(
+            scope.open_verified(&reference, NDJSON).is_err(),
+            "a file whose length no longer matches the descriptor must be refused"
+        );
+    }
+
+    /// `bytes > budget` makes the reservation an inclusive ceiling: a stream of
+    /// exactly the reserved size is the largest legal one. The over-budget case
+    /// passes under `>=` as well, so only the exact-fit half pins the
+    /// comparison down.
+    #[test]
+    fn the_budget_admits_exactly_its_own_size_and_nothing_more() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope_at(temp.path(), "app", "instance", "run-1");
+
+        let exact = scope
+            .write(&mut Repeating { remaining: 4096 }, 4096, NDJSON)
+            .expect("a stream of exactly the reserved size fits");
+        assert_eq!(exact.bytes, 4096);
+
+        let published = fs::read_dir(scope.dir()).expect("entries").count();
+        assert!(
+            scope
+                .write(&mut Repeating { remaining: 4097 }, 4096, NDJSON)
+                .is_err(),
+            "one byte past the reservation must be refused"
+        );
+        assert_eq!(
+            fs::read_dir(scope.dir()).expect("entries").count(),
+            published,
+            "an over-budget stream must not leave its partial spool behind"
+        );
+
+        assert!(
+            scope
+                .write(&mut Repeating { remaining: 0 }, 0, NDJSON)
+                .is_err(),
+            "a zero reservation is not a reservation, even for an empty stream"
+        );
+    }
+
+    /// `budget_from_env` decides how much a run may spool, so "`parse` accepts
+    /// it" is not the bar. Two cases carry most of the weight: `+12` parses as
+    /// 12 under `u64::from_str` and is refused only by the explicit digit
+    /// sweep, and a value one past `u64::MAX` is all digits and is refused only
+    /// by the parse that follows it.
+    #[test]
+    fn a_budget_read_from_the_environment_must_be_a_plain_positive_integer() {
+        const KEY: &str = "AWARE_TEST_ARTIFACT_STREAM_BUDGET";
+
+        {
+            let _absent = EnvVarGuard::scope(&[(KEY, None)]);
+            assert!(
+                budget_from_env(KEY).is_err(),
+                "a missing reservation is not a budget"
+            );
+        }
+
+        let mut guard = EnvVarGuard::set(KEY, "1");
+        assert_eq!(budget_from_env(KEY).expect("one byte"), 1);
+        guard.replace("18446744073709551615");
+        assert_eq!(budget_from_env(KEY).expect("u64::MAX"), u64::MAX);
+
+        for rejected in [
+            "",                     // present but empty
+            "0",                    // a reservation of nothing
+            "-1",                   // negative
+            "+12",                  // parses as 12; only the digit sweep refuses it
+            " 12",                  // leading space
+            "12 ",                  // trailing space
+            "12\n",                 // the trailing newline a shell `echo` leaves
+            "0x10",                 // hex
+            "1e6",                  // scientific
+            "18446744073709551616", // all digits, one past u64::MAX
+        ] {
+            guard.replace(rejected);
+            assert!(
+                budget_from_env(KEY).is_err(),
+                "{rejected:?} must not be accepted as a byte budget"
+            );
+        }
+    }
+
+    /// The reservation id reaches `validate_artifact_component`, because it is
+    /// joined into paths elsewhere in the run. So the check is on its shape,
+    /// not merely on its presence.
+    #[test]
+    fn a_reservation_id_must_be_present_and_path_safe() {
+        const KEY: &str = "AWARE_REPORT_RESERVATION_ID";
+
+        {
+            let _absent = EnvVarGuard::scope(&[(KEY, None)]);
+            assert!(
+                require_reservation().is_err(),
+                "an unset variable is not a reservation"
+            );
+        }
+
+        let mut guard = EnvVarGuard::set(KEY, "run-1.reservation");
+        assert!(
+            require_reservation().is_ok(),
+            "an ordinary reservation id is accepted"
+        );
+
+        for rejected in ["", ".", "..", "a/b", "a\\b", "/etc", "run 1"] {
+            guard.replace(rejected);
+            assert!(
+                require_reservation().is_err(),
+                "{rejected:?} must not be accepted as a reservation id"
+            );
+        }
+    }
+
+    /// The kind is a whitelist because it becomes a filename. An unknown kind
+    /// must be refused *without* leaving a reservation file, or a typo would
+    /// quietly mint a partition that nothing ever releases.
+    #[test]
+    fn a_reservation_kind_outside_the_whitelist_creates_nothing() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope_at(temp.path(), "app", "instance", "run-1");
+        for kind in ["bundle", "", "source/render", "../escape", "SOURCE"] {
+            assert!(
+                scope.claim(kind).is_err(),
+                "{kind:?} is not a reservation kind"
+            );
+        }
+        assert_eq!(
+            fs::read_dir(scope.dir()).expect("entries").count(),
+            0,
+            "a refused claim must not leave a reservation file behind"
+        );
+    }
+
+    /// Two separate things about a source that answers with the wrong media
+    /// type: the gate runs *before* the reservation is claimed, and a refused
+    /// response leaves the run's one source partition unspent.
+    ///
+    /// They need separate runs, because neither assertion alone pins both.
+    /// Asserting only that a fresh run's reservation is still available after
+    /// the refusal cannot see a reorder at all: `RunClaim::drop` removes an
+    /// uncommitted claim, so a claim taken *before* the gate is released again
+    /// on the way out and the reservation looks untouched either way. Codex
+    /// caught that on #569, and the fix is the second run below — its
+    /// reservation is deliberately spent up front, so a claim attempted before
+    /// the gate fails with its own distinct message and the two orderings
+    /// become distinguishable.
+    #[test]
+    fn a_wrong_media_type_is_refused_by_the_gate_and_does_not_spend_the_reservation() {
+        let temp = tempfile::tempdir().expect("temp");
+        let unspent = scope_at(temp.path(), "app", "instance", "run-1");
+        let ordering = scope_at(temp.path(), "app", "instance", "run-2");
+
+        let server = tiny_http::Server::http("127.0.0.1:0").expect("server");
+        let url = format!("http://{}/report", server.server_addr());
+        let responder = std::thread::spawn(move || {
+            for _ in 0..2 {
+                let request = server.recv().expect("request");
+                let header = tiny_http::Header::from_bytes(b"content-type", b"application/json")
+                    .expect("header");
+                let body = b"{\"rows\":[]}".to_vec();
+                let length = body.len();
+                let response = tiny_http::Response::new(
+                    tiny_http::StatusCode(200),
+                    vec![header],
+                    std::io::Cursor::new(body),
+                    Some(length),
+                    None,
+                );
+                request.respond(response).expect("respond");
+            }
+        });
+
+        // A refused response must not consume the partition: this is what goes
+        // red if the claim is committed before the body is known to be
+        // spoolable.
+        assert!(
+            spool_rest_response(ureq::get(&url).call().expect("GET"), &unspent, 4096).is_err(),
+            "a JSON body is not the record stream this path spools"
+        );
+        assert!(
+            unspent.claim("source").is_ok(),
+            "the run's source reservation must still be available after a \
+             refused response"
+        );
+
+        // This run's source reservation is already spent, so a claim taken
+        // here would fail with its own message. That is what turns the
+        // assertion below into a statement about ordering rather than outcome:
+        // with the gate first the refusal names the media type, with the claim
+        // first it names the used-up reservation.
+        ordering.claim("source").expect("reservation").commit();
+        let refusal = spool_rest_response(ureq::get(&url).call().expect("GET"), &ordering, 4096)
+            .expect_err("a JSON body is not the record stream this path spools")
+            .to_string();
+        responder.join().expect("server join");
+        assert!(
+            refusal.contains("report source did not return the expected record stream"),
+            "the media-type gate must run before the reservation is claimed: {refusal}"
+        );
+    }
+
+    /// `from_dir` derives the whole descriptor identity from three directory
+    /// names, so each of them is validated before it can be stamped into an
+    /// `ArtifactRef` and joined into a path later on.
+    #[test]
+    fn a_run_directory_must_name_a_path_safe_run_app_and_instance() {
+        let temp = tempfile::tempdir().expect("temp");
+
+        for (label, dir) in [
+            (
+                "a directory not ending in `.artifacts` is not run-owned",
+                temp.path().join("app").join("instance").join("run-1"),
+            ),
+            (
+                "an app directory that is not one path-safe identifier",
+                temp.path()
+                    .join("app name")
+                    .join("instance")
+                    .join("run-1.artifacts"),
+            ),
+            (
+                "an instance directory that is not one path-safe identifier",
+                temp.path()
+                    .join("app")
+                    .join("instance%name")
+                    .join("run-1.artifacts"),
+            ),
+            (
+                "a run id that is not one path-safe identifier",
+                temp.path()
+                    .join("app")
+                    .join("instance")
+                    .join("run 1.artifacts"),
+            ),
+        ] {
+            fs::create_dir_all(&dir).expect("fixture directory");
+            assert!(RunArtifactScope::from_dir(&dir).is_err(), "{label}");
+        }
+    }
+
+    /// A link anywhere in the run's three-deep path would let a descriptor's
+    /// `join` land wherever it points, outside anything this run owns, so
+    /// `from_dir` checks all three levels rather than only the one it was
+    /// handed.
+    ///
+    /// All three, because each is its own `reject_reparse` call and testing one
+    /// reaches none of the others: an earlier revision of this test linked the
+    /// run directory alone, and deleting either the instance-level or the
+    /// app-level call left every test in this module green. That is the same
+    /// second-call-site gap Codex found at `open_verified` on #569, so it is
+    /// swept here rather than left for the next reviewer.
+    #[cfg(unix)]
+    #[test]
+    fn a_link_at_any_level_of_the_run_path_is_refused() {
+        for linked in ["run", "instance", "app"] {
+            let temp = tempfile::tempdir().expect("temp");
+            let elsewhere = temp.path().join("elsewhere");
+            let root = temp.path().join("root");
+
+            // In each case the link is at a different level and everything it
+            // resolves to is real, so the only thing wrong with the path is the
+            // link itself.
+            let dir = match linked {
+                "run" => {
+                    fs::create_dir_all(&elsewhere).expect("link target");
+                    let instance = root.join("app").join("instance");
+                    fs::create_dir_all(&instance).expect("fixture");
+                    let link = instance.join("run-1.artifacts");
+                    std::os::unix::fs::symlink(&elsewhere, &link).expect("symlink");
+                    link
+                }
+                "instance" => {
+                    fs::create_dir_all(elsewhere.join("run-1.artifacts")).expect("link target");
+                    let app = root.join("app");
+                    fs::create_dir_all(&app).expect("fixture");
+                    let link = app.join("instance");
+                    std::os::unix::fs::symlink(&elsewhere, &link).expect("symlink");
+                    link.join("run-1.artifacts")
+                }
+                _ => {
+                    fs::create_dir_all(elsewhere.join("instance").join("run-1.artifacts"))
+                        .expect("link target");
+                    fs::create_dir_all(&root).expect("fixture");
+                    let link = root.join("app");
+                    std::os::unix::fs::symlink(&elsewhere, &link).expect("symlink");
+                    link.join("instance").join("run-1.artifacts")
+                }
+            };
+
+            assert!(
+                dir.is_dir(),
+                "control: the {linked}-level link must resolve to a real \
+                 directory, or the refusal below is a missing path rather than \
+                 the link check"
+            );
+            let refusal = RunArtifactScope::from_dir(&dir)
+                .expect_err("a run path reached through a link is not run-owned")
+                .to_string();
+            assert!(
+                refusal.contains("must not be a link"),
+                "a link at the {linked} level must be refused as a link, not \
+                 as some later validation failure: {refusal}"
+            );
+        }
+    }
+
+    /// `reject_reparse` guards two call sites, and the run-directory test above
+    /// only reaches the one in `from_dir`. This reaches the other: the check
+    /// `open_verified` runs on the artifact file itself.
+    ///
+    /// The swap keeps the payload byte-for-byte, so the size and the digest
+    /// both still agree with the descriptor and the link is the only thing left
+    /// to object to. Without that call, a published artifact replaced by a link
+    /// to a file outside the run is read as though the run had produced it —
+    /// Codex found all 12 tests above stayed green with it deleted, #569.
+    #[cfg(unix)]
+    #[test]
+    fn a_published_artifact_swapped_for_a_link_is_refused() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope_at(temp.path(), "app", "instance", "run-1");
+        let payload = b"{\"row\":1}\n";
+        let reference = publish_payload(&scope, payload);
+        let path = scope.dir().join(&reference.id);
+
+        let outside = temp.path().join("outside");
+        fs::write(&outside, payload).expect("a file this run does not own");
+        fs::remove_file(&path).expect("remove the real artifact");
+        std::os::unix::fs::symlink(&outside, &path).expect("symlink");
+
+        assert_eq!(
+            fs::read(&path).expect("readable through the link"),
+            payload,
+            "control: the link resolves and carries exactly the bytes the \
+             descriptor names, so nothing but the link check can refuse it"
+        );
+        let refusal = scope
+            .open_verified(&reference, NDJSON)
+            .expect_err("an artifact reached through a link must be refused")
+            .to_string();
+        assert!(
+            refusal.contains("must not be a link"),
+            "the refusal must name the link rather than a size or digest \
+             mismatch: {refusal}"
         );
     }
 }
