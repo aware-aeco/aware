@@ -873,4 +873,44 @@ mod tests {
             "a run directory reached through a link is not run-owned"
         );
     }
+
+    /// `reject_reparse` guards two call sites, and the run-directory test above
+    /// only reaches the one in `from_dir`. This reaches the other: the check
+    /// `open_verified` runs on the artifact file itself.
+    ///
+    /// The swap keeps the payload byte-for-byte, so the size and the digest
+    /// both still agree with the descriptor and the link is the only thing left
+    /// to object to. Without that call, a published artifact replaced by a link
+    /// to a file outside the run is read as though the run had produced it —
+    /// Codex found all 12 tests above stayed green with it deleted, #569.
+    #[cfg(unix)]
+    #[test]
+    fn a_published_artifact_swapped_for_a_link_is_refused() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope_at(temp.path(), "app", "instance", "run-1");
+        let payload = b"{\"row\":1}\n";
+        let reference = publish_payload(&scope, payload);
+        let path = scope.dir().join(&reference.id);
+
+        let outside = temp.path().join("outside");
+        fs::write(&outside, payload).expect("a file this run does not own");
+        fs::remove_file(&path).expect("remove the real artifact");
+        std::os::unix::fs::symlink(&outside, &path).expect("symlink");
+
+        assert_eq!(
+            fs::read(&path).expect("readable through the link"),
+            payload,
+            "control: the link resolves and carries exactly the bytes the \
+             descriptor names, so nothing but the link check can refuse it"
+        );
+        let refusal = scope
+            .open_verified(&reference, NDJSON)
+            .expect_err("an artifact reached through a link must be refused")
+            .to_string();
+        assert!(
+            refusal.contains("must not be a link"),
+            "the refusal must name the link rather than a size or digest \
+             mismatch: {refusal}"
+        );
+    }
 }
