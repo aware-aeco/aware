@@ -358,7 +358,16 @@ pub fn predicate_body<'a>(inline: &'a Inline, node_id: &str) -> Result<&'a str, 
     }
 }
 
-pub fn eval_predicate(code: &str, event: &Value) -> Result<bool, AwareError> {
+/// Parse a predicate body into its expression tree.
+///
+/// The single definition of "what this predicate says", for the same reason
+/// [`executable_body`] is the single definition of "this predicate has a body":
+/// [`eval_predicate`] and [`reads_input`] must agree about every body, including
+/// the `e => …` prefix and the trailing-token check. Hand-rolling the parse twice
+/// would let one accept a body the other rejects — so a gate could be judged
+/// constant by the guard and then dereference a field at run time, which is
+/// exactly the #557 hole the guard exists to close.
+fn parse_body(code: &str) -> Result<Node, AwareError> {
     let expr_src = code
         .trim()
         .split_once("=>")
@@ -371,6 +380,46 @@ pub fn eval_predicate(code: &str, event: &Value) -> Result<bool, AwareError> {
             "predicate: trailing tokens: {rest:?}"
         )));
     }
+    Ok(node)
+}
+
+/// Does this expression tree read the event it is handed?
+///
+/// [`Node::Path`] is the only construct that touches the event — every other
+/// variant is a literal, or a combinator over its operands (see [`eval_node`]) —
+/// so this is exhaustive over the grammar by construction. Matching each literal
+/// variant by name rather than with a `_` arm is deliberate: a future variant that
+/// reads the event (a function call, an index) must not default to "constant", or
+/// it silently reopens #557.
+fn reads_event(n: &Node) -> bool {
+    match n {
+        Node::Path(_) => true,
+        Node::Eq(a, b) | Node::NotEq(a, b) | Node::And(a, b) | Node::Or(a, b) => {
+            reads_event(a) || reads_event(b)
+        }
+        Node::Str(_) | Node::Num(_) | Node::Null | Node::Bool(_) => false,
+    }
+}
+
+/// Whether this predicate body needs an input event to mean anything.
+///
+/// A body with no field path — `true`, `1 == 1` — answers the same whatever it is
+/// handed, so a node carrying one is a constant gate and legitimately needs no
+/// upstream: a single-node app whose only node is `code: 'true'` is the minimal
+/// valid app this repo's own install tests use. A body WITH a path has nothing to
+/// test when no input resolves, and must be refused rather than evaluated against
+/// an empty object — every path would read `null`, the gate would return false, and
+/// the trace would carry a `{"pass": false}` indistinguishable from a gate that
+/// genuinely evaluated false against real data (#557).
+///
+/// An unparseable body answers `Err`, not `false`: "I cannot tell whether this
+/// reads its input" must not be recorded as "it does not".
+pub fn reads_input(code: &str) -> Result<bool, AwareError> {
+    Ok(reads_event(&parse_body(code)?))
+}
+
+pub fn eval_predicate(code: &str, event: &Value) -> Result<bool, AwareError> {
+    let node = parse_body(code)?;
     let evaluated = eval_node(&node, event)?;
     match evaluated {
         Value::Bool(b) => Ok(b),
@@ -387,6 +436,88 @@ mod tests {
 
     fn inline_from(yaml: &str) -> Inline {
         serde_yaml::from_str(yaml).unwrap()
+    }
+
+    #[test]
+    fn reads_input_is_false_only_for_a_body_that_touches_no_field() {
+        // The exemption #557's guard rests on: a body with no path answers the same
+        // whatever it is handed, so a node carrying one legitimately has no upstream.
+        // `code: 'true'` is the minimal valid app this repo's install tests use.
+        for body in [
+            "true",
+            "false",
+            "1 == 1",
+            "\"a\" == \"b\"",
+            "null == null",
+            "e => true",
+        ] {
+            assert!(
+                !reads_input(body).unwrap(),
+                "{body:?} reads no field and must not be treated as needing an input"
+            );
+        }
+    }
+
+    #[test]
+    fn reads_input_is_true_for_a_field_path_anywhere_in_the_body() {
+        // Every one of these dereferences the event, so evaluating it against `{}`
+        // reads `null` and answers false for a reason the trace cannot show (#557).
+        // The nested cases matter: a recursive walk that only checked the root, or
+        // stopped at the first literal, would call them constant.
+        for body in [
+            "e.status == \"open\"",
+            "status == \"open\"",
+            "e",
+            "e => e.status == \"open\"",
+            "true && e.mark != null",
+            "false || e.type == \"Welded\"",
+            "(true == true) && (e.a.b.c == 1)",
+            "e.a == null || (false && e.b != 2)",
+        ] {
+            assert!(
+                reads_input(body).unwrap(),
+                "{body:?} dereferences the event and must be treated as needing an input"
+            );
+        }
+    }
+
+    #[test]
+    fn reads_input_errors_on_an_unparseable_body_rather_than_calling_it_constant() {
+        // "I cannot tell" must not collapse into "it reads nothing", which is the
+        // answer that would let an unparseable gate through the #557 guard. The
+        // callers turn this Err into silence or a refusal deliberately; neither may
+        // be reached by mistaking a broken body for a constant one.
+        for body in ["e ==", "e.", "&& e.x", "e = 1", "e.x)"] {
+            assert!(
+                reads_input(body).is_err(),
+                "{body:?} does not parse, so reads_input must not answer false"
+            );
+        }
+    }
+
+    #[test]
+    fn reads_input_and_eval_predicate_agree_about_every_body() {
+        // Both go through `parse_body`, and this is what that sharing is for: a body
+        // reads its input if and only if the value it evaluates to depends on the
+        // event. Drive each body against two different events and check that
+        // "the answer moved" matches `reads_input` exactly.
+        let a = json!({ "status": "open", "n": 1 });
+        let b = json!({ "status": "closed", "n": 2 });
+        for body in [
+            "true",
+            "1 == 1",
+            "e.status == \"open\"",
+            "e.n == 1",
+            "true && e.status == \"open\"",
+            "e => e.n == 2",
+        ] {
+            let moved = eval_predicate(body, &a).unwrap() != eval_predicate(body, &b).unwrap();
+            let reads = reads_input(body).unwrap();
+            assert!(
+                !moved || reads,
+                "{body:?} changed answer with the event but reads_input said it reads nothing"
+            );
+        }
     }
 
     #[test]

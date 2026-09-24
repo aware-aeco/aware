@@ -391,6 +391,7 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
     }
 
     check_inline_nodes(&app.nodes, &mut out);
+    out.extend(input_less_inline_predicates(app));
     check_requires_syntax(&app.requires, &mut out);
     out
 }
@@ -983,6 +984,84 @@ pub fn body_less_inline_predicates(app: &App) -> Vec<ValidationIssue> {
     let mut out = Vec::new();
     walk(&app.nodes, &mut out);
     out
+}
+
+/// Every top-level inline `predicate` that reads an input it can never be given.
+///
+/// The runtime gates a predicate on the output of a declared predecessor, falling
+/// back to the `{{ item }}` a `for-each` body binds. When neither resolves it used
+/// to substitute an empty object, so every field path in the body read `null`, the
+/// gate returned false, and the trace carried a `{"pass": false}` indistinguishable
+/// from a gate that genuinely evaluated false against real data (#557). That is
+/// #554 with the sign flipped — there an unevaluatable gate passed everything, here
+/// one blocks everything — and it costs the same thing: the diagnosis.
+///
+/// Three deliberate exemptions, each a case the issue asked be named explicitly
+/// rather than reached through that fallback:
+///
+/// - **A constant body** (`code: 'true'`) reads nothing, so it answers the same
+///   whatever it is handed and needs no upstream. That is the minimal valid app
+///   this repo's own install tests use, and refusing it would break a shape that
+///   never had the defect. `inline::reads_input` draws that line from the parsed
+///   body, not from a guess about the text.
+/// - **A `do:`-body predicate** has no graph predecessor by design — the body
+///   topology is implicit — and gates on the bound `{{ item }}` instead (#124). So
+///   this walks top-level nodes only; descending would refuse every per-item filter
+///   in the repo, `bim-monday-audit` and `architect-sheet-status` included.
+/// - **A body-less predicate** is already `E_APP_INLINE_NO_BODY` (#554). Reporting
+///   both against one node would say the same defect twice and name the weaker one.
+///
+/// Membership is tested against the DECLARED `connections:` only, deliberately, and
+/// not the ref-derived edge set `topo_order` schedules with (#208). It has to be the
+/// set the runtime actually reads — `most_recent_upstream` walks `app.connections` —
+/// or this drifts into claiming an input the gate will not be handed. A predicate
+/// whose only inbound edge is ref-derived is therefore refused, correctly: an
+/// `inline:` block's `inputs:` are not rendered into the predicate body, so such a
+/// node is ordered after its reference and still gates on nothing.
+///
+/// Frozen nodes are NOT exempt, on the same reasoning `inline_no_body_issue` gives:
+/// the orchestrator short-circuits them before the inline branch, so the predicate is
+/// never evaluated — but exempting them would let an app carry a gate that starts
+/// blocking everything the moment someone runs `aware app unfreeze`, making the defect
+/// latent rather than absent.
+///
+/// A body that does not parse yields no issue here. "I cannot tell whether this
+/// reads its input" must not be recorded as "it does not" — and an unparseable body
+/// is a different defect, refused by `eval_predicate` on every path that reaches the
+/// node. Validate does not parse predicate bodies today; this guard does not change
+/// that, and must not start reporting a tokenizer error under a no-input code.
+pub fn input_less_inline_predicates(app: &App) -> Vec<ValidationIssue> {
+    let has_declared_input = |id: &str| app.connections.iter().any(|c| c.to == id);
+    app.nodes
+        .iter()
+        .filter_map(|n| {
+            let inline = n.inline.as_ref()?;
+            if inline.kind != "predicate" || has_declared_input(&n.id) {
+                return None;
+            }
+            let code = crate::runtime::inline::executable_body(inline)?;
+            match crate::runtime::inline::reads_input(code) {
+                Ok(true) => {}
+                // A constant gate answers the same whatever it is handed.
+                Ok(false) => return None,
+                // Unparseable. Not this guard's finding, and "I cannot tell
+                // whether it reads its input" must not be recorded as "it does
+                // not" — so say nothing and let the evaluator refuse the body.
+                Err(_) => return None,
+            }
+            Some(ValidationIssue::error(
+                "E_APP_PREDICATE_NO_INPUT",
+                format!(
+                    "inline node {:?}: predicate reads its input but nothing feeds it — no \
+                     `connections:` entry targets it, and only a `for-each` `do:` body binds \
+                     `{{{{ item }}}}`. Add a connection from the node whose output it should \
+                     gate, or move it into the `do:` body it filters. A predicate with no input \
+                     to test is not a predicate that fails",
+                    n.id
+                ),
+            ))
+        })
+        .collect()
 }
 
 /// Recursively validate inline-glue nodes, descending into `for-each` `do:` bodies
@@ -3603,6 +3682,248 @@ requires: []
         let issues = validate_app(&app);
         assert!(has_errors(&issues));
         assert!(issues.iter().any(|i| i.code == "E_APP_CYCLE"));
+    }
+
+    /// Build an app from YAML and return only the #557 no-input issues.
+    fn no_input_codes(yaml: &str) -> Vec<String> {
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        // Through `validate_app`, not `input_less_inline_predicates` directly: the
+        // walker returning the right issue while nothing calls it is exactly how #554
+        // stayed alive, and this is the assertion that goes red for the wiring.
+        validate_app(&app)
+            .into_iter()
+            .filter(|i| i.code == "E_APP_PREDICATE_NO_INPUT")
+            .map(|i| i.message)
+            .collect()
+    }
+
+    #[test]
+    fn input_less_predicate_that_reads_its_input_is_rejected() {
+        // The #557 repro verbatim: validates, compiles and runs clean today, gating
+        // every field path against `{}` and emitting a `{"pass": false}` no reader
+        // can tell from a real one.
+        let found = no_input_codes(
+            r#"
+app: predno
+version: 0.1.0
+description: A predicate with no resolvable upstream.
+requires: []
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: keep open issues
+      code: 'e.status == "open"'
+"#,
+        );
+        assert_eq!(found.len(), 1, "{found:#?}");
+        assert!(found[0].contains("gate"), "{}", found[0]);
+    }
+
+    #[test]
+    fn a_constant_predicate_needs_no_upstream() {
+        // A body that reads nothing answers the same whatever it is handed, so this
+        // shape never had the defect — and it is the minimal valid app this repo's
+        // own install tests use. Refusing it would be the guard overreaching.
+        assert!(
+            no_input_codes(
+                r#"
+app: constgate
+version: 0.1.0
+description: minimal valid app
+requires: []
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: always pass
+      code: 'true'
+"#
+            )
+            .is_empty()
+        );
+    }
+
+    #[test]
+    fn a_predicate_with_a_declared_connection_is_fine() {
+        // The normal shape — `welded-to-tc`'s `filter-welded`. The gate has a
+        // predecessor, so it has an input to test.
+        assert!(
+            no_input_codes(
+                r#"
+app: piped
+version: 0.1.0
+description: x
+requires: []
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: gate
+    inline:
+      kind: predicate
+      description: welded only
+      code: 'e.type == "Welded"'
+connections:
+  - { from: src, to: gate }
+"#
+            )
+            .is_empty()
+        );
+    }
+
+    #[test]
+    fn a_for_each_body_predicate_is_never_input_less() {
+        // A `do:`-body predicate has no graph predecessor BY DESIGN — the body
+        // topology is implicit — and gates on the bound `{{ item }}` (#124). This is
+        // the shape both shipped example apps use, so a walker that descended into
+        // bodies would refuse every per-item filter in the repo.
+        assert!(
+            no_input_codes(
+                r#"
+app: feach
+version: 0.1.0
+description: x
+requires: []
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: loop
+    for-each: '{{ src.items }}'
+    do:
+      - id: gate
+        inline:
+          kind: predicate
+          description: open only
+          code: 'e.status == "open"'
+connections:
+  - { from: src, to: loop }
+"#
+            )
+            .is_empty()
+        );
+    }
+
+    #[test]
+    fn a_body_less_predicate_is_not_also_reported_as_input_less() {
+        // One defect, one finding. A node carrying `atom:` and no `code:` is
+        // `E_APP_INLINE_NO_BODY` (#554); reporting #557 against it too would name the
+        // weaker cause and send the author looking for a missing connection.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: atomgate
+version: 0.1.0
+description: x
+requires: []
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: Issues newer than last Friday
+      atom: 'atom://generic/is-newer-than'
+"#,
+        )
+        .unwrap();
+        let codes: Vec<&str> = validate_app(&app).iter().map(|i| i.code).collect();
+        assert!(codes.contains(&"E_APP_INLINE_NO_BODY"), "{codes:?}");
+        assert!(!codes.contains(&"E_APP_PREDICATE_NO_INPUT"), "{codes:?}");
+    }
+
+    #[test]
+    fn an_unparseable_predicate_body_is_not_reported_as_input_less() {
+        // "I cannot tell whether this reads its input" must not be recorded as "it
+        // does not" — nor as a no-input finding under a tokenizer error. Validate
+        // does not parse predicate bodies today; this guard must not change that.
+        assert!(
+            no_input_codes(
+                r#"
+app: broken
+version: 0.1.0
+description: x
+requires: []
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: broken
+      code: 'e =='
+"#
+            )
+            .is_empty()
+        );
+    }
+
+    #[test]
+    fn a_ref_derived_edge_alone_does_not_feed_a_predicate() {
+        // Deliberate, and the subtle half of this guard. `{{ src.items }}` derives a
+        // SCHEDULING edge (#208), so topo order runs `src` first — but the runtime
+        // gates on `most_recent_upstream`, which walks the DECLARED `connections:`
+        // only, and an `inline:` block's `inputs:` are never rendered into the
+        // predicate body. So this node is ordered after its reference and still
+        // gates on nothing. Refusing it is correct; claiming it has an input because
+        // a derived edge exists would be this guard lying about what the runtime does.
+        let found = no_input_codes(
+            r#"
+app: refonly
+version: 0.1.0
+description: x
+requires: []
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: gate
+    inputs:
+      watched: '{{ src.items }}'
+    inline:
+      kind: predicate
+      description: open only
+      code: 'e.status == "open"'
+"#,
+        );
+        assert_eq!(found.len(), 1, "{found:#?}");
+    }
+
+    #[test]
+    fn input_less_predicates_in_published_examples() {
+        // The companion pin to `body_less_predicates_in_published_examples`: no app
+        // this repo ships may carry a gate that reads an input nothing feeds it. The
+        // two known-defective example predicates are body-less (#554) and sit inside
+        // `for-each` bodies, so neither is reported here — if that changes, the count
+        // below moves and says so rather than a shipped example quietly acquiring it.
+        let root = repo_root();
+        let examples = root.join("30-apps/_examples");
+        let mut app_files = Vec::new();
+        collect_files(
+            &examples,
+            &mut |p| {
+                matches!(
+                    p.extension().and_then(|e| e.to_str()),
+                    Some("app" | "flo" | "flow" | "aware")
+                )
+            },
+            &mut app_files,
+        );
+        assert!(
+            app_files.len() >= 9,
+            "expected at least the 9 app files under 30-apps/_examples/, walked {} — \
+             a walk that finds nothing passes the assertion below vacuously",
+            app_files.len()
+        );
+        let mut found: Vec<String> = Vec::new();
+        for path in &app_files {
+            let text = std::fs::read_to_string(path).unwrap();
+            let app: App = serde_yaml::from_str(&text).unwrap();
+            for issue in input_less_inline_predicates(&app) {
+                found.push(format!("{} :: {}", rel_to(&root, path), issue.message));
+            }
+        }
+        assert!(
+            found.is_empty(),
+            "a published example carries a predicate that reads an input nothing feeds \
+             it (#557): {found:#?}"
+        );
     }
 
     #[test]
