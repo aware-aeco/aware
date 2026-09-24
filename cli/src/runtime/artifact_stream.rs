@@ -747,41 +747,71 @@ mod tests {
         );
     }
 
-    /// The content-type gate runs before the reservation is claimed. Were those
-    /// two reordered, a source that answered with the wrong media type would
-    /// burn the run's one source partition, and the retry would then fail with
-    /// an unrelated message about a reservation already being used.
+    /// Two separate things about a source that answers with the wrong media
+    /// type: the gate runs *before* the reservation is claimed, and a refused
+    /// response leaves the run's one source partition unspent.
+    ///
+    /// They need separate runs, because neither assertion alone pins both.
+    /// Asserting only that a fresh run's reservation is still available after
+    /// the refusal cannot see a reorder at all: `RunClaim::drop` removes an
+    /// uncommitted claim, so a claim taken *before* the gate is released again
+    /// on the way out and the reservation looks untouched either way. Codex
+    /// caught that on #569, and the fix is the second run below — its
+    /// reservation is deliberately spent up front, so a claim attempted before
+    /// the gate fails with its own distinct message and the two orderings
+    /// become distinguishable.
     #[test]
-    fn a_wrong_media_type_is_refused_without_spending_the_reservation() {
+    fn a_wrong_media_type_is_refused_by_the_gate_and_does_not_spend_the_reservation() {
         let temp = tempfile::tempdir().expect("temp");
-        let scope = scope_at(temp.path(), "app", "instance", "run-1");
+        let unspent = scope_at(temp.path(), "app", "instance", "run-1");
+        let ordering = scope_at(temp.path(), "app", "instance", "run-2");
+
         let server = tiny_http::Server::http("127.0.0.1:0").expect("server");
         let url = format!("http://{}/report", server.server_addr());
         let responder = std::thread::spawn(move || {
-            let request = server.recv().expect("request");
-            let header = tiny_http::Header::from_bytes(b"content-type", b"application/json")
-                .expect("header");
-            let body = b"{\"rows\":[]}".to_vec();
-            let length = body.len();
-            let response = tiny_http::Response::new(
-                tiny_http::StatusCode(200),
-                vec![header],
-                std::io::Cursor::new(body),
-                Some(length),
-                None,
-            );
-            request.respond(response).expect("respond");
+            for _ in 0..2 {
+                let request = server.recv().expect("request");
+                let header = tiny_http::Header::from_bytes(b"content-type", b"application/json")
+                    .expect("header");
+                let body = b"{\"rows\":[]}".to_vec();
+                let length = body.len();
+                let response = tiny_http::Response::new(
+                    tiny_http::StatusCode(200),
+                    vec![header],
+                    std::io::Cursor::new(body),
+                    Some(length),
+                    None,
+                );
+                request.respond(response).expect("respond");
+            }
         });
-        let response = ureq::get(&url).call().expect("GET");
+
+        // A refused response must not consume the partition: this is what goes
+        // red if the claim is committed before the body is known to be
+        // spoolable.
         assert!(
-            spool_rest_response(response, &scope, 4096).is_err(),
+            spool_rest_response(ureq::get(&url).call().expect("GET"), &unspent, 4096).is_err(),
             "a JSON body is not the record stream this path spools"
         );
-        responder.join().expect("server join");
         assert!(
-            scope.claim("source").is_ok(),
+            unspent.claim("source").is_ok(),
             "the run's source reservation must still be available after a \
              refused response"
+        );
+
+        // This run's source reservation is already spent, so a claim taken
+        // here would fail with its own message. That is what turns the
+        // assertion below into a statement about ordering rather than outcome:
+        // with the gate first the refusal names the media type, with the claim
+        // first it names the used-up reservation.
+        ordering.claim("source").expect("reservation").commit();
+        let refusal = spool_rest_response(ureq::get(&url).call().expect("GET"), &ordering, 4096)
+            .expect_err("a JSON body is not the record stream this path spools")
+            .to_string();
+        responder.join().expect("server join");
+        assert!(
+            refusal.contains("report source did not return the expected record stream"),
+            "the media-type gate must run before the reservation is claimed: {refusal}"
         );
     }
 
