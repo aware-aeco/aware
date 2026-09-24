@@ -335,7 +335,9 @@ fn invoke_raw_with<T: Serialize>(
     let body = serde_json::to_string(&request)
         .map_err(|e| AwareError::Internal(format!("serialize request: {e}")))?;
 
-    let mut child = Command::new(bin)
+    let mut command = Command::new(bin);
+    crate::private_rest_header::scrub_std_child(&mut command);
+    let mut child = command
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())

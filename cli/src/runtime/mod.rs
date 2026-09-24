@@ -13,6 +13,7 @@ pub mod orchestrator;
 pub mod pidfile;
 pub mod progress;
 pub mod provenance;
+pub mod report_reservation;
 pub mod template;
 pub mod trimble_files;
 // other submodules added later in v0.3

@@ -128,6 +128,8 @@ pub enum AppCommand {
         #[arg(long)]
         usage: bool,
     },
+    /// Inspect which run owns a durable report reservation, as bounded JSON.
+    ArtifactReservation { reservation_id: String },
     /// Freeze a node: pin its last run output into the source as a `frozen:` block, so Run skips
     /// it (emits the pinned value, never re-runs the agent) until unfrozen. Recompiles the lock.
     Freeze {
@@ -145,7 +147,18 @@ pub enum AppCommand {
     },
 }
 
-pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> {
+struct RunOptions {
+    dry_run: bool,
+    simulate: bool,
+    require_verified_agents: bool,
+    private_header: Option<crate::private_rest_header::PrivateRestHeader>,
+}
+
+pub async fn dispatch(
+    cmd: AppCommand,
+    ctx: &Context,
+    private_header: Option<crate::private_rest_header::PrivateRestHeader>,
+) -> Result<(), AwareError> {
     match cmd {
         AppCommand::List => list(ctx),
         AppCommand::Show { app } => show(ctx, &app),
@@ -172,9 +185,12 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
                 &app,
                 instance.as_deref(),
                 &input,
-                dry_run,
-                simulate,
-                require_verified_agents,
+                RunOptions {
+                    dry_run,
+                    simulate,
+                    require_verified_agents,
+                    private_header,
+                },
             ))
             .await
         }
@@ -236,6 +252,14 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
                 .await
             }
         }
+        AppCommand::ArtifactReservation { reservation_id } => {
+            let owner = crate::runtime::report_reservation::inspect(
+                &ctx.paths.logs_dir(),
+                &reservation_id,
+            )?;
+            println!("{}", serde_json::to_string(&owner)?);
+            Ok(())
+        }
         AppCommand::Freeze { app, node } => freeze_cmd(ctx, &app, &node).await,
         AppCommand::Unfreeze { app, node } => unfreeze_cmd(ctx, &app, &node),
     }
@@ -246,10 +270,14 @@ async fn run(
     app_id: &str,
     instance: Option<&str>,
     input_overrides: &[String],
-    dry_run: bool,
-    simulate: bool,
-    require_verified_agents: bool,
+    options: RunOptions,
 ) -> Result<(), AwareError> {
+    let RunOptions {
+        dry_run,
+        simulate,
+        require_verified_agents,
+        private_header,
+    } = options;
     // `--simulate` is a strict superset of `--dry-run`: it also stubs read
     // nodes. Fold it into `dry_run` so every write-mode safety path downstream
     // (pre-flight skip, would-write events) treats a simulate run as a dry run.
@@ -280,6 +308,48 @@ async fn run(
     // Parse and hash one source buffer so the compiled sidecar approves the
     // exact app we execute. Gate every run mode before provenance or dispatch.
     let (app, approved_lock) = crate::app_lock::load_approved_app_with_lock(&manifest_path)?;
+    if let Some(header) = &private_header {
+        if simulate {
+            return Err(AwareError::Validation(
+                "[E_APP_PRIVATE_REST_HEADER] private REST header cannot be simulated".into(),
+            ));
+        }
+        let bound = header.descriptor()?;
+        header.validate_app_graph(&app)?;
+        let manifest =
+            crate::manifest::loader::load_agent_by_id(&ctx.paths.agents_dir(), &bound.agent)?;
+        if (bound.agent == "google-workspace" && bound.command == "gmail.send")
+            || bound.agent == "trimble-connect"
+            || effective_transport(&manifest, &bound.agent)? != TransportKind::Rest
+            || manifest.commands.get(&bound.command).is_none_or(|command| {
+                command.lifecycle != crate::manifest::agent::Lifecycle::Single
+                    || command
+                        .method
+                        .as_deref()
+                        .map(str::to_ascii_uppercase)
+                        .unwrap_or_else(|| bound.command.to_ascii_uppercase())
+                        != bound.method
+                    || command
+                        .path
+                        .as_deref()
+                        .is_some_and(|path| path != bound.path)
+            })
+        {
+            return Err(AwareError::Validation(
+                "[E_APP_PRIVATE_REST_HEADER] bound REST command changed".into(),
+            ));
+        }
+        let base = crate::runtime::invoker::rest_base_url(&ctx.paths.agents_dir(), &bound.agent);
+        if base
+            .as_deref()
+            .and_then(|base| url::Url::parse(base).ok())
+            .is_some_and(|base| base.origin().ascii_serialization() != bound.origin)
+        {
+            return Err(AwareError::Validation(
+                "[E_APP_PRIVATE_REST_HEADER] bound REST origin changed".into(),
+            ));
+        }
+    }
     let mut verified_at_start = serde_json::Map::new();
 
     // Safety-contract pre-flight: refuse to run an app whose write-mode
@@ -445,6 +515,11 @@ async fn run(
         }
         false
     });
+    if private_header.is_some() && is_long_running {
+        return Err(AwareError::Validation(
+            "[E_APP_PRIVATE_REST_HEADER] private REST header requires a one-shot app".into(),
+        ));
+    }
 
     // The commercial RVT provider is intentionally single-control per app instance. Acquire the
     // fence before choosing the one-shot or long-running path so a lifecycle-start graph cannot
@@ -477,6 +552,12 @@ async fn run(
         use crate::runtime::lifecycle::{install_ctrl_c_handler, stop_channel};
         use crate::runtime::pidfile;
 
+        crate::runtime::report_reservation::record_if_reserved(
+            &ctx.paths.logs_dir(),
+            app_id,
+            &instance,
+            &run_id,
+        )?;
         let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
         let provenance = ProvenanceWriter::open(&log_path).await?;
         let artifact_dir = crate::runtime::provenance::artifact_dir_for(
@@ -492,7 +573,8 @@ async fn run(
             simulate,
             Some(artifact_dir),
             model_reader_cleanup_fence.clone(),
-        );
+        )
+        .with_private_header(private_header.clone());
         let reader_cancellation = dispatch.reader_cancellation();
         let invoker = std::sync::Arc::new(dispatch);
 
@@ -568,6 +650,9 @@ async fn run(
 
         return match result {
             Ok(()) => {
+                if let Some(header) = &private_header {
+                    header.require_consumed()?;
+                }
                 println!("\u{2713} run ended; trace at {}", log_path.display());
                 Ok(())
             }
@@ -577,6 +662,12 @@ async fn run(
 
     // One-shot path. The reader fence was acquired above for both one-shot and long-running
     // graphs so provider cleanup remains serialized across the complete run lifecycle.
+    crate::runtime::report_reservation::record_if_reserved(
+        &ctx.paths.logs_dir(),
+        app_id,
+        &instance,
+        &run_id,
+    )?;
     let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
     let provenance = ProvenanceWriter::open(&log_path).await?;
     let artifact_dir = crate::runtime::provenance::artifact_dir_for(
@@ -592,7 +683,8 @@ async fn run(
         simulate,
         Some(artifact_dir),
         model_reader_cleanup_fence,
-    );
+    )
+    .with_private_header(private_header.clone());
     let reader_cancellation = dispatch.reader_cancellation();
     let invoker = std::sync::Arc::new(dispatch);
 
@@ -658,6 +750,9 @@ async fn run(
         orch.run_one_shot().await
     };
     result?;
+    if let Some(header) = &private_header {
+        header.require_consumed()?;
+    }
     println!("\u{2713} run complete; trace at {}", log_path.display());
     Ok(())
 }

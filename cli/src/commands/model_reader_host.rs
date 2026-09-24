@@ -313,6 +313,14 @@ fn provider_command(request: &ProviderRun) -> Result<PreparedProvider, AwareErro
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
         .kill_on_drop(true);
+    for name in request
+        .environment
+        .keys()
+        .filter(|name| name.to_ascii_uppercase().starts_with("AWARE_PRIVATE_REST_"))
+    {
+        command.env_remove(name);
+    }
+    crate::private_rest_header::scrub_tokio_child(&mut command);
     #[cfg(unix)]
     {
         use std::os::unix::process::CommandExt;

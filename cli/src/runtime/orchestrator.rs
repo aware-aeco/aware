@@ -840,7 +840,14 @@ impl Orchestrator {
         let (agent, command) = (agent.to_string(), command.to_string());
         let call = async move {
             invoker
-                .invoke_single_progress_record_safe(&agent, &command, args, record_args, Some(tx))
+                .invoke_single_progress_record_safe(
+                    node_id,
+                    &agent,
+                    &command,
+                    args,
+                    record_args,
+                    Some(tx),
+                )
                 .await
         };
         tokio::pin!(call);

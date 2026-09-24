@@ -55,6 +55,7 @@ mod lockfile;
 mod manifest;
 mod paths;
 mod plugins;
+mod private_rest_header;
 mod provider_store;
 mod receipt;
 mod registry;
@@ -207,9 +208,43 @@ enum Command {
 // `Termination` impl. Naming an error type here would only claim a failure mode
 // that cannot happen — and `AwareError::exit_code` is what actually decides the
 // process's exit status, not a returned `Err`.
-#[tokio::main]
-async fn main() {
+fn main() {
+    // Consume the private transport before Tokio can create worker threads or
+    // any child process can inherit the launcher-supplied environment.
+    let private_header = match private_rest_header::take_from_environment() {
+        Ok(value) => value,
+        Err(err) => {
+            eprintln!("error: {}", err.cli_message());
+            std::process::exit(err.exit_code());
+        }
+    };
+    let runtime = match tokio::runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()
+    {
+        Ok(value) => value,
+        Err(error) => {
+            eprintln!("error: runtime initialization failed: {error}");
+            std::process::exit(1);
+        }
+    };
+    runtime.block_on(async_main(private_header));
+}
+
+async fn async_main(private_header: Option<private_rest_header::PrivateRestHeader>) {
     let cli = Cli::parse();
+
+    if private_header.is_some()
+        && !matches!(
+            &cli.command,
+            Command::App {
+                action: commands::app::AppCommand::Run { .. }
+            }
+        )
+    {
+        eprintln!("error: [E_APP_PRIVATE_REST_HEADER] private REST header requires app run");
+        std::process::exit(3);
+    }
 
     let paths = match crate::paths::Paths::from_env() {
         Ok(p) => p,
@@ -226,7 +261,7 @@ async fn main() {
     let result: Result<(), AwareError> = match cli.command {
         Command::ModelReaderHost => commands::model_reader_host::run().await,
         Command::Agent { action } => commands::agent::dispatch(action, &ctx).await,
-        Command::App { action } => commands::app::dispatch(action, &ctx).await,
+        Command::App { action } => commands::app::dispatch(action, &ctx, private_header).await,
         Command::Connect(args) => commands::connect::run_connect(args, &ctx),
         Command::Disconnect(args) => commands::connect::run_disconnect(args, &ctx),
         Command::Credential { action } => commands::credential::dispatch(action, &ctx),

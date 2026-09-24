@@ -120,6 +120,17 @@ exclusively and removes it on a failed copy. Omitting the option preserves the l
 artifact directory (including a failed-run spool or interrupted candidate), without
 exposing any path. It refuses linked/reparse entries. A missing directory measures zero.
 
+When `AWARE_REPORT_RESERVATION_ID` is supplied to `aware app run`, AWARE creates an
+exclusive, synced reservation owner record before opening the run trace or creating
+its artifact directory. The record survives process failure. A trusted local caller
+can query `aware app artifact-reservation <reservation-id>` for bounded JSON
+`{schemaVersion:"aware.report-reservation/v1",reservationId,app,instance,runId,
+artifactScope:{app,instance,runId}}`. The scope is an identity, not a filesystem
+path; the caller can then use `artifact --usage` for that exact run. An absent
+record exits 7. Invalid, linked or contradictory records fail closed with a
+different exit code. Reusing a reservation ID fails instead of replacing its
+owner; ordinary runs without the environment variable create no record.
+
 An opt-in REST command may instead declare `response: artifact-stream` in its agent manifest.
 Its HTTP 200 NDJSON body is spooled in chunks under the current run's artifact directory,
 with a hard `AWARE_REPORT_SOURCE_BYTES` ceiling and a required opaque
@@ -137,6 +148,23 @@ explanation because it has no current-run artifact scope.
 One completed source spool and one completed bundle may consume a given run reservation;
 durable run-scoped claim files prevent a second streaming node from reusing its byte
 partition. Ordinary failures release their claim; crashes retain it and fail closed.
+
+A trusted launcher may give one `aware app run` invocation a private REST header without
+placing the value in an app input or lock. Set `AWARE_PRIVATE_REST_HEADER` to a JSON object
+with exact `nodeId`, `agent`, `command`, `method`, `origin`, `path`, and `headerName` fields,
+and `AWARE_PRIVATE_REST_HEADER_VALUE` to the visible-ASCII value (16–512 bytes). The origin
+is canonical `http(s)://host[:port]` without a trailing slash; the path starts with `/`
+and contains no query. The header name must be an `X-` custom name, not an auth, Host,
+length, hop-by-hop, or forwarded header. AWARE strips every case-insensitive
+`AWARE_PRIVATE_REST_*` variable synchronously before starting Tokio or a child process,
+and refuses incomplete, malformed, unknown, or colliding names. A bound node must be a
+unique, unfrozen top-level one-shot REST node outside any repeated graph. Immediately
+before dispatch, AWARE verifies the node, command, method, exact origin and path, and no
+collision with declared/auth headers. It gives the header to exactly one matching request,
+with redirects disabled; a second match or a run with zero matches fails. The private
+value is not serialized to the trace, artifact, stdout, stderr, or child environment.
+The destination can of course echo a header back, so the caller must bind a trusted
+destination that consumes it before writing a response.
 
 ### Progressive large outputs
 

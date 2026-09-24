@@ -97,13 +97,14 @@ pub trait AgentInvoker: Send + Sync {
     /// agents so nested provenance receives it.
     async fn invoke_single_progress_record_safe(
         &self,
+        node_id: &str,
         agent: &str,
         command: &str,
         args: Value,
         record_args: Value,
         progress: Option<mpsc::Sender<Value>>,
     ) -> Result<Value, AwareError> {
-        let _ = record_args;
+        let _ = (node_id, record_args);
         self.invoke_single_progress(agent, command, args, progress)
             .await
     }
@@ -626,6 +627,7 @@ impl CliInvoker {
         }
 
         let mut process = tokio::process::Command::new(&program);
+        crate::private_rest_header::scrub_tokio_child(&mut process);
         process
             .arg(command)
             .arg("--json-stdin")
@@ -1090,6 +1092,8 @@ pub struct RestInvoker {
 impl RestInvoker {
     async fn invoke_with_artifacts(
         &self,
+        node_id: Option<&str>,
+        private_header: Option<&crate::private_rest_header::PrivateRestHeader>,
         agent: &str,
         command: &str,
         args: Value,
@@ -1224,6 +1228,11 @@ impl RestInvoker {
                 }
             }
         }
+        let private_header = if let (Some(grant), Some(node_id)) = (private_header, node_id) {
+            grant.claim(node_id, agent, command, &method, &url, &headers)?
+        } else {
+            None
+        };
         // Carry the body itself rather than a separate "should send" flag, so the
         // send path can't be reached without one in hand.
         let request_body = body.filter(|b| {
@@ -1256,9 +1265,18 @@ impl RestInvoker {
         // `ureq` is blocking; run it off the async runtime so we don't stall
         // the orchestrator's reactor.
         tokio::task::spawn_blocking(move || -> Result<Value, AwareError> {
-            let mut req = ureq::request(&method, &url);
+            // No redirect may carry a private header beyond the bound URL.
+            let agent = ureq::AgentBuilder::new().redirects(0).build();
+            let mut req = if private_header.is_some() {
+                agent.request(&method, &url)
+            } else {
+                ureq::request(&method, &url)
+            };
             for (k, v) in &headers {
                 req = req.set(k, v);
+            }
+            if let Some((name, value)) = &private_header {
+                req = req.set(name, value);
             }
             for (k, v) in &query {
                 req = req.query(k, v);
@@ -1290,9 +1308,18 @@ impl RestInvoker {
                 // rather than aborting the run.
                 Err(ureq::Error::Status(_code, r)) => r,
                 Err(ureq::Error::Transport(t)) => {
-                    return Err(AwareError::Network(format!("{label}: {t}")));
+                    return Err(AwareError::Network(if private_header.is_some() {
+                        format!("{label}: private REST request failed")
+                    } else {
+                        format!("{label}: {t}")
+                    }));
                 }
             };
+            if private_header.is_some() && (300..400).contains(&response.status()) {
+                return Err(AwareError::Validation(
+                    "[E_APP_PRIVATE_REST_HEADER] private REST target redirected".into(),
+                ));
+            }
             if let Some(scope) = scope {
                 let status = response.status();
                 if status != 200 {
@@ -1320,7 +1347,8 @@ impl AgentInvoker for RestInvoker {
         command: &str,
         args: Value,
     ) -> Result<Value, AwareError> {
-        self.invoke_with_artifacts(agent, command, args, None).await
+        self.invoke_with_artifacts(None, None, agent, command, args, None)
+            .await
     }
 
     async fn invoke_stream(
@@ -2896,6 +2924,7 @@ pub struct DispatchInvoker {
     /// exposes-as-agent app run.
     pub preview: bool,
     reader_cancellation: ReaderCancellation,
+    private_header: Option<crate::private_rest_header::PrivateRestHeader>,
 }
 
 /// Filesystem + run context a `DispatchInvoker` needs to dispatch an app-backed
@@ -2974,7 +3003,16 @@ impl DispatchInvoker {
             }),
             preview: dry_run || simulate,
             reader_cancellation: ReaderCancellation::with_cleanup_fence(reader_cleanup_fence),
+            private_header: None,
         }
+    }
+
+    pub fn with_private_header(
+        mut self,
+        header: Option<crate::private_rest_header::PrivateRestHeader>,
+    ) -> Self {
+        self.private_header = header;
+        self
     }
 
     pub(crate) fn reader_cancellation(&self) -> ReaderCancellation {
@@ -3091,6 +3129,7 @@ impl DispatchInvoker {
             // suppress side effects under --dry-run / --simulate (#201 Codex).
             preview: self.preview,
             reader_cancellation: self.reader_cancellation.clone(),
+            private_header: None,
         })
     }
 
@@ -3310,6 +3349,8 @@ impl AgentInvoker for DispatchInvoker {
             }
             TransportKind::Rest => {
                 Box::pin(RestInvoker { agents_dir: dir }.invoke_with_artifacts(
+                    None,
+                    None,
                     agent,
                     command,
                     args,
@@ -3351,12 +3392,13 @@ impl AgentInvoker for DispatchInvoker {
         args: Value,
         progress: Option<mpsc::Sender<Value>>,
     ) -> Result<Value, AwareError> {
-        self.invoke_single_progress_record_safe(agent, command, args.clone(), args, progress)
+        self.invoke_single_progress_record_safe("", agent, command, args.clone(), args, progress)
             .await
     }
 
     async fn invoke_single_progress_record_safe(
         &self,
+        node_id: &str,
         agent: &str,
         command: &str,
         args: Value,
@@ -3371,6 +3413,20 @@ impl AgentInvoker for DispatchInvoker {
                     reader_cancellation: self.reader_cancellation.clone(),
                 }
                 .invoke_single_progress(agent, command, args, progress)
+                .await
+            }
+            TransportKind::Rest => {
+                RestInvoker {
+                    agents_dir: self.agents_dir.clone(),
+                }
+                .invoke_with_artifacts(
+                    Some(node_id),
+                    self.private_header.as_ref(),
+                    agent,
+                    command,
+                    args,
+                    self.artifact_dir.as_deref(),
+                )
                 .await
             }
             _ => {
@@ -3890,6 +3946,7 @@ mod tests {
             app_ctx: None,
             preview: false,
             reader_cancellation: ReaderCancellation::default(),
+            private_header: None,
         };
         let error = invoker.transport_kind("future").unwrap_err().to_string();
 
@@ -4248,6 +4305,7 @@ commands:
             app_ctx: None,
             preview: false,
             reader_cancellation: ReaderCancellation::default(),
+            private_header: None,
         };
         let out = inv
             .invoke_single(
@@ -5499,6 +5557,7 @@ mod builtin_invoker_tests {
             app_ctx: None, // nested-invoker shape
             preview: true,
             reader_cancellation: ReaderCancellation::default(),
+            private_header: None,
         };
         let res = inv
             .invoke_single(
