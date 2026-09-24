@@ -3745,6 +3745,34 @@ nodes:
     }
 
     #[test]
+    fn a_predicate_whose_path_is_short_circuited_away_needs_no_upstream() {
+        // Codex P2 on #570, at the surface the author sees. `eval_node` never
+        // evaluates the right operand of a falsy `&&`, so this gate answers `false`
+        // for every event and ran correctly with no upstream — the first cut of this
+        // guard refused it. Same for a truthy `||`.
+        for code in [
+            "false && e.status == \"open\"",
+            "true || e.status == \"open\"",
+        ] {
+            let found = no_input_codes(&format!(
+                r#"
+app: shortcircuit
+version: 0.1.0
+description: x
+requires: []
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: constant by short-circuit
+      code: '{code}'
+"#
+            ));
+            assert!(found.is_empty(), "{code} must validate clean: {found:#?}");
+        }
+    }
+
+    #[test]
     fn a_predicate_with_a_declared_connection_is_fine() {
         // The normal shape — `welded-to-tc`'s `filter-welded`. The gate has a
         // predecessor, so it has an input to test.

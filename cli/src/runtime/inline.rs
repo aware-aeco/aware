@@ -383,34 +383,75 @@ fn parse_body(code: &str) -> Result<Node, AwareError> {
     Ok(node)
 }
 
-/// Does this expression tree read the event it is handed?
+/// Can evaluating this expression tree REACH the event it is handed?
 ///
 /// [`Node::Path`] is the only construct that touches the event — every other
-/// variant is a literal, or a combinator over its operands (see [`eval_node`]) —
-/// so this is exhaustive over the grammar by construction. Matching each literal
-/// variant by name rather than with a `_` arm is deliberate: a future variant that
-/// reads the event (a function call, an index) must not default to "constant", or
-/// it silently reopens #557.
+/// variant is a literal, or a combinator over its operands — so a tree with no
+/// reachable path never consults the event at all. Matching each literal variant by
+/// name rather than with a `_` arm is deliberate: a future variant that reads the
+/// event (a function call, an index) must not default to "constant", or it silently
+/// reopens #557.
+///
+/// "Reachable" is load-bearing, and this must mirror [`eval_node`] rather than scan
+/// the tree: `&&` and `||` short-circuit there, so in `false && e.status == "open"`
+/// the path is never evaluated and the body answers `false` for every event,
+/// including no event at all. An unconditional scan called that body input-reading
+/// and refused an app that worked (Codex P2 on #570).
+///
+/// The contract is REACHABILITY, not result-independence, and the difference shows
+/// in the mirror shape `e.status == "open" && false`. Its answer is also constant —
+/// `false` whatever the event — but evaluation dereferences `e.status` to get there.
+/// That is a gate reading a field it can never be given, which is the #557 defect
+/// whatever its outer structure makes of the value; proving it constant would take a
+/// folder that reasons about paths (`e.x == e.x`, and on), a much larger thing with
+/// its own failure modes. So it reads the event, and is refused.
 fn reads_event(n: &Node) -> bool {
     match n {
         Node::Path(_) => true,
-        Node::Eq(a, b) | Node::NotEq(a, b) | Node::And(a, b) | Node::Or(a, b) => {
-            reads_event(a) || reads_event(b)
-        }
         Node::Str(_) | Node::Num(_) | Node::Null | Node::Bool(_) => false,
+        // Both operands are always evaluated (`eval_node` has no short-circuit here).
+        Node::Eq(a, b) | Node::NotEq(a, b) => reads_event(a) || reads_event(b),
+        // `eval_node` returns early on a falsy left operand for `&&` and a truthy one
+        // for `||`, so the right operand is reached only when the left does not decide.
+        Node::And(a, b) => short_circuit_reads_event(a, b, false),
+        Node::Or(a, b) => short_circuit_reads_event(a, b, true),
+    }
+}
+
+/// Whether a short-circuiting pair can reach the event.
+///
+/// `decides` is the left-operand truthiness that ends evaluation in [`eval_node`]:
+/// `false` for `&&`, `true` for `||`.
+fn short_circuit_reads_event(lhs: &Node, rhs: &Node, decides: bool) -> bool {
+    if reads_event(lhs) {
+        return true;
+    }
+    // The left operand reaches no path, so the event it is given cannot change its
+    // value — `Value::Null` stands in for "no event" safely. If it decides the
+    // answer, the right operand is never evaluated and nothing reads the event.
+    match eval_node(lhs, &Value::Null) {
+        Ok(v) if value_truthy(&v) == decides => false,
+        // Either the left operand does not decide, or it could not be evaluated at
+        // all — in which case the body fails at run and this answer is moot, so take
+        // the side that keeps the #557 guard armed.
+        _ => reads_event(rhs),
     }
 }
 
 /// Whether this predicate body needs an input event to mean anything.
 ///
-/// A body with no field path — `true`, `1 == 1` — answers the same whatever it is
-/// handed, so a node carrying one is a constant gate and legitimately needs no
-/// upstream: a single-node app whose only node is `code: 'true'` is the minimal
-/// valid app this repo's own install tests use. A body WITH a path has nothing to
-/// test when no input resolves, and must be refused rather than evaluated against
-/// an empty object — every path would read `null`, the gate would return false, and
-/// the trace would carry a `{"pass": false}` indistinguishable from a gate that
-/// genuinely evaluated false against real data (#557).
+/// A body that reaches no field path — `true`, `1 == 1`, and after the Codex P2 fix
+/// `false && e.x` too, whose path `eval_node` never evaluates — answers the same
+/// whatever it is handed, so a node carrying one is a constant gate and legitimately
+/// needs no upstream: a single-node app whose only node is `code: 'true'` is the
+/// minimal valid app this repo's own install tests use. A body that CAN reach a path
+/// has nothing to test when no input resolves, and must be refused rather than
+/// evaluated against an empty object — every path would read `null`, the gate would
+/// return false, and the trace would carry a `{"pass": false}` indistinguishable
+/// from a gate that genuinely evaluated false against real data (#557).
+///
+/// See [`reads_event`] for why the contract is reachability rather than
+/// result-independence, and which shape that deliberately still refuses.
 ///
 /// An unparseable body answers `Err`, not `false`: "I cannot tell whether this
 /// reads its input" must not be recorded as "it does not".
@@ -440,8 +481,8 @@ mod tests {
 
     #[test]
     fn reads_input_is_false_only_for_a_body_that_touches_no_field() {
-        // The exemption #557's guard rests on: a body with no path answers the same
-        // whatever it is handed, so a node carrying one legitimately has no upstream.
+        // The exemption #557's guard rests on: a body that reaches no path answers the
+        // same whatever it is handed, so a node carrying one legitimately has no upstream.
         // `code: 'true'` is the minimal valid app this repo's install tests use.
         for body in [
             "true",
@@ -455,6 +496,92 @@ mod tests {
                 !reads_input(body).unwrap(),
                 "{body:?} reads no field and must not be treated as needing an input"
             );
+        }
+    }
+
+    #[test]
+    fn a_path_the_short_circuit_never_reaches_is_not_an_input() {
+        // Codex P2 on #570. `eval_node` returns on a falsy `&&` left operand and a
+        // truthy `||` one, so these paths are never evaluated: each body answers the
+        // same for every event, including no event at all. An unconditional scan of
+        // the tree called them input-reading and refused apps that worked.
+        for body in [
+            "false && e.status == \"open\"",
+            "true || e.status == \"open\"",
+            // nested, and with the deciding operand itself a constant expression
+            "(1 == 2) && e.a.b == 1",
+            "(1 == 1) || e.a.b == 1",
+            "false && (e.x == 1 || e.y == 2)",
+            "false && e.x && e.y",
+            "true || e.x || e.y",
+            "e => false && e.mark != null",
+        ] {
+            assert!(
+                !reads_input(body).unwrap(),
+                "{body:?} short-circuits before any path is evaluated"
+            );
+        }
+    }
+
+    #[test]
+    fn a_short_circuit_that_does_not_decide_still_reads_its_input() {
+        // The other side of the same fold: when the left operand does NOT end
+        // evaluation, the right one is reached and the event with it. Getting this
+        // backwards would exempt real gates and reopen #557 in its original form.
+        for body in [
+            "true && e.status == \"open\"",
+            "false || e.status == \"open\"",
+            "(1 == 1) && e.a.b == 1",
+            "(1 == 2) || e.a.b == 1",
+            // The path is the LEFT operand, so it is evaluated first whatever follows:
+            // constant-VALUED but not constant-reading — refused deliberately, see
+            // `reads_event`.
+            "e.status == \"open\" && false",
+            "e.status == \"open\" || true",
+        ] {
+            assert!(
+                reads_input(body).unwrap(),
+                "{body:?} reaches a path and must be treated as needing an input"
+            );
+        }
+    }
+
+    #[test]
+    fn every_exempted_body_really_is_event_independent() {
+        // The property the exemption rests on, asserted directly: if `reads_input` is
+        // false, the body must answer identically for every event — otherwise the #557
+        // guard is letting through a gate whose verdict depends on data it was never
+        // given. This must keep holding for any future change to `reads_event`,
+        // including a cleverer fold than the short-circuit one.
+        let events = [
+            json!({}),
+            json!({ "status": "open", "mark": "A", "x": 1, "y": 2, "a": { "b": 1 } }),
+            json!({ "status": "closed", "mark": null, "x": 9, "y": 9, "a": { "b": 7 } }),
+            json!(null),
+        ];
+        for body in [
+            "true",
+            "false",
+            "1 == 1",
+            "null == null",
+            "false && e.status == \"open\"",
+            "true || e.status == \"open\"",
+            "false && (e.x == 1 || e.y == 2)",
+            "(1 == 1) || e.a.b == 1",
+        ] {
+            assert!(
+                !reads_input(body).unwrap(),
+                "fixture error: {body:?} is meant to be exempt"
+            );
+            let first = eval_predicate(body, &events[0]).unwrap();
+            for e in &events[1..] {
+                assert_eq!(
+                    eval_predicate(body, e).unwrap(),
+                    first,
+                    "{body:?} is exempt from the #557 guard but its answer moved with \
+                     the event {e}"
+                );
+            }
         }
     }
 
