@@ -138,6 +138,23 @@ One completed source spool and one completed bundle may consume a given run rese
 durable run-scoped claim files prevent a second streaming node from reusing its byte
 partition. Ordinary failures release their claim; crashes retain it and fail closed.
 
+A trusted launcher may give one `aware app run` invocation a private REST header without
+placing the value in an app input or lock. Set `AWARE_PRIVATE_REST_HEADER` to a JSON object
+with exact `nodeId`, `agent`, `command`, `method`, `origin`, `path`, and `headerName` fields,
+and `AWARE_PRIVATE_REST_HEADER_VALUE` to the visible-ASCII value (16–512 bytes). The origin
+is canonical `http(s)://host[:port]` without a trailing slash; the path starts with `/`
+and contains no query. The header name must be an `X-` custom name, not an auth, Host,
+length, hop-by-hop, or forwarded header. AWARE strips every case-insensitive
+`AWARE_PRIVATE_REST_*` variable synchronously before starting Tokio or a child process,
+and refuses incomplete, malformed, unknown, or colliding names. A bound node must be a
+unique, unfrozen top-level one-shot REST node outside any repeated graph. Immediately
+before dispatch, AWARE verifies the node, command, method, exact origin and path, and no
+collision with declared/auth headers. It gives the header to exactly one matching request,
+with redirects disabled; a second match or a run with zero matches fails. The private
+value is not serialized to the trace, artifact, stdout, stderr, or child environment.
+The destination can of course echo a header back, so the caller must bind a trusted
+destination that consumes it before writing a response.
+
 ### Progressive large outputs
 
 A run-owned artifact bounds the trace; it does not make the result *early*. A `single`-lifecycle

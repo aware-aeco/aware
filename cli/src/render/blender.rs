@@ -618,7 +618,9 @@ pub async fn run_blender_command(
     // Exactly the invocation Phase 1 verified against Blender 5.2 — no extra flags (not even
     // `--factory-startup`), because deviating from the proven command line is how a working script
     // starts failing for reasons that have nothing to do with this transport.
-    let mut child = tokio::process::Command::new(&blender)
+    let mut launch = tokio::process::Command::new(&blender);
+    crate::private_rest_header::scrub_tokio_child(&mut launch);
+    let mut child = launch
         .arg("-b")
         .arg("-P")
         .arg(&script)
