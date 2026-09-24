@@ -128,6 +128,8 @@ pub enum AppCommand {
         #[arg(long)]
         usage: bool,
     },
+    /// Inspect which run owns a durable report reservation, as bounded JSON.
+    ArtifactReservation { reservation_id: String },
     /// Freeze a node: pin its last run output into the source as a `frozen:` block, so Run skips
     /// it (emits the pinned value, never re-runs the agent) until unfrozen. Recompiles the lock.
     Freeze {
@@ -249,6 +251,14 @@ pub async fn dispatch(
                 )
                 .await
             }
+        }
+        AppCommand::ArtifactReservation { reservation_id } => {
+            let owner = crate::runtime::report_reservation::inspect(
+                &ctx.paths.logs_dir(),
+                &reservation_id,
+            )?;
+            println!("{}", serde_json::to_string(&owner)?);
+            Ok(())
         }
         AppCommand::Freeze { app, node } => freeze_cmd(ctx, &app, &node).await,
         AppCommand::Unfreeze { app, node } => unfreeze_cmd(ctx, &app, &node),
@@ -542,6 +552,12 @@ async fn run(
         use crate::runtime::lifecycle::{install_ctrl_c_handler, stop_channel};
         use crate::runtime::pidfile;
 
+        crate::runtime::report_reservation::record_if_reserved(
+            &ctx.paths.logs_dir(),
+            app_id,
+            &instance,
+            &run_id,
+        )?;
         let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
         let provenance = ProvenanceWriter::open(&log_path).await?;
         let artifact_dir = crate::runtime::provenance::artifact_dir_for(
@@ -646,6 +662,12 @@ async fn run(
 
     // One-shot path. The reader fence was acquired above for both one-shot and long-running
     // graphs so provider cleanup remains serialized across the complete run lifecycle.
+    crate::runtime::report_reservation::record_if_reserved(
+        &ctx.paths.logs_dir(),
+        app_id,
+        &instance,
+        &run_id,
+    )?;
     let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
     let provenance = ProvenanceWriter::open(&log_path).await?;
     let artifact_dir = crate::runtime::provenance::artifact_dir_for(

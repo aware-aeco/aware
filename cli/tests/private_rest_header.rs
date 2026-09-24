@@ -139,6 +139,107 @@ fn real_app_run_sends_private_header_only_to_the_bound_node() {
 }
 
 #[test]
+fn report_reservation_owner_is_inspectable_before_dispatch_and_cannot_be_reused() {
+    let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+    listener.set_nonblocking(true).unwrap();
+    let origin = format!("http://127.0.0.1:{}", listener.local_addr().unwrap().port());
+    let home = tempfile::tempdir().unwrap();
+    fixture(home.path(), &origin, false);
+    compile(home.path());
+    let home_path = home.path().to_path_buf();
+    let server = std::thread::spawn(move || {
+        let deadline = Instant::now() + Duration::from_secs(15);
+        let (mut stream, _) = loop {
+            match listener.accept() {
+                Ok(connection) => break connection,
+                Err(error)
+                    if error.kind() == std::io::ErrorKind::WouldBlock
+                        && Instant::now() < deadline =>
+                {
+                    std::thread::sleep(Duration::from_millis(20));
+                }
+                Err(error) => panic!("report endpoint was not contacted: {error}"),
+            }
+        };
+        let mut request = [0u8; 4096];
+        let count = stream.read(&mut request).unwrap();
+        assert!(String::from_utf8_lossy(&request[..count]).contains(SECRET));
+        let owner = Command::cargo_bin("aware")
+            .unwrap()
+            .env("AWARE_HOME", &home_path)
+            .args(["app", "artifact-reservation", "reservation-1"])
+            .output()
+            .unwrap();
+        assert!(
+            owner.status.success(),
+            "{}",
+            String::from_utf8_lossy(&owner.stderr)
+        );
+        let json: serde_json::Value = serde_json::from_slice(&owner.stdout).unwrap();
+        assert_eq!(json["schemaVersion"], "aware.report-reservation/v1");
+        assert_eq!(json["reservationId"], "reservation-1");
+        assert_eq!(json["app"], "private-report");
+        assert_eq!(json["instance"], "default");
+        assert_eq!(json["artifactScope"]["runId"], json["runId"]);
+        assert_eq!(json["artifactScope"]["app"], json["app"]);
+        assert_eq!(json["artifactScope"]["instance"], json["instance"]);
+        let body = r#"{"ok":true}"#;
+        write!(stream, "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}", body.len()).unwrap();
+        json
+    });
+    let first = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .env("AWARE_REPORT_RESERVATION_ID", "reservation-1")
+        .env("AWARE_PRIVATE_REST_HEADER", descriptor(&origin))
+        .env("AWARE_PRIVATE_REST_HEADER_VALUE", SECRET)
+        .args(["app", "run", "private-report"])
+        .output()
+        .unwrap();
+    let owner = server.join().unwrap();
+    assert!(
+        first.status.success(),
+        "{}",
+        String::from_utf8_lossy(&first.stderr)
+    );
+    assert!(String::from_utf8_lossy(&first.stdout).contains(owner["runId"].as_str().unwrap()));
+
+    let reused = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .env("AWARE_REPORT_RESERVATION_ID", "reservation-1")
+        .args(["app", "run", "private-report"])
+        .output()
+        .unwrap();
+    assert_eq!(reused.status.code(), Some(8));
+    assert!(String::from_utf8_lossy(&reused.stderr).contains("already used"));
+
+    let missing = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .args(["app", "artifact-reservation", "never-used"])
+        .output()
+        .unwrap();
+    assert_eq!(missing.status.code(), Some(7));
+
+    let marker = home
+        .path()
+        .join("logs/.report-reservations/reservation-1.json");
+    let mut mismatched: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(&marker).unwrap()).unwrap();
+    mismatched["artifactScope"]["runId"] = "another-run".into();
+    std::fs::write(&marker, serde_json::to_vec(&mismatched).unwrap()).unwrap();
+    let corrupt = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .args(["app", "artifact-reservation", "reservation-1"])
+        .output()
+        .unwrap();
+    assert_eq!(corrupt.status.code(), Some(3));
+    assert!(corrupt.stdout.is_empty());
+}
+
+#[test]
 fn successful_graph_without_bound_request_fails_closed() {
     let home = tempfile::tempdir().unwrap();
     let origin = "http://127.0.0.1:9";

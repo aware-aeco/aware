@@ -120,6 +120,17 @@ exclusively and removes it on a failed copy. Omitting the option preserves the l
 artifact directory (including a failed-run spool or interrupted candidate), without
 exposing any path. It refuses linked/reparse entries. A missing directory measures zero.
 
+When `AWARE_REPORT_RESERVATION_ID` is supplied to `aware app run`, AWARE creates an
+exclusive, synced reservation owner record before opening the run trace or creating
+its artifact directory. The record survives process failure. A trusted local caller
+can query `aware app artifact-reservation <reservation-id>` for bounded JSON
+`{schemaVersion:"aware.report-reservation/v1",reservationId,app,instance,runId,
+artifactScope:{app,instance,runId}}`. The scope is an identity, not a filesystem
+path; the caller can then use `artifact --usage` for that exact run. An absent
+record exits 7. Invalid, linked or contradictory records fail closed with a
+different exit code. Reusing a reservation ID fails instead of replacing its
+owner; ordinary runs without the environment variable create no record.
+
 An opt-in REST command may instead declare `response: artifact-stream` in its agent manifest.
 Its HTTP 200 NDJSON body is spooled in chunks under the current run's artifact directory,
 with a hard `AWARE_REPORT_SOURCE_BYTES` ceiling and a required opaque
