@@ -854,24 +854,70 @@ mod tests {
         }
     }
 
-    /// A symlinked run directory would let a descriptor's `join` land wherever
-    /// the link points, outside anything this run owns, so the scope refuses to
-    /// be built on one at all.
+    /// A link anywhere in the run's three-deep path would let a descriptor's
+    /// `join` land wherever it points, outside anything this run owns, so
+    /// `from_dir` checks all three levels rather than only the one it was
+    /// handed.
+    ///
+    /// All three, because each is its own `reject_reparse` call and testing one
+    /// reaches none of the others: an earlier revision of this test linked the
+    /// run directory alone, and deleting either the instance-level or the
+    /// app-level call left every test in this module green. That is the same
+    /// second-call-site gap Codex found at `open_verified` on #569, so it is
+    /// swept here rather than left for the next reviewer.
     #[cfg(unix)]
     #[test]
-    fn a_symlinked_run_directory_is_refused() {
-        let temp = tempfile::tempdir().expect("temp");
-        let elsewhere = temp.path().join("elsewhere");
-        fs::create_dir_all(&elsewhere).expect("fixture");
-        let instance = temp.path().join("app").join("instance");
-        fs::create_dir_all(&instance).expect("fixture");
-        let link = instance.join("run-1.artifacts");
-        std::os::unix::fs::symlink(&elsewhere, &link).expect("symlink");
+    fn a_link_at_any_level_of_the_run_path_is_refused() {
+        for linked in ["run", "instance", "app"] {
+            let temp = tempfile::tempdir().expect("temp");
+            let elsewhere = temp.path().join("elsewhere");
+            let root = temp.path().join("root");
 
-        assert!(
-            RunArtifactScope::from_dir(&link).is_err(),
-            "a run directory reached through a link is not run-owned"
-        );
+            // In each case the link is at a different level and everything it
+            // resolves to is real, so the only thing wrong with the path is the
+            // link itself.
+            let dir = match linked {
+                "run" => {
+                    fs::create_dir_all(&elsewhere).expect("link target");
+                    let instance = root.join("app").join("instance");
+                    fs::create_dir_all(&instance).expect("fixture");
+                    let link = instance.join("run-1.artifacts");
+                    std::os::unix::fs::symlink(&elsewhere, &link).expect("symlink");
+                    link
+                }
+                "instance" => {
+                    fs::create_dir_all(elsewhere.join("run-1.artifacts")).expect("link target");
+                    let app = root.join("app");
+                    fs::create_dir_all(&app).expect("fixture");
+                    let link = app.join("instance");
+                    std::os::unix::fs::symlink(&elsewhere, &link).expect("symlink");
+                    link.join("run-1.artifacts")
+                }
+                _ => {
+                    fs::create_dir_all(elsewhere.join("instance").join("run-1.artifacts"))
+                        .expect("link target");
+                    fs::create_dir_all(&root).expect("fixture");
+                    let link = root.join("app");
+                    std::os::unix::fs::symlink(&elsewhere, &link).expect("symlink");
+                    link.join("instance").join("run-1.artifacts")
+                }
+            };
+
+            assert!(
+                dir.is_dir(),
+                "control: the {linked}-level link must resolve to a real \
+                 directory, or the refusal below is a missing path rather than \
+                 the link check"
+            );
+            let refusal = RunArtifactScope::from_dir(&dir)
+                .expect_err("a run path reached through a link is not run-owned")
+                .to_string();
+            assert!(
+                refusal.contains("must not be a link"),
+                "a link at the {linked} level must be refused as a link, not \
+                 as some later validation failure: {refusal}"
+            );
+        }
     }
 
     /// `reject_reparse` guards two call sites, and the run-directory test above
