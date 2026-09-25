@@ -1044,9 +1044,17 @@ pub fn write_lockfile(
 /// destroying it. `fs::write` returned `ELOOP` and left the chain intact, so
 /// exhaustion is reported rather than papered over (#571, Codex P2).
 fn resolve_through_symlinks(path: &Path) -> Result<std::path::PathBuf, AwareError> {
+    /// Traversals permitted before this reports `ELOOP`, matching Linux's
+    /// `SYMLOOP_MAX`: 40 hops are allowed and the 41st fails.
     const MAX_HOPS: usize = 40;
     let mut current = path.to_path_buf();
-    for _ in 0..MAX_HOPS {
+    // `0..=MAX_HOPS`, not `0..MAX_HOPS`: a chain of exactly MAX_HOPS links needs
+    // one more pass than it has links, because the pass that finds the terminal
+    // target is the one that returns it. Stopping at MAX_HOPS iterations consumed
+    // every link and then reported `ELOOP` without ever looking at the target,
+    // refusing a layout the kernel and the previous `fs::write` both accept
+    // (#571, Codex P2).
+    for _ in 0..=MAX_HOPS {
         // `read_link` errors for anything that is NOT a symlink, and that is the
         // successful terminating case — a regular file, a missing entry, or a
         // directory. Only running out of hops is a failure.
@@ -1444,6 +1452,39 @@ mod tests {
         std::os::unix::fs::symlink("loop", tmp.path().join("other")).unwrap();
         let error = resolve_through_symlinks(&tmp.path().join("loop"))
             .expect_err("a symlink cycle must be refused, not resolved")
+            .to_string();
+        assert!(
+            error.contains("too many levels of symbolic links"),
+            "{error}"
+        );
+    }
+
+    /// The hop bound must match the kernel's: 40 traversals permitted, the 41st
+    /// refused. An off-by-one here refuses a layout `fs::write` accepted
+    /// (#571, Codex P2).
+    #[cfg(unix)]
+    #[test]
+    fn symlink_resolution_permits_forty_hops_and_refuses_forty_one() {
+        fn chain(dir: &Path, links: usize) -> std::path::PathBuf {
+            // link0 -> link1 -> … -> link{n-1} -> target (a regular file)
+            std::fs::write(dir.join("target"), "x").unwrap();
+            let mut next = "target".to_string();
+            for i in (0..links).rev() {
+                let name = format!("link{i}");
+                std::os::unix::fs::symlink(&next, dir.join(&name)).unwrap();
+                next = name;
+            }
+            dir.join("link0")
+        }
+
+        let ok = tempfile::tempdir().unwrap();
+        let resolved = resolve_through_symlinks(&chain(ok.path(), 40))
+            .expect("40 hops is within the kernel's own limit");
+        assert_eq!(resolved, ok.path().join("target"));
+
+        let too_deep = tempfile::tempdir().unwrap();
+        let error = resolve_through_symlinks(&chain(too_deep.path(), 41))
+            .expect_err("41 hops must be refused")
             .to_string();
         assert!(
             error.contains("too many levels of symbolic links"),
