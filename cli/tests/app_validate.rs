@@ -184,3 +184,91 @@ fn body_less_atom_predicate_rejected_by_compile() {
         "compile refused the app but still wrote a lock"
     );
 }
+
+#[test]
+fn validate_announces_the_lock_sidecar_it_writes() {
+    // `validate` emits `<app>.lock` by design (app-spec.md § Lockfile sidecar → CLI;
+    // cli-roadmap.md § v0.24), but it used to write the file and say nothing — so a
+    // verb users reach for to ASK A QUESTION dropped an unmentioned build artifact
+    // into whatever directory the source lived in (#571). The artifact stays; the
+    // silence does not.
+    let tmp = tempfile::tempdir().unwrap();
+    let flo = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .join("30-apps/_examples/welded-to-tc.app");
+    std::fs::copy(&flo, tmp.path().join("welded-to-tc.app")).unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .args(["app", "validate"])
+        .arg(tmp.path())
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("is valid"))
+        .stdout(predicate::str::contains("welded-to-tc.lock"));
+
+    assert!(
+        tmp.path().join("welded-to-tc.lock").exists(),
+        "validate stopped emitting the documented sidecar"
+    );
+}
+
+#[test]
+fn validate_still_reports_valid_when_the_lock_sidecar_cannot_be_written() {
+    // An app's validity is a fact about the FILE. Writing the sidecar is a side
+    // effect, so a location that refuses the write must not restate a valid app as
+    // `error: internal` (#571) — the question a user asks about a file has to stay
+    // answerable in a directory they cannot write to.
+    //
+    // The unwritable location is a DIRECTORY already holding the `.lock` name: that
+    // fails with EISDIR for every user, where a read-only parent directory would be
+    // silently bypassed when the suite runs as root (as it does in CI containers).
+    let tmp = tempfile::tempdir().unwrap();
+    let flo = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .join("30-apps/_examples/welded-to-tc.app");
+    std::fs::copy(&flo, tmp.path().join("welded-to-tc.app")).unwrap();
+    std::fs::create_dir(tmp.path().join("welded-to-tc.lock")).unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .args(["app", "validate"])
+        .arg(tmp.path())
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("is valid"))
+        .stderr(predicate::str::contains("could not be written"));
+}
+
+#[test]
+fn validate_still_fails_when_the_app_itself_is_invalid() {
+    // The warning above is scoped to the ARTIFACT. A bad app must still fail, so
+    // downgrading the write failure cannot become a blanket "validate always
+    // succeeds" — with the sidecar name blocked AND the app cyclic, the verdict
+    // still wins (#571).
+    let tmp = tempfile::tempdir().unwrap();
+    let cyclic = r#"app: cyc
+version: 0.0.1
+description: x
+nodes:
+  - id: a
+  - id: b
+connections:
+  - { from: a, to: b }
+  - { from: b, to: a }
+requires: []
+"#;
+    std::fs::write(tmp.path().join("cyc.flo"), cyclic).unwrap();
+    std::fs::create_dir(tmp.path().join("cyc.lock")).unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .args(["app", "validate"])
+        .arg(tmp.path())
+        .assert()
+        .failure()
+        .code(3)
+        .stdout(predicate::str::contains("E_APP_CYCLE"));
+}

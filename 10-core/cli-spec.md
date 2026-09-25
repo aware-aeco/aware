@@ -38,7 +38,7 @@ aware
 │   ├── uninstall <app>
 │   ├── run <app> [--instance <id>] [--input <kv>...]       execute
 │   ├── stop <app> [--instance <id>]    stop a running app
-│   ├── validate <path>                 schema + cycle + cap checks
+│   ├── validate <path>                 schema + cycle + cap checks; also emits <app>.lock
 │   ├── export <app> <output-path>      copy the app file out
 │   ├── logs <app> [--instance <id>] [--tail]   read execution traces
 │   └── artifact <app> <id> --output <path> [--max-bytes <n>] copy a run-owned large artifact

@@ -1020,10 +1020,16 @@ pub fn compile_to_disk_with_lock(
     Ok((path, lock))
 }
 
-/// Validate one source snapshot using `app validate` semantics, then persist
-/// the plan and hash derived from that same snapshot. Ambient missing or
-/// unsatisfied agent versions remain outside validation's file-only verdict.
-pub fn validate_to_disk(source: &Path, paths: &Paths) -> Result<std::path::PathBuf, AwareError> {
+/// Validate one source snapshot using `app validate` semantics and compile the
+/// plan and hash derived from that same snapshot, WITHOUT writing it. Ambient
+/// missing or unsatisfied agent versions remain outside validation's file-only
+/// verdict.
+///
+/// Compiling is part of the verdict; persisting is not. The caller writes the
+/// returned plan itself, so a sidecar that cannot be written — a read-only
+/// directory, a name already held by a directory — is reported as a failed
+/// artifact rather than silently restated as a failed app (#571).
+pub fn validate_to_lock(source: &Path, paths: &Paths) -> Result<LockFile, AwareError> {
     let snapshot = read_source_snapshot(source)?;
     let app = &snapshot.app;
     let mut issues = crate::validate::validate_app(app);
@@ -1039,8 +1045,7 @@ pub fn validate_to_disk(source: &Path, paths: &Paths) -> Result<std::path::PathB
             error.code, error.message
         )));
     }
-    let lock = compile_snapshot(app, &agents, snapshot.source_hash)?;
-    write_lockfile(&lock, source)
+    compile_snapshot(app, &agents, snapshot.source_hash)
 }
 
 #[cfg(test)]
