@@ -1315,15 +1315,30 @@ mod tests {
             {"role":"properties","digest":"b".repeat(64),"bytes":10,"items":1,"ordinal":0}]);
         refuses(&two, "receipt list is incomplete");
 
-        // Three shards, but one role twice — which, at length three, necessarily
-        // means one role has none. Falling back to any other shard would read
-        // the wrong signed count, so a shard is looked up by role or not at all.
-        let mut duplicated = valid_rows();
-        duplicated[0]["receipts"][2]["role"] = json!("entities");
-        refuses(
-            &duplicated,
-            "receipt list does not contain exactly one shard for each role",
+        // At length three, one role twice necessarily means another has none, so
+        // a whole-stream fixture cannot tell "duplicated" from "absent". Call
+        // `exact_role` directly, past the length guard, where the two separate:
+        // four shards, all three roles present, one of them twice.
+        let shard = |role: &str| json!({"role":role,"digest":"a".repeat(64),"bytes":10,"items":1,"ordinal":0});
+        let four = [
+            shard("entities"),
+            shard("entities"),
+            shard("properties"),
+            shard("relationships"),
+        ];
+        let duplicated = exact_role(&four, "entities").expect_err("duplicated role");
+        assert!(
+            duplicated
+                .to_string()
+                .contains("receipt list does not contain exactly one shard for each role"),
+            "{duplicated}"
         );
+        // The roles present exactly once still resolve, so the refusal above is
+        // about the duplicate and not about the list as a whole.
+        assert!(exact_role(&four, "properties").is_ok());
+        assert!(exact_role(&four, "relationships").is_ok());
+        // And a role with no shard at all is refused by the same rule.
+        assert!(exact_role(&four, "nothing").is_err());
 
         let mut absent = valid_rows();
         absent[0]["receipts"] = json!(null);
@@ -1423,8 +1438,17 @@ mod tests {
             refuses(&with_field("entity-start", key, json!(1)), reason);
         }
 
+        // A second start before the first object ends. Its ordinals are the ones
+        // that WOULD be expected at that point, so nesting is the only rule it
+        // breaks — a clone of the first start would trip the ordinal checks in
+        // the same compound guard and prove nothing about nesting.
         let mut nested = valid_rows();
-        nested.insert(3, nested[2].clone());
+        let mut second = nested[2].clone();
+        second["entityOrdinal"] = json!(1);
+        second["recordOrdinal"] = json!(1);
+        second["id"] = json!("e2");
+        second["entity"] = json!({"id":"e2","name":"Column"});
+        nested.insert(3, second);
         refuses(&nested, reason);
 
         // The source row an object claims has to exist in the signed receipt.
@@ -1545,9 +1569,14 @@ mod tests {
         refuses_terminal(&|t| t["observed"]["relationships"] = json!(0));
 
         // An object left open when the receipt arrives is a truncated stream.
+        // The relationship row goes with the object end, so its expected total
+        // and receipt drop to zero too — otherwise the count and coverage
+        // checks answer for the open-object check and it proves nothing.
         let mut unclosed = valid_rows();
         unclosed.remove(4);
         unclosed.remove(4);
+        unclosed[0]["expected"]["relationships"] = json!(0);
+        unclosed[0]["receipts"][2]["items"] = json!(0);
         refuses(
             &unclosed,
             "the complete report receipt does not match its records",
