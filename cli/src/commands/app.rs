@@ -621,9 +621,7 @@ async fn run(
             &instance,
             &run_id,
         );
-        if artifact_retention_lease.is_some() {
-            tokio::fs::create_dir(&artifact_dir).await?;
-        } else {
+        if artifact_retention_lease.is_none() {
             tokio::fs::create_dir_all(&artifact_dir).await?;
         }
         let dispatch = DispatchInvoker::new(
@@ -741,9 +739,7 @@ async fn run(
         &instance,
         &run_id,
     );
-    if artifact_retention_lease.is_some() {
-        tokio::fs::create_dir(&artifact_dir).await?;
-    } else {
+    if artifact_retention_lease.is_none() {
         tokio::fs::create_dir_all(&artifact_dir).await?;
     }
     let dispatch = DispatchInvoker::new(

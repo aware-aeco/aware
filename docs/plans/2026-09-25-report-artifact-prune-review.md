@@ -21,3 +21,7 @@ Accepted. The marker now binds the lease's OS file identity; `cap-fs-ext::open_d
 ## Round 3 — Codex
 
 APPROVED. The final plan retains the empty directory as a durable tombstone and excludes every legacy run, including completed ones. Implementation follows this narrower contract; verified AWARE capability gap is tracked in issue #576.
+
+## Post-code review — Codex
+
+Found one ownership-order defect: the reservation marker was published before the exclusive artifact-directory creation. If an existing directory made creation fail, the marker could incorrectly authorize pruning that pre-existing directory. Fixed by creating and syncing the empty directory before publishing the marker; a collision now fails without granting prune authority.

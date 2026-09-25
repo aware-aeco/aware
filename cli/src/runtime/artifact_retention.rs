@@ -253,10 +253,15 @@ pub fn begin_if_reserved(
         file_identity: file_identity(&file)?,
         writer_class,
     };
-    sync_dir(
-        &instance_dir,
-        &paths.aware_home.join("logs").join(app).join(instance),
-    )?;
+    // Reserve the exact artifact directory before the ownership marker becomes
+    // visible. If a directory already exists, the run fails without publishing
+    // authority to remove someone else's files.
+    let artifact_name = format!("{run_id}.artifacts");
+    instance_dir.create_dir(&artifact_name)?;
+    let artifact_dir = instance_dir.open_dir_nofollow(&artifact_name)?;
+    let instance_path = paths.aware_home.join("logs").join(app).join(instance);
+    sync_dir(&artifact_dir, &instance_path.join(&artifact_name))?;
+    sync_dir(&instance_dir, &instance_path)?;
     Ok(Some(RunLease { file, evidence }))
 }
 
@@ -418,6 +423,7 @@ pub fn prune<'a>(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::test_env::EnvVarGuard;
 
     #[test]
     fn empty_graph_has_no_external_writer() {
@@ -426,5 +432,36 @@ mod tests {
             aware_home: root.path().into(),
         };
         assert_eq!(classify_nodes(&paths, &[]).unwrap(), WriterClass::InProcess);
+    }
+
+    #[test]
+    fn preexisting_artifact_directory_never_gets_retirement_authority() {
+        let temp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: temp.path().into(),
+        };
+        let instance = paths.aware_home.join("logs/test-app/default");
+        let collision = instance.join("fixed-run.artifacts");
+        std::fs::create_dir_all(&collision).unwrap();
+        std::fs::write(collision.join("keep"), b"not this run's data").unwrap();
+        let graph: App = serde_yaml::from_str(
+            "app: test-app\nversion: 0.1.0\ndescription: Test report\nnodes: []\n",
+        )
+        .unwrap();
+        let _reservation = EnvVarGuard::set("AWARE_REPORT_RESERVATION_ID", "collision-reservation");
+        let error = begin_if_reserved(&paths, "test-app", "default", "fixed-run", &graph)
+            .err()
+            .unwrap();
+        assert!(matches!(error, AwareError::Io(_)));
+        assert_eq!(
+            std::fs::read(collision.join("keep")).unwrap(),
+            b"not this run's data"
+        );
+        assert!(
+            !paths
+                .logs_dir()
+                .join(".report-reservations/collision-reservation.json")
+                .exists()
+        );
     }
 }
