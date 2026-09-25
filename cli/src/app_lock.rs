@@ -933,10 +933,47 @@ pub fn write_lockfile(
             .and_then(|f| f.to_str())
             .unwrap_or("(source)")
     );
-    std::fs::write(&lock_path, format!("{header}{yaml}"))
-        .map_err(|e| AwareError::Internal(format!("write {}: {e}", lock_path.display())))?;
+    // Publish by rename; never truncate the destination in place. A plain
+    // `fs::write` opens the target with O_TRUNC, so a write that fails PARTWAY —
+    // a full disk, a quota, a late I/O error — destroys whatever lock was there
+    // and leaves a half-written one in its place. That is an approval deleted by
+    // a failed attempt to replace it: the lock is what `aware app run` gates on,
+    // so the next run fails `E_APP_LOCK_INVALID` on a file the user never
+    // knowingly changed. With a scratch file, a failure leaves the previous lock
+    // byte-for-byte intact, which is also what lets `app validate` downgrade a
+    // failed sidecar write to a warning without risking an approval (#571).
+    //
+    // Same pattern and same reasoning as `auth::keychain::write_atomic_restricted`,
+    // which documents the full-disk case as one it actually hit. Deliberately not
+    // shared with it: that helper writes 0600 because a credential must not be
+    // world-readable, whereas a lock is a readable, git-committed artifact.
+    let serial = TEMP_SERIAL.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+    // Scratch file in the SAME directory as the target: `rename` is only atomic
+    // within one filesystem, and the system temp dir is routinely on another.
+    let tmp = dir.join(format!(
+        ".{}.lock.{}.{serial}.tmp",
+        lock.app,
+        std::process::id()
+    ));
+    let published = std::fs::write(&tmp, format!("{header}{yaml}"))
+        .and_then(|()| std::fs::rename(&tmp, &lock_path));
+    if let Err(e) = published {
+        // One cleanup covering every way the publish can fail, so a failed write
+        // leaves no scratch file behind for nothing to collect. Best-effort: the
+        // lock was never published either way, so the publish's own error is the
+        // one worth reporting.
+        let _ = std::fs::remove_file(&tmp);
+        return Err(AwareError::Internal(format!(
+            "write {}: {e}",
+            lock_path.display()
+        )));
+    }
     Ok(lock_path)
 }
+
+/// Serial for scratch-file names, so two lock writes in one process — a
+/// `for-each` body compiling siblings, say — cannot collide on one temp path.
+static TEMP_SERIAL: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
 
 /// Find the source app file (`.flo` / `.app` / `.flow` / `.aware`) at a path.
 /// If `path` is a file, returned directly. If a directory, the same tiered
@@ -1117,6 +1154,115 @@ mod tests {
         assert_eq!(lock_path.file_name().unwrap(), "my-cool-app.lock");
         // The .flo extension MUST NOT appear in the lockfile name.
         assert!(!lock_path.to_string_lossy().contains(".flo.lock"));
+    }
+
+    /// The lock is the approval `aware app run` gates on, so a failed attempt to
+    /// REPLACE one must never destroy it (#571, Codex P2). A plain `fs::write`
+    /// opens the target with O_TRUNC, so a write failing partway — ENOSPC, a
+    /// quota, a late I/O error — leaves a half-written lock where a valid one
+    /// was, and the next run fails `E_APP_LOCK_INVALID` on a file the user never
+    /// knowingly touched.
+    ///
+    /// That mid-write failure cannot be provoked portably (it needs fault
+    /// injection or a size-capped filesystem; this suite runs on three
+    /// platforms). So this asserts the MECHANISM that makes it survivable
+    /// instead, and asserts it in the one way that can actually go red: a rename
+    /// publishes a NEW inode over the old name, where a truncating write reuses
+    /// the existing one. Revert `write_lockfile` to `fs::write` and this fails.
+    #[cfg(unix)]
+    #[test]
+    fn republishing_a_lock_publishes_a_new_inode_rather_than_truncating_in_place() {
+        use std::os::unix::fs::MetadataExt;
+
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("gated.flo");
+        std::fs::write(&source, "app: gated\n").unwrap();
+
+        let first = write_lockfile(&lock_fixture("gated"), &source).unwrap();
+        let before = std::fs::metadata(&first).unwrap().ino();
+
+        let second = write_lockfile(&lock_fixture("gated"), &source).unwrap();
+        assert_eq!(first, second, "republish must target the same path");
+        let after = std::fs::metadata(&second).unwrap().ino();
+
+        assert_ne!(
+            before, after,
+            "lock was rewritten in place (same inode) — a write failing partway \
+             would have truncated the previous approval"
+        );
+    }
+
+    /// A failed publish must collect its own scratch file: nothing else knows
+    /// these exist, so one left behind would sit in the user's tree forever
+    /// after an attempt they were told had failed.
+    #[test]
+    fn a_failed_lock_publish_preserves_the_previous_lock_and_leaves_no_scratch() {
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("gated.flo");
+        std::fs::write(&source, "app: gated\n").unwrap();
+
+        // An approved lock already sitting where the next one would go.
+        let approved = "# the approval a run is gated on\napp: gated\n";
+        std::fs::write(tmp.path().join("gated.lock"), approved).unwrap();
+
+        // Force the publish to fail: a DIRECTORY already holding the exact name
+        // the rename targets (`<app>.lock`). EISDIR reaches root too, where a
+        // read-only parent would be silently bypassed.
+        std::fs::create_dir(tmp.path().join("blocked.lock")).unwrap();
+        let err = write_lockfile(&lock_fixture("blocked"), &source).unwrap_err();
+        assert!(err.to_string().contains("blocked.lock"), "{err}");
+
+        // The unrelated approval is untouched, and no scratch file survives.
+        assert_eq!(
+            std::fs::read_to_string(tmp.path().join("gated.lock")).unwrap(),
+            approved,
+            "a failed publish must not disturb an existing lock"
+        );
+        let scratch: Vec<_> = std::fs::read_dir(tmp.path())
+            .unwrap()
+            .map(|e| e.unwrap().file_name().to_string_lossy().into_owned())
+            .filter(|n| n.ends_with(".tmp"))
+            .collect();
+        assert!(
+            scratch.is_empty(),
+            "a failed publish left scratch files behind: {scratch:?}"
+        );
+    }
+
+    /// Replacing an existing lock must leave the whole new plan, with no
+    /// remnant of the longer one it replaced — the shape a truncate-then-fail
+    /// would leave.
+    #[test]
+    fn republishing_a_lock_fully_replaces_a_longer_predecessor() {
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("gated.flo");
+        std::fs::write(&source, "app: gated\n").unwrap();
+        std::fs::write(
+            tmp.path().join("gated.lock"),
+            format!("# stale\n{}", "x".repeat(4096)),
+        )
+        .unwrap();
+
+        let lock_path = write_lockfile(&lock_fixture("gated"), &source).unwrap();
+        let written = std::fs::read_to_string(&lock_path).unwrap();
+        assert!(!written.contains("xxxx"), "predecessor bytes survived");
+        assert!(written.contains("app: gated"));
+        assert!(written.starts_with("# gated.lock — compiled from gated.flo"));
+    }
+
+    fn lock_fixture(app: &str) -> LockFile {
+        LockFile {
+            agent_bundle_pins: BTreeMap::new(),
+            source_hash: "sha256:test".into(),
+            compiled_at: "2026-05-17T00:00:00Z".into(),
+            compiler_version: "0.24.0".into(),
+            app: app.into(),
+            version: "0.1.0".into(),
+            agent_pins: BTreeMap::new(),
+            nodes: vec![],
+            schedule: None,
+            engineering: None,
+        }
     }
 
     #[test]
