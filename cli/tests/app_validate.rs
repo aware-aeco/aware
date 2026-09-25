@@ -184,3 +184,35 @@ fn body_less_atom_predicate_rejected_by_compile() {
         "compile refused the app but still wrote a lock"
     );
 }
+
+#[test]
+fn validate_writes_no_lock_and_leaves_an_existing_one_untouched() {
+    // `validate` answers a question about the file; `compile` writes the
+    // `<app>.lock` approval `run` gates on. A validate that wrote one dropped
+    // untracked or stale locks beside sources nobody compiled — and silently
+    // re-approved an edited source by overwriting its lock (#571).
+    let tmp = tempfile::tempdir().unwrap();
+    let flo = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .join("30-apps/_examples/welded-to-tc.app");
+    std::fs::copy(&flo, tmp.path().join("welded-to-tc.app")).unwrap();
+    let lock = tmp.path().join("welded-to-tc.lock");
+
+    let validate = || {
+        Command::cargo_bin("aware")
+            .unwrap()
+            .args(["app", "validate"])
+            .arg(tmp.path())
+            .assert()
+            .success()
+            .stdout(predicate::str::contains("is valid"));
+    };
+
+    validate();
+    assert!(!lock.exists(), "validate wrote a lock");
+
+    std::fs::write(&lock, "stale approval\n").unwrap();
+    validate();
+    assert_eq!(std::fs::read_to_string(&lock).unwrap(), "stale approval\n");
+}

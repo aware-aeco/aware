@@ -571,7 +571,7 @@ nodes:
 | Command | What it does |
 |---|---|
 | `aware app compile <app>` | Explicit compile. Emits `<app>.lock` next to the source file. Fails if validation fails. |
-| `aware app validate <app>` | Now also writes `<app>.lock` as a side effect (was: silent pass) |
+| `aware app validate <app>` | Schema + cycle + cap checks plus a full compile, so its verdict is as strict as `compile`'s — but it writes nothing. It answers a question about the file; run `aware app compile` to emit the `<app>.lock` that `run` requires. (v0.24 briefly had it write the lock as a side effect; that left untracked or stale locks beside sources nobody compiled — #571.) |
 | `aware app inspect <app>` | Opens Glass Box — a single-file HTML viewer of the lockfile — in the user's default browser |
 | `aware app run <app>` | Refuses before trace creation or node dispatch unless a present `.lock` matches the raw source bytes' `source-hash`. Compile and run each bind parsing and hashing to one source snapshot; unsafe `app:` ids are rejected before lock lookup. Real dispatch also requires every reachable installed agent to match the exact version in `agent-pins` (`E_APP_LOCK_AGENT_PIN_MISMATCH`). The same independent gate applies before dispatching an app-backed agent. Missing lock: `E_APP_LOCK_MISSING`; unreadable/malformed lock: `E_APP_LOCK_INVALID`; hash mismatch: `E_APP_LOCK_STALE`. Each prompts the user to run `aware app compile` first. Source approval applies to real, dry, and simulated runs; simulation continues to ignore ambient agent availability and versions because it dispatches no agent. |
 

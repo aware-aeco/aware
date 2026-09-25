@@ -1858,7 +1858,7 @@ fn validate_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError>
     }
 
     if issues.is_empty() {
-        crate::app_lock::validate_to_disk(&manifest_path, &ctx.paths)?;
+        crate::app_lock::validate_compiles(&manifest_path, &ctx.paths)?;
         println!("\u{2713} {} is valid", manifest_path.display());
         return Ok(());
     }

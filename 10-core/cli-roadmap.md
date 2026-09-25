@@ -523,7 +523,7 @@ The bones (text composition, decalog discipline, CLI ergonomics, hand-curated Te
 **CLI changes:**
 - `aware app compile <app>` — explicit compile step; emits `<app>.lock` next to the source file
 - `aware app inspect <app>` — opens Glass Box (single-file HTML viewer) in the user's default browser
-- `aware app validate <app>` — runs compile + emits `<app>.lock` as a side effect (replaces the silent-pass behavior)
+- `aware app validate <app>` — runs compile, so it is as strict as `compile` (replaces the silent-pass behavior). It originally also emitted `<app>.lock` as a side effect; that was reversed in #571 — `validate` writes nothing, and `compile` emits the lock.
 - `aware app run <app>` — refuses to execute unless a fresh `.lock` matches the source app's content hash (no drift between read + execution)
 
 **Glass Box viewer (single HTML file, no external runtime):**
