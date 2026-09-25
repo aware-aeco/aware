@@ -311,8 +311,8 @@ fn validate_judges_the_file_not_the_machine() {
         .success()
         .stdout(predicate::str::contains("is valid"));
     assert!(
-        src.join("pin-test.lock").is_file(),
-        "successful validation must emit the approval required by app run"
+        !src.join("pin-test.lock").exists(),
+        "validate answers a question about the file; only compile writes the approval (#571)"
     );
 
     let (tmp2, src2) = fixture("1.3.0", "not-a-version");

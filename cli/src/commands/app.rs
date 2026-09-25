@@ -1858,25 +1858,8 @@ fn validate_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError>
     }
 
     if issues.is_empty() {
-        // Compile the same snapshot that was just judged, so the sidecar left
-        // behind is the plan this verdict actually approved. A compile failure
-        // IS a verdict — it propagates.
-        let lock = crate::app_lock::validate_to_lock(&manifest_path, &ctx.paths)?;
+        crate::app_lock::validate_compiles(&manifest_path, &ctx.paths)?;
         println!("\u{2713} {} is valid", manifest_path.display());
-        // The sidecar is a documented side effect of `validate` (app-spec.md
-        // § Lockfile sidecar → CLI; cli-roadmap.md § v0.24), not its answer. So
-        // it is announced the way `compile` announces one rather than appearing
-        // unmentioned, and a sidecar that cannot be written is a warning — the
-        // app's validity is a fact about the file, and must not turn into
-        // `error: internal` because a directory was read-only or the `.lock`
-        // name was already taken (#571).
-        match crate::app_lock::write_lockfile(&lock, &manifest_path) {
-            Ok(lock_path) => println!("\u{2713} wrote {}", lock_path.display()),
-            Err(e) => eprintln!(
-                "\u{26a0} valid, but its .lock sidecar could not be written: {e}\n  (run `aware app compile {}` once the location is writable)",
-                manifest_path.display()
-            ),
-        }
         return Ok(());
     }
     for i in &issues {
