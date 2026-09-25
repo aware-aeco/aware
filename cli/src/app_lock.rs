@@ -967,7 +967,18 @@ pub fn write_lockfile(
     // `runtime::report_reservation::publish`, which this now mirrors — it uses
     // `persist_noclobber` because a reservation must never be replaced, where a
     // lock legitimately supersedes the previous one, so this uses `persist`.
-    let mut candidate = tempfile::NamedTempFile::new_in(dir)
+    //
+    // Publish THROUGH a symlink at `<app>.lock`, not over it. `fs::write` and the
+    // loader both follow such a link, so a bare `rename` onto the link's own
+    // directory entry would convert a tracked lock symlink into a regular file
+    // and leave its canonical target stale — a silent change of what the lock IS
+    // (#571, Codex P2). `canonicalize` resolves the whole chain; it fails when
+    // nothing is there yet or the link dangles, and the plain path is right in
+    // both those cases. The scratch file then goes in the RESOLVED file's
+    // directory, since that is the filesystem the rename has to stay inside.
+    let publish_to = std::fs::canonicalize(&lock_path).unwrap_or_else(|_| lock_path.clone());
+    let stage_dir = publish_to.parent().unwrap_or(dir);
+    let mut candidate = tempfile::NamedTempFile::new_in(stage_dir)
         .map_err(|e| AwareError::Internal(format!("stage {}: {e}", lock_path.display())))?;
     // sync before publishing, so the rename cannot expose a name whose contents
     // are still only in the page cache. The scratch file is removed on drop, so
@@ -999,7 +1010,7 @@ pub fn write_lockfile(
     {
         use std::os::unix::fs::PermissionsExt;
         // Mode bits only: never carry setuid/setgid onto a data file.
-        let mode = std::fs::metadata(&lock_path)
+        let mode = std::fs::metadata(&publish_to)
             .map(|meta| meta.permissions().mode() & 0o777)
             .unwrap_or(0o644);
         candidate
@@ -1008,8 +1019,10 @@ pub fn write_lockfile(
             .map_err(|e| AwareError::Internal(format!("stage {}: {e}", lock_path.display())))?;
     }
     candidate
-        .persist(&lock_path)
+        .persist(&publish_to)
         .map_err(|e| AwareError::Internal(format!("write {}: {}", lock_path.display(), e.error)))?;
+    // The path the CALLER asked for, not the resolved one: that is the name the
+    // user typed and the name `run` will look for.
     Ok(lock_path)
 }
 
@@ -1291,6 +1304,43 @@ mod tests {
         write_lockfile(&lock_fixture("gated"), &source).unwrap();
         let kept = std::fs::metadata(&lock_path).unwrap().permissions().mode() & 0o777;
         assert_eq!(kept, 0o640, "republish reset a deliberately chosen mode");
+    }
+
+    /// A `<app>.lock` symlink must be published THROUGH, not replaced. `fs::write`
+    /// and the loader both follow such a link, so renaming onto the link's own
+    /// directory entry would convert a tracked symlink into a regular file and
+    /// leave its canonical target holding stale bytes — silently changing what the
+    /// lock is, since git tracks the link but not this (#571, Codex P2).
+    #[cfg(unix)]
+    #[test]
+    fn publishing_follows_an_existing_lock_symlink_instead_of_replacing_it() {
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("gated.flo");
+        std::fs::write(&source, "app: gated\n").unwrap();
+
+        // `gated.lock` is a symlink into a sibling directory, as a shared lock
+        // checked into one place and linked from another would be.
+        let shared = tmp.path().join("shared");
+        std::fs::create_dir(&shared).unwrap();
+        let target = shared.join("real.lock");
+        std::fs::write(&target, "stale\n").unwrap();
+        let link = tmp.path().join("gated.lock");
+        std::os::unix::fs::symlink("shared/real.lock", &link).unwrap();
+
+        let reported = write_lockfile(&lock_fixture("gated"), &source).unwrap();
+        assert_eq!(reported, link, "must report the path the caller asked for");
+        assert!(
+            std::fs::symlink_metadata(&link)
+                .unwrap()
+                .file_type()
+                .is_symlink(),
+            "the lock symlink was replaced by a regular file"
+        );
+        let published = std::fs::read_to_string(&target).unwrap();
+        assert!(
+            published.contains("app: gated"),
+            "the link's target was left stale:\n{published}"
+        );
     }
 
     /// Concurrent publishes into ONE directory must each land their OWN plan.
