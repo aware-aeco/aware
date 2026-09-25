@@ -153,6 +153,16 @@ pub struct ProvenanceWriter {
 }
 
 impl ProvenanceWriter {
+    /// Reserved report runs must never append to a prior run's trace.
+    pub async fn open_new(path: &Path) -> Result<Self, AwareError> {
+        let file = OpenOptions::new()
+            .create_new(true)
+            .append(true)
+            .open(path)
+            .await?;
+        Ok(Self { file })
+    }
+
     pub async fn open(path: &Path) -> Result<Self, AwareError> {
         if let Some(parent) = path.parent() {
             tokio::fs::create_dir_all(parent).await?;

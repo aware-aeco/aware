@@ -31,6 +31,15 @@ pub struct ReservationOwner {
     pub instance: String,
     pub run_id: String,
     pub artifact_scope: ArtifactScope,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub writer_lease: Option<LeaseEvidence>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct LeaseEvidence {
+    pub file_identity: String,
+    pub writer_class: crate::runtime::artifact_retention::WriterClass,
 }
 
 fn marker_dir(logs_dir: &Path) -> PathBuf {
@@ -110,6 +119,7 @@ pub fn record_if_reserved(
     app: &str,
     instance: &str,
     run_id: &str,
+    writer_lease: Option<&LeaseEvidence>,
 ) -> Result<(), AwareError> {
     let Some(reservation_id) = std::env::var_os(RESERVATION_ENV) else {
         return Ok(());
@@ -117,6 +127,9 @@ pub fn record_if_reserved(
     let reservation_id = reservation_id
         .to_str()
         .ok_or_else(|| AwareError::Validation("report reservation ID must be plain text".into()))?;
+    let writer_lease = writer_lease.ok_or_else(|| {
+        AwareError::Validation("report reservation requires a writer lease".into())
+    })?;
     let path = marker_path(logs_dir, reservation_id)?;
     for (label, value) in [("app", app), ("instance", instance), ("run id", run_id)] {
         validate_artifact_component(value, label)?;
@@ -136,6 +149,7 @@ pub fn record_if_reserved(
             instance: instance.into(),
             run_id: run_id.into(),
         },
+        writer_lease: Some(writer_lease.clone()),
     };
     let data = serde_json::to_vec(&owner)?;
     if data.len() as u64 > MAX_MARKER_BYTES {
@@ -207,6 +221,15 @@ pub fn inspect(logs_dir: &Path, reservation_id: &str) -> Result<ReservationOwner
     {
         return Err(AwareError::Validation(
             "report reservation marker has mismatched ownership".into(),
+        ));
+    }
+    if owner
+        .writer_lease
+        .as_ref()
+        .is_some_and(|lease| lease.file_identity.is_empty())
+    {
+        return Err(AwareError::Validation(
+            "report writer lease identity is empty".into(),
         ));
     }
     for (label, value) in [

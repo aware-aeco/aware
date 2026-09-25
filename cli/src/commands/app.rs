@@ -127,6 +127,12 @@ pub enum AppCommand {
         /// Return bounded JSON disk usage for the run instead of copying.
         #[arg(long)]
         usage: bool,
+        /// Retire only the artifacts of one safely fenced report run.
+        #[arg(long)]
+        prune: bool,
+        /// Durable reservation ID that owns the exact run being retired.
+        #[arg(long)]
+        reservation_id: Option<String>,
     },
     /// Inspect which run owns a durable report reservation, as bounded JSON.
     ArtifactReservation { reservation_id: String },
@@ -223,8 +229,37 @@ pub async fn dispatch(
             output,
             max_bytes,
             usage,
+            prune,
+            reservation_id,
         } => {
-            if usage {
+            if prune {
+                if usage || id.is_some() || output.is_some() || max_bytes.is_some() {
+                    return Err(AwareError::Validation(
+                        "artifact --prune accepts no artifact id, output, byte limit, or --usage"
+                            .into(),
+                    ));
+                }
+                let run_id = run_id.ok_or_else(|| {
+                    AwareError::Validation("artifact --prune requires --run-id".into())
+                })?;
+                let reservation_id = reservation_id.ok_or_else(|| {
+                    AwareError::Validation("artifact --prune requires --reservation-id".into())
+                })?;
+                let result = crate::runtime::artifact_retention::prune(
+                    &ctx.paths,
+                    &app,
+                    instance.as_deref().unwrap_or("default"),
+                    &run_id,
+                    &reservation_id,
+                )?;
+                println!("{}", serde_json::to_string(&result)?);
+                Ok(())
+            } else if usage {
+                if reservation_id.is_some() {
+                    return Err(AwareError::Validation(
+                        "artifact --usage does not accept --reservation-id".into(),
+                    ));
+                }
                 if id.is_some() || output.is_some() || max_bytes.is_some() {
                     return Err(AwareError::Validation(
                         "artifact --usage accepts no artifact id, output or byte limit".into(),
@@ -235,6 +270,11 @@ pub async fn dispatch(
                 })?;
                 artifact_usage(ctx, &app, instance.as_deref(), &run_id)
             } else {
+                if reservation_id.is_some() {
+                    return Err(AwareError::Validation(
+                        "artifact copy does not accept --reservation-id".into(),
+                    ));
+                }
                 let id = id
                     .ok_or_else(|| AwareError::Validation("artifact copy requires an id".into()))?;
                 let output = output.ok_or_else(|| {
@@ -548,6 +588,16 @@ async fn run(
         )
     });
 
+    let artifact_retention_lease = crate::runtime::artifact_retention::begin_if_reserved(
+        &ctx.paths, app_id, &instance, &run_id, &app,
+    )?;
+    let writer_evidence = artifact_retention_lease
+        .as_ref()
+        .map(|lease| &lease.evidence);
+    let report_in_process_only = artifact_retention_lease
+        .as_ref()
+        .is_some_and(|lease| lease.in_process());
+
     if is_long_running {
         use crate::runtime::lifecycle::{install_ctrl_c_handler, stop_channel};
         use crate::runtime::pidfile;
@@ -557,16 +607,25 @@ async fn run(
             app_id,
             &instance,
             &run_id,
+            writer_evidence,
         )?;
         let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
-        let provenance = ProvenanceWriter::open(&log_path).await?;
+        let provenance = if artifact_retention_lease.is_some() {
+            ProvenanceWriter::open_new(&log_path).await?
+        } else {
+            ProvenanceWriter::open(&log_path).await?
+        };
         let artifact_dir = crate::runtime::provenance::artifact_dir_for(
             &ctx.paths.logs_dir(),
             app_id,
             &instance,
             &run_id,
         );
-        tokio::fs::create_dir_all(&artifact_dir).await?;
+        if artifact_retention_lease.is_some() {
+            tokio::fs::create_dir(&artifact_dir).await?;
+        } else {
+            tokio::fs::create_dir_all(&artifact_dir).await?;
+        }
         let dispatch = DispatchInvoker::new(
             &ctx.paths,
             dry_run,
@@ -574,7 +633,8 @@ async fn run(
             Some(artifact_dir),
             model_reader_cleanup_fence.clone(),
         )
-        .with_private_header(private_header.clone());
+        .with_private_header(private_header.clone())
+        .with_report_in_process_only(report_in_process_only);
         let reader_cancellation = dispatch.reader_cancellation();
         let invoker = std::sync::Arc::new(dispatch);
 
@@ -667,16 +727,25 @@ async fn run(
         app_id,
         &instance,
         &run_id,
+        writer_evidence,
     )?;
     let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
-    let provenance = ProvenanceWriter::open(&log_path).await?;
+    let provenance = if artifact_retention_lease.is_some() {
+        ProvenanceWriter::open_new(&log_path).await?
+    } else {
+        ProvenanceWriter::open(&log_path).await?
+    };
     let artifact_dir = crate::runtime::provenance::artifact_dir_for(
         &ctx.paths.logs_dir(),
         app_id,
         &instance,
         &run_id,
     );
-    tokio::fs::create_dir_all(&artifact_dir).await?;
+    if artifact_retention_lease.is_some() {
+        tokio::fs::create_dir(&artifact_dir).await?;
+    } else {
+        tokio::fs::create_dir_all(&artifact_dir).await?;
+    }
     let dispatch = DispatchInvoker::new(
         &ctx.paths,
         dry_run,
@@ -684,7 +753,8 @@ async fn run(
         Some(artifact_dir),
         model_reader_cleanup_fence,
     )
-    .with_private_header(private_header.clone());
+    .with_private_header(private_header.clone())
+    .with_report_in_process_only(report_in_process_only);
     let reader_cancellation = dispatch.reader_cancellation();
     let invoker = std::sync::Arc::new(dispatch);
 
@@ -1317,6 +1387,8 @@ async fn artifact(
         &run_id,
         id,
     )?;
+    let _reader_lease =
+        crate::runtime::artifact_retention::reader_lease(&ctx.paths, app_id, instance, &run_id)?;
     if !source.is_file() {
         return Err(AwareError::NotFound(format!(
             "artifact {id:?} for run {run_id} not found"
@@ -1386,6 +1458,8 @@ fn artifact_usage(
     }
     let dir =
         crate::runtime::provenance::artifact_dir_for(&ctx.paths.logs_dir(), app, instance, run_id);
+    let _reader_lease =
+        crate::runtime::artifact_retention::reader_lease(&ctx.paths, app, instance, run_id)?;
     let mut bytes = 0u64;
     let mut files = 0u64;
     match std::fs::symlink_metadata(&dir) {
