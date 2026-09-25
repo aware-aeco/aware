@@ -971,12 +971,11 @@ pub fn write_lockfile(
     // Publish THROUGH a symlink at `<app>.lock`, not over it. `fs::write` and the
     // loader both follow such a link, so a bare `rename` onto the link's own
     // directory entry would convert a tracked lock symlink into a regular file
-    // and leave its canonical target stale — a silent change of what the lock IS
-    // (#571, Codex P2). `canonicalize` resolves the whole chain; it fails when
-    // nothing is there yet or the link dangles, and the plain path is right in
-    // both those cases. The scratch file then goes in the RESOLVED file's
-    // directory, since that is the filesystem the rename has to stay inside.
-    let publish_to = std::fs::canonicalize(&lock_path).unwrap_or_else(|_| lock_path.clone());
+    // and leave its target stale — a silent change of what the lock IS, and one
+    // git cannot show, since it records the link but not that it stopped being
+    // one (#571, Codex P2). The scratch file then goes in the RESOLVED file's
+    // directory, because that is the filesystem the rename must stay inside.
+    let publish_to = resolve_through_symlinks(&lock_path);
     let stage_dir = publish_to.parent().unwrap_or(dir);
     let mut candidate = tempfile::NamedTempFile::new_in(stage_dir)
         .map_err(|e| AwareError::Internal(format!("stage {}: {e}", lock_path.display())))?;
@@ -1024,6 +1023,40 @@ pub fn write_lockfile(
     // The path the CALLER asked for, not the resolved one: that is the name the
     // user typed and the name `run` will look for.
     Ok(lock_path)
+}
+
+/// Walk a chain of symlinks at `path` and return the final target, WITHOUT
+/// requiring that target to exist.
+///
+/// `canonicalize` cannot do this: it fails on a DANGLING link, and the obvious
+/// fallback — publish to the link's own path — is the very clobbering that
+/// following the link was meant to avoid. A lock symlink pointing at a target
+/// not generated yet is exactly the case that hides there, and `fs::write`
+/// followed it and created the target (#571, Codex P2, second symlink finding).
+///
+/// A relative target resolves against the link's own directory, as the kernel
+/// does. The walk is bounded, standing in for `ELOOP` on a cycle: on a looping
+/// link this returns some path in the loop rather than spinning, and the publish
+/// then fails on its own merits instead of hanging.
+fn resolve_through_symlinks(path: &Path) -> std::path::PathBuf {
+    const MAX_HOPS: usize = 40;
+    let mut current = path.to_path_buf();
+    for _ in 0..MAX_HOPS {
+        // `read_link` errors for anything that is not a symlink, which is the
+        // terminating case — a regular file, a missing entry, or a directory.
+        let Ok(target) = std::fs::read_link(&current) else {
+            break;
+        };
+        current = if target.is_absolute() {
+            target
+        } else {
+            match current.parent() {
+                Some(dir) => dir.join(target),
+                None => target,
+            }
+        };
+    }
+    current
 }
 
 /// Find the source app file (`.flo` / `.app` / `.flow` / `.aware`) at a path.
@@ -1340,6 +1373,68 @@ mod tests {
         assert!(
             published.contains("app: gated"),
             "the link's target was left stale:\n{published}"
+        );
+    }
+
+    /// A DANGLING `<app>.lock` symlink must be followed too — a shared lock linked
+    /// from here before its target is generated. `canonicalize` fails on one, and
+    /// falling back to the link's own path is the clobbering that following was
+    /// meant to prevent, so the resolver walks the chain by hand
+    /// (#571, Codex P2, second symlink finding).
+    #[cfg(unix)]
+    #[test]
+    fn publishing_follows_a_dangling_lock_symlink_and_creates_its_target() {
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("gated.flo");
+        std::fs::write(&source, "app: gated\n").unwrap();
+
+        // The target's directory exists; the target itself does not yet.
+        std::fs::create_dir(tmp.path().join("shared")).unwrap();
+        let link = tmp.path().join("gated.lock");
+        std::os::unix::fs::symlink("shared/notyet.lock", &link).unwrap();
+
+        write_lockfile(&lock_fixture("gated"), &source).unwrap();
+
+        assert!(
+            std::fs::symlink_metadata(&link)
+                .unwrap()
+                .file_type()
+                .is_symlink(),
+            "a dangling lock symlink was replaced by a regular file"
+        );
+        let published = std::fs::read_to_string(tmp.path().join("shared/notyet.lock"))
+            .expect("the link's target should have been created");
+        assert!(published.contains("app: gated"), "{published}");
+    }
+
+    /// A chain of symlinks resolves to its final target, and a LOOP terminates
+    /// instead of spinning — the bound stands in for the kernel's `ELOOP`.
+    #[cfg(unix)]
+    #[test]
+    fn symlink_resolution_walks_chains_and_survives_a_loop() {
+        let tmp = tempfile::tempdir().unwrap();
+
+        // a -> b -> c, where c does not exist.
+        std::os::unix::fs::symlink("b", tmp.path().join("a")).unwrap();
+        std::os::unix::fs::symlink("c", tmp.path().join("b")).unwrap();
+        assert_eq!(
+            resolve_through_symlinks(&tmp.path().join("a")),
+            tmp.path().join("c"),
+            "a chain must resolve to its final target"
+        );
+
+        // A plain path that is not a link is returned unchanged.
+        let plain = tmp.path().join("plain");
+        std::fs::write(&plain, "x").unwrap();
+        assert_eq!(resolve_through_symlinks(&plain), plain);
+
+        // loop -> other -> loop: must return rather than spin.
+        std::os::unix::fs::symlink("other", tmp.path().join("loop")).unwrap();
+        std::os::unix::fs::symlink("loop", tmp.path().join("other")).unwrap();
+        let settled = resolve_through_symlinks(&tmp.path().join("loop"));
+        assert!(
+            settled.ends_with("loop") || settled.ends_with("other"),
+            "a looping link should settle inside the loop, got {settled:?}"
         );
     }
 
