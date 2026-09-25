@@ -249,10 +249,6 @@ pub fn begin_if_reserved(
     file.sync_all()?;
     FileExt::try_lock_shared(&file)
         .map_err(|_| AwareError::Conflict("report run artifact lease is already owned".into()))?;
-    let evidence = LeaseEvidence {
-        file_identity: file_identity(&file)?,
-        writer_class,
-    };
     // Reserve the exact artifact directory before the ownership marker becomes
     // visible. If a directory already exists, the run fails without publishing
     // authority to remove someone else's files.
@@ -262,6 +258,11 @@ pub fn begin_if_reserved(
     let instance_path = paths.aware_home.join("logs").join(app).join(instance);
     sync_dir(&artifact_dir, &instance_path.join(&artifact_name))?;
     sync_dir(&instance_dir, &instance_path)?;
+    let evidence = LeaseEvidence {
+        file_identity: file_identity(&file)?,
+        artifact_directory_identity: file_identity(&artifact_dir.try_clone()?.into_std_file())?,
+        writer_class,
+    };
     Ok(Some(RunLease { file, evidence }))
 }
 
@@ -364,20 +365,14 @@ pub fn prune<'a>(
         ));
     }
     let artifact_name = format!("{run_id}.artifacts");
-    let artifact_dir = match instance_dir.open_dir_nofollow(&artifact_name) {
-        Ok(dir) => dir,
-        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
-            return Ok(PruneResult {
-                app,
-                instance,
-                run_id,
-                pruned: true,
-                bytes: 0,
-                files: 0,
-            });
-        }
-        Err(error) => return Err(error.into()),
-    };
+    let artifact_dir = instance_dir.open_dir_nofollow(&artifact_name)?;
+    if file_identity(&artifact_dir.try_clone()?.into_std_file())?
+        != evidence.artifact_directory_identity
+    {
+        return Err(AwareError::Validation(
+            "report artifact directory changed; refusing retirement".into(),
+        ));
+    }
     let mut entries = Vec::new();
     let mut bytes = 0u64;
     for entry in artifact_dir.read_dir(".")? {

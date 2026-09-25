@@ -420,6 +420,50 @@ connections:
     assert!(!malformed.status.success());
     assert!(String::from_utf8_lossy(&malformed.stderr).contains("non-file"));
     std::fs::remove_dir(foreign_directory).unwrap();
+    let displaced = logs.join(format!("{run_id}.displaced"));
+    std::fs::rename(&artifact_dir, &displaced).unwrap();
+    let missing = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args([
+            "app",
+            "artifact",
+            "tekla-model-report",
+            "--run-id",
+            run_id,
+            "--prune",
+            "--reservation-id",
+            "test-reservation-1",
+        ])
+        .output()
+        .unwrap();
+    assert!(!missing.status.success());
+    std::fs::create_dir(&artifact_dir).unwrap();
+    std::fs::write(artifact_dir.join("decoy"), b"not this run's data").unwrap();
+    let replaced = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args([
+            "app",
+            "artifact",
+            "tekla-model-report",
+            "--run-id",
+            run_id,
+            "--prune",
+            "--reservation-id",
+            "test-reservation-1",
+        ])
+        .output()
+        .unwrap();
+    assert!(!replaced.status.success());
+    assert!(String::from_utf8_lossy(&replaced.stderr).contains("directory changed"));
+    assert_eq!(
+        std::fs::read(artifact_dir.join("decoy")).unwrap(),
+        b"not this run's data"
+    );
+    std::fs::remove_file(artifact_dir.join("decoy")).unwrap();
+    std::fs::remove_dir(&artifact_dir).unwrap();
+    std::fs::rename(displaced, &artifact_dir).unwrap();
     let pruned = Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &home)

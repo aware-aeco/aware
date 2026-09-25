@@ -286,7 +286,9 @@ the caller releases a storage reservation. The trace, reservation marker, writer
 lease and empty artifact directory remain for audit and crash-safe idempotency;
 this command does not bound their cumulative storage. A live writer or reader,
 an external-capable writer, a legacy run without the new fence, a mismatched
-reservation, or a linked/non-file artifact entry makes the command fail closed.
+reservation, a missing/replaced artifact directory, or a linked/non-file artifact
+entry makes the command fail closed. The reservation records the operating-system
+identity of both the writer lease and the newly created artifact directory.
 
 ## Response envelope
 

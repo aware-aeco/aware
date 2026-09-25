@@ -39,6 +39,7 @@ pub struct ReservationOwner {
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct LeaseEvidence {
     pub file_identity: String,
+    pub artifact_directory_identity: String,
     pub writer_class: crate::runtime::artifact_retention::WriterClass,
 }
 
@@ -223,11 +224,9 @@ pub fn inspect(logs_dir: &Path, reservation_id: &str) -> Result<ReservationOwner
             "report reservation marker has mismatched ownership".into(),
         ));
     }
-    if owner
-        .writer_lease
-        .as_ref()
-        .is_some_and(|lease| lease.file_identity.is_empty())
-    {
+    if owner.writer_lease.as_ref().is_some_and(|lease| {
+        lease.file_identity.is_empty() || lease.artifact_directory_identity.is_empty()
+    }) {
         return Err(AwareError::Validation(
             "report writer lease identity is empty".into(),
         ));

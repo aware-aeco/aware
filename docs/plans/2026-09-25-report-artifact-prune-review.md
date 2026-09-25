@@ -25,3 +25,7 @@ APPROVED. The final plan retains the empty directory as a durable tombstone and 
 ## Post-code review — Codex
 
 Found one ownership-order defect: the reservation marker was published before the exclusive artifact-directory creation. If an existing directory made creation fail, the marker could incorrectly authorize pruning that pre-existing directory. Fixed by creating and syncing the empty directory before publishing the marker; a collision now fails without granting prune authority.
+
+## Post-code review round 2 — Codex
+
+Found a directory-swap defect: after a valid run, a different ordinary directory could replace the original artifact directory at its path and be pruned. Fixed by recording the original directory's OS identity in the durable reservation and comparing the opened handle before deletion. A missing or replaced directory now refuses rather than being treated as an idempotent empty result.
