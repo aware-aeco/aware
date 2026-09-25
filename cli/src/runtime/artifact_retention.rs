@@ -76,8 +76,23 @@ fn create_child(parent: &Dir, name: &str) -> Result<Dir, AwareError> {
 }
 
 #[cfg(unix)]
-fn sync_dir(dir: &Dir, _path: &Path) -> Result<(), AwareError> {
-    dir.try_clone()?.into_std_file().sync_all()?;
+fn sync_dir(dir: &Dir, path: &Path) -> Result<(), AwareError> {
+    use std::os::unix::fs::OpenOptionsExt;
+
+    // cap-std may hold a directory through an O_PATH descriptor on Linux.
+    // Such a descriptor identifies the right inode but fsync returns EBADF.
+    // Reopen it for reading without following a link, then verify that the
+    // opened directory is the one held by the capability before syncing.
+    let file = std::fs::OpenOptions::new()
+        .read(true)
+        .custom_flags(libc::O_DIRECTORY | libc::O_NOFOLLOW)
+        .open(path)?;
+    if file_identity(&file)? != file_identity(&dir.try_clone()?.into_std_file())? {
+        return Err(AwareError::Validation(
+            "report artifact directory changed before durable sync".into(),
+        ));
+    }
+    file.sync_all()?;
     Ok(())
 }
 
@@ -427,6 +442,13 @@ mod tests {
             aware_home: root.path().into(),
         };
         assert_eq!(classify_nodes(&paths, &[]).unwrap(), WriterClass::InProcess);
+    }
+
+    #[test]
+    fn capability_directory_can_be_durably_synced() {
+        let root = tempfile::tempdir().unwrap();
+        let dir = Dir::open_ambient_dir(root.path(), ambient_authority()).unwrap();
+        sync_dir(&dir, root.path()).unwrap();
     }
 
     #[test]
