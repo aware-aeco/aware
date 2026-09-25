@@ -980,6 +980,33 @@ pub fn write_lockfile(
             lock_path.display()
         )));
     }
+    // `NamedTempFile` creates its scratch inode 0600 on Unix and `persist` keeps
+    // that mode — where the `fs::write` this replaced produced 0666 & ~umask
+    // (0644 under the default) and left an existing file's mode alone. A lock is a
+    // readable, git-committed artifact that other users and service accounts run
+    // against, so silently inheriting 0600 would make THEIR `app run` fail
+    // `E_APP_LOCK_INVALID` on a shared checkout (#571, Codex P2).
+    //
+    // Replacing preserves the destination's own mode, so a team that deliberately
+    // widened or narrowed a lock keeps that choice. A NEW lock gets 0644 rather
+    // than 0666 & ~umask, because reading the umask needs an `unsafe libc::umask`
+    // set-and-restore that races any other thread creating a file, and 0644 is
+    // what the default umask produced here before. The one case that differs is a
+    // first compile under a stricter umask, which now yields 0644 where it would
+    // have yielded 0600 — deliberate, for a file whose whole purpose is to be read
+    // by someone other than its author.
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        // Mode bits only: never carry setuid/setgid onto a data file.
+        let mode = std::fs::metadata(&lock_path)
+            .map(|meta| meta.permissions().mode() & 0o777)
+            .unwrap_or(0o644);
+        candidate
+            .as_file()
+            .set_permissions(std::fs::Permissions::from_mode(mode))
+            .map_err(|e| AwareError::Internal(format!("stage {}: {e}", lock_path.display())))?;
+    }
     candidate
         .persist(&lock_path)
         .map_err(|e| AwareError::Internal(format!("write {}: {}", lock_path.display(), e.error)))?;
@@ -1233,6 +1260,37 @@ mod tests {
             "fixture no longer exercises the limit"
         );
         assert!(lock_path.exists());
+    }
+
+    /// A lock is read by people and service accounts OTHER than whoever compiled
+    /// it — it is the artifact `aware app run` gates on. Staging through
+    /// `NamedTempFile` therefore must not publish the scratch inode's 0600:
+    /// that would make a shared checkout's lock unreadable and fail everyone
+    /// else's run with `E_APP_LOCK_INVALID` (#571, Codex P2). A new lock is
+    /// readable; replacing one keeps whatever mode the destination already had.
+    #[cfg(unix)]
+    #[test]
+    fn a_published_lock_is_readable_and_keeps_an_existing_locks_mode() {
+        use std::os::unix::fs::PermissionsExt;
+
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("gated.flo");
+        std::fs::write(&source, "app: gated\n").unwrap();
+
+        // A NEW lock must be readable by group and other, not 0600.
+        let lock_path = write_lockfile(&lock_fixture("gated"), &source).unwrap();
+        let fresh = std::fs::metadata(&lock_path).unwrap().permissions().mode() & 0o777;
+        assert_eq!(
+            fresh, 0o644,
+            "a new lock published {fresh:o}; 0600 would break every other reader"
+        );
+
+        // REPLACING one must preserve the mode the destination already carried,
+        // so a deliberate widening or narrowing survives a recompile.
+        std::fs::set_permissions(&lock_path, std::fs::Permissions::from_mode(0o640)).unwrap();
+        write_lockfile(&lock_fixture("gated"), &source).unwrap();
+        let kept = std::fs::metadata(&lock_path).unwrap().permissions().mode() & 0o777;
+        assert_eq!(kept, 0o640, "republish reset a deliberately chosen mode");
     }
 
     /// Concurrent publishes into ONE directory must each land their OWN plan.
