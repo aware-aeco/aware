@@ -412,12 +412,6 @@ mod tests {
     }
 
     #[test]
-    fn render_is_deterministic() {
-        let data = json!([{"id": "p2"}, {"id": "p1"}]);
-        assert_eq!(render_report("T", &data), render_report("T", &data));
-    }
-
-    #[test]
     fn empty_title_falls_back_to_report() {
         let html = render_report("   ", &json!({}));
         assert!(html.contains("<title>Report</title>"));

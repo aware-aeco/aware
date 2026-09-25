@@ -1149,4 +1149,668 @@ mod tests {
             "large object should span bounded chunks"
         );
     }
+
+    /// A minimal stream that renders cleanly: header, model provenance, one
+    /// object with one property, and one relationship row. Every refusal test
+    /// below changes exactly one field of this, so the error it observes can
+    /// only come from the guard it names.
+    fn valid_rows() -> Vec<Value> {
+        vec![
+            json!({"type":"header","schemaVersion":"floless.complete-model-report/v1",
+                "provider":"revit","projectUuid":"project-1","revisionId":"rev-1","manifestRoot":"root-1",
+                "sourceSha256":"source-1","expected":{"entities":1,"properties":1,"relationships":1},
+                "receipts":[
+                    {"role":"entities","digest":"a".repeat(64),"bytes":10,"items":1,"ordinal":0},
+                    {"role":"properties","digest":"b".repeat(64),"bytes":10,"items":1,"ordinal":0},
+                    {"role":"relationships","digest":"c".repeat(64),"bytes":10,"items":1,"ordinal":0}]}),
+            json!({"type":"model-provenance","providerFingerprint":"revit-2026 <build 3>",
+                "sourceSha256":"source-1","manifestRoot":"root-1","projectUuid":"project-1","revisionId":"rev-1"}),
+            json!({"type":"entity-start","shardOrdinal":0,"recordOrdinal":0,"sourceOrdinal":0,
+                "entityOrdinal":0,"id":"e1","entity":{"id":"e1","name":"Beam"}}),
+            json!({"type":"property","shardOrdinal":0,"recordOrdinal":0,"sourceOrdinal":0,
+                "entityOrdinal":0,"propertyOrdinal":0,"id":"p1","ownerId":"e1",
+                "property":{"entityId":"e1","id":"p1","groupName":"Dimensions","name":"Length","value":1200,"unit":"mm"}}),
+            json!({"type":"entity-end","entityOrdinal":0,"id":"e1","propertyCount":1}),
+            json!({"type":"provenance","shardOrdinal":0,"recordOrdinal":0,"sourceOrdinal":0,
+                "relationship":"Hosted by <Level 1>"}),
+        ]
+    }
+
+    /// Frame `rows` as NDJSON and seal them with a terminal receipt derived from
+    /// the bytes actually written, then hand that receipt to `tamper`. Deriving
+    /// it keeps every negative test honest: the stream fails the guard under
+    /// test, not the digest.
+    fn seal_with(rows: &[Value], tamper: impl FnOnce(&mut Value)) -> Vec<u8> {
+        let mut bytes = Vec::new();
+        for row in rows {
+            bytes.extend_from_slice(row.to_string().as_bytes());
+            bytes.push(b'\n');
+        }
+        let count = |kind: &str| rows.iter().filter(|row| row["type"] == kind).count() as u64;
+        let mut hash = Sha256::new();
+        hash.update(&bytes);
+        let mut terminal = json!({"type":"terminal",
+            "observed":{"entities":count("entity-start"),"properties":count("property"),
+                "relationships":count("provenance")},
+            "priorBytes":bytes.len(),"priorSha256":format!("{:x}",hash.finalize())});
+        tamper(&mut terminal);
+        bytes.extend_from_slice(terminal.to_string().as_bytes());
+        bytes.push(b'\n');
+        bytes
+    }
+
+    fn seal(rows: &[Value]) -> Vec<u8> {
+        seal_with(rows, |_| {})
+    }
+
+    fn render_bytes(scope: &RunArtifactScope, bytes: &[u8]) -> Result<Value, AwareError> {
+        let descriptor = scope
+            .write(&mut &bytes[..], 4_000_000, "application/x-ndjson")
+            .expect("spool");
+        render_stream_inner(&json!({ "artifact": descriptor }), scope, 8_000_000)
+    }
+
+    /// `valid_rows()` with one field of the row of `kind` replaced.
+    fn with_field(kind: &str, key: &str, value: Value) -> Vec<Value> {
+        let mut rows = valid_rows();
+        let row = rows
+            .iter_mut()
+            .find(|row| row["type"] == kind)
+            .unwrap_or_else(|| panic!("no {kind} row"));
+        row[key] = value;
+        rows
+    }
+
+    /// Assert the stream is refused *for the stated reason*. Matching the
+    /// message, not just `is_err`, is what stops a mutated guard from passing
+    /// because some later guard happened to catch the same row.
+    fn refuses(rows: &[Value], reason: &str) {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope(temp.path(), "run-1");
+        let error = render_bytes(&scope, &seal(rows)).expect_err(reason);
+        assert!(
+            error.to_string().contains(reason),
+            "expected a refusal mentioning {reason:?}, got {error}"
+        );
+    }
+
+    /// Reassemble the document the bundle describes, so tests can assert on
+    /// what a reader sees rather than on frame offsets.
+    fn bundle_html(scope: &RunArtifactScope, output: &Value) -> String {
+        let reference: ArtifactRef =
+            serde_json::from_value(output["bundle"].clone()).expect("bundle ref");
+        let mut file = scope
+            .open_verified(&reference, CONTENT_TYPE)
+            .expect("bundle");
+        let mut bytes = Vec::new();
+        file.read_to_end(&mut bytes).expect("read bundle");
+        let read_u64 =
+            |offset: usize| u64::from_le_bytes(bytes[offset..offset + 8].try_into().expect("u64"));
+        let read_u32 = |offset: usize| {
+            u32::from_le_bytes(bytes[offset..offset + 4].try_into().expect("u32")) as usize
+        };
+        let header: Value =
+            serde_json::from_slice(&bytes[12..12 + read_u32(8)]).expect("header JSON");
+        let trailer = bytes.len() - 48;
+        let footer = read_u64(trailer + 8) as usize;
+        let chunks = read_u64(footer + 8) as usize;
+        let mut html = header["documentPrefix"]
+            .as_str()
+            .expect("prefix")
+            .to_owned();
+        for index in 0..chunks {
+            let entry = footer + 32 + index * 76;
+            let offset = read_u64(entry) as usize;
+            let fragment = &bytes[offset..offset + read_u32(entry + 8)];
+            html.push_str(std::str::from_utf8(fragment).expect("HTML fragment"));
+        }
+        html.push_str(header["documentSuffix"].as_str().expect("suffix"));
+        html
+    }
+
+    #[test]
+    fn a_relationship_row_is_counted_and_rendered_beside_the_provider_fingerprint() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope(temp.path(), "run-1");
+        let output = render_bytes(&scope, &seal(&valid_rows())).expect("report");
+        assert_eq!(output["complete"], true);
+        assert_eq!(output["objectCount"], 1);
+        assert_eq!(output["propertyCount"], 1);
+        let html = bundle_html(&scope, &output);
+        // The `provenance` arm is the only writer of a relationship section, and
+        // it escapes its payload like every other value.
+        assert!(html.contains("Hosted by &lt;Level 1&gt;"), "{html}");
+        assert!(
+            html.contains("Provider fingerprint: revit-2026 &lt;build 3&gt;"),
+            "{html}"
+        );
+        // Column order in the row is the column order the header promises.
+        assert!(
+            html.contains(
+                "<td>Dimensions</td><td>Length</td><td>1200</td><td>mm</td><td>Signed source row 0</td>"
+            ),
+            "{html}"
+        );
+    }
+
+    #[test]
+    fn the_stream_header_type_and_schema_version_are_pinned() {
+        let reason = "record stream header has the wrong version";
+        refuses(
+            &with_field(
+                "header",
+                "schemaVersion",
+                json!("floless.complete-model-report/v2"),
+            ),
+            reason,
+        );
+        refuses(&with_field("header", "type", json!("head")), reason);
+    }
+
+    #[test]
+    fn the_receipt_list_must_carry_one_shard_for_each_of_the_three_roles() {
+        let mut two = valid_rows();
+        two[0]["receipts"] = json!([
+            {"role":"entities","digest":"a".repeat(64),"bytes":10,"items":1,"ordinal":0},
+            {"role":"properties","digest":"b".repeat(64),"bytes":10,"items":1,"ordinal":0}]);
+        refuses(&two, "receipt list is incomplete");
+
+        // Three shards, but one role twice — which, at length three, necessarily
+        // means one role has none. Falling back to any other shard would read
+        // the wrong signed count, so a shard is looked up by role or not at all.
+        let mut duplicated = valid_rows();
+        duplicated[0]["receipts"][2]["role"] = json!("entities");
+        refuses(
+            &duplicated,
+            "receipt list does not contain exactly one shard for each role",
+        );
+
+        let mut absent = valid_rows();
+        absent[0]["receipts"] = json!(null);
+        refuses(&absent, "receipt list is missing");
+    }
+
+    #[test]
+    fn a_receipt_shard_must_be_ordinal_zero_with_a_full_length_digest_and_a_size() {
+        let mut late = valid_rows();
+        late[0]["receipts"][0]["ordinal"] = json!(1);
+        refuses(&late, "receipt shard metadata is invalid");
+
+        let mut short = valid_rows();
+        short[0]["receipts"][1]["digest"] = json!("b".repeat(63));
+        refuses(&short, "receipt shard metadata is invalid");
+
+        let mut sizeless = valid_rows();
+        sizeless[0]["receipts"][2]
+            .as_object_mut()
+            .expect("shard")
+            .remove("bytes");
+        refuses(&sizeless, "missing or invalid bytes");
+    }
+
+    #[test]
+    fn receipt_item_counts_must_equal_the_header_totals() {
+        for shard in 0..3 {
+            let mut rows = valid_rows();
+            let items = rows[0]["receipts"][shard]["items"].as_u64().expect("items");
+            rows[0]["receipts"][shard]["items"] = json!(items + 1);
+            refuses(&rows, "signed receipt and header totals disagree");
+        }
+
+        let mut headless = valid_rows();
+        headless[0]
+            .as_object_mut()
+            .expect("header")
+            .remove("expected");
+        refuses(&headless, "expected totals are missing");
+    }
+
+    #[test]
+    fn only_an_approved_provider_and_a_non_empty_revision_render() {
+        let reason = "model provider or approved revision is invalid";
+        refuses(&with_field("header", "provider", json!("rhino")), reason);
+
+        // `revisionId` is cross-checked against the provenance row too, so blank
+        // it in both — otherwise the mismatch guard would answer first.
+        let mut blank = valid_rows();
+        blank[0]["revisionId"] = json!("");
+        blank[1]["revisionId"] = json!("");
+        refuses(&blank, reason);
+
+        // Tekla is the other approved reader, and it must still render.
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope(temp.path(), "run-1");
+        let mut tekla = valid_rows();
+        tekla[0]["provider"] = json!("tekla");
+        let output = render_bytes(&scope, &seal(&tekla)).expect("tekla report");
+        assert_eq!(output["objectCount"], 1);
+    }
+
+    #[test]
+    fn model_provenance_must_repeat_every_approved_revision_field() {
+        for key in ["sourceSha256", "manifestRoot", "projectUuid", "revisionId"] {
+            let mut rows = valid_rows();
+            rows[1][key] = json!("tampered");
+            refuses(
+                &rows,
+                "model provenance does not match the approved revision",
+            );
+        }
+    }
+
+    #[test]
+    fn model_provenance_appears_exactly_once_and_an_object_may_not_precede_it() {
+        let mut twice = valid_rows();
+        twice.insert(2, twice[1].clone());
+        refuses(&twice, "model provenance must appear once before objects");
+
+        let mut trailing = valid_rows();
+        trailing.push(trailing[1].clone());
+        refuses(
+            &trailing,
+            "model provenance must appear once before objects",
+        );
+
+        let mut missing = valid_rows();
+        missing.remove(1);
+        refuses(&missing, "model provenance is missing");
+    }
+
+    #[test]
+    fn object_ordinals_must_be_exact_and_objects_may_not_nest() {
+        let reason = "object order is incomplete or duplicated";
+        for key in ["entityOrdinal", "recordOrdinal", "shardOrdinal"] {
+            refuses(&with_field("entity-start", key, json!(1)), reason);
+        }
+
+        let mut nested = valid_rows();
+        nested.insert(3, nested[2].clone());
+        refuses(&nested, reason);
+
+        // The source row an object claims has to exist in the signed receipt.
+        refuses(
+            &with_field("entity-start", "sourceOrdinal", json!(1)),
+            "source row ordinal is outside its signed receipt",
+        );
+    }
+
+    #[test]
+    fn an_object_payload_may_contradict_nothing_about_its_source_row() {
+        let mut disagrees = valid_rows();
+        disagrees[2]["entity"]["id"] = json!("e2");
+        refuses(&disagrees, "object identity disagrees with its source row");
+
+        // A payload that simply omits its id is not a contradiction.
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope(temp.path(), "run-1");
+        let mut silent = valid_rows();
+        silent[2]["entity"]
+            .as_object_mut()
+            .expect("entity")
+            .remove("id");
+        assert_eq!(
+            render_bytes(&scope, &seal(&silent)).expect("report")["objectCount"],
+            1
+        );
+    }
+
+    #[test]
+    fn property_owner_and_ordinals_must_be_exact() {
+        let reason = "property owner or order is incomplete or duplicated";
+        refuses(&with_field("property", "ownerId", json!("e2")), reason);
+        for key in [
+            "entityOrdinal",
+            "propertyOrdinal",
+            "recordOrdinal",
+            "shardOrdinal",
+        ] {
+            refuses(&with_field("property", key, json!(1)), reason);
+        }
+
+        // A property outside any object is refused before its ordinals matter.
+        let mut orphan = valid_rows();
+        let property = orphan.remove(3);
+        orphan.insert(2, property);
+        refuses(&orphan, "property has no current object");
+    }
+
+    #[test]
+    fn a_property_payload_may_contradict_neither_its_owner_nor_its_own_id() {
+        let mut wrong_owner = valid_rows();
+        wrong_owner[3]["property"]["entityId"] = json!("e2");
+        refuses(
+            &wrong_owner,
+            "property identity disagrees with its source row",
+        );
+
+        let mut wrong_id = valid_rows();
+        wrong_id[3]["property"]["id"] = json!("p2");
+        refuses(&wrong_id, "property identity disagrees with its source row");
+    }
+
+    #[test]
+    fn an_object_end_must_match_the_start_it_closes() {
+        let reason = "object property count is incomplete";
+        refuses(&with_field("entity-end", "propertyCount", json!(2)), reason);
+        refuses(&with_field("entity-end", "id", json!("e2")), reason);
+        refuses(&with_field("entity-end", "entityOrdinal", json!(1)), reason);
+
+        let mut orphan = valid_rows();
+        let end = orphan.remove(4);
+        orphan.insert(2, end);
+        refuses(&orphan, "object end has no start");
+    }
+
+    #[test]
+    fn a_relationship_row_may_not_sit_inside_an_object_or_out_of_order() {
+        let reason = "model provenance order is incomplete";
+        let mut inside = valid_rows();
+        let relationship = inside.remove(5);
+        inside.insert(3, relationship);
+        refuses(&inside, reason);
+
+        refuses(&with_field("provenance", "recordOrdinal", json!(1)), reason);
+        refuses(&with_field("provenance", "shardOrdinal", json!(1)), reason);
+        refuses(
+            &with_field("provenance", "sourceOrdinal", json!(1)),
+            "source row ordinal is outside its signed receipt",
+        );
+    }
+
+    #[test]
+    fn an_unsupported_record_type_refuses_rather_than_being_skipped() {
+        let mut rows = valid_rows();
+        rows.insert(2, json!({"type":"entity-delta","id":"e1"}));
+        refuses(&rows, "record type is unsupported");
+    }
+
+    #[test]
+    fn the_terminal_receipt_must_match_the_bytes_and_the_counts_it_seals() {
+        let refuses_terminal = |tamper: &dyn Fn(&mut Value)| {
+            let temp = tempfile::tempdir().expect("temp");
+            let scope = scope(temp.path(), "run-1");
+            let bytes = seal_with(&valid_rows(), tamper);
+            let error = render_bytes(&scope, &bytes).expect_err("tampered terminal");
+            assert!(
+                error
+                    .to_string()
+                    .contains("the complete report receipt does not match its records"),
+                "{error}"
+            );
+        };
+        refuses_terminal(&|t| t["priorBytes"] = json!(1));
+        refuses_terminal(&|t| t["priorSha256"] = json!("0".repeat(64)));
+        refuses_terminal(&|t| t["observed"]["entities"] = json!(2));
+        refuses_terminal(&|t| t["observed"]["properties"] = json!(0));
+        refuses_terminal(&|t| t["observed"]["relationships"] = json!(0));
+
+        // An object left open when the receipt arrives is a truncated stream.
+        let mut unclosed = valid_rows();
+        unclosed.remove(4);
+        unclosed.remove(4);
+        refuses(
+            &unclosed,
+            "the complete report receipt does not match its records",
+        );
+    }
+
+    #[test]
+    fn the_terminal_digest_is_compared_case_insensitively() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope(temp.path(), "run-1");
+        let bytes = seal_with(&valid_rows(), |terminal| {
+            let upper = terminal["priorSha256"]
+                .as_str()
+                .expect("digest")
+                .to_ascii_uppercase();
+            terminal["priorSha256"] = json!(upper);
+        });
+        assert_eq!(
+            render_bytes(&scope, &bytes).expect("uppercase is the same digest")["objectCount"],
+            1
+        );
+    }
+
+    #[test]
+    fn nothing_may_follow_the_terminal_receipt() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope(temp.path(), "run-1");
+        let mut bytes = seal(&valid_rows());
+        bytes.extend_from_slice(b"{\"type\":\"entity-end\"}\n");
+        let error = render_bytes(&scope, &bytes).expect_err("trailing record");
+        assert!(
+            error
+                .to_string()
+                .contains("unexpected data after the terminal receipt"),
+            "{error}"
+        );
+    }
+
+    #[test]
+    fn an_empty_unparseable_or_unterminated_stream_names_its_own_fault() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope(temp.path(), "run-1");
+        let expect_refusal = |bytes: &[u8], reason: &str| {
+            let error = render_bytes(&scope, bytes).expect_err(reason);
+            assert!(error.to_string().contains(reason), "{error}");
+        };
+        expect_refusal(b"", "record stream is empty");
+        expect_refusal(b"{ not json }\n", "record is not valid JSON");
+
+        // Every record present and correct, but no terminal receipt to seal them.
+        let rows = valid_rows();
+        let mut unsealed = Vec::new();
+        for row in &rows {
+            unsealed.extend_from_slice(row.to_string().as_bytes());
+            unsealed.push(b'\n');
+        }
+        expect_refusal(&unsealed, "terminal receipt is missing");
+    }
+
+    #[test]
+    fn a_record_must_end_in_a_newline_and_stay_inside_its_bound() {
+        // End of stream on a record boundary is not an error.
+        assert_eq!(record_line(&mut &b""[..]).expect("empty"), None);
+
+        // The newline is part of the record, because the terminal receipt
+        // hashes the bytes including it.
+        let mut reader = BufReader::new(&b"ab\ncd\n"[..]);
+        assert_eq!(
+            record_line(&mut reader).expect("first"),
+            Some(b"ab\n".to_vec())
+        );
+        assert_eq!(
+            record_line(&mut reader).expect("second"),
+            Some(b"cd\n".to_vec())
+        );
+        assert_eq!(record_line(&mut reader).expect("end"), None);
+
+        // Trailing bytes with no newline are a truncated record, not a final one.
+        let truncated = record_line(&mut &b"{\"a\":1}"[..]).expect_err("truncated");
+        assert!(
+            truncated
+                .to_string()
+                .contains("record is missing its newline"),
+            "{truncated}"
+        );
+
+        // A record that never ends is refused for being over its bound rather
+        // than buffered to exhaustion and then blamed on the missing newline —
+        // including when it arrives a few bytes at a time.
+        let unbounded = vec![b'x'; MAX_RECORD + 1];
+        let mut dribbled = BufReader::with_capacity(16, &unbounded[..]);
+        let oversized = record_line(&mut dribbled).expect_err("unbounded record");
+        assert!(
+            oversized
+                .to_string()
+                .contains("a model record is too large to read safely"),
+            "{oversized}"
+        );
+    }
+
+    #[test]
+    fn the_identity_table_is_a_power_of_two_of_slots_and_refuses_overflow() {
+        // Two slots per item, rounded up to a power of two, 48 bytes a slot. The
+        // power of two is what makes `slot & (slots - 1)` a correct wrap.
+        for (items, bytes) in [(0u64, 48u64), (1, 96), (3, 384), (4, 384), (5, 768)] {
+            assert_eq!(
+                IdentitySet::table_bytes(items).expect("size"),
+                bytes,
+                "items={items}"
+            );
+        }
+        assert!(IdentitySet::table_bytes(u64::MAX).is_err(), "items * 2");
+        assert!(
+            IdentitySet::table_bytes(u64::MAX / 2).is_err(),
+            "next power of two"
+        );
+        assert!(IdentitySet::table_bytes(1 << 58).is_err(), "slots * 48");
+    }
+
+    #[test]
+    fn an_object_with_no_readable_properties_says_so() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope(temp.path(), "run-1");
+        let mut rows = valid_rows();
+        rows.remove(3);
+        rows[0]["expected"]["properties"] = json!(0);
+        rows[0]["receipts"][1]["items"] = json!(0);
+        rows[3]["propertyCount"] = json!(0);
+        let output = render_bytes(&scope, &seal(&rows)).expect("report");
+        assert_eq!(output["propertyCount"], 0);
+        let html = bundle_html(&scope, &output);
+        assert!(html.contains("No readable properties."), "{html}");
+        assert!(!html.contains("<th>Property</th>"), "{html}");
+    }
+
+    #[test]
+    fn a_model_with_no_objects_at_all_still_seals_a_complete_bundle() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope(temp.path(), "run-1");
+        let mut rows = valid_rows();
+        rows.truncate(2);
+        rows[0]["expected"] = json!({"entities":0,"properties":0,"relationships":0});
+        for shard in rows[0]["receipts"].as_array_mut().expect("receipts") {
+            shard["items"] = json!(0);
+        }
+        // An empty role is covered the moment it is opened — `complete()` has to
+        // read 0 of 0 as done, or a model with nothing to report never renders.
+        let output = render_bytes(&scope, &seal(&rows)).expect("report");
+        assert_eq!(output["objectCount"], 0);
+        assert_eq!(output["propertyCount"], 0);
+        assert_eq!(output["complete"], true);
+        let html = bundle_html(&scope, &output);
+        assert!(html.contains("0 objects · 0 properties"), "{html}");
+        assert!(html.contains("Provider fingerprint:"), "{html}");
+    }
+
+    #[test]
+    fn an_object_split_across_fragments_repeats_its_heading_as_continued() {
+        let temp = tempfile::tempdir().expect("temp");
+        // 32 rows is exactly one fragment's worth, so nothing is continued …
+        let whole = scope(temp.path(), "run-1");
+        let source = many_property_stream(32);
+        let output = render_bytes(&whole, &source).expect("report");
+        let html = bundle_html(&whole, &output);
+        assert!(!html.contains("(continued)"), "{html}");
+
+        // … and the 33rd row opens a fragment that has to say which object it
+        // belongs to, or the reader sees a headless table.
+        let split = scope(temp.path(), "run-2");
+        let source = many_property_stream(33);
+        let output = render_bytes(&split, &source).expect("report");
+        let html = bundle_html(&split, &output);
+        assert!(
+            html.contains("<h2>Object 1 <small>(continued)</small></h2>"),
+            "{html}"
+        );
+        assert_eq!(html.matches("Attribute 32<").count(), 1, "{html}");
+    }
+
+    #[test]
+    fn a_property_row_accepts_each_documented_field_alias() {
+        let temp = tempfile::tempdir().expect("temp");
+        let scope = scope(temp.path(), "run-1");
+        let mut rows = valid_rows();
+        rows[3]["property"] = json!({"entityId":"e1","group":"Identity",
+            "parameterName":"Mark","displayValue":"B-01","units":"text"});
+        let output = render_bytes(&scope, &seal(&rows)).expect("report");
+        let html = bundle_html(&scope, &output);
+        assert!(
+            html.contains("<td>Identity</td><td>Mark</td><td>B-01</td><td>text</td>"),
+            "{html}"
+        );
+    }
+
+    #[test]
+    fn an_object_heading_falls_back_to_its_escaped_id() {
+        let temp = tempfile::tempdir().expect("temp");
+        let labelled = scope(temp.path(), "run-1");
+        let output = render_bytes(&labelled, &seal(&valid_rows())).expect("report");
+        assert!(
+            bundle_html(&labelled, &output).contains("<h2>Beam <small>(e1)</small></h2>"),
+            "a named object keeps its id alongside the label"
+        );
+
+        let bare = scope(temp.path(), "run-2");
+        let mut rows = valid_rows();
+        rows[2]["id"] = json!("<e&1>");
+        rows[2]["entity"] = json!({});
+        rows[3]["ownerId"] = json!("<e&1>");
+        rows[3]["property"]["entityId"] = json!("<e&1>");
+        rows[4]["id"] = json!("<e&1>");
+        let output = render_bytes(&bare, &seal(&rows)).expect("report");
+        let html = bundle_html(&bare, &output);
+        assert!(html.contains("<h2>&lt;e&amp;1&gt;</h2>"), "{html}");
+        assert!(!html.contains("<e&1>"), "{html}");
+    }
+
+    #[test]
+    fn every_html_special_character_is_escaped_and_non_strings_stringify_first() {
+        assert_eq!(
+            escape("<a href=\"x\">&'</a>"),
+            "&lt;a href=&quot;x&quot;&gt;&amp;&#39;&lt;/a&gt;"
+        );
+        assert_eq!(display(None), "");
+        assert_eq!(display(Some(&Value::Null)), "");
+        // A string renders as itself, not as its JSON spelling with quotes.
+        assert_eq!(display(Some(&json!("<b>"))), "&lt;b&gt;");
+        assert_eq!(display(Some(&json!(12.5))), "12.5");
+        assert_eq!(display(Some(&json!(false))), "false");
+        assert_eq!(
+            display(Some(&json!({"k":"<v>"}))),
+            "{&quot;k&quot;:&quot;&lt;v&gt;&quot;}"
+        );
+    }
+
+    #[test]
+    fn the_report_column_set_is_fixed_and_a_preview_cannot_stand_in_for_a_run() {
+        let narrowed = render_stream(
+            &json!({"columns":["Group","Property","Value"]}),
+            None,
+            false,
+        )
+        .expect_err("the column set is fixed");
+        assert!(
+            narrowed
+                .to_string()
+                .contains("report columns must be Group, Property, Value, Unit, Provenance"),
+            "{narrowed}"
+        );
+
+        // The documented set clears that guard and is then refused for its own
+        // reason, which is what proves the guard is the one that fired above.
+        let previewed = render_stream(
+            &json!({"columns":["Group","Property","Value","Unit","Provenance"]}),
+            None,
+            true,
+        )
+        .expect_err("preview");
+        assert!(
+            previewed
+                .to_string()
+                .contains("complete reports require a real run"),
+            "{previewed}"
+        );
+    }
 }
