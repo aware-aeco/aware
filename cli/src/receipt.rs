@@ -88,8 +88,8 @@ pub fn load_signing_key(sec_path: &Path) -> Result<SigningKey, AwareError> {
 }
 
 /// Load an ed25519 verifying key (public) from disk. `verify_receipt` parses the
-/// key inline, so only the tests reach this today.
-#[allow(dead_code)]
+/// key inline; `provider_store::trust_publisher` reaches this to read the key a
+/// publisher is being trusted under.
 pub fn load_verifying_key(pub_path: &Path) -> Result<VerifyingKey, AwareError> {
     let raw = std::fs::read_to_string(pub_path)
         .map_err(|e| AwareError::NotFound(format!("{}: {e}", pub_path.display())))?;

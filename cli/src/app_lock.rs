@@ -148,8 +148,8 @@ pub enum NoteKind {
     ///
     /// No compile path constructs this yet, but `10-core/app-spec.md` publishes
     /// `info | warn | error` as the lockfile's note-kind contract, so the
-    /// variant stays until the spec drops it.
-    #[allow(dead_code)]
+    /// variant stays until the spec drops it. The derived `Deserialize` reads it
+    /// back from a lockfile, which is why `dead_code` does not fire here.
     Error,
 }
 
