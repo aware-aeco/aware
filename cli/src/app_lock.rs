@@ -975,7 +975,7 @@ pub fn write_lockfile(
     // git cannot show, since it records the link but not that it stopped being
     // one (#571, Codex P2). The scratch file then goes in the RESOLVED file's
     // directory, because that is the filesystem the rename must stay inside.
-    let publish_to = resolve_through_symlinks(&lock_path);
+    let publish_to = resolve_through_symlinks(&lock_path)?;
     let stage_dir = publish_to.parent().unwrap_or(dir);
     let mut candidate = tempfile::NamedTempFile::new_in(stage_dir)
         .map_err(|e| AwareError::Internal(format!("stage {}: {e}", lock_path.display())))?;
@@ -1035,17 +1035,23 @@ pub fn write_lockfile(
 /// followed it and created the target (#571, Codex P2, second symlink finding).
 ///
 /// A relative target resolves against the link's own directory, as the kernel
-/// does. The walk is bounded, standing in for `ELOOP` on a cycle: on a looping
-/// link this returns some path in the loop rather than spinning, and the publish
-/// then fails on its own merits instead of hanging.
-fn resolve_through_symlinks(path: &Path) -> std::path::PathBuf {
+/// does.
+///
+/// Exhausting the hop bound is an ERROR, not an answer. Returning the path the
+/// walk stopped on would hand back something that is still a symlink — a 2-cycle
+/// lands back on the original link after an even number of hops — and `persist`
+/// would then rename over that link, so a compile would report success while
+/// destroying it. `fs::write` returned `ELOOP` and left the chain intact, so
+/// exhaustion is reported rather than papered over (#571, Codex P2).
+fn resolve_through_symlinks(path: &Path) -> Result<std::path::PathBuf, AwareError> {
     const MAX_HOPS: usize = 40;
     let mut current = path.to_path_buf();
     for _ in 0..MAX_HOPS {
-        // `read_link` errors for anything that is not a symlink, which is the
-        // terminating case — a regular file, a missing entry, or a directory.
+        // `read_link` errors for anything that is NOT a symlink, and that is the
+        // successful terminating case — a regular file, a missing entry, or a
+        // directory. Only running out of hops is a failure.
         let Ok(target) = std::fs::read_link(&current) else {
-            break;
+            return Ok(current);
         };
         current = if target.is_absolute() {
             target
@@ -1056,7 +1062,10 @@ fn resolve_through_symlinks(path: &Path) -> std::path::PathBuf {
             }
         };
     }
-    current
+    Err(AwareError::Internal(format!(
+        "resolve {}: too many levels of symbolic links",
+        path.display()
+    )))
 }
 
 /// Find the source app file (`.flo` / `.app` / `.flow` / `.aware`) at a path.
@@ -1407,18 +1416,17 @@ mod tests {
         assert!(published.contains("app: gated"), "{published}");
     }
 
-    /// A chain of symlinks resolves to its final target, and a LOOP terminates
-    /// instead of spinning — the bound stands in for the kernel's `ELOOP`.
+    /// A chain of symlinks resolves to its final target; a LOOP is refused.
     #[cfg(unix)]
     #[test]
-    fn symlink_resolution_walks_chains_and_survives_a_loop() {
+    fn symlink_resolution_walks_chains_and_refuses_a_loop() {
         let tmp = tempfile::tempdir().unwrap();
 
         // a -> b -> c, where c does not exist.
         std::os::unix::fs::symlink("b", tmp.path().join("a")).unwrap();
         std::os::unix::fs::symlink("c", tmp.path().join("b")).unwrap();
         assert_eq!(
-            resolve_through_symlinks(&tmp.path().join("a")),
+            resolve_through_symlinks(&tmp.path().join("a")).unwrap(),
             tmp.path().join("c"),
             "a chain must resolve to its final target"
         );
@@ -1426,16 +1434,57 @@ mod tests {
         // A plain path that is not a link is returned unchanged.
         let plain = tmp.path().join("plain");
         std::fs::write(&plain, "x").unwrap();
-        assert_eq!(resolve_through_symlinks(&plain), plain);
+        assert_eq!(resolve_through_symlinks(&plain).unwrap(), plain);
 
-        // loop -> other -> loop: must return rather than spin.
+        // loop -> other -> loop must be an ERROR, not a path. Returning the path
+        // the walk stopped on would still be a symlink — a 2-cycle lands back on
+        // the original after an even number of hops — and publishing to it would
+        // rename over the link, destroying it while reporting success.
         std::os::unix::fs::symlink("other", tmp.path().join("loop")).unwrap();
         std::os::unix::fs::symlink("loop", tmp.path().join("other")).unwrap();
-        let settled = resolve_through_symlinks(&tmp.path().join("loop"));
+        let error = resolve_through_symlinks(&tmp.path().join("loop"))
+            .expect_err("a symlink cycle must be refused, not resolved")
+            .to_string();
         assert!(
-            settled.ends_with("loop") || settled.ends_with("other"),
-            "a looping link should settle inside the loop, got {settled:?}"
+            error.contains("too many levels of symbolic links"),
+            "{error}"
         );
+    }
+
+    /// A cyclic `<app>.lock` symlink must leave the publish REFUSED and the links
+    /// intact. This is the harm behind the hop-limit rule: a walk that returned the
+    /// path it gave up on would hand back something still a symlink, `persist`
+    /// would rename over it, and a compile would report success having destroyed a
+    /// tracked link. `fs::write` returned `ELOOP` and changed nothing (#571,
+    /// Codex P2).
+    #[cfg(unix)]
+    #[test]
+    fn a_cyclic_lock_symlink_is_refused_and_left_intact() {
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("gated.flo");
+        std::fs::write(&source, "app: gated\n").unwrap();
+
+        // gated.lock -> other -> gated.lock
+        std::os::unix::fs::symlink("other", tmp.path().join("gated.lock")).unwrap();
+        std::os::unix::fs::symlink("gated.lock", tmp.path().join("other")).unwrap();
+
+        let error = write_lockfile(&lock_fixture("gated"), &source)
+            .expect_err("a cyclic lock symlink must not be published over")
+            .to_string();
+        assert!(
+            error.contains("too many levels of symbolic links"),
+            "{error}"
+        );
+
+        for name in ["gated.lock", "other"] {
+            assert!(
+                std::fs::symlink_metadata(tmp.path().join(name))
+                    .unwrap()
+                    .file_type()
+                    .is_symlink(),
+                "{name} stopped being a symlink"
+            );
+        }
     }
 
     /// Concurrent publishes into ONE directory must each land their OWN plan.
