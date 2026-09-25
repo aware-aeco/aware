@@ -939,48 +939,52 @@ pub fn write_lockfile(
     // and leaves a half-written one in its place. That is an approval deleted by
     // a failed attempt to replace it: the lock is what `aware app run` gates on,
     // so the next run fails `E_APP_LOCK_INVALID` on a file the user never
-    // knowingly changed. With a scratch file, a failure leaves the previous lock
-    // byte-for-byte intact, which is also what lets `app validate` downgrade a
-    // failed sidecar write to a warning without risking an approval (#571).
+    // knowingly changed. Going through a scratch file leaves the previous lock
+    // byte-for-byte intact on any failure, which is also what lets `app validate`
+    // downgrade a failed sidecar write to a warning without risking an approval
+    // (#571).
     //
-    // Same pattern and same reasoning as `auth::keychain::write_atomic_restricted`,
-    // which documents the full-disk case as one it actually hit. Deliberately not
-    // shared with it: that helper writes 0600 because a credential must not be
-    // world-readable, whereas a lock is a readable, git-committed artifact.
-    let serial = TEMP_SERIAL.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
-    // Scratch file in the SAME directory as the target: `rename` is only atomic
-    // within one filesystem, and the system temp dir is routinely on another.
+    // `NamedTempFile::new_in` rather than a name this function composes, for two
+    // reasons a hand-rolled name got wrong in review:
     //
-    // The name deliberately does NOT contain the app id. `is_safe_segment` puts no
-    // length bound on an id, so `<id>.lock` can legally sit right at the
-    // filesystem's per-component limit (255 bytes on Linux and macOS) — and any
-    // id-derived scratch name is necessarily LONGER than the destination it
-    // stands in for, so it would fail `ENAMETOOLONG` for an app that compiled
-    // fine before. A fixed ~30-byte name cannot: if the destination is
-    // representable, so is the scratch (#571, Codex P2).
+    //   * It creates with O_EXCL under a RANDOM name, retrying on collision, so
+    //     two processes cannot end up sharing one scratch inode. A `<pid>`-based
+    //     name can: PIDs are not unique across PID namespaces or across hosts
+    //     sharing a workspace, and two such processes compiling DIFFERENT apps in
+    //     one directory would both open the same scratch path — then one renames
+    //     it while the other still holds that inode, publishing the second app's
+    //     plan as the first app's lock, from a command that reported success. A
+    //     corrupt approval is the worst outcome this file has, since the lock is
+    //     the artifact `run` gates on (#571, Codex P1).
+    //   * Its name is short and fixed-length, so it cannot reintroduce the
+    //     `ENAMETOOLONG` regression: `is_safe_segment` puts no length bound on an
+    //     app id, so `<id>.lock` may sit exactly at the per-component limit, and
+    //     any id-derived scratch name is necessarily longer than the destination
+    //     it stands in for (#571, Codex P2).
     //
-    // pid plus serial still make it unique — across processes by pid, within one
-    // by serial — so concurrent compiles in one directory cannot collide.
-    let tmp = dir.join(format!(".aware-lock.{}.{serial}.tmp", std::process::id()));
-    let published = std::fs::write(&tmp, format!("{header}{yaml}"))
-        .and_then(|()| std::fs::rename(&tmp, &lock_path));
-    if let Err(e) = published {
-        // One cleanup covering every way the publish can fail, so a failed write
-        // leaves no scratch file behind for nothing to collect. Best-effort: the
-        // lock was never published either way, so the publish's own error is the
-        // one worth reporting.
-        let _ = std::fs::remove_file(&tmp);
+    // Same directory as the target, because `rename` is only atomic within one
+    // filesystem and the system temp dir is routinely on another. Same pattern as
+    // `runtime::report_reservation::publish`, which this now mirrors — it uses
+    // `persist_noclobber` because a reservation must never be replaced, where a
+    // lock legitimately supersedes the previous one, so this uses `persist`.
+    let mut candidate = tempfile::NamedTempFile::new_in(dir)
+        .map_err(|e| AwareError::Internal(format!("stage {}: {e}", lock_path.display())))?;
+    // sync before publishing, so the rename cannot expose a name whose contents
+    // are still only in the page cache. The scratch file is removed on drop, so
+    // every early return below collects it without a cleanup path of its own.
+    let staged = std::io::Write::write_all(&mut candidate, format!("{header}{yaml}").as_bytes())
+        .and_then(|()| candidate.as_file().sync_all());
+    if let Err(e) = staged {
         return Err(AwareError::Internal(format!(
             "write {}: {e}",
             lock_path.display()
         )));
     }
+    candidate
+        .persist(&lock_path)
+        .map_err(|e| AwareError::Internal(format!("write {}: {}", lock_path.display(), e.error)))?;
     Ok(lock_path)
 }
-
-/// Serial for scratch-file names, so two lock writes in one process — a
-/// `for-each` body compiling siblings, say — cannot collide on one temp path.
-static TEMP_SERIAL: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
 
 /// Find the source app file (`.flo` / `.app` / `.flow` / `.aware`) at a path.
 /// If `path` is a file, returned directly. If a directory, the same tiered
@@ -1229,6 +1233,46 @@ mod tests {
             "fixture no longer exercises the limit"
         );
         assert!(lock_path.exists());
+    }
+
+    /// Concurrent publishes into ONE directory must each land their OWN plan.
+    ///
+    /// This is a characterisation guard, NOT a regression test for the P1 it
+    /// relates to (#571): the race there needs two processes sharing a PID across
+    /// PID namespaces or hosts, which no unit test in this suite can stage, and
+    /// within a single process the rejected `<pid>.<serial>` scheme was already
+    /// unique — so this passes either way. The P1 is closed structurally instead,
+    /// by `NamedTempFile::new_in`'s O_EXCL creation under a random name; that is
+    /// stated here rather than implied by a test that cannot fail.
+    #[test]
+    fn concurrent_publishes_in_one_directory_each_land_their_own_plan() {
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("shared.flo");
+        std::fs::write(&source, "app: shared\n").unwrap();
+        let ids: Vec<String> = (0..8).map(|n| format!("concurrent-app-{n}")).collect();
+
+        std::thread::scope(|scope| {
+            for id in &ids {
+                let source = source.clone();
+                scope.spawn(move || {
+                    write_lockfile(&lock_fixture(id), &source).expect("publish");
+                });
+            }
+        });
+
+        for id in &ids {
+            let body = std::fs::read_to_string(tmp.path().join(format!("{id}.lock"))).unwrap();
+            assert!(
+                body.contains(&format!("app: {id}")),
+                "{id}.lock holds another app's plan:\n{body}"
+            );
+        }
+        let scratch: Vec<_> = std::fs::read_dir(tmp.path())
+            .unwrap()
+            .map(|e| e.unwrap().file_name().to_string_lossy().into_owned())
+            .filter(|n| n.contains("aware-lock") || n.ends_with(".tmp"))
+            .collect();
+        assert!(scratch.is_empty(), "scratch files survived: {scratch:?}");
     }
 
     /// A failed publish must collect its own scratch file: nothing else knows
