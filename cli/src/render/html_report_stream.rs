@@ -1340,6 +1340,17 @@ mod tests {
         // And a role with no shard at all is refused by the same rule.
         assert!(exact_role(&four, "nothing").is_err());
 
+        // The direct call above proves `exact_role` rejects a duplicate; it does
+        // not prove `render_stream_inner` looks shards up that way. A malformed
+        // three-shard stream covers the integration: swap the receipt loop for a
+        // positional or first-match lookup and this is what catches it.
+        let mut duplicated_stream = valid_rows();
+        duplicated_stream[0]["receipts"][2]["role"] = json!("entities");
+        refuses(
+            &duplicated_stream,
+            "receipt list does not contain exactly one shard for each role",
+        );
+
         let mut absent = valid_rows();
         absent[0]["receipts"] = json!(null);
         refuses(&absent, "receipt list is missing");
@@ -1758,15 +1769,34 @@ mod tests {
 
     #[test]
     fn a_property_row_accepts_each_documented_field_alias() {
+        // Each alias list is tried in order, so a field is only exercised when
+        // every earlier entry of its list is absent. `valid_rows()` covers the
+        // first choice of each list (`groupName`, `name`, `value`, `unit`); the
+        // two payloads here cover every remaining entry, last ones included.
         let temp = tempfile::tempdir().expect("temp");
         let scope = scope(temp.path(), "run-1");
         let mut rows = valid_rows();
+        rows[0]["expected"]["properties"] = json!(2);
+        rows[0]["receipts"][1]["items"] = json!(2);
         rows[3]["property"] = json!({"entityId":"e1","group":"Identity",
             "parameterName":"Mark","displayValue":"B-01","units":"text"});
+        let mut second = rows[3].clone();
+        second["id"] = json!("p2");
+        second["propertyOrdinal"] = json!(1);
+        second["recordOrdinal"] = json!(1);
+        second["sourceOrdinal"] = json!(1);
+        // `category` and `id` end their lists, so nothing else may be present.
+        second["property"] = json!({"entityId":"e1","category":"Constraints","id":"p2"});
+        rows.insert(4, second);
+        rows[5]["propertyCount"] = json!(2);
         let output = render_bytes(&scope, &seal(&rows)).expect("report");
         let html = bundle_html(&scope, &output);
         assert!(
             html.contains("<td>Identity</td><td>Mark</td><td>B-01</td><td>text</td>"),
+            "{html}"
+        );
+        assert!(
+            html.contains("<td>Constraints</td><td>p2</td><td></td><td></td>"),
             "{html}"
         );
     }
