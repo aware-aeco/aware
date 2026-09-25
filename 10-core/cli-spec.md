@@ -671,8 +671,12 @@ For protocol-v3 conversion, a provider may refuse incomplete geometry coverage b
 with empty stdout and an exact canonical JSON stderr object containing only `code`, `phase`,
 `retryable`, `message` and `diagnosticId`. The reader recognizes only
 `reference-model-coverage-incomplete` with `phase: "conversion"`, `retryable: false`, bounded text
-and a UUID diagnostic ID. It forwards the code through its own safe error envelope, but replaces
-provider-controlled text and diagnostic ID with reader-owned values. Malformed, oversized or
+and a UUID diagnostic ID. It forwards the code through its own safe error envelope and always
+replaces the provider diagnostic ID. It normally replaces provider-controlled text too. The sole
+exception is an exact `coverage-counts-v1:` payload for the same coverage code: six comma-separated
+canonical unsigned decimal counts (0–10,000,000, no leading zeros), at least one nonzero, with no
+other bytes. These are opaque counts to AWARE, not Tekla-specific labels or source details. An
+invalid count payload retains the ordinary generic coverage message. Malformed, oversized or
 unrecognized stderr remains the generic `reference-provider-failed` error. No partial model is
 published in either case.
 

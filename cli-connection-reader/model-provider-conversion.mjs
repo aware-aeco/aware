@@ -23,6 +23,14 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-
 const ALLOWED_PROVIDER_REFUSALS = Object.freeze({
   'reference-model-coverage-incomplete': 'The model contains geometry this reader cannot safely place. No partial model was imported.',
 });
+const COVERAGE_COUNTS = /^coverage-counts-v1:(?:0|[1-9][0-9]{0,7})(?:,(?:0|[1-9][0-9]{0,7})){5}$/;
+
+function safeCoverageCounts(message) {
+  if (message.match(COVERAGE_COUNTS)?.[0] !== message) return null;
+  const counts = message.slice('coverage-counts-v1:'.length).split(',').map(Number);
+  return counts.every((count) => count <= 10_000_000) && counts.some((count) => count !== 0)
+    ? message : null;
+}
 
 function conversionError(code, message, retryable = false, details = undefined) {
   throw new ModelReaderError(code, 'conversion', retryable, message, details);
@@ -43,7 +51,12 @@ function safeProviderRefusal(result, stderrLimit) {
         || refusal.message.length > 240 || /[\u0000-\u001f\u007f]/.test(refusal.message)
         || typeof refusal.diagnosticId !== 'string' || !UUID.test(refusal.diagnosticId)
         || !result.stderr.equals(canonicalJsonBytes(refusal))) return null;
-    return { code: refusal.code, message: ALLOWED_PROVIDER_REFUSALS[refusal.code] };
+    return {
+      code: refusal.code,
+      message: refusal.code === 'reference-model-coverage-incomplete'
+        ? safeCoverageCounts(refusal.message) ?? ALLOWED_PROVIDER_REFUSALS[refusal.code]
+        : ALLOWED_PROVIDER_REFUSALS[refusal.code],
+    };
   } catch {
     return null;
   }
