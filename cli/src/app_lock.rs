@@ -950,11 +950,18 @@ pub fn write_lockfile(
     let serial = TEMP_SERIAL.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
     // Scratch file in the SAME directory as the target: `rename` is only atomic
     // within one filesystem, and the system temp dir is routinely on another.
-    let tmp = dir.join(format!(
-        ".{}.lock.{}.{serial}.tmp",
-        lock.app,
-        std::process::id()
-    ));
+    //
+    // The name deliberately does NOT contain the app id. `is_safe_segment` puts no
+    // length bound on an id, so `<id>.lock` can legally sit right at the
+    // filesystem's per-component limit (255 bytes on Linux and macOS) — and any
+    // id-derived scratch name is necessarily LONGER than the destination it
+    // stands in for, so it would fail `ENAMETOOLONG` for an app that compiled
+    // fine before. A fixed ~30-byte name cannot: if the destination is
+    // representable, so is the scratch (#571, Codex P2).
+    //
+    // pid plus serial still make it unique — across processes by pid, within one
+    // by serial — so concurrent compiles in one directory cannot collide.
+    let tmp = dir.join(format!(".aware-lock.{}.{serial}.tmp", std::process::id()));
     let published = std::fs::write(&tmp, format!("{header}{yaml}"))
         .and_then(|()| std::fs::rename(&tmp, &lock_path));
     if let Err(e) = published {
@@ -1190,6 +1197,38 @@ mod tests {
             "lock was rewritten in place (same inode) — a write failing partway \
              would have truncated the previous approval"
         );
+    }
+
+    /// An app id may legally sit right at the filesystem's per-component limit —
+    /// `is_safe_segment` bounds an id's SHAPE but never its length — so a
+    /// 250-byte id names a representable `<id>.lock` (255 bytes on Linux and
+    /// macOS). The scratch file the publish goes through must therefore not be
+    /// derived from the id: any such name is longer than the destination, and
+    /// would fail `ENAMETOOLONG` for an app that compiled fine before (#571,
+    /// Codex P2). Verified as a real regression: this app compiled under the
+    /// previous truncating `fs::write` and failed with `os error 36` under an
+    /// id-derived scratch name.
+    ///
+    /// Unix-only: the assertion is about NAME_MAX, and on Windows a 255-byte
+    /// component under a temp directory can trip the separate MAX_PATH limit and
+    /// fail for a reason this test is not about.
+    #[cfg(unix)]
+    #[test]
+    fn an_app_id_at_the_component_limit_still_publishes_its_lock() {
+        let tmp = tempfile::tempdir().unwrap();
+        // 250 + ".lock" == 255 == NAME_MAX, the longest representable destination.
+        let id = "a".repeat(250);
+        let source = tmp.path().join("probe.flo");
+        std::fs::write(&source, format!("app: {id}\n")).unwrap();
+
+        let lock_path = write_lockfile(&lock_fixture(&id), &source)
+            .expect("an id whose .lock fits NAME_MAX must still publish");
+        assert_eq!(
+            lock_path.file_name().unwrap().len(),
+            255,
+            "fixture no longer exercises the limit"
+        );
+        assert!(lock_path.exists());
     }
 
     /// A failed publish must collect its own scratch file: nothing else knows
