@@ -136,6 +136,39 @@ test('preserves only the allowlisted canonical conversion refusal without leakin
   }
 });
 
+test('forwards only canonical versioned coverage counts and remints the diagnostic ID', async (t) => {
+  const value = await scenario(t);
+  const base = { code: 'reference-model-coverage-incomplete', phase: 'conversion', retryable: false,
+    diagnosticId: '123e4567-e89b-42d3-a456-426614174000' };
+  for (const message of ['coverage-counts-v1:0,0,49,58,0,16',
+    'coverage-counts-v1:10000000,0,0,0,0,0']) {
+    value.options.hostRun = async () => ({ exitCode: 2, stdout: Buffer.alloc(0),
+      stderr: canonicalJsonBytes({ ...base, message }) });
+    await assert.rejects(() => convertProviderSource(value.options, value.deps), (error) => {
+      const safe = safeErrorEnvelope(error);
+      assert.equal(safe.code, base.code);
+      assert.equal(safe.message, message);
+      assert.notEqual(safe.diagnosticId, base.diagnosticId);
+      return true;
+    });
+  }
+  for (const message of ['coverage-counts-v1:0,0,0,0,0,0', 'coverage-counts-v1:0,0,049,58,0,16',
+    'coverage-counts-v1:0,0,10000001,58,0,16', 'coverage-counts-v1:0,0,-1,58,0,16',
+    'coverage-counts-v1:0,0,49,58,0,16 extra', 'coverage-counts-v1:0,0,49,58,0,１６',
+    'coverage-counts-v1:0,0,49,58,0,16\u202e',
+    'coverage-counts-v2:0,0,49,58,0,16', 'coverage-counts-v1:0,0,49,58,0',
+    'coverage-counts-v1:0,0,49,58,0,16,1']) {
+    value.options.hostRun = async () => ({ exitCode: 2, stdout: Buffer.alloc(0),
+      stderr: canonicalJsonBytes({ ...base, message }) });
+    await assert.rejects(() => convertProviderSource(value.options, value.deps), (error) => {
+      const safe = safeErrorEnvelope(error);
+      assert.equal(safe.code, base.code);
+      assert.equal(safe.message, 'The model contains geometry this reader cannot safely place. No partial model was imported.');
+      return true;
+    });
+  }
+});
+
 test('package and dependency integrity changes supersede a provider coverage refusal', async (t) => {
   const refusal = canonicalJsonBytes({
     code: 'reference-model-coverage-incomplete', phase: 'conversion', retryable: false,
@@ -182,6 +215,7 @@ test('forged, malformed and oversized provider stderr remains a generic failure'
     { ...base, diagnosticId: 'not-a-uuid' },
     { ...base, message: 'a'.repeat(241) },
     { ...base, message: 'A path:\nD:\\private' },
+    { ...base, message: 'coverage-counts-v1:0,0,49,58,0,16\n' },
     Buffer.from('{"code":'),
     Buffer.from('not json'),
     Buffer.from([0xff, 0xfe]),
