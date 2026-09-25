@@ -196,12 +196,12 @@ fn report_reservation_owner_is_inspectable_before_dispatch_and_cannot_be_reused(
         .args(["app", "run", "private-report"])
         .output()
         .unwrap();
-    let owner = server.join().unwrap();
     assert!(
         first.status.success(),
         "{}",
         String::from_utf8_lossy(&first.stderr)
     );
+    let owner = server.join().unwrap();
     assert!(String::from_utf8_lossy(&first.stdout).contains(owner["runId"].as_str().unwrap()));
 
     let reused = Command::cargo_bin("aware")

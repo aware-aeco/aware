@@ -262,7 +262,9 @@ An official bundle is `verified` only when its fresh registry binding, installat
 │   └── <app-id>/<instance-id>/<run-id>.artifacts/   # that run's large outputs, addressed by
 │                                                    # `aware app artifact` — the whole result, any
 │                                                    # progressive segments, and each invocation's
-│                                                    # progress channel. Removed with the run's logs
+│                                                    # progress channel. A safely retired report run
+│                                                    # keeps this empty directory as a tombstone.
+│   └── .report-reservations/<reservation-id>.json     # immutable report ownership + writer fence
 ├── cache/
 │   └── registry-index.json             # last-known agent registry index
 ├── providers/
@@ -274,6 +276,19 @@ An official bundle is `verified` only when its fresh registry binding, installat
     ├── codex/aware-aeco/
     └── opencode/aware-aeco/
 ```
+
+`aware app artifact <app> --instance <instance> --run-id <run> --prune --reservation-id <reservation>`
+retires only the artifact files of that exact report run. It returns JSON
+`{app,instance,runId,pruned,bytes,files}` after synchronizing the empty artifact
+directory and its parent. The `bytes` and `files` values count this invocation's
+removed entries, so a retry returns zero. `--usage` must also report zero before
+the caller releases a storage reservation. The trace, reservation marker, writer
+lease and empty artifact directory remain for audit and crash-safe idempotency;
+this command does not bound their cumulative storage. A live writer or reader,
+an external-capable writer, a legacy run without the new fence, a mismatched
+reservation, a missing/replaced artifact directory, or a linked/non-file artifact
+entry makes the command fail closed. The reservation records the operating-system
+identity of both the writer lease and the newly created artifact directory.
 
 ## Response envelope
 

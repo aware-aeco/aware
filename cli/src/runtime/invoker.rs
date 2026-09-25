@@ -2925,6 +2925,7 @@ pub struct DispatchInvoker {
     pub preview: bool,
     reader_cancellation: ReaderCancellation,
     private_header: Option<crate::private_rest_header::PrivateRestHeader>,
+    report_in_process_only: bool,
 }
 
 /// Filesystem + run context a `DispatchInvoker` needs to dispatch an app-backed
@@ -3004,6 +3005,7 @@ impl DispatchInvoker {
             preview: dry_run || simulate,
             reader_cancellation: ReaderCancellation::with_cleanup_fence(reader_cleanup_fence),
             private_header: None,
+            report_in_process_only: false,
         }
     }
 
@@ -3012,6 +3014,11 @@ impl DispatchInvoker {
         header: Option<crate::private_rest_header::PrivateRestHeader>,
     ) -> Self {
         self.private_header = header;
+        self
+    }
+
+    pub fn with_report_in_process_only(mut self, value: bool) -> Self {
+        self.report_in_process_only = value;
         self
     }
 
@@ -3033,7 +3040,30 @@ impl DispatchInvoker {
         {
             return Err(AwareError::Validation(format!("[{code}] {reason}")));
         }
-        effective_transport(&m, agent)
+        let kind = effective_transport(&m, agent)?;
+        if self.report_in_process_only && matches!(kind, TransportKind::Cli | TransportKind::App) {
+            return Err(AwareError::Validation(
+                "reserved report writer changed to an external transport; refusing dispatch".into(),
+            ));
+        }
+        Ok(kind)
+    }
+
+    fn report_transport_kind(
+        &self,
+        agent: &str,
+        command: &str,
+    ) -> Result<TransportKind, AwareError> {
+        let kind = self.transport_kind(agent)?;
+        if self.report_in_process_only
+            && kind == TransportKind::Builtin
+            && (agent != "html-report-stream" || command != "render-stream")
+        {
+            return Err(AwareError::Validation(
+                "reserved report writer changed to an unapproved built-in command; refusing dispatch".into(),
+            ));
+        }
+        Ok(kind)
     }
 
     /// Resolve the backing app + validate the caller's routed inputs for an
@@ -3130,6 +3160,7 @@ impl DispatchInvoker {
             preview: self.preview,
             reader_cancellation: self.reader_cancellation.clone(),
             private_header: None,
+            report_in_process_only: self.report_in_process_only,
         })
     }
 
@@ -3337,7 +3368,7 @@ impl AgentInvoker for DispatchInvoker {
         record_args: Value,
     ) -> Result<Value, AwareError> {
         let dir = self.agents_dir.clone();
-        match self.transport_kind(agent)? {
+        match self.report_transport_kind(agent, command)? {
             TransportKind::Cli => {
                 CliInvoker {
                     agents_dir: dir,
@@ -3405,7 +3436,7 @@ impl AgentInvoker for DispatchInvoker {
         record_args: Value,
         progress: Option<mpsc::Sender<Value>>,
     ) -> Result<Value, AwareError> {
-        match self.transport_kind(agent)? {
+        match self.report_transport_kind(agent, command)? {
             TransportKind::Cli => {
                 CliInvoker {
                     agents_dir: self.agents_dir.clone(),
@@ -3454,7 +3485,7 @@ impl AgentInvoker for DispatchInvoker {
         record_args: Value,
     ) -> Result<StreamingHandle, AwareError> {
         let dir = self.agents_dir.clone();
-        match self.transport_kind(agent)? {
+        match self.report_transport_kind(agent, command)? {
             TransportKind::Cli => {
                 CliInvoker {
                     agents_dir: dir,
@@ -3947,6 +3978,7 @@ mod tests {
             preview: false,
             reader_cancellation: ReaderCancellation::default(),
             private_header: None,
+            report_in_process_only: false,
         };
         let error = invoker.transport_kind("future").unwrap_err().to_string();
 
@@ -4306,6 +4338,7 @@ commands:
             preview: false,
             reader_cancellation: ReaderCancellation::default(),
             private_header: None,
+            report_in_process_only: false,
         };
         let out = inv
             .invoke_single(
@@ -5558,6 +5591,7 @@ mod builtin_invoker_tests {
             preview: true,
             reader_cancellation: ReaderCancellation::default(),
             private_header: None,
+            report_in_process_only: false,
         };
         let res = inv
             .invoke_single(

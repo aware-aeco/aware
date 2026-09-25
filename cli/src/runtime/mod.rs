@@ -3,6 +3,7 @@
 //! v0.3 phase. Submodules added across Tasks 2-9; orchestrator + command
 //! wiring come in Tasks 10-18.
 
+pub mod artifact_retention;
 pub mod artifact_stream;
 pub mod context;
 pub mod google_mail;
