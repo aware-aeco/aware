@@ -59,6 +59,12 @@ const EVICTION_GRACE: Duration = Duration::from_secs(24 * 60 * 60);
 /// simultaneous copies the election exists to prevent.
 const BUILD_WAIT: Duration = Duration::from_secs(300);
 
+/// How many times a process will try to take the claim before giving up on the
+/// election and copying unelected. More than one so that a builder which dies
+/// is REPLACED by a single successor rather than by all of its waiters at once;
+/// bounded so that a builder dying repeatedly cannot spin here forever.
+const ELECTION_ROUNDS: u32 = 3;
+
 /// How often the waiters look for the builder's result.
 const BUILD_POLL: Duration = Duration::from_millis(100);
 
@@ -110,29 +116,48 @@ fn install_fixture() -> PathBuf {
     // Publication is a rename, which deduplicates copies only once they are
     // finished — so without an election every test binary that found the cache
     // cold would run the full ~400 MB `populate` at the same time, and the
-    // eight of them would need ~3.2 GB of transient space to produce one
-    // fixture. On the constrained machines #578 is about, that is the same disk
+    // eight of them would need ~3 GB of transient space to produce one fixture.
+    // On the constrained machines #578 is about, that is the same disk
     // exhaustion in a new place. `create_dir` is atomic, so exactly one process
     // takes the claim and the rest wait for its result.
-    let claim = BuildClaim::path(&cache_root, &home);
-    match std::fs::create_dir(&claim) {
-        Ok(()) => {}
-        Err(err) if err.kind() == std::io::ErrorKind::AlreadyExists => {
-            if let Some(published) = wait_for_builder(&home, &claim) {
-                return published;
-            }
-            // The builder vanished without publishing — it panicked, or was
-            // killed. Build it ourselves rather than leave the suite with no
-            // fixture; a redundant copy is the worst case, as it was before.
+    //
+    // A builder that dies leaves the others to elect a REPLACEMENT, rather than
+    // each falling through to copy: the herd is exactly what the election is
+    // for, and a dead builder is when it matters most. So a waiter that finds
+    // the claim abandoned clears it and takes another turn of this loop, where
+    // `create_dir` again admits exactly one of them.
+    let claim_path = claim_path(&cache_root, &home);
+    let mut claim = None;
+    for _ in 0..ELECTION_ROUNDS {
+        // A replacement builder may have published while we waited.
+        if home.is_dir() {
+            evict_superseded(&cache_root, &home);
+            return home;
         }
-        Err(_) => {
-            // The claim could not be taken for some other reason. Fall through
-            // and copy unelected: slower and hungrier, never wrong.
+        match BuildClaim::take(&claim_path) {
+            Ok(Some(taken)) => {
+                claim = Some(taken);
+                break;
+            }
+            Ok(None) => {
+                if let Some(published) = wait_for_builder(&home, &claim_path) {
+                    evict_superseded(&cache_root, &home);
+                    return published;
+                }
+                // Abandoned, or slower than any real copy. Clear it so the next
+                // turn can elect a replacement. Whoever's `remove_dir_all` lands
+                // first, the following `create_dir` still admits only one.
+                let _ = std::fs::remove_dir_all(&claim_path);
+            }
+            // The election is unavailable for some other reason. Copy
+            // unelected: slower and hungrier, never wrong.
+            Err(_) => break,
         }
     }
-    // Releases the claim on every exit from here, panics included — it is a
-    // local, so unlike the `static` that caused #578 its `Drop` really runs.
-    let _claim = BuildClaim(claim);
+    // Held until this function returns, releasing the claim on every exit —
+    // panics included, because it is a local. Unlike the `static` that caused
+    // #578, its `Drop` really runs.
+    let _claim = claim;
 
     // Populate a staging directory and publish it with one rename, rather than
     // copying into the final path: a reader then either sees no fixture or sees
@@ -169,27 +194,69 @@ fn install_fixture() -> PathBuf {
     home
 }
 
+/// Where the claim for `home` lives. It shares the `aware-fixture-` prefix so
+/// that one orphaned by a killed process is swept up by [`evict_superseded`]
+/// like any other leftover.
+pub fn claim_path(cache_root: &Path, home: &Path) -> PathBuf {
+    let name = home
+        .file_name()
+        .map(|n| n.to_string_lossy().into_owned())
+        .unwrap_or_default();
+    cache_root.join(format!("{name}.building"))
+}
+
 /// The elected builder's claim on one catalogue state, released on drop.
-struct BuildClaim(PathBuf);
+///
+/// The claim carries a token naming who holds it. Without one, a builder whose
+/// claim was stolen — because it outran [`BUILD_WAIT`] rather than died — would
+/// on finishing delete the claim its REPLACEMENT is now holding, and the next
+/// waiter would start a third concurrent copy. The token means a claim is only
+/// ever retired by the process that currently holds it.
+pub struct BuildClaim {
+    dir: PathBuf,
+    token: String,
+}
 
 impl BuildClaim {
-    /// Named after the fixture it builds, and sharing the `aware-fixture-`
-    /// prefix so that a claim orphaned by a killed process is swept up by
-    /// [`evict_superseded`] like any other leftover.
-    fn path(cache_root: &Path, home: &Path) -> PathBuf {
-        let name = home
-            .file_name()
-            .map(|n| n.to_string_lossy().into_owned())
-            .unwrap_or_default();
-        cache_root.join(format!("{name}.building"))
+    /// The file inside the claim naming its holder.
+    pub const OWNER: &'static str = "owner";
+
+    /// `Ok(None)` means another process holds the claim.
+    pub fn take(dir: &Path) -> std::io::Result<Option<Self>> {
+        match std::fs::create_dir(dir) {
+            Ok(()) => {
+                // Distinct per acquisition, not just per process: the same pid
+                // can take a claim, lose it to a steal, and take it again.
+                let token = format!(
+                    "{}-{}",
+                    std::process::id(),
+                    std::time::SystemTime::now()
+                        .duration_since(UNIX_EPOCH)
+                        .map(|since| since.as_nanos())
+                        .unwrap_or_default()
+                );
+                std::fs::write(dir.join(Self::OWNER), &token)?;
+                Ok(Some(Self {
+                    dir: dir.to_path_buf(),
+                    token,
+                }))
+            }
+            Err(err) if err.kind() == std::io::ErrorKind::AlreadyExists => Ok(None),
+            Err(err) => Err(err),
+        }
     }
 }
 
 impl Drop for BuildClaim {
     fn drop(&mut self) {
-        // Best-effort: a claim that outlives its process costs later runs one
-        // wait, and `evict_superseded` collects it.
-        let _ = std::fs::remove_dir(&self.0);
+        // Retire the claim only while it is still ours; see the type's doc.
+        // Best-effort otherwise: a claim that outlives its process costs later
+        // runs one election round, and `evict_superseded` collects it.
+        let held = std::fs::read_to_string(self.dir.join(Self::OWNER))
+            .is_ok_and(|owner| owner == self.token);
+        if held {
+            let _ = std::fs::remove_dir_all(&self.dir);
+        }
     }
 }
 
