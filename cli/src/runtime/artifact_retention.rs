@@ -504,11 +504,14 @@ mod tests {
         );
     }
 
-    /// The builtin exemption is a three-way conjunction — builtin transport AND
-    /// the `html-report-stream` agent AND its `render-stream` command. Each
-    /// conjunct is load-bearing: a builtin handler that is not that streamer,
-    /// or that streamer under another command, is not known to write only
-    /// in-process.
+    /// The builtin exemption is a conjunction — builtin transport AND the
+    /// `html-report-stream` agent AND its `render-stream` command — and each
+    /// conjunct is falsified on its own below. The transport one matters most
+    /// and is the least obvious: `effective_transport` resolves a manifest
+    /// carrying both `builtin:` and `cli:` to `Cli` (see
+    /// `effective_transport_prioritizes_cli_over_builtin_on_mixed_manifests`),
+    /// so an installed agent can wear the exempted id and command while still
+    /// spawning a host binary.
     #[test]
     fn the_builtin_report_streamer_is_safe_only_under_its_own_render_command() {
         let temp = tempfile::tempdir().unwrap();
@@ -544,6 +547,33 @@ mod tests {
             .unwrap(),
             WriterClass::ExternalPossible,
             "the exemption is per agent, not per command name"
+        );
+
+        // The transport conjunct on its own: the exempted id AND command, but
+        // dispatched through `cli`. Drop `transport == TransportKind::Builtin`
+        // from the guard and every assertion above still passes, while a
+        // spawned binary's artifacts become eligible for automatic retirement.
+        //
+        // A second aware-home under the same temp root: the agent id
+        // deliberately collides with the builtin one installed above, so the
+        // two cannot share one `agents/` directory.
+        let cli_paths = Paths {
+            aware_home: temp.path().join("cli-backed-home"),
+        };
+        install_agent(
+            &cli_paths,
+            "html-report-stream",
+            "  cli:\n    binary: run-me\n",
+        );
+        assert_eq!(
+            classify_nodes(
+                &cli_paths,
+                &nodes("- id: n1\n  agent: html-report-stream\n  command: render-stream\n")
+            )
+            .unwrap(),
+            WriterClass::ExternalPossible,
+            "the exemption is per transport: the exempted id and command over \
+             `cli` still spawns a host binary"
         );
     }
 
