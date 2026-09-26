@@ -244,6 +244,235 @@ pub fn inspect(logs_dir: &Path, reservation_id: &str) -> Result<ReservationOwner
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::runtime::artifact_retention::WriterClass;
+    use crate::test_env::EnvVarGuard;
+
+    /// A marker exactly as a correct run publishes it, written as literal JSON
+    /// rather than by serializing `ReservationOwner` — so these tests pin the
+    /// on-disk wire format instead of agreeing with whatever the struct
+    /// currently emits. Every rejection test below mutates one field of this
+    /// value, and the control test proves the rest of it inspects cleanly, so a
+    /// rejection can only come from the field under test.
+    fn well_formed(reservation_id: &str) -> serde_json::Value {
+        serde_json::json!({
+            "schemaVersion": SCHEMA,
+            "reservationId": reservation_id,
+            "app": "report-app",
+            "instance": "default",
+            "runId": "run-1",
+            "artifactScope": {
+                "app": "report-app",
+                "instance": "default",
+                "runId": "run-1",
+            },
+            "writerLease": {
+                "fileIdentity": "unix:1:2",
+                "artifactDirectoryIdentity": "unix:1:3",
+                "writerClass": "in-process",
+            },
+        })
+    }
+
+    fn logs_with_marker(reservation_id: &str, body: &str) -> (tempfile::TempDir, PathBuf) {
+        let temp = tempfile::tempdir().unwrap();
+        let logs = temp.path().join("logs");
+        fs::create_dir_all(marker_dir(&logs)).unwrap();
+        fs::write(
+            marker_dir(&logs).join(format!("{reservation_id}.json")),
+            body,
+        )
+        .unwrap();
+        (temp, logs)
+    }
+
+    fn expect_rejected(reservation_id: &str, body: &str, because: &str) {
+        let (_temp, logs) = logs_with_marker(reservation_id, body);
+        let error = inspect(&logs, reservation_id).unwrap_err();
+        assert!(
+            matches!(error, AwareError::Validation(_)),
+            "{because}: expected a validation refusal, got {error:?}"
+        );
+    }
+
+    /// The control for every rejection below. Without it a negative test could
+    /// pass because the fixture is malformed in some unrelated way.
+    #[test]
+    fn a_well_formed_marker_inspects_to_its_recorded_owner() {
+        let (_temp, logs) = logs_with_marker("res-1", &well_formed("res-1").to_string());
+        let owner = inspect(&logs, "res-1").unwrap();
+        assert_eq!(owner.app, "report-app");
+        assert_eq!(owner.run_id, "run-1");
+        assert_eq!(
+            owner.writer_lease.unwrap().writer_class,
+            WriterClass::InProcess
+        );
+    }
+
+    /// `prune` checks the caller's run against `owner.{app,instance,run_id}`
+    /// but takes its retirement authority from the lease recorded beside
+    /// `artifact_scope`. A marker whose scope names a different run than its own
+    /// identity would let a reservation for one run authorize deleting another
+    /// run's artifacts, so the two must be refused when they disagree.
+    #[test]
+    fn inspect_rejects_a_marker_whose_scope_disagrees_with_its_own_identity() {
+        for field in ["app", "instance", "runId"] {
+            let mut marker = well_formed("res-1");
+            marker["artifactScope"][field] = serde_json::json!("elsewhere");
+            expect_rejected(
+                "res-1",
+                &marker.to_string(),
+                &format!("artifactScope.{field} disagreeing with the owner"),
+            );
+        }
+    }
+
+    /// The reservation id is the filename *and* a field. Accepting a marker
+    /// whose body names a different id would let a marker be copied to a second
+    /// filename and replayed to claim a run it never owned.
+    #[test]
+    fn inspect_rejects_a_marker_replayed_under_another_reservation_id() {
+        expect_rejected(
+            "res-2",
+            &well_formed("res-1").to_string(),
+            "a body naming a different reservation id than its filename",
+        );
+    }
+
+    #[test]
+    fn inspect_rejects_a_marker_written_against_a_foreign_schema() {
+        let mut marker = well_formed("res-1");
+        marker["schemaVersion"] = serde_json::json!("aware.report-reservation/v99");
+        expect_rejected("res-1", &marker.to_string(), "an unknown schema version");
+    }
+
+    /// The marker is read into memory before it is parsed, so the size cap is
+    /// what stops a planted file from being read without bound.
+    #[test]
+    fn inspect_rejects_a_marker_larger_than_the_cap() {
+        let mut body = well_formed("res-1").to_string();
+        body.push_str(&" ".repeat(usize::try_from(MAX_MARKER_BYTES).unwrap() + 1 - body.len()));
+        assert!(body.len() as u64 > MAX_MARKER_BYTES);
+        expect_rejected("res-1", &body, "a marker past the size cap");
+    }
+
+    /// `prune` compares live filesystem identities against these strings. An
+    /// empty one compares equal to nothing real, but recording it would mean a
+    /// marker that claims a lease it cannot evidence.
+    #[test]
+    fn inspect_rejects_a_writer_lease_with_an_empty_identity() {
+        for field in ["fileIdentity", "artifactDirectoryIdentity"] {
+            let mut marker = well_formed("res-1");
+            marker["writerLease"][field] = serde_json::json!("");
+            expect_rejected(
+                "res-1",
+                &marker.to_string(),
+                &format!("an empty writerLease.{field}"),
+            );
+        }
+    }
+
+    #[test]
+    fn inspect_rejects_a_marker_holding_a_path_unsafe_component() {
+        let mut marker = well_formed("res-1");
+        marker["app"] = serde_json::json!("../escape");
+        marker["artifactScope"]["app"] = serde_json::json!("../escape");
+        expect_rejected(
+            "res-1",
+            &marker.to_string(),
+            "an app name that is not one path-safe identifier",
+        );
+    }
+
+    /// Reading through a symlink would let anything that can write inside the
+    /// reservation directory point a marker at a file elsewhere on disk.
+    #[cfg(unix)]
+    #[test]
+    fn inspect_refuses_to_follow_a_symlinked_marker() {
+        let temp = tempfile::tempdir().unwrap();
+        let logs = temp.path().join("logs");
+        fs::create_dir_all(marker_dir(&logs)).unwrap();
+        let real = temp.path().join("planted.json");
+        fs::write(&real, well_formed("res-1").to_string()).unwrap();
+        std::os::unix::fs::symlink(&real, marker_dir(&logs).join("res-1.json")).unwrap();
+        let error = inspect(&logs, "res-1").unwrap_err();
+        assert!(
+            matches!(error, AwareError::Validation(_)),
+            "a symlinked marker must be refused, got {error:?}"
+        );
+    }
+
+    /// The id reaches the filesystem as a filename, so it is validated before
+    /// any path is built rather than after a lookup misses.
+    #[test]
+    fn a_traversing_reservation_id_is_refused_before_any_path_is_built() {
+        let temp = tempfile::tempdir().unwrap();
+        let logs = temp.path().join("logs");
+        fs::create_dir_all(marker_dir(&logs)).unwrap();
+        let error = inspect(&logs, "../escape").unwrap_err();
+        assert!(
+            matches!(error, AwareError::Validation(_)),
+            "a traversing reservation id must be a validation refusal, not a              lookup miss, got {error:?}"
+        );
+    }
+
+    fn lease() -> LeaseEvidence {
+        LeaseEvidence {
+            file_identity: "unix:1:2".into(),
+            artifact_directory_identity: "unix:1:3".into(),
+            writer_class: WriterClass::InProcess,
+        }
+    }
+
+    /// One reservation authorizes retiring one run's artifacts. If a second run
+    /// could publish under the same id it would inherit that authority over the
+    /// first run's files.
+    #[test]
+    fn a_reservation_id_cannot_be_claimed_twice() {
+        let temp = tempfile::tempdir().unwrap();
+        let logs = temp.path().join("logs");
+        let _env = EnvVarGuard::set(RESERVATION_ENV, "res-1");
+        record_if_reserved(&logs, "report-app", "default", "run-1", Some(&lease())).unwrap();
+        let error = record_if_reserved(&logs, "report-app", "default", "run-2", Some(&lease()))
+            .unwrap_err();
+        assert!(
+            matches!(error, AwareError::Conflict(_)),
+            "a second claim on one reservation id must conflict, got {error:?}"
+        );
+        assert_eq!(
+            inspect(&logs, "res-1").unwrap().run_id,
+            "run-1",
+            "the first claim must remain the owner of record"
+        );
+    }
+
+    /// A marker without lease evidence is one `prune` can never act on, and
+    /// writing it would burn the reservation id for nothing.
+    #[test]
+    fn record_if_reserved_refuses_to_publish_without_writer_evidence() {
+        let temp = tempfile::tempdir().unwrap();
+        let logs = temp.path().join("logs");
+        let _env = EnvVarGuard::set(RESERVATION_ENV, "res-1");
+        let error = record_if_reserved(&logs, "report-app", "default", "run-1", None).unwrap_err();
+        assert!(matches!(error, AwareError::Validation(_)), "got {error:?}");
+        assert!(
+            !marker_dir(&logs).join("res-1.json").exists(),
+            "a refused reservation must not leave a marker behind"
+        );
+    }
+
+    /// Unreserved runs are the common case; they must not create reservation
+    /// state that a later `prune` could find.
+    #[test]
+    fn record_if_reserved_writes_nothing_without_a_reservation_in_the_environment() {
+        let temp = tempfile::tempdir().unwrap();
+        let logs = temp.path().join("logs");
+        let _env = EnvVarGuard::scope(&[(RESERVATION_ENV, None)]);
+        record_if_reserved(&logs, "report-app", "default", "run-1", Some(&lease())).unwrap();
+        assert!(
+            !marker_dir(&logs).exists(),
+            "an unreserved run must not create the reservation directory"
+        );
+    }
 
     #[test]
     fn directory_sync_is_supported_for_reservation_publication() {
