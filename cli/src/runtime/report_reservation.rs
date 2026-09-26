@@ -247,17 +247,25 @@ mod tests {
     use crate::runtime::artifact_retention::WriterClass;
     use crate::test_env::EnvVarGuard;
 
-    /// A marker exactly as a correct run publishes it, written as literal JSON
-    /// rather than by serializing `ReservationOwner` — so these tests pin the
-    /// on-disk wire format instead of agreeing with whatever the struct
-    /// currently emits. Every rejection test that attacks the marker *body*
-    /// changes exactly one logical identity value, and the control test proves
-    /// the rest of it inspects cleanly, so those rejections can only come from
-    /// the value under test. One value is serialized twice — `app` and
-    /// `artifactScope.app` — and the path-safety test changes both, because
-    /// changing either alone would be rejected by the scope-agreement guard
-    /// first and the test would pass on the wrong rung. The size, symlink and
-    /// traversal tests attack the file or the path rather than the body.
+    /// A marker as a correct run publishes it, written as literal JSON rather
+    /// than by serializing `ReservationOwner` — so these tests pin the on-disk
+    /// wire format instead of agreeing with whatever the struct currently
+    /// emits.
+    ///
+    /// Each rejection test below perturbs this baseline in exactly one respect
+    /// and leaves the rest of it valid, so the refusal it asserts can only come
+    /// from the rung under test; the control test proves the un-perturbed
+    /// baseline inspects cleanly. Deliberately no claim about *which* respect:
+    /// it is a single field for the scope and lease rungs, the schema
+    /// discriminator for the version rung, the filename the marker is stored
+    /// under for the replay rung, and the file's size or type — body untouched
+    /// — for the size and symlink rungs.
+    ///
+    /// One perturbation needs two fields, because `app` and
+    /// `artifactScope.app` carry the same value: the path-safety test changes
+    /// both. Changing either alone is caught by the scope-agreement guard
+    /// first, and since both rungs return `AwareError::Validation` the test
+    /// would pass on the wrong one.
     fn well_formed(reservation_id: &str) -> serde_json::Value {
         serde_json::json!({
             // The literal persisted value, deliberately NOT the `SCHEMA`
