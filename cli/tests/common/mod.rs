@@ -106,7 +106,7 @@ fn install_fixture() -> PathBuf {
     // on publication would leave superseded copies sitting there until someone
     // ran `cargo clean`, which is the accumulation this cache is meant to bound.
     if home.is_dir() {
-        evict_superseded(&cache_root, &home);
+        evict_superseded(&cache_root, &home, EVICTION_GRACE);
         return home;
     }
     std::fs::create_dir_all(&cache_root).expect("create the fixture cache root");
@@ -134,14 +134,14 @@ fn install_fixture() -> PathBuf {
     // that path rather than about the generation observed. Generations have no
     // such door: a waiter that finds generation N abandoned tries to create
     // N+1, `create_dir` admits exactly one of them, and a waiter still working
-    // on N can do nothing to N+1. Dead claims are tiny and `evict_superseded`
-    // collects them.
+    // on N can do nothing to N+1. A retired generation stays on disk as its
+    // own tombstone — one small file — so its number is never reused.
     let mut generation = latest_generation(&cache_root, &home);
     let mut claim = None;
     for _ in 0..ELECTION_ROUNDS {
         // A replacement builder may have published while we waited.
         if home.is_dir() {
-            evict_superseded(&cache_root, &home);
+            evict_superseded(&cache_root, &home, EVICTION_GRACE);
             return home;
         }
         let claim_path = claim_dir(&cache_root, &home, generation);
@@ -152,7 +152,7 @@ fn install_fixture() -> PathBuf {
             }
             Ok(None) => {
                 if let Some(published) = wait_for_builder(&home, &claim_path) {
-                    evict_superseded(&cache_root, &home);
+                    evict_superseded(&cache_root, &home, EVICTION_GRACE);
                     return published;
                 }
                 // Abandoned, or slower than any real copy. Leave it alone and
@@ -200,7 +200,7 @@ fn install_fixture() -> PathBuf {
             );
         }
     }
-    evict_superseded(&cache_root, &home);
+    evict_superseded(&cache_root, &home, EVICTION_GRACE);
     home
 }
 
@@ -260,6 +260,10 @@ impl BuildClaim {
     /// The file inside the claim naming its holder.
     pub const OWNER: &'static str = "owner";
 
+    /// The file marking a claim as finished with. Its generation stays on
+    /// disk as a tombstone so the number is never handed out twice.
+    pub const RELEASED: &'static str = "released";
+
     /// `Ok(None)` means another process holds the claim.
     pub fn take(dir: &Path) -> std::io::Result<Option<Self>> {
         match std::fs::create_dir(dir) {
@@ -288,13 +292,20 @@ impl BuildClaim {
 
 impl Drop for BuildClaim {
     fn drop(&mut self) {
-        // Retire the claim only while it is still ours; see the type's doc.
-        // Best-effort otherwise: a claim that outlives its process costs later
-        // runs one election round, and `evict_superseded` collects it.
+        // Retire the claim by MARKING it, never by deleting it. The generation
+        // counter is read off the claim directories that exist, so removing the
+        // newest one makes its number reusable: a waiter that saw generation N
+        // advances to N+1, while a process arriving just after the deletion
+        // sees no claim at all, starts again at N, and both become builders.
+        // A retired generation therefore stays as its own tombstone.
+        //
+        // Only while the claim is still ours; see the type's doc. Best-effort
+        // otherwise: an unmarked claim costs later runs one election round,
+        // since they step past it on its timestamp instead.
         let held = std::fs::read_to_string(self.dir.join(Self::OWNER))
             .is_ok_and(|owner| owner == self.token);
         if held {
-            let _ = std::fs::remove_dir_all(&self.dir);
+            let _ = std::fs::write(self.dir.join(Self::RELEASED), self.token.as_bytes());
         }
     }
 }
@@ -323,7 +334,9 @@ fn wait_for_builder(home: &Path, claim: &Path) -> Option<PathBuf> {
         if home.is_dir() {
             return Some(home.to_path_buf());
         }
-        if !claim.exists() {
+        // Checked after `home`, so a builder that published and then retired
+        // its claim is read as a success rather than as a dead generation.
+        if claim.join(BuildClaim::RELEASED).exists() || !claim.exists() {
             return None;
         }
         if std::time::Instant::now() >= deadline {
@@ -358,7 +371,7 @@ fn wait_for_builder(home: &Path, claim: &Path) -> Option<PathBuf> {
 /// Windows, a permission fault — costs disk and nothing else, so failing the
 /// suite over it would turn a housekeeping problem into a red build. The next
 /// publish tries again.
-fn evict_superseded(cache_root: &Path, keep: &Path) {
+pub fn evict_superseded(cache_root: &Path, keep: &Path, grace: Duration) {
     let Ok(entries) = std::fs::read_dir(cache_root) else {
         return;
     };
@@ -373,13 +386,25 @@ fn evict_superseded(cache_root: &Path, keep: &Path) {
         if !name.starts_with("aware-fixture-") {
             continue;
         }
+        // The current fixture's claims ARE its generation counter — a retired
+        // generation is a tombstone, and deleting one makes its number
+        // reusable (see `BuildClaim::drop`). Claims for superseded keys carry
+        // no such meaning and go with everything else. They are one small file
+        // each, so keeping the live key's costs nothing.
+        if keep
+            .file_name()
+            .and_then(|keep_name| keep_name.to_str())
+            .is_some_and(|keep_name| name.starts_with(keep_name))
+        {
+            continue;
+        }
         let superseded = entry
             .metadata()
             .ok()
             .filter(|meta| meta.is_dir())
             .and_then(|meta| meta.modified().ok())
             .and_then(|modified| modified.elapsed().ok())
-            .is_some_and(|age| age > EVICTION_GRACE);
+            .is_some_and(|age| age > grace);
         if superseded {
             let _ = std::fs::remove_dir_all(&path);
         }

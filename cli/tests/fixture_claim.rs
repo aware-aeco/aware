@@ -10,7 +10,7 @@
 
 mod common;
 
-use common::{BuildClaim, claim_dir, latest_generation};
+use common::{BuildClaim, claim_dir, evict_superseded, latest_generation};
 
 #[test]
 fn a_claim_admits_exactly_one_holder() {
@@ -26,53 +26,70 @@ fn a_claim_admits_exactly_one_holder() {
 }
 
 #[test]
-fn releasing_a_claim_lets_the_next_builder_take_it() {
+fn a_released_generation_is_kept_as_a_tombstone_and_never_reissued() {
     let tmp = tempfile::tempdir().unwrap();
-    let claim = tmp.path().join("fixture.building");
+    let home = tmp.path().join("aware-fixture-v1-abc");
+    let claim = claim_dir(tmp.path(), &home, 0);
 
     drop(BuildClaim::take(&claim).unwrap().expect("first claim"));
+
+    // Deleting it would make generation 0 reusable: a waiter that saw it
+    // advances to 1, while a process arriving afterwards finds no claim at
+    // all, starts again at 0, and both become builders.
     assert!(
-        !claim.exists(),
-        "a released claim must leave nothing behind"
+        claim.is_dir(),
+        "a released generation must stay on disk as its own tombstone"
     );
     assert!(
-        BuildClaim::take(&claim).unwrap().is_some(),
-        "the next builder must be able to take the released claim"
+        claim.join(BuildClaim::RELEASED).exists(),
+        "a released generation must say so, or waiters sit out the full wait"
+    );
+    assert!(
+        BuildClaim::take(&claim).unwrap().is_none(),
+        "a released generation must never be handed out a second time"
+    );
+    assert_eq!(
+        latest_generation(tmp.path(), &home),
+        0,
+        "a released generation must still count, or its number is reused"
     );
 }
 
 #[test]
 fn a_claim_is_not_retired_by_a_holder_that_lost_it() {
     let tmp = tempfile::tempdir().unwrap();
-    let claim = tmp.path().join("fixture.building");
+    let home = tmp.path().join("aware-fixture-v1-abc");
+    let claim = claim_dir(tmp.path(), &home, 0);
 
-    // A builder slower than BUILD_WAIT: its claim is stolen and re-taken by a
-    // replacement while it is still copying.
+    // A builder whose claim is removed out from under it — by the eviction
+    // sweep, or by any hand — and re-taken by a replacement while it is still
+    // copying.
     let outrun = BuildClaim::take(&claim).unwrap().expect("first claim");
-    std::fs::remove_dir_all(&claim).expect("steal the abandoned-looking claim");
+    std::fs::remove_dir_all(&claim).expect("remove the claim out from under it");
     let replacement = BuildClaim::take(&claim)
         .unwrap()
         .expect("replacement claim");
 
-    // The slow builder now finishes. It must not retire the claim the
-    // replacement is holding — that would admit a third concurrent copy.
+    // The outrun builder now finishes. Retiring the replacement's claim would
+    // send every waiter on to the next generation and admit a second copy.
     drop(outrun);
     assert!(
-        claim.is_dir(),
-        "a builder that lost its claim deleted its successor's"
+        !claim.join(BuildClaim::RELEASED).exists(),
+        "a builder that lost its claim retired its successor's"
     );
 
     drop(replacement);
     assert!(
-        !claim.exists(),
-        "the holder that still owns the claim must be able to release it"
+        claim.join(BuildClaim::RELEASED).exists(),
+        "the holder that still owns the claim must be able to retire it"
     );
 }
 
 #[test]
 fn a_claim_records_who_holds_it() {
     let tmp = tempfile::tempdir().unwrap();
-    let claim = tmp.path().join("fixture.building");
+    let home = tmp.path().join("aware-fixture-v1-abc");
+    let claim = claim_dir(tmp.path(), &home, 0);
 
     let held = BuildClaim::take(&claim).unwrap().expect("claim");
     let owner = std::fs::read_to_string(claim.join(BuildClaim::OWNER)).expect("owner token");
@@ -81,14 +98,15 @@ fn a_claim_records_who_holds_it() {
         "the token must name the holding process, got {owner:?}"
     );
 
-    // Distinct per acquisition, not merely per process: the same pid can lose
-    // a claim and take it again, and the second holder must not be mistaken
-    // for the first.
-    drop(held);
-    let retaken = BuildClaim::take(&claim).unwrap().expect("reclaim");
-    let second = std::fs::read_to_string(claim.join(BuildClaim::OWNER)).expect("owner token");
+    // Distinct per acquisition, not merely per process: one process takes a
+    // succession of generations, and the holder of the second must not be
+    // mistaken for the holder of the first.
+    let next = claim_dir(tmp.path(), &home, 1);
+    let later = BuildClaim::take(&next).unwrap().expect("next generation");
+    let second = std::fs::read_to_string(next.join(BuildClaim::OWNER)).expect("owner token");
     assert_ne!(owner, second, "two acquisitions must not share a token");
-    drop(retaken);
+    drop(held);
+    drop(later);
 }
 
 #[test]
@@ -153,5 +171,58 @@ fn a_run_joins_the_newest_generation() {
         latest_generation(tmp.path(), &home),
         3,
         "only this fixture's numbered claims may set the generation"
+    );
+}
+
+#[test]
+fn eviction_spares_the_live_fixture_and_its_generation_counter() {
+    let tmp = tempfile::tempdir().unwrap();
+    let live = tmp.path().join("aware-fixture-v1-live");
+    std::fs::create_dir_all(&live).unwrap();
+
+    // A retired generation of the LIVE fixture. It is the generation counter,
+    // so evicting it would hand generation 0 out a second time — the hazard
+    // `BuildClaim::drop` keeps the tombstone for in the first place.
+    let tombstone = claim_dir(tmp.path(), &live, 0);
+    drop(BuildClaim::take(&tombstone).unwrap().expect("claim"));
+
+    let superseded = tmp.path().join("aware-fixture-v1-old");
+    std::fs::create_dir_all(&superseded).unwrap();
+    let superseded_claim = claim_dir(tmp.path(), &superseded, 0);
+    std::fs::create_dir_all(&superseded_claim).unwrap();
+    let foreign = tmp.path().join("unrelated-file");
+    std::fs::write(&foreign, b"not ours").unwrap();
+
+    // Everything here was made moments ago, so a real grace spares all of it.
+    evict_superseded(
+        tmp.path(),
+        &live,
+        std::time::Duration::from_secs(24 * 60 * 60),
+    );
+    assert!(
+        superseded.is_dir(),
+        "a fixture inside the grace may still be in use by a concurrent run"
+    );
+
+    // With no grace, every candidate is due — so what survives is what the
+    // sweep refuses to touch on purpose, not merely what is too new.
+    evict_superseded(tmp.path(), &live, std::time::Duration::ZERO);
+
+    assert!(live.is_dir(), "the fixture in use must never be evicted");
+    assert!(
+        tombstone.is_dir(),
+        "evicting the live fixture's retired generation makes its number reusable"
+    );
+    assert!(
+        !superseded.exists(),
+        "a superseded fixture past the grace is the whole point of the sweep"
+    );
+    assert!(
+        !superseded_claim.exists(),
+        "a superseded fixture's claims carry no counter worth keeping"
+    );
+    assert!(
+        foreign.exists(),
+        "the sweep must only touch its own directories"
     );
 }
