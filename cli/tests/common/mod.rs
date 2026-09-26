@@ -123,10 +123,20 @@ fn install_fixture() -> PathBuf {
     //
     // A builder that dies leaves the others to elect a REPLACEMENT, rather than
     // each falling through to copy: the herd is exactly what the election is
-    // for, and a dead builder is when it matters most. So a waiter that finds
-    // the claim abandoned clears it and takes another turn of this loop, where
-    // `create_dir` again admits exactly one of them.
-    let claim_path = claim_path(&cache_root, &home);
+    // for, and a dead builder is when it matters most.
+    //
+    // The replacement is elected by moving to the next GENERATION, and nothing
+    // ever deletes a claim to make way for one. Clearing an abandoned claim in
+    // place cannot be made safe: several waiters judge the same claim stale at
+    // once, so a delayed one deletes the claim the REPLACEMENT is already
+    // holding and admits a second builder — the herd again, by a narrower door.
+    // Renaming it aside has the same flaw, being atomic about *a* directory at
+    // that path rather than about the generation observed. Generations have no
+    // such door: a waiter that finds generation N abandoned tries to create
+    // N+1, `create_dir` admits exactly one of them, and a waiter still working
+    // on N can do nothing to N+1. Dead claims are tiny and `evict_superseded`
+    // collects them.
+    let mut generation = latest_generation(&cache_root, &home);
     let mut claim = None;
     for _ in 0..ELECTION_ROUNDS {
         // A replacement builder may have published while we waited.
@@ -134,6 +144,7 @@ fn install_fixture() -> PathBuf {
             evict_superseded(&cache_root, &home);
             return home;
         }
+        let claim_path = claim_dir(&cache_root, &home, generation);
         match BuildClaim::take(&claim_path) {
             Ok(Some(taken)) => {
                 claim = Some(taken);
@@ -144,10 +155,9 @@ fn install_fixture() -> PathBuf {
                     evict_superseded(&cache_root, &home);
                     return published;
                 }
-                // Abandoned, or slower than any real copy. Clear it so the next
-                // turn can elect a replacement. Whoever's `remove_dir_all` lands
-                // first, the following `create_dir` still admits only one.
-                let _ = std::fs::remove_dir_all(&claim_path);
+                // Abandoned, or slower than any real copy. Leave it alone and
+                // contend for the next generation instead.
+                generation += 1;
             }
             // The election is unavailable for some other reason. Copy
             // unelected: slower and hungrier, never wrong.
@@ -194,15 +204,44 @@ fn install_fixture() -> PathBuf {
     home
 }
 
-/// Where the claim for `home` lives. It shares the `aware-fixture-` prefix so
-/// that one orphaned by a killed process is swept up by [`evict_superseded`]
-/// like any other leftover.
-pub fn claim_path(cache_root: &Path, home: &Path) -> PathBuf {
+/// Where one generation of the claim for `home` lives. It shares the
+/// `aware-fixture-` prefix so that a claim orphaned by a killed process is
+/// swept up by [`evict_superseded`] like any other leftover.
+pub fn claim_dir(cache_root: &Path, home: &Path, generation: u32) -> PathBuf {
     let name = home
         .file_name()
         .map(|n| n.to_string_lossy().into_owned())
         .unwrap_or_default();
-    cache_root.join(format!("{name}.building"))
+    cache_root.join(format!("{name}.building-{generation}"))
+}
+
+/// The newest claim generation present for `home`, or 0 when there is none.
+///
+/// Where a run starts, so that it contends for the generation others are
+/// already on rather than one they have long abandoned — including claims left
+/// by an earlier run that died, which simply cost one round to step past.
+pub fn latest_generation(cache_root: &Path, home: &Path) -> u32 {
+    let prefix = format!(
+        "{}.building-",
+        home.file_name()
+            .map(|n| n.to_string_lossy().into_owned())
+            .unwrap_or_default()
+    );
+    let Ok(entries) = std::fs::read_dir(cache_root) else {
+        return 0;
+    };
+    entries
+        .flatten()
+        .filter_map(|entry| {
+            entry
+                .file_name()
+                .to_str()?
+                .strip_prefix(&prefix)?
+                .parse::<u32>()
+                .ok()
+        })
+        .max()
+        .unwrap_or(0)
 }
 
 /// The elected builder's claim on one catalogue state, released on drop.

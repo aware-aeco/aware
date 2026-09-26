@@ -10,7 +10,7 @@
 
 mod common;
 
-use common::BuildClaim;
+use common::{BuildClaim, claim_dir, latest_generation};
 
 #[test]
 fn a_claim_admits_exactly_one_holder() {
@@ -89,4 +89,69 @@ fn a_claim_records_who_holds_it() {
     let second = std::fs::read_to_string(claim.join(BuildClaim::OWNER)).expect("owner token");
     assert_ne!(owner, second, "two acquisitions must not share a token");
     drop(retaken);
+}
+
+#[test]
+fn a_generation_is_a_distinct_claim() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware-fixture-v1-abc");
+
+    let first = claim_dir(tmp.path(), &home, 0);
+    let second = claim_dir(tmp.path(), &home, 1);
+    assert_ne!(
+        first, second,
+        "two generations must not share a path, or electing a replacement \
+         would contend with the claim it is replacing"
+    );
+    // The election's whole safety argument: a waiter still holding an
+    // abandoned generation can do nothing to its successor, because it never
+    // touches that path.
+    let held = BuildClaim::take(&first).unwrap().expect("generation 0");
+    // Bound, not asserted on as a temporary: a temporary would be dropped at
+    // the end of the statement, releasing the very claim the next assertion is
+    // about.
+    let successor = BuildClaim::take(&second).unwrap();
+    assert!(
+        successor.is_some(),
+        "the next generation must be electable while the abandoned one stands"
+    );
+    drop(held);
+    assert!(
+        second.is_dir(),
+        "releasing an abandoned generation must leave its successor's claim alone"
+    );
+}
+
+#[test]
+fn a_run_joins_the_newest_generation() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware-fixture-v1-abc");
+
+    assert_eq!(
+        latest_generation(tmp.path(), &home),
+        0,
+        "with no claim present a run must start at generation 0"
+    );
+
+    std::fs::create_dir_all(claim_dir(tmp.path(), &home, 0)).unwrap();
+    std::fs::create_dir_all(claim_dir(tmp.path(), &home, 3)).unwrap();
+    assert_eq!(
+        latest_generation(tmp.path(), &home),
+        3,
+        "a run must contend for the newest generation, not one already abandoned"
+    );
+
+    // Another fixture's claims, and the fixtures themselves, are not ours.
+    std::fs::create_dir_all(claim_dir(
+        tmp.path(),
+        &tmp.path().join("aware-fixture-v1-other"),
+        9,
+    ))
+    .unwrap();
+    std::fs::create_dir_all(tmp.path().join("aware-fixture-v1-abc.building-notanumber")).unwrap();
+    assert_eq!(
+        latest_generation(tmp.path(), &home),
+        3,
+        "only this fixture's numbered claims may set the generation"
+    );
 }
