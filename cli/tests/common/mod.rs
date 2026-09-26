@@ -53,6 +53,15 @@ const FIXTURE_FORMAT: &str = "v1";
 /// short enough that edits do not pile up copies for days.
 const EVICTION_GRACE: Duration = Duration::from_secs(24 * 60 * 60);
 
+/// How long a process waits for the elected builder before copying its own.
+/// Generously above any real copy of the catalogue, since the cost of waiting
+/// too long is a slow run while the cost of giving up too early is the
+/// simultaneous copies the election exists to prevent.
+const BUILD_WAIT: Duration = Duration::from_secs(300);
+
+/// How often the waiters look for the builder's result.
+const BUILD_POLL: Duration = Duration::from_millis(100);
+
 /// The source trees the fixture mirrors, relative to the repo root. The cache
 /// key covers all of both, which is a superset of what [`populate`] copies —
 /// erring towards rebuilding a fixture that did not need it, never towards
@@ -86,17 +95,50 @@ fn install_fixture() -> PathBuf {
         "aware-fixture-{FIXTURE_FORMAT}-{}",
         catalogue_key(&repo_root)
     ));
+    // Eviction runs on the hit path too, not only after a build. Once the
+    // catalogue stops changing, every run takes this branch — so evicting only
+    // on publication would leave superseded copies sitting there until someone
+    // ran `cargo clean`, which is the accumulation this cache is meant to bound.
     if home.is_dir() {
+        evict_superseded(&cache_root, &home);
         return home;
     }
     std::fs::create_dir_all(&cache_root).expect("create the fixture cache root");
 
+    // Elect ONE builder for this catalogue state.
+    //
+    // Publication is a rename, which deduplicates copies only once they are
+    // finished — so without an election every test binary that found the cache
+    // cold would run the full ~400 MB `populate` at the same time, and the
+    // eight of them would need ~3.2 GB of transient space to produce one
+    // fixture. On the constrained machines #578 is about, that is the same disk
+    // exhaustion in a new place. `create_dir` is atomic, so exactly one process
+    // takes the claim and the rest wait for its result.
+    let claim = BuildClaim::path(&cache_root, &home);
+    match std::fs::create_dir(&claim) {
+        Ok(()) => {}
+        Err(err) if err.kind() == std::io::ErrorKind::AlreadyExists => {
+            if let Some(published) = wait_for_builder(&home, &claim) {
+                return published;
+            }
+            // The builder vanished without publishing — it panicked, or was
+            // killed. Build it ourselves rather than leave the suite with no
+            // fixture; a redundant copy is the worst case, as it was before.
+        }
+        Err(_) => {
+            // The claim could not be taken for some other reason. Fall through
+            // and copy unelected: slower and hungrier, never wrong.
+        }
+    }
+    // Releases the claim on every exit from here, panics included — it is a
+    // local, so unlike the `static` that caused #578 its `Drop` really runs.
+    let _claim = BuildClaim(claim);
+
     // Populate a staging directory and publish it with one rename, rather than
-    // copying into the final path. `cargo test` runs test binaries in parallel,
-    // so several processes reach this at once on a cold cache; rename is atomic,
-    // so a reader either sees no fixture or sees a complete one — never the
-    // half-copied catalogue that copying in place would expose. Staging sits in
-    // `cache_root` so the rename stays within one filesystem.
+    // copying into the final path: a reader then either sees no fixture or sees
+    // a complete one, never the half-copied catalogue that copying in place
+    // would expose. Staging sits in `cache_root` so the rename stays within one
+    // filesystem.
     let staging = tempfile::Builder::new()
         .prefix("aware-fixture-staging-")
         .tempdir_in(&cache_root)
@@ -125,6 +167,64 @@ fn install_fixture() -> PathBuf {
     }
     evict_superseded(&cache_root, &home);
     home
+}
+
+/// The elected builder's claim on one catalogue state, released on drop.
+struct BuildClaim(PathBuf);
+
+impl BuildClaim {
+    /// Named after the fixture it builds, and sharing the `aware-fixture-`
+    /// prefix so that a claim orphaned by a killed process is swept up by
+    /// [`evict_superseded`] like any other leftover.
+    fn path(cache_root: &Path, home: &Path) -> PathBuf {
+        let name = home
+            .file_name()
+            .map(|n| n.to_string_lossy().into_owned())
+            .unwrap_or_default();
+        cache_root.join(format!("{name}.building"))
+    }
+}
+
+impl Drop for BuildClaim {
+    fn drop(&mut self) {
+        // Best-effort: a claim that outlives its process costs later runs one
+        // wait, and `evict_superseded` collects it.
+        let _ = std::fs::remove_dir(&self.0);
+    }
+}
+
+/// Wait for the elected builder, returning the fixture once it publishes.
+///
+/// `None` means "build it yourself": the builder released its claim without
+/// publishing, or it is taking longer than any real copy should, or its claim
+/// was already abandoned before we arrived. All three are safe — the caller
+/// falls back to copying, which is what every process did before the election
+/// existed.
+///
+/// The deadline is measured from the CLAIM's own timestamp, not from now. A
+/// process killed mid-build cannot run its `Drop`, so it leaves the claim
+/// behind; timing from now would make the next run — and every run after it,
+/// until the claim aged out of [`EVICTION_GRACE`] — sit through the full wait
+/// for a builder that no longer exists.
+fn wait_for_builder(home: &Path, claim: &Path) -> Option<PathBuf> {
+    let claimed_at = std::fs::metadata(claim)
+        .and_then(|meta| meta.modified())
+        .ok()?;
+    let age = claimed_at.elapsed().unwrap_or_default();
+    let remaining = BUILD_WAIT.checked_sub(age)?;
+    let deadline = std::time::Instant::now() + remaining;
+    loop {
+        if home.is_dir() {
+            return Some(home.to_path_buf());
+        }
+        if !claim.exists() {
+            return None;
+        }
+        if std::time::Instant::now() >= deadline {
+            return None;
+        }
+        std::thread::sleep(BUILD_POLL);
+    }
 }
 
 /// Delete fixtures and staging directories left by earlier catalogue states.
