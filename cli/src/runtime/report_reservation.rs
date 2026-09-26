@@ -251,10 +251,13 @@ mod tests {
     /// rather than by serializing `ReservationOwner` — so these tests pin the
     /// on-disk wire format instead of agreeing with whatever the struct
     /// currently emits. Every rejection test that attacks the marker *body*
-    /// changes exactly one field of this value, and the control test proves the
-    /// rest of it inspects cleanly, so those rejections can only come from the
-    /// field under test. The size, symlink and traversal tests attack the file
-    /// or the path instead.
+    /// changes exactly one logical identity value, and the control test proves
+    /// the rest of it inspects cleanly, so those rejections can only come from
+    /// the value under test. One value is serialized twice — `app` and
+    /// `artifactScope.app` — and the path-safety test changes both, because
+    /// changing either alone would be rejected by the scope-agreement guard
+    /// first and the test would pass on the wrong rung. The size, symlink and
+    /// traversal tests attack the file or the path rather than the body.
     fn well_formed(reservation_id: &str) -> serde_json::Value {
         serde_json::json!({
             // The literal persisted value, deliberately NOT the `SCHEMA`
