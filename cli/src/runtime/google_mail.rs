@@ -2012,17 +2012,17 @@ mod tests {
 
             assert_eq!(structured.code, "gmail.send.validation");
             assert_eq!(structured.phase, "preflight");
-            // The message is the discriminator. `validate_input` produced this
-            // one; serde's arm says "does not match the documented schema", so
-            // an input that failed to deserialize could never assert it.
+            // The message is the discriminator, pinned whole. `validate_input`
+            // produced this one; serde's arm says "does not match the
+            // documented schema", so an input that failed to deserialize could
+            // never assert it. Pinning it exactly also settles the sibling
+            // tests' concern for free: a message equal to this constant cannot
+            // be echoing the injected address or its `Bcc:` header.
             assert_eq!(&*structured.message, expected_message);
             // Nothing reached the wire — not even the identity probe, which is
             // the first network call `execute_authenticated` makes.
             assert_eq!(mock.send_count(), 0);
             assert_eq!(mock.identity_count(), 0);
-            // And the injected header never rides out in the diagnostic.
-            assert!(!structured.message.contains("attacker@example.com"));
-            assert!(!structured.message.contains("Bcc"));
         }
     }
 
