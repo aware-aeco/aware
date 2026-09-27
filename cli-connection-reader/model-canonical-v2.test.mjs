@@ -142,6 +142,16 @@ test('complete existing canonical artifacts are reused, while incomplete and cha
   assert.deepEqual(await fs.readdir(directory), [descriptor.id]);
 });
 
+test('cleanup failure after linking does not report a published artifact as failed', async (t) => {
+  const directory = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'aware-publish-v2-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const bytes = Buffer.from('signed root manifest');
+  const digest = sha256(bytes);
+  const io = { ...fs, rm: async () => { throw Object.assign(new Error('locked temp'), { code: 'EPERM' }); } };
+  const descriptor = await publishOne(directory, 'model-reference-manifest.json', bytes, digest, io);
+  assert.deepEqual(await fs.readFile(path.join(directory, descriptor.id)), bytes);
+});
+
 test('refuses dangling metadata and geometry ownership outside its tile', async (t) => {
   const dangling = await fixture(t, { properties: [{
     id: 'property:1', entityId: 'missing', name: 'Mark', normalizedName: 'mark', value: null,

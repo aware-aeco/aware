@@ -303,7 +303,7 @@ export async function publishOne(directory, logicalPath, bytes, digest, io = fs)
   // Link only after the temporary file is complete. An interrupted write must never leave
   // truncated bytes at the content-addressed name for a later run to mistake for a collision.
   const temporary = path.join(directory, `.${id}-${randomUUID()}.tmp`);
-  let created = false; let failed = false;
+  let created = false;
   try {
     if (await verifyExisting()) return descriptor;
     const handle = await io.open(temporary, 'wx', 0o600);
@@ -316,7 +316,6 @@ export async function publishOne(directory, logicalPath, bytes, digest, io = fs)
       if (!await verifyExisting()) throw error;
     }
   } catch (error) {
-    failed = true;
     if (error instanceof ModelReaderError) throw error;
     const cause = typeof error?.code === 'string' && /^E[A-Z0-9]{2,20}$/.test(error.code)
       ? error.code : 'unknown filesystem error';
@@ -324,9 +323,9 @@ export async function publishOne(directory, logicalPath, bytes, digest, io = fs)
   } finally {
     if (created) {
       try { await io.rm(temporary, { force: true }); }
-      catch (error) {
-        if (!failed) canonicalError('reference-artifact-cleanup-failed', 'Canonical artifact cleanup failed.', error);
-      }
+      // Once linked, the final artifact is already visible. A cleanup error must not turn a
+      // successful publication into a reported failure (especially for the signed root).
+      catch { /* best effort; an orphan remains outside the content-addressed namespace */ }
     }
   }
   return descriptor;
