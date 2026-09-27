@@ -444,6 +444,186 @@ mod tests {
         assert_eq!(classify_nodes(&paths, &[]).unwrap(), WriterClass::InProcess);
     }
 
+    /// Installs a minimal agent manifest so `classify_nodes` resolves a real
+    /// transport off disk rather than a hand-built struct.
+    fn install_agent(paths: &Paths, id: &str, transport: &str) {
+        let dir = paths.agents_dir().join(id);
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            format!(
+                "agent: {id}\nversion: 0.1.0\ndescription: x\nstateful: false\n\
+                 license: MIT\ntransport:\n{transport}commands:\n  \
+                 render-stream: {{ lifecycle: single, description: x }}\n  \
+                 go: {{ lifecycle: single, description: x }}\n"
+            ),
+        )
+        .unwrap();
+    }
+
+    fn nodes(yaml: &str) -> Vec<Node> {
+        serde_yaml::from_str(yaml).unwrap()
+    }
+
+    /// A `cli` agent spawns a host binary, so the runtime cannot know the writer
+    /// has stopped. Classifying it as in-process would hand `prune` authority to
+    /// delete files a live child process is still writing.
+    #[test]
+    fn a_cli_agent_node_is_an_external_writer() {
+        let temp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: temp.path().into(),
+        };
+        install_agent(&paths, "shell-tool", "  cli:\n    binary: run-me\n");
+        assert_eq!(
+            classify_nodes(
+                &paths,
+                &nodes("- id: n1\n  agent: shell-tool\n  command: go\n")
+            )
+            .unwrap(),
+            WriterClass::ExternalPossible
+        );
+    }
+
+    /// REST is driven entirely from this process, so a run made only of REST
+    /// nodes has no writer left behind when the run ends.
+    #[test]
+    fn a_rest_agent_node_stays_in_process() {
+        let temp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: temp.path().into(),
+        };
+        install_agent(&paths, "api-tool", "  rest: {}\n");
+        assert_eq!(
+            classify_nodes(
+                &paths,
+                &nodes("- id: n1\n  agent: api-tool\n  command: go\n")
+            )
+            .unwrap(),
+            WriterClass::InProcess
+        );
+    }
+
+    /// The builtin exemption is a conjunction — builtin transport AND the
+    /// `html-report-stream` agent AND its `render-stream` command — and each
+    /// conjunct is falsified on its own below. The transport one matters most
+    /// and is the least obvious: `effective_transport` resolves a manifest
+    /// carrying both `builtin:` and `cli:` to `Cli` (see
+    /// `effective_transport_prioritizes_cli_over_builtin_on_mixed_manifests`),
+    /// so an installed agent can wear the exempted id and command while still
+    /// spawning a host binary.
+    #[test]
+    fn the_builtin_report_streamer_is_safe_only_under_its_own_render_command() {
+        let temp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: temp.path().into(),
+        };
+        install_agent(&paths, "html-report-stream", "  builtin: {}\n");
+        install_agent(&paths, "other-builtin", "  builtin: {}\n");
+
+        assert_eq!(
+            classify_nodes(
+                &paths,
+                &nodes("- id: n1\n  agent: html-report-stream\n  command: render-stream\n")
+            )
+            .unwrap(),
+            WriterClass::InProcess,
+            "the streamer under its own command is the one exempted builtin"
+        );
+        assert_eq!(
+            classify_nodes(
+                &paths,
+                &nodes("- id: n1\n  agent: html-report-stream\n  command: go\n")
+            )
+            .unwrap(),
+            WriterClass::ExternalPossible,
+            "the exemption is per command, not per agent"
+        );
+        assert_eq!(
+            classify_nodes(
+                &paths,
+                &nodes("- id: n1\n  agent: other-builtin\n  command: render-stream\n")
+            )
+            .unwrap(),
+            WriterClass::ExternalPossible,
+            "the exemption is per agent, not per command name"
+        );
+
+        // The transport conjunct on its own: the exempted id AND command, but
+        // dispatched through `cli`. Drop `transport == TransportKind::Builtin`
+        // from the guard and every assertion above still passes, while a
+        // spawned binary's artifacts become eligible for automatic retirement.
+        //
+        // A second aware-home under the same temp root: the agent id
+        // deliberately collides with the builtin one installed above, so the
+        // two cannot share one `agents/` directory.
+        let cli_paths = Paths {
+            aware_home: temp.path().join("cli-backed-home"),
+        };
+        install_agent(
+            &cli_paths,
+            "html-report-stream",
+            "  cli:\n    binary: run-me\n",
+        );
+        assert_eq!(
+            classify_nodes(
+                &cli_paths,
+                &nodes("- id: n1\n  agent: html-report-stream\n  command: render-stream\n")
+            )
+            .unwrap(),
+            WriterClass::ExternalPossible,
+            "the exemption is per transport: the exempted id and command over \
+             `cli` still spawns a host binary"
+        );
+    }
+
+    /// A frozen node replays a pinned output and never reaches its agent, so the
+    /// agent's transport says nothing about who writes during this run.
+    #[test]
+    fn a_frozen_node_is_not_classified_by_the_agent_it_never_runs() {
+        let temp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: temp.path().into(),
+        };
+        install_agent(&paths, "shell-tool", "  cli:\n    binary: run-me\n");
+        assert_eq!(
+            classify_nodes(
+                &paths,
+                &nodes(
+                    "- id: n1\n  agent: shell-tool\n  command: go\n  \
+                     frozen: { value: 1 }\n"
+                )
+            )
+            .unwrap(),
+            WriterClass::InProcess
+        );
+    }
+
+    /// A `for-each` body runs real nodes. An external writer nested inside one
+    /// must raise the whole graph's class, or a safe-looking top level would
+    /// grant retirement authority over artifacts a spawned binary wrote.
+    #[test]
+    fn an_external_writer_nested_in_a_body_is_not_hidden_by_a_safe_parent() {
+        let temp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: temp.path().into(),
+        };
+        install_agent(&paths, "api-tool", "  rest: {}\n");
+        install_agent(&paths, "shell-tool", "  cli:\n    binary: run-me\n");
+        assert_eq!(
+            classify_nodes(
+                &paths,
+                &nodes(
+                    "- id: outer\n  agent: api-tool\n  command: go\n  \
+                     for-each: \"{{ items }}\"\n  do:\n    - id: inner\n      \
+                     agent: shell-tool\n      command: go\n"
+                )
+            )
+            .unwrap(),
+            WriterClass::ExternalPossible
+        );
+    }
+
     #[test]
     fn capability_directory_can_be_durably_synced() {
         let root = tempfile::tempdir().unwrap();
