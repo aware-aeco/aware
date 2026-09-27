@@ -4,8 +4,8 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { canonicalJsonBytes, sha256 } from './model-contract.mjs';
-import { canonicalizeProviderOutput } from './model-canonical-v2.mjs';
+import { canonicalJsonBytes, safeErrorEnvelope, sha256 } from './model-contract.mjs';
+import { canonicalizeProviderOutput, publishOne } from './model-canonical-v2.mjs';
 
 function glb(points) {
   const binary = Buffer.alloc(points.length * 12);
@@ -88,6 +88,68 @@ test('canonicalizes unsorted metadata and multiple geometry tiles into one v2 ro
   const entityShard = JSON.parse(await fs.readFile(result.objects.find((entry) => entry.receipt?.logicalKind === 'entities-shard').pathname));
   assert.deepEqual(entityShard.records.map((entry) => entry.id), ['entity:a', 'entity:b']);
   assert.equal(result.root.sha256, sha256(result.root.bytes));
+});
+
+test('a mid-write ENOSPC leaves no published artifact and a retry succeeds', async (t) => {
+  const directory = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'aware-publish-v2-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const bytes = Buffer.from('complete canonical artifact');
+  const digest = sha256(bytes);
+  const io = {
+    ...fs,
+    open: async (...args) => {
+      const handle = await fs.open(...args);
+      return {
+        writeFile: async (content) => {
+          await handle.writeFile(content.subarray(0, 8));
+          throw Object.assign(new Error('disk full'), { code: 'ENOSPC' });
+        },
+        sync: () => handle.sync(), close: () => handle.close(),
+      };
+    },
+  };
+  await assert.rejects(() => publishOne(directory, 'properties.json', bytes, digest, io), (error) => {
+    const envelope = safeErrorEnvelope(error);
+    return envelope.code === 'reference-artifact-write-failed'
+      && envelope.message.includes('ENOSPC') && error.unsafeDetails.code === 'ENOSPC';
+  });
+  assert.deepEqual(await fs.readdir(directory), []);
+  const descriptor = await publishOne(directory, 'properties.json', bytes, digest);
+  assert.deepEqual(await fs.readFile(path.join(directory, descriptor.id)), bytes);
+  assert.deepEqual(await fs.readdir(directory), [descriptor.id]);
+});
+
+test('complete existing canonical artifacts are reused, while incomplete and changed ones are distinguished', async (t) => {
+  const directory = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'aware-publish-v2-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const bytes = Buffer.from('canonical artifact');
+  const digest = sha256(bytes);
+  const descriptor = await publishOne(directory, 'properties.json', bytes, digest);
+  const noSpace = { ...fs, open: async () => { throw Object.assign(new Error('disk full'), { code: 'ENOSPC' }); } };
+  assert.deepEqual(await publishOne(directory, 'properties.json', bytes, digest, noSpace), descriptor);
+
+  const target = path.join(directory, descriptor.id);
+  await fs.writeFile(target, bytes.subarray(0, 8));
+  await assert.rejects(() => publishOne(directory, 'properties.json', bytes, digest),
+    (error) => error.code === 'reference-artifact-incomplete');
+  assert.deepEqual(await fs.readFile(target), bytes.subarray(0, 8));
+
+  const changed = Buffer.alloc(bytes.length, 0x78);
+  await fs.writeFile(target, changed);
+  await assert.rejects(() => publishOne(directory, 'properties.json', bytes, digest),
+    (error) => error.code === 'reference-artifact-collision');
+  assert.deepEqual(await fs.readFile(target), changed);
+  assert.deepEqual(await fs.readdir(directory), [descriptor.id]);
+});
+
+test('cleanup failure after linking does not report a published artifact as failed', async (t) => {
+  const directory = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'aware-publish-v2-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const bytes = Buffer.from('signed root manifest');
+  const digest = sha256(bytes);
+  const io = { ...fs, rm: async () => { throw Object.assign(new Error('locked temp'), { code: 'EPERM' }); } };
+  const descriptor = await publishOne(directory, 'model-reference-manifest.json', bytes, digest, io);
+  assert.deepEqual(await fs.readFile(path.join(directory, descriptor.id)), bytes);
 });
 
 test('refuses dangling metadata and geometry ownership outside its tile', async (t) => {

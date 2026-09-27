@@ -667,6 +667,13 @@ bounds must name an admitted tile. AWARE signs and publishes a `model-reference-
 four family indexes and content-addressed objects. Cancellation or failure before root publication
 leaves no visible root.
 
+Canonical artifact files are written and synced under unique temporary names in the run-owned
+artifact directory, then installed at their content-addressed names without replacing an existing
+file. A complete matching object may be reused. A filesystem write failure leaves no new final
+artifact and retains its filesystem cause in `reference-artifact-write-failed`; an existing truncated
+object is `reference-artifact-incomplete`, while an existing same-length object with a different
+digest is `reference-artifact-collision`.
+
 For protocol-v3 conversion, a provider may refuse incomplete geometry coverage by exiting nonzero
 with empty stdout and an exact canonical JSON stderr object containing only `code`, `phase`,
 `retryable`, `message` and `diagnosticId`. The reader recognizes only
