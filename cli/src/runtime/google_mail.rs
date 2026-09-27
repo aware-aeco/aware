@@ -1963,6 +1963,69 @@ mod tests {
         assert_eq!(mock.send_count(), 0);
     }
 
+    /// `send_blocking` must run `validate_input` on the way to the provider, and
+    /// nothing else in this module proved it did (#552). Every other validation
+    /// test calls `validate_input` directly, and every other send-path test
+    /// enters at `execute_authenticated`, which never validates. The two tests
+    /// that do reach `send_blocking` hand it input that serde rejects first —
+    /// an unknown field, a bare string where `to` wants an array — and because
+    /// the serde arm emits `gmail.send.validation` too, their assertions cannot
+    /// tell a refusal apart from validation never having run.
+    ///
+    /// So this case deserializes cleanly and is refused on its CONTENT: the
+    /// discriminator is the message, which only `validate_input` can produce.
+    /// Deleting `validate_input(&input)?;` from `send_blocking` carries both
+    /// rows past the preflight and into the credential load, which fails as
+    /// `gmail.send.auth` — so the code assertion goes red rather than staying
+    /// green on a different refusal.
+    #[test]
+    fn send_blocking_refuses_schema_valid_but_malicious_content_before_any_request() {
+        // Each row is schema-valid: `to` is an array of strings, `subject` and
+        // `body` are strings, `attempt-id` is a nonempty visible-ASCII string,
+        // and there is no unknown field. Only the content is hostile — a CRLF
+        // smuggling a `Bcc:` header into an address, then into a subject.
+        let cases = [
+            (
+                json!({
+                    "to": ["person@example.com\r\nBcc: attacker@example.com"],
+                    "subject": "subject",
+                    "body": "body",
+                    "attempt-id": "attempt"
+                }),
+                "recipient address is invalid or too long",
+            ),
+            (
+                json!({
+                    "to": ["person@example.com"],
+                    "subject": "subject\r\nBcc: attacker@example.com",
+                    "body": "body",
+                    "attempt-id": "attempt"
+                }),
+                "subject contains a control character",
+            ),
+        ];
+
+        for (args, expected_message) in cases {
+            let mock = MockHttp::responding(accepted());
+            let error = send_blocking(Path::new("agents"), args, &mock).unwrap_err();
+            let structured = error.structured_agent_error().unwrap();
+
+            assert_eq!(structured.code, "gmail.send.validation");
+            assert_eq!(structured.phase, "preflight");
+            // The message is the discriminator, pinned whole. `validate_input`
+            // produced this one; serde's arm says "does not match the
+            // documented schema", so an input that failed to deserialize could
+            // never assert it. Pinning it exactly also settles the sibling
+            // tests' concern for free: a message equal to this constant cannot
+            // be echoing the injected address or its `Bcc:` header.
+            assert_eq!(&*structured.message, expected_message);
+            // Nothing reached the wire — not even the identity probe, which is
+            // the first network call `execute_authenticated` makes.
+            assert_eq!(mock.send_count(), 0);
+            assert_eq!(mock.identity_count(), 0);
+        }
+    }
+
     #[test]
     fn oauth_preflight_requires_exact_narrowed_scope_set() {
         let temp = tempfile::tempdir().unwrap();
