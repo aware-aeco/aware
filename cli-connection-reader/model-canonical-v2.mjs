@@ -1,4 +1,5 @@
 import { createReadStream } from 'node:fs';
+import { randomUUID } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import readline from 'node:readline';
@@ -279,17 +280,56 @@ export async function canonicalizeProviderOutput(options) {
   };
 }
 
-async function publishOne(directory, logicalPath, bytes, digest) {
+export async function publishOne(directory, logicalPath, bytes, digest, io = fs) {
   const extension = path.extname(logicalPath);
   const id = `model-v2-${digest}${extension}`;
   const target = path.join(directory, id);
-  try { await fs.writeFile(target, bytes, { flag: 'wx', mode: 0o600 }); }
-  catch (error) {
-    if (error?.code !== 'EEXIST' || sha256(await fs.readFile(target)) !== digest) {
-      canonicalError('reference-artifact-collision', 'A canonical artifact collided with different bytes.', error);
+  const descriptor = { id, sha256: digest, bytes: bytes.length };
+  const verifyExisting = async () => {
+    let existing;
+    try { existing = await io.readFile(target); }
+    catch (error) {
+      if (error?.code === 'ENOENT') return false;
+      throw error;
+    }
+    if (existing.length !== bytes.length) {
+      canonicalError('reference-artifact-incomplete', 'An existing canonical artifact is incomplete.');
+    }
+    if (sha256(existing) !== digest) {
+      canonicalError('reference-artifact-collision', 'A canonical artifact collided with different bytes.');
+    }
+    return true;
+  };
+  // Link only after the temporary file is complete. An interrupted write must never leave
+  // truncated bytes at the content-addressed name for a later run to mistake for a collision.
+  const temporary = path.join(directory, `.${id}-${randomUUID()}.tmp`);
+  let created = false; let failed = false;
+  try {
+    if (await verifyExisting()) return descriptor;
+    const handle = await io.open(temporary, 'wx', 0o600);
+    created = true;
+    try { await handle.writeFile(bytes); await handle.sync(); }
+    finally { await handle.close(); }
+    try { await io.link(temporary, target); }
+    catch (error) {
+      if (error?.code !== 'EEXIST') throw error;
+      if (!await verifyExisting()) throw error;
+    }
+  } catch (error) {
+    failed = true;
+    if (error instanceof ModelReaderError) throw error;
+    const cause = typeof error?.code === 'string' && /^E[A-Z0-9]{2,20}$/.test(error.code)
+      ? error.code : 'unknown filesystem error';
+    canonicalError('reference-artifact-write-failed', `Canonical artifact publication failed (${cause}).`, error);
+  } finally {
+    if (created) {
+      try { await io.rm(temporary, { force: true }); }
+      catch (error) {
+        if (!failed) canonicalError('reference-artifact-cleanup-failed', 'Canonical artifact cleanup failed.', error);
+      }
     }
   }
-  return { id, sha256: digest, bytes: bytes.length };
+  return descriptor;
 }
 
 export async function publishCanonicalArtifact(canonical, signingKey, directory) {
