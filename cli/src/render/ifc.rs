@@ -808,12 +808,22 @@ fn mesh_bounding_diagonal(el: &Value) -> Option<f64> {
     let positions = el.get("positions")?.as_array()?;
     let mut min = [f64::INFINITY; 3];
     let mut max = [f64::NEG_INFINITY; 3];
+    let mut bounded = false;
     for point in positions.chunks_exact(3) {
+        bounded = true;
         for axis in 0..3 {
             let value = point[axis].as_f64()?;
             min[axis] = min[axis].min(value);
             max[axis] = max[axis].max(value);
         }
+    }
+    // No complete triple is no bounding box, so say so rather than measuring the
+    // untouched seeds: `max - min` on those is `-inf`, whose square is `+inf`, and the
+    // caller would record an INFINITE half-span for the product. `emit_mesh` refuses a
+    // mesh under three points before this is asked for, so nothing reaches it today —
+    // but a second caller would inherit the trap. (Codex review, #586.)
+    if !bounded {
+        return None;
     }
     Some(
         (0..3)
@@ -4508,16 +4518,21 @@ mod tests {
         // an INTEGER token — schema-invalid in an IfcLengthMeasure slot, and invisible
         // to a test that only greps for entity names.
         //
-        // BOTH fixtures, deliberately. The member path and the placement emitter are
+        // THREE fixtures, deliberately. The member path and the placement emitter are
         // different call sites, and `sample_scene` reaches only the first: a bypass in
         // `emit_axis2_placement3d` (fasteners, welds, swept solids) is invisible to it,
         // which is exactly how the first draft of this test passed under that mutation.
-        let mut ordinates = 0;
-        // A coordinate finer than the eleven-place grid, so the precision half of the
-        // assertion below is REACHED: every ordinate in the two fixtures above is whole
-        // or short, where `{:?}` and `r()` agree by coincidence.
-        let fine = json!({
-            "meta": { "name": "fine" },
+        //
+        // The third carries a coordinate finer than the eleven-place grid, and it is
+        // pinned to the EXACT token `r` must produce. An upper bound on the fraction
+        // length is not enough on its own: a site formatting with `{:.6}` emits
+        // `0.123457`, which is a finite REAL with six decimals and clears any `<= 11`
+        // check while having silently lost the grid. (Codex review, #586.)
+        const FINE_X: &str = "0.123456789012345";
+        const FINE_TOKEN: &str = "0.12345678901";
+        // The MEMBER path.
+        let fine_member = json!({
+            "meta": { "name": "fine member" },
             "elements": [
                 { "id": "C1", "role": "column",
                   "from": [0.123456789012345, 0.0, 0.0],
@@ -4525,12 +4540,32 @@ mod tests {
                   "section": { "w": 100, "d": 100 } }
             ]
         });
-        for (fixture, scene) in [
-            ("sample", sample_scene()),
-            ("connection", connection_scene()),
-            ("fine", fine),
+        // The PLACEMENT path, which is a different emitter: a plate's frame origin
+        // reaches `emit_axis2_placement3d` (via `emit_axis_placement`), where the
+        // member fixture above never goes. Without this one a `{:.6}` in the
+        // placement emitter alone still passed. (Codex review, #586.)
+        let fine_placement = json!({
+            "meta": { "name": "fine placement", "units": "mm" },
+            "elements": [
+                { "id": "PL-1", "kind": "plate",
+                  "frame": { "origin": [0.123456789012345, 0.0, 0.0], "uDir": [1,0,0],
+                             "vDir": [0,1,0], "normal": [0,0,1] },
+                  "outline": [[-100,-150],[100,-150],[100,150],[-100,150]],
+                  "thicknessMm": 12 }
+            ]
+        });
+        // The sentinel is only load-bearing if `r` really does shorten it, so say so
+        // here rather than trusting the two literals above to stay in step.
+        assert_eq!(r(FINE_X.parse().expect("a finite literal")), FINE_TOKEN);
+
+        for (fixture, scene, floor, fine) in [
+            ("sample", sample_scene(), 3, false),
+            ("connection", connection_scene(), 30, false),
+            ("fine member", fine_member, 3, true),
+            ("fine placement", fine_placement, 3, true),
         ] {
             let doc = build_ifc(&scene).doc;
+            let mut ordinates = 0;
             for chunk in doc.split("IFCCARTESIANPOINT((").skip(1) {
                 let inner = chunk.split("))").next().expect("closed point literal");
                 for ordinate in inner.split(',') {
@@ -4553,11 +4588,31 @@ mod tests {
                     ordinates += 1;
                 }
             }
+            // PER FIXTURE, not summed. Against one aggregate floor the connection scene
+            // clears it alone, so either of the others could stop emitting points
+            // entirely — and the fine fixture going quiet is what makes the precision
+            // check above vacuous. (Codex review, #586.)
+            assert!(
+                ordinates >= floor,
+                "{fixture} contributed only {ordinates} ordinates, expected at least \
+                 {floor} — it has stopped reaching the emitters, so this test went \
+                 quiet rather than red"
+            );
+            if fine {
+                // The fixtures whose ordinate distinguishes `r` from every
+                // lower-precision formatter, asserted as the exact token. One per
+                // emit path, so a bypass at either is caught.
+                assert!(
+                    doc.contains(FINE_TOKEN),
+                    "{fixture}: no ordinate spelled {FINE_TOKEN:?}, so an emit site \
+                     rounded to a coarser grid than `r` does"
+                );
+                assert!(
+                    !doc.contains(FINE_X),
+                    "{fixture}: the raw {FINE_X:?} reached the document unrounded"
+                );
+            }
         }
-        // Enough to be sure both fixtures contributed — the connection scene alone
-        // places dozens of points. A drop here means a fixture stopped reaching the
-        // emitters and the loop above went quiet rather than red.
-        assert!(ordinates > 60, "only {ordinates} ordinates checked");
     }
 
     #[test]
@@ -4831,14 +4886,15 @@ mod tests {
             mesh_bounding_diagonal(&json!({ "positions": [0, 0, 0, "x", "y"] })),
             Some(0.0)
         );
-        // No positions at all yields no USABLE span rather than a finite zero. Nothing
-        // reaches this through the writer — `emit_mesh` refuses a mesh under three
-        // points before the span is asked for — so this pins the shape, not a
-        // behaviour a caller may lean on.
-        assert!(
-            !mesh_bounding_diagonal(&json!({ "positions": [] }))
-                .expect("an empty list is still a list")
-                .is_finite()
+        // No complete triple is no bounding box, so there is no span to report. This
+        // asserts `None` rather than accepting the `Some(inf)` the untouched
+        // INFINITY/NEG_INFINITY seeds used to produce: a test that pinned the leak
+        // would have to be rewritten by anyone who fixed it, which is backwards.
+        // (Codex review, #586.)
+        assert_eq!(mesh_bounding_diagonal(&json!({ "positions": [] })), None);
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [1, 1] })),
+            None
         );
     }
 
@@ -4940,11 +4996,28 @@ mod tests {
         assert_eq!(guid(0), "0000000000000000000001");
         assert_eq!(guid(63), "0000000000000000000010");
         assert_eq!(guid(4095), "0000000000000000000100");
+
+        // Spelled out here, NOT read from `B64`. Checking the output against the same
+        // constant the producer indexes is no check at all: swapping a symbol for one
+        // outside the IFC GUID set changes producer and oracle together and the
+        // assertion stays green. This literal is the ISO 10303-21 GlobalId alphabet as
+        // the spec gives it, so a change to `B64` has to disagree with something.
+        // (Codex review, #586.)
+        const IFC_GUID_ALPHABET: &str = "0123456789\
+             ABCDEFGHIJKLMNOPQRSTUVWXYZ\
+             abcdefghijklmnopqrstuvwxyz\
+             _$";
+        assert_eq!(IFC_GUID_ALPHABET.len(), 64);
+        assert_eq!(
+            IFC_GUID_ALPHABET.as_bytes(),
+            B64,
+            "the writer's alphabet has drifted from the IFC GUID set"
+        );
         for n in [0, 1, 63, 64, 4095, 1_000_000, i32::MAX as i64] {
             let id = guid(n);
             assert_eq!(id.len(), 22, "{n} -> {id}");
             assert!(
-                id.bytes().all(|b| B64.contains(&b)),
+                id.chars().all(|c| IFC_GUID_ALPHABET.contains(c)),
                 "{n} -> {id} leaves the IFC GUID alphabet"
             );
         }
