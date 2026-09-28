@@ -21,9 +21,7 @@ pub fn tree_digest(root: &Path) -> Result<String, AwareError> {
         )));
     }
     let root = root.canonicalize()?;
-    let mut files = Vec::new();
-    collect(&root, &root, &mut files)?;
-    digest_files(files)
+    digest_files(digest_inputs(&root)?)
 }
 
 /// Hash the exact Git index blobs a repository archive will contain. Staged
@@ -287,41 +285,18 @@ fn digest_files(mut files: Vec<(String, PathBuf)>) -> Result<String, AwareError>
     Ok(format!("sha256:{:x}", h.finalize()))
 }
 
-fn collect(root: &Path, dir: &Path, out: &mut Vec<(String, PathBuf)>) -> Result<(), AwareError> {
-    let mut entries = std::fs::read_dir(dir)?.collect::<Result<Vec<_>, _>>()?;
-    entries.sort_by_key(std::fs::DirEntry::file_name);
-    for entry in entries {
-        let path = entry.path();
-        let metadata = std::fs::symlink_metadata(&path)?;
-        if metadata.file_type().is_symlink() || is_reparse_point(&metadata) {
-            return Err(AwareError::Validation(format!(
-                "agent bundle contains symlink/reparse indirection: {}",
-                path.display()
-            )));
-        }
-        if metadata.is_dir() {
-            collect(root, &path, out)?;
-        } else if metadata.is_file() {
-            let relative = path.strip_prefix(root).map_err(|_| {
-                AwareError::Validation(format!("bundle path escaped root: {}", path.display()))
-            })?;
-            let normalized = relative
-                .components()
-                .map(|c| c.as_os_str().to_str())
-                .collect::<Option<Vec<_>>>()
-                .ok_or_else(|| AwareError::Validation("bundle path is not UTF-8".into()))?
-                .join("/");
-            if normalized != super::provenance::FILE {
-                out.push((normalized, path));
-            }
-        } else {
-            return Err(AwareError::Validation(format!(
-                "agent bundle contains non-regular entry: {}",
-                path.display()
-            )));
-        }
-    }
-    Ok(())
+/// Every bundle file that contributes to the digest: the tree walk, minus the
+/// install receipt.
+///
+/// The exclusion lives here and not in [`crate::fs::plain_files_under`] because
+/// it is this caller's rule, not the walk's — the receipt is written *after* a
+/// bundle is hashed and promoted, so including it would make a bundle's digest
+/// change the moment it was installed. The shared walk stays a walk.
+fn digest_inputs(root: &Path) -> Result<Vec<(String, PathBuf)>, AwareError> {
+    Ok(crate::fs::plain_files_under(root, "agent bundle")?
+        .into_iter()
+        .filter(|(relative, _)| relative != super::provenance::FILE)
+        .collect())
 }
 
 #[cfg(test)]

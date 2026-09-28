@@ -70,14 +70,7 @@ pub fn build_from_npm(spec: &str, agent_id: Option<&str>) -> Result<GeneratedAge
     let (name, version) = parse_npm_spec(spec)?;
     let url = tarball_url(&name, &version);
 
-    let resp = ureq::get(&url)
-        .call()
-        .map_err(|e| AwareError::Network(format!("GET {url}: {e}")))?;
-    let mut bytes = Vec::new();
-    resp.into_reader()
-        .read_to_end(&mut bytes)
-        .map_err(|e| AwareError::Network(format!("read: {e}")))?;
-
+    let bytes = crate::http_body::get_bytes(&url)?;
     build_from_bytes(&bytes, &name, &version, agent_id)
 }
 

@@ -44,7 +44,7 @@ fn regenerate(ctx: &Context) -> Result<(), AwareError> {
         .map(std::path::PathBuf::from)
         .unwrap_or_else(|| home.join(".codex/plugins"));
     if codex_target.exists() || std::env::var_os("AWARE_PLUGINS_CODEX").is_some() {
-        crate::plugins::codex::generate(&agents, &codex_target)?;
+        crate::plugins::scaffold::generate("Codex", &codex_target)?;
         println!("  \u{2713} codex: scaffold (format pending)");
     } else {
         println!("  \u{00b7} codex: ~/.codex/plugins not present (skipped)");
@@ -55,7 +55,7 @@ fn regenerate(ctx: &Context) -> Result<(), AwareError> {
         .map(std::path::PathBuf::from)
         .unwrap_or_else(|| home.join(".opencode/plugins"));
     if opencode_target.exists() || std::env::var_os("AWARE_PLUGINS_OPENCODE").is_some() {
-        crate::plugins::opencode::generate(&agents, &opencode_target)?;
+        crate::plugins::scaffold::generate("OpenCode", &opencode_target)?;
         println!("  \u{2713} opencode: scaffold (format pending)");
     } else {
         println!("  \u{00b7} opencode: ~/.opencode/plugins not present (skipped)");

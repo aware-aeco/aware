@@ -13,7 +13,6 @@
 //! directory (a YARD output dir on disk).
 
 use std::collections::BTreeMap;
-use std::io::Read;
 use std::path::{Path, PathBuf};
 
 use scraper::{Html, Selector};
@@ -143,15 +142,7 @@ impl YardSource {
     fn fetch(&self, relative_path: &str) -> Result<String, AwareError> {
         match self {
             YardSource::Url(base) => {
-                let url = format!("{base}/{relative_path}");
-                let resp = ureq::get(&url)
-                    .call()
-                    .map_err(|e| AwareError::Network(format!("GET {url}: {e}")))?;
-                let mut body = String::new();
-                resp.into_reader()
-                    .read_to_string(&mut body)
-                    .map_err(|e| AwareError::Network(format!("read {url}: {e}")))?;
-                Ok(body)
+                crate::http_body::get_string(&format!("{base}/{relative_path}"))
             }
             YardSource::Dir(root) => {
                 let file = root.join(relative_path);

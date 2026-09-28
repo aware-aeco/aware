@@ -1,6 +1,9 @@
 //! Small filesystem helpers shared across the crate.
 
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
+
+use crate::error::AwareError;
 
 /// Whether `metadata` describes a Windows reparse point — the NTFS indirection
 /// that backs junctions, mount points and symlink surrogates.
@@ -31,6 +34,114 @@ pub(crate) fn is_reparse_point(metadata: &std::fs::Metadata) -> bool {
 #[cfg(not(windows))]
 pub(crate) fn is_reparse_point(_metadata: &std::fs::Metadata) -> bool {
     false
+}
+
+/// Whether `metadata` describes a plain file — a regular file reached without
+/// crossing any name indirection.
+///
+/// The pair `is_file() && !is_symlink() && !is_reparse_point()` was written out
+/// at six call sites across `provider_store`, `install::integrity` and
+/// `runtime::google_mail`, in three different orders and two different lengths:
+/// `runtime::google_mail` omitted the `is_symlink()` clause, which is harmless
+/// only because [`std::fs::symlink_metadata`] reports a symlink as neither file
+/// nor directory — so the omission is invisible until someone passes
+/// [`std::fs::metadata`], which follows the link and answers `is_file()` for its
+/// target. Spelling the rule once removes the chance to write five sixths of it.
+pub(crate) fn is_plain_file(metadata: &std::fs::Metadata) -> bool {
+    metadata.is_file() && !metadata.file_type().is_symlink() && !is_reparse_point(metadata)
+}
+
+/// Whether `metadata` describes a plain directory — see [`is_plain_file`].
+///
+/// A Windows junction is the case that makes the reparse check load-bearing
+/// here rather than redundant: it answers `is_dir()` *and* carries the reparse
+/// bit, so a guard that tested only `is_dir() && !is_symlink()` would walk
+/// straight through it.
+pub(crate) fn is_plain_dir(metadata: &std::fs::Metadata) -> bool {
+    metadata.is_dir() && !metadata.file_type().is_symlink() && !is_reparse_point(metadata)
+}
+
+/// Every plain file beneath `root`, keyed by its `/`-separated path relative to
+/// `root` — refusing, rather than skipping, any entry that is not a plain file
+/// or a plain directory.
+///
+/// `subject` names the thing being walked ("agent bundle", "provider package")
+/// and appears in each refusal, because these walks are security guards whose
+/// message is the only thing a user gets to act on.
+///
+/// `install::integrity::collect` and `provider_store::walk_regular_files` were
+/// this function twice, and had already drifted in a way that matters:
+///
+/// * `install::integrity` rejected a non-UTF-8 component outright, while
+///   `provider_store` ran the relative path through `to_string_lossy()`. A
+///   filename that is not valid UTF-8 therefore became a string full of U+FFFD
+///   and was *compared* against the package manifest's allowlist instead of
+///   refused — so the closed-allowlist check it feeds silently compared the
+///   wrong name. The rejecting behaviour is the one kept.
+/// * `provider_store` spelled the separator fix as `replace('\\', "/")` on the
+///   whole rendered path, which also rewrites a backslash that is part of a
+///   filename on Unix. Joining the components, as `install::integrity` did, has
+///   no such reach.
+///
+/// The ordering that a `BTreeMap` key gives is byte-wise over the relative path,
+/// which is what `install::integrity`'s digest already re-sorted to, so a tree's
+/// digest is unchanged by moving to this walk.
+///
+/// Callers that need a subset filter it out of the returned map; the walk itself
+/// grows no exclusion parameter for one caller's benefit.
+pub(crate) fn plain_files_under(
+    root: &Path,
+    subject: &str,
+) -> Result<BTreeMap<String, PathBuf>, AwareError> {
+    let mut files = BTreeMap::new();
+    collect_plain_files(root, root, subject, &mut files)?;
+    Ok(files)
+}
+
+fn collect_plain_files(
+    root: &Path,
+    dir: &Path,
+    subject: &str,
+    out: &mut BTreeMap<String, PathBuf>,
+) -> Result<(), AwareError> {
+    for entry in std::fs::read_dir(dir)? {
+        let path = entry?.path();
+        let metadata = std::fs::symlink_metadata(&path)?;
+        if metadata.file_type().is_symlink() || is_reparse_point(&metadata) {
+            return Err(AwareError::Validation(format!(
+                "{subject} contains symlink/reparse indirection: {}",
+                path.display()
+            )));
+        }
+        if is_plain_dir(&metadata) {
+            collect_plain_files(root, &path, subject, out)?;
+        } else if is_plain_file(&metadata) {
+            let relative = path.strip_prefix(root).map_err(|_| {
+                AwareError::Validation(format!(
+                    "{subject} path escaped its root: {}",
+                    path.display()
+                ))
+            })?;
+            let normalized = relative
+                .components()
+                .map(|component| component.as_os_str().to_str())
+                .collect::<Option<Vec<_>>>()
+                .ok_or_else(|| {
+                    AwareError::Validation(format!(
+                        "{subject} path is not UTF-8: {}",
+                        path.display()
+                    ))
+                })?
+                .join("/");
+            out.insert(normalized, path);
+        } else {
+            return Err(AwareError::Validation(format!(
+                "{subject} contains a non-regular entry: {}",
+                path.display()
+            )));
+        }
+    }
+    Ok(())
 }
 
 /// Recursively copy every file under `src` into `dst`, creating `dst` and any
@@ -355,5 +466,138 @@ mod tests {
             std::fs::read(dst.join("two/link/s.txt")).unwrap(),
             b"shared"
         );
+    }
+
+    /// The walk's whole output contract in one assertion: it descends, it keys
+    /// by the `/`-separated relative path on every platform, and it carries the
+    /// real path so a caller can reopen the file without rebuilding it.
+    #[test]
+    fn the_walk_descends_and_keys_by_slash_separated_relative_paths() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::create_dir_all(root.join("bin").join("deep")).unwrap();
+        std::fs::write(root.join("top"), b"t").unwrap();
+        std::fs::write(root.join("bin").join("run"), b"r").unwrap();
+        std::fs::write(root.join("bin").join("deep").join("lib.so"), b"l").unwrap();
+
+        let files = plain_files_under(root, "subject").unwrap();
+
+        assert_eq!(
+            files.keys().cloned().collect::<Vec<_>>(),
+            vec![
+                "bin/deep/lib.so".to_string(),
+                "bin/run".to_string(),
+                "top".to_string(),
+            ],
+            "keys must be `/`-separated relative paths in byte order"
+        );
+        assert_eq!(
+            files["bin/deep/lib.so"],
+            root.join("bin").join("deep").join("lib.so")
+        );
+    }
+
+    /// Every refusal names the subject it was given, because the message is the
+    /// only thing a user of a security guard gets to act on. A shared walk that
+    /// dropped the subject would report "contains symlink/reparse indirection"
+    /// with no clue whether an agent bundle or a provider package was at fault.
+    #[cfg(unix)]
+    #[test]
+    fn a_link_anywhere_beneath_the_root_is_refused_and_names_the_subject() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::create_dir(root.join("bin")).unwrap();
+        std::os::unix::fs::symlink("/etc/passwd", root.join("bin").join("secrets")).unwrap();
+
+        match plain_files_under(root, "provider package") {
+            Err(crate::error::AwareError::Validation(message)) => {
+                assert!(
+                    message.contains("provider package contains symlink/reparse indirection"),
+                    "the link guard, not the non-regular fallback, must reject this: {message}"
+                );
+                assert!(message.contains("secrets"), "{message}");
+            }
+            other => panic!("expected the link guard to refuse the entry, got {other:?}"),
+        }
+    }
+
+    /// A FIFO is neither a plain file nor a plain directory, and is refused
+    /// rather than skipped: these walks feed closed-allowlist comparisons and a
+    /// digest, both of which are wrong if an entry is quietly omitted.
+    #[cfg(unix)]
+    #[test]
+    fn a_non_regular_entry_is_refused_rather_than_skipped() {
+        use std::os::unix::fs::FileTypeExt;
+
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        let fifo = root.join("pipe");
+        let status = std::process::Command::new("mkfifo")
+            .arg(&fifo)
+            .status()
+            .expect("mkfifo");
+        assert!(status.success(), "mkfifo failed");
+        assert!(
+            std::fs::symlink_metadata(&fifo)
+                .unwrap()
+                .file_type()
+                .is_fifo()
+        );
+
+        match plain_files_under(root, "agent bundle") {
+            Err(crate::error::AwareError::Validation(message)) => assert!(
+                message.contains("agent bundle contains a non-regular entry"),
+                "{message}"
+            ),
+            other => panic!("expected the non-regular guard to refuse the FIFO, got {other:?}"),
+        }
+    }
+
+    /// The drift this walk exists to end: `provider_store` ran the relative path
+    /// through `to_string_lossy()`, so a name that is not valid UTF-8 became a
+    /// string of U+FFFD and was *compared* against a manifest allowlist instead
+    /// of refused. Refusing is the behaviour kept, and this is what holds it.
+    #[cfg(unix)]
+    #[test]
+    fn a_non_utf8_filename_is_refused_rather_than_lossily_renamed() {
+        use std::ffi::OsStr;
+        use std::os::unix::ffi::OsStrExt;
+
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        // 0x80 is a continuation byte with no lead byte: valid in a POSIX
+        // filename, never valid UTF-8.
+        let name = OsStr::from_bytes(b"bad\x80name");
+        std::fs::write(root.join(name), b"x").unwrap();
+
+        match plain_files_under(root, "provider package") {
+            Err(crate::error::AwareError::Validation(message)) => assert!(
+                message.contains("provider package path is not UTF-8"),
+                "{message}"
+            ),
+            other => panic!("expected the UTF-8 guard to refuse the entry, got {other:?}"),
+        }
+    }
+
+    /// `is_plain_dir` must not accept a directory reached through a link. On
+    /// Unix `symlink_metadata` already reports the link itself, so the clause
+    /// that carries this is `!is_symlink()`; on Windows a junction is what makes
+    /// the reparse half load-bearing, which no test here can reach.
+    #[cfg(unix)]
+    #[test]
+    fn a_symlink_is_neither_a_plain_file_nor_a_plain_dir() {
+        let tmp = tempfile::tempdir().unwrap();
+        let target = tmp.path().join("real");
+        std::fs::create_dir(&target).unwrap();
+        let link = tmp.path().join("link");
+        std::os::unix::fs::symlink(&target, &link).unwrap();
+
+        let through_link = std::fs::symlink_metadata(&link).unwrap();
+        assert!(!is_plain_dir(&through_link));
+        assert!(!is_plain_file(&through_link));
+
+        let direct = std::fs::symlink_metadata(&target).unwrap();
+        assert!(is_plain_dir(&direct));
+        assert!(!is_plain_file(&direct));
     }
 }

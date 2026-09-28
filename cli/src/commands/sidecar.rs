@@ -310,7 +310,7 @@ fn install(ctx: &Context, host: &str) -> Result<(), AwareError> {
     println!("Downloading {} from:", bridge.binary);
     println!("  {url}");
 
-    let bytes = http_get_bytes(&url)?;
+    let bytes = crate::http_body::get_bytes(&url)?;
 
     match bridge.asset_kind {
         AssetKind::Exe => {
@@ -544,24 +544,6 @@ fn lookup_bridge(host: &str) -> Result<&'static Bridge, AwareError> {
             ids.join(", ")
         ))
     })
-}
-
-/// Simple HTTP GET returning bytes. Uses `ureq` (already a Cargo dependency).
-fn http_get_bytes(url: &str) -> Result<Vec<u8>, AwareError> {
-    let resp = ureq::get(url)
-        .call()
-        .map_err(|e| AwareError::Network(format!("download {url}: {e}")))?;
-
-    let len: usize = resp
-        .header("content-length")
-        .and_then(|v| v.parse().ok())
-        .unwrap_or(8 * 1024 * 1024); // 8 MB default buf
-
-    let mut bytes = Vec::with_capacity(len);
-    resp.into_reader()
-        .read_to_end(&mut bytes)
-        .map_err(|e| AwareError::Network(format!("read body {url}: {e}")))?;
-    Ok(bytes)
 }
 
 /// Extract `<binary>.exe` (and any sibling files) from an in-memory zip into
