@@ -4,7 +4,6 @@
 //! Accepts JSON or YAML; HTTP(S) URL or local file path.
 
 use std::collections::BTreeMap;
-use std::io::Read;
 
 use serde_json::Value;
 
@@ -495,14 +494,7 @@ fn build_outputs_yaml(spec: &Value, op: &Value) -> String {
 
 fn fetch_spec(input: &str) -> Result<String, AwareError> {
     if input.starts_with("http://") || input.starts_with("https://") {
-        let resp = ureq::get(input)
-            .call()
-            .map_err(|e| AwareError::Network(format!("GET {input}: {e}")))?;
-        let mut s = String::new();
-        resp.into_reader()
-            .read_to_string(&mut s)
-            .map_err(|e| AwareError::Network(format!("read: {e}")))?;
-        Ok(s)
+        crate::http_body::get_string(input)
     } else {
         std::fs::read_to_string(input).map_err(AwareError::Io)
     }

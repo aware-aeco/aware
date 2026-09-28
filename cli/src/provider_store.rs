@@ -789,7 +789,7 @@ fn verify_package_inventory(root: &Path, manifest: &PackageManifest) -> Result<(
         .map(|file| file.path.clone())
         .chain([MANIFEST_NAME.into(), SIGNATURE_NAME.into()])
         .collect::<BTreeSet<_>>();
-    let actual = walk_regular_files(root, root)?;
+    let actual = walk_regular_files(root)?;
     if actual != expected {
         return Err(AwareError::Validation(
             "provider package directory is not a closed manifest allowlist".into(),
@@ -808,31 +808,16 @@ fn verify_package_inventory(root: &Path, manifest: &PackageManifest) -> Result<(
     Ok(())
 }
 
-fn walk_regular_files(root: &Path, directory: &Path) -> Result<BTreeSet<String>, AwareError> {
-    let mut files = BTreeSet::new();
-    for entry in std::fs::read_dir(directory)? {
-        let entry = entry?;
-        let path = entry.path();
-        let metadata = std::fs::symlink_metadata(&path)?;
-        if metadata.file_type().is_symlink() || crate::fs::is_reparse_point(&metadata) {
-            return Err(AwareError::Validation(
-                "provider package cannot contain links or reparse points".into(),
-            ));
-        }
-        if metadata.is_dir() {
-            files.extend(walk_regular_files(root, &path)?);
-        } else if metadata.is_file() {
-            let relative = path
-                .strip_prefix(root)
-                .map_err(|_| AwareError::Internal("package inventory escaped its root".into()))?;
-            files.insert(relative.to_string_lossy().replace('\\', "/"));
-        } else {
-            return Err(AwareError::Validation(
-                "provider package can contain only regular files".into(),
-            ));
-        }
-    }
-    Ok(files)
+/// The package's actual file inventory, `/`-separated and relative to `root`.
+///
+/// The walk itself is [`crate::fs::plain_files_under`], shared with
+/// `install::integrity`. Only the names are wanted here — the inventory is
+/// compared against the manifest's allowlist as a set, and each allowed file is
+/// then reopened by its manifest path to be hashed.
+fn walk_regular_files(root: &Path) -> Result<BTreeSet<String>, AwareError> {
+    Ok(crate::fs::plain_files_under(root, "provider package")?
+        .into_keys()
+        .collect())
 }
 
 fn canonical_regular_directory(path: &Path) -> Result<PathBuf, AwareError> {
@@ -1861,7 +1846,7 @@ mod tests {
         std::fs::write(root.join("bin").join("deep").join("lib.so"), b"").unwrap();
 
         assert_eq!(
-            walk_regular_files(root, root).unwrap(),
+            walk_regular_files(root).unwrap(),
             BTreeSet::from([
                 "bin/deep/lib.so".to_string(),
                 "bin/provider".to_string(),
@@ -1881,17 +1866,18 @@ mod tests {
         // back a clean inventory that never saw this entry at all. Note this
         // does NOT isolate the explicit `is_symlink()` guard — with that guard
         // deleted a symlink still reports neither dir nor file on Unix, so the
-        // `else` arm ("only regular files") rejects it and this stays green.
+        // `else` arm ("a non-regular entry") rejects it and this stays green.
         // The guard is load-bearing on Windows, where a junction reports
         // `is_dir()` AND the reparse bit; nothing here covers that.
         std::os::unix::fs::symlink("/etc/passwd", root.join("bin").join("secrets")).unwrap();
         // Matched on the message, not `is_err()`: with the link guard deleted
         // the `else` arm still rejects the entry, but with a different string
-        // ("can contain only regular files"), so only this tells the guard
-        // being gone apart from the guard doing its job.
-        match walk_regular_files(root, root) {
+        // ("a non-regular entry"), so only this tells the guard being gone apart
+        // from the guard doing its job. The wording is `crate::fs`'s since the
+        // walk moved there, and still names this package as the subject.
+        match walk_regular_files(root) {
             Err(AwareError::Validation(message)) => assert!(
-                message.contains("links or reparse points"),
+                message.contains("provider package contains symlink/reparse indirection"),
                 "the link guard, not the regular-file fallback, must reject this: {message}"
             ),
             other => panic!("expected the link guard to reject the entry, got {other:?}"),

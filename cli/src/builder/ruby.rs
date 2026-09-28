@@ -29,13 +29,7 @@ pub fn build_from_ruby(spec: &str, agent_id: Option<&str>) -> Result<GeneratedAg
         }
     };
     let url = format!("https://rubygems.org/downloads/{name}-{version}.gem");
-    let resp = ureq::get(&url)
-        .call()
-        .map_err(|e| AwareError::Network(format!("GET {url}: {e}")))?;
-    let mut bytes = Vec::new();
-    resp.into_reader()
-        .read_to_end(&mut bytes)
-        .map_err(|e| AwareError::Network(format!("read: {e}")))?;
+    let bytes = crate::http_body::get_bytes(&url)?;
     build_from_bytes(&bytes, &name, &version, agent_id)
 }
 

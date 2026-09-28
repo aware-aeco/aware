@@ -166,8 +166,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 - `cli::auth::keychain` — encryption via OS keyring (Mac Keychain / Windows DPAPI / Linux libsecret)
 - `cli::auth::refresh` — transparent refresh in the runtime path
 - `cli::plugins::claude_code` — generate `~/.claude/plugins/aware-aeco/`
-- `cli::plugins::codex` — generate `~/.codex/plugins/aware-aeco/`
-- `cli::plugins::opencode` — generate `~/.opencode/plugins/aware-aeco/`
+- `cli::plugins::scaffold` — generate the placeholder marker for a host whose plugin format is not settled yet, named by the caller: `~/.codex/plugins/aware-aeco/` and `~/.opencode/plugins/aware-aeco/` both come from here. (Shipped as one module rather than the `cli::plugins::codex` / `cli::plugins::opencode` pair this line used to name: the two bodies differed only in the host's display name, so that is the parameter and the rest is shared.)
 
 **Definition of done**:
 - `aware connect trimble-connect` survives a real OAuth flow against `app.connect.trimble.com`
