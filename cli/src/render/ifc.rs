@@ -4529,6 +4529,7 @@ mod tests {
         // `0.123457`, which is a finite REAL with six decimals and clears any `<= 11`
         // check while having silently lost the grid. (Codex review, #586.)
         const FINE_X: &str = "0.123456789012345";
+        const FINE_VALUE: f64 = 0.123456789012345;
         const FINE_TOKEN: &str = "0.12345678901";
         // The MEMBER path.
         let fine_member = json!({
@@ -4550,7 +4551,11 @@ mod tests {
                 { "id": "PL-1", "kind": "plate",
                   "frame": { "origin": [0.123456789012345, 0.0, 0.0], "uDir": [1,0,0],
                              "vDir": [0,1,0], "normal": [0,0,1] },
-                  "outline": [[-100,-150],[100,-150],[100,150],[-100,150]],
+                  // A fine OUTLINE vertex too: the outline goes through
+                  // `emit_polyline2`, a third emit site that neither the member nor the
+                  // frame-origin sentinel reaches. (Codex review, #586.)
+                  "outline": [[-100,-150],[100,-150],[100,0.123456789012345],
+                              [0.123456789012345,150],[-100,150]],
                   "thicknessMm": 12 }
             ]
         });
@@ -4558,14 +4563,15 @@ mod tests {
         // here rather than trusting the two literals above to stay in step.
         assert_eq!(r(FINE_X.parse().expect("a finite literal")), FINE_TOKEN);
 
-        for (fixture, scene, floor, fine) in [
-            ("sample", sample_scene(), 3, false),
-            ("connection", connection_scene(), 30, false),
-            ("fine member", fine_member, 3, true),
-            ("fine placement", fine_placement, 3, true),
+        for (fixture, scene, floor, fine, sentinel_floor) in [
+            ("sample", sample_scene(), 3, false, 0),
+            ("connection", connection_scene(), 30, false, 0),
+            ("fine member", fine_member, 3, true, 1),
+            ("fine placement", fine_placement, 3, true, 3),
         ] {
             let doc = build_ifc(&scene).doc;
             let mut ordinates = 0;
+            let mut sentinels = 0;
             for chunk in doc.split("IFCCARTESIANPOINT((").skip(1) {
                 let inner = chunk.split("))").next().expect("closed point literal");
                 for ordinate in inner.split(',') {
@@ -4586,6 +4592,25 @@ mod tests {
                         "{fixture}: {ordinate:?} has no whole part"
                     );
                     ordinates += 1;
+
+                    // EVERY ordinate near the sentinel must be spelled exactly as `r`
+                    // spells it. A document-wide `contains` is not enough: these
+                    // fixtures reach three separate emitters, so one going coarse still
+                    // leaves the token present from the other two and the check passes.
+                    // Checking per ordinate makes a single coarse site red.
+                    // (Codex review, #586.)
+                    if fine {
+                        let value: f64 = ordinate.parse().expect("checked finite above");
+                        if (value - FINE_VALUE).abs() < 1e-6 {
+                            assert_eq!(
+                                ordinate, FINE_TOKEN,
+                                "{fixture}: an ordinate carrying the fine sentinel was \
+                                 spelled {ordinate:?} — its emit site rounded to a \
+                                 coarser grid than `r` does"
+                            );
+                            sentinels += 1;
+                        }
+                    }
                 }
             }
             // PER FIXTURE, not summed. Against one aggregate floor the connection scene
@@ -4599,13 +4624,15 @@ mod tests {
                  quiet rather than red"
             );
             if fine {
-                // The fixtures whose ordinate distinguishes `r` from every
-                // lower-precision formatter, asserted as the exact token. One per
-                // emit path, so a bypass at either is caught.
+                // ...and the sentinel must actually be reached, or the per-ordinate
+                // check above never runs. `fine placement` carries three: two outline
+                // vertices through `emit_polyline2` and the frame origin through
+                // `emit_axis2_placement3d`.
                 assert!(
-                    doc.contains(FINE_TOKEN),
-                    "{fixture}: no ordinate spelled {FINE_TOKEN:?}, so an emit site \
-                     rounded to a coarser grid than `r` does"
+                    sentinels >= sentinel_floor,
+                    "{fixture} emitted {sentinels} sentinel ordinates, expected at \
+                     least {sentinel_floor} — the fixture stopped reaching the emitter \
+                     it was written to cover"
                 );
                 assert!(
                     !doc.contains(FINE_X),
@@ -5025,5 +5052,150 @@ mod tests {
         // silently merge two products in a consuming model.
         let ids: BTreeSet<String> = (0..512).map(guid).collect();
         assert_eq!(ids.len(), 512);
+    }
+
+    /// Every point / direction literal in `source`, paired with the argument text
+    /// filling each of its positional `{}` placeholders. Used by the gate below and
+    /// by its negative control, so the scan is exercised over planted input too.
+    fn point_literal_arguments(source: &str) -> Vec<(String, Vec<String>)> {
+        let mut found = Vec::new();
+        for token in ["IFCCARTESIANPOINT((", "IFCDIRECTION(("] {
+            for (at, _) in source.match_indices(token) {
+                let open = source[..at]
+                    .rfind('"')
+                    .expect("a string literal opens the token");
+                let close = open + 1 + source[open + 1..].find('"').expect("the literal closes");
+                let literal = &source[open + 1..close];
+                let mut args: Vec<String> = Vec::new();
+                if literal.contains("{}") {
+                    let mut depth = 0i32;
+                    let mut current = String::new();
+                    for ch in source[close + 1..].chars() {
+                        match ch {
+                            '(' | '[' => {
+                                depth += 1;
+                                current.push(ch);
+                            }
+                            ')' | ']' if depth > 0 => {
+                                depth -= 1;
+                                current.push(ch);
+                            }
+                            // depth 0 here is the close of the enclosing `format!`.
+                            ')' => break,
+                            ',' if depth == 0 => {
+                                if !current.trim().is_empty() {
+                                    args.push(current.trim().to_string());
+                                }
+                                current.clear();
+                            }
+                            _ => current.push(ch),
+                        }
+                    }
+                    if !current.trim().is_empty() {
+                        args.push(current.trim().to_string());
+                    }
+                }
+                found.push((literal.to_string(), args));
+            }
+        }
+        found
+    }
+
+    #[test]
+    fn every_point_ordinate_in_the_source_goes_through_the_invariant_formatter() {
+        // A fixture-driven test only covers the emit sites its fixtures reach, and this
+        // module has at least six. Codex review on #586 caught a `{:.6}` bypass at a
+        // THIRD one (`emit_polyline2`) after two rounds of adding fixtures for the
+        // first two — so this gate stops chasing them one at a time and covers every
+        // site structurally: each positional ordinate of a point or direction literal
+        // must be an `r(...)` call, whether or not any scene reaches it.
+        //
+        // Implementation half only. The test module below quotes these same entity
+        // names inside assertions, which are not emit sites.
+        const SOURCE: &str = include_str!("ifc.rs");
+        let implementation = SOURCE
+            .split("#[cfg(test)]")
+            .next()
+            .expect("the implementation precedes the tests");
+
+        let sites = point_literal_arguments(implementation);
+        // A floor, so a scan that has stopped matching anything fails loudly instead of
+        // reporting a clean module. Six real sites exist today.
+        assert!(
+            sites.len() >= 6,
+            "found only {} point literals — the scan has stopped matching",
+            sites.len()
+        );
+        for (literal, args) in sites {
+            let placeholders = literal.matches("{}").count();
+            // An inline capture (`{x}`) would carry its own formatting and slip past the
+            // argument check entirely, so it is refused rather than skipped.
+            assert_eq!(
+                literal.matches('{').count(),
+                placeholders,
+                "{literal:?} interpolates something other than a positional placeholder"
+            );
+            assert_eq!(
+                args.len(),
+                placeholders,
+                "{literal:?} has {placeholders} placeholders but {} arguments were read \
+                 — the scan mis-parsed this site",
+                args.len()
+            );
+            for arg in args {
+                assert!(
+                    arg.starts_with("r("),
+                    "{literal:?} fills a placeholder with {arg:?}, which does not go \
+                     through `r` — every ordinate in the SPF must use the invariant \
+                     eleven-place format or two builds of one scene can disagree"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn the_point_ordinate_scan_reports_a_planted_bypass() {
+        // The gate above scans real source that is correct today, so it reports clean
+        // both when it works and when it has stopped matching anything. This drives the
+        // same scan over planted input, so a classifier that quietly matches nothing
+        // fails here first.
+        let planted = r#"
+            spf.emit(&format!("IFCCARTESIANPOINT(({},{},{}))", r(a), format!("{b:.6}"), r(c)));
+            spf.emit(&format!("IFCDIRECTION(({},{}))", r(x), r(y)));
+            spf.emit("IFCCARTESIANPOINT((0.,0.,0.))");
+        "#;
+        let sites = point_literal_arguments(planted);
+        assert_eq!(sites.len(), 3, "{sites:?}");
+        // Looked up BY LITERAL, not by index: the scan walks one entity token at a time,
+        // so its output is grouped by token rather than by source order, and an
+        // index-keyed control asserts the wrong thing. (It did, and failed — which is
+        // the control earning its place.)
+        let args_for = |literal: &str| {
+            sites
+                .iter()
+                .find(|(found, _)| found == literal)
+                .unwrap_or_else(|| panic!("{literal:?} not found in {sites:?}"))
+                .1
+                .clone()
+        };
+
+        // The planted bypass: one argument out of three does not go through `r`.
+        let bypass = args_for("IFCCARTESIANPOINT(({},{},{}))");
+        assert_eq!(bypass, vec!["r(a)", "format!(\"{b:.6}\")", "r(c)"]);
+        assert!(
+            !bypass.iter().all(|arg| arg.starts_with("r(")),
+            "the planted bypass was not detected"
+        );
+
+        // A clean site passes the same check, so the classifier is not simply rejecting
+        // everything it is shown.
+        let clean = args_for("IFCDIRECTION(({},{}))");
+        assert_eq!(clean, vec!["r(x)", "r(y)"]);
+        assert!(clean.iter().all(|arg| arg.starts_with("r(")));
+
+        // A literal with no placeholders yields no arguments, so it cannot bypass —
+        // this is the shape of the two hardcoded origin points in this module.
+        let hardcoded = args_for("IFCCARTESIANPOINT((0.,0.,0.))");
+        assert!(hardcoded.is_empty());
     }
 }
