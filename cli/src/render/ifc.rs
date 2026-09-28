@@ -4469,4 +4469,488 @@ mod tests {
             "unsupported-parent"
         );
     }
+
+    // ────────────────────────────────────────────────────────────────────────────
+    // The pure encoding + descriptor-resolution layer: the helpers that turn scene
+    // JSON into SPF tokens and IFC semantics. Every one of them was reachable only
+    // through a whole-document build before this block, so a wrong token was only
+    // ever caught when it happened to fall inside a `doc.contains(...)` a
+    // higher-level test already spelled out.
+    // ────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn reals_carry_the_invariant_format_the_determinism_contract_promises() {
+        // A whole number still needs its decimal point: `5` is an INTEGER token in
+        // Part 21 and an IfcLengthMeasure slot takes a REAL.
+        assert_eq!(r(5.0), "5.0");
+        assert_eq!(r(-12.0), "-12.0");
+        // Trailing zeros are trimmed — but never the last one.
+        assert_eq!(r(0.5), "0.5");
+        assert_eq!(r(1e20), "100000000000000000000.0");
+        // Negative zero is normalized, so two builds differing only in the sign of a
+        // zero ordinate emit identical bytes.
+        assert_eq!(r(-0.0), "0.0");
+        assert_eq!(r(0.0), "0.0");
+        // Eleven decimal places, fixed — not shortest-round-trip, whose output moves
+        // with the float formatter. A value finer than that grid rounds into it.
+        assert_eq!(r(1.234567890123), "1.23456789012");
+        assert_eq!(r(1.0 / 3.0), "0.33333333333");
+        assert_eq!(r(1e-12), "0.0");
+        // The normalization above is an equality test against zero, so it does not
+        // reach a value that is merely finer than the grid: that keeps its sign.
+        assert_eq!(r(-1e-12), "-0.0");
+    }
+
+    #[test]
+    fn every_emitted_ordinate_goes_through_the_invariant_real_formatter() {
+        // Guards the other half of the contract above: that `r` is what the document
+        // actually uses. `Display` on an f64 prints `3000` for a whole value, which is
+        // an INTEGER token — schema-invalid in an IfcLengthMeasure slot, and invisible
+        // to a test that only greps for entity names.
+        //
+        // BOTH fixtures, deliberately. The member path and the placement emitter are
+        // different call sites, and `sample_scene` reaches only the first: a bypass in
+        // `emit_axis2_placement3d` (fasteners, welds, swept solids) is invisible to it,
+        // which is exactly how the first draft of this test passed under that mutation.
+        let mut ordinates = 0;
+        // A coordinate finer than the eleven-place grid, so the precision half of the
+        // assertion below is REACHED: every ordinate in the two fixtures above is whole
+        // or short, where `{:?}` and `r()` agree by coincidence.
+        let fine = json!({
+            "meta": { "name": "fine" },
+            "elements": [
+                { "id": "C1", "role": "column",
+                  "from": [0.123456789012345, 0.0, 0.0],
+                  "to": [0.123456789012345, 0.0, 3000.0],
+                  "section": { "w": 100, "d": 100 } }
+            ]
+        });
+        for (fixture, scene) in [
+            ("sample", sample_scene()),
+            ("connection", connection_scene()),
+            ("fine", fine),
+        ] {
+            let doc = build_ifc(&scene).doc;
+            for chunk in doc.split("IFCCARTESIANPOINT((").skip(1) {
+                let inner = chunk.split("))").next().expect("closed point literal");
+                for ordinate in inner.split(',') {
+                    let (whole, fraction) = ordinate
+                        .split_once('.')
+                        .unwrap_or_else(|| panic!("{fixture}: {ordinate:?} is an INTEGER token"));
+                    assert!(
+                        ordinate.parse::<f64>().is_ok_and(f64::is_finite),
+                        "{fixture}: {ordinate:?} is not a finite REAL"
+                    );
+                    assert!(
+                        fraction.len() <= 11,
+                        "{fixture}: {ordinate:?} carries more precision than the \
+                         eleven-place grid, so two builds of it need not agree"
+                    );
+                    assert!(
+                        !whole.is_empty(),
+                        "{fixture}: {ordinate:?} has no whole part"
+                    );
+                    ordinates += 1;
+                }
+            }
+        }
+        // Enough to be sure both fixtures contributed — the connection scene alone
+        // places dozens of points. A drop here means a fixture stopped reaching the
+        // emitters and the loop above went quiet rather than red.
+        assert!(ordinates > 60, "only {ordinates} ordinates checked");
+    }
+
+    #[test]
+    fn the_header_file_name_is_a_deterministic_ascii_slug() {
+        // A parenthetical is dropped, so a name carrying a revision marker slugs to the
+        // same file name across revisions.
+        assert_eq!(file_name_meta("Portal frame (rev B)"), "portal-frame.ifc");
+        // A run of non-alphanumerics collapses to one dash; a leading run contributes
+        // nothing, so the slug never opens or closes on a separator.
+        assert_eq!(file_name_meta("  A///B  "), "a-b.ifc");
+        assert_eq!(file_name_meta("x-y"), "x-y.ifc");
+        // Never non-ASCII — the SPF header is read by parsers that assume it is.
+        assert_eq!(file_name_meta("Stahlträger"), "stahltr-ger.ifc");
+        // A name that slugs to nothing still names a file, rather than emitting a bare
+        // `.ifc` with no stem.
+        for unsluggable in ["", "(x)", "---", "中文"] {
+            assert_eq!(file_name_meta(unsluggable), "model.ifc", "{unsluggable:?}");
+        }
+        // Capped at 60 characters before the extension.
+        assert_eq!(
+            file_name_meta(&"a".repeat(70)),
+            format!("{}.ifc", "a".repeat(60))
+        );
+        // Truncation is re-trimmed, so the cap cannot leave a dangling separator.
+        let cut = file_name_meta(&format!("{}-{}", "a".repeat(60), "b".repeat(10)));
+        assert_eq!(cut, format!("{}.ifc", "a".repeat(60)));
+    }
+
+    #[test]
+    fn the_header_carries_the_slug_not_the_raw_project_name() {
+        let scene = json!({
+            "meta": { "name": "Stahlträger (Halle 3)" },
+            "elements": [
+                { "id": "C1", "role": "column", "from": [0, 0, 0], "to": [0, 0, 3000],
+                  "section": { "w": 100, "d": 100 } }
+            ]
+        });
+        let doc = build_ifc(&scene).doc;
+        let header = doc.split("ENDSEC;").next().expect("header section");
+        assert!(header.contains("FILE_NAME('stahltr-ger.ifc'"), "{header}");
+        // The raw name must not reach the header at all. `FILE_NAME` is written by a
+        // plain `writeln!`, not through `s_lit`, so a byte that got there would carry
+        // no `\X2\` escaping and no quote doubling either.
+        assert!(header.is_ascii(), "non-ascii header: {header}");
+        assert!(!header.contains("Halle"), "{header}");
+    }
+
+    #[test]
+    fn a_colour_is_accepted_only_as_six_hex_digits() {
+        assert_eq!(parse_hex("#FF8000"), Some((1.0, 128.0 / 255.0, 0.0)));
+        // Case and surrounding whitespace are tolerated, and change nothing.
+        assert_eq!(parse_hex("#ff8000"), parse_hex("#FF8000"));
+        assert_eq!(parse_hex("  #00FF00  "), Some((0.0, 1.0, 0.0)));
+        // Everything else yields NO colour rather than a fabricated one: three-digit
+        // shorthand, an alpha channel, a missing `#`, and non-hex letters alike.
+        for rejected in ["#fff", "#FF000000", "FF0000", "#GGGGGG", "#", ""] {
+            assert_eq!(parse_hex(rejected), None, "{rejected:?}");
+        }
+        // Six BYTES is not six hex digits. The ascii-hexdigit guard is what makes this
+        // None: without it the `&h[a..a + 2]` slices land mid-character and panic.
+        assert_eq!(parse_hex("#aäbcd"), None);
+    }
+
+    #[test]
+    fn a_group_colour_is_shared_by_value_not_by_spelling() {
+        let scene = json!({
+            "meta": { "name": "colours" },
+            "groups": [
+                { "key": "lower", "color": "#ff0000" },
+                { "key": "upper", "color": "  #FF0000  " },
+                { "key": "bogus", "color": "red" }
+            ],
+            "elements": [
+                { "id": "A", "group": "lower", "role": "column", "from": [0, 0, 0], "to": [0, 0, 1000],
+                  "section": { "w": 100, "d": 100 } },
+                { "id": "B", "group": "upper", "role": "column", "from": [1000, 0, 0], "to": [1000, 0, 1000],
+                  "section": { "w": 100, "d": 100 } },
+                { "id": "C", "group": "bogus", "role": "column", "from": [2000, 0, 0], "to": [2000, 0, 1000],
+                  "section": { "w": 100, "d": 100 } }
+            ]
+        });
+        let doc = build_ifc(&scene).doc;
+        // Two spellings of one colour are ONE entity chain, not two: the dedupe key is
+        // the trimmed upper hex, not the authored string.
+        assert_eq!(doc.matches("IFCCOLOURRGB(").count(), 1, "{doc}");
+        assert_eq!(doc.matches("IFCSURFACESTYLE(").count(), 1);
+        assert!(doc.contains("IFCCOLOURRGB($,1.0,0.0,0.0)"), "{doc}");
+        // A group whose colour is not `#RRGGBB` contributes no style at all, rather
+        // than a fabricated one — so the style count above stays at one even though
+        // three elements each name a group.
+        assert_eq!(doc.matches("IFCSTYLEDITEM(").count(), 2, "{doc}");
+    }
+
+    #[test]
+    fn a_material_dedupes_case_insensitively_and_keeps_its_authored_spelling() {
+        let scene = json!({
+            "meta": { "name": "materials" },
+            "elements": [
+                { "id": "A", "material": "  s355jr  ", "role": "column", "from": [0, 0, 0], "to": [0, 0, 1000],
+                  "section": { "w": 100, "d": 100 } },
+                { "id": "B", "material": "S355JR", "role": "column", "from": [1000, 0, 0], "to": [1000, 0, 1000],
+                  "section": { "w": 100, "d": 100 } },
+                { "id": "C", "material": "   ", "role": "column", "from": [2000, 0, 0], "to": [2000, 0, 1000],
+                  "section": { "w": 100, "d": 100 } }
+            ]
+        });
+        let doc = build_ifc(&scene).doc;
+        // One IfcMaterial for the two spellings — and it carries the first authored
+        // spelling TRIMMED, not the uppercased dedupe key and not the raw padding.
+        assert_eq!(doc.matches("IFCMATERIAL(").count(), 1, "{doc}");
+        assert!(doc.contains("IFCMATERIAL('s355jr',$,$)"), "{doc}");
+        // A blank material is no material, so it joins no association.
+        assert_eq!(doc.matches("IFCRELASSOCIATESMATERIAL(").count(), 1);
+        let association = doc
+            .split("IFCRELASSOCIATESMATERIAL(")
+            .nth(1)
+            .expect("one association")
+            .split(");")
+            .next()
+            .expect("closed association");
+        // Both materialized elements hang off that single material, so the association
+        // names two products.
+        assert_eq!(
+            association.matches('#').count(),
+            3,
+            "expected two members plus the material: {association}"
+        );
+    }
+
+    #[test]
+    fn an_element_label_prefers_meta_label_then_name_then_id() {
+        // Every rung of the chain, in order — a swap between any adjacent pair changes
+        // the IfcElement Name written into the file.
+        assert_eq!(
+            label(&json!({ "meta": { "label": "L" }, "name": "N", "id": "I" })),
+            "L"
+        );
+        assert_eq!(label(&json!({ "name": "N", "id": "I" })), "N");
+        assert_eq!(label(&json!({ "id": "I" })), "I");
+        // A non-string at a rung falls THROUGH to the next one rather than stringifying
+        // it, so a numeric label cannot reach the file unquoted.
+        assert_eq!(label(&json!({ "meta": { "label": 7 }, "name": "N" })), "N");
+        assert_eq!(label(&json!({ "meta": "not-an-object", "id": "I" })), "I");
+        // Nothing usable still names the element.
+        assert_eq!(label(&json!({})), "Element");
+    }
+
+    #[test]
+    fn fastener_semantics_map_kind_and_role_to_a_predefined_type() {
+        let sem = |el: Value| {
+            let (name, predefined) = mechanical_semantics(&el);
+            (name, predefined.to_string())
+        };
+        // A rod's role decides the IFC PredefinedType, not just its display name.
+        assert_eq!(
+            sem(json!({ "kind": "rod", "fastener": { "role": "anchor-rod" } })),
+            ("Anchor bolt".to_string(), ".ANCHORBOLT.".to_string())
+        );
+        assert_eq!(
+            sem(json!({ "kind": "rod", "fastener": { "role": "shear bolt" } })),
+            ("Bolt".to_string(), ".BOLT.".to_string())
+        );
+        // The role is matched case-insensitively.
+        assert_eq!(
+            sem(json!({ "kind": "rod", "fastener": { "role": "ANCHOR" } })),
+            ("Anchor bolt".to_string(), ".ANCHORBOLT.".to_string())
+        );
+        // An unrecognized role on a `rod` is NOT defaulted to a bolt — the writer says
+        // it does not know rather than asserting a fastening type.
+        assert_eq!(
+            sem(json!({ "kind": "rod", "fastener": { "role": "spigot" } })),
+            ("Round fastener".to_string(), ".NOTDEFINED.".to_string())
+        );
+        // `bolt-shank` is the exception: the kind alone is enough, so a missing or
+        // unknown role still lands on `.BOLT.`.
+        assert_eq!(
+            sem(json!({ "kind": "bolt-shank" })),
+            ("Bolt".to_string(), ".BOLT.".to_string())
+        );
+        assert_eq!(
+            sem(json!({ "kind": "bolt-shank", "fastener": { "role": "spigot" } })),
+            ("Bolt".to_string(), ".BOLT.".to_string())
+        );
+        assert_eq!(
+            sem(json!({ "kind": "rod" })),
+            ("Round fastener".to_string(), ".NOTDEFINED.".to_string())
+        );
+        // Both spellings of a nut role, and a kind that ignores the role entirely.
+        assert_eq!(
+            sem(json!({ "kind": "nut", "profile": { "role": "leveling nut" } })).0,
+            "Leveling nut"
+        );
+        assert_eq!(
+            sem(json!({ "kind": "nut", "profile": { "role": "leveling-nut" } })).0,
+            "Leveling nut"
+        );
+        assert_eq!(sem(json!({ "kind": "nut" })).0, "Hex fastener");
+        assert_eq!(
+            sem(json!({ "kind": "washer", "fastener": { "role": "anchor" } })).0,
+            "Washer"
+        );
+        assert_eq!(sem(json!({ "kind": "bolt-head" })).0, "Bolt head");
+        // An unknown kind is named but left undefined.
+        assert_eq!(
+            sem(json!({ "kind": "plate" })),
+            (
+                "Mechanical fastener".to_string(),
+                ".NOTDEFINED.".to_string()
+            )
+        );
+        // The descriptor chain is ordered: `fastener` wins over `fastenerSemantics`,
+        // which wins over `profile`.
+        assert_eq!(
+            sem(json!({ "kind": "rod", "fastener": { "role": "anchor" },
+                        "fastenerSemantics": { "role": "bolt" }, "profile": { "role": "bolt" } })),
+            ("Anchor bolt".to_string(), ".ANCHORBOLT.".to_string())
+        );
+        assert_eq!(
+            sem(
+                json!({ "kind": "rod", "fastenerSemantics": { "role": "anchor" },
+                        "profile": { "role": "bolt" } })
+            ),
+            ("Anchor bolt".to_string(), ".ANCHORBOLT.".to_string())
+        );
+    }
+
+    #[test]
+    fn a_mesh_span_measures_the_extent_and_refuses_a_non_numeric_ordinate() {
+        // The diagonal of the bounding box, not of the first triple: a 3-4-12 extent is
+        // 13, which a min/max swap or a dropped axis cannot reproduce.
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [0, 0, 0, 3, 4, 12] })),
+            Some(13.0)
+        );
+        // Order does not matter — the box is the same whichever corner came first.
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [3, 4, 12, 0, 0, 0] })),
+            Some(13.0)
+        );
+        // Negative coordinates span rather than cancel.
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [-3, 0, 0, 3, 0, 0] })),
+            Some(6.0)
+        );
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [5, 5, 5] })),
+            Some(0.0)
+        );
+        // A non-numeric ordinate in a COMPLETE triple refuses the span, rather than
+        // silently treating it as zero and reporting a span the mesh does not have.
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [0, 0, 0, "x", "y", "z"] })),
+            None
+        );
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [0, 0, null] })),
+            None
+        );
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": "nope" })),
+            None
+        );
+        assert_eq!(mesh_bounding_diagonal(&json!({})), None);
+        // A trailing PARTIAL triple is ignored, whatever it holds — `chunks_exact`
+        // never hands the loop a short chunk to index past the end of.
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [0, 0, 0, 1, 1] })),
+            Some(0.0)
+        );
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [0, 0, 0, "x", "y"] })),
+            Some(0.0)
+        );
+        // No positions at all yields no USABLE span rather than a finite zero. Nothing
+        // reaches this through the writer — `emit_mesh` refuses a mesh under three
+        // points before the span is asked for — so this pins the shape, not a
+        // behaviour a caller may lean on.
+        assert!(
+            !mesh_bounding_diagonal(&json!({ "positions": [] }))
+                .expect("an empty list is still a list")
+                .is_finite()
+        );
+    }
+
+    #[test]
+    fn a_bolt_names_its_shank_head_nuts_and_washers_in_that_order() {
+        // Order is load-bearing: the caller pairs these ids against materialized
+        // products, and the shank is what carries the hole effects.
+        assert_eq!(
+            bolt_component_ids(&json!({
+                "headId": "H", "shankId": "S",
+                "washerIds": ["W1", "W2"], "nutIds": ["N1"]
+            })),
+            vec!["S", "H", "N1", "W1", "W2"]
+        );
+        // Absent fields contribute nothing rather than a placeholder.
+        assert_eq!(bolt_component_ids(&json!({ "shankId": "S" })), vec!["S"]);
+        assert!(bolt_component_ids(&json!({})).is_empty());
+        // A non-string entry is skipped, not stringified — an id the scene never
+        // authored must not enter the participant set.
+        assert_eq!(
+            bolt_component_ids(&json!({
+                "shankId": 7, "nutIds": ["N1", 2, null, "N2"], "washerIds": "W1"
+            })),
+            vec!["N1", "N2"]
+        );
+    }
+
+    #[test]
+    fn a_reference_direction_stays_perpendicular_across_the_pole_switch() {
+        // The seed flips at |z| = 0.9 so the cross product never collapses near the
+        // pole. Pinned at both canonical axes: a moved threshold sends the vertical
+        // case down the degenerate fallback instead.
+        assert_eq!(axis_ref_dir([0.0, 0.0, 1.0]), [0.0, -1.0, 0.0]);
+        assert_eq!(axis_ref_dir([1.0, 0.0, 0.0]), [0.0, 1.0, 0.0]);
+        // Whatever the axis, the result is a well-conditioned unit vector orthogonal to
+        // it — an IfcAxis2Placement3D with a RefDirection parallel to its Axis is
+        // schema-invalid, and one barely off parallel is numerically junk.
+        for axis in [
+            [1.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0],
+            [0.0, 0.0, 1.0],
+            [0.0, 0.0, -1.0],
+            [0.0, 0.6, 0.8],
+            [0.0, 0.43, 0.9028],
+            [0.001, 0.0, 0.9999995],
+            [0.577, 0.577, 0.577],
+        ] {
+            let axis = normalized3(axis).expect("a non-degenerate axis");
+            let reference = axis_ref_dir(axis);
+            assert!(
+                (length3(reference) - 1.0).abs() < 1e-9,
+                "{axis:?} -> {reference:?} is not a unit vector"
+            );
+            assert!(
+                dot3(axis, reference).abs() < 1e-9,
+                "{axis:?} -> {reference:?} is not orthogonal"
+            );
+        }
+        // A degenerate axis cannot produce a direction, so it falls back to a fixed one
+        // rather than emitting a zero IfcDirection.
+        assert_eq!(axis_ref_dir([0.0, 0.0, 0.0]), [1.0, 0.0, 0.0]);
+    }
+
+    #[test]
+    fn an_outline_rotates_counter_clockwise_about_the_extrusion_axis() {
+        // The sign of the rotation is the whole contract: a transposed matrix mirrors
+        // every asymmetric profile — an angle's legs swap sides — while leaving the
+        // outline closed, self-consistent and schema-valid, so nothing downstream
+        // notices.
+        let quarter = rotate_outline(&[[1.0, 0.0]], 90.0);
+        assert!(
+            (quarter[0][0] - 0.0).abs() < 1e-9 && (quarter[0][1] - 1.0).abs() < 1e-9,
+            "+90 deg must take +x to +y, got {quarter:?}"
+        );
+        let back = rotate_outline(&[[0.0, 1.0]], 90.0);
+        assert!(
+            (back[0][0] + 1.0).abs() < 1e-9 && (back[0][1] - 0.0).abs() < 1e-9,
+            "+90 deg must take +y to -x, got {back:?}"
+        );
+        // Rotation preserves the outline: same vertex count, same distances from the
+        // origin, in the same order.
+        let outline = vec![[10.0, 0.0], [10.0, 4.0], [-2.0, 4.0]];
+        let rotated = rotate_outline(&outline, 37.0);
+        assert_eq!(rotated.len(), outline.len());
+        for (before, after) in outline.iter().zip(&rotated) {
+            let radius = |p: &Vec2| (p[0] * p[0] + p[1] * p[1]).sqrt();
+            assert!((radius(before) - radius(after)).abs() < 1e-9);
+        }
+        // A zero rotation is the identity, so an unrotated profile is byte-identical to
+        // one that never went through the rotation at all.
+        assert_eq!(rotate_outline(&outline, 0.0), outline);
+    }
+
+    #[test]
+    fn a_counter_derived_global_id_fills_the_ifc_guid_alphabet() {
+        // These ids go into the file as IfcGloballyUniqueId, which is exactly 22
+        // characters from a fixed 64-symbol alphabet. The counter is base-64 and
+        // one-based, so the rollover at 63 is the digit carry.
+        assert_eq!(guid(0), "0000000000000000000001");
+        assert_eq!(guid(63), "0000000000000000000010");
+        assert_eq!(guid(4095), "0000000000000000000100");
+        for n in [0, 1, 63, 64, 4095, 1_000_000, i32::MAX as i64] {
+            let id = guid(n);
+            assert_eq!(id.len(), 22, "{n} -> {id}");
+            assert!(
+                id.bytes().all(|b| B64.contains(&b)),
+                "{n} -> {id} leaves the IFC GUID alphabet"
+            );
+        }
+        // Distinct counters are distinct ids — the id is a key, and a collision would
+        // silently merge two products in a consuming model.
+        let ids: BTreeSet<String> = (0..512).map(guid).collect();
+        assert_eq!(ids.len(), 512);
+    }
 }
