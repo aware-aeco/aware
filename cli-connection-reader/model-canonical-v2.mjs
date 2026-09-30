@@ -106,12 +106,30 @@ function normalizeProperty(value) {
   return record;
 }
 
+const GENERIC_RELATIONSHIP_KINDS = new Set(['contains', 'hosts', 'depends-on']);
+
+// A closed union keyed by kind: generic edges are exactly {id,kind,from,to}; a provider-explicit
+// edge additionally carries the provider's own relation type, bounded like
+// model-metadata-v2.schema.json (1..256 code points), so consumers can tell provider types apart.
 function normalizeRelationship(value) {
-  closed(value, ['id', 'kind', 'from', 'to'], [], 'relationship record');
-  return {
-    id: text(value.id, 'relationship id'), kind: text(value.kind, 'relationship kind'),
+  const providerExplicit = value?.kind === 'provider-explicit';
+  closed(value, providerExplicit ? ['id', 'kind', 'from', 'to', 'providerRelationKind'] : ['id', 'kind', 'from', 'to'],
+    [], 'relationship record');
+  if (!providerExplicit && !GENERIC_RELATIONSHIP_KINDS.has(value.kind)) {
+    canonicalError('reference-metadata-semantic-invalid', 'relationship kind is invalid.');
+  }
+  const record = {
+    id: text(value.id, 'relationship id'), kind: value.kind,
     from: text(value.from, 'relationship source'), to: text(value.to, 'relationship target'),
   };
+  if (providerExplicit) {
+    const providerRelationKind = text(value.providerRelationKind, 'relationship providerRelationKind');
+    if ([...providerRelationKind].length > 256) {
+      canonicalError('reference-metadata-semantic-invalid', 'relationship providerRelationKind is invalid.');
+    }
+    record.providerRelationKind = providerRelationKind;
+  }
+  return record;
 }
 
 async function* jsonlRecords(root, files, limits, signal) {

@@ -662,10 +662,13 @@ Protocol v3 captures ordered source namespaces into an immutable private closure
 `discover`, applies the admitted dependency policy, invokes the package's read-only `convert`
 operation, and admits only its closed output inventory. Entity, property and relationship JSONL
 records are schema-checked, canonicalized, externally sorted and sharded with unique identities and
-referential integrity. Geometry is admitted as one or more contiguous GLB tiles; entity ownership and
-bounds must name an admitted tile. AWARE signs and publishes a `model-reference-manifest/v2` root,
-four family indexes and content-addressed objects. Cancellation or failure before root publication
-leaves no visible root.
+referential integrity. A relationship record is a closed union keyed by `kind`: `contains`, `hosts`
+and `depends-on` carry exactly `id`, `kind`, `from` and `to`; `provider-explicit` additionally
+requires a non-empty `providerRelationKind` of at most 256 characters, which the canonical
+relationship shard preserves. Any other kind or field is refused. Geometry is admitted as one or
+more contiguous GLB tiles; entity ownership and bounds must name an admitted tile. AWARE signs and
+publishes a `model-reference-manifest/v2` root, four family indexes and content-addressed objects.
+Cancellation or failure before root publication leaves no visible root.
 
 Canonical artifact files are written and synced under unique temporary names in the run-owned
 artifact directory, then installed at their content-addressed names without replacing an existing
