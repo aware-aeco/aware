@@ -667,8 +667,8 @@ and `depends-on` carry exactly `id`, `kind`, `from` and `to`; `provider-explicit
 requires a non-empty `providerRelationKind` of at most 256 characters, which the canonical
 relationship shard preserves. Any other kind or field is refused. Geometry is admitted as one or
 more contiguous GLB tiles; entity ownership and bounds must name an admitted tile. AWARE signs and
-publishes a `model-reference-manifest/v2` root, four family indexes and content-addressed objects. Cancellation or failure before root publication
-leaves no visible root.
+publishes a `model-reference-manifest/v2` root, four family indexes and content-addressed objects.
+Cancellation or failure before root publication leaves no visible root.
 
 Canonical artifact files are written and synced under unique temporary names in the run-owned
 artifact directory, then installed at their content-addressed names without replacing an existing
