@@ -68,12 +68,25 @@
       }
     },
     "relationship": {
-      "type": "object", "additionalProperties": false,
-      "required": ["id", "kind", "from", "to"],
-      "properties": {
-        "id": { "$ref": "#/$defs/id" }, "kind": { "$ref": "#/$defs/id" },
-        "from": { "$ref": "#/$defs/id" }, "to": { "$ref": "#/$defs/id" }
-      }
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "kind", "from", "to"],
+          "properties": {
+            "id": { "$ref": "#/$defs/id" }, "kind": { "enum": ["contains", "hosts", "depends-on"] },
+            "from": { "$ref": "#/$defs/id" }, "to": { "$ref": "#/$defs/id" }
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "kind", "from", "to", "providerRelationKind"],
+          "properties": {
+            "id": { "$ref": "#/$defs/id" }, "kind": { "const": "provider-explicit" },
+            "from": { "$ref": "#/$defs/id" }, "to": { "$ref": "#/$defs/id" },
+            "providerRelationKind": { "allOf": [{ "$ref": "#/$defs/id" }, { "maxLength": 256 }] }
+          }
+        }
+      ]
     }
   }
 }

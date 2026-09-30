@@ -211,3 +211,46 @@ test('refuses duplicate entity and relationship identities', async (t) => {
     conversionRequestSha256: sha256(Buffer.from('request')),
   }), (error) => error.code === 'reference-metadata-semantic-duplicate');
 });
+
+test('keeps provider-explicit relationships and their providerRelationKind (#590)', async (t) => {
+  const value = await fixture(t, { relationships: [
+    { from: 'entity:a', id: 'relation:1', kind: 'provider-explicit', providerRelationKind: 'tekla-component-child', to: 'entity:b' },
+    { from: 'entity:a', id: 'relation:2', kind: 'contains', to: 'entity:b' },
+  ] });
+  const result = await canonicalizeProviderOutput({
+    ...value, formatId: 'format.synthetic', capabilityId: 'capability.synthetic',
+    conversionRequestSha256: sha256(Buffer.from('request')),
+  });
+  const shard = JSON.parse(await fs.readFile(result.objects.find((entry) => entry.receipt?.logicalKind === 'relationships-shard').pathname));
+  assert.deepEqual(shard.records, [
+    { from: 'entity:a', id: 'relation:2', kind: 'contains', to: 'entity:b' },
+    { from: 'entity:a', id: 'relation:1', kind: 'provider-explicit', providerRelationKind: 'tekla-component-child', to: 'entity:b' },
+  ]);
+});
+
+test('relationships are a closed union keyed by kind (#590)', async (t) => {
+  const edge = { id: 'relation:1', from: 'entity:a', to: 'entity:b' };
+  for (const relationship of [
+    { ...edge, kind: 'provider-explicit' },
+    { ...edge, kind: 'provider-explicit', providerRelationKind: '' },
+    { ...edge, kind: 'provider-explicit', providerRelationKind: 'x'.repeat(257) },
+    { ...edge, kind: 'provider-explicit', providerRelationKind: 'a\u0001b' },
+    { ...edge, kind: 'provider-explicit', providerRelationKind: 7 },
+    { ...edge, kind: 'contains', providerRelationKind: 'tekla-component-child' },
+    { ...edge, kind: 'references' },
+    { ...edge, kind: 'hosts', extra: true },
+  ]) {
+    const value = await fixture(t, { relationships: [relationship] });
+    await assert.rejects(() => canonicalizeProviderOutput({
+      ...value, formatId: 'format.synthetic', capabilityId: 'capability.synthetic',
+      conversionRequestSha256: sha256(Buffer.from('request')),
+    }), (error) => error.code === 'reference-metadata-semantic-invalid', JSON.stringify(relationship));
+  }
+  const longest = await fixture(t, { relationships: [
+    { ...edge, kind: 'provider-explicit', providerRelationKind: '中'.repeat(256) },
+  ] });
+  await canonicalizeProviderOutput({
+    ...longest, formatId: 'format.synthetic', capabilityId: 'capability.synthetic',
+    conversionRequestSha256: sha256(Buffer.from('request')),
+  });
+});
