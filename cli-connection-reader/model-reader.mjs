@@ -22,6 +22,7 @@ import { sourceCaptureLimits } from './model-source-capture.mjs';
 import { buildProviderConversionRequest, convertProviderSource } from './model-provider-conversion.mjs';
 import { canonicalizeProviderOutput, publishCanonicalArtifact } from './model-canonical-v2.mjs';
 import { publishV3Cache, readV3Cache, v3CacheKey } from './model-v3-cache.mjs';
+import { mkdtempBeyondMaxPath } from './model-long-path.mjs';
 
 const STALE_PROVIDER_RUN_MS = 60 * 60_000;
 const ACTIVE_RUN_MARKER = '.active';
@@ -143,7 +144,7 @@ async function sweepAbandonedRunRoots(parent, now = Date.now()) {
 async function newRunRoot(parent) {
   await sweepAbandonedRunRoots(parent);
   let runRoot;
-  try { runRoot = await fs.mkdtemp(path.join(parent, 'run-')); }
+  try { runRoot = await mkdtempBeyondMaxPath(fs, path.join(parent, 'run-')); }
   catch (error) { readerError('reference-provider-run-cleanup-failed', 'cleanup', 'Provider staging could not be allocated.', false, error); }
   try {
     const marker = path.join(runRoot, ACTIVE_RUN_MARKER);

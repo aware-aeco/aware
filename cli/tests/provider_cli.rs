@@ -281,6 +281,65 @@ fn operator_admits_a_closed_dependency_policy_for_the_exact_enrolled_capability(
         .failure();
 }
 
+/// #593: a deep `AWARE_HOME` put the replacing store writes past the Win32
+/// `MAX_PATH`, where the raw `MoveFileExW` publish failed with `os error 3`.
+#[test]
+fn replacing_store_writes_succeed_under_an_aware_home_beyond_max_path() {
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp
+        .path()
+        .join("h".repeat(100))
+        .join("o".repeat(100))
+        .join("home");
+    assert!(home.as_os_str().len() > 200);
+    let fixture = package_fixture(temp.path());
+    aware(&home)
+        .args(["provider", "trust-publisher"])
+        .arg(&fixture.public_key)
+        .args(["--publisher-id", "publisher.synthetic"])
+        .assert()
+        .success();
+    aware(&home)
+        .args(["provider", "enroll"])
+        .arg(&fixture.directory)
+        .assert()
+        .success();
+    for _ in 0..2 {
+        aware(&home)
+            .args([
+                "provider",
+                "select",
+                "format.synthetic",
+                &fixture.manifest_sha256,
+            ])
+            .assert()
+            .success();
+    }
+    let policy_file = temp.path().join("dependency-policy.json");
+    std::fs::write(
+        &policy_file,
+        r#"{"policyId":"synthetic-policy-v1","roles":[{"affectedDomains":[],"classification":"mandatory","role":"primary"},{"affectedDomains":[],"classification":"optional","role":"catalogue"}],"schemaVersion":"aware.model-dependency-policy-admission/v1"}"#,
+    )
+    .unwrap();
+    for _ in 0..2 {
+        let admitted = aware(&home)
+            .args(["--json", "provider", "admit-policy"])
+            .arg(&fixture.manifest_sha256)
+            .args(["capability.synthetic"])
+            .arg(&policy_file)
+            .assert()
+            .success();
+        let output: serde_json::Value =
+            serde_json::from_slice(&admitted.get_output().stdout).unwrap();
+        let fingerprint = output["data"]["policy"]["providerFingerprintSha256"]
+            .as_str()
+            .unwrap();
+        let stored = home.join(format!("providers/policies/{fingerprint}.json"));
+        assert!(stored.as_os_str().len() > 260);
+        assert!(stored.is_file());
+    }
+}
+
 #[test]
 fn listing_ignores_interrupted_atomic_write_scratch_files() {
     let temp = tempfile::tempdir().unwrap();
