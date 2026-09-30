@@ -651,6 +651,12 @@ and increments a local generation while retaining at most eight prior digests.
 
 `list --json` exposes package ID/version, format ID, manifest/publisher digests, declared capabilities
 and selection status. It never exposes the package root, launcher, file allowlist or provider output.
+Every listed package passed complete re-verification. An enrollment whose package no longer
+re-verifies is not listed as a package; it is reported under `unavailable` with its manifest digest,
+package ID/version, format ID, selection status and a closed `reason` — `package-missing` when the
+enrolled directory or one of its files is gone, otherwise `verification-failed` — so one stale
+package root never makes the whole inventory unreadable. Store-record corruption (a malformed
+selection or enrollment record) still fails the command.
 The `model-reference-reader` protocol-v3 path consumes the same selected record and brackets every
 provider invocation with complete package re-verification. A caller must supply a non-empty,
 bounded opaque `provider-authorization` value for `preflight`, `fingerprint-source`, `probe`,

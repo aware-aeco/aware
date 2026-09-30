@@ -163,7 +163,24 @@ pub(crate) struct SelectionRecord {
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 pub(crate) struct ProviderList {
+    /// Enrollments that passed complete re-verification — the only ones a caller may use.
     pub packages: Vec<ListedPackage>,
+    /// Enrollments whose package no longer re-verifies. Reported rather than failing the whole
+    /// inventory, so one stale package root cannot block a caller from enrolling a replacement.
+    pub unavailable: Vec<UnavailablePackage>,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub(crate) struct UnavailablePackage {
+    pub(crate) manifest_sha256: String,
+    pub(crate) package_id: String,
+    pub(crate) package_version: String,
+    pub(crate) format_id: String,
+    pub(crate) selected: bool,
+    /// Closed: `package-missing` (the enrolled directory or a file in it is gone) or
+    /// `verification-failed` (it exists but no longer matches its enrollment or publisher).
+    pub(crate) reason: &'static str,
 }
 
 #[derive(Serialize)]
@@ -391,7 +408,9 @@ impl ProviderStore {
                     ));
                 }
                 validate_selection_record(&selection, &selection.format_id)?;
-                let selected = self.verify_enrollment(&selection.active_manifest_sha256)?;
+                // The selected package's own re-verification happens with every other enrollment
+                // below; here only the store's record must agree with the selection.
+                let selected = self.read_package(&selection.active_manifest_sha256)?;
                 if selected.manifest.format_id != selection.format_id {
                     return Err(AwareError::Validation(
                         "provider selection does not reference a package for its format".into(),
@@ -401,6 +420,7 @@ impl ProviderStore {
             }
         }
         let mut packages = Vec::new();
+        let mut unavailable = Vec::new();
         let packages_dir = self.root.join("packages");
         if packages_dir.is_dir() {
             for entry in std::fs::read_dir(packages_dir)? {
@@ -428,10 +448,29 @@ impl ProviderStore {
                 if format.is_some_and(|id| id != package_record.manifest.format_id) {
                     continue;
                 }
-                let package = self.verify_enrollment(digest)?;
-                if package.revoked || !package.enrolled {
+                validate_enrollment_record(&package_record, digest)?;
+                let selected = selections.get(&package_record.manifest.format_id)
+                    == Some(&package_record.manifest_sha256);
+                // An inactive enrollment is simply not inventory — unless it is still selected,
+                // which must stay visible rather than silently leave the format unprovided.
+                if (package_record.revoked || !package_record.enrolled) && !selected {
                     continue;
                 }
+                let package = match self.verify_enrollment(digest) {
+                    Ok(package) => package,
+                    Err(_) => {
+                        let reason = unavailable_reason(&package_record);
+                        unavailable.push(UnavailablePackage {
+                            manifest_sha256: digest.into(),
+                            package_id: package_record.manifest.package_id,
+                            package_version: package_record.manifest.package_version,
+                            format_id: package_record.manifest.format_id,
+                            selected,
+                            reason,
+                        });
+                        continue;
+                    }
+                };
                 packages.push(ListedPackage {
                     manifest_sha256: package.manifest_sha256.clone(),
                     package_id: package.manifest.package_id,
@@ -439,8 +478,7 @@ impl ProviderStore {
                     format_id: package.manifest.format_id.clone(),
                     publisher_fingerprint_sha256: package.publisher_fingerprint_sha256,
                     capabilities: package.manifest.capabilities,
-                    selected: selections.get(&package.manifest.format_id)
-                        == Some(&package.manifest_sha256),
+                    selected,
                 });
             }
         }
@@ -458,7 +496,17 @@ impl ProviderStore {
                     &right.manifest_sha256,
                 ))
         });
-        Ok(ProviderList { packages })
+        unavailable.sort_by(|left, right| {
+            (&left.format_id, &left.package_id, &left.manifest_sha256).cmp(&(
+                &right.format_id,
+                &right.package_id,
+                &right.manifest_sha256,
+            ))
+        });
+        Ok(ProviderList {
+            packages,
+            unavailable,
+        })
     }
 
     fn read_publisher(&self, fingerprint: &str) -> Result<PublisherRecord, AwareError> {
@@ -491,17 +539,12 @@ impl ProviderStore {
 
     fn verify_enrollment(&self, digest: &str) -> Result<PackageRecord, AwareError> {
         let package = self.read_package(digest)?;
-        if package.schema_version != PACKAGE_SCHEMA
-            || package.manifest_sha256 != digest
-            || package.publisher_fingerprint_sha256 != package.manifest.publisher_fingerprint_sha256
-            || !package.enrolled
-            || package.revoked
-        {
+        validate_enrollment_record(&package, digest)?;
+        if !package.enrolled || package.revoked {
             return Err(AwareError::Validation(
                 "provider enrollment record is invalid or inactive".into(),
             ));
         }
-        validate_manifest(&package.manifest)?;
         verify_compatible(&package.manifest)?;
         let root = canonical_regular_directory(Path::new(&package.package_root))?;
         if root != Path::new(&package.package_root) {
@@ -567,6 +610,45 @@ impl ProviderStore {
             .open(path)?;
         file.lock_exclusive()?;
         Ok(file)
+    }
+}
+
+/// The store's own record must be internally consistent. A failure here is store corruption, never
+/// an unavailable package, so `list` stays fatal on it.
+fn validate_enrollment_record(package: &PackageRecord, digest: &str) -> Result<(), AwareError> {
+    if package.schema_version != PACKAGE_SCHEMA
+        || package.manifest_sha256 != digest
+        || package.publisher_fingerprint_sha256 != package.manifest.publisher_fingerprint_sha256
+    {
+        return Err(AwareError::Validation(
+            "provider enrollment record is invalid or inactive".into(),
+        ));
+    }
+    validate_manifest(&package.manifest)?;
+    // Enrollment admits only closed canonical manifest bytes, so the embedded manifest must still
+    // hash to the digest that names the record.
+    if sha256_hex(&canonical_json_bytes(&package.manifest)?) != digest {
+        return Err(AwareError::Validation(
+            "provider enrollment record manifest does not match its digest".into(),
+        ));
+    }
+    Ok(())
+}
+
+/// `package-missing` when the enrolled root, its control files or any receipted file is gone;
+/// every other re-verification failure is `verification-failed`.
+fn unavailable_reason(package: &PackageRecord) -> &'static str {
+    let root = Path::new(&package.package_root);
+    let missing = |path: &Path| matches!(std::fs::symlink_metadata(path), Err(error) if error.kind() == std::io::ErrorKind::NotFound);
+    if missing(root)
+        || [MANIFEST_NAME, SIGNATURE_NAME]
+            .into_iter()
+            .chain(package.manifest.files.iter().map(|file| file.path.as_str()))
+            .any(|relative| missing(&root.join(relative)))
+    {
+        "package-missing"
+    } else {
+        "verification-failed"
     }
 }
 

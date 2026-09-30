@@ -414,11 +414,106 @@ fn listing_reverifies_enrolled_package_contents() {
 
     std::fs::write(fixture.directory.join("provider.bin"), b"changed").unwrap();
 
-    aware(&home)
-        .args(["provider", "list", "--format", "format.synthetic"])
+    // Re-verification still refuses to list the drifted package as usable; it reports it as
+    // unavailable (keeping its selection visible) instead of failing the whole inventory (#589).
+    let listed = aware(&home)
+        .args(["--json", "provider", "list", "--format", "format.synthetic"])
         .assert()
-        .failure()
-        .code(3);
+        .success();
+    let listed_json: serde_json::Value =
+        serde_json::from_slice(&listed.get_output().stdout).unwrap();
+    assert_eq!(listed_json["data"]["packages"], serde_json::json!([]));
+    let unavailable = &listed_json["data"]["unavailable"];
+    assert_eq!(unavailable.as_array().unwrap().len(), 1);
+    assert_eq!(unavailable[0]["manifestSha256"], fixture.manifest_sha256);
+    assert_eq!(unavailable[0]["selected"], true);
+    assert_eq!(unavailable[0]["reason"], "verification-failed");
+}
+
+#[test]
+fn listing_survives_a_removed_unselected_package_directory() {
+    // #589: package A enrolled, package B enrolled and selected, A's directory removed.
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp.path().join("home");
+    let removed = package_fixture_named(temp.path(), "package-removed");
+    let selected = package_fixture_named(temp.path(), "package-selected");
+    for fixture in [&removed, &selected] {
+        aware(&home)
+            .args(["provider", "trust-publisher"])
+            .arg(&fixture.public_key)
+            .args(["--publisher-id", "publisher.synthetic"])
+            .assert()
+            .success();
+        aware(&home)
+            .args(["provider", "enroll"])
+            .arg(&fixture.directory)
+            .assert()
+            .success();
+    }
+    aware(&home)
+        .args([
+            "provider",
+            "select",
+            "format.synthetic",
+            &selected.manifest_sha256,
+        ])
+        .assert()
+        .success();
+    std::fs::remove_dir_all(&removed.directory).unwrap();
+
+    for filter in [Some("format.synthetic"), None] {
+        let mut command = aware(&home);
+        command.args(["--json", "provider", "list"]);
+        if let Some(format) = filter {
+            command.args(["--format", format]);
+        }
+        let listed = command.assert().success();
+        let listed_json: serde_json::Value =
+            serde_json::from_slice(&listed.get_output().stdout).unwrap();
+        let packages = listed_json["data"]["packages"].as_array().unwrap();
+        assert_eq!(packages.len(), 1, "{filter:?}");
+        assert_eq!(packages[0]["manifestSha256"], selected.manifest_sha256);
+        assert_eq!(packages[0]["selected"], true);
+        assert_eq!(
+            listed_json["data"]["unavailable"],
+            serde_json::json!([{
+                "manifestSha256": removed.manifest_sha256,
+                "packageId": "package.synthetic",
+                "packageVersion": "1.2.3",
+                "formatId": "format.synthetic",
+                "selected": false,
+                "reason": "package-missing",
+            }]),
+            "{filter:?}"
+        );
+        let listing = String::from_utf8(listed.get_output().stdout.clone()).unwrap();
+        assert!(!listing.contains(removed.directory.to_string_lossy().as_ref()));
+    }
+
+    let text = aware(&home).args(["provider", "list"]).assert().success();
+    let text = String::from_utf8(text.get_output().stdout.clone()).unwrap();
+    assert!(
+        text.contains(&format!("{}  yes", selected.manifest_sha256)),
+        "{text}"
+    );
+    assert!(
+        text.contains(&format!(
+            "{}  unavailable (package-missing)",
+            removed.manifest_sha256
+        )),
+        "{text}"
+    );
+
+    // The selected package still runs its own full re-verification on select.
+    aware(&home)
+        .args([
+            "provider",
+            "select",
+            "format.synthetic",
+            &removed.manifest_sha256,
+        ])
+        .assert()
+        .failure();
 }
 
 #[test]
@@ -636,6 +731,83 @@ fn selection_refuses_an_unbounded_existing_history() {
             "format.synthetic",
             &fixture.manifest_sha256,
         ])
+        .assert()
+        .failure()
+        .code(3);
+}
+
+fn enrolled_and_selected(temp: &std::path::Path) -> (std::path::PathBuf, PackageFixture) {
+    let home = temp.join("home");
+    let fixture = package_fixture(temp);
+    aware(&home)
+        .args(["provider", "trust-publisher"])
+        .arg(&fixture.public_key)
+        .args(["--publisher-id", "publisher.synthetic"])
+        .assert()
+        .success();
+    aware(&home)
+        .args(["provider", "enroll"])
+        .arg(&fixture.directory)
+        .assert()
+        .success();
+    aware(&home)
+        .args([
+            "provider",
+            "select",
+            "format.synthetic",
+            &fixture.manifest_sha256,
+        ])
+        .assert()
+        .success();
+    (home, fixture)
+}
+
+#[test]
+fn listing_reports_a_deleted_receipted_file_as_package_missing() {
+    let temp = tempfile::tempdir().unwrap();
+    let (home, fixture) = enrolled_and_selected(temp.path());
+    std::fs::remove_file(fixture.directory.join("provider.bin")).unwrap();
+
+    let listed = aware(&home)
+        .args(["--json", "provider", "list"])
+        .assert()
+        .success();
+    let listed_json: serde_json::Value =
+        serde_json::from_slice(&listed.get_output().stdout).unwrap();
+    assert_eq!(listed_json["data"]["packages"], serde_json::json!([]));
+    assert_eq!(
+        listed_json["data"]["unavailable"][0]["reason"],
+        "package-missing"
+    );
+    assert_eq!(listed_json["data"]["unavailable"][0]["selected"], true);
+}
+
+#[test]
+fn listing_still_fails_on_a_corrupt_enrollment_record() {
+    let temp = tempfile::tempdir().unwrap();
+    let (home, fixture) = enrolled_and_selected(temp.path());
+    let record_path = home.join(format!(
+        "providers/packages/{}.json",
+        fixture.manifest_sha256
+    ));
+    let mut record: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(&record_path).unwrap()).unwrap();
+    let original = record.clone();
+    record["schemaVersion"] = serde_json::json!("aware.model-provider-enrollment/v0");
+    std::fs::write(&record_path, serde_json::to_vec(&record).unwrap()).unwrap();
+
+    aware(&home)
+        .args(["provider", "list"])
+        .assert()
+        .failure()
+        .code(3);
+
+    // A still-valid manifest that no longer hashes to the record's digest is corruption too.
+    let mut record = original;
+    record["manifest"]["packageVersion"] = serde_json::json!("9.9.9");
+    std::fs::write(&record_path, serde_json::to_vec(&record).unwrap()).unwrap();
+    aware(&home)
+        .args(["provider", "list"])
         .assert()
         .failure()
         .code(3);
