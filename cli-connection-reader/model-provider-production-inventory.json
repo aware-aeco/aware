@@ -9,6 +9,7 @@
     "model-contract.mjs",
     "model-effective-source.mjs",
     "model-host-client.mjs",
+    "model-long-path.mjs",
     "model-glb-tile.mjs",
     "model-metadata-shards.mjs",
     "model-metadata-sort.mjs",

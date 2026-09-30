@@ -32,6 +32,15 @@ test('external sort is deterministic across input and run order', async (t) => {
     .map((entry) => entry.key).join(','), 'entity:001,entity:002,entity:003,entity:004');
 });
 
+test('sorts under a temp parent beyond the Windows MAX_PATH (#593)', async (t) => {
+  const tempParent = path.join(await temporary(t), 'a'.repeat(120), 'b'.repeat(120));
+  await fs.mkdir(tempParent, { recursive: true });
+  const sorted = await externalSortMetadataRecords(values, { tempParent, limits: { runBytes: 100, fanIn: 2 } });
+  assert.ok(sorted.pathname.length > 260);
+  assert.equal(sorted.count, 4);
+  assert.equal((await fs.readFile(sorted.pathname, 'utf8')).split('\n').filter(Boolean).length, 4);
+});
+
 test('async input and empty input produce canonical deterministic files', async (t) => {
   const tempParent = await temporary(t);
   async function* shuffled() { yield values[2]; yield values[0]; yield values[3]; yield values[1]; }

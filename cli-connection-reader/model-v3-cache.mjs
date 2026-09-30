@@ -3,6 +3,7 @@ import path from 'node:path';
 import { createPublicKey, sign, verify } from 'node:crypto';
 
 import { canonicalJsonBytes, ModelReaderError, parseJsonStrict, sha256 } from './model-contract.mjs';
+import { mkdtempBeyondMaxPath } from './model-long-path.mjs';
 
 const CACHE_SCHEMA = 'aware.model-reference-cache/v3';
 const CACHE_SIGNATURE_DOMAIN = Buffer.from('AWARE\0model-reference-reader\0v3-cache\0v1\0', 'ascii');
@@ -39,7 +40,7 @@ export async function publishV3Cache(root, key, identity, canonical, signingKey)
   }
   const target = entryRoot(root, key);
   await fs.mkdir(path.dirname(target), { recursive: true, mode: 0o700 });
-  const staging = await fs.mkdtemp(path.join(path.dirname(target), '.tmp-'));
+  const staging = await mkdtempBeyondMaxPath(fs, path.join(path.dirname(target), '.tmp-'));
   try {
     for (const object of canonical.objects) {
       await copyVerified(object.pathname, path.join(staging, ...object.receipt.logicalPath.split('/')), object.receipt);

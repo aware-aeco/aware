@@ -1088,6 +1088,10 @@ fn atomic_rename(source: &Path, destination: &Path, replace: bool) -> std::io::R
     use windows_sys::Win32::Storage::FileSystem::{
         MOVEFILE_REPLACE_EXISTING, MOVEFILE_WRITE_THROUGH, MoveFileExW,
     };
+    // `std::fs` adds the verbatim prefix itself; this raw call must, or a deep
+    // AWARE_HOME fails here with `os error 3` past MAX_PATH (#593).
+    let source = crate::fs::win32_verbatim(source)?;
+    let destination = crate::fs::win32_verbatim(destination)?;
     let source_wide = source
         .as_os_str()
         .encode_wide()
@@ -2153,6 +2157,45 @@ mod tests {
         assert!(
             verify_package_inventory(root, &manifest).is_err(),
             "missing file"
+        );
+    }
+
+    /// A deep `AWARE_HOME` pushes store records past the Win32 `MAX_PATH` of 260
+    /// UTF-16 units. `std::fs` quietly adds the `\\?\` verbatim prefix for such
+    /// paths, but a raw `MoveFileExW` does not, so the replacing publish failed
+    /// with `os error 3` while every `std::fs` call around it succeeded.
+    #[test]
+    fn json_records_publish_beyond_max_path() {
+        let tmp = tempfile::tempdir().unwrap();
+        let parent = tmp
+            .path()
+            .join("a".repeat(120))
+            .join("b".repeat(120))
+            .join("providers")
+            .join("policies");
+        let record = parent.join(format!("{}.json", "f".repeat(64)));
+        assert!(record.as_os_str().len() > 300);
+
+        write_new_json(&record, &json!({"revision": 1})).unwrap();
+        write_replace_json(&record, &json!({"revision": 2})).unwrap();
+
+        let stored: serde_json::Value =
+            serde_json::from_slice(&std::fs::read(&record).unwrap()).unwrap();
+        assert_eq!(stored, json!({"revision": 2}));
+        let leftovers = std::fs::read_dir(&parent)
+            .unwrap()
+            .filter(|entry| {
+                entry
+                    .as_ref()
+                    .unwrap()
+                    .file_name()
+                    .to_string_lossy()
+                    .starts_with(".tmp-")
+            })
+            .count();
+        assert_eq!(
+            leftovers, 0,
+            "a failed publish must not leave scratch files"
         );
     }
 }

@@ -3,6 +3,7 @@ import path from 'node:path';
 
 import { canonicalJsonBytes, ModelReaderError, parseJsonStrict } from './model-contract.mjs';
 import { canonicalMetadataRecord } from './model-metadata-shards.mjs';
+import { mkdtempBeyondMaxPath } from './model-long-path.mjs';
 
 const DEFAULT_LIMITS = Object.freeze({
   runBytes: 64 * 1024 * 1024,
@@ -493,7 +494,7 @@ async function sortMetadataRecords(records, options, dependencies) {
   let root;
   try {
     const realTempParent = await io.realpath(tempParent);
-    root = await io.mkdtemp(path.join(realTempParent, 'aware-model-sort-'));
+    root = await mkdtempBeyondMaxPath(io, path.join(realTempParent, 'aware-model-sort-'));
     let buffered = []; let bufferedBytes = 0; let totalBytes = 0; let count = 0; let ordinal = 0;
     const runs = [];
     const publishRun = async () => {

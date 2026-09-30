@@ -273,6 +273,44 @@ fn copy_dir_tracked(
     Ok(())
 }
 
+/// `path` in the Win32 verbatim form (`\\?\C:\…`, `\\?\UNC\server\share\…`)
+/// that raw `*W` file APIs need to reach past `MAX_PATH`.
+///
+/// `std::fs` adds this prefix itself before every call, so only code that hands
+/// a path straight to a Win32 function needs it. The binary carries no
+/// `longPathAware` manifest, so without the prefix such a call is capped at 260
+/// UTF-16 units whatever `LongPathsEnabled` says — a deep `AWARE_HOME` then fails
+/// there with `os error 3` while every `std::fs` call around it succeeds (#593).
+///
+/// A verbatim path is passed to the filesystem unparsed, so the input is first
+/// made absolute and normalised (`/` to `\`, `.` and `..` resolved) by
+/// [`std::path::absolute`]; a path that is already verbatim or a device path is
+/// returned as it is.
+#[cfg(windows)]
+pub(crate) fn win32_verbatim(path: &Path) -> std::io::Result<PathBuf> {
+    use std::ffi::OsString;
+    use std::os::windows::ffi::{OsStrExt, OsStringExt};
+    use std::path::{Component, Prefix};
+
+    let absolute = std::path::absolute(path)?;
+    let Some(Component::Prefix(prefix)) = absolute.components().next() else {
+        return Ok(absolute);
+    };
+    // `C:\x` becomes `\\?\C:\x`; `\\server\share\x` becomes `\\?\UNC\server\share\x`,
+    // i.e. the UNC form drops the first of its two leading separators.
+    let (root, skip) = match prefix.kind() {
+        Prefix::Disk(_) => (r"\\?\", 0),
+        Prefix::UNC(..) => (r"\\?\UNC", 1),
+        Prefix::Verbatim(_)
+        | Prefix::VerbatimUNC(..)
+        | Prefix::VerbatimDisk(_)
+        | Prefix::DeviceNS(_) => return Ok(absolute),
+    };
+    let mut verbatim: Vec<u16> = root.encode_utf16().collect();
+    verbatim.extend(absolute.as_os_str().encode_wide().skip(skip));
+    Ok(PathBuf::from(OsString::from_wide(&verbatim)))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -599,5 +637,29 @@ mod tests {
         let direct = std::fs::symlink_metadata(&target).unwrap();
         assert!(is_plain_dir(&direct));
         assert!(!is_plain_file(&direct));
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn win32_verbatim_prefixes_disk_and_unc_paths_and_normalises_them() {
+        let cases = [
+            (r"C:\a\b.json", r"\\?\C:\a\b.json"),
+            ("C:/a/./x/../b.json", r"\\?\C:\a\b.json"),
+            (r"\\server\share\a\b", r"\\?\UNC\server\share\a\b"),
+            (r"\\?\C:\already\verbatim", r"\\?\C:\already\verbatim"),
+            (r"\\?\UNC\server\share\x", r"\\?\UNC\server\share\x"),
+            (r"\\.\pipe\name", r"\\.\pipe\name"),
+        ];
+        for (input, expected) in cases {
+            assert_eq!(
+                win32_verbatim(Path::new(input)).unwrap(),
+                PathBuf::from(expected),
+                "{input}"
+            );
+        }
+        let relative = win32_verbatim(Path::new("rel")).unwrap();
+        let expected = std::env::current_dir().unwrap().join("rel");
+        assert_eq!(relative, win32_verbatim(&expected).unwrap());
+        assert!(relative.as_os_str().to_string_lossy().starts_with(r"\\?\"));
     }
 }
