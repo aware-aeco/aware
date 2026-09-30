@@ -676,3 +676,69 @@ fn selection_refuses_an_unbounded_existing_history() {
         .failure()
         .code(3);
 }
+
+fn enrolled_and_selected(temp: &std::path::Path) -> (std::path::PathBuf, PackageFixture) {
+    let home = temp.join("home");
+    let fixture = package_fixture(temp);
+    aware(&home)
+        .args(["provider", "trust-publisher"])
+        .arg(&fixture.public_key)
+        .args(["--publisher-id", "publisher.synthetic"])
+        .assert()
+        .success();
+    aware(&home)
+        .args(["provider", "enroll"])
+        .arg(&fixture.directory)
+        .assert()
+        .success();
+    aware(&home)
+        .args([
+            "provider",
+            "select",
+            "format.synthetic",
+            &fixture.manifest_sha256,
+        ])
+        .assert()
+        .success();
+    (home, fixture)
+}
+
+#[test]
+fn listing_reports_a_deleted_receipted_file_as_package_missing() {
+    let temp = tempfile::tempdir().unwrap();
+    let (home, fixture) = enrolled_and_selected(temp.path());
+    std::fs::remove_file(fixture.directory.join("provider.bin")).unwrap();
+
+    let listed = aware(&home)
+        .args(["--json", "provider", "list"])
+        .assert()
+        .success();
+    let listed_json: serde_json::Value =
+        serde_json::from_slice(&listed.get_output().stdout).unwrap();
+    assert_eq!(listed_json["data"]["packages"], serde_json::json!([]));
+    assert_eq!(
+        listed_json["data"]["unavailable"][0]["reason"],
+        "package-missing"
+    );
+    assert_eq!(listed_json["data"]["unavailable"][0]["selected"], true);
+}
+
+#[test]
+fn listing_still_fails_on_a_corrupt_enrollment_record() {
+    let temp = tempfile::tempdir().unwrap();
+    let (home, fixture) = enrolled_and_selected(temp.path());
+    let record_path = home.join(format!(
+        "providers/packages/{}.json",
+        fixture.manifest_sha256
+    ));
+    let mut record: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(&record_path).unwrap()).unwrap();
+    record["schemaVersion"] = serde_json::json!("aware.model-provider-enrollment/v0");
+    std::fs::write(&record_path, serde_json::to_vec(&record).unwrap()).unwrap();
+
+    aware(&home)
+        .args(["provider", "list"])
+        .assert()
+        .failure()
+        .code(3);
+}

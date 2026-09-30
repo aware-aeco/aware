@@ -448,6 +448,7 @@ impl ProviderStore {
                 if format.is_some_and(|id| id != package_record.manifest.format_id) {
                     continue;
                 }
+                validate_enrollment_record(&package_record, digest)?;
                 let selected = selections.get(&package_record.manifest.format_id)
                     == Some(&package_record.manifest_sha256);
                 // An inactive enrollment is simply not inventory — unless it is still selected,
@@ -457,14 +458,15 @@ impl ProviderStore {
                 }
                 let package = match self.verify_enrollment(digest) {
                     Ok(package) => package,
-                    Err(error) => {
+                    Err(_) => {
+                        let reason = unavailable_reason(&package_record);
                         unavailable.push(UnavailablePackage {
                             manifest_sha256: digest.into(),
                             package_id: package_record.manifest.package_id,
                             package_version: package_record.manifest.package_version,
                             format_id: package_record.manifest.format_id,
                             selected,
-                            reason: unavailable_reason(&error),
+                            reason,
                         });
                         continue;
                     }
@@ -537,17 +539,12 @@ impl ProviderStore {
 
     fn verify_enrollment(&self, digest: &str) -> Result<PackageRecord, AwareError> {
         let package = self.read_package(digest)?;
-        if package.schema_version != PACKAGE_SCHEMA
-            || package.manifest_sha256 != digest
-            || package.publisher_fingerprint_sha256 != package.manifest.publisher_fingerprint_sha256
-            || !package.enrolled
-            || package.revoked
-        {
+        validate_enrollment_record(&package, digest)?;
+        if !package.enrolled || package.revoked {
             return Err(AwareError::Validation(
                 "provider enrollment record is invalid or inactive".into(),
             ));
         }
-        validate_manifest(&package.manifest)?;
         verify_compatible(&package.manifest)?;
         let root = canonical_regular_directory(Path::new(&package.package_root))?;
         if root != Path::new(&package.package_root) {
@@ -616,10 +613,34 @@ impl ProviderStore {
     }
 }
 
-fn unavailable_reason(error: &AwareError) -> &'static str {
-    match error {
-        AwareError::Io(io) if io.kind() == std::io::ErrorKind::NotFound => "package-missing",
-        _ => "verification-failed",
+/// The store's own record must be internally consistent. A failure here is store corruption, never
+/// an unavailable package, so `list` stays fatal on it.
+fn validate_enrollment_record(package: &PackageRecord, digest: &str) -> Result<(), AwareError> {
+    if package.schema_version != PACKAGE_SCHEMA
+        || package.manifest_sha256 != digest
+        || package.publisher_fingerprint_sha256 != package.manifest.publisher_fingerprint_sha256
+    {
+        return Err(AwareError::Validation(
+            "provider enrollment record is invalid or inactive".into(),
+        ));
+    }
+    validate_manifest(&package.manifest)
+}
+
+/// `package-missing` when the enrolled root, its control files or any receipted file is gone;
+/// every other re-verification failure is `verification-failed`.
+fn unavailable_reason(package: &PackageRecord) -> &'static str {
+    let root = Path::new(&package.package_root);
+    let missing = |path: &Path| matches!(std::fs::symlink_metadata(path), Err(error) if error.kind() == std::io::ErrorKind::NotFound);
+    if missing(root)
+        || [MANIFEST_NAME, SIGNATURE_NAME]
+            .into_iter()
+            .chain(package.manifest.files.iter().map(|file| file.path.as_str()))
+            .any(|relative| missing(&root.join(relative)))
+    {
+        "package-missing"
+    } else {
+        "verification-failed"
     }
 }
 
