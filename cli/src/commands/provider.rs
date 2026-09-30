@@ -102,7 +102,7 @@ pub fn dispatch(command: ProviderCommand, context: &Context) -> Result<(), Aware
             let listing = store.list(format.as_deref())?;
             if context.json {
                 envelope::print_ok("provider list", listing, started)?;
-            } else if listing.packages.is_empty() {
+            } else if listing.packages.is_empty() && listing.unavailable.is_empty() {
                 println!("(no provider packages enrolled)");
             } else {
                 println!("FORMAT  PACKAGE  VERSION  MANIFEST  SELECTED");
@@ -114,6 +114,17 @@ pub fn dispatch(command: ProviderCommand, context: &Context) -> Result<(), Aware
                         package.package_version,
                         package.manifest_sha256,
                         if package.selected { "yes" } else { "no" }
+                    );
+                }
+                for package in listing.unavailable {
+                    println!(
+                        "{}  {}  {}  {}  {}unavailable ({})",
+                        package.format_id,
+                        package.package_id,
+                        package.package_version,
+                        package.manifest_sha256,
+                        if package.selected { "yes, " } else { "" },
+                        package.reason
                     );
                 }
             }

@@ -355,11 +355,106 @@ fn listing_reverifies_enrolled_package_contents() {
 
     std::fs::write(fixture.directory.join("provider.bin"), b"changed").unwrap();
 
-    aware(&home)
-        .args(["provider", "list", "--format", "format.synthetic"])
+    // Re-verification still refuses to list the drifted package as usable; it reports it as
+    // unavailable (keeping its selection visible) instead of failing the whole inventory (#589).
+    let listed = aware(&home)
+        .args(["--json", "provider", "list", "--format", "format.synthetic"])
         .assert()
-        .failure()
-        .code(3);
+        .success();
+    let listed_json: serde_json::Value =
+        serde_json::from_slice(&listed.get_output().stdout).unwrap();
+    assert_eq!(listed_json["data"]["packages"], serde_json::json!([]));
+    let unavailable = &listed_json["data"]["unavailable"];
+    assert_eq!(unavailable.as_array().unwrap().len(), 1);
+    assert_eq!(unavailable[0]["manifestSha256"], fixture.manifest_sha256);
+    assert_eq!(unavailable[0]["selected"], true);
+    assert_eq!(unavailable[0]["reason"], "verification-failed");
+}
+
+#[test]
+fn listing_survives_a_removed_unselected_package_directory() {
+    // #589: package A enrolled, package B enrolled and selected, A's directory removed.
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp.path().join("home");
+    let removed = package_fixture_named(temp.path(), "package-removed");
+    let selected = package_fixture_named(temp.path(), "package-selected");
+    for fixture in [&removed, &selected] {
+        aware(&home)
+            .args(["provider", "trust-publisher"])
+            .arg(&fixture.public_key)
+            .args(["--publisher-id", "publisher.synthetic"])
+            .assert()
+            .success();
+        aware(&home)
+            .args(["provider", "enroll"])
+            .arg(&fixture.directory)
+            .assert()
+            .success();
+    }
+    aware(&home)
+        .args([
+            "provider",
+            "select",
+            "format.synthetic",
+            &selected.manifest_sha256,
+        ])
+        .assert()
+        .success();
+    std::fs::remove_dir_all(&removed.directory).unwrap();
+
+    for filter in [Some("format.synthetic"), None] {
+        let mut command = aware(&home);
+        command.args(["--json", "provider", "list"]);
+        if let Some(format) = filter {
+            command.args(["--format", format]);
+        }
+        let listed = command.assert().success();
+        let listed_json: serde_json::Value =
+            serde_json::from_slice(&listed.get_output().stdout).unwrap();
+        let packages = listed_json["data"]["packages"].as_array().unwrap();
+        assert_eq!(packages.len(), 1, "{filter:?}");
+        assert_eq!(packages[0]["manifestSha256"], selected.manifest_sha256);
+        assert_eq!(packages[0]["selected"], true);
+        assert_eq!(
+            listed_json["data"]["unavailable"],
+            serde_json::json!([{
+                "manifestSha256": removed.manifest_sha256,
+                "packageId": "package.synthetic",
+                "packageVersion": "1.2.3",
+                "formatId": "format.synthetic",
+                "selected": false,
+                "reason": "package-missing",
+            }]),
+            "{filter:?}"
+        );
+        let listing = String::from_utf8(listed.get_output().stdout.clone()).unwrap();
+        assert!(!listing.contains(removed.directory.to_string_lossy().as_ref()));
+    }
+
+    let text = aware(&home).args(["provider", "list"]).assert().success();
+    let text = String::from_utf8(text.get_output().stdout.clone()).unwrap();
+    assert!(
+        text.contains(&format!("{}  yes", selected.manifest_sha256)),
+        "{text}"
+    );
+    assert!(
+        text.contains(&format!(
+            "{}  unavailable (package-missing)",
+            removed.manifest_sha256
+        )),
+        "{text}"
+    );
+
+    // The selected package still runs its own full re-verification on select.
+    aware(&home)
+        .args([
+            "provider",
+            "select",
+            "format.synthetic",
+            &removed.manifest_sha256,
+        ])
+        .assert()
+        .failure();
 }
 
 #[test]
