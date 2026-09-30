@@ -733,9 +733,20 @@ fn listing_still_fails_on_a_corrupt_enrollment_record() {
     ));
     let mut record: serde_json::Value =
         serde_json::from_slice(&std::fs::read(&record_path).unwrap()).unwrap();
+    let original = record.clone();
     record["schemaVersion"] = serde_json::json!("aware.model-provider-enrollment/v0");
     std::fs::write(&record_path, serde_json::to_vec(&record).unwrap()).unwrap();
 
+    aware(&home)
+        .args(["provider", "list"])
+        .assert()
+        .failure()
+        .code(3);
+
+    // A still-valid manifest that no longer hashes to the record's digest is corruption too.
+    let mut record = original;
+    record["manifest"]["packageVersion"] = serde_json::json!("9.9.9");
+    std::fs::write(&record_path, serde_json::to_vec(&record).unwrap()).unwrap();
     aware(&home)
         .args(["provider", "list"])
         .assert()

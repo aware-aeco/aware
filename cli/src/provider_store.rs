@@ -624,7 +624,15 @@ fn validate_enrollment_record(package: &PackageRecord, digest: &str) -> Result<(
             "provider enrollment record is invalid or inactive".into(),
         ));
     }
-    validate_manifest(&package.manifest)
+    validate_manifest(&package.manifest)?;
+    // Enrollment admits only closed canonical manifest bytes, so the embedded manifest must still
+    // hash to the digest that names the record.
+    if sha256_hex(&canonical_json_bytes(&package.manifest)?) != digest {
+        return Err(AwareError::Validation(
+            "provider enrollment record manifest does not match its digest".into(),
+        ));
+    }
+    Ok(())
 }
 
 /// `package-missing` when the enrolled root, its control files or any receipted file is gone;
