@@ -262,7 +262,15 @@ export async function canonicalizeProviderOutput(options) {
     });
     geometry.push({ pathname: path.join(options.output.root, ...entry.path.split('/')), receipt });
   }
-  const indexes = { geometry: buildArtifactV2Index('geometry', geometry.map((entry) => entry.receipt)) };
+  // "No drawable geometry" is zero tiles, and only a degraded conversion may claim it. The root
+  // re-derives the same permission from the authenticated effective-source bytes.
+  const allowEmptyGeometry = options.effectiveSource?.completeness === 'degraded';
+  if (geometry.length === 0 && !allowEmptyGeometry) {
+    canonicalError('reference-geometry-invalid', 'A complete model conversion requires at least one geometry tile.');
+  }
+  const indexes = {
+    geometry: buildArtifactV2Index('geometry', geometry.map((entry) => entry.receipt), { allowEmptyGeometry }),
+  };
   const entities = new Set(); const propertyIds = new Set(); const relationshipIds = new Set(); const metadata = {};
   for (const family of FAMILIES) {
     const sorted = await externalSortMetadataRecords(

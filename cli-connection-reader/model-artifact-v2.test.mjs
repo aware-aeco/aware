@@ -264,3 +264,63 @@ test('root rejects sparse effective-source coverage arrays', () => {
     );
   }
 });
+
+function degrade(value) {
+  const source = value.options.effectiveSource;
+  source.manifest.absent = [{
+    role: 'catalogue.profile', classification: 'degraded', affectedDomains: ['geometry.profile'],
+  }];
+  source.manifest.completeness = 'degraded';
+  source.bytes = canonicalJsonBytes(source.manifest);
+  value.options.effectiveSourceSha256 = sha256(source.bytes);
+  source.receipt = artifactV2Receipt({
+    logicalPath: 'effective-source.json', logicalKind: 'effective-source', ordinal: 0,
+    mediaType: 'application/json', content: source.bytes, itemCount: 1,
+  });
+  return value;
+}
+
+test('an empty geometry index is refused unless the caller admits it, and only for geometry (#604)', () => {
+  assert.throws(
+    () => buildArtifactV2Index('geometry', []),
+    (error) => error.code === 'reference-artifact-v2-invalid',
+  );
+  assert.throws(
+    () => buildArtifactV2Index('geometry', [], { allowEmptyGeometry: 'yes' }),
+    (error) => error.code === 'reference-artifact-v2-invalid',
+  );
+  assert.throws(
+    () => buildArtifactV2Index('entities', [], { allowEmptyGeometry: true }),
+    (error) => error.code === 'reference-artifact-v2-invalid',
+  );
+  const empty = buildArtifactV2Index('geometry', [], { allowEmptyGeometry: true });
+  assert.equal(empty.bytes.toString('utf8'),
+    '{"family":"geometry","itemCount":0,"objects":[],"schemaVersion":"aware.model-artifact-index/v2"}');
+  assert.equal(empty.receipt.itemCount, 0);
+  assert.equal(empty.receipt.bounds, undefined);
+});
+
+test('a degraded root may carry zero geometry tiles; a complete root may not (#604)', () => {
+  const complete = artifact();
+  complete.options.indexes.geometry = buildArtifactV2Index('geometry', [], { allowEmptyGeometry: true });
+  assert.throws(
+    () => buildArtifactV2Root(complete.options),
+    (error) => error.code === 'reference-artifact-v2-invalid'
+      && error.message === 'Only a degraded artifact may omit geometry.',
+  );
+
+  const degraded = degrade(artifact());
+  degraded.options.indexes.geometry = buildArtifactV2Index('geometry', [], { allowEmptyGeometry: true });
+  const result = buildArtifactV2Root(degraded.options);
+  assert.equal(result.manifest.completeness, 'degraded');
+  assert.equal(result.manifest.indexes.geometry.itemCount, 0);
+  assert.equal(result.manifest.objects.some((entry) => entry.logicalKind === 'geometry-tile'), false);
+  assert.deepEqual(result.manifest.objects.map((entry) => entry.logicalPath), [
+    'effective-source.json', 'entities.index.json', 'geometry.index.json',
+    'metadata/entities-000000.json', 'properties.index.json', 'relationships.index.json',
+  ]);
+
+  // A degraded root with geometry is unchanged by the exception.
+  const drawn = buildArtifactV2Root(degrade(artifact()).options);
+  assert.equal(drawn.manifest.indexes.geometry.itemCount, 7);
+});

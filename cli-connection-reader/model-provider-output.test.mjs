@@ -203,3 +203,42 @@ test('honors cancellation and removes its partial admitted snapshot', async (t) 
   );
   await assert.rejects(fs.stat(value.options.admittedRoot), (error) => error.code === 'ENOENT');
 });
+
+test('admits an output with no geometry tiles; completeness is gated at canonicalization (#604)', async (t) => {
+  const value = await fixture(t);
+  await fs.rm(path.join(value.root, 'geometry', '000000.glb'));
+  value.manifest.files = value.manifest.files.filter((entry) => entry.kind !== 'geometry');
+  const manifestBytes = canonicalJsonBytes(value.manifest);
+  await fs.writeFile(path.join(value.root, 'intermediate-manifest.json'), manifestBytes);
+  await fs.writeFile(path.join(value.root, 'complete.json'), canonicalJsonBytes({
+    schemaVersion: 'aware.model-provider-output-completion/v1', manifestPath: 'intermediate-manifest.json',
+    manifestBytes: manifestBytes.length, manifestSha256: sha256(manifestBytes),
+  }));
+  const result = await verifyProviderOutput(value.root, value.options);
+  assert.deepEqual(result.files.map((entry) => entry.kind), ['entities', 'properties']);
+  assert.deepEqual(await fs.readdir(path.join(result.root, 'geometry')), []);
+});
+
+test('still requires entity shards and bounds on every geometry receipt (#604)', async (t) => {
+  const rewrite = async (value) => {
+    const manifestBytes = canonicalJsonBytes(value.manifest);
+    await fs.writeFile(path.join(value.root, 'intermediate-manifest.json'), manifestBytes);
+    await fs.writeFile(path.join(value.root, 'complete.json'), canonicalJsonBytes({
+      schemaVersion: 'aware.model-provider-output-completion/v1', manifestPath: 'intermediate-manifest.json',
+      manifestBytes: manifestBytes.length, manifestSha256: sha256(manifestBytes),
+    }));
+  };
+  const noEntities = await fixture(t);
+  await fs.rm(path.join(noEntities.root, 'metadata', 'entities-000000.jsonl'));
+  noEntities.manifest.files = noEntities.manifest.files.filter((entry) => entry.kind !== 'entities');
+  await rewrite(noEntities);
+  await assert.rejects(() => verifyProviderOutput(noEntities.root, noEntities.options),
+    (error) => error.code === 'reference-provider-output-invalid');
+
+  const noBounds = await fixture(t);
+  delete noBounds.manifest.files.find((entry) => entry.kind === 'geometry').bounds;
+  await rewrite(noBounds);
+  await assert.rejects(() => verifyProviderOutput(noBounds.root, noBounds.options),
+    (error) => error.code === 'reference-provider-output-invalid'
+      && error.message === 'A geometry tile receipt has invalid bounds.');
+});

@@ -54,7 +54,8 @@ that envelope before reading user-owned model data.
 
 `probe`, `read-model` and `read-snapshot` use an explicit `model-reference-reader/v3` request and never
 fall back to v1/v2. The enrolled provider writes a closed read-only intermediate package. AWARE admits
-its contiguous geometry tiles and JSONL metadata, validates unique entity/relationship identities,
+its contiguous geometry tiles (zero tiles only for a degraded conversion with nothing drawable; never
+an empty GLB tile) and JSONL metadata, validates unique entity/relationship identities,
 property and relationship references, ownership bounds and canonical values, then runs a bounded
 external sort before deterministic sharding. Publication is one signed
 `model-reference-manifest/v2` content-addressed root; no partially converted model becomes visible.

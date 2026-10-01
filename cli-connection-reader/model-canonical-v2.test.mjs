@@ -254,3 +254,64 @@ test('relationships are a closed union keyed by kind (#590)', async (t) => {
     conversionRequestSha256: sha256(Buffer.from('request')),
   });
 });
+
+const NO_GEOMETRY_ENTITIES = [
+  { id: 'entity:b', type: 'member', name: 'B', geometry: [] },
+  { id: 'entity:a', type: 'member', name: 'A', geometry: [] },
+];
+
+function degraded(value) {
+  value.effectiveSource = {
+    ...value.effectiveSource, completeness: 'degraded',
+    absent: [{ role: 'catalogue.profile', classification: 'degraded', affectedDomains: ['geometry.profile'] }],
+  };
+  return value;
+}
+
+function canonicalize(value) {
+  return canonicalizeProviderOutput({
+    ...value, formatId: 'format.synthetic', capabilityId: 'capability.synthetic',
+    conversionRequestSha256: sha256(Buffer.from('request')),
+  });
+}
+
+test('a degraded conversion with nothing drawable publishes a zero-tile geometry family (#604)', async (t) => {
+  const value = degraded(await fixture(t, { geometry: [], entities: NO_GEOMETRY_ENTITIES }));
+  const result = await canonicalize(value);
+  assert.equal(result.root.manifest.completeness, 'degraded');
+  assert.deepEqual(result.indexes.geometry.index.objects, []);
+  assert.equal(result.indexes.geometry.index.itemCount, 0);
+  assert.equal(result.root.manifest.indexes.geometry.itemCount, 0);
+  assert.equal(result.root.manifest.indexes.geometry.bounds, undefined);
+  assert.equal(result.objects.some((entry) => entry.receipt.logicalKind === 'geometry-tile'), false);
+  assert.equal(result.indexes.entities.index.itemCount, 2);
+});
+
+test('a complete conversion with zero geometry tiles is still refused (#604)', async (t) => {
+  const value = await fixture(t, { geometry: [], entities: NO_GEOMETRY_ENTITIES });
+  await assert.rejects(() => canonicalize(value), (error) => error.code === 'reference-geometry-invalid'
+    && error.message === 'A complete model conversion requires at least one geometry tile.');
+});
+
+test('with zero tiles no entity may claim geometry, even when degraded (#604)', async (t) => {
+  const value = degraded(await fixture(t, {
+    geometry: [],
+    entities: [{ id: 'entity:a', type: 'member', name: 'A', geometry: [{ tileOrdinal: 0, bounds: [0, 0, 0, 1, 1, 1] }] }],
+    properties: [], relationships: [],
+  }));
+  await assert.rejects(() => canonicalize(value), (error) => error.code === 'reference-metadata-semantic-invalid');
+});
+
+test('a degraded conversion still may not ship an empty GLB tile (#604)', async (t) => {
+  let json = Buffer.from(JSON.stringify({ asset: { version: '2.0' }, scene: 0, scenes: [{}] }));
+  json = Buffer.concat([json, Buffer.alloc((4 - json.length % 4) % 4, 0x20)]);
+  const header = Buffer.alloc(20); header.writeUInt32LE(0x46546c67, 0); header.writeUInt32LE(2, 4);
+  header.writeUInt32LE(20 + json.length, 8); header.writeUInt32LE(json.length, 12);
+  header.writeUInt32LE(0x4e4f534a, 16);
+  const empty = Buffer.concat([header, json]);
+  const value = degraded(await fixture(t, {
+    geometry: [{ bytes: empty, bounds: [0, 0, 0, 0, 0, 0] }], entities: NO_GEOMETRY_ENTITIES,
+  }));
+  value.output.files.find((entry) => entry.kind === 'geometry').count = 0;
+  await assert.rejects(() => canonicalize(value), (error) => error.code === 'reference-geometry-invalid');
+});

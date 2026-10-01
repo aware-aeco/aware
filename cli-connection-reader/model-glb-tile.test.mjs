@@ -94,3 +94,29 @@ test('GLB tiles refuse geometry outside the rendered scene', () => {
   output.writeUInt32LE(0x004e4942, 24 + json.length); binary.copy(output, 28 + json.length);
   assert.throws(() => validateGlbTile(output), /rendered scene/);
 });
+
+function jsonOnlyGlb(document) {
+  let json = canonicalJsonBytes(document);
+  json = Buffer.concat([json, Buffer.alloc((4 - (json.length % 4)) % 4, 0x20)]);
+  const output = Buffer.alloc(20 + json.length);
+  output.writeUInt32LE(0x46546c67, 0); output.writeUInt32LE(2, 4);
+  output.writeUInt32LE(output.length, 8); output.writeUInt32LE(json.length, 12);
+  output.writeUInt32LE(0x4e4f534a, 16); json.copy(output, 20);
+  return output;
+}
+
+test('an empty GLB tile is never admitted: "no geometry" is zero tiles, not an empty tile (#604)', () => {
+  const refused = (tile) => assert.throws(() => validateGlbTile(tile),
+    (error) => error.code === 'reference-geometry-invalid');
+  // The shape a provider might emit for a model with nothing drawable.
+  refused(jsonOnlyGlb({ asset: { version: '2.0' }, scene: 0, scenes: [{}] }));
+  // Even a structurally complete document with an empty buffer and no meshes is refused.
+  refused(jsonOnlyGlb({
+    asset: { version: '2.0' }, scene: 0, scenes: [{ nodes: [] }], nodes: [], meshes: [],
+    buffers: [{ byteLength: 0 }], bufferViews: [], accessors: [],
+  }));
+  refused(jsonOnlyGlb({
+    asset: { version: '2.0' }, scene: 0, scenes: [{ nodes: [0] }], nodes: [{}], meshes: [],
+    buffers: [{ byteLength: 0 }], bufferViews: [], accessors: [],
+  }));
+});

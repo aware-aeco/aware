@@ -672,7 +672,15 @@ referential integrity. A relationship record is a closed union keyed by `kind`: 
 and `depends-on` carry exactly `id`, `kind`, `from` and `to`; `provider-explicit` additionally
 requires a non-empty `providerRelationKind` of at most 256 characters, which the canonical
 relationship shard preserves. Any other kind or field is refused. Geometry is admitted as one or
-more contiguous GLB tiles; entity ownership and bounds must name an admitted tile. AWARE signs and
+more contiguous GLB tiles; entity ownership and bounds must name an admitted tile. The sole
+exception is a model with nothing drawable: a **degraded** conversion (its effective source lists an
+admitted `degraded` absence) may publish **zero** geometry tiles. The provider then writes no
+`geometry/` files and no geometry receipt, AWARE publishes `geometry.index.json` with `objects: []`
+and `itemCount: 0` (no bounds), the root keeps `completeness: "degraded"`, `counts.geometry` is `0`,
+and no entity may claim geometry. A complete conversion with zero tiles is refused
+(`reference-geometry-invalid`), the signed root refuses a non-degraded empty geometry index, and an
+empty GLB tile (no meshes or primitives) is never admitted in either mode — "no geometry" is the
+absence of tiles, so no bounds are ever invented for it. AWARE signs and
 publishes a `model-reference-manifest/v2` root, four family indexes and content-addressed objects.
 Cancellation or failure before root publication leaves no visible root.
 

@@ -318,8 +318,11 @@ function validateManifest(manifest, expected) {
     const values = ordinals.get(entry.kind) ?? [];
     values.push(entry.ordinal); ordinals.set(entry.kind, values);
   }
-  if (!ordinals.has('geometry') || !ordinals.has('entities')) {
-    outputError('reference-provider-output-invalid', 'Provider output requires geometry and entity shards.');
+  // Geometry tiles may be absent here: whether zero tiles is acceptable depends on the conversion's
+  // completeness, which canonicalization (and the signed root) enforce — only a degraded
+  // conversion may publish no geometry.
+  if (!ordinals.has('entities')) {
+    outputError('reference-provider-output-invalid', 'Provider output requires entity shards.');
   }
   for (const values of ordinals.values()) {
     values.sort((left, right) => left - right);
