@@ -5054,6 +5054,39 @@ mod tests {
         assert_eq!(ids.len(), 512);
     }
 
+    /// The argument text filling each positional placeholder of the format string whose
+    /// closing quote sits at byte `close`, read to the close of the enclosing macro call.
+    fn positional_arguments_after(source: &str, close: usize) -> Vec<String> {
+        let mut args: Vec<String> = Vec::new();
+        let mut depth = 0i32;
+        let mut current = String::new();
+        for ch in source[close + 1..].chars() {
+            match ch {
+                '(' | '[' => {
+                    depth += 1;
+                    current.push(ch);
+                }
+                ')' | ']' if depth > 0 => {
+                    depth -= 1;
+                    current.push(ch);
+                }
+                // depth 0 here is the close of the enclosing `format!` / `write!`.
+                ')' => break,
+                ',' if depth == 0 => {
+                    if !current.trim().is_empty() {
+                        args.push(current.trim().to_string());
+                    }
+                    current.clear();
+                }
+                _ => current.push(ch),
+            }
+        }
+        if !current.trim().is_empty() {
+            args.push(current.trim().to_string());
+        }
+        args
+    }
+
     /// Every point / direction literal in `source`, paired with the argument text
     /// filling each of its positional `{}` placeholders. Used by the gate below and
     /// by its negative control, so the scan is exercised over planted input too.
@@ -5066,36 +5099,148 @@ mod tests {
                     .expect("a string literal opens the token");
                 let close = open + 1 + source[open + 1..].find('"').expect("the literal closes");
                 let literal = &source[open + 1..close];
-                let mut args: Vec<String> = Vec::new();
-                if literal.contains("{}") {
-                    let mut depth = 0i32;
-                    let mut current = String::new();
-                    for ch in source[close + 1..].chars() {
-                        match ch {
-                            '(' | '[' => {
-                                depth += 1;
-                                current.push(ch);
-                            }
-                            ')' | ']' if depth > 0 => {
-                                depth -= 1;
-                                current.push(ch);
-                            }
-                            // depth 0 here is the close of the enclosing `format!`.
-                            ')' => break,
-                            ',' if depth == 0 => {
-                                if !current.trim().is_empty() {
-                                    args.push(current.trim().to_string());
-                                }
-                                current.clear();
-                            }
-                            _ => current.push(ch),
-                        }
-                    }
-                    if !current.trim().is_empty() {
-                        args.push(current.trim().to_string());
+                let args = if literal.contains("{}") {
+                    positional_arguments_after(source, close)
+                } else {
+                    Vec::new()
+                };
+                found.push((literal.to_string(), args));
+            }
+        }
+        found
+    }
+
+    /// The byte range between the parentheses opened at `open`, which must index a `(`.
+    ///
+    /// Parentheses inside string literals are counted, which is sound here only because
+    /// every `write!` literal in this module is itself balanced (`"({},{},{})"`). A
+    /// future unbalanced one would mis-span, and that direction is safe: the scan below
+    /// attributes a coordinate tuple by which span contains it, so a mis-span moves the
+    /// tuple to the wrong buffer or to none, and a point-list buffer left with no tuple
+    /// fails the gate rather than passing it.
+    fn parenthesised(source: &str, open: usize) -> (usize, usize) {
+        let mut depth = 0i32;
+        for (offset, ch) in source[open..].char_indices() {
+            match ch {
+                '(' => depth += 1,
+                ')' => {
+                    depth -= 1;
+                    if depth == 0 {
+                        return (open + 1, open + offset);
                     }
                 }
-                found.push((literal.to_string(), args));
+                _ => {}
+            }
+        }
+        panic!("unbalanced parentheses from byte {open}");
+    }
+
+    /// The byte index of the `;` closing the statement starting at `from`, or the end of
+    /// `source` when it is unterminated.
+    fn statement_end(source: &str, from: usize) -> usize {
+        let mut depth = 0i32;
+        for (offset, ch) in source[from..].char_indices() {
+            match ch {
+                '(' | '[' | '{' => depth += 1,
+                ')' | ']' | '}' => depth -= 1,
+                ';' if depth == 0 => return from + offset,
+                _ => {}
+            }
+        }
+        source.len()
+    }
+
+    /// Every bare coordinate-tuple literal in `source` — `({},{})`, `({},{},{})` — as
+    /// (destination buffer, literal, argument text per placeholder).
+    ///
+    /// Attribution is by destination rather than by literal, because `emit_mesh` writes
+    /// *coordinates* and 1-based *triangle indices* with the identical literal
+    /// `"({},{},{})"` thirteen lines apart. Indices are `i64` and must NOT go through
+    /// `r`, so a scan keyed on the literal would either miss the ordinates or condemn
+    /// the indices. Keying on the buffer also follows a rename for free, since the point
+    /// list that consumes the buffer names it too. (Codex review, #586.)
+    fn coordinate_tuple_destinations(source: &str) -> Vec<(String, String, Vec<String>)> {
+        // `write!(buffer, …)` call spans. The destination is read as the text before the
+        // first comma, which this module's writes satisfy — none passes a call with its
+        // own comma as the destination.
+        let writes: Vec<(usize, usize, String)> = source
+            .match_indices("write!(")
+            .map(|(at, token)| {
+                let (from, to) = parenthesised(source, at + token.len() - 1);
+                let target = source[from..to]
+                    .split(',')
+                    .next()
+                    .expect("splitting always yields a first field")
+                    .trim()
+                    .to_string();
+                (from, to, target)
+            })
+            .collect();
+        // `let buffer = …;` statements, for the mapped-and-joined shape whose coordinates
+        // are built inside the binding's own initializer rather than pushed to it.
+        let bindings: Vec<(usize, usize, String)> = source
+            .match_indices("let ")
+            .filter_map(|(at, token)| {
+                let rest = &source[at + token.len()..];
+                let name = rest
+                    .strip_prefix("mut ")
+                    .unwrap_or(rest)
+                    .split(|c: char| !c.is_alphanumeric() && c != '_')
+                    .next()
+                    .filter(|name| !name.is_empty())?;
+                Some((at, statement_end(source, at), name.to_string()))
+            })
+            .collect();
+
+        let mut found = Vec::new();
+        for (open, _) in source.match_indices("\"(") {
+            let close = open + 1 + source[open + 1..].find('"').expect("the literal closes");
+            let literal = &source[open + 1..close];
+            let placeholders = literal.matches("{}").count();
+            if placeholders < 2 || literal != format!("({})", vec!["{}"; placeholders].join(",")) {
+                continue;
+            }
+            // The innermost containing span wins, and a `write!` destination wins over an
+            // enclosing `let`, because the pushed shape reads `let _ = write!(pts, …)`
+            // and `_` names no buffer.
+            let innermost = |spans: &[(usize, usize, String)]| {
+                spans
+                    .iter()
+                    .filter(|(from, to, _)| (*from..*to).contains(&open))
+                    .min_by_key(|(from, to, _)| to - from)
+                    .map(|(_, _, name)| name.clone())
+            };
+            let destination = innermost(&writes)
+                .or_else(|| innermost(&bindings))
+                .unwrap_or_default();
+            found.push((
+                destination,
+                literal.to_string(),
+                positional_arguments_after(source, close),
+            ));
+        }
+        found
+    }
+
+    /// Each point-list entity in `source`, paired with the buffer it interpolates its
+    /// flat coordinate list from.
+    fn point_list_buffers(source: &str) -> Vec<(String, String)> {
+        let mut found = Vec::new();
+        for token in ["IFCCARTESIANPOINTLIST3D((", "IFCCARTESIANPOINTLIST2D(("] {
+            for (at, _) in source.match_indices(token) {
+                let rest = &source[at + token.len()..];
+                let buffer = rest
+                    .strip_prefix('{')
+                    .unwrap_or_else(|| {
+                        panic!(
+                            "{token} should interpolate a buffer, found {:?}",
+                            &rest[..8]
+                        )
+                    })
+                    .split('}')
+                    .next()
+                    .expect("the capture closes");
+                found.push((token.trim_end_matches("((").to_string(), buffer.to_string()));
             }
         }
         found
@@ -5197,5 +5342,130 @@ mod tests {
         // this is the shape of the two hardcoded origin points in this module.
         let hardcoded = args_for("IFCCARTESIANPOINT((0.,0.,0.))");
         assert!(hardcoded.is_empty());
+    }
+
+    #[test]
+    fn every_point_list_ordinate_in_the_source_goes_through_the_invariant_formatter() {
+        // The gate above reaches singular `IFCCARTESIANPOINT` / `IFCDIRECTION` literals.
+        // This module also emits coordinates in bulk, as the flat tuple lists inside
+        // `IFCCARTESIANPOINTLIST3D` (`emit_mesh`) and `IFCCARTESIANPOINTLIST2D` (the
+        // indexed-profile path), which that scan does not see at all — so swapping `r`
+        // for `{:.6}` at either builder silently halved coordinate precision with the
+        // whole suite green. (Codex review, #586.)
+        //
+        // Reached through the buffer each point list interpolates, not through the tuple
+        // literal, because `emit_mesh` spells its triangle-index write identically.
+        const SOURCE: &str = include_str!("ifc.rs");
+        let implementation = SOURCE
+            .split("#[cfg(test)]")
+            .next()
+            .expect("the implementation precedes the tests");
+
+        let tuples = coordinate_tuple_destinations(implementation);
+        let lists = point_list_buffers(implementation);
+        // A floor, so a scan that has stopped matching fails loudly instead of reporting
+        // a clean module. Two real point lists exist today.
+        assert!(
+            lists.len() >= 2,
+            "found only {} point lists — the scan has stopped matching",
+            lists.len()
+        );
+        for (entity, buffer) in lists {
+            let ordinates: Vec<_> = tuples
+                .iter()
+                .filter(|(destination, ..)| *destination == buffer)
+                .collect();
+            assert!(
+                !ordinates.is_empty(),
+                "{entity} interpolates `{buffer}`, but no coordinate tuple is written \
+                 into it — the scan has lost the builder it is meant to cover"
+            );
+            for (_, literal, args) in ordinates {
+                assert_eq!(
+                    args.len(),
+                    literal.matches("{}").count(),
+                    "{literal:?} building `{buffer}` was mis-parsed as {args:?}"
+                );
+                for arg in args {
+                    assert!(
+                        arg.starts_with("r("),
+                        "{entity} is built from {literal:?} filled with {arg:?}, which \
+                         does not go through `r` — every ordinate in the SPF must use \
+                         the invariant eleven-place format or two builds of one scene \
+                         can disagree"
+                    );
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn the_point_list_ordinate_scan_tells_coordinates_from_indices() {
+        // Drives the destination-keyed scan over planted input, so a classifier that has
+        // quietly stopped matching fails here rather than reporting the module clean.
+        // The planted text is `emit_mesh`'s real shape — a coordinate buffer and an index
+        // buffer whose tuple literals are character-for-character identical — plus the
+        // indexed-profile path's mapped-and-joined shape, with one bypass planted in the
+        // coordinate buffer.
+        let planted = r#"
+            let mut pts = String::new();
+            let _ = write!(
+                pts,
+                "({},{},{})",
+                r(num(a)),
+                format!("{b:.6}"),
+                r(num(c))
+            );
+            let mut tris = String::new();
+            let _ = write!(tris, "({},{},{})", a + 1, b + 1, c + 1);
+            let coords = raw
+                .iter()
+                .map(|(x, y)| format!("({},{})", r(*x), r(*y)))
+                .collect::<Vec<_>>()
+                .join(",");
+            let plist = spf.emit(&format!("IFCCARTESIANPOINTLIST3D(({pts}))"));
+            let flat = spf.emit(&format!("IFCCARTESIANPOINTLIST2D(({coords}))"));
+        "#;
+
+        assert_eq!(
+            point_list_buffers(planted),
+            vec![
+                ("IFCCARTESIANPOINTLIST3D".to_string(), "pts".to_string()),
+                ("IFCCARTESIANPOINTLIST2D".to_string(), "coords".to_string()),
+            ]
+        );
+
+        let tuples = coordinate_tuple_destinations(planted);
+        assert_eq!(tuples.len(), 3, "{tuples:?}");
+        let args_for = |buffer: &str| {
+            tuples
+                .iter()
+                .find(|(destination, ..)| destination == buffer)
+                .unwrap_or_else(|| panic!("nothing written into {buffer:?} in {tuples:?}"))
+                .2
+                .clone()
+        };
+
+        // The coordinate write and the index write share one literal and are told apart
+        // by destination alone — which is the whole reason the scan keys on it.
+        assert_eq!(
+            args_for("pts"),
+            vec!["r(num(a))", "format!(\"{b:.6}\")", "r(num(c))"]
+        );
+        assert_eq!(args_for("tris"), vec!["a + 1", "b + 1", "c + 1"]);
+        assert_eq!(args_for("coords"), vec!["r(*x)", "r(*y)"]);
+
+        // The planted bypass is detected, and in the coordinate buffer only.
+        assert!(!args_for("pts").iter().all(|arg| arg.starts_with("r(")));
+        // A clean buffer passes the same check, so the classifier is not simply rejecting
+        // everything it is shown.
+        assert!(args_for("coords").iter().all(|arg| arg.starts_with("r(")));
+        // `tris` is no point list's buffer, so its `i64` indices are never gated — a scan
+        // that condemned them would reject correct code.
+        assert!(
+            !point_list_buffers(planted)
+                .iter()
+                .any(|(_, buffer)| buffer == "tris")
+        );
     }
 }
