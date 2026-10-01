@@ -1934,6 +1934,13 @@ fn render_config(config: &Value, ctx: &RuntimeContext) -> Result<Value, AwareErr
                     // null) — preserving how optional refs rendered before #205, so a
                     // command expecting a string param doesn't suddenly receive null
                     // (#205 Codex).
+                    //
+                    // Both cases land on `""`, so this arm does not need to tell them
+                    // apart: `render` prints a present null as empty too, matching the
+                    // absent ref it means the same thing as. It did not always — a null
+                    // rendered as the literal text `none` — and the fix sits at `render`'s
+                    // formatter because the embedded form (`"{{ x }}/r.html"`) never
+                    // reaches this arm at all (#551).
                     let resolved = template::resolve_value(s, ctx);
                     if resolved.is_null() {
                         Ok(Value::String(template::render(s, ctx)?))
@@ -2155,6 +2162,73 @@ mod tests {
             serde_json::json!(""),
             "missing whole-value ref must render to empty string, not null: {out}"
         );
+    }
+
+    #[test]
+    fn render_config_present_null_renders_empty_like_an_absent_ref() {
+        // #551: `render_config` routes a whole-value ref that resolved to null into the
+        // lenient renderer, and minijinja used to write a null out as the literal text
+        // `none`. So an upstream node handing back an optional field the bridge left
+        // empty produced the string "none" as a *value*: `output-path` wrote a file
+        // called `none` in the process CWD and the node returned `path: "none"` with
+        // exit 0, so nothing downstream could tell. "none" is a non-empty, perfectly
+        // valid relative path, which is why #550's `output_path_arg` guard cannot see it.
+        //
+        // This sits one layer below that guard, at `render`'s formatter, so it covers
+        // every string param rather than `output-path` alone — and the embedded-ref form
+        // (`"{{ x }}/r.html"`, which never reaches the whole-value arm at all) with it.
+        let mut ctx = RuntimeContext {
+            inputs: serde_json::json!({}),
+            ..Default::default()
+        };
+        ctx.record_output("reader", serde_json::json!({ "out_path": null }));
+        let config = serde_json::json!({
+            "whole": "{{ reader.out_path }}",
+            "embedded": "{{ reader.out_path }}/r.html",
+            "missing": "{{ reader.nope }}",
+        });
+        let out = render_config(&config, &ctx).unwrap();
+        assert_eq!(
+            out["whole"],
+            serde_json::json!(""),
+            "a whole-value ref over a present null must render empty, not `none`: {out}"
+        );
+        assert_eq!(
+            out["embedded"],
+            serde_json::json!("/r.html"),
+            "an embedded ref over a present null must render empty, not `none`: {out}"
+        );
+        assert_eq!(
+            out["missing"],
+            serde_json::json!(""),
+            "an unresolved ref keeps its #205 empty-string rendering: {out}"
+        );
+    }
+
+    #[test]
+    fn render_config_still_passes_a_present_value_through_structurally() {
+        // #205's structured passthrough is what the null arm sits next to, so pin it
+        // here: a whole-value ref to a non-null value must still arrive as its own JSON
+        // type, not stringified by the formatter change above.
+        let mut ctx = RuntimeContext {
+            inputs: serde_json::json!({}),
+            ..Default::default()
+        };
+        ctx.record_output(
+            "reader",
+            serde_json::json!({ "rows": [1, 2], "obj": { "k": "v" }, "n": 0, "f": false }),
+        );
+        let config = serde_json::json!({
+            "rows": "{{ reader.rows }}",
+            "obj": "{{ reader.obj }}",
+            "n": "{{ reader.n }}",
+            "f": "{{ reader.f }}",
+        });
+        let out = render_config(&config, &ctx).unwrap();
+        assert_eq!(out["rows"], serde_json::json!([1, 2]), "{out}");
+        assert_eq!(out["obj"], serde_json::json!({ "k": "v" }), "{out}");
+        assert_eq!(out["n"], serde_json::json!(0), "{out}");
+        assert_eq!(out["f"], serde_json::json!(false), "{out}");
     }
 
     #[test]

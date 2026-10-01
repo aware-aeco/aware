@@ -37,13 +37,17 @@ pub(super) fn abs_path(path: &str) -> String {
 /// Refusing either would turn "the author left it out" into a failed run.
 ///
 /// The `null` arm is reachable only from a hand-written literal — NOT from a
-/// template. `render_config` intercepts a whole-value ref that resolves to null
-/// and re-renders it leniently, and minijinja prints a null as the literal text
-/// `none`, so `output-path: "{{ reader.out_path }}"` over a null arrives here as
-/// the string `"none"` and writes a file called `none`. That is a separate
-/// silent-wrong-output bug at #205's layer (it hits every string param, not just
-/// this one) and this guard cannot see it — recorded so the next reader does not
-/// take the null case as covered.
+/// template, which cannot produce one: `render_config` re-renders a whole-value
+/// ref that resolved to null leniently, and `template::render` prints a null as
+/// empty. A templated `output-path: "{{ reader.out_path }}"` over a null therefore
+/// arrives here as `""` and opts out through the blank-string arm, alongside the
+/// absent ref it means the same thing as.
+///
+/// It used to arrive as the string `"none"` — minijinja's stock formatter spells a
+/// null that way — and wrote a file literally called `none`, which this guard
+/// cannot see, `"none"` being a non-empty and perfectly valid relative path. That
+/// was fixed one layer down at `render`'s formatter rather than here, because it
+/// reached every string param and not just this one (#551).
 ///
 /// A number, boolean, array or object is none of those things. Every manifest
 /// that reaches here declares `output-path: {type: string}` — the four callers

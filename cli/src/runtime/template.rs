@@ -639,6 +639,37 @@ fn normalize_hyphenated_paths(template: &str) -> String {
 pub fn render(template: &str, ctx: &RenderContext) -> Result<String, AwareError> {
     let normalized = normalize_hyphenated_paths(template);
     let mut env = Environment::new();
+    // Print a present JSON null as empty, the way an unresolved ref already prints (#205).
+    //
+    // minijinja's default formatter spells a null `none` on its way to output, so before
+    // this every string param rendered from a ref over a null came back carrying that word
+    // as a VALUE: `output-path: "{{ reader.out_path }}"` wrote a file literally called
+    // `none` and the node returned `path: "none"` with exit 0, so nothing downstream could
+    // tell (#551). A reader that found no path, or an app input defaulted to null, is
+    // ordinary — "not given" is what it means, and that is what absent already renders to.
+    //
+    // This belongs at the formatter, and the two alternatives are both worse. Changing only
+    // `render_config`'s whole-value arm would miss the embedded form (`"{{ x }}/r.html"`
+    // → `none/r.html`), which never reaches that arm. Stripping nulls from the context, or
+    // handing expressions `Value::UNDEFINED`, would change what a null IS rather than how
+    // it prints — flipping `is none`, `is defined` and `default()` (which substitutes only
+    // for undefined). The formatter runs on the way OUT, so expression semantics are
+    // untouched; `a_null_is_still_null_to_every_test_filter_and_comparison` pins that.
+    //
+    // Only a null moves: everything else is handed to the stock formatter unchanged, so the
+    // falsy spellings (`0`, `false`, `""`) keep theirs. This mirrors minijinja's own
+    // documented recipe for `set_formatter`.
+    env.set_formatter(|out, state, value| {
+        minijinja::escape_formatter(
+            out,
+            state,
+            if value.is_none() {
+                &Value::UNDEFINED
+            } else {
+                value
+            },
+        )
+    });
     env.add_template("t", &normalized)
         .map_err(|e| AwareError::Validation(format!("template parse: {e}")))?;
     let tmpl = env
@@ -1228,6 +1259,90 @@ mod tests {
             resolve_value("{{ inputs.ids }}", &ctx),
             serde_json::json!(["a", "b"])
         );
+    }
+
+    #[test]
+    fn render_prints_a_present_null_as_empty_not_the_literal_none() {
+        // #551: minijinja spells a JSON null `none` when it writes one into output, so
+        // every string param rendered from a ref over a present null used to come back
+        // carrying that word as a *value* — `output-path: "{{ reader.out_path }}"` wrote
+        // a file literally called `none` and reported it as a success.
+        //
+        // A null now prints as empty, exactly like a ref that does not resolve at all
+        // (#205). Both spellings of "not given" therefore read the same downstream,
+        // which is what lets `output_path_arg`'s blank-string opt-out see them.
+        let mut ctx = RenderContext::default();
+        ctx.record_output("reader", serde_json::json!({ "out_path": null }));
+
+        assert_eq!(
+            render("{{ reader.out_path }}", &ctx).unwrap(),
+            "",
+            "a whole-value ref over a present null must print empty, not `none`"
+        );
+        assert_eq!(
+            render("{{ reader.out_path }}/r.html", &ctx).unwrap(),
+            "/r.html",
+            "an embedded ref over a present null must print empty, not `none`"
+        );
+        assert_eq!(
+            render("{{ reader.nope }}", &ctx).unwrap(),
+            "",
+            "an unresolved ref keeps its #205 empty-string rendering"
+        );
+    }
+
+    #[test]
+    fn render_still_prints_every_non_null_value_unchanged() {
+        // The null arm above is the ONLY thing that moved. A formatter override is a
+        // blunt hook — it sees every value on its way to output — so pin the ordinary
+        // spellings beside it, including the three falsy ones a careless `is_none()`
+        // check would also blank.
+        let mut ctx = RenderContext::default();
+        ctx.record_output(
+            "n",
+            serde_json::json!({
+                "zero": 0, "f": false, "empty": "", "s": "x", "i": 7, "fl": 1.5,
+                "t": true, "list": [1, 2], "obj": { "k": "v" },
+            }),
+        );
+        for (expr, want) in [
+            ("{{ n.zero }}", "0"),
+            ("{{ n.f }}", "false"),
+            ("{{ n.empty }}", ""),
+            ("{{ n.s }}", "x"),
+            ("{{ n.i }}", "7"),
+            ("{{ n.fl }}", "1.5"),
+            ("{{ n.t }}", "true"),
+            ("{{ n.list }}", "[1, 2]"),
+            ("{{ n.obj }}", "{\"k\": \"v\"}"),
+        ] {
+            assert_eq!(render(expr, &ctx).unwrap(), want, "{expr} changed spelling");
+        }
+    }
+
+    #[test]
+    fn a_null_is_still_null_to_every_test_filter_and_comparison() {
+        // The fix must change only how a null is PRINTED, never what it IS. `is none`,
+        // `default()` and a `== none` comparison all still see a null — blanking it by
+        // stripping nulls from the context, or by handing expressions `Value::UNDEFINED`,
+        // would silently flip each of these.
+        let mut ctx = RenderContext::default();
+        ctx.record_output("r", serde_json::json!({ "p": null }));
+        for (expr, want) in [
+            ("{{ r.p is none }}", "true"),
+            ("{{ r.p is defined }}", "true"),
+            ("{{ r.nope is defined }}", "false"),
+            ("{{ r.p == none }}", "true"),
+            // `default` substitutes only for an UNDEFINED value (minijinja `filters::default`
+            // tests `is_undefined()`), so a null passes straight through it and then prints
+            // empty. This row is the discriminator: an implementation that blanked nulls by
+            // stripping them from the context, or by substituting `Value::UNDEFINED` in the
+            // expression rather than at the formatter, would answer "fallback" here.
+            ("{{ r.p | default('fallback') }}", ""),
+            ("{% if r.p is none %}null{% else %}set{% endif %}", "null"),
+        ] {
+            assert_eq!(render(expr, &ctx).unwrap(), want, "{expr} changed meaning");
+        }
     }
 
     #[test]
