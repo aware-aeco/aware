@@ -1154,6 +1154,30 @@ fn the_push_step_shell_refuses_every_range_it_cannot_vouch_for() {
         })
         .to_owned();
 
+    // The step runs under bash and invokes python3. Both are on the CI runner;
+    // a developer machine may lack either (Git for Windows does not put bash on
+    // PATH), so skip there rather than fail a healthy tree — but never under CI,
+    // where skipping would drop this gate's only end-to-end control.
+    let available = |tool: &str| {
+        Command::new(tool)
+            .arg("--version")
+            .output()
+            .is_ok_and(|o| o.status.success())
+    };
+    let missing: Vec<&str> = ["bash", "python3"]
+        .into_iter()
+        .filter(|tool| !available(tool))
+        .collect();
+    assert!(
+        missing.is_empty() || std::env::var_os("CI").is_none(),
+        "{missing:?} unavailable under CI, where the workflow runs this step — \
+         skipping here would drop its only end-to-end control"
+    );
+    if !missing.is_empty() {
+        eprintln!("skipping: {missing:?} unavailable");
+        return;
+    }
+
     let repo = tempfile::tempdir().expect("tempdir");
     let root = repo.path();
     let git = |args: &[&str], env: &[(&str, &str)]| {
