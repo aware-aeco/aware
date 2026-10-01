@@ -42,9 +42,11 @@
 //! * `run:` text has `#` comment lines stripped before matching, and the
 //!   checker must be invoked by a line that STARTS with `python3 ` and names the
 //!   checker by path (which the test also asserts exists on disk);
-//! * a step that invokes the checker may not carry `continue-on-error`, a
-//!   step-level `if:`, `|| true`, `|| :`, `set +e` or a bare `exit 0`, each of
-//!   which makes the step run, fail, and report success;
+//! * NEITHER step that invokes the checker — the self-test or the check — may
+//!   carry `continue-on-error`, a step-level `if:`, `|| true`, `|| :`, `set +e`
+//!   or a bare `exit 0`, each of which makes a step run, fail, and report
+//!   success. One list, applied to both, because the `exit 0` half was once
+//!   applied to the check step only and this sentence was broader than the code;
 //! * both ranges are contracts — the push route's `before..after` and the
 //!   pull_request route's `origin/$BASE_REF..$HEAD_SHA`. The second was
 //!   unpinned, so `--range "HEAD..HEAD"` passed, and an empty range makes the
@@ -69,6 +71,11 @@
 //! control below can drive both over mutated workflow sources rather than only
 //! over the live file — which passes, and would pass just as well with the
 //! predicate broken.
+//!
+//! A third test RUNS the push step's shell against a throwaway repository. That
+//! is not redundant with the Python classifier's own control: it is the only
+//! cover anywhere for the workflow's `|| status=$?` / `exit "$status"` idiom,
+//! which `faults` cannot see at all. Do not delete it as duplicated coverage.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
@@ -161,8 +168,8 @@ struct Wiring {
     /// false diagnosis "does not cover `main` (covers [])" on a legal workflow.
     push_branches: Option<Vec<String>>,
     pr_types: BTreeSet<String>,
-    /// Keys other than `branches` under `push:` — a path filter here silences
-    /// the route without touching anything this gate used to read.
+    /// Every key under `push:`, `branches` included — a path filter here
+    /// silences the route without touching anything this gate used to read.
     push_filters: BTreeSet<String>,
     cancel_in_progress: String,
     concurrency_group: String,
@@ -426,6 +433,45 @@ fn read_wiring(source: &str, label: &str) -> Result<Wiring, String> {
     })
 }
 
+/// How a step that invokes the checker can be made to run, fail, and still
+/// report success. One list for both such steps: the bare `exit 0` test used to
+/// be applied to the checking step only, so the module header claimed a rule
+/// broader than the code — `exit 0` ahead of the `--self-test` call passed.
+fn disarmed(step: &Step) -> Option<String> {
+    if step.conditional {
+        return Some(
+            "carries its own `if:`, so it can be skipped while the job still reports success"
+                .to_owned(),
+        );
+    }
+    if step.continue_on_error {
+        return Some(
+            "carries `continue-on-error`, so its failure would not fail the run".to_owned(),
+        );
+    }
+    if let Some(disarmer) = DISARMERS
+        .iter()
+        .find(|disarmer| step.run.contains(**disarmer))
+    {
+        return Some(format!(
+            "contains `{disarmer}`, which turns a failure into a clean verdict"
+        ));
+    }
+    if step
+        .run
+        .lines()
+        .any(|line| line.trim() == "exit 0" || line.trim_start().starts_with("exit 0 "))
+    {
+        return Some(
+            "has a bare `exit 0`, so it can return success without reaching the \
+             checker — every exit from such a step except the checker call must \
+             be a refusal"
+                .to_owned(),
+        );
+    }
+    None
+}
+
 /// The step invoking the checker with `flag`, and the offset of that call.
 fn call<'a>(job: &'a Job, flag: &str) -> Option<(&'a Step, usize)> {
     job.steps
@@ -569,57 +615,19 @@ fn faults(wiring: &Wiring) -> Vec<String> {
                         job.id
                     ));
                 }
-                if self_test_step.conditional
-                    || self_test_step.continue_on_error
-                    || DISARMERS
-                        .iter()
-                        .any(|disarmer| self_test_step.run.contains(disarmer))
-                {
+                if let Some(how) = disarmed(self_test_step) {
                     found.push(format!(
-                        "job `{}` runs `--self-test` in a step that is \
-                         conditional, non-fatal, or disarmed with one of \
-                         {DISARMERS:?} — the negative control can then be \
-                         skipped, or can fail while the job reports success",
+                        "the self-test step in job `{}` {how} — the negative \
+                         control can then be skipped, or can fail while the job \
+                         reports success",
                         job.id
                     ));
                 }
             }
         }
 
-        if check_step.conditional {
-            found.push(format!(
-                "the checking step in job `{}` carries its own `if:`, so it can \
-                 be skipped while the job still reports success",
-                job.id
-            ));
-        }
-        if check_step.continue_on_error {
-            found.push(format!(
-                "the checking step in job `{}` carries `continue-on-error`, so a \
-                 flagged commit would not fail the run",
-                job.id
-            ));
-        }
-        for disarmer in DISARMERS {
-            if check_step.run.contains(disarmer) {
-                found.push(format!(
-                    "the checking step in job `{}` contains `{disarmer}`, which \
-                     turns a flagged commit into a clean verdict",
-                    job.id
-                ));
-            }
-        }
-        if check_step
-            .run
-            .lines()
-            .any(|line| line.trim() == "exit 0" || line.trim_start().starts_with("exit 0 "))
-        {
-            found.push(format!(
-                "the checking step in job `{}` has a bare `exit 0`, so it can \
-                 return success without reaching the checker — every exit from \
-                 that step except the checker call must be a refusal",
-                job.id
-            ));
+        if let Some(how) = disarmed(check_step) {
+            found.push(format!("the checking step in job `{}` {how}", job.id));
         }
 
         let env_faults = |expected: &[(&str, &str)], route: &str| -> Vec<String> {
@@ -976,7 +984,25 @@ fn the_wiring_classifier_matches_its_contract() {
                 "      - run: python3 scripts/no-claude-coauthor-trailers.py --self-test\n      - env:\n          BEFORE:",
                 "      - run: python3 scripts/no-claude-coauthor-trailers.py --self-test || true\n      - env:\n          BEFORE:",
             ),
-            "conditional, non-fatal, or disarmed",
+            "the self-test step in job `trailers-main` contains `|| true`",
+        ),
+        // The gap the shared `disarmed` rule closed: the bare-`exit 0` test was
+        // applied to the checking step only, so this passed.
+        (
+            "a bare `exit 0` ahead of the self-test call",
+            CANONICAL.replace(
+                "      - run: python3 scripts/no-claude-coauthor-trailers.py --self-test",
+                "      - run: |\n          exit 0\n          python3 scripts/no-claude-coauthor-trailers.py --self-test",
+            ),
+            "the self-test step in job `trailers-main` has a bare `exit 0`",
+        ),
+        (
+            "a step-level `if:` on the self-test step",
+            CANONICAL.replace(
+                "      - run: python3 scripts/no-claude-coauthor-trailers.py --self-test",
+                "      - if: github.event_name == 'release'\n        run: python3 scripts/no-claude-coauthor-trailers.py --self-test",
+            ),
+            "the self-test step in job `trailers-main` carries its own `if:`",
         ),
         (
             "the self-test dropped from the push job",

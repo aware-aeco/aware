@@ -20,7 +20,7 @@ name: Trailers
 # 570c714fb, was 17 of 570). A number in this file has now been wrong twice, so
 # the sentence above is date-stamped and the other sites below carry no count.
 #
-# None of the 19 can be fixed: the same section makes `main` append-only ("no
+# None of them can be fixed: the same section makes `main` append-only ("no
 # force-push, no rewrite"), so a trailer that reaches it is there for good. That
 # is why the pull_request route below is the PREVENTIVE one and the only place
 # the violation can still be stopped — GitHub propagates or synthesises the
@@ -168,7 +168,7 @@ jobs:
 
       # `before..after`, which is exactly the commits this push added — not
       # `origin/main..`, which on this route is the empty range, and not the
-      # whole history, 19 of whose commits carry the violation and can never be
+      # whole history, whose commits carry violations that can never be
       # rewritten.
       #
       # The SHAs come from the event rather than from `git`, because after the
@@ -197,7 +197,7 @@ jobs:
           # that is safe on an append-only branch: the alternative is a clean
           # verdict over a set the gate never saw.
           if [ "$AFTER" = "$zero" ] || [ "$BEFORE" = "$zero" ]; then
-            echo "::error::this push event carries the all-zeros sha (BEFORE=$BEFORE AFTER=$AFTER), so it is a branch creation or deletion rather than commits added to an existing main. The range of added commits is therefore not BEFORE..AFTER, and 19 commits already on main carry this violation unfixably (CLAUDE.md §Git workflow makes main append-only). Review this push by hand; do not read this failure as new breakage."
+            echo "::error::this push event carries the all-zeros sha (BEFORE=$BEFORE AFTER=$AFTER), so it is a branch creation or deletion rather than commits added to an existing main. The range of added commits is therefore not BEFORE..AFTER, and commits already on main carry this violation unfixably (CLAUDE.md §Git workflow makes main append-only). Review this push by hand; do not read this failure as new breakage."
             exit 1
           fi
 
