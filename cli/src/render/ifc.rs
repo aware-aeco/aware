@@ -5240,6 +5240,14 @@ mod tests {
                     .split('}')
                     .next()
                     .expect("the capture closes");
+                // A capture that parsed to nothing would be matched by the empty
+                // destination `coordinate_tuple_destinations` gives an unattributed
+                // tuple, which would let this gate pass on tuples it never located. An
+                // identifier is the only shape that can be followed back to a builder.
+                assert!(
+                    !buffer.is_empty() && buffer.chars().all(|c| c.is_alphanumeric() || c == '_'),
+                    "{token} interpolates {buffer:?}, which is not a buffer identifier"
+                );
                 found.push((token.trim_end_matches("((").to_string(), buffer.to_string()));
             }
         }
