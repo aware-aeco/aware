@@ -122,5 +122,11 @@ export async function readV3Cache(root, key, identity, expectedPublicKey) {
   if (!['geometry', 'entities', 'properties', 'relationships'].every((family) => indexes[family])) {
     cacheError('reference-cache-invalid', 'Protocol-v3 cache is missing an artifact index.');
   }
+  // A warm hit must not be a route around the #604 gate: zero geometry tiles are only ever
+  // published for a degraded conversion, so a cached non-degraded root without geometry is invalid.
+  if (!Array.isArray(indexes.geometry.index?.objects)
+      || (indexes.geometry.index.objects.length === 0 && manifest.completeness !== 'degraded')) {
+    cacheError('reference-cache-invalid', 'Protocol-v3 cache holds a non-degraded root without geometry.');
+  }
   return { root: { manifest, bytes: rootBytes, sha256: record.artifactRootSha256 }, indexes, objects };
 }
