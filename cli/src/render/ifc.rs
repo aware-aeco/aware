@@ -3736,6 +3736,16 @@ mod tests {
         assert_eq!(b.doc.matches("IFCTRIANGULATEDFACESET(").count(), 1);
         assert!(b.doc.contains("((1,2,3),(1,3,4))"));
         assert!(b.doc.contains("'Tessellation'"));
+        // The vertices themselves, in order and in their slots. The source gates prove
+        // every ordinate is spelled through `r()`; only the content proves it is the
+        // RIGHT ordinate — an X/Y swap emits well-formed tokens in the wrong places (#600).
+        assert!(
+            b.doc.contains(
+                "IFCCARTESIANPOINTLIST3D(((0.0,0.0,0.0),(100.0,0.0,0.0),(100.0,100.0,0.0),(0.0,100.0,0.0)))"
+            ),
+            "the mesh vertices must reach the point list unchanged and in order:\n{}",
+            b.doc
+        );
     }
 
     #[test]
@@ -4398,6 +4408,20 @@ mod tests {
             "the fillet uses an indexed poly-curve with an arc"
         );
         assert!(built.doc.contains("IFCARCINDEX("));
+        // The notch outline in profile (u, v), worked from the tool alone: `halfExtents`
+        // is [u, v, depth], so hu = 60, hv = 20, r = 12.7, vSign = -1 and the rounded
+        // corner is (+u, -v). Walked CCW: far bottom-left, the bottom tangent point
+        // (hu - r, -hv), the arc midpoint 45° toward the corner, (hu - r + r/√2,
+        // -hv + r - r/√2) = (56.28025612107, -16.28025612107), the side tangent point
+        // (hu, -hv + r), then the two far corners. A transposed or degraded ordinate
+        // fails this; the source gates cannot see it (#600).
+        assert!(
+            built.doc.contains(
+                "IFCCARTESIANPOINTLIST2D(((-60.0,-20.0),(47.3,-20.0),(56.28025612107,-16.28025612107),(60.0,-7.3),(60.0,20.0),(-60.0,20.0)))"
+            ),
+            "the filleted notch outline must be emitted point for point:\n{}",
+            built.doc
+        );
         let row = built
             .emitted
             .iter()
