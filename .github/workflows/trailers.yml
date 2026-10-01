@@ -1,18 +1,24 @@
 name: Trailers
 
 # CLAUDE.md §Git workflow: "No `Co-Authored-By: Claude ...` trailers in commit
-# messages." Nothing enforced it and the rule was being broken — 19 of the 722
-# commits on `main` carry one. It was 14 of 568 when this workflow was written,
-# and the count rose because the gate missed a whole route, not because the
-# classifier did.
+# messages." Nothing enforced it and the rule was being broken. The census, as
+# of 2026-10-01 and on one basis (message trailer OR commit authorship): 19
+# offenders among the 722 commits on `main`. Re-measure rather than trust this
+# number — `scripts/no-claude-coauthor-trailers.py --range <root>..origin/main`
+# is the authority and takes a second.
 #
-# Five landed after this workflow existed but through the pull_request route,
-# when the check was still aimed at commit messages and the PR body while GitHub
+# Ten were already there when this workflow was written (7cb4c2dc, 2026-08-08,
+# 549 commits). Of the nine since, five came through the pull_request route
+# while the check was still aimed at commit messages and the PR body, and GitHub
 # was generating the trailer from commit AUTHORSHIP instead; #412 closed that by
-# reading authorship as a third source. The last of those five was 0789633b
-# (#408, 2026-08-13), and this comment named it as the final offender for seven
-# weeks while four others were landing by a route nothing watched — see the
-# `push` trigger below.
+# reading authorship as a third source. The other four came through the `push`
+# route, which nothing watched at all — see that trigger below.
+#
+# Earlier versions of this comment reported "8 of 50" and "14 of 568". Both were
+# measured wrong rather than merely out of date: the first in a depth-50 clone,
+# the second counting message trailers only (on today's basis that moment,
+# 570c714fb, was 17 of 570). A number in this file has now been wrong twice, so
+# the sentence above is date-stamped and the other sites below carry no count.
 #
 # None of the 19 can be fixed: the same section makes `main` append-only ("no
 # force-push, no rewrite"), so a trailer that reaches it is there for good. That
@@ -31,8 +37,9 @@ name: Trailers
 # To fix a failure locally:
 #   python3 scripts/no-claude-coauthor-trailers.py --range origin/main..HEAD
 #
-# Note `origin/main`, not `main`: a stale local `main` puts the eight unfixable
-# commits in the range and reports eight failures nobody can act on.
+# Note `origin/main`, not `main`: a stale local `main` puts the unfixable
+# commits already on the branch into the range and reports failures nobody can
+# act on.
 
 on:
   pull_request:
@@ -44,11 +51,18 @@ on:
     types: [opened, synchronize, reopened, edited]
 
   # Not every commit on `main` arrives through a pull request, and the ones that
-  # do not are exactly where this rule kept breaking. 40 of the commits pushed
-  # to `main` since this workflow was written carry no `(#N)` — they are release
-  # bumps pushed straight to the branch — and four are authored by
-  # `Claude <noreply@anthropic.com>`: v0.120.0 (a2cd3a6d), v0.122.0 (f6ed04bc),
-  # v0.129.0 (dc0092bb) and v0.137.0 (0fe24d5c).
+  # do not are exactly where this rule kept breaking. Release bumps are pushed
+  # straight to the branch, and four of them are authored by
+  # `Claude <noreply@anthropic.com>`, the identity GitHub turns into the
+  # forbidden trailer: v0.120.0 (a2cd3a6d, 2026-08-09), v0.122.0 (f6ed04bc,
+  # 2026-08-13), v0.129.0 (dc0092bb, 2026-08-22) and v0.137.0 (0fe24d5c,
+  # 2026-09-10). That closed set of four is the whole argument here; it cannot
+  # grow or shrink, so nothing below depends on a count that rots.
+  #
+  # (A tempting proxy for this route — a commit with no trailing `(#N)` — does
+  # not work: it also matches a PR merged with a merge strategy rather than a
+  # squash, and #403 and #404 are exactly that. Those did raise pull_request
+  # events and were covered.)
   #
   # The last two landed AFTER #412 taught this check to read authorship, so the
   # classifier would have flagged either on sight. It never saw them: a release
@@ -59,11 +73,13 @@ on:
   #
   # On this route the check cannot undo anything; `main` is append-only, so a
   # commit it flags is already permanent. Two things it does do. It stops silent
-  # accumulation, which is how the comment above came to name #408 as the last
-  # offender while 0fe24d5c sat three weeks past it. And it is the only place
-  # the SYNTHESISED trailer is observable at all: on the pull_request route that
-  # trailer does not exist yet and is predicted from authorship, whereas here the
-  # squash commit is on the branch and its real message can be read.
+  # accumulation: #412 wrote on 2026-08-14 that 0789633b (#408, 2026-08-13) was
+  # the last offender, while a2cd3a6d and f6ed04bc were ALREADY on the branch
+  # behind it and dc0092bb and 0fe24d5c then landed over the following four
+  # weeks, all four unseen. And it is the only place the SYNTHESISED trailer is
+  # observable at all: on the pull_request route that trailer does not exist yet
+  # and is predicted from authorship, whereas here the squash commit is on the
+  # branch and its real message can be read.
   push:
     branches: [main]
 
@@ -113,8 +129,8 @@ jobs:
       # The range is `origin/<base branch>..<head>`, not
       # `<base.sha>..<head>`. `base.sha` is the base branch as it stood when the
       # event fired and can lag; if the branch has merged `main` in since, a
-      # lagging base puts commits already on `main` into the range — and eight
-      # of those carry the trailer and can never be fixed. Against the live base
+      # lagging base puts commits already on `main` into the range — and the
+      # offenders among those can never be fixed. Against the live base
       # ref that cannot happen, because `main` is append-only.
       #
       # The body is written to a file rather than interpolated into the shell:
@@ -165,20 +181,70 @@ jobs:
           BEFORE: ${{ github.event.before }}
           AFTER: ${{ github.event.after }}
         run: |
+          # `set -euo pipefail`, so an unset SHA or a failing git call stops the
+          # step instead of degrading the range. Without `-u`, an empty $AFTER
+          # turned the range into `BEFORE..` — git accepts that, silently
+          # substituting the checked-out HEAD for the commit the event named,
+          # and the gate then reports on something other than what it was asked
+          # about.
+          set -euo pipefail
+
           zero='0000000000000000000000000000000000000000'
-          if [ "$AFTER" = "$zero" ]; then
-            echo "this event deleted the branch; it added no commits to check"
-            exit 0
-          fi
-          if [ "$BEFORE" = "$zero" ]; then
-            echo "::error::this event created main, so the range of added commits is the whole history — and 19 commits already on main carry this violation and cannot be rewritten (CLAUDE.md §Git workflow makes main append-only). Review the pushed commits by hand rather than reading a failure here as new breakage."
+
+          # Every path out of this step except the final checker call is a
+          # refusal. A push whose added commits this step cannot NAME is a push
+          # it cannot clear, and there is no spelling of "nothing to do here"
+          # that is safe on an append-only branch: the alternative is a clean
+          # verdict over a set the gate never saw.
+          if [ "$AFTER" = "$zero" ] || [ "$BEFORE" = "$zero" ]; then
+            echo "::error::this push event carries the all-zeros sha (BEFORE=$BEFORE AFTER=$AFTER), so it is a branch creation or deletion rather than commits added to an existing main. The range of added commits is therefore not BEFORE..AFTER, and 19 commits already on main carry this violation unfixably (CLAUDE.md §Git workflow makes main append-only). Review this push by hand; do not read this failure as new breakage."
             exit 1
           fi
-          # Not `|| true`, and no fallback range. A pre-push tip this checkout
-          # cannot resolve means the set of added commits is unknown, and a gate
-          # that cannot name what it checked must not print "ok".
-          if ! git cat-file -e "${BEFORE}^{commit}" 2>/dev/null; then
-            echo "::error::cannot resolve the pre-push tip ${BEFORE} in this checkout, so the commits this push added are unknown — refusing to report clean"
+
+          for sha in "$BEFORE" "$AFTER"; do
+            if ! git cat-file -e "${sha}^{commit}" 2>/dev/null; then
+              echo "::error::cannot resolve ${sha} in this checkout, so the commits this push added are unknown — refusing to report clean"
+              exit 1
+            fi
+          done
+
+          # A fast-forward is what makes `BEFORE..AFTER` mean "the commits this
+          # push added". If AFTER is an ancestor of BEFORE the branch moved
+          # BACKWARDS, and the range is empty while history was in fact
+          # rewritten — on which the checker would print "ok" over nothing.
+          if ! git merge-base --is-ancestor "$BEFORE" "$AFTER"; then
+            echo "::error::$BEFORE is not an ancestor of $AFTER, so this was not a fast-forward push and ${BEFORE}..${AFTER} is not the set of commits it added — refusing to report clean. CLAUDE.md §Git workflow forbids rewriting main; review this push by hand."
             exit 1
           fi
-          python3 scripts/no-claude-coauthor-trailers.py --range "${BEFORE}..${AFTER}"
+
+          # And the range must be non-empty. GitHub only sends a push event for
+          # a ref that moved, so zero added commits after the ancestry check
+          # above means the gate's idea of the range disagrees with the event's
+          # — which is the one thing it must never paper over, because an empty
+          # range and a clean branch produce the identical "ok" line.
+          count=$(git rev-list --count "${BEFORE}..${AFTER}")
+          if [ "$count" -eq 0 ]; then
+            echo "::error::${BEFORE}..${AFTER} contains no commits, yet GitHub sent a push event for a ref that moved — refusing to certify a push whose commits this gate cannot name"
+            exit 1
+          fi
+
+          echo "checking $count commit(s) added by this push"
+
+          # The checker's remedy text is written for a branch — "force-push",
+          # "git rebase -i", "--reset-author" — and CLAUDE.md §Git workflow
+          # forbids every one of them on `main` ("no force-push, no rewrite").
+          # Its header says the trailers "would reach `main` in the squash
+          # commit" too, which on this route is already past tense. Printing
+          # that and nothing else would hand whoever opens the run a set of
+          # instructions they must not follow, so the route explains itself.
+          #
+          # `|| status=$?` rather than `if ! python3 …`, so the invocation stays
+          # a line that STARTS with `python3` — which is the contract
+          # cli/tests/trailer_gate_wiring.rs holds, and what stops the call
+          # being hidden behind `echo` or a comment.
+          status=0
+          python3 scripts/no-claude-coauthor-trailers.py --range "${BEFORE}..${AFTER}" || status=$?
+          if [ "$status" -ne 0 ]; then
+            echo "::error::The commits above are already on \`main\`, which CLAUDE.md §Git workflow makes append-only, so the remedy the checker just printed (force-push, rebase, --reset-author) does NOT apply here and must not be attempted. Nothing can remove them. This failure is a record, not a task: it stops the count growing unobserved — four of these landed unnoticed before this route was watched. The actionable fix is upstream, in whatever produced the push: set \`git config user.name\` and \`user.email\` to the identity the work lands under before committing, per CLAUDE.md §Git workflow."
+            exit "$status"
+          fi

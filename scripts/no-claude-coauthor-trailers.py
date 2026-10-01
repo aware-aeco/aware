@@ -3,10 +3,13 @@
 
 CLAUDE.md §Git workflow: "**No `Co-Authored-By: Claude ...` trailers** in commit
 messages." Nothing enforced it, and the rule has been broken on `main` many
-times: 14 of the 568 commits on `main` carry
-`Co-authored-by: Claude <noreply@anthropic.com>`.
+times: as of 2026-10-01, 19 of the 722 commits on `main` are flagged — 15 for a
+`Co-authored-by: Claude` trailer in the message, and 4 more for Claude
+AUTHORSHIP with a clean message, which is a different thing and is why the two
+are counted separately here. Re-measure rather than trust these figures;
+`--range <root>..origin/main` is the authority.
 
-Those 14 cannot be fixed. CLAUDE.md §Git workflow also makes `main`'s history
+Those 19 cannot be fixed. CLAUDE.md §Git workflow also makes `main`'s history
 append-only ("no force-push, no rewrite"), so the only available fix is to stop
 the next one — which is what this script is.
 
@@ -14,8 +17,9 @@ the next one — which is what this script is.
 
 The first version of this file counted "8 of the 50 commits reachable in a
 depth-50 clone" and named b0ee11b5 (2026-08-05, #362) the most recent. Both were
-artefacts of measuring in a shallow clone. Over the full history the count is
-14 — and five of them landed *after* this gate was merged on 2026-08-08:
+artefacts of measuring in a shallow clone. Over the full history, counting
+message trailers only, the count was 14 — and five of those landed *after* this
+gate was merged on 2026-08-08:
 
     e5432842 (#397)  2026-08-10        d6fb23ab (#396)  2026-08-10
     3d5c4ad4 (#398)  2026-08-10        c32dec83 (#399)  2026-08-11
@@ -85,8 +89,11 @@ it, `offending_identities` is one line from covering it.
 Stated plainly, because a gate that is described as absolute gets trusted like
 one:
 
-  * a **direct push to `main`** — this runs on `pull_request` only, and CLAUDE.md
-    permits direct pushes with approval;
+  * a direct push to `main` *preventively* — `trailers.yml` now also runs on
+    `push: branches: [main]`, so such a push is checked, but only after the
+    fact: CLAUDE.md §Git workflow makes `main` append-only, so what that route
+    reports can never be removed. Four Claude-authored release bumps reached
+    `main` while this file still said the route was unreachable;
   * a **`--admin` merge**, which CLAUDE.md §Git workflow makes the repo's normal
     merge mechanism, and which bypasses required status checks — a red run here
     does not mechanically block it, only the procedural "CI is green" rule does;
@@ -104,7 +111,7 @@ squash body explicitly at merge time (the REST API's `commit_message`, or
 the trailer out no matter who authored the branch, and CLAUDE.md §Git workflow
 requires it. The fourth is not a gap to close but a person to leave alone.
 
-What this *does* now reach is the path all 14 offenders took.
+What this *does* now reach is the path every offender on `main` took.
 
 ## What counts as a trailer
 
@@ -1113,8 +1120,9 @@ fixing it just rewrites Claude onto Claude. Do it in the clone before the first
 commit and none of this is needed.
 
 If the range names commits already on `main`, the range is wrong, not the
-commits: use `origin/main..HEAD`, not `main..HEAD`. `main` carries 14 of these
-from before this check reached its third source, and they cannot be rewritten.
+commits: use `origin/main..HEAD`, not `main..HEAD`. `main` already carries
+offenders from before this check watched every route into it, and they cannot
+be rewritten.
 
 If this flagged a real person whose given name is Claude, it is wrong and the
 fix is here, not in their trailer — do not delete a human's attribution to get
