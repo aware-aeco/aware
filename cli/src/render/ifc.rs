@@ -5386,8 +5386,9 @@ mod tests {
         //
         // Implementation half only. The test module below quotes these same entity
         // names inside assertions, which are not emit sites.
-        const SOURCE: &str = include_str!("ifc.rs");
-        let implementation = implementation_half(SOURCE);
+        // A CRLF checkout (`core.autocrlf` on Windows) would hide the `\n`-anchored marker.
+        let source = include_str!("ifc.rs").replace("\r\n", "\n");
+        let implementation = implementation_half(&source);
 
         let sites = point_literal_arguments(implementation);
         // An EQUALITY, not a floor. A floor cannot tell "nothing regressed" from "I
@@ -5501,8 +5502,9 @@ mod tests {
         // the emitted document, and `every_emitted_ordinate_goes_through_the_invariant_
         // real_formatter` is the test that should grow to cover the two point lists.
         // Recorded rather than left for the next reviewer to rediscover.
-        const SOURCE: &str = include_str!("ifc.rs");
-        let source = without_comments(implementation_half(SOURCE));
+        // A CRLF checkout (`core.autocrlf` on Windows) would hide the `\n`-anchored marker.
+        let normalized = include_str!("ifc.rs").replace("\r\n", "\n");
+        let source = without_comments(implementation_half(&normalized));
 
         // Every candidate tuple is REFUSED unless it is a bare positional ordinate
         // tuple. The previous version skipped a non-conforming one with `continue`, which
