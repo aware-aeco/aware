@@ -808,12 +808,22 @@ fn mesh_bounding_diagonal(el: &Value) -> Option<f64> {
     let positions = el.get("positions")?.as_array()?;
     let mut min = [f64::INFINITY; 3];
     let mut max = [f64::NEG_INFINITY; 3];
+    let mut bounded = false;
     for point in positions.chunks_exact(3) {
+        bounded = true;
         for axis in 0..3 {
             let value = point[axis].as_f64()?;
             min[axis] = min[axis].min(value);
             max[axis] = max[axis].max(value);
         }
+    }
+    // No complete triple is no bounding box, so say so rather than measuring the
+    // untouched seeds: `max - min` on those is `-inf`, whose square is `+inf`, and the
+    // caller would record an INFINITE half-span for the product. `emit_mesh` refuses a
+    // mesh under three points before this is asked for, so nothing reaches it today —
+    // but a second caller would inherit the trap. (Codex review, #586.)
+    if !bounded {
+        return None;
     }
     Some(
         (0..3)
@@ -4468,5 +4478,1220 @@ mod tests {
                 .unwrap()["code"],
             "unsupported-parent"
         );
+    }
+
+    // ────────────────────────────────────────────────────────────────────────────
+    // The pure encoding + descriptor-resolution layer: the helpers that turn scene
+    // JSON into SPF tokens and IFC semantics. Every one of them was reachable only
+    // through a whole-document build before this block, so a wrong token was only
+    // ever caught when it happened to fall inside a `doc.contains(...)` a
+    // higher-level test already spelled out.
+    // ────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn reals_carry_the_invariant_format_the_determinism_contract_promises() {
+        // A whole number still needs its decimal point: `5` is an INTEGER token in
+        // Part 21 and an IfcLengthMeasure slot takes a REAL.
+        assert_eq!(r(5.0), "5.0");
+        assert_eq!(r(-12.0), "-12.0");
+        // Trailing zeros are trimmed — but never the last one.
+        assert_eq!(r(0.5), "0.5");
+        assert_eq!(r(1e20), "100000000000000000000.0");
+        // Negative zero is normalized, so two builds differing only in the sign of a
+        // zero ordinate emit identical bytes.
+        assert_eq!(r(-0.0), "0.0");
+        assert_eq!(r(0.0), "0.0");
+        // Eleven decimal places, fixed — not shortest-round-trip, whose output moves
+        // with the float formatter. A value finer than that grid rounds into it.
+        assert_eq!(r(1.234567890123), "1.23456789012");
+        assert_eq!(r(1.0 / 3.0), "0.33333333333");
+        assert_eq!(r(1e-12), "0.0");
+        // The normalization above is an equality test against zero, so it does not
+        // reach a value that is merely finer than the grid: that keeps its sign.
+        assert_eq!(r(-1e-12), "-0.0");
+    }
+
+    #[test]
+    fn every_emitted_ordinate_goes_through_the_invariant_real_formatter() {
+        // Guards the other half of the contract above: that `r` is what the document
+        // actually uses. `Display` on an f64 prints `3000` for a whole value, which is
+        // an INTEGER token — schema-invalid in an IfcLengthMeasure slot, and invisible
+        // to a test that only greps for entity names.
+        //
+        // THREE fixtures, deliberately. The member path and the placement emitter are
+        // different call sites, and `sample_scene` reaches only the first: a bypass in
+        // `emit_axis2_placement3d` (fasteners, welds, swept solids) is invisible to it,
+        // which is exactly how the first draft of this test passed under that mutation.
+        //
+        // The third carries a coordinate finer than the eleven-place grid, and it is
+        // pinned to the EXACT token `r` must produce. An upper bound on the fraction
+        // length is not enough on its own: a site formatting with `{:.6}` emits
+        // `0.123457`, which is a finite REAL with six decimals and clears any `<= 11`
+        // check while having silently lost the grid. (Codex review, #586.)
+        const FINE_X: &str = "0.123456789012345";
+        const FINE_VALUE: f64 = 0.123456789012345;
+        const FINE_TOKEN: &str = "0.12345678901";
+        // The MEMBER path.
+        let fine_member = json!({
+            "meta": { "name": "fine member" },
+            "elements": [
+                { "id": "C1", "role": "column",
+                  "from": [0.123456789012345, 0.0, 0.0],
+                  "to": [0.123456789012345, 0.0, 3000.0],
+                  "section": { "w": 100, "d": 100 } }
+            ]
+        });
+        // The PLACEMENT path, which is a different emitter: a plate's frame origin
+        // reaches `emit_axis2_placement3d` (via `emit_axis_placement`), where the
+        // member fixture above never goes. Without this one a `{:.6}` in the
+        // placement emitter alone still passed. (Codex review, #586.)
+        let fine_placement = json!({
+            "meta": { "name": "fine placement", "units": "mm" },
+            "elements": [
+                { "id": "PL-1", "kind": "plate",
+                  "frame": { "origin": [0.123456789012345, 0.0, 0.0], "uDir": [1,0,0],
+                             "vDir": [0,1,0], "normal": [0,0,1] },
+                  // A fine OUTLINE vertex too: the outline goes through
+                  // `emit_polyline2`, a third emit site that neither the member nor the
+                  // frame-origin sentinel reaches. (Codex review, #586.)
+                  "outline": [[-100,-150],[100,-150],[100,0.123456789012345],
+                              [0.123456789012345,150],[-100,150]],
+                  "thicknessMm": 12 }
+            ]
+        });
+        // The sentinel is only load-bearing if `r` really does shorten it, so say so
+        // here rather than trusting the two literals above to stay in step.
+        assert_eq!(r(FINE_X.parse().expect("a finite literal")), FINE_TOKEN);
+
+        for (fixture, scene, floor, fine, sentinel_floor) in [
+            ("sample", sample_scene(), 3, false, 0),
+            ("connection", connection_scene(), 30, false, 0),
+            ("fine member", fine_member, 3, true, 1),
+            ("fine placement", fine_placement, 3, true, 3),
+        ] {
+            let doc = build_ifc(&scene).doc;
+            let mut ordinates = 0;
+            let mut sentinels = 0;
+            for chunk in doc.split("IFCCARTESIANPOINT((").skip(1) {
+                let inner = chunk.split("))").next().expect("closed point literal");
+                for ordinate in inner.split(',') {
+                    let (whole, fraction) = ordinate
+                        .split_once('.')
+                        .unwrap_or_else(|| panic!("{fixture}: {ordinate:?} is an INTEGER token"));
+                    assert!(
+                        ordinate.parse::<f64>().is_ok_and(f64::is_finite),
+                        "{fixture}: {ordinate:?} is not a finite REAL"
+                    );
+                    assert!(
+                        fraction.len() <= 11,
+                        "{fixture}: {ordinate:?} carries more precision than the \
+                         eleven-place grid, so two builds of it need not agree"
+                    );
+                    assert!(
+                        !whole.is_empty(),
+                        "{fixture}: {ordinate:?} has no whole part"
+                    );
+                    ordinates += 1;
+
+                    // EVERY ordinate near the sentinel must be spelled exactly as `r`
+                    // spells it. A document-wide `contains` is not enough: these
+                    // fixtures reach three separate emitters, so one going coarse still
+                    // leaves the token present from the other two and the check passes.
+                    // Checking per ordinate makes a single coarse site red.
+                    // (Codex review, #586.)
+                    if fine {
+                        let value: f64 = ordinate.parse().expect("checked finite above");
+                        if (value - FINE_VALUE).abs() < 1e-6 {
+                            assert_eq!(
+                                ordinate, FINE_TOKEN,
+                                "{fixture}: an ordinate carrying the fine sentinel was \
+                                 spelled {ordinate:?} — its emit site rounded to a \
+                                 coarser grid than `r` does"
+                            );
+                            sentinels += 1;
+                        }
+                    }
+                }
+            }
+            // PER FIXTURE, not summed. Against one aggregate floor the connection scene
+            // clears it alone, so either of the others could stop emitting points
+            // entirely — and the fine fixture going quiet is what makes the precision
+            // check above vacuous. (Codex review, #586.)
+            assert!(
+                ordinates >= floor,
+                "{fixture} contributed only {ordinates} ordinates, expected at least \
+                 {floor} — it has stopped reaching the emitters, so this test went \
+                 quiet rather than red"
+            );
+            if fine {
+                // ...and the sentinel must actually be reached, or the per-ordinate
+                // check above never runs. `fine placement` carries three: two outline
+                // vertices through `emit_polyline2` and the frame origin through
+                // `emit_axis2_placement3d`.
+                assert!(
+                    sentinels >= sentinel_floor,
+                    "{fixture} emitted {sentinels} sentinel ordinates, expected at \
+                     least {sentinel_floor} — the fixture stopped reaching the emitter \
+                     it was written to cover"
+                );
+                assert!(
+                    !doc.contains(FINE_X),
+                    "{fixture}: the raw {FINE_X:?} reached the document unrounded"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn the_header_file_name_is_a_deterministic_ascii_slug() {
+        // A parenthetical is dropped, so a name carrying a revision marker slugs to the
+        // same file name across revisions.
+        assert_eq!(file_name_meta("Portal frame (rev B)"), "portal-frame.ifc");
+        // A run of non-alphanumerics collapses to one dash; a leading run contributes
+        // nothing, so the slug never opens or closes on a separator.
+        assert_eq!(file_name_meta("  A///B  "), "a-b.ifc");
+        assert_eq!(file_name_meta("x-y"), "x-y.ifc");
+        // Never non-ASCII — the SPF header is read by parsers that assume it is.
+        assert_eq!(file_name_meta("Stahlträger"), "stahltr-ger.ifc");
+        // A name that slugs to nothing still names a file, rather than emitting a bare
+        // `.ifc` with no stem.
+        for unsluggable in ["", "(x)", "---", "中文"] {
+            assert_eq!(file_name_meta(unsluggable), "model.ifc", "{unsluggable:?}");
+        }
+        // Capped at 60 characters before the extension.
+        assert_eq!(
+            file_name_meta(&"a".repeat(70)),
+            format!("{}.ifc", "a".repeat(60))
+        );
+        // Truncation is re-trimmed, so the cap cannot leave a dangling separator.
+        let cut = file_name_meta(&format!("{}-{}", "a".repeat(60), "b".repeat(10)));
+        assert_eq!(cut, format!("{}.ifc", "a".repeat(60)));
+    }
+
+    #[test]
+    fn the_header_carries_the_slug_not_the_raw_project_name() {
+        let scene = json!({
+            "meta": { "name": "Stahlträger (Halle 3)" },
+            "elements": [
+                { "id": "C1", "role": "column", "from": [0, 0, 0], "to": [0, 0, 3000],
+                  "section": { "w": 100, "d": 100 } }
+            ]
+        });
+        let doc = build_ifc(&scene).doc;
+        let header = doc.split("ENDSEC;").next().expect("header section");
+        assert!(header.contains("FILE_NAME('stahltr-ger.ifc'"), "{header}");
+        // The raw name must not reach the header at all. `FILE_NAME` is written by a
+        // plain `writeln!`, not through `s_lit`, so a byte that got there would carry
+        // no `\X2\` escaping and no quote doubling either.
+        assert!(header.is_ascii(), "non-ascii header: {header}");
+        assert!(!header.contains("Halle"), "{header}");
+    }
+
+    #[test]
+    fn a_colour_is_accepted_only_as_six_hex_digits() {
+        assert_eq!(parse_hex("#FF8000"), Some((1.0, 128.0 / 255.0, 0.0)));
+        // Case and surrounding whitespace are tolerated, and change nothing.
+        assert_eq!(parse_hex("#ff8000"), parse_hex("#FF8000"));
+        assert_eq!(parse_hex("  #00FF00  "), Some((0.0, 1.0, 0.0)));
+        // Everything else yields NO colour rather than a fabricated one: three-digit
+        // shorthand, an alpha channel, a missing `#`, and non-hex letters alike.
+        for rejected in ["#fff", "#FF000000", "FF0000", "#GGGGGG", "#", ""] {
+            assert_eq!(parse_hex(rejected), None, "{rejected:?}");
+        }
+        // Six BYTES is not six hex digits. The ascii-hexdigit guard is what makes this
+        // None: without it the `&h[a..a + 2]` slices land mid-character and panic.
+        assert_eq!(parse_hex("#aäbcd"), None);
+    }
+
+    #[test]
+    fn a_group_colour_is_shared_by_value_not_by_spelling() {
+        let scene = json!({
+            "meta": { "name": "colours" },
+            "groups": [
+                { "key": "lower", "color": "#ff0000" },
+                { "key": "upper", "color": "  #FF0000  " },
+                { "key": "bogus", "color": "red" }
+            ],
+            "elements": [
+                { "id": "A", "group": "lower", "role": "column", "from": [0, 0, 0], "to": [0, 0, 1000],
+                  "section": { "w": 100, "d": 100 } },
+                { "id": "B", "group": "upper", "role": "column", "from": [1000, 0, 0], "to": [1000, 0, 1000],
+                  "section": { "w": 100, "d": 100 } },
+                { "id": "C", "group": "bogus", "role": "column", "from": [2000, 0, 0], "to": [2000, 0, 1000],
+                  "section": { "w": 100, "d": 100 } }
+            ]
+        });
+        let doc = build_ifc(&scene).doc;
+        // Two spellings of one colour are ONE entity chain, not two: the dedupe key is
+        // the trimmed upper hex, not the authored string.
+        assert_eq!(doc.matches("IFCCOLOURRGB(").count(), 1, "{doc}");
+        assert_eq!(doc.matches("IFCSURFACESTYLE(").count(), 1);
+        assert!(doc.contains("IFCCOLOURRGB($,1.0,0.0,0.0)"), "{doc}");
+        // A group whose colour is not `#RRGGBB` contributes no style at all, rather
+        // than a fabricated one — so the style count above stays at one even though
+        // three elements each name a group.
+        assert_eq!(doc.matches("IFCSTYLEDITEM(").count(), 2, "{doc}");
+    }
+
+    #[test]
+    fn a_material_dedupes_case_insensitively_and_keeps_its_authored_spelling() {
+        let scene = json!({
+            "meta": { "name": "materials" },
+            "elements": [
+                { "id": "A", "material": "  s355jr  ", "role": "column", "from": [0, 0, 0], "to": [0, 0, 1000],
+                  "section": { "w": 100, "d": 100 } },
+                { "id": "B", "material": "S355JR", "role": "column", "from": [1000, 0, 0], "to": [1000, 0, 1000],
+                  "section": { "w": 100, "d": 100 } },
+                { "id": "C", "material": "   ", "role": "column", "from": [2000, 0, 0], "to": [2000, 0, 1000],
+                  "section": { "w": 100, "d": 100 } }
+            ]
+        });
+        let doc = build_ifc(&scene).doc;
+        // One IfcMaterial for the two spellings — and it carries the first authored
+        // spelling TRIMMED, not the uppercased dedupe key and not the raw padding.
+        assert_eq!(doc.matches("IFCMATERIAL(").count(), 1, "{doc}");
+        assert!(doc.contains("IFCMATERIAL('s355jr',$,$)"), "{doc}");
+        // A blank material is no material, so it joins no association.
+        assert_eq!(doc.matches("IFCRELASSOCIATESMATERIAL(").count(), 1);
+        let association = doc
+            .split("IFCRELASSOCIATESMATERIAL(")
+            .nth(1)
+            .expect("one association")
+            .split(");")
+            .next()
+            .expect("closed association");
+        // Both materialized elements hang off that single material, so the association
+        // names two products.
+        assert_eq!(
+            association.matches('#').count(),
+            3,
+            "expected two members plus the material: {association}"
+        );
+    }
+
+    #[test]
+    fn an_element_label_prefers_meta_label_then_name_then_id() {
+        // Every rung of the chain, in order — a swap between any adjacent pair changes
+        // the IfcElement Name written into the file.
+        assert_eq!(
+            label(&json!({ "meta": { "label": "L" }, "name": "N", "id": "I" })),
+            "L"
+        );
+        assert_eq!(label(&json!({ "name": "N", "id": "I" })), "N");
+        assert_eq!(label(&json!({ "id": "I" })), "I");
+        // A non-string at a rung falls THROUGH to the next one rather than stringifying
+        // it, so a numeric label cannot reach the file unquoted.
+        assert_eq!(label(&json!({ "meta": { "label": 7 }, "name": "N" })), "N");
+        assert_eq!(label(&json!({ "meta": "not-an-object", "id": "I" })), "I");
+        // Nothing usable still names the element.
+        assert_eq!(label(&json!({})), "Element");
+    }
+
+    #[test]
+    fn fastener_semantics_map_kind_and_role_to_a_predefined_type() {
+        let sem = |el: Value| {
+            let (name, predefined) = mechanical_semantics(&el);
+            (name, predefined.to_string())
+        };
+        // A rod's role decides the IFC PredefinedType, not just its display name.
+        assert_eq!(
+            sem(json!({ "kind": "rod", "fastener": { "role": "anchor-rod" } })),
+            ("Anchor bolt".to_string(), ".ANCHORBOLT.".to_string())
+        );
+        assert_eq!(
+            sem(json!({ "kind": "rod", "fastener": { "role": "shear bolt" } })),
+            ("Bolt".to_string(), ".BOLT.".to_string())
+        );
+        // The role is matched case-insensitively.
+        assert_eq!(
+            sem(json!({ "kind": "rod", "fastener": { "role": "ANCHOR" } })),
+            ("Anchor bolt".to_string(), ".ANCHORBOLT.".to_string())
+        );
+        // An unrecognized role on a `rod` is NOT defaulted to a bolt — the writer says
+        // it does not know rather than asserting a fastening type.
+        assert_eq!(
+            sem(json!({ "kind": "rod", "fastener": { "role": "spigot" } })),
+            ("Round fastener".to_string(), ".NOTDEFINED.".to_string())
+        );
+        // `bolt-shank` is the exception: the kind alone is enough, so a missing or
+        // unknown role still lands on `.BOLT.`.
+        assert_eq!(
+            sem(json!({ "kind": "bolt-shank" })),
+            ("Bolt".to_string(), ".BOLT.".to_string())
+        );
+        assert_eq!(
+            sem(json!({ "kind": "bolt-shank", "fastener": { "role": "spigot" } })),
+            ("Bolt".to_string(), ".BOLT.".to_string())
+        );
+        assert_eq!(
+            sem(json!({ "kind": "rod" })),
+            ("Round fastener".to_string(), ".NOTDEFINED.".to_string())
+        );
+        // Both spellings of a nut role, and a kind that ignores the role entirely.
+        assert_eq!(
+            sem(json!({ "kind": "nut", "profile": { "role": "leveling nut" } })).0,
+            "Leveling nut"
+        );
+        assert_eq!(
+            sem(json!({ "kind": "nut", "profile": { "role": "leveling-nut" } })).0,
+            "Leveling nut"
+        );
+        assert_eq!(sem(json!({ "kind": "nut" })).0, "Hex fastener");
+        assert_eq!(
+            sem(json!({ "kind": "washer", "fastener": { "role": "anchor" } })).0,
+            "Washer"
+        );
+        assert_eq!(sem(json!({ "kind": "bolt-head" })).0, "Bolt head");
+        // An unknown kind is named but left undefined.
+        assert_eq!(
+            sem(json!({ "kind": "plate" })),
+            (
+                "Mechanical fastener".to_string(),
+                ".NOTDEFINED.".to_string()
+            )
+        );
+        // The descriptor chain is ordered: `fastener` wins over `fastenerSemantics`,
+        // which wins over `profile`.
+        assert_eq!(
+            sem(json!({ "kind": "rod", "fastener": { "role": "anchor" },
+                        "fastenerSemantics": { "role": "bolt" }, "profile": { "role": "bolt" } })),
+            ("Anchor bolt".to_string(), ".ANCHORBOLT.".to_string())
+        );
+        assert_eq!(
+            sem(
+                json!({ "kind": "rod", "fastenerSemantics": { "role": "anchor" },
+                        "profile": { "role": "bolt" } })
+            ),
+            ("Anchor bolt".to_string(), ".ANCHORBOLT.".to_string())
+        );
+    }
+
+    #[test]
+    fn a_mesh_span_measures_the_extent_and_refuses_a_non_numeric_ordinate() {
+        // The diagonal of the bounding box, not of the first triple: a 3-4-12 extent is
+        // 13, which a min/max swap or a dropped axis cannot reproduce.
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [0, 0, 0, 3, 4, 12] })),
+            Some(13.0)
+        );
+        // Order does not matter — the box is the same whichever corner came first.
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [3, 4, 12, 0, 0, 0] })),
+            Some(13.0)
+        );
+        // Negative coordinates span rather than cancel.
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [-3, 0, 0, 3, 0, 0] })),
+            Some(6.0)
+        );
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [5, 5, 5] })),
+            Some(0.0)
+        );
+        // A non-numeric ordinate in a COMPLETE triple refuses the span, rather than
+        // silently treating it as zero and reporting a span the mesh does not have.
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [0, 0, 0, "x", "y", "z"] })),
+            None
+        );
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [0, 0, null] })),
+            None
+        );
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": "nope" })),
+            None
+        );
+        assert_eq!(mesh_bounding_diagonal(&json!({})), None);
+        // A trailing PARTIAL triple is ignored, whatever it holds — `chunks_exact`
+        // never hands the loop a short chunk to index past the end of.
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [0, 0, 0, 1, 1] })),
+            Some(0.0)
+        );
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [0, 0, 0, "x", "y"] })),
+            Some(0.0)
+        );
+        // No complete triple is no bounding box, so there is no span to report. This
+        // asserts `None` rather than accepting the `Some(inf)` the untouched
+        // INFINITY/NEG_INFINITY seeds used to produce: a test that pinned the leak
+        // would have to be rewritten by anyone who fixed it, which is backwards.
+        // (Codex review, #586.)
+        assert_eq!(mesh_bounding_diagonal(&json!({ "positions": [] })), None);
+        assert_eq!(
+            mesh_bounding_diagonal(&json!({ "positions": [1, 1] })),
+            None
+        );
+    }
+
+    #[test]
+    fn a_bolt_names_its_shank_head_nuts_and_washers_in_that_order() {
+        // Order is load-bearing: the caller pairs these ids against materialized
+        // products, and the shank is what carries the hole effects.
+        assert_eq!(
+            bolt_component_ids(&json!({
+                "headId": "H", "shankId": "S",
+                "washerIds": ["W1", "W2"], "nutIds": ["N1"]
+            })),
+            vec!["S", "H", "N1", "W1", "W2"]
+        );
+        // Absent fields contribute nothing rather than a placeholder.
+        assert_eq!(bolt_component_ids(&json!({ "shankId": "S" })), vec!["S"]);
+        assert!(bolt_component_ids(&json!({})).is_empty());
+        // A non-string entry is skipped, not stringified — an id the scene never
+        // authored must not enter the participant set.
+        assert_eq!(
+            bolt_component_ids(&json!({
+                "shankId": 7, "nutIds": ["N1", 2, null, "N2"], "washerIds": "W1"
+            })),
+            vec!["N1", "N2"]
+        );
+    }
+
+    #[test]
+    fn a_reference_direction_stays_perpendicular_across_the_pole_switch() {
+        // The seed flips at |z| = 0.9 so the cross product never collapses near the
+        // pole. Pinned at both canonical axes: a moved threshold sends the vertical
+        // case down the degenerate fallback instead.
+        assert_eq!(axis_ref_dir([0.0, 0.0, 1.0]), [0.0, -1.0, 0.0]);
+        assert_eq!(axis_ref_dir([1.0, 0.0, 0.0]), [0.0, 1.0, 0.0]);
+        // Whatever the axis, the result is a well-conditioned unit vector orthogonal to
+        // it — an IfcAxis2Placement3D with a RefDirection parallel to its Axis is
+        // schema-invalid, and one barely off parallel is numerically junk.
+        for axis in [
+            [1.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0],
+            [0.0, 0.0, 1.0],
+            [0.0, 0.0, -1.0],
+            [0.0, 0.6, 0.8],
+            [0.0, 0.43, 0.9028],
+            [0.001, 0.0, 0.9999995],
+            [0.577, 0.577, 0.577],
+        ] {
+            let axis = normalized3(axis).expect("a non-degenerate axis");
+            let reference = axis_ref_dir(axis);
+            assert!(
+                (length3(reference) - 1.0).abs() < 1e-9,
+                "{axis:?} -> {reference:?} is not a unit vector"
+            );
+            assert!(
+                dot3(axis, reference).abs() < 1e-9,
+                "{axis:?} -> {reference:?} is not orthogonal"
+            );
+        }
+        // A degenerate axis cannot produce a direction, so it falls back to a fixed one
+        // rather than emitting a zero IfcDirection.
+        assert_eq!(axis_ref_dir([0.0, 0.0, 0.0]), [1.0, 0.0, 0.0]);
+    }
+
+    #[test]
+    fn an_outline_rotates_counter_clockwise_about_the_extrusion_axis() {
+        // The sign of the rotation is the whole contract: a transposed matrix mirrors
+        // every asymmetric profile — an angle's legs swap sides — while leaving the
+        // outline closed, self-consistent and schema-valid, so nothing downstream
+        // notices.
+        let quarter = rotate_outline(&[[1.0, 0.0]], 90.0);
+        assert!(
+            (quarter[0][0] - 0.0).abs() < 1e-9 && (quarter[0][1] - 1.0).abs() < 1e-9,
+            "+90 deg must take +x to +y, got {quarter:?}"
+        );
+        let back = rotate_outline(&[[0.0, 1.0]], 90.0);
+        assert!(
+            (back[0][0] + 1.0).abs() < 1e-9 && (back[0][1] - 0.0).abs() < 1e-9,
+            "+90 deg must take +y to -x, got {back:?}"
+        );
+        // Rotation preserves the outline: same vertex count, same distances from the
+        // origin, in the same order.
+        let outline = vec![[10.0, 0.0], [10.0, 4.0], [-2.0, 4.0]];
+        let rotated = rotate_outline(&outline, 37.0);
+        assert_eq!(rotated.len(), outline.len());
+        for (before, after) in outline.iter().zip(&rotated) {
+            let radius = |p: &Vec2| (p[0] * p[0] + p[1] * p[1]).sqrt();
+            assert!((radius(before) - radius(after)).abs() < 1e-9);
+        }
+        // A zero rotation is the identity, so an unrotated profile is byte-identical to
+        // one that never went through the rotation at all.
+        assert_eq!(rotate_outline(&outline, 0.0), outline);
+    }
+
+    #[test]
+    fn a_counter_derived_global_id_fills_the_ifc_guid_alphabet() {
+        // These ids go into the file as IfcGloballyUniqueId, which is exactly 22
+        // characters from a fixed 64-symbol alphabet. The counter is base-64 and
+        // one-based, so the rollover at 63 is the digit carry.
+        assert_eq!(guid(0), "0000000000000000000001");
+        assert_eq!(guid(63), "0000000000000000000010");
+        assert_eq!(guid(4095), "0000000000000000000100");
+
+        // Spelled out here, NOT read from `B64`. Checking the output against the same
+        // constant the producer indexes is no check at all: swapping a symbol for one
+        // outside the IFC GUID set changes producer and oracle together and the
+        // assertion stays green. This literal is the ISO 10303-21 GlobalId alphabet as
+        // the spec gives it, so a change to `B64` has to disagree with something.
+        // (Codex review, #586.)
+        const IFC_GUID_ALPHABET: &str = "0123456789\
+             ABCDEFGHIJKLMNOPQRSTUVWXYZ\
+             abcdefghijklmnopqrstuvwxyz\
+             _$";
+        assert_eq!(IFC_GUID_ALPHABET.len(), 64);
+        assert_eq!(
+            IFC_GUID_ALPHABET.as_bytes(),
+            B64,
+            "the writer's alphabet has drifted from the IFC GUID set"
+        );
+        for n in [0, 1, 63, 64, 4095, 1_000_000, i32::MAX as i64] {
+            let id = guid(n);
+            assert_eq!(id.len(), 22, "{n} -> {id}");
+            assert!(
+                id.chars().all(|c| IFC_GUID_ALPHABET.contains(c)),
+                "{n} -> {id} leaves the IFC GUID alphabet"
+            );
+        }
+        // Distinct counters are distinct ids — the id is a key, and a collision would
+        // silently merge two products in a consuming model.
+        let ids: BTreeSet<String> = (0..512).map(guid).collect();
+        assert_eq!(ids.len(), 512);
+    }
+
+    /// The argument text filling each positional placeholder of the format string whose
+    /// closing quote sits at byte `close`, read to the close of the enclosing macro call.
+    fn positional_arguments_after(source: &str, close: usize) -> Vec<String> {
+        let mut args: Vec<String> = Vec::new();
+        let mut depth = 0i32;
+        let mut current = String::new();
+        for ch in source[close + 1..].chars() {
+            match ch {
+                '(' | '[' => {
+                    depth += 1;
+                    current.push(ch);
+                }
+                ')' | ']' if depth > 0 => {
+                    depth -= 1;
+                    current.push(ch);
+                }
+                // depth 0 here is the close of the enclosing `format!` / `write!`.
+                ')' => break,
+                ',' if depth == 0 => {
+                    if !current.trim().is_empty() {
+                        args.push(current.trim().to_string());
+                    }
+                    current.clear();
+                }
+                _ => current.push(ch),
+            }
+        }
+        if !current.trim().is_empty() {
+            args.push(current.trim().to_string());
+        }
+        args
+    }
+
+    /// Every point / direction literal in `source`, paired with the argument text
+    /// filling each of its positional `{}` placeholders. Used by the gate below and
+    /// by its negative control, so the scan is exercised over planted input too.
+    fn point_literal_arguments(source: &str) -> Vec<(String, Vec<String>)> {
+        let mut found = Vec::new();
+        for token in ["IFCCARTESIANPOINT((", "IFCDIRECTION(("] {
+            for (at, _) in source.match_indices(token) {
+                let open = source[..at]
+                    .rfind('"')
+                    .expect("a string literal opens the token");
+                let close = open + 1 + source[open + 1..].find('"').expect("the literal closes");
+                let literal = &source[open + 1..close];
+                let args = if literal.contains("{}") {
+                    positional_arguments_after(source, close)
+                } else {
+                    Vec::new()
+                };
+                found.push((literal.to_string(), args));
+            }
+        }
+        found
+    }
+
+    /// This module's own implementation half — everything before its test module.
+    ///
+    /// The marker is `"\n#[cfg(test)]\nmod tests {"`, not the bare attribute, and it is
+    /// required to be UNIQUE. Matched as plain text the bare `#[cfg(test)]` also occurs in
+    /// prose, and a doc comment mentioning it truncated a third of the module out of both
+    /// source gates while every floor in them stayed satisfied. `.next()` on a `Split`
+    /// cannot fail, so the old `.expect(..)` here was never a check: if the marker moved,
+    /// it silently returned the whole file, test module included.
+    fn implementation_half(source: &str) -> &str {
+        let halves: Vec<&str> = source.split("\n#[cfg(test)]\nmod tests {").collect();
+        assert_eq!(
+            halves.len(),
+            2,
+            "expected exactly one `#[cfg(test)] mod tests {{` marker, found {}",
+            halves.len() - 1
+        );
+        halves[0]
+    }
+
+    /// `source` with every `//`-to-EOL and `/* … */` comment blanked to spaces, keeping
+    /// byte offsets intact.
+    ///
+    /// The scans below are text matches, so without this a comment IS code to them. A
+    /// stale `// was: write!(pts, "({},{},{})", r(x), r(y), r(z));` left beside a
+    /// bypassed write — the most likely artefact of exactly the edit this gate exists to
+    /// catch — otherwise mints a phantom clean tuple for `pts` and the gate reports the
+    /// module clean. Verified: that two-line edit passed the whole suite before this.
+    fn without_comments(source: &str) -> String {
+        let mut out = String::with_capacity(source.len());
+        // Char-wise, not byte-wise: this file carries multi-byte text (em dashes in the
+        // module docs), and a byte cursor lands mid-character and panics on the next
+        // slice.
+        let mut chars = source.chars().peekable();
+        while let Some(ch) = chars.next() {
+            match ch {
+                '/' if chars.peek() == Some(&'/') => {
+                    out.push_str("  ");
+                    chars.next();
+                    for ch in chars.by_ref() {
+                        if ch == '\n' {
+                            out.push('\n');
+                            break;
+                        }
+                        // One space per char, so offsets into the stripped copy still line
+                        // up line-for-line with the original for a panic message.
+                        out.push(' ');
+                    }
+                }
+                '/' if chars.peek() == Some(&'*') => {
+                    out.push_str("  ");
+                    chars.next();
+                    let mut prev = '\0';
+                    for ch in chars.by_ref() {
+                        let closing = prev == '*' && ch == '/';
+                        out.push(if ch == '\n' { '\n' } else { ' ' });
+                        if closing {
+                            break;
+                        }
+                        prev = ch;
+                    }
+                }
+                '"' => {
+                    // Kept verbatim: the literals are what the scan reads.
+                    out.push('"');
+                    while let Some(ch) = chars.next() {
+                        out.push(ch);
+                        if ch == '\\' {
+                            if let Some(escaped) = chars.next() {
+                                out.push(escaped);
+                            }
+                        } else if ch == '"' {
+                            break;
+                        }
+                    }
+                }
+                '\'' => {
+                    // A char literal is blanked so a lone `'('` — `name.find('(')` at
+                    // ifc.rs:137 — cannot unbalance `parenthesised`. A lifetime (`'a`) is
+                    // not a literal and is left alone.
+                    let mut lookahead = chars.clone();
+                    let first = lookahead.next();
+                    let body_len = if first == Some('\\') { 2 } else { 1 };
+                    let mut probe = chars.clone();
+                    for _ in 0..body_len {
+                        probe.next();
+                    }
+                    if probe.next() == Some('\'') {
+                        out.push_str(&" ".repeat(body_len + 2));
+                        for _ in 0..=body_len {
+                            chars.next();
+                        }
+                    } else {
+                        out.push('\'');
+                    }
+                }
+                _ => out.push(ch),
+            }
+        }
+        out
+    }
+
+    /// The byte range between the parentheses opened at `open`, which must index a `(`.
+    ///
+    /// Parentheses inside string literals are counted. That is only ever used to decide
+    /// which `write!` call a tuple literal sits in, and the gate below no longer relies
+    /// on that attribution being right to catch a bypass — attribution now only grants
+    /// an *exemption* to the index buffer, so a mis-span loses an exemption rather than
+    /// a check. Char literals are blanked by `without_comments`, which is what keeps
+    /// `name.find('(')` at ifc.rs:137 from unbalancing anything.
+    fn parenthesised(source: &str, open: usize) -> (usize, usize) {
+        let mut depth = 0i32;
+        for (offset, ch) in source[open..].char_indices() {
+            match ch {
+                '(' => depth += 1,
+                ')' => {
+                    depth -= 1;
+                    if depth == 0 {
+                        return (open + 1, open + offset);
+                    }
+                }
+                _ => {}
+            }
+        }
+        panic!("unbalanced parentheses from byte {open}");
+    }
+
+    /// The byte index of the `;` closing the statement starting at `from`, or `None` when
+    /// there is none at depth zero.
+    ///
+    /// `None` rather than the end of `source`, which is what this used to return: this
+    /// scan does not understand `if let` / `let else`, and the text `let weld {op_id}`
+    /// inside the string literal at ifc.rs:1685 mints a binding whose braces never
+    /// balance — so the fallback handed it a span covering half the module, large enough
+    /// to relabel unrelated tuples `weld`. A binding with no terminator is not a usable
+    /// span, so it is dropped. That can only cost an exemption, never a check.
+    fn statement_end(source: &str, from: usize) -> Option<usize> {
+        let mut depth = 0i32;
+        for (offset, ch) in source[from..].char_indices() {
+            match ch {
+                '(' | '[' | '{' => depth += 1,
+                ')' | ']' | '}' => depth -= 1,
+                ';' if depth == 0 => return Some(from + offset),
+                _ => {}
+            }
+        }
+        None
+    }
+
+    /// Whether `literal` is a bare positional ordinate tuple — `({},{})`,
+    /// `({},{},{})`, or either with the element separator moved into the literal.
+    ///
+    /// An exact comparison, deliberately. A looser one that merely strips the punctuation
+    /// accepts `"({},{},{}),"` *and* would accept a rearrangement, and the whole point is
+    /// that the only thing between `(` and `)` is positional placeholders — anything with
+    /// a format spec (`{:.6}`), an inline capture (`{x}`) or stray whitespace carries its
+    /// own formatting and must be refused rather than read.
+    fn is_bare_ordinate_tuple(literal: &str) -> bool {
+        let literal = literal.strip_suffix(',').unwrap_or(literal);
+        let placeholders = literal.matches("{}").count();
+        placeholders >= 2 && literal == format!("({})", vec!["{}"; placeholders].join(","))
+    }
+
+    /// Whether `literal` is written in a way that makes it a candidate ordinate tuple at
+    /// all: it opens a tuple and interpolates something.
+    fn looks_like_an_ordinate_tuple(literal: &str) -> bool {
+        literal.starts_with('(') && literal.contains('{')
+    }
+
+    /// Every candidate ordinate-tuple literal in `source`, as
+    /// (destination buffer, literal, argument text per placeholder).
+    ///
+    /// The destination is read so the gate can EXEMPT the one buffer that legitimately
+    /// carries non-`r` arguments: `emit_mesh` writes coordinates and 1-based triangle
+    /// indices with the identical literal `"({},{},{})"` (ifc.rs:502 and ifc.rs:520), and
+    /// the indices are `i64` that must not go through `r`. Everything else is checked
+    /// whether or not its destination resolved, so an unresolvable one fails rather than
+    /// vanishing — that direction was a live bypass: a builder bound at the top of the
+    /// module got the empty destination and was checked by nobody.
+    fn coordinate_tuple_destinations(source: &str) -> Vec<(String, String, Vec<String>)> {
+        let writes: Vec<(usize, usize, String)> = source
+            .match_indices("write!(")
+            .chain(source.match_indices("writeln!("))
+            .map(|(at, token)| {
+                let (from, to) = parenthesised(source, at + token.len() - 1);
+                let target = source[from..to]
+                    .split(',')
+                    .next()
+                    .expect("splitting always yields a first field")
+                    .trim()
+                    .to_string();
+                (from, to, target)
+            })
+            .collect();
+        let bindings: Vec<(usize, usize, String)> = source
+            .match_indices("let ")
+            .filter_map(|(at, token)| {
+                let rest = &source[at + token.len()..];
+                let name = rest
+                    .strip_prefix("mut ")
+                    .unwrap_or(rest)
+                    .split(|c: char| !c.is_alphanumeric() && c != '_')
+                    .next()
+                    .filter(|name| !name.is_empty())?;
+                Some((at, statement_end(source, at)?, name.to_string()))
+            })
+            .collect();
+
+        let mut found = Vec::new();
+        for (open, _) in source.match_indices("\"(") {
+            let close = open + 1 + source[open + 1..].find('"').expect("the literal closes");
+            let literal = &source[open + 1..close];
+            if !looks_like_an_ordinate_tuple(literal) {
+                continue;
+            }
+            // Innermost span wins, and a `write!` destination beats an enclosing `let`,
+            // because the pushed shape reads `let _ = write!(pts, …)` and `_` names no
+            // buffer.
+            let innermost = |spans: &[(usize, usize, String)]| {
+                spans
+                    .iter()
+                    .filter(|(from, to, _)| (*from..*to).contains(&open))
+                    .min_by_key(|(from, to, _)| to - from)
+                    .map(|(_, _, name)| name.clone())
+            };
+            let destination = innermost(&writes)
+                .or_else(|| innermost(&bindings))
+                .unwrap_or_default();
+            found.push((
+                destination,
+                literal.to_string(),
+                positional_arguments_after(source, close),
+            ));
+        }
+        found
+    }
+
+    /// Each point-list entity in `source`, paired with the buffer it interpolates its
+    /// flat coordinate list from.
+    fn point_list_buffers(source: &str) -> Vec<(String, String)> {
+        let mut found = Vec::new();
+        for token in ["IFCCARTESIANPOINTLIST3D((", "IFCCARTESIANPOINTLIST2D(("] {
+            for (at, _) in source.match_indices(token) {
+                let rest = &source[at + token.len()..];
+                let buffer = rest
+                    .strip_prefix('{')
+                    .unwrap_or_else(|| {
+                        let shown: String = rest.chars().take(8).collect();
+                        panic!("{token} should interpolate a buffer, found {shown:?}")
+                    })
+                    .split('}')
+                    .next()
+                    .expect("the capture closes");
+                // An identifier is the only shape the scan can follow back to a builder,
+                // and a capture that parsed to nothing would collide with the empty
+                // destination an unattributed tuple carries.
+                assert!(
+                    !buffer.is_empty() && buffer.chars().all(|c| c.is_alphanumeric() || c == '_'),
+                    "{token} interpolates {buffer:?}, which is not a buffer identifier"
+                );
+                found.push((token.trim_end_matches("((").to_string(), buffer.to_string()));
+            }
+        }
+        found
+    }
+
+    #[test]
+    fn every_point_ordinate_in_the_source_goes_through_the_invariant_formatter() {
+        // A fixture-driven test only covers the emit sites its fixtures reach, and this
+        // module has at least six. Codex review on #586 caught a `{:.6}` bypass at a
+        // THIRD one (`emit_polyline2`) after two rounds of adding fixtures for the
+        // first two — so this gate stops chasing them one at a time and covers every
+        // site structurally: each positional ordinate of a point or direction literal
+        // must be an `r(...)` call, whether or not any scene reaches it.
+        //
+        // Implementation half only. The test module below quotes these same entity
+        // names inside assertions, which are not emit sites.
+        // A CRLF checkout (`core.autocrlf` on Windows) would hide the `\n`-anchored marker.
+        let source = include_str!("ifc.rs").replace("\r\n", "\n");
+        let implementation = implementation_half(&source);
+
+        let sites = point_literal_arguments(implementation);
+        // An EQUALITY, not a floor. A floor cannot tell "nothing regressed" from "I
+        // stopped looking", which is the one thing a test that scans its own source has to
+        // get right — and the floor this replaces was set at 6 against 18 real sites, so
+        // two thirds of them could have vanished unnoticed.
+        assert_eq!(
+            sites.len(),
+            18,
+            "the point-literal census moved — {} sites found. If you added or removed an \
+             emit site, update this count deliberately; if you did not, the scan has \
+             stopped matching.",
+            sites.len()
+        );
+        for (literal, args) in sites {
+            let placeholders = literal.matches("{}").count();
+            // An inline capture (`{x}`) would carry its own formatting and slip past the
+            // argument check entirely, so it is refused rather than skipped.
+            assert_eq!(
+                literal.matches('{').count(),
+                placeholders,
+                "{literal:?} interpolates something other than a positional placeholder"
+            );
+            assert_eq!(
+                args.len(),
+                placeholders,
+                "{literal:?} has {placeholders} placeholders but {} arguments were read \
+                 — the scan mis-parsed this site",
+                args.len()
+            );
+            for arg in args {
+                assert!(
+                    arg.starts_with("r("),
+                    "{literal:?} fills a placeholder with {arg:?}, which does not go \
+                     through `r` — every ordinate in the SPF must use the invariant \
+                     eleven-place format or two builds of one scene can disagree"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn the_point_ordinate_scan_reports_a_planted_bypass() {
+        // The gate above scans real source that is correct today, so it reports clean
+        // both when it works and when it has stopped matching anything. This drives the
+        // same scan over planted input, so a classifier that quietly matches nothing
+        // fails here first.
+        let planted = r#"
+            spf.emit(&format!("IFCCARTESIANPOINT(({},{},{}))", r(a), format!("{b:.6}"), r(c)));
+            spf.emit(&format!("IFCDIRECTION(({},{}))", r(x), r(y)));
+            spf.emit("IFCCARTESIANPOINT((0.,0.,0.))");
+        "#;
+        let sites = point_literal_arguments(planted);
+        assert_eq!(sites.len(), 3, "{sites:?}");
+        // Looked up BY LITERAL, not by index: the scan walks one entity token at a time,
+        // so its output is grouped by token rather than by source order, and an
+        // index-keyed control asserts the wrong thing. (It did, and failed — which is
+        // the control earning its place.)
+        let args_for = |literal: &str| {
+            sites
+                .iter()
+                .find(|(found, _)| found == literal)
+                .unwrap_or_else(|| panic!("{literal:?} not found in {sites:?}"))
+                .1
+                .clone()
+        };
+
+        // The planted bypass: one argument out of three does not go through `r`.
+        let bypass = args_for("IFCCARTESIANPOINT(({},{},{}))");
+        assert_eq!(bypass, vec!["r(a)", "format!(\"{b:.6}\")", "r(c)"]);
+        assert!(
+            !bypass.iter().all(|arg| arg.starts_with("r(")),
+            "the planted bypass was not detected"
+        );
+
+        // A clean site passes the same check, so the classifier is not simply rejecting
+        // everything it is shown.
+        let clean = args_for("IFCDIRECTION(({},{}))");
+        assert_eq!(clean, vec!["r(x)", "r(y)"]);
+        assert!(clean.iter().all(|arg| arg.starts_with("r(")));
+
+        // A literal with no placeholders yields no arguments, so it cannot bypass —
+        // this is the shape of the two hardcoded origin points in this module.
+        let hardcoded = args_for("IFCCARTESIANPOINT((0.,0.,0.))");
+        assert!(hardcoded.is_empty());
+    }
+
+    #[test]
+    fn every_point_list_ordinate_in_the_source_goes_through_the_invariant_formatter() {
+        // The gate above reaches singular `IFCCARTESIANPOINT` / `IFCDIRECTION` literals.
+        // This module also emits coordinates in bulk, as the flat tuple lists inside
+        // `IFCCARTESIANPOINTLIST3D` (`emit_mesh`, the `pts` buffer) and
+        // `IFCCARTESIANPOINTLIST2D` (the indexed-profile path, `coords`), which that scan
+        // does not see at all — so swapping `r` for `{:.6}` at either builder halved
+        // coordinate precision with the whole suite green. (Codex review, #586.)
+        //
+        // The check runs the other way round from the obvious one, and that matters.
+        // EVERY candidate ordinate tuple in the module must be clean; a destination
+        // buffer only ever buys an EXEMPTION, and exactly one buffer has it. Keying it
+        // the other way — find each point list's buffer, check the tuples attributed to
+        // it — was a sieve, because a tuple the scan attributed somewhere else was then
+        // checked by nobody: a clean tuple bound to a variable named `coords` anywhere in
+        // the module satisfied the 2D list while the real builder emitted six decimals.
+        // Attribution is by bare name across 3,300 lines and `pts` is already a distinct
+        // local in three functions, so those collisions are not hypothetical.
+        //
+        // WHAT THIS STILL CANNOT SEE: `starts_with("r(")` is a prefix test on source
+        // text, so it proves only that the outermost call is `r`. `r(snap(x))`,
+        // `r((x * 1e6).round() / 1e6)` and friends degrade the value inside the
+        // parentheses and pass. No source scan can close that; it needs an assertion on
+        // the emitted document, and `every_emitted_ordinate_goes_through_the_invariant_
+        // real_formatter` is the test that should grow to cover the two point lists.
+        // Recorded rather than left for the next reviewer to rediscover.
+        // A CRLF checkout (`core.autocrlf` on Windows) would hide the `\n`-anchored marker.
+        let normalized = include_str!("ifc.rs").replace("\r\n", "\n");
+        let source = without_comments(implementation_half(&normalized));
+
+        // Every candidate tuple is REFUSED unless it is a bare positional ordinate
+        // tuple. The previous version skipped a non-conforming one with `continue`, which
+        // silently dropped the likeliest bypass spelling of all — the format spec written
+        // straight into the literal, `"({:.6},{:.6},{:.6})"`, which has no `{}`
+        // placeholders at all — along with `"({},{},{}),"` and `"({x},{y})"`.
+        let tuples = coordinate_tuple_destinations(&source);
+        // Buffers that legitimately carry non-`r` arguments. `tris` is `emit_mesh`'s
+        // 1-based triangle-index list: `i64`, and wrong if it went through `r`.
+        const INDEX_BUFFERS: [&str; 1] = ["tris"];
+        let mut exempted = 0;
+        let mut checked = 0;
+        for (destination, literal, args) in &tuples {
+            let placeholders = literal.matches("{}").count();
+            assert!(
+                is_bare_ordinate_tuple(literal),
+                "{literal:?} (written into {destination:?}) opens a coordinate tuple but \
+                 is not a bare positional one, so this scan cannot tell what formats its \
+                 ordinates — spell it `({{}},{{}},{{}})` and format the arguments, or \
+                 teach this gate the new shape deliberately"
+            );
+            assert_eq!(
+                args.len(),
+                placeholders,
+                "{literal:?} has {placeholders} placeholders but {} arguments were read \
+                 — the scan mis-parsed this site",
+                args.len()
+            );
+            if INDEX_BUFFERS.contains(&destination.as_str()) {
+                exempted += 1;
+                continue;
+            }
+            for arg in args {
+                assert!(
+                    arg.starts_with("r("),
+                    "the tuple {literal:?} written into {destination:?} fills a \
+                     placeholder with {arg:?}, which does not go through `r` — every \
+                     ordinate in the SPF must use the invariant eleven-place format or \
+                     two builds of one scene can disagree"
+                );
+            }
+            checked += 1;
+        }
+        // Pin both counts. A floor cannot tell "nothing regressed" from "I stopped
+        // looking", which is the one thing a test that scans its own source has to get
+        // right. Today: `pts` and `coords` are checked, `tris` is exempt.
+        assert_eq!(
+            (checked, exempted),
+            (2, 1),
+            "the coordinate-tuple census moved: {tuples:?}"
+        );
+        // Every exemption must still be earned, so a buffer that stopped existing cannot
+        // leave a standing licence behind for the next thing to reuse its name.
+        for buffer in INDEX_BUFFERS {
+            assert!(
+                tuples.iter().any(|(destination, ..)| destination == buffer),
+                "{buffer:?} is exempted from the `r` check but nothing writes a tuple \
+                 into it any more — drop the exemption"
+            );
+        }
+        // And each point list must still have a builder, so one going quiet is loud.
+        let lists = point_list_buffers(&source);
+        assert_eq!(lists.len(), 2, "the point-list census moved: {lists:?}");
+        for (entity, buffer) in lists {
+            assert!(
+                tuples
+                    .iter()
+                    .any(|(destination, ..)| *destination == buffer),
+                "{entity} interpolates `{buffer}`, but no coordinate tuple is written \
+                 into it — either its builder changed to a shape this scan cannot see, \
+                 or the buffer is no longer filled here. Found: {tuples:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn the_point_list_ordinate_scan_tells_coordinates_from_indices() {
+        // Drives the scan over planted input, so a classifier that has quietly stopped
+        // matching fails here rather than reporting the module clean. The planted text is
+        // `emit_mesh`'s real shape — a coordinate buffer and an index buffer whose tuple
+        // literals are character-for-character identical — plus the indexed-profile
+        // path's mapped-and-joined shape, with one bypass planted in the coordinate
+        // buffer.
+        let planted = r#"
+            let mut pts = String::new();
+            let _ = write!(
+                pts,
+                "({},{},{})",
+                r(num(a)),
+                format!("{b:.6}"),
+                r(num(c))
+            );
+            let mut tris = String::new();
+            let _ = write!(tris, "({},{},{})", a + 1, b + 1, c + 1);
+            let coords = raw
+                .iter()
+                .map(|(x, y)| format!("({},{})", r(*x), r(*y)))
+                .collect::<Vec<_>>()
+                .join(",");
+            let plist = spf.emit(&format!("IFCCARTESIANPOINTLIST3D(({pts}))"));
+            let flat = spf.emit(&format!("IFCCARTESIANPOINTLIST2D(({coords}))"));
+        "#;
+
+        assert_eq!(
+            point_list_buffers(planted),
+            vec![
+                ("IFCCARTESIANPOINTLIST3D".to_string(), "pts".to_string()),
+                ("IFCCARTESIANPOINTLIST2D".to_string(), "coords".to_string()),
+            ]
+        );
+
+        let tuples = coordinate_tuple_destinations(planted);
+        assert_eq!(tuples.len(), 3, "{tuples:?}");
+        let args_for = |buffer: &str| {
+            tuples
+                .iter()
+                .find(|(destination, ..)| destination == buffer)
+                .unwrap_or_else(|| panic!("nothing written into {buffer:?} in {tuples:?}"))
+                .2
+                .clone()
+        };
+
+        // The coordinate write and the index write share one literal and are told apart
+        // by destination alone — which is the whole reason the scan reads it.
+        assert_eq!(
+            args_for("pts"),
+            vec!["r(num(a))", "format!(\"{b:.6}\")", "r(num(c))"]
+        );
+        assert_eq!(args_for("tris"), vec!["a + 1", "b + 1", "c + 1"]);
+        assert_eq!(args_for("coords"), vec!["r(*x)", "r(*y)"]);
+
+        // The planted bypass is detected, and in the coordinate buffer only.
+        assert!(!args_for("pts").iter().all(|arg| arg.starts_with("r(")));
+        // A clean buffer passes the same check, so the classifier is not simply rejecting
+        // everything it is shown.
+        assert!(args_for("coords").iter().all(|arg| arg.starts_with("r(")));
+        // `tris` is no point list's buffer — it is exempt from the `r` check by name, not
+        // by being invisible, and a scan that condemned its indices would reject correct
+        // code.
+        assert!(
+            !point_list_buffers(planted)
+                .iter()
+                .any(|(_, buffer)| buffer == "tris")
+        );
+
+        // A comment is not code. Without the stripper, the commented-out clean write
+        // below mints a phantom tuple for `pts` and vouches for the bypassed real one —
+        // a two-line edit that passed the entire suite.
+        let decoyed = r#"
+            // was: write!(pts, "({},{},{})", r(x), r(y), r(z));
+            let _ = write!(pts, "({:.6},{:.6},{:.6})", x, y, z);
+            let plist = spf.emit(&format!("IFCCARTESIANPOINTLIST3D(({pts}))"));
+        "#;
+        let stripped = without_comments(decoyed);
+        assert!(
+            !stripped.contains("was:"),
+            "the comment survived stripping: {stripped:?}"
+        );
+        let decoy_tuples = coordinate_tuple_destinations(&stripped);
+        assert_eq!(decoy_tuples.len(), 1, "{decoy_tuples:?}");
+        // What survives is the bypass itself, and it is not a bare positional tuple — so
+        // the gate refuses it instead of skipping it.
+        let (destination, literal, _) = &decoy_tuples[0];
+        assert_eq!(destination, "pts");
+        assert_eq!(literal, "({:.6},{:.6},{:.6})");
+        assert_eq!(literal.matches("{}").count(), 0);
+        assert!(looks_like_an_ordinate_tuple(literal));
+        assert!(
+            !is_bare_ordinate_tuple(literal),
+            "the bypass spelling must be refused, not read"
+        );
+
+        // The shapes the old filter skipped in silence, each now a candidate the gate
+        // refuses: an inline format spec, an inline capture, stray whitespace, and a
+        // single placeholder.
+        for shape in ["({:.6},{:.6})", "({x},{y})", "({}, {})", "({})"] {
+            assert!(looks_like_an_ordinate_tuple(shape), "{shape:?}");
+            assert!(
+                !is_bare_ordinate_tuple(shape),
+                "{shape:?} should not pass the bare-positional test"
+            );
+        }
+        // And the shapes that must keep passing — including the separator moved into the
+        // literal, a legitimate refactor of the `push(',')` dance, which is read rather
+        // than refused.
+        for shape in ["({},{})", "({},{},{})", "({},{},{},{})", "({},{},{}),"] {
+            assert!(is_bare_ordinate_tuple(shape), "{shape:?}");
+        }
     }
 }
