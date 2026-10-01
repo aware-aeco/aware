@@ -5110,14 +5110,115 @@ mod tests {
         found
     }
 
+    /// This module's own implementation half — everything before its test module.
+    ///
+    /// The marker is `"\n#[cfg(test)]\nmod tests {"`, not the bare attribute, and it is
+    /// required to be UNIQUE. Matched as plain text the bare `#[cfg(test)]` also occurs in
+    /// prose, and a doc comment mentioning it truncated a third of the module out of both
+    /// source gates while every floor in them stayed satisfied. `.next()` on a `Split`
+    /// cannot fail, so the old `.expect(..)` here was never a check: if the marker moved,
+    /// it silently returned the whole file, test module included.
+    fn implementation_half(source: &str) -> &str {
+        let halves: Vec<&str> = source.split("\n#[cfg(test)]\nmod tests {").collect();
+        assert_eq!(
+            halves.len(),
+            2,
+            "expected exactly one `#[cfg(test)] mod tests {{` marker, found {}",
+            halves.len() - 1
+        );
+        halves[0]
+    }
+
+    /// `source` with every `//`-to-EOL and `/* … */` comment blanked to spaces, keeping
+    /// byte offsets intact.
+    ///
+    /// The scans below are text matches, so without this a comment IS code to them. A
+    /// stale `// was: write!(pts, "({},{},{})", r(x), r(y), r(z));` left beside a
+    /// bypassed write — the most likely artefact of exactly the edit this gate exists to
+    /// catch — otherwise mints a phantom clean tuple for `pts` and the gate reports the
+    /// module clean. Verified: that two-line edit passed the whole suite before this.
+    fn without_comments(source: &str) -> String {
+        let mut out = String::with_capacity(source.len());
+        // Char-wise, not byte-wise: this file carries multi-byte text (em dashes in the
+        // module docs), and a byte cursor lands mid-character and panics on the next
+        // slice.
+        let mut chars = source.chars().peekable();
+        while let Some(ch) = chars.next() {
+            match ch {
+                '/' if chars.peek() == Some(&'/') => {
+                    out.push_str("  ");
+                    chars.next();
+                    for ch in chars.by_ref() {
+                        if ch == '\n' {
+                            out.push('\n');
+                            break;
+                        }
+                        // One space per char, so offsets into the stripped copy still line
+                        // up line-for-line with the original for a panic message.
+                        out.push(' ');
+                    }
+                }
+                '/' if chars.peek() == Some(&'*') => {
+                    out.push_str("  ");
+                    chars.next();
+                    let mut prev = '\0';
+                    for ch in chars.by_ref() {
+                        let closing = prev == '*' && ch == '/';
+                        out.push(if ch == '\n' { '\n' } else { ' ' });
+                        if closing {
+                            break;
+                        }
+                        prev = ch;
+                    }
+                }
+                '"' => {
+                    // Kept verbatim: the literals are what the scan reads.
+                    out.push('"');
+                    while let Some(ch) = chars.next() {
+                        out.push(ch);
+                        if ch == '\\' {
+                            if let Some(escaped) = chars.next() {
+                                out.push(escaped);
+                            }
+                        } else if ch == '"' {
+                            break;
+                        }
+                    }
+                }
+                '\'' => {
+                    // A char literal is blanked so a lone `'('` — `name.find('(')` at
+                    // ifc.rs:137 — cannot unbalance `parenthesised`. A lifetime (`'a`) is
+                    // not a literal and is left alone.
+                    let mut lookahead = chars.clone();
+                    let first = lookahead.next();
+                    let body_len = if first == Some('\\') { 2 } else { 1 };
+                    let mut probe = chars.clone();
+                    for _ in 0..body_len {
+                        probe.next();
+                    }
+                    if probe.next() == Some('\'') {
+                        out.push_str(&" ".repeat(body_len + 2));
+                        for _ in 0..=body_len {
+                            chars.next();
+                        }
+                    } else {
+                        out.push('\'');
+                    }
+                }
+                _ => out.push(ch),
+            }
+        }
+        out
+    }
+
     /// The byte range between the parentheses opened at `open`, which must index a `(`.
     ///
-    /// Parentheses inside string literals are counted, which is sound here only because
-    /// every `write!` literal in this module is itself balanced (`"({},{},{})"`). A
-    /// future unbalanced one would mis-span, and that direction is safe: the scan below
-    /// attributes a coordinate tuple by which span contains it, so a mis-span moves the
-    /// tuple to the wrong buffer or to none, and a point-list buffer left with no tuple
-    /// fails the gate rather than passing it.
+    /// Parentheses inside string literals are counted. That is only ever used to decide
+    /// which `write!` call a tuple literal sits in, and the gate below no longer relies
+    /// on that attribution being right to catch a bypass — attribution now only grants
+    /// an *exemption* to the index buffer, so a mis-span loses an exemption rather than
+    /// a check. Char literals are blanked by `without_comments`, which is what keeps
+    /// `name.find('(')` at ifc.rs:137 from unbalancing anything.
     fn parenthesised(source: &str, open: usize) -> (usize, usize) {
         let mut depth = 0i32;
         for (offset, ch) in source[open..].char_indices() {
@@ -5135,36 +5236,62 @@ mod tests {
         panic!("unbalanced parentheses from byte {open}");
     }
 
-    /// The byte index of the `;` closing the statement starting at `from`, or the end of
-    /// `source` when it is unterminated.
-    fn statement_end(source: &str, from: usize) -> usize {
+    /// The byte index of the `;` closing the statement starting at `from`, or `None` when
+    /// there is none at depth zero.
+    ///
+    /// `None` rather than the end of `source`, which is what this used to return: this
+    /// scan does not understand `if let` / `let else`, and the text `let weld {op_id}`
+    /// inside the string literal at ifc.rs:1685 mints a binding whose braces never
+    /// balance — so the fallback handed it a span covering half the module, large enough
+    /// to relabel unrelated tuples `weld`. A binding with no terminator is not a usable
+    /// span, so it is dropped. That can only cost an exemption, never a check.
+    fn statement_end(source: &str, from: usize) -> Option<usize> {
         let mut depth = 0i32;
         for (offset, ch) in source[from..].char_indices() {
             match ch {
                 '(' | '[' | '{' => depth += 1,
                 ')' | ']' | '}' => depth -= 1,
-                ';' if depth == 0 => return from + offset,
+                ';' if depth == 0 => return Some(from + offset),
                 _ => {}
             }
         }
-        source.len()
+        None
     }
 
-    /// Every bare coordinate-tuple literal in `source` — `({},{})`, `({},{},{})` — as
+    /// Whether `literal` is a bare positional ordinate tuple — `({},{})`,
+    /// `({},{},{})`, or either with the element separator moved into the literal.
+    ///
+    /// An exact comparison, deliberately. A looser one that merely strips the punctuation
+    /// accepts `"({},{},{}),"` *and* would accept a rearrangement, and the whole point is
+    /// that the only thing between `(` and `)` is positional placeholders — anything with
+    /// a format spec (`{:.6}`), an inline capture (`{x}`) or stray whitespace carries its
+    /// own formatting and must be refused rather than read.
+    fn is_bare_ordinate_tuple(literal: &str) -> bool {
+        let literal = literal.strip_suffix(',').unwrap_or(literal);
+        let placeholders = literal.matches("{}").count();
+        placeholders >= 2 && literal == format!("({})", vec!["{}"; placeholders].join(","))
+    }
+
+    /// Whether `literal` is written in a way that makes it a candidate ordinate tuple at
+    /// all: it opens a tuple and interpolates something.
+    fn looks_like_an_ordinate_tuple(literal: &str) -> bool {
+        literal.starts_with('(') && literal.contains('{')
+    }
+
+    /// Every candidate ordinate-tuple literal in `source`, as
     /// (destination buffer, literal, argument text per placeholder).
     ///
-    /// Attribution is by destination rather than by literal, because `emit_mesh` writes
-    /// *coordinates* and 1-based *triangle indices* with the identical literal
-    /// `"({},{},{})"` thirteen lines apart. Indices are `i64` and must NOT go through
-    /// `r`, so a scan keyed on the literal would either miss the ordinates or condemn
-    /// the indices. Keying on the buffer also follows a rename for free, since the point
-    /// list that consumes the buffer names it too. (Codex review, #586.)
+    /// The destination is read so the gate can EXEMPT the one buffer that legitimately
+    /// carries non-`r` arguments: `emit_mesh` writes coordinates and 1-based triangle
+    /// indices with the identical literal `"({},{},{})"` (ifc.rs:502 and ifc.rs:520), and
+    /// the indices are `i64` that must not go through `r`. Everything else is checked
+    /// whether or not its destination resolved, so an unresolvable one fails rather than
+    /// vanishing — that direction was a live bypass: a builder bound at the top of the
+    /// module got the empty destination and was checked by nobody.
     fn coordinate_tuple_destinations(source: &str) -> Vec<(String, String, Vec<String>)> {
-        // `write!(buffer, …)` call spans. The destination is read as the text before the
-        // first comma, which this module's writes satisfy — none passes a call with its
-        // own comma as the destination.
         let writes: Vec<(usize, usize, String)> = source
             .match_indices("write!(")
+            .chain(source.match_indices("writeln!("))
             .map(|(at, token)| {
                 let (from, to) = parenthesised(source, at + token.len() - 1);
                 let target = source[from..to]
@@ -5176,8 +5303,6 @@ mod tests {
                 (from, to, target)
             })
             .collect();
-        // `let buffer = …;` statements, for the mapped-and-joined shape whose coordinates
-        // are built inside the binding's own initializer rather than pushed to it.
         let bindings: Vec<(usize, usize, String)> = source
             .match_indices("let ")
             .filter_map(|(at, token)| {
@@ -5188,7 +5313,7 @@ mod tests {
                     .split(|c: char| !c.is_alphanumeric() && c != '_')
                     .next()
                     .filter(|name| !name.is_empty())?;
-                Some((at, statement_end(source, at), name.to_string()))
+                Some((at, statement_end(source, at)?, name.to_string()))
             })
             .collect();
 
@@ -5196,13 +5321,12 @@ mod tests {
         for (open, _) in source.match_indices("\"(") {
             let close = open + 1 + source[open + 1..].find('"').expect("the literal closes");
             let literal = &source[open + 1..close];
-            let placeholders = literal.matches("{}").count();
-            if placeholders < 2 || literal != format!("({})", vec!["{}"; placeholders].join(",")) {
+            if !looks_like_an_ordinate_tuple(literal) {
                 continue;
             }
-            // The innermost containing span wins, and a `write!` destination wins over an
-            // enclosing `let`, because the pushed shape reads `let _ = write!(pts, …)`
-            // and `_` names no buffer.
+            // Innermost span wins, and a `write!` destination beats an enclosing `let`,
+            // because the pushed shape reads `let _ = write!(pts, …)` and `_` names no
+            // buffer.
             let innermost = |spans: &[(usize, usize, String)]| {
                 spans
                     .iter()
@@ -5232,18 +5356,15 @@ mod tests {
                 let buffer = rest
                     .strip_prefix('{')
                     .unwrap_or_else(|| {
-                        panic!(
-                            "{token} should interpolate a buffer, found {:?}",
-                            &rest[..8]
-                        )
+                        let shown: String = rest.chars().take(8).collect();
+                        panic!("{token} should interpolate a buffer, found {shown:?}")
                     })
                     .split('}')
                     .next()
                     .expect("the capture closes");
-                // A capture that parsed to nothing would be matched by the empty
-                // destination `coordinate_tuple_destinations` gives an unattributed
-                // tuple, which would let this gate pass on tuples it never located. An
-                // identifier is the only shape that can be followed back to a builder.
+                // An identifier is the only shape the scan can follow back to a builder,
+                // and a capture that parsed to nothing would collide with the empty
+                // destination an unattributed tuple carries.
                 assert!(
                     !buffer.is_empty() && buffer.chars().all(|c| c.is_alphanumeric() || c == '_'),
                     "{token} interpolates {buffer:?}, which is not a buffer identifier"
@@ -5266,17 +5387,19 @@ mod tests {
         // Implementation half only. The test module below quotes these same entity
         // names inside assertions, which are not emit sites.
         const SOURCE: &str = include_str!("ifc.rs");
-        let implementation = SOURCE
-            .split("#[cfg(test)]")
-            .next()
-            .expect("the implementation precedes the tests");
+        let implementation = implementation_half(SOURCE);
 
         let sites = point_literal_arguments(implementation);
-        // A floor, so a scan that has stopped matching anything fails loudly instead of
-        // reporting a clean module. Six real sites exist today.
-        assert!(
-            sites.len() >= 6,
-            "found only {} point literals — the scan has stopped matching",
+        // An EQUALITY, not a floor. A floor cannot tell "nothing regressed" from "I
+        // stopped looking", which is the one thing a test that scans its own source has to
+        // get right — and the floor this replaces was set at 6 against 18 real sites, so
+        // two thirds of them could have vanished unnoticed.
+        assert_eq!(
+            sites.len(),
+            18,
+            "the point-literal census moved — {} sites found. If you added or removed an \
+             emit site, update this count deliberately; if you did not, the scan has \
+             stopped matching.",
             sites.len()
         );
         for (literal, args) in sites {
@@ -5356,65 +5479,113 @@ mod tests {
     fn every_point_list_ordinate_in_the_source_goes_through_the_invariant_formatter() {
         // The gate above reaches singular `IFCCARTESIANPOINT` / `IFCDIRECTION` literals.
         // This module also emits coordinates in bulk, as the flat tuple lists inside
-        // `IFCCARTESIANPOINTLIST3D` (`emit_mesh`) and `IFCCARTESIANPOINTLIST2D` (the
-        // indexed-profile path), which that scan does not see at all — so swapping `r`
-        // for `{:.6}` at either builder silently halved coordinate precision with the
-        // whole suite green. (Codex review, #586.)
+        // `IFCCARTESIANPOINTLIST3D` (`emit_mesh`, the `pts` buffer) and
+        // `IFCCARTESIANPOINTLIST2D` (the indexed-profile path, `coords`), which that scan
+        // does not see at all — so swapping `r` for `{:.6}` at either builder halved
+        // coordinate precision with the whole suite green. (Codex review, #586.)
         //
-        // Reached through the buffer each point list interpolates, not through the tuple
-        // literal, because `emit_mesh` spells its triangle-index write identically.
+        // The check runs the other way round from the obvious one, and that matters.
+        // EVERY candidate ordinate tuple in the module must be clean; a destination
+        // buffer only ever buys an EXEMPTION, and exactly one buffer has it. Keying it
+        // the other way — find each point list's buffer, check the tuples attributed to
+        // it — was a sieve, because a tuple the scan attributed somewhere else was then
+        // checked by nobody: a clean tuple bound to a variable named `coords` anywhere in
+        // the module satisfied the 2D list while the real builder emitted six decimals.
+        // Attribution is by bare name across 3,300 lines and `pts` is already a distinct
+        // local in three functions, so those collisions are not hypothetical.
+        //
+        // WHAT THIS STILL CANNOT SEE: `starts_with("r(")` is a prefix test on source
+        // text, so it proves only that the outermost call is `r`. `r(snap(x))`,
+        // `r((x * 1e6).round() / 1e6)` and friends degrade the value inside the
+        // parentheses and pass. No source scan can close that; it needs an assertion on
+        // the emitted document, and `every_emitted_ordinate_goes_through_the_invariant_
+        // real_formatter` is the test that should grow to cover the two point lists.
+        // Recorded rather than left for the next reviewer to rediscover.
         const SOURCE: &str = include_str!("ifc.rs");
-        let implementation = SOURCE
-            .split("#[cfg(test)]")
-            .next()
-            .expect("the implementation precedes the tests");
+        let source = without_comments(implementation_half(SOURCE));
 
-        let tuples = coordinate_tuple_destinations(implementation);
-        let lists = point_list_buffers(implementation);
-        // A floor, so a scan that has stopped matching fails loudly instead of reporting
-        // a clean module. Two real point lists exist today.
-        assert!(
-            lists.len() >= 2,
-            "found only {} point lists — the scan has stopped matching",
-            lists.len()
-        );
-        for (entity, buffer) in lists {
-            let ordinates: Vec<_> = tuples
-                .iter()
-                .filter(|(destination, ..)| *destination == buffer)
-                .collect();
+        // Every candidate tuple is REFUSED unless it is a bare positional ordinate
+        // tuple. The previous version skipped a non-conforming one with `continue`, which
+        // silently dropped the likeliest bypass spelling of all — the format spec written
+        // straight into the literal, `"({:.6},{:.6},{:.6})"`, which has no `{}`
+        // placeholders at all — along with `"({},{},{}),"` and `"({x},{y})"`.
+        let tuples = coordinate_tuple_destinations(&source);
+        // Buffers that legitimately carry non-`r` arguments. `tris` is `emit_mesh`'s
+        // 1-based triangle-index list: `i64`, and wrong if it went through `r`.
+        const INDEX_BUFFERS: [&str; 1] = ["tris"];
+        let mut exempted = 0;
+        let mut checked = 0;
+        for (destination, literal, args) in &tuples {
+            let placeholders = literal.matches("{}").count();
             assert!(
-                !ordinates.is_empty(),
-                "{entity} interpolates `{buffer}`, but no coordinate tuple is written \
-                 into it — the scan has lost the builder it is meant to cover"
+                is_bare_ordinate_tuple(literal),
+                "{literal:?} (written into {destination:?}) opens a coordinate tuple but \
+                 is not a bare positional one, so this scan cannot tell what formats its \
+                 ordinates — spell it `({{}},{{}},{{}})` and format the arguments, or \
+                 teach this gate the new shape deliberately"
             );
-            for (_, literal, args) in ordinates {
-                assert_eq!(
-                    args.len(),
-                    literal.matches("{}").count(),
-                    "{literal:?} building `{buffer}` was mis-parsed as {args:?}"
-                );
-                for arg in args {
-                    assert!(
-                        arg.starts_with("r("),
-                        "{entity} is built from {literal:?} filled with {arg:?}, which \
-                         does not go through `r` — every ordinate in the SPF must use \
-                         the invariant eleven-place format or two builds of one scene \
-                         can disagree"
-                    );
-                }
+            assert_eq!(
+                args.len(),
+                placeholders,
+                "{literal:?} has {placeholders} placeholders but {} arguments were read \
+                 — the scan mis-parsed this site",
+                args.len()
+            );
+            if INDEX_BUFFERS.contains(&destination.as_str()) {
+                exempted += 1;
+                continue;
             }
+            for arg in args {
+                assert!(
+                    arg.starts_with("r("),
+                    "the tuple {literal:?} written into {destination:?} fills a \
+                     placeholder with {arg:?}, which does not go through `r` — every \
+                     ordinate in the SPF must use the invariant eleven-place format or \
+                     two builds of one scene can disagree"
+                );
+            }
+            checked += 1;
+        }
+        // Pin both counts. A floor cannot tell "nothing regressed" from "I stopped
+        // looking", which is the one thing a test that scans its own source has to get
+        // right. Today: `pts` and `coords` are checked, `tris` is exempt.
+        assert_eq!(
+            (checked, exempted),
+            (2, 1),
+            "the coordinate-tuple census moved: {tuples:?}"
+        );
+        // Every exemption must still be earned, so a buffer that stopped existing cannot
+        // leave a standing licence behind for the next thing to reuse its name.
+        for buffer in INDEX_BUFFERS {
+            assert!(
+                tuples.iter().any(|(destination, ..)| destination == buffer),
+                "{buffer:?} is exempted from the `r` check but nothing writes a tuple \
+                 into it any more — drop the exemption"
+            );
+        }
+        // And each point list must still have a builder, so one going quiet is loud.
+        let lists = point_list_buffers(&source);
+        assert_eq!(lists.len(), 2, "the point-list census moved: {lists:?}");
+        for (entity, buffer) in lists {
+            assert!(
+                tuples
+                    .iter()
+                    .any(|(destination, ..)| *destination == buffer),
+                "{entity} interpolates `{buffer}`, but no coordinate tuple is written \
+                 into it — either its builder changed to a shape this scan cannot see, \
+                 or the buffer is no longer filled here. Found: {tuples:?}"
+            );
         }
     }
 
     #[test]
     fn the_point_list_ordinate_scan_tells_coordinates_from_indices() {
-        // Drives the destination-keyed scan over planted input, so a classifier that has
-        // quietly stopped matching fails here rather than reporting the module clean.
-        // The planted text is `emit_mesh`'s real shape — a coordinate buffer and an index
-        // buffer whose tuple literals are character-for-character identical — plus the
-        // indexed-profile path's mapped-and-joined shape, with one bypass planted in the
-        // coordinate buffer.
+        // Drives the scan over planted input, so a classifier that has quietly stopped
+        // matching fails here rather than reporting the module clean. The planted text is
+        // `emit_mesh`'s real shape — a coordinate buffer and an index buffer whose tuple
+        // literals are character-for-character identical — plus the indexed-profile
+        // path's mapped-and-joined shape, with one bypass planted in the coordinate
+        // buffer.
         let planted = r#"
             let mut pts = String::new();
             let _ = write!(
@@ -5455,7 +5626,7 @@ mod tests {
         };
 
         // The coordinate write and the index write share one literal and are told apart
-        // by destination alone — which is the whole reason the scan keys on it.
+        // by destination alone — which is the whole reason the scan reads it.
         assert_eq!(
             args_for("pts"),
             vec!["r(num(a))", "format!(\"{b:.6}\")", "r(num(c))"]
@@ -5468,12 +5639,57 @@ mod tests {
         // A clean buffer passes the same check, so the classifier is not simply rejecting
         // everything it is shown.
         assert!(args_for("coords").iter().all(|arg| arg.starts_with("r(")));
-        // `tris` is no point list's buffer, so its `i64` indices are never gated — a scan
-        // that condemned them would reject correct code.
+        // `tris` is no point list's buffer — it is exempt from the `r` check by name, not
+        // by being invisible, and a scan that condemned its indices would reject correct
+        // code.
         assert!(
             !point_list_buffers(planted)
                 .iter()
                 .any(|(_, buffer)| buffer == "tris")
         );
+
+        // A comment is not code. Without the stripper, the commented-out clean write
+        // below mints a phantom tuple for `pts` and vouches for the bypassed real one —
+        // a two-line edit that passed the entire suite.
+        let decoyed = r#"
+            // was: write!(pts, "({},{},{})", r(x), r(y), r(z));
+            let _ = write!(pts, "({:.6},{:.6},{:.6})", x, y, z);
+            let plist = spf.emit(&format!("IFCCARTESIANPOINTLIST3D(({pts}))"));
+        "#;
+        let stripped = without_comments(decoyed);
+        assert!(
+            !stripped.contains("was:"),
+            "the comment survived stripping: {stripped:?}"
+        );
+        let decoy_tuples = coordinate_tuple_destinations(&stripped);
+        assert_eq!(decoy_tuples.len(), 1, "{decoy_tuples:?}");
+        // What survives is the bypass itself, and it is not a bare positional tuple — so
+        // the gate refuses it instead of skipping it.
+        let (destination, literal, _) = &decoy_tuples[0];
+        assert_eq!(destination, "pts");
+        assert_eq!(literal, "({:.6},{:.6},{:.6})");
+        assert_eq!(literal.matches("{}").count(), 0);
+        assert!(looks_like_an_ordinate_tuple(literal));
+        assert!(
+            !is_bare_ordinate_tuple(literal),
+            "the bypass spelling must be refused, not read"
+        );
+
+        // The shapes the old filter skipped in silence, each now a candidate the gate
+        // refuses: an inline format spec, an inline capture, stray whitespace, and a
+        // single placeholder.
+        for shape in ["({:.6},{:.6})", "({x},{y})", "({}, {})", "({})"] {
+            assert!(looks_like_an_ordinate_tuple(shape), "{shape:?}");
+            assert!(
+                !is_bare_ordinate_tuple(shape),
+                "{shape:?} should not pass the bare-positional test"
+            );
+        }
+        // And the shapes that must keep passing — including the separator moved into the
+        // literal, a legitimate refactor of the `push(',')` dance, which is read rather
+        // than refused.
+        for shape in ["({},{})", "({},{},{})", "({},{},{},{})", "({},{},{}),"] {
+            assert!(is_bare_ordinate_tuple(shape), "{shape:?}");
+        }
     }
 }
