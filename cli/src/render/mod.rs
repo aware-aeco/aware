@@ -36,19 +36,32 @@ pub(super) fn abs_path(path: &str) -> String {
 /// (#205, pinned by `render_config_unresolved_whole_value_falls_back_to_empty_string`).
 /// Refusing either would turn "the author left it out" into a failed run.
 ///
-/// The `null` arm is reachable only from a hand-written literal — NOT from a
-/// template, which cannot produce one: `render_config` re-renders a whole-value
-/// ref that resolved to null leniently, and `template::render` prints a null as
-/// empty. A templated `output-path: "{{ reader.out_path }}"` over a null therefore
-/// arrives here as `""` and opts out through the blank-string arm, alongside the
-/// absent ref it means the same thing as.
+/// The `null` arm is reachable from a hand-written literal, and from one templated
+/// route. A templated *leaf* can no longer deliver a null: `render_config` re-renders
+/// a leaf whose ref resolved to null, and `template::render` now prints a null as
+/// empty, so `output-path: "{{ reader.out_path }}"` over a null arrives here as `""`
+/// and opts out through the blank-string arm — alongside the absent ref it means the
+/// same thing as (#551). It used to arrive as the string `"none"` and write a file by
+/// that name, which this guard cannot see, `"none"` being a non-empty and perfectly
+/// valid relative path.
 ///
-/// It used to arrive as the string `"none"` — minijinja's stock formatter spells a
-/// null that way — and wrote a file literally called `none`, which this guard
-/// cannot see, `"none"` being a non-empty and perfectly valid relative path. That
-/// was fixed one layer down at `render`'s formatter rather than here, because it
-/// reached every string param and not just this one (#551).
+/// **Do not read the null case as covered.** Three routes still reach this function
+/// with a null, or with a non-empty string standing for one:
 ///
+/// 1. A **scalar** whole-value `config:`/`inputs:` — not a mapping of leaves — resolves
+///    to an upstream object structurally, nulls intact, because `merged_params()`
+///    returns a non-mapping unchanged (`manifest/app.rs:258`). That reaches the `Null`
+///    arm from a template, and is why this arm is not dead code (#598).
+/// 2. A null stringified *inside* the expression — `{{ x ~ '.html' }}`, `{{ x | string }}`,
+///    `{{ x | upper }}`, `{{ x | join }}` — never reaches `render`'s formatter as a null
+///    and still spells it: `output-path: "{{ x ~ '.html' }}"` writes `none.html` at exit
+///    0, #551's failure verbatim (#598).
+/// 3. An **empty** leading segment, which is what a null now renders to, leaves a
+///    filesystem-ROOT path: `"{{ x }}/r.html"` → `/r.html`, written with no containment
+///    guard. Already reachable on an absent ref, tracked as #597.
+///
+/// Recorded, as the comment this replaced was, so the next reader does not take the
+/// null case as settled — it is narrower than it was, not closed.
 /// A number, boolean, array or object is none of those things. Every manifest
 /// that reaches here declares `output-path: {type: string}` — the four callers
 /// today are `20-agents/_core/{html-report,ui,viewer-3d,ifc}/manifest.yaml`. That

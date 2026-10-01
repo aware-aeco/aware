@@ -1941,6 +1941,19 @@ fn render_config(config: &Value, ctx: &RuntimeContext) -> Result<Value, AwareErr
                     // rendered as the literal text `none` — and the fix sits at `render`'s
                     // formatter because the embedded form (`"{{ x }}/r.html"`) never
                     // reaches this arm at all (#551).
+                    //
+                    // A third outcome exists and is not an error here: when the ref's HEAD
+                    // is undefined, `resolve_value` also returns null while `render` fails
+                    // (`{{ nope.x }}` → "template render: undefined value"), because
+                    // minijinja's lenient mode prints an undefined but refuses attribute
+                    // access on one — the same mechanism as the #127 note in `template`.
+                    // So this arm yields `""`, `""`, or `Err`.
+                    //
+                    // What it does NOT do is preserve the distinction. After the formatter
+                    // change no consumer can tell `""`-from-absent from `""`-from-null, so
+                    // #551's other option — refusing a present null outright — is foreclosed
+                    // at this layer and would have to be decided here, where the ctx and the
+                    // ref path are still in hand. #598 carries that.
                     let resolved = template::resolve_value(s, ctx);
                     if resolved.is_null() {
                         Ok(Value::String(template::render(s, ctx)?))
@@ -2207,9 +2220,16 @@ mod tests {
 
     #[test]
     fn render_config_still_passes_a_present_value_through_structurally() {
-        // #205's structured passthrough is what the null arm sits next to, so pin it
-        // here: a whole-value ref to a non-null value must still arrive as its own JSON
-        // type, not stringified by the formatter change above.
+        // #205's structured passthrough is what the null arm sits next to, so pin it here:
+        // a whole-value ref to a non-null value must still arrive as its own JSON type.
+        //
+        // This test CANNOT see the formatter, and must not be read as proving it safe. A
+        // non-null whole-value ref returns through `template::resolve_value`, a pure
+        // serde_json path that never builds a minijinja `Environment` — verified by deleting
+        // the formatter and by making it blank every falsy value, under both of which this
+        // test stays green. What it does guard, uniquely, is `render_config`'s own
+        // `is_null()` check: widen that to anything falsy and `0`/`false` arrive as the
+        // strings `"0"`/`"false"`, and this is the only test that goes red.
         let mut ctx = RuntimeContext {
             inputs: serde_json::json!({}),
             ..Default::default()

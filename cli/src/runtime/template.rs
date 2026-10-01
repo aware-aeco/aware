@@ -641,24 +641,47 @@ pub fn render(template: &str, ctx: &RenderContext) -> Result<String, AwareError>
     let mut env = Environment::new();
     // Print a present JSON null as empty, the way an unresolved ref already prints (#205).
     //
-    // minijinja's default formatter spells a null `none` on its way to output, so before
-    // this every string param rendered from a ref over a null came back carrying that word
-    // as a VALUE: `output-path: "{{ reader.out_path }}"` wrote a file literally called
-    // `none` and the node returned `path: "none"` with exit 0, so nothing downstream could
-    // tell (#551). A reader that found no path, or an app input defaulted to null, is
-    // ordinary — "not given" is what it means, and that is what absent already renders to.
+    // minijinja's default formatter spells a null `none` on its way to output — as of 2.19,
+    // the version `Cargo.lock` pins; 2.2x re-spells it `None` — so before this a string
+    // param rendered from a ref over a null came back carrying that word as a VALUE:
+    // `output-path: "{{ reader.out_path }}"` wrote a file literally called `none` and the
+    // node returned `path: "none"` with exit 0, so nothing downstream could tell (#551). A
+    // reader that found no path is ordinary; "not given" is what it means, and that is what
+    // an absent ref already renders to.
     //
-    // This belongs at the formatter, and the two alternatives are both worse. Changing only
-    // `render_config`'s whole-value arm would miss the embedded form (`"{{ x }}/r.html"`
-    // → `none/r.html`), which never reaches that arm. Stripping nulls from the context, or
-    // handing expressions `Value::UNDEFINED`, would change what a null IS rather than how
-    // it prints — flipping `is none`, `is defined` and `default()` (which substitutes only
-    // for undefined). The formatter runs on the way OUT, so expression semantics are
-    // untouched; `a_null_is_still_null_to_every_test_filter_and_comparison` pins that.
+    // This sits at the formatter, and the two in-expression alternatives are worse. Stripping
+    // nulls from the context, or handing expressions `Value::UNDEFINED`, would change what a
+    // null IS rather than how it prints — flipping `is none`, `is defined` and `default()`
+    // (which substitutes for an undefined value, and for a null only in its `boolean=true`
+    // form). The formatter runs on the way OUT, so expression semantics are untouched;
+    // `the_formatter_changes_how_a_null_prints_not_what_it_is` pins that.
     //
-    // Only a null moves: everything else is handed to the stock formatter unchanged, so the
-    // falsy spellings (`0`, `false`, `""`) keep theirs. This mirrors minijinja's own
-    // documented recipe for `set_formatter`.
+    // Only a null moves — everything else goes to the stock formatter untouched, so the falsy
+    // spellings (`0`, `false`, `""`) keep theirs. The hazard to avoid here is a TRUTHINESS
+    // check (`!value.is_true()`), which would blank all three; `is_none()` is strictly the
+    // none singleton (`ValueRepr::None`). This mirrors minijinja's own documented recipe for
+    // `set_formatter`, whose doctest asserts `{{ none }}` renders empty.
+    //
+    // WHAT THIS DOES NOT REACH — do not read the null case as closed.
+    //
+    // The formatter is handed the top-level value of each `{{ }}` block, and only AFTER the
+    // expression has been evaluated. A null stringified inside the expression, or nested in a
+    // rendered container, never arrives here as a null and still carries the word (#598):
+    //
+    //     {{ x ~ '.html' }} → `none.html`      {{ x | string }}   → `none`
+    //     {{ x | upper }}   → `NONE`           {{ rows }}         → `[1, none]`
+    //     {{ rows | join }} → `1,none`         {{ {"a": x} }}     → `{"a": none}`
+    //
+    // `{{ x ~ '.html' }}` is #551's failure verbatim — it writes a file called `none.html`,
+    // and `output_path_arg` cannot see that either, a non-empty relative path being exactly
+    // what it accepts. Closing it needs a lever that still knows the value was null, which
+    // this one does not: see #598. `none_still_leaks_where_the_formatter_cannot_reach` pins
+    // the surviving spellings so they trip when it is closed rather than being rediscovered.
+    //
+    // And note what empty costs in an EMBEDDED position: `"{{ x }}/r.html"` over a null now
+    // renders `/r.html`, writing at the filesystem ROOT instead of the `none/` subdirectory
+    // of the CWD it used to make. That door is already open on an absent ref (#205 renders
+    // one empty too) and is tracked as #597, not fixed here.
     env.set_formatter(|out, state, value| {
         minijinja::escape_formatter(
             out,
@@ -1279,10 +1302,19 @@ mod tests {
             "",
             "a whole-value ref over a present null must print empty, not `none`"
         );
+        // The embedded form, asserted for the `none` being gone and NOT as an endorsement
+        // of what replaces it: an empty leading segment leaves a filesystem-ROOT path, which
+        // is its own hazard (#597 — `write_artifact` has no containment guard and writes
+        // `/r.html`). That door is already open on an absent ref, so it is not this change's
+        // to close, but nothing here should read as blessing `/r.html`.
+        let embedded = render("{{ reader.out_path }}/r.html", &ctx).unwrap();
+        assert!(
+            !embedded.to_lowercase().contains("none"),
+            "an embedded ref over a present null must not print `none`: {embedded:?}"
+        );
         assert_eq!(
-            render("{{ reader.out_path }}/r.html", &ctx).unwrap(),
-            "/r.html",
-            "an embedded ref over a present null must print empty, not `none`"
+            embedded, "/r.html",
+            "#597: still a root-absolute path, tracked there"
         );
         assert_eq!(
             render("{{ reader.nope }}", &ctx).unwrap(),
@@ -1295,8 +1327,10 @@ mod tests {
     fn render_still_prints_every_non_null_value_unchanged() {
         // The null arm above is the ONLY thing that moved. A formatter override is a
         // blunt hook — it sees every value on its way to output — so pin the ordinary
-        // spellings beside it, including the three falsy ones a careless `is_none()`
-        // check would also blank.
+        // spellings beside it, including the three falsy ones a careless TRUTHINESS check
+        // (`!value.is_true()`) would also blank. `is_none()` would not: it is strictly the
+        // none singleton. Naming the right hazard matters, because the careless version is
+        // the one a reader is liable to write.
         let mut ctx = RenderContext::default();
         ctx.record_output(
             "n",
@@ -1313,36 +1347,99 @@ mod tests {
             ("{{ n.i }}", "7"),
             ("{{ n.fl }}", "1.5"),
             ("{{ n.t }}", "true"),
-            ("{{ n.list }}", "[1, 2]"),
-            ("{{ n.obj }}", "{\"k\": \"v\"}"),
         ] {
             assert_eq!(render(expr, &ctx).unwrap(), want, "{expr} changed spelling");
+        }
+        // Containers are asserted by substance, not punctuation: their exact spelling is
+        // minijinja's `Display`, not AWARE behaviour, and `Cargo.toml` carries an open
+        // `minijinja = "2"` — 2.2x re-spells containers and booleans, which would red this
+        // test for no reason of ours. What matters is that the formatter neither blanked the
+        // container nor let a `none` through it.
+        for expr in ["{{ n.list }}", "{{ n.obj }}"] {
+            let got = render(expr, &ctx).unwrap();
+            assert!(!got.is_empty(), "{expr} was blanked: {got:?}");
+            assert!(
+                !got.to_lowercase().contains("none"),
+                "{expr} leaked a null spelling: {got:?}"
+            );
         }
     }
 
     #[test]
-    fn a_null_is_still_null_to_every_test_filter_and_comparison() {
-        // The fix must change only how a null is PRINTED, never what it IS. `is none`,
-        // `default()` and a `== none` comparison all still see a null — blanking it by
+    fn the_formatter_changes_how_a_null_prints_not_what_it_is() {
+        // The fix must change only how a null is PRINTED, never what it IS. Blanking it by
         // stripping nulls from the context, or by handing expressions `Value::UNDEFINED`,
-        // would silently flip each of these.
+        // would silently flip every row below.
+        //
+        // The discriminator row is FIRST on purpose. `assert_eq!` inside a loop stops at the
+        // first failure, so a row buried behind `is none` is never reached under the natural
+        // mutation (deleting the formatter) and its claim goes unexercised.
         let mut ctx = RenderContext::default();
         ctx.record_output("r", serde_json::json!({ "p": null }));
         for (expr, want) in [
+            // `default` substitutes for an UNDEFINED value (minijinja `filters::default`
+            // tests `is_undefined() || (lax && !is_true())`), so a bare `default` leaves a
+            // null alone and it then prints empty. This is THE discriminator: an
+            // implementation that blanked nulls by stripping them from the context, or by
+            // substituting `Value::UNDEFINED` in the expression rather than at the
+            // formatter, answers "fallback" here. Both were implemented and confirmed to
+            // fail on this row standing alone.
+            ("{{ r.p | default('fallback') }}", ""),
+            // ...and its `boolean=true` form DOES substitute for a null, which is why the
+            // comment at the formatter says "only in its `boolean=true` form".
+            ("{{ r.p | default('fallback', true) }}", "fallback"),
             ("{{ r.p is none }}", "true"),
             ("{{ r.p is defined }}", "true"),
             ("{{ r.nope is defined }}", "false"),
             ("{{ r.p == none }}", "true"),
-            // `default` substitutes only for an UNDEFINED value (minijinja `filters::default`
-            // tests `is_undefined()`), so a null passes straight through it and then prints
-            // empty. This row is the discriminator: an implementation that blanked nulls by
-            // stripping them from the context, or by substituting `Value::UNDEFINED` in the
-            // expression rather than at the formatter, would answer "fallback" here.
-            ("{{ r.p | default('fallback') }}", ""),
             ("{% if r.p is none %}null{% else %}set{% endif %}", "null"),
         ] {
             assert_eq!(render(expr, &ctx).unwrap(), want, "{expr} changed meaning");
         }
+    }
+
+    #[test]
+    fn none_still_leaks_where_the_formatter_cannot_reach() {
+        // CHARACTERISATION, not an endorsement: this pins a KNOWN-UNFIXED surface (#598) so
+        // it trips when someone closes it, instead of being rediscovered. The repo's Code
+        // Review Rules ask for exactly this where a defect is known and not yet fixed.
+        //
+        // The formatter is handed the top-level value of a `{{ }}` block AFTER the expression
+        // ran, so a null stringified inside the expression (`~`, `| string`, `| upper`,
+        // `| join`) or nested in a rendered container never arrives as a null. `~` is the
+        // sharp one: `output-path: "{{ x ~ '.html' }}"` over a null writes a file called
+        // `none.html` at exit 0, which is #551's failure verbatim.
+        //
+        // WHEN #598 IS FIXED this test fails. That is the point — delete the rows it closes
+        // and move them into `render_prints_a_present_null_as_empty_not_the_literal_none`.
+        let mut ctx = RenderContext::default();
+        ctx.record_output(
+            "r",
+            serde_json::json!({ "p": null, "rows": [1, null], "obj": { "a": null } }),
+        );
+        for expr in [
+            "{{ r.p ~ '.html' }}",
+            "{{ r.p | string }}",
+            "{{ r.p | upper }}",
+            "{{ r.p | trim }}",
+            "{{ r.rows }}",
+            "{{ r.obj }}",
+            "{{ r.rows | join(',') }}",
+        ] {
+            let got = render(expr, &ctx).unwrap();
+            assert!(
+                got.to_lowercase().contains("none"),
+                "{expr} no longer leaks a null as `none` ({got:?}) — #598 looks fixed; \
+                 move this row into the fixed-behaviour test rather than loosening this one"
+            );
+        }
+        // The two forms the formatter DOES reach, asserted here too so the boundary between
+        // fixed and unfixed is stated in one place rather than inferred.
+        assert_eq!(render("{{ r.p }}", &ctx).unwrap(), "");
+        assert_eq!(
+            render("{% for i in r.rows %}[{{ i }}]{% endfor %}", &ctx).unwrap(),
+            "[1][]"
+        );
     }
 
     #[test]
