@@ -68,12 +68,22 @@ on:
     branches: [main]
 
 concurrency:
-  group: trailers-${{ github.ref }}
-  # Cancelling a superseded run is right for a pull request, where the newer
-  # push replaces the older one and only the head matters. It is wrong for
-  # `main`: the branch is append-only, so a cancelled run is a commit that is
-  # now never checked by anything, ever. Two release pushes a minute apart would
-  # leave the first unexamined for good.
+  # A pull request shares one group per ref: a newer push supersedes the older
+  # run and only the head matters. A push to `main` must NOT share a group with
+  # another push, and `cancel-in-progress: false` would not be enough to
+  # protect it. GitHub keeps at most one running and one PENDING run per group,
+  # and a newly queued run REPLACES the pending one:
+  # https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency
+  # So three pushes arriving while the first run is still active drop the middle
+  # one — and because each push run scans only the commits ITS push added, that
+  # run's `before..after` range is then examined by nothing, ever. Keying the
+  # group by the pushed commit gives every push a run of its own, which is the
+  # only arrangement under which no pushed commit can be skipped.
+  group: trailers-${{ github.ref }}-${{ github.event_name == 'push' && github.sha || 'pull-request' }}
+  # Kept conditional even though a per-commit group already makes a push run
+  # uncancellable. If the group above ever regresses to a shared one, this is
+  # the second thing that would have to fail before a commit goes unchecked —
+  # and on an append-only branch a cancelled run is a commit nothing rechecks.
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:

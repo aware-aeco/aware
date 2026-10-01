@@ -44,6 +44,15 @@
 //! negative control below can drive both over mutated workflow sources rather
 //! than only over the live file — which currently passes, and would pass just
 //! as well with the predicate broken.
+//!
+//! A job's `if:` is judged by WHAT IT ADMITS, not by whether it exists. The
+//! first version of this gate only checked for absence, and Codex found the
+//! hole on review: flip the push job's condition to
+//! `github.event_name == 'pull_request'` and the job never runs on a push, yet
+//! the field is still present and the dormant job still contains the push
+//! range — so both tests passed while nothing checked `main` at all. The two
+//! conditions are therefore an exact contract, and the job carrying the push
+//! range must be the one gated to `push`.
 
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
@@ -58,6 +67,25 @@ const PUSH_RANGE: &str = r#"--range "${BEFORE}..${AFTER}""#;
 
 const REQUIRED_PR_TYPES: [&str; 4] = ["opened", "synchronize", "reopened", "edited"];
 
+/// The only two conditions this workflow may gate a job with. An exact
+/// contract: anything else has to be read by a human, because deciding which
+/// events an arbitrary expression admits means evaluating GitHub's expression
+/// language, and a gate that tries to do that is a gate that can be fooled.
+const PR_IF: &str = "github.event_name == 'pull_request'";
+const PUSH_IF: &str = "github.event_name == 'push'";
+
+/// `--message-file` is what makes a step the pull-request one: the PR body is
+/// half of what that route checks and exists on no other event.
+const PR_BODY_FLAG: &str = "--message-file";
+
+/// The concurrency group must vary by the pushed commit. GitHub keeps at most
+/// one running and one PENDING run per group and a newly queued run replaces
+/// the pending one, so a group shared across pushes silently drops the middle
+/// of three — and each push run scans only its own disjoint range, so those
+/// commits are then checked by nothing. `cancel-in-progress: false` protects
+/// the running run, not the queued one.
+const PUSH_UNIQUE_GROUP: &str = "github.event_name == 'push' && github.sha";
+
 fn repo_root() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR"))
         .parent()
@@ -68,8 +96,9 @@ fn repo_root() -> PathBuf {
 #[derive(Debug)]
 struct Job {
     id: String,
-    /// `None` when the job has no `if:` at all — it would then run on both
-    /// events, including the one whose context it cannot read.
+    /// `None` only when the job has no `if:` at all — it would then run on
+    /// both events, including the one whose context it cannot read. Any value
+    /// that IS present arrives here verbatim, bools included.
     if_expr: Option<String>,
     /// Index of the first step invoking the checker with `--self-test`.
     self_test_at: Option<usize>,
@@ -87,7 +116,28 @@ struct Wiring {
     pr_types: BTreeSet<String>,
     /// Verbatim, so an expression and a literal `true` stay distinguishable.
     cancel_in_progress: String,
+    /// Verbatim, so a group keyed by the pushed commit stays distinguishable
+    /// from one shared across pushes.
+    concurrency_group: String,
     jobs: Vec<Job>,
+}
+
+/// Which event a job's `if:` admits. `Unrecognised` is not a third event — it
+/// is the gate refusing to guess, and it is itself a fault.
+#[derive(Debug, PartialEq, Eq)]
+enum Admits {
+    PullRequest,
+    Push,
+    Unrecognised,
+}
+
+fn admits(if_expr: Option<&str>) -> Option<Admits> {
+    match if_expr {
+        None => None,
+        Some(expr) if expr.trim() == PR_IF => Some(Admits::PullRequest),
+        Some(expr) if expr.trim() == PUSH_IF => Some(Admits::Push),
+        Some(_) => Some(Admits::Unrecognised),
+    }
 }
 
 /// `on:` is the one key whose spelling depends on the YAML version: 1.1 resolves
@@ -166,6 +216,13 @@ fn read_wiring(source: &str) -> Result<Wiring, String> {
         })
         .unwrap_or_else(|| "<absent>".to_owned());
 
+    let concurrency_group = doc
+        .get("concurrency")
+        .and_then(|concurrency| concurrency.get("group"))
+        .and_then(serde_yaml::Value::as_str)
+        .unwrap_or("<absent>")
+        .to_owned();
+
     let mut jobs = Vec::new();
     let job_map = doc
         .get("jobs")
@@ -210,10 +267,17 @@ fn read_wiring(source: &str) -> Result<Wiring, String> {
 
         jobs.push(Job {
             id,
-            if_expr: job
-                .get("if")
-                .and_then(serde_yaml::Value::as_str)
-                .map(str::to_owned),
+            // Any `if:` value, stringified rather than read as a string.
+            // `if: false` is a YAML bool, and `as_str` would have returned
+            // None for it — collapsing "present but disabling" into "absent",
+            // which are different facts with different remedies.
+            if_expr: job.get("if").map(|value| match value {
+                serde_yaml::Value::String(text) => text.clone(),
+                other => serde_yaml::to_string(other)
+                    .unwrap_or_default()
+                    .trim()
+                    .to_owned(),
+            }),
             self_test_at,
             check_at,
             check_env,
@@ -225,6 +289,7 @@ fn read_wiring(source: &str) -> Result<Wiring, String> {
         push_branches,
         pr_types,
         cancel_in_progress,
+        concurrency_group,
         jobs,
     })
 }
@@ -264,62 +329,124 @@ fn faults(wiring: &Wiring) -> Vec<String> {
         );
     }
 
-    let mut checks_push_range = false;
+    if !wiring.concurrency_group.contains(PUSH_UNIQUE_GROUP) {
+        found.push(format!(
+            "the concurrency group `{}` is not keyed by the pushed commit, so \
+             two pushes can share it — GitHub keeps one running and one pending \
+             run per group and replaces the pending one, dropping a push whose \
+             range nothing else scans. It must contain `{PUSH_UNIQUE_GROUP}`",
+            wiring.concurrency_group
+        ));
+    }
+
+    // Which job does which route. Both are required, and each must be gated to
+    // the event it reads context from: a push-range job admitted only on
+    // `pull_request` is dormant, and its mere presence used to satisfy this
+    // gate.
+    let mut push_route = None;
+    let mut pr_route = None;
+
     for job in &wiring.jobs {
-        if job.if_expr.is_none() {
-            found.push(format!(
+        let gate = admits(job.if_expr.as_deref());
+        match &gate {
+            None => found.push(format!(
                 "job `{}` has no `if:` pinning it to one event, so it also runs \
                  on the event whose context it cannot read",
                 job.id
-            ));
+            )),
+            Some(Admits::Unrecognised) => found.push(format!(
+                "job `{}` is gated by `{}`, which is neither `{PR_IF}` nor \
+                 `{PUSH_IF}` — this gate will not guess which events an \
+                 arbitrary expression admits, so the condition is an exact \
+                 contract and a new one needs a human",
+                job.id,
+                job.if_expr.as_deref().unwrap_or_default()
+            )),
+            Some(_) => {}
         }
-        match &job.check_at {
-            None => found.push(format!(
+
+        let Some((check_index, run)) = &job.check_at else {
+            found.push(format!(
                 "job `{}` never invokes {CHECKER} with a range",
                 job.id
+            ));
+            continue;
+        };
+
+        match job.self_test_at {
+            None => found.push(format!(
+                "job `{}` checks a range without running `--self-test` first, \
+                 so a dead classifier would certify it",
+                job.id
             )),
-            Some((check_index, run)) => {
-                match job.self_test_at {
-                    None => found.push(format!(
-                        "job `{}` checks a range without running `--self-test` first, \
-                         so a dead classifier would certify it",
+            Some(self_test_index) if self_test_index > *check_index => found.push(format!(
+                "job `{}` runs `--self-test` after the check, which is too late \
+                 to stop a dead classifier reporting clean",
+                job.id
+            )),
+            Some(_) => {}
+        }
+
+        if run.contains(PUSH_RANGE) {
+            // Only a job that actually runs on `push` counts as covering the
+            // push route. This is the hole Codex found: without the gate check
+            // here, a job frozen off by its own condition still satisfied it.
+            if gate == Some(Admits::Push) {
+                push_route = Some(job);
+            } else {
+                found.push(format!(
+                    "job `{}` carries the push range but is gated by `{}`, so it \
+                     never runs on a push — the commits a push adds are checked \
+                     by nothing",
+                    job.id,
+                    job.if_expr.as_deref().unwrap_or("<no if:>")
+                ));
+            }
+            for (name, source) in [
+                ("BEFORE", "github.event.before"),
+                ("AFTER", "github.event.after"),
+            ] {
+                if !job
+                    .check_env
+                    .iter()
+                    .any(|(key, value)| key == name && value.contains(source))
+                {
+                    found.push(format!(
+                        "job `{}` uses ${{{name}}} in its range but does not bind \
+                         it to `{source}`",
                         job.id
-                    )),
-                    Some(self_test_index) if self_test_index > *check_index => found.push(format!(
-                        "job `{}` runs `--self-test` after the check, which is too \
-                             late to stop a dead classifier reporting clean",
-                        job.id
-                    )),
-                    Some(_) => {}
+                    ));
                 }
-                if run.contains(PUSH_RANGE) {
-                    checks_push_range = true;
-                    for (name, source) in [
-                        ("BEFORE", "github.event.before"),
-                        ("AFTER", "github.event.after"),
-                    ] {
-                        if !job
-                            .check_env
-                            .iter()
-                            .any(|(key, value)| key == name && value.contains(source))
-                        {
-                            found.push(format!(
-                                "job `{}` uses ${{{name}}} in its range but does not bind \
-                                 it to `{source}`",
-                                job.id
-                            ));
-                        }
-                    }
-                }
+            }
+        }
+
+        if run.contains(PR_BODY_FLAG) {
+            if gate == Some(Admits::PullRequest) {
+                pr_route = Some(job);
+            } else {
+                found.push(format!(
+                    "job `{}` checks the pull request body but is gated by `{}`, \
+                     so it never runs on a pull request — the preventive route, \
+                     the only one that can still stop a trailer, is dead",
+                    job.id,
+                    job.if_expr.as_deref().unwrap_or("<no if:>")
+                ));
             }
         }
     }
 
-    if wiring.triggers.contains("push") && !checks_push_range {
+    if push_route.is_none() {
         found.push(format!(
-            "no job checks the commits a push added — the contract is \
-             `{PUSH_RANGE}`; `origin/main..` is empty on that route and the full \
-             history carries 19 unfixable offenders"
+            "no job both runs on `push` and checks the commits that push added \
+             — the contract is `{PUSH_RANGE}`; `origin/main..` is empty on that \
+             route and the full history carries 19 unfixable offenders"
+        ));
+    }
+    if pr_route.is_none() {
+        found.push(format!(
+            "no job both runs on `pull_request` and checks the branch with \
+             `{PR_BODY_FLAG}` — that is the only route on which a trailer can \
+             still be prevented rather than merely recorded"
         ));
     }
 
@@ -385,7 +512,40 @@ fn the_wiring_classifier_matches_its_contract() {
         (
             "the push range widened to the whole branch",
             live.replace(PUSH_RANGE, r#"--range "origin/main..${AFTER}""#),
-            "no job checks the commits a push added",
+            "no job both runs on `push` and checks the commits that push added",
+        ),
+        // Codex's P2 on review of the first version of this gate. The job is
+        // still there and still carries the push range; it simply never runs.
+        (
+            "the push job frozen off by its own condition",
+            live.replace(
+                "    if: github.event_name == 'push'",
+                "    if: github.event_name == 'pull_request'",
+            ),
+            "carries the push range but is gated by",
+        ),
+        (
+            "the push job disabled outright",
+            live.replace("    if: github.event_name == 'push'", "    if: false"),
+            "which is neither",
+        ),
+        (
+            "the pull_request job frozen off by its own condition",
+            live.replace(
+                "    if: github.event_name == 'pull_request'",
+                "    if: github.event_name == 'push'",
+            ),
+            "never runs on a pull request",
+        ),
+        // Codex's second P2. The group goes back to being shared between
+        // pushes, which silently drops the middle of three.
+        (
+            "the concurrency group shared between pushes again",
+            live.replace(
+                "  group: trailers-${{ github.ref }}-${{ github.event_name == 'push' && github.sha || 'pull-request' }}",
+                "  group: trailers-${{ github.ref }}",
+            ),
+            "is not keyed by the pushed commit",
         ),
         (
             "the event SHAs unbound from the step",
