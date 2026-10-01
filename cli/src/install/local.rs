@@ -82,6 +82,20 @@ pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<App, AwareErro
         return Err(AwareError::Validation(summary));
     }
 
+    // An `exposes-as-agent` app registers a synthesized agent under
+    // `agents/<app>/`. Refuse up front (before claiming or copying anything) if a
+    // real, non-app-backed agent already squats that name, so we never leave a
+    // half-installed app behind.
+    if app.exposes_as_agent {
+        let agent_dst = paths.agents_dir().join(&app.app);
+        if agent_dst.exists() && !is_app_backed_agent(&agent_dst, &app.app) {
+            return Err(AwareError::Conflict(format!(
+                "cannot expose app {0} as an agent: an agent named {0} is already installed",
+                app.app
+            )));
+        }
+    }
+
     // Claimed, not checked (#516). `dst.exists()` used to guard this, and a check
     // is not a reservation: two installs of one id could both pass it and both
     // copy into `dst` — `copy_dir_recursive` creates with `create_dir_all`, which
@@ -100,42 +114,7 @@ pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<App, AwareErro
         }
         Err(e) => return Err(e.into()),
     }
-
-    // Owned from here on, so a failed install may remove what it claimed: no other
-    // install can be writing into `dst`. Before #516 it could not, which is why the
-    // postcondition below used to delete nothing.
-    let populated = populate_claimed_app_dir(src, &manifest_path, &app, &dst, paths);
-    if populated.is_err() {
-        let _ = std::fs::remove_dir_all(&dst);
-    }
-    populated.map(|()| app)
-}
-
-/// Fill the `apps/<id>/` directory [`install_app_from_path`] has just claimed:
-/// the agent-name pre-flight, the copy, the manifest postcondition, and the
-/// synthesized agent. Any error leaves cleanup to the caller, which owns `dst`.
-fn populate_claimed_app_dir(
-    src: &Path,
-    manifest_path: &Path,
-    app: &App,
-    dst: &Path,
-    paths: &Paths,
-) -> Result<(), AwareError> {
-    // An `exposes-as-agent` app registers a synthesized agent under
-    // `agents/<app>/`. Refuse up front (before copying anything) if a real,
-    // non-app-backed agent already squats that name, so nothing is copied for an
-    // app that cannot be exposed.
-    if app.exposes_as_agent {
-        let agent_dst = paths.agents_dir().join(&app.app);
-        if agent_dst.exists() && !is_app_backed_agent(&agent_dst, &app.app) {
-            return Err(AwareError::Conflict(format!(
-                "cannot expose app {0} as an agent: an agent named {0} is already installed",
-                app.app
-            )));
-        }
-    }
-
-    copy_dir_recursive(src, dst)?;
+    copy_dir_recursive(src, &dst)?;
 
     // The copy preserves file names, and the source held exactly one manifest,
     // so this is the same file `app` was parsed from — under its new root.
@@ -152,15 +131,20 @@ fn populate_claimed_app_dir(
     // means a selector has drifted apart from install again. Checked BEFORE the
     // synthesized agent is written, so a refused install registers no agent.
     //
-    // A refusal is cleaned up by the caller. That used to be unsafe: before the
-    // destination was claimed (#516), the way to reach this was a concurrent
-    // install of the same id merging into `dst`, and removing it would have
-    // destroyed the other process's successful install. Now `dst` is ours alone.
-    let resolved = crate::manifest::loader::find_app_manifest(dst);
+    // It still deletes NOTHING, even though `dst` is now claimed atomically.
+    // `create_dir` guarantees exclusive CREATION, not continued ownership of the
+    // name: an `aware app uninstall` can remove `dst` mid-install and a second
+    // install can then claim and fill it, so a `remove_dir_all(&dst)` here could
+    // destroy that install's files to tidy up after this one. Safe rollback needs
+    // install and uninstall to share a per-app lock. Naming the directory and
+    // leaving it costs an operator one `aware app uninstall`.
+    let resolved = crate::manifest::loader::find_app_manifest(&dst);
     if resolved.as_deref() != Some(installed_manifest.as_path()) {
         return Err(AwareError::Internal(format!(
             "installed {} from {}, but discovery in {} resolves to {} — the install-time and \
-             run-time manifests disagree, so the install was rolled back",
+             run-time manifests disagree, so {} is NOT safe to run; inspect it and remove it \
+             with `aware app uninstall {}` (left in place: removing it is only safe for an \
+             install that still owns the directory)",
             app.app,
             manifest_path.display(),
             dst.display(),
@@ -168,14 +152,16 @@ fn populate_claimed_app_dir(
                 .as_deref()
                 .map(|p| p.display().to_string())
                 .unwrap_or_else(|| "nothing".into()),
+            app.app,
+            app.app,
         )));
     }
 
     if app.exposes_as_agent {
-        write_synthesized_agent(app, paths)?;
+        write_synthesized_agent(&app, paths)?;
     }
 
-    Ok(())
+    Ok(app)
 }
 
 /// Write the synthesized callable agent manifest for an `exposes-as-agent` app
