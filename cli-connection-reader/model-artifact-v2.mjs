@@ -113,11 +113,20 @@ export function artifactV2Receipt(options) {
   });
 }
 
-export function buildArtifactV2Index(family, payloadReceipts) {
+/**
+ * Build one family index. Geometry and entities normally require at least one payload. The only
+ * sanctioned exception is a geometry family with zero tiles, which a caller may admit solely for a
+ * degraded conversion (`allowEmptyGeometry`); `buildArtifactV2Root` derives that permission from the
+ * authenticated effective-source completeness, never from a caller flag. An empty GLB tile is never
+ * a substitute: "no geometry" is represented by no tiles, so no bounds have to be invented.
+ */
+export function buildArtifactV2Index(family, payloadReceipts, options = {}) {
   const contract = typeof family === 'string' && Object.hasOwn(FAMILIES, family)
     ? FAMILIES[family] : undefined;
+  const emptyAdmitted = family === 'geometry' && options?.allowEmptyGeometry === true;
   if (!contract || !denseArray(payloadReceipts) || payloadReceipts.length > 256
-      || ((family === 'geometry' || family === 'entities') && payloadReceipts.length === 0)) {
+      || ((family === 'geometry' || family === 'entities') && payloadReceipts.length === 0
+        && !emptyAdmitted)) {
     artifactError('reference-artifact-v2-invalid', 'Artifact index input is invalid.');
   }
   const objects = payloadReceipts.map((receipt) => ({ ...validateReceipt(receipt) }))
@@ -144,7 +153,7 @@ export function buildArtifactV2Index(family, payloadReceipts) {
   return { index, bytes, receipt };
 }
 
-function validateIndex(value, family) {
+function validateIndex(value, family, options = {}) {
   closed(value, ['index', 'bytes', 'receipt'], [], `${family} index package`);
   closed(value.index, ['schemaVersion', 'family', 'itemCount', 'objects'], [], `${family} index`);
   validateReceipt(value.receipt, `${family} index receipt`);
@@ -159,7 +168,7 @@ function validateIndex(value, family) {
       || value.receipt.itemCount !== value.index.itemCount) {
     artifactError('reference-artifact-v2-invalid', `The ${family} index package is invalid.`);
   }
-  const rebuilt = buildArtifactV2Index(family, value.index.objects);
+  const rebuilt = buildArtifactV2Index(family, value.index.objects, options);
   if (!rebuilt.bytes.equals(value.bytes)
       || !canonicalJsonBytes(rebuilt.receipt).equals(canonicalJsonBytes(value.receipt))) {
     artifactError('reference-artifact-v2-invalid', `The ${family} index package is not canonical.`);
@@ -244,10 +253,17 @@ export function buildArtifactV2Root(options) {
     sha256: effectiveSourceSha256, formatId, capabilityId, providerPackageManifestSha256,
   });
   const effectiveSource = source.receipt;
+  // Zero geometry tiles are admitted only when the authenticated effective source is degraded
+  // (it lists an admitted `degraded` absence). A complete conversion must still draw something.
+  const allowEmptyGeometry = source.completeness === 'degraded';
+  const geometryObjects = options.indexes?.geometry?.index?.objects;
+  if (!allowEmptyGeometry && Array.isArray(geometryObjects) && geometryObjects.length === 0) {
+    artifactError('reference-artifact-v2-invalid', 'Only a degraded artifact may omit geometry.');
+  }
   const indexes = {};
   const objects = [effectiveSource];
   for (const family of Object.keys(FAMILIES)) {
-    const rebuilt = validateIndex(options.indexes?.[family], family);
+    const rebuilt = validateIndex(options.indexes?.[family], family, { allowEmptyGeometry });
     indexes[family] = rebuilt.receipt;
     objects.push(rebuilt.receipt, ...rebuilt.index.objects);
   }

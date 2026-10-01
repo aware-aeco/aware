@@ -24,7 +24,7 @@ test('protocol-v3 cache revalidates every object before a warm reuse', async (t)
     indexes[family] = { index, bytes, receipt };
   }
   const objects = [payloadReceipt, ...Object.values(indexes).map((entry) => entry.receipt)];
-  const manifest = { schemaVersion: 'model-reference-manifest/v2', objects };
+  const manifest = { schemaVersion: 'model-reference-manifest/v2', completeness: 'degraded', objects };
   const rootBytes = canonicalJsonBytes(manifest); const identity = { source: 'a'.repeat(64) };
   const key = v3CacheKey(identity);
   const generated = generateKeyPairSync('ed25519');
@@ -70,7 +70,7 @@ test('protocol-v3 cache refuses a coherently rewritten record and root', async (
     indexes[family] = { index, bytes, receipt };
   }
   const objects = [payloadReceipt, ...Object.values(indexes).map((entry) => entry.receipt)];
-  const manifest = { schemaVersion: 'model-reference-manifest/v2', objects };
+  const manifest = { schemaVersion: 'model-reference-manifest/v2', completeness: 'degraded', objects };
   const rootBytes = canonicalJsonBytes(manifest);
   await publishV3Cache(root, key, identity, {
     root: { manifest, bytes: rootBytes, sha256: sha256(rootBytes) }, indexes,
@@ -83,4 +83,46 @@ test('protocol-v3 cache refuses a coherently rewritten record and root', async (
   await fs.chmod(recordPath, 0o600); await fs.writeFile(recordPath, canonicalJsonBytes(record));
   await assert.rejects(() => readV3Cache(root, key, identity, signingKey.publicKeyBytes),
     (error) => error.code === 'reference-cache-invalid');
+});
+
+test('protocol-v3 cache refuses a validly signed non-degraded root without geometry (#604)', async (t) => {
+  const root = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'aware-v3-cache-empty-'));
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  const generated = generateKeyPairSync('ed25519');
+  const signingKey = {
+    privateKey: generated.privateKey,
+    publicKeyBytes: generated.publicKey.export({ format: 'der', type: 'spki' }).subarray(-32),
+  };
+  const source = path.join(root, 'source.bin'); await fs.writeFile(source, 'payload');
+  const payload = await fs.readFile(source);
+  const payloadReceipt = { logicalPath: 'effective-source.json', logicalKind: 'effective-source', ordinal: 0,
+    mediaType: 'application/json', bytes: payload.length, sha256: sha256(payload), itemCount: 1 };
+  const indexes = {};
+  for (const family of ['geometry', 'entities', 'properties', 'relationships']) {
+    const index = { schemaVersion: 'aware.model-artifact-index/v2', family, itemCount: 0, objects: [] };
+    const bytes = canonicalJsonBytes(index);
+    const receipt = { logicalPath: `${family}.index.json`, logicalKind: `${family}-index`, ordinal: 0,
+      mediaType: 'application/json', bytes: bytes.length, sha256: sha256(bytes), itemCount: 0 };
+    indexes[family] = { index, bytes, receipt };
+  }
+  const objects = [payloadReceipt, ...Object.values(indexes).map((entry) => entry.receipt)];
+  for (const completeness of ['complete', 'degraded']) {
+    const identity = { source: completeness.padEnd(64, 'a') }; const key = v3CacheKey(identity);
+    const manifest = { schemaVersion: 'model-reference-manifest/v2', completeness, objects };
+    const rootBytes = canonicalJsonBytes(manifest);
+    const publish = () => publishV3Cache(root, key, identity, {
+      root: { manifest, bytes: rootBytes, sha256: sha256(rootBytes) }, indexes,
+      objects: [{ pathname: source, receipt: payloadReceipt }],
+    }, signingKey);
+    if (completeness === 'complete') {
+      await assert.rejects(publish, (error) => error.code === 'reference-cache-invalid'
+        && error.message === 'Protocol-v3 cache holds a non-degraded root without geometry.');
+      await assert.rejects(() => readV3Cache(root, key, identity, signingKey.publicKeyBytes),
+        (error) => error.code === 'reference-cache-invalid');
+    } else {
+      const cached = await publish();
+      assert.equal(cached.root.manifest.completeness, 'degraded');
+      assert.deepEqual(cached.indexes.geometry.index.objects, []);
+    }
+  }
 });
