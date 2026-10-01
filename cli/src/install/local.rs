@@ -82,17 +82,9 @@ pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<App, AwareErro
         return Err(AwareError::Validation(summary));
     }
 
-    let dst = paths.apps_dir().join(&app.app);
-    if dst.exists() {
-        return Err(AwareError::Conflict(format!(
-            "app {} already installed",
-            app.app
-        )));
-    }
-
     // An `exposes-as-agent` app registers a synthesized agent under
-    // `agents/<app>/`. Refuse up front (before copying anything) if a real,
-    // non-app-backed agent already squats that name, so we never leave a
+    // `agents/<app>/`. Refuse up front (before claiming or copying anything) if a
+    // real, non-app-backed agent already squats that name, so we never leave a
     // half-installed app behind.
     if app.exposes_as_agent {
         let agent_dst = paths.agents_dir().join(&app.app);
@@ -104,7 +96,24 @@ pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<App, AwareErro
         }
     }
 
+    // Claimed, not checked (#516). `dst.exists()` used to guard this, and a check
+    // is not a reservation: two installs of one id could both pass it and both
+    // copy into `dst` — `copy_dir_recursive` creates with `create_dir_all`, which
+    // succeeds on an existing directory — leaving one directory holding two apps,
+    // each reported installed. `create_dir` fails with `AlreadyExists` instead, so
+    // exactly one racer wins the name and every other one copies nothing.
+    let dst = paths.apps_dir().join(&app.app);
     std::fs::create_dir_all(paths.apps_dir())?;
+    match std::fs::create_dir(&dst) {
+        Ok(()) => {}
+        Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => {
+            return Err(AwareError::Conflict(format!(
+                "app {} already installed",
+                app.app
+            )));
+        }
+        Err(e) => return Err(e.into()),
+    }
     copy_dir_recursive(src, &dst)?;
 
     // The copy preserves file names, and the source held exactly one manifest,
@@ -122,24 +131,20 @@ pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<App, AwareErro
     // means a selector has drifted apart from install again. Checked BEFORE the
     // synthesized agent is written, so a refused install registers no agent.
     //
-    // It deletes NOTHING, deliberately. Being unreachable for a lone install is
-    // exactly what makes cleanup dangerous here: the way to reach it is a SECOND
-    // `app install` of the same id running concurrently. `dst.exists()` above is
-    // a check, not a reservation, so both can pass it and both can copy into
-    // `dst`; the merged directory then holds two manifests and whichever process
-    // loses the selection arrives here — with the other process's files, possibly
-    // already reported to its user as installed. A `remove_dir_all(&dst)` on that
-    // path destroys a successful install to tidy up after a failed one. Naming
-    // the directory and leaving it costs an operator one `aware app uninstall`;
-    // the alternative costs them someone else's app. (The `exists()` race itself
-    // predates this check and is not this change's to fix — see #516.)
+    // It still deletes NOTHING, even though `dst` is now claimed atomically.
+    // `create_dir` guarantees exclusive CREATION, not continued ownership of the
+    // name: an `aware app uninstall` can remove `dst` mid-install and a second
+    // install can then claim and fill it, so a `remove_dir_all(&dst)` here could
+    // destroy that install's files to tidy up after this one. Safe rollback needs
+    // install and uninstall to share a per-app lock. Naming the directory and
+    // leaving it costs an operator one `aware app uninstall`.
     let resolved = crate::manifest::loader::find_app_manifest(&dst);
     if resolved.as_deref() != Some(installed_manifest.as_path()) {
         return Err(AwareError::Internal(format!(
             "installed {} from {}, but discovery in {} resolves to {} — the install-time and \
              run-time manifests disagree, so {} is NOT safe to run; inspect it and remove it \
-             with `aware app uninstall {}` (left in place: a concurrent install of the same id \
-             may own these files)",
+             with `aware app uninstall {}` (left in place: removing it is only safe for an \
+             install that still owns the directory)",
             app.app,
             manifest_path.display(),
             dst.display(),
@@ -463,6 +468,74 @@ requires: []
             .expect("installed app must be discoverable");
         assert_eq!(discovered, app_dir.join("bundle.flo"));
         assert_eq!(load_app(&discovered).unwrap().app, "alpha");
+    }
+
+    /// #516: concurrent installs of one app id must not merge into one directory.
+    /// `dst.exists()` was a check, not a reservation — every racer could pass it
+    /// and `copy_dir_recursive` then merged them all into `apps/<id>/`. The winner
+    /// must be decided by one atomic operation: exactly one install succeeds, every
+    /// other one gets `Conflict`, and the directory holds the winner's files only.
+    #[test]
+    fn concurrent_installs_of_one_id_claim_the_destination_exactly_once() {
+        const RACERS: usize = 8;
+        for round in 0..20 {
+            let tmp = tempfile::tempdir().unwrap();
+            let paths = Paths {
+                aware_home: tmp.path().to_path_buf(),
+            };
+            let sources: Vec<_> = (0..RACERS)
+                .map(|i| {
+                    let src = tmp.path().join(format!("src/racer-{i}"));
+                    write_fixture_app(&src.join(format!("racer-{i}.flo")), "same-id", "racer");
+                    std::fs::write(src.join(format!("owned-by-{i}.txt")), "x").unwrap();
+                    src
+                })
+                .collect();
+
+            let barrier = std::sync::Barrier::new(RACERS);
+            let results: Vec<_> = std::thread::scope(|scope| {
+                let handles: Vec<_> = sources
+                    .iter()
+                    .map(|src| {
+                        let (barrier, paths) = (&barrier, &paths);
+                        scope.spawn(move || {
+                            barrier.wait();
+                            install_app_from_path(src, paths)
+                        })
+                    })
+                    .collect();
+                handles.into_iter().map(|h| h.join().unwrap()).collect()
+            });
+
+            let winners: Vec<usize> = results
+                .iter()
+                .enumerate()
+                .filter_map(|(i, r)| r.is_ok().then_some(i))
+                .collect();
+            assert_eq!(winners.len(), 1, "round {round}: winners {winners:?}");
+            for (i, result) in results.iter().enumerate() {
+                if let Err(err) = result {
+                    assert!(
+                        matches!(err, AwareError::Conflict(_)),
+                        "round {round}: racer {i} lost with {err:?}, expected Conflict"
+                    );
+                }
+            }
+            let winner = winners[0];
+            let mut entries: Vec<String> = std::fs::read_dir(paths.apps_dir().join("same-id"))
+                .unwrap()
+                .map(|e| e.unwrap().file_name().to_string_lossy().into_owned())
+                .collect();
+            entries.sort();
+            assert_eq!(
+                entries,
+                vec![
+                    format!("owned-by-{winner}.txt"),
+                    format!("racer-{winner}.flo")
+                ],
+                "round {round}: the installed directory must hold the winner's files only"
+            );
+        }
     }
 
     fn write_fixture_app(path: &Path, id: &str, description: &str) {
