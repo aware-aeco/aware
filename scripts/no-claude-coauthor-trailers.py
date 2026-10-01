@@ -371,6 +371,7 @@ def parse_trailers(message: str) -> list[tuple[str, str]]:
         input=message,
         capture_output=True,
         text=True,
+        encoding="utf-8",
         check=False,
     )
     if result.returncode != 0:
@@ -457,6 +458,11 @@ def commits_in_range(rev_range: str, cwd: str | None = None) -> list[Commit]:
         ["git", "log", "-z", "--encoding=UTF-8", f"--format={_LOG_FORMAT}", rev_range],
         capture_output=True,
         text=True,
+        # The other half of that pin. Without it Python decodes git's UTF-8 with
+        # the LOCALE encoding — cp1250 on a Windows checkout — and an identity
+        # spelled with a compatibility character arrives mangled, misses `folded`,
+        # and the commit passes. ASCII locales raise instead. See #601.
+        encoding="utf-8",
         check=False,
         cwd=cwd,
     )
@@ -697,6 +703,7 @@ def _git(args: list[str], cwd: str, env: dict[str, str] | None = None) -> None:
         check=True,
         capture_output=True,
         text=True,
+        encoding="utf-8",
         env={**os.environ, **env} if env else None,
     )
 
@@ -832,6 +839,7 @@ def _end_to_end_control() -> list[str]:
                 cwd=repo,
                 capture_output=True,
                 text=True,
+                encoding="utf-8",
                 check=True,
             ).stdout.strip()
 
@@ -939,13 +947,18 @@ def _end_to_end_control() -> list[str]:
         # Codex caught that on #412.
         script = os.path.abspath(__file__)
 
-        def cli(*arguments: str) -> subprocess.CompletedProcess[str]:
+        def cli(
+            *arguments: str, env: dict[str, str] | None = None
+        ) -> subprocess.CompletedProcess[str]:
             return subprocess.run(
                 [sys.executable, script, *arguments],
                 cwd=repo,
                 capture_output=True,
                 text=True,
+                encoding="utf-8",
+                errors="replace",
                 check=False,
+                env={**os.environ, **env} if env else None,
             )
 
         for arguments, expected_code, description in (
@@ -1021,6 +1034,33 @@ def _end_to_end_control() -> list[str]:
                     "both flags, so one source going unread reads as a clean branch"
                 )
 
+        # The confusable identity through the real CLI under a NON-UTF-8 locale.
+        # Every case above runs in whatever locale the runner has, which on CI is
+        # UTF-8 — so it cannot see the gate decoding git's UTF-8 output with the
+        # locale codec. On Windows (cp1250) that mangled `ⅼ` and the commit exited
+        # 0; under ASCII it raises. Turning off UTF-8 mode and locale coercion
+        # gives ASCII on Linux and the ANSI code page on Windows. A traceback also
+        # exits 1, so the run must NAME the offender, not merely fail. See #601.
+        legacy_locale = {
+            "PYTHONUTF8": "0",
+            "PYTHONCOERCECLOCALE": "0",
+            "PYTHONIOENCODING": "",
+            "LC_ALL": "C",
+            "LANG": "C",
+        }
+        localized = cli("--range", f"{hyphenated}..{confusable}", env=legacy_locale)
+        if (
+            localized.returncode != 1
+            or "Traceback" in localized.stderr
+            or "aude-bot@example.com" not in localized.stderr
+        ):
+            failures.append(
+                "  end-to-end: under a non-UTF-8 locale the confusable Claude bot "
+                f"exited {localized.returncode} without naming it — git's UTF-8 "
+                "output is being decoded with the locale codec\n"
+                f"    stderr: {localized.stderr.strip()[-300:]}"
+            )
+
         # Last, because it reconfigures the repo: a checkout that re-encodes log
         # output. Without `--encoding=UTF-8` git transcodes the format's own NUL
         # separators and the field stream dissolves, so the gate stops reading
@@ -1088,7 +1128,7 @@ def self_test() -> int:
         f"{len(_IDENTITY_CASES)} identity cases, each also checked against the "
         f"authorship-implies-trailer invariant, + "
         f"{len(SELF_TEST_CASES)} message cases + 6 parser cases + 9 end-to-end ranges "
-        f"+ 12 through the real CLI)"
+        f"+ 13 through the real CLI)"
     )
     return 0
 
@@ -1178,6 +1218,10 @@ def main() -> int:
             offenders.append(f"pull request body: {trailer}")
 
     if offenders:
+        # An offender can carry a character the console's code page cannot
+        # print (the confusable `ⅼ` under cp1250); escape it rather than let a
+        # UnicodeEncodeError replace the report with a traceback.
+        sys.stderr.reconfigure(errors="backslashreplace")
         print(
             "error: CLAUDE.md §Git workflow forbids `Co-Authored-By: Claude ...` "
             "trailers, and these would reach `main` in the squash commit:\n",
