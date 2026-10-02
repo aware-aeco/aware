@@ -1110,9 +1110,17 @@ fn check_inline_nodes(nodes: &[crate::manifest::app::Node], out: &mut Vec<Valida
 /// Agents referenced by the app but not installed are skipped (not an
 /// error here — caught by lockfile resolution earlier).
 ///
-/// Recurses into `do:` bodies (`for-each`, `sweep`, `schedule` scopes), so the
-/// contract holds "on any write-mode node anywhere in the tree" as
-/// `10-core/app-spec.md § Substrate primitives` promises (#611).
+/// Recurses into `do:` bodies, so the gate's reach no longer depends on a
+/// node's DEPTH, which is what `10-core/app-spec.md § Substrate primitives`
+/// promises with "on any write-mode node anywhere in the tree" (#611).
+///
+/// Depth is only one of the ways this gate's reach can fall short of the
+/// compiler's, so do not read this as the whole promise being discharged. A
+/// node whose agent is absent from the catalogue, or whose command is absent
+/// from that agent's manifest, is still skipped here (see `check_node_safety`)
+/// — while `app_lock` stamps both cases `mode: write` "for safety". That is the
+/// same "the compiler knew and the gate never asked" shape as #611, on a
+/// different axis, and it is not fixed here.
 pub fn validate_app_safety(
     app: &App,
     agents: &[crate::manifest::loader::DiscoveredAgent],
@@ -1130,14 +1138,25 @@ pub fn validate_app_safety(
 /// over one element — walked around the whole contract: `tekla.close` was
 /// refused at the top level and accepted inside a body, while `compile` stamped
 /// it `mode: write` into the lock, so the compiler knew and the gate never
-/// asked (#611). `do_` is the single nested container for `for-each`, `sweep`
-/// and `schedule` scopes (`manifest::app::Node::do_`), so this one recursion
-/// covers every primitive that has a body.
+/// asked (#611). `do_` is the only child-node container on `Node` — the sole
+/// `Vec<Node>` besides `App::nodes` — so this one recursion covers every
+/// primitive that has a body: a `for-each`, a `sweep`, and a node that merely
+/// scopes a body. (It keys on `do_` alone, never on which primitive is set, so
+/// a bare `do:` is traversed too. Note there is no node-level `schedule:` key
+/// despite `Node::do_`'s own doc comment calling such a node
+/// "`schedule`-scoped" — `schedule:` is app-level only.)
 ///
 /// `prefix` is the enclosing `do:` scope, so a nested node is named the way the
-/// lock names it (`loop.shutdown`, not a bare `shutdown` that could be any of
-/// three loops' bodies). `None` at the top level, where the message is
-/// unchanged.
+/// lock names it — `loop.shutdown`, not a bare `shutdown` that gives the author
+/// no way to tell which body it is in. The construction is deliberately the
+/// same as `app_lock::flatten_nodes`', so the id in this error matches the id
+/// in the compiled lock. `None` at the top level, where the message is
+/// byte-identical to before.
+///
+/// Known inconsistency: the sibling validators recurse but still report a
+/// nested node by its bare `id`, so one run can name the same node two ways.
+/// Scoping them too is the right fix and is deliberately not done here — it
+/// changes messages on gates #611 is not about.
 fn check_node_safety(
     nodes: &[crate::manifest::app::Node],
     agents: &[crate::manifest::loader::DiscoveredAgent],
@@ -3458,6 +3477,216 @@ nodes:
     /// It goes red in both directions, which is the point: when `atom://`
     /// resolution ships and one of these gains a body, and equally when a tenth
     /// example acquires the defect — a regression the README prose cannot catch.
+    /// Every published example satisfies the write-mode safety contract, bodies
+    /// included — the real-world accept case for the #611 recursion.
+    ///
+    /// `bim-monday-audit.app` nests `revit-2026 link.reload-all` (write by name
+    /// convention) inside a `for-each` body and already carries its `safety:`
+    /// block, so the authors were honouring the contract while only the gate was
+    /// missing. That makes it the strongest available proof the new recursion
+    /// does not refuse LEGITIMATE nested writes — against real agent manifests
+    /// rather than a fixture. Before the fix this assertion held vacuously for
+    /// the body nodes, since the gate never looked at them.
+    ///
+    /// It guards that ACCEPT direction, not the #611 regression itself: deleting
+    /// the recursion leaves this green, because `count_nested_write_nodes` walks
+    /// the tree itself and the corpus has no non-compliant nested write to miss.
+    /// The regression is pinned by the five `safety_check_*` tests above and the
+    /// four in `tests/app_validate.rs`. Measured: neutering the counter reds this,
+    /// and so does ignoring `node.safety` (which makes the corpus's compliant
+    /// nested write look like an offender); removing the recursion does not.
+    ///
+    /// Keyed on `validate_app_safety` alone, not on `validate` exiting 0: two of
+    /// these examples fail `validate` for an unrelated, pinned reason (body-less
+    /// inline predicates, the test below), so a whole-validate assertion here
+    /// would be red for someone else's defect.
+    ///
+    /// The catalogue is built by walking `20-agents/` for the agent ids the corpus
+    /// names, and the walk is ASSERTED non-empty rather than skipped: the gate
+    /// resolves a node's mode THROUGH the manifests, so with no catalogue every
+    /// node is skipped and this test would pass having checked nothing. (It did
+    /// exactly that on the first draft — `discover_agents_in` expects
+    /// `<dir>/<agent>/manifest.yaml` and this repo nests agents a vertical and a
+    /// domain deeper, so it returned zero and the early-return made it green.)
+    #[test]
+    fn published_examples_satisfy_the_safety_contract_at_every_depth() {
+        let root = repo_root();
+        let examples = root.join("30-apps/_examples");
+        let mut app_files = Vec::new();
+        collect_files(
+            &examples,
+            &mut |p| {
+                matches!(
+                    p.extension().and_then(|e| e.to_str()),
+                    Some("app" | "flo" | "flow" | "aware")
+                )
+            },
+            &mut app_files,
+        );
+        app_files.sort();
+        assert!(
+            app_files.len() >= 9,
+            "expected at least the 9 app files under 30-apps/_examples/, walked {} — \
+             a walk that finds nothing passes vacuously",
+            app_files.len()
+        );
+
+        // Every agent id the corpus dispatches to, bodies included.
+        let mut wanted = std::collections::BTreeSet::new();
+        let apps: Vec<(String, App)> = app_files
+            .iter()
+            .map(|path| {
+                let rel = rel_to(&root, path);
+                let text = std::fs::read_to_string(path).unwrap();
+                let app: App = serde_yaml::from_str(&text)
+                    .unwrap_or_else(|e| panic!("{rel} does not deserialize as an app: {e}"));
+                (rel, app)
+            })
+            .collect();
+        for (_, app) in &apps {
+            collect_agent_ids(&app.nodes, &mut wanted);
+        }
+
+        let mut manifest_paths = Vec::new();
+        collect_agent_manifests(&root.join("20-agents"), &wanted, &mut manifest_paths);
+        let agents: Vec<crate::manifest::loader::DiscoveredAgent> = manifest_paths
+            .iter()
+            .filter_map(|p| {
+                let text = std::fs::read_to_string(p).ok()?;
+                let manifest: crate::manifest::agent::Agent = serde_yaml::from_str(&text).ok()?;
+                Some(crate::manifest::loader::DiscoveredAgent {
+                    manifest,
+                    root: p.parent().unwrap().to_path_buf(),
+                })
+            })
+            .collect();
+        assert!(
+            !agents.is_empty(),
+            "resolved no agent manifests under 20-agents/ for the ids the corpus names \
+             ({wanted:?}) — with an empty catalogue the safety gate skips every node, so \
+             this test would prove nothing"
+        );
+
+        // Prove the corpus actually exercises a NESTED write: without one, this
+        // test would pass on top-level nodes alone and say nothing about #611.
+        let mut nested_writes = 0usize;
+        // (node id, "<file> :: <message>")
+        let mut offenders: Vec<(String, String)> = Vec::new();
+        for (rel, app) in &apps {
+            nested_writes += count_nested_write_nodes(app, &agents);
+            for issue in validate_app_safety(app, &agents) {
+                // The node id is the first quoted span of the message. Taken from
+                // there rather than by sniffing the whole string for a `.`, which
+                // the filename (`.app`) and the command (`blender.render.still`)
+                // both carry — that mistake put every top-level offender into the
+                // nested bucket and failed the build on someone else's defect.
+                let node_id = issue.message.split('"').nth(1).unwrap_or_default();
+                offenders.push((node_id.to_string(), format!("{rel} :: {}", issue.message)));
+            }
+        }
+        offenders.sort();
+
+        assert!(
+            nested_writes > 0,
+            "no published example nests a write-mode node in a `do:` body, so this \
+             test cannot speak to #611 — re-ground it on whichever example now does"
+        );
+
+        // NESTED is the half this fix owns, and it must be clean: every write
+        // inside a `do:` body in the corpus declares its `safety:` block. Only a
+        // scoped NODE ID carries a `.`, which is how the two halves are told apart.
+        let nested_offenders: Vec<&String> = offenders
+            .iter()
+            .filter(|(id, _)| id.contains('.'))
+            .map(|(_, m)| m)
+            .collect();
+        assert!(
+            nested_offenders.is_empty(),
+            "a nested write-mode node lost its `safety:` block, or the #611 recursion \
+             started refusing a compliant one:\n{nested_offenders:#?}"
+        );
+
+        // TOP-LEVEL is a pre-existing content defect, pinned as a set equality
+        // rather than asserted away — the same shape as
+        // `body_less_predicates_in_published_examples` below, per CLAUDE.md's rule
+        // for a known defect that is not yet fixed: it TRIPS when the fix lands.
+        //
+        // `model-to-renders.app` dispatches four `blender` commands that declare
+        // `mode: write` (`scene.import`, `scene.apply-look`, `render.still`,
+        // `render.turntable`) and the app carries no `safety:` block at all, so
+        // `aware app validate` refuses it the moment `blender` is installed.
+        // Nothing to do with nesting — these are top-level nodes the gate always
+        // saw — which is why it is pinned here and not fixed here.
+        let top_level: std::collections::BTreeSet<&str> = offenders
+            .iter()
+            .filter(|(id, _)| !id.contains('.'))
+            .map(|(_, m)| m.as_str())
+            .collect();
+        let expected: std::collections::BTreeSet<&str> = [
+            "30-apps/_examples/model-to-renders.app :: node \"hero\" calls write-mode command blender.render.still without a `safety:` block (required per app-spec § Safety contract)",
+            "30-apps/_examples/model-to-renders.app :: node \"look\" calls write-mode command blender.scene.apply-look without a `safety:` block (required per app-spec § Safety contract)",
+            "30-apps/_examples/model-to-renders.app :: node \"stage\" calls write-mode command blender.scene.import without a `safety:` block (required per app-spec § Safety contract)",
+            "30-apps/_examples/model-to-renders.app :: node \"turntable\" calls write-mode command blender.render.turntable without a `safety:` block (required per app-spec § Safety contract)",
+        ]
+        .into_iter()
+        .collect();
+        assert_eq!(
+            top_level, expected,
+            "the set of top-level safety-contract violations in the published corpus \
+             changed. If model-to-renders.app gained its `safety:` blocks, delete them \
+             from `expected` (that is the fix landing). If another example acquired a \
+             violation, that is a regression."
+        );
+    }
+
+    /// Every agent id these nodes dispatch to, descending into `do:` bodies —
+    /// the body agents are exactly the ones this test needs resolved.
+    fn collect_agent_ids(
+        nodes: &[crate::manifest::app::Node],
+        out: &mut std::collections::BTreeSet<String>,
+    ) {
+        for n in nodes {
+            if let Some(a) = &n.agent {
+                out.insert(a.clone());
+            }
+            if let Some(body) = &n.do_ {
+                collect_agent_ids(body, out);
+            }
+        }
+    }
+
+    /// Write-mode nodes inside a `do:` body, resolved through the real catalogue.
+    fn count_nested_write_nodes(
+        app: &App,
+        agents: &[crate::manifest::loader::DiscoveredAgent],
+    ) -> usize {
+        fn walk(
+            nodes: &[crate::manifest::app::Node],
+            agents: &[crate::manifest::loader::DiscoveredAgent],
+            nested: bool,
+            out: &mut usize,
+        ) {
+            for n in nodes {
+                if nested
+                    && let Some(agent_id) = &n.agent
+                    && let Some(cmd_name) = &n.command
+                    && let Some(d) = agents.iter().find(|d| d.manifest.agent == *agent_id)
+                    && let Some(cmd) = d.manifest.commands.get(cmd_name.as_str())
+                    && d.manifest.effective_mode(cmd_name, cmd, n.mode).mode
+                        == crate::manifest::agent::Mode::Write
+                {
+                    *out += 1;
+                }
+                if let Some(body) = &n.do_ {
+                    walk(body, agents, true, out);
+                }
+            }
+        }
+        let mut out = 0;
+        walk(&app.nodes, agents, false, &mut out);
+        out
+    }
+
     #[test]
     fn body_less_predicates_in_published_examples() {
         let root = repo_root();
@@ -4390,8 +4619,11 @@ requires: []
 
     /// An agent with one write-mode and one read-mode command, for the
     /// nested-traversal tests below. `close` is the real shape of the escape
-    /// hatch in #611: it declares `mode: write` and ends the user's session,
-    /// discarding unsaved model work.
+    /// hatch in #611: it declares `mode: write` and terminates the host, which
+    /// CAN lose unsaved model bytes. Stated the way the tekla manifest states
+    /// it — `close` is clean by default (it commits and awaits `ModelSave`),
+    /// and the loss is confined to `force` where the Open API cannot attach.
+    /// "Discards unsaved work" overstates the command.
     fn writer_agent() -> crate::manifest::loader::DiscoveredAgent {
         discovered(
             r#"
@@ -4578,10 +4810,11 @@ requires: []
     #[test]
     fn safety_check_skips_the_body_of_a_frozen_for_each() {
         // A frozen primitive short-circuits its whole subtree: `execute_node`
-        // returns on `frozen:` before it reaches the `for-each` branch, so the
-        // body never runs and its write nodes never write. Same reach as
-        // `check_node_agents`' carve-out — asserted so the two cannot drift
-        // into disagreeing about what `frozen:` covers.
+        // returns on `frozen:` (orchestrator) before it reaches the `for-each`
+        // branch, and the streaming path does the same, so the body never runs
+        // and its write nodes never write. This pins THIS gate's frozen-subtree
+        // skip only; it does not couple the gate to `check_node_agents`, whose
+        // carve-out reads the same but which nothing here exercises.
         let app: App = serde_yaml::from_str(
             r#"
 app: frozen-loop
@@ -4604,6 +4837,113 @@ requires: []
 
         let issues = validate_app_safety(&app, &[writer_agent()]);
         assert!(issues.is_empty(), "issues: {issues:?}");
+    }
+
+    #[test]
+    fn safety_check_reports_every_write_node_in_a_body_not_just_the_first() {
+        // The gate must not stop at the first offender: an author fixing one
+        // `safety:` block and re-running would otherwise meet the next one only
+        // on the next attempt. Pinned because a `break`/early-return refactor of
+        // the recursion would hide the 2nd+ node with every other test green.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: two-nested-writes
+version: 0.0.1
+description: x
+nodes:
+  - id: loop
+    for-each: '[1]'
+    do:
+      - id: first
+        agent: tekla
+        command: close
+      - id: second
+        agent: tekla
+        command: close
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[writer_agent()]);
+        assert_eq!(issues.len(), 2, "issues: {issues:?}");
+        let msgs = issues
+            .iter()
+            .map(|i| i.message.as_str())
+            .collect::<Vec<_>>();
+        assert!(
+            msgs.iter().any(|m| m.contains("\"loop.first\""))
+                && msgs.iter().any(|m| m.contains("\"loop.second\"")),
+            "both body nodes must be named; got: {msgs:?}"
+        );
+    }
+
+    #[test]
+    fn safety_check_reaches_a_write_node_in_a_bare_do_body() {
+        // The recursion keys on `do_` alone, never on which primitive is set.
+        // A node that merely scopes a body — no `for-each`, no `sweep` — still
+        // has its body walked. This is the executable form of the doc comment's
+        // "`do_` is the only child-node container" claim, and it reds if someone
+        // gates the recursion on `for_each.is_some() || sweep.is_some()`.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: bare-do-write
+version: 0.0.1
+description: x
+nodes:
+  - id: scope
+    do:
+      - id: shutdown
+        agent: tekla
+        command: close
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[writer_agent()]);
+        assert_eq!(issues.len(), 1, "issues: {issues:?}");
+        assert!(
+            issues[0].message.contains("\"scope.shutdown\""),
+            "got: {}",
+            issues[0].message
+        );
+    }
+
+    #[test]
+    fn safety_check_reaches_a_write_node_under_a_top_level_sweep() {
+        // `sweep` is the other body-bearing primitive this gate claims to cover,
+        // and the deeply-nested test only reaches it as an INNER node. Pinned at
+        // the top level too so neither primitive in the fix is covered by proxy.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: swept-write
+version: 0.0.1
+description: x
+nodes:
+  - id: sw
+    sweep:
+      var: thickness
+      values: [1, 2]
+    do:
+      - id: shutdown
+        agent: tekla
+        command: close
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[writer_agent()]);
+        assert_eq!(issues.len(), 1, "issues: {issues:?}");
+        assert!(
+            issues[0].message.contains("\"sw.shutdown\""),
+            "got: {}",
+            issues[0].message
+        );
     }
 
     #[test]
