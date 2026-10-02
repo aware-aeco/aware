@@ -919,6 +919,14 @@ commands: {}
             // One parse per manifest — `revit-2026` is 1.1 MB of YAML.
             let agent = real_manifest(rel);
             for (name, entry) in *rows {
+                // The label is free text; a row re-pointed at another command while
+                // keeping its old label would leave the entry set unchanged and the
+                // entry ungrounded.
+                assert!(
+                    name.ends_with(entry) || name == entry,
+                    "{rel}: row ({name:?}, {entry:?}) names a command that does not rest on \
+                     that convention entry"
+                );
                 let cmd = agent.commands.get(*name).unwrap_or_else(|| {
                     panic!(
                         "{rel} no longer declares {name}. If the command was RENAMED, \
@@ -1000,6 +1008,11 @@ commands: {}
         // either: a stale recap of the rule earlier in the document would win over the
         // normative bullet, so the spec could withdraw a suffix with this test still
         // reading the old wording. Hence the section bound first.
+        //
+        // Residual hole, named: a write-implying suffix written WITHOUT the leading `*`
+        // (`` `.purge` ``) is invisible, because the scan keys on the `*.` spelling the
+        // spec uses today. A test cannot tell prose that mentions a suffix from a
+        // contract that promises one, so this stays a convention the spec must keep.
         //
         // The region is scanned to the next `## ` section (a sibling `####` subsection
         // naming more suffixes was invisible when it stopped at the first `####` —
@@ -1084,10 +1097,13 @@ commands: {}
                 while let Some(i) = rest.find("*.") {
                     let tail = &rest[i + 1..]; // `.create...`
                     let end = 1 + tail[1..]
-                        .find(|c: char| !(c.is_ascii_alphanumeric() || c == '-' || c == '_'))
+                        .find(|c: char| !(c.is_alphanumeric() || matches!(c, '-' | '_' | '.')))
                         .unwrap_or(tail.len() - 1);
-                    if end > 1 {
-                        out.push(tail[..end].to_string()); // `*.create` -> `.create`
+                    // A multi-dot suffix (`*.export.pdf`) is kept whole, and the dots of a
+                    // sentence ending in one are not part of it.
+                    let token = tail[..end].trim_end_matches('.');
+                    if token.len() > 1 {
+                        out.push(token.to_string()); // `*.create` -> `.create`
                     }
                     rest = &rest[i + 2..];
                 }
@@ -1104,8 +1120,11 @@ commands: {}
             outside_owned.is_empty(),
             "{} § The rule names {outside_owned:?} OUTSIDE its normative bullet list. If \
              that text EXTENDS the contract, put the suffix in the list and in \
-             `SUFFIXES`. If it is a read example or a withdrawal note, avoid the \
-             `*.`-prefixed spelling or narrow this scan deliberately — do NOT add it to \
+             `SUFFIXES`. The normative list is the contiguous run of non-blank lines \
+             from the FIRST `- ` bullet in the region, so a blank line between bullets, \
+             or an earlier `- ` list, also puts real suffixes \"outside\" — fix the \
+             structure or narrow this scan. If it is a read example or a withdrawal \
+             note, avoid the `*.`-prefixed spelling or narrow this scan deliberately — do NOT add it to \
              `SUFFIXES`, which would make every command with that suffix write-mode. \
              Region: {region:?}",
             spec.display()
@@ -1316,6 +1335,7 @@ commands: {}
         let agent = tekla_min();
         let overridable = command("mode: write\nmode-overridable: true\n");
         let fixed = command("mode: write\n");
+        let overridable_read = command("mode: read\nmode-overridable: true\n");
         let read_by_name = command("");
         // `Command` ignores unknown keys, so a typo in the fixture above would
         // silently produce a NON-overridable command and quietly turn the first three
@@ -1323,6 +1343,11 @@ commands: {}
         assert!(
             overridable.mode_overridable,
             "fixture key did not land: the `overridable` command is not mode-overridable"
+        );
+        assert!(
+            overridable_read.mode_overridable && overridable_read.mode == Some(Mode::Read),
+            "fixture `overridable_read` must be a mode-overridable command whose manifest \
+             mode is read"
         );
         assert!(
             !fixed.mode_overridable && fixed.mode == Some(Mode::Write),
@@ -1348,6 +1373,13 @@ commands: {}
             // write must not be reported as an override, or every such node stamps a
             // spurious "author-declared mode" note into its `.lock`.
             (&fixed, Some(Mode::Write), Mode::Write, false),
+            // The override that RAISES a read-mode command to write. A node on a
+            // mode-overridable command whose manifest says `read` may still declare
+            // `mode: write`, and it must be gated as a write: an `effective_mode` that
+            // let the manifest's read win here would skip the `safety:` requirement for
+            // a node that asked to write. Every other overridable row uses a write
+            // manifest, so nothing else reached this combination.
+            (&overridable_read, Some(Mode::Write), Mode::Write, true),
         ];
         for (cmd, node_mode, mode, overridden) in cases {
             assert_eq!(
@@ -1526,8 +1558,9 @@ commands: {}
         }
     }
 
-    /// Collect an enum's variants by walking a successor function from its first
-    /// variant.
+    /// Collect an enum's variants by walking a successor function forward from its
+    /// first variant and a predecessor function backward from its last, and requiring
+    /// the two to agree.
     ///
     /// The point is the *compile-time* gate the successor functions below carry,
     /// which an array literal cannot. `[Lifecycle::Start, Lifecycle::Stop,
@@ -1539,25 +1572,31 @@ commands: {}
     /// is an exhaustive `match`, so the same addition stops this module compiling
     /// until the variant is wired into the chain the test walks.
     ///
-    /// Residual holes, named rather than hidden. The chain is walked FORWARD from the
-    /// first-declared variant and BACKWARD from the last-declared, and the two walks must
-    /// agree. That closes the hole a single forward walk has by construction: a variant
-    /// inserted ahead of `first` is simply never visited (measured: an `AgentStatus`
-    /// variant added before `Available`, wired in declaration order, left the suite
-    /// green), whereas the backward walk reaches it and the two disagree. The compile
-    /// error can still be resolved
-    /// by giving the new variant its own `=> None` arm beside the existing terminator
-    /// (in BOTH chains), which satisfies the compiler and orphans the variant from the
-    /// walk — measured on the forward chain alone, and `cargo clippy -D warnings` does
-    /// not flag the unreachable arm either. And nothing stops a maintainer collapsing
-    /// the arms to `_ => None`, which removes the gate altogether and silently: there is
-    /// no `match` that can forbid a wildcard in the `match` doing the forbidding. Both
-    /// of those are deliberate wrong turns; the head-insertion above was not.
+    /// What the gate does and does not guarantee. Adding a variant stops this module
+    /// compiling until the new variant has an arm in each `match` — but the compiler
+    /// forces only the arms that lead FROM the new variant, never one that leads TO it,
+    /// and both walks start from the caller's literals (`first`, `last`) naming
+    /// variants that already exist. So the new variant is reached only if the
+    /// maintainer ALSO edits an existing arm to point at it, and nothing forces that.
     ///
-    /// Each chain is therefore written in declaration order with the last-declared
-    /// variant as the sole terminator of `next_*` and the first-declared as the sole
-    /// terminator of `prev_*`, so adding a variant at either end makes the correct edit
-    /// the obvious one — but no `match` can force it.
+    /// The forward walk from `first` and the backward walk from `last` must agree, which
+    /// catches a variant wired into one chain but not the other, and a head or tail
+    /// insertion where the neighbour's arm in the other chain is updated. It does NOT
+    /// catch the natural wiring of a head insertion done only through the forced arms:
+    /// `X => Some(Available)` in `next_*` and `X => None` in `prev_*`, with
+    /// `Available => None` left alone in `prev_*`. Both walks then still return the old
+    /// variants, agree, and never visit `X` (the mirror case at the tail is the same).
+    /// Nor does it catch a deliberate `=> None` for the new variant in both chains, or
+    /// collapsing the arms to `_ => None`, which removes the gate silently — no `match`
+    /// can forbid a wildcard in the `match` doing the forbidding. Closing this properly
+    /// needs the variants ENUMERATED rather than walked (a derive such as
+    /// `strum::EnumIter`, which this crate does not depend on directly), which is a
+    /// production dependency change and out of scope for a test-only PR.
+    ///
+    /// The chains are written in declaration order, with the last-declared variant the
+    /// sole terminator of `next_*` and the first-declared the sole terminator of
+    /// `prev_*`, so the correct edit when adding a variant is to update the call
+    /// sites' `first`/`last` and the neighbour's arm in BOTH chains.
     ///
     /// The cycle check is what keeps a mis-wired chain a red test rather than a hung
     /// one: the `while let` walk below would not terminate on a chain that loops back,

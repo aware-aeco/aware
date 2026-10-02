@@ -4171,12 +4171,15 @@ requires: []
     /// obvious rationale is the wrong one.
     ///
     /// Not the four early `continue`s above `effective_mode`: this test does not guard
-    /// them, and they are not all guarded elsewhere either. Only the `frozen` branch has
-    /// a dedicated test (`frozen_write_node_skips_safety_gate`); flipping each of the
-    /// other three to push an error instead of skipping leaves the suite green —
-    /// measured — so those branches are unexercised, not "already caught". What this
-    /// test adds, and nothing else catches, is a plausible normalising refactor at the
-    /// gate:
+    /// them. Measured by flipping each to push an error instead of skipping, across the
+    /// FULL suite including `cli/tests/`: `frozen` is caught by a unit test
+    /// (`frozen_write_node_skips_safety_gate`); the no-`agent`/`command` branch and the
+    /// agent-not-installed branch are caught only by integration tests that install or
+    /// run apps (`tests/app_install.rs`, `tests/app_run.rs`), none of them in this
+    /// module; and the command-not-in-the-manifest branch is caught by NOTHING in the
+    /// suite. (A unit-tests-only run, `--bin aware`, shows all three as uncaught, which
+    /// is how an earlier version of this comment came to overstate it.) What this test
+    /// adds, and nothing else catches, is a plausible normalising refactor at the gate:
     ///
     /// ```ignore
     /// let leaf = cmd_name.rsplit('.').next().unwrap();
