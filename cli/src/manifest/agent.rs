@@ -516,6 +516,24 @@ fn is_write_by_convention(name: &str) -> bool {
 mod tests {
     use super::*;
 
+    /// Parse one of the repo's real, shipped agent manifests. The paths are
+    /// relative to the repo root, which is `cli/`'s parent.
+    ///
+    /// Four tests below spelled this walk out inline, byte for byte. Reading
+    /// production manifests rather than fixtures is deliberate — several of the
+    /// assertions in this file are claims about what the substrate actually
+    /// ships, and a fixture cannot carry those.
+    fn real_manifest(rel: &str) -> Agent {
+        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .join(rel);
+        let text = std::fs::read_to_string(&path)
+            .unwrap_or_else(|e| panic!("cannot read {}: {e}", path.display()));
+        serde_yaml::from_str(&text)
+            .unwrap_or_else(|e| panic!("cannot parse {}: {e}", path.display()))
+    }
+
     const TEKLA_MIN: &str = r#"
 agent: tekla
 version: 2025.0.1
@@ -566,27 +584,45 @@ skills:
         assert_eq!(a.minimum_cli_version.as_deref(), Some("0.136.0"));
     }
 
-    #[test]
-    fn legacy_v0_135_status_enum_rejects_requires_runtime() {
-        // This mirrors the closed status enum shipped by v0.135.0. The unknown
-        // value is intentionally not caught by `#[serde(other)]`: an old runtime
-        // must reject the manifest before it can route through its generic REST
-        // path. The release test can additionally exercise the tagged binary.
-        #[derive(Debug, Deserialize)]
-        #[serde(rename_all = "kebab-case")]
-        enum V0_135AgentStatus {
-            Available,
-            Planned,
-        }
-        #[derive(Debug, Deserialize)]
-        struct V0_135Manifest {
-            #[allow(dead_code)]
-            status: V0_135AgentStatus,
-        }
+    // `legacy_v0_135_status_enum_rejects_requires_runtime` stood here. It
+    // declared its OWN two-variant `V0_135AgentStatus` inside the test body and
+    // asserted that serde rejects `requires-runtime` against it. Nothing in that
+    // test reached production code: the only thing it imported from `super` was
+    // the `Deserialize` derive, so it was a test of serde's unknown-variant
+    // handling, not of this module. Give the real `AgentStatus` an
+    // `#[serde(alias = "requires-runtime")] Available` — the most complete
+    // destruction of the property its name claims — and it still passed, because
+    // the enum it checked was the one it had just written two lines up.
+    //
+    // The claim it was reaching for is about a SHIPPED v0.135.0 binary, which no
+    // test in this tree can exercise; its own comment conceded that ("The release
+    // test can additionally exercise the tagged binary"). The half that IS
+    // testable here — that `AgentStatus` has no catch-all, so an older CLI meeting
+    // a status it does not know refuses the manifest instead of misrouting it —
+    // is asserted against the production type by
+    // `an_unknown_status_value_is_refused_rather_than_absorbed` below.
 
-        let err = serde_yaml::from_str::<V0_135Manifest>("status: requires-runtime\n")
-            .expect_err("v0.135.0 semantics must reject the new status");
+    /// `AgentStatus` deliberately carries no `#[serde(other)]` arm: a CLI that
+    /// predates a status value must fail to parse the manifest, not absorb the
+    /// unknown word into a variant and then route the agent through a transport it
+    /// cannot execute (#495). That is the whole mechanism by which
+    /// `status: requires-runtime` is safe to publish to runtimes older than the
+    /// one that introduced it.
+    ///
+    /// Asserted on `Agent` — the production type a real manifest is read into —
+    /// rather than on a lookalike declared in the test.
+    #[test]
+    fn an_unknown_status_value_is_refused_rather_than_absorbed() {
+        let yaml = TEKLA_MIN.replace(
+            "stateful: true\n",
+            "stateful: true\nstatus: supersedes-everything\n",
+        );
+        let err = serde_yaml::from_str::<Agent>(&yaml)
+            .expect_err("an unrecognised status must not parse");
         assert!(err.to_string().contains("unknown variant"), "{err}");
+        // The same manifest without the unknown value parses, so the error above
+        // is the status and not some unrelated defect in `TEKLA_MIN`.
+        serde_yaml::from_str::<Agent>(TEKLA_MIN).expect("the base fixture must parse");
     }
 
     #[test]
@@ -627,12 +663,7 @@ commands: {}
 
     #[test]
     fn parses_real_tekla_manifest() {
-        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-            .parent()
-            .unwrap()
-            .join("20-agents/aeco/engineering/tekla/manifest.yaml");
-        let text = std::fs::read_to_string(&path).unwrap();
-        let a: Agent = serde_yaml::from_str(&text).unwrap();
+        let a = real_manifest("20-agents/aeco/engineering/tekla/manifest.yaml");
         assert_eq!(a.agent, "tekla");
         // tekla is the gold-standard curated agent — currently 33 skills and
         // 26 commands. (Grew from 23 when the `bake-scene` verb landed in #235,
@@ -650,12 +681,7 @@ commands: {}
         // `aware-trimble-connect` binary), a declared `auth:` block so the OAuth
         // token is attached, and read commands carrying `method`/`path` so the
         // REST transport can form an authenticated request.
-        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-            .parent()
-            .unwrap()
-            .join("20-agents/aeco/construction/trimble-connect/manifest.yaml");
-        let text = std::fs::read_to_string(&path).unwrap();
-        let a: Agent = serde_yaml::from_str(&text).unwrap();
+        let a = real_manifest("20-agents/aeco/construction/trimble-connect/manifest.yaml");
 
         // REST-only: no CLI transport to mis-route to.
         assert!(
@@ -684,12 +710,7 @@ commands: {}
     fn tekla_commands_are_explicitly_curated() {
         // The Tekla curated agent is the gold-standard category: curated agent.
         // All 3 commands declare `category: curated` explicitly.
-        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-            .parent()
-            .unwrap()
-            .join("20-agents/aeco/engineering/tekla/manifest.yaml");
-        let text = std::fs::read_to_string(&path).unwrap();
-        let a: Agent = serde_yaml::from_str(&text).unwrap();
+        let a = real_manifest("20-agents/aeco/engineering/tekla/manifest.yaml");
         // All tekla commands are explicitly `category: curated` (26 total).
         assert_eq!(a.curated_count(), 26);
         assert_eq!(a.reflected_count(), 0);
@@ -704,12 +725,7 @@ commands: {}
         // generated-by), so the inference rule makes unmarked commands
         // default to Reflected. The first wave of curated workflow verbs
         // explicitly carry `category: curated`.
-        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-            .parent()
-            .unwrap()
-            .join("20-agents/aeco/architecture/revit-2026/manifest.yaml");
-        let text = std::fs::read_to_string(&path).unwrap();
-        let a: Agent = serde_yaml::from_str(&text).unwrap();
+        let a = real_manifest("20-agents/aeco/architecture/revit-2026/manifest.yaml");
         assert!(
             a.curated_count() >= 10,
             "expected ≥10 curated, got {}",
@@ -731,6 +747,330 @@ commands: {}
         // Both commands have no explicit category → both resolve to Curated.
         assert_eq!(a.curated_count(), 2);
         assert_eq!(a.reflected_count(), 0);
+    }
+
+    // ----------------------------------------------------------------------
+    // The safety contract: how a node's read/write mode is resolved.
+    //
+    // `mode_of` / `is_write_by_convention` / `effective_mode` are what decide
+    // whether `validate_app_safety` demands a `safety:` block from a node
+    // (`E_APP_WRITE_WITHOUT_SAFETY`) — the structural guard the 2026-05-17
+    // persona audit made a precondition for live-model writes
+    // (`10-core/app-spec.md § Safety contract (write-mode nodes)`).
+    //
+    // Before the tests below, the name convention had no coverage anywhere in the
+    // suite. Every safety test in `validate.rs` that reaches the convention at all
+    // reaches it through the bare legacy name `insert`, so a dotted suffix could
+    // be deleted from `SUFFIXES` with the whole of `cargo test` staying green —
+    // measured on `".bump"` and `".delete"`, and nothing outside `mode_of` reads
+    // the list.
+    // ----------------------------------------------------------------------
+
+    /// Build a `Command` from YAML rather than field-by-field. `Command` is
+    /// `Deserialize`-only, and going through the parser keeps these assertions
+    /// pointed at `mode_of` instead of at a struct the test just filled in.
+    fn command(extra: &str) -> Command {
+        serde_yaml::from_str(&format!("lifecycle: single\ndescription: x\n{extra}"))
+            .unwrap_or_else(|e| panic!("bad command fixture {extra:?}: {e}"))
+    }
+
+    /// Any `Agent` will do — `mode_of` reads only its arguments — so reuse the
+    /// minimal fixture rather than inventing a second one per test.
+    fn tekla_min() -> Agent {
+        serde_yaml::from_str(TEKLA_MIN).unwrap()
+    }
+
+    /// Seven commands the substrate ships **today** that declare no `mode:` of
+    /// their own, each resting on a different entry of `is_write_by_convention`
+    /// for its write-mode classification — and therefore for the `safety:` block
+    /// every node calling them must carry.
+    ///
+    /// Read from the production manifests, not fixtures, because the claim is
+    /// about what is shipped: delete `".bump"` from `SUFFIXES` and
+    /// `revit-2026 revision.bump` becomes a read, so an app may add a revision
+    /// letter to a user's model — `Document.AddRevision`, locking the prior
+    /// revision — with no transaction group, no snapshot and no worksharing
+    /// pre-flight. Its own description says it is "WRITE-mode against the Revit
+    /// model — requires `safety:` block"; nothing but this convention makes that
+    /// claim true.
+    ///
+    /// The `mode.is_none()` pre-check on each row is load-bearing rather than
+    /// decoration. Were a manifest to annotate one of these commands explicitly
+    /// later, the `mode_of` assertion would still pass — through the explicit
+    /// branch, proving nothing about the convention. The pre-check turns that
+    /// into a red test naming the row to re-ground on a still-unannotated
+    /// command.
+    #[test]
+    fn shipped_write_commands_with_no_declared_mode_are_inferred_from_their_names() {
+        // (manifest, [(command, the convention entry it rests on)])
+        const GROUNDED: &[(&str, &[(&str, &str)])] = &[
+            (
+                "20-agents/aeco/architecture/revit-2026/manifest.yaml",
+                &[
+                    ("revision.bump", ".bump"),
+                    ("sheet.stamp", ".stamp"),
+                    ("link.reload-all", ".reload-all"),
+                    ("parameter.bulk-write", ".bulk-write"),
+                ],
+            ),
+            (
+                "20-agents/aeco/engineering/tekla/manifest.yaml",
+                // The bare legacy name — the Tekla curated verbs predate the
+                // dotted namespace, so `save-attributes` is matched by exact
+                // string and by nothing else.
+                &[("save-attributes", "save-attributes")],
+            ),
+            (
+                "20-agents/aeco/construction/navisworks/manifest.yaml",
+                &[("clash.export", ".export")],
+            ),
+            (
+                "20-agents/aeco/architecture/autocad-2026/manifest.yaml",
+                &[("layout.export-pdfs", ".export-pdfs")],
+            ),
+        ];
+
+        for (rel, rows) in GROUNDED {
+            // One parse per manifest — `revit-2026` is 1.1 MB of YAML.
+            let agent = real_manifest(rel);
+            for (name, entry) in *rows {
+                let cmd = agent
+                    .commands
+                    .get(*name)
+                    .unwrap_or_else(|| panic!("{rel} no longer declares {name}"));
+                assert!(
+                    cmd.mode.is_none(),
+                    "{rel}:{name} now declares an explicit `mode:`, so it no longer \
+                     grounds the convention entry {entry:?} — re-ground this row on a \
+                     command that still declares none"
+                );
+                assert_eq!(
+                    agent.mode_of(name, cmd),
+                    Mode::Write,
+                    "{rel}:{name} must be write-mode by the {entry:?} convention"
+                );
+            }
+        }
+    }
+
+    /// `10-core/app-spec.md § Safety contract` publishes the convention to app
+    /// authors, naming eight suffixes. Exactly four of those eight — `.create`,
+    /// `.update`, `.delete`, `.insert` — have no shipped un-annotated command to
+    /// ground them in the test above: every shipped `.create`, `.update` and
+    /// `.delete` command declares `mode: write` outright, and no shipped command
+    /// ends in `.insert` at all. So this reads the promise out of the spec and
+    /// holds the implementation to it. Two artifacts, one claim: deleting a suffix
+    /// from `SUFFIXES` while the spec still advertises it goes red here.
+    ///
+    /// Not a restatement of `SUFFIXES` — the spec is the primary source and the
+    /// list is extracted from it, so this test cannot be satisfied by editing the
+    /// code it checks. Note the gap it leaves. The implementation carries four
+    /// entries the spec does not name at all (`.save`, `.publish`, `.export`,
+    /// `.export-pdfs`); `.export` and `.export-pdfs` are grounded on real
+    /// manifests above, but `.save` and `.publish` are pinned by nothing, because
+    /// the one shipped `.save` command declares `mode: write` outright and no
+    /// shipped command ends in `.publish`. Widening the spec to name the four, or
+    /// narrowing the code to the eight, is a decision about the contract and not
+    /// a test's to make.
+    #[test]
+    fn every_suffix_the_app_spec_publishes_is_inferred_as_a_write() {
+        let spec = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .join("10-core/app-spec.md");
+        let text = std::fs::read_to_string(&spec)
+            .unwrap_or_else(|e| panic!("cannot read {}: {e}", spec.display()));
+
+        // The sentence that states the rule, located by its prose rather than by
+        // line number so an edit elsewhere in the spec cannot silently move it.
+        const MARKER: &str = "the command's name conventionally implies a write";
+        let line = text
+            .lines()
+            .find(|l| l.contains(MARKER))
+            .unwrap_or_else(|| {
+                panic!(
+                    "{} no longer contains {MARKER:?} — the safety contract was reworded, so \
+                     re-ground this test on the new wording rather than deleting it",
+                    spec.display()
+                )
+            });
+
+        // Every `` `*.<something>` `` token on that line.
+        let published: Vec<&str> = line
+            .split('`')
+            .filter(|tok| tok.starts_with("*."))
+            .map(|tok| &tok[1..]) // `*.create` -> `.create`
+            .collect();
+
+        // Without a floor, a failed extraction leaves the loop below iterating
+        // over nothing and the test green — the exact vacuity this file is being
+        // audited for. Eight is what the spec names today; more is fine.
+        assert!(
+            published.len() >= 8,
+            "extracted only {} suffixes from the spec's contract line ({published:?}); \
+             expected at least the eight it names. Line: {line}",
+            published.len()
+        );
+
+        let agent = tekla_min();
+        for suffix in &published {
+            let name = format!("thing{suffix}");
+            assert_eq!(
+                agent.mode_of(&name, &command("")),
+                Mode::Write,
+                "app-spec.md promises {suffix} implies a write, but {name} resolved read"
+            );
+        }
+    }
+
+    /// The convention matches a whole trailing name, never a substring. Each
+    /// negative below is a name a real agent could plausibly carry, and each one
+    /// is what a specific loosening of `is_write_by_convention` would get wrong:
+    /// `ends_with` → `contains` lets `thing.deleted` through, and the two exact
+    /// legacy comparisons → `starts_with` lets `insert-many` through.
+    ///
+    /// The positive controls are in the same test on purpose: a `mode_of` that
+    /// had regressed to answering `Read` unconditionally would satisfy every
+    /// negative here and nothing else in this test file would notice.
+    #[test]
+    fn the_convention_matches_a_whole_trailing_name_not_a_substring() {
+        let agent = tekla_min();
+        let cmd = command("");
+        let mode = |name: &str| agent.mode_of(name, &cmd);
+
+        for name in [
+            "thing.deleted", // suffix must END the name
+            "delete.thing",  // ...and be at the end, not the start
+            "insert-many",   // the legacy names match exactly, not by prefix
+            "save-attributes-v2",
+            "thing.exports",
+            // A bare `create` is NOT inferred as a write: the only two names
+            // matched without a dot are the two legacy Tekla verbs. This is why
+            // `10-core/app-spec.md` has the manifest `mode:` be authoritative —
+            // an agent author who names a write command without the dotted
+            // namespace has to declare it, and `validate.rs`'s
+            // `safety_check_honors_explicit_mode_write_field` covers that path.
+            "create",
+            "sheet.list",
+        ] {
+            assert_eq!(
+                mode(name),
+                Mode::Read,
+                "{name} must not be inferred a write"
+            );
+        }
+
+        for name in ["thing.delete", "insert", "save-attributes"] {
+            assert_eq!(mode(name), Mode::Write, "{name} must be inferred a write");
+        }
+    }
+
+    /// `effective_mode`'s truth table over (`mode-overridable`, node-level
+    /// `mode:`), including the `overridden` flag — which `app_lock::compile`
+    /// reads to decide whether the lock carries the "using author-declared mode"
+    /// compile note, and which no test reached.
+    ///
+    /// Row 4 is the one that matters most: on a command that is NOT
+    /// `mode-overridable`, a node declaring `mode: read` does not get to relabel
+    /// a genuinely-writing command as a read and skip the safety contract. The
+    /// validator also rejects that app outright
+    /// (`E_APP_NODE_MODE_NOT_OVERRIDABLE`, covered in `validate.rs`), so this is
+    /// the second of two independent guards — pinned here because
+    /// `validate_app_safety` and `app_lock::compile` both ask this function, not
+    /// the validator, what the mode is.
+    #[test]
+    fn effective_mode_records_whether_the_node_overrode_the_manifest() {
+        let agent = tekla_min();
+        let overridable = command("mode: write\nmode-overridable: true\n");
+        let fixed = command("mode: write\n");
+        let read_by_name = command("");
+
+        // The command name cannot affect the rows below — both fixtures they use
+        // declare an explicit `mode:`, which short-circuits the convention — so it
+        // is spelled `exec` after the canonical caller-determined command the spec
+        // uses to introduce `mode-overridable`.
+        let cases = [
+            // (command, node-level mode, expected mode, expected `overridden`)
+            (&overridable, Some(Mode::Read), Mode::Read, true),
+            (&overridable, Some(Mode::Write), Mode::Write, true),
+            (&overridable, None, Mode::Write, false),
+            (&fixed, Some(Mode::Read), Mode::Write, false),
+        ];
+        for (cmd, node_mode, mode, overridden) in cases {
+            assert_eq!(
+                agent.effective_mode("exec", cmd, node_mode),
+                EffectiveMode { mode, overridden },
+                "node_mode {node_mode:?} on mode-overridable={}",
+                cmd.mode_overridable
+            );
+        }
+
+        // And with no manifest `mode:` at all the convention still feeds through
+        // `effective_mode`, never only `mode_of`.
+        assert_eq!(
+            agent.effective_mode("sheet.stamp", &read_by_name, None),
+            EffectiveMode {
+                mode: Mode::Write,
+                overridden: false
+            }
+        );
+    }
+
+    /// Each of these three enums has a hand-written `as_str` that writes a word
+    /// back out at a boundary somebody reads or re-parses: `Lifecycle` into the
+    /// synthesized agent manifest (`manifest::expose`) and the registry catalog
+    /// (`registry::catalog`), `Mode` into the `.lock` a node's mode is recorded
+    /// in (`app_lock`), `AgentStatus` into the `agent list` / `app show` output
+    /// whose own `match` arms are string literals (`commands::agent`,
+    /// `commands::app`).
+    ///
+    /// Nothing checked that the hand-written word is the word the derive accepts.
+    /// `Lifecycle::as_str`'s doc comment states the property outright — "a value
+    /// read from a manifest round-trips back to the same word" — and until now a
+    /// typo in any arm would have desynchronised the published surfaces from the
+    /// parser in silence.
+    ///
+    /// This is not a serde round-trip: the value under test is the `&'static str`
+    /// a `match` produced, and serde is the independent oracle it is checked
+    /// against. The arms are exhaustive, so a new variant cannot slip past
+    /// `as_str` — but it can slip past the lists below, which is why each list is
+    /// written out in full rather than derived.
+    #[test]
+    fn each_enum_writes_back_the_word_its_own_parser_reads() {
+        for v in [Lifecycle::Start, Lifecycle::Stop, Lifecycle::Single] {
+            let word = v.as_str();
+            assert_eq!(
+                serde_yaml::from_str::<Lifecycle>(word).unwrap_or_else(|e| panic!(
+                    "Lifecycle::as_str produced {word:?}, which its own parser rejects: {e}"
+                )),
+                v,
+                "Lifecycle::{v:?} writes {word:?}, which parses as a different variant"
+            );
+        }
+        for v in [Mode::Read, Mode::Write] {
+            let word = v.as_str();
+            assert_eq!(
+                serde_yaml::from_str::<Mode>(word).unwrap_or_else(|e| panic!(
+                    "Mode::as_str produced {word:?}, which its own parser rejects: {e}"
+                )),
+                v,
+                "Mode::{v:?} writes {word:?}, which parses as a different variant"
+            );
+        }
+        for v in [
+            AgentStatus::Available,
+            AgentStatus::Planned,
+            AgentStatus::RequiresRuntime,
+        ] {
+            let word = v.as_str();
+            assert_eq!(
+                serde_yaml::from_str::<AgentStatus>(word).unwrap_or_else(|e| panic!(
+                    "AgentStatus::as_str produced {word:?}, which its own parser rejects: {e}"
+                )),
+                v,
+                "AgentStatus::{v:?} writes {word:?}, which parses as a different variant"
+            );
+        }
     }
 
     #[test]
