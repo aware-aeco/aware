@@ -4152,6 +4152,103 @@ requires: []
         assert!(issues.is_empty(), "unexpected issues: {issues:?}");
     }
 
+    /// The convention's teeth, at the gate rather than at the resolver.
+    ///
+    /// `is_write_by_convention` carries twelve dotted suffixes and, until this test,
+    /// no dotted suffix was pinned anywhere end-to-end: the two convention-side
+    /// safety tests above both use the bare legacy name `insert`, and every other
+    /// safety test that needs a POSITIVE answer declares an explicit `mode:`, which
+    /// short-circuits the convention before it is consulted.
+    /// (`safety_check_skips_read_mode_nodes` does reach it, with the command `list` —
+    /// but it needs the answer to be Read, so no suffix deletion can make it fail.) So `cargo test` stayed green with `".bump"` deleted
+    /// from the list — measured — while `revit-2026 revision.bump`, which declares no
+    /// `mode:` of its own, became a read and an app could add a revision letter to a
+    /// user's sheets with no `safety:` block.
+    ///
+    /// `manifest::agent`'s tests pin `mode_of`'s answer; this pins that
+    /// `validate_app_safety` still ASKS, with a DOTTED name. That conjunction is where
+    /// it is uniquely load-bearing, and the measurement is worth recording because the
+    /// obvious rationale is the wrong one.
+    ///
+    /// Not the four early `continue`s above `effective_mode`: this test does not guard
+    /// them. Measured by flipping each to push an error instead of skipping, across the
+    /// FULL suite including `cli/tests/`: `frozen` is caught by a unit test
+    /// (`frozen_write_node_skips_safety_gate`); the no-`agent`/`command` branch and the
+    /// agent-not-installed branch are caught only by integration tests that install or
+    /// run apps (`tests/app_install.rs`, `tests/app_run.rs`), none of them in this
+    /// module; and the command-not-in-the-manifest branch is caught by NOTHING in the
+    /// suite. (A unit-tests-only run, `--bin aware`, shows all three as uncaught, which
+    /// is how an earlier version of this comment came to overstate it.) What this test
+    /// adds, and nothing else catches, is a plausible normalising refactor at the gate:
+    ///
+    /// ```ignore
+    /// let leaf = cmd_name.rsplit('.').next().unwrap();
+    /// let effective = agent.manifest.effective_mode(leaf, cmd, node.mode);
+    /// ```
+    ///
+    /// That kills all twelve dotted entries at once while leaving the two bare legacy
+    /// names working, so every resolver-level test in `manifest::agent` stays green and
+    /// so does every pre-existing gate test here. Measured: 1608 passed, 1 failed —
+    /// this test, alone in the suite.
+    ///
+    /// Both halves are asserted. Without the passing half, a gate that rejected
+    /// everything unconditionally would satisfy the first assertion.
+    #[test]
+    fn safety_check_demands_a_block_from_a_dotted_write_command_with_no_declared_mode() {
+        // `revision.bump` spelled as the real revit-2026 manifest spells it: curated,
+        // and carrying NO `mode:`. Its write-mode classification comes from the
+        // `".bump"` convention entry and from nothing else.
+        const AGENT: &str = r#"
+agent: revit-2026
+version: 1.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-revit } }
+commands:
+  revision.bump:
+    lifecycle: single
+    category: curated
+    description: Add the next revision letter to a set of sheets.
+"#;
+        let app_yaml = |safety: &str| {
+            format!(
+                r#"
+app: bump-probe
+version: 0.0.1
+description: x
+nodes:
+  - id: bump
+    agent: revit-2026
+    command: revision.bump
+{safety}
+connections: []
+requires: []
+"#
+            )
+        };
+
+        let app: App = serde_yaml::from_str(&app_yaml("")).unwrap();
+        let issues = validate_app_safety(&app, &[discovered(AGENT)]);
+        assert!(
+            issues
+                .iter()
+                .any(|i| i.code == "E_APP_WRITE_WITHOUT_SAFETY"),
+            "an un-annotated `.bump` command must be write-mode by convention, so a \
+             node calling it without `safety:` is refused. Got: {issues:?}"
+        );
+
+        let safe: App = serde_yaml::from_str(&app_yaml(
+            "    safety:\n      transaction-group: tender-bump\n      snapshot: true\n",
+        ))
+        .unwrap();
+        assert!(
+            validate_app_safety(&safe, &[discovered(AGENT)]).is_empty(),
+            "the same node WITH a `safety:` block must pass — otherwise the assertion \
+             above proves only that this gate rejects everything"
+        );
+    }
+
     #[test]
     fn safety_check_skips_read_mode_nodes() {
         let agent = discovered(
