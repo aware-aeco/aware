@@ -293,13 +293,22 @@ fn write_node_inside_a_for_each_body_accepted_when_it_declares_safety() {
     // node carrying `safety:` satisfies the contract, exactly as it does at the
     // top level — otherwise the fix for #611 would break every legitimate
     // `for-each` over a write command.
+    //
+    // This test asserts a CLEAN validate, which is also what an app whose agent
+    // failed to load produces — so on its own it would pass even if the fixture
+    // stopped parsing, the agent dir moved, or `close` lost its `mode: write`.
+    // That is not hypothetical: an earlier draft of `write_mode_agent` built its
+    // manifest with a `\` continuation that ate the indentation, the agent was
+    // never discovered, and this assertion passed vacuously. So the fixture's
+    // liveness is proved HERE, inside the test that depends on it: the same app
+    // with the `safety:` block removed must be REFUSED by the same catalogue.
+    // Only then does the clean pass mean what it claims.
     let home = tempfile::tempdir().unwrap();
     write_mode_agent(home.path());
 
-    let appdir = tempfile::tempdir().unwrap();
-    std::fs::write(
-        appdir.path().join("nested.flo"),
-        r#"app: nested-write-safe
+    let body = |safety: &str| {
+        format!(
+            r#"app: nested-write-safe
 version: 0.0.1
 description: x
 requires: []
@@ -311,10 +320,34 @@ nodes:
       - id: shutdown
         agent: tekla
         command: close
-        safety:
-          transaction: true
-          snapshot: true
-"#,
+{safety}"#
+        )
+    };
+
+    // Control: same fixture, same catalogue, no `safety:` → must be refused.
+    // If this stops failing, the fixture is dead and the assertion below is void.
+    let control = tempfile::tempdir().unwrap();
+    std::fs::write(control.path().join("nested.flo"), body("")).unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .args(["app", "validate"])
+        .arg(control.path())
+        .assert()
+        .failure()
+        .code(3)
+        .stdout(predicate::str::contains("E_APP_WRITE_WITHOUT_SAFETY"));
+
+    // The real assertion: declaring `safety:` makes the same nested write valid.
+    // `transaction-group` is the real field name on `Safety` (a plain
+    // `transaction:` key is silently ignored, which would leave this block
+    // resting on `snapshot:` alone).
+    let appdir = tempfile::tempdir().unwrap();
+    std::fs::write(
+        appdir.path().join("nested.flo"),
+        body(
+            "        safety:\n          transaction-group: shutdown-tx\n          snapshot: true\n",
+        ),
     )
     .unwrap();
 
@@ -326,4 +359,94 @@ nodes:
         .assert()
         .success()
         .stdout(predicate::str::contains("is valid"));
+}
+
+/// Write the #611 app — a write-mode node inside a `for-each` body, no
+/// `safety:` block — into its own directory and return it.
+fn nested_write_app(safety: &str) -> tempfile::TempDir {
+    let dir = tempfile::tempdir().unwrap();
+    std::fs::write(
+        dir.path().join("nested.flo"),
+        format!(
+            r#"app: nested-write
+version: 0.0.1
+description: x
+requires: []
+connections: []
+nodes:
+  - id: loop
+    for-each: '[1]'
+    do:
+      - id: shutdown
+        agent: tekla
+        command: close
+{safety}"#
+        ),
+    )
+    .unwrap();
+    dir
+}
+
+#[test]
+fn write_node_inside_a_for_each_body_refused_by_install() {
+    // #611 named `aware app install` specifically: it ACCEPTED the nested app.
+    // `validate` and `install` are separate call sites of the gate
+    // (`commands/app.rs:1921` vs `:1578`), so covering one does not cover the
+    // other. Install also reports through stderr rather than stdout, which is
+    // why this asserts there.
+    let home = tempfile::tempdir().unwrap();
+    write_mode_agent(home.path());
+    let app = nested_write_app("");
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .args(["app", "install"])
+        .arg(app.path())
+        .assert()
+        .failure()
+        .stderr(
+            predicate::str::contains("E_APP_WRITE_WITHOUT_SAFETY")
+                .and(predicate::str::contains("loop.shutdown")),
+        );
+}
+
+#[test]
+fn write_node_inside_a_for_each_body_refused_by_run_safety_preflight() {
+    // The surface that actually matters, and the one route by which a nested
+    // write still reaches a live host: installing an app BEFORE its agents is
+    // supported (#170), and with an empty catalogue the gate has no manifest to
+    // resolve a mode from, so install only warns. The agent is installed
+    // afterwards, and `app run`'s safety pre-flight is then the last gate
+    // standing. Before the #611 fix that pre-flight did not look inside the
+    // body and the run proceeded; this pins that it now refuses.
+    //
+    // Not `--dry-run`/`--simulate`: both deliberately skip the pre-flight
+    // (`commands/app.rs:518-520`), so neither can prove this.
+    let home = tempfile::tempdir().unwrap();
+    let app = nested_write_app("");
+
+    // Install with no agents present — accepted, with a missing-agent warning.
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .args(["app", "install"])
+        .arg(app.path())
+        .assert()
+        .success();
+
+    // Now the agent exists, so the mode resolves and the gate can fire.
+    write_mode_agent(home.path());
+    common::approve_installed_apps(home.path());
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .args(["app", "run", "nested-write"])
+        .assert()
+        .failure()
+        .stderr(
+            predicate::str::contains("E_APP_WRITE_WITHOUT_SAFETY")
+                .and(predicate::str::contains("loop.shutdown")),
+        );
 }
