@@ -996,8 +996,14 @@ commands: {}
              extraction, do not delete the test. Bullet: {bullet}"
         );
 
-        // Second: the spec and the code have to name the same things, and drift in
-        // EITHER direction is a finding. A floor on the COUNT catches neither, and the
+        // Second: everything the spec names, the code must implement, and drift in
+        // EITHER direction is worth a red test. Not quite symmetric, and the asymmetry
+        // is the spec's: `app-spec.md:806` introduces its list with "e.g.", so the code
+        // carrying four entries the spec does not name is not a divergence — it is the
+        // open question `the_suffixes_the_code_adds_beyond_the_spec_are_pinned_too`
+        // documents. What IS a divergence is the spec naming a suffix the code does not
+        // match, or dropping one the code still does. A floor on the COUNT catches
+        // neither, and the
         // gap is reachable rather than theoretical: swap `*.insert` for `*.export` in
         // the bullet — a plausible edit, since `.export` is implemented and no shipped
         // command ends in `.insert` — and the count stays eight, this test's own claim
@@ -1222,9 +1228,11 @@ commands: {}
     /// out at a boundary somebody reads or re-parses: `Lifecycle` into the synthesized
     /// agent manifest (`manifest::expose:101`) and the published registry catalog
     /// (`registry::catalog:254`); `Mode` into the `.lock` a node's mode is recorded in
-    /// (`app_lock:570`), the catalog (`registry::catalog:257`) and a validator message
-    /// (`validate:1391`); `AgentStatus` into `agent describe --json`
-    /// (`commands::agent:1186` and `:1198`) and the catalog (`registry::catalog:216`),
+    /// (`app_lock:573`; `:570` is the compile note beside it), the catalog
+    /// (`registry::catalog:257`) and a validator message (`validate:1391`);
+    /// `AgentStatus` into `agent describe --json` (`commands::agent:1186` and `:1198`)
+    /// and the catalog, through `registry::catalog`'s `status_str` delegation (`:216`)
+    /// at `:256` and `:264`,
     /// where `describe_from_catalog` then `match`es the word against string literals
     /// (`commands::agent:2322`). Not `app show` — `commands::app:1288` matches a
     /// `RunEvent::RunEnd` status, an unrelated type that happens to share the field
@@ -1306,7 +1314,7 @@ commands: {}
     ///    one-sided typo but not for a rename that moves the serde word and the
     ///    `as_str` arm together: that round-trips perfectly and still breaks every
     ///    consumer that `match`es the literal — `commands::agent:2322`,
-    ///    `registry::catalog:111`. These words are a wire vocabulary (the published
+    ///    `registry::catalog:115`. These words are a wire vocabulary (the published
     ///    registry catalog, the `.lock`, `agent describe --json`), so they are spelled
     ///    out here the way a golden test spells out a wire format.
     /// 2. **The word round-trips.** `as_str`'s output fed back through the derive must
@@ -1314,8 +1322,11 @@ commands: {}
     ///    promises.
     /// 3. **The table is complete.** The length check against the walk is what stops a
     ///    newly added variant from being given an `as_str` arm and no published word:
-    ///    the walk cannot miss it (the successor `match` is exhaustive, so the module
-    ///    stops compiling), and the table cannot then stay short.
+    ///    the successor `match` is exhaustive, so the module stops compiling until the
+    ///    variant is wired into the walk, and the table cannot then stay short. Not
+    ///    airtight — [`variants`] documents the one edit that satisfies the compiler
+    ///    while orphaning a variant from the walk — but a deliberate wrong turn rather
+    ///    than an omission.
     fn check_published_words<T>(
         walked: Vec<T>,
         as_str: fn(T) -> &'static str,
