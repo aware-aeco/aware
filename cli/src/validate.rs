@@ -3502,12 +3502,20 @@ nodes:
     /// would be red for someone else's defect.
     ///
     /// The catalogue is built by walking `20-agents/` for the agent ids the corpus
-    /// names, and the walk is ASSERTED non-empty rather than skipped: the gate
-    /// resolves a node's mode THROUGH the manifests, so with no catalogue every
-    /// node is skipped and this test would pass having checked nothing. (It did
-    /// exactly that on the first draft — `discover_agents_in` expects
-    /// `<dir>/<agent>/manifest.yaml` and this repo nests agents a vertical and a
-    /// domain deeper, so it returned zero and the early-return made it green.)
+    /// names, and both the EMPTY and the PARTIAL case are asserted rather than
+    /// skipped: the gate resolves a node's mode THROUGH the manifests and silently
+    /// skips a node whose agent it cannot resolve, so a thin catalogue makes this
+    /// test pass having checked far less than it claims.
+    ///
+    /// Three drafts of this test were vacuous, which is why both halves are pinned:
+    /// the first skipped on an empty catalogue, and `discover_agents_in` expects
+    /// `<dir>/<agent>/manifest.yaml` while this repo nests agents a vertical and a
+    /// domain deeper, so it returned zero every run and the early return made it
+    /// green. The second split nested from top-level offenders by looking for a `.`
+    /// in the whole message, which the filename and the dotted command name both
+    /// carry. The third accepted any non-empty catalogue, while 3 of the 16 ids the
+    /// corpus names resolve to no manifest at all — so their nodes, including one
+    /// inside the very `for-each` body this test leans on, were being skipped.
     #[test]
     fn published_examples_satisfy_the_safety_contract_at_every_depth() {
         let root = repo_root();
@@ -3549,22 +3557,55 @@ nodes:
 
         let mut manifest_paths = Vec::new();
         collect_agent_manifests(&root.join("20-agents"), &wanted, &mut manifest_paths);
-        let agents: Vec<crate::manifest::loader::DiscoveredAgent> = manifest_paths
+        // Built with an explicit loop, not `filter_map(...ok()?)`: a manifest that
+        // resolved to a PATH but cannot be read or parsed is a broken manifest, and
+        // silently dropping it would shrink this test's reach with nothing said.
+        let mut agents: Vec<crate::manifest::loader::DiscoveredAgent> = Vec::new();
+        for path in &manifest_paths {
+            let rel = rel_to(&root, path);
+            let text = std::fs::read_to_string(path)
+                .unwrap_or_else(|e| panic!("{rel}: agent manifest resolved but unreadable: {e}"));
+            let manifest: crate::manifest::agent::Agent = serde_yaml::from_str(&text)
+                .unwrap_or_else(|e| panic!("{rel}: agent manifest does not deserialize: {e}"));
+            agents.push(crate::manifest::loader::DiscoveredAgent {
+                manifest,
+                root: path.parent().unwrap().to_path_buf(),
+            });
+        }
+
+        // A NON-EMPTY catalogue is not enough. The gate resolves a node's mode through
+        // the manifests and silently skips a node whose agent it cannot resolve, so a
+        // PARTIAL catalogue narrows this test's reach without failing it — and three of
+        // the ids the corpus names have no manifest in the substrate at all. Pin the
+        // unresolved set exactly, so a manifest going missing fails here, and one
+        // becoming available forces this pin to be re-grounded rather than quietly
+        // widening what is checked.
+        //
+        // `aware-runtime` matters most of the three: `bim-monday-audit.app:48` calls it
+        // from INSIDE the `for-each` body this test leans on, so its nodes are among the
+        // ones being skipped.
+        let resolved: std::collections::BTreeSet<&str> =
+            agents.iter().map(|a| a.manifest.agent.as_str()).collect();
+        let unresolved: std::collections::BTreeSet<&str> = wanted
             .iter()
-            .filter_map(|p| {
-                let text = std::fs::read_to_string(p).ok()?;
-                let manifest: crate::manifest::agent::Agent = serde_yaml::from_str(&text).ok()?;
-                Some(crate::manifest::loader::DiscoveredAgent {
-                    manifest,
-                    root: p.parent().unwrap().to_path_buf(),
-                })
-            })
+            .map(|w| w.as_str())
+            .filter(|w| !resolved.contains(w))
             .collect();
+        let known_unresolved: std::collections::BTreeSet<&str> =
+            ["aware-runtime", "excel", "think-node"]
+                .into_iter()
+                .collect();
+        assert_eq!(
+            unresolved, known_unresolved,
+            "the set of corpus-referenced agents with no manifest under 20-agents/ changed. \
+             A NEW entry means an agent manifest went missing and this test now checks less \
+             than it claims. A REMOVED entry means the agent now ships — re-ground this pin, \
+             since its nodes are newly covered. (resolved: {resolved:?})"
+        );
         assert!(
             !agents.is_empty(),
             "resolved no agent manifests under 20-agents/ for the ids the corpus names \
-             ({wanted:?}) — with an empty catalogue the safety gate skips every node, so \
-             this test would prove nothing"
+             ({wanted:?}) — with an empty catalogue the safety gate skips every node"
         );
 
         // Prove the corpus actually exercises a NESTED write: without one, this
