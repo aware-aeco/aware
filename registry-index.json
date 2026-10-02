@@ -10,6 +10,13 @@
           "manifest-agent": "tekla",
           "manifest-version": "0.1.5",
           "bundle-digest": "sha256:4eb0cb164ce93b56b391f31a8feade4a68689a90ac90e28d3b78f4312b5395fa"
+        },
+        "2025.0.2": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/f8a7b5dd73f022011c65563cdc697e1b4d45b1c8.tar.gz",
+          "subdir": "aware-f8a7b5dd73f022011c65563cdc697e1b4d45b1c8/20-agents/aeco/engineering/tekla",
+          "manifest-agent": "tekla",
+          "manifest-version": "0.1.6",
+          "bundle-digest": "sha256:97ee6ea0d5cb2ac9e263bd50421be977afe8631dd7f3ba08bc5962d44f32a65f"
         }
       }
     },
@@ -402,6 +409,13 @@
           "manifest-agent": "google-workspace",
           "manifest-version": "2.0.0",
           "bundle-digest": "sha256:7f18040c2bbdd24567bea5a5a0a120a6bf65fa8faf9d03adb73106236890d608"
+        },
+        "2.1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/f8a7b5dd73f022011c65563cdc697e1b4d45b1c8.tar.gz",
+          "subdir": "aware-f8a7b5dd73f022011c65563cdc697e1b4d45b1c8/20-agents/aeco/cross-cutting/google-workspace",
+          "manifest-agent": "google-workspace",
+          "manifest-version": "2.1.0",
+          "bundle-digest": "sha256:188314d73f80ca300e32ede1c6753e9b64aed13f9372a34dbce80841fda8a031"
         }
       }
     },
@@ -901,7 +915,7 @@
     "aware-aeco": {
       "description": "All first-party AECO agents (engineering, construction, cross-cutting, utilities, meta).",
       "agents": [
-        "tekla@2025.0.1",
+        "tekla@2025.0.2",
         "tekla-2025@2025.0.0",
         "tekla-2026@2026.0.3",
         "revit-2025@2025.0.2.419",
@@ -936,7 +950,7 @@
         "dynamo-4-1-1@4.1.1.4941",
         "trimble-connect@2.4.0",
         "microsoft-365@1.0.0",
-        "google-workspace@2.0.0",
+        "google-workspace@2.1.0",
         "html-report@1.0.0",
         "file@1.0.0",
         "shell@0.1.0",
