@@ -915,9 +915,8 @@ impl ProcessTree {
             let _ = crate::commands::model_reader_host::terminate_provider_job(job).await;
         }
         #[cfg(unix)]
-        {
-            let _ = crate::commands::model_reader_host::terminate_provider_group(self.group.take())
-                .await;
+        if let Some(group) = self.group.take() {
+            kill_process_group(group);
         }
     }
 
@@ -929,9 +928,8 @@ impl ProcessTree {
         #[cfg(windows)]
         drop(self.job.take());
         #[cfg(unix)]
-        {
-            let _ = crate::commands::model_reader_host::terminate_provider_group(self.group.take())
-                .await;
+        if let Some(group) = self.group.take() {
+            kill_process_group(group);
         }
     }
 }
@@ -947,13 +945,32 @@ impl Drop for ProcessTree {
         drop(self.job.take());
         #[cfg(unix)]
         if let Some(group) = self.group.take() {
-            let _ = std::process::Command::new("kill")
-                .args(["-KILL", &format!("-{group}")])
-                .stdout(std::process::Stdio::null())
-                .stderr(std::process::Stdio::null())
-                .status();
+            kill_process_group(group);
         }
     }
+}
+
+/// SIGKILL every process in the group the probe's child leads.
+///
+/// `killpg(2)` directly, not a spawned `kill -KILL -<pgid>`: a `kill` binary may
+/// read a leading `-<n>` as an option rather than a negative pid (procps needs
+/// `--` first), and a cleanup that silently does nothing is the one failure this
+/// path must not have. ESRCH — the group already gone — is the goal reached.
+#[cfg(unix)]
+fn kill_process_group(group: u32) {
+    // A group id that would wrap negative, or 0/1 (the caller's own group / init),
+    // is never one this module created: the child was spawned with
+    // `process_group(0)`, so its group id is its own positive pid.
+    let Ok(group) = libc::pid_t::try_from(group) else {
+        return;
+    };
+    if group <= 1 {
+        return;
+    }
+    // SAFETY: `killpg` takes two plain integers and dereferences no memory. `group`
+    // is the positive pid of a child this process spawned as the leader of its own
+    // process group (checked > 1 above), so the signal reaches only that tree.
+    let _ = unsafe { libc::killpg(group, libc::SIGKILL) };
 }
 
 /// Run `program args…`, feeding `stdin`, with a deadline and a stdout cap. On
