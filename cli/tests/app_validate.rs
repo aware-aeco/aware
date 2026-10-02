@@ -216,3 +216,114 @@ fn validate_writes_no_lock_and_leaves_an_existing_one_untouched() {
     validate();
     assert_eq!(std::fs::read_to_string(&lock).unwrap(), "stale approval\n");
 }
+
+/// Write a one-command agent whose `close` verb declares `mode: write`, the
+/// shape of the escape hatch in #611.
+fn write_mode_agent(home: &std::path::Path) {
+    let agent_dir = home.join("agents").join("tekla");
+    std::fs::create_dir_all(&agent_dir).unwrap();
+    std::fs::write(
+        agent_dir.join("manifest.yaml"),
+        r#"agent: tekla
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport:
+  cli:
+    binary: aware-tekla
+commands:
+  close:
+    lifecycle: single
+    mode: write
+    category: curated
+    description: Terminate the session.
+"#,
+    )
+    .unwrap();
+}
+
+#[test]
+fn write_node_inside_a_for_each_body_rejected_by_validate() {
+    // #611: the safety gate iterated top-level nodes only, so wrapping a
+    // write-mode node in `for-each: '[1]'` — a no-op loop over one element —
+    // skipped the `safety:` requirement. The byte-identical node at the top
+    // level was refused. Driven through the real CLI, since that asymmetry is
+    // what a user actually met: `aware app validate` said "is valid".
+    let home = tempfile::tempdir().unwrap();
+    write_mode_agent(home.path());
+
+    let appdir = tempfile::tempdir().unwrap();
+    std::fs::write(
+        appdir.path().join("nested.flo"),
+        r#"app: nested-write
+version: 0.0.1
+description: x
+requires: []
+connections: []
+nodes:
+  - id: loop
+    for-each: '[1]'
+    do:
+      - id: shutdown
+        agent: tekla
+        command: close
+"#,
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .args(["app", "validate"])
+        .arg(appdir.path())
+        .assert()
+        .failure()
+        .code(3)
+        // Reported by the scoped id the lock uses, so the author can find it.
+        .stdout(
+            predicate::str::contains("E_APP_WRITE_WITHOUT_SAFETY")
+                .and(predicate::str::contains("loop.shutdown")),
+        );
+}
+
+#[test]
+fn write_node_inside_a_for_each_body_accepted_when_it_declares_safety() {
+    // The other half: the recursion must not refuse every nested write. A body
+    // node carrying `safety:` satisfies the contract, exactly as it does at the
+    // top level — otherwise the fix for #611 would break every legitimate
+    // `for-each` over a write command.
+    let home = tempfile::tempdir().unwrap();
+    write_mode_agent(home.path());
+
+    let appdir = tempfile::tempdir().unwrap();
+    std::fs::write(
+        appdir.path().join("nested.flo"),
+        r#"app: nested-write-safe
+version: 0.0.1
+description: x
+requires: []
+connections: []
+nodes:
+  - id: loop
+    for-each: '[1]'
+    do:
+      - id: shutdown
+        agent: tekla
+        command: close
+        safety:
+          transaction: true
+          snapshot: true
+"#,
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .args(["app", "validate"])
+        .arg(appdir.path())
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("is valid"));
+}
