@@ -8,6 +8,7 @@ version's complete release record is an immutable install contract.
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -30,6 +31,39 @@ def releases(document: object, source: str) -> dict[tuple[str, str], object]:
     return result
 
 
+MAIN_TARBALL = "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz"
+COMMIT_TARBALL = re.compile(r"^https://github\.com/aware-aeco/aware/archive/([0-9a-f]{40})\.tar\.gz$")
+
+
+def is_freezing_repin(original: object, current: object) -> bool:
+    """A main-tracking release re-pinned, byte for byte, to an immutable commit.
+
+    A record whose tarball is `refs/heads/main` was never immutable: any change to
+    its agent folder on main changes the bytes it installs, so the record cannot
+    stay valid and the agent can never change. This admits exactly one rewrite of
+    such a record — freezing it at a commit — and only when everything that names
+    the bytes stays identical: the same `bundle-digest` (which must be present),
+    `manifest-agent` and `manifest-version`, and the same path inside the archive.
+    `aware agent reindex --check` then proves the pinned commit's tree hashes to
+    that digest, so the install contract is unchanged; it simply stops drifting.
+    """
+    if not isinstance(original, dict) or not isinstance(current, dict):
+        return False
+    if original.get("tarball") != MAIN_TARBALL or not original.get("bundle-digest"):
+        return False
+    match = COMMIT_TARBALL.match(str(current.get("tarball", "")))
+    if not match:
+        return False
+    original_subdir = str(original.get("subdir", ""))
+    if not original_subdir.startswith("aware-main/"):
+        return False
+    expected_subdir = f"aware-{match.group(1)}/" + original_subdir[len("aware-main/"):]
+    if current.get("subdir") != expected_subdir:
+        return False
+    rest = lambda record: {k: v for k, v in record.items() if k not in ("tarball", "subdir")}
+    return rest(original) == rest(current)
+
+
 def violations(base: object, candidate: object) -> list[str]:
     published = releases(base, "base registry-index.json")
     current = releases(candidate, "candidate registry-index.json")
@@ -38,7 +72,7 @@ def violations(base: object, candidate: object) -> list[str]:
         label = "@".join(key)
         if key not in current:
             errors.append(f"{label}: published version was removed")
-        elif current[key] != original:
+        elif current[key] != original and not is_freezing_repin(original, current[key]):
             errors.append(f"{label}: published release record was changed")
     return errors
 
