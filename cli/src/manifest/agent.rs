@@ -425,7 +425,16 @@ impl Agent {
     ///
     /// A command is `Write` if its name matches any of:
     /// `*.create`, `*.update`, `*.delete`, `*.bump`, `*.stamp`, `*.reload-all`,
-    /// `*.bulk-write`, `*.insert`, `*.save`, `*.publish`. Otherwise `Read`.
+    /// `*.bulk-write`, `*.insert`, `*.save`, `*.publish`, `*.export-pdfs`, `*.export`
+    /// — or is one of the two legacy Tekla names `insert` / `save-attributes`, which
+    /// predate the dotted namespace. Otherwise `Read`.
+    ///
+    /// `*.export-pdfs` and `*.export` were missing from this list while the code
+    /// matched them, so a reader checking here would have concluded that
+    /// `navisworks clash.export` is a read. Note the spec's own list
+    /// (`10-core/app-spec.md § Safety contract`) names eight of these twelve and is
+    /// marked "e.g."; the four it omits are discussed in
+    /// `the_suffixes_the_code_adds_beyond_the_spec_are_pinned_too`.
     pub fn mode_of(&self, name: &str, cmd: &Command) -> Mode {
         if let Some(m) = cmd.mode {
             return m;
@@ -709,8 +718,10 @@ commands: {}
 
     #[test]
     fn tekla_commands_are_explicitly_curated() {
-        // The Tekla curated agent is the gold-standard category: curated agent.
-        // All 3 commands declare `category: curated` explicitly.
+        // The Tekla curated agent is the gold-standard `category: curated` agent:
+        // every one of its commands declares it explicitly. ("All 3 commands" stood
+        // here, contradicted by the "(26 total)" on the next line — tekla has had more
+        // than three commands for a long time.)
         let a = real_manifest("20-agents/aeco/engineering/tekla/manifest.yaml");
         // All tekla commands are explicitly `category: curated` (26 total).
         assert_eq!(a.curated_count(), 26);
@@ -767,9 +778,9 @@ commands: {}
     // declares an explicit `mode:`, which short-circuits before the convention is
     // consulted at all. (`safety_check_skips_read_mode_nodes` does reach it, with the
     // command `list` — but it needs the answer to be Read, so no suffix deletion can
-    // make it fail.) Not one of the twelve DOTTED suffixes was pinned anywhere: with
-    // `".bump"` deleted from `SUFFIXES`, `cargo test -- --skip manifest::agent::tests`
-    // is 2070 passed, 0 failed, and the same holds for `".delete"`. The asymmetry is
+    // make it fail.) Not one of the DOTTED suffixes was pinned anywhere: on `main`,
+    // deleting `".bump"` or `".delete"` from `SUFFIXES` left the whole of `cargo test`
+    // green. The asymmetry is
     // structural rather than an oversight — loosening the list only ever REMOVES a
     // safety error, and every integration test over an example app asserts that the
     // app is valid, so only a refusal assertion can catch it.
@@ -799,10 +810,18 @@ commands: {}
         serde_yaml::from_str(TEKLA_MIN).expect("TEKLA_MIN must parse")
     }
 
-    /// Seven commands the substrate ships **today** that declare no `mode:` of
-    /// their own, each resting on a different entry of `is_write_by_convention`
-    /// for its write-mode classification — and therefore for the `safety:` block
-    /// every node calling them must carry.
+    /// Seven commands the substrate ships **today** that declare no `mode:` of their
+    /// own, each resting on a different entry of `is_write_by_convention` for its
+    /// write-mode classification — and so for the `safety:` block a node calling them
+    /// must carry.
+    ///
+    /// With one honest caveat on that last clause: `tekla save-attributes` is
+    /// `status: planned` (declared, not dispatched — #520), so no valid app can reach
+    /// it today and the safety consequence does not yet bite for that row. Its
+    /// `mode_of` assertion is still exactly right, and it is still the only shipped
+    /// command grounding the `save-attributes` legacy arm, which is why it stays. The
+    /// five `revit-2026` / `navisworks` / `autocad-2026` rows are all dispatchable, so
+    /// the consequence is live for them.
     ///
     /// Read from the production manifests, not fixtures, because the claim is
     /// about what is shipped: delete `".bump"` from `SUFFIXES` and
@@ -937,9 +956,11 @@ commands: {}
         // code resolving a read, test green. Demonstrated on this branch with
         // `*.purge`, `*.truncate` added on a second line of the same bullet.
         //
-        // A markdown bullet continues while the following lines are indented
-        // continuations: non-empty, and not the start of a new bullet, heading or
-        // fence.
+        // Taken as: every following line until a blank one, a new bullet, a heading or
+        // a fence. Deliberately not an indentation test — `trim_start` runs first, so a
+        // continuation line is captured however it is indented. The cost is
+        // over-capture (a stray `*.`-token in an adjacent unindented line would be
+        // read as published), which fails loudly rather than silently.
         let bullet: String = std::iter::once(lines[first])
             .chain(
                 lines[first + 1..]
@@ -1115,26 +1136,29 @@ commands: {}
     /// reads to decide whether the lock carries the "using author-declared mode"
     /// compile note.
     ///
-    /// Three of the four rows were already covered end-to-end and are kept here as
-    /// a single readable table rather than as new coverage: the overridable rows via
-    /// `validate.rs`'s `safety_check_passes_read_override_on_mode_overridable_exec`
-    /// and `..._still_requires_safety_on_unannotated_mode_overridable_exec`, and
-    /// `overridden == true` via `app_lock.rs`'s
-    /// `compile_honors_mode_read_on_mode_overridable_command`, which asserts the note
-    /// that is emitted only under `if resolved.overridden`. What is new is the
-    /// `(overridable, Some(Write))` row — the spec's "(A node declaring `mode: write`
-    /// likewise wins.)" (`10-core/app-spec.md:817`) — and the assertion on
-    /// `EffectiveMode` as a value rather than on a note's text downstream of it.
+    /// TWO of the four rows were already covered end-to-end and are kept here as a
+    /// single readable table rather than as new coverage: `(overridable, Some(Read))`
+    /// via `validate.rs`'s `safety_check_passes_read_override_on_mode_overridable_exec`
+    /// and `app_lock.rs`'s `compile_honors_mode_read_on_mode_overridable_command`
+    /// (which asserts the note emitted only under `if resolved.overridden`, so it
+    /// reaches the flag end to end), and `(overridable, None)` via
+    /// `..._still_requires_safety_on_unannotated_mode_overridable_exec`.
     ///
-    /// The `fixed` + node-`read` row is defence in depth, not a reachable path: an app
-    /// shaped like it is refused by `validate_app_agents` with
-    /// `E_APP_NODE_MODE_NOT_OVERRIDABLE` on every lock-producing path
-    /// (`validate.rs:1381`, covered by
-    /// `agents_check_rejects_conflicting_node_mode_on_non_overridable_command`), so it
-    /// never reaches here in production. It is pinned because `validate_app_safety`
-    /// and `app_lock::compile_node` ask THIS function what the mode is, and a
-    /// loosening here would silently make their answer depend on a check living
-    /// somewhere else.
+    /// Two rows are new. `(overridable, Some(Write))` is the spec's "(A node declaring
+    /// `mode: write` likewise wins.)" (`10-core/app-spec.md:817`). And
+    /// `(fixed, Some(Read))` is new too — the validator's conflict check reaches
+    /// `mode_of`, not `effective_mode` (`validate.rs:1381` compares against
+    /// `d.manifest.mode_of(..)`), so nothing previously pinned what `effective_mode`
+    /// itself answers for that input. An earlier version of this comment said three of
+    /// four were covered and that this row was pure defence in depth; both were wrong.
+    ///
+    /// That row is also not a reachable production input: an app shaped like it is
+    /// refused by `validate_app_agents` with `E_APP_NODE_MODE_NOT_OVERRIDABLE` on every
+    /// lock-producing path, covered by
+    /// `agents_check_rejects_conflicting_node_mode_on_non_overridable_command`. Pinned
+    /// anyway, because that is a different check: `validate_app_safety` and
+    /// `app_lock::compile_node` ask THIS function what the mode is, and a loosening
+    /// here would silently make their answer depend on a guard living elsewhere.
     #[test]
     fn effective_mode_records_whether_the_node_overrode_the_manifest() {
         let agent = tekla_min();
@@ -1206,37 +1230,45 @@ commands: {}
     /// `RunEvent::RunEnd` status, an unrelated type that happens to share the field
     /// name.
     ///
-    /// **Exactly one thing here is new coverage: the exhaustiveness gate.** Two earlier
-    /// versions of this comment claimed more than that — first that nothing checked
-    /// these words at all, then that six of the eight rows were pinned. Both were
-    /// wrong, and the correction is measured rather than reasoned, because this repo
-    /// requires a load-bearing claim to be grounded:
+    /// **What is new here is the exhaustiveness gate, plus one variant.** Three earlier
+    /// versions of this comment got the accounting wrong — first claiming nothing
+    /// checked these words at all, then that six of the eight rows were pinned, then
+    /// attributing the pins to the wrong places. The numbers below are measured, each
+    /// by deleting or altering the thing in question and running
+    /// `cargo test --bin aware -- --skip manifest::agent::tests`:
     ///
-    /// * **One-sided** (`as_str` lies, the derive unchanged): already caught.
-    ///   `Lifecycle::Start => "begin"` alone reddens
-    ///   `manifest::expose::tests::synthesizes_a_parseable_agent_manifest_from_welded_to_tc`
-    ///   and `..._one_start_command_among_singles_...`, which re-parse the manifest
-    ///   `synthesize_agent_manifest` wrote with `as_str` and assert the variant back.
-    ///   `Mode` and `AgentStatus` are covered the same way through `app_lock` and
-    ///   `registry::catalog`.
-    /// * **Coordinated** (serde word and `as_str` arm renamed together, which
-    ///   round-trips perfectly and would defeat any round-trip assertion): also already
-    ///   caught, and widely — renaming `Lifecycle::Start` to `"begin"` reddens 36 tests
-    ///   outside this module, `Mode::Read` to `"r"` reddens 29, because the fixtures and
-    ///   the shipped manifests spell these words literally and simply stop parsing.
+    /// * **Seven of the eight rows were already pinned**, against a one-sided lie
+    ///   (`as_str` wrong, the derive untouched). `Lifecycle::Start` and
+    ///   `Lifecycle::Stop` by `manifest::expose`, which EMITS the word through
+    ///   `as_str` (`expose.rs:101`) and whose two synthesis tests re-parse that
+    ///   manifest and assert the variant back (`expose.rs:289`, `:507`, `:508`) —
+    ///   mutating either word reddens them. Both `Mode` words by `app_lock`, which
+    ///   writes `as_str`'s output into the lock and asserts the string. All three
+    ///   `AgentStatus` words by `registry::catalog`, whose `status_str` delegates
+    ///   straight to `as_str`.
+    /// * **`Lifecycle::Single` was the one genuinely unpinned row**: changing it to
+    ///   `"start"` leaves 1590 passed, 0 failed outside this module. The catalog's JSON
+    ///   golden does NOT cover it — that golden is parse INPUT, and
+    ///   `CatalogCommand::lifecycle` is a `String`, so it never reaches
+    ///   `Lifecycle::as_str` at all.
+    /// * A **coordinated** rename (serde word and `as_str` arm moved together, which
+    ///   round-trips perfectly) is also already caught, and widely: renaming
+    ///   `Lifecycle::Start` to `"begin"` reddens 36 tests outside this module,
+    ///   `Mode::Read` to `"r"` reddens 29 — the fixtures and the shipped manifests
+    ///   spell these words literally and simply stop parsing.
     ///
-    /// A newly **added** variant escapes all of that, for a reason no amount of fixture
-    /// coverage fixes: no fixture can mention a word that does not exist yet. Its
-    /// `as_str` arm would go unchecked, which is the hole Codex's review named on this
-    /// PR. The successor-chain walk closes it — a new variant stops the module
-    /// compiling until it is wired in — and the length check against the
-    /// published-word table is what stops the walk from growing past a table that
-    /// does not.
+    /// So a NEW variant is the hole that remains, and no amount of fixture coverage
+    /// closes it: no fixture mentions a word that does not exist yet, so a new
+    /// variant's `as_str` arm goes unchecked. That is what Codex's review named on this
+    /// PR. The successor-chain walk closes it — the module stops compiling until the
+    /// variant is wired in — and the length check against the published-word table
+    /// stops the walk from growing past a table that does not. `variants`'s own doc
+    /// comment names the one escape the compiler cannot force.
     ///
-    /// So the eight rows below are a consolidation of a property already proven
+    /// The eight rows below are therefore mostly a consolidation of a property proven
     /// incidentally across three other modules, asserted here directly and in one
-    /// place. They are kept because they are what the length check binds against, not
-    /// because they were the gap.
+    /// place; `Lifecycle::Single` is the single row that is new coverage on its own
+    /// terms. They are kept because they are what the length check binds against.
     #[test]
     fn each_enum_writes_back_the_word_its_own_parser_reads() {
         check_published_words(
@@ -1342,9 +1374,9 @@ commands: {}
     /// the last-declared variant as the sole terminator, so appending a variant
     /// makes the correct edit the obvious one — but no `match` can force it.
     ///
-    /// The cycle check is what keeps a mis-wired chain a red test rather than a
-    /// hung one: `successors` on a chain that loops back never terminates, and
-    /// libtest has no per-test timeout.
+    /// The cycle check is what keeps a mis-wired chain a red test rather than a hung
+    /// one: the `while let` walk below would not terminate on a chain that loops back,
+    /// and libtest has no per-test timeout.
     fn variants<T>(first: T, next: fn(T) -> Option<T>) -> Vec<T>
     where
         T: Copy + PartialEq + std::fmt::Debug,

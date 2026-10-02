@@ -4157,8 +4157,10 @@ requires: []
     /// `is_write_by_convention` carries twelve dotted suffixes and, until this test,
     /// no dotted suffix was pinned anywhere end-to-end: the two convention-side
     /// safety tests above both use the bare legacy name `insert`, and every other
-    /// safety test declares an explicit `mode:`, which short-circuits the convention
-    /// before it is consulted. So `cargo test` stayed green with `".bump"` deleted
+    /// safety test that needs a POSITIVE answer declares an explicit `mode:`, which
+    /// short-circuits the convention before it is consulted.
+    /// (`safety_check_skips_read_mode_nodes` does reach it, with the command `list` —
+    /// but it needs the answer to be Read, so no suffix deletion can make it fail.) So `cargo test` stayed green with `".bump"` deleted
     /// from the list — measured — while `revit-2026 revision.bump`, which declares no
     /// `mode:` of its own, became a read and an app could add a revision letter to a
     /// user's sheets with no `safety:` block.
