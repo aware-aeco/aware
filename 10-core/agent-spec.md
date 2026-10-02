@@ -261,6 +261,55 @@ This is not a detail of the runtime. It decides which nested `requires:` pins ar
 
 ---
 
+## Connection probe (`probe:`)
+
+An agent may declare **one** probe: a fixed call that proves a connection reaches the real host
+or account, run by `aware agent probe <agent>` (#617). It is data in the manifest, inside the
+manifest digest, so the tekla probe is tekla's manifest and not a host's code.
+
+```yaml
+probe:
+  command: model-info        # a command whose OWN effective mode is read
+  inputs: {}                 # literal values only — no templating, no caller input
+  describe: "Reads the name of the model open in Tekla Structures."   # plain English, <= 160 chars
+  kind: host                 # host | account
+  rest:                      # rest transport only — and required there
+    origin: https://openidconnect.googleapis.com   # exact origin: https, no port/userinfo/path
+  reports:                   # RFC 6901 pointers into the transport's ACTUAL result
+    summary: /model_name     #   cli: the bridge's JSON receipt
+    identity: /host          #   rest: {status, headers, body} — so /body/...
+    stable-id: /host_pid
+    host-version: /host_version
+```
+
+The grammar is **closed** — an unknown key anywhere in the block is refused — and it is checked
+by `aware agent validate`, by both install routes, and again at probe time
+(`E_PROBE_INVALID`, with the broken rule as `details.reason`):
+
+- `command` exists, is runnable (`status: available`), has `lifecycle: single`, resolves to
+  mode `read`, and is **not** `mode-overridable` (a caller-determined mode proves nothing about
+  what a fixed input does — `exec` can never be a probe). Model-extraction and
+  artifact-streaming commands are refused.
+- `inputs` are literals that are declared by the command, match its declared type, and cover
+  every `required` input.
+- `kind: account` requires `reports.identity` **and** `reports.stable-id`: an account probe that
+  cannot say which account it reached verifies nothing.
+- A probe is supported on the `cli` and `rest` transports. A `rest` probe requires
+  `rest.origin`, its command must declare `method:` + `path:`, and the URL that path resolves
+  to must sit on exactly that origin. `rest:` on a `cli` probe is refused.
+
+**Trust is not declared.** A manifest can claim anything, so nothing in it can make a probe
+*reviewed*. `aware agent probe` reports `reviewed: true` only when the installed bundle's digest
+equals the `bundle-digest` a freshly fetched official registry index records for that
+agent@version — the agent arrived unmodified from the registry, whose manifests are reviewed in
+`aware-aeco/aware` PRs. A local, built, grafted or edited agent, an offline machine, or a custom
+registry is `reviewed: false`.
+
+Generated agents get no automatic probe; `aware build agent … --probe <command>` writes one at
+build time, after the same validation, and it is unreviewed.
+
+---
+
 ## Capabilities and permissions
 
 Declared in `manifest.yaml` under `requires:`. The user is prompted at first install (Claude-style — *"Allow once / Always allow / Deny"*). Approvals are stored in `~/.aware/permissions/`.
