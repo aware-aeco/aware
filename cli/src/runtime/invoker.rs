@@ -1447,13 +1447,25 @@ pub(crate) type RequestParts = (
 /// location (default query). The `in: body` input becomes the request body —
 /// keyed by location, not name, so a query/header param named `body` is routed
 /// correctly.
-pub(crate) fn build_operation_request(
+fn build_operation_request(
     agents_dir: &std::path::Path,
     agent: &str,
     command: &str,
     args: &Value,
 ) -> Result<RequestParts, AwareError> {
     let m = crate::manifest::loader::load_agent_by_id(agents_dir, agent)?;
+    build_operation_request_for(&m, command, args)
+}
+
+/// [`build_operation_request`] from an already-parsed manifest — so a caller
+/// that hashed and validated those exact bytes (`aware agent probe`) builds the
+/// request from the same manifest rather than a second read of the file.
+pub(crate) fn build_operation_request_for(
+    m: &crate::manifest::Agent,
+    command: &str,
+    args: &Value,
+) -> Result<RequestParts, AwareError> {
+    let agent = m.agent.as_str();
     let cmd = m.commands.get(command).ok_or_else(|| {
         AwareError::Validation(format!("{agent}/{command}: command not found in manifest"))
     })?;
@@ -1522,7 +1534,13 @@ pub(crate) fn build_operation_request(
     if !cookies.is_empty() {
         headers.push(("Cookie".to_string(), cookies.join("; ")));
     }
-    let url = resolve_url(rest_base_url(agents_dir, agent).as_deref(), &path);
+    let base = m
+        .transport
+        .rest
+        .as_ref()
+        .and_then(|rest| rest.get("base"))
+        .and_then(|base| base.as_str());
+    let url = resolve_url(base, &path);
     Ok((method, url, headers, query, body))
 }
 

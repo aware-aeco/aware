@@ -295,8 +295,9 @@ by `aware agent validate`, by both install routes, and again at probe time
 - `kind: account` requires `reports.identity` **and** `reports.stable-id`: an account probe that
   cannot say which account it reached verifies nothing.
 - A probe is supported on the `cli` and `rest` transports. A `rest` probe requires
-  `rest.origin`, its command must declare `method:` + `path:`, and the URL that path resolves
-  to must sit on exactly that origin. `rest:` on a `cli` probe is refused.
+  `rest.origin`, its command must declare `method:` + `path:` with a safe method (`GET` or
+  `HEAD` — a command's inferred mode comes from its name, which says nothing about a
+  `DELETE`), and the URL that path resolves to must sit on exactly that origin. `rest:` on a `cli` probe is refused.
 
 **Trust is not declared.** A manifest can claim anything, so nothing in it can make a probe
 *reviewed*. `aware agent probe` reports `reviewed: true` only when the installed bundle's digest

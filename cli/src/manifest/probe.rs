@@ -255,11 +255,23 @@ pub(crate) fn parse_probe(agent: &Agent) -> Result<Option<ProbeDecl>, ProbeIssue
                     ),
                 ));
             }
-            if command.method.is_none() {
+            let Some(method) = command.method.as_deref() else {
                 return Err(ProbeIssue::new(
                     "rest-method-missing",
                     format!(
                         "probe command {:?} declares no `method:`/`path:`, so its request URL cannot be fixed by the manifest",
+                        raw.command
+                    ),
+                ));
+            };
+            // An un-annotated command's read/write mode is inferred from its NAME,
+            // which says nothing about a `DELETE`. A REST probe must use a safe
+            // method (RFC 9110 §9.2.1) whatever the command is called.
+            if !method.eq_ignore_ascii_case("GET") && !method.eq_ignore_ascii_case("HEAD") {
+                return Err(ProbeIssue::new(
+                    "rest-method-not-safe",
+                    format!(
+                        "probe command {:?} uses HTTP {method}; a REST probe must be a GET or HEAD",
                         raw.command
                     ),
                 ));
@@ -613,6 +625,11 @@ commands:
   bare:
     lifecycle: single
     description: No method.
+  account.remove:
+    lifecycle: single
+    description: Named like a read, but deletes.
+    method: DELETE
+    path: https://openidconnect.googleapis.com/v1/userinfo
 "#;
 
     fn with_probe(base: &str, probe: &str) -> Agent {
@@ -813,6 +830,14 @@ commands:
                 "  rest: { origin: \"https://gmail.googleapis.com\" }\n"
             ),
             "rest-method-missing"
+        );
+        // Mode is inferred from the name; the HTTP method decides a REST probe.
+        assert_eq!(
+            refuse(
+                "account.remove",
+                "  rest: { origin: \"https://openidconnect.googleapis.com\" }\n"
+            ),
+            "rest-method-not-safe"
         );
         assert_eq!(
             reason(

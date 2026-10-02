@@ -717,3 +717,105 @@ async fn a_normal_exit_returns_stdout_and_status() {
     assert!(output.status.success());
     assert_eq!(output.stdout, b"ok-done");
 }
+
+#[tokio::test]
+async fn a_service_that_never_answers_times_out_within_the_deadline() {
+    let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+    let port = listener.local_addr().unwrap().port();
+    std::thread::spawn(move || {
+        let held: Vec<_> = listener.incoming().take(4).collect();
+        std::thread::sleep(Duration::from_secs(30));
+        drop(held);
+    });
+    let origin = format!("http://127.0.0.1:{port}");
+    let home = home_with(
+        "svc",
+        &rest_manifest("svc", "my.api.key", &origin, "account"),
+    );
+    store(home.path(), "my.api.key", None);
+    let mut opts = options(None, Some(&origin));
+    opts.timeout = Duration::from_millis(1500);
+    let started = Instant::now();
+    let failure = probe_agent(home.path(), "svc", &opts)
+        .await
+        .expect_err("must time out");
+    assert_eq!(failure.code, "E_PROBE_TIMEOUT");
+    assert!(
+        started.elapsed() < Duration::from_secs(5),
+        "the deadline bounds the whole probe: {:?}",
+        started.elapsed()
+    );
+}
+
+#[tokio::test]
+async fn a_probe_whose_inputs_fill_the_auth_slot_is_refused_before_sending() {
+    // A header input named Authorization would carry a token typed into the
+    // manifest instead of the stored credential — the receipt would then name a
+    // credential generation that never left AWARE.
+    let server = Fixture::start(200, "", userinfo_body());
+    let origin = server.origin();
+    let manifest = rest_manifest("svc", "my.api.key", &origin, "account")
+        .replace(
+            "    path: \"",
+            "    inputs:\n      Authorization: { type: string, in: header }\n    path: \"",
+        )
+        .replace(
+            "  describe: Reads who is signed in.\n  kind",
+            "  inputs: { Authorization: \"Bearer typed-into-the-manifest\" }\n  describe: Reads who is signed in.\n  kind",
+        );
+    let home = home_with("svc", &manifest);
+    store(home.path(), "my.api.key", Some("gen-1"));
+    let failure = probe_agent(home.path(), "svc", &options(None, Some(&origin)))
+        .await
+        .expect_err("the stored credential would not be what authenticates");
+    assert_eq!(failure.code, "E_PROBE_INVALID");
+    assert_eq!(failure.details["reason"], "auth-not-attached");
+    assert!(server.requests().is_empty());
+}
+
+#[tokio::test]
+async fn a_folder_that_is_not_its_manifests_agent_is_refused() {
+    let home = home_with("other", HOST_AGENT_FOR_ID_TEST);
+    let failure = probe_agent(home.path(), "other", &options(None, None))
+        .await
+        .unwrap_err();
+    assert_eq!(failure.code, "E_PROBE_INVALID");
+    assert_eq!(failure.details["reason"], "agent-id-mismatch");
+}
+
+const HOST_AGENT_FOR_ID_TEST: &str = "agent: hostx\nversion: 1.0.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+    transport: { cli: { binary: aware-no-such-bridge-617 } }\n\
+    commands:\n  model-info: { lifecycle: single, description: Reads. }\n\
+    probe: { command: model-info, describe: Reads the model., kind: host }\n";
+
+#[tokio::test]
+async fn a_registered_generation_mismatch_is_refused_before_any_refresh() {
+    // An EXPIRED google-workspace token with no refresh token: had the refresh
+    // run first, the answer would be E_CREDENTIAL_EXPIRED. The expected
+    // generation must be compared before the resolver touches the slot.
+    let origin = "https://openidconnect.googleapis.com";
+    let home = home_with(
+        "gw",
+        &rest_manifest("gw", "google-workspace", origin, "account"),
+    );
+    let token = crate::auth::keychain::StoredToken {
+        access_token: TOKEN.into(),
+        refresh_token: None,
+        expires_at: 1,
+        scope: "openid".into(),
+        token_type: "Bearer".into(),
+        integration: "google-workspace".into(),
+        obtained_at: 0,
+        generation: Some("gen-real".into()),
+        source: crate::auth::keychain::TokenSource::Oauth,
+    };
+    crate::auth::keychain::store_token(&token, None, home.path()).unwrap();
+    let mut opts = options(None, None);
+    opts.expect_generation = Some("gen-other".into());
+    let failure = probe_agent(home.path(), "gw", &opts).await.unwrap_err();
+    assert_eq!(failure.code, "E_CREDENTIAL_CHANGED");
+
+    opts.expect_generation = Some("gen-real".into());
+    let failure = probe_agent(home.path(), "gw", &opts).await.unwrap_err();
+    assert_eq!(failure.code, "E_CREDENTIAL_EXPIRED");
+}

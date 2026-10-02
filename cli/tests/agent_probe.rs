@@ -108,7 +108,7 @@ fn the_timeout_flag_is_bounded() {
 #[test]
 fn describe_publishes_the_probe_and_the_same_manifest_digest() {
     let home = common::aware_home();
-    let out = aware(&home)
+    let out = aware(home)
         .args(["--json", "agent", "describe", "tekla"])
         .assert()
         .success()
@@ -133,7 +133,7 @@ fn describe_publishes_the_probe_and_the_same_manifest_digest() {
         })
     );
 
-    let out = aware(&home)
+    let out = aware(home)
         .args(["--json", "agent", "describe", "google-workspace"])
         .assert()
         .success()

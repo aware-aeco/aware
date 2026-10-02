@@ -420,10 +420,42 @@ fn check_credential_origin(
 // ── the verb ─────────────────────────────────────────────────────────────────
 
 /// Run `agent_id`'s declared probe against `home` (an AWARE home directory).
+///
+/// `options.timeout` bounds the WHOLE probe — manifest checks, credential
+/// resolution (including an OAuth refresh), the transport call and the
+/// `reviewed` lookup — not only the transport. Past it the answer is
+/// `E_PROBE_TIMEOUT`.
 pub(crate) async fn probe_agent(
     home: &Path,
     agent_id: &str,
     options: &ProbeOptions,
+) -> Result<ProbeReceipt, ProbeFailure> {
+    let started = Instant::now();
+    match tokio::time::timeout(
+        options.timeout,
+        probe_agent_within(home, agent_id, options, started),
+    )
+    .await
+    {
+        Ok(outcome) => outcome,
+        Err(_) => Err(ProbeFailure::new("E_PROBE_TIMEOUT")),
+    }
+}
+
+/// What remains of the probe's deadline, or `E_PROBE_TIMEOUT` once it is spent.
+fn remaining(options: &ProbeOptions, started: Instant) -> Result<Duration, ProbeFailure> {
+    options
+        .timeout
+        .checked_sub(started.elapsed())
+        .filter(|left| !left.is_zero())
+        .ok_or_else(|| ProbeFailure::new("E_PROBE_TIMEOUT"))
+}
+
+async fn probe_agent_within(
+    home: &Path,
+    agent_id: &str,
+    options: &ProbeOptions,
+    started: Instant,
 ) -> Result<ProbeReceipt, ProbeFailure> {
     let probed_at = crate::time::now_iso();
     let agents_dir = home.join("agents");
@@ -437,6 +469,11 @@ pub(crate) async fn probe_agent(
         .map_err(|_| ProbeFailure::reason("E_PROBE_INVALID", "manifest-unreadable"))?;
     if agent.status == crate::manifest::agent::AgentStatus::Planned {
         return Err(ProbeFailure::new("E_AGENT_PLANNED"));
+    }
+    // The folder an agent is installed under must be the agent the manifest
+    // declares, or the receipt (and its `reviewed`) would describe another one.
+    if agent.agent != agent_id {
+        return Err(ProbeFailure::reason("E_PROBE_INVALID", "agent-id-mismatch"));
     }
     if crate::validate::runtime_requirement_error(&agent, crate::validate::CURRENT_CLI_VERSION)
         .is_some()
@@ -462,7 +499,6 @@ pub(crate) async fn probe_agent(
         CredentialPlan::None => None,
     };
 
-    let started = Instant::now();
     let (result, generation) = match decl.transport {
         TransportKind::Cli => {
             if options.allow_origin.is_some() {
@@ -478,7 +514,7 @@ pub(crate) async fn probe_agent(
                 .as_ref()
                 .map(|c| c.binary.clone())
                 .ok_or_else(|| ProbeFailure::reason("E_PROBE_INVALID", "transport-unsupported"))?;
-            let result = probe_cli(home, &binary, &decl, options.timeout).await?;
+            let result = probe_cli(home, &binary, &decl, remaining(options, started)?).await?;
             (result, None)
         }
         TransportKind::Rest => probe_rest(home, &agent, &decl, &plan, options, started).await?,
@@ -505,11 +541,16 @@ pub(crate) async fn probe_agent(
 
     let agent_dir = agents_dir.join(agent_id);
     let (manifest_agent, manifest_version) = (agent.agent.clone(), agent.version.clone());
-    let reviewed = tokio::task::spawn_blocking(move || {
+    // Bounded by what is left of the deadline. A registry that does not answer
+    // in time leaves the probe unreviewed (fail closed on trust) rather than
+    // failing a connection the probe has already proven.
+    let lookup = tokio::task::spawn_blocking(move || {
         bundle_is_reviewed(&agent_dir, &manifest_agent, &manifest_version)
-    })
-    .await
-    .unwrap_or(false);
+    });
+    let reviewed = match remaining(options, started) {
+        Ok(left) => matches!(tokio::time::timeout(left, lookup).await, Ok(Ok(true))),
+        Err(_) => false,
+    };
 
     Ok(ProbeReceipt {
         schema: SCHEMA,
@@ -669,11 +710,10 @@ async fn probe_rest(
         .rest_origin
         .clone()
         .ok_or_else(|| ProbeFailure::reason("E_PROBE_INVALID", "rest-origin-required"))?;
-    let agents_dir = home.join("agents");
+    // Built from the manifest that was hashed and validated, never a second read.
     let (method, url, mut headers, mut query, body) =
-        crate::runtime::invoker::build_operation_request(
-            &agents_dir,
-            &agent.agent,
+        crate::runtime::invoker::build_operation_request_for(
+            agent,
             &decl.command,
             &Json::Object(decl.inputs.clone()),
         )
@@ -704,6 +744,14 @@ async fn probe_rest(
             &mut headers,
             &mut query,
         );
+        // The stored credential MUST be what authenticates the request: a receipt
+        // naming its generation is a claim that this credential reached that
+        // account. If nothing was attached (an unknown scheme, or a probe input
+        // already filling the slot), the call would prove some other token — or
+        // none — so it is refused before anything is sent.
+        if slot.is_none() {
+            return Err(ProbeFailure::reason("E_PROBE_INVALID", "auth-not-attached"));
+        }
         if slot == Some(crate::runtime::invoker::AuthSlot::Header)
             && crate::runtime::invoker::unsendable_in_header_char(&credential.secret).is_some()
         {
@@ -712,11 +760,7 @@ async fn probe_rest(
     }
     let request_body = body
         .filter(|b| matches!(method.as_str(), "POST" | "PUT" | "PATCH" | "DELETE") && !b.is_null());
-    let remaining = options
-        .timeout
-        .checked_sub(started.elapsed())
-        .filter(|d| !d.is_zero())
-        .ok_or_else(|| ProbeFailure::new("E_PROBE_TIMEOUT"))?;
+    let remaining = remaining(options, started)?;
     let request = RestRequest {
         method,
         url,

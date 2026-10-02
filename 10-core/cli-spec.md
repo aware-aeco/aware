@@ -435,7 +435,11 @@ integration** (`google-workspace`, `microsoft-365`, `trimble-connect`) goes only
 that integration's code-owned allowlist (`IntegrationConfig::probe_origins` — google-workspace:
 `https://openidconnect.googleapis.com`; the others: none); a **custom handle**'s only with
 `--allow-origin` equal to `rest.origin`, which a host passes after the person confirmed where the
-credential will be sent. Redirects are never followed (a 3xx is `E_PROBE_FAILED`).
+credential will be sent. Redirects are never followed (a 3xx is `E_PROBE_FAILED`). The stored credential must be what
+authenticates the request: if it could not be attached (an unknown scheme, or a probe input
+already filling the slot) the probe is refused (`E_PROBE_INVALID`, `auth-not-attached`) before
+anything is sent. The request is built from the same manifest bytes that were hashed, and an
+agent folder whose manifest declares a different `agent:` is refused (`agent-id-mismatch`).
 
 **Exactly one slot, no fallback.** The manifest's `auth.secret` names the base handle `H`. A
 registered integration's `H` is the integration id by the resolver's first-dot split, and `--as`
@@ -444,7 +448,10 @@ opaque (dots allowed, never split). `--as A` resolves exactly `H.A`; without it,
 manifest's slot. A missing slot is `E_CREDENTIAL_MISSING`, never another account.
 `--expect-generation` is checked before the credential is refreshed or attached.
 
-**Bounded.** cli stdout and REST bodies are capped at 64 KiB. A timeout terminates the bridge's
+**Bounded.** `--timeout-ms` bounds the whole probe — credential resolution and refresh, the
+call, and the `reviewed` registry lookup (which, if it cannot finish in the time left, leaves
+`reviewed: false` rather than failing a proven connection). cli stdout and REST bodies are
+capped at 64 KiB. A timeout terminates the bridge's
 whole process tree — a Windows Job Object (the child starts suspended and is assigned before it
 runs) or a Unix process group — and any process left behind after a normal exit is ended too.
 
