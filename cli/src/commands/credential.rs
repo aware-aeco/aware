@@ -338,10 +338,26 @@ fn run_status(args: HandleArgs, ctx: &Context) -> Result<(), AwareError> {
             "unusable"
         };
 
+    // The slot's generation (#617): the opaque identity of the material grant,
+    // so a caller can tell "the same credential" from "a re-provisioned one"
+    // without ever seeing it. Reading through `load_token` is also what writes a
+    // generation for a legacy credential that predates them — once, under the
+    // keychain's generation lock — so every usable StoredToken-shaped credential
+    // reports one. A bare-string credential file has nowhere to keep it and
+    // reports `null`, which a caller must treat as "cannot confirm".
+    let generation = if status == "present" {
+        crate::auth::keychain::load_token(&args.handle, args.r#as.as_deref(), &ctx.paths.aware_home)
+            .ok()
+            .flatten()
+            .and_then(|token| token.generation)
+    } else {
+        None
+    };
+
     if ctx.json {
         println!(
             "{}",
-            serde_json::json!({ "status": status, "handle": account })
+            serde_json::json!({ "status": status, "handle": account, "generation": generation })
         );
     } else {
         match status {
@@ -392,6 +408,13 @@ const RESERVED_DEVICE_NAMES: &[&str] = &[
 /// exits 3.
 pub(crate) fn is_provisionable(handle: &str) -> bool {
     validated_account(handle, None).is_ok()
+}
+
+/// Whether `alias` is an account alias `put --as` / `connect --as` would accept
+/// — the one grammar `aware agent probe --as` must also hold to, since the alias
+/// becomes part of a keychain account and a credentials file name.
+pub(crate) fn is_valid_alias(alias: &str) -> bool {
+    validate_label("alias", alias, false).is_ok()
 }
 
 /// Validate handle and alias, and return the account name the store will use.

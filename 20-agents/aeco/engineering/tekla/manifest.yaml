@@ -1,5 +1,5 @@
 agent:        tekla
-version:      0.1.5
+version:      0.1.6
 sdk-target:   2025+         # version-agnostic shorthand; structured form lands in hardening pass
 display-name: Tekla Structures
 
@@ -157,6 +157,33 @@ commands:
       type: single
       schema:
         instances: array          # [{ pid: integer, version: string, exe_path: string }]
+
+  # The connection probe (#617) — see `probe:` below. Strictly read-only.
+  model-info:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: |
+      Read the name and folder of the model open in Tekla Structures — the agent's
+      connection probe. Strictly read-only: it constructs the Open API Model and calls
+      only GetConnectionStatus() and GetInfo(); nothing is committed, saved or changed.
+      Takes no input.
+
+      The host is chosen by the same rule `exec` uses: exactly one reachable Tekla
+      instance (or one instance of a single version). Several same-version instances,
+      or one this sidecar cannot inspect, are refused with code `host-ambiguous`
+      rather than guessed at. No Tekla running is `host-not-running`; Tekla running
+      with no model open is `model-closed`. A refusal is a receipt with
+      `status: err`, a kebab-case `code` and `instance_count`.
+    outputs:
+      type: single
+      schema:
+        status:       string      # ok
+        host:         string      # tekla
+        host_version: string      # e.g. 2026.0
+        host_pid:     integer
+        model_name:   string
+        model_path:   string
 
   close:
     lifecycle: single
@@ -863,6 +890,20 @@ commands:
             mark-a:   string
             mark-b:   string
             severity: string
+
+# One declared, read-only call that proves the connection reaches a live Tekla with a model
+# open (#617). Run by `aware agent probe tekla`; FloLess shows `describe` before the first
+# check. `reviewed` is never claimed here — AWARE derives it from the installed bundle digest.
+probe:
+  command: model-info
+  inputs: {}
+  describe: Reads the name of the model open in Tekla Structures.
+  kind: host
+  reports:
+    summary: /model_name
+    identity: /host
+    stable-id: /host_pid
+    host-version: /host_version
 
 skills:
   - runtime-bridge-dotnet-framework.md   # CRITICAL — read first before writing any Tekla sidecar

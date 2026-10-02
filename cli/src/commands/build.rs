@@ -80,6 +80,11 @@ pub struct BuildAgentArgs {
     /// (v0.30) Vertical for --from-coverage (e.g. "engineering", "construction").
     #[arg(long)]
     pub vertical: Option<String>,
+    /// (#617) Declare this generated command as the agent's connection probe —
+    /// the one read-only call `aware agent probe` runs. Validated before the
+    /// agent is written; a generated probe is always unreviewed.
+    #[arg(long)]
+    pub probe: Option<String>,
 }
 
 pub fn dispatch(cmd: BuildCommand, ctx: &Context) -> Result<(), AwareError> {
@@ -96,6 +101,11 @@ fn build_agent(ctx: &Context, args: &BuildAgentArgs) -> Result<(), AwareError> {
     // and return — the rest of the dispatch is for builders that produce a
     // GeneratedAgent + then go through write_agent().
     if let Some(ir_path) = &args.from_coverage {
+        if args.probe.is_some() {
+            return Err(AwareError::Validation(
+                "--probe is not supported with --from-coverage (that builder writes its manifest in the sidecar)".into(),
+            ));
+        }
         let agent_id = args
             .agent_id
             .as_deref()
@@ -150,7 +160,7 @@ fn build_agent(ctx: &Context, args: &BuildAgentArgs) -> Result<(), AwareError> {
 
     let agents_dir = ctx.paths.agents_dir();
     std::fs::create_dir_all(&agents_dir)?;
-    let dst = builder::write_agent(&generated, &agents_dir)?;
+    let dst = builder::write_agent_with_probe(&generated, &agents_dir, args.probe.as_deref())?;
     println!(
         "\u{2713} generated {} ({} commands, {} skills) at {}",
         generated.id,

@@ -8,8 +8,8 @@
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
           "subdir": "aware-main/20-agents/aeco/engineering/tekla",
           "manifest-agent": "tekla",
-          "manifest-version": "0.1.5",
-          "bundle-digest": "sha256:4eb0cb164ce93b56b391f31a8feade4a68689a90ac90e28d3b78f4312b5395fa"
+          "manifest-version": "0.1.6",
+          "bundle-digest": "sha256:97ee6ea0d5cb2ac9e263bd50421be977afe8631dd7f3ba08bc5962d44f32a65f"
         }
       }
     },

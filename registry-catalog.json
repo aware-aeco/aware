@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-09-23T15:05:16.618310700+00:00",
+  "updated-at": "2026-10-02T16:38:33.160481300+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -6083,11 +6083,11 @@
         "2025.0.1": {
           "description": "Watches the active Tekla model, reads its state, and writes back via the",
           "status": "available",
-          "manifest-version": "0.1.5",
+          "manifest-version": "0.1.6",
           "stateful": true,
           "sdk-target": "2025+",
           "transport": "cli",
-          "command_count": 26,
+          "command_count": 27,
           "skills": [
             "runtime-bridge-dotnet-framework",
             "headless-startup-and-shutdown",
@@ -6222,6 +6222,13 @@
               "description": "List the Tekla Structures instances VISIBLE TO THIS SIDECAR — the discovery",
               "lifecycle": "single",
               "category": "curated"
+            },
+            {
+              "name": "model-info",
+              "description": "Read the name and folder of the model open in Tekla Structures — the agent's",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
             },
             {
               "name": "nc-export",

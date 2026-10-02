@@ -65,6 +65,16 @@ pub struct IntegrationConfig {
     overlay: Overlay,
 }
 
+/// See [`IntegrationConfig::probe_origins`].
+fn probe_origins_for(id: &str) -> &'static [&'static str] {
+    match id {
+        // OpenID Connect userinfo — the `account.userinfo` probe. The consent
+        // already includes `openid` + `userinfo.email`, so it needs no new scope.
+        "google-workspace" => &["https://openidconnect.googleapis.com"],
+        _ => &[],
+    }
+}
+
 pub fn for_integration(id: &str) -> Result<IntegrationConfig, AwareError> {
     let scopes = |list: &[&str]| list.iter().map(|s| s.to_string()).collect::<Vec<String>>();
     match id {
@@ -149,6 +159,16 @@ pub fn for_integration(id: &str) -> Result<IntegrationConfig, AwareError> {
 }
 
 impl IntegrationConfig {
+    /// The exact origins an agent probe (#617) may send this integration's
+    /// credential to. Code-owned, keyed by the integration id alone: no manifest,
+    /// BYO profile or environment variable can extend it, because the whole point
+    /// is that a manifest naming this integration's secret cannot choose where the
+    /// token goes. An integration with no reviewed read endpoint has none, so a
+    /// probe of it is refused rather than pointed anywhere.
+    pub fn probe_origins(&self) -> &'static [&'static str] {
+        probe_origins_for(&self.id)
+    }
+
     /// Overlay a BYO (Tier 2) app profile + keychain secret on top of the bundled
     /// defaults. Looks up `~/.aware/oauth/<id>[.<alias>].yaml` and the keychain
     /// `oauth-app.<id>[.<alias>]` slot. For M365, a profile that sets only a

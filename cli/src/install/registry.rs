@@ -866,7 +866,7 @@ mod tests {
                 tarball: format!("file://{}", tarball.display()),
                 subdir: "aware-main/20-agents/tekla".into(),
                 manifest_agent: Some("tekla".into()),
-                manifest_version: Some("0.1.5".into()),
+                manifest_version: Some("0.1.6".into()),
             },
         );
         let mut agents = BTreeMap::new();
@@ -947,12 +947,12 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.path().join("aware"),
         };
-        let initial = tekla_index(&tarball, Some("tekla"), Some("0.1.5"));
+        let initial = tekla_index(&tarball, Some("tekla"), Some("0.1.6"));
         install_agent_from_registry("tekla", None, &paths, &initial).unwrap();
         let sentinel = paths.agents_dir().join("tekla/keep-me.txt");
         std::fs::write(&sentinel, "original install").unwrap();
 
-        let mismatched = tekla_index(&tarball, Some("different-agent"), Some("0.1.5"));
+        let mismatched = tekla_index(&tarball, Some("different-agent"), Some("0.1.6"));
         let error =
             update_agent_from_registry("tekla", None, false, &paths, &mismatched).unwrap_err();
 
@@ -1043,7 +1043,7 @@ mod tests {
                     tarball: url.clone(),
                     subdir: subdir.to_string(),
                     manifest_agent: subdir.rsplit('/').next().map(str::to_owned),
-                    manifest_version: Some("0.1.5".to_string()),
+                    manifest_version: Some("0.1.6".to_string()),
                 },
             );
             versions
@@ -1196,7 +1196,7 @@ mod tests {
                 tarball: url.to_string(),
                 subdir: "aware-main/20-agents/alpha".to_string(),
                 manifest_agent: Some("alpha".into()),
-                manifest_version: Some("0.1.5".into()),
+                manifest_version: Some("0.1.6".into()),
             },
         );
         let mut agents = BTreeMap::new();
@@ -1235,7 +1235,7 @@ mod tests {
             .get_mut("1")
             .unwrap();
         release.manifest_agent = Some("alpha".into());
-        release.manifest_version = Some("0.1.5".into());
+        release.manifest_version = Some("0.1.6".into());
 
         let cache_file = paths
             .cache_dir()
@@ -1390,7 +1390,7 @@ mod tests {
             .get_mut("1")
             .unwrap();
         release.manifest_agent = Some("alpha".into());
-        release.manifest_version = Some("0.1.5".into());
+        release.manifest_version = Some("0.1.6".into());
 
         write_alpha_archive(&archive, "KNOWN-GOOD");
         let (_first_guard, first) =
@@ -1687,7 +1687,7 @@ mod tests {
                         tarball: url.clone(),
                         subdir: format!("aware-main/20-agents/{n}"),
                         manifest_agent: Some((*n).to_string()),
-                        manifest_version: Some("0.1.5".to_string()),
+                        manifest_version: Some("0.1.6".to_string()),
                     },
                 );
                 agents.insert(
