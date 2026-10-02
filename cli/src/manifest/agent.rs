@@ -1203,36 +1203,40 @@ commands: {}
     /// (`commands::agent:1186` and `:1198`) and the catalog (`registry::catalog:216`),
     /// where `describe_from_catalog` then `match`es the word against string literals
     /// (`commands::agent:2322`). Not `app show` — `commands::app:1288` matches a
-    /// `RunEvent::RunEnd` status, which is an unrelated type that happens to share the
-    /// field name.
+    /// `RunEvent::RunEnd` status, an unrelated type that happens to share the field
+    /// name.
     ///
-    /// Six of the eight variant rows were already pinned incidentally, and saying
-    /// otherwise would be wrong: both `Mode` words via `app_lock.rs`'s
-    /// `mode_axis_agents`, which feeds `mode: read` / `mode: write` through serde and
-    /// asserts the lock string `Mode::as_str` produced; all three `AgentStatus` words
-    /// via `registry/catalog.rs`'s `status_str` (a thin delegation to `as_str`), whose
-    /// tests feed `status: planned` / `requires-runtime` and assert the published
-    /// word; and `Lifecycle::Single` via the catalog's JSON golden. What was unpinned
-    /// is `Lifecycle::Start` and `Lifecycle::Stop` — `expose.rs` uses those words only
-    /// as inputs and nothing asserted the emitted word — even though
-    /// `Lifecycle::as_str`'s own doc comment states the round-trip property outright
-    /// ("a value read from a manifest round-trips back to the same word") and names
-    /// the two surfaces that would desynchronise.
+    /// **Exactly one thing here is new coverage: the exhaustiveness gate.** Two earlier
+    /// versions of this comment claimed more than that — first that nothing checked
+    /// these words at all, then that six of the eight rows were pinned. Both were
+    /// wrong, and the correction is measured rather than reasoned, because this repo
+    /// requires a load-bearing claim to be grounded:
     ///
-    /// So the standing value of this test is less the eight rows than the two gates
-    /// under them — the exhaustiveness-checked variant walk and the published-word
-    /// table it is length-checked against. Those incidental pins are per-variant and
-    /// per-surface; none of them notices a variant that is ADDED, and none of them
-    /// catches a rename that moves the serde word and the `as_str` arm together.
+    /// * **One-sided** (`as_str` lies, the derive unchanged): already caught.
+    ///   `Lifecycle::Start => "begin"` alone reddens
+    ///   `manifest::expose::tests::synthesizes_a_parseable_agent_manifest_from_welded_to_tc`
+    ///   and `..._one_start_command_among_singles_...`, which re-parse the manifest
+    ///   `synthesize_agent_manifest` wrote with `as_str` and assert the variant back.
+    ///   `Mode` and `AgentStatus` are covered the same way through `app_lock` and
+    ///   `registry::catalog`.
+    /// * **Coordinated** (serde word and `as_str` arm renamed together, which
+    ///   round-trips perfectly and would defeat any round-trip assertion): also already
+    ///   caught, and widely — renaming `Lifecycle::Start` to `"begin"` reddens 36 tests
+    ///   outside this module, `Mode::Read` to `"r"` reddens 29, because the fixtures and
+    ///   the shipped manifests spell these words literally and simply stop parsing.
     ///
-    /// This is not a serde round-trip: the value under test is the `&'static str`
-    /// a `match` produced, and serde is the independent oracle it is checked
-    /// against.
+    /// A newly **added** variant escapes all of that, for a reason no amount of fixture
+    /// coverage fixes: no fixture can mention a word that does not exist yet. Its
+    /// `as_str` arm would go unchecked, which is the hole Codex's review named on this
+    /// PR. The successor-chain walk closes it — a new variant stops the module
+    /// compiling until it is wired in — and the length check against the
+    /// published-word table is what stops the walk from growing past a table that
+    /// does not.
     ///
-    /// The variants are walked through the successor chains below rather than
-    /// listed in an array literal, so a variant added to one of these enums
-    /// cannot slip past this test — see [`variants`] for why that distinction is
-    /// load-bearing (Codex review, PR #610).
+    /// So the eight rows below are a consolidation of a property already proven
+    /// incidentally across three other modules, asserted here directly and in one
+    /// place. They are kept because they are what the length check binds against, not
+    /// because they were the gap.
     #[test]
     fn each_enum_writes_back_the_word_its_own_parser_reads() {
         check_published_words(
