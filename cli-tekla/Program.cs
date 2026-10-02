@@ -3228,10 +3228,16 @@ internal static class Program
         Environment.CurrentDirectory = binDir;
         try
         {
+            // Net48Runtime first: Tekla 2026's bin/ holds the .NET 8/9 builds, and this
+            // sidecar is net48 — the same probe order ConstructTeklaModel uses for exec.
+            var probePaths = new[] { Path.Combine(binDir, "Net48Runtime"), binDir };
             foreach (var name in new[] { "Tekla.Structures.dll", "Tekla.Structures.Datatype.dll", "Tekla.Structures.Model.dll" })
             {
-                var p = Path.Combine(binDir, name);
-                if (File.Exists(p)) Assembly.LoadFrom(p);
+                foreach (var probe in probePaths)
+                {
+                    var p = Path.Combine(probe, name);
+                    if (File.Exists(p)) { Assembly.LoadFrom(p); break; }
+                }
             }
             var modelAsm = AppDomain.CurrentDomain.GetAssemblies()
                 .FirstOrDefault(a => a.GetName().Name == "Tekla.Structures.Model")
