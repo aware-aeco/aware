@@ -1109,46 +1109,82 @@ fn check_inline_nodes(nodes: &[crate::manifest::app::Node], out: &mut Vec<Valida
 ///
 /// Agents referenced by the app but not installed are skipped (not an
 /// error here — caught by lockfile resolution earlier).
+///
+/// Recurses into `do:` bodies (`for-each`, `sweep`, `schedule` scopes), so the
+/// contract holds "on any write-mode node anywhere in the tree" as
+/// `10-core/app-spec.md § Substrate primitives` promises (#611).
 pub fn validate_app_safety(
     app: &App,
     agents: &[crate::manifest::loader::DiscoveredAgent],
 ) -> Vec<ValidationIssue> {
-    use crate::manifest::agent::Mode;
     let mut out = Vec::new();
-    for node in &app.nodes {
+    check_node_safety(&app.nodes, agents, None, &mut out);
+    out
+}
+
+/// The safety gate's traversal, shared by top-level nodes and every `do:` body.
+///
+/// Split out from [`validate_app_safety`] so the gate recurses the way its
+/// siblings already do ([`check_node_agents`], [`collect_missing_agents`]). It
+/// did not, and a write-mode node wrapped in `for-each: '[1]'` — a no-op loop
+/// over one element — walked around the whole contract: `tekla.close` was
+/// refused at the top level and accepted inside a body, while `compile` stamped
+/// it `mode: write` into the lock, so the compiler knew and the gate never
+/// asked (#611). `do_` is the single nested container for `for-each`, `sweep`
+/// and `schedule` scopes (`manifest::app::Node::do_`), so this one recursion
+/// covers every primitive that has a body.
+///
+/// `prefix` is the enclosing `do:` scope, so a nested node is named the way the
+/// lock names it (`loop.shutdown`, not a bare `shutdown` that could be any of
+/// three loops' bodies). `None` at the top level, where the message is
+/// unchanged.
+fn check_node_safety(
+    nodes: &[crate::manifest::app::Node],
+    agents: &[crate::manifest::loader::DiscoveredAgent],
+    prefix: Option<&str>,
+    out: &mut Vec<ValidationIssue>,
+) {
+    use crate::manifest::agent::Mode;
+    for node in nodes {
         // A frozen node never invokes its agent (the orchestrator emits its pinned output and
         // skips dispatch), so it never writes — the write-mode safety contract does not apply.
+        // Its `do:` body is skipped with it: `execute_node` returns on `frozen:` before it ever
+        // reaches the `for-each`/`sweep` branch, so a frozen primitive's body never runs either.
+        // Same carve-out, same reach, as `check_node_agents`.
         if node.frozen.is_some() {
             continue;
         }
-        let (Some(agent_id), Some(cmd_name)) = (node.agent.as_ref(), node.command.as_ref()) else {
-            continue;
+        let scoped_id = match prefix {
+            Some(p) => format!("{p}.{}", node.id),
+            None => node.id.clone(),
         };
-        let Some(agent) = agents.iter().find(|d| d.manifest.agent == *agent_id) else {
-            continue;
-        };
-        let Some(cmd) = agent.manifest.commands.get(cmd_name.as_str()) else {
-            continue;
-        };
-
-        // Note: a node-level `mode:` that *conflicts* with a non-overridable
-        // command is rejected by `validate_app_agents` (#165) — the agent-aware
-        // validator that runs on every lock-producing + run path. Here we only
-        // resolve the effective mode for the write-mode safety gate; on a
-        // mode-overridable command an explicit `mode: read` legitimately makes
-        // the node read-mode (so no `safety:` block is required).
-        let effective = agent.manifest.effective_mode(cmd_name, cmd, node.mode);
-        if effective.mode == Mode::Write && node.safety.is_none() {
-            out.push(ValidationIssue::error(
-                "E_APP_WRITE_WITHOUT_SAFETY",
-                format!(
-                    "node {:?} calls write-mode command {}.{} without a `safety:` block (required per app-spec § Safety contract)",
-                    node.id, agent_id, cmd_name
-                ),
-            ));
+        if let (Some(agent_id), Some(cmd_name)) = (node.agent.as_ref(), node.command.as_ref())
+            && let Some(agent) = agents.iter().find(|d| d.manifest.agent == *agent_id)
+            && let Some(cmd) = agent.manifest.commands.get(cmd_name.as_str())
+        {
+            // Note: a node-level `mode:` that *conflicts* with a non-overridable
+            // command is rejected by `validate_app_agents` (#165) — the agent-aware
+            // validator that runs on every lock-producing + run path. Here we only
+            // resolve the effective mode for the write-mode safety gate; on a
+            // mode-overridable command an explicit `mode: read` legitimately makes
+            // the node read-mode (so no `safety:` block is required).
+            let effective = agent.manifest.effective_mode(cmd_name, cmd, node.mode);
+            if effective.mode == Mode::Write && node.safety.is_none() {
+                out.push(ValidationIssue::error(
+                    "E_APP_WRITE_WITHOUT_SAFETY",
+                    format!(
+                        "node {:?} calls write-mode command {}.{} without a `safety:` block (required per app-spec § Safety contract)",
+                        scoped_id, agent_id, cmd_name
+                    ),
+                ));
+            }
+        }
+        // Recurse regardless of whether THIS node dispatches: a bare `for-each`
+        // carries no agent of its own and its body is where the writes live.
+        if let Some(body) = &node.do_ {
+            check_node_safety(body, agents, Some(&scoped_id), out);
         }
     }
-    out
 }
 
 /// Reject nodes that reference an agent the runtime can't dispatch to: one
@@ -4350,6 +4386,224 @@ requires: []
         let issues = validate_app_safety(&app, &[agent]);
         assert_eq!(issues.len(), 1);
         assert_eq!(issues[0].code, "E_APP_WRITE_WITHOUT_SAFETY");
+    }
+
+    /// An agent with one write-mode and one read-mode command, for the
+    /// nested-traversal tests below. `close` is the real shape of the escape
+    /// hatch in #611: it declares `mode: write` and ends the user's session,
+    /// discarding unsaved model work.
+    fn writer_agent() -> crate::manifest::loader::DiscoveredAgent {
+        discovered(
+            r#"
+agent: tekla
+version: 1.0
+description: x
+stateful: false
+license: Apache-2.0
+transport: { cli: { binary: aware-tekla } }
+commands:
+  close:
+    lifecycle: single
+    mode: write
+    category: curated
+    description: Terminate the Tekla session.
+  list:
+    lifecycle: single
+    mode: read
+    category: curated
+    description: List things.
+"#,
+        )
+    }
+
+    #[test]
+    fn safety_check_rejects_a_write_node_inside_a_for_each_body() {
+        // #611: the gate iterated `&app.nodes` only, so wrapping a write-mode
+        // node in `for-each: '[1]'` — a no-op loop over a single element —
+        // skipped the `safety:` requirement entirely, while `compile` still
+        // stamped the node `mode: write` into the lock. The byte-identical node
+        // at the top level was refused; nested it was accepted.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: nested-write-no-safety
+version: 0.0.1
+description: x
+nodes:
+  - id: loop
+    for-each: '[1]'
+    do:
+      - id: shutdown
+        agent: tekla
+        command: close
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[writer_agent()]);
+        assert_eq!(issues.len(), 1, "issues: {issues:?}");
+        assert_eq!(issues[0].code, "E_APP_WRITE_WITHOUT_SAFETY");
+        // Named the way the lock names it, so the author can find the node: a
+        // bare `shutdown` could be any of several bodies'.
+        assert!(
+            issues[0].message.contains("\"loop.shutdown\""),
+            "nested node must be reported by its scoped id; got: {}",
+            issues[0].message
+        );
+    }
+
+    #[test]
+    fn safety_check_passes_a_nested_write_node_that_declares_safety() {
+        // The recursion must not turn into a blanket refusal of nested writes:
+        // a body node carrying `safety:` satisfies the contract exactly as the
+        // same node does at the top level.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: nested-write-with-safety
+version: 0.0.1
+description: x
+nodes:
+  - id: loop
+    for-each: '[1]'
+    do:
+      - id: shutdown
+        agent: tekla
+        command: close
+        safety:
+          transaction: true
+          snapshot: true
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[writer_agent()]);
+        assert!(issues.is_empty(), "issues: {issues:?}");
+    }
+
+    #[test]
+    fn safety_check_reaches_a_write_node_nested_two_bodies_deep() {
+        // The traversal is recursive, not one level of unrolling: a `sweep`
+        // inside a `for-each` is a second `do:` body, and `do_` is the single
+        // nested container for every body-bearing primitive.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: deeply-nested-write
+version: 0.0.1
+description: x
+nodes:
+  - id: outer
+    for-each: '[1]'
+    do:
+      - id: inner
+        sweep:
+          var: thickness
+          values: [1, 2]
+        do:
+          - id: shutdown
+            agent: tekla
+            command: close
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[writer_agent()]);
+        assert_eq!(issues.len(), 1, "issues: {issues:?}");
+        assert_eq!(issues[0].code, "E_APP_WRITE_WITHOUT_SAFETY");
+        assert!(
+            issues[0].message.contains("\"outer.inner.shutdown\""),
+            "scoped id must carry every enclosing body; got: {}",
+            issues[0].message
+        );
+    }
+
+    #[test]
+    fn safety_check_skips_a_read_mode_node_inside_a_for_each_body() {
+        // The recursion must not demand `safety:` from a nested READ node —
+        // that would refuse the common case (a loop over a read command).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: nested-read
+version: 0.0.1
+description: x
+nodes:
+  - id: loop
+    for-each: '[1, 2]'
+    do:
+      - id: peek
+        agent: tekla
+        command: list
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[writer_agent()]);
+        assert!(issues.is_empty(), "issues: {issues:?}");
+    }
+
+    #[test]
+    fn safety_check_skips_a_frozen_write_node_inside_a_for_each_body() {
+        // The frozen carve-out must keep applying inside a body: a frozen node
+        // emits its pinned output and never dispatches, so it never writes.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: nested-frozen-write
+version: 0.0.1
+description: x
+nodes:
+  - id: loop
+    for-each: '[1]'
+    do:
+      - id: shutdown
+        agent: tekla
+        command: close
+        frozen:
+          ok: true
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[writer_agent()]);
+        assert!(issues.is_empty(), "issues: {issues:?}");
+    }
+
+    #[test]
+    fn safety_check_skips_the_body_of_a_frozen_for_each() {
+        // A frozen primitive short-circuits its whole subtree: `execute_node`
+        // returns on `frozen:` before it reaches the `for-each` branch, so the
+        // body never runs and its write nodes never write. Same reach as
+        // `check_node_agents`' carve-out — asserted so the two cannot drift
+        // into disagreeing about what `frozen:` covers.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: frozen-loop
+version: 0.0.1
+description: x
+nodes:
+  - id: loop
+    for-each: '[1]'
+    frozen:
+      ok: true
+    do:
+      - id: shutdown
+        agent: tekla
+        command: close
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[writer_agent()]);
+        assert!(issues.is_empty(), "issues: {issues:?}");
     }
 
     #[test]
