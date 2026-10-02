@@ -819,3 +819,38 @@ async fn a_registered_generation_mismatch_is_refused_before_any_refresh() {
     let failure = probe_agent(home.path(), "gw", &opts).await.unwrap_err();
     assert_eq!(failure.code, "E_CREDENTIAL_EXPIRED");
 }
+
+#[tokio::test]
+async fn abandoning_a_supervised_run_still_kills_the_grandchild() {
+    // The probe's outer deadline can drop `run_bounded` before its own deadline
+    // fires. Dropping the future must take the whole tree with it.
+    let dir = tempfile::tempdir().unwrap();
+    let pidfile = dir.path().join("grandchild.pid");
+    #[cfg(windows)]
+    let script = format!(
+        "$p = Start-Process -PassThru -NoNewWindow -FilePath powershell.exe -ArgumentList '-NoProfile','-Command','Start-Sleep 120'; \
+         Set-Content -Path '{}' -Value $p.Id; Start-Sleep 120",
+        pidfile.display()
+    );
+    #[cfg(unix)]
+    let script = format!("sleep 120 & echo $! > '{}'; sleep 120", pidfile.display());
+    let outer = tokio::time::timeout(
+        Duration::from_secs(12),
+        run_script(script, Duration::from_secs(120)),
+    )
+    .await;
+    assert!(outer.is_err(), "the outer deadline fires first");
+    let pid: u32 = std::fs::read_to_string(&pidfile)
+        .expect("the grandchild was spawned")
+        .trim()
+        .parse()
+        .unwrap();
+    let deadline = Instant::now() + Duration::from_secs(10);
+    while pid_alive(pid) && Instant::now() < deadline {
+        std::thread::sleep(Duration::from_millis(200));
+    }
+    assert!(
+        !pid_alive(pid),
+        "grandchild {pid} outlived the abandoned run"
+    );
+}

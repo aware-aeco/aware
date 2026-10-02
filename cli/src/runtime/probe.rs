@@ -936,6 +936,26 @@ impl ProcessTree {
     }
 }
 
+/// A tree that was neither terminated nor released is being abandoned — the
+/// supervising future was dropped, e.g. by the probe's outer deadline. The tree
+/// must not outlive it: on Windows dropping the Job (KILL_ON_JOB_CLOSE) ends every
+/// process in it; on Unix the group is signalled here, synchronously, because
+/// `kill_on_drop` reaches only the immediate child.
+impl Drop for ProcessTree {
+    fn drop(&mut self) {
+        #[cfg(windows)]
+        drop(self.job.take());
+        #[cfg(unix)]
+        if let Some(group) = self.group.take() {
+            let _ = std::process::Command::new("kill")
+                .args(["-KILL", &format!("-{group}")])
+                .stdout(std::process::Stdio::null())
+                .stderr(std::process::Stdio::null())
+                .status();
+        }
+    }
+}
+
 /// Run `program args…`, feeding `stdin`, with a deadline and a stdout cap. On
 /// timeout or overflow the whole process tree is terminated.
 pub(crate) async fn run_bounded(
