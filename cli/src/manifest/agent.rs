@@ -832,6 +832,19 @@ commands: {}
     /// model — requires `safety:` block"; nothing but this convention makes that
     /// claim true.
     ///
+    /// What makes this table worth its weight is NOT that it pins `SUFFIXES` — it does,
+    /// but every suffix here is also pinned by a cheaper, fixture-only sibling in this
+    /// same module, and dropping any one entry reddens those too. Measured: of the seven
+    /// rows, zero are the sole catcher of a dropped `SUFFIXES` entry.
+    ///
+    /// It is the sole catcher of a different and more dangerous regression: a shipped
+    /// command drifting OUT of the convention. Rename `revision.bump` to
+    /// `revision.increment` in the manifest — the substrate is content, and content
+    /// routines edit it — and a live Revit write becomes a read, so no node calling it
+    /// needs a `safety:` block. Measured across all 2090 tests: 2089 passed, 1 failed,
+    /// and the one is this test. No fixture-based test can see that, because the thing
+    /// that changed is not the code.
+    ///
     /// The `mode.is_none()` pre-check on each row is load-bearing rather than
     /// decoration. Were a manifest to annotate one of these commands explicitly
     /// later, the `mode_of` assertion would still pass — through the explicit
@@ -934,87 +947,111 @@ commands: {}
         let text = std::fs::read_to_string(&spec)
             .unwrap_or_else(|e| panic!("cannot read {}: {e}", spec.display()));
 
-        // The bullet that states the rule, located by its prose rather than by line
-        // number so an edit elsewhere in the spec cannot silently move it.
+        // Scope to `## Safety contract`'s `### The rule` region, and scan the WHOLE of
+        // it. Both halves are load-bearing, and an earlier version of this test had
+        // neither.
+        //
+        // Reading one BULLET is not enough. The rule is written as a two-bullet
+        // "if either:" list, so the natural way to extend it is a third bullet — and a
+        // `take_while` that stops at the next `-` cannot see one. Measured: adding
+        //
+        //     - the command destroys data (`*.purge`, `*.truncate`).
+        //
+        // to the rule leaves the whole suite green while the spec promises `*.purge`
+        // implies a write, `is_write_by_convention` resolves it Read, and
+        // `aware app validate` accepts a node calling `model.purge` with no `safety:`
+        // block. A nested sub-list does the same. The comment that stood here claimed
+        // the sub-list case was handled; it was handled only for a WHOLE move of the
+        // list, which yields nothing and trips the non-empty guard — an ADDITION yields
+        // a non-empty subset and every check below passes.
+        //
+        // Taking the FIRST line matching the marker anywhere in the file is not enough
+        // either: a stale recap of the rule earlier in the document would win over the
+        // normative bullet, so the spec could withdraw a suffix with this test still
+        // reading the old wording. Hence the section bound first.
+        //
+        // The cost of scanning the region rather than the bullet is over-capture: the
+        // region also holds the "Pure-read nodes" sentence, so a future reword putting a
+        // `*.`-prefixed token on a READ line would make this test red. That is the right
+        // way round — it fails loudly, naming the token, and the remedy is to narrow the
+        // scan deliberately rather than to discover years later that nothing was checked.
+        const SECTION: &str = "## Safety contract";
+        const RULE: &str = "### The rule";
         const MARKER: &str = "the command's name conventionally implies a write";
+
         let lines: Vec<&str> = text.lines().collect();
-        let first = lines
+        let sec = lines
             .iter()
-            .position(|l| l.contains(MARKER))
+            .position(|l| l.starts_with(SECTION))
             .unwrap_or_else(|| {
                 panic!(
-                    "{} no longer contains {MARKER:?} — the safety contract was reworded, so \
-                     re-ground this test on the new wording rather than deleting it",
+                    "{} no longer has a {SECTION:?} heading — re-ground this test on the \
+                     new structure rather than deleting it",
                     spec.display()
                 )
             });
+        let rule = sec
+            + lines[sec..]
+                .iter()
+                .position(|l| l.starts_with(RULE))
+                .unwrap_or_else(|| {
+                    panic!(
+                        "{} no longer has a {RULE:?} subheading inside {SECTION:?}",
+                        spec.display()
+                    )
+                });
+        // The rule region ends at its first sub-subheading (`#### Node-level mode:` …)
+        // or at the next section, whichever comes first.
+        let len = lines[rule + 1..]
+            .iter()
+            .position(|l| l.starts_with("####") || l.starts_with("## "))
+            .unwrap_or(lines.len() - rule - 1);
+        let region: Vec<&str> = lines[rule..rule + 1 + len].to_vec();
+        assert!(
+            region.iter().any(|l| l.contains(MARKER)),
+            "{} § The rule no longer contains {MARKER:?} — the safety contract was \
+             reworded, so re-ground this test on the new wording rather than deleting \
+             it. Region: {region:?}",
+            spec.display()
+        );
 
-        // The WHOLE bullet, not just the line the marker fell on. Reading one line
-        // looks equivalent and is not: the list is long enough that ordinary markdown
-        // reflow would push its tail onto a continuation line, and a suffix the spec
-        // publishes there would then be skipped in silence — spec promising a write,
-        // code resolving a read, test green. Demonstrated on this branch with
-        // `*.purge`, `*.truncate` added on a second line of the same bullet.
-        //
-        // Taken as: every following line until a blank one, a new bullet, a heading or
-        // a fence. Deliberately not an indentation test — `trim_start` runs first, so a
-        // continuation line is captured however it is indented. The cost is
-        // over-capture (a stray `*.`-token in an adjacent unindented line would be
-        // read as published), which fails loudly rather than silently.
-        let bullet: String = std::iter::once(lines[first])
-            .chain(
-                lines[first + 1..]
-                    .iter()
-                    .take_while(|l| {
-                        let t = l.trim_start();
-                        !t.is_empty()
-                            && !t.starts_with('-')
-                            && !t.starts_with('#')
-                            && !t.starts_with("```")
-                    })
-                    .copied(),
-            )
-            .collect::<Vec<_>>()
-            .join(" ");
-
-        // Every `` `*.<something>` `` token in that bullet.
-        let published: Vec<&str> = bullet
-            .split('`')
+        // Every `` `*.<something>` `` token in that region.
+        let published: Vec<&str> = region
+            .iter()
+            .flat_map(|l| l.split('`'))
             .filter(|tok| tok.starts_with("*."))
             .map(|tok| &tok[1..]) // `*.create` -> `.create`
             .collect();
 
         // Separate the two things that can go wrong, because they want different
         // remedies. First: did extraction work at all? A reword that drops the
-        // backticks, or moves the list into a sub-list, yields nothing — and an empty
-        // list leaves the loop below iterating over nothing and the test green, which
-        // is the exact vacuity this file is being audited for.
+        // backticks yields nothing — and an empty list leaves the loop below iterating
+        // over nothing and the test green, which is the exact vacuity this file is being
+        // audited for.
         assert!(
             !published.is_empty(),
-            "extracted no `*.<suffix>` tokens from the spec's contract bullet, so the \
-             loop below would assert nothing. The bullet's formatting changed — fix the \
-             extraction, do not delete the test. Bullet: {bullet}"
+            "extracted no `*.<suffix>` tokens from {} § The rule, so the loop below \
+             would assert nothing. The region's formatting changed — fix the \
+             extraction, do not delete the test. Region: {region:?}",
+            spec.display()
         );
 
         // Second: everything the spec names, the code must implement, and drift in
         // EITHER direction is worth a red test. Not quite symmetric, and the asymmetry
-        // is the spec's: `app-spec.md:806` introduces its list with "e.g.", so the code
-        // carrying four entries the spec does not name is not a divergence — it is the
-        // open question `the_suffixes_the_code_adds_beyond_the_spec_are_pinned_too`
-        // documents. What IS a divergence is the spec naming a suffix the code does not
-        // match, or dropping one the code still does. A floor on the COUNT catches
-        // neither, and the
-        // gap is reachable rather than theoretical: swap `*.insert` for `*.export` in
-        // the bullet — a plausible edit, since `.export` is implemented and no shipped
-        // command ends in `.insert` — and the count stays eight, this test's own claim
-        // stays true, and `.insert` quietly loses the only coverage it has anywhere in
-        // the repo. Drop `".insert"` from `SUFFIXES` after that and the whole suite is
-        // green while any `*.insert` command resolves read and stops needing a
-        // `safety:` block. Measured on this branch before the check below was added.
+        // is the spec's: it introduces its list with "e.g.", so the code carrying four
+        // entries the spec does not name is not a divergence — it is the open question
+        // `the_suffixes_the_code_adds_beyond_the_spec_are_pinned_too` documents. What IS
+        // a divergence is the spec naming a suffix the code does not match, or dropping
+        // one the code still does.
         //
-        // So the SET is asserted. This is still not a restatement of `SUFFIXES` — it
-        // restates the spec's published commitment, and the loop below restates the
-        // code's, so each artifact checks the other.
+        // A floor on the COUNT catches neither, and the gap is reachable rather than
+        // theoretical: swap `*.insert` for `*.export` — a plausible edit, since
+        // `.export` is implemented and no shipped command ends in `.insert` — and the
+        // count stays eight, this test's own claim stays true, and `.insert` quietly
+        // loses the only coverage it has anywhere in the repo. So the SET is asserted.
+        // This is still not a restatement of `SUFFIXES`: it restates the spec's
+        // published commitment, and the loop below restates the code's, so each
+        // artifact checks the other.
         for want in [
             ".create",
             ".update",
@@ -1027,11 +1064,12 @@ commands: {}
         ] {
             assert!(
                 published.contains(&want),
-                "app-spec.md § Safety contract no longer names {want} among the suffixes \
-                 that imply a write (found {published:?}). The spec narrowed while the \
-                 code still implements {want} — that may well be the right call, but \
-                 decide it in both places: drop the entry from `SUFFIXES` and from this \
-                 list, or put it back in the spec. Bullet: {bullet}"
+                "{} § The rule no longer names {want} among the suffixes that imply a \
+                 write (found {published:?}). The spec narrowed while the code still \
+                 implements {want} — that may well be the right call, but decide it in \
+                 both places: drop the entry from `SUFFIXES` and from this list, or put \
+                 it back in the spec.",
+                spec.display()
             );
         }
 
@@ -1096,25 +1134,43 @@ commands: {}
         let cmd = command("");
         let mode = |name: &str| agent.mode_of(name, &cmd);
 
-        for name in [
-            "thing.deleted", // suffix must END the name
-            "delete.thing",  // ...and be at the end, not the start
-            "insert-many",   // the legacy names match exactly, not by prefix
-            "save-attributes-v2",
-            "thing.exports",
+        // Each negative carries the loosening it guards against, so a failure says
+        // which half of `is_write_by_convention` went wrong rather than only which
+        // input surprised it.
+        for (name, loosening) in [
+            ("thing.deleted", "`ends_with` widened to `contains`"),
+            (
+                "delete.thing",
+                "the suffix matched anywhere rather than at the end",
+            ),
+            ("insert-many", "the legacy `==` widened to `starts_with`"),
+            (
+                "save-attributes-v2",
+                "the legacy `==` widened to a prefix match",
+            ),
+            (
+                "thing.exports",
+                "`.export` matched a longer word ending in it",
+            ),
             // A bare `create` is NOT inferred as a write: the only two names
             // matched without a dot are the two legacy Tekla verbs. This is why
             // `10-core/app-spec.md` has the manifest `mode:` be authoritative —
             // an agent author who names a write command without the dotted
             // namespace has to declare it, and `validate.rs`'s
             // `safety_check_honors_explicit_mode_write_field` covers that path.
-            "create",
-            "sheet.list",
+            ("create", "a bare verb treated as its dotted form"),
+            (
+                "sheet.list",
+                "a plainly reading command classified as a write",
+            ),
         ] {
             assert_eq!(
                 mode(name),
                 Mode::Read,
-                "{name} must not be inferred a write"
+                "{name} was inferred a write — {loosening}. That direction is the \
+                 expensive one: it demands a `safety:` block from nodes that do not \
+                 write, so authors learn to add one reflexively and the contract stops \
+                 meaning anything."
             );
         }
 
@@ -1378,12 +1434,17 @@ commands: {}
     /// is an exhaustive `match`, so the same addition stops this module compiling
     /// until the variant is wired into the chain the test walks.
     ///
-    /// One residual hole, named rather than hidden: the compile error can also be
-    /// resolved by giving the new variant its own `=> None` arm beside the
-    /// existing terminator, which satisfies the compiler and orphans the variant
-    /// from the walk. Each chain is therefore written in declaration order with
-    /// the last-declared variant as the sole terminator, so appending a variant
-    /// makes the correct edit the obvious one — but no `match` can force it.
+    /// Two residual holes, named rather than hidden. The compile error can be resolved
+    /// by giving the new variant its own `=> None` arm beside the existing terminator,
+    /// which satisfies the compiler and orphans the variant from the walk — measured,
+    /// and `cargo clippy -D warnings` does not flag the unreachable arm either. And
+    /// nothing stops a maintainer collapsing the arms to `_ => None`, which removes the
+    /// gate altogether and silently: there is no `match` that can forbid a wildcard in
+    /// the `match` doing the forbidding.
+    ///
+    /// Each chain is therefore written in declaration order with the last-declared
+    /// variant as the sole terminator, so appending a variant makes the correct edit the
+    /// obvious one — but no `match` can force it.
     ///
     /// The cycle check is what keeps a mis-wired chain a red test rather than a hung
     /// one: the `while let` walk below would not terminate on a chain that loops back,

@@ -4166,10 +4166,24 @@ requires: []
     /// user's sheets with no `safety:` block.
     ///
     /// `manifest::agent`'s tests pin `mode_of`'s answer; this pins that
-    /// `validate_app_safety` still ASKS. The two are not the same claim —
-    /// `validate_app_safety` has four early `continue`s before it reaches
-    /// `effective_mode`, and a regression in any of them leaves every resolver-level
-    /// test green.
+    /// `validate_app_safety` still ASKS, with a DOTTED name. That conjunction is where
+    /// it is uniquely load-bearing, and the measurement is worth recording because the
+    /// obvious rationale is the wrong one.
+    ///
+    /// Not the four early `continue`s above `effective_mode` — each of those is already
+    /// caught by two to five of the pre-existing safety tests in this module, so
+    /// claiming this test guards them would overstate it. What nothing else catches is
+    /// a plausible normalising refactor at the gate:
+    ///
+    /// ```ignore
+    /// let leaf = cmd_name.rsplit('.').next().unwrap();
+    /// let effective = agent.manifest.effective_mode(leaf, cmd, node.mode);
+    /// ```
+    ///
+    /// That kills all twelve dotted entries at once while leaving the two bare legacy
+    /// names working, so every resolver-level test in `manifest::agent` stays green and
+    /// so does every pre-existing gate test here. Measured: 1608 passed, 1 failed —
+    /// this test, alone in the suite.
     ///
     /// Both halves are asserted. Without the passing half, a gate that rejected
     /// everything unconditionally would satisfy the first assertion.
