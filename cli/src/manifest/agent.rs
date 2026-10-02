@@ -519,10 +519,11 @@ mod tests {
     /// Parse one of the repo's real, shipped agent manifests. The paths are
     /// relative to the repo root, which is `cli/`'s parent.
     ///
-    /// Four tests below spelled this walk out inline, byte for byte. Reading
-    /// production manifests rather than fixtures is deliberate — several of the
-    /// assertions in this file are claims about what the substrate actually
-    /// ships, and a fixture cannot carry those.
+    /// Four tests in this module spelled this walk out inline, byte for byte,
+    /// before it was factored out; five call it now. Reading production manifests
+    /// rather than fixtures is deliberate — several of the assertions in this file
+    /// are claims about what the substrate actually ships, and a fixture cannot
+    /// carry those.
     fn real_manifest(rel: &str) -> Agent {
         let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
             .parent()
@@ -758,17 +759,35 @@ commands: {}
     // persona audit made a precondition for live-model writes
     // (`10-core/app-spec.md § Safety contract (write-mode nodes)`).
     //
-    // Before the tests below, the name convention had no coverage anywhere in the
-    // suite. Every safety test in `validate.rs` that reaches the convention at all
-    // reaches it through the bare legacy name `insert`, so a dotted suffix could
-    // be deleted from `SUFFIXES` with the whole of `cargo test` staying green —
-    // measured on `".bump"` and `".delete"`, and nothing outside `mode_of` reads
-    // the list.
+    // Before the tests below, the convention was covered at exactly one point. Every
+    // safety test in `validate.rs` that depends on a POSITIVE convention match
+    // depends on the bare legacy name `insert`
+    // (`safety_check_rejects_write_node_without_safety_block`,
+    // `safety_check_passes_when_write_node_has_safety_block`); every other one
+    // declares an explicit `mode:`, which short-circuits before the convention is
+    // consulted at all. (`safety_check_skips_read_mode_nodes` does reach it, with the
+    // command `list` — but it needs the answer to be Read, so no suffix deletion can
+    // make it fail.) Not one of the twelve DOTTED suffixes was pinned anywhere: with
+    // `".bump"` deleted from `SUFFIXES`, `cargo test -- --skip manifest::agent::tests`
+    // is 2070 passed, 0 failed, and the same holds for `".delete"`. The asymmetry is
+    // structural rather than an oversight — loosening the list only ever REMOVES a
+    // safety error, and every integration test over an example app asserts that the
+    // app is valid, so only a refusal assertion can catch it.
+    //
+    // `SUFFIXES` is a fn-local const with exactly one reader, `is_write_by_convention`,
+    // itself called only from `mode_of` — so these tests and the `validate.rs` gate
+    // test added alongside them are the whole of its coverage.
     // ----------------------------------------------------------------------
 
     /// Build a `Command` from YAML rather than field-by-field. `Command` is
     /// `Deserialize`-only, and going through the parser keeps these assertions
     /// pointed at `mode_of` instead of at a struct the test just filled in.
+    ///
+    /// One hazard that comes with the parser: `Command` declares no
+    /// `deny_unknown_fields`, so a misspelled key here (`mode-overridible:`) is
+    /// ignored rather than rejected and yields a fixture that is not the one the
+    /// caller named. Callers whose behaviour turns on a key assert that the key
+    /// landed — see `effective_mode_records_whether_the_node_overrode_the_manifest`.
     fn command(extra: &str) -> Command {
         serde_yaml::from_str(&format!("lifecycle: single\ndescription: x\n{extra}"))
             .unwrap_or_else(|e| panic!("bad command fixture {extra:?}: {e}"))
@@ -777,7 +796,7 @@ commands: {}
     /// Any `Agent` will do — `mode_of` reads only its arguments — so reuse the
     /// minimal fixture rather than inventing a second one per test.
     fn tekla_min() -> Agent {
-        serde_yaml::from_str(TEKLA_MIN).unwrap()
+        serde_yaml::from_str(TEKLA_MIN).expect("TEKLA_MIN must parse")
     }
 
     /// Seven commands the substrate ships **today** that declare no `mode:` of
@@ -830,7 +849,19 @@ commands: {}
             ),
         ];
 
+        // The doc comment above says "Seven commands"; this is what keeps that true.
+        // The table is a compile-time literal, so it cannot be empty at run time —
+        // but the `mode.is_none()` guard below tells a maintainer to re-ground a row,
+        // and a re-grounding that empties a `rows` slice would pass vacuously for that
+        // manifest with nothing noticing.
+        assert_eq!(
+            GROUNDED.iter().map(|(_, rows)| rows.len()).sum::<usize>(),
+            7,
+            "the grounded table changed size — update the count in this test's doc \
+             comment too, and check no manifest was left with zero rows"
+        );
         for (rel, rows) in GROUNDED {
+            assert!(!rows.is_empty(), "{rel} has no rows left to ground");
             // One parse per manifest — `revit-2026` is 1.1 MB of YAML.
             let agent = real_manifest(rel);
             for (name, entry) in *rows {
@@ -840,9 +871,12 @@ commands: {}
                     .unwrap_or_else(|| panic!("{rel} no longer declares {name}"));
                 assert!(
                     cmd.mode.is_none(),
-                    "{rel}:{name} now declares an explicit `mode:`, so it no longer \
-                     grounds the convention entry {entry:?} — re-ground this row on a \
-                     command that still declares none"
+                    "{rel}:{name} now declares an explicit `mode:`. That is a fine \
+                     change to the manifest — belt and braces — but it means this row \
+                     no longer grounds the convention entry {entry:?}, which would \
+                     then be pinned only synthetically. Re-ground the row on a command \
+                     that still declares no `mode:`, or drop it; do not revert the \
+                     manifest."
                 );
                 assert_eq!(
                     agent.mode_of(name, cmd),
@@ -881,12 +915,13 @@ commands: {}
         let text = std::fs::read_to_string(&spec)
             .unwrap_or_else(|e| panic!("cannot read {}: {e}", spec.display()));
 
-        // The sentence that states the rule, located by its prose rather than by
-        // line number so an edit elsewhere in the spec cannot silently move it.
+        // The bullet that states the rule, located by its prose rather than by line
+        // number so an edit elsewhere in the spec cannot silently move it.
         const MARKER: &str = "the command's name conventionally implies a write";
-        let line = text
-            .lines()
-            .find(|l| l.contains(MARKER))
+        let lines: Vec<&str> = text.lines().collect();
+        let first = lines
+            .iter()
+            .position(|l| l.contains(MARKER))
             .unwrap_or_else(|| {
                 panic!(
                     "{} no longer contains {MARKER:?} — the safety contract was reworded, so \
@@ -895,22 +930,83 @@ commands: {}
                 )
             });
 
-        // Every `` `*.<something>` `` token on that line.
-        let published: Vec<&str> = line
+        // The WHOLE bullet, not just the line the marker fell on. Reading one line
+        // looks equivalent and is not: the list is long enough that ordinary markdown
+        // reflow would push its tail onto a continuation line, and a suffix the spec
+        // publishes there would then be skipped in silence — spec promising a write,
+        // code resolving a read, test green. Demonstrated on this branch with
+        // `*.purge`, `*.truncate` added on a second line of the same bullet.
+        //
+        // A markdown bullet continues while the following lines are indented
+        // continuations: non-empty, and not the start of a new bullet, heading or
+        // fence.
+        let bullet: String = std::iter::once(lines[first])
+            .chain(
+                lines[first + 1..]
+                    .iter()
+                    .take_while(|l| {
+                        let t = l.trim_start();
+                        !t.is_empty()
+                            && !t.starts_with('-')
+                            && !t.starts_with('#')
+                            && !t.starts_with("```")
+                    })
+                    .copied(),
+            )
+            .collect::<Vec<_>>()
+            .join(" ");
+
+        // Every `` `*.<something>` `` token in that bullet.
+        let published: Vec<&str> = bullet
             .split('`')
             .filter(|tok| tok.starts_with("*."))
             .map(|tok| &tok[1..]) // `*.create` -> `.create`
             .collect();
 
-        // Without a floor, a failed extraction leaves the loop below iterating
-        // over nothing and the test green — the exact vacuity this file is being
-        // audited for. Eight is what the spec names today; more is fine.
+        // Separate the two things that can go wrong, because they want different
+        // remedies. First: did extraction work at all? A reword that drops the
+        // backticks, or moves the list into a sub-list, yields nothing — and an empty
+        // list leaves the loop below iterating over nothing and the test green, which
+        // is the exact vacuity this file is being audited for.
         assert!(
-            published.len() >= 8,
-            "extracted only {} suffixes from the spec's contract line ({published:?}); \
-             expected at least the eight it names. Line: {line}",
-            published.len()
+            !published.is_empty(),
+            "extracted no `*.<suffix>` tokens from the spec's contract bullet, so the \
+             loop below would assert nothing. The bullet's formatting changed — fix the \
+             extraction, do not delete the test. Bullet: {bullet}"
         );
+
+        // Second: the spec and the code have to name the same things, and drift in
+        // EITHER direction is a finding. A floor on the COUNT catches neither, and the
+        // gap is reachable rather than theoretical: swap `*.insert` for `*.export` in
+        // the bullet — a plausible edit, since `.export` is implemented and no shipped
+        // command ends in `.insert` — and the count stays eight, this test's own claim
+        // stays true, and `.insert` quietly loses the only coverage it has anywhere in
+        // the repo. Drop `".insert"` from `SUFFIXES` after that and the whole suite is
+        // green while any `*.insert` command resolves read and stops needing a
+        // `safety:` block. Measured on this branch before the check below was added.
+        //
+        // So the SET is asserted. This is still not a restatement of `SUFFIXES` — it
+        // restates the spec's published commitment, and the loop below restates the
+        // code's, so each artifact checks the other.
+        for want in [
+            ".create",
+            ".update",
+            ".delete",
+            ".bump",
+            ".stamp",
+            ".reload-all",
+            ".bulk-write",
+            ".insert",
+        ] {
+            assert!(
+                published.contains(&want),
+                "app-spec.md § Safety contract no longer names {want} among the suffixes \
+                 that imply a write (found {published:?}). The spec narrowed while the \
+                 code still implements {want} — that may well be the right call, but \
+                 decide it in both places: drop the entry from `SUFFIXES` and from this \
+                 list, or put it back in the spec. Bullet: {bullet}"
+            );
+        }
 
         let agent = tekla_min();
         for suffix in &published {
@@ -919,6 +1015,41 @@ commands: {}
                 agent.mode_of(&name, &command("")),
                 Mode::Write,
                 "app-spec.md promises {suffix} implies a write, but {name} resolved read"
+            );
+        }
+    }
+
+    /// The four entries `SUFFIXES` carries that `10-core/app-spec.md § Safety
+    /// contract` does not publish. The spec-parity test above covers the eight it
+    /// names; nothing covered these, so dropping one was invisible.
+    ///
+    /// This is a pin on a security-relevant list, and yes, it mirrors the constant —
+    /// which is exactly why it is written as the consequence rather than as the list.
+    /// `.export` and `.export-pdfs` are additionally grounded on shipped
+    /// un-annotated commands by
+    /// `shipped_write_commands_with_no_declared_mode_are_inferred_from_their_names`;
+    /// `.save` and `.publish` have no shipped un-annotated command to ground them (the
+    /// one shipped `.save`, `navisworks federation.save`, declares `mode: write`
+    /// outright, and no shipped command ends in `.publish` at all), so this is their
+    /// only coverage and a silent deletion of `".save"` would make the next
+    /// `model.save` command a read.
+    ///
+    /// Whether the right resolution is to widen the spec to name these four or to
+    /// narrow the code to the spec's eight is a decision about the published contract,
+    /// not a test's to make. Until someone makes it, today's behaviour is what app
+    /// authors get, so today's behaviour is what is pinned.
+    #[test]
+    fn the_suffixes_the_code_adds_beyond_the_spec_are_pinned_too() {
+        let agent = tekla_min();
+        for suffix in [".save", ".publish", ".export", ".export-pdfs"] {
+            let name = format!("thing{suffix}");
+            assert_eq!(
+                agent.mode_of(&name, &command("")),
+                Mode::Write,
+                "{name} resolved read: `is_write_by_convention` no longer carries \
+                 {suffix:?}. If that removal was deliberate, app-spec.md § Safety \
+                 contract and this test both want updating — a command named {name} \
+                 now needs no `safety:` block."
             );
         }
     }
@@ -960,30 +1091,71 @@ commands: {}
             );
         }
 
-        for name in ["thing.delete", "insert", "save-attributes"] {
-            assert_eq!(mode(name), Mode::Write, "{name} must be inferred a write");
+        // Each positive names the arm of `is_write_by_convention` that owns it, so a
+        // failure points at the right half of the function.
+        for (name, arm) in [
+            ("thing.delete", "the `.delete` entry in SUFFIXES"),
+            ("insert", "the legacy exact-match `name == \"insert\"`"),
+            (
+                "save-attributes",
+                "the legacy exact-match `name == \"save-attributes\"`",
+            ),
+        ] {
+            assert_eq!(
+                mode(name),
+                Mode::Write,
+                "{name} must be inferred a write via {arm}; a read here drops the \
+                 `safety:` requirement from every node calling it"
+            );
         }
     }
 
     /// `effective_mode`'s truth table over (`mode-overridable`, node-level
-    /// `mode:`), including the `overridden` flag — which `app_lock::compile`
+    /// `mode:`), including the `overridden` flag that `app_lock::compile_node`
     /// reads to decide whether the lock carries the "using author-declared mode"
-    /// compile note, and which no test reached.
+    /// compile note.
     ///
-    /// Row 4 is the one that matters most: on a command that is NOT
-    /// `mode-overridable`, a node declaring `mode: read` does not get to relabel
-    /// a genuinely-writing command as a read and skip the safety contract. The
-    /// validator also rejects that app outright
-    /// (`E_APP_NODE_MODE_NOT_OVERRIDABLE`, covered in `validate.rs`), so this is
-    /// the second of two independent guards — pinned here because
-    /// `validate_app_safety` and `app_lock::compile` both ask this function, not
-    /// the validator, what the mode is.
+    /// Three of the four rows were already covered end-to-end and are kept here as
+    /// a single readable table rather than as new coverage: the overridable rows via
+    /// `validate.rs`'s `safety_check_passes_read_override_on_mode_overridable_exec`
+    /// and `..._still_requires_safety_on_unannotated_mode_overridable_exec`, and
+    /// `overridden == true` via `app_lock.rs`'s
+    /// `compile_honors_mode_read_on_mode_overridable_command`, which asserts the note
+    /// that is emitted only under `if resolved.overridden`. What is new is the
+    /// `(overridable, Some(Write))` row — the spec's "(A node declaring `mode: write`
+    /// likewise wins.)" (`10-core/app-spec.md:817`) — and the assertion on
+    /// `EffectiveMode` as a value rather than on a note's text downstream of it.
+    ///
+    /// The `fixed` + node-`read` row is defence in depth, not a reachable path: an app
+    /// shaped like it is refused by `validate_app_agents` with
+    /// `E_APP_NODE_MODE_NOT_OVERRIDABLE` on every lock-producing path
+    /// (`validate.rs:1381`, covered by
+    /// `agents_check_rejects_conflicting_node_mode_on_non_overridable_command`), so it
+    /// never reaches here in production. It is pinned because `validate_app_safety`
+    /// and `app_lock::compile_node` ask THIS function what the mode is, and a
+    /// loosening here would silently make their answer depend on a check living
+    /// somewhere else.
     #[test]
     fn effective_mode_records_whether_the_node_overrode_the_manifest() {
         let agent = tekla_min();
         let overridable = command("mode: write\nmode-overridable: true\n");
         let fixed = command("mode: write\n");
         let read_by_name = command("");
+        // `Command` ignores unknown keys, so a typo in the fixture above would
+        // silently produce a NON-overridable command and quietly turn the first three
+        // rows into copies of the fourth. Check the fixtures are what they claim.
+        assert!(
+            overridable.mode_overridable,
+            "fixture key did not land: the `overridable` command is not mode-overridable"
+        );
+        assert!(
+            !fixed.mode_overridable && fixed.mode == Some(Mode::Write),
+            "fixture `fixed` must be a non-overridable write"
+        );
+        assert!(
+            read_by_name.mode.is_none(),
+            "fixture `read_by_name` must declare no mode, so the convention decides"
+        );
 
         // The command name cannot affect the rows below — both fixtures they use
         // declare an explicit `mode:`, which short-circuits the convention — so it
@@ -1006,70 +1178,207 @@ commands: {}
         }
 
         // And with no manifest `mode:` at all the convention still feeds through
-        // `effective_mode`, never only `mode_of`.
+        // `effective_mode`, never only `mode_of` — `validate_app_safety` and
+        // `app_lock::compile_node` both call `effective_mode`, so a convention match
+        // that stopped reaching this arm would un-gate every un-annotated write
+        // command.
         assert_eq!(
             agent.effective_mode("sheet.stamp", &read_by_name, None),
             EffectiveMode {
                 mode: Mode::Write,
                 overridden: false
-            }
+            },
+            "an un-annotated `.stamp` command must reach `effective_mode` as a write \
+             (is_write_by_convention via mode_of); a read here means every node calling \
+             revit-2026 sheet.stamp stops needing a `safety:` block"
         );
     }
 
-    /// Each of these three enums has a hand-written `as_str` that writes a word
-    /// back out at a boundary somebody reads or re-parses: `Lifecycle` into the
-    /// synthesized agent manifest (`manifest::expose`) and the registry catalog
-    /// (`registry::catalog`), `Mode` into the `.lock` a node's mode is recorded
-    /// in (`app_lock`), `AgentStatus` into the `agent list` / `app show` output
-    /// whose own `match` arms are string literals (`commands::agent`,
-    /// `commands::app`).
+    /// Each of these three enums has a hand-written `as_str` that writes a word back
+    /// out at a boundary somebody reads or re-parses: `Lifecycle` into the synthesized
+    /// agent manifest (`manifest::expose:101`) and the published registry catalog
+    /// (`registry::catalog:254`); `Mode` into the `.lock` a node's mode is recorded in
+    /// (`app_lock:570`), the catalog (`registry::catalog:257`) and a validator message
+    /// (`validate:1391`); `AgentStatus` into `agent describe --json`
+    /// (`commands::agent:1186` and `:1198`) and the catalog (`registry::catalog:216`),
+    /// where `describe_from_catalog` then `match`es the word against string literals
+    /// (`commands::agent:2322`). Not `app show` — `commands::app:1288` matches a
+    /// `RunEvent::RunEnd` status, which is an unrelated type that happens to share the
+    /// field name.
     ///
-    /// Nothing checked that the hand-written word is the word the derive accepts.
-    /// `Lifecycle::as_str`'s doc comment states the property outright — "a value
-    /// read from a manifest round-trips back to the same word" — and until now a
-    /// typo in any arm would have desynchronised the published surfaces from the
-    /// parser in silence.
+    /// Six of the eight variant rows were already pinned incidentally, and saying
+    /// otherwise would be wrong: both `Mode` words via `app_lock.rs`'s
+    /// `mode_axis_agents`, which feeds `mode: read` / `mode: write` through serde and
+    /// asserts the lock string `Mode::as_str` produced; all three `AgentStatus` words
+    /// via `registry/catalog.rs`'s `status_str` (a thin delegation to `as_str`), whose
+    /// tests feed `status: planned` / `requires-runtime` and assert the published
+    /// word; and `Lifecycle::Single` via the catalog's JSON golden. What was unpinned
+    /// is `Lifecycle::Start` and `Lifecycle::Stop` — `expose.rs` uses those words only
+    /// as inputs and nothing asserted the emitted word — even though
+    /// `Lifecycle::as_str`'s own doc comment states the round-trip property outright
+    /// ("a value read from a manifest round-trips back to the same word") and names
+    /// the two surfaces that would desynchronise.
+    ///
+    /// So the standing value of this test is less the eight rows than the two gates
+    /// under them — the exhaustiveness-checked variant walk and the published-word
+    /// table it is length-checked against. Those incidental pins are per-variant and
+    /// per-surface; none of them notices a variant that is ADDED, and none of them
+    /// catches a rename that moves the serde word and the `as_str` arm together.
     ///
     /// This is not a serde round-trip: the value under test is the `&'static str`
     /// a `match` produced, and serde is the independent oracle it is checked
-    /// against. The arms are exhaustive, so a new variant cannot slip past
-    /// `as_str` — but it can slip past the lists below, which is why each list is
-    /// written out in full rather than derived.
+    /// against.
+    ///
+    /// The variants are walked through the successor chains below rather than
+    /// listed in an array literal, so a variant added to one of these enums
+    /// cannot slip past this test — see [`variants`] for why that distinction is
+    /// load-bearing (Codex review, PR #610).
     #[test]
     fn each_enum_writes_back_the_word_its_own_parser_reads() {
-        for v in [Lifecycle::Start, Lifecycle::Stop, Lifecycle::Single] {
-            let word = v.as_str();
+        check_published_words(
+            variants(Lifecycle::Start, next_lifecycle),
+            Lifecycle::as_str,
+            &[
+                (Lifecycle::Start, "start"),
+                (Lifecycle::Stop, "stop"),
+                (Lifecycle::Single, "single"),
+            ],
+            "Lifecycle",
+        );
+        check_published_words(
+            variants(Mode::Read, next_mode),
+            Mode::as_str,
+            &[(Mode::Read, "read"), (Mode::Write, "write")],
+            "Mode",
+        );
+        check_published_words(
+            variants(AgentStatus::Available, next_agent_status),
+            AgentStatus::as_str,
+            &[
+                (AgentStatus::Available, "available"),
+                (AgentStatus::Planned, "planned"),
+                (AgentStatus::RequiresRuntime, "requires-runtime"),
+            ],
+            "AgentStatus",
+        );
+    }
+
+    /// Hold one enum's `as_str` to three properties at once, for every variant the
+    /// exhaustiveness-gated walk finds.
+    ///
+    /// 1. **The word is the published literal.** Serde is an independent oracle for a
+    ///    one-sided typo but not for a rename that moves the serde word and the
+    ///    `as_str` arm together: that round-trips perfectly and still breaks every
+    ///    consumer that `match`es the literal — `commands::agent:2322`,
+    ///    `registry::catalog:111`. These words are a wire vocabulary (the published
+    ///    registry catalog, the `.lock`, `agent describe --json`), so they are spelled
+    ///    out here the way a golden test spells out a wire format.
+    /// 2. **The word round-trips.** `as_str`'s output fed back through the derive must
+    ///    return the same variant, which is what `Lifecycle::as_str`'s own doc comment
+    ///    promises.
+    /// 3. **The table is complete.** The length check against the walk is what stops a
+    ///    newly added variant from being given an `as_str` arm and no published word:
+    ///    the walk cannot miss it (the successor `match` is exhaustive, so the module
+    ///    stops compiling), and the table cannot then stay short.
+    fn check_published_words<T>(
+        walked: Vec<T>,
+        as_str: fn(T) -> &'static str,
+        expected: &[(T, &str)],
+        ty: &str,
+    ) where
+        T: Copy + PartialEq + std::fmt::Debug + serde::de::DeserializeOwned,
+    {
+        assert_eq!(
+            walked.len(),
+            expected.len(),
+            "{ty}: the variant walk found {:?} but the published-word table lists {} \
+             entries — a variant was added without deciding the word it writes to the \
+             catalog, the `.lock` and `--json`",
+            walked,
+            expected.len()
+        );
+        for v in walked {
+            let (_, want) = expected
+                .iter()
+                .find(|(e, _)| *e == v)
+                .unwrap_or_else(|| panic!("{ty}::{v:?} has no entry in the published-word table"));
+            let got = as_str(v);
             assert_eq!(
-                serde_yaml::from_str::<Lifecycle>(word).unwrap_or_else(|e| panic!(
-                    "Lifecycle::as_str produced {word:?}, which its own parser rejects: {e}"
+                got, *want,
+                "{ty}::{v:?} writes {got:?}, but {want:?} is the published word that \
+                 consumers match as a string literal"
+            );
+            assert_eq!(
+                serde_yaml::from_str::<T>(got).unwrap_or_else(|e| panic!(
+                    "{ty}::as_str produced {got:?}, which its own parser rejects: {e}"
                 )),
                 v,
-                "Lifecycle::{v:?} writes {word:?}, which parses as a different variant"
+                "{ty}::{v:?} writes {got:?}, which parses back as a different variant"
             );
         }
-        for v in [Mode::Read, Mode::Write] {
-            let word = v.as_str();
-            assert_eq!(
-                serde_yaml::from_str::<Mode>(word).unwrap_or_else(|e| panic!(
-                    "Mode::as_str produced {word:?}, which its own parser rejects: {e}"
-                )),
-                v,
-                "Mode::{v:?} writes {word:?}, which parses as a different variant"
+    }
+
+    /// Collect an enum's variants by walking a successor function from its first
+    /// variant.
+    ///
+    /// The point is the *compile-time* gate the successor functions below carry,
+    /// which an array literal cannot. `[Lifecycle::Start, Lifecycle::Stop,
+    /// Lifecycle::Single]` — which is what stood here — stays perfectly valid
+    /// when a fourth variant is added, so the new variant's `as_str` would never
+    /// be checked and
+    /// `each_enum_writes_back_the_word_its_own_parser_reads` would stay green
+    /// while doing none of its job (Codex review, PR #610). Each `next_*` below
+    /// is an exhaustive `match`, so the same addition stops this module compiling
+    /// until the variant is wired into the chain the test walks.
+    ///
+    /// One residual hole, named rather than hidden: the compile error can also be
+    /// resolved by giving the new variant its own `=> None` arm beside the
+    /// existing terminator, which satisfies the compiler and orphans the variant
+    /// from the walk. Each chain is therefore written in declaration order with
+    /// the last-declared variant as the sole terminator, so appending a variant
+    /// makes the correct edit the obvious one — but no `match` can force it.
+    ///
+    /// The cycle check is what keeps a mis-wired chain a red test rather than a
+    /// hung one: `successors` on a chain that loops back never terminates, and
+    /// libtest has no per-test timeout.
+    fn variants<T>(first: T, next: fn(T) -> Option<T>) -> Vec<T>
+    where
+        T: Copy + PartialEq + std::fmt::Debug,
+    {
+        let mut out = vec![first];
+        let mut cur = first;
+        while let Some(v) = next(cur) {
+            assert!(
+                !out.contains(&v),
+                "the successor chain cycles at {v:?} after {out:?}; it must visit each \
+                 variant once and terminate on the last"
             );
+            out.push(v);
+            cur = v;
         }
-        for v in [
-            AgentStatus::Available,
-            AgentStatus::Planned,
-            AgentStatus::RequiresRuntime,
-        ] {
-            let word = v.as_str();
-            assert_eq!(
-                serde_yaml::from_str::<AgentStatus>(word).unwrap_or_else(|e| panic!(
-                    "AgentStatus::as_str produced {word:?}, which its own parser rejects: {e}"
-                )),
-                v,
-                "AgentStatus::{v:?} writes {word:?}, which parses as a different variant"
-            );
+        out
+    }
+
+    fn next_lifecycle(v: Lifecycle) -> Option<Lifecycle> {
+        match v {
+            Lifecycle::Start => Some(Lifecycle::Stop),
+            Lifecycle::Stop => Some(Lifecycle::Single),
+            Lifecycle::Single => None,
+        }
+    }
+
+    fn next_mode(v: Mode) -> Option<Mode> {
+        match v {
+            Mode::Read => Some(Mode::Write),
+            Mode::Write => None,
+        }
+    }
+
+    fn next_agent_status(v: AgentStatus) -> Option<AgentStatus> {
+        match v {
+            AgentStatus::Available => Some(AgentStatus::Planned),
+            AgentStatus::Planned => Some(AgentStatus::RequiresRuntime),
+            AgentStatus::RequiresRuntime => None,
         }
     }
 
