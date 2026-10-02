@@ -39,14 +39,16 @@ fn first_party_bundle_installs_the_corrected_immutable_release() {
         .as_array()
         .expect("aware-aeco bundle must list agents");
 
-    assert!(agents.iter().any(|entry| entry == "google-workspace@2.0.0"));
+    // 2.1.0 (#617) adds the read-only account.userinfo probe; the bundle tracks it.
+    assert!(agents.iter().any(|entry| entry == "google-workspace@2.1.0"));
+    assert!(!agents.iter().any(|entry| entry == "google-workspace@2.0.0"));
     assert!(!agents.iter().any(|entry| entry == "google-workspace@1.0.0"));
     let versions = index["agents"]["google-workspace"]["versions"]
         .as_object()
         .expect("Google Workspace versions must be an object");
     assert_eq!(
         versions.keys().map(String::as_str).collect::<Vec<_>>(),
-        vec!["1.0.0", "2.0.0"],
+        vec!["1.0.0", "2.0.0", "2.1.0"],
         "the rejected release remains addressable while the corrected release becomes current"
     );
 }
