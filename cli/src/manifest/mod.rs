@@ -10,6 +10,7 @@ pub mod agent;
 pub mod app;
 pub mod expose;
 pub mod loader;
+pub mod probe;
 
 pub use agent::Agent;
 pub use app::App;

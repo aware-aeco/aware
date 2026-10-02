@@ -378,6 +378,94 @@ skills (31):
   ...
 ```
 
+### `aware agent probe <agent>`
+
+Run the agent's declared connection probe (`probe:`, see agent-spec § Connection probe) **for
+real** — never a dry run — and report a bounded receipt (#617).
+
+```
+aware agent probe <agent> [--as <alias>] [--allow-origin <origin>]
+                          [--expect-generation <g>] [--timeout-ms <1000..60000>] --json
+```
+
+```
+$ aware --json agent probe tekla
+{"ok":true,"data":{"schema":"aware.agent-probe/v1","agent":"tekla","version":"0.1.6",
+ "manifestSha256":"d1a22b3a…","command":"model-info","transport":"cli","reviewed":false,
+ "kind":"host","alias":null,"credentialGeneration":null,
+ "describe":"Reads the name of the model open in Tekla Structures.",
+ "probedAt":"2026-10-02T16:37:34.351894400+00:00","durationMs":2421,
+ "reported":{"summary":"Aware Tests.db1","identity":"tekla","stableId":"25068","hostVersion":"2026.0"}},
+ "error":null,"meta":{"cli-version":"…","command":"agent probe","duration-ms":2435}}
+```
+
+`data` (schema `aware.agent-probe/v1`): `schema, agent, version, manifestSha256` (lowercase hex
+SHA-256 of the installed `manifest.yaml` bytes), `command, transport` (`cli`|`rest`),
+`reviewed, kind` (`host`|`account`), `alias` (the slot alias used, or `null`),
+`credentialGeneration` (the credential slot's generation, or `null`), `describe, probedAt,
+durationMs, reported: {summary?, identity?, stableId?, hostVersion?}`. A report is present only
+when its pointer resolved to a string or number, at most 256 characters after control
+characters are removed.
+
+**Nothing raw leaves AWARE.** A failure is `{ok:false, data:null, error:{code, message,
+details}}` where `message` is AWARE's own fixed sentence for the code and `details` holds only
+codes, an HTTP status, and counts — never a response body, stderr, bridge message, header or
+token. Codes, with their exit status:
+
+| Code | Exit | Meaning |
+|---|---|---|
+| `E_AGENT_NOT_INSTALLED` | 7 | No such installed agent. |
+| `E_AGENT_PLANNED` | 3 | The agent is `status: planned`. |
+| `E_PROBE_UNDECLARED` | 3 | The agent declares no probe. |
+| `E_PROBE_INVALID` | 3 | The probe block breaks a rule (`details.reason`). |
+| `E_PROBE_ORIGIN_NOT_ALLOWED` | 3 | The request would leave its pinned origin, or the credential may not go there (`details.reason`). |
+| `E_PROBE_ALIAS_CONFLICT` | 3 | `--as` conflicts with an alias already in the manifest, is malformed, or names a slot on a probe that uses no credential. |
+| `E_CREDENTIAL_MISSING` | 6 | The exact slot holds no usable credential. |
+| `E_CREDENTIAL_EXPIRED` | 6 | The credential expired and could not be refreshed. |
+| `E_CREDENTIAL_CHANGED` | 6 | `--expect-generation` does not match the slot. |
+| `E_PROBE_FAILED` | 4 | The service answered with HTTP >= 300 (`details.status`), or the transport failed. |
+| `E_HOST_UNAVAILABLE` | 4 | The bridge failed; `details.hostCode` is its kebab-case structured code (e.g. `model-closed`, `host-ambiguous` with `details.instanceCount`). |
+| `E_PROBE_OUTPUT_TOO_LARGE` | 4 | More than 64 KiB of bridge stdout or response body. |
+| `E_PROBE_REPORT_MISSING` | 4 | An account probe answered without its identity / stable id. |
+| `E_PROBE_TIMEOUT` | 4 | The deadline (`--timeout-ms`, default 15000) passed. |
+
+**Where a credential may go.** For a `rest` probe the assembled URL's origin must equal the
+declared `rest.origin` before any credential is read. A credential of a **registered
+integration** (`google-workspace`, `microsoft-365`, `trimble-connect`) goes only to an origin in
+that integration's code-owned allowlist (`IntegrationConfig::probe_origins` — google-workspace:
+`https://openidconnect.googleapis.com`; the others: none); a **custom handle**'s only with
+`--allow-origin` equal to `rest.origin`, which a host passes after the person confirmed where the
+credential will be sent. Redirects are never followed (a 3xx is `E_PROBE_FAILED`). The stored credential must be what
+authenticates the request: if it could not be attached (an unknown scheme, or a probe input
+already filling the slot) the probe is refused (`E_PROBE_INVALID`, `auth-not-attached`) before
+anything is sent. The request is built from the same manifest bytes that were hashed, and an
+agent folder whose manifest declares a different `agent:` is refused (`agent-id-mismatch`).
+
+**Exactly one slot, no fallback.** The manifest's `auth.secret` names the base handle `H`. A
+registered integration's `H` is the integration id by the resolver's first-dot split, and `--as`
+alongside an alias already in `auth.secret` is `E_PROBE_ALIAS_CONFLICT`; a custom handle is
+opaque (dots allowed, never split). `--as A` resolves exactly `H.A`; without it, exactly the
+manifest's slot. A missing slot is `E_CREDENTIAL_MISSING`, never another account.
+`--expect-generation` is checked before the credential is refreshed or attached.
+
+**Bounded.** `--timeout-ms` bounds the whole probe — credential resolution and refresh, the
+call, and the `reviewed` registry lookup (which, if it cannot finish in the time left, leaves
+`reviewed: false` rather than failing a proven connection). cli stdout and REST bodies are
+capped at 64 KiB. A timeout terminates the bridge's
+whole process tree — a Windows Job Object (the child starts suspended and is assigned before it
+runs) or a Unix process group — and any process left behind after a normal exit is ended too.
+
+**Persistent writes, exactly:** one code-only line appended to `~/.aware/logs/agent-probe.log`
+(`<time> agent-probe <agent> <ok|CODE>`), plus the credential maintenance the resolver already
+performs — an OAuth refresh stored back to the same slot, and a generation written for a legacy
+credential.
+
+`aware --json agent describe <agent>` publishes the same facts a host needs before the first
+check: top-level `manifestSha256` (equal to the probe's) and `probe: {command, describe, kind,
+reviewed, origin, credentialHandle}` — `origin` is `rest.origin` (`null` for cli),
+`credentialHandle` the base handle the probe would use (`null` when it attaches none). `probe`
+is `null` when no valid probe is declared.
+
 ### `aware app run <app>`
 
 The heaviest command. It first verifies the installed source against the engineer-approved `<app>.lock`: the lock must be present, parseable, and carry the SHA-256 of the exact raw source bytes. Compilation and runtime each parse and hash one source snapshot, so the compiled plan, approved bytes, and executed app cannot drift between reads. An unsafe `app:` id is rejected before it can become a lock path. A missing (`E_APP_LOCK_MISSING`), unreadable/malformed (`E_APP_LOCK_INVALID`), or mismatched (`E_APP_LOCK_STALE`) lock exits 3 before trace creation or node dispatch and tells the operator to run `aware app compile` again. Before real dispatch, every reachable agent must also match the exact compiled `agent-pins` version (`E_APP_LOCK_AGENT_PIN_MISMATCH`); simulation remains independent of ambient agent versions because it contacts no binary. Source approval applies independently to the top-level app and every app-backed agent it invokes, including `--dry-run` and `--simulate`.
@@ -505,7 +593,7 @@ $ printf %s "$TOKEN" | aware credential put floless-workspace --as session
 ✓ stored credential floless-workspace.session (OS keychain or ~/.aware/credentials fallback)
 
 $ aware --json credential status floless-workspace --as session
-{"status":"present","handle":"floless-workspace.session"}
+{"status":"present","handle":"floless-workspace.session","generation":"5c9f0d3e-…"}
 
 $ printf %s "$NEW_TOKEN" | aware --json credential put floless-workspace --as session
 {"status":"rotated","handle":"floless-workspace.session"}
@@ -533,6 +621,11 @@ Contract:
   and no usable secret came out of it: corrupt JSON, an unreachable keychain, or a blank
   value. A blank credential is never `present`; the runtime treats it as absent too, rather
   than sending a bare `Authorization: Bearer` and reporting a successful run.
+- **`status` reports the slot's `generation`** — the same opaque identity `connect --list`
+  reports — or `null` when nothing usable is stored or the stored shape cannot carry one (a bare
+  string). A credential stored before generations existed gets one written on its first
+  `status` read, so every `put` credential reports one; a caller treats `null` as "cannot
+  confirm this account".
 - **Storage stays AWARE's.** Whether the bytes live in the OS keychain or the
   `~/.aware/credentials/` fallback is not the caller's concern and is not part of this
   contract.

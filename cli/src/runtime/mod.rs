@@ -12,6 +12,7 @@ pub mod invoker;
 pub mod lifecycle;
 pub mod orchestrator;
 pub mod pidfile;
+pub mod probe;
 pub mod progress;
 pub mod provenance;
 pub mod report_reservation;

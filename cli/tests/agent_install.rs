@@ -81,7 +81,7 @@ fn write_registry_fixture(dir: &std::path::Path, tarball: &std::path::Path) -> s
     "agents": {{
         "tekla": {{
             "versions": {{
-                "2025.0.1": {{ "tarball": "{tarball_url}", "subdir": "aware-main/20-agents/tekla", "manifest-agent": "tekla", "manifest-version": "0.1.5" }}
+                "2025.0.1": {{ "tarball": "{tarball_url}", "subdir": "aware-main/20-agents/tekla", "manifest-agent": "tekla", "manifest-version": "0.1.6" }}
             }}
         }}
     }},

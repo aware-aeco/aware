@@ -86,7 +86,7 @@ fn write_registry_fixture_for(
     "agents": {{
         "tekla": {{
             "versions": {{
-                "2025.0.1": {{ "tarball": "{tarball_url}", "subdir": "aware-main/20-agents/tekla", "manifest-agent": "{manifest_agent}", "manifest-version": "0.1.5" }}
+                "2025.0.1": {{ "tarball": "{tarball_url}", "subdir": "aware-main/20-agents/tekla", "manifest-agent": "{manifest_agent}", "manifest-version": "0.1.6" }}
             }}
         }}
     }},
@@ -387,7 +387,7 @@ fn write_registry_index(
     "agents": {{
         "{key}": {{
             "versions": {{
-                "{version}": {{ "tarball": "{tarball_url}", "subdir": "{subdir}", "manifest-agent": "{key}", "manifest-version": "0.1.5" }}
+                "{version}": {{ "tarball": "{tarball_url}", "subdir": "{subdir}", "manifest-agent": "{key}", "manifest-version": "0.1.6" }}
             }}
         }}
     }},

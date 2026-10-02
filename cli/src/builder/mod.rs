@@ -138,9 +138,27 @@ pub fn kebab_ascii(s: &str) -> String {
 }
 
 /// Write the generated agent into `<output_dir>/<agent-id>/`. Returns the new agent's root path.
+/// The CLI calls [`write_agent_with_probe`]; this no-probe form is what the builder tests drive.
+#[cfg(test)]
 pub fn write_agent(
     agent: &GeneratedAgent,
     output_dir: &Path,
+) -> Result<std::path::PathBuf, AwareError> {
+    write_agent_with_probe(agent, output_dir, None)
+}
+
+/// [`write_agent`], optionally declaring `probe_command` as the agent's
+/// connection probe (`aware build agent … --probe <command>`, #617).
+///
+/// The block is held to the same closed grammar `aware agent validate` and
+/// `aware agent probe` apply, and it is checked BEFORE anything is written, so a
+/// command that cannot be a probe (write-mode, needing inputs, an origin that
+/// cannot be pinned) leaves no half-built agent behind. A generated probe is
+/// never reviewed: it did not come from the registry.
+pub fn write_agent_with_probe(
+    agent: &GeneratedAgent,
+    output_dir: &Path,
+    probe_command: Option<&str>,
 ) -> Result<std::path::PathBuf, AwareError> {
     let dst = output_dir.join(&agent.id);
     if dst.exists() {
@@ -150,10 +168,21 @@ pub fn write_agent(
             dst.display()
         )));
     }
+    let mut manifest = build_manifest_yaml(agent)?;
+    if let Some(command) = probe_command {
+        manifest.push_str(&probe_block_yaml(agent, command)?);
+        let parsed: crate::manifest::Agent = serde_yaml::from_str(&manifest)
+            .map_err(|e| AwareError::Internal(format!("generated manifest with probe: {e}")))?;
+        if let Err(issue) = crate::manifest::probe::parse_probe(&parsed) {
+            return Err(AwareError::Validation(format!(
+                "[E_PROBE_INVALID] --probe {command:?} cannot be this agent's probe ({}): {}",
+                issue.reason, issue.message
+            )));
+        }
+    }
+
     std::fs::create_dir_all(dst.join("skills"))?;
     std::fs::create_dir_all(dst.join("commands"))?;
-
-    let manifest = build_manifest_yaml(agent)?;
     std::fs::write(dst.join("manifest.yaml"), manifest)?;
 
     for s in &agent.skills {
@@ -178,6 +207,46 @@ pub fn write_agent(
     }
 
     Ok(dst)
+}
+
+/// The `probe:` block `--probe <command>` appends: no inputs, kind `host`, and
+/// for a REST agent the exact origin the command's URL resolves to.
+fn probe_block_yaml(agent: &GeneratedAgent, command: &str) -> Result<String, AwareError> {
+    let Some(cmd) = agent.commands.get(command) else {
+        return Err(AwareError::Validation(format!(
+            "[E_PROBE_INVALID] --probe {command:?} is not a command of the generated agent {}",
+            agent.id
+        )));
+    };
+    let mut describe =
+        format!("Runs the {command} command once to check that the connection works.");
+    if describe.chars().count() > crate::manifest::probe::MAX_DESCRIBE_CHARS {
+        describe = "Runs this agent's check command once to confirm that the connection works."
+            .to_string();
+    }
+    let mut out = String::from("probe:\n");
+    out.push_str(&format!("  command: {}\n", quote_yaml_scalar(command)));
+    out.push_str(&format!("  describe: {}\n", quote_yaml_scalar(&describe)));
+    out.push_str("  kind: host\n");
+    if let Some(rest) = &agent.rest {
+        let url = crate::runtime::invoker::resolve_url(
+            rest.base.as_deref(),
+            cmd.path.as_deref().unwrap_or(""),
+        );
+        let origin = url::Url::parse(&url.replace(['{', '}'], ""))
+            .ok()
+            .and_then(|u| crate::manifest::probe::origin_of(u.as_str()))
+            .ok_or_else(|| {
+                AwareError::Validation(format!(
+                    "[E_PROBE_INVALID] --probe {command:?} resolves to {url:?}, which has no exact https origin to pin"
+                ))
+            })?;
+        out.push_str(&format!(
+            "  rest:\n    origin: {}\n",
+            quote_yaml_scalar(&origin)
+        ));
+    }
+    Ok(out)
 }
 
 fn build_manifest_yaml(agent: &GeneratedAgent) -> Result<String, AwareError> {

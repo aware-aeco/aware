@@ -65,6 +65,16 @@ pub struct IntegrationConfig {
     overlay: Overlay,
 }
 
+/// See [`IntegrationConfig::probe_origins`].
+fn probe_origins_for(id: &str) -> &'static [&'static str] {
+    match id {
+        // OpenID Connect userinfo — the `account.userinfo` probe. The consent
+        // already includes `openid` + `userinfo.email`, so it needs no new scope.
+        "google-workspace" => &["https://openidconnect.googleapis.com"],
+        _ => &[],
+    }
+}
+
 pub fn for_integration(id: &str) -> Result<IntegrationConfig, AwareError> {
     let scopes = |list: &[&str]| list.iter().map(|s| s.to_string()).collect::<Vec<String>>();
     match id {
@@ -117,7 +127,9 @@ pub fn for_integration(id: &str) -> Result<IntegrationConfig, AwareError> {
             auth_url: "https://accounts.google.com/o/oauth2/v2/auth".to_string(),
             token_url: "https://oauth2.googleapis.com/token".to_string(),
             // Keep consent aligned with the commands that are actually runnable.
-            // google-workspace@2.0.0 exposes only gmail.send; the runtime rejects
+            // google-workspace exposes gmail.send plus (2.1.0, #617) the read-only
+            // account.userinfo probe, which needs only openid + userinfo.email
+            // and so adds no scope here; the runtime rejects
             // legacy broad grants before dispatch so reconnecting must produce this
             // exact least-privilege set (#495).
             default_scopes: scopes(&[
@@ -149,6 +161,16 @@ pub fn for_integration(id: &str) -> Result<IntegrationConfig, AwareError> {
 }
 
 impl IntegrationConfig {
+    /// The exact origins an agent probe (#617) may send this integration's
+    /// credential to. Code-owned, keyed by the integration id alone: no manifest,
+    /// BYO profile or environment variable can extend it, because the whole point
+    /// is that a manifest naming this integration's secret cannot choose where the
+    /// token goes. An integration with no reviewed read endpoint has none, so a
+    /// probe of it is refused rather than pointed anywhere.
+    pub fn probe_origins(&self) -> &'static [&'static str] {
+        probe_origins_for(&self.id)
+    }
+
     /// Overlay a BYO (Tier 2) app profile + keychain secret on top of the bundled
     /// defaults. Looks up `~/.aware/oauth/<id>[.<alias>].yaml` and the keychain
     /// `oauth-app.<id>[.<alias>]` slot. For M365, a profile that sets only a

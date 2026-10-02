@@ -337,7 +337,7 @@ fn provider_command(request: &ProviderRun) -> Result<PreparedProvider, AwareErro
 }
 
 #[cfg(windows)]
-fn provider_creation_flags() -> u32 {
+pub(crate) fn provider_creation_flags() -> u32 {
     windows_sys::Win32::System::Threading::CREATE_SUSPENDED
 }
 
@@ -365,7 +365,7 @@ async fn kill_tree(child: &mut tokio::process::Child) {
 }
 
 #[cfg(windows)]
-fn provider_job(child: &tokio::process::Child) -> Result<win32job::Job, AwareError> {
+pub(crate) fn provider_job(child: &tokio::process::Child) -> Result<win32job::Job, AwareError> {
     let job = win32job::Job::create()
         .map_err(|error| AwareError::Internal(format!("create provider Job Object: {error}")))?;
     let mut limits = job
@@ -383,7 +383,7 @@ fn provider_job(child: &tokio::process::Child) -> Result<win32job::Job, AwareErr
 }
 
 #[cfg(windows)]
-fn resume_provider(child: &tokio::process::Child) -> Result<(), AwareError> {
+pub(crate) fn resume_provider(child: &tokio::process::Child) -> Result<(), AwareError> {
     use windows_sys::Win32::Foundation::{CloseHandle, INVALID_HANDLE_VALUE};
     use windows_sys::Win32::System::Diagnostics::ToolHelp::{
         CreateToolhelp32Snapshot, TH32CS_SNAPTHREAD, THREADENTRY32, Thread32First, Thread32Next,
@@ -437,7 +437,7 @@ async fn join_bounded_stream(
 }
 
 #[cfg(unix)]
-async fn terminate_provider_group(pid: Option<u32>) -> Result<(), AwareError> {
+pub(crate) async fn terminate_provider_group(pid: Option<u32>) -> Result<(), AwareError> {
     if let Some(pid) = pid {
         let _ = tokio::process::Command::new("kill")
             .args(["-KILL", &format!("-{pid}")])
@@ -470,7 +470,7 @@ async fn terminate_provider_group(pid: Option<u32>) -> Result<(), AwareError> {
 }
 
 #[cfg(windows)]
-async fn terminate_provider_job(job: win32job::Job) -> Result<(), AwareError> {
+pub(crate) async fn terminate_provider_job(job: win32job::Job) -> Result<(), AwareError> {
     tokio::task::spawn_blocking(move || {
         use windows_sys::Win32::Foundation::{HANDLE, WAIT_OBJECT_0};
         use windows_sys::Win32::System::JobObjects::TerminateJobObject;

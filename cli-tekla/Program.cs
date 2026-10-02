@@ -270,6 +270,10 @@ internal static class Program
                 return Exec(parsed);
             case "bake-scene":
                 return BakeScene(parsed);
+            case "model-info":
+                // Takes no input; drain stdin for the same reason as list-instances (#520).
+                if (parsed.JsonStdin) { Console.In.ReadToEnd(); }
+                return ModelInfo();
             case "watch":
                 return Watch(parsed);
             default:
@@ -2570,6 +2574,7 @@ internal static class Program
               close            Save + clean-shutdown a Tekla instance (Open API + ModelSave event)
               exec             Compile + run an ad-hoc C# script against the active model
               bake-scene       Materialize source-owned native parts, operations, and grids (write)
+              model-info       Read the open model's name and path (read-only connection probe)
               watch            Stream ModelObjectChanged events as newline-delimited JSON (lifecycle: start)
 
             Flags:
@@ -3080,6 +3085,169 @@ internal static class Program
             typeof(Program).GetMethod(signalMethodName, BindingFlags.NonPublic | BindingFlags.Static)!);
         il.Emit(System.Reflection.Emit.OpCodes.Ret);
         return dyn.CreateDelegate(eventInfo.EventHandlerType);
+    }
+
+    // ── model-info ───────────────────────────────────────────────────────────
+    // The tekla agent's connection probe (#617): READ-ONLY. It constructs the Open API
+    // Model, asks GetConnectionStatus() and GetInfo().ModelName / ModelPath, and nothing
+    // else — no CommitChanges, no Operation.*, no write of any kind. The host is chosen by
+    // the same rule exec uses (ResolveExecTarget): exactly one reachable instance, or one
+    // instance of a single major; several same-major or uninspectable instances are refused
+    // with a structured code rather than guessed at, because new Model() binds by version
+    // and could attach to the wrong one.
+    //
+    // A failure is a receipt on stdout with a kebab-case `code` (and `instance_count`).
+    // The probe runtime reads ONLY those two fields, never a message, so nothing a vendor
+    // assembly prints can leave AWARE through this verb.
+    static int ModelInfo()
+    {
+        int rawCount;
+        List<TeklaInstance> instances;
+        try
+        {
+            (rawCount, instances) = DiscoverTeklas();
+        }
+        catch (Exception e)
+        {
+            Console.Error.WriteLine($"aware-tekla model-info: could not enumerate Tekla instances: {e.Message}");
+            EmitModelInfoFail("host-enumeration-failed", null, null, null);
+            return 2;
+        }
+
+        var target = ResolveExecTarget(null, null, rawCount, instances);
+        switch (target.Kind)
+        {
+            case ExecTargetKind.NoHost:
+            case ExecTargetKind.NotRunning:
+                EmitModelInfoFail("host-not-running", rawCount, null, null);
+                return 1;
+            case ExecTargetKind.Ambiguous:
+                Console.Error.WriteLine($"aware-tekla model-info: {target.Message}");
+                EmitModelInfoFail("host-ambiguous", rawCount, null, null);
+                return 4;
+        }
+
+        var host = target.Instance!;
+        bool connected;
+        string? modelName;
+        string? modelPath;
+        try
+        {
+            (connected, modelName, modelPath) = WithTeklaModelAssembly(host, ReadModelInfo);
+        }
+        catch (Exception e)
+        {
+            var root = e;
+            while (root is TargetInvocationException && root.InnerException is not null)
+                root = root.InnerException;
+            Console.Error.WriteLine($"aware-tekla model-info: {root.GetType().Name}: {root.Message}");
+            EmitModelInfoFail("model-read-failed", rawCount, host.Version, host.Pid);
+            return 2;
+        }
+        if (!connected)
+        {
+            EmitModelInfoFail("host-not-connected", rawCount, host.Version, host.Pid);
+            return 2;
+        }
+        if (string.IsNullOrWhiteSpace(modelName))
+        {
+            EmitModelInfoFail("model-closed", rawCount, host.Version, host.Pid);
+            return 2;
+        }
+
+        WriteProtocolLine(BuildModelInfoReceipt(host, modelName!, modelPath).ToJsonString());
+        return 0;
+    }
+
+    internal static JsonObject BuildModelInfoReceipt(TeklaInstance host, string modelName, string? modelPath)
+        => new JsonObject
+        {
+            ["status"] = "ok",
+            ["host"] = "tekla",
+            ["host_version"] = host.Version,
+            ["host_pid"] = host.Pid,
+            ["host_session_id"] = $"tekla-{host.Pid}",
+            ["verb"] = "model-info",
+            ["model_name"] = modelName,
+            ["model_path"] = modelPath,
+            ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+        };
+
+    internal static JsonObject BuildModelInfoFailure(string code, int? instanceCount, string? hostVersion, int? hostPid)
+        => new JsonObject
+        {
+            ["status"] = "err",
+            ["code"] = code,
+            ["host"] = "tekla",
+            ["host_version"] = hostVersion,
+            ["host_pid"] = hostPid,
+            ["instance_count"] = instanceCount,
+            ["verb"] = "model-info",
+            ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+        };
+
+    static void EmitModelInfoFail(string code, int? instanceCount, string? hostVersion, int? hostPid)
+        => WriteProtocolLine(BuildModelInfoFailure(code, instanceCount, hostVersion, hostPid).ToJsonString());
+
+    // Read-only: GetConnectionStatus() and GetInfo() are the whole of what model-info calls.
+    static (bool connected, string? modelName, string? modelPath) ReadModelInfo(Assembly modelAsm)
+    {
+        var modelType = modelAsm.GetType("Tekla.Structures.Model.Model")
+            ?? throw new InvalidOperationException("Tekla.Structures.Model.Model type not found");
+        var model = Activator.CreateInstance(modelType)
+            ?? throw new InvalidOperationException("Could not construct Tekla Model()");
+        var getStatus = modelType.GetMethod("GetConnectionStatus", BindingFlags.Public | BindingFlags.Instance);
+        var connected = (bool)(getStatus?.Invoke(model, null) ?? false);
+        if (!connected) return (false, null, null);
+        var getInfo = modelType.GetMethod("GetInfo", BindingFlags.Public | BindingFlags.Instance, null, Type.EmptyTypes, null)
+            ?? throw new InvalidOperationException("Model.GetInfo() method not found");
+        var info = getInfo.Invoke(model, null);
+        return (true, ReadStringMember(info, "ModelName"), ReadStringMember(info, "ModelPath"));
+    }
+
+    internal static string? ReadStringMember(object? target, string name)
+    {
+        if (target is null) return null;
+        var type = target.GetType();
+        var property = type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
+        if (property is not null) return property.GetValue(target) as string;
+        var field = type.GetField(name, BindingFlags.Public | BindingFlags.Instance);
+        return field?.GetValue(target) as string;
+    }
+
+    // Load the target instance's Tekla.Structures.* assemblies (resolver wired, CWD = Tekla's
+    // bin so native siblings resolve) and run `body` against Tekla.Structures.Model.
+    static T WithTeklaModelAssembly<T>(TeklaInstance target, Func<Assembly, T> body)
+    {
+        var binDir = Path.GetDirectoryName(target.ExePath)!;
+        var modelDllPath = Path.Combine(binDir, "Tekla.Structures.Model.dll");
+        if (!File.Exists(modelDllPath))
+            throw new FileNotFoundException($"Tekla.Structures.Model.dll not found at {modelDllPath}");
+        WireResolver(binDir);
+        var originalCwd = Environment.CurrentDirectory;
+        Environment.CurrentDirectory = binDir;
+        try
+        {
+            // Net48Runtime first: Tekla 2026's bin/ holds the .NET 8/9 builds, and this
+            // sidecar is net48 — the same probe order ConstructTeklaModel uses for exec.
+            var probePaths = new[] { Path.Combine(binDir, "Net48Runtime"), binDir };
+            foreach (var name in new[] { "Tekla.Structures.dll", "Tekla.Structures.Datatype.dll", "Tekla.Structures.Model.dll" })
+            {
+                foreach (var probe in probePaths)
+                {
+                    var p = Path.Combine(probe, name);
+                    if (File.Exists(p)) { Assembly.LoadFrom(p); break; }
+                }
+            }
+            var modelAsm = AppDomain.CurrentDomain.GetAssemblies()
+                .FirstOrDefault(a => a.GetName().Name == "Tekla.Structures.Model")
+                ?? Assembly.LoadFrom(modelDllPath);
+            return body(modelAsm);
+        }
+        finally
+        {
+            Environment.CurrentDirectory = originalCwd;
+        }
     }
 
     static void DispatchSendStatus(TeklaInstance target, string message)

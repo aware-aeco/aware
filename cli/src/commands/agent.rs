@@ -136,6 +136,38 @@ pub enum AgentCommand {
         #[arg(long)]
         inputs: Option<String>,
     },
+
+    /// Run an installed agent's declared connection probe, for real (#617).
+    ///
+    /// A probe is the one fixed, read-only call an agent declares in its
+    /// manifest's `probe:` block to prove the connection reaches the real host
+    /// or account. Nothing raw leaves AWARE: a failure is a code and a fixed
+    /// sentence, success only the declared report strings. With `--json` the
+    /// result is the standard envelope; `data` is schema `aware.agent-probe/v1`.
+    Probe {
+        /// Agent id (must be installed and declare a `probe:` block).
+        agent: String,
+        /// Account alias: use exactly the slot `<handle>.<alias>`, never another.
+        #[arg(long = "as")]
+        r#as: Option<String>,
+        /// The origin a custom-handle credential may be sent to. Must equal the
+        /// probe's declared `rest.origin` exactly.
+        #[arg(long = "allow-origin")]
+        allow_origin: Option<String>,
+        /// Refuse (E_CREDENTIAL_CHANGED) unless the credential slot still has
+        /// this generation — checked before the credential is attached.
+        #[arg(long = "expect-generation")]
+        expect_generation: Option<String>,
+        /// Deadline for the whole probe, 1000..=60000 ms.
+        #[arg(
+            long = "timeout-ms",
+            default_value_t = crate::runtime::probe::DEFAULT_TIMEOUT_MS,
+            value_parser = clap::value_parser!(u64).range(
+                crate::runtime::probe::MIN_TIMEOUT_MS..=crate::runtime::probe::MAX_TIMEOUT_MS
+            )
+        )]
+        timeout_ms: u64,
+    },
 }
 
 pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
@@ -163,6 +195,85 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
             command,
             inputs,
         } => invoke_cmd(ctx, &agent, &command, inputs.as_deref()).await,
+        AgentCommand::Probe {
+            agent,
+            r#as,
+            allow_origin,
+            expect_generation,
+            timeout_ms,
+        } => {
+            let options = crate::runtime::probe::ProbeOptions {
+                alias: r#as,
+                allow_origin,
+                expect_generation,
+                timeout: std::time::Duration::from_millis(timeout_ms),
+            };
+            probe_cmd(ctx, &agent, &options).await
+        }
+    }
+}
+
+/// `aware agent probe <agent>` — run the agent's declared probe and print the
+/// receipt (or the refusal) inside the standard envelope.
+async fn probe_cmd(
+    ctx: &Context,
+    agent_id: &str,
+    options: &crate::runtime::probe::ProbeOptions,
+) -> Result<(), AwareError> {
+    let started = Instant::now();
+    let outcome =
+        crate::runtime::probe::probe_agent(&ctx.paths.aware_home, agent_id, options).await;
+    let logged = match &outcome {
+        Ok(_) => "ok",
+        Err(failure) => failure.code,
+    };
+    crate::runtime::probe::append_log_line(&ctx.paths.logs_dir(), agent_id, logged);
+    match outcome {
+        Ok(receipt) => {
+            if ctx.json {
+                envelope::print_ok("agent probe", &receipt, started).ok();
+            } else {
+                println!(
+                    "\u{2713} {} probe ok ({} ms)",
+                    receipt.agent, receipt.duration_ms
+                );
+                if let Some(summary) = &receipt.reported.summary {
+                    println!("  summary:      {summary}");
+                }
+                if let Some(identity) = &receipt.reported.identity {
+                    println!("  identity:     {identity}");
+                }
+                if let Some(id) = &receipt.reported.stable_id {
+                    println!("  stable-id:    {id}");
+                }
+                if let Some(v) = &receipt.reported.host_version {
+                    println!("  host-version: {v}");
+                }
+                println!(
+                    "  reviewed:     {}",
+                    if receipt.reviewed { "yes" } else { "no" }
+                );
+            }
+            Ok(())
+        }
+        Err(failure) => {
+            if ctx.json {
+                let env = envelope::Envelope::<()> {
+                    ok: false,
+                    data: None,
+                    error: Some(envelope::EnvelopeError {
+                        code: failure.code.to_string(),
+                        message: failure.message().to_string(),
+                        details: serde_json::Value::Object(failure.details.clone()),
+                    }),
+                    meta: envelope::meta_for("agent probe", started),
+                };
+                println!("{}", serde_json::to_string(&env)?);
+            } else {
+                eprintln!("error: [{}] {}", failure.code, failure.message());
+            }
+            flush_exit(failure.exit_code());
+        }
     }
 }
 
@@ -1174,7 +1285,42 @@ fn describe_installed(
             reflected_count: usize,
             #[serde(rename = "agent-bundle-provenance")]
             bundle_provenance: crate::install::provenance::BundleProvenance,
+            /// SHA-256 of the installed manifest's bytes — the same value
+            /// `aware agent probe` reports, so a host can tell whether a stored
+            /// probe receipt is still current (#617).
+            #[serde(rename = "manifestSha256")]
+            manifest_sha256: Option<String>,
+            /// The declared probe, or `null` when none is declared (or the block
+            /// is invalid — `aware agent validate` names the rule it broke).
+            probe: Option<ProbeSummary>,
         }
+        #[derive(Serialize)]
+        #[serde(rename_all = "camelCase")]
+        struct ProbeSummary {
+            command: String,
+            describe: String,
+            kind: &'static str,
+            reviewed: bool,
+            origin: Option<String>,
+            credential_handle: Option<String>,
+        }
+
+        let manifest_sha256 = std::fs::read(root.join("manifest.yaml"))
+            .ok()
+            .map(|bytes| crate::runtime::probe::manifest_sha256(&bytes));
+        let probe = crate::manifest::probe::parse_probe(m)
+            .ok()
+            .flatten()
+            .map(|decl| ProbeSummary {
+                credential_handle: crate::runtime::probe::credential_handle(m, &decl),
+                command: decl.command,
+                describe: decl.describe,
+                kind: decl.kind.as_str(),
+                // The same outside-the-manifest anchor the probe uses: the
+                // installed bundle digest against the fresh official index.
+                reviewed: bundle_provenance.verified,
+                origin: decl.rest_origin,
+            });
 
         let cmds: Vec<CommandRow> = m
             .commands
@@ -1206,6 +1352,8 @@ fn describe_installed(
             commands: cmds,
             skills: &m.skills,
             bundle_provenance,
+            manifest_sha256,
+            probe,
         };
         envelope::print_ok("agent describe", data, started).ok();
         return Ok(());
@@ -1244,6 +1392,16 @@ fn describe_installed(
         "executable:   unverified — bundle integrity does not attest PATH/managed executables or REST services"
     );
     print_transport(&m.transport);
+    match crate::manifest::probe::parse_probe(m) {
+        Ok(Some(decl)) => println!(
+            "probe:        {} ({}) — {}",
+            decl.command,
+            decl.kind.as_str(),
+            decl.describe
+        ),
+        Ok(None) => {}
+        Err(issue) => println!("probe:        invalid ({})", issue.reason),
+    }
     match m.status {
         crate::manifest::agent::AgentStatus::Available => {}
         crate::manifest::agent::AgentStatus::Planned => println!(

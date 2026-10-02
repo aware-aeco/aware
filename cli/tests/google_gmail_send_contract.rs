@@ -64,7 +64,7 @@ fn mapping_keys(value: &Value) -> BTreeSet<String> {
 fn manifest_is_rest_only_runtime_gated_and_least_privilege() {
     let manifest = load_manifest();
 
-    assert_eq!(manifest["version"].as_str(), Some("2.0.0"));
+    assert_eq!(manifest["version"].as_str(), Some("2.1.0"));
     assert_eq!(manifest["status"].as_str(), Some("requires-runtime"));
     assert_eq!(manifest["minimum-cli-version"].as_str(), Some("0.136.0"));
     assert_eq!(
@@ -111,15 +111,16 @@ fn manifest_is_rest_only_runtime_gated_and_least_privilege() {
 fn gmail_send_is_the_only_available_command_and_freezes_the_v1_shape() {
     let manifest = load_manifest();
     let commands = manifest["commands"].as_mapping().expect("commands mapping");
-    assert_eq!(commands.len(), PLANNED_COMMAND_COUNT + 1);
+    // gmail.send, plus the read-only account.userinfo connection probe (#617).
+    assert_eq!(commands.len(), PLANNED_COMMAND_COUNT + 2);
 
     let mut planned = Vec::new();
     for (name, command) in commands {
         let name = name.as_str().expect("command name");
-        if name == "gmail.send" {
+        if name == "gmail.send" || name == "account.userinfo" {
             assert!(
                 command.get("status").is_none(),
-                "gmail.send inherits the available command default"
+                "{name} inherits the available command default"
             );
         } else {
             assert_eq!(
@@ -131,6 +132,15 @@ fn gmail_send_is_the_only_available_command_and_freezes_the_v1_shape() {
         }
     }
     assert_eq!(planned.len(), PLANNED_COMMAND_COUNT);
+
+    let userinfo = &manifest["commands"]["account.userinfo"];
+    assert_eq!(userinfo["mode"].as_str(), Some("read"));
+    assert_eq!(userinfo["method"].as_str(), Some("GET"));
+    assert_eq!(
+        userinfo["path"].as_str(),
+        Some("https://openidconnect.googleapis.com/v1/userinfo")
+    );
+    assert!(userinfo.get("inputs").is_none(), "the probe takes no input");
 
     let send = &manifest["commands"]["gmail.send"];
     assert_eq!(send["mode"].as_str(), Some("write"));

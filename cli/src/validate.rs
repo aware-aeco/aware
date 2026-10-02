@@ -142,6 +142,15 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
             "`mcp` is not a dispatchable transport on its own — the runtime cannot invoke it, so this agent would validate and then fail at run. Declare `mcp` alongside a runnable transport (cli / rest / app / builtin), which is how the agent-spec describes it",
         ));
     }
+    // A declared probe (#617) is held to its closed grammar here so `agent
+    // validate` and both install routes refuse a block `aware agent probe` would
+    // refuse — the probe verb runs the same parser again on the installed copy.
+    if let Err(issue) = crate::manifest::probe::parse_probe(agent) {
+        out.push(ValidationIssue::error(
+            "E_PROBE_INVALID",
+            format!("probe ({}): {}", issue.reason, issue.message),
+        ));
+    }
     if agent.stateful {
         let has_start = agent
             .commands

@@ -214,7 +214,10 @@ impl AgentInvoker for MockInvoker {
 /// with only the npm shim dir on PATH, so a bundled sibling would never be found.
 /// This mirrors how `aware-sidecar` and `aware-roslyn` are already discovered
 /// (see `sidecar::discover_named`).
-fn resolve_cli_binary(binary: &str, bridges_dir: &std::path::Path) -> std::path::PathBuf {
+pub(crate) fn resolve_cli_binary(
+    binary: &str,
+    bridges_dir: &std::path::Path,
+) -> std::path::PathBuf {
     if let Some(bridge) = crate::commands::sidecar::find_bridge_by_binary(binary, bridges_dir) {
         return bridge;
     }
@@ -269,7 +272,7 @@ fn sibling_binary(dir: &std::path::Path, binary: &str) -> Option<std::path::Path
 
 /// The persistent bridges directory (`<AWARE_HOME>/bridges`), derived from the
 /// same env-driven source the rest of the CLI uses.
-fn bridges_dir() -> std::path::PathBuf {
+pub(crate) fn bridges_dir() -> std::path::PathBuf {
     crate::paths::Paths::from_env()
         .map(|p| p.aware_home.join("bridges"))
         .unwrap_or_default()
@@ -1405,7 +1408,7 @@ pub(crate) fn percent_encode_path(s: &str) -> String {
 
 /// Join an optional base URL with a (possibly relative) path. An absolute
 /// `http(s)://` path is used as-is.
-fn resolve_url(base: Option<&str>, raw: &str) -> String {
+pub(crate) fn resolve_url(base: Option<&str>, raw: &str) -> String {
     match base {
         Some(b) if !raw.starts_with("http://") && !raw.starts_with("https://") => {
             format!(
@@ -1430,7 +1433,7 @@ fn value_to_str(v: &Value) -> Option<String> {
 
 /// `(method, url, headers, query, body)` — the parts of an HTTP request the REST
 /// transport assembles before adding auth and dispatching it.
-type RequestParts = (
+pub(crate) type RequestParts = (
     String,
     String,
     Vec<(String, String)>,
@@ -1451,6 +1454,18 @@ fn build_operation_request(
     args: &Value,
 ) -> Result<RequestParts, AwareError> {
     let m = crate::manifest::loader::load_agent_by_id(agents_dir, agent)?;
+    build_operation_request_for(&m, command, args)
+}
+
+/// [`build_operation_request`] from an already-parsed manifest — so a caller
+/// that hashed and validated those exact bytes (`aware agent probe`) builds the
+/// request from the same manifest rather than a second read of the file.
+pub(crate) fn build_operation_request_for(
+    m: &crate::manifest::Agent,
+    command: &str,
+    args: &Value,
+) -> Result<RequestParts, AwareError> {
+    let agent = m.agent.as_str();
     let cmd = m.commands.get(command).ok_or_else(|| {
         AwareError::Validation(format!("{agent}/{command}: command not found in manifest"))
     })?;
@@ -1519,7 +1534,13 @@ fn build_operation_request(
     if !cookies.is_empty() {
         headers.push(("Cookie".to_string(), cookies.join("; ")));
     }
-    let url = resolve_url(rest_base_url(agents_dir, agent).as_deref(), &path);
+    let base = m
+        .transport
+        .rest
+        .as_ref()
+        .and_then(|rest| rest.get("base"))
+        .and_then(|base| base.as_str());
+    let url = resolve_url(base, &path);
     Ok((method, url, headers, query, body))
 }
 
@@ -1659,7 +1680,7 @@ pub(crate) fn stored_secret_is_usable(aware_home: &std::path::Path, handle: &str
 /// Load a credential by handle, reusing the runtime secret loader (OS keychain,
 /// then `<aware-home>/credentials/<id>.json`). `agents_dir` is `<home>/agents`,
 /// so the credentials directory is its `credentials` sibling.
-fn load_secret_value(agents_dir: &std::path::Path, id: &str) -> Option<Value> {
+pub(crate) fn load_secret_value(agents_dir: &std::path::Path, id: &str) -> Option<Value> {
     let creds_dir = agents_dir.parent()?.join("credentials");
     let mut ctx = crate::runtime::template::RenderContext::default();
     crate::runtime::context::load_secret(&mut ctx, &creds_dir, id).ok()?;
@@ -1707,7 +1728,7 @@ pub(crate) fn unsendable_in_header_char(secret: &str) -> Option<char> {
 /// would never be sent (Codex, #443). Reporting the outcome of the one function
 /// that decides removes the second opinion rather than correcting it.
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
-enum AuthSlot {
+pub(crate) enum AuthSlot {
     /// A header — including `Cookie`, which is one.
     Header,
     /// A query parameter, which is URL-encoded and so carries any character.
@@ -1734,7 +1755,7 @@ enum AuthSlot {
 /// `key`, and returns before the raw object is ever offered here. So that
 /// fallthrough was reachable only from its own test. Selecting first and
 /// validating after is what the store actually does (#443).
-fn secret_as_str(secret: &Value) -> Option<String> {
+pub(crate) fn secret_as_str(secret: &Value) -> Option<String> {
     let selected = match secret {
         Value::String(s) => Some(s.clone()),
         Value::Object(m) => [
@@ -1761,7 +1782,7 @@ fn secret_as_str(secret: &Value) -> Option<String> {
 /// caller had already set it, or because the scheme injects nowhere. The caller
 /// validates the credential against the slot it LANDED in, so a value that was
 /// never sent is never judged by where it would have gone.
-fn inject_auth(
+pub(crate) fn inject_auth(
     auth: &crate::manifest::agent::AuthScheme,
     cred: &str,
     headers: &mut Vec<(String, String)>,

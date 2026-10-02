@@ -94,6 +94,14 @@ pub struct Agent {
     pub commands: BTreeMap<String, Command>,
     #[serde(default)]
     pub skills: Vec<String>,
+    /// The agent's one declared connection probe (#617) — a fixed read that
+    /// proves the connection reaches the real host or account, run by
+    /// `aware agent probe`. Kept as the raw YAML value here so a malformed block
+    /// never makes the whole manifest unloadable (`agent list` must still work);
+    /// [`crate::manifest::probe::parse_probe`] applies the closed grammar, and
+    /// `validate_agent` refuses an invalid block at validate and install time.
+    #[serde(default)]
+    pub probe: Option<Value>,
 }
 
 /// Agent-level capability flags (RFC #223). Currently the single fenced
@@ -635,11 +643,12 @@ commands: {}
         let a: Agent = serde_yaml::from_str(&text).unwrap();
         assert_eq!(a.agent, "tekla");
         // tekla is the gold-standard curated agent — currently 33 skills and
-        // 26 commands. (Grew from 23 when the `bake-scene` verb landed in #235,
-        // and from 24 when #520 declared `list-instances` and `close`, which the
-        // bridge had always dispatched with nothing publishing them.)
+        // 27 commands. (Grew from 23 when the `bake-scene` verb landed in #235,
+        // from 24 when #520 declared `list-instances` and `close`, which the
+        // bridge had always dispatched with nothing publishing them, and from 26
+        // when #617 added the read-only `model-info` probe verb.)
         assert_eq!(a.skill_count(), 33);
-        assert_eq!(a.command_count(), 26);
+        assert_eq!(a.command_count(), 27);
         assert!(a.stateful);
     }
 
@@ -690,8 +699,8 @@ commands: {}
             .join("20-agents/aeco/engineering/tekla/manifest.yaml");
         let text = std::fs::read_to_string(&path).unwrap();
         let a: Agent = serde_yaml::from_str(&text).unwrap();
-        // All tekla commands are explicitly `category: curated` (26 total).
-        assert_eq!(a.curated_count(), 26);
+        // All tekla commands are explicitly `category: curated` (27 total).
+        assert_eq!(a.curated_count(), 27);
         assert_eq!(a.reflected_count(), 0);
         for cmd in a.commands.values() {
             assert_eq!(cmd.category, Some(Category::Curated));

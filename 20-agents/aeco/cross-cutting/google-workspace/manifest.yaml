@@ -1,10 +1,11 @@
 agent:        google-workspace
-version:      2.0.0
+version:      2.1.0
 sdk-target:   1.0.0
 display-name: Google Workspace
 description: |
   Submit plain-text or HTML email through Gmail as the authenticated Google
-  mailbox. The remaining Drive, Sheets, Calendar, Chat, Forms, Slides, Meet,
+  mailbox, and read which Google account is signed in (the connection probe).
+  The remaining Drive, Sheets, Calendar, Chat, Forms, Slides, Meet,
   Tasks, and Gmail search commands are declared as planned, not runnable.
 
 stateful: false
@@ -134,6 +135,32 @@ commands:
       type: single
       schema:
         updated-cells: int
+
+  # ---- Account (the connection probe, #617) -----------------------------
+
+  account.userinfo:
+    lifecycle: single
+    category: curated
+    mode: read
+    method: GET
+    # Absolute: the OpenID Connect userinfo endpoint is not on the Gmail base.
+    # The probe pins this exact origin, and AWARE's code-owned allowlist for the
+    # google-workspace credential (`IntegrationConfig::probe_origins`) is the only
+    # thing that lets the token go there.
+    path: https://openidconnect.googleapis.com/v1/userinfo
+    description: |
+      Read which Google account is signed in — its email address and stable
+      account id — from the OpenID Connect userinfo endpoint. Read-only, takes no
+      input, and needs only the `openid` + `userinfo.email` scopes the consent
+      already grants.
+    outputs:
+      type: single
+      schema:
+        status: integer
+        body:
+          sub:            string
+          email:          string
+          email_verified: boolean
 
   # ---- Gmail ------------------------------------------------------------
 
@@ -628,6 +655,21 @@ commands:
           items:
             email: string
             role:  string
+
+# One declared, read-only call that proves the stored credential reaches the real
+# Google account and says WHICH account it is (#617). Run by
+# `aware agent probe google-workspace [--as <alias>]`.
+probe:
+  command: account.userinfo
+  inputs: {}
+  describe: Reads the email address of the Google account that is signed in.
+  kind: account
+  rest:
+    origin: https://openidconnect.googleapis.com
+  reports:
+    summary: /body/email
+    identity: /body/email
+    stable-id: /body/sub
 
 skills:
   - auth.md

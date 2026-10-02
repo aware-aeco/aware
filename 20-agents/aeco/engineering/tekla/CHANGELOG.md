@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.6 — 2026-10-02
+
+- Add `model-info`, a curated read-only verb that reads the name and folder of the model open in Tekla Structures (Open API `GetConnectionStatus()` + `GetInfo()`, nothing else). It refuses with a structured code — `host-not-running`, `host-ambiguous` (with the instance count), `host-not-connected`, `model-closed` — rather than guessing which instance to read.
+- Declare it as the agent's connection probe (`probe:`, #617), run by `aware agent probe tekla`: it reports the model name, the host, its pid and its version.
+
 ## 0.1.5 — 2026-09-12
 
 - Mark the 19 commands the `aware-tekla` bridge does not dispatch as `status: planned`, so an app using `insert`, `part-list`, `report-create`, `uda-get` or any of the others is refused at validate and compile with `E_APP_COMMAND_UNAVAILABLE` instead of compiling clean and then failing at run with `aware-tekla: unknown verb`. No verb's runtime behaviour changed; the contract now says which ones exist.
