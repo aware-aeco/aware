@@ -886,29 +886,60 @@ commands: {}
         // but the `mode.is_none()` guard below tells a maintainer to re-ground a row,
         // and a re-grounding that empties a `rows` slice would pass vacuously for that
         // manifest with nothing noticing.
+        // The convention entries the rows ground, as a SET: a count of seven survives
+        // swapping one row for a duplicate entry (`.stamp` -> `.bump`), which keeps the
+        // count while one entry quietly loses its only real-manifest grounding.
+        let mut entries: Vec<&str> = GROUNDED
+            .iter()
+            .flat_map(|(_, rows)| rows.iter().map(|(_, entry)| *entry))
+            .collect();
+        entries.sort_unstable();
         assert_eq!(
-            GROUNDED.iter().map(|(_, rows)| rows.len()).sum::<usize>(),
-            7,
-            "the grounded table changed size — update the count in this test's doc \
-             comment too, and check no manifest was left with zero rows"
+            entries,
+            [
+                ".bump",
+                ".export",
+                ".export-pdfs",
+                ".bulk-write",
+                ".reload-all",
+                ".stamp",
+                "save-attributes"
+            ]
+            .iter()
+            .copied()
+            .collect::<std::collections::BTreeSet<_>>()
+            .into_iter()
+            .collect::<Vec<_>>(),
+            "the grounded table's set of convention entries changed — update the \
+             \"Seven commands\" prose in this test's doc comment too, and check no entry \
+             is now grounded twice while another lost its row"
         );
         for (rel, rows) in GROUNDED {
             assert!(!rows.is_empty(), "{rel} has no rows left to ground");
             // One parse per manifest — `revit-2026` is 1.1 MB of YAML.
             let agent = real_manifest(rel);
             for (name, entry) in *rows {
-                let cmd = agent
-                    .commands
-                    .get(*name)
-                    .unwrap_or_else(|| panic!("{rel} no longer declares {name}"));
+                let cmd = agent.commands.get(*name).unwrap_or_else(|| {
+                    panic!(
+                        "{rel} no longer declares {name}. If the command was RENAMED, \
+                             check the new name still resolves write-mode through the \
+                             {entry:?} convention BEFORE re-pointing this row — a rename \
+                             that leaves the convention (e.g. `revision.bump` -> \
+                             `revision.increment`) turns a live write into a read, and \
+                             that is the regression this row exists to catch. If the \
+                             command was removed, drop the row and update the entry set \
+                             above."
+                    )
+                });
                 assert!(
                     cmd.mode.is_none(),
                     "{rel}:{name} now declares an explicit `mode:`. That is a fine \
                      change to the manifest — belt and braces — but it means this row \
                      no longer grounds the convention entry {entry:?}, which would \
                      then be pinned only synthetically. Re-ground the row on a command \
-                     that still declares no `mode:`, or drop it; do not revert the \
-                     manifest."
+                     that still declares no `mode:` if one exists — for `.bump` and \
+                     `.stamp` none does, so dropping the row (and updating the entry set \
+                     above) is the expected outcome; do not revert the manifest."
                 );
                 assert_eq!(
                     agent.mode_of(name, cmd),
@@ -970,11 +1001,16 @@ commands: {}
         // normative bullet, so the spec could withdraw a suffix with this test still
         // reading the old wording. Hence the section bound first.
         //
-        // The cost of scanning the region rather than the bullet is over-capture: the
-        // region also holds the "Pure-read nodes" sentence, so a future reword putting a
-        // `*.`-prefixed token on a READ line would make this test red. That is the right
-        // way round — it fails loudly, naming the token, and the remedy is to narrow the
-        // scan deliberately rather than to discover years later that nothing was checked.
+        // The region is scanned to the next `## ` section (a sibling `####` subsection
+        // naming more suffixes was invisible when it stopped at the first `####` —
+        // measured), and tokens are then split into the normative bullet list and
+        // everything else. The list is held to the code in both directions below; a
+        // token OUTSIDE it fails with its own message rather than being read as a
+        // promise, because a read example (`*.list`) or a withdrawal note
+        // ("`*.insert` was withdrawn") names a suffix without promising a write, and
+        // reporting it as "the spec promises .list implies a write" would be a false
+        // statement about the spec. Over-capture therefore still fails loudly, but
+        // accurately.
         const SECTION: &str = "## Safety contract";
         const RULE: &str = "### The rule";
         const MARKER: &str = "the command's name conventionally implies a write";
@@ -1000,11 +1036,12 @@ commands: {}
                         spec.display()
                     )
                 });
-        // The rule region ends at its first sub-subheading (`#### Node-level mode:` …)
-        // or at the next section, whichever comes first.
+        // The region runs to the next `## ` section, NOT to the first `####`: the rule
+        // is followed by `#### Node-level mode:` and a spec restructure that adds a
+        // sibling `####` subsection naming more suffixes must not fall outside it.
         let len = lines[rule + 1..]
             .iter()
-            .position(|l| l.starts_with("####") || l.starts_with("## "))
+            .position(|l| l.starts_with("## "))
             .unwrap_or(lines.len() - rule - 1);
         let region: Vec<&str> = lines[rule..rule + 1 + len].to_vec();
         assert!(
@@ -1015,13 +1052,64 @@ commands: {}
             spec.display()
         );
 
-        // Every `` `*.<something>` `` token in that region.
-        let published: Vec<&str> = region
+        // Split the region into the NORMATIVE LIST and everything else. The list is the
+        // contiguous run of non-blank lines from the first `- ` bullet — it is what
+        // "a node is write-mode if either:" enumerates, so a third bullet or a nested
+        // sub-list lands inside it. A `*.` token anywhere ELSE in the region (a
+        // `####` subsection, a prose paragraph after a blank line, a withdrawal note,
+        // a read example) is not part of the contract's list and is reported
+        // separately, because it wants a different remedy.
+        let list_start = region
             .iter()
-            .flat_map(|l| l.split('`'))
-            .filter(|tok| tok.starts_with("*."))
-            .map(|tok| &tok[1..]) // `*.create` -> `.create`
+            .position(|l| l.trim_start().starts_with("- "))
+            .unwrap_or_else(|| {
+                panic!(
+                    "{} § The rule has no `- ` bullet list left, so there is no normative \
+                     list to read — re-ground this test on the new structure rather than \
+                     deleting it. Region: {region:?}",
+                    spec.display()
+                )
+            });
+        let list_len = region[list_start..]
+            .iter()
+            .position(|l| l.trim().is_empty())
+            .unwrap_or(region.len() - list_start);
+        // Every `*.<name>` spelling, backticked or not. Splitting on backticks alone
+        // missed a suffix added to the bullet as bare text (`*.purge`), which left the
+        // required-suffix checks satisfied and the suite green — measured.
+        let star_tokens = |ls: &[&'_ str]| -> Vec<String> {
+            let mut out = Vec::new();
+            for line in ls {
+                let mut rest = *line;
+                while let Some(i) = rest.find("*.") {
+                    let tail = &rest[i + 1..]; // `.create...`
+                    let end = 1 + tail[1..]
+                        .find(|c: char| !(c.is_ascii_alphanumeric() || c == '-' || c == '_'))
+                        .unwrap_or(tail.len() - 1);
+                    if end > 1 {
+                        out.push(tail[..end].to_string()); // `*.create` -> `.create`
+                    }
+                    rest = &rest[i + 2..];
+                }
+            }
+            out
+        };
+        let published_owned = star_tokens(&region[list_start..list_start + list_len]);
+        let published: Vec<&str> = published_owned.iter().map(String::as_str).collect();
+        let outside_owned: Vec<String> = star_tokens(&region[..list_start])
+            .into_iter()
+            .chain(star_tokens(&region[list_start + list_len..]))
             .collect();
+        assert!(
+            outside_owned.is_empty(),
+            "{} § The rule names {outside_owned:?} OUTSIDE its normative bullet list. If \
+             that text EXTENDS the contract, put the suffix in the list and in \
+             `SUFFIXES`. If it is a read example or a withdrawal note, avoid the \
+             `*.`-prefixed spelling or narrow this scan deliberately — do NOT add it to \
+             `SUFFIXES`, which would make every command with that suffix write-mode. \
+             Region: {region:?}",
+            spec.display()
+        );
 
         // Separate the two things that can go wrong, because they want different
         // remedies. First: did extraction work at all? A reword that drops the
@@ -1036,7 +1124,7 @@ commands: {}
             spec.display()
         );
 
-        // Second: everything the spec names, the code must implement, and drift in
+        // Second: everything the spec LISTS, the code must implement, and drift in
         // EITHER direction is worth a red test. Not quite symmetric, and the asymmetry
         // is the spec's: it introduces its list with "e.g.", so the code carrying four
         // entries the spec does not name is not a divergence — it is the open question
@@ -1051,7 +1139,9 @@ commands: {}
         // loses the only coverage it has anywhere in the repo. So the SET is asserted.
         // This is still not a restatement of `SUFFIXES`: it restates the spec's
         // published commitment, and the loop below restates the code's, so each
-        // artifact checks the other.
+        // artifact checks the other. The list is scoped to the normative bullets, so a
+        // note elsewhere that merely MENTIONS `*.insert` while withdrawing it does not
+        // count as the spec still naming it.
         for want in [
             ".create",
             ".update",
@@ -1064,8 +1154,8 @@ commands: {}
         ] {
             assert!(
                 published.contains(&want),
-                "{} § The rule no longer names {want} among the suffixes that imply a \
-                 write (found {published:?}). The spec narrowed while the code still \
+                "{} § The rule's bullet list no longer names {want} among the suffixes \
+                 that imply a write (found {published:?}). The spec narrowed while the code still \
                  implements {want} — that may well be the right call, but decide it in \
                  both places: drop the entry from `SUFFIXES` and from this list, or put \
                  it back in the spec.",
@@ -1253,6 +1343,11 @@ commands: {}
             (&overridable, Some(Mode::Write), Mode::Write, true),
             (&overridable, None, Mode::Write, false),
             (&fixed, Some(Mode::Read), Mode::Write, false),
+            // Reachable and legitimate: the spec lets a node RESTATE the manifest's
+            // mode, and `validate_app_agents` rejects only a CONFLICTING one. A restated
+            // write must not be reported as an override, or every such node stamps a
+            // spurious "author-declared mode" note into its `.lock`.
+            (&fixed, Some(Mode::Write), Mode::Write, false),
         ];
         for (cmd, node_mode, mode, overridden) in cases {
             assert_eq!(
@@ -1336,7 +1431,12 @@ commands: {}
     #[test]
     fn each_enum_writes_back_the_word_its_own_parser_reads() {
         check_published_words(
-            variants(Lifecycle::Start, next_lifecycle),
+            variants(
+                Lifecycle::Start,
+                next_lifecycle,
+                Lifecycle::Single,
+                prev_lifecycle,
+            ),
             Lifecycle::as_str,
             &[
                 (Lifecycle::Start, "start"),
@@ -1346,13 +1446,18 @@ commands: {}
             "Lifecycle",
         );
         check_published_words(
-            variants(Mode::Read, next_mode),
+            variants(Mode::Read, next_mode, Mode::Write, prev_mode),
             Mode::as_str,
             &[(Mode::Read, "read"), (Mode::Write, "write")],
             "Mode",
         );
         check_published_words(
-            variants(AgentStatus::Available, next_agent_status),
+            variants(
+                AgentStatus::Available,
+                next_agent_status,
+                AgentStatus::RequiresRuntime,
+                prev_agent_status,
+            ),
             AgentStatus::as_str,
             &[
                 (AgentStatus::Available, "available"),
@@ -1434,22 +1539,47 @@ commands: {}
     /// is an exhaustive `match`, so the same addition stops this module compiling
     /// until the variant is wired into the chain the test walks.
     ///
-    /// Two residual holes, named rather than hidden. The compile error can be resolved
-    /// by giving the new variant its own `=> None` arm beside the existing terminator,
-    /// which satisfies the compiler and orphans the variant from the walk — measured,
-    /// and `cargo clippy -D warnings` does not flag the unreachable arm either. And
-    /// nothing stops a maintainer collapsing the arms to `_ => None`, which removes the
-    /// gate altogether and silently: there is no `match` that can forbid a wildcard in
-    /// the `match` doing the forbidding.
+    /// Residual holes, named rather than hidden. The chain is walked FORWARD from the
+    /// first-declared variant and BACKWARD from the last-declared, and the two walks must
+    /// agree. That closes the hole a single forward walk has by construction: a variant
+    /// inserted ahead of `first` is simply never visited (measured: an `AgentStatus`
+    /// variant added before `Available`, wired in declaration order, left the suite
+    /// green), whereas the backward walk reaches it and the two disagree. The compile
+    /// error can still be resolved
+    /// by giving the new variant its own `=> None` arm beside the existing terminator
+    /// (in BOTH chains), which satisfies the compiler and orphans the variant from the
+    /// walk — measured on the forward chain alone, and `cargo clippy -D warnings` does
+    /// not flag the unreachable arm either. And nothing stops a maintainer collapsing
+    /// the arms to `_ => None`, which removes the gate altogether and silently: there is
+    /// no `match` that can forbid a wildcard in the `match` doing the forbidding. Both
+    /// of those are deliberate wrong turns; the head-insertion above was not.
     ///
     /// Each chain is therefore written in declaration order with the last-declared
-    /// variant as the sole terminator, so appending a variant makes the correct edit the
-    /// obvious one — but no `match` can force it.
+    /// variant as the sole terminator of `next_*` and the first-declared as the sole
+    /// terminator of `prev_*`, so adding a variant at either end makes the correct edit
+    /// the obvious one — but no `match` can force it.
     ///
     /// The cycle check is what keeps a mis-wired chain a red test rather than a hung
     /// one: the `while let` walk below would not terminate on a chain that loops back,
     /// and libtest has no per-test timeout.
-    fn variants<T>(first: T, next: fn(T) -> Option<T>) -> Vec<T>
+    fn variants<T>(first: T, next: fn(T) -> Option<T>, last: T, prev: fn(T) -> Option<T>) -> Vec<T>
+    where
+        T: Copy + PartialEq + std::fmt::Debug,
+    {
+        let forward = walk_chain(first, next);
+        let mut backward = walk_chain(last, prev);
+        backward.reverse();
+        assert_eq!(
+            forward, backward,
+            "the forward chain from the first-declared variant and the backward chain \
+             from the last-declared disagree — a variant is missing from one of them \
+             (typically one added ahead of `first` or after `last` and wired into only \
+             one chain)"
+        );
+        forward
+    }
+
+    fn walk_chain<T>(first: T, next: fn(T) -> Option<T>) -> Vec<T>
     where
         T: Copy + PartialEq + std::fmt::Debug,
     {
@@ -1475,10 +1605,33 @@ commands: {}
         }
     }
 
+    fn prev_lifecycle(v: Lifecycle) -> Option<Lifecycle> {
+        match v {
+            Lifecycle::Start => None,
+            Lifecycle::Stop => Some(Lifecycle::Start),
+            Lifecycle::Single => Some(Lifecycle::Stop),
+        }
+    }
+
     fn next_mode(v: Mode) -> Option<Mode> {
         match v {
             Mode::Read => Some(Mode::Write),
             Mode::Write => None,
+        }
+    }
+
+    fn prev_mode(v: Mode) -> Option<Mode> {
+        match v {
+            Mode::Read => None,
+            Mode::Write => Some(Mode::Read),
+        }
+    }
+
+    fn prev_agent_status(v: AgentStatus) -> Option<AgentStatus> {
+        match v {
+            AgentStatus::Available => None,
+            AgentStatus::Planned => Some(AgentStatus::Available),
+            AgentStatus::RequiresRuntime => Some(AgentStatus::Planned),
         }
     }
 

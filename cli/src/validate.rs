@@ -4170,10 +4170,13 @@ requires: []
     /// it is uniquely load-bearing, and the measurement is worth recording because the
     /// obvious rationale is the wrong one.
     ///
-    /// Not the four early `continue`s above `effective_mode` — each of those is already
-    /// caught by two to five of the pre-existing safety tests in this module, so
-    /// claiming this test guards them would overstate it. What nothing else catches is
-    /// a plausible normalising refactor at the gate:
+    /// Not the four early `continue`s above `effective_mode`: this test does not guard
+    /// them, and they are not all guarded elsewhere either. Only the `frozen` branch has
+    /// a dedicated test (`frozen_write_node_skips_safety_gate`); flipping each of the
+    /// other three to push an error instead of skipping leaves the suite green —
+    /// measured — so those branches are unexercised, not "already caught". What this
+    /// test adds, and nothing else catches, is a plausible normalising refactor at the
+    /// gate:
     ///
     /// ```ignore
     /// let leaf = cmd_name.rsplit('.').next().unwrap();
