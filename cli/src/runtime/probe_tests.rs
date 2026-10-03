@@ -919,7 +919,12 @@ fn the_expect_manifest_value_is_64_lowercase_hex() {
         format!("{}g", &good[..63]),
         format!(" {}", &good[..63]),
     ] {
-        assert!(parse_expected_manifest(&bad).is_err(), "{bad:?}");
+        assert_eq!(
+            parse_expected_manifest(&bad).unwrap_err(),
+            "must be 64 lowercase hex characters: the manifestSha256 that \
+             `aware agent describe --json` reports",
+            "{bad:?}"
+        );
     }
 }
 

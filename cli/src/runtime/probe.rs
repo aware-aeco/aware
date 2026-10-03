@@ -189,8 +189,10 @@ pub(crate) fn parse_expected_manifest(value: &str) -> Result<String, String> {
     {
         Ok(value.to_string())
     } else {
-        Err("must be 64 lowercase hex characters: the manifestSha256              `aware agent describe --json` reports"
-            .into())
+        Err(
+            "must be 64 lowercase hex characters: the manifestSha256 that `aware agent describe --json` reports"
+                .into(),
+        )
     }
 }
 

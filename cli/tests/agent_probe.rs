@@ -455,7 +455,10 @@ fn a_malformed_expect_manifest_is_a_usage_error() {
             .assert()
             .failure()
             .code(2)
-            .stderr(predicates::str::contains("--expect-manifest"));
+            .stderr(predicates::str::contains("--expect-manifest"))
+            .stderr(predicates::str::contains(
+                "must be 64 lowercase hex characters: the manifestSha256 that",
+            ));
     }
     assert!(!marker.exists(), "a usage error never reaches the bridge");
 }
