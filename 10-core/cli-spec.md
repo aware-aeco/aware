@@ -385,7 +385,8 @@ real** — never a dry run — and report a bounded receipt (#617).
 
 ```
 aware agent probe <agent> [--as <alias>] [--allow-origin <origin>]
-                          [--expect-generation <g>] [--timeout-ms <1000..60000>] --json
+                          [--expect-generation <g>] [--expect-manifest <sha256>]
+                          [--timeout-ms <1000..60000>] --json
 ```
 
 ```
@@ -419,6 +420,7 @@ token. Codes, with their exit status:
 | `E_PROBE_UNDECLARED` | 3 | The agent declares no probe. |
 | `E_PROBE_INVALID` | 3 | The probe block breaks a rule (`details.reason`). |
 | `E_PROBE_ORIGIN_NOT_ALLOWED` | 3 | The request would leave its pinned origin, or the credential may not go there (`details.reason`). |
+| `E_PROBE_CHANGED` | 3 | `--expect-manifest` does not match the installed manifest's SHA-256; nothing ran. |
 | `E_PROBE_ALIAS_CONFLICT` | 3 | `--as` conflicts with an alias already in the manifest, is malformed, or names a slot on a probe that uses no credential. |
 | `E_CREDENTIAL_MISSING` | 6 | The exact slot holds no usable credential. |
 | `E_CREDENTIAL_EXPIRED` | 6 | The credential expired and could not be refreshed. |
@@ -447,6 +449,18 @@ alongside an alias already in `auth.secret` is `E_PROBE_ALIAS_CONFLICT`; a custo
 opaque (dots allowed, never split). `--as A` resolves exactly `H.A`; without it, exactly the
 manifest's slot. A missing slot is `E_CREDENTIAL_MISSING`, never another account.
 `--expect-generation` is checked before the credential is refreshed or attached.
+
+**Pin the manifest the person confirmed (#621).** A host reads `agent describe --json` to decide
+whether the person must confirm the check, then calls `agent probe`; the agent can be replaced
+in between (a reinstall, `build agent --probe` committing over it). `--expect-manifest <sha256>`
+closes that gap: the value is the `manifestSha256` `describe` reported (exactly 64 lowercase hex
+characters, else a usage error, exit 2), and AWARE compares it with the SHA-256 of the installed
+`manifest.yaml` bytes it has just read, before parsing them. On a mismatch the probe is refused
+with `E_PROBE_CHANGED` and AWARE's fixed sentence, and nothing runs: no bridge is spawned, no
+request is sent, no credential is read or refreshed. On a match the probe is planned from those
+same hashed bytes, so the check cannot be raced. A host detects support from
+`aware agent probe --help`, which lists `--expect-manifest <SHA256>`; an older CLI rejects the
+flag as a usage error (exit 2, `unexpected argument '--expect-manifest'`).
 
 **Bounded.** `--timeout-ms` bounds the whole probe — credential resolution and refresh, the
 call, and the `reviewed` registry lookup (which, if it cannot finish in the time left, leaves

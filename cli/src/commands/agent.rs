@@ -158,6 +158,16 @@ pub enum AgentCommand {
         /// this generation — checked before the credential is attached.
         #[arg(long = "expect-generation")]
         expect_generation: Option<String>,
+        /// Refuse (E_PROBE_CHANGED) unless the installed manifest's SHA-256 is
+        /// still this value — the `manifestSha256` `agent describe --json`
+        /// reports (64 lowercase hex). Checked before anything runs: no bridge
+        /// is spawned, no request sent, no credential read (#621).
+        #[arg(
+            long = "expect-manifest",
+            value_name = "SHA256",
+            value_parser = crate::runtime::probe::parse_expected_manifest
+        )]
+        expect_manifest: Option<String>,
         /// Deadline for the whole probe, 1000..=60000 ms.
         #[arg(
             long = "timeout-ms",
@@ -200,12 +210,14 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
             r#as,
             allow_origin,
             expect_generation,
+            expect_manifest,
             timeout_ms,
         } => {
             let options = crate::runtime::probe::ProbeOptions {
                 alias: r#as,
                 allow_origin,
                 expect_generation,
+                expect_manifest,
                 timeout: std::time::Duration::from_millis(timeout_ms),
             };
             probe_cmd(ctx, &agent, &options).await
