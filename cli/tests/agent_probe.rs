@@ -270,3 +270,203 @@ fn build_agent_writes_a_validated_probe_or_nothing() {
     assert_eq!(probe["origin"], "https://api.demo.example");
     assert_eq!(probe["reviewed"], false);
 }
+
+// ── --expect-manifest (#621) ──────────────────────────────────────────────────
+
+/// A fake bridge that appends a line to `marker` every time it is spawned and
+/// answers with a minimal successful receipt. Returns the path for the manifest.
+fn marker_bridge(dir: &std::path::Path, marker: &std::path::Path) -> std::path::PathBuf {
+    #[cfg(windows)]
+    {
+        let path = dir.join("fake-bridge-621.cmd");
+        std::fs::write(
+            &path,
+            format!(
+                "@echo off\r\necho spawned>>\"{}\"\r\necho {{\"ok\":true,\"model\":\"m\"}}\r\n",
+                marker.display()
+            ),
+        )
+        .unwrap();
+        path
+    }
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        let path = dir.join("fake-bridge-621");
+        std::fs::write(
+            &path,
+            format!(
+                "#!/bin/sh\necho spawned >> '{}'\necho '{{\"ok\":true,\"model\":\"m\"}}'\n",
+                marker.display()
+            ),
+        )
+        .unwrap();
+        std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o755)).unwrap();
+        path
+    }
+}
+
+fn bridged_agent(bridge: &std::path::Path, describe: &str) -> String {
+    format!(
+        "agent: hostx\nversion: 1.0.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+         transport: {{ cli: {{ binary: '{}' }} }}\n\
+         commands:\n  model-info: {{ lifecycle: single, description: Reads the model. }}\n\
+         probe: {{ command: model-info, describe: {describe}, kind: host, reports: {{ summary: /model }} }}\n",
+        bridge.display()
+    )
+}
+
+fn described_digest(home: &std::path::Path) -> String {
+    let out = aware(home)
+        .args(["--json", "agent", "describe", "hostx"])
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    json_of(&out)["data"]["manifestSha256"]
+        .as_str()
+        .expect("describe reports manifestSha256")
+        .to_string()
+}
+
+#[test]
+fn a_manifest_replaced_after_describe_is_refused_before_the_bridge_is_spawned() {
+    let home = tempfile::tempdir().unwrap();
+    let marker = home.path().join("spawned.txt");
+    let bridge = marker_bridge(home.path(), &marker);
+
+    // The consumer reads the manifest it will ask the person to confirm…
+    install_manifest(
+        home.path(),
+        "hostx",
+        &bridged_agent(&bridge, "Reads the model."),
+    );
+    let confirmed = described_digest(home.path());
+
+    // …and the agent is replaced before the probe runs.
+    install_manifest(
+        home.path(),
+        "hostx",
+        &bridged_agent(&bridge, "Reads something else entirely."),
+    );
+
+    let out = aware(home.path())
+        .args(["--json", "agent", "probe", "hostx", "--expect-manifest"])
+        .arg(&confirmed)
+        .assert()
+        .failure()
+        .code(3)
+        .get_output()
+        .stdout
+        .clone();
+    let v = json_of(&out);
+    assert_eq!(v["ok"], false);
+    assert!(v["data"].is_null());
+    assert_eq!(v["error"]["code"], "E_PROBE_CHANGED");
+    assert_eq!(
+        v["error"]["message"],
+        "The installed agent is not the one the caller expected (its manifest changed), so the probe was not run."
+    );
+    assert_eq!(v["error"]["details"], serde_json::json!({}));
+    assert!(
+        !marker.exists(),
+        "the replaced agent's bridge must not have been spawned"
+    );
+    let log = std::fs::read_to_string(home.path().join("logs/agent-probe.log")).unwrap();
+    assert!(
+        log.trim_end()
+            .ends_with("agent-probe hostx E_PROBE_CHANGED"),
+        "{log}"
+    );
+
+    // Human output carries the same code.
+    aware(home.path())
+        .args(["agent", "probe", "hostx", "--expect-manifest"])
+        .arg(&confirmed)
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicates::str::contains("[E_PROBE_CHANGED]"));
+    assert!(!marker.exists());
+}
+
+#[test]
+fn the_pinned_digest_is_the_one_describe_reports_and_a_match_runs_the_probe() {
+    let home = tempfile::tempdir().unwrap();
+    let marker = home.path().join("spawned.txt");
+    let bridge = marker_bridge(home.path(), &marker);
+    let manifest = bridged_agent(&bridge, "Reads the model.");
+    install_manifest(home.path(), "hostx", &manifest);
+
+    let described = described_digest(home.path());
+    assert_eq!(
+        described,
+        format!("{:x}", Sha256::digest(manifest.as_bytes())),
+        "describe's manifestSha256 is the SHA-256 of the installed bytes"
+    );
+
+    let out = aware(home.path())
+        .args(["--json", "agent", "probe", "hostx", "--expect-manifest"])
+        .arg(&described)
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    let data = json_of(&out)["data"].clone();
+    assert_eq!(data["manifestSha256"], described.as_str());
+    assert_eq!(data["reported"]["summary"], "m");
+    assert_eq!(
+        std::fs::read_to_string(&marker).unwrap().lines().count(),
+        1,
+        "a matching pin runs the probe exactly once"
+    );
+}
+
+#[test]
+fn a_malformed_expect_manifest_is_a_usage_error() {
+    let home = tempfile::tempdir().unwrap();
+    let marker = home.path().join("spawned.txt");
+    let bridge = marker_bridge(home.path(), &marker);
+    install_manifest(
+        home.path(),
+        "hostx",
+        &bridged_agent(&bridge, "Reads the model."),
+    );
+    let good = described_digest(home.path());
+    for bad in [
+        String::new(),
+        good.to_uppercase(),
+        good[..63].to_string(),
+        format!("{good}0"),
+        format!("{}g", &good[..63]),
+        format!("sha256:{good}"),
+    ] {
+        aware(home.path())
+            .args([
+                "--json",
+                "agent",
+                "probe",
+                "hostx",
+                "--expect-manifest",
+                &bad,
+            ])
+            .assert()
+            .failure()
+            .code(2)
+            .stderr(predicates::str::contains("--expect-manifest"));
+    }
+    assert!(!marker.exists(), "a usage error never reaches the bridge");
+}
+
+#[test]
+fn probe_help_advertises_expect_manifest() {
+    let home = tempfile::tempdir().unwrap();
+    aware(home.path())
+        .args(["agent", "probe", "--help"])
+        .assert()
+        .success()
+        .stdout(predicates::str::contains("--expect-manifest <SHA256>"))
+        .stdout(predicates::str::contains("E_PROBE_CHANGED"));
+}
