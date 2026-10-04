@@ -574,14 +574,21 @@ fn assess_agent(
         refusal: None,
     };
 
-    // The current working copy. Missing means uninstalled: today's
-    // missing-agent refusal, whatever the store holds.
+    // The current working copy. "Uninstalled" means there is no `agents/<id>/`
+    // DIRECTORY (app-spec): today's missing-agent refusal, whatever the store
+    // holds. A directory whose manifest is missing or does not parse is an
+    // installed copy that cannot be used - a digest-pinned lock still runs its
+    // stored approved bytes; a version-only lock is refused, naming why.
     let agents_dir = paths.agents_dir();
     let Ok(current_manifest) = crate::manifest::loader::agent_manifest_path(&agents_dir, id) else {
         outcome.detail = format!("agent {id} is not installed");
         return Ok(outcome);
     };
-    match std::fs::symlink_metadata(&current_manifest) {
+    let current_root = current_manifest
+        .parent()
+        .ok_or_else(|| AwareError::Internal("agent manifest has no parent".into()))?
+        .to_path_buf();
+    match std::fs::symlink_metadata(&current_root) {
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
             outcome.detail = format!(
                 "agent {id} is not installed; install it (`aware agent install {id}`) to run this app"
@@ -591,34 +598,63 @@ fn assess_agent(
         Err(error) => {
             return Err(std::io::Error::new(
                 error.kind(),
-                format!("{}: {error}", current_manifest.display()),
+                format!("{}: {error}", current_root.display()),
             )
             .into());
         }
         Ok(_) => {}
     }
-    let current = crate::manifest::loader::load_agent(&current_manifest)?;
-    let current_root = current_manifest
-        .parent()
-        .ok_or_else(|| AwareError::Internal("agent manifest has no parent".into()))?
-        .to_path_buf();
-    outcome.installed_version = Some(current.version.clone());
+    let mut notes: Vec<String> = Vec::new();
+    let current: Option<Agent> = match crate::manifest::loader::load_agent(&current_manifest) {
+        Ok(agent) => Some(agent),
+        Err(AwareError::Io(error)) if error.kind() == std::io::ErrorKind::NotFound => {
+            notes.push(format!(
+                "the installed copy at agents/{id} has no manifest.yaml"
+            ));
+            None
+        }
+        Err(error @ (AwareError::Validation(_) | AwareError::Yaml(_))) => {
+            notes.push(format!(
+                "the installed copy at agents/{id} has a manifest that cannot be used ({error})"
+            ));
+            None
+        }
+        // Could not READ it: a real fault, not "unusable" (review #626-2).
+        Err(error) => return Err(error),
+    };
+    outcome.installed_version = current.as_ref().map(|agent| agent.version.clone());
+    let installed = current
+        .as_ref()
+        .map(|agent| agent.version.clone())
+        .unwrap_or_else(|| "a copy with no usable manifest".into());
 
     // Installed but absent from the lock: never approved.
     let Some(pinned) = pinned_version else {
         outcome.resolution = Resolution::NeverApproved;
         outcome.detail = format!(
-            "agent {id} {} is installed but this app's compiled approval never pinned it; compile the app again",
-            current.version
+            "agent {id} {installed} is installed but this app's compiled approval never pinned it; compile the app again"
         );
         outcome.refusal = Some(AwareError::Validation(format!(
-            "[E_APP_LOCK_AGENT_PIN_MISMATCH] compiled approval pins agent {id} at no version, but the installed version is {}; run `aware app compile` again",
-            current.version
+            "[E_APP_LOCK_AGENT_PIN_MISMATCH] compiled approval pins agent {id} at no version, but the installed version is {installed}; run `aware app compile` again"
         )));
         return Ok(outcome);
     };
 
     let Some(required) = pinned_digest else {
+        let Some(current) = current else {
+            // A version-only lock can only run the current copy, and this one
+            // has no usable manifest: refuse, saying exactly that.
+            outcome.resolution = Resolution::LegacyPinMismatch;
+            outcome.detail = format!(
+                "{}; this app's approval names only a version ({pinned}), so nothing else can stand in for it — reinstall {id} or compile the app again",
+                notes.join("; ")
+            );
+            outcome.refusal = Some(AwareError::Validation(format!(
+                "[E_APP_LOCK_AGENT_PIN_MISMATCH] compiled approval pins agent {id} at {pinned}, but {}; reinstall the agent or run `aware app compile` again",
+                notes.join("; ")
+            )));
+            return Ok(outcome);
+        };
         return legacy_version_only(paths, id, &pinned, current, &current_root, mode, outcome);
     };
 
@@ -627,18 +663,25 @@ fn assess_agent(
     // hashed (symlink/reparse indirection, a non-UTF-8 name) is reported as
     // exactly that - never as "changed bytes"; a copy that cannot be READ is a
     // real error and propagates (the run fails with it, `app check` cannot run).
-    let mut notes: Vec<String> = Vec::new();
-    let current_digest = match hash_current(&current_root)? {
-        Ok(digest) => Some(digest),
-        Err(reason) => {
-            notes.push(format!("the installed copy cannot be hashed ({reason})"));
-            None
+    let current_digest = if current.is_none() {
+        None
+    } else {
+        match hash_current(&current_root)? {
+            Ok(digest) => Some(digest),
+            Err(reason) => {
+                notes.push(format!("the installed copy cannot be hashed ({reason})"));
+                None
+            }
         }
     };
     let mut own: Option<StoredPackage> = None;
     let mut own_is_approved_in_check = false;
     let mut snapshot_error: Option<AwareError> = None;
-    if current_digest.as_deref() == Some(required.as_str()) && current.version == pinned {
+    if current_digest.as_deref() == Some(required.as_str())
+        && current
+            .as_ref()
+            .is_some_and(|agent| agent.version == pinned)
+    {
         match mode {
             Mode::Run(_) => match agent_store::snapshot(paths, &current_root) {
                 Ok(package) if package.digest == required && package.version == pinned => {
@@ -729,7 +772,7 @@ fn assess_agent(
     if own_is_approved_in_check {
         outcome.resolution = Resolution::Current;
         outcome.detail = format!("the installed {id} {pinned} is the approved copy");
-        outcome.manifest = Some(current);
+        outcome.manifest = current;
         return Ok(outcome);
     }
 
@@ -738,8 +781,7 @@ fn assess_agent(
         outcome.resolution = Resolution::Stored;
         outcome.detail = with_notes(
             format!(
-                "the approved {id} {pinned} runs from its stored copy; {} is installed",
-                current.version
+                "the approved {id} {pinned} runs from its stored copy; {installed} is installed"
             ),
             &notes,
         );
@@ -794,14 +836,13 @@ fn assess_agent(
             ),
             &notes,
         )
-    } else if current.version == pinned {
+    } else if outcome.installed_version.as_deref() == Some(pinned.as_str()) {
         format!(
             "the approved bytes of {id} {pinned} are no longer installed - the installed copy has changed since compile; compile the app again to approve it"
         )
     } else {
         format!(
-            "the approved version of {id} ({pinned}) is no longer installed; compile the app again to use {}",
-            current.version
+            "the approved version of {id} ({pinned}) is no longer installed; compile the app again to use {installed}"
         )
     };
     outcome.refusal = Some(AwareError::Validation(format!(

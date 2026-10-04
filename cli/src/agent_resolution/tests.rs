@@ -1109,3 +1109,91 @@ fn an_unknown_chosen_copy_fails_the_backing_check_instead_of_passing_it() {
     assert_eq!(check.nested_apps.len(), 1);
     assert!(!check.nested_apps[0].detail.is_empty());
 }
+
+// ── review round 2: "uninstalled" means no agents/<id>/ directory, nothing less ──
+
+#[test]
+fn a_missing_current_manifest_still_runs_the_stored_approved_bytes() {
+    for breakage in ["missing", "unparseable"] {
+        let h = home();
+        let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
+        let d1 = digest(&v1);
+        let package = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+        let manifest = v1.join("manifest.yaml");
+        if breakage == "missing" {
+            std::fs::remove_file(&manifest).unwrap();
+        } else {
+            std::fs::write(&manifest, "agent: [not yaml").unwrap();
+        }
+        let pinned = lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]);
+
+        let resolved = resolve_agents(
+            &h.paths,
+            &app_using(&["alpha"]),
+            &pinned,
+            Selection::Default,
+        )
+        .unwrap_or_else(|e| panic!("{breakage}: {e}"));
+        assert_eq!(
+            resolved.get("alpha").unwrap().root,
+            package.root,
+            "{breakage}"
+        );
+        assert_eq!(
+            resolved.info("alpha").unwrap().resolution,
+            Resolution::Stored
+        );
+
+        let check = assess_agent(&h.paths, "alpha", &pinned, Mode::Check).unwrap();
+        assert_eq!(check.resolution, Resolution::Stored, "{breakage}");
+        assert!(
+            check.detail.contains("manifest"),
+            "{breakage}: the detail says why the installed copy was unusable: {}",
+            check.detail
+        );
+    }
+}
+
+#[test]
+fn a_legacy_lock_on_a_copy_with_no_usable_manifest_is_a_named_refusal_not_uninstalled() {
+    let h = home();
+    let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
+    std::fs::remove_file(v1.join("manifest.yaml")).unwrap();
+    let pinned = lock(&[("alpha", "1.0.0")], &[], &[]);
+
+    let check = assess_agent(&h.paths, "alpha", &pinned, Mode::Check).unwrap();
+    assert_ne!(check.resolution, Resolution::Missing);
+    assert!(!check.resolution.runs());
+    assert!(check.detail.contains("manifest"), "{}", check.detail);
+
+    let error = resolve_agents(
+        &h.paths,
+        &app_using(&["alpha"]),
+        &pinned,
+        Selection::Default,
+    )
+    .unwrap_err()
+    .to_string();
+    assert!(error.contains("E_APP_LOCK_AGENT_PIN_MISMATCH"), "{error}");
+    assert!(error.contains("manifest"), "{error}");
+}
+
+#[test]
+fn no_agent_directory_at_all_is_still_uninstalled_whatever_the_store_holds() {
+    let h = home();
+    let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
+    let d1 = digest(&v1);
+    crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    std::fs::remove_dir_all(&v1).unwrap();
+    let pinned = lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]);
+    let check = assess_agent(&h.paths, "alpha", &pinned, Mode::Check).unwrap();
+    assert_eq!(check.resolution, Resolution::Missing);
+    let resolved = resolve_agents(
+        &h.paths,
+        &app_using(&["alpha"]),
+        &pinned,
+        Selection::Default,
+    )
+    .unwrap();
+    assert!(resolved.get("alpha").is_none());
+}
