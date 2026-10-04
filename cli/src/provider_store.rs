@@ -163,11 +163,63 @@ pub(crate) struct SelectionRecord {
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 pub(crate) struct ProviderList {
-    /// Enrollments that passed complete re-verification — the only ones a caller may use.
+    /// Enrollments that passed re-verification at the depth each one's `verification` names.
     pub packages: Vec<ListedPackage>,
     /// Enrollments whose package no longer re-verifies. Reported rather than failing the whole
     /// inventory, so one stale package root cannot block a caller from enrolling a replacement.
     pub unavailable: Vec<UnavailablePackage>,
+}
+
+/// How deeply `list` re-verified one available enrollment (#624).
+///
+/// `list` is an inventory, not a trust decision: nothing executes or selects a provider on its
+/// word. `select` and `admit-policy` re-verify the package completely before they commit, and the
+/// model reader re-verifies the selected package completely around every provider invocation. So
+/// the content hash — the one cost that grows with every enrolled build — is spent where a provider
+/// is chosen or run: on each format's active selection. Every other enrollment is checked as far
+/// as metadata goes, which still catches a removed or reused package root, a replaced manifest, a
+/// withdrawn publisher, a broken signature, an added or missing file and a changed file size.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub(crate) enum Verification {
+    /// Every receipted file was re-hashed against its receipt, as `select` and the runtime do.
+    Complete,
+    /// The record, publisher trust, manifest digest and signature, the closed file allowlist and
+    /// every receipted byte count were re-checked; file contents were not re-hashed.
+    Inventory,
+}
+
+/// What `prune` / `unenroll` removed (or, under `--dry-run`, would remove).
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub(crate) struct RetiredPackage {
+    pub(crate) manifest_sha256: String,
+    pub(crate) package_id: String,
+    pub(crate) package_version: String,
+    pub(crate) format_id: String,
+    /// Admitted dependency policies bound to this exact package that went with it.
+    pub(crate) dependency_policies: usize,
+}
+
+/// An enrollment `prune` left in place, and the closed reason it did.
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub(crate) struct KeptPackage {
+    pub(crate) manifest_sha256: String,
+    pub(crate) package_id: String,
+    pub(crate) package_version: String,
+    /// `selected`, `rollback-history` or `not-superseded` (enrolled after the format's current
+    /// selection was made, or the format has no selection yet).
+    pub(crate) reason: &'static str,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub(crate) struct ProviderPrune {
+    pub(crate) format_id: String,
+    pub(crate) dry_run: bool,
+    pub(crate) retired: Vec<RetiredPackage>,
+    pub(crate) kept: Vec<KeptPackage>,
 }
 
 #[derive(Serialize)]
@@ -193,6 +245,7 @@ pub(crate) struct ListedPackage {
     publisher_fingerprint_sha256: String,
     capabilities: Vec<ProviderCapability>,
     pub(crate) selected: bool,
+    pub(crate) verification: Verification,
 }
 
 pub(crate) struct ProviderStore {
@@ -293,23 +346,7 @@ impl ProviderStore {
             .iter()
             .find(|entry| entry.capability_id == capability_id)
             .ok_or_else(|| AwareError::NotFound("provider capability is not enrolled".into()))?;
-        let launcher_sha256 = package
-            .manifest
-            .files
-            .iter()
-            .find(|entry| entry.path == package.manifest.launcher)
-            .map(|entry| entry.sha256.as_str())
-            .ok_or_else(|| AwareError::Validation("provider launcher receipt is missing".into()))?;
-        let fingerprint = EnrolledProviderFingerprint {
-            schema_version: "aware.enrolled-model-provider-fingerprint/v1",
-            execution: "enrolled-local",
-            package_manifest_sha256: manifest_sha256,
-            launcher_sha256,
-            publisher_fingerprint_sha256: &package.publisher_fingerprint_sha256,
-            format_id: &package.manifest.format_id,
-            capability,
-        };
-        let provider_fingerprint_sha256 = sha256_hex(&canonical_json_bytes(&fingerprint)?);
+        let provider_fingerprint_sha256 = provider_fingerprint_sha256(&package, capability)?;
         let admission_bytes = read_bounded(policy_file, MAX_CONTROL_BYTES)?;
         let admission: DependencyPolicyAdmission = serde_json::from_slice(&admission_bytes)
             .map_err(|error| {
@@ -353,6 +390,23 @@ impl ProviderStore {
         }
         verify_compatible(&package.manifest)?;
         let _selection_lock = self.acquire_selection_lock(format_id)?;
+        // The package was verified before the lock was taken, and `prune` / `unenroll` retire
+        // records under this same lock. Re-read the record here so a selection can never name an
+        // enrollment that was retired in between (#624).
+        let current = self
+            .read_package(manifest_sha256)
+            .map_err(|error| match error {
+                AwareError::NotFound(_) => AwareError::NotFound(
+                    "provider package was unenrolled while it was being selected".into(),
+                ),
+                other => other,
+            })?;
+        validate_enrollment_record(&current, manifest_sha256)?;
+        if current.revoked || !current.enrolled || current.manifest.format_id != format_id {
+            return Err(AwareError::Validation(
+                "provider package is not an active enrollment for that format".into(),
+            ));
+        }
         let path = self.selection_path(format_id);
         let prior = read_optional_json::<SelectionRecord>(&path)?;
         if let Some(selection) = &prior {
@@ -425,26 +479,17 @@ impl ProviderStore {
         if packages_dir.is_dir() {
             for entry in std::fs::read_dir(packages_dir)? {
                 let entry = entry?;
-                if entry
-                    .file_name()
-                    .to_str()
-                    .is_some_and(|name| name.starts_with(".tmp-"))
-                {
+                let Some(digest) = enrollment_digest(&entry)? else {
                     continue;
-                }
-                let file_name = entry.file_name();
-                let file_name = file_name.to_str().ok_or_else(|| {
-                    AwareError::Validation(
-                        "provider enrollment filename must be valid Unicode".into(),
-                    )
-                })?;
-                let digest = file_name.strip_suffix(".json").ok_or_else(|| {
-                    AwareError::Validation(
-                        "provider enrollment record filename must end in .json".into(),
-                    )
-                })?;
-                validate_sha256(digest, "provider enrollment filename digest")?;
-                let package_record = self.read_package(digest)?;
+                };
+                let digest = digest.as_str();
+                let package_record = match self.read_package(digest) {
+                    Ok(record) => record,
+                    // Retired by a concurrent `prune` / `unenroll` after the directory was read:
+                    // gone from the inventory, not a corrupt store.
+                    Err(AwareError::NotFound(_)) => continue,
+                    Err(error) => return Err(error),
+                };
                 if format.is_some_and(|id| id != package_record.manifest.format_id) {
                     continue;
                 }
@@ -456,29 +501,37 @@ impl ProviderStore {
                 if (package_record.revoked || !package_record.enrolled) && !selected {
                     continue;
                 }
-                let package = match self.verify_enrollment(digest) {
-                    Ok(package) => package,
-                    Err(_) => {
-                        let reason = unavailable_reason(&package_record);
-                        unavailable.push(UnavailablePackage {
-                            manifest_sha256: digest.into(),
-                            package_id: package_record.manifest.package_id,
-                            package_version: package_record.manifest.package_version,
-                            format_id: package_record.manifest.format_id,
-                            selected,
-                            reason,
-                        });
-                        continue;
-                    }
+                // Only the package a format would actually run is content-hashed here; every other
+                // enrollment is re-hashed by `select` before it can become that package (#624).
+                let verification = if selected {
+                    Verification::Complete
+                } else {
+                    Verification::Inventory
                 };
+                if self
+                    .verify_record(&package_record, digest, verification)
+                    .is_err()
+                {
+                    let reason = unavailable_reason(&package_record);
+                    unavailable.push(UnavailablePackage {
+                        manifest_sha256: digest.into(),
+                        package_id: package_record.manifest.package_id,
+                        package_version: package_record.manifest.package_version,
+                        format_id: package_record.manifest.format_id,
+                        selected,
+                        reason,
+                    });
+                    continue;
+                }
                 packages.push(ListedPackage {
-                    manifest_sha256: package.manifest_sha256.clone(),
-                    package_id: package.manifest.package_id,
-                    package_version: package.manifest.package_version,
-                    format_id: package.manifest.format_id.clone(),
-                    publisher_fingerprint_sha256: package.publisher_fingerprint_sha256,
-                    capabilities: package.manifest.capabilities,
+                    manifest_sha256: package_record.manifest_sha256,
+                    package_id: package_record.manifest.package_id,
+                    package_version: package_record.manifest.package_version,
+                    format_id: package_record.manifest.format_id,
+                    publisher_fingerprint_sha256: package_record.publisher_fingerprint_sha256,
+                    capabilities: package_record.manifest.capabilities,
                     selected,
+                    verification,
                 });
             }
         }
@@ -509,6 +562,203 @@ impl ProviderStore {
         })
     }
 
+    /// Retire one enrollment by its manifest digest (#624).
+    ///
+    /// Refuses the active selection and every digest in that selection's rollback history, so no
+    /// selection AWARE writes can ever name a record this removed. Only AWARE's own record and the
+    /// dependency policies admitted for that exact package are removed: the package directory is
+    /// the publisher's or host's, may be shared with a newer enrollment (a host that installs each
+    /// build into the same directory), and is never touched.
+    pub(crate) fn unenroll(&self, manifest_sha256: &str) -> Result<RetiredPackage, AwareError> {
+        validate_sha256(manifest_sha256, "manifest sha256")?;
+        let format_id = self
+            .read_enrollment_record(manifest_sha256)?
+            .manifest
+            .format_id;
+        let _selection_lock = self.acquire_selection_lock(&format_id)?;
+        // Read again under the lock: a concurrent `prune` may already have retired it.
+        let package = self.read_enrollment_record(manifest_sha256)?;
+        if let Some(selection) = self.read_selection(&format_id)? {
+            if selection.active_manifest_sha256 == manifest_sha256 {
+                return Err(AwareError::Conflict(format!(
+                    "provider package {manifest_sha256} is the active selection for {format_id}; select another package first"
+                )));
+            }
+            if selection
+                .previous_manifest_sha256
+                .iter()
+                .any(|digest| digest == manifest_sha256)
+            {
+                return Err(AwareError::Conflict(format!(
+                    "provider package {manifest_sha256} is in the rollback history of {format_id}; it can be retired once newer selections move it out of that history"
+                )));
+            }
+        }
+        self.retire(&package, false)
+    }
+
+    /// Retire every superseded enrollment of one format (#624).
+    ///
+    /// Superseded means: not the format's active selection, not in that selection's rollback
+    /// history (at most eight digests, which `select` already bounds), and enrolled before the
+    /// current selection was made. The last condition keeps a package a host has just enrolled
+    /// and is about to select, so a prune racing that sequence cannot remove it; it compares the
+    /// store's own record timestamps and decides only what is kept, never what is trusted. A
+    /// format with no selection has superseded nothing, so nothing is retired.
+    pub(crate) fn prune(
+        &self,
+        format_id: &str,
+        dry_run: bool,
+    ) -> Result<ProviderPrune, AwareError> {
+        validate_id(format_id, "format id")?;
+        let _selection_lock = self.acquire_selection_lock(format_id)?;
+        // `select` rewrites the selection only under this lock, so its timestamp is stable here.
+        let selection = match self.read_selection(format_id)? {
+            Some(selection) => Some((
+                std::fs::symlink_metadata(self.selection_path(format_id))?.modified()?,
+                selection,
+            )),
+            None => None,
+        };
+        let mut retired = Vec::new();
+        let mut kept = Vec::new();
+        let packages_dir = self.root.join("packages");
+        let entries = match std::fs::read_dir(&packages_dir) {
+            Ok(entries) => entries.collect::<Result<Vec<_>, _>>()?,
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => Vec::new(),
+            Err(error) => return Err(error.into()),
+        };
+        for entry in entries {
+            let Some(digest) = enrollment_digest(&entry)? else {
+                continue;
+            };
+            let package = match self.read_package(&digest) {
+                Ok(package) => package,
+                // Another format's record, retired by that format's concurrent prune: this format's
+                // records only change under the lock held here.
+                Err(AwareError::NotFound(_)) => continue,
+                Err(error) => return Err(error),
+            };
+            if package.manifest.format_id != format_id {
+                continue;
+            }
+            validate_enrollment_record(&package, &digest)?;
+            let reason = match &selection {
+                Some((_, selection)) if selection.active_manifest_sha256 == digest => {
+                    Some("selected")
+                }
+                Some((_, selection)) if selection.previous_manifest_sha256.contains(&digest) => {
+                    Some("rollback-history")
+                }
+                Some((selected_at, _)) => {
+                    // Records are written once, at enrollment. Equal timestamps (a coarse
+                    // filesystem clock) keep the package rather than guess.
+                    let enrolled_at = std::fs::symlink_metadata(entry.path())?.modified()?;
+                    (enrolled_at >= *selected_at).then_some("not-superseded")
+                }
+                None => Some("not-superseded"),
+            };
+            match reason {
+                Some(reason) => kept.push(KeptPackage {
+                    manifest_sha256: package.manifest_sha256,
+                    package_id: package.manifest.package_id,
+                    package_version: package.manifest.package_version,
+                    reason,
+                }),
+                None => retired.push(self.retire(&package, dry_run)?),
+            }
+        }
+        retired.sort_by(|left, right| {
+            (
+                &left.package_id,
+                &left.package_version,
+                &left.manifest_sha256,
+            )
+                .cmp(&(
+                    &right.package_id,
+                    &right.package_version,
+                    &right.manifest_sha256,
+                ))
+        });
+        kept.sort_by(|left, right| {
+            (
+                &left.package_id,
+                &left.package_version,
+                &left.manifest_sha256,
+            )
+                .cmp(&(
+                    &right.package_id,
+                    &right.package_version,
+                    &right.manifest_sha256,
+                ))
+        });
+        Ok(ProviderPrune {
+            format_id: format_id.into(),
+            dry_run,
+            retired,
+            kept,
+        })
+    }
+
+    /// Remove one enrollment's record and the policies admitted for it. The caller holds the
+    /// format's selection lock and has already refused the active selection and its history.
+    ///
+    /// Dependents go first and the record last. Each removal is a single atomic unlink, and the
+    /// record's unlink is the commit: a crash before it leaves an enrolled package with no admitted
+    /// policy — exactly the state `enroll` produces before `admit-policy` — and running the verb
+    /// again finishes the job. No interruption can leave a selection naming a record that is gone,
+    /// the state that once made `list` fail outright (#589).
+    fn retire(&self, package: &PackageRecord, dry_run: bool) -> Result<RetiredPackage, AwareError> {
+        let mut dependency_policies = 0;
+        for capability in &package.manifest.capabilities {
+            let policy = self.root.join("policies").join(format!(
+                "{}.json",
+                provider_fingerprint_sha256(package, capability)?
+            ));
+            let present = if dry_run {
+                path_exists(&policy)?
+            } else {
+                remove_if_present(&policy)?
+            };
+            dependency_policies += usize::from(present);
+        }
+        if !dry_run {
+            std::fs::remove_file(
+                self.root
+                    .join("packages")
+                    .join(format!("{}.json", package.manifest_sha256)),
+            )?;
+        }
+        Ok(RetiredPackage {
+            manifest_sha256: package.manifest_sha256.clone(),
+            package_id: package.manifest.package_id.clone(),
+            package_version: package.manifest.package_version.clone(),
+            format_id: package.manifest.format_id.clone(),
+            dependency_policies,
+        })
+    }
+
+    /// A record that must exist and be internally consistent — the retire verbs act on nothing
+    /// they cannot identify.
+    fn read_enrollment_record(&self, digest: &str) -> Result<PackageRecord, AwareError> {
+        let package = self.read_package(digest).map_err(|error| match error {
+            AwareError::NotFound(_) => {
+                AwareError::NotFound(format!("provider package {digest} is not enrolled"))
+            }
+            other => other,
+        })?;
+        validate_enrollment_record(&package, digest)?;
+        Ok(package)
+    }
+
+    fn read_selection(&self, format_id: &str) -> Result<Option<SelectionRecord>, AwareError> {
+        let selection = read_optional_json::<SelectionRecord>(&self.selection_path(format_id))?;
+        if let Some(selection) = &selection {
+            validate_selection_record(selection, format_id)?;
+        }
+        Ok(selection)
+    }
+
     fn read_publisher(&self, fingerprint: &str) -> Result<PublisherRecord, AwareError> {
         validate_sha256(fingerprint, "publisher fingerprint")?;
         let publisher: PublisherRecord = read_json(
@@ -537,9 +787,23 @@ impl ProviderStore {
         read_json(&self.root.join("packages").join(format!("{digest}.json")))
     }
 
+    /// Complete re-verification — what every trust decision (`select`, `admit-policy`) requires.
     fn verify_enrollment(&self, digest: &str) -> Result<PackageRecord, AwareError> {
         let package = self.read_package(digest)?;
-        validate_enrollment_record(&package, digest)?;
+        self.verify_record(&package, digest, Verification::Complete)?;
+        Ok(package)
+    }
+
+    /// Re-verify an already-read enrollment record against its package on disk. The two depths
+    /// share every step except the last: `Complete` re-hashes each receipted file, `Inventory`
+    /// stops at the closed allowlist and the receipted byte counts.
+    fn verify_record(
+        &self,
+        package: &PackageRecord,
+        digest: &str,
+        depth: Verification,
+    ) -> Result<(), AwareError> {
+        validate_enrollment_record(package, digest)?;
         if !package.enrolled || package.revoked {
             return Err(AwareError::Validation(
                 "provider enrollment record is invalid or inactive".into(),
@@ -574,8 +838,10 @@ impl ProviderStore {
             ));
         }
         verify_package_signature(&root, digest, &publisher)?;
-        verify_package_inventory(&root, &disk_manifest)?;
-        Ok(package)
+        match depth {
+            Verification::Complete => verify_package_inventory(&root, &disk_manifest),
+            Verification::Inventory => verify_package_inventory_sizes(&root, &disk_manifest),
+        }
     }
 
     fn selection_path(&self, format_id: &str) -> PathBuf {
@@ -610,6 +876,40 @@ impl ProviderStore {
             .open(path)?;
         file.lock_exclusive()?;
         Ok(file)
+    }
+}
+
+/// The manifest digest an entry of `packages/` is the record of, or `None` for the scratch file of
+/// an interrupted atomic write. Any other name is store corruption.
+fn enrollment_digest(entry: &std::fs::DirEntry) -> Result<Option<String>, AwareError> {
+    let file_name = entry.file_name();
+    let file_name = file_name.to_str().ok_or_else(|| {
+        AwareError::Validation("provider enrollment filename must be valid Unicode".into())
+    })?;
+    if file_name.starts_with(".tmp-") {
+        return Ok(None);
+    }
+    let digest = file_name.strip_suffix(".json").ok_or_else(|| {
+        AwareError::Validation("provider enrollment record filename must end in .json".into())
+    })?;
+    validate_sha256(digest, "provider enrollment filename digest")?;
+    Ok(Some(digest.into()))
+}
+
+fn path_exists(path: &Path) -> Result<bool, AwareError> {
+    match std::fs::symlink_metadata(path) {
+        Ok(_) => Ok(true),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(false),
+        Err(error) => Err(error.into()),
+    }
+}
+
+/// Unlink `path`, reporting whether there was anything to unlink.
+fn remove_if_present(path: &Path) -> Result<bool, AwareError> {
+    match std::fs::remove_file(path) {
+        Ok(()) => Ok(true),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(false),
+        Err(error) => Err(error.into()),
     }
 }
 
@@ -865,21 +1165,9 @@ fn verify_package_signature(
 }
 
 fn verify_package_inventory(root: &Path, manifest: &PackageManifest) -> Result<(), AwareError> {
-    let expected = manifest
-        .files
-        .iter()
-        .map(|file| file.path.clone())
-        .chain([MANIFEST_NAME.into(), SIGNATURE_NAME.into()])
-        .collect::<BTreeSet<_>>();
-    let actual = walk_regular_files(root)?;
-    if actual != expected {
-        return Err(AwareError::Validation(
-            "provider package directory is not a closed manifest allowlist".into(),
-        ));
-    }
+    verify_closed_allowlist(root, manifest)?;
     for receipt in &manifest.files {
-        let path = root.join(receipt.path.replace('/', std::path::MAIN_SEPARATOR_STR));
-        let (bytes, digest) = hash_regular_file(&path)?;
+        let (bytes, digest) = hash_regular_file(&receipt_path(root, receipt))?;
         if bytes != receipt.bytes || digest != receipt.sha256 {
             return Err(AwareError::Validation(format!(
                 "provider package file {} does not match its receipt",
@@ -888,6 +1176,78 @@ fn verify_package_inventory(root: &Path, manifest: &PackageManifest) -> Result<(
         }
     }
     Ok(())
+}
+
+/// [`verify_package_inventory`] without the content hash: the same closed allowlist, and every
+/// receipted file must still be a regular non-link file of exactly its receipted length. Reads no
+/// file contents, so its cost is the directory walk rather than the package's size (#624).
+fn verify_package_inventory_sizes(
+    root: &Path,
+    manifest: &PackageManifest,
+) -> Result<(), AwareError> {
+    verify_closed_allowlist(root, manifest)?;
+    for receipt in &manifest.files {
+        let metadata = std::fs::symlink_metadata(receipt_path(root, receipt))?;
+        if !metadata.is_file()
+            || metadata.file_type().is_symlink()
+            || crate::fs::is_reparse_point(&metadata)
+        {
+            return Err(AwareError::Validation(
+                "provider package receipt must name a regular non-link file".into(),
+            ));
+        }
+        if metadata.len() != receipt.bytes {
+            return Err(AwareError::Validation(format!(
+                "provider package file {} does not match its receipt",
+                receipt.path
+            )));
+        }
+    }
+    Ok(())
+}
+
+fn verify_closed_allowlist(root: &Path, manifest: &PackageManifest) -> Result<(), AwareError> {
+    let expected = manifest
+        .files
+        .iter()
+        .map(|file| file.path.clone())
+        .chain([MANIFEST_NAME.into(), SIGNATURE_NAME.into()])
+        .collect::<BTreeSet<_>>();
+    if walk_regular_files(root)? != expected {
+        return Err(AwareError::Validation(
+            "provider package directory is not a closed manifest allowlist".into(),
+        ));
+    }
+    Ok(())
+}
+
+fn receipt_path(root: &Path, receipt: &PackageFile) -> PathBuf {
+    root.join(receipt.path.replace('/', std::path::MAIN_SEPARATOR_STR))
+}
+
+/// The identity a dependency policy is admitted under — and therefore the name of its file. Bound
+/// to the exact package manifest digest, so it can never match any other enrollment.
+fn provider_fingerprint_sha256(
+    package: &PackageRecord,
+    capability: &ProviderCapability,
+) -> Result<String, AwareError> {
+    let launcher_sha256 = package
+        .manifest
+        .files
+        .iter()
+        .find(|entry| entry.path == package.manifest.launcher)
+        .map(|entry| entry.sha256.as_str())
+        .ok_or_else(|| AwareError::Validation("provider launcher receipt is missing".into()))?;
+    let fingerprint = EnrolledProviderFingerprint {
+        schema_version: "aware.enrolled-model-provider-fingerprint/v1",
+        execution: "enrolled-local",
+        package_manifest_sha256: &package.manifest_sha256,
+        launcher_sha256,
+        publisher_fingerprint_sha256: &package.publisher_fingerprint_sha256,
+        format_id: &package.manifest.format_id,
+        capability,
+    };
+    Ok(sha256_hex(&canonical_json_bytes(&fingerprint)?))
 }
 
 /// The package's actual file inventory, `/`-separated and relative to `root`.
@@ -2239,6 +2599,64 @@ mod tests {
         assert!(
             verify_package_inventory(root, &manifest).is_err(),
             "missing file"
+        );
+    }
+
+    /// The `inventory` depth `list` uses for unselected enrollments (#624): everything
+    /// [`verify_package_inventory`] checks except the content hash. The same-length change is the
+    /// one thing it is allowed to miss, and the complete depth must still catch exactly that.
+    #[test]
+    fn the_inventory_depth_checks_everything_but_file_contents() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        let mut manifest = valid_manifest();
+        manifest.files[0] = PackageFile {
+            path: "provider.bin".into(),
+            bytes: 3,
+            sha256: ABC_SHA256.into(),
+        };
+        std::fs::write(root.join("provider.bin"), b"abc").unwrap();
+        std::fs::write(root.join(MANIFEST_NAME), b"{}").unwrap();
+        std::fs::write(root.join(SIGNATURE_NAME), b"").unwrap();
+        verify_package_inventory_sizes(root, &manifest).unwrap();
+        verify_package_inventory(root, &manifest).unwrap();
+
+        std::fs::write(root.join("provider.bin"), b"abd").unwrap();
+        verify_package_inventory_sizes(root, &manifest)
+            .expect("the inventory depth does not read file contents");
+        assert!(
+            verify_package_inventory(root, &manifest).is_err(),
+            "the complete depth must still see same-length content drift"
+        );
+
+        std::fs::write(root.join("provider.bin"), b"abcd").unwrap();
+        match verify_package_inventory_sizes(root, &manifest) {
+            Err(AwareError::Validation(message)) => assert!(
+                message.contains("does not match its receipt"),
+                "length drift must be refused by the byte count: {message}"
+            ),
+            other => panic!("length drift must be refused, got {other:?}"),
+        }
+        std::fs::write(root.join("provider.bin"), b"abc").unwrap();
+
+        std::fs::write(root.join("extra.so"), b"").unwrap();
+        assert!(
+            verify_package_inventory_sizes(root, &manifest).is_err(),
+            "unreceipted file"
+        );
+        std::fs::remove_file(root.join("extra.so")).unwrap();
+
+        std::fs::remove_file(root.join("provider.bin")).unwrap();
+        assert!(
+            verify_package_inventory_sizes(root, &manifest).is_err(),
+            "missing file"
+        );
+
+        // A directory standing where the receipt names a file is not that file.
+        std::fs::create_dir(root.join("provider.bin")).unwrap();
+        assert!(
+            verify_package_inventory_sizes(root, &manifest).is_err(),
+            "a directory in the receipt's place"
         );
     }
 
