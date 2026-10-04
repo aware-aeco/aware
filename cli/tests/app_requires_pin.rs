@@ -938,7 +938,16 @@ fn a_path_shaped_agent_id_never_reads_a_manifest_outside_agents() {
 }
 
 #[test]
-fn a_path_shaped_agent_id_is_refused_at_real_dispatch_too() {
+fn a_path_shaped_agent_id_is_refused_at_preflight_on_a_real_run() {
+    // Named for where it is refused NOW. Before #626 this reached
+    // `DispatchInvoker::transport_kind`, because the run discovered agents by
+    // their manifest's `agent:` field and the decoy below satisfied the
+    // pre-flight. A real run now resolves each node's id once, through the
+    // fenced by-id path, so the traversal never resolves and the run stops at
+    // the missing-agent pre-flight — it no longer reaches dispatch at all, and
+    // a name claiming dispatch coverage would overstate what this proves. The
+    // dispatch funnel itself only ever sees ids the resolver approved
+    // (`tests/run_path_reads_the_resolved_catalogue.rs` keeps it that way).
     // The pre-flight fence only covers the pre-flight. A REAL run reaches
     // `DispatchInvoker::transport_kind`, which joins the same file-controlled id
     // onto `agents/` before it knows the transport — so a traversal manifest
