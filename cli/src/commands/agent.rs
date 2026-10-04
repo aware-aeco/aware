@@ -429,9 +429,12 @@ async fn invoke_cmd(
     // Direct invocation is always a REAL run (dry_run: false): there is no
     // --dry-run posture here, and the caller asked for the side effect (e.g. an
     // `output-path` write) explicitly.
-    let result = BuiltinInvoker { dry_run: false }
-        .invoke_single(agent_id, command, args)
-        .await?;
+    let result = BuiltinInvoker {
+        dry_run: false,
+        blender_root: None,
+    }
+    .invoke_single(agent_id, command, args)
+    .await?;
 
     if ctx.json {
         envelope::print_ok("agent invoke", result, started).ok();
@@ -1217,6 +1220,9 @@ struct AgentListRow {
     kind: String,
     skills: usize,
     commands: usize,
+    /// Every `(version, digest)` the immutable agent store holds for this id
+    /// (#626) — display only; whether an app runs is `aware app check`'s call.
+    stored: Vec<crate::agent_store::StoredVersion>,
 }
 
 #[derive(Serialize)]
@@ -1562,6 +1568,7 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
                     kind: d.manifest.kind(),
                     skills: d.manifest.skill_count(),
                     commands: d.manifest.command_count(),
+                    stored: crate::agent_store::stored_versions(&ctx.paths, &d.manifest.agent),
                 })
                 .collect(),
         };

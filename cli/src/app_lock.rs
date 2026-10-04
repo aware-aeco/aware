@@ -56,6 +56,19 @@ pub struct LockFile {
     )]
     pub agent_bundle_pins: BTreeMap<String, String>,
 
+    /// Agent id → `sha256:` tree digest of the exact bytes this lock approved,
+    /// for EVERY pinned agent whatever its source (#626). A run resolves each
+    /// pinned agent to the store package with these bytes — the current working
+    /// copy if it still matches, else the immutable snapshot taken at compile —
+    /// so updating an agent no longer breaks an approved app. Locks written by
+    /// AWARE ≤ 0.148 lack it; they run on the current copy by version only.
+    #[serde(
+        rename = "agent-digests",
+        default,
+        skip_serializing_if = "BTreeMap::is_empty"
+    )]
+    pub agent_digests: BTreeMap<String, String>,
+
     /// Compiled nodes — every template that can be resolved at compile
     /// time IS resolved; runtime expressions are tagged with the
     /// `{{ runtime: ... }}` prefix to make their dynamic nature explicit.
@@ -197,6 +210,7 @@ fn hash_source_bytes(source_bytes: &[u8]) -> String {
 struct AppSourceSnapshot {
     app: App,
     source_hash: String,
+    source_text: String,
 }
 
 /// Read, parse, validate the path-bearing id, and hash one immutable buffer.
@@ -216,6 +230,7 @@ fn read_source_snapshot(source_path: &Path) -> Result<AppSourceSnapshot, AwareEr
     Ok(AppSourceSnapshot {
         app,
         source_hash: hash_source_bytes(source_text.as_bytes()),
+        source_text,
     })
 }
 
@@ -232,7 +247,23 @@ pub fn load_approved_app(source_path: &Path) -> Result<App, AwareError> {
 
 /// Load the approved source together with the exact compiled plan it matched.
 pub fn load_approved_app_with_lock(source_path: &Path) -> Result<(App, LockFile), AwareError> {
+    load_approved_app_snapshot(source_path).map(|approved| (approved.app, approved.lock))
+}
+
+/// An approved app as read at one instant: the parsed app, the lock it matched,
+/// and the exact source text both were checked against. Nested app-backed
+/// dispatch re-parses `source_text` rather than re-reading the file, so the app
+/// it runs is the one preflight approved (#626).
+pub struct ApprovedApp {
+    pub app: App,
+    pub lock: LockFile,
+    pub source_text: String,
+}
+
+/// [`load_approved_app_with_lock`], keeping the approved source text.
+pub fn load_approved_app_snapshot(source_path: &Path) -> Result<ApprovedApp, AwareError> {
     let snapshot = read_source_snapshot(source_path)?;
+    let source_text = snapshot.source_text;
     let app = snapshot.app;
     let source_dir = source_path
         .parent()
@@ -273,44 +304,18 @@ pub fn load_approved_app_with_lock(source_path: &Path) -> Result<(App, LockFile)
             source_path.display()
         )));
     }
-    Ok((app, lock))
+    Ok(ApprovedApp {
+        app,
+        lock,
+        source_text,
+    })
 }
 
-/// Refuse execution when a dispatchable agent no longer matches the exact
-/// version captured in the engineer-approved plan.
-pub fn verify_agent_pins(
-    app: &App,
-    lock: &LockFile,
-    agents: &[DiscoveredAgent],
-) -> Result<(), AwareError> {
-    for agent_id in crate::validate::dispatchable_agents(app) {
-        let current = agents
-            .iter()
-            .find(|agent| agent.manifest.agent == agent_id)
-            .map(|agent| agent.manifest.version.as_str());
-        let approved = lock.agent_pins.get(agent_id).map(String::as_str);
-        // A missing agent is reported by the existing missing-agent preflight.
-        // An installed agent absent from the lock was never approved and must
-        // not become executable merely because it appeared after compilation.
-        if current.is_some() && current != approved {
-            return Err(AwareError::Validation(format!(
-                "[E_APP_LOCK_AGENT_PIN_MISMATCH] compiled approval pins agent {agent_id} at {}, but the installed version is {}; run `aware app compile` again",
-                approved.unwrap_or("no version"),
-                current.unwrap_or("missing")
-            )));
-        }
-        if let Some(expected) = lock.agent_bundle_pins.get(agent_id)
-            && let Some(agent) = agents.iter().find(|agent| agent.manifest.agent == agent_id)
-        {
-            let actual = crate::install::integrity::tree_digest(&agent.root).ok();
-            if actual.as_deref() != Some(expected) {
-                return Err(AwareError::Validation(format!(
-                    "[E_APP_LOCK_AGENT_BUNDLE_PIN_MISMATCH] compiled approval pins agent {agent_id} at bundle {expected}, but those installed bytes are no longer verified; run `aware app compile` again after restoring an official bundle"
-                )));
-            }
-        }
-    }
-    Ok(())
+/// Read and hash an app source exactly as the approval gate does, for
+/// `aware app check` — which must report a stale source as data rather than
+/// fail on it. Returns the parsed app and its `sha256:` source hash.
+pub fn read_app_source(source_path: &Path) -> Result<(App, String), AwareError> {
+    read_source_snapshot(source_path).map(|snapshot| (snapshot.app, snapshot.source_hash))
 }
 
 /// Compile a source snapshot + the installed agent catalogue into a lockfile.
@@ -320,13 +325,26 @@ pub fn verify_agent_pins(
 #[cfg(test)]
 fn compile(source_path: &Path, agents: &[DiscoveredAgent]) -> Result<LockFile, AwareError> {
     let snapshot = read_source_snapshot(source_path)?;
-    compile_snapshot(&snapshot.app, agents, snapshot.source_hash)
+    compile_snapshot(
+        &snapshot.app,
+        agents,
+        snapshot.source_hash,
+        &BTreeMap::new(),
+    )
 }
 
+/// Compile one source snapshot against `agents`.
+///
+/// `digests` maps each pinned agent to the tree digest of the store package its
+/// `agents` entry was loaded from (#626) — `compile_to_disk_with_lock` snapshots
+/// first and passes the snapshots here, so the version pin, the digest pin and
+/// every compiled node detail come from the same immutable bytes. An empty map
+/// (validation, tests) writes no `agent-digests`.
 fn compile_snapshot(
     app: &App,
     agents: &[DiscoveredAgent],
     source_hash: String,
+    digests: &BTreeMap<String, String>,
 ) -> Result<LockFile, AwareError> {
     // Flatten the node tree: top-level nodes plus the bodies of `do:`-bearing
     // primitives (for-each / sweep), so inner nodes are pinned, compiled, and
@@ -338,16 +356,26 @@ fn compile_snapshot(
     // Pin every agent referenced by any node (incl. `do:` bodies).
     let mut agent_pins: BTreeMap<String, String> = BTreeMap::new();
     let mut agent_bundle_pins: BTreeMap<String, String> = BTreeMap::new();
+    let mut agent_digests: BTreeMap<String, String> = BTreeMap::new();
     for (node, _, _, _) in &flat {
         if let Some(aid) = &node.agent
             && let Some(d) = agents.iter().find(|d| d.manifest.agent == *aid)
         {
             agent_pins.insert(aid.clone(), d.manifest.version.clone());
+            let stored = digests.get(aid);
+            if let Some(digest) = stored {
+                agent_digests.insert(aid.clone(), digest.clone());
+            }
+            // The receipt's digest is kept only when it names these same bytes:
+            // a lock whose two digest fields disagree is refused at run
+            // (`E_APP_LOCK_INVALID`), and a receipt that no longer describes its
+            // tree (a hand-edited registry install) approves nothing.
             if let Some(digest) = crate::install::provenance::receipt_digest_pin(
                 &d.root,
                 &d.manifest.agent,
                 &d.manifest.version,
-            ) {
+            ) && stored.is_none_or(|stored| *stored == digest)
+            {
                 agent_bundle_pins.insert(aid.clone(), digest);
             }
         }
@@ -459,6 +487,7 @@ fn compile_snapshot(
         version: app.version.clone(),
         agent_pins,
         agent_bundle_pins,
+        agent_digests,
         nodes,
         schedule,
         engineering,
@@ -981,7 +1010,12 @@ pub fn compile_to_disk_with_lock(
             err.code, err.message
         )));
     }
-    let agents = discover_agents(paths)?;
+    // #626: snapshot every agent this app pins FIRST, then compile from the
+    // verified stored manifests. The version pin, the digest pin and every
+    // compiled node detail (mode, output schema, notes) then come from one
+    // immutable copy — a working copy edited mid-compile cannot leak into the
+    // lock, and the approved bytes survive any later `agent update`.
+    let (agents, digests) = snapshot_pinned_agents(app, paths)?;
     // Refuse to lock an app that references a not-yet-runnable agent (e.g.
     // html-report, whose transport binary isn't shipped) — fail here, not at run
     // with "program not found" (#161).
@@ -1015,9 +1049,45 @@ pub fn compile_to_disk_with_lock(
     for m in crate::validate::missing_agents(app, &agents, crate::validate::Severity::Warning) {
         eprintln!("\u{26a0} [{}] {}", m.code, m.message);
     }
-    let lock = compile_snapshot(app, &agents, snapshot.source_hash)?;
+    let lock = compile_snapshot(app, &agents, snapshot.source_hash, &digests)?;
     let path = write_lockfile(&lock, source)?;
     Ok((path, lock))
+}
+
+/// Snapshot every installed agent that any node of `app` references (the set
+/// `compile_snapshot` pins, frozen nodes included) and return the catalogue
+/// re-read from the store, plus each agent's stored digest.
+fn snapshot_pinned_agents(
+    app: &App,
+    paths: &Paths,
+) -> Result<(Vec<DiscoveredAgent>, BTreeMap<String, String>), AwareError> {
+    let mut flat: Vec<FlatNode> = Vec::new();
+    flatten_nodes(&app.nodes, None, &[], &mut flat);
+    let referenced: BTreeSet<&str> = flat
+        .iter()
+        .filter_map(|(node, _, _, _)| node.agent.as_deref())
+        .collect();
+    let mut agents = Vec::new();
+    let mut digests = BTreeMap::new();
+    for current in discover_agents(paths)? {
+        if !referenced.contains(current.manifest.agent.as_str()) {
+            continue;
+        }
+        let package = crate::agent_store::snapshot(paths, &current.root)?;
+        let manifest = crate::agent_store::package_manifest(&package.root)?;
+        if manifest.agent != current.manifest.agent {
+            return Err(AwareError::Validation(format!(
+                "[E_AGENT_STORE_INVALID] agent directory for {} snapshotted as {}",
+                current.manifest.agent, manifest.agent
+            )));
+        }
+        digests.insert(manifest.agent.clone(), package.digest);
+        agents.push(DiscoveredAgent {
+            manifest,
+            root: package.root,
+        });
+    }
+    Ok((agents, digests))
 }
 
 /// Validate one source snapshot using `app validate` semantics and compile it,
@@ -1042,7 +1112,7 @@ pub fn validate_compiles(source: &Path, paths: &Paths) -> Result<(), AwareError>
             error.code, error.message
         )));
     }
-    compile_snapshot(app, &agents, snapshot.source_hash).map(|_| ())
+    compile_snapshot(app, &agents, snapshot.source_hash, &BTreeMap::new()).map(|_| ())
 }
 
 #[cfg(test)]
@@ -1064,7 +1134,8 @@ mod tests {
         )
         .unwrap();
 
-        let lock = compile_snapshot(&snapshot.app, &[], snapshot.source_hash).unwrap();
+        let lock =
+            compile_snapshot(&snapshot.app, &[], snapshot.source_hash, &BTreeMap::new()).unwrap();
         assert_eq!(lock.app, "snapshot");
         assert_eq!(lock.version, "0.1.0");
         assert_eq!(lock.source_hash, hash_source_bytes(approved.as_bytes()));
@@ -1100,6 +1171,7 @@ mod tests {
         std::fs::write(&source, "app: my-cool-app\n").unwrap();
         let lock = LockFile {
             agent_bundle_pins: BTreeMap::new(),
+            agent_digests: BTreeMap::new(),
             source_hash: "sha256:test".into(),
             compiled_at: "2026-05-17T00:00:00Z".into(),
             compiler_version: "0.24.0".into(),

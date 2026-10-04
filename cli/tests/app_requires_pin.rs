@@ -138,6 +138,23 @@ fn run_refuses_an_agent_version_that_drifted_from_the_compiled_plan() {
         .replace("version: 1.3.0", "version: 1.4.0");
     std::fs::write(manifest, changed).unwrap();
 
+    // #626: compile snapshotted the approved 1.3.0 bytes into the immutable
+    // store, so drift in the working copy no longer stops the run - it passes
+    // the approval gate and dispatches the APPROVED copy (whose `aware-probe`
+    // binary is not on PATH here, hence the transport failure, exit 4).
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .args(["app", "run", "pin-test", "--dry-run"])
+        .assert()
+        .failure()
+        .code(4)
+        .stderr(predicate::str::contains("E_APP_LOCK").not())
+        .stderr(predicate::str::contains("aware-probe"));
+
+    // When the approved bytes exist nowhere any more, the drift refuses, naming
+    // both versions - the approved one and the one installed.
+    std::fs::remove_dir_all(home.join("agent-store")).unwrap();
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &home)
@@ -971,17 +988,22 @@ fn a_path_shaped_agent_id_is_refused_at_real_dispatch_too() {
     )
     .unwrap();
 
+    // #626 closed the door this test used to prop open: a real run no longer
+    // discovers agents by their manifest's `agent:` field at all. It resolves
+    // each node's id through the fenced by-id path, once, at preflight, and
+    // every dispatch reads only that resolved catalogue - so the decoy cannot
+    // smuggle the traversal past the pre-flight any more, and the run refuses
+    // it there as an agent that is not installed. What must still hold is the
+    // point of the test: nothing outside `agents/` is ever read.
     aware(&home)
         .args(["app", "run", "outer"])
         .assert()
         .failure()
-        // Refused as not-installed, which is what a path-shaped id is…
+        // Refused as not-installed, which is what a path-shaped id is...
         .stderr(predicate::str::contains(
-            "agent ../elsewhere is not installed",
+            "references agent \"../elsewhere\", which is not installed",
         ))
-        // …and NOT because the pre-flight got there first, which is how the
-        // previous version of this test fooled itself.
-        .stderr(predicate::str::contains("E_APP_AGENT_NOT_INSTALLED").not())
+        .stderr(predicate::str::contains("E_APP_AGENT_NOT_INSTALLED"))
         // The DISPATCH load never happened: without the fence `transport_kind`
         // reads the planted manifest and gets as far as the binary it names.
         // (Read-only lookups earlier in the run — the long-running probe, the

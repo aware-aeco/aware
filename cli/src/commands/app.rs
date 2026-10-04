@@ -85,6 +85,16 @@ pub enum AppCommand {
     /// Compile an app to its deterministic `<app>.lock` sidecar.
     /// Engineers read the lockfile; the AI reads the source. (v0.24)
     Compile { path: std::path::PathBuf },
+    /// Would `aware app run` accept this app's compiled approval? (#626)
+    ///
+    /// Read-only: resolves every pinned agent with the run's own resolver —
+    /// the current copy, a stored snapshot of the approved bytes, or neither —
+    /// and reports it, writing nothing. Answers only the approval / compile-drift
+    /// question (`E_APP_LOCK_*`); requirements, safety, strict provenance and
+    /// host availability still report at run time. Every drift is data
+    /// (`approval-current: false` with the reason); `ok: false` only when the
+    /// check itself cannot run. Takes an installed app id or a path.
+    Check { app: String },
     /// Open Glass Box — a single-file HTML viewer of the lockfile —
     /// in the user's default browser. (v0.24)
     Inspect { path: std::path::PathBuf },
@@ -202,6 +212,7 @@ pub async fn dispatch(
         }
         AppCommand::Explain { app } => explain(ctx, &app),
         AppCommand::Compile { path } => compile_cmd(ctx, &path),
+        AppCommand::Check { app } => check_cmd(ctx, &app),
         AppCommand::Inspect { path } => inspect_cmd(ctx, &path),
         AppCommand::Stop { app, instance } => stop(ctx, &app, instance.as_deref()),
         AppCommand::Logs {
@@ -348,6 +359,115 @@ async fn run(
     // Parse and hash one source buffer so the compiled sidecar approves the
     // exact app we execute. Gate every run mode before provenance or dispatch.
     let (app, approved_lock) = crate::app_lock::load_approved_app_with_lock(&manifest_path)?;
+
+    // An unreadable `requires:` pin is checked FIRST, before any catalogue
+    // work (#349). Simulation is excused from the catalogue checks because it
+    // contacts no binary — a fact about the environment. Whether a constraint
+    // can be *read* is a fact about the file, true on every machine, so the
+    // same exemption must not swallow it. `run` never calls `validate_app`, so
+    // without this an app edited in place under `~/.aware/apps/` simulated
+    // clean with a constraint nothing could parse.
+    if let Some(err) = crate::validate::malformed_requires(&app).first() {
+        eprintln!("error: {}", err.message);
+        return Err(AwareError::Validation(format!("[{}]", err.code)));
+    }
+
+    // #626: every real run (`--dry-run` included — it still dispatches
+    // read-mode nodes) resolves each pinned agent ONCE, here, to the store
+    // package holding the bytes its lock approved, and every later preflight and
+    // every dispatch read takes manifests and roots from that one catalogue —
+    // nothing on the run path re-reads `agents/`. `--simulate` dispatches no
+    // agent, builds no catalogue, and keeps today's working-copy lookups (and
+    // their tolerance of missing agents) — the only exemption the run-path
+    // guard (`tests/run_path_reads_the_resolved_catalogue.rs`) allows.
+    let mut verified_at_start = serde_json::Map::new();
+    let mut agent_resolution = serde_json::Map::new();
+    let resolved: Option<std::sync::Arc<crate::agent_resolution::ResolvedCatalogue>> = if simulate {
+        // …and the same file-level rule one level down, for the apps behind
+        // this app's app-backed agents. `--simulate` never reaches nested
+        // dispatch, so this is the only place an unreadable pin one level down
+        // is reported for it.
+        if let Some(err) = simulate_nested_malformed_requires(&ctx.paths, &app)?.first() {
+            eprintln!("error: {}", err.message);
+            return Err(AwareError::Validation(format!("[{}]", err.code)));
+        }
+        None
+    } else {
+        let resolved = resolve_run_agents(
+            &ctx.paths,
+            &app,
+            &approved_lock,
+            require_verified_agents,
+            &mut verified_at_start,
+        )?;
+        for (id, info) in resolved.infos() {
+            agent_resolution.insert(id.clone(), serde_json::to_value(info)?);
+        }
+        // The same file-level rule one level down, judged on the backing apps
+        // preflight just approved — the ones dispatch will run.
+        if let Some(err) = nested_malformed_requires(&resolved).first() {
+            eprintln!("error: {}", err.message);
+            return Err(AwareError::Validation(format!("[{}]", err.code)));
+        }
+        let agents = resolved.agents();
+
+        // Planned-agent check: a plain `--dry-run` still dispatches to live read-mode
+        // binaries (only `--simulate`, excluded above, stubs everything), so refuse a
+        // not-yet-runnable agent with a clear reason instead of a downstream
+        // "program not found" (#161).
+        if let Some(err) = crate::validate::validate_app_agents(&app, agents).first() {
+            eprintln!("error: {}", err.message);
+            return Err(AwareError::Validation(format!("[{}]", err.code)));
+        }
+
+        // Missing-agent check (#308): a node whose agent isn't installed has
+        // nothing to dispatch to. Install/compile only warn (an app may be
+        // installed before its agents, #170); by run time the agent must exist.
+        // An uninstalled agent is absent from the resolved catalogue whatever the
+        // store holds (#626: uninstall means the person removed the tool).
+        if let Some(err) =
+            crate::validate::missing_agents(&app, agents, crate::validate::Severity::Error).first()
+        {
+            eprintln!("error: {}", err.message);
+            return Err(AwareError::Validation(format!("[{}]", err.code)));
+        }
+
+        // Pin check (#349): the app's `requires:` names the agent contract it was
+        // written against — judged against the versions this run will actually
+        // dispatch (#626), which may be an older stored copy than the one
+        // installed.
+        if let Some(err) =
+            crate::validate::unsatisfied_pins(&app, agents, crate::validate::Severity::Error)
+                .first()
+        {
+            eprintln!("error: {}", err.message);
+            return Err(AwareError::Validation(format!("[{}]", err.code)));
+        }
+
+        // Safety pre-flight only gates real runs (dry-run is precisely how you test
+        // an app's safety contract before adding the blocks).
+        if !dry_run {
+            let safety_issues = crate::validate::validate_app_safety(&app, agents);
+            if !safety_issues.is_empty() {
+                eprintln!("error: app failed safety pre-flight (use --dry-run to preview):");
+                for issue in &safety_issues {
+                    eprintln!("  \u{2717} [{}] {}", issue.code, issue.message);
+                }
+                return Err(AwareError::Validation(
+                    "write-mode node(s) missing `safety:` block".into(),
+                ));
+            }
+        }
+        Some(std::sync::Arc::new(resolved))
+    };
+    let catalogue = match &resolved {
+        Some(resolved) => crate::agent_resolution::AgentCatalogue::resolved(
+            ctx.paths.agents_dir(),
+            resolved.clone(),
+        ),
+        None => crate::agent_resolution::AgentCatalogue::working_copies(ctx.paths.agents_dir()),
+    };
+
     if let Some(header) = &private_header {
         if simulate {
             return Err(AwareError::Validation(
@@ -356,8 +476,7 @@ async fn run(
         }
         let bound = header.descriptor()?;
         header.validate_app_graph(&app)?;
-        let manifest =
-            crate::manifest::loader::load_agent_by_id(&ctx.paths.agents_dir(), &bound.agent)?;
+        let manifest = catalogue.manifest(&bound.agent)?;
         if (bound.agent == "google-workspace" && bound.command == "gmail.send")
             || bound.agent == "trimble-connect"
             || effective_transport(&manifest, &bound.agent)? != TransportKind::Rest
@@ -379,7 +498,7 @@ async fn run(
                 "[E_APP_PRIVATE_REST_HEADER] bound REST command changed".into(),
             ));
         }
-        let base = crate::runtime::invoker::rest_base_url(&ctx.paths.agents_dir(), &bound.agent);
+        let base = crate::runtime::invoker::rest_base_url(&catalogue, &bound.agent);
         if base
             .as_deref()
             .and_then(|base| url::Url::parse(base).ok())
@@ -390,146 +509,10 @@ async fn run(
             ));
         }
     }
-    let mut verified_at_start = serde_json::Map::new();
-
-    // Safety-contract pre-flight: refuse to run an app whose write-mode
-    // nodes are missing `safety:` blocks. Skipped in --dry-run (a dry-run
-    // is precisely how you'd test an app's safety contract before adding
-    // the blocks). See `10-core/app-spec.md § Safety contract`.
-    // Pre-flight checks need the agent catalogue. `--simulate` stubs every node
-    // and contacts no binary, so it skips both checks; a plain `--dry-run` still
-    // dispatches read-mode nodes, so it gets the planned-agent check.
-
-    // …but an unreadable `requires:` pin is checked FIRST, outside that exemption
-    // (#349). Simulation is excused from the catalogue checks because it contacts
-    // no binary — a fact about the environment. Whether a constraint can be *read*
-    // is a fact about the file, true on every machine, so the same exemption must
-    // not swallow it. `run` never calls `validate_app`, so without this an app
-    // edited in place under `~/.aware/apps/` simulated clean with a constraint
-    // nothing could parse.
-    if let Some(err) = crate::validate::malformed_requires(&app).first() {
-        eprintln!("error: {}", err.message);
-        return Err(AwareError::Validation(format!("[{}]", err.code)));
-    }
-
-    // …and the same file-level rule one level down. A node may dispatch to an
-    // app-backed agent, and the app behind it carries a `requires:` block of its
-    // own. On a real run `DispatchInvoker::resolve_exposed` reads those pins when
-    // the node dispatches; `--simulate` never reaches it, because the
-    // orchestrator returns a synthesized output before the app transport, so the
-    // backing app is never loaded and an unreadable pin one level down was
-    // reported nowhere at all.
-    if let Some(err) = nested_malformed_requires(&ctx.paths, &app)?.first() {
-        eprintln!("error: {}", err.message);
-        return Err(AwareError::Validation(format!("[{}]", err.code)));
-    }
-
-    if !simulate {
-        let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
-        crate::app_lock::verify_agent_pins(&app, &approved_lock, &agents)?;
-        let reachable = reachable_agent_ids(&ctx.paths, &app, &agents)?;
-        if require_verified_agents {
-            for agent_id in &reachable {
-                let Some(agent) = agents.iter().find(|a| a.manifest.agent == *agent_id) else {
-                    return Err(AwareError::Validation(format!(
-                        "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {agent_id} is not installed"
-                    )));
-                };
-                if !crate::install::provenance::claims_official(&agent.root) {
-                    let assessment = crate::install::provenance::assess_against_index(
-                        &agent.root,
-                        &agent.manifest.agent,
-                        &agent.manifest.version,
-                        None,
-                    );
-                    return Err(AwareError::Validation(format!(
-                        "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {agent_id} is not verified: {}",
-                        assessment.reason
-                    )));
-                }
-            }
-        }
-        let official_index = if require_verified_agents && !reachable.is_empty() {
-            Some(crate::registry::fetch::fetch_fresh_official_index().map_err(|error| {
-                AwareError::Validation(format!("[E_APP_AGENT_BUNDLE_UNVERIFIED] cannot fetch fresh official registry index: {error}"))
-            })?)
-        } else {
-            None
-        };
-        for agent_id in reachable {
-            if let Some(agent) = agents.iter().find(|a| a.manifest.agent == agent_id) {
-                let assessment = crate::install::provenance::assess_against_index(
-                    &agent.root,
-                    &agent.manifest.agent,
-                    &agent.manifest.version,
-                    official_index.as_ref(),
-                );
-                verified_at_start.insert(agent_id.clone(), serde_json::to_value(&assessment)?);
-                if require_verified_agents && !assessment.verified {
-                    return Err(AwareError::Validation(format!(
-                        "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {agent_id} is not verified: {}",
-                        assessment.reason
-                    )));
-                }
-            }
-        }
-
-        // Planned-agent check: a plain `--dry-run` still dispatches to live read-mode
-        // binaries (only `--simulate`, excluded above, stubs everything), so refuse a
-        // not-yet-runnable agent with a clear reason instead of a downstream
-        // "program not found" (#161).
-        if let Some(err) = crate::validate::validate_app_agents(&app, &agents).first() {
-            eprintln!("error: {}", err.message);
-            return Err(AwareError::Validation(format!("[{}]", err.code)));
-        }
-
-        // Missing-agent check (#308): a node whose agent isn't installed has
-        // nothing to dispatch to. Without this the run reached the transport and
-        // died reading `<home>/agents/<id>/manifest.yaml` — surfacing a bare
-        // `io: ... (os error 3)` that named neither the node nor the agent.
-        // Install/compile only warn (an app may be installed before its agents,
-        // #170); by run time the agent must exist. `--simulate` stubs every node
-        // and contacts no binary, so it is excluded above and stays the way to
-        // check a composition before its agents are installed.
-        if let Some(err) =
-            crate::validate::missing_agents(&app, &agents, crate::validate::Severity::Error).first()
-        {
-            eprintln!("error: {}", err.message);
-            return Err(AwareError::Validation(format!("[{}]", err.code)));
-        }
-
-        // Pin check (#349): the app's `requires:` names the agent contract it was
-        // written against. Running against a version outside that pin is how a
-        // breaking agent change used to reach an app silently — the #343
-        // coordinate-frame change is the case that surfaced it. Checked against
-        // the live catalogue rather than the lock, so an agent swapped out after
-        // the app was compiled is caught too. `--simulate` is excluded with the
-        // other catalogue checks above: it stubs every node and dispatches to
-        // nothing, and it is the documented way to check a composition before the
-        // agents around it are in place.
-        if let Some(err) =
-            crate::validate::unsatisfied_pins(&app, &agents, crate::validate::Severity::Error)
-                .first()
-        {
-            eprintln!("error: {}", err.message);
-            return Err(AwareError::Validation(format!("[{}]", err.code)));
-        }
-
-        // Safety pre-flight only gates real runs (dry-run is precisely how you test
-        // an app's safety contract before adding the blocks).
-        if !dry_run {
-            let safety_issues = crate::validate::validate_app_safety(&app, &agents);
-            if !safety_issues.is_empty() {
-                eprintln!("error: app failed safety pre-flight (use --dry-run to preview):");
-                for issue in &safety_issues {
-                    eprintln!("  \u{2717} [{}] {}", issue.code, issue.message);
-                }
-                return Err(AwareError::Validation(
-                    "write-mode node(s) missing `safety:` block".into(),
-                ));
-            }
-        }
-    }
+    let run_config = serde_json::json!({
+        "verified-at-start": verified_at_start,
+        "agent-resolution": agent_resolution,
+    });
 
     // Parse `--input key=value` overrides into the app's input map.
     let mut inputs = serde_json::Map::new();
@@ -540,18 +523,16 @@ async fn run(
     }
 
     // Detect mode: any node whose agent has stateful: true + lifecycle: start = long-running.
-    // For v0.3 one-shot path, we check installed manifests. If no installed manifest for a node,
-    // treat the node as stateless. Task 14 wires the actual long-running path.
+    // For v0.3 one-shot path, we check the run's manifests (the resolved catalogue, #626). If
+    // none is known for a node, treat the node as stateless. Task 14 wires the long-running path.
     let is_long_running = app.nodes.iter().any(|n| {
-        if let Some(agent_id) = &n.agent {
-            let agents = ctx.paths.agents_dir();
-            if let Ok(m) = crate::manifest::loader::load_agent_by_id(&agents, agent_id)
-                && m.stateful
-                && let Some(cmd_name) = &n.command
-                && let Some(c) = m.commands.get(cmd_name)
-            {
-                return matches!(c.lifecycle, crate::manifest::agent::Lifecycle::Start);
-            }
+        if let Some(agent_id) = &n.agent
+            && let Ok(m) = catalogue.manifest(agent_id)
+            && m.stateful
+            && let Some(cmd_name) = &n.command
+            && let Some(c) = m.commands.get(cmd_name)
+        {
+            return matches!(c.lifecycle, crate::manifest::agent::Lifecycle::Start);
         }
         false
     });
@@ -565,7 +546,7 @@ async fn run(
     // fence before choosing the one-shot or long-running path so a lifecycle-start graph cannot
     // bypass it. Simulation dispatches no agents and therefore must not contend with a real read;
     // dry-run still executes read-mode nodes and retains the fence.
-    let contains_model_reader = app_uses_model_reader(&ctx.paths, &app)?;
+    let contains_model_reader = app_uses_model_reader(&ctx.paths, &catalogue, &app)?;
     let model_reader_control =
         if should_acquire_model_reader_control(contains_model_reader, simulate) {
             let pidfile = crate::runtime::pidfile::Pidfile {
@@ -589,7 +570,7 @@ async fn run(
     });
 
     let artifact_retention_lease = crate::runtime::artifact_retention::begin_if_reserved(
-        &ctx.paths, app_id, &instance, &run_id, &app,
+        &ctx.paths, &catalogue, app_id, &instance, &run_id, &app,
     )?;
     let writer_evidence = artifact_retention_lease
         .as_ref()
@@ -626,6 +607,7 @@ async fn run(
         }
         let dispatch = DispatchInvoker::new(
             &ctx.paths,
+            catalogue.clone(),
             dry_run,
             simulate,
             Some(artifact_dir),
@@ -649,13 +631,13 @@ async fn run(
 
         let orch = Orchestrator {
             app,
-            agents_dir: ctx.paths.agents_dir(),
+            catalogue: catalogue.clone(),
             run_id: run_id.clone(),
             instance: instance.clone(),
             invoker,
             provenance,
             ctx: rt_ctx,
-            run_config: serde_json::json!({ "verified-at-start": verified_at_start }),
+            run_config: run_config.clone(),
             record_inputs,
             record_item: None,
             fan_in: Default::default(),
@@ -744,6 +726,7 @@ async fn run(
     }
     let dispatch = DispatchInvoker::new(
         &ctx.paths,
+        catalogue.clone(),
         dry_run,
         simulate,
         Some(artifact_dir),
@@ -769,13 +752,13 @@ async fn run(
 
     let orch = Orchestrator {
         app,
-        agents_dir: ctx.paths.agents_dir(),
+        catalogue,
         run_id: run_id.clone(),
         instance: instance.clone(),
         invoker,
         provenance,
         ctx: rt_ctx,
-        run_config: serde_json::json!({ "verified-at-start": verified_at_start }),
+        run_config,
         record_inputs,
         record_item: None,
         fan_in: Default::default(),
@@ -828,6 +811,7 @@ async fn run(
 /// both shapes because the nested runner deliberately does not create a second app instance.
 fn app_uses_model_reader(
     paths: &crate::paths::Paths,
+    catalogue: &crate::agent_resolution::AgentCatalogue,
     app: &crate::manifest::app::App,
 ) -> Result<bool, AwareError> {
     let dispatchable = crate::validate::dispatchable_agents(app);
@@ -835,24 +819,20 @@ fn app_uses_model_reader(
         return Ok(true);
     }
     for agent_id in dispatchable {
-        let Ok(manifest_path) =
-            crate::manifest::loader::agent_manifest_path(&paths.agents_dir(), agent_id)
-        else {
+        // The run's resolved manifest (#626); under `--simulate`, the working
+        // copy, absent read as "not installed".
+        let Some(manifest) = catalogue.manifest_if_installed(agent_id)? else {
             continue;
         };
-        match std::fs::symlink_metadata(&manifest_path) {
-            Err(error) if error.kind() == std::io::ErrorKind::NotFound => continue,
-            Err(error) => {
-                return Err(std::io::Error::new(
-                    error.kind(),
-                    format!("{}: {error}", manifest_path.display()),
-                )
-                .into());
-            }
-            Ok(_) => {}
-        }
-        let manifest = crate::manifest::loader::load_agent(&manifest_path)?;
         if effective_transport(&manifest, agent_id)? != TransportKind::App {
+            continue;
+        }
+        // A resolved run already approved the backing app; read nothing.
+        if let Some(nested) = catalogue.nested(agent_id) {
+            if crate::validate::dispatchable_agents(&nested.app).contains("model-reference-reader")
+            {
+                return Ok(true);
+            }
             continue;
         }
         let Some(backed_by) = manifest
@@ -920,7 +900,8 @@ mod model_reader_control_tests {
         )
         .unwrap();
 
-        assert!(app_uses_model_reader(&paths, &top).unwrap());
+        let current = crate::agent_resolution::AgentCatalogue::working_copies(paths.agents_dir());
+        assert!(app_uses_model_reader(&paths, &current, &top).unwrap());
     }
 
     #[test]
@@ -934,7 +915,8 @@ mod model_reader_control_tests {
         )
         .unwrap();
 
-        assert!(!app_uses_model_reader(&paths, &app).unwrap());
+        let current = crate::agent_resolution::AgentCatalogue::working_copies(paths.agents_dir());
+        assert!(!app_uses_model_reader(&paths, &current, &app).unwrap());
     }
 
     #[test]
@@ -950,14 +932,20 @@ mod model_reader_control_tests {
 
         // Simulation still discovers the reader graph so it can avoid touching the live
         // instance pidfile; the caller uses `simulate` only to skip lock acquisition.
-        assert!(app_uses_model_reader(&paths, &app).unwrap());
+        let current = crate::agent_resolution::AgentCatalogue::working_copies(paths.agents_dir());
+        assert!(app_uses_model_reader(&paths, &current, &app).unwrap());
         assert!(!should_acquire_model_reader_control(true, true));
         assert!(!should_manage_ordinary_pidfile(true, false));
         assert!(should_manage_ordinary_pidfile(false, false));
     }
 }
 
-/// File-level preflight for apps behind this app's app-backed agents.
+/// File-level preflight for apps behind this app's app-backed agents, for
+/// `--simulate` ONLY (#626). A real run approves and resolves each backing app
+/// once, at preflight, and checks the same rule on that resolution with
+/// [`nested_malformed_requires`]; simulation builds no resolved catalogue, so
+/// it keeps reading the working copies here, with today's tolerance of missing
+/// agents. This is the one run-path function the run-path guard exempts.
 ///
 /// Approval and constraint readability are facts about files — true on every
 /// machine, needing no binary — so preview-mode transport short-circuits must
@@ -1011,7 +999,7 @@ mod model_reader_control_tests {
 /// One level is the whole depth: a nested app may not itself compose another
 /// `exposes-as-agent` app in v0 (`DispatchInvoker::nested_leaf` passes
 /// `app_ctx: None`), so there is no deeper hop to recurse into.
-fn nested_malformed_requires(
+fn simulate_nested_malformed_requires(
     paths: &crate::paths::Paths,
     app: &crate::manifest::app::App,
 ) -> Result<Vec<crate::validate::ValidationIssue>, AwareError> {
@@ -1157,59 +1145,115 @@ fn nested_malformed_requires(
     Ok(out)
 }
 
-/// Resolve the exact one-hop set whose transports can execute. App-backed
-/// wrapper manifests are routing metadata; their approved backing app's leaf
-/// agents are the executable bundles that strict provenance must assess.
-fn reachable_agent_ids(
+/// [`simulate_nested_malformed_requires`] for a real run: the same file-level
+/// rule, judged on the backing apps preflight approved and resolved (#626) —
+/// the ones dispatch will run — so nothing is re-read from `apps/`.
+fn nested_malformed_requires(
+    resolved: &crate::agent_resolution::ResolvedCatalogue,
+) -> Vec<crate::validate::ValidationIssue> {
+    let mut out = Vec::new();
+    for (agent_id, nested) in resolved.nested_apps() {
+        out.extend(
+            crate::validate::malformed_requires(&nested.app)
+                .into_iter()
+                .map(|issue| crate::validate::ValidationIssue {
+                    // Name the hop, or the operator reads a pin that appears in
+                    // neither the app they named nor anything they can see.
+                    message: format!(
+                        "app-backed agent {:?} (backing app {:?}): {}",
+                        agent_id, nested.backed_by, issue.message
+                    ),
+                    ..issue
+                }),
+        );
+    }
+    out
+}
+
+/// Resolve the run's agents once (#626) and apply strict provenance.
+///
+/// Every pinned agent resolves to the store package holding the bytes its lock
+/// approved; app-backed agents carry their backing app, approved and resolved
+/// by its own lock. Without `--require-verified-agents` this is offline: stored
+/// receipts decide which package of identical bytes is used. With it, the
+/// existing assessment walks the same order against a freshly fetched official
+/// index and the first package that verifies is used; any reachable agent left
+/// unverified refuses the run, exactly as before.
+///
+/// Fills `verified_at_start` with each reachable agent's assessment and its
+/// approval kind (`bytes` / `version-only`), for the run's provenance record.
+fn resolve_run_agents(
     paths: &crate::paths::Paths,
     app: &crate::manifest::app::App,
-    agents: &[crate::manifest::loader::DiscoveredAgent],
-) -> Result<std::collections::BTreeSet<String>, AwareError> {
-    let mut reachable = std::collections::BTreeSet::new();
-    for id in crate::validate::dispatchable_agents(app) {
-        let Some(agent) = agents.iter().find(|agent| agent.manifest.agent == id) else {
-            continue; // existing missing-agent preflight reports it below
-        };
-        if !matches!(
-            effective_transport(&agent.manifest, id),
-            Ok(TransportKind::App)
-        ) {
-            reachable.insert(id.to_string());
-            continue;
-        }
-        let transport = agent.manifest.transport.app.as_ref().ok_or_else(|| {
-            AwareError::Validation(format!("app-backed agent {id} has no app transport"))
-        })?;
-        if !crate::manifest::loader::is_safe_segment(&transport.backed_by) {
-            return Err(AwareError::Validation(format!(
-                "app-backed agent {id} has unsafe backing app id {:?}",
-                transport.backed_by
-            )));
-        }
-        let backing_dir = paths.apps_dir().join(&transport.backed_by);
-        let source = crate::manifest::loader::find_app_manifest(&backing_dir).ok_or_else(|| {
-            AwareError::Validation(format!(
-                "app-backed agent {id}: backing app {} is not installed",
-                transport.backed_by
-            ))
-        })?;
-        let (backing, lock) = crate::app_lock::load_approved_app_with_lock(&source)?;
-        crate::app_lock::verify_agent_pins(&backing, &lock, agents)?;
-        for leaf in crate::validate::dispatchable_agents(&backing) {
-            if let Some(leaf_agent) = agents.iter().find(|agent| agent.manifest.agent == leaf)
-                && matches!(
-                    effective_transport(&leaf_agent.manifest, leaf),
-                    Ok(TransportKind::App)
-                )
-            {
+    lock: &crate::app_lock::LockFile,
+    require_verified_agents: bool,
+    verified_at_start: &mut serde_json::Map<String, serde_json::Value>,
+) -> Result<crate::agent_resolution::ResolvedCatalogue, AwareError> {
+    use crate::agent_resolution::{Selection, resolve_agents};
+    let mut resolved = resolve_agents(paths, app, lock, Selection::Default)?;
+    let official_index = if require_verified_agents {
+        // Offline precheck first, so an unofficial install is refused without
+        // touching the network: some stored candidate must at least CLAIM an
+        // official registry receipt.
+        for reachable in resolved.reachable(app) {
+            let Some(agent) = reachable.agent else {
                 return Err(AwareError::Validation(format!(
-                    "app-backed agent {id}: nested app-backed agent {leaf} exceeds the v0 one-hop limit"
+                    "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {} is not installed",
+                    reachable.id
+                )));
+            };
+            if !reachable.info.is_some_and(|info| info.official_claim) {
+                let assessment = crate::install::provenance::assess_against_index(
+                    &agent.root,
+                    &agent.manifest.agent,
+                    &agent.manifest.version,
+                    None,
+                );
+                return Err(AwareError::Validation(format!(
+                    "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {} is not verified: {}",
+                    reachable.id, assessment.reason
                 )));
             }
-            reachable.insert(leaf.to_string());
+        }
+        if resolved.reachable(app).is_empty() {
+            None
+        } else {
+            let index = crate::registry::fetch::fetch_fresh_official_index().map_err(|error| {
+                AwareError::Validation(format!("[E_APP_AGENT_BUNDLE_UNVERIFIED] cannot fetch fresh official registry index: {error}"))
+            })?;
+            resolved = resolve_agents(paths, app, lock, Selection::Verified(&index))?;
+            Some(index)
+        }
+    } else {
+        None
+    };
+    for reachable in resolved.reachable(app) {
+        let Some(agent) = reachable.agent else {
+            continue;
+        };
+        let assessment = crate::install::provenance::assess_against_index(
+            &agent.root,
+            &agent.manifest.agent,
+            &agent.manifest.version,
+            official_index.as_ref(),
+        );
+        let mut record = serde_json::to_value(&assessment)?;
+        if let (Some(fields), Some(info)) = (record.as_object_mut(), reachable.info) {
+            fields.insert("approval".into(), serde_json::to_value(info.approval)?);
+            fields.insert(
+                "digest".into(),
+                serde_json::Value::String(info.digest.clone()),
+            );
+        }
+        verified_at_start.insert(reachable.id.clone(), record);
+        if require_verified_agents && !assessment.verified {
+            return Err(AwareError::Validation(format!(
+                "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {} is not verified: {}",
+                reachable.id, assessment.reason
+            )));
         }
     }
-    Ok(reachable)
+    Ok(resolved)
 }
 
 async fn logs(
@@ -2098,6 +2142,118 @@ fn compile_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> 
     Ok(())
 }
 
+/// `aware app check <app>` — report whether the app's compiled approval would
+/// let `aware app run` proceed, using the run's resolver (#626). With `--json`
+/// every outcome, failures included, is one envelope on stdout.
+fn check_cmd(ctx: &Context, app: &str) -> Result<(), AwareError> {
+    let started = Instant::now();
+    let outcome = check_source(ctx, app)
+        .and_then(|source| crate::agent_resolution::check_app(&ctx.paths, &source));
+    match outcome {
+        Ok(check) => {
+            if ctx.json {
+                envelope::print_ok("app check", &check, started)?;
+            } else {
+                print_check(&check);
+            }
+            Ok(())
+        }
+        Err(error) if ctx.json => {
+            let env = envelope::Envelope::<()> {
+                ok: false,
+                data: None,
+                error: Some(envelope::EnvelopeError {
+                    code: check_error_code(&error).into(),
+                    message: error.to_string(),
+                    details: serde_json::Value::Null,
+                }),
+                meta: envelope::meta_for("app check", started),
+            };
+            println!("{}", serde_json::to_string(&env)?);
+            use std::io::Write;
+            let _ = std::io::stdout().flush();
+            std::process::exit(error.exit_code());
+        }
+        Err(error) => Err(error),
+    }
+}
+
+/// The source file `aware app check` reads: a path (file or app directory)
+/// when one exists, else an installed app id resolved exactly as `run` does.
+fn check_source(ctx: &Context, app: &str) -> Result<std::path::PathBuf, AwareError> {
+    let path = std::path::Path::new(app);
+    if path.exists() {
+        return crate::app_lock::find_app_source(path).ok_or_else(|| {
+            AwareError::NotFound(format!(
+                "no app source file (.flo / .app / .flow / .aware) at {}",
+                path.display()
+            ))
+        });
+    }
+    let app_dir = crate::manifest::loader::resolve_app_dir(&ctx.paths, app)?;
+    crate::manifest::loader::find_app_manifest(&app_dir)
+        .ok_or_else(|| AwareError::NotFound(format!("app {app} has no .flo/.app file")))
+}
+
+fn check_error_code(error: &AwareError) -> &'static str {
+    match error {
+        AwareError::NotFound(_) => "E_APP_CHECK_NOT_FOUND",
+        AwareError::Validation(_) | AwareError::Yaml(_) => "E_APP_CHECK_SOURCE_INVALID",
+        _ => "E_APP_CHECK_FAILED",
+    }
+}
+
+fn print_check(check: &crate::agent_resolution::AppCheck) {
+    use crate::agent_resolution::{Approval, LockState};
+    let verdict = match (check.approval_current, check.approval_kind) {
+        (true, Some(Approval::VersionOnly)) => {
+            "approval current (version-only: compile again to approve exact bytes)"
+        }
+        (true, _) => "approval current",
+        (false, _) => "needs compile",
+    };
+    println!("{}: {verdict}", check.app);
+    let lock = match check.lock {
+        LockState::Valid => "valid",
+        LockState::Missing => "missing",
+        LockState::Invalid => "invalid",
+    };
+    println!(
+        "  lock: {lock}{}",
+        check
+            .lock_detail
+            .as_deref()
+            .map(|detail| format!(" — {detail}"))
+            .unwrap_or_default()
+    );
+    println!(
+        "  source: {}",
+        if check.source_current {
+            "matches the lock"
+        } else {
+            "changed since compile"
+        }
+    );
+    for row in &check.agents {
+        let resolution = serde_json::to_value(row.resolution)
+            .ok()
+            .and_then(|value| value.as_str().map(str::to_string))
+            .unwrap_or_default();
+        let via = row
+            .via
+            .as_deref()
+            .map(|via| format!(" (via {via})"))
+            .unwrap_or_default();
+        println!("  {}{via}: {resolution} — {}", row.agent, row.detail);
+    }
+    for nested in &check.nested_apps {
+        println!(
+            "  backing app {} of {}: {}",
+            nested.app, nested.agent, nested.detail
+        );
+    }
+}
+
 /// `aware app inspect <path>` — open Glass Box (single-file HTML viewer)
 /// of the lockfile in the user's default browser.
 fn inspect_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
@@ -2633,6 +2789,7 @@ mod glass_box_tests {
     fn lock(nodes: Vec<CompiledNode>) -> LockFile {
         LockFile {
             agent_bundle_pins: std::collections::BTreeMap::new(),
+            agent_digests: std::collections::BTreeMap::new(),
             source_hash: "abc123".into(),
             compiled_at: "2026-08-22T00:00:00Z".into(),
             compiler_version: "0.128.0".into(),

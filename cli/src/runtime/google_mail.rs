@@ -186,14 +186,17 @@ struct JournalRecord {
 /// Dispatch `gmail.send` off the async reactor. Dropping/cancelling the caller
 /// does not cancel the blocking closure, so a handed-off request still writes
 /// its terminal journal record when the provider call returns.
-pub async fn send(agents_dir: PathBuf, args: Value) -> Result<Value, AwareError> {
-    tokio::task::spawn_blocking(move || send_blocking(&agents_dir, args, &PinnedGoogleHttp::new()))
+pub async fn send(
+    catalogue: crate::agent_resolution::AgentCatalogue,
+    args: Value,
+) -> Result<Value, AwareError> {
+    tokio::task::spawn_blocking(move || send_blocking(&catalogue, args, &PinnedGoogleHttp::new()))
         .await
         .map_err(|error| AwareError::Internal(format!("gmail send task join: {error}")))?
 }
 
 fn send_blocking(
-    agents_dir: &Path,
+    catalogue: &crate::agent_resolution::AgentCatalogue,
     args: Value,
     http: &impl GoogleHttp,
 ) -> Result<Value, AwareError> {
@@ -208,7 +211,7 @@ fn send_blocking(
     })?;
     validate_input(&input)?;
 
-    let aware_home = agents_dir.parent().ok_or_else(|| {
+    let aware_home = catalogue.agents_dir().parent().ok_or_else(|| {
         structured(
             "gmail.send.validation",
             "preflight",
@@ -217,10 +220,14 @@ fn send_blocking(
             None,
         )
     })?;
-    let manifest = crate::manifest::loader::load_agent_by_id(agents_dir, INTEGRATION)
+    // The manifest comes from the run's resolved catalogue (#626): the
+    // approved bytes, not whatever `agents/google-workspace` holds now.
+    let manifest = catalogue
+        .manifest(INTEGRATION)
         .map_err(|error| auth_error(format!("load Google Workspace manifest: {error}")))?;
     let auth = manifest
         .auth
+        .clone()
         .ok_or_else(|| auth_error("Google Workspace manifest has no OAuth configuration"))?;
     if auth.scheme != "oauth2" {
         return Err(auth_error(
@@ -1924,7 +1931,7 @@ mod tests {
         let key = format!("{}é", "a".repeat(600));
         let mock = MockHttp::responding(accepted());
         let error = send_blocking(
-            Path::new("agents"),
+            &crate::agent_resolution::AgentCatalogue::working_copies(PathBuf::from("agents")),
             json!({
                 "to": ["person@example.com"],
                 "subject": "subject",
@@ -1947,7 +1954,7 @@ mod tests {
         let recipient = "private-recipient@example.com";
         let mock = MockHttp::responding(accepted());
         let error = send_blocking(
-            Path::new("agents"),
+            &crate::agent_resolution::AgentCatalogue::working_copies(PathBuf::from("agents")),
             json!({
                 "to": recipient,
                 "subject": "subject",
@@ -2007,7 +2014,12 @@ mod tests {
 
         for (args, expected_message) in cases {
             let mock = MockHttp::responding(accepted());
-            let error = send_blocking(Path::new("agents"), args, &mock).unwrap_err();
+            let error = send_blocking(
+                &crate::agent_resolution::AgentCatalogue::working_copies(PathBuf::from("agents")),
+                args,
+                &mock,
+            )
+            .unwrap_err();
             let structured = error.structured_agent_error().unwrap();
 
             assert_eq!(structured.code, "gmail.send.validation");

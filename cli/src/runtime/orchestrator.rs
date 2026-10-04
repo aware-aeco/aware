@@ -5,7 +5,7 @@
 //! Task 12 adds DAG fan-in.
 
 use std::collections::{HashMap, HashSet, VecDeque};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::sync::Arc;
 
 use serde_json::Value;
@@ -35,7 +35,9 @@ pub struct FanInState {
 
 pub struct Orchestrator {
     pub app: App,
-    pub agents_dir: PathBuf,
+    /// Every agent manifest this run reads (#626): the resolved catalogue on a
+    /// real run, the working copies under `--simulate`.
+    pub catalogue: crate::agent_resolution::AgentCatalogue,
     pub run_id: String,
     pub instance: String,
     pub invoker: Arc<dyn AgentInvoker>,
@@ -689,7 +691,7 @@ impl Orchestrator {
                     // `args`: this record is persisted, and `args` is what the
                     // live run would put on the wire, credential included (#448).
                     proposed_inputs: trace_safe_agent_inputs(
-                        &self.agents_dir,
+                        &self.catalogue,
                         agent_id,
                         command,
                         render_for_record(&params, &self.record_render_context(&params)),
@@ -748,7 +750,7 @@ impl Orchestrator {
             Some(c) => c,
             None => return false,
         };
-        let Ok(m) = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent_id) else {
+        let Ok(m) = self.catalogue.manifest(agent_id) else {
             return false;
         };
         if !m.stateful {
@@ -888,7 +890,7 @@ impl Orchestrator {
         command: &str,
         declared: Option<crate::manifest::agent::Mode>,
     ) -> crate::manifest::agent::Mode {
-        match crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent_id) {
+        match self.catalogue.manifest(agent_id) {
             Ok(agent) => agent
                 .commands
                 .get(command)
@@ -911,8 +913,7 @@ impl Orchestrator {
     /// `{ "simulated": true }` marker so the DAG still flows.
     fn synthesize_output(&self, agent_id: &str, command: &str) -> Value {
         let fallback = || serde_json::json!({ "simulated": true });
-        let Ok(agent) = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent_id)
-        else {
+        let Ok(agent) = self.catalogue.manifest(agent_id) else {
             return fallback();
         };
         let Some(cmd) = agent.commands.get(command) else {
@@ -998,7 +999,7 @@ impl Orchestrator {
                         // the live run would put on the wire, credential
                         // included (#448).
                         proposed_inputs: trace_safe_agent_inputs(
-                            &self.agents_dir,
+                            &self.catalogue,
                             agent_id,
                             command,
                             render_for_record(
@@ -1545,7 +1546,7 @@ pub async fn run_exposed_app_one_shot(
     app: App,
     inputs: Value,
     record_inputs: Value,
-    agents_dir: PathBuf,
+    catalogue: crate::agent_resolution::AgentCatalogue,
     invoker: Arc<dyn AgentInvoker>,
     provenance: ProvenanceWriter,
     run_id: String,
@@ -1557,7 +1558,7 @@ pub async fn run_exposed_app_one_shot(
     let ctx = nested_runtime_context(&run_id, inputs.clone(), credentials_dir);
     let orch = Orchestrator {
         app,
-        agents_dir,
+        catalogue,
         run_id,
         instance,
         invoker,
@@ -1583,7 +1584,7 @@ pub async fn run_exposed_app_stream(
     app: App,
     inputs: Value,
     record_inputs: Value,
-    agents_dir: PathBuf,
+    catalogue: crate::agent_resolution::AgentCatalogue,
     invoker: Arc<dyn AgentInvoker>,
     provenance: ProvenanceWriter,
     run_id: String,
@@ -1597,7 +1598,7 @@ pub async fn run_exposed_app_stream(
     let ctx = nested_runtime_context(&run_id, inputs.clone(), credentials_dir);
     let orch = Orchestrator {
         app,
-        agents_dir,
+        catalogue,
         run_id,
         instance,
         invoker,
@@ -1781,10 +1782,15 @@ fn render_for_record(params: &Value, ctx: &RuntimeContext) -> Value {
 /// Remove message content from the persisted preview of the built-in Gmail send
 /// primitive. Credentials are already blinded by `record_render_context`; these
 /// fields are sensitive business data even when they contain no credential.
-fn trace_safe_agent_inputs(agents_dir: &Path, agent: &str, command: &str, inputs: Value) -> Value {
+fn trace_safe_agent_inputs(
+    catalogue: &crate::agent_resolution::AgentCatalogue,
+    agent: &str,
+    command: &str,
+    inputs: Value,
+) -> Value {
     if agent == "google-workspace" && command == "gmail.send" {
         redact_gmail_inputs(inputs)
-    } else if installed_app_routes_to_gmail(agents_dir, agent) {
+    } else if installed_app_routes_to_gmail(catalogue, agent) {
         redact_scalar_values(inputs)
     } else {
         inputs
@@ -1871,8 +1877,11 @@ fn redact_scalar_values(value: Value) -> Value {
 /// is known, inspection failures redact in the safe direction: the later
 /// dispatch will report the malformed/missing backing app without first writing
 /// its caller inputs to provenance.
-fn installed_app_routes_to_gmail(agents_dir: &Path, agent: &str) -> bool {
-    let Ok(manifest) = crate::manifest::loader::load_agent_by_id(agents_dir, agent) else {
+fn installed_app_routes_to_gmail(
+    catalogue: &crate::agent_resolution::AgentCatalogue,
+    agent: &str,
+) -> bool {
+    let Ok(manifest) = catalogue.manifest(agent) else {
         return false;
     };
     if crate::runtime::invoker::dispatch_transport(&manifest.transport)
@@ -1886,7 +1895,11 @@ fn installed_app_routes_to_gmail(agents_dir: &Path, agent: &str) -> bool {
     if !crate::manifest::loader::is_safe_segment(&app_transport.backed_by) {
         return true;
     }
-    let Some(aware_home) = agents_dir.parent() else {
+    // A resolved run carries the approved backing app (#626); read nothing.
+    if let Some(nested) = catalogue.nested(agent) {
+        return app_routes_to_gmail(&nested.app);
+    }
+    let Some(aware_home) = catalogue.agents_dir().parent() else {
         return true;
     };
     let app_dir = aware_home.join("apps").join(&app_transport.backed_by);
@@ -2213,7 +2226,7 @@ requires: []
         let prov = ProvenanceWriter::open(&log_path).await.unwrap();
         let orch = Orchestrator {
             app,
-            agents_dir: paths.agents_dir(),
+            catalogue: crate::agent_resolution::AgentCatalogue::working_copies(paths.agents_dir()),
             run_id,
             instance: "default".into(),
             invoker,
@@ -2233,7 +2246,7 @@ requires: []
     #[test]
     fn gmail_write_preview_redacts_message_content_but_keeps_correlation() {
         let safe = trace_safe_agent_inputs(
-            Path::new("agents"),
+            &std::path::PathBuf::from("agents").into(),
             "google-workspace",
             "gmail.send",
             serde_json::json!({
@@ -2256,7 +2269,7 @@ requires: []
         assert_eq!(safe["attempt-id"], "stable-attempt");
 
         let unknown = trace_safe_agent_inputs(
-            Path::new("agents"),
+            &std::path::PathBuf::from("agents").into(),
             "google-workspace",
             "gmail.send",
             serde_json::json!({
@@ -2272,7 +2285,7 @@ requires: []
         assert_eq!(unknown["content-type"], "text");
 
         let untouched = trace_safe_agent_inputs(
-            Path::new("agents"),
+            &std::path::PathBuf::from("agents").into(),
             "microsoft-365",
             "mail.send",
             serde_json::json!({ "subject": "ordinary preview" }),
@@ -2330,7 +2343,8 @@ connections: []
             crate::manifest::expose::synthesize_agent_manifest(&app).unwrap(),
         )
         .unwrap();
-        let outer = trace_safe_agent_inputs(&agents_dir, "mail-wrapper", "send", inputs);
+        let outer =
+            trace_safe_agent_inputs(&agents_dir.clone().into(), "mail-wrapper", "send", inputs);
         assert_eq!(outer["recipient_alias"][0], template::REDACTED);
         assert_eq!(outer["message"]["body"], template::REDACTED);
 
@@ -5012,7 +5026,7 @@ requires: []
             app,
             serde_json::json!({ "phase": "design" }),
             serde_json::json!({ "phase": "design" }),
-            tmp.path().join("agents"),
+            tmp.path().join("agents").into(),
             inv,
             prov,
             "r_nested".into(),
@@ -5064,7 +5078,7 @@ requires: []
             app,
             serde_json::json!({ "token": "secret-live-value" }),
             serde_json::json!({ "token": "[redacted]" }),
-            tmp.path().join("agents"),
+            tmp.path().join("agents").into(),
             Arc::new(EchoInvoker),
             prov,
             "r_nested".into(),
@@ -5127,7 +5141,7 @@ requires: []
             app,
             serde_json::json!({}),
             serde_json::json!({}),
-            tmp.path().join("agents"),
+            tmp.path().join("agents").into(),
             inv,
             prov,
             "r".into(),
@@ -5220,7 +5234,7 @@ requires: []
             app,
             serde_json::json!({ "proj": "P-1" }),
             serde_json::json!({ "proj": "[redacted]" }),
-            tmp.path().join("agents"),
+            tmp.path().join("agents").into(),
             Arc::new(EchoInvoker),
             prov,
             "r".into(),

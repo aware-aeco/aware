@@ -305,14 +305,19 @@ fn find_blender() -> Result<PathBuf, AwareError> {
 
 // ─────────────────────────────── script resolution ───────────────────────────────
 
-/// The installed agent's `scripts/` directory. `BuiltinInvoker` carries only `dry_run`, so the path
-/// is resolved here from the same env-driven source the rest of the CLI uses (mirroring
-/// `invoker::bridges_dir`). A missing directory is an *installation* error, not a path error.
-fn scripts_dir() -> Result<PathBuf, AwareError> {
-    let dir = crate::paths::Paths::from_env()?
-        .agents_dir()
-        .join("blender")
-        .join("scripts");
+/// The agent's `scripts/` directory. On a run, `agent_root` is the `blender` agent's resolved
+/// store package (#626), so the scripts executed are the approved bytes. Outside a run
+/// (`aware agent invoke`) it is `None` and the installed copy is used, resolved from the same
+/// env-driven source the rest of the CLI uses (mirroring `invoker::bridges_dir`). A missing
+/// directory is an *installation* error, not a path error.
+fn scripts_dir(agent_root: Option<&Path>) -> Result<PathBuf, AwareError> {
+    let root = match agent_root {
+        Some(root) => root.to_path_buf(),
+        None => crate::paths::Paths::from_env()?
+            .agents_dir()
+            .join("blender"),
+    };
+    let dir = root.join("scripts");
     if !dir.is_dir() {
         return Err(AwareError::NotFound(format!(
             "the `blender` agent is not installed (no {}) — run \
@@ -325,14 +330,14 @@ fn scripts_dir() -> Result<PathBuf, AwareError> {
 
 /// The script file for `command` inside an installed agent. A present agent whose script is missing
 /// is a *damaged* install and says so — the fix (`agent update`) differs from "never installed".
-fn script_path(command: &str) -> Result<PathBuf, AwareError> {
+fn script_path(command: &str, agent_root: Option<&Path>) -> Result<PathBuf, AwareError> {
     let script = script_for_command(command).ok_or_else(|| {
         AwareError::Validation(format!(
             "blender: no command `{command}` (available: {})",
             COMMANDS.join(", ")
         ))
     })?;
-    let path = scripts_dir()?.join(script);
+    let path = scripts_dir(agent_root)?.join(script);
     if !path.is_file() {
         return Err(AwareError::NotFound(format!(
             "the installed `blender` agent is damaged: {} is missing (the `{command}` command \
@@ -596,6 +601,7 @@ pub async fn run_blender_command(
     command: &str,
     args: &Value,
     dry_run: bool,
+    agent_root: Option<&Path>,
 ) -> Result<Value, AwareError> {
     // Reject an unknown command before anything else, so a typo never reports as "agent not
     // installed" just because the scripts directory is also missing.
@@ -611,7 +617,7 @@ pub async fn run_blender_command(
         return dry_run_result(command, args);
     }
 
-    let script = script_path(command)?;
+    let script = script_path(command, agent_root)?;
     let blender = find_blender()?;
     let inputs = ScratchInputs::write(args)?;
 
@@ -744,7 +750,7 @@ mod tests {
 
     #[tokio::test]
     async fn an_unknown_command_names_what_is_available() {
-        let err = run_blender_command("render.video", &json!({}), false)
+        let err = run_blender_command("render.video", &json!({}), false, None)
             .await
             .unwrap_err();
         let text = err.to_string();
@@ -991,6 +997,7 @@ mod tests {
             "render.still",
             &json!({ "blend-path": "m.blend", "output-path": "out/hero.png" }),
             true,
+            None,
         )
         .await
         .expect("dry run");
@@ -1008,6 +1015,7 @@ mod tests {
             "scene.import",
             &json!({ "ifc-path": "m.ifc", "blend-path": "staged/m.blend" }),
             true,
+            None,
         )
         .await
         .expect("dry run");
@@ -1026,6 +1034,7 @@ mod tests {
             "scene.apply-look",
             &json!({ "blend-path": "m.blend" }),
             true,
+            None,
         )
         .await
         .expect("dry run");
@@ -1039,6 +1048,7 @@ mod tests {
             "scene.apply-look",
             &json!({ "blend-path": "m.blend", "output-path": "look/m2.blend" }),
             true,
+            None,
         )
         .await
         .expect("dry run");
@@ -1052,7 +1062,7 @@ mod tests {
 
     #[tokio::test]
     async fn a_dry_run_info_returns_the_inventory_contract() {
-        let out = run_blender_command("scene.info", &json!({ "ifc-path": "m.ifc" }), true)
+        let out = run_blender_command("scene.info", &json!({ "ifc-path": "m.ifc" }), true, None)
             .await
             .expect("dry run");
         assert_eq!(out["count"], json!(0));
@@ -1071,7 +1081,7 @@ mod tests {
                 json!({ "ifc-path": "m.ifc", "blend-path": "m.blend" }),
             ),
         ] {
-            let err = run_blender_command(command, &args, true)
+            let err = run_blender_command(command, &args, true, None)
                 .await
                 .expect_err("preview must not mask a miswired node");
             assert!(matches!(err, AwareError::Validation(_)), "{err}");
@@ -1111,7 +1121,7 @@ mod tests {
     async fn end_to_end_scene_info_against_a_real_blender() {
         let ifc = std::env::var("AWARE_BLENDER_TEST_IFC")
             .expect("set AWARE_BLENDER_TEST_IFC to a fixture .ifc");
-        let out = run_blender_command("scene.info", &json!({ "ifc-path": ifc }), false)
+        let out = run_blender_command("scene.info", &json!({ "ifc-path": ifc }), false, None)
             .await
             .expect("scene.info");
         assert!(out["count"].as_u64().unwrap_or(0) > 0, "{out}");
