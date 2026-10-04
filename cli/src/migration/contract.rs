@@ -62,11 +62,13 @@ pub const IGNORED_AGENT_KEYS: &[&str] = &[
 /// treated as executable (fail safe), `atoms/` included. `manifest.yaml` is
 /// covered by the projections above and skipped here.
 pub fn is_doc_file(relative: &str) -> bool {
-    let root_level = !relative.contains('/');
+    // `relative` is `/`-separated from the package root, so `starts_with`
+    // already confines README*/LICENSE* to the root level.
     relative.starts_with("skills/")
         || (relative.starts_with("commands/") && relative.ends_with(".md"))
         || relative == "CHANGELOG.md"
-        || (root_level && (relative.starts_with("README") || relative.starts_with("LICENSE")))
+        || relative.starts_with("README")
+        || relative.starts_with("LICENSE")
         || crate::install::integrity::is_install_metadata(relative)
 }
 

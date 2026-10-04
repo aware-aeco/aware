@@ -500,6 +500,15 @@ commands:
             "{:?}",
             moved.reasons
         );
+        // ...and the other way round: a read declared only by the NEW version
+        // was not a declaration when the workflow was approved.
+        let promoted = workflow_read_only(&new, &old, &BTreeSet::new());
+        assert!(!promoted.read_only);
+        assert!(
+            promoted.reasons[0].contains("under the old pins"),
+            "{:?}",
+            promoted.reasons
+        );
 
         // One non-eligible node anywhere flips the whole workflow.
         let b = app("  - { id: r, agent: tool, command: read-declared }\n\
