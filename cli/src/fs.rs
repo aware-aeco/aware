@@ -311,9 +311,76 @@ pub(crate) fn win32_verbatim(path: &Path) -> std::io::Result<PathBuf> {
     Ok(PathBuf::from(OsString::from_wide(&verbatim)))
 }
 
+/// Atomically replace `destination` with the fully written, fsynced file
+/// `source` in the SAME directory: a reader sees the old bytes or the new ones,
+/// never a mix, and a crash leaves one of the two.
+///
+/// Windows: `MoveFileExW(MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)`,
+/// which returns only once the move is on disk. Unix: `rename(2)`, then an
+/// fsync of the directory so the new name survives a power loss.
+#[cfg(not(windows))]
+pub(crate) fn replace_file(source: &Path, destination: &Path) -> std::io::Result<()> {
+    std::fs::rename(source, destination)?;
+    if let Some(parent) = destination.parent() {
+        std::fs::File::open(parent)?.sync_all()?;
+    }
+    Ok(())
+}
+
+#[cfg(windows)]
+pub(crate) fn replace_file(source: &Path, destination: &Path) -> std::io::Result<()> {
+    use std::os::windows::ffi::OsStrExt;
+    use windows_sys::Win32::Storage::FileSystem::{
+        MOVEFILE_REPLACE_EXISTING, MOVEFILE_WRITE_THROUGH, MoveFileExW,
+    };
+    // `std::fs` adds the verbatim prefix itself; this raw call must, or a deep
+    // path fails here with `os error 3` past MAX_PATH (#593).
+    let source = win32_verbatim(source)?;
+    let destination = win32_verbatim(destination)?;
+    let source_wide = source
+        .as_os_str()
+        .encode_wide()
+        .chain(std::iter::once(0))
+        .collect::<Vec<_>>();
+    let destination_wide = destination
+        .as_os_str()
+        .encode_wide()
+        .chain(std::iter::once(0))
+        .collect::<Vec<_>>();
+    // SAFETY: both pointers name live, NUL-terminated UTF-16 buffers for the duration of the call.
+    let moved = unsafe {
+        MoveFileExW(
+            source_wide.as_ptr(),
+            destination_wide.as_ptr(),
+            MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH,
+        )
+    };
+    if moved == 0 {
+        Err(std::io::Error::last_os_error())
+    } else {
+        Ok(())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn replace_file_swaps_in_the_new_bytes_and_consumes_the_source() {
+        let tmp = tempfile::tempdir().unwrap();
+        let (staged, live) = (tmp.path().join(".staged"), tmp.path().join("live"));
+        std::fs::write(&live, b"old").unwrap();
+        std::fs::write(&staged, b"new").unwrap();
+        replace_file(&staged, &live).unwrap();
+        assert_eq!(std::fs::read(&live).unwrap(), b"new");
+        assert!(!staged.exists());
+        // A missing destination is simply created.
+        let fresh = tmp.path().join("fresh");
+        std::fs::write(&staged, b"first").unwrap();
+        replace_file(&staged, &fresh).unwrap();
+        assert_eq!(std::fs::read(&fresh).unwrap(), b"first");
+    }
 
     #[test]
     fn copies_a_nested_tree_and_creates_the_destination() {

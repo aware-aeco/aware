@@ -715,7 +715,7 @@ fn compile_node(
     })
 }
 
-fn classify_node(node: &crate::manifest::app::Node) -> &'static str {
+pub(crate) fn classify_node(node: &crate::manifest::app::Node) -> &'static str {
     if node.agent.is_some() {
         "agent"
     } else if node.inline.is_some() {
@@ -962,9 +962,61 @@ pub fn write_lockfile(
             .and_then(|f| f.to_str())
             .unwrap_or("(source)")
     );
-    std::fs::write(&lock_path, format!("{header}{yaml}"))
+    replace_atomically(&lock_path, format!("{header}{yaml}").as_bytes())
         .map_err(|e| AwareError::Internal(format!("write {}: {e}", lock_path.display())))?;
     Ok(lock_path)
+}
+
+/// Replace `path` with `bytes` so a reader — `aware app run` reading the lock
+/// at preflight — sees the old lock or the new one, never a torn mix, and a
+/// crash leaves one of the two (#628 plan §1). The bytes go to a temp file in
+/// the SAME directory (so the swap is a same-volume rename), are fsynced, then
+/// [`crate::fs::replace_file`] moves them over `path`. On any failure the temp
+/// file is removed and `path` is untouched.
+fn replace_atomically(path: &Path, bytes: &[u8]) -> std::io::Result<()> {
+    use std::io::Write;
+    let dir = path.parent().ok_or_else(|| {
+        std::io::Error::new(std::io::ErrorKind::InvalidInput, "lock path has no parent")
+    })?;
+    let name = path.file_name().and_then(|n| n.to_str()).unwrap_or("lock");
+    let temp = dir.join(format!(".{name}.tmp-{}", uuid::Uuid::new_v4().simple()));
+    let result = (|| {
+        let mut file = std::fs::OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .open(&temp)?;
+        file.write_all(bytes)?;
+        file.sync_all()?;
+        drop(file);
+        before_lock_replace()?;
+        crate::fs::replace_file(&temp, path)
+    })();
+    if result.is_err() {
+        let _ = std::fs::remove_file(&temp);
+    }
+    result
+}
+
+#[cfg(test)]
+thread_local! {
+    /// When set, the next lock replace on this thread fails after the temp file
+    /// is fully written and before it is moved over the lock.
+    static FAIL_BEFORE_REPLACE: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+#[cfg(test)]
+fn before_lock_replace() -> std::io::Result<()> {
+    if FAIL_BEFORE_REPLACE.with(|f| f.replace(false)) {
+        return Err(std::io::Error::other(
+            "injected fault before the lock replace",
+        ));
+    }
+    Ok(())
+}
+
+#[cfg(not(test))]
+fn before_lock_replace() -> std::io::Result<()> {
+    Ok(())
 }
 
 /// Find the source app file (`.flo` / `.app` / `.flow` / `.aware`) at a path.
@@ -1186,6 +1238,56 @@ mod tests {
         assert_eq!(lock_path.file_name().unwrap(), "my-cool-app.lock");
         // The .flo extension MUST NOT appear in the lockfile name.
         assert!(!lock_path.to_string_lossy().contains(".flo.lock"));
+    }
+
+    fn tiny_lock(app: &str, version: &str) -> LockFile {
+        LockFile {
+            agent_bundle_pins: BTreeMap::new(),
+            agent_digests: BTreeMap::new(),
+            source_hash: "sha256:test".into(),
+            compiled_at: "2026-10-05T00:00:00Z".into(),
+            compiler_version: "0.149.0".into(),
+            app: app.into(),
+            version: version.into(),
+            agent_pins: BTreeMap::new(),
+            nodes: vec![],
+            schedule: None,
+            engineering: None,
+        }
+    }
+
+    fn dir_names(dir: &Path) -> Vec<String> {
+        let mut names: Vec<String> = std::fs::read_dir(dir)
+            .unwrap()
+            .map(|e| e.unwrap().file_name().to_string_lossy().into_owned())
+            .collect();
+        names.sort();
+        names
+    }
+
+    /// #628 plan §1: the lock is replaced atomically. A write that fails after
+    /// the new bytes are staged must leave the approved lock byte-identical and
+    /// no staging file behind — the old `std::fs::write` truncated the lock in
+    /// place first, so a failure mid-write left a torn approval.
+    #[test]
+    fn a_failed_lock_write_leaves_the_approved_lock_byte_identical() {
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("app.flo");
+        std::fs::write(&source, "app: app\n").unwrap();
+        let path = write_lockfile(&tiny_lock("app", "1.0.0"), &source).unwrap();
+        let approved = std::fs::read(&path).unwrap();
+
+        FAIL_BEFORE_REPLACE.with(|f| f.set(true));
+        let error = write_lockfile(&tiny_lock("app", "2.0.0"), &source).unwrap_err();
+        assert!(error.to_string().contains("injected fault"), "{error}");
+        assert_eq!(std::fs::read(&path).unwrap(), approved);
+        assert_eq!(dir_names(tmp.path()), ["app.flo", "app.lock"]);
+
+        // The next write replaces it whole and leaves no staging file.
+        write_lockfile(&tiny_lock("app", "2.0.0"), &source).unwrap();
+        let replaced = std::fs::read_to_string(&path).unwrap();
+        assert!(replaced.contains("version: 2.0.0"), "{replaced}");
+        assert_eq!(dir_names(tmp.path()), ["app.flo", "app.lock"]);
     }
 
     #[test]
