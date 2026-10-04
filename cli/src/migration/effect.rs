@@ -291,12 +291,22 @@ pub fn workflow_read_only(
                 reasons.push(format!("{reason} (under the {side} pins)"));
             }
         }
-        if effect.basis == NodeBasis::Agent(ModeBasis::Inherited)
-            && let Some(agent) = &effect.agent
+        // An app-backed pin never moves under a read-only verdict — and that
+        // holds when the agent is app-backed on EITHER side: a wrapper that
+        // becomes a plain agent (or the reverse) is still a moved wrapper, even
+        // when each side alone looks like a declared read.
+        let inherited = |e: &NodeEffect| e.basis == NodeBasis::Agent(ModeBasis::Inherited);
+        if (inherited(before) || inherited(effect))
+            && let Some(agent) = effect.agent.as_ref().or(before.agent.as_ref())
             && moved.contains(agent)
         {
+            let sides = match (inherited(before), inherited(effect)) {
+                (true, true) => "app-backed under both pins",
+                (true, false) => "app-backed under the old pins and a plain agent under the new",
+                _ => "a plain agent under the old pins and app-backed under the new",
+            };
             reasons.push(format!(
-                "node {} runs app-backed agent {agent}, whose pin moves",
+                "node {} runs agent {agent}, which is {sides}, and its pin moves",
                 effect.node
             ));
         }
@@ -600,7 +610,7 @@ commands:
         let moved: BTreeSet<String> = ["wrap".to_string()].into();
         let verdict = workflow_read_only(&judged, &judged, &moved);
         assert!(!verdict.read_only);
-        assert!(verdict.reasons[0].contains("whose pin moves"));
+        assert!(verdict.reasons[0].contains("its pin moves"));
 
         // A write backing app makes the caller node write.
         let writer = inner_app("  - { id: w, agent: tool, command: write-declared }\n", "");
@@ -610,6 +620,51 @@ commands:
         );
         let judged = node_effects(&caller, &tools, &wrappers);
         assert_eq!(judged[0].mode, Mode::Write);
+    }
+
+    /// Review #628 round 2: an agent that is app-backed under ONE pin and a
+    /// plain agent under the other still moves an app-backed pin. Judging only
+    /// the new side's basis let a read-only wrapper "become" a declared read and
+    /// pass — in both directions.
+    #[test]
+    fn a_moved_agent_that_is_app_backed_on_either_side_is_never_read_only() {
+        let tool = agent(TOOL);
+        let wrap = agent(WRAP);
+        // The same id, now a plain cli agent declaring `run` as read.
+        let plain = agent(&WRAP.replace(
+            "transport: { app: { backed-by: inner } }",
+            "transport: { cli: { binary: x } }",
+        ));
+        let caller = app("  - { id: c, agent: wrap, command: run }
+");
+        let inner = inner_app(
+            "  - { id: r, agent: tool, command: read-declared }
+",
+            "",
+        );
+        let mut wrappers = BTreeMap::new();
+        wrappers.insert(
+            wrapper_key("wrap", "run"),
+            wrapper_effect(&inner, "run", std::slice::from_ref(&tool)),
+        );
+        let as_wrapper = node_effects(&caller, &[agent(TOOL), wrap], &wrappers);
+        let as_plain = node_effects(&caller, &[tool, plain], &BTreeMap::new());
+        // Each side alone is eligible, so only the move rule can refuse it.
+        assert!(eligible_read(&as_wrapper[0]).is_ok());
+        assert!(eligible_read(&as_plain[0]).is_ok());
+        let moved: BTreeSet<String> = ["wrap".to_string()].into();
+        for (old, new, direction) in [
+            (&as_wrapper, &as_plain, "app-backed -> plain"),
+            (&as_plain, &as_wrapper, "plain -> app-backed"),
+        ] {
+            let verdict = workflow_read_only(old, new, &moved);
+            assert!(!verdict.read_only, "{direction}: {verdict:?}");
+            assert!(
+                verdict.reasons.iter().any(|r| r.contains("app-backed")),
+                "{direction}: {:?}",
+                verdict.reasons
+            );
+        }
     }
 
     #[test]
