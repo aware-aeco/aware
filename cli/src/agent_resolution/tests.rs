@@ -1035,3 +1035,77 @@ fn stored_versions_reports_packages_whose_record_cannot_be_read() {
             .contains(&package.root.display().to_string())
     );
 }
+
+// ── review round 1, item 7: app check judges the backing app of the copy it chose ──
+
+/// Install wrapper agent `inner` backed by app `inner` (which calls alpha),
+/// compile both apps, and return the outer source.
+fn app_backed_fixture(h: &Home) -> PathBuf {
+    write_agent(&h.paths, "alpha", "1.0.0", "");
+    let backing_dir = h.paths.apps_dir().join("inner");
+    std::fs::create_dir_all(&backing_dir).unwrap();
+    std::fs::write(
+        backing_dir.join("inner.flo"),
+        "app: inner\nversion: 0.1.0\ndescription: x\nexposes-as-agent: true\n\
+         exposed-commands:\n  go:\n    lifecycle: single\n    outputs:\n      type: single\n\
+         nodes:\n  - id: n\n    agent: alpha\n    command: go\nconnections: []\n",
+    )
+    .unwrap();
+    crate::app_lock::compile_to_disk(&backing_dir.join("inner.flo"), &h.paths).unwrap();
+    let wrapper = h.paths.agents_dir().join("inner");
+    std::fs::create_dir_all(&wrapper).unwrap();
+    std::fs::write(
+        wrapper.join("manifest.yaml"),
+        "agent: inner\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: app-exposed\n\
+         transport:\n  app:\n    backed-by: inner\ncommands: { go: { lifecycle: single, description: x } }\n",
+    )
+    .unwrap();
+    compile_app(h, &["inner"])
+}
+
+#[test]
+fn app_check_judges_the_backing_app_of_the_stored_wrapper_it_chose() {
+    let h = home();
+    let source = app_backed_fixture(&h);
+    // The wrapper is replaced after compile by one that is NOT app-backed: a
+    // re-read of the working copy would see no backing app to check at all.
+    write_agent(&h.paths, "inner", "0.2.0", "");
+    // …and the backing app's source changes without a recompile.
+    let inner = h.paths.apps_dir().join("inner").join("inner.flo");
+    std::fs::write(
+        &inner,
+        std::fs::read_to_string(&inner).unwrap() + "# edited\n",
+    )
+    .unwrap();
+
+    let check = check_app(&h.paths, &source).unwrap();
+    assert_eq!(row(&check, "inner").resolution, Resolution::Stored);
+    assert_eq!(check.nested_apps.len(), 1, "{:?}", check.nested_apps);
+    assert!(!check.nested_apps[0].source_current);
+    assert!(
+        !check.approval_current,
+        "the stale backing app must be caught"
+    );
+}
+
+#[test]
+fn an_unknown_chosen_copy_fails_the_backing_check_instead_of_passing_it() {
+    let h = home();
+    let mut check = AppCheck {
+        app: "demo".into(),
+        approval_current: false,
+        approval_kind: None,
+        source_current: true,
+        lock: LockState::Valid,
+        lock_detail: None,
+        agents: Vec::new(),
+        nested_apps: Vec::new(),
+    };
+    let ok = super::fold_backing(&h.paths, "inner", None, &mut check).unwrap();
+    assert!(
+        !ok,
+        "no manifest for a runnable agent must not count as checked"
+    );
+    assert_eq!(check.nested_apps.len(), 1);
+    assert!(!check.nested_apps[0].detail.is_empty());
+}

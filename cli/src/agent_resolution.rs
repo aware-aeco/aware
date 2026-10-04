@@ -542,6 +542,9 @@ pub struct AgentOutcome {
     pub resolution: Resolution,
     pub detail: String,
     pub invalid_candidates: Vec<InvalidCandidate>,
+    /// `app check` only: the manifest of the copy a run would dispatch, so the
+    /// backing-app check judges THAT copy rather than a fresh re-read.
+    manifest: Option<Agent>,
     chosen: Option<Chosen>,
     refusal: Option<AwareError>,
 }
@@ -566,6 +569,7 @@ fn assess_agent(
         resolution: Resolution::Missing,
         detail: String::new(),
         invalid_candidates: Vec::new(),
+        manifest: None,
         chosen: None,
         refusal: None,
     };
@@ -615,7 +619,7 @@ fn assess_agent(
     };
 
     let Some(required) = pinned_digest else {
-        return legacy_version_only(paths, id, &pinned, &current, &current_root, mode, outcome);
+        return legacy_version_only(paths, id, &pinned, current, &current_root, mode, outcome);
     };
 
     // The current copy, if it still IS the approved bytes, supplies the package
@@ -725,6 +729,7 @@ fn assess_agent(
     if own_is_approved_in_check {
         outcome.resolution = Resolution::Current;
         outcome.detail = format!("the installed {id} {pinned} is the approved copy");
+        outcome.manifest = Some(current);
         return Ok(outcome);
     }
 
@@ -744,6 +749,10 @@ fn assess_agent(
                 approval: Approval::Bytes,
                 official_claim,
             });
+        } else {
+            // The package the run's default order would choose; it verified
+            // above, so its manifest loads.
+            outcome.manifest = agent_store::package_manifest(&first.root).ok();
         }
         return Ok(outcome);
     }
@@ -820,7 +829,7 @@ fn legacy_version_only(
     paths: &Paths,
     id: &str,
     pinned: &str,
-    current: &Agent,
+    current: Agent,
     current_root: &Path,
     mode: Mode<'_>,
     mut outcome: AgentOutcome,
@@ -895,6 +904,7 @@ fn legacy_version_only(
             outcome.detail = format!(
                 "the installed {id} {pinned} matches the pinned version (this lock approved a version, not bytes; compile again to approve the exact bytes)"
             );
+            outcome.manifest = Some(current);
         }
     }
     Ok(outcome)
@@ -1020,25 +1030,16 @@ pub fn check_app(paths: &Paths, source: &Path) -> Result<AppCheck, AwareError> {
 
     let mut nested_ok = true;
     for id in sorted_dispatchable(&app) {
-        let outcome = assess_agent(paths, id, &lock, Mode::Check)?;
+        let mut outcome = assess_agent(paths, id, &lock, Mode::Check)?;
         let runs = outcome.resolution.runs();
-        let resolution = outcome.resolution;
+        let manifest = outcome.manifest.take();
         check.agents.push(agent_row(outcome, None));
-        if !runs || resolution == Resolution::Missing {
+        if !runs {
             continue;
         }
-        // An app-backed agent's backing app has an approval of its own, which the
-        // run also enforces. Its manifest is read from the copy the run would use.
-        let Some(manifest) = manifest_for_check(paths, id, &lock, resolution)? else {
-            continue;
-        };
-        if !matches!(
-            crate::runtime::invoker::effective_transport(&manifest, id),
-            Ok(crate::runtime::invoker::TransportKind::App)
-        ) {
-            continue;
-        }
-        nested_ok &= check_backing(paths, id, &manifest, &mut check)?;
+        // An app-backed agent's backing app has an approval of its own, which
+        // the run also enforces — judged on the copy the resolver chose.
+        nested_ok &= fold_backing(paths, id, manifest.as_ref(), &mut check)?;
     }
     let agents_ok = check.agents.iter().all(|row| row.resolution.runs());
     check.approval_current = check.source_current && agents_ok && nested_ok;
@@ -1071,30 +1072,34 @@ fn agent_row(outcome: AgentOutcome, via: Option<&str>) -> AgentCheck {
     }
 }
 
-/// The manifest the run would dispatch for an agent that resolves: the current
-/// copy when it is the approved one, else the first valid stored package.
-fn manifest_for_check(
+/// Fold the backing-app check of one runnable agent into `check`, from the
+/// manifest of the copy the resolver chose. Without that manifest the backing
+/// app cannot be judged, which fails the check rather than passing it.
+fn fold_backing(
     paths: &Paths,
     id: &str,
-    lock: &LockFile,
-    resolution: Resolution,
-) -> Result<Option<Agent>, AwareError> {
-    if resolution != Resolution::Stored {
-        return crate::manifest::loader::load_agent_by_id(&paths.agents_dir(), id).map(Some);
-    }
-    let Some(required) = lock
-        .agent_digests
-        .get(id)
-        .or_else(|| lock.agent_bundle_pins.get(id))
-    else {
-        return Ok(None);
+    manifest: Option<&Agent>,
+    check: &mut AppCheck,
+) -> Result<bool, AwareError> {
+    let Some(manifest) = manifest else {
+        check.nested_apps.push(NestedCheck {
+            agent: id.to_string(),
+            app: String::new(),
+            lock: LockState::Missing,
+            source_current: false,
+            detail: format!(
+                "could not determine which copy of {id} the run would use, so any app behind it was not checked"
+            ),
+        });
+        return Ok(false);
     };
-    for (key, dir) in agent_store::package_candidates(paths, id, required)? {
-        if agent_store::verify_package(&dir, id, required, &key).is_ok() {
-            return agent_store::package_manifest(&dir).map(Some);
-        }
+    if !matches!(
+        crate::runtime::invoker::effective_transport(manifest, id),
+        Ok(crate::runtime::invoker::TransportKind::App)
+    ) {
+        return Ok(true);
     }
-    Ok(None)
+    check_backing(paths, id, manifest, check)
 }
 
 fn check_backing(
