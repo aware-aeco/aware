@@ -482,6 +482,12 @@ reviewed, origin, credentialHandle}` — `origin` is `rest.origin` (`null` for c
 `credentialHandle` the base handle the probe would use (`null` when it attaches none). `probe`
 is `null` when no valid probe is declared.
 
+Each `commands[]` row also carries `mode` (`read`|`write`), `mode-basis`
+(`declared`|`overridable`|`inferred`|`inherited`) and `mode-overridable` (#628): only
+`declared` is the agent author's statement of effect (agent-spec § Declared effect). An
+app-backed agent's rows add `inherited-from` and `inherited-read-only`, or `inherited-detail`
+when the backing app's approved pins could not be resolved (resolution writes nothing).
+
 ### `aware app run <app>`
 
 The heaviest command. It first verifies the installed source against the engineer-approved `<app>.lock`: the lock must be present, parseable, and carry the SHA-256 of the exact raw source bytes. Compilation and runtime each parse and hash one source snapshot, so the compiled plan, approved bytes, and executed app cannot drift between reads. An unsafe `app:` id is rejected before it can become a lock path. A missing (`E_APP_LOCK_MISSING`), unreadable/malformed (`E_APP_LOCK_INVALID`), or mismatched (`E_APP_LOCK_STALE`) lock exits 3 before trace creation or node dispatch and tells the operator to run `aware app compile` again. Before real dispatch, every reachable agent is resolved — once, at preflight — to the immutable agent-store package holding the exact bytes the lock approved (`agent-digests`, else an official `agent-bundle-pins` digest), or, for a legacy lock with no digest, to a snapshot of the current copy if it still matches the pinned version (labelled `approval: version-only`); every later read on the run path uses that resolution, never `agents/` (#626; see [App Spec § Agent pins](./app-spec.md)). Approved bytes that exist nowhere refuse with `E_APP_LOCK_AGENT_PIN_MISMATCH`, a stored copy that does not verify with `E_APP_LOCK_AGENT_BUNDLE_PIN_MISMATCH`, inconsistent digest fields with `E_APP_LOCK_INVALID`. `aware app check <app> --json` answers the same question read-only. Simulation remains independent of ambient agent versions because it contacts no binary. Source approval applies independently to the top-level app and every app-backed agent it invokes, including `--dry-run` and `--simulate`.

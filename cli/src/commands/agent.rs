@@ -1281,6 +1281,29 @@ fn describe_installed(
             category: String,
             status: String,
             description: String,
+            /// The command's mode with no calling node (#628).
+            mode: &'static str,
+            /// `declared` | `overridable` | `inferred` | `inherited` — only
+            /// `declared` is the agent author's promise about the effect.
+            #[serde(rename = "mode-basis")]
+            mode_basis: &'static str,
+            #[serde(rename = "mode-overridable")]
+            mode_overridable: bool,
+            /// App-backed agents: the backing app whose effect this is.
+            #[serde(rename = "inherited-from", skip_serializing_if = "Option::is_none")]
+            inherited_from: Option<String>,
+            /// App-backed agents: every node of the backing app is declared
+            /// read-only under its own approved pins.
+            #[serde(
+                rename = "inherited-read-only",
+                skip_serializing_if = "Option::is_none"
+            )]
+            inherited_read_only: Option<bool>,
+            /// App-backed agents: why the inherited effect could not be
+            /// evaluated (the backing app is not approved, its pins are not
+            /// stored, …); `mode` is then the synthesized boundary mode.
+            #[serde(rename = "inherited-detail", skip_serializing_if = "Option::is_none")]
+            inherited_detail: Option<String>,
         }
         #[derive(Serialize)]
         struct DescribeData<'a> {
@@ -1344,15 +1367,36 @@ fn describe_installed(
                 origin: decl.rest_origin,
             });
 
+        let backed_by = m.transport.app.as_ref().map(|t| t.backed_by.clone());
         let cmds: Vec<CommandRow> = m
             .commands
             .iter()
-            .map(|(n, c)| CommandRow {
-                name: n.clone(),
-                lifecycle: format!("{:?}", c.lifecycle).to_lowercase(),
-                category: format!("{:?}", m.category_of(c)).to_lowercase(),
-                status: c.status.as_str().to_string(),
-                description: c.description.clone(),
+            .map(|(n, c)| {
+                let resolved = m.mode_basis(n, Some(c), None);
+                let mut row = CommandRow {
+                    name: n.clone(),
+                    lifecycle: format!("{:?}", c.lifecycle).to_lowercase(),
+                    category: format!("{:?}", m.category_of(c)).to_lowercase(),
+                    status: c.status.as_str().to_string(),
+                    description: c.description.clone(),
+                    mode: resolved.mode.as_str(),
+                    mode_basis: resolved.basis.describe_label(),
+                    mode_overridable: c.mode_overridable,
+                    inherited_from: None,
+                    inherited_read_only: None,
+                    inherited_detail: None,
+                };
+                if resolved.basis == crate::manifest::agent::ModeBasis::Inherited {
+                    row.inherited_from = backed_by.clone();
+                    match inherited_effect(ctx, backed_by.as_deref().unwrap_or(""), n) {
+                        Ok(effect) => {
+                            row.mode = effect.mode.as_str();
+                            row.inherited_read_only = Some(effect.read_only);
+                        }
+                        Err(reason) => row.inherited_detail = Some(reason),
+                    }
+                }
+                row
             })
             .collect();
 
@@ -1459,6 +1503,35 @@ fn describe_installed(
         println!("  - {s}");
     }
     Ok(())
+}
+
+/// The inherited effect of `command` on an app-backed agent (#628 plan §3):
+/// the backing app's own approved source and lock, its agents resolved to the
+/// lock's stored bytes WITHOUT writing anything, then
+/// [`crate::migration::effect::wrapper_effect`]. `Err` says why it could not be
+/// evaluated, as a sentence.
+fn inherited_effect(
+    ctx: &Context,
+    backed_by: &str,
+    command: &str,
+) -> Result<crate::migration::effect::WrapperEffect, String> {
+    if !crate::manifest::loader::is_safe_segment(backed_by) {
+        return Err(format!("backing app id {backed_by:?} is not a plain name"));
+    }
+    let source = crate::manifest::loader::find_app_manifest(&ctx.paths.apps_dir().join(backed_by))
+        .ok_or_else(|| format!("backing app {backed_by} is not installed"))?;
+    let (app, lock) = crate::app_lock::load_approved_app_with_lock(&source)
+        .map_err(|e| format!("backing app {backed_by} has no current approval: {e}"))?;
+    let pins = crate::agent_resolution::resolve_pins(
+        &ctx.paths,
+        &app,
+        &crate::agent_resolution::PinSet::from_lock(&lock, std::collections::BTreeMap::new()),
+    )
+    .map_err(|e| format!("backing app {backed_by}'s approved agents cannot be resolved: {e}"))?;
+    let agents: Vec<_> = pins.into_iter().map(|pin| pin.agent).collect();
+    Ok(crate::migration::effect::wrapper_effect(
+        &app, command, &agents,
+    ))
 }
 
 /// Print the `transport:` line of `aware agent describe` — the one that dispatches,
