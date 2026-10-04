@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-10-02T18:21:03.453477900+00:00",
+  "updated-at": "2026-10-04T19:21:22.339037700+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -2733,7 +2733,8 @@
               "status": "planned",
               "mode": "write"
             }
-          ]
+          ],
+          "connection-check": true
         }
       }
     },
@@ -6759,7 +6760,8 @@
               "category": "curated",
               "status": "planned"
             }
-          ]
+          ],
+          "connection-check": true
         }
       }
     },

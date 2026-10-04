@@ -84,6 +84,16 @@ pub struct CatalogVersion {
     /// CURATED commands only (the hand-authored workflow verbs).
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub commands: Vec<CatalogCommand>,
+    /// `true` when this version declares a valid connection probe (#617), so
+    /// `aware agent probe` can check it. Lets a front door that finds an installed
+    /// version without one say "update to check its connection" only when the
+    /// update really adds one (#630). Omitted when false: additive for old readers.
+    #[serde(
+        rename = "connection-check",
+        default,
+        skip_serializing_if = "std::ops::Not::not"
+    )]
+    pub connection_check: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -275,6 +285,8 @@ fn version_from_agent(a: &Agent) -> CatalogVersion {
             .map(|s| s.trim_end_matches(".md").to_string())
             .collect(),
         commands,
+        // A malformed probe block is not a check anyone can run, so it counts as none.
+        connection_check: matches!(crate::manifest::probe::parse_probe(a), Ok(Some(_))),
     }
 }
 
@@ -560,6 +572,51 @@ mod tests {
              skills:\n  - some-skill\n"
         );
         serde_yaml::from_str(&y).unwrap()
+    }
+
+    /// #630: the catalog says whether a version can be connection-checked, and only
+    /// a probe `aware agent probe` would accept counts.
+    #[test]
+    fn catalog_says_whether_a_version_has_a_connection_check() {
+        const BASE: &str = "agent: hostx\nversion: 1.0.0\ndescription: x\nstateful: false\n\
+                            license: MIT\ntransport: { cli: { binary: aware-hostx } }\n\
+                            commands:\n  model-info:\n    lifecycle: single\n    description: Reads the open model.\n";
+        let with =
+            |probe: &str| -> Agent { serde_yaml::from_str(&format!("{BASE}{probe}")).unwrap() };
+
+        let none = version_from_agent(&with(""));
+        assert!(!none.connection_check);
+        let json = serde_json::to_value(&none).unwrap();
+        assert!(
+            json.get("connection-check").is_none(),
+            "omitted when false so old readers see no change: {json}"
+        );
+
+        let valid = version_from_agent(&with(
+            "probe:\n  command: model-info\n  describe: Reads the model name.\n  kind: host\n  reports:\n    summary: /model_name\n",
+        ));
+        assert!(valid.connection_check);
+        assert_eq!(
+            serde_json::to_value(&valid).unwrap()["connection-check"],
+            true
+        );
+
+        // A probe naming a command the agent doesn't have is not a check anyone can run.
+        let broken = version_from_agent(&with(
+            "probe:\n  command: no-such-command\n  describe: d\n  kind: host\n",
+        ));
+        assert!(!broken.connection_check);
+
+        // Round-trips through the on-disk catalog, and an older catalog without the
+        // field still reads (as "no check").
+        let back: CatalogVersion =
+            serde_json::from_value(serde_json::to_value(&valid).unwrap()).unwrap();
+        assert!(back.connection_check);
+        let old: CatalogVersion = serde_json::from_value(serde_json::json!({
+            "description": "d", "status": "available", "stateful": false, "transport": "cli"
+        }))
+        .unwrap();
+        assert!(!old.connection_check);
     }
 
     #[test]
