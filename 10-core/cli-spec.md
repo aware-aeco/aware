@@ -94,7 +94,9 @@ aware
 │   ├── trust-publisher <key> --publisher-id <id>  enroll an Ed25519 trust root
 │   ├── enroll <absolute-directory>     verify a signed closed package
 │   ├── select <format-id> <manifest-sha256>       select one enrolled package
-│   └── list [--format <format-id>]     list public package/capability metadata
+│   ├── list [--format <format-id>]     list public package/capability metadata
+│   ├── unenroll <manifest-sha256>      retire one unselected enrollment record
+│   └── prune --format <format-id> [--dry-run]     retire superseded enrollments
 │
 └── doctor                              health check — config, creds, hosts, registry
 ```
@@ -742,7 +744,7 @@ does not accept a consumer-supplied tool list, install absent sidecars, or alter
 legacy PATH copies. A caller queries `sidecar list --json` again after repair to
 observe the authoritative result.
 
-### `aware provider trust-publisher|enroll|select|list`
+### `aware provider trust-publisher|enroll|select|list|unenroll|prune`
 
 These operator commands establish a local, format-neutral trust boundary for model-provider
 packages. Package manifests use `aware.model-provider-package/v1`, closed canonical JSON and an
@@ -756,14 +758,44 @@ files, unsafe relative paths, duplicate capabilities/files, incompatible version
 and receipt drift are refused. Selection binds an opaque format to an exact enrolled manifest digest
 and increments a local generation while retaining at most eight prior digests.
 
-`list --json` exposes package ID/version, format ID, manifest/publisher digests, declared capabilities
-and selection status. It never exposes the package root, launcher, file allowlist or provider output.
-Every listed package passed complete re-verification. An enrollment whose package no longer
-re-verifies is not listed as a package; it is reported under `unavailable` with its manifest digest,
-package ID/version, format ID, selection status and a closed `reason` — `package-missing` when the
-enrolled directory or one of its files is gone, otherwise `verification-failed` — so one stale
-package root never makes the whole inventory unreadable. Store-record corruption (a malformed
-selection or enrollment record) still fails the command.
+`list --json` exposes package ID/version, format ID, manifest/publisher digests, declared capabilities,
+selection status and a closed `verification` depth. It never exposes the package root, launcher,
+file allowlist or provider output. Every listed package passed re-verification at the depth it
+names. Each format's selected package is verified `complete`: every receipted file is re-hashed, as
+`select`, `admit-policy` and the runtime do. Every other enrollment is verified to `inventory` depth:
+its record, publisher trust, manifest digest and signature, the closed file allowlist and every
+receipted byte count are re-checked, but file contents are not re-hashed. This keeps `list`'s cost
+from growing with every build a host enrolls; it weakens no trust decision, because nothing selects
+or runs a package on `list`'s word (#624). An enrollment whose package no longer re-verifies is not
+listed as a package; it is reported under `unavailable` with its manifest digest, package
+ID/version, format ID, selection status and a closed `reason` — `package-missing` when the enrolled
+directory or one of its files is gone, otherwise `verification-failed` — so one stale package root
+never makes the whole inventory unreadable. Store-record corruption (a malformed selection or
+enrollment record) still fails the command.
+
+`unenroll <manifest-sha256>` and `prune --format <format-id> [--dry-run]` retire enrollments. Both
+remove only AWARE's enrollment record and the dependency policies admitted for that exact package;
+the package directory belongs to its publisher or host, may already hold a newer enrolled build,
+and is never touched. Both refuse to remove the format's active selection or any digest in its
+rollback history, so no selection can name a retired record. `select` and `admit-policy` re-check
+their record under the same per-format lock the retire verbs hold, so neither can publish a
+selection or a policy for a record retired while it waited. `unenroll` removes one named enrollment
+and fails with a conflict (exit 8) on a selected or rollback digest, or not-found (exit 7) on an
+unknown one. `prune` removes every superseded enrollment of one format: not selected, not in the
+rollback history, and enrolled before the current selection was made. An enrollment newer than the
+selection — one a host has just enrolled and is about to select — is kept, as is everything in a
+format with no selection. "Before" is read from the store's own record timestamps, and a tie keeps
+the enrollment; a clock set backwards or a store restored with fresh timestamps can make a pending
+enrollment look superseded, in which case the host's `select` fails not-found and enrolling again
+recovers it. Timestamps decide only what is kept, never what is trusted. `prune --json` reports
+`formatId`, `dryRun`, `retired[]` (`manifestSha256`, `packageId`, `packageVersion`, `formatId`,
+`dependencyPolicies`) and `kept[]` (`manifestSha256`, `packageId`, `packageVersion` and a closed
+`reason`: `selected`, `rollback-history` or `not-superseded`); the `data` of `unenroll --json` is
+one such retired-package object. `prune` reads and classifies every record before it removes any,
+so a record it cannot read fails the command with the store untouched. Policies are removed before
+the record, whose single unlink is the commit, so an interrupted retire leaves a valid enrolled
+package and re-running the verb finishes it. A retired package can be enrolled again.
+
 The `model-reference-reader` protocol-v3 path consumes the same selected record and brackets every
 provider invocation with complete package re-verification. A caller must supply a non-empty,
 bounded opaque `provider-authorization` value for `preflight`, `fingerprint-source`, `probe`,
