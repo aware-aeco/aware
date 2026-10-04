@@ -1440,3 +1440,36 @@ fn resolve_pins_refuses_what_cannot_be_carried_forward() {
         refuse(&PinSet::from_lock(&unpinned, BTreeMap::new())).contains("E_MIGRATE_PIN_MISSING")
     );
 }
+
+/// Review #628-1: a target never stands in for a missing approval. An agent the
+/// base lock never pinned, or pinned by version only, has no approved bytes to
+/// carry forward — whether or not a target names it.
+#[test]
+fn a_target_cannot_carry_forward_an_agent_with_no_approved_bytes() {
+    let h = home();
+    migrated_home(&h);
+    let app = app_using(&["a"]);
+    let a2 = digest(&h.paths.agents_dir().join("a"));
+    for target in [
+        PinTarget::Digest(a2.clone()),
+        PinTarget::Version("2.0.0".into()),
+    ] {
+        let targets: BTreeMap<String, PinTarget> = [("a".to_string(), target.clone())].into();
+        let legacy = PinSet::from_lock(&lock(&[("a", "1.0.0")], &[], &[]), targets.clone());
+        let error = resolve_pins(&h.paths, &app, &legacy)
+            .unwrap_err()
+            .to_string();
+        assert!(
+            error.contains("E_MIGRATE_BASE_VERSION_ONLY"),
+            "{target:?}: {error}"
+        );
+        let unpinned = PinSet::from_lock(&lock(&[], &[], &[]), targets);
+        let error = resolve_pins(&h.paths, &app, &unpinned)
+            .unwrap_err()
+            .to_string();
+        assert!(
+            error.contains("E_MIGRATE_PIN_MISSING"),
+            "{target:?}: {error}"
+        );
+    }
+}

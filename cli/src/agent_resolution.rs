@@ -1122,32 +1122,30 @@ pub fn resolve_pins(
     }
     let mut out = Vec::new();
     for id in dispatched {
+        // Every agent must have approved BYTES in the base lock before anything
+        // is applied over it: a target moves an approval, it never creates one
+        // (review #628-1).
+        let base = pins.base.get(id).ok_or_else(|| {
+            AwareError::Validation(format!(
+                "[E_MIGRATE_PIN_MISSING] app {}'s approval never pinned agent {id}; compile the app again",
+                app.app
+            ))
+        })?;
+        let base_digest = base.digest.clone().ok_or_else(|| {
+            AwareError::Validation(format!(
+                "[E_MIGRATE_BASE_VERSION_ONLY] app {}'s approval names only a version of {id} ({}), not its bytes; compile the app again before migrating it",
+                app.app, base.version
+            ))
+        })?;
         let (digest, source) = match pins.targets.get(id) {
             Some(PinTarget::Digest(digest)) => (digest.clone(), PinSource::Target),
             Some(PinTarget::Version(version)) => {
                 (unique_stored_digest(paths, id, version)?, PinSource::Target)
             }
-            None => {
-                let base = pins.base.get(id).ok_or_else(|| {
-                    AwareError::Validation(format!(
-                        "[E_MIGRATE_PIN_MISSING] app {}'s approval never pinned agent {id}; compile the app again",
-                        app.app
-                    ))
-                })?;
-                let digest = base.digest.clone().ok_or_else(|| {
-                    AwareError::Validation(format!(
-                        "[E_MIGRATE_BASE_VERSION_ONLY] app {}'s approval names only a version of {id} ({}), not its bytes; compile the app again before migrating it",
-                        app.app, base.version
-                    ))
-                })?;
-                (digest, PinSource::Base)
-            }
+            None => (base_digest, PinSource::Base),
         };
         let package = stored_package(paths, id, &digest)?;
-        if source == PinSource::Base
-            && let Some(base) = pins.base.get(id)
-            && package.version != base.version
-        {
+        if source == PinSource::Base && package.version != base.version {
             return Err(bundle_mismatch(
                 id,
                 &digest,
