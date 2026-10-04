@@ -3068,10 +3068,15 @@ impl DispatchInvoker {
 
     /// The `blender` built-in reads its `bpy` scripts from the agent's root -
     /// on a resolved run, the approved store package (#626).
-    fn builtin_blender_root(&self, agent: &str) -> Option<PathBuf> {
-        (agent == "blender")
-            .then(|| self.catalogue.root(agent).ok())
-            .flatten()
+    ///
+    /// `Ok(None)` only under the working-copy catalogue (`--simulate`), where the
+    /// built-in reads the installed copy exactly as before; on a resolved run a
+    /// failed lookup is an error, never a quiet fallback to `agents/blender`.
+    fn builtin_blender_root(&self, agent: &str) -> Result<Option<PathBuf>, AwareError> {
+        if agent != "blender" {
+            return Ok(None);
+        }
+        self.catalogue.resolved_root(agent)
     }
 
     fn transport_kind(&self, agent: &str) -> Result<TransportKind, AwareError> {
@@ -3440,7 +3445,7 @@ impl AgentInvoker for DispatchInvoker {
                 }
                 BuiltinInvoker {
                     dry_run: self.preview,
-                    blender_root: self.builtin_blender_root(agent),
+                    blender_root: self.builtin_blender_root(agent)?,
                 }
                 .invoke_single(agent, command, args)
                 .await
@@ -3545,7 +3550,7 @@ impl AgentInvoker for DispatchInvoker {
             TransportKind::Builtin => {
                 BuiltinInvoker {
                     dry_run: self.preview,
-                    blender_root: self.builtin_blender_root(agent),
+                    blender_root: self.builtin_blender_root(agent)?,
                 }
                 .invoke_stream(agent, command, args)
                 .await
@@ -3986,6 +3991,34 @@ mod stream_pump_tests {
 mod tests {
     use super::*;
     use serde_json::json;
+
+    /// On a resolved run the `blender` scripts root comes from the catalogue or
+    /// the dispatch fails — a failed lookup must never mean "run the working
+    /// copy". Only the working-copy catalogue (`--simulate`) defers to the
+    /// installed copy (review #626-6).
+    #[test]
+    fn a_resolved_run_never_falls_back_to_the_working_copy_for_blender_scripts() {
+        let invoker = |catalogue| DispatchInvoker {
+            catalogue,
+            artifact_dir: None,
+            app_ctx: None,
+            preview: false,
+            reader_cancellation: ReaderCancellation::default(),
+            private_header: None,
+            report_in_process_only: false,
+        };
+        let resolved = invoker(AgentCatalogue::resolved(
+            PathBuf::from("agents"),
+            Arc::new(crate::agent_resolution::ResolvedCatalogue::default()),
+        ));
+        assert!(
+            resolved.builtin_blender_root("blender").is_err(),
+            "a resolved run without blender must refuse, not read agents/blender"
+        );
+        assert_eq!(resolved.builtin_blender_root("ui").unwrap(), None);
+        let simulated = invoker(AgentCatalogue::working_copies(PathBuf::from("agents")));
+        assert_eq!(simulated.builtin_blender_root("blender").unwrap(), None);
+    }
 
     #[test]
     fn common_dispatch_funnel_rejects_a_newer_runtime_requirement() {

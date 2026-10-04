@@ -304,6 +304,16 @@ impl AgentCatalogue {
         }
     }
 
+    /// The resolved store root of `id` on a resolved run (an error when the run
+    /// did not resolve it), or `Ok(None)` for the working-copy catalogue — the
+    /// one place a caller may defer to the installed copy.
+    pub fn resolved_root(&self, id: &str) -> Result<Option<PathBuf>, AwareError> {
+        match self {
+            AgentCatalogue::WorkingCopies { .. } => Ok(None),
+            AgentCatalogue::Resolved { .. } => self.root(id).map(Some),
+        }
+    }
+
     /// The pre-resolved backing app of app-backed agent `id` (resolved runs only).
     pub fn nested(&self, id: &str) -> Option<Arc<NestedApp>> {
         match self {

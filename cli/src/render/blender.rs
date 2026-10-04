@@ -306,8 +306,9 @@ fn find_blender() -> Result<PathBuf, AwareError> {
 // ─────────────────────────────── script resolution ───────────────────────────────
 
 /// The agent's `scripts/` directory. On a run, `agent_root` is the `blender` agent's resolved
-/// store package (#626), so the scripts executed are the approved bytes. Outside a run
-/// (`aware agent invoke`) it is `None` and the installed copy is used, resolved from the same
+/// store package (#626), so the scripts executed are the approved bytes; a resolved run that
+/// lacks it refuses before reaching here. It is `None` only outside a resolved run (`aware agent
+/// invoke`, `--simulate`), where the installed copy is used, resolved from the same
 /// env-driven source the rest of the CLI uses (mirroring `invoker::bridges_dir`). A missing
 /// directory is an *installation* error, not a path error.
 fn scripts_dir(agent_root: Option<&Path>) -> Result<PathBuf, AwareError> {
