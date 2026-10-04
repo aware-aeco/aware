@@ -1087,6 +1087,9 @@ pub struct ResolvedPin {
     pub version: String,
     pub digest: String,
     pub source: PinSource,
+    /// Store packages or records that claimed this agent's chosen bytes or
+    /// target version but do not verify — skipped, never used, reported.
+    pub invalid_candidates: Vec<InvalidCandidate>,
 }
 
 /// Resolve every agent `app` dispatches to the store package `pins` names —
@@ -1137,14 +1140,22 @@ pub fn resolve_pins(
                 app.app, base.version
             ))
         })?;
+        let mut invalid_candidates = Vec::new();
         let (digest, source) = match pins.targets.get(id) {
             Some(PinTarget::Digest(digest)) => (digest.clone(), PinSource::Target),
             Some(PinTarget::Version(version)) => {
-                (unique_stored_digest(paths, id, version)?, PinSource::Target)
+                let (digest, skipped) = unique_stored_digest(paths, id, version)?;
+                invalid_candidates = skipped;
+                (digest, PinSource::Target)
             }
             None => (base_digest, PinSource::Base),
         };
-        let package = stored_package(paths, id, &digest)?;
+        let (package, skipped) = stored_package(paths, id, &digest)?;
+        for candidate in skipped {
+            if !invalid_candidates.contains(&candidate) {
+                invalid_candidates.push(candidate);
+            }
+        }
         if source == PinSource::Base && package.version != base.version {
             return Err(bundle_mismatch(
                 id,
@@ -1160,6 +1171,7 @@ pub fn resolve_pins(
             version: package.version,
             digest: package.digest,
             source,
+            invalid_candidates,
             agent: DiscoveredAgent {
                 manifest,
                 root: package.root,
@@ -1169,49 +1181,100 @@ pub fn resolve_pins(
     Ok(out)
 }
 
-/// The verified store package of `id` with bytes `digest`, chosen by the same
-/// receipt order a run uses. Refuses when none verifies.
-fn stored_package(paths: &Paths, id: &str, digest: &str) -> Result<StoredPackage, AwareError> {
+/// Every store package of `id` claiming bytes `digest`, verified: the valid
+/// ones in the receipt order a run uses, and the ones that do not verify.
+fn verified_candidates(
+    paths: &Paths,
+    id: &str,
+    digest: &str,
+) -> Result<(Vec<StoredPackage>, Vec<InvalidCandidate>), AwareError> {
     let mut valid = Vec::new();
     let mut invalid = Vec::new();
     for (key, dir) in agent_store::package_candidates(paths, id, digest)? {
         match agent_store::verify_package(&dir, id, digest, &key) {
             Ok(package) => valid.push((agent_store::receipt_rank(&dir), key, package)),
-            Err(reason) => invalid.push(format!("{}: {reason}", dir.display())),
+            Err(reason) => invalid.push(InvalidCandidate {
+                path: dir.display().to_string(),
+                reason,
+            }),
         }
     }
     valid.sort_by(|a, b| (a.0, &a.1).cmp(&(b.0, &b.1)));
+    Ok((valid.into_iter().map(|(_, _, p)| p).collect(), invalid))
+}
+
+/// The verified store package of `id` with bytes `digest`, chosen by the same
+/// receipt order a run uses, plus the candidates that did not verify. Refuses
+/// when none verifies.
+fn stored_package(
+    paths: &Paths,
+    id: &str,
+    digest: &str,
+) -> Result<(StoredPackage, Vec<InvalidCandidate>), AwareError> {
+    let (valid, invalid) = verified_candidates(paths, id, digest)?;
     match valid.into_iter().next() {
-        Some((_, _, package)) => Ok(package),
+        Some(package) => Ok((package, invalid)),
         None if invalid.is_empty() => Err(AwareError::Validation(format!(
             "[E_MIGRATE_PIN_NOT_STORED] no stored copy of agent {id} {digest} exists on this machine"
         ))),
         None => Err(bundle_mismatch(
             id,
             digest,
-            &format!("no stored copy verifies ({})", invalid.join("; ")),
+            &format!(
+                "no stored copy verifies ({})",
+                invalid
+                    .iter()
+                    .map(|c| format!("{}: {}", c.path, c.reason))
+                    .collect::<Vec<_>>()
+                    .join("; ")
+            ),
         )),
     }
 }
 
-/// The ONE stored digest of `id` at `version` (from the package records).
-fn unique_stored_digest(paths: &Paths, id: &str, version: &str) -> Result<String, AwareError> {
+/// The ONE stored digest of `id` at `version`. The store records only
+/// nominate digests; each is VERIFIED before it counts, so a corrupt or forged
+/// record claiming the version can neither make a target ambiguous nor be
+/// chosen (review #628-2). Records that do not verify — and store entries
+/// whose record cannot be read at all — are returned for reporting.
+fn unique_stored_digest(
+    paths: &Paths,
+    id: &str,
+    version: &str,
+) -> Result<(String, Vec<InvalidCandidate>), AwareError> {
     let listing = agent_store::stored_versions(paths, id);
-    let digests: BTreeSet<&str> = listing
+    let nominated: BTreeSet<&str> = listing
         .stored
         .iter()
         .filter(|stored| stored.version == version)
         .map(|stored| stored.digest.as_str())
         .collect();
-    match digests.len() {
-        1 => Ok(digests.into_iter().next().unwrap_or_default().to_string()),
-        0 => Err(AwareError::Validation(format!(
+    let mut invalid = listing.unreadable.clone();
+    let mut verified: Vec<&str> = Vec::new();
+    for digest in nominated {
+        let (valid, bad) = verified_candidates(paths, id, digest)?;
+        invalid.extend(bad);
+        if valid.iter().any(|package| package.version == version) {
+            verified.push(digest);
+        }
+    }
+    match verified.as_slice() {
+        [one] => Ok(((*one).to_string(), invalid)),
+        [] if invalid.is_empty() => Err(AwareError::Validation(format!(
             "[E_MIGRATE_TARGET_NOT_STORED] no stored copy of agent {id} {version} exists on this machine"
         ))),
-        _ => Err(AwareError::Validation(format!(
-            "[E_MIGRATE_TARGET_AMBIGUOUS] agent {id} {version} is stored as {} different byte sets ({}); name one as {id}@sha256:<hex>",
-            digests.len(),
-            digests.into_iter().collect::<Vec<_>>().join(", ")
+        [] => Err(AwareError::Validation(format!(
+            "[E_MIGRATE_TARGET_NOT_STORED] no stored copy of agent {id} {version} verifies on this machine ({})",
+            invalid
+                .iter()
+                .map(|c| format!("{}: {}", c.path, c.reason))
+                .collect::<Vec<_>>()
+                .join("; ")
+        ))),
+        many => Err(AwareError::Validation(format!(
+            "[E_MIGRATE_TARGET_AMBIGUOUS] agent {id} {version} is stored as {} different verified byte sets ({}); name one as {id}@sha256:<hex>",
+            many.len(),
+            many.join(", ")
         ))),
     }
 }

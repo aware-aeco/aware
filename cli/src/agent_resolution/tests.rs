@@ -1473,3 +1473,50 @@ fn a_target_cannot_carry_forward_an_agent_with_no_approved_bytes() {
         );
     }
 }
+
+/// Review #628-2: `<agent>@<version>` counts only byte sets that VERIFY. A
+/// corrupt store record claiming the same version must not make a single real
+/// copy look ambiguous — it is skipped and reported.
+#[test]
+fn a_corrupt_record_claiming_the_target_version_is_reported_not_counted() {
+    let h = home();
+    let base = migrated_home(&h);
+    let real = digest(&h.paths.agents_dir().join("a"));
+    let real_hex = real.trim_start_matches("sha256:");
+    let fake_hex = "f".repeat(64);
+    let real_container = h.paths.agent_store_dir().join("a").join(real_hex);
+    let key = std::fs::read_dir(&real_container)
+        .unwrap()
+        .map(|e| e.unwrap().file_name().to_string_lossy().into_owned())
+        .find(|n| !n.starts_with('.'))
+        .unwrap();
+    let forged = h
+        .paths
+        .agent_store_dir()
+        .join("a")
+        .join(&fake_hex)
+        .join(&key);
+    crate::fs::copy_dir_recursive(&real_container.join(&key), &forged).unwrap();
+    let record = forged.join(PACKAGE_FILE);
+    let text = std::fs::read_to_string(&record)
+        .unwrap()
+        .replace(real_hex, &fake_hex);
+    std::fs::write(&record, text).unwrap();
+
+    let targets = [("a".to_string(), PinTarget::Version("2.0.0".into()))].into();
+    let pins = resolve_pins(
+        &h.paths,
+        &app_using(&["a"]),
+        &PinSet::from_lock(&base, targets),
+    )
+    .expect("one verified 2.0.0 is not ambiguous");
+    assert_eq!(pins[0].digest, real);
+    assert!(
+        pins[0]
+            .invalid_candidates
+            .iter()
+            .any(|c| c.path.contains(&fake_hex)),
+        "the forged record must be reported: {:?}",
+        pins[0].invalid_candidates
+    );
+}
