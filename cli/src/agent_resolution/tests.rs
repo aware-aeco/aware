@@ -957,3 +957,81 @@ fn a_legacy_lock_on_an_unhashable_copy_is_a_data_refusal_in_check_and_in_run() {
             .unwrap();
     assert!(resolve_agents(&h.paths, &app_using(&["alpha"]), &lock, Selection::Default).is_err());
 }
+
+// ── review round 1, item 4: invalid stored candidates are reported, not dropped ──
+
+#[test]
+fn an_invalid_stored_candidate_is_reported_even_when_a_valid_one_serves() {
+    let h = home();
+    let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
+    let d1 = digest(&v1);
+    official_receipt(&v1, "alpha", "1.0.0");
+    let official = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    crate::install::provenance::write_required(
+        &v1,
+        &crate::install::provenance::InstallSource::Local { path: "x".into() },
+    )
+    .unwrap();
+    let local = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    std::fs::write(local.root.join("skills").join("s.md"), "tampered").unwrap();
+    write_agent(&h.paths, "alpha", "1.1.0", ""); // current no longer matches
+    let pinned = lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]);
+    let app = app_using(&["alpha"]);
+
+    let resolved = resolve_agents(&h.paths, &app, &pinned, Selection::Default).unwrap();
+    assert_eq!(resolved.get("alpha").unwrap().root, official.root);
+    let info = resolved.info("alpha").unwrap();
+    assert_eq!(
+        info.invalid_candidates.len(),
+        1,
+        "{:?}",
+        info.invalid_candidates
+    );
+    assert!(
+        info.invalid_candidates[0]
+            .reason
+            .contains("changed after the snapshot")
+    );
+    // …in the run record…
+    let record = serde_json::to_value(info).unwrap();
+    assert_eq!(
+        record["invalid-candidates"].as_array().unwrap().len(),
+        1,
+        "{record}"
+    );
+    // …as a warning the run prints…
+    let warnings = invalid_candidate_warnings(&resolved);
+    assert_eq!(warnings.len(), 1);
+    assert!(
+        warnings[0].contains(&local.root.display().to_string()),
+        "{}",
+        warnings[0]
+    );
+
+    // …and in `app check`.
+    let outcome = assess_agent(&h.paths, "alpha", &pinned, Mode::Check).unwrap();
+    let row = agent_row(outcome, None);
+    assert_eq!(row.invalid_candidates.len(), 1);
+    let json = serde_json::to_value(&row).unwrap();
+    assert_eq!(
+        json["invalid-candidates"].as_array().unwrap().len(),
+        1,
+        "{json}"
+    );
+}
+
+#[test]
+fn stored_versions_reports_packages_whose_record_cannot_be_read() {
+    let h = home();
+    let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
+    let package = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    std::fs::remove_file(package.root.join(PACKAGE_FILE)).unwrap();
+    let listing = crate::agent_store::stored_versions(&h.paths, "alpha");
+    assert!(listing.stored.is_empty());
+    assert_eq!(listing.unreadable.len(), 1, "{:?}", listing.unreadable);
+    assert!(
+        listing.unreadable[0]
+            .path
+            .contains(&package.root.display().to_string())
+    );
+}

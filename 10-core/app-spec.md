@@ -619,12 +619,13 @@ The run's `run-start` provenance record carries `agent-resolution` (per agent: v
                 "installed-version": "0.1.6",
                 "resolution": "stored",     // see below
                 "detail": "plain sentence",
+                "invalid-candidates": [ { "path": "…", "reason": "plain sentence" } ],
                 "via": "wrapper-agent" } ], // only on the leaves of an app-backed agent
   "nested-apps": [ { "agent": "wrapper-agent", "app": "backing-app", "lock": "valid",
                      "source-current": true, "detail": "plain sentence" } ] } }
 ```
 
-`resolution` is one of `stored` (the approved bytes run from the store), `current` (the installed copy is the approved one), `current-version-only` (a legacy lock that matches by version), `missing`, `pin-not-installed`, `digest-mismatch`, `never-approved`, `legacy-pin-mismatch`. `approval-current` is true iff the lock is valid and consistent, the source hash matches, every agent (and every backing app's agents) resolves to `current`, `stored` or `current-version-only`, and every backing app's own lock is valid and current. `approval-kind` is the weakest kind across the agents.
+`resolution` is one of `stored` (the approved bytes run from the store), `current` (the installed copy is the approved one), `current-version-only` (a legacy lock that matches by version), `missing`, `pin-not-installed`, `digest-mismatch`, `never-approved`, `legacy-pin-mismatch`. `approval-current` is true iff the lock is valid and consistent, the source hash matches, every agent (and every backing app's agents) resolves to `current`, `stored` or `current-version-only`, and every backing app's own lock is valid and current. `approval-kind` is the weakest kind across the agents. `invalid-candidates` lists every stored package that claims the approved bytes but does not verify: the run never uses one, but it does not drop them silently either — they appear here, in the run record's `agent-resolution`, and as a warning on stderr.
 
 Every expected drift — a missing, invalid or inconsistent lock, a stale source, any agent resolution — is `ok: true` data with `approval-current: false`. `ok: false` (an envelope carrying `E_APP_CHECK_NOT_FOUND`, `E_APP_CHECK_SOURCE_INVALID` or `E_APP_CHECK_FAILED`) is reserved for failures that prevent the check itself: an unknown app, an unreadable app source, an unreadable agent manifest or `AWARE_HOME`. Nothing is printed outside the envelope. The check answers only approval / compile drift; requirements, status, safety, strict provenance and host availability still report at run time.
 

@@ -71,6 +71,15 @@ impl Resolution {
     }
 }
 
+/// A store package that claims an agent's approved bytes but does not verify,
+/// or whose record cannot be read. Never used; always reported (review #626-4).
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "kebab-case")]
+pub struct InvalidCandidate {
+    pub path: String,
+    pub reason: String,
+}
+
 /// What the run recorded about one resolved agent.
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "kebab-case")]
@@ -84,6 +93,9 @@ pub struct ResolvedAgentInfo {
     /// `--require-verified-agents`, before the fresh index is fetched.
     #[serde(skip)]
     pub official_claim: bool,
+    /// Stored packages of the approved bytes that did not verify and were
+    /// skipped. Recorded in `agent-resolution` and warned about on stderr.
+    pub invalid_candidates: Vec<InvalidCandidate>,
 }
 
 /// An app-backed agent's backing app, approved and resolved at preflight and
@@ -182,6 +194,24 @@ impl ResolvedCatalogue {
         }
         out
     }
+}
+
+/// One warning per stored package the run skipped because it does not verify,
+/// across the app and every backing app it resolved — printed by `app run`.
+pub fn invalid_candidate_warnings(catalogue: &ResolvedCatalogue) -> Vec<String> {
+    let mut out = Vec::new();
+    for (id, info) in &catalogue.info {
+        for candidate in &info.invalid_candidates {
+            out.push(format!(
+                "\u{26a0} agent {id}: skipped the stored package {} because it does not verify: {}",
+                candidate.path, candidate.reason
+            ));
+        }
+    }
+    for nested in catalogue.nested.values() {
+        out.extend(invalid_candidate_warnings(&nested.catalogue));
+    }
+    out
 }
 
 fn sorted_dispatchable(app: &App) -> Vec<&str> {
@@ -436,6 +466,7 @@ fn resolve_inner(
                 approval: chosen.approval,
                 resolution: outcome.resolution,
                 official_claim: chosen.official_claim,
+                invalid_candidates: outcome.invalid_candidates,
             },
         );
         catalogue.agents.push(DiscoveredAgent {
@@ -510,6 +541,7 @@ pub struct AgentOutcome {
     pub installed_version: Option<String>,
     pub resolution: Resolution,
     pub detail: String,
+    pub invalid_candidates: Vec<InvalidCandidate>,
     chosen: Option<Chosen>,
     refusal: Option<AwareError>,
 }
@@ -533,6 +565,7 @@ fn assess_agent(
         installed_version: None,
         resolution: Resolution::Missing,
         detail: String::new(),
+        invalid_candidates: Vec::new(),
         chosen: None,
         refusal: None,
     };
@@ -653,6 +686,13 @@ fn assess_agent(
         }
     }
     valid.sort_by(|a, b| (a.0, &a.1).cmp(&(b.0, &b.1)));
+    outcome.invalid_candidates = invalid
+        .iter()
+        .map(|(dir, reason)| InvalidCandidate {
+            path: dir.display().to_string(),
+            reason: reason.clone(),
+        })
+        .collect();
     let official_claim = valid
         .iter()
         .any(|(_, _, package)| crate::install::provenance::claims_official(&package.root))
@@ -909,6 +949,9 @@ pub struct AgentCheck {
     pub installed_version: Option<String>,
     pub resolution: Resolution,
     pub detail: String,
+    /// Stored packages of the approved bytes that do not verify (skipped by
+    /// the run, which warns about them).
+    pub invalid_candidates: Vec<InvalidCandidate>,
     /// For a leaf of an app-backed agent: that agent's id. Absent otherwise.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub via: Option<String>,
@@ -1023,6 +1066,7 @@ fn agent_row(outcome: AgentOutcome, via: Option<&str>) -> AgentCheck {
         installed_version: outcome.installed_version,
         resolution: outcome.resolution,
         detail: outcome.detail,
+        invalid_candidates: outcome.invalid_candidates,
         via: via.map(str::to_string),
     }
 }

@@ -265,41 +265,101 @@ pub struct StoredVersion {
     pub digest: String,
 }
 
+/// What the store holds for one agent, for `agent list --json`.
+#[derive(Debug, Default)]
+pub struct StoredListing {
+    pub stored: Vec<StoredVersion>,
+    /// Packages (or store directories) whose record could not be read or does
+    /// not describe this agent — listed, never silently dropped.
+    pub unreadable: Vec<crate::agent_resolution::InvalidCandidate>,
+}
+
 /// Every `(version, digest)` the store holds for `id`, read from the package
-/// records without verifying them — display only; decisions belong to the
-/// resolver (`aware app check`).
-pub fn stored_versions(paths: &Paths, id: &str) -> Vec<StoredVersion> {
+/// records without verifying the bytes — display only; decisions belong to the
+/// resolver (`aware app check`). Anything that cannot be read is reported in
+/// `unreadable` rather than skipped.
+pub fn stored_versions(paths: &Paths, id: &str) -> StoredListing {
+    use crate::agent_resolution::InvalidCandidate;
+    let mut listing = StoredListing::default();
     if !crate::manifest::loader::is_safe_segment(id) {
-        return Vec::new();
+        return listing;
     }
-    let mut out = std::collections::BTreeSet::new();
-    let Ok(digests) = std::fs::read_dir(paths.agent_store_dir().join(id)) else {
-        return Vec::new();
+    let unreadable = |path: &Path, reason: String| InvalidCandidate {
+        path: path.display().to_string(),
+        reason,
     };
-    for digest_dir in digests.flatten() {
-        let Ok(packages) = std::fs::read_dir(digest_dir.path()) else {
-            continue;
-        };
-        for package in packages.flatten() {
-            let name = package.file_name();
-            if name.to_str().is_none_or(|n| !is_receipt_key(n)) {
+    let mut stored = std::collections::BTreeSet::new();
+    let root = paths.agent_store_dir().join(id);
+    let digests = match std::fs::read_dir(&root) {
+        Ok(digests) => digests,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return listing,
+        Err(error) => {
+            listing
+                .unreadable
+                .push(unreadable(&root, error.to_string()));
+            return listing;
+        }
+    };
+    for digest_dir in digests {
+        let digest_dir = match digest_dir {
+            Ok(entry) => entry.path(),
+            Err(error) => {
+                listing
+                    .unreadable
+                    .push(unreadable(&root, error.to_string()));
                 continue;
             }
-            let Ok(text) = std::fs::read_to_string(package.path().join(PACKAGE_FILE)) else {
+        };
+        let packages = match std::fs::read_dir(&digest_dir) {
+            Ok(packages) => packages,
+            Err(error) => {
+                listing
+                    .unreadable
+                    .push(unreadable(&digest_dir, error.to_string()));
                 continue;
+            }
+        };
+        for package in packages {
+            let package = match package {
+                Ok(entry) => entry,
+                Err(error) => {
+                    listing
+                        .unreadable
+                        .push(unreadable(&digest_dir, error.to_string()));
+                    continue;
+                }
             };
-            let Ok(record) = serde_yaml::from_str::<PackageMetadata>(&text) else {
-                continue;
-            };
-            if record.agent == id && digest_hex(&record.digest).is_some() {
-                out.insert(StoredVersion {
-                    version: record.version,
-                    digest: record.digest,
+            let name = package.file_name();
+            if name.to_str().is_none_or(|n| !is_receipt_key(n)) {
+                continue; // `.tmp-*` and anything else that is not a package
+            }
+            let path = package.path();
+            let record = std::fs::read_to_string(path.join(PACKAGE_FILE))
+                .map_err(|e| format!("cannot read {PACKAGE_FILE}: {e}"))
+                .and_then(|text| {
+                    serde_yaml::from_str::<PackageMetadata>(&text)
+                        .map_err(|e| format!("{PACKAGE_FILE} is malformed: {e}"))
                 });
+            match record {
+                Ok(record) if record.agent == id && digest_hex(&record.digest).is_some() => {
+                    stored.insert(StoredVersion {
+                        version: record.version,
+                        digest: record.digest,
+                    });
+                }
+                Ok(record) => listing.unreadable.push(unreadable(
+                    &path,
+                    format!(
+                        "its record describes agent {:?} digest {:?}",
+                        record.agent, record.digest
+                    ),
+                )),
+                Err(reason) => listing.unreadable.push(unreadable(&path, reason)),
             }
         }
     }
-    out.into_iter().collect()
+    listing.stored = stored.into_iter().collect();
+    listing
 }
 
 /// The step a test can make [`snapshot`] fail at.
@@ -905,7 +965,7 @@ mod tests {
         snapshot(&paths, &current).unwrap();
         write_agent(&current, "alpha", "1.1.0");
         let two = snapshot(&paths, &current).unwrap();
-        let listed = stored_versions(&paths, "alpha");
+        let listed = stored_versions(&paths, "alpha").stored;
         assert_eq!(
             listed,
             vec![
@@ -919,6 +979,6 @@ mod tests {
                 },
             ]
         );
-        assert!(stored_versions(&paths, "../alpha").is_empty());
+        assert!(stored_versions(&paths, "../alpha").stored.is_empty());
     }
 }

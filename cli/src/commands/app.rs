@@ -403,6 +403,11 @@ async fn run(
         for (id, info) in resolved.infos() {
             agent_resolution.insert(id.clone(), serde_json::to_value(info)?);
         }
+        // A stored copy of approved bytes that does not verify was skipped for
+        // another; say so (it is also in the run record) rather than drop it.
+        for warning in crate::agent_resolution::invalid_candidate_warnings(&resolved) {
+            eprintln!("{warning}");
+        }
         // The same file-level rule one level down, judged on the backing apps
         // preflight just approved — the ones dispatch will run.
         if let Some(err) = nested_malformed_requires(&resolved).first() {

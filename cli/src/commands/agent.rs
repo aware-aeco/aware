@@ -1223,6 +1223,10 @@ struct AgentListRow {
     /// Every `(version, digest)` the immutable agent store holds for this id
     /// (#626) — display only; whether an app runs is `aware app check`'s call.
     stored: Vec<crate::agent_store::StoredVersion>,
+    /// Store entries whose record could not be read (path + reason) — shown,
+    /// never silently dropped.
+    #[serde(rename = "unreadable-stored")]
+    unreadable_stored: Vec<crate::agent_resolution::InvalidCandidate>,
 }
 
 #[derive(Serialize)]
@@ -1561,14 +1565,19 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
         let data = AgentListData {
             agents: discovered
                 .iter()
-                .map(|d| AgentListRow {
-                    id: d.manifest.agent.clone(),
-                    version: d.manifest.version.clone(),
-                    sdk_target: d.manifest.sdk_target.clone(),
-                    kind: d.manifest.kind(),
-                    skills: d.manifest.skill_count(),
-                    commands: d.manifest.command_count(),
-                    stored: crate::agent_store::stored_versions(&ctx.paths, &d.manifest.agent),
+                .map(|d| {
+                    let listing =
+                        crate::agent_store::stored_versions(&ctx.paths, &d.manifest.agent);
+                    AgentListRow {
+                        id: d.manifest.agent.clone(),
+                        version: d.manifest.version.clone(),
+                        sdk_target: d.manifest.sdk_target.clone(),
+                        kind: d.manifest.kind(),
+                        skills: d.manifest.skill_count(),
+                        commands: d.manifest.command_count(),
+                        stored: listing.stored,
+                        unreadable_stored: listing.unreadable,
+                    }
                 })
                 .collect(),
         };
