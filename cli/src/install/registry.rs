@@ -110,6 +110,12 @@ fn install_staged_registry(
         official_source: official,
     };
     crate::install::provenance::write_required(&staging, &receipt)?;
+    // #626: snapshot the staged tree BEFORE promotion, so a snapshot failure
+    // refuses the install with nothing installed.
+    if let Err(error) = crate::agent_store::snapshot(paths, &staging) {
+        let _ = std::fs::remove_dir_all(&staging);
+        return Err(error);
+    }
     std::fs::create_dir_all(paths.agents_dir())?;
     std::fs::rename(&staging, &dst)?;
     Ok(agent.agent)
@@ -507,13 +513,24 @@ pub fn update_agent_from_registry(
         return Err(e);
     }
 
+    // #626: before anything is removed, the incoming copy and EVERY copy the
+    // swap will remove — `agents/<id>` and, for a suffixed or renamed payload,
+    // `agents/<new_name>` too — are snapshotted into the immutable store and
+    // verified. An app approved against the outgoing bytes then keeps running
+    // on them after this update. Any failure refuses the update with `agents/`
+    // untouched.
+    let prev_dir = agents_dir.join(id);
+    let final_dir = agents_dir.join(&new_name);
+    if let Err(error) = snapshot_before_swap(paths, &staging, id, &new_name) {
+        let _ = std::fs::remove_dir_all(&staging);
+        return Err(error);
+    }
+
     // Remove the prior install (the folder we updated from) and any stale folder
     // already at the new name — collapses the duplicate-folder bug.
-    let prev_dir = agents_dir.join(id);
     if prev_dir.exists() {
         std::fs::remove_dir_all(&prev_dir)?;
     }
-    let final_dir = agents_dir.join(&new_name);
     if final_dir.exists() {
         std::fs::remove_dir_all(&final_dir)?;
     }
@@ -521,6 +538,39 @@ pub fn update_agent_from_registry(
     // Atomic move into place (same filesystem).
     std::fs::rename(&staging, &final_dir)?;
     Ok(new_name)
+}
+
+/// Snapshot the staged copy and every directory an update is about to remove
+/// (#626), stopping at the first failure. An outgoing directory with no
+/// loadable manifest is skipped: no lock can have been compiled against it
+/// (compile snapshots first) or resolve to it (the resolver loads the
+/// manifest), and `check_update_is_not_destructive` already made the person
+/// pass `--force` to replace it — refusing here would leave them nothing to do.
+fn snapshot_before_swap(
+    paths: &Paths,
+    staging: &Path,
+    id: &str,
+    new_name: &str,
+) -> Result<(), AwareError> {
+    crate::agent_store::snapshot(paths, staging)?;
+    let agents = paths.agents_dir();
+    let outgoing_ids = if new_name == id {
+        vec![id]
+    } else {
+        vec![id, new_name]
+    };
+    for outgoing in outgoing_ids {
+        // Fenced by-id lookups (#365): a path-shaped id names no agent here.
+        if crate::manifest::loader::load_agent_by_id(&agents, outgoing).is_err() {
+            continue;
+        }
+        let manifest = crate::manifest::loader::agent_manifest_path(&agents, outgoing)?;
+        let Some(root) = manifest.parent() else {
+            continue;
+        };
+        crate::agent_store::snapshot(paths, root)?;
+    }
+    Ok(())
 }
 
 /// Refuse an `update` that would replace something the registry did not put there (#370).
@@ -1740,5 +1790,234 @@ mod tests {
             "beta"
         );
         assert!(aware.join("agents/beta/manifest.yaml").is_file());
+    }
+
+    // ── #626: snapshots before promotion and before removal ──────────────────
+
+    /// Every file under `dir`, by relative path → bytes. Byte-identity of
+    /// `agents/*` is the property a refused update must keep.
+    fn tree_bytes(dir: &Path) -> BTreeMap<String, Vec<u8>> {
+        crate::fs::plain_files_under(dir, "test tree")
+            .unwrap()
+            .into_iter()
+            .map(|(relative, path)| (relative, std::fs::read(path).unwrap()))
+            .collect()
+    }
+
+    fn installed_tekla(tmp: &Path) -> (Paths, Index) {
+        let tarball = tmp.join("tekla.tar.gz");
+        make_test_tarball(&tarball);
+        let paths = Paths {
+            aware_home: tmp.join("aware"),
+        };
+        let index = tekla_index(&tarball, Some("tekla"), Some("0.1.6"));
+        install_agent_from_registry("tekla", None, &paths, &index).unwrap();
+        (paths, index)
+    }
+
+    #[test]
+    fn install_snapshots_the_staged_tree_before_promotion() {
+        let tmp = tempfile::tempdir().unwrap();
+        let (paths, _) = installed_tekla(tmp.path());
+        let installed = paths.agents_dir().join("tekla");
+        let digest = crate::install::integrity::tree_digest(&installed).unwrap();
+        let key = crate::agent_store::receipt_key(&installed).unwrap();
+        let package = crate::agent_store::digest_container(&paths, "tekla", &digest)
+            .unwrap()
+            .join(&key);
+        assert!(
+            crate::agent_store::verify_package(&package, "tekla", &digest, &key).is_ok(),
+            "the installed bytes, receipt included, are in the store"
+        );
+    }
+
+    #[test]
+    fn a_staged_snapshot_failure_installs_nothing() {
+        for step in [
+            crate::agent_store::FaultStep::Copy,
+            crate::agent_store::FaultStep::Recheck,
+            crate::agent_store::FaultStep::Rename,
+        ] {
+            let tmp = tempfile::tempdir().unwrap();
+            let tarball = tmp.path().join("tekla.tar.gz");
+            make_test_tarball(&tarball);
+            let paths = Paths {
+                aware_home: tmp.path().join("aware"),
+            };
+            let index = tekla_index(&tarball, Some("tekla"), Some("0.1.6"));
+            crate::agent_store::inject_fault(0, step);
+            let error = install_agent_from_registry("tekla", None, &paths, &index);
+            crate::agent_store::clear_fault();
+            assert!(error.is_err(), "{step:?}");
+            assert!(!paths.agents_dir().join("tekla").exists(), "{step:?}");
+            assert!(
+                !paths
+                    .cache_dir()
+                    .join("install-staging")
+                    .join("tekla")
+                    .exists(),
+                "{step:?}: staging cleaned"
+            );
+        }
+    }
+
+    #[test]
+    fn update_snapshots_the_staged_and_the_outgoing_copy_before_removing_anything() {
+        let tmp = tempfile::tempdir().unwrap();
+        let (paths, index) = installed_tekla(tmp.path());
+        let installed = paths.agents_dir().join("tekla");
+        // The outgoing copy differs from what the update brings in.
+        std::fs::write(installed.join("local-note.md"), "outgoing bytes").unwrap();
+        let outgoing = crate::install::integrity::tree_digest(&installed).unwrap();
+
+        update_agent_from_registry("tekla", None, false, &paths, &index).unwrap();
+        let incoming = crate::install::integrity::tree_digest(&installed).unwrap();
+        assert_ne!(incoming, outgoing);
+        for digest in [&outgoing, &incoming] {
+            assert_eq!(
+                crate::agent_store::package_candidates(&paths, "tekla", digest)
+                    .unwrap()
+                    .len(),
+                1,
+                "{digest} must be in the store"
+            );
+        }
+    }
+
+    #[test]
+    fn a_snapshot_failure_at_any_step_refuses_the_update_with_agents_untouched() {
+        use crate::agent_store::FaultStep;
+        // Call 0 = the staged copy, call 1 = the outgoing `agents/tekla`.
+        for call in [0, 1] {
+            for step in [FaultStep::Copy, FaultStep::Recheck, FaultStep::Rename] {
+                let tmp = tempfile::tempdir().unwrap();
+                let (paths, index) = installed_tekla(tmp.path());
+                // The install already stored the bytes the update brings in (same
+                // payload, same receipt), which would let call 0 return the existing
+                // package before reaching any fault point. Start from an empty store.
+                std::fs::remove_dir_all(paths.agent_store_dir()).unwrap();
+                let installed = paths.agents_dir().join("tekla");
+                std::fs::write(installed.join("local-note.md"), "outgoing bytes").unwrap();
+                let before = tree_bytes(&paths.agents_dir());
+
+                crate::agent_store::inject_fault(call, step);
+                let result = update_agent_from_registry("tekla", None, false, &paths, &index);
+                crate::agent_store::clear_fault();
+
+                assert!(
+                    result.is_err(),
+                    "call {call} {step:?} must refuse the update"
+                );
+                assert_eq!(
+                    tree_bytes(&paths.agents_dir()),
+                    before,
+                    "call {call} {step:?}: agents/ must be byte-identical"
+                );
+                assert!(
+                    !paths
+                        .cache_dir()
+                        .join("update-staging")
+                        .join("tekla")
+                        .exists(),
+                    "call {call} {step:?}: staging cleaned"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn a_renaming_update_snapshots_both_outgoing_directories_first() {
+        // The dotted-id / alias route removes TWO directories: the one updated
+        // from and a stale one already at the payload's id. Both are snapshotted
+        // before either is removed, and a failure on the second leaves both.
+        let tmp = tempfile::tempdir().unwrap();
+        let aware = tmp.path().join("aware");
+        let paths = Paths {
+            aware_home: aware.clone(),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        let entry = |subdir: &str| {
+            let mut versions = BTreeMap::new();
+            versions.insert(
+                "0.1.0".to_string(),
+                VersionEntry {
+                    bundle_digest: None,
+                    tarball: url.clone(),
+                    subdir: subdir.to_string(),
+                    manifest_agent: subdir.rsplit('/').next().map(str::to_owned),
+                    manifest_version: Some("0.1.6".to_string()),
+                },
+            );
+            versions
+        };
+        write_repo_tarball(&archive, &["old-id", "new-id"]);
+        let mut agents = BTreeMap::new();
+        for name in ["old-id", "new-id"] {
+            agents.insert(
+                name.to_string(),
+                IndexEntry {
+                    versions: entry(&format!("aware-main/20-agents/{name}")),
+                    ..Default::default()
+                },
+            );
+        }
+        let before_index = Index {
+            trust: Default::default(),
+            version: "1.0".into(),
+            updated_at: "a".into(),
+            agents,
+            bundles: BTreeMap::new(),
+        };
+        install_agent_from_registry("old-id", None, &paths, &before_index).unwrap();
+        install_agent_from_registry("new-id", None, &paths, &before_index).unwrap();
+        std::fs::write(aware.join("agents/new-id/stale.md"), "stale second dir").unwrap();
+        let stale_digest =
+            crate::install::integrity::tree_digest(&aware.join("agents/new-id")).unwrap();
+
+        let mut after_agents = BTreeMap::new();
+        after_agents.insert(
+            "new-id".to_string(),
+            IndexEntry {
+                versions: entry("aware-main/20-agents/new-id"),
+                ..Default::default()
+            },
+        );
+        after_agents.insert(
+            "old-id".to_string(),
+            IndexEntry {
+                versions: entry("aware-main/20-agents/new-id"),
+                alias_of: Some("new-id".to_string()),
+                deprecated: false,
+            },
+        );
+        let after = Index {
+            trust: Default::default(),
+            version: "1.0".into(),
+            updated_at: "b".into(),
+            agents: after_agents,
+            bundles: BTreeMap::new(),
+        };
+
+        // Call 2 = the second outgoing directory (`agents/new-id`).
+        let before = tree_bytes(&paths.agents_dir());
+        crate::agent_store::inject_fault(2, crate::agent_store::FaultStep::Rename);
+        let refused = update_agent_from_registry("old-id", None, false, &paths, &after);
+        crate::agent_store::clear_fault();
+        assert!(refused.is_err());
+        assert_eq!(tree_bytes(&paths.agents_dir()), before, "both dirs survive");
+
+        assert_eq!(
+            update_agent_from_registry("old-id", None, false, &paths, &after).unwrap(),
+            "new-id"
+        );
+        assert!(!aware.join("agents/old-id").exists());
+        assert_eq!(
+            crate::agent_store::package_candidates(&paths, "new-id", &stale_digest)
+                .unwrap()
+                .len(),
+            1,
+            "the stale second directory was snapshotted before it was removed"
+        );
     }
 }

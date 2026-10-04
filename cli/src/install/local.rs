@@ -49,17 +49,38 @@ pub fn install_agent_from_path(
             agent.agent, agent.agent
         )));
     }
-    std::fs::create_dir_all(paths.agents_dir())?;
-    copy_dir_recursive(src, &dst)?;
-    // AFTER the copy: if `src` is itself an installed agent directory it carries a marker of its
-    // own, and that one describes where IT came from, not where this copy did.
-    //
-    // Cleared FIRST, because the write is best-effort. If it failed, an inherited
-    // `source: registry` marker would survive and say the opposite of the truth about a
-    // LOCAL install — a silent failure in the destructive direction. Absent degrades to
-    // "unknown", which the guard judges conservatively; wrong does not.
-    let _ = std::fs::remove_file(dst.join(crate::install::provenance::FILE));
-    crate::install::provenance::write(&dst, source);
+    // Staged, then promoted with one rename (#626): the staged tree — receipt
+    // included — is snapshotted into the immutable store BEFORE promotion, so a
+    // snapshot failure refuses the install with nothing installed. Staging sits
+    // under `cache/` on the same filesystem as `agents/`, like the registry
+    // install's.
+    let staging = paths.cache_dir().join("install-staging").join(format!(
+        "{}-local-{}",
+        agent.agent,
+        uuid::Uuid::new_v4().simple()
+    ));
+    let staged = (|| -> Result<(), AwareError> {
+        copy_dir_recursive(src, &staging)?;
+        // AFTER the copy: if `src` is itself an installed agent directory it carries a marker
+        // of its own, and that one describes where IT came from, not where this copy did. A
+        // stale store record copied along is not this copy's either.
+        //
+        // Cleared FIRST, because the write is best-effort. If it failed, an inherited
+        // `source: registry` marker would survive and say the opposite of the truth about a
+        // LOCAL install — a silent failure in the destructive direction. Absent degrades to
+        // "unknown", which the guard judges conservatively; wrong does not.
+        let _ = std::fs::remove_file(staging.join(crate::install::provenance::FILE));
+        let _ = std::fs::remove_file(staging.join(crate::agent_store::PACKAGE_FILE));
+        crate::install::provenance::write(&staging, source);
+        crate::agent_store::snapshot(paths, &staging)?;
+        std::fs::create_dir_all(paths.agents_dir())?;
+        std::fs::rename(&staging, &dst)?;
+        Ok(())
+    })();
+    if let Err(error) = staged {
+        let _ = std::fs::remove_dir_all(&staging);
+        return Err(error);
+    }
     Ok(agent.agent)
 }
 
@@ -549,5 +570,52 @@ requires: []
             ),
         )
         .unwrap();
+    }
+
+    #[test]
+    fn a_local_install_snapshots_before_promotion_and_a_failure_installs_nothing() {
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("src-agent");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(
+            src.join("manifest.yaml"),
+            "agent: loc\nversion: 1.0.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+             transport:\n  cli:\n    binary: aware-loc\ncommands:\n  go:\n    lifecycle: single\n    description: x\n",
+        )
+        .unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let source = crate::install::provenance::InstallSource::Local {
+            path: src.display().to_string(),
+        };
+
+        crate::agent_store::inject_fault(0, crate::agent_store::FaultStep::Rename);
+        let refused = install_agent_from_path(&src, &paths, &source);
+        crate::agent_store::clear_fault();
+        assert!(refused.is_err());
+        assert!(
+            !paths.agents_dir().join("loc").exists(),
+            "nothing installed"
+        );
+        let staging = paths.cache_dir().join("install-staging");
+        assert!(
+            std::fs::read_dir(&staging).map(|d| d.count()).unwrap_or(0) == 0,
+            "staging cleaned"
+        );
+
+        install_agent_from_path(&src, &paths, &source).unwrap();
+        let installed = paths.agents_dir().join("loc");
+        let digest = crate::install::integrity::tree_digest(&installed).unwrap();
+        let key = crate::agent_store::receipt_key(&installed).unwrap();
+        assert_ne!(
+            key,
+            crate::agent_store::NO_RECEIPT,
+            "the local receipt is part of it"
+        );
+        let package = crate::agent_store::digest_container(&paths, "loc", &digest)
+            .unwrap()
+            .join(&key);
+        assert!(crate::agent_store::verify_package(&package, "loc", &digest, &key).is_ok());
     }
 }

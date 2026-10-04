@@ -38,6 +38,7 @@
 // ungated.
 #![cfg_attr(not(test), deny(clippy::unwrap_used, clippy::expect_used))]
 
+mod agent_store;
 mod app_lock;
 mod auth;
 mod builder;

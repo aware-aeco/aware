@@ -173,7 +173,7 @@ pub fn checkout_tree_digests(
                 .collect::<Option<Vec<_>>>()
                 .ok_or_else(|| AwareError::Validation("bundle path is not UTF-8".into()))?
                 .join("/");
-            if normalized != super::provenance::FILE {
+            if !is_install_metadata(&normalized) {
                 records.push(BlobRecord {
                     root: root.clone(),
                     relative: normalized,
@@ -286,17 +286,26 @@ fn digest_files(mut files: Vec<(String, PathBuf)>) -> Result<String, AwareError>
 }
 
 /// Every bundle file that contributes to the digest: the tree walk, minus the
-/// install receipt.
+/// install receipt and the agent-store package record.
 ///
 /// The exclusion lives here and not in [`crate::fs::plain_files_under`] because
 /// it is this caller's rule, not the walk's — the receipt is written *after* a
 /// bundle is hashed and promoted, so including it would make a bundle's digest
-/// change the moment it was installed. The shared walk stays a walk.
+/// change the moment it was installed. The store's `.aware-package.yaml` is the
+/// same kind of file (#626): it is written into a snapshot *about* the bytes, so
+/// a snapshot's digest must equal the working copy it was taken from. The shared
+/// walk stays a walk.
 fn digest_inputs(root: &Path) -> Result<Vec<(String, PathBuf)>, AwareError> {
     Ok(crate::fs::plain_files_under(root, "agent bundle")?
         .into_iter()
-        .filter(|(relative, _)| relative != super::provenance::FILE)
+        .filter(|(relative, _)| !is_install_metadata(relative))
         .collect())
+}
+
+/// The top-level metadata files that describe a bundle rather than belong to it:
+/// the install receipt and the agent-store package record. Neither is hashed.
+pub(crate) fn is_install_metadata(relative: &str) -> bool {
+    relative == super::provenance::FILE || relative == crate::agent_store::PACKAGE_FILE
 }
 
 #[cfg(test)]
@@ -312,6 +321,37 @@ mod tests {
         std::fs::write(tmp.path().join(super::super::provenance::FILE), b"receipt").unwrap();
         assert_eq!(first, tree_digest(tmp.path()).unwrap());
         std::fs::write(tmp.path().join("x/a"), b"two").unwrap();
+        assert_ne!(first, tree_digest(tmp.path()).unwrap());
+    }
+
+    /// #626: a store snapshot carries `.aware-package.yaml`, and its digest must
+    /// still equal the working copy it was taken from.
+    #[test]
+    fn hash_excludes_the_agent_store_package_record() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(
+            tmp.path().join("manifest.yaml"),
+            b"agent: x
+",
+        )
+        .unwrap();
+        let first = tree_digest(tmp.path()).unwrap();
+        std::fs::write(
+            tmp.path().join(crate::agent_store::PACKAGE_FILE),
+            b"agent: x
+",
+        )
+        .unwrap();
+        assert_eq!(first, tree_digest(tmp.path()).unwrap());
+        // …but only at the top level: a nested file of that name is content.
+        std::fs::create_dir(tmp.path().join("sub")).unwrap();
+        std::fs::write(
+            tmp.path()
+                .join("sub")
+                .join(crate::agent_store::PACKAGE_FILE),
+            b"x",
+        )
+        .unwrap();
         assert_ne!(first, tree_digest(tmp.path()).unwrap());
     }
 
