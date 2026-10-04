@@ -1364,63 +1364,99 @@ fn unenroll_refuses_the_selection_and_its_rollback_history() {
         .code(3);
 }
 
+/// A store set up for one retirement race: its home, the command to race, and the record a
+/// retire verb removes while that command waits on the format's selection lock.
+struct RetirementRace {
+    home: std::path::PathBuf,
+    command: std::process::Command,
+    record: std::path::PathBuf,
+    /// The selection that must still be active once the race is over, if the store has one.
+    active: Option<String>,
+}
+
+/// Run `race`'s command against its store while holding the selection lock, remove its record as
+/// a retire verb would under that lock, then release it. The command verifies before it takes the
+/// lock, and a command still verifying when the record went fails not-found before the lock —
+/// which proves nothing about the re-check under it. Only an attempt whose stderr carries
+/// `under_lock_message` (which only that re-check produces) counts; a slower machine gets a
+/// longer head start. Returns that attempt's temp root and race.
+fn race_a_retirement(
+    setup: impl Fn(&std::path::Path) -> RetirementRace,
+    under_lock_message: &str,
+) -> (tempfile::TempDir, RetirementRace) {
+    use fs2::FileExt;
+
+    for head_start_ms in [500, 2_000, 8_000] {
+        let temp = tempfile::tempdir().unwrap();
+        let mut race = setup(temp.path());
+        let lock_directory = race.home.join("providers/locks");
+        std::fs::create_dir_all(&lock_directory).unwrap();
+        let lock = std::fs::OpenOptions::new()
+            .read(true)
+            .write(true)
+            .create(true)
+            .truncate(false)
+            .open(lock_directory.join("selection-format.synthetic.lock"))
+            .unwrap();
+        lock.lock_exclusive().unwrap();
+        let child = race
+            .command
+            .stderr(std::process::Stdio::piped())
+            .spawn()
+            .unwrap();
+        std::thread::sleep(std::time::Duration::from_millis(head_start_ms));
+        std::fs::remove_file(&race.record).unwrap();
+        fs2::FileExt::unlock(&lock).unwrap();
+        let output = child.wait_with_output().unwrap();
+        let stderr = String::from_utf8_lossy(&output.stderr).into_owned();
+        assert_eq!(output.status.code(), Some(7), "{stderr}");
+        if stderr.contains(under_lock_message) {
+            return (temp, race);
+        }
+    }
+    panic!("the raced command never reached the selection lock");
+}
+
 /// `select` verifies before it takes the selection lock, and the retire verbs remove records under
 /// that lock. The selection must re-check the record under the lock, or it could publish a
 /// selection naming a record that no longer exists — the state that made #589 fatal.
 #[test]
 fn selection_never_names_a_record_retired_while_it_waited() {
-    use fs2::FileExt;
-
-    let temp = tempfile::tempdir().unwrap();
-    let home = temp.path().join("home");
-    let current = package_fixture_named(temp.path(), "current");
-    let candidate = package_fixture_named(temp.path(), "candidate");
-    trust_and_enroll(&home, &current);
-    trust_and_enroll(&home, &candidate);
-    select(&home, &current);
-
-    let lock = std::fs::OpenOptions::new()
-        .read(true)
-        .write(true)
-        .create(true)
-        .truncate(false)
-        .open(home.join("providers/locks/selection-format.synthetic.lock"))
-        .unwrap();
-    lock.lock_exclusive().unwrap();
-    let mut child = std::process::Command::new(assert_cmd::cargo::cargo_bin("aware"))
-        .env("AWARE_HOME", &home)
-        .args([
-            "provider",
-            "select",
-            "format.synthetic",
-            &candidate.manifest_sha256,
-        ])
-        .stderr(std::process::Stdio::piped())
-        .spawn()
-        .unwrap();
-    // Long enough for the child to finish verifying and block on the lock.
-    std::thread::sleep(std::time::Duration::from_millis(500));
-    assert!(child.try_wait().unwrap().is_none());
-    // What a retire verb does while it holds the lock.
-    std::fs::remove_file(record_path(&home, &candidate.manifest_sha256)).unwrap();
-    fs2::FileExt::unlock(&lock).unwrap();
-    let output = child.wait_with_output().unwrap();
-    assert_eq!(output.status.code(), Some(7));
-    // Only the re-check under the lock says this. A child still verifying when the record went
-    // would fail not-found too, before the lock, and prove nothing about the re-check.
-    let stderr = String::from_utf8_lossy(&output.stderr);
-    assert!(
-        stderr.contains("unenrolled while it was being selected"),
-        "{stderr}"
+    let (_temp, race) = race_a_retirement(
+        |root| {
+            let home = root.join("home");
+            let current = package_fixture_named(root, "current");
+            let candidate = package_fixture_named(root, "candidate");
+            trust_and_enroll(&home, &current);
+            trust_and_enroll(&home, &candidate);
+            select(&home, &current);
+            let mut command = std::process::Command::new(assert_cmd::cargo::cargo_bin("aware"));
+            command.env("AWARE_HOME", &home).args([
+                "provider",
+                "select",
+                "format.synthetic",
+                &candidate.manifest_sha256,
+            ]);
+            RetirementRace {
+                record: record_path(&home, &candidate.manifest_sha256),
+                home,
+                command,
+                active: Some(current.manifest_sha256),
+            }
+        },
+        "unenrolled while it was being selected",
     );
 
     let selection: serde_json::Value = serde_json::from_slice(
-        &std::fs::read(home.join("providers/selections/format.synthetic.json")).unwrap(),
+        &std::fs::read(race.home.join("providers/selections/format.synthetic.json")).unwrap(),
     )
     .unwrap();
-    assert_eq!(selection["activeManifestSha256"], current.manifest_sha256);
+    assert_eq!(
+        selection["activeManifestSha256"],
+        race.active.unwrap().as_str()
+    );
     assert_eq!(selection["generation"], 1);
-    json_of(&home, &["provider", "list"]);
+    json_of(&race.home, &["provider", "list"]);
 }
 
 /// The same race for `admit-policy`: it verifies before it takes the lock, so without a re-check
@@ -1428,53 +1464,34 @@ fn selection_never_names_a_record_retired_while_it_waited() {
 /// verb has just reported removing, and one a later re-enrollment of the same digest would inherit.
 #[test]
 fn admission_never_publishes_a_policy_for_a_record_retired_while_it_waited() {
-    use fs2::FileExt;
-
-    let temp = tempfile::tempdir().unwrap();
-    let home = temp.path().join("home");
-    let fixture = package_fixture(temp.path());
-    trust_and_enroll(&home, &fixture);
-    let admission = temp.path().join("dependency-policy.json");
-    std::fs::write(&admission, SYNTHETIC_ADMISSION).unwrap();
-
-    let lock_directory = home.join("providers/locks");
-    std::fs::create_dir_all(&lock_directory).unwrap();
-    let lock = std::fs::OpenOptions::new()
-        .read(true)
-        .write(true)
-        .create(true)
-        .truncate(false)
-        .open(lock_directory.join("selection-format.synthetic.lock"))
-        .unwrap();
-    lock.lock_exclusive().unwrap();
-    let mut child = std::process::Command::new(assert_cmd::cargo::cargo_bin("aware"))
-        .env("AWARE_HOME", &home)
-        .args([
-            "provider",
-            "admit-policy",
-            &fixture.manifest_sha256,
-            "capability.synthetic",
-        ])
-        .arg(&admission)
-        .stderr(std::process::Stdio::piped())
-        .spawn()
-        .unwrap();
-    // Long enough for the child to finish verifying and block on the lock.
-    std::thread::sleep(std::time::Duration::from_millis(500));
-    assert!(child.try_wait().unwrap().is_none());
-    // What a retire verb does while it holds the lock.
-    std::fs::remove_file(record_path(&home, &fixture.manifest_sha256)).unwrap();
-    fs2::FileExt::unlock(&lock).unwrap();
-    let output = child.wait_with_output().unwrap();
-    assert_eq!(output.status.code(), Some(7));
-    let stderr = String::from_utf8_lossy(&output.stderr);
-    assert!(
-        stderr.contains("unenrolled while it was being admitted"),
-        "{stderr}"
+    let (_temp, race) = race_a_retirement(
+        |root| {
+            let home = root.join("home");
+            let fixture = package_fixture(root);
+            trust_and_enroll(&home, &fixture);
+            let admission = root.join("dependency-policy.json");
+            std::fs::write(&admission, SYNTHETIC_ADMISSION).unwrap();
+            let mut command = std::process::Command::new(assert_cmd::cargo::cargo_bin("aware"));
+            command
+                .env("AWARE_HOME", &home)
+                .args([
+                    "provider",
+                    "admit-policy",
+                    &fixture.manifest_sha256,
+                    "capability.synthetic",
+                ])
+                .arg(&admission);
+            RetirementRace {
+                record: record_path(&home, &fixture.manifest_sha256),
+                home,
+                command,
+                active: None,
+            }
+        },
+        "unenrolled while it was being admitted",
     );
 
-    let policies = home.join("providers/policies");
-    let published = std::fs::read_dir(&policies)
+    let published = std::fs::read_dir(race.home.join("providers/policies"))
         .map(|entries| entries.count())
         .unwrap_or(0);
     assert_eq!(published, 0, "no policy may outlive its retired enrollment");
