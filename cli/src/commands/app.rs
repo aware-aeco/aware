@@ -403,6 +403,10 @@ async fn run(
         for (id, info) in resolved.infos() {
             agent_resolution.insert(id.clone(), serde_json::to_value(info)?);
         }
+        // Each backing app's own resolution too: it may run different bytes.
+        for (key, info) in resolved.nested_infos() {
+            agent_resolution.insert(key, serde_json::to_value(info)?);
+        }
         // A stored copy of approved bytes that does not verify was skipped for
         // another; say so (it is also in the run record) rather than drop it.
         for warning in crate::agent_resolution::invalid_candidate_warnings(&resolved) {
@@ -875,6 +879,187 @@ fn should_manage_ordinary_pidfile(
 }
 
 #[cfg(test)]
+mod strict_provenance_tests {
+    //! Review round 3 (#626): strict provenance must assess every resolved
+    //! PACKAGE, not every agent id — a backing app can pin different bytes of an
+    //! agent the outer app also calls directly.
+    use super::resolve_run_agents;
+    use crate::paths::Paths;
+    use std::path::Path;
+
+    fn write_agent(paths: &Paths, id: &str, version: &str) -> std::path::PathBuf {
+        let dir = paths.agents_dir().join(id);
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            format!(
+                "agent: {id}\nversion: {version}\ndescription: x\nstateful: false\nlicense: MIT\n\
+                 transport:\n  cli:\n    binary: aware-{id}\n\
+                 commands:\n  go:\n    lifecycle: single\n    mode: read\n    description: x\n"
+            ),
+        )
+        .unwrap();
+        dir
+    }
+
+    fn official_receipt(dir: &Path, id: &str, version: &str) {
+        let digest = crate::install::integrity::tree_digest(dir).unwrap();
+        crate::install::provenance::write_required(
+            dir,
+            &crate::install::provenance::InstallSource::Registry {
+                key: id.into(),
+                version: version.into(),
+                manifest_agent: Some(id.into()),
+                manifest_version: Some(version.into()),
+                entry_digest: Some(digest.clone()),
+                installed_digest: Some(digest),
+                official_source: true,
+            },
+        )
+        .unwrap();
+    }
+
+    fn compile(paths: &Paths, source: &Path) -> crate::app_lock::LockFile {
+        crate::app_lock::compile_to_disk_with_lock(source, paths)
+            .unwrap()
+            .1
+    }
+
+    #[test]
+    fn strict_mode_assesses_a_backing_apps_different_package_of_the_same_agent() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().to_path_buf(),
+        };
+
+        // The backing app is compiled against alpha 1.1.0, installed locally
+        // (no official receipt: strict provenance must refuse these bytes).
+        write_agent(&paths, "alpha", "1.1.0");
+        let backing_dir = paths.apps_dir().join("inner");
+        std::fs::create_dir_all(&backing_dir).unwrap();
+        let backing = backing_dir.join("inner.flo");
+        std::fs::write(
+            &backing,
+            "app: inner\nversion: 0.1.0\ndescription: x\nexposes-as-agent: true\n\
+             exposed-commands:\n  go:\n    lifecycle: single\n    outputs:\n      type: single\n\
+             nodes:\n  - id: n\n    agent: alpha\n    command: go\nconnections: []\n",
+        )
+        .unwrap();
+        compile(&paths, &backing);
+        let wrapper = paths.agents_dir().join("inner");
+        std::fs::create_dir_all(&wrapper).unwrap();
+        std::fs::write(
+            wrapper.join("manifest.yaml"),
+            "agent: inner\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: app-exposed\n\
+             transport:\n  app:\n    backed-by: inner\ncommands: { go: { lifecycle: single, description: x } }\n",
+        )
+        .unwrap();
+
+        // The outer app calls alpha directly — compiled against an OFFICIAL
+        // alpha 1.0.0 — and also through `inner`.
+        let v1 = write_agent(&paths, "alpha", "1.0.0");
+        official_receipt(&v1, "alpha", "1.0.0");
+        let outer_dir = paths.apps_dir().join("outer");
+        std::fs::create_dir_all(&outer_dir).unwrap();
+        let outer = outer_dir.join("outer.flo");
+        std::fs::write(
+            &outer,
+            "app: outer\nversion: 0.1.0\ndescription: x\n\
+             nodes:\n  - id: a\n    agent: alpha\n    command: go\n\
+             \x20 - id: b\n    agent: inner\n    command: go\n    mode: read\nconnections: []\n",
+        )
+        .unwrap();
+        let lock = compile(&paths, &outer);
+        let app = crate::app_lock::load_approved_app(&outer).unwrap();
+
+        // Two resolved packages of alpha are reachable; both must be assessed.
+        let resolved = crate::agent_resolution::resolve_agents(
+            &paths,
+            &app,
+            &lock,
+            crate::agent_resolution::Selection::Default,
+        )
+        .unwrap();
+        let alphas = resolved
+            .reachable(&app)
+            .into_iter()
+            .filter(|r| r.id == "alpha")
+            .count();
+        assert_eq!(alphas, 2, "both packages of alpha are reachable");
+
+        // Strict mode refuses on the backing app's unofficial 1.1.0 package —
+        // offline, at the precheck, before any index fetch.
+        let mut verified = serde_json::Map::new();
+        let error = resolve_run_agents(&paths, &app, &lock, true, &mut verified)
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("E_APP_AGENT_BUNDLE_UNVERIFIED"), "{error}");
+        assert!(
+            error.contains("via inner"),
+            "the nested package is named: {error}"
+        );
+        assert!(
+            !error.contains("cannot fetch"),
+            "refused before the fetch: {error}"
+        );
+    }
+
+    #[test]
+    fn every_reachable_package_is_recorded_without_overwriting_another() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().to_path_buf(),
+        };
+        write_agent(&paths, "alpha", "1.1.0");
+        let backing_dir = paths.apps_dir().join("inner");
+        std::fs::create_dir_all(&backing_dir).unwrap();
+        let backing = backing_dir.join("inner.flo");
+        std::fs::write(
+            &backing,
+            "app: inner\nversion: 0.1.0\ndescription: x\nexposes-as-agent: true\n\
+             exposed-commands:\n  go:\n    lifecycle: single\n    outputs:\n      type: single\n\
+             nodes:\n  - id: n\n    agent: alpha\n    command: go\nconnections: []\n",
+        )
+        .unwrap();
+        compile(&paths, &backing);
+        let wrapper = paths.agents_dir().join("inner");
+        std::fs::create_dir_all(&wrapper).unwrap();
+        std::fs::write(
+            wrapper.join("manifest.yaml"),
+            "agent: inner\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: app-exposed\n\
+             transport:\n  app:\n    backed-by: inner\ncommands: { go: { lifecycle: single, description: x } }\n",
+        )
+        .unwrap();
+        write_agent(&paths, "alpha", "1.0.0");
+        let outer_dir = paths.apps_dir().join("outer");
+        std::fs::create_dir_all(&outer_dir).unwrap();
+        let outer = outer_dir.join("outer.flo");
+        std::fs::write(
+            &outer,
+            "app: outer\nversion: 0.1.0\ndescription: x\n\
+             nodes:\n  - id: a\n    agent: alpha\n    command: go\n\
+             \x20 - id: b\n    agent: inner\n    command: go\n    mode: read\nconnections: []\n",
+        )
+        .unwrap();
+        let lock = compile(&paths, &outer);
+        let app = crate::app_lock::load_approved_app(&outer).unwrap();
+
+        let mut verified = serde_json::Map::new();
+        resolve_run_agents(&paths, &app, &lock, false, &mut verified).unwrap();
+        let versions: Vec<&str> = verified
+            .values()
+            .filter_map(|record| record["manifest-version"].as_str())
+            .collect();
+        assert_eq!(verified.len(), 2, "{verified:?}");
+        assert!(
+            versions.contains(&"1.0.0") && versions.contains(&"1.1.0"),
+            "{versions:?}"
+        );
+    }
+}
+
+#[cfg(test)]
 mod model_reader_control_tests {
     use super::{
         app_uses_model_reader, should_acquire_model_reader_control, should_manage_ordinary_pidfile,
@@ -1204,7 +1389,7 @@ fn resolve_run_agents(
             let Some(agent) = reachable.agent else {
                 return Err(AwareError::Validation(format!(
                     "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {} is not installed",
-                    reachable.id
+                    reachable.label()
                 )));
             };
             if !reachable.info.is_some_and(|info| info.official_claim) {
@@ -1215,8 +1400,10 @@ fn resolve_run_agents(
                     None,
                 );
                 return Err(AwareError::Validation(format!(
-                    "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {} is not verified: {}",
-                    reachable.id, assessment.reason
+                    "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {} ({}) is not verified: {}",
+                    reachable.label(),
+                    agent.manifest.version,
+                    assessment.reason
                 )));
             }
         }
@@ -1250,11 +1437,21 @@ fn resolve_run_agents(
                 serde_json::Value::String(info.digest.clone()),
             );
         }
-        verified_at_start.insert(reachable.id.clone(), record);
+        // Keyed by agent id as before; a second, different package of the same
+        // agent (through an app-backed agent) gets its own `<id> via <wrapper>`
+        // entry rather than overwriting the first.
+        let key = if verified_at_start.contains_key(&reachable.id) {
+            reachable.label()
+        } else {
+            reachable.id.clone()
+        };
+        verified_at_start.insert(key, record);
         if require_verified_agents && !assessment.verified {
             return Err(AwareError::Validation(format!(
-                "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {} is not verified: {}",
-                reachable.id, assessment.reason
+                "[E_APP_AGENT_BUNDLE_UNVERIFIED] agent {} ({}) is not verified: {}",
+                reachable.label(),
+                agent.manifest.version,
+                assessment.reason
             )));
         }
     }

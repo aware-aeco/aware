@@ -135,6 +135,19 @@ pub struct Reachable<'a> {
     pub id: String,
     pub agent: Option<&'a DiscoveredAgent>,
     pub info: Option<&'a ResolvedAgentInfo>,
+    /// The app-backed agent this leaf is reached through, if any.
+    pub via: Option<&'a str>,
+}
+
+impl Reachable<'_> {
+    /// How this package is named in a refusal and keyed in the run record:
+    /// the agent id, plus the app-backed agent it is reached through.
+    pub fn label(&self) -> String {
+        match self.via {
+            Some(via) => format!("{} via {via}", self.id),
+            None => self.id.clone(),
+        }
+    }
 }
 
 impl ResolvedCatalogue {
@@ -166,33 +179,58 @@ impl ResolvedCatalogue {
 
     /// The one-hop set whose transports can execute: each directly dispatched
     /// agent, and for an app-backed agent the leaf agents of its backing app
-    /// (from the backing app's OWN resolution). Sorted, deduplicated by id.
-    pub fn reachable(&self, app: &App) -> Vec<Reachable<'_>> {
-        let mut seen = BTreeSet::new();
-        let mut out = Vec::new();
+    /// (from the backing app's OWN resolution). Deduplicated by the resolved
+    /// PACKAGE — agent id plus store root, which names digest and receipt key —
+    /// never by id alone: a backing app may pin different bytes of an agent the
+    /// app also calls directly, and strict provenance must assess both
+    /// (review #626 round 3). Sorted: direct agents first, then each wrapper's.
+    pub fn reachable<'a>(&'a self, app: &'a App) -> Vec<Reachable<'a>> {
+        let mut seen: BTreeSet<(String, Option<PathBuf>)> = BTreeSet::new();
+        let mut direct = Vec::new();
+        let mut nested_out = Vec::new();
         for id in sorted_dispatchable(app) {
             let Some(agent) = self.get(id) else {
                 continue; // the missing-agent preflight reports it
             };
             if let Some(nested) = self.nested.get(id) {
                 for leaf in sorted_dispatchable(&nested.app) {
-                    if seen.insert(leaf.to_string()) {
-                        out.push(Reachable {
-                            id: leaf.to_string(),
-                            agent: nested.catalogue.get(leaf),
-                            info: nested.catalogue.info(leaf),
-                        });
-                    }
+                    let leaf_agent = nested.catalogue.get(leaf);
+                    nested_out.push(Reachable {
+                        id: leaf.to_string(),
+                        agent: leaf_agent,
+                        info: nested.catalogue.info(leaf),
+                        via: Some(id),
+                    });
                 }
-            } else if seen.insert(id.to_string()) {
-                out.push(Reachable {
+            } else {
+                direct.push(Reachable {
                     id: id.to_string(),
                     agent: Some(agent),
                     info: self.info.get(id),
+                    via: None,
                 });
             }
         }
-        out
+        direct
+            .into_iter()
+            .chain(nested_out)
+            .filter(|r| seen.insert((r.id.clone(), r.agent.map(|a| a.root.clone()))))
+            .collect()
+    }
+
+    /// Every resolved agent of the backing apps, keyed `<wrapper>><leaf>`, for
+    /// the run record's `agent-resolution`.
+    pub fn nested_infos(&self) -> Vec<(String, &ResolvedAgentInfo)> {
+        self.nested
+            .iter()
+            .flat_map(|(wrapper, nested)| {
+                nested
+                    .catalogue
+                    .info
+                    .iter()
+                    .map(move |(leaf, info)| (format!("{wrapper}>{leaf}"), info))
+            })
+            .collect()
     }
 }
 
