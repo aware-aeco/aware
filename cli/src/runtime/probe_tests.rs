@@ -119,6 +119,7 @@ fn options(alias: Option<&str>, allow_origin: Option<&str>) -> ProbeOptions {
         alias: alias.map(str::to_string),
         allow_origin: allow_origin.map(str::to_string),
         expect_generation: None,
+        expect_manifest: None,
         timeout: Duration::from_secs(10),
     }
 }
@@ -853,4 +854,83 @@ async fn abandoning_a_supervised_run_still_kills_the_grandchild() {
         !pid_alive(pid),
         "grandchild {pid} outlived the abandoned run"
     );
+}
+
+// ── --expect-manifest (#621) ──────────────────────────────────────────────────
+
+#[tokio::test]
+async fn a_manifest_replaced_after_describe_is_refused_before_any_request_or_credential() {
+    let server = Fixture::start(200, "", userinfo_body());
+    let origin = server.origin();
+    let confirmed = rest_manifest("svc", "my.api.key", &origin, "account");
+    let home = home_with("svc", &confirmed);
+    store(home.path(), "my.api.key", Some("gen-1"));
+
+    // Swapped after the caller read it: same origin, a different credential slot.
+    let replaced = rest_manifest("svc", "other.api.key", &origin, "account");
+    std::fs::write(home.path().join("agents/svc/manifest.yaml"), &replaced).unwrap();
+
+    let mut opts = options(None, Some(&origin));
+    opts.expect_manifest = Some(manifest_sha256(confirmed.as_bytes()));
+    // A wrong generation too: the manifest pin is checked first, so the
+    // credential store is never consulted.
+    opts.expect_generation = Some("gen-other".into());
+    let failure = probe_agent(home.path(), "svc", &opts)
+        .await
+        .expect_err("changed");
+    assert_eq!(failure.code, "E_PROBE_CHANGED");
+    assert!(failure.details.is_empty());
+    assert_eq!(failure.exit_code(), 3);
+    assert!(server.requests().is_empty(), "no HTTP request was made");
+
+    // Even a manifest that no longer parses is refused as changed, not invalid.
+    std::fs::write(home.path().join("agents/svc/manifest.yaml"), "not: [yaml").unwrap();
+    let failure = probe_agent(home.path(), "svc", &opts).await.unwrap_err();
+    assert_eq!(failure.code, "E_PROBE_CHANGED");
+    assert!(server.requests().is_empty());
+}
+
+#[tokio::test]
+async fn a_matching_manifest_pin_probes_normally() {
+    let server = Fixture::start(200, "", userinfo_body());
+    let origin = server.origin();
+    let home = custom_home(&server);
+    store(home.path(), "my.api.key", Some("gen-1"));
+    let installed = std::fs::read(home.path().join("agents/svc/manifest.yaml")).unwrap();
+
+    let mut opts = options(None, Some(&origin));
+    opts.expect_manifest = Some(manifest_sha256(&installed));
+    let receipt = probe_agent(home.path(), "svc", &opts)
+        .await
+        .expect("matches");
+    assert_eq!(receipt.manifest_sha256, manifest_sha256(&installed));
+    assert_eq!(server.requests().len(), 1);
+}
+
+#[test]
+fn the_expect_manifest_value_is_64_lowercase_hex() {
+    let good = manifest_sha256(b"x");
+    assert_eq!(parse_expected_manifest(&good).as_deref(), Ok(good.as_str()));
+    for bad in [
+        String::new(),
+        good.to_uppercase(),
+        good[..63].to_string(),
+        format!("{good}0"),
+        format!("{}g", &good[..63]),
+        format!(" {}", &good[..63]),
+    ] {
+        assert_eq!(
+            parse_expected_manifest(&bad).unwrap_err(),
+            "must be 64 lowercase hex characters: the manifestSha256 that \
+             `aware agent describe --json` reports",
+            "{bad:?}"
+        );
+    }
+}
+
+#[test]
+fn the_changed_manifest_refusal_has_its_own_fixed_sentence() {
+    let failure = ProbeFailure::new("E_PROBE_CHANGED");
+    assert_ne!(failure.message(), ProbeFailure::new("E_UNKNOWN").message());
+    assert!(failure.message().contains("manifest changed"));
 }

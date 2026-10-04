@@ -95,6 +95,9 @@ impl ProbeFailure {
             "E_CREDENTIAL_CHANGED" => {
                 "The stored credential is not the one the caller expected (its generation changed)."
             }
+            "E_PROBE_CHANGED" => {
+                "The installed agent is not the one the caller expected (its manifest changed), so the probe was not run."
+            }
             "E_PROBE_FAILED" => "The service answered the probe with a failure.",
             "E_HOST_UNAVAILABLE" => "The host did not answer the probe.",
             "E_PROBE_OUTPUT_TOO_LARGE" => "The probe's answer exceeded the 64 KiB limit.",
@@ -128,6 +131,10 @@ pub(crate) struct ProbeOptions {
     pub(crate) alias: Option<String>,
     pub(crate) allow_origin: Option<String>,
     pub(crate) expect_generation: Option<String>,
+    /// The `manifestSha256` the caller read (from `agent describe --json`) and
+    /// confirmed; checked against the installed manifest before anything runs
+    /// (#621).
+    pub(crate) expect_manifest: Option<String>,
     pub(crate) timeout: Duration,
 }
 
@@ -169,6 +176,34 @@ pub(crate) struct ProbeReceipt {
 pub(crate) fn manifest_sha256(bytes: &[u8]) -> String {
     use sha2::{Digest, Sha256};
     format!("{:x}", Sha256::digest(bytes))
+}
+
+/// `--expect-manifest` value parser: exactly 64 lowercase hex characters, the
+/// shape [`manifest_sha256`] produces. Anything else is a usage error, so a
+/// malformed pin can never be mistaken for "no pin".
+pub(crate) fn parse_expected_manifest(value: &str) -> Result<String, String> {
+    if value.len() == 64
+        && value
+            .bytes()
+            .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+    {
+        Ok(value.to_string())
+    } else {
+        Err(
+            "must be 64 lowercase hex characters: the manifestSha256 that `aware agent describe --json` reports"
+                .into(),
+        )
+    }
+}
+
+/// `--expect-manifest` (#621): refuse unless the installed manifest is the one
+/// the caller read. Checked on the same bytes the probe is then planned from,
+/// so a manifest replaced after `agent describe` can never run unconfirmed.
+fn check_expected_manifest(expected: Option<&str>, actual: &str) -> Result<(), ProbeFailure> {
+    match expected {
+        Some(expected) if expected != actual => Err(ProbeFailure::new("E_PROBE_CHANGED")),
+        _ => Ok(()),
+    }
 }
 
 // ── credential slots ─────────────────────────────────────────────────────────
@@ -464,6 +499,9 @@ async fn probe_agent_within(
     let bytes =
         std::fs::read(&manifest_path).map_err(|_| ProbeFailure::new("E_AGENT_NOT_INSTALLED"))?;
     let manifest_sha256 = manifest_sha256(&bytes);
+    // Before the manifest is even parsed: nothing a replaced manifest declares —
+    // its bridge, its URL, its credential — is acted on (#621).
+    check_expected_manifest(options.expect_manifest.as_deref(), &manifest_sha256)?;
     let text = String::from_utf8_lossy(&bytes);
     let agent: Agent = serde_yaml::from_str(text.trim_start_matches('\u{feff}'))
         .map_err(|_| ProbeFailure::reason("E_PROBE_INVALID", "manifest-unreadable"))?;
