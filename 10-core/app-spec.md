@@ -515,6 +515,11 @@ agent-pins:
   microsoft-365:  1.0.0
   acc-docs:       1.0.0
 
+agent-digests:                             # the exact bytes approved, for EVERY pinned agent (#626)
+  revit-2026:     sha256:9f2c...
+  microsoft-365:  sha256:41ab...
+  acc-docs:       sha256:07de...
+
 nodes:
   - id: sheets
     agent: revit-2026
@@ -564,6 +569,30 @@ nodes:
 | `warn` | The author should look at this. | `"… command <c> not found; defaulting to write-mode for safety"` (silent write-mode fallback), `"agent <a> not installed; …"`, `"input references {{ x.y }} but node x has no output field y …"`. |
 | `error` | A condition that should block the run. | (reserved) |
 
+### Agent pins and how a run resolves them (#626)
+
+A lock pins every agent any node references, three ways:
+
+| Field | What it pins | Written when |
+|---|---|---|
+| `agent-pins` | the manifest version | always |
+| `agent-digests` | the `sha256:` tree digest of the exact bytes compiled against (see [Agent Spec § the agent store](./agent-spec.md)) | always, by AWARE ≥ 0.149, whatever the agent's source — registry, local folder, `aware build`, an `exposes-as-agent` app |
+| `agent-bundle-pins` | the digest recorded in a registry install receipt | when the receipt names these same bytes |
+
+`aware app compile` snapshots every pinned agent into the agent store **first** and compiles from the stored manifests, so the version pin, the digest pin and every compiled node detail (mode, output schema, notes) describe one immutable copy.
+
+`aware app run` resolves every dispatchable agent **once**, at preflight, and every later read — each preflight check, each transport, each built-in helper, each nested app-backed dispatch — takes its manifest and files from that resolution, never from `agents/`. For each agent:
+
+1. **Lock consistency first.** A digest that is not `sha256:` + 64 lowercase hex, an `agent-digests` entry with no `agent-pins` entry, or an `agent-digests` and `agent-bundle-pins` pair that disagree refuses the run (`E_APP_LOCK_INVALID`) before anything resolves.
+2. **Not installed** (no `agents/<id>/`): the missing-agent refusal (`E_APP_AGENT_NOT_INSTALLED`) — whatever the store holds; uninstalling means the tool was removed. A directory that exists but whose `manifest.yaml` is missing or does not parse is **not** uninstalled: a digest-pinned lock still runs its stored approved bytes (the detail says why the installed copy was unusable), and a version-only lock is refused with `E_APP_LOCK_AGENT_PIN_MISMATCH`, naming the unusable manifest.
+3. **Installed but absent from the lock:** never approved (`E_APP_LOCK_AGENT_PIN_MISMATCH`).
+4. **The lock has a digest** (`agent-digests`, else `agent-bundle-pins`): the run uses the store package with exactly those bytes — a snapshot of the current copy when the current copy still hashes to it, otherwise a stored package. A candidate counts only if its fresh tree digest, receipt key, manifest identity, manifest version (= `agent-pins`) and `.aware-package.yaml` all agree. Among valid packages of the same bytes, the current copy's own receipt wins; otherwise a total order: an official registry receipt, then any other registry receipt, then a local one, then none, ties by receipt key. Ordinary runs choose offline from the stored receipts; under `--require-verified-agents` the same order is walked with the existing fresh-index assessment and the first package that verifies is used. No package with those bytes anywhere: `E_APP_LOCK_AGENT_PIN_MISMATCH` ("the approved version of X (0.1.4) is no longer installed; compile the app again to use 0.1.6"). A package claiming those bytes that does not verify: `E_APP_LOCK_AGENT_BUNDLE_PIN_MISMATCH` — nothing else is run in its place.
+5. **The lock has no digest** (compiled by AWARE ≤ 0.148, not an official install): today's guarantee, stated as such — the current copy must match `agent-pins` by version, and the run dispatches an immutable snapshot of it. Such a lock approved a version, not bytes: `aware app check` reports `current-version-only` and the run's provenance records the agent with `approval: version-only`. It never resolves to an older stored package by version string; recompiling upgrades it to a byte approval.
+
+Because an update snapshots the outgoing copy before replacing it, an app compiled against agent 0.1.5 keeps running on the 0.1.5 bytes after `aware agent update` installs 0.1.6 — no recompile — while a fresh compile pins 0.1.6. An app-backed agent's backing app is approved and resolved by its **own** lock at the same preflight, and its nested run dispatches from that resolution. `--simulate` dispatches no agent and resolves nothing: it keeps reading the working copies, with its usual tolerance of missing agents.
+
+The run's `run-start` provenance record carries `agent-resolution` (per agent: version, digest, `approval`, `resolution`) and, in `verified-at-start`, each reachable agent's assessment plus its `approval` and `digest`.
+
 **AWARE owns the semantics** (what a note means / how severe — it's the determinism authority that produces the lock); **consumers own presentation** (info quiet/collapsible, warn/error prominent). Because severity is machine-readable, the CLI, the lock audit, and other consumers stay correct across note-wording changes — they must key on `kind`, never on the `text` prose, which is free to change between releases (#170).
 
 ### CLI
@@ -573,7 +602,32 @@ nodes:
 | `aware app compile <app>` | Explicit compile. Emits `<app>.lock` next to the source file. Fails if validation fails. |
 | `aware app validate <app>` | Schema + cycle + cap checks plus a full compile, so its verdict is as strict as `compile`'s — but it writes nothing. It answers a question about the file; run `aware app compile` to emit the `<app>.lock` that `run` requires. (v0.24 briefly had it write the lock as a side effect; that left untracked or stale locks beside sources nobody compiled — #571.) |
 | `aware app inspect <app>` | Opens Glass Box — a single-file HTML viewer of the lockfile — in the user's default browser |
-| `aware app run <app>` | Refuses before trace creation or node dispatch unless a present `.lock` matches the raw source bytes' `source-hash`. Compile and run each bind parsing and hashing to one source snapshot; unsafe `app:` ids are rejected before lock lookup. Real dispatch also requires every reachable installed agent to match the exact version in `agent-pins` (`E_APP_LOCK_AGENT_PIN_MISMATCH`). The same independent gate applies before dispatching an app-backed agent. Missing lock: `E_APP_LOCK_MISSING`; unreadable/malformed lock: `E_APP_LOCK_INVALID`; hash mismatch: `E_APP_LOCK_STALE`. Each prompts the user to run `aware app compile` first. Source approval applies to real, dry, and simulated runs; simulation continues to ignore ambient agent availability and versions because it dispatches no agent. |
+| `aware app check <app>` | Read-only. Answers one question with the run's own resolver — would `aware app run` refuse this app with an `E_APP_LOCK_*` code? — and writes nothing (no snapshot). Takes an installed app id or a path. See below. |
+| `aware app run <app>` | Refuses before trace creation or node dispatch unless a present `.lock` matches the raw source bytes' `source-hash`. Compile and run each bind parsing and hashing to one source snapshot; unsafe `app:` ids are rejected before lock lookup. Real dispatch then resolves every reachable agent to the bytes the lock approved, as described in [§ Agent pins](#agent-pins-and-how-a-run-resolves-them-626) (`E_APP_LOCK_AGENT_PIN_MISMATCH`, `E_APP_LOCK_AGENT_BUNDLE_PIN_MISMATCH`, `E_APP_LOCK_INVALID`). The same resolution applies to the backing app of every app-backed agent. Missing lock: `E_APP_LOCK_MISSING`; unreadable/malformed lock: `E_APP_LOCK_INVALID`; hash mismatch: `E_APP_LOCK_STALE`. Each prompts the user to run `aware app compile` first. Source approval applies to real, dry, and simulated runs; simulation continues to ignore ambient agent availability and versions because it dispatches no agent. |
+
+#### `aware app check <app> --json`
+
+```json
+{ "ok": true, "data": {
+  "app": "tekla-bom",
+  "approval-current": true,
+  "approval-kind": "bytes",                 // or "version-only"; null when approval-current is false
+  "source-current": true,                   // .flo hash == lock source-hash
+  "lock": "valid",                          // "valid" | "missing" | "invalid"
+  "lock-detail": null,                      // why, when lock is not valid
+  "agents": [ { "agent": "tekla", "pinned-version": "0.1.5", "pinned-digest": "sha256:…",
+                "installed-version": "0.1.6",
+                "resolution": "stored",     // see below
+                "detail": "plain sentence",
+                "invalid-candidates": [ { "path": "…", "reason": "plain sentence" } ],
+                "via": "wrapper-agent" } ], // only on the leaves of an app-backed agent
+  "nested-apps": [ { "agent": "wrapper-agent", "app": "backing-app", "lock": "valid",
+                     "source-current": true, "detail": "plain sentence" } ] } }
+```
+
+`resolution` is one of `stored` (the approved bytes run from the store), `current` (the installed copy is the approved one), `current-version-only` (a legacy lock that matches by version), `missing`, `pin-not-installed`, `digest-mismatch`, `never-approved`, `legacy-pin-mismatch`. `approval-current` is true iff the lock is valid and consistent, the source hash matches, every agent (and every backing app's agents) resolves to `current`, `stored` or `current-version-only`, and every backing app's own lock is valid and current. `approval-kind` is the weakest kind across the agents. `invalid-candidates` lists every stored package that claims the approved bytes but does not verify: the run never uses one, but it does not drop them silently either — they appear here, in the run record's `agent-resolution`, and as a warning on stderr.
+
+Every expected drift — a missing, invalid or inconsistent lock, a stale source, any agent resolution — is `ok: true` data with `approval-current: false`. `ok: false` (an envelope carrying `E_APP_CHECK_NOT_FOUND`, `E_APP_CHECK_SOURCE_INVALID` or `E_APP_CHECK_FAILED`) is reserved for failures that prevent the check itself: an unknown app, an unreadable app source, an unreadable agent manifest or `AWARE_HOME`. Nothing is printed outside the envelope. The check answers only approval / compile drift; requirements, status, safety, strict provenance and host availability still report at run time.
 
 ### Why this matters
 

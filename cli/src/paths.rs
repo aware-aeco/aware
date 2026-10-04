@@ -31,6 +31,13 @@ impl Paths {
         self.aware_home.join("apps")
     }
 
+    /// The immutable, content-addressed agent store (#626):
+    /// `agent-store/<id>/<tree-hex>/<receipt-key>/`. Written only by
+    /// [`crate::agent_store::snapshot`]; never modified or deleted by AWARE.
+    pub fn agent_store_dir(&self) -> PathBuf {
+        self.aware_home.join("agent-store")
+    }
+
     pub fn config_path(&self) -> PathBuf {
         self.aware_home.join("config.yaml")
     }
@@ -73,6 +80,11 @@ mod tests {
     #[test]
     fn agents_dir_appends_agents() {
         assert_eq!(p("/x").agents_dir(), PathBuf::from("/x/agents"));
+    }
+
+    #[test]
+    fn agent_store_dir_appends_agent_store() {
+        assert_eq!(p("/x").agent_store_dir(), PathBuf::from("/x/agent-store"));
     }
 
     #[test]

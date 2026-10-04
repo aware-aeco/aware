@@ -14,12 +14,12 @@
 //! exactly as the generic REST path does. Binary travels as base64 over JSON.
 
 use std::io::Read;
-use std::path::{Path, PathBuf};
 use std::time::Duration;
 
 use base64::Engine;
 use serde_json::{Value, json};
 
+use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
 use crate::runtime::invoker::{percent_encode_path, resolve_rest_credential, rest_base_url};
 
@@ -36,40 +36,50 @@ fn http_agent() -> ureq::Agent {
 }
 
 /// `trimble-connect.upload` — 3-step package upload. Blocking HTTP runs off the reactor.
-pub async fn upload(agents_dir: PathBuf, args: Value) -> Result<Value, AwareError> {
-    tokio::task::spawn_blocking(move || upload_blocking(&agents_dir, &args))
+pub async fn upload(
+    catalogue: impl Into<AgentCatalogue>,
+    args: Value,
+) -> Result<Value, AwareError> {
+    let catalogue = catalogue.into();
+    tokio::task::spawn_blocking(move || upload_blocking(&catalogue, &args))
         .await
         .map_err(|e| AwareError::Internal(format!("trimble upload task join: {e}")))?
 }
 
 /// `trimble-connect.download` — 2-step pre-signed download. Blocking HTTP off the reactor.
-pub async fn download(agents_dir: PathBuf, args: Value) -> Result<Value, AwareError> {
-    tokio::task::spawn_blocking(move || download_blocking(&agents_dir, &args))
+pub async fn download(
+    catalogue: impl Into<AgentCatalogue>,
+    args: Value,
+) -> Result<Value, AwareError> {
+    let catalogue = catalogue.into();
+    tokio::task::spawn_blocking(move || download_blocking(&catalogue, &args))
         .await
         .map_err(|e| AwareError::Internal(format!("trimble download task join: {e}")))?
 }
 
 /// Resolve the (refreshed, #198) bearer token + trimmed base URL for trimble-connect.
-fn auth_and_base(agents_dir: &Path) -> Result<(String, String), AwareError> {
-    let manifest = crate::manifest::loader::load_agent_by_id(agents_dir, TC_AGENT)?;
-    let auth = manifest.auth.ok_or_else(|| {
+/// The manifest is the run's resolved one (#626); `agents_dir()` only names
+/// AWARE_HOME for the credential.
+fn auth_and_base(catalogue: &AgentCatalogue) -> Result<(String, String), AwareError> {
+    let manifest = catalogue.manifest(TC_AGENT)?;
+    let auth = manifest.auth.clone().ok_or_else(|| {
         AwareError::Validation("trimble-connect: manifest has no `auth:` block".into())
     })?;
-    let token = resolve_rest_credential(agents_dir, &auth).ok_or_else(|| {
+    let token = resolve_rest_credential(catalogue.agents_dir(), &auth).ok_or_else(|| {
         AwareError::Validation(
             "trimble-connect declares `auth` but the credential is missing — \
              run `aware connect trimble-connect`"
                 .into(),
         )
     })?;
-    let base = rest_base_url(agents_dir, TC_AGENT).ok_or_else(|| {
+    let base = rest_base_url(catalogue, TC_AGENT).ok_or_else(|| {
         AwareError::Validation("trimble-connect: no `transport.rest.base`".into())
     })?;
     Ok((token, base.trim_end_matches('/').to_string()))
 }
 
-fn upload_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError> {
-    let (token, base) = auth_and_base(agents_dir)?;
+fn upload_blocking(catalogue: &AgentCatalogue, args: &Value) -> Result<Value, AwareError> {
+    let (token, base) = auth_and_base(catalogue)?;
     let agent = http_agent();
     let folder_id = str_arg(args, "folder-id")?;
     let filename = str_arg(args, "filename")?;
@@ -165,8 +175,8 @@ fn upload_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError>
     }))
 }
 
-fn download_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError> {
-    let (token, base) = auth_and_base(agents_dir)?;
+fn download_blocking(catalogue: &AgentCatalogue, args: &Value) -> Result<Value, AwareError> {
+    let (token, base) = auth_and_base(catalogue)?;
     let agent = http_agent();
     let file_id = str_arg(args, "file-id")?;
 

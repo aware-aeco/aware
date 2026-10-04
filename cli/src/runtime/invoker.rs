@@ -10,6 +10,8 @@ use std::sync::Arc;
 use std::{collections::HashMap, sync::Mutex};
 
 use async_trait::async_trait;
+
+pub use crate::agent_resolution::AgentCatalogue;
 use serde_json::Value;
 use tokio::sync::{mpsc, oneshot};
 
@@ -418,7 +420,9 @@ fn structured_bridge_error(stderr: &str) -> Option<AwareError> {
 /// Production invoker: spawn the agent's CLI transport binary,
 /// talk JSON over stdin/stdout.
 pub struct CliInvoker {
-    pub agents_dir: std::path::PathBuf,
+    /// Where agent manifests are read from — the run's resolved catalogue
+    /// (#626); never a fresh read of `agents/`.
+    pub catalogue: AgentCatalogue,
     /// Run-owned destination for an opt-in large artifact. Kept out of agent
     /// stdin so it cannot collide with an agent's public command schema.
     pub artifact_dir: Option<PathBuf>,
@@ -589,7 +593,7 @@ impl CliInvoker {
         ),
         AwareError,
     > {
-        let m = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent)?;
+        let m = self.catalogue.manifest(agent)?;
         let cli =
             m.transport.cli.as_ref().ok_or_else(|| {
                 AwareError::Validation(format!("agent {agent} has no cli transport"))
@@ -1089,7 +1093,9 @@ where
 /// the app author hand-templating it — fill-if-absent, so explicit input wins
 /// (#106).
 pub struct RestInvoker {
-    pub agents_dir: std::path::PathBuf,
+    /// Where agent manifests are read from (#626); `agents_dir()` only names
+    /// AWARE_HOME for credentials.
+    pub catalogue: AgentCatalogue,
 }
 
 impl RestInvoker {
@@ -1106,18 +1112,18 @@ impl RestInvoker {
         // MIME construction and durable outbox cannot be expressed by the
         // generic one-request REST renderer (#495).
         if agent == "google-workspace" && command == "gmail.send" {
-            return crate::runtime::google_mail::send(self.agents_dir.clone(), args).await;
+            return crate::runtime::google_mail::send(self.catalogue.clone(), args).await;
         }
         // Trimble Connect file ops are multi-step, binary, cross-domain flows the
         // single-call REST path can't express, so they're handled out-of-line (#200).
         if agent == "trimble-connect" {
             match command {
                 "upload" => {
-                    return crate::runtime::trimble_files::upload(self.agents_dir.clone(), args)
+                    return crate::runtime::trimble_files::upload(self.catalogue.clone(), args)
                         .await;
                 }
                 "download" => {
-                    return crate::runtime::trimble_files::download(self.agents_dir.clone(), args)
+                    return crate::runtime::trimble_files::download(self.catalogue.clone(), args)
                         .await;
                 }
                 _ => {}
@@ -1132,13 +1138,13 @@ impl RestInvoker {
         // A manifest mapping is preferred, so an operationId that kebab-cases to
         // an HTTP verb still routes to its mapped operation (Codex #106).
         let (method, url, mut headers, mut query, body) = if command_method(
-            &self.agents_dir,
+            &self.catalogue,
             agent,
             command,
         )
         .is_some()
         {
-            build_operation_request(&self.agents_dir, agent, command, &args)?
+            build_operation_request(&self.catalogue, agent, command, &args)?
         } else {
             let upper = command.to_ascii_uppercase();
             if !matches!(
@@ -1152,7 +1158,7 @@ impl RestInvoker {
             let raw_url = args.get("url").and_then(|v| v.as_str()).ok_or_else(|| {
                 AwareError::Validation(format!("{agent}/{command}: missing required input `url`"))
             })?;
-            let url = resolve_url(rest_base_url(&self.agents_dir, agent).as_deref(), raw_url);
+            let url = resolve_url(rest_base_url(&self.catalogue, agent).as_deref(), raw_url);
             (
                 upper,
                 url,
@@ -1169,20 +1175,21 @@ impl RestInvoker {
         // credential is a fail-fast error (not a silent unauthenticated call).
         // Load the manifest once for the auth block + this command's `no-auth`
         // (public-endpoint) flag, which opts a command out of agent auth.
-        let stream_response =
-            match crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent)
-                .ok()
-                .and_then(|m| m.commands.get(command).and_then(|c| c.response.clone()))
-            {
-                None => false,
-                Some(mode) if mode == "artifact-stream" => true,
-                Some(mode) => {
-                    return Err(AwareError::Validation(format!(
-                        "unsupported REST response mode {mode:?}"
-                    )));
-                }
-            };
-        if let Ok(m) = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent) {
+        let stream_response = match self
+            .catalogue
+            .manifest(agent)
+            .ok()
+            .and_then(|m| m.commands.get(command).and_then(|c| c.response.clone()))
+        {
+            None => false,
+            Some(mode) if mode == "artifact-stream" => true,
+            Some(mode) => {
+                return Err(AwareError::Validation(format!(
+                    "unsupported REST response mode {mode:?}"
+                )));
+            }
+        };
+        if let Ok(m) = self.catalogue.manifest(agent) {
             let is_public = m.commands.get(command).is_some_and(|c| c.no_auth);
             if let Some(auth) = &m.auth
                 && !is_public
@@ -1191,7 +1198,7 @@ impl RestInvoker {
                 // a blocking token-endpoint POST), so run it off the async reactor —
                 // same posture as the REST request below (#198 Codex).
                 let auth_owned = auth.clone();
-                let dir = self.agents_dir.clone();
+                let dir = self.catalogue.agents_dir().to_path_buf();
                 let cred =
                     tokio::task::spawn_blocking(move || resolve_rest_credential(&dir, &auth_owned))
                         .await
@@ -1369,8 +1376,8 @@ impl AgentInvoker for RestInvoker {
 /// Read an optional `base` URL from an agent's `rest` transport block. The
 /// generic `http` agent declares no base (callers pass absolute URLs); a
 /// domain-specific rest agent may set one and pass relative paths.
-pub(crate) fn rest_base_url(agents_dir: &std::path::Path, agent: &str) -> Option<String> {
-    let m = crate::manifest::loader::load_agent_by_id(agents_dir, agent).ok()?;
+pub(crate) fn rest_base_url(catalogue: &AgentCatalogue, agent: &str) -> Option<String> {
+    let m = catalogue.manifest(agent).ok()?;
     m.transport
         .rest
         .as_ref()?
@@ -1381,8 +1388,9 @@ pub(crate) fn rest_base_url(agents_dir: &std::path::Path, agent: &str) -> Option
 
 /// The HTTP method a manifest command maps to (a built OpenAPI operation), if
 /// any. Used to prefer the operation executor over the generic url-based path.
-fn command_method(agents_dir: &std::path::Path, agent: &str, command: &str) -> Option<String> {
-    crate::manifest::loader::load_agent_by_id(agents_dir, agent)
+fn command_method(catalogue: &AgentCatalogue, agent: &str, command: &str) -> Option<String> {
+    catalogue
+        .manifest(agent)
         .ok()?
         .commands
         .get(command)?
@@ -1448,12 +1456,12 @@ pub(crate) type RequestParts = (
 /// keyed by location, not name, so a query/header param named `body` is routed
 /// correctly.
 fn build_operation_request(
-    agents_dir: &std::path::Path,
+    catalogue: &AgentCatalogue,
     agent: &str,
     command: &str,
     args: &Value,
 ) -> Result<RequestParts, AwareError> {
-    let m = crate::manifest::loader::load_agent_by_id(agents_dir, agent)?;
+    let m = catalogue.manifest(agent)?;
     build_operation_request_for(&m, command, args)
 }
 
@@ -1912,6 +1920,10 @@ pub(crate) struct BuiltinInvoker {
     /// skipped so a preview never touches disk; the HTML and result shape are still
     /// returned so downstream nodes resolve.
     pub(crate) dry_run: bool,
+    /// The `blender` agent's root on a run — its resolved store package (#626),
+    /// so the `bpy` scripts are the approved bytes. `None` outside a run
+    /// (`aware agent invoke`), which reads the installed copy.
+    pub(crate) blender_root: Option<PathBuf>,
 }
 
 #[async_trait]
@@ -1941,7 +1953,13 @@ impl AgentInvoker for BuiltinInvoker {
             // module's named error, which lists the five commands it does serve, rather than the
             // generic dispatch message below.
             ("blender", command) => {
-                crate::render::blender::run_blender_command(command, &args, self.dry_run).await
+                crate::render::blender::run_blender_command(
+                    command,
+                    &args,
+                    self.dry_run,
+                    self.blender_root.as_deref(),
+                )
+                .await
             }
             _ => Err(AwareError::Validation(format!(
                 "builtin transport: no handler for {agent}/{command}"
@@ -2932,7 +2950,9 @@ mod vision_provider_tests {
 /// runs that app's node chain. This lets one app graph mix host-backed (cli),
 /// web-API (rest), and app-backed agents.
 pub struct DispatchInvoker {
-    pub agents_dir: PathBuf,
+    /// Every manifest and agent root this invoker reads (#626): the run's
+    /// resolved catalogue on a real run, the working copies under `--simulate`.
+    pub catalogue: AgentCatalogue,
     pub artifact_dir: Option<PathBuf>,
     /// Set on the top-level invoker to enable app-backed-agent dispatch. `None`
     /// on a nested invoker — that disables app dispatch, enforcing the v0 rule
@@ -2955,7 +2975,6 @@ pub struct DispatchInvoker {
 /// posture.
 #[derive(Clone)]
 pub struct AppTransportCtx {
-    pub apps_dir: PathBuf,
     pub logs_dir: PathBuf,
     pub credentials_dir: PathBuf,
     pub dry_run: bool,
@@ -3008,16 +3027,16 @@ impl DispatchInvoker {
     /// from the given paths + run posture.
     pub fn new(
         paths: &crate::paths::Paths,
+        catalogue: AgentCatalogue,
         dry_run: bool,
         simulate: bool,
         artifact_dir: Option<PathBuf>,
         reader_cleanup_fence: Option<PathBuf>,
     ) -> Self {
         Self {
-            agents_dir: paths.agents_dir(),
+            catalogue,
             artifact_dir,
             app_ctx: Some(AppTransportCtx {
-                apps_dir: paths.apps_dir(),
                 logs_dir: paths.logs_dir(),
                 credentials_dir: paths.credentials_dir(),
                 dry_run,
@@ -3047,15 +3066,28 @@ impl DispatchInvoker {
         self.reader_cancellation.clone()
     }
 
+    /// The `blender` built-in reads its `bpy` scripts from the agent's root -
+    /// on a resolved run, the approved store package (#626).
+    ///
+    /// `Ok(None)` only under the working-copy catalogue (`--simulate`), where the
+    /// built-in reads the installed copy exactly as before; on a resolved run a
+    /// failed lookup is an error, never a quiet fallback to `agents/blender`.
+    fn builtin_blender_root(&self, agent: &str) -> Result<Option<PathBuf>, AwareError> {
+        if agent != "blender" {
+            return Ok(None);
+        }
+        self.catalogue.resolved_root(agent)
+    }
+
     fn transport_kind(&self, agent: &str) -> Result<TransportKind, AwareError> {
         // The funnel every dispatch passes through — `invoke_single` and
         // `invoke_stream` both start here, and `CliInvoker`/`RestInvoker` are
         // only ever constructed after it returns. The node's `agent:` id reaches
-        // us from the app FILE and nothing validates it as a path, so the fence
-        // in `load_agent_by_id` matters most here: every transport below joins
-        // the same id onto `agents_dir` again, and a traversal manifest declaring
-        // `cli:` or `rest:` never touches the app-transport path (#349, #365).
-        let m = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent)?;
+        // us from the app FILE and nothing validates it as a path. On a resolved
+        // run (#626) only ids the preflight resolver fenced and approved are in
+        // the catalogue; under `--simulate` the working-copy lookup goes through
+        // the `load_agent_by_id` fence (#349, #365).
+        let m = self.catalogue.manifest(agent)?;
         if let Some((code, reason)) =
             crate::validate::runtime_requirement_error(&m, crate::validate::CURRENT_CLI_VERSION)
         {
@@ -3089,44 +3121,30 @@ impl DispatchInvoker {
 
     /// Resolve the backing app + validate the caller's routed inputs for an
     /// app-backed agent. Shared by the one-shot and streaming dispatch paths.
+    ///
+    /// The backing app is NOT read here (#626): `aware app run` approved it and
+    /// resolved its agents once, at preflight (`agent_resolution::resolve_agents`),
+    /// and this takes that entry - the same approved source text and the same
+    /// resolved catalogue - so the provenance and model-reader fencing decided
+    /// at preflight are what dispatch runs under. Returns the app and the
+    /// catalogue its nested invoker and orchestrator must be built from.
     fn resolve_exposed(
         &self,
         app_ctx: &AppTransportCtx,
         agent: &str,
         command: &str,
         args: &mut Value,
-    ) -> Result<App, AwareError> {
-        let manifest = crate::manifest::loader::load_agent_by_id(&self.agents_dir, agent)?;
-        let backed_by = manifest
-            .transport
-            .app
-            .as_ref()
-            .map(|a| a.backed_by.clone())
-            .unwrap_or_else(|| agent.to_string());
-        // `agent` arrived through `transport_kind`, which fenced it. `backed-by:`
-        // has not been fenced by anyone: it comes from the agent MANIFEST and is
-        // joined onto `apps_dir` just below, so a hand-edited
-        // `backed-by: ../../elsewhere` would run an app from outside `apps/`. The
-        // pre-flight in `commands::app` fences the same field (#349 review).
-        if !crate::manifest::loader::is_safe_segment(&backed_by) {
-            return Err(AwareError::NotFound(format!(
-                "app-backed agent {agent}: backing app {backed_by} is not installed"
+    ) -> Result<(App, AgentCatalogue), AwareError> {
+        let Some(nested) = self.catalogue.nested(agent) else {
+            // Only a resolved run reaches app dispatch (`--simulate` stubs the
+            // node before the transport), so a missing entry is a wiring fault,
+            // never a reason to fall back to reading `apps/` and `agents/`.
+            return Err(AwareError::Internal(format!(
+                "app-backed agent {agent} was not resolved at preflight; refusing to dispatch it"
             )));
-        }
-
-        let app_dir = app_ctx.apps_dir.join(&backed_by);
-        if !app_dir.is_dir() {
-            return Err(AwareError::NotFound(format!(
-                "app-backed agent {agent}: backing app {backed_by} is not installed"
-            )));
-        }
-        let manifest_path =
-            crate::manifest::loader::find_app_manifest(&app_dir).ok_or_else(|| {
-                AwareError::Validation(format!("backing app {backed_by} has no .flo/.app file"))
-            })?;
-        // Nested app-backed dispatch is still app execution: require its own
-        // compiled approval and bind parsing to the exact bytes that were hashed.
-        let (app, approved_lock) = crate::app_lock::load_approved_app_with_lock(&manifest_path)?;
+        };
+        let backed_by = nested.backed_by.clone();
+        let app = nested.app_owned()?;
         if !app.exposes_as_agent {
             return Err(AwareError::Validation(format!(
                 "app {backed_by} is not declared exposes-as-agent"
@@ -3140,22 +3158,18 @@ impl DispatchInvoker {
         // #349: the backing app has its own `requires:` pins, and nothing else
         // checks them. `aware app run` pre-flights the app the operator named;
         // a nested exposed app is reached only here, so upgrading one of ITS
-        // agents to an incompatible version would otherwise still dispatch —
-        // the same live-catalogue gap the pre-flight exists to close, one level
-        // down. Skipped under `--simulate` for the same reason the pre-flight
-        // skips it: every node is stubbed and no binary is contacted.
+        // agents to an incompatible version would otherwise still dispatch.
+        // Judged against the backing app's OWN resolved catalogue (#626) - the
+        // bytes its lock approved - never the live `agents/`. Skipped under
+        // `--simulate` for the same reason the pre-flight skips it.
         if !app_ctx.simulate {
-            let agents = crate::manifest::loader::discover_agents_in(&self.agents_dir)?;
-            crate::app_lock::verify_agent_pins(&app, &approved_lock, &agents)?;
-            // The nested app gets the same two catalogue pre-flights `aware app run`
-            // applies to the app the operator named — it never had either, because
-            // the command-level pre-flight only ever sees the top-level app. Missing
-            // agent first: without it, a nested node whose agent isn't installed died
-            // at the transport with a bare `os error 3` naming neither.
+            let agents = nested.catalogue.agents();
+            // Missing agent first: without it, a nested node whose agent isn't
+            // installed died at the transport with a bare `os error 3`.
             let missing =
-                crate::validate::missing_agents(&app, &agents, crate::validate::Severity::Error);
+                crate::validate::missing_agents(&app, agents, crate::validate::Severity::Error);
             let pins =
-                crate::validate::unsatisfied_pins(&app, &agents, crate::validate::Severity::Error);
+                crate::validate::unsatisfied_pins(&app, agents, crate::validate::Severity::Error);
             if let Some(err) = missing.first().or_else(|| pins.first()) {
                 return Err(AwareError::Validation(format!(
                     "app-backed agent {agent}: [{}] {}",
@@ -3166,14 +3180,19 @@ impl DispatchInvoker {
         // Coerce + type-check the caller's routed inputs against the declared
         // contract (templating stringifies them; this restores declared types).
         crate::manifest::expose::validate_exposed_inputs(command, exposed, args)?;
-        Ok(app)
+        let catalogue = AgentCatalogue::resolved(
+            self.catalogue.agents_dir().to_path_buf(),
+            nested.catalogue.clone(),
+        );
+        Ok((app, catalogue))
     }
 
-    /// Build a leaf invoker for a nested app run — `app_ctx: None` forbids the
+    /// Build a leaf invoker for a nested app run - `app_ctx: None` forbids the
     /// nested app from composing yet another exposes-as-agent app (v0 rule).
-    fn nested_leaf(&self) -> Arc<dyn AgentInvoker> {
+    /// `catalogue` is the BACKING app's resolved catalogue, never the parent's.
+    fn nested_leaf(&self, catalogue: AgentCatalogue) -> Arc<dyn AgentInvoker> {
         Arc::new(DispatchInvoker {
-            agents_dir: self.agents_dir.clone(),
+            catalogue,
             artifact_dir: self.artifact_dir.clone(),
             app_ctx: None,
             // Carry the preview posture into the nested run so its built-ins still
@@ -3194,7 +3213,7 @@ impl DispatchInvoker {
         mut record_args: Value,
     ) -> Result<Value, AwareError> {
         let original_args = args.clone();
-        let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
+        let (app, catalogue) = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
         Self::align_record_args_after_coercion(&original_args, &args, &mut record_args);
         record_args = crate::runtime::orchestrator::trace_safe_app_inputs(&app, record_args);
         let backed_by = app.app.clone();
@@ -3210,8 +3229,8 @@ impl DispatchInvoker {
             app,
             args,
             record_args,
-            self.agents_dir.clone(),
-            self.nested_leaf(),
+            catalogue.clone(),
+            self.nested_leaf(catalogue),
             provenance,
             run_id,
             "nested".to_string(),
@@ -3231,7 +3250,7 @@ impl DispatchInvoker {
         mut record_args: Value,
     ) -> Result<StreamingHandle, AwareError> {
         let original_args = args.clone();
-        let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
+        let (app, catalogue) = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
         Self::align_record_args_after_coercion(&original_args, &args, &mut record_args);
         record_args = crate::runtime::orchestrator::trace_safe_app_inputs(&app, record_args);
         let backed_by = app.app.clone();
@@ -3256,8 +3275,7 @@ impl DispatchInvoker {
             let _ = nested_stop_tx.send(true);
         });
 
-        let agents_dir = self.agents_dir.clone();
-        let leaf = self.nested_leaf();
+        let leaf = self.nested_leaf(catalogue.clone());
         let creds = app_ctx.credentials_dir.clone();
         let dry_run = app_ctx.dry_run;
         let simulate = app_ctx.simulate;
@@ -3266,7 +3284,7 @@ impl DispatchInvoker {
                 app,
                 args,
                 record_args,
-                agents_dir,
+                catalogue,
                 leaf,
                 provenance,
                 run_id,
@@ -3388,11 +3406,11 @@ impl AgentInvoker for DispatchInvoker {
         args: Value,
         record_args: Value,
     ) -> Result<Value, AwareError> {
-        let dir = self.agents_dir.clone();
+        let catalogue = self.catalogue.clone();
         match self.report_transport_kind(agent, command)? {
             TransportKind::Cli => {
                 CliInvoker {
-                    agents_dir: dir,
+                    catalogue,
                     artifact_dir: self.artifact_dir.clone(),
                     reader_cancellation: self.reader_cancellation.clone(),
                 }
@@ -3400,7 +3418,7 @@ impl AgentInvoker for DispatchInvoker {
                 .await
             }
             TransportKind::Rest => {
-                Box::pin(RestInvoker { agents_dir: dir }.invoke_with_artifacts(
+                Box::pin(RestInvoker { catalogue }.invoke_with_artifacts(
                     None,
                     None,
                     agent,
@@ -3427,6 +3445,7 @@ impl AgentInvoker for DispatchInvoker {
                 }
                 BuiltinInvoker {
                     dry_run: self.preview,
+                    blender_root: self.builtin_blender_root(agent)?,
                 }
                 .invoke_single(agent, command, args)
                 .await
@@ -3460,7 +3479,7 @@ impl AgentInvoker for DispatchInvoker {
         match self.report_transport_kind(agent, command)? {
             TransportKind::Cli => {
                 CliInvoker {
-                    agents_dir: self.agents_dir.clone(),
+                    catalogue: self.catalogue.clone(),
                     artifact_dir: self.artifact_dir.clone(),
                     reader_cancellation: self.reader_cancellation.clone(),
                 }
@@ -3469,7 +3488,7 @@ impl AgentInvoker for DispatchInvoker {
             }
             TransportKind::Rest => {
                 RestInvoker {
-                    agents_dir: self.agents_dir.clone(),
+                    catalogue: self.catalogue.clone(),
                 }
                 .invoke_with_artifacts(
                     Some(node_id),
@@ -3505,11 +3524,11 @@ impl AgentInvoker for DispatchInvoker {
         args: Value,
         record_args: Value,
     ) -> Result<StreamingHandle, AwareError> {
-        let dir = self.agents_dir.clone();
+        let catalogue = self.catalogue.clone();
         match self.report_transport_kind(agent, command)? {
             TransportKind::Cli => {
                 CliInvoker {
-                    agents_dir: dir,
+                    catalogue,
                     artifact_dir: self.artifact_dir.clone(),
                     reader_cancellation: self.reader_cancellation.clone(),
                 }
@@ -3517,7 +3536,7 @@ impl AgentInvoker for DispatchInvoker {
                 .await
             }
             TransportKind::Rest => {
-                RestInvoker { agents_dir: dir }
+                RestInvoker { catalogue }
                     .invoke_stream(agent, command, args)
                     .await
             }
@@ -3531,6 +3550,7 @@ impl AgentInvoker for DispatchInvoker {
             TransportKind::Builtin => {
                 BuiltinInvoker {
                     dry_run: self.preview,
+                    blender_root: self.builtin_blender_root(agent)?,
                 }
                 .invoke_stream(agent, command, args)
                 .await
@@ -3773,7 +3793,7 @@ commands:
         .unwrap();
 
         let inv = CliInvoker {
-            agents_dir: tmp.path().to_path_buf(),
+            catalogue: (tmp.path().to_path_buf()).into(),
             artifact_dir: None,
             reader_cancellation: ReaderCancellation::default(),
         };
@@ -3808,7 +3828,7 @@ commands:
         .unwrap();
 
         let inv = CliInvoker {
-            agents_dir: tmp.path().to_path_buf(),
+            catalogue: (tmp.path().to_path_buf()).into(),
             artifact_dir: None,
             reader_cancellation: ReaderCancellation::default(),
         };
@@ -3849,7 +3869,7 @@ commands:
         .unwrap();
 
         let inv = CliInvoker {
-            agents_dir: tmp.path().to_path_buf(),
+            catalogue: (tmp.path().to_path_buf()).into(),
             artifact_dir: None,
             reader_cancellation: ReaderCancellation::default(),
         };
@@ -3882,7 +3902,7 @@ commands:
         .unwrap();
 
         let inv = CliInvoker {
-            agents_dir: tmp.path().to_path_buf(),
+            catalogue: (tmp.path().to_path_buf()).into(),
             artifact_dir: None,
             reader_cancellation: ReaderCancellation::default(),
         };
@@ -3972,6 +3992,34 @@ mod tests {
     use super::*;
     use serde_json::json;
 
+    /// On a resolved run the `blender` scripts root comes from the catalogue or
+    /// the dispatch fails — a failed lookup must never mean "run the working
+    /// copy". Only the working-copy catalogue (`--simulate`) defers to the
+    /// installed copy (review #626-6).
+    #[test]
+    fn a_resolved_run_never_falls_back_to_the_working_copy_for_blender_scripts() {
+        let invoker = |catalogue| DispatchInvoker {
+            catalogue,
+            artifact_dir: None,
+            app_ctx: None,
+            preview: false,
+            reader_cancellation: ReaderCancellation::default(),
+            private_header: None,
+            report_in_process_only: false,
+        };
+        let resolved = invoker(AgentCatalogue::resolved(
+            PathBuf::from("agents"),
+            Arc::new(crate::agent_resolution::ResolvedCatalogue::default()),
+        ));
+        assert!(
+            resolved.builtin_blender_root("blender").is_err(),
+            "a resolved run without blender must refuse, not read agents/blender"
+        );
+        assert_eq!(resolved.builtin_blender_root("ui").unwrap(), None);
+        let simulated = invoker(AgentCatalogue::working_copies(PathBuf::from("agents")));
+        assert_eq!(simulated.builtin_blender_root("blender").unwrap(), None);
+    }
+
     #[test]
     fn common_dispatch_funnel_rejects_a_newer_runtime_requirement() {
         let tmp = tempfile::tempdir().unwrap();
@@ -3993,7 +4041,7 @@ mod tests {
         .unwrap();
 
         let invoker = DispatchInvoker {
-            agents_dir,
+            catalogue: agents_dir.into(),
             artifact_dir: None,
             app_ctx: None,
             preview: false,
@@ -4233,7 +4281,7 @@ commands:
         let (port, rx) = mock_server(200, r#"{"ok":true,"id":42}"#);
         let tmp = http_agent_dir();
         let inv = RestInvoker {
-            agents_dir: tmp.path().to_path_buf(),
+            catalogue: (tmp.path().to_path_buf()).into(),
         };
         let out = inv
             .invoke_single(
@@ -4272,7 +4320,7 @@ commands:
         let (port, rx) = mock_server(200, r#"{"rows":[]}"#);
         let tmp = http_agent_dir();
         let inv = RestInvoker {
-            agents_dir: tmp.path().to_path_buf(),
+            catalogue: (tmp.path().to_path_buf()).into(),
         };
         let _ = inv
             .invoke_single(
@@ -4295,7 +4343,7 @@ commands:
         let (port, _rx) = mock_server(404, r#"{"message":"not found"}"#);
         let tmp = http_agent_dir();
         let inv = RestInvoker {
-            agents_dir: tmp.path().to_path_buf(),
+            catalogue: (tmp.path().to_path_buf()).into(),
         };
         let out = inv
             .invoke_single(
@@ -4318,7 +4366,7 @@ commands:
         };
         let tmp = http_agent_dir();
         let inv = RestInvoker {
-            agents_dir: tmp.path().to_path_buf(),
+            catalogue: (tmp.path().to_path_buf()).into(),
         };
         let err = inv
             .invoke_single(
@@ -4335,7 +4383,7 @@ commands:
     async fn command_that_is_not_a_method_is_rejected() {
         let tmp = http_agent_dir();
         let inv = RestInvoker {
-            agents_dir: tmp.path().to_path_buf(),
+            catalogue: (tmp.path().to_path_buf()).into(),
         };
         let err = inv
             .invoke_single(
@@ -4353,7 +4401,7 @@ commands:
         let (port, rx) = mock_server(200, r#"{"ok":true}"#);
         let tmp = http_agent_dir();
         let inv = DispatchInvoker {
-            agents_dir: tmp.path().to_path_buf(),
+            catalogue: (tmp.path().to_path_buf()).into(),
             artifact_dir: None,
             app_ctx: None,
             preview: false,
@@ -4469,7 +4517,9 @@ commands:
         std::fs::create_dir_all(&creds).unwrap();
         std::fs::write(creds.join("secured.json"), r#"{"key":"sk-live-123"}"#).unwrap();
 
-        let inv = RestInvoker { agents_dir: agents };
+        let inv = RestInvoker {
+            catalogue: agents.into(),
+        };
         let out = inv
             .invoke_single(
                 "secured",
@@ -4941,7 +4991,7 @@ commands:
         std::fs::write(creds.join("probe.json"), "{\"key\":\"sk-caf\u{00e9}\"}").unwrap();
 
         let inv = RestInvoker {
-            agents_dir: agents.clone(),
+            catalogue: (agents.clone()).into(),
         };
         let out = inv
             .invoke_single(
@@ -4969,14 +5019,16 @@ commands:
         // The same agent with the slot FREE still fails closed, so this is not a
         // hole in the charset check — only a narrowing of it to what is sent.
         let (port2, _rx2) = mock_server(200, r#"{"ok":true}"#);
-        let err = RestInvoker { agents_dir: agents }
-            .invoke_single(
-                "http",
-                "get",
-                serde_json::json!({ "url": format!("http://127.0.0.1:{port2}/thing") }),
-            )
-            .await
-            .expect_err("an unsendable credential must still be refused when it IS the one sent");
+        let err = RestInvoker {
+            catalogue: agents.into(),
+        }
+        .invoke_single(
+            "http",
+            "get",
+            serde_json::json!({ "url": format!("http://127.0.0.1:{port2}/thing") }),
+        )
+        .await
+        .expect_err("an unsendable credential must still be refused when it IS the one sent");
         assert!(
             err.to_string().contains("as an HTTP header"),
             "wrong error: {err}"
@@ -5031,7 +5083,9 @@ commands:
         std::fs::create_dir_all(&creds).unwrap();
         std::fs::write(creds.join("petstore.json"), r#"{"key":"sk-abc"}"#).unwrap();
 
-        let inv = RestInvoker { agents_dir: agents };
+        let inv = RestInvoker {
+            catalogue: agents.into(),
+        };
         let out = inv
             .invoke_single(
                 "petstore",
@@ -5093,7 +5147,9 @@ commands:
         std::fs::create_dir_all(&creds).unwrap();
         std::fs::write(creds.join("petstore.json"), r#"{"token":"jwt-xyz"}"#).unwrap();
 
-        let inv = RestInvoker { agents_dir: agents };
+        let inv = RestInvoker {
+            catalogue: agents.into(),
+        };
         let out = inv
             .invoke_single(
                 "petstore",
@@ -5140,7 +5196,9 @@ commands:
         .replace("PORT", &port.to_string());
         std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
 
-        let inv = RestInvoker { agents_dir: agents };
+        let inv = RestInvoker {
+            catalogue: agents.into(),
+        };
         // No `url` input — the mapping must drive the request.
         let out = inv
             .invoke_single("svc", "get", serde_json::json!({}))
@@ -5185,7 +5243,9 @@ commands:
         .replace("PORT", &port.to_string());
         std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
 
-        let inv = RestInvoker { agents_dir: agents };
+        let inv = RestInvoker {
+            catalogue: agents.into(),
+        };
         let _ = inv
             .invoke_single("svc", "get-thing", serde_json::json!({ "sid": "abc-9" }))
             .await
@@ -5243,7 +5303,9 @@ commands:
         std::fs::create_dir_all(&creds).unwrap();
         std::fs::write(creds.join("svc.json"), r#"{"key":"tok-9"}"#).unwrap();
 
-        let inv = RestInvoker { agents_dir: agents };
+        let inv = RestInvoker {
+            catalogue: agents.into(),
+        };
         let _ = inv
             .invoke_single("svc", "get-thing", serde_json::json!({ "sid": "abc" }))
             .await
@@ -5285,7 +5347,9 @@ commands:
         )
         .unwrap();
         // Deliberately no credentials/secured.json.
-        let inv = RestInvoker { agents_dir: agents };
+        let inv = RestInvoker {
+            catalogue: agents.into(),
+        };
         let err = inv
             .invoke_single(
                 "secured",
@@ -5340,7 +5404,9 @@ commands:
         .replace("PORT", &port.to_string());
         std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
 
-        let inv = RestInvoker { agents_dir: agents };
+        let inv = RestInvoker {
+            catalogue: agents.into(),
+        };
         let _ = inv
             .invoke_single("svc", "list", serde_json::json!({ "tags": ["a", "b"] }))
             .await
@@ -5385,7 +5451,9 @@ commands:
         std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
         // Deliberately no credentials/svc.json.
 
-        let inv = RestInvoker { agents_dir: agents };
+        let inv = RestInvoker {
+            catalogue: agents.into(),
+        };
         let out = inv
             .invoke_single("svc", "get-health", serde_json::json!({}))
             .await
@@ -5430,7 +5498,9 @@ commands:
 "#,
         )
         .unwrap();
-        let inv = RestInvoker { agents_dir: agents };
+        let inv = RestInvoker {
+            catalogue: agents.into(),
+        };
         let err = inv
             .invoke_single("svc", "get-pet", serde_json::json!({}))
             .await
@@ -5473,7 +5543,9 @@ commands:
         .replace("PORT", &port.to_string());
         std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
 
-        let inv = RestInvoker { agents_dir: agents };
+        let inv = RestInvoker {
+            catalogue: agents.into(),
+        };
         let _ = inv
             .invoke_single("svc", "search", serde_json::json!({ "body": "hello" }))
             .await
@@ -5531,19 +5603,25 @@ mod builtin_invoker_tests {
 
     #[tokio::test]
     async fn builtin_stream_is_rejected() {
-        let err = BuiltinInvoker { dry_run: false }
-            .invoke_stream("html-report", "render", json!({}))
-            .await
-            .unwrap_err();
+        let err = BuiltinInvoker {
+            dry_run: false,
+            blender_root: None,
+        }
+        .invoke_stream("html-report", "render", json!({}))
+        .await
+        .unwrap_err();
         assert!(matches!(err, AwareError::Validation(_)));
     }
 
     #[tokio::test]
     async fn unknown_builtin_command_errors() {
-        let err = BuiltinInvoker { dry_run: false }
-            .invoke_single("html-report", "nope", json!({}))
-            .await
-            .unwrap_err();
+        let err = BuiltinInvoker {
+            dry_run: false,
+            blender_root: None,
+        }
+        .invoke_single("html-report", "nope", json!({}))
+        .await
+        .unwrap_err();
         assert!(matches!(err, AwareError::Validation(_)));
     }
 
@@ -5606,7 +5684,7 @@ mod builtin_invoker_tests {
         .unwrap();
         let out = tmp.path().join("r.html");
         let inv = DispatchInvoker {
-            agents_dir: agents,
+            catalogue: (agents).into(),
             artifact_dir: None,
             app_ctx: None, // nested-invoker shape
             preview: true,

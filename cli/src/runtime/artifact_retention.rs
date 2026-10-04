@@ -191,13 +191,17 @@ fn plain_file(dir: &Dir, name: &str) -> Result<(), AwareError> {
     Ok(())
 }
 
-fn classify_nodes(paths: &Paths, nodes: &[Node]) -> Result<WriterClass, AwareError> {
+fn classify_nodes(
+    catalogue: &crate::agent_resolution::AgentCatalogue,
+    nodes: &[Node],
+) -> Result<WriterClass, AwareError> {
     for node in nodes {
         if node.frozen.is_some() {
             continue;
         }
         if let Some(agent) = &node.agent {
-            let manifest = crate::manifest::loader::load_agent_by_id(&paths.agents_dir(), agent)?;
+            // The run's resolved manifest (#626), not a fresh read of `agents/`.
+            let manifest = catalogue.manifest(agent)?;
             let transport = effective_transport(&manifest, agent)?;
             let safe = transport == TransportKind::Rest
                 || (transport == TransportKind::Builtin
@@ -208,7 +212,7 @@ fn classify_nodes(paths: &Paths, nodes: &[Node]) -> Result<WriterClass, AwareErr
             }
         }
         if let Some(body) = &node.do_
-            && classify_nodes(paths, body)? != WriterClass::InProcess
+            && classify_nodes(catalogue, body)? != WriterClass::InProcess
         {
             return Ok(WriterClass::ExternalPossible);
         }
@@ -218,6 +222,7 @@ fn classify_nodes(paths: &Paths, nodes: &[Node]) -> Result<WriterClass, AwareErr
 
 pub fn begin_if_reserved(
     paths: &Paths,
+    catalogue: &crate::agent_resolution::AgentCatalogue,
     app: &str,
     instance: &str,
     run_id: &str,
@@ -251,7 +256,7 @@ pub fn begin_if_reserved(
     let mut options = OpenOptions::new();
     options.read(true).write(true).create_new(true);
     let mut file = instance_dir.open_with(&name, &options)?.into_std();
-    let writer_class = classify_nodes(paths, &graph.nodes)?;
+    let writer_class = classify_nodes(catalogue, &graph.nodes)?;
     let record = LeaseRecord {
         schema_version: LEASE_SCHEMA.into(),
         reservation_id: reservation_id.into(),
@@ -441,7 +446,10 @@ mod tests {
         let paths = Paths {
             aware_home: root.path().into(),
         };
-        assert_eq!(classify_nodes(&paths, &[]).unwrap(), WriterClass::InProcess);
+        assert_eq!(
+            classify_nodes(&paths.agents_dir().into(), &[]).unwrap(),
+            WriterClass::InProcess
+        );
     }
 
     /// Installs a minimal agent manifest so `classify_nodes` resolves a real
@@ -477,7 +485,7 @@ mod tests {
         install_agent(&paths, "shell-tool", "  cli:\n    binary: run-me\n");
         assert_eq!(
             classify_nodes(
-                &paths,
+                &paths.agents_dir().into(),
                 &nodes("- id: n1\n  agent: shell-tool\n  command: go\n")
             )
             .unwrap(),
@@ -496,7 +504,7 @@ mod tests {
         install_agent(&paths, "api-tool", "  rest: {}\n");
         assert_eq!(
             classify_nodes(
-                &paths,
+                &paths.agents_dir().into(),
                 &nodes("- id: n1\n  agent: api-tool\n  command: go\n")
             )
             .unwrap(),
@@ -523,7 +531,7 @@ mod tests {
 
         assert_eq!(
             classify_nodes(
-                &paths,
+                &paths.agents_dir().into(),
                 &nodes("- id: n1\n  agent: html-report-stream\n  command: render-stream\n")
             )
             .unwrap(),
@@ -532,7 +540,7 @@ mod tests {
         );
         assert_eq!(
             classify_nodes(
-                &paths,
+                &paths.agents_dir().into(),
                 &nodes("- id: n1\n  agent: html-report-stream\n  command: go\n")
             )
             .unwrap(),
@@ -541,7 +549,7 @@ mod tests {
         );
         assert_eq!(
             classify_nodes(
-                &paths,
+                &paths.agents_dir().into(),
                 &nodes("- id: n1\n  agent: other-builtin\n  command: render-stream\n")
             )
             .unwrap(),
@@ -567,7 +575,7 @@ mod tests {
         );
         assert_eq!(
             classify_nodes(
-                &cli_paths,
+                &cli_paths.agents_dir().into(),
                 &nodes("- id: n1\n  agent: html-report-stream\n  command: render-stream\n")
             )
             .unwrap(),
@@ -588,7 +596,7 @@ mod tests {
         install_agent(&paths, "shell-tool", "  cli:\n    binary: run-me\n");
         assert_eq!(
             classify_nodes(
-                &paths,
+                &paths.agents_dir().into(),
                 &nodes(
                     "- id: n1\n  agent: shell-tool\n  command: go\n  \
                      frozen: { value: 1 }\n"
@@ -612,7 +620,7 @@ mod tests {
         install_agent(&paths, "shell-tool", "  cli:\n    binary: run-me\n");
         assert_eq!(
             classify_nodes(
-                &paths,
+                &paths.agents_dir().into(),
                 &nodes(
                     "- id: outer\n  agent: api-tool\n  command: go\n  \
                      for-each: \"{{ items }}\"\n  do:\n    - id: inner\n      \
@@ -646,9 +654,16 @@ mod tests {
         )
         .unwrap();
         let _reservation = EnvVarGuard::set("AWARE_REPORT_RESERVATION_ID", "collision-reservation");
-        let error = begin_if_reserved(&paths, "test-app", "default", "fixed-run", &graph)
-            .err()
-            .unwrap();
+        let error = begin_if_reserved(
+            &paths,
+            &paths.agents_dir().into(),
+            "test-app",
+            "default",
+            "fixed-run",
+            &graph,
+        )
+        .err()
+        .unwrap();
         assert!(matches!(error, AwareError::Io(_)));
         assert_eq!(
             std::fs::read(collision.join("keep")).unwrap(),

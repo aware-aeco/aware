@@ -3,7 +3,16 @@
 use crate::error::AwareError;
 use crate::paths::Paths;
 
+/// Remove `agents/<id>/`. The immutable agent store (`agent-store/<id>/`) is
+/// deliberately left alone (#626): its packages are unreachable once the
+/// working copy is gone (a run then refuses with the missing-agent error), and
+/// removing them is GC's job (#629), which needs run leases (#627).
 pub fn uninstall_agent(id: &str, paths: &Paths) -> Result<(), AwareError> {
+    // Fenced like every other agent-id join (#365): `id` is typed by a person
+    // and must never name a directory outside `agents/` for `remove_dir_all`.
+    if !crate::manifest::loader::is_safe_segment(id) {
+        return Err(AwareError::NotFound(format!("agent {id} is not installed")));
+    }
     let dir = paths.agents_dir().join(id);
     if !dir.exists() {
         return Err(AwareError::NotFound(format!("agent {id} is not installed")));
@@ -43,6 +52,49 @@ mod tests {
         std::fs::write(dir.join("manifest.yaml"), "agent: tekla\n").unwrap();
         uninstall_agent("tekla", &paths).unwrap();
         assert!(!dir.exists());
+    }
+
+    #[test]
+    fn uninstall_leaves_the_agent_store_alone() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().to_path_buf(),
+        };
+        let dir = paths.agents_dir().join("tekla");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            "agent: tekla\nversion: 1.0.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+             transport:\n  cli:\n    binary: aware-tekla\ncommands: {}\n",
+        )
+        .unwrap();
+        let package = crate::agent_store::snapshot(&paths, &dir).unwrap();
+        uninstall_agent("tekla", &paths).unwrap();
+        assert!(!dir.exists());
+        assert!(
+            package.root.join("manifest.yaml").is_file(),
+            "uninstall must not touch the store"
+        );
+    }
+
+    #[test]
+    fn a_path_shaped_id_is_refused_before_any_removal() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("home"),
+        };
+        // A directory OUTSIDE agents/ that `agents/../victim` would name.
+        let victim = paths.aware_home.join("victim");
+        std::fs::create_dir_all(&victim).unwrap();
+        std::fs::create_dir_all(paths.agents_dir()).unwrap();
+        for id in ["../victim", "..", "a/b", ""] {
+            let err = uninstall_agent(id, &paths).unwrap_err();
+            assert!(matches!(err, AwareError::NotFound(_)), "{id:?}: {err:?}");
+        }
+        assert!(
+            victim.is_dir(),
+            "the fence must refuse before remove_dir_all"
+        );
     }
 
     #[test]
