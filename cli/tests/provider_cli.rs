@@ -1224,7 +1224,8 @@ fn prune_removes_nothing_when_any_record_cannot_be_read() {
     trust_and_enroll(&home, &stale);
     trust_and_enroll(&home, &active);
     select(&home, &active);
-    // Named to sort after every digest, so a single-pass prune would already have retired.
+    // `prune` walks records in name order, and this name sorts after every lowercase-hex digest:
+    // a prune that removed while it classified would already have retired `stale` by now.
     let stray = home.join("providers/packages/zz-stray.txt");
     std::fs::write(&stray, b"not a record").unwrap();
 

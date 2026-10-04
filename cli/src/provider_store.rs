@@ -620,11 +620,14 @@ impl ProviderStore {
         let mut superseded = Vec::new();
         let mut kept = Vec::new();
         let packages_dir = self.root.join("packages");
-        let entries = match std::fs::read_dir(&packages_dir) {
+        let mut entries = match std::fs::read_dir(&packages_dir) {
             Ok(entries) => entries.collect::<Result<Vec<_>, _>>()?,
             Err(error) if error.kind() == std::io::ErrorKind::NotFound => Vec::new(),
             Err(error) => return Err(error.into()),
         };
+        // `read_dir` order is the filesystem's; name order makes a prune behave — and fail — the
+        // same way on every platform.
+        entries.sort_by_key(std::fs::DirEntry::file_name);
         for entry in entries {
             let Some(digest) = enrollment_digest(&entry)? else {
                 continue;
