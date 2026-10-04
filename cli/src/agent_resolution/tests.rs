@@ -830,3 +830,130 @@ fn app_check_fails_only_when_it_cannot_run() {
     let source = write_source(&h.paths.apps_dir().join("demo"), "app: [unparseable");
     assert!(check_app(&h.paths, &source).is_err());
 }
+
+// ── review round 1: hashing and snapshot failures are named, not relabelled ──
+
+/// Put a directory link (a junction on Windows) inside `dir`, which makes the
+/// tree unhashable: `tree_digest` refuses reparse/symlink indirection.
+fn link_inside(dir: &Path, outside: &Path) {
+    std::fs::create_dir_all(outside).unwrap();
+    let link = dir.join("linked");
+    #[cfg(windows)]
+    {
+        let status = std::process::Command::new("cmd.exe")
+            .args(["/C", "mklink", "/J"])
+            .arg(&link)
+            .arg(outside)
+            .stdout(std::process::Stdio::null())
+            .stderr(std::process::Stdio::null())
+            .status()
+            .unwrap();
+        assert!(status.success(), "failed to create test junction");
+    }
+    #[cfg(unix)]
+    std::os::unix::fs::symlink(outside, &link).unwrap();
+}
+
+#[test]
+fn an_unhashable_current_copy_is_named_not_called_changed_bytes() {
+    let h = home();
+    let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
+    let d1 = digest(&v1);
+    crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    link_inside(&v1, &h.paths.aware_home.join("outside"));
+    let pinned = lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]);
+
+    // The approved bytes are still stored: they run, and the detail says why
+    // the installed copy could not be compared — not that it changed.
+    let outcome = assess_agent(&h.paths, "alpha", &pinned, Mode::Check).unwrap();
+    assert_eq!(outcome.resolution, Resolution::Stored);
+    assert!(
+        outcome.detail.contains("cannot be hashed"),
+        "{}",
+        outcome.detail
+    );
+
+    // With no stored copy, the refusal names the hashing failure.
+    std::fs::remove_dir_all(h.paths.agent_store_dir()).unwrap();
+    let error = resolve_agents(
+        &h.paths,
+        &app_using(&["alpha"]),
+        &pinned,
+        Selection::Default,
+    )
+    .unwrap_err()
+    .to_string();
+    assert!(error.contains("cannot be hashed"), "{error}");
+    assert!(!error.contains("has changed"), "{error}");
+}
+
+#[test]
+fn a_failed_snapshot_of_the_matching_copy_falls_through_to_a_valid_stored_copy() {
+    let h = home();
+    let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
+    let d1 = digest(&v1);
+    official_receipt(&v1, "alpha", "1.0.0");
+    let official = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    crate::install::provenance::write_required(
+        &v1,
+        &crate::install::provenance::InstallSource::Local { path: "x".into() },
+    )
+    .unwrap();
+    // The current copy's OWN package exists but is corrupt, so its snapshot
+    // refuses — yet an equally valid package of the same bytes is stored.
+    let own = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    std::fs::write(own.root.join("skills").join("s.md"), "tampered").unwrap();
+    let pinned = lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]);
+    let app = app_using(&["alpha"]);
+
+    let resolved = resolve_agents(&h.paths, &app, &pinned, Selection::Default).unwrap();
+    assert_eq!(resolved.get("alpha").unwrap().root, official.root);
+    assert_eq!(
+        resolved.info("alpha").unwrap().resolution,
+        Resolution::Stored
+    );
+    // …and `app check` agrees with the run.
+    let check = assess_agent(&h.paths, "alpha", &pinned, Mode::Check).unwrap();
+    assert_eq!(check.resolution, Resolution::Stored);
+}
+
+#[test]
+fn a_snapshot_failure_with_nothing_stored_keeps_its_own_error_class() {
+    let h = home();
+    let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
+    let d1 = digest(&v1);
+    let pinned = lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]);
+    crate::agent_store::inject_fault(0, crate::agent_store::FaultStep::Rename);
+    let error = resolve_agents(
+        &h.paths,
+        &app_using(&["alpha"]),
+        &pinned,
+        Selection::Default,
+    )
+    .unwrap_err();
+    crate::agent_store::clear_fault();
+    assert!(matches!(error, AwareError::Internal(_)), "{error:?}");
+    assert!(
+        !error.to_string().contains("BUNDLE_PIN_MISMATCH"),
+        "a failed snapshot is not a bundle mismatch: {error}"
+    );
+}
+
+#[test]
+fn a_legacy_lock_on_an_unhashable_copy_is_a_data_refusal_in_check_and_in_run() {
+    let h = home();
+    let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
+    let source = compile_app(&h, &["alpha"]);
+    edit_lock(&source, |lock| lock.agent_digests.clear());
+    link_inside(&v1, &h.paths.aware_home.join("outside"));
+
+    let check = check_app(&h.paths, &source).expect("check reports data, it does not fail");
+    assert!(!check.approval_current);
+    assert_eq!(row(&check, "alpha").resolution, Resolution::DigestMismatch);
+    assert!(row(&check, "alpha").detail.contains("cannot be hashed"));
+
+    let lock: LockFile =
+        serde_yaml::from_str(&std::fs::read_to_string(source.with_file_name("demo.lock")).unwrap())
+            .unwrap();
+    assert!(resolve_agents(&h.paths, &app_using(&["alpha"]), &lock, Selection::Default).is_err());
+}

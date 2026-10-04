@@ -586,39 +586,51 @@ fn assess_agent(
     };
 
     // The current copy, if it still IS the approved bytes, supplies the package
-    // (its own receipt kept); otherwise the store does.
-    let current_digest = crate::install::integrity::tree_digest(&current_root).ok();
+    // (its own receipt kept); otherwise the store does. A copy that cannot be
+    // hashed (symlink/reparse indirection, a non-UTF-8 name) is reported as
+    // exactly that - never as "changed bytes"; a copy that cannot be READ is a
+    // real error and propagates (the run fails with it, `app check` cannot run).
+    let mut notes: Vec<String> = Vec::new();
+    let current_digest = match hash_current(&current_root)? {
+        Ok(digest) => Some(digest),
+        Err(reason) => {
+            notes.push(format!("the installed copy cannot be hashed ({reason})"));
+            None
+        }
+    };
     let mut own: Option<StoredPackage> = None;
+    let mut own_is_approved_in_check = false;
+    let mut snapshot_error: Option<AwareError> = None;
     if current_digest.as_deref() == Some(required.as_str()) && current.version == pinned {
         match mode {
             Mode::Run(_) => match agent_store::snapshot(paths, &current_root) {
                 Ok(package) if package.digest == required && package.version == pinned => {
                     own = Some(package);
                 }
-                Ok(_) => {} // changed under us; the store decides below
+                Ok(_) => notes.push("the installed copy changed while the run started".into()),
+                // Not a bundle mismatch: keep the error, and let a valid stored
+                // package of the same bytes serve the run if there is one.
                 Err(error) => {
-                    outcome.resolution = Resolution::DigestMismatch;
-                    outcome.detail = error.to_string();
-                    outcome.refusal = Some(bundle_mismatch(id, &required, &error.to_string()));
-                    return Ok(outcome);
+                    notes.push(format!("snapshotting the installed copy failed ({error})"));
+                    snapshot_error = Some(error);
                 }
             },
             Mode::Check => {
+                // Exactly what the run's snapshot would do: reuse a valid
+                // package at this receipt key, or take a fresh one. A corrupt one
+                // there makes the run fall through to the other candidates below.
                 let key = agent_store::receipt_key(&current_root)?;
                 let package = agent_store::digest_container(paths, id, &required)?.join(&key);
-                if std::fs::symlink_metadata(&package).is_ok()
-                    && let Err(reason) = agent_store::verify_package(&package, id, &required, &key)
+                if std::fs::symlink_metadata(&package).is_err()
+                    || agent_store::verify_package(&package, id, &required, &key).is_ok()
                 {
-                    outcome.resolution = Resolution::DigestMismatch;
-                    outcome.detail = format!(
-                        "the stored copy of the approved bytes at {} does not verify: {reason}",
+                    own_is_approved_in_check = true;
+                } else {
+                    notes.push(format!(
+                        "snapshotting the installed copy would fail: the stored package {} does not verify",
                         package.display()
-                    );
-                    return Ok(outcome);
+                    ));
                 }
-                outcome.resolution = Resolution::Current;
-                outcome.detail = format!("the installed {id} {pinned} is the approved copy");
-                return Ok(outcome);
             }
         }
     }
@@ -647,6 +659,13 @@ fn assess_agent(
         || own
             .as_ref()
             .is_some_and(|package| crate::install::provenance::claims_official(&package.root));
+    let with_notes = |sentence: String, notes: &[String]| {
+        if notes.is_empty() {
+            sentence
+        } else {
+            format!("{sentence} ({})", notes.join("; "))
+        }
+    };
 
     if let Some(own) = own {
         let rest: Vec<StoredPackage> = valid
@@ -663,13 +682,21 @@ fn assess_agent(
         });
         return Ok(outcome);
     }
+    if own_is_approved_in_check {
+        outcome.resolution = Resolution::Current;
+        outcome.detail = format!("the installed {id} {pinned} is the approved copy");
+        return Ok(outcome);
+    }
 
     let mut ordered = valid.into_iter().map(|(_, _, package)| package);
     if let Some(first) = ordered.next() {
         outcome.resolution = Resolution::Stored;
-        outcome.detail = format!(
-            "the approved {id} {pinned} runs from its stored copy; {} is installed",
-            current.version
+        outcome.detail = with_notes(
+            format!(
+                "the approved {id} {pinned} runs from its stored copy; {} is installed",
+                current.version
+            ),
+            &notes,
         );
         if matches!(mode, Mode::Run(_)) {
             outcome.chosen = Some(Chosen {
@@ -683,9 +710,12 @@ fn assess_agent(
 
     if let Some((dir, reason)) = invalid.into_iter().next() {
         outcome.resolution = Resolution::DigestMismatch;
-        outcome.detail = format!(
-            "the stored copy of the approved {id} {pinned} at {} does not verify: {reason}",
-            dir.display()
+        outcome.detail = with_notes(
+            format!(
+                "the stored copy of the approved {id} {pinned} at {} does not verify: {reason}",
+                dir.display()
+            ),
+            &notes,
         );
         outcome.refusal = Some(bundle_mismatch(
             id,
@@ -698,10 +728,26 @@ fn assess_agent(
         return Ok(outcome);
     }
 
+    // The snapshot of the matching copy failed and nothing else holds those
+    // bytes: refuse with THAT error, in its own class.
+    if let Some(error) = snapshot_error {
+        outcome.resolution = Resolution::DigestMismatch;
+        outcome.detail = error.to_string();
+        outcome.refusal = Some(error);
+        return Ok(outcome);
+    }
+
     outcome.resolution = Resolution::PinNotInstalled;
-    outcome.detail = if current.version == pinned {
+    outcome.detail = if current_digest.is_none() {
+        with_notes(
+            format!(
+                "no stored copy of the approved bytes of {id} {pinned} exists, and the installed copy cannot be compared with them"
+            ),
+            &notes,
+        )
+    } else if current.version == pinned {
         format!(
-            "the approved bytes of {id} {pinned} are no longer installed — the installed copy has changed since compile; compile the app again to approve it"
+            "the approved bytes of {id} {pinned} are no longer installed - the installed copy has changed since compile; compile the app again to approve it"
         )
     } else {
         format!(
@@ -714,6 +760,18 @@ fn assess_agent(
         outcome.detail
     )));
     Ok(outcome)
+}
+
+/// Hash the installed copy. `Ok(Err(reason))` when the tree cannot be hashed by
+/// rule (symlink/reparse indirection, a non-UTF-8 name, a non-regular entry) -
+/// a fact about the copy the caller reports as data; `Err` when it cannot be
+/// READ, which is a real fault the caller propagates.
+fn hash_current(root: &Path) -> Result<Result<String, String>, AwareError> {
+    match crate::install::integrity::tree_digest(root) {
+        Ok(digest) => Ok(Ok(digest)),
+        Err(AwareError::Validation(reason)) => Ok(Err(reason)),
+        Err(error) => Err(error),
+    }
 }
 
 /// A lock with no digest for this agent: today's version check, then the run
@@ -769,7 +827,18 @@ fn legacy_version_only(
             }
         },
         Mode::Check => {
-            let digest = crate::install::integrity::tree_digest(current_root)?;
+            // The run's snapshot would refuse a copy it cannot hash: report the
+            // same refusal as data, not as a check that could not run.
+            let digest = match hash_current(current_root)? {
+                Ok(digest) => digest,
+                Err(reason) => {
+                    outcome.resolution = Resolution::DigestMismatch;
+                    outcome.detail = format!(
+                        "the installed {id} cannot be hashed ({reason}), so it cannot be snapshotted to run"
+                    );
+                    return Ok(outcome);
+                }
+            };
             let key = agent_store::receipt_key(current_root)?;
             let package = agent_store::digest_container(paths, id, &digest)?.join(&key);
             if std::fs::symlink_metadata(&package).is_ok()
