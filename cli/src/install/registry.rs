@@ -541,11 +541,12 @@ pub fn update_agent_from_registry(
 }
 
 /// Snapshot the staged copy and every directory an update is about to remove
-/// (#626), stopping at the first failure. An outgoing directory with no
-/// loadable manifest is skipped: no lock can have been compiled against it
-/// (compile snapshots first) or resolve to it (the resolver loads the
-/// manifest), and `check_update_is_not_destructive` already made the person
-/// pass `--force` to replace it — refusing here would leave them nothing to do.
+/// (#626), stopping at the first failure. An outgoing directory that is absent,
+/// or whose manifest reads but does not parse, is skipped with a warning: no
+/// lock can resolve to it (the resolver loads the manifest), and
+/// `check_update_is_not_destructive` already made the person pass `--force` to
+/// replace it. A manifest that cannot be READ is not skipped — it may be the
+/// only copy a lock resolves to — and refuses the update before any removal.
 fn snapshot_before_swap(
     paths: &Paths,
     staging: &Path,
@@ -561,8 +562,28 @@ fn snapshot_before_swap(
     };
     for outgoing in outgoing_ids {
         // Fenced by-id lookups (#365): a path-shaped id names no agent here.
-        if crate::manifest::loader::load_agent_by_id(&agents, outgoing).is_err() {
-            continue;
+        match crate::manifest::loader::load_agent_by_id(&agents, outgoing) {
+            Ok(_) => {}
+            // Nothing there (or an id that can name nothing): nothing to keep.
+            Err(AwareError::NotFound(_)) => continue,
+            Err(AwareError::Io(error)) if error.kind() == std::io::ErrorKind::NotFound => {
+                continue;
+            }
+            // Present but not an agent manifest: no lock can pin it, and
+            // `--force` was required to get here. Say so, then proceed.
+            Err(error @ (AwareError::Validation(_) | AwareError::Yaml(_))) => {
+                eprintln!(
+                    "\u{26a0} agents/{outgoing} has no readable agent manifest ({error}); it is replaced without a snapshot"
+                );
+                continue;
+            }
+            // Could not READ it (a sharing violation, a permission fault): it may
+            // be the only copy a lock resolves to, so refuse before removing it.
+            Err(error) => {
+                return Err(AwareError::Validation(format!(
+                    "[E_AGENT_STORE_SNAPSHOT_FAILED] cannot read agents/{outgoing} to keep a copy of it before the update replaces it ({error}); nothing was changed — retry once whatever holds it has let go"
+                )));
+            }
         }
         let manifest = crate::manifest::loader::agent_manifest_path(&agents, outgoing)?;
         let Some(root) = manifest.parent() else {
@@ -1923,6 +1944,45 @@ mod tests {
                 );
             }
         }
+    }
+
+    /// An outgoing manifest that cannot be READ (a sharing violation, a
+    /// permission fault — here a directory where the file should be) is not
+    /// "nothing to snapshot": skipping it would remove the only copy an
+    /// `agent-bundle-pins` lock could still resolve. The update refuses with
+    /// `agents/` untouched (review #626-5).
+    #[test]
+    fn an_io_error_reading_an_outgoing_manifest_refuses_the_update() {
+        let tmp = tempfile::tempdir().unwrap();
+        let (paths, index) = installed_tekla(tmp.path());
+        let installed = paths.agents_dir().join("tekla");
+        let manifest = installed.join("manifest.yaml");
+        let text = std::fs::read(&manifest).unwrap();
+        std::fs::remove_file(&manifest).unwrap();
+        std::fs::create_dir(&manifest).unwrap();
+        std::fs::write(manifest.join("held-open"), &text).unwrap();
+        let before = tree_bytes(&paths.agents_dir());
+
+        let result = update_agent_from_registry("tekla", None, false, &paths, &index);
+
+        assert!(result.is_err(), "an unreadable outgoing copy must refuse");
+        assert_eq!(tree_bytes(&paths.agents_dir()), before, "agents/ untouched");
+    }
+
+    /// A manifest that reads but does not parse is genuinely not an agent a
+    /// lock could pin: the update proceeds (warning on stderr), as `--force`
+    /// on such a directory always intended.
+    #[test]
+    fn an_unparseable_outgoing_manifest_is_skipped_and_the_update_proceeds() {
+        let tmp = tempfile::tempdir().unwrap();
+        let (paths, index) = installed_tekla(tmp.path());
+        let manifest = paths.agents_dir().join("tekla").join("manifest.yaml");
+        std::fs::write(&manifest, "agent: [not yaml").unwrap();
+        update_agent_from_registry("tekla", None, true, &paths, &index).unwrap();
+        assert!(
+            crate::manifest::loader::load_agent(&manifest).is_ok(),
+            "the registry copy replaced the broken one"
+        );
     }
 
     #[test]
