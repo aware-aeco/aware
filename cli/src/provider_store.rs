@@ -362,6 +362,9 @@ impl ProviderStore {
         };
         let bytes = canonical_json_bytes(&policy)?;
         let digest = sha256_hex(&bytes);
+        let format_id = &package.manifest.format_id;
+        let _selection_lock = self.acquire_selection_lock(format_id)?;
+        self.confirm_enrolled_under_lock(manifest_sha256, format_id, "admitted")?;
         write_replace_json(
             &self
                 .root
@@ -390,23 +393,7 @@ impl ProviderStore {
         }
         verify_compatible(&package.manifest)?;
         let _selection_lock = self.acquire_selection_lock(format_id)?;
-        // The package was verified before the lock was taken, and `prune` / `unenroll` retire
-        // records under this same lock. Re-read the record here so a selection can never name an
-        // enrollment that was retired in between (#624).
-        let current = self
-            .read_package(manifest_sha256)
-            .map_err(|error| match error {
-                AwareError::NotFound(_) => AwareError::NotFound(
-                    "provider package was unenrolled while it was being selected".into(),
-                ),
-                other => other,
-            })?;
-        validate_enrollment_record(&current, manifest_sha256)?;
-        if current.revoked || !current.enrolled || current.manifest.format_id != format_id {
-            return Err(AwareError::Validation(
-                "provider package is not an active enrollment for that format".into(),
-            ));
-        }
+        self.confirm_enrolled_under_lock(manifest_sha256, format_id, "selected")?;
         let path = self.selection_path(format_id);
         let prior = read_optional_json::<SelectionRecord>(&path)?;
         if let Some(selection) = &prior {
@@ -454,17 +441,22 @@ impl ProviderStore {
                 {
                     continue;
                 }
-                let selection: SelectionRecord = read_json(&entry.path())?;
-                let expected_name = format!("{}.json", selection.format_id);
-                if file_name != Some(expected_name.as_str()) {
-                    return Err(AwareError::Validation(
-                        "provider selection record filename does not match its format".into(),
-                    ));
-                }
-                validate_selection_record(&selection, &selection.format_id)?;
+                let path = entry.path();
+                let read_selection = || -> Result<SelectionRecord, AwareError> {
+                    let selection: SelectionRecord = read_json(&path)?;
+                    let expected_name = format!("{}.json", selection.format_id);
+                    if file_name != Some(expected_name.as_str()) {
+                        return Err(AwareError::Validation(
+                            "provider selection record filename does not match its format".into(),
+                        ));
+                    }
+                    validate_selection_record(&selection, &selection.format_id)?;
+                    Ok(selection)
+                };
                 // The selected package's own re-verification happens with every other enrollment
                 // below; here only the store's record must agree with the selection.
-                let selected = self.read_package(&selection.active_manifest_sha256)?;
+                let (selection, selected) =
+                    read_active_selection(read_selection, |digest| self.read_package(digest))?;
                 if selected.manifest.format_id != selection.format_id {
                     return Err(AwareError::Validation(
                         "provider selection does not reference a package for its format".into(),
@@ -603,8 +595,11 @@ impl ProviderStore {
     /// history (at most eight digests, which `select` already bounds), and enrolled before the
     /// current selection was made. The last condition keeps a package a host has just enrolled
     /// and is about to select, so a prune racing that sequence cannot remove it; it compares the
-    /// store's own record timestamps and decides only what is kept, never what is trusted. A
-    /// format with no selection has superseded nothing, so nothing is retired.
+    /// store's own record timestamps and decides only what is kept, never what is trusted. Its
+    /// failure mode is bounded: a clock set backwards, or a store restored with fresh timestamps,
+    /// can make a pending enrollment look superseded, and then the host's `select` fails
+    /// not-found and enrolling again recovers. A format with no selection has superseded nothing,
+    /// so nothing is retired.
     pub(crate) fn prune(
         &self,
         format_id: &str,
@@ -620,7 +615,9 @@ impl ProviderStore {
             )),
             None => None,
         };
-        let mut retired = Vec::new();
+        // Two passes: every record is read, validated and classified before anything is removed,
+        // so a stray or corrupt record fails the command with the store untouched.
+        let mut superseded = Vec::new();
         let mut kept = Vec::new();
         let packages_dir = self.root.join("packages");
         let entries = match std::fs::read_dir(&packages_dir) {
@@ -665,21 +662,42 @@ impl ProviderStore {
                     package_version: package.manifest.package_version,
                     reason,
                 }),
-                None => retired.push(self.retire(&package, dry_run)?),
+                None => superseded.push(package),
             }
         }
-        retired.sort_by(|left, right| {
+        superseded.sort_by(|left, right| {
             (
-                &left.package_id,
-                &left.package_version,
+                &left.manifest.package_id,
+                &left.manifest.package_version,
                 &left.manifest_sha256,
             )
                 .cmp(&(
-                    &right.package_id,
-                    &right.package_version,
+                    &right.manifest.package_id,
+                    &right.manifest.package_version,
                     &right.manifest_sha256,
                 ))
         });
+        let mut retired = Vec::with_capacity(superseded.len());
+        for package in &superseded {
+            match self.retire(package, dry_run) {
+                Ok(package) => retired.push(package),
+                // Removal itself failed (a record held open on Windows, a permission change).
+                // Each retire is atomic on its own, so say exactly which ones already went.
+                Err(error) => {
+                    let done = retired
+                        .iter()
+                        .map(|package| package.manifest_sha256.as_str())
+                        .collect::<Vec<_>>();
+                    return Err(AwareError::Internal(format!(
+                        "provider prune retired {} of {} superseded enrollments [{}] before retiring {} failed: {error}; run it again to finish",
+                        done.len(),
+                        superseded.len(),
+                        done.join(", "),
+                        package.manifest_sha256
+                    )));
+                }
+            }
+        }
         kept.sort_by(|left, right| {
             (
                 &left.package_id,
@@ -736,6 +754,31 @@ impl ProviderStore {
             format_id: package.manifest.format_id.clone(),
             dependency_policies,
         })
+    }
+
+    /// Re-read an enrollment record under its format's selection lock. `select` and `admit-policy`
+    /// verify the package before they take the lock, and `prune` / `unenroll` retire records under
+    /// that same lock, so this re-read is what stops either from publishing a selection or a
+    /// policy for a record retired in between (#624).
+    fn confirm_enrolled_under_lock(
+        &self,
+        digest: &str,
+        format_id: &str,
+        action: &str,
+    ) -> Result<(), AwareError> {
+        let current = self.read_package(digest).map_err(|error| match error {
+            AwareError::NotFound(_) => AwareError::NotFound(format!(
+                "provider package was unenrolled while it was being {action}"
+            )),
+            other => other,
+        })?;
+        validate_enrollment_record(&current, digest)?;
+        if current.revoked || !current.enrolled || current.manifest.format_id != format_id {
+            return Err(AwareError::Validation(
+                "provider package is not an active enrollment for that format".into(),
+            ));
+        }
+        Ok(())
     }
 
     /// A record that must exist and be internally consistent — the retire verbs act on nothing
@@ -877,6 +920,37 @@ impl ProviderStore {
         file.lock_exclusive()?;
         Ok(file)
     }
+}
+
+/// How many times `list` follows a selection that moved on while it was being read.
+const ACTIVE_SELECTION_ATTEMPTS: usize = 4;
+
+/// One format's selection and the record of its active package, as `list` reads them: without
+/// the selection lock, because `list` is read-only. Between the two reads `select` can move the
+/// selection on and, once the old digest has left the rollback history, `prune` can retire its
+/// record. A record missing under a selection that has since changed is therefore followed to the
+/// new selection; one missing under an unchanged selection is store corruption and stays fatal.
+fn read_active_selection(
+    mut read_selection: impl FnMut() -> Result<SelectionRecord, AwareError>,
+    read_package: impl Fn(&str) -> Result<PackageRecord, AwareError>,
+) -> Result<(SelectionRecord, PackageRecord), AwareError> {
+    let mut selection = read_selection()?;
+    for _ in 0..ACTIVE_SELECTION_ATTEMPTS {
+        match read_package(&selection.active_manifest_sha256) {
+            Ok(record) => return Ok((selection, record)),
+            Err(AwareError::NotFound(message)) => {
+                let current = read_selection()?;
+                if current.active_manifest_sha256 == selection.active_manifest_sha256 {
+                    return Err(AwareError::NotFound(message));
+                }
+                selection = current;
+            }
+            Err(error) => return Err(error),
+        }
+    }
+    Err(AwareError::Conflict(
+        "provider selection kept changing while it was being listed; retry".into(),
+    ))
 }
 
 /// The manifest digest an entry of `packages/` is the record of, or `None` for the scratch file of
@@ -2602,6 +2676,100 @@ mod tests {
         );
     }
 
+    // ---------------------------------------------------------------------
+    // read_active_selection — `list` reads a selection and its record without the
+    // lock, so a concurrent select + prune can retire the record in between.
+    // ---------------------------------------------------------------------
+
+    fn active_record(digest: &str) -> PackageRecord {
+        PackageRecord {
+            schema_version: PACKAGE_SCHEMA.into(),
+            manifest_sha256: digest.into(),
+            package_root: "/package".into(),
+            publisher_fingerprint_sha256: "a".repeat(64),
+            manifest: valid_manifest(),
+            enrolled: true,
+            revoked: false,
+        }
+    }
+
+    fn selection_naming(digest: &str) -> SelectionRecord {
+        let mut selection = valid_selection();
+        selection.active_manifest_sha256 = digest.into();
+        selection
+    }
+
+    fn retired(digest: &str) -> AwareError {
+        AwareError::NotFound(format!("{digest} is gone"))
+    }
+
+    #[test]
+    fn listing_follows_a_selection_that_moved_on_while_its_record_was_retired() {
+        let old = "d".repeat(64);
+        let new = "e".repeat(64);
+        let mut reads = vec![selection_naming(&old), selection_naming(&new)].into_iter();
+        let (selection, record) = read_active_selection(
+            || Ok(reads.next().expect("read once more than expected")),
+            |digest| {
+                if digest == old {
+                    Err(retired(digest))
+                } else {
+                    Ok(active_record(digest))
+                }
+            },
+        )
+        .unwrap();
+        assert_eq!(selection.active_manifest_sha256, new);
+        assert_eq!(record.manifest_sha256, new);
+    }
+
+    #[test]
+    fn a_selection_naming_a_missing_record_it_still_names_is_corruption() {
+        let digest = "d".repeat(64);
+        let mut reads = 0;
+        let result = read_active_selection(
+            || {
+                reads += 1;
+                Ok(selection_naming(&digest))
+            },
+            |digest| Err(retired(digest)),
+        );
+        assert!(matches!(result, Err(AwareError::NotFound(_))), "{result:?}");
+        assert_eq!(
+            reads, 2,
+            "re-read once to tell a moved selection from a broken one"
+        );
+
+        // Anything but a missing record is not a race, and is not retried.
+        let mut reads = 0;
+        let result = read_active_selection(
+            || {
+                reads += 1;
+                Ok(selection_naming(&digest))
+            },
+            |_| Err(AwareError::Validation("corrupt".into())),
+        );
+        assert!(
+            matches!(result, Err(AwareError::Validation(_))),
+            "{result:?}"
+        );
+        assert_eq!(reads, 1);
+    }
+
+    #[test]
+    fn a_selection_that_never_settles_is_a_bounded_conflict() {
+        let mut reads = 0_u8;
+        let result = read_active_selection(
+            || {
+                reads += 1;
+                Ok(selection_naming(&format!("{reads:064x}")))
+            },
+            |digest| Err(retired(digest)),
+        );
+        assert!(matches!(result, Err(AwareError::Conflict(_))), "{result:?}");
+        assert_eq!(usize::from(reads), ACTIVE_SELECTION_ATTEMPTS + 1);
+    }
+
     /// The `inventory` depth `list` uses for unselected enrollments (#624): everything
     /// [`verify_package_inventory`] checks except the content hash. The same-length change is the
     /// one thing it is allowed to miss, and the complete depth must still catch exactly that.
@@ -2652,7 +2820,10 @@ mod tests {
             "missing file"
         );
 
-        // A directory standing where the receipt names a file is not that file.
+        // A directory standing where the receipt names a file is not that file. Like the missing
+        // file above, the shared allowlist walk refuses it first; the regular-file check after
+        // the walk is defensive, for an entry swapped between the walk and the size check, and
+        // nothing here reaches it.
         std::fs::create_dir(root.join("provider.bin")).unwrap();
         assert!(
             verify_package_inventory_sizes(root, &manifest).is_err(),

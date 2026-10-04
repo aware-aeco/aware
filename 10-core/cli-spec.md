@@ -777,18 +777,25 @@ enrollment record) still fails the command.
 remove only AWARE's enrollment record and the dependency policies admitted for that exact package;
 the package directory belongs to its publisher or host, may already hold a newer enrolled build,
 and is never touched. Both refuse to remove the format's active selection or any digest in its
-rollback history, so no selection can name a retired record, and `select` re-checks its record
-under the same per-format lock the retire verbs hold. `unenroll` removes one named enrollment and
-fails with a conflict (exit 8) on a selected or rollback digest, or not-found (exit 7) on an unknown
-one. `prune` removes every superseded enrollment of one format: not selected, not in the rollback
-history, and enrolled before the current selection was made. An enrollment newer than the
+rollback history, so no selection can name a retired record. `select` and `admit-policy` re-check
+their record under the same per-format lock the retire verbs hold, so neither can publish a
+selection or a policy for a record retired while it waited. `unenroll` removes one named enrollment
+and fails with a conflict (exit 8) on a selected or rollback digest, or not-found (exit 7) on an
+unknown one. `prune` removes every superseded enrollment of one format: not selected, not in the
+rollback history, and enrolled before the current selection was made. An enrollment newer than the
 selection — one a host has just enrolled and is about to select — is kept, as is everything in a
-format with no selection. Its JSON reports `formatId`, `dryRun`, `retired[]` (`manifestSha256`,
-`packageId`, `packageVersion`, `formatId`, `dependencyPolicies`) and `kept[]` (`manifestSha256`,
-`packageId`, `packageVersion` and a closed `reason`: `selected`, `rollback-history` or
-`not-superseded`); `unenroll --json` reports one `retired` entry. Policies are removed before the
-record, whose single unlink is the commit, so an interrupted retire leaves a valid enrolled package
-and re-running the verb finishes it. A retired package can be enrolled again.
+format with no selection. "Before" is read from the store's own record timestamps, and a tie keeps
+the enrollment; a clock set backwards or a store restored with fresh timestamps can make a pending
+enrollment look superseded, in which case the host's `select` fails not-found and enrolling again
+recovers it. Timestamps decide only what is kept, never what is trusted. `prune --json` reports
+`formatId`, `dryRun`, `retired[]` (`manifestSha256`, `packageId`, `packageVersion`, `formatId`,
+`dependencyPolicies`) and `kept[]` (`manifestSha256`, `packageId`, `packageVersion` and a closed
+`reason`: `selected`, `rollback-history` or `not-superseded`); the `data` of `unenroll --json` is
+one such retired-package object. `prune` reads and classifies every record before it removes any,
+so a record it cannot read fails the command with the store untouched. Policies are removed before
+the record, whose single unlink is the commit, so an interrupted retire leaves a valid enrolled
+package and re-running the verb finishes it. A retired package can be enrolled again.
+
 The `model-reference-reader` protocol-v3 path consumes the same selected record and brackets every
 provider invocation with complete package re-verification. A caller must supply a non-empty,
 bounded opaque `provider-authorization` value for `preflight`, `fingerprint-source`, `probe`,

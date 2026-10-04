@@ -1213,6 +1213,36 @@ fn prune_retires_only_superseded_enrollments() {
     select(&home, &stale);
 }
 
+/// Every record is classified before any is removed: a record `prune` cannot read fails the whole
+/// command with the store untouched, rather than after some enrollments are already gone.
+#[test]
+fn prune_removes_nothing_when_any_record_cannot_be_read() {
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp.path().join("home");
+    let stale = package_fixture_named(temp.path(), "stale");
+    let active = package_fixture_named(temp.path(), "active");
+    trust_and_enroll(&home, &stale);
+    trust_and_enroll(&home, &active);
+    select(&home, &active);
+    // Named to sort after every digest, so a single-pass prune would already have retired.
+    let stray = home.join("providers/packages/zz-stray.txt");
+    std::fs::write(&stray, b"not a record").unwrap();
+
+    aware(&home)
+        .args(["provider", "prune", "--format", "format.synthetic"])
+        .assert()
+        .failure()
+        .code(3);
+    assert!(record_path(&home, &stale.manifest_sha256).is_file());
+
+    std::fs::remove_file(&stray).unwrap();
+    let data = json_of(
+        &home,
+        &["provider", "prune", "--format", "format.synthetic"],
+    );
+    assert_eq!(data["retired"][0]["manifestSha256"], stale.manifest_sha256);
+}
+
 #[test]
 fn prune_without_a_selection_retires_nothing() {
     let temp = tempfile::tempdir().unwrap();
@@ -1365,6 +1395,7 @@ fn selection_never_names_a_record_retired_while_it_waited() {
             "format.synthetic",
             &candidate.manifest_sha256,
         ])
+        .stderr(std::process::Stdio::piped())
         .spawn()
         .unwrap();
     // Long enough for the child to finish verifying and block on the lock.
@@ -1373,7 +1404,15 @@ fn selection_never_names_a_record_retired_while_it_waited() {
     // What a retire verb does while it holds the lock.
     std::fs::remove_file(record_path(&home, &candidate.manifest_sha256)).unwrap();
     fs2::FileExt::unlock(&lock).unwrap();
-    assert_eq!(child.wait().unwrap().code(), Some(7));
+    let output = child.wait_with_output().unwrap();
+    assert_eq!(output.status.code(), Some(7));
+    // Only the re-check under the lock says this. A child still verifying when the record went
+    // would fail not-found too, before the lock, and prove nothing about the re-check.
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(
+        stderr.contains("unenrolled while it was being selected"),
+        "{stderr}"
+    );
 
     let selection: serde_json::Value = serde_json::from_slice(
         &std::fs::read(home.join("providers/selections/format.synthetic.json")).unwrap(),
@@ -1382,4 +1421,61 @@ fn selection_never_names_a_record_retired_while_it_waited() {
     assert_eq!(selection["activeManifestSha256"], current.manifest_sha256);
     assert_eq!(selection["generation"], 1);
     json_of(&home, &["provider", "list"]);
+}
+
+/// The same race for `admit-policy`: it verifies before it takes the lock, so without a re-check
+/// under the lock it could publish a policy for a record retired in between — a policy the retire
+/// verb has just reported removing, and one a later re-enrollment of the same digest would inherit.
+#[test]
+fn admission_never_publishes_a_policy_for_a_record_retired_while_it_waited() {
+    use fs2::FileExt;
+
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp.path().join("home");
+    let fixture = package_fixture(temp.path());
+    trust_and_enroll(&home, &fixture);
+    let admission = temp.path().join("dependency-policy.json");
+    std::fs::write(&admission, SYNTHETIC_ADMISSION).unwrap();
+
+    let lock_directory = home.join("providers/locks");
+    std::fs::create_dir_all(&lock_directory).unwrap();
+    let lock = std::fs::OpenOptions::new()
+        .read(true)
+        .write(true)
+        .create(true)
+        .truncate(false)
+        .open(lock_directory.join("selection-format.synthetic.lock"))
+        .unwrap();
+    lock.lock_exclusive().unwrap();
+    let mut child = std::process::Command::new(assert_cmd::cargo::cargo_bin("aware"))
+        .env("AWARE_HOME", &home)
+        .args([
+            "provider",
+            "admit-policy",
+            &fixture.manifest_sha256,
+            "capability.synthetic",
+        ])
+        .arg(&admission)
+        .stderr(std::process::Stdio::piped())
+        .spawn()
+        .unwrap();
+    // Long enough for the child to finish verifying and block on the lock.
+    std::thread::sleep(std::time::Duration::from_millis(500));
+    assert!(child.try_wait().unwrap().is_none());
+    // What a retire verb does while it holds the lock.
+    std::fs::remove_file(record_path(&home, &fixture.manifest_sha256)).unwrap();
+    fs2::FileExt::unlock(&lock).unwrap();
+    let output = child.wait_with_output().unwrap();
+    assert_eq!(output.status.code(), Some(7));
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(
+        stderr.contains("unenrolled while it was being admitted"),
+        "{stderr}"
+    );
+
+    let policies = home.join("providers/policies");
+    let published = std::fs::read_dir(&policies)
+        .map(|entries| entries.count())
+        .unwrap_or(0);
+    assert_eq!(published, 0, "no policy may outlive its retired enrollment");
 }
