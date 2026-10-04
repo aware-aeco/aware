@@ -962,8 +962,19 @@ pub fn write_lockfile(
             .and_then(|f| f.to_str())
             .unwrap_or("(source)")
     );
-    replace_atomically(&lock_path, format!("{header}{yaml}").as_bytes())
-        .map_err(|e| AwareError::Internal(format!("write {}: {e}", lock_path.display())))?;
+    match replace_atomically(&lock_path, format!("{header}{yaml}").as_bytes())
+        .map_err(|e| AwareError::Internal(format!("write {}: {e}", lock_path.display())))?
+    {
+        crate::fs::Replaced::Durable => {}
+        // The new lock IS the approval now; only its durability is in doubt.
+        // Saying "write failed" here would be false — and a caller who retried
+        // on that belief would be acting on a lock it thinks is the old one.
+        crate::fs::Replaced::NotDurable(error) => eprintln!(
+            "\u{26a0} {} was replaced and is in effect, but making the change durable failed ({error}); \
+             a power loss before the system flushes could bring back the previous lock — compile again to be sure",
+            lock_path.display()
+        ),
+    }
     Ok(lock_path)
 }
 
@@ -971,13 +982,14 @@ pub fn write_lockfile(
 /// at preflight — sees the old lock or the new one, never a torn mix, and a
 /// crash leaves one of the two (#628 plan §1). The bytes go to a temp file in
 /// the SAME directory (so the swap is a same-volume rename), are fsynced, then
-/// [`crate::fs::replace_file`] moves them over `path`. On any failure the temp
-/// file is removed and `path` is untouched.
-fn replace_atomically(path: &Path, bytes: &[u8]) -> std::io::Result<()> {
+/// [`crate::fs::replace_file`] moves them over `path`.
+///
+/// `Err`: nothing was replaced — the temp file is removed and `path` is
+/// byte-identical. `Ok`: the new bytes ARE in place; `Replaced::NotDurable`
+/// says only the durability step after the move failed.
+fn replace_atomically(path: &Path, bytes: &[u8]) -> std::io::Result<crate::fs::Replaced> {
     use std::io::Write;
-    let dir = path.parent().ok_or_else(|| {
-        std::io::Error::new(std::io::ErrorKind::InvalidInput, "lock path has no parent")
-    })?;
+    let dir = crate::fs::containing_dir(path);
     let name = path.file_name().and_then(|n| n.to_str()).unwrap_or("lock");
     let temp = dir.join(format!(".{name}.tmp-{}", uuid::Uuid::new_v4().simple()));
     let result = (|| {
@@ -1287,6 +1299,29 @@ mod tests {
         write_lockfile(&tiny_lock("app", "2.0.0"), &source).unwrap();
         let replaced = std::fs::read_to_string(&path).unwrap();
         assert!(replaced.contains("version: 2.0.0"), "{replaced}");
+        assert_eq!(dir_names(tmp.path()), ["app.flo", "app.lock"]);
+    }
+
+    /// Review #628-3: once the new lock is moved into place, a failure to make
+    /// that durable (the directory fsync) must not be reported as "the write
+    /// failed": the new lock IS live. `write_lockfile` succeeds and warns.
+    #[test]
+    fn a_failed_durability_sync_after_the_replace_is_not_a_failed_write() {
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("app.flo");
+        std::fs::write(
+            &source,
+            "app: app
+",
+        )
+        .unwrap();
+        write_lockfile(&tiny_lock("app", "1.0.0"), &source).unwrap();
+
+        crate::fs::inject_post_replace_sync_failure();
+        let path = write_lockfile(&tiny_lock("app", "2.0.0"), &source)
+            .expect("the new lock is in place, so this is not a failed write");
+        let live = std::fs::read_to_string(&path).unwrap();
+        assert!(live.contains("version: 2.0.0"), "{live}");
         assert_eq!(dir_names(tmp.path()), ["app.flo", "app.lock"]);
     }
 

@@ -1603,7 +1603,9 @@ fn atomic_rename(source: &Path, destination: &Path, replace: bool) -> std::io::R
     if !replace {
         return std::fs::rename(source, destination);
     }
-    crate::fs::replace_file(source, destination)
+    // On Windows the move itself is write-through, so the post-replace step
+    // has nothing that can fail outside tests; the record is in place either way.
+    crate::fs::replace_file(source, destination).map(|_| ())
 }
 
 #[cfg(test)]

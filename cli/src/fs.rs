@@ -311,24 +311,82 @@ pub(crate) fn win32_verbatim(path: &Path) -> std::io::Result<PathBuf> {
     Ok(PathBuf::from(OsString::from_wide(&verbatim)))
 }
 
+/// What [`replace_file`] achieved once it returned `Ok`: the new file IS in
+/// place in every case — the only question left is whether that is durable.
+#[derive(Debug)]
+pub(crate) enum Replaced {
+    /// In place and on disk.
+    Durable,
+    /// In place — readers already see the new bytes — but making the rename
+    /// durable failed, so a power loss could still bring the old file back.
+    /// Never "the write failed": the caller must not tell anyone the old file
+    /// is untouched.
+    NotDurable(std::io::Error),
+}
+
+/// The directory holding `path`, as something that can be opened: a bare file
+/// name (`myapp.lock`, whose `parent()` is `""`) lives in the current
+/// directory, never in the empty path.
+pub(crate) fn containing_dir(path: &Path) -> &Path {
+    match path.parent() {
+        Some(parent) if !parent.as_os_str().is_empty() => parent,
+        _ => Path::new("."),
+    }
+}
+
 /// Atomically replace `destination` with the fully written, fsynced file
 /// `source` in the SAME directory: a reader sees the old bytes or the new ones,
 /// never a mix, and a crash leaves one of the two.
 ///
-/// Windows: `MoveFileExW(MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)`,
-/// which returns only once the move is on disk. Unix: `rename(2)`, then an
-/// fsync of the directory so the new name survives a power loss.
-#[cfg(not(windows))]
-pub(crate) fn replace_file(source: &Path, destination: &Path) -> std::io::Result<()> {
-    std::fs::rename(source, destination)?;
-    if let Some(parent) = destination.parent() {
-        std::fs::File::open(parent)?.sync_all()?;
+/// `Err` means the replace did NOT happen and `destination` is untouched.
+/// `Ok` means it did; [`Replaced::NotDurable`] reports a failure of the
+/// durability step that follows (Unix: an fsync of the directory; Windows:
+/// nothing — `MOVEFILE_WRITE_THROUGH` returns only once the move is on disk).
+pub(crate) fn replace_file(source: &Path, destination: &Path) -> std::io::Result<Replaced> {
+    rename_replacing(source, destination)?;
+    Ok(match sync_after_replace(destination) {
+        Ok(()) => Replaced::Durable,
+        Err(error) => Replaced::NotDurable(error),
+    })
+}
+
+#[cfg(test)]
+thread_local! {
+    static FAIL_POST_REPLACE_SYNC: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+/// Make the next post-replace durability step on this thread fail.
+#[cfg(test)]
+pub(crate) fn inject_post_replace_sync_failure() {
+    FAIL_POST_REPLACE_SYNC.with(|f| f.set(true));
+}
+
+fn sync_after_replace(destination: &Path) -> std::io::Result<()> {
+    #[cfg(test)]
+    if FAIL_POST_REPLACE_SYNC.with(|f| f.replace(false)) {
+        return Err(std::io::Error::other("injected post-replace sync failure"));
     }
-    Ok(())
+    #[cfg(unix)]
+    {
+        let dir = containing_dir(destination);
+        std::fs::File::open(dir)
+            .and_then(|handle| handle.sync_all())
+            .map_err(|e| std::io::Error::new(e.kind(), format!("fsync {}: {e}", dir.display())))
+    }
+    #[cfg(not(unix))]
+    {
+        let _ = destination;
+        Ok(())
+    }
+}
+
+#[cfg(not(windows))]
+fn rename_replacing(source: &Path, destination: &Path) -> std::io::Result<()> {
+    std::fs::rename(source, destination)
 }
 
 #[cfg(windows)]
-pub(crate) fn replace_file(source: &Path, destination: &Path) -> std::io::Result<()> {
+fn rename_replacing(source: &Path, destination: &Path) -> std::io::Result<()> {
     use std::os::windows::ffi::OsStrExt;
     use windows_sys::Win32::Storage::FileSystem::{
         MOVEFILE_REPLACE_EXISTING, MOVEFILE_WRITE_THROUGH, MoveFileExW,
@@ -366,13 +424,44 @@ pub(crate) fn replace_file(source: &Path, destination: &Path) -> std::io::Result
 mod tests {
     use super::*;
 
+    /// Review #628-3: a bare file name has parent `""`; the directory to sync
+    /// is the current one, never the empty path.
+    #[test]
+    fn the_containing_directory_of_a_bare_file_name_is_the_current_one() {
+        assert_eq!(containing_dir(Path::new("myapp.lock")), Path::new("."));
+        assert_eq!(containing_dir(Path::new("")), Path::new("."));
+        assert_eq!(
+            containing_dir(Path::new("apps/x/x.lock")),
+            Path::new("apps/x")
+        );
+    }
+
+    #[test]
+    fn a_failed_post_replace_sync_still_reports_the_file_as_replaced() {
+        let tmp = tempfile::tempdir().unwrap();
+        let (staged, live) = (tmp.path().join(".staged"), tmp.path().join("live"));
+        std::fs::write(&live, b"old").unwrap();
+        std::fs::write(&staged, b"new").unwrap();
+        inject_post_replace_sync_failure();
+        match replace_file(&staged, &live).unwrap() {
+            Replaced::NotDurable(error) => {
+                assert!(error.to_string().contains("injected"), "{error}")
+            }
+            Replaced::Durable => panic!("the injected sync failure was swallowed"),
+        }
+        assert_eq!(std::fs::read(&live).unwrap(), b"new");
+    }
+
     #[test]
     fn replace_file_swaps_in_the_new_bytes_and_consumes_the_source() {
         let tmp = tempfile::tempdir().unwrap();
         let (staged, live) = (tmp.path().join(".staged"), tmp.path().join("live"));
         std::fs::write(&live, b"old").unwrap();
         std::fs::write(&staged, b"new").unwrap();
-        replace_file(&staged, &live).unwrap();
+        assert!(matches!(
+            replace_file(&staged, &live).unwrap(),
+            Replaced::Durable
+        ));
         assert_eq!(std::fs::read(&live).unwrap(), b"new");
         assert!(!staged.exists());
         // A missing destination is simply created.

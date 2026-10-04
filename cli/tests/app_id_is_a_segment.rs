@@ -131,3 +131,45 @@ fn walk(dir: &std::path::Path) -> Vec<std::path::PathBuf> {
     }
     out
 }
+
+/// Review #628-3: `aware app compile myapp.flo` run FROM the app's directory.
+/// The source path has an empty parent (`""`), which the atomic lock replace
+/// must read as the current directory — on Unix an fsync of `""` failed after
+/// the new lock was already in place, so compile reported failure for a lock it
+/// had in fact replaced.
+#[test]
+fn compile_by_bare_file_name_from_the_app_directory_writes_the_lock() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("home");
+    let dir = tmp.path().join("app");
+    std::fs::create_dir_all(&home).unwrap();
+    std::fs::create_dir_all(&dir).unwrap();
+    std::fs::write(
+        dir.join("bare.flo"),
+        "app: bare\nversion: 0.1.0\ndescription: x\nrequires: []\nnodes:\n  - id: n\n    inline:\n      kind: predicate\n      description: pass\n      code: 'true'\n",
+    )
+    .unwrap();
+    aware(&home)
+        .current_dir(&dir)
+        .args(["app", "compile", "bare.flo"])
+        .assert()
+        .success();
+    let lock = std::fs::read_to_string(dir.join("bare.lock")).unwrap();
+    assert!(lock.contains("app: bare"), "{lock}");
+    let mut names: Vec<String> = std::fs::read_dir(&dir)
+        .unwrap()
+        .map(|e| e.unwrap().file_name().to_string_lossy().into_owned())
+        .collect();
+    names.sort();
+    assert_eq!(
+        names,
+        ["bare.flo", "bare.lock"],
+        "no staging file left behind"
+    );
+    // A second compile replaces the existing lock the same way.
+    aware(&home)
+        .current_dir(&dir)
+        .args(["app", "compile", "bare.flo"])
+        .assert()
+        .success();
+}
