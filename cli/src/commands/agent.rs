@@ -1654,6 +1654,10 @@ fn catalog_cmd(ctx: &Context) -> Result<(), AwareError> {
             vendor: Option<&'a str>,
             #[serde(skip_serializing_if = "<[_]>::is_empty")]
             keywords: &'a [String],
+            // The latest version declares a connection check (#630); omitted when it
+            // doesn't, so a UI can offer "update to check its connection" truthfully.
+            #[serde(skip_serializing_if = "std::ops::Not::not")]
+            connection_check: bool,
         }
         #[derive(Serialize)]
         struct Data<'a> {
@@ -1674,6 +1678,7 @@ fn catalog_cmd(ctx: &Context) -> Result<(), AwareError> {
                     description: &v.description,
                     vendor: a.vendor.as_deref(),
                     keywords: &a.keywords,
+                    connection_check: v.connection_check,
                 })
             })
             .collect();
@@ -2427,6 +2432,9 @@ fn describe_from_catalog(
             /// newest falls outside an app's `requires:` pin: the information
             /// was in the catalogue and simply never surfaced.
             versions: Vec<&'a str>,
+            /// The latest version declares a connection check (#630).
+            #[serde(skip_serializing_if = "std::ops::Not::not")]
+            connection_check: bool,
         }
         let data = D {
             agent: agent_id,
@@ -2444,6 +2452,7 @@ fn describe_from_catalog(
             commands: &v.commands,
             skills: &v.skills,
             versions: versions_oldest_first(agent),
+            connection_check: v.connection_check,
         };
         envelope::print_ok("agent describe", data, started).ok();
         return Ok(());
