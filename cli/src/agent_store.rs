@@ -132,6 +132,57 @@ pub fn digest_container(paths: &Paths, id: &str, digest: &str) -> Result<PathBuf
     Ok(paths.agent_store_dir().join(id).join(hex))
 }
 
+/// Whether `path` exists, WITHOUT turning a failed look into "absent":
+/// `Ok(Some)` when it exists, `Ok(None)` only on `NotFound`, and any other error
+/// (permission denied, a sharing violation) as the real error naming the path.
+/// `Path::exists()` / `symlink_metadata(..).is_ok()` collapse that third case
+/// into "absent", which let `app check` call an unreadable approved package
+/// "not stored yet" while the run refused (review #626 round 4).
+pub fn probe(path: &Path) -> Result<Option<std::fs::Metadata>, AwareError> {
+    #[cfg(test)]
+    if let Some(kind) = injected_stat_error(path) {
+        return Err(
+            std::io::Error::new(kind, format!("{}: injected stat error", path.display())).into(),
+        );
+    }
+    match std::fs::symlink_metadata(path) {
+        Ok(metadata) => Ok(Some(metadata)),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(None),
+        Err(error) => {
+            Err(std::io::Error::new(error.kind(), format!("{}: {error}", path.display())).into())
+        }
+    }
+}
+
+#[cfg(test)]
+thread_local! {
+    /// `(path, kind)`: [`probe`] of exactly `path` on this thread fails with `kind`.
+    static STAT_FAULT: std::cell::RefCell<Option<(PathBuf, std::io::ErrorKind)>> =
+        const { std::cell::RefCell::new(None) };
+}
+
+/// Make [`probe`] of exactly `path` fail with `kind` on this thread.
+#[cfg(test)]
+pub(crate) fn inject_stat_error(path: &Path, kind: std::io::ErrorKind) {
+    STAT_FAULT.with(|fault| *fault.borrow_mut() = Some((path.to_path_buf(), kind)));
+}
+
+#[cfg(test)]
+pub(crate) fn clear_stat_error() {
+    STAT_FAULT.with(|fault| *fault.borrow_mut() = None);
+}
+
+#[cfg(test)]
+fn injected_stat_error(path: &Path) -> Option<std::io::ErrorKind> {
+    STAT_FAULT.with(|fault| {
+        fault
+            .borrow()
+            .as_ref()
+            .filter(|(target, _)| target == path)
+            .map(|(_, kind)| *kind)
+    })
+}
+
 /// Load the manifest of a store package (or a staged tree) by its directory.
 pub fn package_manifest(package: &Path) -> Result<crate::manifest::Agent, AwareError> {
     crate::manifest::loader::load_agent(&package.join("manifest.yaml"))
@@ -494,7 +545,9 @@ fn snapshot_once(paths: &Paths, current_root: &Path, call: u32) -> Result<Attemp
     let container = digest_container(paths, &id, &digest)?;
     let package = container.join(&key);
 
-    if std::fs::symlink_metadata(&package).is_ok() {
+    // Absent only on NotFound: a package that cannot be LOOKED AT is an error,
+    // never a reason to snapshot over it (review #626 round 4).
+    if probe(&package)?.is_some() {
         return verify_existing(&package, &id, &digest, &key).map(Attempt::Done);
     }
 
@@ -550,13 +603,14 @@ fn snapshot_once(paths: &Paths, current_root: &Path, call: u32) -> Result<Attemp
         fault_at(call, FaultStep::Rename).and_then(|()| Ok(publish_dir(&temp, &package)?));
     if let Err(error) = renamed {
         let _ = std::fs::remove_dir_all(&temp);
-        // Lost a race to an identical snapshot: use theirs, verified.
-        if std::fs::symlink_metadata(&package).is_ok() {
+        // Lost a race to an identical snapshot: use theirs, verified. If the
+        // name cannot even be looked at, that error is the one to report.
+        if probe(&package)?.is_some() {
             return verify_existing(&package, &id, &digest, &key).map(Attempt::Done);
         }
         return Err(error);
     }
-    sync_parents(&package, &container);
+    sync_parents(&package, &container)?;
     Ok(Attempt::Done(StoredPackage {
         root: package,
         agent: record.agent,
@@ -631,13 +685,16 @@ fn publish_dir(temp: &Path, package: &Path) -> std::io::Result<()> {
     // is never empty (it holds at least the manifest and the record), and the
     // caller checked the name was free, so the remaining race is with another
     // snapshot of the same bytes, which the caller verifies on failure.
-    if std::fs::symlink_metadata(package).is_ok() {
-        return Err(std::io::Error::new(
+    match std::fs::symlink_metadata(package) {
+        Ok(_) => Err(std::io::Error::new(
             std::io::ErrorKind::AlreadyExists,
             format!("{} already exists", package.display()),
-        ));
+        )),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+            std::fs::rename(temp, package)
+        }
+        Err(error) => Err(error),
     }
-    std::fs::rename(temp, package)
 }
 
 #[cfg(windows)]
@@ -673,23 +730,27 @@ fn publish_dir(temp: &Path, package: &Path) -> std::io::Result<()> {
     }
 }
 
-/// Make the rename durable before anything is promoted on top of it. Directory
-/// handles cannot be flushed portably on Windows, where the write-through move
-/// above carries this instead.
+/// Make the rename durable before anything is promoted on top of it — a
+/// failure is an error, not a skipped step, because promotion relies on it.
+/// Directory handles cannot be flushed portably on Windows, where the
+/// write-through move above carries this instead.
 #[cfg(unix)]
-fn sync_parents(package: &Path, container: &Path) {
+fn sync_parents(package: &Path, container: &Path) -> Result<(), AwareError> {
     for dir in [Some(package), Some(container), container.parent()]
         .into_iter()
         .flatten()
     {
-        if let Ok(handle) = std::fs::File::open(dir) {
-            let _ = handle.sync_all();
-        }
+        std::fs::File::open(dir)
+            .and_then(|handle| handle.sync_all())
+            .map_err(|e| std::io::Error::new(e.kind(), format!("fsync {}: {e}", dir.display())))?;
     }
+    Ok(())
 }
 
 #[cfg(not(unix))]
-fn sync_parents(_package: &Path, _container: &Path) {}
+fn sync_parents(_package: &Path, _container: &Path) -> Result<(), AwareError> {
+    Ok(())
+}
 
 #[cfg(test)]
 mod tests {

@@ -1197,3 +1197,104 @@ fn no_agent_directory_at_all_is_still_uninstalled_whatever_the_store_holds() {
     .unwrap();
     assert!(resolved.get("alpha").is_none());
 }
+
+// ── review round 4: a failed look at a store path is never "not stored" ──
+
+/// The receipt-key package path the current copy of `id` would snapshot to.
+fn own_package_path(paths: &Paths, id: &str) -> PathBuf {
+    let current = paths.agents_dir().join(id);
+    let digest = crate::install::integrity::tree_digest(&current).unwrap();
+    let key = crate::agent_store::receipt_key(&current).unwrap();
+    crate::agent_store::digest_container(paths, id, &digest)
+        .unwrap()
+        .join(key)
+}
+
+#[test]
+fn an_unreadable_approved_package_is_not_approval_current_in_check_or_run() {
+    for kind in [
+        std::io::ErrorKind::PermissionDenied,
+        std::io::ErrorKind::Other, // e.g. a sharing violation
+    ] {
+        let h = home();
+        write_agent(&h.paths, "alpha", "1.0.0", "");
+        let source = compile_app(&h, &["alpha"]); // digest lock; package stored
+        let package = own_package_path(&h.paths, "alpha");
+        assert!(package.is_dir());
+        let lock: LockFile = serde_yaml::from_str(
+            &std::fs::read_to_string(source.with_file_name("demo.lock")).unwrap(),
+        )
+        .unwrap();
+
+        crate::agent_store::inject_stat_error(&package, kind);
+        let check = check_app(&h.paths, &source);
+        let run = resolve_agents(&h.paths, &app_using(&["alpha"]), &lock, Selection::Default);
+        crate::agent_store::clear_stat_error();
+
+        let check_error = check.expect_err("check could not run: it must not report a verdict");
+        assert!(
+            check_error.to_string().contains("injected stat error"),
+            "{kind:?}: the real error is surfaced: {check_error}"
+        );
+        let run_error = run.expect_err("the run must surface the real error");
+        assert!(
+            run_error.to_string().contains("injected stat error"),
+            "{kind:?}: {run_error}"
+        );
+    }
+}
+
+#[test]
+fn an_unreadable_snapshot_path_on_a_legacy_lock_is_not_approval_current_in_check_or_run() {
+    let h = home();
+    write_agent(&h.paths, "alpha", "1.0.0", "");
+    let source = compile_app(&h, &["alpha"]);
+    edit_lock(&source, |lock| lock.agent_digests.clear());
+    let package = own_package_path(&h.paths, "alpha");
+    let lock: LockFile =
+        serde_yaml::from_str(&std::fs::read_to_string(source.with_file_name("demo.lock")).unwrap())
+            .unwrap();
+
+    crate::agent_store::inject_stat_error(&package, std::io::ErrorKind::PermissionDenied);
+    let check = check_app(&h.paths, &source);
+    let run = resolve_agents(&h.paths, &app_using(&["alpha"]), &lock, Selection::Default);
+    crate::agent_store::clear_stat_error();
+
+    assert!(
+        check
+            .expect_err("check could not run")
+            .to_string()
+            .contains("injected stat error")
+    );
+    assert!(
+        run.expect_err("the run surfaces the real error")
+            .to_string()
+            .contains("injected stat error")
+    );
+}
+
+#[test]
+fn an_unreadable_backing_app_directory_is_an_error_not_uninstalled() {
+    let h = home();
+    let source = app_backed_fixture(&h);
+    let backing_dir = h.paths.apps_dir().join("inner");
+    let lock: LockFile =
+        serde_yaml::from_str(&std::fs::read_to_string(source.with_file_name("demo.lock")).unwrap())
+            .unwrap();
+
+    crate::agent_store::inject_stat_error(&backing_dir, std::io::ErrorKind::PermissionDenied);
+    let check = check_app(&h.paths, &source);
+    let run = resolve_agents(&h.paths, &app_using(&["inner"]), &lock, Selection::Default);
+    crate::agent_store::clear_stat_error();
+
+    let check_error = check.expect_err("check could not run");
+    assert!(
+        check_error.to_string().contains("injected stat error"),
+        "{check_error}"
+    );
+    let run_error = run.expect_err("the run surfaces the real error");
+    assert!(
+        run_error.to_string().contains("injected stat error"),
+        "not 'backing app is not installed': {run_error}"
+    );
+}

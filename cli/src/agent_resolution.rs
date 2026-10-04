@@ -532,6 +532,8 @@ fn resolve_backing(
         )));
     }
     let backing_dir = paths.apps_dir().join(&backed_by);
+    // A directory that cannot be looked at is an error, not "not installed".
+    agent_store::probe(&backing_dir)?;
     let source = crate::manifest::loader::find_app_manifest(&backing_dir).ok_or_else(|| {
         AwareError::Validation(format!(
             "app-backed agent {id}: backing app {backed_by} is not installed"
@@ -626,21 +628,11 @@ fn assess_agent(
         .parent()
         .ok_or_else(|| AwareError::Internal("agent manifest has no parent".into()))?
         .to_path_buf();
-    match std::fs::symlink_metadata(&current_root) {
-        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
-            outcome.detail = format!(
-                "agent {id} is not installed; install it (`aware agent install {id}`) to run this app"
-            );
-            return Ok(outcome);
-        }
-        Err(error) => {
-            return Err(std::io::Error::new(
-                error.kind(),
-                format!("{}: {error}", current_root.display()),
-            )
-            .into());
-        }
-        Ok(_) => {}
+    if agent_store::probe(&current_root)?.is_none() {
+        outcome.detail = format!(
+            "agent {id} is not installed; install it (`aware agent install {id}`) to run this app"
+        );
+        return Ok(outcome);
     }
     let mut notes: Vec<String> = Vec::new();
     let current: Option<Agent> = match crate::manifest::loader::load_agent(&current_manifest) {
@@ -726,6 +718,10 @@ fn assess_agent(
                     own = Some(package);
                 }
                 Ok(_) => notes.push("the installed copy changed while the run started".into()),
+                // A filesystem fault (the package path cannot be looked at, a
+                // copy cannot be written) is the real error: propagate it, as
+                // `app check` does, rather than run around it.
+                Err(error @ AwareError::Io(_)) => return Err(error),
                 // Not a bundle mismatch: keep the error, and let a valid stored
                 // package of the same bytes serve the run if there is one.
                 Err(error) => {
@@ -739,7 +735,9 @@ fn assess_agent(
                 // there makes the run fall through to the other candidates below.
                 let key = agent_store::receipt_key(&current_root)?;
                 let package = agent_store::digest_container(paths, id, &required)?.join(&key);
-                if std::fs::symlink_metadata(&package).is_err()
+                // Absent only on NotFound; any other failure to look is the
+                // check failing, never "not stored yet" (review #626 round 4).
+                if agent_store::probe(&package)?.is_none()
                     || agent_store::verify_package(&package, id, &required, &key).is_ok()
                 {
                     own_is_approved_in_check = true;
@@ -832,7 +830,7 @@ fn assess_agent(
         } else {
             // The package the run's default order would choose; it verified
             // above, so its manifest loads.
-            outcome.manifest = agent_store::package_manifest(&first.root).ok();
+            outcome.manifest = Some(agent_store::package_manifest(&first.root)?);
         }
         return Ok(outcome);
     }
@@ -969,7 +967,7 @@ fn legacy_version_only(
             };
             let key = agent_store::receipt_key(current_root)?;
             let package = agent_store::digest_container(paths, id, &digest)?.join(&key);
-            if std::fs::symlink_metadata(&package).is_ok()
+            if agent_store::probe(&package)?.is_some()
                 && let Err(reason) = agent_store::verify_package(&package, id, &digest, &key)
             {
                 outcome.resolution = Resolution::DigestMismatch;
@@ -1202,9 +1200,15 @@ fn check_backing(
         source_current: false,
         detail: String::new(),
     };
-    let source = crate::manifest::loader::is_safe_segment(&backed_by)
-        .then(|| crate::manifest::loader::find_app_manifest(&paths.apps_dir().join(&backed_by)))
-        .flatten();
+    let source = if crate::manifest::loader::is_safe_segment(&backed_by) {
+        let backing_dir = paths.apps_dir().join(&backed_by);
+        // As in the run (`resolve_backing`): a directory that cannot be looked
+        // at fails the check, it is not "not installed" (review #626 round 4).
+        agent_store::probe(&backing_dir)?;
+        crate::manifest::loader::find_app_manifest(&backing_dir)
+    } else {
+        None
+    };
     let Some(source) = source else {
         row.detail = format!("backing app {backed_by} is not installed");
         check.nested_apps.push(row);

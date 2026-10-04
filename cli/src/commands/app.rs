@@ -2384,7 +2384,12 @@ fn check_cmd(ctx: &Context, app: &str) -> Result<(), AwareError> {
 /// when one exists, else an installed app id resolved exactly as `run` does.
 fn check_source(ctx: &Context, app: &str) -> Result<std::path::PathBuf, AwareError> {
     let path = std::path::Path::new(app);
-    if path.exists() {
+    // `Path::exists()` would read "cannot look" as "no such path" and quietly
+    // resolve the argument as an app id instead; surface the real error.
+    let exists = path.try_exists().map_err(|error| {
+        std::io::Error::new(error.kind(), format!("{}: {error}", path.display()))
+    })?;
+    if exists {
         return crate::app_lock::find_app_source(path).ok_or_else(|| {
             AwareError::NotFound(format!(
                 "no app source file (.flo / .app / .flow / .aware) at {}",
