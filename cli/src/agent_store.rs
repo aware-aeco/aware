@@ -536,11 +536,18 @@ fn copy_tree(src: &Path, dst: &Path) -> Result<(), AwareError> {
         if let Some(parent) = to.parent() {
             std::fs::create_dir_all(parent)?;
         }
-        std::fs::copy(&from, &to)?;
-        std::fs::OpenOptions::new()
+        // Bytes only, into a file we create writable — not `fs::copy`, which
+        // carries the source's read-only attribute along, after which the
+        // destination cannot be opened for the fsync below. A read-only file in
+        // a working copy (a Perforce checkout) is ordinary and must not make a
+        // snapshot refuse. Permissions are not part of the tree digest.
+        let mut source = std::fs::File::open(&from)?;
+        let mut destination = std::fs::OpenOptions::new()
             .write(true)
-            .open(&to)?
-            .sync_all()?;
+            .create_new(true)
+            .open(&to)?;
+        std::io::copy(&mut source, &mut destination)?;
+        destination.sync_all()?;
     }
     Ok(())
 }
@@ -856,6 +863,33 @@ mod tests {
         let reason =
             verify_package(&package.root, "alpha", &package.digest, NO_RECEIPT).unwrap_err();
         assert!(reason.contains("disagrees"), "{reason}");
+    }
+
+    /// A read-only file in the working copy (a Perforce checkout, a file
+    /// unpacked read-only) must not make the snapshot — and so install,
+    /// update, compile and run — refuse (review #626-1).
+    #[test]
+    #[allow(clippy::permissions_set_readonly_false)]
+    fn a_read_only_source_file_snapshots() {
+        let (_tmp, paths) = home();
+        let current = paths.agents_dir().join("alpha");
+        write_agent(&current, "alpha", "1.0.0");
+        let skill = current.join("skills").join("a.md");
+        let mut permissions = std::fs::metadata(&skill).unwrap().permissions();
+        permissions.set_readonly(true);
+        std::fs::set_permissions(&skill, permissions).unwrap();
+
+        let result = snapshot(&paths, &current);
+
+        let mut permissions = std::fs::metadata(&skill).unwrap().permissions();
+        permissions.set_readonly(false);
+        std::fs::set_permissions(&skill, permissions).unwrap();
+        let package = result.unwrap();
+        assert_eq!(
+            std::fs::read_to_string(package.root.join("skills").join("a.md")).unwrap(),
+            "skill 1.0.0"
+        );
+        assert!(verify_package(&package.root, "alpha", &package.digest, NO_RECEIPT).is_ok());
     }
 
     #[test]
