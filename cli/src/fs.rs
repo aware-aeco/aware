@@ -424,6 +424,51 @@ fn rename_replacing(source: &Path, destination: &Path) -> std::io::Result<()> {
     })
 }
 
+/// The filesystem identity of the entry at `path` (the entry itself, not a
+/// link target): Unix `st_dev`/`st_ino`, Windows volume serial number + file
+/// index. Two names have the same identity exactly when the filesystem
+/// resolves both to one entry — e.g. `agents/Alpha` and `agents/alpha` on a
+/// case-insensitive volume, and never on a case-sensitive one.
+#[cfg(unix)]
+pub(crate) fn entry_identity(path: &Path) -> std::io::Result<(u64, u64, u64)> {
+    use std::os::unix::fs::MetadataExt;
+    let meta = std::fs::symlink_metadata(path)?;
+    Ok((meta.dev(), meta.ino(), 0))
+}
+
+#[cfg(windows)]
+pub(crate) fn entry_identity(path: &Path) -> std::io::Result<(u64, u64, u64)> {
+    use std::os::windows::fs::OpenOptionsExt;
+    use std::os::windows::io::AsRawHandle;
+    use windows_sys::Win32::Storage::FileSystem::{
+        BY_HANDLE_FILE_INFORMATION, FILE_FLAG_BACKUP_SEMANTICS, FILE_FLAG_OPEN_REPARSE_POINT,
+        GetFileInformationByHandle,
+    };
+    // No access rights beyond attributes: a directory opens with backup
+    // semantics, the entry itself (not a junction's target) with
+    // OPEN_REPARSE_POINT, and other handles are not disturbed.
+    let file = retry_transient(|| {
+        std::fs::OpenOptions::new()
+            .access_mode(0)
+            .custom_flags(FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT)
+            .open(path)
+    })?;
+    let mut info = std::mem::MaybeUninit::<BY_HANDLE_FILE_INFORMATION>::uninit();
+    // SAFETY: the raw handle belongs to the open File and stays live through
+    // the call; the OS fills the output structure only on success.
+    let ok = unsafe { GetFileInformationByHandle(file.as_raw_handle(), info.as_mut_ptr()) };
+    if ok == 0 {
+        return Err(std::io::Error::last_os_error());
+    }
+    // SAFETY: GetFileInformationByHandle returned success and initialized info.
+    let info = unsafe { info.assume_init() };
+    Ok((
+        u64::from(info.dwVolumeSerialNumber),
+        u64::from(info.nFileIndexHigh),
+        u64::from(info.nFileIndexLow),
+    ))
+}
+
 /// Run `op`, retrying for up to two seconds while Windows reports the target
 /// as transiently held: `ERROR_ACCESS_DENIED` (5, also what a file in a
 /// delete-pending state or a directory with an open child returns) or

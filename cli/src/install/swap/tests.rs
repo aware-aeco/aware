@@ -732,40 +732,105 @@ fn ids_differing_only_by_case_take_one_swap_lock_and_never_hang() {
     assert_eq!(locked, 1, "one lock for one directory");
 }
 
-/// The outgoing set of a case-differing update is the ONE directory both ids
-/// name where the filesystem folds case; where it does not and both exist as
-/// two directories, the swap refuses rather than guess (nothing is changed).
+/// Make `agents/` case-SENSITIVE: natively on Unix; on Windows with the
+/// per-directory flag (`fsutil file setCaseSensitiveInfo`, no elevation
+/// needed). `false` when that is not available here (the test then skips).
+fn case_sensitive_agents_dir(paths: &Paths) -> bool {
+    let agents = paths.agents_dir();
+    std::fs::create_dir_all(&agents).unwrap();
+    if cfg!(windows) {
+        let enabled = std::process::Command::new("fsutil.exe")
+            .args(["file", "setCaseSensitiveInfo"])
+            .arg(&agents)
+            .arg("enable")
+            .output()
+            .is_ok_and(|o| o.status.success());
+        if !enabled {
+            return false;
+        }
+    }
+    // Verify rather than assume (macOS folds case by default).
+    std::fs::create_dir(agents.join("Probe")).unwrap();
+    let sensitive = !agents.join("probe").exists();
+    std::fs::remove_dir(agents.join("Probe")).unwrap();
+    sensitive
+}
+
+/// On the default (case-folding) filesystem, `Alpha` and `alpha` are one
+/// directory: an update naming both moves it once and installs the new copy.
 #[test]
-fn a_case_differing_update_moves_the_one_directory_or_refuses_two() {
+fn a_case_differing_update_on_a_folding_filesystem_moves_the_one_directory() {
     let (_tmp, paths) = home();
     write_tree(&paths.agents_dir().join("Alpha"), "Alpha", "1.0.0", "old");
-    let entries = existing_dirs(&paths, &["Alpha", "alpha"]);
-    let folds = paths.agents_dir().join("alpha").exists();
-    if folds {
-        assert_eq!(entries.unwrap(), vec!["Alpha".to_string()]);
-        // And the whole update goes through.
-        let guard = crate::agent_store::open(&paths).unwrap();
-        let (staged, digest) = stage(&paths, "alpha", "2.0.0", "new");
-        let txn = begin(&paths, &guard, &["Alpha", "alpha"], Some(staged)).unwrap();
-        let out = existing_dirs(&paths, &["Alpha", "alpha"])
-            .unwrap()
-            .into_iter()
-            .map(|id| outgoing(&paths, &id))
-            .collect();
-        txn.execute(Op::Update, Some("alpha"), Some(digest), out)
-            .unwrap();
-        let names: Vec<String> = std::fs::read_dir(paths.agents_dir())
-            .unwrap()
-            .flatten()
-            .map(|e| e.file_name().to_string_lossy().into_owned())
-            .filter(|n| n != SWAP_DIR)
-            .collect();
-        assert_eq!(names, vec!["alpha".to_string()]);
-    } else {
-        write_tree(&paths.agents_dir().join("alpha"), "alpha", "0.9.0", "other");
-        let error = existing_dirs(&paths, &["Alpha", "alpha"]).unwrap_err();
-        assert!(error.to_string().contains("differ only by case"), "{error}");
+    if !paths.agents_dir().join("alpha").exists() {
+        eprintln!("[skip] this filesystem does not fold case");
+        return;
     }
+    assert_eq!(
+        existing_dirs(&paths, &["Alpha", "alpha"]).unwrap(),
+        vec!["Alpha".to_string()]
+    );
+    let guard = crate::agent_store::open(&paths).unwrap();
+    let (staged, digest) = stage(&paths, "alpha", "2.0.0", "new");
+    let txn = begin(&paths, &guard, &["Alpha", "alpha"], Some(staged)).unwrap();
+    let out = existing_dirs(&paths, &["Alpha", "alpha"])
+        .unwrap()
+        .into_iter()
+        .map(|id| outgoing(&paths, &id))
+        .collect();
+    txn.execute(Op::Update, Some("alpha"), Some(digest), out)
+        .unwrap();
+    let names: Vec<String> = std::fs::read_dir(paths.agents_dir())
+        .unwrap()
+        .flatten()
+        .map(|e| e.file_name().to_string_lossy().into_owned())
+        .filter(|n| n != SWAP_DIR)
+        .collect();
+    assert_eq!(names, vec!["alpha".to_string()]);
+}
+
+/// Codex round 3 (P1): on a case-SENSITIVE filesystem an unrelated `Alpha`
+/// is not the `alpha` an update names. It must never be chosen as outgoing —
+/// it would be moved aside and deleted without the update ever judging it.
+/// And two distinct case-variant directories are each their own entry.
+#[test]
+fn on_a_case_sensitive_filesystem_another_cased_directory_is_never_outgoing() {
+    let (_tmp, paths) = home();
+    if !case_sensitive_agents_dir(&paths) {
+        eprintln!("[skip] no case-sensitive directory available here");
+        return;
+    }
+    write_tree(
+        &paths.agents_dir().join("Alpha"),
+        "Alpha",
+        "1.0.0",
+        "unrelated",
+    );
+    let unrelated = tree_bytes(&paths.agents_dir().join("Alpha"));
+    assert!(
+        existing_dirs(&paths, &["alpha"]).unwrap().is_empty(),
+        "agents/alpha does not exist; agents/Alpha is another agent"
+    );
+
+    // The whole update of `alpha`: Alpha is untouched.
+    let guard = crate::agent_store::open(&paths).unwrap();
+    let (staged, digest) = stage(&paths, "alpha", "2.0.0", "new");
+    let txn = begin(&paths, &guard, &["alpha"], Some(staged)).unwrap();
+    let out = existing_dirs(&paths, &["alpha"])
+        .unwrap()
+        .into_iter()
+        .map(|id| outgoing(&paths, &id))
+        .collect();
+    txn.execute(Op::Update, Some("alpha"), Some(digest), out)
+        .unwrap();
+    assert_eq!(tree_bytes(&paths.agents_dir().join("Alpha")), unrelated);
+    assert!(paths.agents_dir().join("alpha/manifest.yaml").is_file());
+
+    // Both present as two entries: each is its own outgoing directory.
+    assert_eq!(
+        existing_dirs(&paths, &["Alpha", "alpha"]).unwrap(),
+        vec!["Alpha".to_string(), "alpha".to_string()]
+    );
 }
 
 /// Review #627-a: a kill DURING the final delete of a committed transaction

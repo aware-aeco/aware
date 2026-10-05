@@ -524,13 +524,23 @@ pub fn update_agent_from_registry(
     if new_name != id {
         check_update_is_not_destructive(&new_name, force, paths, index)?;
     }
+    // The directories the swap will actually move — as the filesystem resolves
+    // `agents/<id>` and `agents/<new_name>`, under their on-disk spelling — are
+    // each judged too, so no directory is ever replaced unless this check has
+    // looked at it under the name it really has (Codex round 3).
+    let outgoing_dirs = swap::existing_dirs(paths, &[id, new_name.as_str()])?;
+    for dir in &outgoing_dirs {
+        if dir != id && *dir != new_name {
+            check_update_is_not_destructive(dir, force, paths, index)?;
+        }
+    }
 
     // #626: before anything is moved, every copy the swap will replace —
     // `agents/<id>` and `agents/<new_name>` — is snapshotted into the immutable
     // store and verified. An app approved against the outgoing bytes then keeps
     // running on them after this update. Any failure refuses the update with
     // `agents/` untouched.
-    let outgoing = snapshot_outgoing(paths, guard, id, &new_name)?;
+    let outgoing = snapshot_outgoing(paths, guard, &outgoing_dirs)?;
 
     // One journaled swap: each outgoing copy is moved aside whole, the new copy
     // moved in, then the old copies deleted. A crash at any point leaves a
@@ -556,14 +566,13 @@ pub fn update_agent_from_registry(
 fn snapshot_outgoing(
     paths: &Paths,
     guard: &RefGuard,
-    id: &str,
-    new_name: &str,
+    outgoing_ids: &[String],
 ) -> Result<Vec<swap::Outgoing>, AwareError> {
     let agents = paths.agents_dir();
-    // The directories as spelled on disk, each once: an installed `Alpha`
-    // updated by a payload `alpha` is ONE directory on a case-insensitive
-    // filesystem (#627-a review), and two distinct ones elsewhere are refused.
-    let outgoing_ids = swap::existing_dirs(paths, &[id, new_name])?;
+    // `outgoing_ids`: the directories as the filesystem resolves them, each
+    // once, from `swap::existing_dirs` — an installed `Alpha` updated by a
+    // payload `alpha` is ONE directory on a case-insensitive volume, and an
+    // unrelated `Alpha` is never one on a case-sensitive volume.
     let mut outgoing = Vec::new();
     for outgoing_id in outgoing_ids.iter().map(String::as_str) {
         // Fenced by-id lookups (#365): a path-shaped id names no agent here.
@@ -1344,6 +1353,76 @@ mod tests {
             agents,
             bundles: BTreeMap::new(),
         }
+    }
+
+    /// Codex round 3 (P1): on a case-SENSITIVE filesystem, `update alpha` with
+    /// no `agents/alpha` but an unrelated LOCAL `agents/Alpha` behaves as an
+    /// install of `alpha` and never moves, judges as its own, or deletes
+    /// `Alpha`.
+    #[test]
+    fn an_update_never_replaces_a_differently_cased_agent_on_a_case_sensitive_volume() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let agents = paths.agents_dir();
+        std::fs::create_dir_all(&agents).unwrap();
+        if cfg!(windows)
+            && !std::process::Command::new("fsutil.exe")
+                .args(["file", "setCaseSensitiveInfo"])
+                .arg(&agents)
+                .arg("enable")
+                .output()
+                .is_ok_and(|o| o.status.success())
+        {
+            eprintln!("[skip] no case-sensitive directory available here");
+            return;
+        }
+        std::fs::create_dir(agents.join("Probe")).unwrap();
+        let sensitive = !agents.join("probe").exists();
+        std::fs::remove_dir(agents.join("Probe")).unwrap();
+        if !sensitive {
+            eprintln!("[skip] this filesystem folds case");
+            return;
+        }
+        // A local install that happens to be called `Alpha`.
+        let local = agents.join("Alpha");
+        std::fs::create_dir_all(&local).unwrap();
+        std::fs::write(
+            local.join("manifest.yaml"),
+            "agent: Alpha\nversion: 0.0.1-mine\ndescription: x\nstateful: false\nlicense: MIT\n\
+             transport:\n  cli:\n    binary: aware-alpha\ncommands: {}\n",
+        )
+        .unwrap();
+        std::fs::write(local.join("my-work.txt"), "exists nowhere else").unwrap();
+        crate::install::provenance::write_required(
+            &local,
+            &crate::install::provenance::InstallSource::Local {
+                path: "C:/my/alpha".into(),
+            },
+        )
+        .unwrap();
+        let before = tree_bytes(&local);
+
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        write_alpha_archive(&archive, "REGISTRY");
+        let index = single_alpha_index(&url);
+        let updated = update_agent_from_registry(
+            "alpha",
+            None,
+            false,
+            &paths,
+            &index,
+            &crate::agent_store::open(&paths).unwrap(),
+        );
+        assert_eq!(
+            updated.as_deref().map_err(|e| e.to_string()),
+            Ok("alpha"),
+            "`update alpha` installs alpha"
+        );
+        assert_eq!(tree_bytes(&local), before, "agents/Alpha is untouched");
+        assert!(agents.join("alpha/manifest.yaml").is_file());
     }
 
     #[test]

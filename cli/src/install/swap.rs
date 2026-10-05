@@ -897,18 +897,24 @@ fn write_intent(dir: &Path, intent: &Intent) -> Result<(), AwareError> {
     Ok(())
 }
 
-/// The directories under `agents/` that the ids `ids` name, as they are
-/// actually spelled on disk, each once — the outgoing set of a swap.
+/// The directories under `agents/` that the ids `ids` name, each once, as
+/// spelled on disk — the outgoing set of a swap.
 ///
-/// An id names the entry spelled exactly like it, else the one entry that
-/// differs from it only by case (a case-insensitive filesystem opens that one
-/// for it too). Two ids of one swap that differ only by case thus name ONE
-/// directory where the filesystem folds case; where it does not and both exist
-/// as two directories, the swap refuses — it would otherwise move two agents
-/// under one lock key that the person asked to treat as one — and nothing is
-/// changed.
+/// An id names a directory only if `agents/<id>` itself exists — the
+/// filesystem decides, never a case-folded guess: on a case-sensitive volume
+/// an unrelated `agents/Alpha` is NOT the `alpha` an update names, and must
+/// never be moved aside and deleted under it (Codex round 3). Where the volume
+/// folds case, `agents/alpha` opens `agents/Alpha`; that is recorded under its
+/// on-disk spelling, found by comparing filesystem identities. Two ids that
+/// resolve to one entry (same identity) are one outgoing directory; two
+/// distinct entries are two.
 pub fn existing_dirs<S: AsRef<str>>(paths: &Paths, ids: &[S]) -> Result<Vec<String>, AwareError> {
     let agents = paths.agents_dir();
+    let identity = |name: &str| -> Result<(u64, u64, u64), AwareError> {
+        let path = agents.join(name);
+        crate::fs::entry_identity(&path)
+            .map_err(|e| std::io::Error::new(e.kind(), format!("{}: {e}", path.display())).into())
+    };
     let listed: Vec<String> = match std::fs::read_dir(&agents) {
         Ok(entries) => entries
             .filter_map(|e| e.ok())
@@ -924,34 +930,34 @@ pub fn existing_dirs<S: AsRef<str>>(paths: &Paths, ids: &[S]) -> Result<Vec<Stri
             .into());
         }
     };
-    let mut out: Vec<String> = Vec::new();
+    let mut out: Vec<(String, (u64, u64, u64))> = Vec::new();
     for id in ids {
         let id = id.as_ref();
         check_id(id)?;
-        let entry = if listed.iter().any(|name| name == id) {
-            Some(id.to_string())
+        if !exists(&agents.join(id))? {
+            continue; // nothing of that name: not outgoing
+        }
+        let id_identity = identity(id)?;
+        if out.iter().any(|(_, seen)| *seen == id_identity) {
+            continue; // the same entry under another spelling
+        }
+        // Its on-disk spelling: the exact name, else the listed entry with
+        // the same identity (a folding volume resolved the name to it).
+        let spelled = if listed.iter().any(|name| name == id) {
+            id.to_string()
         } else {
-            let folded: Vec<&String> = listed
-                .iter()
-                .filter(|name| lock_key(name) == lock_key(id))
-                .collect();
-            match folded.as_slice() {
-                [one] => Some((*one).clone()),
-                _ => None,
+            let mut found = None;
+            for name in listed.iter().filter(|name| lock_key(name) == lock_key(id)) {
+                if identity(name)? == id_identity {
+                    found = Some(name.clone());
+                    break;
+                }
             }
+            found.unwrap_or_else(|| id.to_string())
         };
-        let Some(entry) = entry else { continue };
-        if out.contains(&entry) {
-            continue;
-        }
-        if let Some(other) = out.iter().find(|o| lock_key(o) == lock_key(&entry)) {
-            return Err(AwareError::Conflict(format!(
-                "agents/{other} and agents/{entry} are two installed agents whose ids differ only by case;                  one update cannot replace both safely. Remove the one you no longer want                  (`aware agent uninstall <id>`) and update again"
-            )));
-        }
-        out.push(entry);
+        out.push((spelled, id_identity));
     }
-    Ok(out)
+    Ok(out.into_iter().map(|(name, _)| name).collect())
 }
 
 // ── doctor ────────────────────────────────────────────────────────────────────
