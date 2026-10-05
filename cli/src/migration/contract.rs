@@ -25,9 +25,6 @@
 //! The ignore-list is only sound while the run path does not read those keys;
 //! `run_path_never_reads_a_contract_ignored_field` scans `runtime/` to keep it so.
 
-// Wired into `aware app migrate plan` by #628 PR2.
-#![cfg_attr(not(test), allow(dead_code))]
-
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
@@ -197,7 +194,7 @@ pub fn cli_executor(binary: String, program: &Path) -> Executor {
 }
 
 /// A pin as the diff names it.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, serde::Deserialize)]
 pub struct PinRef {
     pub version: String,
     pub digest: String,
@@ -453,6 +450,11 @@ pub fn canonical(value: &serde_yaml::Value) -> String {
         Ok(json) => sorted(json).to_string(),
         Err(_) => serde_yaml::to_string(value).unwrap_or_default(),
     }
+}
+
+/// Canonical JSON text of a JSON value: object keys sorted at every depth.
+pub fn canonical_json(value: serde_json::Value) -> String {
+    sorted(value).to_string()
 }
 
 fn sorted(value: serde_json::Value) -> serde_json::Value {

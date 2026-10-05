@@ -1019,7 +1019,6 @@ fn bundle_mismatch(id: &str, digest: &str, reason: &str) -> AwareError {
 // ── #628: resolve an app against a CHOSEN set of pins ──────────────────────────
 
 /// Where a migration target pin points.
-#[cfg_attr(not(test), allow(dead_code))] // wired by #628 PR2
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum PinTarget {
     /// Exact stored bytes: `<agent>@sha256:<hex>`.
@@ -1079,7 +1078,6 @@ impl PinSet {
 }
 
 /// Which side of a [`PinSet`] an agent resolved from.
-#[cfg_attr(not(test), allow(dead_code))] // wired by #628 PR2
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum PinSource {
@@ -1088,7 +1086,6 @@ pub enum PinSource {
 }
 
 /// One agent resolved by [`resolve_pins`]: a verified store package.
-#[cfg_attr(not(test), allow(dead_code))] // wired by #628 PR2
 #[derive(Debug)]
 pub struct ResolvedPin {
     pub agent: DiscoveredAgent,
@@ -1187,6 +1184,27 @@ pub fn resolve_pins(
         });
     }
     Ok(out)
+}
+
+/// The verified store package of `id` with bytes `digest`, loaded — or `None`
+/// when no stored copy of those bytes verifies. Side-effect free, like
+/// [`resolve_pins`]. A candidate uses it for an agent only FROZEN nodes
+/// reference (#628 plan §1): such an agent is never dispatched, so its absence
+/// is not a refusal — the candidate keeps the base lock's pin verbatim.
+pub fn stored_agent(
+    paths: &Paths,
+    id: &str,
+    digest: &str,
+) -> Result<Option<DiscoveredAgent>, AwareError> {
+    let (valid, _) = verified_candidates(paths, id, digest)?;
+    let Some(package) = valid.into_iter().next() else {
+        return Ok(None);
+    };
+    let manifest = agent_store::package_manifest(&package.root)?;
+    Ok(Some(DiscoveredAgent {
+        manifest,
+        root: package.root,
+    }))
 }
 
 /// Every store package of `id` claiming bytes `digest`, verified: the valid
