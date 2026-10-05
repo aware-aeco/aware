@@ -853,7 +853,11 @@ fn short(pin: &ApprovalPin) -> String {
         .effective_digest()
         .and_then(|d| crate::agent_store::digest_hex(d))
     {
-        Some(hex) => format!("{} (sha256:{}…)", pin.version, &hex[..12]),
+        Some(hex) => format!(
+            "{} (sha256:{}…)",
+            pin.version,
+            crate::text::cut_after_chars(hex, 12).unwrap_or(hex)
+        ),
         None => pin.version.clone(),
     }
 }
