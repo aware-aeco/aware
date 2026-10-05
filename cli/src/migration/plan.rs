@@ -280,7 +280,7 @@ pub fn evaluate(
             .filter(|(id, _)| dispatched.contains(*id))
             .map(|(id, target)| (id.clone(), target.clone()))
             .collect(),
-        None => default_targets(paths, &dispatched, &base)?,
+        None => default_targets(paths, &dispatched, &base, &mut eval.row.warnings)?,
     };
     let old = match PinSet::from_lock(&base, BTreeMap::new())
         .and_then(|set| resolve_pins(paths, &app, &set))
@@ -566,6 +566,7 @@ fn default_targets(
     paths: &Paths,
     dispatched: &BTreeSet<String>,
     base: &LockFile,
+    warnings: &mut Vec<Reason>,
 ) -> Result<BTreeMap<String, PinTarget>, AwareError> {
     let mut out = BTreeMap::new();
     for id in dispatched {
@@ -587,7 +588,15 @@ fn default_targets(
             Ok(current) if current != *approved => {
                 out.insert(id.clone(), PinTarget::Digest(current));
             }
-            Ok(_) | Err(AwareError::Validation(_)) => {}
+            Ok(_) => {}
+            // The copy cannot be hashed by rule (a link, a non-regular entry, a
+            // non-UTF-8 name): it is not "up to date", it is unknown — say so.
+            Err(AwareError::Validation(reason)) => warnings.push(Reason::new(
+                "installed-copy-unhashable",
+                format!(
+                    "The installed copy of {id} cannot be compared with the approved bytes because it cannot be hashed ({reason}); no update of it is offered — reinstall it, or name a target with --to."
+                ),
+            )),
             Err(error) => return Err(error),
         }
     }

@@ -308,6 +308,44 @@ fn a_caller_is_found_through_backed_by_not_through_the_agent_name() {
     assert!(codes(outer).contains(&"backing-app-moved"), "{outer:#?}");
 }
 
+/// Review #628 PR2 round 1: an installed copy that cannot be hashed (here: it
+/// holds a link) cannot be compared with the approval. That is not "up to
+/// date" said silently — the row warns.
+#[test]
+fn an_installed_copy_that_cannot_be_hashed_is_a_warning_not_silence() {
+    let h = home();
+    let dir = write_agent(&h.paths, "tool", "1.0.0", "mode: read");
+    let source = write_app(&h.paths, "demo", READS);
+    approve(&h.paths, &source);
+    let outside = h.paths.aware_home.join("outside");
+    std::fs::create_dir_all(&outside).unwrap();
+    let link = dir.join("linked");
+    #[cfg(windows)]
+    {
+        let status = std::process::Command::new("cmd.exe")
+            .args(["/C", "mklink", "/J"])
+            .arg(&link)
+            .arg(&outside)
+            .stdout(std::process::Stdio::null())
+            .stderr(std::process::Stdio::null())
+            .status()
+            .unwrap();
+        assert!(status.success(), "failed to create test junction");
+    }
+    #[cfg(unix)]
+    std::os::unix::fs::symlink(&outside, &link).unwrap();
+
+    let row = row_of(&h, &source);
+    assert!(row.targets.is_empty(), "{row:#?}");
+    let warning = row
+        .warnings
+        .iter()
+        .find(|w| w.code == "installed-copy-unhashable")
+        .unwrap_or_else(|| panic!("no warning: {row:#?}"));
+    assert!(warning.text.contains("tool"), "{warning:?}");
+    assert!(warning.text.contains("cannot be compared"), "{warning:?}");
+}
+
 #[test]
 fn only_an_accepted_comparison_could_ever_skip_the_person() {
     // `advisory` is not an input to the decision at all.
