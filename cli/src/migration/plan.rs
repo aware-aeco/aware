@@ -7,14 +7,18 @@
 //! states, in v1:
 //!
 //! * `up-to-date` — no agent this app dispatches would move;
-//! * `needs-person` — every real candidate in v1 (no fixed-state comparison
-//!   method exists yet, so the no-click path is closed: `no-click-available:
-//!   false`);
+//! * `needs-person` — a person must approve carrying it forward: the update is
+//!   not eligible for the no-click path, or no active policy covers it;
 //! * `blocked` — the candidate cannot be carried forward until a person edits
 //!   or recompiles the workflow (the reasons say which);
 //! * `held` — a person put the app on hold;
-//! * `auto-under-policy` — reserved: reachable only when an accepted executed
-//!   comparison method exists ([`super::compare::ACCEPTED_FOR_POLICY`]).
+//! * `auto-under-policy` — the no-click path is open (declared read-only,
+//!   run instructions unchanged, an accepted comparison —
+//!   [`super::compare::ACCEPTED_FOR_POLICY`]) AND an active, person-approved
+//!   policy covers this app, every moved tool, a `patch` move and an
+//!   official-registry package (#628 PR3b, [`super::policy`]). The row names
+//!   the policy; `migrate promote --policy` re-checks all of it, plus a fresh
+//!   official-registry verification, before anything moves.
 //!
 //! An `exposes-as-agent` backing app, and any app whose candidate would move a
 //! backing app's pins, is never carried forward in v1 (§14): it is
@@ -141,9 +145,13 @@ pub struct PlanRow {
     /// Reserved for an urgency notice (e.g. a security advisory). Urgency is
     /// never approval: this field never changes `state`.
     pub advisory: Option<serde_json::Value>,
-    /// Whether this candidate could be carried forward with no click. Always
-    /// false in v1: no fixed-state comparison method is available yet.
+    /// Whether this candidate is eligible for the no-click path at all:
+    /// declared read-only, run instructions unchanged, an accepted comparison,
+    /// no backing app, nothing blocking. A policy must still cover it.
     pub no_click_available: bool,
+    /// The active policy that covers carrying this app forward (state
+    /// `auto-under-policy`).
+    pub policy: Option<String>,
 }
 
 impl PlanRow {
@@ -167,6 +175,7 @@ impl PlanRow {
             warnings: Vec::new(),
             advisory: None,
             no_click_available: false,
+            policy: None,
         }
     }
 
@@ -200,8 +209,11 @@ impl Evaluation {
     }
 }
 
-/// The text of the reason that keeps the no-click path closed in v1.
+/// The text of the reason a changed contract keeps the no-click path closed.
 pub const NO_FIXED_STATE_METHOD: &str = "No fixed-state comparison method is available yet, so a person must approve carrying this workflow forward.";
+
+/// The text of the reason an eligible update still needs a person.
+pub const NO_POLICY: &str = "No carry-forward policy covers this update yet, so a person must approve it (approving can also record a policy for updates like it).";
 
 /// Evaluate the app whose source is `source`.
 ///
@@ -523,26 +535,39 @@ pub fn evaluate(
         && comparison_accepted
         && backing.is_empty()
         && !blocked;
-    if !row.no_click_available && !blocked {
+    if !comparison_accepted && !blocked {
         row.reasons
             .push(Reason::new("no-fixed-state-method", NO_FIXED_STATE_METHOD));
     }
     row.comparison = comparison;
-    row.state = decide(row.hold.is_some(), true, blocked, row.no_click_available);
+    // The no-click path needs a person-approved policy that covers it.
+    let mut covered = false;
+    if row.no_click_available && row.hold.is_none() {
+        row.state = State::AutoUnderPolicy;
+        match super::policy::covering(paths, row) {
+            Some(loaded) => {
+                covered = true;
+                row.policy = Some(loaded.policy.policy);
+            }
+            None => row.reasons.push(Reason::new("no-policy", NO_POLICY)),
+        }
+    }
+    row.state = decide(row.hold.is_some(), true, blocked, covered);
     eval.candidate = Some(candidate);
     Ok(eval)
 }
 
 /// The state of an app from the facts that may decide it. `advisory` is not an
-/// input: urgency never changes who decides.
-pub fn decide(held: bool, moved: bool, blocked: bool, no_click: bool) -> State {
+/// input: urgency never changes who decides. `covered`: the no-click path is
+/// open AND an active policy covers it.
+pub fn decide(held: bool, moved: bool, blocked: bool, covered: bool) -> State {
     if held {
         State::Held
     } else if !moved {
         State::UpToDate
     } else if blocked {
         State::Blocked
-    } else if no_click {
+    } else if covered {
         State::AutoUnderPolicy
     } else {
         State::NeedsPerson
@@ -581,8 +606,9 @@ pub fn plan_rows(
                     "This workflow runs {backing}, which has a pending tool update; a backing workflow is never carried forward automatically, so compile {backing} and this workflow again."
                 ),
             ));
-            if row.state == State::UpToDate {
+            if matches!(row.state, State::UpToDate | State::AutoUnderPolicy) {
                 row.state = State::NeedsPerson;
+                row.policy = None;
             }
         }
     }

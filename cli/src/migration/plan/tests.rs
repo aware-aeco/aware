@@ -34,10 +34,12 @@ fn nothing_installed_newer_is_up_to_date() {
     assert_eq!(row.comparison, None);
 }
 
-/// §11 Q1 + §12 R1-9: the best case v1 can see — declared read-only, run
-/// instructions byte-identical — still needs a person, and says why.
+/// §11 Q1 + owner decision 2 (floless.app#1985): the best case — declared
+/// read-only, run instructions byte-identical — opens the no-click path, but
+/// with no person-approved policy covering it a person still decides, and the
+/// row says why.
 #[test]
-fn a_declared_read_with_identical_instructions_still_needs_a_person_in_v1() {
+fn a_declared_read_with_identical_instructions_needs_a_policy_to_skip_the_person() {
     let h = home();
     write_agent(&h.paths, "tool", "1.0.0", "mode: read");
     let source = write_app(&h.paths, "demo", READS);
@@ -60,9 +62,10 @@ fn a_declared_read_with_identical_instructions_still_needs_a_person_in_v1() {
         compare::ComparisonStatus::IdenticalInstructions
     );
     assert_eq!(comparison.method, Some(compare::STATIC_INSPECTION));
-    assert!(!row.no_click_available);
-    assert_eq!(codes(&row), ["no-fixed-state-method"]);
-    assert_eq!(row.reasons[0].text, NO_FIXED_STATE_METHOD);
+    assert!(row.no_click_available, "{row:#?}");
+    assert_eq!(row.policy, None);
+    assert_eq!(codes(&row), ["no-policy"]);
+    assert_eq!(row.reasons[0].text, NO_POLICY);
 }
 
 #[test]
@@ -79,11 +82,10 @@ fn a_mode_overridable_read_is_not_declared_read_only() {
     let row = row_of(&h, &source);
     assert_eq!(row.state, State::NeedsPerson);
     assert_eq!(row.effect, Some("not-declared-read-only"));
-    assert_eq!(
-        codes(&row),
-        ["mode-overridable", "no-fixed-state-method"],
-        "{row:#?}"
-    );
+    // The instructions are identical (accepted), so no "no method" reason —
+    // what keeps a person in the loop is the effect.
+    assert_eq!(codes(&row), ["mode-overridable"], "{row:#?}");
+    assert!(!row.no_click_available);
     assert!(row.reasons[0].text.contains("node x (tool exec)"));
     // The contract of `exec` itself is unchanged: inspection says identical.
     assert_eq!(

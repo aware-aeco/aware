@@ -52,6 +52,18 @@ impl Paths {
         self.agents_dir().join(crate::install::swap::SWAP_DIR)
     }
 
+    /// Carry-forward policies (#628 PR3b): `<policy-id>.yaml`, immutable once
+    /// written; `<policy-id>.revoked.yaml` revokes one.
+    pub fn migration_policies_dir(&self) -> PathBuf {
+        self.aware_home.join("migration-policies")
+    }
+
+    /// Per-app promotion locks (#628 PR3b): `<key>.flock`, held exclusive by
+    /// `migrate promote|revert` and by a compile writing the same `<app>.lock`.
+    pub fn migration_locks_dir(&self) -> PathBuf {
+        self.aware_home.join("migration-locks")
+    }
+
     pub fn config_path(&self) -> PathBuf {
         self.aware_home.join("config.yaml")
     }

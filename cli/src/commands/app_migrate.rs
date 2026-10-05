@@ -1,11 +1,14 @@
-//! `aware app migrate …` (#628 PR2): plan, prepare, discard, hold, unhold.
+//! `aware app migrate …` (#628): plan, prepare, discard, hold, unhold (PR2);
+//! promote, revert and the policy verbs (PR3b).
 //!
-//! None of these verbs touches `<app>.lock`. `prepare` writes only the
-//! candidate + evidence under `<source-dir>/.aware-migration/`; `hold` writes
-//! only `<source-dir>/.aware-approvals/HOLD`. Expected outcomes — up to date,
-//! needs a person, blocked, held — are `ok: true` data; `ok: false` only when
-//! the command cannot run (an unknown app, a malformed `--to`, a refused
-//! backing-app candidate, an unreadable file).
+//! Only `promote` and `revert` touch `<app>.lock` (see
+//! [`crate::migration::promote`]). `prepare` writes only the candidate +
+//! evidence under `<source-dir>/.aware-migration/`; `hold` writes only
+//! `<source-dir>/.aware-approvals/HOLD.<app>`; the policy verbs write only
+//! `AWARE_HOME/migration-policies/`. Expected outcomes of `plan`/`prepare` —
+//! up to date, needs a person, blocked, held — are `ok: true` data; `ok:
+//! false` only when the command cannot run or a promotion is refused (each
+//! refusal has its own `E_MIGRATE_…` code and changes nothing).
 
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
@@ -15,11 +18,14 @@ use clap::Subcommand;
 use serde::Serialize;
 
 use crate::agent_resolution::PinTarget;
+use crate::app_lock::approval::SuccessorKind;
 use crate::context::Context;
 use crate::envelope;
 use crate::error::AwareError;
 use crate::migration::files::{self, HoldRecord};
 use crate::migration::plan::{self, PlanRow, State};
+use crate::migration::policy;
+use crate::migration::promote::{self, Approver, Refused};
 
 #[derive(Subcommand, Debug)]
 pub enum MigrateCommand {
@@ -64,6 +70,76 @@ pub enum MigrateCommand {
         #[arg(long)]
         actor: String,
     },
+    /// Carry an app's approval forward to its prepared candidate: replace
+    /// `<app>.lock` and append a successor link. Needs a person's recorded
+    /// approval (`--person --approval --front-door`) or a policy (`--policy`).
+    Promote {
+        app: String,
+        /// The `sha256:` digest of the prepared candidate being approved.
+        #[arg(long)]
+        candidate: String,
+        /// Who approved it (a claim the front door recorded).
+        #[arg(long)]
+        person: Option<String>,
+        /// The front door's approval record (JSON) bound to this candidate.
+        #[arg(long)]
+        approval: Option<PathBuf>,
+        /// Carry it forward under this person-approved policy instead.
+        #[arg(long)]
+        policy: Option<String>,
+        /// The front door recording this promotion (required with --person).
+        #[arg(long = "front-door")]
+        front_door: Option<String>,
+    },
+    /// Move an app back to pins that were approved before: promote a
+    /// candidate prepared with `--to <agent>@sha256:<earlier digest>` as a
+    /// `reverted` successor. Never claims anything was undone.
+    Revert {
+        app: String,
+        #[arg(long)]
+        candidate: String,
+        #[arg(long)]
+        person: Option<String>,
+        #[arg(long)]
+        approval: Option<PathBuf>,
+        /// A caller's policy reverting after a failed run (`--reason
+        /// run-failed:<run-id>`).
+        #[arg(long)]
+        automatic: bool,
+        #[arg(long)]
+        reason: Option<String>,
+        #[arg(long = "front-door")]
+        front_door: Option<String>,
+    },
+    /// Carry-forward policies: record, list, revoke.
+    Policy {
+        #[command(subcommand)]
+        cmd: PolicyCommand,
+    },
+}
+
+#[derive(Subcommand, Debug)]
+pub enum PolicyCommand {
+    /// Record the policy a person approved, from the front door's record.
+    Record {
+        /// The front door's policy approval record (JSON).
+        #[arg(long)]
+        approval: PathBuf,
+        #[arg(long = "front-door")]
+        front_door: Option<String>,
+    },
+    /// List every policy: active, revoked, or invalid.
+    List,
+    /// Revoke a policy. It stays on disk, marked revoked.
+    Revoke {
+        id: String,
+        #[arg(long)]
+        actor: String,
+        #[arg(long = "front-door")]
+        front_door: Option<String>,
+        #[arg(long)]
+        reason: Option<String>,
+    },
 }
 
 pub fn dispatch(cmd: MigrateCommand, ctx: &Context) -> Result<(), AwareError> {
@@ -83,12 +159,83 @@ pub fn dispatch(cmd: MigrateCommand, ctx: &Context) -> Result<(), AwareError> {
             prepare_cmd(ctx, &app, &to, &store_guard),
         ),
         MigrateCommand::Discard { app } => ("app migrate discard", discard_cmd(ctx, &app)),
-        MigrateCommand::Hold { app, actor, reason } => {
-            ("app migrate hold", hold_cmd(ctx, &app, &actor, reason))
-        }
+        MigrateCommand::Hold { app, actor, reason } => (
+            "app migrate hold",
+            hold_cmd(ctx, &app, &actor, reason, &store_guard),
+        ),
         MigrateCommand::Unhold { app, actor } => {
             ("app migrate unhold", unhold_cmd(ctx, &app, &actor))
         }
+        MigrateCommand::Promote {
+            app,
+            candidate,
+            person,
+            approval,
+            policy,
+            front_door,
+        } => (
+            "app migrate promote",
+            promote_cmd(
+                ctx,
+                &store_guard,
+                &app,
+                &candidate,
+                ApproverArgs {
+                    person,
+                    approval,
+                    policy,
+                    automatic: false,
+                    reason: None,
+                    front_door,
+                },
+                SuccessorKind::CarriedForward,
+            ),
+        ),
+        MigrateCommand::Revert {
+            app,
+            candidate,
+            person,
+            approval,
+            automatic,
+            reason,
+            front_door,
+        } => (
+            "app migrate revert",
+            promote_cmd(
+                ctx,
+                &store_guard,
+                &app,
+                &candidate,
+                ApproverArgs {
+                    person,
+                    approval,
+                    policy: None,
+                    automatic,
+                    reason,
+                    front_door,
+                },
+                SuccessorKind::Reverted,
+            ),
+        ),
+        MigrateCommand::Policy { cmd } => match cmd {
+            PolicyCommand::Record {
+                approval,
+                front_door,
+            } => (
+                "app migrate policy record",
+                policy_record_cmd(ctx, &approval, front_door),
+            ),
+            PolicyCommand::List => ("app migrate policy list", policy_list_cmd(ctx)),
+            PolicyCommand::Revoke {
+                id,
+                actor,
+                front_door,
+                reason,
+            } => (
+                "app migrate policy revoke",
+                policy_revoke_cmd(ctx, &id, &actor, front_door, reason),
+            ),
+        },
     };
     match outcome {
         Ok(output) => {
@@ -140,6 +287,16 @@ impl From<AwareError> for Failure {
             code: code.into(),
             error: Box::new(error),
             details: serde_json::Value::Null,
+        }
+    }
+}
+
+impl From<Refused> for Failure {
+    fn from(refused: Refused) -> Self {
+        Failure {
+            code: refused.code,
+            error: refused.error,
+            details: refused.details,
         }
     }
 }
@@ -510,11 +667,15 @@ fn hold_cmd(
     app: &str,
     actor: &str,
     reason: Option<String>,
+    guard: &crate::agent_store::RefGuard,
 ) -> Result<Output, Failure> {
     let actor = require_actor(actor)?;
     let source = app_source(ctx, app)?;
     let id = app_id(&source)?;
     let dir = crate::fs::containing_dir(&source);
+    // Under the app's promotion lock: a promotion either finished before the
+    // hold or sees it (§15.1 R3).
+    let _promotion = promote::lock_app(&ctx.paths, guard, dir, &id)?;
     let record = HoldRecord {
         format: 1,
         app: id.clone(),
@@ -547,6 +708,286 @@ fn unhold_cmd(ctx: &Context, app: &str, actor: &str) -> Result<Output, Failure> 
         } else {
             format!("{id} was not on hold\n")
         },
+    })
+}
+
+// ── promote / revert ────────────────────────────────────────────────────────
+
+struct ApproverArgs {
+    person: Option<String>,
+    approval: Option<PathBuf>,
+    policy: Option<String>,
+    automatic: bool,
+    reason: Option<String>,
+    front_door: Option<String>,
+}
+
+/// The front door that recorded a person's approval. Required: the CLI cannot
+/// tell a person from a process, so a person approval exists only as a front
+/// door's record (owner decision 1, pawellisowski/floless.app#1985). In an AI
+/// coding session a missing front door is reported as such — an accident
+/// guard, not a security boundary (plan §11 R1).
+fn required_front_door(front_door: Option<String>, what: &str) -> Result<String, Failure> {
+    match front_door.map(|f| f.trim().to_string()) {
+        Some(front_door) if !front_door.is_empty() => Ok(front_door),
+        _ => {
+            let why = match promote::ai_session_marker() {
+                Some(marker) => format!(
+                    "this looks like an AI coding session ({marker} is set), and an AI never approves on a person's behalf: {what} must come from the front door the person used, which passes --front-door"
+                ),
+                None => format!("{what} must name the front door that recorded it (--front-door)"),
+            };
+            Err(Refused::new("E_MIGRATE_NO_FRONT_DOOR", why).into())
+        }
+    }
+}
+
+fn read_record(path: &Path) -> Result<Vec<u8>, Failure> {
+    std::fs::read(path).map_err(|error| {
+        Refused::new(
+            "E_MIGRATE_APPROVAL_UNREADABLE",
+            format!(
+                "the approval record {} cannot be read: {error}",
+                path.display()
+            ),
+        )
+        .into()
+    })
+}
+
+/// The front door of a promotion no person claims (a policy, an automatic
+/// revert): the caller's name when given, else the CLI itself.
+fn optional_front_door(front_door: Option<String>) -> String {
+    front_door
+        .map(|f| f.trim().to_string())
+        .filter(|f| !f.is_empty())
+        .unwrap_or_else(|| "aware-cli".to_string())
+}
+
+fn promote_cmd(
+    ctx: &Context,
+    guard: &crate::agent_store::RefGuard,
+    app: &str,
+    candidate: &str,
+    args: ApproverArgs,
+    kind: SuccessorKind,
+) -> Result<Output, Failure> {
+    if crate::agent_store::digest_hex(candidate).is_none() {
+        return Err(Refused::new(
+            "E_MIGRATE_BAD_CANDIDATE",
+            format!(
+                "--candidate {candidate:?} is not sha256: followed by 64 lowercase hex characters"
+            ),
+        )
+        .into());
+    }
+    let person = args.person.is_some() || args.approval.is_some();
+    let approvers =
+        usize::from(person) + usize::from(args.policy.is_some()) + usize::from(args.automatic);
+    if approvers == 0 {
+        return Err(Refused::new(
+            "E_MIGRATE_NO_APPROVER",
+            match kind {
+                SuccessorKind::CarriedForward => {
+                    "nothing is carried forward without an approver: give a person's recorded approval (--person, --approval, --front-door) or a policy (--policy)"
+                }
+                SuccessorKind::Reverted => {
+                    "nothing is reverted without an approver: give a person's recorded approval (--person, --approval, --front-door), or --automatic --reason run-failed:<run-id>"
+                }
+            },
+        )
+        .into());
+    }
+    if approvers > 1 {
+        return Err(Refused::new(
+            "E_MIGRATE_APPROVER_CONFLICT",
+            "give exactly one approver: a person's recorded approval, a policy, or --automatic — not several",
+        )
+        .into());
+    }
+    let source = app_source(ctx, app)?;
+    let official_index = std::cell::OnceCell::new();
+    let official = |pin: &crate::app_lock::CandidatePin| -> Result<(), String> {
+        let index = official_index
+            .get_or_init(|| {
+                crate::registry::fetch::fetch_fresh_official_index().map_err(|e| e.to_string())
+            })
+            .as_ref()
+            .map_err(|e| format!("the official registry could not be fetched: {e}"))?;
+        let verdict = crate::install::provenance::assess_against_index(
+            &pin.root,
+            &pin.agent,
+            &pin.version,
+            Some(index),
+        );
+        if verdict.verified {
+            Ok(())
+        } else {
+            Err(verdict.reason)
+        }
+    };
+    let actor;
+    let front_door;
+    let approver = if person {
+        let (Some(who), Some(path)) = (&args.person, &args.approval) else {
+            return Err(Refused::new(
+                "E_MIGRATE_NO_APPROVER",
+                "a person approval needs both --person <who> and --approval <record file>",
+            )
+            .into());
+        };
+        front_door = required_front_door(args.front_door, "a person approval")?;
+        actor = who.trim().to_string();
+        if actor.is_empty() {
+            return Err(
+                Refused::new("E_MIGRATE_NO_APPROVER", "--person must name who approved").into(),
+            );
+        }
+        Approver::Person {
+            actor: &actor,
+            front_door: &front_door,
+            record: read_record(path)?,
+        }
+    } else if let Some(id) = &args.policy {
+        front_door = optional_front_door(args.front_door);
+        Approver::Policy {
+            id,
+            front_door: &front_door,
+            official: &official,
+        }
+    } else {
+        front_door = optional_front_door(args.front_door);
+        let Some(reason) = args.reason.as_deref() else {
+            return Err(Refused::new(
+                "E_MIGRATE_NOT_ELIGIBLE",
+                "--automatic needs --reason run-failed:<run-id>, naming the run that failed",
+            )
+            .into());
+        };
+        Approver::Automatic {
+            reason,
+            front_door: &front_door,
+        }
+    };
+    let promoted = promote::promote(&ctx.paths, guard, &source, candidate, approver, kind)?;
+    let moves = promoted
+        .to
+        .iter()
+        .map(|(id, pin)| {
+            format!(
+                "{id} {} -> {}",
+                promoted
+                    .from
+                    .get(id)
+                    .map(|p| p.version.as_str())
+                    .unwrap_or("(none)"),
+                pin.version
+            )
+        })
+        .collect::<Vec<_>>()
+        .join(", ");
+    let mut text = format!(
+        "\u{2713} {} {}: {moves}\n  {}\n",
+        promoted.app,
+        match kind {
+            SuccessorKind::CarriedForward => "carried forward",
+            SuccessorKind::Reverted => "reverted",
+        },
+        promoted.label
+    );
+    if !promoted.running_instances.is_empty() {
+        text.push_str(&format!(
+            "  {} run(s) already in progress keep the plan they started with\n",
+            promoted.running_instances.len()
+        ));
+    }
+    for warning in &promoted.warnings {
+        text.push_str(&format!("  \u{26a0} {}\n", warning.text));
+    }
+    Ok(Output {
+        data: to_json(&promoted)?,
+        text,
+    })
+}
+
+// ── policy record / list / revoke ───────────────────────────────────────────
+
+fn policy_record_cmd(
+    ctx: &Context,
+    approval: &Path,
+    front_door: Option<String>,
+) -> Result<Output, Failure> {
+    let front_door = required_front_door(front_door, "a policy a person approved")?;
+    let record = read_record(approval)?;
+    let (loaded, created) =
+        policy::record(&ctx.paths, &record, &front_door).map_err(Refused::from)?;
+    let label = policy::label(&loaded);
+    Ok(Output {
+        text: format!(
+            "{} {label}\n",
+            if created {
+                "\u{2713} recorded"
+            } else {
+                "already recorded:"
+            }
+        ),
+        data: serde_json::json!({
+            "policy": loaded.policy.policy,
+            "created": created,
+            "digest": loaded.digest,
+            "path": loaded.path.display().to_string(),
+            "rule": loaded.policy.rule,
+            "scope": loaded.policy.scope,
+            "approved-by": loaded.policy.approved_by,
+            "label": label,
+        }),
+    })
+}
+
+fn policy_list_cmd(ctx: &Context) -> Result<Output, Failure> {
+    let entries = policy::list(&ctx.paths)?;
+    let mut text = String::new();
+    for entry in &entries {
+        text.push_str(&format!(
+            "{} [{}] {}\n",
+            entry.policy, entry.state, entry.label
+        ));
+    }
+    if entries.is_empty() {
+        text.push_str("no carry-forward policies\n");
+    }
+    Ok(Output {
+        data: serde_json::json!({ "policies": entries }),
+        text,
+    })
+}
+
+fn policy_revoke_cmd(
+    ctx: &Context,
+    id: &str,
+    actor: &str,
+    front_door: Option<String>,
+    reason: Option<String>,
+) -> Result<Output, Failure> {
+    let actor = require_actor(actor)?;
+    let front_door = optional_front_door(front_door);
+    let (revocation, revoked_now) =
+        policy::revoke(&ctx.paths, id, &actor, &front_door, reason).map_err(Refused::from)?;
+    Ok(Output {
+        text: if revoked_now {
+            format!("\u{2713} policy {id} revoked; it carries nothing forward from now on\n")
+        } else {
+            format!(
+                "policy {id} was already revoked by {}\n",
+                revocation.revoked_by
+            )
+        },
+        data: serde_json::json!({
+            "policy": id,
+            "revoked": true,
+            "revoked-now": revoked_now,
+            "revocation": revocation,
+        }),
     })
 }
 

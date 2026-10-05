@@ -1180,6 +1180,14 @@ pub fn compile_to_disk_for(
     }
     let mut lock = compile_snapshot(app, &agents, snapshot.source_hash, &digests)?;
     lock.front_door = front_door.map(str::to_string);
+    // #628 PR3b: a person's compile and a promotion of the same app never
+    // interleave — both write `<app>.lock` under the app's promotion lock.
+    let _promotion = crate::migration::promote::lock_app(
+        paths,
+        guard,
+        crate::fs::containing_dir(source),
+        &lock.app,
+    )?;
     let path = write_lockfile(&lock, source)?;
     Ok((path, lock))
 }
@@ -1259,7 +1267,7 @@ pub fn validate_compiles(source: &Path, paths: &Paths) -> Result<(), AwareError>
 }
 
 /// The exact bytes of a lock file: a `#` comment header, then the YAML.
-fn render_lock(lock: &LockFile, header: &str) -> Result<Vec<u8>, AwareError> {
+pub(crate) fn render_lock(lock: &LockFile, header: &str) -> Result<Vec<u8>, AwareError> {
     let yaml = serde_yaml::to_string(lock)
         .map_err(|e| AwareError::Internal(format!("serialize lockfile: {e}")))?;
     Ok(format!("{header}{yaml}").into_bytes())
