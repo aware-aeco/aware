@@ -831,3 +831,322 @@ fn a_simulated_run_records_its_backing_app_s_approval_origin() {
         assert_eq!(nested["record-complete"], true, "{args:?}: {approval}");
     }
 }
+
+// ── #628 PR3b: promote / revert / policy through the real binary ────────────
+
+impl Fixture {
+    /// `aware --json <args>` with extra environment: the whole envelope.
+    fn json_env(&self, args: &[&str], env: &[(&str, Option<&str>)]) -> serde_json::Value {
+        let mut full = vec!["--json"];
+        full.extend_from_slice(args);
+        let mut command = self.aware();
+        for (key, value) in env {
+            match value {
+                Some(value) => command.env(key, value),
+                None => command.env_remove(key),
+            };
+        }
+        let output = command.args(&full).output().unwrap();
+        let text = String::from_utf8_lossy(&output.stdout).into_owned();
+        serde_json::from_str(text.trim()).unwrap_or_else(|e| {
+            panic!(
+                "aware {full:?}: not one JSON envelope ({e}):\nstdout: {text}\nstderr: {}",
+                String::from_utf8_lossy(&output.stderr)
+            )
+        })
+    }
+
+    /// Prepare app `id` (optionally `--to` a target) and write the person
+    /// approval record a front door would write for it. Returns the candidate
+    /// digest and the record file.
+    fn prepare_with_record(&self, id: &str, to: Option<&str>, actor: &str) -> (String, PathBuf) {
+        let mut args = vec!["app", "migrate", "prepare", id];
+        if let Some(to) = to {
+            args.extend(["--to", to]);
+        }
+        let prepared = self.data(&args);
+        assert_eq!(prepared["prepared"], true, "{prepared}");
+        let candidate = prepared["candidate-digest"].as_str().unwrap().to_string();
+        let record = serde_json::json!({
+            "format": 1, "kind": "person", "actor": actor, "front-door": "floless@test",
+            "approval-ref": "batch-1", "candidate-digest": candidate,
+            "base-lock-digest": prepared["lock-digest"], "plan-digest": prepared["plan-digest"],
+            "statement-sha256": sha(b"Carry this workflow forward"), "at": "2026-10-05T00:00:00Z",
+        });
+        let path = self.root.join(format!("approval-{}.json", hex(&candidate)));
+        std::fs::write(&path, record.to_string()).unwrap();
+        (candidate, path)
+    }
+}
+
+fn error_code(envelope: &serde_json::Value) -> &str {
+    assert_eq!(envelope["ok"], false, "{envelope}");
+    envelope["error"]["code"].as_str().unwrap()
+}
+
+const NO_AI_MARKERS: [(&str, Option<&str>); 3] = [
+    ("CLAUDECODE", None),
+    ("CODEX_SANDBOX", None),
+    ("AWARE_AI_SESSION", None),
+];
+
+#[test]
+fn a_person_promotion_runs_the_new_pins_labelled_and_a_revert_brings_the_old_ones_back() {
+    let Some(fx) = fixture() else {
+        eprintln!("[skip] rustc not on PATH");
+        return;
+    };
+    fx.ok(&["agent", "install", "verbot@1.0.0"]);
+    fx.compiled_app("a");
+    assert_eq!(fx.run_says("a"), V1);
+    let (original_bytes, _) = fx.lock_state("a");
+    let original: serde_yaml::Value = serde_yaml::from_slice(&original_bytes).unwrap();
+    let old_digest = original["agent-digests"]["verbot"]
+        .as_str()
+        .unwrap()
+        .to_string();
+    fx.ok(&["agent", "update", "verbot"]);
+    let (candidate, record) = fx.prepare_with_record("a", None, "e2e");
+    let record = record.to_str().unwrap().to_string();
+    let promote = |extra: &[&str]| -> Vec<String> {
+        let mut args = vec!["app", "migrate", "promote", "a", "--candidate", &candidate];
+        args.extend_from_slice(extra);
+        args.iter().map(|s| s.to_string()).collect()
+    };
+    let refused = |args: Vec<String>, env: &[(&str, Option<&str>)]| -> String {
+        let args: Vec<&str> = args.iter().map(String::as_str).collect();
+        let envelope = fx.json_env(&args, env);
+        error_code(&envelope).to_string()
+    };
+
+    // Refusals change nothing.
+    assert_eq!(
+        refused(promote(&[]), &NO_AI_MARKERS),
+        "E_MIGRATE_NO_APPROVER"
+    );
+    assert_eq!(
+        refused(
+            promote(&[
+                "--person",
+                "e2e",
+                "--approval",
+                &record,
+                "--policy",
+                "pol-0000000000000000"
+            ]),
+            &NO_AI_MARKERS
+        ),
+        "E_MIGRATE_APPROVER_CONFLICT"
+    );
+    assert_eq!(
+        refused(
+            promote(&["--person", "e2e", "--approval", &record]),
+            &NO_AI_MARKERS
+        ),
+        "E_MIGRATE_NO_FRONT_DOOR"
+    );
+    // The AI-session accident guard names the marker.
+    let mut args = vec!["app", "migrate", "promote", "a", "--candidate", &candidate];
+    args.extend(["--person", "e2e", "--approval", &record]);
+    let envelope = fx.json_env(&args, &[("CLAUDECODE", Some("1"))]);
+    assert_eq!(error_code(&envelope), "E_MIGRATE_NO_FRONT_DOOR");
+    assert!(
+        envelope["error"]["message"]
+            .as_str()
+            .unwrap()
+            .contains("AI coding session (CLAUDECODE is set)"),
+        "{envelope}"
+    );
+    assert_eq!(
+        refused(
+            promote(&[
+                "--person",
+                "someone-else",
+                "--approval",
+                &record,
+                "--front-door",
+                "floless@test"
+            ]),
+            &NO_AI_MARKERS
+        ),
+        "E_MIGRATE_APPROVAL_MISMATCH"
+    );
+    assert_eq!(
+        refused(
+            promote(&["--policy", "pol-0000000000000000"]),
+            &NO_AI_MARKERS
+        ),
+        "E_MIGRATE_POLICY_NOT_FOUND"
+    );
+    assert_eq!(
+        fx.lock_state("a").0,
+        original_bytes,
+        "a refusal moved the lock"
+    );
+    assert_eq!(fx.run_says("a"), V1);
+
+    // The person approval, through its front door.
+    let args = promote(&[
+        "--person",
+        "e2e",
+        "--approval",
+        &record,
+        "--front-door",
+        "floless@test",
+    ]);
+    let args: Vec<&str> = args.iter().map(String::as_str).collect();
+    let promoted = fx.data(&args);
+    assert_eq!(promoted["seq"], 1, "{promoted}");
+    assert_eq!(promoted["kind"], "carried-forward");
+    assert_eq!(promoted["by-kind"], "person");
+    assert_eq!(promoted["to"]["verbot"]["version"], V2);
+    assert_eq!(fx.run_says("a"), V2, "the run reads the promoted lock");
+    let check = fx.data(&["app", "check", "a"]);
+    assert_eq!(check["approval-current"], true, "{check}");
+    assert_eq!(check["approval-origin"], "successor");
+    assert_eq!(check["approval-record"], "complete");
+    assert_eq!(check["successors"][0]["attested"], false);
+    let approval = fx.last_run_config("a")["approval"].clone();
+    assert_eq!(approval["origin"], "successor", "{approval}");
+    assert!(
+        approval["label"].as_str().unwrap().starts_with(
+            "approval carried forward from verbot 1.0.0 to 1.1.0 \u{2014} claimed person approval by e2e, recorded by floless@test"
+        ),
+        "{approval}"
+    );
+    // The original approval's exact bytes are archived.
+    let original_digest = sha(&original_bytes);
+    assert_eq!(
+        std::fs::read(
+            fx.aware
+                .join("apps/a/.aware-approvals")
+                .join(format!("{}.lock", hex(&original_digest)))
+        )
+        .unwrap(),
+        original_bytes
+    );
+    // The candidate was consumed: promoting it again finds nothing to promote.
+    assert_eq!(
+        refused(
+            promote(&[
+                "--person",
+                "e2e",
+                "--approval",
+                &record,
+                "--front-door",
+                "floless@test"
+            ]),
+            &NO_AI_MARKERS
+        ),
+        "E_MIGRATE_NO_CANDIDATE"
+    );
+
+    // Revert: a person approves going back to the original's bytes.
+    let to = format!("verbot@{old_digest}");
+    let (back, back_record) = fx.prepare_with_record("a", Some(&to), "e2e");
+    let reverted = fx.data(&[
+        "app",
+        "migrate",
+        "revert",
+        "a",
+        "--candidate",
+        &back,
+        "--person",
+        "e2e",
+        "--approval",
+        back_record.to_str().unwrap(),
+        "--front-door",
+        "floless@test",
+    ]);
+    assert_eq!(reverted["kind"], "reverted", "{reverted}");
+    assert_eq!(reverted["seq"], 2);
+    assert_eq!(fx.run_says("a"), V1);
+    let check = fx.data(&["app", "check", "a"]);
+    assert_eq!(check["successors"][1]["kind"], "reverted", "{check}");
+    assert_eq!(check["approval-record"], "complete");
+}
+
+#[test]
+fn policies_are_recorded_listed_and_revoked_through_the_cli() {
+    let Some(fx) = fixture() else {
+        eprintln!("[skip] rustc not on PATH");
+        return;
+    };
+    let record = serde_json::json!({
+        "format": 1, "kind": "policy", "actor": "e2e", "front-door": "floless@test",
+        "approval-ref": "first", "statement-sha256": sha(b"policy text"),
+        "at": "2026-10-05T00:00:00Z", "rule": "read-only-patch",
+        "scope": { "apps": ["*"], "agents": ["verbot"], "publishers": ["official-registry"], "bump": "patch" },
+    });
+    let path = fx.root.join("policy.json");
+    std::fs::write(&path, record.to_string()).unwrap();
+    let path = path.to_str().unwrap();
+    let envelope = fx.json_env(
+        &["app", "migrate", "policy", "record", "--approval", path],
+        &NO_AI_MARKERS,
+    );
+    assert_eq!(error_code(&envelope), "E_MIGRATE_NO_FRONT_DOOR");
+
+    let record_args = [
+        "app",
+        "migrate",
+        "policy",
+        "record",
+        "--approval",
+        path,
+        "--front-door",
+        "floless@test",
+    ];
+    let recorded = fx.data(&record_args);
+    assert_eq!(recorded["created"], true, "{recorded}");
+    let id = recorded["policy"].as_str().unwrap().to_string();
+    assert!(id.starts_with("pol-"), "{id}");
+    assert_eq!(recorded["approved-by"]["attested"], false);
+    let again = fx.data(&record_args);
+    assert_eq!(again["created"], false);
+    assert_eq!(again["policy"], id.as_str());
+
+    let listed = fx.data(&["app", "migrate", "policy", "list"]);
+    assert_eq!(listed["policies"][0]["policy"], id.as_str(), "{listed}");
+    assert_eq!(listed["policies"][0]["state"], "active");
+
+    // verbot 1.0.0 -> 1.1.0 is a minor update with a changed contract: the
+    // policy does not cover it, so the plan asks a person.
+    fx.ok(&["agent", "install", "verbot@1.0.0"]);
+    fx.compiled_app("a");
+    fx.ok(&["agent", "update", "verbot"]);
+    assert_eq!(fx.plan_row("a")["state"], "needs-person");
+    let prepared = fx.data(&["app", "migrate", "prepare", "a"]);
+    let candidate = prepared["candidate-digest"].as_str().unwrap();
+    let promote = [
+        "app",
+        "migrate",
+        "promote",
+        "a",
+        "--candidate",
+        candidate,
+        "--policy",
+        &id,
+    ];
+    let envelope = fx.json(&promote);
+    assert_eq!(
+        error_code(&envelope),
+        "E_MIGRATE_NOT_ELIGIBLE",
+        "{envelope}"
+    );
+    let reasons = envelope["error"]["details"]["reasons"].to_string();
+    assert!(reasons.contains("policy-not-patch"), "{reasons}");
+    assert!(reasons.contains("contract-changed"), "{reasons}");
+
+    let revoked = fx.data(&[
+        "app", "migrate", "policy", "revoke", &id, "--actor", "e2e", "--reason", "retired",
+    ]);
+    assert_eq!(revoked["revoked-now"], true, "{revoked}");
+    let again = fx.data(&["app", "migrate", "policy", "revoke", &id, "--actor", "e2e"]);
+    assert_eq!(again["revoked-now"], false);
+    assert_eq!(
+        fx.data(&["app", "migrate", "policy", "list"])["policies"][0]["state"],
+        "revoked"
+    );
+    assert_eq!(error_code(&fx.json(&promote)), "E_MIGRATE_POLICY_REVOKED");
+}

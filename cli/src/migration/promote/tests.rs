@@ -1031,3 +1031,72 @@ fn the_ai_session_marker_is_reported_by_name() {
     ]);
     assert_eq!(ai_session_marker(), Some("CODEX_SANDBOX"));
 }
+
+/// A content-addressed archive already in place must hash to its name; one
+/// that does not is a changed record, refused before the lock moves.
+#[test]
+fn a_changed_archive_already_in_place_refuses_the_promotion() {
+    let (h, source, _) = approved_demo(READS);
+    update_agent(&h.paths, "tool", "1.0.1", "mode: read");
+    let (candidate, header) = prepare(&h, &source, None);
+    let dir = source.parent().unwrap();
+    let squatter = dir.join(approval::archive_rel(&candidate, "lock").unwrap());
+    std::fs::create_dir_all(squatter.parent().unwrap()).unwrap();
+    std::fs::write(&squatter, b"not the candidate").unwrap();
+    let (_, before) = lock_of(&source);
+    let record = person_record("pawel", &candidate, &header);
+    let refused = by_person(
+        &h,
+        &source,
+        &candidate,
+        &record,
+        SuccessorKind::CarriedForward,
+    )
+    .unwrap_err();
+    assert_eq!(
+        refused.code, "E_MIGRATE_ARCHIVE_INVALID",
+        "{:?}",
+        refused.error
+    );
+    assert_eq!(lock_of(&source).1, before);
+    assert!(owned_txns(dir, "demo").unwrap().is_empty(), "rolled back");
+}
+
+/// §15.1 R3: a policy promotion holds the policies lock shared, so it waits
+/// while a revocation holds it exclusive.
+#[test]
+fn a_policy_promotion_waits_for_a_revocation_in_flight() {
+    let (h, source, _) = approved_demo(READS);
+    update_official(&h, "1.0.1", "mode: read");
+    let id = record_policy(&h, &["demo"], &["tool"]);
+    let (candidate, _) = prepare(&h, &source, None);
+    let exclusive = policy::lock_policies(&h.paths, true).unwrap();
+    let paths = h.paths.clone();
+    let worker_source = source.clone();
+    let (tx, rx) = std::sync::mpsc::channel();
+    let worker = std::thread::spawn(move || {
+        let guard = crate::agent_store::open(&paths).unwrap();
+        let result = promote(
+            &paths,
+            &guard,
+            &worker_source,
+            &candidate,
+            Approver::Policy {
+                id: &id,
+                front_door: "floless@test",
+                official: &verified,
+            },
+            SuccessorKind::CarriedForward,
+        );
+        tx.send(result.map(|p| p.seq).map_err(|r| r.code)).unwrap();
+    });
+    assert!(
+        rx.recv_timeout(std::time::Duration::from_millis(400))
+            .is_err(),
+        "the policy promotion ran while a revocation held the policies lock"
+    );
+    drop(exclusive);
+    let outcome = rx.recv_timeout(std::time::Duration::from_secs(30)).unwrap();
+    worker.join().unwrap();
+    assert_eq!(outcome, Ok(1));
+}
