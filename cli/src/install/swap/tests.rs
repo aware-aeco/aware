@@ -851,3 +851,79 @@ fn app_check_after_an_interrupted_swap_answers_like_the_run() {
     assert!(paths.agents_dir().join("alpha/manifest.yaml").is_file());
     assert!(txn_dirs(&paths).is_empty());
 }
+
+/// Review #627-a (minor): when a rename succeeds and what follows it fails (a
+/// directory sync, the `done` line), the swap must not return with the agent
+/// missing until some later locked command recovers it — it settles the
+/// transaction itself before returning the error.
+#[test]
+fn a_failure_after_a_rename_settles_the_swap_before_returning() {
+    for step in ["out alpha", "in alpha"] {
+        let (_tmp, paths) = home();
+        write_tree(&paths.agents_dir().join("alpha"), "alpha", "1.0.0", "old");
+        let old = tree_bytes(&paths.agents_dir().join("alpha"));
+        inject_fault(Fault::FailAfterRename(step.into()));
+        let error = update(&paths, "alpha", "alpha", "new").unwrap_err();
+        clear_fault();
+        assert!(
+            error.to_string().contains("injected failure"),
+            "{step}: {error}"
+        );
+        let now = maybe_tree(&paths.agents_dir().join("alpha"))
+            .unwrap_or_else(|| panic!("{step}: the agent is missing after the failed swap"));
+        if step == "out alpha" {
+            assert_eq!(now, old, "{step}: rolled back");
+        } else {
+            assert!(
+                String::from_utf8_lossy(&now["manifest.yaml"]).contains("2.0.0"),
+                "{step}: the move-in happened, so the swap commits"
+            );
+        }
+        assert!(
+            pending_naming(&paths, &["alpha".to_string()])
+                .unwrap()
+                .is_empty(),
+            "{step}: settled"
+        );
+    }
+}
+
+/// Review #627-a (minor): `aware doctor` that meets a swap still being run by
+/// a live writer waits for it and must not claim to have recovered it.
+#[test]
+fn doctor_does_not_claim_a_live_writers_swap_as_recovered() {
+    let (_tmp, paths) = home();
+    write_tree(&paths.agents_dir().join("zeta"), "zeta", "1.0.0", "old");
+    let writer = {
+        let paths = paths.clone();
+        std::thread::spawn(move || {
+            inject_fault(Fault::PauseAfter("done out zeta".into(), 800));
+            let result = update(&paths, "zeta", "zeta", "new");
+            clear_fault();
+            result.unwrap();
+        })
+    };
+    let started = std::time::Instant::now();
+    while !txn_dirs(&paths).iter().any(|dir| {
+        std::fs::read_to_string(dir.join(JOURNAL_FILE)).is_ok_and(|j| j.contains("done out zeta"))
+    }) {
+        assert!(
+            started.elapsed() < Duration::from_secs(20),
+            "writer never paused"
+        );
+        std::thread::sleep(Duration::from_millis(10));
+    }
+    let guard = crate::agent_store::open(&paths).unwrap();
+    let findings = recover_all(&paths, &guard).unwrap();
+    writer.join().unwrap();
+    assert!(
+        findings.iter().all(|f| f.outcome != "recovered"),
+        "the live writer finished its own swap: {findings:?}"
+    );
+    assert!(
+        findings
+            .iter()
+            .any(|f| f.outcome == "finished-by-its-writer"),
+        "{findings:?}"
+    );
+}

@@ -266,6 +266,17 @@ fn lock_and_recover<'g>(
     guard: &'g RefGuard,
     ids: &[String],
 ) -> Result<SwapLocks<'g>, AwareError> {
+    lock_and_recover_reporting(paths, guard, ids).map(|(locks, _)| locks)
+}
+
+/// [`lock_and_recover`], also returning the transactions THIS call recovered
+/// (a transaction its own live writer finished while we waited for its locks
+/// is not among them).
+fn lock_and_recover_reporting<'g>(
+    paths: &Paths,
+    guard: &'g RefGuard,
+    ids: &[String],
+) -> Result<(SwapLocks<'g>, Vec<(String, Recovered)>), AwareError> {
     let mut wanted: BTreeSet<String> = ids.iter().cloned().collect();
     for _ in 0..8 {
         let set: Vec<String> = wanted.iter().cloned().collect();
@@ -284,15 +295,17 @@ fn lock_and_recover<'g>(
             // A transaction reaching beyond what we hold: widen and retake in order.
             continue;
         }
+        let mut recovered = Vec::new();
         for txn in found {
             if txn.settled() {
                 // Its final delete failed earlier: inert, removed best effort.
                 finish(&txn.dir);
             } else {
-                recover(paths, &txn)?;
+                let outcome = recover(paths, &txn)?;
+                recovered.push((txn.intent.txn.clone(), outcome));
             }
         }
-        return Ok(locks);
+        return Ok((locks, recovered));
     }
     Err(AwareError::Conflict(format!(
         "[E_AGENT_SWAP_BUSY] the swaps touching agent(s) {} kept changing while they were being recovered; retry",
@@ -766,50 +779,85 @@ impl Transaction<'_> {
         let mut staged = staged;
         staged.armed = false;
         let dir = staged.dir.clone();
-        hooks::after_line("intent")?;
-        let mut journal = Journal::open(&dir)?;
+        let paths = self.paths.clone();
+        let steps = (|| -> Result<(), AwareError> {
+            hooks::after_line("intent")?;
+            let mut journal = Journal::open(&dir)?;
+            for out in &intent.outgoing {
+                let step = format!("out {}", out.id);
+                journal.line(&format!("pending {step}"))?;
+                let from = agents.join(&out.id);
+                let to = dir.join(format!("{OUTGOING_PREFIX}{}", out.id));
+                if let Err(error) = hooks::rename(&from, &to, &step) {
+                    return Err(live_rollback(
+                        &paths,
+                        &dir,
+                        &intent,
+                        &mut journal,
+                        swap_io(
+                            &format!("move {} aside to {}", from.display(), to.display()),
+                            error,
+                        ),
+                    ));
+                }
+                hooks::after_rename(&step)?;
+                sync_dirs(&[&agents, &dir])?;
+                journal.line(&format!("done {step}"))?;
+            }
+            if let Some(name) = new_name {
+                let step = format!("in {name}");
+                journal.line(&format!("pending {step}"))?;
+                let from = dir.join(INCOMING_DIR);
+                let to = agents.join(name);
+                if let Err(error) = hooks::rename(&from, &to, &step) {
+                    return Err(live_rollback(
+                        &paths,
+                        &dir,
+                        &intent,
+                        &mut journal,
+                        swap_io(&format!("move the new copy into {}", to.display()), error),
+                    ));
+                }
+                hooks::after_rename(&step)?;
+                sync_dirs(&[&agents, &dir])?;
+                journal.line(&format!("done {step}"))?;
+            }
+            journal.line(COMMIT)?;
+            journal.close();
+            finish(&dir);
+            Ok(())
+        })();
+        // Any other failure once the intent is down (a directory sync or a
+        // journal line after a rename that DID happen): settle the swap here,
+        // under the locks still held, rather than return with the agent
+        // missing until some later locked command recovers it (review #627-a).
+        steps.map_err(|cause| settle_after_failure(&paths, &dir, cause))
+    }
+}
 
-        for out in &intent.outgoing {
-            let step = format!("out {}", out.id);
-            journal.line(&format!("pending {step}"))?;
-            let from = agents.join(&out.id);
-            let to = dir.join(format!("{OUTGOING_PREFIX}{}", out.id));
-            if let Err(error) = hooks::rename(&from, &to, &step) {
-                return Err(live_rollback(
-                    &self.paths,
-                    &dir,
-                    &intent,
-                    &mut journal,
-                    swap_io(
-                        &format!("move {} aside to {}", from.display(), to.display()),
-                        error,
-                    ),
-                ));
-            }
-            sync_dirs(&[&agents, &dir])?;
-            journal.line(&format!("done {step}"))?;
+/// The swap at `dir` failed with `cause` while this process holds its locks:
+/// recover it now (commit or roll back, from the paths) and return `cause` —
+/// or say exactly where things stand if even that fails. A simulated crash
+/// (tests) is left exactly as a dead process would leave it.
+fn settle_after_failure(paths: &Paths, dir: &Path, cause: AwareError) -> AwareError {
+    if hooks::is_simulated_crash(&cause) {
+        return cause;
+    }
+    let pending = match transactions(paths) {
+        Ok(all) => all.into_iter().find(|txn| txn.dir == dir && !txn.settled()),
+        Err(error) => {
+            return AwareError::Validation(format!(
+                "[E_AGENT_SWAP_RECOVERY] the swap failed ({cause}) and its state could not be read back ({error}); \
+                 the next install, update, run or `aware doctor` recovers it"
+            ));
         }
-        if let Some(name) = new_name {
-            let step = format!("in {name}");
-            journal.line(&format!("pending {step}"))?;
-            let from = dir.join(INCOMING_DIR);
-            let to = agents.join(name);
-            if let Err(error) = hooks::rename(&from, &to, &step) {
-                return Err(live_rollback(
-                    &self.paths,
-                    &dir,
-                    &intent,
-                    &mut journal,
-                    swap_io(&format!("move the new copy into {}", to.display()), error),
-                ));
-            }
-            sync_dirs(&[&agents, &dir])?;
-            journal.line(&format!("done {step}"))?;
-        }
-        journal.line(COMMIT)?;
-        journal.close();
-        finish(&dir);
-        Ok(())
+    };
+    match pending.map(|txn| recover(paths, &txn)) {
+        None | Some(Ok(_)) => cause,
+        Some(Err(error)) => AwareError::Validation(format!(
+            "[E_AGENT_SWAP_RECOVERY] the swap failed ({cause}) and settling it also failed ({error}); \
+             the next install, update, run or `aware doctor` retries the recovery"
+        )),
     }
 }
 
@@ -926,13 +974,21 @@ pub fn recover_all(paths: &Paths, guard: &RefGuard) -> Result<Vec<DoctorFinding>
     for txn in transactions(paths)? {
         let ids = txn.intent.ids.clone();
         let was_settled = txn.settled();
-        let outcome = (|| -> Result<(), AwareError> {
-            drop(lock_and_recover(paths, guard, &ids)?);
-            Ok(())
-        })();
+        // Waiting for the transaction's locks also waits for a writer that is
+        // still running it; such a swap finishes on its own and is reported
+        // as that, never as one doctor recovered.
+        let outcome = lock_and_recover_reporting(paths, guard, &ids)
+            .map(|(_, recovered)| recovered.into_iter().find(|(id, _)| *id == txn.intent.txn));
         let (outcome, detail) = match outcome {
-            Ok(()) if was_settled => ("cleaned".to_string(), None),
-            Ok(()) => ("recovered".to_string(), None),
+            Ok(_) if was_settled => ("cleaned".to_string(), None),
+            Ok(Some((_, how))) => (
+                "recovered".to_string(),
+                Some(match how {
+                    Recovered::Committed => "finished (committed)".to_string(),
+                    Recovered::RolledBack => "rolled back".to_string(),
+                }),
+            ),
+            Ok(None) => ("finished-by-its-writer".to_string(), None),
             Err(error) => ("needs-you".to_string(), Some(error.to_string())),
         };
         findings.push(DoctorFinding {
@@ -1020,6 +1076,12 @@ mod hooks {
         /// Stop the final delete of a settled transaction part-way, as a
         /// kill during `remove_dir_all` would.
         InterruptFinish,
+        /// The rename of this step succeeds, then what follows it (the
+        /// directory sync, the `done` line) fails as an IO error would.
+        FailAfterRename(String),
+        /// Pause this many milliseconds after writing this journal line, as a
+        /// slow but live writer would.
+        PauseAfter(String, u64),
     }
 
     #[cfg(test)]
@@ -1046,6 +1108,14 @@ mod hooks {
         if FAULT.with(|f| f.borrow().as_ref() == Some(&Fault::CrashAfter(line.to_string()))) {
             return Err(AwareError::Internal(format!("{CRASHED} after {line:?}")));
         }
+        #[cfg(test)]
+        if let Some(Fault::PauseAfter(_, ms)) = FAULT.with(|f| {
+            f.borrow()
+                .clone()
+                .filter(|fault| matches!(fault, Fault::PauseAfter(at, _) if at == line))
+        }) {
+            std::thread::sleep(std::time::Duration::from_millis(ms));
+        }
         // E2E only, never in a release build: a debug build pauses here so a
         // test can kill the process mid-swap (`AWARE_TEST_SWAP_PAUSE_AFTER` =
         // a journal line, e.g. `done out tekla`).
@@ -1055,6 +1125,28 @@ mod hooks {
             std::thread::sleep(std::time::Duration::from_secs(120));
         }
         let _ = line;
+        Ok(())
+    }
+
+    /// Whether `error` is a test's simulated crash (never in a real build).
+    pub(super) fn is_simulated_crash(error: &AwareError) -> bool {
+        #[cfg(test)]
+        if error.to_string().contains(CRASHED) {
+            return true;
+        }
+        let _ = error;
+        false
+    }
+
+    /// After a successful rename of `step`: a test can make what follows fail.
+    pub(super) fn after_rename(step: &str) -> std::io::Result<()> {
+        #[cfg(test)]
+        if FAULT.with(|f| f.borrow().as_ref() == Some(&Fault::FailAfterRename(step.to_string()))) {
+            return Err(std::io::Error::other(format!(
+                "injected failure after the rename of {step}"
+            )));
+        }
+        let _ = step;
         Ok(())
     }
 
