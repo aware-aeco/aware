@@ -277,120 +277,9 @@ fn sibling_binary(dir: &std::path::Path, binary: &str) -> Option<std::path::Path
 /// migration contract's executor identity (#628). Host bridges live in
 /// `<AWARE_HOME>/bridges` (off PATH) and resolve to an absolute path; bundled
 /// transports resolve to the sibling of `aware`; anything else is passed on as
-/// written, for `Command::new` to look up (see [`spawn_target`]).
+/// written, for the operating system to resolve when `Command::new` spawns it.
 pub(crate) fn cli_program(binary: &str) -> std::path::PathBuf {
     resolve_cli_binary(binary, &bridges_dir())
-}
-
-/// Where `Command::new(program)` will find the file it executes, when nothing
-/// in the child's environment overrides `PATH` (`spawn_cli` sets none).
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub(crate) struct SpawnTarget {
-    pub path: std::path::PathBuf,
-    /// `program` contained a path separator but was not absolute, so the file
-    /// is the one under the RUN's working directory — this answer holds for
-    /// the working directory it was computed from only.
-    pub relative_to_cwd: bool,
-}
-
-/// What the process environment contributes to [`spawn_target_in`].
-#[derive(Debug, Clone, Default)]
-pub(crate) struct SpawnEnv {
-    pub cwd: std::path::PathBuf,
-    /// Directory of the running `aware` executable (Windows searches it first).
-    pub app_dir: Option<std::path::PathBuf>,
-    /// Windows system and Windows directories, searched after the app dir.
-    pub system_dirs: Vec<std::path::PathBuf>,
-    pub path: Vec<std::path::PathBuf>,
-}
-
-impl SpawnEnv {
-    pub(crate) fn current() -> Self {
-        let system_dirs = if cfg!(windows) {
-            std::env::var_os("SystemRoot")
-                .map(std::path::PathBuf::from)
-                .map(|root| vec![root.join("System32"), root])
-                .unwrap_or_default()
-        } else {
-            Vec::new()
-        };
-        SpawnEnv {
-            cwd: std::env::current_dir().unwrap_or_default(),
-            app_dir: std::env::current_exe()
-                .ok()
-                .and_then(|exe| exe.parent().map(std::path::Path::to_path_buf)),
-            system_dirs,
-            path: std::env::var_os("PATH")
-                .map(|p| std::env::split_paths(&p).collect())
-                .unwrap_or_default(),
-        }
-    }
-}
-
-/// [`spawn_target_in`] for this process.
-pub(crate) fn spawn_target(program: &std::path::Path) -> Option<SpawnTarget> {
-    spawn_target_in(program, &SpawnEnv::current())
-}
-
-/// The file `std::process::Command::new(program)` executes, following the
-/// standard library's own lookup for this platform — the part of dispatch the
-/// OS performs, written out so an executor identity names the same file:
-///
-/// * a path with a separator is used as written (a relative one against the
-///   working directory, never searched on PATH). Windows first tries it with
-///   `.exe` appended unless it already ends in `.exe`;
-/// * a bare name is searched: Windows — the `aware` executable's directory,
-///   the system directories, then PATH, appending `.exe` only when the name
-///   has no extension (no other PATHEXT suffix: `Command::new` cannot launch a
-///   `.cmd` by bare name); Unix — PATH, verbatim.
-///
-/// `None` when nothing exists there, i.e. the spawn would fail.
-pub(crate) fn spawn_target_in(program: &std::path::Path, env: &SpawnEnv) -> Option<SpawnTarget> {
-    let text = program.to_string_lossy();
-    let has_separator = text.contains('/') || (cfg!(windows) && text.contains('\\'));
-    if program.is_absolute() || has_separator {
-        let relative_to_cwd = !program.is_absolute();
-        let base = if relative_to_cwd {
-            env.cwd.join(program)
-        } else {
-            program.to_path_buf()
-        };
-        let mut candidates = Vec::new();
-        if cfg!(windows) && !text.to_ascii_lowercase().ends_with(".exe") {
-            let mut with_exe = base.clone().into_os_string();
-            with_exe.push(".exe");
-            candidates.push(std::path::PathBuf::from(with_exe));
-        }
-        candidates.push(base);
-        return candidates
-            .into_iter()
-            .find(|c| c.is_file())
-            .map(|path| SpawnTarget {
-                path,
-                relative_to_cwd,
-            });
-    }
-    let name = if cfg!(windows) && !text.contains('.') {
-        format!("{text}.exe")
-    } else {
-        text.into_owned()
-    };
-    let dirs: Vec<&std::path::PathBuf> = if cfg!(windows) {
-        env.app_dir
-            .iter()
-            .chain(env.system_dirs.iter())
-            .chain(env.path.iter())
-            .collect()
-    } else {
-        env.path.iter().collect()
-    };
-    dirs.into_iter()
-        .map(|dir| dir.join(&name))
-        .find(|candidate| candidate.is_file())
-        .map(|path| SpawnTarget {
-            path,
-            relative_to_cwd: false,
-        })
 }
 
 /// The persistent bridges directory (`<AWARE_HOME>/bridges`), derived from the
@@ -720,6 +609,8 @@ impl CliInvoker {
                 AwareError::Validation(format!("agent {agent} has no cli transport"))
             })?;
         let binary = cli.binary.clone();
+        // Host bridges live in ~/.aware/bridges (off PATH); resolve to an absolute
+        // path. Non-bridge binaries fall back to bare-name PATH resolution.
         let bridges = bridges_dir();
         let program = cli_program(&binary);
         // A managed bridge installed by a different CLI version may speak an older

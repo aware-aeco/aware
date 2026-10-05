@@ -90,16 +90,16 @@ pub struct PackageSide<'a> {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 #[serde(tag = "kind", rename_all = "kebab-case")]
 pub enum Executor {
-    /// A CLI agent's bridge program, as `aware app run` would resolve it now.
+    /// A CLI agent's program, as `aware app run` would resolve it now.
     Cli {
         binary: String,
+        /// The program dispatch hands to the operating system: an absolute
+        /// path when AWARE fixed the file, else `binary` as written.
         program: String,
-        /// The program was a relative path, resolved against the working
-        /// directory this identity was computed in — a run started elsewhere
-        /// would execute a different file.
-        #[serde(rename = "relative-to-cwd", skip_serializing_if = "std::ops::Not::not")]
-        relative_to_cwd: bool,
-        /// `None` when the program cannot be found or read; `detail` says why.
+        resolution: CliResolution,
+        /// The program's sha256 — ONLY for [`CliResolution::FixedPath`]. A
+        /// program the operating system resolves at run time is not pinned,
+        /// and no byte claim is made for it.
         sha256: Option<String>,
         #[serde(skip_serializing_if = "Option::is_none")]
         detail: Option<String>,
@@ -110,6 +110,20 @@ pub enum Executor {
     App { backed_by: String },
     /// No dispatchable transport.
     None,
+}
+
+/// Who decides which file a CLI agent's program is.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum CliResolution {
+    /// AWARE fixed the exact file: a managed bridge, a bundled transport next
+    /// to `aware`, or an absolute `binary:` path. Its bytes are hashed.
+    FixedPath,
+    /// A bare name the operating system searches for at run time.
+    OsSearch,
+    /// A relative path the operating system resolves against the run's
+    /// working directory.
+    RelativeToCwd,
 }
 
 /// The executor of `manifest`, resolved exactly as dispatch would now.
@@ -123,31 +137,10 @@ pub fn executor_identity(manifest: &Agent) -> Executor {
                 .as_ref()
                 .map(|c| c.binary.clone())
                 .unwrap_or_default();
-            // The same two steps dispatch takes: the program `spawn_cli` passes
-            // to `Command::new`, then the file `Command::new` finds for it.
-            let program = crate::runtime::invoker::cli_program(&binary);
-            match crate::runtime::invoker::spawn_target(&program) {
-                Some(target) => {
-                    let (sha256, detail) = match std::fs::read(&target.path) {
-                        Ok(bytes) => (Some(format!("sha256:{:x}", Sha256::digest(&bytes))), None),
-                        Err(error) => (None, Some(format!("cannot read the program: {error}"))),
-                    };
-                    Executor::Cli {
-                        binary,
-                        program: target.path.display().to_string(),
-                        relative_to_cwd: target.relative_to_cwd,
-                        sha256,
-                        detail,
-                    }
-                }
-                None => Executor::Cli {
-                    binary,
-                    program: program.display().to_string(),
-                    relative_to_cwd: false,
-                    sha256: None,
-                    detail: Some("the program is not installed".into()),
-                },
-            }
+            cli_executor(
+                binary.clone(),
+                &crate::runtime::invoker::cli_program(&binary),
+            )
         }
         Some(TransportKind::Rest | TransportKind::Builtin) => Executor::AwareCli {
             version: crate::validate::CURRENT_CLI_VERSION.to_string(),
@@ -161,6 +154,45 @@ pub fn executor_identity(manifest: &Agent) -> Executor {
                 .unwrap_or_default(),
         },
         None => Executor::None,
+    }
+}
+
+/// The identity of a CLI executor whose program dispatch resolved to
+/// `program` (from [`crate::runtime::invoker::cli_program`], the function
+/// `spawn_cli` itself calls). Bytes are claimed only where AWARE fixed the file
+/// — an absolute program. Anything else is left to the operating system at run
+/// time (a PATH search, or a path relative to the run's working directory); it
+/// is reported as written with no hash, so two pins compare equal when they
+/// name the same program the same way — the bytes were never part of the pin.
+pub fn cli_executor(binary: String, program: &Path) -> Executor {
+    if program.is_absolute() {
+        let (sha256, detail) = match std::fs::read(program) {
+            Ok(bytes) => (Some(format!("sha256:{:x}", Sha256::digest(&bytes))), None),
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+                (None, Some("the program is not installed".to_string()))
+            }
+            Err(error) => (None, Some(format!("cannot read the program: {error}"))),
+        };
+        return Executor::Cli {
+            binary,
+            program: program.display().to_string(),
+            resolution: CliResolution::FixedPath,
+            sha256,
+            detail,
+        };
+    }
+    let text = program.to_string_lossy();
+    let relative = text.contains('/') || (cfg!(windows) && text.contains('\\'));
+    Executor::Cli {
+        program: text.into_owned(),
+        binary,
+        resolution: if relative {
+            CliResolution::RelativeToCwd
+        } else {
+            CliResolution::OsSearch
+        },
+        sha256: None,
+        detail: Some("resolved by the operating system at run time; not pinned".to_string()),
     }
 }
 

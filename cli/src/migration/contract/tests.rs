@@ -321,7 +321,7 @@ fn a_different_executor_for_the_old_pin_counts() {
     let by_binary = |m: &Agent| Executor::Cli {
         binary: m.transport.cli.as_ref().unwrap().binary.clone(),
         program: "p".into(),
-        relative_to_cwd: false,
+        resolution: CliResolution::FixedPath,
         sha256: Some("sha256:1".into()),
         detail: None,
     };
@@ -612,7 +612,7 @@ fn real_tekla_packages_contract_diff_for_exec() {
     println!("{}", serde_json::to_string_pretty(&d).unwrap());
 }
 
-// ── Executor identity follows dispatch (Codex review #628 round 4) ─────────────
+// ── Executor identity (Codex review #628 rounds 4-5) ───────────────────────────
 
 fn cli_manifest(binary: &str) -> Agent {
     serde_yaml::from_str(&format!(
@@ -622,90 +622,69 @@ fn cli_manifest(binary: &str) -> Agent {
     .unwrap()
 }
 
-/// A relative `transport.cli.binary` is handed to `Command::new` as is and
-/// resolved against the run's working directory — never searched on PATH. The
-/// identity must name and hash that file, and say it is cwd-relative. (Any
-/// existing file proves the resolution; `Cargo.toml` sits in the cwd `cargo test`
-/// runs this crate's unit tests from.)
+/// A bare name is searched by the operating system at run time: AWARE does not
+/// fix that file, so it makes no byte claim — even when a file of that name is
+/// on PATH right now.
 #[test]
-fn a_relative_cli_binary_is_resolved_against_the_working_directory() {
-    let expected = format!(
-        "sha256:{:x}",
-        Sha256::digest(std::fs::read("Cargo.toml").unwrap())
-    );
-    match executor_identity(&cli_manifest("./Cargo.toml")) {
+fn a_bare_program_name_is_os_search_with_no_byte_claim() {
+    for binary in ["git", "no-such-tool-628"] {
+        match executor_identity(&cli_manifest(binary)) {
+            Executor::Cli {
+                program,
+                resolution,
+                sha256,
+                detail,
+                ..
+            } => {
+                assert_eq!(program, binary);
+                assert_eq!(resolution, CliResolution::OsSearch);
+                assert_eq!(sha256, None);
+                assert!(detail.unwrap().contains("not pinned"));
+            }
+            other => panic!("expected a cli executor, got {other:?}"),
+        }
+    }
+}
+
+/// A relative path is resolved by the operating system against the run's
+/// working directory — reported as written, unhashed.
+#[test]
+fn a_relative_program_is_relative_to_cwd_with_no_byte_claim() {
+    let json = serde_json::to_value(executor_identity(&cli_manifest("./Cargo.toml"))).unwrap();
+    assert_eq!(json["resolution"], "relative-to-cwd", "{json}");
+    assert_eq!(json["program"], "./Cargo.toml");
+    assert!(json["sha256"].is_null(), "{json}");
+}
+
+/// A managed bridge is a file AWARE fixed: its bytes are hashed.
+#[test]
+fn a_managed_bridge_is_hashed() {
+    let bridges = tempfile::tempdir().unwrap();
+    std::fs::write(bridges.path().join("aware-tekla.exe"), b"bridge bytes").unwrap();
+    let program = crate::runtime::invoker::resolve_cli_binary("aware-tekla", bridges.path());
+    assert!(program.is_absolute(), "{program:?}");
+    match cli_executor("aware-tekla".into(), &program) {
         Executor::Cli {
-            sha256,
-            relative_to_cwd,
-            detail,
-            ..
+            resolution, sha256, ..
         } => {
-            assert_eq!(sha256.as_deref(), Some(expected.as_str()), "{detail:?}");
-            assert!(relative_to_cwd);
+            assert_eq!(resolution, CliResolution::FixedPath);
+            assert_eq!(
+                sha256,
+                Some(format!("sha256:{:x}", Sha256::digest(b"bridge bytes")))
+            );
         }
         other => panic!("expected a cli executor, got {other:?}"),
     }
 }
 
-fn exe(name: &str) -> String {
-    if cfg!(windows) {
-        format!("{name}.exe")
-    } else {
-        name.to_string()
-    }
-}
-
-/// The lookup `Command::new` performs, pinned case by case.
+/// OS-resolved executors compare as data: the same program named the same way
+/// is the same executor; a different program is not.
 #[test]
-fn spawn_target_follows_command_new_lookup() {
-    use crate::runtime::invoker::{SpawnEnv, spawn_target_in};
-    let tmp = tempfile::tempdir().unwrap();
-    let (cwd, app, on_path) = (
-        tmp.path().join("cwd"),
-        tmp.path().join("app"),
-        tmp.path().join("bin"),
-    );
-    for dir in [&cwd, &app, &on_path] {
-        std::fs::create_dir_all(dir.join("tools")).unwrap();
-    }
-    std::fs::write(cwd.join("tools").join(exe("rel")), b"rel").unwrap();
-    std::fs::write(on_path.join(exe("tool")), b"path").unwrap();
-    std::fs::write(on_path.join("rel"), b"never").unwrap();
-    std::fs::write(on_path.join("shim.cmd"), b"cmd").unwrap();
-    let env = SpawnEnv {
-        cwd: cwd.clone(),
-        app_dir: Some(app.clone()),
-        system_dirs: Vec::new(),
-        path: vec![on_path.clone()],
-    };
-
-    // A relative path: the cwd's file, flagged — never the PATH one.
-    let rel = spawn_target_in(Path::new("./tools/rel"), &env).unwrap();
-    assert!(rel.relative_to_cwd);
-    assert_eq!(std::fs::read(&rel.path).unwrap(), b"rel");
-    // A bare name: searched.
-    let bare = spawn_target_in(Path::new("tool"), &env).unwrap();
-    assert!(!bare.relative_to_cwd);
-    assert_eq!(std::fs::read(&bare.path).unwrap(), b"path");
-    // An absolute path is itself.
-    let abs = spawn_target_in(&on_path.join(exe("tool")), &env).unwrap();
-    assert_eq!(abs.path, on_path.join(exe("tool")));
-    // Nothing there: the spawn would fail.
-    assert!(spawn_target_in(Path::new("missing"), &env).is_none());
-    if cfg!(windows) {
-        // Command::new appends only `.exe`: a bare `shim` does not find shim.cmd.
-        assert!(spawn_target_in(Path::new("shim"), &env).is_none());
-        // ...and searches the `aware` executable's directory before PATH.
-        std::fs::write(app.join("tool.exe"), b"app").unwrap();
-        let first = spawn_target_in(Path::new("tool"), &env).unwrap();
-        assert_eq!(std::fs::read(&first.path).unwrap(), b"app");
-    }
-}
-
-#[test]
-fn the_relative_executor_flag_serializes_in_kebab_case() {
-    let json = serde_json::to_value(executor_identity(&cli_manifest("./Cargo.toml"))).unwrap();
-    assert_eq!(json["relative-to-cwd"], true, "{json}");
+fn os_resolved_executors_compare_by_what_the_manifest_names() {
+    let a = executor_identity(&cli_manifest("tool"));
+    assert_eq!(a, executor_identity(&cli_manifest("tool")));
+    assert_ne!(a, executor_identity(&cli_manifest("tool2")));
+    assert_ne!(a, executor_identity(&cli_manifest("./tool")));
 }
 
 /// Codex review #628 round 5: only ROOT-LEVEL `README[.*]` / `LICENSE[.*]`
