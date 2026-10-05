@@ -110,7 +110,10 @@ fn default_timeout_seconds(command: &str) -> u64 {
 }
 
 /// The caller's budget for this run: the `timeout-seconds` input when given, else the per-command
-/// default. `null` counts as absent (a templated-but-unset workflow input resolves to null).
+/// default. `null` counts as absent — but NOT because a template produces one: an unset or
+/// null-valued `{{ }}` ref renders to `""` (#205, #551), which takes the `Some` arm below and
+/// is refused as not-a-number. The `Null` arm is reached by a hand-written empty YAML value,
+/// or by a scalar whole-value `config:` that resolves to an object with nulls intact (#598).
 fn timeout_for(command: &str, args: &Value) -> Result<Duration, AwareError> {
     let raw = match args.get("timeout-seconds") {
         None | Some(Value::Null) => {
