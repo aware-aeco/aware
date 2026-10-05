@@ -375,7 +375,7 @@ Removes the stored tool versions that nothing needs any more: exactly the packag
 
 `--apply` removes nothing and fails with `E_AGENT_GC_REFS_INCOMPLETE` while the reference table is incomplete.
 
-`--json` data, schema `aware.agent-gc/v1`: `{ "format", "applied", "deferred"?: "store-busy"|"network-volume", "recovery-window", "complete", "removed": [ { "agent", "version", "digest", "receipt-key", "path", "bytes", "invalid"? } ], "kept": [ { "agent", "version", "digest", "references" } ], "in-window": [ { …, "until" } ], "skipped": [ { "path", "reason" } ], "pending-delete": [ path ], "leftovers-removed": [ path ], "stale-leases-removed": [ path ], "blockers": [ { "path", "problem" } ] }`. In a dry run, `removed` lists what `--apply` would remove.
+`--json` data, schema `aware.agent-gc/v1`: `{ "format", "applied", "deferred"?: "store-busy"|"network-volume", "recovery-window", "complete": true|false|null (null when deferred: no table was built), "removed": [ { "agent", "version", "digest", "receipt-key", "path", "bytes", "invalid"? } ], "kept": [ { "agent", "version", "digest", "references" } ], "in-window": [ { …, "until" } ], "skipped": [ { "path", "reason" } ], "pending-delete": [ path ], "leftovers-removed": [ path ], "stale-leases-removed": [ path ], "blockers": [ { "path", "problem" } ] }`. In a dry run, `removed` lists what `--apply` would remove, and is empty while the table is incomplete (`--apply` would then remove nothing). When only a recovery window keeps a package, the `--only` refusal says so and how to remove it now anyway (`--recovery-window 0s`).
 
 ### `aware agent refs` (#629)
 
