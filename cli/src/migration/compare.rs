@@ -18,9 +18,10 @@
 //!
 //! [`ComparisonStatus::Pass`] / [`ComparisonStatus::Fail`] are reserved for an
 //! executed method (#628 PR4). Only [`ACCEPTED_FOR_POLICY`] statuses may ever
-//! open the no-click path, and in v1 that is `Pass` alone — so the path is
-//! implemented but closed until the owner ratifies `identical-instructions` or
-//! an executed method ships.
+//! open the no-click path: an executed `Pass`, and — by the owner's ruling of
+//! 2026-10-05 (pawellisowski/floless.app#1985, decision 2) —
+//! `IdenticalInstructions`. Accepting it changes who may decide, never the
+//! words: it is still reported as "checked by inspection, nothing was run".
 
 use serde::Serialize;
 
@@ -47,9 +48,14 @@ pub enum ComparisonStatus {
 }
 
 /// The statuses that may make a candidate eligible for the no-click path.
-/// `IdenticalInstructions` is deliberately absent until the owner ratifies it
-/// (#628 plan §11 Q1); enabling it is adding it here, with a test.
-pub const ACCEPTED_FOR_POLICY: &[ComparisonStatus] = &[ComparisonStatus::Pass];
+/// `IdenticalInstructions` was ratified by the owner on 2026-10-05
+/// (pawellisowski/floless.app#1985, decision 2: "identical instructions"
+/// counts as the fixed-state comparison; #628 plan §11 Q1, §15). `Fail` and
+/// `NotComparable` never qualify.
+pub const ACCEPTED_FOR_POLICY: &[ComparisonStatus] = &[
+    ComparisonStatus::Pass,
+    ComparisonStatus::IdenticalInstructions,
+];
 
 /// The verdict for one moved agent.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
@@ -229,8 +235,9 @@ mod tests {
         assert_eq!(c.runs, 0);
         assert!(c.reason.text.contains("nothing was run"), "{c:?}");
         assert!(!c.reason.text.to_lowercase().contains("same result"));
-        // v1: inspection is NOT accepted for the no-click path.
-        assert!(!c.accepted_for_policy());
+        // Owner decision 2 (floless.app#1985): accepted for the no-click
+        // path, though still worded as an inspection.
+        assert!(c.accepted_for_policy());
     }
 
     #[test]
@@ -268,16 +275,35 @@ mod tests {
         assert_eq!(c.per_agent.len(), 2);
     }
 
+    /// Owner decision 2 (pawellisowski/floless.app#1985, 2026-10-05):
+    /// identical instructions counts as the fixed-state comparison. Exactly
+    /// `Pass` and `IdenticalInstructions` are accepted — never a `Fail` or a
+    /// `NotComparable`, and every agent must qualify, not the fold alone.
     #[test]
-    fn only_an_executed_pass_is_accepted_for_policy() {
-        let mut c = compare(&[diff("a", true, cli())]).unwrap();
-        c.status = ComparisonStatus::Pass;
-        assert!(
-            !c.accepted_for_policy(),
-            "every agent must pass, not the fold alone"
+    fn an_executed_pass_or_identical_instructions_is_accepted_for_policy() {
+        assert_eq!(
+            ACCEPTED_FOR_POLICY,
+            [
+                ComparisonStatus::Pass,
+                ComparisonStatus::IdenticalInstructions
+            ]
         );
-        c.per_agent[0].status = ComparisonStatus::Pass;
+        let mut c = compare(&[diff("a", true, cli()), diff("b", true, cli())]).unwrap();
+        assert_eq!(c.status, ComparisonStatus::IdenticalInstructions);
         assert!(c.accepted_for_policy());
-        assert!(!ACCEPTED_FOR_POLICY.contains(&ComparisonStatus::IdenticalInstructions));
+        for status in [ComparisonStatus::Fail, ComparisonStatus::NotComparable] {
+            let mut one = c.clone();
+            one.per_agent[1].status = status;
+            assert!(
+                !one.accepted_for_policy(),
+                "{status:?} on one agent must close the no-click path"
+            );
+            let mut fold = c.clone();
+            fold.status = status;
+            assert!(!fold.accepted_for_policy(), "{status:?} as the fold");
+        }
+        c.status = ComparisonStatus::Pass;
+        c.per_agent[0].status = ComparisonStatus::Pass;
+        assert!(c.accepted_for_policy(), "an executed pass still qualifies");
     }
 }

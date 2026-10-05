@@ -17,14 +17,21 @@
 //!   record under `<source-dir>/.aware-approvals/`. `aware app run` never reads
 //!   either.
 //!
-//! Nothing here replaces `<app>.lock`. Promotion (`migrate promote|revert`)
-//! arrives with #628 PR3.
+//! * [`policy`] — carry-forward policies: a person's standing approval of one
+//!   narrow kind of update (`AWARE_HOME/migration-policies/`), immutable,
+//!   revocable.
+//! * [`promote`] — `aware app migrate promote|revert`: the only code that
+//!   replaces `<app>.lock` with a carried-forward plan, under the app's
+//!   promotion lock, as one crash-safe transaction that appends a successor
+//!   link the approval reader verifies before the lock moves.
 
 pub mod compare;
 pub mod contract;
 pub mod effect;
 pub mod files;
 pub mod plan;
+pub mod policy;
+pub mod promote;
 
 use serde::{Deserialize, Serialize};
 

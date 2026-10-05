@@ -41,7 +41,7 @@ aware
 │   ├── validate <path>                 schema + cycle + cap checks
 │   ├── export <app> <output-path>      copy the app file out
 │   ├── logs <app> [--instance <id>] [--tail]   read execution traces
-│   ├── migrate plan|prepare|discard|hold|unhold   carry an approval to newer agents (#628)
+│   ├── migrate plan|prepare|discard|hold|unhold|promote|revert|policy   carry an approval to newer agents (#628)
 │   └── artifact <app> <id> --output <path> [--max-bytes <n>] copy a run-owned large artifact
 │   └── artifact <app> --run-id <id> --usage   measure retained bytes for one run
 │
@@ -528,9 +528,9 @@ $ aware app run welded-to-tc --instance fab-east \
 ✓ Final state saved to ~/.aware/apps/welded-to-tc/instances/fab-east/state/
 ```
 
-### `aware app migrate plan|prepare|discard|hold|unhold` (#628)
+### `aware app migrate plan|prepare|discard|hold|unhold|promote|revert|policy` (#628)
 
-Carries an approved app forward to newer agent versions **without pretending a person re-approved it**. None of these verbs touches the approved `<app>.lock`; `aware app run` reads only that file and never a candidate (see [App Spec § Migration candidates](./app-spec.md#migration-candidates-628)). Promotion (`migrate promote|revert`) is a later step of #628 and does not exist yet.
+Carries an approved app forward to newer agent versions **without pretending a person re-approved it**. Only `promote` and `revert` replace the approved `<app>.lock`, and only with a person's recorded approval or under a person-approved policy (see [App Spec § Successor approvals](./app-spec.md#successor-approvals-628)); `aware app run` reads only that file and never a candidate (see [App Spec § Migration candidates](./app-spec.md#migration-candidates-628)).
 
 | Verb | Writes |
 |---|---|
@@ -539,6 +539,11 @@ Carries an approved app forward to newer agent versions **without pretending a p
 | `migrate discard <app>` | removes both |
 | `migrate hold <app> --actor <who> [--reason <text>]` | `<source-dir>/.aware-approvals/HOLD.<app>` |
 | `migrate unhold <app> --actor <who>` | removes `HOLD.<app>` |
+| `migrate promote <app> --candidate sha256:… (--person <who> --approval <record.json> --front-door <name> \| --policy <id> [--front-door <name>])` | archives under `.aware-approvals/`, then replaces `<app>.lock` (one transaction) |
+| `migrate revert <app> --candidate sha256:… (--person <who> --approval <record.json> --front-door <name> \| --automatic --reason run-failed:<run-id> [--front-door <name>])` | the same, as a `reverted` successor |
+| `migrate policy record --approval <record.json> --front-door <name>` | `AWARE_HOME/migration-policies/<id>.yaml` (immutable) |
+| `migrate policy list` | nothing |
+| `migrate policy revoke <id> --actor <who> [--front-door <name>] [--reason <text>]` | `<id>.revoked.yaml` |
 
 `<target>` is `<agent>@sha256:<64 hex>` (exact stored bytes) or `<agent>@<version>` (must name exactly one verified stored byte set: `E_MIGRATE_TARGET_AMBIGUOUS` when several, `E_MIGRATE_TARGET_NOT_STORED` when none). Without `--to`, every agent the app dispatches whose installed copy is not the approved bytes is targeted at the installed copy; every other agent keeps the base lock's own bytes. Candidates are compiled from **verified store packages only** — never the working copy, never a new snapshot. `plan` with no `--app` covers every installed app.
 
@@ -560,18 +565,19 @@ A **candidate** is compiled exactly as `aware app compile` would compile the unc
   "comparison": { "status": "identical-instructions", "method": "static-inspection", "runs": 0,
                   "reason": { "code": "…", "text": "…" }, "per-agent": [ … ] },
   "reasons": [ { "code": "mode-overridable", "text": "plain sentence" },
-               { "code": "no-fixed-state-method", "text": "No fixed-state comparison method is available yet, so a person must approve carrying this workflow forward." } ],
+               { "code": "no-policy", "text": "No carry-forward policy covers this update yet, so a person must approve it (approving can also record a policy for updates like it)." } ],
   "candidate": { "present": true, "candidate-digest": "sha256:…", "fresh": true },
   "running-instances": [ { "instance": "default", "pid": 4242, "run-id": "…", "started-at": "…" } ],
   "hold": null,                       // { "format", "app", "held-by", "held-at", "reason" } when held
   "backing-app-moved": false, "callers": [],
   "warnings": [],                     // e.g. a stored copy that does not verify (skipped)
   "advisory": null,                   // reserved; never changes "state"
-  "no-click-available": false }
+  "no-click-available": false,        // declared read-only + unchanged contract + accepted comparison + no backing app + not blocked
+  "policy": null }                    // the covering policy id when state is auto-under-policy
 ```
 
-- **Comparison.** `identical-instructions` (method `static-inspection`, `runs: 0`) means every moved agent's executable contract is unchanged: both versions hand the executor byte-identical instructions. It is checked by inspection, nothing is run, and it is **not** `pass`. A changed contract is `not-comparable` with a reason per transport — `no-fixed-state` (a CLI/host agent on live state: AWARE has no snapshot to replay, and two live reads are never compared), `no-recorded-exchange` (REST/builtin), `nested-generated-tool` (an app-backed agent). `pass`/`fail` are reserved for an executed method.
-- **States in this version.** Every candidate that moves something is `needs-person` (or `blocked`/`held`): no comparison status is accepted for the no-click path yet (only an executed `pass` would be), so `no-click-available` is `false` and the reasons include `no-fixed-state-method`. `auto-under-policy` is reserved.
+- **Comparison.** `identical-instructions` (method `static-inspection`, `runs: 0`) means every moved agent's executable contract is unchanged: both versions hand the executor byte-identical instructions. It is checked by inspection, nothing is run, and it is **not** `pass` — but by the owner's ruling of 2026-10-05 (pawellisowski/floless.app#1985) it counts as the fixed-state comparison: it is accepted for the no-click path, alongside an executed `pass`. Its wording never changes. A changed contract is `not-comparable` with a reason per transport — `no-fixed-state` (a CLI/host agent on live state: AWARE has no snapshot to replay, and two live reads are never compared), `no-recorded-exchange` (REST/builtin), `nested-generated-tool` (an app-backed agent). `pass`/`fail` are reserved for an executed method.
+- **States.** `no-click-available` is true when the workflow is declared read-only, every moved contract is unchanged, the comparison is accepted (`identical-instructions` or an executed `pass`), no backing app moves and nothing blocks it. The state is then `auto-under-policy` (with `policy` naming it) when an active policy covers the app, every moved agent, a `patch` move and an `official-registry` install receipt — and `needs-person` with reason `no-policy` otherwise. A comparison that is not accepted adds `no-fixed-state-method`. A caller of a moving backing app is never `auto-under-policy`.
 - **Effect** is always *declared*: a workflow is `declared-read-only` only when every dispatchable node is read under the agent's own non-overridable `mode:` under BOTH the old and the new pins (or is read-only glue). A `mode-overridable` command (Tekla `exec`) is never a declaration, even with `mode: read` on the node — reason `mode-overridable`.
 - **Blocked.** `no-approval`, `approval-invalid`, `source-changed` (compile again), `needs-source-edit` (a node would write without `safety:`, or `requires:` does not admit the target), `agent-unavailable`, or a resolver refusal (`migrate-pin-not-stored`, `migrate-base-version-only`, …).
 - **Backing apps.** An `exposes-as-agent` app with a pending move, or an app whose candidate would move an app-backed agent, is `needs-person` with reason `backing-app-moved`; `callers` lists the installed apps that run it, and `plan` marks each caller in the same listing `needs-person` with the same reason. `prepare` on such an app refuses with `E_MIGRATE_BACKING_APP` (`details.callers`) and writes nothing. The person path is `aware app compile` of the backing app and its callers.
@@ -582,6 +588,24 @@ A **candidate** is compiled exactly as `aware app compile` would compile the unc
 A hold is per app (`HOLD.<app>`, whose record names the app), because several apps may share a source directory. A hold file that cannot be attributed to one app — a plain `HOLD`, or a record that does not parse or names another app — holds **every** app in that directory, and `unhold` refuses with `E_MIGRATE_HOLD_UNREADABLE` (removing nothing) until a person removes it deliberately.
 
 Expected outcomes are `ok: true` data. `ok: false` only when the command cannot run: `E_MIGRATE_APP_NOT_FOUND`, `E_MIGRATE_BAD_TARGET`, `E_MIGRATE_TARGET_UNUSED` / `_AMBIGUOUS` / `_NOT_STORED` (prepare with an explicit `--to`), `E_MIGRATE_BACKING_APP`, `E_MIGRATE_NO_ACTOR`, `E_MIGRATE_HOLD_UNREADABLE`, `E_MIGRATE_FAILED`.
+
+#### `migrate promote` / `migrate revert`
+
+Promotion carries an app's approval forward to its **prepared** candidate (`migrate prepare`). Exactly one approver:
+
+- **A person** — `--person <who> --approval <record.json> --front-door <name>`, all three required. The record is the front door's JSON `{format: 1, kind: "person", actor, front-door, approval-ref, candidate-digest, base-lock-digest, plan-digest, statement-sha256, at}`; its actor and front door must equal the flags and it must name this candidate, the lock it starts from and its plan, or `E_MIGRATE_APPROVAL_MISMATCH`. It is archived and recorded as a claim (`attested: false`): AWARE cannot prove a person clicked, and the trust boundary for "the AI never approves" is the front door (owner decision, pawellisowski/floless.app#1985). With no `--front-door` the refusal is `E_MIGRATE_NO_FRONT_DOOR`, and when an AI-session marker is set (`CLAUDECODE`, `CODEX_SANDBOX`, `AWARE_AI_SESSION`) it says so by name — an accident guard, not a security boundary.
+- **A policy** — `--policy <id>`. The policy must exist, verify (its id names its own body) and not be revoked; it must cover the plan row (above); and every new package must verify against a **freshly fetched** official registry index (`official-unverified` when it cannot — offline or an `AWARE_REGISTRY` override). Otherwise `E_MIGRATE_NOT_ELIGIBLE` with `details.reasons`. A revocation cannot land mid-promotion.
+- **`revert --automatic --reason run-failed:<run-id>`** — only after a failed run the CLI can find — a trace under `logs/<app>/` of this app, run under the approval being reverted, ending `run-end` with a status other than `ok`/`interrupted` or recording a node error — only when the current approval was carried forward by a policy, and only back to a PLAN a person approved (the original's, or a person-carried successor's). It is recorded under that same policy; the reason and the failed run found go in the archived evidence (`row.revert`).
+
+Under the app's promotion lock (which `aware app compile` takes too), promotion re-reads the candidate and its evidence (`E_MIGRATE_NO_CANDIDATE`, `E_MIGRATE_CANDIDATE_TAMPERED`), requires the candidate's digest to be `--candidate` and the lock on disk to be the one it started from (`E_MIGRATE_CANDIDATE_STALE`), **recompiles it from the current source and lock** and requires the same plan (`E_MIGRATE_CANDIDATE_STALE`), and refuses a held app (`E_MIGRATE_HELD`), a backing app (`E_MIGRATE_BACKING_APP`), a blocked or no-move candidate (`E_MIGRATE_BLOCKED`, `E_MIGRATE_NOTHING_TO_PROMOTE`) and a current record with a missing or changed archive (`E_MIGRATE_ARCHIVE_INVALID`). A revert must move to pins approved before (`E_MIGRATE_REVERT_UNAPPROVED`). A refusal changes nothing.
+
+Then, as one transaction under `.aware-approvals/.txn/<app>.<id>/`: the lock it replaces, the candidate bytes (the resulting plan), the evidence and the person record are staged and fsynced, moved into `.aware-approvals/` content-addressed and synced, the new lock is checked by the same reader `app run` uses, and `<app>.lock` is replaced in one atomic rename. A run reads the lock once, so it runs the old plan or the whole new one; runs already in progress keep theirs (`running-instances`). A crash is finished (the lock had moved) or rolled back (it had not) by the next migrate verb. The consumed candidate is removed.
+
+`promote --json` / `revert --json` data: `{ app, lock, kind, seq, by-kind, replaced-lock-digest, lock-digest, plan-digest, resulting-lock-digest, evidence-digest, from, to, policy?, running-instances, recovered?, warnings, label }`.
+
+#### `migrate policy record|list|revoke`
+
+A policy is a person's standing approval of one narrow kind of update. `policy record` takes the front door's record `{format: 1, kind: "policy", actor, front-door, approval-ref, statement-sha256, at, rule: "read-only-patch", scope: {apps: [ids | "*"], agents: [ids | "*"], publishers: ["official-registry"], bump: "patch"}}` (rule, publishers and bump are closed sets) and writes `migration-policies/<id>.yaml`, where `<id>` is `pol-` and the first 16 hex of the sha256 of the policy body — so an edited policy no longer matches its name and is `invalid`, never obeyed. Recording the same approval again is a no-op (`created: false`). `--front-door` is required, as for a person promotion. `policy list` shows every policy as `active`, `revoked` or `invalid` (with its problem). `policy revoke` writes `<id>.revoked.yaml` (idempotent; an unreadable revocation still revokes) and nothing is deleted. Codes: `E_MIGRATE_POLICY_NOT_FOUND`, `E_MIGRATE_POLICY_INVALID`, `E_MIGRATE_POLICY_CONFLICT`, `E_MIGRATE_POLICY_REVOKED`, `E_MIGRATE_APPROVAL_MISMATCH`, `E_MIGRATE_APPROVAL_UNREADABLE`, `E_MIGRATE_NO_FRONT_DOOR`, `E_MIGRATE_NO_APPROVER`, `E_MIGRATE_APPROVER_CONFLICT`, `E_MIGRATE_BAD_CANDIDATE`.
 
 ### `aware connect <integration>`
 

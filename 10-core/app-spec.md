@@ -637,11 +637,11 @@ Every expected drift — a missing, invalid or inconsistent lock, a stale source
 - Preparing a candidate leaves `<app>.lock` byte-identical (same bytes, same modification time). The evidence records the sha256 of the lock it started from (`base-lock-digest`), so a candidate prepared against an older approval is reported `fresh: false` and is never mistaken for one prepared against the current approval.
 - `<source-dir>/.aware-approvals/HOLD.<app>` (written by `aware app migrate hold`) marks that app as sealed, certified or frozen: it is never carried forward, whatever a plan says. A hold file that cannot be attributed to one app holds every app in the directory.
 
-Until a promotion verb exists, the only way to change what an app runs remains a person compiling it (`aware app compile`). See [CLI Spec § `aware app migrate`](./cli-spec.md) for the verbs and the plan's JSON.
+What an app runs changes only when a person compiles it (`aware app compile`) or when `aware app migrate promote|revert` carries its approval forward to a prepared candidate — with a person's recorded approval or under a person-approved policy (§ Successor approvals). See [CLI Spec § `aware app migrate`](./cli-spec.md) for the verbs and the plan's JSON.
 
 ### Successor approvals (#628)
 
-A **successor approval** is an approval carried forward from an earlier one to newer agent pins without a person recompiling the source. This CLI **reads** successor approvals: it checks them, reports them and runs them labelled. It has no verb that creates one yet. Promotion (`aware app migrate promote|revert` and migration policies) is a later change, and it waits on an owner decision about where the trust boundary for person approvals sits (see *Person approvals are claims* below). Until it ships, the only way to change what an app runs is still a person compiling it.
+A **successor approval** is an approval carried forward from an earlier one to newer agent pins without a person recompiling the source. This CLI checks successor approvals, reports them and runs them labelled, and `aware app migrate promote|revert` writes them (see [CLI Spec § `aware app migrate`](./cli-spec.md)). Every lock the writer produces is checked by this same reader before it replaces `<app>.lock`, so the writer can never produce a record the reader refuses or reports incomplete.
 
 **The lock file is replaced. The original approval record is preserved.** A promoted `<app>.lock` carries the effective, runnable plan at its **top level**: the same `agent-pins`, `agent-digests`, `agent-bundle-pins` and `nodes` a run reads today. A pinned-value reader therefore sees the pins that actually run, and fails closed if it does not know them. The history goes in a new `approval:` block. The original lock is never rewritten: its exact bytes are archived, and its approval fields are copied verbatim into `approval.original`. Each promotion appends one successor.
 
@@ -749,7 +749,7 @@ A person approval record is the front door's JSON: `{format: 1, kind: person, ac
   | | `statement-sha256` | a sha256 digest |
   | | `at` | non-empty |
 
-  A policy link's `policy-digest` is checked for form only: there is no policy store to check it against until promotion ships. The labels' effect and comparison wording comes from the evidence, so evidence that cannot be read as such is a contradiction, never a silently complete record.
+  A policy link's `policy-digest` is checked here for form only: the policy lives in `AWARE_HOME/migration-policies/`, not beside the app, and an app may be read on a machine without it. `migrate promote --policy` checks the policy itself — present, self-naming, not revoked, covering — at the moment it promotes. The labels' effect and comparison wording comes from the evidence, so evidence that cannot be read as such is a contradiction, never a silently complete record.
 
 The source hash is then compared as usual. The hex part of `successor-v1:<hex>` must be the current source's sha256, or the run is refused with `E_APP_LOCK_STALE`.
 
@@ -798,7 +798,7 @@ An original approval is recorded as `{ "origin": "original", "record-complete": 
 
 No label says "same results", "unchanged behaviour" or "passed 0 comparisons". Effect and comparison wording comes from the archived evidence: when the evidence is missing, the label claims neither.
 
-**Person approvals are claims.** AWARE cannot prove that a person clicked. Any key or file the CLI could check is readable by every process that runs as the same user, including an AI agent. So AWARE records a person approval as a claim (`attested: false`), bound to the exact candidate, base lock and plan digests, and labels it "claimed". The trust boundary for "the AI never approves" is the front door, for example the FloLess Approve click. **That trust boundary is pending a decision from the owner**: accept the front door, or require an OS-level separated boundary before person promotion ships.
+**Person approvals are claims.** AWARE cannot prove that a person clicked. Any key or file the CLI could check is readable by every process that runs as the same user, including an AI agent. So AWARE records a person approval as a claim (`attested: false`), bound to the exact candidate, base lock and plan digests, and labels it "claimed". The trust boundary for "the AI never approves" is the front door, for example the FloLess Approve click — the owner's ruling of 2026-10-05 (pawellisowski/floless.app#1985). A person promotion therefore needs `--front-door` and the front door's record bound to the exact digests; when an AI-session marker is set and the front door is missing, the refusal names the marker (an accident guard: any process can unset it).
 
 **`aware app compile` always writes a fresh original.** The lock it writes has no `approval:` block and a raw `sha256:` source hash, whatever the lock it replaces carried. `--front-door <name>` (optional) records who asked for the compile as a top-level `front-door:`. That field is outside the plan digest, and it is copied into `approval.original` if the lock is later carried forward.
 
