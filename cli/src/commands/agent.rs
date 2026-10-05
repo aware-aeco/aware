@@ -1715,6 +1715,9 @@ fn auto_regenerate_plugins(ctx: &Context, full: bool) -> Result<(), AwareError> 
 
 fn list(ctx: &Context) -> Result<(), AwareError> {
     let started = Instant::now();
+    // Opening the store first carries over an older CLI's stored versions
+    // (#627-b), so `stored` is never empty just after an upgrade.
+    let _store = crate::agent_store::open(&ctx.paths)?;
     let discovered = discover_agents(&ctx.paths)?;
 
     if ctx.json {

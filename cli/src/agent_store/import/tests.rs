@@ -420,3 +420,72 @@ fn a_legacy_package_that_cannot_be_read_now_is_retried() {
         "imported once readable"
     );
 }
+
+/// Review round 3: a legacy store that is a link to where `agent-store-v2`
+/// would be created is refused before v2 exists, so no first write can make
+/// the two one directory.
+#[test]
+fn a_legacy_link_to_a_v2_not_yet_created_is_refused() {
+    let (_tmp, paths) = home();
+    let target = paths.agent_store_dir();
+    std::fs::create_dir_all(&paths.aware_home).unwrap();
+    // A link needs an existing target: create it, link, then remove it so v2
+    // is "not yet created" while the link still points at its place.
+    std::fs::create_dir_all(&target).unwrap();
+    let legacy = paths.legacy_agent_store_dir();
+    #[cfg(windows)]
+    {
+        let status = std::process::Command::new("cmd.exe")
+            .args(["/C", "mklink", "/J"])
+            .arg(&legacy)
+            .arg(&target)
+            .stdout(std::process::Stdio::null())
+            .stderr(std::process::Stdio::null())
+            .status()
+            .unwrap();
+        assert!(status.success(), "failed to create test junction");
+    }
+    #[cfg(unix)]
+    std::os::unix::fs::symlink(&target, &legacy).unwrap();
+    std::fs::remove_dir(&target).unwrap();
+    assert!(!target.exists(), "v2 is not created yet; the link dangles");
+    let error = open(&paths).unwrap_err().to_string();
+    assert!(error.contains("E_AGENT_STORE_ALIASED"), "{error}");
+}
+
+/// Review round 3: every store path is formed by `digest_container`, which
+/// refuses a link below the store root — so a snapshot can never write
+/// through one either.
+#[test]
+fn a_snapshot_never_writes_through_a_link_below_v2() {
+    let (_tmp, paths) = home();
+    let elsewhere = tempfile::tempdir().unwrap();
+    std::fs::create_dir_all(paths.agent_store_dir()).unwrap();
+    let link = paths.agent_store_dir().join("tekla");
+    #[cfg(windows)]
+    {
+        let status = std::process::Command::new("cmd.exe")
+            .args(["/C", "mklink", "/J"])
+            .arg(&link)
+            .arg(elsewhere.path())
+            .stdout(std::process::Stdio::null())
+            .stderr(std::process::Stdio::null())
+            .status()
+            .unwrap();
+        assert!(status.success(), "failed to create test junction");
+    }
+    #[cfg(unix)]
+    std::os::unix::fs::symlink(elsewhere.path(), &link).unwrap();
+    let dir = write_agent(&paths, "tekla", "0.1.5");
+    let error = snapshot(&paths, &dir, &open(&paths).unwrap())
+        .unwrap_err()
+        .to_string();
+    assert!(error.contains("E_AGENT_STORE_ALIASED"), "{error}");
+    assert!(
+        std::fs::read_dir(elsewhere.path())
+            .unwrap()
+            .next()
+            .is_none(),
+        "nothing was written through the link"
+    );
+}

@@ -165,7 +165,7 @@ fn check_pair(v2: &Path, legacy: &Path) -> Result<(), AwareError> {
                 )));
             }
         }
-        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(()),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
         Err(error) => {
             return Err(
                 std::io::Error::new(error.kind(), format!("{}: {error}", v2.display())).into(),
@@ -173,9 +173,23 @@ fn check_pair(v2: &Path, legacy: &Path) -> Result<(), AwareError> {
         }
     }
     // Where each really is (the legacy store may be a link; it is only read).
-    let (Ok(real_v2), Ok(real_legacy)) = (std::fs::canonicalize(v2), std::fs::canonicalize(legacy))
-    else {
+    // A v2 that does not exist yet is judged where it WOULD be created, so a
+    // legacy link aimed at that spot is refused before any write makes the two
+    // one directory (review round 3).
+    let Ok(real_legacy) = std::fs::canonicalize(legacy) else {
         return Ok(());
+    };
+    let real_v2 = match std::fs::canonicalize(v2) {
+        Ok(real) => real,
+        Err(_) => {
+            let (Some(parent), Some(name)) = (v2.parent(), v2.file_name()) else {
+                return Ok(());
+            };
+            let Ok(real_parent) = std::fs::canonicalize(parent) else {
+                return Ok(());
+            };
+            real_parent.join(name)
+        }
     };
     if real_v2 == real_legacy {
         return Err(aliased(format!(
@@ -196,7 +210,7 @@ fn check_pair(v2: &Path, legacy: &Path) -> Result<(), AwareError> {
 
 /// Every existing directory between `agent-store-v2/` and `container`
 /// (`<id>`, `<id>/<hex>`) must be a plain directory, not a link or junction.
-fn no_link_below_v2(paths: &Paths, container: &Path) -> Result<(), AwareError> {
+pub(crate) fn no_link_below_v2(paths: &Paths, container: &Path) -> Result<(), AwareError> {
     let v2 = paths.agent_store_dir();
     let Ok(below) = container.strip_prefix(&v2) else {
         return Err(aliased(format!(
@@ -369,12 +383,9 @@ fn import_one(
     if let Err(reason) = super::verify_package(source, id, &digest, key) {
         return Ok(Outcome::Skipped(reason));
     }
+    // `digest_container` refuses a link on the way to the container before
+    // anything is looked at or created under v2 (review rounds 2-3).
     let container = digest_container(paths, id, &digest)?;
-    // Before anything is looked at or created under v2: no link on the way
-    // to the container (review round 2 — a junction at `agent-store-v2/<id>`
-    // would otherwise have this import create directories in the legacy
-    // store, or count a legacy package as already in v2).
-    no_link_below_v2(paths, &container)?;
     let dest = container.join(key);
     if probe(&dest)?.is_some() {
         return match super::verify_package(&dest, id, &digest, key) {
