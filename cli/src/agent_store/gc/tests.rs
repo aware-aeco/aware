@@ -160,7 +160,8 @@ fn only_refuses_a_referenced_package_and_removes_just_the_one_named() {
     };
     let error = collect(&h.paths, &only(&kept)).unwrap_err().to_string();
     assert!(error.contains("E_AGENT_GC_REFERENCED"), "{error}");
-    assert!(error.contains("approved-lock"), "{error}");
+    assert!(error.contains("the approved workflow"), "{error}");
+    assert!(error.contains("demo.lock"), "{error}");
     assert!(kept_path.exists());
     let error = collect(&h.paths, &only(&format!("sha256:{}", "f".repeat(64))))
         .unwrap_err()

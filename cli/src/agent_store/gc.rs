@@ -313,7 +313,11 @@ fn refuse_referenced(table: &RefTable, agent: &str, digest: &str) -> Result<(), 
         )));
     }
     if let Some((_, until, references)) = rows.iter().find(|(s, ..)| *s != State::Removable) {
-        let why = serde_json::to_string(references).unwrap_or_default();
+        let why = references
+            .iter()
+            .map(describe)
+            .collect::<Vec<_>>()
+            .join("; ");
         let until = until
             .as_deref()
             .map(|u| format!(" (kept until {u})"))
@@ -323,6 +327,60 @@ fn refuse_referenced(table: &RefTable, agent: &str, digest: &str) -> Result<(), 
         )));
     }
     Ok(())
+}
+
+/// One reason a package is kept, as a sentence fragment.
+fn describe(reference: &Reference) -> String {
+    let until = |u: &Option<String>, held: bool| {
+        if held {
+            " (its app is on hold)".to_string()
+        } else {
+            u.as_deref()
+                .map(|u| format!(" until {u}"))
+                .unwrap_or_default()
+        }
+    };
+    match reference {
+        Reference::Current { path } => format!("it is the installed copy ({path})"),
+        Reference::CurrentUnhashable { path, .. } => {
+            format!("the installed copy at {path} cannot be read, so every stored version is kept")
+        }
+        Reference::ApprovedLock { lock } => format!("the approved workflow {lock} uses it"),
+        Reference::CandidateLock { candidate } => {
+            format!("the prepared update {candidate} uses it")
+        }
+        Reference::CandidateBase { evidence } => {
+            format!("the prepared update {evidence} moves away from it")
+        }
+        Reference::PromotionInProgress { path } => {
+            format!("an approval being carried forward uses it ({path})")
+        }
+        Reference::ApprovalArchive {
+            archive,
+            until: u,
+            held,
+        } => {
+            format!("the earlier approval {archive} used it{}", until(u, *held))
+        }
+        Reference::ApprovalOriginal {
+            lock,
+            until: u,
+            held,
+        }
+        | Reference::SuccessorFrom {
+            lock,
+            until: u,
+            held,
+            ..
+        } => {
+            format!("an earlier approval of {lock} used it{}", until(u, *held))
+        }
+        Reference::Lease { run_id, app } => format!("run {run_id} of {app} is using it"),
+        Reference::StaleLeaseUnstamped { run_id, app, .. } => {
+            format!("run {run_id} of {app} ended without letting go of it")
+        }
+        Reference::Recent { until } => format!("it was used recently (kept until {until})"),
+    }
 }
 
 fn incomplete(table: &RefTable) -> AwareError {
