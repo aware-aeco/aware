@@ -1188,9 +1188,13 @@ fn store(
             .and_then(|n| n.to_str())
             .unwrap_or("")
             .to_string();
-        if !crate::manifest::loader::is_safe_segment(&id) || !id_dir.is_dir() {
-            leftovers.push(unrecognized(&id_dir));
-            continue;
+        match is_dir(c, &id_dir) {
+            None => continue,
+            Some(true) if crate::manifest::loader::is_safe_segment(&id) => {}
+            Some(_) => {
+                leftovers.push(unrecognized(&id_dir));
+                continue;
+            }
         }
         let Some(containers) = c.list(&id_dir) else {
             continue;
@@ -1202,9 +1206,13 @@ fn store(
                 .unwrap_or("")
                 .to_string();
             let digest = format!("sha256:{hex}");
-            if super::digest_hex(&digest).is_none() || !container.is_dir() {
-                leftovers.push(unrecognized(&container));
-                continue;
+            match is_dir(c, &container) {
+                None => continue,
+                Some(true) if super::digest_hex(&digest).is_some() => {}
+                Some(_) => {
+                    leftovers.push(unrecognized(&container));
+                    continue;
+                }
             }
             // Formed by the one function that refuses a link below the store.
             if let Err(error) = super::digest_container(paths, &id, &digest) {
@@ -1300,6 +1308,20 @@ fn store(
         ))
     });
     (packages, invalid, leftovers)
+}
+
+/// Whether a store entry is a folder. One whose metadata cannot be read is a
+/// blocker, never an "unrecognized" leftover: packages under it were not
+/// inspected (review round 3). `None` then, after recording the blocker.
+fn is_dir(c: &mut Collector, path: &Path) -> Option<bool> {
+    match super::probe(path) {
+        Ok(Some(metadata)) => Some(metadata.is_dir()),
+        Ok(None) => Some(false),
+        Err(error) => {
+            c.block(path, format!("cannot read it: {error}"));
+            None
+        }
+    }
 }
 
 /// Prefix of a package GC has renamed away and not yet deleted (#629-b).

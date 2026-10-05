@@ -1028,3 +1028,20 @@ fn a_dangling_agent_folder_is_a_blocker() {
         "{t:#?}"
     );
 }
+
+/// A store folder whose metadata cannot be read hides packages: a blocker,
+/// not an "unrecognized" leftover (review round 3).
+#[test]
+fn an_unreadable_store_folder_is_a_blocker() {
+    let h = home();
+    let digest = orphan(&h.paths, "tool", "1.0.0");
+    let container = crate::agent_store::digest_container(&h.paths, "tool", &digest).unwrap();
+    for path in [h.paths.agent_store_dir().join("tool"), container] {
+        crate::agent_store::inject_stat_error(&path, std::io::ErrorKind::PermissionDenied);
+        let t = build(&h.paths, "30d", Utc::now());
+        crate::agent_store::clear_stat_error();
+        assert!(!t.complete, "{}", path.display());
+        assert!(t.leftovers.is_empty(), "{t:#?}");
+        assert_eq!(t.blockers[0].path, path.display().to_string());
+    }
+}
