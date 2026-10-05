@@ -1279,6 +1279,25 @@ fn a_caller_of_a_moving_backing_app_is_not_carried_forward_under_a_policy() {
     approve(&h.paths, &source);
     update_official(&h, "1.0.1", "mode: read");
     let id = record_policy(&h, &["*"], &["*"]);
+    // On its own the caller's update is no-click eligible and covered...
+    let own = row(&h, &source);
+    assert!(own.no_click_available, "{own:#?}");
+    assert_eq!(own.state, State::AutoUnderPolicy, "{own:#?}");
+    // ...but the plan, which sees the backing app's pending move, gives one
+    // consistent answer: a person decides (review round 5).
+    let rows = plan::plan_rows(
+        &h.paths,
+        &[
+            ("demo".into(), source.clone()),
+            ("inner".into(), backing.clone()),
+        ],
+        None,
+        &guard(&h),
+    );
+    let caller = rows.iter().find(|r| r.app == "demo").unwrap();
+    assert_eq!(caller.state, State::NeedsPerson, "{caller:#?}");
+    assert!(!caller.no_click_available, "{caller:#?}");
+    assert_eq!(caller.policy, None);
     let (candidate, _) = prepare(&h, &source, None);
     let (_, before) = lock_of(&source);
     let refused = by_policy(&h, &source, &candidate, &id, &verified).unwrap_err();
@@ -1295,7 +1314,7 @@ fn a_caller_of_a_moving_backing_app_is_not_carried_forward_under_a_policy() {
     assert_eq!(lock_of(&source).1, before);
 }
 
-/// Review round 2 (\u{a7}15.1 R3): a policy promotion holds the policies lock
+/// Review round 2 (§15.1 R3): a policy promotion holds the policies lock
 /// from its verdict until the lock has moved — a revocation started in
 /// between waits for it.
 #[test]

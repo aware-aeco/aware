@@ -610,6 +610,9 @@ pub fn plan_rows(
                 row.state = State::NeedsPerson;
                 row.policy = None;
             }
+            // It runs a backing app with a pending move: never the no-click
+            // path, whatever its own update looks like (review round 5).
+            row.no_click_available = false;
         }
     }
     rows
