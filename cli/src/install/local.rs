@@ -511,6 +511,40 @@ requires: []
         assert!(!paths.apps_dir().join("inner").exists());
     }
 
+    /// Codex round 4 (#627-a): an `exposes-as-agent` app whose id is the swap
+    /// area's name (in any case) would need `agents/.aware-swap/` as its
+    /// synthesized agent. It is refused at validation, naming the reserved
+    /// name, BEFORE `apps/<id>/` is claimed — never a half-installed app.
+    #[test]
+    fn an_exposed_app_named_like_the_swap_area_is_refused_before_anything_is_claimed() {
+        for id in [".aware-swap", ".AWARE-Swap"] {
+            let tmp = tempfile::tempdir().unwrap();
+            let paths = Paths {
+                aware_home: tmp.path().to_path_buf(),
+            };
+            let app_src = tmp.path().join("src/x");
+            std::fs::create_dir_all(&app_src).unwrap();
+            std::fs::write(
+                app_src.join("x.flo"),
+                format!(
+                    "app: {id}\nversion: 0.1.0\ndescription: x\nexposes-as-agent: true\n\
+                     exposed-commands: {{ run: {{ lifecycle: single }} }}\n\
+                     nodes: [{{ id: n, inline: {{ kind: predicate, description: p, code: 'true' }} }}]\nrequires: []\n"
+                ),
+            )
+            .unwrap();
+            let err =
+                install_app_from_path(&app_src, &paths, &crate::agent_store::open(&paths).unwrap())
+                    .unwrap_err();
+            assert!(matches!(err, AwareError::Validation(_)), "{id}: {err:?}");
+            assert!(err.to_string().contains("reserved"), "{id}: {err}");
+            assert!(
+                !paths.apps_dir().join(id).exists(),
+                "{id}: nothing may be claimed under apps/"
+            );
+        }
+    }
+
     /// The #502 repro. `bundle/` holds `bundle.flo` (`app: alpha`) beside
     /// `alpha.flo` (`app: decoy`). Install used to take one of them by
     /// filesystem order and copy the whole folder, after which discovery — which
