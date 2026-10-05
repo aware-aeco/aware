@@ -405,18 +405,46 @@ fn rename_replacing(source: &Path, destination: &Path) -> std::io::Result<()> {
         .encode_wide()
         .chain(std::iter::once(0))
         .collect::<Vec<_>>();
-    // SAFETY: both pointers name live, NUL-terminated UTF-16 buffers for the duration of the call.
-    let moved = unsafe {
-        MoveFileExW(
-            source_wide.as_ptr(),
-            destination_wide.as_ptr(),
-            MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH,
-        )
-    };
-    if moved == 0 {
-        Err(std::io::Error::last_os_error())
-    } else {
-        Ok(())
+    // A reader holding `destination` open (`aware app run` reading the lock
+    // it is replacing) fails the replace transiently: retried, bounded.
+    retry_transient(|| {
+        // SAFETY: both pointers name live, NUL-terminated UTF-16 buffers for the duration of the call.
+        let moved = unsafe {
+            MoveFileExW(
+                source_wide.as_ptr(),
+                destination_wide.as_ptr(),
+                MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH,
+            )
+        };
+        if moved == 0 {
+            Err(std::io::Error::last_os_error())
+        } else {
+            Ok(())
+        }
+    })
+}
+
+/// Run `op`, retrying for up to two seconds while Windows reports the target
+/// as transiently held: `ERROR_ACCESS_DENIED` (5, also what a file in a
+/// delete-pending state or a directory with an open child returns) or
+/// `ERROR_SHARING_VIOLATION` (32). Another process (or thread) reading the
+/// file, a concurrent delete finishing, an indexer or a virus scanner all
+/// clear within milliseconds; a real permission fault is still returned, just
+/// two seconds later. Unix returns the first result.
+pub(crate) fn retry_transient<T>(mut op: impl FnMut() -> std::io::Result<T>) -> std::io::Result<T> {
+    let mut attempts = 0;
+    loop {
+        match op() {
+            Err(error)
+                if cfg!(windows)
+                    && matches!(error.raw_os_error(), Some(5 | 32))
+                    && attempts < 100 =>
+            {
+                attempts += 1;
+                std::thread::sleep(std::time::Duration::from_millis(20));
+            }
+            result => return result,
+        }
     }
 }
 
@@ -464,19 +492,23 @@ pub(crate) fn rename_dir_no_replace(source: &Path, destination: &Path) -> std::i
         .chain(std::iter::once(0))
         .collect::<Vec<_>>();
     // No MOVEFILE_REPLACE_EXISTING: an existing destination must never be replaced.
-    // SAFETY: both pointers name live, NUL-terminated UTF-16 buffers for the duration of the call.
-    let moved = unsafe {
-        MoveFileExW(
-            source_wide.as_ptr(),
-            destination_wide.as_ptr(),
-            MOVEFILE_WRITE_THROUGH,
-        )
-    };
-    if moved == 0 {
-        Err(std::io::Error::last_os_error())
-    } else {
-        Ok(())
-    }
+    // A file open inside `source` (an unlocked reader, a scanner) makes the
+    // move fail transiently: retried, bounded.
+    retry_transient(|| {
+        // SAFETY: both pointers name live, NUL-terminated UTF-16 buffers for the duration of the call.
+        let moved = unsafe {
+            MoveFileExW(
+                source_wide.as_ptr(),
+                destination_wide.as_ptr(),
+                MOVEFILE_WRITE_THROUGH,
+            )
+        };
+        if moved == 0 {
+            Err(std::io::Error::last_os_error())
+        } else {
+            Ok(())
+        }
+    })
 }
 
 /// Make a directory's entries durable (Unix: fsync the directory). A no-op on

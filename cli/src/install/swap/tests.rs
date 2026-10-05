@@ -535,11 +535,11 @@ fn a_version_only_lock_never_snapshots_a_partial_tree() {
     }
 }
 
-/// Plan 8 R1-1: one lock order everywhere (store, then swap locks sorted), so
-/// updates, runs and compiles of the same agents racing each other always
-/// finish. Bounded by a timeout: a deadlock fails the test instead of hanging.
-#[test]
-fn updates_runs_and_compiles_racing_never_deadlock() {
+/// One race of updates, a run and a compile over the same two agents. Every
+/// worker reports its own outcome — `Err` carries the error or panic message —
+/// so a worker that FAILS is told apart from one that never finishes (a
+/// deadlock, bounded by `timeout`).
+fn race_updates_runs_and_compiles(timeout: Duration) -> Result<(), String> {
     let (_tmp, paths) = home();
     write_tree(&paths.agents_dir().join("alpha"), "alpha", "1.0.0", "seed");
     write_tree(&paths.agents_dir().join("beta"), "beta", "1.0.0", "seed");
@@ -556,82 +556,125 @@ fn updates_runs_and_compiles_racing_never_deadlock() {
         crate::app_lock::compile_to_disk(&source, &paths, &guard).unwrap();
     }
 
-    let (tx, rx) = std::sync::mpsc::channel::<&'static str>();
+    type Outcome = (&'static str, Result<(), String>);
+    let (tx, rx) = std::sync::mpsc::channel::<Outcome>();
+    let spawn = |name: &'static str, work: Box<dyn FnOnce() -> Result<(), AwareError> + Send>| {
+        let tx = tx.clone();
+        std::thread::spawn(move || {
+            let outcome = match std::panic::catch_unwind(std::panic::AssertUnwindSafe(work)) {
+                Ok(Ok(())) => Ok(()),
+                Ok(Err(error)) => Err(error.to_string()),
+                Err(panic) => Err(panic
+                    .downcast_ref::<String>()
+                    .cloned()
+                    .or_else(|| panic.downcast_ref::<&str>().map(|s| s.to_string()))
+                    .unwrap_or_else(|| "panic".into())),
+            };
+            let _ = tx.send((name, outcome));
+        })
+    };
     let mut handles = Vec::new();
     for (name, id) in [("update-alpha", "alpha"), ("update-beta", "beta")] {
         let paths = paths.clone();
-        let tx = tx.clone();
-        handles.push(std::thread::spawn(move || {
-            for n in 0..6 {
-                let guard = crate::agent_store::open(&paths).unwrap();
-                // Same version, new bytes: the version-only fallback of the
-                // compiled lock is not what is under test; finishing is.
-                let (staged, digest) = stage(&paths, id, "1.0.0", &format!("{name}{n}"));
-                let txn = begin(&paths, &guard, &[id], Some(staged)).unwrap();
-                txn.execute(
-                    Op::Update,
-                    Some(id),
-                    Some(digest),
-                    vec![outgoing(&paths, id)],
-                )
-                .unwrap();
-            }
-            tx.send(name).unwrap();
-        }));
-    }
-    {
-        let paths = paths.clone();
-        let source = source.clone();
-        let tx = tx.clone();
-        handles.push(std::thread::spawn(move || {
-            for _ in 0..6 {
-                let guard = crate::agent_store::open(&paths).unwrap();
-                crate::app_lock::compile_to_disk(&source, &paths, &guard).unwrap();
-            }
-            tx.send("compile").unwrap();
-        }));
-    }
-    {
-        let paths = paths.clone();
-        let source = source.clone();
-        let tx = tx.clone();
-        handles.push(std::thread::spawn(move || {
-            for _ in 0..6 {
-                let guard = crate::agent_store::open(&paths).unwrap();
-                // A run reads the approval under the guard, then resolves.
-                let (app, lock) = crate::app_lock::load_approved_app_with_lock(&source)
-                    .expect("the approval reads");
-                // The lock may be one compile behind the bytes: a refusal is a
-                // clean outcome; what must never happen is a hang or a raw IO
-                // error from a vanishing tree.
-                if let Err(error) = crate::agent_resolution::resolve_agents(
-                    &paths,
-                    &app,
-                    &lock,
-                    crate::agent_resolution::Selection::Default,
-                    &guard,
-                ) {
-                    assert!(
-                        !matches!(error, AwareError::Io(_)),
-                        "a run must never fail with a raw IO error mid-swap: {error}"
-                    );
+        handles.push(spawn(
+            name,
+            Box::new(move || {
+                for n in 0..6 {
+                    let guard = crate::agent_store::open(&paths)?;
+                    // Same version, new bytes: the version-only fallback of
+                    // the compiled lock is not what is under test.
+                    let (staged, digest) = stage(&paths, id, "1.0.0", &format!("{name}{n}"));
+                    let txn = begin(&paths, &guard, &[id], Some(staged))?;
+                    txn.execute(
+                        Op::Update,
+                        Some(id),
+                        Some(digest),
+                        vec![outgoing(&paths, id)],
+                    )?;
                 }
-            }
-            tx.send("run").unwrap();
-        }));
+                Ok(())
+            }),
+        ));
+    }
+    {
+        let paths = paths.clone();
+        let source = source.clone();
+        handles.push(spawn(
+            "compile",
+            Box::new(move || {
+                for _ in 0..6 {
+                    let guard = crate::agent_store::open(&paths)?;
+                    crate::app_lock::compile_to_disk(&source, &paths, &guard)?;
+                }
+                Ok(())
+            }),
+        ));
+    }
+    {
+        let paths = paths.clone();
+        let source = source.clone();
+        handles.push(spawn(
+            "run",
+            Box::new(move || {
+                for _ in 0..6 {
+                    let guard = crate::agent_store::open(&paths)?;
+                    // A run reads the approval under the guard, then resolves.
+                    let (app, lock) = crate::app_lock::load_approved_app_with_lock(&source)?;
+                    // The lock may be one compile behind the bytes: a refusal
+                    // (a validation error) is a clean outcome; a hang or a raw
+                    // IO error from a vanishing tree is not.
+                    if let Err(error @ AwareError::Io(_)) = crate::agent_resolution::resolve_agents(
+                        &paths,
+                        &app,
+                        &lock,
+                        crate::agent_resolution::Selection::Default,
+                        &guard,
+                    ) {
+                        return Err(error);
+                    }
+                }
+                Ok(())
+            }),
+        ));
     }
     drop(tx);
     let mut finished = Vec::new();
-    for _ in 0..4 {
-        match rx.recv_timeout(Duration::from_secs(120)) {
-            Ok(name) => finished.push(name),
-            Err(_) => panic!("deadlock: only {finished:?} finished within the timeout"),
+    let mut failures = Vec::new();
+    for _ in 0..handles.len() {
+        match rx.recv_timeout(timeout) {
+            Ok((name, Ok(()))) => finished.push(name),
+            Ok((name, Err(error))) => failures.push(format!("{name}: {error}")),
+            Err(_) => {
+                return Err(format!(
+                    "deadlock: only {finished:?} finished (failures: {failures:?}) within {timeout:?}"
+                ));
+            }
         }
     }
     for handle in handles {
-        handle.join().unwrap();
+        let _ = handle.join();
     }
-    assert!(txn_dirs(&paths).is_empty());
+    if !failures.is_empty() {
+        return Err(format!("a racing worker failed: {}", failures.join("; ")));
+    }
+    if !txn_dirs(&paths).is_empty() {
+        return Err("a swap transaction was left behind".into());
+    }
+    Ok(())
+}
+
+/// Plan 8 R1-1: one lock order everywhere (store, then swap locks sorted), so
+/// updates, runs and compiles of the same agents racing each other always
+/// finish — and none of them fails. Bounded by a timeout: a deadlock fails the
+/// test instead of hanging. Repeated, because an interleaving bug shows up in
+/// a fraction of runs only (review #627-a round 1: compile failed in ~1 of 5).
+#[test]
+fn updates_runs_and_compiles_racing_never_deadlock_or_fail() {
+    for round in 0..40 {
+        if let Err(error) = race_updates_runs_and_compiles(Duration::from_secs(120)) {
+            panic!("round {round}: {error}");
+        }
+    }
 }
 
 /// The swap-lock API refuses a guard of another AWARE_HOME.

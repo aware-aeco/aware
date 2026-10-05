@@ -314,32 +314,25 @@ fn transactions(paths: &Paths) -> Result<Vec<OnDisk>, AwareError> {
             continue;
         }
         let dir = entry.path();
-        let intent = match std::fs::read(dir.join(INTENT_FILE)) {
-            Ok(bytes) => match serde_json::from_slice::<Intent>(&bytes) {
+        // A transaction being deleted concurrently (its writer just finished)
+        // reads as access-denied on Windows while its files are delete-pending:
+        // retried until it is gone, then skipped.
+        let intent = match read_member(&dir, INTENT_FILE)? {
+            Some(bytes) => match serde_json::from_slice::<Intent>(&bytes) {
                 Ok(intent) if intent.format == INTENT_FORMAT => intent,
                 // Written by temp + rename, so a torn intent is corruption,
                 // not a crash; `aware doctor` reports it.
                 _ => continue,
             },
-            Err(error) if error.kind() == std::io::ErrorKind::NotFound => continue,
-            Err(error) => {
-                return Err(std::io::Error::new(
-                    error.kind(),
-                    format!("{}: {error}", dir.join(INTENT_FILE).display()),
-                )
-                .into());
-            }
+            None => continue,
         };
-        let journal = match std::fs::read_to_string(dir.join(JOURNAL_FILE)) {
-            Ok(text) => text.lines().map(str::to_string).collect(),
-            Err(error) if error.kind() == std::io::ErrorKind::NotFound => Vec::new(),
-            Err(error) => {
-                return Err(std::io::Error::new(
-                    error.kind(),
-                    format!("{}: {error}", dir.join(JOURNAL_FILE).display()),
-                )
-                .into());
-            }
+        let journal = match read_member(&dir, JOURNAL_FILE)? {
+            Some(bytes) => String::from_utf8_lossy(&bytes)
+                .lines()
+                .map(str::to_string)
+                .collect(),
+            None if !dir.exists() => continue,
+            None => Vec::new(),
         };
         out.push(OnDisk {
             dir,
@@ -349,6 +342,20 @@ fn transactions(paths: &Paths) -> Result<Vec<OnDisk>, AwareError> {
     }
     out.sort_by(|a, b| a.intent.txn.cmp(&b.intent.txn));
     Ok(out)
+}
+
+/// Read `<dir>/<name>`: `None` when it (or the whole transaction directory)
+/// is gone, retrying while Windows reports it transiently held.
+fn read_member(dir: &Path, name: &str) -> Result<Option<Vec<u8>>, AwareError> {
+    let path = dir.join(name);
+    match crate::fs::retry_transient(|| std::fs::read(&path)) {
+        Ok(bytes) => Ok(Some(bytes)),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(None),
+        Err(_) if !dir.exists() => Ok(None),
+        Err(error) => {
+            Err(std::io::Error::new(error.kind(), format!("{}: {error}", path.display())).into())
+        }
+    }
 }
 
 /// Every transaction (settled or not) naming any of `ids`.
