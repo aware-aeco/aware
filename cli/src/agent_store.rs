@@ -40,6 +40,7 @@ use crate::paths::Paths;
 pub mod guard;
 pub mod import;
 pub mod lease;
+pub mod refs;
 pub mod stamps;
 pub use guard::RefGuard;
 

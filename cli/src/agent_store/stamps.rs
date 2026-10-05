@@ -39,9 +39,8 @@ fn hex_of(digest: &str) -> Result<&str, AwareError> {
     })
 }
 
-/// The last-needed time of `id`'s package `digest`, if stamped. Read by GC's
-/// recovery window (#629); until then only by tests.
-#[cfg_attr(not(test), allow(dead_code))]
+/// The last-needed time of `id`'s package `digest`, if stamped: where the
+/// recovery window of an unreferenced package starts (#629).
 pub fn last_needed(paths: &Paths, id: &str, digest: &str) -> Option<String> {
     let dir = refs_dir(paths, id).ok()?;
     let hex = hex_of(digest).ok()?;
