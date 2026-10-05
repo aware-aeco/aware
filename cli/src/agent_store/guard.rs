@@ -248,16 +248,22 @@ mod tests {
             .unwrap()
             .expect("free once every shared guard is dropped");
         assert!(exclusive.is_exclusive());
-        // And while it is held, a shared request from another thread waits.
+        // And while it is held, a shared request from another thread waits:
+        // it gets the lock only after the release. Ordering, not elapsed time,
+        // so a loaded machine that starts the thread late cannot fail it.
         let other = paths.clone();
+        let ready = std::sync::Arc::new(std::sync::Barrier::new(2));
+        let waiter_ready = ready.clone();
         let waiter = std::thread::spawn(move || {
-            let started = Instant::now();
+            waiter_ready.wait();
             let _guard = crate::agent_store::open(&other).unwrap();
-            started.elapsed()
+            Instant::now()
         });
+        ready.wait();
         std::thread::sleep(Duration::from_millis(200));
+        let released = Instant::now();
         drop(exclusive);
-        assert!(waiter.join().unwrap() >= Duration::from_millis(150));
+        assert!(waiter.join().unwrap() >= released);
     }
 
     /// R5-1: no path may hold a shared guard while asking for an exclusive one.
