@@ -652,6 +652,20 @@ fn assess_agent(
         {
             Some(crate::install::swap::read_lock(paths, guard, &[id])?)
         }
+        // `aware app check` takes no lock and writes nothing — except here:
+        // an interrupted swap of this agent (an update killed between its two
+        // renames) is finished first, exactly as the run's own preflight would
+        // finish it, so the check answers what the run would do rather than
+        // "not installed" for as long as nobody runs the app (review #627-a).
+        Mode::Check
+            if crate::manifest::loader::is_safe_segment(id)
+                && !crate::install::swap::is_swap_area(id)
+                && crate::install::swap::has_pending(paths, id)? =>
+        {
+            let guard = agent_store::open(paths)?;
+            drop(crate::install::swap::read_lock(paths, &guard, &[id])?);
+            None
+        }
         _ => None,
     };
 
@@ -1460,7 +1474,9 @@ pub struct AppCheck {
 }
 
 /// Answer "would `aware app run` refuse this app with an `E_APP_LOCK_*`
-/// code?" with the run's own resolver, writing nothing. Every expected drift is
+/// code?" with the run's own resolver, writing nothing — except that an
+/// interrupted swap of an agent it checks is first finished, as the run's
+/// preflight would finish it (#627). Every expected drift is
 /// data; `Err` only when the check itself cannot run (unreadable source, an
 /// unreadable agent manifest, an unreadable AWARE_HOME).
 pub fn check_app(paths: &Paths, source: &Path) -> Result<AppCheck, AwareError> {

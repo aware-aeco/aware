@@ -817,3 +817,37 @@ fn a_kill_during_the_final_delete_never_resurrects_or_wedges_the_swap() {
         );
     }
 }
+
+/// Review #627-a: `aware app check` after an update was killed between its
+/// two renames must answer what the run would do — the run recovers the swap
+/// and runs — not report the agent "not installed" for ever.
+#[test]
+fn app_check_after_an_interrupted_swap_answers_like_the_run() {
+    let (_tmp, paths) = home();
+    write_tree(&paths.agents_dir().join("alpha"), "alpha", "1.0.0", "old");
+    let source_dir = paths.aware_home.join("src");
+    std::fs::create_dir_all(&source_dir).unwrap();
+    let source = source_dir.join("demo.flo");
+    std::fs::write(
+        &source,
+        "app: demo\nversion: 0.1.0\ndescription: x\nnodes:\n  - id: a\n    agent: alpha\n    command: go\nconnections: []\n",
+    )
+    .unwrap();
+    {
+        let guard = crate::agent_store::open(&paths).unwrap();
+        crate::app_lock::compile_to_disk(&source, &paths, &guard).unwrap();
+    }
+    inject_fault(Fault::CrashAfter("done out alpha".into()));
+    update(&paths, "alpha", "alpha", "new").unwrap_err();
+    clear_fault();
+    assert!(!paths.agents_dir().join("alpha").exists());
+
+    let check = crate::agent_resolution::check_app(&paths, &source).unwrap();
+    assert!(
+        check.approval_current,
+        "check must recover the interrupted swap as the run does: {:?}",
+        check.agents.iter().map(|a| &a.detail).collect::<Vec<_>>()
+    );
+    assert!(paths.agents_dir().join("alpha/manifest.yaml").is_file());
+    assert!(txn_dirs(&paths).is_empty());
+}

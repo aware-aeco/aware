@@ -252,6 +252,12 @@ pub fn read_lock<'g, S: AsRef<str>>(
     )))
 }
 
+/// Whether an unfinished (crashed or in-flight) swap names agent `id` — for a
+/// reader that takes no lock to decide whether it must recover first.
+pub fn has_pending(paths: &Paths, id: &str) -> Result<bool, AwareError> {
+    Ok(!pending_naming(paths, &[lock_key(id)])?.is_empty())
+}
+
 /// Take `ids` exclusive (plus every id of any pending transaction that names
 /// one of them — a transaction is only ever recovered whole), recover those
 /// transactions, and return the exclusive locks over the whole set.
