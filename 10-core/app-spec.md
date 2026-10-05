@@ -635,7 +635,7 @@ Every expected drift — a missing, invalid or inconsistent lock, a stale source
 
 - `aware app run`, `--dry-run`, `--simulate` and `aware app check` read only `<app>.lock`; they never read `.aware-migration/` (a guard test scans the run path for it). A garbage or stale candidate cannot change what runs.
 - Preparing a candidate leaves `<app>.lock` byte-identical (same bytes, same modification time). The evidence records the sha256 of the lock it started from (`base-lock-digest`), so a candidate prepared against an older approval is reported `fresh: false` and is never mistaken for one prepared against the current approval.
-- `<source-dir>/.aware-approvals/HOLD` (written by `aware app migrate hold`) marks an app as sealed, certified or frozen: it is never carried forward, whatever a plan says.
+- `<source-dir>/.aware-approvals/HOLD.<app>` (written by `aware app migrate hold`) marks that app as sealed, certified or frozen: it is never carried forward, whatever a plan says. A hold file that cannot be attributed to one app holds every app in the directory.
 
 Until a promotion verb exists, the only way to change what an app runs remains a person compiling it (`aware app compile`). See [CLI Spec § `aware app migrate`](./cli-spec.md) for the verbs and the plan's JSON.
 

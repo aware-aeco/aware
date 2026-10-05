@@ -126,6 +126,7 @@ fn a_held_app_reports_held_whatever_else_is_true() {
     let dir = source.parent().unwrap();
     let hold = files::HoldRecord {
         format: 1,
+        app: "demo".into(),
         held_by: "pawel".into(),
         held_at: "t".into(),
         reason: Some("certified".into()),
@@ -141,7 +142,7 @@ fn a_held_app_reports_held_whatever_else_is_true() {
     assert_eq!(row.state, State::Held);
     assert_eq!(row.hold, Some(hold));
     assert_eq!(row.targets.len(), 1, "the move is still reported");
-    files::remove_hold(dir).unwrap();
+    files::remove_hold(dir, "demo").unwrap();
     assert_eq!(row_of(&h, &source).state, State::NeedsPerson);
 }
 

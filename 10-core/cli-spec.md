@@ -254,7 +254,7 @@ An official bundle is `verified` only when its fresh registry binding, installat
 │       ├── <app-id>.<ext>              # app source; <ext> is .app (recommended), .flo, etc.
 │       ├── lockfile.yaml               # pinned agent versions resolved at install
 │       ├── .aware-migration/           # migration candidate + evidence (#628); never read by a run
-│       ├── .aware-approvals/HOLD       # a person's hold: never carry this app forward (#628)
+│       ├── .aware-approvals/HOLD.<app> # a person's hold: never carry this app forward (#628)
 │       └── instances/<id>/state/       # per-instance state (stateful apps)
 ├── credentials/                        # encrypted; OS keychain on Mac/Linux, DPAPI on Windows
 │   ├── trimble-connect.json
@@ -537,8 +537,8 @@ Carries an approved app forward to newer agent versions **without pretending a p
 | `migrate plan [--app <id-or-path>]... \| --all [--to <target>]...` | nothing |
 | `migrate prepare <app> [--to <target>]...` | `<source-dir>/.aware-migration/<app>.candidate.lock` and `<app>.evidence.json` (atomic) |
 | `migrate discard <app>` | removes both |
-| `migrate hold <app> --actor <who> [--reason <text>]` | `<source-dir>/.aware-approvals/HOLD` |
-| `migrate unhold <app> --actor <who>` | removes `HOLD` |
+| `migrate hold <app> --actor <who> [--reason <text>]` | `<source-dir>/.aware-approvals/HOLD.<app>` |
+| `migrate unhold <app> --actor <who>` | removes `HOLD.<app>` |
 
 `<target>` is `<agent>@sha256:<64 hex>` (exact stored bytes) or `<agent>@<version>` (must name exactly one verified stored byte set: `E_MIGRATE_TARGET_AMBIGUOUS` when several, `E_MIGRATE_TARGET_NOT_STORED` when none). Without `--to`, every agent the app dispatches whose installed copy is not the approved bytes is targeted at the installed copy; every other agent keeps the base lock's own bytes. Candidates are compiled from **verified store packages only** — never the working copy, never a new snapshot. `plan` with no `--app` covers every installed app.
 
@@ -563,7 +563,7 @@ A **candidate** is compiled exactly as `aware app compile` would compile the unc
                { "code": "no-fixed-state-method", "text": "No fixed-state comparison method is available yet, so a person must approve carrying this workflow forward." } ],
   "candidate": { "present": true, "candidate-digest": "sha256:…", "fresh": true },
   "running-instances": [ { "instance": "default", "pid": 4242, "run-id": "…", "started-at": "…" } ],
-  "hold": null,                       // { "format", "held-by", "held-at", "reason" } when held
+  "hold": null,                       // { "format", "app", "held-by", "held-at", "reason" } when held
   "backing-app-moved": false, "callers": [],
   "warnings": [],                     // e.g. a stored copy that does not verify (skipped)
   "advisory": null,                   // reserved; never changes "state"
@@ -579,7 +579,9 @@ A **candidate** is compiled exactly as `aware app compile` would compile the unc
 
 `prepare --json` data: `{ app, state, prepared, candidate, evidence, candidate-digest, plan-digest, evidence-digest, lock-digest, lock-unchanged, row }`. `prepared: false` (with the row's reasons) when nothing moves or the candidate is blocked. A held app's candidate may still be prepared: a hold blocks carrying the app forward, not inspecting what that would mean.
 
-Expected outcomes are `ok: true` data. `ok: false` only when the command cannot run: `E_MIGRATE_APP_NOT_FOUND`, `E_MIGRATE_BAD_TARGET`, `E_MIGRATE_TARGET_UNUSED` / `_AMBIGUOUS` / `_NOT_STORED` (prepare with an explicit `--to`), `E_MIGRATE_BACKING_APP`, `E_MIGRATE_NO_ACTOR`, `E_MIGRATE_FAILED`.
+A hold is per app (`HOLD.<app>`, whose record names the app), because several apps may share a source directory. A hold file that cannot be attributed to one app — a plain `HOLD`, or a record that does not parse or names another app — holds **every** app in that directory, and `unhold` refuses with `E_MIGRATE_HOLD_UNREADABLE` (removing nothing) until a person removes it deliberately.
+
+Expected outcomes are `ok: true` data. `ok: false` only when the command cannot run: `E_MIGRATE_APP_NOT_FOUND`, `E_MIGRATE_BAD_TARGET`, `E_MIGRATE_TARGET_UNUSED` / `_AMBIGUOUS` / `_NOT_STORED` (prepare with an explicit `--to`), `E_MIGRATE_BACKING_APP`, `E_MIGRATE_NO_ACTOR`, `E_MIGRATE_HOLD_UNREADABLE`, `E_MIGRATE_FAILED`.
 
 ### `aware connect <integration>`
 

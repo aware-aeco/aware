@@ -367,7 +367,7 @@ fn a_held_app_is_reported_held_until_a_person_lifts_it() {
         "certified",
     ]);
     assert_eq!(held["held"], true);
-    assert!(fx.aware.join("apps/a/.aware-approvals/HOLD").is_file());
+    assert!(fx.aware.join("apps/a/.aware-approvals/HOLD.a").is_file());
     let row = fx.plan_row("a");
     assert_eq!(row["state"], "held", "{row}");
     assert_eq!(row["hold"]["held-by"], "pawel");

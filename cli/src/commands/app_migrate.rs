@@ -495,6 +495,7 @@ fn hold_cmd(
     let dir = crate::fs::containing_dir(&source);
     let record = HoldRecord {
         format: 1,
+        app: id.clone(),
         held_by: actor,
         held_at: chrono::Utc::now().to_rfc3339(),
         reason,
@@ -513,7 +514,10 @@ fn unhold_cmd(ctx: &Context, app: &str, actor: &str) -> Result<Output, Failure> 
     let source = app_source(ctx, app)?;
     let id = app_id(&source)?;
     let dir = crate::fs::containing_dir(&source);
-    let was_held = files::remove_hold(dir)?;
+    let was_held = files::remove_hold(dir, &id).map_err(|error| match error {
+        AwareError::Validation(_) => usage_failure(error),
+        other => Failure::from(other),
+    })?;
     Ok(Output {
         data: serde_json::json!({ "app": id, "held": false, "was-held": was_held, "by": actor }),
         text: if was_held {

@@ -217,7 +217,7 @@ pub fn evaluate(
     let dir = crate::fs::containing_dir(source).to_path_buf();
     let lock_path = dir.join(format!("{}.lock", app.app));
     let mut row = PlanRow::new(&app.app, source, &lock_path);
-    row.hold = files::read_hold(&dir)?;
+    row.hold = files::read_hold(&dir, &app.app)?;
     row.running_instances = running_instances(paths, &app.app);
     let stored = files::read_candidate(&dir, &app.app)?;
     row.candidate = CandidateRow {
