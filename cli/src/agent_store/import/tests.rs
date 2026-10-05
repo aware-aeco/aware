@@ -1,7 +1,7 @@
 //! The legacy store import (#627-b, plan §11–§12).
 
 use super::*;
-use crate::agent_store::{NO_RECEIPT, RefGuard, open, snapshot};
+use crate::agent_store::{NO_RECEIPT, open, snapshot};
 
 fn home() -> (tempfile::TempDir, Paths) {
     let tmp = tempfile::tempdir().unwrap();
@@ -29,23 +29,23 @@ fn write_agent(paths: &Paths, id: &str, version: &str) -> PathBuf {
 /// Make a package the way AWARE 0.149-0.151 did: snapshot it (into v2), then
 /// move the whole v2 store to the legacy name, as if an older CLI wrote it.
 fn legacy_package(paths: &Paths, id: &str, version: &str) -> crate::agent_store::StoredPackage {
-    let dir = write_agent(paths, id, version);
-    let package = {
-        let guard = RefGuard::shared(paths).unwrap();
-        snapshot(paths, &dir, &guard).unwrap()
+    // Snapshot in a scratch home (through `open`, the only door to a guard;
+    // a scratch home has no legacy store, so nothing is imported there), then
+    // plant the package in this home's legacy store, as an older CLI left it.
+    let tmp = tempfile::tempdir().unwrap();
+    let scratch = Paths {
+        aware_home: tmp.path().to_path_buf(),
     };
-    let legacy = paths.legacy_agent_store_dir();
-    std::fs::create_dir_all(&legacy).unwrap();
+    let dir = write_agent(&scratch, id, version);
+    let package = snapshot(&scratch, &dir, &open(&scratch).unwrap()).unwrap();
     let rel = package
         .root
-        .strip_prefix(paths.agent_store_dir())
+        .strip_prefix(scratch.agent_store_dir())
         .unwrap()
         .to_path_buf();
-    let target = legacy.join(&rel);
+    let target = paths.legacy_agent_store_dir().join(&rel);
     std::fs::create_dir_all(target.parent().unwrap()).unwrap();
-    std::fs::rename(&package.root, &target).unwrap();
-    // Leave v2 without it (and without empty containers).
-    let _ = std::fs::remove_dir_all(paths.agent_store_dir());
+    crate::fs::copy_dir_recursive(&package.root, &target).unwrap();
     crate::agent_store::StoredPackage {
         root: target,
         ..package
