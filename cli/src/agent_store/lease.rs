@@ -73,15 +73,17 @@ impl LeaseRecord {
 }
 
 #[cfg(test)]
+type LockHook = Box<dyn FnOnce(&Path)>;
+
+#[cfg(test)]
 thread_local! {
     /// Run once on this thread between writing a lease and locking it — the
     /// window a lister's liveness probe can fall into (review round 1).
-    static BEFORE_LOCK: std::cell::RefCell<Option<Box<dyn FnOnce(&Path)>>> =
-        std::cell::RefCell::new(None);
+    static BEFORE_LOCK: std::cell::RefCell<Option<LockHook>> = std::cell::RefCell::new(None);
 }
 
 #[cfg(test)]
-pub(crate) fn on_before_lock(hook: Box<dyn FnOnce(&Path)>) {
+pub(crate) fn on_before_lock(hook: LockHook) {
     BEFORE_LOCK.with(|h| *h.borrow_mut() = Some(hook));
 }
 
