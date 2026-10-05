@@ -73,6 +73,8 @@ fn lock(pins: &[(&str, &str)], digests: &[(&str, &str)], bundle: &[(&str, &str)]
         nodes: Vec::new(),
         schedule: None,
         engineering: None,
+        front_door: None,
+        approval: None,
     }
 }
 
@@ -1100,6 +1102,11 @@ fn an_unknown_chosen_copy_fails_the_backing_check_instead_of_passing_it() {
         lock_detail: None,
         agents: Vec::new(),
         nested_apps: Vec::new(),
+        approval_origin: None,
+        approval_record: None,
+        approval_record_missing: Vec::new(),
+        approval_label: None,
+        successors: Vec::new(),
     };
     let ok = super::fold_backing(&h.paths, "inner", None, &mut check).unwrap();
     assert!(
@@ -1586,4 +1593,56 @@ fn a_pin_set_is_never_built_from_an_inconsistent_lock() {
     assert!(PinSet::from_lock(&malformed, BTreeMap::new()).is_err());
     let consistent = lock(&[("x", "1.0.0")], &[("x", &a)], &[("x", &a)]);
     assert!(PinSet::from_lock(&consistent, BTreeMap::new()).is_ok());
+}
+
+// ── #628 PR3a: a caller sees its backing app's approval origin ──
+
+#[test]
+fn a_caller_records_the_carried_forward_origin_of_its_backing_app() {
+    use crate::app_lock::approval::{Origin, SuccessorKind, test_support};
+    let h = home();
+    let outer = app_backed_fixture(&h);
+    let inner = h.paths.apps_dir().join("inner").join("inner.flo");
+    let newer =
+        crate::agent_store::snapshot(&h.paths, &write_agent(&h.paths, "alpha", "1.0.1", ""))
+            .unwrap()
+            .digest;
+    test_support::promote(
+        &h.paths,
+        &inner,
+        [("alpha".to_string(), PinTarget::Digest(newer.clone()))].into(),
+        test_support::By::Person("pawel"),
+        SuccessorKind::CarriedForward,
+    );
+
+    let check = check_app(&h.paths, &outer).unwrap();
+    assert!(check.approval_current, "{check:?}");
+    assert_eq!(check.approval_origin, Some(Origin::Original));
+    assert_eq!(check.nested_apps.len(), 1);
+    assert_eq!(
+        check.nested_apps[0].approval_origin,
+        Some(Origin::Successor)
+    );
+    assert_eq!(
+        check.nested_apps[0].approval_record,
+        Some(RecordState::Complete)
+    );
+
+    let approved = crate::app_lock::load_approved_app_snapshot(&outer).unwrap();
+    let resolved =
+        resolve_agents(&h.paths, &approved.app, &approved.lock, Selection::Default).unwrap();
+    let nested = resolved.nested_approvals();
+    assert_eq!(nested.len(), 1);
+    assert_eq!(nested[0].0, "inner");
+    assert_eq!(nested[0].1.backed_by, "inner");
+    assert_eq!(nested[0].1.approval.origin, Origin::Successor);
+    let leaf = resolved
+        .nested_infos()
+        .into_iter()
+        .find(|(key, _)| key == "inner>alpha")
+        .unwrap();
+    assert_eq!(
+        leaf.1.digest, newer,
+        "the backing app runs its promoted pins"
+    );
 }

@@ -263,7 +263,16 @@ pub fn evaluate(
             )));
         }
     };
-    if base.source_hash != source_hash {
+    if let Err(reason) = crate::agent_resolution::check_lock_consistency(&base) {
+        return Ok(eval.blocked(Reason::new(
+            "approval-invalid",
+            format!(
+                "The workflow's approval {} is inconsistent ({reason}); a person must compile it again.",
+                lock_path.display()
+            ),
+        )));
+    }
+    if !crate::app_lock::approval::source_matches(&base, &source_hash) {
         return Ok(eval.blocked(Reason::new(
             "source-changed",
             "The workflow changed since it was approved, so its approval cannot be carried forward; a person must compile it again.",

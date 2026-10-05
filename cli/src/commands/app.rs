@@ -84,7 +84,16 @@ pub enum AppCommand {
     Explain { app: String },
     /// Compile an app to its deterministic `<app>.lock` sidecar.
     /// Engineers read the lockfile; the AI reads the source. (v0.24)
-    Compile { path: std::path::PathBuf },
+    ///
+    /// A compile is always a fresh ORIGINAL approval: it never carries a
+    /// successor approval record forward (#628).
+    Compile {
+        path: std::path::PathBuf,
+        /// The front door that asked for this compile (e.g. `floless@0.150.0`),
+        /// recorded in the lock as `front-door:`. Who asked, not what runs.
+        #[arg(long)]
+        front_door: Option<String>,
+    },
     /// Would `aware app run` accept this app's compiled approval? (#626)
     ///
     /// Read-only: resolves every pinned agent with the run's own resolver —
@@ -218,7 +227,7 @@ pub async fn dispatch(
             .await
         }
         AppCommand::Explain { app } => explain(ctx, &app),
-        AppCommand::Compile { path } => compile_cmd(ctx, &path),
+        AppCommand::Compile { path, front_door } => compile_cmd(ctx, &path, front_door.as_deref()),
         AppCommand::Check { app } => check_cmd(ctx, &app),
         AppCommand::Migrate { cmd } => crate::commands::app_migrate::dispatch(cmd, ctx),
         AppCommand::Inspect { path } => inspect_cmd(ctx, &path),
@@ -366,7 +375,22 @@ async fn run(
         .ok_or_else(|| AwareError::Validation(format!("app {app_id} has no .flo/.app file")))?;
     // Parse and hash one source buffer so the compiled sidecar approves the
     // exact app we execute. Gate every run mode before provenance or dispatch.
-    let (app, approved_lock) = crate::app_lock::load_approved_app_with_lock(&manifest_path)?;
+    let crate::app_lock::ApprovedApp {
+        app,
+        lock: approved_lock,
+        approval,
+        ..
+    } = crate::app_lock::load_approved_app_snapshot(&manifest_path)?;
+    // A carried-forward approval says so before anything runs; an incomplete
+    // record is a warning, never a refusal (#628 PR3a).
+    if approval.origin == crate::app_lock::approval::Origin::Successor {
+        let mark = if approval.record_complete {
+            "\u{2139}"
+        } else {
+            "\u{26a0}"
+        };
+        eprintln!("{mark} {}", approval.label);
+    }
 
     // An unreadable `requires:` pin is checked FIRST, before any catalogue
     // work (#349). Simulation is excused from the catalogue checks because it
@@ -526,9 +550,39 @@ async fn run(
             ));
         }
     }
+    let mut approval_record = serde_json::to_value(&approval)?;
+    if let Some(fields) = approval_record.as_object_mut() {
+        // The full chain is in the lock; the record carries the run's facts.
+        fields.remove("successors");
+        let nested: serde_json::Map<String, serde_json::Value> = resolved
+            .as_ref()
+            .map(|resolved| {
+                resolved
+                    .nested_approvals()
+                    .into_iter()
+                    .map(|(wrapper, nested)| {
+                        let mut entry = serde_json::to_value(&nested.approval)
+                            .unwrap_or(serde_json::Value::Null);
+                        if let Some(entry) = entry.as_object_mut() {
+                            entry.remove("successors");
+                            entry.insert(
+                                "app".into(),
+                                serde_json::Value::String(nested.backed_by.clone()),
+                            );
+                        }
+                        (wrapper.to_string(), entry)
+                    })
+                    .collect()
+            })
+            .unwrap_or_default();
+        if !nested.is_empty() {
+            fields.insert("nested".into(), serde_json::Value::Object(nested));
+        }
+    }
     let run_config = serde_json::json!({
         "verified-at-start": verified_at_start,
         "agent-resolution": agent_resolution,
+        "approval": approval_record,
     });
 
     // Parse `--input key=value` overrides into the app's input map.
@@ -2334,7 +2388,16 @@ fn explain(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
 
 /// `aware app compile <path>` — emit the deterministic `<app-name>.lock`
 /// sidecar (per `10-core/app-spec.md § Lockfile sidecar`, v0.24).
-fn compile_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
+fn compile_cmd(
+    ctx: &Context,
+    path: &std::path::Path,
+    front_door: Option<&str>,
+) -> Result<(), AwareError> {
+    if front_door.is_some_and(|door| door.trim().is_empty()) {
+        return Err(AwareError::Validation(
+            "--front-door names who asked for the compile; it cannot be empty".into(),
+        ));
+    }
     let source = crate::app_lock::find_app_source(path).ok_or_else(|| {
         AwareError::Validation(format!(
             "no app source file (.flo / .app / .flow / .aware) at {}",
@@ -2343,7 +2406,7 @@ fn compile_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> 
     })?;
     // compile_to_disk validates before locking, so an unrunnable construct (e.g.
     // an inline kind the runtime rejects) fails here rather than at run (#160).
-    let lock_path = crate::app_lock::compile_to_disk(&source, &ctx.paths)?;
+    let (lock_path, _) = crate::app_lock::compile_to_disk_for(&source, &ctx.paths, front_door)?;
     println!(
         "\u{2713} compiled {} \u{2192} {}",
         source.display(),
@@ -2449,6 +2512,18 @@ fn print_check(check: &crate::agent_resolution::AppCheck) {
             "changed since compile"
         }
     );
+    if let Some(label) = &check.approval_label {
+        println!("  approval: {label}");
+    }
+    if check.approval_record == Some(crate::agent_resolution::RecordState::Incomplete) {
+        println!("  \u{26a0} approval record incomplete — missing:");
+        for item in &check.approval_record_missing {
+            println!("    {item}");
+        }
+    }
+    for row in &check.successors {
+        println!("  successor {}: {}", row.seq, row.label);
+    }
     for row in &check.agents {
         let resolution = serde_json::to_value(row.resolution)
             .ok()
@@ -2466,6 +2541,9 @@ fn print_check(check: &crate::agent_resolution::AppCheck) {
             "  backing app {} of {}: {}",
             nested.app, nested.agent, nested.detail
         );
+        if let Some(label) = &nested.approval_label {
+            println!("    approval: {label}");
+        }
     }
 }
 
@@ -3014,6 +3092,8 @@ mod glass_box_tests {
             nodes,
             schedule: None,
             engineering: None,
+            front_door: None,
+            approval: None,
         }
     }
 

@@ -106,6 +106,8 @@ pub struct NestedApp {
     pub app: App,
     source_text: String,
     pub catalogue: Arc<ResolvedCatalogue>,
+    /// The backing app's own approval origin, for the caller's run record.
+    pub approval: crate::app_lock::approval::ApprovalSummary,
 }
 
 impl NestedApp {
@@ -220,6 +222,14 @@ impl ResolvedCatalogue {
 
     /// Every resolved agent of the backing apps, keyed `<wrapper>><leaf>`, for
     /// the run record's `agent-resolution`.
+    /// Each app-backed agent, its backing app and that app's approval origin.
+    pub fn nested_approvals(&self) -> Vec<(&str, &NestedApp)> {
+        self.nested
+            .iter()
+            .map(|(wrapper, nested)| (wrapper.as_str(), nested.as_ref()))
+            .collect()
+    }
+
     pub fn nested_infos(&self) -> Vec<(String, &ResolvedAgentInfo)> {
         self.nested
             .iter()
@@ -419,6 +429,9 @@ pub enum Selection<'a> {
 /// Refuse a lock whose digest fields are malformed or disagree, before anything
 /// is resolved. Returns the reason as a sentence.
 pub fn check_lock_consistency(lock: &LockFile) -> Result<(), String> {
+    // The successor approval record (#628 PR3a), and the `successor-v1:`
+    // source hash that is only valid with one.
+    crate::app_lock::approval::check_chain(lock)?;
     for (id, digest) in &lock.agent_digests {
         if agent_store::digest_hex(digest).is_none() {
             return Err(format!(
@@ -555,6 +568,7 @@ fn resolve_backing(
         app: approved.app,
         source_text: approved.source_text,
         catalogue: Arc::new(catalogue),
+        approval: approved.approval,
     })
 }
 
@@ -1372,6 +1386,32 @@ pub struct NestedCheck {
     pub lock: LockState,
     pub source_current: bool,
     pub detail: String,
+    /// The backing app's approval origin, once its lock was read and checked.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub approval_origin: Option<crate::app_lock::approval::Origin>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub approval_record: Option<RecordState>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub approval_label: Option<String>,
+}
+
+/// Whether every archive an approval record cites is present and verifies.
+/// `incomplete` is never a refusal: the run proceeds, labelled.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum RecordState {
+    Complete,
+    Incomplete,
+}
+
+impl RecordState {
+    fn of(summary: &crate::app_lock::approval::ApprovalSummary) -> Self {
+        if summary.record_complete {
+            Self::Complete
+        } else {
+            Self::Incomplete
+        }
+    }
 }
 
 /// `aware app check --json` `data`.
@@ -1386,6 +1426,14 @@ pub struct AppCheck {
     pub lock_detail: Option<String>,
     pub agents: Vec<AgentCheck>,
     pub nested_apps: Vec<NestedCheck>,
+    /// `original` (a person compiled it) or `successor` (carried forward);
+    /// absent when the lock could not be read or is inconsistent.
+    pub approval_origin: Option<crate::app_lock::approval::Origin>,
+    pub approval_record: Option<RecordState>,
+    /// The archives a successor record cites that are missing.
+    pub approval_record_missing: Vec<String>,
+    pub approval_label: Option<String>,
+    pub successors: Vec<crate::app_lock::approval::SuccessorRow>,
 }
 
 /// Answer "would `aware app run` refuse this app with an `E_APP_LOCK_*`
@@ -1407,6 +1455,11 @@ pub fn check_app(paths: &Paths, source: &Path) -> Result<AppCheck, AwareError> {
         lock_detail: None,
         agents: Vec::new(),
         nested_apps: Vec::new(),
+        approval_origin: None,
+        approval_record: None,
+        approval_record_missing: Vec::new(),
+        approval_label: None,
+        successors: Vec::new(),
     };
     let lock = match read_lock(&lock_path) {
         Ok(lock) => lock,
@@ -1416,13 +1469,24 @@ pub fn check_app(paths: &Paths, source: &Path) -> Result<AppCheck, AwareError> {
             return Ok(check);
         }
     };
-    check.source_current = lock.source_hash == source_hash;
-    if let Err(reason) = check_lock_consistency(&lock) {
-        check.lock = LockState::Invalid;
-        check.lock_detail = Some(reason);
-        return Ok(check);
-    }
+    check.source_current = crate::app_lock::approval::source_matches(&lock, &source_hash);
+    let lock_dir = crate::fs::containing_dir(&lock_path);
+    let summary = match check_lock_consistency(&lock)
+        .and_then(|()| crate::app_lock::approval::assess(&lock, lock_dir))
+    {
+        Ok(summary) => summary,
+        Err(reason) => {
+            check.lock = LockState::Invalid;
+            check.lock_detail = Some(reason);
+            return Ok(check);
+        }
+    };
     check.lock = LockState::Valid;
+    check.approval_origin = Some(summary.origin);
+    check.approval_record = Some(RecordState::of(&summary));
+    check.approval_label = Some(summary.label.clone());
+    check.approval_record_missing = summary.missing;
+    check.successors = summary.successors;
 
     let mut nested_ok = true;
     for id in sorted_dispatchable(&app) {
@@ -1486,6 +1550,9 @@ fn fold_backing(
             detail: format!(
                 "could not determine which copy of {id} the run would use, so any app behind it was not checked"
             ),
+            approval_origin: None,
+            approval_record: None,
+            approval_label: None,
         });
         return Ok(false);
     };
@@ -1518,6 +1585,9 @@ fn check_backing(
         lock: LockState::Missing,
         source_current: false,
         detail: String::new(),
+        approval_origin: None,
+        approval_record: None,
+        approval_label: None,
     };
     let source = if crate::manifest::loader::is_safe_segment(&backed_by) {
         let backing_dir = paths.apps_dir().join(&backed_by);
@@ -1547,14 +1617,22 @@ fn check_backing(
             return Ok(false);
         }
     };
-    row.source_current = lock.source_hash == hash;
-    if let Err(reason) = check_lock_consistency(&lock) {
-        row.lock = LockState::Invalid;
-        row.detail = reason;
-        check.nested_apps.push(row);
-        return Ok(false);
-    }
+    row.source_current = crate::app_lock::approval::source_matches(&lock, &hash);
+    let summary = match check_lock_consistency(&lock).and_then(|()| {
+        crate::app_lock::approval::assess(&lock, crate::fs::containing_dir(&lock_path))
+    }) {
+        Ok(summary) => summary,
+        Err(reason) => {
+            row.lock = LockState::Invalid;
+            row.detail = reason;
+            check.nested_apps.push(row);
+            return Ok(false);
+        }
+    };
     row.lock = LockState::Valid;
+    row.approval_origin = Some(summary.origin);
+    row.approval_record = Some(RecordState::of(&summary));
+    row.approval_label = Some(summary.label);
     let mut ok = row.source_current;
     row.detail = if row.source_current {
         format!("backing app {backed_by} is approved")

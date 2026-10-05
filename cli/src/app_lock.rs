@@ -81,6 +81,22 @@ pub struct LockFile {
     /// App-level `engineering:` block (if present), passed through verbatim.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub engineering: Option<serde_yaml::Value>,
+
+    /// The front door that asked for this compile (`aware app compile
+    /// --front-door`), when it said. Who asked, not what runs: outside the
+    /// plan digest, like `compiler-version`.
+    #[serde(
+        rename = "front-door",
+        default,
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub front_door: Option<String>,
+
+    /// The successor approval record (#628 PR3a): present only on a lock whose
+    /// pins were carried forward from an earlier approval. A person's compile
+    /// writes none. See [`approval`].
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub approval: Option<approval::ApprovalChain>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -258,6 +274,9 @@ pub struct ApprovedApp {
     pub app: App,
     pub lock: LockFile,
     pub source_text: String,
+    /// Where the approval comes from (original / carried forward) and whether
+    /// its record is complete — for the run record (#628 PR3a).
+    pub approval: approval::ApprovalSummary,
 }
 
 /// [`load_approved_app_with_lock`], keeping the approved source text.
@@ -294,8 +313,20 @@ pub fn load_approved_app_snapshot(source_path: &Path) -> Result<ApprovedApp, Awa
             source_path.display()
         ))
     })?;
+    let invalid = |reason: String| {
+        AwareError::Validation(format!(
+            "[E_APP_LOCK_INVALID] compiled approval {} has an inconsistent approval record: {reason}; run `aware app compile {}` again",
+            lock_path.display(),
+            source_path.display()
+        ))
+    };
+    // A carried-forward record is checked before the source hash: a
+    // `successor-v1:` hash without a chain is a broken lock, not a stale one.
+    if approval::has_record(&lock) {
+        approval::check_chain(&lock).map_err(invalid)?;
+    }
     let current_hash = snapshot.source_hash;
-    if lock.source_hash != current_hash {
+    if !approval::source_matches(&lock, &current_hash) {
         return Err(AwareError::Validation(format!(
             "[E_APP_LOCK_STALE] compiled approval {} does not match the installed source (approved {}, current {}); run `aware app compile {}` again",
             lock_path.display(),
@@ -304,10 +335,14 @@ pub fn load_approved_app_snapshot(source_path: &Path) -> Result<ApprovedApp, Awa
             source_path.display()
         )));
     }
+    // Archives that are missing make the record incomplete, never a refusal;
+    // an archive that contradicts the record is a tampered lock.
+    let approval = approval::assess(&lock, source_dir).map_err(invalid)?;
     Ok(ApprovedApp {
         app,
         lock,
         source_text,
+        approval,
     })
 }
 
@@ -491,6 +526,8 @@ fn compile_snapshot(
         nodes,
         schedule,
         engineering,
+        front_door: None,
+        approval: None,
     })
 }
 
@@ -1060,6 +1097,17 @@ pub fn compile_to_disk_with_lock(
     source: &Path,
     paths: &Paths,
 ) -> Result<(std::path::PathBuf, LockFile), AwareError> {
+    compile_to_disk_for(source, paths, None)
+}
+
+/// [`compile_to_disk_with_lock`], recording the front door that asked for the
+/// compile (`aware app compile --front-door`). A compile is always a fresh
+/// ORIGINAL approval: it never carries an `approval:` record forward.
+pub fn compile_to_disk_for(
+    source: &Path,
+    paths: &Paths,
+    front_door: Option<&str>,
+) -> Result<(std::path::PathBuf, LockFile), AwareError> {
     let snapshot = read_source_snapshot(source)?;
     let app = &snapshot.app;
     // Refuse to produce a lock for an app the runtime can't execute (e.g. an
@@ -1115,7 +1163,8 @@ pub fn compile_to_disk_with_lock(
     for m in crate::validate::missing_agents(app, &agents, crate::validate::Severity::Warning) {
         eprintln!("\u{26a0} [{}] {}", m.code, m.message);
     }
-    let lock = compile_snapshot(app, &agents, snapshot.source_hash, &digests)?;
+    let mut lock = compile_snapshot(app, &agents, snapshot.source_hash, &digests)?;
+    lock.front_door = front_door.map(str::to_string);
     let path = write_lockfile(&lock, source)?;
     Ok((path, lock))
 }
@@ -1197,22 +1246,31 @@ pub fn lock_digest(bytes: &[u8]) -> String {
 /// The digest of a lock's runnable PLAN (#628 plan §5): sha256 of its
 /// canonical form — object keys sorted at every depth (`serde_json` preserves
 /// insertion order in this crate, so the sort is explicit) — minus the fields
-/// that say when and by which CLI it was compiled (`compiled-at`,
-/// `compiler-version`) and the approval record (`approval`, #628 PR3a). Two
+/// that say when, by which CLI and for which front door it was compiled
+/// (`compiled-at`, `compiler-version`, `front-door`) and the approval record
+/// (`approval`, #628 PR3a); a promoted lock's `successor-v1:<hex>` source hash
+/// counts as the `sha256:<hex>` it names. Two
 /// compiles of one source against the same agent bytes share a plan digest
 /// although their files differ.
 pub fn plan_digest(lock: &LockFile) -> Result<String, AwareError> {
     let mut value = serde_yaml::to_value(lock)
         .map_err(|e| AwareError::Internal(format!("serialize lockfile: {e}")))?;
     if let Some(map) = value.as_mapping_mut() {
-        for key in ["compiled-at", "compiler-version", "approval"] {
+        for key in ["compiled-at", "compiler-version", "front-door", "approval"] {
             map.remove(key);
         }
+        // A promoted lock names its source `successor-v1:<hex>`; the plan it
+        // runs is the plan of that same `sha256:<hex>` source.
+        map.insert(
+            "source-hash".into(),
+            approval::approved_source_hash(lock).into(),
+        );
     }
     let canonical = crate::migration::contract::canonical(&value);
     Ok(hash_source_bytes(canonical.as_bytes()))
 }
 
+pub mod approval;
 pub(crate) mod candidate;
 pub use candidate::{Candidate, CandidateHeader, CandidatePin, compile_candidate};
 
@@ -1282,6 +1340,8 @@ mod tests {
             nodes: vec![],
             schedule: None,
             engineering: None,
+            front_door: None,
+            approval: None,
         };
         let lock_path = write_lockfile(&lock, &source).unwrap();
         assert_eq!(lock_path.file_name().unwrap(), "my-cool-app.lock");
@@ -1302,6 +1362,8 @@ mod tests {
             nodes: vec![],
             schedule: None,
             engineering: None,
+            front_door: None,
+            approval: None,
         }
     }
 
