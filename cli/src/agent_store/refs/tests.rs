@@ -1045,3 +1045,61 @@ fn an_unreadable_store_folder_is_a_blocker() {
         assert_eq!(t.blockers[0].path, path.display().to_string());
     }
 }
+
+/// Review round 4: evidence of a format this AWARE does not read, and a
+/// dangling link where `.aware-approvals/` or `.aware-migration/` should be,
+/// are blockers — not "no references here".
+#[test]
+fn unknown_evidence_formats_and_dangling_aware_folders_are_blockers() {
+    let later = far(Utc::now());
+    let h = home();
+    let dir = h.paths.apps_dir().join("demo").join(".aware-migration");
+    std::fs::create_dir_all(&dir).unwrap();
+    let evidence = |format: &str| {
+        serde_json::json!({
+            "format": format,
+            "app": "demo",
+            "prepared-at": "t",
+            "cli-version": "x",
+            "header": {
+                "format": crate::app_lock::candidate::CANDIDATE_FORMAT,
+                "app": "demo",
+                "base-lock-digest": "x",
+                "base-source-hash": "x",
+                "targets": {},
+                "candidate-digest": "x",
+                "plan-digest": "x",
+            },
+            "row": {},
+        })
+        .to_string()
+    };
+    std::fs::write(
+        dir.join("demo.evidence.json"),
+        evidence(crate::migration::files::EVIDENCE_FORMAT),
+    )
+    .unwrap();
+    assert!(build(&h.paths, "30d", later).complete);
+    std::fs::write(
+        dir.join("demo.evidence.json"),
+        evidence("aware.migration-evidence/v2"),
+    )
+    .unwrap();
+    let t = build(&h.paths, "30d", later);
+    assert!(!t.complete);
+    assert!(t.blockers[0].problem.contains("format"), "{t:#?}");
+
+    for name in [".aware-approvals", ".aware-migration"] {
+        let h = home();
+        let app = h.paths.apps_dir().join("demo");
+        std::fs::create_dir_all(&app).unwrap();
+        let gone = h.paths.aware_home.join("gone");
+        std::fs::create_dir_all(&gone).unwrap();
+        link(&app.join(name), &gone);
+        assert!(build(&h.paths, "30d", later).complete, "{name}");
+        std::fs::remove_dir(&gone).unwrap();
+        let t = build(&h.paths, "30d", later);
+        assert!(!t.complete, "{name}");
+        assert!(t.blockers.iter().any(|b| b.path.ends_with(name)), "{t:#?}");
+    }
+}

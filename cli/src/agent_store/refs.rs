@@ -705,6 +705,19 @@ impl Collector {
                         serde_json::from_slice::<crate::migration::files::Evidence>(&b).map_err(
                             |e| format!("it is not migration evidence AWARE can read: {e}"),
                         )
+                    })
+                    // A later format may give the same fields another meaning.
+                    .and_then(|e| {
+                        if e.format == crate::migration::files::EVIDENCE_FORMAT
+                            && e.header.format == crate::app_lock::candidate::CANDIDATE_FORMAT
+                        {
+                            Ok(e)
+                        } else {
+                            Err(format!(
+                                "its format ({} / {}) is not one this AWARE reads",
+                                e.format, e.header.format
+                            ))
+                        }
                     });
                 let evidence = match evidence {
                     Ok(evidence) => evidence,
@@ -817,7 +830,14 @@ impl Collector {
                 out.sort();
                 Some(out)
             }
-            Err(error) if error.kind() == std::io::ErrorKind::NotFound => None,
+            // Truly absent; a dangling link in its place may have pointed at
+            // what holds references (review round 4).
+            Err(error)
+                if error.kind() == std::io::ErrorKind::NotFound
+                    && std::fs::symlink_metadata(dir).is_err() =>
+            {
+                None
+            }
             Err(error) => {
                 self.block(dir, format!("cannot list it: {error}"));
                 None
