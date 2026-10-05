@@ -689,3 +689,61 @@ fn an_approval_block_survives_a_round_trip_unchanged() {
         assert!(text.contains(key), "{key} missing:\n{text}");
     }
 }
+
+// ── mutation follow-ups: each archive comparison has its own witness ────────
+
+#[test]
+fn an_original_record_whose_pins_differ_from_the_archived_original_is_invalid() {
+    let s = setup();
+    let p = promoted_by(&s, By::Person("pawel"));
+    tamper(&p.lock_path, |l| {
+        // Change the original's pins AND link 1's from, so the chain is
+        // structurally whole and only the archive can tell.
+        let c = chain(l);
+        c.original.agent_pins.insert("tool".into(), "0.9.9".into());
+        c.successors[0].from.get_mut("tool").unwrap().version = "0.9.9".into();
+    });
+    assert_invalid(&s, "does not match the archived original approval");
+}
+
+#[test]
+fn a_resulting_plan_archive_that_carries_an_approval_record_is_invalid() {
+    let s = setup();
+    let p = promoted_by(&s, By::Person("pawel"));
+    // Same plan, same pins - but it is a promoted lock, not the plan as promoted.
+    let dir = crate::fs::containing_dir(&s.source).to_path_buf();
+    let promoted = archive(&dir, &p.bytes, "lock");
+    tamper(&p.lock_path, |l| {
+        chain(l).successors[0].resulting_lock_digest = promoted;
+    });
+    assert_invalid(&s, "archived resulting plan is not the plan it approved");
+}
+
+#[test]
+fn a_replaced_lock_with_another_original_record_is_invalid() {
+    let s = setup();
+    let first = promoted_by(&s, By::Person("pawel"));
+    let newer = update_agent(&s.h.paths, "tool", "1.0.2", "mode: read");
+    let second = promote(
+        &s.h.paths,
+        &s.source,
+        to("tool", &newer),
+        By::Person("pawel"),
+        SuccessorKind::CarriedForward,
+    );
+    // The lock link 2 replaced, but with its original's compile time changed:
+    // same successors, same plan, a different original record.
+    let mut replaced: LockFile = serde_yaml::from_slice(&first.bytes).unwrap();
+    replaced.approval.as_mut().unwrap().original.compiled_at = "1999-01-01T00:00:00Z".into();
+    let dir = crate::fs::containing_dir(&s.source).to_path_buf();
+    let other = dir.join("other.lock");
+    let bytes = write_lock(&other, &replaced);
+    let digest = archive(&dir, &bytes, "lock");
+    tamper(&second.lock_path, |l| {
+        chain(l).successors[1].from_lock_digest = digest;
+    });
+    assert_invalid(
+        &s,
+        "replaced a lock whose record or plan is not the one successor 1 left",
+    );
+}
