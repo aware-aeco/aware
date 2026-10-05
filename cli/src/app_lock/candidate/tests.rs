@@ -44,7 +44,9 @@ pub(crate) fn write_agent(paths: &Paths, id: &str, version: &str, mode_line: &st
 /// working copy and snapshot it into the store. Returns its digest.
 pub(crate) fn update_agent(paths: &Paths, id: &str, version: &str, mode_line: &str) -> String {
     let dir = write_agent(paths, id, version, mode_line);
-    crate::agent_store::snapshot(paths, &dir).unwrap().digest
+    crate::agent_store::snapshot(paths, &dir, &crate::agent_store::open(paths).unwrap())
+        .unwrap()
+        .digest
 }
 
 pub(crate) fn write_app(paths: &Paths, id: &str, body: &str) -> PathBuf {
@@ -61,7 +63,9 @@ pub(crate) fn write_app(paths: &Paths, id: &str, body: &str) -> PathBuf {
 
 /// Compile as a person would; return the lock and its exact bytes.
 pub(crate) fn approve(paths: &Paths, source: &Path) -> (LockFile, Vec<u8>) {
-    let (path, lock) = compile_to_disk_with_lock(source, paths).unwrap();
+    let (path, lock) =
+        compile_to_disk_with_lock(source, paths, &crate::agent_store::open(paths).unwrap())
+            .unwrap();
     (lock, std::fs::read(path).unwrap())
 }
 

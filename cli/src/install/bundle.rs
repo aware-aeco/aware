@@ -18,6 +18,7 @@ pub fn install_bundle(
     name: &str,
     paths: &Paths,
     index: &Index,
+    guard: &crate::agent_store::RefGuard,
 ) -> Result<BundleReport, AwareError> {
     let bundle = index
         .bundles
@@ -32,7 +33,7 @@ pub fn install_bundle(
             Some((i, v)) => (i, Some(v)),
             None => (spec.as_str(), None),
         };
-        match install_agent_from_registry(id, version_pin, paths, index) {
+        match install_agent_from_registry(id, version_pin, paths, index, guard) {
             Ok(_) => installed.push(spec.clone()),
             Err(e) => failed.push((spec.clone(), e.to_string())),
         }

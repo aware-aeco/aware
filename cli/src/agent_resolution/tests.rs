@@ -114,7 +114,8 @@ fn a_digest_lock_resolves_to_the_stored_copy_after_an_update() {
     let h = home();
     let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
     let d1 = digest(&v1);
-    crate::agent_store::snapshot(&h.paths, &v1).unwrap(); // compile's snapshot
+    crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+        .unwrap(); // compile's snapshot
     write_agent(&h.paths, "alpha", "1.1.0", ""); // the update
 
     let resolved = resolve_agents(
@@ -122,6 +123,7 @@ fn a_digest_lock_resolves_to_the_stored_copy_after_an_update() {
         &app_using(&["alpha"]),
         &lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]),
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap();
     let agent = resolved.get("alpha").unwrap();
@@ -149,6 +151,7 @@ fn a_matching_current_copy_is_snapshotted_and_dispatched_from_the_store() {
         &app_using(&["alpha"]),
         &lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]),
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap();
     let agent = resolved.get("alpha").unwrap();
@@ -170,7 +173,9 @@ fn a_tampered_stored_package_refuses_and_never_falls_back() {
     let h = home();
     let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
     let d1 = digest(&v1);
-    let package = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    let package =
+        crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+            .unwrap();
     write_agent(&h.paths, "alpha", "1.1.0", "");
     std::fs::write(package.root.join("skills").join("s.md"), "tampered").unwrap();
 
@@ -179,6 +184,7 @@ fn a_tampered_stored_package_refuses_and_never_falls_back() {
         &app_using(&["alpha"]),
         &lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]),
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap_err()
     .to_string();
@@ -194,7 +200,9 @@ fn a_package_whose_record_or_manifest_identity_disagrees_is_refused() {
     let h = home();
     let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
     let d1 = digest(&v1);
-    let package = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    let package =
+        crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+            .unwrap();
     write_agent(&h.paths, "alpha", "1.1.0", "");
     let record = package.root.join(PACKAGE_FILE);
     let text = std::fs::read_to_string(&record).unwrap();
@@ -205,6 +213,7 @@ fn a_package_whose_record_or_manifest_identity_disagrees_is_refused() {
         &app_using(&["alpha"]),
         &lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]),
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap_err()
     .to_string();
@@ -221,6 +230,7 @@ fn a_package_whose_record_or_manifest_identity_disagrees_is_refused() {
         &app_using(&["alpha"]),
         &lock(&[("alpha", "9.9.9")], &[("alpha", &d1)], &[]),
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap_err()
     .to_string();
@@ -235,7 +245,8 @@ fn a_package_whose_record_or_manifest_identity_disagrees_is_refused() {
 fn a_version_only_lock_never_resolves_to_an_older_package_by_version() {
     let h = home();
     let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
-    crate::agent_store::snapshot(&h.paths, &v1).unwrap(); // 1.0.0 IS in the store
+    crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+        .unwrap(); // 1.0.0 IS in the store
     write_agent(&h.paths, "alpha", "1.1.0", "");
 
     let error = resolve_agents(
@@ -243,6 +254,7 @@ fn a_version_only_lock_never_resolves_to_an_older_package_by_version() {
         &app_using(&["alpha"]),
         &lock(&[("alpha", "1.0.0")], &[], &[]),
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap_err()
     .to_string();
@@ -259,6 +271,7 @@ fn a_version_only_lock_on_a_matching_copy_runs_a_snapshot_labelled_version_only(
         &app_using(&["alpha"]),
         &lock(&[("alpha", "1.0.0")], &[], &[]),
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap();
     let agent = resolved.get("alpha").unwrap();
@@ -277,7 +290,8 @@ fn a_legacy_lock_with_an_official_bundle_pin_resolves_to_the_stored_copy() {
     official_receipt(&v1, "alpha", "1.0.0");
     let d1 = digest(&v1);
     // The update snapshots the outgoing copy before replacing it.
-    crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+        .unwrap();
     write_agent(&h.paths, "alpha", "1.1.0", "");
 
     let resolved = resolve_agents(
@@ -285,6 +299,7 @@ fn a_legacy_lock_with_an_official_bundle_pin_resolves_to_the_stored_copy() {
         &app_using(&["alpha"]),
         &lock(&[("alpha", "1.0.0")], &[], &[("alpha", &d1)]),
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap();
     assert_eq!(version_of(&resolved, "alpha"), "1.0.0");
@@ -297,7 +312,8 @@ fn an_uninstalled_agent_is_missing_whatever_the_store_holds() {
     let h = home();
     let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
     let d1 = digest(&v1);
-    crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+        .unwrap();
     std::fs::remove_dir_all(&v1).unwrap();
 
     let app = app_using(&["alpha"]);
@@ -306,6 +322,7 @@ fn an_uninstalled_agent_is_missing_whatever_the_store_holds() {
         &app,
         &lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]),
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap();
     assert!(resolved.get("alpha").is_none());
@@ -323,6 +340,7 @@ fn an_installed_agent_the_lock_never_pinned_is_refused() {
         &app_using(&["alpha"]),
         &lock(&[], &[], &[]),
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap_err()
     .to_string();
@@ -341,6 +359,7 @@ fn approved_bytes_that_exist_nowhere_refuse_as_pin_not_installed() {
         &app_using(&["alpha"]),
         &lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]),
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap_err()
     .to_string();
@@ -366,9 +385,15 @@ fn inconsistent_or_malformed_lock_digests_refuse_before_anything_resolves() {
         lock(&[("alpha", "1.0.0")], &[], &[("alpha", "md5:abc")]),
         lock(&[], &[("alpha", &d1)], &[]),
     ] {
-        let error = resolve_agents(&h.paths, &app, &bad, Selection::Default)
-            .unwrap_err()
-            .to_string();
+        let error = resolve_agents(
+            &h.paths,
+            &app,
+            &bad,
+            Selection::Default,
+            &crate::agent_store::open(&h.paths).unwrap(),
+        )
+        .unwrap_err()
+        .to_string();
         assert!(error.contains("E_APP_LOCK_INVALID"), "{error}");
     }
     assert!(
@@ -388,15 +413,26 @@ fn receipt_choice_prefers_the_current_receipt_then_official_then_local() {
         &crate::install::provenance::InstallSource::Local { path: "x".into() },
     )
     .unwrap();
-    let local = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    let local =
+        crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+            .unwrap();
     official_receipt(&v1, "alpha", "1.0.0");
-    let official = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    let official =
+        crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+            .unwrap();
     assert_ne!(local.root, official.root);
     let app = app_using(&["alpha"]);
     let pinned = lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]);
 
     // The current copy (official receipt now) hashes to the pin: its own wins.
-    let resolved = resolve_agents(&h.paths, &app, &pinned, Selection::Default).unwrap();
+    let resolved = resolve_agents(
+        &h.paths,
+        &app,
+        &pinned,
+        Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap();
     assert_eq!(resolved.get("alpha").unwrap().root, official.root);
 
     // Back to the local receipt on the working copy: still its own receipt.
@@ -405,7 +441,14 @@ fn receipt_choice_prefers_the_current_receipt_then_official_then_local() {
         &crate::install::provenance::InstallSource::Local { path: "x".into() },
     )
     .unwrap();
-    let resolved = resolve_agents(&h.paths, &app, &pinned, Selection::Default).unwrap();
+    let resolved = resolve_agents(
+        &h.paths,
+        &app,
+        &pinned,
+        Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap();
     assert_eq!(resolved.get("alpha").unwrap().root, local.root);
     assert!(
         resolved.info("alpha").unwrap().official_claim,
@@ -414,7 +457,14 @@ fn receipt_choice_prefers_the_current_receipt_then_official_then_local() {
 
     // Current no longer matches: the total order picks the official receipt.
     write_agent(&h.paths, "alpha", "1.1.0", "");
-    let resolved = resolve_agents(&h.paths, &app, &pinned, Selection::Default).unwrap();
+    let resolved = resolve_agents(
+        &h.paths,
+        &app,
+        &pinned,
+        Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap();
     assert_eq!(resolved.get("alpha").unwrap().root, official.root);
     assert_eq!(
         resolved.info("alpha").unwrap().resolution,
@@ -427,7 +477,8 @@ fn an_app_backed_agent_carries_its_backing_apps_own_resolution() {
     let h = home();
     let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
     let d1 = digest(&v1);
-    crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+        .unwrap();
 
     // The backing app, compiled against alpha 1.0.0.
     let backing_dir = h.paths.apps_dir().join("inner");
@@ -462,6 +513,7 @@ fn an_app_backed_agent_carries_its_backing_apps_own_resolution() {
         &app_using(&["inner"]),
         &lock(&[("inner", "0.1.0")], &[("inner", &dw)], &[]),
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap();
     let nested = resolved
@@ -515,6 +567,7 @@ fn an_app_backed_leaf_inside_a_backing_app_exceeds_the_one_hop_limit() {
         &app_using(&["inner"]),
         &lock(&[("inner", "0.1.0")], &[], &[]),
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap_err()
     .to_string();
@@ -558,7 +611,12 @@ fn compile_writes_agent_digests_for_registry_local_and_app_built_agents() {
          \x20 - id: b\n    agent: loc\n    command: go\n\
          \x20 - id: c\n    agent: built\n    command: go\n    mode: read\nconnections: []\n",
     );
-    let (_, lock) = crate::app_lock::compile_to_disk_with_lock(&source, &h.paths).unwrap();
+    let (_, lock) = crate::app_lock::compile_to_disk_with_lock(
+        &source,
+        &h.paths,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap();
     for (id, dir) in [("reg", &reg), ("loc", &local), ("built", &built)] {
         assert_eq!(lock.agent_digests.get(id), Some(&digest(dir)), "{id}");
         let hex = crate::agent_store::digest_hex(&lock.agent_digests[id]).unwrap();
@@ -593,7 +651,12 @@ fn compile_pins_and_node_details_come_from_one_stored_copy() {
             write_agent(&paths, "alpha", "1.1.0", "mid-compile");
         }
     }));
-    let (_, lock) = crate::app_lock::compile_to_disk_with_lock(&source, &h.paths).unwrap();
+    let (_, lock) = crate::app_lock::compile_to_disk_with_lock(
+        &source,
+        &h.paths,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap();
     crate::agent_store::clear_fault();
 
     let pinned_digest = lock.agent_digests["alpha"].clone();
@@ -628,7 +691,12 @@ fn compile_app(h: &Home, ids: &[&str]) -> PathBuf {
         &h.paths.apps_dir().join("demo"),
         &format!("app: demo\nversion: 0.1.0\ndescription: x\nnodes:\n{nodes}connections: []\n"),
     );
-    crate::app_lock::compile_to_disk(&source, &h.paths).unwrap();
+    crate::app_lock::compile_to_disk(
+        &source,
+        &h.paths,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap();
     source
 }
 
@@ -861,7 +929,8 @@ fn an_unhashable_current_copy_is_named_not_called_changed_bytes() {
     let h = home();
     let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
     let d1 = digest(&v1);
-    crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+        .unwrap();
     link_inside(&v1, &h.paths.aware_home.join("outside"));
     let pinned = lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]);
 
@@ -882,6 +951,7 @@ fn an_unhashable_current_copy_is_named_not_called_changed_bytes() {
         &app_using(&["alpha"]),
         &pinned,
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap_err()
     .to_string();
@@ -895,7 +965,9 @@ fn a_failed_snapshot_of_the_matching_copy_falls_through_to_a_valid_stored_copy()
     let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
     let d1 = digest(&v1);
     official_receipt(&v1, "alpha", "1.0.0");
-    let official = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    let official =
+        crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+            .unwrap();
     crate::install::provenance::write_required(
         &v1,
         &crate::install::provenance::InstallSource::Local { path: "x".into() },
@@ -903,12 +975,21 @@ fn a_failed_snapshot_of_the_matching_copy_falls_through_to_a_valid_stored_copy()
     .unwrap();
     // The current copy's OWN package exists but is corrupt, so its snapshot
     // refuses — yet an equally valid package of the same bytes is stored.
-    let own = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    let own =
+        crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+            .unwrap();
     std::fs::write(own.root.join("skills").join("s.md"), "tampered").unwrap();
     let pinned = lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]);
     let app = app_using(&["alpha"]);
 
-    let resolved = resolve_agents(&h.paths, &app, &pinned, Selection::Default).unwrap();
+    let resolved = resolve_agents(
+        &h.paths,
+        &app,
+        &pinned,
+        Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap();
     assert_eq!(resolved.get("alpha").unwrap().root, official.root);
     assert_eq!(
         resolved.info("alpha").unwrap().resolution,
@@ -931,6 +1012,7 @@ fn a_snapshot_failure_with_nothing_stored_keeps_its_own_error_class() {
         &app_using(&["alpha"]),
         &pinned,
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap_err();
     crate::agent_store::clear_fault();
@@ -957,7 +1039,16 @@ fn a_legacy_lock_on_an_unhashable_copy_is_a_data_refusal_in_check_and_in_run() {
     let lock: LockFile =
         serde_yaml::from_str(&std::fs::read_to_string(source.with_file_name("demo.lock")).unwrap())
             .unwrap();
-    assert!(resolve_agents(&h.paths, &app_using(&["alpha"]), &lock, Selection::Default).is_err());
+    assert!(
+        resolve_agents(
+            &h.paths,
+            &app_using(&["alpha"]),
+            &lock,
+            Selection::Default,
+            &crate::agent_store::open(&h.paths).unwrap()
+        )
+        .is_err()
+    );
 }
 
 // ── review round 1, item 4: invalid stored candidates are reported, not dropped ──
@@ -968,19 +1059,30 @@ fn an_invalid_stored_candidate_is_reported_even_when_a_valid_one_serves() {
     let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
     let d1 = digest(&v1);
     official_receipt(&v1, "alpha", "1.0.0");
-    let official = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    let official =
+        crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+            .unwrap();
     crate::install::provenance::write_required(
         &v1,
         &crate::install::provenance::InstallSource::Local { path: "x".into() },
     )
     .unwrap();
-    let local = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    let local =
+        crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+            .unwrap();
     std::fs::write(local.root.join("skills").join("s.md"), "tampered").unwrap();
     write_agent(&h.paths, "alpha", "1.1.0", ""); // current no longer matches
     let pinned = lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]);
     let app = app_using(&["alpha"]);
 
-    let resolved = resolve_agents(&h.paths, &app, &pinned, Selection::Default).unwrap();
+    let resolved = resolve_agents(
+        &h.paths,
+        &app,
+        &pinned,
+        Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap();
     assert_eq!(resolved.get("alpha").unwrap().root, official.root);
     let info = resolved.info("alpha").unwrap();
     assert_eq!(
@@ -1026,7 +1128,9 @@ fn an_invalid_stored_candidate_is_reported_even_when_a_valid_one_serves() {
 fn stored_versions_reports_packages_whose_record_cannot_be_read() {
     let h = home();
     let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
-    let package = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    let package =
+        crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+            .unwrap();
     std::fs::remove_file(package.root.join(PACKAGE_FILE)).unwrap();
     let listing = crate::agent_store::stored_versions(&h.paths, "alpha");
     assert!(listing.stored.is_empty());
@@ -1053,7 +1157,12 @@ fn app_backed_fixture(h: &Home) -> PathBuf {
          nodes:\n  - id: n\n    agent: alpha\n    command: go\nconnections: []\n",
     )
     .unwrap();
-    crate::app_lock::compile_to_disk(&backing_dir.join("inner.flo"), &h.paths).unwrap();
+    crate::app_lock::compile_to_disk(
+        &backing_dir.join("inner.flo"),
+        &h.paths,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap();
     let wrapper = h.paths.agents_dir().join("inner");
     std::fs::create_dir_all(&wrapper).unwrap();
     std::fs::write(
@@ -1125,7 +1234,12 @@ fn a_missing_current_manifest_still_runs_the_stored_approved_bytes() {
         let h = home();
         let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
         let d1 = digest(&v1);
-        let package = crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+        let package = crate::agent_store::snapshot(
+            &h.paths,
+            &v1,
+            &crate::agent_store::open(&h.paths).unwrap(),
+        )
+        .unwrap();
         let manifest = v1.join("manifest.yaml");
         if breakage == "missing" {
             std::fs::remove_file(&manifest).unwrap();
@@ -1139,6 +1253,7 @@ fn a_missing_current_manifest_still_runs_the_stored_approved_bytes() {
             &app_using(&["alpha"]),
             &pinned,
             Selection::Default,
+            &crate::agent_store::open(&h.paths).unwrap(),
         )
         .unwrap_or_else(|e| panic!("{breakage}: {e}"));
         assert_eq!(
@@ -1178,6 +1293,7 @@ fn a_legacy_lock_on_a_copy_with_no_usable_manifest_is_a_named_refusal_not_uninst
         &app_using(&["alpha"]),
         &pinned,
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap_err()
     .to_string();
@@ -1190,7 +1306,8 @@ fn no_agent_directory_at_all_is_still_uninstalled_whatever_the_store_holds() {
     let h = home();
     let v1 = write_agent(&h.paths, "alpha", "1.0.0", "");
     let d1 = digest(&v1);
-    crate::agent_store::snapshot(&h.paths, &v1).unwrap();
+    crate::agent_store::snapshot(&h.paths, &v1, &crate::agent_store::open(&h.paths).unwrap())
+        .unwrap();
     std::fs::remove_dir_all(&v1).unwrap();
     let pinned = lock(&[("alpha", "1.0.0")], &[("alpha", &d1)], &[]);
     let check = assess_agent(&h.paths, "alpha", &pinned, Mode::Check).unwrap();
@@ -1200,6 +1317,7 @@ fn no_agent_directory_at_all_is_still_uninstalled_whatever_the_store_holds() {
         &app_using(&["alpha"]),
         &pinned,
         Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
     )
     .unwrap();
     assert!(resolved.get("alpha").is_none());
@@ -1235,7 +1353,13 @@ fn an_unreadable_approved_package_is_not_approval_current_in_check_or_run() {
 
         crate::agent_store::inject_stat_error(&package, kind);
         let check = check_app(&h.paths, &source);
-        let run = resolve_agents(&h.paths, &app_using(&["alpha"]), &lock, Selection::Default);
+        let run = resolve_agents(
+            &h.paths,
+            &app_using(&["alpha"]),
+            &lock,
+            Selection::Default,
+            &crate::agent_store::open(&h.paths).unwrap(),
+        );
         crate::agent_store::clear_stat_error();
 
         let check_error = check.expect_err("check could not run: it must not report a verdict");
@@ -1264,7 +1388,13 @@ fn an_unreadable_snapshot_path_on_a_legacy_lock_is_not_approval_current_in_check
 
     crate::agent_store::inject_stat_error(&package, std::io::ErrorKind::PermissionDenied);
     let check = check_app(&h.paths, &source);
-    let run = resolve_agents(&h.paths, &app_using(&["alpha"]), &lock, Selection::Default);
+    let run = resolve_agents(
+        &h.paths,
+        &app_using(&["alpha"]),
+        &lock,
+        Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    );
     crate::agent_store::clear_stat_error();
 
     assert!(
@@ -1291,7 +1421,13 @@ fn an_unreadable_backing_app_directory_is_an_error_not_uninstalled() {
 
     crate::agent_store::inject_stat_error(&backing_dir, std::io::ErrorKind::PermissionDenied);
     let check = check_app(&h.paths, &source);
-    let run = resolve_agents(&h.paths, &app_using(&["inner"]), &lock, Selection::Default);
+    let run = resolve_agents(
+        &h.paths,
+        &app_using(&["inner"]),
+        &lock,
+        Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    );
     crate::agent_store::clear_stat_error();
 
     let check_error = check.expect_err("check could not run");
@@ -1324,12 +1460,16 @@ fn migrated_home(h: &Home) -> LockFile {
     let a1 = write_agent(&h.paths, "a", "1.0.0", "");
     let b1 = write_agent(&h.paths, "b", "1.0.0", "");
     let (da1, db1) = (digest(&a1), digest(&b1));
-    crate::agent_store::snapshot(&h.paths, &a1).unwrap();
-    crate::agent_store::snapshot(&h.paths, &b1).unwrap();
+    crate::agent_store::snapshot(&h.paths, &a1, &crate::agent_store::open(&h.paths).unwrap())
+        .unwrap();
+    crate::agent_store::snapshot(&h.paths, &b1, &crate::agent_store::open(&h.paths).unwrap())
+        .unwrap();
     let a2 = write_agent(&h.paths, "a", "2.0.0", "");
     let b2 = write_agent(&h.paths, "b", "2.0.0", "");
-    crate::agent_store::snapshot(&h.paths, &a2).unwrap();
-    crate::agent_store::snapshot(&h.paths, &b2).unwrap();
+    crate::agent_store::snapshot(&h.paths, &a2, &crate::agent_store::open(&h.paths).unwrap())
+        .unwrap();
+    crate::agent_store::snapshot(&h.paths, &b2, &crate::agent_store::open(&h.paths).unwrap())
+        .unwrap();
     lock(
         &[("a", "1.0.0"), ("b", "1.0.0")],
         &[("a", &da1), ("b", &db1)],
@@ -1392,7 +1532,12 @@ fn a_version_target_with_two_stored_byte_sets_is_refused_as_ambiguous() {
     let base = migrated_home(&h);
     // A second, different copy of a 2.0.0 lands in the store.
     let other = write_agent(&h.paths, "a", "2.0.0", "rebuilt");
-    crate::agent_store::snapshot(&h.paths, &other).unwrap();
+    crate::agent_store::snapshot(
+        &h.paths,
+        &other,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap();
     let targets = [("a".to_string(), PinTarget::Version("2.0.0".into()))].into();
     let error = resolve_pins(
         &h.paths,
@@ -1603,10 +1748,13 @@ fn a_caller_records_the_carried_forward_origin_of_its_backing_app() {
     let h = home();
     let outer = app_backed_fixture(&h);
     let inner = h.paths.apps_dir().join("inner").join("inner.flo");
-    let newer =
-        crate::agent_store::snapshot(&h.paths, &write_agent(&h.paths, "alpha", "1.0.1", ""))
-            .unwrap()
-            .digest;
+    let newer = crate::agent_store::snapshot(
+        &h.paths,
+        &write_agent(&h.paths, "alpha", "1.0.1", ""),
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap()
+    .digest;
     test_support::promote(
         &h.paths,
         &inner,
@@ -1629,8 +1777,14 @@ fn a_caller_records_the_carried_forward_origin_of_its_backing_app() {
     );
 
     let approved = crate::app_lock::load_approved_app_snapshot(&outer).unwrap();
-    let resolved =
-        resolve_agents(&h.paths, &approved.app, &approved.lock, Selection::Default).unwrap();
+    let resolved = resolve_agents(
+        &h.paths,
+        &approved.app,
+        &approved.lock,
+        Selection::Default,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap();
     let nested = resolved.nested_approvals();
     assert_eq!(nested.len(), 1);
     assert_eq!(nested[0].0, "inner");

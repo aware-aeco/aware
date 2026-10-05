@@ -68,6 +68,11 @@ pub enum MigrateCommand {
 
 pub fn dispatch(cmd: MigrateCommand, ctx: &Context) -> Result<(), AwareError> {
     let started = Instant::now();
+    // #627: every migrate verb reads approvals and writes or reads candidate
+    // locks — store references — so each runs under the store reference lock,
+    // shared, taken before anything is read (plan R1-4, R1-7). Store-only: no
+    // migrate verb reads a working copy, so no swap lock is taken.
+    let _store_guard = crate::agent_store::open(&ctx.paths)?;
     let (name, outcome) = match cmd {
         MigrateCommand::Plan { apps, all: _, to } => {
             ("app migrate plan", plan_cmd(ctx, &apps, &to))

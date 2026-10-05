@@ -123,6 +123,7 @@ fn a_promoted_lock_loads_runs_the_top_level_pins_and_says_where_it_came_from() {
         &approved.app,
         &approved.lock,
         crate::agent_resolution::Selection::Default,
+        &crate::agent_store::open(&s.h.paths).unwrap(),
     )
     .unwrap();
     let infos: Vec<_> = resolved.infos().iter().collect();
@@ -526,7 +527,13 @@ fn a_promoted_lock_whose_source_changed_is_stale() {
 fn compile_writes_a_fresh_original_and_records_the_front_door_outside_the_plan() {
     let s = setup();
     let p = promoted_by(&s, By::Person("pawel"));
-    let (_, lock) = compile_to_disk_for(&s.source, &s.h.paths, Some("floless@9.9.9")).unwrap();
+    let (_, lock) = compile_to_disk_for(
+        &s.source,
+        &s.h.paths,
+        Some("floless@9.9.9"),
+        &crate::agent_store::open(&s.h.paths).unwrap(),
+    )
+    .unwrap();
     assert!(lock.approval.is_none());
     assert!(lock.source_hash.starts_with("sha256:"));
     assert_eq!(lock.front_door.as_deref(), Some("floless@9.9.9"));

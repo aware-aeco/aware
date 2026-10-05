@@ -1090,25 +1090,38 @@ pub fn find_app_source(path: &Path) -> Option<std::path::PathBuf> {
 }
 
 /// End-to-end: load + compile + write. Called by `aware app compile`.
-pub fn compile_to_disk(source: &Path, paths: &Paths) -> Result<std::path::PathBuf, AwareError> {
-    compile_to_disk_with_lock(source, paths).map(|(path, _)| path)
+///
+/// Requires the store reference lock (`guard`, #627), taken by the caller
+/// BEFORE the source is read and held until the lock is written: the lock
+/// written is a store reference.
+pub fn compile_to_disk(
+    source: &Path,
+    paths: &Paths,
+    guard: &crate::agent_store::RefGuard,
+) -> Result<std::path::PathBuf, AwareError> {
+    compile_to_disk_with_lock(source, paths, guard).map(|(path, _)| path)
 }
 
 /// Compile and persist one source snapshot, returning the exact plan written.
 pub fn compile_to_disk_with_lock(
     source: &Path,
     paths: &Paths,
+    guard: &crate::agent_store::RefGuard,
 ) -> Result<(std::path::PathBuf, LockFile), AwareError> {
-    compile_to_disk_for(source, paths, None)
+    compile_to_disk_for(source, paths, None, guard)
 }
 
 /// [`compile_to_disk_with_lock`], recording the front door that asked for the
 /// compile (`aware app compile --front-door`). A compile is always a fresh
 /// ORIGINAL approval: it never carries an `approval:` record forward.
+///
+/// Requires the store reference lock (`guard`, #627), taken by the caller
+/// BEFORE the source is read.
 pub fn compile_to_disk_for(
     source: &Path,
     paths: &Paths,
     front_door: Option<&str>,
+    guard: &crate::agent_store::RefGuard,
 ) -> Result<(std::path::PathBuf, LockFile), AwareError> {
     let snapshot = read_source_snapshot(source)?;
     let app = &snapshot.app;
@@ -1131,7 +1144,7 @@ pub fn compile_to_disk_for(
     // compiled node detail (mode, output schema, notes) then come from one
     // immutable copy — a working copy edited mid-compile cannot leak into the
     // lock, and the approved bytes survive any later `agent update`.
-    let (agents, digests) = snapshot_pinned_agents(app, paths)?;
+    let (agents, digests) = snapshot_pinned_agents(app, paths, guard)?;
     // Refuse to lock an app that references a not-yet-runnable agent (e.g.
     // html-report, whose transport binary isn't shipped) — fail here, not at run
     // with "program not found" (#161).
@@ -1174,9 +1187,14 @@ pub fn compile_to_disk_for(
 /// Snapshot every installed agent that any node of `app` references (the set
 /// `compile_snapshot` pins, frozen nodes included) and return the catalogue
 /// re-read from the store, plus each agent's stored digest.
+///
+/// #627: the working copies are read under their swap locks, shared — after
+/// any interrupted swap of them has been recovered — so a concurrent install,
+/// update or uninstall can never hand compile a partial or vanishing tree.
 fn snapshot_pinned_agents(
     app: &App,
     paths: &Paths,
+    guard: &crate::agent_store::RefGuard,
 ) -> Result<(Vec<DiscoveredAgent>, BTreeMap<String, String>), AwareError> {
     let mut flat: Vec<FlatNode> = Vec::new();
     flatten_nodes(&app.nodes, None, &[], &mut flat);
@@ -1184,13 +1202,21 @@ fn snapshot_pinned_agents(
         .iter()
         .filter_map(|(node, _, _, _)| node.agent.as_deref())
         .collect();
+    let lockable: Vec<&str> = referenced
+        .iter()
+        .copied()
+        .filter(|id| {
+            crate::manifest::loader::is_safe_segment(id) && *id != crate::install::swap::SWAP_DIR
+        })
+        .collect();
+    let _swap_read = crate::install::swap::read_lock(paths, guard, &lockable)?;
     let mut agents = Vec::new();
     let mut digests = BTreeMap::new();
     for current in discover_agents(paths)? {
         if !referenced.contains(current.manifest.agent.as_str()) {
             continue;
         }
-        let package = crate::agent_store::snapshot(paths, &current.root)?;
+        let package = crate::agent_store::snapshot(paths, &current.root, guard)?;
         let manifest = crate::agent_store::package_manifest(&package.root)?;
         if manifest.agent != current.manifest.agent {
             return Err(AwareError::Validation(format!(

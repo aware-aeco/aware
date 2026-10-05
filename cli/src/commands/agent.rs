@@ -187,7 +187,10 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
         AgentCommand::Skill { agent, skill } => skill_cmd(ctx, &agent, &skill),
         AgentCommand::Install { spec } => install(ctx, &spec),
         AgentCommand::Uninstall { agent } => {
-            crate::install::uninstall_agent(&agent, &ctx.paths)?;
+            // #627: the store reference lock first, then the swap lock inside.
+            let guard = crate::agent_store::open(&ctx.paths)?;
+            crate::install::uninstall_agent(&agent, &ctx.paths, &guard)?;
+            drop(guard);
             println!("✓ uninstalled {agent}");
             let _ = auto_regenerate_plugins(ctx, false);
             let _ = crate::commands::diagram::auto_regenerate(ctx);
@@ -552,13 +555,18 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     use std::path::PathBuf;
     let path = PathBuf::from(spec);
     if path.is_dir() {
+        // #627: an install creates a store reference (its snapshot) and swaps
+        // `agents/<id>` — the store reference lock first, swap locks inside.
+        let guard = crate::agent_store::open(&ctx.paths)?;
         let installed = crate::install::install_agent_from_path(
             &path,
             &ctx.paths,
             &crate::install::InstallSource::Local {
                 path: path.display().to_string(),
             },
+            &guard,
         )?;
+        drop(guard);
         println!("✓ installed {installed} from {}", path.display());
         // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
         let _ = auto_regenerate_plugins(ctx, false);
@@ -568,8 +576,10 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
 
     // Otherwise: treat as registry id [@version] or bundle name.
     let index = crate::registry::fetch::fetch_index_for_install(&ctx.paths.cache_dir())?;
+    let guard = crate::agent_store::open(&ctx.paths)?;
     if index.bundles.contains_key(spec) {
-        let report = crate::install::install_bundle(spec, &ctx.paths, &index)?;
+        let report = crate::install::install_bundle(spec, &ctx.paths, &index, &guard)?;
+        drop(guard);
         println!(
             "✓ bundle {}: {} installed, {} failed",
             report.bundle,
@@ -592,7 +602,8 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
         None => (spec, None),
     };
     let installed =
-        crate::install::install_agent_from_registry(id, version_pin, &ctx.paths, &index)?;
+        crate::install::install_agent_from_registry(id, version_pin, &ctx.paths, &index, &guard)?;
+    drop(guard);
     println!("✓ installed {installed}");
     // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
     let _ = auto_regenerate_plugins(ctx, false);
@@ -644,8 +655,17 @@ fn update_one(ctx: &Context, spec: &str, force: bool) -> Result<(), AwareError> 
     // so a failed re-pull — including a version the registry does not have —
     // leaves the existing agent intact (#174). That property is exactly why the
     // version argument went here rather than on `install --force`.
-    let installed =
-        crate::install::update_agent_from_registry(id, version_pin, force, &ctx.paths, &index)?;
+    // #627: store reference lock first; the update takes its swap locks inside.
+    let guard = crate::agent_store::open(&ctx.paths)?;
+    let installed = crate::install::update_agent_from_registry(
+        id,
+        version_pin,
+        force,
+        &ctx.paths,
+        &index,
+        &guard,
+    )?;
+    drop(guard);
     match version_pin {
         Some(v) => println!("\u{2713} updated {installed} to {v}"),
         None => println!("\u{2713} updated {installed}"),
@@ -682,7 +702,12 @@ fn update_all(ctx: &Context, force: bool) -> Result<(), AwareError> {
         // see. It is also the natural thing to reach for, which is what makes it
         // dangerous: `update --all` fails, the failure names `--force`, and the shortest
         // fix is to append it.
-        match crate::install::update_agent_from_registry(id, None, false, &ctx.paths, &index) {
+        // #627: one store reference lock per agent, so `--all` never holds it
+        // across the whole set.
+        let updated = crate::agent_store::open(&ctx.paths).and_then(|guard| {
+            crate::install::update_agent_from_registry(id, None, false, &ctx.paths, &index, &guard)
+        });
+        match updated {
             Ok(spec) => {
                 println!("  \u{2713} {spec}");
                 ok += 1;

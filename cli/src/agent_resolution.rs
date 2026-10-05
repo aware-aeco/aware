@@ -470,13 +470,19 @@ fn inconsistent_lock(lock: &LockFile, reason: &str) -> AwareError {
 
 /// Build the run's catalogue for `app` under `lock`. Snapshots a matching
 /// current copy that has no snapshot yet. Errors are the run's refusals.
+///
+/// Requires the store reference lock (`guard`, #627), held from before the
+/// caller read `lock` until it no longer relies on the catalogue's packages.
+/// Each agent's working copy is read under its swap lock, shared, after any
+/// interrupted swap of it has been recovered.
 pub fn resolve_agents(
     paths: &Paths,
     app: &App,
     lock: &LockFile,
     selection: Selection<'_>,
+    guard: &agent_store::RefGuard,
 ) -> Result<ResolvedCatalogue, AwareError> {
-    resolve_inner(paths, app, lock, selection, None)
+    resolve_inner(paths, app, lock, selection, guard, None)
 }
 
 fn resolve_inner(
@@ -484,12 +490,13 @@ fn resolve_inner(
     app: &App,
     lock: &LockFile,
     selection: Selection<'_>,
+    guard: &agent_store::RefGuard,
     nested_under: Option<&str>,
 ) -> Result<ResolvedCatalogue, AwareError> {
     check_lock_consistency(lock).map_err(|reason| inconsistent_lock(lock, &reason))?;
     let mut catalogue = ResolvedCatalogue::default();
     for id in sorted_dispatchable(app) {
-        let outcome = assess_agent(paths, id, lock, Mode::Run(selection))?;
+        let outcome = assess_agent(paths, id, lock, Mode::Run(selection, guard))?;
         if let Some(refusal) = outcome.refusal {
             return Err(refusal);
         }
@@ -506,7 +513,7 @@ fn resolve_inner(
                     "app-backed agent {wrapper}: nested app-backed agent {id} exceeds the v0 one-hop limit"
                 )));
             }
-            let nested = resolve_backing(paths, id, &manifest, selection)?;
+            let nested = resolve_backing(paths, id, &manifest, selection, guard)?;
             catalogue.nested.insert(id.to_string(), Arc::new(nested));
         }
         catalogue.info.insert(
@@ -534,6 +541,7 @@ fn resolve_backing(
     id: &str,
     manifest: &Agent,
     selection: Selection<'_>,
+    guard: &agent_store::RefGuard,
 ) -> Result<NestedApp, AwareError> {
     let transport = manifest.transport.app.as_ref().ok_or_else(|| {
         AwareError::Validation(format!("app-backed agent {id} has no app transport"))
@@ -562,7 +570,14 @@ fn resolve_backing(
             other => other,
         }
     })?;
-    let catalogue = resolve_inner(paths, &approved.app, &approved.lock, selection, Some(id))?;
+    let catalogue = resolve_inner(
+        paths,
+        &approved.app,
+        &approved.lock,
+        selection,
+        guard,
+        Some(id),
+    )?;
     Ok(NestedApp {
         backed_by,
         app: approved.app,
@@ -574,8 +589,10 @@ fn resolve_backing(
 
 #[derive(Clone, Copy)]
 enum Mode<'a> {
-    /// Resolve for a run: may snapshot a matching current copy.
-    Run(Selection<'a>),
+    /// Resolve for a run: may snapshot a matching current copy. Holds the
+    /// store reference lock, under which the working copy is read with its
+    /// swap lock held shared (#627).
+    Run(Selection<'a>, &'a agent_store::RefGuard),
     /// `aware app check`: read-only, writes nothing.
     Check,
 }
@@ -622,6 +639,20 @@ fn assess_agent(
         manifest: None,
         chosen: None,
         refusal: None,
+    };
+
+    // #627: a run reads the working copy only under its swap lock, shared —
+    // after recovering any interrupted swap of it — so it hashes and snapshots
+    // a complete old or a complete new tree, never one being replaced.
+    // `aware app check` (read-only, writes nothing) takes no lock.
+    let _swap_read = match mode {
+        Mode::Run(_, guard)
+            if crate::manifest::loader::is_safe_segment(id)
+                && id != crate::install::swap::SWAP_DIR =>
+        {
+            Some(crate::install::swap::read_lock(paths, guard, &[id])?)
+        }
+        _ => None,
     };
 
     // The current working copy. "Uninstalled" means there is no `agents/<id>/`
@@ -723,7 +754,7 @@ fn assess_agent(
             .is_some_and(|agent| agent.version == pinned)
     {
         match mode {
-            Mode::Run(_) => match agent_store::snapshot(paths, &current_root) {
+            Mode::Run(_, guard) => match agent_store::snapshot(paths, &current_root, guard) {
                 Ok(package) if package.digest == required && package.version == pinned => {
                     own = Some(package);
                 }
@@ -831,7 +862,7 @@ fn assess_agent(
             ),
             &notes,
         );
-        if matches!(mode, Mode::Run(_)) {
+        if matches!(mode, Mode::Run(..)) {
             outcome.chosen = Some(Chosen {
                 package: select(first, ordered.collect(), mode),
                 approval: Approval::Bytes,
@@ -934,7 +965,7 @@ fn legacy_version_only(
         return Ok(outcome);
     }
     match mode {
-        Mode::Run(_) => match agent_store::snapshot(paths, current_root) {
+        Mode::Run(_, guard) => match agent_store::snapshot(paths, current_root, guard) {
             Ok(package) if package.version == pinned => {
                 outcome.resolution = Resolution::CurrentVersionOnly;
                 outcome.detail = format!(
@@ -1000,7 +1031,7 @@ fn legacy_version_only(
 /// Pick a package from candidates already in the receipt-choice order
 /// (`first` is the default choice, `rest` the remaining order).
 fn select(first: StoredPackage, rest: Vec<StoredPackage>, mode: Mode<'_>) -> StoredPackage {
-    let Mode::Run(Selection::Verified(index)) = mode else {
+    let Mode::Run(Selection::Verified(index), _) = mode else {
         return first;
     };
     let verifies = |package: &StoredPackage| {

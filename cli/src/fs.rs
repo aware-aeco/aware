@@ -420,9 +420,107 @@ fn rename_replacing(source: &Path, destination: &Path) -> std::io::Result<()> {
     }
 }
 
+/// Rename the directory `source` to `destination`, failing — never replacing —
+/// when `destination` already exists. Used to publish a store package (#626)
+/// and for every move of an agent swap (#627). Both paths must be on the same
+/// volume (callers keep them under one parent tree).
+///
+/// Windows: `MoveFileExW(MOVEFILE_WRITE_THROUGH)` without
+/// `MOVEFILE_REPLACE_EXISTING`, so an existing name is refused by the OS and the
+/// move is on disk when the call returns. Unix: `rename(2)` would replace an
+/// EMPTY destination directory, so the name is checked first; callers hold the
+/// lock that makes that check meaningful (the swap lock), or tolerate the race
+/// (two snapshots of identical bytes). Follow with [`sync_dir`] on both parents
+/// for durability on Unix.
+#[cfg(not(windows))]
+pub(crate) fn rename_dir_no_replace(source: &Path, destination: &Path) -> std::io::Result<()> {
+    match std::fs::symlink_metadata(destination) {
+        Ok(_) => Err(std::io::Error::new(
+            std::io::ErrorKind::AlreadyExists,
+            format!("{} already exists", destination.display()),
+        )),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+            std::fs::rename(source, destination)
+        }
+        Err(error) => Err(error),
+    }
+}
+
+#[cfg(windows)]
+pub(crate) fn rename_dir_no_replace(source: &Path, destination: &Path) -> std::io::Result<()> {
+    use std::os::windows::ffi::OsStrExt;
+    use windows_sys::Win32::Storage::FileSystem::{MOVEFILE_WRITE_THROUGH, MoveFileExW};
+    // Same verbatim-prefix requirement as `rename_replacing` (#593).
+    let source = win32_verbatim(source)?;
+    let destination = win32_verbatim(destination)?;
+    let source_wide = source
+        .as_os_str()
+        .encode_wide()
+        .chain(std::iter::once(0))
+        .collect::<Vec<_>>();
+    let destination_wide = destination
+        .as_os_str()
+        .encode_wide()
+        .chain(std::iter::once(0))
+        .collect::<Vec<_>>();
+    // No MOVEFILE_REPLACE_EXISTING: an existing destination must never be replaced.
+    // SAFETY: both pointers name live, NUL-terminated UTF-16 buffers for the duration of the call.
+    let moved = unsafe {
+        MoveFileExW(
+            source_wide.as_ptr(),
+            destination_wide.as_ptr(),
+            MOVEFILE_WRITE_THROUGH,
+        )
+    };
+    if moved == 0 {
+        Err(std::io::Error::last_os_error())
+    } else {
+        Ok(())
+    }
+}
+
+/// Make a directory's entries durable (Unix: fsync the directory). A no-op on
+/// Windows, where directory handles cannot be flushed portably and the
+/// write-through moves above carry durability instead.
+pub(crate) fn sync_dir(dir: &Path) -> std::io::Result<()> {
+    #[cfg(unix)]
+    {
+        std::fs::File::open(dir)
+            .and_then(|handle| handle.sync_all())
+            .map_err(|e| std::io::Error::new(e.kind(), format!("fsync {}: {e}", dir.display())))
+    }
+    #[cfg(not(unix))]
+    {
+        let _ = dir;
+        Ok(())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn rename_dir_no_replace_moves_and_never_replaces() {
+        let tmp = tempfile::tempdir().unwrap();
+        let a = tmp.path().join("a");
+        let b = tmp.path().join("b");
+        std::fs::create_dir(&a).unwrap();
+        std::fs::write(a.join("f"), "one").unwrap();
+        rename_dir_no_replace(&a, &b).unwrap();
+        assert!(!a.exists());
+        assert_eq!(std::fs::read_to_string(b.join("f")).unwrap(), "one");
+        // An existing destination — even an EMPTY one, which rename(2) would
+        // replace — is refused and both sides are left as they were.
+        std::fs::create_dir(&a).unwrap();
+        std::fs::write(a.join("f"), "two").unwrap();
+        assert!(rename_dir_no_replace(&a, &b).is_err());
+        let empty = tmp.path().join("empty");
+        std::fs::create_dir(&empty).unwrap();
+        assert!(rename_dir_no_replace(&a, &empty).is_err());
+        assert_eq!(std::fs::read_to_string(a.join("f")).unwrap(), "two");
+        assert_eq!(std::fs::read_to_string(b.join("f")).unwrap(), "one");
+    }
 
     /// Review #628-3: a bare file name has parent `""`; the directory to sync
     /// is the current one, never the empty path.
