@@ -189,16 +189,21 @@ fn agent_limits_removal_to_one_agent() {
     let h = home();
     let (_, tool) = orphan(&h.paths, "tool", "1.0.0");
     let (_, other) = orphan(&h.paths, "other", "1.0.0");
-    let report = collect(
+    // An old leftover of the agent NOT named stays too (review round 4).
+    let trash = tool.parent().unwrap().join(format!("{TRASH_PREFIX}x"));
+    std::fs::create_dir_all(&trash).unwrap();
+    let report = collect_at(
         &h.paths,
         &Options {
             agent: Some("other".into()),
             ..options(true, "0s")
         },
+        Utc::now() + chrono::Duration::hours(2),
     )
     .unwrap();
     assert_eq!(report.removed.len(), 1);
     assert!(tool.exists() && !other.exists());
+    assert!(trash.exists(), "--agent touches nothing outside its agent");
 }
 
 /// GC waits for no run: while anything holds the store lock shared it

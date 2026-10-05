@@ -484,8 +484,9 @@ pub fn collect_at(
         refuse_referenced(&table, agent, digest)?;
     }
     let mut out = report(&table, true);
-    // `--only` removes exactly one package and touches nothing else.
-    let housekeeping = options.only.is_none();
+    // `--only` and `--agent` touch nothing outside what they name; stale
+    // leases and leftovers are an unfiltered GC's job (review round 4).
+    let housekeeping = options.only.is_none() && options.agent.is_none();
 
     // Stale leases: stamp first, then delete; a failure keeps the lease.
     if housekeeping {
