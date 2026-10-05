@@ -179,6 +179,11 @@ struct Intent {
     base_lock_digest: String,
     new_lock_digest: String,
     archives: Vec<StagedArchive>,
+    /// The archives that were NOT in `.aware-approvals/` before this
+    /// transaction: the only ones a rollback removes (review round 3 — a
+    /// refused promotion leaves no new records behind).
+    #[serde(default)]
+    fresh: Vec<StagedArchive>,
 }
 
 /// A step after which a test can make the promotion "crash" (fault
@@ -337,8 +342,10 @@ pub fn recover(
         let finished = intent
             .as_ref()
             .is_some_and(|i| current.as_deref() == Some(i.new_lock_digest.as_str()));
-        if let (true, Some(intent)) = (finished, &intent) {
-            place_archives(source_dir, &txn, &intent.archives)?;
+        match (finished, &intent) {
+            (true, Some(intent)) => place_archives(source_dir, &txn, &intent.archives)?,
+            (false, Some(intent)) => remove_fresh(source_dir, &intent.fresh),
+            _ => {}
         }
         std::fs::remove_dir_all(&txn)
             .map_err(|e| std::io::Error::new(e.kind(), format!("{}: {e}", txn.display())))?;
@@ -348,6 +355,61 @@ pub fn recover(
         });
     }
     Ok(out)
+}
+
+/// Remove the archives a rolled-back transaction placed that were not there
+/// before it (each only when it still holds exactly its named bytes).
+fn remove_fresh(source_dir: &Path, fresh: &[StagedArchive]) {
+    for archive in fresh {
+        let Some(rel) = approval::archive_rel(&archive.digest, &archive.ext) else {
+            continue;
+        };
+        let path = source_dir.join(rel);
+        if std::fs::read(&path).is_ok_and(|bytes| lock_digest(&bytes) == archive.digest) {
+            let _ = std::fs::remove_file(&path);
+        }
+    }
+}
+
+/// Check every archive destination before anything is written: an archive
+/// already in place must hold exactly its named bytes. Returns the archives
+/// that are not there yet.
+fn preflight_archives(
+    source_dir: &Path,
+    archives: &[StagedArchive],
+) -> std::result::Result<Vec<StagedArchive>, AwareError> {
+    let mut fresh = Vec::new();
+    for archive in archives {
+        let rel = approval::archive_rel(&archive.digest, &archive.ext)
+            .ok_or_else(|| AwareError::Internal(format!("{} is not a digest", archive.digest)))?;
+        let dest = source_dir.join(&rel);
+        match std::fs::read(&dest) {
+            Ok(bytes) if lock_digest(&bytes) == archive.digest => {}
+            Ok(_) => {
+                return Err(AwareError::Validation(format!(
+                    "[E_MIGRATE_ARCHIVE_INVALID] {} does not hash to {}: an archived approval record was changed; nothing was promoted",
+                    dest.display(),
+                    archive.digest
+                )));
+            }
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+                if !fresh
+                    .iter()
+                    .any(|f: &StagedArchive| f.digest == archive.digest && f.ext == archive.ext)
+                {
+                    fresh.push(archive.clone());
+                }
+            }
+            Err(error) => {
+                return Err(std::io::Error::new(
+                    error.kind(),
+                    format!("{}: {error}", dest.display()),
+                )
+                .into());
+            }
+        }
+    }
+    Ok(fresh)
 }
 
 /// Move each staged archive of `txn` into `.aware-approvals/`. An archive
@@ -413,6 +475,10 @@ fn commit(
     new_lock: &LockFile,
     new_bytes: &[u8],
 ) -> std::result::Result<(), AwareError> {
+    // Nothing is written until every destination checks out.
+    let mut intent = intent.clone();
+    intent.fresh = preflight_archives(source_dir, &intent.archives)?;
+    let intent = &intent;
     let root = txn_root(source_dir);
     std::fs::create_dir_all(&root)
         .map_err(|e| std::io::Error::new(e.kind(), format!("{}: {e}", root.display())))?;
@@ -437,6 +503,7 @@ fn commit(
         Ok(())
     })();
     let rollback = |error: AwareError| {
+        remove_fresh(source_dir, &intent.fresh);
         let _ = std::fs::remove_dir_all(&txn);
         error
     };
@@ -964,6 +1031,8 @@ pub fn promote(
                 ext: ext.to_string(),
             })
             .collect(),
+        // Filled in by `commit`'s preflight.
+        fresh: Vec::new(),
     };
     commit(&dir, &lock_path, &intent, &archives, &new_lock, &new_bytes)?;
     drop(policy_guard);

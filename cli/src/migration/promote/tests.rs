@@ -454,6 +454,7 @@ fn a_crash_at_any_step_recovers_to_the_old_lock_or_the_whole_promotion() {
         update_agent(&h.paths, "tool", "1.0.1", "mode: read");
         let (candidate, header) = prepare(&h, &source, None);
         let record = person_record("pawel", &candidate, &header);
+        let archives_before = archive_files(source.parent().unwrap());
         inject_fault(fault);
         let crashed = by_person(
             &h,
@@ -495,6 +496,8 @@ fn a_crash_at_any_step_recovers_to_the_old_lock_or_the_whole_promotion() {
             reader_accepts(&source);
         } else {
             assert_eq!(lock_of(&source).1, original_bytes, "{fault:?}");
+            // Review round 3: a rolled-back promotion leaves no new records.
+            assert_eq!(archive_files(dir), archives_before, "{fault:?}");
             // ...and the promotion can simply be run again.
             by_person(
                 &h,
@@ -1120,6 +1123,7 @@ fn a_changed_archive_already_in_place_refuses_the_promotion() {
     std::fs::create_dir_all(squatter.parent().unwrap()).unwrap();
     std::fs::write(&squatter, b"not the candidate").unwrap();
     let (_, before) = lock_of(&source);
+    let archives_before = archive_files(dir);
     let record = person_record("pawel", &candidate, &header);
     let refused = by_person(
         &h,
@@ -1136,6 +1140,11 @@ fn a_changed_archive_already_in_place_refuses_the_promotion() {
     );
     assert_eq!(lock_of(&source).1, before);
     assert!(owned_txns(dir, "demo").unwrap().is_empty(), "rolled back");
+    assert_eq!(
+        archive_files(dir),
+        archives_before,
+        "nothing else was written"
+    );
 }
 
 /// §15.1 R3: a policy promotion holds the policies lock shared, so it waits
@@ -1185,6 +1194,7 @@ fn a_chain_its_own_reader_would_refuse_is_never_written() {
     update_agent(&h.paths, "tool", "1.0.1", "mode: read");
     let (candidate, header) = prepare(&h, &source, None);
     let (_, before) = lock_of(&source);
+    let archives_before = archive_files(source.parent().unwrap());
     corrupt_next_chain();
     let refused = by_person(
         &h,
@@ -1208,6 +1218,22 @@ fn a_chain_its_own_reader_would_refuse_is_never_written() {
             .unwrap()
             .is_empty()
     );
+    assert_eq!(
+        archive_files(source.parent().unwrap()),
+        archives_before,
+        "a refused promotion leaves no new records"
+    );
+}
+
+/// The archive files in `.aware-approvals/` (not the transaction area).
+fn archive_files(dir: &Path) -> std::collections::BTreeSet<String> {
+    std::fs::read_dir(dir.join(approval::ARCHIVE_DIR))
+        .into_iter()
+        .flatten()
+        .flatten()
+        .filter(|e| e.path().is_file())
+        .map(|e| e.file_name().to_string_lossy().into_owned())
+        .collect()
 }
 
 /// The evidence digest of the last successor of the lock on disk.
