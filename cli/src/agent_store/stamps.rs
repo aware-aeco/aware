@@ -39,16 +39,33 @@ fn hex_of(digest: &str) -> Result<&str, AwareError> {
     })
 }
 
-/// The last-needed time of `id`'s package `digest`, if stamped. Read by GC's
-/// recovery window (#629); until then only by tests.
+/// The last-needed time of `id`'s package `digest`, if stamped and readable.
 #[cfg_attr(not(test), allow(dead_code))]
 pub fn last_needed(paths: &Paths, id: &str, digest: &str) -> Option<String> {
-    let dir = refs_dir(paths, id).ok()?;
-    let hex = hex_of(digest).ok()?;
-    std::fs::read_to_string(dir.join(format!("{hex}.{STAMP_EXT}")))
-        .ok()
-        .map(|t| t.trim().to_string())
-        .filter(|t| chrono::DateTime::parse_from_rfc3339(t).is_ok())
+    read_last_needed(paths, id, digest).ok().flatten()
+}
+
+/// The last-needed time of `id`'s package `digest`: where the recovery window
+/// of an unreferenced package starts (#629). `Ok(None)` when never stamped;
+/// `Err` when a stamp exists but cannot be read or is not a time — GC must not
+/// then count the window from an earlier time.
+pub fn read_last_needed(paths: &Paths, id: &str, digest: &str) -> Result<Option<String>, String> {
+    let dir = refs_dir(paths, id).map_err(|e| e.to_string())?;
+    let hex = hex_of(digest).map_err(|e| e.to_string())?;
+    let path = dir.join(format!("{hex}.{STAMP_EXT}"));
+    let text = match std::fs::read_to_string(&path) {
+        Ok(text) => text,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(None),
+        Err(error) => return Err(format!("cannot read {}: {error}", path.display())),
+    };
+    let text = text.trim().to_string();
+    match chrono::DateTime::parse_from_rfc3339(&text) {
+        Ok(_) => Ok(Some(text)),
+        Err(_) => Err(format!(
+            "{} holds {text:?}, which is not a time",
+            path.display()
+        )),
+    }
 }
 
 /// Stamp `id`'s package `digest` as needed until `at` (now when `None`). The

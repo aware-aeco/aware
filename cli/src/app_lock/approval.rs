@@ -157,7 +157,7 @@ pub fn pins_of(lock: &LockFile) -> BTreeMap<String, ApprovalPin> {
     )
 }
 
-fn original_pins(original: &OriginalApproval) -> BTreeMap<String, ApprovalPin> {
+pub(crate) fn original_pins(original: &OriginalApproval) -> BTreeMap<String, ApprovalPin> {
     pin_map(
         &original.agent_pins,
         &original.agent_digests,

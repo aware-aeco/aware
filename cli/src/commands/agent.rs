@@ -123,6 +123,22 @@ pub enum AgentCommand {
     /// releasing them. Read-only.
     Leases,
 
+    /// The stored tool versions and what still needs each one (#629): the
+    /// working copy, an approved lock, a migration candidate, an archived
+    /// approval, a run in progress, or nothing, so that `aware agent gc` may
+    /// remove it once the recovery window has passed. Read-only. With `--json`
+    /// the data is schema `aware.agent-refs/v1`; `complete: false` lists what
+    /// could not be read, and GC removes nothing while it is so.
+    Refs {
+        /// How long an unreferenced version is kept after it was last needed
+        /// (`<n>{s,m,h,d}`). Default: `agent-store.recovery-window` in
+        /// config.yaml, else 30d.
+        #[arg(long = "recovery-window", value_name = "DURATION")]
+        recovery_window: Option<String>,
+        #[command(subcommand)]
+        action: Option<RefsAction>,
+    },
+
     /// Invoke an installed BUILTIN agent's command directly, outside a workflow.
     /// (#215)
     ///
@@ -184,6 +200,31 @@ pub enum AgentCommand {
     },
 }
 
+#[derive(Subcommand, Debug)]
+pub enum RefsAction {
+    /// The folders AWARE searches for approved locks besides its own `apps/`
+    /// (a front door registers where it keeps its workflows).
+    Roots {
+        #[command(subcommand)]
+        action: RootsAction,
+    },
+}
+
+#[derive(Subcommand, Debug)]
+pub enum RootsAction {
+    /// Register a folder; its locks then keep the versions they pin.
+    Add {
+        dir: std::path::PathBuf,
+        /// Who registered it (e.g. `floless`).
+        #[arg(long)]
+        label: Option<String>,
+    },
+    /// Unregister a folder (it need not exist any more).
+    Remove { dir: std::path::PathBuf },
+    /// List the registered folders.
+    List,
+}
+
 pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
     match cmd {
         AgentCommand::List => list(ctx),
@@ -221,6 +262,13 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
         AgentCommand::Has { agent, capability } => has_cmd(ctx, &agent, &capability),
         AgentCommand::Reindex { check } => reindex(ctx, check),
         AgentCommand::Leases => leases_cmd(ctx),
+        AgentCommand::Refs {
+            recovery_window,
+            action,
+        } => match action {
+            None => refs_cmd(ctx, recovery_window.as_deref()),
+            Some(RefsAction::Roots { action }) => roots_cmd(ctx, action),
+        },
         AgentCommand::Invoke {
             agent,
             command,
@@ -282,6 +330,154 @@ fn leases_cmd(ctx: &Context) -> Result<(), AwareError> {
     }
     for lease in &leases.unreadable {
         println!("\u{26a0} {}: {}", lease.path, lease.problem);
+    }
+    Ok(())
+}
+
+/// `aware agent refs` (#629): every stored version and what still needs it.
+fn refs_cmd(ctx: &Context, recovery_window: Option<&str>) -> Result<(), AwareError> {
+    use crate::agent_store::refs::{self, State};
+    let started = Instant::now();
+    let window = refs::recovery_window(&ctx.paths, recovery_window)?;
+    let guard = crate::agent_store::open(&ctx.paths)?;
+    let table = refs::table(&ctx.paths, &guard, &window, chrono::Utc::now())?;
+    drop(guard);
+    if ctx.json {
+        envelope::print_ok("agent refs", &table, started)?;
+        return Ok(());
+    }
+    let short = |digest: &str| digest.chars().take(19).collect::<String>();
+    for package in &table.packages {
+        let why = match package.state {
+            State::Kept => format!("kept: {}", reasons(&package.references)),
+            State::InWindow => format!(
+                "kept until {} ({})",
+                package.kept_until.as_deref().unwrap_or("?"),
+                reasons(&package.references)
+            ),
+            State::Removable => "nothing needs it; gc may remove it".to_string(),
+        };
+        println!(
+            "{} {} {}  {why}",
+            package.agent,
+            package.version,
+            short(&package.digest)
+        );
+    }
+    if table.packages.is_empty() {
+        println!("no stored tool versions");
+    }
+    for invalid in &table.invalid_packages {
+        println!(
+            "\u{26a0} {} {}: does not verify ({})",
+            invalid.agent,
+            short(&invalid.digest),
+            invalid.reason
+        );
+    }
+    for leftover in &table.leftovers {
+        println!("\u{26a0} {} ({})", leftover.path, leftover.kind);
+    }
+    if let Some(legacy) = &table.legacy_store {
+        println!(
+            "the older store {} ({} bytes) is only used by AWARE 0.152 and older; nothing new writes or removes it",
+            legacy.path, legacy.bytes
+        );
+    }
+    if table.complete {
+        println!("recovery window {}; table complete", table.recovery_window);
+    } else {
+        println!("\u{26a0} table incomplete: gc will remove nothing until these can be read:");
+        for blocker in &table.blockers {
+            println!("  {}: {}", blocker.path, blocker.problem);
+        }
+    }
+    Ok(())
+}
+
+fn reasons(references: &[crate::agent_store::refs::Reference]) -> String {
+    use crate::agent_store::refs::Reference as R;
+    let mut out: Vec<&str> = references
+        .iter()
+        .map(|r| match r {
+            R::Current { .. } => "current copy",
+            R::CurrentUnhashable { .. } => "current copy could not be read",
+            R::ApprovedLock { .. } => "approved lock",
+            R::CandidateLock { .. } | R::CandidateBase { .. } => "migration candidate",
+            R::PromotionInProgress { .. } => "promotion in progress",
+            R::ApprovalArchive { held: true, .. }
+            | R::ApprovalOriginal { held: true, .. }
+            | R::SuccessorFrom { held: true, .. } => "earlier approval of an app on hold",
+            R::ApprovalArchive { .. } | R::ApprovalOriginal { .. } | R::SuccessorFrom { .. } => {
+                "earlier approval"
+            }
+            R::Lease { .. } => "run in progress",
+            R::StaleLeaseUnstamped { .. } => "run that ended without releasing it",
+            R::Recent { .. } => "recently used",
+        })
+        .collect();
+    out.sort();
+    out.dedup();
+    out.join(", ")
+}
+
+/// `aware agent refs roots add|remove|list` (#629).
+fn roots_cmd(ctx: &Context, action: RootsAction) -> Result<(), AwareError> {
+    use crate::agent_store::refs;
+    let started = Instant::now();
+    match action {
+        RootsAction::Add { dir, label } => {
+            let guard = crate::agent_store::open(&ctx.paths)?;
+            let (root, added) = refs::add_root(&ctx.paths, &guard, &dir, label.as_deref())?;
+            drop(guard);
+            if ctx.json {
+                envelope::print_ok(
+                    "agent refs roots add",
+                    serde_json::json!({ "root": root, "added": added }),
+                    started,
+                )?;
+            } else if added {
+                println!(
+                    "\u{2713} locks under {} now keep the versions they pin",
+                    root.path
+                );
+            } else {
+                println!("{} was already registered", root.path);
+            }
+        }
+        RootsAction::Remove { dir } => {
+            let guard = crate::agent_store::open(&ctx.paths)?;
+            let removed = refs::remove_root(&ctx.paths, &guard, &dir)?;
+            drop(guard);
+            if ctx.json {
+                envelope::print_ok(
+                    "agent refs roots remove",
+                    serde_json::json!({ "removed": removed }),
+                    started,
+                )?;
+            } else if removed {
+                println!("\u{2713} {} is no longer searched for locks", dir.display());
+            } else {
+                println!("{} was not registered", dir.display());
+            }
+        }
+        RootsAction::List => {
+            let roots = refs::read_roots(&ctx.paths)?;
+            if ctx.json {
+                envelope::print_ok(
+                    "agent refs roots list",
+                    serde_json::json!({ "roots": roots }),
+                    started,
+                )?;
+            } else if roots.is_empty() {
+                println!("no registered folders; only AWARE's own apps/ is searched");
+            } else {
+                for root in roots {
+                    let label = root.label.map(|l| format!(" ({l})")).unwrap_or_default();
+                    println!("{}{label}  added {}", root.path, root.added_at);
+                }
+            }
+        }
     }
     Ok(())
 }

@@ -252,6 +252,18 @@ pub fn read_lock<'g, S: AsRef<str>>(
     )))
 }
 
+/// The ids named by every unfinished (crashed or in-flight) swap — for the
+/// reference table (#629), which must look at a copy a crash moved out.
+pub fn pending_ids(paths: &Paths) -> Result<Vec<String>, AwareError> {
+    let mut ids = BTreeSet::new();
+    for txn in transactions(paths)? {
+        if !txn.settled() {
+            ids.extend(txn.intent.ids);
+        }
+    }
+    Ok(ids.into_iter().collect())
+}
+
 /// Whether an unfinished (crashed or in-flight) swap names agent `id` — for a
 /// reader that takes no lock to decide whether it must recover first.
 pub fn has_pending(paths: &Paths, id: &str) -> Result<bool, AwareError> {
