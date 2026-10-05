@@ -635,12 +635,27 @@ pub fn assess(lock: &LockFile, source_dir: &Path) -> Result<ApprovalSummary, Str
         )? {
             Archive::Missing(item) => missing.push(item),
             Archive::Present(bytes) => {
-                if let Ok(value) = serde_json::from_slice::<serde_json::Value>(&bytes) {
-                    let row = &value["row"];
-                    fact.effect = row["effect"].as_str().map(str::to_string);
-                    fact.comparison = row["comparison"]["status"].as_str().map(str::to_string);
-                    fact.comparison_runs = row["comparison"]["runs"].as_u64();
+                // The labels' effect and comparison wording comes from this
+                // file, so it must be evidence FOR this link: the candidate it
+                // promoted, the plan it approved, this app.
+                let evidence: crate::migration::files::Evidence = serde_json::from_slice(&bytes)
+                    .map_err(|e| {
+                        format!("successor {n}'s evidence is not migration evidence: {e}")
+                    })?;
+                if evidence.format != crate::migration::files::EVIDENCE_FORMAT
+                    || evidence.app != lock.app
+                    || evidence.header.app != lock.app
+                    || evidence.header.candidate_digest != link.resulting_lock_digest
+                    || evidence.header.plan_digest != link.to_plan_digest
+                {
+                    return Err(format!(
+                        "successor {n}'s evidence does not belong to this link (it was written for another candidate, plan or app)"
+                    ));
                 }
+                let row = &evidence.row;
+                fact.effect = row["effect"].as_str().map(str::to_string);
+                fact.comparison = row["comparison"]["status"].as_str().map(str::to_string);
+                fact.comparison_runs = row["comparison"]["runs"].as_u64();
             }
         }
         facts.push(fact);

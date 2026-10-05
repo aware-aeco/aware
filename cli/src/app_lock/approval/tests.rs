@@ -776,3 +776,53 @@ fn an_original_approval_of_another_source_is_invalid() {
     });
     assert_invalid(&s, "approved another source");
 }
+
+/// Archive `bytes` as successor 1's evidence and point the link at it.
+fn swap_evidence(s: &Setup, p: &Promoted, bytes: &[u8]) {
+    let dir = crate::fs::containing_dir(&s.source).to_path_buf();
+    let digest = archive(&dir, bytes, "json");
+    tamper(&p.lock_path, |l| {
+        let link = &mut chain(l).successors[0];
+        link.evidence = archive_rel(&digest, "json").unwrap();
+        link.evidence_digest = digest;
+    });
+}
+
+fn current_evidence(s: &Setup, p: &Promoted) -> serde_json::Value {
+    let link = &p.lock.approval.as_ref().unwrap().successors[0];
+    let path = crate::fs::containing_dir(&s.source).join(&link.evidence);
+    serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap()
+}
+
+#[test]
+fn evidence_for_another_candidate_is_invalid_and_never_labels_the_link() {
+    for (field, value) in [
+        ("candidate-digest", format!("sha256:{}", "5".repeat(64))),
+        ("plan-digest", format!("sha256:{}", "6".repeat(64))),
+    ] {
+        let s = setup();
+        let p = promoted_by(&s, By::Person("pawel"));
+        let mut evidence = current_evidence(&s, &p);
+        evidence["header"][field] = serde_json::Value::String(value);
+        swap_evidence(&s, &p, evidence.to_string().as_bytes());
+        assert_invalid(&s, "evidence does not belong to this link");
+    }
+    let s = setup();
+    let p = promoted_by(&s, By::Person("pawel"));
+    let mut evidence = current_evidence(&s, &p);
+    evidence["app"] = serde_json::Value::String("another-app".into());
+    swap_evidence(&s, &p, evidence.to_string().as_bytes());
+    assert_invalid(&s, "evidence does not belong to this link");
+}
+
+#[test]
+fn evidence_that_is_not_evidence_is_invalid_not_silently_complete() {
+    let s = setup();
+    let p = promoted_by(&s, By::Person("pawel"));
+    swap_evidence(&s, &p, b"this is not json");
+    assert_invalid(&s, "evidence");
+    let s = setup();
+    let p = promoted_by(&s, By::Person("pawel"));
+    swap_evidence(&s, &p, br#"{"row": {"effect": "declared-read-only"}}"#);
+    assert_invalid(&s, "evidence");
+}
