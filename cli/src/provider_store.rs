@@ -1603,37 +1603,9 @@ fn atomic_rename(source: &Path, destination: &Path, replace: bool) -> std::io::R
     if !replace {
         return std::fs::rename(source, destination);
     }
-    use std::os::windows::ffi::OsStrExt;
-    use windows_sys::Win32::Storage::FileSystem::{
-        MOVEFILE_REPLACE_EXISTING, MOVEFILE_WRITE_THROUGH, MoveFileExW,
-    };
-    // `std::fs` adds the verbatim prefix itself; this raw call must, or a deep
-    // AWARE_HOME fails here with `os error 3` past MAX_PATH (#593).
-    let source = crate::fs::win32_verbatim(source)?;
-    let destination = crate::fs::win32_verbatim(destination)?;
-    let source_wide = source
-        .as_os_str()
-        .encode_wide()
-        .chain(std::iter::once(0))
-        .collect::<Vec<_>>();
-    let destination_wide = destination
-        .as_os_str()
-        .encode_wide()
-        .chain(std::iter::once(0))
-        .collect::<Vec<_>>();
-    // SAFETY: both pointers name live, NUL-terminated UTF-16 buffers for the duration of the call.
-    let moved = unsafe {
-        MoveFileExW(
-            source_wide.as_ptr(),
-            destination_wide.as_ptr(),
-            MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH,
-        )
-    };
-    if moved == 0 {
-        Err(std::io::Error::last_os_error())
-    } else {
-        Ok(())
-    }
+    // On Windows the move itself is write-through, so the post-replace step
+    // has nothing that can fail outside tests; the record is in place either way.
+    crate::fs::replace_file(source, destination).map(|_| ())
 }
 
 #[cfg(test)]

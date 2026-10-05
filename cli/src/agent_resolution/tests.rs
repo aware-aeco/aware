@@ -1298,3 +1298,247 @@ fn an_unreadable_backing_app_directory_is_an_error_not_uninstalled() {
         "not 'backing app is not installed': {run_error}"
     );
 }
+
+// ── #628: resolve_pins ─────────────────────────────────────────────────────────
+
+/// Every file under AWARE_HOME with its bytes — a side-effect-free call must
+/// leave this identical.
+fn home_state(paths: &Paths) -> BTreeMap<String, Vec<u8>> {
+    crate::fs::plain_files_under(&paths.aware_home, "home")
+        .unwrap()
+        .into_iter()
+        .map(|(rel, path)| (rel, std::fs::read(path).unwrap()))
+        .collect()
+}
+
+/// Two agents approved at 1.0.0, then both updated to 2.0.0 (each version
+/// snapshotted, as install/update do). Returns the base lock.
+fn migrated_home(h: &Home) -> LockFile {
+    let a1 = write_agent(&h.paths, "a", "1.0.0", "");
+    let b1 = write_agent(&h.paths, "b", "1.0.0", "");
+    let (da1, db1) = (digest(&a1), digest(&b1));
+    crate::agent_store::snapshot(&h.paths, &a1).unwrap();
+    crate::agent_store::snapshot(&h.paths, &b1).unwrap();
+    let a2 = write_agent(&h.paths, "a", "2.0.0", "");
+    let b2 = write_agent(&h.paths, "b", "2.0.0", "");
+    crate::agent_store::snapshot(&h.paths, &a2).unwrap();
+    crate::agent_store::snapshot(&h.paths, &b2).unwrap();
+    lock(
+        &[("a", "1.0.0"), ("b", "1.0.0")],
+        &[("a", &da1), ("b", &db1)],
+        &[],
+    )
+}
+
+fn resolved(pins: &[ResolvedPin], id: &str) -> (String, PinSource) {
+    let pin = pins.iter().find(|p| p.agent.manifest.agent == id).unwrap();
+    assert_eq!(pin.agent.manifest.version, pin.version);
+    (pin.version.clone(), pin.source)
+}
+
+#[test]
+fn resolve_pins_moves_only_the_target_and_keeps_every_other_base_digest() {
+    let h = home();
+    let base = migrated_home(&h);
+    let a2 = digest(&h.paths.agents_dir().join("a"));
+    let targets = [("a".to_string(), PinTarget::Digest(a2.clone()))].into();
+    let pins = resolve_pins(
+        &h.paths,
+        &app_using(&["a", "b"]),
+        &PinSet::from_lock(&base, targets).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(resolved(&pins, "a"), ("2.0.0".into(), PinSource::Target));
+    // b 2.0.0 is installed and stored, yet b stays on the base lock's bytes.
+    assert_eq!(resolved(&pins, "b"), ("1.0.0".into(), PinSource::Base));
+    let a = pins.iter().find(|p| p.agent.manifest.agent == "a").unwrap();
+    assert_eq!(a.digest, a2);
+    assert!(a.agent.root.starts_with(h.paths.agent_store_dir()));
+}
+
+#[test]
+fn resolve_pins_writes_nothing_and_never_reads_the_working_copy() {
+    let h = home();
+    let base = migrated_home(&h);
+    // No working copies at all: everything must come from the store.
+    std::fs::remove_dir_all(h.paths.agents_dir()).unwrap();
+    let before = home_state(&h.paths);
+    let targets = [("a".to_string(), PinTarget::Version("2.0.0".into()))].into();
+    let pins = resolve_pins(
+        &h.paths,
+        &app_using(&["a", "b"]),
+        &PinSet::from_lock(&base, targets).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(resolved(&pins, "a").0, "2.0.0");
+    assert_eq!(resolved(&pins, "b").0, "1.0.0");
+    assert_eq!(
+        before,
+        home_state(&h.paths),
+        "resolve_pins wrote to AWARE_HOME"
+    );
+}
+
+#[test]
+fn a_version_target_with_two_stored_byte_sets_is_refused_as_ambiguous() {
+    let h = home();
+    let base = migrated_home(&h);
+    // A second, different copy of a 2.0.0 lands in the store.
+    let other = write_agent(&h.paths, "a", "2.0.0", "rebuilt");
+    crate::agent_store::snapshot(&h.paths, &other).unwrap();
+    let targets = [("a".to_string(), PinTarget::Version("2.0.0".into()))].into();
+    let error = resolve_pins(
+        &h.paths,
+        &app_using(&["a"]),
+        &PinSet::from_lock(&base, targets).unwrap(),
+    )
+    .unwrap_err()
+    .to_string();
+    assert!(error.contains("E_MIGRATE_TARGET_AMBIGUOUS"), "{error}");
+    // Naming the bytes resolves it.
+    let targets = [("a".to_string(), PinTarget::Digest(digest(&other)))].into();
+    let pins = resolve_pins(
+        &h.paths,
+        &app_using(&["a"]),
+        &PinSet::from_lock(&base, targets).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(pins[0].digest, digest(&other));
+}
+
+#[test]
+fn resolve_pins_refuses_what_cannot_be_carried_forward() {
+    let h = home();
+    let base = migrated_home(&h);
+    let app = app_using(&["a"]);
+    let refuse = |pins: &PinSet| resolve_pins(&h.paths, &app, pins).unwrap_err().to_string();
+    // A target the app never dispatches.
+    let unused = PinSet::from_lock(
+        &base,
+        [("b".to_string(), PinTarget::Version("2.0.0".into()))].into(),
+    )
+    .unwrap();
+    assert!(refuse(&unused).contains("E_MIGRATE_TARGET_UNUSED"));
+    // A version nothing stored.
+    let missing = PinSet::from_lock(
+        &base,
+        [("a".to_string(), PinTarget::Version("9.9.9".into()))].into(),
+    )
+    .unwrap();
+    assert!(refuse(&missing).contains("E_MIGRATE_TARGET_NOT_STORED"));
+    // A digest nothing stored.
+    let absent = format!("sha256:{}", "0".repeat(64));
+    let gone =
+        PinSet::from_lock(&base, [("a".to_string(), PinTarget::Digest(absent))].into()).unwrap();
+    assert!(refuse(&gone).contains("E_MIGRATE_PIN_NOT_STORED"));
+    // A legacy lock that named only a version.
+    let legacy = lock(&[("a", "1.0.0")], &[], &[]);
+    assert!(
+        refuse(&PinSet::from_lock(&legacy, BTreeMap::new()).unwrap())
+            .contains("E_MIGRATE_BASE_VERSION_ONLY")
+    );
+    // An agent the base lock never pinned.
+    let unpinned = lock(&[], &[], &[]);
+    assert!(
+        refuse(&PinSet::from_lock(&unpinned, BTreeMap::new()).unwrap())
+            .contains("E_MIGRATE_PIN_MISSING")
+    );
+}
+
+/// Review #628-1: a target never stands in for a missing approval. An agent the
+/// base lock never pinned, or pinned by version only, has no approved bytes to
+/// carry forward — whether or not a target names it.
+#[test]
+fn a_target_cannot_carry_forward_an_agent_with_no_approved_bytes() {
+    let h = home();
+    migrated_home(&h);
+    let app = app_using(&["a"]);
+    let a2 = digest(&h.paths.agents_dir().join("a"));
+    for target in [
+        PinTarget::Digest(a2.clone()),
+        PinTarget::Version("2.0.0".into()),
+    ] {
+        let targets: BTreeMap<String, PinTarget> = [("a".to_string(), target.clone())].into();
+        let legacy =
+            PinSet::from_lock(&lock(&[("a", "1.0.0")], &[], &[]), targets.clone()).unwrap();
+        let error = resolve_pins(&h.paths, &app, &legacy)
+            .unwrap_err()
+            .to_string();
+        assert!(
+            error.contains("E_MIGRATE_BASE_VERSION_ONLY"),
+            "{target:?}: {error}"
+        );
+        let unpinned = PinSet::from_lock(&lock(&[], &[], &[]), targets).unwrap();
+        let error = resolve_pins(&h.paths, &app, &unpinned)
+            .unwrap_err()
+            .to_string();
+        assert!(
+            error.contains("E_MIGRATE_PIN_MISSING"),
+            "{target:?}: {error}"
+        );
+    }
+}
+
+/// Review #628-2: `<agent>@<version>` counts only byte sets that VERIFY. A
+/// corrupt store record claiming the same version must not make a single real
+/// copy look ambiguous — it is skipped and reported.
+#[test]
+fn a_corrupt_record_claiming_the_target_version_is_reported_not_counted() {
+    let h = home();
+    let base = migrated_home(&h);
+    let real = digest(&h.paths.agents_dir().join("a"));
+    let real_hex = real.trim_start_matches("sha256:");
+    let fake_hex = "f".repeat(64);
+    let real_container = h.paths.agent_store_dir().join("a").join(real_hex);
+    let key = std::fs::read_dir(&real_container)
+        .unwrap()
+        .map(|e| e.unwrap().file_name().to_string_lossy().into_owned())
+        .find(|n| !n.starts_with('.'))
+        .unwrap();
+    let forged = h
+        .paths
+        .agent_store_dir()
+        .join("a")
+        .join(&fake_hex)
+        .join(&key);
+    crate::fs::copy_dir_recursive(&real_container.join(&key), &forged).unwrap();
+    let record = forged.join(PACKAGE_FILE);
+    let text = std::fs::read_to_string(&record)
+        .unwrap()
+        .replace(real_hex, &fake_hex);
+    std::fs::write(&record, text).unwrap();
+
+    let targets = [("a".to_string(), PinTarget::Version("2.0.0".into()))].into();
+    let pins = resolve_pins(
+        &h.paths,
+        &app_using(&["a"]),
+        &PinSet::from_lock(&base, targets).unwrap(),
+    )
+    .expect("one verified 2.0.0 is not ambiguous");
+    assert_eq!(pins[0].digest, real);
+    assert!(
+        pins[0]
+            .invalid_candidates
+            .iter()
+            .any(|c| c.path.contains(&fake_hex)),
+        "the forged record must be reported: {:?}",
+        pins[0].invalid_candidates
+    );
+}
+
+/// Codex review round 3: PinSet::from_lock applies the run's consistency check,
+/// so no caller can resolve a lock `app run` would refuse.
+#[test]
+fn a_pin_set_is_never_built_from_an_inconsistent_lock() {
+    let a = format!("sha256:{}", "a".repeat(64));
+    let b = format!("sha256:{}", "b".repeat(64));
+    let conflicting = lock(&[("x", "1.0.0")], &[("x", &a)], &[("x", &b)]);
+    let error = PinSet::from_lock(&conflicting, BTreeMap::new())
+        .unwrap_err()
+        .to_string();
+    assert!(error.contains("E_APP_LOCK_INVALID"), "{error}");
+    let malformed = lock(&[("x", "1.0.0")], &[("x", "sha256:nope")], &[]);
+    assert!(PinSet::from_lock(&malformed, BTreeMap::new()).is_err());
+    let consistent = lock(&[("x", "1.0.0")], &[("x", &a)], &[("x", &a)]);
+    assert!(PinSet::from_lock(&consistent, BTreeMap::new()).is_ok());
+}

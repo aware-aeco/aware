@@ -349,3 +349,78 @@ fn uninstall_app_removes_synthesized_agent() {
         "synth agent should be removed on uninstall"
     );
 }
+
+fn describe_json(aware: &std::path::Path, agent: &str) -> serde_json::Value {
+    let out = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", aware)
+        .args(["--json", "agent", "describe", agent])
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    serde_json::from_slice(&out).unwrap()
+}
+
+/// #628 § Declared effect: an app-backed agent's synthesized `mode:` is never a
+/// declaration. `describe` says the effect is inherited, from which app, and
+/// judges the backing app's own approved nodes — an inline-only app is read-only,
+/// an author-written `mode: write` makes it write.
+#[test]
+fn describe_reports_an_app_backed_agents_effect_as_inherited() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let src = tmp.path().join("src");
+    install_app(&aware, &write_app(&src, "inner", INNER_FLO)).success();
+    let v = describe_json(&aware, "inner");
+    let run = &v["data"]["commands"][0];
+    assert_eq!(run["name"], "run");
+    assert_eq!(run["mode-basis"], "inherited");
+    assert_eq!(run["inherited-from"], "inner");
+    assert_eq!(run["mode"], "read");
+    assert_eq!(run["inherited-read-only"], true, "{run}");
+    assert!(run.get("inherited-detail").is_none(), "{run}");
+
+    let writer = INNER_FLO.replace("app: inner", "app: writer").replace(
+        "    lifecycle: single\n",
+        "    lifecycle: single\n    mode: write\n",
+    );
+    install_app(&aware, &write_app(&src, "writer", &writer)).success();
+    let v = describe_json(&aware, "writer");
+    let run = &v["data"]["commands"][0];
+    assert_eq!(run["mode-basis"], "inherited");
+    assert_eq!(run["mode"], "write");
+    assert_eq!(run["inherited-read-only"], false, "{run}");
+}
+
+/// Codex review round 3 on #628 PR1: a backing-app lock whose `agent-digests`
+/// and `agent-bundle-pins` disagree is one `app run` refuses
+/// (E_APP_LOCK_INVALID). `describe` must not judge it read-only: it says why the
+/// inherited effect could not be evaluated instead.
+#[test]
+fn describe_gives_no_inherited_verdict_for_an_inconsistent_backing_lock() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let src = tmp.path().join("src");
+    install_app(&aware, &write_app(&src, "inner", INNER_FLO)).success();
+    let lock_path = aware.join("apps/inner/inner.lock");
+    let lock = std::fs::read_to_string(&lock_path).unwrap();
+    assert!(lock.contains("agent-pins: {}"), "fixture changed: {lock}");
+    let conflicting = lock.replace(
+        "agent-pins: {}",
+        &format!(
+            "agent-pins:\n  tool: 1.0.0\nagent-digests:\n  tool: sha256:{}\nagent-bundle-pins:\n  tool: sha256:{}",
+            "a".repeat(64),
+            "b".repeat(64)
+        ),
+    );
+    std::fs::write(&lock_path, conflicting).unwrap();
+
+    let v = describe_json(&aware, "inner");
+    let run = &v["data"]["commands"][0];
+    assert_eq!(run["mode-basis"], "inherited");
+    assert!(run.get("inherited-read-only").is_none(), "{run}");
+    let detail = run["inherited-detail"].as_str().unwrap_or_default();
+    assert!(detail.contains("E_APP_LOCK_INVALID"), "{run}");
+}

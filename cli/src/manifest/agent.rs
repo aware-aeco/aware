@@ -309,7 +309,8 @@ pub struct Command {
 }
 
 /// Read/write mode for a command — drives the safety-contract enforcement.
-#[derive(Debug, Deserialize, PartialEq, Eq, Clone, Copy)]
+/// Ordered `Read < Write`, so the effect of several nodes is their `max`.
+#[derive(Debug, Deserialize, serde::Serialize, PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
 pub enum Mode {
     Read,
@@ -336,6 +337,73 @@ impl Mode {
 pub struct EffectiveMode {
     pub mode: Mode,
     pub overridden: bool,
+}
+
+/// WHERE a node's read/write mode came from (#628) — the difference between an
+/// effect the agent author *declared* and one AWARE merely *assumed*.
+///
+/// Only [`ModeBasis::Declared`] is a declaration of effect: an explicit `mode:`
+/// on a command that is not `mode-overridable`. There is no separate manifest
+/// key for "declared" — the explicit, non-overridable `mode:` IS the
+/// declaration. Everything else is a default, an inference, or somebody else's
+/// effect, and a migration that wants to treat a workflow as *declared
+/// read-only* may rely on `Declared` alone (`10-core/agent-spec.md § Declared
+/// effect`).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum ModeBasis {
+    /// The command declares `mode:` and is not `mode-overridable`.
+    Declared,
+    /// The command is `mode-overridable` and the node declared nothing, so the
+    /// manifest's `mode:` applies as a conservative default (e.g. `exec`).
+    OverridableDefault,
+    /// The command is `mode-overridable` and the node declared its own `mode:`
+    /// — or the command is unknown and the node declared one. The author of the
+    /// APP said so; the agent did not.
+    NodeOverride,
+    /// No `mode:` anywhere: inferred from the command name convention
+    /// (`*.create`, `insert`, …) — an unannotated read verb lands here as `read`.
+    InferredName,
+    /// The command is not in the manifest and the node declared nothing, so
+    /// compile falls back to `write` for safety.
+    FallbackWrite,
+    /// An app-backed agent (`exposes-as-agent`): the manifest `mode:` is
+    /// synthesized at the app boundary and never a declaration. The real effect
+    /// is the backing app's, computed by `migration::effect::wrapper_effect`.
+    Inherited,
+}
+
+impl ModeBasis {
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            ModeBasis::Declared => "declared",
+            ModeBasis::OverridableDefault => "overridable-default",
+            ModeBasis::NodeOverride => "node-override",
+            ModeBasis::InferredName => "inferred-name",
+            ModeBasis::FallbackWrite => "fallback-write",
+            ModeBasis::Inherited => "inherited",
+        }
+    }
+
+    /// The coarse label `aware agent describe` prints per command, where no
+    /// node exists: `declared`, `overridable` (a default the calling node may
+    /// replace), `inferred`, or `inherited`.
+    pub const fn describe_label(self) -> &'static str {
+        match self {
+            ModeBasis::Declared => "declared",
+            ModeBasis::OverridableDefault | ModeBasis::NodeOverride => "overridable",
+            ModeBasis::InferredName | ModeBasis::FallbackWrite => "inferred",
+            ModeBasis::Inherited => "inherited",
+        }
+    }
+}
+
+/// A node's resolved mode together with where it came from — see
+/// [`Agent::mode_basis`].
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ModeResolution {
+    pub mode: Mode,
+    pub basis: ModeBasis,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Eq, Clone, Copy)]
@@ -469,6 +537,57 @@ impl Agent {
                 mode: self.mode_of(name, cmd),
                 overridden: false,
             },
+        }
+    }
+
+    /// Resolve a node's mode AND its basis (#628). `cmd` is `None` when the
+    /// command is not in the manifest — the case compile locks as the author's
+    /// node `mode:` or, failing that, `write` for safety.
+    ///
+    /// The `mode` returned always equals what compile records for the node
+    /// ([`effective_mode`](Self::effective_mode) for a known command, the
+    /// unknown-command fallback otherwise), so a basis can never describe a mode
+    /// the lock does not hold.
+    pub fn mode_basis(
+        &self,
+        name: &str,
+        cmd: Option<&Command>,
+        node_mode: Option<Mode>,
+    ) -> ModeResolution {
+        let Some(cmd) = cmd else {
+            return match node_mode {
+                Some(mode) => ModeResolution {
+                    mode,
+                    basis: ModeBasis::NodeOverride,
+                },
+                None => ModeResolution {
+                    mode: Mode::Write,
+                    basis: ModeBasis::FallbackWrite,
+                },
+            };
+        };
+        let effective = self.effective_mode(name, cmd, node_mode);
+        let basis = if matches!(
+            crate::runtime::invoker::dispatch_transport(&self.transport),
+            Some(crate::runtime::invoker::TransportKind::App)
+        ) {
+            // A synthesized manifest always carries `mode:` (defaulted to read
+            // when the app author wrote nothing), so it is never a declaration.
+            ModeBasis::Inherited
+        } else if cmd.mode_overridable {
+            if effective.overridden {
+                ModeBasis::NodeOverride
+            } else {
+                ModeBasis::OverridableDefault
+            }
+        } else if cmd.mode.is_some() {
+            ModeBasis::Declared
+        } else {
+            ModeBasis::InferredName
+        };
+        ModeResolution {
+            mode: effective.mode,
+            basis,
         }
     }
 
@@ -740,6 +859,113 @@ commands: {}
         // Both commands have no explicit category → both resolve to Curated.
         assert_eq!(a.curated_count(), 2);
         assert_eq!(a.reflected_count(), 0);
+    }
+
+    const MODES: &str = r#"
+agent: modes
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: x } }
+commands:
+  declared-read:
+    lifecycle: single
+    description: x
+    mode: read
+  declared-write:
+    lifecycle: single
+    description: x
+    mode: write
+  exec:
+    lifecycle: single
+    description: x
+    mode: write
+    mode-overridable: true
+  list-things:
+    lifecycle: single
+    description: x
+  thing.create:
+    lifecycle: single
+    description: x
+"#;
+
+    fn basis(a: &Agent, name: &str, node: Option<Mode>) -> (Mode, ModeBasis) {
+        let r = a.mode_basis(name, a.commands.get(name), node);
+        (r.mode, r.basis)
+    }
+
+    /// #628 § Declared effect: only an explicit, non-overridable `mode:` is a
+    /// declaration. Every other route to a mode must say what it was, or a
+    /// migration could treat a guess as a promise.
+    #[test]
+    fn mode_basis_separates_a_declaration_from_every_default_and_guess() {
+        let a: Agent = serde_yaml::from_str(MODES).unwrap();
+        assert_eq!(
+            basis(&a, "declared-read", None),
+            (Mode::Read, ModeBasis::Declared)
+        );
+        assert_eq!(
+            basis(&a, "declared-write", None),
+            (Mode::Write, ModeBasis::Declared)
+        );
+        // A node mode on a non-overridable command changes nothing (the
+        // validator rejects a conflict); it is still the manifest's declaration.
+        assert_eq!(
+            basis(&a, "declared-read", Some(Mode::Write)),
+            (Mode::Read, ModeBasis::Declared)
+        );
+        assert_eq!(
+            basis(&a, "exec", None),
+            (Mode::Write, ModeBasis::OverridableDefault)
+        );
+        assert_eq!(
+            basis(&a, "exec", Some(Mode::Read)),
+            (Mode::Read, ModeBasis::NodeOverride)
+        );
+        assert_eq!(
+            basis(&a, "list-things", None),
+            (Mode::Read, ModeBasis::InferredName)
+        );
+        assert_eq!(
+            basis(&a, "thing.create", None),
+            (Mode::Write, ModeBasis::InferredName)
+        );
+        // Unknown command: the author's node mode, else write for safety.
+        assert_eq!(
+            basis(&a, "nope", None),
+            (Mode::Write, ModeBasis::FallbackWrite)
+        );
+        assert_eq!(
+            basis(&a, "nope", Some(Mode::Read)),
+            (Mode::Read, ModeBasis::NodeOverride)
+        );
+    }
+
+    #[test]
+    fn a_synthesized_app_backed_manifest_never_declares_its_mode() {
+        let yaml = MODES.replace(
+            "transport: { cli: { binary: x } }",
+            "transport: { app: { backed-by: inner } }",
+        );
+        let a: Agent = serde_yaml::from_str(&yaml).unwrap();
+        // Even an explicit `mode: read` is the synthesizer's default, not a declaration.
+        assert_eq!(
+            basis(&a, "declared-read", None),
+            (Mode::Read, ModeBasis::Inherited)
+        );
+        assert_eq!(ModeBasis::Inherited.describe_label(), "inherited");
+    }
+
+    #[test]
+    fn describe_labels_collapse_to_four_words() {
+        assert_eq!(ModeBasis::Declared.describe_label(), "declared");
+        assert_eq!(
+            ModeBasis::OverridableDefault.describe_label(),
+            "overridable"
+        );
+        assert_eq!(ModeBasis::InferredName.describe_label(), "inferred");
+        assert_eq!(ModeBasis::FallbackWrite.describe_label(), "inferred");
     }
 
     #[test]

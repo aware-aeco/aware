@@ -55,6 +55,7 @@ mod install;
 mod json;
 mod lockfile;
 mod manifest;
+mod migration;
 mod paths;
 mod plugins;
 mod private_rest_header;

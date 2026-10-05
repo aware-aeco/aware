@@ -1016,6 +1016,277 @@ fn bundle_mismatch(id: &str, digest: &str, reason: &str) -> AwareError {
     ))
 }
 
+// ── #628: resolve an app against a CHOSEN set of pins ──────────────────────────
+
+/// Where a migration target pin points.
+#[cfg_attr(not(test), allow(dead_code))] // wired by #628 PR2
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum PinTarget {
+    /// Exact stored bytes: `<agent>@sha256:<hex>`.
+    Digest(String),
+    /// A version that must map to exactly ONE stored digest: `<agent>@<version>`.
+    Version(String),
+}
+
+/// One agent pin of the base lock: its version and, when the lock names
+/// bytes, their digest (`agent-digests`, else an official `agent-bundle-pins`).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct BasePin {
+    pub version: String,
+    pub digest: Option<String>,
+}
+
+/// The pins a candidate resolves against: the base lock's, with some agents
+/// retargeted. Every agent NOT in `targets` keeps the base lock's own bytes — a
+/// Tekla candidate never drags in a newer google-workspace.
+#[derive(Debug, Clone, Default)]
+pub struct PinSet {
+    pub base: BTreeMap<String, BasePin>,
+    pub targets: BTreeMap<String, PinTarget>,
+}
+
+impl PinSet {
+    /// The base lock's pins with `targets` applied over them — refused, as the
+    /// run refuses it (`E_APP_LOCK_INVALID`), when the lock's digest fields are
+    /// malformed or disagree. Without this, `agent-digests` would silently win
+    /// over a conflicting `agent-bundle-pins` and a caller could judge a lock
+    /// that `aware app run` will never execute (Codex review #628 round 3).
+    pub fn from_lock(
+        lock: &LockFile,
+        targets: BTreeMap<String, PinTarget>,
+    ) -> Result<Self, AwareError> {
+        check_lock_consistency(lock).map_err(|reason| inconsistent_lock(lock, &reason))?;
+        let base = lock
+            .agent_pins
+            .iter()
+            .map(|(id, version)| {
+                let digest = lock
+                    .agent_digests
+                    .get(id)
+                    .or_else(|| lock.agent_bundle_pins.get(id))
+                    .cloned();
+                (
+                    id.clone(),
+                    BasePin {
+                        version: version.clone(),
+                        digest,
+                    },
+                )
+            })
+            .collect();
+        Ok(PinSet { base, targets })
+    }
+}
+
+/// Which side of a [`PinSet`] an agent resolved from.
+#[cfg_attr(not(test), allow(dead_code))] // wired by #628 PR2
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum PinSource {
+    Base,
+    Target,
+}
+
+/// One agent resolved by [`resolve_pins`]: a verified store package.
+#[cfg_attr(not(test), allow(dead_code))] // wired by #628 PR2
+#[derive(Debug)]
+pub struct ResolvedPin {
+    pub agent: DiscoveredAgent,
+    pub version: String,
+    pub digest: String,
+    pub source: PinSource,
+    /// Store packages or records that claimed this agent's chosen bytes or
+    /// target version but do not verify — skipped, never used, reported.
+    pub invalid_candidates: Vec<InvalidCandidate>,
+}
+
+/// Resolve every agent `app` dispatches to the store package `pins` names —
+/// **side-effect free** (#628 plan §1): nothing is snapshotted, written or
+/// repaired, and the working copy under `agents/` is never read; only verified
+/// store packages are used.
+///
+/// * an agent in `pins.targets` resolves to the target bytes — a `Version`
+///   target must map to exactly one stored digest (`E_MIGRATE_TARGET_AMBIGUOUS`
+///   when it maps to several, `E_MIGRATE_TARGET_NOT_STORED` when to none);
+/// * every other agent resolves to the base lock's own digest — never to a
+///   newer copy that happens to be installed;
+/// * a target naming an agent the app does not dispatch, an agent the base
+///   lock never pinned, or a base pin with no digest (a lock compiled by AWARE
+///   ≤ 0.148) is refused, naming it: none of these can be carried forward
+///   without a person compiling the app again.
+///
+/// Frozen-only agents are not dispatchable and are not resolved here; a
+/// candidate keeps their base pins (plan §1).
+pub fn resolve_pins(
+    paths: &Paths,
+    app: &App,
+    pins: &PinSet,
+) -> Result<Vec<ResolvedPin>, AwareError> {
+    let dispatched = sorted_dispatchable(app);
+    for id in pins.targets.keys() {
+        if !dispatched.contains(&id.as_str()) {
+            return Err(AwareError::Validation(format!(
+                "[E_MIGRATE_TARGET_UNUSED] app {} does not dispatch agent {id}, so there is nothing to move it to",
+                app.app
+            )));
+        }
+    }
+    let mut out = Vec::new();
+    for id in dispatched {
+        // Every agent must have approved BYTES in the base lock before anything
+        // is applied over it: a target moves an approval, it never creates one
+        // (review #628-1).
+        let base = pins.base.get(id).ok_or_else(|| {
+            AwareError::Validation(format!(
+                "[E_MIGRATE_PIN_MISSING] app {}'s approval never pinned agent {id}; compile the app again",
+                app.app
+            ))
+        })?;
+        let base_digest = base.digest.clone().ok_or_else(|| {
+            AwareError::Validation(format!(
+                "[E_MIGRATE_BASE_VERSION_ONLY] app {}'s approval names only a version of {id} ({}), not its bytes; compile the app again before migrating it",
+                app.app, base.version
+            ))
+        })?;
+        let mut invalid_candidates = Vec::new();
+        let (digest, source) = match pins.targets.get(id) {
+            Some(PinTarget::Digest(digest)) => (digest.clone(), PinSource::Target),
+            Some(PinTarget::Version(version)) => {
+                let (digest, skipped) = unique_stored_digest(paths, id, version)?;
+                invalid_candidates = skipped;
+                (digest, PinSource::Target)
+            }
+            None => (base_digest, PinSource::Base),
+        };
+        let (package, skipped) = stored_package(paths, id, &digest)?;
+        for candidate in skipped {
+            if !invalid_candidates.contains(&candidate) {
+                invalid_candidates.push(candidate);
+            }
+        }
+        if source == PinSource::Base && package.version != base.version {
+            return Err(bundle_mismatch(
+                id,
+                &digest,
+                &format!(
+                    "the stored copy holds version {}, not the pinned {}",
+                    package.version, base.version
+                ),
+            ));
+        }
+        let manifest = agent_store::package_manifest(&package.root)?;
+        out.push(ResolvedPin {
+            version: package.version,
+            digest: package.digest,
+            source,
+            invalid_candidates,
+            agent: DiscoveredAgent {
+                manifest,
+                root: package.root,
+            },
+        });
+    }
+    Ok(out)
+}
+
+/// Every store package of `id` claiming bytes `digest`, verified: the valid
+/// ones in the receipt order a run uses, and the ones that do not verify.
+fn verified_candidates(
+    paths: &Paths,
+    id: &str,
+    digest: &str,
+) -> Result<(Vec<StoredPackage>, Vec<InvalidCandidate>), AwareError> {
+    let mut valid = Vec::new();
+    let mut invalid = Vec::new();
+    for (key, dir) in agent_store::package_candidates(paths, id, digest)? {
+        match agent_store::verify_package(&dir, id, digest, &key) {
+            Ok(package) => valid.push((agent_store::receipt_rank(&dir), key, package)),
+            Err(reason) => invalid.push(InvalidCandidate {
+                path: dir.display().to_string(),
+                reason,
+            }),
+        }
+    }
+    valid.sort_by(|a, b| (a.0, &a.1).cmp(&(b.0, &b.1)));
+    Ok((valid.into_iter().map(|(_, _, p)| p).collect(), invalid))
+}
+
+/// The verified store package of `id` with bytes `digest`, chosen by the same
+/// receipt order a run uses, plus the candidates that did not verify. Refuses
+/// when none verifies.
+fn stored_package(
+    paths: &Paths,
+    id: &str,
+    digest: &str,
+) -> Result<(StoredPackage, Vec<InvalidCandidate>), AwareError> {
+    let (valid, invalid) = verified_candidates(paths, id, digest)?;
+    match valid.into_iter().next() {
+        Some(package) => Ok((package, invalid)),
+        None if invalid.is_empty() => Err(AwareError::Validation(format!(
+            "[E_MIGRATE_PIN_NOT_STORED] no stored copy of agent {id} {digest} exists on this machine"
+        ))),
+        None => Err(bundle_mismatch(
+            id,
+            digest,
+            &format!(
+                "no stored copy verifies ({})",
+                invalid
+                    .iter()
+                    .map(|c| format!("{}: {}", c.path, c.reason))
+                    .collect::<Vec<_>>()
+                    .join("; ")
+            ),
+        )),
+    }
+}
+
+/// The ONE stored digest of `id` at `version`. The store records only
+/// nominate digests; each is VERIFIED before it counts, so a corrupt or forged
+/// record claiming the version can neither make a target ambiguous nor be
+/// chosen (review #628-2). Records that do not verify — and store entries
+/// whose record cannot be read at all — are returned for reporting.
+fn unique_stored_digest(
+    paths: &Paths,
+    id: &str,
+    version: &str,
+) -> Result<(String, Vec<InvalidCandidate>), AwareError> {
+    let listing = agent_store::stored_versions(paths, id);
+    let nominated: BTreeSet<&str> = listing
+        .stored
+        .iter()
+        .filter(|stored| stored.version == version)
+        .map(|stored| stored.digest.as_str())
+        .collect();
+    let mut invalid = listing.unreadable.clone();
+    let mut verified: Vec<&str> = Vec::new();
+    for digest in nominated {
+        let (valid, bad) = verified_candidates(paths, id, digest)?;
+        invalid.extend(bad);
+        if valid.iter().any(|package| package.version == version) {
+            verified.push(digest);
+        }
+    }
+    match verified.as_slice() {
+        [one] => Ok(((*one).to_string(), invalid)),
+        [] if invalid.is_empty() => Err(AwareError::Validation(format!(
+            "[E_MIGRATE_TARGET_NOT_STORED] no stored copy of agent {id} {version} exists on this machine"
+        ))),
+        [] => Err(AwareError::Validation(format!(
+            "[E_MIGRATE_TARGET_NOT_STORED] no stored copy of agent {id} {version} verifies on this machine ({})",
+            invalid
+                .iter()
+                .map(|c| format!("{}: {}", c.path, c.reason))
+                .collect::<Vec<_>>()
+                .join("; ")
+        ))),
+        many => Err(AwareError::Validation(format!(
+            "[E_MIGRATE_TARGET_AMBIGUOUS] agent {id} {version} is stored as {} different verified byte sets ({}); name one as {id}@sha256:<hex>",
+            many.len(),
+            many.join(", ")
+        ))),
+    }
+}
+
 // ── `aware app check` ──────────────────────────────────────────────────────────
 
 /// Whether the app's compiled approval could be read.

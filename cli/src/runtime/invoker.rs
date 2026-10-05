@@ -272,6 +272,16 @@ fn sibling_binary(dir: &std::path::Path, binary: &str) -> Option<std::path::Path
     candidate.is_file().then_some(candidate)
 }
 
+/// The program `spawn_cli` hands to `Command::new` for a CLI agent's
+/// `transport.cli.binary` — the ONE place dispatch decides it, also read by the
+/// migration contract's executor identity (#628). Host bridges live in
+/// `<AWARE_HOME>/bridges` (off PATH) and resolve to an absolute path; bundled
+/// transports resolve to the sibling of `aware`; anything else is passed on as
+/// written, for the operating system to resolve when `Command::new` spawns it.
+pub(crate) fn cli_program(binary: &str) -> std::path::PathBuf {
+    resolve_cli_binary(binary, &bridges_dir())
+}
+
 /// The persistent bridges directory (`<AWARE_HOME>/bridges`), derived from the
 /// same env-driven source the rest of the CLI uses.
 pub(crate) fn bridges_dir() -> std::path::PathBuf {
@@ -602,7 +612,7 @@ impl CliInvoker {
         // Host bridges live in ~/.aware/bridges (off PATH); resolve to an absolute
         // path. Non-bridge binaries fall back to bare-name PATH resolution.
         let bridges = bridges_dir();
-        let program = resolve_cli_binary(&binary, &bridges);
+        let program = cli_program(&binary);
         // A managed bridge installed by a different CLI version may speak an older
         // protocol. We warn (rather than refuse) so compatible bridges keep working
         // and a CLI patch bump doesn't force a redownload; a truly incompatible

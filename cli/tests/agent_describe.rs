@@ -261,3 +261,46 @@ transport:
         .success()
         .stdout(predicate::str::contains("transport:    builtin"));
 }
+
+/// #628 § Declared effect: every command row says its mode and where that mode
+/// came from — only `declared` is the agent author's promise.
+#[test]
+fn json_describe_says_where_each_commands_mode_came_from() {
+    let home = common::aware_home();
+    let output = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home)
+        .args(["--json", "agent", "describe", "tekla"])
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    let v: serde_json::Value = serde_json::from_slice(&output).unwrap();
+    let row = |name: &str| {
+        v["data"]["commands"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|c| c["name"] == name)
+            .unwrap_or_else(|| panic!("no {name} row"))
+            .clone()
+    };
+    let exec = row("exec");
+    assert_eq!(exec["mode"], "write");
+    assert_eq!(exec["mode-basis"], "overridable");
+    assert_eq!(exec["mode-overridable"], true);
+    let probe = row("model-info");
+    assert_eq!(probe["mode"], "read");
+    assert_eq!(probe["mode-basis"], "declared");
+    assert_eq!(probe["mode-overridable"], false);
+    // No `mode:` at all: read by name inference, not by declaration.
+    let launch = row("launch");
+    assert_eq!(launch["mode"], "read");
+    assert_eq!(launch["mode-basis"], "inferred");
+    // `insert` is write by the name convention.
+    let insert = row("insert");
+    assert_eq!(insert["mode"], "write");
+    assert_eq!(insert["mode-basis"], "inferred");
+    assert!(exec.get("inherited-from").is_none());
+}

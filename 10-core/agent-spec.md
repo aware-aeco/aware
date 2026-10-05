@@ -192,6 +192,25 @@ Every command declares a `category:` in the manifest:
 
 **Filtering.** `aware tree <agent> --curated`, `aware search <term> --curated`, `aware agent describe <id>` all support filtering or weighting by category. Defaults show curated first, reflected as a collapsed escape hatch.
 
+### Declared effect (`mode-basis`)
+
+A command's `mode:` (`read` / `write`, see [App Spec § Safety contract](./app-spec.md)) can reach a node by five routes, and only one of them is the agent author saying what the command does. AWARE records which route a mode took — its **basis** — so a later step (carrying an approved workflow forward to a new agent version, #628) can tell a promise from a guess:
+
+| Basis | When | A declaration? |
+|---|---|---|
+| `declared` | The command states `mode:` and is **not** `mode-overridable`. | **Yes** — the only one. |
+| `overridable-default` | The command is `mode-overridable: true` and the node states nothing, so the manifest's `mode:` applies as a conservative default (Tekla's `exec`). | No |
+| `node-override` | The command is `mode-overridable` and the node states its own `mode:` — or the command is not in the manifest and the node states one. The workflow author said so, not the agent. | No |
+| `inferred-name` | No `mode:` anywhere; inferred from the command-name convention (`*.create`, `insert`, … are write; the rest read). | No |
+| `fallback-write` | The command is not in the manifest and the node states nothing: compile locks `write` for safety. | No |
+| `inherited` | The agent is app-backed (`exposes-as-agent`). Its synthesized `mode:` is written at the app boundary (defaulting to `read`) and is never a declaration; the real effect is the backing app's — the highest mode over every dispatchable node of the backing app, each judged against **that app's own approved pins** — and `write` outright when the app's author wrote `mode: write` on the exposed command. | No (it is the backing app's) |
+
+There is no separate manifest key for "declared": the explicit, non-overridable `mode:` **is** the declaration. An agent that wants its read verbs to count as declared reads states `mode: read` on them.
+
+`aware agent describe <id> --json` reports, per command, `mode`, `mode-basis` (`declared`, `overridable`, `inferred` or `inherited` — no node exists there, so the five node routes collapse to these four words) and `mode-overridable`. An app-backed agent's rows add `inherited-from: <backing app>` and `inherited-read-only` (every node of the backing app is a declared read under its own approved pins), or `inherited-detail` saying why the backing app could not be judged (not installed, no current approval, a lock the run would refuse as inconsistent — `E_APP_LOCK_INVALID` — or approved agents not stored), in which case `mode` is the synthesized boundary mode.
+
+**A workflow is declared read-only** iff every dispatchable node (frozen subtrees excluded, `do:` bodies included) is eligible as read under **both** the pins it was approved on and the pins it would move to: an agent node whose mode is `read` on basis `declared` in both; an `inline`, `assert` or `compare` step; or an app-backed node whose inherited effect is read-only and whose pin does not move (an agent that is app-backed under **either** set of pins counts as app-backed: a wrapper that becomes a plain agent, or the reverse, is a moved wrapper) — and in every case not a node that calls a model at run time (`runtime-model`), and never a `sweep`, `approve`, `snapshot` or `model-lock` step. This is stricter than "every command the workflow calls is read on that agent": one `exec` left at its write default, or one verb whose `read` was only inferred from its name, makes the whole workflow a person's decision. The word is **declared**: it comes from manifest declarations, never from anything observed at run time, and every label built on it says "declared read-only".
+
 ---
 
 ## Stateful vs Stateless
@@ -551,7 +570,35 @@ Only an index fetched fresh from AWARE's exact built-in HTTPS registry endpoint 
 - **Snapshots are the only writer.** A snapshot validates the id (a plain segment) and the digest (`sha256:` + 64 lowercase hex) before forming any path; copies the tree into a temp directory inside the digest container (so the final rename is same-directory); fsyncs every file; re-hashes the copy — its digest and receipt key must still equal those computed before the copy, otherwise the working copy changed mid-copy and the snapshot retries once, then refuses (`E_AGENT_STORE_CHANGED`); and publishes with one rename. Durability: Unix fsyncs the package, digest and id directories; Windows renames with `MoveFileExW(MOVEFILE_WRITE_THROUGH)`. An existing package with the same name is verified (fresh digest, receipt key, manifest identity and `.aware-package.yaml`) and reused; one that does not verify makes the snapshot **refuse**, naming it (`E_AGENT_STORE_INVALID`). AWARE never renames, rewrites, repairs or deletes a store package.
 - **When snapshots are taken.** `agent install` and `agent update` (registry and local) snapshot the **staged** tree before promoting it, so a snapshot failure installs or replaces nothing. `agent update`, before removing anything, also snapshots **every** directory the swap would remove — `agents/<id>/` and, for a suffixed or renamed payload, `agents/<new-id>/` too — and any failure refuses the update with `agents/` untouched (an outgoing directory with no loadable manifest has nothing a lock could approve and is skipped). `app compile` snapshots every agent it pins first and compiles from the stored manifests. `app run` snapshots a pinned current copy that has none yet (an install from before the store existed).
 - `aware agent uninstall` removes only the working copy. The store is left alone: its packages become unreachable (a run of an app that needs the agent refuses as not installed) and removing them is garbage collection's job (#629, which needs run leases, #627). Until then packages accumulate — at most one per distinct version an app was compiled against or that was current. `aware agent list --json` shows each agent's `stored: [{version, digest}]`, and `unreadable-stored: [{path, reason}]` for any store entry whose record cannot be read (display only; whether an app runs is `aware app check`'s answer — see [App Spec](./app-spec.md)).
+- **A lock is replaced atomically** (#628). `aware app compile` writes `<app>.lock` to a temp file in the same directory, fsyncs it, and moves it over the old lock in one step (Windows `MoveFileExW(MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)`; Unix `rename(2)` then an fsync of the directory). A run reading the lock at preflight sees the old approval or the new one, never a torn mix. A write that fails before the move leaves the old lock byte-identical; if only the durability step after the move fails (the Unix directory fsync), compile still succeeds — the new lock **is** in effect — and warns that a power loss could bring back the previous one, rather than claiming the write failed.
 - Threat model: the store protects approved bytes from AWARE's **own** writers. Hand-editing files under `agent-store/` is out of scope, exactly as hand-editing `bridges/` is; such an edit is caught by the next run's digest check, which refuses rather than runs other bytes. On a power loss before Windows has made the rename durable, the worst case is that an outgoing package is missing: the run then refuses with `E_APP_LOCK_AGENT_PIN_MISMATCH` (compile again), never runs different bytes.
+
+### The executable contract of a pin (`aware.contract-diff/v1`)
+
+When an approved workflow could move from one stored version of an agent to another (#628), the question is not "did the package change" — every release changes its version and changelog — but "would a run of THIS workflow hand the executor different instructions". An agent package is mostly not executable code: a CLI agent's bridge program belongs to the installed bridge, and REST/builtin agents are executed by AWARE's own code from manifest fields. So the **executable contract** of a pin, for one workflow, is:
+
+1. **The run-relevant manifest projection**, compared on the raw YAML value — so a key this CLI does not know is compared too (fail safe) — with keys in canonical form (sorted at every depth). Excluded, because `aware app run` never reads them: `version`, `display-name`, `description`, `keywords`, `homepage`, `vendor`, `license`, `provenance`, `skills`, `probe`. `probe` is read only by `aware agent probe`; a change to it is reported as `probe-changed` and not counted. A unit test scans the run path (`cli/src/runtime/`, except the probe's own module) and fails if it starts reading any excluded key, with a negative control proving the scan finds such a read.
+2. **The called commands**: each command a non-frozen node of the workflow calls, compared whole except its top-level `description` — schemas, `mode`, `mode-overridable`, `lifecycle`, `status`, `category`, `method`, `path`, `response`, `no-auth`, `model-extraction`, and any key not listed here. A command no node calls is reported under `ignored.commands-not-called` and not counted.
+3. **The executable files**: the sha256 of every package file except `manifest.yaml` (covered above) and a documentation allowlist — `skills/**`, `commands/**/*.md`, the root-level files `CHANGELOG.md`, `README`, `README.*`, `LICENSE` and `LICENSE.*` (a directory named `README` or `LICENSE` is not documentation), and the install metadata `.aware-install.yaml` / `.aware-package.yaml`. Everything else counts, `atoms/` included. Documentation differences are reported under `ignored.doc-files`.
+4. **The executor identity**, as dispatch resolves it at evaluation time — for a CLI agent, the program `aware app run` hands to the operating system (the same function decides it for both): a managed bridge in `<AWARE_HOME>/bridges`, a bundled transport next to `aware`, or `transport.cli.binary` as written. Bytes are claimed **only where AWARE fixed the file** (`resolution: fixed-path` — a bridge, a bundled transport, or an absolute `binary:`), whose sha256 is recorded. A bare name the operating system searches for (`os-search`) or a relative path it resolves against the run's working directory (`relative-to-cwd`) is reported as written with `sha256: null` and the detail "resolved by the operating system at run time; not pinned": AWARE makes no byte claim for a file it does not choose, and two pins naming the same program the same way have the same executor. `aware-cli <version>` for REST and builtin agents; the backing app for an app-backed agent. If the old pin would resolve to a different executor, agent-level `executor` is reported as changed.
+5. **The plan changes**: compiled-node fields of the moved agent's nodes — `mode`, `output-schema`, `runtime-model`, `model-pin` — that differ between the approved lock and a candidate lock.
+
+The contract is **unchanged** iff (1), (2), (3) and (5) show no difference and the executor is the same. One diff per moved agent:
+
+```json
+{ "format": "aware.contract-diff/v1", "agent": "tekla",
+  "from": {"version": "0.1.5", "digest": "sha256:…"}, "to": {"version": "0.1.6", "digest": "sha256:…"},
+  "unchanged": true,
+  "agent-level": {"changed": []},
+  "commands": [{"command": "exec", "nodes": ["read-model"], "unchanged": true, "changes": []}],
+  "executable-files": {"added": [], "removed": [], "changed": []},
+  "probe-changed": true,
+  "executor": {"kind": "cli", "binary": "aware-tekla", "program": "…/bridges/aware-tekla.exe", "resolution": "fixed-path", "sha256": "sha256:…"},
+  "plan-changes": [],
+  "ignored": {"doc-files": ["CHANGELOG.md", "…"], "commands-not-called": ["model-info"]} }
+```
+
+`unchanged` says the run instructions are byte-identical by inspection — nothing was executed. It is never a claim that results are the same on any model or account. Comparing two packages reads only verified store packages; nothing is written.
 
 ---
 
