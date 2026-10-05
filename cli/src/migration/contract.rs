@@ -87,6 +87,11 @@ pub enum Executor {
     Cli {
         binary: String,
         program: String,
+        /// The program was a relative path, resolved against the working
+        /// directory this identity was computed in — a run started elsewhere
+        /// would execute a different file.
+        #[serde(rename = "relative-to-cwd", skip_serializing_if = "std::ops::Not::not")]
+        relative_to_cwd: bool,
         /// `None` when the program cannot be found or read; `detail` says why.
         sha256: Option<String>,
         #[serde(skip_serializing_if = "Option::is_none")]
@@ -111,33 +116,27 @@ pub fn executor_identity(manifest: &Agent) -> Executor {
                 .as_ref()
                 .map(|c| c.binary.clone())
                 .unwrap_or_default();
-            let resolved = crate::runtime::invoker::resolve_cli_binary(
-                &binary,
-                &crate::runtime::invoker::bridges_dir(),
-            );
-            let program = if resolved.is_absolute() {
-                Some(resolved)
-            } else {
-                crate::which::find_on_path(&binary)
-            };
-            match program {
-                Some(program) => match std::fs::read(&program) {
-                    Ok(bytes) => Executor::Cli {
+            // The same two steps dispatch takes: the program `spawn_cli` passes
+            // to `Command::new`, then the file `Command::new` finds for it.
+            let program = crate::runtime::invoker::cli_program(&binary);
+            match crate::runtime::invoker::spawn_target(&program) {
+                Some(target) => {
+                    let (sha256, detail) = match std::fs::read(&target.path) {
+                        Ok(bytes) => (Some(format!("sha256:{:x}", Sha256::digest(&bytes))), None),
+                        Err(error) => (None, Some(format!("cannot read the program: {error}"))),
+                    };
+                    Executor::Cli {
                         binary,
-                        program: program.display().to_string(),
-                        sha256: Some(format!("sha256:{:x}", Sha256::digest(&bytes))),
-                        detail: None,
-                    },
-                    Err(error) => Executor::Cli {
-                        binary,
-                        program: program.display().to_string(),
-                        sha256: None,
-                        detail: Some(format!("cannot read the program: {error}")),
-                    },
-                },
+                        program: target.path.display().to_string(),
+                        relative_to_cwd: target.relative_to_cwd,
+                        sha256,
+                        detail,
+                    }
+                }
                 None => Executor::Cli {
-                    program: binary.clone(),
                     binary,
+                    program: program.display().to_string(),
+                    relative_to_cwd: false,
                     sha256: None,
                     detail: Some("the program is not installed".into()),
                 },
