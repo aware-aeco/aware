@@ -21,8 +21,16 @@ pub fn uninstall_agent(id: &str, paths: &Paths, guard: &RefGuard) -> Result<(), 
     }
     let txn = crate::install::swap::begin(paths, guard, &[id], None)?;
     let dir = paths.agents_dir().join(id);
-    if crate::agent_store::probe(&dir)?.is_none() {
-        return Err(AwareError::NotFound(format!("agent {id} is not installed")));
+    match crate::agent_store::probe(&dir)? {
+        None => return Err(AwareError::NotFound(format!("agent {id} is not installed"))),
+        // Only an installed agent is a directory; a stray file (or a link) at
+        // that name is not ours to delete, so leave it and say what is there.
+        Some(meta) if !meta.is_dir() => {
+            return Err(AwareError::Validation(format!(
+                "agents/{id} is not an installed agent (it is not a folder), so nothing was removed; move or delete it by hand if it should not be there"
+            )));
+        }
+        Some(_) => {}
     }
     txn.execute(
         crate::install::swap::Op::Uninstall,
@@ -63,6 +71,24 @@ mod tests {
         std::fs::write(dir.join("manifest.yaml"), "agent: tekla\n").unwrap();
         uninstall_agent("tekla", &paths, &crate::agent_store::open(&paths).unwrap()).unwrap();
         assert!(!dir.exists());
+    }
+
+    /// A stray FILE at `agents/<id>` is not an installed agent: uninstall must
+    /// leave it untouched (the pre-swap `remove_dir_all` failed on it; the swap
+    /// would otherwise move it aside and delete it).
+    #[test]
+    fn uninstall_never_deletes_a_file_standing_where_an_agent_would_be() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().to_path_buf(),
+        };
+        std::fs::create_dir_all(paths.agents_dir()).unwrap();
+        let file = paths.agents_dir().join("tekla");
+        std::fs::write(&file, "not an agent").unwrap();
+        let err = uninstall_agent("tekla", &paths, &crate::agent_store::open(&paths).unwrap())
+            .unwrap_err();
+        assert!(err.to_string().contains("not a folder"), "{err}");
+        assert_eq!(std::fs::read_to_string(&file).unwrap(), "not an agent");
     }
 
     #[test]
