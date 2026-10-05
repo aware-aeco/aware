@@ -57,7 +57,12 @@ fn assert_invalid(s: &Setup, needle: &str) {
     assert!(error.contains("[E_APP_LOCK_INVALID]"), "{error}");
     assert!(error.contains(needle), "expected {needle:?} in: {error}");
     // `app check` reports the same lock as invalid, as data.
-    let check = crate::agent_resolution::check_app(&s.h.paths, &s.source).unwrap();
+    let check = crate::agent_resolution::check_app(
+        &s.h.paths,
+        &s.source,
+        &crate::agent_store::open(&s.h.paths).unwrap(),
+    )
+    .unwrap();
     assert_eq!(
         check.lock,
         crate::agent_resolution::LockState::Invalid,
@@ -131,7 +136,12 @@ fn a_promoted_lock_loads_runs_the_top_level_pins_and_says_where_it_came_from() {
     assert_eq!(infos[0].1.digest, s.new_digest);
 
     // `app check` reports the origin and the record, approval current.
-    let check = crate::agent_resolution::check_app(&s.h.paths, &s.source).unwrap();
+    let check = crate::agent_resolution::check_app(
+        &s.h.paths,
+        &s.source,
+        &crate::agent_store::open(&s.h.paths).unwrap(),
+    )
+    .unwrap();
     assert!(check.approval_current, "{check:?}");
     assert!(check.source_current);
     assert_eq!(check.approval_origin, Some(Origin::Successor));
@@ -468,7 +478,12 @@ fn a_missing_original_archive_is_incomplete_and_the_run_proceeds_labelled() {
         "{}",
         summary.label
     );
-    let check = crate::agent_resolution::check_app(&s.h.paths, &s.source).unwrap();
+    let check = crate::agent_resolution::check_app(
+        &s.h.paths,
+        &s.source,
+        &crate::agent_store::open(&s.h.paths).unwrap(),
+    )
+    .unwrap();
     assert!(check.approval_current, "incomplete is not a refusal");
     assert_eq!(
         check.approval_record,
@@ -566,7 +581,13 @@ fn a_promoted_lock_has_the_plan_digest_of_the_candidate_it_promoted() {
 fn migrate_plans_a_promoted_lock_from_its_top_level_pins() {
     let s = setup();
     promoted_by(&s, By::Person("pawel"));
-    let eval = crate::migration::plan::evaluate(&s.h.paths, &s.source, None).unwrap();
+    let eval = crate::migration::plan::evaluate(
+        &s.h.paths,
+        &s.source,
+        None,
+        &crate::agent_store::open(&s.h.paths).unwrap(),
+    )
+    .unwrap();
     assert_eq!(
         eval.row.state,
         crate::migration::plan::State::UpToDate,
@@ -574,7 +595,13 @@ fn migrate_plans_a_promoted_lock_from_its_top_level_pins() {
         eval.row
     );
     let newest = update_agent(&s.h.paths, "tool", "1.0.2", "mode: read");
-    let eval = crate::migration::plan::evaluate(&s.h.paths, &s.source, None).unwrap();
+    let eval = crate::migration::plan::evaluate(
+        &s.h.paths,
+        &s.source,
+        None,
+        &crate::agent_store::open(&s.h.paths).unwrap(),
+    )
+    .unwrap();
     assert_eq!(eval.row.targets.len(), 1, "{:?}", eval.row);
     let json = serde_json::to_value(&eval.row).unwrap();
     assert_eq!(json["targets"][0]["from"]["version"], "1.0.1", "{json}");
@@ -590,7 +617,13 @@ fn migrate_plans_a_promoted_lock_from_its_top_level_pins() {
     tamper(&s.source.with_file_name("demo.lock"), |l| {
         chain(l).format = 7;
     });
-    let eval = crate::migration::plan::evaluate(&s.h.paths, &s.source, None).unwrap();
+    let eval = crate::migration::plan::evaluate(
+        &s.h.paths,
+        &s.source,
+        None,
+        &crate::agent_store::open(&s.h.paths).unwrap(),
+    )
+    .unwrap();
     let json = serde_json::to_value(&eval.row).unwrap();
     assert_eq!(json["state"], "blocked", "{json}");
     assert_eq!(json["reasons"][0]["code"], "approval-invalid");
@@ -857,7 +890,13 @@ fn migrate_never_plans_from_an_approval_its_archives_contradict() {
     let p = promoted_by(&s, By::Person("pawel"));
     update_agent(&s.h.paths, "tool", "1.0.2", "mode: read");
     // Complete record: planned as usual, no warning about the record.
-    let eval = crate::migration::plan::evaluate(&s.h.paths, &s.source, None).unwrap();
+    let eval = crate::migration::plan::evaluate(
+        &s.h.paths,
+        &s.source,
+        None,
+        &crate::agent_store::open(&s.h.paths).unwrap(),
+    )
+    .unwrap();
     let json = serde_json::to_value(&eval.row).unwrap();
     assert_eq!(json["state"], "needs-person", "{json}");
     assert!(
@@ -870,7 +909,13 @@ fn migrate_never_plans_from_an_approval_its_archives_contradict() {
     let path = crate::fs::containing_dir(&s.source).join(&original.archive);
     let bytes = std::fs::read(&path).unwrap();
     std::fs::remove_file(&path).unwrap();
-    let eval = crate::migration::plan::evaluate(&s.h.paths, &s.source, None).unwrap();
+    let eval = crate::migration::plan::evaluate(
+        &s.h.paths,
+        &s.source,
+        None,
+        &crate::agent_store::open(&s.h.paths).unwrap(),
+    )
+    .unwrap();
     let json = serde_json::to_value(&eval.row).unwrap();
     assert_eq!(json["state"], "needs-person", "{json}");
     assert!(eval.candidate.is_some());
@@ -892,7 +937,13 @@ fn migrate_never_plans_from_an_approval_its_archives_contradict() {
     let mut changed = bytes;
     changed.extend_from_slice(b"# edited\n");
     std::fs::write(&path, changed).unwrap();
-    let eval = crate::migration::plan::evaluate(&s.h.paths, &s.source, None).unwrap();
+    let eval = crate::migration::plan::evaluate(
+        &s.h.paths,
+        &s.source,
+        None,
+        &crate::agent_store::open(&s.h.paths).unwrap(),
+    )
+    .unwrap();
     let json = serde_json::to_value(&eval.row).unwrap();
     assert_eq!(json["state"], "blocked", "{json}");
     assert_eq!(json["reasons"][0]["code"], "approval-invalid", "{json}");
@@ -1101,7 +1152,12 @@ fn a_bundle_pin_only_base_lock_is_carried_forward_and_loads_complete() {
             "{:?}",
             approved.approval.missing
         );
-        let check = crate::agent_resolution::check_app(&s.h.paths, &s.source).unwrap();
+        let check = crate::agent_resolution::check_app(
+            &s.h.paths,
+            &s.source,
+            &crate::agent_store::open(&s.h.paths).unwrap(),
+        )
+        .unwrap();
         assert!(check.approval_current, "{check:?}");
         assert_eq!(
             check.approval_record,

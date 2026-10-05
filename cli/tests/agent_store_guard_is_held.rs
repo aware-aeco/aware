@@ -233,7 +233,9 @@ fn code_of(rel: &str) -> String {
 /// third column (the read or write of the reference it relies on).
 const WRITERS: &[(&str, &str, &str)] = &[
     // `app run`: before the source and its `<app>.lock` are read.
-    ("commands/app.rs", "run", "load_approved_app_with_lock("),
+    ("commands/app.rs", "run", "load_approved_app_snapshot("),
+    // `app check`: before the source, the lock and its approval archives.
+    ("commands/app.rs", "check_cmd", "check_source("),
     ("commands/app.rs", "compile_cmd", "compile_to_disk_for("),
     (
         "commands/app.rs",
@@ -329,6 +331,11 @@ const GUARDED_SIGNATURES: &[(&str, &str)] = &[
     ("migration/plan.rs", "evaluate"),
     ("migration/plan.rs", "plan_rows"),
     ("migration/plan.rs", "default_targets"),
+    // `app check` and its approval fields (#628 PR3a) read the lock, its
+    // archives and the store under the guard.
+    ("agent_resolution.rs", "check_app"),
+    ("agent_resolution.rs", "check_backing"),
+    ("app_lock.rs", "compile_to_disk_for"),
     // The swap-lock API: every acquisition path takes the guard.
     ("install/swap.rs", "acquire"),
     ("install/swap.rs", "read_lock"),

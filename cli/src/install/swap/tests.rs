@@ -842,7 +842,12 @@ fn app_check_after_an_interrupted_swap_answers_like_the_run() {
     clear_fault();
     assert!(!paths.agents_dir().join("alpha").exists());
 
-    let check = crate::agent_resolution::check_app(&paths, &source).unwrap();
+    let check = crate::agent_resolution::check_app(
+        &paths,
+        &source,
+        &crate::agent_store::open(&paths).unwrap(),
+    )
+    .unwrap();
     assert!(
         check.approval_current,
         "check must recover the interrupted swap as the run does: {:?}",

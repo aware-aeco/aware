@@ -2499,8 +2499,13 @@ fn compile_cmd(
 /// every outcome, failures included, is one envelope on stdout.
 fn check_cmd(ctx: &Context, app: &str) -> Result<(), AwareError> {
     let started = Instant::now();
-    let outcome = check_source(ctx, app)
-        .and_then(|source| crate::agent_resolution::check_app(&ctx.paths, &source));
+    // #627: under the store reference lock, taken before the source, its
+    // lock and the lock's approval archives are read, so the answer is one
+    // consistent view of the approval and the store packages it names.
+    let outcome = crate::agent_store::open(&ctx.paths).and_then(|guard| {
+        check_source(ctx, app)
+            .and_then(|source| crate::agent_resolution::check_app(&ctx.paths, &source, &guard))
+    });
     match outcome {
         Ok(check) => {
             if ctx.json {
