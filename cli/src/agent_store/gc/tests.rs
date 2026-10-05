@@ -316,6 +316,20 @@ fn leftovers_of_dead_processes_are_removed_once_old_enough() {
         "kept only by its window: {error}"
     );
     assert!(trash.exists(), "a refused --only changed nothing");
+    // A successful --only removes its package and nothing else, however old
+    // the leftovers beside it.
+    let report = collect_at(
+        &h.paths,
+        &Options {
+            only: Some(("tool".into(), digest.clone())),
+            ..options(true, "0s")
+        },
+        now + chrono::Duration::hours(2),
+    )
+    .unwrap();
+    assert_eq!(report.removed.len(), 1, "{report:#?}");
+    assert!(report.leftovers_removed.is_empty(), "{report:#?}");
+    assert!(trash.exists(), "--only touches nothing but its package");
 }
 
 /// A package Windows will not let go of (an open handle inside it) is
