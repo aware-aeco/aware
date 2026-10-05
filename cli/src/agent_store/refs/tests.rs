@@ -194,11 +194,12 @@ fn a_last_needed_stamp_restarts_the_window() {
 }
 
 #[test]
-fn an_approved_lock_keeps_its_pins_and_a_lock_with_no_source_beside_it_does_not() {
+fn an_approved_lock_keeps_its_pins_even_while_its_source_is_missing() {
     let h = home();
     let digest = orphan(&h.paths, "tool", "1.0.0");
     let later = far(Utc::now());
-    let lock = lock_beside_source(&h.paths.apps_dir().join("demo"), "demo", "tool", &digest);
+    let dir = h.paths.apps_dir().join("demo");
+    let lock = lock_beside_source(&dir, "demo", "tool", &digest);
     let t = build(&h.paths, "30d", later);
     let r = row(&t, &digest);
     assert_eq!(r.state, State::Kept);
@@ -211,12 +212,25 @@ fn an_approved_lock_keeps_its_pins_and_a_lock_with_no_source_beside_it_does_not(
     assert_eq!(t.roots[0].kind, "apps");
     assert_eq!(t.roots[0].locks, 1);
 
-    // Negative control: the same lock with no app source in its folder is
-    // somebody else's `.lock` file, not an approval.
-    std::fs::remove_file(h.paths.apps_dir().join("demo").join("demo.flo")).unwrap();
+    // A source being rewritten or moved must not cost its lock the versions
+    // it pins (review round 1; plan §8 R1-10).
+    std::fs::remove_file(dir.join("demo.flo")).unwrap();
     let t = build(&h.paths, "30d", later);
-    assert_eq!(row(&t, &digest).state, State::Removable);
+    assert_eq!(row(&t, &digest).state, State::Kept);
     assert!(t.complete);
+
+    // Someone else's `.lock` with no app source beside it is not AWARE's: it
+    // is neither a reference nor a blocker. Beside any app source (`.flow`
+    // too: AWARE is extension-agnostic) an unreadable lock is a blocker.
+    std::fs::write(dir.join("yarn.lock"), "# yarn lockfile v1\n").unwrap();
+    assert!(build(&h.paths, "30d", later).complete);
+    std::fs::write(dir.join("demo.flow"), "app: demo\n").unwrap();
+    let t = build(&h.paths, "30d", later);
+    assert!(!t.complete);
+    assert_eq!(
+        t.blockers[0].path,
+        dir.join("yarn.lock").display().to_string()
+    );
 }
 
 #[test]
@@ -636,6 +650,15 @@ fn a_registered_root_is_searched_like_apps_and_can_be_removed_again() {
     assert_eq!(read_roots(&h.paths).unwrap().len(), 1);
     // Not a directory: refused, nothing recorded.
     assert!(add_root(&h.paths, &guard, &workspace.join("nope"), None).is_err());
+    // The same folder spelled with a trailing separator (and, on Windows, in
+    // another case) is the same root.
+    let mut spelled = format!("{}{}", workspace.display(), std::path::MAIN_SEPARATOR);
+    if cfg!(windows) {
+        spelled = spelled.to_uppercase();
+    }
+    let (_, added) = add_root(&h.paths, &guard, Path::new(&spelled), None).unwrap();
+    assert!(!added, "{spelled}");
+    assert_eq!(read_roots(&h.paths).unwrap().len(), 1);
     drop(guard);
 
     let t = build(&h.paths, "30d", later);
@@ -643,40 +666,205 @@ fn a_registered_root_is_searched_like_apps_and_can_be_removed_again() {
     assert_eq!(t.roots[1].kind, "registered");
     assert_eq!(t.roots[1].locks, 1);
 
+    // Removed once the folder has gone, by the path `roots list` prints.
+    let listed = read_roots(&h.paths).unwrap()[0].path.clone();
+    std::fs::remove_dir_all(&workspace).unwrap();
     let guard = crate::agent_store::open(&h.paths).unwrap();
-    assert!(remove_root(&h.paths, &guard, &workspace).unwrap());
+    assert!(remove_root(&h.paths, &guard, Path::new(&listed)).unwrap());
     assert!(!remove_root(&h.paths, &guard, &workspace).unwrap());
     drop(guard);
+    assert!(read_roots(&h.paths).unwrap().is_empty());
     assert_eq!(
         row(&build(&h.paths, "30d", later), &digest).state,
         State::Removable
     );
 }
 
-#[test]
-fn a_link_below_a_root_is_not_followed_and_is_reported() {
-    let h = home();
-    let digest = orphan(&h.paths, "tool", "1.0.0");
-    let elsewhere = h.paths.aware_home.join("elsewhere");
-    lock_beside_source(&elsewhere, "w1", "tool", &digest);
-    std::fs::create_dir_all(h.paths.apps_dir()).unwrap();
-    let link = h.paths.apps_dir().join("linked");
+fn link(link: &Path, target: &Path) {
     #[cfg(windows)]
     assert!(
         std::process::Command::new("cmd")
             .args(["/C", "mklink", "/J"])
-            .arg(&link)
-            .arg(&elsewhere)
+            .arg(link)
+            .arg(target)
             .output()
             .unwrap()
             .status
             .success()
     );
     #[cfg(unix)]
-    std::os::unix::fs::symlink(&elsewhere, &link).unwrap();
+    std::os::unix::fs::symlink(target, link).unwrap();
+}
+
+/// `aware app run` follows an `apps/<id>` junction, so the table must too
+/// (review round 1) — once per real folder, so a link back up cannot loop.
+#[test]
+fn a_linked_app_folder_is_followed_and_a_link_loop_ends() {
+    let h = home();
+    let digest = orphan(&h.paths, "tool", "1.0.0");
+    let elsewhere = h.paths.aware_home.join("elsewhere");
+    lock_beside_source(&elsewhere, "w1", "tool", &digest);
+    std::fs::create_dir_all(h.paths.apps_dir()).unwrap();
+    link(&h.paths.apps_dir().join("linked"), &elsewhere);
+    link(&elsewhere.join("loop"), &h.paths.apps_dir());
     let t = build(&h.paths, "30d", far(Utc::now()));
-    assert_eq!(row(&t, &digest).state, State::Removable);
-    assert_eq!(t.roots[0].links_not_followed, [link.display().to_string()]);
+    assert!(t.complete, "{t:#?}");
+    let r = row(&t, &digest);
+    assert_eq!(r.state, State::Kept, "{r:#?}");
+    assert_eq!(t.roots[0].locks, 1, "walked once despite the loop");
+
+    // A dangling link may have pointed at a lock: a blocker.
+    let gone = h.paths.aware_home.join("gone");
+    std::fs::create_dir_all(&gone).unwrap();
+    link(&h.paths.apps_dir().join("dangling"), &gone);
+    std::fs::remove_dir(&gone).unwrap();
+    let t = build(&h.paths, "30d", far(Utc::now()));
+    assert!(!t.complete);
+    assert!(
+        t.blockers.iter().any(|b| b.path.ends_with("dangling")),
+        "{t:#?}"
+    );
+}
+
+#[test]
+fn a_folder_too_deep_to_search_is_a_blocker_and_dot_folders_are_searched() {
+    let h = home();
+    let digest = orphan(&h.paths, "tool", "1.0.0");
+    // FloLess stages publications in a dot-folder.
+    lock_beside_source(
+        &h.paths
+            .apps_dir()
+            .join(".floless-approval-publications-v1")
+            .join("w-1"),
+        "w",
+        "tool",
+        &digest,
+    );
+    let t = build(&h.paths, "30d", far(Utc::now()));
+    assert_eq!(row(&t, &digest).state, State::Kept);
+    assert!(t.complete);
+
+    let mut deep = h.paths.apps_dir().join("deep");
+    for i in 0..=MAX_DEPTH {
+        deep = deep.join(format!("d{i}"));
+    }
+    std::fs::create_dir_all(&deep).unwrap();
+    let t = build(&h.paths, "30d", far(Utc::now()));
+    assert!(!t.complete);
+    assert!(
+        t.blockers[0].problem.contains("folders below its root"),
+        "{t:#?}"
+    );
+}
+
+#[test]
+fn any_hold_file_holds_the_way_the_hold_reader_reads_it() {
+    let h = home();
+    let digest = orphan(&h.paths, "tool", "1.0.0");
+    let dir = h.paths.apps_dir().join("demo");
+    lock_beside_source(&dir, "demo", "tool", &orphan(&h.paths, "tool", "3.0.0"));
+    let approvals = dir.join(".aware-approvals");
+    std::fs::create_dir_all(&approvals).unwrap();
+    std::fs::write(
+        approvals.join(format!("{}.lock", "a".repeat(64))),
+        lock_text("demo", "tool", &digest),
+    )
+    .unwrap();
+    let later = far(Utc::now());
+    assert_eq!(
+        row(&build(&h.paths, "30d", later), &digest).state,
+        State::Removable
+    );
+    // A plain HOLD names no app: it holds every app in the folder.
+    std::fs::write(approvals.join("HOLD"), "").unwrap();
+    assert_eq!(
+        row(&build(&h.paths, "30d", later), &digest).state,
+        State::Kept
+    );
+    std::fs::remove_file(approvals.join("HOLD")).unwrap();
+    // A hold for another app, or one that cannot be read, still holds here.
+    std::fs::write(approvals.join("HOLD.other"), "not: a hold").unwrap();
+    assert_eq!(
+        row(&build(&h.paths, "30d", later), &digest).state,
+        State::Kept
+    );
+}
+
+#[test]
+fn unreadable_evidence_and_an_unreadable_stamp_are_blockers() {
+    let later = far(Utc::now());
+    let h = home();
+    let dir = h.paths.apps_dir().join("demo").join(".aware-migration");
+    std::fs::create_dir_all(&dir).unwrap();
+    std::fs::write(dir.join("demo.evidence.json"), "{").unwrap();
+    let t = build(&h.paths, "30d", later);
+    assert!(!t.complete);
+    assert!(t.blockers[0].path.ends_with("demo.evidence.json"), "{t:#?}");
+
+    // A stamp that is not a time must not let the window start earlier.
+    let h = home();
+    let digest = orphan(&h.paths, "tool", "1.0.0");
+    crate::agent_store::stamps::stamp(&h.paths, "tool", &digest, None).unwrap();
+    let stamp_file = h
+        .paths
+        .agent_store_control_dir()
+        .join("refs")
+        .join("tool")
+        .join(format!(
+            "{}.last-needed",
+            crate::agent_store::digest_hex(&digest).unwrap()
+        ));
+    std::fs::write(&stamp_file, "garbage").unwrap();
+    let t = build(&h.paths, "30d", later);
+    assert!(!t.complete, "{t:#?}");
+    assert!(t.blockers[0].problem.contains("not a time"), "{t:#?}");
+}
+
+/// A crashed update moved `agents/<id>` out: the table recovers it (as every
+/// reader of a working copy does) and keeps the restored copy's bytes.
+#[test]
+fn a_working_copy_moved_out_by_a_crashed_update_is_recovered_and_kept() {
+    use crate::install::swap::{self, Fault, Op, Outgoing, Staged};
+    let h = home();
+    let current = write_agent(&h.paths, "tool", "1.0.0", "mode: read");
+    let old = crate::install::integrity::tree_digest(&current).unwrap();
+    // Stored, so the table has a package to judge.
+    crate::agent_store::snapshot(
+        &h.paths,
+        &current,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap();
+    let guard = crate::agent_store::open(&h.paths).unwrap();
+    let staged = Staged::new(&h.paths).unwrap();
+    std::fs::create_dir_all(staged.incoming()).unwrap();
+    std::fs::copy(
+        current.join("manifest.yaml"),
+        staged.incoming().join("manifest.yaml"),
+    )
+    .unwrap();
+    std::fs::write(staged.incoming().join("extra.md"), "new").unwrap();
+    let incoming = crate::install::integrity::tree_digest(&staged.incoming()).unwrap();
+    let txn = swap::begin(&h.paths, &guard, &["tool"], Some(staged)).unwrap();
+    swap::inject_fault(Fault::CrashAfter("done out tool".into()));
+    let outgoing = vec![Outgoing {
+        id: "tool".into(),
+        digest: Some(old.clone()),
+    }];
+    txn.execute(Op::Update, Some("tool"), Some(incoming), outgoing)
+        .unwrap_err();
+    swap::clear_fault();
+    drop(guard);
+    assert!(
+        !current.exists(),
+        "the crash left the working copy moved out"
+    );
+
+    let t = build(&h.paths, "30d", far(Utc::now()));
+    assert!(t.complete, "{t:#?}");
+    let r = row(&t, &old);
+    assert_eq!(kinds(r), ["current"], "{r:#?}");
+    assert!(current.exists(), "recovered");
 }
 
 #[test]

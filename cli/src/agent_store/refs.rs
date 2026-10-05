@@ -19,9 +19,10 @@
 //!
 //! Where locks are found: every app directory under `AWARE_HOME/apps/`, and
 //! every directory a front door registered with `aware agent refs roots add`
-//! (`agent-store-control/roots.yaml`), walked the same way. A lock AWARE cannot
-//! see is unprotected: after GC its pin is reported not installed, and nothing
-//! else is ever run in its place.
+//! (`agent-store-control/roots.yaml`), walked the same way — through links and
+//! junctions, as `aware app run` follows them, each real folder once. A lock
+//! outside every root is unprotected: after GC its pin is reported not
+//! installed, and nothing else is ever run in its place.
 
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
@@ -43,10 +44,21 @@ pub const ROOTS_FORMAT: &str = "aware.agent-store-roots/v1";
 /// The recovery window when neither `--recovery-window` nor `config.yaml`
 /// sets one (plan §7 Q1).
 pub const DEFAULT_WINDOW: &str = "30d";
-/// How deep below a root the walk looks for app directories.
-const MAX_DEPTH: usize = 8;
-/// Directory names the walk never descends into.
-const SKIPPED_DIRS: [&str; 3] = ["node_modules", "target", "__pycache__"];
+/// How deep below a root the walk looks for app directories; a folder
+/// deeper than this is a blocker, never silently skipped.
+const MAX_DEPTH: usize = 16;
+/// Folders the walk never descends into: version-control and package
+/// caches, and the two AWARE folders [`Collector::app_dir`] reads itself (an
+/// archive under `.aware-approvals/` is not an approved lock).
+const SKIPPED_DIRS: [&str; 7] = [
+    ".git",
+    ".hg",
+    ".svn",
+    "node_modules",
+    ".venv",
+    crate::migration::files::APPROVALS_DIR,
+    crate::migration::files::MIGRATION_DIR,
+];
 
 // ---------------------------------------------------------------- window
 
@@ -187,11 +199,37 @@ pub fn read_roots(paths: &Paths) -> Result<Vec<RegisteredRoot>, AwareError> {
     Ok(file.roots)
 }
 
-/// The form a root is recorded and compared in: absolute, as given.
+/// The form a root is recorded in: the real path when the folder exists
+/// (links resolved, Windows' `\\?\` prefix dropped), else absolute; never a
+/// trailing separator.
 fn normalize_root(dir: &Path) -> Result<String, AwareError> {
-    std::path::absolute(dir)
-        .map(|p| p.display().to_string())
-        .map_err(|e| AwareError::Validation(format!("{}: {e}", dir.display())))
+    let path = match std::fs::canonicalize(dir) {
+        Ok(real) => real,
+        Err(_) => std::path::absolute(dir)
+            .map_err(|e| AwareError::Validation(format!("{}: {e}", dir.display())))?,
+    };
+    let text = path.display().to_string();
+    let text = match text.strip_prefix(r"\\?\UNC\") {
+        Some(unc) => format!(r"\\{unc}"),
+        None => text.strip_prefix(r"\\?\").unwrap_or(&text).to_string(),
+    };
+    let trimmed = text.trim_end_matches(['/', '\\']);
+    // A drive or filesystem root keeps its separator.
+    Ok(if trimmed.is_empty() || trimmed.ends_with(':') {
+        text
+    } else {
+        trimmed.to_string()
+    })
+}
+
+/// Whether two recorded roots name the same folder (Windows paths compare
+/// without case).
+fn same_root(a: &str, b: &str) -> bool {
+    if cfg!(windows) {
+        a.eq_ignore_ascii_case(b)
+    } else {
+        a == b
+    }
 }
 
 /// Run `change` on the roots list under `roots.flock`, then publish it
@@ -247,7 +285,7 @@ pub fn add_root(
     }
     let path = normalize_root(dir)?;
     edit_roots(paths, guard, |roots| {
-        if let Some(existing) = roots.iter_mut().find(|r| r.path == path) {
+        if let Some(existing) = roots.iter_mut().find(|r| same_root(&r.path, &path)) {
             if let Some(label) = label {
                 existing.label = Some(label.to_string());
             }
@@ -265,12 +303,13 @@ pub fn add_root(
 
 /// Unregister `dir`. `Ok(false)` when it was not registered. The directory
 /// need not exist any more — removing a deleted root is how a person clears
-/// its blocker.
+/// its blocker — and the path may be given as `roots list` prints it.
 pub fn remove_root(paths: &Paths, guard: &RefGuard, dir: &Path) -> Result<bool, AwareError> {
     let path = normalize_root(dir)?;
+    let given = dir.display().to_string();
     edit_roots(paths, guard, |roots| {
         let before = roots.len();
-        roots.retain(|r| r.path != path);
+        roots.retain(|r| !same_root(&r.path, &path) && !same_root(&r.path, &given));
         roots.len() != before
     })
 }
@@ -414,10 +453,6 @@ pub struct RootRow {
     pub status: &'static str,
     /// Locks found below it.
     pub locks: usize,
-    /// Links and junctions below it that were not followed: locks behind them
-    /// are not protected.
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub links_not_followed: Vec<String>,
 }
 
 /// The older CLIs' store, which nothing new writes or removes.
@@ -466,7 +501,8 @@ struct Collector {
     now: DateTime<Utc>,
     found: Vec<Found>,
     blockers: Vec<Blocker>,
-    links: Vec<String>,
+    /// Real folders already walked: a link back up never loops.
+    visited: std::collections::BTreeSet<PathBuf>,
     locks: usize,
 }
 
@@ -530,13 +566,7 @@ impl Collector {
     }
 
     fn read_lock(&mut self, path: &Path) -> Option<LockFile> {
-        let parsed = std::fs::read(path)
-            .map_err(|e| format!("cannot read it: {e}"))
-            .and_then(|bytes| {
-                serde_yaml::from_slice::<LockFile>(&bytes)
-                    .map_err(|e| format!("it is not a lock AWARE can read: {e}"))
-            });
-        match parsed {
+        match parse_lock(path) {
             Ok(lock) => Some(lock),
             Err(problem) => {
                 self.block(path, problem);
@@ -546,10 +576,7 @@ impl Collector {
     }
 
     /// The pins of an approved lock, and of its approval record.
-    fn approved_lock(&mut self, dir: &Path, path: &Path, held_apps: &[String]) {
-        let Some(lock) = self.read_lock(path) else {
-            return;
-        };
+    fn approved_lock(&mut self, dir: &Path, path: &Path, lock: LockFile) {
         self.locks += 1;
         let shown = path.display().to_string();
         self.keep_lock_pins(&lock, || Reference::ApprovedLock {
@@ -566,7 +593,18 @@ impl Collector {
             );
             return;
         }
-        let held = held_apps.contains(&lock.app) || hold_exists(dir, &lock.app);
+        // The hold reader's own rule: a plain `HOLD`, or one that cannot be
+        // attributed to a single app, holds every app in the folder.
+        let held = match crate::migration::files::read_hold(dir, &lock.app) {
+            Ok(hold) => hold.is_some(),
+            Err(error) => {
+                self.block(
+                    dir,
+                    format!("cannot tell whether {} is on hold: {error}", lock.app),
+                );
+                true
+            }
+        };
         let mut anchors = Vec::with_capacity(chain.successors.len());
         for successor in &chain.successors {
             match parse_time(&successor.promoted_at) {
@@ -609,30 +647,33 @@ impl Collector {
     }
 
     /// Everything in one directory that may reference a package: its approved
-    /// locks (only beside an app source), its migration candidates, its
-    /// approval archives and any promotion in progress.
+    /// locks, its migration candidates, its approval archives and any
+    /// promotion in progress.
+    ///
+    /// Every `*.lock` that reads as an AWARE lock counts, whether or not its
+    /// source sits beside it (a source being rewritten or moved must not cost
+    /// its lock the versions it pins). One that does not read is a blocker
+    /// beside an app source, and someone else's `.lock` file otherwise.
     fn app_dir(&mut self, dir: &Path, files: &[PathBuf]) {
         let has_source = files.iter().any(|f| {
             f.extension()
                 .and_then(|e| e.to_str())
-                .is_some_and(|e| crate::manifest::loader::APP_MANIFEST_EXTENSIONS.contains(&e))
+                .is_some_and(|e| crate::manifest::loader::APP_SOURCE_EXTENSIONS.contains(&e))
         });
-        let approvals = dir.join(crate::migration::files::APPROVALS_DIR);
-        let held_apps = holds_in(&approvals);
-        let locks: Vec<PathBuf> = if has_source {
-            files
-                .iter()
-                .filter(|f| f.extension().is_some_and(|e| e == "lock"))
-                .cloned()
-                .collect()
-        } else {
-            Vec::new()
-        };
-        for lock in &locks {
-            self.approved_lock(dir, lock, &held_apps);
+        for path in files
+            .iter()
+            .filter(|f| f.extension().is_some_and(|e| e == "lock"))
+        {
+            match parse_lock(path) {
+                Ok(lock) => self.approved_lock(dir, path, lock),
+                Err(problem) if has_source => self.block(path, problem),
+                Err(_) => {}
+            }
         }
+        let approvals = dir.join(crate::migration::files::APPROVALS_DIR);
         self.candidates(&dir.join(crate::migration::files::MIGRATION_DIR));
-        self.archives(&approvals, !held_apps.is_empty());
+        let held = any_hold(&approvals);
+        self.archives(&approvals, held);
     }
 
     fn candidates(&mut self, dir: &Path) {
@@ -652,13 +693,21 @@ impl Collector {
                     });
                 }
             } else if name.ends_with(".evidence.json") {
-                // The pins a candidate moves away from. The base lock usually
-                // still references them; an evidence file that cannot be read
-                // leaves the candidate's own pins, which are what it runs.
-                let Some(evidence) = std::fs::read(&path).ok().and_then(|b| {
-                    serde_json::from_slice::<crate::migration::files::Evidence>(&b).ok()
-                }) else {
-                    continue;
+                // The pins a candidate moves away from — once its base lock
+                // has been replaced, possibly the only reference left.
+                let evidence = std::fs::read(&path)
+                    .map_err(|e| format!("cannot read it: {e}"))
+                    .and_then(|b| {
+                        serde_json::from_slice::<crate::migration::files::Evidence>(&b).map_err(
+                            |e| format!("it is not migration evidence AWARE can read: {e}"),
+                        )
+                    });
+                let evidence = match evidence {
+                    Ok(evidence) => evidence,
+                    Err(problem) => {
+                        self.block(&path, problem);
+                        continue;
+                    }
                 };
                 let shown = path.display().to_string();
                 for (id, moved) in &evidence.header.targets {
@@ -771,30 +820,38 @@ impl Collector {
         }
     }
 
-    /// Walk `dir` and below for app directories, never through a link.
+    /// Walk `dir` and below for app directories. Links and junctions are
+    /// followed, as `aware app run` follows an `apps/<id>` junction; each real
+    /// folder is walked once, so a link back up cannot loop.
     fn walk(&mut self, dir: &Path, depth: usize) {
+        match std::fs::canonicalize(dir) {
+            Ok(real) => {
+                if !self.visited.insert(real) {
+                    return;
+                }
+            }
+            Err(error) => {
+                self.block(dir, format!("cannot resolve it: {error}"));
+                return;
+            }
+        }
         let Some(entries) = self.list(dir) else {
             return;
         };
         let mut files = Vec::new();
         let mut subdirs = Vec::new();
         for path in entries {
-            let metadata = match std::fs::symlink_metadata(&path) {
+            // Through any link: a dangling one may have pointed at a lock.
+            let metadata = match std::fs::metadata(&path) {
                 Ok(metadata) => metadata,
                 Err(error) => {
                     self.block(&path, format!("cannot read it: {error}"));
                     continue;
                 }
             };
-            if metadata.file_type().is_symlink() || crate::fs::is_reparse_point(&metadata) {
-                if std::fs::metadata(&path).is_ok_and(|m| m.is_dir()) {
-                    self.links.push(path.display().to_string());
-                }
-                continue;
-            }
             if metadata.is_dir() {
                 let name = path.file_name().and_then(|n| n.to_str()).unwrap_or("");
-                if !name.starts_with('.') && !SKIPPED_DIRS.contains(&name) {
+                if !SKIPPED_DIRS.contains(&name) {
                     subdirs.push(path);
                 }
             } else {
@@ -802,9 +859,14 @@ impl Collector {
             }
         }
         self.app_dir(dir, &files);
-        if depth < MAX_DEPTH {
-            for sub in subdirs {
+        for sub in subdirs {
+            if depth < MAX_DEPTH {
                 self.walk(&sub, depth + 1);
+            } else {
+                self.block(
+                    &sub,
+                    format!("it is more than {MAX_DEPTH} folders below its root; locks in it are not searched"),
+                );
             }
         }
     }
@@ -813,7 +875,6 @@ impl Collector {
     fn root(&mut self, path: &Path, kind: &'static str, label: Option<String>) -> RootRow {
         let before_locks = self.locks;
         let before_blockers = self.blockers.len();
-        let before_links = self.links.len();
         let status = match std::fs::metadata(path) {
             Ok(m) if m.is_dir() => {
                 self.walk(path, 0);
@@ -852,27 +913,31 @@ impl Collector {
             label,
             status,
             locks: self.locks - before_locks,
-            links_not_followed: self.links[before_links..].to_vec(),
         }
     }
 }
 
-fn hold_exists(dir: &Path, app: &str) -> bool {
-    crate::migration::files::hold_path(dir, app).exists()
+/// Whether any hold file (`HOLD` or `HOLD.<anything>`) sits in an approvals
+/// folder. Archives are not per app, so any hold keeps all of them. A folder
+/// that cannot be listed is already a blocker (see [`Collector::archives`]).
+fn any_hold(approvals: &Path) -> bool {
+    let hold = crate::migration::files::HOLD_FILE;
+    std::fs::read_dir(approvals).is_ok_and(|entries| {
+        entries.flatten().any(|e| {
+            let name = e.file_name().to_string_lossy().into_owned();
+            name == hold || name.starts_with(&format!("{hold}."))
+        })
+    })
 }
 
-/// The apps with a `HOLD.<app>` file in an approvals directory.
-fn holds_in(approvals: &Path) -> Vec<String> {
-    let prefix = format!("{}.", crate::migration::files::HOLD_FILE);
-    std::fs::read_dir(approvals)
-        .map(|entries| {
-            entries
-                .flatten()
-                .filter_map(|e| e.file_name().to_str().map(str::to_string))
-                .filter_map(|name| name.strip_prefix(&prefix).map(str::to_string))
-                .collect()
+/// Read and parse an AWARE lock.
+fn parse_lock(path: &Path) -> Result<LockFile, String> {
+    std::fs::read(path)
+        .map_err(|e| format!("cannot read it: {e}"))
+        .and_then(|bytes| {
+            serde_yaml::from_slice::<LockFile>(&bytes)
+                .map_err(|e| format!("it is not a lock AWARE can read: {e}"))
         })
-        .unwrap_or_default()
 }
 
 /// Total size of the regular files under `dir`, never through a link.
@@ -914,7 +979,7 @@ fn judge(
     for f in found {
         let applies = match &f.scope {
             Scope::Digest(fid, fdigest) => fid == id && fdigest == digest,
-            Scope::Agent(fid) => fid == id,
+            Scope::Agent(fid) => fid.eq_ignore_ascii_case(id),
         };
         if !applies {
             continue;
@@ -957,7 +1022,7 @@ pub fn table(
         now,
         found: Vec::new(),
         blockers: Vec::new(),
-        links: Vec::new(),
+        visited: std::collections::BTreeSet::new(),
         locks: 0,
     };
 
@@ -1048,10 +1113,8 @@ pub fn table(
 
 fn current_copies(c: &mut Collector, paths: &Paths, guard: &RefGuard) {
     let agents = paths.agents_dir();
-    let Some(entries) = c.list(&agents) else {
-        return;
-    };
-    for path in entries {
+    let mut ids = std::collections::BTreeSet::new();
+    for path in c.list(&agents).unwrap_or_default() {
         let Some(id) = path
             .file_name()
             .and_then(|n| n.to_str())
@@ -1066,15 +1129,30 @@ fn current_copies(c: &mut Collector, paths: &Paths, guard: &RefGuard) {
         {
             continue;
         }
+        ids.insert(id);
+    }
+    // An update or uninstall that crashed may have moved `agents/<id>` out;
+    // reading its swap lock recovers it first, like any reader of that copy.
+    match crate::install::swap::pending_ids(paths) {
+        Ok(pending) => ids.extend(pending),
+        Err(error) => c.block(&paths.agent_swap_dir(), error.to_string()),
+    }
+    for id in ids {
+        let path = agents.join(&id);
         let shown = path.display().to_string();
         let digest =
             crate::install::swap::read_lock(paths, guard, &[id.as_str()]).and_then(|held| {
-                let digest = crate::install::integrity::tree_digest(&path);
+                // Recovered away (an uninstall that finished): nothing current.
+                if crate::agent_store::probe(&path)?.is_none() {
+                    return Ok(None);
+                }
+                let digest = crate::install::integrity::tree_digest(&path).map(Some);
                 drop(held);
                 digest
             });
         match digest {
-            Ok(digest) => c.keep(&id, &digest, Reference::Current { path: shown }, None),
+            Ok(None) => {}
+            Ok(Some(digest)) => c.keep(&id, &digest, Reference::Current { path: shown }, None),
             Err(error) => c.found.push(Found {
                 scope: Scope::Agent(id),
                 reference: Reference::CurrentUnhashable {
@@ -1166,7 +1244,13 @@ fn store(
                     .ok()
                     .and_then(|t| serde_yaml::from_str::<super::PackageMetadata>(&t).ok());
                 let snapshotted = record.as_ref().and_then(|r| parse_time(&r.snapshotted_at));
-                let last_needed = super::stamps::last_needed(paths, &id, &digest);
+                let last_needed = match super::stamps::read_last_needed(paths, &id, &digest) {
+                    Ok(time) => time,
+                    Err(problem) => {
+                        c.block(&entry, problem);
+                        None
+                    }
+                };
                 let recent = [
                     snapshotted.or_else(|| modified(&entry)),
                     last_needed.as_deref().and_then(parse_time),

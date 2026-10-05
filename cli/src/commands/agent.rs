@@ -378,17 +378,6 @@ fn refs_cmd(ctx: &Context, recovery_window: Option<&str>) -> Result<(), AwareErr
     for leftover in &table.leftovers {
         println!("\u{26a0} {} ({})", leftover.path, leftover.kind);
     }
-    for root in table
-        .roots
-        .iter()
-        .filter(|r| !r.links_not_followed.is_empty())
-    {
-        println!(
-            "\u{26a0} links under {} were not followed; locks behind them are not protected: {}",
-            root.path,
-            root.links_not_followed.join(", ")
-        );
-    }
     if let Some(legacy) = &table.legacy_store {
         println!(
             "the older store {} ({} bytes) is only used by AWARE 0.152 and older; nothing new writes or removes it",
