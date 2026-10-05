@@ -707,7 +707,48 @@ A person approval record is the front door's JSON: `{format: 1, kind: person, ac
 - the last successor's `to` is not the lock's top-level `agent-pins` / `agent-digests` / `agent-bundle-pins`, or its `to-plan-digest` is not the lock's plan digest;
 - a `kind: reverted` successor moves to pins that were never approved before it (neither the original's nor an earlier successor's `to`);
 - an archive or evidence path is not the content-addressed path of its digest, a digest is not `sha256:` plus 64 lowercase hex, or a person claim says `attested: true` (this CLI cannot have written it);
-- **an archive that is present contradicts the record**: its bytes do not hash to its name; the original archive approved another source (its source hash is not the one this lock names) or its pins, `compiled-at`, `compiler-version` or `front-door` differ from `approval.original`; successor k's resulting plan does not have plan digest `to-plan-digest` and pins `to`; the lock successor k+1 replaced does not carry exactly the original plus successors 1..k and the plan successor k approved; a person approval record does not name this link's actor, approval-ref, front door, candidate, base lock and plan; or a successor's evidence is not `aware.migration-evidence/v1` for this app whose header names this link's candidate (`candidate-digest` = `resulting-lock-digest`) and plan (`plan-digest` = `to-plan-digest`). The labels' effect and comparison wording comes from that evidence, so evidence that cannot be read as such is a contradiction, never a silently complete record.
+- **an archive that is present contradicts the record**: its bytes do not hash to its name, or it is not the kind of record the chain says it is, or any field below disagrees. Every field each archived record carries is checked, and the refusal names the record and the field:
+
+  | Record | Field | Must be |
+  |---|---|---|
+  | original lock | `approval` | absent — an original carries no approval record |
+  | | `source-hash` | the raw `sha256:<hex>` form (never `successor-v1:`), naming the source this lock approves |
+  | | `app`, `version` | this lock's |
+  | | `compiled-at`, `compiler-version`, `front-door` | `approval.original`'s |
+  | | `agent-pins`, `agent-digests`, `agent-bundle-pins` | `approval.original`'s |
+  | | `nodes`, `schedule`, `engineering` | not recorded in the chain; bound by `lock-digest` (the file is content-addressed) |
+  | lock successor k+1 replaced | `approval` | present: `format`, `original` and successors 1..k exactly this chain's |
+  | | `source-hash` | this lock's (`successor-v1:<hex>`) |
+  | | `app`, `version` | this lock's |
+  | | `agent-pins`, `agent-digests`, `agent-bundle-pins` | successor k's `to` |
+  | | plan digest | successor k's `to-plan-digest` |
+  | resulting plan of successor k | `approval` | absent — the candidate as promoted |
+  | | `source-hash` | the raw `sha256:<hex>` form, naming this lock's source |
+  | | `app`, `version` | this lock's |
+  | | `agent-pins`, `agent-digests`, `agent-bundle-pins` | successor k's `to` |
+  | | plan digest | successor k's `to-plan-digest` |
+  | | `compiled-at`, `compiler-version`, `front-door` | unchecked: when and by whom, outside the plan digest |
+  | evidence of successor k | whole file | parses as migration evidence |
+  | | `format` | `aware.migration-evidence/v1` |
+  | | `app` | this lock's |
+  | | `prepared-at`, `cli-version` | non-empty |
+  | | `row` | an object (the label reads `effect` and `comparison` from it) |
+  | | `header.format` | `aware.migration-candidate/v1` |
+  | | `header.app` | this lock's |
+  | | `header.base-lock-digest` | successor k's `from-lock-digest` |
+  | | `header.base-source-hash` | this lock's source, `sha256:<hex>` |
+  | | `header.candidate-digest` | successor k's `resulting-lock-digest` |
+  | | `header.plan-digest` | successor k's `to-plan-digest` |
+  | | `header.targets` | exactly the agents successor k moved, `from` and `to` as in its pin maps |
+  | person approval record of successor k | whole file | parses, with every field below present |
+  | | `format` | `1` |
+  | | `kind` | `person` |
+  | | `actor`, `approval-ref`, `front-door` | the link's `carried-forward-by` claim |
+  | | `candidate-digest`, `base-lock-digest`, `plan-digest` | the link's `resulting-lock-digest`, `from-lock-digest`, `to-plan-digest` |
+  | | `statement-sha256` | a sha256 digest |
+  | | `at` | non-empty |
+
+  A policy link's `policy-digest` is checked for form only: there is no policy store to check it against until promotion ships. The labels' effect and comparison wording comes from the evidence, so evidence that cannot be read as such is a contradiction, never a silently complete record.
 
 The source hash is then compared as usual. The hex part of `successor-v1:<hex>` must be the current source's sha256, or the run is refused with `E_APP_LOCK_STALE`.
 

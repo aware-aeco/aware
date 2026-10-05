@@ -242,7 +242,7 @@ fn the_replaced_lock_of_a_later_link_must_be_the_lock_the_earlier_link_left() {
     });
     assert_invalid(
         &s,
-        "replaced a lock whose record or plan is not the one successor 1 left",
+        "the archived replaced lock contradicts the approval record",
     );
 }
 
@@ -400,7 +400,10 @@ fn an_original_record_that_is_not_the_archived_original_is_invalid() {
         c.original.archive = archive_rel(&other, "lock").unwrap();
         c.successors[0].from_lock_digest = other;
     });
-    assert_invalid(&s, "does not match the archived original approval");
+    assert_invalid(
+        &s,
+        "original approval archive contradicts the approval record",
+    );
 }
 
 #[test]
@@ -411,7 +414,10 @@ fn a_resulting_plan_archive_that_is_not_the_approved_plan_is_invalid() {
         let c = chain(l);
         c.successors[0].resulting_lock_digest = c.original.lock_digest.clone();
     });
-    assert_invalid(&s, "archived resulting plan is not the plan it approved");
+    assert_invalid(
+        &s,
+        "the archived resulting plan contradicts the approval record",
+    );
 }
 
 #[test]
@@ -426,6 +432,8 @@ fn a_person_approval_record_for_another_plan_is_invalid() {
         "candidate-digest": chain0.resulting_lock_digest,
         "base-lock-digest": chain0.from_lock_digest,
         "plan-digest": format!("sha256:{}", "3".repeat(64)),
+        "statement-sha256": format!("sha256:{}", "9".repeat(64)),
+        "at": "2026-10-05T00:00:00Z",
     });
     let digest = archive(&dir, record.to_string().as_bytes(), "json");
     tamper(&p.lock_path, |l| {
@@ -437,7 +445,7 @@ fn a_person_approval_record_for_another_plan_is_invalid() {
             *approval_record_digest = digest;
         }
     });
-    assert_invalid(&s, "plan-digest differs");
+    assert_invalid(&s, "contradicts the approval record at `plan-digest`");
 }
 
 #[test]
@@ -703,7 +711,10 @@ fn an_original_record_whose_pins_differ_from_the_archived_original_is_invalid() 
         c.original.agent_pins.insert("tool".into(), "0.9.9".into());
         c.successors[0].from.get_mut("tool").unwrap().version = "0.9.9".into();
     });
-    assert_invalid(&s, "does not match the archived original approval");
+    assert_invalid(
+        &s,
+        "original approval archive contradicts the approval record",
+    );
 }
 
 #[test]
@@ -716,7 +727,10 @@ fn a_resulting_plan_archive_that_carries_an_approval_record_is_invalid() {
     tamper(&p.lock_path, |l| {
         chain(l).successors[0].resulting_lock_digest = promoted;
     });
-    assert_invalid(&s, "archived resulting plan is not the plan it approved");
+    assert_invalid(
+        &s,
+        "the archived resulting plan contradicts the approval record",
+    );
 }
 
 #[test]
@@ -744,7 +758,7 @@ fn a_replaced_lock_with_another_original_record_is_invalid() {
     });
     assert_invalid(
         &s,
-        "replaced a lock whose record or plan is not the one successor 1 left",
+        "the archived replaced lock contradicts the approval record",
     );
 }
 
@@ -774,7 +788,10 @@ fn an_original_approval_of_another_source_is_invalid() {
     swap_original(&s, &p, |o| {
         o.source_hash = format!("sha256:{}", "4".repeat(64));
     });
-    assert_invalid(&s, "approved another source");
+    assert_invalid(
+        &s,
+        "original approval archive contradicts the approval record at `source-hash`",
+    );
 }
 
 /// Archive `bytes` as successor 1's evidence and point the link at it.
@@ -805,14 +822,14 @@ fn evidence_for_another_candidate_is_invalid_and_never_labels_the_link() {
         let mut evidence = current_evidence(&s, &p);
         evidence["header"][field] = serde_json::Value::String(value);
         swap_evidence(&s, &p, evidence.to_string().as_bytes());
-        assert_invalid(&s, "evidence does not belong to this link");
+        assert_invalid(&s, "the archived evidence contradicts the approval record");
     }
     let s = setup();
     let p = promoted_by(&s, By::Person("pawel"));
     let mut evidence = current_evidence(&s, &p);
     evidence["app"] = serde_json::Value::String("another-app".into());
     swap_evidence(&s, &p, evidence.to_string().as_bytes());
-    assert_invalid(&s, "evidence does not belong to this link");
+    assert_invalid(&s, "the archived evidence contradicts the approval record");
 }
 
 #[test]

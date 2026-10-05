@@ -549,30 +549,7 @@ pub fn assess(lock: &LockFile, source_dir: &Path) -> Result<ApprovalSummary, Str
         }
         Archive::Present(bytes) => {
             let archived = parse_archived_lock(&bytes, "the original approval archive")?;
-            if archived.approval.is_some() {
-                return Err(
-                    "the original approval archive itself carries an approval record".into(),
-                );
-            }
-            // The step original → successor 1 carries an approval of THIS
-            // source: an original that approved another one cannot be carried
-            // onto it.
-            if approved_source_hash(&archived) != approved_source_hash(lock) {
-                return Err(format!(
-                    "the archived original approval approved another source ({}, this lock is for {})",
-                    approved_source_hash(&archived),
-                    approved_source_hash(lock)
-                ));
-            }
-            if original_pins(original) != pins_of(&archived)
-                || archived.compiled_at != original.compiled_at
-                || archived.compiler_version != original.compiler_version
-                || archived.front_door != original.front_door
-            {
-                return Err(
-                    "approval.original does not match the archived original approval".into(),
-                );
-            }
+            records::validate_original(&archived, original, lock).map_err(|c| c.to_string())?;
         }
     }
 
@@ -590,19 +567,8 @@ pub fn assess(lock: &LockFile, source_dir: &Path) -> Result<ApprovalSummary, Str
                 Archive::Present(bytes) => {
                     let replaced =
                         parse_archived_lock(&bytes, &format!("successor {n}'s replaced lock"))?;
-                    let prior = &chain.successors[index - 1];
-                    let earlier = replaced.approval.as_ref();
-                    if earlier.map(|c| &c.original) != Some(&chain.original)
-                        || earlier.map(|c| c.successors.as_slice())
-                            != Some(&chain.successors[..index])
-                        || plan_digest(&replaced).map_err(|e| e.to_string())?
-                            != prior.to_plan_digest
-                    {
-                        return Err(format!(
-                            "successor {n} replaced a lock whose record or plan is not the one successor {} left",
-                            prior.seq
-                        ));
-                    }
+                    records::validate_replaced(&replaced, chain, index, lock)
+                        .map_err(|c| format!("successor {n}: {c}"))?;
                 }
             }
         }
@@ -616,14 +582,8 @@ pub fn assess(lock: &LockFile, source_dir: &Path) -> Result<ApprovalSummary, Str
             Archive::Present(bytes) => {
                 let result =
                     parse_archived_lock(&bytes, &format!("successor {n}'s resulting plan"))?;
-                if result.approval.is_some()
-                    || plan_digest(&result).map_err(|e| e.to_string())? != link.to_plan_digest
-                    || pins_of(&result) != link.to
-                {
-                    return Err(format!(
-                        "successor {n}'s archived resulting plan is not the plan it approved"
-                    ));
-                }
+                records::validate_resulting(&result, link, lock)
+                    .map_err(|c| format!("successor {n}: {c}"))?;
             }
         }
         let mut fact = EvidenceFacts::default();
@@ -636,22 +596,9 @@ pub fn assess(lock: &LockFile, source_dir: &Path) -> Result<ApprovalSummary, Str
             Archive::Missing(item) => missing.push(item),
             Archive::Present(bytes) => {
                 // The labels' effect and comparison wording comes from this
-                // file, so it must be evidence FOR this link: the candidate it
-                // promoted, the plan it approved, this app.
-                let evidence: crate::migration::files::Evidence = serde_json::from_slice(&bytes)
-                    .map_err(|e| {
-                        format!("successor {n}'s evidence is not migration evidence: {e}")
-                    })?;
-                if evidence.format != crate::migration::files::EVIDENCE_FORMAT
-                    || evidence.app != lock.app
-                    || evidence.header.app != lock.app
-                    || evidence.header.candidate_digest != link.resulting_lock_digest
-                    || evidence.header.plan_digest != link.to_plan_digest
-                {
-                    return Err(format!(
-                        "successor {n}'s evidence does not belong to this link (it was written for another candidate, plan or app)"
-                    ));
-                }
+                // file, so it must be evidence FOR this link.
+                let evidence = records::validate_evidence(&bytes, link, lock)
+                    .map_err(|c| format!("successor {n}: {c}"))?;
                 let row = &evidence.row;
                 fact.effect = row["effect"].as_str().map(str::to_string);
                 fact.comparison = row["comparison"]["status"].as_str().map(str::to_string);
@@ -660,9 +607,6 @@ pub fn assess(lock: &LockFile, source_dir: &Path) -> Result<ApprovalSummary, Str
         }
         facts.push(fact);
         if let CarriedForwardBy::Person {
-            actor,
-            approval_ref,
-            front_door,
             approval_record_digest,
             ..
         } = &link.carried_forward_by
@@ -674,26 +618,8 @@ pub fn assess(lock: &LockFile, source_dir: &Path) -> Result<ApprovalSummary, Str
                 &format!("successor {n}: person approval record"),
             )? {
                 Archive::Missing(item) => missing.push(item),
-                Archive::Present(bytes) => {
-                    let record: serde_json::Value = serde_json::from_slice(&bytes)
-                        .map_err(|e| format!("successor {n}'s approval record is not JSON: {e}"))?;
-                    let field = |key: &str| record[key].as_str().unwrap_or_default().to_string();
-                    let expected = [
-                        ("kind", "person".to_string()),
-                        ("actor", actor.clone()),
-                        ("approval-ref", approval_ref.clone()),
-                        ("front-door", front_door.clone()),
-                        ("candidate-digest", link.resulting_lock_digest.clone()),
-                        ("base-lock-digest", link.from_lock_digest.clone()),
-                        ("plan-digest", link.to_plan_digest.clone()),
-                    ];
-                    if let Some((key, _)) = expected.iter().find(|(key, want)| field(key) != *want)
-                    {
-                        return Err(format!(
-                            "successor {n}'s archived approval record does not approve this link ({key} differs)"
-                        ));
-                    }
-                }
+                Archive::Present(bytes) => records::validate_person_record(&bytes, link)
+                    .map_err(|c| format!("successor {n}: {c}"))?,
             }
         }
     }
@@ -872,8 +798,13 @@ fn link_label(link: &Successor, fact: Option<&EvidenceFacts>) -> String {
     label
 }
 
+pub mod records;
+
 #[cfg(test)]
 pub(crate) mod test_support;
 
 #[cfg(test)]
 mod tests;
+
+#[cfg(test)]
+mod record_tables;
