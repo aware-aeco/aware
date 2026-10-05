@@ -1079,6 +1079,25 @@ mod hooks {
     }
 }
 
+/// Every transaction directory (settled or not, with or without an intent)
+/// under the swap area — for tests asserting a failed operation left no
+/// staging behind.
+#[cfg(test)]
+pub(crate) fn leftover_txn_dirs(paths: &Paths) -> Vec<PathBuf> {
+    std::fs::read_dir(paths.agent_swap_dir())
+        .map(|entries| {
+            entries
+                .flatten()
+                .filter(|e| {
+                    let name = e.file_name().to_string_lossy().into_owned();
+                    is_txn_name(&name) || name.starts_with(SETTLED_PREFIX)
+                })
+                .map(|e| e.path())
+                .collect()
+        })
+        .unwrap_or_default()
+}
+
 #[cfg(test)]
 pub(crate) use hooks::{CRASHED, Fault, clear as clear_fault, inject as inject_fault};
 

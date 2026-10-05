@@ -691,9 +691,8 @@ requires: []
             !paths.agents_dir().join("loc").exists(),
             "nothing installed"
         );
-        let staging = paths.cache_dir().join("install-staging");
         assert!(
-            std::fs::read_dir(&staging).map(|d| d.count()).unwrap_or(0) == 0,
+            crate::install::swap::leftover_txn_dirs(&paths).is_empty(),
             "staging cleaned"
         );
 

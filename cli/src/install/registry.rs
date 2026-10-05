@@ -786,7 +786,7 @@ mod tests {
 
         assert!(error.to_string().contains("absent.md"), "{error}");
         assert!(!paths.agents_dir().join("probe").exists());
-        assert!(!paths.cache_dir().join("install-staging/probe").exists());
+        assert!(crate::install::swap::leftover_txn_dirs(&paths).is_empty());
     }
 
     #[test]
@@ -830,12 +830,7 @@ mod tests {
             "{error}"
         );
         assert!(!paths.agents_dir().join("future-agent").exists());
-        assert!(
-            !paths
-                .cache_dir()
-                .join("install-staging/future-agent")
-                .exists()
-        );
+        assert!(crate::install::swap::leftover_txn_dirs(&paths).is_empty());
     }
 
     #[test]
@@ -1963,11 +1958,7 @@ mod tests {
             assert!(error.is_err(), "{step:?}");
             assert!(!paths.agents_dir().join("tekla").exists(), "{step:?}");
             assert!(
-                !paths
-                    .cache_dir()
-                    .join("install-staging")
-                    .join("tekla")
-                    .exists(),
+                crate::install::swap::leftover_txn_dirs(&paths).is_empty(),
                 "{step:?}: staging cleaned"
             );
         }
@@ -2041,11 +2032,7 @@ mod tests {
                     "call {call} {step:?}: agents/ must be byte-identical"
                 );
                 assert!(
-                    !paths
-                        .cache_dir()
-                        .join("update-staging")
-                        .join("tekla")
-                        .exists(),
+                    crate::install::swap::leftover_txn_dirs(&paths).is_empty(),
                     "call {call} {step:?}: staging cleaned"
                 );
             }
