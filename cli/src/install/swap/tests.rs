@@ -767,3 +767,53 @@ fn a_case_differing_update_moves_the_one_directory_or_refuses_two() {
         assert!(error.to_string().contains("differ only by case"), "{error}");
     }
 }
+
+/// Review #627-a: a kill DURING the final delete of a committed transaction
+/// (`remove_dir_all` gone part-way: the journal and some of a moved-aside copy
+/// deleted, the intent still there) must leave nothing a later recovery could
+/// mistake for an unfinished swap — never rolling a half-deleted old copy back
+/// into `agents/`, never E_AGENT_SWAP_RECOVERY for ever.
+#[test]
+fn a_kill_during_the_final_delete_never_resurrects_or_wedges_the_swap() {
+    for op in ["uninstall", "update"] {
+        let (_tmp, paths) = home();
+        write_tree(&paths.agents_dir().join("alpha"), "alpha", "1.0.0", "old");
+        inject_fault(Fault::InterruptFinish);
+        let result = if op == "uninstall" {
+            let guard = crate::agent_store::open(&paths).unwrap();
+            crate::install::uninstall_agent("alpha", &paths, &guard)
+        } else {
+            update(&paths, "alpha", "alpha", "new")
+        };
+        clear_fault();
+        result.unwrap();
+
+        let guard = crate::agent_store::open(&paths).unwrap();
+        let read = read_lock(&paths, &guard, &["alpha"]);
+        assert!(read.is_ok(), "{op}: {:?}", read.err());
+        drop(read);
+        let now = maybe_tree(&paths.agents_dir().join("alpha"));
+        if op == "uninstall" {
+            assert_eq!(now, None, "{op}: the uninstalled agent came back");
+        } else {
+            let now = now.expect("updated");
+            assert_eq!(now.len(), 9, "{op}: complete");
+            assert!(String::from_utf8_lossy(&now["manifest.yaml"]).contains("2.0.0"));
+        }
+        let findings = recover_all(&paths, &guard).unwrap();
+        assert!(
+            findings.iter().all(|f| f.outcome != "needs-you"),
+            "{op}: {findings:?}"
+        );
+        let left: Vec<_> = std::fs::read_dir(paths.agent_swap_dir())
+            .unwrap()
+            .flatten()
+            .map(|e| e.file_name().to_string_lossy().into_owned())
+            .filter(|n| n != LOCKS_DIR)
+            .collect();
+        assert!(
+            left.is_empty(),
+            "{op}: doctor cleans the leftover: {left:?}"
+        );
+    }
+}

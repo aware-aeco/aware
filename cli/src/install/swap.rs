@@ -73,6 +73,8 @@ const OUTGOING_PREFIX: &str = "outgoing-";
 const INTENT_FORMAT: &str = "aware.agent-swap/v1";
 const COMMIT: &str = "commit";
 const ROLLED_BACK: &str = "rolled-back";
+/// Prefix of a settled transaction being deleted: never a transaction name.
+const SETTLED_PREFIX: &str = ".done-";
 
 /// What a transaction does — informational; recovery decides from the paths.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -462,6 +464,7 @@ fn recover(paths: &Paths, txn: &OnDisk) -> Result<Recovered, AwareError> {
         if !txn.has(COMMIT) {
             journal.line(COMMIT)?;
         }
+        journal.close();
         finish(&txn.dir);
         return Ok(Recovered::Committed);
     }
@@ -526,20 +529,61 @@ fn roll_back(
         }
     }
     journal.line(ROLLED_BACK)?;
+    journal.close();
     finish(dir);
     Ok(())
 }
 
 /// Delete a settled transaction directory (incoming leftovers, outgoing
-/// copies). Best effort — a settled transaction is inert; a later recovery or
-/// `aware doctor` retries.
+/// copies). Best effort — a settled transaction is inert.
+///
+/// First the transaction is made unrecognisable in ONE step — renamed to
+/// `.done-<txn>`, a name no reader treats as a transaction — and only then
+/// deleted. Deleting in place could be killed part-way (`remove_dir_all` takes
+/// many steps) and leave an intent whose journal is gone: recovery would then
+/// roll a half-deleted old copy back into `agents/`, or refuse for ever
+/// (review #627-a). If the rename cannot be made, the intent is deleted first
+/// instead, which is the same single step. Leftover `.done-*` directories are
+/// removed by `aware doctor`.
 fn finish(dir: &Path) {
-    if let Err(error) = std::fs::remove_dir_all(dir)
+    let name = dir
+        .file_name()
+        .map(|n| n.to_string_lossy().into_owned())
+        .unwrap_or_default();
+    let settled = dir.with_file_name(format!("{SETTLED_PREFIX}{name}"));
+    let target = match crate::fs::rename_dir_no_replace(dir, &settled) {
+        Ok(()) => settled,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return,
+        Err(_) => match std::fs::remove_file(dir.join(INTENT_FILE)) {
+            Ok(()) => dir.to_path_buf(),
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => dir.to_path_buf(),
+            Err(error) => {
+                eprintln!(
+                    "\u{26a0} could not retire the finished agent swap {} ({error}); it is inert and will be retried",
+                    dir.display()
+                );
+                return;
+            }
+        },
+    };
+    if hooks::finish_interrupted() {
+        // Test: stop part-way, as a kill during the delete would.
+        let _ = std::fs::remove_file(target.join(JOURNAL_FILE));
+        if let Ok(entries) = std::fs::read_dir(&target) {
+            for e in entries.flatten() {
+                if e.file_name().to_string_lossy().starts_with(OUTGOING_PREFIX) {
+                    let _ = std::fs::remove_file(e.path().join("manifest.yaml"));
+                }
+            }
+        }
+        return;
+    }
+    if let Err(error) = std::fs::remove_dir_all(&target)
         && error.kind() != std::io::ErrorKind::NotFound
     {
         eprintln!(
-            "\u{26a0} could not remove the finished agent swap {} ({error}); it is inert and will be retried",
-            dir.display()
+            "\u{26a0} could not remove the finished agent swap {} ({error}); it is inert and `aware doctor` removes it",
+            target.display()
         );
     }
 }
@@ -556,8 +600,10 @@ fn swap_io(what: &str, error: std::io::Error) -> AwareError {
 }
 
 /// `journal.log`: one line per step, each fsynced before the next rename.
+/// Closed before the transaction is retired: Windows cannot rename a
+/// directory while a file inside it is open.
 struct Journal {
-    file: std::fs::File,
+    file: Option<std::fs::File>,
     dir: PathBuf,
 }
 
@@ -570,17 +616,25 @@ impl Journal {
             .open(&path)
             .map_err(|e| std::io::Error::new(e.kind(), format!("{}: {e}", path.display())))?;
         Ok(Self {
-            file,
+            file: Some(file),
             dir: dir.to_path_buf(),
         })
     }
 
     fn line(&mut self, line: &str) -> Result<(), AwareError> {
         use std::io::Write;
-        self.file.write_all(format!("{line}\n").as_bytes())?;
-        self.file.sync_all()?;
+        let file = self
+            .file
+            .as_mut()
+            .ok_or_else(|| AwareError::Internal("the swap journal is already closed".into()))?;
+        file.write_all(format!("{line}\n").as_bytes())?;
+        file.sync_all()?;
         crate::fs::sync_dir(&self.dir)?;
         hooks::after_line(line)
+    }
+
+    fn close(&mut self) {
+        self.file = None;
     }
 }
 
@@ -747,6 +801,7 @@ impl Transaction<'_> {
             journal.line(&format!("done {step}"))?;
         }
         journal.line(COMMIT)?;
+        journal.close();
         finish(&dir);
         Ok(())
     }
@@ -886,6 +941,18 @@ pub fn recover_all(paths: &Paths, guard: &RefGuard) -> Result<Vec<DoctorFinding>
     if let Ok(entries) = std::fs::read_dir(&root) {
         for entry in entries.flatten() {
             let name = entry.file_name().to_string_lossy().to_string();
+            if name.starts_with(SETTLED_PREFIX) {
+                // A finished swap whose delete was interrupted: inert.
+                if std::fs::remove_dir_all(entry.path()).is_ok() {
+                    findings.push(DoctorFinding {
+                        txn: name,
+                        ids: Vec::new(),
+                        outcome: "cleaned".into(),
+                        detail: Some("a finished swap's leftover files".into()),
+                    });
+                }
+                continue;
+            }
             if !is_txn_name(&name) {
                 continue;
             }
@@ -944,6 +1011,9 @@ mod hooks {
         /// Make the rename of this step (`"out <id>"` / `"in <name>"`) fail as
         /// an OS error would; the live rollback then runs.
         FailRename(String),
+        /// Stop the final delete of a settled transaction part-way, as a
+        /// kill during `remove_dir_all` would.
+        InterruptFinish,
     }
 
     #[cfg(test)]
@@ -980,6 +1050,15 @@ mod hooks {
         }
         let _ = line;
         Ok(())
+    }
+
+    /// Whether the final delete of a transaction stops part-way (test only).
+    pub(super) fn finish_interrupted() -> bool {
+        #[cfg(test)]
+        if FAULT.with(|f| f.borrow().as_ref() == Some(&Fault::InterruptFinish)) {
+            return true;
+        }
+        false
     }
 
     pub(super) fn rename(from: &Path, to: &Path, step: &str) -> std::io::Result<()> {
