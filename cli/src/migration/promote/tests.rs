@@ -212,7 +212,7 @@ fn a_person_promotion_replaces_the_lock_with_a_record_its_reader_accepts() {
     );
     // The consumed candidate is gone; no transaction is left behind.
     assert!(!files::candidate_path(&dir, "demo").exists());
-    assert!(!dir.join(approval::ARCHIVE_DIR).join(TXN_DIR).exists());
+    assert!(owned_txns(&dir, "demo").unwrap().is_empty());
     // And a run now resolves the new bytes.
     let pins = crate::agent_resolution::PinSet::from_lock(&lock, BTreeMap::new()).unwrap();
     let app = crate::app_lock::read_app_source(&source).unwrap().0;
@@ -942,9 +942,12 @@ fn an_automatic_revert_undoes_only_a_policy_s_move_back_to_an_approved_plan() {
     let (_, before) = lock_of(&source);
     // Codex review round 1: the failed run must be one the CLI can find — a
     // run of this app, under the approval being reverted, that failed.
-    record_run(&h, "run-ok", Some(1), "ok", false);
+    let current = last_evidence(&source);
+    record_run(&h, "run-ok", Some((1, &current)), "ok", false);
     record_run(&h, "run-under-original", None, "error", true);
-    record_run(&h, "run-42", Some(1), "error", false);
+    let other = format!("sha256:{}", "9".repeat(64));
+    record_run(&h, "run-other-seq-1", Some((1, &other)), "error", true);
+    record_run(&h, "run-42", Some((1, &current)), "error", false);
     for (reason, why) in [
         ("because", "the reason must name the failed run"),
         ("run-failed:no-such-run", "an unknown run is no failure"),
@@ -952,6 +955,10 @@ fn an_automatic_revert_undoes_only_a_policy_s_move_back_to_an_approved_plan() {
         (
             "run-failed:run-under-original",
             "a failure under another approval",
+        ),
+        (
+            "run-failed:run-other-seq-1",
+            "a failure under an earlier successor 1 (before a recompile)",
         ),
         ("run-failed:../escape", "a run id is a plain name"),
     ] {
@@ -981,10 +988,12 @@ fn an_automatic_revert_undoes_only_a_policy_s_move_back_to_an_approved_plan() {
 
 /// Write the trace of a run of `demo`: under successor `seq` (or the original
 /// approval), ending `status`, optionally with a node error.
-fn record_run(h: &Home, run_id: &str, seq: Option<u32>, status: &str, node_error: bool) {
+fn record_run(h: &Home, run_id: &str, under: Option<(u32, &str)>, status: &str, node_error: bool) {
     use crate::runtime::provenance::RunEvent;
-    let approval = match seq {
-        Some(seq) => serde_json::json!({ "origin": "successor", "seq": seq }),
+    let approval = match under {
+        Some((seq, evidence)) => {
+            serde_json::json!({ "origin": "successor", "seq": seq, "evidence-digest": evidence })
+        }
         None => serde_json::json!({ "origin": "original" }),
     };
     let mut events = vec![RunEvent::RunStart {
@@ -1038,7 +1047,8 @@ fn an_automatic_revert_never_undoes_a_person_s_approval() {
     .unwrap();
     // Even after a genuinely failed run under it, a person's approval is not
     // undone automatically.
-    record_run(&h, "run-1", Some(1), "error", true);
+    let current = last_evidence(&source);
+    record_run(&h, "run-1", Some((1, &current)), "error", true);
     let (c2, _) = prepare(&h, &source, back_to(&old));
     let (_, before) = lock_of(&source);
     assert_eq!(
@@ -1198,4 +1208,141 @@ fn a_chain_its_own_reader_would_refuse_is_never_written() {
             .unwrap()
             .is_empty()
     );
+}
+
+/// The evidence digest of the last successor of the lock on disk.
+fn last_evidence(source: &Path) -> String {
+    lock_of(source)
+        .0
+        .approval
+        .unwrap()
+        .successors
+        .last()
+        .unwrap()
+        .evidence_digest
+        .clone()
+}
+
+/// Review round 2: a workflow that runs a backing workflow with a pending
+/// update is never carried forward under a policy, as the plan says.
+#[test]
+fn a_caller_of_a_moving_backing_app_is_not_carried_forward_under_a_policy() {
+    let h = home();
+    write_agent(&h.paths, "tool", "1.0.0", "mode: read");
+    let backing = write_app(
+        &h.paths,
+        "inner",
+        "exposes-as-agent: true\nexposed-commands:\n  ask:\n    lifecycle: single\n    outputs:\n      type: single\n\
+         requires: []\nnodes:\n  - { id: a, agent: tool, command: go }\n",
+    );
+    approve(&h.paths, &backing);
+    let wrapper = h.paths.agents_dir().join("inner-wrapper");
+    std::fs::create_dir_all(&wrapper).unwrap();
+    std::fs::write(
+        wrapper.join("manifest.yaml"),
+        "agent: inner-wrapper\nversion: 1.0.0\ndescription: x\nstateful: false\nlicense: app-exposed\n\
+         transport:\n  app:\n    backed-by: inner\n\
+         commands:\n  ask:\n    lifecycle: single\n    mode: read\n    description: x\n",
+    )
+    .unwrap();
+    let source = write_app(
+        &h.paths,
+        "demo",
+        "requires: []\nnodes:\n  - { id: a, agent: tool, command: go }\n  - { id: c, agent: inner-wrapper, command: ask }\n",
+    );
+    approve(&h.paths, &source);
+    update_official(&h, "1.0.1", "mode: read");
+    let id = record_policy(&h, &["*"], &["*"]);
+    let (candidate, _) = prepare(&h, &source, None);
+    let (_, before) = lock_of(&source);
+    let refused = by_policy(&h, &source, &candidate, &id, &verified).unwrap_err();
+    assert_eq!(
+        refused.code, "E_MIGRATE_NOT_ELIGIBLE",
+        "{:?}",
+        refused.error
+    );
+    assert!(
+        refused.details.to_string().contains("backing-app-moved"),
+        "{:?}",
+        refused.details
+    );
+    assert_eq!(lock_of(&source).1, before);
+}
+
+/// Review round 2 (\u{a7}15.1 R3): a policy promotion holds the policies lock
+/// from its verdict until the lock has moved — a revocation started in
+/// between waits for it.
+#[test]
+fn a_revocation_cannot_land_between_a_policy_verdict_and_the_lock_moving() {
+    let (h, source, _) = approved_demo(READS);
+    update_official(&h, "1.0.1", "mode: read");
+    let id = record_policy(&h, &["demo"], &["tool"]);
+    let (candidate, _) = prepare(&h, &source, None);
+    let (at_verdict, verdict_reached) = std::sync::mpsc::channel::<()>();
+    let (go, wait_for_go) = std::sync::mpsc::channel::<()>();
+    let paths = h.paths.clone();
+    let worker_source = source.clone();
+    let worker_id = id.clone();
+    let promoter = std::thread::spawn(move || {
+        on_policy_verdict(Box::new(move || {
+            at_verdict.send(()).unwrap();
+            wait_for_go.recv().unwrap();
+        }));
+        let guard = crate::agent_store::open(&paths).unwrap();
+        promote(
+            &paths,
+            &guard,
+            &worker_source,
+            &candidate,
+            Approver::Policy {
+                id: &worker_id,
+                front_door: "floless@test",
+                official: &verified,
+            },
+            SuccessorKind::CarriedForward,
+        )
+        .map(|p| p.seq)
+        .map_err(|r| r.code)
+    });
+    verdict_reached
+        .recv_timeout(std::time::Duration::from_secs(30))
+        .unwrap();
+    let paths = h.paths.clone();
+    let (revoked, revoke_done) = std::sync::mpsc::channel();
+    let revoker = std::thread::spawn(move || {
+        policy::revoke(&paths, &id, "pawel", "floless@test", None).unwrap();
+        revoked.send(()).unwrap();
+    });
+    assert!(
+        revoke_done
+            .recv_timeout(std::time::Duration::from_millis(400))
+            .is_err(),
+        "a revocation landed between the policy verdict and the lock moving"
+    );
+    go.send(()).unwrap();
+    assert_eq!(promoter.join().unwrap(), Ok(1));
+    revoke_done
+        .recv_timeout(std::time::Duration::from_secs(30))
+        .unwrap();
+    revoker.join().unwrap();
+    reader_accepts(&source);
+}
+
+/// Review round 2: two apps sharing a source directory share
+/// `.aware-approvals/.txn`; one promotion's cleanup never removes the
+/// directory another is about to use.
+#[test]
+fn a_promotion_leaves_the_shared_transaction_directory_in_place() {
+    let (h, source, _) = approved_demo(READS);
+    update_agent(&h.paths, "tool", "1.0.1", "mode: read");
+    let (candidate, header) = prepare(&h, &source, None);
+    by_person(
+        &h,
+        &source,
+        &candidate,
+        &person_record("pawel", &candidate, &header),
+        SuccessorKind::CarriedForward,
+    )
+    .unwrap();
+    assert!(txn_root(source.parent().unwrap()).is_dir());
 }

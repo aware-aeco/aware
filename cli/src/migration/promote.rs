@@ -218,6 +218,29 @@ fn crash_point(_: Fault) -> std::result::Result<(), AwareError> {
 
 #[cfg(test)]
 thread_local! {
+    /// Run once on this thread right after a policy promotion's eligibility
+    /// verdict, while it holds the policies lock (§15.1 R3 test).
+    static AFTER_POLICY_VERDICT: std::cell::RefCell<Option<Box<dyn FnOnce()>>> =
+        std::cell::RefCell::new(None);
+}
+
+#[cfg(test)]
+pub(crate) fn on_policy_verdict(hook: Box<dyn FnOnce()>) {
+    AFTER_POLICY_VERDICT.with(|h| *h.borrow_mut() = Some(hook));
+}
+
+#[cfg(test)]
+fn after_policy_verdict() {
+    if let Some(hook) = AFTER_POLICY_VERDICT.with(|h| h.borrow_mut().take()) {
+        hook();
+    }
+}
+
+#[cfg(not(test))]
+fn after_policy_verdict() {}
+
+#[cfg(test)]
+thread_local! {
     /// When set, the next promotion on this thread writes a chain whose last
     /// link names the wrong plan — the negative control of the writer's
     /// self-check by the reader (§15).
@@ -324,7 +347,6 @@ pub fn recover(
             outcome: if finished { "finished" } else { "rolled-back" },
         });
     }
-    let _ = std::fs::remove_dir(txn_root(source_dir));
     Ok(out)
 }
 
@@ -416,7 +438,6 @@ fn commit(
     })();
     let rollback = |error: AwareError| {
         let _ = std::fs::remove_dir_all(&txn);
-        let _ = std::fs::remove_dir(&root);
         error
     };
     staged.map_err(rollback)?;
@@ -472,7 +493,6 @@ fn commit(
     }
     crash_point(Fault::LockReplaced)?;
     let _ = std::fs::remove_dir_all(&txn);
-    let _ = std::fs::remove_dir(&root);
     Ok(())
 }
 
@@ -777,6 +797,14 @@ pub fn promote(
                 ));
             }
             let mut why = policy::ineligibility(&loaded, &row);
+            for backing in plan::moving_backing_apps(paths, &recompiled.agents, guard) {
+                why.push(Reason::new(
+                    "backing-app-moved",
+                    format!(
+                        "This workflow runs {backing}, which has a pending tool update; a workflow that runs a backing workflow with a pending update is never carried forward under a policy — a person can approve it, or compile {backing} and this workflow again."
+                    ),
+                ));
+            }
             let moved: Vec<&CandidatePin> = recompiled
                 .pins
                 .iter()
@@ -806,6 +834,7 @@ pub fn promote(
                 )
                 .with(serde_json::json!({ "reasons": why })));
             }
+            after_policy_verdict();
             policy_id = Some(pid.to_string());
             (
                 CarriedForwardBy::Policy {
@@ -831,11 +860,13 @@ pub fn promote(
                 &header.plan_digest,
                 reason,
             )?;
+            let last = chain_before.as_ref().and_then(|c| c.successors.last());
             let seq = chain_before
                 .as_ref()
                 .map(|c| c.successors.len())
                 .unwrap_or(0);
-            let failed = recorded_failure(paths, &id, reason, seq)?;
+            let last_evidence = last.map(|l| l.evidence_digest.as_str()).unwrap_or("");
+            let failed = recorded_failure(paths, &id, reason, seq, last_evidence)?;
             if let CarriedForwardBy::Policy { policy_id: p, .. } = &by {
                 policy_id = Some(p.clone());
             }
@@ -936,15 +967,20 @@ pub fn promote(
     };
     commit(&dir, &lock_path, &intent, &archives, &new_lock, &new_bytes)?;
     drop(policy_guard);
-    drop(promotion_lock);
 
+    // Still under the promotion lock (which `prepare` takes too), and only
+    // the candidate that was promoted (review round 2).
     let mut warnings = Vec::new();
-    if let Err(error) = files::discard_candidate(&dir, &id) {
+    let still_ours = std::fs::read(&candidate_file)
+        .map(|bytes| lock_digest(&bytes) == on_disk)
+        .unwrap_or(false);
+    if still_ours && let Err(error) = files::discard_candidate(&dir, &id) {
         warnings.push(Reason::new(
             "candidate-not-removed",
             format!("The promoted candidate could not be removed ({error}); it is no longer fresh and will never be promoted again."),
         ));
     }
+    drop(promotion_lock);
     let label = approval::assess(&new_lock, &dir)
         .map(|s| s.label)
         .unwrap_or_default();
@@ -1130,6 +1166,7 @@ fn recorded_failure(
     app: &str,
     reason: &str,
     seq: usize,
+    evidence_digest: &str,
 ) -> Result<serde_json::Value> {
     let not = |why: String| Refused::new("E_MIGRATE_NOT_ELIGIBLE", why);
     let run = reason.strip_prefix("run-failed:").unwrap_or("").trim();
@@ -1167,7 +1204,11 @@ fn recorded_failure(
         _ => None,
     });
     let under_current = ran_under.as_ref().is_some_and(|a| {
-        a["origin"].as_str() == Some("successor") && a["seq"].as_u64() == u64::try_from(seq).ok()
+        // seq alone is not unique (a recompile restarts it at 1); the link's
+        // evidence digest is (review round 2).
+        a["origin"].as_str() == Some("successor")
+            && a["seq"].as_u64() == u64::try_from(seq).ok()
+            && a["evidence-digest"].as_str() == Some(evidence_digest)
     });
     if !under_current {
         return Err(not(format!(

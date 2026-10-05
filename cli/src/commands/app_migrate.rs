@@ -158,7 +158,9 @@ pub fn dispatch(cmd: MigrateCommand, ctx: &Context) -> Result<(), AwareError> {
             "app migrate prepare",
             prepare_cmd(ctx, &app, &to, &store_guard),
         ),
-        MigrateCommand::Discard { app } => ("app migrate discard", discard_cmd(ctx, &app)),
+        MigrateCommand::Discard { app } => {
+            ("app migrate discard", discard_cmd(ctx, &app, &store_guard))
+        }
         MigrateCommand::Hold { app, actor, reason } => (
             "app migrate hold",
             hold_cmd(ctx, &app, &actor, reason, &store_guard),
@@ -496,6 +498,9 @@ fn prepare_cmd(
     let targets = parse_targets(to).map_err(usage_failure)?;
     let source = app_source(ctx, app)?;
     let dir = crate::fs::containing_dir(&source).to_path_buf();
+    // Under the app's promotion lock: a candidate is never written while a
+    // promotion of this app reads or consumes the one before it.
+    let _promotion = promote::lock_app(&ctx.paths, guard, &dir, &app_id(&source)?)?;
     let requested = (!targets.is_empty()).then_some(&targets);
     if let Some(requested) = requested {
         // An explicit target the app does not dispatch is a misuse, not a state.
@@ -647,10 +652,15 @@ fn has_block(row: &PlanRow) -> bool {
 
 // ── discard / hold / unhold ─────────────────────────────────────────────────
 
-fn discard_cmd(ctx: &Context, app: &str) -> Result<Output, Failure> {
+fn discard_cmd(
+    ctx: &Context,
+    app: &str,
+    guard: &crate::agent_store::RefGuard,
+) -> Result<Output, Failure> {
     let source = app_source(ctx, app)?;
     let id = app_id(&source)?;
     let dir = crate::fs::containing_dir(&source);
+    let _promotion = promote::lock_app(&ctx.paths, guard, dir, &id)?;
     let discarded = files::discard_candidate(dir, &id)?;
     Ok(Output {
         data: serde_json::json!({ "app": id, "discarded": discarded }),

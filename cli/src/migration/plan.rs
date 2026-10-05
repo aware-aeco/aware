@@ -769,6 +769,41 @@ fn backed_by(paths: &Paths, lock: Option<&LockFile>, id: &str) -> BTreeSet<Strin
     out
 }
 
+/// The backing apps (`backed-by:` of the app-backed agents among `agents`)
+/// that have a pending tool update of their own. A workflow that runs one is
+/// never carried forward under a policy (§14): the plan marks it
+/// `needs-person`, and `migrate promote --policy` refuses it.
+pub fn moving_backing_apps(
+    paths: &Paths,
+    agents: &[DiscoveredAgent],
+    guard: &crate::agent_store::RefGuard,
+) -> Vec<String> {
+    let mut out = BTreeSet::new();
+    for agent in agents {
+        let Some(transport) = agent.manifest.transport.app.as_ref() else {
+            continue;
+        };
+        let backed_by = &transport.backed_by;
+        if !crate::manifest::loader::is_safe_segment(backed_by) {
+            continue;
+        }
+        let Some(source) =
+            crate::manifest::loader::find_app_manifest(&paths.apps_dir().join(backed_by))
+        else {
+            continue;
+        };
+        match evaluate(paths, &source, None, guard) {
+            Ok(eval) if eval.row.targets.is_empty() => {}
+            // A pending move, or a backing app that cannot be evaluated:
+            // either way a person decides (the safe side).
+            _ => {
+                out.insert(backed_by.clone());
+            }
+        }
+    }
+    out.into_iter().collect()
+}
+
 /// Runs a pidfile records under `apps/<app>/instances/*/`.
 fn running_instances(paths: &Paths, app: &str) -> Vec<RunningInstance> {
     if !crate::manifest::loader::is_safe_segment(app) {
