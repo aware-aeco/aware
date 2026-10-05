@@ -167,3 +167,18 @@ fn a_malformed_window_is_an_error() {
     );
     assert!(said.contains("E_AGENT_REFS_WINDOW_INVALID"), "{said}");
 }
+
+/// #629-b review round 3: `--only` names its agent; combined with `--agent`
+/// it could only conflict, so the two are refused together as a usage error.
+#[test]
+fn gc_refuses_agent_together_with_only() {
+    let tmp = tempfile::tempdir().unwrap();
+    let only = format!("tool@sha256:{}", "a".repeat(64));
+    let output = aware(tmp.path())
+        .args(["agent", "gc", "--agent", "other", "--only", &only])
+        .output()
+        .unwrap();
+    assert!(!output.status.success());
+    let said = String::from_utf8_lossy(&output.stderr);
+    assert!(said.contains("cannot be used with"), "{said}");
+}

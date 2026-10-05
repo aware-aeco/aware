@@ -143,7 +143,7 @@ pub enum AgentCommand {
         agent: Option<String>,
         /// Only this one version, `<agent>@sha256:<hex>`; refused, with what
         /// still needs it, when anything does.
-        #[arg(long, value_name = "AGENT@DIGEST")]
+        #[arg(long, value_name = "AGENT@DIGEST", conflicts_with = "agent")]
         only: Option<String>,
         /// How long `--apply` waits for runs and installs to let go of the
         /// store (`<n>{s,m,h,d}`; default 0s).
