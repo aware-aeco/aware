@@ -120,8 +120,11 @@ fn a_lease_turns_stale_when_its_process_is_killed() {
         return;
     }
     #[cfg(unix)]
+    // `-o`: `flock` itself holds the lock and closes it before starting
+    // `sleep`, so killing `flock` releases it (without `-o` the `sleep`
+    // grandchild inherits the descriptor and keeps the lock alive).
     let mut child = std::process::Command::new("flock")
-        .args(["-s"])
+        .args(["-s", "-o"])
         .arg(&path)
         .args(["sleep", "60"])
         .spawn()
