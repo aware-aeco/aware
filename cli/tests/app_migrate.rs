@@ -1241,13 +1241,16 @@ fn gc_racing_promotion_and_revert_never_leaves_the_app_without_its_approved_vers
     let hammer = GcHammer::start(&fx);
     let (candidate, record) = fx.prepare_with_record("a", None, "e2e");
     let promoted = person(&candidate, &record, "promote");
-    let (applied, _) = hammer.stop();
+    let (applied, deferred) = hammer.stop();
     assert_eq!(promoted["kind"], "carried-forward", "{promoted}");
-    assert!(applied > 0, "the collector never got the store");
+    assert!(applied + deferred > 0, "the collector never ran");
     assert_eq!(fx.run_says("a"), V2);
 
-    // With a 0s window nothing needed 1.0.0 once the lock moved on: the
-    // collector removed it.
+    // With a 0s window nothing needed 1.0.0 once the lock moved on: one more
+    // pass, with the store free, removes it (the hammer may have spent the
+    // whole promotion deferred — review round 1).
+    let last = fx.data(&["agent", "gc", "--apply", "--recovery-window", "0s"]);
+    assert_eq!(last["applied"], true, "{last}");
     let refs = fx.data(&["agent", "refs"]);
     assert!(
         !refs["packages"]
@@ -1268,9 +1271,13 @@ fn gc_racing_promotion_and_revert_never_leaves_the_app_without_its_approved_vers
     let (back, back_record) = fx.prepare_with_record("a", Some(&to), "e2e");
     let hammer = GcHammer::start(&fx);
     let reverted = person(&back, &back_record, "revert");
-    let (applied, _) = hammer.stop();
+    let (applied, deferred) = hammer.stop();
     assert_eq!(reverted["kind"], "reverted", "{reverted}");
-    assert!(applied > 0, "the collector never got the store");
+    assert!(applied + deferred > 0, "the collector never ran");
+    // And with the store free, the collector still keeps what the lock now pins.
+    let last = fx.data(&["agent", "gc", "--apply", "--recovery-window", "0s"]);
+    assert_eq!(last["applied"], true, "{last}");
+    let _ = applied;
     assert_eq!(fx.run_says("a"), V1, "the reverted version is still stored");
     let check = fx.data(&["app", "check", "a"]);
     assert_eq!(check["approval-current"], true, "{check}");

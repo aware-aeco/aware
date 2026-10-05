@@ -104,7 +104,10 @@ fn apply_removes_only_removable_packages_whole_and_records_each_removal() {
         Utc::now() + chrono::Duration::days(2),
     )
     .unwrap();
-    assert!(report.applied && report.complete, "{report:#?}");
+    assert!(
+        report.applied && report.complete == Some(true),
+        "{report:#?}"
+    );
     assert_eq!(report.removed.len(), 1, "{report:#?}");
     assert_eq!(report.removed[0].digest, removable);
     assert!(!gone_path.exists(), "removed whole");
@@ -141,10 +144,12 @@ fn apply_removes_nothing_while_the_table_is_incomplete() {
     assert!(error.contains("E_AGENT_GC_REFS_INCOMPLETE"), "{error}");
     assert!(error.contains("demo.lock"), "{error}");
     assert!(path.exists());
-    // A dry run still reports, as data.
+    // A dry run still reports, as data, and lists nothing as removable:
+    // `--apply` would remove nothing (review round 1).
     let report = collect(&h.paths, &options(false, "0s")).unwrap();
-    assert!(!report.complete);
+    assert_eq!(report.complete, Some(false));
     assert_eq!(report.blockers.len(), 1);
+    assert!(report.removed.is_empty(), "{report:#?}");
 }
 
 #[test]
@@ -215,6 +220,7 @@ fn a_busy_store_defers_apply() {
     let report = collect(&h.paths, &options(true, "0s")).unwrap();
     assert!(!report.applied);
     assert_eq!(report.deferred, Some("store-busy"));
+    assert_eq!(report.complete, None, "deferred: no table was built");
     assert!(path.exists());
     done_tx.send(()).unwrap();
     holder.join().unwrap();
@@ -257,43 +263,59 @@ fn a_stale_lease_is_stamped_then_removed_and_its_packages_get_their_window() {
     );
 }
 
+/// Leftovers of dead processes go once they are old enough to be nobody's:
+/// trash after 10 minutes (another GC may be deleting its own), interrupted
+/// snapshots after an hour (an older CLI may still be writing one).
+/// Unrecognized names are never removed.
 #[test]
-fn leftovers_of_dead_processes_are_removed_and_a_young_snapshot_is_left_alone() {
+fn leftovers_of_dead_processes_are_removed_once_old_enough() {
     let h = home();
     let (digest, _) = orphan(&h.paths, "tool", "1.0.0");
     let container = crate::agent_store::digest_container(&h.paths, "tool", &digest).unwrap();
     let trash = container.join(format!("{TRASH_PREFIX}x"));
-    let young = container.join(".tmp-young");
-    let old = container.join(".tmp-old");
+    let temp = container.join(".tmp-x");
     let odd = container.join("weird");
-    for dir in [&trash, &young, &old, &odd] {
+    for dir in [&trash, &temp, &odd] {
         std::fs::create_dir_all(dir.join("sub")).unwrap();
         std::fs::write(dir.join("sub").join("f"), "x").unwrap();
     }
-    let two_hours_ago = std::time::SystemTime::now() - std::time::Duration::from_secs(7200);
-    std::fs::File::open(&old)
-        .and_then(|f| f.set_modified(two_hours_ago))
-        .unwrap_or_else(|_| {
-            // Directories cannot be opened for writing everywhere; set it via
-            // a fresh handle with the right flags on Windows.
-            #[cfg(windows)]
-            {
-                use std::os::windows::fs::OpenOptionsExt;
-                std::fs::OpenOptions::new()
-                    .write(true)
-                    .custom_flags(0x0200_0000) // FILE_FLAG_BACKUP_SEMANTICS
-                    .open(&old)
-                    .unwrap()
-                    .set_modified(two_hours_ago)
-                    .unwrap();
-            }
-        });
-    let report = collect(&h.paths, &options(true, "30d")).unwrap();
+    let now = Utc::now();
+    let report = collect_at(&h.paths, &options(true, "30d"), now).unwrap();
+    assert!(trash.exists() && temp.exists(), "too young: {report:#?}");
+    let report = collect_at(
+        &h.paths,
+        &options(true, "30d"),
+        now + chrono::Duration::minutes(15),
+    )
+    .unwrap();
     assert!(!trash.exists(), "{report:#?}");
-    assert!(!old.exists(), "{report:#?}");
-    assert!(young.exists(), "a young snapshot may be a live older CLI's");
+    assert!(temp.exists(), "a young snapshot may be a live older CLI's");
+    let report = collect_at(
+        &h.paths,
+        &options(true, "30d"),
+        now + chrono::Duration::hours(2),
+    )
+    .unwrap();
+    assert!(!temp.exists(), "{report:#?}");
+    assert_eq!(report.leftovers_removed.len(), 1, "{report:#?}");
     assert!(odd.exists(), "unrecognized names are never removed");
-    assert_eq!(report.leftovers_removed.len(), 2, "{report:#?}");
+    // `--only` touches nothing but the one package.
+    std::fs::create_dir_all(&trash).unwrap();
+    let error = collect_at(
+        &h.paths,
+        &Options {
+            only: Some(("tool".into(), digest.clone())),
+            ..options(true, "30d")
+        },
+        now + chrono::Duration::hours(2),
+    )
+    .unwrap_err()
+    .to_string();
+    assert!(
+        error.contains("--recovery-window 0s"),
+        "kept only by its window: {error}"
+    );
+    assert!(trash.exists(), "a refused --only changed nothing");
 }
 
 /// A package Windows will not let go of (an open handle inside it) is
@@ -354,4 +376,42 @@ fn app_check_says_gc_removed_the_approved_version() {
         row.detail
     );
     assert!(!check.approval_current);
+}
+
+/// Review round 1: a legacy import that is due while a run holds the store
+/// must not make `--apply` wait past `--wait`; it reports `store-busy`.
+#[test]
+fn a_due_legacy_import_does_not_make_apply_wait_past_its_bound() {
+    let h = home();
+    let paths = h.paths.clone();
+    let (held_tx, held_rx) = std::sync::mpsc::channel();
+    let (done_tx, done_rx) = std::sync::mpsc::channel::<()>();
+    let holder = std::thread::spawn(move || {
+        let guard = crate::agent_store::open(&paths).unwrap();
+        held_tx.send(()).unwrap();
+        done_rx.recv().unwrap();
+        drop(guard);
+    });
+    held_rx.recv().unwrap();
+    // An older CLI adds a package to its own store while the run is going.
+    let legacy = h
+        .paths
+        .legacy_agent_store_dir()
+        .join("tool")
+        .join("a".repeat(64))
+        .join(crate::agent_store::NO_RECEIPT);
+    std::fs::create_dir_all(&legacy).unwrap();
+    std::fs::write(legacy.join("manifest.yaml"), "x").unwrap();
+    assert!(crate::agent_store::import::needed(&h.paths).unwrap());
+
+    let paths = h.paths.clone();
+    let (tx, rx) = std::sync::mpsc::channel();
+    std::thread::spawn(move || tx.send(collect(&paths, &options(true, "0s"))).unwrap());
+    let report = rx
+        .recv_timeout(std::time::Duration::from_secs(20))
+        .expect("gc --apply waited for the run instead of reporting store-busy")
+        .unwrap();
+    assert_eq!(report.deferred, Some("store-busy"));
+    done_tx.send(()).unwrap();
+    holder.join().unwrap();
 }

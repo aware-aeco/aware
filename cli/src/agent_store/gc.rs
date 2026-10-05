@@ -47,6 +47,8 @@ pub const TOMBSTONE_FORMAT: &str = "aware.agent-tombstone/v1";
 /// An interrupted snapshot younger than this may belong to a live process
 /// that does not hold the store lock (an older CLI): left alone.
 const TEMP_MIN_AGE: chrono::Duration = chrono::Duration::hours(1);
+/// Trash younger than this may be another GC's, being deleted right now.
+const TRASH_MIN_AGE: chrono::Duration = chrono::Duration::minutes(10);
 
 /// What to collect.
 #[derive(Debug, Clone)]
@@ -121,8 +123,11 @@ pub struct GcReport {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub deferred: Option<&'static str>,
     pub recovery_window: String,
-    pub complete: bool,
-    /// Removed (`--apply`) or that `--apply` would remove (dry run).
+    /// Whether the reference table could be fully read; absent when GC was
+    /// deferred and built no table.
+    pub complete: Option<bool>,
+    /// Removed (`--apply`) or that `--apply` would remove (dry run; empty
+    /// while the table is incomplete, because `--apply` would remove nothing).
     pub removed: Vec<Gone>,
     pub kept: Vec<Keep>,
     pub in_window: Vec<Keep>,
@@ -237,7 +242,7 @@ fn report(table: &RefTable, apply: bool) -> GcReport {
         applied: apply,
         deferred: None,
         recovery_window: table.recovery_window.clone(),
-        complete: table.complete,
+        complete: Some(table.complete),
         removed: Vec::new(),
         kept,
         in_window,
@@ -322,8 +327,23 @@ fn refuse_referenced(table: &RefTable, agent: &str, digest: &str) -> Result<(), 
             .as_deref()
             .map(|u| format!(" (kept until {u})"))
             .unwrap_or_default();
+        // Kept only by a recovery window: say how to remove it now anyway.
+        let only_windows = references.iter().all(|r| {
+            matches!(r, Reference::Recent { .. })
+                || matches!(
+                    r,
+                    Reference::ApprovalArchive { held: false, .. }
+                        | Reference::ApprovalOriginal { held: false, .. }
+                        | Reference::SuccessorFrom { held: false, .. }
+                )
+        });
+        let choice = if only_windows {
+            "; only its recovery window keeps it - to remove it now anyway, run gc again with --recovery-window 0s"
+        } else {
+            ""
+        };
         return Err(AwareError::Conflict(format!(
-            "[E_AGENT_GC_REFERENCED] {agent} {digest} is still needed{until}: {why}"
+            "[E_AGENT_GC_REFERENCED] {agent} {digest} is still needed{until}: {why}{choice}"
         )));
     }
     Ok(())
@@ -414,20 +434,26 @@ pub fn collect_at(
             refuse_referenced(&table, agent, digest)?;
         }
         let mut out = report(&table, false);
-        out.removed = removable(&table, options);
+        // While the table is incomplete `--apply` removes nothing, so nothing
+        // is listed as what it would remove (review round 1).
+        if table.complete {
+            out.removed = removable(&table, options);
+        }
         return Ok(out);
     }
 
-    // The store must exist and be distinct from the legacy one, and any
-    // legacy import done, before the exclusive lock (never an upgrade).
-    drop(super::open(paths)?);
+    // The store must exist and be distinct from the legacy one. Any legacy
+    // import runs under GC's own exclusive lock below, bounded by `--wait`
+    // like everything else GC waits for (review round 1), never under
+    // `open`'s blocking one.
+    super::prepare(paths)?;
     let deferred = |reason| {
         Ok(GcReport {
             format: GC_FORMAT,
             applied: false,
             deferred: Some(reason),
             recovery_window: options.window.text().to_string(),
-            complete: false,
+            complete: None,
             removed: Vec::new(),
             kept: Vec::new(),
             in_window: Vec::new(),
@@ -444,12 +470,26 @@ pub fn collect_at(
     let Some(guard) = RefGuard::exclusive_within(paths, options.wait)? else {
         return deferred("store-busy");
     };
+    super::warn_import(super::import_if_needed(paths));
+
+    // Decide before changing anything: a refusal leaves everything as it was
+    // (review round 1). A stale lease still counts as a reference here; its
+    // package gets its window from the stamp written below.
+    let table = refs::table(paths, &guard, &options.window, now)?;
+    if !table.complete {
+        drop(guard);
+        return Err(incomplete(&table));
+    }
+    if let Some((agent, digest)) = &options.only {
+        refuse_referenced(&table, agent, digest)?;
+    }
+    let mut out = report(&table, true);
+    // `--only` removes exactly one package and touches nothing else.
+    let housekeeping = options.only.is_none();
 
     // Stale leases: stamp first, then delete; a failure keeps the lease.
-    let mut stale_removed = Vec::new();
-    let mut skipped = Vec::new();
-    if let Ok(leases) = super::lease::list(paths) {
-        for lease in leases.stale {
+    if housekeeping {
+        for lease in &table.stale_leases {
             let path = PathBuf::from(&lease.path);
             if super::lease::is_live(&path).unwrap_or(true) {
                 continue; // it came back to life, or cannot be probed
@@ -459,98 +499,119 @@ pub fn collect_at(
                 .iter()
                 .try_for_each(|p| super::stamps::stamp(paths, &p.agent, &p.digest, Some(now)));
             match stamped.and_then(|()| std::fs::remove_file(&path).map_err(Into::into)) {
-                Ok(()) => stale_removed.push(lease.path),
-                Err(error) => skipped.push(Skipped {
-                    path: lease.path,
+                Ok(()) => out.stale_leases_removed.push(lease.path.clone()),
+                Err(error) => out.skipped.push(Skipped {
+                    path: lease.path.clone(),
                     reason: format!("the stale lease could not be released: {error}"),
                 }),
             }
         }
     }
 
-    let table = refs::table(paths, &guard, &options.window, now)?;
-    if !table.complete {
-        drop(guard);
-        return Err(incomplete(&table));
-    }
-    if let Some((agent, digest)) = &options.only {
-        refuse_referenced(&table, agent, digest)?;
+    // Report the state GC leaves: a released lease's packages are now in
+    // their window from the stamp, not "kept by a stale lease". What to
+    // remove is still decided from the table above (those packages were kept
+    // there, and are not removable in this pass).
+    if !out.stale_leases_removed.is_empty() {
+        let after = report(&refs::table(paths, &guard, &options.window, now)?, true);
+        out.kept = after.kept;
+        out.in_window = after.in_window;
     }
 
-    // Leftovers of dead processes: every writer holds the store lock shared,
-    // so under the exclusive lock nothing live owns a `.trash-*`; a `.tmp-*`
-    // could still be an older CLI's, so only old ones go.
-    let mut trash: Vec<PathBuf> = Vec::new();
-    for leftover in &table.leftovers {
-        let path = PathBuf::from(&leftover.path);
-        let old_enough = || {
-            std::fs::symlink_metadata(&path)
+    // Leftovers of dead processes. Every writer holds the store lock shared,
+    // so under the exclusive lock nothing live owns one — but another GC that
+    // has just released the lock may still be deleting its own trash, and a
+    // `.tmp-*` could be an older CLI's: only old ones go (review round 1).
+    let mut leftovers: Vec<PathBuf> = Vec::new();
+    if housekeeping {
+        for leftover in &table.leftovers {
+            let path = PathBuf::from(&leftover.path);
+            let age = match leftover.kind {
+                "trash" => TRASH_MIN_AGE,
+                "temp" => TEMP_MIN_AGE,
+                _ => continue, // unrecognized: never removed
+            };
+            let old_enough = std::fs::symlink_metadata(&path)
                 .and_then(|m| m.modified())
-                .map(|t| DateTime::<Utc>::from(t) + TEMP_MIN_AGE <= now)
-                .unwrap_or(false)
-        };
-        if leftover.kind == "trash" || (leftover.kind == "temp" && old_enough()) {
-            trash.push(path);
+                .map(|t| DateTime::<Utc>::from(t) + age <= now)
+                .unwrap_or(false);
+            if old_enough {
+                leftovers.push(path);
+            }
         }
     }
-    let leftover_count = trash.len();
 
-    let mut out = report(&table, true);
-    out.stale_leases_removed = stale_removed;
+    let mut trash: Vec<PathBuf> = Vec::new();
     for gone in removable(&table, options) {
         let path = PathBuf::from(&gone.path);
         let container = path.parent().map(Path::to_path_buf).unwrap_or_default();
         let to = container.join(format!("{TRASH_PREFIX}{}", uuid::Uuid::new_v4().simple()));
+        // The record first: a crash after the rename must not leave a package
+        // gone with no word of why (review round 1). A tombstone is only read
+        // once its package is absent, so one left by a failed rename is inert.
+        let record = container.join(format!("{TOMBSTONE_PREFIX}{}.yaml", gone.receipt_key));
+        let tombstone = Tombstone {
+            format: TOMBSTONE_FORMAT.to_string(),
+            agent: gone.agent.clone(),
+            version: gone.version.clone(),
+            digest: gone.digest.clone(),
+            receipt_key: gone.receipt_key.clone(),
+            removed_at: now_text(now),
+            removed_by: "aware agent gc".to_string(),
+            cli_version: env!("CARGO_PKG_VERSION").to_string(),
+        };
+        let written = serde_yaml::to_string(&tombstone)
+            .map_err(|e| std::io::Error::other(e.to_string()))
+            .and_then(|text| {
+                crate::app_lock::replace_atomically(&record, text.as_bytes()).map(|_| ())
+            });
+        if let Err(error) = written {
+            out.skipped.push(Skipped {
+                path: gone.path,
+                reason: format!("its removal record could not be written, so it was kept: {error}"),
+            });
+            continue;
+        }
         match crate::fs::rename_dir_no_replace(&path, &to) {
             Ok(()) => {
-                let tombstone = Tombstone {
-                    format: TOMBSTONE_FORMAT.to_string(),
-                    agent: gone.agent.clone(),
-                    version: gone.version.clone(),
-                    digest: gone.digest.clone(),
-                    receipt_key: gone.receipt_key.clone(),
-                    removed_at: now_text(now),
-                    removed_by: "aware agent gc".to_string(),
-                    cli_version: env!("CARGO_PKG_VERSION").to_string(),
-                };
-                let record = container.join(format!("{TOMBSTONE_PREFIX}{}.yaml", gone.receipt_key));
-                let text = serde_yaml::to_string(&tombstone)
-                    .map_err(|e| AwareError::Internal(format!("serialize tombstone: {e}")))?;
-                if let Err(error) = crate::app_lock::replace_atomically(&record, text.as_bytes()) {
-                    // The package is gone either way; say why the record is missing.
-                    skipped.push(Skipped {
-                        path: record.display().to_string(),
-                        reason: format!("the removal record could not be written: {error}"),
-                    });
-                }
+                let _ = crate::fs::sync_dir(&container);
                 trash.push(to);
                 out.removed.push(gone);
             }
-            Err(error) => skipped.push(Skipped {
-                path: gone.path,
-                reason: if error.kind() == std::io::ErrorKind::PermissionDenied {
-                    format!("in use: {error}")
-                } else {
-                    error.to_string()
-                },
-            }),
+            Err(error) => {
+                let _ = std::fs::remove_file(&record);
+                out.skipped.push(Skipped {
+                    path: gone.path,
+                    reason: if error.kind() == std::io::ErrorKind::PermissionDenied {
+                        format!("in use: {error}")
+                    } else {
+                        error.to_string()
+                    },
+                });
+            }
         }
     }
     drop(guard);
 
     // Delete outside the lock: renamed away, nothing can reach them.
-    for (i, path) in trash.into_iter().enumerate() {
+    for path in trash {
         match std::fs::remove_dir_all(&path) {
-            Ok(()) => {
-                if i < leftover_count {
-                    out.leftovers_removed.push(path.display().to_string());
-                }
-            }
+            Ok(()) => {}
             Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
             Err(_) => out.pending_delete.push(path.display().to_string()),
         }
     }
-    out.skipped.extend(skipped);
+    for path in leftovers {
+        match std::fs::remove_dir_all(&path) {
+            Ok(()) => out.leftovers_removed.push(path.display().to_string()),
+            // Another process got there first: gone either way.
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+            Err(error) => out.skipped.push(Skipped {
+                path: path.display().to_string(),
+                reason: format!("a leftover could not be deleted yet: {error}"),
+            }),
+        }
+    }
     Ok(out)
 }
 

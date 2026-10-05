@@ -450,7 +450,7 @@ fn gc_cmd(
     if !report.applied && !report.removed.is_empty() {
         println!("run `aware agent gc --apply` to remove them");
     }
-    if !report.complete {
+    if report.complete == Some(false) {
         println!("\u{26a0} --apply would remove nothing until these can be read:");
         for blocker in &report.blockers {
             println!("  {}: {}", blocker.path, blocker.problem);

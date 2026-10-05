@@ -283,7 +283,10 @@ fn gc_keeps_what_a_run_in_progress_uses_and_removes_it_after() {
 }
 
 /// #629-b / plan §9 R2-5: a killed run's stale lease keeps its package until
-/// GC stamps it; GC then removes the lease and the window counts from the stamp.
+/// GC stamps it; GC then removes the lease. (That the window then counts from
+/// GC's stamp is shown with a moved clock by the unit test
+/// `a_stale_lease_is_stamped_then_removed_and_its_packages_get_their_window`;
+/// here the run's own acquire stamp is recent too — review round 1.)
 #[test]
 fn gc_stamps_and_releases_a_killed_run_s_lease() {
     let Some(fx) = fixture() else {

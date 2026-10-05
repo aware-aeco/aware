@@ -946,8 +946,15 @@ fn assess_agent(
             .removed_at
             .get(..10)
             .unwrap_or(&tombstone.removed_at);
-        outcome.detail = format!(
-            "the approved version of {id} ({pinned}, {required}) was removed by `aware agent gc` on {on} because nothing referenced it; nothing else will be run in its place - compile the app again to use {installed}"
+        let next = match &outcome.installed_version {
+            Some(version) => format!("compile the app again to use {version}"),
+            None => format!("install {id} again and compile the app"),
+        };
+        outcome.detail = with_notes(
+            format!(
+                "the approved version of {id} ({pinned}, {required}) was removed by `aware agent gc` on {on} because nothing AWARE could find still referenced it; nothing else will be run in its place - {next}"
+            ),
+            &notes,
         );
         outcome.removed = Some(Removed {
             by: "gc".into(),
