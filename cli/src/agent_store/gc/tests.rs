@@ -429,3 +429,28 @@ fn a_due_legacy_import_does_not_make_apply_wait_past_its_bound() {
     done_tx.send(()).unwrap();
     holder.join().unwrap();
 }
+
+/// Review round 2: the default dry run neither imports the legacy store nor
+/// creates the new one, so it writes nothing and never waits for a run.
+#[test]
+fn a_dry_run_never_imports_or_creates_the_store() {
+    let h = home();
+    let legacy = h
+        .paths
+        .legacy_agent_store_dir()
+        .join("tool")
+        .join("a".repeat(64))
+        .join(crate::agent_store::NO_RECEIPT);
+    std::fs::create_dir_all(&legacy).unwrap();
+    std::fs::write(legacy.join("manifest.yaml"), "x").unwrap();
+    let report = collect(&h.paths, &options(false, "0s")).unwrap();
+    assert!(report.removed.is_empty());
+    assert!(
+        !h.paths.agent_store_dir().exists(),
+        "a dry run created the store"
+    );
+    assert!(
+        crate::agent_store::import::needed(&h.paths).unwrap(),
+        "a dry run imported the legacy store"
+    );
+}

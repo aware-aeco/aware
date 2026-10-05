@@ -74,6 +74,18 @@ pub fn open(paths: &Paths) -> Result<RefGuard, AwareError> {
     RefGuard::shared(paths)
 }
 
+/// The store lock held shared for a REPORT that must not change anything or
+/// wait for a run: no legacy import, no store directory created (`aware agent
+/// gc` without `--apply`, review round 2). The aliasing check still runs when
+/// the store exists. Packages still waiting in the legacy store are simply not
+/// in the report yet; nothing that writes may use this door.
+pub(crate) fn open_for_report(paths: &Paths) -> Result<RefGuard, AwareError> {
+    if probe(&paths.agent_store_dir())?.is_some() {
+        import::check_distinct(paths)?;
+    }
+    RefGuard::shared(paths)
+}
+
 /// Make sure `agent-store-v2/` exists as a plain directory and is physically
 /// distinct from the legacy store: everything [`open`] checks before it
 /// imports. GC (#629-b) calls this, then imports under its own exclusive

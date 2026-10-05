@@ -427,7 +427,7 @@ pub fn collect_at(
     now: DateTime<Utc>,
 ) -> Result<GcReport, AwareError> {
     if !options.apply {
-        let guard = super::open(paths)?;
+        let guard = super::open_for_report(paths)?;
         let table = refs::table(paths, &guard, &options.window, now)?;
         drop(guard);
         if let Some((agent, digest)) = &options.only {
