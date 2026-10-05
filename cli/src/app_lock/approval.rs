@@ -554,6 +554,16 @@ pub fn assess(lock: &LockFile, source_dir: &Path) -> Result<ApprovalSummary, Str
                     "the original approval archive itself carries an approval record".into(),
                 );
             }
+            // The step original → successor 1 carries an approval of THIS
+            // source: an original that approved another one cannot be carried
+            // onto it.
+            if approved_source_hash(&archived) != approved_source_hash(lock) {
+                return Err(format!(
+                    "the archived original approval approved another source ({}, this lock is for {})",
+                    approved_source_hash(&archived),
+                    approved_source_hash(lock)
+                ));
+            }
             if original_pins(original) != pins_of(&archived)
                 || archived.compiled_at != original.compiled_at
                 || archived.compiler_version != original.compiler_version

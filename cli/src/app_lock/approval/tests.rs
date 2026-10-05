@@ -747,3 +747,32 @@ fn a_replaced_lock_with_another_original_record_is_invalid() {
         "replaced a lock whose record or plan is not the one successor 1 left",
     );
 }
+
+// ── review round 1 ──────────────────────────────────────────────────────────
+
+/// Re-archive the original with `edit` applied and point the chain at it, so
+/// only the changed field can tell the archive apart from the real original.
+fn swap_original(s: &Setup, p: &Promoted, edit: impl FnOnce(&mut LockFile)) {
+    let mut original: LockFile = serde_yaml::from_slice(&p.replaced).unwrap();
+    edit(&mut original);
+    let dir = crate::fs::containing_dir(&s.source).to_path_buf();
+    let bytes = write_lock(&dir.join("scratch.lock"), &original);
+    let digest = archive(&dir, &bytes, "lock");
+    tamper(&p.lock_path, |l| {
+        let c = chain(l);
+        c.original.lock_digest = digest.clone();
+        c.original.archive = archive_rel(&digest, "lock").unwrap();
+        c.successors[0].from_lock_digest = digest;
+    });
+}
+
+#[test]
+fn an_original_approval_of_another_source_is_invalid() {
+    let s = setup();
+    // A policy link: no person record whose base-lock-digest would catch the swap.
+    let p = promoted_by(&s, By::Policy("pol-1"));
+    swap_original(&s, &p, |o| {
+        o.source_hash = format!("sha256:{}", "4".repeat(64));
+    });
+    assert_invalid(&s, "approved another source");
+}
