@@ -343,3 +343,80 @@ fn a_failed_import_record_never_refuses_the_command() {
     drop(guard);
     assert!(needed(&paths).unwrap(), "retried by the next command");
 }
+
+/// Review round 2: a junction at `agent-store-v2/<id>` pointing into the
+/// legacy store is refused before anything is created or looked up through
+/// it: the legacy store stays byte-identical and nothing counts as imported.
+#[test]
+fn a_link_below_v2_is_never_written_through() {
+    let (_tmp, paths) = home();
+    legacy_package(&paths, "tekla", "0.1.5");
+    let before = tree(&paths.legacy_agent_store_dir());
+    let v2_id = paths.agent_store_dir().join("tekla");
+    std::fs::create_dir_all(paths.agent_store_dir()).unwrap();
+    let target = paths.legacy_agent_store_dir().join("tekla");
+    #[cfg(windows)]
+    {
+        let status = std::process::Command::new("cmd.exe")
+            .args(["/C", "mklink", "/J"])
+            .arg(&v2_id)
+            .arg(&target)
+            .stdout(std::process::Stdio::null())
+            .stderr(std::process::Stdio::null())
+            .status()
+            .unwrap();
+        assert!(status.success(), "failed to create test junction");
+    }
+    #[cfg(unix)]
+    std::os::unix::fs::symlink(&target, &v2_id).unwrap();
+    drop(open(&paths).unwrap());
+    assert_eq!(tree(&paths.legacy_agent_store_dir()), before);
+    let record = read_record(&paths);
+    assert!(record.imported.is_empty(), "{record:?}");
+    assert!(needed(&paths).unwrap(), "retried once the link is gone");
+}
+
+/// Review round 2: a legacy package that cannot be READ right now (another
+/// program holds a file) is retried by the next command, not skipped forever.
+#[test]
+fn a_legacy_package_that_cannot_be_read_now_is_retried() {
+    let (_tmp, paths) = home();
+    let old = legacy_package(&paths, "tekla", "0.1.5");
+    let manifest = old.root.join("manifest.yaml");
+    #[cfg(windows)]
+    let held = {
+        use std::os::windows::fs::OpenOptionsExt;
+        std::fs::OpenOptions::new()
+            .read(true)
+            .share_mode(0)
+            .open(&manifest)
+            .unwrap()
+    };
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        std::fs::set_permissions(&manifest, std::fs::Permissions::from_mode(0o000)).unwrap();
+        if std::fs::File::open(&manifest).is_ok() {
+            eprintln!("[skip] running as a user that ignores file permissions");
+            return;
+        }
+    }
+    drop(open(&paths).unwrap());
+    let record = read_record(&paths);
+    assert!(record.skipped.is_empty(), "not a verdict: {record:?}");
+    assert!(record.imported.is_empty());
+    assert!(needed(&paths).unwrap());
+    #[cfg(windows)]
+    drop(held);
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        std::fs::set_permissions(&manifest, std::fs::Permissions::from_mode(0o644)).unwrap();
+    }
+    drop(open(&paths).unwrap());
+    assert_eq!(
+        read_record(&paths).imported.len(),
+        1,
+        "imported once readable"
+    );
+}

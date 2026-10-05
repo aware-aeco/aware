@@ -194,6 +194,58 @@ fn check_pair(v2: &Path, legacy: &Path) -> Result<(), AwareError> {
     Ok(())
 }
 
+/// Every existing directory between `agent-store-v2/` and `container`
+/// (`<id>`, `<id>/<hex>`) must be a plain directory, not a link or junction.
+fn no_link_below_v2(paths: &Paths, container: &Path) -> Result<(), AwareError> {
+    let v2 = paths.agent_store_dir();
+    let Ok(below) = container.strip_prefix(&v2) else {
+        return Err(aliased(format!(
+            "{} is not under {}",
+            container.display(),
+            v2.display()
+        )));
+    };
+    let mut path = v2.clone();
+    for part in below.components() {
+        path.push(part);
+        match std::fs::symlink_metadata(&path) {
+            Ok(meta) if crate::fs::is_reparse_point(&meta) || meta.file_type().is_symlink() => {
+                return Err(aliased(format!(
+                    "{} is a link or junction; everything under agent-store-v2 must be plain directories",
+                    path.display()
+                )));
+            }
+            Ok(_) => {}
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(()),
+            Err(error) => {
+                return Err(std::io::Error::new(
+                    error.kind(),
+                    format!("{}: {error}", path.display()),
+                )
+                .into());
+            }
+        }
+    }
+    Ok(())
+}
+
+/// Open every file of a legacy package for reading: `Err` (retried later)
+/// when one cannot be read right now.
+fn readable(package: &Path) -> Result<(), AwareError> {
+    let files = match crate::fs::plain_files_under(package, "stored package") {
+        Ok(files) => files,
+        Err(error @ AwareError::Io(_)) => return Err(error),
+        // Not an I/O problem (a link inside the package): a verdict on the
+        // package itself, which `verify_package` gives next.
+        Err(_) => return Ok(()),
+    };
+    for (_, file) in files {
+        std::fs::File::open(&file)
+            .map_err(|e| std::io::Error::new(e.kind(), format!("{}: {e}", file.display())))?;
+    }
+    Ok(())
+}
+
 /// A container the import is about to write must resolve inside v2.
 fn check_inside_v2(paths: &Paths, container: &Path) -> Result<(), AwareError> {
     let real_v2 = std::fs::canonicalize(paths.agent_store_dir()).map_err(|e| {
@@ -310,10 +362,19 @@ fn import_one(
     if digest_hex(&digest).is_none() {
         return Ok(Outcome::Skipped("not a store digest".into()));
     }
+    // A file that cannot be read right now (another program holds it) is a
+    // reason to try again later, never a verdict on the package's bytes
+    // (review round 2): only a package that reads and still fails is skipped.
+    readable(source)?;
     if let Err(reason) = super::verify_package(source, id, &digest, key) {
         return Ok(Outcome::Skipped(reason));
     }
     let container = digest_container(paths, id, &digest)?;
+    // Before anything is looked at or created under v2: no link on the way
+    // to the container (review round 2 — a junction at `agent-store-v2/<id>`
+    // would otherwise have this import create directories in the legacy
+    // store, or count a legacy package as already in v2).
+    no_link_below_v2(paths, &container)?;
     let dest = container.join(key);
     if probe(&dest)?.is_some() {
         return match super::verify_package(&dest, id, &digest, key) {
