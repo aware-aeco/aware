@@ -637,8 +637,13 @@ fn wrapper_effects(
     out
 }
 
-/// The installed apps whose workflow dispatches agent `backing` (the agent an
-/// `exposes-as-agent` app installs as is named after the app).
+/// The installed apps that run the backing app `backing`: every app that
+/// dispatches an app-backed agent whose `backed-by:` is `backing`, whatever
+/// that agent is called. Each dispatched agent is judged by the manifest of
+/// the bytes the caller's approval pins (from the store) AND by its installed
+/// copy, and an agent named after the backing app (how `exposes-as-agent`
+/// installs it) counts too — any of them is enough: listing a caller too many
+/// asks a person once more, missing one lets it run new nested bytes unasked.
 pub fn find_callers(paths: &Paths, backing: &str) -> Vec<String> {
     let mut out = BTreeSet::new();
     let Ok(entries) = std::fs::read_dir(paths.apps_dir()) else {
@@ -651,11 +656,44 @@ pub fn find_callers(paths: &Paths, backing: &str) -> Vec<String> {
         let Ok((app, _)) = crate::app_lock::read_app_source(&source) else {
             continue;
         };
-        if app.app != backing && crate::validate::dispatchable_agents(&app).contains(backing) {
+        if app.app == backing {
+            continue;
+        }
+        let lock: Option<LockFile> =
+            std::fs::read(crate::fs::containing_dir(&source).join(format!("{}.lock", app.app)))
+                .ok()
+                .and_then(|bytes| serde_yaml::from_slice(&bytes).ok());
+        let runs_it = crate::validate::dispatchable_agents(&app)
+            .into_iter()
+            .any(|id| id == backing || backed_by(paths, lock.as_ref(), id).contains(backing));
+        if runs_it {
             out.insert(app.app);
         }
     }
     out.into_iter().collect()
+}
+
+/// The `backed-by:` apps agent `id` names: in the copy `lock` pins (when it
+/// pins bytes that are stored) and in the installed copy.
+fn backed_by(paths: &Paths, lock: Option<&LockFile>, id: &str) -> BTreeSet<String> {
+    let mut out = BTreeSet::new();
+    let pinned = lock.and_then(|lock| {
+        lock.agent_digests
+            .get(id)
+            .or_else(|| lock.agent_bundle_pins.get(id))
+    });
+    if let Some(digest) = pinned
+        && let Ok(Some(agent)) = crate::agent_resolution::stored_agent(paths, id, digest)
+        && let Some(transport) = agent.manifest.transport.app
+    {
+        out.insert(transport.backed_by);
+    }
+    if let Ok(agent) = crate::manifest::loader::load_agent_by_id(&paths.agents_dir(), id)
+        && let Some(transport) = agent.transport.app
+    {
+        out.insert(transport.backed_by);
+    }
+    out
 }
 
 /// Runs a pidfile records under `apps/<app>/instances/*/`.

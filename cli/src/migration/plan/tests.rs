@@ -261,6 +261,53 @@ fn a_backing_app_never_moves_and_its_callers_are_named() {
     );
 }
 
+/// Codex review #628 PR2 round 1: a caller reaches a backing app through the
+/// agent's `backed-by:`, whatever the agent itself is called.
+#[test]
+fn a_caller_is_found_through_backed_by_not_through_the_agent_name() {
+    let h = home();
+    write_agent(&h.paths, "tool", "1.0.0", "mode: read");
+    let backing = write_app(
+        &h.paths,
+        "reader-backing",
+        "exposes-as-agent: true\nexposed-commands:\n  ask:\n    lifecycle: single\n    outputs:\n      type: single\n\
+         requires: []\nnodes:\n  - { id: a, agent: tool, command: go }\n",
+    );
+    approve(&h.paths, &backing);
+    // A hand-written app-backed agent whose name is NOT the backing app's.
+    let wrapper = h.paths.agents_dir().join("reader-wrapper");
+    std::fs::create_dir_all(&wrapper).unwrap();
+    std::fs::write(
+        wrapper.join("manifest.yaml"),
+        "agent: reader-wrapper\nversion: 1.0.0\ndescription: x\nstateful: false\nlicense: app-exposed\n\
+         transport:\n  app:\n    backed-by: reader-backing\n\
+         commands:\n  ask:\n    lifecycle: single\n    mode: read\n    description: x\n",
+    )
+    .unwrap();
+    let caller = write_app(
+        &h.paths,
+        "outer",
+        "requires: []\nnodes:\n  - { id: c, agent: reader-wrapper, command: ask }\n",
+    );
+    approve(&h.paths, &caller);
+    update_agent(&h.paths, "tool", "1.0.1", "mode: read");
+
+    assert_eq!(find_callers(&h.paths, "reader-backing"), ["outer"]);
+    let rows = plan_rows(
+        &h.paths,
+        &[
+            ("outer".into(), caller.clone()),
+            ("reader-backing".into(), backing.clone()),
+        ],
+        None,
+    );
+    let backing_row = rows.iter().find(|r| r.app == "reader-backing").unwrap();
+    assert_eq!(backing_row.callers, ["outer"], "{backing_row:#?}");
+    let outer = rows.iter().find(|r| r.app == "outer").unwrap();
+    assert_eq!(outer.state, State::NeedsPerson, "{outer:#?}");
+    assert!(codes(outer).contains(&"backing-app-moved"), "{outer:#?}");
+}
+
 #[test]
 fn only_an_accepted_comparison_could_ever_skip_the_person() {
     // `advisory` is not an input to the decision at all.
