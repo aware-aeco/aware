@@ -48,12 +48,18 @@ fn a_held_lease_is_live_readable_and_released_with_its_packages_stamped() {
     let path = lease.path().to_path_buf();
     assert!(is_live(&path).unwrap());
 
+    // Released strictly later than acquired: the stamp must say so.
+    std::thread::sleep(std::time::Duration::from_millis(20));
+    let released_after = chrono::Utc::now() - chrono::Duration::milliseconds(1);
     drop(lease);
     assert!(!path.exists(), "a released lease is removed");
     for p in &record.packages {
+        let stamped = crate::agent_store::stamps::last_needed(&paths, &p.agent, &p.digest)
+            .unwrap_or_else(|| panic!("{} stamped", p.agent));
+        let stamped = chrono::DateTime::parse_from_rfc3339(&stamped).unwrap();
         assert!(
-            crate::agent_store::stamps::last_needed(&paths, &p.agent, &p.digest).is_some(),
-            "{} stamped on release",
+            stamped >= released_after,
+            "{} stamped on release ({stamped}), not only on acquire",
             p.agent
         );
     }

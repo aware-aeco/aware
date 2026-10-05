@@ -143,10 +143,12 @@ pub fn legacy_listing(paths: &Paths) -> Result<BTreeSet<String>, AwareError> {
 /// Refuse a home whose two stores are not physically distinct plain
 /// directories (plan §12 R5-3).
 pub fn check_distinct(paths: &Paths) -> Result<(), AwareError> {
-    let v2 = paths.agent_store_dir();
-    let legacy = paths.legacy_agent_store_dir();
+    check_pair(&paths.agent_store_dir(), &paths.legacy_agent_store_dir())
+}
+
+fn check_pair(v2: &Path, legacy: &Path) -> Result<(), AwareError> {
     let mut identities = Vec::new();
-    for dir in [&v2, &legacy] {
+    for dir in [v2, legacy] {
         match std::fs::symlink_metadata(dir) {
             Ok(meta) => {
                 if crate::fs::is_reparse_point(&meta) || meta.file_type().is_symlink() {

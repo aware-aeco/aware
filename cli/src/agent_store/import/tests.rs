@@ -208,6 +208,20 @@ fn a_v2_store_that_is_the_legacy_store_is_refused() {
     );
 }
 
+/// The identity check on its own (a link is caught before it): one directory
+/// reached under two names is refused.
+#[test]
+fn one_directory_under_two_names_is_refused() {
+    let (_tmp, paths) = home();
+    let dir = paths.agent_store_dir();
+    std::fs::create_dir_all(&dir).unwrap();
+    let error = check_pair(&dir, &dir).unwrap_err().to_string();
+    assert!(error.contains("are the same directory"), "{error}");
+    let other = paths.legacy_agent_store_dir();
+    std::fs::create_dir_all(&other).unwrap();
+    check_pair(&dir, &other).unwrap();
+}
+
 #[test]
 fn the_listing_ignores_what_is_not_a_package() {
     let (_tmp, paths) = home();
