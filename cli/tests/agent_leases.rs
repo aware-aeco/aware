@@ -266,7 +266,11 @@ fn gc_keeps_what_a_run_in_progress_uses_and_removes_it_after() {
     let report = fx.gc(&["--apply", "--recovery-window", "0s"]);
     assert_eq!(report["applied"], true, "{report}");
     assert!(digests(&report["removed"]).is_empty(), "{report}");
-    assert_eq!(digests(&report["kept"]), [digest.clone()], "{report}");
+    assert_eq!(
+        digests(&report["kept"]),
+        std::slice::from_ref(&digest),
+        "{report}"
+    );
     assert_eq!(report["kept"][0]["references"][0]["kind"], "lease");
 
     std::fs::write(&fx.go, "go").unwrap();
