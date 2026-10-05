@@ -212,6 +212,7 @@ pub fn evaluate(
     paths: &Paths,
     source: &Path,
     requested: Option<&BTreeMap<String, PinTarget>>,
+    guard: &crate::agent_store::RefGuard,
 ) -> Result<Evaluation, AwareError> {
     let (app, source_hash) = crate::app_lock::read_app_source(source)?;
     let dir = crate::fs::containing_dir(source).to_path_buf();
@@ -305,7 +306,7 @@ pub fn evaluate(
             .filter(|(id, _)| dispatched.contains(*id))
             .map(|(id, target)| (id.clone(), target.clone()))
             .collect(),
-        None => default_targets(paths, &dispatched, &base, &mut eval.row.warnings)?,
+        None => default_targets(paths, &dispatched, &base, &mut eval.row.warnings, guard)?,
     };
     let old = match PinSet::from_lock(&base, BTreeMap::new())
         .and_then(|set| resolve_pins(paths, &app, &set))
@@ -555,13 +556,16 @@ pub fn plan_rows(
     paths: &Paths,
     sources: &[(String, PathBuf)],
     requested: Option<&BTreeMap<String, PinTarget>>,
+    guard: &crate::agent_store::RefGuard,
 ) -> Vec<PlanRow> {
     let mut rows: Vec<PlanRow> = sources
         .iter()
-        .map(|(id, source)| match evaluate(paths, source, requested) {
-            Ok(eval) => eval.row,
-            Err(error) => PlanRow::unevaluated(id, source, &error),
-        })
+        .map(
+            |(id, source)| match evaluate(paths, source, requested, guard) {
+                Ok(eval) => eval.row,
+                Err(error) => PlanRow::unevaluated(id, source, &error),
+            },
+        )
         .collect();
     // A backing app with a pending move carries its installed callers.
     let moving_backing: Vec<(String, BTreeSet<String>)> = rows
@@ -592,7 +596,20 @@ fn default_targets(
     dispatched: &BTreeSet<String>,
     base: &LockFile,
     warnings: &mut Vec<Reason>,
+    guard: &crate::agent_store::RefGuard,
 ) -> Result<BTreeMap<String, PinTarget>, AwareError> {
+    // The working copies are hashed under their swap locks, shared — after any
+    // interrupted swap of them is recovered — like every reader of `agents/`
+    // (#627): never a tree being replaced, never "uninstalled" because an
+    // update was killed between its two renames.
+    let lockable: Vec<&str> = dispatched
+        .iter()
+        .map(String::as_str)
+        .filter(|id| {
+            crate::manifest::loader::is_safe_segment(id) && !crate::install::swap::is_swap_area(id)
+        })
+        .collect();
+    let _swap_read = crate::install::swap::read_lock(paths, guard, &lockable)?;
     let mut out = BTreeMap::new();
     for id in dispatched {
         let Some(approved) = base

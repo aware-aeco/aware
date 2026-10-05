@@ -6,7 +6,14 @@ use crate::app_lock::candidate::tests::{approve, home, update_agent, write_agent
 const READS: &str = "requires: []\nnodes:\n  - { id: a, agent: tool, command: go }\n";
 
 fn row_of(h: &crate::app_lock::candidate::tests::Home, source: &Path) -> PlanRow {
-    evaluate(&h.paths, source, None).unwrap().row
+    evaluate(
+        &h.paths,
+        source,
+        None,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap()
+    .row
 }
 
 fn codes(row: &PlanRow) -> Vec<&str> {
@@ -203,17 +210,29 @@ fn an_explicit_target_moves_only_what_it_names() {
     );
     let only: BTreeMap<String, PinTarget> =
         [("tool".to_string(), PinTarget::Version("1.0.1".into()))].into();
-    let row = evaluate(&h.paths, &source, Some(&only)).unwrap().row;
+    let row = evaluate(
+        &h.paths,
+        &source,
+        Some(&only),
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap()
+    .row;
     let moved: Vec<&str> = row.targets.iter().map(|t| t.agent.as_str()).collect();
     assert_eq!(moved, ["tool"]);
     // A target for an agent this app does not use is simply not this app's.
     let unused: BTreeMap<String, PinTarget> =
         [("ghost".to_string(), PinTarget::Version("1.0.0".into()))].into();
     assert_eq!(
-        evaluate(&h.paths, &source, Some(&unused))
-            .unwrap()
-            .row
-            .state,
+        evaluate(
+            &h.paths,
+            &source,
+            Some(&unused),
+            &crate::agent_store::open(&h.paths).unwrap()
+        )
+        .unwrap()
+        .row
+        .state,
         State::UpToDate
     );
 }
@@ -250,6 +269,7 @@ fn a_backing_app_never_moves_and_its_callers_are_named() {
             ("outer".into(), outer.clone()),
         ],
         None,
+        &crate::agent_store::open(&h.paths).unwrap(),
     );
     let caller = rows.iter().find(|r| r.app == "outer").unwrap();
     assert!(
@@ -300,6 +320,7 @@ fn a_caller_is_found_through_backed_by_not_through_the_agent_name() {
             ("reader-backing".into(), backing.clone()),
         ],
         None,
+        &crate::agent_store::open(&h.paths).unwrap(),
     );
     let backing_row = rows.iter().find(|r| r.app == "reader-backing").unwrap();
     assert_eq!(backing_row.callers, ["outer"], "{backing_row:#?}");
@@ -363,7 +384,13 @@ fn a_stored_candidate_is_fresh_only_against_the_current_approval() {
     let source = write_app(&h.paths, "demo", READS);
     approve(&h.paths, &source);
     update_agent(&h.paths, "tool", "1.0.1", "mode: read");
-    let eval_now = evaluate(&h.paths, &source, None).unwrap();
+    let eval_now = evaluate(
+        &h.paths,
+        &source,
+        None,
+        &crate::agent_store::open(&h.paths).unwrap(),
+    )
+    .unwrap();
     assert!(!eval_now.row.candidate.present);
     let candidate = eval_now.candidate.unwrap();
     let evidence = serde_json::to_vec(&files::Evidence {
@@ -388,4 +415,53 @@ fn a_stored_candidate_is_fresh_only_against_the_current_approval() {
     approve(&h.paths, &source);
     let row = row_of(&h, &source);
     assert!(row.candidate.present && !row.candidate.fresh);
+}
+
+/// Review #627-a: `migrate plan` hashes the installed working copy to propose
+/// targets; it must read it under the agent's swap lock — and so recover an
+/// interrupted swap first — like every other reader of the working copy,
+/// never judge an agent "uninstalled" because an update was killed between
+/// its two renames.
+#[test]
+fn plan_reads_the_working_copy_under_its_swap_lock_and_recovers_first() {
+    use crate::install::swap;
+    let h = home();
+    write_agent(&h.paths, "tool", "1.0.0", "mode: read");
+    let source = write_app(&h.paths, "demo", READS);
+    approve(&h.paths, &source);
+
+    // An update of `tool` killed after it moved the old copy aside.
+    let guard = crate::agent_store::open(&h.paths).unwrap();
+    let staged = swap::Staged::new(&h.paths).unwrap();
+    let incoming = staged.incoming();
+    std::fs::create_dir_all(&incoming).unwrap();
+    std::fs::write(
+        incoming.join("manifest.yaml"),
+        "agent: tool\nversion: 9.9.9\n",
+    )
+    .unwrap();
+    let digest = crate::install::integrity::tree_digest(&incoming).unwrap();
+    let txn = swap::begin(&h.paths, &guard, &["tool"], Some(staged)).unwrap();
+    swap::inject_fault(swap::Fault::CrashAfter("done out tool".into()));
+    let crashed = txn.execute(
+        swap::Op::Update,
+        Some("tool"),
+        Some(digest),
+        vec![swap::Outgoing {
+            id: "tool".into(),
+            digest: None,
+        }],
+    );
+    swap::clear_fault();
+    assert!(crashed.is_err());
+    drop(guard);
+    assert!(!h.paths.agents_dir().join("tool").exists());
+
+    let row = row_of(&h, &source);
+    assert!(
+        !swap::has_pending(&h.paths, "tool").unwrap(),
+        "plan read the working copy without recovering the interrupted swap"
+    );
+    assert!(h.paths.agents_dir().join("tool/manifest.yaml").is_file());
+    assert_eq!(row.state, State::UpToDate, "{row:?}");
 }

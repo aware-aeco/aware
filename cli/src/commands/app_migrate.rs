@@ -70,14 +70,18 @@ pub fn dispatch(cmd: MigrateCommand, ctx: &Context) -> Result<(), AwareError> {
     let started = Instant::now();
     // #627: every migrate verb reads approvals and writes or reads candidate
     // locks — store references — so each runs under the store reference lock,
-    // shared, taken before anything is read (plan R1-4, R1-7). Store-only: no
-    // migrate verb reads a working copy, so no swap lock is taken.
-    let _store_guard = crate::agent_store::open(&ctx.paths)?;
+    // shared, taken before anything is read (plan R1-4, R1-7). `plan` and
+    // `prepare` also hash installed working copies to propose targets; they
+    // take those agents' swap locks shared under this guard.
+    let store_guard = crate::agent_store::open(&ctx.paths)?;
     let (name, outcome) = match cmd {
         MigrateCommand::Plan { apps, all: _, to } => {
-            ("app migrate plan", plan_cmd(ctx, &apps, &to))
+            ("app migrate plan", plan_cmd(ctx, &apps, &to, &store_guard))
         }
-        MigrateCommand::Prepare { app, to } => ("app migrate prepare", prepare_cmd(ctx, &app, &to)),
+        MigrateCommand::Prepare { app, to } => (
+            "app migrate prepare",
+            prepare_cmd(ctx, &app, &to, &store_guard),
+        ),
         MigrateCommand::Discard { app } => ("app migrate discard", discard_cmd(ctx, &app)),
         MigrateCommand::Hold { app, actor, reason } => {
             ("app migrate hold", hold_cmd(ctx, &app, &actor, reason))
@@ -221,7 +225,12 @@ struct PlanData {
     apps: Vec<PlanRow>,
 }
 
-fn plan_cmd(ctx: &Context, apps: &[String], to: &[String]) -> Result<Output, Failure> {
+fn plan_cmd(
+    ctx: &Context,
+    apps: &[String],
+    to: &[String],
+    guard: &crate::agent_store::RefGuard,
+) -> Result<Output, Failure> {
     let targets = parse_targets(to).map_err(usage_failure)?;
     let mut sources = Vec::new();
     if apps.is_empty() {
@@ -234,7 +243,7 @@ fn plan_cmd(ctx: &Context, apps: &[String], to: &[String]) -> Result<Output, Fai
         }
     }
     let requested = (!targets.is_empty()).then_some(&targets);
-    let rows = plan::plan_rows(&ctx.paths, &sources, requested);
+    let rows = plan::plan_rows(&ctx.paths, &sources, requested, guard);
     let mut text = String::new();
     for row in &rows {
         text.push_str(&format!("{}: {}\n", row.app, state_word(row.state)));
@@ -321,7 +330,12 @@ struct PrepareData {
     row: PlanRow,
 }
 
-fn prepare_cmd(ctx: &Context, app: &str, to: &[String]) -> Result<Output, Failure> {
+fn prepare_cmd(
+    ctx: &Context,
+    app: &str,
+    to: &[String],
+    guard: &crate::agent_store::RefGuard,
+) -> Result<Output, Failure> {
     let targets = parse_targets(to).map_err(usage_failure)?;
     let source = app_source(ctx, app)?;
     let dir = crate::fs::containing_dir(&source).to_path_buf();
@@ -340,7 +354,7 @@ fn prepare_cmd(ctx: &Context, app: &str, to: &[String]) -> Result<Output, Failur
             ))));
         }
     }
-    let mut eval = plan::evaluate(&ctx.paths, &source, requested)?;
+    let mut eval = plan::evaluate(&ctx.paths, &source, requested, guard)?;
     let row = &eval.row;
     // An explicit target that cannot be resolved is a misuse too.
     if requested.is_some()

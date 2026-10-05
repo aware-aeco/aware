@@ -325,6 +325,10 @@ const GUARDED_SIGNATURES: &[(&str, &str)] = &[
     ("install/rename.rs", "rename_app"),
     ("install/rename.rs", "duplicate_app"),
     ("install/bundle.rs", "install_bundle"),
+    // Migrate's planner hashes working copies to propose targets.
+    ("migration/plan.rs", "evaluate"),
+    ("migration/plan.rs", "plan_rows"),
+    ("migration/plan.rs", "default_targets"),
     // The swap-lock API: every acquisition path takes the guard.
     ("install/swap.rs", "acquire"),
     ("install/swap.rs", "read_lock"),
