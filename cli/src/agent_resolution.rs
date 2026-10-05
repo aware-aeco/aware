@@ -615,6 +615,8 @@ pub struct AgentOutcome {
     pub resolution: Resolution,
     pub detail: String,
     pub invalid_candidates: Vec<InvalidCandidate>,
+    /// The approved bytes were removed by `aware agent gc` (#629).
+    pub removed: Option<Removed>,
     /// `app check` only: the manifest of the copy a run would dispatch, so the
     /// backing-app check judges THAT copy rather than a fresh re-read.
     manifest: Option<Agent>,
@@ -638,6 +640,7 @@ fn assess_agent(
         resolution: Resolution::Missing,
         detail: String::new(),
         invalid_candidates: Vec::new(),
+        removed: None,
         manifest: None,
         chosen: None,
         refusal: None,
@@ -937,6 +940,20 @@ fn assess_agent(
             "the approved version of {id} ({pinned}) is no longer installed; compile the app again to use {installed}"
         )
     };
+    // GC removed it (#629): say so, and that nothing stands in for it.
+    if let Some(tombstone) = agent_store::gc::tombstone(paths, id, &required) {
+        let on = tombstone
+            .removed_at
+            .get(..10)
+            .unwrap_or(&tombstone.removed_at);
+        outcome.detail = format!(
+            "the approved version of {id} ({pinned}, {required}) was removed by `aware agent gc` on {on} because nothing referenced it; nothing else will be run in its place - compile the app again to use {installed}"
+        );
+        outcome.removed = Some(Removed {
+            by: "gc".into(),
+            at: tombstone.removed_at,
+        });
+    }
     outcome.refusal = Some(AwareError::Validation(format!(
         "[E_APP_LOCK_AGENT_PIN_MISMATCH] {}; run `aware app compile` again",
         outcome.detail
@@ -1413,6 +1430,16 @@ pub struct AgentCheck {
     /// For a leaf of an app-backed agent: that agent's id. Absent otherwise.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub via: Option<String>,
+    /// The approved bytes were removed by `aware agent gc` (#629): `{by, at}`.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub removed: Option<Removed>,
+}
+
+/// Who removed an approved package, and when.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+pub struct Removed {
+    pub by: String,
+    pub at: String,
 }
 
 /// The approval of one app-backed agent's backing app.
@@ -1577,6 +1604,7 @@ fn agent_row(outcome: AgentOutcome, via: Option<&str>) -> AgentCheck {
         detail: outcome.detail,
         invalid_candidates: outcome.invalid_candidates,
         via: via.map(str::to_string),
+        removed: outcome.removed,
     }
 }
 

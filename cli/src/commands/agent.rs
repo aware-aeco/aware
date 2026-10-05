@@ -123,6 +123,34 @@ pub enum AgentCommand {
     /// releasing them. Read-only.
     Leases,
 
+    /// Remove the stored tool versions nothing needs any more (#629). A dry
+    /// run by default: it lists what `--apply` would remove. Removes only what
+    /// `aware agent refs` calls removable, and nothing at all while that table
+    /// is incomplete (`E_AGENT_GC_REFS_INCOMPLETE`). Waits for no run: when
+    /// the store is busy it reports `deferred: store-busy`. With `--json` the
+    /// data is schema `aware.agent-gc/v1`.
+    Gc {
+        /// Remove, rather than list.
+        #[arg(long)]
+        apply: bool,
+        /// How long an unreferenced version is kept after it was last needed
+        /// (`<n>{s,m,h,d}`). Default: `agent-store.recovery-window` in
+        /// config.yaml, else 30d.
+        #[arg(long = "recovery-window", value_name = "DURATION")]
+        recovery_window: Option<String>,
+        /// Only versions of this agent.
+        #[arg(long)]
+        agent: Option<String>,
+        /// Only this one version, `<agent>@sha256:<hex>`; refused, with what
+        /// still needs it, when anything does.
+        #[arg(long, value_name = "AGENT@DIGEST")]
+        only: Option<String>,
+        /// How long `--apply` waits for runs and installs to let go of the
+        /// store (`<n>{s,m,h,d}`; default 0s).
+        #[arg(long, value_name = "DURATION")]
+        wait: Option<String>,
+    },
+
     /// The stored tool versions and what still needs each one (#629): the
     /// working copy, an approved lock, a migration candidate, an archived
     /// approval, a run in progress, or nothing, so that `aware agent gc` may
@@ -262,6 +290,20 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
         AgentCommand::Has { agent, capability } => has_cmd(ctx, &agent, &capability),
         AgentCommand::Reindex { check } => reindex(ctx, check),
         AgentCommand::Leases => leases_cmd(ctx),
+        AgentCommand::Gc {
+            apply,
+            recovery_window,
+            agent,
+            only,
+            wait,
+        } => gc_cmd(
+            ctx,
+            apply,
+            recovery_window.as_deref(),
+            agent,
+            only.as_deref(),
+            wait.as_deref(),
+        ),
         AgentCommand::Refs {
             recovery_window,
             action,
@@ -330,6 +372,89 @@ fn leases_cmd(ctx: &Context) -> Result<(), AwareError> {
     }
     for lease in &leases.unreadable {
         println!("\u{26a0} {}: {}", lease.path, lease.problem);
+    }
+    Ok(())
+}
+
+/// `aware agent gc` (#629): remove the stored versions nothing needs.
+fn gc_cmd(
+    ctx: &Context,
+    apply: bool,
+    recovery_window: Option<&str>,
+    agent: Option<String>,
+    only: Option<&str>,
+    wait: Option<&str>,
+) -> Result<(), AwareError> {
+    use crate::agent_store::{gc, refs};
+    let started = Instant::now();
+    let options = gc::Options {
+        apply,
+        window: refs::recovery_window(&ctx.paths, recovery_window)?,
+        agent,
+        only: only.map(gc::parse_only).transpose()?,
+        wait: match wait {
+            Some(text) => refs::Window::parse(text)?
+                .duration()
+                .to_std()
+                .unwrap_or_default(),
+            None => std::time::Duration::ZERO,
+        },
+    };
+    let report = gc::collect(&ctx.paths, &options)?;
+    if ctx.json {
+        envelope::print_ok("agent gc", &report, started)?;
+        return Ok(());
+    }
+    if let Some(reason) = report.deferred {
+        println!(
+            "nothing removed: {}",
+            match reason {
+                "store-busy" =>
+                    "a run, install or update is using the store; try again when it has finished (or pass --wait)",
+                _ =>
+                    "AWARE_HOME is on a network drive, where the locks that keep runs safe cannot be relied on",
+            }
+        );
+        return Ok(());
+    }
+    let verb = if report.applied {
+        "removed"
+    } else {
+        "would remove"
+    };
+    for gone in &report.removed {
+        println!(
+            "{verb} {} {} ({} bytes){}",
+            gone.agent,
+            gone.version.as_deref().unwrap_or("(does not verify)"),
+            gone.bytes,
+            if gone.invalid {
+                " - it no longer verifies"
+            } else {
+                ""
+            }
+        );
+    }
+    if report.removed.is_empty() {
+        println!("nothing to remove");
+    }
+    for skipped in &report.skipped {
+        println!("\u{26a0} {}: {}", skipped.path, skipped.reason);
+    }
+    if !report.pending_delete.is_empty() {
+        println!(
+            "{} removed version(s) could not be deleted from disk yet; the next gc deletes them",
+            report.pending_delete.len()
+        );
+    }
+    if !report.applied && !report.removed.is_empty() {
+        println!("run `aware agent gc --apply` to remove them");
+    }
+    if !report.complete {
+        println!("\u{26a0} --apply would remove nothing until these can be read:");
+        for blocker in &report.blockers {
+            println!("  {}: {}", blocker.path, blocker.problem);
+        }
     }
     Ok(())
 }

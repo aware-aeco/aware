@@ -225,3 +225,86 @@ fn a_killed_run_leaves_a_stale_lease_never_a_live_one() {
         std::thread::sleep(Duration::from_millis(100));
     }
 }
+
+impl Fixture {
+    fn gc(&self, args: &[&str]) -> serde_json::Value {
+        let mut full = vec!["--json", "agent", "gc"];
+        full.extend_from_slice(args);
+        let out = self.ok(&full);
+        let envelope: serde_json::Value = serde_json::from_str(out.trim()).unwrap();
+        assert_eq!(envelope["ok"], true, "{envelope}");
+        envelope["data"].clone()
+    }
+
+    /// Nothing but the run itself needs the approved package any more.
+    fn drop_every_other_reference(&self) {
+        self.ok(&["agent", "uninstall", "waiter"]);
+        std::fs::remove_dir_all(self.aware.join("apps/w")).unwrap();
+    }
+}
+
+fn digests(rows: &serde_json::Value) -> Vec<String> {
+    rows.as_array()
+        .unwrap()
+        .iter()
+        .map(|r| r["digest"].as_str().unwrap().to_string())
+        .collect()
+}
+
+/// #629-b: GC never removes what a run in progress is using; once the run
+/// has finished, the package is removable like any other.
+#[test]
+fn gc_keeps_what_a_run_in_progress_uses_and_removes_it_after() {
+    let Some(fx) = fixture() else {
+        eprintln!("[skip] rustc not on PATH");
+        return;
+    };
+    let digest = fx.approved_digest();
+    let mut run = fx.start_run();
+    fx.wait_for_lease();
+    fx.drop_every_other_reference();
+    let report = fx.gc(&["--apply", "--recovery-window", "0s"]);
+    assert_eq!(report["applied"], true, "{report}");
+    assert!(digests(&report["removed"]).is_empty(), "{report}");
+    assert_eq!(digests(&report["kept"]), [digest.clone()], "{report}");
+    assert_eq!(report["kept"][0]["references"][0]["kind"], "lease");
+
+    std::fs::write(&fx.go, "go").unwrap();
+    assert!(
+        run.wait().unwrap().success(),
+        "the run finished on its copy"
+    );
+    let report = fx.gc(&["--apply", "--recovery-window", "0s"]);
+    assert_eq!(digests(&report["removed"]), [digest], "{report}");
+}
+
+/// #629-b / plan §9 R2-5: a killed run's stale lease keeps its package until
+/// GC stamps it; GC then removes the lease and the window counts from the stamp.
+#[test]
+fn gc_stamps_and_releases_a_killed_run_s_lease() {
+    let Some(fx) = fixture() else {
+        eprintln!("[skip] rustc not on PATH");
+        return;
+    };
+    let digest = fx.approved_digest();
+    let mut run = fx.start_run();
+    fx.wait_for_lease();
+    run.kill().unwrap();
+    run.wait().unwrap();
+    std::fs::write(&fx.go, "go").unwrap();
+    let deadline = Instant::now() + Duration::from_secs(30);
+    while fx.leases()["stale"].as_array().is_none_or(|s| s.is_empty()) {
+        assert!(Instant::now() < deadline, "no stale lease");
+        std::thread::sleep(Duration::from_millis(100));
+    }
+    fx.drop_every_other_reference();
+    let report = fx.gc(&["--apply", "--recovery-window", "30d"]);
+    assert_eq!(
+        report["stale-leases-removed"].as_array().unwrap().len(),
+        1,
+        "{report}"
+    );
+    assert_eq!(digests(&report["in-window"]), [digest], "{report}");
+    assert!(digests(&report["removed"]).is_empty());
+    assert_eq!(fx.leases()["stale"], serde_json::json!([]));
+}

@@ -1150,3 +1150,128 @@ fn policies_are_recorded_listed_and_revoked_through_the_cli() {
     );
     assert_eq!(error_code(&fx.json(&promote)), "E_MIGRATE_POLICY_REVOKED");
 }
+
+/// Runs `aware agent gc --apply --recovery-window 0s` in a loop until stopped
+/// — the most eager collector there can be — and counts the passes that ran.
+struct GcHammer {
+    stop: std::sync::Arc<std::sync::atomic::AtomicBool>,
+    thread: std::thread::JoinHandle<(usize, usize)>,
+}
+
+impl GcHammer {
+    fn start(fx: &Fixture) -> Self {
+        let stop = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
+        let flag = stop.clone();
+        let (home, registry) = (fx.aware.clone(), fx.registry.clone());
+        let thread = std::thread::spawn(move || {
+            let (mut applied, mut deferred) = (0, 0);
+            while !flag.load(std::sync::atomic::Ordering::SeqCst) {
+                let output = Command::cargo_bin("aware")
+                    .unwrap()
+                    .env("AWARE_HOME", &home)
+                    .env("AWARE_REGISTRY", &registry)
+                    .args([
+                        "--json",
+                        "agent",
+                        "gc",
+                        "--apply",
+                        "--recovery-window",
+                        "0s",
+                    ])
+                    .output()
+                    .unwrap();
+                let text = String::from_utf8_lossy(&output.stdout);
+                let envelope: serde_json::Value = serde_json::from_str(text.trim())
+                    .unwrap_or_else(|e| panic!("gc printed no envelope ({e}): {text}"));
+                assert_eq!(envelope["ok"], true, "gc failed mid-race: {envelope}");
+                if envelope["data"]["applied"] == true {
+                    applied += 1;
+                } else {
+                    deferred += 1;
+                }
+            }
+            (applied, deferred)
+        });
+        Self { stop, thread }
+    }
+
+    fn stop(self) -> (usize, usize) {
+        self.stop.store(true, std::sync::atomic::Ordering::SeqCst);
+        self.thread.join().unwrap()
+    }
+}
+
+/// #629-b, plan §8 R1-11 ("GC racing promotion"): promotion and revert hold
+/// the store lock shared from before they verify their target until the new
+/// lock is written, and GC removes only under it exclusive — so however the
+/// two interleave, the app afterwards runs exactly what it was moved to.
+#[test]
+fn gc_racing_promotion_and_revert_never_leaves_the_app_without_its_approved_version() {
+    let Some(fx) = fixture() else {
+        eprintln!("[skip] rustc not on PATH");
+        return;
+    };
+    fx.ok(&["agent", "install", "verbot@1.0.0"]);
+    fx.compiled_app("a");
+    let (original_bytes, _) = fx.lock_state("a");
+    let original: serde_yaml::Value = serde_yaml::from_slice(&original_bytes).unwrap();
+    let old_digest = original["agent-digests"]["verbot"]
+        .as_str()
+        .unwrap()
+        .to_string();
+    fx.ok(&["agent", "update", "verbot"]);
+    let person = |candidate: &str, record: &Path, verb: &str| {
+        fx.data(&[
+            "app",
+            "migrate",
+            verb,
+            "a",
+            "--candidate",
+            candidate,
+            "--person",
+            "e2e",
+            "--approval",
+            record.to_str().unwrap(),
+            "--front-door",
+            "floless@test",
+        ])
+    };
+
+    // Carry forward to 1.1.0 while GC hammers the store.
+    let hammer = GcHammer::start(&fx);
+    let (candidate, record) = fx.prepare_with_record("a", None, "e2e");
+    let promoted = person(&candidate, &record, "promote");
+    let (applied, _) = hammer.stop();
+    assert_eq!(promoted["kind"], "carried-forward", "{promoted}");
+    assert!(applied > 0, "the collector never got the store");
+    assert_eq!(fx.run_says("a"), V2);
+
+    // With a 0s window nothing needed 1.0.0 once the lock moved on: the
+    // collector removed it.
+    let refs = fx.data(&["agent", "refs"]);
+    assert!(
+        !refs["packages"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|p| p["digest"] == old_digest.as_str()),
+        "{refs}"
+    );
+
+    // Bring 1.0.0 back into the store (install it, then update past it), and
+    // revert to it while GC hammers again: between prepare and the new lock,
+    // only the revert's candidate keeps it.
+    fx.ok(&["agent", "uninstall", "verbot"]);
+    fx.ok(&["agent", "install", "verbot@1.0.0"]);
+    fx.ok(&["agent", "update", "verbot"]);
+    let to = format!("verbot@{old_digest}");
+    let (back, back_record) = fx.prepare_with_record("a", Some(&to), "e2e");
+    let hammer = GcHammer::start(&fx);
+    let reverted = person(&back, &back_record, "revert");
+    let (applied, _) = hammer.stop();
+    assert_eq!(reverted["kind"], "reverted", "{reverted}");
+    assert!(applied > 0, "the collector never got the store");
+    assert_eq!(fx.run_says("a"), V1, "the reverted version is still stored");
+    let check = fx.data(&["app", "check", "a"]);
+    assert_eq!(check["approval-current"], true, "{check}");
+}

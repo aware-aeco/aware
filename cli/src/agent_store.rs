@@ -37,6 +37,7 @@ use sha2::{Digest, Sha256};
 use crate::error::AwareError;
 use crate::paths::Paths;
 
+pub mod gc;
 pub mod guard;
 pub mod import;
 pub mod lease;
