@@ -831,11 +831,20 @@ pub fn promote(
                 &header.plan_digest,
                 reason,
             )?;
+            let seq = chain_before
+                .as_ref()
+                .map(|c| c.successors.len())
+                .unwrap_or(0);
+            let failed = recorded_failure(paths, &id, reason, seq)?;
             if let CarriedForwardBy::Policy { policy_id: p, .. } = &by {
                 policy_id = Some(p.clone());
             }
             let mut value: Evidence = evidence.clone();
-            value.row["revert"] = serde_json::json!({ "automatic": true, "reason": reason });
+            value.row["revert"] = serde_json::json!({
+                "automatic": true,
+                "reason": reason,
+                "failed-run": failed,
+            });
             evidence_out = serde_json::to_vec_pretty(&value)
                 .map_err(|e| AwareError::Internal(format!("serialize evidence: {e}")))?;
             (by, front_door.to_string())
@@ -1109,6 +1118,85 @@ fn check_revert_target(
         ));
     }
     Ok(())
+}
+
+/// The run an automatic revert names must be a recorded run of this app,
+/// under the CURRENT carried-forward approval (successor `seq`), that failed:
+/// its trace ends `run-end` with a status other than `ok`/`interrupted`, or
+/// records a node error. A claim the CLI cannot find is not a failure (Codex
+/// review of #628 PR3b, round 1). Returns what was found, for the evidence.
+fn recorded_failure(
+    paths: &Paths,
+    app: &str,
+    reason: &str,
+    seq: usize,
+) -> Result<serde_json::Value> {
+    let not = |why: String| Refused::new("E_MIGRATE_NOT_ELIGIBLE", why);
+    let run = reason.strip_prefix("run-failed:").unwrap_or("").trim();
+    if !crate::manifest::loader::is_safe_segment(run)
+        || !crate::manifest::loader::is_safe_segment(app)
+    {
+        return Err(not(format!(
+            "--reason {reason:?} must name a run id: run-failed:<run-id>"
+        )));
+    }
+    let app_logs = paths.logs_dir().join(app);
+    let mut trace = None;
+    if let Ok(instances) = std::fs::read_dir(&app_logs) {
+        for instance in instances.flatten() {
+            let candidate = instance.path().join(format!("{run}.jsonl"));
+            if candidate.is_file() {
+                trace = Some(candidate);
+                break;
+            }
+        }
+    }
+    let Some(trace) = trace else {
+        return Err(not(format!(
+            "no run {run} of {app} is recorded, so there is no failed run to revert after; a person can revert it"
+        )));
+    };
+    let text = std::fs::read_to_string(&trace).map_err(|e| io(&trace, e))?;
+    use crate::runtime::provenance::RunEvent;
+    let events: Vec<RunEvent> = text
+        .lines()
+        .filter_map(|line| serde_json::from_str(line).ok())
+        .collect();
+    let ran_under = events.iter().find_map(|e| match e {
+        RunEvent::RunStart { config, .. } => Some(config["approval"].clone()),
+        _ => None,
+    });
+    let under_current = ran_under.as_ref().is_some_and(|a| {
+        a["origin"].as_str() == Some("successor") && a["seq"].as_u64() == u64::try_from(seq).ok()
+    });
+    if !under_current {
+        return Err(not(format!(
+            "run {run} of {app} did not run under the approval being reverted (successor {seq}), so its failure says nothing about it; a person can revert it"
+        )));
+    }
+    let status = events.iter().rev().find_map(|e| match e {
+        RunEvent::RunEnd { status, .. } => Some(status.clone()),
+        _ => None,
+    });
+    let node_error = events
+        .iter()
+        .any(|e| matches!(e, RunEvent::NodeError { .. }));
+    let failed = node_error
+        || status
+            .as_deref()
+            .is_some_and(|s| s != "ok" && s != "interrupted");
+    if !failed {
+        return Err(not(format!(
+            "run {run} of {app} is not recorded as failed (it ended {}); an automatic revert follows only a failed run — a person can revert it",
+            status.as_deref().unwrap_or("without a run-end record")
+        )));
+    }
+    Ok(serde_json::json!({
+        "run-id": run,
+        "trace": trace.display().to_string(),
+        "status": status,
+        "node-error": node_error,
+    }))
 }
 
 /// The authority of an automatic revert (§11, §15): only the policy that

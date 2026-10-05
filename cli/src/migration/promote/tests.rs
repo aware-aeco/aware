@@ -939,11 +939,29 @@ fn an_automatic_revert_undoes_only_a_policy_s_move_back_to_an_approved_plan() {
     by_policy(&h, &source, &c1, &id, &verified).unwrap();
 
     let (c2, _) = prepare(&h, &source, back_to(&old));
-    assert_eq!(
-        code(automatic(&h, &source, &c2, "because")),
-        "E_MIGRATE_NOT_ELIGIBLE",
-        "the reason must name the failed run"
-    );
+    let (_, before) = lock_of(&source);
+    // Codex review round 1: the failed run must be one the CLI can find — a
+    // run of this app, under the approval being reverted, that failed.
+    record_run(&h, "run-ok", Some(1), "ok", false);
+    record_run(&h, "run-under-original", None, "error", true);
+    record_run(&h, "run-42", Some(1), "error", false);
+    for (reason, why) in [
+        ("because", "the reason must name the failed run"),
+        ("run-failed:no-such-run", "an unknown run is no failure"),
+        ("run-failed:run-ok", "a run that succeeded is no failure"),
+        (
+            "run-failed:run-under-original",
+            "a failure under another approval",
+        ),
+        ("run-failed:../escape", "a run id is a plain name"),
+    ] {
+        assert_eq!(
+            code(automatic(&h, &source, &c2, reason)),
+            "E_MIGRATE_NOT_ELIGIBLE",
+            "{why}"
+        );
+        assert_eq!(lock_of(&source).1, before, "{why}: the lock moved");
+    }
     let reverted = automatic(&h, &source, &c2, "run-failed:run-42").unwrap();
     assert_eq!(
         reverted.by_kind, "policy",
@@ -957,6 +975,51 @@ fn an_automatic_revert_undoes_only_a_policy_s_move_back_to_an_approved_plan() {
         serde_json::from_slice(&archived(&source, &link.evidence_digest, "json")).unwrap();
     assert_eq!(evidence["row"]["revert"]["reason"], "run-failed:run-42");
     assert_eq!(evidence["row"]["revert"]["automatic"], true);
+    assert_eq!(evidence["row"]["revert"]["failed-run"]["run-id"], "run-42");
+    assert_eq!(evidence["row"]["revert"]["failed-run"]["status"], "error");
+}
+
+/// Write the trace of a run of `demo`: under successor `seq` (or the original
+/// approval), ending `status`, optionally with a node error.
+fn record_run(h: &Home, run_id: &str, seq: Option<u32>, status: &str, node_error: bool) {
+    use crate::runtime::provenance::RunEvent;
+    let approval = match seq {
+        Some(seq) => serde_json::json!({ "origin": "successor", "seq": seq }),
+        None => serde_json::json!({ "origin": "original" }),
+    };
+    let mut events = vec![RunEvent::RunStart {
+        ts: "t".into(),
+        run_id: run_id.into(),
+        app: "demo".into(),
+        instance: "default".into(),
+        config: serde_json::json!({ "approval": approval }),
+    }];
+    if node_error {
+        events.push(RunEvent::NodeError {
+            ts: "t".into(),
+            run_id: run_id.into(),
+            node: "a".into(),
+            error: "boom".into(),
+            structured: None,
+        });
+    }
+    events.push(RunEvent::RunEnd {
+        ts: "t".into(),
+        run_id: run_id.into(),
+        status: status.into(),
+    });
+    let path =
+        crate::runtime::provenance::log_path_for(&h.paths.logs_dir(), "demo", "default", run_id);
+    std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+    let body: String = events
+        .iter()
+        .map(|e| {
+            serde_json::to_string(e).unwrap()
+                + "
+"
+        })
+        .collect();
+    std::fs::write(path, body).unwrap();
 }
 
 #[test]
@@ -973,6 +1036,9 @@ fn an_automatic_revert_never_undoes_a_person_s_approval() {
         SuccessorKind::CarriedForward,
     )
     .unwrap();
+    // Even after a genuinely failed run under it, a person's approval is not
+    // undone automatically.
+    record_run(&h, "run-1", Some(1), "error", true);
     let (c2, _) = prepare(&h, &source, back_to(&old));
     let (_, before) = lock_of(&source);
     assert_eq!(
