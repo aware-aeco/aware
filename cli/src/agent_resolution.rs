@@ -1046,8 +1046,16 @@ pub struct PinSet {
 }
 
 impl PinSet {
-    /// The base lock's pins with `targets` applied over them.
-    pub fn from_lock(lock: &LockFile, targets: BTreeMap<String, PinTarget>) -> Self {
+    /// The base lock's pins with `targets` applied over them — refused, as the
+    /// run refuses it (`E_APP_LOCK_INVALID`), when the lock's digest fields are
+    /// malformed or disagree. Without this, `agent-digests` would silently win
+    /// over a conflicting `agent-bundle-pins` and a caller could judge a lock
+    /// that `aware app run` will never execute (Codex review #628 round 3).
+    pub fn from_lock(
+        lock: &LockFile,
+        targets: BTreeMap<String, PinTarget>,
+    ) -> Result<Self, AwareError> {
+        check_lock_consistency(lock).map_err(|reason| inconsistent_lock(lock, &reason))?;
         let base = lock
             .agent_pins
             .iter()
@@ -1066,7 +1074,7 @@ impl PinSet {
                 )
             })
             .collect();
-        PinSet { base, targets }
+        Ok(PinSet { base, targets })
     }
 }
 

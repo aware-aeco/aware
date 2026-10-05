@@ -1522,12 +1522,12 @@ fn inherited_effect(
         .ok_or_else(|| format!("backing app {backed_by} is not installed"))?;
     let (app, lock) = crate::app_lock::load_approved_app_with_lock(&source)
         .map_err(|e| format!("backing app {backed_by} has no current approval: {e}"))?;
-    let pins = crate::agent_resolution::resolve_pins(
-        &ctx.paths,
-        &app,
-        &crate::agent_resolution::PinSet::from_lock(&lock, std::collections::BTreeMap::new()),
-    )
-    .map_err(|e| format!("backing app {backed_by}'s approved agents cannot be resolved: {e}"))?;
+    let pin_set =
+        crate::agent_resolution::PinSet::from_lock(&lock, std::collections::BTreeMap::new())
+            .map_err(|e| format!("backing app {backed_by}'s approval is not usable: {e}"))?;
+    let pins = crate::agent_resolution::resolve_pins(&ctx.paths, &app, &pin_set).map_err(|e| {
+        format!("backing app {backed_by}'s approved agents cannot be resolved: {e}")
+    })?;
     let agents: Vec<_> = pins.into_iter().map(|pin| pin.agent).collect();
     Ok(crate::migration::effect::wrapper_effect(
         &app, command, &agents,

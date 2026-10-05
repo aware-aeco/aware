@@ -486,7 +486,8 @@ Each `commands[]` row also carries `mode` (`read`|`write`), `mode-basis`
 (`declared`|`overridable`|`inferred`|`inherited`) and `mode-overridable` (#628): only
 `declared` is the agent author's statement of effect (agent-spec § Declared effect). An
 app-backed agent's rows add `inherited-from` and `inherited-read-only`, or `inherited-detail`
-when the backing app's approved pins could not be resolved (resolution writes nothing).
+when the backing app's approved pins could not be resolved — including a lock `app run` would
+refuse as inconsistent (`E_APP_LOCK_INVALID`), which gets no verdict (resolution writes nothing).
 
 ### `aware app run <app>`
 

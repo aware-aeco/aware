@@ -1345,7 +1345,7 @@ fn resolve_pins_moves_only_the_target_and_keeps_every_other_base_digest() {
     let pins = resolve_pins(
         &h.paths,
         &app_using(&["a", "b"]),
-        &PinSet::from_lock(&base, targets),
+        &PinSet::from_lock(&base, targets).unwrap(),
     )
     .unwrap();
     assert_eq!(resolved(&pins, "a"), ("2.0.0".into(), PinSource::Target));
@@ -1367,7 +1367,7 @@ fn resolve_pins_writes_nothing_and_never_reads_the_working_copy() {
     let pins = resolve_pins(
         &h.paths,
         &app_using(&["a", "b"]),
-        &PinSet::from_lock(&base, targets),
+        &PinSet::from_lock(&base, targets).unwrap(),
     )
     .unwrap();
     assert_eq!(resolved(&pins, "a").0, "2.0.0");
@@ -1390,7 +1390,7 @@ fn a_version_target_with_two_stored_byte_sets_is_refused_as_ambiguous() {
     let error = resolve_pins(
         &h.paths,
         &app_using(&["a"]),
-        &PinSet::from_lock(&base, targets),
+        &PinSet::from_lock(&base, targets).unwrap(),
     )
     .unwrap_err()
     .to_string();
@@ -1400,7 +1400,7 @@ fn a_version_target_with_two_stored_byte_sets_is_refused_as_ambiguous() {
     let pins = resolve_pins(
         &h.paths,
         &app_using(&["a"]),
-        &PinSet::from_lock(&base, targets),
+        &PinSet::from_lock(&base, targets).unwrap(),
     )
     .unwrap();
     assert_eq!(pins[0].digest, digest(&other));
@@ -1416,28 +1416,32 @@ fn resolve_pins_refuses_what_cannot_be_carried_forward() {
     let unused = PinSet::from_lock(
         &base,
         [("b".to_string(), PinTarget::Version("2.0.0".into()))].into(),
-    );
+    )
+    .unwrap();
     assert!(refuse(&unused).contains("E_MIGRATE_TARGET_UNUSED"));
     // A version nothing stored.
     let missing = PinSet::from_lock(
         &base,
         [("a".to_string(), PinTarget::Version("9.9.9".into()))].into(),
-    );
+    )
+    .unwrap();
     assert!(refuse(&missing).contains("E_MIGRATE_TARGET_NOT_STORED"));
     // A digest nothing stored.
     let absent = format!("sha256:{}", "0".repeat(64));
-    let gone = PinSet::from_lock(&base, [("a".to_string(), PinTarget::Digest(absent))].into());
+    let gone =
+        PinSet::from_lock(&base, [("a".to_string(), PinTarget::Digest(absent))].into()).unwrap();
     assert!(refuse(&gone).contains("E_MIGRATE_PIN_NOT_STORED"));
     // A legacy lock that named only a version.
     let legacy = lock(&[("a", "1.0.0")], &[], &[]);
     assert!(
-        refuse(&PinSet::from_lock(&legacy, BTreeMap::new()))
+        refuse(&PinSet::from_lock(&legacy, BTreeMap::new()).unwrap())
             .contains("E_MIGRATE_BASE_VERSION_ONLY")
     );
     // An agent the base lock never pinned.
     let unpinned = lock(&[], &[], &[]);
     assert!(
-        refuse(&PinSet::from_lock(&unpinned, BTreeMap::new())).contains("E_MIGRATE_PIN_MISSING")
+        refuse(&PinSet::from_lock(&unpinned, BTreeMap::new()).unwrap())
+            .contains("E_MIGRATE_PIN_MISSING")
     );
 }
 
@@ -1455,7 +1459,8 @@ fn a_target_cannot_carry_forward_an_agent_with_no_approved_bytes() {
         PinTarget::Version("2.0.0".into()),
     ] {
         let targets: BTreeMap<String, PinTarget> = [("a".to_string(), target.clone())].into();
-        let legacy = PinSet::from_lock(&lock(&[("a", "1.0.0")], &[], &[]), targets.clone());
+        let legacy =
+            PinSet::from_lock(&lock(&[("a", "1.0.0")], &[], &[]), targets.clone()).unwrap();
         let error = resolve_pins(&h.paths, &app, &legacy)
             .unwrap_err()
             .to_string();
@@ -1463,7 +1468,7 @@ fn a_target_cannot_carry_forward_an_agent_with_no_approved_bytes() {
             error.contains("E_MIGRATE_BASE_VERSION_ONLY"),
             "{target:?}: {error}"
         );
-        let unpinned = PinSet::from_lock(&lock(&[], &[], &[]), targets);
+        let unpinned = PinSet::from_lock(&lock(&[], &[], &[]), targets).unwrap();
         let error = resolve_pins(&h.paths, &app, &unpinned)
             .unwrap_err()
             .to_string();
@@ -1507,7 +1512,7 @@ fn a_corrupt_record_claiming_the_target_version_is_reported_not_counted() {
     let pins = resolve_pins(
         &h.paths,
         &app_using(&["a"]),
-        &PinSet::from_lock(&base, targets),
+        &PinSet::from_lock(&base, targets).unwrap(),
     )
     .expect("one verified 2.0.0 is not ambiguous");
     assert_eq!(pins[0].digest, real);
@@ -1519,4 +1524,21 @@ fn a_corrupt_record_claiming_the_target_version_is_reported_not_counted() {
         "the forged record must be reported: {:?}",
         pins[0].invalid_candidates
     );
+}
+
+/// Codex review round 3: PinSet::from_lock applies the run's consistency check,
+/// so no caller can resolve a lock `app run` would refuse.
+#[test]
+fn a_pin_set_is_never_built_from_an_inconsistent_lock() {
+    let a = format!("sha256:{}", "a".repeat(64));
+    let b = format!("sha256:{}", "b".repeat(64));
+    let conflicting = lock(&[("x", "1.0.0")], &[("x", &a)], &[("x", &b)]);
+    let error = PinSet::from_lock(&conflicting, BTreeMap::new())
+        .unwrap_err()
+        .to_string();
+    assert!(error.contains("E_APP_LOCK_INVALID"), "{error}");
+    let malformed = lock(&[("x", "1.0.0")], &[("x", "sha256:nope")], &[]);
+    assert!(PinSet::from_lock(&malformed, BTreeMap::new()).is_err());
+    let consistent = lock(&[("x", "1.0.0")], &[("x", &a)], &[("x", &a)]);
+    assert!(PinSet::from_lock(&consistent, BTreeMap::new()).is_ok());
 }
