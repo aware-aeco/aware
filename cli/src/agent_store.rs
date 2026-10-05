@@ -6,10 +6,10 @@
 //! dispatches from a **snapshot** instead:
 //!
 //! ```text
-//! <AWARE_HOME>/agent-store/<id>/<tree-hex>/<receipt-key>/
+//! <AWARE_HOME>/agent-store-v2/<id>/<tree-hex>/<receipt-key>/
 //!     manifest.yaml, …, .aware-install.yaml   # the copied tree, receipt included
 //!     .aware-package.yaml                     # { agent, version, digest, receipt-key, snapshotted-at }
-//! <AWARE_HOME>/agent-store/<id>/<tree-hex>/.tmp-<random>/   # in-progress; ignored by every reader
+//! <AWARE_HOME>/agent-store-v2/<id>/<tree-hex>/.tmp-<random>/   # in-progress; ignored by every reader
 //! ```
 //!
 //! * `<tree-hex>` is the 64-hex body of the bundle's `tree_digest`, which
@@ -38,6 +38,9 @@ use crate::error::AwareError;
 use crate::paths::Paths;
 
 pub mod guard;
+pub mod import;
+pub mod lease;
+pub mod stamps;
 pub use guard::RefGuard;
 
 /// Open the agent store for an operation that creates or relies on a store
@@ -45,7 +48,44 @@ pub use guard::RefGuard;
 /// the only door to a shared [`RefGuard`]. Take it BEFORE reading anything the
 /// reference depends on (an app source, its `<app>.lock`, an agent working
 /// copy) and hold it until the reference is durable or no longer needed.
+///
+/// First, while this thread holds no guard, any legacy package not yet in
+/// `agent-store-v2/` is imported under the store lock held exclusive (#627-b,
+/// [`import`]) — never an upgrade of a held guard (plan §12 R5-1).
 pub fn open(paths: &Paths) -> Result<RefGuard, AwareError> {
+    // v2 exists as a plain directory before it is compared with where the
+    // legacy store resolves: a legacy link aimed at the spot v2 would take is
+    // then refused here, before any package is written (review round 3).
+    if probe(&paths.agent_store_dir())?.is_none() {
+        std::fs::create_dir_all(paths.agent_store_dir()).map_err(|e| {
+            std::io::Error::new(
+                e.kind(),
+                format!("{}: {e}", paths.agent_store_dir().display()),
+            )
+        })?;
+    }
+    import::check_distinct(paths)?;
+    if guard::shared_held_on_this_thread() == 0 {
+        // Best effort: an import that cannot complete now is retried by the
+        // next command and never refuses this one (a run verifies every byte
+        // it dispatches whatever the store holds).
+        let imported = import::needed(paths).and_then(|needed| {
+            if !needed {
+                return Ok(());
+            }
+            let exclusive = RefGuard::exclusive_blocking(paths)?;
+            if import::needed(paths)? {
+                import::import(paths)?;
+            }
+            drop(exclusive);
+            Ok(())
+        });
+        if let Err(error) = imported {
+            eprintln!(
+                "\u{26a0} the older agent store (agent-store/) could not be carried over now ({error}); the next command tries again"
+            );
+        }
+    }
     RefGuard::shared(paths)
 }
 
@@ -141,7 +181,13 @@ pub fn digest_container(paths: &Paths, id: &str, digest: &str) -> Result<PathBuf
             "[E_AGENT_STORE_INVALID] {digest:?} is not a sha256 bundle digest"
         ))
     })?;
-    Ok(paths.agent_store_dir().join(id).join(hex))
+    let container = paths.agent_store_dir().join(id).join(hex);
+    // No link or junction between the store root and the container: every
+    // reader and writer of a package — snapshot, resolution, the legacy
+    // import, GC — forms its path here, so none can reach outside the store
+    // through one (#627-b review round 3).
+    import::no_link_below_v2(paths, &container)?;
+    Ok(container)
 }
 
 /// Whether `path` exists, WITHOUT turning a failed look into "absent":

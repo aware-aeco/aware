@@ -755,6 +755,20 @@ impl Transaction<'_> {
             (None, Some(staged)) => staged,
             (None, None) => Staged::new(&self.paths)?,
         };
+        // #627-b: each outgoing copy's bytes were needed until now — the
+        // recovery window of its stored package counts from here. A failed
+        // stamp only warns: it is availability, never correctness.
+        for out in &outgoing {
+            if let Some(digest) = &out.digest
+                && let Err(error) =
+                    crate::agent_store::stamps::stamp(&self.paths, &out.id, digest, None)
+            {
+                eprintln!(
+                    "\u{26a0} could not record when {} was last in use ({error})",
+                    out.id
+                );
+            }
+        }
         let agents = self.paths.agents_dir();
         std::fs::create_dir_all(&agents)?;
         let intent = Intent {

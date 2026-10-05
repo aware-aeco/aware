@@ -118,6 +118,10 @@ pub enum AgentCommand {
         #[arg(long)]
         check: bool,
     },
+    /// List the runs in progress and the stored tool versions each one is
+    /// using (#627 run leases), plus leases left by runs that ended without
+    /// releasing them. Read-only.
+    Leases,
 
     /// Invoke an installed BUILTIN agent's command directly, outside a workflow.
     /// (#215)
@@ -192,6 +196,19 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
             crate::install::uninstall_agent(&agent, &ctx.paths, &guard)?;
             drop(guard);
             println!("✓ uninstalled {agent}");
+            // #627: runs in progress are unaffected — they run from the store.
+            if let Ok(leases) = crate::agent_store::lease::list(&ctx.paths) {
+                let using = leases
+                    .leases
+                    .iter()
+                    .filter(|l| l.packages.iter().any(|p| p.agent == agent))
+                    .count();
+                if using > 0 {
+                    println!(
+                        "  {using} run(s) in progress still use {agent}; they keep running on their stored copy, which stays until they finish"
+                    );
+                }
+            }
             let _ = auto_regenerate_plugins(ctx, false);
             let _ = crate::commands::diagram::auto_regenerate(ctx);
             Ok(())
@@ -203,6 +220,7 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
         AgentCommand::Search { query, capability } => search_cmd(ctx, &query, capability),
         AgentCommand::Has { agent, capability } => has_cmd(ctx, &agent, &capability),
         AgentCommand::Reindex { check } => reindex(ctx, check),
+        AgentCommand::Leases => leases_cmd(ctx),
         AgentCommand::Invoke {
             agent,
             command,
@@ -226,6 +244,46 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
             probe_cmd(ctx, &agent, &options).await
         }
     }
+}
+
+/// `aware agent leases` (#627): the runs in progress and what they use.
+fn leases_cmd(ctx: &Context) -> Result<(), AwareError> {
+    let started = Instant::now();
+    let leases = crate::agent_store::lease::list(&ctx.paths)?;
+    if ctx.json {
+        envelope::print_ok("agent leases", &leases, started)?;
+        return Ok(());
+    }
+    if leases.leases.is_empty() {
+        println!("no runs in progress hold stored tool versions");
+    }
+    for lease in &leases.leases {
+        println!(
+            "{} {} (instance {}, pid {}, started {})",
+            lease.run_id, lease.app, lease.instance, lease.pid, lease.started_at
+        );
+        for package in &lease.packages {
+            let via = package
+                .via
+                .as_deref()
+                .map(|v| format!(" via {v}"))
+                .unwrap_or_default();
+            println!(
+                "  {} {} {}{via}",
+                package.agent, package.version, package.digest
+            );
+        }
+    }
+    for lease in &leases.stale {
+        println!(
+            "\u{26a0} {} {}: the run ended without releasing its lease ({})",
+            lease.run_id, lease.app, lease.path
+        );
+    }
+    for lease in &leases.unreadable {
+        println!("\u{26a0} {}: {}", lease.path, lease.problem);
+    }
+    Ok(())
 }
 
 /// `aware agent probe <agent>` — run the agent's declared probe and print the
@@ -1657,6 +1715,9 @@ fn auto_regenerate_plugins(ctx: &Context, full: bool) -> Result<(), AwareError> 
 
 fn list(ctx: &Context) -> Result<(), AwareError> {
     let started = Instant::now();
+    // Opening the store first carries over an older CLI's stored versions
+    // (#627-b), so `stored` is never empty just after an upgrade.
+    let _store = crate::agent_store::open(&ctx.paths)?;
     let discovered = discover_agents(&ctx.paths)?;
 
     if ctx.json {

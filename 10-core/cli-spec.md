@@ -249,6 +249,9 @@ An official bundle is `verified` only when its fresh registry binding, installat
 ├── config.yaml                         # user config (default editor, default prompts, etc.)
 ├── agents/
 │   └── <agent-id>/                     # installed agent (manifest + skills + commands)
+├── agent-store-v2/<id>/<hex>/<key>/    # immutable stored versions (#626/#627); the only store GC touches
+├── agent-store/                        # the store of AWARE 0.149-0.151; read once, never written (#627-b)
+├── agent-store-control/                # store.flock, leases/<run-id>.lease, refs/<id>/<hex>.last-needed, legacy-import.json
 ├── apps/
 │   └── <app-id>/                       # installed app
 │       ├── <app-id>.<ext>              # app source; <ext> is .app (recommended), .flo, etc.
@@ -354,6 +357,12 @@ aware-skill-builder      0.1.0      meta              6       4
 ```
 
 Flags: `--json`, `--filter <kw>`, `--sort <name|version|skills>`.
+
+### `aware agent leases` (#627)
+
+Lists the runs in progress and the stored tool versions each one is using — their run leases, `AWARE_HOME/agent-store-control/leases/<run-id>.lease`, each held under an OS lock by the run's process (see [Agent Spec § the agent store](./agent-spec.md)). Read-only.
+
+`--json` data: `{ "leases": [ { "run-id", "app", "instance", "pid", "started-at", "cli-version", "live": true, "path", "packages": [ { "agent", "version", "digest", "receipt-key", "root", "via"? } ] } ], "stale": [ …same, "live": false ], "unreadable": [ { "path", "live", "problem" } ] }`. A stale lease is one whose process ended without releasing it (a kill or crash); it is evidence for garbage collection (#629), which stamps and removes it.
 
 ### `aware agent describe <agent>`
 

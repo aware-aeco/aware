@@ -70,6 +70,30 @@ impl RefGuard {
         })
     }
 
+    /// Take the store lock exclusive, blocking. Only for the one-time legacy
+    /// import in [`crate::agent_store::open`], which calls it while this thread
+    /// holds no guard (never an upgrade; asserted).
+    pub(super) fn exclusive_blocking(paths: &Paths) -> Result<Self, AwareError> {
+        debug_assert_eq!(
+            SHARED_HELD.with(Cell::get),
+            0,
+            "an exclusive store guard was requested while this thread holds a shared one —              that is a lock upgrade, which can wait on itself (#627 plan R5-1)"
+        );
+        let file = open_lock_file(paths)?;
+        file.lock_exclusive().map_err(|error| {
+            lock_error(
+                paths,
+                "take the agent store reference lock (exclusive)",
+                error,
+            )
+        })?;
+        Ok(Self {
+            _file: file,
+            home: paths.aware_home.clone(),
+            exclusive: true,
+        })
+    }
+
     /// Try to take the store lock exclusive for up to `wait`; `Ok(None)` when it
     /// stayed busy. Never blocks unboundedly, so it can never deadlock a run.
     /// Used by GC (#629); never called while this thread holds a shared guard.
@@ -146,7 +170,6 @@ pub(crate) fn require_home(guard: &RefGuard, paths: &Paths) -> Result<(), AwareE
 }
 
 /// How many shared guards this thread holds.
-#[cfg(test)]
 pub(crate) fn shared_held_on_this_thread() -> u32 {
     SHARED_HELD.with(Cell::get)
 }
@@ -225,16 +248,22 @@ mod tests {
             .unwrap()
             .expect("free once every shared guard is dropped");
         assert!(exclusive.is_exclusive());
-        // And while it is held, a shared request from another thread waits.
+        // And while it is held, a shared request from another thread waits:
+        // it gets the lock only after the release. Ordering, not elapsed time,
+        // so a loaded machine that starts the thread late cannot fail it.
         let other = paths.clone();
+        let ready = std::sync::Arc::new(std::sync::Barrier::new(2));
+        let waiter_ready = ready.clone();
         let waiter = std::thread::spawn(move || {
-            let started = Instant::now();
+            waiter_ready.wait();
             let _guard = crate::agent_store::open(&other).unwrap();
-            started.elapsed()
+            Instant::now()
         });
+        ready.wait();
         std::thread::sleep(Duration::from_millis(200));
+        let released = Instant::now();
         drop(exclusive);
-        assert!(waiter.join().unwrap() >= Duration::from_millis(150));
+        assert!(waiter.join().unwrap() >= released);
     }
 
     /// R5-1: no path may hold a shared guard while asking for an exclusive one.

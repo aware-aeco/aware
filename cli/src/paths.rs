@@ -32,9 +32,19 @@ impl Paths {
     }
 
     /// The immutable, content-addressed agent store (#626):
-    /// `agent-store/<id>/<tree-hex>/<receipt-key>/`. Written only by
-    /// [`crate::agent_store::snapshot`]; never modified or deleted by AWARE.
+    /// `agent-store-v2/<id>/<tree-hex>/<receipt-key>/`. Written only by
+    /// [`crate::agent_store::snapshot`] and the one-time legacy import; a
+    /// package is never modified, and removed only by `aware agent gc` (#629).
+    /// `-v2` since #627-b: older CLIs (0.149-0.151) use `agent-store/` and
+    /// take no run leases, so only this store is safe to garbage-collect.
     pub fn agent_store_dir(&self) -> PathBuf {
+        self.aware_home.join("agent-store-v2")
+    }
+
+    /// The store of AWARE 0.149-0.151 (#626 layout). Read by the one-time
+    /// import into [`Self::agent_store_dir`]; never written or deleted by this
+    /// CLI (#627-b).
+    pub fn legacy_agent_store_dir(&self) -> PathBuf {
         self.aware_home.join("agent-store")
     }
 
@@ -110,7 +120,14 @@ mod tests {
 
     #[test]
     fn agent_store_dir_appends_agent_store() {
-        assert_eq!(p("/x").agent_store_dir(), PathBuf::from("/x/agent-store"));
+        assert_eq!(
+            p("/x").agent_store_dir(),
+            PathBuf::from("/x/agent-store-v2")
+        );
+        assert_eq!(
+            p("/x").legacy_agent_store_dir(),
+            PathBuf::from("/x/agent-store")
+        );
     }
 
     #[test]
