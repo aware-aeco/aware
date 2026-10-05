@@ -251,7 +251,7 @@ An official bundle is `verified` only when its fresh registry binding, installat
 │   └── <agent-id>/                     # installed agent (manifest + skills + commands)
 ├── agent-store-v2/<id>/<hex>/<key>/    # immutable stored versions (#626/#627); the only store GC touches
 ├── agent-store/                        # the store of AWARE 0.149-0.151; read once, never written (#627-b)
-├── agent-store-control/                # store.flock, leases/<run-id>.lease, refs/<id>/<hex>.last-needed, legacy-import.json
+├── agent-store-control/                # store.flock, leases/<run-id>.lease, refs/<id>/<hex>.last-needed, legacy-import.json, roots.yaml
 ├── apps/
 │   └── <app-id>/                       # installed app
 │       ├── <app-id>.<ext>              # app source; <ext> is .app (recommended), .flo, etc.
@@ -363,6 +363,14 @@ Flags: `--json`, `--filter <kw>`, `--sort <name|version|skills>`.
 Lists the runs in progress and the stored tool versions each one is using — their run leases, `AWARE_HOME/agent-store-control/leases/<run-id>.lease`, each held under an OS lock by the run's process (see [Agent Spec § the agent store](./agent-spec.md)). Read-only.
 
 `--json` data: `{ "leases": [ { "run-id", "app", "instance", "pid", "started-at", "cli-version", "live": true, "path", "packages": [ { "agent", "version", "digest", "receipt-key", "root", "via"? } ] } ], "stale": [ …same, "live": false ], "unreadable": [ { "path", "live", "problem" } ] }`. A stale lease is one whose process ended without releasing it (a kill or crash); it is evidence for garbage collection (#629), which stamps and removes it.
+
+### `aware agent refs` (#629)
+
+Every stored tool version (`agent-store-v2/`) and what still needs it — the reference table garbage collection decides from (see [Agent Spec § the agent store](./agent-spec.md)). Read-only. `--recovery-window <n>{s,m,h,d}` overrides `agent-store.recovery-window` in `config.yaml` (default `30d`).
+
+`--json` data, schema `aware.agent-refs/v1`: `{ "format", "generated-at", "recovery-window", "complete", "roots": [ { "path", "kind": "apps"|"registered", "label"?, "status": "ok"|"missing"|"unreadable", "locks", "links-not-followed"? } ], "blockers": [ { "path", "problem" } ], "packages": [ { "agent", "version", "digest", "receipt-key", "path", "bytes", "snapshotted-at", "last-needed-at", "state": "kept"|"in-window"|"removable", "kept-until"?, "references": [ { "kind", … } ] } ], "invalid-packages": [ { "agent", "digest", "receipt-key", "path", "bytes", "reason", "state", "kept-until"?, "references" } ], "leftovers": [ { "path", "kind": "temp"|"trash"|"unrecognized" } ], "stale-leases": [ … as `agent leases` ], "legacy-store"?: { "path", "bytes" } }`. Reference kinds: `current`, `current-unhashable`, `approved-lock`, `candidate-lock`, `candidate-base`, `promotion-in-progress`, `approval-archive`, `approval-original`, `successor-from` (each of the last three with `until`, or `held: true` while the app is on HOLD), `lease`, `stale-lease-unstamped`, `recent` (`until`). `complete: false` (with `blockers`) means something that might hold a reference could not be read; GC removes nothing then.
+
+`aware agent refs roots add <dir> [--label <who>]` / `roots remove <dir>` / `roots list` — the folders searched for locks besides `AWARE_HOME/apps/`, kept in `agent-store-control/roots.yaml` (`aware.agent-store-roots/v1`). A front door that keeps its workflows elsewhere registers its folder so their locks keep the versions they pin. `add` needs an existing directory and is idempotent (a new `--label` replaces the old); `remove` works on a folder that no longer exists, which is how a person clears its blocker.
 
 ### `aware agent describe <agent>`
 

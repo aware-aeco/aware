@@ -32,7 +32,7 @@ use serde::{Deserialize, Serialize};
 
 use super::RefGuard;
 use crate::app_lock::LockFile;
-use crate::app_lock::approval::{APPROVAL_FORMAT, ApprovalPin};
+use crate::app_lock::approval::ApprovalPin;
 use crate::error::AwareError;
 use crate::paths::Paths;
 
@@ -558,16 +558,7 @@ impl Collector {
         let Some(chain) = &lock.approval else {
             return;
         };
-        if chain.format != APPROVAL_FORMAT {
-            self.block(
-                path,
-                format!(
-                    "its approval record has format {}, which this AWARE cannot read",
-                    chain.format
-                ),
-            );
-            return;
-        }
+        // `check_chain` also refuses an approval format this AWARE cannot read.
         if let Err(problem) = crate::app_lock::approval::check_chain(&lock) {
             self.block(
                 path,

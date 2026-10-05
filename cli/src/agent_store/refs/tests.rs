@@ -495,6 +495,56 @@ fn a_carried_forward_lock_keeps_its_earlier_approvals_for_the_window_from_the_pr
     .unwrap();
     let t = build(&h.paths, "1d", far(at));
     assert_eq!(row(&t, &old).state, State::Kept, "{:#?}", row(&t, &old));
+
+    // The hold keeps it through the lock's own record too, not only through
+    // the archives beside it.
+    let approvals = crate::fs::containing_dir(&source).join(".aware-approvals");
+    for entry in std::fs::read_dir(&approvals).unwrap().flatten() {
+        if entry.path().extension().is_some_and(|e| e == "lock") {
+            std::fs::remove_file(entry.path()).unwrap();
+        }
+    }
+    let t = build(&h.paths, "1d", far(at));
+    let r = row(&t, &old);
+    assert_eq!(r.state, State::Kept, "{r:#?}");
+    assert!(
+        r.references.iter().all(|r| matches!(
+            r,
+            Reference::ApprovalOriginal { held: true, .. }
+                | Reference::SuccessorFrom { held: true, .. }
+        )),
+        "{r:#?}"
+    );
+}
+
+#[test]
+fn an_expiring_reference_ends_exactly_at_its_time() {
+    let h = home();
+    let digest = orphan(&h.paths, "tool", "1.0.0");
+    let approvals = h.paths.apps_dir().join("demo").join(".aware-approvals");
+    std::fs::create_dir_all(&approvals).unwrap();
+    let archive = approvals.join(format!("{}.lock", "a".repeat(64)));
+    std::fs::write(&archive, lock_text("demo", "tool", &digest)).unwrap();
+    // Push the archive's own time past the package's recent use, so the
+    // archive is the only reference left near its end.
+    let file = std::fs::OpenOptions::new()
+        .write(true)
+        .open(&archive)
+        .unwrap();
+    file.set_modified((Utc::now() + days(5)).into()).unwrap();
+    drop(file);
+    let end = modified(&archive).unwrap() + days(30);
+    let before = row(
+        &build(&h.paths, "30d", end - chrono::Duration::milliseconds(1)),
+        &digest,
+    )
+    .clone();
+    assert_eq!(before.state, State::InWindow, "{before:#?}");
+    assert_eq!(kinds(&before), ["approval-archive"]);
+    assert_eq!(
+        row(&build(&h.paths, "30d", end), &digest).state,
+        State::Removable
+    );
 }
 
 #[test]
@@ -525,6 +575,7 @@ fn whatever_cannot_be_read_makes_the_table_incomplete() {
     let t = build(&h.paths, "30d", later);
     assert!(!t.complete);
     assert!(t.blockers[0].problem.contains("format 99"), "{t:#?}");
+    assert_eq!(t.blockers[0].path, lock.display().to_string());
 
     // An unreadable candidate and an unreadable archive.
     for (rel, name) in [
