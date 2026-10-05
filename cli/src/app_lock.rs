@@ -256,7 +256,9 @@ fn read_source_snapshot(source_path: &Path) -> Result<AppSourceSnapshot, AwareEr
 /// source bytes. Missing, unreadable, malformed, or stale approval artifacts
 /// are validation failures. Reading, parsing, and hashing one buffer ensures the
 /// parsed app is exactly the artifact the lock approves even if the file is
-/// replaced concurrently.
+/// replaced concurrently. Only tests still need the app alone; the run path
+/// takes [`load_approved_app_snapshot`], which also carries the approval origin.
+#[cfg(test)]
 pub fn load_approved_app(source_path: &Path) -> Result<App, AwareError> {
     load_approved_app_with_lock(source_path).map(|(app, _)| app)
 }
