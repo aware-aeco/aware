@@ -707,3 +707,35 @@ fn the_relative_executor_flag_serializes_in_kebab_case() {
     let json = serde_json::to_value(executor_identity(&cli_manifest("./Cargo.toml"))).unwrap();
     assert_eq!(json["relative-to-cwd"], true, "{json}");
 }
+
+/// Codex review #628 round 5: only ROOT-LEVEL `README[.*]` / `LICENSE[.*]`
+/// files are documentation — a directory named README or LICENSE holds files
+/// like any other, and their changed bytes count.
+#[test]
+fn a_readme_or_license_directory_is_not_documentation() {
+    let a = package(
+        BASE,
+        &[
+            ("README/run.sh", "one"),
+            ("LICENSE/helper.py", "one"),
+            ("READMEX", "one"),
+        ],
+    );
+    let b = package(
+        BASE,
+        &[
+            ("README/run.sh", "two"),
+            ("LICENSE/helper.py", "two"),
+            ("READMEX", "two"),
+        ],
+    );
+    let d = run(&a, &b, &exec_called());
+    assert!(!d.unchanged);
+    assert_eq!(
+        d.executable_files.changed,
+        ["LICENSE/helper.py", "README/run.sh", "READMEX"]
+    );
+    for doc in ["README", "README.md", "LICENSE", "LICENSE.txt"] {
+        assert!(is_doc_file(doc), "{doc}");
+    }
+}
