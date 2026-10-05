@@ -331,3 +331,15 @@ fn stores_inside_one_another_are_refused() {
     let error = check_pair(&inside, &legacy).unwrap_err().to_string();
     assert!(error.contains("inside one another"), "{error}");
 }
+
+/// Review round 1: when the import as a whole cannot finish (here its record
+/// cannot be written), the command still gets its guard and runs.
+#[test]
+fn a_failed_import_record_never_refuses_the_command() {
+    let (_tmp, paths) = home();
+    legacy_package(&paths, "tekla", "0.1.5");
+    std::fs::create_dir_all(paths.agent_store_control_dir().join(RECORD_FILE)).unwrap();
+    let guard = open(&paths).expect("the command proceeds");
+    drop(guard);
+    assert!(needed(&paths).unwrap(), "retried by the next command");
+}

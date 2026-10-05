@@ -94,17 +94,14 @@ pub fn stamp(
 /// Stamp every digest a lock pins (the run's resolution rule: `agent-digests`,
 /// else `agent-bundle-pins`; a version-only pin references nothing stored).
 /// Never fails the operation it serves (review round 1): a pin that cannot be
-/// stamped (a malformed digest in an old lock) is skipped, and a stamp that
-/// cannot be written is warned about — a stamp is availability, and the
+/// stamped (a malformed digest in an old lock) or a stamp that cannot be
+/// written is warned about — a stamp is availability, and the
 /// compile, promotion or uninstall it accompanies is often the very fix.
 pub fn stamp_lock(paths: &Paths, lock: &LockFile) {
     for id in lock.agent_pins.keys() {
         let Some(digest) = crate::app_lock::pinned_digest(lock, id) else {
             continue;
         };
-        if !crate::manifest::loader::is_safe_segment(id) || super::digest_hex(digest).is_none() {
-            continue;
-        }
         if let Err(error) = stamp(paths, id, digest, None) {
             eprintln!("\u{26a0} could not record when {id} was last in use ({error})");
         }
