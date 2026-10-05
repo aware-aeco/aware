@@ -711,11 +711,7 @@ pub fn find_callers(paths: &Paths, backing: &str) -> Vec<String> {
 /// pins bytes that are stored) and in the installed copy.
 fn backed_by(paths: &Paths, lock: Option<&LockFile>, id: &str) -> BTreeSet<String> {
     let mut out = BTreeSet::new();
-    let pinned = lock.and_then(|lock| {
-        lock.agent_digests
-            .get(id)
-            .or_else(|| lock.agent_bundle_pins.get(id))
-    });
+    let pinned = lock.and_then(|lock| crate::app_lock::pinned_digest(lock, id));
     if let Some(digest) = pinned
         && let Ok(Some(agent)) = crate::agent_resolution::stored_agent(paths, id, digest)
         && let Some(transport) = agent.manifest.transport.app

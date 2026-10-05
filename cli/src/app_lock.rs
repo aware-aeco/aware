@@ -1239,6 +1239,23 @@ fn render_lock(lock: &LockFile, header: &str) -> Result<Vec<u8>, AwareError> {
     Ok(format!("{header}{yaml}").into_bytes())
 }
 
+/// The digest an agent's pin approves: its `agent-digests` entry, else its
+/// `agent-bundle-pins` entry (a lock compiled before 0.149 pins a registry
+/// install by bundle only). The ONE rule every reader of a lock's pins uses —
+/// the run's resolver, migration's base pins and the approval record (#626,
+/// #628).
+pub fn effective_digest<'a>(
+    digest: Option<&'a String>,
+    bundle_pin: Option<&'a String>,
+) -> Option<&'a String> {
+    digest.or(bundle_pin)
+}
+
+/// [`effective_digest`] of agent `id` in `lock`.
+pub fn pinned_digest<'a>(lock: &'a LockFile, id: &str) -> Option<&'a String> {
+    effective_digest(lock.agent_digests.get(id), lock.agent_bundle_pins.get(id))
+}
+
 /// `sha256:<hex>` of a lock file's exact bytes — what a candidate's
 /// `base-lock-digest` names (#628).
 pub fn lock_digest(bytes: &[u8]) -> String {

@@ -1062,3 +1062,122 @@ fn every_comparison_status_and_effect_has_its_own_exact_label() {
         "{got}"
     );
 }
+
+// ── review round 4 ──────────────────────────────────────────────────────────
+
+/// Rewrite the approved lock as a registry install compiled before 0.149
+/// pins it: by `agent-bundle-pins` only, no `agent-digests`.
+fn bundle_pin_only(s: &Setup) {
+    let path = s.source.with_file_name("demo.lock");
+    let mut lock: LockFile = serde_yaml::from_slice(&std::fs::read(&path).unwrap()).unwrap();
+    lock.agent_bundle_pins = std::mem::take(&mut lock.agent_digests);
+    let header = "# demo.lock — compiled from demo.flo\n\n";
+    std::fs::write(&path, render_lock(&lock, header).unwrap()).unwrap();
+}
+
+#[test]
+fn a_bundle_pin_only_base_lock_is_carried_forward_and_loads_complete() {
+    for by in [By::Person("pawel"), By::Policy("pol-1")] {
+        let s = setup();
+        bundle_pin_only(&s);
+        let base: LockFile =
+            serde_yaml::from_slice(&std::fs::read(s.source.with_file_name("demo.lock")).unwrap())
+                .unwrap();
+        assert!(base.agent_digests.is_empty() && !base.agent_bundle_pins.is_empty());
+        let p = promoted_by(&s, by);
+        let link = &p.lock.approval.as_ref().unwrap().successors[0];
+        assert_eq!(link.from["tool"].digest, None);
+        assert!(link.from["tool"].bundle_pin.is_some());
+        let approved = load_approved_app_snapshot(&s.source).expect("a legitimate successor loads");
+        assert!(
+            approved.approval.record_complete,
+            "{:?}",
+            approved.approval.missing
+        );
+        let check = crate::agent_resolution::check_app(&s.h.paths, &s.source).unwrap();
+        assert!(check.approval_current, "{check:?}");
+        assert_eq!(
+            check.approval_record,
+            Some(crate::agent_resolution::RecordState::Complete)
+        );
+        // Still bound: evidence naming other targets is refused.
+        let dir = crate::fs::containing_dir(&s.source).to_path_buf();
+        let path = dir.join(&link.evidence);
+        let mut evidence: serde_json::Value =
+            serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        evidence["header"]["targets"]["tool"]["from"]["digest"] =
+            format!("sha256:{}", "1".repeat(64)).into();
+        let digest = archive(&dir, evidence.to_string().as_bytes(), "json");
+        tamper(&p.lock_path, |l| {
+            let link = &mut chain(l).successors[0];
+            link.evidence = archive_rel(&digest, "json").unwrap();
+            link.evidence_digest = digest;
+        });
+        assert_invalid(&s, "at `header.targets`");
+    }
+}
+
+/// A two-link chain whose INTERMEDIATE archives (link 1's resulting plan,
+/// the lock link 2 replaced) are missing, so only `check_chain` can judge the
+/// intermediate pin maps.
+fn two_links_without_intermediate_archives() -> (Setup, Promoted) {
+    let s = setup();
+    promoted_by(&s, By::Policy("pol-1"));
+    let newer = update_agent(&s.h.paths, "tool", "1.0.2", "mode: read");
+    let second = promote(
+        &s.h.paths,
+        &s.source,
+        to("tool", &newer),
+        By::Policy("pol-1"),
+        SuccessorKind::CarriedForward,
+    );
+    let c = second.lock.approval.as_ref().unwrap();
+    remove_archive(&s, &c.successors[0].resulting_lock_digest, "lock");
+    remove_archive(&s, &c.successors[1].from_lock_digest, "lock");
+    (s, second)
+}
+
+type PinEdit = fn(&mut ApprovalPin);
+
+#[test]
+fn every_link_s_pin_maps_are_validated_even_without_their_archives() {
+    let cases: Vec<(&str, PinEdit)> = vec![
+        ("digest", |p| p.digest = Some("sha256:not-hex".into())),
+        ("bundle-pin", |p| p.bundle_pin = Some("md5:1234".into())),
+        ("bundle-pin", |p| {
+            p.bundle_pin = Some(format!("sha256:{}", "c".repeat(64)))
+        }),
+    ];
+    // Control: the chain with missing intermediate archives loads, incomplete.
+    let (s, _) = two_links_without_intermediate_archives();
+    let summary = load_approved_app_snapshot(&s.source).unwrap().approval;
+    assert!(!summary.record_complete);
+
+    let mut failed = Vec::new();
+    for (field, edit) in cases {
+        let (s, p) = two_links_without_intermediate_archives();
+        // The intermediate pin: successor 1's `to` and successor 2's `from`,
+        // changed together so continuity alone cannot tell.
+        tamper(&p.lock_path, |l| {
+            let c = chain(l);
+            edit(c.successors[0].to.get_mut("tool").unwrap());
+            edit(c.successors[1].from.get_mut("tool").unwrap());
+        });
+        match load_approved_app_snapshot(&s.source) {
+            Err(e)
+                if e.to_string().contains("[E_APP_LOCK_INVALID]")
+                    && e.to_string().contains("successor 1 to")
+                    && e.to_string().contains(field) => {}
+            Err(e) => failed.push(format!("  {field}: wrong reason: {e}")),
+            Ok(a) => failed.push(format!(
+                "  {field}: NOT REFUSED (record-complete {})",
+                a.approval.record_complete
+            )),
+        }
+    }
+    assert!(
+        failed.is_empty(),
+        "intermediate pin maps:\n{}",
+        failed.join("\n")
+    );
+}

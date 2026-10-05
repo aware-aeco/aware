@@ -610,11 +610,7 @@ fn assess_agent(
     mode: Mode<'_>,
 ) -> Result<AgentOutcome, AwareError> {
     let pinned_version = lock.agent_pins.get(id).cloned();
-    let pinned_digest = lock
-        .agent_digests
-        .get(id)
-        .or_else(|| lock.agent_bundle_pins.get(id))
-        .cloned();
+    let pinned_digest = crate::app_lock::pinned_digest(lock, id).cloned();
     let mut outcome = AgentOutcome {
         agent: id.to_string(),
         pinned_version: pinned_version.clone(),
@@ -1073,11 +1069,7 @@ impl PinSet {
             .agent_pins
             .iter()
             .map(|(id, version)| {
-                let digest = lock
-                    .agent_digests
-                    .get(id)
-                    .or_else(|| lock.agent_bundle_pins.get(id))
-                    .cloned();
+                let digest = crate::app_lock::pinned_digest(lock, id).cloned();
                 (
                     id.clone(),
                     BasePin {

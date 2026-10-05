@@ -560,3 +560,57 @@ impl Promoted {
         lock_from(&std::fs::read(&self.lock_path).unwrap())
     }
 }
+
+// ── every pin-map field of every link ───────────────────────────────────────
+
+type PinEdit = fn(&mut ApprovalPin);
+type Position = fn(&mut ApprovalChain) -> Vec<&mut ApprovalPin>;
+
+/// Each pin field of each link position, mutated alone (malformed, or made to
+/// conflict). Positions: successor 1 `from` (must equal the original), the
+/// intermediate successor 1 `to` = successor 2 `from` (changed together, so
+/// continuity cannot tell), successor 2 `to` (must equal the top level).
+/// Archives are present, so a well-formed but different intermediate value is
+/// caught against the archived plans.
+#[test]
+fn every_pin_map_field_of_every_link_is_checked() {
+    let fields: Vec<(&str, PinEdit)> = vec![
+        ("version", |p| p.version = "9.9.9".into()),
+        ("digest", |p| p.digest = Some("sha256:not-hex".into())),
+        ("digest", |p| p.digest = Some(sha_of('d'))),
+        ("bundle-pin", |p| p.bundle_pin = Some("md5:1234".into())),
+        ("bundle-pin", |p| p.bundle_pin = Some(sha_of('b'))),
+    ];
+    let positions: Vec<(&str, Position)> = vec![
+        ("successor 1 from", |c| {
+            vec![c.successors[0].from.get_mut("tool").unwrap()]
+        }),
+        ("successor 1 to / successor 2 from", |c| {
+            let (a, b) = c.successors.split_at_mut(1);
+            vec![
+                a[0].to.get_mut("tool").unwrap(),
+                b[0].from.get_mut("tool").unwrap(),
+            ]
+        }),
+        ("successor 2 to", |c| {
+            vec![c.successors[1].to.get_mut("tool").unwrap()]
+        }),
+    ];
+    let mut failed = Vec::new();
+    for (position, pick) in &positions {
+        for (field, edit) in &fields {
+            let fx = fixture(policy, true);
+            tamper(&fx.p.lock_path, |l| {
+                for pin in pick(l.approval.as_mut().unwrap()) {
+                    edit(pin);
+                }
+            });
+            match load_approved_app_snapshot(&fx.source) {
+                Err(e) if e.to_string().contains("[E_APP_LOCK_INVALID]") => {}
+                Err(e) => failed.push(format!("  {position} {field}: wrong error: {e}")),
+                Ok(_) => failed.push(format!("  {position} {field}: NOT REFUSED")),
+            }
+        }
+    }
+    assert!(failed.is_empty(), "pin-map fields:\n{}", failed.join("\n"));
+}

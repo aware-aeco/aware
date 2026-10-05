@@ -79,6 +79,14 @@ pub struct ApprovalPin {
     pub bundle_pin: Option<String>,
 }
 
+impl ApprovalPin {
+    /// The digest this pin approves — [`effective_digest`], the same rule the
+    /// run and `PinSet::from_lock` use.
+    pub fn effective_digest(&self) -> Option<&String> {
+        effective_digest(self.digest.as_ref(), self.bundle_pin.as_ref())
+    }
+}
+
 /// Who carried an approval forward. A person approval is a CLAIM the front
 /// door recorded: the CLI cannot prove a person clicked (`attested: false`).
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -209,6 +217,22 @@ fn non_empty(field: &str, value: &str) -> Result<(), String> {
     } else {
         Ok(())
     }
+}
+
+/// Split a link's pin map back into the three top-level maps, so the same
+/// [`maps_consistent`] judges a link as judges a lock.
+pub(crate) fn split_pins(pins: &BTreeMap<String, ApprovalPin>) -> [BTreeMap<String, String>; 3] {
+    let mut out: [BTreeMap<String, String>; 3] = Default::default();
+    for (id, pin) in pins {
+        out[0].insert(id.clone(), pin.version.clone());
+        if let Some(d) = &pin.digest {
+            out[1].insert(id.clone(), d.clone());
+        }
+        if let Some(b) = &pin.bundle_pin {
+            out[2].insert(id.clone(), b.clone());
+        }
+    }
+    out
 }
 
 fn maps_consistent(
@@ -356,6 +380,10 @@ pub fn check_chain(lock: &LockFile) -> Result<(), String> {
                 sha(&format!("{at} policy-digest"), policy_digest)?;
                 non_empty(&format!("{at} policy-approved-by"), policy_approved_by)?;
             }
+        }
+        for (side, pins) in [("from", &link.from), ("to", &link.to)] {
+            let [p, d, b] = split_pins(pins);
+            maps_consistent(&format!("{at} {side}"), &p, &d, &b)?;
         }
         if n == 1 && link.from_lock_digest != original.lock_digest {
             return Err(format!(
@@ -822,9 +850,8 @@ fn moved(from: &BTreeMap<String, ApprovalPin>, to: &BTreeMap<String, ApprovalPin
 
 fn short(pin: &ApprovalPin) -> String {
     match pin
-        .digest
-        .as_deref()
-        .and_then(crate::agent_store::digest_hex)
+        .effective_digest()
+        .and_then(|d| crate::agent_store::digest_hex(d))
     {
         Some(hex) => format!("{} (sha256:{}…)", pin.version, &hex[..12]),
         None => pin.version.clone(),

@@ -702,6 +702,7 @@ A person approval record is the front door's JSON: `{format: 1, kind: person, ac
 - `approval.format` is not `1`;
 - the record has no successor, or its source hash is not `successor-v1:<64 hex>`, or a `successor-v1:` source hash appears without an approval record;
 - `seq` does not run 1, 2, 3, …;
+- any link's `from` or `to` pin map is malformed, judged exactly as the lock's own top-level maps are: every `digest` and `bundle-pin` is `sha256:` plus 64 lowercase hex, and where an agent has both they agree. This holds for every link, so an intermediate link is judged even when the archives that would show its plans are missing;
 - successor 1's `from` is not the original's full pin maps, or its `from-lock-digest` is not `original.lock-digest`;
 - successor k's `to` is not successor k+1's `from`;
 - the last successor's `to` is not the lock's top-level `agent-pins` / `agent-digests` / `agent-bundle-pins`, or its `to-plan-digest` is not the lock's plan digest;
@@ -739,7 +740,7 @@ A person approval record is the front door's JSON: `{format: 1, kind: person, ac
   | | `header.base-source-hash` | this lock's source, `sha256:<hex>` |
   | | `header.candidate-digest` | successor k's `resulting-lock-digest` |
   | | `header.plan-digest` | successor k's `to-plan-digest` |
-  | | `header.targets` | exactly the agents successor k moved, `from` and `to` as in its pin maps |
+  | | `header.targets` | exactly the agents successor k moved, `from` and `to` as in its pin maps, each digest read as the run reads it (`digest`, else `bundle-pin` — a lock compiled before 0.149 pins a registry install by bundle only) |
   | person approval record of successor k | whole file | parses, with every field below present |
   | | `format` | `1` |
   | | `kind` | `person` |

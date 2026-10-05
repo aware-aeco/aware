@@ -138,20 +138,7 @@ impl Checker {
     }
 }
 
-/// Split a pin map back into the three top-level maps.
-fn split(pins: &BTreeMap<String, ApprovalPin>) -> [BTreeMap<String, String>; 3] {
-    let mut out: [BTreeMap<String, String>; 3] = Default::default();
-    for (id, pin) in pins {
-        out[0].insert(id.clone(), pin.version.clone());
-        if let Some(d) = &pin.digest {
-            out[1].insert(id.clone(), d.clone());
-        }
-        if let Some(b) = &pin.bundle_pin {
-            out[2].insert(id.clone(), b.clone());
-        }
-    }
-    out
-}
+use super::split_pins as split;
 
 /// The original approval archive: a person's compile of THIS source, exactly
 /// as `approval.original` copied it.
@@ -244,7 +231,8 @@ pub fn validate_resulting(result: &LockFile, link: &Successor, current: &LockFil
 fn expected_targets(link: &Successor) -> BTreeMap<String, PinMove> {
     let pin_ref = |pin: &ApprovalPin| PinRef {
         version: pin.version.clone(),
-        digest: pin.digest.clone().unwrap_or_default(),
+        // As `PinSet::from_lock` (which `compile_candidate` records) reads it.
+        digest: pin.effective_digest().cloned().unwrap_or_default(),
     };
     link.from
         .iter()
