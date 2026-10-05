@@ -9,7 +9,7 @@
 //!
 //! The legacy `agent-store/` is **never written** by this CLI: it stays the
 //! private store of any older CLI still used on the home. Its verified packages
-//! are copied into `agent-store-v2/` by [`ensure`], which [`super::open`] runs
+//! are copied into `agent-store-v2/` by [`import`], which [`super::open`] runs
 //! before any shared guard exists:
 //!
 //! * the legacy tree is listed by name only (`<id>/<hex>/<key>`, three levels)
@@ -23,14 +23,21 @@
 //!   temp in v2 with its original `.aware-package.yaml` bytes (so
 //!   `snapshotted-at` is kept), verified again and published with one
 //!   no-replace rename. A package that does not verify is not imported, and is
-//!   recorded with its reason;
+//!   recorded with its reason. The import is **best effort**: a package that
+//!   cannot be copied right now (a full disk, a file another program holds) is
+//!   warned about and retried by the next command, never a refusal of the
+//!   command — a run verifies every byte it dispatches anyway;
+//! * a package imported once is never imported again, even if it is later
+//!   gone from `agent-store-v2/` (GC removed it; #629);
 //! * hard links are never used: an older CLI writing through one would alias
 //!   v2 bytes.
 //!
-//! Before importing, both stores must be physically distinct directories and
-//! neither may be a link or junction (`E_AGENT_STORE_ALIASED` otherwise): a v2
-//! that resolves into the legacy store would let this CLI write the legacy store
-//! and let GC delete an older CLI's packages.
+//! `agent-store-v2/` must be a plain directory that is not, and is not inside or
+//! around, the legacy store — checked on every store access, and every package
+//! container the import writes must resolve inside it
+//! (`E_AGENT_STORE_ALIASED` otherwise): a v2 that resolves into the legacy store
+//! would let this CLI write it and let GC delete an older CLI's packages. The
+//! legacy store itself may be a link (it is only ever read).
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
@@ -65,6 +72,8 @@ pub struct ImportReport {
     pub copied: Vec<String>,
     pub already_present: Vec<String>,
     pub skipped: BTreeMap<String, String>,
+    /// Packages that could not be copied now (I/O): retried next command.
+    pub failed: BTreeMap<String, String>,
 }
 
 fn record_path(paths: &Paths) -> PathBuf {
@@ -140,40 +149,44 @@ pub fn legacy_listing(paths: &Paths) -> Result<BTreeSet<String>, AwareError> {
     Ok(out)
 }
 
-/// Refuse a home whose two stores are not physically distinct plain
-/// directories (plan §12 R5-3).
+/// Refuse a home whose `agent-store-v2/` is a link or junction, or resolves
+/// to, inside or around the legacy store (plan §12 R5-3).
 pub fn check_distinct(paths: &Paths) -> Result<(), AwareError> {
     check_pair(&paths.agent_store_dir(), &paths.legacy_agent_store_dir())
 }
 
 fn check_pair(v2: &Path, legacy: &Path) -> Result<(), AwareError> {
-    let mut identities = Vec::new();
-    for dir in [v2, legacy] {
-        match std::fs::symlink_metadata(dir) {
-            Ok(meta) => {
-                if crate::fs::is_reparse_point(&meta) || meta.file_type().is_symlink() {
-                    return Err(aliased(format!(
-                        "{} is a link or junction; the agent stores must be plain directories",
-                        dir.display()
-                    )));
-                }
-                identities.push(crate::fs::entry_identity(dir).map_err(|e| {
-                    std::io::Error::new(e.kind(), format!("{}: {e}", dir.display()))
-                })?);
-            }
-            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
-            Err(error) => {
-                return Err(std::io::Error::new(
-                    error.kind(),
-                    format!("{}: {error}", dir.display()),
-                )
-                .into());
+    match std::fs::symlink_metadata(v2) {
+        Ok(meta) => {
+            if crate::fs::is_reparse_point(&meta) || meta.file_type().is_symlink() {
+                return Err(aliased(format!(
+                    "{} is a link or junction; it must be a plain directory",
+                    v2.display()
+                )));
             }
         }
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(()),
+        Err(error) => {
+            return Err(
+                std::io::Error::new(error.kind(), format!("{}: {error}", v2.display())).into(),
+            );
+        }
     }
-    if identities.len() == 2 && identities[0] == identities[1] {
+    // Where each really is (the legacy store may be a link; it is only read).
+    let (Ok(real_v2), Ok(real_legacy)) = (std::fs::canonicalize(v2), std::fs::canonicalize(legacy))
+    else {
+        return Ok(());
+    };
+    if real_v2 == real_legacy {
         return Err(aliased(format!(
             "{} and {} are the same directory",
+            v2.display(),
+            legacy.display()
+        )));
+    }
+    if real_v2.starts_with(&real_legacy) || real_legacy.starts_with(&real_v2) {
+        return Err(aliased(format!(
+            "{} and {} lie inside one another",
             v2.display(),
             legacy.display()
         )));
@@ -181,9 +194,30 @@ fn check_pair(v2: &Path, legacy: &Path) -> Result<(), AwareError> {
     Ok(())
 }
 
+/// A container the import is about to write must resolve inside v2.
+fn check_inside_v2(paths: &Paths, container: &Path) -> Result<(), AwareError> {
+    let real_v2 = std::fs::canonicalize(paths.agent_store_dir()).map_err(|e| {
+        std::io::Error::new(
+            e.kind(),
+            format!("{}: {e}", paths.agent_store_dir().display()),
+        )
+    })?;
+    let real = std::fs::canonicalize(container)
+        .map_err(|e| std::io::Error::new(e.kind(), format!("{}: {e}", container.display())))?;
+    if !real.starts_with(&real_v2) {
+        return Err(aliased(format!(
+            "{} resolves to {}, outside {}",
+            container.display(),
+            real.display(),
+            real_v2.display()
+        )));
+    }
+    Ok(())
+}
+
 fn aliased(why: String) -> AwareError {
     AwareError::Validation(format!(
-        "[E_AGENT_STORE_ALIASED] {why}. AWARE keeps the agent store of older CLIs (agent-store/) and its own (agent-store-v2/) apart so it never writes or removes an older CLI's packages; make both plain, separate directories"
+        "[E_AGENT_STORE_ALIASED] {why}. AWARE keeps the agent store of older CLIs (agent-store/) and its own (agent-store-v2/) apart so it never writes or removes an older CLI's packages; make agent-store-v2 a plain directory of its own"
     ))
 }
 
@@ -192,16 +226,22 @@ pub fn needed(paths: &Paths) -> Result<bool, AwareError> {
     Ok(legacy_listing(paths)? != read_record(paths).seen)
 }
 
-/// Import every legacy package not yet in v2. The caller holds the store lock
-/// EXCLUSIVE (see [`super::open`]). Writes nothing under `agent-store/`.
+/// Import every legacy package not yet imported. The caller holds the store
+/// lock EXCLUSIVE (see [`super::open`]). Writes nothing under `agent-store/`.
+/// Best effort per package: a package that fails for a reason other than its
+/// own bytes is reported in `failed` and left out of `seen`, so the next
+/// command retries it.
 pub fn import(paths: &Paths) -> Result<ImportReport, AwareError> {
     check_distinct(paths)?;
     let listing = legacy_listing(paths)?;
     let mut record = read_record(paths);
     let mut report = ImportReport::default();
     let legacy_root = paths.legacy_agent_store_dir();
+    let mut seen = listing.clone();
     for rel in &listing {
-        if record.imported.contains(rel) && present_in_v2(paths, rel)? {
+        // Imported once is enough: a package GC later removed from v2 is
+        // never brought back from the legacy store.
+        if record.imported.contains(rel) {
             continue;
         }
         let mut parts = rel.split('/');
@@ -209,26 +249,39 @@ pub fn import(paths: &Paths) -> Result<ImportReport, AwareError> {
             continue;
         };
         let source = legacy_root.join(id).join(hex).join(key);
-        match import_one(paths, &source, id, hex, key)? {
-            Outcome::Copied => {
+        match import_one(paths, &source, id, hex, key) {
+            Ok(Outcome::Copied) => {
                 record.skipped.remove(rel);
                 record.imported.insert(rel.clone());
                 report.copied.push(rel.clone());
             }
-            Outcome::AlreadyPresent => {
+            Ok(Outcome::AlreadyPresent) => {
                 record.skipped.remove(rel);
                 record.imported.insert(rel.clone());
                 report.already_present.push(rel.clone());
             }
-            Outcome::Skipped(reason) => {
-                record.imported.remove(rel);
+            Ok(Outcome::Skipped(reason)) => {
                 record.skipped.insert(rel.clone(), reason.clone());
                 report.skipped.insert(rel.clone(), reason);
+            }
+            Err(error) => {
+                seen.remove(rel);
+                report.failed.insert(rel.clone(), error.to_string());
             }
         }
     }
     record.format = RECORD_FORMAT;
-    record.seen = listing;
+    record.seen = seen;
+    for (rel, reason) in &report.skipped {
+        eprintln!(
+            "\u{26a0} the older agent store's package {rel} was not carried over: it does not verify ({reason}); it is left untouched in agent-store/"
+        );
+    }
+    for (rel, error) in &report.failed {
+        eprintln!(
+            "\u{26a0} the older agent store's package {rel} could not be carried over now ({error}); the next command tries again"
+        );
+    }
     let dir = paths.agent_store_control_dir();
     std::fs::create_dir_all(&dir)
         .map_err(|e| std::io::Error::new(e.kind(), format!("{}: {e}", dir.display())))?;
@@ -237,21 +290,7 @@ pub fn import(paths: &Paths) -> Result<ImportReport, AwareError> {
     let path = record_path(paths);
     crate::app_lock::replace_atomically(&path, &bytes)
         .map_err(|e| std::io::Error::new(e.kind(), format!("{}: {e}", path.display())))?;
-    for (rel, reason) in &report.skipped {
-        eprintln!(
-            "\u{26a0} the older agent store's package {rel} was not carried over: it does not verify ({reason}); it is left untouched in agent-store/"
-        );
-    }
     Ok(report)
-}
-
-fn present_in_v2(paths: &Paths, rel: &str) -> Result<bool, AwareError> {
-    let mut parts = rel.split('/');
-    let (Some(id), Some(hex), Some(key)) = (parts.next(), parts.next(), parts.next()) else {
-        return Ok(false);
-    };
-    let container = digest_container(paths, id, &format!("sha256:{hex}"))?;
-    Ok(probe(&container.join(key))?.is_some())
 }
 
 enum Outcome {
@@ -287,6 +326,7 @@ fn import_one(
     }
     std::fs::create_dir_all(&container)
         .map_err(|e| std::io::Error::new(e.kind(), format!("{}: {e}", container.display())))?;
+    check_inside_v2(paths, &container)?;
     let temp = container.join(format!("{TEMP_PREFIX}{}", uuid::Uuid::new_v4().simple()));
     let staged = (|| -> Result<Result<(), String>, AwareError> {
         super::copy_tree(source, &temp)?;

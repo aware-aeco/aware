@@ -93,24 +93,30 @@ pub fn stamp(
 
 /// Stamp every digest a lock pins (the run's resolution rule: `agent-digests`,
 /// else `agent-bundle-pins`; a version-only pin references nothing stored).
-pub fn stamp_lock(paths: &Paths, lock: &LockFile) -> Result<(), AwareError> {
+/// Never fails the operation it serves (review round 1): a pin that cannot be
+/// stamped (a malformed digest in an old lock) is skipped, and a stamp that
+/// cannot be written is warned about — a stamp is availability, and the
+/// compile, promotion or uninstall it accompanies is often the very fix.
+pub fn stamp_lock(paths: &Paths, lock: &LockFile) {
     for id in lock.agent_pins.keys() {
-        if let Some(digest) = crate::app_lock::pinned_digest(lock, id) {
-            stamp(paths, id, digest, None)?;
+        let Some(digest) = crate::app_lock::pinned_digest(lock, id) else {
+            continue;
+        };
+        if !crate::manifest::loader::is_safe_segment(id) || super::digest_hex(digest).is_none() {
+            continue;
+        }
+        if let Err(error) = stamp(paths, id, digest, None) {
+            eprintln!("\u{26a0} could not record when {id} was last in use ({error})");
         }
     }
-    Ok(())
 }
 
 /// [`stamp_lock`] of the lock file at `path`, if there is one and it parses.
-/// `Err` only when stamping fails; an absent or unreadable lock stamps nothing.
-pub fn stamp_lock_file(paths: &Paths, path: &std::path::Path) -> Result<(), AwareError> {
-    let Ok(bytes) = std::fs::read(path) else {
-        return Ok(());
-    };
-    match serde_yaml::from_slice::<LockFile>(&bytes) {
-        Ok(lock) => stamp_lock(paths, &lock),
-        Err(_) => Ok(()),
+pub fn stamp_lock_file(paths: &Paths, path: &std::path::Path) {
+    if let Ok(bytes) = std::fs::read(path)
+        && let Ok(lock) = serde_yaml::from_slice::<LockFile>(&bytes)
+    {
+        stamp_lock(paths, &lock);
     }
 }
 
@@ -192,6 +198,31 @@ mod tests {
                 "{site} lets go of store packages but no longer stamps them"
             );
         }
+    }
+
+    /// Review round 1: a lock with a pin that cannot be stamped (a malformed
+    /// digest in an old lock) is skipped, never an error of the compile,
+    /// promotion or uninstall that is replacing it.
+    #[test]
+    fn a_lock_with_an_unstampable_pin_is_skipped_not_an_error() {
+        let (_tmp, paths) = home();
+        let good = format!("sha256:{}", "c".repeat(64));
+        let lock: LockFile = serde_yaml::from_str(&format!(
+            "source-hash: sha256:x\ncompiled-at: t\ncompiler-version: v\napp: a\nversion: 0.1.0\n\
+             agent-pins: {{ tekla: 0.1.5, odd: 1.0.0 }}\n\
+             agent-bundle-pins: {{ odd: 'sha256:NOT-HEX' }}\n\
+             agent-digests: {{ tekla: '{good}' }}\nnodes: []\n"
+        ))
+        .unwrap();
+        stamp_lock(&paths, &lock);
+        assert!(last_needed(&paths, "tekla", &good).is_some());
+        assert!(
+            !paths
+                .agent_store_control_dir()
+                .join("refs")
+                .join("odd")
+                .exists()
+        );
     }
 
     #[test]

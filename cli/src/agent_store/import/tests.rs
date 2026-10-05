@@ -231,3 +231,103 @@ fn the_listing_ignores_what_is_not_a_package() {
     std::fs::write(root.join("stray.txt"), "x").unwrap();
     assert!(legacy_listing(&paths).unwrap().is_empty());
 }
+
+/// Review round 1: an import that cannot complete never refuses the command —
+/// here a v2 package that does not verify collides with a legacy one. The
+/// command proceeds, the package is reported and retried next time.
+#[test]
+fn an_import_that_cannot_complete_never_refuses_the_command() {
+    let (_tmp, paths) = home();
+    let old = legacy_package(&paths, "tekla", "0.1.5");
+    let clash = paths
+        .agent_store_dir()
+        .join("tekla")
+        .join(digest_hex(&old.digest).unwrap())
+        .join(NO_RECEIPT);
+    crate::fs::copy_dir_recursive(&old.root, &clash).unwrap();
+    std::fs::write(
+        clash.join("manifest.yaml"),
+        "agent: tekla\nversion: 6.6.6\n",
+    )
+    .unwrap();
+    let guard = open(&paths).expect("a failed import does not refuse the command");
+    drop(guard);
+    assert!(
+        needed(&paths).unwrap(),
+        "left out of `seen`: retried next time"
+    );
+    assert!(read_record(&paths).imported.is_empty());
+}
+
+/// Review round 1: a package imported once is never brought back after it is
+/// gone from v2 (GC removed it, #629), even when the legacy listing changes.
+#[test]
+fn a_package_imported_once_is_never_imported_again() {
+    let (_tmp, paths) = home();
+    let old = legacy_package(&paths, "tekla", "0.1.5");
+    drop(open(&paths).unwrap());
+    let imported = paths
+        .agent_store_dir()
+        .join("tekla")
+        .join(digest_hex(&old.digest).unwrap())
+        .join(NO_RECEIPT);
+    assert!(imported.is_dir());
+    std::fs::remove_dir_all(&imported).unwrap();
+    legacy_package(&paths, "alpha", "1.0.0");
+    drop(open(&paths).unwrap());
+    assert!(
+        !imported.exists(),
+        "a removed package is not imported again"
+    );
+    assert!(
+        paths.agent_store_dir().join("alpha").is_dir(),
+        "the new one is"
+    );
+}
+
+/// Review round 1: the legacy store is only ever read, so it may itself be a
+/// link or junction (moved to another drive, say).
+#[test]
+fn a_legacy_store_that_is_a_junction_is_read_through() {
+    let (_tmp, paths) = home();
+    let elsewhere = tempfile::tempdir().unwrap();
+    let real = Paths {
+        aware_home: elsewhere.path().to_path_buf(),
+    };
+    let old = legacy_package(&real, "tekla", "0.1.5");
+    let legacy = paths.legacy_agent_store_dir();
+    std::fs::create_dir_all(&paths.aware_home).unwrap();
+    #[cfg(windows)]
+    {
+        let status = std::process::Command::new("cmd.exe")
+            .args(["/C", "mklink", "/J"])
+            .arg(&legacy)
+            .arg(real.legacy_agent_store_dir())
+            .stdout(std::process::Stdio::null())
+            .stderr(std::process::Stdio::null())
+            .status()
+            .unwrap();
+        assert!(status.success(), "failed to create test junction");
+    }
+    #[cfg(unix)]
+    std::os::unix::fs::symlink(real.legacy_agent_store_dir(), &legacy).unwrap();
+    drop(open(&paths).unwrap());
+    assert!(
+        paths
+            .agent_store_dir()
+            .join("tekla")
+            .join(digest_hex(&old.digest).unwrap())
+            .join(NO_RECEIPT)
+            .is_dir()
+    );
+}
+
+#[test]
+fn stores_inside_one_another_are_refused() {
+    let (_tmp, paths) = home();
+    let legacy = paths.legacy_agent_store_dir();
+    let inside = legacy.join("v2");
+    std::fs::create_dir_all(&inside).unwrap();
+    let error = check_pair(&inside, &legacy).unwrap_err().to_string();
+    assert!(error.contains("inside one another"), "{error}");
+}

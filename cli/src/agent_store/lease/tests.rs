@@ -158,3 +158,39 @@ fn a_lease_needs_the_store_guard_of_its_home_and_a_plain_run_id() {
     assert!(RunLease::acquire(&paths, &guard, bad).is_err());
     assert!(list(&paths).unwrap().leases.is_empty());
 }
+
+/// Review round 1: a lister probing liveness (`aware agent leases`, uninstall)
+/// can hold the lease's lock for an instant between the run writing the file
+/// and locking it. The run waits for it; it never aborts.
+#[test]
+fn a_liveness_probe_racing_a_starting_run_never_aborts_it() {
+    let (_tmp, paths) = home();
+    let guard = crate::agent_store::open(&paths).unwrap();
+    let (released_tx, released_rx) = std::sync::mpsc::channel::<()>();
+    on_before_lock(Box::new(move |path: &Path| {
+        // A probe takes the lock exclusive (as `is_live` does) and lets go
+        // a moment later, from another thread.
+        let file = std::fs::OpenOptions::new()
+            .read(true)
+            .write(true)
+            .open(path)
+            .unwrap();
+        file.try_lock_exclusive().unwrap();
+        std::thread::spawn(move || {
+            std::thread::sleep(std::time::Duration::from_millis(200));
+            fs2::FileExt::unlock(&file).unwrap();
+            drop(file);
+            released_tx.send(()).unwrap();
+        });
+    }));
+    let started = std::time::Instant::now();
+    let lease = RunLease::acquire(
+        &paths,
+        &guard,
+        LeaseRecord::new("run-race", "demo", "default", vec![package("tekla", 'a')]),
+    )
+    .expect("the run waited for the probe instead of failing");
+    released_rx.recv().unwrap();
+    assert!(started.elapsed() >= std::time::Duration::from_millis(150));
+    assert!(is_live(lease.path()).unwrap());
+}

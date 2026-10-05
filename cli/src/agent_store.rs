@@ -54,12 +54,26 @@ pub use guard::RefGuard;
 /// [`import`]) — never an upgrade of a held guard (plan §12 R5-1).
 pub fn open(paths: &Paths) -> Result<RefGuard, AwareError> {
     import::check_distinct(paths)?;
-    if guard::shared_held_on_this_thread() == 0 && import::needed(paths)? {
-        let exclusive = RefGuard::exclusive_blocking(paths)?;
-        if import::needed(paths)? {
-            import::import(paths)?;
+    if guard::shared_held_on_this_thread() == 0 {
+        // Best effort: an import that cannot complete now is retried by the
+        // next command and never refuses this one (a run verifies every byte
+        // it dispatches whatever the store holds).
+        let imported = import::needed(paths).and_then(|needed| {
+            if !needed {
+                return Ok(());
+            }
+            let exclusive = RefGuard::exclusive_blocking(paths)?;
+            if import::needed(paths)? {
+                import::import(paths)?;
+            }
+            drop(exclusive);
+            Ok(())
+        });
+        if let Err(error) = imported {
+            eprintln!(
+                "\u{26a0} the older agent store (agent-store/) could not be carried over now ({error}); the next command tries again"
+            );
         }
-        drop(exclusive);
     }
     RefGuard::shared(paths)
 }

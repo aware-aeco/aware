@@ -72,6 +72,29 @@ impl LeaseRecord {
     }
 }
 
+#[cfg(test)]
+thread_local! {
+    /// Run once on this thread between writing a lease and locking it — the
+    /// window a lister's liveness probe can fall into (review round 1).
+    static BEFORE_LOCK: std::cell::RefCell<Option<Box<dyn FnOnce(&Path)>>> =
+        std::cell::RefCell::new(None);
+}
+
+#[cfg(test)]
+pub(crate) fn on_before_lock(hook: Box<dyn FnOnce(&Path)>) {
+    BEFORE_LOCK.with(|h| *h.borrow_mut() = Some(hook));
+}
+
+#[cfg(test)]
+fn before_lock(path: &Path) {
+    if let Some(hook) = BEFORE_LOCK.with(|h| h.borrow_mut().take()) {
+        hook(path);
+    }
+}
+
+#[cfg(not(test))]
+fn before_lock(_: &Path) {}
+
 /// The leases directory.
 pub fn leases_dir(paths: &Paths) -> PathBuf {
     paths.agent_store_control_dir().join("leases")
@@ -119,7 +142,11 @@ impl RunLease {
                 .open(&path)?;
             file.write_all(&bytes)?;
             file.sync_all()?;
-            file.try_lock_shared()?;
+            before_lock(&path);
+            // Blocking, never a single try: a lister probing liveness holds the
+            // lock exclusive for an instant, and must not abort a run that is
+            // starting (review round 1).
+            file.lock_shared()?;
             Ok(file)
         })()
         .map_err(|e| {

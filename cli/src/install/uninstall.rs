@@ -48,19 +48,19 @@ pub fn uninstall_app(id: &str, paths: &Paths, guard: &RefGuard) -> Result<(), Aw
     if !dir.exists() {
         return Err(AwareError::NotFound(format!("app {id} is not installed")));
     }
-    // Remove the synthesized agent an `exposes-as-agent` install registered —
-    // but only if it is still app-backed by THIS app (never a real agent that
-    // happens to share the name).
-    // #627-b: the app's approval needed its pinned packages until now; a
-    // failed stamp fails the uninstall before anything is removed.
+    // #627-b: the app's approval needed its pinned packages until now (a
+    // stamp is availability only; it never fails the uninstall).
     if let Some(source) = crate::manifest::loader::find_app_manifest(&dir)
         && let Ok((app, _)) = crate::app_lock::read_app_source(&source)
     {
         crate::agent_store::stamps::stamp_lock_file(
             paths,
             &crate::fs::containing_dir(&source).join(format!("{}.lock", app.app)),
-        )?;
+        );
     }
+    // Remove the synthesized agent an `exposes-as-agent` install registered —
+    // but only if it is still app-backed by THIS app (never a real agent that
+    // happens to share the name).
     crate::install::local::remove_synthesized_agent(id, paths, guard)?;
     std::fs::remove_dir_all(&dir)?;
     Ok(())
