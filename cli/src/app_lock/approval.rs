@@ -381,7 +381,9 @@ pub fn check_chain(lock: &LockFile) -> Result<(), String> {
         approved_before.push(&link.to);
         previous_to = &link.to;
     }
-    let last = chain.successors.last().expect("checked non-empty");
+    let Some(last) = chain.successors.last() else {
+        return Err("the approval record has no successor".into());
+    };
     if *previous_to != pins_of(lock) {
         return Err(format!(
             "the lock's agent-pins / agent-digests / agent-bundle-pins are not the pins successor {} carried forward to",
@@ -671,7 +673,9 @@ pub fn assess(lock: &LockFile, source_dir: &Path) -> Result<ApprovalSummary, Str
         }
     }
 
-    let last = chain.successors.last().expect("check_chain: non-empty");
+    let Some(last) = chain.successors.last() else {
+        return Err("the approval record has no successor".into());
+    };
     let last_fact = facts.last().cloned().unwrap_or_default();
     let (from, to) = moved(&last.from, &last.to);
     let complete = missing.is_empty();
@@ -780,14 +784,15 @@ fn moves_text(link: &Successor) -> String {
     let ids: BTreeSet<&String> = from.keys().chain(to.keys()).collect();
     let parts: Vec<String> = ids
         .into_iter()
-        .map(|id| match (from.get(id), to.get(id)) {
+        .filter_map(|id| match (from.get(id), to.get(id)) {
             (Some(a), Some(b)) if a.version == b.version => {
-                format!("{id} {} to {}", short(a), short(b))
+                Some(format!("{id} {} to {}", short(a), short(b)))
             }
-            (Some(a), Some(b)) => format!("{id} {} to {}", a.version, b.version),
-            (Some(a), None) => format!("{id} {} to no pin", a.version),
-            (None, Some(b)) => format!("{id} no pin to {}", b.version),
-            (None, None) => unreachable!("id comes from one of the maps"),
+            (Some(a), Some(b)) => Some(format!("{id} {} to {}", a.version, b.version)),
+            (Some(a), None) => Some(format!("{id} {} to no pin", a.version)),
+            (None, Some(b)) => Some(format!("{id} no pin to {}", b.version)),
+            // `ids` comes from the two maps, so one side is always present.
+            (None, None) => None,
         })
         .collect();
     parts.join(" and ")
