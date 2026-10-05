@@ -37,6 +37,7 @@ use sha2::{Digest, Sha256};
 use crate::error::AwareError;
 use crate::paths::Paths;
 
+pub mod gc;
 pub mod guard;
 pub mod import;
 pub mod lease;
@@ -54,6 +55,42 @@ pub use guard::RefGuard;
 /// `agent-store-v2/` is imported under the store lock held exclusive (#627-b,
 /// [`import`]) — never an upgrade of a held guard (plan §12 R5-1).
 pub fn open(paths: &Paths) -> Result<RefGuard, AwareError> {
+    prepare(paths)?;
+    if guard::shared_held_on_this_thread() == 0 {
+        // Best effort: an import that cannot complete now is retried by the
+        // next command and never refuses this one (a run verifies every byte
+        // it dispatches whatever the store holds).
+        let imported = import::needed(paths).and_then(|needed| {
+            if !needed {
+                return Ok(());
+            }
+            let exclusive = RefGuard::exclusive_blocking(paths)?;
+            import_if_needed(paths)?;
+            drop(exclusive);
+            Ok(())
+        });
+        warn_import(imported);
+    }
+    RefGuard::shared(paths)
+}
+
+/// The store lock held shared for a REPORT that must not change anything or
+/// wait for a run: no legacy import, no store directory created (`aware agent
+/// gc` without `--apply`, review round 2). The aliasing check still runs when
+/// the store exists. Packages still waiting in the legacy store are simply not
+/// in the report yet; nothing that writes may use this door.
+pub(crate) fn open_for_report(paths: &Paths) -> Result<RefGuard, AwareError> {
+    if probe(&paths.agent_store_dir())?.is_some() {
+        import::check_distinct(paths)?;
+    }
+    RefGuard::shared(paths)
+}
+
+/// Make sure `agent-store-v2/` exists as a plain directory and is physically
+/// distinct from the legacy store: everything [`open`] checks before it
+/// imports. GC (#629-b) calls this, then imports under its own exclusive
+/// lock, which `--wait` bounds, rather than `open`'s blocking one.
+pub(crate) fn prepare(paths: &Paths) -> Result<(), AwareError> {
     // v2 exists as a plain directory before it is compared with where the
     // legacy store resolves: a legacy link aimed at the spot v2 would take is
     // then refused here, before any package is written (review round 3).
@@ -65,29 +102,25 @@ pub fn open(paths: &Paths) -> Result<RefGuard, AwareError> {
             )
         })?;
     }
-    import::check_distinct(paths)?;
-    if guard::shared_held_on_this_thread() == 0 {
-        // Best effort: an import that cannot complete now is retried by the
-        // next command and never refuses this one (a run verifies every byte
-        // it dispatches whatever the store holds).
-        let imported = import::needed(paths).and_then(|needed| {
-            if !needed {
-                return Ok(());
-            }
-            let exclusive = RefGuard::exclusive_blocking(paths)?;
-            if import::needed(paths)? {
-                import::import(paths)?;
-            }
-            drop(exclusive);
-            Ok(())
-        });
-        if let Err(error) = imported {
-            eprintln!(
-                "\u{26a0} the older agent store (agent-store/) could not be carried over now ({error}); the next command tries again"
-            );
-        }
+    import::check_distinct(paths)
+}
+
+/// Import the legacy packages not yet carried over. The caller holds the
+/// store lock exclusive.
+pub(crate) fn import_if_needed(paths: &Paths) -> Result<(), AwareError> {
+    if import::needed(paths)? {
+        import::import(paths)?;
     }
-    RefGuard::shared(paths)
+    Ok(())
+}
+
+/// An import failure never refuses the command: warn, and the next one retries.
+pub(crate) fn warn_import(result: Result<(), AwareError>) {
+    if let Err(error) = result {
+        eprintln!(
+            "\u{26a0} the older agent store (agent-store/) could not be carried over now ({error}); the next command tries again"
+        );
+    }
 }
 
 /// The per-package record, dot-prefixed so it reads as metadata. Excluded from

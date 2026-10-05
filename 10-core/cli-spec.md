@@ -364,6 +364,19 @@ Lists the runs in progress and the stored tool versions each one is using — th
 
 `--json` data: `{ "leases": [ { "run-id", "app", "instance", "pid", "started-at", "cli-version", "live": true, "path", "packages": [ { "agent", "version", "digest", "receipt-key", "root", "via"? } ] } ], "stale": [ …same, "live": false ], "unreadable": [ { "path", "live", "problem" } ] }`. A stale lease is one whose process ended without releasing it (a kill or crash); it is evidence for garbage collection (#629), which stamps and removes it.
 
+### `aware agent gc` (#629)
+
+Removes the stored tool versions that nothing needs any more: exactly the packages `aware agent refs` calls removable (see [Agent Spec § the agent store](./agent-spec.md)). **A dry run by default**: it lists what `--apply` would remove.
+
+- `--recovery-window <n>{s,m,h,d}`: as for `agent refs`.
+- `--agent <id>`: only that agent's versions.
+- `--only <id>@sha256:<hex>`: only that one version. It is refused with `E_AGENT_GC_REFERENCED`, naming what still needs the version, when anything does; `E_AGENT_GC_NOT_STORED` when the version is not stored.
+- `--wait <d>`: how long `--apply` waits for runs and installs to let go of the store. The default is 0s; when they have not let go, the result is `deferred: store-busy`.
+
+`--apply` removes nothing and fails with `E_AGENT_GC_REFS_INCOMPLETE` while the reference table is incomplete.
+
+`--json` data, schema `aware.agent-gc/v1`: `{ "format", "applied", "deferred"?: "store-busy"|"network-volume", "recovery-window", "complete": true|false|null (null when deferred: no table was built), "removed": [ { "agent", "version", "digest", "receipt-key", "path", "bytes", "invalid"? } ], "kept": [ { "agent", "version", "digest", "references" } ], "in-window": [ { …, "until" } ], "skipped": [ { "path", "reason" } ], "pending-delete": [ path ], "leftovers-removed": [ path ], "stale-leases-removed": [ path ], "blockers": [ { "path", "problem" } ] }`. In a dry run, `removed` lists what `--apply` would remove, and is empty while the table is incomplete (`--apply` would then remove nothing). When only a recovery window keeps a package, the `--only` refusal says so and how to remove it now anyway (`--recovery-window 0s`).
+
 ### `aware agent refs` (#629)
 
 Every stored tool version (`agent-store-v2/`) and what still needs it — the reference table garbage collection decides from (see [Agent Spec § the agent store](./agent-spec.md)). Read-only. `--recovery-window <n>{s,m,h,d}` overrides `agent-store.recovery-window` in `config.yaml` (default `30d`).
