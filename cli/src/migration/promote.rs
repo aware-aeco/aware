@@ -216,6 +216,31 @@ fn crash_point(_: Fault) -> std::result::Result<(), AwareError> {
     Ok(())
 }
 
+#[cfg(test)]
+thread_local! {
+    /// When set, the next promotion on this thread writes a chain whose last
+    /// link names the wrong plan — the negative control of the writer's
+    /// self-check by the reader (§15).
+    static CORRUPT_CHAIN: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+#[cfg(test)]
+pub(crate) fn corrupt_next_chain() {
+    CORRUPT_CHAIN.with(|c| c.set(true));
+}
+
+#[cfg(test)]
+fn maybe_corrupt(chain: &mut ApprovalChain) {
+    if CORRUPT_CHAIN.with(|c| c.replace(false))
+        && let Some(last) = chain.successors.last_mut()
+    {
+        last.to_plan_digest = format!("sha256:{}", "e".repeat(64));
+    }
+}
+
+#[cfg(not(test))]
+fn maybe_corrupt(_: &mut ApprovalChain) {}
+
 fn approvals_dir(source_dir: &Path) -> PathBuf {
     source_dir.join(approval::ARCHIVE_DIR)
 }
@@ -876,6 +901,7 @@ pub fn promote(
             )
         })?;
     new_lock.source_hash = format!("{SUCCESSOR_SOURCE_PREFIX}{hex}");
+    maybe_corrupt(&mut chain);
     new_lock.approval = Some(chain);
     let header_text = format!(
         "# {id}.lock — approval carried forward (see approval:); the original approval is archived in {}/\n# DO NOT EDIT — written by `aware app migrate`.\n\n",

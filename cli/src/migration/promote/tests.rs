@@ -1100,3 +1100,36 @@ fn a_policy_promotion_waits_for_a_revocation_in_flight() {
     worker.join().unwrap();
     assert_eq!(outcome, Ok(1));
 }
+
+/// The negative control of the writer's self-check: a chain the reader would
+/// refuse is never written — the lock stays, the transaction rolls back.
+#[test]
+fn a_chain_its_own_reader_would_refuse_is_never_written() {
+    let (h, source, _) = approved_demo(READS);
+    update_agent(&h.paths, "tool", "1.0.1", "mode: read");
+    let (candidate, header) = prepare(&h, &source, None);
+    let (_, before) = lock_of(&source);
+    corrupt_next_chain();
+    let refused = by_person(
+        &h,
+        &source,
+        &candidate,
+        &person_record("pawel", &candidate, &header),
+        SuccessorKind::CarriedForward,
+    )
+    .unwrap_err();
+    assert!(
+        refused
+            .error
+            .to_string()
+            .contains("would not pass its own reader"),
+        "{:?}",
+        refused.error
+    );
+    assert_eq!(lock_of(&source).1, before);
+    assert!(
+        owned_txns(source.parent().unwrap(), "demo")
+            .unwrap()
+            .is_empty()
+    );
+}
