@@ -1372,3 +1372,64 @@ fn a_promotion_leaves_the_shared_transaction_directory_in_place() {
     .unwrap();
     assert!(txn_root(source.parent().unwrap()).is_dir());
 }
+
+/// Review round 4: the archived evidence row words the approval labels, so a
+/// row edited after `prepare` (here: a write workflow claimed read-only) is
+/// refused, never archived.
+#[test]
+fn an_evidence_row_that_no_longer_matches_the_candidate_is_refused() {
+    let (h, source, _) = approved_demo(OVERRIDABLE);
+    update_agent(&h.paths, "tool", "1.0.1", "mode: read");
+    let (candidate, header) = prepare(&h, &source, None);
+    let dir = source.parent().unwrap();
+    let path = files::evidence_path(dir, "demo");
+    let mut evidence: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(&path).unwrap()).unwrap();
+    assert_eq!(evidence["row"]["effect"], "not-declared-read-only");
+    evidence["row"]["effect"] = "declared-read-only".into();
+    std::fs::write(&path, serde_json::to_vec_pretty(&evidence).unwrap()).unwrap();
+    let (_, before) = lock_of(&source);
+    let refused = by_person(
+        &h,
+        &source,
+        &candidate,
+        &person_record("pawel", &candidate, &header),
+        SuccessorKind::CarriedForward,
+    )
+    .unwrap_err();
+    assert_eq!(
+        refused.code, "E_MIGRATE_CANDIDATE_TAMPERED",
+        "{:?}",
+        refused.error
+    );
+    assert_eq!(lock_of(&source).1, before);
+}
+
+/// Review round 4: every migrate verb that takes the app's lock recovers a
+/// crashed promotion first (`lock_and_recover`, used by prepare, discard and
+/// hold) — leaving neither the transaction nor its new archives behind.
+#[test]
+fn taking_the_lock_for_another_verb_recovers_a_crashed_promotion() {
+    let (h, source, _) = approved_demo(READS);
+    update_agent(&h.paths, "tool", "1.0.1", "mode: read");
+    let (candidate, header) = prepare(&h, &source, None);
+    let dir = source.parent().unwrap();
+    let archives_before = archive_files(dir);
+    inject_fault(Fault::ArchivesPlaced);
+    by_person(
+        &h,
+        &source,
+        &candidate,
+        &person_record("pawel", &candidate, &header),
+        SuccessorKind::CarriedForward,
+    )
+    .unwrap_err();
+    assert!(!owned_txns(dir, "demo").unwrap().is_empty());
+    assert_ne!(archive_files(dir), archives_before);
+    let g = guard(&h);
+    let (_lock, recovered) = lock_and_recover(&h.paths, &g, dir, "demo").unwrap();
+    assert_eq!(recovered.len(), 1);
+    assert_eq!(recovered[0].outcome, "rolled-back");
+    assert!(owned_txns(dir, "demo").unwrap().is_empty());
+    assert_eq!(archive_files(dir), archives_before);
+}

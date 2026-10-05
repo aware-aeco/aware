@@ -162,6 +162,20 @@ pub fn lock_app(
     Ok(PromotionLock { _file: file })
 }
 
+/// Take app `app`'s promotion lock and recover any leftover transaction of it
+/// first — what every migrate verb that touches the app's migration files
+/// does (plan §12 R1-7: recovery at the start of every migrate verb).
+pub fn lock_and_recover(
+    paths: &Paths,
+    guard: &crate::agent_store::RefGuard,
+    source_dir: &Path,
+    app: &str,
+) -> std::result::Result<(PromotionLock, Vec<Recovered>), AwareError> {
+    let lock = lock_app(paths, guard, source_dir, app)?;
+    let recovered = recover(source_dir, app, &lock)?;
+    Ok((lock, recovered))
+}
+
 // ── The transaction ────────────────────────────────────────────────────────
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -692,6 +706,10 @@ pub fn promote(
             ),
         ));
     }
+    // The archived evidence's row is what the approval labels are worded
+    // from, so it must state what is true of this candidate — the facts
+    // recomputed below (review round 4).
+    let recorded_facts = evidence_facts(&evidence.row);
     if header.targets.is_empty() {
         return Err(Refused::new(
             "E_MIGRATE_NOTHING_TO_PROMOTE",
@@ -774,6 +792,21 @@ pub fn promote(
                 recompiled.header.plan_digest, header.plan_digest
             ),
         ));
+    }
+
+    let recomputed = serde_json::to_value(&row)
+        .map_err(|e| AwareError::Internal(format!("serialize plan row: {e}")))?;
+    if recorded_facts != evidence_facts(&recomputed) {
+        return Err(Refused::new(
+            "E_MIGRATE_CANDIDATE_TAMPERED",
+            format!(
+                "the evidence of {id}'s candidate records other facts (effect, contract, comparison or moves) than a check of it finds now; prepare again"
+            ),
+        )
+        .with(serde_json::json!({
+            "recorded": recorded_facts,
+            "found": evidence_facts(&recomputed),
+        })));
     }
 
     // The current record must be whole: a promotion appends to it (§12 R1-5).
@@ -1077,6 +1110,34 @@ pub fn promote(
         recovered,
         warnings,
         label,
+    })
+}
+
+/// The facts of a plan row that an approval label is worded from, plus the
+/// moves they are about.
+fn evidence_facts(row: &serde_json::Value) -> serde_json::Value {
+    let targets: Vec<serde_json::Value> = row["targets"]
+        .as_array()
+        .map(|targets| {
+            targets
+                .iter()
+                .map(|t| {
+                    serde_json::json!({
+                        "agent": t["agent"],
+                        "from": t["from"],
+                        "to": t["to"],
+                    })
+                })
+                .collect()
+        })
+        .unwrap_or_default();
+    serde_json::json!({
+        "effect": row["effect"],
+        "contract-unchanged": row["contract"]["unchanged"],
+        "comparison-status": row["comparison"]["status"],
+        "comparison-method": row["comparison"]["method"],
+        "comparison-runs": row["comparison"]["runs"],
+        "targets": targets,
     })
 }
 

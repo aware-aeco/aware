@@ -500,7 +500,7 @@ fn prepare_cmd(
     let dir = crate::fs::containing_dir(&source).to_path_buf();
     // Under the app's promotion lock: a candidate is never written while a
     // promotion of this app reads or consumes the one before it.
-    let _promotion = promote::lock_app(&ctx.paths, guard, &dir, &app_id(&source)?)?;
+    let _promotion = promote::lock_and_recover(&ctx.paths, guard, &dir, &app_id(&source)?)?;
     let requested = (!targets.is_empty()).then_some(&targets);
     if let Some(requested) = requested {
         // An explicit target the app does not dispatch is a misuse, not a state.
@@ -660,7 +660,7 @@ fn discard_cmd(
     let source = app_source(ctx, app)?;
     let id = app_id(&source)?;
     let dir = crate::fs::containing_dir(&source);
-    let _promotion = promote::lock_app(&ctx.paths, guard, dir, &id)?;
+    let _promotion = promote::lock_and_recover(&ctx.paths, guard, dir, &id)?;
     let discarded = files::discard_candidate(dir, &id)?;
     Ok(Output {
         data: serde_json::json!({ "app": id, "discarded": discarded }),
@@ -685,7 +685,7 @@ fn hold_cmd(
     let dir = crate::fs::containing_dir(&source);
     // Under the app's promotion lock: a promotion either finished before the
     // hold or sees it (§15.1 R3).
-    let _promotion = promote::lock_app(&ctx.paths, guard, dir, &id)?;
+    let _promotion = promote::lock_and_recover(&ctx.paths, guard, dir, &id)?;
     let record = HoldRecord {
         format: 1,
         app: id.clone(),
