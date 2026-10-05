@@ -826,3 +826,51 @@ fn evidence_that_is_not_evidence_is_invalid_not_silently_complete() {
     swap_evidence(&s, &p, br#"{"row": {"effect": "declared-read-only"}}"#);
     assert_invalid(&s, "evidence");
 }
+
+#[test]
+fn migrate_never_plans_from_an_approval_its_archives_contradict() {
+    let s = setup();
+    let p = promoted_by(&s, By::Person("pawel"));
+    update_agent(&s.h.paths, "tool", "1.0.2", "mode: read");
+    // Complete record: planned as usual, no warning about the record.
+    let eval = crate::migration::plan::evaluate(&s.h.paths, &s.source, None).unwrap();
+    let json = serde_json::to_value(&eval.row).unwrap();
+    assert_eq!(json["state"], "needs-person", "{json}");
+    assert!(
+        !json["warnings"].to_string().contains("approval-record"),
+        "{json}"
+    );
+
+    // A missing archive: still planned (never a refusal), and said so.
+    let original = p.lock.approval.as_ref().unwrap().original.clone();
+    let path = crate::fs::containing_dir(&s.source).join(&original.archive);
+    let bytes = std::fs::read(&path).unwrap();
+    std::fs::remove_file(&path).unwrap();
+    let eval = crate::migration::plan::evaluate(&s.h.paths, &s.source, None).unwrap();
+    let json = serde_json::to_value(&eval.row).unwrap();
+    assert_eq!(json["state"], "needs-person", "{json}");
+    assert!(eval.candidate.is_some());
+    let warning = json["warnings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|w| w["code"] == "approval-record-incomplete")
+        .unwrap_or_else(|| panic!("no incomplete-record warning: {json}"));
+    assert!(
+        warning["text"]
+            .as_str()
+            .unwrap()
+            .contains(&original.archive),
+        "{warning}"
+    );
+
+    // An archive that contradicts the record: blocked, exactly as run/check refuse it.
+    let mut changed = bytes;
+    changed.extend_from_slice(b"# edited\n");
+    std::fs::write(&path, changed).unwrap();
+    let eval = crate::migration::plan::evaluate(&s.h.paths, &s.source, None).unwrap();
+    let json = serde_json::to_value(&eval.row).unwrap();
+    assert_eq!(json["state"], "blocked", "{json}");
+    assert_eq!(json["reasons"][0]["code"], "approval-invalid", "{json}");
+    assert!(eval.candidate.is_none());
+}

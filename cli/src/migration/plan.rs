@@ -263,7 +263,23 @@ pub fn evaluate(
             )));
         }
     };
-    if let Err(reason) = crate::agent_resolution::check_lock_consistency(&base) {
+    // The same verdict `app run` and `app check` reach: the chain's structure
+    // AND its archives. A lock its archives contradict is not an approval to
+    // plan from; one whose archives are missing still is, and says so.
+    let assessed = crate::agent_resolution::check_lock_consistency(&base)
+        .and_then(|()| crate::app_lock::approval::assess(&base, &dir));
+    if let Ok(summary) = &assessed
+        && !summary.record_complete
+    {
+        eval.row.warnings.push(Reason::new(
+            "approval-record-incomplete",
+            format!(
+                "Part of this workflow's approval record is missing ({}), so where its approval came from cannot be fully shown; compiling it again writes a fresh, complete approval.",
+                summary.missing.join("; ")
+            ),
+        ));
+    }
+    if let Err(reason) = assessed {
         return Ok(eval.blocked(Reason::new(
             "approval-invalid",
             format!(
