@@ -529,6 +529,19 @@ fn a_carried_forward_lock_keeps_its_earlier_approvals_for_the_window_from_the_pr
         )),
         "{r:#?}"
     );
+
+    // A plain HOLD naming no app holds this app's record too (the hold
+    // reader's rule), with no archive left to mask it.
+    std::fs::remove_file(approvals.join("HOLD.demo")).unwrap();
+    assert_eq!(
+        row(&build(&h.paths, "1d", far(at)), &old).state,
+        State::Removable
+    );
+    std::fs::write(approvals.join("HOLD"), "").unwrap();
+    assert_eq!(
+        row(&build(&h.paths, "1d", far(at)), &old).state,
+        State::Kept
+    );
 }
 
 #[test]
@@ -666,11 +679,19 @@ fn a_registered_root_is_searched_like_apps_and_can_be_removed_again() {
     assert_eq!(t.roots[1].kind, "registered");
     assert_eq!(t.roots[1].locks, 1);
 
-    // Removed once the folder has gone, by the path `roots list` prints.
+    // Removed once the folder has gone, spelled as `roots list` prints it but
+    // with a trailing separator (and, on Windows, in another case).
     let listed = read_roots(&h.paths).unwrap()[0].path.clone();
     std::fs::remove_dir_all(&workspace).unwrap();
+    let mut gone = format!("{listed}{}", std::path::MAIN_SEPARATOR);
+    if cfg!(windows) {
+        gone = gone.to_uppercase();
+    }
     let guard = crate::agent_store::open(&h.paths).unwrap();
-    assert!(remove_root(&h.paths, &guard, Path::new(&listed)).unwrap());
+    assert!(
+        remove_root(&h.paths, &guard, Path::new(&gone)).unwrap(),
+        "{gone}"
+    );
     assert!(!remove_root(&h.paths, &guard, &workspace).unwrap());
     drop(guard);
     assert!(read_roots(&h.paths).unwrap().is_empty());

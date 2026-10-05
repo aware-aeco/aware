@@ -306,10 +306,9 @@ pub fn add_root(
 /// its blocker — and the path may be given as `roots list` prints it.
 pub fn remove_root(paths: &Paths, guard: &RefGuard, dir: &Path) -> Result<bool, AwareError> {
     let path = normalize_root(dir)?;
-    let given = dir.display().to_string();
     edit_roots(paths, guard, |roots| {
         let before = roots.len();
-        roots.retain(|r| !same_root(&r.path, &path) && !same_root(&r.path, &given));
+        roots.retain(|r| !same_root(&r.path, &path));
         roots.len() != before
     })
 }
