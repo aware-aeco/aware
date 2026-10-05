@@ -1155,7 +1155,13 @@ pub fn resolve_pins(
             }
             None => (base_digest, PinSource::Base),
         };
-        let (package, skipped) = stored_package(paths, id, &digest)?;
+        let (package, skipped) = match source {
+            PinSource::Base => stored_package(paths, id, &digest)?,
+            // A target the caller named: its absence is about THAT target, not
+            // about the compiled approval, which never pinned it (review #628
+            // PR2 round 1).
+            PinSource::Target => stored_target(paths, id, &digest)?,
+        };
         for candidate in skipped {
             if !invalid_candidates.contains(&candidate) {
                 invalid_candidates.push(candidate);
@@ -1255,6 +1261,30 @@ fn stored_package(
                     .join("; ")
             ),
         )),
+    }
+}
+
+/// [`stored_package`] for a migration TARGET: no verified copy is
+/// `E_MIGRATE_TARGET_NOT_STORED`, naming the copies that did not verify.
+fn stored_target(
+    paths: &Paths,
+    id: &str,
+    digest: &str,
+) -> Result<(StoredPackage, Vec<InvalidCandidate>), AwareError> {
+    let (valid, invalid) = verified_candidates(paths, id, digest)?;
+    match valid.into_iter().next() {
+        Some(package) => Ok((package, invalid)),
+        None if invalid.is_empty() => Err(AwareError::Validation(format!(
+            "[E_MIGRATE_TARGET_NOT_STORED] no stored copy of agent {id} {digest} exists on this machine"
+        ))),
+        None => Err(AwareError::Validation(format!(
+            "[E_MIGRATE_TARGET_NOT_STORED] no stored copy of agent {id} {digest} verifies on this machine ({})",
+            invalid
+                .iter()
+                .map(|c| format!("{}: {}", c.path, c.reason))
+                .collect::<Vec<_>>()
+                .join("; ")
+        ))),
     }
 }
 

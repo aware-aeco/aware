@@ -456,16 +456,34 @@ fn malformed_or_unusable_targets_are_refused_as_misuse() {
     fx.ok(&["agent", "install", "verbot@1.0.0"]);
     fx.compiled_app("a");
     fx.ok(&["agent", "update", "verbot"]);
+    // Well-formed bytes this machine has never stored.
+    let unstored = format!("verbot@sha256:{}", "0".repeat(64));
     for (to, code) in [
         ("verbot", "E_MIGRATE_BAD_TARGET"),
         ("verbot@sha256:XYZ", "E_MIGRATE_BAD_TARGET"),
         ("ghost@1.0.0", "E_MIGRATE_TARGET_UNUSED"),
         ("verbot@9.9.9", "E_MIGRATE_TARGET_NOT_STORED"),
+        (unstored.as_str(), "E_MIGRATE_TARGET_NOT_STORED"),
     ] {
         let refused = fx.json(&["app", "migrate", "prepare", "a", "--to", to]);
         assert_eq!(refused["ok"], false, "{to}: {refused}");
         assert_eq!(refused["error"]["code"], code, "{to}: {refused}");
     }
+    // `plan` reports the same target as data, in the same words.
+    let row =
+        fx.data(&["app", "migrate", "plan", "--app", "a", "--to", &unstored])["apps"][0].clone();
+    assert_eq!(row["state"], "blocked", "{row}");
+    assert_eq!(
+        row["reasons"][0]["code"], "migrate-target-not-stored",
+        "{row}"
+    );
+    assert!(
+        row["reasons"][0]["text"]
+            .as_str()
+            .unwrap()
+            .contains("no stored copy of agent verbot"),
+        "{row}"
+    );
     assert!(!fx.aware.join("apps/a/.aware-migration").exists());
     // An explicit version target that resolves is fine.
     let prepared = fx.data(&["app", "migrate", "prepare", "a", "--to", "verbot@1.1.0"]);

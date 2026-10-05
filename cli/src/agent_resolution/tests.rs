@@ -1430,7 +1430,8 @@ fn resolve_pins_refuses_what_cannot_be_carried_forward() {
     let absent = format!("sha256:{}", "0".repeat(64));
     let gone =
         PinSet::from_lock(&base, [("a".to_string(), PinTarget::Digest(absent))].into()).unwrap();
-    assert!(refuse(&gone).contains("E_MIGRATE_PIN_NOT_STORED"));
+    // A target the approval never pinned is named as the target (review #628 PR2).
+    assert!(refuse(&gone).contains("E_MIGRATE_TARGET_NOT_STORED"));
     // A legacy lock that named only a version.
     let legacy = lock(&[("a", "1.0.0")], &[], &[]);
     assert!(
@@ -1523,6 +1524,50 @@ fn a_corrupt_record_claiming_the_target_version_is_reported_not_counted() {
             .any(|c| c.path.contains(&fake_hex)),
         "the forged record must be reported: {:?}",
         pins[0].invalid_candidates
+    );
+}
+
+/// Review #628 PR2 round 1: a DIGEST target that is not stored, or whose only
+/// stored copy does not verify, is a target the caller named wrongly — never a
+/// refusal "about the compiled approval", which never pinned it.
+#[test]
+fn a_digest_target_that_is_not_stored_or_does_not_verify_is_named_as_the_target() {
+    let h = home();
+    let base = migrated_home(&h);
+    let refuse = |digest: &str| {
+        let targets = [("a".to_string(), PinTarget::Digest(digest.to_string()))].into();
+        resolve_pins(
+            &h.paths,
+            &app_using(&["a"]),
+            &PinSet::from_lock(&base, targets).unwrap(),
+        )
+        .unwrap_err()
+        .to_string()
+    };
+    let nowhere = format!("sha256:{}", "0".repeat(64));
+    let error = refuse(&nowhere);
+    assert!(error.contains("[E_MIGRATE_TARGET_NOT_STORED]"), "{error}");
+    assert!(error.contains(&nowhere), "{error}");
+
+    // The 2.0.0 package exists but its bytes were tampered with.
+    let a2 = digest(&h.paths.agents_dir().join("a"));
+    let container = h
+        .paths
+        .agent_store_dir()
+        .join("a")
+        .join(a2.trim_start_matches("sha256:"));
+    let package = std::fs::read_dir(&container)
+        .unwrap()
+        .map(|e| e.unwrap().path())
+        .find(|p| !p.file_name().unwrap().to_string_lossy().starts_with('.'))
+        .unwrap();
+    std::fs::write(package.join("skills").join("s.md"), "tampered").unwrap();
+    let error = refuse(&a2);
+    assert!(error.contains("[E_MIGRATE_TARGET_NOT_STORED]"), "{error}");
+    assert!(!error.contains("compiled approval"), "{error}");
+    assert!(
+        error.contains("does not verify") || error.contains("verif"),
+        "{error}"
     );
 }
 
