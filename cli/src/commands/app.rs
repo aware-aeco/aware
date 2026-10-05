@@ -414,15 +414,19 @@ async fn run(
     // guard (`tests/run_path_reads_the_resolved_catalogue.rs`) allows.
     let mut verified_at_start = serde_json::Map::new();
     let mut agent_resolution = serde_json::Map::new();
+    // Each backing app's approval origin, from whichever path checked it.
+    let mut nested_approvals: Vec<NestedApproval> = Vec::new();
     let resolved: Option<std::sync::Arc<crate::agent_resolution::ResolvedCatalogue>> = if simulate {
         // …and the same file-level rule one level down, for the apps behind
         // this app's app-backed agents. `--simulate` never reaches nested
         // dispatch, so this is the only place an unreadable pin one level down
         // is reported for it.
-        if let Some(err) = simulate_nested_malformed_requires(&ctx.paths, &app)?.first() {
+        let (issues, approvals) = simulate_nested_malformed_requires(&ctx.paths, &app)?;
+        if let Some(err) = issues.first() {
             eprintln!("error: {}", err.message);
             return Err(AwareError::Validation(format!("[{}]", err.code)));
         }
+        nested_approvals = approvals;
         None
     } else {
         let resolved = resolve_run_agents(
@@ -554,27 +558,26 @@ async fn run(
     if let Some(fields) = approval_record.as_object_mut() {
         // The full chain is in the lock; the record carries the run's facts.
         fields.remove("successors");
-        let nested: serde_json::Map<String, serde_json::Value> = resolved
-            .as_ref()
-            .map(|resolved| {
-                resolved
-                    .nested_approvals()
-                    .into_iter()
-                    .map(|(wrapper, nested)| {
-                        let mut entry = serde_json::to_value(&nested.approval)
-                            .unwrap_or(serde_json::Value::Null);
-                        if let Some(entry) = entry.as_object_mut() {
-                            entry.remove("successors");
-                            entry.insert(
-                                "app".into(),
-                                serde_json::Value::String(nested.backed_by.clone()),
-                            );
-                        }
-                        (wrapper.to_string(), entry)
-                    })
-                    .collect()
-            })
-            .unwrap_or_default();
+        if let Some(resolved) = &resolved {
+            nested_approvals = resolved
+                .nested_approvals()
+                .into_iter()
+                .map(|(wrapper, nested)| NestedApproval {
+                    agent: wrapper.to_string(),
+                    app: nested.backed_by.clone(),
+                    approval: nested.approval.clone(),
+                })
+                .collect();
+        }
+        let mut nested = serde_json::Map::new();
+        for entry in &nested_approvals {
+            let mut value = serde_json::to_value(&entry.approval)?;
+            if let Some(fields) = value.as_object_mut() {
+                fields.remove("successors");
+                fields.insert("app".into(), serde_json::Value::String(entry.app.clone()));
+            }
+            nested.insert(entry.agent.clone(), value);
+        }
         if !nested.is_empty() {
             fields.insert("nested".into(), serde_json::Value::Object(nested));
         }
@@ -1251,12 +1254,17 @@ mod model_reader_control_tests {
 /// One level is the whole depth: a nested app may not itself compose another
 /// `exposes-as-agent` app in v0 (`DispatchInvoker::nested_leaf` passes
 /// `app_ctx: None`), so there is no deeper hop to recurse into.
+///
+/// Also returns, per app-backed agent, the backing app and the approval origin
+/// it was just checked against, so a simulated run records it as a real run
+/// does (#628 PR3a).
 fn simulate_nested_malformed_requires(
     paths: &crate::paths::Paths,
     app: &crate::manifest::app::App,
-) -> Result<Vec<crate::validate::ValidationIssue>, AwareError> {
+) -> Result<(Vec<crate::validate::ValidationIssue>, Vec<NestedApproval>), AwareError> {
     let agents_dir = paths.agents_dir();
     let apps_dir = paths.apps_dir();
+    let mut approvals = Vec::new();
     // Sorted, so which of several broken nested apps gets reported first is the
     // same on every machine — `dispatchable_agents` returns a set, whose order is
     // not.
@@ -1367,19 +1375,28 @@ fn simulate_nested_malformed_requires(
         // which yields `Io` for the same file on a real run. `cli-spec.md` keeps 1
         // ("general failure") and 3 ("validation failed") distinct: a file that
         // cannot be read is not an invalid one.
-        let backing = crate::app_lock::load_approved_app(&manifest_path).map_err(|e| {
-            let hop = format!(
-                "app-backed agent {:?} (backing app {:?})",
-                agent_id, app_transport.backed_by
-            );
-            match e {
-                AwareError::Validation(m) => AwareError::Validation(format!("{hop}: {m}")),
-                AwareError::Io(io) => std::io::Error::new(io.kind(), format!("{hop}: {io}")).into(),
-                // Loading/approval can also produce other classes; those keep
-                // their own class and lose only the hop, which fails safe.
-                other => other,
-            }
-        })?;
+        let approved =
+            crate::app_lock::load_approved_app_snapshot(&manifest_path).map_err(|e| {
+                let hop = format!(
+                    "app-backed agent {:?} (backing app {:?})",
+                    agent_id, app_transport.backed_by
+                );
+                match e {
+                    AwareError::Validation(m) => AwareError::Validation(format!("{hop}: {m}")),
+                    AwareError::Io(io) => {
+                        std::io::Error::new(io.kind(), format!("{hop}: {io}")).into()
+                    }
+                    // Loading/approval can also produce other classes; those keep
+                    // their own class and lose only the hop, which fails safe.
+                    other => other,
+                }
+            })?;
+        let backing = approved.app;
+        approvals.push(NestedApproval {
+            agent: agent_id.to_string(),
+            app: app_transport.backed_by.clone(),
+            approval: approved.approval,
+        });
         out.extend(
             crate::validate::malformed_requires(&backing)
                 .into_iter()
@@ -1394,7 +1411,14 @@ fn simulate_nested_malformed_requires(
                 }),
         );
     }
-    Ok(out)
+    Ok((out, approvals))
+}
+
+/// One app-backed agent's backing app and the approval it was checked against.
+struct NestedApproval {
+    agent: String,
+    app: String,
+    approval: crate::app_lock::approval::ApprovalSummary,
 }
 
 /// [`simulate_nested_malformed_requires`] for a real run: the same file-level

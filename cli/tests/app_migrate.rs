@@ -787,3 +787,47 @@ fn a_carried_forward_lock_runs_its_new_pins_labelled_and_a_tampered_one_is_refus
         "original"
     );
 }
+
+/// Review #628 PR3a round 1: `--simulate` checks the backing app's approval,
+/// so its run record carries that approval's origin too — not only a real run.
+#[test]
+fn a_simulated_run_records_its_backing_app_s_approval_origin() {
+    let Some(fx) = fixture() else {
+        eprintln!("[skip] rustc not on PATH");
+        return;
+    };
+    fx.ok(&["agent", "install", "verbot@1.0.0"]);
+    let inner = fx.root.join("src").join("inner");
+    std::fs::create_dir_all(&inner).unwrap();
+    std::fs::write(
+        inner.join("inner.flo"),
+        "app: inner\nversion: 0.1.0\ndescription: wraps verbot\nexposes-as-agent: true\n\
+         exposed-commands:\n  ask:\n    lifecycle: single\n    outputs:\n      type: single\n\
+         nodes:\n  - id: say\n    agent: verbot\n    command: say\nconnections: []\nrequires: []\n",
+    )
+    .unwrap();
+    fx.ok(&["app", "compile", inner.join("inner.flo").to_str().unwrap()]);
+    fx.ok(&["app", "install", inner.to_str().unwrap()]);
+    let outer = fx.aware.join("apps/outer");
+    std::fs::create_dir_all(&outer).unwrap();
+    std::fs::write(
+        outer.join("outer.flo"),
+        "app: outer\nversion: 0.1.0\ndescription: calls inner\n\
+         nodes:\n  - id: call\n    agent: inner\n    command: ask\nconnections: []\nrequires: []\n",
+    )
+    .unwrap();
+    fx.ok(&["app", "compile", outer.join("outer.flo").to_str().unwrap()]);
+
+    for args in [
+        &["app", "run", "outer"][..],
+        &["app", "run", "outer", "--simulate"],
+    ] {
+        fx.ok(args);
+        let approval = fx.last_run_config("outer")["approval"].clone();
+        assert_eq!(approval["origin"], "original", "{args:?}: {approval}");
+        let nested = &approval["nested"]["inner"];
+        assert_eq!(nested["app"], "inner", "{args:?}: {approval}");
+        assert_eq!(nested["origin"], "original", "{args:?}: {approval}");
+        assert_eq!(nested["record-complete"], true, "{args:?}: {approval}");
+    }
+}
